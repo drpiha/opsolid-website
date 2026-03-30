@@ -43,7 +43,7 @@
   }
 
   .gradient-text-vibrant {
-    @apply bg-gradient-to-r from-brand-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-brand-300 via-teal-300 to-cyan-400 bg-clip-text text-transparent;
   }
 
   .gradient-text-light {

@@ -24,9 +24,9 @@ export const content: Content = {
       primaryCta: "Ücretsiz Görüşme Planlayın",
       secondaryCta: "Çözümleri Keşfedin",
       stats: [
-        { value: "50+", label: "Devreye Alınan Otomasyon" },
-        { value: "10.000+", label: "Aylık Tasarruf Edilen Saat" },
-        { value: "%99,9", label: "Sistem Çalışma Süresi" },
+        { value: "%80", label: "Daha Az Manuel İş" },
+        { value: "3x", label: "Daha Hızlı Süreçler" },
+        { value: "7/24", label: "Yapay Zeka Destekli Operasyonlar" },
       ],
     },
 
@@ -99,9 +99,9 @@ export const content: Content = {
           icon: "messageSquare",
         },
         {
-          title: "Yapay Zeka Ajanları ve Akıllı Asistanlar",
+          title: "Yapay Zeka Ajanları & Sesli Asistanlar",
           description:
-            "Müşteri sorularını otonom olarak yanıtlayan, veri analiz eden, karar veren ve görevleri yürüten yeni nesil yapay zeka ajanları — ses asistanlarından en son LLM'lerle desteklenen akıllı chatbot'lara kadar.",
+            "Gelen ve giden sesli aramalar, müşteri desteği, potansiyel müşteri değerlendirmesi ve otonom görev yürütme için akıllı yapay zeka ajanları. İşbirliği yapan, muhakeme eden ve harekete geçen çoklu ajan sistemleri — en son temel modellerle güçlendirildi.",
           icon: "bot",
         },
       ],
@@ -278,10 +278,10 @@ export const content: Content = {
       label: "Sonuçlar",
       headline: "Operasyonlarınız üzerinde ölçülebilir etki",
       items: [
-        { value: "%94", label: "Hata Azaltma", description: "Manuel işleme hatalarında ortalama düşüş" },
-        { value: "10x", label: "Daha Hızlı İşleme", description: "Manuel iş akışlarına göre hız artışı" },
-        { value: "7/24", label: "Her Zaman Çalışır", description: "Otomasyonlarınız kesintisiz çalışır" },
-        { value: "<2 hf", label: "Devreye Alma Süresi", description: "Keşiften üretime geçiş süresi" },
+        { value: "%80", label: "Daha Az Manuel İş", description: "Otomasyon tipik olarak tekrarlayan manuel görevlerin %80'ine kadarını ortadan kaldırır" },
+        { value: "5-10x", label: "İlk Yıl Yatırım Getirisi", description: "İşletmeler 12 ay içinde otomasyon yatırımlarının 5-10 katı geri dönüş elde eder" },
+        { value: "%60", label: "Daha Hızlı Operasyonlar", description: "Akıllı iş akışlarıyla süreç döngü süreleri %60 veya daha fazla kısalır" },
+        { value: "%35", label: "Maliyet Tasarrufu", description: "Otomasyon ve yapay zeka ajanlarıyla ortalama operasyonel maliyet düşüşü" },
       ],
     },
 
@@ -293,7 +293,7 @@ export const content: Content = {
         { name: "n8n", description: "Karmaşık otomasyonlar için self-hosted iş akışı motoru. Webhook tetikleyiciler, koşullu mantık ve yapay zeka ajan orkestrasyon döngüleri.", techFeatures: ["Self-Hosted", "500+ Entegrasyon", "AI Ajan Döngüleri", "Webhook Trigger", "Hata Yönetimi"] },
         { name: "Make", description: "Çok adımlı veri yönlendirme için görsel senaryo oluşturucu. Gerçek zamanlı API bağlantıları, hata dallanması ve otomatik veri dönüşümleri.", techFeatures: ["Görsel Builder", "Veri Routing", "API Modülleri", "Hata Dallanma", "Gerçek Zamanlı"] },
         { name: "Zapier", description: "Çok adımlı otomasyonlarla 6.000+ uygulamayı hızlıca bağlayın. Koşullu yollar, zamanlanmış tetikleyiciler ve yapay zeka destekli filtreleme.", techFeatures: ["6000+ Uygulama", "Çok Adımlı", "Koşullu Mantık", "Zamanlayıcılar", "Filtreler"] },
-        { name: "Yapay Zeka Ajanları", description: "GPT-4, Claude ve özel LLM'lerle desteklenen otonom ajanlar. Araç kullanımı, RAG pipeline'ları, hafıza yönetimi ve çok adımlı muhakeme.", techFeatures: ["GPT-4 / Claude", "Tool Use", "RAG Pipeline", "Otonom Karar", "Hafıza"] },
+        { name: "Yapay Zeka Ajanları", description: "Sesli aramalar, müşteri desteği, veri analizi ve karar verme için otonom yapay zeka ajanları. En son temel modellerle, RAG pipeline'larıyla ve çoklu ajan orkestrasyonuyla inşa edildi.", techFeatures: ["Sesli Asistanlar", "Çoklu Ajan", "RAG Pipeline", "Araç Kullanımı", "Gerçek Zamanlı"] },
       ],
     },
   },

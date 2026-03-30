@@ -8,6 +8,18 @@ export function Footer() {
   const { t } = useLocale();
   const ft = t.footer;
 
+  // Map hrefs to localized labels (same approach as Header)
+  const linkLabels: Record<string, string> = {
+    "/solutions": t.nav.solutions,
+    "/use-cases": t.nav.useCases,
+    "/blog": t.nav.blog,
+    "/faq": t.nav.faq,
+    "/about": t.nav.about,
+    "/contact": t.nav.contact,
+    "/impressum": t.impressum.title,
+    "/privacy": t.privacy.title,
+  };
+
   return (
     <footer className="relative border-t border-white/10 bg-slate-900">
       {/* Gradient top border */}
@@ -21,9 +33,13 @@ export function Footer() {
               href="/"
               className="flex items-center gap-2 text-lg font-bold text-white tracking-tight"
             >
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-brand-500 via-accent-500 to-teal-500">
-                <span className="text-xs font-bold text-white">S</span>
-              </div>
+              <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 flex-shrink-0">
+                <path d="M16 2L28.5 9.5V24.5L16 30L3.5 24.5V9.5L16 2Z" stroke="#60a5fa" strokeWidth="2" fill="none" />
+                <path d="M16 8L23 12V22L16 26L9 22V12L16 8Z" stroke="#14b8a6" strokeWidth="2" fill="none" />
+                <path d="M9 12L16 16L23 12" stroke="#14b8a6" strokeWidth="1.5" fill="none" />
+                <path d="M16 16V26" stroke="#14b8a6" strokeWidth="1.5" fill="none" />
+                <path d="M3.5 9.5L16 16L28.5 9.5" stroke="#60a5fa" strokeWidth="1.5" fill="none" opacity="0.5" />
+              </svg>
               {SITE_CONFIG.name}
             </Link>
             <p className="mt-4 text-sm text-slate-400 leading-relaxed max-w-xs">
@@ -39,7 +55,7 @@ export function Footer() {
               {FOOTER_LINKS.company.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-sm text-slate-400 hover:text-teal-400 transition-colors">
-                    {link.label}
+                    {linkLabels[link.href] || link.label}
                   </Link>
                 </li>
               ))}
@@ -54,7 +70,7 @@ export function Footer() {
               {FOOTER_LINKS.services.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-sm text-slate-400 hover:text-teal-400 transition-colors">
-                    {link.label}
+                    {linkLabels[link.href] || link.label}
                   </Link>
                 </li>
               ))}
@@ -69,7 +85,7 @@ export function Footer() {
               {FOOTER_LINKS.resources.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-sm text-slate-400 hover:text-teal-400 transition-colors">
-                    {link.label}
+                    {linkLabels[link.href] || link.label}
                   </Link>
                 </li>
               ))}
@@ -84,7 +100,7 @@ export function Footer() {
               {FOOTER_LINKS.legal.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-sm text-slate-400 hover:text-teal-400 transition-colors">
-                    {link.label}
+                    {linkLabels[link.href] || link.label}
                   </Link>
                 </li>
               ))}

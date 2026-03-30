@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
@@ -16,18 +15,8 @@ export function CTASection() {
       <div className="container-wide">
         <AnimatedSection>
           <div className="relative rounded-2xl px-8 py-16 md:px-20 md:py-20 text-center overflow-hidden">
-            {/* Background Unsplash image */}
-            <div className="absolute inset-0">
-              <Image
-                src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=800&h=600&fit=crop"
-                alt=""
-                fill
-                className="object-cover"
-                sizes="100vw"
-              />
-            </div>
-            {/* Gradient CTA overlay on top of image */}
-            <div className="absolute inset-0 gradient-cta opacity-90" />
+            {/* Gradient CTA background */}
+            <div className="absolute inset-0 gradient-cta" />
             {/* Animated floating orbs */}
             <div className="absolute top-8 right-12 w-64 h-64 bg-gradient-to-br from-brand-400/15 to-teal-400/10 rounded-full blur-2xl animate-float" />
             <div className="absolute bottom-6 left-10 w-48 h-48 bg-gradient-to-br from-accent-400/12 to-brand-400/8 rounded-full blur-2xl animate-float-delayed" />

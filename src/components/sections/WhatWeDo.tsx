@@ -1,10 +1,11 @@
 "use client";
 
-import Image from "next/image";
 import { Check } from "lucide-react";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { useLocale } from "@/context/LocaleContext";
+import { AutomationFlow } from "@/components/illustrations/AutomationFlow";
+import { AnimatedWorkflow } from "@/components/illustrations/AnimatedWorkflow";
 
 export function WhatWeDo() {
   const { t } = useLocale();
@@ -41,21 +42,11 @@ export function WhatWeDo() {
             </ul>
           </AnimatedSection>
 
-          {/* Right side - Image */}
+          {/* Right side - Animated illustrations */}
           <AnimatedSection delay={0.2}>
-            <div className="relative">
-              {/* Gradient border glow effect */}
-              <div className="absolute -inset-1 bg-gradient-to-br from-brand-500/20 via-accent-500/10 to-teal-500/20 rounded-2xl blur-sm" />
-              <div className="relative h-[400px] lg:h-[480px] rounded-2xl overflow-hidden shadow-medium">
-                <Image
-                  src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&h=600&fit=crop"
-                  alt=""
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 1024px) 100vw, 50vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-tr from-brand-900/20 to-transparent" />
-              </div>
+            <div className="space-y-6">
+              <AnimatedWorkflow />
+              <AutomationFlow className="px-4" />
             </div>
           </AnimatedSection>
         </div>

@@ -56,9 +56,13 @@ export function Header() {
             href="/"
             className="relative z-50 flex items-center gap-2.5 text-xl font-bold text-slate-900 tracking-tight"
           >
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-brand-600 via-accent-600 to-teal-500">
-              <span className="text-sm font-bold text-white">S</span>
-            </div>
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-8 w-8 flex-shrink-0">
+              <path d="M16 2L28.5 9.5V24.5L16 30L3.5 24.5V9.5L16 2Z" stroke="#2563eb" strokeWidth="2" fill="none" />
+              <path d="M16 8L23 12V22L16 26L9 22V12L16 8Z" stroke="#14b8a6" strokeWidth="2" fill="none" />
+              <path d="M9 12L16 16L23 12" stroke="#14b8a6" strokeWidth="1.5" fill="none" />
+              <path d="M16 16V26" stroke="#14b8a6" strokeWidth="1.5" fill="none" />
+              <path d="M3.5 9.5L16 16L28.5 9.5" stroke="#2563eb" strokeWidth="1.5" fill="none" opacity="0.5" />
+            </svg>
             {SITE_CONFIG.name}
           </Link>
 

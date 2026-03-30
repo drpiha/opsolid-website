@@ -10,6 +10,8 @@ import {
   StaggerItem,
 } from "@/components/shared/AnimatedSection";
 import { useLocale } from "@/context/LocaleContext";
+import { AutomationFlow } from "@/components/illustrations/AutomationFlow";
+import { useCaseIcons } from "@/components/illustrations/UseCaseIcons";
 
 export function UseCasesPage() {
   const { t } = useLocale();
@@ -32,6 +34,11 @@ export function UseCasesPage() {
               {s.hero.description}
             </p>
           </AnimatedSection>
+          <AnimatedSection delay={0.3}>
+            <div className="mt-10 max-w-2xl mx-auto">
+              <AutomationFlow />
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 
@@ -39,15 +46,20 @@ export function UseCasesPage() {
       <section className="pb-24 md:pb-32 pt-16 md:pt-20">
         <div className="container-wide">
           <StaggerContainer className="space-y-6">
-            {s.items.map((item, i) => (
+            {s.items.map((item, i) => {
+              const Icon = useCaseIcons[i];
+              return (
               <StaggerItem key={i}>
                 <div className="rounded-xl gradient-border overflow-hidden transition-all duration-300 hover:shadow-glow hover:-translate-y-0.5">
                   {/* Header with gradient accent */}
                   <div className="relative border-b border-slate-100/80 bg-white/90 backdrop-blur-sm px-6 py-4 md:px-8 md:py-5">
                     <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-500 via-accent-500 to-teal-500" />
-                    <h2 className="text-base md:text-lg font-semibold text-slate-900">
-                      {item.title}
-                    </h2>
+                    <div className="flex items-center gap-3">
+                      {Icon && <Icon className="shrink-0" />}
+                      <h2 className="text-base md:text-lg font-semibold text-slate-900">
+                        {item.title}
+                      </h2>
+                    </div>
                   </div>
 
                   <div className="grid md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-100/80 bg-white/80 backdrop-blur-sm">
@@ -93,7 +105,8 @@ export function UseCasesPage() {
                   </div>
                 </div>
               </StaggerItem>
-            ))}
+              );
+            })}
           </StaggerContainer>
         </div>
       </section>

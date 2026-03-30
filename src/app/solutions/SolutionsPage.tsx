@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
 import {
   Workflow,
   LayoutDashboard,
@@ -15,6 +14,8 @@ import {
   AlertCircle,
   ArrowRight,
 } from "lucide-react";
+import { DashboardMockup } from "@/components/illustrations/DashboardMockup";
+import { solutionIllustrationMap } from "@/components/illustrations/SolutionIllustrations";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
@@ -66,20 +67,10 @@ export function SolutionsPage() {
               </p>
             </AnimatedSection>
 
-            {/* Right - Dashboard image */}
+            {/* Right - Animated Dashboard */}
             <AnimatedSection delay={0.2}>
               <div className="relative hidden lg:block">
-                <div className="absolute -inset-1 bg-gradient-to-br from-brand-400/20 via-accent-400/10 to-teal-400/20 rounded-2xl blur-sm" />
-                <div className="relative h-[340px] rounded-2xl overflow-hidden shadow-2xl border border-white/10">
-                  <Image
-                    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop"
-                    alt=""
-                    fill
-                    className="object-cover"
-                    sizes="50vw"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-tr from-brand-900/30 to-transparent" />
-                </div>
+                <DashboardMockup />
               </div>
             </AnimatedSection>
           </div>
@@ -90,6 +81,7 @@ export function SolutionsPage() {
         <div className="container-wide space-y-20 md:space-y-28 pt-16 md:pt-20">
           {s.items.map((item, i) => {
             const accent = accentCycle[i % accentCycle.length];
+            const Illustration = solutionIllustrationMap[item.icon];
             return (
               <AnimatedSection key={i}>
                 <div className={`grid lg:grid-cols-2 gap-10 lg:gap-16 items-start`}>
@@ -102,9 +94,15 @@ export function SolutionsPage() {
                         {item.title}
                       </h2>
                     </div>
-                    <p className="text-body text-slate-500 leading-relaxed">
+                    <p className="text-body text-slate-500 leading-relaxed mb-6">
                       {item.description}
                     </p>
+                    {/* Animated illustration per solution */}
+                    {Illustration && (
+                      <div className="hidden md:block">
+                        <Illustration />
+                      </div>
+                    )}
                   </div>
 
                   <div className={`space-y-4 ${i % 2 === 1 ? "lg:order-1" : ""}`}>

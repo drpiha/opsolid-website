@@ -8,6 +8,7 @@ import {
   StaggerItem,
 } from "@/components/shared/AnimatedSection";
 import { useLocale } from "@/context/LocaleContext";
+import { processStepIcons } from "@/components/illustrations/ProcessStepIcons";
 
 const stepIcons = [
   {
@@ -89,6 +90,11 @@ export function HowWeWork() {
                     <p className="mt-2 text-sm text-slate-500 leading-relaxed">
                       {step.description}
                     </p>
+                    {/* Step illustration */}
+                    {processStepIcons[i] && (() => {
+                      const StepIllustration = processStepIcons[i];
+                      return <StepIllustration className="mt-4" />;
+                    })()}
                   </div>
                 </StaggerItem>
               );

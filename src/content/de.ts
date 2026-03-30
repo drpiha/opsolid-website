@@ -24,9 +24,9 @@ export const content: Content = {
       primaryCta: "Beratungsgespräch buchen",
       secondaryCta: "Lösungen entdecken",
       stats: [
-        { value: "50+", label: "Automatisierungen im Einsatz" },
-        { value: "10.000+", label: "Stunden monatlich gespart" },
-        { value: "99,9%", label: "Systemverfügbarkeit" },
+        { value: "80%", label: "Weniger manuelle Arbeit" },
+        { value: "3x", label: "Schnellere Prozesse" },
+        { value: "24/7", label: "KI-gestützte Abläufe" },
       ],
     },
 
@@ -99,9 +99,9 @@ export const content: Content = {
           icon: "messageSquare",
         },
         {
-          title: "KI-Agenten & Intelligente Assistenten",
+          title: "KI-Agenten & Sprach-Assistenten",
           description:
-            "KI-Agenten der nächsten Generation, die autonom Kundenanfragen bearbeiten, Daten analysieren, Entscheidungen treffen und Aufgaben ausführen — von Sprachassistenten bis hin zu intelligenten Chatbots, angetrieben durch die neuesten LLMs.",
+            "Intelligente KI-Agenten für ein- und ausgehende Sprachanrufe, Kundenbetreuung, Lead-Qualifizierung und autonome Aufgabenausführung. Multi-Agent-Systeme, die zusammenarbeiten, denken und handeln — angetrieben durch die neuesten Foundation-Modelle.",
           icon: "bot",
         },
       ],
@@ -261,10 +261,10 @@ export const content: Content = {
       label: "Ergebnisse",
       headline: "Messbarer Einfluss auf Ihre Abläufe",
       items: [
-        { value: "94%", label: "Fehlerreduktion", description: "Durchschnittliche Reduktion manueller Verarbeitungsfehler" },
-        { value: "10x", label: "Schnellere Verarbeitung", description: "Geschwindigkeitssteigerung gegenüber manuellen Workflows" },
-        { value: "24/7", label: "Immer aktiv", description: "Ihre Automatisierungen arbeiten rund um die Uhr" },
-        { value: "<2 Wo", label: "Deployment-Zeit", description: "Von der Analyse bis zum Produktivbetrieb" },
+        { value: "80%", label: "Weniger manuelle Arbeit", description: "Automatisierung eliminiert typischerweise bis zu 80% der repetitiven manuellen Aufgaben" },
+        { value: "5-10x", label: "ROI im ersten Jahr", description: "Unternehmen erzielen 5-10x Rendite auf ihre Automatisierungsinvestition innerhalb von 12 Monaten" },
+        { value: "60%", label: "Schnellere Abläufe", description: "Prozesszykluszeiten werden mit intelligenten Workflows um 60% oder mehr reduziert" },
+        { value: "35%", label: "Kosteneinsparung", description: "Durchschnittliche Betriebskostenreduktion durch Automatisierung und KI-Agenten" },
       ],
     },
 
@@ -276,7 +276,7 @@ export const content: Content = {
         { name: "n8n", description: "Self-hosted Workflow-Engine für komplexe Automatisierungen. Webhook-Trigger, bedingte Logik und KI-Agenten-Orchestrierungsschleifen.", techFeatures: ["Self-Hosted", "500+ Integrationen", "KI-Agent-Loops", "Webhook-Trigger", "Fehlerbehandlung"] },
         { name: "Make", description: "Visueller Szenario-Builder für mehrstufiges Daten-Routing. Echtzeit-API-Verbindungen, Fehlerverzweigung und automatisierte Datentransformationen.", techFeatures: ["Visueller Builder", "Daten-Routing", "API-Module", "Fehlerverzweigung", "Echtzeit"] },
         { name: "Zapier", description: "6.000+ Apps schnell verbinden mit mehrstufigen Automatisierungen. Bedingte Pfade, geplante Trigger und KI-gestützte Filterung.", techFeatures: ["6.000+ Apps", "Mehrstufig", "Bedingte Logik", "Zeitpläne", "Filter"] },
-        { name: "KI-Agenten", description: "Autonome Agenten mit GPT-4, Claude und eigenen LLMs. Tool-Nutzung, RAG-Pipelines, Speicherverwaltung und mehrstufiges Reasoning.", techFeatures: ["GPT-4 / Claude", "Tool-Nutzung", "RAG-Pipeline", "Autonom", "Speicher"] },
+        { name: "KI-Agenten", description: "Autonome KI-Agenten für Sprachanrufe, Kundenservice, Datenanalyse und Entscheidungsfindung. Gebaut mit den neuesten Foundation-Modellen, RAG-Pipelines und Multi-Agent-Orchestrierung.", techFeatures: ["Sprach-Assistenten", "Multi-Agent", "RAG-Pipeline", "Tool-Nutzung", "Echtzeit"] },
       ],
     },
   },

@@ -15,6 +15,9 @@ Premium B2B website for OpSolid, an operational systems and automation company.
 
 ## Getting Started
 
+## PUSH to VERCEL :
+cd C:\Users\drhas\Documents\Coding\Project_Website\mayai-website; git add -A; git commit -m "update"; git push
+
 ```bash
 # Install dependencies
 npm install

@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import {
   StaggerContainer,
@@ -14,17 +13,12 @@ export function WhyUs() {
 
   return (
     <section className="section-padding relative overflow-hidden">
-      {/* Background Unsplash image with dark overlay */}
-      <div className="absolute inset-0 -z-10">
-        <Image
-          src="https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=600&fit=crop"
-          alt=""
-          fill
-          className="object-cover"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/92 via-slate-900/88 to-slate-900/95" />
-        <div className="absolute inset-0 bg-gradient-to-tr from-brand-900/30 to-transparent" />
+      {/* Dark gradient mesh background */}
+      <div className="absolute inset-0 -z-10 bg-slate-900">
+        <div className="absolute top-10 left-[15%] w-96 h-96 bg-brand-500/[0.08] rounded-full blur-[120px]" />
+        <div className="absolute bottom-10 right-[10%] w-80 h-80 bg-accent-500/[0.06] rounded-full blur-[100px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-teal-500/[0.04] rounded-full blur-[140px]" />
+        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 via-transparent to-slate-900/70" />
       </div>
 
       <div className="container-wide relative z-10">

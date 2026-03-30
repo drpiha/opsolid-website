@@ -23,9 +23,9 @@ export const content = {
       primaryCta: "Book a Consultation",
       secondaryCta: "Explore Solutions",
       stats: [
-        { value: "50+", label: "Automations Deployed" },
-        { value: "10k+", label: "Hours Saved Monthly" },
-        { value: "99.9%", label: "System Uptime" },
+        { value: "80%", label: "Less Manual Work" },
+        { value: "3x", label: "Faster Processes" },
+        { value: "24/7", label: "AI-Powered Operations" },
       ],
     },
 
@@ -98,9 +98,9 @@ export const content = {
           icon: "messageSquare",
         },
         {
-          title: "AI Agents & Intelligent Assistants",
+          title: "AI Agents & Voice Assistants",
           description:
-            "Next-generation AI agents that autonomously handle customer inquiries, analyze data, make decisions, and execute tasks — from voice assistants to intelligent chatbots powered by the latest LLMs.",
+            "Intelligent AI agents for inbound/outbound voice calls, customer support, lead qualification, and autonomous task execution. Multi-agent systems that collaborate, reason, and act — powered by the latest foundation models.",
           icon: "bot",
         },
       ],
@@ -260,10 +260,10 @@ export const content = {
       label: "Results",
       headline: "Measurable impact on your operations",
       items: [
-        { value: "94%", label: "Error Reduction", description: "Average decrease in manual processing errors" },
-        { value: "10x", label: "Faster Processing", description: "Speed improvement over manual workflows" },
-        { value: "24/7", label: "Always Running", description: "Your automations work around the clock" },
-        { value: "<2 wk", label: "Time to Deploy", description: "From discovery to production deployment" },
+        { value: "80%", label: "Less Manual Work", description: "Automation typically eliminates up to 80% of repetitive manual tasks" },
+        { value: "5-10x", label: "ROI in Year One", description: "Businesses see 5-10x return on automation investment within 12 months" },
+        { value: "60%", label: "Faster Operations", description: "Process cycle times reduced by 60% or more with intelligent workflows" },
+        { value: "35%", label: "Cost Savings", description: "Average operational cost reduction through automation and AI agents" },
       ],
     },
 
@@ -275,7 +275,7 @@ export const content = {
         { name: "n8n", description: "Self-hosted workflow engine for complex automations. Webhook triggers, conditional logic, and AI agent orchestration loops.", techFeatures: ["Self-Hosted", "500+ Integrations", "AI Agent Loops", "Webhook Triggers", "Error Handling"] },
         { name: "Make", description: "Visual scenario builder for multi-step data routing. Real-time API connections, error branching, and automated data transformations.", techFeatures: ["Visual Builder", "Data Routing", "API Modules", "Error Branching", "Real-Time"] },
         { name: "Zapier", description: "Quick-connect 6,000+ apps with multi-step automations. Conditional paths, scheduled triggers, and AI-enhanced filtering.", techFeatures: ["6,000+ Apps", "Multi-Step", "Conditional Logic", "Schedulers", "Filters"] },
-        { name: "AI Agents", description: "Autonomous agents powered by GPT-4, Claude, and custom LLMs. Tool use, RAG pipelines, memory management, and multi-step reasoning.", techFeatures: ["GPT-4 / Claude", "Tool Use", "RAG Pipeline", "Autonomous", "Memory"] },
+        { name: "AI Agents", description: "Autonomous AI agents for voice calls, customer support, data analysis, and decision-making. Built with the latest foundation models, RAG pipelines, and multi-agent orchestration.", techFeatures: ["Voice Assistants", "Multi-Agent", "RAG Pipeline", "Tool Use", "Real-Time"] },
       ],
     },
   },
@@ -798,7 +798,7 @@ export const content = {
       },
       {
         question: "What tools and platforms do you use?",
-        answer: "Our primary automation platform is n8n, supplemented by Make and Zapier where appropriate. We also build custom integrations using APIs, databases, and cloud services. For AI solutions, we use OpenAI, Claude, and custom ML models. We always choose the right tool for each use case — never a one-size-fits-all approach.",
+        answer: "Our primary automation platform is n8n, supplemented by Make and Zapier where appropriate. We also build custom integrations using APIs, databases, and cloud services. For AI solutions, we use the latest foundation models, voice AI platforms, and custom-trained agents. We always choose the right tool for each use case — never a one-size-fits-all approach.",
         category: "technical",
       },
       {

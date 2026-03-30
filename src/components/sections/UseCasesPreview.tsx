@@ -8,6 +8,7 @@ import {
   StaggerItem,
 } from "@/components/shared/AnimatedSection";
 import { useLocale } from "@/context/LocaleContext";
+import { useCaseIcons } from "@/components/illustrations/UseCaseIcons";
 
 export function UseCasesPreview() {
   const { t } = useLocale();
@@ -19,7 +20,9 @@ export function UseCasesPreview() {
         <SectionHeading label={s.label} headline={s.headline} />
 
         <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
-          {s.items.map((item, i) => (
+          {s.items.map((item, i) => {
+            const Icon = useCaseIcons[i];
+            return (
             <StaggerItem key={i}>
               <Link
                 href="/use-cases"
@@ -30,6 +33,7 @@ export function UseCasesPreview() {
                   <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-500 via-accent-500 to-teal-500" />
 
                   <div className="flex items-start gap-3">
+                    {Icon && <Icon className="shrink-0 -ml-0.5" />}
                     <div className="flex-1 min-w-0">
                       <h3 className="text-sm font-semibold text-slate-900 group-hover:text-brand-700 transition-colors">
                         {item.title}
@@ -46,7 +50,8 @@ export function UseCasesPreview() {
                 </div>
               </Link>
             </StaggerItem>
-          ))}
+            );
+          })}
         </StaggerContainer>
       </div>
     </section>

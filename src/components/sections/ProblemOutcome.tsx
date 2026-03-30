@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import {
@@ -15,17 +15,11 @@ export function ProblemOutcome() {
 
   return (
     <section className="section-padding relative overflow-hidden">
-      {/* Subtle AI/abstract background */}
-      <div className="absolute inset-0 -z-10">
-        <Image
-          src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&h=600&fit=crop"
-          alt=""
-          fill
-          className="object-cover"
-          sizes="100vw"
-        />
-        <div className="absolute inset-0 bg-white/[0.96]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-white/50" />
+      {/* Animated gradient mesh background */}
+      <div className="absolute inset-0 -z-10 bg-slate-50/60">
+        <div className="absolute top-10 left-[10%] w-80 h-80 bg-brand-500/[0.04] rounded-full blur-[100px]" />
+        <div className="absolute bottom-10 right-[15%] w-72 h-72 bg-teal-500/[0.05] rounded-full blur-[100px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent-500/[0.03] rounded-full blur-[120px]" />
       </div>
 
       <div className="container-wide relative z-10">
@@ -42,11 +36,16 @@ export function ProblemOutcome() {
                   </div>
                 </div>
 
-                {/* Gradient arrow divider */}
+                {/* Animated gradient arrow divider */}
                 <div className="flex items-center justify-center -my-3 relative z-10">
-                  <div className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-r from-red-400 to-teal-500 shadow-sm">
-                    <ArrowRight size={12} className="text-white" />
-                  </div>
+                  <motion.div
+                    className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-r from-red-400 to-teal-500 shadow-md"
+                    whileInView={{ rotate: [0, 0, 360], scale: [0.8, 1.1, 1] }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.6, delay: 0.2 + i * 0.08 }}
+                  >
+                    <ArrowRight size={13} className="text-white" />
+                  </motion.div>
                 </div>
 
                 {/* After - teal tint */}
