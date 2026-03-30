@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #0f172a;
+    --muted: #f8fafc;
+    --muted-foreground: #64748b;
+    --border: #e8ecf1;
+    --ring: #2563eb;
+  }
+
+  * {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    color: var(--foreground);
+    background: var(--background);
+  }
+
+  ::selection {
+    background-color: rgba(37, 99, 235, 0.15);
+    color: #1e3a8a;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gradient-text {
+    @apply bg-gradient-to-r from-brand-700 via-brand-500 to-accent-500 bg-clip-text text-transparent;
+  }
+
+  .gradient-text-vibrant {
+    @apply bg-gradient-to-r from-brand-400 via-teal-400 to-cyan-400 bg-clip-text text-transparent;
+  }
+
+  .gradient-text-light {
+    @apply bg-gradient-to-r from-white via-brand-200 to-teal-200 bg-clip-text text-transparent;
+  }
+
+  .glass {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  }
+
+  .glass-light {
+    @apply bg-white/70 backdrop-blur-xl border border-white/20 shadow-soft;
+  }
+
+  .glass-dark {
+    @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  }
+
+  .gradient-mesh {
+    background:
+      radial-gradient(at 27% 37%, rgba(37, 99, 235, 0.08) 0px, transparent 50%),
+      radial-gradient(at 97% 21%, rgba(124, 58, 237, 0.06) 0px, transparent 50%),
+      radial-gradient(at 52% 99%, rgba(20, 184, 166, 0.05) 0px, transparent 50%),
+      radial-gradient(at 10% 29%, rgba(6, 182, 212, 0.04) 0px, transparent 50%);
+  }
+
+  .gradient-hero {
+    background: linear-gradient(135deg, #0c1e4a 0%, #1e3a8a 25%, #1d4ed8 50%, #4c1d95 100%);
+  }
+
+  .gradient-hero-mesh {
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(37, 99, 235, 0.3) 0%, transparent 50%),
+      radial-gradient(ellipse at 80% 20%, rgba(139, 92, 246, 0.2) 0%, transparent 50%),
+      radial-gradient(ellipse at 60% 80%, rgba(20, 184, 166, 0.15) 0%, transparent 50%),
+      linear-gradient(135deg, #0c1e4a 0%, #1e3a8a 30%, #2e1065 70%, #0c1e4a 100%);
+  }
+
+  .gradient-border {
+    background: linear-gradient(var(--bg, white), var(--bg, white)) padding-box,
+                linear-gradient(135deg, #2563eb, #7c3aed, #14b8a6) border-box;
+    border: 1px solid transparent;
+  }
+
+  .gradient-cta {
+    background: linear-gradient(135deg, #1e3a8a 0%, #4c1d95 40%, #0f766e 100%);
+  }
+
+  /* Flowing dash animation for workflow visualizations */
+  .animate-flow-dash {
+    animation: flowDash 1.2s linear infinite;
+  }
+
+  .section-padding {
+    @apply py-24 md:py-32 lg:py-40;
+  }
+
+  .section-padding-sm {
+    @apply py-16 md:py-20 lg:py-24;
+  }
+
+  .container-narrow {
+    @apply mx-auto max-w-3xl px-6 lg:px-8;
+  }
+
+  .container-wide {
+    @apply mx-auto max-w-7xl px-6 lg:px-8;
+  }
+}
+
+@keyframes flowDash {
+  to {
+    stroke-dashoffset: -12;
+  }
+}
