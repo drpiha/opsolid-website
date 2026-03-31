@@ -14,7 +14,7 @@ No separate backend process — Next.js API routes (`src/app/api/`) run within t
 
 ## Architecture
 
-**Solidra** is a B2B company website built with Next.js 14 App Router, TypeScript, and Tailwind CSS. Brand: "Solidra" (operational infrastructure / automation company, Germany-based).
+**OpSolid** is a B2B company website built with Next.js 14 App Router, TypeScript, and Tailwind CSS. Brand: "OpSolid" (practical automation & AI systems for business operations, Germany-based). Positioning: independent automation practice — no fake metrics, no "we" team language, no employer references, no inflated claims.
 
 ### Localization System
 

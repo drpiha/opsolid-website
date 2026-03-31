@@ -63,7 +63,7 @@ export function AboutPage() {
                 <div className="absolute -inset-1 bg-gradient-to-br from-brand-500/20 via-accent-500/10 to-teal-500/20 rounded-2xl blur-sm" />
                 <div className="relative h-[360px] lg:h-[420px] rounded-2xl overflow-hidden shadow-medium">
                   <Image
-                    src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop"
+                    src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&h=600&fit=crop"
                     alt=""
                     fill
                     className="object-cover"

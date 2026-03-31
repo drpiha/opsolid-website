@@ -5,7 +5,6 @@ import { WhatWeDo } from "@/components/sections/WhatWeDo";
 import { SolutionsOverview } from "@/components/sections/SolutionsOverview";
 import { IntegrationGrid } from "@/components/sections/IntegrationGrid";
 import { ProblemOutcome } from "@/components/sections/ProblemOutcome";
-import { ResultsShowcase } from "@/components/sections/ResultsShowcase";
 import { UseCasesPreview } from "@/components/sections/UseCasesPreview";
 import { HowWeWork } from "@/components/sections/HowWeWork";
 import { WhyUs } from "@/components/sections/WhyUs";
@@ -21,7 +20,6 @@ export default function HomePage() {
       <SolutionsOverview />
       <IntegrationGrid />
       <ProblemOutcome />
-      <ResultsShowcase />
       <UseCasesPreview />
       <HowWeWork />
       <WhyUs />

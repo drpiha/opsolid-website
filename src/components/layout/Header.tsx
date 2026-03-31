@@ -35,7 +35,6 @@ export function Header() {
     "/solutions": t.nav.solutions,
     "/use-cases": t.nav.useCases,
     "/blog": t.nav.blog,
-    "/faq": t.nav.faq,
     "/about": t.nav.about,
     "/contact": t.nav.contact,
   };

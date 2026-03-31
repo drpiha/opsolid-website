@@ -77,29 +77,6 @@ export function Hero() {
               </Link>
             </div>
 
-            {/* Stats strip */}
-            <motion.div
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.3 }}
-              className="mt-14 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-6 sm:gap-0"
-            >
-              {(hero.stats as Array<{ value: string; label: string }>).map((stat, i) => (
-                <div key={i} className="flex items-center gap-6 sm:gap-0">
-                  <div className="text-center lg:text-left px-6 sm:px-8 first:pl-0">
-                    <div className="text-2xl md:text-3xl font-bold gradient-text-vibrant">
-                      {stat.value}
-                    </div>
-                    <div className="mt-1 text-xs md:text-sm text-slate-400">
-                      {stat.label}
-                    </div>
-                  </div>
-                  {i < (hero.stats as Array<{ value: string; label: string }>).length - 1 && (
-                    <div className="hidden sm:block w-px h-10 bg-white/10" />
-                  )}
-                </div>
-              ))}
-            </motion.div>
           </motion.div>
 
           {/* Right side - Animated Workflow (40%) */}

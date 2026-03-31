@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import { UseCasesPage } from "./UseCasesPage";
 
 export const metadata: Metadata = {
-  title: "Use Cases",
+  title: "Example Solutions",
   description:
-    "Real-world examples of how businesses use OpSolid to automate order processing, document handling, approvals, reporting, and more.",
+    "Realistic examples of the kinds of automation systems OpSolid can design and build — from order processing and document handling to approval workflows and dashboards.",
   openGraph: {
-    title: "Use Cases | OpSolid",
+    title: "Example Solutions | OpSolid",
     description:
-      "Real-world examples of how businesses use OpSolid to automate operations and eliminate manual work.",
+      "Practical automation scenarios showing what OpSolid can design and build for your operations.",
   },
 };
 

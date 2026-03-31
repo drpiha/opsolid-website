@@ -1,108 +1,85 @@
 // =============================================================================
 // TURKISH CONTENT (Türkçe)
-// Tüm metinler doğal iş Türkçesinde. Yapı en.ts ile birebir aynı.
+// Tüm metinler profesyonel iş Türkçesinde. Yapı en.ts ile birebir aynı.
 // =============================================================================
 
 import type { Content } from "./en";
 
 export const content: Content = {
   nav: {
-    solutions: "Çözümler",
-    useCases: "Kullanım Alanları",
+    solutions: "Hizmetler",
+    useCases: "Örnek Çözümler",
     about: "Hakkımızda",
     contact: "İletişim",
-    cta: "Bize Ulaşın",
+    cta: "Tanışma Görüşmesi Planlayın",
     blog: "Blog",
     faq: "SSS",
   },
 
   home: {
     hero: {
-      headline: "Yapay Zeka Destekli Otomasyon\nModern İşletmeler İçin",
+      headline: "İş Operasyonları İçin\nPratik Otomasyon",
       subheadline:
-        "Yeni nesil yapay zeka ajanlarını ve otomasyon sistemlerini operasyonlarınıza entegre ediyoruz — manuel işleri akıllı, kendi kendine çalışan iş akışlarıyla değiştirerek işletmenizi her zaman bir adım önde tutuyoruz.",
-      primaryCta: "Ücretsiz Görüşme Planlayın",
-      secondaryCta: "Çözümleri Keşfedin",
-      stats: [
-        { value: "%80", label: "Daha Az Manuel İş" },
-        { value: "3x", label: "Daha Hızlı Süreçler" },
-        { value: "7/24", label: "Yapay Zeka Destekli Operasyonlar" },
-      ],
+        "OpSolid, işletmelerin manuel ve tekrarlayan işlerini güvenilir otomasyon sistemleriyle değiştirmelerine yardımcı olur — iş akışı otomasyonundan sistem entegrasyonuna, yapay zeka destekli süreçlere kadar.",
+      primaryCta: "Tanışma Görüşmesi Planlayın",
+      secondaryCta: "Hizmetleri İnceleyin",
     },
 
     capabilities: [
-      "Yapay Zeka Ajan Entegrasyonu",
-      "Süreç Otomasyonu",
+      "İş Akışı Otomasyonu",
       "Sistem Entegrasyonu",
-      "İş Akışı Mühendisliği",
-      "Akıllı Chatbot'lar",
-      "Yeni Nesil Yapay Zeka Çözümleri",
+      "Dahili Araçlar",
+      "Yapay Zeka Destekli İş Akışları",
+      "Süreç Dijitalleştirme",
+      "Operasyonel Panolar",
     ],
 
     whatWeDo: {
-      label: "Ne Yapıyoruz",
-      headline: "Yapay zeka ve otomasyonu iş süreçlerinize taşıyoruz",
+      label: "OpSolid Ne Yapar",
+      headline: "Gerçek operasyonlar için otomasyon ve yapay zeka sistemleri",
       description:
-        "Dünya hızla değişiyor — yapay zeka ajanları, akıllı otomasyon ve bağlantılı sistemler artık bir tercih değil, zorunluluk. En son yapay zeka teknolojilerini ve otomasyon platformlarını operasyonlarınıza entegre ediyoruz, böylece işletmeniz rekabetçi, verimli ve geleceğe hazır kalıyor.",
+        "Birçok işletme hâlâ manuel süreçlere, birbirinden kopuk araçlara ve elektronik tablo tabanlı takip sistemlerine güveniyor. OpSolid, araçlarınızı birbirine bağlayan, iş akışlarınızı düzenleyen ve ekipleri yavaşlatan operasyonel yükü azaltan otomasyon sistemleri tasarlar ve geliştirir.",
       points: [
-        "Görevleri otonom olarak yürüten yapay zeka ajanları kurun",
-        "n8n ve Make ile karmaşık iş akışlarını otomatize edin",
-        "Tüm araçlarınızı akıllı sistemlere bağlayın",
-        "Yeni nesil yapay zeka teknolojisiyle öne geçin",
+        "n8n, Make ve özel entegrasyonlarla tekrarlayan iş akışlarını otomatize edin",
+        "CRM, ERP, veritabanları ve iletişim araçlarını birleşik sistemlere bağlayın",
+        "Ekibiniz için özel panolar ve dahili araçlar geliştirin",
+        "Pratik değer yaratan alanlara yapay zeka destekli süreçler ekleyin",
       ],
     },
 
     solutions: {
-      label: "Çözümler",
-      headline: "Neler inşa ediyoruz",
+      label: "Odak Alanları",
+      headline: "OpSolid neler geliştirebilir",
       items: [
         {
-          title: "Süreç Otomasyonu",
+          title: "İş Akışı Otomasyonu",
           description:
-            "Manuel adımları güvenilir otomatik iş akışlarıyla değiştirin — veri girişinden onaylara, bildirimlerden raporlamaya. n8n, özel betikler ve API orkestrasyonu ile desteklenir.",
+            "Manuel adımların yerini alan otomatik iş akışları — veri girişinden onaylara, bildirimlerden raporlamaya. n8n, Make ve özel entegrasyonlarla geliştirilir.",
           icon: "workflow",
-        },
-        {
-          title: "Dahili Araçlar",
-          description:
-            "Ekibinizin gerçek çalışma şekline uygun özel panolar, yönetim arayüzleri ve operasyonel araçlar.",
-          icon: "layout",
-        },
-        {
-          title: "İş Akışı Orkestrasyonu",
-          description:
-            "İnsanları, süreçleri ve kararları izlenebilir, tekrarlanabilir sistemlerle birbirine bağlayan uçtan uca orkestrasyon.",
-          icon: "gitBranch",
         },
         {
           title: "Sistem Entegrasyonu",
           description:
-            "CRM, ERP, depo, veritabanları ve iletişim araçlarınızı tek bir senkronize operasyonel katmanda birleştirin.",
+            "CRM, ERP, veritabanları ve iletişim araçlarınızı tek bir senkronize operasyonel katmanda birleştirin. Artık manuel veri aktarımına gerek yok.",
           icon: "plug",
         },
         {
-          title: "Pazarlama ve Satış Otomasyonu",
+          title: "Dahili Araçlar ve Panolar",
           description:
-            "Otomatik potansiyel müşteri yakalama, takip dizileri, CRM güncellemeleri, YouTube içerik operasyonları ve kampanya takibi.",
-          icon: "target",
+            "Ekibinizin gerçek çalışma şekline göre tasarlanmış özel operasyonel arayüzler, yönetim panelleri ve gösterge panoları.",
+          icon: "layout",
         },
         {
-          title: "Kargo ve Sipariş Operasyonları",
+          title: "Yapay Zeka Destekli İş Akışları",
           description:
-            "Otomatik sipariş işleme, kargo entegrasyonu ve sevkiyat iş akışları — sistemlerimizin anında yatırım getirisi sağladığı alanlardan biri.",
-          icon: "package",
-        },
-        {
-          title: "Mesajlaşma ve İletişim",
-          description:
-            "WhatsApp, Telegram, e-posta ve SMS üzerinden müşteri iletişimini otomatize edin — destek taleplerinden işlemsel bildirimlere kadar.",
-          icon: "messageSquare",
-        },
-        {
-          title: "Yapay Zeka Ajanları & Sesli Asistanlar",
-          description:
-            "Gelen ve giden sesli aramalar, müşteri desteği, potansiyel müşteri değerlendirmesi ve otonom görev yürütme için akıllı yapay zeka ajanları. İşbirliği yapan, muhakeme eden ve harekete geçen çoklu ajan sistemleri — en son temel modellerle güçlendirildi.",
+            "Chatbot'lar, sesli asistanlar, belge işleme ve akıllı yönlendirme — mevcut süreçlerinize entegre edilen pratik yapay zeka uygulamaları.",
           icon: "bot",
+        },
+        {
+          title: "İletişim Otomasyonu",
+          description:
+            "WhatsApp, Telegram, e-posta ve SMS üzerinden otomatik mesajlaşma — destek yanıtlarından işlemsel bildirimlere ve takip mesajlarına kadar.",
+          icon: "messageSquare",
         },
       ],
     },
@@ -112,87 +89,72 @@ export const content: Content = {
       headline: "Manuel yükten operasyonel netliğe",
       items: [
         {
-          before: "Manuel e-postalar ve takipler",
-          after: "Akıllı bildirimlerle otomatik iş akışları",
+          before: "Manuel e-postalar ve takip mesajları",
+          after: "Yapılandırılmış bildirimlerle otomatik iş akışları",
         },
         {
-          before: "Tablo tabanlı takip",
-          after: "Gerçek zamanlı veriye sahip bağlantılı sistemler",
+          before: "Elektronik tablo tabanlı takip",
+          after: "Tutarlı veriye sahip bağlantılı sistemler",
         },
         {
           before: "Tekrarlayan veri girişi",
-          after: "Güvenilir, hatasız süreçler",
+          after: "Güvenilir, otomatik süreçler",
         },
         {
           before: "Parçalanmış, birbirinden kopuk araçlar",
           after: "Platformlar arası entegre operasyonlar",
         },
         {
-          before: "WhatsApp, e-posta ve telefonda kaçırılan mesajlar",
-          after: "Tüm kanallarda birleşik, otomatik iletişim",
+          before: "Kanallara dağılmış mesajlar",
+          after: "Birleşik, otomatik iletişim",
         },
         {
-          before: "Manuel takipler ve potansiyel müşteri izleme",
-          after: "Akıllı yönlendirmeli otomatik satış hattı",
+          before: "Manuel takip ve görev yönetimi",
+          after: "Net sorumluluk dağılımına sahip yapılandırılmış iş akışları",
         },
       ],
     },
 
     useCases: {
-      label: "Kullanım Alanları",
-      headline: "Sonuç ürettiğimiz alanlar",
+      label: "Otomasyonun Fayda Sağladığı Alanlar",
+      headline: "Tipik sorun alanları",
       items: [
         {
-          title: "Kargo ve Sipariş Operasyonları",
+          title: "Sipariş ve Teslimat Operasyonları",
           description:
-            "Sipariş alımı, etiket oluşturma, kargo seçimi ve takip güncellemelerini otomatize edin.",
+            "Sipariş alımı, durum güncellemeleri ve teslimat takibini tüm kanallarda otomatize edin.",
         },
         {
           title: "Belge İşleme",
           description:
-            "Faturaları, sözleşmeleri ve formları otomatik olarak çıkarın, sınıflandırın ve yönlendirin.",
+            "Faturaları, sözleşmeleri ve formları yapılandırılmış iş akışlarıyla çıkarın, sınıflandırın ve yönlendirin.",
         },
         {
           title: "Dahili Onaylar",
           description:
-            "Satın alma, sözleşme ve bütçe talepleri için yapılandırılmış onay iş akışları.",
+            "Satın alma, sözleşme ve operasyonel talepler için yapılandırılmış onay iş akışları.",
         },
         {
-          title: "Raporlama ve Panolar",
+          title: "Operasyonel Panolar",
           description:
-            "Birden fazla kaynaktan verileri otomatik olarak birleştiren canlı panolar.",
+            "Birden fazla kaynaktan gelen verileri tek bir operasyonel görünümde birleştiren panolar.",
         },
         {
-          title: "Müşteri Operasyonları",
+          title: "Müşteri İletişimi",
           description:
-            "Müşteri alıştırma, destek yönlendirme ve müşteri iletişimini düzenleyin.",
-        },
-        {
-          title: "WhatsApp ve Telegram Otomasyonu",
-          description:
-            "Kanallar arası otomatik mesajlaşma, destek botları ve işlemsel bildirimler.",
-        },
-        {
-          title: "Yapay Zeka Sesli ve Sohbet Asistanları",
-          description:
-            "Gelen aramaları karşılayan, soruları yanıtlayan ve talepleri yönlendiren akıllı ajanlar.",
-        },
-        {
-          title: "Satış Hattı Otomasyonu",
-          description:
-            "Potansiyel müşteri puanlama, takip dizileri, CRM senkronizasyonu ve dönüşüm takibi.",
+            "WhatsApp, e-posta ve diğer kanallar üzerinden otomatik mesajlaşma, takip ve durum güncellemeleri.",
         },
         {
           title: "Veri Senkronizasyonu",
           description:
-            "CRM, ERP ve depo sistemlerinizi gerçek zamanlı olarak senkronize tutun.",
+            "CRM, ERP ve diğer iş sistemlerini senkronize tutun — manuel veri aktarımlarını azaltın.",
         },
       ],
     },
 
     integrations: {
       label: "Entegrasyonlar",
-      headline: "Bağladığımız araç ve platformlar",
+      headline: "OpSolid'in bağlandığı araçlar ve platformlar",
       items: [
         { name: "WhatsApp", icon: "messageCircle" },
         { name: "Telegram", icon: "send" },
@@ -211,408 +173,344 @@ export const content: Content = {
 
     howWeWork: {
       label: "Süreç",
-      headline: "Sizinle nasıl çalışıyoruz",
+      headline: "Tipik bir proje nasıl ilerler",
       steps: [
         {
           step: "01",
           title: "Keşif",
           description:
-            "Süreçlerinizi haritalıyor, darboğazları tespit ediyor ve otomasyonun en yüksek etkiyi yaratacağı noktaları belirliyoruz.",
+            "Süreçlerinizi anlamak, darboğazları belirlemek ve otomasyonun en fazla pratik değer yarattığı alanları tespit etmek.",
         },
         {
           step: "02",
           title: "Tasarım",
           description:
-            "Doğru sistemi tasarlıyoruz — ihtiyaçlarınıza uygun araçları, entegrasyonları ve iş akışlarını seçiyoruz.",
+            "İhtiyaçlarınıza uygun araçları, entegrasyonları ve iş akışı mimarisini belirlemek.",
         },
         {
           step: "03",
           title: "Geliştirme",
           description:
-            "Yinelemeli olarak geliştiriyor, test ediyor ve devreye alıyoruz — her adımda sizi sürecin içinde tutuyoruz.",
+            "Her adımda net iletişim ile iteratif olarak geliştirmek, test etmek ve devreye almak.",
         },
         {
           step: "04",
           title: "İyileştirme",
           description:
-            "İşletmeniz büyüdükçe sistemlerinizi izliyor, optimize ediyor ve genişletiyoruz.",
+            "Operasyonlarınız geliştikçe sistemlerinizi izlemek, optimize etmek ve genişletmek.",
         },
       ],
     },
 
     whyUs: {
       label: "Neden OpSolid",
-      headline: "Bizi farklı kılan ne",
+      headline: "Neler bekleyebilirsiniz",
       points: [
         {
-          title: "Önce İş, Sonra Teknoloji",
+          title: "Önce Süreç Odaklı Düşünce",
           description:
-            "Teknolojimizle değil, operasyonlarınızla başlıyoruz. İnşa ettiğimiz her sistem gerçek bir sorunu çözer.",
+            "Her proje, işletmenizin nasıl çalıştığını anlamakla başlar — bir teknoloji satışıyla değil.",
         },
         {
           title: "Size Özel, Hazır Paket Değil",
           description:
-            "Sistemleriniz işletmenizin çalışma şekline göre tasarlanır — şablon yok, taviz yok.",
+            "Sistemleriniz gerçek iş akışlarınıza göre tasarlanır — genel şablonlar veya zorunlu tavizler yok.",
         },
         {
-          title: "Üretime Hazır Sistemler",
+          title: "Üretime Hazır",
           description:
-            "Çözümlerimiz gerçek iş yüklerini taşır. Demo için değil, güvenilirlik için mühendislik yapıyoruz.",
+            "Çözümler güvenilirlik ve gerçek iş yükleri için tasarlanır — uygun hata yönetimi ve izleme ile.",
         },
         {
-          title: "Avrupa Merkezli, Uluslararası Bakış Açısı",
+          title: "Almanya Merkezli, Uluslararası Bakış Açısı",
           description:
-            "Almanya merkezliyiz, Avrupa ve ötesindeki şirketlere hizmet veriyoruz. Yerel gereksinimleri ve uluslararası ölçeği anlıyoruz.",
+            "Almanya merkezli, Avrupa genelinde ve ötesinde hizmet veren. Yerel gereksinimler ve uluslararası bağlamlarla tanışık.",
         },
       ],
     },
 
     cta: {
-      headline: "Yapay zekayı operasyonlarınıza taşımaya hazır mısınız?",
+      headline: "Operasyonlarınızı otomatize etmeye hazır mısınız?",
       description:
-        "Ücretsiz bir danışma görüşmesi planlayın. Yapay zeka ajanları ve otomasyonun işletmenizi nerede dönüştürebileceğini belirleyip, size ulaştıracak bir yol haritası oluşturalım.",
-      primaryCta: "Ücretsiz Görüşme Planlayın",
-    },
-
-    results: {
-      label: "Sonuçlar",
-      headline: "Operasyonlarınız üzerinde ölçülebilir etki",
-      items: [
-        { value: "%80", label: "Daha Az Manuel İş", description: "Otomasyon tipik olarak tekrarlayan manuel görevlerin %80'ine kadarını ortadan kaldırır" },
-        { value: "5-10x", label: "İlk Yıl Yatırım Getirisi", description: "İşletmeler 12 ay içinde otomasyon yatırımlarının 5-10 katı geri dönüş elde eder" },
-        { value: "%60", label: "Daha Hızlı Operasyonlar", description: "Akıllı iş akışlarıyla süreç döngü süreleri %60 veya daha fazla kısalır" },
-        { value: "%35", label: "Maliyet Tasarrufu", description: "Otomasyon ve yapay zeka ajanlarıyla ortalama operasyonel maliyet düşüşü" },
-      ],
+        "Ücretsiz bir tanışma görüşmesi planlayın. OpSolid, otomasyonun manuel işleri nerede azaltabileceğini ve operasyonel iş akışlarınızı nasıl iyileştirebileceğini belirlemenize yardımcı olur.",
+      primaryCta: "Tanışma Görüşmesi Planlayın",
     },
 
     toolsShowcase: {
-      label: "Altyapımız",
-      headline: "Yeni nesil yapay zeka ve otomasyon platformlarıyla güçlendirildi",
-      description: "İşletmenizle birlikte gelişen akıllı sistemler inşa etmek için en son yapay zeka modellerini, otonom ajanları ve en güçlü otomasyon platformlarını kullanıyoruz.",
+      label: "Kullanılan Araçlar",
+      headline: "OpSolid'in çalıştığı otomasyon platformları ve yapay zeka araçları",
+      description:
+        "OpSolid, operasyonlarınıza uygun sistemler geliştirmek için güvenilir, kanıtlanmış otomasyon platformları ve pratik yapay zeka araçları kullanır — her kullanım senaryosu için doğru aracı seçerek.",
       tools: [
-        { name: "n8n", description: "Karmaşık otomasyonlar için self-hosted iş akışı motoru. Webhook tetikleyiciler, koşullu mantık ve yapay zeka ajan orkestrasyon döngüleri.", techFeatures: ["Self-Hosted", "500+ Entegrasyon", "AI Ajan Döngüleri", "Webhook Trigger", "Hata Yönetimi"] },
-        { name: "Make", description: "Çok adımlı veri yönlendirme için görsel senaryo oluşturucu. Gerçek zamanlı API bağlantıları, hata dallanması ve otomatik veri dönüşümleri.", techFeatures: ["Görsel Builder", "Veri Routing", "API Modülleri", "Hata Dallanma", "Gerçek Zamanlı"] },
-        { name: "Zapier", description: "Çok adımlı otomasyonlarla 6.000+ uygulamayı hızlıca bağlayın. Koşullu yollar, zamanlanmış tetikleyiciler ve yapay zeka destekli filtreleme.", techFeatures: ["6000+ Uygulama", "Çok Adımlı", "Koşullu Mantık", "Zamanlayıcılar", "Filtreler"] },
-        { name: "Yapay Zeka Ajanları", description: "Sesli aramalar, müşteri desteği, veri analizi ve karar verme için otonom yapay zeka ajanları. En son temel modellerle, RAG pipeline'larıyla ve çoklu ajan orkestrasyonuyla inşa edildi.", techFeatures: ["Sesli Asistanlar", "Çoklu Ajan", "RAG Pipeline", "Araç Kullanımı", "Gerçek Zamanlı"] },
+        {
+          name: "n8n",
+          description:
+            "Karmaşık otomasyonlar için kendi sunucunuzda barındırılan iş akışı motoru. Webhook tetikleyicileri, koşullu mantık ve tam veri egemenliği.",
+          techFeatures: [
+            "Kendi Sunucunuzda",
+            "500+ Entegrasyon",
+            "Webhook Tetikleyiciler",
+            "Hata Yönetimi",
+            "Veri Egemenliği",
+          ],
+        },
+        {
+          name: "Make",
+          description:
+            "Çok adımlı veri yönlendirme için görsel senaryo oluşturucu. API bağlantıları, hata dallanması ve otomatik veri dönüşümleri.",
+          techFeatures: [
+            "Görsel Oluşturucu",
+            "Veri Yönlendirme",
+            "API Modülleri",
+            "Hata Dallanması",
+            "Gerçek Zamanlı",
+          ],
+        },
+        {
+          name: "Zapier",
+          description:
+            "6.000'den fazla uygulamayı çok adımlı otomasyonlarla hızlıca bağlayın. Koşullu yollar, zamanlanmış tetikleyiciler ve filtreleme.",
+          techFeatures: [
+            "6.000+ Uygulama",
+            "Çok Adımlı",
+            "Koşullu Mantık",
+            "Zamanlayıcılar",
+            "Filtreler",
+          ],
+        },
+        {
+          name: "Yapay Zeka Araçları",
+          description:
+            "Ses, sohbet, belge işleme ve karar destek için pratik yapay zeka uygulamaları. Güvenilir modellerle ve yapılandırılmış iş akışlarıyla geliştirilir.",
+          techFeatures: [
+            "Sesli Asistanlar",
+            "Chatbot'lar",
+            "Belge Yapay Zekası",
+            "Sınıflandırma",
+            "Yapılandırılmış Çıktı",
+          ],
+        },
       ],
     },
   },
 
   solutions: {
     hero: {
-      label: "Çözümler",
+      label: "Hizmetler",
       headline: "Gerçek operasyonel sorunları çözen sistemler",
       description:
-        "Otomasyon, dahili araçlar, entegrasyonlar ve iş akışı sistemleri — her biri sizin süreçlerinize göre tasarlanır.",
+        "İş akışı otomasyonu, dahili araçlar, entegrasyonlar ve yapay zeka destekli süreçler — her biri sizin operasyonlarınıza göre tasarlanır.",
     },
-    problemsLabel: "Çözdüğümüz sorunlar",
-    outcomesLabel: "Beklenen sonuçlar",
+    problemsLabel: "Yaygın sorunlar",
+    outcomesLabel: "Olası sonuçlar",
     items: [
       {
-        title: "Süreç Otomasyonu",
+        title: "İş Akışı Otomasyonu",
         description:
-          "n8n, özel iş akışları ve API orkestrasyonu kullanarak kuruluşunuzdaki tekrarlayan, kural tabanlı görevleri otomatize edin.",
+          "n8n, Make, özel iş akışları ve API orkestrasyonu kullanarak kuruluşunuz genelindeki tekrarlayan, kural tabanlı görevleri otomatize edin.",
         problems: [
-          "Sistemler arası veri girişi ve kopyala-yapıştır ile harcanan saatler",
-          "Departmanlar arası manuel aktarımlardaki hatalar",
-          "Görevi kimin yaptığına bağlı tutarsız yürütme",
-          "Manuel onay zincirleri nedeniyle oluşan darboğazlar",
+          "Veri girişi ve sistemler arası kopyala-yapıştır işlerine harcanan saatler",
+          "Departmanlar arası manuel aktarımlardan kaynaklanan hatalar",
+          "Görevi kimin yürüttüğüne bağlı tutarsız uygulama",
+          "Manuel onay zincirlerinden kaynaklanan darboğazlar",
         ],
         outcomes: [
-          "Hata yönetimli uçtan uca otomatik iş akışları",
-          "Her seferinde tutarlı, güvenilir yürütme",
+          "Yerleşik hata yönetimine sahip uçtan uca otomatik iş akışları",
+          "Her seferinde tutarlı, güvenilir uygulama",
           "Süreç durumuna gerçek zamanlı görünürlük",
-          "Haftalık saatlerce manuel işin ortadan kaldırılması",
+          "Tekrarlayan manuel işlerde önemli azalma",
         ],
         icon: "workflow",
       },
       {
-        title: "Dahili Araçlar ve Panolar",
-        description:
-          "Ekibiniz için özel olarak geliştirilmiş operasyonel araçlar — yönetim panelleri, veri arayüzleri ve iş akışınıza uygun panolar.",
-        problems: [
-          "Ekiplerin uygun araçlar gerektiren işler için tablo kullanması",
-          "Sürecinize uymayan hazır yazılımlar",
-          "Operasyonel verilerin merkezi bir görünümünün olmaması",
-          "Kritik bilgilerin e-postalar ve belgeler arasında dağınık olması",
-        ],
-        outcomes: [
-          "Ekibinizin çalışma şekline uygun amaca yönelik araçlar",
-          "Gerçek zamanlı verilerle merkezi panolar",
-          "Yeni ekip üyelerinin uyum süresinin kısalması",
-          "Daha iyi veri görünürlüğüyle daha iyi kararlar",
-        ],
-        icon: "layout",
-      },
-      {
-        title: "İş Akışı Orkestrasyonu",
-        description:
-          "İnsanları, kararları ve sistemleri tam izlenebilirlikle birbirine bağlayan uçtan uca iş akışları.",
-        problems: [
-          "Kritik süreçlerin e-posta ve hafıza ile yönetilmesi",
-          "Durum veya sorumluluk hakkında görünürlük eksikliği",
-          "Departmanlar arasında kaybolan görevler",
-          "Büyümeyle ölçeklenemeyen süreçler",
-        ],
-        outcomes: [
-          "Her adımda sahipliği olan net iş akışları",
-          "Otomatik yönlendirme, eskalasyon ve bildirim",
-          "Uyumluluk denetimi için tam iz kaydı",
-          "Kadro artırmadan ölçeklenen süreçler",
-        ],
-        icon: "gitBranch",
-      },
-      {
         title: "Sistem Entegrasyonu",
         description:
-          "CRM, ERP, veritabanları ve araçlarınızı birleşik bir operasyonel katmanda birleştirin. Veri silolarını ortadan kaldıran güvenilir entegrasyonlar.",
+          "CRM, ERP, veritabanları ve araçlarınızı birleşik bir operasyonel katmanda bağlayın. Veri silolarını azaltan güvenilir entegrasyonlar.",
         problems: [
           "Aynı verinin birden fazla sisteme manuel olarak girilmesi",
-          "Güncel olmayan veya çelişkili verilere dayalı kararlar",
-          "BT'yi bunaltan noktadan noktaya entegrasyon talepleri",
-          "Operasyonel veriler için tek bir doğru kaynağın bulunmaması",
+          "Güncel olmayan veya çelişen verilere dayalı kararlar",
+          "Dahili kaynakları zorlayan entegrasyon talepleri",
+          "Operasyonel veriler için tek bir doğru kaynağın olmaması",
         ],
         outcomes: [
-          "Ana sistemler arasında çift yönlü veri senkronizasyonu",
+          "Temel sistemler arasında çift yönlü veri senkronizasyonu",
           "Operasyonlar için tek doğru kaynak",
-          "Manuel veri aktarımı ve hataların ortadan kaldırılması",
+          "Azaltılmış manuel veri aktarımı ve daha az hata",
           "Ölçeklenebilir entegrasyon mimarisi",
         ],
         icon: "plug",
       },
       {
-        title: "Pazarlama ve Satış Otomasyonu",
+        title: "Dahili Araçlar ve Panolar",
         description:
-          "Satış hattınızı, pazarlama kampanyalarınızı, YouTube içerik operasyonlarınızı ve potansiyel müşteri yönetiminizi akıllı iş akışlarıyla otomatize edin.",
+          "Ekibiniz için özel olarak geliştirilen operasyonel araçlar — yönetim panelleri, veri arayüzleri ve iş akışınıza uygun gösterge panoları.",
         problems: [
-          "Takip yapılmadığı için kaybolan potansiyel müşteriler",
-          "Manuel CRM güncellemeleri ve dağınık kampanya verileri",
-          "YouTube ve içerik yayınlamanın manuel yapılması",
-          "Kanallar arası dönüşüm metriklerine görünürlük olmaması",
+          "Uygun araçlar gerektiren görevler için elektronik tablo kullanan ekipler",
+          "Sürecinize uymayan hazır yazılımlar",
+          "Operasyonel verilerin merkezi bir görünümünün olmaması",
+          "Önemli bilgilerin e-postalar ve belgelere dağılmış olması",
         ],
         outcomes: [
-          "Otomatik potansiyel müşteri puanlama ve takip dizileri",
-          "CRM'in tüm temas noktalarıyla otomatik senkronizasyonu",
-          "İçerik yayınlama ve zamanlama otopilotta",
-          "Tüm kampanyalar için birleşik analitik panosu",
+          "Ekibinizin çalışma şekline uygun, amaca yönelik araçlar",
+          "Güncel verilerle merkezi panolar",
+          "Yeni ekip üyeleri için kısaltılmış uyum süresi",
+          "Daha iyi veri görünürlüğü ile daha iyi kararlar",
         ],
-        icon: "target",
+        icon: "layout",
       },
       {
-        title: "Kargo ve Sipariş Operasyonları",
+        title: "Yapay Zeka Destekli İş Akışları",
         description:
-          "Sipariş işleme, sevkiyat ve kargo için uçtan uca otomasyon — satış kanallarını, depoları ve kargo firmalarını birbirine bağlar.",
+          "Operasyonlarınıza gömülü pratik yapay zeka uygulamaları — chatbot'lar, sesli asistanlar, belge işleme ve akıllı yönlendirme.",
         problems: [
-          "Satış kanalları genelinde siparişlerin manuel işlenmesi",
-          "Etiket oluşturma ve kargo seçiminin elle yapılması",
-          "Müşteriler için otomatik takip güncellemelerinin olmaması",
-          "Birbirinden kopuk sistemlerden kaynaklanan sevkiyat hataları",
-        ],
-        outcomes: [
-          "Çok kanallı otomatik sipariş işleme",
-          "Akıllı kargo seçimi ve etiket oluşturma",
-          "Tüm kanallarda gerçek zamanlı takip",
-          "Azaltılmış hatalar ve daha hızlı teslimat",
-        ],
-        icon: "package",
-      },
-      {
-        title: "Mesajlaşma ve İletişim Otomasyonu",
-        description:
-          "WhatsApp, Telegram, e-posta ve SMS üzerinden müşteri iletişimini akıllı yönlendirme ve şablonlu yanıtlarla otomatize edin.",
-        problems: [
-          "Destek mesajlarının WhatsApp, e-posta ve telefon arasında dağılması",
+          "Yüksek hacimli tekrarlayan gelen talepler",
           "Yoğun saatlerde yavaş yanıt süreleri",
-          "Müşterilere otomatik işlemsel bildirim gönderilmemesi",
-          "Müşterileri sipariş durumu hakkında bilgilendirmek için manuel çaba",
+          "Rutin, düşük karmaşıklıktaki görevlere harcanan personel zamanı",
+          "Mesai saatleri dışında müşteri iletişimi kapsamının olmaması",
         ],
         outcomes: [
-          "Otomatik yönlendirme ve etiketleme ile birleşik gelen kutusu",
-          "WhatsApp ve Telegram botları ile anında yanıtlar",
-          "Otomatik sipariş onayları ve durum güncellemeleri",
-          "Ek personel gerektirmeden 7/24 erişilebilirlik",
-        ],
-        icon: "messageSquare",
-      },
-      {
-        title: "Yapay Zeka Asistanları ve Sohbet Botları",
-        description:
-          "Soruları yanıtlayan, potansiyel müşterileri değerlendiren ve ekibinizi gece gündüz destekleyen sesli arama asistanları, sohbet ajanları ve akıllı botlar.",
-        problems: [
-          "Tekrarlayan gelen arama ve mesajların yüksek hacmi",
-          "Müşterilerin beklemede kalması veya e-posta yanıtı beklemesi",
-          "Personelin SSS tipi sorularla bunalması",
-          "Mesai saatleri dışında destek kapsamının olmaması",
-        ],
-        outcomes: [
-          "Gelen aramaları anında karşılayan yapay zeka sesli asistan",
-          "7/24 soruları yanıtlayan ve potansiyel müşterileri değerlendiren sohbet ajanları",
-          "Rutin soruların %80'inin insan müdahalesi olmadan çözülmesi",
-          "Personelin karmaşık, yüksek değerli etkileşimlere odaklanması",
+          "Rutin talep ve görevlerin yapay zeka destekli yönetimi",
+          "İletişim kanalları genelinde daha hızlı yanıt süreleri",
+          "Personelin daha yüksek değerli işlere odaklanabilmesi",
+          "Ek personel olmadan genişletilmiş erişilebilirlik",
         ],
         icon: "bot",
       },
+      {
+        title: "İletişim Otomasyonu",
+        description:
+          "WhatsApp, Telegram, e-posta ve SMS üzerinden otomatik mesajlaşma — destek yanıtlarından işlemsel güncellemelere ve takip dizilerine kadar.",
+        problems: [
+          "Birden fazla kanala dağılmış destek mesajları",
+          "Yavaş veya tutarsız yanıt süreleri",
+          "Otomatik işlemsel bildirimlerin olmaması",
+          "Müşterileri durum güncellemeleri hakkında bilgilendirmek için harcanan manuel çaba",
+        ],
+        outcomes: [
+          "Otomatik yönlendirmeli birleşik iletişim",
+          "Tüm kanallarda tutarlı, zamanında yanıtlar",
+          "Otomatik sipariş onayları ve durum güncellemeleri",
+          "Azaltılmış manuel iletişim yükü",
+        ],
+        icon: "messageSquare",
+      },
     ],
     cta: {
-      headline: "Hangi çözümün uygun olduğundan emin değil misiniz?",
+      headline: "Hangi hizmetin uygun olduğundan emin değil misiniz?",
       description:
-        "Her işletme farklıdır. Zorluklarınızı konuşalım ve doğru sistemi birlikte tasarlayalım.",
-      primaryCta: "Ücretsiz Görüşme Planlayın",
+        "Her işletme farklıdır. Sorunlarınızı görüşmek ve neyin mantıklı olduğunu keşfetmek için ücretsiz bir tanışma görüşmesi planlayın.",
+      primaryCta: "Tanışma Görüşmesi Planlayın",
     },
   },
 
   useCases: {
     hero: {
-      label: "Kullanım Alanları",
-      headline: "İşletmeler OpSolid ile nasıl daha verimli çalışıyor",
+      label: "Örnek Çözümler",
+      headline: "Pratik otomasyon senaryoları",
       description:
-        "Manuel işlerin güvenilir, otomatik operasyonlarla değiştirildiği gerçek senaryolar.",
+        "OpSolid'in tasarlayıp geliştirebileceği sistem türlerinin gerçekçi örnekleri. Bunlar tipik sorun alanlarını ve çözüm yaklaşımlarını gösterir.",
     },
     labels: {
-      context: "Bağlam",
+      context: "Senaryo",
       problem: "Sorun",
-      solution: "Çözüm",
-      outcome: "Sonuç",
+      solution: "Yaklaşım",
+      outcome: "Olası Sonuç",
     },
     items: [
       {
         title: "Çok Kanallı Sipariş İşleme",
         context:
-          "Orta ölçekli e-ticaret şirketi, dört satış kanalından günde 200'den fazla sipariş.",
+          "Birden fazla satış kanalı üzerinden günlük sipariş yöneten bir e-ticaret işletmesi.",
         problem:
-          "Manuel sipariş girişi, durum güncellemeleri ve stok ayarlamaları için günde 4+ saat. Yoğun dönemlerde sık hatalar.",
+          "Manuel sipariş girişi, durum güncellemeleri ve envanter düzenlemeleri günde saatlerce zaman alıyor. Yoğun dönemlerde hatalar artıyor.",
         solution:
-          "Otomatik boru hattı: sipariş alımı, veri normalleştirme, gerçek zamanlı stok, etiket oluşturma ve takip — tüm kanallarda.",
+          "Otomatik boru hattı: tüm kanallardan sipariş alımı, veri normalleştirme, envanter güncellemeleri, etiket oluşturma ve takip bildirimi iş akışları.",
         outcome:
-          "İşlem süresi: 4 saatten 15 dakikaya. Hata oranı %94 azaldı. Aynı ekiple 3 kat sipariş hacmi.",
+          "Manuel işlem süresinde önemli azalma. Daha az hata. Orantılı personel artışı olmadan daha yüksek sipariş hacimlerini yönetebilme kapasitesi.",
       },
       {
         title: "Fatura ve Belge İşleme",
         context:
-          "Lojistik şirketi, kargo firmaları ve tedarikçilerden farklı formatlarda aylık 500'den fazla fatura.",
+          "Farklı tedarikçilerden aylık yüzlerce fatura alan, karışık formatlarda belgelerle uğraşan bir şirket.",
         problem:
-          "Haftada iki tam gün fatura verilerini çıkarmak, muhasebe sistemine girmek ve satın alma siparişleriyle eşleştirmek için harcanıyor.",
+          "Personel, fatura verilerini çıkarmak, muhasebe sistemlerine girmek ve satın alma siparişleriyle eşleştirmek için önemli miktarda zaman harcıyor.",
         solution:
-          "Yapay zeka destekli veri çıkarma, otomatik satın alma siparişi eşleştirme, tutarsızlık bildirimi ve muhasebe sistemine doğrudan yönlendirme.",
+          "Yapay zeka destekli veri çıkarma, otomatik satın alma siparişi eşleştirme, tutarsızlık işaretleme ve muhasebe sistemlerine doğrudan yönlendirme.",
         outcome:
-          "İşlem süresi %75 azaldı. Finans ekibi artık istisnalara ve stratejiye odaklanıyor.",
+          "İşlem süresinde önemli azalma. Finans ekibinin veri girişi yerine istisnalara ve stratejik işlere odaklanabilmesi.",
       },
       {
         title: "Dahili Onay İş Akışları",
         context:
-          "Büyüyen şirket, 120 çalışan. Satın alma, seyahat ve taşeron işe alım e-posta ile yönetiliyor.",
+          "Satın alma, seyahat talepleri ve yüklenici uyum süreçlerini e-posta üzerinden yöneten, büyüyen bir şirket.",
         problem:
-          "Talepler e-posta içinde kayboluyor. Görünürlük yok, iz kaydı yok. Süreç yöneticiye göre değişiyor.",
+          "Talepler e-posta dizilerinde kaybolyor. Duruma ilişkin görünürlük yok, denetim izi yok. Süreç yöneticiye göre değişiyor.",
         solution:
-          "Yapılandırılmış onay sistemi: form gönderimi, kural tabanlı yönlendirme, takip ve otomatik hatırlatıcılar.",
+          "Yapılandırılmış onay sistemi: form gönderimi, kural tabanlı yönlendirme, durum takibi ve otomatik hatırlatıcılar.",
         outcome:
-          "Onay süresi: 5 günden 1,2 güne. Sıfır kayıp talep. Tam iz kaydı.",
+          "Daha hızlı onay döngüleri. Kaybolan talep yok. Uyumluluk için tam denetim izi.",
       },
       {
-        title: "Operasyonel Pano",
+        title: "Operasyon Panosu",
         context:
-          "Satış, depo ve teslimatı ayrı haftalık tablolarla izleyen dağıtım şirketi.",
+          "Satış, depo ve teslimat verilerini ayrı elektronik tablolarda takip eden bir dağıtım şirketi.",
         problem:
-          "Raporlar her zaman bir hafta eski, çoğu zaman tutarsız. Kararlar sezgiye dayalı.",
+          "Raporlar her zaman gecikiyor ve genellikle tutarsız. Karar alma, güncel olmayan bilgilere dayanıyor.",
         solution:
-          "ERP, depo ve teslimat sistemlerinden beslenen canlı pano. Anomaliler için yapılandırılabilir uyarılar.",
+          "ERP, depo ve teslimat sistemlerinden veri çeken canlı pano. Anomali ve eşik değerleri için yapılandırılabilir uyarılar.",
         outcome:
-          "Pazartesi toplantıları: 2 saatten 30 dakikaya. Sorunlar gerçek zamanlı tespit ediliyor.",
+          "Gerçek zamanlı operasyonel görünürlük. Daha hızlı sorun tespiti. Daha bilinçli karar alma.",
       },
       {
-        title: "Müşteri Alıştırma",
+        title: "Müşteri Uyum Otomasyonu",
         context:
-          "Aylık 15-20 müşteriyi çok adımlı süreçle karşılayan B2B hizmet şirketi.",
+          "Yeni müşterilerini çok adımlı manuel bir süreçle sisteme dahil eden bir B2B hizmet şirketi.",
         problem:
-          "Paylaşılan belgede kontrol listesi. Adımlar atlanıyor, tutarsız deneyim, 2-3 haftalık alıştırma süresi.",
+          "Uyum süreci paylaşımlı belgelerde takip ediliyor. Adımlar atlanıyor, deneyim tutarsız ve süreç gereğinden uzun sürüyor.",
         solution:
-          "Otomatik iş akışı: hoş geldiniz e-postaları, hesap oluşturma, belge takibi, durum panosu.",
+          "Otomatik iş akışı: hoş geldiniz iletişimleri, hesap oluşturma, belge toplama takibi ve durum panosu.",
         outcome:
-          "Alıştırma süresi: 3 haftadan 5 güne. Atlanan adım yok. Artan müşteri memnuniyeti.",
-      },
-      {
-        title: "Arka Ofis Dijitalleştirme",
-        context:
-          "Üretim şirketi. İK ve satın alma hâlâ kâğıt formlar ve yerel dosyalarla yürütülüyor.",
-        problem:
-          "Evrak işlemek günler sürüyor. Tutarsız kanallar. Hiçbir şey aranabilir veya izlenebilir değil.",
-        solution:
-          "İşe alım, satın alma talepleri ve belge yönetimi için uygun versiyonlama ile dijital iş akışları.",
-        outcome:
-          "Kâğıt kullanımı ortadan kalktı. İK işe alım süresi -%60. Satın alma talepleri: 1 haftadan 2 güne.",
+          "Daha kısa uyum süresi. Her müşteri için tutarlı deneyim. Atlanan adım yok.",
       },
       {
         title: "Sistemler Arası Veri Senkronizasyonu",
         context:
-          "Shopify, ERP, depo yönetim sistemi ve HubSpot kullanan perakende şirketi — her biri kendi verisiyle.",
+          "E-ticaret, ERP, depo yönetimi ve CRM için ayrı sistemler kullanan bir perakende şirketi.",
         problem:
-          "Manuel senkronizasyona günde saatler harcanıyor. Sistemler arasında sık tutarsızlıklar.",
+          "Personel, günde saatlerce manuel veri senkronizasyonu yapıyor. Sistemler arasındaki tutarsızlıklar operasyonel sorunlara yol açıyor.",
         solution:
-          "Neredeyse gerçek zamanlı senkronizasyon, çakışma tespiti ve hata yönetimi ile merkezi entegrasyon katmanı.",
+          "Neredeyse gerçek zamanlı senkronizasyon, çakışma algılama ve yapılandırılmış hata yönetimine sahip merkezi entegrasyon katmanı.",
         outcome:
-          "Manuel senkronizasyon ortadan kalktı. Tutarsızlıklar neredeyse sıfır. Haftalık 15+ saat yeniden tahsis edildi.",
+          "Manuel senkronizasyon görevlerinin ortadan kaldırılması. Tüm sistemlerde tutarlı veri. Personel zamanının daha yüksek değerli işlere yönlendirilmesi.",
       },
       {
         title: "Otomatik Müşteri İletişimi",
         context:
-          "Hizmet şirketi. Durum güncellemeleri, hatırlatmalar ve takipler üç kişi tarafından manuel yönetiliyor.",
+          "Durum güncellemelerini, hatırlatıcıları ve takip mesajlarını manuel olarak gönderen bir hizmet şirketi.",
         problem:
-          "Mesajlar geç, tutarsız veya gönderilmiyor. Yoğun dönemlerde iletişim aksıyor.",
+          "Mesajlar bazen geç kalıyor, tutarsız oluyor veya tamamen atlanıyor. Yoğun dönemlerde iletişim kalitesi düşüyor.",
         solution:
-          "Hizmet kilometre taşlarına göre tetiklenen otomatik mesajlaşma. Gerektiğinde müdahale imkânı olan tutarlı şablonlar.",
+          "Hizmet kilometre taşları ve olaylar tarafından tetiklenen otomatik mesajlaşma. Manuel müdahale imkânıyla tutarlı şablonlar.",
         outcome:
-          "%100 iletişim güvenilirliği. Haftalık 20+ saat tasarruf. Memnuniyet %35 artış.",
+          "Güvenilir, zamanında iletişim. Azaltılmış manuel yük. Daha tutarlı müşteri deneyimi.",
       },
       {
-        title: "WhatsApp ve Telegram Destek Kanalı",
+        title: "WhatsApp ve Telegram Desteği",
         context:
-          "WhatsApp, Telegram ve e-posta üzerinden günde 300'den fazla müşteri talebi alan e-ticaret şirketi.",
+          "WhatsApp, Telegram ve e-posta üzerinden günlük müşteri talepleri alan bir işletme.",
         problem:
-          "Üç personel aynı soruları manuel yanıtlıyor. Mesai dışı destek yok. Kanallar arasında mesajlar kayboluyor.",
+          "Personel, tekrarlayan soruları manuel olarak yanıtlıyor. Mesai dışı kapsam yok. Mesajlar kanallar arasında kayboluyor.",
         solution:
-          "Otomatik SSS yanıtları, sipariş durumu sorgulamaları ve karmaşık konular için insan temsilcilere akıllı yönlendirme ile birleşik mesajlaşma merkezi.",
+          "Otomatik SSS yanıtları, durum sorgulamaları ve karmaşık konular için insan temsilcilerine akıllı yönlendirmeli birleşik mesajlaşma merkezi.",
         outcome:
-          "Taleplerin %70'i otomatik çözüldü. Yanıt süresi 30 saniyenin altında. Tam mesai dışı kapsam.",
-      },
-      {
-        title: "Gelen Aramalar İçin Yapay Zeka Sesli Asistan",
-        context:
-          "Günde 100'den fazla arama alan hizmet şirketi — randevu, durum sorgusu, genel sorular.",
-        problem:
-          "Telefonlarda iki tam zamanlı personel. Uzun bekleme süreleri. Yoğun saatlerde ve mesai sonrası kaçırılan aramalar.",
-        solution:
-          "Gelen aramaları karşılayan yapay zeka sesli asistan: SSS'leri yanıtlama, randevu alma, karmaşık aramaları doğru departmana yönlendirme.",
-        outcome:
-          "Aramaların %60'ı insan müdahalesi olmadan karşılandı. Sıfır kaçırılan arama. Personel daha değerli işlere yönlendirildi.",
-      },
-      {
-        title: "YouTube İçerik Operasyonları",
-        context:
-          "Birden fazla YouTube kanalında yerelleştirilmiş meta verilerle aylık 8-12 video yayınlayan pazarlama ekibi.",
-        problem:
-          "Manuel yükleme, başlık/açıklama/etiket girişi, küçük resim atama ve zamanlama. Video başına 3+ saat.",
-        solution:
-          "Otomatik boru hattı: video işleme, meta veri oluşturma, küçük resim atama, zamanlanmış yayınlama ve performans takip panosu.",
-        outcome:
-          "Yayınlama süresi video başına 20 dakikaya düştü. Tutarlı meta veri kalitesi. Merkezi analitik.",
-      },
-      {
-        title: "Satış Hattı Otomasyonu",
-        context:
-          "50'den fazla aktif potansiyel müşterisi olan B2B şirketi. Satış ekibi CRM kullanıyor ama takipleri ve anlaşma aşamalarını manuel izliyor.",
-        problem:
-          "Kaçırılan takipler nedeniyle soğuyan potansiyel müşteriler. CRM'de tutarsız veriler. Satış hattı sağlığına görünürlük yok.",
-        solution:
-          "Otomatik potansiyel müşteri puanlama, davranışa göre tetiklenen takip dizileri, CRM otomatik güncellemeleri ve uyarılı satış hattı panosu.",
-        outcome:
-          "Takip oranı: %100. Potansiyel müşteriden toplantıya dönüşüm %40 artış. Yönetim için gerçek zamanlı satış hattı görünürlüğü.",
+          "Daha hızlı yanıt süreleri. Genişletilmiş erişilebilirlik. Personelin insan ilgisi gerektiren taleplere odaklanması.",
       },
     ],
     cta: {
-      headline: "Bu senaryolarda kendinizi görüyor musunuz?",
+      headline: "Durumunuza uyan bir senaryo görüyor musunuz?",
       description:
-        "Ekibiniz otomatize edilmesi gereken işlere zaman harcıyorsa, konuşalım.",
-      primaryCta: "Ücretsiz Görüşme Planlayın",
+        "Bunlar nelerin geliştirilebileceğine dair örneklerdir. Özel ihtiyaçlarınızı görüşmek için bir tanışma görüşmesi planlayın.",
+      primaryCta: "Tanışma Görüşmesi Planlayın",
     },
   },
 
@@ -620,64 +518,58 @@ export const content: Content = {
     hero: {
       label: "OpSolid Hakkında",
       headline:
-        "Manuel süreçleri aşmış işletmeler için operasyonel altyapı inşa ediyoruz",
+        "Daha az manuel iş isteyen işletmeler için pratik otomasyon sistemleri",
       description:
-        "Almanya merkezli. Tek bir odak noktası: manuel, tekrarlayan işleri güvenilir otomatik sistemlerle değiştirmek.",
+        "Almanya merkezli. Manuel, tekrarlayan operasyonel işlerin güvenilir otomatik sistemlerle değiştirilmesine odaklanır.",
     },
     story: {
-      headline: "Neden varız",
+      headline: "OpSolid neden var",
       paragraphs: [
-        "Her büyüyen işletme, manuel süreçlerin darboğaz haline geldiği bir noktaya ulaşır. Siparişler birikir, onaylar kaybolur, veriler birbirinden kopuk tablolarda yaşar ve ekipler zamanlarını işi ileriye taşıyan çalışmalardan çok yönetim yüküne harcar.",
-        "OpSolid tam da bunu çözmek için kuruldu. Derin süreç anlayışını modern otomasyon, entegrasyon ve yapay zeka yetenekleriyle birleştirerek operasyonel işleri güvenilir, tutarlı ve ölçeklenebilir şekilde yürüten sistemler inşa ediyoruz.",
-        "Genel bir teknoloji ajansı değiliz. Pazarlama web siteleri yapmıyoruz, reklam kampanyaları yürütmüyoruz. Operasyonel sistemlere odaklanıyoruz: bir işletmeyi her gün ayakta tutan iş akışları, araçlar ve entegrasyonlar.",
+        "Her büyüyen işletme, bir noktada manuel süreçlerin darboğaz haline geldiği anla karşılaşır. Siparişler birikir, onaylar e-posta arasında kaybolur, veriler birbirinden kopuk elektronik tablolarda kalır ve ekipler, işi ileriye taşıyan çalışmalardan çok operasyonel yüke zaman harcar.",
+        "OpSolid bunu çözmek için kuruldu. Süreç düşüncesini modern otomasyon platformları ve pratik yapay zeka araçlarıyla birleştirerek OpSolid, operasyonel işleri güvenilir, tutarlı ve gereksiz karmaşıklık eklemeden yürüten sistemler tasarlar.",
       ],
     },
     values: {
-      headline: "İşimize bakış açımız",
+      headline: "OpSolid'in çalışma yaklaşımı",
       items: [
         {
-          title: "Teknolojiden değil, süreçten başla",
+          title: "Teknolojiyle değil, süreçle başlayın",
           description:
-            "Herhangi bir çözüm önermeden önce işletmenizin nasıl çalıştığını anlamaya zaman ayırırız.",
+            "Herhangi bir çözüm önermeden önce işletmenizin nasıl çalıştığını anlamaya zaman ayrılır.",
         },
         {
-          title: "Demo için değil, üretim için inşa et",
+          title: "Demo için değil, üretim için geliştirin",
           description:
-            "Sistemlerimiz gerçek iş yüklerini taşır. Güvenilirlik, hata yönetimi ve uç durumlar için tasarlarız.",
+            "Sistemler gerçek iş yüklerini yönetir. Güvenilirlik, hata yönetimi ve uç durumlar için tasarlanır.",
         },
         {
-          title: "Özellikleri değil, sonuçları ölç",
+          title: "Özellikleri değil, sonuçları ölçün",
           description:
-            "Özellik listeleriyle değil — kazanılan saatler, ortadan kaldırılan hatalar ve iyileştirilen süreçlerle ilgileniriz.",
+            "Önemli olan tasarruf edilen saatler, azaltılan hatalar ve iyileştirilen süreçlerdir — özellik listeleri değil.",
         },
         {
-          title: "Pratik ol, dürüst ol",
+          title: "Pratik kalın, dürüst olun",
           description:
-            "Otomasyonu mantıklı olan yerde önerir, olmayan yerde uyarırız.",
+            "Otomasyon mantıklı olan yerde önerilir — mantıklı olmayan yerde tavsiye edilmez.",
         },
       ],
     },
     founder: {
       name: "Hasan Dönmez",
       title: "Kurucu & Sistem Mimarı",
-      education: "Yüksek Lisans Elektrik-Elektronik Mühendisliği & Bilgi Teknolojileri — Karlsruhe Teknoloji Enstitüsü (KIT)",
+      education: "",
       description:
-        "Hasan, Almanya'nın önde gelen araştırma üniversitelerinden Karlsruhe Teknoloji Enstitüsü'nden (KIT) Elektrik-Elektronik Mühendisliği & Bilgi Teknolojileri alanında yüksek lisans derecesine sahiptir. Süreç otomasyonu, sistem entegrasyonu ve yapay zeka destekli iş akışlarındaki derin uzmanlığı — Veri Bilimi, Makine Öğrenimi, Derin Öğrenme ve İş Zekası alanlarındaki ileri eğitimiyle birleşerek — gerçek iş sorunlarını çözen operasyonel sistemler inşa etmektedir. Mühendislik altyapısı, her çözümün güvenilirlik, ölçeklenebilirlik ve ölçülebilir sonuçlar için tasarlanmasını garanti eder.",
-      expertiseLabel: "Temel Uzmanlıklar",
-      expertise: [
-        "Süreç Otomasyonu & İş Akışı Mühendisliği",
-        "Veri Bilimi & Makine Öğrenimi",
-        "Derin Öğrenme & Yapay Zeka Sistemleri",
-        "İş Zekası & Analitik",
-        "Sistem Entegrasyonu & API Geliştirme",
-      ],
-      footnote: "Almanya merkezli. Avrupa ve uluslararası alanda hizmet vermektedir.",
+        "Almanya merkezli bağımsız otomasyon uzmanı. İş operasyonları için pratik otomasyon sistemleri, iş akışı entegrasyonları ve yapay zeka destekli süreçlerin tasarımı ve geliştirilmesine odaklanır.",
+      expertiseLabel: "",
+      expertise: [],
+      footnote:
+        "Almanya merkezli. Avrupa genelinde ve uluslararası projelere açıktır.",
     },
     cta: {
-      headline: "İşe yarayan bir şey inşa edelim",
+      headline: "Birlikte faydalı bir şeyler geliştirelim",
       description:
-        "Operasyonlarınız daha az manuel iş ve daha güvenilir sistemlere ihtiyaç duyuyorsa, sizden haber almak isteriz.",
-      primaryCta: "Bize Ulaşın",
+        "Operasyonlarınız çok fazla manuel iş ve birbirinden kopuk süreçler içeriyorsa, OpSolid yardımcı olabilir.",
+      primaryCta: "Tanışma Görüşmesi Planlayın",
     },
   },
 
@@ -686,11 +578,11 @@ export const content: Content = {
       label: "İletişim",
       headline: "Operasyonlarınızı konuşalım",
       description:
-        "Belirli bir otomasyon sorununuz olsun ya da nelerin mümkün olduğunu keşfetmek isteyin — satış baskısı yok, sadece pratik bir sohbet.",
+        "Belirli bir otomasyon sorununuz olsun ya da nelerin mümkün olduğunu keşfetmek isteyin — pratik bir sohbet, zorlama yok.",
     },
     form: {
       name: "Ad Soyad",
-      email: "Kurumsal E-posta",
+      email: "İş E-postası",
       company: "Şirket Adı",
       message: "Hangi operasyonel sorunu çözmek istiyorsunuz?",
       consent:
@@ -698,71 +590,80 @@ export const content: Content = {
       privacyLink: "Gizlilik Politikası",
       submit: "Mesaj Gönder",
       sending: "Gönderiliyor...",
-      success: "Teşekkür ederiz. 1-2 iş günü içinde size dönüş yapacağız.",
+      success:
+        "Teşekkürler. 1-2 iş günü içinde yanıt alacaksınız.",
       error:
-        "Bir hata oluştu. Lütfen tekrar deneyin veya bize doğrudan e-posta gönderin.",
+        "Bir şeyler ters gitti. Lütfen tekrar deneyin veya doğrudan e-posta gönderin.",
     },
     meeting: {
-      headline: "Doğrudan görüşmeyi mi tercih edersiniz?",
+      headline: "Doğrudan görüşmeyi mi tercih ediyorsunuz?",
       description:
-        "Ücretsiz 30 dakikalık bir keşif görüşmesi planlayın. Size uygun bir zaman seçin — uygun saatler takvimimizden canlı olarak senkronize edilir.",
+        "Ücretsiz 30 dakikalık bir tanışma görüşmesi planlayın. Size uygun bir zaman seçin — müsait saatler anlık olarak güncellenir.",
       cta: "Görüşme Planlayın",
     },
     info: {
       email: "hello@opsolid.de",
-      response: "Genellikle 1-2 iş günü içinde yanıt veriyoruz.",
+      response: "Tipik yanıt süresi: 1-2 iş günü.",
       location:
-        "Almanya merkezli. Avrupa ve uluslararası düzeyde müşterilere hizmet veriyoruz.",
+        "Almanya merkezli. Avrupa genelinde ve uluslararası projelere açıktır.",
     },
   },
 
   footer: {
     description:
-      "Modern işletmeler için operasyonel altyapı. Otomasyon, dahili araçlar ve iş akışı sistemleri.",
+      "İş operasyonları için pratik otomasyon ve yapay zeka sistemleri.",
     company: "Şirket",
     services: "Hizmetler",
-    legal: "Hukuki",
+    legal: "Yasal",
     resources: "Kaynaklar",
     copyright: `© ${new Date().getFullYear()} OpSolid. Tüm hakları saklıdır.`,
   },
 
   notFound: {
     title: "Sayfa bulunamadı",
-    description: "Aradığınız sayfa mevcut değil veya taşınmış olabilir.",
+    description:
+      "Aradığınız sayfa mevcut değil veya taşınmış olabilir.",
     backHome: "Ana Sayfaya Dön",
-    contactUs: "İletişim",
+    contactUs: "Bize Ulaşın",
   },
 
   impressum: {
     title: "Yasal Bildirim",
-    notice: "Bu yasal bildirim kuruluş aşamasındaki bir şirket içindir. Bilgiler işletme tescilinden sonra güncellenecektir.",
+    notice:
+      "Bu yasal bildirim, kuruluş aşamasındaki bir şirket içindir. Ticaret sicili kaydı yapıldığında bilgiler güncellenecektir.",
     sections: {
-      according: "§ 5 TMG uyarınca bilgiler",
+      according: "§ 5 TMG'ye göre",
       representedBy: "Temsil eden",
       contact: "İletişim",
       phone: "Telefon: Talep üzerine",
       register: "Ticaret Sicili",
-      registerText: "Şu anda bir ticaret sicili kaydı bulunmamaktadır. Şirket kuruluş aşamasındadır.",
+      registerText:
+        "Şu anda ticaret sicili kaydı bulunmamaktadır. Şirket kuruluş aşamasındadır.",
       vatId: "KDV Kimlik Numarası",
-      vatIdText: "İşletme tescilinden sonra başvurulacaktır.",
-      responsibleContent: "§ 55 Abs. 2 RStV uyarınca içerikten sorumlu",
+      vatIdText: "Ticaret sicili kaydı yapıldığında başvurulacaktır.",
+      responsibleContent:
+        "§ 55 Abs. 2 RStV'ye göre içerikten sorumlu kişi",
       liabilityContent: "İçerik Sorumluluğu",
-      liabilityContentText: "Hizmet sağlayıcı olarak, § 7 Abs. 1 TMG uyarınca bu sayfalardaki kendi içeriklerimizden genel yasalar çerçevesinde sorumluyuz. Ancak §§ 8 ila 10 TMG uyarınca, iletilen veya depolanan üçüncü taraf bilgilerini izlemek zorunda değiliz.",
+      liabilityContentText:
+        "Hizmet sağlayıcı olarak, bu sayfalardaki kendi içeriklerimizden genel yasalar çerçevesinde § 7 Abs. 1 TMG'ye göre sorumluyuz. Ancak §§ 8-10 TMG'ye göre, iletilen veya depolanan üçüncü taraf bilgilerini izlemekle yükümlü değiliz.",
       liabilityLinks: "Bağlantı Sorumluluğu",
-      liabilityLinksText: "Teklifimiz, içerikleri üzerinde hiçbir etkimiz olmayan üçüncü taraf harici web sitelerine bağlantılar içermektedir. Bağlantı verilen sayfaların içeriğinden her zaman ilgili sağlayıcı veya işletmeci sorumludur.",
-      address: "Tam adres işletme tescilinden sonra eklenecektir.",
+      liabilityLinksText:
+        "Web sitemiz, içerikleri üzerinde hiçbir etkimiz olmayan harici üçüncü taraf web sitelerine bağlantılar içermektedir. Bağlantı verilen sayfaların içeriğinden her zaman ilgili sağlayıcı veya işletmeci sorumludur.",
+      address: "Tam adres, ticaret sicili kaydı yapıldığında eklenecektir.",
     },
   },
 
   privacy: {
     title: "Gizlilik Politikası",
     subtitle: "Datenschutzerklärung",
-    notice: "Bu gizlilik politikası bir taslaktır. İşletme tescilinden sonra yasal olarak incelenmiş bir versiyonla değiştirilecektir.",
+    notice:
+      "Bu gizlilik politikası bir taslaktır. Ticaret sicili kaydı yapıldığında hukuki incelemeden geçmiş bir politikayla değiştirilecektir.",
     lastUpdated: "Son güncelleme: Mart 2026",
     sections: [
       {
-        title: "1. Veri Korumaya Genel Bakış",
-        content: "Aşağıda, bu web sitesini ziyaret ettiğinizde kişisel verilerinize ne olduğuna dair genel bir bakış sunulmaktadır. Kişisel veriler, sizi kişisel olarak tanımlayabilecek tüm verilerdir.",
+        title: "1. Veri Koruma Özeti",
+        content:
+          "Aşağıda, bu web sitesini ziyaret ettiğinizde kişisel verilerinize ne olduğuna dair genel bir bakış sunulmaktadır. Kişisel veri, sizi kişisel olarak tanımlayabilecek her türlü veridir.",
       },
       {
         title: "2. Sorumlu Taraf",
@@ -773,25 +674,30 @@ export const content: Content = {
         subsections: [
           {
             title: "İletişim Formu",
-            content: "İletişim formu aracılığıyla gönderilen veriler, sorgunun işlenmesi ve takibi için saklanır. Yasal dayanak: Sözleşmeye ilişkin sorgular için GDPR Madde 6(1)(b), meşru menfaat için GDPR Madde 6(1)(f) veya onay verilmişse GDPR Madde 6(1)(a).",
+            content:
+              "İletişim formu aracılığıyla gönderilen veriler, talebin işlenmesi ve takibi amacıyla saklanır. Hukuki dayanak: Sözleşmeye ilişkin talepler için GDPR Madde 6(1)(b), meşru menfaat için GDPR Madde 6(1)(f) veya onay verilmişse GDPR Madde 6(1)(a).",
           },
           {
             title: "Sunucu Günlük Dosyaları",
-            content: "Barındırma sağlayıcısı otomatik olarak tarayıcı türü, işletim sistemi, yönlendiren URL, ana bilgisayar adı ve istek zamanını toplar. Bu veriler belirli kişilere atanamaz.",
+            content:
+              "Barındırma sağlayıcısı, tarayıcı türü, işletim sistemi, yönlendiren URL, ana bilgisayar adı ve istek zamanını otomatik olarak toplar. Bu veriler belirli kişilere atanamaz.",
           },
         ],
       },
       {
         title: "4. Barındırma",
-        content: "Bu web sitesi Vercel, Inc. (440 N Baxter St, Los Angeles, CA 90012, ABD) tarafından barındırılmaktadır. Web sitemizi ziyaret ettiğinizde IP adresiniz ve kullanım verileriniz Vercel tarafından işlenir. Daha fazla bilgi için Vercel'in gizlilik politikasına bakın.",
+        content:
+          "Bu web sitesi Vercel, Inc. (440 N Baxter St, Los Angeles, CA 90012, ABD) üzerinde barındırılmaktadır. Web sitemizi ziyaret ettiğinizde, IP adresiniz ve kullanım verileriniz Vercel tarafından işlenir. Daha fazla bilgi için Vercel'in gizlilik politikasına bakınız.",
       },
       {
         title: "5. Çerezler ve Analitik",
-        content: "Bu web sitesi izleme çerezleri veya analitik araçları kullanmamaktadır. Seçtiğiniz dili hatırlamak için tarayıcınızın yerel depolamasında bir dil tercihi saklanır.",
+        content:
+          "Bu web sitesi izleme çerezleri veya analitik araçları kullanmaz. Seçtiğiniz dili hatırlamak için tarayıcınızın yerel depolama alanında bir dil tercihi saklanır.",
       },
       {
         title: "6. Haklarınız",
-        content: "Saklanan verileriniz hakkında bilgi alma, düzeltme veya silme talep etme, işlemeyi kısıtlama ve denetim makamına şikayette bulunma hakkına sahipsiniz. Onay verilmişse, bunu istediğiniz zaman geri çekebilirsiniz.",
+        content:
+          "Saklanan verileriniz hakkında bilgi alma, düzeltme veya silme talep etme, işlemeyi kısıtlama ve bir denetim makamına şikayette bulunma hakkınız bulunmaktadır. Onay verilmişse, istediğiniz zaman geri çekebilirsiniz.",
       },
     ],
   },
@@ -800,7 +706,8 @@ export const content: Content = {
     hero: {
       label: "Blog",
       headline: "Otomasyon ve Operasyonlar Hakkında İçgörüler",
-      description: "İş akışı otomasyonu, entegrasyon stratejileri ve operasyonel verimlilik hakkında pratik makaleler.",
+      description:
+        "İş akışı otomasyonu, entegrasyon stratejileri ve operasyonel verimlilik hakkında pratik makaleler.",
     },
     readMore: "Makaleyi Oku",
     minRead: "dk okuma",
@@ -813,58 +720,66 @@ export const content: Content = {
     },
     posts: [
       {
-        slug: "n8n-neden-is-akisi-otomasyonunun-gelecegi",
-        title: "n8n Neden İş Akışı Otomasyonunun Geleceği?",
-        excerpt: "Güçlü, kendi sunucunuzda barındırılan ve verileriniz üzerinde tam kontrol sağlayan iş akışı otomasyonuna ihtiyaç duyan işletmeler için n8n'in neden tercih edilen platform haline geldiğini keşfedin.",
+        slug: "why-n8n-is-the-future-of-workflow-automation",
+        title: "n8n Neden İş Akışı Otomasyonunun Geleceği",
+        excerpt:
+          "n8n'in, verileri üzerinde tam kontrol isteyen işletmeler için neden güçlü ve kendi sunucusunda barındırılan iş akışı otomasyonu platformu haline geldiğini keşfedin.",
         category: "automation",
         date: "2026-03-15",
         readTime: "6",
       },
       {
-        slug: "isletmenizin-surec-otomasyonuna-ihtiyaci-oldugunu-gosteren-5-isaret",
-        title: "İşletmenizin Süreç Otomasyonuna İhtiyacı Olduğunu Gösteren 5 İşaret",
-        excerpt: "Ekibiniz manuel işlerin altında eziliyor mu? Otomasyon altyapısına yatırım yapmanın zamanı geldiğini gösteren temel göstergeler.",
+        slug: "5-signs-your-business-needs-process-automation",
+        title: "İşletmenizin Süreç Otomasyonuna İhtiyacı Olduğunun 5 İşareti",
+        excerpt:
+          "Ekibiniz manuel işlere çok fazla zaman mı harcıyor? İşte otomasyona yatırım yapmanın zamanının geldiğini gösteren temel göstergeler.",
         category: "operations",
         date: "2026-03-08",
         readTime: "5",
       },
       {
-        slug: "crm-ve-erp-entegrasyonu-rehber",
-        title: "CRM & ERP Entegrasyonu: Uygulama Rehberi",
-        excerpt: "CRM ve ERP sistemlerinizi senkronize etmek için pratik bir rehber — veri silolarını ortadan kaldırın ve tek bir doğruluk kaynağı oluşturun.",
+        slug: "connecting-crm-erp-the-integration-playbook",
+        title: "CRM ve ERP Bağlantısı: Entegrasyon Rehberi",
+        excerpt:
+          "CRM ve ERP sistemlerinizi senkronize etmek için pratik bir rehber — veri silolarını azaltarak tek bir doğru kaynak oluşturmak.",
         category: "integration",
         date: "2026-02-28",
         readTime: "8",
       },
       {
-        slug: "yapay-zeka-chatbotlar-vs-kural-tabanli-botlar",
-        title: "Yapay Zeka Chatbotlar vs. Kural Tabanlı Botlar: Hangisine İhtiyacınız Var?",
-        excerpt: "Yapay zeka destekli ve kural tabanlı chatbotlar arasındaki farkı anlayın — ve her yaklaşımın işletmeniz için ne zaman mantıklı olduğunu öğrenin.",
+        slug: "ai-chatbots-vs-rule-based-bots",
+        title: "Yapay Zeka Chatbot'ları ve Kural Tabanlı Botlar: Hangisine İhtiyacınız Var?",
+        excerpt:
+          "Yapay zeka destekli ve kural tabanlı chatbot'lar arasındaki farkı ve her yaklaşımın işletmeniz için ne zaman mantıklı olduğunu anlayın.",
         category: "ai",
         date: "2026-02-20",
         readTime: "7",
       },
       {
-        slug: "make-vs-zapier-vs-n8n-karsilastirma",
-        title: "Make vs. Zapier vs. n8n: Doğru Otomasyon Platformunu Seçmek",
-        excerpt: "En popüler üç otomasyon platformunun detaylı karşılaştırması — özellikler, fiyatlandırma, esneklik ve kullanım senaryoları.",
+        slug: "make-vs-zapier-vs-n8n-comparison",
+        title:
+          "Make vs. Zapier vs. n8n: Doğru Otomasyon Platformunu Seçmek",
+        excerpt:
+          "En popüler üç otomasyon platformunun ayrıntılı karşılaştırması — özellikler, fiyatlandırma, esneklik ve her birinin ne zaman kullanılacağı.",
         category: "automation",
         date: "2026-02-12",
         readTime: "10",
       },
       {
-        slug: "whatsapp-business-otomasyon-rehberi",
+        slug: "whatsapp-business-automation-guide",
         title: "WhatsApp Business Otomasyon Rehberi",
-        excerpt: "WhatsApp üzerinden müşteri iletişimini nasıl otomatize edeceğinizi öğrenin — sipariş onaylarından destek botlarına — kişisel dokunuşu kaybetmeden.",
+        excerpt:
+          "WhatsApp üzerinde müşteri iletişimini nasıl otomatize edeceğiniz — sipariş onaylarından destek botlarına — kişisel dokunuşu kaybetmeden.",
         category: "automation",
         date: "2026-02-05",
         readTime: "9",
       },
     ],
     cta: {
-      headline: "Operasyonlarınızı otomatize etmek ister misiniz?",
-      description: "Ücretsiz bir danışma görüşmesi planlayın. İşletmeniz için en etkili otomasyon fırsatlarını birlikte belirleyelim.",
-      primaryCta: "Ücretsiz Görüşme Planlayın",
+      headline: "Operasyonlarınızı otomatize etmek mi istiyorsunuz?",
+      description:
+        "Ücretsiz bir tanışma görüşmesi planlayın. OpSolid, işletmeniz için en yüksek etkili otomasyon fırsatlarını belirlemenize yardımcı olur.",
+      primaryCta: "Tanışma Görüşmesi Planlayın",
     },
   },
 
@@ -872,70 +787,82 @@ export const content: Content = {
     hero: {
       label: "SSS",
       headline: "Sıkça Sorulan Sorular",
-      description: "Otomasyon hizmetlerimiz, sürecimiz ve teknolojimiz hakkında sık sorulan sorular.",
+      description:
+        "Otomasyon hizmetleri, süreç ve teknoloji hakkında sık sorulan sorular.",
     },
     allFilter: "Tümü",
     categories: {
       general: "Genel",
       technical: "Teknik",
-      process: "Süreç & Fiyatlandırma",
+      process: "Süreç ve Fiyatlandırma",
     },
     items: [
       {
-        question: "OpSolid tam olarak ne yapıyor?",
-        answer: "İşletmeler için otomasyon sistemleri, entegrasyonlar ve dahili araçlar inşa ediyoruz. Ekibiniz manuel, tekrarlayan işlerle vakit harcıyorsa — veri girişi, e-posta takipleri, sipariş işleme, rapor oluşturma — bunu otomatik, güvenilir ve ölçeklenebilir şekilde yapan sistemler kuruyoruz.",
+        question: "OpSolid tam olarak ne yapar?",
+        answer:
+          "OpSolid, işletmeler için otomasyon sistemleri, entegrasyonlar ve dahili araçlar geliştirir. Ekibiniz manuel, tekrarlayan işlere — veri girişi, e-posta takipleri, sipariş işleme, rapor oluşturma — zaman harcıyorsa, OpSolid bunları otomatik ve güvenilir bir şekilde yürüten sistemler geliştirir.",
         category: "general",
       },
       {
-        question: "Hangi araç ve platformları kullanıyorsunuz?",
-        answer: "Birincil otomasyon platformumuz n8n, gerektiğinde Make ve Zapier ile desteklenir. Ayrıca API'ler, veritabanları ve bulut hizmetleri kullanarak özel entegrasyonlar inşa ediyoruz. Yapay zeka çözümleri için OpenAI, Claude ve özel ML modelleri kullanıyoruz. Her kullanım senaryosu için doğru aracı seçiyoruz.",
+        question: "Hangi araçlar ve platformlar kullanılıyor?",
+        answer:
+          "Ana otomasyon platformu n8n'dir, uygun olduğunda Make ve Zapier ile desteklenir. Özel entegrasyonlar API'ler, veritabanları ve bulut hizmetleri kullanılarak geliştirilir. Yapay zeka destekli iş akışları için güvenilir temel modeller ve yapılandırılmış yaklaşımlar kullanılır. Her kullanım senaryosu için doğru araç seçilir — tek tip yaklaşım asla uygulanmaz.",
         category: "technical",
       },
       {
-        question: "n8n nedir ve neden tercih ediyorsunuz?",
-        answer: "n8n, kendi sunucunuzda barındırılabilen, verileriniz ve iş akışlarınız üzerinde tam kontrol sağlayan açık kaynaklı bir iş akışı otomasyon platformudur. Son derece esnek, yüzlerce entegrasyonu destekler ve gerektiğinde özel kod yazmaya izin verir. İş otomasyonu için güç, esneklik ve veri egemenliği arasındaki en iyi dengeyi sunduğu için tercih ediyoruz.",
+        question: "n8n nedir ve neden tercih edilir?",
+        answer:
+          "n8n, kendi sunucunuzda barındırılabilen, verileriniz ve iş akışlarınız üzerinde tam kontrol sağlayan açık kaynaklı bir iş akışı otomasyon platformudur. Esnek, yüzlerce entegrasyonu destekler ve gerektiğinde özel kod yazılmasına olanak tanır. İş otomasyonu için güç, esneklik ve veri egemenliği arasında güçlü bir denge sunar.",
         category: "technical",
       },
       {
         question: "Tipik bir proje ne kadar sürer?",
-        answer: "Çoğu proje karmaşıklığa bağlı olarak keşiften devreye almaya 2-6 hafta sürer. Basit otomasyonlar birkaç gün içinde canlıya alınabilir. Yinelemeli çalışıyoruz — sonuçları erken ve sık görürsünüz.",
+        answer:
+          "Çoğu proje, karmaşıklığa bağlı olarak keşiften devreye almaya kadar 2-6 hafta sürer. Basit otomasyonlar günler içinde canlıya alınabilir. Karmaşık çoklu sistem entegrasyonları daha uzun sürebilir. Çalışmalar iteratif olarak yapılır — sonuçları erken ve sık görürsünüz.",
         category: "process",
       },
       {
-        question: "Devreye alma sonrası sürekli destek sunuyor musunuz?",
-        answer: "Evet. İzleme, bakım ve optimizasyon paketleri sunuyoruz. Otomasyon sistemleri işletmeniz büyüdükçe gelişir — sistemlerinizin ayak uydurmasını sağlıyoruz. Ayrıca ekibinizin günlük operasyonları bağımsız yönetebilmesi için dokümantasyon ve eğitim sağlıyoruz.",
+        question: "Devreye alma sonrası sürekli destek var mı?",
+        answer:
+          "Evet. Devreye alma sonrasında izleme, bakım ve optimizasyon hizmetleri mevcuttur. Otomasyon sistemleri işletmeniz büyüdükçe gelişir — sürekli destek, sistemlerinizin ayak uydurmasını sağlar. Ekibinizin günlük operasyonları bağımsız olarak yönetebilmesi için dokümantasyon ve eğitim de sağlanır.",
         category: "process",
       },
       {
-        question: "Maliyeti nedir?",
-        answer: "Her proje farklıdır. İhtiyaçlarınızı anlamak için ücretsiz bir ilk görüşme sunuyoruz, ardından şeffaf bir teklif hazırlıyoruz. Fiyatlandırmamız proje bazlı, saat bazlı değil — yatırımı önceden bilirsiniz.",
+        question: "Maliyeti ne kadar?",
+        answer:
+          "Her proje farklıdır. Ücretsiz bir ilk görüşme ihtiyaçlarınızı anlamaya yardımcı olur, ardından şeffaf bir teklif sunulur. Fiyatlandırma saatlik değil, proje bazlıdır — yatırımı önceden bilirsiniz.",
         category: "process",
       },
       {
-        question: "Mevcut sistemlerimize entegre olabilir misiniz?",
-        answer: "Neredeyse kesinlikle. CRM'ler (HubSpot, Salesforce, Pipedrive), ERP'ler (SAP, Oracle, Odoo), e-ticaret platformları (Shopify, WooCommerce), veritabanları, Google Workspace ve API'si olan neredeyse her sistemle çalışıyoruz.",
+        question: "OpSolid mevcut sistemlerle entegre olabilir mi?",
+        answer:
+          "Neredeyse kesinlikle. OpSolid; CRM'ler (HubSpot, Salesforce, Pipedrive), ERP'ler (SAP, Oracle, Odoo), e-ticaret platformları (Shopify, WooCommerce), veritabanları, Google Workspace ve API'si olan neredeyse her sistemle çalışır.",
         category: "technical",
       },
       {
-        question: "Mevcut araçlarımızı değiştirmemiz gerekiyor mu?",
-        answer: "Hayır. Mevcut araçlarınızı birbirine bağlayan sistemler inşa ediyoruz — onları değiştirmiyoruz. Amacımız, elinizdekinin birlikte daha iyi çalışmasını sağlamak, veri silolarını ve manuel aktarımları ortadan kaldırmaktır.",
+        question: "Mevcut araçların değiştirilmesi gerekiyor mu?",
+        answer:
+          "Hayır. OpSolid, mevcut araçlarınızı birbirine bağlayan sistemler geliştirir — onların yerini almaz. Amaç, sahip olduğunuz araçların birlikte daha iyi çalışmasını sağlamak, veri silolarını ve manuel aktarımları ortadan kaldırmaktır.",
         category: "general",
       },
       {
-        question: "Verilerimiz güvende mi?",
-        answer: "Kesinlikle. Tüm otomasyon altyapısını kendi ortamınızda barındırabiliriz. KVKK ve GDPR gereksinimlerini takip ediyor, hassas veriler için şifreleme uyguluyoruz ve güvenli API bağlantıları kullanıyoruz. Açıkça bulut çözümü tercih etmediğiniz sürece hiçbir veri üçüncü taraf sunucularından geçmez.",
+        question: "Veriler güvende mi?",
+        answer:
+          "Evet. Tüm otomasyon altyapısı kendi ortamınızda barındırılabilir. GDPR/KVKK gereksinimlerine uyulur, hassas veriler için şifreleme kullanılır ve tüm bağlantılar güvenli API'ler üzerinden yapılır. Siz açıkça bulut barındırmalı çözümleri tercih etmediğiniz sürece hiçbir veri üçüncü taraf sunucularından geçmez.",
         category: "technical",
       },
       {
-        question: "Hangi sektörlere hizmet veriyorsunuz?",
-        answer: "Sektörler arası çalışıyoruz — e-ticaret, lojistik, üretim, profesyonel hizmetler ve daha fazlası. Çözümlerimiz sektör etiketinize göre değil, süreçlerinize göre inşa edilir. Tekrarlayan manuel iş içeren operasyonlarınız varsa yardımcı olabiliriz.",
+        question: "Hangi sektörlere hizmet veriliyor?",
+        answer:
+          "OpSolid, sektörler genelinde çalışır — e-ticaret, lojistik, üretim, profesyonel hizmetler ve daha fazlası. Çözümler sektör etiketinize göre değil, süreçlerinize göre geliştirilir. Operasyonlarınız tekrarlayan manuel iş içeriyorsa, otomasyon yardımcı olabilir.",
         category: "general",
       },
     ],
     cta: {
-      headline: "Hala sorularınız mı var?",
-      description: "Diğer sorularınızı yanıtlamaktan memnuniyet duyarız. Ücretsiz bir danışma görüşmesi planlayın ve durumunuzu birlikte konuşalım.",
-      primaryCta: "Ücretsiz Görüşme Planlayın",
+      headline: "Hâlâ sorularınız mı var?",
+      description:
+        "Özel durumunuzu görüşmek için ücretsiz bir tanışma görüşmesi planlayın — hiçbir yükümlülük yok.",
+      primaryCta: "Tanışma Görüşmesi Planlayın",
     },
   },
 } as const;

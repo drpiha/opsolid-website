@@ -5,9 +5,9 @@
 
 export const SITE_CONFIG = {
   name: "OpSolid",
-  tagline: "Operational Infrastructure for Modern Businesses",
+  tagline: "Practical Automation & AI Systems",
   description:
-    "OpSolid helps companies reduce repetitive work, connect fragmented processes, and build reliable operational systems using automation, internal tools, integrations, and AI-assisted workflows.",
+    "OpSolid helps businesses replace manual, repetitive work with reliable automated systems — workflow automation, systems integration, internal tools, and AI-assisted processes.",
   url: "https://opsolid.de",
   email: "hello@opsolid.de",
   phone: "",
@@ -18,10 +18,9 @@ export const SITE_CONFIG = {
 } as const;
 
 export const NAV_LINKS = [
-  { label: "Solutions", href: "/solutions" },
-  { label: "Use Cases", href: "/use-cases" },
+  { label: "Services", href: "/solutions" },
+  { label: "Example Solutions", href: "/use-cases" },
   { label: "Blog", href: "/blog" },
-  { label: "FAQ", href: "/faq" },
   { label: "About", href: "/about" },
   { label: "Contact", href: "/contact" },
 ] as const;
@@ -32,8 +31,8 @@ export const FOOTER_LINKS = {
     { label: "Contact", href: "/contact" },
   ],
   services: [
-    { label: "Solutions", href: "/solutions" },
-    { label: "Use Cases", href: "/use-cases" },
+    { label: "Services", href: "/solutions" },
+    { label: "Example Solutions", href: "/use-cases" },
   ],
   resources: [
     { label: "Blog", href: "/blog" },

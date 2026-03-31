@@ -4,11 +4,11 @@ import { AboutPage } from "./AboutPage";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "Learn about OpSolid — a Germany-based company building reliable operational systems, automation, and workflow solutions for businesses across Europe.",
+    "OpSolid is a Germany-based automation practice focused on replacing manual, repetitive operational work with reliable automated systems.",
   openGraph: {
     title: "About | OpSolid",
     description:
-      "A Germany-based company focused on building reliable operational systems for modern businesses.",
+      "Germany-based automation practice focused on practical automation and AI systems for business operations.",
   },
 };
 

@@ -7,183 +7,154 @@ import type { Content } from "./en";
 
 export const content: Content = {
   nav: {
-    solutions: "Lösungen",
-    useCases: "Anwendungsfälle",
+    solutions: "Leistungen",
+    useCases: "Beispiellösungen",
     about: "Über uns",
     contact: "Kontakt",
-    cta: "Kontakt aufnehmen",
+    cta: "Erstgespräch buchen",
     blog: "Blog",
     faq: "FAQ",
   },
 
   home: {
     hero: {
-      headline: "KI-gestützte Automatisierung\nfür moderne Unternehmen",
+      headline: "Praxisnahe Automatisierung\nfür Geschäftsprozesse",
       subheadline:
-        "Wir integrieren KI-Agenten der nächsten Generation und Automatisierungssysteme in Ihre Abläufe — ersetzen manuelle Arbeit durch intelligente, selbstlaufende Workflows, die Ihr Unternehmen voranbringen.",
-      primaryCta: "Beratungsgespräch buchen",
-      secondaryCta: "Lösungen entdecken",
-      stats: [
-        { value: "80%", label: "Weniger manuelle Arbeit" },
-        { value: "3x", label: "Schnellere Prozesse" },
-        { value: "24/7", label: "KI-gestützte Abläufe" },
-      ],
+        "OpSolid unterstützt Unternehmen dabei, manuelle, wiederkehrende Arbeit durch zuverlässige automatisierte Systeme zu ersetzen — von Workflow-Automatisierung und Systemintegration bis hin zu KI-gestützten Prozessen.",
+      primaryCta: "Erstgespräch buchen",
+      secondaryCta: "Leistungen ansehen",
     },
 
     capabilities: [
-      "KI-Agent-Integration",
-      "Prozessautomatisierung",
+      "Workflow-Automatisierung",
       "Systemintegration",
-      "Workflow-Engineering",
-      "Intelligente Chatbots",
-      "KI-Lösungen der nächsten Generation",
+      "Interne Tools",
+      "KI-gestützte Workflows",
+      "Prozessdigitalisierung",
+      "Operative Dashboards",
     ],
 
     whatWeDo: {
-      label: "Was wir tun",
-      headline: "Wir bringen KI und Automatisierung in Ihre Geschäftsabläufe",
+      label: "Was OpSolid macht",
+      headline: "Automatisierung und KI-Systeme für den realen Betrieb",
       description:
-        "Die Welt entwickelt sich rasant — KI-Agenten, intelligente Automatisierung und vernetzte Systeme sind keine Option mehr. Wir integrieren die neuesten KI-Technologien und Automatisierungsplattformen in Ihre Abläufe, damit Ihr Unternehmen wettbewerbsfähig, effizient und zukunftsfähig bleibt.",
+        "Viele Unternehmen arbeiten noch mit manuellen Prozessen, voneinander getrennten Tools und tabellenbasierter Nachverfolgung. OpSolid entwickelt und implementiert Automatisierungssysteme, die Ihre Tools verbinden, Ihre Workflows optimieren und den operativen Aufwand reduzieren, der Teams ausbremst.",
       points: [
-        "KI-Agenten einsetzen, die Aufgaben autonom erledigen",
-        "Komplexe Workflows mit n8n und Make automatisieren",
-        "Alle Tools in intelligente Systeme verbinden",
-        "Mit KI-Technologie der nächsten Generation voraus sein",
+        "Wiederkehrende Workflows mit n8n, Make und individuellen Integrationen automatisieren",
+        "CRM, ERP, Datenbanken und Kommunikationstools zu einheitlichen Systemen verbinden",
+        "Individuelle Dashboards und interne Tools für Ihr Team entwickeln",
+        "KI-gestützte Prozesse dort einsetzen, wo sie praktischen Mehrwert schaffen",
       ],
     },
 
     solutions: {
-      label: "Lösungen",
-      headline: "Was wir für Sie bauen",
+      label: "Schwerpunkte",
+      headline: "Was OpSolid für Sie entwickeln kann",
       items: [
         {
-          title: "Prozessautomatisierung",
+          title: "Workflow-Automatisierung",
           description:
-            "Manuelle Schritte durch zuverlässige automatisierte Workflows ersetzen — von der Dateneingabe über Freigaben bis zu Benachrichtigungen.",
+            "Automatisierte Workflows, die manuelle Schritte ersetzen — von Dateneingabe und Freigaben bis hin zu Benachrichtigungen und Reporting. Umgesetzt mit n8n, Make und individuellen Integrationen.",
           icon: "workflow",
-        },
-        {
-          title: "Interne Tools",
-          description:
-            "Maßgeschneiderte Dashboards, Admin-Panels und operative Oberflächen, die zu den Arbeitsabläufen Ihres Teams passen.",
-          icon: "layout",
-        },
-        {
-          title: "Workflow-Systeme",
-          description:
-            "End-to-End-Orchestrierung, die Menschen, Prozesse und Entscheidungen in nachvollziehbare, wiederholbare Systeme verbindet.",
-          icon: "gitBranch",
         },
         {
           title: "Systemintegration",
           description:
-            "CRM, ERP, Lagerverwaltung, Datenbanken und Kommunikationstools in eine einheitliche, synchronisierte Betriebsschicht verbinden.",
+            "Verbinden Sie Ihr CRM, ERP, Ihre Datenbanken und Kommunikationstools zu einer einzigen, synchronisierten operativen Ebene. Keine manuellen Datenübertragungen mehr.",
           icon: "plug",
         },
         {
-          title: "Marketing- & Vertriebsautomatisierung",
+          title: "Interne Tools & Dashboards",
           description:
-            "Automatisierte Lead-Erfassung, Follow-up-Sequenzen, CRM-Updates, YouTube-Content-Operations und Kampagnen-Tracking.",
-          icon: "target",
+            "Individuell entwickelte operative Oberflächen, Admin-Panels und Dashboards — zugeschnitten auf die tatsächliche Arbeitsweise Ihres Teams.",
+          icon: "layout",
         },
         {
-          title: "Versand & Bestellabwicklung",
+          title: "KI-gestützte Workflows",
           description:
-            "Automatisierte Bestellverarbeitung, Carrier-Integration und Fulfillment-Workflows — ein Bereich mit sofortigem ROI.",
-          icon: "package",
-        },
-        {
-          title: "Messaging & Kommunikation",
-          description:
-            "Kundenkommunikation über WhatsApp, Telegram, E-Mail und SMS automatisieren — von Support-Tickets bis zu transaktionalen Updates.",
-          icon: "messageSquare",
-        },
-        {
-          title: "KI-Agenten & Sprach-Assistenten",
-          description:
-            "Intelligente KI-Agenten für ein- und ausgehende Sprachanrufe, Kundenbetreuung, Lead-Qualifizierung und autonome Aufgabenausführung. Multi-Agent-Systeme, die zusammenarbeiten, denken und handeln — angetrieben durch die neuesten Foundation-Modelle.",
+            "Chatbots, Sprachassistenten, Dokumentenverarbeitung und intelligentes Routing — praxisnahe KI-Anwendungen, eingebettet in Ihre bestehenden Prozesse.",
           icon: "bot",
+        },
+        {
+          title: "Kommunikationsautomatisierung",
+          description:
+            "Automatisierte Nachrichten über WhatsApp, Telegram, E-Mail und SMS — von Support-Antworten über transaktionale Benachrichtigungen bis hin zu Follow-ups.",
+          icon: "messageSquare",
         },
       ],
     },
 
     transformation: {
-      label: "Die Veränderung",
+      label: "Der Wandel",
       headline: "Von manuellem Aufwand zu operativer Klarheit",
       items: [
         {
           before: "Manuelle E-Mails und Nachfassaktionen",
-          after: "Automatisierte Workflows mit intelligenten Benachrichtigungen",
+          after: "Automatisierte Workflows mit strukturierten Benachrichtigungen",
         },
         {
-          before: "Tracking per Spreadsheet",
-          after: "Vernetzte Systeme mit Echtzeitdaten",
+          before: "Tabellenbasierte Nachverfolgung",
+          after: "Vernetzte Systeme mit konsistenten Daten",
         },
         {
-          before: "Repetitive Dateneingabe",
-          after: "Zuverlässige, fehlerfreie Prozesse",
+          before: "Wiederkehrende Dateneingabe",
+          after: "Zuverlässige, automatisierte Prozesse",
         },
         {
-          before: "Fragmentierte, unverbundene Tools",
-          after: "Integrierte Abläufe über alle Plattformen",
+          before: "Fragmentierte, voneinander getrennte Tools",
+          after: "Integrierte Abläufe über alle Plattformen hinweg",
         },
         {
-          before: "Verpasste Nachrichten über WhatsApp, E-Mail und Telefon",
-          after: "Einheitliche, automatisierte Kommunikation über alle Kanäle",
+          before: "Nachrichten verstreut über verschiedene Kanäle",
+          after: "Einheitliche, automatisierte Kommunikation",
         },
         {
-          before: "Manuelles Nachfassen und Lead-Tracking",
-          after: "Automatisierte Vertriebspipeline mit intelligentem Routing",
+          before: "Manuelle Nachfassaktionen und Aufgabenverfolgung",
+          after: "Strukturierte Workflows mit klarer Zuständigkeit",
         },
       ],
     },
 
     useCases: {
-      label: "Anwendungsfälle",
-      headline: "Wo wir Ergebnisse liefern",
+      label: "Wo Automatisierung hilft",
+      headline: "Typische Problembereiche",
       items: [
         {
-          title: "Versand & Bestellabwicklung",
-          description: "Bestelleingang, Labelerstellung, Carrier-Auswahl und Tracking-Updates automatisieren.",
+          title: "Bestell- und Fulfillment-Prozesse",
+          description:
+            "Automatisieren Sie Bestelleingang, Statusaktualisierungen und Fulfillment-Tracking über alle Kanäle hinweg.",
         },
         {
           title: "Dokumentenverarbeitung",
-          description: "Rechnungen, Verträge und Formulare automatisch extrahieren, klassifizieren und weiterleiten.",
+          description:
+            "Rechnungen, Verträge und Formulare mit strukturierten Workflows extrahieren, klassifizieren und weiterleiten.",
         },
         {
           title: "Interne Freigaben",
-          description: "Strukturierte Freigabe-Workflows für Einkauf, Verträge und Budgetanträge.",
+          description:
+            "Strukturierte Freigabe-Workflows für Bestellungen, Verträge und operative Anfragen.",
         },
         {
-          title: "Reporting & Dashboards",
-          description: "Live-Dashboards, die Daten aus mehreren Quellen automatisch konsolidieren.",
+          title: "Operative Dashboards",
+          description:
+            "Dashboards, die Daten aus mehreren Quellen in einer einzigen operativen Ansicht zusammenführen.",
         },
         {
-          title: "Kundenoperationen",
-          description: "Onboarding, Support-Routing und Kundenkommunikation optimieren.",
+          title: "Kundenkommunikation",
+          description:
+            "Automatisierte Nachrichten, Follow-ups und Statusaktualisierungen über WhatsApp, E-Mail und weitere Kanäle.",
         },
         {
-          title: "WhatsApp- & Telegram-Automatisierung",
-          description: "Automatisiertes Messaging, Support-Bots und transaktionale Benachrichtigungen über alle Kanäle.",
-        },
-        {
-          title: "KI-Sprach- & Chat-Assistenten",
-          description: "Intelligente Agenten, die eingehende Anrufe bearbeiten, Fragen beantworten und Anfragen weiterleiten.",
-        },
-        {
-          title: "Vertriebspipeline-Automatisierung",
-          description: "Lead-Scoring, Follow-up-Sequenzen, CRM-Synchronisation und Conversion-Tracking.",
-        },
-        {
-          title: "Datensynchronisierung",
-          description: "CRM, ERP und Lagersysteme in Echtzeit synchron halten.",
+          title: "Datensynchronisation",
+          description:
+            "CRM, ERP und andere Geschäftssysteme synchron halten — weniger manuelle Datenübertragungen.",
         },
       ],
     },
 
     integrations: {
       label: "Integrationen",
-      headline: "Tools und Plattformen, die wir verbinden",
+      headline: "Tools und Plattformen, die OpSolid verbindet",
       items: [
         { name: "WhatsApp", icon: "messageCircle" },
         { name: "Telegram", icon: "send" },
@@ -192,7 +163,7 @@ export const content: Content = {
         { name: "CRM-Systeme", icon: "users" },
         { name: "ERP-Systeme", icon: "database" },
         { name: "E-Mail & SMTP", icon: "mail" },
-        { name: "REST-APIs", icon: "code" },
+        { name: "REST APIs", icon: "code" },
         { name: "Google Workspace", icon: "cloud" },
         { name: "Datenbanken", icon: "hardDrive" },
         { name: "Zapier", icon: "zap" },
@@ -201,507 +172,532 @@ export const content: Content = {
     },
 
     howWeWork: {
-      label: "Prozess",
-      headline: "Wie wir mit Ihnen arbeiten",
+      label: "Vorgehensweise",
+      headline: "Wie ein typisches Projekt abläuft",
       steps: [
         {
           step: "01",
-          title: "Verstehen",
-          description: "Wir analysieren Ihre Prozesse, identifizieren Engpässe und finden die größten Automatisierungshebel.",
+          title: "Analyse",
+          description:
+            "Ihre Prozesse verstehen, Engpässe identifizieren und herausfinden, wo Automatisierung den größten praktischen Mehrwert schafft.",
         },
         {
           step: "02",
-          title: "Konzipieren",
-          description: "Wir entwerfen das passende System — die richtigen Tools, Integrationen und Workflows für Ihre Anforderungen.",
+          title: "Konzeption",
+          description:
+            "Die richtigen Tools, Integrationen und die passende Workflow-Architektur für Ihre spezifischen Anforderungen auswählen.",
         },
         {
           step: "03",
-          title: "Umsetzen",
-          description: "Wir entwickeln, testen und deployen iterativ — Sie sind bei jedem Schritt eingebunden.",
+          title: "Umsetzung",
+          description:
+            "Iterativ entwickeln, testen und bereitstellen — mit klarer Kommunikation in jedem Schritt.",
         },
         {
           step: "04",
-          title: "Optimieren",
-          description: "Wir überwachen, verbessern und erweitern Ihre Systeme, wenn Ihr Unternehmen wächst.",
+          title: "Optimierung",
+          description:
+            "Ihre Systeme überwachen, optimieren und erweitern, wenn sich Ihre Abläufe weiterentwickeln.",
         },
       ],
     },
 
     whyUs: {
       label: "Warum OpSolid",
-      headline: "Was uns unterscheidet",
+      headline: "Was Sie erwarten können",
       points: [
         {
-          title: "Business-First-Ansatz",
-          description: "Wir beginnen bei Ihren Abläufen, nicht bei unserer Technologie. Jedes System löst ein reales Problem.",
+          title: "Prozesse zuerst",
+          description:
+            "Jedes Projekt beginnt damit, zu verstehen, wie Ihr Unternehmen arbeitet — nicht mit einem Technologie-Pitch.",
         },
         {
-          title: "Maßgeschneidert, nicht von der Stange",
-          description: "Ihre Systeme werden um Ihre Arbeitsweise herum entworfen — keine Templates, keine Kompromisse.",
+          title: "Individuell statt Standardlösung",
+          description:
+            "Ihre Systeme werden um Ihre tatsächlichen Workflows herum entwickelt — keine generischen Templates, keine erzwungenen Kompromisse.",
         },
         {
-          title: "Gebaut für den Produktivbetrieb",
-          description: "Unsere Lösungen laufen unter realer Last. Wir entwickeln für Zuverlässigkeit, nicht für Demos.",
+          title: "Für den Produktivbetrieb gebaut",
+          description:
+            "Lösungen werden für Zuverlässigkeit und reale Arbeitslasten entwickelt — mit ordnungsgemäßer Fehlerbehandlung und Monitoring.",
         },
         {
-          title: "In Europa verwurzelt, international ausgerichtet",
-          description: "Sitz in Deutschland, tätig für Unternehmen in ganz Europa und darüber hinaus. Wir kennen lokale Anforderungen und internationale Skalierung.",
+          title: "In Deutschland ansässig, international ausgerichtet",
+          description:
+            "Sitz in Deutschland, tätig für Unternehmen in Europa und darüber hinaus. Vertraut mit lokalen Anforderungen und internationalen Kontexten.",
         },
       ],
     },
 
     cta: {
-      headline: "Bereit, KI in Ihre Abläufe zu bringen?",
+      headline: "Bereit, Ihre Abläufe zu automatisieren?",
       description:
-        "Buchen Sie ein kostenloses Beratungsgespräch. Wir identifizieren, wo KI-Agenten und Automatisierung Ihr Unternehmen transformieren können — und erstellen einen Fahrplan.",
-      primaryCta: "Beratungsgespräch buchen",
-    },
-
-    results: {
-      label: "Ergebnisse",
-      headline: "Messbarer Einfluss auf Ihre Abläufe",
-      items: [
-        { value: "80%", label: "Weniger manuelle Arbeit", description: "Automatisierung eliminiert typischerweise bis zu 80% der repetitiven manuellen Aufgaben" },
-        { value: "5-10x", label: "ROI im ersten Jahr", description: "Unternehmen erzielen 5-10x Rendite auf ihre Automatisierungsinvestition innerhalb von 12 Monaten" },
-        { value: "60%", label: "Schnellere Abläufe", description: "Prozesszykluszeiten werden mit intelligenten Workflows um 60% oder mehr reduziert" },
-        { value: "35%", label: "Kosteneinsparung", description: "Durchschnittliche Betriebskostenreduktion durch Automatisierung und KI-Agenten" },
-      ],
+        "Buchen Sie ein kostenloses Erstgespräch. OpSolid hilft Ihnen zu erkennen, wo Automatisierung manuelle Arbeit reduzieren und Ihre operativen Workflows verbessern kann.",
+      primaryCta: "Erstgespräch buchen",
     },
 
     toolsShowcase: {
-      label: "Angetrieben durch",
-      headline: "Angetrieben durch KI & Automatisierungsplattformen der nächsten Generation",
-      description: "Wir nutzen modernste KI-Modelle, autonome Agenten und die leistungsfähigsten Automatisierungsplattformen, um intelligente Systeme zu bauen, die mit Ihrem Unternehmen wachsen.",
+      label: "Technologien",
+      headline: "Automatisierungsplattformen und KI-Tools, mit denen OpSolid arbeitet",
+      description:
+        "OpSolid nutzt bewährte Automatisierungsplattformen und praxisnahe KI-Tools, um Systeme zu entwickeln, die zu Ihrem Betrieb passen — stets mit dem richtigen Werkzeug für jeden Anwendungsfall.",
       tools: [
-        { name: "n8n", description: "Self-hosted Workflow-Engine für komplexe Automatisierungen. Webhook-Trigger, bedingte Logik und KI-Agenten-Orchestrierungsschleifen.", techFeatures: ["Self-Hosted", "500+ Integrationen", "KI-Agent-Loops", "Webhook-Trigger", "Fehlerbehandlung"] },
-        { name: "Make", description: "Visueller Szenario-Builder für mehrstufiges Daten-Routing. Echtzeit-API-Verbindungen, Fehlerverzweigung und automatisierte Datentransformationen.", techFeatures: ["Visueller Builder", "Daten-Routing", "API-Module", "Fehlerverzweigung", "Echtzeit"] },
-        { name: "Zapier", description: "6.000+ Apps schnell verbinden mit mehrstufigen Automatisierungen. Bedingte Pfade, geplante Trigger und KI-gestützte Filterung.", techFeatures: ["6.000+ Apps", "Mehrstufig", "Bedingte Logik", "Zeitpläne", "Filter"] },
-        { name: "KI-Agenten", description: "Autonome KI-Agenten für Sprachanrufe, Kundenservice, Datenanalyse und Entscheidungsfindung. Gebaut mit den neuesten Foundation-Modellen, RAG-Pipelines und Multi-Agent-Orchestrierung.", techFeatures: ["Sprach-Assistenten", "Multi-Agent", "RAG-Pipeline", "Tool-Nutzung", "Echtzeit"] },
+        {
+          name: "n8n",
+          description:
+            "Self-hosted Workflow-Engine für komplexe Automatisierungen. Webhook-Trigger, bedingte Logik und vollständige Datenhoheit.",
+          techFeatures: [
+            "Self-Hosted",
+            "500+ Integrationen",
+            "Webhook-Trigger",
+            "Fehlerbehandlung",
+            "Datenhoheit",
+          ],
+        },
+        {
+          name: "Make",
+          description:
+            "Visueller Szenario-Builder für mehrstufiges Daten-Routing. API-Verbindungen, Fehlerverzweigung und automatisierte Datentransformationen.",
+          techFeatures: [
+            "Visueller Builder",
+            "Daten-Routing",
+            "API-Module",
+            "Fehlerverzweigung",
+            "Echtzeit",
+          ],
+        },
+        {
+          name: "Zapier",
+          description:
+            "Schnelle Verbindung von über 6.000 Apps mit mehrstufigen Automatisierungen. Bedingte Pfade, geplante Trigger und Filterung.",
+          techFeatures: [
+            "6.000+ Apps",
+            "Mehrstufig",
+            "Bedingte Logik",
+            "Zeitsteuerung",
+            "Filter",
+          ],
+        },
+        {
+          name: "KI-Tools",
+          description:
+            "Praxisnahe KI-Anwendungen für Sprache, Chat, Dokumentenverarbeitung und Entscheidungsunterstützung. Entwickelt mit zuverlässigen Modellen und strukturierten Workflows.",
+          techFeatures: [
+            "Sprachassistenten",
+            "Chatbots",
+            "Dokumenten-KI",
+            "Klassifizierung",
+            "Strukturierte Ausgabe",
+          ],
+        },
       ],
     },
   },
 
   solutions: {
     hero: {
-      label: "Lösungen",
-      headline: "Systeme, die echte operative Probleme lösen",
+      label: "Leistungen",
+      headline: "Systeme, die reale operative Probleme lösen",
       description:
-        "Automatisierung, interne Tools, Integrationen und Workflow-Systeme — jeweils um Ihre spezifischen Prozesse herum entwickelt.",
+        "Workflow-Automatisierung, interne Tools, Integrationen und KI-gestützte Prozesse — jeweils zugeschnitten auf Ihre spezifischen Abläufe.",
     },
-    problemsLabel: "Probleme, die wir lösen",
-    outcomesLabel: "Erwartete Ergebnisse",
+    problemsLabel: "Typische Herausforderungen",
+    outcomesLabel: "Mögliche Ergebnisse",
     items: [
       {
-        title: "Prozessautomatisierung",
-        description: "Repetitive, regelbasierte Aufgaben in Ihrem Unternehmen automatisieren — mit n8n, individuellen Workflows und API-Orchestrierung.",
+        title: "Workflow-Automatisierung",
+        description:
+          "Automatisieren Sie wiederkehrende, regelbasierte Aufgaben in Ihrem Unternehmen mit n8n, Make, individuellen Workflows und API-Orchestrierung.",
         problems: [
-          "Stundenlange Dateneingabe und Copy-Paste zwischen Systemen",
+          "Stunden für Dateneingabe und Copy-Paste zwischen Systemen",
           "Fehler durch manuelle Übergaben zwischen Abteilungen",
-          "Inkonsistente Ausführung je nach Bearbeiter",
+          "Inkonsistente Ausführung je nachdem, wer die Aufgabe bearbeitet",
           "Engpässe durch manuelle Freigabeketten",
         ],
         outcomes: [
-          "Automatisierte End-to-End-Workflows mit Fehlerbehandlung",
+          "Automatisierte End-to-End-Workflows mit integrierter Fehlerbehandlung",
           "Konsistente, zuverlässige Ausführung jedes Mal",
-          "Echtzeit-Einblick in den Prozessstatus",
-          "Wöchentlich Stunden manueller Arbeit eingespart",
+          "Echtzeit-Transparenz über den Prozessstatus",
+          "Erhebliche Reduzierung wiederkehrender manueller Arbeit",
         ],
         icon: "workflow",
       },
       {
-        title: "Interne Tools & Dashboards",
-        description: "Maßgeschneiderte operative Tools — Admin-Panels, Datenoberflächen und Dashboards, die zu Ihren Arbeitsabläufen passen.",
+        title: "Systemintegration",
+        description:
+          "Verbinden Sie Ihr CRM, ERP, Ihre Datenbanken und Tools zu einer einheitlichen operativen Ebene. Zuverlässige Integrationen, die Datensilos abbauen.",
         problems: [
-          "Teams arbeiten mit Spreadsheets statt richtigen Tools",
-          "Standardsoftware, die nicht zum Prozess passt",
-          "Keine zentrale Sicht auf operative Daten",
+          "Gleiche Daten werden manuell in mehrere Systeme eingegeben",
+          "Entscheidungen auf Basis veralteter oder widersprüchlicher Daten",
+          "Integrationsanfragen überlasten interne Ressourcen",
+          "Keine zentrale Datenquelle für operative Daten",
+        ],
+        outcomes: [
+          "Bidirektionaler Datenabgleich zwischen Kernsystemen",
+          "Eine zentrale Datenquelle für den Betrieb",
+          "Weniger manuelle Datenübertragungen und weniger Fehler",
+          "Skalierbare Integrationsarchitektur",
+        ],
+        icon: "plug",
+      },
+      {
+        title: "Interne Tools & Dashboards",
+        description:
+          "Individuell entwickelte operative Tools für Ihr Team — Admin-Panels, Datenoberflächen und Dashboards, die zu Ihrem Workflow passen.",
+        problems: [
+          "Teams nutzen Tabellen für Aufgaben, die richtige Tools erfordern",
+          "Standardsoftware, die nicht zu Ihrem Prozess passt",
+          "Keine zentrale Ansicht der operativen Daten",
           "Wichtige Informationen verstreut über E-Mails und Dokumente",
         ],
         outcomes: [
-          "Zweckgebundene Tools, die zum Arbeitsablauf passen",
-          "Zentralisierte Dashboards mit Echtzeitdaten",
+          "Zweckgebundene Tools, die zur Arbeitsweise Ihres Teams passen",
+          "Zentrale Dashboards mit aktuellen Daten",
           "Kürzere Einarbeitungszeit für neue Teammitglieder",
           "Bessere Entscheidungen durch bessere Datentransparenz",
         ],
         icon: "layout",
       },
       {
-        title: "Workflow-Orchestrierung",
-        description: "End-to-End-Workflows, die Menschen, Entscheidungen und Systeme mit voller Nachvollziehbarkeit verbinden.",
+        title: "KI-gestützte Workflows",
+        description:
+          "Praxisnahe KI-Anwendungen in Ihren Betrieb integriert — Chatbots, Sprachassistenten, Dokumentenverarbeitung und intelligentes Routing.",
         problems: [
-          "Kritische Prozesse per E-Mail und Gedächtnis verwaltet",
-          "Keine Sicht auf Status oder Verantwortlichkeiten",
-          "Aufgaben, die zwischen Abteilungen durchfallen",
-          "Prozesse, die mit dem Wachstum nicht skalieren",
-        ],
-        outcomes: [
-          "Klare Workflows mit Verantwortung bei jedem Schritt",
-          "Automatisches Routing, Eskalation und Benachrichtigung",
-          "Vollständiger Audit-Trail für Compliance",
-          "Prozesse, die ohne zusätzliches Personal skalieren",
-        ],
-        icon: "gitBranch",
-      },
-      {
-        title: "Systemintegration",
-        description: "CRM, ERP, Datenbanken und Tools in eine einheitliche Betriebsschicht verbinden. Zuverlässige Integrationen, die Datensilos beseitigen.",
-        problems: [
-          "Gleiche Daten manuell in mehrere Systeme eingegeben",
-          "Entscheidungen auf Basis veralteter oder widersprüchlicher Daten",
-          "Punkt-zu-Punkt-Integrations-Anfragen überlasten die IT",
-          "Keine einheitliche Datenquelle für den Betrieb",
-        ],
-        outcomes: [
-          "Bidirektionale Datensynchronisation zwischen Kernsystemen",
-          "Single Source of Truth für den Betrieb",
-          "Eliminierte manuelle Datenübertragung und Fehler",
-          "Skalierbare Integrationsarchitektur",
-        ],
-        icon: "plug",
-      },
-      {
-        title: "Marketing- & Vertriebsautomatisierung",
-        description: "Vertriebspipeline, Marketingkampagnen, YouTube-Content-Operations und Lead-Management mit intelligenten Workflows automatisieren.",
-        problems: [
-          "Leads gehen ohne Follow-up verloren",
-          "Manuelle CRM-Updates und verstreute Kampagnendaten",
-          "YouTube- und Content-Veröffentlichung wird manuell durchgeführt",
-          "Keine Sicht auf Conversion-Metriken über alle Kanäle",
-        ],
-        outcomes: [
-          "Automatisiertes Lead-Scoring und Follow-up-Sequenzen",
-          "CRM automatisch mit allen Touchpoints synchronisiert",
-          "Content-Veröffentlichung und -Planung auf Autopilot",
-          "Einheitliches Analytics-Dashboard für alle Kampagnen",
-        ],
-        icon: "target",
-      },
-      {
-        title: "Versand & Bestellabwicklung",
-        description: "End-to-End-Automatisierung für Bestellverarbeitung, Fulfillment und Versand — Vertriebskanäle, Lager und Carrier verbunden.",
-        problems: [
-          "Bestellungen manuell über Vertriebskanäle verarbeitet",
-          "Labelerstellung und Carrier-Auswahl per Hand",
-          "Keine automatischen Tracking-Updates für Kunden",
-          "Fulfillment-Fehler durch unverbundene Systeme",
-        ],
-        outcomes: [
-          "Automatisierte Multi-Channel-Bestellverarbeitung",
-          "Intelligente Carrier-Auswahl und Labelerstellung",
-          "Echtzeit-Tracking über alle Kanäle",
-          "Weniger Fehler, schnellerer Versand",
-        ],
-        icon: "package",
-      },
-      {
-        title: "Messaging- & Kommunikationsautomatisierung",
-        description: "Kundenkommunikation über WhatsApp, Telegram, E-Mail und SMS mit intelligentem Routing und vorlagenbasierten Antworten automatisieren.",
-        problems: [
-          "Supportnachrichten verstreut über WhatsApp, E-Mail und Telefon",
-          "Langsame Reaktionszeiten in Stoßzeiten",
-          "Keine automatisierten transaktionalen Benachrichtigungen an Kunden",
-          "Manueller Aufwand, um Kunden über den Bestellstatus zu informieren",
-        ],
-        outcomes: [
-          "Einheitlicher Posteingang mit automatischem Routing und Tagging",
-          "Sofortige Antworten über WhatsApp- und Telegram-Bots",
-          "Automatische Bestellbestätigungen und Statusupdates",
-          "Rund-um-die-Uhr-Verfügbarkeit ohne zusätzliches Personal",
-        ],
-        icon: "messageSquare",
-      },
-      {
-        title: "KI-Assistenten & Chatbots",
-        description: "Sprachassistenten, Chat-Agenten und intelligente Bots, die Anfragen bearbeiten, Leads qualifizieren und Ihr Team rund um die Uhr unterstützen.",
-        problems: [
-          "Hohes Volumen repetitiver eingehender Anrufe und Nachrichten",
-          "Kunden warten in der Warteschleife oder auf E-Mail-Antworten",
-          "Mitarbeiter überlastet durch FAQ-artige Anfragen",
+          "Hohes Volumen an wiederkehrenden eingehenden Anfragen",
+          "Langsame Reaktionszeiten in Spitzenzeiten",
+          "Mitarbeiterzeit für routinemäßige, wenig komplexe Aufgaben",
           "Keine Erreichbarkeit außerhalb der Geschäftszeiten",
         ],
         outcomes: [
-          "KI-Sprachassistent bearbeitet eingehende Anrufe sofort",
-          "Chat-Agenten beantworten Fragen und qualifizieren Leads rund um die Uhr",
-          "80 % der Routineanfragen werden ohne menschliches Eingreifen gelöst",
-          "Mitarbeiter für komplexe, wertschöpfende Interaktionen freigestellt",
+          "KI-gestützte Bearbeitung routinemäßiger Anfragen und Aufgaben",
+          "Schnellere Reaktionszeiten über alle Kommunikationskanäle",
+          "Mitarbeiter können sich auf höherwertige Arbeit konzentrieren",
+          "Erweiterte Erreichbarkeit ohne zusätzliches Personal",
         ],
         icon: "bot",
       },
+      {
+        title: "Kommunikationsautomatisierung",
+        description:
+          "Automatisierte Nachrichten über WhatsApp, Telegram, E-Mail und SMS — von Support-Antworten über transaktionale Updates bis hin zu Follow-up-Sequenzen.",
+        problems: [
+          "Support-Nachrichten verteilt über mehrere Kanäle",
+          "Langsame oder inkonsistente Reaktionszeiten",
+          "Keine automatisierten transaktionalen Benachrichtigungen",
+          "Manueller Aufwand, um Kunden über Statusänderungen zu informieren",
+        ],
+        outcomes: [
+          "Einheitliche Kommunikation mit automatisiertem Routing",
+          "Konsistente, zeitnahe Antworten über alle Kanäle",
+          "Automatisierte Bestellbestätigungen und Statusaktualisierungen",
+          "Reduzierter manueller Kommunikationsaufwand",
+        ],
+        icon: "messageSquare",
+      },
     ],
     cta: {
-      headline: "Nicht sicher, welche Lösung passt?",
-      description: "Jedes Unternehmen ist anders. Lassen Sie uns über Ihre Herausforderungen sprechen und das richtige System gemeinsam entwerfen.",
-      primaryCta: "Beratungsgespräch buchen",
+      headline: "Nicht sicher, welche Leistung passt?",
+      description:
+        "Jedes Unternehmen ist anders. Buchen Sie ein kostenloses Erstgespräch, um Ihre Herausforderungen zu besprechen und herauszufinden, was sinnvoll ist.",
+      primaryCta: "Erstgespräch buchen",
     },
   },
 
   useCases: {
     hero: {
-      label: "Anwendungsfälle",
-      headline: "Wie Unternehmen mit OpSolid besser arbeiten",
-      description: "Reale Szenarien, in denen unsere Systeme manuelle Arbeit durch zuverlässige, automatisierte Abläufe ersetzen.",
+      label: "Beispiellösungen",
+      headline: "Praxisnahe Automatisierungsszenarien",
+      description:
+        "Realistische Beispiele für die Art von Systemen, die OpSolid entwerfen und umsetzen kann. Sie veranschaulichen typische Problembereiche und Lösungsansätze.",
     },
     labels: {
-      context: "Kontext",
-      problem: "Problem",
-      solution: "Lösung",
-      outcome: "Ergebnis",
+      context: "Szenario",
+      problem: "Herausforderung",
+      solution: "Ansatz",
+      outcome: "Mögliches Ergebnis",
     },
     items: [
       {
         title: "Multi-Channel-Bestellverarbeitung",
-        context: "Mittelständisches E-Commerce-Unternehmen, 200+ tägliche Bestellungen über vier Vertriebskanäle.",
-        problem: "4+ Stunden täglich für manuelle Bestelleingabe, Statusaktualisierungen und Bestandsanpassungen. Häufige Fehler in Spitzenzeiten.",
-        solution: "Automatisierte Pipeline: Bestelleingang, Datennormalisierung, Echtzeit-Bestand, Labelerstellung und Tracking über alle Kanäle.",
-        outcome: "Bearbeitungszeit: 4 Stunden auf 15 Minuten. Fehlerrate -94%. 3x Bestellvolumen mit gleichem Team.",
+        context:
+          "Ein E-Commerce-Unternehmen, das täglich Bestellungen über mehrere Vertriebskanäle abwickelt.",
+        problem:
+          "Manuelle Bestelleingabe, Statusaktualisierungen und Bestandsanpassungen kosten täglich Stunden. Fehler häufen sich in Stoßzeiten.",
+        solution:
+          "Automatisierte Pipeline: Bestelleingang aus allen Kanälen, Datennormalisierung, Bestandsaktualisierungen, Labelerstellung und Tracking-Benachrichtigungs-Workflows.",
+        outcome:
+          "Erhebliche Reduzierung der manuellen Bearbeitungszeit. Weniger Fehler. Fähigkeit, höhere Bestellvolumina ohne proportionale Personalaufstockung zu bewältigen.",
       },
       {
-        title: "Rechnungs- & Dokumentenverarbeitung",
-        context: "Logistikunternehmen, 500+ monatliche Rechnungen von Carriern und Lieferanten in verschiedenen Formaten.",
-        problem: "Zwei volle Tage pro Woche für Rechnungsdatenextraktion, Buchhaltungseingabe und Bestellabgleich.",
-        solution: "KI-gestützte Extraktion, automatischer PO-Abgleich, Abweichungserkennung und direkte Weiterleitung an die Buchhaltung.",
-        outcome: "Bearbeitungszeit -75%. Finanzteam konzentriert sich auf Ausnahmen und Strategie.",
+        title: "Rechnungs- und Dokumentenverarbeitung",
+        context:
+          "Ein Unternehmen, das monatlich Hunderte von Rechnungen in verschiedenen Formaten von diversen Lieferanten erhält.",
+        problem:
+          "Mitarbeiter verbringen erhebliche Zeit mit der Extraktion von Rechnungsdaten, der Eingabe in Buchhaltungssysteme und dem Abgleich von Bestellungen.",
+        solution:
+          "KI-gestützte Extraktion, automatischer Bestellabgleich, Abweichungserkennung und direkte Weiterleitung an Buchhaltungssysteme.",
+        outcome:
+          "Erhebliche Reduzierung der Bearbeitungszeit. Das Finanzteam kann sich auf Ausnahmen und strategische Arbeit konzentrieren statt auf Dateneingabe.",
       },
       {
         title: "Interne Freigabe-Workflows",
-        context: "Wachsendes Unternehmen, 120 Mitarbeiter. Einkauf, Reisen, Contractor-Onboarding per E-Mail verwaltet.",
-        problem: "Anfragen gehen in E-Mails verloren. Keine Transparenz, kein Audit-Trail. Prozess variiert je nach Manager.",
-        solution: "Strukturiertes Freigabesystem: Formulareinreichung, regelbasiertes Routing, Tracking, automatische Erinnerungen.",
-        outcome: "Freigabezeit: 5 Tage auf 1,2 Tage. Null verlorene Anfragen. Vollständiger Audit-Trail.",
+        context:
+          "Ein wachsendes Unternehmen, das Einkäufe, Reiseanträge und Auftragnehmer-Onboarding per E-Mail verwaltet.",
+        problem:
+          "Anfragen gehen in E-Mail-Verläufen verloren. Keine Transparenz über den Status, kein Audit-Trail. Der Prozess variiert je nach Vorgesetztem.",
+        solution:
+          "Strukturiertes Freigabesystem: Formularübermittlung, regelbasiertes Routing, Statusverfolgung und automatische Erinnerungen.",
+        outcome:
+          "Schnellere Freigabezyklen. Keine verlorenen Anfragen. Vollständiger Audit-Trail für Compliance.",
       },
       {
         title: "Operations-Dashboard",
-        context: "Distributionsunternehmen, das Vertrieb, Lager und Lieferung über separate wöchentliche Spreadsheets trackt.",
-        problem: "Berichte immer eine Woche alt, oft inkonsistent. Entscheidungen auf Bauchgefühl basiert.",
-        solution: "Live-Dashboard mit Daten aus ERP, Lagersystem und Lieferverfolgung. Konfigurierbare Alerts bei Anomalien.",
-        outcome: "Montagsmeetings: 2 Stunden auf 30 Minuten. Probleme werden in Echtzeit erkannt.",
+        context:
+          "Ein Distributionsunternehmen, das Verkaufs-, Lager- und Lieferdaten in separaten Tabellen verfolgt.",
+        problem:
+          "Berichte sind stets verspätet und oft inkonsistent. Entscheidungen basieren auf veralteten Informationen.",
+        solution:
+          "Live-Dashboard mit Daten aus ERP, Lagersystem und Liefersystemen. Konfigurierbare Warnmeldungen bei Anomalien und Schwellenwerten.",
+        outcome:
+          "Operative Transparenz in Echtzeit. Schnellere Problemerkennung. Fundiertere Entscheidungsfindung.",
       },
       {
-        title: "Kunden-Onboarding",
-        context: "B2B-Dienstleister, monatlich 15-20 neue Kunden mit mehrstufigem Prozess.",
-        problem: "Checkliste im geteilten Dokument. Schritte vergessen, inkonsistente Erfahrung, 2-3 Wochen Onboarding.",
-        solution: "Automatisierter Workflow: Willkommens-E-Mails, Account-Einrichtung, Dokumenten-Tracking, Status-Dashboard.",
-        outcome: "Onboarding: 3 Wochen auf 5 Tage. Keine vergessenen Schritte. Bessere Kundenzufriedenheit.",
-      },
-      {
-        title: "Back-Office-Digitalisierung",
-        context: "Fertigungsunternehmen. HR und Einkauf arbeiten noch mit Papierformularen und lokalen Dateien.",
-        problem: "Tage für Papierverarbeitung. Inkonsistente Kanäle. Nichts durchsuchbar oder nachvollziehbar.",
-        solution: "Digitale Workflows für Onboarding, Bestellanforderungen und Dokumentenmanagement mit Versionierung.",
-        outcome: "Papier eliminiert. HR-Onboarding -60%. Bestellanforderungen: 1 Woche auf 2 Tage.",
+        title: "Automatisiertes Kunden-Onboarding",
+        context:
+          "Ein B2B-Dienstleistungsunternehmen, das neue Kunden über einen mehrstufigen manuellen Prozess einführt.",
+        problem:
+          "Onboarding wird in geteilten Dokumenten verfolgt. Schritte werden vergessen, die Erfahrung ist inkonsistent, und der Prozess dauert länger als nötig.",
+        solution:
+          "Automatisierter Workflow: Willkommensnachrichten, Kontoeinrichtung, Nachverfolgung der Dokumentensammlung und Status-Dashboard.",
+        outcome:
+          "Kürzere Onboarding-Zeit. Konsistente Erfahrung für jeden Kunden. Keine vergessenen Schritte.",
       },
       {
         title: "Systemübergreifende Datensynchronisation",
-        context: "Handelsunternehmen mit Shopify, ERP, WMS und HubSpot — jedes System mit eigenen Daten.",
-        problem: "Stundenlange manuelle Synchronisation täglich. Häufige Diskrepanzen zwischen Systemen.",
-        solution: "Zentrale Integrationsschicht mit Echtzeit-Sync, Konflikterkennung und Fehlerbehandlung.",
-        outcome: "Manuelle Synchronisation eliminiert. Diskrepanzen gegen null. 15+ Stunden/Woche umverteilt.",
+        context:
+          "Ein Einzelhandelsunternehmen mit separaten Systemen für E-Commerce, ERP, Lagerverwaltung und CRM.",
+        problem:
+          "Mitarbeiter verbringen täglich Stunden mit manueller Datensynchronisation. Abweichungen zwischen Systemen verursachen operative Probleme.",
+        solution:
+          "Zentrale Integrationsschicht mit nahezu Echtzeit-Synchronisation, Konflikterkennung und strukturierter Fehlerbehandlung.",
+        outcome:
+          "Manuelle Synchronisationsaufgaben eliminiert. Konsistente Daten über alle Systeme hinweg. Mitarbeiterzeit für höherwertige Aufgaben umgewidmet.",
       },
       {
         title: "Automatisierte Kundenkommunikation",
-        context: "Dienstleistungsunternehmen. Statusupdates und Follow-ups werden manuell von drei Personen verwaltet.",
-        problem: "Nachrichten verspätet, inkonsistent oder vergessen. Kommunikation bricht in Hochphasen ein.",
-        solution: "Automatisierte Kommunikation, ausgelöst durch Service-Meilensteine. Konsistente Vorlagen mit Überschreibungsoption.",
-        outcome: "100% Kommunikationszuverlässigkeit. 20+ Stunden/Woche gespart. Zufriedenheit +35%.",
+        context:
+          "Ein Dienstleistungsunternehmen, das Statusaktualisierungen, Erinnerungen und Follow-ups manuell versendet.",
+        problem:
+          "Nachrichten kommen manchmal zu spät, sind inkonsistent oder werden ganz vergessen. Die Kommunikationsqualität sinkt in Stoßzeiten.",
+        solution:
+          "Automatisierte Nachrichten, ausgelöst durch Service-Meilensteine und Events. Konsistente Vorlagen mit manueller Überschreibungsmöglichkeit.",
+        outcome:
+          "Zuverlässige, zeitnahe Kommunikation. Reduzierter manueller Aufwand. Konsistentere Kundenerfahrung.",
       },
       {
-        title: "WhatsApp- & Telegram-Supportkanal",
-        context: "E-Commerce-Unternehmen mit 300+ täglichen Kundenanfragen über WhatsApp, Telegram und E-Mail.",
-        problem: "Drei Mitarbeiter beantworten manuell dieselben Fragen. Keine Erreichbarkeit außerhalb der Geschäftszeiten. Nachrichten gehen zwischen Kanälen verloren.",
-        solution: "Einheitlicher Messaging-Hub mit automatisierten FAQ-Antworten, Bestellstatus-Abfragen und intelligentem Routing an menschliche Agenten bei komplexen Anliegen.",
-        outcome: "70 % der Anfragen automatisch gelöst. Antwortzeit unter 30 Sekunden. Volle Erreichbarkeit außerhalb der Geschäftszeiten.",
-      },
-      {
-        title: "KI-Sprachassistent für eingehende Anrufe",
-        context: "Dienstleistungsunternehmen mit 100+ täglichen Anrufen — Terminbuchungen, Statusanfragen, allgemeine Fragen.",
-        problem: "Zwei Vollzeitkräfte am Telefon. Lange Wartezeiten. Verpasste Anrufe in Stoßzeiten und außerhalb der Geschäftszeiten.",
-        solution: "KI-Sprachassistent für eingehende Anrufe: FAQ-Beantwortung, Terminbuchung, Weiterleitung komplexer Anrufe an die richtige Abteilung.",
-        outcome: "60 % der Anrufe ohne menschliches Eingreifen bearbeitet. Null verpasste Anrufe. Mitarbeiter für höherwertige Aufgaben freigestellt.",
-      },
-      {
-        title: "YouTube-Content-Operations",
-        context: "Marketingteam, das monatlich 8-12 Videos auf mehreren YouTube-Kanälen mit lokalisierten Metadaten veröffentlicht.",
-        problem: "Manueller Upload, Titel-/Beschreibungs-/Tag-Eingabe, Thumbnail-Zuweisung und Planung. 3+ Stunden pro Video.",
-        solution: "Automatisierte Pipeline: Videoverarbeitung, Metadaten-Generierung, Thumbnail-Zuweisung, geplante Veröffentlichung und Performance-Tracking-Dashboard.",
-        outcome: "Veröffentlichungszeit auf 20 Minuten pro Video reduziert. Konsistente Metadaten-Qualität. Zentralisierte Analysen.",
-      },
-      {
-        title: "Vertriebspipeline-Automatisierung",
-        context: "B2B-Unternehmen mit 50+ aktiven Leads. Vertriebsteam nutzt CRM, trackt Follow-ups aber manuell und aktualisiert Deal-Stufen per Hand.",
-        problem: "Leads werden kalt durch verpasste Follow-ups. Inkonsistente Daten im CRM. Keine Sicht auf Pipeline-Gesundheit.",
-        solution: "Automatisiertes Lead-Scoring, verhaltensgesteuerte Follow-up-Sequenzen, automatische CRM-Updates und Pipeline-Dashboard mit Alerts.",
-        outcome: "Follow-up-Rate: 100 %. Lead-to-Meeting-Conversion +40 %. Echtzeit-Pipeline-Transparenz für das Management.",
+        title: "WhatsApp- & Telegram-Support",
+        context:
+          "Ein Unternehmen, das täglich Kundenanfragen über WhatsApp, Telegram und E-Mail erhält.",
+        problem:
+          "Mitarbeiter beantworten manuell wiederkehrende Fragen. Keine Erreichbarkeit außerhalb der Geschäftszeiten. Nachrichten gehen zwischen den Kanälen verloren.",
+        solution:
+          "Einheitlicher Messaging-Hub mit automatisierten FAQ-Antworten, Statusabfragen und intelligentem Routing an menschliche Agenten bei komplexen Anliegen.",
+        outcome:
+          "Schnellere Reaktionszeiten. Erweiterte Erreichbarkeit. Mitarbeiter konzentrieren sich auf Anfragen, die menschliche Aufmerksamkeit erfordern.",
       },
     ],
     cta: {
-      headline: "Erkennen Sie sich in diesen Szenarien?",
-      description: "Wenn Ihr Team Zeit mit Arbeit verbringt, die automatisiert werden sollte, sollten wir sprechen.",
-      primaryCta: "Beratungsgespräch buchen",
+      headline: "Erkennen Sie ein Szenario, das zu Ihrer Situation passt?",
+      description:
+        "Dies sind Beispiele für das, was entwickelt werden kann. Buchen Sie ein Erstgespräch, um Ihre konkreten Anforderungen zu besprechen.",
+      primaryCta: "Erstgespräch buchen",
     },
   },
 
   about: {
     hero: {
       label: "Über OpSolid",
-      headline: "Operative Infrastruktur für Unternehmen, die manuelle Prozesse hinter sich lassen",
-      description: "Sitz in Deutschland. Fokussiert auf eines: manuelle, repetitive Arbeit durch zuverlässige automatisierte Systeme zu ersetzen.",
+      headline:
+        "Praxisnahe Automatisierungssysteme für Unternehmen, die weniger manuelle Arbeit brauchen",
+      description:
+        "Sitz in Deutschland. Fokus auf den Ersatz manueller, wiederkehrender operativer Arbeit durch zuverlässige automatisierte Systeme.",
     },
     story: {
-      headline: "Warum es uns gibt",
+      headline: "Warum es OpSolid gibt",
       paragraphs: [
-        "Jedes wachsende Unternehmen erreicht einen Punkt, an dem manuelle Prozesse zum Engpass werden. Bestellungen stauen sich, Freigaben gehen in E-Mails verloren, Daten leben in unverbundenen Spreadsheets, und Teams verbringen mehr Zeit mit Overhead als mit wertschöpfender Arbeit.",
-        "OpSolid wurde gegründet, um genau dieses Problem zu lösen. Wir verbinden tiefes Prozessverständnis mit moderner Automatisierung, Integration und KI, um Systeme zu bauen, die operative Arbeit übernehmen — zuverlässig, konsistent und skalierbar.",
-        "Wir sind keine generische Technologie-Agentur. Wir bauen keine Marketing-Websites und schalten keine Werbung. Wir fokussieren uns auf operative Systeme: die Workflows, Tools und Integrationen, die ein Unternehmen jeden Tag am Laufen halten.",
+        "Jedes wachsende Unternehmen erreicht einen Punkt, an dem manuelle Prozesse zum Engpass werden. Bestellungen häufen sich, Freigaben gehen in E-Mails verloren, Daten liegen in getrennten Tabellen, und Teams verbringen mehr Zeit mit operativem Overhead als mit Arbeit, die das Unternehmen voranbringt.",
+        "OpSolid wurde gegründet, um genau das zu lösen. Durch die Verbindung von Prozessdenken mit modernen Automatisierungsplattformen und praxisnahen KI-Tools entwickelt OpSolid Systeme, die operative Arbeit übernehmen — zuverlässig, konsistent und ohne unnötige Komplexität hinzuzufügen.",
       ],
     },
     values: {
-      headline: "Wie wir über unsere Arbeit denken",
+      headline: "Wie OpSolid arbeitet",
       items: [
         {
           title: "Erst der Prozess, dann die Technologie",
-          description: "Wir investieren Zeit, um zu verstehen, wie Ihr Unternehmen tatsächlich arbeitet, bevor wir eine Lösung vorschlagen.",
+          description:
+            "Zeit wird investiert, um zu verstehen, wie Ihr Unternehmen arbeitet, bevor eine Lösung vorgeschlagen wird.",
         },
         {
-          title: "Gebaut für den Produktivbetrieb, nicht für Demos",
-          description: "Unsere Systeme verarbeiten echte Lasten. Wir entwickeln für Zuverlässigkeit, Fehlerbehandlung und Grenzfälle.",
+          title: "Für den Produktivbetrieb gebaut, nicht für Demos",
+          description:
+            "Systeme bewältigen reale Arbeitslasten. Sie sind auf Zuverlässigkeit, Fehlerbehandlung und Sonderfälle ausgelegt.",
         },
         {
           title: "Ergebnisse messen, nicht Features",
-          description: "Uns geht es um eingesparte Stunden, eliminierte Fehler und verbesserte Prozesse — nicht um Feature-Listen.",
+          description:
+            "Was zählt, sind eingesparte Stunden, reduzierte Fehler und verbesserte Prozesse — keine Feature-Listen.",
         },
         {
-          title: "Praktisch bleiben, ehrlich bleiben",
-          description: "Wir empfehlen Automatisierung dort, wo sie Sinn ergibt — und raten davon ab, wo nicht.",
+          title: "Pragmatisch und ehrlich bleiben",
+          description:
+            "Automatisierung wird dort empfohlen, wo sie sinnvoll ist — und dort davon abgeraten, wo sie es nicht ist.",
         },
       ],
     },
     founder: {
       name: "Hasan Dönmez",
-      title: "Gründer & Systemarchitekt",
-      education: "M.Sc. Elektrotechnik & Informationstechnik — Karlsruher Institut für Technologie (KIT)",
-      description: "Hasan hat einen Master-Abschluss in Elektrotechnik & Informationstechnik vom Karlsruher Institut für Technologie (KIT), einer der führenden Forschungsuniversitäten Deutschlands. Mit fundierter Expertise in Prozessautomatisierung, Systemintegration und KI-gestützten Workflows — ergänzt durch weiterführende Ausbildung in Data Science, Machine Learning, Deep Learning und Business Intelligence — baut er operative Systeme, die reale Geschäftsprobleme lösen. Sein Ingenieur-Hintergrund garantiert, dass jede Lösung auf Zuverlässigkeit, Skalierbarkeit und messbare Ergebnisse ausgelegt ist.",
-      expertiseLabel: "Kernkompetenzen",
-      expertise: [
-        "Prozessautomatisierung & Workflow-Engineering",
-        "Data Science & Machine Learning",
-        "Deep Learning & KI-Systeme",
-        "Business Intelligence & Analytics",
-        "Systemintegration & API-Entwicklung",
-      ],
-      footnote: "Sitz in Deutschland. Tätig für Unternehmen in Europa und international.",
+      title: "Gründer & Systems Architect",
+      education: "",
+      description:
+        "Unabhängiger Automatisierungsspezialist mit Sitz in Deutschland. Fokussiert auf die Konzeption und Entwicklung praxisnaher Automatisierungssysteme, Workflow-Integrationen und KI-gestützter Prozesse für den Geschäftsbetrieb.",
+      expertiseLabel: "",
+      expertise: [],
+      footnote:
+        "Sitz in Deutschland. Verfügbar für Projekte in ganz Europa und international.",
     },
     cta: {
-      headline: "Lassen Sie uns etwas bauen, das funktioniert",
-      description: "Wenn Ihre Abläufe weniger manuelle Arbeit und zuverlässigere Systeme brauchen, freuen wir uns auf Ihre Nachricht.",
-      primaryCta: "Kontakt aufnehmen",
+      headline: "Lassen Sie uns etwas Nützliches bauen",
+      description:
+        "Wenn Ihre Abläufe zu viel manuelle Arbeit und voneinander getrennte Prozesse beinhalten, kann OpSolid helfen.",
+      primaryCta: "Erstgespräch buchen",
     },
   },
 
   contact: {
     hero: {
       label: "Kontakt",
-      headline: "Lassen Sie uns über Ihre Abläufe sprechen",
-      description: "Ob Sie eine konkrete Automatisierungs-Herausforderung haben oder Möglichkeiten erkunden möchten — kein Verkaufsdruck, nur ein sachliches Gespräch.",
+      headline: "Sprechen wir über Ihre Abläufe",
+      description:
+        "Ob Sie eine konkrete Automatisierungsherausforderung haben oder erkunden möchten, was möglich ist — ein praxisnahes Gespräch, kein Verkaufsdruck.",
     },
     form: {
       name: "Vollständiger Name",
       email: "Geschäftliche E-Mail",
-      company: "Firmenname",
+      company: "Unternehmen",
       message: "Welche operative Herausforderung möchten Sie lösen?",
-      consent: "Ich stimme der Verarbeitung meiner Daten gemäß der Datenschutzerklärung zu. Meine Daten werden ausschließlich zur Bearbeitung dieser Anfrage verwendet.",
+      consent:
+        "Ich stimme der Verarbeitung meiner Daten gemäß der Datenschutzerklärung zu. Meine Daten werden ausschließlich zur Bearbeitung dieser Anfrage verwendet.",
       privacyLink: "Datenschutzerklärung",
       submit: "Nachricht senden",
       sending: "Wird gesendet...",
-      success: "Vielen Dank. Wir melden uns innerhalb von 1-2 Werktagen bei Ihnen.",
-      error: "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder schreiben Sie uns direkt.",
+      success:
+        "Vielen Dank. Sie erhalten innerhalb von 1–2 Werktagen eine Antwort.",
+      error:
+        "Etwas ist schiefgelaufen. Bitte versuchen Sie es erneut oder senden Sie direkt eine E-Mail.",
     },
     meeting: {
-      headline: "Lieber direkt sprechen?",
-      description: "Buchen Sie ein kostenloses 30-minütiges Erstgespräch. Wählen Sie einen passenden Termin — verfügbare Zeiten werden live aus unserem Kalender synchronisiert.",
-      cta: "Gespräch vereinbaren",
+      headline: "Lieber ein direktes Gespräch?",
+      description:
+        "Buchen Sie ein kostenloses 30-minütiges Erstgespräch. Wählen Sie einen passenden Termin — verfügbare Zeiten werden live synchronisiert.",
+      cta: "Termin vereinbaren",
     },
     info: {
       email: "hello@opsolid.de",
-      response: "Wir antworten in der Regel innerhalb von 1-2 Werktagen.",
-      location: "Sitz in Deutschland. Kunden in ganz Europa und international.",
+      response: "Übliche Antwortzeit: 1–2 Werktage.",
+      location:
+        "Sitz in Deutschland. Verfügbar für Projekte in ganz Europa und international.",
     },
   },
 
   footer: {
-    description: "Operative Infrastruktur für moderne Unternehmen. Automatisierung, interne Tools und Workflow-Systeme.",
+    description:
+      "Praxisnahe Automatisierungs- und KI-Systeme für den Geschäftsbetrieb.",
     company: "Unternehmen",
     services: "Leistungen",
     legal: "Rechtliches",
     resources: "Ressourcen",
-    copyright: `© ${new Date().getFullYear()} OpSolid. Alle Rechte vorbehalten.`,
+    copyright: `© ${new Date().getFullYear()} OpSolid. All rights reserved.`,
   },
 
   notFound: {
     title: "Seite nicht gefunden",
-    description: "Die gesuchte Seite existiert nicht oder wurde verschoben.",
-    backHome: "Zur Startseite",
+    description:
+      "Die gesuchte Seite existiert nicht oder wurde verschoben.",
+    backHome: "Zurück zur Startseite",
     contactUs: "Kontakt",
   },
 
   impressum: {
     title: "Impressum",
-    notice: "Dieses Impressum gilt für ein Unternehmen in Gründung. Die Angaben werden nach der Gewerbeanmeldung aktualisiert.",
+    notice:
+      "Dieses Impressum gilt für ein Unternehmen in Gründung. Die Angaben werden nach der Gewerbeanmeldung aktualisiert.",
     sections: {
       according: "Angaben gemäß § 5 TMG",
       representedBy: "Vertreten durch",
       contact: "Kontakt",
       phone: "Telefon: Auf Anfrage",
-      register: "Registereintrag",
-      registerText: "Ein Handelsregistereintrag besteht derzeit nicht. Das Unternehmen befindet sich in Gründung.",
+      register: "Handelsregister",
+      registerText:
+        "Ein Handelsregistereintrag liegt derzeit nicht vor. Das Unternehmen befindet sich in Gründung.",
       vatId: "Umsatzsteuer-ID",
-      vatIdText: "Wird nach Gewerbeanmeldung beantragt.",
-      responsibleContent: "Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV",
+      vatIdText: "Wird nach der Gewerbeanmeldung beantragt.",
+      responsibleContent:
+        "Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV",
       liabilityContent: "Haftung für Inhalte",
-      liabilityContentText: "Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.",
+      liabilityContentText:
+        "Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.",
       liabilityLinks: "Haftung für Links",
-      liabilityLinksText: "Unser Angebot enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber verantwortlich.",
-      address: "Vollständige Adresse wird nach Gewerbeanmeldung ergänzt.",
+      liabilityLinksText:
+        "Unsere Website enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber verantwortlich.",
+      address: "Vollständige Adresse wird nach der Gewerbeanmeldung ergänzt.",
     },
   },
 
   privacy: {
     title: "Datenschutzerklärung",
     subtitle: "Datenschutzerklärung",
-    notice: "Diese Datenschutzerklärung ist ein Entwurf. Sie wird nach der Gewerbeanmeldung durch eine rechtlich geprüfte Fassung ersetzt.",
+    notice:
+      "Diese Datenschutzerklärung ist ein Entwurf. Sie wird nach der Gewerbeanmeldung durch eine rechtlich geprüfte Fassung ersetzt.",
     lastUpdated: "Letzte Aktualisierung: März 2026",
     sections: [
       {
         title: "1. Datenschutz auf einen Blick",
-        content: "Im Folgenden erhalten Sie einen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.",
+        content:
+          "Im Folgenden erhalten Sie einen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.",
       },
       {
         title: "2. Verantwortliche Stelle",
         isResponsible: "true",
       },
       {
-        title: "3. Datenerfassung",
+        title: "3. Datenerhebung",
         subsections: [
           {
             title: "Kontaktformular",
-            content: "Die über das Kontaktformular übermittelten Daten werden zur Bearbeitung der Anfrage und für Nachfragen gespeichert. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO bei vertragsbezogenen Anfragen, Art. 6 Abs. 1 lit. f DSGVO bei berechtigtem Interesse oder Art. 6 Abs. 1 lit. a DSGVO bei erteilter Einwilligung.",
+            content:
+              "Über das Kontaktformular übermittelte Daten werden zur Bearbeitung der Anfrage und für Rückfragen gespeichert. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO bei vertragsbezogenen Anfragen, Art. 6 Abs. 1 lit. f DSGVO bei berechtigtem Interesse oder Art. 6 Abs. 1 lit. a DSGVO bei erteilter Einwilligung.",
           },
           {
-            title: "Server-Logdateien",
-            content: "Der Hosting-Anbieter erfasst automatisch Browsertyp, Betriebssystem, Referrer-URL, Hostname und Zeitpunkt der Anfrage. Diese Daten können keinen bestimmten Personen zugeordnet werden.",
+            title: "Server-Log-Dateien",
+            content:
+              "Der Hosting-Anbieter erfasst automatisch Browsertyp, Betriebssystem, Referrer-URL, Hostname und Zeitpunkt der Anfrage. Diese Daten können keiner bestimmten Person zugeordnet werden.",
           },
         ],
       },
       {
         title: "4. Hosting",
-        content: "Diese Website wird bei Vercel, Inc. (440 N Baxter St, Los Angeles, CA 90012, USA) gehostet. Beim Besuch unserer Website werden Ihre IP-Adresse und Nutzungsdaten von Vercel verarbeitet. Weitere Informationen finden Sie in der Datenschutzerklärung von Vercel.",
+        content:
+          "Diese Website wird bei Vercel, Inc. (440 N Baxter St, Los Angeles, CA 90012, USA) gehostet. Beim Besuch unserer Website werden Ihre IP-Adresse und Nutzungsdaten von Vercel verarbeitet. Weitere Informationen finden Sie in der Datenschutzerklärung von Vercel.",
       },
       {
-        title: "5. Cookies & Analysetools",
-        content: "Diese Website verwendet keine Tracking-Cookies oder Analysetools. Eine Sprachpräferenz wird im lokalen Speicher Ihres Browsers gespeichert, um Ihre gewählte Sprache zu merken.",
+        title: "5. Cookies & Analyse",
+        content:
+          "Diese Website verwendet keine Tracking-Cookies oder Analysetools. Eine Sprachpräferenz wird im lokalen Speicher Ihres Browsers gespeichert, um Ihre ausgewählte Sprache zu merken.",
       },
       {
         title: "6. Ihre Rechte",
-        content: "Sie haben das Recht auf Auskunft über Ihre gespeicherten Daten, Berichtigung oder Löschung, Einschränkung der Verarbeitung und Beschwerde bei einer Aufsichtsbehörde. Bei erteilter Einwilligung können Sie diese jederzeit widerrufen.",
+        content:
+          "Sie haben das Recht auf Auskunft über Ihre gespeicherten Daten, Berichtigung oder Löschung, Einschränkung der Verarbeitung sowie Beschwerde bei einer Aufsichtsbehörde. Wurde eine Einwilligung erteilt, können Sie diese jederzeit widerrufen.",
       },
     ],
   },
@@ -710,7 +706,8 @@ export const content: Content = {
     hero: {
       label: "Blog",
       headline: "Einblicke in Automatisierung & Betrieb",
-      description: "Praxisnahe Artikel über Workflow-Automatisierung, Integrationsstrategien und operative Effizienz.",
+      description:
+        "Praxisnahe Artikel über Workflow-Automatisierung, Integrationsstrategien und operative Effizienz.",
     },
     readMore: "Artikel lesen",
     minRead: "Min. Lesezeit",
@@ -723,49 +720,56 @@ export const content: Content = {
     },
     posts: [
       {
-        slug: "warum-n8n-die-zukunft-der-workflow-automatisierung-ist",
+        slug: "why-n8n-is-the-future-of-workflow-automation",
         title: "Warum n8n die Zukunft der Workflow-Automatisierung ist",
-        excerpt: "Erfahren Sie, warum n8n zur bevorzugten Plattform für Unternehmen geworden ist, die leistungsstarke, selbst gehostete Workflow-Automatisierung mit voller Datenkontrolle benötigen.",
+        excerpt:
+          "Erfahren Sie, warum n8n zur bevorzugten Plattform für Unternehmen geworden ist, die leistungsstarke, selbst gehostete Workflow-Automatisierung mit voller Kontrolle über ihre Daten benötigen.",
         category: "automation",
         date: "2026-03-15",
         readTime: "6",
       },
       {
-        slug: "5-zeichen-dass-ihr-unternehmen-prozessautomatisierung-braucht",
-        title: "5 Zeichen, dass Ihr Unternehmen Prozessautomatisierung braucht",
-        excerpt: "Versinkt Ihr Team in manueller Arbeit? Hier sind die entscheidenden Indikatoren, dass es Zeit ist, in Automatisierungsinfrastruktur zu investieren.",
+        slug: "5-signs-your-business-needs-process-automation",
+        title: "5 Anzeichen, dass Ihr Unternehmen Prozessautomatisierung braucht",
+        excerpt:
+          "Verbringt Ihr Team zu viel Zeit mit manueller Arbeit? Hier sind die wichtigsten Indikatoren, dass es Zeit ist, in Automatisierung zu investieren.",
         category: "operations",
         date: "2026-03-08",
         readTime: "5",
       },
       {
-        slug: "crm-und-erp-verbinden-der-integrations-leitfaden",
+        slug: "connecting-crm-erp-the-integration-playbook",
         title: "CRM & ERP verbinden: Der Integrations-Leitfaden",
-        excerpt: "Ein praktischer Leitfaden zur Synchronisierung Ihrer CRM- und ERP-Systeme — Datensilos beseitigen und eine einheitliche Datenquelle schaffen.",
+        excerpt:
+          "Ein praktischer Leitfaden zur Synchronisierung Ihrer CRM- und ERP-Systeme — Datensilos abbauen und eine zentrale Datenquelle schaffen.",
         category: "integration",
         date: "2026-02-28",
         readTime: "8",
       },
       {
-        slug: "ki-chatbots-vs-regelbasierte-bots",
+        slug: "ai-chatbots-vs-rule-based-bots",
         title: "KI-Chatbots vs. regelbasierte Bots: Was brauchen Sie?",
-        excerpt: "Den Unterschied zwischen KI-gesteuerten und regelbasierten Chatbots verstehen — und wann welcher Ansatz für Ihr Unternehmen sinnvoll ist.",
+        excerpt:
+          "Den Unterschied zwischen KI-gestützten und regelbasierten Chatbots verstehen — und wann welcher Ansatz für Ihr Unternehmen sinnvoll ist.",
         category: "ai",
         date: "2026-02-20",
         readTime: "7",
       },
       {
-        slug: "make-vs-zapier-vs-n8n-vergleich",
-        title: "Make vs. Zapier vs. n8n: Die richtige Automatisierungsplattform wählen",
-        excerpt: "Ein detaillierter Vergleich der drei beliebtesten Automatisierungsplattformen — Funktionen, Preise, Flexibilität und Einsatzszenarien.",
+        slug: "make-vs-zapier-vs-n8n-comparison",
+        title:
+          "Make vs. Zapier vs. n8n: Die richtige Automatisierungsplattform wählen",
+        excerpt:
+          "Ein detaillierter Vergleich der drei beliebtesten Automatisierungsplattformen — Funktionen, Preise, Flexibilität und wann welche zum Einsatz kommt.",
         category: "automation",
         date: "2026-02-12",
         readTime: "10",
       },
       {
-        slug: "whatsapp-business-automatisierung-leitfaden",
-        title: "Der komplette Leitfaden zur WhatsApp Business Automatisierung",
-        excerpt: "Wie Sie die Kundenkommunikation auf WhatsApp automatisieren — von Bestellbestätigungen bis zu Support-Bots — ohne die persönliche Note zu verlieren.",
+        slug: "whatsapp-business-automation-guide",
+        title: "Der vollständige Leitfaden zur WhatsApp Business Automatisierung",
+        excerpt:
+          "So automatisieren Sie Kundenkommunikation über WhatsApp — von Bestellbestätigungen bis zu Support-Bots — ohne die persönliche Note zu verlieren.",
         category: "automation",
         date: "2026-02-05",
         readTime: "9",
@@ -773,8 +777,9 @@ export const content: Content = {
     ],
     cta: {
       headline: "Möchten Sie Ihre Abläufe automatisieren?",
-      description: "Buchen Sie ein kostenloses Beratungsgespräch. Wir identifizieren die wirkungsvollsten Automatisierungsmöglichkeiten für Ihr Unternehmen.",
-      primaryCta: "Beratungsgespräch buchen",
+      description:
+        "Buchen Sie ein kostenloses Erstgespräch. OpSolid hilft Ihnen, die wirkungsvollsten Automatisierungsmöglichkeiten für Ihr Unternehmen zu identifizieren.",
+      primaryCta: "Erstgespräch buchen",
     },
   },
 
@@ -782,70 +787,82 @@ export const content: Content = {
     hero: {
       label: "FAQ",
       headline: "Häufig gestellte Fragen",
-      description: "Häufige Fragen zu unseren Automatisierungsdiensten, unserem Prozess und unserer Technologie.",
+      description:
+        "Häufige Fragen zu Automatisierungsleistungen, Vorgehensweise und Technologie.",
     },
     allFilter: "Alle",
     categories: {
       general: "Allgemein",
       technical: "Technisch",
-      process: "Prozess & Preise",
+      process: "Ablauf & Preise",
     },
     items: [
       {
         question: "Was genau macht OpSolid?",
-        answer: "Wir bauen Automatisierungssysteme, Integrationen und interne Tools für Unternehmen. Wenn Ihr Team Zeit mit manueller, repetitiver Arbeit verbringt — Dateneingabe, E-Mail-Follow-ups, Bestellverarbeitung, Berichtserstellung — bauen wir Systeme, die das automatisch, zuverlässig und skalierbar erledigen.",
+        answer:
+          "OpSolid entwickelt Automatisierungssysteme, Integrationen und interne Tools für Unternehmen. Wenn Ihr Team Zeit mit manueller, wiederkehrender Arbeit verbringt — Dateneingabe, E-Mail-Nachfassaktionen, Bestellverarbeitung, Berichterstellung — baut OpSolid Systeme, die das automatisch und zuverlässig erledigen.",
         category: "general",
       },
       {
-        question: "Welche Tools und Plattformen nutzen Sie?",
-        answer: "Unsere primäre Automatisierungsplattform ist n8n, ergänzt durch Make und Zapier wo passend. Wir bauen auch individuelle Integrationen mit APIs, Datenbanken und Cloud-Diensten. Für KI-Lösungen nutzen wir OpenAI, Claude und eigene ML-Modelle. Wir wählen immer das richtige Tool für den jeweiligen Anwendungsfall.",
+        question: "Welche Tools und Plattformen werden eingesetzt?",
+        answer:
+          "Die primäre Automatisierungsplattform ist n8n, ergänzt durch Make und Zapier, wo es sinnvoll ist. Individuelle Integrationen werden über APIs, Datenbanken und Cloud-Dienste erstellt. Für KI-gestützte Workflows kommen zuverlässige Foundation Models und strukturierte Ansätze zum Einsatz. Das richtige Tool wird für jeden Anwendungsfall gewählt — nie eine Einheitslösung.",
         category: "technical",
       },
       {
-        question: "Was ist n8n und warum bevorzugen Sie es?",
-        answer: "n8n ist eine Open-Source-Workflow-Automatisierungsplattform, die selbst gehostet werden kann und Ihnen volle Kontrolle über Ihre Daten und Workflows gibt. Sie ist extrem flexibel, unterstützt Hunderte von Integrationen und ermöglicht individuellen Code bei Bedarf. Wir bevorzugen n8n wegen der besten Balance aus Leistung, Flexibilität und Datensouveränität.",
+        question: "Was ist n8n und warum wird es bevorzugt?",
+        answer:
+          "n8n ist eine Open-Source-Plattform für Workflow-Automatisierung, die selbst gehostet werden kann und Ihnen volle Kontrolle über Ihre Daten und Workflows gibt. Sie ist flexibel, unterstützt Hunderte von Integrationen und erlaubt bei Bedarf individuellen Code. Sie bietet eine starke Balance aus Leistungsfähigkeit, Flexibilität und Datenhoheit für die Geschäftsautomatisierung.",
         category: "technical",
       },
       {
         question: "Wie lange dauert ein typisches Projekt?",
-        answer: "Die meisten Projekte dauern 2-6 Wochen von der Analyse bis zum Deployment, abhängig von der Komplexität. Einfache Automatisierungen können innerhalb weniger Tage live sein. Wir arbeiten iterativ — Sie sehen früh und regelmäßig Ergebnisse.",
+        answer:
+          "Die meisten Projekte dauern 2–6 Wochen von der Analyse bis zum Deployment, abhängig von der Komplexität. Einfache Automatisierungen können innerhalb von Tagen live sein. Komplexe Multi-System-Integrationen können länger dauern. Die Arbeit erfolgt iterativ — Sie sehen früh und regelmäßig Ergebnisse.",
         category: "process",
       },
       {
-        question: "Bieten Sie nach dem Deployment fortlaufenden Support?",
-        answer: "Ja. Wir bieten Monitoring-, Wartungs- und Optimierungspakete. Automatisierungssysteme entwickeln sich mit Ihrem Unternehmen weiter — wir sorgen dafür, dass Ihre Systeme Schritt halten. Zudem liefern wir Dokumentation und Schulungen.",
+        question: "Gibt es nach dem Deployment laufenden Support?",
+        answer:
+          "Ja. Monitoring, Wartung und Optimierung stehen nach dem Deployment zur Verfügung. Automatisierungssysteme entwickeln sich mit Ihrem Unternehmen weiter — laufender Support stellt sicher, dass Ihre Systeme Schritt halten. Dokumentation und Schulungen werden ebenfalls bereitgestellt, damit Ihr Team den täglichen Betrieb eigenständig verwalten kann.",
         category: "process",
       },
       {
         question: "Was kostet es?",
-        answer: "Jedes Projekt ist anders. Wir bieten ein kostenloses Erstgespräch, um Ihre Anforderungen zu verstehen, und erstellen dann ein transparentes Angebot. Unsere Preise sind projektbasiert, nicht stundenbasiert — Sie kennen die Investition im Voraus.",
+        answer:
+          "Jedes Projekt ist anders. Ein kostenloses Erstgespräch hilft, Ihre Anforderungen zu verstehen, gefolgt von einem transparenten Angebot. Die Preisgestaltung ist projektbasiert, nicht stundenbasiert — Sie kennen die Investition im Voraus.",
         category: "process",
       },
       {
-        question: "Können Sie sich in unsere bestehenden Systeme integrieren?",
-        answer: "Mit ziemlicher Sicherheit. Wir arbeiten mit CRMs (HubSpot, Salesforce, Pipedrive), ERPs (SAP, Oracle, Odoo), E-Commerce-Plattformen (Shopify, WooCommerce), Datenbanken, Google Workspace und praktisch jedem System mit API.",
+        question: "Kann OpSolid bestehende Systeme integrieren?",
+        answer:
+          "Mit großer Wahrscheinlichkeit ja. OpSolid arbeitet mit CRMs (HubSpot, Salesforce, Pipedrive), ERPs (SAP, Oracle, Odoo), E-Commerce-Plattformen (Shopify, WooCommerce), Datenbanken, Google Workspace und praktisch jedem System mit API.",
         category: "technical",
       },
       {
-        question: "Müssen wir unsere bestehenden Tools wechseln?",
-        answer: "Nein. Wir bauen Systeme, die Ihre bestehenden Tools verbinden — wir ersetzen sie nicht. Unser Ziel ist es, das, was Sie bereits haben, besser zusammenarbeiten zu lassen und Datensilos sowie manuelle Übergaben zu eliminieren.",
+        question: "Müssen bestehende Tools ersetzt werden?",
+        answer:
+          "Nein. OpSolid entwickelt Systeme, die Ihre bestehenden Tools verbinden — nicht ersetzen. Das Ziel ist, das, was Sie bereits haben, besser zusammenarbeiten zu lassen und Datensilos sowie manuelle Übergaben zu eliminieren.",
         category: "general",
       },
       {
-        question: "Sind unsere Daten sicher?",
-        answer: "Absolut. Wir können die gesamte Automatisierungsinfrastruktur in Ihrer eigenen Umgebung hosten. Wir folgen den DSGVO-Anforderungen, implementieren Verschlüsselung für sensible Daten und nutzen sichere API-Verbindungen. Keine Daten laufen über Drittanbieter-Server, es sei denn, Sie wählen explizit Cloud-gehostete Lösungen.",
+        question: "Sind die Daten sicher?",
+        answer:
+          "Ja. Die gesamte Automatisierungsinfrastruktur kann in Ihrer eigenen Umgebung selbst gehostet werden. DSGVO-Anforderungen werden eingehalten, Verschlüsselung wird für sensible Daten eingesetzt, und alle Verbindungen nutzen sichere APIs. Keine Daten passieren Drittanbieter-Server, es sei denn, Sie entscheiden sich ausdrücklich für cloudbasierte Lösungen.",
         category: "technical",
       },
       {
-        question: "Welche Branchen bedienen Sie?",
-        answer: "Wir arbeiten branchenübergreifend — E-Commerce, Logistik, Fertigung, Dienstleistungen und mehr. Unsere Lösungen werden um Ihre Prozesse herum gebaut, nicht um Ihre Branche. Wenn Sie Abläufe mit repetitiver manueller Arbeit haben, können wir helfen.",
+        question: "Welche Branchen werden bedient?",
+        answer:
+          "OpSolid arbeitet branchenübergreifend — E-Commerce, Logistik, Fertigung, professionelle Dienstleistungen und mehr. Lösungen werden um Ihre Prozesse herum gebaut, nicht um Ihre Branchenbezeichnung. Wenn Ihre Abläufe wiederkehrende manuelle Arbeit beinhalten, kann Automatisierung helfen.",
         category: "general",
       },
     ],
     cta: {
       headline: "Noch Fragen?",
-      description: "Wir beantworten gerne weitere Fragen. Buchen Sie ein kostenloses Beratungsgespräch und lassen Sie uns über Ihre Situation sprechen.",
-      primaryCta: "Beratungsgespräch buchen",
+      description:
+        "Buchen Sie ein kostenloses Erstgespräch, um Ihre konkrete Situation zu besprechen — unverbindlich.",
+      primaryCta: "Erstgespräch buchen",
     },
   },
 } as const;

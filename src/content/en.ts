@@ -6,102 +6,79 @@
 
 export const content = {
   nav: {
-    solutions: "Solutions",
-    useCases: "Use Cases",
+    solutions: "Services",
+    useCases: "Example Solutions",
     about: "About",
     contact: "Contact",
-    cta: "Get in Touch",
+    cta: "Book a Discovery Call",
     blog: "Blog",
     faq: "FAQ",
   },
 
   home: {
     hero: {
-      headline: "AI-Powered Automation\nfor Modern Businesses",
+      headline: "Practical Automation\nfor Business Operations",
       subheadline:
-        "We integrate next-generation AI agents and automation systems into your operations — replacing manual work with intelligent, self-running workflows that keep your business ahead.",
-      primaryCta: "Book a Consultation",
-      secondaryCta: "Explore Solutions",
-      stats: [
-        { value: "80%", label: "Less Manual Work" },
-        { value: "3x", label: "Faster Processes" },
-        { value: "24/7", label: "AI-Powered Operations" },
-      ],
+        "OpSolid helps businesses replace manual, repetitive work with reliable automated systems — from workflow automation and systems integration to AI-assisted processes.",
+      primaryCta: "Book a Discovery Call",
+      secondaryCta: "See Services",
     },
 
     capabilities: [
-      "AI Agent Integration",
-      "Process Automation",
+      "Workflow Automation",
       "Systems Integration",
-      "Workflow Engineering",
-      "Intelligent Chatbots",
-      "Next-Gen AI Solutions",
+      "Internal Tools",
+      "AI-Assisted Workflows",
+      "Process Digitization",
+      "Operational Dashboards",
     ],
 
     whatWeDo: {
-      label: "What We Do",
-      headline: "We bring AI and automation to your business operations",
+      label: "What OpSolid Does",
+      headline: "Automation and AI systems built for real operations",
       description:
-        "The world is evolving fast — AI agents, intelligent automation, and connected systems are no longer optional. We integrate the latest AI technologies and automation platforms into your operations, so your business stays competitive, efficient, and ready for what's next.",
+        "Many businesses still rely on manual processes, disconnected tools, and spreadsheet-based tracking. OpSolid designs and builds automation systems that connect your tools, streamline your workflows, and reduce the operational overhead that slows teams down.",
       points: [
-        "Deploy AI agents that handle tasks autonomously",
-        "Automate complex workflows with n8n and Make",
-        "Connect all your tools into intelligent systems",
-        "Stay ahead with next-generation AI technology",
+        "Automate repetitive workflows with n8n, Make, and custom integrations",
+        "Connect CRM, ERP, databases, and communication tools into unified systems",
+        "Build custom dashboards and internal tools for your team",
+        "Add AI-assisted processes where they create practical value",
       ],
     },
 
     solutions: {
-      label: "Solutions",
-      headline: "What we build",
+      label: "Focus Areas",
+      headline: "What OpSolid can build",
       items: [
         {
-          title: "Process Automation",
+          title: "Workflow Automation",
           description:
-            "Replace manual steps with reliable automated workflows — from data entry to approvals to notifications. Powered by n8n, custom scripts, and API orchestration.",
+            "Automated workflows that replace manual steps — from data entry and approvals to notifications and reporting. Built with n8n, Make, and custom integrations.",
           icon: "workflow",
-        },
-        {
-          title: "Internal Tools",
-          description:
-            "Custom dashboards, admin panels, and operational interfaces built for how your team actually works.",
-          icon: "layout",
-        },
-        {
-          title: "Workflow Orchestration",
-          description:
-            "End-to-end orchestration that connects people, processes, and decisions into trackable, repeatable systems.",
-          icon: "gitBranch",
         },
         {
           title: "Systems Integration",
           description:
-            "Connect your CRM, ERP, warehouse, databases, and communication tools into a single, synchronized operational layer.",
+            "Connect your CRM, ERP, databases, and communication tools into a single, synchronized operational layer. No more manual data transfers.",
           icon: "plug",
         },
         {
-          title: "Marketing & Sales Automation",
+          title: "Internal Tools & Dashboards",
           description:
-            "Automated lead capture, follow-up sequences, CRM updates, YouTube content operations, and campaign tracking.",
-          icon: "target",
+            "Custom-built operational interfaces, admin panels, and dashboards designed around how your team actually works.",
+          icon: "layout",
         },
         {
-          title: "Shipping & Order Ops",
+          title: "AI-Assisted Workflows",
           description:
-            "Automated order processing, carrier integration, and fulfillment workflows — one area where our systems deliver immediate ROI.",
-          icon: "package",
-        },
-        {
-          title: "Messaging & Communication",
-          description:
-            "Automate customer communication across WhatsApp, Telegram, email, and SMS — from support tickets to transactional updates.",
-          icon: "messageSquare",
-        },
-        {
-          title: "AI Agents & Voice Assistants",
-          description:
-            "Intelligent AI agents for inbound/outbound voice calls, customer support, lead qualification, and autonomous task execution. Multi-agent systems that collaborate, reason, and act — powered by the latest foundation models.",
+            "Chatbots, voice assistants, document processing, and intelligent routing — practical AI applications embedded into your existing processes.",
           icon: "bot",
+        },
+        {
+          title: "Communication Automation",
+          description:
+            "Automated messaging across WhatsApp, Telegram, email, and SMS — from support responses to transactional notifications and follow-ups.",
+          icon: "messageSquare",
         },
       ],
     },
@@ -112,77 +89,71 @@ export const content = {
       items: [
         {
           before: "Manual emails and follow-ups",
-          after: "Automated workflows with smart notifications",
+          after: "Automated workflows with structured notifications",
         },
         {
           before: "Spreadsheet-based tracking",
-          after: "Connected systems with real-time data",
+          after: "Connected systems with consistent data",
         },
         {
           before: "Repetitive data entry",
-          after: "Reliable, error-free processes",
+          after: "Reliable, automated processes",
         },
         {
           before: "Fragmented, disconnected tools",
           after: "Integrated operations across platforms",
         },
         {
-          before: "Missed messages across WhatsApp, email, and phone",
-          after: "Unified, automated communication across all channels",
+          before: "Messages scattered across channels",
+          after: "Unified, automated communication",
         },
         {
-          before: "Manual follow-ups and lead tracking",
-          after: "Automated sales pipeline with intelligent routing",
+          before: "Manual follow-ups and task tracking",
+          after: "Structured workflows with clear ownership",
         },
       ],
     },
 
     useCases: {
-      label: "Use Cases",
-      headline: "Where we deliver results",
+      label: "Where Automation Helps",
+      headline: "Typical problem areas",
       items: [
         {
-          title: "Shipping & Order Operations",
-          description: "Automate order intake, label generation, carrier selection, and tracking updates.",
+          title: "Order & Fulfillment Operations",
+          description:
+            "Automate order intake, status updates, and fulfillment tracking across channels.",
         },
         {
           title: "Document Processing",
-          description: "Extract, classify, and route invoices, contracts, and forms automatically.",
+          description:
+            "Extract, classify, and route invoices, contracts, and forms with structured workflows.",
         },
         {
           title: "Internal Approvals",
-          description: "Structured approval workflows for purchases, contracts, and budget requests.",
+          description:
+            "Structured approval workflows for purchases, contracts, and operational requests.",
         },
         {
-          title: "Reporting & Dashboards",
-          description: "Live dashboards that consolidate data from multiple sources automatically.",
+          title: "Operational Dashboards",
+          description:
+            "Dashboards that consolidate data from multiple sources into a single operational view.",
         },
         {
-          title: "Customer Operations",
-          description: "Streamline onboarding, support routing, and client communication.",
-        },
-        {
-          title: "WhatsApp & Telegram Automation",
-          description: "Automated messaging, support bots, and transactional notifications across channels.",
-        },
-        {
-          title: "AI Voice & Chat Assistants",
-          description: "Intelligent agents that handle inbound calls, answer questions, and route inquiries.",
-        },
-        {
-          title: "Sales Pipeline Automation",
-          description: "Lead scoring, follow-up sequences, CRM sync, and conversion tracking.",
+          title: "Customer Communication",
+          description:
+            "Automated messaging, follow-ups, and status updates across WhatsApp, email, and more.",
         },
         {
           title: "Data Synchronization",
-          description: "Keep your CRM, ERP, and warehouse systems in sync — in real time.",
+          description:
+            "Keep CRM, ERP, and other business systems in sync — reducing manual data transfers.",
         },
       ],
     },
 
     integrations: {
       label: "Integrations",
-      headline: "Tools and platforms we connect",
+      headline: "Tools and platforms OpSolid connects",
       items: [
         { name: "WhatsApp", icon: "messageCircle" },
         { name: "Telegram", icon: "send" },
@@ -201,98 +172,141 @@ export const content = {
 
     howWeWork: {
       label: "Process",
-      headline: "How we work with you",
+      headline: "How a typical engagement works",
       steps: [
         {
           step: "01",
           title: "Discover",
-          description: "We map your processes, identify bottlenecks, and find where automation has the highest impact.",
+          description:
+            "Understanding your processes, identifying bottlenecks, and finding where automation creates the most practical value.",
         },
         {
           step: "02",
           title: "Design",
-          description: "We architect the right system — choosing tools, integrations, and workflows for your needs.",
+          description:
+            "Choosing the right tools, integrations, and workflow architecture for your specific needs.",
         },
         {
           step: "03",
           title: "Build",
-          description: "We develop, test, and deploy iteratively — keeping you involved at every step.",
+          description:
+            "Developing, testing, and deploying iteratively — with clear communication at every step.",
         },
         {
           step: "04",
           title: "Improve",
-          description: "We monitor, optimize, and extend your systems as your business evolves.",
+          description:
+            "Monitoring, optimizing, and extending your systems as your operations evolve.",
         },
       ],
     },
 
     whyUs: {
       label: "Why OpSolid",
-      headline: "What sets us apart",
+      headline: "What to expect",
       points: [
         {
-          title: "Business-First Approach",
-          description: "We start with your operations, not our technology. Every system we build solves a real problem.",
+          title: "Process-First Thinking",
+          description:
+            "Every project starts with understanding how your business operates — not with a technology pitch.",
         },
         {
           title: "Custom-Fit, Not Off-the-Shelf",
-          description: "Your systems are designed around how your business works — no templates, no compromises.",
+          description:
+            "Your systems are designed around your actual workflows — no generic templates, no forced compromises.",
         },
         {
           title: "Built for Production",
-          description: "Our solutions run real workloads. We engineer for reliability, not demos.",
+          description:
+            "Solutions are engineered for reliability and real workloads — with proper error handling and monitoring.",
         },
         {
-          title: "Europe-Based, Internationally Minded",
-          description: "Based in Germany, serving companies across Europe and beyond. We understand local requirements and international scale.",
+          title: "Germany-Based, Internationally Minded",
+          description:
+            "Based in Germany, serving businesses across Europe and beyond. Familiar with local requirements and international contexts.",
         },
       ],
     },
 
     cta: {
-      headline: "Ready to bring AI into your operations?",
+      headline: "Ready to automate your operations?",
       description:
-        "Book a free consultation. We'll identify where AI agents and automation can transform your business — and build a roadmap to get you there.",
-      primaryCta: "Book a Consultation",
-    },
-
-    results: {
-      label: "Results",
-      headline: "Measurable impact on your operations",
-      items: [
-        { value: "80%", label: "Less Manual Work", description: "Automation typically eliminates up to 80% of repetitive manual tasks" },
-        { value: "5-10x", label: "ROI in Year One", description: "Businesses see 5-10x return on automation investment within 12 months" },
-        { value: "60%", label: "Faster Operations", description: "Process cycle times reduced by 60% or more with intelligent workflows" },
-        { value: "35%", label: "Cost Savings", description: "Average operational cost reduction through automation and AI agents" },
-      ],
+        "Book a free discovery call. OpSolid will help identify where automation can reduce manual work and improve your operational workflows.",
+      primaryCta: "Book a Discovery Call",
     },
 
     toolsShowcase: {
-      label: "Powered By",
-      headline: "Powered by next-generation AI & automation platforms",
-      description: "We leverage cutting-edge AI models, autonomous agents, and the most powerful automation platforms to build intelligent systems that evolve with your business.",
+      label: "Built With",
+      headline: "Automation platforms and AI tools OpSolid works with",
+      description:
+        "OpSolid uses reliable, proven automation platforms and practical AI tools to build systems that fit your operations — choosing the right tool for each use case.",
       tools: [
-        { name: "n8n", description: "Self-hosted workflow engine for complex automations. Webhook triggers, conditional logic, and AI agent orchestration loops.", techFeatures: ["Self-Hosted", "500+ Integrations", "AI Agent Loops", "Webhook Triggers", "Error Handling"] },
-        { name: "Make", description: "Visual scenario builder for multi-step data routing. Real-time API connections, error branching, and automated data transformations.", techFeatures: ["Visual Builder", "Data Routing", "API Modules", "Error Branching", "Real-Time"] },
-        { name: "Zapier", description: "Quick-connect 6,000+ apps with multi-step automations. Conditional paths, scheduled triggers, and AI-enhanced filtering.", techFeatures: ["6,000+ Apps", "Multi-Step", "Conditional Logic", "Schedulers", "Filters"] },
-        { name: "AI Agents", description: "Autonomous AI agents for voice calls, customer support, data analysis, and decision-making. Built with the latest foundation models, RAG pipelines, and multi-agent orchestration.", techFeatures: ["Voice Assistants", "Multi-Agent", "RAG Pipeline", "Tool Use", "Real-Time"] },
+        {
+          name: "n8n",
+          description:
+            "Self-hosted workflow engine for complex automations. Webhook triggers, conditional logic, and full data sovereignty.",
+          techFeatures: [
+            "Self-Hosted",
+            "500+ Integrations",
+            "Webhook Triggers",
+            "Error Handling",
+            "Data Sovereignty",
+          ],
+        },
+        {
+          name: "Make",
+          description:
+            "Visual scenario builder for multi-step data routing. API connections, error branching, and automated data transformations.",
+          techFeatures: [
+            "Visual Builder",
+            "Data Routing",
+            "API Modules",
+            "Error Branching",
+            "Real-Time",
+          ],
+        },
+        {
+          name: "Zapier",
+          description:
+            "Quick-connect 6,000+ apps with multi-step automations. Conditional paths, scheduled triggers, and filtering.",
+          techFeatures: [
+            "6,000+ Apps",
+            "Multi-Step",
+            "Conditional Logic",
+            "Schedulers",
+            "Filters",
+          ],
+        },
+        {
+          name: "AI Tools",
+          description:
+            "Practical AI applications for voice, chat, document processing, and decision support. Built with reliable models and structured workflows.",
+          techFeatures: [
+            "Voice Assistants",
+            "Chatbots",
+            "Document AI",
+            "Classification",
+            "Structured Output",
+          ],
+        },
       ],
     },
   },
 
   solutions: {
     hero: {
-      label: "Solutions",
+      label: "Services",
       headline: "Systems that solve real operational problems",
       description:
-        "Automation, internal tools, integrations, and workflow systems — each designed around your specific processes.",
+        "Workflow automation, internal tools, integrations, and AI-assisted processes — each designed around your specific operations.",
     },
-    problemsLabel: "Problems we solve",
-    outcomesLabel: "Expected outcomes",
+    problemsLabel: "Common challenges",
+    outcomesLabel: "Possible outcomes",
     items: [
       {
-        title: "Process Automation",
-        description: "Automate repetitive, rule-based tasks across your organization using n8n, custom workflows, and API orchestration.",
+        title: "Workflow Automation",
+        description:
+          "Automate repetitive, rule-based tasks across your organization using n8n, Make, custom workflows, and API orchestration.",
         problems: [
           "Hours spent on data entry and copy-pasting between systems",
           "Errors from manual handoffs between departments",
@@ -300,16 +314,35 @@ export const content = {
           "Bottlenecks from manual approval chains",
         ],
         outcomes: [
-          "Automated end-to-end workflows with error handling",
+          "Automated end-to-end workflows with built-in error handling",
           "Consistent, reliable execution every time",
           "Real-time visibility into process status",
-          "Hours of manual work eliminated weekly",
+          "Significant reduction in repetitive manual work",
         ],
         icon: "workflow",
       },
       {
+        title: "Systems Integration",
+        description:
+          "Connect your CRM, ERP, databases, and tools into a unified operational layer. Reliable integrations that reduce data silos.",
+        problems: [
+          "Same data entered manually into multiple systems",
+          "Decisions based on outdated or conflicting data",
+          "Integration requests overwhelming internal resources",
+          "No single source of truth for operational data",
+        ],
+        outcomes: [
+          "Bi-directional data sync between key systems",
+          "Single source of truth for operations",
+          "Reduced manual data transfer and fewer errors",
+          "Scalable integration architecture",
+        ],
+        icon: "plug",
+      },
+      {
         title: "Internal Tools & Dashboards",
-        description: "Custom-built operational tools for your team — admin panels, data interfaces, and dashboards that fit your workflow.",
+        description:
+          "Custom-built operational tools for your team — admin panels, data interfaces, and dashboards that match your workflow.",
         problems: [
           "Teams using spreadsheets for tasks that need proper tools",
           "Off-the-shelf software that doesn't match your process",
@@ -318,282 +351,224 @@ export const content = {
         ],
         outcomes: [
           "Purpose-built tools matching how your team works",
-          "Centralized dashboards with real-time data",
+          "Centralized dashboards with up-to-date data",
           "Reduced onboarding time for new team members",
           "Better decisions from better data visibility",
         ],
         icon: "layout",
       },
       {
-        title: "Workflow Orchestration",
-        description: "End-to-end workflows connecting people, decisions, and systems with full traceability.",
+        title: "AI-Assisted Workflows",
+        description:
+          "Practical AI applications embedded into your operations — chatbots, voice assistants, document processing, and intelligent routing.",
         problems: [
-          "Critical processes managed through email and memory",
-          "No visibility into status or responsibility",
-          "Tasks falling through cracks between departments",
-          "Processes that can't scale with growth",
-        ],
-        outcomes: [
-          "Clear workflows with ownership at every step",
-          "Automatic routing, escalation, and notification",
-          "Full audit trail for compliance review",
-          "Processes that scale without adding headcount",
-        ],
-        icon: "gitBranch",
-      },
-      {
-        title: "Systems Integration",
-        description: "Connect your CRM, ERP, databases, and tools into a unified operational layer. Reliable integrations that eliminate data silos.",
-        problems: [
-          "Same data entered manually into multiple systems",
-          "Decisions based on outdated or conflicting data",
-          "Point-to-point integration requests overwhelming IT",
-          "No single source of truth for operational data",
-        ],
-        outcomes: [
-          "Bi-directional data sync between key systems",
-          "Single source of truth for operations",
-          "Eliminated manual data transfer and errors",
-          "Scalable integration architecture",
-        ],
-        icon: "plug",
-      },
-      {
-        title: "Marketing & Sales Automation",
-        description: "Automate your sales pipeline, marketing campaigns, YouTube content operations, and lead management with intelligent workflows.",
-        problems: [
-          "Leads falling through the cracks without follow-up",
-          "Manual CRM updates and scattered campaign data",
-          "YouTube and content publishing done manually",
-          "No visibility into conversion metrics across channels",
-        ],
-        outcomes: [
-          "Automated lead scoring and follow-up sequences",
-          "CRM automatically synced with all touchpoints",
-          "Content publishing and scheduling on autopilot",
-          "Unified analytics dashboard for all campaigns",
-        ],
-        icon: "target",
-      },
-      {
-        title: "Shipping & Order Operations",
-        description: "End-to-end automation for order processing, fulfillment, and shipping — connecting sales channels, warehouses, and carriers.",
-        problems: [
-          "Orders processed manually across sales channels",
-          "Label generation and carrier selection by hand",
-          "No automated tracking updates for customers",
-          "Fulfillment errors from disconnected systems",
-        ],
-        outcomes: [
-          "Automated multi-channel order processing",
-          "Smart carrier selection and label generation",
-          "Real-time tracking across all channels",
-          "Reduced errors and faster shipping",
-        ],
-        icon: "package",
-      },
-      {
-        title: "Messaging & Communication Automation",
-        description: "Automate customer communication across WhatsApp, Telegram, email, and SMS with intelligent routing and templated responses.",
-        problems: [
-          "Support messages scattered across WhatsApp, email, and phone",
+          "High volume of repetitive inbound inquiries",
           "Slow response times during peak hours",
-          "No automated transactional notifications to customers",
-          "Manual effort to keep customers informed about order status",
+          "Staff time spent on routine, low-complexity tasks",
+          "No after-hours coverage for customer communication",
         ],
         outcomes: [
-          "Unified inbox with automated routing and tagging",
-          "Instant responses via WhatsApp and Telegram bots",
-          "Automated order confirmations and status updates",
-          "24/7 availability without additional staff",
-        ],
-        icon: "messageSquare",
-      },
-      {
-        title: "AI Assistants & Chatbots",
-        description: "Voice call assistants, chat agents, and intelligent bots that handle inquiries, qualify leads, and support your team around the clock.",
-        problems: [
-          "High volume of repetitive inbound calls and messages",
-          "Customers waiting on hold or for email replies",
-          "Staff overwhelmed by FAQ-type inquiries",
-          "No after-hours support coverage",
-        ],
-        outcomes: [
-          "AI voice assistant handling inbound calls instantly",
-          "Chat agents answering questions and qualifying leads 24/7",
-          "80% of routine inquiries resolved without human involvement",
-          "Staff freed to focus on complex, high-value interactions",
+          "AI-assisted handling of routine inquiries and tasks",
+          "Faster response times across communication channels",
+          "Staff freed to focus on higher-value work",
+          "Extended availability without additional headcount",
         ],
         icon: "bot",
       },
+      {
+        title: "Communication Automation",
+        description:
+          "Automated messaging across WhatsApp, Telegram, email, and SMS — from support responses to transactional updates and follow-up sequences.",
+        problems: [
+          "Support messages scattered across multiple channels",
+          "Slow or inconsistent response times",
+          "No automated transactional notifications",
+          "Manual effort to keep customers informed about status updates",
+        ],
+        outcomes: [
+          "Unified communication with automated routing",
+          "Consistent, timely responses across all channels",
+          "Automated order confirmations and status updates",
+          "Reduced manual communication overhead",
+        ],
+        icon: "messageSquare",
+      },
     ],
     cta: {
-      headline: "Not sure which solution fits?",
-      description: "Every business is different. Let's discuss your challenges and design the right system together.",
-      primaryCta: "Book a Consultation",
+      headline: "Not sure which service fits?",
+      description:
+        "Every business is different. Book a free discovery call to discuss your challenges and explore what makes sense.",
+      primaryCta: "Book a Discovery Call",
     },
   },
 
   useCases: {
     hero: {
-      label: "Use Cases",
-      headline: "How businesses use OpSolid to work better",
-      description: "Real scenarios where our systems replace manual work with reliable, automated operations.",
+      label: "Example Solutions",
+      headline: "Practical automation scenarios",
+      description:
+        "Realistic examples of the kinds of systems OpSolid can design and build. These illustrate typical problem areas and solution approaches.",
     },
     labels: {
-      context: "Context",
-      problem: "Problem",
-      solution: "Solution",
-      outcome: "Outcome",
+      context: "Scenario",
+      problem: "Challenge",
+      solution: "Approach",
+      outcome: "Possible Outcome",
     },
     items: [
       {
         title: "Multi-Channel Order Processing",
-        context: "Mid-sized e-commerce company, 200+ daily orders across four sales channels.",
-        problem: "4+ hours daily on manual order entry, status updates, and inventory adjustments. Frequent errors during peak seasons.",
-        solution: "Automated pipeline: order ingestion, data normalization, real-time inventory, label generation, and tracking — across all channels.",
-        outcome: "Processing time: 4 hours to 15 minutes. Error rate down 94%. 3x order volume with same team.",
+        context:
+          "An e-commerce business handling daily orders across multiple sales channels.",
+        problem:
+          "Manual order entry, status updates, and inventory adjustments consume hours daily. Errors increase during busy periods.",
+        solution:
+          "Automated pipeline: order ingestion from all channels, data normalization, inventory updates, label generation, and tracking notification workflows.",
+        outcome:
+          "Significant reduction in manual processing time. Fewer errors. Ability to handle higher order volumes without proportional staff increases.",
       },
       {
         title: "Invoice & Document Processing",
-        context: "Logistics company, 500+ monthly invoices from carriers and suppliers in mixed formats.",
-        problem: "Two full days per week spent extracting invoice data, entering it into accounting, and matching purchase orders.",
-        solution: "AI-assisted extraction, automatic PO matching, discrepancy flagging, and direct routing to accounting.",
-        outcome: "Processing time reduced 75%. Finance team now focuses on exceptions and strategy.",
+        context:
+          "A company receiving hundreds of invoices monthly in mixed formats from various suppliers.",
+        problem:
+          "Staff spend considerable time extracting invoice data, entering it into accounting systems, and matching purchase orders.",
+        solution:
+          "AI-assisted extraction, automatic PO matching, discrepancy flagging, and direct routing to accounting systems.",
+        outcome:
+          "Substantial reduction in processing time. Finance team can focus on exceptions and strategic work rather than data entry.",
       },
       {
         title: "Internal Approval Workflows",
-        context: "Growing company, 120 employees. Purchases, travel, contractor onboarding managed via email.",
-        problem: "Requests lost in email. No visibility, no audit trail. Process varies by manager.",
-        solution: "Structured approval system: form submission, rule-based routing, tracking, automatic reminders.",
-        outcome: "Approval time: 5 days to 1.2 days. Zero lost requests. Full audit trail.",
+        context:
+          "A growing company managing purchases, travel requests, and contractor onboarding through email.",
+        problem:
+          "Requests get lost in email threads. No visibility into status, no audit trail. Process varies by manager.",
+        solution:
+          "Structured approval system: form submission, rule-based routing, status tracking, and automatic reminders.",
+        outcome:
+          "Faster approval cycles. No lost requests. Full audit trail for compliance.",
       },
       {
         title: "Operations Dashboard",
-        context: "Distribution company tracking sales, warehouse, and delivery via separate weekly spreadsheets.",
-        problem: "Reports always a week old, often inconsistent. Decisions based on gut feeling.",
-        solution: "Live dashboard pulling from ERP, warehouse, and delivery systems. Configurable alerts for anomalies.",
-        outcome: "Monday meetings: 2 hours to 30 minutes. Issues caught in real time.",
+        context:
+          "A distribution company tracking sales, warehouse, and delivery data across separate spreadsheets.",
+        problem:
+          "Reports are always delayed and often inconsistent. Decision-making relies on outdated information.",
+        solution:
+          "Live dashboard pulling from ERP, warehouse, and delivery systems. Configurable alerts for anomalies and thresholds.",
+        outcome:
+          "Real-time operational visibility. Faster issue detection. More informed decision-making.",
       },
       {
-        title: "Customer Onboarding",
-        context: "B2B service company onboarding 15-20 clients monthly with multi-step process.",
-        problem: "Checklist in shared doc. Steps missed, inconsistent experience, 2-3 week onboarding time.",
-        solution: "Automated workflow: welcome emails, account provisioning, document tracking, status dashboard.",
-        outcome: "Onboarding: 3 weeks to 5 days. No missed steps. Improved client satisfaction.",
-      },
-      {
-        title: "Back-Office Digitization",
-        context: "Manufacturing company. HR and procurement still on paper forms and local files.",
-        problem: "Days to process paperwork. Inconsistent channels. Nothing searchable or tracked.",
-        solution: "Digital workflows for onboarding, purchase requests, and document management with proper versioning.",
-        outcome: "Paper eliminated. HR onboarding -60%. Purchase requests: 1 week to 2 days.",
+        title: "Customer Onboarding Automation",
+        context:
+          "A B2B service company onboarding new clients through a multi-step manual process.",
+        problem:
+          "Onboarding tracked in shared documents. Steps get missed, experience is inconsistent, and the process takes longer than necessary.",
+        solution:
+          "Automated workflow: welcome communications, account provisioning, document collection tracking, and status dashboard.",
+        outcome:
+          "Shorter onboarding time. Consistent experience for every client. No missed steps.",
       },
       {
         title: "Cross-System Data Sync",
-        context: "Retail company using Shopify, ERP, WMS, and HubSpot — each with its own data.",
-        problem: "Hours daily on manual sync. Frequent discrepancies across systems.",
-        solution: "Central integration layer with near real-time sync, conflict detection, and error handling.",
-        outcome: "Manual sync eliminated. Discrepancies near zero. 15+ hours/week reallocated.",
+        context:
+          "A retail company using separate systems for e-commerce, ERP, warehouse management, and CRM.",
+        problem:
+          "Staff spend hours daily on manual data synchronization. Discrepancies between systems cause operational issues.",
+        solution:
+          "Central integration layer with near real-time sync, conflict detection, and structured error handling.",
+        outcome:
+          "Eliminated manual sync tasks. Consistent data across all systems. Staff time reallocated to higher-value work.",
       },
       {
         title: "Automated Client Communication",
-        context: "Service company. Status updates, reminders, and follow-ups managed manually by three people.",
-        problem: "Messages late, inconsistent, or missed. Communication drops during busy periods.",
-        solution: "Automated messaging triggered by service milestones. Consistent templates with override capability.",
-        outcome: "100% communication reliability. 20+ hours saved weekly. Satisfaction up 35%.",
+        context:
+          "A service company sending status updates, reminders, and follow-ups manually.",
+        problem:
+          "Messages are sometimes late, inconsistent, or missed entirely. Communication quality drops during busy periods.",
+        solution:
+          "Automated messaging triggered by service milestones and events. Consistent templates with manual override capability.",
+        outcome:
+          "Reliable, timely communication. Reduced manual overhead. More consistent client experience.",
       },
       {
-        title: "WhatsApp & Telegram Support Channel",
-        context: "E-commerce company receiving 300+ customer inquiries daily across WhatsApp, Telegram, and email.",
-        problem: "Three staff members manually answering the same questions. No after-hours coverage. Messages lost between channels.",
-        solution: "Unified messaging hub with automated FAQ responses, order status lookups, and intelligent routing to human agents for complex issues.",
-        outcome: "70% of inquiries resolved automatically. Response time under 30 seconds. Full after-hours coverage.",
-      },
-      {
-        title: "AI Voice Assistant for Inbound Calls",
-        context: "Service company receiving 100+ daily calls — appointment bookings, status inquiries, general questions.",
-        problem: "Two full-time staff on phones. Long hold times. Missed calls during peak hours and after business hours.",
-        solution: "AI voice assistant handling inbound calls: answering FAQs, booking appointments, routing complex calls to the right department.",
-        outcome: "60% of calls handled without human intervention. Zero missed calls. Staff reallocated to higher-value work.",
-      },
-      {
-        title: "YouTube Content Operations",
-        context: "Marketing team publishing 8-12 videos monthly across multiple YouTube channels with localized metadata.",
-        problem: "Manual upload, title/description/tag entry, thumbnail assignment, and scheduling. 3+ hours per video.",
-        solution: "Automated pipeline: video processing, metadata generation, thumbnail assignment, scheduled publishing, and performance tracking dashboard.",
-        outcome: "Publishing time reduced to 20 minutes per video. Consistent metadata quality. Centralized analytics.",
-      },
-      {
-        title: "Sales Pipeline Automation",
-        context: "B2B company with 50+ active leads. Sales team using CRM but manually tracking follow-ups and updating deal stages.",
-        problem: "Leads going cold due to missed follow-ups. Inconsistent data in CRM. No visibility into pipeline health.",
-        solution: "Automated lead scoring, follow-up sequences triggered by behavior, CRM auto-updates, and pipeline dashboard with alerts.",
-        outcome: "Follow-up rate: 100%. Lead-to-meeting conversion up 40%. Real-time pipeline visibility for management.",
+        title: "WhatsApp & Telegram Support",
+        context:
+          "A business receiving customer inquiries daily across WhatsApp, Telegram, and email.",
+        problem:
+          "Staff manually answer repetitive questions. No after-hours coverage. Messages get lost between channels.",
+        solution:
+          "Unified messaging hub with automated FAQ responses, status lookups, and intelligent routing to human agents for complex issues.",
+        outcome:
+          "Faster response times. Extended availability. Staff focused on inquiries that require human attention.",
       },
     ],
     cta: {
-      headline: "See yourself in these scenarios?",
-      description: "If your team spends time on work that should be automated, we should talk.",
-      primaryCta: "Book a Consultation",
+      headline: "See a scenario that fits your situation?",
+      description:
+        "These are examples of what can be built. Book a discovery call to discuss your specific needs.",
+      primaryCta: "Book a Discovery Call",
     },
   },
 
   about: {
     hero: {
       label: "About OpSolid",
-      headline: "Building operational infrastructure for businesses that have outgrown manual processes",
-      description: "Germany-based. Focused on one thing: replacing manual, repetitive work with reliable automated systems.",
+      headline:
+        "Practical automation systems for businesses that need less manual work",
+      description:
+        "Germany-based. Focused on replacing manual, repetitive operational work with reliable automated systems.",
     },
     story: {
-      headline: "Why we exist",
+      headline: "Why OpSolid exists",
       paragraphs: [
-        "Every growing business hits a point where manual processes become the bottleneck. Orders pile up, approvals get lost, data lives in disconnected spreadsheets, and teams spend more time on overhead than on work that moves the business forward.",
-        "OpSolid was founded to solve this. We combine deep process thinking with modern automation, integration, and AI capabilities to build systems that handle operational work — reliably, consistently, and at scale.",
-        "We are not a generic technology agency. We don't build marketing websites or run ad campaigns. We focus on operational systems: the workflows, tools, and integrations that keep a business running every day.",
+        "Every growing business reaches a point where manual processes become the bottleneck. Orders pile up, approvals get lost in email, data lives in disconnected spreadsheets, and teams spend more time on operational overhead than on work that moves the business forward.",
+        "OpSolid was built to solve this. By combining process thinking with modern automation platforms and practical AI tools, OpSolid designs systems that handle operational work — reliably, consistently, and without adding complexity where it isn't needed.",
       ],
     },
     values: {
-      headline: "How we think about our work",
+      headline: "How OpSolid approaches work",
       items: [
         {
           title: "Start with the process, not the technology",
-          description: "We invest time understanding how your business operates before proposing any solution.",
+          description:
+            "Time is invested in understanding how your business operates before proposing any solution.",
         },
         {
           title: "Build for production, not for demos",
-          description: "Our systems handle real workloads. We design for reliability, error handling, and edge cases.",
+          description:
+            "Systems handle real workloads. They are designed for reliability, error handling, and edge cases.",
         },
         {
           title: "Measure outcomes, not features",
-          description: "We care about hours saved, errors eliminated, and processes improved — not feature lists.",
+          description:
+            "What matters is hours saved, errors reduced, and processes improved — not feature lists.",
         },
         {
           title: "Stay practical, stay honest",
-          description: "We recommend automation where it makes sense and advise against it where it doesn't.",
+          description:
+            "Automation is recommended where it makes sense — and advised against where it doesn't.",
         },
       ],
     },
     founder: {
       name: "Hasan Dönmez",
       title: "Founder & Systems Architect",
-      education: "M.Sc. Electrical Engineering & Information Technology — Karlsruhe Institute of Technology (KIT)",
+      education: "",
       description:
-        "Hasan holds a Master's degree in Electrical Engineering & Information Technology from the Karlsruhe Institute of Technology (KIT), one of Germany's leading research universities. With deep expertise in process automation, systems integration, and AI-assisted workflows — complemented by advanced training in Data Science, Machine Learning, Deep Learning, and Business Intelligence — he builds operational systems that solve real business problems. His engineering background ensures every solution is designed for reliability, scalability, and measurable results.",
-      expertiseLabel: "Core Expertise",
-      expertise: [
-        "Process Automation & Workflow Engineering",
-        "Data Science & Machine Learning",
-        "Deep Learning & AI Systems",
-        "Business Intelligence & Analytics",
-        "Systems Integration & API Development",
-      ],
-      footnote: "Based in Germany. Serving businesses across Europe and internationally.",
+        "Independent automation specialist based in Germany. Focused on designing and building practical automation systems, workflow integrations, and AI-assisted processes for business operations.",
+      expertiseLabel: "",
+      expertise: [],
+      footnote:
+        "Based in Germany. Available for projects across Europe and internationally.",
     },
     cta: {
-      headline: "Let's build something that works",
-      description: "If your operations need less manual work and more reliable systems, we'd like to hear from you.",
-      primaryCta: "Get in Touch",
+      headline: "Let's build something useful",
+      description:
+        "If your operations involve too much manual work and disconnected processes, OpSolid can help.",
+      primaryCta: "Book a Discovery Call",
     },
   },
 
@@ -601,34 +576,41 @@ export const content = {
     hero: {
       label: "Contact",
       headline: "Let's discuss your operations",
-      description: "Whether you have a specific automation challenge or want to explore what's possible — no hard sell, just a practical conversation.",
+      description:
+        "Whether you have a specific automation challenge or want to explore what's possible — a practical conversation, no hard sell.",
     },
     form: {
       name: "Full Name",
       email: "Business Email",
       company: "Company Name",
       message: "What operational challenge would you like to solve?",
-      consent: "I agree to the processing of my data as described in the Privacy Policy. My data will only be used to respond to this inquiry.",
+      consent:
+        "I agree to the processing of my data as described in the Privacy Policy. My data will only be used to respond to this inquiry.",
       privacyLink: "Privacy Policy",
       submit: "Send Message",
       sending: "Sending...",
-      success: "Thank you. We'll get back to you within 1-2 business days.",
-      error: "Something went wrong. Please try again or email us directly.",
+      success:
+        "Thank you. You'll receive a response within 1-2 business days.",
+      error:
+        "Something went wrong. Please try again or send an email directly.",
     },
     meeting: {
       headline: "Prefer a direct conversation?",
-      description: "Book a free 30-minute discovery call. Choose a time that works for you — available slots are synced live from our calendar.",
+      description:
+        "Book a free 30-minute discovery call. Choose a time that works for you — available slots are synced live.",
       cta: "Schedule a Call",
     },
     info: {
       email: "hello@opsolid.de",
-      response: "We typically respond within 1-2 business days.",
-      location: "Based in Germany. Serving clients across Europe and internationally.",
+      response: "Typical response time: 1-2 business days.",
+      location:
+        "Based in Germany. Available for projects across Europe and internationally.",
     },
   },
 
   footer: {
-    description: "Operational infrastructure for modern businesses. Automation, internal tools, and workflow systems.",
+    description:
+      "Practical automation and AI systems for business operations.",
     company: "Company",
     services: "Services",
     legal: "Legal",
@@ -638,28 +620,34 @@ export const content = {
 
   notFound: {
     title: "Page not found",
-    description: "The page you are looking for does not exist or has been moved.",
+    description:
+      "The page you are looking for does not exist or has been moved.",
     backHome: "Back to Home",
     contactUs: "Contact Us",
   },
 
   impressum: {
     title: "Legal Notice",
-    notice: "This legal notice is for a company in formation. Details will be updated upon business registration.",
+    notice:
+      "This legal notice is for a company in formation. Details will be updated upon business registration.",
     sections: {
       according: "According to § 5 TMG",
       representedBy: "Represented by",
       contact: "Contact",
       phone: "Phone: On request",
       register: "Trade Register",
-      registerText: "No trade register entry exists at this time. The company is in formation.",
+      registerText:
+        "No trade register entry exists at this time. The company is in formation.",
       vatId: "VAT ID",
       vatIdText: "Will be applied for upon business registration.",
-      responsibleContent: "Responsible for content according to § 55 Abs. 2 RStV",
+      responsibleContent:
+        "Responsible for content according to § 55 Abs. 2 RStV",
       liabilityContent: "Liability for Content",
-      liabilityContentText: "As a service provider, we are responsible for our own content on these pages under general laws in accordance with § 7 Para. 1 TMG. According to §§ 8 to 10 TMG, however, we are not obligated to monitor transmitted or stored third-party information.",
+      liabilityContentText:
+        "As a service provider, we are responsible for our own content on these pages under general laws in accordance with § 7 Para. 1 TMG. According to §§ 8 to 10 TMG, however, we are not obligated to monitor transmitted or stored third-party information.",
       liabilityLinks: "Liability for Links",
-      liabilityLinksText: "Our website contains links to external third-party websites over whose content we have no influence. The respective provider or operator is always responsible for the content of the linked pages.",
+      liabilityLinksText:
+        "Our website contains links to external third-party websites over whose content we have no influence. The respective provider or operator is always responsible for the content of the linked pages.",
       address: "Full address will be added upon business registration.",
     },
   },
@@ -667,12 +655,14 @@ export const content = {
   privacy: {
     title: "Privacy Policy",
     subtitle: "Datenschutzerklärung",
-    notice: "This privacy policy is a template. It will be replaced with a legally reviewed policy upon business registration.",
+    notice:
+      "This privacy policy is a template. It will be replaced with a legally reviewed policy upon business registration.",
     lastUpdated: "Last updated: March 2026",
     sections: [
       {
         title: "1. Data Protection at a Glance",
-        content: "The following provides an overview of what happens to your personal data when you visit this website. Personal data is any data that can personally identify you.",
+        content:
+          "The following provides an overview of what happens to your personal data when you visit this website. Personal data is any data that can personally identify you.",
       },
       {
         title: "2. Responsible Party",
@@ -683,25 +673,30 @@ export const content = {
         subsections: [
           {
             title: "Contact Form",
-            content: "Data submitted via the contact form is stored for processing the inquiry and follow-up. Legal basis: Art. 6(1)(b) GDPR for contract-related inquiries, Art. 6(1)(f) GDPR for legitimate interest, or Art. 6(1)(a) GDPR if consent was given.",
+            content:
+              "Data submitted via the contact form is stored for processing the inquiry and follow-up. Legal basis: Art. 6(1)(b) GDPR for contract-related inquiries, Art. 6(1)(f) GDPR for legitimate interest, or Art. 6(1)(a) GDPR if consent was given.",
           },
           {
             title: "Server Log Files",
-            content: "The hosting provider automatically collects browser type, OS, referrer URL, hostname, and request time. This data cannot be assigned to specific individuals.",
+            content:
+              "The hosting provider automatically collects browser type, OS, referrer URL, hostname, and request time. This data cannot be assigned to specific individuals.",
           },
         ],
       },
       {
         title: "4. Hosting",
-        content: "This website is hosted on Vercel, Inc. (440 N Baxter St, Los Angeles, CA 90012, USA). When you visit our website, your IP address and usage data are processed by Vercel. For more information, see Vercel's privacy policy.",
+        content:
+          "This website is hosted on Vercel, Inc. (440 N Baxter St, Los Angeles, CA 90012, USA). When you visit our website, your IP address and usage data are processed by Vercel. For more information, see Vercel's privacy policy.",
       },
       {
         title: "5. Cookies & Analytics",
-        content: "This website does not use tracking cookies or analytics tools. A language preference is stored in your browser's local storage to remember your selected language.",
+        content:
+          "This website does not use tracking cookies or analytics tools. A language preference is stored in your browser's local storage to remember your selected language.",
       },
       {
         title: "6. Your Rights",
-        content: "You have the right to receive information about your stored data, request correction or deletion, restrict processing, and lodge a complaint with a supervisory authority. If consent was given, you can revoke it at any time.",
+        content:
+          "You have the right to receive information about your stored data, request correction or deletion, restrict processing, and lodge a complaint with a supervisory authority. If consent was given, you can revoke it at any time.",
       },
     ],
   },
@@ -710,7 +705,8 @@ export const content = {
     hero: {
       label: "Blog",
       headline: "Insights on Automation & Operations",
-      description: "Practical articles about workflow automation, integration strategies, and operational efficiency.",
+      description:
+        "Practical articles about workflow automation, integration strategies, and operational efficiency.",
     },
     readMore: "Read Article",
     minRead: "min read",
@@ -725,7 +721,8 @@ export const content = {
       {
         slug: "why-n8n-is-the-future-of-workflow-automation",
         title: "Why n8n Is the Future of Workflow Automation",
-        excerpt: "Discover why n8n has become the go-to platform for businesses that need powerful, self-hosted workflow automation with full control over their data.",
+        excerpt:
+          "Discover why n8n has become a go-to platform for businesses that need powerful, self-hosted workflow automation with full control over their data.",
         category: "automation",
         date: "2026-03-15",
         readTime: "6",
@@ -733,7 +730,8 @@ export const content = {
       {
         slug: "5-signs-your-business-needs-process-automation",
         title: "5 Signs Your Business Needs Process Automation",
-        excerpt: "Are your teams drowning in manual work? Here are the key indicators that it's time to invest in automation infrastructure.",
+        excerpt:
+          "Is your team spending too much time on manual work? Here are the key indicators that it's time to invest in automation.",
         category: "operations",
         date: "2026-03-08",
         readTime: "5",
@@ -741,7 +739,8 @@ export const content = {
       {
         slug: "connecting-crm-erp-the-integration-playbook",
         title: "Connecting CRM & ERP: The Integration Playbook",
-        excerpt: "A practical guide to synchronizing your CRM and ERP systems — eliminating data silos and creating a single source of truth.",
+        excerpt:
+          "A practical guide to synchronizing your CRM and ERP systems — reducing data silos and creating a single source of truth.",
         category: "integration",
         date: "2026-02-28",
         readTime: "8",
@@ -749,15 +748,18 @@ export const content = {
       {
         slug: "ai-chatbots-vs-rule-based-bots",
         title: "AI Chatbots vs. Rule-Based Bots: Which One Do You Need?",
-        excerpt: "Understanding the difference between AI-powered and rule-based chatbots, and when each approach makes sense for your business.",
+        excerpt:
+          "Understanding the difference between AI-powered and rule-based chatbots, and when each approach makes sense for your business.",
         category: "ai",
         date: "2026-02-20",
         readTime: "7",
       },
       {
         slug: "make-vs-zapier-vs-n8n-comparison",
-        title: "Make vs. Zapier vs. n8n: Choosing the Right Automation Platform",
-        excerpt: "A detailed comparison of the three most popular automation platforms — features, pricing, flexibility, and when to use each.",
+        title:
+          "Make vs. Zapier vs. n8n: Choosing the Right Automation Platform",
+        excerpt:
+          "A detailed comparison of the three most popular automation platforms — features, pricing, flexibility, and when to use each.",
         category: "automation",
         date: "2026-02-12",
         readTime: "10",
@@ -765,7 +767,8 @@ export const content = {
       {
         slug: "whatsapp-business-automation-guide",
         title: "The Complete Guide to WhatsApp Business Automation",
-        excerpt: "How to automate customer communication on WhatsApp — from order confirmations to support bots — without losing the personal touch.",
+        excerpt:
+          "How to automate customer communication on WhatsApp — from order confirmations to support bots — without losing the personal touch.",
         category: "automation",
         date: "2026-02-05",
         readTime: "9",
@@ -773,8 +776,9 @@ export const content = {
     ],
     cta: {
       headline: "Want to automate your operations?",
-      description: "Book a free consultation. We'll identify the highest-impact automation opportunities for your business.",
-      primaryCta: "Book a Consultation",
+      description:
+        "Book a free discovery call. OpSolid will help identify the highest-impact automation opportunities for your business.",
+      primaryCta: "Book a Discovery Call",
     },
   },
 
@@ -782,7 +786,8 @@ export const content = {
     hero: {
       label: "FAQ",
       headline: "Frequently Asked Questions",
-      description: "Common questions about our automation services, process, and technology.",
+      description:
+        "Common questions about automation services, process, and technology.",
     },
     allFilter: "All",
     categories: {
@@ -793,59 +798,70 @@ export const content = {
     items: [
       {
         question: "What exactly does OpSolid do?",
-        answer: "We build automation systems, integrations, and internal tools for businesses. If your team spends time on manual, repetitive work — data entry, email follow-ups, order processing, report generation — we build systems that handle it automatically, reliably, and at scale.",
+        answer:
+          "OpSolid builds automation systems, integrations, and internal tools for businesses. If your team spends time on manual, repetitive work — data entry, email follow-ups, order processing, report generation — OpSolid builds systems that handle it automatically and reliably.",
         category: "general",
       },
       {
-        question: "What tools and platforms do you use?",
-        answer: "Our primary automation platform is n8n, supplemented by Make and Zapier where appropriate. We also build custom integrations using APIs, databases, and cloud services. For AI solutions, we use the latest foundation models, voice AI platforms, and custom-trained agents. We always choose the right tool for each use case — never a one-size-fits-all approach.",
+        question: "What tools and platforms are used?",
+        answer:
+          "The primary automation platform is n8n, supplemented by Make and Zapier where appropriate. Custom integrations are built using APIs, databases, and cloud services. For AI-assisted workflows, reliable foundation models and structured approaches are used. The right tool is chosen for each use case — never a one-size-fits-all approach.",
         category: "technical",
       },
       {
-        question: "What is n8n and why do you prefer it?",
-        answer: "n8n is an open-source workflow automation platform that can be self-hosted, giving you full control over your data and workflows. It's extremely flexible, supports hundreds of integrations, and allows for custom code when needed. We prefer it because it offers the best balance of power, flexibility, and data sovereignty for business automation.",
+        question: "What is n8n and why is it preferred?",
+        answer:
+          "n8n is an open-source workflow automation platform that can be self-hosted, giving you full control over your data and workflows. It's flexible, supports hundreds of integrations, and allows for custom code when needed. It offers a strong balance of power, flexibility, and data sovereignty for business automation.",
         category: "technical",
       },
       {
         question: "How long does a typical project take?",
-        answer: "Most projects take 2-6 weeks from discovery to deployment, depending on complexity. Simple automations can be live within days. Complex multi-system integrations may take longer. We work iteratively — you see results early and often.",
+        answer:
+          "Most projects take 2-6 weeks from discovery to deployment, depending on complexity. Simple automations can be live within days. Complex multi-system integrations may take longer. Work is done iteratively — you see results early and often.",
         category: "process",
       },
       {
-        question: "Do you offer ongoing support after deployment?",
-        answer: "Yes. We offer monitoring, maintenance, and optimization packages. Automation systems evolve as your business grows — we make sure your systems keep up. We also provide documentation and training so your team can manage day-to-day operations independently.",
+        question: "Is ongoing support available after deployment?",
+        answer:
+          "Yes. Monitoring, maintenance, and optimization are available after deployment. Automation systems evolve as your business grows — ongoing support ensures your systems keep up. Documentation and training are also provided so your team can manage day-to-day operations independently.",
         category: "process",
       },
       {
         question: "How much does it cost?",
-        answer: "Every project is different. We offer a free initial consultation to understand your needs, then provide a transparent proposal. Our pricing is project-based, not hourly — you know the investment upfront.",
+        answer:
+          "Every project is different. A free initial consultation helps understand your needs, followed by a transparent proposal. Pricing is project-based, not hourly — you know the investment upfront.",
         category: "process",
       },
       {
-        question: "Can you integrate with our existing systems?",
-        answer: "Almost certainly. We work with CRMs (HubSpot, Salesforce, Pipedrive), ERPs (SAP, Oracle, Odoo), e-commerce platforms (Shopify, WooCommerce), databases, Google Workspace, and virtually any system with an API. If it has an API, we can connect it.",
+        question: "Can OpSolid integrate with existing systems?",
+        answer:
+          "Almost certainly. OpSolid works with CRMs (HubSpot, Salesforce, Pipedrive), ERPs (SAP, Oracle, Odoo), e-commerce platforms (Shopify, WooCommerce), databases, Google Workspace, and virtually any system with an API.",
         category: "technical",
       },
       {
-        question: "Do we need to change our existing tools?",
-        answer: "No. We build systems that connect your existing tools — we don't replace them. Our goal is to make what you already have work better together, eliminating data silos and manual handoffs.",
+        question: "Do existing tools need to be replaced?",
+        answer:
+          "No. OpSolid builds systems that connect your existing tools — not replace them. The goal is to make what you already have work better together, eliminating data silos and manual handoffs.",
         category: "general",
       },
       {
-        question: "Is our data secure?",
-        answer: "Absolutely. We can self-host all automation infrastructure within your own environment. We follow GDPR requirements, implement encryption for sensitive data, and use secure API connections. No data passes through third-party servers unless you explicitly choose cloud-hosted solutions.",
+        question: "Is data secure?",
+        answer:
+          "Yes. All automation infrastructure can be self-hosted within your own environment. GDPR requirements are followed, encryption is used for sensitive data, and all connections use secure APIs. No data passes through third-party servers unless you explicitly choose cloud-hosted solutions.",
         category: "technical",
       },
       {
-        question: "What industries do you serve?",
-        answer: "We work across industries — e-commerce, logistics, manufacturing, professional services, and more. Our solutions are built around your processes, not your industry label. If you have operations that involve repetitive manual work, we can help.",
+        question: "What industries are served?",
+        answer:
+          "OpSolid works across industries — e-commerce, logistics, manufacturing, professional services, and more. Solutions are built around your processes, not your industry label. If your operations involve repetitive manual work, automation can help.",
         category: "general",
       },
     ],
     cta: {
       headline: "Still have questions?",
-      description: "We're happy to answer any other questions. Book a free consultation and let's talk about your specific situation.",
-      primaryCta: "Book a Consultation",
+      description:
+        "Book a free discovery call to discuss your specific situation — no obligation.",
+      primaryCta: "Book a Discovery Call",
     },
   },
 };

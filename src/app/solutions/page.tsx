@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import { SolutionsPage } from "./SolutionsPage";
 
 export const metadata: Metadata = {
-  title: "Solutions",
+  title: "Services",
   description:
-    "Explore our automation, internal tools, workflow systems, integrations, and AI-assisted operations solutions. Purpose-built for how your business works.",
+    "Workflow automation, systems integration, internal tools, AI-assisted workflows, and communication automation — designed around your specific operations.",
   openGraph: {
-    title: "Solutions | OpSolid",
+    title: "Services | OpSolid",
     description:
-      "Explore our automation, internal tools, workflow systems, integrations, and AI-assisted operations solutions.",
+      "Practical automation services designed around your specific business operations.",
   },
 };
 
