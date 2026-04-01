@@ -114,7 +114,7 @@ async function sendEmail(booking: BookingInfo): Promise<void> {
   const smtpHost = process.env.SMTP_HOST;
   const smtpUser = process.env.SMTP_USER;
   const smtpPass = process.env.SMTP_PASS;
-  const contactTo = process.env.CONTACT_TO_EMAIL || "hello@opsolid.de";
+  const contactTo = process.env.CONTACT_TO_EMAIL || "drhasanhd@gmail.com";
 
   if (!smtpHost || !smtpUser || !smtpPass) return;
 

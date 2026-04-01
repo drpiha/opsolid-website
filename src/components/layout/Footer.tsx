@@ -110,12 +110,6 @@ export function Footer() {
 
         <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-slate-500">{ft.copyright}</p>
-          <a
-            href={`mailto:${SITE_CONFIG.email}`}
-            className="text-xs text-slate-500 hover:text-teal-400 transition-colors"
-          >
-            {SITE_CONFIG.email}
-          </a>
         </div>
       </div>
     </footer>

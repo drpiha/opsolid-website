@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { Mail, Clock, MapPin, Calendar, ArrowRight, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
+import { Clock, MapPin, Calendar, ArrowRight, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { Input, Textarea } from "@/components/ui/Input";
@@ -176,14 +176,6 @@ export function ContactPage() {
                 </div>
 
                 <div className="rounded-xl border border-slate-100/80 bg-white/80 backdrop-blur-sm p-6 md:p-7 space-y-4">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-brand-50">
-                      <Mail size={13} className="text-brand-500" />
-                    </div>
-                    <a href={`mailto:${s.info.email}`} className="text-sm text-brand-600 hover:underline">
-                      {s.info.email}
-                    </a>
-                  </div>
                   <div className="flex items-center gap-3">
                     <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-teal-50">
                       <Clock size={13} className="text-teal-500" />
