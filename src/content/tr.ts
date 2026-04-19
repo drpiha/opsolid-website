@@ -8,6 +8,7 @@ import type { Content } from "./en";
 export const content: Content = {
   nav: {
     solutions: "Hizmetler",
+    products: "Ürünler",
     useCases: "Örnek Çözümler",
     about: "Hakkımızda",
     contact: "İletişim",
@@ -614,6 +615,7 @@ export const content: Content = {
       "İş operasyonları için pratik otomasyon ve yapay zeka sistemleri.",
     company: "Şirket",
     services: "Hizmetler",
+    products: "Ürünler",
     legal: "Yasal",
     resources: "Kaynaklar",
     copyright: `© ${new Date().getFullYear()} OpSolid. Tüm hakları saklıdır.`,
@@ -863,6 +865,175 @@ export const content: Content = {
       description:
         "Özel durumunuzu görüşmek için ücretsiz bir tanışma görüşmesi planlayın — hiçbir yükümlülük yok.",
       primaryCta: "Tanışma Görüşmesi Planlayın",
+    },
+  },
+
+  products: {
+    hero: {
+      label: "Ürünlerimiz",
+      headline: "Kendi geliştirdiğimiz yazılım ürünleri",
+      description:
+        "Özel projelerin yanı sıra OpSolid, kendi yazılım ürünlerini de geliştirip işletir — aynı otomasyon ve yapay zekâ temelleri üzerine inşa edilmiş, üretime hazır olgun sistemler.",
+    },
+    comingSoonLabel: "Geliştirme aşamasında",
+    comingSoonTitle: "Yeni ürünler yolda",
+    comingSoonDescription:
+      "OpSolid'in ürün portföyü genişliyor. Operasyon, iletişim ve yapay zekâ destekli iş akışları için yeni araçlar şu anda geliştirme aşamasında.",
+    items: [
+      {
+        name: "Kutasia",
+        tagline: "Çoklu sektör müşteri platformu",
+        description:
+          "Müşteri iletişimini, taleplerini ve içeriklerini tek çatı altında toplayan çok kiracılı SaaS platform — sektöre özel iş akışları ve yapay zekâ destekli analiz ile.",
+        status: "Canlı",
+        href: "/products/kutasia",
+        externalUrl: "https://kutasia.com",
+        icon: "sparkles",
+      },
+    ],
+
+    kutasia: {
+      hero: {
+        eyebrow: "Bir OpSolid ürünü",
+        label: "Kutasia",
+        headline: "Müşteri operasyonu,\nbirleşik ve akıllı",
+        subheadline:
+          "Kutasia; mesajlaşmayı, talepleri, rezervasyonları ve içerikleri yapay zekâ destekli tek bir çalışma alanında birleştiren çok kiracılı SaaS platformdur — sektörünüze göre uyarlanmıştır.",
+        primaryCta: "Kutasia'yı Ziyaret Et",
+        secondaryCta: "Ekiple Görüşün",
+        primaryCtaHref: "https://kutasia.com",
+        secondaryCtaHref: "/contact",
+        domain: "kutasia.com",
+      },
+
+      trustStrip: [
+        "Çok kiracılı SaaS",
+        "AES-256 şifreleme",
+        "KVKK/GDPR uyumlu",
+        "EN / DE / TR",
+      ],
+
+      features: {
+        label: "Platform Yetenekleri",
+        headline: "Bir operasyon ekibinin ihtiyacı olan her şey",
+        description:
+          "Kutasia, işletmelerin kanallar arasında yönettiği araçları tek bir yerde toplar — sektöre özel yapı ve konuşmaları içgörüye dönüştüren yapay zekâ ile.",
+        items: [
+          {
+            icon: "inbox",
+            title: "Birleşik Gelen Kutusu",
+            description:
+              "Instagram DM, WhatsApp, e-posta ve web formları tek iş parçacığı mantığında — otomatik atama ve durum takibi ile.",
+          },
+          {
+            icon: "bot",
+            title: "Yapay Zekâ Analizi",
+            description:
+              "Her mesaj için duygu, niyet ve rezervasyon niyeti skorlama — acil konuşmalar ve fırsatlar otomatik olarak öne çıkar.",
+          },
+          {
+            icon: "layers",
+            title: "Sektör Şablonları",
+            description:
+              "Otel, kuaför, kuyumcu, klinik, restoran, muhasebe ve daha fazlası — her sektör kendi alanları, terminolojisi ve iş akışlarıyla gelir.",
+          },
+          {
+            icon: "lineChart",
+            title: "Operasyonel Panolar",
+            description:
+              "Günlük özetler, KPI trendleri, kanal dağılımı ve yapay zekâ içgörüleri — çok sektörlü operasyon için tasarlanmış tek panoda.",
+          },
+          {
+            icon: "shield",
+            title: "Güvenli Çok Kiracılı",
+            description:
+              "AES-256-GCM şifreli OAuth token'ları, sıkı kiracı izolasyonu, rol bazlı erişim kontrolü ve KVKK/GDPR uyumlu veri işleme.",
+          },
+          {
+            icon: "languages",
+            title: "Avrupa için tasarlandı",
+            description:
+              "Yerel İngilizce, Almanca ve Türkçe — sektör terminolojisi her endüstriye özel çevrilmiş, sınır ötesi operasyona hazır.",
+          },
+        ],
+      },
+
+      sectors: {
+        label: "Desteklenen Sektörler",
+        headline: "Tek platform, on beş sektör",
+        description:
+          "Kutasia; alanlarını, dilini ve iş akışlarını çalıştığınız sektöre uyarlar — özel işlere jenerik şablon dayatmaz.",
+        list: [
+          { name: "Otel & Konaklama", icon: "bed" },
+          { name: "Kuaför & Güzellik", icon: "scissors" },
+          { name: "Kuyumculuk", icon: "gem" },
+          { name: "Restoran", icon: "utensils" },
+          { name: "Klinik & Sağlık", icon: "stethoscope" },
+          { name: "Muhasebe", icon: "calculator" },
+          { name: "Influencer", icon: "sparkles" },
+          { name: "İçerik Üretici", icon: "video" },
+          { name: "Freelancer", icon: "briefcase" },
+          { name: "E-ticaret", icon: "shoppingBag" },
+          { name: "Ajans", icon: "megaphone" },
+          { name: "Eğitim", icon: "graduationCap" },
+          { name: "Hukuk", icon: "scale" },
+          { name: "Danışmanlık", icon: "lineChart" },
+          { name: "Diğer", icon: "package" },
+        ],
+      },
+
+      howItHelps: {
+        label: "Dönüşüm",
+        headline: "Dağınık kanallardan operasyonel netliğe",
+        items: [
+          {
+            before: "Mesajlar Instagram, WhatsApp ve e-posta arasında kayboluyor",
+            after: "Yapay zekâ ile öncelik skorlanmış birleşik gelen kutusu",
+          },
+          {
+            before: "Sektörünüze uymayan genel amaçlı CRM",
+            after: "Kutudan çıkar çıkmaz sektöre özel alanlar ve akışlar",
+          },
+          {
+            before: "Manuel takipler ve konuşmalara dair içgörü yok",
+            after: "Günlük yapay zekâ özetleri ve otomatik müşteri sinyalleri",
+          },
+          {
+            before: "Araçlar arasında parçalanmış müşteri verisi",
+            after: "Tam etkileşim geçmişiyle tekil müşteri profili",
+          },
+        ],
+      },
+
+      forWho: {
+        label: "Kimler için",
+        headline: "Müşteri iletişimine bağımlı ekipler için",
+        items: [
+          {
+            title: "Yerel hizmet işletmeleri",
+            description:
+              "Rezervasyon ve müşteri ilişkilerini kanallar arasında yöneten otel, kuaför, klinik, kuyumcu ve restoranlar.",
+          },
+          {
+            title: "Bireysel profesyoneller",
+            description:
+              "Yüksek hacimli müşteri iletişimini yöneten influencer, içerik üretici, freelancer ve danışmanlar.",
+          },
+          {
+            title: "Küçük ajanslar",
+            description:
+              "Her biri kendi iş akışları, markası ve raporlama ihtiyacı olan birden fazla müşteri hesabını yöneten ekipler.",
+          },
+        ],
+      },
+
+      cta: {
+        headline: "Kutasia'yı iş başında görün",
+        description:
+          "Platformu keşfetmek için kutasia.com'u ziyaret edin veya özelleştirilmiş bir tanıtım için OpSolid ekibiyle görüşün.",
+        primaryCta: "kutasia.com'u ziyaret et",
+        secondaryCta: "Tanıtım planla",
+      },
     },
   },
 } as const;

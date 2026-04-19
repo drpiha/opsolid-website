@@ -19,6 +19,7 @@ export const SITE_CONFIG = {
 
 export const NAV_LINKS = [
   { label: "Services", href: "/solutions" },
+  { label: "Products", href: "/products" },
   { label: "Example Solutions", href: "/use-cases" },
   { label: "Blog", href: "/blog" },
   { label: "About", href: "/about" },
@@ -33,6 +34,10 @@ export const FOOTER_LINKS = {
   services: [
     { label: "Services", href: "/solutions" },
     { label: "Example Solutions", href: "/use-cases" },
+  ],
+  products: [
+    { label: "Kutasia", href: "/products/kutasia" },
+    { label: "All Products", href: "/products" },
   ],
   resources: [
     { label: "Blog", href: "/blog" },

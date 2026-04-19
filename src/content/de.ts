@@ -8,6 +8,7 @@ import type { Content } from "./en";
 export const content: Content = {
   nav: {
     solutions: "Leistungen",
+    products: "Produkte",
     useCases: "Beispiellösungen",
     about: "Über uns",
     contact: "Kontakt",
@@ -614,6 +615,7 @@ export const content: Content = {
       "Praxisnahe Automatisierungs- und KI-Systeme für den Geschäftsbetrieb.",
     company: "Unternehmen",
     services: "Leistungen",
+    products: "Produkte",
     legal: "Rechtliches",
     resources: "Ressourcen",
     copyright: `© ${new Date().getFullYear()} OpSolid. All rights reserved.`,
@@ -863,6 +865,175 @@ export const content: Content = {
       description:
         "Buchen Sie ein kostenloses Erstgespräch, um Ihre konkrete Situation zu besprechen — unverbindlich.",
       primaryCta: "Erstgespräch buchen",
+    },
+  },
+
+  products: {
+    hero: {
+      label: "Unsere Produkte",
+      headline: "Eigenentwickelte Software-Produkte",
+      description:
+        "Neben individuellen Projekten entwickelt und betreibt OpSolid eigene Software-Produkte — ausgereifte, produktionsreife Systeme auf derselben Automatisierungs- und KI-Grundlage.",
+    },
+    comingSoonLabel: "Weitere in Entwicklung",
+    comingSoonTitle: "Weitere Produkte folgen",
+    comingSoonDescription:
+      "Das Produktportfolio von OpSolid wächst. Neue Tools für Operations, Kommunikation und KI-gestützte Workflows befinden sich derzeit in Entwicklung.",
+    items: [
+      {
+        name: "Kutasia",
+        tagline: "Multi-Branchen-Kundenplattform",
+        description:
+          "Eine mandantenfähige SaaS-Plattform, die Kundenkommunikation, Anfragen und Inhalte vereint — mit branchenspezifischen Workflows und KI-gestützter Analyse.",
+        status: "Live",
+        href: "/products/kutasia",
+        externalUrl: "https://kutasia.com",
+        icon: "sparkles",
+      },
+    ],
+
+    kutasia: {
+      hero: {
+        eyebrow: "Ein OpSolid-Produkt",
+        label: "Kutasia",
+        headline: "Kundenbetrieb,\nvereint und intelligent",
+        subheadline:
+          "Kutasia ist eine mandantenfähige SaaS-Plattform, die Nachrichten, Anfragen, Buchungen und Inhalte in einem KI-gestützten Arbeitsbereich zusammenführt — angepasst an Ihre Branche.",
+        primaryCta: "Kutasia besuchen",
+        secondaryCta: "Mit dem Team sprechen",
+        primaryCtaHref: "https://kutasia.com",
+        secondaryCtaHref: "/contact",
+        domain: "kutasia.com",
+      },
+
+      trustStrip: [
+        "Mandantenfähiges SaaS",
+        "AES-256-Verschlüsselung",
+        "DSGVO-konform",
+        "EN / DE / TR",
+      ],
+
+      features: {
+        label: "Plattformfunktionen",
+        headline: "Alles, was ein operatives Team braucht",
+        description:
+          "Kutasia bündelt die Tools, die Unternehmen über Kanäle hinweg jonglieren — mit branchenspezifischer Struktur und KI, die Gespräche in Erkenntnisse verwandelt.",
+        items: [
+          {
+            icon: "inbox",
+            title: "Vereinheitlichter Posteingang",
+            description:
+              "Instagram-DMs, WhatsApp, E-Mail und Webformulare in einem thematisch strukturierten Arbeitsbereich — mit automatischer Zuweisung und Statusverfolgung.",
+          },
+          {
+            icon: "bot",
+            title: "KI-Analyse",
+            description:
+              "Stimmung, Absicht und Buchungsabsichts-Scoring für jede Nachricht — dringende Gespräche und Chancen werden automatisch hervorgehoben.",
+          },
+          {
+            icon: "layers",
+            title: "Branchen-Vorlagen",
+            description:
+              "Hotel, Salon, Juwelier, Klinik, Restaurant, Buchhaltung und mehr — jede Branche bringt eigene Felder, Terminologie und Workflows mit.",
+          },
+          {
+            icon: "lineChart",
+            title: "Operative Dashboards",
+            description:
+              "Tagessummaries, KPI-Trends, Kanalverteilung und KI-Insights in einem Dashboard, das für Multi-Branchen-Betrieb entwickelt wurde.",
+          },
+          {
+            icon: "shield",
+            title: "Sicheres Multi-Tenant",
+            description:
+              "AES-256-GCM-verschlüsselte OAuth-Tokens, strikte Mandantenisolation, rollenbasierte Zugriffskontrolle und DSGVO-konforme Datenhaltung.",
+          },
+          {
+            icon: "languages",
+            title: "Für Europa entwickelt",
+            description:
+              "Native Englisch, Deutsch und Türkisch — Branchenterminologie pro Industrie übersetzt, bereit für den grenzüberschreitenden Einsatz.",
+          },
+        ],
+      },
+
+      sectors: {
+        label: "Unterstützte Branchen",
+        headline: "Eine Plattform, fünfzehn Branchen",
+        description:
+          "Kutasia passt Felder, Sprache und Workflows an Ihre Branche an — ohne generische Vorlagen auf spezialisierte Arbeit zu zwingen.",
+        list: [
+          { name: "Hotel & Gastgewerbe", icon: "bed" },
+          { name: "Salon & Beauty", icon: "scissors" },
+          { name: "Juwelier", icon: "gem" },
+          { name: "Restaurant", icon: "utensils" },
+          { name: "Klinik & Gesundheit", icon: "stethoscope" },
+          { name: "Buchhaltung", icon: "calculator" },
+          { name: "Influencer", icon: "sparkles" },
+          { name: "Creator", icon: "video" },
+          { name: "Freelancer", icon: "briefcase" },
+          { name: "E-Commerce", icon: "shoppingBag" },
+          { name: "Agentur", icon: "megaphone" },
+          { name: "Bildung", icon: "graduationCap" },
+          { name: "Recht", icon: "scale" },
+          { name: "Beratung", icon: "lineChart" },
+          { name: "Sonstige", icon: "package" },
+        ],
+      },
+
+      howItHelps: {
+        label: "Der Wandel",
+        headline: "Von verstreuten Kanälen zu operativer Klarheit",
+        items: [
+          {
+            before: "Nachrichten gehen zwischen Instagram, WhatsApp und E-Mail verloren",
+            after: "Vereinheitlichter Posteingang mit KI-bewerteter Dringlichkeit",
+          },
+          {
+            before: "Generisches CRM, das nicht zu Ihrer Branche passt",
+            after: "Branchenspezifische Felder und Workflows ab Werk",
+          },
+          {
+            before: "Manuelle Follow-ups und keine Einsicht in Gespräche",
+            after: "Tägliche KI-Zusammenfassungen und automatisierte Kundensignale",
+          },
+          {
+            before: "Fragmentierte Kundendaten über mehrere Tools verteilt",
+            after: "Einheitliches Kundenprofil mit vollständigem Interaktionsverlauf",
+          },
+        ],
+      },
+
+      forWho: {
+        label: "Entwickelt für",
+        headline: "Teams, die auf Kundenkommunikation angewiesen sind",
+        items: [
+          {
+            title: "Lokale Dienstleister",
+            description:
+              "Hotels, Salons, Kliniken, Juweliere und Restaurants, die Buchungen und Kundenbeziehungen über Kanäle hinweg verwalten.",
+          },
+          {
+            title: "Selbstständige Profis",
+            description:
+              "Influencer, Creator, Freelancer und Berater, die hohe Volumina an Kundenkommunikation bewältigen.",
+          },
+          {
+            title: "Kleine Agenturen",
+            description:
+              "Teams, die mehrere Kundenaccounts mit eigenen Workflows, Branding und Reporting-Bedarf betreuen.",
+          },
+        ],
+      },
+
+      cta: {
+        headline: "Sehen Sie Kutasia in Aktion",
+        description:
+          "Besuchen Sie kutasia.com, um die Plattform zu erkunden, oder sprechen Sie mit dem OpSolid-Team für eine maßgeschneiderte Präsentation.",
+        primaryCta: "kutasia.com besuchen",
+        secondaryCta: "Präsentation buchen",
+      },
     },
   },
 } as const;

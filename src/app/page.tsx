@@ -8,6 +8,7 @@ import { ProblemOutcome } from "@/components/sections/ProblemOutcome";
 import { UseCasesPreview } from "@/components/sections/UseCasesPreview";
 import { HowWeWork } from "@/components/sections/HowWeWork";
 import { WhyUs } from "@/components/sections/WhyUs";
+import { ProductsTeaser } from "@/components/sections/ProductsTeaser";
 import { CTASection } from "@/components/sections/CTASection";
 
 export default function HomePage() {
@@ -23,6 +24,7 @@ export default function HomePage() {
       <UseCasesPreview />
       <HowWeWork />
       <WhyUs />
+      <ProductsTeaser />
       <CTASection />
     </>
   );

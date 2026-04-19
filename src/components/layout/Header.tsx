@@ -33,6 +33,7 @@ export function Header() {
 
   const navLabels: Record<string, string> = {
     "/solutions": t.nav.solutions,
+    "/products": t.nav.products,
     "/use-cases": t.nav.useCases,
     "/blog": t.nav.blog,
     "/about": t.nav.about,

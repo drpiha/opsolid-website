@@ -7,6 +7,7 @@
 export const content = {
   nav: {
     solutions: "Services",
+    products: "Products",
     useCases: "Example Solutions",
     about: "About",
     contact: "Contact",
@@ -613,6 +614,7 @@ export const content = {
       "Practical automation and AI systems for business operations.",
     company: "Company",
     services: "Services",
+    products: "Products",
     legal: "Legal",
     resources: "Resources",
     copyright: `© ${new Date().getFullYear()} OpSolid. All rights reserved.`,
@@ -862,6 +864,175 @@ export const content = {
       description:
         "Book a free discovery call to discuss your specific situation — no obligation.",
       primaryCta: "Book a Discovery Call",
+    },
+  },
+
+  products: {
+    hero: {
+      label: "Our Products",
+      headline: "Software products built in-house",
+      description:
+        "Alongside bespoke engagements, OpSolid develops and operates its own software products — mature, production-grade systems built from the same automation and AI foundations.",
+    },
+    comingSoonLabel: "More in development",
+    comingSoonTitle: "More products on the way",
+    comingSoonDescription:
+      "OpSolid's product portfolio is expanding. New tools for operations, communication, and AI-assisted workflows are currently in development.",
+    items: [
+      {
+        name: "Kutasia",
+        tagline: "Multi-sector customer platform",
+        description:
+          "A multi-tenant SaaS platform that unifies customer communication, requests, and content — with sector-specific workflows and AI-assisted analysis.",
+        status: "Live",
+        href: "/products/kutasia",
+        externalUrl: "https://kutasia.com",
+        icon: "sparkles",
+      },
+    ],
+
+    kutasia: {
+      hero: {
+        eyebrow: "An OpSolid product",
+        label: "Kutasia",
+        headline: "Customer operations,\nunified and intelligent",
+        subheadline:
+          "Kutasia is a multi-tenant SaaS platform that brings messaging, requests, bookings, and content into one AI-assisted workspace — tailored per business sector.",
+        primaryCta: "Visit Kutasia",
+        secondaryCta: "Talk to the team",
+        primaryCtaHref: "https://kutasia.com",
+        secondaryCtaHref: "/contact",
+        domain: "kutasia.com",
+      },
+
+      trustStrip: [
+        "Multi-tenant SaaS",
+        "AES-256 encryption",
+        "GDPR compliant",
+        "EN / DE / TR",
+      ],
+
+      features: {
+        label: "Platform Capabilities",
+        headline: "Everything an operational team needs",
+        description:
+          "Kutasia consolidates the tools businesses juggle across channels — with sector-specific structure and AI that turns conversations into insights.",
+        items: [
+          {
+            icon: "inbox",
+            title: "Unified Inbox",
+            description:
+              "Instagram DMs, WhatsApp, email, and web forms in one threaded workspace — with automatic assignment and status tracking.",
+          },
+          {
+            icon: "bot",
+            title: "AI Analysis",
+            description:
+              "Sentiment, intent, and booking-intent scoring on every message — surfacing urgent conversations and opportunities automatically.",
+          },
+          {
+            icon: "layers",
+            title: "Sector Templates",
+            description:
+              "Hotel, salon, jewelry, clinic, restaurant, accounting and more — each sector ships with its own fields, terminology, and workflows.",
+          },
+          {
+            icon: "lineChart",
+            title: "Operational Dashboards",
+            description:
+              "Daily summaries, KPI trends, channel distribution, and AI insights in a single dashboard built for multi-sector operations.",
+          },
+          {
+            icon: "shield",
+            title: "Secure Multi-Tenant",
+            description:
+              "AES-256-GCM encrypted OAuth tokens, strict tenant isolation, role-based access control, and GDPR-aligned data handling.",
+          },
+          {
+            icon: "languages",
+            title: "Built for Europe",
+            description:
+              "Native English, German, and Turkish — with sector terminology translated per industry, ready for cross-border operations.",
+          },
+        ],
+      },
+
+      sectors: {
+        label: "Sectors Supported",
+        headline: "One platform, fifteen industries",
+        description:
+          "Kutasia adapts its fields, language, and workflows to the sector you operate in — without forcing generic templates on specialized work.",
+        list: [
+          { name: "Hotel & Hospitality", icon: "bed" },
+          { name: "Salon & Beauty", icon: "scissors" },
+          { name: "Jewelry", icon: "gem" },
+          { name: "Restaurant", icon: "utensils" },
+          { name: "Clinic & Health", icon: "stethoscope" },
+          { name: "Accounting", icon: "calculator" },
+          { name: "Influencer", icon: "sparkles" },
+          { name: "Creator", icon: "video" },
+          { name: "Freelancer", icon: "briefcase" },
+          { name: "E-commerce", icon: "shoppingBag" },
+          { name: "Agency", icon: "megaphone" },
+          { name: "Education", icon: "graduationCap" },
+          { name: "Legal", icon: "scale" },
+          { name: "Consulting", icon: "lineChart" },
+          { name: "Other", icon: "package" },
+        ],
+      },
+
+      howItHelps: {
+        label: "The Shift",
+        headline: "From scattered channels to operational clarity",
+        items: [
+          {
+            before: "Messages lost across Instagram, WhatsApp, and email",
+            after: "Unified inbox with AI-scored urgency",
+          },
+          {
+            before: "Generic CRM that doesn't fit your sector",
+            after: "Sector-specific fields and workflows out of the box",
+          },
+          {
+            before: "Manual follow-ups and no insight into conversations",
+            after: "Daily AI summaries and automated customer signals",
+          },
+          {
+            before: "Fragmented customer data across tools",
+            after: "Single customer profile with full interaction history",
+          },
+        ],
+      },
+
+      forWho: {
+        label: "Built for",
+        headline: "Teams that depend on customer conversations",
+        items: [
+          {
+            title: "Local service businesses",
+            description:
+              "Hotels, salons, clinics, jewelers, and restaurants managing bookings and customer relationships across channels.",
+          },
+          {
+            title: "Individual professionals",
+            description:
+              "Influencers, creators, freelancers, and consultants handling high volumes of client communication.",
+          },
+          {
+            title: "Small agencies",
+            description:
+              "Teams managing multiple client accounts, each with its own workflows, branding, and reporting needs.",
+          },
+        ],
+      },
+
+      cta: {
+        headline: "See Kutasia in action",
+        description:
+          "Visit kutasia.com to explore the platform, or talk to the OpSolid team for a tailored walkthrough.",
+        primaryCta: "Visit kutasia.com",
+        secondaryCta: "Book a walkthrough",
+      },
     },
   },
 };

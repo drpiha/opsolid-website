@@ -11,6 +11,8 @@ export function Footer() {
   // Map hrefs to localized labels (same approach as Header)
   const linkLabels: Record<string, string> = {
     "/solutions": t.nav.solutions,
+    "/products": t.nav.products,
+    "/products/kutasia": "Kutasia",
     "/use-cases": t.nav.useCases,
     "/blog": t.nav.blog,
     "/faq": t.nav.faq,
@@ -26,7 +28,7 @@ export function Footer() {
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-500 to-transparent" />
 
       <div className="container-wide py-16 md:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 lg:gap-12">
           {/* Brand */}
           <div className="lg:col-span-1">
             <Link
@@ -68,6 +70,21 @@ export function Footer() {
             </h4>
             <ul className="space-y-2.5">
               {FOOTER_LINKS.services.map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-sm text-slate-400 hover:text-teal-400 transition-colors">
+                    {linkLabels[link.href] || link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div>
+            <h4 className="text-xs font-semibold text-white uppercase tracking-wider mb-4">
+              {ft.products}
+            </h4>
+            <ul className="space-y-2.5">
+              {FOOTER_LINKS.products.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-sm text-slate-400 hover:text-teal-400 transition-colors">
                     {linkLabels[link.href] || link.label}
