@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Link from "next/link";
+import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import Image from "next/image";
 import { Clock, MapPin, Calendar, ArrowRight, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";

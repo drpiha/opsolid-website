@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { SITE_CONFIG, FOOTER_LINKS } from "@/lib/constants";
 import { useLocale } from "@/context/LocaleContext";
 
