@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { ArrowRight, ArrowUpRight, Sparkles, Clock } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";

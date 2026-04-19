@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import { Inter } from "next/font/google";
-import { ClientProviders } from "@/components/ClientProviders";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
 import { SITE_CONFIG } from "@/lib/constants";
+import { isLocale, DEFAULT_LOCALE } from "@/lib/i18n";
 import "./globals.css";
 
 const inter = Inter({
@@ -46,7 +45,6 @@ export const metadata: Metadata = {
   creator: SITE_CONFIG.name,
   openGraph: {
     type: "website",
-    locale: "en_US",
     url: SITE_CONFIG.url,
     siteName: SITE_CONFIG.name,
     title: `${SITE_CONFIG.name} — ${SITE_CONFIG.tagline}`,
@@ -65,14 +63,14 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const headerStore = headers();
+  const localeHeader = headerStore.get("x-locale");
+  const lang = isLocale(localeHeader) ? localeHeader : DEFAULT_LOCALE;
+
   return (
-    <html lang="en" className={`scroll-smooth ${inter.variable}`}>
+    <html lang={lang} className={`scroll-smooth ${inter.variable}`}>
       <body className="font-sans antialiased bg-white text-slate-900 min-h-screen flex flex-col">
-        <ClientProviders>
-          <Header />
-          <main className="flex-1">{children}</main>
-          <Footer />
-        </ClientProviders>
+        {children}
       </body>
     </html>
   );

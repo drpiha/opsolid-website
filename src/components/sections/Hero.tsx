@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { motion } from "framer-motion";
 import { ArrowRight, Workflow, MessageCircle, Send, Zap, Bot, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/Button";
