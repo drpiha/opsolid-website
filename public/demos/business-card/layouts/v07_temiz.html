@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Ester D&#246;nmez | 4K Hava &#199;ekimi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --bg: #f0f5fa;
+    --card: #ffffff;
+    --sky: #0369a1;
+    --sky-light: #e0f2fe;
+    --sky-dark: #0c4a6e;
+    --sky-mid: #0ea5e9;
+    --blue: #3b82f6;
+    --red: #ef4444;
+    --text: #1e293b;
+    --text-muted: #64748b;
+    --shadow: 0 2px 16px rgba(3, 105, 161, 0.08);
+    --shadow-lg: 0 8px 32px rgba(3, 105, 161, 0.12);
+    --radius: 14px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .card-wrapper {
+    width: 100%;
+    max-width: 460px;
+    padding: 0 0 40px 0;
+    position: relative;
+  }
+
+  /* Scroll reveal base */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== HEADER ===== */
+  .header {
+    background: linear-gradient(135deg, var(--sky) 0%, var(--sky-mid) 100%);
+    padding: 28px 24px 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 120px;
+    height: 120px;
+    border: 3px solid rgba(255,255,255,0.12);
+    border-radius: 50%;
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: -20px;
+    width: 80px;
+    height: 80px;
+    border: 2px solid rgba(255,255,255,0.08);
+    border-radius: 50%;
+  }
+
+  .brand-initials {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.18);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1.5px solid rgba(255,255,255,0.25);
+    margin-bottom: 12px;
+    font-size: 18px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 1px;
+  }
+
+  .header .company-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.95);
+    letter-spacing: 0.3px;
+    line-height: 1.4;
+  }
+
+  /* ===== PROFILE ===== */
+  .profile-section {
+    background: var(--card);
+    margin: -20px 16px 0;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    padding: 32px 24px 28px;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .profile-photo-wrap {
+    width: 110px;
+    height: 110px;
+    margin: 0 auto 16px;
+    border-radius: 50%;
+    padding: 4px;
+    background: linear-gradient(135deg, var(--sky), var(--sky-mid));
+    box-shadow: 0 4px 20px rgba(3,105,161,0.2);
+  }
+
+  .profile-initials-circle {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    border: 3px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #0c4a6e 0%, #0369a1 100%);
+    font-size: 36px;
+    font-weight: 800;
+    color: #ffffff;
+    letter-spacing: 2px;
+    user-select: none;
+  }
+
+  .profile-name {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .profile-name .name-accent {
+    color: var(--sky);
+  }
+  .profile-specialty {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--sky);
+    margin-bottom: 4px;
+  }
+  .profile-credentials {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  /* ===== CTA ===== */
+  .cta-section {
+    padding: 0 16px;
+    margin-top: 16px;
+  }
+
+  .cta-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 18px 24px;
+    background: linear-gradient(135deg, #25d366 0%, #20bd5a 100%);
+    color: white;
+    border: none;
+    border-radius: var(--radius);
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px;
+    font-weight: 800;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+    animation: ctaPulse 2.5s ease-in-out infinite;
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 28px rgba(37,211,102,0.45);
+  }
+  .cta-button:active {
+    transform: translateY(0);
+  }
+  .cta-button::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    transform: translateX(-100%);
+    animation: shimmer 3s ease-in-out infinite;
+  }
+
+  @keyframes ctaPulse {
+    0%, 100% { box-shadow: 0 4px 20px rgba(37,211,102,0.35); }
+    50% { box-shadow: 0 4px 30px rgba(37,211,102,0.55); }
+  }
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    60%, 100% { transform: translateX(100%); }
+  }
+
+  /* ===== SECTIONS ===== */
+  .section {
+    margin: 16px 16px 0;
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px;
+    overflow: hidden;
+  }
+
+  .section-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-title::before {
+    content: '';
+    width: 4px;
+    height: 20px;
+    background: var(--sky);
+    border-radius: 2px;
+    flex-shrink: 0;
+  }
+
+  /* ===== CONTACT ROWS ===== */
+  .contact-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f5f9;
+    text-decoration: none;
+    color: var(--text);
+    transition: background 0.2s;
+  }
+  .contact-row:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+  .contact-row:first-child {
+    padding-top: 0;
+  }
+  .contact-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--sky-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+  .contact-label {
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .contact-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    word-break: break-all;
+  }
+
+  /* ===== SERVICES GRID ===== */
+  .spec-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .spec-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: var(--bg);
+    border-radius: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .spec-item:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(3,105,161,0.1);
+  }
+  .spec-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+  .spec-icon.c1 { background: #dbeafe; }
+  .spec-icon.c2 { background: #fce7f3; }
+  .spec-icon.c3 { background: #d1fae5; }
+  .spec-icon.c4 { background: #fef3c7; }
+  .spec-icon.c5 { background: #e0e7ff; }
+  .spec-icon.c6 { background: #ccfbf1; }
+
+  .spec-name {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  /* ===== ABOUT ===== */
+  .about-text {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  /* ===== SOCIAL LINKS ===== */
+  .social-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .social-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 14px;
+    background: var(--bg);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .social-link:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(3,105,161,0.1);
+  }
+  .social-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .social-icon.ig { background: linear-gradient(135deg, #f9ce34, #ee2a7b, #6228d7); }
+  .social-icon.yt { background: #ff0000; }
+  .social-icon.web { background: var(--sky); }
+  .social-icon.ss { background: #ee2b24; }
+  .social-info .social-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .social-info .social-name {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+  }
+
+  /* ===== VIDEO SECTION ===== */
+  .video-scroll {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding: 4px 0 8px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .video-scroll::-webkit-scrollbar { display: none; }
+
+  .video-card {
+    flex-shrink: 0;
+    width: 260px;
+    border-radius: 10px;
+    overflow: hidden;
+    background: var(--bg);
+    border: 1.5px solid #cbd5e1;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .video-card:hover {
+    border-color: var(--sky);
+    transform: translateY(-2px);
+  }
+  .video-card iframe {
+    width: 100%;
+    height: 146px;
+    border: none;
+    display: block;
+  }
+
+  /* ===== STATS BAR ===== */
+  .stats-bar {
+    display: flex;
+    gap: 8px;
+    margin-top: 0;
+  }
+  .stat-item {
+    flex: 1;
+    text-align: center;
+    padding: 14px 8px;
+    background: var(--bg);
+    border-radius: 10px;
+  }
+  .stat-value {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--sky);
+    line-height: 1.2;
+  }
+  .stat-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* ===== VCARD / FOOTER ===== */
+  .vcard-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 16px 24px;
+    background: var(--card);
+    color: var(--sky);
+    border: 2px solid var(--sky);
+    border-radius: var(--radius);
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+  .vcard-button:hover {
+    background: var(--sky);
+    color: white;
+  }
+  .vcard-section {
+    padding: 0 16px;
+    margin-top: 16px;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 24px 16px 8px;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 460px) {
+    .card-wrapper {
+      max-width: 100%;
+    }
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    .cta-button {
+      animation: none;
+    }
+    .cta-button::after {
+      animation: none;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="card-wrapper">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="brand-initials" aria-hidden="true"><img src="data:image/jpeg;base64,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" alt="Ester Donmez" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div>
+    <div class="company-name">4K Hava &#199;ekimi | Profesyonel Drone Hizmetleri</div>
+  </header>
+
+  <!-- PROFILE -->
+  <section class="profile-section reveal" aria-label="Profil">
+    <div class="profile-photo-wrap">
+      <div class="profile-initials-circle" aria-hidden="true"><img src="data:image/jpeg;base64,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" alt="Ester Donmez" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div>
+    </div>
+    <h1 class="profile-name"><span class="name-accent">Ester</span> D&#246;nmez</h1>
+    <p class="profile-specialty">Kurucu &amp; Prod&#252;kt&#246;r</p>
+    <p class="profile-credentials">4K Hava &#199;ekimi</p>
+  </section>
+
+  <!-- STATS BAR -->
+  <div class="section reveal" aria-label="&#304;statistikler">
+    <div class="stats-bar">
+      <div class="stat-item">
+        <div class="stat-value">89.7K</div>
+        <div class="stat-label">Takip&#231;i</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">672</div>
+        <div class="stat-label">Payla&#351;&#305;m</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">4K</div>
+        <div class="stat-label">&#199;&#246;z&#252;n&#252;rl&#252;k</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHATSAPP CTA -->
+  <div class="cta-section reveal">
+    <a href="https://wa.me/905446692669?text=Merhaba%2C%20hava%20%C3%A7ekimi%20hizmeti%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." class="cta-button" target="_blank" rel="noopener" aria-label="WhatsApp &#252;zerinden ileti&#351;ime ge&#231;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp ile &#304;leti&#351;im
+    </a>
+  </div>
+
+  <!-- QUICK CONTACT -->
+  <section class="section reveal" aria-label="&#304;leti&#351;im">
+    <div class="section-title">&#304;leti&#351;im</div>
+
+    <a href="tel:+905446692669" class="contact-row">
+      <div class="contact-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0369a1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+      </div>
+      <div>
+        <div class="contact-label">Telefon</div>
+        <div class="contact-value">+90 544 669 26 69</div>
+      </div>
+    </a>
+
+    <a href="mailto:esterdonmez@gmail.com" class="contact-row">
+      <div class="contact-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0369a1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <div>
+        <div class="contact-label">E-posta</div>
+        <div class="contact-value">esterdonmez@gmail.com</div>
+      </div>
+    </a>
+
+    <a href="https://www.4khavacekim.com" class="contact-row" target="_blank" rel="noopener">
+      <div class="contact-icon">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0369a1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      </div>
+      <div>
+        <div class="contact-label">Web Sitesi</div>
+        <div class="contact-value">www.4khavacekim.com</div>
+      </div>
+    </a>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section reveal" aria-label="Hizmetler">
+    <div class="section-title">Hizmetlerimiz</div>
+    <div class="spec-grid">
+      <div class="spec-item">
+        <div class="spec-icon c1"><span aria-hidden="true">&#x1F681;</span></div>
+        <div class="spec-name">Drone Hava &#199;ekimi</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-icon c2"><span aria-hidden="true">&#x1F3AC;</span></div>
+        <div class="spec-name">Tan&#305;t&#305;m Filmi</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-icon c3"><span aria-hidden="true">&#x1F4F8;</span></div>
+        <div class="spec-name">Hava Foto&#287;raf&#231;&#305;l&#305;&#287;&#305;</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-icon c4"><span aria-hidden="true">&#x1F39E;</span></div>
+        <div class="spec-name">Reklam Filmi</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-icon c5"><span aria-hidden="true">&#x1F3D7;</span></div>
+        <div class="spec-name">&#304;n&#351;aat Takibi</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-icon c6"><span aria-hidden="true">&#x1F3AE;</span></div>
+        <div class="spec-name">FPV Drone &#199;ekimi</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section reveal" aria-label="Hakk&#305;m&#305;zda">
+    <div class="section-title">Hakk&#305;m&#305;zda</div>
+    <p class="about-text">
+      Profesyonel drone ekipmanlar&#305; ve deneyimli ekibimizle; havadan g&#246;r&#252;nt&#252;leme, tan&#305;t&#305;m filmi ve reklam prod&#252;ksiyonu alan&#305;nda hizmet veriyoruz. 4K &#231;&#246;z&#252;n&#252;rl&#252;kte sinematik hava &#231;ekimleriyle projelerinize fark yaratan bir bak&#305;&#351; a&#231;&#305;s&#305; kat&#305;yoruz.
+    </p>
+  </section>
+
+  <!-- SHOWREEL VIDEOS -->
+  <section class="section reveal" aria-label="Showreel">
+    <div class="section-title">Showreel</div>
+    <div class="video-scroll" role="list">
+      <div class="video-card" role="listitem">
+        <iframe
+          src="https://www.youtube.com/embed/_m1YNYj2w9E?rel=0&modestbranding=1"
+          title="4K Hava &#199;ekimi Showreel 1"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+      <div class="video-card" role="listitem">
+        <iframe
+          src="https://www.youtube.com/embed/-3iJ-ZXnIPw?rel=0&modestbranding=1"
+          title="4K Hava &#199;ekimi Showreel 2"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+      <div class="video-card" role="listitem">
+        <iframe
+          src="https://www.youtube.com/embed/ptYm163dv8g?rel=0&modestbranding=1"
+          title="4K Hava &#199;ekimi Showreel 3"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+      <div class="video-card" role="listitem">
+        <iframe
+          src="https://www.youtube.com/embed/MR2tziFK7KY?rel=0&modestbranding=1"
+          title="4K Hava &#199;ekimi Showreel 4"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+      <div class="video-card" role="listitem">
+        <iframe
+          src="https://www.youtube.com/embed/jhbyY1JzZoY?rel=0&modestbranding=1"
+          title="4K Hava &#199;ekimi Showreel 5"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOCIAL MEDIA -->
+  <section class="section reveal" aria-label="Sosyal Medya">
+    <div class="section-title">Sosyal Medya</div>
+    <div class="social-grid">
+      <a href="https://www.instagram.com/4khavacekim_pro" class="social-link" target="_blank" rel="noopener">
+        <div class="social-icon ig">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </div>
+        <div class="social-info">
+          <div class="social-label">Instagram</div>
+          <div class="social-name">@4khavacekim_pro</div>
+        </div>
+      </a>
+      <a href="https://www.youtube.com/@4khavacekim_pro" class="social-link" target="_blank" rel="noopener">
+        <div class="social-icon yt">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </div>
+        <div class="social-info">
+          <div class="social-label">YouTube</div>
+          <div class="social-name">4K Hava &#199;ekimi</div>
+        </div>
+      </a>
+      <a href="https://www.4khavacekim.com" class="social-link" target="_blank" rel="noopener">
+        <div class="social-icon web">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+        </div>
+        <div class="social-info">
+          <div class="social-label">Web Sitesi</div>
+          <div class="social-name">4khavacekim.com</div>
+        </div>
+      </a>
+      <a href="https://www.shutterstock.com/tr/g/4khavacekim/video?rid=164220666" class="social-link" target="_blank" rel="noopener">
+        <div class="social-icon ss">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm4.151 17.088c-.354.353-.871.471-1.349.308a8.07 8.07 0 0 1-2.454-1.393 7.963 7.963 0 0 1-2.348-3.665c-.148-.52.144-1.063.664-1.21.52-.149 1.063.143 1.21.663a5.95 5.95 0 0 0 1.754 2.738 6.07 6.07 0 0 0 1.836 1.042c.479.164.758.61.687 1.072a.99.99 0 0 1-.001.445zm1.838-5.084c-.52.148-1.063-.144-1.21-.664a5.95 5.95 0 0 0-1.754-2.738 6.07 6.07 0 0 0-1.836-1.042c-.479-.163-.758-.61-.687-1.072a.975.975 0 0 1 .688-.762c.52-.148 1.063.144 1.211.664.354.353.871.471 1.349.308a8.07 8.07 0 0 1 2.454 1.393 7.963 7.963 0 0 1 2.348 3.665c.148.52-.144 1.063-.664 1.21a.985.985 0 0 1-.9-.962z"/></svg>
+        </div>
+        <div class="social-info">
+          <div class="social-label">Shutterstock</div>
+          <div class="social-name">Stok Video</div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- VCARD -->
+  <div class="vcard-section reveal">
+    <button class="vcard-button" onclick="downloadVCard()" aria-label="Rehbere kaydet">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Rehbere Kaydet
+    </button>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    &copy; 2026 4K Hava &#199;ekimi | Ester D&#246;nmez
+  </footer>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ===== Scroll Reveal with IntersectionObserver =====
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.1,
+      rootMargin: '0px 0px -40px 0px'
+    });
+    revealEls.forEach(function(el) {
+      observer.observe(el);
+    });
+  } else {
+    // Fallback: show all
+    revealEls.forEach(function(el) {
+      el.classList.add('visible');
+    });
+  }
+
+  // ===== vCard Download =====
+  window.downloadVCard = function() {
+    var vcard = [
+      'BEGIN:VCARD',
+      'VERSION:3.0',
+      'N:D\u00f6nmez;Ester;;;',
+      'FN:Ester D\u00f6nmez',
+      'ORG:4K Hava \u00c7ekimi',
+      'TITLE:Kurucu & Prod\u00fckt\u00f6r',
+      'TEL;TYPE=CELL:+905446692669',
+      'EMAIL;TYPE=WORK:esterdonmez@gmail.com',
+      'URL:https://www.4khavacekim.com',
+      'X-SOCIALPROFILE;TYPE=instagram:https://www.instagram.com/4khavacekim_pro',
+      'NOTE:Profesyonel Drone Hava \u00c7ekimi Hizmetleri',
+      'END:VCARD'
+    ].join('\r\n');
+
+    var blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'Ester_Donmez_4K_Hava_Cekimi.vcf';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  };
+
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZK Handmade — El Yap&#305;m&#305; Tak&#305; &amp; Aksesuar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Nunito',sans-serif;
+  background:#fdf8f3;
+  color:#3d2c2c;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  -webkit-font-smoothing:antialiased;
+}
+.card{
+  width:100%;
+  max-width:460px;
+  min-height:100vh;
+  background:#fdf8f3;
+  position:relative;
+}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal{
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity 0.65s cubic-bezier(.22,1,.36,1), transform 0.65s cubic-bezier(.22,1,.36,1);
+}
+.reveal.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ===== SHOP HEADER ===== */
+.shop-header{
+  text-align:center;
+  padding:40px 20px 28px;
+  background:linear-gradient(180deg,#fff9f5 0%,#fdf8f3 100%);
+  position:relative;
+}
+.shop-header::after{
+  content:'';
+  position:absolute;
+  bottom:0;left:20%;right:20%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,#e8c4b8,transparent);
+}
+.monogram{
+  width:72px;height:72px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#e11d48,#f472b6);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-family:'Poppins',sans-serif;
+  font-size:1.6rem;
+  font-weight:700;
+  letter-spacing:1px;
+  margin-bottom:14px;
+  box-shadow:0 4px 20px rgba(225,29,72,0.25);
+}
+.shop-header h1{
+  font-family:'Poppins',sans-serif;
+  font-size:1.5rem;
+  font-weight:700;
+  color:#2d1f1f;
+  letter-spacing:0.5px;
+}
+.shop-header .tagline{
+  font-size:0.88rem;
+  color:#a07070;
+  margin-top:4px;
+  font-weight:500;
+}
+
+/* ===== PROFILE STRIP ===== */
+.profile-strip{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:18px 24px;
+  background:#fff;
+  margin:0 16px;
+  border-radius:14px;
+  box-shadow:0 2px 12px rgba(120,80,60,0.06);
+  transform:translateY(-8px);
+  position:relative;
+  z-index:2;
+}
+.profile-photo{
+  width:52px;height:52px;
+  border-radius:50%;
+  border:2px solid #f9a8d4;
+  object-fit:cover;
+  flex-shrink:0;
+}
+.profile-strip .info h2{
+  font-family:'Poppins',sans-serif;
+  font-size:0.95rem;
+  font-weight:600;
+  color:#2d1f1f;
+}
+.profile-strip .info p{
+  font-size:0.78rem;
+  color:#a07070;
+  margin-top:1px;
+}
+.profile-strip .info .bio{
+  font-size:0.75rem;
+  color:#b08080;
+  margin-top:4px;
+  line-height:1.4;
+}
+
+/* ===== SECTION SHARED ===== */
+.section{
+  padding:24px 20px;
+}
+.section-title{
+  font-family:'Poppins',sans-serif;
+  font-size:1.1rem;
+  font-weight:600;
+  color:#2d1f1f;
+  margin-bottom:16px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.section-title .dot{
+  width:8px;height:8px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#e11d48,#f472b6);
+  flex-shrink:0;
+}
+
+/* ===== PRODUCT CATALOG ===== */
+.product-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px;
+}
+.product-card{
+  background:#fff;
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 2px 14px rgba(120,80,60,0.07);
+  transition:transform 0.3s ease, box-shadow 0.3s ease;
+}
+.product-card:hover{
+  transform:translateY(-3px);
+  box-shadow:0 6px 24px rgba(120,80,60,0.12);
+}
+.product-card .img-wrap{
+  aspect-ratio:1;
+  overflow:hidden;
+  position:relative;
+  background:#f5ebe5;
+}
+.product-card .img-wrap img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform 0.4s ease;
+}
+.product-card:hover .img-wrap img{
+  transform:scale(1.06);
+}
+.product-card .details{
+  padding:12px 14px 14px;
+}
+.product-card .pname{
+  font-family:'Poppins',sans-serif;
+  font-size:0.82rem;
+  font-weight:600;
+  color:#2d1f1f;
+  line-height:1.3;
+}
+.product-card .pprice{
+  font-family:'Poppins',sans-serif;
+  font-size:0.95rem;
+  font-weight:700;
+  color:#e11d48;
+  margin-top:4px;
+}
+.product-card .order-btn{
+  display:block;
+  width:100%;
+  margin-top:10px;
+  padding:9px 0;
+  background:linear-gradient(135deg,#e11d48,#f472b6);
+  color:#fff;
+  font-family:'Nunito',sans-serif;
+  font-size:0.78rem;
+  font-weight:700;
+  text-align:center;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  text-decoration:none;
+  transition:all 0.3s ease;
+}
+.product-card .order-btn:hover{
+  background:linear-gradient(135deg,#be123c,#e11d48);
+  box-shadow:0 4px 14px rgba(225,29,72,0.3);
+}
+
+/* ===== ORDER INFO ===== */
+.order-info{
+  background:#fff;
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 2px 14px rgba(120,80,60,0.07);
+}
+.order-info .wa-btn{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  width:100%;
+  padding:14px;
+  background:#25d366;
+  color:#fff;
+  font-family:'Poppins',sans-serif;
+  font-size:0.9rem;
+  font-weight:600;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  text-decoration:none;
+  transition:all 0.3s ease;
+  margin-bottom:16px;
+}
+.order-info .wa-btn:hover{
+  background:#1da851;
+  box-shadow:0 4px 14px rgba(37,211,102,0.3);
+}
+.order-info .info-row{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  padding:8px 0;
+  font-size:0.85rem;
+  color:#5a4040;
+  line-height:1.5;
+}
+.order-info .info-row .icon{
+  font-size:1.1rem;
+  flex-shrink:0;
+  margin-top:1px;
+}
+
+/* ===== IBAN SECTION ===== */
+.iban-section{
+  background:#fff;
+  border-radius:16px;
+  padding:20px;
+  border:2px dashed #e8c4b8;
+  box-shadow:0 2px 14px rgba(120,80,60,0.05);
+}
+.iban-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  padding:8px 0;
+  font-size:0.84rem;
+  border-bottom:1px solid #f5ebe5;
+}
+.iban-row:last-child{border-bottom:none;}
+.iban-row .label{
+  color:#a07070;
+  font-size:0.78rem;
+  font-weight:500;
+  flex-shrink:0;
+  min-width:90px;
+}
+.iban-row .value{
+  font-weight:600;
+  color:#2d1f1f;
+  text-align:right;
+  word-break:break-all;
+}
+.copy-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:10px 20px;
+  background:linear-gradient(135deg,#d4a574,#c49060);
+  color:#fff;
+  font-family:'Nunito',sans-serif;
+  font-size:0.82rem;
+  font-weight:700;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  margin-top:14px;
+  width:100%;
+  justify-content:center;
+}
+.copy-btn:hover{
+  background:linear-gradient(135deg,#c49060,#b07c50);
+  box-shadow:0 4px 14px rgba(212,165,116,0.35);
+}
+.copy-btn.copied{
+  background:linear-gradient(135deg,#16a34a,#22c55e);
+}
+
+/* ===== REVIEWS ===== */
+.review-card{
+  background:#fff;
+  border-radius:14px;
+  padding:16px 18px;
+  margin-bottom:12px;
+  box-shadow:0 2px 10px rgba(120,80,60,0.06);
+}
+.review-card:last-child{margin-bottom:0;}
+.review-stars{
+  color:#f59e0b;
+  font-size:0.9rem;
+  letter-spacing:2px;
+  margin-bottom:6px;
+}
+.review-text{
+  font-size:0.84rem;
+  color:#5a4040;
+  line-height:1.55;
+  font-style:italic;
+  margin-bottom:8px;
+}
+.review-name{
+  font-size:0.78rem;
+  font-weight:700;
+  color:#a07070;
+}
+
+/* ===== SOCIAL LINKS ===== */
+.social-links{
+  display:flex;
+  gap:12px;
+  justify-content:center;
+  padding:8px 0;
+}
+.social-links a{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:12px 24px;
+  border-radius:12px;
+  text-decoration:none;
+  font-size:0.85rem;
+  font-weight:600;
+  transition:all 0.3s ease;
+}
+.social-links .btn-ig{
+  background:linear-gradient(135deg,#e11d48,#f472b6);
+  color:#fff;
+}
+.social-links .btn-ig:hover{
+  box-shadow:0 4px 16px rgba(225,29,72,0.3);
+  transform:translateY(-2px);
+}
+.social-links .btn-wa{
+  background:#25d366;
+  color:#fff;
+}
+.social-links .btn-wa:hover{
+  box-shadow:0 4px 16px rgba(37,211,102,0.3);
+  transform:translateY(-2px);
+}
+
+/* ===== QR CODE ===== */
+.qr-section{
+  text-align:center;
+}
+.qr-wrapper{
+  display:inline-block;
+  padding:16px;
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 2px 14px rgba(120,80,60,0.07);
+  margin-top:12px;
+}
+#qrcode{
+  width:140px;height:140px;
+}
+#qrcode img{width:140px!important;height:140px!important;}
+#qrcode canvas{width:140px!important;height:140px!important;}
+
+/* ===== VCARD BUTTON ===== */
+.vcard-btn{
+  display:block;
+  width:100%;
+  padding:16px;
+  background:linear-gradient(135deg,#e11d48,#f472b6);
+  color:#fff;
+  font-family:'Poppins',sans-serif;
+  font-size:0.95rem;
+  font-weight:600;
+  border:none;
+  border-radius:14px;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  margin-top:8px;
+}
+.vcard-btn:hover{
+  background:linear-gradient(135deg,#be123c,#e11d48);
+  transform:translateY(-1px);
+  box-shadow:0 6px 20px rgba(225,29,72,0.25);
+}
+.vcard-btn:active{transform:translateY(0);}
+
+/* ===== FOOTER ===== */
+.footer{
+  text-align:center;
+  padding:20px 20px 32px;
+  border-top:1px solid #f0e0d6;
+}
+.footer p{
+  font-size:0.72rem;
+  color:#b08080;
+  margin-top:4px;
+}
+.footer .brand{
+  color:#e11d48;
+  font-weight:700;
+}
+
+/* ===== DECORATIVE DIVIDER ===== */
+.divider{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:8px 20px;
+  color:#e8c4b8;
+  font-size:0.6rem;
+  letter-spacing:4px;
+}
+.divider::before,.divider::after{
+  content:'';
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg,transparent,#e8c4b8,transparent);
+}
+
+/* ===== REDUCED MOTION ===== */
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none;}
+  .product-card,.social-links a{transition:none;}
+  .product-card .img-wrap img{transition:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- Shop Header -->
+  <div class="shop-header reveal">
+    <div class="monogram">ZK</div>
+    <h1>ZK Handmade</h1>
+    <p class="tagline">El Yap&#305;m&#305; Tak&#305; &amp; Aksesuar</p>
+  </div>
+
+  <!-- Profile Strip -->
+  <div class="profile-strip reveal">
+    <img src="https://i.pravatar.cc/200?img=23" alt="Zeynep Kaya" class="profile-photo" loading="lazy">
+    <div class="info">
+      <h2>Zeynep Kaya</h2>
+      <p>Tasar&#305;mc&#305; &amp; Kurucu</p>
+      <div class="bio">Her par&ccedil;a el eme&#287;i, g&ouml;z nuru. Do&#287;al ta&#351;lar ve kaliteli malzemelerle benzersiz tak&#305;lar tasar&#305;l&#305;yorum.</div>
+    </div>
+  </div>
+
+  <div class="divider">&#10047; &#10047; &#10047;</div>
+
+  <!-- Product Catalog -->
+  <div class="section reveal">
+    <div class="section-title">
+      <span class="dot"></span> &Uuml;r&uuml;nlerimiz
+    </div>
+    <div class="product-grid">
+
+      <div class="product-card">
+        <div class="img-wrap">
+          <img src="https://picsum.photos/seed/necklace-moon/400/400" alt="Ay Kolye" loading="lazy">
+        </div>
+        <div class="details">
+          <div class="pname">Ay Kolye</div>
+          <div class="pprice">&#8378;350</div>
+          <a href="https://wa.me/905343334455?text=Merhaba%2C%20%22Ay%20Kolye%22%20%C3%BCr%C3%BCn%C3%BC%20i%C3%A7in%20sipari%C5%9F%20vermek%20istiyorum." class="order-btn" target="_blank" rel="noopener">Sipari&#351; Ver</a>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="img-wrap">
+          <img src="https://picsum.photos/seed/bracelet-stone/400/400" alt="Do&#287;al Ta&#351; Bileklik" loading="lazy">
+        </div>
+        <div class="details">
+          <div class="pname">Do&#287;al Ta&#351; Bileklik</div>
+          <div class="pprice">&#8378;280</div>
+          <a href="https://wa.me/905343334455?text=Merhaba%2C%20%22Do%C4%9Fal%20Ta%C5%9F%20Bileklik%22%20%C3%BCr%C3%BCn%C3%BC%20i%C3%A7in%20sipari%C5%9F%20vermek%20istiyorum." class="order-btn" target="_blank" rel="noopener">Sipari&#351; Ver</a>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="img-wrap">
+          <img src="https://picsum.photos/seed/earring-pearl/400/400" alt="&#304;nci K&uuml;pe" loading="lazy">
+        </div>
+        <div class="details">
+          <div class="pname">&#304;nci K&uuml;pe</div>
+          <div class="pprice">&#8378;220</div>
+          <a href="https://wa.me/905343334455?text=Merhaba%2C%20%22%C4%B0nci%20K%C3%BCpe%22%20%C3%BCr%C3%BCn%C3%BC%20i%C3%A7in%20sipari%C5%9F%20vermek%20istiyorum." class="order-btn" target="_blank" rel="noopener">Sipari&#351; Ver</a>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="img-wrap">
+          <img src="https://picsum.photos/seed/ring-gold/400/400" alt="Alt&#305;n Y&uuml;z&uuml;k" loading="lazy">
+        </div>
+        <div class="details">
+          <div class="pname">Alt&#305;n Y&uuml;z&uuml;k</div>
+          <div class="pprice">&#8378;450</div>
+          <a href="https://wa.me/905343334455?text=Merhaba%2C%20%22Alt%C4%B1n%20Y%C3%BCz%C3%BCk%22%20%C3%BCr%C3%BCn%C3%BC%20i%C3%A7in%20sipari%C5%9F%20vermek%20istiyorum." class="order-btn" target="_blank" rel="noopener">Sipari&#351; Ver</a>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="img-wrap">
+          <img src="https://picsum.photos/seed/necklace-crystal/400/400" alt="Kristal Kolye" loading="lazy">
+        </div>
+        <div class="details">
+          <div class="pname">Kristal Kolye</div>
+          <div class="pprice">&#8378;380</div>
+          <a href="https://wa.me/905343334455?text=Merhaba%2C%20%22Kristal%20Kolye%22%20%C3%BCr%C3%BCn%C3%BC%20i%C3%A7in%20sipari%C5%9F%20vermek%20istiyorum." class="order-btn" target="_blank" rel="noopener">Sipari&#351; Ver</a>
+        </div>
+      </div>
+
+      <div class="product-card">
+        <div class="img-wrap">
+          <img src="https://picsum.photos/seed/bracelet-charm/400/400" alt="Charm Bileklik" loading="lazy">
+        </div>
+        <div class="details">
+          <div class="pname">Charm Bileklik</div>
+          <div class="pprice">&#8378;300</div>
+          <a href="https://wa.me/905343334455?text=Merhaba%2C%20%22Charm%20Bileklik%22%20%C3%BCr%C3%BCn%C3%BC%20i%C3%A7in%20sipari%C5%9F%20vermek%20istiyorum." class="order-btn" target="_blank" rel="noopener">Sipari&#351; Ver</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="divider">&#10047; &#10047; &#10047;</div>
+
+  <!-- Order Info -->
+  <div class="section reveal">
+    <div class="section-title">
+      <span class="dot"></span> Sipari&#351; Bilgisi
+    </div>
+    <div class="order-info">
+      <a href="https://wa.me/905343334455?text=Merhaba%2C%20%C3%BCr%C3%BCn%20sipari%C5%9Fi%20vermek%20istiyorum." class="wa-btn" target="_blank" rel="noopener">
+        <span>&#128172;</span> WhatsApp ile Sipari&#351; Verin
+      </a>
+      <div class="info-row">
+        <span class="icon">&#128230;</span>
+        <span>T&uuml;rkiye geneli <strong>&uuml;cretsiz kargo</strong> (&#8378;500 &uuml;zeri)</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">&#128666;</span>
+        <span><strong>2-4 i&#351; g&uuml;n&uuml;</strong> teslimat</span>
+      </div>
+      <div class="info-row">
+        <span class="icon">&#127381;</span>
+        <span>Hediye paketi se&ccedil;ene&#287;i mevcut</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- IBAN Section -->
+  <div class="section reveal">
+    <div class="section-title">
+      <span class="dot"></span> &Ouml;deme Bilgisi
+    </div>
+    <div class="iban-section">
+      <div class="iban-row">
+        <span class="label">Banka</span>
+        <span class="value">Ziraat Bankas&#305;</span>
+      </div>
+      <div class="iban-row">
+        <span class="label">IBAN</span>
+        <span class="value" id="iban-value">TR12 3456 7890 1234 5678 9012 34</span>
+      </div>
+      <div class="iban-row">
+        <span class="label">Hesap Sahibi</span>
+        <span class="value">Zeynep Kaya</span>
+      </div>
+      <div class="iban-row">
+        <span class="label">Papara No</span>
+        <span class="value">1234567890</span>
+      </div>
+      <button class="copy-btn" id="copyIbanBtn" onclick="copyIBAN()" aria-label="IBAN kopyala">
+        <span id="copyIcon">&#128203;</span>
+        <span id="copyText">IBAN Kopyala</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="divider">&#10047; &#10047; &#10047;</div>
+
+  <!-- Customer Reviews -->
+  <div class="section reveal">
+    <div class="section-title">
+      <span class="dot"></span> M&uuml;&#351;teri Yorumlar&#305;
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="review-text">"Ay kolye &ccedil;ok zarif ve kaliteli geldi. Pakelemesi bile &ccedil;ok &ouml;zenli. Kesinlikle tekrar sipari&#351; verece&#287;im!"</div>
+      <div class="review-name">— Elif Y.</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <div class="review-text">"Arkada&#351;&#305;ma hediye ald&#305;m, bayald&#305;! Do&#287;al ta&#351; bileklik ger&ccedil;ekten el yap&#305;m&#305; oldu&#287;unu hissettiriyor."</div>
+      <div class="review-name">— Merve K.</div>
+    </div>
+
+    <div class="review-card">
+      <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+      <div class="review-text">"Kristal kolye &ccedil;ok g&uuml;zel, tam bekledi&#287;im gibi. Kargo da &ccedil;ok h&#305;zl&#305; geldi. Te&#351;ekk&uuml;rler!"</div>
+      <div class="review-name">— Selin A.</div>
+    </div>
+  </div>
+
+  <!-- Social Links -->
+  <div class="section reveal">
+    <div class="social-links">
+      <a href="https://instagram.com/zk_handmade" class="btn-ig" target="_blank" rel="noopener" aria-label="Instagram">
+        <span>&#128248;</span> @zk_handmade
+      </a>
+      <a href="https://wa.me/905343334455?text=Merhaba%2C%20%C3%BCr%C3%BCn%20sipari%C5%9Fi%20vermek%20istiyorum." class="btn-wa" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <span>&#128172;</span> WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <div class="divider">&#10047; &#10047; &#10047;</div>
+
+  <!-- QR Code -->
+  <div class="section qr-section reveal">
+    <div class="section-title" style="justify-content:center;">
+      <span class="dot"></span> Ma&#287;azam&#305;z&#305; Payla&#351;
+    </div>
+    <div class="qr-wrapper">
+      <div id="qrcode"></div>
+    </div>
+  </div>
+
+  <!-- vCard Download -->
+  <div class="section reveal">
+    <button class="vcard-btn" onclick="downloadVCard()" aria-label="Rehbere Kaydet">
+      &#128241; Rehbere Kaydet
+    </button>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>siparis@zkhandmade.com</p>
+    <p style="margin-top:8px;">&copy; 2025 <span class="brand">ZK Handmade</span>. T&uuml;m haklar&#305; sakl&#305;d&#305;r.</p>
+  </div>
+
+</div>
+
+<script>
+/* ===== QR Code ===== */
+document.addEventListener('DOMContentLoaded', function() {
+  var qrContainer = document.getElementById('qrcode');
+  if (qrContainer) {
+    new QRCode(qrContainer, {
+      text: window.location.href,
+      width: 140,
+      height: 140,
+      colorDark: '#2d1f1f',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  }
+});
+
+/* ===== vCard Download ===== */
+function downloadVCard() {
+  var vcard = [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    'FN:Zeynep Kaya',
+    'N:Kaya;Zeynep;;;',
+    'ORG:ZK Handmade',
+    'TITLE:Tasar\u0131mc\u0131 & Kurucu',
+    'TEL;TYPE=CELL:+905343334455',
+    'EMAIL:siparis@zkhandmade.com',
+    'URL:https://instagram.com/zk_handmade',
+    'NOTE:ZK Handmade - El Yap\u0131m\u0131 Tak\u0131 & Aksesuar',
+    'END:VCARD'
+  ].join('\r\n');
+
+  var blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'Zeynep_Kaya_ZK_Handmade.vcf';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+/* ===== Copy IBAN ===== */
+function copyIBAN() {
+  var iban = document.getElementById('iban-value').textContent.trim();
+  var btn = document.getElementById('copyIbanBtn');
+  var iconEl = document.getElementById('copyIcon');
+  var textEl = document.getElementById('copyText');
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(iban).then(function() {
+      showCopied();
+    }).catch(function() {
+      fallbackCopy(iban);
+    });
+  } else {
+    fallbackCopy(iban);
+  }
+
+  function fallbackCopy(text) {
+    var ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand('copy'); showCopied(); }
+    catch(e) { /* silently fail */ }
+    document.body.removeChild(ta);
+  }
+
+  function showCopied() {
+    btn.classList.add('copied');
+    iconEl.textContent = '\u2714';
+    textEl.textContent = 'Kopyaland\u0131 \u2713';
+    setTimeout(function() {
+      btn.classList.remove('copied');
+      iconEl.innerHTML = '&#128203;';
+      textEl.textContent = 'IBAN Kopyala';
+    }, 2500);
+  }
+}
+
+/* ===== Scroll Reveal ===== */
+(function() {
+  var reveals = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    reveals.forEach(function(el) { el.classList.add('visible'); });
+    return;
+  }
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.08,
+    rootMargin: '0px 0px -40px 0px'
+  });
+  reveals.forEach(function(el) { observer.observe(el); });
+})();
+</script>
+
+</body>
+</html>

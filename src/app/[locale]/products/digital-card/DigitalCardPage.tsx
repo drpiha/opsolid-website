@@ -26,6 +26,7 @@ import { Input, Textarea, Select } from "@/components/ui/Input";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { HeroCardMockup } from "@/components/sections/hero/HeroCardMockup";
+import { DemoGallery } from "@/components/products/DemoGallery";
 import { useLocale } from "@/context/LocaleContext";
 
 type FormState = "idle" | "sending" | "success" | "error";
@@ -320,6 +321,21 @@ export function DigitalCardPage() {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* ================================================================
+          DEMO GALLERY — 20 live previews
+          ================================================================ */}
+      <section className="bg-white">
+        <DemoGallery
+          title={t.products.templatesStrip?.heading ?? "10 industry templates + 10 layouts"}
+          subtitle={t.products.templatesStrip?.paragraph ?? "Live previews — click any card to open a full-size interactive demo."}
+          ctaLabel={t.products.templatesStrip?.cta ?? "Customize this template"}
+          openLabel={t.products.categories?.all ? "Open full preview" : "Open full preview"}
+          filterAll={t.products.categories?.all ?? "All"}
+          filterIndustry={t.products.categories?.customerFacing ?? "Industry"}
+          filterLayout="Layout"
+        />
       </section>
 
       {/* ================================================================

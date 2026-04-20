@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4K Hava &#199;ekimi &mdash; Ester D&#246;nmez</title>
+<meta name="description" content="Profesyonel drone hava &#231;ekimi, tan&#305;t&#305;m filmi ve reklam prod&#252;ksiyonu hizmetleri. 4K Hava &#199;ekimi.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Roboto',sans-serif;
+  background:#0a0a0f;
+  color:#e0e0e0;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  -webkit-font-smoothing:antialiased;
+}
+.card{
+  width:100%;
+  max-width:460px;
+  min-height:100vh;
+  background:#0a0a0f;
+  position:relative;
+  overflow:hidden;
+}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal{
+  opacity:0;
+  transform:translateY(32px);
+  transition:opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1);
+}
+.reveal.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ===== AERIAL STRIPE (replaces barber pole) ===== */
+.aerial-stripe{
+  height:4px;
+  background:linear-gradient(
+    90deg,
+    #0a0a0f 0%,
+    #0ea5e9 15%,
+    #38bdf8 30%,
+    #ffffff 50%,
+    #38bdf8 70%,
+    #0ea5e9 85%,
+    #0a0a0f 100%
+  );
+  background-size:200% 100%;
+  animation:aerialGlow 3s ease-in-out infinite;
+}
+@keyframes aerialGlow{
+  0%{background-position:0% 50%;}
+  50%{background-position:100% 50%;}
+  100%{background-position:0% 50%;}
+}
+
+/* ===== HEADER BANNER ===== */
+.header-banner{
+  background:linear-gradient(180deg,#0d0d14 0%,#111118 100%);
+  text-align:center;
+  padding:36px 20px 28px;
+  position:relative;
+}
+.header-banner::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:4px;
+  background:linear-gradient(90deg,#0ea5e9,#38bdf8,#7dd3fc,#38bdf8,#0ea5e9);
+}
+.shop-name{
+  font-family:'Oswald',sans-serif;
+  font-weight:700;
+  font-size:2rem;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:#38bdf8;
+  line-height:1.1;
+}
+.shop-est{
+  font-family:'Oswald',sans-serif;
+  font-weight:400;
+  font-size:0.85rem;
+  letter-spacing:6px;
+  color:#888;
+  margin-top:6px;
+  text-transform:uppercase;
+}
+.shop-tagline{
+  font-size:0.8rem;
+  color:#666;
+  margin-top:10px;
+  letter-spacing:1px;
+}
+
+/* ===== PROFILE STRIP ===== */
+.profile-strip{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:20px 24px;
+  background:#0d0d14;
+  border-bottom:1px solid #1a1a24;
+}
+.profile-initials{
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  border:3px solid #0ea5e9;
+  flex-shrink:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:linear-gradient(135deg,#0c2d48,#0a1628);
+  font-family:'Oswald',sans-serif;
+  font-size:1.6rem;
+  font-weight:700;
+  color:#38bdf8;
+  letter-spacing:2px;
+}
+.profile-info h2{
+  font-family:'Oswald',sans-serif;
+  font-size:1.2rem;
+  font-weight:600;
+  color:#fff;
+  letter-spacing:1px;
+}
+.profile-info p{
+  font-size:0.82rem;
+  color:#38bdf8;
+  margin-top:2px;
+}
+
+/* ===== QUICK CONTACT BUTTONS ===== */
+.quick-contact{
+  display:flex;
+  gap:8px;
+  padding:16px 20px;
+  background:#0a0a0f;
+}
+.quick-contact a{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  padding:12px 8px;
+  border-radius:10px;
+  text-decoration:none;
+  font-size:0.78rem;
+  font-weight:500;
+  transition:all 0.3s ease;
+}
+.btn-call{
+  background:#111118;
+  color:#38bdf8;
+  border:1px solid #0ea5e9;
+}
+.btn-call:hover{background:#0ea5e9;color:#0a0a0f;}
+.btn-whatsapp{
+  background:#1b5e20;
+  color:#fff;
+  border:1px solid #2e7d32;
+}
+.btn-whatsapp:hover{background:#2e7d32;}
+.btn-web{
+  background:#111118;
+  color:#e0e0e0;
+  border:1px solid #2a2a36;
+}
+.btn-web:hover{background:#2a2a36;}
+
+/* ===== SECTION SHARED ===== */
+.section{
+  padding:28px 20px;
+}
+.section-title{
+  font-family:'Oswald',sans-serif;
+  font-size:1.2rem;
+  font-weight:600;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#38bdf8;
+  margin-bottom:20px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.section-title::after{
+  content:'';
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg,#0ea5e9 0%,transparent 100%);
+}
+.section-title .icon{
+  font-size:1.1rem;
+}
+
+/* ===== ABOUT BOX ===== */
+.about-box{
+  background:#111118;
+  border-radius:16px;
+  border:1px solid #1a1a24;
+  padding:20px;
+  font-size:0.9rem;
+  line-height:1.7;
+  color:#b0b0b8;
+}
+
+/* ===== SERVICES LIST ===== */
+.services-list{
+  background:#111118;
+  border-radius:16px;
+  border:1px solid #1a1a24;
+  overflow:hidden;
+}
+.service-item{
+  display:flex;
+  align-items:center;
+  padding:15px 20px;
+  border-bottom:1px solid #151520;
+  transition:background 0.3s ease;
+  gap:12px;
+}
+.service-item:last-child{border-bottom:none;}
+.service-item:hover{background:#181822;}
+.service-item.featured{
+  background:linear-gradient(135deg,rgba(14,165,233,0.08),rgba(14,165,233,0.02));
+  border-left:3px solid #0ea5e9;
+}
+.service-item .emoji{
+  font-size:1.2rem;
+  flex-shrink:0;
+  width:28px;
+  text-align:center;
+}
+.service-item .name{
+  font-size:0.9rem;
+  color:#ccc;
+}
+.service-item.featured .name{
+  color:#7dd3fc;
+  font-weight:500;
+}
+
+/* ===== VIDEO SHOWCASE ===== */
+.video-showcase{
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+}
+.video-card{
+  background:#111118;
+  border-radius:12px;
+  border:1px solid #1a1a24;
+  overflow:hidden;
+  transition:border-color 0.3s ease;
+}
+.video-card:hover{border-color:#0ea5e9;}
+.video-wrapper{
+  position:relative;
+  width:100%;
+  aspect-ratio:16/9;
+  background:#000;
+  cursor:pointer;
+  overflow:hidden;
+}
+.video-wrapper .thumb{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform 0.5s ease, filter 0.5s ease;
+}
+.video-wrapper:hover .thumb{
+  transform:scale(1.03);
+  filter:brightness(0.7);
+}
+.video-wrapper .play-btn{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:56px;height:56px;
+  background:rgba(14,165,233,0.9);
+  border-radius:50%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:all 0.3s ease;
+  pointer-events:none;
+  box-shadow:0 4px 20px rgba(14,165,233,0.4);
+}
+.video-wrapper:hover .play-btn{
+  background:rgba(56,189,248,1);
+  transform:translate(-50%,-50%) scale(1.1);
+}
+.play-btn::after{
+  content:'';
+  display:block;
+  width:0;height:0;
+  border-style:solid;
+  border-width:10px 0 10px 18px;
+  border-color:transparent transparent transparent #fff;
+  margin-left:3px;
+}
+.video-wrapper iframe{
+  position:absolute;
+  top:0;left:0;
+  width:100%;
+  height:100%;
+  border:none;
+}
+.video-card .video-label{
+  padding:12px 16px;
+  font-family:'Oswald',sans-serif;
+  font-size:0.85rem;
+  font-weight:500;
+  color:#aaa;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+/* ===== INSTAGRAM / SOCIAL STATS ===== */
+.social-stats{
+  display:flex;
+  gap:10px;
+  margin-bottom:20px;
+}
+.stat-card{
+  flex:1;
+  background:#111118;
+  border-radius:12px;
+  border:1px solid #1a1a24;
+  padding:16px 12px;
+  text-align:center;
+  transition:border-color 0.3s ease;
+}
+.stat-card:hover{border-color:#0ea5e9;}
+.stat-card .stat-value{
+  font-family:'Oswald',sans-serif;
+  font-size:1.4rem;
+  font-weight:700;
+  color:#38bdf8;
+  letter-spacing:1px;
+}
+.stat-card .stat-label{
+  font-size:0.72rem;
+  color:#888;
+  margin-top:4px;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+}
+
+/* ===== INSTAGRAM GRID ===== */
+.insta-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:4px;
+}
+.insta-grid a{
+  display:block;
+  aspect-ratio:1;
+  overflow:hidden;
+  border-radius:6px;
+  position:relative;
+}
+.insta-grid img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform 0.4s ease, filter 0.4s ease;
+}
+.insta-grid a:hover img{
+  transform:scale(1.08);
+  filter:brightness(0.8);
+}
+.insta-grid a::after{
+  content:'';
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:1.2rem;
+  opacity:0;
+  transition:opacity 0.3s ease;
+  background:rgba(0,0,0,0.3);
+}
+.insta-grid a:hover::after{opacity:1;}
+
+/* ===== SOCIAL LINKS ===== */
+.social-links{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  margin-top:16px;
+}
+.social-link{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 18px;
+  background:#111118;
+  border:1px solid #1a1a24;
+  border-radius:12px;
+  text-decoration:none;
+  color:#e0e0e0;
+  font-size:0.88rem;
+  font-weight:400;
+  transition:all 0.3s ease;
+}
+.social-link:hover{
+  border-color:#0ea5e9;
+  background:#14141e;
+  transform:translateX(4px);
+}
+.social-link .s-icon{
+  font-size:1.3rem;
+  width:28px;
+  text-align:center;
+  flex-shrink:0;
+}
+.social-link .s-label{
+  flex:1;
+}
+.social-link .s-arrow{
+  color:#555;
+  font-size:0.8rem;
+  transition:color 0.3s ease;
+}
+.social-link:hover .s-arrow{color:#38bdf8;}
+
+/* ===== CONTACT INFO ===== */
+.contact-list{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.contact-item{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:14px 18px;
+  background:#111118;
+  border:1px solid #1a1a24;
+  border-radius:12px;
+  text-decoration:none;
+  color:#e0e0e0;
+  font-size:0.88rem;
+  transition:all 0.3s ease;
+}
+.contact-item:hover{
+  border-color:#0ea5e9;
+  background:#14141e;
+}
+.contact-item .c-icon{
+  font-size:1.2rem;
+  width:24px;
+  text-align:center;
+  flex-shrink:0;
+}
+.contact-item .c-text{
+  color:#b0b0b8;
+}
+.contact-item .c-text strong{
+  color:#e0e0e0;
+  font-weight:500;
+}
+
+/* ===== VCARD BUTTON ===== */
+.vcard-btn{
+  display:block;
+  width:100%;
+  padding:16px;
+  background:linear-gradient(135deg,#0ea5e9,#0284c7);
+  color:#fff;
+  font-family:'Oswald',sans-serif;
+  font-size:1rem;
+  font-weight:600;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  margin-top:12px;
+}
+.vcard-btn:hover{
+  background:linear-gradient(135deg,#38bdf8,#0ea5e9);
+  transform:translateY(-1px);
+  box-shadow:0 6px 24px rgba(14,165,233,0.35);
+}
+.vcard-btn:active{transform:translateY(0);}
+
+/* ===== FOOTER ===== */
+.footer{
+  text-align:center;
+  padding:24px 20px 32px;
+  border-top:1px solid #111118;
+}
+.footer p{
+  font-size:0.72rem;
+  color:#555;
+  margin-top:4px;
+}
+.footer .brand{color:#38bdf8;font-weight:500;}
+
+/* ===== REDUCED MOTION ===== */
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none;}
+  .aerial-stripe{animation:none;}
+  .insta-grid img{transition:none;}
+  .video-wrapper .thumb{transition:none;}
+  .social-link{transition:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- Aerial Stripe Top -->
+  <div class="aerial-stripe"></div>
+
+  <!-- Header Banner -->
+  <div class="header-banner reveal">
+    <div class="shop-name">4K Hava &#199;ekimi</div>
+    <div class="shop-est">&mdash; Profesyonel Drone Prod&#252;ksiyon &mdash;</div>
+    <div class="shop-tagline">Havadan G&#246;r&#252;nt&#252;leme &amp; Reklam Prod&#252;ksiyonu</div>
+  </div>
+
+  <!-- Aerial Stripe -->
+  <div class="aerial-stripe"></div>
+
+  <!-- Profile Strip -->
+  <div class="profile-strip reveal">
+    <div class="profile-initials" aria-label="Ester D&#246;nmez"><img src="data:image/jpeg;base64,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" alt="Ester Donmez" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div>
+    <div class="profile-info">
+      <h2>Ester D&#246;nmez</h2>
+      <p>Kurucu &amp; Prod&#252;kt&#246;r</p>
+    </div>
+  </div>
+
+  <!-- Quick Contact -->
+  <div class="quick-contact reveal">
+    <a href="tel:+905446692669" class="btn-call" aria-label="Telefon ile ara">
+      <span>&#128222;</span> Ara
+    </a>
+    <a href="https://wa.me/905446692669?text=Merhaba%2C%20hava%20%C3%A7ekimi%20hizmeti%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." class="btn-whatsapp" target="_blank" rel="noopener" aria-label="WhatsApp ile ileti&#351;im">
+      <span>&#128172;</span> WhatsApp
+    </a>
+    <a href="https://www.4khavacekim.com" class="btn-web" target="_blank" rel="noopener" aria-label="Web Sitesi">
+      <span>&#127760;</span> Web
+    </a>
+  </div>
+
+  <!-- About -->
+  <div class="section reveal">
+    <div class="section-title">
+      <span class="icon">&#9992;&#65039;</span> Hakk&#305;m&#305;zda
+    </div>
+    <div class="about-box">
+      Profesyonel drone ekipmanlar&#305; ve deneyimli ekibimizle; havadan g&#246;r&#252;nt&#252;leme, tan&#305;t&#305;m filmi ve reklam prod&#252;ksiyonu alan&#305;nda hizmet veriyoruz.
+    </div>
+  </div>
+
+  <!-- Services -->
+  <div class="section reveal">
+    <div class="section-title">
+      <span class="icon">&#127916;</span> Hizmetlerimiz
+    </div>
+    <div class="services-list">
+      <div class="service-item featured">
+        <span class="emoji">&#128681;</span>
+        <span class="name">Drone Hava &#199;ekimi</span>
+      </div>
+      <div class="service-item">
+        <span class="emoji">&#127916;</span>
+        <span class="name">Tan&#305;t&#305;m Filmi</span>
+      </div>
+      <div class="service-item">
+        <span class="emoji">&#128248;</span>
+        <span class="name">Hava Foto&#287;raf&#231;&#305;l&#305;&#287;&#305;</span>
+      </div>
+      <div class="service-item">
+        <span class="emoji">&#127902;</span>
+        <span class="name">Reklam Filmi</span>
+      </div>
+      <div class="service-item">
+        <span class="emoji">&#127959;</span>
+        <span class="name">&#304;n&#351;aat Takibi</span>
+      </div>
+      <div class="service-item featured">
+        <span class="emoji">&#127918;</span>
+        <span class="name">FPV Drone &#199;ekimi</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Aerial Stripe -->
+  <div class="aerial-stripe"></div>
+
+  <!-- Video Showcase -->
+  <div class="section reveal">
+    <div class="section-title">
+      <span class="icon">&#127909;</span> Se&#231;me &#199;al&#305;&#351;malar
+    </div>
+    <div class="video-showcase">
+
+      <div class="video-card">
+        <div class="video-wrapper" data-yt="_m1YNYj2w9E">
+          <img class="thumb" src="https://img.youtube.com/vi/_m1YNYj2w9E/hqdefault.jpg" alt="Otel Tan&#305;t&#305;m &#199;ekimi" loading="lazy">
+          <div class="play-btn" aria-hidden="true"></div>
+        </div>
+        <div class="video-label">Otel Tan&#305;t&#305;m &#199;ekimi</div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper" data-yt="-3iJ-ZXnIPw">
+          <img class="thumb" src="https://img.youtube.com/vi/-3iJ-ZXnIPw/hqdefault.jpg" alt="Fuar &#199;ekimi" loading="lazy">
+          <div class="play-btn" aria-hidden="true"></div>
+        </div>
+        <div class="video-label">Fuar &#199;ekimi</div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper" data-yt="ptYm163dv8g">
+          <img class="thumb" src="https://img.youtube.com/vi/ptYm163dv8g/hqdefault.jpg" alt="One Shot &#199;ekim" loading="lazy">
+          <div class="play-btn" aria-hidden="true"></div>
+        </div>
+        <div class="video-label">One Shot &#199;ekim</div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper" data-yt="MR2tziFK7KY">
+          <img class="thumb" src="https://img.youtube.com/vi/MR2tziFK7KY/hqdefault.jpg" alt="FPV Drone &#199;ekimi" loading="lazy">
+          <div class="play-btn" aria-hidden="true"></div>
+        </div>
+        <div class="video-label">FPV Drone &#199;ekimi</div>
+      </div>
+
+      <div class="video-card">
+        <div class="video-wrapper" data-yt="jhbyY1JzZoY">
+          <img class="thumb" src="https://img.youtube.com/vi/jhbyY1JzZoY/hqdefault.jpg" alt="Showreel" loading="lazy">
+          <div class="play-btn" aria-hidden="true"></div>
+        </div>
+        <div class="video-label">Showreel 2024</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Instagram -->
+  <div class="section reveal">
+    <div class="section-title">
+      <span class="icon">&#128248;</span> Instagram
+    </div>
+
+    <div class="social-stats">
+      <div class="stat-card">
+        <div class="stat-value">89.7K</div>
+        <div class="stat-label">Takip&#231;i</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">672</div>
+        <div class="stat-label">G&#246;nderi</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">4K</div>
+        <div class="stat-label">Kalite</div>
+      </div>
+    </div>
+
+    <div class="insta-grid">
+      <a href="https://www.instagram.com/4khavacekim_pro" target="_blank" rel="noopener" aria-label="Instagram video 1">
+        <img src="https://img.youtube.com/vi/_m1YNYj2w9E/mqdefault.jpg" alt="Hava &#199;ekimi 1" loading="lazy">
+      </a>
+      <a href="https://www.instagram.com/4khavacekim_pro" target="_blank" rel="noopener" aria-label="Instagram video 2">
+        <img src="https://img.youtube.com/vi/-3iJ-ZXnIPw/mqdefault.jpg" alt="Hava &#199;ekimi 2" loading="lazy">
+      </a>
+      <a href="https://www.instagram.com/4khavacekim_pro" target="_blank" rel="noopener" aria-label="Instagram video 3">
+        <img src="https://img.youtube.com/vi/ptYm163dv8g/mqdefault.jpg" alt="Hava &#199;ekimi 3" loading="lazy">
+      </a>
+      <a href="https://www.instagram.com/4khavacekim_pro" target="_blank" rel="noopener" aria-label="Instagram video 4">
+        <img src="https://img.youtube.com/vi/MR2tziFK7KY/mqdefault.jpg" alt="Hava &#199;ekimi 4" loading="lazy">
+      </a>
+      <a href="https://www.instagram.com/4khavacekim_pro" target="_blank" rel="noopener" aria-label="Instagram video 5">
+        <img src="https://img.youtube.com/vi/jhbyY1JzZoY/mqdefault.jpg" alt="Hava &#199;ekimi 5" loading="lazy">
+      </a>
+      <a href="https://www.instagram.com/4khavacekim_pro" target="_blank" rel="noopener" aria-label="Instagram profil">
+        <img src="https://img.youtube.com/vi/_m1YNYj2w9E/default.jpg" alt="Hava &#199;ekimi 6" loading="lazy">
+      </a>
+    </div>
+    <div style="text-align:center;margin-top:14px;">
+      <a href="https://www.instagram.com/4khavacekim_pro" target="_blank" rel="noopener" style="color:#38bdf8;font-size:0.85rem;text-decoration:none;font-weight:500;">@4khavacekim_pro</a>
+    </div>
+  </div>
+
+  <!-- Aerial Stripe -->
+  <div class="aerial-stripe"></div>
+
+  <!-- Social Links -->
+  <div class="section reveal">
+    <div class="section-title">
+      <span class="icon">&#128279;</span> Ba&#287;lant&#305;lar
+    </div>
+    <div class="social-links">
+      <a href="https://www.instagram.com/4khavacekim_pro" target="_blank" rel="noopener" class="social-link">
+        <span class="s-icon">&#128247;</span>
+        <span class="s-label">Instagram</span>
+        <span class="s-arrow">&#10132;</span>
+      </a>
+      <a href="https://www.youtube.com/@4khavacekim_pro" target="_blank" rel="noopener" class="social-link">
+        <span class="s-icon">&#9654;&#65039;</span>
+        <span class="s-label">YouTube</span>
+        <span class="s-arrow">&#10132;</span>
+      </a>
+      <a href="https://www.4khavacekim.com" target="_blank" rel="noopener" class="social-link">
+        <span class="s-icon">&#127760;</span>
+        <span class="s-label">4khavacekim.com</span>
+        <span class="s-arrow">&#10132;</span>
+      </a>
+      <a href="mailto:esterdonmez@gmail.com" class="social-link">
+        <span class="s-icon">&#9993;&#65039;</span>
+        <span class="s-label">esterdonmez@gmail.com</span>
+        <span class="s-arrow">&#10132;</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Contact Details -->
+  <div class="section reveal">
+    <div class="section-title">
+      <span class="icon">&#128222;</span> &#304;leti&#351;im
+    </div>
+    <div class="contact-list">
+      <a href="tel:+905446692669" class="contact-item">
+        <span class="c-icon">&#128222;</span>
+        <span class="c-text"><strong>+90 544 669 26 69</strong></span>
+      </a>
+      <a href="mailto:esterdonmez@gmail.com" class="contact-item">
+        <span class="c-icon">&#9993;&#65039;</span>
+        <span class="c-text"><strong>esterdonmez@gmail.com</strong></span>
+      </a>
+      <a href="https://wa.me/905446692669?text=Merhaba%2C%20hava%20%C3%A7ekimi%20hizmeti%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener" class="contact-item">
+        <span class="c-icon">&#128172;</span>
+        <span class="c-text"><strong>WhatsApp Mesaj G&#246;nder</strong></span>
+      </a>
+    </div>
+  </div>
+
+  <!-- vCard Download -->
+  <div class="section reveal">
+    <button class="vcard-btn" onclick="downloadVCard()" aria-label="Rehbere Kaydet">
+      &#128241; Rehbere Kaydet
+    </button>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>&#9993;&#65039; esterdonmez@gmail.com</p>
+    <p style="margin-top:10px;">&copy; 2025 <span class="brand">4K Hava &#199;ekimi</span>. T&#252;m haklar&#305; sakl&#305;d&#305;r.</p>
+  </div>
+
+  <!-- Aerial Stripe Bottom -->
+  <div class="aerial-stripe"></div>
+
+</div>
+
+<script>
+/* ===== vCard Download ===== */
+function downloadVCard() {
+  var vcard = [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    'FN:Ester D\u00f6nmez',
+    'N:D\u00f6nmez;Ester;;;',
+    'ORG:4K Hava \u00c7ekimi',
+    'TITLE:Kurucu & Prod\u00fckt\u00f6r',
+    'TEL;TYPE=CELL:+905446692669',
+    'EMAIL:esterdonmez@gmail.com',
+    'URL:https://www.4khavacekim.com',
+    'X-SOCIALPROFILE;TYPE=instagram:https://www.instagram.com/4khavacekim_pro',
+    'X-SOCIALPROFILE;TYPE=youtube:https://www.youtube.com/@4khavacekim_pro',
+    'NOTE:4K Hava \u00c7ekimi - Profesyonel Drone Hava \u00c7ekimi & Prod\u00fcksiyon',
+    'END:VCARD'
+  ].join('\r\n');
+
+  var blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'Ester_Donmez_4K_Hava_Cekimi.vcf';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+/* ===== Inline YouTube Video Player ===== */
+document.querySelectorAll('.video-wrapper[data-yt]').forEach(function(wrapper) {
+  wrapper.addEventListener('click', function() {
+    var videoId = this.getAttribute('data-yt');
+    var iframe = document.createElement('iframe');
+    iframe.setAttribute('src', 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0&modestbranding=1');
+    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.setAttribute('loading', 'lazy');
+    iframe.setAttribute('title', this.querySelector('.thumb').getAttribute('alt'));
+    /* Remove thumb + play btn, insert iframe */
+    var thumb = this.querySelector('.thumb');
+    var playBtn = this.querySelector('.play-btn');
+    if (thumb) thumb.remove();
+    if (playBtn) playBtn.remove();
+    this.appendChild(iframe);
+    this.style.cursor = 'default';
+  });
+});
+
+/* ===== Scroll Reveal ===== */
+(function() {
+  var reveals = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    reveals.forEach(function(el) { el.classList.add('visible'); });
+    return;
+  }
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.08,
+    rootMargin: '0px 0px -40px 0px'
+  });
+  reveals.forEach(function(el) { observer.observe(el); });
+})();
+</script>
+
+</body>
+</html>

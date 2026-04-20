@@ -1,0 +1,1253 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ester D&#246;nmez | 4K Hava &#199;ekimi - Drone Hava G&#246;r&#252;nt&#252;leme</title>
+
+    <!-- OG Meta Tags for WhatsApp sharing -->
+    <meta property="og:title" content="Ester D&#246;nmez | 4K Hava &#199;ekimi">
+    <meta property="og:description" content="Profesyonel drone hava &#231;ekimi, tan&#305;t&#305;m filmi ve reklam prod&#252;ksiyonu. Projelerinizi farkl&#305; bir perspektiften d&#252;nyaya g&#246;steriyoruz.">
+    <meta property="og:image" content="https://img.youtube.com/vi/jhbyY1JzZoY/maxresdefault.jpg">
+    <meta property="og:type" content="profile">
+    <meta property="og:locale" content="tr_TR">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --deep-blue: #0c2d5a;
+            --sky-blue: #0ea5e9;
+            --sky-blue-light: #38bdf8;
+            --white: #ffffff;
+            --light-gray: #f0f4f8;
+            --medium-gray: #dde3eb;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #e8ecf1;
+            color: var(--text-dark);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--white);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Scroll reveal animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ==================== HERO BANNER ==================== */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .hero-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(12,45,90,0.92) 0%, rgba(12,45,90,0.4) 50%, rgba(12,45,90,0.15) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px 24px;
+        }
+
+        .hero-overlay .hero-company {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--sky-blue-light);
+            margin-bottom: 4px;
+        }
+
+        .hero-overlay .hero-tagline {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            font-weight: 400;
+        }
+
+        /* ==================== PROFILE STRIP ==================== */
+        .profile-strip {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 24px;
+            background: var(--white);
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .profile-strip .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 3px solid var(--sky-blue);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--deep-blue) 0%, #1a4a8a 100%);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--white);
+            letter-spacing: 1px;
+        }
+
+        .profile-strip .info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .profile-strip .info .name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--deep-blue);
+            line-height: 1.3;
+        }
+
+        .profile-strip .info .title {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .profile-strip .info .company {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--sky-blue);
+            letter-spacing: 0.5px;
+        }
+
+        /* ==================== QUICK CONTACT ROW ==================== */
+        .quick-contact {
+            display: flex;
+            gap: 10px;
+            padding: 16px 24px;
+            background: var(--light-gray);
+        }
+
+        .pill-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 8px;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .pill-btn--call {
+            background: var(--deep-blue);
+            color: var(--white);
+        }
+
+        .pill-btn--call:hover {
+            background: #1a4a8a;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .pill-btn--whatsapp {
+            background: #25d366;
+            color: var(--white);
+        }
+
+        .pill-btn--whatsapp:hover {
+            background: #1fb855;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .pill-btn--email {
+            background: var(--sky-blue);
+            color: var(--white);
+        }
+
+        .pill-btn--email:hover {
+            background: #0284c7;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .pill-btn .pill-icon {
+            font-size: 15px;
+            line-height: 1;
+        }
+
+        /* ==================== SECTIONS ==================== */
+        .section {
+            padding: 28px 24px;
+        }
+
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--deep-blue);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--sky-blue);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        /* ==================== SERVICES GRID ==================== */
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .service-card {
+            background: var(--light-gray);
+            border-radius: 12px;
+            padding: 16px 14px;
+            text-align: center;
+            border: 1px solid var(--medium-gray);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .service-card .service-icon {
+            font-size: 28px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .service-card .service-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--text-dark);
+            line-height: 1.3;
+        }
+
+        /* ==================== VIDEO CAROUSEL ==================== */
+        .carousel-wrapper {
+            position: relative;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 14px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 6px;
+            scrollbar-width: none;
+        }
+
+        .carousel-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .video-card {
+            flex: 0 0 300px;
+            scroll-snap-align: start;
+            background: var(--white);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--medium-gray);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .video-card .video-wrapper {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            overflow: hidden;
+            background: #000;
+            cursor: pointer;
+        }
+
+        .video-card .video-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .video-card:hover .video-wrapper img {
+            transform: scale(1.05);
+        }
+
+        .video-card .video-wrapper .play-btn-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.3);
+            transition: background 0.3s ease;
+        }
+
+        .video-card .video-wrapper:hover .play-btn-overlay {
+            background: rgba(0,0,0,0.15);
+        }
+
+        .play-btn-overlay .play-circle {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: rgba(14, 165, 233, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .video-card .video-wrapper:hover .play-circle {
+            transform: scale(1.1);
+            background: rgba(14, 165, 233, 1);
+        }
+
+        .play-circle svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--white);
+            margin-left: 3px;
+        }
+
+        .video-card .video-wrapper iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .video-card .card-body {
+            padding: 12px 16px 14px;
+        }
+
+        .video-card .video-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        /* Carousel navigation */
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .carousel-arrow {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 2px solid var(--medium-gray);
+            background: var(--white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+            color: var(--deep-blue);
+        }
+
+        .carousel-arrow:hover {
+            border-color: var(--sky-blue);
+            background: var(--sky-blue);
+            color: var(--white);
+        }
+
+        .carousel-arrow svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .carousel-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .carousel-dots .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--medium-gray);
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dots .dot.active {
+            background: var(--sky-blue);
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        /* ==================== ABOUT SECTION ==================== */
+        .about-text {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.75;
+        }
+
+        /* ==================== INSTAGRAM SECTION ==================== */
+        .instagram-section {
+            background: var(--light-gray);
+        }
+
+        .instagram-card {
+            background: var(--white);
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--medium-gray);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .instagram-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .instagram-card .ig-avatar {
+            width: 54px;
+            height: 54px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .instagram-card .ig-avatar .ig-inner {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--deep-blue);
+        }
+
+        .instagram-card .ig-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .instagram-card .ig-handle {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.3;
+        }
+
+        .instagram-card .ig-name {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .instagram-card .ig-stats {
+            display: flex;
+            gap: 14px;
+        }
+
+        .instagram-card .ig-stat {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .instagram-card .ig-stat strong {
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        /* ==================== SOCIAL LINKS ==================== */
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            background: var(--light-gray);
+            border-radius: 12px;
+            border: 1px solid var(--medium-gray);
+            text-decoration: none;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .social-link:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .social-link .link-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 20px;
+        }
+
+        .social-link .link-icon--web {
+            background: linear-gradient(135deg, var(--sky-blue) 0%, #0369a1 100%);
+        }
+
+        .social-link .link-icon--youtube {
+            background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+        }
+
+        .social-link .link-icon--shutterstock {
+            background: linear-gradient(135deg, #ee2b24 0%, #c41e1a 100%);
+        }
+
+        .social-link .link-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--white);
+        }
+
+        .social-link .link-text {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .social-link .link-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .social-link .link-url {
+            font-size: 11.5px;
+            color: var(--text-muted);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .social-link .link-arrow {
+            flex-shrink: 0;
+            color: var(--text-muted);
+            transition: transform 0.25s ease;
+        }
+
+        .social-link:hover .link-arrow {
+            transform: translateX(3px);
+            color: var(--sky-blue);
+        }
+
+        .social-link .link-arrow svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* ==================== STATS ROW ==================== */
+        .stats-section {
+            background: var(--deep-blue);
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .stat-item {
+            flex: 1;
+        }
+
+        .stat-item .stat-number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--sky-blue-light);
+            line-height: 1.2;
+        }
+
+        .stat-item .stat-label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.75);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* ==================== VCARD BUTTON ==================== */
+        .vcard-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 15px 24px;
+            background: linear-gradient(135deg, var(--deep-blue) 0%, #1a4a8a 100%);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .vcard-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(12,45,90,0.35);
+        }
+
+        .vcard-btn:active {
+            transform: translateY(0);
+        }
+
+        .vcard-btn .btn-icon {
+            font-size: 18px;
+        }
+
+        /* ==================== FOOTER ==================== */
+        .footer {
+            text-align: center;
+            padding: 24px;
+            background: var(--deep-blue);
+        }
+
+        .footer .footer-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--sky-blue-light);
+            margin-bottom: 4px;
+        }
+
+        .footer .footer-sub {
+            font-size: 11px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* ==================== MEDIA QUERIES ==================== */
+        @media (max-width: 340px) {
+            .video-card {
+                flex: 0 0 260px;
+            }
+
+            .pill-btn {
+                font-size: 11.5px;
+                padding: 9px 4px;
+            }
+
+            .stat-item .stat-number {
+                font-size: 20px;
+            }
+
+            .services-grid {
+                gap: 8px;
+            }
+
+            .service-card {
+                padding: 12px 10px;
+            }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+
+            .video-card,
+            .video-card .video-wrapper img,
+            .pill-btn,
+            .carousel-arrow,
+            .vcard-btn,
+            .service-card,
+            .social-link,
+            .instagram-card {
+                transition: none;
+            }
+
+            .carousel-track {
+                scroll-behavior: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+
+        <!-- HERO BANNER -->
+        <div class="hero-banner">
+            <img src="https://img.youtube.com/vi/jhbyY1JzZoY/maxresdefault.jpg" alt="4K Hava Cekimi showreel goruntusu" loading="eager">
+            <div class="hero-overlay">
+                <span class="hero-company">4K Hava &#199;ekimi</span>
+                <span class="hero-tagline">Projelerinizi farkl&#305; bir perspektiften d&#252;nyaya g&#246;steriyoruz</span>
+            </div>
+        </div>
+
+        <!-- PROFILE STRIP -->
+        <div class="profile-strip reveal">
+            <div class="avatar" aria-label="Ester Donmez profil"><img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/7QCEUGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAGgcAigAYkZCTUQwYTAwMGFhNTAxMDAwMDY1MDMwMDAwYWYwNDAwMDAxOTA1MDAwMDY4MDUwMDAwMWIwNjAwMDA1ODA4MDAwMGIxMDgwMDAwMjYwOTAwMDA4MTA5MDAwMGQ3MGMwMDAwAP/bAIQABQYGCwgLCwsLCw0LCwsNDg4NDQ4ODw0ODg4NDxAQEBEREBAQEA8TEhMPEBETFBQTERMWFhYTFhUVFhkWGRYWEgEFBQUKBwoICQkICwgKCAsKCgkJCgoMCQoJCgkMDQsKCwsKCw0MCwsICwsMDAwNDQwMDQoLCg0MDQ0MExQTExOc/8IAEQgAlgCWAwEiAAIRAQMRAf/EAHAAAAEFAQEAAAAAAAAAAAAAAAABAgMEBQcGEAABAwIFAQcDAwUAAAAAAAABAAIRAxAEEiAhMTATIkBBUWFxBTKBIzORcoKhsdERAAIBAgUEAgMBAQAAAAAAAAABESExEEFRYXEggZHwobHB0eEw8f/aAAwDAQACAAMAAAABrqEtBRAFVFAc1VRViwkd6M8PRa/pe5xvXif0tM/QqzoioDcbaxQpyeH9Fera4g+NytBHtM4PJYr0hvRpsOZJkKRPZP0jmE7TvDaV2siYu1ihyqRi2V9js8299LXtq1XwOq2JUXzJv4WbtOp242u87S9JRs1cIt1JY+t+i8Z7OuiYm3iInKmRzWXO9X5X0Ks9QNWam4bE1+bka2JV09BHaFafGbqzObR836nLcvqfW+Z9M6imJt4iJyRzCy616LznrhmwIk9Rlmg2OXKbE+nq2LNSGKSzPSnVtmnLhqnrNvlWhZodaxqV0h5K6JJJ5iBAu7nmJVb0mfmW0sOth7uTXuSUYKrZLjslJY7kcLHR2Z6s6ntt3mfTGpyVWo5ZBigMeA1zgLtVu2iead7DzLkpq0HK8eg6aORCXp3MOnhyRr1UYPUI3OUBFcDfUeX9GM1vPeiyFj8lJcmSemlumDnMUHdV5R1cOQSowJQAUABRAdqZIJ7rzde8rHxz4zXwQKirKIoO6tynqwckTrgHJV6yBydergcob1kQ5I7rIpyebqQJzer1IDj7uvAvJXdYA5T1YEP/2gAIAQEAAQUC6jRK4HVc4NTsa0I456OKqFDG1QqX1N4VHENq6Q4HoYiv2hlSpU2a8hYLHdpoZVyqniA7ViXZWFBhKbh06hCIu10KhV7Rl2uVCuHaatPOH4LIQALP3TmItsF9OM0rCzDCpOzC4VYRctUJzE5tvpP26AsI/RmyrE1XEgrOV3yiwrsZTaICr08p+lD9PTg9FQbN3DmmWNQCcggd8UF9M/auLYQXzQRV2IIM5iFmtKlVhIwuJbSpYfEitoCw7hls095rsyc+E20rMmlF0J9abUX5XQNIcWqljIVNzHLK1VqEIbIuRes6FWE55daUFhseWNvKlSgqeITjtKzIu1DVCi0plUhONp0jqCiHgYdoVdmV3QjoYf7Vi2bqFHWw3CxDk1m3Zp+3WoVQ21bdwanFOPXp1ixCHF74Qcj4BjoT90drDR//2gAIAQMAAT8B0BpK7EptKNDqUXAlBvouzOqoyN7N5CpjZOCLdNTg2pjceyk7INnkrsxKqtGXjjQ/g2pnKRPHmmkO3CJhNO6qvRXaH0uWgp1JUDI+E56zo72jTMIOnov4TOeiRKDY6/8A/9oACAECAAE/AdBMLOqm+gOuVK7QWc2UbtdYp5KaUHqU7k3bzZ3CyiFmjyXaFU3GflO5uObOEyjIUSiExpJWRdneVmVUJrFkUWjTHSHiv//aAAgBAQAGPwLqx1pK23XkF9y+8rvd4f5XdP407dD21TwfVZH/AHeR9fnpn326E+iDvX/emPPTC3M9AexI6e/Qf86iNErZc7rheQW5t6/K24KP9Wo6OJ/Cjz1hf3HUb8SneXopH5XxoF9+ZO3mj5R7rkfzo5Fz8Jy2J17W9vNfadOxhd4T7+altu6J6WUiY6EO/nwkeXhJsR4MH8eBNoU+Ag2P4tHgPb0U+8/8sfBcoDV//9oACAEBAQE/If8ASXAogf7IGyEs2Ww6qZTvx9j1l2m/tmfVxC+i0+BfoyNwfaUL6LavmXZ16bwT4fW3FXZD4LK3C/McDxiL2GKRtFkcDmuf8Ldvnz0SJTc+fMspjo+rdEE7/wALy0IY7ilxJHMkcOpPSChUNKrRL4xQhSnUXJnGSf30/JkWY4GSYJg4MXqgmV99BwSCFczk+V0Vtcj0m54QUBzwM/D4X6xshDfBMtKvnojWcRbnISoTS+SKrTaCl5CyJ94JofkM09qCfO1vMspTUtQubgaaorerfCWN8EUvj0bdeVSp+ZKmEJcuDv8AggwISJTsMSxZ3RNsqxY9uWKwIdLbYukUkTeCCdNlXk6f3sKfGmo8h/UDYGUoV0OzCunojW73VlszyNLPPIlfwYIYVsHM3WE1jUe9BfkRXapzoLZVTyyQ6rWZx1CIQisfTZqIShutnAks5d+m/HBjHp7VP0ZNuUu+T7oSJSit6i0ncVtyxG0pU+ymQSUEIuD7EiDC1GWuaxkuxDIZUkIoM05Th7HqPkrYs0i2sSOJIO5OhJM4l0tDaVWBa72tthNlA3OFxUEF0yTgmQQLcocV7GVTa5B1rrh4pEYLCMEEEEEFsH+4/wAooO1WwQRYiSRf4/aP2hMb02+xfM7cCZXKEdhvBjRYT6lhO0Js8iZjlHi0/nupb8LnNiZSWTr2qMcP2tXhlgxoXXODnX0oPobbxon5ELSW38In95l/FBYLF9TfQ95vyTeW1RuRcfS//9oADAMBAQIBAwEAABDU+qmA88e2F9a5mnVCp+s4jNsAxr+YnRZMnr63VaFhOyJqeTFoukelvdfT+giMi5xKkxbMBeqRmodZxQgVVm3CXJBUAGEEMDHHCCP/2gAIAQMBAT8Q6LapE+7SGOnKfQ6pVXzjOS1ZFRChMR1WjPCiCjlCV+Q5rAajqUjomSbMhZ/Ay4+hTJqkaednRNxZX4wW1Ya7CCzK44KiG75GeD0T+sbwhis2yNTdRNmTVhnU6vrR2yWfRP8AvESCZ/i+hYf/2gAIAQIBAT8Q6EXMjuM12GousUu9MWhToMV4xiQThlYWvgeZE98JSwEdA9StKgrBrYg4C8sXsXoGRIXihasRUhYaVsyBHUjCQhsXNjCoD6lRGL6z/wAm/wDf/9oACAEBAQE/EMJ6V0vWnfZCoWEh4sa64wQTvmQvXkSmWPwEcFnojAig4+B+sTcad3+R4lrpBkgKayV2vtzgx4ZCt4GT0SSLVshDbeiV2RRNSV9H1flhNiZq++CV37FRkskXDVhYbsUdhTZZ8jxila7ujRIIHc6y3k/18kiwkkpi53CvhCTbcY1GQrp2JJcWm6WKomTOss0zSL+rBDsmq2eKkzmGNUSY9IgKlNQSSSSIkOHKZeqEaU01NSyiJENwiDGTKub+1ye3UaKGR3PxX0MTKolWY1MOJFVcX5DGRWmquEEotJO40N2PusL5fY3TMjoRYZ7A3grWojq2QSxFtnXdcTjaTMO0qCoyAYpgiIe6K5uKDcKRq4BsWT5CkyQrPJSBM+7ieIiC0yRq6a9FsyDQ73bjwbbcHAtxYOz7JJJGUU13qzNyoSECTySVmt9RaBqsTkp8hEcDOf8ABV1F8DOk7Cd2x/om4/Q2pmxYZEzLCzckO0FO+LkO2CFExmUSkpK+mClWmNgijKxRO26FdodB6Y4KMx5deRckmm+35FAro8FJzGtbi1E7ZKugL4T6lhNhHwhoa7p9dRjaFns/BGGxZk87licqVVaqq8kYSrZ2EtnlrUKSMHFG+6uZsBlA1CpcNxUeaRql6x4GldvFBM2aSJuj8nAwpfJN2a4dRVjIlZeXDEtSiJIQ8l9uITIHgfTbknh6uHkFDi12P2QKrM0st2ZQm0PEb6OBEIqUjv8AAtXX6ZvGiHOVklhxJcCqYldd8FX0PWweLIMsFDJEkWbQx0ckXetySApKlnQpeaJoJe8o8snKR5bBQQ2NoQsHKCSSSRjI3BO6hCQnlH22GsaTZxRSSCxIUZj6KZPSDXQSk+3MJyJnOdmYFZo/KfAiJwEEMJ4JEyZMmLWVEZoS+C+5Clwa7k8Ftr4Im3YjM4SHgQvY09SY6ioP7NRxoETrPeFZ5YjJZPrMqv8AwQjXb/oqbmUjVRNYkSdEjGGWCt4j3zXIlkUNNkqzKRlI9a2HdL0OWnY/kAIlDO3yPlLBhWQ1SQpfSiwwhEWfVvvQ/grBVXrUD3DMIoED4/AezZ4YIyxpiCwTILYECY6lFEmiTfNb0GmHCXNShc/daPCHq+S8Vyzw/9k=" alt="Ester Donmez" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div>
+            <div class="info">
+                <div class="name">Ester D&#246;nmez</div>
+                <div class="title">Kurucu &amp; Prod&#252;kt&#246;r</div>
+                <div class="company">4K Hava &#199;ekimi</div>
+            </div>
+        </div>
+
+        <!-- QUICK CONTACT ROW -->
+        <div class="quick-contact reveal">
+            <a href="tel:+905446692669" class="pill-btn pill-btn--call" aria-label="Ester Donmez'i ara">
+                <span class="pill-icon" aria-hidden="true">&#128222;</span> Ara
+            </a>
+            <a href="https://wa.me/905446692669?text=Merhaba%2C%20hava%20%C3%A7ekimi%20hizmeti%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." class="pill-btn pill-btn--whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp ile mesaj gonder">
+                <span class="pill-icon" aria-hidden="true">&#128172;</span> WhatsApp
+            </a>
+            <a href="mailto:esterdonmez@gmail.com" class="pill-btn pill-btn--email" aria-label="E-posta gonder">
+                <span class="pill-icon" aria-hidden="true">&#9993;&#65039;</span> E-posta
+            </a>
+        </div>
+
+        <!-- SERVICES SECTION -->
+        <div class="section reveal">
+            <h2 class="section-title">Hizmetlerimiz</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <span class="service-icon" aria-hidden="true">&#128681;</span>
+                    <span class="service-name">Drone Hava &#199;ekimi</span>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon" aria-hidden="true">&#127916;</span>
+                    <span class="service-name">Tan&#305;t&#305;m Filmi</span>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon" aria-hidden="true">&#128248;</span>
+                    <span class="service-name">Hava Foto&#287;raf&#231;&#305;l&#305;&#287;&#305;</span>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon" aria-hidden="true">&#127902;</span>
+                    <span class="service-name">Reklam Filmi</span>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon" aria-hidden="true">&#127959;</span>
+                    <span class="service-name">&#304;n&#351;aat Takibi</span>
+                </div>
+                <div class="service-card">
+                    <span class="service-icon" aria-hidden="true">&#127918;</span>
+                    <span class="service-name">FPV Drone &#199;ekimi</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- VIDEO CAROUSEL -->
+        <div class="section reveal">
+            <h2 class="section-title">&#199;al&#305;&#351;malar&#305;m&#305;z</h2>
+            <div class="carousel-wrapper">
+                <div class="carousel-track" id="carouselTrack">
+
+                    <!-- Video 1 -->
+                    <div class="video-card">
+                        <div class="video-wrapper" data-video-id="_m1YNYj2w9E" role="button" tabindex="0" aria-label="Otel Tanitim Cekimi videosunu oynat">
+                            <img src="https://img.youtube.com/vi/_m1YNYj2w9E/mqdefault.jpg" alt="Otel Tanitim Cekimi" loading="lazy">
+                            <div class="play-btn-overlay">
+                                <div class="play-circle">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="video-title">Otel Tan&#305;t&#305;m &#199;ekimi</div>
+                        </div>
+                    </div>
+
+                    <!-- Video 2 -->
+                    <div class="video-card">
+                        <div class="video-wrapper" data-video-id="-3iJ-ZXnIPw" role="button" tabindex="0" aria-label="Fuar Cekimleri videosunu oynat">
+                            <img src="https://img.youtube.com/vi/-3iJ-ZXnIPw/mqdefault.jpg" alt="Fuar Cekimleri" loading="lazy">
+                            <div class="play-btn-overlay">
+                                <div class="play-circle">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="video-title">Fuar &#199;ekimleri</div>
+                        </div>
+                    </div>
+
+                    <!-- Video 3 -->
+                    <div class="video-card">
+                        <div class="video-wrapper" data-video-id="ptYm163dv8g" role="button" tabindex="0" aria-label="One Shot Kesintisiz Cekim videosunu oynat">
+                            <img src="https://img.youtube.com/vi/ptYm163dv8g/mqdefault.jpg" alt="One Shot Kesintisiz Cekim" loading="lazy">
+                            <div class="play-btn-overlay">
+                                <div class="play-circle">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="video-title">One Shot Kesintisiz &#199;ekim</div>
+                        </div>
+                    </div>
+
+                    <!-- Video 4 -->
+                    <div class="video-card">
+                        <div class="video-wrapper" data-video-id="MR2tziFK7KY" role="button" tabindex="0" aria-label="FPV Drone Reklam Filmi videosunu oynat">
+                            <img src="https://img.youtube.com/vi/MR2tziFK7KY/mqdefault.jpg" alt="FPV Drone Reklam Filmi" loading="lazy">
+                            <div class="play-btn-overlay">
+                                <div class="play-circle">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="video-title">FPV Drone Reklam Filmi</div>
+                        </div>
+                    </div>
+
+                    <!-- Video 5 -->
+                    <div class="video-card">
+                        <div class="video-wrapper" data-video-id="jhbyY1JzZoY" role="button" tabindex="0" aria-label="Showreel 2024 videosunu oynat">
+                            <img src="https://img.youtube.com/vi/jhbyY1JzZoY/mqdefault.jpg" alt="Showreel 2024" loading="lazy">
+                            <div class="play-btn-overlay">
+                                <div class="play-circle">
+                                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="video-title">Showreel 2024</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Carousel navigation -->
+                <div class="carousel-nav">
+                    <button class="carousel-arrow" id="prevBtn" aria-label="Onceki video">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+                    <div class="carousel-dots" id="carouselDots">
+                        <button class="dot active" data-index="0" aria-label="Video 1"></button>
+                        <button class="dot" data-index="1" aria-label="Video 2"></button>
+                        <button class="dot" data-index="2" aria-label="Video 3"></button>
+                        <button class="dot" data-index="3" aria-label="Video 4"></button>
+                        <button class="dot" data-index="4" aria-label="Video 5"></button>
+                    </div>
+                    <button class="carousel-arrow" id="nextBtn" aria-label="Sonraki video">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABOUT SECTION -->
+        <div class="section reveal">
+            <h2 class="section-title">Hakk&#305;m&#305;zda</h2>
+            <p class="about-text">
+                Profesyonel drone ekipmanlar&#305; ve deneyimli ekibimizle; havadan g&#246;r&#252;nt&#252;leme, tan&#305;t&#305;m filmi ve reklam prod&#252;ksiyonu alan&#305;nda hizmet veriyoruz. Projelerinizi farkl&#305; bir perspektiften d&#252;nyaya g&#246;steriyoruz.
+            </p>
+        </div>
+
+        <!-- INSTAGRAM SECTION -->
+        <div class="section instagram-section reveal">
+            <h2 class="section-title">Instagram</h2>
+            <a href="https://www.instagram.com/4khavacekim_pro" target="_blank" rel="noopener noreferrer" class="instagram-card" aria-label="Instagram profilini ziyaret et">
+                <div class="ig-avatar">
+                    <div class="ig-inner">4K</div>
+                </div>
+                <div class="ig-info">
+                    <div class="ig-handle">@4khavacekim_pro</div>
+                    <div class="ig-name">Ahmet E&#351;ter D&#214;NMEZ</div>
+                    <div class="ig-stats">
+                        <span class="ig-stat"><strong>672</strong> g&#246;nderi</span>
+                        <span class="ig-stat"><strong>89.7K</strong> takip&#231;i</span>
+                        <span class="ig-stat"><strong>792</strong> takip</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- SOCIAL / WEB LINKS -->
+        <div class="section reveal">
+            <h2 class="section-title">Ba&#287;lant&#305;lar</h2>
+            <div class="social-links">
+
+                <a href="https://www.4khavacekim.com" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Web sitesini ziyaret et">
+                    <div class="link-icon link-icon--web">
+                        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    </div>
+                    <div class="link-text">
+                        <div class="link-label">Web Sitesi</div>
+                        <div class="link-url">4khavacekim.com</div>
+                    </div>
+                    <div class="link-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+
+                <a href="https://www.youtube.com/@4khavacekim_pro" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="YouTube kanalini ziyaret et">
+                    <div class="link-icon link-icon--youtube">
+                        <svg viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6m11.56-7.83c.13.47.22 1.1.28 1.9.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83-.25.9-.83 1.48-1.73 1.73-.47.13-1.33.22-2.65.28-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44-.9-.25-1.48-.83-1.73-1.73-.13-.47-.22-1.1-.28-1.9-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83.25-.9.83-1.48 1.73-1.73.47-.13 1.33-.22 2.65-.28 1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44.9.25 1.48.83 1.73 1.73z"/></svg>
+                    </div>
+                    <div class="link-text">
+                        <div class="link-label">YouTube</div>
+                        <div class="link-url">@4khavacekim_pro</div>
+                    </div>
+                    <div class="link-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+
+                <a href="https://www.shutterstock.com/tr/g/4khavacekim/video?rid=164220666" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Shutterstock portfoyunu ziyaret et">
+                    <div class="link-icon link-icon--shutterstock">
+                        <svg viewBox="0 0 24 24"><path d="M9.8 8.44C9.8 7.07 10.91 5.96 12.28 5.96c.6 0 1.16.22 1.6.6l1.44-1.66A4.47 4.47 0 0012.28 3.6 4.84 4.84 0 007.44 8.44v2.4H5.6v2.36h1.84v7.2h2.36v-7.2h3.16V10.84H9.8V8.44zm6 4.76v-2.36h-1.84v2.36H9.8v2.36h4.16v2.48c0 1.37-1.11 2.48-2.48 2.48-.6 0-1.16-.22-1.6-.6l-1.44 1.66c.84.78 1.96 1.22 3.12 1.22a4.84 4.84 0 004.84-4.84v-2.4h1.84v-2.36H15.8z"/></svg>
+                    </div>
+                    <div class="link-text">
+                        <div class="link-label">Shutterstock</div>
+                        <div class="link-url">Stok Video Portf&#246;y&#252;</div>
+                    </div>
+                    <div class="link-arrow">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </div>
+                </a>
+
+            </div>
+        </div>
+
+        <!-- STATS ROW -->
+        <div class="section stats-section reveal">
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-number" data-target="672" data-suffix="">0</div>
+                    <div class="stat-label">G&#246;nderi</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="89" data-suffix=".7K">0</div>
+                    <div class="stat-label">Takip&#231;i</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="4" data-suffix="K">0</div>
+                    <div class="stat-label">Video</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- VCARD BUTTON -->
+        <div class="section reveal">
+            <button class="vcard-btn" id="vcardBtn" type="button">
+                <span class="btn-icon" aria-hidden="true">&#128229;</span>
+                Rehbere Kaydet
+            </button>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="footer-name">Ester D&#246;nmez | 4K Hava &#199;ekimi</div>
+            <div class="footer-sub">&copy; 2026 T&#252;m haklar&#305; sakl&#305;d&#305;r.</div>
+        </footer>
+
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+
+        /* ========== SCROLL REVEAL (IntersectionObserver) ========== */
+        function initScrollReveal() {
+            var revealElements = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                revealElements.forEach(function(el) { el.classList.add('visible'); });
+                return;
+            }
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            revealElements.forEach(function(el) { observer.observe(el); });
+        }
+
+        /* ========== VIDEO CAROUSEL ========== */
+        function initCarousel() {
+            var track = document.getElementById('carouselTrack');
+            var dots = document.querySelectorAll('#carouselDots .dot');
+            var prevBtn = document.getElementById('prevBtn');
+            var nextBtn = document.getElementById('nextBtn');
+            var cards = track.querySelectorAll('.video-card');
+            var currentIndex = 0;
+
+            function scrollToIndex(index) {
+                if (index < 0) index = 0;
+                if (index >= cards.length) index = cards.length - 1;
+                currentIndex = index;
+                var card = cards[index];
+                var scrollLeft = card.offsetLeft - track.offsetLeft;
+                track.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+                updateDots();
+            }
+
+            function updateDots() {
+                dots.forEach(function(dot, i) {
+                    dot.classList.toggle('active', i === currentIndex);
+                });
+            }
+
+            prevBtn.addEventListener('click', function() {
+                scrollToIndex(currentIndex - 1);
+            });
+
+            nextBtn.addEventListener('click', function() {
+                scrollToIndex(currentIndex + 1);
+            });
+
+            dots.forEach(function(dot) {
+                dot.addEventListener('click', function() {
+                    var index = parseInt(this.getAttribute('data-index'), 10);
+                    scrollToIndex(index);
+                });
+            });
+
+            // Update dots on manual scroll
+            var scrollTimeout;
+            track.addEventListener('scroll', function() {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(function() {
+                    var trackLeft = track.scrollLeft;
+                    var closestIndex = 0;
+                    var closestDistance = Infinity;
+                    cards.forEach(function(card, i) {
+                        var distance = Math.abs(card.offsetLeft - track.offsetLeft - trackLeft);
+                        if (distance < closestDistance) {
+                            closestDistance = distance;
+                            closestIndex = i;
+                        }
+                    });
+                    currentIndex = closestIndex;
+                    updateDots();
+                }, 100);
+            });
+        }
+
+        /* ========== INLINE VIDEO PLAY ========== */
+        function initVideoPlay() {
+            var videoWrappers = document.querySelectorAll('.video-wrapper[data-video-id]');
+            videoWrappers.forEach(function(wrapper) {
+                function playVideo() {
+                    var videoId = wrapper.getAttribute('data-video-id');
+                    if (!videoId) return;
+                    // Replace thumbnail with iframe
+                    var iframe = document.createElement('iframe');
+                    iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0&modestbranding=1';
+                    iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+                    iframe.setAttribute('allowfullscreen', '');
+                    iframe.setAttribute('title', wrapper.getAttribute('aria-label') || 'YouTube video');
+                    // Remove thumbnail and play button
+                    wrapper.innerHTML = '';
+                    wrapper.appendChild(iframe);
+                    wrapper.style.cursor = 'default';
+                    // Remove click handlers
+                    wrapper.removeEventListener('click', playVideo);
+                    wrapper.removeEventListener('keydown', handleKeydown);
+                    wrapper.removeAttribute('role');
+                    wrapper.removeAttribute('tabindex');
+                }
+
+                function handleKeydown(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        playVideo();
+                    }
+                }
+
+                wrapper.addEventListener('click', playVideo);
+                wrapper.addEventListener('keydown', handleKeydown);
+            });
+        }
+
+        /* ========== STAT COUNTER ANIMATION ========== */
+        function initStatCounters() {
+            var statNumbers = document.querySelectorAll('.stat-number[data-target]');
+            if (!('IntersectionObserver' in window)) {
+                statNumbers.forEach(function(el) {
+                    var target = parseInt(el.getAttribute('data-target'), 10);
+                    var suffix = el.getAttribute('data-suffix') || '';
+                    el.textContent = target + suffix;
+                });
+                return;
+            }
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        var el = entry.target;
+                        var target = parseInt(el.getAttribute('data-target'), 10);
+                        var suffix = el.getAttribute('data-suffix') || '';
+                        animateCounter(el, 0, target, 1800, suffix);
+                        observer.unobserve(el);
+                    }
+                });
+            }, { threshold: 0.5 });
+            statNumbers.forEach(function(el) { observer.observe(el); });
+        }
+
+        function animateCounter(el, start, end, duration, suffix) {
+            var startTime = null;
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                var progress = Math.min((timestamp - startTime) / duration, 1);
+                var eased = 1 - Math.pow(1 - progress, 3);
+                var current = Math.floor(start + (end - start) * eased);
+                el.textContent = current + suffix;
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                }
+            }
+            requestAnimationFrame(step);
+        }
+
+        /* ========== VCARD DOWNLOAD ========== */
+        function initVCard() {
+            var btn = document.getElementById('vcardBtn');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var vcardData = [
+                    'BEGIN:VCARD',
+                    'VERSION:3.0',
+                    'N:D\u00f6nmez;Ester;;;',
+                    'FN:Ester D\u00f6nmez',
+                    'ORG:4K Hava \u00c7ekimi',
+                    'TITLE:Kurucu & Prod\u00fckt\u00f6r',
+                    'TEL;TYPE=CELL:+90 544 669 26 69',
+                    'EMAIL;TYPE=INTERNET:esterdonmez@gmail.com',
+                    'URL:https://www.4khavacekim.com',
+                    'NOTE:4K Hava \u00c7ekimi - Drone Hava G\u00f6r\u00fcnt\u00fcleme & Prod\u00fcksiyon',
+                    'END:VCARD'
+                ].join('\r\n');
+
+                var blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'Ester_Donmez_4K_Hava_Cekimi.vcf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+        }
+
+        /* ========== INIT ========== */
+        document.addEventListener('DOMContentLoaded', function() {
+            initScrollReveal();
+            initCarousel();
+            initVideoPlay();
+            initStatCounters();
+            initVCard();
+        });
+
+    })();
+    </script>
+</body>
+</html>

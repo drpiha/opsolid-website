@@ -520,6 +520,45 @@ export const content: Content = {
       secondaryCtaLabel: "Leistungen ansehen",
       secondaryCtaHref: "/solutions",
     },
+
+    cardStrip: {
+      eyebrow: "VORLAGEN",
+      heading: "10 Branchenvorlagen, sofort einsatzbereit",
+      paragraph:
+        "Immobilien, Klinik, Restaurant, DJ, Barber, E-Commerce, Architekt, Fitness — 10 Tap-to-Share-Karten, pro Branche zugeschnitten. Zum Live-Vorschau klicken.",
+      ctaLabel: "Alle Vorlagen ansehen",
+      ctaHref: "/products/digital-card",
+    },
+
+    agentShowcase: {
+      eyebrow: "KI-AGENTEN",
+      heading: "Agenten, die wirklich ans Telefon gehen",
+      paragraph:
+        "Voice auf Ihrer Telefonleitung, Chat auf Ihrer Website, Buchungen in Ihrem Kalender — gebaut auf echten, produktionsreifen Stacks.",
+      items: [
+        {
+          key: "voice",
+          title: "Voice-KI-Agent",
+          body: "24/7 Anrufannahme, Routing, Terminbuchung — mit Retell.",
+          href: "/products/voice-agent",
+          badge: "Retell · Vapi",
+        },
+        {
+          key: "chatbot",
+          title: "Website-Chatbot",
+          body: "Web, WhatsApp, Telegram gleichzeitig. CRM-synchronisiert.",
+          href: "/products/chatbot",
+          badge: "Multi-Kanal",
+        },
+        {
+          key: "booking",
+          title: "Terminbuchungs-Agent",
+          body: "Telefon oder Chat → Kalender. Keine Doppelbuchungen.",
+          href: "/products/booking-agent",
+          badge: "Cal.com",
+        },
+      ],
+    },
   },
 
   solutions: {
@@ -1141,6 +1180,34 @@ export const content: Content = {
     comingSoonTitle: "Weitere Produkte folgen",
     comingSoonDescription:
       "Das Produktportfolio von OpSolid wächst. Neue Tools für Operations, Kommunikation und KI-gestützte Workflows befinden sich derzeit in Entwicklung.",
+    categories: {
+      all: "Alle",
+      customerFacing: "Kundenkontakt",
+      internalOps: "Interne Prozesse",
+      communication: "Kommunikation",
+    },
+    templatesStrip: {
+      label: "BRANCHEN-VORLAGEN",
+      heading: "10 Vorlagen, bereit zum Anpassen",
+      paragraph:
+        "Wählen Sie Ihre Branche, passen Sie an, gehen Sie live. Immobilien, Klinik, Restaurant, DJ, Barber, E-Commerce, Architekt, Fitness und mehr.",
+      cta: "Eigene Vorlage anpassen",
+      ctaHref: "/products/digital-card",
+    },
+    techStack: {
+      label: "AUF ECHTER INFRASTRUKTUR",
+      heading: "Keine Magie. Echte, produktionsreife Technik.",
+      items: [
+        "Retell AI",
+        "Vapi",
+        "Cal.com",
+        "n8n",
+        "Supabase",
+        "Meta Business",
+        "HubSpot",
+        "Stripe",
+      ],
+    },
     items: [
       {
         name: "Digitale Visitenkarte",
@@ -1151,6 +1218,87 @@ export const content: Content = {
         href: "/products/digital-card",
         externalUrl: "",
         icon: "idCard",
+        startingPrice: "€39 einmalig · kostenlose Stufe verfügbar",
+        category: "Kundenkontakt",
+        stack: "Next.js · Hetzner · Apple Wallet · HubSpot",
+      },
+      {
+        name: "Voice-KI-Agent",
+        tagline: "24/7 Telefonempfang · Retell · Vapi",
+        description:
+          "Ein KI-Voice-Agent, der Ihre Telefonleitung rund um die Uhr entgegennimmt, Termine bucht und Anrufe weiterleitet. Mehrsprachig (DE/EN/TR). Gebaut auf Retell AI oder Vapi mit Kalender-Sync. Ersetzt €3.000/Monat Empfangsarbeit.",
+        status: "Live",
+        href: "/products/voice-agent",
+        externalUrl: "",
+        icon: "phone",
+        startingPrice: "Ab €1.200 Einrichtung + €0,12/Min.",
+        category: "Kommunikation",
+        stack: "Retell AI · Vapi · Cal.com · Supabase",
+      },
+      {
+        name: "Website-Chatbot",
+        tagline: "Multi-Kanal · Web · WhatsApp · Telegram",
+        description:
+          "Ein Chatbot, der gleichzeitig auf Ihrer Website, WhatsApp und Telegram lebt. Qualifiziert Leads, beantwortet FAQs, synchronisiert ins CRM. Kontextbewusste Mehrfach-Dialoge, keine starren Skriptwände.",
+        status: "Live",
+        href: "/products/chatbot",
+        externalUrl: "",
+        icon: "messageCircle",
+        startingPrice: "Ab €1.800 Einrichtung + €99/Monat",
+        category: "Kundenkontakt",
+        stack: "OpenAI · n8n · Supabase · HubSpot",
+      },
+      {
+        name: "WhatsApp-Business-Agent",
+        tagline: "Offizielle Meta-API · Auftragsstatus · Zahlungen",
+        description:
+          "WhatsApp-Automatisierung über die offizielle Meta Business Cloud API (via verifiziertem BSP — Twilio, 360dialog, AiSensy). Auftragsstatus, Support, Qualifizierung, Zahlungs-Trigger. Kein Graumarkt-Scraping, kein Sperrrisiko.",
+        status: "Live",
+        href: "/products/whatsapp-agent",
+        externalUrl: "",
+        icon: "messagesSquare",
+        startingPrice: "Ab €1.500 Einrichtung + Meta-Gebühren",
+        category: "Kommunikation",
+        stack: "Meta Business Cloud · 360dialog · Twilio · Stripe",
+      },
+      {
+        name: "Terminbuchungs-Agent",
+        tagline: "Cal.com + Voice + Chat",
+        description:
+          "Ein Buchungs-Agent, der Terminplanung per Telefon, Chat oder Formular übernimmt. Zwei-Wege-Sync mit Google Kalender/Outlook/Cal.com. Umbuchungen, Erinnerungen und No-Show-Nachfassen inklusive.",
+        status: "Live",
+        href: "/products/booking-agent",
+        externalUrl: "",
+        icon: "calendarClock",
+        startingPrice: "Ab €800 Einrichtung + €49/Monat",
+        category: "Interne Prozesse",
+        stack: "Cal.com · Retell · n8n · Google Calendar",
+      },
+      {
+        name: "E-Mail-Automatisierungs-Agent",
+        tagline: "Outreach · Triage · Antwortentwürfe",
+        description:
+          "KI-E-Mail-Workflows — Cold Outreach mit personalisierten Varianten, Inbox-Triage, Auto-Entwürfe zur Freigabe. Gebaut auf Instantly / AgentMail / eigene n8n-Flows. Zustellbarkeit aufgewärmt, DSGVO-konform.",
+        status: "Live",
+        href: "/products/email-agent",
+        externalUrl: "",
+        icon: "mail",
+        startingPrice: "Ab €99 – €499/Monat",
+        category: "Kommunikation",
+        stack: "Instantly · AgentMail · n8n · OpenAI",
+      },
+      {
+        name: "Lead-Qualifizierungs-Agent",
+        tagline: "Voice + Chat · CRM-Scoring · HubSpot-Sync",
+        description:
+          "Ein Gesprächs-Agent, der eingehende Leads per Voice oder Chat qualifiziert, bewertet und qualifizierte Leads an HubSpot/Pipedrive/Salesforce weiterleitet. 40 % MQL-zu-SQL-Steigerung realistisch.",
+        status: "Live",
+        href: "/products/lead-qualifier",
+        externalUrl: "",
+        icon: "userCheck",
+        startingPrice: "Ab €2.200 Einrichtung + €199/Monat",
+        category: "Kundenkontakt",
+        stack: "Retell · HubSpot · n8n · Supabase",
       },
       {
         name: "Digitale Rezeption",
@@ -1161,6 +1309,9 @@ export const content: Content = {
         href: "/products/digital-reception",
         externalUrl: "",
         icon: "bell",
+        startingPrice: "Ab €29/Monat",
+        category: "Interne Prozesse",
+        stack: "Retell · Cal.com · Postmark · Supabase",
       },
       {
         name: "Kutasia",
@@ -1171,6 +1322,9 @@ export const content: Content = {
         href: "/products/kutasia",
         externalUrl: "https://kutasia.com",
         icon: "sparkles",
+        startingPrice: "Individuelle Preise · pro Mandant",
+        category: "Interne Prozesse",
+        stack: "Next.js · Postgres · OpenAI · Stripe",
       },
     ],
 
@@ -1188,9 +1342,9 @@ export const content: Content = {
         secondaryCta: "So funktioniert's",
         tags: "LINK · QR-CODE · NFC (OPTIONAL) · APPLE WALLET · DSGVO",
         cardLabels: {
-          name: "Hasan Dönmez",
-          role: "Automation Studio",
-          company: "OpSolid · Hamburg",
+          name: "Alex Weber",
+          role: "Produktdesigner",
+          company: "Studio Nord · Hamburg",
           nfc: "QR",
           chip: "SCANNEN ODER ANTIPPEN",
         },
@@ -1445,6 +1599,969 @@ export const content: Content = {
         title: "Digitale Visitenkarte — in Deutschland gehostet | OpSolid",
         description:
           "Eine moderne NFC-Visitenkarte mit DSGVO-nativem digitalen Profil. Apple & Google Wallet, CRM-Sync, Team-Roster — gehostet in Hamburg, nicht in San Francisco.",
+      },
+    },
+
+    voiceAgent: {
+      hero: {
+        eyebrow: "[ OPSOLID AGENT · 02 ]   VOICE AI",
+        title: [
+          "Ein Voice-Agent,",
+          "der Ihr Telefon um 2 Uhr morgens beantwortet —",
+          "in drei Sprachen.",
+        ],
+        paragraph:
+          "Ein produktionsreifer KI-Voice-Agent, der Ihre Telefonleitung rund um die Uhr entgegennimmt, Anrufer qualifiziert, Termine bucht und echte Notfälle an einen Menschen weiterleitet. Deutsch, Englisch und Türkisch ab Werk. Gebaut auf Retell AI oder Vapi mit Live-Kalender-Sync.",
+        primaryCta: "Demo buchen",
+        secondaryCta: "So funktioniert's",
+        tags: "RETELL · VAPI · DE/EN/TR · 24/7",
+        startingPrice: "Ab €1.200 Einrichtung + €0,12/Min.",
+      },
+      features: {
+        label: "WAS SIE BEKOMMEN",
+        heading: "Jeder Anruf entgegengenommen — qualifiziert, protokolliert, weitergeleitet.",
+        items: [
+          {
+            label: "NATÜRLICHER DIALOG",
+            body: "Niedrige Latenz beim Sprecherwechsel (<800 ms) mit Barge-In-Unterstützung. Klingt wie ein gut gebriefter Empfang, nicht wie ein IVR-Menü.",
+          },
+          {
+            label: "KALENDERBUCHUNG",
+            body: "Live-Zwei-Wege-Sync mit Google Kalender, Outlook und Cal.com. Der Agent bucht, bucht um und respektiert Puffer.",
+          },
+          {
+            label: "ANRUF-ROUTING",
+            body: "Erkennt Dringlichkeit und leitet komplexe Anrufe an eine menschliche Leitung weiter — mit vollem Kontext und Transkript vor der Annahme.",
+          },
+          {
+            label: "TRANSKRIPTE & ZUSAMMENFASSUNGEN",
+            body: "Jeder Anruf wird transkribiert, zusammengefasst und nach Absicht getaggt. Landet Sekunden nach dem Auflegen in Ihrem CRM oder Slack.",
+          },
+          {
+            label: "MEHRSPRACHIG",
+            body: "Deutsch, Englisch, Türkisch — mit Stimmenauswahl pro Sprache. Anrufer werden in der Sprache beantwortet, in der sie anrufen.",
+          },
+          {
+            label: "DSGVO-NATIV",
+            body: "EU-gehostete Inferenz, AV-Vertrag ab Registrierung, Aufzeichnungen in Frankfurt gespeichert. Opt-in-Ansage zu Beginn jedes Anrufs.",
+          },
+        ],
+      },
+      howItWorks: {
+        label: "SO FUNKTIONIERT'S",
+        heading: "Vier Schritte. Eine Telefonnummer.",
+        steps: [
+          {
+            step: "01",
+            title: "Nummer portieren oder weiterleiten",
+            body: "Sie behalten Ihre bestehende Nummer — wir leiten unbeantwortete Anrufe an den Agenten weiter, oder Sie geben uns eine eigene Leitung.",
+          },
+          {
+            step: "02",
+            title: "Agent briefen",
+            body: "Wir schreiben den System-Prompt mit Ihren Leistungen, Preisen, Öffnungszeiten und Eskalationsregeln. Sie prüfen ihn.",
+          },
+          {
+            step: "03",
+            title: "Kalender + CRM verbinden",
+            body: "Cal.com oder Google Kalender für Buchungen; HubSpot/Pipedrive für Leads. Webhooks erledigen den Rest.",
+          },
+          {
+            step: "04",
+            title: "Live gehen und überwachen",
+            body: "Jeder Anruf wird im Dashboard protokolliert. Sie prüfen Transkripte, justieren den Prompt, passen Eskalations-Trigger an.",
+          },
+        ],
+      },
+      stack: {
+        label: "GEBAUT AUF",
+        heading: "Keine Magie. Echte Technik.",
+        items: [
+          { name: "Retell AI", role: "Voice-Orchestrierung + Telefonie" },
+          { name: "Vapi", role: "Alternativer Voice-Stack (Enterprise)" },
+          { name: "Cal.com", role: "Kalenderbuchungsschicht" },
+          { name: "Supabase", role: "Anruf-Logs + Kontext-Store" },
+          { name: "n8n", role: "CRM-Sync + Post-Call-Workflows" },
+        ],
+      },
+      pricing: {
+        label: "PREISE",
+        heading: "Einrichtung einmalig. Abrechnung pro Gesprächsminute.",
+        tiers: [
+          {
+            name: "Starter",
+            price: "€1.200",
+            billing: "einmalige Einrichtung + €0,12/Min.",
+            features: [
+              "Eine Telefonleitung",
+              "DE oder EN (eine Sprache)",
+              "Cal.com-Integration",
+              "E-Mail-Benachrichtigungen",
+              "100 Min. Testguthaben",
+            ],
+            cta: "Demo buchen",
+          },
+          {
+            name: "Business",
+            price: "€2.400",
+            billing: "Einrichtung + €0,12/Min. + €99/Monat",
+            features: [
+              "Bis zu 3 Telefonleitungen",
+              "DE · EN · TR mehrsprachig",
+              "HubSpot- / Pipedrive-Sync",
+              "Slack + WhatsApp-Benachrichtigungen",
+              "Monatliche Prompt-Feinabstimmung",
+              "Priorisierter Support",
+            ],
+            cta: "Demo buchen",
+            featured: "true",
+          },
+          {
+            name: "Enterprise",
+            price: "Individuell",
+            billing: "Volumenpreise + SLA",
+            features: [
+              "Unbegrenzte Leitungen",
+              "Individuelles Voice-Cloning",
+              "Self-Hosted-Option (Vapi)",
+              "Eigener Slack-Kanal",
+              "99,9 % SLA",
+            ],
+            cta: "Sprechen Sie uns an",
+          },
+        ],
+      },
+      faq: {
+        label: "FAQ",
+        heading: "Ehrliche Antworten.",
+        items: [
+          {
+            q: "Merken Anrufer, dass es eine KI ist?",
+            a: "Ja — wir sagen es zu Beginn jedes Gesprächs an. Etwas anderes bricht DSGVO und beschädigt Vertrauen. In der Praxis stört es Anrufer nicht, sobald der Agent den Anruf kompetent abwickelt.",
+          },
+          {
+            q: "Was passiert bei komplexen oder Notfall-Anrufen?",
+            a: "Der Agent erkennt Eskalations-Trigger (von Ihnen definierte Schlüsselwortlisten + Intent-Signale) und leitet an eine menschliche Leitung weiter — Transkript und Zusammenfassung werden bereits per Slack/E-Mail gesendet.",
+          },
+          {
+            q: "Wie schnell ist das wirklich?",
+            a: "Die Sprecherwechsel-Latenz liegt bei Retells Enterprise-Stufe unter 800 ms. Er unterbricht höflich und macht nicht die peinlichen 2-Sekunden-Pausen früher Voice-Agenten aus 2024.",
+          },
+          {
+            q: "Kann ich ein echtes Beispiel hören?",
+            a: "Ja. Wir lassen beim Erstgespräch eine Live-Demo auf einer Sandbox-Nummer laufen — Sie rufen an, der Agent antwortet, Sie testen Grenzfälle. Kein Folienvortrag.",
+          },
+          {
+            q: "Ist es wirklich DSGVO-konform?",
+            a: "Anrufe werden auf EU-Infrastruktur verarbeitet (Retell EU-Region / Vapi selbstgehostet). Aufzeichnungen in Frankfurt gespeichert. AV-Vertrag ab Tag eins. Wir kündigen die KI zu Beginn an und bieten Opt-out.",
+          },
+        ],
+      },
+      cta: {
+        heading: "Ihr Telefon klingelt um 2 Uhr morgens. Wer hebt ab?",
+        paragraph:
+          "Buchen Sie ein 30-minütiges Erstgespräch. Wir richten einen Sandbox-Agenten auf Ihren tatsächlichen Leistungen ein und lassen Sie ihn anrufen.",
+        primaryCta: "Demo buchen",
+        secondaryCta: "Sprechen Sie uns an",
+      },
+    },
+
+    chatbot: {
+      hero: {
+        eyebrow: "[ OPSOLID AGENT · 03 ]   WEBSITE-CHATBOT",
+        title: [
+          "Ein Chatbot.",
+          "Drei Kanäle.",
+          "Null Skriptmauern.",
+        ],
+        paragraph:
+          "Ein kontextbewusster Chatbot, der gleichzeitig auf Ihrer Website, WhatsApp und Telegram lebt — ein Gehirn, drei Stimmen. Qualifiziert Leads, beantwortet echte Fragen aus Ihren Dokumenten und synchronisiert Gespräche mit HubSpot.",
+        primaryCta: "Demo buchen",
+        secondaryCta: "So funktioniert's",
+        tags: "OPENAI · n8n · SUPABASE · MULTI-KANAL",
+        startingPrice: "Ab €1.800 Einrichtung + €99/Monat",
+      },
+      features: {
+        label: "WAS SIE BEKOMMEN",
+        heading: "Ein Chatbot, der Ihre Dokumente liest — kein FAQ-Papagei.",
+        items: [
+          {
+            label: "MULTI-KANAL",
+            body: "Gleiches Gespräch, gleiche Erinnerung — über Web-Widget, WhatsApp Business und Telegram. Ein gemeinsamer Posteingang für Ihr Team.",
+          },
+          {
+            label: "RAG-GESTÜTZT",
+            body: "Trainiert auf Ihren echten Inhalten: Produkt-Dokumente, Richtlinien, PDFs, Notion-Seiten. Keine halluzinierten Antworten — Quellenangaben inklusive.",
+          },
+          {
+            label: "LEAD-ERFASSUNG",
+            body: "Qualifiziert im natürlichen Dialog (kein Formular-Abarbeiten), dann schickt strukturierte Daten beim Absenden an HubSpot/Pipedrive.",
+          },
+          {
+            label: "ÜBERGABE AN MENSCHEN",
+            body: "Nahtlose Eskalation an einen Live-Agenten mit vollem Transkript, erkannter Stimmung und empfohlener nächster Aktion.",
+          },
+          {
+            label: "ANALYSE",
+            body: "Top-unbeantwortete Fragen, Eskalationsrate, Conversion-Funnel pro Kanal. Ein wöchentlicher Digest, kein Dashboard-Labyrinth.",
+          },
+          {
+            label: "INDIVIDUELL GESTALTET",
+            body: "Ihre Schriften, Ihre Farben, Ihr Ton. Lebt im Gehäuse Ihrer Seite — keine generische Fremd-Chatblase.",
+          },
+        ],
+      },
+      howItWorks: {
+        label: "SO FUNKTIONIERT'S",
+        heading: "Vier Schritte zum Launch.",
+        steps: [
+          {
+            step: "01",
+            title: "Wissensquellen einlesen",
+            body: "Wir crawlen Ihre Seite, importieren Dokumente/PDFs, verbinden Ihr Notion oder Confluence. Embeddings landen in Supabase pgvector.",
+          },
+          {
+            step: "02",
+            title: "Flows entwerfen",
+            body: "Lead-Qualifizierung, Buchungspfad, Eskalations-Trigger. Sie geben System-Prompt und Leitplanken frei.",
+          },
+          {
+            step: "03",
+            title: "Über alle Kanäle deployen",
+            body: "Ein Widget fürs Web. BSP-verifiziertes WhatsApp Business. Telegram-Bot. Alle landen im selben Gesprächs-Backend.",
+          },
+          {
+            step: "04",
+            title: "Wöchentlich iterieren",
+            body: "Wir überwachen die am häufigsten fehlgeschlagenen Anfragen und aktualisieren Wissensbasis und Prompts. Erste 30 Tage inklusive.",
+          },
+        ],
+      },
+      stack: {
+        label: "GEBAUT AUF",
+        heading: "Keine Magie. Echte Technik.",
+        items: [
+          { name: "OpenAI / Claude", role: "LLM-Kern (austauschbar)" },
+          { name: "Supabase pgvector", role: "RAG-Embeddings + Gedächtnis" },
+          { name: "n8n", role: "Kanal-Orchestrierung + CRM-Sync" },
+          { name: "Meta Business Cloud", role: "Offizieller WhatsApp-BSP" },
+          { name: "HubSpot / Pipedrive", role: "Lead-Sync-Ziel" },
+        ],
+      },
+      pricing: {
+        label: "PREISE",
+        heading: "Einmalige Einrichtung. Planbare Monatsraten.",
+        tiers: [
+          {
+            name: "Nur Web",
+            price: "€1.800",
+            billing: "Einrichtung + €99/Monat",
+            features: [
+              "Website-Widget",
+              "RAG auf bis zu 200 Seiten/Dokumenten",
+              "HubSpot-Sync",
+              "5.000 Nachrichten/Monat",
+              "30 Tage Feinabstimmung nach Launch",
+            ],
+            cta: "Demo buchen",
+          },
+          {
+            name: "Multi-Kanal",
+            price: "€2.800",
+            billing: "Einrichtung + €199/Monat",
+            features: [
+              "Web + WhatsApp + Telegram",
+              "Vereinheitlichter Agenten-Posteingang",
+              "RAG auf bis zu 1.000 Dokumenten",
+              "20.000 Nachrichten/Monat",
+              "Übergabe-an-Mensch-Workflow",
+              "Wöchentliche Iteration",
+            ],
+            cta: "Demo buchen",
+            featured: "true",
+          },
+          {
+            name: "Scale",
+            price: "Ab €5.000",
+            billing: "Einrichtung + nutzungsbasiert",
+            features: [
+              "Unbegrenzte Kanäle",
+              "Individuelles LLM (Self-Hosted-Option)",
+              "Erweiterte Analyse",
+              "White-Label",
+              "SLA + dedizierter Support",
+            ],
+            cta: "Sprechen Sie uns an",
+          },
+        ],
+      },
+      faq: {
+        label: "FAQ",
+        heading: "Ehrliche Antworten.",
+        items: [
+          {
+            q: "Halluziniert er und beschädigt unsere Marke?",
+            a: "RAG mit strenger Erdung bedeutet, dass der Bot seine Quellen nennt. Steht die Antwort nicht in Ihren Dokumenten, sagt er das und bietet Eskalation an. Wir tunen ihn explizit so, dass er 'ich weiß es nicht' der selbstbewussten Erfindung vorzieht.",
+          },
+          {
+            q: "Funktioniert WhatsApp wirklich richtig?",
+            a: "Ja — über die offizielle Meta Business Cloud API via verifiziertem BSP (Twilio, 360dialog oder AiSensy). Kein Graumarkt-Scraping. Grüner Verifikations-Haken, kein Sperrrisiko.",
+          },
+          {
+            q: "Können wir unser bestehendes Live-Chat-Tool weiter nutzen?",
+            a: "Wenn Sie Intercom, Crisp oder Zendesk verwenden — ja. Wir legen KI darüber und eskalieren nur an Ihren bestehenden menschlichen Workflow. Kein Tool-Austausch.",
+          },
+          {
+            q: "Was passiert, wenn OpenAI ausfällt?",
+            a: "Wir konfigurieren Claude (Anthropic) als Fallback und können Llama 3 für kritische Workloads selbst hosten. Multi-Provider-LLM-Routing ist in jeder Stufe ab Web enthalten.",
+          },
+        ],
+      },
+      cta: {
+        heading: "Ihr Support-Team beantwortet die gleichen 50 Fragen. Jeden Tag.",
+        paragraph:
+          "Buchen Sie eine Demo. Wir richten einen Chatbot auf Ihren echten Dokumenten ein und lassen Sie ihn vor der Festlegung testen.",
+        primaryCta: "Demo buchen",
+        secondaryCta: "Sprechen Sie uns an",
+      },
+    },
+
+    whatsappAgent: {
+      hero: {
+        eyebrow: "[ OPSOLID AGENT · 04 ]   WHATSAPP BUSINESS",
+        title: [
+          "WhatsApp,",
+          "das tatsächlich funktioniert —",
+          "offiziell.",
+        ],
+        paragraph:
+          "WhatsApp-Automatisierung über die offizielle Meta Business Cloud API — via verifiziertem BSP (Twilio, 360dialog, AiSensy). Auftrags-Tracking, Support, Qualifizierung, Zahlungs-Trigger. Kein Scraping, keine inoffiziellen Bibliotheken, kein Sperrrisiko.",
+        primaryCta: "Demo buchen",
+        secondaryCta: "So funktioniert's",
+        tags: "META BUSINESS CLOUD · 360DIALOG · TWILIO · VERIFIZIERT",
+        startingPrice: "Ab €1.500 Einrichtung + Meta-Gebühren",
+      },
+      features: {
+        label: "WAS SIE BEKOMMEN",
+        heading: "Alles, was Metas API erlaubt — nichts, was sie nicht erlaubt.",
+        items: [
+          {
+            label: "VERIFIZIERTER GRÜNER HAKEN",
+            body: "Wir übernehmen die offizielle Business-Verifizierung über den BSP. Ihre Marke erscheint mit dem grünen Häkchen, dem Kunden vertrauen.",
+          },
+          {
+            label: "BESTELL- & VERSANDUPDATES",
+            body: "Automatisierte Benachrichtigungen: Bestellung erhalten, verpackt, versendet, zugestellt. Direkt angebunden an Shopify / WooCommerce / Ihr ERP.",
+          },
+          {
+            label: "KUNDENSUPPORT",
+            body: "Eingehender Support mit KI-Antworten in erster Linie. Eskalation an einen Menschen mit vollem Kontext, wenn der Bot an Grenzen stößt.",
+          },
+          {
+            label: "ZAHLUNGSLINKS",
+            body: "Stripe-Zahlungslinks im Gespräch auslösen — Auftragsbestätigungen, Rechnungen, Anzahlungen — mit Belegen zurück in WhatsApp.",
+          },
+          {
+            label: "KAMPAGNEN-VORLAGEN",
+            body: "Meta-freigegebene Nachrichtenvorlagen für Broadcasts. Opt-in-Verwaltung, Rate-Limit, niemals spammy.",
+          },
+          {
+            label: "TEAM-POSTEINGANG",
+            body: "Ihre Agenten bearbeiten Gespräche in einem echten Posteingang (unserem oder Ihrem bestehenden — Front, HubSpot, Zendesk). Vollständiger Audit-Trail.",
+          },
+        ],
+      },
+      howItWorks: {
+        label: "SO FUNKTIONIERT'S",
+        heading: "Erst verifizieren, dann automatisieren.",
+        steps: [
+          {
+            step: "01",
+            title: "Geschäft bei Meta verifizieren",
+            body: "Wir begleiten Sie durch die Facebook-Business-Manager-Verifizierung und das BSP-Onboarding. Üblich sind 5–10 Werktage.",
+          },
+          {
+            step: "02",
+            title: "Nachrichtenvorlagen entwerfen",
+            body: "Meta prüft jede Broadcast-Vorlage. Wir entwerfen, reichen ein und iterieren bis zur Freigabe — meist 1–2 Runden.",
+          },
+          {
+            step: "03",
+            title: "Backend anbinden",
+            body: "Shopify/WooCommerce für Bestellungen, Stripe für Zahlungen, HubSpot für Leads. Webhooks fließen in beide Richtungen.",
+          },
+          {
+            step: "04",
+            title: "Launch mit Automatisierung + menschlicher Ebene",
+            body: "Automatische Antworten + KI für Skalierung, menschliche Agenten für Nuance. Sie wählen, wo die Grenze liegt.",
+          },
+        ],
+      },
+      stack: {
+        label: "GEBAUT AUF",
+        heading: "Offizielle API, kein Graumarkt.",
+        items: [
+          { name: "Meta Business Cloud API", role: "Offizieller WhatsApp-Kanal" },
+          { name: "360dialog / Twilio / AiSensy", role: "Verifizierte BSP-Schicht" },
+          { name: "n8n", role: "Workflow-Orchestrierung" },
+          { name: "Stripe", role: "Zahlungslink-Trigger" },
+          { name: "Shopify / WooCommerce", role: "Bestell- + Versand-Quelle der Wahrheit" },
+        ],
+      },
+      pricing: {
+        label: "PREISE",
+        heading: "Einrichtung + BSP-Durchleitung. Keine Marge-Spielchen.",
+        tiers: [
+          {
+            name: "Launch",
+            price: "€1.500",
+            billing: "Einrichtung + Meta-Gebühren durchgereicht",
+            features: [
+              "Business-Verifizierung",
+              "3 freigegebene Meta-Vorlagen",
+              "1 Automatisierung (Bestellung oder Support)",
+              "360dialog- oder Twilio-BSP",
+              "30 Tage Support nach Launch",
+            ],
+            cta: "Demo buchen",
+          },
+          {
+            name: "Commerce",
+            price: "€3.200",
+            billing: "Einrichtung + €149/Monat + Meta-Gebühren",
+            features: [
+              "Alles aus Launch",
+              "Shopify-/WooCommerce-Integration",
+              "Bestellfluss-Automatisierungen",
+              "Stripe-Zahlungslinks",
+              "KI-first-Support-Schicht",
+              "Team-Posteingang (bis zu 5 Agenten)",
+            ],
+            cta: "Demo buchen",
+            featured: "true",
+          },
+          {
+            name: "Enterprise",
+            price: "Individuell",
+            billing: "Einrichtung + Volumenpreise",
+            features: [
+              "Nummern in mehreren Ländern",
+              "Bi-direktionaler CRM-Sync",
+              "Erweitertes Routing + SLAs",
+              "Eigener BSP-Ansprechpartner",
+              "Compliance-Prüfung",
+            ],
+            cta: "Sprechen Sie uns an",
+          },
+        ],
+      },
+      faq: {
+        label: "FAQ",
+        heading: "Ehrliche Antworten zu einem undurchsichtigen Kanal.",
+        items: [
+          {
+            q: "Warum nicht eine günstigere inoffizielle WhatsApp-Bibliothek nutzen?",
+            a: "Weil Meta sie sperrt, Punkt. Ihre Nummer wird markiert, Kunden verlieren Vertrauen, Ihre Automatisierung bricht über Nacht. Wir liefern keinen Graumarkt-WhatsApp. Die offizielle API kostet mehr — sie ist auch das Einzige, was überlebt.",
+          },
+          {
+            q: "Wie hoch sind Metas Gebühren?",
+            a: "Gesprächsbasiert. Utility-Gespräche (Auftrags-Updates) liegen bei etwa €0,02–0,05; Marketing-Gespräche bei €0,05–0,12. Wir reichen diese zum Selbstkostenpreis durch — ohne Aufschlag.",
+          },
+          {
+            q: "Wie lange dauert die Verifizierung?",
+            a: "Durchschnittlich 5–10 Werktage. Meta verifiziert Ihre Unternehmensdokumente und Ihre BSP-Beziehung. Wir erledigen den Papierkram.",
+          },
+          {
+            q: "Kann ich von einem inoffiziellen Tool migrieren?",
+            a: "Ja. Wir lassen den offiziellen Kanal 2 Wochen parallel laufen, dann schalten wir um. Die Migration der Rufnummer ist möglich, erfordert aber Koordination mit Ihrem aktuellen Anbieter.",
+          },
+        ],
+      },
+      cta: {
+        heading: "WhatsApp ist dort, wo Ihre Kunden bereits sind.",
+        paragraph:
+          "Buchen Sie eine Demo. Wir zeigen Ihnen den exakten Meta-Verifizierungsweg und was auf Ihrem Stack automatisierbar ist.",
+        primaryCta: "Demo buchen",
+        secondaryCta: "Sprechen Sie uns an",
+      },
+    },
+
+    bookingAgent: {
+      hero: {
+        eyebrow: "[ OPSOLID AGENT · 05 ]   TERMINBUCHUNGS-AGENT",
+        title: [
+          "Buchungen,",
+          "die sich selbst erledigen —",
+          "über Telefon und Chat.",
+        ],
+        paragraph:
+          "Ein KI-Agent für eine Aufgabe: buchen, umbuchen, erinnern. Funktioniert per Voice, Chat oder Formular — mit Zwei-Wege-Sync zu Google Kalender, Outlook oder Cal.com. Null Doppelbuchungen, weniger No-Shows.",
+        primaryCta: "Demo buchen",
+        secondaryCta: "So funktioniert's",
+        tags: "CAL.COM · RETELL · N8N · GOOGLE KALENDER",
+        startingPrice: "Ab €800 Einrichtung + €49/Monat",
+      },
+      features: {
+        label: "WAS SIE BEKOMMEN",
+        heading: "Ein Agent, jeder Buchungskanal.",
+        items: [
+          {
+            label: "MULTI-KANAL-INTAKE",
+            body: "Anrufer, Chat-Nutzer oder Web-Formular — gleiches Backend, gleiche Verfügbarkeitslogik, gleiche Bestätigungs-E-Mail.",
+          },
+          {
+            label: "ZWEI-WEGE-KALENDER-SYNC",
+            body: "Live-Sync mit Google Kalender, Outlook 365, iCloud oder Cal.com. Externe Blocker werden sofort berücksichtigt.",
+          },
+          {
+            label: "UMBUCHEN & STORNIEREN",
+            body: "Kunden können per Antwort auf die Bestätigung oder Rückruf umbuchen. Kein Formular-Marathon, kein Support-Ticket.",
+          },
+          {
+            label: "ERINNERUNGEN + NO-SHOWS",
+            body: "SMS-/WhatsApp-/E-Mail-Erinnerungen nach Ihrem Zeitplan. Automatisches Nachfassen bei verpassten Terminen mit Umbuchungs-Link.",
+          },
+          {
+            label: "PUFFER- & ROUTING-REGELN",
+            body: "Dauer pro Leistung, Puffer, Team-Routing, Standort-Beschränkungen. Keine Magie — alles in Cal.com sichtbar.",
+          },
+          {
+            label: "DASHBOARDS",
+            body: "Buchungsgeschwindigkeit, Auslastung, No-Show-Rate pro Kanal. Schlichter Wochenbericht, kein 20-Diagramme-Friedhof.",
+          },
+        ],
+      },
+      howItWorks: {
+        label: "SO FUNKTIONIERT'S",
+        heading: "Vier Schritte. Ein Kalender der Wahrheit.",
+        steps: [
+          {
+            step: "01",
+            title: "Leistungen abbilden",
+            body: "Jede Leistung: Dauer, Puffer, wer liefern darf, Standort-/Raum-Beschränkungen. Wir modellieren das in Cal.com.",
+          },
+          {
+            step: "02",
+            title: "Kalender verbinden",
+            body: "Mitarbeiterkalender (Google/Outlook/iCloud) synchronisieren in beide Richtungen. Externe Termine blockieren Buchungsslots automatisch.",
+          },
+          {
+            step: "03",
+            title: "Intake-Kanäle verdrahten",
+            body: "Telefon (via Retell-Voice-Agent), Web-Chat-Widget, eingebettetes Formular. Alles schreibt ins gleiche Cal.com-Backend.",
+          },
+          {
+            step: "04",
+            title: "Erinnerungen automatisieren",
+            body: "Erinnerungskadenz und Kanal pro Leistung. No-Show-Nachfassen mit Umbuchungs-Links. Alles messbar.",
+          },
+        ],
+      },
+      stack: {
+        label: "GEBAUT AUF",
+        heading: "Keine Magie. Echte Technik.",
+        items: [
+          { name: "Cal.com", role: "Buchungs-Engine + Verfügbarkeit" },
+          { name: "Retell AI", role: "Voice-Intake (optional)" },
+          { name: "n8n", role: "Erinnerungs- + Nachfass-Workflows" },
+          { name: "Google Calendar / Outlook", role: "Quelle-der-Wahrheit-Sync" },
+          { name: "Twilio", role: "SMS-Erinnerungen" },
+        ],
+      },
+      pricing: {
+        label: "PREISE",
+        heading: "Kleine Einrichtung. Kleine Monatsrate. Echter ROI.",
+        tiers: [
+          {
+            name: "Solo",
+            price: "€800",
+            billing: "Einrichtung + €49/Monat",
+            features: [
+              "Bis zu 3 Leistungen",
+              "Web-Formular + Chat-Intake",
+              "Google Kalender oder Cal.com",
+              "E-Mail- + SMS-Erinnerungen",
+              "Wochenbericht",
+            ],
+            cta: "Demo buchen",
+          },
+          {
+            name: "Team",
+            price: "€1.600",
+            billing: "Einrichtung + €129/Monat",
+            features: [
+              "Unbegrenzte Leistungen",
+              "Telefon + Chat + Formular",
+              "Voice-Agent (Retell)",
+              "Team-Routing-Regeln",
+              "WhatsApp-Erinnerungen",
+              "No-Show-Umbuchungs-Flow",
+            ],
+            cta: "Demo buchen",
+            featured: "true",
+          },
+          {
+            name: "Multi-Standort",
+            price: "Individuell",
+            billing: "pro Standort",
+            features: [
+              "Multi-Standort-Routing",
+              "Ressourcen-Beschränkungen",
+              "Individuelle Integrationen",
+              "Mitarbeiter-App (optional)",
+              "SLA + Onboarding",
+            ],
+            cta: "Sprechen Sie uns an",
+          },
+        ],
+      },
+      faq: {
+        label: "FAQ",
+        heading: "Ehrliche Antworten.",
+        items: [
+          {
+            q: "Kann ich meinen bestehenden Cal.com-Account behalten?",
+            a: "Ja — wir legen obenauf. Wenn Sie bereits auf Cal.com sind, erweitern wir es um Voice-Intake und Workflow-Automatisierung. Keine Migration nötig.",
+          },
+          {
+            q: "Was ist mit wiederkehrenden Buchungen / Paketen?",
+            a: "Nativ über Cal.com unterstützt. 5er-Pakete, Monatsabos, Mehr-Sitzungs-Behandlungen — alles Standard.",
+          },
+          {
+            q: "Reduziert es wirklich No-Shows?",
+            a: "In unseren Einsätzen sind 30–50 % Reduktion typisch — getrieben von 24-h- + 2-h-Erinnerungen und einem Ein-Klick-Umbuchungs-Link. Zahlen hängen von Ihrem Leistungstyp ab.",
+          },
+          {
+            q: "Können Kunden einfach zum Buchen anrufen?",
+            a: "Ja — genau das ist der Punkt. Der Voice-Agent hebt ab, findet Slots, bucht, bestätigt. Oder ein Mensch hebt dennoch ab, wenn der Kunde das bevorzugt.",
+          },
+        ],
+      },
+      cta: {
+        heading: "Jeder verpasste Anruf ist eine verpasste Buchung.",
+        paragraph:
+          "Buchen Sie eine Demo. Wir binden einen Sandbox-Kalender an und lassen Sie den Telefon- + Chat-Flow Ende-zu-Ende testen.",
+        primaryCta: "Demo buchen",
+        secondaryCta: "Sprechen Sie uns an",
+      },
+    },
+
+    emailAgent: {
+      hero: {
+        eyebrow: "[ OPSOLID AGENT · 06 ]   E-MAIL-AUTOMATISIERUNG",
+        title: [
+          "Inbox-Triage.",
+          "Cold Outreach.",
+          "Antwortentwürfe zur Freigabe.",
+        ],
+        paragraph:
+          "KI-E-Mail-Workflows, die wirklich laufen: personalisierter Cold Outreach, Eingangs-Triage und automatisch erstellte Antwortentwürfe zur Freigabe durch einen Menschen. Gebaut auf Instantly, AgentMail und eigenen n8n-Flows. Aufgewärmte Zustellbarkeit, DSGVO-konform.",
+        primaryCta: "Demo buchen",
+        secondaryCta: "So funktioniert's",
+        tags: "INSTANTLY · AGENTMAIL · n8n · OPENAI",
+        startingPrice: "Ab €99 – €499/Monat",
+      },
+      features: {
+        label: "WAS SIE BEKOMMEN",
+        heading: "E-Mail, die funktioniert — ohne 50-Personen-SDR-Team.",
+        items: [
+          {
+            label: "COLD OUTREACH IN SKALIERUNG",
+            body: "Personalisierte Varianten pro Kontakt, kein Spray-and-Pray. Multi-Inbox-Rotation, Absenderaufwärmung, Bounce-Handling.",
+          },
+          {
+            label: "EINGANGS-TRIAGE",
+            body: "Eingehende Post klassifiziert: Lead, Support, Partner, Spam, Eskalation. Geroutet, getaggt, Zusammenfassung wartet in Ihrem CRM.",
+          },
+          {
+            label: "ANTWORTENTWÜRFE",
+            body: "KI entwirft Antworten in Ihrer Stimme, basierend auf Ihren bisherigen E-Mails. Sie prüfen, justieren, senden — Stunden gespart, kein Bot-Schrott.",
+          },
+          {
+            label: "ZUSTELLBARKEITS-GESUNDHEIT",
+            body: "SPF/DKIM/DMARC-Audit, Absenderreputation überwacht, Aufwärmung über 5–50 Postfächer. Sie landen tatsächlich im Posteingang.",
+          },
+          {
+            label: "CRM-RÜCKSCHREIBEN",
+            body: "Jeder relevante Thread automatisch in HubSpot/Pipedrive protokolliert — mit richtigem Kontakt, Stufe und Zusammenfassung.",
+          },
+          {
+            label: "DSGVO-LEITPLANKEN",
+            body: "Sperr-Listen, Abmelde-Handling, Einwilligungslogik für EU-Kontakte. Kein Cold-Mailing ohne Opt-in-Signal.",
+          },
+        ],
+      },
+      howItWorks: {
+        label: "SO FUNKTIONIERT'S",
+        heading: "Vier Schritte, tief in den Posteingang.",
+        steps: [
+          {
+            step: "01",
+            title: "Zustellbarkeit prüfen",
+            body: "SPF, DKIM, DMARC, Absenderreputation. Alles reparieren, was brennt. Aufwärm-Postfächer bereitstellen, falls Outreach Teil des Umfangs ist.",
+          },
+          {
+            step: "02",
+            title: "Post + CRM verbinden",
+            body: "Google Workspace, M365 oder Postmark. HubSpot/Pipedrive fürs Protokollieren. Alles nur lesend, bis Sie freigeben.",
+          },
+          {
+            step: "03",
+            title: "Flows bauen",
+            body: "Triage-Regeln, Antwortvorlagen, Outreach-Sequenzen. Prompts mit echten Beispiel-E-Mails auf Ihre Stimme abgestimmt.",
+          },
+          {
+            step: "04",
+            title: "Mensch-im-Prozess",
+            body: "Entwürfe landen in einer Prüfwarteschlange. Sie geben frei, bearbeiten, senden. Outreach läuft eigenständig mit Sperr-Logik.",
+          },
+        ],
+      },
+      stack: {
+        label: "GEBAUT AUF",
+        heading: "Keine Magie. Echte Technik.",
+        items: [
+          { name: "Instantly", role: "Cold Outreach + Aufwärmung" },
+          { name: "AgentMail", role: "Eingangs-Triage + Entwürfe" },
+          { name: "n8n", role: "Individuelle Workflow-Verklebung" },
+          { name: "OpenAI / Claude", role: "Entwürfe + Klassifikation" },
+          { name: "HubSpot / Pipedrive", role: "CRM-Quelle der Wahrheit" },
+        ],
+      },
+      pricing: {
+        label: "PREISE",
+        heading: "Monatliche Betriebspreise. Jederzeit kündbar.",
+        tiers: [
+          {
+            name: "Triage",
+            price: "€99",
+            billing: "pro Monat",
+            features: [
+              "1 Postfach klassifiziert + triagiert",
+              "Antwortentwürfe (bis zu 200/Monat)",
+              "HubSpot- oder Pipedrive-Sync",
+              "Wochenbericht",
+            ],
+            cta: "Demo buchen",
+          },
+          {
+            name: "Outreach + Triage",
+            price: "€299",
+            billing: "pro Monat",
+            features: [
+              "Alles aus Triage",
+              "Cold Outreach (5 Postfächer)",
+              "Aufwärmung + Zustellbarkeits-Monitoring",
+              "Bis zu 2.000 gesendete E-Mails/Monat",
+              "A/B-Testing",
+              "Monatliche Prompt-Feinabstimmung",
+            ],
+            cta: "Demo buchen",
+            featured: "true",
+          },
+          {
+            name: "Scale",
+            price: "€499+",
+            billing: "pro Monat, volumenbasiert",
+            features: [
+              "Unbegrenzte Postfächer",
+              "Individuelles LLM-Routing",
+              "Erweiterte Segmentierung",
+              "Dedizierter Workflow-Engineer",
+              "SLA",
+            ],
+            cta: "Sprechen Sie uns an",
+          },
+        ],
+      },
+      faq: {
+        label: "FAQ",
+        heading: "Ehrliche Antworten zu einem standardmäßig spammigen Kanal.",
+        items: [
+          {
+            q: "Ist KI-geschriebene Cold-E-Mail nicht einfach Spam?",
+            a: "Wenn man es falsch macht, ja. Wir personalisieren auf Absatzebene (kein Token-Austausch), deckeln Volumen pro Postfach und sperren alle, die nicht interagieren. Ist Ihre Liste Müll, sagen wir das — und empfehlen stattdessen Inbound.",
+          },
+          {
+            q: "Ist das DSGVO-konform für EU-Kontakte?",
+            a: "B2B-Cold-Outreach an EU-Kontakte erfordert eine Begründung berechtigter Interessen + einfachen Opt-out. Wir setzen beides um. Für Verbraucher (B2C) ist eine vorherige Einwilligung Pflicht — wir mailen ohne sie nicht.",
+          },
+          {
+            q: "Kann ohne menschliche Freigabe geantwortet werden?",
+            a: "Ja, aber nur für enge, sichere Intents (Versandbestätigungen, Verfügbarkeits-Antworten, Terminabstimmung). Alles andere landet zur Prüfung in der Warteschlange. Sie setzen die Linie.",
+          },
+          {
+            q: "Was ist mit meiner bestehenden Postfach-Historie?",
+            a: "Wir können den Antwort-Entwerfer auf Ihren letzten 500 gesendeten E-Mails trainieren, damit Entwürfe wie Sie klingen, nicht wie die Konzernstimme von GPT-4. Alles lokal verarbeitet, nichts über Embeddings hinaus gespeichert.",
+          },
+        ],
+      },
+      cta: {
+        heading: "Ihr Posteingang ist ein zweiter Vollzeitjob. Sollte er nicht sein.",
+        paragraph:
+          "Buchen Sie eine Demo. Wir prüfen Ihr Mail-Setup und zeigen, was sich automatisieren lässt, ohne Spam-Filter auszulösen.",
+        primaryCta: "Demo buchen",
+        secondaryCta: "Sprechen Sie uns an",
+      },
+    },
+
+    leadQualifier: {
+      hero: {
+        eyebrow: "[ OPSOLID AGENT · 07 ]   LEAD-QUALIFIZIERUNG",
+        title: [
+          "Jeder eingehende Lead.",
+          "Qualifiziert, bewertet,",
+          "an den Vertrieb übergeben.",
+        ],
+        paragraph:
+          "Ein Gesprächs-Agent, der eingehende Leads per Voice oder Chat qualifiziert, gegen Ihr ICP bewertet und MQLs direkt in HubSpot oder Pipedrive an den Vertrieb weiterleitet. Typische Steigerung: 40 % MQL-zu-SQL-Conversion.",
+        primaryCta: "Demo buchen",
+        secondaryCta: "So funktioniert's",
+        tags: "RETELL · HUBSPOT · N8N · SCORING",
+        startingPrice: "Ab €2.200 Einrichtung + €199/Monat",
+      },
+      features: {
+        label: "WAS SIE BEKOMMEN",
+        heading: "SDR-Arbeit — 24/7 verfügbar.",
+        items: [
+          {
+            label: "GESPRÄCHSBASIERTE QUALIFIZIERUNG",
+            body: "Natürlicher Dialog statt 14-Feld-Formular. Fragt, was zählt, überspringt, was nicht zählt, wirkt menschlich.",
+          },
+          {
+            label: "ICP-SCORING",
+            body: "Konfigurierbares Scoring-Modell — Firmografik, Intent-Signale, Budget, Zeitplan. Score landet beim Absenden in HubSpot.",
+          },
+          {
+            label: "SOFORT-ROUTING",
+            body: "SQL-reife Leads pingen den Vertrieb auf Slack an oder buchen direkt einen Termin im Kalender eines AE. Kein 'Wir melden uns'-Verzug.",
+          },
+          {
+            label: "VOICE ODER CHAT",
+            body: "Gleiche Qualifizierungslogik funktioniert per Telefon (Retell), Website-Chat oder WhatsApp. Sie wählen die Kanäle.",
+          },
+          {
+            label: "GESPRÄCHSBIBLIOTHEK",
+            body: "Vollständiges Transkript + Zusammenfassung + Score für jeden Lead. Der Vertrieb öffnet HubSpot und kennt den Kontext bereits.",
+          },
+          {
+            label: "A/B-FRAGEN-TUNING",
+            body: "Monatliche Prüfung der Qualifizierungs-Abbrüche. Fragen verfeinern, Abschlussrate verbessern, Wirkung messen.",
+          },
+        ],
+      },
+      howItWorks: {
+        label: "SO FUNKTIONIERT'S",
+        heading: "Vom anonymen Besucher zum vertriebsreifen Lead — ohne Menschen.",
+        steps: [
+          {
+            step: "01",
+            title: "ICP + Scoring-Modell definieren",
+            body: "Wir erarbeiten Ihr ideales Kundenprofil und übersetzen es in eine gewichtete Scoring-Rubrik (firmografisch + Intent).",
+          },
+          {
+            step: "02",
+            title: "Gespräch entwerfen",
+            body: "Qualifizierungsfragen auf Score-Dimensionen abgebildet. Verzweigungslogik. Disqualifikation elegant abgewickelt.",
+          },
+          {
+            step: "03",
+            title: "CRM + Vertriebs-Routing verdrahten",
+            body: "HubSpot/Pipedrive-Pipelines, Slack-Kanäle, AE-Kalender-Routing. SQL-Übergabe per Buchungslink oder direktem Ping.",
+          },
+          {
+            step: "04",
+            title: "Über alle Kanäle launchen",
+            body: "Chat-Widget + Telefonleitung live. Monatlicher Scoring-Review mit dem Vertrieb zur Kalibrierung der MQL-zu-SQL-Conversion.",
+          },
+        ],
+      },
+      stack: {
+        label: "GEBAUT AUF",
+        heading: "Keine Magie. Echte Technik.",
+        items: [
+          { name: "Retell AI", role: "Voice-Qualifizierung" },
+          { name: "HubSpot / Pipedrive", role: "CRM + Scoring-Ziel" },
+          { name: "n8n", role: "Routing + Slack-/Cal.com-Übergabe" },
+          { name: "Supabase", role: "Gesprächs-Log + Analyse" },
+          { name: "Clearbit / Apollo (optional)", role: "Firmografische Anreicherung" },
+        ],
+      },
+      pricing: {
+        label: "PREISE",
+        heading: "Einmalige Einrichtung. Wiederkehrende Steigerung.",
+        tiers: [
+          {
+            name: "Nur Chat",
+            price: "€2.200",
+            billing: "Einrichtung + €199/Monat",
+            features: [
+              "Website-Chat-Widget",
+              "ICP-Scoring-Modell",
+              "HubSpot- oder Pipedrive-Sync",
+              "Slack-Routing",
+              "Monatlicher Review",
+            ],
+            cta: "Demo buchen",
+          },
+          {
+            name: "Voice + Chat",
+            price: "€3.800",
+            billing: "Einrichtung + €349/Monat",
+            features: [
+              "Chat + eingehendes Telefon",
+              "Retell-Voice-Qualifizierung",
+              "Kalender-Routing an AEs",
+              "Firmografische Anreicherung",
+              "A/B-Testing von Fragen",
+              "Wöchentlicher Vertriebs-Sync",
+            ],
+            cta: "Demo buchen",
+            featured: "true",
+          },
+          {
+            name: "Enterprise",
+            price: "Individuell",
+            billing: "Preise pro Team",
+            features: [
+              "Multi-Team-Routing",
+              "Individuelle CRM-Integrationen",
+              "Account-basiertes Scoring",
+              "Dedizierte Sales Ops",
+              "SLA + Reporting",
+            ],
+            cta: "Sprechen Sie uns an",
+          },
+        ],
+      },
+      faq: {
+        label: "FAQ",
+        heading: "Ehrliche Antworten.",
+        items: [
+          {
+            q: "Bleiben Leads bei einer KI wirklich dran?",
+            a: "Kurze Antwort: ja, wenn das Gespräch nützlich wirkt. Wir weisen die KI vorab offen, halten die Fragen auf 4–6 begrenzt und bieten jederzeit eine menschliche Übergabe. Abschlussraten liegen bei 60–80 % gegenüber 15–25 % bei statischen Formularen.",
+          },
+          {
+            q: "Welche MQL-zu-SQL-Steigerung ist realistisch?",
+            a: "30–50 % in den meisten Einsätzen — getrieben durch bessere Scoring-Genauigkeit + schnelleres Routing (SQLs landen in Minuten, nicht Stunden beim Vertrieb). Konkrete Zahlen hängen von Ihrem Ausgangswert ab.",
+          },
+          {
+            q: "Kann er Leads disqualifizieren?",
+            a: "Ja — und zwar elegant. Außer-ICP-Leads landen in einer Self-Service-Stufe oder werden höflich verabschiedet. Ihre AEs verlieren keine Zeit mehr mit Nicht-Passern.",
+          },
+          {
+            q: "Wie fügt er sich in unser bestehendes SDR-Team?",
+            a: "Er ersetzt entweder die Erstqualifizierung (das SDR-Team konzentriert sich auf warmen Outbound) oder ergänzt sie (SDRs bekommen nur SQL-reife Übergaben). Wir bilden Ihre aktuelle Motion ab.",
+          },
+        ],
+      },
+      cta: {
+        heading: "Ihre AEs sollten mit SQLs sprechen. Nicht Tire-Kicker qualifizieren.",
+        paragraph:
+          "Buchen Sie eine Demo. Wir gehen Ihren Funnel durch und zeigen, wo die Qualifizierung heute Leads verliert.",
+        primaryCta: "Demo buchen",
+        secondaryCta: "Sprechen Sie uns an",
       },
     },
 

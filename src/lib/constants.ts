@@ -37,6 +37,9 @@ export const FOOTER_LINKS = {
   ],
   products: [
     { label: "Digital Business Card", href: "/products/digital-card" },
+    { label: "Voice AI Agent", href: "/products/voice-agent" },
+    { label: "Website Chatbot", href: "/products/chatbot" },
+    { label: "Booking Agent", href: "/products/booking-agent" },
     { label: "Digital Reception", href: "/products/digital-reception" },
     { label: "Kutasia", href: "/products/kutasia" },
     { label: "All Products", href: "/products" },

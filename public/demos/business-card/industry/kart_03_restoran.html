@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yesil Bahce Restoran - Chef Baris Yildiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #faf6f0;
+    --white: #ffffff;
+    --olive: #3d5a3e;
+    --olive-light: #4a6e4b;
+    --terracotta: #c4654a;
+    --terracotta-light: #d4785e;
+    --text-dark: #2c2c2c;
+    --text-mid: #5a5a5a;
+    --text-light: #8a8a8a;
+    --border: #e8e0d6;
+    --shadow: 0 2px 16px rgba(60, 50, 40, 0.07);
+    --shadow-hover: 0 4px 24px rgba(60, 50, 40, 0.12);
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text-dark);
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .card-wrapper {
+    width: 100%;
+    max-width: 460px;
+    background: var(--bg);
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* 1. Hero Banner */
+  .hero-banner {
+    position: relative;
+    width: 100%;
+    height: 220px;
+    overflow: hidden;
+  }
+  .hero-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(30,20,10,0.75) 0%, rgba(30,20,10,0.15) 50%, rgba(30,20,10,0.05) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 24px 20px;
+  }
+  .hero-overlay h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    font-size: 32px;
+    color: #fff;
+    line-height: 1.1;
+    letter-spacing: 0.5px;
+  }
+  .hero-overlay .tagline {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 15px;
+    color: rgba(255,255,255,0.85);
+    margin-top: 4px;
+    letter-spacing: 0.3px;
+  }
+
+  /* 2. Chef Strip */
+  .chef-strip {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+  }
+  .chef-strip img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--olive);
+    flex-shrink: 0;
+  }
+  .chef-info h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-dark);
+    line-height: 1.2;
+  }
+  .chef-info p {
+    font-size: 13px;
+    color: var(--text-mid);
+    font-weight: 400;
+    margin-top: 1px;
+  }
+
+  /* 3. Quick Actions */
+  .quick-actions {
+    display: flex;
+    gap: 8px;
+    padding: 16px 20px;
+    justify-content: center;
+  }
+  .pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    border-radius: 50px;
+    border: none;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+  }
+  .pill-btn.primary {
+    background: var(--olive);
+    color: #fff;
+  }
+  .pill-btn.primary:hover { background: var(--olive-light); }
+  .pill-btn.secondary {
+    background: var(--white);
+    color: var(--olive);
+    border: 1.5px solid var(--olive);
+  }
+  .pill-btn.secondary:hover { background: var(--olive); color: #fff; }
+  .pill-btn.accent {
+    background: var(--terracotta);
+    color: #fff;
+  }
+  .pill-btn.accent:hover { background: var(--terracotta-light); }
+
+  /* 4. Food Photo Grid */
+  .food-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 0 20px 20px;
+  }
+  .food-card {
+    position: relative;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    aspect-ratio: 1;
+    cursor: default;
+  }
+  .food-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+  }
+  .food-card:hover img { transform: scale(1.05); }
+  .food-card .food-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 24px 10px 10px;
+    background: linear-gradient(to top, rgba(0,0,0,0.65), transparent);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 13px;
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+  }
+
+  /* 5. Menu Section */
+  .section-pad {
+    padding: 0 20px;
+    margin-bottom: 24px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--olive);
+    text-align: center;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .section-title::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 2px;
+    background: var(--terracotta);
+    margin: 8px auto 0;
+    border-radius: 2px;
+  }
+
+  .accordion-item {
+    background: var(--white);
+    border-radius: var(--radius);
+    margin-bottom: 10px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .accordion-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 18px;
+    cursor: pointer;
+    user-select: none;
+    border: none;
+    background: none;
+    width: 100%;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text-dark);
+    transition: background 0.2s ease;
+  }
+  .accordion-header:hover { background: rgba(61,90,62,0.04); }
+  .accordion-header .arrow {
+    font-size: 13px;
+    color: var(--terracotta);
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    display: inline-block;
+    flex-shrink: 0;
+    margin-left: 12px;
+  }
+  .accordion-item.open .accordion-header .arrow {
+    transform: rotate(180deg);
+  }
+  .accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .accordion-item.open .accordion-body {
+    max-height: 600px;
+  }
+  .menu-list {
+    padding: 0 18px 16px;
+  }
+  .menu-item {
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--border);
+  }
+  .menu-item:last-child { border-bottom: none; }
+  .menu-item-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .menu-item-name {
+    font-weight: 600;
+    font-size: 14.5px;
+    color: var(--text-dark);
+    flex-shrink: 0;
+  }
+  .menu-item-dots {
+    flex: 1;
+    border-bottom: 1px dotted var(--text-light);
+    min-width: 20px;
+    margin: 0 4px;
+    position: relative;
+    top: -4px;
+  }
+  .menu-item-price {
+    font-weight: 600;
+    font-size: 14.5px;
+    color: var(--terracotta);
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+  .menu-item-desc {
+    font-size: 12.5px;
+    color: var(--text-light);
+    margin-top: 2px;
+    line-height: 1.4;
+  }
+
+  /* 6. About */
+  .about-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin: 0 20px 24px;
+    box-shadow: var(--shadow);
+  }
+  .about-card p {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-mid);
+    text-align: center;
+  }
+
+  /* 7. Working Hours Table */
+  .hours-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    margin: 0 20px 24px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+  }
+  .hours-card .section-title {
+    padding-top: 20px;
+  }
+  .hours-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .hours-table tr:nth-child(even) {
+    background: rgba(61,90,62,0.04);
+  }
+  .hours-table td {
+    padding: 12px 18px;
+    font-size: 14px;
+  }
+  .hours-table td:first-child {
+    font-weight: 500;
+    color: var(--text-dark);
+  }
+  .hours-table td:last-child {
+    text-align: right;
+    color: var(--olive);
+    font-weight: 600;
+  }
+
+  /* 8. Instagram CTA */
+  .insta-cta {
+    text-align: center;
+    padding: 20px;
+    margin: 0 20px 24px;
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  .insta-cta p {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--text-mid);
+    margin-bottom: 12px;
+  }
+  .insta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .insta-btn:hover { opacity: 0.9; transform: scale(1.02); }
+  .insta-btn svg { width: 18px; height: 18px; }
+
+  /* 9. QR Code */
+  .qr-section {
+    text-align: center;
+    padding: 24px 20px;
+    margin: 0 20px 24px;
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  .qr-section .qr-label {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 16px;
+    color: var(--olive);
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  #qrcode {
+    display: inline-block;
+    padding: 12px;
+    background: #fff;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+  }
+  #qrcode img, #qrcode canvas {
+    display: block;
+    border-radius: 4px;
+  }
+
+  /* 10. vCard + Footer */
+  .vcard-section {
+    text-align: center;
+    padding: 0 20px 16px;
+  }
+  .vcard-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px 20px;
+    border-radius: var(--radius);
+    background: var(--olive);
+    color: #fff;
+    border: none;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.2s ease;
+  }
+  .vcard-btn:hover { background: var(--olive-light); transform: translateY(-1px); }
+  .vcard-btn svg { width: 18px; height: 18px; }
+
+  .footer {
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid var(--border);
+    margin: 8px 20px 0;
+  }
+  .footer p {
+    font-size: 12px;
+    color: var(--text-light);
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { transition: none; opacity: 1; transform: none; }
+    .accordion-body { transition: none; }
+    .accordion-header .arrow { transition: none; }
+    .food-card img { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card-wrapper">
+
+  <!-- 1. Hero Banner -->
+  <div class="hero-banner">
+    <img src="https://picsum.photos/seed/gourmet-food/460/220" alt="Yesil Bahce Restoran yemek goruntusu" loading="eager">
+    <div class="hero-overlay">
+      <h1>Yesil Bahce</h1>
+      <span class="tagline">Farm-to-Table Mutfak</span>
+    </div>
+  </div>
+
+  <!-- 2. Chef Strip -->
+  <div class="chef-strip reveal">
+    <img src="https://i.pravatar.cc/200?img=7" alt="Chef Baris Yildiz profil fotografi">
+    <div class="chef-info">
+      <h2>Chef Baris Yildiz</h2>
+      <p>Executive Chef &amp; Kurucu</p>
+    </div>
+  </div>
+
+  <!-- 3. Quick Actions -->
+  <div class="quick-actions reveal">
+    <a href="tel:+905388889900" class="pill-btn primary" aria-label="Rezervasyon icin ara">
+      <span>Rezervasyon</span>
+    </a>
+    <a href="https://wa.me/905388889900?text=Merhaba%2C%20rezervasyon%20yapmak%20istiyorum." class="pill-btn accent" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp ile iletisim">
+      <span>WhatsApp</span>
+    </a>
+    <a href="https://maps.google.com/?q=Yesil+Bahce+Restoran" class="pill-btn secondary" target="_blank" rel="noopener noreferrer" aria-label="Konumu goruntle">
+      <span>Konum</span>
+    </a>
+  </div>
+
+  <!-- 4. Food Photo Grid -->
+  <div class="food-grid reveal">
+    <div class="food-card">
+      <img src="https://picsum.photos/seed/pasta-dish/400/400" alt="Mantar Risotto" loading="lazy">
+      <div class="food-label">Mantar Risotto</div>
+    </div>
+    <div class="food-card">
+      <img src="https://picsum.photos/seed/grilled-lamb/400/400" alt="Kuzu Incik" loading="lazy">
+      <div class="food-label">Kuzu Incik</div>
+    </div>
+    <div class="food-card">
+      <img src="https://picsum.photos/seed/fresh-salad/400/400" alt="Mevsim Salata" loading="lazy">
+      <div class="food-label">Mevsim Salata</div>
+    </div>
+    <div class="food-card">
+      <img src="https://picsum.photos/seed/chocolate-dessert/400/400" alt="Cikolatali Sufle" loading="lazy">
+      <div class="food-label">Cikolatali Sufle</div>
+    </div>
+  </div>
+
+  <!-- 5. Menu Section with Accordion -->
+  <div class="section-pad reveal">
+    <h3 class="section-title">Menumuz</h3>
+
+    <!-- Baslangiclar -->
+    <div class="accordion-item">
+      <button class="accordion-header" aria-expanded="false" aria-controls="menu-starter">
+        <span>Baslangiclar</span>
+        <span class="arrow" aria-hidden="true">&#9660;</span>
+      </button>
+      <div class="accordion-body" id="menu-starter" role="region">
+        <div class="menu-list">
+          <div class="menu-item">
+            <div class="menu-item-top">
+              <span class="menu-item-name">Mevsim Salata</span>
+              <span class="menu-item-dots"></span>
+              <span class="menu-item-price">145 TL</span>
+            </div>
+            <div class="menu-item-desc">Taze yesillikler, nar, ceviz</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top">
+              <span class="menu-item-name">Humus Tabagi</span>
+              <span class="menu-item-dots"></span>
+              <span class="menu-item-price">120 TL</span>
+            </div>
+            <div class="menu-item-desc">Nohut ezmesi, zeytinyagi, pita</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top">
+              <span class="menu-item-name">Keci Peyniri Bruschetta</span>
+              <span class="menu-item-dots"></span>
+              <span class="menu-item-price">165 TL</span>
+            </div>
+            <div class="menu-item-desc">Bal, ceviz, taze feslegen</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top">
+              <span class="menu-item-name">Corba (Gunun)</span>
+              <span class="menu-item-dots"></span>
+              <span class="menu-item-price">95 TL</span>
+            </div>
+            <div class="menu-item-desc">Mevsime gore degisir</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Ana Yemekler -->
+    <div class="accordion-item">
+      <button class="accordion-header" aria-expanded="false" aria-controls="menu-main">
+        <span>Ana Yemekler</span>
+        <span class="arrow" aria-hidden="true">&#9660;</span>
+      </button>
+      <div class="accordion-body" id="menu-main" role="region">
+        <div class="menu-list">
+          <div class="menu-item">
+            <div class="menu-item-top">
+              <span class="menu-item-name">Kuzu Incik</span>
+              <span class="menu-item-dots"></span>
+              <span class="menu-item-price">385 TL</span>
+            </div>
+            <div class="menu-item-desc">6 saat pisirilmis, sebze puresi</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top">
+              <span class="menu-item-name">Levrek Fileto</span>
+              <span class="menu-item-dots"></span>
+              <span class="menu-item-price">345 TL</span>
+            </div>
+            <div class="menu-item-desc">Enginar, kapari, limon sos</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top">
+              <span class="menu-item-name">Mantar Risotto</span>
+              <span class="menu-item-dots"></span>
+              <span class="menu-item-price">285 TL</span>
+            </div>
+            <div class="menu-item-desc">Porcini, parmesan, truf yagi</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top">
+              <span class="menu-item-name">Bonfile</span>
+              <span class="menu-item-dots"></span>
+              <span class="menu-item-price">425 TL</span>
+            </div>
+            <div class="menu-item-desc">Izgara, mevsim sebzeleri</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tatlilar -->
+    <div class="accordion-item">
+      <button class="accordion-header" aria-expanded="false" aria-controls="menu-dessert">
+        <span>Tatlilar</span>
+        <span class="arrow" aria-hidden="true">&#9660;</span>
+      </button>
+      <div class="accordion-body" id="menu-dessert" role="region">
+        <div class="menu-list">
+          <div class="menu-item">
+            <div class="menu-item-top">
+              <span class="menu-item-name">Cikolatali Sufle</span>
+              <span class="menu-item-dots"></span>
+              <span class="menu-item-price">185 TL</span>
+            </div>
+            <div class="menu-item-desc">Vanilya dondurma</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top">
+              <span class="menu-item-name">Kunefe</span>
+              <span class="menu-item-dots"></span>
+              <span class="menu-item-price">165 TL</span>
+            </div>
+            <div class="menu-item-desc">Antep fistigi, kaymak</div>
+          </div>
+          <div class="menu-item">
+            <div class="menu-item-top">
+              <span class="menu-item-name">Mevsim Meyve Tabagi</span>
+              <span class="menu-item-dots"></span>
+              <span class="menu-item-price">120 TL</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. About -->
+  <div class="about-card reveal">
+    <p>Ciftlikten sofraya felsefesiyle, yerel ve organik malzemeler kullanarak geleneksel Turk mutfagini modern tekniklerle yeniden yorumluyoruz. Michelin rehberinde yer alan restoranumizda doganin sundugu en taze lezzetleri kesfedin.</p>
+  </div>
+
+  <!-- 7. Working Hours Table -->
+  <div class="hours-card reveal">
+    <h3 class="section-title">Calisma Saatleri</h3>
+    <table class="hours-table">
+      <tr>
+        <td>Pazartesi - Cuma</td>
+        <td>12:00 - 23:00</td>
+      </tr>
+      <tr>
+        <td>Cumartesi</td>
+        <td>11:00 - 00:00</td>
+      </tr>
+      <tr>
+        <td>Pazar</td>
+        <td>11:00 - 22:00</td>
+      </tr>
+    </table>
+  </div>
+
+  <!-- 8. Instagram CTA -->
+  <div class="insta-cta reveal">
+    <p>Lezzetlerimizi takip edin</p>
+    <a href="https://instagram.com/yesilbahce_restoran" class="insta-btn" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      @yesilbahce_restoran
+    </a>
+  </div>
+
+  <!-- 9. QR Code -->
+  <div class="qr-section reveal">
+    <div class="qr-label">Menuyu Paylas</div>
+    <div id="qrcode"></div>
+  </div>
+
+  <!-- 10. vCard + Footer -->
+  <div class="vcard-section reveal">
+    <button class="vcard-btn" onclick="downloadVCard()" aria-label="Rehbere Kaydet">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Rehbere Kaydet
+    </button>
+  </div>
+
+  <footer class="footer">
+    <p>Yesil Bahce Restoran &copy; 2026</p>
+  </footer>
+
+</div>
+
+<script>
+  // Scroll Reveal with IntersectionObserver
+  (function() {
+    var revealElements = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      revealElements.forEach(function(el) { observer.observe(el); });
+    } else {
+      revealElements.forEach(function(el) { el.classList.add('visible'); });
+    }
+  })();
+
+  // Accordion
+  (function() {
+    var headers = document.querySelectorAll('.accordion-header');
+    headers.forEach(function(header) {
+      header.addEventListener('click', function() {
+        var item = this.closest('.accordion-item');
+        var isOpen = item.classList.contains('open');
+        // Close all
+        document.querySelectorAll('.accordion-item').forEach(function(ai) {
+          ai.classList.remove('open');
+          ai.querySelector('.accordion-header').setAttribute('aria-expanded', 'false');
+        });
+        // Toggle current
+        if (!isOpen) {
+          item.classList.add('open');
+          this.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+  })();
+
+  // QR Code
+  (function() {
+    var qrContainer = document.getElementById('qrcode');
+    if (qrContainer && typeof QRCode !== 'undefined') {
+      new QRCode(qrContainer, {
+        text: window.location.href,
+        width: 140,
+        height: 140,
+        colorDark: '#3d5a3e',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    }
+  })();
+
+  // vCard Download
+  function downloadVCard() {
+    var vcard = [
+      'BEGIN:VCARD',
+      'VERSION:3.0',
+      'N:Yildiz;Baris;;;Chef',
+      'FN:Chef Baris Yildiz',
+      'ORG:Yesil Bahce Restoran',
+      'TITLE:Executive Chef & Kurucu',
+      'TEL;TYPE=CELL:+90 538 888 99 00',
+      'EMAIL:info@yesilbahce.com.tr',
+      'URL:https://instagram.com/yesilbahce_restoran',
+      'NOTE:Farm-to-Table Mutfak - Yesil Bahce Restoran',
+      'END:VCARD'
+    ].join('\r\n');
+
+    var blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'Chef_Baris_Yildiz.vcf';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+</script>
+
+</body>
+</html>

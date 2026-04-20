@@ -1,0 +1,978 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Can Yılmaz — Personal Trainer & Fitness Coach | FitZone</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #111111;
+    --panel: #1a1a1a;
+    --panel-alt: #222222;
+    --lime: #a3e635;
+    --orange: #f97316;
+    --white: #ffffff;
+    --gray-100: #f5f5f5;
+    --gray-300: #d4d4d4;
+    --gray-400: #a3a3a3;
+    --gray-500: #737373;
+    --gray-600: #525252;
+    --gray-700: #404040;
+    --gray-800: #262626;
+    --border: #2a2a2a;
+    --shadow: 0 4px 20px rgba(0,0,0,0.4);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #000;
+    color: var(--gray-300);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .card-container {
+    max-width: 460px;
+    margin: 0 auto;
+    background: var(--bg);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  h2, h3, h4 {
+    font-family: 'Outfit', sans-serif;
+  }
+
+  /* ===== 1. BOLD HERO ===== */
+  .hero {
+    position: relative;
+    height: 380px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 32px 24px;
+  }
+  .hero-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: brightness(0.35) contrast(1.1);
+    z-index: 0;
+  }
+  .hero-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(to top, rgba(17,17,17,0.95) 0%, rgba(17,17,17,0.3) 50%, transparent 100%);
+    z-index: 1;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+  }
+  .hero-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 42px;
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+  }
+  .hero-name span {
+    display: block;
+    color: var(--lime);
+  }
+  .hero-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-400);
+    margin-top: 8px;
+    letter-spacing: 0.5px;
+  }
+
+  /* ===== 2. STATS STRIP ===== */
+  .stats-strip {
+    display: flex;
+    gap: 10px;
+    padding: 20px 24px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .stats-strip::-webkit-scrollbar { display: none; }
+  .stat-badge {
+    flex-shrink: 0;
+    padding: 8px 16px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--gray-300);
+    white-space: nowrap;
+  }
+  .stat-badge strong {
+    color: var(--lime);
+    font-weight: 700;
+  }
+
+  /* ===== 3. QUICK CONTACT CTAs ===== */
+  .cta-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 0 24px 24px;
+  }
+  .cta-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+    border: none;
+    cursor: pointer;
+  }
+  .cta-btn:hover { transform: translateY(-2px); }
+  .cta-btn:active { transform: translateY(0); }
+  .cta-primary {
+    background: var(--lime);
+    color: #111;
+  }
+  .cta-primary:hover { box-shadow: 0 4px 20px rgba(163,230,53,0.3); }
+  .cta-whatsapp {
+    background: #25D366;
+    color: #fff;
+  }
+  .cta-whatsapp:hover { box-shadow: 0 4px 20px rgba(37,211,102,0.3); }
+  .cta-btn svg { width: 18px; height: 18px; }
+
+  /* ===== SECTION SHARED ===== */
+  .section-header {
+    padding: 32px 24px 20px;
+  }
+  .section-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: var(--gray-600);
+    margin-bottom: 4px;
+  }
+  .section-heading {
+    font-family: 'Outfit', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--white);
+  }
+
+  /* ===== 4. TRAINING PROGRAMS ===== */
+  .programs {
+    padding: 0 24px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .program-card {
+    background: var(--panel);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: border-color 0.3s ease;
+  }
+  .program-card:hover { border-color: var(--gray-700); }
+  .program-stripe {
+    height: 4px;
+    width: 100%;
+  }
+  .program-stripe.fire { background: linear-gradient(90deg, #ef4444, var(--orange)); }
+  .program-stripe.muscle { background: linear-gradient(90deg, var(--lime), #22c55e); }
+  .program-stripe.functional { background: linear-gradient(90deg, #3b82f6, #8b5cf6); }
+  .program-body {
+    padding: 20px;
+  }
+  .program-icon-name {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .program-emoji {
+    font-size: 24px;
+    line-height: 1;
+  }
+  .program-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--white);
+  }
+  .program-features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+  }
+  .program-features li {
+    font-size: 13px;
+    color: var(--gray-400);
+    padding-left: 20px;
+    position: relative;
+  }
+  .program-features li::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 7px;
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: var(--gray-700);
+  }
+  .program-card:nth-child(1) .program-features li::before { background: var(--orange); }
+  .program-card:nth-child(2) .program-features li::before { background: var(--lime); }
+  .program-card:nth-child(3) .program-features li::before { background: #8b5cf6; }
+  .program-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .program-price {
+    font-family: 'Outfit', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--white);
+  }
+  .program-price small {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gray-500);
+  }
+  .program-btn {
+    padding: 10px 24px;
+    border-radius: 50px;
+    border: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    color: #111;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+  }
+  .program-btn:hover { transform: translateY(-1px); }
+  .program-card:nth-child(1) .program-btn { background: var(--orange); box-shadow: 0 2px 12px rgba(249,115,22,0.3); }
+  .program-card:nth-child(2) .program-btn { background: var(--lime); box-shadow: 0 2px 12px rgba(163,230,53,0.3); }
+  .program-card:nth-child(3) .program-btn { background: #8b5cf6; color: #fff; box-shadow: 0 2px 12px rgba(139,92,246,0.3); }
+
+  /* ===== 5. TRANSFORMATION GALLERY ===== */
+  .transformations {
+    padding: 0 24px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .transform-card {
+    background: var(--panel);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .transform-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    position: relative;
+  }
+  .transform-img-wrap {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+  }
+  .transform-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .transform-label {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    color: #fff;
+  }
+  .transform-label.before { background: rgba(239,68,68,0.85); }
+  .transform-label.after { background: rgba(34,197,94,0.85); }
+  .transform-arrow {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    background: var(--bg);
+    border: 2px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+  .transform-arrow svg {
+    width: 14px; height: 14px;
+    fill: none;
+    stroke: var(--lime);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .transform-info {
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .transform-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--white);
+  }
+  .transform-result {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--lime);
+    background: rgba(163,230,53,0.1);
+    padding: 4px 12px;
+    border-radius: 50px;
+  }
+
+  /* ===== 6. WEEKLY SCHEDULE ===== */
+  .schedule-table-wrap {
+    padding: 0 24px 8px;
+    overflow-x: auto;
+  }
+  .schedule-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 4px;
+    font-size: 13px;
+  }
+  .schedule-table thead th {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--gray-500);
+    text-align: left;
+    padding: 8px 12px;
+  }
+  .schedule-table tbody tr {
+    background: var(--panel);
+    transition: background 0.2s ease;
+  }
+  .schedule-table tbody tr:hover { background: var(--panel-alt); }
+  .schedule-table tbody td {
+    padding: 12px;
+    color: var(--gray-300);
+    font-weight: 500;
+  }
+  .schedule-table tbody td:first-child {
+    border-radius: 10px 0 0 10px;
+    font-weight: 600;
+    color: var(--white);
+  }
+  .schedule-table tbody td:last-child {
+    border-radius: 0 10px 10px 0;
+  }
+  .schedule-table tbody tr.today-row {
+    background: rgba(163,230,53,0.08);
+    border: 1px solid rgba(163,230,53,0.15);
+  }
+  .schedule-table tbody tr.today-row td:first-child {
+    color: var(--lime);
+  }
+  .class-tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    background: var(--gray-800);
+    color: var(--gray-300);
+  }
+  .class-tag.hiit { background: rgba(249,115,22,0.15); color: var(--orange); }
+  .class-tag.weight { background: rgba(163,230,53,0.12); color: var(--lime); }
+  .class-tag.func { background: rgba(139,92,246,0.15); color: #a78bfa; }
+  .class-tag.kilo { background: rgba(239,68,68,0.12); color: #f87171; }
+  .class-tag.outdoor { background: rgba(56,189,248,0.12); color: #38bdf8; }
+
+  /* ===== 7. VIDEO ===== */
+  .video-section {
+    padding: 0 24px 8px;
+  }
+  .video-wrapper {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #000;
+    cursor: pointer;
+    aspect-ratio: 16/9;
+    border: 1px solid var(--border);
+  }
+  .video-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+  .video-wrapper:hover .video-thumb { opacity: 0.5; }
+  .video-play-btn {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px; height: 60px;
+    background: var(--lime);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 24px rgba(163,230,53,0.3);
+    transition: transform 0.3s ease;
+  }
+  .video-wrapper:hover .video-play-btn { transform: translate(-50%, -50%) scale(1.1); }
+  .video-play-btn::after {
+    content: '';
+    width: 0; height: 0;
+    border-top: 11px solid transparent;
+    border-bottom: 11px solid transparent;
+    border-left: 18px solid #111;
+    margin-left: 4px;
+  }
+  .video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: 0;
+  }
+
+  /* ===== 8. ABOUT ===== */
+  .about-section {
+    padding: 0 24px 8px;
+  }
+  .about-text {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--gray-400);
+  }
+
+  /* ===== 9. SOCIAL LINKS ===== */
+  .social-section {
+    padding: 24px;
+  }
+  .social-links {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+  }
+  .social-link {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  }
+  .social-link:hover {
+    background: var(--panel-alt);
+    border-color: var(--gray-700);
+    transform: translateY(-2px);
+  }
+  .social-link svg {
+    width: 22px; height: 22px;
+    fill: var(--gray-400);
+    transition: fill 0.2s ease;
+  }
+  .social-link:hover svg { fill: var(--white); }
+  .social-link.instagram:hover { border-color: #e1306c; }
+  .social-link.instagram:hover svg { fill: #e1306c; }
+  .social-link.youtube:hover { border-color: #ff0000; }
+  .social-link.youtube:hover svg { fill: #ff0000; }
+  .social-link.whatsapp:hover { border-color: #25D366; }
+  .social-link.whatsapp:hover svg { fill: #25D366; }
+
+  /* ===== 10. QR CODE ===== */
+  .qr-section {
+    padding: 32px 24px;
+    text-align: center;
+  }
+  .qr-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: var(--gray-600);
+    margin-bottom: 16px;
+  }
+  #qrcode {
+    display: inline-block;
+    padding: 14px;
+    background: var(--white);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+  }
+  #qrcode img { border-radius: 4px; }
+
+  /* ===== 11. FOOTER ===== */
+  .footer {
+    padding: 24px 24px 44px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+  .vcard-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 32px;
+    background: var(--lime);
+    color: #111;
+    border: none;
+    border-radius: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+    margin-bottom: 16px;
+  }
+  .vcard-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(163,230,53,0.25); }
+  .vcard-btn:active { transform: translateY(0); }
+  .vcard-btn svg {
+    width: 18px; height: 18px;
+    fill: none;
+    stroke: #111;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .footer-copy {
+    font-size: 11px;
+    color: var(--gray-600);
+    margin-top: 8px;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { transition: none; opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card-container">
+
+  <!-- 1. BOLD HERO -->
+  <section class="hero">
+    <img src="https://i.pravatar.cc/200?img=53" alt="" class="hero-bg" width="460" height="380">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1 class="hero-name">CAN<span>YILMAZ</span></h1>
+      <p class="hero-title">Personal Trainer & Fitness Coach</p>
+    </div>
+  </section>
+
+  <!-- 2. STATS STRIP -->
+  <div class="stats-strip reveal">
+    <div class="stat-badge"><strong>500+</strong>&nbsp; Öğrenci</div>
+    <div class="stat-badge"><strong>8</strong>&nbsp; Yıl Deneyim</div>
+    <div class="stat-badge"><strong>NASM</strong>&nbsp; Certified</div>
+  </div>
+
+  <!-- 3. QUICK CONTACT -->
+  <div class="cta-row reveal">
+    <a href="tel:+905361112233" class="cta-btn cta-primary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+      Ücretsiz Deneme
+    </a>
+    <a href="https://wa.me/905361112233?text=Merhaba%2C%20ki%C5%9Fisel%20antrenman%20program%C4%B1%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer" class="cta-btn cta-whatsapp">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+
+  <!-- 4. TRAINING PROGRAMS -->
+  <div class="section-header reveal">
+    <div class="section-label">Eğitim</div>
+    <h2 class="section-heading">Programlar</h2>
+  </div>
+
+  <div class="programs">
+    <div class="program-card reveal">
+      <div class="program-stripe fire"></div>
+      <div class="program-body">
+        <div class="program-icon-name">
+          <span class="program-emoji" aria-hidden="true">&#x1F525;</span>
+          <h3 class="program-name">Kilo Verme</h3>
+        </div>
+        <ul class="program-features">
+          <li>12 hafta program</li>
+          <li>Kişiye özel diyet</li>
+          <li>Haftalık takip</li>
+        </ul>
+        <div class="program-bottom">
+          <div class="program-price">&#8378;3.500 <small>/ay</small></div>
+          <button class="program-btn" onclick="window.open('https://wa.me/905361112233?text=Merhaba%2C%20Kilo%20Verme%20program%C4%B1%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum.','_blank')">Başla</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="program-card reveal">
+      <div class="program-stripe muscle"></div>
+      <div class="program-body">
+        <div class="program-icon-name">
+          <span class="program-emoji" aria-hidden="true">&#x1F4AA;</span>
+          <h3 class="program-name">Kas Yapma</h3>
+        </div>
+        <ul class="program-features">
+          <li>Hipertrofi antrenman</li>
+          <li>Supplement rehberi</li>
+          <li>Ölçüm takibi</li>
+        </ul>
+        <div class="program-bottom">
+          <div class="program-price">&#8378;4.000 <small>/ay</small></div>
+          <button class="program-btn" onclick="window.open('https://wa.me/905361112233?text=Merhaba%2C%20Kas%20Yapma%20program%C4%B1%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum.','_blank')">Başla</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="program-card reveal">
+      <div class="program-stripe functional"></div>
+      <div class="program-body">
+        <div class="program-icon-name">
+          <span class="program-emoji" aria-hidden="true">&#x26A1;</span>
+          <h3 class="program-name">Fonksiyonel</h3>
+        </div>
+        <ul class="program-features">
+          <li>HIIT & CrossFit</li>
+          <li>Esneklik çalışması</li>
+          <li>Grup dersleri</li>
+        </ul>
+        <div class="program-bottom">
+          <div class="program-price">&#8378;2.500 <small>/ay</small></div>
+          <button class="program-btn" onclick="window.open('https://wa.me/905361112233?text=Merhaba%2C%20Fonksiyonel%20program%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum.','_blank')">Başla</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. TRANSFORMATION GALLERY -->
+  <div class="section-header reveal">
+    <div class="section-label">Sonuçlar</div>
+    <h2 class="section-heading">Dönüşüm Hikayeleri</h2>
+  </div>
+
+  <div class="transformations">
+    <div class="transform-card reveal">
+      <div class="transform-images">
+        <div class="transform-img-wrap">
+          <img src="https://picsum.photos/seed/before1/200/260" alt="Önce" width="200" height="260" loading="lazy">
+          <span class="transform-label before">Önce</span>
+        </div>
+        <div class="transform-img-wrap">
+          <img src="https://picsum.photos/seed/after1/200/260" alt="Sonra" width="200" height="260" loading="lazy">
+          <span class="transform-label after">Sonra</span>
+        </div>
+        <div class="transform-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+      <div class="transform-info">
+        <span class="transform-name">Ahmet K.</span>
+        <span class="transform-result">3 ayda -15 kg</span>
+      </div>
+    </div>
+
+    <div class="transform-card reveal">
+      <div class="transform-images">
+        <div class="transform-img-wrap">
+          <img src="https://picsum.photos/seed/before2/200/260" alt="Önce" width="200" height="260" loading="lazy">
+          <span class="transform-label before">Önce</span>
+        </div>
+        <div class="transform-img-wrap">
+          <img src="https://picsum.photos/seed/after2/200/260" alt="Sonra" width="200" height="260" loading="lazy">
+          <span class="transform-label after">Sonra</span>
+        </div>
+        <div class="transform-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+      <div class="transform-info">
+        <span class="transform-name">Elif S.</span>
+        <span class="transform-result">4 ayda -12 kg</span>
+      </div>
+    </div>
+
+    <div class="transform-card reveal">
+      <div class="transform-images">
+        <div class="transform-img-wrap">
+          <img src="https://picsum.photos/seed/before3/200/260" alt="Önce" width="200" height="260" loading="lazy">
+          <span class="transform-label before">Önce</span>
+        </div>
+        <div class="transform-img-wrap">
+          <img src="https://picsum.photos/seed/after3/200/260" alt="Sonra" width="200" height="260" loading="lazy">
+          <span class="transform-label after">Sonra</span>
+        </div>
+        <div class="transform-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+        </div>
+      </div>
+      <div class="transform-info">
+        <span class="transform-name">Burak T.</span>
+        <span class="transform-result">6 ayda +8 kg kas</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. WEEKLY SCHEDULE TABLE -->
+  <div class="section-header reveal">
+    <div class="section-label">Takvim</div>
+    <h2 class="section-heading">Haftalık Ders Programı</h2>
+  </div>
+
+  <div class="schedule-table-wrap reveal">
+    <table class="schedule-table" id="scheduleTable">
+      <thead>
+        <tr>
+          <th>Gün</th>
+          <th>Saat</th>
+          <th>Ders</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr data-day="1">
+          <td>Pazartesi</td>
+          <td>07:00</td>
+          <td><span class="class-tag hiit">Sabah HIIT</span></td>
+        </tr>
+        <tr data-day="1">
+          <td>Pazartesi</td>
+          <td>18:00</td>
+          <td><span class="class-tag weight">Ağırlık</span></td>
+        </tr>
+        <tr data-day="2">
+          <td>Salı</td>
+          <td>07:00</td>
+          <td><span class="class-tag func">Fonksiyonel</span></td>
+        </tr>
+        <tr data-day="2">
+          <td>Salı</td>
+          <td>19:00</td>
+          <td><span class="class-tag kilo">Kilo Verme</span></td>
+        </tr>
+        <tr data-day="3">
+          <td>Çarşamba</td>
+          <td>07:00</td>
+          <td><span class="class-tag hiit">Sabah HIIT</span></td>
+        </tr>
+        <tr data-day="4">
+          <td>Perşembe</td>
+          <td>18:00</td>
+          <td><span class="class-tag weight">Ağırlık</span></td>
+        </tr>
+        <tr data-day="5">
+          <td>Cuma</td>
+          <td>07:00</td>
+          <td><span class="class-tag func">Fonksiyonel</span></td>
+        </tr>
+        <tr data-day="6">
+          <td>Cumartesi</td>
+          <td>10:00</td>
+          <td><span class="class-tag outdoor">Açık Hava</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 7. MOTIVATIONAL VIDEO -->
+  <div class="section-header reveal">
+    <div class="section-label">Motivasyon</div>
+    <h2 class="section-heading">Antrenman Görüntüleri</h2>
+  </div>
+
+  <div class="video-section reveal">
+    <div class="video-wrapper" id="videoWrapper" role="button" tabindex="0" aria-label="Videoyu oynat">
+      <img src="https://img.youtube.com/vi/9bZkp7q19f0/hqdefault.jpg" alt="Video önizleme" class="video-thumb" width="480" height="360" loading="lazy">
+      <div class="video-play-btn" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <!-- 8. ABOUT -->
+  <div class="section-header reveal">
+    <div class="section-label">Hakkımda</div>
+    <h2 class="section-heading">Ben Kimim?</h2>
+  </div>
+  <div class="about-section reveal">
+    <p class="about-text">Profesyonel NASM sertifikalı personal trainer. Hedeflerine ulaşman için bilimsel temelli, kişiye özel antrenman ve beslenme programları oluşturuyorum. İlk ders ücretsiz!</p>
+  </div>
+
+  <!-- 9. SOCIAL LINKS -->
+  <div class="social-section reveal">
+    <div class="social-links">
+      <a href="https://instagram.com/canyilmaz_fit" target="_blank" rel="noopener noreferrer" class="social-link instagram" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      </a>
+      <a href="https://youtube.com/@canyilmaz_fit" target="_blank" rel="noopener noreferrer" class="social-link youtube" aria-label="YouTube">
+        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      </a>
+      <a href="https://wa.me/905361112233?text=Merhaba%2C%20ki%C5%9Fisel%20antrenman%20program%C4%B1%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer" class="social-link whatsapp" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- 10. QR CODE -->
+  <section class="qr-section reveal">
+    <div class="qr-label">Kayıt QR</div>
+    <div id="qrcode"></div>
+  </section>
+
+  <!-- 11. FOOTER -->
+  <footer class="footer">
+    <button class="vcard-btn" onclick="downloadVCard()" aria-label="Rehbere kaydet">
+      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Rehbere Kaydet
+    </button>
+    <p class="footer-copy">FitZone Personal Training &copy; 2024</p>
+  </footer>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // === SCROLL REVEAL ===
+  var revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -20px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(function(el) {
+    revealObserver.observe(el);
+  });
+
+  // === HIGHLIGHT TODAY'S SCHEDULE ROWS ===
+  var today = new Date().getDay(); // 0=Sun, 1=Mon, ...
+  var rows = document.querySelectorAll('#scheduleTable tbody tr');
+  rows.forEach(function(row) {
+    var dayAttr = parseInt(row.getAttribute('data-day'), 10);
+    if (dayAttr === today) {
+      row.classList.add('today-row');
+    }
+  });
+
+  // === VIDEO PLAYER ===
+  var videoWrapper = document.getElementById('videoWrapper');
+  if (videoWrapper) {
+    function playVideo() {
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube.com/embed/9bZkp7q19f0?autoplay=1&rel=0';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.title = 'Antrenman Görüntüleri';
+      videoWrapper.innerHTML = '';
+      videoWrapper.appendChild(iframe);
+      videoWrapper.removeAttribute('role');
+      videoWrapper.removeAttribute('tabindex');
+    }
+    videoWrapper.addEventListener('click', playVideo);
+    videoWrapper.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); playVideo(); }
+    });
+  }
+
+  // === QR CODE ===
+  var qrEl = document.getElementById('qrcode');
+  if (qrEl && typeof QRCode !== 'undefined') {
+    new QRCode(qrEl, {
+      text: window.location.href,
+      width: 140,
+      height: 140,
+      colorDark: '#111111',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  }
+})();
+
+// === VCARD DOWNLOAD ===
+function downloadVCard() {
+  var vcard = [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    'N:Yılmaz;Can;;;',
+    'FN:Can Yılmaz',
+    'ORG:FitZone Personal Training',
+    'TITLE:Personal Trainer & Fitness Coach',
+    'TEL;TYPE=CELL:+905361112233',
+    'EMAIL:can@fitzone.com.tr',
+    'URL:https://instagram.com/canyilmaz_fit',
+    'NOTE:NASM Certified Personal Trainer - FitZone',
+    'END:VCARD'
+  ].join('\r\n');
+
+  var blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'Can_Yilmaz.vcf';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+</script>
+
+</body>
+</html>

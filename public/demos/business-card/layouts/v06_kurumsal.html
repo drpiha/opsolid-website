@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ester Donmez | 4K Hava Cekimi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #060d1a;
+            --panel-dark: #0c1829;
+            --panel-border: #152240;
+            --accent-blue: #0ea5e9;
+            --accent-gold: #38bdf8;
+            --text-white: #e8ecf2;
+            --text-muted: #8896aa;
+            --text-dimmed: #5a6a80;
+            --border-subtle: rgba(14, 165, 233, 0.15);
+            --accent-cyan: #22d3ee;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background-color: #030810;
+            color: var(--text-white);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--bg-dark);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'IBM Plex Serif', serif;
+        }
+
+        /* Scroll reveal animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ==================== HERO BANNER ==================== */
+        .hero-banner {
+            width: 100%;
+            height: 200px;
+            background: url('https://img.youtube.com/vi/jhbyY1JzZoY/maxresdefault.jpg') center center / cover no-repeat;
+            position: relative;
+        }
+
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 80px;
+            background: linear-gradient(to top, var(--bg-dark) 0%, transparent 100%);
+        }
+
+        /* ==================== HEADER BAR ==================== */
+        .header-bar {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 24px;
+            background: var(--panel-dark);
+            border-bottom: 1px solid var(--panel-border);
+        }
+
+        .logo-box {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, #0284c7 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: #ffffff;
+            flex-shrink: 0;
+            letter-spacing: 0.5px;
+        }
+
+        .header-bar .firm-name {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--accent-gold);
+            line-height: 1.3;
+        }
+
+        .header-bar .firm-type {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        /* ==================== PROFILE CARD ==================== */
+        .profile-card {
+            text-align: center;
+            padding: 32px 24px 28px;
+            border-bottom: 1px solid var(--panel-border);
+            margin-top: -40px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .profile-card .avatar-initials {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid var(--panel-border);
+            margin: 0 auto 16px;
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #0c4a6e 0%, #0369a1 50%, #0ea5e9 100%);
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 2px;
+        }
+
+        .profile-card .name {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-white);
+            margin-bottom: 4px;
+        }
+
+        .profile-card .title {
+            font-size: 14px;
+            color: var(--accent-blue);
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .profile-card .company {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* ==================== TAB BAR ==================== */
+        .tab-bar {
+            display: flex;
+            border-bottom: 1px solid var(--panel-border);
+            background: var(--panel-dark);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 14px 8px;
+            background: none;
+            border: none;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            position: relative;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-white);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-blue);
+        }
+
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 60%;
+            height: 2px;
+            background: var(--accent-blue);
+            border-radius: 1px;
+            transition: transform 0.3s ease;
+        }
+
+        .tab-btn.active::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        /* ==================== TAB CONTENT ==================== */
+        .tab-content-wrapper {
+            min-height: 400px;
+        }
+
+        .tab-panel {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        .tab-panel.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .panel-section {
+            padding: 24px;
+        }
+
+        .panel-section + .panel-section {
+            border-top: 1px solid var(--panel-border);
+        }
+
+        .panel-heading {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-white);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .panel-heading .heading-line {
+            flex: 1;
+            height: 1px;
+            background: var(--panel-border);
+        }
+
+        /* ==================== TAB 1: ABOUT ==================== */
+        .about-text {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .key-stats {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .key-stat {
+            flex: 1;
+            background: var(--panel-dark);
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+            padding: 16px 10px;
+            text-align: center;
+        }
+
+        .key-stat .stat-val {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            line-height: 1.2;
+        }
+
+        .key-stat .stat-label {
+            font-size: 10.5px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* Social stats */
+        .social-stats {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .social-stat {
+            flex: 1 1 calc(50% - 6px);
+            min-width: 0;
+            background: var(--panel-dark);
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+            padding: 14px 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            transition: border-color 0.25s ease;
+        }
+
+        .social-stat:hover {
+            border-color: rgba(14, 165, 233, 0.3);
+        }
+
+        .social-stat .social-icon {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(14, 165, 233, 0.08);
+            border-radius: 8px;
+        }
+
+        .social-stat .social-icon svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--accent-blue);
+        }
+
+        .social-stat .social-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .social-stat .social-label {
+            font-size: 11px;
+            color: var(--text-dimmed);
+            font-weight: 500;
+        }
+
+        .social-stat .social-value {
+            font-size: 13px;
+            color: var(--text-white);
+            font-weight: 600;
+        }
+
+        /* ==================== TAB 2: SERVICES ==================== */
+        .practice-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .practice-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px;
+            background: var(--panel-dark);
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+            transition: border-color 0.25s ease;
+        }
+
+        .practice-item:hover {
+            border-color: rgba(14, 165, 233, 0.3);
+        }
+
+        .practice-item .practice-icon {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(14, 165, 233, 0.08);
+            border-radius: 8px;
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .practice-item .practice-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .practice-item .practice-title {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-white);
+            margin-bottom: 2px;
+        }
+
+        .practice-item .practice-desc {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* Video Embed */
+        .video-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-top: 4px;
+        }
+
+        .video-card {
+            background: var(--panel-dark);
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .video-card .video-embed {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border: 0;
+            display: block;
+        }
+
+        .video-card .video-title {
+            padding: 12px 14px;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-white);
+            border-top: 1px solid var(--panel-border);
+        }
+
+        /* ==================== TAB 3: CONTACT ==================== */
+        .contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .contact-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .contact-row .contact-icon {
+            width: 38px;
+            height: 38px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(14, 165, 233, 0.08);
+            border-radius: 8px;
+        }
+
+        .contact-row .contact-icon svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--accent-blue);
+            fill: none;
+            stroke-width: 1.8;
+        }
+
+        .contact-row .contact-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .contact-row .contact-label {
+            font-size: 11px;
+            color: var(--text-dimmed);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-row .contact-value {
+            font-size: 14px;
+            color: var(--text-white);
+            font-weight: 500;
+        }
+
+        .contact-row .contact-value a {
+            color: var(--text-white);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .contact-row .contact-value a:hover {
+            color: var(--accent-blue);
+        }
+
+        /* Platform links */
+        .platform-card {
+            background: var(--panel-dark);
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            transition: border-color 0.25s ease;
+        }
+
+        .platform-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .platform-card:hover {
+            border-color: rgba(14, 165, 233, 0.3);
+        }
+
+        .platform-card .platform-icon {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(14, 165, 233, 0.08);
+            border-radius: 8px;
+        }
+
+        .platform-card .platform-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: var(--accent-blue);
+        }
+
+        .platform-card .platform-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .platform-card .platform-name {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-white);
+            margin-bottom: 2px;
+        }
+
+        .platform-card .platform-handle {
+            font-size: 12.5px;
+            color: var(--text-muted);
+        }
+
+        .platform-card .platform-arrow {
+            color: var(--text-dimmed);
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        /* CTA button */
+        .cta-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 15px 24px;
+            background: var(--accent-blue);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.25s ease;
+            text-decoration: none;
+        }
+
+        .cta-btn:hover {
+            background: #0284c7;
+        }
+
+        .cta-btn--whatsapp {
+            background: #25d366;
+            margin-top: 10px;
+        }
+
+        .cta-btn--whatsapp:hover {
+            background: #1fb855;
+        }
+
+        /* Working hours */
+        .hours-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .hours-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            background: var(--panel-dark);
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+        }
+
+        .hours-row .day {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .hours-row .time {
+            font-size: 13px;
+            color: var(--text-white);
+            font-weight: 600;
+        }
+
+        .hours-row .time--note {
+            color: var(--accent-cyan);
+            font-size: 12px;
+        }
+
+        /* ==================== VCARD BUTTON ==================== */
+        .vcard-section {
+            padding: 0 24px 28px;
+        }
+
+        .vcard-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 15px 24px;
+            background: var(--panel-dark);
+            color: var(--text-white);
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: border-color 0.25s ease, background 0.25s ease;
+        }
+
+        .vcard-btn:hover {
+            border-color: var(--accent-blue);
+            background: rgba(14, 165, 233, 0.06);
+        }
+
+        .vcard-btn .btn-icon {
+            font-size: 18px;
+        }
+
+        /* ==================== FOOTER ==================== */
+        .footer {
+            text-align: center;
+            padding: 24px;
+            border-top: 1px solid var(--panel-border);
+            background: var(--panel-dark);
+        }
+
+        .footer .footer-name {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent-gold);
+            margin-bottom: 4px;
+        }
+
+        .footer .footer-sub {
+            font-size: 11px;
+            color: var(--text-dimmed);
+        }
+
+        /* ==================== MEDIA QUERIES ==================== */
+        @media (max-width: 340px) {
+            .tab-btn {
+                font-size: 11.5px;
+                padding: 12px 4px;
+            }
+
+            .key-stats {
+                flex-direction: column;
+            }
+
+            .social-stat {
+                flex: 1 1 100%;
+            }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+
+            .tab-panel {
+                transition: none;
+            }
+
+            .tab-btn::after {
+                transition: none;
+            }
+
+            .practice-item,
+            .cta-btn,
+            .vcard-btn,
+            .platform-card,
+            .social-stat,
+            .contact-row .contact-value a {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+
+        <!-- HERO BANNER -->
+        <div class="hero-banner" role="img" aria-label="4K Hava Cekimi - havadan drone goruntusu"></div>
+
+        <!-- HEADER BAR -->
+        <header class="header-bar">
+            <div class="logo-box" aria-hidden="true">4K</div>
+            <div>
+                <div class="firm-name">4K Hava Cekimi</div>
+                <div class="firm-type">Profesyonel Drone Hizmetleri</div>
+            </div>
+        </header>
+
+        <!-- PROFILE CARD -->
+        <div class="profile-card reveal">
+            <div class="avatar-initials" aria-label="Ester Donmez profil"><img src="data:image/jpeg;base64,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" alt="Ester Donmez" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div>
+            <div class="name">Ester Donmez</div>
+            <div class="title">Kurucu &amp; Prodüktör</div>
+            <div class="company">4K Hava Cekimi</div>
+        </div>
+
+        <!-- TAB BAR -->
+        <nav class="tab-bar" role="tablist" aria-label="Profil sekmeleri">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-about" id="btn-about">Hakkimizda</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-services" id="btn-services">Hizmetlerimiz</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-contact" id="btn-contact">Iletisim</button>
+        </nav>
+
+        <!-- TAB CONTENT WRAPPER -->
+        <div class="tab-content-wrapper">
+
+            <!-- TAB 1: ABOUT -->
+            <div class="tab-panel active" role="tabpanel" id="tab-about" aria-labelledby="btn-about">
+                <div class="panel-section reveal">
+                    <p class="about-text">
+                        Profesyonel drone ekipmanlari ve deneyimli ekibimizle; havadan goruntuleme, tanitim filmi ve reklam produksiyonu alaninda hizmet veriyoruz. Projelerinizi farkli bir perspektiften dunyaya gosteriyoruz.
+                    </p>
+                    <div class="key-stats">
+                        <div class="key-stat">
+                            <div class="stat-val">89.7K</div>
+                            <div class="stat-label">Takipci</div>
+                        </div>
+                        <div class="key-stat">
+                            <div class="stat-val">672</div>
+                            <div class="stat-label">Paylasim</div>
+                        </div>
+                        <div class="key-stat">
+                            <div class="stat-val">4K</div>
+                            <div class="stat-label">Ultra HD</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-section reveal">
+                    <div class="panel-heading">
+                        Platformlarimiz
+                        <span class="heading-line"></span>
+                    </div>
+                    <div class="social-stats">
+                        <a class="social-stat" href="https://www.instagram.com/4khavacekim_pro" target="_blank" rel="noopener noreferrer">
+                            <div class="social-icon">
+                                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                            </div>
+                            <div class="social-info">
+                                <div class="social-label">Instagram</div>
+                                <div class="social-value">@4khavacekim_pro</div>
+                            </div>
+                        </a>
+                        <a class="social-stat" href="https://www.youtube.com/@4khavacekim_pro" target="_blank" rel="noopener noreferrer">
+                            <div class="social-icon">
+                                <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                            </div>
+                            <div class="social-info">
+                                <div class="social-label">YouTube</div>
+                                <div class="social-value">4K Hava Cekimi</div>
+                            </div>
+                        </a>
+                        <a class="social-stat" href="https://www.shutterstock.com/tr/g/4khavacekim/video?rid=164220666" target="_blank" rel="noopener noreferrer">
+                            <div class="social-icon">
+                                <svg viewBox="0 0 24 24"><path d="M9.55 16.45c-1.61-1.61-1.61-4.22 0-5.83l5.83-5.83c1.61-1.61 4.22-1.61 5.83 0 1.61 1.61 1.61 4.22 0 5.83l-2.17 2.17c.09-.67.05-1.36-.14-2.03l.88-.88c.78-.78.78-2.05 0-2.83-.78-.78-2.05-.78-2.83 0l-5.83 5.83c-.78.78-.78 2.05 0 2.83.78.78 2.05.78 2.83 0l.71-.71c.41.27.87.46 1.36.54l-1.64 1.64c-1.61 1.62-4.22 1.62-5.83.01zm7.73-8.73l-1.64 1.64c.49.08.95.27 1.36.54l.71-.71c.78-.78.78-2.05 0-2.83-.78-.78-2.05-.78-2.83 0l-5.83 5.83c-.78.78-.78 2.05 0 2.83.78.78 2.05.78 2.83 0l.88-.88c-.19-.67-.23-1.36-.14-2.03l-2.17 2.17c-1.61 1.61-4.22 1.61-5.83 0-1.61-1.61-1.61-4.22 0-5.83l5.83-5.83c1.61-1.61 4.22-1.61 5.83 0 1.61 1.62 1.61 4.23-.01 5.84z"/></svg>
+                            </div>
+                            <div class="social-info">
+                                <div class="social-label">Shutterstock</div>
+                                <div class="social-value">Stok Video</div>
+                            </div>
+                        </a>
+                        <a class="social-stat" href="https://www.4khavacekim.com" target="_blank" rel="noopener noreferrer">
+                            <div class="social-icon">
+                                <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                            </div>
+                            <div class="social-info">
+                                <div class="social-label">Website</div>
+                                <div class="social-value">4khavacekim.com</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: SERVICES -->
+            <div class="tab-panel" role="tabpanel" id="tab-services" aria-labelledby="btn-services">
+                <div class="panel-section">
+                    <div class="practice-list">
+
+                        <div class="practice-item reveal">
+                            <div class="practice-icon" aria-hidden="true">&#128681;</div>
+                            <div class="practice-info">
+                                <div class="practice-title">Drone Hava Cekimi</div>
+                                <div class="practice-desc">Profesyonel drone ekipmanlariyla yuksek cozunurluklu havadan goruntuleme</div>
+                            </div>
+                        </div>
+
+                        <div class="practice-item reveal">
+                            <div class="practice-icon" aria-hidden="true">&#127916;</div>
+                            <div class="practice-info">
+                                <div class="practice-title">Tanitim Filmi</div>
+                                <div class="practice-desc">Kurumsal ve ticari tanitim filmi produksiyonu</div>
+                            </div>
+                        </div>
+
+                        <div class="practice-item reveal">
+                            <div class="practice-icon" aria-hidden="true">&#128248;</div>
+                            <div class="practice-info">
+                                <div class="practice-title">Hava Fotografciligi</div>
+                                <div class="practice-desc">Yuksek cozunurluklu havadan fotograf cekimi ve isleme</div>
+                            </div>
+                        </div>
+
+                        <div class="practice-item reveal">
+                            <div class="practice-icon" aria-hidden="true">&#127902;</div>
+                            <div class="practice-info">
+                                <div class="practice-title">Reklam Filmi</div>
+                                <div class="practice-desc">Marka ve urun odakli reklam filmi produksiyonu</div>
+                            </div>
+                        </div>
+
+                        <div class="practice-item reveal">
+                            <div class="practice-icon" aria-hidden="true">&#127959;</div>
+                            <div class="practice-info">
+                                <div class="practice-title">Insaat Takibi</div>
+                                <div class="practice-desc">Insaat sahalarinin periyodik havadan goruntulenmesi ve raporlama</div>
+                            </div>
+                        </div>
+
+                        <div class="practice-item reveal">
+                            <div class="practice-icon" aria-hidden="true">&#127918;</div>
+                            <div class="practice-info">
+                                <div class="practice-title">FPV Drone Cekimi</div>
+                                <div class="practice-desc">Hizli ve dinamik FPV drone ile sinematik goruntu cekimi</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- VIDEO PORTFOLIO -->
+                <div class="panel-section">
+                    <div class="panel-heading">
+                        Video Portfoy
+                        <span class="heading-line"></span>
+                    </div>
+                    <div class="video-gallery">
+
+                        <div class="video-card reveal">
+                            <iframe class="video-embed" src="https://www.youtube.com/embed/jhbyY1JzZoY?playsinline=1&rel=0" title="Showreel 2024" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                            <div class="video-title">Showreel 2024</div>
+                        </div>
+
+                        <div class="video-card reveal">
+                            <iframe class="video-embed" src="https://www.youtube.com/embed/_m1YNYj2w9E?playsinline=1&rel=0" title="Otel Tanitim" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                            <div class="video-title">Otel Tanitim</div>
+                        </div>
+
+                        <div class="video-card reveal">
+                            <iframe class="video-embed" src="https://www.youtube.com/embed/-3iJ-ZXnIPw?playsinline=1&rel=0" title="Fuar Cekimi" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                            <div class="video-title">Fuar Cekimi</div>
+                        </div>
+
+                        <div class="video-card reveal">
+                            <iframe class="video-embed" src="https://www.youtube.com/embed/ptYm163dv8g?playsinline=1&rel=0" title="One Shot" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                            <div class="video-title">One Shot</div>
+                        </div>
+
+                        <div class="video-card reveal">
+                            <iframe class="video-embed" src="https://www.youtube.com/embed/MR2tziFK7KY?playsinline=1&rel=0" title="FPV Reklam" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+                            <div class="video-title">FPV Reklam</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: CONTACT -->
+            <div class="tab-panel" role="tabpanel" id="tab-contact" aria-labelledby="btn-contact">
+                <div class="panel-section">
+                    <div class="contact-list">
+                        <div class="contact-row reveal">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-label">Telefon</div>
+                                <div class="contact-value"><a href="tel:+905446692669">+90 544 669 26 69</a></div>
+                            </div>
+                        </div>
+                        <div class="contact-row reveal">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-label">E-posta</div>
+                                <div class="contact-value"><a href="mailto:esterdonmez@gmail.com">esterdonmez@gmail.com</a></div>
+                            </div>
+                        </div>
+                        <div class="contact-row reveal">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-label">Website</div>
+                                <div class="contact-value"><a href="https://www.4khavacekim.com" target="_blank" rel="noopener noreferrer">www.4khavacekim.com</a></div>
+                            </div>
+                        </div>
+                        <div class="contact-row reveal">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-label">Instagram</div>
+                                <div class="contact-value"><a href="https://www.instagram.com/4khavacekim_pro" target="_blank" rel="noopener noreferrer">@4khavacekim_pro</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Online Platforms -->
+                <div class="panel-section">
+                    <div class="panel-heading">
+                        Platformlar
+                        <span class="heading-line"></span>
+                    </div>
+
+                    <a class="platform-card reveal" href="https://www.youtube.com/@4khavacekim_pro" target="_blank" rel="noopener noreferrer">
+                        <div class="platform-icon">
+                            <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </div>
+                        <div class="platform-info">
+                            <div class="platform-name">YouTube</div>
+                            <div class="platform-handle">@4khavacekim_pro</div>
+                        </div>
+                        <div class="platform-arrow" aria-hidden="true">&#8594;</div>
+                    </a>
+
+                    <a class="platform-card reveal" href="https://www.shutterstock.com/tr/g/4khavacekim/video?rid=164220666" target="_blank" rel="noopener noreferrer">
+                        <div class="platform-icon">
+                            <svg viewBox="0 0 24 24"><path d="M9.55 16.45c-1.61-1.61-1.61-4.22 0-5.83l5.83-5.83c1.61-1.61 4.22-1.61 5.83 0 1.61 1.61 1.61 4.22 0 5.83l-2.17 2.17c.09-.67.05-1.36-.14-2.03l.88-.88c.78-.78.78-2.05 0-2.83-.78-.78-2.05-.78-2.83 0l-5.83 5.83c-.78.78-.78 2.05 0 2.83.78.78 2.05.78 2.83 0l.71-.71c.41.27.87.46 1.36.54l-1.64 1.64c-1.61 1.62-4.22 1.62-5.83.01zm7.73-8.73l-1.64 1.64c.49.08.95.27 1.36.54l.71-.71c.78-.78.78-2.05 0-2.83-.78-.78-2.05-.78-2.83 0l-5.83 5.83c-.78.78-.78 2.05 0 2.83.78.78 2.05.78 2.83 0l.88-.88c-.19-.67-.23-1.36-.14-2.03l-2.17 2.17c-1.61 1.61-4.22 1.61-5.83 0-1.61-1.61-1.61-4.22 0-5.83l5.83-5.83c1.61-1.61 4.22-1.61 5.83 0 1.61 1.62 1.61 4.23-.01 5.84z"/></svg>
+                        </div>
+                        <div class="platform-info">
+                            <div class="platform-name">Shutterstock</div>
+                            <div class="platform-handle">Stok Video Portfoyu</div>
+                        </div>
+                        <div class="platform-arrow" aria-hidden="true">&#8594;</div>
+                    </a>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="panel-section">
+                    <a href="tel:+905446692669" class="cta-btn" aria-label="Hemen arayin">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                        Hemen Arayin
+                    </a>
+                    <a href="https://wa.me/905446692669?text=Merhaba%2C%20hava%20%C3%A7ekimi%20hizmeti%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." class="cta-btn cta-btn--whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp ile iletisime gecin">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        WhatsApp ile Iletisim
+                    </a>
+                </div>
+
+                <!-- Working Hours -->
+                <div class="panel-section">
+                    <div class="panel-heading">
+                        Calisma Bilgisi
+                        <span class="heading-line"></span>
+                    </div>
+                    <div class="hours-grid">
+                        <div class="hours-row">
+                            <span class="day">Pazartesi - Cuma</span>
+                            <span class="time">09:00 - 19:00</span>
+                        </div>
+                        <div class="hours-row">
+                            <span class="day">Cumartesi</span>
+                            <span class="time">10:00 - 17:00</span>
+                        </div>
+                        <div class="hours-row">
+                            <span class="day">Pazar</span>
+                            <span class="time time--note">Randevuyla</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- VCARD BUTTON -->
+        <div class="vcard-section reveal">
+            <button class="vcard-btn" id="vcardBtn" type="button">
+                <span class="btn-icon" aria-hidden="true">&#128229;</span>
+                Rehbere Kaydet
+            </button>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="footer-name">4K Hava Cekimi</div>
+            <div class="footer-sub">&copy; 2026 Tum haklari saklidir.</div>
+        </footer>
+
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+
+        /* ========== SCROLL REVEAL (IntersectionObserver) ========== */
+        function initScrollReveal() {
+            var revealElements = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                revealElements.forEach(function(el) { el.classList.add('visible'); });
+                return;
+            }
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+            revealElements.forEach(function(el) { observer.observe(el); });
+        }
+
+        /* ========== TABBED NAVIGATION ========== */
+        function initTabs() {
+            var tabBtns = document.querySelectorAll('.tab-btn');
+            var tabPanels = document.querySelectorAll('.tab-panel');
+
+            tabBtns.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var targetId = this.getAttribute('aria-controls');
+
+                    // Deactivate all tabs
+                    tabBtns.forEach(function(b) {
+                        b.classList.remove('active');
+                        b.setAttribute('aria-selected', 'false');
+                    });
+
+                    // Hide all panels with fade
+                    tabPanels.forEach(function(panel) {
+                        panel.classList.remove('active');
+                    });
+
+                    // Activate clicked tab
+                    this.classList.add('active');
+                    this.setAttribute('aria-selected', 'true');
+
+                    // Show target panel with fade
+                    var targetPanel = document.getElementById(targetId);
+                    // Force reflow for opacity transition
+                    void targetPanel.offsetWidth;
+                    targetPanel.classList.add('active');
+
+                    // Re-observe reveal elements inside newly shown panel
+                    var newRevealElements = targetPanel.querySelectorAll('.reveal:not(.visible)');
+                    if (newRevealElements.length > 0 && ('IntersectionObserver' in window)) {
+                        var observer = new IntersectionObserver(function(entries) {
+                            entries.forEach(function(entry) {
+                                if (entry.isIntersecting) {
+                                    entry.target.classList.add('visible');
+                                    observer.unobserve(entry.target);
+                                }
+                            });
+                        }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+                        newRevealElements.forEach(function(el) { observer.observe(el); });
+                    }
+                });
+            });
+
+            // Keyboard navigation for tabs
+            var tabBar = document.querySelector('.tab-bar');
+            tabBar.addEventListener('keydown', function(e) {
+                var currentBtn = document.activeElement;
+                if (!currentBtn.classList.contains('tab-btn')) return;
+                var btns = Array.from(tabBtns);
+                var index = btns.indexOf(currentBtn);
+
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    var next = btns[(index + 1) % btns.length];
+                    next.focus();
+                    next.click();
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    var prev = btns[(index - 1 + btns.length) % btns.length];
+                    prev.focus();
+                    prev.click();
+                }
+            });
+        }
+
+        /* ========== VCARD DOWNLOAD ========== */
+        function initVCard() {
+            var btn = document.getElementById('vcardBtn');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var vcardData = [
+                    'BEGIN:VCARD',
+                    'VERSION:3.0',
+                    'N:Donmez;Ester;;;',
+                    'FN:Ester Donmez',
+                    'ORG:4K Hava Cekimi',
+                    'TITLE:Kurucu & Prodüktör',
+                    'TEL;TYPE=CELL:+90 544 669 26 69',
+                    'EMAIL;TYPE=INTERNET:esterdonmez@gmail.com',
+                    'URL:https://www.4khavacekim.com',
+                    'X-SOCIALPROFILE;type=instagram:https://www.instagram.com/4khavacekim_pro',
+                    'NOTE:4K Hava Cekimi - Profesyonel Drone Hava Cekimi ve Produksiyon',
+                    'END:VCARD'
+                ].join('\r\n');
+
+                var blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'Ester_Donmez_4K_Hava_Cekimi.vcf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+        }
+
+        /* ========== INIT ========== */
+        document.addEventListener('DOMContentLoaded', function() {
+            initScrollReveal();
+            initTabs();
+            initVCard();
+        });
+
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4K Hava Çekimi - Ester Dönmez</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f5f7fa;
+    --white: #ffffff;
+    --steel: #3a5a7c;
+    --steel-light: #4a6f94;
+    --accent: #c4875a;
+    --accent-light: #d49a6e;
+    --text-dark: #2c2c2c;
+    --text-mid: #5a5a5a;
+    --text-light: #8a8a8a;
+    --border: #dce4ec;
+    --shadow: 0 2px 16px rgba(40, 55, 70, 0.07);
+    --shadow-hover: 0 4px 24px rgba(40, 55, 70, 0.12);
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Source Sans 3', 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text-dark);
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .card-wrapper {
+    width: 100%;
+    max-width: 460px;
+    background: var(--bg);
+    min-height: 100vh;
+    position: relative;
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* 1. Hero Banner */
+  .hero-banner {
+    position: relative;
+    width: 100%;
+    height: 240px;
+    overflow: hidden;
+  }
+  .hero-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(20,30,45,0.80) 0%, rgba(20,30,45,0.20) 50%, rgba(20,30,45,0.05) 100%);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 24px 20px;
+  }
+  .hero-overlay h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    font-size: 30px;
+    color: #fff;
+    line-height: 1.1;
+    letter-spacing: 0.5px;
+  }
+  .hero-overlay .tagline {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 15px;
+    color: rgba(255,255,255,0.85);
+    margin-top: 4px;
+    letter-spacing: 0.3px;
+  }
+
+  /* 2. Profile Strip */
+  .chef-strip {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+  }
+  .profile-initials {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px solid var(--steel);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, var(--steel) 0%, var(--steel-light) 100%);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-weight: 700;
+    font-size: 18px;
+    color: #fff;
+    letter-spacing: 1px;
+  }
+  .chef-info h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--text-dark);
+    line-height: 1.2;
+  }
+  .chef-info p {
+    font-size: 13px;
+    color: var(--text-mid);
+    font-weight: 400;
+    margin-top: 1px;
+  }
+
+  /* 3. Quick Actions */
+  .quick-actions {
+    display: flex;
+    gap: 8px;
+    padding: 16px 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .pill-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 18px;
+    border-radius: 50px;
+    border: none;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 13.5px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+  }
+  .pill-btn.primary {
+    background: var(--steel);
+    color: #fff;
+  }
+  .pill-btn.primary:hover { background: var(--steel-light); }
+  .pill-btn.secondary {
+    background: var(--white);
+    color: var(--steel);
+    border: 1.5px solid var(--steel);
+  }
+  .pill-btn.secondary:hover { background: var(--steel); color: #fff; }
+  .pill-btn.accent {
+    background: #25d366;
+    color: #fff;
+  }
+  .pill-btn.accent:hover { background: #20bd5a; }
+  .pill-btn.email-btn {
+    background: var(--accent);
+    color: #fff;
+  }
+  .pill-btn.email-btn:hover { background: var(--accent-light); }
+
+  /* 4. Video Portfolio Grid */
+  .video-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 0 20px 20px;
+  }
+  .video-card {
+    position: relative;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    aspect-ratio: 16/9;
+    cursor: pointer;
+    background: #1a1a1a;
+  }
+  .video-card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease, opacity 0.3s ease;
+  }
+  .video-card:hover img { transform: scale(1.05); }
+  .video-card .video-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px 10px 8px;
+    background: linear-gradient(to top, rgba(0,0,0,0.70), transparent);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 12px;
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 0.2px;
+  }
+  .video-card .play-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 36px;
+    height: 36px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, background 0.3s ease;
+    pointer-events: none;
+  }
+  .video-card .play-icon::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 7px 0 7px 12px;
+    border-color: transparent transparent transparent var(--steel);
+    margin-left: 2px;
+  }
+  .video-card:hover .play-icon { transform: translate(-50%, -50%) scale(1.1); background: #fff; }
+
+  /* Video card full-width for showreel */
+  .video-card.full-width {
+    grid-column: 1 / -1;
+    aspect-ratio: 16/9;
+  }
+
+  /* Inline video player modal */
+  .video-modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    animation: fadeIn 0.3s ease;
+  }
+  .video-modal-overlay.active { display: flex; }
+  .video-modal {
+    width: 100%;
+    max-width: 520px;
+    background: #000;
+    border-radius: var(--radius);
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  }
+  .video-modal .modal-close {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+    backdrop-filter: blur(4px);
+  }
+  .video-modal .modal-close:hover { background: rgba(255,255,255,0.3); }
+  .video-modal .video-container {
+    position: relative;
+    width: 100%;
+    padding-bottom: 56.25%;
+  }
+  .video-modal .video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+  .video-modal .modal-title {
+    padding: 12px 16px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    background: rgba(0,0,0,0.6);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* 5. Services Section */
+  .section-pad {
+    padding: 0 20px;
+    margin-bottom: 24px;
+  }
+  .section-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--steel);
+    text-align: center;
+    margin-bottom: 16px;
+    position: relative;
+  }
+  .section-title::after {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 2px;
+    background: var(--accent);
+    margin: 8px auto 0;
+    border-radius: 2px;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .service-item {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 18px 14px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .service-item:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-hover);
+  }
+  .service-icon {
+    font-size: 28px;
+    margin-bottom: 8px;
+    display: block;
+    line-height: 1;
+  }
+  .service-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--text-dark);
+    line-height: 1.3;
+  }
+
+  /* 6. About */
+  .about-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin: 0 20px 24px;
+    box-shadow: var(--shadow);
+  }
+  .about-card p {
+    font-size: 14px;
+    line-height: 1.65;
+    color: var(--text-mid);
+    text-align: center;
+  }
+
+  /* 7. Stats Card (replaces hours table) */
+  .stats-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    margin: 0 20px 24px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    padding: 20px 18px;
+  }
+  .stats-card .section-title {
+    padding-top: 0;
+  }
+  .stats-row {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    gap: 8px;
+  }
+  .stat-item {
+    flex: 1;
+  }
+  .stat-number {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--steel);
+    line-height: 1.2;
+  }
+  .stat-label {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 2px;
+    font-weight: 500;
+  }
+
+  /* 8. Social Links */
+  .social-links {
+    margin: 0 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .social-link-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    text-decoration: none;
+    color: var(--text-dark);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+  .social-link-card:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-hover);
+  }
+  .social-link-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .social-link-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  .social-link-icon.instagram {
+    background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+  }
+  .social-link-icon.youtube {
+    background: #ff0000;
+  }
+  .social-link-icon.web {
+    background: var(--steel);
+  }
+  .social-link-icon.shutterstock {
+    background: #ee2d24;
+  }
+  .social-link-text {
+    display: flex;
+    flex-direction: column;
+  }
+  .social-link-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-dark);
+  }
+  .social-link-handle {
+    font-size: 12.5px;
+    color: var(--text-light);
+    margin-top: 1px;
+  }
+  .social-link-arrow {
+    margin-left: auto;
+    color: var(--text-light);
+    font-size: 14px;
+    flex-shrink: 0;
+  }
+
+  /* 9. Instagram CTA */
+  .insta-cta {
+    text-align: center;
+    padding: 20px;
+    margin: 0 20px 24px;
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+  }
+  .insta-cta p {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--text-mid);
+    margin-bottom: 12px;
+  }
+  .insta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 24px;
+    border-radius: 50px;
+    background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+    color: #fff;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  .insta-btn:hover { opacity: 0.9; transform: scale(1.02); }
+  .insta-btn svg { width: 18px; height: 18px; }
+
+  /* 10. vCard + Footer */
+  .vcard-section {
+    text-align: center;
+    padding: 0 20px 16px;
+  }
+  .vcard-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px 20px;
+    border-radius: var(--radius);
+    background: var(--steel);
+    color: #fff;
+    border: none;
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.25s ease, transform 0.2s ease;
+  }
+  .vcard-btn:hover { background: var(--steel-light); transform: translateY(-1px); }
+  .vcard-btn svg { width: 18px; height: 18px; }
+
+  .footer {
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid var(--border);
+    margin: 8px 20px 0;
+  }
+  .footer p {
+    font-size: 12px;
+    color: var(--text-light);
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { transition: none; opacity: 1; transform: none; }
+    .video-card img { transition: none; }
+    .service-item { transition: none; }
+    .social-link-card { transition: none; }
+    .video-modal-overlay { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card-wrapper">
+
+  <!-- 1. Hero Banner -->
+  <div class="hero-banner">
+    <img src="https://img.youtube.com/vi/_m1YNYj2w9E/maxresdefault.jpg" alt="4K Hava Çekimi drone havadan görüntü" loading="eager">
+    <div class="hero-overlay">
+      <h1>4K Hava Çekimi</h1>
+      <span class="tagline">Profesyonel Drone Prodüksiyon</span>
+    </div>
+  </div>
+
+  <!-- 2. Profile Strip -->
+  <div class="chef-strip reveal">
+    <div class="profile-initials" aria-hidden="true"><img src="data:image/jpeg;base64,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" alt="Ester Donmez" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div>
+    <div class="chef-info">
+      <h2>Ester Dönmez</h2>
+      <p>Kurucu &amp; Prodüktör</p>
+    </div>
+  </div>
+
+  <!-- 3. Quick Actions -->
+  <div class="quick-actions reveal">
+    <a href="tel:+905446692669" class="pill-btn primary" aria-label="Telefon ile ara">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      <span>Ara</span>
+    </a>
+    <a href="https://wa.me/905446692669?text=Merhaba%2C%20hava%20%C3%A7ekimi%20hizmeti%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." class="pill-btn accent" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp ile iletisim">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      <span>WhatsApp</span>
+    </a>
+    <a href="mailto:esterdonmez@gmail.com" class="pill-btn email-btn" aria-label="E-posta gönder">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <span>E-posta</span>
+    </a>
+  </div>
+
+  <!-- 4. Video Portfolio -->
+  <div class="section-pad reveal">
+    <h3 class="section-title">Video Portföy</h3>
+  </div>
+
+  <div class="video-grid reveal">
+    <div class="video-card full-width" onclick="openVideo('jhbyY1JzZoY', 'Showreel 2024')">
+      <img src="https://img.youtube.com/vi/jhbyY1JzZoY/maxresdefault.jpg" alt="Showreel 2024" loading="lazy">
+      <div class="play-icon"></div>
+      <div class="video-label">Showreel 2024</div>
+    </div>
+    <div class="video-card" onclick="openVideo('_m1YNYj2w9E', 'Otel Tanıtım')">
+      <img src="https://img.youtube.com/vi/_m1YNYj2w9E/maxresdefault.jpg" alt="Otel Tanıtım" loading="lazy">
+      <div class="play-icon"></div>
+      <div class="video-label">Otel Tanıtım</div>
+    </div>
+    <div class="video-card" onclick="openVideo('-3iJ-ZXnIPw', 'Fuar Çekimi')">
+      <img src="https://img.youtube.com/vi/-3iJ-ZXnIPw/maxresdefault.jpg" alt="Fuar Çekimi" loading="lazy">
+      <div class="play-icon"></div>
+      <div class="video-label">Fuar</div>
+    </div>
+    <div class="video-card" onclick="openVideo('ptYm163dv8g', 'One Shot')">
+      <img src="https://img.youtube.com/vi/ptYm163dv8g/maxresdefault.jpg" alt="One Shot Çekim" loading="lazy">
+      <div class="play-icon"></div>
+      <div class="video-label">One Shot</div>
+    </div>
+    <div class="video-card" onclick="openVideo('MR2tziFK7KY', 'FPV Reklam')">
+      <img src="https://img.youtube.com/vi/MR2tziFK7KY/maxresdefault.jpg" alt="FPV Reklam Filmi" loading="lazy">
+      <div class="play-icon"></div>
+      <div class="video-label">FPV Reklam</div>
+    </div>
+  </div>
+
+  <!-- Video Modal -->
+  <div class="video-modal-overlay" id="videoModal" onclick="closeVideo(event)">
+    <div class="video-modal" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeVideo()" aria-label="Videoyu kapat">&times;</button>
+      <div class="video-container">
+        <iframe id="videoFrame" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <div class="modal-title" id="videoTitle"></div>
+    </div>
+  </div>
+
+  <!-- 5. Services -->
+  <div class="section-pad reveal">
+    <h3 class="section-title">Hizmetlerimiz</h3>
+    <div class="services-grid">
+      <div class="service-item">
+        <span class="service-icon" aria-hidden="true">&#x1F681;</span>
+        <span class="service-name">Drone Hava Çekimi</span>
+      </div>
+      <div class="service-item">
+        <span class="service-icon" aria-hidden="true">&#x1F3AC;</span>
+        <span class="service-name">Tanıtım Filmi</span>
+      </div>
+      <div class="service-item">
+        <span class="service-icon" aria-hidden="true">&#x1F4F8;</span>
+        <span class="service-name">Hava Fotoğrafçılığı</span>
+      </div>
+      <div class="service-item">
+        <span class="service-icon" aria-hidden="true">&#x1F39E;</span>
+        <span class="service-name">Reklam Filmi</span>
+      </div>
+      <div class="service-item">
+        <span class="service-icon" aria-hidden="true">&#x1F3D7;</span>
+        <span class="service-name">İnşaat Takibi</span>
+      </div>
+      <div class="service-item">
+        <span class="service-icon" aria-hidden="true">&#x1F3AE;</span>
+        <span class="service-name">FPV Drone Çekimi</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. About -->
+  <div class="about-card reveal">
+    <p>Profesyonel drone ekipmanları ve deneyimli ekibimizle; havadan görüntüleme, tanıtım filmi ve reklam prodüksiyonu alanında hizmet veriyoruz. Projelerinizi farklı bir perspektiften dünyaya gösteriyoruz.</p>
+  </div>
+
+  <!-- 7. Instagram Stats -->
+  <div class="stats-card reveal">
+    <h3 class="section-title">Instagram</h3>
+    <div class="stats-row">
+      <div class="stat-item">
+        <div class="stat-number">89.7K</div>
+        <div class="stat-label">Takipçi</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">672</div>
+        <div class="stat-label">Gönderi</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-number">792</div>
+        <div class="stat-label">Takip</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. Social & Web Links -->
+  <div class="social-links reveal">
+    <a href="https://www.instagram.com/4khavacekim_pro" class="social-link-card" target="_blank" rel="noopener noreferrer">
+      <div class="social-link-icon instagram">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      </div>
+      <div class="social-link-text">
+        <span class="social-link-name">Instagram</span>
+        <span class="social-link-handle">@4khavacekim_pro</span>
+      </div>
+      <span class="social-link-arrow" aria-hidden="true">&#8250;</span>
+    </a>
+    <a href="https://www.youtube.com/@4khavacekim_pro" class="social-link-card" target="_blank" rel="noopener noreferrer">
+      <div class="social-link-icon youtube">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      </div>
+      <div class="social-link-text">
+        <span class="social-link-name">YouTube</span>
+        <span class="social-link-handle">@4khavacekim_pro</span>
+      </div>
+      <span class="social-link-arrow" aria-hidden="true">&#8250;</span>
+    </a>
+    <a href="https://www.4khavacekim.com" class="social-link-card" target="_blank" rel="noopener noreferrer">
+      <div class="social-link-icon web">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      </div>
+      <div class="social-link-text">
+        <span class="social-link-name">Web Sitesi</span>
+        <span class="social-link-handle">4khavacekim.com</span>
+      </div>
+      <span class="social-link-arrow" aria-hidden="true">&#8250;</span>
+    </a>
+    <a href="https://www.shutterstock.com/tr/g/4khavacekim/video?rid=164220666" class="social-link-card" target="_blank" rel="noopener noreferrer">
+      <div class="social-link-icon shutterstock">
+        <svg viewBox="0 0 24 24" fill="#fff"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm4.151 17.088h-4.98c-3.165 0-5.726-2.561-5.726-5.726h2.855c0 1.584 1.287 2.871 2.871 2.871h4.98v2.855zm0-5.817h-2.855c0-1.584-1.287-2.871-2.871-2.871H5.445V5.545h4.98c3.165 0 5.726 2.561 5.726 5.726z"/></svg>
+      </div>
+      <div class="social-link-text">
+        <span class="social-link-name">Shutterstock</span>
+        <span class="social-link-handle">Stok Video Portföyü</span>
+      </div>
+      <span class="social-link-arrow" aria-hidden="true">&#8250;</span>
+    </a>
+  </div>
+
+  <!-- 9. vCard + Footer -->
+  <div class="vcard-section reveal">
+    <button class="vcard-btn" onclick="downloadVCard()" aria-label="Rehbere Kaydet">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Rehbere Kaydet
+    </button>
+  </div>
+
+  <footer class="footer">
+    <p>4K Hava Çekimi &copy; 2026</p>
+  </footer>
+
+</div>
+
+<script>
+  // Scroll Reveal with IntersectionObserver
+  (function() {
+    var revealElements = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      revealElements.forEach(function(el) { observer.observe(el); });
+    } else {
+      revealElements.forEach(function(el) { el.classList.add('visible'); });
+    }
+  })();
+
+  // Video Modal - Inline YouTube playback
+  function openVideo(videoId, title) {
+    var modal = document.getElementById('videoModal');
+    var frame = document.getElementById('videoFrame');
+    var titleEl = document.getElementById('videoTitle');
+
+    frame.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0&modestbranding=1';
+    titleEl.textContent = title;
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeVideo(event) {
+    if (event && event.target !== event.currentTarget && !event.target.classList.contains('modal-close')) return;
+    var modal = document.getElementById('videoModal');
+    var frame = document.getElementById('videoFrame');
+
+    frame.src = '';
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  // Close on Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      closeVideo();
+    }
+  });
+
+  // vCard Download
+  function downloadVCard() {
+    var vcard = [
+      'BEGIN:VCARD',
+      'VERSION:3.0',
+      'N:Dönmez;Ester;;;',
+      'FN:Ester Dönmez',
+      'ORG:4K Hava Çekimi',
+      'TITLE:Kurucu & Prodüktör',
+      'TEL;TYPE=CELL:+90 544 669 26 69',
+      'EMAIL:esterdonmez@gmail.com',
+      'URL:https://www.4khavacekim.com',
+      'X-SOCIALPROFILE;TYPE=instagram:https://www.instagram.com/4khavacekim_pro',
+      'X-SOCIALPROFILE;TYPE=youtube:https://www.youtube.com/@4khavacekim_pro',
+      'NOTE:Profesyonel Drone Hava Çekimi - 4K Hava Çekimi',
+      'END:VCARD'
+    ].join('\r\n');
+
+    var blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'Ester_Donmez_4K_Hava_Cekimi.vcf';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+</script>
+
+</body>
+</html>

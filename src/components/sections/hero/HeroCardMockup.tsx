@@ -16,9 +16,9 @@ interface HeroCardMockupProps {
 }
 
 export function HeroCardMockup({
-  name = "Hasan Dönmez",
-  role = "Automation Studio",
-  company = "OpSolid · Hamburg",
+  name = "Alex Weber",
+  role = "Product Designer",
+  company = "Studio Nord · Hamburg",
   cardLabel = "TAP TO SHARE",
 }: HeroCardMockupProps) {
   const initials =

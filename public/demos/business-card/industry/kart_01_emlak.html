@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mehmet Karaca | RE/MAX Gold - Gayrimenkul Danismani</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --deep-blue: #1a365d;
+            --warm-gold: #c8a951;
+            --white: #ffffff;
+            --light-gray: #f7f8fa;
+            --medium-gray: #e2e6ec;
+            --text-dark: #1a202c;
+            --text-muted: #64748b;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #eef1f5;
+            color: var(--text-dark);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--white);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* Scroll reveal animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ==================== HERO BANNER ==================== */
+        .hero-banner {
+            position: relative;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+
+        .hero-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(26,54,93,0.92) 0%, rgba(26,54,93,0.4) 50%, rgba(26,54,93,0.15) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 20px 24px;
+        }
+
+        .hero-overlay .hero-company {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--warm-gold);
+            margin-bottom: 4px;
+        }
+
+        .hero-overlay .hero-tagline {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 13px;
+            color: rgba(255,255,255,0.8);
+            font-weight: 400;
+        }
+
+        /* ==================== PROFILE STRIP ==================== */
+        .profile-strip {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 18px 24px;
+            background: var(--white);
+            border-bottom: 1px solid var(--medium-gray);
+        }
+
+        .profile-strip .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--warm-gold);
+            flex-shrink: 0;
+        }
+
+        .profile-strip .info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .profile-strip .info .name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--deep-blue);
+            line-height: 1.3;
+        }
+
+        .profile-strip .info .title {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        .profile-strip .info .company {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--warm-gold);
+            letter-spacing: 0.5px;
+        }
+
+        /* ==================== QUICK CONTACT ROW ==================== */
+        .quick-contact {
+            display: flex;
+            gap: 10px;
+            padding: 16px 24px;
+            background: var(--light-gray);
+        }
+
+        .pill-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 8px;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+
+        .pill-btn--call {
+            background: var(--deep-blue);
+            color: var(--white);
+        }
+
+        .pill-btn--call:hover {
+            background: #244a7a;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .pill-btn--whatsapp {
+            background: #25d366;
+            color: var(--white);
+        }
+
+        .pill-btn--whatsapp:hover {
+            background: #1fb855;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .pill-btn--email {
+            background: var(--warm-gold);
+            color: var(--white);
+        }
+
+        .pill-btn--email:hover {
+            background: #b8993e;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .pill-btn .pill-icon {
+            font-size: 15px;
+            line-height: 1;
+        }
+
+        /* ==================== PROPERTY CAROUSEL ==================== */
+        .section {
+            padding: 28px 24px;
+        }
+
+        .section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--deep-blue);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: var(--warm-gold);
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        .carousel-wrapper {
+            position: relative;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 14px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 6px;
+            scrollbar-width: none;
+        }
+
+        .carousel-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .property-card {
+            flex: 0 0 280px;
+            scroll-snap-align: start;
+            background: var(--white);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--medium-gray);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .property-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .property-card .photo-wrapper {
+            position: relative;
+            height: 160px;
+            overflow: hidden;
+        }
+
+        .property-card .photo-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.4s ease;
+        }
+
+        .property-card:hover .photo-wrapper img {
+            transform: scale(1.05);
+        }
+
+        .property-card .badge-status {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 10.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .badge-status--sale {
+            background: var(--deep-blue);
+            color: var(--white);
+        }
+
+        .badge-status--rent {
+            background: var(--warm-gold);
+            color: var(--white);
+        }
+
+        .property-card .card-body {
+            padding: 14px 16px 16px;
+        }
+
+        .property-card .prop-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 3px;
+        }
+
+        .property-card .prop-location {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .property-card .prop-location::before {
+            content: '';
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2364748b' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z'/%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M15 11a3 3 0 11-6 0 3 3 0 016 0z'/%3E%3C/svg%3E") no-repeat center/contain;
+            flex-shrink: 0;
+        }
+
+        .property-card .prop-price {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--deep-blue);
+            margin-bottom: 10px;
+        }
+
+        .property-card .prop-features {
+            display: flex;
+            gap: 8px;
+        }
+
+        .prop-features .feat-badge {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 4px 10px;
+            background: var(--light-gray);
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .feat-badge svg {
+            width: 13px;
+            height: 13px;
+        }
+
+        /* Carousel navigation */
+        .carousel-nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin-top: 16px;
+        }
+
+        .carousel-arrow {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 2px solid var(--medium-gray);
+            background: var(--white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.25s ease;
+            color: var(--deep-blue);
+        }
+
+        .carousel-arrow:hover {
+            border-color: var(--deep-blue);
+            background: var(--deep-blue);
+            color: var(--white);
+        }
+
+        .carousel-arrow svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .carousel-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .carousel-dots .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--medium-gray);
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dots .dot.active {
+            background: var(--deep-blue);
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        /* ==================== ABOUT SECTION ==================== */
+        .about-text {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.75;
+        }
+
+        /* ==================== TESTIMONIALS ==================== */
+        .testimonials-section {
+            background: var(--light-gray);
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 14px;
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--medium-gray);
+            position: relative;
+        }
+
+        .testimonial-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .testimonial-card .quote-mark {
+            position: absolute;
+            top: 14px;
+            right: 18px;
+            font-size: 40px;
+            font-family: Georgia, serif;
+            color: var(--warm-gold);
+            opacity: 0.3;
+            line-height: 1;
+        }
+
+        .testimonial-card .stars {
+            color: var(--warm-gold);
+            font-size: 14px;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        .testimonial-card .quote-text {
+            font-size: 13.5px;
+            color: var(--text-dark);
+            font-style: italic;
+            line-height: 1.65;
+            margin-bottom: 12px;
+        }
+
+        .testimonial-card .client-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: var(--deep-blue);
+        }
+
+        /* ==================== MAP ==================== */
+        .map-container {
+            border-radius: 14px;
+            overflow: hidden;
+            border: 1px solid var(--medium-gray);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 200px;
+            border: 0;
+            display: block;
+        }
+
+        /* ==================== STATS ROW ==================== */
+        .stats-section {
+            background: var(--deep-blue);
+        }
+
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+
+        .stat-item {
+            flex: 1;
+        }
+
+        .stat-item .stat-number {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--warm-gold);
+            line-height: 1.2;
+        }
+
+        .stat-item .stat-label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.75);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* ==================== QR SECTION ==================== */
+        .qr-section {
+            text-align: center;
+        }
+
+        .qr-section .qr-heading {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--deep-blue);
+            margin-bottom: 16px;
+        }
+
+        #qrcode {
+            display: inline-block;
+            padding: 12px;
+            background: var(--white);
+            border-radius: 12px;
+            border: 1px solid var(--medium-gray);
+            box-shadow: var(--shadow-sm);
+        }
+
+        #qrcode img {
+            display: block;
+        }
+
+        /* ==================== VCARD BUTTON ==================== */
+        .vcard-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 15px 24px;
+            background: linear-gradient(135deg, var(--deep-blue) 0%, #244a7a 100%);
+            color: var(--white);
+            border: none;
+            border-radius: 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .vcard-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(26,54,93,0.35);
+        }
+
+        .vcard-btn:active {
+            transform: translateY(0);
+        }
+
+        .vcard-btn .btn-icon {
+            font-size: 18px;
+        }
+
+        /* ==================== FOOTER ==================== */
+        .footer {
+            text-align: center;
+            padding: 24px;
+            background: var(--deep-blue);
+        }
+
+        .footer .footer-name {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--warm-gold);
+            margin-bottom: 4px;
+        }
+
+        .footer .footer-sub {
+            font-size: 11px;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* ==================== MEDIA QUERIES ==================== */
+        @media (max-width: 340px) {
+            .property-card {
+                flex: 0 0 250px;
+            }
+
+            .pill-btn {
+                font-size: 11.5px;
+                padding: 9px 4px;
+            }
+
+            .stat-item .stat-number {
+                font-size: 20px;
+            }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+
+            .property-card,
+            .property-card .photo-wrapper img,
+            .pill-btn,
+            .carousel-arrow,
+            .vcard-btn {
+                transition: none;
+            }
+
+            .carousel-track {
+                scroll-behavior: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+
+        <!-- HERO BANNER -->
+        <div class="hero-banner">
+            <img src="https://picsum.photos/seed/luxury-home/460/200" alt="Luks gayrimenkul gorunumu" loading="eager">
+            <div class="hero-overlay">
+                <span class="hero-company">RE/MAX Gold</span>
+                <span class="hero-tagline">Hayalinizdeki evi birlikte bulalim</span>
+            </div>
+        </div>
+
+        <!-- PROFILE STRIP -->
+        <div class="profile-strip reveal">
+            <img class="avatar" src="https://i.pravatar.cc/200?img=11" alt="Mehmet Karaca profil fotografI">
+            <div class="info">
+                <div class="name">Mehmet Karaca</div>
+                <div class="title">Kidemli Gayrimenkul Danismani</div>
+                <div class="company">RE/MAX Gold</div>
+            </div>
+        </div>
+
+        <!-- QUICK CONTACT ROW -->
+        <div class="quick-contact reveal">
+            <a href="tel:+905321112233" class="pill-btn pill-btn--call" aria-label="Mehmet Karaca'yi ara">
+                <span class="pill-icon" aria-hidden="true">&#128222;</span> Ara
+            </a>
+            <a href="https://wa.me/905321112233?text=Merhaba%2C%20gayrimenkul%20dan%C4%B1%C5%9Fmanl%C4%B1%C4%9F%C4%B1%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." class="pill-btn pill-btn--whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp ile mesaj gonder">
+                <span class="pill-icon" aria-hidden="true">&#128172;</span> WhatsApp
+            </a>
+            <a href="mailto:mehmet@remaxgold.com.tr" class="pill-btn pill-btn--email" aria-label="E-posta gonder">
+                <span class="pill-icon" aria-hidden="true">&#9993;&#65039;</span> E-posta
+            </a>
+        </div>
+
+        <!-- PROPERTY CAROUSEL -->
+        <div class="section reveal">
+            <h2 class="section-title">Portfoyumdeki Gayrimenkuller</h2>
+            <div class="carousel-wrapper">
+                <div class="carousel-track" id="carouselTrack">
+
+                    <!-- Property 1 -->
+                    <div class="property-card">
+                        <div class="photo-wrapper">
+                            <img src="https://picsum.photos/seed/bosphorus-villa/400/240" alt="Bogaz Manzarali Villa" loading="lazy">
+                            <span class="badge-status badge-status--sale">Satilik</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="prop-name">Bogaz Manzarali Villa</div>
+                            <div class="prop-location">Sariyer, Istanbul</div>
+                            <div class="prop-price">&#8378;12.500.000</div>
+                            <div class="prop-features">
+                                <span class="feat-badge">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0h4"/></svg>
+                                    5+2
+                                </span>
+                                <span class="feat-badge">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h18M3 10v8a2 2 0 002 2h14a2 2 0 002-2v-8M3 10l2-6h14l2 6"/></svg>
+                                    3 Banyo
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Property 2 -->
+                    <div class="property-card">
+                        <div class="photo-wrapper">
+                            <img src="https://picsum.photos/seed/sea-apartment/400/240" alt="Deniz Manzarali Daire" loading="lazy">
+                            <span class="badge-status badge-status--sale">Satilik</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="prop-name">Deniz Manzarali Daire</div>
+                            <div class="prop-location">Kadikoy, Istanbul</div>
+                            <div class="prop-price">&#8378;4.200.000</div>
+                            <div class="prop-features">
+                                <span class="feat-badge">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0h4"/></svg>
+                                    3+1
+                                </span>
+                                <span class="feat-badge">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h18M3 10v8a2 2 0 002 2h14a2 2 0 002-2v-8M3 10l2-6h14l2 6"/></svg>
+                                    2 Banyo
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Property 3 -->
+                    <div class="property-card">
+                        <div class="photo-wrapper">
+                            <img src="https://picsum.photos/seed/modern-residence/400/240" alt="Modern Rezidans" loading="lazy">
+                            <span class="badge-status badge-status--rent">Kiralik</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="prop-name">Modern Rezidans</div>
+                            <div class="prop-location">Levent, Istanbul</div>
+                            <div class="prop-price">&#8378;35.000/ay</div>
+                            <div class="prop-features">
+                                <span class="feat-badge">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0h4"/></svg>
+                                    2+1
+                                </span>
+                                <span class="feat-badge">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h18M3 10v8a2 2 0 002 2h14a2 2 0 002-2v-8M3 10l2-6h14l2 6"/></svg>
+                                    1 Banyo
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Property 4 -->
+                    <div class="property-card">
+                        <div class="photo-wrapper">
+                            <img src="https://picsum.photos/seed/garden-house/400/240" alt="Bahceli Mustakil Ev" loading="lazy">
+                            <span class="badge-status badge-status--sale">Satilik</span>
+                        </div>
+                        <div class="card-body">
+                            <div class="prop-name">Bahceli Mustakil Ev</div>
+                            <div class="prop-location">Beykoz, Istanbul</div>
+                            <div class="prop-price">&#8378;8.750.000</div>
+                            <div class="prop-features">
+                                <span class="feat-badge">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-4 0h4"/></svg>
+                                    4+1
+                                </span>
+                                <span class="feat-badge">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 10h18M3 10v8a2 2 0 002 2h14a2 2 0 002-2v-8M3 10l2-6h14l2 6"/></svg>
+                                    2 Banyo
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Carousel navigation -->
+                <div class="carousel-nav">
+                    <button class="carousel-arrow" id="prevBtn" aria-label="Onceki gayrimenkul">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+                    </button>
+                    <div class="carousel-dots" id="carouselDots">
+                        <button class="dot active" data-index="0" aria-label="Gayrimenkul 1"></button>
+                        <button class="dot" data-index="1" aria-label="Gayrimenkul 2"></button>
+                        <button class="dot" data-index="2" aria-label="Gayrimenkul 3"></button>
+                        <button class="dot" data-index="3" aria-label="Gayrimenkul 4"></button>
+                    </div>
+                    <button class="carousel-arrow" id="nextBtn" aria-label="Sonraki gayrimenkul">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABOUT SECTION -->
+        <div class="section reveal">
+            <h2 class="section-title">Hakkimda</h2>
+            <p class="about-text">
+                Istanbul'un en prestijli lokasyonlarinda 15 yillik deneyimimle, hayalinizdeki evi bulmaniza yardimci oluyorum. Luks konut, yatirim amacli gayrimenkul ve ticari alan konularinda uzman danismanlik hizmeti sunuyorum.
+            </p>
+        </div>
+
+        <!-- TESTIMONIALS -->
+        <div class="section testimonials-section reveal">
+            <h2 class="section-title">Musterilerimiz Ne Diyor?</h2>
+
+            <div class="testimonial-card">
+                <span class="quote-mark" aria-hidden="true">"</span>
+                <div class="stars" aria-label="5 yildiz uzerinden 5">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="quote-text">"Mehmet Bey sayesinde hayalimizdeki evi bulduk. Profesyonelligi ve guler yuzu ile surec cok kolay gecti."</p>
+                <div class="client-name">Ayse &amp; Cem Yilmaz</div>
+            </div>
+
+            <div class="testimonial-card">
+                <span class="quote-mark" aria-hidden="true">"</span>
+                <div class="stars" aria-label="5 yildiz uzerinden 5">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="quote-text">"Yatirim amacli aldigimiz daire 2 yilda %40 deger kazandi. Dogru yonlendirmesi icin tesekkurler."</p>
+                <div class="client-name">Burak Ozkan</div>
+            </div>
+
+            <div class="testimonial-card">
+                <span class="quote-mark" aria-hidden="true">"</span>
+                <div class="stars" aria-label="5 yildiz uzerinden 5">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+                <p class="quote-text">"10 farkli danismanla calistim, hicbiri Mehmet Bey kadar ilgili ve bilgili degildi."</p>
+                <div class="client-name">Fatma Demir</div>
+            </div>
+        </div>
+
+        <!-- MAP -->
+        <div class="section reveal">
+            <h2 class="section-title">Konum</h2>
+            <div class="map-container">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d96251.37405790498!2d28.93577!3d41.01384!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14caa7040068086b%3A0xe1ccfe98bc01b0d0!2zxLBzdGFuYnVs!5e0!3m2!1str!2str!4v1700000000000"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="Ofis konumu - Istanbul haritasi"
+                ></iframe>
+            </div>
+        </div>
+
+        <!-- STATS ROW -->
+        <div class="section stats-section reveal">
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-number" data-target="250">0</div>
+                    <div class="stat-label">Satis</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="15">0</div>
+                    <div class="stat-label">Yil Deneyim</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number" data-target="98">0</div>
+                    <div class="stat-label">Memnuniyet</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- QR CODE -->
+        <div class="section qr-section reveal">
+            <div class="qr-heading">Kartviziti Paylas</div>
+            <div id="qrcode" role="img" aria-label="QR kod - bu sayfanin baglantisini icerir"></div>
+        </div>
+
+        <!-- VCARD BUTTON -->
+        <div class="section reveal" style="padding-top: 0;">
+            <button class="vcard-btn" id="vcardBtn" type="button">
+                <span class="btn-icon" aria-hidden="true">&#128229;</span>
+                Rehbere Kaydet
+            </button>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="footer-name">Mehmet Karaca | RE/MAX Gold</div>
+            <div class="footer-sub">&copy; 2026 Tum haklari saklidir.</div>
+        </footer>
+
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+
+        /* ========== SCROLL REVEAL (IntersectionObserver) ========== */
+        function initScrollReveal() {
+            var revealElements = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                revealElements.forEach(function(el) { el.classList.add('visible'); });
+                return;
+            }
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            revealElements.forEach(function(el) { observer.observe(el); });
+        }
+
+        /* ========== PROPERTY CAROUSEL ========== */
+        function initCarousel() {
+            var track = document.getElementById('carouselTrack');
+            var dots = document.querySelectorAll('#carouselDots .dot');
+            var prevBtn = document.getElementById('prevBtn');
+            var nextBtn = document.getElementById('nextBtn');
+            var cards = track.querySelectorAll('.property-card');
+            var currentIndex = 0;
+
+            function scrollToIndex(index) {
+                if (index < 0) index = 0;
+                if (index >= cards.length) index = cards.length - 1;
+                currentIndex = index;
+                var card = cards[index];
+                var trackRect = track.getBoundingClientRect();
+                var cardRect = card.getBoundingClientRect();
+                var scrollLeft = card.offsetLeft - track.offsetLeft;
+                track.scrollTo({ left: scrollLeft, behavior: 'smooth' });
+                updateDots();
+            }
+
+            function updateDots() {
+                dots.forEach(function(dot, i) {
+                    dot.classList.toggle('active', i === currentIndex);
+                });
+            }
+
+            prevBtn.addEventListener('click', function() {
+                scrollToIndex(currentIndex - 1);
+            });
+
+            nextBtn.addEventListener('click', function() {
+                scrollToIndex(currentIndex + 1);
+            });
+
+            dots.forEach(function(dot) {
+                dot.addEventListener('click', function() {
+                    var index = parseInt(this.getAttribute('data-index'), 10);
+                    scrollToIndex(index);
+                });
+            });
+
+            // Update dots on manual scroll
+            var scrollTimeout;
+            track.addEventListener('scroll', function() {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(function() {
+                    var trackLeft = track.scrollLeft;
+                    var closestIndex = 0;
+                    var closestDistance = Infinity;
+                    cards.forEach(function(card, i) {
+                        var distance = Math.abs(card.offsetLeft - track.offsetLeft - trackLeft);
+                        if (distance < closestDistance) {
+                            closestDistance = distance;
+                            closestIndex = i;
+                        }
+                    });
+                    currentIndex = closestIndex;
+                    updateDots();
+                }, 100);
+            });
+        }
+
+        /* ========== STAT COUNTER ANIMATION ========== */
+        function initStatCounters() {
+            var statNumbers = document.querySelectorAll('.stat-number[data-target]');
+            if (!('IntersectionObserver' in window)) {
+                statNumbers.forEach(function(el) {
+                    var target = parseInt(el.getAttribute('data-target'), 10);
+                    el.textContent = target + (target === 98 ? '%' : '+');
+                });
+                return;
+            }
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        var el = entry.target;
+                        var target = parseInt(el.getAttribute('data-target'), 10);
+                        var suffix = (target === 98) ? '%' : '+';
+                        animateCounter(el, 0, target, 1800, suffix);
+                        observer.unobserve(el);
+                    }
+                });
+            }, { threshold: 0.5 });
+            statNumbers.forEach(function(el) { observer.observe(el); });
+        }
+
+        function animateCounter(el, start, end, duration, suffix) {
+            var startTime = null;
+            function step(timestamp) {
+                if (!startTime) startTime = timestamp;
+                var progress = Math.min((timestamp - startTime) / duration, 1);
+                var eased = 1 - Math.pow(1 - progress, 3);
+                var current = Math.floor(start + (end - start) * eased);
+                el.textContent = current + suffix;
+                if (progress < 1) {
+                    requestAnimationFrame(step);
+                }
+            }
+            requestAnimationFrame(step);
+        }
+
+        /* ========== QR CODE GENERATION ========== */
+        function initQRCode() {
+            var qrContainer = document.getElementById('qrcode');
+            if (qrContainer && typeof QRCode !== 'undefined') {
+                new QRCode(qrContainer, {
+                    text: window.location.href,
+                    width: 150,
+                    height: 150,
+                    colorDark: '#1a365d',
+                    colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            }
+        }
+
+        /* ========== VCARD DOWNLOAD ========== */
+        function initVCard() {
+            var btn = document.getElementById('vcardBtn');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var vcardData = [
+                    'BEGIN:VCARD',
+                    'VERSION:3.0',
+                    'N:Karaca;Mehmet;;;',
+                    'FN:Mehmet Karaca',
+                    'ORG:RE/MAX Gold',
+                    'TITLE:Kidemli Gayrimenkul Danismani',
+                    'TEL;TYPE=CELL:+90 532 111 22 33',
+                    'EMAIL;TYPE=INTERNET:mehmet@remaxgold.com.tr',
+                    'URL:' + window.location.href,
+                    'NOTE:RE/MAX Gold - Gayrimenkul Danismanligi',
+                    'END:VCARD'
+                ].join('\r\n');
+
+                var blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'Mehmet_Karaca.vcf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+        }
+
+        /* ========== INIT ========== */
+        document.addEventListener('DOMContentLoaded', function() {
+            initScrollReveal();
+            initCarousel();
+            initStatCounters();
+            initQRCode();
+            initVCard();
+        });
+
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Av. Kerem Sahin | Sahin &amp; Partners Hukuk Burosu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-dark: #0b1426;
+            --panel-dark: #131f38;
+            --panel-border: #1e2d4a;
+            --accent-blue: #3b82f6;
+            --accent-gold: #c8a951;
+            --text-white: #e8ecf2;
+            --text-muted: #8896aa;
+            --text-dimmed: #5a6a80;
+            --border-subtle: rgba(59, 130, 246, 0.15);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background-color: #060b14;
+            color: var(--text-white);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--bg-dark);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'IBM Plex Serif', serif;
+        }
+
+        /* Scroll reveal animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ==================== HEADER BAR ==================== */
+        .header-bar {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 24px;
+            background: var(--panel-dark);
+            border-bottom: 1px solid var(--panel-border);
+        }
+
+        .logo-box {
+            width: 42px;
+            height: 42px;
+            background: linear-gradient(135deg, var(--accent-blue) 0%, #2563eb 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 16px;
+            font-weight: 700;
+            color: #ffffff;
+            flex-shrink: 0;
+            letter-spacing: 1px;
+        }
+
+        .header-bar .firm-name {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--accent-gold);
+            line-height: 1.3;
+        }
+
+        .header-bar .firm-type {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        /* ==================== PROFILE CARD ==================== */
+        .profile-card {
+            text-align: center;
+            padding: 32px 24px 28px;
+            border-bottom: 1px solid var(--panel-border);
+        }
+
+        .profile-card .avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--panel-border);
+            margin-bottom: 16px;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .profile-card .name {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text-white);
+            margin-bottom: 4px;
+        }
+
+        .profile-card .title {
+            font-size: 14px;
+            color: var(--accent-blue);
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .profile-card .company {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        /* ==================== TAB BAR ==================== */
+        .tab-bar {
+            display: flex;
+            border-bottom: 1px solid var(--panel-border);
+            background: var(--panel-dark);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 14px 8px;
+            background: none;
+            border: none;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            position: relative;
+            transition: color 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-white);
+        }
+
+        .tab-btn.active {
+            color: var(--accent-blue);
+        }
+
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) scaleX(0);
+            width: 60%;
+            height: 2px;
+            background: var(--accent-blue);
+            border-radius: 1px;
+            transition: transform 0.3s ease;
+        }
+
+        .tab-btn.active::after {
+            transform: translateX(-50%) scaleX(1);
+        }
+
+        /* ==================== TAB CONTENT ==================== */
+        .tab-content-wrapper {
+            min-height: 400px;
+        }
+
+        .tab-panel {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        .tab-panel.active {
+            display: block;
+            opacity: 1;
+        }
+
+        .panel-section {
+            padding: 24px;
+        }
+
+        .panel-section + .panel-section {
+            border-top: 1px solid var(--panel-border);
+        }
+
+        .panel-heading {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-white);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .panel-heading .heading-line {
+            flex: 1;
+            height: 1px;
+            background: var(--panel-border);
+        }
+
+        /* ==================== TAB 1: ABOUT ==================== */
+        .about-text {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.8;
+        }
+
+        .key-stats {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .key-stat {
+            flex: 1;
+            background: var(--panel-dark);
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+            padding: 16px 10px;
+            text-align: center;
+        }
+
+        .key-stat .stat-val {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--accent-blue);
+            line-height: 1.2;
+        }
+
+        .key-stat .stat-label {
+            font-size: 10.5px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* Client logos */
+        .client-logos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .client-logo {
+            flex: 1 1 calc(33.333% - 8px);
+            min-width: 0;
+            background: var(--panel-dark);
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+            padding: 12px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-dimmed);
+            letter-spacing: 0.5px;
+            white-space: nowrap;
+        }
+
+        /* ==================== TAB 2: PRACTICE AREAS ==================== */
+        .practice-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .practice-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 16px;
+            background: var(--panel-dark);
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+            transition: border-color 0.25s ease;
+        }
+
+        .practice-item:hover {
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .practice-item .practice-icon {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(59, 130, 246, 0.08);
+            border-radius: 8px;
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .practice-item .practice-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .practice-item .practice-title {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-white);
+            margin-bottom: 2px;
+        }
+
+        .practice-item .practice-desc {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* ==================== TAB 3: CONTACT ==================== */
+        .contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .contact-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .contact-row .contact-icon {
+            width: 38px;
+            height: 38px;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(59, 130, 246, 0.08);
+            border-radius: 8px;
+        }
+
+        .contact-row .contact-icon svg {
+            width: 18px;
+            height: 18px;
+            stroke: var(--accent-blue);
+            fill: none;
+            stroke-width: 1.8;
+        }
+
+        .contact-row .contact-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .contact-row .contact-label {
+            font-size: 11px;
+            color: var(--text-dimmed);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .contact-row .contact-value {
+            font-size: 14px;
+            color: var(--text-white);
+            font-weight: 500;
+        }
+
+        .contact-row .contact-value a {
+            color: var(--text-white);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .contact-row .contact-value a:hover {
+            color: var(--accent-blue);
+        }
+
+        /* Office locations */
+        .office-card {
+            background: var(--panel-dark);
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 10px;
+        }
+
+        .office-card:last-child {
+            margin-bottom: 0;
+        }
+
+        .office-card .office-city {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-white);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .office-card .office-flag {
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        .office-card .office-address {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        /* CTA button */
+        .cta-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 15px 24px;
+            background: var(--accent-blue);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.25s ease;
+            text-decoration: none;
+        }
+
+        .cta-btn:hover {
+            background: #2563eb;
+        }
+
+        .cta-btn--whatsapp {
+            background: #25d366;
+            margin-top: 10px;
+        }
+
+        .cta-btn--whatsapp:hover {
+            background: #1fb855;
+        }
+
+        /* Map */
+        .map-container {
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--panel-border);
+            margin-top: 16px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 180px;
+            border: 0;
+            display: block;
+            filter: grayscale(0.4) brightness(0.85);
+        }
+
+        /* Working hours */
+        .hours-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .hours-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 14px;
+            background: var(--panel-dark);
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+        }
+
+        .hours-row .day {
+            font-size: 13px;
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .hours-row .time {
+            font-size: 13px;
+            color: var(--text-white);
+            font-weight: 600;
+        }
+
+        .hours-row .time--closed {
+            color: #ef4444;
+        }
+
+        /* ==================== QR SECTION ==================== */
+        .qr-section {
+            text-align: center;
+            padding: 28px 24px;
+            border-top: 1px solid var(--panel-border);
+        }
+
+        .qr-heading {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-white);
+            margin-bottom: 16px;
+        }
+
+        #qrcode {
+            display: inline-block;
+            padding: 14px;
+            background: #ffffff;
+            border-radius: 8px;
+        }
+
+        #qrcode img {
+            display: block;
+        }
+
+        /* ==================== VCARD BUTTON ==================== */
+        .vcard-section {
+            padding: 0 24px 28px;
+        }
+
+        .vcard-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 15px 24px;
+            background: var(--panel-dark);
+            color: var(--text-white);
+            border: 1px solid var(--panel-border);
+            border-radius: 8px;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: border-color 0.25s ease, background 0.25s ease;
+        }
+
+        .vcard-btn:hover {
+            border-color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.06);
+        }
+
+        .vcard-btn .btn-icon {
+            font-size: 18px;
+        }
+
+        /* ==================== FOOTER ==================== */
+        .footer {
+            text-align: center;
+            padding: 24px;
+            border-top: 1px solid var(--panel-border);
+            background: var(--panel-dark);
+        }
+
+        .footer .footer-name {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent-gold);
+            margin-bottom: 4px;
+        }
+
+        .footer .footer-sub {
+            font-size: 11px;
+            color: var(--text-dimmed);
+        }
+
+        /* ==================== MEDIA QUERIES ==================== */
+        @media (max-width: 340px) {
+            .tab-btn {
+                font-size: 11.5px;
+                padding: 12px 4px;
+            }
+
+            .key-stats {
+                flex-direction: column;
+            }
+
+            .client-logo {
+                flex: 1 1 calc(50% - 6px);
+            }
+        }
+
+        /* Reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            .reveal {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+
+            .tab-panel {
+                transition: none;
+            }
+
+            .tab-btn::after {
+                transition: none;
+            }
+
+            .practice-item,
+            .cta-btn,
+            .vcard-btn,
+            .contact-row .contact-value a {
+                transition: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+
+        <!-- HEADER BAR -->
+        <header class="header-bar">
+            <div class="logo-box" aria-hidden="true">SP</div>
+            <div>
+                <div class="firm-name">Sahin &amp; Partners</div>
+                <div class="firm-type">Hukuk Burosu</div>
+            </div>
+        </header>
+
+        <!-- PROFILE CARD -->
+        <div class="profile-card reveal">
+            <img class="avatar" src="https://i.pravatar.cc/200?img=3" alt="Av. Kerem Sahin profil fotografi">
+            <div class="name">Av. Kerem Sahin</div>
+            <div class="title">Kurucu Ortak</div>
+            <div class="company">Sahin &amp; Partners Hukuk Burosu</div>
+        </div>
+
+        <!-- TAB BAR -->
+        <nav class="tab-bar" role="tablist" aria-label="Profil sekmeleri">
+            <button class="tab-btn active" role="tab" aria-selected="true" aria-controls="tab-about" id="btn-about">Hakkimizda</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-expertise" id="btn-expertise">Uzmanlik Alanlari</button>
+            <button class="tab-btn" role="tab" aria-selected="false" aria-controls="tab-contact" id="btn-contact">Iletisim</button>
+        </nav>
+
+        <!-- TAB CONTENT WRAPPER -->
+        <div class="tab-content-wrapper">
+
+            <!-- TAB 1: ABOUT -->
+            <div class="tab-panel active" role="tabpanel" id="tab-about" aria-labelledby="btn-about">
+                <div class="panel-section reveal">
+                    <p class="about-text">
+                        2006 yilindan bu yana ticaret hukuku, sirketler hukuku ve uluslararasi tahkim alanlarinda muvekkillerimize stratejik hukuki cozumler sunuyoruz. Istanbul, Ankara ve Londra ofislerimizle ulusal ve uluslararasi alanda hizmet veriyoruz. Kadromuzda 12 avukat ve 5 hukuk danismani bulunmaktadir.
+                    </p>
+                    <div class="key-stats">
+                        <div class="key-stat">
+                            <div class="stat-val">18</div>
+                            <div class="stat-label">Yil Deneyim</div>
+                        </div>
+                        <div class="key-stat">
+                            <div class="stat-val">500+</div>
+                            <div class="stat-label">Dava</div>
+                        </div>
+                        <div class="key-stat">
+                            <div class="stat-val">3</div>
+                            <div class="stat-label">Ofis</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-section reveal">
+                    <div class="panel-heading">
+                        Referanslarimiz
+                        <span class="heading-line"></span>
+                    </div>
+                    <div class="client-logos">
+                        <div class="client-logo">TechCorp</div>
+                        <div class="client-logo">ABank</div>
+                        <div class="client-logo">MegaHolding</div>
+                        <div class="client-logo">GoldenInvest</div>
+                        <div class="client-logo">BlueTech</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: PRACTICE AREAS -->
+            <div class="tab-panel" role="tabpanel" id="tab-expertise" aria-labelledby="btn-expertise">
+                <div class="panel-section">
+                    <div class="practice-list">
+
+                        <div class="practice-item reveal">
+                            <div class="practice-icon" aria-hidden="true">&#9878;&#65039;</div>
+                            <div class="practice-info">
+                                <div class="practice-title">Ticaret Hukuku</div>
+                                <div class="practice-desc">Ticari uyusmazliklarin cozumu ve ticaret hukuku danismanligi</div>
+                            </div>
+                        </div>
+
+                        <div class="practice-item reveal">
+                            <div class="practice-icon" aria-hidden="true">&#127970;</div>
+                            <div class="practice-info">
+                                <div class="practice-title">Sirketler Hukuku</div>
+                                <div class="practice-desc">Sirket kurulusu, birlesme, devralma ve yapilanma sureclerinde hukuki destek</div>
+                            </div>
+                        </div>
+
+                        <div class="practice-item reveal">
+                            <div class="practice-icon" aria-hidden="true">&#127757;</div>
+                            <div class="practice-info">
+                                <div class="practice-title">Uluslararasi Tahkim</div>
+                                <div class="practice-desc">ICC, LCIA ve ICSID tahkim yargılamalari</div>
+                            </div>
+                        </div>
+
+                        <div class="practice-item reveal">
+                            <div class="practice-icon" aria-hidden="true">&#128203;</div>
+                            <div class="practice-info">
+                                <div class="practice-title">Sozlesme Hukuku</div>
+                                <div class="practice-desc">Sozlesme hazirlama, inceleme ve uyusmazlik cozumu</div>
+                            </div>
+                        </div>
+
+                        <div class="practice-item reveal">
+                            <div class="practice-icon" aria-hidden="true">&#128188;</div>
+                            <div class="practice-info">
+                                <div class="practice-title">Is Hukuku</div>
+                                <div class="practice-desc">Isci-isveren iliskileri, is sozlesmeleri ve toplu is hukuku</div>
+                            </div>
+                        </div>
+
+                        <div class="practice-item reveal">
+                            <div class="practice-icon" aria-hidden="true">&#127963;</div>
+                            <div class="practice-info">
+                                <div class="practice-title">Idare Hukuku</div>
+                                <div class="practice-desc">Idari islemler, kamu ihaleleri ve duzenleyici uyum</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 3: CONTACT -->
+            <div class="tab-panel" role="tabpanel" id="tab-contact" aria-labelledby="btn-contact">
+                <div class="panel-section">
+                    <div class="contact-list">
+                        <div class="contact-row reveal">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-label">Telefon</div>
+                                <div class="contact-value"><a href="tel:+905319990011">+90 531 999 00 11</a></div>
+                            </div>
+                        </div>
+                        <div class="contact-row reveal">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-label">E-posta</div>
+                                <div class="contact-value"><a href="mailto:kerem@sahinhukuk.com.tr">kerem@sahinhukuk.com.tr</a></div>
+                            </div>
+                        </div>
+                        <div class="contact-row reveal">
+                            <div class="contact-icon">
+                                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                            </div>
+                            <div class="contact-info">
+                                <div class="contact-label">Website</div>
+                                <div class="contact-value"><a href="#">www.sahinhukuk.com.tr</a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Office Locations -->
+                <div class="panel-section">
+                    <div class="panel-heading">
+                        Ofislerimiz
+                        <span class="heading-line"></span>
+                    </div>
+
+                    <div class="office-card reveal">
+                        <div class="office-city">
+                            <span class="office-flag" aria-hidden="true">&#127481;&#127479;</span>
+                            Istanbul
+                        </div>
+                        <div class="office-address">Levent Mah. Buyukdere Cad. No:185, Sapphire Tower Kat:34, Sisli/Istanbul</div>
+                    </div>
+
+                    <div class="office-card reveal">
+                        <div class="office-city">
+                            <span class="office-flag" aria-hidden="true">&#127481;&#127479;</span>
+                            Ankara
+                        </div>
+                        <div class="office-address">Kizilay, Ataturk Bulvari No:120, Daire:5, Cankaya/Ankara</div>
+                    </div>
+
+                    <div class="office-card reveal">
+                        <div class="office-city">
+                            <span class="office-flag" aria-hidden="true">&#127468;&#127463;</span>
+                            Londra
+                        </div>
+                        <div class="office-address">48 Moorgate, London EC2R 6EJ, United Kingdom</div>
+                    </div>
+                </div>
+
+                <!-- CTA Buttons -->
+                <div class="panel-section">
+                    <a href="tel:+905319990011" class="cta-btn" aria-label="Danismanlik randevusu icin arayin">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.362 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                        Danismanlik Randevusu
+                    </a>
+                    <a href="https://wa.me/905319990011?text=Merhaba%2C%20hukuki%20dan%C4%B1%C5%9Fmanl%C4%B1k%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." class="cta-btn cta-btn--whatsapp" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp ile iletisime gecin">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                        WhatsApp ile Iletisim
+                    </a>
+                </div>
+
+                <!-- Map -->
+                <div class="panel-section">
+                    <div class="panel-heading">
+                        Konum
+                        <span class="heading-line"></span>
+                    </div>
+                    <div class="map-container">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3008.048238536797!2d29.01268!3d41.07854!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab63f42e1d7c1%3A0x4bf3e9e26a3b2f6c!2sLevent%2C%20Istanbul!5e0!3m2!1str!2str!4v1700000000000"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                            title="Ofis konumu - Istanbul Levent haritasi"
+                        ></iframe>
+                    </div>
+                </div>
+
+                <!-- Working Hours -->
+                <div class="panel-section">
+                    <div class="panel-heading">
+                        Calisma Saatleri
+                        <span class="heading-line"></span>
+                    </div>
+                    <div class="hours-grid">
+                        <div class="hours-row">
+                            <span class="day">Pazartesi - Cuma</span>
+                            <span class="time">09:00 - 18:00</span>
+                        </div>
+                        <div class="hours-row">
+                            <span class="day">Cumartesi</span>
+                            <span class="time">10:00 - 14:00</span>
+                        </div>
+                        <div class="hours-row">
+                            <span class="day">Pazar</span>
+                            <span class="time time--closed">Kapali</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- QR CODE (always visible, below tabs) -->
+        <div class="qr-section reveal">
+            <div class="qr-heading">Kartviziti Paylas</div>
+            <div id="qrcode" role="img" aria-label="QR kod - bu sayfanin baglantisini icerir"></div>
+        </div>
+
+        <!-- VCARD BUTTON -->
+        <div class="vcard-section reveal">
+            <button class="vcard-btn" id="vcardBtn" type="button">
+                <span class="btn-icon" aria-hidden="true">&#128229;</span>
+                Rehbere Kaydet
+            </button>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="footer-name">Sahin &amp; Partners Hukuk Burosu</div>
+            <div class="footer-sub">&copy; 2026 Tum haklari saklidir.</div>
+        </footer>
+
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+
+        /* ========== SCROLL REVEAL (IntersectionObserver) ========== */
+        function initScrollReveal() {
+            var revealElements = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                revealElements.forEach(function(el) { el.classList.add('visible'); });
+                return;
+            }
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+            revealElements.forEach(function(el) { observer.observe(el); });
+        }
+
+        /* ========== TABBED NAVIGATION ========== */
+        function initTabs() {
+            var tabBtns = document.querySelectorAll('.tab-btn');
+            var tabPanels = document.querySelectorAll('.tab-panel');
+
+            tabBtns.forEach(function(btn) {
+                btn.addEventListener('click', function() {
+                    var targetId = this.getAttribute('aria-controls');
+
+                    // Deactivate all tabs
+                    tabBtns.forEach(function(b) {
+                        b.classList.remove('active');
+                        b.setAttribute('aria-selected', 'false');
+                    });
+
+                    // Hide all panels with fade
+                    tabPanels.forEach(function(panel) {
+                        panel.classList.remove('active');
+                    });
+
+                    // Activate clicked tab
+                    this.classList.add('active');
+                    this.setAttribute('aria-selected', 'true');
+
+                    // Show target panel with fade
+                    var targetPanel = document.getElementById(targetId);
+                    // Force reflow for opacity transition
+                    void targetPanel.offsetWidth;
+                    targetPanel.classList.add('active');
+
+                    // Re-observe reveal elements inside newly shown panel
+                    var newRevealElements = targetPanel.querySelectorAll('.reveal:not(.visible)');
+                    if (newRevealElements.length > 0 && ('IntersectionObserver' in window)) {
+                        var observer = new IntersectionObserver(function(entries) {
+                            entries.forEach(function(entry) {
+                                if (entry.isIntersecting) {
+                                    entry.target.classList.add('visible');
+                                    observer.unobserve(entry.target);
+                                }
+                            });
+                        }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+                        newRevealElements.forEach(function(el) { observer.observe(el); });
+                    }
+                });
+            });
+
+            // Keyboard navigation for tabs
+            var tabBar = document.querySelector('.tab-bar');
+            tabBar.addEventListener('keydown', function(e) {
+                var currentBtn = document.activeElement;
+                if (!currentBtn.classList.contains('tab-btn')) return;
+                var btns = Array.from(tabBtns);
+                var index = btns.indexOf(currentBtn);
+
+                if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    var next = btns[(index + 1) % btns.length];
+                    next.focus();
+                    next.click();
+                } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    var prev = btns[(index - 1 + btns.length) % btns.length];
+                    prev.focus();
+                    prev.click();
+                }
+            });
+        }
+
+        /* ========== QR CODE GENERATION ========== */
+        function initQRCode() {
+            var qrContainer = document.getElementById('qrcode');
+            if (qrContainer && typeof QRCode !== 'undefined') {
+                new QRCode(qrContainer, {
+                    text: window.location.href,
+                    width: 140,
+                    height: 140,
+                    colorDark: '#0b1426',
+                    colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            }
+        }
+
+        /* ========== VCARD DOWNLOAD ========== */
+        function initVCard() {
+            var btn = document.getElementById('vcardBtn');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var vcardData = [
+                    'BEGIN:VCARD',
+                    'VERSION:3.0',
+                    'N:Sahin;Kerem;;;',
+                    'FN:Av. Kerem Sahin',
+                    'ORG:Sahin & Partners Hukuk Burosu',
+                    'TITLE:Kurucu Ortak',
+                    'TEL;TYPE=CELL:+90 531 999 00 11',
+                    'EMAIL;TYPE=INTERNET:kerem@sahinhukuk.com.tr',
+                    'ADR;TYPE=WORK:;;Levent Mah. Buyukdere Cad. No:185 Kat:34;Istanbul;;34330;Turkey',
+                    'URL:' + window.location.href,
+                    'NOTE:Sahin & Partners Hukuk Burosu - Ticaret Hukuku ve Uluslararasi Tahkim',
+                    'END:VCARD'
+                ].join('\r\n');
+
+                var blob = new Blob([vcardData], { type: 'text/vcard;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'Kerem_Sahin.vcf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+        }
+
+        /* ========== INIT ========== */
+        document.addEventListener('DOMContentLoaded', function() {
+            initScrollReveal();
+            initTabs();
+            initQRCode();
+            initVCard();
+        });
+
+    })();
+    </script>
+</body>
+</html>

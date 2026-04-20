@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ester D&#246;nmez &#8212; 4K Hava &#199;ekimi | Drone &amp; Prodüksiyon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0a0f;
+    --panel: #12121a;
+    --panel-alt: #1a1a26;
+    --cyan: #22d3ee;
+    --electric: #3b82f6;
+    --cyan-dim: rgba(34,211,238,0.12);
+    --electric-dim: rgba(59,130,246,0.12);
+    --white: #ffffff;
+    --gray-100: #f5f5f5;
+    --gray-300: #d4d4d4;
+    --gray-400: #a3a3a3;
+    --gray-500: #737373;
+    --gray-600: #525252;
+    --gray-700: #404040;
+    --gray-800: #1e1e2a;
+    --border: #1f1f2e;
+    --shadow: 0 4px 20px rgba(0,0,0,0.5);
+    --glow-cyan: 0 0 30px rgba(34,211,238,0.15);
+    --glow-electric: 0 0 30px rgba(59,130,246,0.15);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #000;
+    color: var(--gray-300);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .card-container {
+    max-width: 460px;
+    margin: 0 auto;
+    background: var(--bg);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  h2, h3, h4 {
+    font-family: 'Outfit', sans-serif;
+  }
+
+  /* ===== 1. BOLD HERO ===== */
+  .hero {
+    position: relative;
+    height: 420px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 32px 24px;
+  }
+  .hero-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: brightness(0.4) contrast(1.15) saturate(1.1);
+    z-index: 0;
+  }
+  .hero-overlay {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(to top, rgba(10,10,15,0.97) 0%, rgba(10,10,15,0.4) 45%, transparent 100%);
+    z-index: 1;
+  }
+  .hero-scanline {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(34,211,238,0.015) 2px,
+      rgba(34,211,238,0.015) 4px
+    );
+    z-index: 1;
+    pointer-events: none;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+  }
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    background: rgba(34,211,238,0.1);
+    border: 1px solid rgba(34,211,238,0.2);
+    border-radius: 50px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--cyan);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 14px;
+  }
+  .hero-badge::before {
+    content: '';
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--cyan);
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+  .hero-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 40px;
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+  }
+  .hero-name span {
+    display: block;
+    background: linear-gradient(135deg, var(--cyan), var(--electric));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-400);
+    margin-top: 8px;
+    letter-spacing: 0.5px;
+  }
+  .hero-company {
+    font-family: 'Outfit', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--cyan);
+    margin-top: 4px;
+    letter-spacing: 1px;
+  }
+
+  /* ===== 2. STATS STRIP ===== */
+  .stats-strip {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 10px;
+    padding: 20px 24px;
+  }
+  .stat-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 16px 12px;
+    text-align: center;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .stat-card:hover {
+    border-color: rgba(34,211,238,0.2);
+    box-shadow: var(--glow-cyan);
+  }
+  .stat-number {
+    font-family: 'Outfit', sans-serif;
+    font-size: 22px;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--cyan), var(--electric));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    line-height: 1.1;
+  }
+  .stat-label {
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--gray-500);
+    margin-top: 4px;
+    letter-spacing: 0.3px;
+  }
+
+  /* ===== 3. QUICK CONTACT CTAs ===== */
+  .cta-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 0 24px 24px;
+  }
+  .cta-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 16px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+    border: none;
+    cursor: pointer;
+  }
+  .cta-btn:hover { transform: translateY(-2px); }
+  .cta-btn:active { transform: translateY(0); }
+  .cta-primary {
+    background: linear-gradient(135deg, var(--cyan), var(--electric));
+    color: #fff;
+  }
+  .cta-primary:hover { box-shadow: 0 4px 24px rgba(34,211,238,0.35); }
+  .cta-whatsapp {
+    background: #25D366;
+    color: #fff;
+  }
+  .cta-whatsapp:hover { box-shadow: 0 4px 20px rgba(37,211,102,0.3); }
+  .cta-btn svg { width: 18px; height: 18px; }
+
+  /* ===== SECTION SHARED ===== */
+  .section-header {
+    padding: 32px 24px 20px;
+  }
+  .section-label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    color: var(--cyan);
+    margin-bottom: 4px;
+    opacity: 0.7;
+  }
+  .section-heading {
+    font-family: 'Outfit', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--white);
+  }
+
+  /* ===== 4. SERVICES ===== */
+  .services {
+    padding: 0 24px 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .service-card {
+    background: var(--panel);
+    border-radius: 14px;
+    padding: 20px 16px;
+    border: 1px solid var(--border);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    cursor: default;
+  }
+  .service-card:hover {
+    border-color: rgba(34,211,238,0.25);
+    box-shadow: var(--glow-cyan);
+    transform: translateY(-2px);
+  }
+  .service-icon {
+    font-size: 28px;
+    line-height: 1;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .service-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 4px;
+  }
+  .service-desc {
+    font-size: 12px;
+    color: var(--gray-500);
+    line-height: 1.5;
+  }
+
+  /* ===== 5. VIDEO PORTFOLIO ===== */
+  .video-grid {
+    padding: 0 24px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .video-card {
+    background: var(--panel);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    transition: border-color 0.3s ease;
+  }
+  .video-card:hover { border-color: rgba(34,211,238,0.2); }
+  .video-wrapper {
+    position: relative;
+    background: #000;
+    cursor: pointer;
+    aspect-ratio: 16/9;
+  }
+  .video-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.75;
+    transition: opacity 0.3s ease, transform 0.5s ease;
+  }
+  .video-wrapper:hover .video-thumb {
+    opacity: 0.5;
+    transform: scale(1.03);
+  }
+  .video-play-btn {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 54px; height: 54px;
+    background: linear-gradient(135deg, var(--cyan), var(--electric));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 24px rgba(34,211,238,0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  .video-wrapper:hover .video-play-btn {
+    transform: translate(-50%, -50%) scale(1.1);
+    box-shadow: 0 6px 32px rgba(34,211,238,0.45);
+  }
+  .video-play-btn::after {
+    content: '';
+    width: 0; height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 16px solid #fff;
+    margin-left: 3px;
+  }
+  .video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: 0;
+  }
+  .video-info {
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .video-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--white);
+  }
+  .video-tag {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--cyan);
+    background: var(--cyan-dim);
+    padding: 4px 12px;
+    border-radius: 50px;
+    white-space: nowrap;
+  }
+
+  /* Featured video (larger) */
+  .video-card.featured .video-wrapper {
+    aspect-ratio: 16/9;
+  }
+  .video-card.featured .video-play-btn {
+    width: 64px; height: 64px;
+  }
+
+  /* ===== 6. ABOUT ===== */
+  .about-section {
+    padding: 0 24px 8px;
+  }
+  .about-card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+  }
+  .about-avatar {
+    flex-shrink: 0;
+    width: 56px; height: 56px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--cyan), var(--electric));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: 20px;
+    font-weight: 900;
+    color: #fff;
+  }
+  .about-body {
+    flex: 1;
+  }
+  .about-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--white);
+  }
+  .about-role {
+    font-size: 12px;
+    color: var(--cyan);
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .about-text {
+    font-size: 14px;
+    line-height: 1.8;
+    color: var(--gray-400);
+  }
+
+  /* ===== 7. CONTACT DETAILS ===== */
+  .contact-list {
+    padding: 0 24px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    text-decoration: none;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .contact-item:hover {
+    background: var(--panel-alt);
+    border-color: var(--gray-700);
+  }
+  .contact-icon {
+    width: 40px; height: 40px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .contact-icon svg {
+    width: 20px; height: 20px;
+  }
+  .contact-icon.phone {
+    background: var(--cyan-dim);
+  }
+  .contact-icon.phone svg { stroke: var(--cyan); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .contact-icon.email {
+    background: var(--electric-dim);
+  }
+  .contact-icon.email svg { stroke: var(--electric); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .contact-icon.web {
+    background: rgba(168,85,247,0.12);
+  }
+  .contact-icon.web svg { stroke: #a855f7; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .contact-icon.shutterstock {
+    background: rgba(239,68,68,0.12);
+  }
+  .contact-icon.shutterstock svg { stroke: #ef4444; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .contact-text-wrap {
+    flex: 1;
+    min-width: 0;
+  }
+  .contact-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .contact-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--gray-300);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .contact-item .arrow-icon {
+    width: 16px; height: 16px;
+    stroke: var(--gray-600);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+    transition: stroke 0.2s ease, transform 0.2s ease;
+  }
+  .contact-item:hover .arrow-icon {
+    stroke: var(--gray-400);
+    transform: translateX(2px);
+  }
+
+  /* ===== 8. SOCIAL LINKS ===== */
+  .social-section {
+    padding: 24px;
+  }
+  .social-links {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+  }
+  .social-link {
+    width: 52px; height: 52px;
+    border-radius: 14px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: background 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+  }
+  .social-link:hover {
+    background: var(--panel-alt);
+    border-color: var(--gray-700);
+    transform: translateY(-2px);
+  }
+  .social-link svg {
+    width: 22px; height: 22px;
+    fill: var(--gray-400);
+    transition: fill 0.2s ease;
+  }
+  .social-link:hover svg { fill: var(--white); }
+  .social-link.instagram:hover { border-color: #e1306c; }
+  .social-link.instagram:hover svg { fill: #e1306c; }
+  .social-link.youtube:hover { border-color: #ff0000; }
+  .social-link.youtube:hover svg { fill: #ff0000; }
+  .social-link.whatsapp:hover { border-color: #25D366; }
+  .social-link.whatsapp:hover svg { fill: #25D366; }
+  .social-link.web:hover { border-color: var(--cyan); }
+  .social-link.web:hover svg { fill: var(--cyan); }
+
+  /* ===== 9. FOOTER ===== */
+  .footer {
+    padding: 24px 24px 44px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+  .vcard-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 32px;
+    background: linear-gradient(135deg, var(--cyan), var(--electric));
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+    margin-bottom: 16px;
+  }
+  .vcard-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 24px rgba(34,211,238,0.3); }
+  .vcard-btn:active { transform: translateY(0); }
+  .vcard-btn svg {
+    width: 18px; height: 18px;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .footer-copy {
+    font-size: 11px;
+    color: var(--gray-600);
+    margin-top: 8px;
+  }
+  .footer-copy a {
+    color: var(--gray-500);
+    text-decoration: none;
+  }
+  .footer-copy a:hover { color: var(--cyan); }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { transition: none; opacity: 1; transform: none; }
+    .hero-badge::before { animation: none; }
+    .video-thumb { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card-container">
+
+  <!-- 1. BOLD HERO -->
+  <section class="hero">
+    <img src="https://img.youtube.com/vi/jhbyY1JzZoY/maxresdefault.jpg" alt="4K Hava &#199;ekimi showreel g&#246;r&#252;nt&#252;s&#252;" class="hero-bg" width="460" height="420">
+    <div class="hero-overlay"></div>
+    <div class="hero-scanline" aria-hidden="true"></div>
+    <div class="hero-content">
+      <div class="hero-badge" aria-hidden="true">4K Drone</div>
+      <h1 class="hero-name">ESTER<span>D&#214;NMEZ</span></h1>
+      <p class="hero-title">Kurucu &amp; Prod&#252;kt&#246;r</p>
+      <p class="hero-company">4K HAVA &#199;EK&#304;M&#304;</p>
+    </div>
+  </section>
+
+  <!-- 2. STATS -->
+  <div class="stats-strip reveal">
+    <div class="stat-card">
+      <div class="stat-number">500+</div>
+      <div class="stat-label">Proje</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">89.7K</div>
+      <div class="stat-label">Takip&#231;i</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">6</div>
+      <div class="stat-label">Y&#305;l Deneyim</div>
+    </div>
+  </div>
+
+  <!-- 3. QUICK CONTACT -->
+  <div class="cta-row reveal">
+    <a href="tel:+905446692669" class="cta-btn cta-primary">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      Ara
+    </a>
+    <a href="https://wa.me/905446692669?text=Merhaba%2C%20hava%20%C3%A7ekimi%20hizmeti%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer" class="cta-btn cta-whatsapp">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+
+  <!-- 4. SERVICES -->
+  <div class="section-header reveal">
+    <div class="section-label">Hizmetler</div>
+    <h2 class="section-heading">Neler Yap&#305;yoruz?</h2>
+  </div>
+
+  <div class="services">
+    <div class="service-card reveal">
+      <span class="service-icon" aria-hidden="true">&#x1F681;</span>
+      <div class="service-name">Drone Hava &#199;ekimi</div>
+      <div class="service-desc">Profesyonel 4K havadan g&#246;r&#252;nt&#252;leme</div>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon" aria-hidden="true">&#x1F3AC;</span>
+      <div class="service-name">Tan&#305;t&#305;m Filmi</div>
+      <div class="service-desc">Kurumsal ve ticari prod&#252;ksiyon</div>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon" aria-hidden="true">&#x1F4F8;</span>
+      <div class="service-name">Hava Foto&#287;raf&#231;&#305;l&#305;&#287;&#305;</div>
+      <div class="service-desc">Y&#252;ksek &#231;&#246;z&#252;n&#252;rl&#252;kl&#252; hava foto&#287;raf&#305;</div>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon" aria-hidden="true">&#x1F39E;</span>
+      <div class="service-name">Reklam Filmi</div>
+      <div class="service-desc">Yarat&#305;c&#305; reklam prodüksiyonu</div>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon" aria-hidden="true">&#x1F3D7;</span>
+      <div class="service-name">&#304;n&#351;aat Takibi</div>
+      <div class="service-desc">&#350;antiye ilerleme dok&#252;mantasyonu</div>
+    </div>
+    <div class="service-card reveal">
+      <span class="service-icon" aria-hidden="true">&#x1F3AE;</span>
+      <div class="service-name">FPV Drone</div>
+      <div class="service-desc">Dinamik FPV u&#231;u&#351; &#231;ekimleri</div>
+    </div>
+  </div>
+
+  <!-- 5. VIDEO PORTFOLIO -->
+  <div class="section-header reveal">
+    <div class="section-label">Port&#246;fly</div>
+    <h2 class="section-heading">Se&#231;me &#199;al&#305;&#351;malar</h2>
+  </div>
+
+  <div class="video-grid">
+    <!-- Featured: Showreel 2024 -->
+    <div class="video-card featured reveal">
+      <div class="video-wrapper" role="button" tabindex="0" aria-label="Showreel 2024 videosunu oynat" data-video-id="jhbyY1JzZoY">
+        <img src="https://img.youtube.com/vi/jhbyY1JzZoY/maxresdefault.jpg" alt="Showreel 2024" class="video-thumb" width="480" height="270" loading="lazy">
+        <div class="video-play-btn" aria-hidden="true"></div>
+      </div>
+      <div class="video-info">
+        <span class="video-title">Showreel 2024</span>
+        <span class="video-tag">&#9733; &#214;ne &#199;&#305;kan</span>
+      </div>
+    </div>
+
+    <!-- Otel Tanitim -->
+    <div class="video-card reveal">
+      <div class="video-wrapper" role="button" tabindex="0" aria-label="Otel Tan&#305;t&#305;m videosunu oynat" data-video-id="_m1YNYj2w9E">
+        <img src="https://img.youtube.com/vi/_m1YNYj2w9E/hqdefault.jpg" alt="Otel Tan&#305;t&#305;m" class="video-thumb" width="480" height="270" loading="lazy">
+        <div class="video-play-btn" aria-hidden="true"></div>
+      </div>
+      <div class="video-info">
+        <span class="video-title">Otel Tan&#305;t&#305;m</span>
+        <span class="video-tag">Tan&#305;t&#305;m</span>
+      </div>
+    </div>
+
+    <!-- FPV Reklam -->
+    <div class="video-card reveal">
+      <div class="video-wrapper" role="button" tabindex="0" aria-label="FPV Reklam videosunu oynat" data-video-id="MR2tziFK7KY">
+        <img src="https://img.youtube.com/vi/MR2tziFK7KY/hqdefault.jpg" alt="FPV Reklam" class="video-thumb" width="480" height="270" loading="lazy">
+        <div class="video-play-btn" aria-hidden="true"></div>
+      </div>
+      <div class="video-info">
+        <span class="video-title">FPV Reklam</span>
+        <span class="video-tag">FPV</span>
+      </div>
+    </div>
+
+    <!-- One Shot -->
+    <div class="video-card reveal">
+      <div class="video-wrapper" role="button" tabindex="0" aria-label="One Shot videosunu oynat" data-video-id="ptYm163dv8g">
+        <img src="https://img.youtube.com/vi/ptYm163dv8g/hqdefault.jpg" alt="One Shot" class="video-thumb" width="480" height="270" loading="lazy">
+        <div class="video-play-btn" aria-hidden="true"></div>
+      </div>
+      <div class="video-info">
+        <span class="video-title">One Shot</span>
+        <span class="video-tag">Teknik</span>
+      </div>
+    </div>
+
+    <!-- Fuar -->
+    <div class="video-card reveal">
+      <div class="video-wrapper" role="button" tabindex="0" aria-label="Fuar &#231;ekimi videosunu oynat" data-video-id="-3iJ-ZXnIPw">
+        <img src="https://img.youtube.com/vi/-3iJ-ZXnIPw/hqdefault.jpg" alt="Fuar &#199;ekimi" class="video-thumb" width="480" height="270" loading="lazy">
+        <div class="video-play-btn" aria-hidden="true"></div>
+      </div>
+      <div class="video-info">
+        <span class="video-title">Fuar &#199;ekimi</span>
+        <span class="video-tag">Etkinlik</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. ABOUT -->
+  <div class="section-header reveal">
+    <div class="section-label">Hakk&#305;m&#305;zda</div>
+    <h2 class="section-heading">Biz Kimiz?</h2>
+  </div>
+  <div class="about-section reveal">
+    <div class="about-card">
+      <div class="about-avatar" aria-hidden="true"><img src="data:image/jpeg;base64,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" alt="Ester Donmez" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></div>
+      <div class="about-body">
+        <div class="about-name">Ester D&#246;nmez</div>
+        <div class="about-role">Kurucu &amp; Prod&#252;kt&#246;r</div>
+        <p class="about-text">Profesyonel drone ekipmanlar&#305; ve deneyimli ekibimizle; havadan g&#246;r&#252;nt&#252;leme, tan&#305;t&#305;m filmi ve reklam prod&#252;ksiyonu alan&#305;nda hizmet veriyoruz.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. CONTACT DETAILS -->
+  <div class="section-header reveal">
+    <div class="section-label">&#304;leti&#351;im</div>
+    <h2 class="section-heading">Bize Ula&#351;&#305;n</h2>
+  </div>
+  <div class="contact-list">
+    <a href="tel:+905446692669" class="contact-item reveal">
+      <div class="contact-icon phone">
+        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+      </div>
+      <div class="contact-text-wrap">
+        <div class="contact-label">Telefon</div>
+        <div class="contact-value">+90 544 669 26 69</div>
+      </div>
+      <svg class="arrow-icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </a>
+    <a href="mailto:esterdonmez@gmail.com" class="contact-item reveal">
+      <div class="contact-icon email">
+        <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      </div>
+      <div class="contact-text-wrap">
+        <div class="contact-label">E-posta</div>
+        <div class="contact-value">esterdonmez@gmail.com</div>
+      </div>
+      <svg class="arrow-icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </a>
+    <a href="https://www.4khavacekim.com" target="_blank" rel="noopener noreferrer" class="contact-item reveal">
+      <div class="contact-icon web">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      </div>
+      <div class="contact-text-wrap">
+        <div class="contact-label">Web Sitesi</div>
+        <div class="contact-value">4khavacekim.com</div>
+      </div>
+      <svg class="arrow-icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </a>
+    <a href="https://www.shutterstock.com/tr/g/4khavacekim/video?rid=164220666" target="_blank" rel="noopener noreferrer" class="contact-item reveal">
+      <div class="contact-icon shutterstock">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      </div>
+      <div class="contact-text-wrap">
+        <div class="contact-label">Shutterstock</div>
+        <div class="contact-value">Stok Video Ar&#351;ivi</div>
+      </div>
+      <svg class="arrow-icon" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+    </a>
+  </div>
+
+  <!-- 8. SOCIAL LINKS -->
+  <div class="social-section reveal">
+    <div class="social-links">
+      <a href="https://instagram.com/4khavacekim_pro" target="_blank" rel="noopener noreferrer" class="social-link instagram" aria-label="Instagram - @4khavacekim_pro">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+      </a>
+      <a href="https://www.youtube.com/@4khavacekim_pro" target="_blank" rel="noopener noreferrer" class="social-link youtube" aria-label="YouTube - @4khavacekim_pro">
+        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      </a>
+      <a href="https://wa.me/905446692669?text=Merhaba%2C%20hava%20%C3%A7ekimi%20hizmeti%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer" class="social-link whatsapp" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      </a>
+      <a href="https://www.4khavacekim.com" target="_blank" rel="noopener noreferrer" class="social-link web" aria-label="Web sitesi">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- 9. FOOTER -->
+  <footer class="footer">
+    <button class="vcard-btn" onclick="downloadVCard()" aria-label="Rehbere kaydet">
+      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Rehbere Kaydet
+    </button>
+    <p class="footer-copy">4K Hava &#199;ekimi &copy; 2024 &mdash; <a href="https://www.4khavacekim.com" target="_blank" rel="noopener noreferrer">4khavacekim.com</a></p>
+  </footer>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // === SCROLL REVEAL ===
+  var revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -20px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(function(el) {
+    revealObserver.observe(el);
+  });
+
+  // === VIDEO INLINE PLAY ===
+  document.querySelectorAll('.video-wrapper[data-video-id]').forEach(function(wrapper) {
+    function playVideo() {
+      var videoId = wrapper.getAttribute('data-video-id');
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.title = wrapper.getAttribute('aria-label') || 'Video';
+      wrapper.innerHTML = '';
+      wrapper.appendChild(iframe);
+      wrapper.removeAttribute('role');
+      wrapper.removeAttribute('tabindex');
+      wrapper.style.cursor = 'default';
+    }
+    wrapper.addEventListener('click', playVideo);
+    wrapper.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); playVideo(); }
+    });
+  });
+})();
+
+// === VCARD DOWNLOAD ===
+function downloadVCard() {
+  var vcard = [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    'N:D\u00f6nmez;Ester;;;',
+    'FN:Ester D\u00f6nmez',
+    'ORG:4K Hava \u00c7ekimi',
+    'TITLE:Kurucu & Prod\u00fckt\u00f6r',
+    'TEL;TYPE=CELL:+905446692669',
+    'EMAIL:esterdonmez@gmail.com',
+    'URL:https://www.4khavacekim.com',
+    'X-SOCIALPROFILE;TYPE=instagram:https://instagram.com/4khavacekim_pro',
+    'NOTE:Profesyonel drone hava \u00e7ekimi \\, tan\u0131t\u0131m filmi ve reklam prod\u00fcksiyonu.',
+    'END:VCARD'
+  ].join('\r\n');
+
+  var blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'Ester_Donmez_4K.vcf';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+</script>
+
+</body>
+</html>

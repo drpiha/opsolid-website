@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Elif Celik - Fotograf Sanatcisi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #111111;
+    --bg-card: #1a1a1a;
+    --accent: #e8c472;
+    --accent-dim: rgba(232, 196, 114, 0.15);
+    --white: #ffffff;
+    --white-90: rgba(255,255,255,0.9);
+    --white-60: rgba(255,255,255,0.6);
+    --white-30: rgba(255,255,255,0.3);
+    --white-12: rgba(255,255,255,0.12);
+    --white-06: rgba(255,255,255,0.06);
+    --gap: 4px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--white);
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 0;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .card-wrapper {
+    width: 100%;
+    max-width: 460px;
+    background: var(--bg);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1), transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* 1. Minimal Header */
+  .header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 24px 20px 20px;
+    border-bottom: 1px solid var(--white-06);
+  }
+  .header img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent);
+    flex-shrink: 0;
+  }
+  .header-text h1 {
+    font-family: 'Space Mono', monospace;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+  }
+  .header-text p {
+    font-size: 12.5px;
+    color: var(--accent);
+    font-weight: 400;
+    margin-top: 1px;
+    letter-spacing: 0.3px;
+  }
+
+  /* 2. Category Filter Bar */
+  .filter-bar {
+    display: flex;
+    gap: 8px;
+    padding: 18px 20px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .filter-bar::-webkit-scrollbar { display: none; }
+  .filter-pill {
+    flex-shrink: 0;
+    padding: 7px 18px;
+    border-radius: 50px;
+    border: 1.5px solid var(--white-30);
+    background: transparent;
+    color: var(--white-60);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    white-space: nowrap;
+  }
+  .filter-pill:hover {
+    border-color: var(--white-60);
+    color: var(--white-90);
+  }
+  .filter-pill.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--bg);
+    font-weight: 600;
+  }
+
+  /* 3. Masonry Gallery */
+  .masonry {
+    column-count: 2;
+    column-gap: var(--gap);
+    padding: 0 var(--gap) var(--gap);
+  }
+  .masonry-item {
+    break-inside: avoid;
+    margin-bottom: var(--gap);
+    position: relative;
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: pointer;
+    display: block;
+  }
+  .masonry-item.hidden {
+    display: none;
+  }
+  .masonry-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .masonry-item:hover img {
+    transform: scale(1.04);
+  }
+  .masonry-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: flex-end;
+    padding: 12px;
+  }
+  .masonry-item:hover .masonry-overlay {
+    opacity: 1;
+  }
+  .masonry-overlay span {
+    font-size: 12.5px;
+    font-weight: 500;
+    color: var(--white);
+    letter-spacing: 0.2px;
+  }
+
+  /* Lightbox */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0,0,0,0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  .lightbox.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    border: none;
+    background: rgba(255,255,255,0.1);
+    color: var(--white);
+    font-size: 22px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s ease;
+    z-index: 1001;
+  }
+  .lightbox-close:hover { background: rgba(255,255,255,0.2); }
+  .lightbox-img {
+    max-width: 92%;
+    max-height: 75vh;
+    object-fit: contain;
+    border-radius: 4px;
+    transform: scale(0.92);
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .lightbox.active .lightbox-img {
+    transform: scale(1);
+  }
+  .lightbox-title {
+    margin-top: 16px;
+    font-size: 14px;
+    color: var(--white-60);
+    font-weight: 400;
+    letter-spacing: 0.3px;
+    text-align: center;
+  }
+
+  /* 4. About */
+  .about-section {
+    text-align: center;
+    padding: 32px 28px;
+    border-top: 1px solid var(--white-06);
+  }
+  .about-section p {
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--white-60);
+    font-weight: 300;
+  }
+
+  /* 5. Contact Strip */
+  .contact-strip {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 12px 20px 24px;
+  }
+  .contact-icon {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    border: 1.5px solid var(--white-12);
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white-60);
+    text-decoration: none;
+    transition: all 0.25s ease;
+  }
+  .contact-icon:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-dim);
+  }
+  .contact-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+
+  /* 6. QR Code */
+  .qr-section {
+    text-align: center;
+    padding: 28px 20px;
+    border-top: 1px solid var(--white-06);
+  }
+  .qr-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 13px;
+    color: var(--white-30);
+    margin-bottom: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  #qrcode {
+    display: inline-block;
+    padding: 10px;
+    background: var(--white);
+    border-radius: 6px;
+  }
+  #qrcode img, #qrcode canvas { display: block; border-radius: 3px; }
+
+  /* 7. vCard */
+  .vcard-section {
+    padding: 0 20px 16px;
+  }
+  .vcard-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 13px 20px;
+    border-radius: 8px;
+    background: transparent;
+    border: 1.5px solid var(--white-12);
+    color: var(--white-60);
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .vcard-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: var(--accent-dim);
+  }
+  .vcard-btn svg { width: 18px; height: 18px; }
+
+  /* 8. Footer */
+  .footer {
+    text-align: center;
+    padding: 20px;
+    border-top: 1px solid var(--white-06);
+  }
+  .footer p {
+    font-size: 11px;
+    color: var(--white-30);
+    letter-spacing: 0.5px;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { transition: none; opacity: 1; transform: none; }
+    .masonry-item img { transition: none; }
+    .lightbox { transition: none; }
+    .lightbox-img { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card-wrapper">
+
+  <!-- 1. Minimal Header -->
+  <div class="header">
+    <img src="https://i.pravatar.cc/200?img=9" alt="Elif Celik profil fotografi">
+    <div class="header-text">
+      <h1>Elif Celik</h1>
+      <p>Fotograf Sanatcisi</p>
+    </div>
+  </div>
+
+  <!-- 2. Category Filter Bar -->
+  <div class="filter-bar reveal">
+    <button class="filter-pill active" data-filter="all">Tumu</button>
+    <button class="filter-pill" data-filter="dugun">Dugun</button>
+    <button class="filter-pill" data-filter="portre">Portre</button>
+    <button class="filter-pill" data-filter="moda">Moda</button>
+    <button class="filter-pill" data-filter="doga">Doga</button>
+  </div>
+
+  <!-- 3. Masonry Photo Gallery -->
+  <div class="masonry reveal" id="gallery">
+    <div class="masonry-item" data-category="dugun" data-title="Gun Batimi Cekimi" onclick="openLightbox(this)">
+      <img src="https://picsum.photos/seed/wedding-couple/400/560" alt="Gun Batimi Cekimi" loading="lazy">
+      <div class="masonry-overlay"><span>Gun Batimi Cekimi</span></div>
+    </div>
+    <div class="masonry-item" data-category="portre" data-title="Studyo Portre" onclick="openLightbox(this)">
+      <img src="https://picsum.photos/seed/portrait-woman/400/400" alt="Studyo Portre" loading="lazy">
+      <div class="masonry-overlay"><span>Studyo Portre</span></div>
+    </div>
+    <div class="masonry-item" data-category="moda" data-title="Moda Editoryal" onclick="openLightbox(this)">
+      <img src="https://picsum.photos/seed/fashion-model/400/600" alt="Moda Editoryal" loading="lazy">
+      <div class="masonry-overlay"><span>Moda Editoryal</span></div>
+    </div>
+    <div class="masonry-item" data-category="doga" data-title="Karadeniz Ormanlari" onclick="openLightbox(this)">
+      <img src="https://picsum.photos/seed/nature-forest/400/300" alt="Karadeniz Ormanlari" loading="lazy">
+      <div class="masonry-overlay"><span>Karadeniz Ormanlari</span></div>
+    </div>
+    <div class="masonry-item" data-category="dugun" data-title="Detay Cekimi" onclick="openLightbox(this)">
+      <img src="https://picsum.photos/seed/wedding-rings/400/400" alt="Detay Cekimi" loading="lazy">
+      <div class="masonry-overlay"><span>Detay Cekimi</span></div>
+    </div>
+    <div class="masonry-item" data-category="portre" data-title="Dogal Isik Portre" onclick="openLightbox(this)">
+      <img src="https://picsum.photos/seed/portrait-man/400/500" alt="Dogal Isik Portre" loading="lazy">
+      <div class="masonry-overlay"><span>Dogal Isik Portre</span></div>
+    </div>
+    <div class="masonry-item" data-category="moda" data-title="Sokak Modasi" onclick="openLightbox(this)">
+      <img src="https://picsum.photos/seed/fashion-street/400/350" alt="Sokak Modasi" loading="lazy">
+      <div class="masonry-overlay"><span>Sokak Modasi</span></div>
+    </div>
+    <div class="masonry-item" data-category="doga" data-title="Kackar Daglari" onclick="openLightbox(this)">
+      <img src="https://picsum.photos/seed/nature-mountain/400/450" alt="Kackar Daglari" loading="lazy">
+      <div class="masonry-overlay"><span>Kackar Daglari</span></div>
+    </div>
+  </div>
+
+  <!-- 4. About -->
+  <div class="about-section reveal">
+    <p>Isigi ve ani yakaliyorum. Her kare, bir hikaye anlatir.</p>
+  </div>
+
+  <!-- 5. Contact Strip -->
+  <div class="contact-strip reveal">
+    <!-- Phone -->
+    <a href="tel:+905375556677" class="contact-icon" aria-label="Telefon ile ara">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+    </a>
+    <!-- Email -->
+    <a href="mailto:elif@elifcelik.com" class="contact-icon" aria-label="E-posta gonder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 7L2 7"/></svg>
+    </a>
+    <!-- Instagram -->
+    <a href="https://instagram.com/elifcelik_photo" class="contact-icon" target="_blank" rel="noopener noreferrer" aria-label="Instagram profili">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+    </a>
+    <!-- WhatsApp -->
+    <a href="https://wa.me/905375556677?text=Merhaba%2C%20foto%C4%9Fraf%20%C3%A7ekimi%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." class="contact-icon" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp ile iletisim">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+  </div>
+
+  <!-- 6. QR Code -->
+  <div class="qr-section reveal">
+    <div class="qr-label">Portfolyomu Paylas</div>
+    <div id="qrcode"></div>
+  </div>
+
+  <!-- 7. vCard Download -->
+  <div class="vcard-section reveal">
+    <button class="vcard-btn" onclick="downloadVCard()" aria-label="Rehbere Kaydet">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Rehbere Kaydet
+    </button>
+  </div>
+
+  <!-- 8. Footer -->
+  <footer class="footer">
+    <p>Elif Celik &middot; Fotograf Sanatcisi</p>
+  </footer>
+
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightboxBackdrop(event)">
+  <button class="lightbox-close" onclick="closeLightbox()" aria-label="Kapat">&times;</button>
+  <img class="lightbox-img" id="lightbox-img" src="" alt="">
+  <div class="lightbox-title" id="lightbox-title"></div>
+</div>
+
+<script>
+  // Scroll Reveal with IntersectionObserver
+  (function() {
+    var revealEls = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            obs.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+      revealEls.forEach(function(el) { obs.observe(el); });
+    } else {
+      revealEls.forEach(function(el) { el.classList.add('visible'); });
+    }
+  })();
+
+  // Category Filter
+  (function() {
+    var pills = document.querySelectorAll('.filter-pill');
+    var items = document.querySelectorAll('.masonry-item');
+
+    pills.forEach(function(pill) {
+      pill.addEventListener('click', function() {
+        // Update active state
+        pills.forEach(function(p) { p.classList.remove('active'); });
+        this.classList.add('active');
+
+        var filter = this.getAttribute('data-filter');
+
+        items.forEach(function(item) {
+          if (filter === 'all' || item.getAttribute('data-category') === filter) {
+            item.classList.remove('hidden');
+          } else {
+            item.classList.add('hidden');
+          }
+        });
+      });
+    });
+  })();
+
+  // Lightbox
+  function openLightbox(el) {
+    var imgSrc = el.querySelector('img').src;
+    var title = el.getAttribute('data-title');
+    var lb = document.getElementById('lightbox');
+    var lbImg = document.getElementById('lightbox-img');
+    var lbTitle = document.getElementById('lightbox-title');
+
+    lbImg.src = imgSrc;
+    lbImg.alt = title;
+    lbTitle.textContent = title;
+    lb.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    var lb = document.getElementById('lightbox');
+    lb.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+
+  function closeLightboxBackdrop(e) {
+    if (e.target === document.getElementById('lightbox')) {
+      closeLightbox();
+    }
+  }
+
+  // Close lightbox with Escape key
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  // QR Code
+  (function() {
+    var qrContainer = document.getElementById('qrcode');
+    if (qrContainer && typeof QRCode !== 'undefined') {
+      new QRCode(qrContainer, {
+        text: window.location.href,
+        width: 120,
+        height: 120,
+        colorDark: '#111111',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    }
+  })();
+
+  // vCard Download
+  function downloadVCard() {
+    var vcard = [
+      'BEGIN:VCARD',
+      'VERSION:3.0',
+      'N:Celik;Elif;;;',
+      'FN:Elif Celik',
+      'TITLE:Fotograf Sanatcisi',
+      'TEL;TYPE=CELL:+90 537 555 66 77',
+      'EMAIL:elif@elifcelik.com',
+      'URL:https://instagram.com/elifcelik_photo',
+      'NOTE:Fotograf Sanatcisi - Isigi ve ani yakaliyorum.',
+      'END:VCARD'
+    ].join('\r\n');
+
+    var blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'Elif_Celik.vcf';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+</script>
+
+</body>
+</html>

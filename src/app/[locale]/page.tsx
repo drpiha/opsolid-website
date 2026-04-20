@@ -5,6 +5,8 @@ import { HowWeWork } from "@/components/sections/HowWeWork";
 import { UseCasesPreview } from "@/components/sections/UseCasesPreview";
 import { ToolsShowcase } from "@/components/sections/ToolsShowcase";
 import { ProductsTeaser } from "@/components/sections/ProductsTeaser";
+import { DigitalCardPreviewStrip } from "@/components/sections/DigitalCardPreviewStrip";
+import { AgentShowcase } from "@/components/sections/AgentShowcase";
 import { ProblemOutcome } from "@/components/sections/ProblemOutcome";
 import { WhyUs } from "@/components/sections/WhyUs";
 import { CTASection } from "@/components/sections/CTASection";
@@ -33,13 +35,19 @@ export default function HomePage() {
       {/* 7. Pricing preview — DBC + Automation services */}
       <ProductsTeaser />
 
-      {/* 8. Social proof / testimonials */}
+      {/* 8. Industry templates — 10 digital card previews */}
+      <DigitalCardPreviewStrip />
+
+      {/* 9. AI agent showcase — voice + chatbot + booking */}
+      <AgentShowcase />
+
+      {/* 10. Social proof / testimonials */}
       <ProblemOutcome />
 
-      {/* 9. Why Germany-native matters */}
+      {/* 11. Why Germany-native matters */}
       <WhyUs />
 
-      {/* 10. Final CTA */}
+      {/* 12. Final CTA */}
       <CTASection />
     </>
   );

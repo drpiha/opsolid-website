@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ester Donmez — Kurucu & Produktor | 4K Hava Cekimi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f5f5f0;
+    --white: #ffffff;
+    --charcoal: #2a2a2a;
+    --accent: #c4654a;
+    --text: #333333;
+    --text-light: #777777;
+    --text-muted: #aaaaaa;
+    --border: #e8e8e3;
+    --shadow: 0 2px 16px rgba(0,0,0,0.06);
+    --shadow-hover: 0 4px 24px rgba(0,0,0,0.1);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Manrope', sans-serif;
+    background: #e8e8e3;
+    color: var(--text);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .card-container {
+    max-width: 460px;
+    margin: 0 auto;
+    background: var(--bg);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== 1. HEADER ===== */
+  .header {
+    padding: 24px 28px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    border-bottom: 1px solid var(--border);
+    background: var(--white);
+  }
+  .header-logo {
+    width: 36px;
+    height: 36px;
+    position: relative;
+    flex-shrink: 0;
+  }
+  /* Geometric drone mark: rotated square (diamond) + crosshair lines */
+  .header-logo::before {
+    content: '';
+    position: absolute;
+    top: 4px; left: 4px;
+    width: 22px; height: 22px;
+    border: 2.5px solid var(--charcoal);
+    transform: rotate(45deg);
+    transform-origin: center center;
+  }
+  .header-logo::after {
+    content: '';
+    position: absolute;
+    bottom: 0; right: 0;
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--accent);
+  }
+  .header-firm {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: var(--charcoal);
+  }
+
+  /* ===== 2. PROFILE ===== */
+  .profile {
+    padding: 32px 28px 24px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background: var(--white);
+  }
+  .profile-initials {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--charcoal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .profile-initials::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--accent);
+  }
+  .profile-initials span {
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 2px;
+  }
+  .profile-info { text-align: left; }
+  .profile-name {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--charcoal);
+    line-height: 1.2;
+  }
+  .profile-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    margin-top: 3px;
+    letter-spacing: 0.3px;
+  }
+  .profile-tagline {
+    font-size: 12px;
+    color: var(--text-light);
+    margin-top: 6px;
+    font-weight: 400;
+  }
+
+  /* ===== 3. STAT COUNTERS ===== */
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    padding: 0 28px;
+    background: var(--white);
+    padding-bottom: 28px;
+  }
+  .stat-item {
+    text-align: center;
+    padding: 16px 4px;
+    position: relative;
+  }
+  .stat-item:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 20%;
+    height: 60%;
+    width: 1px;
+    background: var(--border);
+  }
+  .stat-number {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--charcoal);
+    line-height: 1;
+  }
+  .stat-number .stat-suffix {
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .stat-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 6px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+
+  /* ===== 4. SERVICES ===== */
+  .services-section {
+    padding: 32px 28px 24px;
+  }
+  .services-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .service-card {
+    background: var(--white);
+    border-radius: 10px;
+    padding: 18px 16px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+  }
+  .service-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+  }
+  .service-icon {
+    font-size: 24px;
+    margin-bottom: 8px;
+    display: block;
+    line-height: 1;
+  }
+  .service-name {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--charcoal);
+    letter-spacing: 0.2px;
+    line-height: 1.3;
+  }
+
+  /* ===== 5. HORIZONTAL SCROLL VIDEO PORTFOLIO ===== */
+  .projects-section {
+    padding: 32px 0 24px;
+  }
+  .section-title {
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    padding: 0 28px;
+    margin-bottom: 20px;
+  }
+  .section-title span {
+    display: block;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--charcoal);
+    text-transform: none;
+    letter-spacing: 0;
+    margin-top: 4px;
+  }
+  .scroll-wrapper {
+    position: relative;
+  }
+  .projects-scroll {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 28px 16px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .projects-scroll::-webkit-scrollbar { display: none; }
+  .project-card {
+    flex: 0 0 280px;
+    scroll-snap-align: start;
+    background: var(--white);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.3s ease;
+  }
+  .project-card:hover {
+    box-shadow: var(--shadow-hover);
+  }
+  .project-video-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #000;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .project-video-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.85;
+    transition: opacity 0.3s ease;
+  }
+  .project-video-wrap:hover img { opacity: 0.7; }
+  .project-play {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 44px; height: 44px;
+    background: rgba(255,255,255,0.93);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+    pointer-events: none;
+  }
+  .project-video-wrap:hover .project-play { transform: translate(-50%, -50%) scale(1.08); }
+  .project-play::after {
+    content: '';
+    width: 0; height: 0;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-left: 13px solid var(--charcoal);
+    margin-left: 2px;
+  }
+  .project-video-wrap iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: 0;
+  }
+  .project-body {
+    padding: 16px 18px;
+  }
+  .project-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--charcoal);
+  }
+  .project-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .project-location {
+    font-size: 12px;
+    color: var(--text-light);
+    font-weight: 400;
+  }
+  .project-year {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--accent);
+    background: rgba(196, 101, 74, 0.08);
+    padding: 3px 10px;
+    border-radius: 20px;
+  }
+  /* Scroll hint arrow */
+  .scroll-hint {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 32px;
+    height: 32px;
+    background: var(--white);
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+    animation: pulseHint 2s ease-in-out infinite;
+    z-index: 2;
+  }
+  .scroll-hint svg {
+    width: 16px; height: 16px;
+    fill: none;
+    stroke: var(--charcoal);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  @keyframes pulseHint {
+    0%, 100% { opacity: 0.7; transform: translateY(-50%) translateX(0); }
+    50% { opacity: 1; transform: translateY(-50%) translateX(4px); }
+  }
+  /* Scroll dots */
+  .scroll-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 0 0;
+  }
+  .scroll-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--border);
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  .scroll-dot.active {
+    background: var(--accent);
+    transform: scale(1.3);
+  }
+
+  /* ===== 6. SHOWREEL VIDEO ===== */
+  .video-section {
+    padding: 24px 28px;
+  }
+  .video-wrapper {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #000;
+    cursor: pointer;
+    aspect-ratio: 16/9;
+  }
+  .video-thumb {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.85;
+    transition: opacity 0.3s ease;
+  }
+  .video-wrapper:hover .video-thumb { opacity: 0.7; }
+  .video-play {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 56px; height: 56px;
+    background: rgba(255,255,255,0.95);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+  }
+  .video-wrapper:hover .video-play { transform: translate(-50%, -50%) scale(1.08); }
+  .video-play::after {
+    content: '';
+    width: 0; height: 0;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 16px solid var(--charcoal);
+    margin-left: 3px;
+  }
+  .video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    border: 0;
+  }
+
+  /* ===== 7. ABOUT ===== */
+  .about-section {
+    padding: 24px 28px 32px;
+  }
+  .about-text {
+    font-size: 14px;
+    color: var(--text-light);
+    line-height: 1.75;
+    font-weight: 400;
+  }
+
+  /* ===== 8. SOCIAL LINKS ===== */
+  .social-section {
+    padding: 0 28px 24px;
+  }
+  .social-grid {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .social-card {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 8px;
+    background: var(--white);
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--text);
+    box-shadow: var(--shadow);
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+  }
+  .social-card:hover {
+    box-shadow: var(--shadow-hover);
+    transform: translateY(-2px);
+  }
+  .social-card svg {
+    width: 22px; height: 22px;
+  }
+  .social-card-label {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+  }
+  .social-card-value {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--charcoal);
+  }
+
+  /* ===== 9. CONTACT ===== */
+  .contact-section {
+    padding: 24px 28px;
+    background: var(--white);
+    border-top: 1px solid var(--border);
+  }
+  .contact-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 8px;
+  }
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 13px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .contact-item:hover { color: var(--accent); }
+  .contact-icon {
+    width: 36px; height: 36px;
+    border-radius: 8px;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .contact-icon svg {
+    width: 16px; height: 16px;
+    fill: none;
+    stroke: var(--charcoal);
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .whatsapp-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 14px;
+    background: #25D366;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 20px;
+    transition: background 0.2s ease;
+  }
+  .whatsapp-btn:hover { background: #1da851; }
+  .whatsapp-btn svg { width: 20px; height: 20px; fill: #fff; }
+
+  /* ===== 10. FOOTER ===== */
+  .footer {
+    padding: 24px 28px 40px;
+    text-align: center;
+    border-top: 1px solid var(--border);
+    background: var(--white);
+  }
+  .vcard-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background: var(--charcoal);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-family: 'Manrope', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+    margin-bottom: 16px;
+  }
+  .vcard-btn:hover { background: #444; transform: translateY(-1px); }
+  .vcard-btn:active { transform: translateY(0); }
+  .vcard-btn svg {
+    width: 18px; height: 18px;
+    fill: none;
+    stroke: #fff;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .footer-copy {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { transition: none; opacity: 1; transform: none; }
+    .scroll-hint { animation: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card-container">
+
+  <!-- 1. HEADER -->
+  <header class="header">
+    <div class="header-logo" aria-hidden="true"></div>
+    <div class="header-firm">4K Hava Cekimi</div>
+  </header>
+
+  <!-- 2. PROFILE -->
+  <section class="profile reveal">
+    <div class="profile-initials" aria-label="Ester Donmez">
+      <span><img src="data:image/jpeg;base64,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" alt="Ester Donmez" style="width:100%;height:100%;object-fit:cover;border-radius:inherit"></span>
+    </div>
+    <div class="profile-info">
+      <h1 class="profile-name">Ester Donmez</h1>
+      <p class="profile-title">Kurucu &amp; Produktor</p>
+      <p class="profile-tagline">Profesyonel drone ile havadan goruntuleme ve produksiyon.</p>
+    </div>
+  </section>
+
+  <!-- 3. STAT COUNTERS -->
+  <section class="stats reveal" id="statsSection">
+    <div class="stat-item">
+      <div class="stat-number"><span data-target="672" class="counter">0</span></div>
+      <div class="stat-label">Video</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number"><span data-target="89" class="counter">0</span><span class="stat-suffix">.7K</span></div>
+      <div class="stat-label">Takipci</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number"><span data-target="10" class="counter">0</span><span class="stat-suffix">+</span></div>
+      <div class="stat-label">Yil</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-number"><span data-target="40" class="counter">0</span><span class="stat-suffix">+</span></div>
+      <div class="stat-label">Sehir</div>
+    </div>
+  </section>
+
+  <!-- 4. SERVICES -->
+  <section class="services-section reveal">
+    <div class="section-title">Hizmetler<span>Neler Yapiyoruz</span></div>
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="service-icon" aria-hidden="true">&#x1F681;</span>
+        <div class="service-name">Drone Hava Cekimi</div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon" aria-hidden="true">&#x1F3AC;</span>
+        <div class="service-name">Tanitim Filmi</div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon" aria-hidden="true">&#x1F4F8;</span>
+        <div class="service-name">Hava Fotografciligi</div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon" aria-hidden="true">&#x1F39E;</span>
+        <div class="service-name">Reklam Filmi</div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon" aria-hidden="true">&#x1F3D7;</span>
+        <div class="service-name">Insaat Takibi</div>
+      </div>
+      <div class="service-card">
+        <span class="service-icon" aria-hidden="true">&#x1F3AE;</span>
+        <div class="service-name">FPV Drone Cekimi</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. HORIZONTAL SCROLL VIDEO PORTFOLIO -->
+  <section class="projects-section reveal">
+    <div class="section-title">Portfolyo<span>Video Calismalarimiz</span></div>
+    <div class="scroll-wrapper">
+      <div class="projects-scroll" id="projectsScroll">
+
+        <article class="project-card">
+          <div class="project-video-wrap" data-video-id="_m1YNYj2w9E" role="button" tabindex="0" aria-label="Otel cekimi videosunu oynat">
+            <img src="https://img.youtube.com/vi/_m1YNYj2w9E/hqdefault.jpg" alt="Otel hava cekimi onizleme" width="480" height="360" loading="lazy">
+            <div class="project-play" aria-hidden="true"></div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-name">Otel Tanitim Cekimi</h3>
+            <div class="project-meta">
+              <span class="project-location">Drone Hava Cekimi</span>
+              <span class="project-year">4K</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-video-wrap" data-video-id="-3iJ-ZXnIPw" role="button" tabindex="0" aria-label="Fuar cekimi videosunu oynat">
+            <img src="https://img.youtube.com/vi/-3iJ-ZXnIPw/hqdefault.jpg" alt="Fuar hava cekimi onizleme" width="480" height="360" loading="lazy">
+            <div class="project-play" aria-hidden="true"></div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-name">Fuar Cekimi</h3>
+            <div class="project-meta">
+              <span class="project-location">Etkinlik Goruntuleme</span>
+              <span class="project-year">4K</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-video-wrap" data-video-id="ptYm163dv8g" role="button" tabindex="0" aria-label="One Shot videosunu oynat">
+            <img src="https://img.youtube.com/vi/ptYm163dv8g/hqdefault.jpg" alt="One Shot cekim onizleme" width="480" height="360" loading="lazy">
+            <div class="project-play" aria-hidden="true"></div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-name">One Shot Cekim</h3>
+            <div class="project-meta">
+              <span class="project-location">Tek Cekim Produksiyon</span>
+              <span class="project-year">4K</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-video-wrap" data-video-id="MR2tziFK7KY" role="button" tabindex="0" aria-label="FPV Drone videosunu oynat">
+            <img src="https://img.youtube.com/vi/MR2tziFK7KY/hqdefault.jpg" alt="FPV Drone cekim onizleme" width="480" height="360" loading="lazy">
+            <div class="project-play" aria-hidden="true"></div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-name">FPV Drone Cekimi</h3>
+            <div class="project-meta">
+              <span class="project-location">Adrenalin Dolu Ucus</span>
+              <span class="project-year">FPV</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-card">
+          <div class="project-video-wrap" data-video-id="jhbyY1JzZoY" role="button" tabindex="0" aria-label="Showreel videosunu oynat">
+            <img src="https://img.youtube.com/vi/jhbyY1JzZoY/hqdefault.jpg" alt="Showreel onizleme" width="480" height="360" loading="lazy">
+            <div class="project-play" aria-hidden="true"></div>
+          </div>
+          <div class="project-body">
+            <h3 class="project-name">Showreel 2024</h3>
+            <div class="project-meta">
+              <span class="project-location">En Iyi Calismalar</span>
+              <span class="project-year">REEL</span>
+            </div>
+          </div>
+        </article>
+
+      </div>
+      <div class="scroll-hint" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+      </div>
+    </div>
+    <div class="scroll-dots" id="scrollDots" aria-hidden="true">
+      <div class="scroll-dot active"></div>
+      <div class="scroll-dot"></div>
+      <div class="scroll-dot"></div>
+      <div class="scroll-dot"></div>
+      <div class="scroll-dot"></div>
+    </div>
+  </section>
+
+  <!-- 6. SHOWREEL VIDEO -->
+  <section class="video-section reveal">
+    <div class="section-title">Showreel<span>En Iyi Anlar</span></div>
+    <div class="video-wrapper" id="videoWrapper" role="button" tabindex="0" aria-label="Showreel videosunu oynat">
+      <img src="https://img.youtube.com/vi/jhbyY1JzZoY/hqdefault.jpg" alt="Showreel video onizleme" class="video-thumb" width="480" height="360" loading="lazy">
+      <div class="video-play" aria-hidden="true"></div>
+    </div>
+  </section>
+
+  <!-- 7. ABOUT -->
+  <section class="about-section reveal">
+    <div class="section-title">Hakkimizda<span>Biz Kimiz</span></div>
+    <p class="about-text">Profesyonel drone ekipmanlari ve deneyimli ekibimizle; havadan goruntuleme, tanitim filmi ve reklam produksiyonu alaninda hizmet veriyoruz. Her projede sinematik kalite ve gorsel mukemmellik hedefliyoruz.</p>
+  </section>
+
+  <!-- 8. SOCIAL LINKS -->
+  <section class="social-section reveal">
+    <div class="section-title">Sosyal Medya<span>Bizi Takip Edin</span></div>
+    <div class="social-grid">
+      <a href="https://www.instagram.com/4khavacekim_pro" target="_blank" rel="noopener noreferrer" class="social-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--charcoal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+        <span class="social-card-label">Instagram</span>
+        <span class="social-card-value">89.7K</span>
+      </a>
+      <a href="https://www.youtube.com/@4khavacekim_pro" target="_blank" rel="noopener noreferrer" class="social-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--charcoal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19.1c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.43z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
+        <span class="social-card-label">YouTube</span>
+        <span class="social-card-value">Video</span>
+      </a>
+      <a href="https://www.shutterstock.com/tr/g/4khavacekim/video?rid=164220666" target="_blank" rel="noopener noreferrer" class="social-card">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--charcoal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"/><line x1="4" y1="22" x2="4" y2="15"/></svg>
+        <span class="social-card-label">Shutterstock</span>
+        <span class="social-card-value">Stok</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- 9. CONTACT -->
+  <section class="contact-section reveal">
+    <div class="section-title">Iletisim<span>Bize Ulasin</span></div>
+    <ul class="contact-list">
+      <li>
+        <a href="tel:+905446692669" class="contact-item">
+          <span class="contact-icon"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></span>
+          +90 544 669 26 69
+        </a>
+      </li>
+      <li>
+        <a href="mailto:esterdonmez@gmail.com" class="contact-item">
+          <span class="contact-icon"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg></span>
+          esterdonmez@gmail.com
+        </a>
+      </li>
+      <li>
+        <a href="https://www.4khavacekim.com" target="_blank" rel="noopener noreferrer" class="contact-item">
+          <span class="contact-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></span>
+          4khavacekim.com
+        </a>
+      </li>
+    </ul>
+    <a href="https://wa.me/905446692669?text=Merhaba%2C%20hava%20%C3%A7ekimi%20hizmeti%20hakk%C4%B1nda%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener noreferrer" class="whatsapp-btn">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp ile Iletisim
+    </a>
+  </section>
+
+  <!-- 10. FOOTER -->
+  <footer class="footer">
+    <button class="vcard-btn" onclick="downloadVCard()" aria-label="Rehbere kaydet">
+      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Rehbere Kaydet
+    </button>
+    <p class="footer-copy">4K Hava Cekimi &copy; 2024</p>
+  </footer>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // === SCROLL REVEAL ===
+  var revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(function(el) {
+    revealObserver.observe(el);
+  });
+
+  // === STAT COUNTER ANIMATION ===
+  var countersAnimated = false;
+  var statsObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting && !countersAnimated) {
+        countersAnimated = true;
+        animateCounters();
+        statsObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  var statsSection = document.getElementById('statsSection');
+  if (statsSection) statsObserver.observe(statsSection);
+
+  function animateCounters() {
+    var counters = document.querySelectorAll('.counter');
+    counters.forEach(function(counter) {
+      var target = parseInt(counter.getAttribute('data-target'), 10);
+      var duration = 2000;
+      var startTime = null;
+
+      function step(timestamp) {
+        if (!startTime) startTime = timestamp;
+        var progress = Math.min((timestamp - startTime) / duration, 1);
+        var eased = 1 - Math.pow(1 - progress, 3);
+        counter.textContent = Math.floor(eased * target);
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          counter.textContent = target;
+        }
+      }
+      requestAnimationFrame(step);
+    });
+  }
+
+  // === HORIZONTAL SCROLL DOTS ===
+  var scrollContainer = document.getElementById('projectsScroll');
+  var dots = document.querySelectorAll('.scroll-dot');
+  var scrollHint = document.querySelector('.scroll-hint');
+
+  if (scrollContainer && dots.length) {
+    scrollContainer.addEventListener('scroll', function() {
+      var scrollLeft = scrollContainer.scrollLeft;
+      var cardWidth = 296;
+      var activeIndex = Math.round(scrollLeft / cardWidth);
+      activeIndex = Math.max(0, Math.min(activeIndex, dots.length - 1));
+
+      dots.forEach(function(dot, i) {
+        dot.classList.toggle('active', i === activeIndex);
+      });
+
+      if (scrollHint && scrollLeft > 30) {
+        scrollHint.style.opacity = '0';
+        scrollHint.style.pointerEvents = 'none';
+      }
+    });
+  }
+
+  // === PORTFOLIO VIDEO PLAYERS (inline play) ===
+  document.querySelectorAll('.project-video-wrap').forEach(function(wrap) {
+    function playPortfolioVideo() {
+      var videoId = wrap.getAttribute('data-video-id');
+      if (!videoId) return;
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1&rel=0';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.title = 'Video';
+      wrap.innerHTML = '';
+      wrap.appendChild(iframe);
+      wrap.style.cursor = 'default';
+      wrap.removeAttribute('role');
+      wrap.removeAttribute('tabindex');
+    }
+    wrap.addEventListener('click', playPortfolioVideo);
+    wrap.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); playPortfolioVideo(); }
+    });
+  });
+
+  // === SHOWREEL VIDEO PLAYER ===
+  var videoWrapper = document.getElementById('videoWrapper');
+  if (videoWrapper) {
+    function playShowreel() {
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube.com/embed/jhbyY1JzZoY?autoplay=1&rel=0';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+      iframe.allowFullscreen = true;
+      iframe.title = 'Showreel';
+      videoWrapper.innerHTML = '';
+      videoWrapper.appendChild(iframe);
+      videoWrapper.removeAttribute('role');
+      videoWrapper.removeAttribute('tabindex');
+    }
+    videoWrapper.addEventListener('click', playShowreel);
+    videoWrapper.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); playShowreel(); }
+    });
+  }
+
+})();
+
+// === VCARD DOWNLOAD ===
+function downloadVCard() {
+  var vcard = [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    'N:Donmez;Ester;;;',
+    'FN:Ester Donmez',
+    'ORG:4K Hava Cekimi',
+    'TITLE:Kurucu & Produktor',
+    'TEL;TYPE=CELL:+905446692669',
+    'EMAIL:esterdonmez@gmail.com',
+    'URL:https://www.4khavacekim.com',
+    'X-SOCIALPROFILE;TYPE=instagram:https://www.instagram.com/4khavacekim_pro',
+    'X-SOCIALPROFILE;TYPE=youtube:https://www.youtube.com/@4khavacekim_pro',
+    'NOTE:Kurucu & Produktor - 4K Hava Cekimi | Profesyonel Drone Hava Cekimi',
+    'END:VCARD'
+  ].join('\r\n');
+
+  var blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'Ester_Donmez_4K_Hava_Cekimi.vcf';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+</script>
+
+</body>
+</html>

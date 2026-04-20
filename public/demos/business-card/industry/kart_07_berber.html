@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BarberKing Studio — Serkan Aydın</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Roboto',sans-serif;
+  background:#0d0d0d;
+  color:#e0e0e0;
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  -webkit-font-smoothing:antialiased;
+}
+.card{
+  width:100%;
+  max-width:460px;
+  min-height:100vh;
+  background:#0d0d0d;
+  position:relative;
+  overflow:hidden;
+}
+
+/* ===== SCROLL REVEAL ===== */
+.reveal{
+  opacity:0;
+  transform:translateY(32px);
+  transition:opacity 0.7s cubic-bezier(.22,1,.36,1), transform 0.7s cubic-bezier(.22,1,.36,1);
+}
+.reveal.visible{
+  opacity:1;
+  transform:translateY(0);
+}
+
+/* ===== BARBER POLE STRIPE ===== */
+.barber-stripe{
+  height:12px;
+  background:repeating-linear-gradient(
+    135deg,
+    #c62828 0px, #c62828 10px,
+    #fff 10px, #fff 20px,
+    #1565c0 20px, #1565c0 30px
+  );
+  background-size:42.43px 12px;
+  animation:poleScroll 1.5s linear infinite;
+}
+@keyframes poleScroll{
+  0%{background-position:0 0;}
+  100%{background-position:42.43px 0;}
+}
+
+/* ===== HEADER BANNER ===== */
+.header-banner{
+  background:linear-gradient(180deg,#141414 0%,#1a1a1a 100%);
+  text-align:center;
+  padding:36px 20px 28px;
+  position:relative;
+}
+.header-banner::before{
+  content:'';
+  position:absolute;
+  top:0;left:0;right:0;
+  height:4px;
+  background:linear-gradient(90deg,#c8a951,#e8d48b,#c8a951);
+}
+.shop-name{
+  font-family:'Oswald',sans-serif;
+  font-weight:700;
+  font-size:2rem;
+  letter-spacing:4px;
+  text-transform:uppercase;
+  color:#c8a951;
+  line-height:1.1;
+}
+.shop-est{
+  font-family:'Oswald',sans-serif;
+  font-weight:400;
+  font-size:0.85rem;
+  letter-spacing:6px;
+  color:#888;
+  margin-top:6px;
+  text-transform:uppercase;
+}
+.shop-tagline{
+  font-size:0.8rem;
+  color:#666;
+  margin-top:10px;
+  letter-spacing:1px;
+}
+
+/* ===== PROFILE STRIP ===== */
+.profile-strip{
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:20px 24px;
+  background:#141414;
+  border-bottom:1px solid #222;
+}
+.profile-photo{
+  width:72px;
+  height:72px;
+  border-radius:50%;
+  border:3px solid #c8a951;
+  object-fit:cover;
+  flex-shrink:0;
+}
+.profile-info h2{
+  font-family:'Oswald',sans-serif;
+  font-size:1.2rem;
+  font-weight:600;
+  color:#fff;
+  letter-spacing:1px;
+}
+.profile-info p{
+  font-size:0.82rem;
+  color:#c8a951;
+  margin-top:2px;
+}
+
+/* ===== QUICK CONTACT BUTTONS ===== */
+.quick-contact{
+  display:flex;
+  gap:8px;
+  padding:16px 20px;
+  background:#0d0d0d;
+}
+.quick-contact a{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  padding:12px 8px;
+  border-radius:10px;
+  text-decoration:none;
+  font-size:0.78rem;
+  font-weight:500;
+  transition:all 0.3s ease;
+}
+.btn-call{
+  background:#1a1a1a;
+  color:#c8a951;
+  border:1px solid #c8a951;
+}
+.btn-call:hover{background:#c8a951;color:#0d0d0d;}
+.btn-whatsapp{
+  background:#1b5e20;
+  color:#fff;
+  border:1px solid #2e7d32;
+}
+.btn-whatsapp:hover{background:#2e7d32;}
+.btn-location{
+  background:#1a1a1a;
+  color:#e0e0e0;
+  border:1px solid #333;
+}
+.btn-location:hover{background:#333;}
+
+/* ===== SECTION SHARED ===== */
+.section{
+  padding:28px 20px;
+}
+.section-title{
+  font-family:'Oswald',sans-serif;
+  font-size:1.2rem;
+  font-weight:600;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:#c8a951;
+  margin-bottom:20px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.section-title::after{
+  content:'';
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg,#c8a951 0%,transparent 100%);
+}
+.section-title .icon{
+  font-size:1.1rem;
+}
+
+/* ===== PRICE LIST ===== */
+.price-list{
+  background:#1a1a1a;
+  border-radius:16px;
+  border:1px solid #252525;
+  overflow:hidden;
+}
+.price-list-header{
+  background:linear-gradient(135deg,#1a1a1a,#222);
+  padding:20px 20px 16px;
+  border-bottom:1px solid #2a2a2a;
+}
+.price-item{
+  display:flex;
+  align-items:baseline;
+  padding:14px 20px;
+  border-bottom:1px solid #1f1f1f;
+  transition:background 0.3s ease;
+}
+.price-item:last-child{border-bottom:none;}
+.price-item:hover{background:#222;}
+.price-item.vip{
+  background:linear-gradient(135deg,rgba(200,169,81,0.08),rgba(200,169,81,0.03));
+  border-left:3px solid #c8a951;
+}
+.price-item .emoji{
+  font-size:1.05rem;
+  margin-right:10px;
+  flex-shrink:0;
+}
+.price-item .name{
+  font-size:0.9rem;
+  color:#ccc;
+  white-space:nowrap;
+}
+.price-item .dots{
+  flex:1;
+  border-bottom:1px dotted #444;
+  margin:0 10px;
+  min-width:20px;
+  align-self:center;
+  margin-bottom:4px;
+}
+.price-item .price{
+  font-family:'Oswald',sans-serif;
+  font-size:1.05rem;
+  font-weight:600;
+  color:#c8a951;
+  white-space:nowrap;
+}
+.price-item.vip .name{color:#e8d48b;font-weight:500;}
+.price-item.vip .price{font-size:1.15rem;}
+
+/* ===== BEFORE / AFTER SLIDER ===== */
+.ba-container{
+  margin-bottom:20px;
+}
+.ba-slider{
+  position:relative;
+  width:100%;
+  aspect-ratio:4/3;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid #333;
+  user-select:none;
+  -webkit-user-select:none;
+}
+.ba-slider img{
+  position:absolute;
+  top:0;left:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+.ba-slider .ba-before{
+  clip-path:inset(0 50% 0 0);
+  z-index:2;
+}
+.ba-slider .ba-after{
+  z-index:1;
+}
+.ba-slider .ba-handle{
+  position:absolute;
+  top:0;bottom:0;
+  left:50%;
+  width:3px;
+  background:#c8a951;
+  z-index:4;
+  transform:translateX(-50%);
+  pointer-events:none;
+}
+.ba-slider .ba-handle::before{
+  content:'';
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:36px;height:36px;
+  background:#c8a951;
+  border-radius:50%;
+  border:3px solid #fff;
+  box-shadow:0 2px 8px rgba(0,0,0,0.5);
+}
+.ba-slider .ba-handle::after{
+  content:'\25C0  \25B6';
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  color:#0d0d0d;
+  font-size:0.65rem;
+  font-weight:700;
+  z-index:5;
+  pointer-events:none;
+  letter-spacing:2px;
+}
+.ba-slider input[type=range]{
+  position:absolute;
+  top:0;left:0;
+  width:100%;
+  height:100%;
+  z-index:5;
+  opacity:0;
+  cursor:ew-resize;
+  margin:0;
+}
+.ba-label{
+  position:absolute;
+  bottom:10px;
+  padding:4px 12px;
+  border-radius:6px;
+  font-family:'Oswald',sans-serif;
+  font-size:0.75rem;
+  font-weight:500;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  z-index:3;
+  pointer-events:none;
+}
+.ba-label-before{left:10px;background:rgba(198,40,40,0.85);color:#fff;}
+.ba-label-after{right:10px;background:rgba(200,169,81,0.85);color:#0d0d0d;}
+
+/* ===== WORKING HOURS ===== */
+.hours-list{
+  background:#1a1a1a;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid #252525;
+}
+.hours-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:13px 20px;
+  border-bottom:1px solid #1f1f1f;
+  font-size:0.88rem;
+}
+.hours-item:last-child{border-bottom:none;}
+.hours-item .day{color:#aaa;}
+.hours-item .time{
+  font-family:'Oswald',sans-serif;
+  font-weight:500;
+  color:#e0e0e0;
+  letter-spacing:0.5px;
+}
+.hours-item .closed{color:#c62828;font-weight:600;}
+.hours-item.today{background:rgba(200,169,81,0.06);}
+.hours-item.today .day{color:#c8a951;font-weight:500;}
+
+/* ===== INSTAGRAM GRID ===== */
+.insta-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:4px;
+}
+.insta-grid a{
+  display:block;
+  aspect-ratio:1;
+  overflow:hidden;
+  border-radius:6px;
+  position:relative;
+}
+.insta-grid img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  transition:transform 0.4s ease, filter 0.4s ease;
+}
+.insta-grid a:hover img{
+  transform:scale(1.08);
+  filter:brightness(0.8);
+}
+.insta-grid a::after{
+  content:'\f16d';
+  font-family:'Roboto',sans-serif;
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-size:1.2rem;
+  opacity:0;
+  transition:opacity 0.3s ease;
+  background:rgba(0,0,0,0.3);
+}
+.insta-grid a:hover::after{opacity:1;}
+
+/* ===== QR CODE ===== */
+.qr-section{
+  text-align:center;
+}
+.qr-wrapper{
+  display:inline-block;
+  padding:16px;
+  background:#fff;
+  border-radius:12px;
+  margin-top:12px;
+}
+#qrcode{
+  width:140px;
+  height:140px;
+}
+#qrcode img{
+  width:140px!important;
+  height:140px!important;
+}
+#qrcode canvas{
+  width:140px!important;
+  height:140px!important;
+}
+
+/* ===== VCARD BUTTON ===== */
+.vcard-btn{
+  display:block;
+  width:100%;
+  padding:16px;
+  background:linear-gradient(135deg,#c8a951,#b8943e);
+  color:#0d0d0d;
+  font-family:'Oswald',sans-serif;
+  font-size:1rem;
+  font-weight:600;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  transition:all 0.3s ease;
+  margin-top:12px;
+}
+.vcard-btn:hover{
+  background:linear-gradient(135deg,#d4b85c,#c8a951);
+  transform:translateY(-1px);
+  box-shadow:0 6px 20px rgba(200,169,81,0.3);
+}
+.vcard-btn:active{transform:translateY(0);}
+
+/* ===== FOOTER ===== */
+.footer{
+  text-align:center;
+  padding:24px 20px 32px;
+  border-top:1px solid #1a1a1a;
+}
+.footer p{
+  font-size:0.72rem;
+  color:#555;
+  margin-top:4px;
+}
+.footer .brand{color:#c8a951;font-weight:500;}
+
+/* ===== REDUCED MOTION ===== */
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none;}
+  .barber-stripe{animation:none;}
+  .insta-grid img{transition:none;}
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- Barber Pole Stripe Top -->
+  <div class="barber-stripe"></div>
+
+  <!-- Header Banner -->
+  <div class="header-banner reveal">
+    <div class="shop-name">BarberKing Studio</div>
+    <div class="shop-est">- Est. 2018 -</div>
+    <div class="shop-tagline">Premium Erkek Kuaf&ouml;r&uuml; &amp; Bak&#305;m Merkezi</div>
+  </div>
+
+  <!-- Barber Pole Stripe -->
+  <div class="barber-stripe"></div>
+
+  <!-- Profile Strip -->
+  <div class="profile-strip reveal">
+    <img src="https://i.pravatar.cc/200?img=14" alt="Serkan Ayd&#305;n" class="profile-photo" loading="lazy">
+    <div class="profile-info">
+      <h2>Serkan Ayd&#305;n</h2>
+      <p>Kurucu &amp; Ba&#351; Berber</p>
+    </div>
+  </div>
+
+  <!-- Quick Contact -->
+  <div class="quick-contact reveal">
+    <a href="tel:+905367778899" class="btn-call" aria-label="Telefon ile ara">
+      <span>&#128222;</span> Randevu Al
+    </a>
+    <a href="https://wa.me/905367778899?text=Merhaba%2C%20randevu%20almak%20istiyorum." class="btn-whatsapp" target="_blank" rel="noopener" aria-label="WhatsApp ile ileti&#351;im">
+      <span>&#128172;</span> WhatsApp
+    </a>
+    <a href="https://maps.google.com/?q=Ni%C5%9Fanta%C5%9F%C4%B1+Abdi+%C4%B0pek%C3%A7i+Cad+No+15+%C5%9Ei%C5%9Fli+%C4%B0stanbul" class="btn-location" target="_blank" rel="noopener" aria-label="Konum">
+      <span>&#128205;</span> Konum
+    </a>
+  </div>
+
+  <!-- Price List -->
+  <div class="section reveal">
+    <div class="section-title">
+      <span class="icon">&#9986;</span> Hizmetler &amp; Fiyatlar
+    </div>
+    <div class="price-list">
+      <div class="price-item">
+        <span class="emoji">&#9986;&#65039;</span>
+        <span class="name">Sa&ccedil; Kesimi</span>
+        <span class="dots"></span>
+        <span class="price">&#8378;250</span>
+      </div>
+      <div class="price-item">
+        <span class="emoji">&#129682;</span>
+        <span class="name">Sakal &#350;ekillendirme</span>
+        <span class="dots"></span>
+        <span class="price">&#8378;150</span>
+      </div>
+      <div class="price-item">
+        <span class="emoji">&#9986;&#65039;</span>
+        <span class="name">Sa&ccedil; + Sakal Kombo</span>
+        <span class="dots"></span>
+        <span class="price">&#8378;350</span>
+      </div>
+      <div class="price-item">
+        <span class="emoji">&#128136;</span>
+        <span class="name">S&#305;cak Havlu Tra&#351;</span>
+        <span class="dots"></span>
+        <span class="price">&#8378;200</span>
+      </div>
+      <div class="price-item">
+        <span class="emoji">&#129524;</span>
+        <span class="name">Sa&ccedil; Bak&#305;m Paketi</span>
+        <span class="dots"></span>
+        <span class="price">&#8378;180</span>
+      </div>
+      <div class="price-item vip">
+        <span class="emoji">&#128134;</span>
+        <span class="name">VIP Paket (Kesim+Sakal+Bak&#305;m)</span>
+        <span class="dots"></span>
+        <span class="price">&#8378;500</span>
+      </div>
+      <div class="price-item">
+        <span class="emoji">&#128102;</span>
+        <span class="name">&Ccedil;ocuk Kesimi (0-12 ya&#351;)</span>
+        <span class="dots"></span>
+        <span class="price">&#8378;150</span>
+      </div>
+      <div class="price-item">
+        <span class="emoji">&#127912;</span>
+        <span class="name">Sa&ccedil; Boyama</span>
+        <span class="dots"></span>
+        <span class="price">&#8378;300+</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Barber Pole Stripe -->
+  <div class="barber-stripe"></div>
+
+  <!-- Before / After Slider -->
+  <div class="section reveal">
+    <div class="section-title">
+      <span class="icon">&#128247;</span> &Ccedil;al&#305;&#351;malar&#305;m&#305;z
+    </div>
+
+    <div class="ba-container">
+      <div class="ba-slider" data-ba="1">
+        <img class="ba-after" src="https://picsum.photos/seed/man-groomed/460/345" alt="Sonra" loading="lazy">
+        <img class="ba-before" src="https://picsum.photos/seed/man-before/460/345" alt="&Ouml;nce" loading="lazy">
+        <div class="ba-handle" style="left:50%"></div>
+        <span class="ba-label ba-label-before">&Ouml;nce</span>
+        <span class="ba-label ba-label-after">Sonra</span>
+        <input type="range" min="0" max="100" value="50" aria-label="&Ouml;nce ve sonra kar&#351;&#305;la&#351;t&#305;rma s&uuml;rg&uuml;s&uuml;">
+      </div>
+    </div>
+
+    <div class="ba-container">
+      <div class="ba-slider" data-ba="2">
+        <img class="ba-after" src="https://picsum.photos/seed/beard-after/460/345" alt="Sonra" loading="lazy">
+        <img class="ba-before" src="https://picsum.photos/seed/beard-before/460/345" alt="&Ouml;nce" loading="lazy">
+        <div class="ba-handle" style="left:50%"></div>
+        <span class="ba-label ba-label-before">&Ouml;nce</span>
+        <span class="ba-label ba-label-after">Sonra</span>
+        <input type="range" min="0" max="100" value="50" aria-label="&Ouml;nce ve sonra kar&#351;&#305;la&#351;t&#305;rma s&uuml;rg&uuml;s&uuml;">
+      </div>
+    </div>
+  </div>
+
+  <!-- Working Hours -->
+  <div class="section reveal">
+    <div class="section-title">
+      <span class="icon">&#128340;</span> &Ccedil;al&#305;&#351;ma Saatleri
+    </div>
+    <div class="hours-list" id="hourslist">
+      <div class="hours-item" data-day="1">
+        <span class="day">Pazartesi</span>
+        <span class="time">09:00 — 20:00</span>
+      </div>
+      <div class="hours-item" data-day="2">
+        <span class="day">Sal&#305;</span>
+        <span class="time">09:00 — 20:00</span>
+      </div>
+      <div class="hours-item" data-day="3">
+        <span class="day">&Ccedil;ar&#351;amba</span>
+        <span class="time">09:00 — 20:00</span>
+      </div>
+      <div class="hours-item" data-day="4">
+        <span class="day">Per&#351;embe</span>
+        <span class="time">09:00 — 20:00</span>
+      </div>
+      <div class="hours-item" data-day="5">
+        <span class="day">Cuma</span>
+        <span class="time">09:00 — 20:00</span>
+      </div>
+      <div class="hours-item" data-day="6">
+        <span class="day">Cumartesi</span>
+        <span class="time">09:00 — 21:00</span>
+      </div>
+      <div class="hours-item" data-day="0">
+        <span class="day">Pazar</span>
+        <span class="time closed">Kapal&#305;</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Instagram Grid -->
+  <div class="section reveal">
+    <div class="section-title">
+      <span class="icon">&#128248;</span> Son &Ccedil;al&#305;&#351;malar
+    </div>
+    <div class="insta-grid">
+      <a href="https://instagram.com/barberking_studio" target="_blank" rel="noopener" aria-label="Instagram foto 1">
+        <img src="https://picsum.photos/seed/haircut-1/300/300" alt="Sa&ccedil; kesimi 1" loading="lazy">
+      </a>
+      <a href="https://instagram.com/barberking_studio" target="_blank" rel="noopener" aria-label="Instagram foto 2">
+        <img src="https://picsum.photos/seed/haircut-2/300/300" alt="Sa&ccedil; kesimi 2" loading="lazy">
+      </a>
+      <a href="https://instagram.com/barberking_studio" target="_blank" rel="noopener" aria-label="Instagram foto 3">
+        <img src="https://picsum.photos/seed/haircut-3/300/300" alt="Sa&ccedil; kesimi 3" loading="lazy">
+      </a>
+      <a href="https://instagram.com/barberking_studio" target="_blank" rel="noopener" aria-label="Instagram foto 4">
+        <img src="https://picsum.photos/seed/haircut-4/300/300" alt="Sa&ccedil; kesimi 4" loading="lazy">
+      </a>
+      <a href="https://instagram.com/barberking_studio" target="_blank" rel="noopener" aria-label="Instagram foto 5">
+        <img src="https://picsum.photos/seed/haircut-5/300/300" alt="Sa&ccedil; kesimi 5" loading="lazy">
+      </a>
+      <a href="https://instagram.com/barberking_studio" target="_blank" rel="noopener" aria-label="Instagram foto 6">
+        <img src="https://picsum.photos/seed/haircut-6/300/300" alt="Sa&ccedil; kesimi 6" loading="lazy">
+      </a>
+    </div>
+    <div style="text-align:center;margin-top:14px;">
+      <a href="https://instagram.com/barberking_studio" target="_blank" rel="noopener" style="color:#c8a951;font-size:0.85rem;text-decoration:none;font-weight:500;">@barberking_studio</a>
+    </div>
+  </div>
+
+  <!-- Barber Pole Stripe -->
+  <div class="barber-stripe"></div>
+
+  <!-- QR Code -->
+  <div class="section qr-section reveal">
+    <div class="section-title" style="justify-content:center;">
+      <span class="icon">&#128274;</span> Randevu i&ccedil;in QR
+    </div>
+    <div class="qr-wrapper">
+      <div id="qrcode"></div>
+    </div>
+  </div>
+
+  <!-- vCard Download -->
+  <div class="section reveal">
+    <button class="vcard-btn" onclick="downloadVCard()" aria-label="Rehbere Kaydet">
+      &#128241; Rehbere Kaydet
+    </button>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>Ni&#351;anta&#351;&#305;, Abdi &#304;pek&ccedil;i Cad. No:15, &#350;i&#351;li/&#304;stanbul</p>
+    <p>randevu@barberking.com.tr</p>
+    <p style="margin-top:10px;">&copy; 2025 <span class="brand">BarberKing Studio</span>. T&uuml;m haklar&#305; sakl&#305;d&#305;r.</p>
+  </div>
+
+  <!-- Barber Pole Stripe Bottom -->
+  <div class="barber-stripe"></div>
+
+</div>
+
+<script>
+/* ===== QR Code ===== */
+document.addEventListener('DOMContentLoaded', function() {
+  var qrContainer = document.getElementById('qrcode');
+  if (qrContainer) {
+    new QRCode(qrContainer, {
+      text: window.location.href,
+      width: 140,
+      height: 140,
+      colorDark: '#0d0d0d',
+      colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.H
+    });
+  }
+});
+
+/* ===== vCard Download ===== */
+function downloadVCard() {
+  var vcard = [
+    'BEGIN:VCARD',
+    'VERSION:3.0',
+    'FN:Serkan Ayd\u0131n',
+    'N:Ayd\u0131n;Serkan;;;',
+    'ORG:BarberKing Studio',
+    'TITLE:Kurucu & Ba\u015f Berber',
+    'TEL;TYPE=CELL:+905367778899',
+    'EMAIL:randevu@barberking.com.tr',
+    'ADR;TYPE=WORK:;;Abdi \u0130pek\u00e7i Cad. No:15;Ni\u015fanta\u015f\u0131 \u015ei\u015fli;\u0130stanbul;;T\u00fcrkiye',
+    'URL:https://instagram.com/barberking_studio',
+    'NOTE:BarberKing Studio - Premium Erkek Kuaf\u00f6r\u00fc',
+    'END:VCARD'
+  ].join('\r\n');
+
+  var blob = new Blob([vcard], { type: 'text/vcard;charset=utf-8' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'Serkan_Aydin_BarberKing.vcf';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+/* ===== Before/After Sliders ===== */
+document.querySelectorAll('.ba-slider').forEach(function(slider) {
+  var rangeInput = slider.querySelector('input[type=range]');
+  var beforeImg = slider.querySelector('.ba-before');
+  var handle = slider.querySelector('.ba-handle');
+
+  function updateSlider(val) {
+    var pct = val + '%';
+    beforeImg.style.clipPath = 'inset(0 ' + (100 - val) + '% 0 0)';
+    handle.style.left = pct;
+  }
+
+  rangeInput.addEventListener('input', function() {
+    updateSlider(this.value);
+  });
+
+  updateSlider(50);
+});
+
+/* ===== Highlight Today ===== */
+(function() {
+  var today = new Date().getDay();
+  var items = document.querySelectorAll('.hours-item');
+  items.forEach(function(item) {
+    if (parseInt(item.getAttribute('data-day')) === today) {
+      item.classList.add('today');
+    }
+  });
+})();
+
+/* ===== Scroll Reveal ===== */
+(function() {
+  var reveals = document.querySelectorAll('.reveal');
+  if (!('IntersectionObserver' in window)) {
+    reveals.forEach(function(el) { el.classList.add('visible'); });
+    return;
+  }
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.08,
+    rootMargin: '0px 0px -40px 0px'
+  });
+  reveals.forEach(function(el) { observer.observe(el); });
+})();
+</script>
+
+</body>
+</html>

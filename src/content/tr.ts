@@ -520,6 +520,45 @@ export const content: Content = {
       secondaryCtaLabel: "Hizmetleri gör",
       secondaryCtaHref: "/solutions",
     },
+
+    cardStrip: {
+      eyebrow: "ŞABLONLAR",
+      heading: "Hazır 10 sektör şablonu",
+      paragraph:
+        "Emlakçı, klinik, restoran, DJ, kuaför, e-ticaret, mimar, fitness — her sektöre özel 10 tap-to-share kart. Canlı önizleme için tıklayın.",
+      ctaLabel: "Tüm şablonları gör",
+      ctaHref: "/products/digital-card",
+    },
+
+    agentShowcase: {
+      eyebrow: "AI AJANLARI",
+      heading: "Telefonu gerçekten açan ajanlar",
+      paragraph:
+        "Telefon hattınızda ses, sitenizde sohbet, takviminizde rezervasyon — gerçek, üretime hazır yığınlar üzerine kurulu.",
+      items: [
+        {
+          key: "voice",
+          title: "Ses AI Ajanı",
+          body: "7/24 telefon yanıtlama, yönlendirme, rezervasyon — Retell destekli.",
+          href: "/products/voice-agent",
+          badge: "Retell · Vapi",
+        },
+        {
+          key: "chatbot",
+          title: "Web Sitesi Chatbot'u",
+          body: "Web, WhatsApp, Telegram aynı anda. CRM ile senkron.",
+          href: "/products/chatbot",
+          badge: "Çok kanallı",
+        },
+        {
+          key: "booking",
+          title: "Rezervasyon Ajanı",
+          body: "Telefon veya sohbet → takvim. Çifte rezervasyon yok.",
+          href: "/products/booking-agent",
+          badge: "Cal.com",
+        },
+      ],
+    },
   },
 
   solutions: {
@@ -1141,6 +1180,34 @@ export const content: Content = {
     comingSoonTitle: "Yeni ürünler yolda",
     comingSoonDescription:
       "OpSolid'in ürün portföyü genişliyor. Operasyon, iletişim ve yapay zekâ destekli iş akışları için yeni araçlar şu anda geliştirme aşamasında.",
+    categories: {
+      all: "Tümü",
+      customerFacing: "Müşteriye yönelik",
+      internalOps: "Dahili operasyon",
+      communication: "İletişim",
+    },
+    templatesStrip: {
+      label: "SEKTÖR ŞABLONLARI",
+      heading: "Özelleştirmeye hazır 10 şablon",
+      paragraph:
+        "Sektörünüzü seçin, özelleştirin, yayına alın. Emlakçı, klinik, restoran, DJ, kuaför, e-ticaret, mimar, fitness ve daha fazlası.",
+      cta: "Kendi şablonunuzu özelleştirin",
+      ctaHref: "/products/digital-card",
+    },
+    techStack: {
+      label: "GERÇEK ALTYAPI ÜZERİNE KURULU",
+      heading: "Sihir yok. Gerçek, üretime hazır teknoloji.",
+      items: [
+        "Retell AI",
+        "Vapi",
+        "Cal.com",
+        "n8n",
+        "Supabase",
+        "Meta Business",
+        "HubSpot",
+        "Stripe",
+      ],
+    },
     items: [
       {
         name: "Dijital Kartvizit",
@@ -1151,6 +1218,87 @@ export const content: Content = {
         href: "/products/digital-card",
         externalUrl: "",
         icon: "idCard",
+        startingPrice: "€39 tek seferlik · ücretsiz katman mevcut",
+        category: "Müşteriye yönelik",
+        stack: "Next.js · Hetzner · Apple Wallet · HubSpot",
+      },
+      {
+        name: "Ses AI Ajanı",
+        tagline: "7/24 telefon resepsiyonu · Retell · Vapi",
+        description:
+          "Telefon hattınıza 7/24 yanıt veren, randevu oluşturan ve çağrıları yönlendiren bir AI ses ajanı. Çok dilli (DE/EN/TR). Retell AI veya Vapi üzerine kurulu, takvim senkronu ile. Aylık 3.000 €'luk resepsiyonist işinin yerini alır.",
+        status: "Canlı",
+        href: "/products/voice-agent",
+        externalUrl: "",
+        icon: "phone",
+        startingPrice: "€1.200 kurulum + €0,12/dk'dan başlar",
+        category: "İletişim",
+        stack: "Retell AI · Vapi · Cal.com · Supabase",
+      },
+      {
+        name: "Web Sitesi Chatbot'u",
+        tagline: "Çok kanallı · web · WhatsApp · Telegram",
+        description:
+          "Sitenizde, WhatsApp'ta ve Telegram'da aynı anda yaşayan bir chatbot. Leadleri niteler, SSS'leri yanıtlar, CRM'e senkronlar. Bağlam farkındalıklı çok turlu konuşmalar, senaryo duvarı yok.",
+        status: "Canlı",
+        href: "/products/chatbot",
+        externalUrl: "",
+        icon: "messageCircle",
+        startingPrice: "€1.800 kurulum + €99/ay'dan başlar",
+        category: "Müşteriye yönelik",
+        stack: "OpenAI · n8n · Supabase · HubSpot",
+      },
+      {
+        name: "WhatsApp Business Ajanı",
+        tagline: "Resmi Meta API · sipariş durumu · ödemeler",
+        description:
+          "Resmi Meta Business Cloud API üzerinden WhatsApp otomasyonu (doğrulanmış BSP aracılığıyla — Twilio, 360dialog, AiSensy). Sipariş durumu, destek, nitelendirme, ödeme tetikleri. Gri piyasa kazıma yok, ban riski yok.",
+        status: "Canlı",
+        href: "/products/whatsapp-agent",
+        externalUrl: "",
+        icon: "messagesSquare",
+        startingPrice: "€1.500 kurulum + Meta ücretleri'nden başlar",
+        category: "İletişim",
+        stack: "Meta Business Cloud · 360dialog · Twilio · Stripe",
+      },
+      {
+        name: "Randevu Rezervasyon Ajanı",
+        tagline: "Cal.com + ses + sohbet",
+        description:
+          "Telefon, sohbet veya form üzerinden rezervasyon alan bir ajan. Google Takvim/Outlook/Cal.com ile çift yönlü senkron. Yeniden planlama, hatırlatma ve randevuya gelmeme takiplerini yönetir.",
+        status: "Canlı",
+        href: "/products/booking-agent",
+        externalUrl: "",
+        icon: "calendarClock",
+        startingPrice: "€800 kurulum + €49/ay'dan başlar",
+        category: "Dahili operasyon",
+        stack: "Cal.com · Retell · n8n · Google Calendar",
+      },
+      {
+        name: "E-posta Otomasyon Ajanı",
+        tagline: "Dış iletişim · triyaj · yanıt taslağı",
+        description:
+          "AI e-posta iş akışları — kişiselleştirilmiş varyantlarla soğuk dış iletişim, gelen kutusu triyajı, onay için otomatik taslaklar. Instantly / AgentMail / özel n8n akışları üzerine kurulu. Deliverability ısıtılmış, GDPR uyumlu.",
+        status: "Canlı",
+        href: "/products/email-agent",
+        externalUrl: "",
+        icon: "mail",
+        startingPrice: "€99 – €499/ay'dan başlar",
+        category: "İletişim",
+        stack: "Instantly · AgentMail · n8n · OpenAI",
+      },
+      {
+        name: "Lead Nitelendirme Ajanı",
+        tagline: "Ses + sohbet · CRM skorlama · HubSpot senkron",
+        description:
+          "Gelen leadleri ses veya sohbet üzerinden niteleyen, skorlayan ve nitelikli leadleri HubSpot/Pipedrive/Salesforce'a yönlendiren bir konuşma ajanı. %40 MQL→SQL dönüşüm artışı gerçekçi.",
+        status: "Canlı",
+        href: "/products/lead-qualifier",
+        externalUrl: "",
+        icon: "userCheck",
+        startingPrice: "€2.200 kurulum + €199/ay'dan başlar",
+        category: "Müşteriye yönelik",
+        stack: "Retell · HubSpot · n8n · Supabase",
       },
       {
         name: "Dijital Resepsiyon",
@@ -1161,6 +1309,9 @@ export const content: Content = {
         href: "/products/digital-reception",
         externalUrl: "",
         icon: "bell",
+        startingPrice: "€29/ay'dan başlar",
+        category: "Dahili operasyon",
+        stack: "Retell · Cal.com · Postmark · Supabase",
       },
       {
         name: "Kutasia",
@@ -1171,6 +1322,9 @@ export const content: Content = {
         href: "/products/kutasia",
         externalUrl: "https://kutasia.com",
         icon: "sparkles",
+        startingPrice: "Özel fiyatlandırma · kiracı başına",
+        category: "Dahili operasyon",
+        stack: "Next.js · Postgres · OpenAI · Stripe",
       },
     ],
 
@@ -1188,9 +1342,9 @@ export const content: Content = {
         secondaryCta: "Nasıl çalışır",
         tags: "LİNK · QR KOD · NFC (OPSİYONEL) · APPLE WALLET · GDPR",
         cardLabels: {
-          name: "Hasan Dönmez",
-          role: "Otomasyon Stüdyosu",
-          company: "OpSolid · Hamburg",
+          name: "Alex Weber",
+          role: "Ürün Tasarımcısı",
+          company: "Studio Nord · Hamburg",
           nfc: "QR",
           chip: "TARATIN VEYA DOKUNUN",
         },
@@ -1445,6 +1599,969 @@ export const content: Content = {
         title: "Dijital Kartvizit — Almanya'da barındırılıyor | OpSolid",
         description:
           "GDPR-yerli dijital profile sahip modern NFC kartvizit. Apple & Google Wallet, CRM senkronizasyonu, ekip listesi — Hamburg'da barındırılıyor, San Francisco'da değil.",
+      },
+    },
+
+    voiceAgent: {
+      hero: {
+        eyebrow: "[ OPSOLID AJAN · 02 ]   SES AI",
+        title: [
+          "Telefonunuzu gece 2'de",
+          "açan bir ses ajanı —",
+          "üç dilde.",
+        ],
+        paragraph:
+          "Üretime hazır bir AI ses ajanı: telefon hattınızı 7/24 açar, arayanları niteler, randevu oluşturur ve gerçek acil durumları bir insana yönlendirir. Almanca, İngilizce ve Türkçe kutudan çıkar çıkmaz. Retell AI veya Vapi üzerine kurulu, canlı takvim senkronu ile.",
+        primaryCta: "Demo planla",
+        secondaryCta: "Nasıl çalışır",
+        tags: "RETELL · VAPI · DE/EN/TR · 7/24",
+        startingPrice: "€1.200 kurulum + €0,12/dk'dan başlar",
+      },
+      features: {
+        label: "NELER VAR",
+        heading: "Her çağrı yanıtlanır — nitelendirilir, kaydedilir, yönlendirilir.",
+        items: [
+          {
+            label: "DOĞAL KONUŞMA",
+            body: "Düşük gecikmeli sıra değişimi (<800ms) ve söze girme desteği. IVR ağacı gibi değil, iyi brifinglenmiş bir resepsiyonist gibi konuşur.",
+          },
+          {
+            label: "TAKVİM REZERVASYONU",
+            body: "Google Calendar, Outlook ve Cal.com ile canlı çift yönlü senkron. Ajan rezervasyon yapar, yeniden planlar ve tamponlara uyar.",
+          },
+          {
+            label: "ÇAĞRI YÖNLENDİRME",
+            body: "Aciliyeti algılar ve karmaşık çağrıları, tam bağlam ve transkriptle birlikte canlı bir insana aktarır.",
+          },
+          {
+            label: "TRANSKRİPT VE ÖZETLER",
+            body: "Her çağrı yazıya dökülür, özetlenir, niyete göre etiketlenir. Telefon kapanır kapanmaz saniyeler içinde CRM veya Slack'e düşer.",
+          },
+          {
+            label: "ÇOK DİLLİ",
+            body: "Almanca, İngilizce, Türkçe — her dil için ses seçimi. Arayanlar hangi dilde aradıysa o dilde karşılanır.",
+          },
+          {
+            label: "GDPR-YERLİ",
+            body: "AB'de çalışan inference, kayıt anında DPA, kayıtlar Frankfurt'ta saklanır. Çağrı başında opt-in duyurusu.",
+          },
+        ],
+      },
+      howItWorks: {
+        label: "NASIL ÇALIŞIR",
+        heading: "Dört adım. Tek telefon numarası.",
+        steps: [
+          {
+            step: "01",
+            title: "Numaranızı taşıyın veya yönlendirin",
+            body: "Mevcut numaranızı koruyun — cevapsız çağrıları ajana yönlendiririz ya da size özel bir hat veririz.",
+          },
+          {
+            step: "02",
+            title: "Ajanı brifingleyin",
+            body: "Sistem promptunu hizmetleriniz, fiyatlarınız, mesai saatleriniz ve yükseltme kurallarınızla birlikte yazarız. Siz onaylarsınız.",
+          },
+          {
+            step: "03",
+            title: "Takvim + CRM bağlayın",
+            body: "Rezervasyonlar için Cal.com veya Google Calendar; leadler için HubSpot/Pipedrive. Gerisini webhook'lar halleder.",
+          },
+          {
+            step: "04",
+            title: "Canlıya alın ve izleyin",
+            body: "Her çağrı panoda kayıtlı. Transkriptleri inceler, promptu ayarlar, yükseltme tetiklerini düzenlersiniz.",
+          },
+        ],
+      },
+      stack: {
+        label: "ÜZERİNE KURULU",
+        heading: "Sihir yok. Gerçek teknoloji.",
+        items: [
+          { name: "Retell AI", role: "Ses orkestrasyonu + telefon" },
+          { name: "Vapi", role: "Alternatif ses yığını (kurumsal)" },
+          { name: "Cal.com", role: "Takvim rezervasyon katmanı" },
+          { name: "Supabase", role: "Çağrı kayıtları + bağlam deposu" },
+          { name: "n8n", role: "CRM senkronu + çağrı sonrası iş akışları" },
+        ],
+      },
+      pricing: {
+        label: "FİYATLANDIRMA",
+        heading: "Kurulumu bir kez ödeyin. Gerçek çağrı dakikası başına ödeyin.",
+        tiers: [
+          {
+            name: "Starter",
+            price: "€1.200",
+            billing: "tek seferlik kurulum + €0,12/dk",
+            features: [
+              "Tek telefon hattı",
+              "DE veya EN (tek dil)",
+              "Cal.com entegrasyonu",
+              "E-posta bildirimleri",
+              "100 dk test kredisi",
+            ],
+            cta: "Demo planla",
+          },
+          {
+            name: "Business",
+            price: "€2.400",
+            billing: "kurulum + €0,12/dk + €99/ay",
+            features: [
+              "3 telefon hattına kadar",
+              "DE · EN · TR çok dilli",
+              "HubSpot / Pipedrive senkronu",
+              "Slack + WhatsApp bildirimleri",
+              "Aylık prompt ince ayarı",
+              "Öncelikli destek",
+            ],
+            cta: "Demo planla",
+            featured: "true",
+          },
+          {
+            name: "Enterprise",
+            price: "Özel",
+            billing: "hacim fiyatlandırması + SLA",
+            features: [
+              "Sınırsız hat",
+              "Özel ses klonlama",
+              "Self-hosted opsiyonu (Vapi)",
+              "Özel Slack kanalı",
+              "%99,9 SLA",
+            ],
+            cta: "Bizimle konuşun",
+          },
+        ],
+      },
+      faq: {
+        label: "SSS",
+        heading: "Dürüst cevaplar.",
+        items: [
+          {
+            q: "Arayanlar AI olduğunu anlayacak mı?",
+            a: "Evet — her çağrının başında duyuruyoruz. Aksini yapmak hem GDPR'ı ihlal eder hem de güveni sarsar. Pratikte, ajan çağrıyı yetkin şekilde yürüttüğü sürece arayanlar önemsemiyor.",
+          },
+          {
+            q: "Karmaşık veya acil çağrılarda ne oluyor?",
+            a: "Ajan yükseltme tetiklerini (tanımladığınız anahtar kelimeler + niyet sinyalleri) algılar ve insan hattına aktarır; transkript ve özet önceden Slack/e-posta ile iletilir.",
+          },
+          {
+            q: "Gerçekten ne kadar hızlı?",
+            a: "Retell'in kurumsal katmanında sıra gecikmesi 800 ms'nin altında. Söze girer, kibarca böler, 2024 başı ses ajanlarını ele veren o garip 2 saniyelik duraksamayı yapmaz.",
+          },
+          {
+            q: "Gerçek bir örnek dinleyebilir miyim?",
+            a: "Evet. Tanışma görüşmesinde sandbox bir numarada canlı demo yürütürüz — siz ararsınız, ajan cevaplar, uç durumları test edersiniz. Sunum yok.",
+          },
+          {
+            q: "Gerçekten GDPR uyumlu mu?",
+            a: "Çağrılar AB altyapısında işlenir (Retell AB bölgesi / Vapi self-hosted). Kayıtlar Frankfurt'ta saklanır. İlk gün DPA imzalanır. Çağrı başında AI duyurulur ve opt-out sunulur.",
+          },
+        ],
+      },
+      cta: {
+        heading: "Gece 2'de telefonunuz çalıyor. Kim açıyor?",
+        paragraph:
+          "30 dakikalık tanışma görüşmesi planlayın. Gerçek hizmetleriniz üzerinde sandbox bir ajan kurup aramanızı sağlarız.",
+        primaryCta: "Demo planla",
+        secondaryCta: "Bizimle konuşun",
+      },
+    },
+
+    chatbot: {
+      hero: {
+        eyebrow: "[ OPSOLID AJAN · 03 ]   WEB SİTESİ CHATBOT",
+        title: [
+          "Tek chatbot.",
+          "Üç kanal.",
+          "Senaryo duvarı yok.",
+        ],
+        paragraph:
+          "Web sitenizde, WhatsApp'ta ve Telegram'da aynı anda yaşayan, bağlam farkındalıklı bir chatbot — aynı beyin, üç ağız. Leadleri niteler, dokümanlarınızdan gerçek soruları yanıtlar ve konuşmaları HubSpot'a senkronlar.",
+        primaryCta: "Demo planla",
+        secondaryCta: "Nasıl çalışır",
+        tags: "OPENAI · n8n · SUPABASE · ÇOK KANALLI",
+        startingPrice: "€1.800 kurulum + €99/ay'dan başlar",
+      },
+      features: {
+        label: "NELER VAR",
+        heading: "SSS papağanı değil, dokümanlarınızı okuyan bir chatbot.",
+        items: [
+          {
+            label: "ÇOK KANALLI",
+            body: "Aynı konuşma, aynı hafıza — web widget'ı, WhatsApp Business ve Telegram arasında. Ekibiniz için birleşik gelen kutusu.",
+          },
+          {
+            label: "RAG DESTEKLİ",
+            body: "Gerçek içeriğinizle eğitilir: ürün dokümanları, politikalar, PDF'ler, Notion sayfaları. Halüsinasyon yok — kaynak atıfları dahil.",
+          },
+          {
+            label: "LEAD YAKALAMA",
+            body: "Doğal bir konuşmayla niteler (form dayatması değil), ardından gönderimde HubSpot/Pipedrive'a yapılandırılmış veri iter.",
+          },
+          {
+            label: "İNSANA DEVRETME",
+            body: "Tam transkript, algılanan duygu ve önerilen sonraki adımla canlı temsilciye sorunsuz yükseltme.",
+          },
+          {
+            label: "ANALİTİK",
+            body: "En çok cevapsız kalan sorular, yükseltme oranı, kanal başına dönüşüm hunisi. Haftalık tek özet, pano labirenti yok.",
+          },
+          {
+            label: "ÖZEL STİL",
+            body: "Sizin yazı tipleriniz, renkleriniz, tonunuz. Sitenizin kabuğunda yaşar — jenerik üçüncü taraf sohbet balonu değil.",
+          },
+        ],
+      },
+      howItWorks: {
+        label: "NASIL ÇALIŞIR",
+        heading: "Yayına almak için dört adım.",
+        steps: [
+          {
+            step: "01",
+            title: "Bilginizi içeri alın",
+            body: "Sitenizi tararız, doküman/PDF'leri içeri aktarırız, Notion veya Confluence'ınızı bağlarız. Embeddingler Supabase pgvector'a düşer.",
+          },
+          {
+            step: "02",
+            title: "Akışları tasarlayın",
+            body: "Lead nitelendirme, rezervasyon yolu, yükseltme tetikleri. Sistem promptunu ve guardrail'leri siz onaylarsınız.",
+          },
+          {
+            step: "03",
+            title: "Kanallara dağıtın",
+            body: "Web için tek widget. BSP onaylı WhatsApp Business. Telegram botu. Hepsi aynı konuşma backend'ine bağlanır.",
+          },
+          {
+            step: "04",
+            title: "Haftalık iyileştirin",
+            body: "En çok başarısız sorguları izler, bilgi tabanı ve promptları güncelleriz. İlk 30 gün dahil.",
+          },
+        ],
+      },
+      stack: {
+        label: "ÜZERİNE KURULU",
+        heading: "Sihir yok. Gerçek teknoloji.",
+        items: [
+          { name: "OpenAI / Claude", role: "LLM çekirdeği (değiştirilebilir)" },
+          { name: "Supabase pgvector", role: "RAG embeddings + hafıza" },
+          { name: "n8n", role: "Kanal orkestrasyonu + CRM senkronu" },
+          { name: "Meta Business Cloud", role: "Resmi WhatsApp BSP" },
+          { name: "HubSpot / Pipedrive", role: "Lead senkron hedefi" },
+        ],
+      },
+      pricing: {
+        label: "FİYATLANDIRMA",
+        heading: "Tek seferlik kurulum. Öngörülebilir aylık.",
+        tiers: [
+          {
+            name: "Sadece Web",
+            price: "€1.800",
+            billing: "kurulum + €99/ay",
+            features: [
+              "Web sitesi widget'ı",
+              "200 sayfa/dokümana kadar RAG",
+              "HubSpot senkronu",
+              "Aylık 5.000 mesaj",
+              "Yayın sonrası 30 gün ince ayar",
+            ],
+            cta: "Demo planla",
+          },
+          {
+            name: "Çok kanallı",
+            price: "€2.800",
+            billing: "kurulum + €199/ay",
+            features: [
+              "Web + WhatsApp + Telegram",
+              "Birleşik ajan gelen kutusu",
+              "1.000 dokümana kadar RAG",
+              "Aylık 20.000 mesaj",
+              "İnsana devretme iş akışı",
+              "Haftalık iterasyon",
+            ],
+            cta: "Demo planla",
+            featured: "true",
+          },
+          {
+            name: "Scale",
+            price: "€5.000'den",
+            billing: "kurulum + kullanım bazlı",
+            features: [
+              "Sınırsız kanal",
+              "Özel LLM (self-hosted opsiyonu)",
+              "Gelişmiş analitik",
+              "White-label",
+              "SLA + özel destek",
+            ],
+            cta: "Bizimle konuşun",
+          },
+        ],
+      },
+      faq: {
+        label: "SSS",
+        heading: "Dürüst cevaplar.",
+        items: [
+          {
+            q: "Halüsinasyon yapıp markamıza zarar verecek mi?",
+            a: "Sıkı sınırlı RAG, botun kaynaklarını atıf göstermesini sağlar. Cevap dokümanlarınızda yoksa bunu söyler ve yükseltmeyi önerir. Özellikle kendinden emin kurguya göre 'bilmiyorum' demeyi tercih edecek şekilde ayarlıyoruz.",
+          },
+          {
+            q: "WhatsApp gerçekten düzgün çalışıyor mu?",
+            a: "Evet — resmi Meta Business Cloud API üzerinden doğrulanmış bir BSP aracılığıyla (Twilio, 360dialog veya AiSensy). Gri piyasa kazıma yok. Yeşil doğrulanmış rozet, ban riski yok.",
+          },
+          {
+            q: "Mevcut canlı sohbet aracımızı kullanmaya devam edebilir miyiz?",
+            a: "Intercom, Crisp veya Zendesk kullanıyorsanız — evet. Üzerine AI katmanı koyarız ve yalnızca mevcut insan akışınıza yükseltiriz. Araç değişimi yok.",
+          },
+          {
+            q: "OpenAI kesintiye girerse ne olur?",
+            a: "Yedek olarak Claude'u (Anthropic) yapılandırıyoruz ve kritik iş yükleri için Llama 3'ü self-host edebiliyoruz. Web'in üstündeki her katmanda çoklu sağlayıcı LLM yönlendirmesi var.",
+          },
+        ],
+      },
+      cta: {
+        heading: "Destek ekibiniz her gün aynı 50 soruyu yanıtlıyor.",
+        paragraph:
+          "Demo planlayın. Gerçek dokümanlarınız üzerinde bir chatbot kurup, karar vermeden önce test etmenizi sağlarız.",
+        primaryCta: "Demo planla",
+        secondaryCta: "Bizimle konuşun",
+      },
+    },
+
+    whatsappAgent: {
+      hero: {
+        eyebrow: "[ OPSOLID AJAN · 04 ]   WHATSAPP BUSINESS",
+        title: [
+          "Gerçekten çalışan",
+          "WhatsApp —",
+          "resmi olarak.",
+        ],
+        paragraph:
+          "Resmi Meta Business Cloud API üzerinden WhatsApp otomasyonu — doğrulanmış bir BSP aracılığıyla (Twilio, 360dialog, AiSensy). Sipariş takibi, destek, nitelendirme, ödeme tetikleri. Kazıma yok, gayri resmi kütüphane yok, ban riski yok.",
+        primaryCta: "Demo planla",
+        secondaryCta: "Nasıl çalışır",
+        tags: "META BUSINESS CLOUD · 360DIALOG · TWILIO · DOĞRULANMIŞ",
+        startingPrice: "€1.500 kurulum + Meta ücretleri'nden başlar",
+      },
+      features: {
+        label: "NELER VAR",
+        heading: "Meta'nın API'sinin izin verdiği her şey — vermediği hiçbir şey.",
+        items: [
+          {
+            label: "DOĞRULANMIŞ YEŞİL TİK",
+            body: "Resmi işletme doğrulamasını BSP üzerinden biz yürütürüz. Markanız müşterilerin güvendiği yeşil tik ile görünür.",
+          },
+          {
+            label: "SİPARİŞ VE KARGO GÜNCELLEMELERİ",
+            body: "Otomatik bildirimler: sipariş alındı, hazırlandı, kargoya verildi, teslim edildi. Shopify / WooCommerce / ERP'nize doğrudan bağlı.",
+          },
+          {
+            label: "MÜŞTERİ DESTEĞİ",
+            body: "AI ilk kademe yanıtlarıyla gelen destek. Bot sınırına ulaştığında tam bağlamla birlikte insana yükseltme.",
+          },
+          {
+            label: "ÖDEME LİNKLERİ",
+            body: "Konuşma içinde Stripe ödeme linklerini tetikleyin — sipariş onayları, faturalar, depozitolar — makbuzlar WhatsApp'a geri düşer.",
+          },
+          {
+            label: "KAMPANYA ŞABLONLARI",
+            body: "Yayınlar için Meta onaylı mesaj şablonları. Opt-in yönetimi, hız sınırlı, asla spam değil.",
+          },
+          {
+            label: "EKİP GELEN KUTUSU",
+            body: "Temsilcileriniz konuşmaları gerçek bir gelen kutusunda yürütür (bizim veya mevcut olanınız — Front, HubSpot, Zendesk). Tam denetim izi.",
+          },
+        ],
+      },
+      howItWorks: {
+        label: "NASIL ÇALIŞIR",
+        heading: "Önce doğrulama, sonra otomasyon.",
+        steps: [
+          {
+            step: "01",
+            title: "İşletmenizi Meta'da doğrulayın",
+            body: "Facebook Business Manager doğrulaması ve BSP onboarding'de size rehberlik ederiz. Tipik olarak 5–10 iş günü.",
+          },
+          {
+            step: "02",
+            title: "Mesaj şablonları tasarlayın",
+            body: "Meta her yayın şablonunu onaylar. Taslağı biz yazarız, gönderirız, onaylanana kadar iterasyon — genelde 1–2 tur.",
+          },
+          {
+            step: "03",
+            title: "Backend'inizi bağlayın",
+            body: "Siparişler için Shopify/WooCommerce, ödemeler için Stripe, leadler için HubSpot. Webhook'lar iki yöne akar.",
+          },
+          {
+            step: "04",
+            title: "Otomasyon + insan katmanıyla yayına alın",
+            body: "Ölçek için otomatik yanıtlar + AI, nüans için insan temsilciler. Çizgiyi siz belirlersiniz.",
+          },
+        ],
+      },
+      stack: {
+        label: "ÜZERİNE KURULU",
+        heading: "Resmi API, gri piyasa yok.",
+        items: [
+          { name: "Meta Business Cloud API", role: "Resmi WhatsApp kanalı" },
+          { name: "360dialog / Twilio / AiSensy", role: "Doğrulanmış BSP katmanı" },
+          { name: "n8n", role: "İş akışı orkestrasyonu" },
+          { name: "Stripe", role: "Ödeme linki tetikleri" },
+          { name: "Shopify / WooCommerce", role: "Sipariş + kargo doğru kaynağı" },
+        ],
+      },
+      pricing: {
+        label: "FİYATLANDIRMA",
+        heading: "Kurulum + BSP geçişi. Marj oyunu yok.",
+        tiers: [
+          {
+            name: "Launch",
+            price: "€1.500",
+            billing: "kurulum + Meta ücretleri geçişli",
+            features: [
+              "İşletme doğrulaması",
+              "3 Meta şablonu onaylı",
+              "1 otomasyon (sipariş veya destek)",
+              "360dialog veya Twilio BSP",
+              "Yayın sonrası 30 gün destek",
+            ],
+            cta: "Demo planla",
+          },
+          {
+            name: "Commerce",
+            price: "€3.200",
+            billing: "kurulum + €149/ay + Meta ücretleri",
+            features: [
+              "Launch'taki her şey",
+              "Shopify/WooCommerce entegrasyonu",
+              "Sipariş akışı otomasyonları",
+              "Stripe ödeme linkleri",
+              "AI öncelikli destek katmanı",
+              "Ekip gelen kutusu (5 temsilciye kadar)",
+            ],
+            cta: "Demo planla",
+            featured: "true",
+          },
+          {
+            name: "Enterprise",
+            price: "Özel",
+            billing: "kurulum + hacim fiyatlandırması",
+            features: [
+              "Çok ülkeli numaralar",
+              "Çift yönlü CRM senkronu",
+              "Gelişmiş yönlendirme + SLA'lar",
+              "Özel BSP temsilcisi",
+              "Uyum incelemesi",
+            ],
+            cta: "Bizimle konuşun",
+          },
+        ],
+      },
+      faq: {
+        label: "SSS",
+        heading: "Şeffaf olmayan bir kanal hakkında dürüst cevaplar.",
+        items: [
+          {
+            q: "Neden daha ucuz gayri resmi WhatsApp kütüphanesi kullanmıyoruz?",
+            a: "Çünkü Meta onları yasaklıyor, nokta. Numaranız işaretlenir, müşterilerinizin güveni sarsılır, otomasyonunuz bir gecede bozulur. Gri piyasa WhatsApp göndermeyi reddediyoruz. Resmi API daha pahalı — aynı zamanda ayakta kalan tek şey.",
+          },
+          {
+            q: "Meta'nın ücretleri ne kadar?",
+            a: "Konuşma bazlı. Utility konuşmaları (sipariş güncellemeleri) yaklaşık €0,02–0,05; pazarlama konuşmaları €0,05–0,12. Bunları maliyetine geçiriyoruz — marj yok.",
+          },
+          {
+            q: "Doğrulama ne kadar sürüyor?",
+            a: "Ortalama 5–10 iş günü. Meta, işletme belgelerinizi ve BSP ilişkinizi doğrular. Evrak işini biz hallederiz.",
+          },
+          {
+            q: "Gayri resmi bir araçtan geçiş yapabilir miyim?",
+            a: "Evet. Resmi kanalı 2 hafta paralel çalıştırırız, sonra geçiş yaparız. Telefon numarası taşıma mümkün ama mevcut sağlayıcınızla koordinasyon gerektirir.",
+          },
+        ],
+      },
+      cta: {
+        heading: "WhatsApp müşterilerinizin zaten bulunduğu yer.",
+        paragraph:
+          "Demo planlayın. Tam Meta doğrulama yolunu ve yığınınızda neyin otomatize edilebileceğini gösteririz.",
+        primaryCta: "Demo planla",
+        secondaryCta: "Bizimle konuşun",
+      },
+    },
+
+    bookingAgent: {
+      hero: {
+        eyebrow: "[ OPSOLID AJAN · 05 ]   REZERVASYON AJANI",
+        title: [
+          "Kendini yöneten",
+          "rezervasyonlar —",
+          "telefon ve sohbette.",
+        ],
+        paragraph:
+          "Tek bir işe adanmış AI ajanı: rezervasyon yapmak, yeniden planlamak, hatırlatmak. Ses, sohbet veya form üzerinden çalışır — Google Calendar, Outlook veya Cal.com ile çift yönlü senkron. Sıfır çifte rezervasyon, daha az randevuya gelmeme.",
+        primaryCta: "Demo planla",
+        secondaryCta: "Nasıl çalışır",
+        tags: "CAL.COM · RETELL · N8N · GOOGLE CALENDAR",
+        startingPrice: "€800 kurulum + €49/ay'dan başlar",
+      },
+      features: {
+        label: "NELER VAR",
+        heading: "Tek ajan, her rezervasyon kanalı.",
+        items: [
+          {
+            label: "ÇOK KANALLI ALIM",
+            body: "Arayan, sohbet kullanıcısı veya web formu — aynı backend, aynı müsaitlik mantığı, aynı onay e-postası.",
+          },
+          {
+            label: "ÇİFT YÖNLÜ TAKVİM SENKRONU",
+            body: "Google Calendar, Outlook 365, iCloud veya Cal.com ile canlı senkron. Harici bloklar anında dikkate alınır.",
+          },
+          {
+            label: "YENİDEN PLANLAMA VE İPTAL",
+            body: "Müşteri, onay mailine yanıt vererek veya tekrar arayarak yeniden planlayabilir. Form rodeosu yok, destek bileti yok.",
+          },
+          {
+            label: "HATIRLATMA + GELMEME",
+            body: "Takviminize göre SMS/WhatsApp/e-posta hatırlatmaları. Kaçırılan randevular için rebooking linki ile otomatik takip.",
+          },
+          {
+            label: "TAMPON VE YÖNLENDİRME KURALLARI",
+            body: "Hizmet başına süre, tampon, ekip yönlendirme, lokasyon kısıtları. Sihir yok — hepsi Cal.com'da görünür.",
+          },
+          {
+            label: "PANOLAR",
+            body: "Rezervasyon hızı, kullanım oranı, kanal başına gelmeme oranı. Basit haftalık rapor, 20 grafikli mezarlık yok.",
+          },
+        ],
+      },
+      howItWorks: {
+        label: "NASIL ÇALIŞIR",
+        heading: "Dört adım. Tek doğru takvim.",
+        steps: [
+          {
+            step: "01",
+            title: "Hizmetlerinizi haritalayın",
+            body: "Her hizmet: süre, tampon, kim verebilir, lokasyon/oda kısıtları. Cal.com'da modelleriz.",
+          },
+          {
+            step: "02",
+            title: "Takvimleri bağlayın",
+            body: "Personel takvimleri (Google/Outlook/iCloud) çift yönlü senkronize olur. Harici toplantılar rezervasyon slotlarını otomatik bloklar.",
+          },
+          {
+            step: "03",
+            title: "Alım kanallarını bağlayın",
+            body: "Telefon (Retell ses ajanıyla), web sohbet widget'ı, gömülü form. Hepsi aynı Cal.com backend'ine yazar.",
+          },
+          {
+            step: "04",
+            title: "Hatırlatmaları otomatikleştirin",
+            body: "Hizmet başına hatırlatma sıklığı ve kanalı. Rebooking linkli gelmeme takipleri. Her şeyi izleyin.",
+          },
+        ],
+      },
+      stack: {
+        label: "ÜZERİNE KURULU",
+        heading: "Sihir yok. Gerçek teknoloji.",
+        items: [
+          { name: "Cal.com", role: "Rezervasyon motoru + müsaitlik" },
+          { name: "Retell AI", role: "Ses alımı (opsiyonel)" },
+          { name: "n8n", role: "Hatırlatma + takip iş akışları" },
+          { name: "Google Calendar / Outlook", role: "Doğru kaynak senkronu" },
+          { name: "Twilio", role: "SMS hatırlatmaları" },
+        ],
+      },
+      pricing: {
+        label: "FİYATLANDIRMA",
+        heading: "Küçük kurulum. Küçük aylık. Gerçek ROI.",
+        tiers: [
+          {
+            name: "Solo",
+            price: "€800",
+            billing: "kurulum + €49/ay",
+            features: [
+              "3 hizmete kadar",
+              "Web form + sohbet alımı",
+              "Google Calendar veya Cal.com",
+              "E-posta + SMS hatırlatmaları",
+              "Haftalık rapor",
+            ],
+            cta: "Demo planla",
+          },
+          {
+            name: "Team",
+            price: "€1.600",
+            billing: "kurulum + €129/ay",
+            features: [
+              "Sınırsız hizmet",
+              "Telefon + sohbet + form",
+              "Ses ajanı (Retell)",
+              "Ekip yönlendirme kuralları",
+              "WhatsApp hatırlatmaları",
+              "Gelmeme rebooking akışı",
+            ],
+            cta: "Demo planla",
+            featured: "true",
+          },
+          {
+            name: "Çok lokasyonlu",
+            price: "Özel",
+            billing: "lokasyon başına",
+            features: [
+              "Çok şubeli yönlendirme",
+              "Kaynak kısıtları",
+              "Özel entegrasyonlar",
+              "Personel uygulaması (opsiyonel)",
+              "SLA + onboarding",
+            ],
+            cta: "Bizimle konuşun",
+          },
+        ],
+      },
+      faq: {
+        label: "SSS",
+        heading: "Dürüst cevaplar.",
+        items: [
+          {
+            q: "Mevcut Cal.com hesabımı koruyabilir miyim?",
+            a: "Evet — üzerine katman ekleriz. Zaten Cal.com'daysanız, ses alımı ve iş akışı otomasyonuyla genişletiriz. Göç gerekmez.",
+          },
+          {
+            q: "Tekrarlayan rezervasyonlar / paketler?",
+            a: "Cal.com'da yerli olarak desteklenir. 5'li paketler, aylık abonelikler, çok seanslı tedaviler — hepsi standart.",
+          },
+          {
+            q: "Gerçekten gelmemeleri azaltıyor mu?",
+            a: "Uygulamalarımızda %30–50 azalma tipik — 24 saat + 2 saat hatırlatmalar ve tek tıkla yeniden planlama linkiyle. Sayılar hizmet türünüze bağlı.",
+          },
+          {
+            q: "Müşteriler rezervasyon için bizi arayabilir mi?",
+            a: "Evet — tüm mesele bu. Ses ajanı cevaplar, slot bulur, rezervasyon yapar, onaylar. Ya da müşteri tercih ederse insan da telefonu açabilir.",
+          },
+        ],
+      },
+      cta: {
+        heading: "Her kaçırılan çağrı, kaçırılan bir rezervasyondur.",
+        paragraph:
+          "Demo planlayın. Sandbox bir takvim bağlar ve telefon + sohbet akışını uçtan uca test etmenizi sağlarız.",
+        primaryCta: "Demo planla",
+        secondaryCta: "Bizimle konuşun",
+      },
+    },
+
+    emailAgent: {
+      hero: {
+        eyebrow: "[ OPSOLID AJAN · 06 ]   E-POSTA OTOMASYONU",
+        title: [
+          "Gelen kutusu triyajı.",
+          "Soğuk dış iletişim.",
+          "Onaylı yanıt taslakları.",
+        ],
+        paragraph:
+          "Gerçekten yayına çıkan AI e-posta iş akışları: kişiselleştirilmiş soğuk dış iletişim, gelen triyajı ve insan onayı için otomatik taslaklar. Instantly, AgentMail ve özel n8n akışları üzerine kurulu. Isıtılmış deliverability, GDPR uyumlu.",
+        primaryCta: "Demo planla",
+        secondaryCta: "Nasıl çalışır",
+        tags: "INSTANTLY · AGENTMAIL · n8n · OPENAI",
+        startingPrice: "€99 – €499/ay'dan başlar",
+      },
+      features: {
+        label: "NELER VAR",
+        heading: "50 kişilik SDR ekibi olmadan işleyen e-posta.",
+        items: [
+          {
+            label: "ÖLÇEKLİ SOĞUK DIŞ İLETİŞİM",
+            body: "Kişi başına kişiselleştirilmiş varyantlar, sprey-dua değil. Çoklu gelen kutusu rotasyonu, gönderen ısıtma, bounce yönetimi.",
+          },
+          {
+            label: "GELEN KUTUSU TRİYAJI",
+            body: "Gelen mailler sınıflandırılır: Lead, Destek, Partner, Spam, Yükselt. Yönlendirilir, etiketlenir, CRM'de özet bekler.",
+          },
+          {
+            label: "YANIT TASLAKLARI",
+            body: "AI, geçmiş e-postalarınıza dayanarak sizin sesinizle taslak yazar. Siz inceler, düzenler, gönderirsiniz — saatler tasarruf, bot atığı gönderilmez.",
+          },
+          {
+            label: "DELIVERABILITY SAĞLIĞI",
+            body: "SPF/DKIM/DMARC denetimi, gönderen itibar izleme, 5–50 gelen kutusunda ısıtma. Gerçekten gelen kutusuna düşersiniz.",
+          },
+          {
+            label: "CRM'E YAZMA",
+            body: "Anlamlı her konuşma HubSpot/Pipedrive'a doğru kişi, aşama ve özetle otomatik olarak kaydedilir.",
+          },
+          {
+            label: "GDPR GUARDRAIL'LERİ",
+            body: "Suppression listeleri, unsubscribe yönetimi, AB kişi rıza mantığı. Opt-in sinyali olmayan soğuk maile yer yok.",
+          },
+        ],
+      },
+      howItWorks: {
+        label: "NASIL ÇALIŞIR",
+        heading: "Dört adım, gelen kutusu derinliğinde.",
+        steps: [
+          {
+            step: "01",
+            title: "Deliverability denetimi",
+            body: "SPF, DKIM, DMARC, gönderen itibarı. Yanan ne varsa düzeltin. Dış iletişim kapsamdaysa ısıtma gelen kutuları sağlarız.",
+          },
+          {
+            step: "02",
+            title: "Mail + CRM bağlayın",
+            body: "Google Workspace, M365 veya Postmark. Kayıt için HubSpot/Pipedrive. Siz onaylayana kadar her şey salt okunur.",
+          },
+          {
+            step: "03",
+            title: "Akışları kurun",
+            body: "Triyaj kuralları, yanıt şablonları, dış iletişim dizileri. Gerçek örnek maillerle sesinize ayarlanmış promptlar.",
+          },
+          {
+            step: "04",
+            title: "İnsan döngüde",
+            body: "Taslaklar inceleme kuyruğuna düşer. Siz onaylar, düzenler, gönderirsiniz. Dış iletişim suppression mantığıyla kendi başına çalışır.",
+          },
+        ],
+      },
+      stack: {
+        label: "ÜZERİNE KURULU",
+        heading: "Sihir yok. Gerçek teknoloji.",
+        items: [
+          { name: "Instantly", role: "Soğuk dış iletişim + ısıtma" },
+          { name: "AgentMail", role: "Gelen triyaj + taslak" },
+          { name: "n8n", role: "Özel iş akışı tutkalı" },
+          { name: "OpenAI / Claude", role: "Taslak + sınıflandırma" },
+          { name: "HubSpot / Pipedrive", role: "CRM doğru kaynağı" },
+        ],
+      },
+      pricing: {
+        label: "FİYATLANDIRMA",
+        heading: "Aylık operasyonel fiyatlandırma. İstediğinizde iptal.",
+        tiers: [
+          {
+            name: "Triage",
+            price: "€99",
+            billing: "aylık",
+            features: [
+              "1 gelen kutusu sınıflandırma + triyaj",
+              "Yanıt taslakları (aylık 200'e kadar)",
+              "HubSpot veya Pipedrive senkronu",
+              "Haftalık rapor",
+            ],
+            cta: "Demo planla",
+          },
+          {
+            name: "Outreach + Triage",
+            price: "€299",
+            billing: "aylık",
+            features: [
+              "Triage'daki her şey",
+              "Soğuk dış iletişim (5 gelen kutusu)",
+              "Isıtma + deliverability izleme",
+              "Aylık 2.000'e kadar gönderim",
+              "A/B test",
+              "Aylık prompt ince ayarı",
+            ],
+            cta: "Demo planla",
+            featured: "true",
+          },
+          {
+            name: "Scale",
+            price: "€499+",
+            billing: "aylık, hacim bazlı",
+            features: [
+              "Sınırsız gelen kutusu",
+              "Özel LLM yönlendirme",
+              "Gelişmiş segmentasyon",
+              "Özel iş akışı mühendisi",
+              "SLA",
+            ],
+            cta: "Bizimle konuşun",
+          },
+        ],
+      },
+      faq: {
+        label: "SSS",
+        heading: "Varsayılan olarak spam dolu bir kanal hakkında dürüst cevaplar.",
+        items: [
+          {
+            q: "AI yazılı soğuk e-posta aslında spam değil mi?",
+            a: "Yanlış yapılırsa öyledir. Paragraf düzeyinde kişiselleştiririz (mail-merge token ikamesi değil), gelen kutusu başına hacmi sınırlandırırız ve etkileşime geçmeyenleri suppress ederiz. Listeniz berbatsa size söyleriz — inbound öneririz.",
+          },
+          {
+            q: "AB kişileri için GDPR uyumlu mu?",
+            a: "AB kişilerine B2B soğuk iletişim, meşru menfaat gerekçesi + kolay opt-out gerektirir. İkisini de uygularız. Tüketici (B2C) kişileri için önceden rıza zorunludur — onsuz mail göndermeyiz.",
+          },
+          {
+            q: "İnsan incelemesi olmadan yanıt verebilir mi?",
+            a: "Evet, ama sadece dar ve güvenli niyetler için (kargo onayları, müsaitlik kontrolü yanıtları, planlama). Geri kalan her şey inceleme için kuyruğa girer. Çizgiyi siz belirlersiniz.",
+          },
+          {
+            q: "Mevcut posta geçmişime ne olacak?",
+            a: "Yanıt taslayıcıyı son 500 gönderilmiş e-postanız üzerinde eğitebiliriz; böylece taslaklar GPT-4'ün kurumsal sesi gibi değil, sizin gibi duyulur. Hepsi lokal işlenir, embedding dışında hiçbir şey saklanmaz.",
+          },
+        ],
+      },
+      cta: {
+        heading: "Gelen kutunuz ikinci bir tam zamanlı iş. Olmamalı.",
+        paragraph:
+          "Demo planlayın. Mail kurulumunuzu denetler ve spam filtrelerini tetiklemeden neyin otomatize edilebileceğini gösteririz.",
+        primaryCta: "Demo planla",
+        secondaryCta: "Bizimle konuşun",
+      },
+    },
+
+    leadQualifier: {
+      hero: {
+        eyebrow: "[ OPSOLID AJAN · 07 ]   LEAD NİTELENDİRME",
+        title: [
+          "Her gelen lead.",
+          "Nitelendirilmiş, skorlanmış,",
+          "satışa teslim edilmiş.",
+        ],
+        paragraph:
+          "Gelen leadleri ses veya sohbet üzerinden niteleyen, ICP'nize göre skorlayan ve MQL'leri doğrudan HubSpot veya Pipedrive'da satışa yönlendiren bir konuşma ajanı. Tipik artış: %40 MQL-SQL dönüşümü.",
+        primaryCta: "Demo planla",
+        secondaryCta: "Nasıl çalışır",
+        tags: "RETELL · HUBSPOT · N8N · SKORLAMA",
+        startingPrice: "€2.200 kurulum + €199/ay'dan başlar",
+      },
+      features: {
+        label: "NELER VAR",
+        heading: "SDR işi, 7/24 müsait.",
+        items: [
+          {
+            label: "KONUŞMAYLA NİTELENDİRME",
+            body: "14 alanlı form yerine doğal karşılıklı konuşma. Önemliyi sorar, gereksizi atlar, insan gibi hissettirir.",
+          },
+          {
+            label: "ICP SKORLAMA",
+            body: "Yapılandırılabilir skorlama modeli — firmografik, niyet sinyalleri, bütçe, zaman çizelgesi. Skor gönderimde HubSpot'a düşer.",
+          },
+          {
+            label: "ANINDA YÖNLENDİRME",
+            body: "SQL'e hazır leadler satışa Slack'ten pinglenir veya doğrudan AE'nin takvimine randevu düşer. 'Size döneriz' gecikmesi yok.",
+          },
+          {
+            label: "SES VEYA SOHBET",
+            body: "Aynı nitelendirme mantığı telefon (Retell), web sohbeti veya WhatsApp üzerinden çalışır. Kanalları siz seçersiniz.",
+          },
+          {
+            label: "KONUŞMA KÜTÜPHANESİ",
+            body: "Her lead için tam transkript + özet + skor. Satış HubSpot'u açar ve bağlamı zaten bilir.",
+          },
+          {
+            label: "A/B SORU AYARI",
+            body: "Nitelendirme terkinin aylık incelemesi. Soruları iyileştirin, kapanış oranını artırın, etkisini ölçün.",
+          },
+        ],
+      },
+      howItWorks: {
+        label: "NASIL ÇALIŞIR",
+        heading: "Anonim ziyaretçiden satışa hazır lead'e, insan olmadan.",
+        steps: [
+          {
+            step: "01",
+            title: "ICP + skorlama modelinizi tanımlayın",
+            body: "İdeal müşteri profilinizi birlikte çalışır ve ağırlıklı bir skorlama rubriğine dönüştürürüz (firmografik + niyet).",
+          },
+          {
+            step: "02",
+            title: "Konuşmayı tasarlayın",
+            body: "Skor boyutlarına eşlenmiş nitelendirme soruları. Dallanma mantığı. Diskalifiye zarifçe yürütülür.",
+          },
+          {
+            step: "03",
+            title: "CRM + satış yönlendirmesi bağlayın",
+            body: "HubSpot/Pipedrive pipeline'ları, Slack kanalları, AE takvim yönlendirme. SQL teslimatı rezervasyon linki veya doğrudan ping ile.",
+          },
+          {
+            step: "04",
+            title: "Kanallarda yayına alın",
+            body: "Sohbet widget'ı + telefon hattı canlı. MQL→SQL dönüşümünü kalibre etmek için satışla aylık skorlama incelemesi.",
+          },
+        ],
+      },
+      stack: {
+        label: "ÜZERİNE KURULU",
+        heading: "Sihir yok. Gerçek teknoloji.",
+        items: [
+          { name: "Retell AI", role: "Ses nitelendirme" },
+          { name: "HubSpot / Pipedrive", role: "CRM + skorlama hedefi" },
+          { name: "n8n", role: "Yönlendirme + Slack/Cal.com teslimatı" },
+          { name: "Supabase", role: "Konuşma kaydı + analitik" },
+          { name: "Clearbit / Apollo (opsiyonel)", role: "Firmografik zenginleştirme" },
+        ],
+      },
+      pricing: {
+        label: "FİYATLANDIRMA",
+        heading: "Tek seferlik kurulum. Tekrarlayan artış.",
+        tiers: [
+          {
+            name: "Sadece sohbet",
+            price: "€2.200",
+            billing: "kurulum + €199/ay",
+            features: [
+              "Web sitesi sohbet widget'ı",
+              "ICP skorlama modeli",
+              "HubSpot veya Pipedrive senkronu",
+              "Slack yönlendirme",
+              "Aylık inceleme",
+            ],
+            cta: "Demo planla",
+          },
+          {
+            name: "Ses + Sohbet",
+            price: "€3.800",
+            billing: "kurulum + €349/ay",
+            features: [
+              "Sohbet + gelen telefon",
+              "Retell ses nitelendirme",
+              "AE'lere takvim yönlendirme",
+              "Firmografik zenginleştirme",
+              "Sorularda A/B test",
+              "Haftalık satış senkronu",
+            ],
+            cta: "Demo planla",
+            featured: "true",
+          },
+          {
+            name: "Enterprise",
+            price: "Özel",
+            billing: "ekip başına fiyatlandırma",
+            features: [
+              "Çok ekipli yönlendirme",
+              "Özel CRM entegrasyonları",
+              "Hesap bazlı skorlama",
+              "Özel sales ops",
+              "SLA + raporlama",
+            ],
+            cta: "Bizimle konuşun",
+          },
+        ],
+      },
+      faq: {
+        label: "SSS",
+        heading: "Dürüst cevaplar.",
+        items: [
+          {
+            q: "Leadler gerçekten AI ile etkileşimde kalıyor mu?",
+            a: "Kısa cevap: konuşma yararlı hissettirirse evet. AI'yı önceden açıklıyoruz, soruları en fazla 4–6 ile sınırlıyoruz ve her noktada insana devretme sunuyoruz. Tamamlama oranları statik formlardaki %15–25'e karşı %60–80 seviyelerinde.",
+          },
+          {
+            q: "Gerçekçi bir MQL→SQL artışı nedir?",
+            a: "Çoğu uygulamada %30–50, daha iyi skorlama doğruluğu + daha hızlı yönlendirme (SQL'ler satışa saatler yerine dakikalar içinde düşer) ile. Spesifik rakamlar mevcut tabanınıza bağlıdır.",
+          },
+          {
+            q: "Leadleri diskalifiye edebilir mi?",
+            a: "Evet — hem de zarifçe. ICP dışı leadler self-serve bir katmana yönlendirilir veya kibarca yolcu edilir. AE'leriniz uymayan çağrılarda zaman kaybetmez.",
+          },
+          {
+            q: "Mevcut SDR ekibimizle nasıl entegre olur?",
+            a: "İlk nitelendirmeyi devralır (SDR ekibi sıcak dışa odaklanır) veya onları güçlendirir (SDR'ler yalnızca SQL'e hazır leadleri alır). Mevcut hareketinize eşleriz.",
+          },
+        ],
+      },
+      cta: {
+        heading: "AE'leriniz SQL'lerle konuşmalı. Lastik tekmeleyenlerle değil.",
+        paragraph:
+          "Demo planlayın. Huninizde nitelendirmenin bugün leadleri nerede kaybettiğini birlikte haritalayalım.",
+        primaryCta: "Demo planla",
+        secondaryCta: "Bizimle konuşun",
       },
     },
 
