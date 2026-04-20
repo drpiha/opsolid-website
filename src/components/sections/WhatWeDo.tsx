@@ -1,54 +1,50 @@
 "use client";
 
-import { Check } from "lucide-react";
-import { SectionHeading } from "@/components/shared/SectionHeading";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { useLocale } from "@/context/LocaleContext";
-import { AutomationFlow } from "@/components/illustrations/AutomationFlow";
-import { AnimatedWorkflow } from "@/components/illustrations/AnimatedWorkflow";
 
 export function WhatWeDo() {
   const { t } = useLocale();
   const s = t.home.whatWeDo;
 
   return (
-    <section className="section-padding relative">
-      {/* Gradient mesh background */}
-      <div className="absolute inset-0 gradient-mesh -z-10" />
-
+    <section className="section hairline-t bg-paper">
       <div className="container-wide">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-          {/* Left side - Content */}
-          <AnimatedSection>
-            <SectionHeading
-              label={s.label}
-              headline={s.headline}
-              gradient
-              align="left"
-              className="mb-6"
-            />
-            <p className="text-body-lg text-slate-500 mb-10">
+        {/* Editorial two-column header */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-12 lg:mb-16">
+          <AnimatedSection className="lg:col-span-7">
+            <div className="mono-label mb-4">{s.label}</div>
+            <h2 className="font-serif text-ink text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.06] tracking-[-0.02em] text-balance">
+              {s.headline}
+            </h2>
+          </AnimatedSection>
+
+          <AnimatedSection
+            delay={0.1}
+            className="lg:col-span-5 lg:pt-2 flex items-start"
+          >
+            <p className="text-ink/70 text-body-lg leading-relaxed text-pretty">
               {s.description}
             </p>
-            <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {s.points.map((point, i) => (
-                <li key={i} className="flex items-start gap-3 bg-white/60 backdrop-blur-sm rounded-xl p-3.5 border border-white/40">
-                  <div className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-brand-500 to-teal-500">
-                    <Check size={11} className="text-white" strokeWidth={3} />
-                  </div>
-                  <span className="text-sm text-slate-700 font-medium">{point}</span>
-                </li>
-              ))}
-            </ul>
           </AnimatedSection>
+        </div>
 
-          {/* Right side - Animated illustrations */}
-          <AnimatedSection delay={0.2}>
-            <div className="space-y-6">
-              <AnimatedWorkflow />
-              <AutomationFlow className="px-4" />
-            </div>
-          </AnimatedSection>
+        {/* Points grid — hairline cells */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-t border-l border-ink/10">
+          {s.points.map((point, i) => (
+            <AnimatedSection
+              key={i}
+              delay={0.05 + i * 0.05}
+              className="border-r border-b border-ink/10 p-6 md:p-8 bg-paper-warm flex flex-col gap-3"
+            >
+              <div className="mono-label text-ink/50">
+                {String(i + 1).padStart(2, "0")}
+              </div>
+              <p className="text-ink text-body leading-relaxed text-pretty">
+                {point}
+              </p>
+            </AnimatedSection>
+          ))}
         </div>
       </div>
     </section>

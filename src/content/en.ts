@@ -23,6 +23,32 @@ export const content = {
         "OpSolid helps businesses replace manual, repetitive work with reliable automated systems — from workflow automation and systems integration to AI-assisted processes.",
       primaryCta: "Book a Discovery Call",
       secondaryCta: "See Services",
+      editorial: {
+        eyebrow: "[ 01 / 04 ]   AUTOMATION STUDIO — HAMBURG, DE",
+        title: [
+          "We build the systems",
+          "your operations",
+          "already pretend to have.",
+        ],
+        paragraph:
+          "Practical automation for mid-sized operations — orders, documents, approvals, communications. No rebuild of your stack, no AI theater, no vendor lock-in.",
+        primaryCta: "Book a call",
+        secondaryCta: "How we work",
+        stackLabel: "Trusted stack",
+        schematic: {
+          trigger: "Trigger",
+          triggerDetail: "Webhook / Form",
+          parse: "Parse",
+          parseDetail: "AI · PDF OCR",
+          route: "Route",
+          routeDetail: "If / Else",
+          write: "Write",
+          writeDetail: "Postgres",
+          notify: "Notify",
+          notifyDetail: "WhatsApp / Email",
+          caption: "Workflow · v1",
+        },
+      },
     },
 
     capabilities: [
@@ -692,13 +718,48 @@ export const content = {
       },
       {
         title: "5. Cookies & Analytics",
-        content:
-          "This website does not use tracking cookies or analytics tools. A language preference is stored in your browser's local storage to remember your selected language.",
+        subsections: [
+          {
+            title: "No tracking cookies",
+            content:
+              "This website does not use tracking cookies. A language preference is stored in your browser's local storage to remember your selected language.",
+          },
+          {
+            title: "Vercel Analytics",
+            content:
+              "We use Vercel Analytics on this website, which captures anonymous page-view counts without cookies and without personal identifiers. It cannot identify individual visitors.",
+          },
+        ],
       },
       {
         title: "6. Your Rights",
         content:
           "You have the right to receive information about your stored data, request correction or deletion, restrict processing, and lodge a complaint with a supervisory authority. If consent was given, you can revoke it at any time.",
+      },
+      {
+        title: "7. Digital Business Card Product",
+        subsections: [
+          {
+            title: "Purpose & legal basis",
+            content:
+              "We process the contact details you submit through the Digital Business Card lead form (name, work email, company, team size, message, GDPR consent) solely to respond to your inquiry. Legal basis: Art. 6(1)(b) GDPR (pre-contractual measures at your request) and Art. 6(1)(a) GDPR (your explicit consent).",
+          },
+          {
+            title: "Hosting",
+            content:
+              "Card data and lead submissions are stored within the European Union on servers located in Frankfurt, Germany (Hetzner / IONOS). No US subprocessors.",
+          },
+          {
+            title: "Retention",
+            content:
+              "Lead data is retained for 24 months. Inactive Digital Business Card profiles are deleted after 12 months of inactivity after a reminder email.",
+          },
+          {
+            title: "Right to deletion",
+            content:
+              "You may delete your Digital Business Card profile and all associated data with one click inside your account, or by emailing contact@opsolid.de. Deletion is effective within 30 days.",
+          },
+        ],
       },
     ],
   },
@@ -889,7 +950,217 @@ export const content = {
         externalUrl: "https://kutasia.com",
         icon: "sparkles",
       },
+      {
+        name: "Digital Business Card",
+        tagline: "NFC · Apple Wallet · GDPR-native",
+        description:
+          "A physical NFC card plus a digital profile that lives in Germany. Apple & Google Wallet, real-time analytics, CRM sync, team management — without the US subscription lock-in.",
+        status: "Live",
+        href: "/products/digital-card",
+        externalUrl: "",
+        icon: "idCard",
+      },
     ],
+
+    digitalCard: {
+      hero: {
+        eyebrow: "[ OPSOLID PRODUCT · 02 ]   DIGITAL BUSINESS CARD",
+        title: [
+          "One tap,",
+          "one URL,",
+          "one card that stays in Germany.",
+        ],
+        paragraph:
+          "A modern NFC business card with a digital profile hosted in Germany. Apple & Google Wallet passes, realtime analytics, CRM sync, team roster — no US servers, no subscription lock-in.",
+        primaryCta: "Book a demo",
+        secondaryCta: "See how it works",
+        tags: "ISO 27001 · GDPR · NFC · APPLE WALLET · GOOGLE WALLET",
+        cardLabels: {
+          name: "Hasan Dönmez",
+          role: "Automation Studio",
+          company: "OpSolid · Hamburg",
+          nfc: "NFC",
+          chip: "TAP TO SHARE",
+        },
+      },
+      features: {
+        label: "CAPABILITIES",
+        heading: "Everything a card should do in 2026.",
+        intro:
+          "Beyond a vCard drop. Analytics, wallet passes, CRM sync, and team oversight — built on an EU-native stack.",
+        items: [
+          {
+            label: "TAP · 01",
+            title: "NFC tap & QR",
+            desc: "Tap an NFC phone or scan the QR. No app install for the receiver. Works on every modern iOS and Android.",
+            icon: "nfc",
+          },
+          {
+            label: "WALLET · 02",
+            title: "Apple & Google Wallet",
+            desc: "Every profile can be saved as a wallet pass. Updates automatically when your card changes.",
+            icon: "wallet",
+          },
+          {
+            label: "ANALYTICS · 03",
+            title: "Realtime analytics",
+            desc: "See taps, opens, and saves as they happen. Filter by team member, event, and country.",
+            icon: "chart",
+          },
+          {
+            label: "CRM · 04",
+            title: "CRM sync",
+            desc: "Push captured leads straight into HubSpot, Pipedrive, Salesforce, or a CSV. Native — no Zapier required.",
+            icon: "sync",
+          },
+          {
+            label: "TEAMS · 05",
+            title: "Team roster",
+            desc: "Provision, revoke, and rebrand cards for your entire team from one admin console. SSO-ready.",
+            icon: "team",
+          },
+          {
+            label: "HOSTING · 06",
+            title: "Hosted in Germany",
+            desc: "Hetzner / IONOS Frankfurt. ISO 27001. Zero US subprocessors. GDPR-native, DPA ready on signup.",
+            icon: "hosting",
+          },
+        ],
+      },
+      compliance: {
+        label: "SOVEREIGNTY",
+        heading: "Where does your card data live?",
+        intro:
+          "Most competitors proudly host in the US. We don't. This is where that matters.",
+        cols: [
+          "Provider",
+          "Host region",
+          "Sub-processors",
+          "GDPR DPA",
+          "One-click delete",
+        ],
+        rows: [
+          {
+            provider: "Popl",
+            host: "US",
+            sub: "US (AWS, Heroku)",
+            dpa: "via SCC",
+            del: "Partial",
+            highlight: "",
+          },
+          {
+            provider: "Blinq",
+            host: "AU",
+            sub: "US (AWS Sydney)",
+            dpa: "via SCC",
+            del: "Partial",
+            highlight: "",
+          },
+          {
+            provider: "Lemontaps",
+            host: "DE (Frankfurt)",
+            sub: "Limited",
+            dpa: "Yes",
+            del: "Yes",
+            highlight: "",
+          },
+          {
+            provider: "OpSolid Digital Card",
+            host: "DE (Frankfurt)",
+            sub: "No US subprocessors",
+            dpa: "Native",
+            del: "Yes",
+            highlight: "true",
+          },
+        ],
+      },
+      pricing: {
+        label: "PRICING",
+        heading: "One-time, subscription, or free. Never locked in.",
+        popularBadge: "MOST POPULAR",
+        plans: [
+          {
+            name: "Free",
+            price: "€0",
+            cadence: "",
+            popular: "",
+            bullets: [
+              "Digital profile, 1 card",
+              "Basic analytics",
+              "OpSolid watermark",
+              "Ideal for founders and freelancers",
+            ],
+            cta: "Create profile",
+            href: "/contact?source=dbc-free",
+          },
+          {
+            name: "Team",
+            price: "€4.90",
+            cadence: "per user / month",
+            popular: "true",
+            bullets: [
+              "Everything in Free",
+              "Advanced analytics",
+              "CRM sync (HubSpot, Pipedrive, Salesforce)",
+              "Custom domain & full branding",
+              "Roster + SSO",
+              "Annual billing, min. 5 seats",
+            ],
+            cta: "Book a demo",
+            href: "#lead",
+          },
+          {
+            name: "NFC + Lifetime",
+            price: "€39",
+            cadence: "one-time, per card",
+            popular: "",
+            bullets: [
+              "Matte or wood NFC card, shipped from Hamburg",
+              "Free digital account, forever",
+              "No subscription, ever",
+              "Upgrade to Team anytime",
+            ],
+            cta: "Request card",
+            href: "#lead",
+          },
+        ],
+      },
+      lead: {
+        label: "REQUEST",
+        heading: "Book a demo — or your first card.",
+        intro:
+          "Tell us roughly how big your team is and what you want to do with digital cards. We respond within one business day.",
+        fields: {
+          name: "Full name",
+          email: "Work email",
+          company: "Company (optional)",
+          teamSize: "Team size",
+          teamSizeOptions: ["1", "2 – 10", "11 – 50", "50+"],
+          message: "Anything we should know? (optional)",
+          consent:
+            "I consent to OpSolid processing this submission to respond to my request. See the Privacy Policy.",
+          privacyLink: "Privacy Policy",
+          submit: "Send request",
+          submitting: "Sending…",
+          success:
+            "Thanks — we'll reply within one business day.",
+          error:
+            "Something went wrong. Please email contact@opsolid.de directly.",
+        },
+      },
+      cta: {
+        eyebrow: "READY?",
+        heading:
+          "Your next business card ships from Hamburg,\nnot San Francisco.",
+        primaryCta: "Book a call",
+        secondaryCta: "Go to /contact",
+      },
+      meta: {
+        title: "Digital Business Card — Hosted in Germany | OpSolid",
+        description:
+          "A modern NFC business card with a GDPR-native digital profile. Apple & Google Wallet, CRM sync, team roster — hosted in Hamburg, not San Francisco.",
+      },
+    },
 
     kutasia: {
       hero: {

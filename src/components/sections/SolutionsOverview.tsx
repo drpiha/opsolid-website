@@ -11,34 +11,39 @@ import {
   MessageSquare,
   Bot,
 } from "lucide-react";
-import { SectionHeading } from "@/components/shared/SectionHeading";
-import {
-  StaggerContainer,
-  StaggerItem,
-} from "@/components/shared/AnimatedSection";
+import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { useLocale } from "@/context/LocaleContext";
 
 const iconMap: Record<string, React.ReactNode> = {
-  workflow: <Workflow size={20} />,
-  layout: <LayoutDashboard size={20} />,
-  gitBranch: <GitBranch size={20} />,
-  plug: <Plug size={20} />,
-  target: <Target size={20} />,
-  package: <Package size={20} />,
-  messageSquare: <MessageSquare size={20} />,
-  bot: <Bot size={20} />,
+  workflow: <Workflow size={18} strokeWidth={1.5} />,
+  layout: <LayoutDashboard size={18} strokeWidth={1.5} />,
+  gitBranch: <GitBranch size={18} strokeWidth={1.5} />,
+  plug: <Plug size={18} strokeWidth={1.5} />,
+  target: <Target size={18} strokeWidth={1.5} />,
+  package: <Package size={18} strokeWidth={1.5} />,
+  messageSquare: <MessageSquare size={18} strokeWidth={1.5} />,
+  bot: <Bot size={18} strokeWidth={1.5} />,
 };
 
-// Rotating accent colors: brand, accent, teal
-const accentCycle = [
-  { bg: "from-brand-500 to-brand-600", text: "text-white" },
-  { bg: "from-accent-500 to-accent-600", text: "text-white" },
-  { bg: "from-teal-500 to-teal-600", text: "text-white" },
-  { bg: "from-brand-500 to-teal-500", text: "text-white" },
-  { bg: "from-accent-500 to-brand-500", text: "text-white" },
-  { bg: "from-teal-500 to-cyan-500", text: "text-white" },
-  { bg: "from-brand-600 to-accent-500", text: "text-white" },
-  { bg: "from-teal-600 to-brand-500", text: "text-white" },
+/**
+ * 8-cell asymmetric bento layout.
+ * `lg:grid-cols-6` with manual col/row spans to produce variation.
+ * Visual rhythm (left→right, top→bottom):
+ *   [ A A A ][ B B B ]      row 1 — two wide
+ *   [ C C ][ D D ][ E E ]  row 2 — three equal
+ *   [ F F ][ G G G G ]     row 3 — one narrow + one wide
+ *   [ H H H H H H ]          row 4 — one full-width
+ * ...collapsed intelligently on smaller breakpoints.
+ */
+const spans = [
+  "lg:col-span-3 lg:row-span-1",        // 0
+  "lg:col-span-3 lg:row-span-1",        // 1
+  "lg:col-span-2 lg:row-span-1",        // 2
+  "lg:col-span-2 lg:row-span-1",        // 3
+  "lg:col-span-2 lg:row-span-1",        // 4
+  "lg:col-span-2 lg:row-span-1",        // 5
+  "lg:col-span-4 lg:row-span-1",        // 6
+  "lg:col-span-6 lg:row-span-1",        // 7
 ];
 
 export function SolutionsOverview() {
@@ -46,49 +51,57 @@ export function SolutionsOverview() {
   const s = t.home.solutions;
 
   return (
-    <section className="section-padding relative overflow-hidden">
-      {/* Animated gradient mesh background */}
-      <div className="absolute inset-0 -z-10 bg-slate-50/80">
-        <div className="absolute top-0 left-[20%] w-96 h-96 bg-brand-500/[0.04] rounded-full blur-[120px]" />
-        <div className="absolute bottom-0 right-[10%] w-80 h-80 bg-accent-500/[0.04] rounded-full blur-[100px]" />
-        <div className="absolute top-1/3 right-[30%] w-64 h-64 bg-teal-500/[0.03] rounded-full blur-[80px]" />
-      </div>
+    <section className="section hairline-t bg-paper-cool/40">
+      <div className="container-wide">
+        {/* Editorial two-column header */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-12 lg:mb-16">
+          <AnimatedSection className="lg:col-span-7">
+            <div className="mono-label mb-4">{s.label}</div>
+            <h2 className="font-serif text-ink text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.06] tracking-[-0.02em] text-balance">
+              {s.headline}
+            </h2>
+          </AnimatedSection>
+        </div>
 
-      <div className="container-wide relative z-10">
-        <SectionHeading label={s.label} headline={s.headline} />
-
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5">
-          {s.items.map((item, i) => {
-            const accent = accentCycle[i % accentCycle.length];
-            return (
-              <StaggerItem key={i}>
-                <Link href="/solutions" className="block h-full">
-                  <div className="h-full rounded-2xl bg-white/80 backdrop-blur-xl border border-white/20 shadow-soft p-6 md:p-7 group transition-all duration-300 hover:shadow-glow hover:-translate-y-0.5 relative overflow-hidden">
-                    {/* Decorative SVG pattern */}
-                    <svg className="absolute top-0 right-0 w-24 h-24 opacity-[0.04] group-hover:opacity-[0.08] transition-opacity" viewBox="0 0 80 80" fill="none">
-                      <circle cx="60" cy="20" r="30" stroke="currentColor" strokeWidth="0.5" />
-                      <circle cx="60" cy="20" r="18" stroke="currentColor" strokeWidth="0.5" />
-                      <circle cx="60" cy="20" r="6" fill="currentColor" opacity="0.3" />
-                      <line x1="30" y1="20" x2="54" y2="20" stroke="currentColor" strokeWidth="0.5" />
-                      <line x1="60" y1="50" x2="60" y2="26" stroke="currentColor" strokeWidth="0.5" />
-                    </svg>
-                    <div
-                      className={`relative z-10 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br ${accent.bg} ${accent.text} mb-4`}
-                    >
-                      {iconMap[item.icon]}
-                    </div>
-                    <h3 className="relative z-10 text-sm font-semibold text-slate-900 group-hover:text-brand-700 transition-colors">
-                      {item.title}
-                    </h3>
-                    <p className="relative z-10 mt-1.5 text-xs text-slate-500 leading-relaxed">
-                      {item.description}
-                    </p>
+        {/* Bento grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 lg:gap-5">
+          {s.items.map((item, i) => (
+            <AnimatedSection
+              key={i}
+              delay={0.04 * i}
+              className={spans[i % spans.length]}
+            >
+              <Link
+                href="/solutions"
+                className="group block h-full rounded-2xl border border-ink/10 bg-paper-warm p-6 md:p-7 transition duration-300 hover:border-amber/60 hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber focus-visible:outline-none"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-ink/10 bg-paper text-ink">
+                    {iconMap[item.icon]}
                   </div>
-                </Link>
-              </StaggerItem>
-            );
-          })}
-        </StaggerContainer>
+                  <div className="mono-label text-ink/50">
+                    {String(i + 1).padStart(2, "0")}
+                  </div>
+                </div>
+                <h3 className="font-serif text-ink text-[1.375rem] leading-[1.2] tracking-[-0.015em] group-hover:text-ink transition-colors">
+                  {item.title}
+                </h3>
+                <p className="mt-3 text-ink/70 text-sm leading-relaxed text-pretty">
+                  {item.description}
+                </p>
+                <span
+                  aria-hidden="true"
+                  className="mt-5 inline-flex items-center gap-1.5 text-ink/60 group-hover:text-amber-700 transition-colors text-sm"
+                >
+                  <span className="mono-label">Learn more</span>
+                  <span className="transition-transform group-hover:translate-x-0.5">
+                    →
+                  </span>
+                </span>
+              </Link>
+            </AnimatedSection>
+          ))}
+        </div>
       </div>
     </section>
   );

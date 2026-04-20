@@ -1,150 +1,65 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Search, PenTool, Code2, TrendingUp } from "lucide-react";
-import { SectionHeading } from "@/components/shared/SectionHeading";
-import {
-  StaggerContainer,
-  StaggerItem,
-} from "@/components/shared/AnimatedSection";
+import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { useLocale } from "@/context/LocaleContext";
-import { processStepIcons } from "@/components/illustrations/ProcessStepIcons";
-
-const stepIcons = [
-  {
-    icon: Search,
-    gradient: "from-brand-500 to-brand-700",
-    glow: "shadow-[0_0_20px_-5px_rgba(37,99,235,0.4)]",
-    bgLight: "bg-brand-50",
-  },
-  {
-    icon: PenTool,
-    gradient: "from-accent-500 to-accent-700",
-    glow: "shadow-[0_0_20px_-5px_rgba(139,92,246,0.4)]",
-    bgLight: "bg-accent-50",
-  },
-  {
-    icon: Code2,
-    gradient: "from-teal-500 to-teal-700",
-    glow: "shadow-[0_0_20px_-5px_rgba(20,184,166,0.4)]",
-    bgLight: "bg-teal-50",
-  },
-  {
-    icon: TrendingUp,
-    gradient: "from-cyan-400 to-brand-600",
-    glow: "shadow-[0_0_20px_-5px_rgba(6,182,212,0.4)]",
-    bgLight: "bg-cyan-50",
-  },
-];
 
 export function HowWeWork() {
   const { t } = useLocale();
   const s = t.home.howWeWork;
 
   return (
-    <section className="section-padding">
+    <section className="section hairline-t bg-paper">
       <div className="container-wide">
-        <SectionHeading label={s.label} headline={s.headline} />
+        {/* Editorial two-column header */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-12 lg:mb-16">
+          <AnimatedSection className="lg:col-span-7">
+            <div className="mono-label mb-4">{s.label}</div>
+            <h2 className="font-serif text-ink text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.06] tracking-[-0.02em] text-balance">
+              {s.headline}
+            </h2>
+          </AnimatedSection>
+          <AnimatedSection
+            delay={0.1}
+            className="lg:col-span-5 lg:pt-2 flex items-start"
+          >
+            <p className="text-ink/70 text-body leading-relaxed text-pretty">
+              A four-step engagement: discover, design, build, improve.
+              Each step ends with a concrete artifact you can review.
+            </p>
+          </AnimatedSection>
+        </div>
 
-        {/* Desktop: horizontal timeline */}
-        <StaggerContainer className="hidden lg:block max-w-5xl mx-auto">
-          {/* Gradient connecting line */}
-          <div className="relative">
-            <div className="absolute top-8 left-[calc(12.5%-0.5rem)] right-[calc(12.5%-0.5rem)] h-0.5 bg-gradient-to-r from-brand-500 via-accent-500 to-teal-500 rounded-full" />
-          </div>
+        {/* Process steps — hairline grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-t border-l border-ink/10">
+          {s.steps.map((step, i) => (
+            <AnimatedSection
+              key={i}
+              delay={0.05 + i * 0.08}
+              className="relative border-r border-b border-ink/10 p-6 md:p-8 bg-paper-warm flex flex-col gap-4 group"
+            >
+              {/* Step number — large serif numeral */}
+              <div className="flex items-baseline gap-3">
+                <span className="font-serif text-[3rem] leading-none text-ink/15 group-hover:text-amber/60 transition-colors duration-500">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span className="mono-label text-ink/50">{step.step}</span>
+              </div>
 
-          <div className="grid grid-cols-4 gap-10 relative">
-            {s.steps.map((step, i) => {
-              const visual = stepIcons[i] || stepIcons[0];
-              const Icon = visual.icon;
+              <h3 className="font-serif text-ink text-[1.375rem] leading-[1.2] tracking-[-0.015em]">
+                {step.title}
+              </h3>
+              <p className="text-ink/70 text-sm leading-relaxed text-pretty">
+                {step.description}
+              </p>
 
-              return (
-                <StaggerItem key={i}>
-                  <div className="text-center">
-                    {/* Icon with gradient background */}
-                    <motion.div
-                      className="relative mx-auto mb-5"
-                      whileHover={{ scale: 1.08 }}
-                      transition={{ type: "spring", stiffness: 300 }}
-                    >
-                      {/* Glow ring behind the icon */}
-                      <div
-                        className={`absolute inset-0 w-16 h-16 mx-auto rounded-2xl bg-gradient-to-br ${visual.gradient} opacity-20 blur-md`}
-                      />
-                      {/* Main icon container */}
-                      <div
-                        className={`relative mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br ${visual.gradient} ${visual.glow}`}
-                      >
-                        <Icon size={26} className="text-white" strokeWidth={1.8} />
-                      </div>
-                      {/* Step number badge */}
-                      <div className="absolute -top-1.5 -right-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-white border-2 border-slate-100 shadow-sm">
-                        <span className="text-[10px] font-bold text-slate-600">
-                          {step.step}
-                        </span>
-                      </div>
-                    </motion.div>
-                    <h3 className="text-lg font-semibold text-slate-900">
-                      {step.title}
-                    </h3>
-                    <p className="mt-2 text-sm text-slate-500 leading-relaxed">
-                      {step.description}
-                    </p>
-                    {/* Step illustration */}
-                    {processStepIcons[i] && (() => {
-                      const StepIllustration = processStepIcons[i];
-                      return <StepIllustration className="mt-4" />;
-                    })()}
-                  </div>
-                </StaggerItem>
-              );
-            })}
-          </div>
-        </StaggerContainer>
-
-        {/* Mobile/Tablet: vertical timeline */}
-        <StaggerContainer className="lg:hidden max-w-xl mx-auto">
-          <div className="relative pl-16">
-            {/* Vertical gradient line */}
-            <div className="absolute left-[1.4375rem] top-5 bottom-5 w-0.5 bg-gradient-to-b from-brand-500 via-accent-500 to-teal-500 rounded-full" />
-
-            <div className="space-y-12">
-              {s.steps.map((step, i) => {
-                const visual = stepIcons[i] || stepIcons[0];
-                const Icon = visual.icon;
-
-                return (
-                  <StaggerItem key={i}>
-                    <div className="relative">
-                      {/* Icon with gradient background */}
-                      <div className="absolute -left-16 top-0">
-                        <div className="relative">
-                          <div
-                            className={`flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br ${visual.gradient} ${visual.glow}`}
-                          >
-                            <Icon size={20} className="text-white" strokeWidth={1.8} />
-                          </div>
-                          {/* Step number badge */}
-                          <div className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-white border-2 border-slate-100 shadow-sm">
-                            <span className="text-[9px] font-bold text-slate-600">
-                              {step.step}
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                      <h3 className="text-lg font-semibold text-slate-900">
-                        {step.title}
-                      </h3>
-                      <p className="mt-1.5 text-sm text-slate-500 leading-relaxed">
-                        {step.description}
-                      </p>
-                    </div>
-                  </StaggerItem>
-                );
-              })}
-            </div>
-          </div>
-        </StaggerContainer>
+              {/* Amber indicator line on hover */}
+              <div
+                aria-hidden="true"
+                className="absolute top-0 left-0 h-px w-0 bg-amber transition-[width] duration-500 group-hover:w-full"
+              />
+            </AnimatedSection>
+          ))}
+        </div>
       </div>
     </section>
   );

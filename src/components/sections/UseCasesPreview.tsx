@@ -1,58 +1,68 @@
 "use client";
 
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
-import { ArrowRight } from "lucide-react";
-import { SectionHeading } from "@/components/shared/SectionHeading";
-import {
-  StaggerContainer,
-  StaggerItem,
-} from "@/components/shared/AnimatedSection";
+import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { useLocale } from "@/context/LocaleContext";
-import { useCaseIcons } from "@/components/illustrations/UseCaseIcons";
 
 export function UseCasesPreview() {
   const { t } = useLocale();
   const s = t.home.useCases;
 
   return (
-    <section className="section-padding bg-slate-50/40">
+    <section className="section hairline-t bg-paper">
       <div className="container-wide">
-        <SectionHeading label={s.label} headline={s.headline} />
+        {/* Editorial header */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-12 lg:mb-16">
+          <AnimatedSection className="lg:col-span-7">
+            <div className="mono-label mb-4">{s.label}</div>
+            <h2 className="font-serif text-ink text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.06] tracking-[-0.02em] text-balance">
+              {s.headline}
+            </h2>
+          </AnimatedSection>
+        </div>
 
-        <StaggerContainer className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
-          {s.items.map((item, i) => {
-            const Icon = useCaseIcons[i];
-            return (
-            <StaggerItem key={i}>
+        {/* Use case cards — three columns, equal cells */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-t border-l border-ink/10">
+          {s.items.map((item, i) => (
+            <AnimatedSection
+              key={i}
+              delay={0.04 * i}
+              className="border-r border-b border-ink/10"
+            >
               <Link
                 href="/use-cases"
-                className="group block h-full"
+                className="group block h-full p-6 md:p-7 bg-paper-warm hover:bg-paper transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber focus-visible:outline-none"
               >
-                <div className="relative h-full rounded-xl gradient-border p-5 transition-all duration-300 hover:shadow-glow hover:-translate-y-0.5 overflow-hidden">
-                  {/* Small gradient accent bar at top */}
-                  <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-500 via-accent-500 to-teal-500" />
-
-                  <div className="flex items-start gap-3">
-                    {Icon && <Icon className="shrink-0 -ml-0.5" />}
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-sm font-semibold text-slate-900 group-hover:text-brand-700 transition-colors">
-                        {item.title}
-                      </h3>
-                      <p className="mt-1.5 text-xs text-slate-400 leading-relaxed line-clamp-2">
-                        {item.description}
-                      </p>
-                    </div>
-                    <ArrowRight
-                      size={14}
-                      className="mt-0.5 shrink-0 text-slate-200 group-hover:text-brand-500 transition-colors"
-                    />
-                  </div>
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="mono-label text-ink/50">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span
+                    aria-hidden="true"
+                    className="flex-1 h-px bg-ink/10 group-hover:bg-amber/50 transition-colors duration-300"
+                  />
                 </div>
+
+                <h3 className="font-serif text-ink text-[1.25rem] leading-[1.25] tracking-[-0.015em]">
+                  {item.title}
+                </h3>
+                <p className="mt-2.5 text-ink/70 text-sm leading-relaxed text-pretty">
+                  {item.description}
+                </p>
+
+                <span
+                  aria-hidden="true"
+                  className="mt-5 inline-flex items-center gap-1.5 text-ink/60 group-hover:text-amber-700 transition-colors"
+                >
+                  <span className="mono-label">View</span>
+                  <span className="transition-transform group-hover:translate-x-0.5">
+                    →
+                  </span>
+                </span>
               </Link>
-            </StaggerItem>
-            );
-          })}
-        </StaggerContainer>
+            </AnimatedSection>
+          ))}
+        </div>
       </div>
     </section>
   );

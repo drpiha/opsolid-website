@@ -1,14 +1,18 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { Inter } from "next/font/google";
+import { Instrument_Serif } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
+import { Analytics } from "@vercel/analytics/next";
 import { SITE_CONFIG } from "@/lib/constants";
 import { isLocale, DEFAULT_LOCALE } from "@/lib/i18n";
 import "./globals.css";
 
-const inter = Inter({
+const instrumentSerif = Instrument_Serif({
   subsets: ["latin", "latin-ext"],
+  weight: "400",
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-instrument-serif",
 });
 
 export const metadata: Metadata = {
@@ -68,9 +72,13 @@ export default function RootLayout({
   const lang = isLocale(localeHeader) ? localeHeader : DEFAULT_LOCALE;
 
   return (
-    <html lang={lang} className={`scroll-smooth ${inter.variable}`}>
-      <body className="font-sans antialiased bg-white text-slate-900 min-h-screen flex flex-col">
+    <html
+      lang={lang}
+      className={`${instrumentSerif.variable} ${GeistSans.variable} ${GeistMono.variable}`}
+    >
+      <body className="font-sans antialiased bg-paper text-ink min-h-[100svh] flex flex-col">
         {children}
+        <Analytics />
       </body>
     </html>
   );

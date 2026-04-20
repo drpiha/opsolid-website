@@ -4,6 +4,66 @@ import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { SITE_CONFIG, FOOTER_LINKS } from "@/lib/constants";
 import { useLocale } from "@/context/LocaleContext";
 
+/**
+ * Small editorial hex logo for the dark footer context.
+ * Amber ring + paper-tinted inner cage for visibility on `bg-ink`.
+ */
+function FooterHex({ size = 28 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 32 32"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      className="flex-shrink-0"
+    >
+      <path
+        d="M16 2L28.5 9.5V24.5L16 30L3.5 24.5V9.5L16 2Z"
+        stroke="#E8A252"
+        strokeWidth="1.75"
+        fill="none"
+      />
+      <path
+        d="M16 8L23 12V22L16 26L9 22V12L16 8Z"
+        stroke="#F4EFE6"
+        strokeOpacity="0.6"
+        strokeWidth="1.5"
+        fill="none"
+      />
+      <path d="M9 12L16 16L23 12" stroke="#F4EFE6" strokeOpacity="0.45" strokeWidth="1.25" fill="none" />
+      <path d="M16 16V26" stroke="#F4EFE6" strokeOpacity="0.45" strokeWidth="1.25" fill="none" />
+    </svg>
+  );
+}
+
+type LinkColumnProps = {
+  title: string;
+  links: ReadonlyArray<{ label: string; href: string }>;
+  labelMap: Record<string, string>;
+};
+
+function LinkColumn({ title, links, labelMap }: LinkColumnProps) {
+  return (
+    <div>
+      <h4 className="mono-label text-paper/60 mb-4">{title}</h4>
+      <ul className="space-y-2.5">
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link
+              href={link.href}
+              className="text-sm text-paper/80 hover:text-amber transition-colors"
+            >
+              {labelMap[link.href] || link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 export function Footer() {
   const { t } = useLocale();
   const ft = t.footer;
@@ -13,6 +73,7 @@ export function Footer() {
     "/solutions": t.nav.solutions,
     "/products": t.nav.products,
     "/products/kutasia": "Kutasia",
+    "/products/digital-card": "Digital Business Card",
     "/use-cases": t.nav.useCases,
     "/blog": t.nav.blog,
     "/faq": t.nav.faq,
@@ -22,111 +83,61 @@ export function Footer() {
     "/privacy": t.privacy.title,
   };
 
-  return (
-    <footer className="relative border-t border-white/10 bg-slate-900">
-      {/* Gradient top border */}
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-brand-500 to-transparent" />
+  // Top link columns (exclude legal — legal goes in the bottom bar)
+  const columns: Array<{ key: string; title: string; links: ReadonlyArray<{ label: string; href: string }> }> = [
+    { key: "company", title: ft.company, links: FOOTER_LINKS.company },
+    { key: "services", title: ft.services, links: FOOTER_LINKS.services },
+    { key: "products", title: ft.products, links: FOOTER_LINKS.products },
+    { key: "resources", title: ft.resources, links: FOOTER_LINKS.resources },
+  ];
 
+  return (
+    <footer className="relative bg-ink text-paper paper-grain">
       <div className="container-wide py-16 md:py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-10 lg:gap-12">
+        {/* Top: brand block + 4 link columns */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.4fr_repeat(4,1fr)] gap-10 lg:gap-12">
           {/* Brand */}
-          <div className="lg:col-span-1">
+          <div>
             <Link
               href="/"
-              className="flex items-center gap-2 text-lg font-bold text-white tracking-tight"
+              className="flex items-center gap-2.5 font-serif text-xl leading-none text-paper tracking-[-0.01em]"
             >
-              <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-7 w-7 flex-shrink-0">
-                <path d="M16 2L28.5 9.5V24.5L16 30L3.5 24.5V9.5L16 2Z" stroke="#60a5fa" strokeWidth="2" fill="none" />
-                <path d="M16 8L23 12V22L16 26L9 22V12L16 8Z" stroke="#14b8a6" strokeWidth="2" fill="none" />
-                <path d="M9 12L16 16L23 12" stroke="#14b8a6" strokeWidth="1.5" fill="none" />
-                <path d="M16 16V26" stroke="#14b8a6" strokeWidth="1.5" fill="none" />
-                <path d="M3.5 9.5L16 16L28.5 9.5" stroke="#60a5fa" strokeWidth="1.5" fill="none" opacity="0.5" />
-              </svg>
-              {SITE_CONFIG.name}
+              <FooterHex size={28} />
+              <span>{SITE_CONFIG.name}</span>
             </Link>
-            <p className="mt-4 text-sm text-slate-400 leading-relaxed max-w-xs">
+            <p className="mono-label text-paper/55 mt-4">
+              AUTOMATION STUDIO &middot; HAMBURG, DE
+            </p>
+            <p className="mt-4 text-sm text-paper/70 leading-relaxed max-w-xs text-pretty">
               {ft.description}
             </p>
           </div>
 
-          <div>
-            <h4 className="text-xs font-semibold text-white uppercase tracking-wider mb-4">
-              {ft.company}
-            </h4>
-            <ul className="space-y-2.5">
-              {FOOTER_LINKS.company.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-slate-400 hover:text-teal-400 transition-colors">
-                    {linkLabels[link.href] || link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-xs font-semibold text-white uppercase tracking-wider mb-4">
-              {ft.services}
-            </h4>
-            <ul className="space-y-2.5">
-              {FOOTER_LINKS.services.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-slate-400 hover:text-teal-400 transition-colors">
-                    {linkLabels[link.href] || link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-xs font-semibold text-white uppercase tracking-wider mb-4">
-              {ft.products}
-            </h4>
-            <ul className="space-y-2.5">
-              {FOOTER_LINKS.products.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-slate-400 hover:text-teal-400 transition-colors">
-                    {linkLabels[link.href] || link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-xs font-semibold text-white uppercase tracking-wider mb-4">
-              {ft.resources}
-            </h4>
-            <ul className="space-y-2.5">
-              {FOOTER_LINKS.resources.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-slate-400 hover:text-teal-400 transition-colors">
-                    {linkLabels[link.href] || link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-xs font-semibold text-white uppercase tracking-wider mb-4">
-              {ft.legal}
-            </h4>
-            <ul className="space-y-2.5">
-              {FOOTER_LINKS.legal.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} className="text-sm text-slate-400 hover:text-teal-400 transition-colors">
-                    {linkLabels[link.href] || link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {columns.map((col) => (
+            <LinkColumn
+              key={col.key}
+              title={col.title}
+              links={col.links}
+              labelMap={linkLabels}
+            />
+          ))}
         </div>
 
-        <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-slate-500">{ft.copyright}</p>
+        {/* Bottom bar: copyright + legal links */}
+        <div className="mt-14 pt-6 border-t border-paper/15 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <p className="mono-label text-paper/45">{ft.copyright}</p>
+          <ul className="flex flex-wrap items-center gap-x-6 gap-y-2">
+            {FOOTER_LINKS.legal.map((link) => (
+              <li key={link.href}>
+                <Link
+                  href={link.href}
+                  className="mono-label text-paper/60 hover:text-amber transition-colors"
+                >
+                  {linkLabels[link.href] || link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </footer>

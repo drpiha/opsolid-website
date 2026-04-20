@@ -24,6 +24,32 @@ export const content: Content = {
         "OpSolid, işletmelerin manuel ve tekrarlayan işlerini güvenilir otomasyon sistemleriyle değiştirmelerine yardımcı olur — iş akışı otomasyonundan sistem entegrasyonuna, yapay zeka destekli süreçlere kadar.",
       primaryCta: "Tanışma Görüşmesi Planlayın",
       secondaryCta: "Hizmetleri İnceleyin",
+      editorial: {
+        eyebrow: "[ 01 / 04 ]   OTOMASYON STÜDYOSU — HAMBURG, DE",
+        title: [
+          "Operasyonunun zaten",
+          "sahipmiş gibi davrandığı",
+          "sistemleri biz kuruyoruz.",
+        ],
+        paragraph:
+          "Orta ölçekli operasyonlar için pratik otomasyon — siparişler, belgeler, onaylar, iletişim. Yığınınızı yeniden kurmak yok, yapay zeka tiyatrosu yok, tedarikçiye bağımlılık yok.",
+        primaryCta: "Görüşme ayarla",
+        secondaryCta: "Nasıl çalışıyoruz",
+        stackLabel: "Güvenilen yığın",
+        schematic: {
+          trigger: "Tetikleyici",
+          triggerDetail: "Webhook / Form",
+          parse: "Ayrıştır",
+          parseDetail: "AI · PDF OCR",
+          route: "Yönlendir",
+          routeDetail: "If / Else",
+          write: "Yaz",
+          writeDetail: "Postgres",
+          notify: "Bildir",
+          notifyDetail: "WhatsApp / E-posta",
+          caption: "İş Akışı · v1",
+        },
+      },
     },
 
     capabilities: [
@@ -693,13 +719,48 @@ export const content: Content = {
       },
       {
         title: "5. Çerezler ve Analitik",
-        content:
-          "Bu web sitesi izleme çerezleri veya analitik araçları kullanmaz. Seçtiğiniz dili hatırlamak için tarayıcınızın yerel depolama alanında bir dil tercihi saklanır.",
+        subsections: [
+          {
+            title: "İzleme çerezi yok",
+            content:
+              "Bu web sitesi izleme çerezleri kullanmaz. Seçtiğiniz dili hatırlamak için tarayıcınızın yerel depolama alanında bir dil tercihi saklanır.",
+          },
+          {
+            title: "Vercel Analytics",
+            content:
+              "Bu web sitesinde Vercel Analytics kullanıyoruz; bu araç çerez kullanmadan ve kişisel tanımlayıcılar olmadan anonim sayfa görüntüleme sayılarını toplar. Bireysel ziyaretçileri tanımlayamaz.",
+          },
+        ],
       },
       {
         title: "6. Haklarınız",
         content:
           "Saklanan verileriniz hakkında bilgi alma, düzeltme veya silme talep etme, işlemeyi kısıtlama ve bir denetim makamına şikayette bulunma hakkınız bulunmaktadır. Onay verilmişse, istediğiniz zaman geri çekebilirsiniz.",
+      },
+      {
+        title: "7. Digital Business Card Ürünü",
+        subsections: [
+          {
+            title: "Amaç ve hukuki dayanak",
+            content:
+              "Digital Business Card lead formu aracılığıyla gönderdiğiniz iletişim bilgilerini (ad, iş e-postası, şirket, ekip büyüklüğü, mesaj, GDPR onayı) yalnızca talebinizi yanıtlamak amacıyla işleriz. Hukuki dayanak: GDPR Madde 6(1)(b) (talebiniz üzerine sözleşme öncesi tedbirler) ve GDPR Madde 6(1)(a) (açık rızanız).",
+          },
+          {
+            title: "Barındırma",
+            content:
+              "Kart verileri ve lead gönderimleri, Avrupa Birliği içinde, Frankfurt, Almanya'da bulunan sunucularda (Hetzner / IONOS) saklanır. ABD'de alt işleyici bulunmamaktadır.",
+          },
+          {
+            title: "Saklama süresi",
+            content:
+              "Lead verileri 24 ay süreyle saklanır. Kullanılmayan Digital Business Card profilleri, hatırlatma e-postasının ardından 12 aylık hareketsizlik sonunda silinir.",
+          },
+          {
+            title: "Silme hakkı",
+            content:
+              "Digital Business Card profilinizi ve ilgili tüm verileri hesabınız içinden tek tıklamayla veya contact@opsolid.de adresine e-posta göndererek silebilirsiniz. Silme işlemi 30 gün içinde tamamlanır.",
+          },
+        ],
       },
     ],
   },
@@ -890,7 +951,217 @@ export const content: Content = {
         externalUrl: "https://kutasia.com",
         icon: "sparkles",
       },
+      {
+        name: "Dijital Kartvizit",
+        tagline: "NFC · Apple Wallet · GDPR-uyumlu",
+        description:
+          "Fiziksel NFC kart ve Almanya'da barındırılan dijital profil. Apple & Google Wallet, gerçek zamanlı analiz, CRM senkronizasyonu, ekip yönetimi — ABD abonelik kilidi olmadan.",
+        status: "Canlı",
+        href: "/products/digital-card",
+        externalUrl: "",
+        icon: "idCard",
+      },
     ],
+
+    digitalCard: {
+      hero: {
+        eyebrow: "[ OPSOLID ÜRÜN · 02 ]   DİJİTAL KARTVİZİT",
+        title: [
+          "Tek dokunuş,",
+          "tek URL,",
+          "Almanya'da kalan tek bir kart.",
+        ],
+        paragraph:
+          "Almanya'da barındırılan dijital profile sahip modern NFC kartvizit. Apple & Google Wallet kartları, gerçek zamanlı analiz, CRM senkronizasyonu, ekip listesi — ABD sunucusu yok, abonelik kilidi yok.",
+        primaryCta: "Demo planla",
+        secondaryCta: "Nasıl çalışır",
+        tags: "ISO 27001 · GDPR · NFC · APPLE WALLET · GOOGLE WALLET",
+        cardLabels: {
+          name: "Hasan Dönmez",
+          role: "Otomasyon Stüdyosu",
+          company: "OpSolid · Hamburg",
+          nfc: "NFC",
+          chip: "PAYLAŞMAK İÇİN DOKUN",
+        },
+      },
+      features: {
+        label: "YETENEKLER",
+        heading: "Bir kartın 2026'da yapması gereken her şey.",
+        intro:
+          "vCard göndermekten fazlası. Analiz, cüzdan kartı, CRM senkronizasyonu ve ekip yönetimi — AB-yerli bir stack üzerinde.",
+        items: [
+          {
+            label: "TAP · 01",
+            title: "NFC tap ve QR",
+            desc: "NFC'li bir telefona dokun ya da QR'ı okut. Karşı tarafın uygulama yüklemesine gerek yok. Tüm modern iOS ve Android'de çalışır.",
+            icon: "nfc",
+          },
+          {
+            label: "WALLET · 02",
+            title: "Apple & Google Wallet",
+            desc: "Her profil cüzdana kart olarak eklenebilir. Kart değiştiğinde otomatik olarak güncellenir.",
+            icon: "wallet",
+          },
+          {
+            label: "ANALİZ · 03",
+            title: "Gerçek zamanlı analiz",
+            desc: "Dokunuşları, açılmaları ve kaydetmeleri anlık gör. Ekip üyesi, etkinlik ve ülkeye göre filtrele.",
+            icon: "chart",
+          },
+          {
+            label: "CRM · 04",
+            title: "CRM senkronizasyonu",
+            desc: "Toplanan leadleri doğrudan HubSpot, Pipedrive, Salesforce'a veya bir CSV'ye gönder. Yerel — Zapier'a gerek yok.",
+            icon: "sync",
+          },
+          {
+            label: "EKİP · 05",
+            title: "Ekip listesi",
+            desc: "Tüm ekibin kartlarını tek bir yönetim panelinden oluştur, iptal et ve yeniden markala. SSO'ya hazır.",
+            icon: "team",
+          },
+          {
+            label: "HOSTING · 06",
+            title: "Almanya'da barındırılıyor",
+            desc: "Hetzner / IONOS Frankfurt. ISO 27001. Sıfır ABD alt işleyen. GDPR-yerli, kayıt anında DPA hazır.",
+            icon: "hosting",
+          },
+        ],
+      },
+      compliance: {
+        label: "VERİ EGEMENLİĞİ",
+        heading: "Kartınızın verisi nerede yaşıyor?",
+        intro:
+          "Rakiplerin çoğu gururla ABD'de barındırıyor. Biz barındırmıyoruz. Önemli olan tam da bu.",
+        cols: [
+          "Sağlayıcı",
+          "Hosting bölgesi",
+          "Alt işleyenler",
+          "GDPR DPA",
+          "Tek tıkla silme",
+        ],
+        rows: [
+          {
+            provider: "Popl",
+            host: "ABD",
+            sub: "ABD (AWS, Heroku)",
+            dpa: "SCC üzerinden",
+            del: "Kısmen",
+            highlight: "",
+          },
+          {
+            provider: "Blinq",
+            host: "AU",
+            sub: "ABD (AWS Sydney)",
+            dpa: "SCC üzerinden",
+            del: "Kısmen",
+            highlight: "",
+          },
+          {
+            provider: "Lemontaps",
+            host: "DE (Frankfurt)",
+            sub: "Sınırlı",
+            dpa: "Evet",
+            del: "Evet",
+            highlight: "",
+          },
+          {
+            provider: "OpSolid Dijital Kartvizit",
+            host: "DE (Frankfurt)",
+            sub: "ABD alt işleyen yok",
+            dpa: "Yerli",
+            del: "Evet",
+            highlight: "true",
+          },
+        ],
+      },
+      pricing: {
+        label: "FİYATLANDIRMA",
+        heading: "Tek seferlik, abonelik ya da ücretsiz. Kilitli kalmazsınız.",
+        popularBadge: "EN POPÜLER",
+        plans: [
+          {
+            name: "Ücretsiz",
+            price: "€0",
+            cadence: "",
+            popular: "",
+            bullets: [
+              "Dijital profil, 1 kart",
+              "Temel analiz",
+              "OpSolid filigranı",
+              "Girişimciler ve freelancerlar için ideal",
+            ],
+            cta: "Profil oluştur",
+            href: "/contact?source=dbc-free",
+          },
+          {
+            name: "Team",
+            price: "€4,90",
+            cadence: "kullanıcı başı / ay",
+            popular: "true",
+            bullets: [
+              "Ücretsiz'deki her şey",
+              "Gelişmiş analiz",
+              "CRM senkronizasyonu (HubSpot, Pipedrive, Salesforce)",
+              "Özel domain ve tam markalama",
+              "Roster + SSO",
+              "Yıllık faturalandırma, min. 5 koltuk",
+            ],
+            cta: "Demo planla",
+            href: "#lead",
+          },
+          {
+            name: "NFC + Lifetime",
+            price: "€39",
+            cadence: "tek seferlik, kart başı",
+            popular: "",
+            bullets: [
+              "Mat ya da ahşap NFC kart, Hamburg'dan gönderim",
+              "Sonsuza kadar ücretsiz dijital hesap",
+              "Abonelik yok, asla",
+              "İstediğinde Team'e yükselt",
+            ],
+            cta: "Kart iste",
+            href: "#lead",
+          },
+        ],
+      },
+      lead: {
+        label: "TALEP",
+        heading: "Demo planla — ya da ilk kartını al.",
+        intro:
+          "Ekip büyüklüğünüzü ve dijital kartlarla ne yapmak istediğinizi kısaca yazın. Bir iş günü içinde dönüş yapıyoruz.",
+        fields: {
+          name: "Ad Soyad",
+          email: "İş e-postası",
+          company: "Şirket (opsiyonel)",
+          teamSize: "Ekip büyüklüğü",
+          teamSizeOptions: ["1", "2 – 10", "11 – 50", "50+"],
+          message: "Bilmemiz gereken bir şey var mı? (opsiyonel)",
+          consent:
+            "Bu talebime yanıt vermesi için OpSolid'in bu verileri işlemesine izin veriyorum. Gizlilik Politikası'na bakabilirsiniz.",
+          privacyLink: "Gizlilik Politikası",
+          submit: "Talep gönder",
+          submitting: "Gönderiliyor…",
+          success:
+            "Teşekkürler — bir iş günü içinde dönüş yapacağız.",
+          error:
+            "Bir sorun oluştu. Lütfen doğrudan contact@opsolid.de adresine yazın.",
+        },
+      },
+      cta: {
+        eyebrow: "HAZIR MISIN?",
+        heading:
+          "Bir sonraki kartınız Hamburg'dan gelir,\nSan Francisco'dan değil.",
+        primaryCta: "Görüşme planla",
+        secondaryCta: "/contact'a git",
+      },
+      meta: {
+        title: "Dijital Kartvizit — Almanya'da barındırılıyor | OpSolid",
+        description:
+          "GDPR-yerli dijital profile sahip modern NFC kartvizit. Apple & Google Wallet, CRM senkronizasyonu, ekip listesi — Hamburg'da barındırılıyor, San Francisco'da değil.",
+      },
+    },
 
     kutasia: {
       hero: {

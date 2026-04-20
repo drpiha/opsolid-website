@@ -1,14 +1,18 @@
 "use client";
 
-import { Badge } from "@/components/ui/Badge";
 import { cn } from "@/lib/utils";
 
 interface SectionHeadingProps {
+  /** Mono-label eyebrow (e.g. "WHAT WE DO"). */
   label?: string;
+  /** Instrument-serif headline. */
   headline: string;
+  /** Optional description body paragraph. */
   description?: string;
   align?: "left" | "center";
+  /** Deprecated visual flag — kept for API compat, rendered as ink. */
   gradient?: boolean;
+  /** Rendered on a dark surface (WhyUs / CTA). Flips text colors. */
   dark?: boolean;
   className?: string;
 }
@@ -18,7 +22,6 @@ export function SectionHeading({
   headline,
   description,
   align = "center",
-  gradient = false,
   dark = false,
   className,
 }: SectionHeadingProps) {
@@ -32,14 +35,19 @@ export function SectionHeading({
       )}
     >
       {label && (
-        <Badge variant={dark ? "gradient" : "brand"} className="mb-4">
+        <div
+          className={cn(
+            "mono-label mb-4",
+            dark ? "text-paper/60" : "text-ink/60"
+          )}
+        >
           {label}
-        </Badge>
+        </div>
       )}
       <h2
         className={cn(
-          "text-heading-lg md:text-display-sm font-bold text-balance",
-          gradient ? "gradient-text-vibrant" : dark ? "text-white" : "text-slate-900"
+          "font-serif text-[clamp(1.875rem,4.5vw,3rem)] leading-[1.08] tracking-[-0.02em] text-balance",
+          dark ? "text-paper" : "text-ink"
         )}
       >
         {headline}
@@ -47,8 +55,8 @@ export function SectionHeading({
       {description && (
         <p
           className={cn(
-            "mt-4 text-body-lg text-balance",
-            dark ? "text-slate-300" : "text-slate-500"
+            "mt-5 text-body-lg text-pretty leading-relaxed",
+            dark ? "text-paper/70" : "text-ink/70"
           )}
         >
           {description}

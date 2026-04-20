@@ -1,16 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
-import Image from "next/image";
-import { Clock, MapPin, Calendar, ArrowRight, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
+import {
+  Clock,
+  MapPin,
+  Calendar,
+  CheckCircle,
+  AlertCircle,
+  Loader2,
+} from "lucide-react";
 import { Input, Textarea } from "@/components/ui/Input";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { useLocale } from "@/context/LocaleContext";
 import { getCalApi } from "@calcom/embed-react";
-import { useEffect } from "react";
 
 type FormState = "idle" | "sending" | "success" | "error";
 
@@ -65,44 +68,98 @@ export function ContactPage() {
 
   return (
     <>
-      {/* Hero with gradient accent */}
-      <section className="relative pt-36 pb-12 md:pt-44 md:pb-16">
-        <div className="absolute inset-0 -z-10 gradient-mesh" />
-        <div className="container-wide text-center">
-          <AnimatedSection>
-            <Badge variant="gradient" className="mb-4">{s.hero.label}</Badge>
-            <h1 className="text-display-sm md:text-display font-bold text-slate-900 text-balance max-w-3xl mx-auto">
-              {s.hero.headline}
-            </h1>
-            <p className="mt-5 text-body-lg text-slate-500 max-w-2xl mx-auto">
-              {s.hero.description}
-            </p>
-          </AnimatedSection>
+      {/* Hero */}
+      <section
+        aria-labelledby="contact-title"
+        className="relative pt-32 md:pt-40 pb-12 md:pb-16 paper-grain overflow-hidden"
+      >
+        <div className="hairline-b">
+          <div className="container-wide flex items-center justify-between py-3">
+            <span className="mono-label text-ink/60">
+              [ CONTACT · 07 ]   CONVERSATION
+            </span>
+            <span className="mono-label hidden md:inline text-ink/40">
+              {new Date().getFullYear()}
+            </span>
+          </div>
+        </div>
+
+        <div className="container-wide relative z-10 pt-10 md:pt-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+            <div className="lg:col-span-7 animate-fade-in">
+              <div className="mono-label text-ink/60 mb-5">{s.hero.label}</div>
+              <h1
+                id="contact-title"
+                className="font-serif text-ink text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[1.04] tracking-[-0.025em] text-balance"
+              >
+                {s.hero.headline}
+              </h1>
+            </div>
+
+            <div className="lg:col-span-5 lg:pt-6 animate-fade-in">
+              <p className="text-ink/70 text-body-lg leading-relaxed text-pretty">
+                {s.hero.description}
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="pb-24 md:pb-32">
+      {/* Form + meeting panel */}
+      <section className="hairline-t section-sm">
         <div className="container-wide">
-          <div className="grid lg:grid-cols-5 gap-12 lg:gap-16">
-            <AnimatedSection className="lg:col-span-3">
-              {/* Form card - glass-light styling with gradient border */}
-              <div id="contact-form" className="rounded-2xl glass-light gradient-border p-6 md:p-10">
+          <div className="grid lg:grid-cols-12 gap-10 lg:gap-14">
+            {/* Form — left */}
+            <AnimatedSection className="lg:col-span-7">
+              <div className="mono-label mb-5">[ 01 ] WRITE</div>
+              <h2 className="font-serif text-ink text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.1] tracking-[-0.02em] mb-8 text-balance">
+                Tell us about your operations
+              </h2>
+
+              <div id="contact-form" className="hairline bg-paper-warm rounded-2xl p-6 md:p-10">
                 {formState === "success" ? (
                   <div className="text-center py-12">
-                    <CheckCircle size={40} className="text-teal-500 mx-auto mb-4" />
-                    <h3 className="text-lg font-semibold text-slate-900 mb-2">
+                    <CheckCircle
+                      size={40}
+                      className="text-amber-700 mx-auto mb-4"
+                      aria-hidden="true"
+                    />
+                    <h3 className="font-serif text-ink text-[1.5rem] leading-[1.2] mb-2">
                       {s.form.success.split(".")[0]}.
                     </h3>
-                    <p className="text-sm text-slate-500">{s.form.success}</p>
+                    <p className="text-sm text-ink/70">{s.form.success}</p>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-5">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <Input name="name" id="name" label={s.form.name} placeholder="Jane Smith" required />
-                      <Input name="email" id="email" type="email" label={s.form.email} placeholder="jane@company.com" required />
+                      <Input
+                        name="name"
+                        id="name"
+                        label={s.form.name}
+                        placeholder="Jane Smith"
+                        required
+                      />
+                      <Input
+                        name="email"
+                        id="email"
+                        type="email"
+                        label={s.form.email}
+                        placeholder="jane@company.com"
+                        required
+                      />
                     </div>
-                    <Input name="company" id="company" label={s.form.company} placeholder="Acme GmbH" />
-                    <Textarea name="message" id="message" label={s.form.message} required />
+                    <Input
+                      name="company"
+                      id="company"
+                      label={s.form.company}
+                      placeholder="Acme GmbH"
+                    />
+                    <Textarea
+                      name="message"
+                      id="message"
+                      label={s.form.message}
+                      required
+                    />
 
                     <label className="flex items-start gap-3 cursor-pointer">
                       <input
@@ -110,96 +167,119 @@ export function ContactPage() {
                         checked={agreed}
                         onChange={(e) => setAgreed(e.target.checked)}
                         required
-                        className="mt-1 h-4 w-4 rounded border-slate-300 text-brand-600 focus:ring-brand-500"
+                        className="mt-1 h-4 w-4 rounded border-ink/30 text-ink focus:ring-amber"
                       />
-                      <span className="text-xs text-slate-400 leading-relaxed">
+                      <span className="text-xs text-ink/60 leading-relaxed">
                         {s.form.consent}{" "}
-                        <Link href="/privacy" className="text-brand-600 hover:underline">
+                        <Link
+                          href="/privacy"
+                          className="text-ink underline underline-offset-4 decoration-ink/30 hover:decoration-ink"
+                        >
                           {s.form.privacyLink}
                         </Link>
                       </span>
                     </label>
 
                     {formState === "error" && (
-                      <div className="flex items-center gap-2 text-sm text-red-600 bg-red-50 rounded-lg p-3">
-                        <AlertCircle size={16} />
+                      <div className="flex items-center gap-2 text-sm text-amber-700 hairline bg-amber/10 rounded-md p-3">
+                        <AlertCircle size={16} aria-hidden="true" />
                         <span>{s.form.error}</span>
                       </div>
                     )}
 
-                    <Button
+                    <button
                       type="submit"
-                      variant="gradient"
-                      size="lg"
-                      className="w-full sm:w-auto"
                       disabled={formState === "sending"}
+                      className="group inline-flex items-center gap-2.5 bg-amber text-ink px-7 py-3.5 font-medium hairline hover:bg-amber-600 hover:text-paper transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {formState === "sending" ? (
                         <>
-                          <Loader2 size={16} className="animate-spin" />
-                          {s.form.sending}
+                          <Loader2
+                            size={16}
+                            className="animate-spin"
+                            aria-hidden="true"
+                          />
+                          <span>{s.form.sending}</span>
                         </>
                       ) : (
                         <>
-                          {s.form.submit}
-                          <ArrowRight size={16} />
+                          <span>{s.form.submit}</span>
+                          <span
+                            aria-hidden="true"
+                            className="transition-transform duration-200 group-hover:translate-x-0.5"
+                          >
+                            →
+                          </span>
                         </>
                       )}
-                    </Button>
+                    </button>
                   </form>
                 )}
               </div>
             </AnimatedSection>
 
-            <AnimatedSection delay={0.15} className="lg:col-span-2">
-              <div className="space-y-5">
-                {/* Meeting card - Cal.com popup trigger */}
-                <div className="block">
-                  <div className="rounded-2xl gradient-cta p-6 md:p-7 hover:shadow-glow transition-all duration-300 overflow-hidden relative">
-                    {/* Subtle floating orb */}
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-teal-400/10 rounded-full blur-2xl" />
+            {/* Right column — meeting + info */}
+            <AnimatedSection delay={0.15} className="lg:col-span-5">
+              <div className="mono-label mb-5">[ 02 ] SCHEDULE</div>
+              <h2 className="font-serif text-ink text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.1] tracking-[-0.02em] mb-8 text-balance">
+                {s.meeting.headline}
+              </h2>
 
-                    <div className="relative z-10">
-                      <Calendar size={20} className="text-teal-300 mb-3" />
-                      <h3 className="text-base font-semibold text-white mb-2">{s.meeting.headline}</h3>
-                      <p className="text-sm text-slate-300 leading-relaxed mb-5">{s.meeting.description}</p>
-                      <button
-                        data-cal-link={`${CALCOM_USERNAME}/${CALCOM_EVENT}`}
-                        data-cal-config={JSON.stringify({ layout: "month_view", theme: "light", locale })}
-                        className="w-full inline-flex items-center justify-center gap-2 rounded-lg bg-white text-slate-900 hover:bg-slate-100 px-4 py-2.5 text-sm font-medium transition-colors"
-                      >
-                        <Calendar size={16} />
-                        {s.meeting.cta}
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="rounded-xl border border-slate-100/80 bg-white/80 backdrop-blur-sm p-6 md:p-7 space-y-4">
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-teal-50">
-                      <Clock size={13} className="text-teal-500" />
-                    </div>
-                    <span className="text-sm text-slate-500">{s.info.response}</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-accent-50">
-                      <MapPin size={13} className="text-accent-500" />
-                    </div>
-                    <span className="text-sm text-slate-500">{s.info.location}</span>
-                  </div>
-                </div>
-
-                {/* Modern office image accent */}
-                <div className="relative h-[200px] rounded-2xl overflow-hidden shadow-soft">
-                  <Image
-                    src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&h=600&fit=crop"
-                    alt=""
-                    fill
-                    className="object-cover"
-                    sizes="(max-width: 1024px) 100vw, 40vw"
+              {/* Cal.com trigger */}
+              <div className="hairline bg-ink text-paper paper-grain rounded-2xl p-6 md:p-7">
+                <div className="flex items-start gap-3 mb-4">
+                  <Calendar
+                    size={20}
+                    className="text-amber"
+                    aria-hidden="true"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-brand-900/30 via-brand-900/10 to-transparent" />
+                  <span className="mono-label text-paper/60">
+                    DISCOVERY CALL · 30 MIN
+                  </span>
+                </div>
+                <p className="text-paper/70 text-sm leading-relaxed text-pretty mb-5">
+                  {s.meeting.description}
+                </p>
+                <button
+                  data-cal-link={`${CALCOM_USERNAME}/${CALCOM_EVENT}`}
+                  data-cal-config={JSON.stringify({
+                    layout: "month_view",
+                    theme: "light",
+                    locale,
+                  })}
+                  className="group inline-flex items-center gap-2.5 bg-amber text-ink px-5 py-3 font-medium hairline hover:bg-paper transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber"
+                >
+                  <Calendar size={16} aria-hidden="true" />
+                  <span>{s.meeting.cta}</span>
+                  <span
+                    aria-hidden="true"
+                    className="transition-transform duration-200 group-hover:translate-x-0.5"
+                  >
+                    →
+                  </span>
+                </button>
+              </div>
+
+              {/* Info cards */}
+              <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="hairline bg-paper-warm rounded-2xl p-5">
+                  <div className="mono-label text-ink/50 mb-3 flex items-center gap-2">
+                    <Clock size={12} aria-hidden="true" />
+                    <span>RESPONSE</span>
+                  </div>
+                  <p className="text-sm text-ink/80 leading-relaxed text-pretty">
+                    {s.info.response}
+                  </p>
+                </div>
+
+                <div className="hairline bg-paper-warm rounded-2xl p-5">
+                  <div className="mono-label text-ink/50 mb-3 flex items-center gap-2">
+                    <MapPin size={12} aria-hidden="true" />
+                    <span>LOCATION</span>
+                  </div>
+                  <p className="text-sm text-ink/80 leading-relaxed text-pretty">
+                    {s.info.location}
+                  </p>
                 </div>
               </div>
             </AnimatedSection>

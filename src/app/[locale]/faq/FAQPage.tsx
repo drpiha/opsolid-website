@@ -2,10 +2,7 @@
 
 import { useState } from "react";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
-import { motion, AnimatePresence } from "framer-motion";
-import { ArrowRight, ChevronDown } from "lucide-react";
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
+import { ChevronDown } from "lucide-react";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { useLocale } from "@/context/LocaleContext";
 import { cn } from "@/lib/utils";
@@ -30,116 +27,116 @@ export function FAQPage() {
   return (
     <>
       {/* Hero */}
-      <section className="relative pt-36 pb-16 md:pt-44 md:pb-20 overflow-hidden">
-        <div className="absolute inset-0 -z-10 gradient-hero-mesh" />
-        <div className="absolute inset-0 -z-10">
-          <div className="absolute top-20 right-1/4 w-72 h-72 bg-teal-500/10 rounded-full blur-3xl" />
-          <div className="absolute bottom-10 left-1/4 w-96 h-96 bg-accent-500/8 rounded-full blur-3xl" />
+      <section
+        aria-labelledby="faq-title"
+        className="relative pt-32 md:pt-40 pb-12 md:pb-16 paper-grain overflow-hidden"
+      >
+        <div className="hairline-b">
+          <div className="container-wide flex items-center justify-between py-3">
+            <span className="mono-label text-ink/60">
+              [ FAQ · 06 ]   QUESTIONS
+            </span>
+            <span className="mono-label hidden md:inline text-ink/40">
+              {new Date().getFullYear()}
+            </span>
+          </div>
         </div>
-        <div className="container-wide text-center">
-          <AnimatedSection>
-            <Badge variant="gradient" className="mb-4">{s.hero.label}</Badge>
-            <h1 className="text-display-sm md:text-display font-bold text-white text-balance max-w-3xl mx-auto">
-              {s.hero.headline}
-            </h1>
-            <p className="mt-5 text-body-lg text-slate-300 max-w-2xl mx-auto">
-              {s.hero.description}
-            </p>
-          </AnimatedSection>
+
+        <div className="container-narrow relative z-10 pt-10 md:pt-16 text-center">
+          <div className="mono-label text-ink/60 mb-5">{s.hero.label}</div>
+          <h1
+            id="faq-title"
+            className="font-serif text-ink text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[1.04] tracking-[-0.025em] text-balance"
+          >
+            {s.hero.headline}
+          </h1>
+          <p className="mt-6 text-ink/70 text-body-lg leading-relaxed text-pretty max-w-2xl mx-auto">
+            {s.hero.description}
+          </p>
         </div>
       </section>
 
-      {/* Category Filter */}
-      <section className="py-8 border-b border-slate-100">
-        <div className="container-wide">
+      {/* Category filter */}
+      <section className="hairline-t">
+        <div className="container-wide py-6">
           <div className="flex flex-wrap items-center justify-center gap-2">
-            <button
+            <FilterChip
+              active={activeCategory === "all"}
               onClick={() => setActiveCategory("all")}
-              className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
-                activeCategory === "all"
-                  ? "bg-brand-600 text-white shadow-glow-brand"
-                  : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-              }`}
             >
               {s.allFilter}
-            </button>
+            </FilterChip>
             {categoryKeys.map((key) => (
-              <button
+              <FilterChip
                 key={key}
+                active={activeCategory === key}
                 onClick={() => setActiveCategory(key)}
-                className={`px-4 py-2 text-sm font-medium rounded-full transition-all duration-200 ${
-                  activeCategory === key
-                    ? "bg-brand-600 text-white shadow-glow-brand"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                }`}
               >
                 {s.categories[key]}
-              </button>
+              </FilterChip>
             ))}
           </div>
         </div>
       </section>
 
-      {/* FAQ Accordion */}
-      <section className="section-padding">
+      {/* FAQ accordion */}
+      <section className="hairline-t section-sm">
         <div className="container-narrow">
-          <div className="space-y-3">
+          <div className="hairline-t">
             {filteredItems.map((item, i) => {
               const key = `${item.category}-${i}`;
               const isOpen = openItems[key];
+              const index = String(i + 1).padStart(2, "0");
               return (
-                <AnimatedSection key={key} delay={i * 0.05}>
-                  <div
-                    className={cn(
-                      "rounded-xl border overflow-hidden transition-all duration-300",
-                      isOpen
-                        ? "border-brand-200 shadow-glow-brand bg-white"
-                        : "border-slate-200/60 bg-white hover:border-slate-300"
-                    )}
-                  >
+                <AnimatedSection key={key} delay={i * 0.04}>
+                  <div className="hairline-b">
                     <button
                       onClick={() => toggle(key)}
-                      className="w-full flex items-center justify-between p-5 md:p-6 text-left"
+                      aria-expanded={isOpen}
+                      aria-controls={`faq-panel-${key}`}
+                      className="w-full flex items-start gap-5 md:gap-6 text-left py-6 md:py-7 group focus-visible:outline-none"
                     >
-                      <span className="text-sm md:text-base font-semibold text-slate-900 pr-4">
-                        {item.question}
+                      <span className="mono-label text-ink/50 pt-2 shrink-0 hidden sm:block">
+                        Q · {index}
                       </span>
-                      <motion.div
-                        animate={{ rotate: isOpen ? 180 : 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="shrink-0"
-                      >
-                        <ChevronDown
-                          size={18}
-                          className={cn(
-                            "transition-colors",
-                            isOpen ? "text-brand-500" : "text-slate-400"
-                          )}
-                        />
-                      </motion.div>
+                      <h2 className="flex-1 font-serif text-ink text-[1.25rem] md:text-[1.5rem] leading-[1.2] tracking-[-0.015em] text-balance group-hover:text-ink/80 transition-colors">
+                        {item.question}
+                      </h2>
+                      <ChevronDown
+                        size={20}
+                        aria-hidden="true"
+                        className={cn(
+                          "shrink-0 mt-1.5 text-amber transition-transform duration-300",
+                          isOpen && "rotate-180"
+                        )}
+                      />
                     </button>
-                    <AnimatePresence initial={false}>
-                      {isOpen && (
-                        <motion.div
-                          initial={{ height: 0, opacity: 0 }}
-                          animate={{ height: "auto", opacity: 1 }}
-                          exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.3, ease: [0.21, 0.47, 0.32, 0.98] }}
-                          className="overflow-hidden"
-                        >
-                          <div className="px-5 md:px-6 pb-5 md:pb-6 border-t border-slate-100">
-                            <p className="pt-4 text-sm md:text-base text-slate-500 leading-relaxed">
-                              {item.answer}
-                            </p>
-                            <div className="mt-3">
-                              <Badge variant="default" className="text-[10px]">
-                                {s.categories[item.category as keyof typeof s.categories] || item.category}
-                              </Badge>
-                            </div>
-                          </div>
-                        </motion.div>
+
+                    <div
+                      id={`faq-panel-${key}`}
+                      role="region"
+                      className={cn(
+                        "grid transition-[grid-template-rows] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+                        isOpen
+                          ? "grid-rows-[1fr] opacity-100"
+                          : "grid-rows-[0fr] opacity-0"
                       )}
-                    </AnimatePresence>
+                    >
+                      <div className="overflow-hidden">
+                        <div className="pb-6 md:pb-8 sm:pl-[4.25rem] pr-8">
+                          <p className="text-ink/75 text-body leading-relaxed text-pretty">
+                            {item.answer}
+                          </p>
+                          <div className="mt-4">
+                            <span className="mono-label text-ink/50">
+                              {s.categories[
+                                item.category as keyof typeof s.categories
+                              ] || item.category}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </AnimatedSection>
               );
@@ -149,24 +146,34 @@ export function FAQPage() {
       </section>
 
       {/* CTA */}
-      <section className="section-padding">
-        <div className="container-wide">
+      <section className="hairline-t bg-ink text-paper paper-grain">
+        <div className="container-wide section">
           <AnimatedSection>
-            <div className="relative rounded-2xl gradient-cta px-8 py-16 md:px-20 md:py-20 text-center overflow-hidden">
-              <div className="absolute top-0 right-0 w-80 h-80 bg-teal-400/10 rounded-full blur-3xl" />
-              <div className="absolute bottom-0 left-0 w-60 h-60 bg-accent-400/8 rounded-full blur-3xl" />
-              <div className="relative z-10 max-w-xl mx-auto">
-                <h2 className="text-heading-lg md:text-display-sm font-bold text-white">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
+              <div className="lg:col-span-7">
+                <div className="mono-label text-paper/60 mb-5">
+                  [ NEXT ]   CONVERSATION
+                </div>
+                <h2 className="font-serif text-paper text-[clamp(2rem,5vw,3.75rem)] leading-[1.04] tracking-[-0.025em] text-balance">
                   {s.cta.headline}
                 </h2>
-                <p className="mt-4 text-body text-slate-300">
+                <p className="mt-5 max-w-xl text-paper/70 text-body-lg leading-relaxed text-pretty">
                   {s.cta.description}
                 </p>
-                <Link href="/contact" className="mt-8 inline-block">
-                  <Button size="xl" className="bg-white text-slate-900 hover:bg-slate-100">
-                    {s.cta.primaryCta}
-                    <ArrowRight size={18} />
-                  </Button>
+              </div>
+
+              <div className="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col items-start gap-5 lg:items-end lg:justify-end">
+                <Link
+                  href="/contact"
+                  className="group inline-flex items-center gap-2.5 bg-amber text-ink px-7 py-4 font-medium hairline hover:bg-paper transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber"
+                >
+                  <span>{s.cta.primaryCta}</span>
+                  <span
+                    aria-hidden="true"
+                    className="transition-transform duration-200 group-hover:translate-x-0.5"
+                  >
+                    →
+                  </span>
                 </Link>
               </div>
             </div>
@@ -174,5 +181,29 @@ export function FAQPage() {
         </div>
       </section>
     </>
+  );
+}
+
+function FilterChip({
+  active,
+  onClick,
+  children,
+}: {
+  active: boolean;
+  onClick: () => void;
+  children: React.ReactNode;
+}) {
+  return (
+    <button
+      onClick={onClick}
+      className={cn(
+        "rounded-full px-4 py-2 font-mono text-[0.6875rem] tracking-[0.14em] uppercase transition-colors duration-200 focus-visible:outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber",
+        active
+          ? "bg-ink text-paper"
+          : "hairline bg-paper-warm text-ink/70 hover:border-ink/25 hover:text-ink"
+      )}
+    >
+      {children}
+    </button>
   );
 }

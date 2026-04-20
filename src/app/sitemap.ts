@@ -10,6 +10,7 @@ const STATIC_PAGES: PageDef[] = [
   { path: "/solutions", changeFrequency: "monthly", priority: 0.9 },
   { path: "/products", changeFrequency: "monthly", priority: 0.9 },
   { path: "/products/kutasia", changeFrequency: "monthly", priority: 0.85 },
+  { path: "/products/digital-card", changeFrequency: "monthly", priority: 0.85 },
   { path: "/use-cases", changeFrequency: "monthly", priority: 0.8 },
   { path: "/blog", changeFrequency: "weekly", priority: 0.7 },
   { path: "/faq", changeFrequency: "monthly", priority: 0.6 },

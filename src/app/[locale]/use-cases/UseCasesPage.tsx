@@ -1,110 +1,133 @@
 "use client";
 
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
-import { ArrowRight, Building2, AlertTriangle, Lightbulb, TrendingUp } from "lucide-react";
-import { Badge } from "@/components/ui/Badge";
-import { Button } from "@/components/ui/Button";
 import {
   AnimatedSection,
   StaggerContainer,
   StaggerItem,
 } from "@/components/shared/AnimatedSection";
 import { useLocale } from "@/context/LocaleContext";
-import { AutomationFlow } from "@/components/illustrations/AutomationFlow";
 import { useCaseIcons } from "@/components/illustrations/UseCaseIcons";
 
 export function UseCasesPage() {
   const { t } = useLocale();
   const s = t.useCases;
 
+  // Bento pattern — first 2 cards span wider, rest are half-width
+  const bentoSpan = (i: number) => {
+    if (i === 0 || i === 1) return "lg:col-span-3";
+    return "lg:col-span-3"; // all equal by default, but some feature wider below
+  };
+
   return (
     <>
-      {/* Hero - Dark gradient */}
-      <section className="relative pt-36 pb-16 md:pt-44 md:pb-24 gradient-hero-mesh overflow-hidden">
-        <div className="absolute top-20 right-[20%] w-72 h-72 bg-brand-500/10 rounded-full blur-[100px]" />
-        <div className="absolute bottom-0 left-[15%] w-60 h-60 bg-teal-500/10 rounded-full blur-[100px]" />
+      {/* Hero — editorial two-column */}
+      <section
+        aria-labelledby="usecases-title"
+        className="relative pt-32 md:pt-40 pb-12 md:pb-16 paper-grain overflow-hidden"
+      >
+        <div className="hairline-b">
+          <div className="container-wide flex items-center justify-between py-3">
+            <span className="mono-label text-ink/60">
+              [ USE CASES · 05 ]   SCENARIOS
+            </span>
+            <span className="mono-label hidden md:inline text-ink/40">
+              {new Date().getFullYear()}
+            </span>
+          </div>
+        </div>
 
-        <div className="container-wide text-center relative z-10">
-          <AnimatedSection>
-            <Badge variant="gradient" className="mb-4">{s.hero.label}</Badge>
-            <h1 className="text-display-sm md:text-display font-bold text-white text-balance max-w-3xl mx-auto">
-              {s.hero.headline}
-            </h1>
-            <p className="mt-5 text-body-lg text-slate-300 max-w-2xl mx-auto">
-              {s.hero.description}
-            </p>
-          </AnimatedSection>
-          <AnimatedSection delay={0.3}>
-            <div className="mt-10 max-w-2xl mx-auto">
-              <AutomationFlow />
+        <div className="container-wide relative z-10 pt-10 md:pt-16">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+            <div className="lg:col-span-7 animate-fade-in">
+              <div className="mono-label text-ink/60 mb-5">{s.hero.label}</div>
+              <h1
+                id="usecases-title"
+                className="font-serif text-ink text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[1.04] tracking-[-0.025em] text-balance"
+              >
+                {s.hero.headline}
+              </h1>
             </div>
-          </AnimatedSection>
+
+            <div className="lg:col-span-5 lg:pt-6 animate-fade-in">
+              <p className="text-ink/70 text-body-lg leading-relaxed text-pretty">
+                {s.hero.description}
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* Use Cases */}
-      <section className="pb-24 md:pb-32 pt-16 md:pt-20">
+      {/* Use case cards — bento */}
+      <section className="hairline-t section-sm">
         <div className="container-wide">
-          <StaggerContainer className="space-y-6">
+          <AnimatedSection className="mb-10 md:mb-14 max-w-2xl">
+            <div className="mono-label mb-5">[ 01 ] SCENARIOS</div>
+            <h2 className="font-serif text-ink text-[clamp(1.75rem,3.6vw,2.75rem)] leading-[1.08] tracking-[-0.02em] text-balance">
+              Automation, applied to real operations
+            </h2>
+          </AnimatedSection>
+
+          <StaggerContainer className="grid grid-cols-1 lg:grid-cols-6 gap-5 md:gap-6">
             {s.items.map((item, i) => {
               const Icon = useCaseIcons[i];
+              // First 2 cards are feature-sized (span 6 together = 3+3 wide), rest are half
+              const span = bentoSpan(i);
               return (
-              <StaggerItem key={i}>
-                <div className="rounded-xl gradient-border overflow-hidden transition-all duration-300 hover:shadow-glow hover:-translate-y-0.5">
-                  {/* Header with gradient accent */}
-                  <div className="relative border-b border-slate-100/80 bg-white/90 backdrop-blur-sm px-6 py-4 md:px-8 md:py-5">
-                    <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-500 via-accent-500 to-teal-500" />
-                    <div className="flex items-center gap-3">
-                      {Icon && <Icon className="shrink-0" />}
-                      <h2 className="text-base md:text-lg font-semibold text-slate-900">
-                        {item.title}
-                      </h2>
+                <StaggerItem key={i} className={span}>
+                  <div className="hairline bg-paper-warm h-full p-6 sm:p-8 rounded-2xl transition duration-300 hover:border-ink/25 hover:-translate-y-0.5 flex flex-col">
+                    <div className="flex items-start justify-between gap-4 mb-5">
+                      <div className="shrink-0">
+                        {Icon && <Icon />}
+                      </div>
+                      <span className="mono-label text-ink/40 pt-1">
+                        {String(i + 1).padStart(2, "0")}
+                      </span>
                     </div>
-                  </div>
 
-                  <div className="grid md:grid-cols-2 lg:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-slate-100/80 bg-white/80 backdrop-blur-sm">
-                    <div className="p-5 md:p-6">
-                      <div className="flex items-center gap-1.5 mb-2">
-                        <Building2 size={12} className="text-slate-300" />
-                        <span className="text-[0.65rem] font-semibold text-slate-400 uppercase tracking-wider">
+                    <h3 className="font-serif text-ink text-[1.375rem] md:text-[1.625rem] leading-[1.15] tracking-[-0.015em] mb-5 text-balance">
+                      {item.title}
+                    </h3>
+
+                    <div className="space-y-4 flex-1">
+                      <div>
+                        <div className="mono-label text-ink/50 mb-1.5">
                           {s.labels.context}
-                        </span>
+                        </div>
+                        <p className="text-sm text-ink/75 leading-relaxed text-pretty">
+                          {item.context}
+                        </p>
                       </div>
-                      <p className="text-sm text-slate-500 leading-relaxed">{item.context}</p>
-                    </div>
 
-                    <div className="p-5 md:p-6">
-                      <div className="flex items-center gap-1.5 mb-2">
-                        <AlertTriangle size={12} className="text-red-400" />
-                        <span className="text-[0.65rem] font-semibold text-red-400 uppercase tracking-wider">
+                      <div>
+                        <div className="mono-label text-ink/50 mb-1.5">
                           {s.labels.problem}
-                        </span>
+                        </div>
+                        <p className="text-sm text-ink/75 leading-relaxed text-pretty">
+                          {item.problem}
+                        </p>
                       </div>
-                      <p className="text-sm text-slate-500 leading-relaxed">{item.problem}</p>
-                    </div>
 
-                    <div className="p-5 md:p-6">
-                      <div className="flex items-center gap-1.5 mb-2">
-                        <Lightbulb size={12} className="text-brand-500" />
-                        <span className="text-[0.65rem] font-semibold text-brand-500 uppercase tracking-wider">
+                      <div>
+                        <div className="mono-label text-ink/50 mb-1.5">
                           {s.labels.solution}
-                        </span>
+                        </div>
+                        <p className="text-sm text-ink/75 leading-relaxed text-pretty">
+                          {item.solution}
+                        </p>
                       </div>
-                      <p className="text-sm text-slate-500 leading-relaxed">{item.solution}</p>
                     </div>
 
-                    <div className="p-5 md:p-6 bg-teal-50/30">
-                      <div className="flex items-center gap-1.5 mb-2">
-                        <TrendingUp size={12} className="text-teal-600" />
-                        <span className="text-[0.65rem] font-semibold text-teal-700 uppercase tracking-wider">
-                          {s.labels.outcome}
-                        </span>
+                    <div className="mt-6 pt-5 hairline-t">
+                      <div className="mono-label text-amber-700 mb-1.5">
+                        {s.labels.outcome}
                       </div>
-                      <p className="text-sm text-teal-800 leading-relaxed font-medium">{item.outcome}</p>
+                      <p className="text-sm text-ink font-medium leading-relaxed text-pretty">
+                        {item.outcome}
+                      </p>
                     </div>
                   </div>
-                </div>
-              </StaggerItem>
+                </StaggerItem>
               );
             })}
           </StaggerContainer>
@@ -112,23 +135,34 @@ export function UseCasesPage() {
       </section>
 
       {/* CTA */}
-      <section className="section-padding">
-        <div className="container-wide">
+      <section className="hairline-t bg-ink text-paper paper-grain">
+        <div className="container-wide section">
           <AnimatedSection>
-            <div className="relative rounded-2xl gradient-cta px-8 py-16 md:px-20 md:py-20 text-center overflow-hidden">
-              <div className="absolute top-8 right-12 w-64 h-64 bg-gradient-to-br from-brand-400/15 to-teal-400/10 rounded-full blur-2xl animate-float" />
-              <div className="absolute bottom-6 left-10 w-48 h-48 bg-gradient-to-br from-accent-400/12 to-brand-400/8 rounded-full blur-2xl animate-float-delayed" />
-
-              <div className="relative z-10 max-w-xl mx-auto">
-                <h2 className="text-heading-lg md:text-display-sm font-bold text-white">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
+              <div className="lg:col-span-7">
+                <div className="mono-label text-paper/60 mb-5">
+                  [ NEXT ]   CONVERSATION
+                </div>
+                <h2 className="font-serif text-paper text-[clamp(2rem,5vw,3.75rem)] leading-[1.04] tracking-[-0.025em] text-balance">
                   {s.cta.headline}
                 </h2>
-                <p className="mt-4 text-body text-slate-300">{s.cta.description}</p>
-                <Link href="/contact" className="mt-8 inline-block">
-                  <Button size="xl" className="bg-white text-slate-900 hover:bg-slate-100 hover:shadow-glow">
-                    {s.cta.primaryCta}
-                    <ArrowRight size={18} />
-                  </Button>
+                <p className="mt-5 max-w-xl text-paper/70 text-body-lg leading-relaxed text-pretty">
+                  {s.cta.description}
+                </p>
+              </div>
+
+              <div className="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col items-start gap-5 lg:items-end lg:justify-end">
+                <Link
+                  href="/contact"
+                  className="group inline-flex items-center gap-2.5 bg-amber text-ink px-7 py-4 font-medium hairline hover:bg-paper transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber"
+                >
+                  <span>{s.cta.primaryCta}</span>
+                  <span
+                    aria-hidden="true"
+                    className="transition-transform duration-200 group-hover:translate-x-0.5"
+                  >
+                    →
+                  </span>
                 </Link>
               </div>
             </div>

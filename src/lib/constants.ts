@@ -37,6 +37,7 @@ export const FOOTER_LINKS = {
   ],
   products: [
     { label: "Kutasia", href: "/products/kutasia" },
+    { label: "Digital Business Card", href: "/products/digital-card" },
     { label: "All Products", href: "/products" },
   ],
   resources: [

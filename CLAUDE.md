@@ -54,10 +54,17 @@ Each route follows a two-file pattern:
 
 - `components/ui/` — Design system primitives (Button, Card, Badge, Input) using CVA
 - `components/sections/` — Homepage sections (Hero, SolutionsOverview, IntegrationGrid, etc.)
-- `components/shared/` — Reusable pieces (SectionHeading, AnimatedSection with Framer Motion)
+- `components/shared/` — Reusable pieces (SectionHeading, AnimatedSection — IntersectionObserver + CSS transitions, no Framer Motion)
 - `components/layout/` — Header (with language switcher) and Footer
 - `components/ClientProviders.tsx` — Wraps children with LocaleProvider (keeps layout.tsx as server component)
 
 ### Brand Colors
 
-Primary: `brand-600: #1a5faa` (deep professional blue). Accent used very sparingly. Override in `tailwind.config.ts` under `theme.extend.colors.brand`.
+Editorial warm-graphite palette (no blue/violet/teal). Override in `tailwind.config.ts`:
+- `ink` — primary text / dark surfaces (#15120F)
+- `paper` / `paper-warm` / `paper-cool` — light backgrounds (#F4EFE6 / #FAF6EF / #ECE6D8)
+- `amber` — primary CTA accent (#E8A252)
+- `olive` — secondary accent (#B8C48A)
+- `steel` — neutral grey (#9CA3A0)
+
+Typography: Instrument Serif (`font-serif` / all h1/h2/h3) + Geist Sans (body) + Geist Mono (mono-labels). Utilities: `.mono-label`, `.hairline`, `.paper-grain`, `.section`. No `framer-motion`, no gradient-mesh backgrounds, no glassmorphism.

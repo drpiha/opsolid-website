@@ -24,6 +24,32 @@ export const content: Content = {
         "OpSolid unterstützt Unternehmen dabei, manuelle, wiederkehrende Arbeit durch zuverlässige automatisierte Systeme zu ersetzen — von Workflow-Automatisierung und Systemintegration bis hin zu KI-gestützten Prozessen.",
       primaryCta: "Erstgespräch buchen",
       secondaryCta: "Leistungen ansehen",
+      editorial: {
+        eyebrow: "[ 01 / 04 ]   AUTOMATION STUDIO — HAMBURG, DE",
+        title: [
+          "Wir bauen die Systeme,",
+          "die euer Betrieb",
+          "längst vorzeigen müsste.",
+        ],
+        paragraph:
+          "Praxisnahe Automatisierung für den Mittelstand — Bestellungen, Dokumente, Freigaben, Kommunikation. Kein Umbau Ihres Stacks, kein KI-Theater, keine Abhängigkeit vom Anbieter.",
+        primaryCta: "Termin vereinbaren",
+        secondaryCta: "Wie wir arbeiten",
+        stackLabel: "Bewährter Stack",
+        schematic: {
+          trigger: "Trigger",
+          triggerDetail: "Webhook / Formular",
+          parse: "Parsen",
+          parseDetail: "KI · PDF-OCR",
+          route: "Routen",
+          routeDetail: "If / Else",
+          write: "Schreiben",
+          writeDetail: "Postgres",
+          notify: "Benachrichtigen",
+          notifyDetail: "WhatsApp / E-Mail",
+          caption: "Workflow · v1",
+        },
+      },
     },
 
     capabilities: [
@@ -693,13 +719,48 @@ export const content: Content = {
       },
       {
         title: "5. Cookies & Analyse",
-        content:
-          "Diese Website verwendet keine Tracking-Cookies oder Analysetools. Eine Sprachpräferenz wird im lokalen Speicher Ihres Browsers gespeichert, um Ihre ausgewählte Sprache zu merken.",
+        subsections: [
+          {
+            title: "Keine Tracking-Cookies",
+            content:
+              "Diese Website verwendet keine Tracking-Cookies. Eine Sprachpräferenz wird im lokalen Speicher Ihres Browsers gespeichert, um Ihre ausgewählte Sprache zu merken.",
+          },
+          {
+            title: "Vercel Analytics",
+            content:
+              "Wir nutzen auf dieser Website Vercel Analytics, das anonyme Seitenaufruf-Zählungen ohne Cookies und ohne personenbezogene Kennungen erfasst. Einzelne Besucherinnen und Besucher können damit nicht identifiziert werden.",
+          },
+        ],
       },
       {
         title: "6. Ihre Rechte",
         content:
           "Sie haben das Recht auf Auskunft über Ihre gespeicherten Daten, Berichtigung oder Löschung, Einschränkung der Verarbeitung sowie Beschwerde bei einer Aufsichtsbehörde. Wurde eine Einwilligung erteilt, können Sie diese jederzeit widerrufen.",
+      },
+      {
+        title: "7. Digital Business Card Produkt",
+        subsections: [
+          {
+            title: "Zweck & Rechtsgrundlage",
+            content:
+              "Wir verarbeiten die Kontaktdaten, die Sie über das Digital Business Card Lead-Formular übermitteln (Name, geschäftliche E-Mail, Unternehmen, Teamgröße, Nachricht, DSGVO-Einwilligung), ausschließlich zur Beantwortung Ihrer Anfrage. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen auf Ihre Anfrage) und Art. 6 Abs. 1 lit. a DSGVO (Ihre ausdrückliche Einwilligung).",
+          },
+          {
+            title: "Hosting",
+            content:
+              "Kartendaten und Lead-Übermittlungen werden innerhalb der Europäischen Union auf Servern in Frankfurt am Main, Deutschland (Hetzner / IONOS) gespeichert. Keine US-Subauftragsverarbeiter.",
+          },
+          {
+            title: "Aufbewahrung",
+            content:
+              "Lead-Daten werden 24 Monate aufbewahrt. Inaktive Digital Business Card Profile werden nach 12 Monaten Inaktivität und nach vorheriger Erinnerungs-E-Mail gelöscht.",
+          },
+          {
+            title: "Recht auf Löschung",
+            content:
+              "Sie können Ihr Digital Business Card Profil und alle zugehörigen Daten mit einem Klick in Ihrem Konto oder per E-Mail an contact@opsolid.de löschen. Die Löschung wird innerhalb von 30 Tagen wirksam.",
+          },
+        ],
       },
     ],
   },
@@ -890,7 +951,217 @@ export const content: Content = {
         externalUrl: "https://kutasia.com",
         icon: "sparkles",
       },
+      {
+        name: "Digitale Visitenkarte",
+        tagline: "NFC · Apple Wallet · DSGVO-nativ",
+        description:
+          "Eine physische NFC-Karte plus ein digitales Profil, das in Deutschland liegt. Apple & Google Wallet, Echtzeit-Analysen, CRM-Sync, Teamverwaltung — ohne US-Abo-Zwang.",
+        status: "Live",
+        href: "/products/digital-card",
+        externalUrl: "",
+        icon: "idCard",
+      },
     ],
+
+    digitalCard: {
+      hero: {
+        eyebrow: "[ OPSOLID PRODUKT · 02 ]   DIGITALE VISITENKARTE",
+        title: [
+          "Ein Tap,",
+          "eine URL,",
+          "eine Karte, die in Deutschland bleibt.",
+        ],
+        paragraph:
+          "Eine moderne NFC-Visitenkarte mit einem digitalen Profil, das in Deutschland gehostet wird. Apple & Google Wallet, Echtzeit-Analysen, CRM-Sync, Team-Roster — keine US-Server, kein Abo-Zwang.",
+        primaryCta: "Demo buchen",
+        secondaryCta: "So funktioniert's",
+        tags: "ISO 27001 · DSGVO · NFC · APPLE WALLET · GOOGLE WALLET",
+        cardLabels: {
+          name: "Hasan Dönmez",
+          role: "Automation Studio",
+          company: "OpSolid · Hamburg",
+          nfc: "NFC",
+          chip: "ANTIPPEN ZUM TEILEN",
+        },
+      },
+      features: {
+        label: "FUNKTIONEN",
+        heading: "Alles, was eine Karte 2026 können sollte.",
+        intro:
+          "Mehr als ein vCard-Abwurf. Analysen, Wallet-Pässe, CRM-Sync und Team-Verwaltung — auf einem EU-nativen Stack.",
+        items: [
+          {
+            label: "TAP · 01",
+            title: "NFC-Tap & QR",
+            desc: "NFC-Handy antippen oder QR scannen. Keine App-Installation beim Empfänger. Funktioniert auf jedem modernen iOS und Android.",
+            icon: "nfc",
+          },
+          {
+            label: "WALLET · 02",
+            title: "Apple & Google Wallet",
+            desc: "Jedes Profil lässt sich als Wallet-Pass speichern. Aktualisiert sich automatisch, wenn sich die Karte ändert.",
+            icon: "wallet",
+          },
+          {
+            label: "ANALYSE · 03",
+            title: "Echtzeit-Analysen",
+            desc: "Taps, Öffnungen und Speicherungen live sehen. Gefiltert nach Teammitglied, Event und Land.",
+            icon: "chart",
+          },
+          {
+            label: "CRM · 04",
+            title: "CRM-Sync",
+            desc: "Erfasste Leads direkt nach HubSpot, Pipedrive, Salesforce oder in ein CSV schicken. Nativ — ohne Zapier.",
+            icon: "sync",
+          },
+          {
+            label: "TEAMS · 05",
+            title: "Team-Roster",
+            desc: "Karten für das gesamte Team aus einer Admin-Konsole bereitstellen, entziehen und rebranden. SSO-fähig.",
+            icon: "team",
+          },
+          {
+            label: "HOSTING · 06",
+            title: "Gehostet in Deutschland",
+            desc: "Hetzner / IONOS Frankfurt. ISO 27001. Keine US-Subunternehmer. DSGVO-nativ, DPA ab Tag eins.",
+            icon: "hosting",
+          },
+        ],
+      },
+      compliance: {
+        label: "DATENHOHEIT",
+        heading: "Wo leben die Daten Ihrer Karte?",
+        intro:
+          "Die meisten Mitbewerber hosten stolz in den USA. Wir nicht. Und genau das macht den Unterschied.",
+        cols: [
+          "Anbieter",
+          "Hosting-Region",
+          "Subunternehmer",
+          "DSGVO-AVV",
+          "Ein-Klick-Löschung",
+        ],
+        rows: [
+          {
+            provider: "Popl",
+            host: "USA",
+            sub: "USA (AWS, Heroku)",
+            dpa: "über SCC",
+            del: "Teilweise",
+            highlight: "",
+          },
+          {
+            provider: "Blinq",
+            host: "AU",
+            sub: "USA (AWS Sydney)",
+            dpa: "über SCC",
+            del: "Teilweise",
+            highlight: "",
+          },
+          {
+            provider: "Lemontaps",
+            host: "DE (Frankfurt)",
+            sub: "Begrenzt",
+            dpa: "Ja",
+            del: "Ja",
+            highlight: "",
+          },
+          {
+            provider: "OpSolid Digitale Visitenkarte",
+            host: "DE (Frankfurt)",
+            sub: "Keine US-Subunternehmer",
+            dpa: "Nativ",
+            del: "Ja",
+            highlight: "true",
+          },
+        ],
+      },
+      pricing: {
+        label: "PREISE",
+        heading: "Einmalig, Abo oder gratis. Nie an uns gebunden.",
+        popularBadge: "BELIEBT",
+        plans: [
+          {
+            name: "Gratis",
+            price: "€0",
+            cadence: "",
+            popular: "",
+            bullets: [
+              "Digitales Profil, 1 Karte",
+              "Grundlegende Analysen",
+              "OpSolid-Wasserzeichen",
+              "Ideal für Gründer und Freelancer",
+            ],
+            cta: "Profil erstellen",
+            href: "/contact?source=dbc-free",
+          },
+          {
+            name: "Team",
+            price: "€4,90",
+            cadence: "pro Nutzer / Monat",
+            popular: "true",
+            bullets: [
+              "Alles aus Gratis",
+              "Erweiterte Analysen",
+              "CRM-Sync (HubSpot, Pipedrive, Salesforce)",
+              "Eigene Domain & Vollbranding",
+              "Roster + SSO",
+              "Jährliche Abrechnung, min. 5 Plätze",
+            ],
+            cta: "Demo buchen",
+            href: "#lead",
+          },
+          {
+            name: "NFC + Lifetime",
+            price: "€39",
+            cadence: "einmalig, pro Karte",
+            popular: "",
+            bullets: [
+              "Matte oder Holz-NFC-Karte, Versand aus Hamburg",
+              "Digitaler Account dauerhaft gratis",
+              "Kein Abo, niemals",
+              "Jederzeit auf Team upgraden",
+            ],
+            cta: "Karte anfragen",
+            href: "#lead",
+          },
+        ],
+      },
+      lead: {
+        label: "ANFRAGE",
+        heading: "Demo buchen — oder die erste Karte bestellen.",
+        intro:
+          "Sagen Sie uns kurz, wie groß Ihr Team ist und was Sie mit digitalen Karten vorhaben. Antwort innerhalb eines Werktages.",
+        fields: {
+          name: "Vollständiger Name",
+          email: "Geschäfts-E-Mail",
+          company: "Unternehmen (optional)",
+          teamSize: "Teamgröße",
+          teamSizeOptions: ["1", "2 – 10", "11 – 50", "50+"],
+          message: "Etwas, das wir wissen sollten? (optional)",
+          consent:
+            "Ich willige in die Verarbeitung dieser Daten durch OpSolid zur Bearbeitung meiner Anfrage ein. Siehe Datenschutzerklärung.",
+          privacyLink: "Datenschutzerklärung",
+          submit: "Anfrage senden",
+          submitting: "Wird gesendet…",
+          success:
+            "Danke — Antwort innerhalb eines Werktages.",
+          error:
+            "Etwas ist schiefgegangen. Bitte direkt an contact@opsolid.de schreiben.",
+        },
+      },
+      cta: {
+        eyebrow: "BEREIT?",
+        heading:
+          "Ihre nächste Visitenkarte kommt aus Hamburg,\nnicht aus San Francisco.",
+        primaryCta: "Termin buchen",
+        secondaryCta: "Zu /contact",
+      },
+      meta: {
+        title: "Digitale Visitenkarte — in Deutschland gehostet | OpSolid",
+        description:
+          "Eine moderne NFC-Visitenkarte mit DSGVO-nativem digitalen Profil. Apple & Google Wallet, CRM-Sync, Team-Roster — gehostet in Hamburg, nicht in San Francisco.",
+      },
+    },
 
     kutasia: {
       hero: {

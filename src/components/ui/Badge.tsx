@@ -1,23 +1,38 @@
 import { cn } from "@/lib/utils";
 
 interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
-  variant?: "default" | "brand" | "gradient" | "teal" | "accent";
+  /**
+   * Editorial palette.
+   *  - default:  hairline + ink/muted mono label
+   *  - amber:    amber fill on ink text (sparingly, for status)
+   *  - olive:    olive-tinted chip
+   *  - ink:      solid ink on paper (inverse)
+   *  - brand / gradient / teal / accent: legacy aliases, all render as default
+   */
+  variant?: "default" | "amber" | "olive" | "ink" | "brand" | "gradient" | "teal" | "accent";
 }
 
-export function Badge({ className, variant = "brand", children, ...props }: BadgeProps) {
+export function Badge({
+  className,
+  variant = "default",
+  children,
+  ...props
+}: BadgeProps) {
+  const base =
+    "inline-flex items-center rounded-full px-3 py-1 font-mono text-[0.6875rem] tracking-[0.14em] uppercase";
+
+  const palette =
+    variant === "amber"
+      ? "bg-amber/15 text-amber-700 border border-amber/30"
+      : variant === "olive"
+      ? "bg-olive/15 text-olive-700 border border-olive/40"
+      : variant === "ink"
+      ? "bg-ink text-paper"
+      : // default + all legacy aliases render as hairline chip
+        "border border-ink/15 bg-paper-warm text-ink/70";
+
   return (
-    <span
-      className={cn(
-        "inline-flex items-center rounded-full px-3.5 py-1 text-xs font-semibold tracking-wide uppercase",
-        variant === "brand" && "bg-brand-50 text-brand-700",
-        variant === "default" && "bg-slate-100 text-slate-600",
-        variant === "gradient" && "bg-gradient-to-r from-brand-50 to-teal-50 text-brand-700 border border-brand-100/50",
-        variant === "teal" && "bg-teal-50 text-teal-700",
-        variant === "accent" && "bg-accent-50 text-accent-700",
-        className
-      )}
-      {...props}
-    >
+    <span className={cn(base, palette, className)} {...props}>
       {children}
     </span>
   );

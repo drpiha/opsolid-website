@@ -2,27 +2,31 @@ import { forwardRef } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
+/**
+ * Editorial button. Variants:
+ *  - primary:   solid amber on ink (brand CTA)
+ *  - secondary: solid ink on paper (inverse, high contrast)
+ *  - ghost:     transparent with underline affordance
+ *  - link:      inline text link
+ *  - gradient:  legacy alias → falls back to primary (no animated gradient)
+ */
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
-        primary:
-          "bg-brand-600 text-white hover:bg-brand-700 shadow-soft hover:shadow-medium active:scale-[0.98]",
-        secondary:
-          "bg-white text-slate-800 border border-slate-200 hover:bg-slate-50 hover:border-slate-300 shadow-soft active:scale-[0.98]",
+        primary: "bg-amber text-ink hover:bg-amber-600 hover:text-paper",
+        secondary: "bg-ink text-paper hover:bg-ink-700",
         ghost:
-          "text-slate-600 hover:text-slate-900 hover:bg-slate-100",
-        link:
-          "text-brand-600 hover:text-brand-700 underline-offset-4 hover:underline p-0 h-auto",
-        gradient:
-          "bg-gradient-to-r from-brand-600 via-accent-600 to-teal-500 text-white hover:shadow-glow active:scale-[0.98] bg-[length:200%_200%] animate-gradient-x",
+          "text-ink underline underline-offset-8 decoration-ink/20 decoration-1 hover:decoration-ink bg-transparent px-0",
+        link: "text-ink underline underline-offset-4 decoration-ink/30 hover:decoration-ink p-0 h-auto",
+        gradient: "bg-amber text-ink hover:bg-amber-600 hover:text-paper",
       },
       size: {
         sm: "h-9 px-4 text-sm",
         md: "h-11 px-6 text-sm",
-        lg: "h-12 px-8 text-base",
-        xl: "h-14 px-10 text-base",
+        lg: "h-12 px-7 text-base",
+        xl: "h-14 px-9 text-base",
       },
     },
     defaultVariants: {

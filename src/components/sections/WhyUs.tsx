@@ -1,10 +1,6 @@
 "use client";
 
-import { SectionHeading } from "@/components/shared/SectionHeading";
-import {
-  StaggerContainer,
-  StaggerItem,
-} from "@/components/shared/AnimatedSection";
+import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { useLocale } from "@/context/LocaleContext";
 
 export function WhyUs() {
@@ -12,38 +8,44 @@ export function WhyUs() {
   const s = t.home.whyUs;
 
   return (
-    <section className="section-padding relative overflow-hidden">
-      {/* Dark gradient mesh background */}
-      <div className="absolute inset-0 -z-10 bg-slate-900">
-        <div className="absolute top-10 left-[15%] w-96 h-96 bg-brand-500/[0.08] rounded-full blur-[120px]" />
-        <div className="absolute bottom-10 right-[10%] w-80 h-80 bg-accent-500/[0.06] rounded-full blur-[100px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-teal-500/[0.04] rounded-full blur-[140px]" />
-        <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 via-transparent to-slate-900/70" />
-      </div>
-
+    <section className="section bg-ink text-paper paper-grain relative">
       <div className="container-wide relative z-10">
-        <SectionHeading
-          label={s.label}
-          headline={s.headline}
-          className="[&_p]:text-slate-300 [&_h2]:text-white"
-        />
+        {/* Editorial two-column header */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-12 lg:mb-16">
+          <AnimatedSection className="lg:col-span-7">
+            <div className="mono-label text-paper/60 mb-4">{s.label}</div>
+            <h2 className="font-serif text-paper text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.06] tracking-[-0.02em] text-balance">
+              {s.headline}
+            </h2>
+          </AnimatedSection>
+        </div>
 
-        <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-5 max-w-4xl mx-auto">
+        {/* Reasons — hairline grid on ink */}
+        <div className="grid grid-cols-1 md:grid-cols-2 border-t border-l border-paper/10 max-w-5xl">
           {s.points.map((point, i) => (
-            <StaggerItem key={i}>
-              <div className="relative rounded-xl bg-white/[0.07] backdrop-blur-md border border-white/10 p-6 md:p-7 pl-8 md:pl-9 transition-all duration-300 hover:bg-white/[0.12] hover:-translate-y-0.5 overflow-hidden">
-                {/* 2px gradient left border */}
-                <div className="absolute left-0 top-4 bottom-4 w-0.5 bg-gradient-to-b from-brand-400 via-accent-400 to-teal-400 rounded-full" />
-                <h3 className="text-base font-semibold text-white">
-                  {point.title}
-                </h3>
-                <p className="mt-2 text-sm text-slate-300 leading-relaxed">
-                  {point.description}
-                </p>
+            <AnimatedSection
+              key={i}
+              delay={0.05 + i * 0.06}
+              className="border-r border-b border-paper/10 p-6 md:p-8 flex flex-col gap-3 group"
+            >
+              <div className="flex items-center gap-3">
+                <span
+                  aria-hidden="true"
+                  className="h-1.5 w-1.5 rounded-full bg-amber"
+                />
+                <span className="mono-label text-paper/60">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
               </div>
-            </StaggerItem>
+              <h3 className="font-serif text-paper text-[1.375rem] leading-[1.2] tracking-[-0.015em]">
+                {point.title}
+              </h3>
+              <p className="text-paper/70 text-sm leading-relaxed text-pretty">
+                {point.description}
+              </p>
+            </AnimatedSection>
           ))}
-        </StaggerContainer>
+        </div>
       </div>
     </section>
   );
