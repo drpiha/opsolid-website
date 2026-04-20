@@ -3,139 +3,39 @@
 import { useState } from "react";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import {
-  Nfc,
-  Wallet,
+  ClipboardList,
+  Mail,
+  Phone,
+  CalendarClock,
   LineChart,
-  RefreshCw,
-  Users,
   ServerCog,
-  Link2,
-  QrCode,
-  Layers,
   Loader2,
   AlertCircle,
   CheckCircle,
   Check,
-  X,
-  AlertTriangle,
-  Star,
   ArrowRight,
   ChevronDown,
+  BellRing,
 } from "lucide-react";
 import { Input, Textarea, Select } from "@/components/ui/Input";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { SectionHeading } from "@/components/shared/SectionHeading";
-import { HeroCardMockup } from "@/components/sections/hero/HeroCardMockup";
 import { useLocale } from "@/context/LocaleContext";
 
 type FormState = "idle" | "sending" | "success" | "error";
 
 const featureIconMap: Record<string, React.ReactNode> = {
-  link: <Link2 size={22} strokeWidth={2} />,
-  qr: <QrCode size={22} strokeWidth={2} />,
-  nfc: <Nfc size={22} strokeWidth={2} />,
-  templates: <Layers size={22} strokeWidth={2} />,
-  wallet: <Wallet size={22} strokeWidth={2} />,
+  form: <ClipboardList size={22} strokeWidth={2} />,
+  mail: <Mail size={22} strokeWidth={2} />,
+  phone: <Phone size={22} strokeWidth={2} />,
+  calendar: <CalendarClock size={22} strokeWidth={2} />,
   chart: <LineChart size={22} strokeWidth={2} />,
-  sync: <RefreshCw size={22} strokeWidth={2} />,
-  team: <Users size={22} strokeWidth={2} />,
   hosting: <ServerCog size={22} strokeWidth={2} />,
 };
 
-/** Map the textual delete/DPA label to a glyph + tone. */
-function statusTokenFor(value: string): {
-  symbol: React.ReactNode;
-  tone: "good" | "bad" | "warn";
-} {
-  const v = value.toLowerCase();
-  if (
-    v === "yes" ||
-    v === "native" ||
-    v === "evet" ||
-    v === "ja" ||
-    v === "yerli" ||
-    v === "nativ"
-  ) {
-    return {
-      symbol: <Check size={14} strokeWidth={3} />,
-      tone: "good",
-    };
-  }
-  if (
-    v === "no" ||
-    v === "nein" ||
-    v === "hayır" ||
-    v.includes("no us") ||
-    v.includes("keine us") ||
-    v.includes("abd alt")
-  ) {
-    return {
-      symbol: <Check size={14} strokeWidth={3} />,
-      tone: "good",
-    };
-  }
-  // partial / via SCC / teilweise / kısmen
-  if (
-    v.includes("partial") ||
-    v.includes("scc") ||
-    v.includes("teilweise") ||
-    v.includes("kısmen") ||
-    v.includes("limited") ||
-    v.includes("begrenzt") ||
-    v.includes("sınırlı")
-  ) {
-    return {
-      symbol: <AlertTriangle size={14} strokeWidth={2.5} />,
-      tone: "warn",
-    };
-  }
-  return {
-    symbol: <X size={14} strokeWidth={3} />,
-    tone: "bad",
-  };
-}
-
-function StatusChip({
-  symbol,
-  tone,
-  label,
-}: {
-  symbol: React.ReactNode;
-  tone: "good" | "bad" | "warn";
-  label: string;
-}) {
-  const toneClass =
-    tone === "good"
-      ? "bg-brand/10 text-brand"
-      : tone === "warn"
-      ? "bg-neutral-100 text-ink/60"
-      : "bg-neutral-100 text-ink/40";
-  return (
-    <span className="inline-flex items-center gap-1.5 text-xs">
-      <span
-        className={`flex h-5 w-5 items-center justify-center rounded-full ${toneClass}`}
-      >
-        {symbol}
-      </span>
-      <span className="text-ink/70">{label}</span>
-    </span>
-  );
-}
-
-function Row({ label, value }: { label: string; value: React.ReactNode }) {
-  return (
-    <div className="flex items-start justify-between gap-3">
-      <dt className="text-xs font-semibold uppercase tracking-wide text-ink/50 shrink-0">
-        {label}
-      </dt>
-      <dd className="text-sm text-ink text-right">{value}</dd>
-    </div>
-  );
-}
-
-export function DigitalCardPage() {
+export function DigitalReceptionPage() {
   const { t } = useLocale();
-  const d = t.products.digitalCard;
+  const d = t.products.digitalReception;
   const home = t.home;
 
   const [formState, setFormState] = useState<FormState>("idle");
@@ -151,11 +51,11 @@ export function DigitalCardPage() {
       name: (formData.get("name") as string) || "",
       email: (formData.get("email") as string) || "",
       company: (formData.get("company") as string) || "",
-      teamSize: (formData.get("teamSize") as string) || "",
+      teamSize: (formData.get("businessType") as string) || "",
       message:
         ((formData.get("message") as string) || "").trim() ||
-        "Digital Business Card request (no additional notes).",
-      source: "digital-card",
+        "Digital Reception request (no additional notes).",
+      source: "digital-reception",
     };
 
     try {
@@ -173,39 +73,23 @@ export function DigitalCardPage() {
 
   return (
     <>
-      {/* ================================================================
-          HERO
-          ================================================================ */}
+      {/* HERO */}
       <section
-        aria-labelledby="dbc-hero-title"
+        aria-labelledby="reception-hero-title"
         className="relative overflow-hidden pt-24 md:pt-28 lg:pt-32 pb-12 md:pb-20"
       >
         <div className="container-wide">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-            {/* LEFT */}
             <AnimatedSection className="lg:col-span-7">
-              {/* Rating pill */}
               <div className="inline-flex items-center gap-2 rounded-full bg-neutral-50 border border-neutral-200 px-3.5 py-1.5 shadow-soft">
-                <span
-                  className="flex items-center gap-0.5 text-brand"
-                  aria-hidden="true"
-                >
-                  {[0, 1, 2, 3, 4].map((i) => (
-                    <Star
-                      key={i}
-                      size={12}
-                      fill="currentColor"
-                      strokeWidth={0}
-                    />
-                  ))}
-                </span>
+                <BellRing size={14} strokeWidth={2.25} className="text-brand" />
                 <span className="text-xs font-semibold text-ink">
-                  {home.hero.ratingPill}
+                  {d.hero.tags}
                 </span>
               </div>
 
               <h1
-                id="dbc-hero-title"
+                id="reception-hero-title"
                 className="mt-6 md:mt-8 font-sans font-extrabold text-ink tracking-[-0.035em] leading-[0.98] text-balance text-[clamp(2.75rem,7vw,5.25rem)]"
               >
                 {d.hero.title.map((line, i) => (
@@ -232,22 +116,15 @@ export function DigitalCardPage() {
               <p className="mt-5 text-sm text-ink/50">{home.hero.footnote}</p>
             </AnimatedSection>
 
-            {/* RIGHT — hero mockup */}
+            {/* RIGHT — reception visual */}
             <div className="lg:col-span-5 animate-rise">
-              <HeroCardMockup
-                name={d.hero.cardLabels.name}
-                role={d.hero.cardLabels.role}
-                company={d.hero.cardLabels.company}
-                cardLabel={d.hero.cardLabels.chip}
-              />
+              <ReceptionVisual eyebrow={d.hero.eyebrow} />
             </div>
           </div>
         </div>
       </section>
 
-      {/* ================================================================
-          TRUST STRIP
-          ================================================================ */}
+      {/* TRUST STRIP */}
       <section
         aria-label="Trust signals"
         className="border-t border-b border-neutral-200 bg-white"
@@ -257,29 +134,18 @@ export function DigitalCardPage() {
             className="flex items-center justify-center md:justify-between gap-4 md:gap-6 py-5 md:py-6 overflow-x-auto [overscroll-behavior-x:contain]"
             style={{ scrollbarWidth: "none" }}
           >
-            <div className="flex items-center gap-2 shrink-0">
-              <span
-                className="flex items-center gap-0.5 text-brand"
-                aria-hidden="true"
-              >
-                {[0, 1, 2, 3, 4].map((i) => (
-                  <Star key={i} size={14} fill="currentColor" strokeWidth={0} />
-                ))}
-              </span>
-              <span className="text-sm font-semibold text-ink whitespace-nowrap">
-                {home.trustStrip.items[0]}
-              </span>
-            </div>
-            {home.trustStrip.items.slice(1).map((item, i) => (
+            {home.trustStrip.items.map((item, i) => (
               <div
                 key={i}
                 className="flex items-center gap-4 md:gap-6 shrink-0"
               >
-                <span
-                  className="hidden md:inline-block h-1 w-1 rounded-full bg-neutral-300"
-                  aria-hidden="true"
-                />
-                <span className="text-sm font-medium text-ink/60 whitespace-nowrap">
+                {i > 0 && (
+                  <span
+                    className="hidden md:inline-block h-1 w-1 rounded-full bg-neutral-300"
+                    aria-hidden="true"
+                  />
+                )}
+                <span className="text-sm font-medium text-ink/65 whitespace-nowrap">
                   {item}
                 </span>
               </div>
@@ -288,9 +154,7 @@ export function DigitalCardPage() {
         </div>
       </section>
 
-      {/* ================================================================
-          FEATURES
-          ================================================================ */}
+      {/* FEATURES */}
       <section id="features" className="section bg-white">
         <div className="container-wide">
           <AnimatedSection>
@@ -322,196 +186,37 @@ export function DigitalCardPage() {
         </div>
       </section>
 
-      {/* ================================================================
-          HOW IT WORKS
-          ================================================================ */}
+      {/* USE CASES */}
       <section className="section bg-neutral-50">
         <div className="container-wide">
           <AnimatedSection>
             <SectionHeading
-              label={d.howItWorks.label}
-              headline={d.howItWorks.heading}
+              label={d.useCases.label}
+              headline={d.useCases.heading}
+              description={d.useCases.intro}
               align="center"
             />
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 lg:gap-12">
-            {d.howItWorks.steps.map((step, i) => (
-              <AnimatedSection
-                key={i}
-                delay={0.1 * i}
-                className="flex flex-col items-center text-center"
-              >
-                <div className="w-[5.5rem] h-[5.5rem] rounded-full bg-white border-2 border-brand flex items-center justify-center shadow-soft mb-6">
-                  <span className="font-sans font-black text-brand text-[2.75rem] leading-none">
-                    {i + 1}
-                  </span>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6 max-w-5xl mx-auto">
+            {d.useCases.items.map((item, i) => (
+              <AnimatedSection key={i} delay={0.06 * i}>
+                <div className="pop-card h-full p-7 md:p-8 flex flex-col">
+                  <h3 className="text-heading font-bold text-ink mb-3 tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-body text-ink/60 leading-relaxed text-pretty">
+                    {item.desc}
+                  </p>
                 </div>
-                <h3 className="text-heading font-bold text-ink mb-3 tracking-tight">
-                  {step.title}
-                </h3>
-                <p className="text-body text-ink/60 leading-relaxed max-w-xs text-pretty">
-                  {step.description}
-                </p>
               </AnimatedSection>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ================================================================
-          SOVEREIGNTY TABLE
-          ================================================================ */}
-      <section className="section bg-white">
-        <div className="container-wide">
-          <AnimatedSection>
-            <SectionHeading
-              label={d.compliance.label}
-              headline={d.compliance.heading}
-              description={d.compliance.intro}
-              align="center"
-            />
-          </AnimatedSection>
-
-          {/* Desktop */}
-          <AnimatedSection className="hidden md:block">
-            <div className="overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-card">
-              <table className="w-full text-sm">
-                <thead className="bg-neutral-50">
-                  <tr>
-                    {d.compliance.cols.map((col, i) => (
-                      <th
-                        key={i}
-                        scope="col"
-                        className="text-left px-6 py-4 text-xs font-semibold uppercase tracking-wide text-ink/60"
-                      >
-                        {col}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {d.compliance.rows.map((row, i) => {
-                    const highlighted = row.highlight === "true";
-                    const dpa = statusTokenFor(row.dpa);
-                    const del = statusTokenFor(row.del);
-                    const sub = statusTokenFor(row.sub);
-                    return (
-                      <tr
-                        key={i}
-                        className={`border-t border-neutral-200 ${
-                          highlighted
-                            ? "bg-brand/[0.04]"
-                            : "hover:bg-neutral-50/70 transition-colors"
-                        }`}
-                      >
-                        <td
-                          className={`px-6 py-5 ${
-                            highlighted
-                              ? "font-bold text-ink"
-                              : "font-semibold text-ink"
-                          }`}
-                        >
-                          {row.provider}
-                        </td>
-                        <td className="px-6 py-5 text-ink/70">{row.host}</td>
-                        <td className="px-6 py-5">
-                          <StatusChip
-                            symbol={sub.symbol}
-                            tone={sub.tone}
-                            label={row.sub}
-                          />
-                        </td>
-                        <td className="px-6 py-5">
-                          <StatusChip
-                            symbol={dpa.symbol}
-                            tone={dpa.tone}
-                            label={row.dpa}
-                          />
-                        </td>
-                        <td className="px-6 py-5">
-                          <StatusChip
-                            symbol={del.symbol}
-                            tone={del.tone}
-                            label={row.del}
-                          />
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </div>
-          </AnimatedSection>
-
-          {/* Mobile cards */}
-          <div className="md:hidden grid grid-cols-1 gap-4">
-            {d.compliance.rows.map((row, i) => {
-              const highlighted = row.highlight === "true";
-              const dpa = statusTokenFor(row.dpa);
-              const del = statusTokenFor(row.del);
-              const sub = statusTokenFor(row.sub);
-              return (
-                <AnimatedSection key={i} delay={0.05 * i}>
-                  <div
-                    className={`rounded-2xl border p-5 ${
-                      highlighted
-                        ? "bg-brand/[0.06] border-brand/30"
-                        : "bg-white border-neutral-200"
-                    }`}
-                  >
-                    <div
-                      className={`text-lg text-ink ${
-                        highlighted ? "font-bold" : "font-semibold"
-                      }`}
-                    >
-                      {row.provider}
-                    </div>
-                    <dl className="mt-4 grid grid-cols-1 gap-3">
-                      <Row label={d.compliance.cols[1]} value={row.host} />
-                      <Row
-                        label={d.compliance.cols[2]}
-                        value={
-                          <StatusChip
-                            symbol={sub.symbol}
-                            tone={sub.tone}
-                            label={row.sub}
-                          />
-                        }
-                      />
-                      <Row
-                        label={d.compliance.cols[3]}
-                        value={
-                          <StatusChip
-                            symbol={dpa.symbol}
-                            tone={dpa.tone}
-                            label={row.dpa}
-                          />
-                        }
-                      />
-                      <Row
-                        label={d.compliance.cols[4]}
-                        value={
-                          <StatusChip
-                            symbol={del.symbol}
-                            tone={del.tone}
-                            label={row.del}
-                          />
-                        }
-                      />
-                    </dl>
-                  </div>
-                </AnimatedSection>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ================================================================
-          PRICING — 3 cards
-          ================================================================ */}
-      <section id="pricing" className="section bg-neutral-50">
+      {/* PRICING */}
+      <section id="pricing" className="section bg-white">
         <div className="container-wide">
           <AnimatedSection>
             <SectionHeading
@@ -590,66 +295,7 @@ export function DigitalCardPage() {
         </div>
       </section>
 
-      {/* ================================================================
-          TESTIMONIALS
-          ================================================================ */}
-      <section className="section bg-white">
-        <div className="container-wide">
-          <AnimatedSection>
-            <SectionHeading
-              label={d.testimonials.label}
-              headline={d.testimonials.heading}
-              align="center"
-            />
-          </AnimatedSection>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-            {d.testimonials.items.map((item, i) => (
-              <AnimatedSection key={i} delay={0.08 * i}>
-                <figure className="pop-card h-full p-6 md:p-7 flex flex-col gap-5">
-                  <div
-                    className="flex items-center gap-0.5 text-brand"
-                    aria-label="5 out of 5 stars"
-                  >
-                    {[0, 1, 2, 3, 4].map((j) => (
-                      <Star
-                        key={j}
-                        size={16}
-                        fill="currentColor"
-                        strokeWidth={0}
-                      />
-                    ))}
-                  </div>
-                  <blockquote className="text-ink text-body leading-relaxed text-pretty flex-1">
-                    &ldquo;{item.quote}&rdquo;
-                  </blockquote>
-                  <figcaption className="flex items-center gap-3 pt-4 border-t border-neutral-200">
-                    <div className="h-10 w-10 rounded-full bg-gradient-to-br from-brand to-brand-700 text-white flex items-center justify-center text-sm font-bold shrink-0">
-                      {item.name
-                        .split(" ")
-                        .slice(0, 2)
-                        .map((n) => n[0] ?? "")
-                        .join("")}
-                    </div>
-                    <div className="min-w-0">
-                      <div className="text-sm font-semibold text-ink truncate">
-                        {item.name}
-                      </div>
-                      <div className="text-xs text-ink/55 truncate">
-                        {item.role} · {item.company}
-                      </div>
-                    </div>
-                  </figcaption>
-                </figure>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ================================================================
-          LEAD FORM
-          ================================================================ */}
+      {/* LEAD FORM */}
       <section id="lead" className="section bg-neutral-50">
         <div className="container-wide">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
@@ -680,14 +326,14 @@ export function DigitalCardPage() {
                   <form onSubmit={handleSubmit} className="space-y-5">
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <Input
-                        id="dbc-name"
+                        id="dr-name"
                         name="name"
                         label={d.lead.fields.name}
                         placeholder="Jane Schmidt"
                         required
                       />
                       <Input
-                        id="dbc-email"
+                        id="dr-email"
                         name="email"
                         type="email"
                         label={d.lead.fields.email}
@@ -698,21 +344,21 @@ export function DigitalCardPage() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                       <Input
-                        id="dbc-company"
+                        id="dr-company"
                         name="company"
                         label={d.lead.fields.company}
-                        placeholder="Acme GmbH"
+                        placeholder="Hotel Acme"
                       />
                       <Select
-                        id="dbc-teamsize"
-                        name="teamSize"
+                        id="dr-businesstype"
+                        name="businessType"
                         defaultValue=""
-                        label={d.lead.fields.teamSize}
+                        label={d.lead.fields.businessType}
                       >
                         <option value="" disabled>
                           —
                         </option>
-                        {d.lead.fields.teamSizeOptions.map((opt, i) => (
+                        {d.lead.fields.businessTypeOptions.map((opt, i) => (
                           <option key={i} value={opt}>
                             {opt}
                           </option>
@@ -721,7 +367,7 @@ export function DigitalCardPage() {
                     </div>
 
                     <Textarea
-                      id="dbc-message"
+                      id="dr-message"
                       name="message"
                       label={d.lead.fields.message}
                       rows={4}
@@ -782,9 +428,7 @@ export function DigitalCardPage() {
         </div>
       </section>
 
-      {/* ================================================================
-          FAQ — short accordion
-          ================================================================ */}
+      {/* FAQ */}
       <section className="section bg-white">
         <div className="container-wide max-w-3xl">
           <AnimatedSection>
@@ -843,9 +487,7 @@ export function DigitalCardPage() {
         </div>
       </section>
 
-      {/* ================================================================
-          FINAL CTA
-          ================================================================ */}
+      {/* FINAL CTA */}
       <section className="section bg-ink text-white relative overflow-hidden">
         <div
           aria-hidden="true"
@@ -861,7 +503,7 @@ export function DigitalCardPage() {
                 {d.cta.heading}
               </h2>
               <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-                <Link href="/contact" className="btn-primary">
+                <Link href="#lead" className="btn-primary">
                   <span>{d.cta.primaryCta}</span>
                   <ArrowRight size={16} strokeWidth={2.5} />
                 </Link>
@@ -879,3 +521,123 @@ export function DigitalCardPage() {
     </>
   );
 }
+
+/**
+ * Simple hero visual for Digital Reception:
+ * A phone silhouette with an AI-triaged inbox mock + pulsing live dot.
+ * Pure SVG / Tailwind, no external deps.
+ */
+function ReceptionVisual({ eyebrow }: { eyebrow: string }) {
+  return (
+    <div className="relative mx-auto w-full max-w-[360px] aspect-[3/4]">
+      {/* Ambient red halo */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 -z-10 bg-brand/15 blur-3xl"
+      />
+
+      {/* Phone frame */}
+      <div className="absolute inset-0 rounded-[2.75rem] bg-ink p-3 shadow-lifted">
+        <div className="relative h-full w-full rounded-[2.25rem] bg-white overflow-hidden">
+          {/* Top bar */}
+          <div className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-neutral-100">
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-2 w-2">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand opacity-60" />
+                <span className="relative inline-flex rounded-full h-2 w-2 bg-brand" />
+              </span>
+              <span className="text-[0.7rem] font-semibold uppercase tracking-wider text-ink/70">
+                Live
+              </span>
+            </div>
+            <span className="text-[0.65rem] font-semibold uppercase tracking-wider text-ink/40">
+              Digital Reception
+            </span>
+          </div>
+
+          {/* Mock inbox rows */}
+          <ul className="px-4 py-3 space-y-2.5">
+            {INBOX_MOCK.map((row, i) => (
+              <li
+                key={i}
+                className={`rounded-xl border ${
+                  row.highlight
+                    ? "bg-brand/5 border-brand/30"
+                    : "bg-neutral-50 border-neutral-200"
+                } px-3 py-2.5`}
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <span
+                    className={`text-[0.7rem] font-semibold ${
+                      row.highlight ? "text-brand" : "text-ink/70"
+                    }`}
+                  >
+                    {row.from}
+                  </span>
+                  <span className="text-[0.6rem] font-medium text-ink/40 tabular-nums">
+                    {row.time}
+                  </span>
+                </div>
+                <p className="mt-1 text-[0.72rem] leading-snug text-ink/70 line-clamp-1">
+                  {row.preview}
+                </p>
+                <div className="mt-1.5 flex items-center gap-1.5">
+                  <span
+                    className={`inline-flex items-center gap-1 rounded-full px-1.5 py-0.5 text-[0.58rem] font-semibold uppercase tracking-wide ${
+                      row.tag === "AI"
+                        ? "bg-brand/15 text-brand"
+                        : row.tag === "Booking"
+                          ? "bg-ink/5 text-ink/70"
+                          : "bg-neutral-200 text-ink/60"
+                    }`}
+                  >
+                    {row.tag}
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          {/* Bottom bar */}
+          <div className="absolute bottom-0 left-0 right-0 border-t border-neutral-100 bg-white px-5 py-3 flex items-center justify-between">
+            <span className="text-[0.6rem] font-semibold uppercase tracking-wider text-ink/40">
+              {eyebrow.replace(/^\[\s*OPSOLID\s*PRODUCT\s*·\s*0\d\s*\]\s*/i, "")}
+            </span>
+            <span className="h-1 w-10 rounded-full bg-ink/10" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const INBOX_MOCK = [
+  {
+    from: "hotel inquiry",
+    time: "02:14",
+    preview: "Double room available on Friday?",
+    tag: "AI",
+    highlight: true,
+  },
+  {
+    from: "booking.com",
+    time: "01:48",
+    preview: "Reservation #A2831 confirmed",
+    tag: "Booking",
+    highlight: false,
+  },
+  {
+    from: "voice — 030 1234 56",
+    time: "23:02",
+    preview: "Transcribed: after-hours call about...",
+    tag: "Voice",
+    highlight: false,
+  },
+  {
+    from: "form: spa",
+    time: "21:15",
+    preview: "Can I bring my dog to the spa?",
+    tag: "AI",
+    highlight: false,
+  },
+];

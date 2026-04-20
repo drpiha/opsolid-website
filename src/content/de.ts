@@ -24,19 +24,21 @@ export const content: Content = {
         "OpSolid unterstützt Unternehmen dabei, manuelle, wiederkehrende Arbeit durch zuverlässige automatisierte Systeme zu ersetzen — von Workflow-Automatisierung und Systemintegration bis hin zu KI-gestützten Prozessen.",
       primaryCta: "Erstgespräch buchen",
       secondaryCta: "Leistungen ansehen",
-      ratingPill: "4,9  ·  Von Teams in ganz Europa genutzt",
+      ratingPill: "OpSolid · Automation Studio · Sitz in Deutschland",
       title: [
-        "Ein Tap.",
-        "Eine Karte, die",
-        "in Deutschland bleibt.",
+        "Automatisierung, die",
+        "Ihren Betrieb steuert —",
+        "nicht umgekehrt.",
       ],
       subtitle:
-        "Eine moderne NFC-Visitenkarte mit DSGVO-nativem Profil, gehostet in Hamburg. Apple & Google Wallet, Echtzeit-Analytik, CRM-Sync, Team-Verwaltung — optional mit einem vollen Automatisierungspartner im Hintergrund.",
-      primaryCtaLabel: "Karte holen",
-      secondaryCtaLabel: "So funktioniert's",
-      footnote: "Keine Kreditkarte nötig  ·  Versand aus Hamburg",
+        "OpSolid entwickelt praxisnahe Automatisierungs- und KI-Systeme für den echten Geschäftsbetrieb — Workflow-Automatisierung, Systemintegration, interne Tools und KI-gestützte Prozesse. In Deutschland gehostet. Keine Abhängigkeit vom Anbieter.",
+      primaryCtaLabel: "Erstgespräch buchen",
+      primaryCtaHref: "/contact",
+      secondaryCtaLabel: "Leistungen ansehen",
+      secondaryCtaHref: "/solutions",
+      footnote: "Sitz in Deutschland  ·  DSGVO-nativ  ·  Keine Lock-ins",
       consultingNote:
-        "Wir bauen auch individuelle Automatisierung für Operations-Teams.",
+        "Wir liefern auch eigenständige Produkte — Kutasia, Digital Business Card, Digital Reception.",
       editorial: {
         eyebrow: "[ 01 / 04 ]   AUTOMATION STUDIO — HAMBURG, DE",
         title: [
@@ -335,188 +337,188 @@ export const content: Content = {
 
     trustStrip: {
       items: [
-        "4,9 Bewertung",
-        "2.400+ Bewertungen",
-        "ISO 27001 konform",
+        "Aus Deutschland",
         "DSGVO-nativ",
-        "Made in Germany",
-        "Versand aus Hamburg",
+        "n8n · Make · KI-gestützt",
+        "Keine Anbieter-Lock-ins",
+        "ISO 27001-orientiert",
+        "EN · DE · TR",
       ],
     },
 
     featureGrid: {
-      label: "Alles auf einen Tap",
-      headline: "Eine Visitenkarte, die tatsächlich etwas tut.",
+      label: "Was OpSolid baut",
+      headline: "Automatisierung, KI und interne Tools — für den Betrieb, den Sie bereits führen.",
       description:
-        "Mehr als nur ein vCard-Drop. Jede Funktion basiert auf einem EU-Stack und wird mit fertigen DSGVO-Unterlagen ausgeliefert.",
+        "Sechs Fokusbereiche. Jedes Projekt startet mit Ihrem Prozess — nicht mit einem Technologie-Pitch.",
       items: [
         {
-          icon: "nfc",
-          title: "NFC-Tap & QR",
+          icon: "workflow",
+          title: "Workflow-Automatisierung",
           description:
-            "Tippen Sie ein NFC-Smartphone an oder scannen Sie den QR-Code. Keine App-Installation für Empfänger. Funktioniert auf jedem modernen iOS- und Android-Gerät.",
+            "End-to-End-Automatisierung für repetitive, regelbasierte Arbeit — mit n8n, Make und maßgeschneiderten Integrationen. Saubere Fehlerbehandlung, kein brüchiger Klebecode.",
         },
         {
-          icon: "wallet",
-          title: "Apple & Google Wallet",
+          icon: "plug",
+          title: "Systemintegration",
           description:
-            "Jedes Profil lässt sich als Wallet-Pass speichern. Es aktualisiert sich automatisch, wenn sich Ihre Karte ändert.",
+            "Verknüpfung von CRM, ERP, Datenbanken und Kommunikationstools zu einer einheitlichen operativen Ebene. Eine Wahrheitsquelle statt Datensilos.",
         },
         {
-          icon: "chart",
-          title: "Echtzeit-Analytik",
+          icon: "layout",
+          title: "Interne Tools & Dashboards",
           description:
-            "Sehen Sie Taps, Öffnungen und Speicherungen in Echtzeit. Filtern Sie nach Teammitglied, Event und Land.",
+            "Individuelle Admin-Panels, Dashboards und interne Apps — gebaut um die Art, wie Ihr Team tatsächlich arbeitet.",
         },
         {
-          icon: "sync",
-          title: "CRM-Sync",
+          icon: "bot",
+          title: "KI-gestützte Prozesse",
           description:
-            "Übertragen Sie erfasste Leads direkt in HubSpot, Pipedrive, Salesforce oder als CSV. Nativ — kein Zapier nötig.",
+            "Praxisnahe KI — Dokumentenverarbeitung, Klassifikation, Sprach-Agenten, Chat-Assistenten — eingebettet in Ihre bestehenden Abläufe, nicht aufgesetzt.",
         },
         {
-          icon: "team",
-          title: "Team-Verwaltung",
+          icon: "messageSquare",
+          title: "Kommunikations-Automatisierung",
           description:
-            "Karten für Ihr gesamtes Team aus einer Admin-Konsole bereitstellen, entziehen und branden. SSO-fähig.",
+            "Automatisierte Nachrichten über WhatsApp, Telegram, E-Mail und SMS — von Statusupdates bis Follow-up-Sequenzen. Kanal-agnostisch.",
         },
         {
-          icon: "hosting",
-          title: "Gehostet in Deutschland",
+          icon: "shield",
+          title: "Gehostet in Europa",
           description:
-            "Hetzner / IONOS Frankfurt. ISO 27001. Null US-Subauftragnehmer. DSGVO-nativ, AV-Vertrag ab der Registrierung bereit.",
+            "Self-hosted oder deployed auf Hetzner / IONOS Frankfurt. DSGVO-nativ. Keine US-Subauftragnehmer, außer Sie möchten es explizit.",
         },
       ],
     },
 
     howItWorks: {
-      label: "So funktioniert's",
-      headline: "Drei Schritte. Unter fünf Minuten.",
+      label: "Vorgehen",
+      headline: "Drei Schritte. Kein Lock-in. Keine Blackbox.",
       steps: [
         {
-          title: "Karte bestellen",
+          title: "Analyse",
           description:
-            "Wählen Sie Matt, Metall oder Holz. Wir versenden innerhalb von zwei Werktagen aus Hamburg.",
+            "Wir kartieren Ihre tatsächlichen Prozesse, identifizieren Engpässe und finden heraus, wo Automatisierung sich rechnet. Sie erhalten einen schriftlichen Scope, bevor Code entsteht.",
         },
         {
-          title: "Profil einrichten",
+          title: "Design & Umsetzung",
           description:
-            "Foto, Links, Social Handles und Kalender hinzufügen. Vorschau in Echtzeit.",
+            "Wir wählen den passenden Stack (n8n, Make, Custom-Code oder KI) und entwickeln, testen und deployen iterativ — mit klaren Updates in jedem Schritt.",
         },
         {
-          title: "Tappen und teilen",
+          title: "Betrieb & Weiterentwicklung",
           description:
-            "Ein Tap teilt alles. Jede Interaktion lässt sich im Dashboard verfolgen.",
+            "Wir überwachen, optimieren und erweitern Ihre Systeme mit Ihrem Betrieb. Volle Dokumentation. Die Infrastruktur gehört jederzeit Ihnen.",
         },
       ],
     },
 
     whoUses: {
-      label: "Für wen OpSolid gemacht ist",
-      headline: "Für Teams, die tatsächlich Menschen treffen.",
+      label: "Für wen wir arbeiten",
+      headline: "Teams, deren Betrieb nicht manuell bleiben darf.",
       items: [
         {
-          title: "Gründer",
+          title: "Hotellerie & Service",
           description:
-            "Einen denkwürdigen ersten Eindruck hinterlassen, jedes Handshake im CRM halten.",
+            "Hotels, Kliniken, Salons und Restaurants, die Buchungen, Kundengespräche und Mehrkanal-Abläufe steuern.",
           icon: "founder",
         },
         {
-          title: "Vertriebsteams",
+          title: "Handel & E-Commerce",
           description:
-            "Statten Sie jede Vertriebsperson mit einer nachverfolgbaren Karte aus. Sehen Sie, wer getippt, gespeichert und konvertiert hat.",
+            "Mehrkanal-Händler, die Bestellungen, Lager, Fulfillment und ERP/CRM-Synchronisation jonglieren.",
           icon: "sales",
         },
         {
-          title: "Agenturen",
+          title: "Professional Services",
           description:
-            "Branden Sie das Team jedes Kunden mit Profilen auf eigener Domain und gebündelter Analytik.",
+            "Beratungen, Kanzleien, Steuerbüros und Agenturen, die Dokumentenprüfung, Intake und Kunden-Onboarding automatisieren.",
           icon: "agency",
         },
         {
-          title: "Freelancer",
+          title: "Operations-Teams",
           description:
-            "Eine Karte ersetzt jeden Papierstapel. Titel aktualisieren, ohne neu drucken zu müssen.",
+            "Interne Ops-Leads, die statt noch mehr Tabellen endlich verlässliche interne Tools, Freigabe-Workflows und Dashboards brauchen.",
           icon: "freelancer",
         },
       ],
     },
 
     pricingPreview: {
-      label: "Zwei Wege",
-      headline: "Nehmen Sie eine Karte oder bauen Sie einen ganzen Betrieb.",
+      label: "Zwei Wege, mit OpSolid zu arbeiten",
+      headline: "Maßgeschneiderte Systeme — oder eigenständige Produkte.",
       description:
-        "Die meisten starten mit der Digital Business Card. Teams mit größerem Betrieb ergänzen sie oft durch individuelle Automatisierung.",
+        "Die meisten Kunden starten mit individueller Automatisierung. Wer ein fertiges Werkzeug braucht, wählt eines unserer eigenständigen Produkte — auf demselben Fundament gebaut.",
       cards: [
         {
-          title: "Digital Business Card",
-          priceLabel: "Ab 39 €",
-          priceCadence: "einmalig · pro Karte",
-          bullets: [
-            "NFC-Karte aus Hamburg versendet",
-            "Kostenloses digitales Profil, für immer",
-            "Apple & Google Wallet",
-            "Optionaler Team-Tarif ab 4,90 € / Nutzer / Monat",
-          ],
-          ctaLabel: "Karte bestellen",
-          ctaHref: "/products/digital-card",
-          tone: "brand",
-        },
-        {
-          title: "Automatisierungs-Services",
+          title: "Individuelle Automatisierung",
           priceLabel: "Projektbasiert",
           priceCadence: "startet mit einem Erstgespräch",
           bullets: [
-            "Workflow-Automatisierung (n8n, Make)",
-            "Interne Tools und Dashboards",
-            "KI-gestützte Prozesse",
-            "Systemintegration (CRM, ERP, APIs)",
+            "Workflow-Automatisierung (n8n, Make, Custom)",
+            "Systemintegration über CRM, ERP, APIs",
+            "Interne Tools, Admin-Panels, Dashboards",
+            "KI-gestützte Workflows und Kommunikation",
           ],
           ctaLabel: "Erstgespräch buchen",
           ctaHref: "/contact",
+          tone: "brand",
+        },
+        {
+          title: "Eigenständige Produkte",
+          priceLabel: "Self-Serve",
+          priceCadence: "direkt einsatzbereit · Preis pro Produkt",
+          bullets: [
+            "Kutasia — Multi-Branchen-Kundenplattform",
+            "Digital Business Card — Link, QR, optional NFC",
+            "Digital Reception — KI-Empfang für Service-Betriebe",
+            "Alle DSGVO-nativ · gehostet in Deutschland",
+          ],
+          ctaLabel: "Alle Produkte ansehen",
+          ctaHref: "/products",
           tone: "dark",
         },
       ],
     },
 
     testimonials: {
-      label: "Soziale Bewährung",
-      headline: "Teams, die gewechselt haben, kehren nicht zurück.",
+      label: "Notizen von Operations-Leads",
+      headline: "Was Teams nach der Zusammenarbeit mit OpSolid bemerken.",
       items: [
         {
           quote:
-            "Wir haben in einer einzigen Woche Papierkarten in drei Städten ersetzt. Leads landen sekundengenau in HubSpot, niemand musste etwas tippen.",
+            "Wir kopieren keine Bestelldaten mehr zwischen vier Systemen. Was früher zwei Stunden morgens gekostet hat, läuft jetzt bevor jemand den Laptop öffnet.",
           name: "Lena Richter",
-          role: "Vertriebsleitung",
-          company: "Scale-up aus Berlin",
+          role: "Head of Operations",
+          company: "Berliner Handelsgruppe",
         },
         {
           quote:
-            "Dass die Daten in Deutschland bleiben, hat unser Legal-Team überzeugt. Alles andere war ein Bonus.",
+            "OpSolid wollte uns keine Plattform verkaufen. Sie haben unseren echten Prozess kartiert, das Langweilige automatisiert und uns volle Dokumentation übergeben.",
           name: "Marco Weber",
           role: "COO",
           company: "Industrieunternehmen aus München",
         },
         {
           quote:
-            "Pauschal 39 € für eine lebenslange Karte. Keine Abo-Falle. Allein deshalb bin ich vom US-Produkt gewechselt.",
+            "Der gesamte Integrationslayer ist self-hosted. Keine US-Subauftragnehmer. Legal hat in einem einzigen Meeting freigegeben — das allein war es wert.",
           name: "Sarah Klein",
-          role: "Selbstständige Beraterin",
-          company: "Hamburg",
+          role: "IT-Leitung",
+          company: "Hamburger Dienstleistungsunternehmen",
         },
       ],
     },
 
     finalCta: {
-      eyebrow: "Bereit?",
+      eyebrow: "BEREIT?",
       headline:
-        "Ihre nächste Visitenkarte kommt aus Hamburg — nicht aus San Francisco.",
+        "Schauen wir, was sich tatsächlich automatisieren lässt.",
       description:
-        "Bestellen Sie eine Karte, buchen Sie ein Gespräch, oder beides. Wir antworten innerhalb eines Werktags.",
-      primaryCtaLabel: "Karte bestellen",
-      primaryCtaHref: "/products/digital-card",
-      secondaryCtaLabel: "Mit uns sprechen",
-      secondaryCtaHref: "/contact",
+        "Buchen Sie ein kostenloses Erstgespräch. Wir zeigen ehrlich, wo Automatisierung sich rechnet — und wo nicht.",
+      primaryCtaLabel: "Erstgespräch buchen",
+      primaryCtaHref: "/contact",
+      secondaryCtaLabel: "Leistungen ansehen",
+      secondaryCtaHref: "/solutions",
     },
   },
 
@@ -1141,88 +1143,98 @@ export const content: Content = {
       "Das Produktportfolio von OpSolid wächst. Neue Tools für Operations, Kommunikation und KI-gestützte Workflows befinden sich derzeit in Entwicklung.",
     items: [
       {
-        name: "Kutasia",
-        tagline: "Multi-Branchen-Kundenplattform",
-        description:
-          "Eine mandantenfähige SaaS-Plattform, die Kundenkommunikation, Anfragen und Inhalte vereint — mit branchenspezifischen Workflows und KI-gestützter Analyse.",
-        status: "Live",
-        href: "/products/kutasia",
-        externalUrl: "https://kutasia.com",
-        icon: "sparkles",
-      },
-      {
         name: "Digitale Visitenkarte",
-        tagline: "NFC · Apple Wallet · DSGVO-nativ",
+        tagline: "Link · QR-Code · optionales NFC",
         description:
-          "Eine physische NFC-Karte plus ein digitales Profil, das in Deutschland liegt. Apple & Google Wallet, Echtzeit-Analysen, CRM-Sync, Teamverwaltung — ohne US-Abo-Zwang.",
+          "Eine in Deutschland gehostete digitale Visitenkarte. Teilen Sie Ihr Profil per Link, QR-Code oder optionaler NFC-Karte. Branchenvorlagen für Immobilien, Salons, Kliniken, Restaurants, Fotografen und mehr — alle DSGVO-nativ.",
         status: "Live",
         href: "/products/digital-card",
         externalUrl: "",
         icon: "idCard",
       },
+      {
+        name: "Digitale Rezeption",
+        tagline: "KI-Empfang · Micro-SaaS",
+        description:
+          "Ein eigenständiger KI-Empfang für Hotels, Kliniken, Salons und Service-Betriebe. Webformulare, E-Mail-Intake, optionaler Voice-Agent — ohne Instagram- oder WhatsApp-Business-Verifizierung.",
+        status: "Live",
+        href: "/products/digital-reception",
+        externalUrl: "",
+        icon: "bell",
+      },
+      {
+        name: "Kutasia",
+        tagline: "Multi-Branchen-Kundenplattform",
+        description:
+          "Die volle Plattform — eine mandantenfähige SaaS, die Kundenkommunikation, Anfragen, Buchungen und Inhalte über Kanäle hinweg vereint. Branchenspezifische Workflows und KI-gestützte Analyse. Einzelne Module sind auch als eigenständige Produkte erhältlich.",
+        status: "Live",
+        href: "/products/kutasia",
+        externalUrl: "https://kutasia.com",
+        icon: "sparkles",
+      },
     ],
 
     digitalCard: {
       hero: {
-        eyebrow: "[ OPSOLID PRODUKT · 02 ]   DIGITALE VISITENKARTE",
+        eyebrow: "[ OPSOLID PRODUKT · 01 ]   DIGITALE VISITENKARTE",
         title: [
-          "Ein Tap,",
-          "eine URL,",
-          "eine Karte, die in Deutschland bleibt.",
+          "Ein Link, ein QR,",
+          "ein Profil —",
+          "gehostet in Deutschland.",
         ],
         paragraph:
-          "Eine moderne NFC-Visitenkarte mit einem digitalen Profil, das in Deutschland gehostet wird. Apple & Google Wallet, Echtzeit-Analysen, CRM-Sync, Team-Roster — keine US-Server, kein Abo-Zwang.",
+          "Eine digitale Visitenkarte, die Sie als Link oder QR-Code weitergeben. Optionale NFC-Karte, wenn Sie das physische Antippen möchten. Branchenvorlagen für Immobilien, Salons, Fotografen, Kliniken, Restaurants und mehr. DSGVO-nativ, gehostet in Deutschland — kein US-Abo-Zwang.",
         primaryCta: "Demo buchen",
         secondaryCta: "So funktioniert's",
-        tags: "ISO 27001 · DSGVO · NFC · APPLE WALLET · GOOGLE WALLET",
+        tags: "LINK · QR-CODE · NFC (OPTIONAL) · APPLE WALLET · DSGVO",
         cardLabels: {
           name: "Hasan Dönmez",
           role: "Automation Studio",
           company: "OpSolid · Hamburg",
-          nfc: "NFC",
-          chip: "ANTIPPEN ZUM TEILEN",
+          nfc: "QR",
+          chip: "SCANNEN ODER ANTIPPEN",
         },
       },
       features: {
         label: "FUNKTIONEN",
-        heading: "Alles, was eine Karte 2026 können sollte.",
+        heading: "Ein Profil, das überall funktioniert — Ihr Link, Ihr QR, Ihre Karte.",
         intro:
-          "Mehr als ein vCard-Abwurf. Analysen, Wallet-Pässe, CRM-Sync und Team-Verwaltung — auf einem EU-nativen Stack.",
+          "Übergeben Sie Ihre Karte, wie es gerade passt: als Link in der E-Mail-Signatur, als QR-Code an der Wand oder als optionale NFC-Karte. Gleiches Profil, drei Übergabemodi.",
         items: [
           {
-            label: "TAP · 01",
-            title: "NFC-Tap & QR",
-            desc: "NFC-Handy antippen oder QR scannen. Keine App-Installation beim Empfänger. Funktioniert auf jedem modernen iOS und Android.",
+            label: "LINK · 01",
+            title: "Teilbarer Link",
+            desc: "Eine saubere URL für E-Mail-Signaturen, WhatsApp-Biografie, Instagram-Link oder Nachrichten. Keine App-Installation beim Empfänger.",
+            icon: "link",
+          },
+          {
+            label: "QR · 02",
+            title: "Dynamischer QR-Code",
+            desc: "Ein druckbarer, neu generierbarer QR-Code. Auf der Scheibe, im Menü, am Messestand oder im Zoom-Hintergrund — immer auf das aktuelle Profil.",
+            icon: "qr",
+          },
+          {
+            label: "NFC · 03",
+            title: "Optionale NFC-Karte",
+            desc: "Wer eine physische Karte möchte: Matt, Holz oder Metall, Versand aus Hamburg. Komplett optional — das digitale Profil läuft auch ohne.",
             icon: "nfc",
           },
           {
-            label: "WALLET · 02",
-            title: "Apple & Google Wallet",
-            desc: "Jedes Profil lässt sich als Wallet-Pass speichern. Aktualisiert sich automatisch, wenn sich die Karte ändert.",
+            label: "VORLAGEN · 04",
+            title: "Branchenvorlagen",
+            desc: "Vorgefertigte Designs für Immobilien, Salons, Kliniken, Fotografen, Restaurants, Steuerberater, Anwälte und mehr. Jeweils eigene Felder, Abschnitte, Tonalität.",
+            icon: "templates",
+          },
+          {
+            label: "WALLET + CRM · 05",
+            title: "Wallet-Pässe & CRM-Sync",
+            desc: "Apple & Google Wallet-Pässe mit Auto-Update. Erfasste Leads fließen nach HubSpot, Pipedrive, Salesforce oder in ein CSV. Nativ — ohne Zapier.",
             icon: "wallet",
-          },
-          {
-            label: "ANALYSE · 03",
-            title: "Echtzeit-Analysen",
-            desc: "Taps, Öffnungen und Speicherungen live sehen. Gefiltert nach Teammitglied, Event und Land.",
-            icon: "chart",
-          },
-          {
-            label: "CRM · 04",
-            title: "CRM-Sync",
-            desc: "Erfasste Leads direkt nach HubSpot, Pipedrive, Salesforce oder in ein CSV schicken. Nativ — ohne Zapier.",
-            icon: "sync",
-          },
-          {
-            label: "TEAMS · 05",
-            title: "Team-Roster",
-            desc: "Karten für das gesamte Team aus einer Admin-Konsole bereitstellen, entziehen und rebranden. SSO-fähig.",
-            icon: "team",
           },
           {
             label: "HOSTING · 06",
             title: "Gehostet in Deutschland",
-            desc: "Hetzner / IONOS Frankfurt. ISO 27001. Keine US-Subunternehmer. DSGVO-nativ, DPA ab Tag eins.",
+            desc: "Hetzner / IONOS Frankfurt. DSGVO-nativ. Keine US-Subunternehmer. DPA ab Tag eins. Ein-Klick-Löschung, immer.",
             icon: "hosting",
           },
         ],
@@ -1436,13 +1448,209 @@ export const content: Content = {
       },
     },
 
+    digitalReception: {
+      hero: {
+        eyebrow: "[ OPSOLID PRODUKT · 02 ]   DIGITALE REZEPTION",
+        title: [
+          "Ein KI-Empfang,",
+          "der antwortet —",
+          "auch wenn niemand da ist.",
+        ],
+        paragraph:
+          "Digitale Rezeption ist ein eigenständiges Micro-SaaS — ein KI-gestützter Empfang für Hotels, Kliniken, Salons und Service-Betriebe. Webformular + E-Mail-Intake + optionaler Voice-Agent. Ohne Instagram- oder WhatsApp-Business-Verifizierung. Eigenständig oder als Modul in Kutasia.",
+        primaryCta: "Demo buchen",
+        secondaryCta: "So funktioniert's",
+        tags: "KI-INTAKE · WEBFORMULAR · E-MAIL · OPTIONALER VOICE · DSGVO",
+      },
+      features: {
+        label: "FUNKTIONEN",
+        heading: "Ein Empfang, der nicht schläft, krank wird oder den Terminkalender verbummelt.",
+        intro:
+          "Fokus auf die eine Aufgabe, die eine Rezeption gut machen muss: Anfrage erfassen, qualifizieren, Häufiges beantworten und den Rest sauber an einen Menschen weiterreichen.",
+        items: [
+          {
+            label: "INTAKE · 01",
+            title: "Smartes Webformular",
+            desc: "Ein gebrandetes Intake-Formular für Ihre Seite. Dynamische Fragen, bedingte Logik und automatisches Routing nach Leistungstyp.",
+            icon: "form",
+          },
+          {
+            label: "E-MAIL · 02",
+            title: "KI-E-Mail-Triage",
+            desc: "Eingehende E-Mails werden von der KI zusammengefasst, klassifiziert und geroutet. Antwortentwürfe werden vorgeschlagen — ein Mensch gibt immer frei.",
+            icon: "mail",
+          },
+          {
+            label: "VOICE · 03",
+            title: "Optionaler Voice-Agent",
+            desc: "Ein DSGVO-konformer Voice-Agent, der nach Feierabend abhebt. Deutsch, Englisch, Türkisch. Gespräche werden transkribiert und landen in Ihrem Posteingang.",
+            icon: "phone",
+          },
+          {
+            label: "BUCHUNGEN · 04",
+            title: "Kalenderbuchungen",
+            desc: "Verbindung zu Google Kalender, Outlook oder Cal.com. Keine zerbrochene Instagram-DM-Integration — nur Kalenderverfügbarkeit und bestätigte Buchungen.",
+            icon: "calendar",
+          },
+          {
+            label: "ANALYSE · 05",
+            title: "Schlichte Analyse",
+            desc: "Woher Anfragen kommen, wie schnell geantwortet wird, welche Leistungen am häufigsten nachgefragt werden. Ein Dashboard, kein 40-Tab-CRM.",
+            icon: "chart",
+          },
+          {
+            label: "HOSTING · 06",
+            title: "Gehostet in Deutschland",
+            desc: "Hetzner / IONOS Frankfurt. DSGVO-nativ. Keine Daten in die USA. Läuft eigenständig oder als Modul in Kutasia.",
+            icon: "hosting",
+          },
+        ],
+      },
+      useCases: {
+        label: "FÜR WEN",
+        heading: "Kleine Teams, deren Rezeption zum Engpass wird.",
+        intro:
+          "Digitale Rezeption ist bewusst schmal — sie ersetzt das Chaos aus verpassten Anrufen, langsamen E-Mails und überlaufenden DMs durch einen organisierten Intake.",
+        items: [
+          {
+            title: "Hotels & Pensionen",
+            desc: "Reservierungsfragen, nächtliche Anfragen, mehrsprachige Gäste. Voice-Agent + Formular + E-Mail-Triage — ohne Ihre Rezeption zu ersetzen.",
+          },
+          {
+            title: "Kliniken & Praxen",
+            desc: "Terminaufnahme, Medikationsfragen, weniger No-Shows. Intake-Formulare folgen DSGVO für Gesundheitsdaten. Ein Mensch bleibt immer dabei.",
+          },
+          {
+            title: "Salons & Spas",
+            desc: "Terminbuchung, Service-Fragen, Walk-in-Triage. KI nimmt die repetitiven Fragen, das Personal konzentriert sich auf den Kunden am Stuhl.",
+          },
+          {
+            title: "Dienstleistungsbetriebe",
+            desc: "Installateure, Elektriker, Steuerberater, Kanzleien — wer auch immer das Telefon als Engpass hat. Vollständig gebrandeter Intake mit Routing.",
+          },
+        ],
+      },
+      pricing: {
+        label: "PREISE",
+        heading: "Klein, ehrlich, monatlich. Jederzeit kündbar.",
+        popularBadge: "AM BELIEBTESTEN",
+        plans: [
+          {
+            name: "Starter",
+            price: "29 €",
+            cadence: "pro Monat",
+            popular: "",
+            bullets: [
+              "Intake-Webformular",
+              "KI-E-Mail-Triage (1 Postfach)",
+              "100 Konversationen / Monat",
+              "EN · DE · TR",
+            ],
+            cta: "Kostenlos testen",
+            href: "#lead",
+          },
+          {
+            name: "Rezeption",
+            price: "79 €",
+            cadence: "pro Monat",
+            popular: "true",
+            bullets: [
+              "Alles aus Starter",
+              "Unbegrenzte Postfächer & Formulare",
+              "Kalenderbuchungs-Integration",
+              "500 Konversationen / Monat",
+              "Eigene Domain & Branding",
+            ],
+            cta: "Demo buchen",
+            href: "#lead",
+          },
+          {
+            name: "Voice+",
+            price: "149 €",
+            cadence: "pro Monat",
+            popular: "",
+            bullets: [
+              "Alles aus Rezeption",
+              "KI-Voice-Agent (EN · DE · TR)",
+              "Anrufe nach Feierabend",
+              "1.500 Konversationen / Monat",
+              "Priorisierter Support",
+            ],
+            cta: "Demo buchen",
+            href: "#lead",
+          },
+        ],
+      },
+      lead: {
+        label: "ANFRAGE",
+        heading: "Testen Sie es an Ihrem Betrieb — kostenloses 30-Minuten-Setup.",
+        intro:
+          "Sagen Sie uns, welche Art Betrieb und wie viele Anfragen Sie ungefähr bearbeiten. Wir gehen das Setup gemeinsam durch und richten eine Testversion ein.",
+        fields: {
+          name: "Voller Name",
+          email: "Geschäftliche E-Mail",
+          company: "Name des Betriebs",
+          businessType: "Art des Betriebs",
+          businessTypeOptions: ["Hotel / Pension", "Klinik / Praxis", "Salon / Spa", "Dienstleistung", "Andere"],
+          message: "Etwas, das wir wissen sollten? (optional)",
+          consent:
+            "Ich stimme zu, dass OpSolid diese Anfrage zur Kontaktaufnahme verarbeitet. Siehe Datenschutzerklärung.",
+          privacyLink: "Datenschutzerklärung",
+          submit: "Anfrage senden",
+          submitting: "Wird gesendet…",
+          success:
+            "Danke — wir antworten innerhalb eines Werktags.",
+          error:
+            "Etwas ist schiefgegangen. Bitte schreiben Sie direkt an contact@opsolid.de.",
+        },
+      },
+      faq: {
+        label: "FAQ",
+        heading: "Ehrliche Antworten.",
+        items: [
+          {
+            question: "Ersetzt das mein Empfangspersonal?",
+            answer:
+              "Nein — es nimmt ihnen Last ab. Die KI erledigt die repetitiven, unwichtigen Anfragen, damit Ihre Leute sich auf den Gast / Patienten / Kunden konzentrieren können, der gerade vor ihnen steht. Alles Nicht-Triviale wird vom Menschen freigegeben.",
+          },
+          {
+            question: "Brauche ich Instagram oder WhatsApp Business?",
+            answer:
+              "Nein. Digitale Rezeption meidet bewusst Plattformen mit Business-Verifizierungs-Hürden. Es arbeitet mit Ihrem Webformular, Ihrer E-Mail und optional einer Telefonnummer — keine Meta-/Instagram-Integrationen.",
+          },
+          {
+            question: "Ist es DSGVO-konform für Gesundheitsdaten?",
+            answer:
+              "Ja. Hosting in Frankfurt, Daten im Ruhezustand verschlüsselt, AV-Vertrag ab Registrierung. Kliniken und Praxen bekommen ein spezielles Onboarding für BDSG-konformes Setup.",
+          },
+          {
+            question: "Kann ich das später in Kutasia integrieren?",
+            answer:
+              "Ja. Digitale Rezeption ist ein eigenständiges Produkt — wenn Sie aber in die volle Kutasia-Plattform hineinwachsen (vereinheitlichter Posteingang, Branchen-Workflows, KI-Analyse), lässt es sich als Modul einbinden — ohne Datenmigration.",
+          },
+        ],
+      },
+      cta: {
+        eyebrow: "BEREIT?",
+        heading:
+          "Lassen Sie Ihre Rezeption um 2 Uhr morgens antworten —\nohne eine weitere Person einzustellen.",
+        primaryCta: "Demo buchen",
+        secondaryCta: "Mit uns sprechen",
+      },
+      meta: {
+        title: "Digitale Rezeption — KI-Empfang für Hotels, Kliniken & Salons | OpSolid",
+        description:
+          "Eigenständiger KI-Empfang für Service-Betriebe. Webformulare, E-Mail-Triage, optionaler Voice-Agent. DSGVO-nativ, in Deutschland gehostet. Ohne Instagram-Business-Verifizierung.",
+      },
+    },
+
     kutasia: {
       hero: {
-        eyebrow: "Ein OpSolid-Produkt",
+        eyebrow: "Ein OpSolid-Produkt · Die Plattform",
         label: "Kutasia",
         headline: "Kundenbetrieb,\nvereint und intelligent",
         subheadline:
-          "Kutasia ist eine mandantenfähige SaaS-Plattform, die Nachrichten, Anfragen, Buchungen und Inhalte in einem KI-gestützten Arbeitsbereich zusammenführt — angepasst an Ihre Branche.",
+          "Kutasia ist eine mandantenfähige SaaS-Plattform, die Nachrichten, Anfragen, Buchungen und Inhalte in einem KI-gestützten Arbeitsbereich zusammenführt — angepasst an Ihre Branche. Modular aufgebaut: Kern-Bausteine (Digitale Rezeption, Digitale Visitenkarte) gibt es auch als eigenständige Produkte.",
         primaryCta: "Kutasia besuchen",
         secondaryCta: "Mit dem Team sprechen",
         primaryCtaHref: "https://kutasia.com",
@@ -1467,7 +1675,7 @@ export const content: Content = {
             icon: "inbox",
             title: "Vereinheitlichter Posteingang",
             description:
-              "Instagram-DMs, WhatsApp, E-Mail und Webformulare in einem thematisch strukturierten Arbeitsbereich — mit automatischer Zuweisung und Statusverfolgung.",
+              "E-Mail, Webformulare und optionale Messaging-Kanäle (WhatsApp Business API, Instagram wo freigeschaltet) in einem thematisch strukturierten Arbeitsbereich — mit automatischer Zuweisung und Statusverfolgung. Kanal-agnostisch: Sie entscheiden, welche Integrationen aktiv sind.",
           },
           {
             icon: "bot",

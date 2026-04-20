@@ -118,6 +118,7 @@ export function Footer() {
     "/products": t.nav.products,
     "/products/kutasia": "Kutasia",
     "/products/digital-card": "Digital Business Card",
+    "/products/digital-reception": "Digital Reception",
     "/use-cases": t.nav.useCases,
     "/blog": t.nav.blog,
     "/faq": t.nav.faq,

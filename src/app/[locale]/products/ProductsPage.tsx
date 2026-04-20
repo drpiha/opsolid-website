@@ -1,13 +1,14 @@
 "use client";
 
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
-import { Sparkles, IdCard, ArrowRight } from "lucide-react";
+import { Sparkles, IdCard, BellRing, ArrowRight } from "lucide-react";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { useLocale } from "@/context/LocaleContext";
 
 const productIconMap: Record<string, React.ReactNode> = {
   sparkles: <Sparkles size={22} strokeWidth={1.75} />,
   idCard: <IdCard size={22} strokeWidth={1.75} />,
+  bell: <BellRing size={22} strokeWidth={1.75} />,
 };
 
 export function ProductsPage() {

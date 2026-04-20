@@ -1,6 +1,12 @@
 "use client";
 
 import {
+  Workflow,
+  Plug,
+  LayoutDashboard,
+  Bot,
+  MessageSquare,
+  Shield,
   Nfc,
   Wallet,
   LineChart,
@@ -13,6 +19,12 @@ import { SectionHeading } from "@/components/shared/SectionHeading";
 import { useLocale } from "@/context/LocaleContext";
 
 const iconMap: Record<string, React.ReactNode> = {
+  workflow: <Workflow size={22} strokeWidth={2} />,
+  plug: <Plug size={22} strokeWidth={2} />,
+  layout: <LayoutDashboard size={22} strokeWidth={2} />,
+  bot: <Bot size={22} strokeWidth={2} />,
+  messageSquare: <MessageSquare size={22} strokeWidth={2} />,
+  shield: <Shield size={22} strokeWidth={2} />,
   nfc: <Nfc size={22} strokeWidth={2} />,
   wallet: <Wallet size={22} strokeWidth={2} />,
   chart: <LineChart size={22} strokeWidth={2} />,

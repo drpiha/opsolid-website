@@ -36,8 +36,9 @@ export const FOOTER_LINKS = {
     { label: "Example Solutions", href: "/use-cases" },
   ],
   products: [
-    { label: "Kutasia", href: "/products/kutasia" },
     { label: "Digital Business Card", href: "/products/digital-card" },
+    { label: "Digital Reception", href: "/products/digital-reception" },
+    { label: "Kutasia", href: "/products/kutasia" },
     { label: "All Products", href: "/products" },
   ],
   resources: [

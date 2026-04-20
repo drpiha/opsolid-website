@@ -50,7 +50,7 @@ export function Hero() {
             {/* CTAs */}
             <div className="mt-8 flex flex-wrap items-center gap-3">
               <Link
-                href="/products/digital-card"
+                href={hero.primaryCtaHref || "/contact"}
                 className="btn-primary text-[0.95rem]"
               >
                 <span>{hero.primaryCtaLabel}</span>
@@ -60,7 +60,7 @@ export function Hero() {
                   className="transition-transform duration-200 group-hover:translate-x-0.5"
                 />
               </Link>
-              <Link href="#features" className="btn-ghost text-[0.95rem]">
+              <Link href={hero.secondaryCtaHref || "/solutions"} className="btn-ghost text-[0.95rem]">
                 <span>{hero.secondaryCtaLabel}</span>
               </Link>
             </div>
@@ -68,14 +68,14 @@ export function Hero() {
             {/* Micro footnote */}
             <p className="mt-5 text-sm text-ink/50">{hero.footnote}</p>
 
-            {/* Consulting nod */}
+            {/* Products nod */}
             <p className="mt-6 text-xs text-ink/45 max-w-md">
               {hero.consultingNote}{" "}
               <Link
-                href="/solutions"
+                href="/products"
                 className="underline underline-offset-4 decoration-ink/25 hover:decoration-brand hover:text-brand transition-colors"
               >
-                See services →
+                See products →
               </Link>
             </p>
           </div>

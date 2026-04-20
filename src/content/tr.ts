@@ -24,19 +24,21 @@ export const content: Content = {
         "OpSolid, işletmelerin manuel ve tekrarlayan işlerini güvenilir otomasyon sistemleriyle değiştirmelerine yardımcı olur — iş akışı otomasyonundan sistem entegrasyonuna, yapay zeka destekli süreçlere kadar.",
       primaryCta: "Tanışma Görüşmesi Planlayın",
       secondaryCta: "Hizmetleri İnceleyin",
-      ratingPill: "4,9  ·  Avrupa genelinde ekipler tarafından kullanılıyor",
+      ratingPill: "OpSolid · Otomasyon Stüdyosu · Almanya merkezli",
       title: [
-        "Tek dokunuş.",
-        "Almanya'da kalan",
-        "tek bir kart.",
+        "Operasyonlarınızı",
+        "yöneten otomasyon —",
+        "tersi değil.",
       ],
       subtitle:
-        "Hamburg'da barındırılan GDPR-yerli profili olan modern bir NFC kartvizit. Apple & Google Wallet, gerçek zamanlı analitik, CRM senkronu, ekip yönetimi — ve isteğe bağlı olarak arkada komple bir otomasyon ortağı.",
-      primaryCtaLabel: "Kartınızı alın",
-      secondaryCtaLabel: "Nasıl çalıştığını görün",
-      footnote: "Kredi kartı gerekmez  ·  Hamburg'dan kargo",
+        "OpSolid gerçek iş operasyonları için pratik otomasyon ve yapay zeka sistemleri tasarlar ve kurar — iş akışı otomasyonu, sistem entegrasyonu, dahili araçlar ve AI destekli süreçler. Almanya'da barındırılır. Tedarikçi bağımlılığı yok.",
+      primaryCtaLabel: "Tanışma görüşmesi planla",
+      primaryCtaHref: "/contact",
+      secondaryCtaLabel: "Hizmetleri gör",
+      secondaryCtaHref: "/solutions",
+      footnote: "Almanya merkezli  ·  GDPR-yerli  ·  Tedarikçi kilidi yok",
       consultingNote:
-        "Ayrıca operasyon ekipleri için özel otomasyon da geliştiriyoruz.",
+        "Ayrıca bağımsız ürünler de sunuyoruz — Kutasia, Dijital Kartvizit, Dijital Resepsiyon.",
       editorial: {
         eyebrow: "[ 01 / 04 ]   OTOMASYON STÜDYOSU — HAMBURG, DE",
         title: [
@@ -335,188 +337,188 @@ export const content: Content = {
 
     trustStrip: {
       items: [
-        "4,9 puan",
-        "2.400+ değerlendirme",
-        "ISO 27001 uyumlu",
-        "KVKK & GDPR uyumlu",
-        "Made in Germany",
-        "Hamburg'dan kargo",
+        "Almanya'da kurulmuş",
+        "GDPR-yerli",
+        "n8n · Make · AI destekli",
+        "Tedarikçi kilidi yok",
+        "ISO 27001-uyumlu",
+        "EN · DE · TR",
       ],
     },
 
     featureGrid: {
-      label: "Hepsi tek dokunuşta",
-      headline: "Gerçekten bir işe yarayan bir kartvizit.",
+      label: "OpSolid ne inşa eder",
+      headline: "Otomasyon, AI ve dahili araçlar — zaten yürüttüğünüz operasyonlar için.",
       description:
-        "Sadece bir vCard değil. Her özellik AB merkezli bir altyapı üzerine kuruludur ve hazır GDPR belgeleriyle gelir.",
+        "Altı odak alanı. Her proje, sizin sürecinizle başlar — bir teknoloji sunumuyla değil.",
       items: [
         {
-          icon: "nfc",
-          title: "NFC dokunuşu & QR",
+          icon: "workflow",
+          title: "İş akışı otomasyonu",
           description:
-            "NFC özellikli bir telefona dokundurun ya da QR'ı taratın. Alıcının uygulama kurmasına gerek yok. Modern iOS ve Android cihazlarda çalışır.",
+            "Tekrarlayan, kural tabanlı işler için uçtan uca otomasyon — n8n, Make ve özel entegrasyonlarla. Düzgün hata yönetimi, kırılgan yapıştırıcı kod yok.",
         },
         {
-          icon: "wallet",
-          title: "Apple & Google Wallet",
+          icon: "plug",
+          title: "Sistem entegrasyonu",
           description:
-            "Her profil Wallet kartı olarak saklanabilir. Kartınız değiştikçe otomatik olarak güncellenir.",
+            "CRM, ERP, veritabanları ve iletişim araçlarını tek bir senkronize operasyonel katmana bağlayın. Tek kaynak doğrusu.",
         },
         {
-          icon: "chart",
-          title: "Gerçek zamanlı analitik",
+          icon: "layout",
+          title: "Dahili araçlar & panolar",
           description:
-            "Dokunuşları, açılışları ve kayıtları anlık görün. Ekip üyesi, etkinlik ve ülkeye göre filtreleyin.",
+            "Ekibinizin gerçekten çalıştığı şekle göre tasarlanmış özel admin panelleri, operasyonel dashboardlar ve dahili uygulamalar.",
         },
         {
-          icon: "sync",
-          title: "CRM senkronizasyonu",
+          icon: "bot",
+          title: "AI destekli süreçler",
           description:
-            "Yakalanan müşteri adaylarını doğrudan HubSpot, Pipedrive, Salesforce'a ya da CSV'ye gönderin. Yerli — Zapier gerekmez.",
+            "Pratik yapay zeka — doküman işleme, sınıflandırma, ses ajanları, sohbet asistanları — mevcut süreçlerinize üzerine monte değil, içine gömülü.",
         },
         {
-          icon: "team",
-          title: "Ekip yönetimi",
+          icon: "messageSquare",
+          title: "İletişim otomasyonu",
           description:
-            "Tüm ekibiniz için kartları tek bir yönetim panelinden oluşturun, iptal edin ve markalayın. SSO uyumlu.",
+            "WhatsApp, Telegram, e-posta ve SMS üzerinden otomatik mesajlaşma — durum güncellemelerinden takip dizilerine kadar. Kanaldan bağımsız.",
         },
         {
-          icon: "hosting",
-          title: "Almanya'da barındırılır",
+          icon: "shield",
+          title: "Avrupa'da barındırma",
           description:
-            "Hetzner / IONOS Frankfurt. ISO 27001. Sıfır ABD alt işleyen. GDPR-yerli, kayıtla birlikte DPA hazır.",
+            "Self-hosted veya Hetzner / IONOS Frankfurt üzerinde deploy. GDPR-yerli. İstemediğiniz sürece ABD alt işleyen yok.",
         },
       ],
     },
 
     howItWorks: {
-      label: "Nasıl çalışır",
-      headline: "Üç adım. Beş dakikadan az.",
+      label: "Süreç",
+      headline: "Üç adım. Tedarikçi kilidi yok. Gizem yok.",
       steps: [
         {
-          title: "Kartınızı sipariş edin",
+          title: "Keşfet",
           description:
-            "Mat, metal veya ahşap seçin. Hamburg'dan iki iş günü içinde kargolarız.",
+            "Gerçek süreçlerinizi haritalandırırız, darboğazları tespit ederiz ve otomasyonun nerede karşılığını verdiğini buluruz. Tek satır kod yazılmadan önce yazılı kapsam alırsınız.",
         },
         {
-          title: "Profilinizi oluşturun",
+          title: "Tasarla & kur",
           description:
-            "Fotoğrafınızı, bağlantılarınızı, sosyal hesaplarınızı ve takviminizi ekleyin. Anlık önizleme.",
+            "Durumunuza uygun stack'i seçeriz (n8n, Make, özel kod veya AI) — sonra her adımda net güncellemelerle iteratif kurup test edip deploy ederiz.",
         },
         {
-          title: "Dokunun ve paylaşın",
+          title: "İşlet & geliştir",
           description:
-            "Tek dokunuş her şeyi paylaşır. Her etkileşimi panelinizden takip edin.",
+            "Operasyonunuz geliştikçe sistemleri izler, optimize eder ve genişletiriz. Tam dokümantasyon. Altyapı her zaman sizin.",
         },
       ],
     },
 
     whoUses: {
-      label: "OpSolid'i kimler kullanır",
-      headline: "Gerçekten insanlarla buluşan ekipler için.",
+      label: "Kimlerle çalışıyoruz",
+      headline: "Operasyonları manuel kalmaya tahammülü olmayan ekipler.",
       items: [
         {
-          title: "Kurucular",
+          title: "Otel & hizmet",
           description:
-            "Akılda kalıcı bir ilk izlenim bırakın, her el sıkışmayı CRM'inizde tutun.",
+            "Rezervasyonları, müşteri konuşmalarını ve çok kanallı operasyonları yöneten oteller, klinikler, salonlar ve restoranlar.",
           icon: "founder",
         },
         {
-          title: "Satış ekipleri",
+          title: "Perakende & e-ticaret",
           description:
-            "Her temsilciye izlenebilir bir kart verin. Kimin dokunduğunu, kaydettiğini, dönüştüğünü görün.",
+            "Siparişleri, stoku, fulfillment'ı ve ERP/CRM arası veri senkronunu taşıyan çok kanallı satıcılar.",
           icon: "sales",
         },
         {
-          title: "Ajanslar",
+          title: "Profesyonel hizmetler",
           description:
-            "Her müşterinizin ekibini özel alan adlı profiller ve ortak analitikle markalayın.",
+            "Doküman işleme, müşteri alımı ve onboarding'i otomatikleştiren danışmanlıklar, hukuk büroları, mali müşavirler, ajanslar.",
           icon: "agency",
         },
         {
-          title: "Serbest çalışanlar",
+          title: "Operasyon ekipleri",
           description:
-            "Tek bir kart, her kağıt desteyi değiştirir. Yeniden baskıya gerek kalmadan unvanınızı güncelleyin.",
+            "Daha çok tablo yerine güvenilir dahili araçlar, onay iş akışları ve panolara ihtiyaç duyan operasyon liderleri.",
           icon: "freelancer",
         },
       ],
     },
 
     pricingPreview: {
-      label: "İki yol",
-      headline: "Bir kart alın ya da komple bir operasyon kurun.",
+      label: "OpSolid ile çalışmanın iki yolu",
+      headline: "Özel sistemler — veya bağımsız ürünler.",
       description:
-        "Çoğu insan Dijital Kartvizit ile başlar. Daha yoğun operasyonu olan ekipler üzerine özel otomasyon ekler.",
+        "Çoğu proje özel otomasyonla başlar. Hazır kullanılabilir bir araç isteyen ekipler bağımsız ürünlerimizden birini seçer — aynı temeller üzerine kurulu.",
       cards: [
         {
-          title: "Dijital Kartvizit",
-          priceLabel: "39 €'dan",
-          priceCadence: "tek seferlik · kart başına",
-          bullets: [
-            "Hamburg'dan gönderilen NFC kart",
-            "Sonsuza kadar ücretsiz dijital profil",
-            "Apple & Google Wallet",
-            "İsteğe bağlı ekip planı: 4,90 € / kullanıcı / ay",
-          ],
-          ctaLabel: "Kart al",
-          ctaHref: "/products/digital-card",
-          tone: "brand",
-        },
-        {
-          title: "Otomasyon hizmetleri",
+          title: "Özel otomasyon",
           priceLabel: "Proje bazlı",
           priceCadence: "tanışma görüşmesiyle başlar",
           bullets: [
-            "İş akışı otomasyonu (n8n, Make)",
-            "Dahili araçlar ve panolar",
-            "Yapay zeka destekli süreçler",
-            "Sistem entegrasyonu (CRM, ERP, API)",
+            "İş akışı otomasyonu (n8n, Make, özel)",
+            "CRM, ERP, API'ler üzerinde sistem entegrasyonu",
+            "Dahili araçlar, admin panelleri, dashboardlar",
+            "AI destekli iş akışları ve iletişim",
           ],
           ctaLabel: "Tanışma görüşmesi planla",
           ctaHref: "/contact",
+          tone: "brand",
+        },
+        {
+          title: "Bağımsız ürünler",
+          priceLabel: "Self-Serve",
+          priceCadence: "kullanıma hazır · ürün başına fiyat",
+          bullets: [
+            "Kutasia — çok sektörlü müşteri platformu",
+            "Dijital Kartvizit — link, QR, opsiyonel NFC",
+            "Dijital Resepsiyon — hizmet işletmeleri için AI resepsiyon",
+            "Hepsi GDPR-yerli · Almanya'da barındırılır",
+          ],
+          ctaLabel: "Tüm ürünleri gör",
+          ctaHref: "/products",
           tone: "dark",
         },
       ],
     },
 
     testimonials: {
-      label: "Sosyal kanıt",
-      headline: "Geçiş yapan ekipler geri dönmüyor.",
+      label: "Operasyon liderlerinden notlar",
+      headline: "Ekipler OpSolid ile çalıştıktan sonra neyi fark ediyor.",
       items: [
         {
           quote:
-            "Bir haftada üç şehirdeki kağıt kartları değiştirdik. Müşteri adayları saniyeler içinde HubSpot'a düşüyor, kimsenin bir şey yazmasına gerek kalmadı.",
+            "Sipariş verilerini artık dört sistem arasında kopyalamıyoruz. Her sabah iki saat süren iş artık kimse laptopu açmadan önce tamamlanıyor.",
           name: "Lena Richter",
-          role: "Satış Direktörü",
-          company: "Berlin merkezli scale-up",
+          role: "Operasyon Direktörü",
+          company: "Berlinli perakende grubu",
         },
         {
           quote:
-            "Verilerin Almanya'da kalması, hukuk ekibimizi ikna etti. Geri kalan her şey artı bir bonustu.",
+            "OpSolid bize bir platform satmaya çalışmadı. Gerçek sürecimizi haritalandırdılar, sıkıcı kısımları otomatikleştirdiler ve tam dokümantasyonu teslim ettiler.",
           name: "Marco Weber",
           role: "COO",
           company: "Münih sanayi grubu",
         },
         {
           quote:
-            "Ömür boyu kart için tek seferlik 39 €. Abonelik tuzağı yok. Sırf bu yüzden ABD ürününden geçtim.",
+            "Bütün entegrasyon katmanı self-hosted. ABD alt işleyen yok. Legal tek toplantıda onay verdi — bu tek başına değerdi.",
           name: "Sarah Klein",
-          role: "Bağımsız danışman",
-          company: "Hamburg",
+          role: "BT Direktörü",
+          company: "Hamburg hizmet firması",
         },
       ],
     },
 
     finalCta: {
-      eyebrow: "Hazır mısınız?",
+      eyebrow: "HAZIR MISINIZ?",
       headline:
-        "Sonraki kartvizitiniz Hamburg'dan, San Francisco'dan değil.",
+        "Gerçekten neyin otomatikleştirilebileceğine bakalım.",
       description:
-        "Bir kart sipariş edin, görüşme ayarlayın, ya da ikisini birden. Bir iş günü içinde yanıt veriyoruz.",
-      primaryCtaLabel: "Kart al",
-      primaryCtaHref: "/products/digital-card",
-      secondaryCtaLabel: "Bizimle konuşun",
-      secondaryCtaHref: "/contact",
+        "Ücretsiz tanışma görüşmesi planlayın. Otomasyonun nerede kazandırdığını — ve dürüstçe nerede kazandırmadığını — birlikte haritalayalım.",
+      primaryCtaLabel: "Tanışma görüşmesi planla",
+      primaryCtaHref: "/contact",
+      secondaryCtaLabel: "Hizmetleri gör",
+      secondaryCtaHref: "/solutions",
     },
   },
 
@@ -1141,88 +1143,98 @@ export const content: Content = {
       "OpSolid'in ürün portföyü genişliyor. Operasyon, iletişim ve yapay zekâ destekli iş akışları için yeni araçlar şu anda geliştirme aşamasında.",
     items: [
       {
-        name: "Kutasia",
-        tagline: "Çoklu sektör müşteri platformu",
-        description:
-          "Müşteri iletişimini, taleplerini ve içeriklerini tek çatı altında toplayan çok kiracılı SaaS platform — sektöre özel iş akışları ve yapay zekâ destekli analiz ile.",
-        status: "Canlı",
-        href: "/products/kutasia",
-        externalUrl: "https://kutasia.com",
-        icon: "sparkles",
-      },
-      {
         name: "Dijital Kartvizit",
-        tagline: "NFC · Apple Wallet · GDPR-uyumlu",
+        tagline: "Link · QR kod · opsiyonel NFC",
         description:
-          "Fiziksel NFC kart ve Almanya'da barındırılan dijital profil. Apple & Google Wallet, gerçek zamanlı analiz, CRM senkronizasyonu, ekip yönetimi — ABD abonelik kilidi olmadan.",
+          "Almanya'da barındırılan bir dijital kartvizit. Profilinizi link, QR kod veya opsiyonel NFC kart olarak paylaşın. Emlakçı, kuaför, klinik, restoran, fotoğrafçı gibi meslekler için sektör şablonları — hepsi GDPR-yerli.",
         status: "Canlı",
         href: "/products/digital-card",
         externalUrl: "",
         icon: "idCard",
       },
+      {
+        name: "Dijital Resepsiyon",
+        tagline: "AI resepsiyon · mikro-SaaS",
+        description:
+          "Oteller, klinikler, kuaförler ve hizmet işletmeleri için bağımsız AI destekli resepsiyon. Web formları, e-posta alımı, opsiyonel ses ajanı — Instagram veya WhatsApp Business doğrulamasına ihtiyaç yok.",
+        status: "Canlı",
+        href: "/products/digital-reception",
+        externalUrl: "",
+        icon: "bell",
+      },
+      {
+        name: "Kutasia",
+        tagline: "Çoklu sektör müşteri platformu",
+        description:
+          "Tam platform — müşteri iletişimini, talepleri, rezervasyonları ve içeriği kanallar arasında birleştiren çok kiracılı SaaS. Sektöre özel iş akışları ve AI destekli analiz. Bireysel modüller bağımsız ürün olarak da mevcut.",
+        status: "Canlı",
+        href: "/products/kutasia",
+        externalUrl: "https://kutasia.com",
+        icon: "sparkles",
+      },
     ],
 
     digitalCard: {
       hero: {
-        eyebrow: "[ OPSOLID ÜRÜN · 02 ]   DİJİTAL KARTVİZİT",
+        eyebrow: "[ OPSOLID ÜRÜN · 01 ]   DİJİTAL KARTVİZİT",
         title: [
-          "Tek dokunuş,",
-          "tek URL,",
-          "Almanya'da kalan tek bir kart.",
+          "Tek link, tek QR,",
+          "tek profil —",
+          "Almanya'da barındırılır.",
         ],
         paragraph:
-          "Almanya'da barındırılan dijital profile sahip modern NFC kartvizit. Apple & Google Wallet kartları, gerçek zamanlı analiz, CRM senkronizasyonu, ekip listesi — ABD sunucusu yok, abonelik kilidi yok.",
+          "Link veya QR kod olarak paylaşacağınız bir dijital kartvizit. Fiziksel dokunuş isterseniz opsiyonel NFC kart. Emlakçı, kuaför, fotoğrafçı, klinik, restoran gibi meslekler için sektör şablonları. GDPR-yerli, Almanya'da barındırılır — ABD abonelik kilidi yok.",
         primaryCta: "Demo planla",
         secondaryCta: "Nasıl çalışır",
-        tags: "ISO 27001 · GDPR · NFC · APPLE WALLET · GOOGLE WALLET",
+        tags: "LİNK · QR KOD · NFC (OPSİYONEL) · APPLE WALLET · GDPR",
         cardLabels: {
           name: "Hasan Dönmez",
           role: "Otomasyon Stüdyosu",
           company: "OpSolid · Hamburg",
-          nfc: "NFC",
-          chip: "PAYLAŞMAK İÇİN DOKUN",
+          nfc: "QR",
+          chip: "TARATIN VEYA DOKUNUN",
         },
       },
       features: {
         label: "YETENEKLER",
-        heading: "Bir kartın 2026'da yapması gereken her şey.",
+        heading: "Her yerde çalışan bir profil — linkiniz, QR'ınız, kartınız.",
         intro:
-          "vCard göndermekten fazlası. Analiz, cüzdan kartı, CRM senkronizasyonu ve ekip yönetimi — AB-yerli bir stack üzerinde.",
+          "Kartınızı duruma göre verin: e-posta imzasında link, duvarda QR kod ya da opsiyonel NFC kart. Aynı profil, üç dağıtım modu.",
         items: [
           {
-            label: "TAP · 01",
-            title: "NFC tap ve QR",
-            desc: "NFC'li bir telefona dokun ya da QR'ı okut. Karşı tarafın uygulama yüklemesine gerek yok. Tüm modern iOS ve Android'de çalışır.",
+            label: "LİNK · 01",
+            title: "Paylaşılabilir link",
+            desc: "E-posta imzanıza, WhatsApp biyografinize, Instagram bağlantınıza veya mesajlarınıza eklediğiniz temiz bir URL. Karşı tarafın uygulama yüklemesine gerek yok.",
+            icon: "link",
+          },
+          {
+            label: "QR · 02",
+            title: "Dinamik QR kod",
+            desc: "Basılabilir, yeniden üretilebilir QR kod. Vitrinde, menüde, fuar standında ya da Zoom arka planında — her zaman güncel profile yönlendirir.",
+            icon: "qr",
+          },
+          {
+            label: "NFC · 03",
+            title: "Opsiyonel NFC kart",
+            desc: "Fiziksel kart isterseniz: mat, ahşap veya metal NFC kartlar Hamburg'dan gönderilir. Tamamen opsiyoneldir — dijital profil kart olmadan da çalışır.",
             icon: "nfc",
           },
           {
-            label: "WALLET · 02",
-            title: "Apple & Google Wallet",
-            desc: "Her profil cüzdana kart olarak eklenebilir. Kart değiştiğinde otomatik olarak güncellenir.",
+            label: "ŞABLON · 04",
+            title: "Sektör şablonları",
+            desc: "Emlakçı, kuaför, klinik, fotoğrafçı, restoran, mali müşavir, avukat ve daha fazlası için hazır tasarımlar. Her biri kendi alanları, bölümleri, tonuyla.",
+            icon: "templates",
+          },
+          {
+            label: "WALLET + CRM · 05",
+            title: "Wallet kartı ve CRM senkronu",
+            desc: "Otomatik güncellenen Apple & Google Wallet kartları. Yakalanan leadler HubSpot, Pipedrive, Salesforce'a ya da CSV'ye senkronlanır. Yerel — Zapier gerekmez.",
             icon: "wallet",
-          },
-          {
-            label: "ANALİZ · 03",
-            title: "Gerçek zamanlı analiz",
-            desc: "Dokunuşları, açılmaları ve kaydetmeleri anlık gör. Ekip üyesi, etkinlik ve ülkeye göre filtrele.",
-            icon: "chart",
-          },
-          {
-            label: "CRM · 04",
-            title: "CRM senkronizasyonu",
-            desc: "Toplanan leadleri doğrudan HubSpot, Pipedrive, Salesforce'a veya bir CSV'ye gönder. Yerel — Zapier'a gerek yok.",
-            icon: "sync",
-          },
-          {
-            label: "EKİP · 05",
-            title: "Ekip listesi",
-            desc: "Tüm ekibin kartlarını tek bir yönetim panelinden oluştur, iptal et ve yeniden markala. SSO'ya hazır.",
-            icon: "team",
           },
           {
             label: "HOSTING · 06",
             title: "Almanya'da barındırılıyor",
-            desc: "Hetzner / IONOS Frankfurt. ISO 27001. Sıfır ABD alt işleyen. GDPR-yerli, kayıt anında DPA hazır.",
+            desc: "Hetzner / IONOS Frankfurt. GDPR-yerli. ABD alt işleyen yok. Kayıt anında DPA hazır. Tek tıkla silme, her zaman.",
             icon: "hosting",
           },
         ],
@@ -1436,13 +1448,209 @@ export const content: Content = {
       },
     },
 
+    digitalReception: {
+      hero: {
+        eyebrow: "[ OPSOLID ÜRÜN · 02 ]   DİJİTAL RESEPSİYON",
+        title: [
+          "Kimse yokken bile",
+          "cevap veren",
+          "bir AI resepsiyon.",
+        ],
+        paragraph:
+          "Dijital Resepsiyon, bağımsız bir mikro-SaaS — oteller, klinikler, kuaförler ve hizmet işletmeleri için AI destekli bir ön büro. Web form + e-posta alımı + opsiyonel ses ajanı. Instagram veya WhatsApp Business doğrulamasına ihtiyaç yok. Tek başına ya da Kutasia içinde modül olarak.",
+        primaryCta: "Demo planla",
+        secondaryCta: "Nasıl çalışır",
+        tags: "AI ALIM · WEB FORMU · E-POSTA · OPSİYONEL SES · GDPR",
+      },
+      features: {
+        label: "YETENEKLER",
+        heading: "Uyumayan, hasta olmayan, takvimi karıştırmayan bir resepsiyon.",
+        intro:
+          "Resepsiyonun iyi yapması gereken tek işe odaklanır: talebi alır, önceliklendirir, sıkça sorulanları yanıtlar ve geri kalanı düzgün şekilde bir insana yönlendirir.",
+        items: [
+          {
+            label: "ALIM · 01",
+            title: "Akıllı web formu",
+            desc: "Siteniz için markalı alım formu. Dinamik sorular, koşullu mantık ve hizmet türüne göre otomatik yönlendirme.",
+            icon: "form",
+          },
+          {
+            label: "E-POSTA · 02",
+            title: "AI e-posta triyajı",
+            desc: "Gelen e-postalar AI tarafından özetlenir, sınıflandırılır ve yönlendirilir. Yanıt taslakları önerilir — son onayı her zaman insan verir.",
+            icon: "mail",
+          },
+          {
+            label: "SES · 03",
+            title: "Opsiyonel ses ajanı",
+            desc: "Mesai sonrası telefonu açan GDPR uyumlu bir ses ajanı. Almanca, İngilizce, Türkçe. Konuşmalar yazıya dökülüp e-posta kutunuza düşer.",
+            icon: "phone",
+          },
+          {
+            label: "REZERVASYON · 04",
+            title: "Takvim rezervasyonları",
+            desc: "Google Takvim, Outlook veya Cal.com'a bağlanır. Kırık Instagram DM entegrasyonu yok — sadece takvim müsaitliği ve onaylı rezervasyonlar.",
+            icon: "calendar",
+          },
+          {
+            label: "ANALİZ · 05",
+            title: "Sade analiz",
+            desc: "Taleplerin nereden geldiği, ne kadar hızlı yanıtlandığı, en çok hangi hizmetlerin sorulduğu. Tek panel, 40 sekmeli CRM yok.",
+            icon: "chart",
+          },
+          {
+            label: "HOSTING · 06",
+            title: "Almanya'da barındırılıyor",
+            desc: "Hetzner / IONOS Frankfurt. GDPR-yerli. ABD'ye veri aktarımı yok. Tek başına ya da Kutasia içinde modül olarak çalışır.",
+            icon: "hosting",
+          },
+        ],
+      },
+      useCases: {
+        label: "KİME GÖRE",
+        heading: "Resepsiyonu darboğaz olan küçük ekipler.",
+        intro:
+          "Dijital Resepsiyon bilerek dar tutulmuştur — kaçırılan çağrı, geciken e-posta ve taşan DM kaosunu tek bir düzenli alımla değiştirir.",
+        items: [
+          {
+            title: "Oteller & pansiyonlar",
+            desc: "Rezervasyon soruları, gece saatlerindeki talepler, çok dilli misafirler. Ses ajanı + form + e-posta triyajı — mevcut resepsiyonunuzu ikame etmeden.",
+          },
+          {
+            title: "Klinikler & muayenehaneler",
+            desc: "Randevu alımı, ilaç soruları, randevuya gelmeme oranını azaltma. Alım formları sağlık verisi için GDPR'a uyar. İnsan her zaman döngüde.",
+          },
+          {
+            title: "Kuaförler & spalar",
+            desc: "Randevu alma, hizmet soruları, walk-in triyajı. AI tekrarlayan soruları halleder, ekip koltuktaki müşteriye odaklanır.",
+          },
+          {
+            title: "Hizmet işletmeleri",
+            desc: "Tesisatçı, elektrikçi, mali müşavir, avukat — telefonu darboğaz olan herkes. Tamamen markalı alım, doğru kişiye yönlendirme.",
+          },
+        ],
+      },
+      pricing: {
+        label: "FİYATLANDIRMA",
+        heading: "Küçük, dürüst, aylık. İstediğiniz zaman iptal.",
+        popularBadge: "EN POPÜLER",
+        plans: [
+          {
+            name: "Başlangıç",
+            price: "29 €",
+            cadence: "aylık",
+            popular: "",
+            bullets: [
+              "Web alım formu",
+              "AI e-posta triyajı (1 posta kutusu)",
+              "Aylık 100 konuşma",
+              "EN · DE · TR",
+            ],
+            cta: "Ücretsiz dene",
+            href: "#lead",
+          },
+          {
+            name: "Resepsiyon",
+            price: "79 €",
+            cadence: "aylık",
+            popular: "true",
+            bullets: [
+              "Başlangıç'taki her şey",
+              "Sınırsız posta kutusu ve form",
+              "Takvim rezervasyon entegrasyonu",
+              "Aylık 500 konuşma",
+              "Özel alan adı ve markalama",
+            ],
+            cta: "Demo planla",
+            href: "#lead",
+          },
+          {
+            name: "Voice+",
+            price: "149 €",
+            cadence: "aylık",
+            popular: "",
+            bullets: [
+              "Resepsiyon'daki her şey",
+              "AI ses ajanı (EN · DE · TR)",
+              "Mesai sonrası çağrı yönetimi",
+              "Aylık 1.500 konuşma",
+              "Öncelikli destek",
+            ],
+            cta: "Demo planla",
+            href: "#lead",
+          },
+        ],
+      },
+      lead: {
+        label: "TALEP",
+        heading: "İşletmenizde deneyin — ücretsiz 30 dakikalık kurulum.",
+        intro:
+          "Ne tür işletme yürüttüğünüzü ve yaklaşık kaç talep aldığınızı anlatın. Kurulumu birlikte yürütüp bir deneme başlatırız.",
+        fields: {
+          name: "Adınız Soyadınız",
+          email: "İş e-posta adresi",
+          company: "İşletme adı",
+          businessType: "İşletme türü",
+          businessTypeOptions: ["Otel / pansiyon", "Klinik / muayenehane", "Kuaför / spa", "Hizmet işletmesi", "Diğer"],
+          message: "Bilmemizi istediğiniz bir şey var mı? (opsiyonel)",
+          consent:
+            "OpSolid'in bu gönderimi cevap vermek amacıyla işlemesini kabul ediyorum. Gizlilik Politikası'na bakın.",
+          privacyLink: "Gizlilik Politikası",
+          submit: "Talep gönder",
+          submitting: "Gönderiliyor…",
+          success:
+            "Teşekkürler — bir iş günü içinde yanıtlayacağız.",
+          error:
+            "Bir şeyler yanlış gitti. Lütfen doğrudan contact@opsolid.de adresine yazın.",
+        },
+      },
+      faq: {
+        label: "SSS",
+        heading: "Dürüst cevaplar.",
+        items: [
+          {
+            question: "Bu resepsiyon personelimi yerine geçer mi?",
+            answer:
+              "Hayır — yüklerini azaltır. AI tekrarlayan, düşük değerli soruları halleder; ekibiniz karşılarındaki müşteriye / misafir / hastaya odaklanır. Önemli olan her şey için son onayı insan verir.",
+          },
+          {
+            question: "Instagram veya WhatsApp Business'e ihtiyacım var mı?",
+            answer:
+              "Hayır. Dijital Resepsiyon, iş doğrulaması gerektiren platformları bilinçli olarak atlar. Web formu, e-posta ve opsiyonel olarak telefon numarası ile çalışır — Meta/Instagram entegrasyonuna gerek yok.",
+          },
+          {
+            question: "Sağlık verisi için GDPR uyumlu mu?",
+            answer:
+              "Evet. Frankfurt'ta barındırılır, veriler şifrelenir, kayıt anında DPA verilir. Klinikler ve muayenehaneler için BDSG uyumlu kurulum özel onboarding ile gelir.",
+          },
+          {
+            question: "Daha sonra Kutasia'ya bağlayabilir miyim?",
+            answer:
+              "Evet. Dijital Resepsiyon bağımsız bir üründür — ama daha büyüyüp tam Kutasia platformuna ihtiyaç duyarsanız (birleşik posta kutusu, sektör iş akışları, AI analiz), veri göçüne gerek kalmadan modül olarak entegre olur.",
+          },
+        ],
+      },
+      cta: {
+        eyebrow: "HAZIR MISINIZ?",
+        heading:
+          "Resepsiyonunuz sabah 2'de cevap versin —\nyeni bir kişi almadan.",
+        primaryCta: "Demo planla",
+        secondaryCta: "Bizimle konuşun",
+      },
+      meta: {
+        title: "Dijital Resepsiyon — Otel, Klinik ve Kuaförler için AI Ön Büro | OpSolid",
+        description:
+          "Hizmet işletmeleri için bağımsız AI resepsiyon. Web formları, e-posta triyajı, opsiyonel ses ajanı. GDPR-yerli, Almanya'da barındırılır. Instagram Business doğrulaması gerektirmez.",
+      },
+    },
+
     kutasia: {
       hero: {
-        eyebrow: "Bir OpSolid ürünü",
+        eyebrow: "Bir OpSolid ürünü · Platform",
         label: "Kutasia",
         headline: "Müşteri operasyonu,\nbirleşik ve akıllı",
         subheadline:
-          "Kutasia; mesajlaşmayı, talepleri, rezervasyonları ve içerikleri yapay zekâ destekli tek bir çalışma alanında birleştiren çok kiracılı SaaS platformdur — sektörünüze göre uyarlanmıştır.",
+          "Kutasia; mesajlaşmayı, talepleri, rezervasyonları ve içerikleri yapay zekâ destekli tek bir çalışma alanında birleştiren çok kiracılı SaaS platformdur — sektörünüze göre uyarlanmıştır. Modüler yapı: temel modüller (Dijital Resepsiyon, Dijital Kartvizit) bağımsız ürün olarak da mevcut.",
         primaryCta: "Kutasia'yı Ziyaret Et",
         secondaryCta: "Ekiple Görüşün",
         primaryCtaHref: "https://kutasia.com",
@@ -1467,7 +1675,7 @@ export const content: Content = {
             icon: "inbox",
             title: "Birleşik Gelen Kutusu",
             description:
-              "Instagram DM, WhatsApp, e-posta ve web formları tek iş parçacığı mantığında — otomatik atama ve durum takibi ile.",
+              "E-posta, web formları ve opsiyonel mesajlaşma kanalları (WhatsApp Business API, onaylanan yerlerde Instagram) tek iş parçacığı mantığında — otomatik atama ve durum takibi ile. Kanaldan bağımsız: hangi entegrasyonun aktif olacağına siz karar verirsiniz.",
           },
           {
             icon: "bot",
