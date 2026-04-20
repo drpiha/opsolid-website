@@ -1,7 +1,7 @@
 "use client";
 
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
-import { ArrowLeft, Calendar, Clock } from "lucide-react";
+import { ArrowLeft, ArrowRight, Calendar, Clock } from "lucide-react";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { useLocale } from "@/context/LocaleContext";
 import { getPostContent } from "@/content/blog";
@@ -33,36 +33,25 @@ export function BlogPostPage({ slug }: BlogPostPageProps) {
       {/* Hero */}
       <section
         aria-labelledby="post-title"
-        className="relative pt-32 md:pt-40 pb-10 md:pb-14 paper-grain overflow-hidden"
+        className="relative pt-32 md:pt-40 pb-10 md:pb-14 bg-white"
       >
-        <div className="hairline-b">
-          <div className="container-wide flex items-center justify-between py-3">
-            <span className="mono-label text-ink/60">
-              [ JOURNAL · 09 ]   ARTICLE
-            </span>
-            <span className="mono-label hidden md:inline text-ink/40">
-              {postMeta.date}
-            </span>
-          </div>
-        </div>
-
-        <div className="container-narrow relative z-10 pt-10 md:pt-14">
+        <div className="container-prose">
           <AnimatedSection>
             <Link
               href="/blog"
-              className="inline-flex items-center gap-1.5 mono-label text-ink/50 hover:text-ink transition-colors mb-8"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-ink/50 hover:text-ink transition-colors mb-8"
             >
               <ArrowLeft size={12} aria-hidden="true" />
               <span>{blog.hero.label}</span>
             </Link>
-            <div className="mono-label text-amber-700 mb-4">{categoryLabel}</div>
+            <div className="eyebrow uppercase text-brand mb-4">{categoryLabel}</div>
             <h1
               id="post-title"
-              className="font-serif text-ink text-[clamp(2rem,4.8vw,3.75rem)] leading-[1.05] tracking-[-0.025em] text-balance"
+              className="text-[clamp(2rem,5vw,3.75rem)] font-extrabold leading-[1.05] tracking-[-0.03em] text-ink text-balance"
             >
               {postMeta.title}
             </h1>
-            <div className="mt-6 flex items-center gap-5 mono-label text-ink/50">
+            <div className="mt-6 flex flex-wrap items-center gap-5 text-xs font-medium text-ink/55">
               <span className="flex items-center gap-1.5">
                 <Calendar size={12} aria-hidden="true" />
                 {postMeta.date}
@@ -77,23 +66,22 @@ export function BlogPostPage({ slug }: BlogPostPageProps) {
       </section>
 
       {/* Article body */}
-      <section className="hairline-t py-12 md:py-20">
+      <section className="py-12 md:py-20 bg-white">
         <div className="container-prose">
           <AnimatedSection>
             <article
               className="prose prose-lg max-w-none break-words text-pretty
-                prose-headings:font-serif prose-headings:text-ink prose-headings:font-normal prose-headings:tracking-[-0.02em] prose-headings:text-balance
-                prose-h2:text-[clamp(1.5rem,3vw,2.25rem)] prose-h2:leading-[1.1] prose-h2:mt-14 prose-h2:mb-5
+                prose-headings:text-ink prose-headings:font-bold prose-headings:tracking-[-0.02em] prose-headings:text-balance
+                prose-h2:text-[clamp(1.5rem,3vw,2.25rem)] prose-h2:leading-[1.1] prose-h2:mt-14 prose-h2:mb-5 prose-h2:font-extrabold
                 prose-h3:text-[1.375rem] prose-h3:leading-[1.2] prose-h3:mt-10 prose-h3:mb-3
                 prose-p:text-ink/80 prose-p:leading-[1.75] prose-p:text-pretty
                 prose-li:text-ink/80 prose-li:leading-[1.7]
-                prose-strong:text-ink prose-strong:font-medium
-                prose-a:text-ink prose-a:underline prose-a:underline-offset-4 prose-a:decoration-ink/30 hover:prose-a:decoration-ink
-                prose-blockquote:border-l-2 prose-blockquote:border-amber prose-blockquote:bg-paper-warm prose-blockquote:rounded-r-xl prose-blockquote:py-1 prose-blockquote:not-italic prose-blockquote:font-serif prose-blockquote:text-ink prose-blockquote:text-[1.125rem]
-                prose-code:text-ink prose-code:bg-paper-warm prose-code:rounded prose-code:px-1.5 prose-code:py-0.5 prose-code:font-mono prose-code:text-[0.9em] prose-code:before:content-[''] prose-code:after:content-['']
-                prose-pre:bg-ink prose-pre:text-paper prose-pre:rounded-xl prose-pre:border prose-pre:border-ink/10
-                prose-hr:border-ink/10
-                first:[&>p:first-of-type]:text-[1.125rem] first:[&>p:first-of-type]:first-letter:font-serif first:[&>p:first-of-type]:first-letter:text-[3.5rem] first:[&>p:first-of-type]:first-letter:leading-[0.9] first:[&>p:first-of-type]:first-letter:float-left first:[&>p:first-of-type]:first-letter:mr-3 first:[&>p:first-of-type]:first-letter:mt-1 first:[&>p:first-of-type]:first-letter:text-ink
+                prose-strong:text-ink prose-strong:font-semibold
+                prose-a:text-brand prose-a:underline prose-a:underline-offset-4 prose-a:decoration-brand/40 hover:prose-a:decoration-brand
+                prose-blockquote:border-l-4 prose-blockquote:border-brand prose-blockquote:bg-brand/5 prose-blockquote:rounded-r-2xl prose-blockquote:py-1 prose-blockquote:px-6 prose-blockquote:not-italic prose-blockquote:font-semibold prose-blockquote:text-ink prose-blockquote:text-[1.125rem]
+                prose-code:text-ink prose-code:bg-neutral-100 prose-code:rounded prose-code:px-1.5 prose-code:py-0.5 prose-code:text-[0.9em] prose-code:before:content-[''] prose-code:after:content-['']
+                prose-pre:bg-ink prose-pre:text-white prose-pre:rounded-2xl prose-pre:border prose-pre:border-neutral-800
+                prose-hr:border-neutral-200
               "
               dangerouslySetInnerHTML={{ __html: postContent }}
             />
@@ -103,22 +91,20 @@ export function BlogPostPage({ slug }: BlogPostPageProps) {
 
       {/* Prev / Next */}
       {(prevPost || nextPost) && (
-        <section className="hairline-t section-sm">
+        <section className="section-sm bg-neutral-50">
           <div className="container-wide">
-            <div className="mono-label text-ink/50 mb-6">
-              [ MORE ]   READING
-            </div>
+            <div className="eyebrow uppercase text-ink/50 mb-6">More reading</div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-6">
               {prevPost ? (
                 <Link
                   href={`/blog/${prevPost.slug}`}
-                  className="group block hairline bg-paper-warm rounded-2xl p-6 sm:p-8 transition duration-300 hover:border-ink/25 hover:-translate-y-0.5"
+                  className="pop-card group block p-6 sm:p-8"
                 >
-                  <div className="mono-label text-ink/50 mb-3 flex items-center gap-2">
-                    <span aria-hidden="true">←</span>
-                    <span>PREVIOUS</span>
+                  <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-ink/50 mb-3">
+                    <ArrowLeft size={12} aria-hidden="true" />
+                    <span>Previous</span>
                   </div>
-                  <h3 className="font-serif text-ink text-[1.25rem] md:text-[1.5rem] leading-[1.2] tracking-[-0.015em] text-balance group-hover:text-ink/80 transition-colors">
+                  <h3 className="text-lg md:text-xl font-bold text-ink tracking-[-0.015em] leading-snug text-balance group-hover:text-brand transition-colors">
                     {prevPost.title}
                   </h3>
                 </Link>
@@ -128,13 +114,13 @@ export function BlogPostPage({ slug }: BlogPostPageProps) {
               {nextPost ? (
                 <Link
                   href={`/blog/${nextPost.slug}`}
-                  className="group block hairline bg-paper-warm rounded-2xl p-6 sm:p-8 transition duration-300 hover:border-ink/25 hover:-translate-y-0.5 md:text-right"
+                  className="pop-card group block p-6 sm:p-8 md:text-right"
                 >
-                  <div className="mono-label text-ink/50 mb-3 flex md:justify-end items-center gap-2">
-                    <span>NEXT</span>
-                    <span aria-hidden="true">→</span>
+                  <div className="flex md:justify-end items-center gap-2 text-xs font-semibold uppercase tracking-wider text-ink/50 mb-3">
+                    <span>Next</span>
+                    <ArrowRight size={12} aria-hidden="true" />
                   </div>
-                  <h3 className="font-serif text-ink text-[1.25rem] md:text-[1.5rem] leading-[1.2] tracking-[-0.015em] text-balance group-hover:text-ink/80 transition-colors">
+                  <h3 className="text-lg md:text-xl font-bold text-ink tracking-[-0.015em] leading-snug text-balance group-hover:text-brand transition-colors">
                     {nextPost.title}
                   </h3>
                 </Link>
@@ -147,34 +133,21 @@ export function BlogPostPage({ slug }: BlogPostPageProps) {
       )}
 
       {/* CTA */}
-      <section className="hairline-t bg-ink text-paper paper-grain">
-        <div className="container-wide section">
+      <section className="section-sm bg-white">
+        <div className="container-wide">
           <AnimatedSection>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
-              <div className="lg:col-span-7">
-                <div className="mono-label text-paper/60 mb-5">
-                  [ NEXT ]   CONVERSATION
-                </div>
-                <h2 className="font-serif text-paper text-[clamp(2rem,5vw,3.75rem)] leading-[1.04] tracking-[-0.025em] text-balance">
-                  {blog.cta.headline}
-                </h2>
-                <p className="mt-5 max-w-xl text-paper/70 text-body-lg leading-relaxed text-pretty">
-                  {blog.cta.description}
-                </p>
-              </div>
-
-              <div className="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col items-start gap-5 lg:items-end lg:justify-end">
-                <Link
-                  href="/contact"
-                  className="group inline-flex items-center gap-2.5 bg-amber text-ink px-7 py-4 font-medium hairline hover:bg-paper transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber"
-                >
+            <div className="pop-card p-10 md:p-14 text-center max-w-3xl mx-auto">
+              <div className="eyebrow uppercase text-brand mb-4">Next step</div>
+              <h2 className="text-[clamp(1.75rem,4vw,3rem)] font-extrabold leading-[1.08] tracking-[-0.03em] text-ink text-balance">
+                {blog.cta.headline}
+              </h2>
+              <p className="mt-5 max-w-xl mx-auto text-ink/70 text-body leading-relaxed text-pretty">
+                {blog.cta.description}
+              </p>
+              <div className="mt-8 flex justify-center">
+                <Link href="/contact" className="btn-primary">
                   <span>{blog.cta.primaryCta}</span>
-                  <span
-                    aria-hidden="true"
-                    className="transition-transform duration-200 group-hover:translate-x-0.5"
-                  >
-                    →
-                  </span>
+                  <ArrowRight size={16} aria-hidden="true" />
                 </Link>
               </div>
             </div>

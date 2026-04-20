@@ -9,6 +9,7 @@ import {
   CheckCircle,
   AlertCircle,
   Loader2,
+  ArrowRight,
 } from "lucide-react";
 import { Input, Textarea } from "@/components/ui/Input";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
@@ -71,60 +72,49 @@ export function ContactPage() {
       {/* Hero */}
       <section
         aria-labelledby="contact-title"
-        className="relative pt-32 md:pt-40 pb-12 md:pb-16 paper-grain overflow-hidden"
+        className="relative pt-32 md:pt-40 pb-10 md:pb-14 bg-white"
       >
-        <div className="hairline-b">
-          <div className="container-wide flex items-center justify-between py-3">
-            <span className="mono-label text-ink/60">
-              [ CONTACT · 07 ]   CONVERSATION
-            </span>
-            <span className="mono-label hidden md:inline text-ink/40">
-              {new Date().getFullYear()}
-            </span>
-          </div>
-        </div>
-
-        <div className="container-wide relative z-10 pt-10 md:pt-16">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
-            <div className="lg:col-span-7 animate-fade-in">
-              <div className="mono-label text-ink/60 mb-5">{s.hero.label}</div>
-              <h1
-                id="contact-title"
-                className="font-serif text-ink text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[1.04] tracking-[-0.025em] text-balance"
-              >
-                {s.hero.headline}
-              </h1>
+        <div className="container-wide">
+          <AnimatedSection className="max-w-3xl">
+            <div className="eyebrow uppercase text-brand mb-4">
+              {s.hero.label}
             </div>
-
-            <div className="lg:col-span-5 lg:pt-6 animate-fade-in">
-              <p className="text-ink/70 text-body-lg leading-relaxed text-pretty">
-                {s.hero.description}
-              </p>
-            </div>
-          </div>
+            <h1
+              id="contact-title"
+              className="text-[clamp(2.5rem,6vw,4.5rem)] font-extrabold leading-[1.02] tracking-[-0.035em] text-ink text-balance"
+            >
+              {s.hero.headline}
+            </h1>
+            <p className="mt-6 md:mt-8 text-ink/70 text-body-lg leading-relaxed max-w-2xl text-pretty">
+              {s.hero.description}
+            </p>
+          </AnimatedSection>
         </div>
       </section>
 
       {/* Form + meeting panel */}
-      <section className="hairline-t section-sm">
+      <section className="section-sm bg-neutral-50">
         <div className="container-wide">
           <div className="grid lg:grid-cols-12 gap-10 lg:gap-14">
             {/* Form — left */}
             <AnimatedSection className="lg:col-span-7">
-              <div className="mono-label mb-5">[ 01 ] WRITE</div>
-              <h2 className="font-serif text-ink text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.1] tracking-[-0.02em] mb-8 text-balance">
+              <div className="eyebrow uppercase text-ink/50 mb-4">Write</div>
+              <h2 className="text-[clamp(1.5rem,3vw,2.25rem)] font-bold text-ink tracking-[-0.025em] leading-[1.1] mb-8 text-balance">
                 Tell us about your operations
               </h2>
 
-              <div id="contact-form" className="hairline bg-paper-warm rounded-2xl p-6 md:p-10">
+              <div
+                id="contact-form"
+                className="pop-card p-6 md:p-10"
+              >
                 {formState === "success" ? (
                   <div className="text-center py-12">
                     <CheckCircle
                       size={40}
-                      className="text-amber-700 mx-auto mb-4"
+                      className="text-green-600 mx-auto mb-4"
                       aria-hidden="true"
                     />
-                    <h3 className="font-serif text-ink text-[1.5rem] leading-[1.2] mb-2">
+                    <h3 className="text-xl font-bold text-ink tracking-[-0.015em] mb-2">
                       {s.form.success.split(".")[0]}.
                     </h3>
                     <p className="text-sm text-ink/70">{s.form.success}</p>
@@ -167,7 +157,7 @@ export function ContactPage() {
                         checked={agreed}
                         onChange={(e) => setAgreed(e.target.checked)}
                         required
-                        className="mt-1 h-4 w-4 rounded border-ink/30 text-ink focus:ring-amber"
+                        className="mt-1 h-4 w-4 rounded border-neutral-300 text-brand focus:ring-brand/30"
                       />
                       <span className="text-xs text-ink/60 leading-relaxed">
                         {s.form.consent}{" "}
@@ -181,7 +171,7 @@ export function ContactPage() {
                     </label>
 
                     {formState === "error" && (
-                      <div className="flex items-center gap-2 text-sm text-amber-700 hairline bg-amber/10 rounded-md p-3">
+                      <div className="flex items-center gap-2 text-sm text-brand bg-brand/5 border border-brand/20 rounded-2xl px-4 py-3">
                         <AlertCircle size={16} aria-hidden="true" />
                         <span>{s.form.error}</span>
                       </div>
@@ -190,7 +180,7 @@ export function ContactPage() {
                     <button
                       type="submit"
                       disabled={formState === "sending"}
-                      className="group inline-flex items-center gap-2.5 bg-amber text-ink px-7 py-3.5 font-medium hairline hover:bg-amber-600 hover:text-paper transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="btn-primary w-full sm:w-auto disabled:opacity-60 disabled:cursor-not-allowed"
                     >
                       {formState === "sending" ? (
                         <>
@@ -204,12 +194,7 @@ export function ContactPage() {
                       ) : (
                         <>
                           <span>{s.form.submit}</span>
-                          <span
-                            aria-hidden="true"
-                            className="transition-transform duration-200 group-hover:translate-x-0.5"
-                          >
-                            →
-                          </span>
+                          <ArrowRight size={16} aria-hidden="true" />
                         </>
                       )}
                     </button>
@@ -220,24 +205,24 @@ export function ContactPage() {
 
             {/* Right column — meeting + info */}
             <AnimatedSection delay={0.15} className="lg:col-span-5">
-              <div className="mono-label mb-5">[ 02 ] SCHEDULE</div>
-              <h2 className="font-serif text-ink text-[clamp(1.5rem,3vw,2.25rem)] leading-[1.1] tracking-[-0.02em] mb-8 text-balance">
+              <div className="eyebrow uppercase text-ink/50 mb-4">Schedule</div>
+              <h2 className="text-[clamp(1.5rem,3vw,2.25rem)] font-bold text-ink tracking-[-0.025em] leading-[1.1] mb-8 text-balance">
                 {s.meeting.headline}
               </h2>
 
-              {/* Cal.com trigger */}
-              <div className="hairline bg-ink text-paper paper-grain rounded-2xl p-6 md:p-7">
+              {/* Cal.com trigger card (ink) */}
+              <div className="rounded-[1.25rem] bg-ink text-white p-7 md:p-8">
                 <div className="flex items-start gap-3 mb-4">
                   <Calendar
                     size={20}
-                    className="text-amber"
+                    className="text-brand"
                     aria-hidden="true"
                   />
-                  <span className="mono-label text-paper/60">
-                    DISCOVERY CALL · 30 MIN
+                  <span className="text-xs font-semibold uppercase tracking-wider text-white/60">
+                    Discovery Call · 30 min
                   </span>
                 </div>
-                <p className="text-paper/70 text-sm leading-relaxed text-pretty mb-5">
+                <p className="text-white/70 text-sm leading-relaxed text-pretty mb-6">
                   {s.meeting.description}
                 </p>
                 <button
@@ -247,35 +232,29 @@ export function ContactPage() {
                     theme: "light",
                     locale,
                   })}
-                  className="group inline-flex items-center gap-2.5 bg-amber text-ink px-5 py-3 font-medium hairline hover:bg-paper transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber"
+                  className="btn-primary"
                 >
                   <Calendar size={16} aria-hidden="true" />
                   <span>{s.meeting.cta}</span>
-                  <span
-                    aria-hidden="true"
-                    className="transition-transform duration-200 group-hover:translate-x-0.5"
-                  >
-                    →
-                  </span>
                 </button>
               </div>
 
               {/* Info cards */}
               <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div className="hairline bg-paper-warm rounded-2xl p-5">
-                  <div className="mono-label text-ink/50 mb-3 flex items-center gap-2">
+                <div className="pop-card p-5">
+                  <div className="flex items-center gap-2 eyebrow uppercase text-ink/50 mb-3">
                     <Clock size={12} aria-hidden="true" />
-                    <span>RESPONSE</span>
+                    <span>Response</span>
                   </div>
                   <p className="text-sm text-ink/80 leading-relaxed text-pretty">
                     {s.info.response}
                   </p>
                 </div>
 
-                <div className="hairline bg-paper-warm rounded-2xl p-5">
-                  <div className="mono-label text-ink/50 mb-3 flex items-center gap-2">
+                <div className="pop-card p-5">
+                  <div className="flex items-center gap-2 eyebrow uppercase text-ink/50 mb-3">
                     <MapPin size={12} aria-hidden="true" />
-                    <span>LOCATION</span>
+                    <span>Location</span>
                   </div>
                   <p className="text-sm text-ink/80 leading-relaxed text-pretty">
                     {s.info.location}

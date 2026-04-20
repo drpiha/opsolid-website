@@ -24,6 +24,19 @@ export const content: Content = {
         "OpSolid, işletmelerin manuel ve tekrarlayan işlerini güvenilir otomasyon sistemleriyle değiştirmelerine yardımcı olur — iş akışı otomasyonundan sistem entegrasyonuna, yapay zeka destekli süreçlere kadar.",
       primaryCta: "Tanışma Görüşmesi Planlayın",
       secondaryCta: "Hizmetleri İnceleyin",
+      ratingPill: "4,9  ·  Avrupa genelinde ekipler tarafından kullanılıyor",
+      title: [
+        "Tek dokunuş.",
+        "Almanya'da kalan",
+        "tek bir kart.",
+      ],
+      subtitle:
+        "Hamburg'da barındırılan GDPR-yerli profili olan modern bir NFC kartvizit. Apple & Google Wallet, gerçek zamanlı analitik, CRM senkronu, ekip yönetimi — ve isteğe bağlı olarak arkada komple bir otomasyon ortağı.",
+      primaryCtaLabel: "Kartınızı alın",
+      secondaryCtaLabel: "Nasıl çalıştığını görün",
+      footnote: "Kredi kartı gerekmez  ·  Hamburg'dan kargo",
+      consultingNote:
+        "Ayrıca operasyon ekipleri için özel otomasyon da geliştiriyoruz.",
       editorial: {
         eyebrow: "[ 01 / 04 ]   OTOMASYON STÜDYOSU — HAMBURG, DE",
         title: [
@@ -318,6 +331,192 @@ export const content: Content = {
           ],
         },
       ],
+    },
+
+    trustStrip: {
+      items: [
+        "4,9 puan",
+        "2.400+ değerlendirme",
+        "ISO 27001 uyumlu",
+        "KVKK & GDPR uyumlu",
+        "Made in Germany",
+        "Hamburg'dan kargo",
+      ],
+    },
+
+    featureGrid: {
+      label: "Hepsi tek dokunuşta",
+      headline: "Gerçekten bir işe yarayan bir kartvizit.",
+      description:
+        "Sadece bir vCard değil. Her özellik AB merkezli bir altyapı üzerine kuruludur ve hazır GDPR belgeleriyle gelir.",
+      items: [
+        {
+          icon: "nfc",
+          title: "NFC dokunuşu & QR",
+          description:
+            "NFC özellikli bir telefona dokundurun ya da QR'ı taratın. Alıcının uygulama kurmasına gerek yok. Modern iOS ve Android cihazlarda çalışır.",
+        },
+        {
+          icon: "wallet",
+          title: "Apple & Google Wallet",
+          description:
+            "Her profil Wallet kartı olarak saklanabilir. Kartınız değiştikçe otomatik olarak güncellenir.",
+        },
+        {
+          icon: "chart",
+          title: "Gerçek zamanlı analitik",
+          description:
+            "Dokunuşları, açılışları ve kayıtları anlık görün. Ekip üyesi, etkinlik ve ülkeye göre filtreleyin.",
+        },
+        {
+          icon: "sync",
+          title: "CRM senkronizasyonu",
+          description:
+            "Yakalanan müşteri adaylarını doğrudan HubSpot, Pipedrive, Salesforce'a ya da CSV'ye gönderin. Yerli — Zapier gerekmez.",
+        },
+        {
+          icon: "team",
+          title: "Ekip yönetimi",
+          description:
+            "Tüm ekibiniz için kartları tek bir yönetim panelinden oluşturun, iptal edin ve markalayın. SSO uyumlu.",
+        },
+        {
+          icon: "hosting",
+          title: "Almanya'da barındırılır",
+          description:
+            "Hetzner / IONOS Frankfurt. ISO 27001. Sıfır ABD alt işleyen. GDPR-yerli, kayıtla birlikte DPA hazır.",
+        },
+      ],
+    },
+
+    howItWorks: {
+      label: "Nasıl çalışır",
+      headline: "Üç adım. Beş dakikadan az.",
+      steps: [
+        {
+          title: "Kartınızı sipariş edin",
+          description:
+            "Mat, metal veya ahşap seçin. Hamburg'dan iki iş günü içinde kargolarız.",
+        },
+        {
+          title: "Profilinizi oluşturun",
+          description:
+            "Fotoğrafınızı, bağlantılarınızı, sosyal hesaplarınızı ve takviminizi ekleyin. Anlık önizleme.",
+        },
+        {
+          title: "Dokunun ve paylaşın",
+          description:
+            "Tek dokunuş her şeyi paylaşır. Her etkileşimi panelinizden takip edin.",
+        },
+      ],
+    },
+
+    whoUses: {
+      label: "OpSolid'i kimler kullanır",
+      headline: "Gerçekten insanlarla buluşan ekipler için.",
+      items: [
+        {
+          title: "Kurucular",
+          description:
+            "Akılda kalıcı bir ilk izlenim bırakın, her el sıkışmayı CRM'inizde tutun.",
+          icon: "founder",
+        },
+        {
+          title: "Satış ekipleri",
+          description:
+            "Her temsilciye izlenebilir bir kart verin. Kimin dokunduğunu, kaydettiğini, dönüştüğünü görün.",
+          icon: "sales",
+        },
+        {
+          title: "Ajanslar",
+          description:
+            "Her müşterinizin ekibini özel alan adlı profiller ve ortak analitikle markalayın.",
+          icon: "agency",
+        },
+        {
+          title: "Serbest çalışanlar",
+          description:
+            "Tek bir kart, her kağıt desteyi değiştirir. Yeniden baskıya gerek kalmadan unvanınızı güncelleyin.",
+          icon: "freelancer",
+        },
+      ],
+    },
+
+    pricingPreview: {
+      label: "İki yol",
+      headline: "Bir kart alın ya da komple bir operasyon kurun.",
+      description:
+        "Çoğu insan Dijital Kartvizit ile başlar. Daha yoğun operasyonu olan ekipler üzerine özel otomasyon ekler.",
+      cards: [
+        {
+          title: "Dijital Kartvizit",
+          priceLabel: "39 €'dan",
+          priceCadence: "tek seferlik · kart başına",
+          bullets: [
+            "Hamburg'dan gönderilen NFC kart",
+            "Sonsuza kadar ücretsiz dijital profil",
+            "Apple & Google Wallet",
+            "İsteğe bağlı ekip planı: 4,90 € / kullanıcı / ay",
+          ],
+          ctaLabel: "Kart al",
+          ctaHref: "/products/digital-card",
+          tone: "brand",
+        },
+        {
+          title: "Otomasyon hizmetleri",
+          priceLabel: "Proje bazlı",
+          priceCadence: "tanışma görüşmesiyle başlar",
+          bullets: [
+            "İş akışı otomasyonu (n8n, Make)",
+            "Dahili araçlar ve panolar",
+            "Yapay zeka destekli süreçler",
+            "Sistem entegrasyonu (CRM, ERP, API)",
+          ],
+          ctaLabel: "Tanışma görüşmesi planla",
+          ctaHref: "/contact",
+          tone: "dark",
+        },
+      ],
+    },
+
+    testimonials: {
+      label: "Sosyal kanıt",
+      headline: "Geçiş yapan ekipler geri dönmüyor.",
+      items: [
+        {
+          quote:
+            "Bir haftada üç şehirdeki kağıt kartları değiştirdik. Müşteri adayları saniyeler içinde HubSpot'a düşüyor, kimsenin bir şey yazmasına gerek kalmadı.",
+          name: "Lena Richter",
+          role: "Satış Direktörü",
+          company: "Berlin merkezli scale-up",
+        },
+        {
+          quote:
+            "Verilerin Almanya'da kalması, hukuk ekibimizi ikna etti. Geri kalan her şey artı bir bonustu.",
+          name: "Marco Weber",
+          role: "COO",
+          company: "Münih sanayi grubu",
+        },
+        {
+          quote:
+            "Ömür boyu kart için tek seferlik 39 €. Abonelik tuzağı yok. Sırf bu yüzden ABD ürününden geçtim.",
+          name: "Sarah Klein",
+          role: "Bağımsız danışman",
+          company: "Hamburg",
+        },
+      ],
+    },
+
+    finalCta: {
+      eyebrow: "Hazır mısınız?",
+      headline:
+        "Sonraki kartvizitiniz Hamburg'dan, San Francisco'dan değil.",
+      description:
+        "Bir kart sipariş edin, görüşme ayarlayın, ya da ikisini birden. Bir iş günü içinde yanıt veriyoruz.",
+      primaryCtaLabel: "Kart al",
+      primaryCtaHref: "/products/digital-card",
+      secondaryCtaLabel: "Bizimle konuşun",
+      secondaryCtaHref: "/contact",
     },
   },
 
@@ -1148,6 +1347,80 @@ export const content: Content = {
           error:
             "Bir sorun oluştu. Lütfen doğrudan contact@opsolid.de adresine yazın.",
         },
+      },
+      testimonials: {
+        label: "Sosyal kanıt",
+        heading: "Geçiş yapan müşteriler ne söylüyor.",
+        items: [
+          {
+            quote:
+              "Bir haftada üç şehirdeki kağıt kartları değiştirdik. Müşteri adayları saniyeler içinde HubSpot'a düşüyor, kimsenin bir şey yazmasına gerek kalmadı.",
+            name: "Lena Richter",
+            role: "Satış Direktörü",
+            company: "Berlin merkezli scale-up",
+          },
+          {
+            quote:
+              "Verilerin Almanya'da kalması, hukuk ekibimizi ikna etti. Geri kalan her şey artı bir bonustu.",
+            name: "Marco Weber",
+            role: "COO",
+            company: "Münih sanayi grubu",
+          },
+          {
+            quote:
+              "Ömür boyu kart için tek seferlik 39 €. Abonelik tuzağı yok. Sırf bu yüzden ABD ürününden geçtim.",
+            name: "Sarah Klein",
+            role: "Bağımsız danışman",
+            company: "Hamburg",
+          },
+        ],
+      },
+      howItWorks: {
+        label: "Nasıl çalışır",
+        heading: "Üç adım. Beş dakikadan az.",
+        steps: [
+          {
+            title: "Kartınızı sipariş edin",
+            description:
+              "Mat, metal veya ahşap seçin. Hamburg'dan iki iş günü içinde kargolarız.",
+          },
+          {
+            title: "Profilinizi oluşturun",
+            description:
+              "Fotoğrafınızı, bağlantılarınızı, sosyal hesaplarınızı ve takviminizi ekleyin. Anlık önizleme.",
+          },
+          {
+            title: "Dokunun ve paylaşın",
+            description:
+              "Tek dokunuş her şeyi paylaşır. Her etkileşimi panelinizden takip edin.",
+          },
+        ],
+      },
+      faq: {
+        label: "SSS",
+        heading: "Sık sorulan sorular.",
+        items: [
+          {
+            question: "Kartlar her telefonla çalışıyor mu?",
+            answer:
+              "Evet. NFC, modern iOS ve Android cihazlarının tümünde desteklenir. Alıcının uygulama kurmasına gerek yoktur.",
+          },
+          {
+            question: "Verilerim nerede saklanıyor?",
+            answer:
+              "Almanya / Frankfurt'ta, Hetzner ve IONOS altyapısında. Sıfır ABD alt işleyen. Kayıt olur olmaz DPA hazır.",
+          },
+          {
+            question: "İstediğim zaman iptal edebilir miyim?",
+            answer:
+              "39 €'luk ömür boyu kartın aboneliği hiç yok. Ekip planları ilk yıldan sonra aylık olarak iptal edilebilir.",
+          },
+          {
+            question: "Mevcut CRM'imi tutabilir miyim?",
+            answer:
+              "Evet. HubSpot, Pipedrive ve Salesforce ile yerli olarak senkronize oluruz — diğer her şey için CSV'ye aktarırız. Zapier gerekmez.",
+          },
+        ],
       },
       cta: {
         eyebrow: "HAZIR MISIN?",

@@ -35,7 +35,7 @@ export function ImpressumPage() {
           E-Mail:{" "}
           <a
             href={`mailto:${SITE_CONFIG.email}`}
-            className="text-ink underline underline-offset-4 decoration-ink/30 hover:decoration-ink break-all"
+            className="text-brand underline underline-offset-4 decoration-brand/40 hover:decoration-brand break-all"
           >
             {SITE_CONFIG.email}
           </a>
@@ -71,23 +71,13 @@ export function ImpressumPage() {
       {/* Hero */}
       <section
         aria-labelledby="impressum-title"
-        className="relative pt-32 md:pt-40 pb-10 md:pb-14 paper-grain overflow-hidden"
+        className="relative pt-32 md:pt-40 pb-10 md:pb-14 bg-white"
       >
-        <div className="hairline-b">
-          <div className="container-wide flex items-center justify-between py-3">
-            <span className="mono-label text-ink/60">
-              [ LEGAL · 10 ]   IMPRESSUM
-            </span>
-            <span className="mono-label hidden md:inline text-ink/40">
-              {new Date().getFullYear()}
-            </span>
-          </div>
-        </div>
-
-        <div className="container-narrow relative z-10 pt-10 md:pt-14">
+        <div className="container-narrow">
+          <span className="eyebrow uppercase text-brand mb-4 block">Legal</span>
           <h1
             id="impressum-title"
-            className="font-serif text-ink text-[clamp(2rem,4.5vw,3.5rem)] leading-[1.05] tracking-[-0.025em] text-balance"
+            className="text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-[1.05] tracking-[-0.03em] text-ink text-balance"
           >
             {s.title}
           </h1>
@@ -95,26 +85,26 @@ export function ImpressumPage() {
       </section>
 
       {/* Notice + body */}
-      <section className="hairline-t py-12 md:py-20">
+      <section className="py-12 md:py-20 bg-white">
         <div className="container-narrow">
-          <div className="hairline bg-paper-warm rounded-2xl p-5 mb-12 text-sm text-ink/80 flex items-start gap-3">
-            <span className="mono-label text-amber-700 shrink-0 pt-0.5">
-              NOTICE
+          <div className="pop-card p-5 mb-12 text-sm text-ink/80 flex items-start gap-3">
+            <span className="eyebrow uppercase text-brand shrink-0 pt-0.5">
+              Notice
             </span>
             <span className="leading-relaxed text-pretty">{s.notice}</span>
           </div>
 
-          <dl className="hairline-t">
+          <dl className="border-t border-neutral-200">
             {items.map((item, i) => (
               <div
                 key={i}
-                className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 py-7 md:py-8 hairline-b"
+                className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 py-7 md:py-8 border-b border-neutral-200"
               >
                 <dt className="md:col-span-4">
-                  <div className="mono-label text-ink/50 mb-1">
+                  <div className="eyebrow uppercase text-ink/50 mb-1">
                     {String(i + 1).padStart(2, "0")}
                   </div>
-                  <div className="font-serif text-ink text-[1.125rem] md:text-[1.25rem] leading-[1.2] tracking-[-0.01em] text-balance">
+                  <div className="text-base md:text-lg font-bold text-ink tracking-[-0.015em] leading-snug text-balance">
                     {item.heading}
                   </div>
                 </dt>

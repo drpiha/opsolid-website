@@ -1,65 +1,46 @@
 "use client";
 
-import { LocaleLink as Link } from "@/components/shared/LocaleLink";
+import { Rocket, TrendingUp, Megaphone, UserCheck } from "lucide-react";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
+import { SectionHeading } from "@/components/shared/SectionHeading";
 import { useLocale } from "@/context/LocaleContext";
+
+const ICON_MAP: Record<string, React.ReactNode> = {
+  founder: <Rocket size={22} strokeWidth={2} />,
+  sales: <TrendingUp size={22} strokeWidth={2} />,
+  agency: <Megaphone size={22} strokeWidth={2} />,
+  freelancer: <UserCheck size={22} strokeWidth={2} />,
+};
 
 export function UseCasesPreview() {
   const { t } = useLocale();
-  const s = t.home.useCases;
+  const s = t.home.whoUses;
 
   return (
-    <section className="section hairline-t bg-paper">
+    <section className="section bg-white">
       <div className="container-wide">
-        {/* Editorial header */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-12 lg:mb-16">
-          <AnimatedSection className="lg:col-span-7">
-            <div className="mono-label mb-4">{s.label}</div>
-            <h2 className="font-serif text-ink text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.06] tracking-[-0.02em] text-balance">
-              {s.headline}
-            </h2>
-          </AnimatedSection>
-        </div>
+        <AnimatedSection>
+          <SectionHeading
+            label={s.label}
+            headline={s.headline}
+            align="center"
+          />
+        </AnimatedSection>
 
-        {/* Use case cards — three columns, equal cells */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 border-t border-l border-ink/10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
           {s.items.map((item, i) => (
-            <AnimatedSection
-              key={i}
-              delay={0.04 * i}
-              className="border-r border-b border-ink/10"
-            >
-              <Link
-                href="/use-cases"
-                className="group block h-full p-6 md:p-7 bg-paper-warm hover:bg-paper transition-colors duration-300 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-amber focus-visible:outline-none"
-              >
-                <div className="flex items-center gap-3 mb-4">
-                  <span className="mono-label text-ink/50">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span
-                    aria-hidden="true"
-                    className="flex-1 h-px bg-ink/10 group-hover:bg-amber/50 transition-colors duration-300"
-                  />
+            <AnimatedSection key={i} delay={0.05 * i}>
+              <div className="pop-card h-full p-6 md:p-7 flex flex-col">
+                <div className="w-11 h-11 rounded-2xl bg-brand/10 text-brand flex items-center justify-center mb-5">
+                  {ICON_MAP[item.icon] ?? <Rocket size={22} strokeWidth={2} />}
                 </div>
-
-                <h3 className="font-serif text-ink text-[1.25rem] leading-[1.25] tracking-[-0.015em]">
+                <h3 className="text-heading-sm font-bold text-ink mb-2 tracking-tight">
                   {item.title}
                 </h3>
-                <p className="mt-2.5 text-ink/70 text-sm leading-relaxed text-pretty">
+                <p className="text-body-sm text-ink/60 leading-relaxed text-pretty">
                   {item.description}
                 </p>
-
-                <span
-                  aria-hidden="true"
-                  className="mt-5 inline-flex items-center gap-1.5 text-ink/60 group-hover:text-amber-700 transition-colors"
-                >
-                  <span className="mono-label">View</span>
-                  <span className="transition-transform group-hover:translate-x-0.5">
-                    →
-                  </span>
-                </span>
-              </Link>
+              </div>
             </AnimatedSection>
           ))}
         </div>

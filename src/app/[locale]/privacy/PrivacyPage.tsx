@@ -8,21 +8,26 @@ export function PrivacyPage() {
   const s = t.privacy;
 
   return (
-    <section className="pt-36 pb-24 md:pt-44 md:pb-32">
+    <section className="pt-32 pb-20 md:pt-40 md:pb-28 bg-white">
       <div className="container-narrow">
-        <div className="mb-12 hairline bg-paper-warm p-5 text-sm text-ink/80 text-pretty">
-          <span className="mono-label text-ink/60 block mb-2">NOTICE</span>
+        <div className="mb-10 pop-card p-5 text-sm text-ink/80 text-pretty">
+          <span className="eyebrow uppercase text-brand block mb-2">Notice</span>
           {s.notice}
         </div>
 
-        <span className="mono-label text-ink/60">[ LEGAL · PRIVACY ]</span>
-        <h1 className="font-serif text-display-sm text-ink mt-3 mb-2 text-balance">{s.title}</h1>
-        <p className="mono-label text-ink/50 mb-12">{s.subtitle}</p>
+        <span className="eyebrow uppercase text-ink/50">Legal · Privacy</span>
+        <h1 className="text-[clamp(2rem,5vw,3.5rem)] font-extrabold leading-[1.05] tracking-[-0.03em] text-ink mt-3 mb-2 text-balance">
+          {s.title}
+        </h1>
+        <p className="text-sm font-medium text-ink/50 mb-12">{s.subtitle}</p>
 
         <div className="space-y-10 text-ink/75 text-body leading-relaxed break-words">
           {(s.sections as Array<Record<string, unknown>>).map((section, i) => (
-            <div key={i} className="hairline-t pt-8 first:hairline-t-0 first:pt-0">
-              <h2 className="font-serif text-heading text-ink mb-4 text-balance">
+            <div
+              key={i}
+              className="border-t border-neutral-200 pt-8 first:border-t-0 first:pt-0"
+            >
+              <h2 className="text-[clamp(1.25rem,2.4vw,1.75rem)] font-bold text-ink mb-4 tracking-[-0.015em] text-balance">
                 {section.title as string}
               </h2>
 
@@ -34,7 +39,7 @@ export function PrivacyPage() {
                   E-Mail:{" "}
                   <a
                     href={`mailto:${SITE_CONFIG.email}`}
-                    className="text-ink underline underline-offset-4 decoration-ink/30 hover:decoration-ink break-all"
+                    className="text-brand underline underline-offset-4 decoration-brand/40 hover:decoration-brand break-all"
                   >
                     {SITE_CONFIG.email}
                   </a>
@@ -44,7 +49,9 @@ export function PrivacyPage() {
                   {(section.subsections as Array<{ title: string; content: string }>).map(
                     (sub, j) => (
                       <div key={j}>
-                        <h3 className="mono-label text-ink mb-2">{sub.title}</h3>
+                        <h3 className="text-sm font-semibold text-ink mb-2">
+                          {sub.title}
+                        </h3>
                         <p className="text-pretty">{sub.content}</p>
                       </div>
                     )
@@ -56,7 +63,7 @@ export function PrivacyPage() {
             </div>
           ))}
 
-          <div className="mono-label text-ink/50 pt-8 hairline-t">
+          <div className="eyebrow uppercase text-ink/50 pt-8 border-t border-neutral-200">
             {s.lastUpdated}
           </div>
         </div>

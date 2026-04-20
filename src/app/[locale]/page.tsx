@@ -1,30 +1,45 @@
 import { Hero } from "@/components/sections/Hero";
 import { TrustStrip } from "@/components/sections/TrustStrip";
-import { ToolsShowcase } from "@/components/sections/ToolsShowcase";
-import { WhatWeDo } from "@/components/sections/WhatWeDo";
 import { SolutionsOverview } from "@/components/sections/SolutionsOverview";
-import { IntegrationGrid } from "@/components/sections/IntegrationGrid";
-import { ProblemOutcome } from "@/components/sections/ProblemOutcome";
-import { UseCasesPreview } from "@/components/sections/UseCasesPreview";
 import { HowWeWork } from "@/components/sections/HowWeWork";
-import { WhyUs } from "@/components/sections/WhyUs";
+import { UseCasesPreview } from "@/components/sections/UseCasesPreview";
+import { ToolsShowcase } from "@/components/sections/ToolsShowcase";
 import { ProductsTeaser } from "@/components/sections/ProductsTeaser";
+import { ProblemOutcome } from "@/components/sections/ProblemOutcome";
+import { WhyUs } from "@/components/sections/WhyUs";
 import { CTASection } from "@/components/sections/CTASection";
 
 export default function HomePage() {
   return (
     <>
+      {/* 1. Hero — DBC-first */}
       <Hero />
+
+      {/* 2. Trust strip — rating + signals */}
       <TrustStrip />
-      <ToolsShowcase />
-      <WhatWeDo />
+
+      {/* 3. Feature grid — "Everything in one tap" */}
       <SolutionsOverview />
-      <IntegrationGrid />
-      <ProblemOutcome />
-      <UseCasesPreview />
+
+      {/* 4. How it works — 3 steps */}
       <HowWeWork />
-      <WhyUs />
+
+      {/* 5. Who uses it — founders / sales / agencies / freelancers */}
+      <UseCasesPreview />
+
+      {/* 6. Integrations ticker */}
+      <ToolsShowcase />
+
+      {/* 7. Pricing preview — DBC + Automation services */}
       <ProductsTeaser />
+
+      {/* 8. Social proof / testimonials */}
+      <ProblemOutcome />
+
+      {/* 9. Why Germany-native matters */}
+      <WhyUs />
+
+      {/* 10. Final CTA */}
       <CTASection />
     </>
   );

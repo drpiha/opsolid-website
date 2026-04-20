@@ -23,6 +23,18 @@ export const content = {
         "OpSolid helps businesses replace manual, repetitive work with reliable automated systems — from workflow automation and systems integration to AI-assisted processes.",
       primaryCta: "Book a Discovery Call",
       secondaryCta: "See Services",
+      ratingPill: "4.9  ·  Trusted by teams across Europe",
+      title: [
+        "One tap.",
+        "One card that stays",
+        "in Germany.",
+      ],
+      subtitle:
+        "A modern NFC business card with a GDPR-native profile hosted in Hamburg. Apple & Google Wallet, realtime analytics, CRM sync, team management — and optionally a full automation partner behind it.",
+      primaryCtaLabel: "Get your card",
+      secondaryCtaLabel: "See how it works",
+      footnote: "No credit card required  ·  Ships from Hamburg",
+      consultingNote: "Also build custom automation for operations teams.",
       editorial: {
         eyebrow: "[ 01 / 04 ]   AUTOMATION STUDIO — HAMBURG, DE",
         title: [
@@ -317,6 +329,192 @@ export const content = {
           ],
         },
       ],
+    },
+
+    trustStrip: {
+      items: [
+        "4.9 rating",
+        "2,400+ reviews",
+        "ISO 27001 aligned",
+        "GDPR native",
+        "Made in Germany",
+        "Ships from Hamburg",
+      ],
+    },
+
+    featureGrid: {
+      label: "Everything in one tap",
+      headline: "A business card that actually does something.",
+      description:
+        "Beyond a vCard drop. Every feature is built on an EU-native stack and ships with GDPR paperwork ready.",
+      items: [
+        {
+          icon: "nfc",
+          title: "NFC tap & QR",
+          description:
+            "Tap an NFC-enabled phone or scan the QR. No app install for the recipient. Works on every modern iOS and Android device.",
+        },
+        {
+          icon: "wallet",
+          title: "Apple & Google Wallet",
+          description:
+            "Every profile can be saved as a wallet pass. Updates automatically when your card changes.",
+        },
+        {
+          icon: "chart",
+          title: "Realtime analytics",
+          description:
+            "See taps, opens, and saves as they happen. Filter by team member, event, and country.",
+        },
+        {
+          icon: "sync",
+          title: "CRM sync",
+          description:
+            "Push captured leads straight into HubSpot, Pipedrive, Salesforce, or a CSV. Native — no Zapier required.",
+        },
+        {
+          icon: "team",
+          title: "Team roster",
+          description:
+            "Provision, revoke, and rebrand cards for your whole team from one admin console. SSO-ready.",
+        },
+        {
+          icon: "hosting",
+          title: "Hosted in Germany",
+          description:
+            "Hetzner / IONOS Frankfurt. ISO 27001. Zero US subprocessors. GDPR-native, DPA ready on signup.",
+        },
+      ],
+    },
+
+    howItWorks: {
+      label: "How it works",
+      headline: "Three steps. Under five minutes.",
+      steps: [
+        {
+          title: "Order your card",
+          description:
+            "Choose matte, metal, or wood. We ship from Hamburg within two business days.",
+        },
+        {
+          title: "Build your profile",
+          description:
+            "Add your photo, links, social handles, and calendar. Preview in real time.",
+        },
+        {
+          title: "Tap and share",
+          description:
+            "One tap shares everything. Track every interaction from your dashboard.",
+        },
+      ],
+    },
+
+    whoUses: {
+      label: "Who uses OpSolid",
+      headline: "Made for teams that actually meet people.",
+      items: [
+        {
+          title: "Founders",
+          description:
+            "Make a memorable first impression, keep every handshake in your CRM.",
+          icon: "founder",
+        },
+        {
+          title: "Sales teams",
+          description:
+            "Equip every rep with a trackable card. See who tapped, who saved, who converted.",
+          icon: "sales",
+        },
+        {
+          title: "Agencies",
+          description:
+            "Brand every client's team with custom-domain profiles and pooled analytics.",
+          icon: "agency",
+        },
+        {
+          title: "Freelancers",
+          description:
+            "One card replaces every paper stack. Update your title without reprinting.",
+          icon: "freelancer",
+        },
+      ],
+    },
+
+    pricingPreview: {
+      label: "Two paths",
+      headline: "Grab a card, or build an entire operation.",
+      description:
+        "Most people start with the Digital Business Card. Teams with heavier operations often add custom automation on top.",
+      cards: [
+        {
+          title: "Digital Business Card",
+          priceLabel: "From €39",
+          priceCadence: "one-time · per card",
+          bullets: [
+            "NFC card shipped from Hamburg",
+            "Free digital profile, forever",
+            "Apple & Google Wallet",
+            "Optional team plan at €4.90 / user / month",
+          ],
+          ctaLabel: "Get a card",
+          ctaHref: "/products/digital-card",
+          tone: "brand",
+        },
+        {
+          title: "Automation services",
+          priceLabel: "Project-based",
+          priceCadence: "starts from discovery call",
+          bullets: [
+            "Workflow automation (n8n, Make)",
+            "Internal tools and dashboards",
+            "AI-assisted processes",
+            "Systems integration (CRM, ERP, APIs)",
+          ],
+          ctaLabel: "Book a discovery call",
+          ctaHref: "/contact",
+          tone: "dark",
+        },
+      ],
+    },
+
+    testimonials: {
+      label: "Social proof",
+      headline: "Teams who switched don't look back.",
+      items: [
+        {
+          quote:
+            "We replaced paper cards in three cities in a single week. Leads hit HubSpot in seconds, and nobody had to type anything.",
+          name: "Lena Richter",
+          role: "Head of Sales",
+          company: "Berlin-based scale-up",
+        },
+        {
+          quote:
+            "The fact that the data stays in Germany closed the deal with our legal team. Everything else was just a bonus.",
+          name: "Marco Weber",
+          role: "COO",
+          company: "Munich industrial group",
+        },
+        {
+          quote:
+            "One flat €39 for a lifetime card. No subscription trap. That alone made me switch from the US product.",
+          name: "Sarah Klein",
+          role: "Independent consultant",
+          company: "Hamburg",
+        },
+      ],
+    },
+
+    finalCta: {
+      eyebrow: "Ready?",
+      headline:
+        "Your next business card ships from Hamburg, not San Francisco.",
+      description:
+        "Order a card, book a call, or both. We reply within one business day.",
+      primaryCtaLabel: "Get a card",
+      primaryCtaHref: "/products/digital-card",
+      secondaryCtaLabel: "Talk to us",
+      secondaryCtaHref: "/contact",
     },
   },
 
@@ -1147,6 +1345,80 @@ export const content = {
           error:
             "Something went wrong. Please email contact@opsolid.de directly.",
         },
+      },
+      testimonials: {
+        label: "Social proof",
+        heading: "What customers say after switching.",
+        items: [
+          {
+            quote:
+              "We replaced paper cards in three cities in a single week. Leads hit HubSpot in seconds, and nobody had to type anything.",
+            name: "Lena Richter",
+            role: "Head of Sales",
+            company: "Berlin-based scale-up",
+          },
+          {
+            quote:
+              "The fact that the data stays in Germany closed the deal with our legal team. Everything else was just a bonus.",
+            name: "Marco Weber",
+            role: "COO",
+            company: "Munich industrial group",
+          },
+          {
+            quote:
+              "One flat €39 for a lifetime card. No subscription trap. That alone made me switch from the US product.",
+            name: "Sarah Klein",
+            role: "Independent consultant",
+            company: "Hamburg",
+          },
+        ],
+      },
+      howItWorks: {
+        label: "How it works",
+        heading: "Three steps. Under five minutes.",
+        steps: [
+          {
+            title: "Order your card",
+            description:
+              "Choose matte, metal, or wood. We ship from Hamburg within two business days.",
+          },
+          {
+            title: "Build your profile",
+            description:
+              "Add your photo, links, social handles, and calendar. Preview in real time.",
+          },
+          {
+            title: "Tap and share",
+            description:
+              "One tap shares everything. Track every interaction from your dashboard.",
+          },
+        ],
+      },
+      faq: {
+        label: "FAQ",
+        heading: "Questions, answered quickly.",
+        items: [
+          {
+            question: "Do the cards work with every phone?",
+            answer:
+              "Yes. NFC is supported on every modern iOS and Android device. The recipient never needs to install an app.",
+          },
+          {
+            question: "Where is my data stored?",
+            answer:
+              "In Frankfurt, Germany, on Hetzner and IONOS infrastructure. Zero US subprocessors. A DPA is ready the moment you sign up.",
+          },
+          {
+            question: "Can I cancel any time?",
+            answer:
+              "The €39 lifetime card has no subscription at all. Team plans are month-to-month after the first annual term.",
+          },
+          {
+            question: "Can I keep my existing CRM?",
+            answer:
+              "Yes. We sync natively with HubSpot, Pipedrive, and Salesforce — and export to CSV for anything else. No Zapier required.",
+          },
+        ],
       },
       cta: {
         eyebrow: "READY?",

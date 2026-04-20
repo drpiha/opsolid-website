@@ -12,55 +12,35 @@ import {
   Loader2,
   AlertCircle,
   CheckCircle,
+  Check,
+  X,
+  AlertTriangle,
+  Star,
+  ArrowRight,
+  ChevronDown,
 } from "lucide-react";
 import { Input, Textarea, Select } from "@/components/ui/Input";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
-import { CardHeroVisual } from "@/components/sections/digital-card/CardHeroVisual";
+import { SectionHeading } from "@/components/shared/SectionHeading";
+import { HeroCardMockup } from "@/components/sections/hero/HeroCardMockup";
 import { useLocale } from "@/context/LocaleContext";
 
 type FormState = "idle" | "sending" | "success" | "error";
 
 const featureIconMap: Record<string, React.ReactNode> = {
-  nfc: <Nfc size={22} strokeWidth={1.25} />,
-  wallet: <Wallet size={22} strokeWidth={1.25} />,
-  chart: <LineChart size={22} strokeWidth={1.25} />,
-  sync: <RefreshCw size={22} strokeWidth={1.25} />,
-  team: <Users size={22} strokeWidth={1.25} />,
-  hosting: <ServerCog size={22} strokeWidth={1.25} />,
+  nfc: <Nfc size={22} strokeWidth={2} />,
+  wallet: <Wallet size={22} strokeWidth={2} />,
+  chart: <LineChart size={22} strokeWidth={2} />,
+  sync: <RefreshCw size={22} strokeWidth={2} />,
+  team: <Users size={22} strokeWidth={2} />,
+  hosting: <ServerCog size={22} strokeWidth={2} />,
 };
 
-/**
- * Asymmetric bento spans for the 6 features (lg:grid-cols-6).
- *   [ A A ][ B B ][ C C ]    row 1 — three equal (2/6 each)
- *   [ D D D ][ E E E ]       row 2 — two wide (3/6 each)
- *   [ F F F F F F ]          row 3 — full-width (EU hosting — amber accent)
- */
-const FEATURE_SPANS = [
-  "lg:col-span-2",
-  "lg:col-span-2",
-  "lg:col-span-2",
-  "lg:col-span-3",
-  "lg:col-span-3",
-  "lg:col-span-6",
-];
-
-function CheckDot({ className = "" }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 16 16"
-      width="14"
-      height="14"
-      aria-hidden="true"
-      className={className}
-    >
-      <circle cx="8" cy="8" r="6.5" fill="none" stroke="currentColor" strokeWidth="1.25" />
-      <path d="M 5 8 L 7.5 10.5 L 11 6" stroke="currentColor" strokeWidth="1.25" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
 /** Map the textual delete/DPA label to a glyph + tone. */
-function statusPillFor(value: string): { symbol: string; tone: string } {
+function statusTokenFor(value: string): {
+  symbol: React.ReactNode;
+  tone: "good" | "bad" | "warn";
+} {
   const v = value.toLowerCase();
   if (
     v === "yes" ||
@@ -70,7 +50,10 @@ function statusPillFor(value: string): { symbol: string; tone: string } {
     v === "yerli" ||
     v === "nativ"
   ) {
-    return { symbol: "✓", tone: "text-ink" };
+    return {
+      symbol: <Check size={14} strokeWidth={3} />,
+      tone: "good",
+    };
   }
   if (
     v === "no" ||
@@ -80,18 +63,78 @@ function statusPillFor(value: string): { symbol: string; tone: string } {
     v.includes("keine us") ||
     v.includes("abd alt")
   ) {
-    return { symbol: "✗", tone: "text-steel-700" };
+    return {
+      symbol: <Check size={14} strokeWidth={3} />,
+      tone: "good",
+    };
   }
-  // partial / via SCC / teilweise / kısmen / begrenzt / sınırlı / limited
-  return { symbol: "⚠", tone: "text-amber-600" };
+  // partial / via SCC / teilweise / kısmen
+  if (
+    v.includes("partial") ||
+    v.includes("scc") ||
+    v.includes("teilweise") ||
+    v.includes("kısmen") ||
+    v.includes("limited") ||
+    v.includes("begrenzt") ||
+    v.includes("sınırlı")
+  ) {
+    return {
+      symbol: <AlertTriangle size={14} strokeWidth={2.5} />,
+      tone: "warn",
+    };
+  }
+  return {
+    symbol: <X size={14} strokeWidth={3} />,
+    tone: "bad",
+  };
+}
+
+function StatusChip({
+  symbol,
+  tone,
+  label,
+}: {
+  symbol: React.ReactNode;
+  tone: "good" | "bad" | "warn";
+  label: string;
+}) {
+  const toneClass =
+    tone === "good"
+      ? "bg-brand/10 text-brand"
+      : tone === "warn"
+      ? "bg-neutral-100 text-ink/60"
+      : "bg-neutral-100 text-ink/40";
+  return (
+    <span className="inline-flex items-center gap-1.5 text-xs">
+      <span
+        className={`flex h-5 w-5 items-center justify-center rounded-full ${toneClass}`}
+      >
+        {symbol}
+      </span>
+      <span className="text-ink/70">{label}</span>
+    </span>
+  );
+}
+
+function Row({ label, value }: { label: string; value: React.ReactNode }) {
+  return (
+    <div className="flex items-start justify-between gap-3">
+      <dt className="text-xs font-semibold uppercase tracking-wide text-ink/50 shrink-0">
+        {label}
+      </dt>
+      <dd className="text-sm text-ink text-right">{value}</dd>
+    </div>
+  );
 }
 
 export function DigitalCardPage() {
   const { t } = useLocale();
   const d = t.products.digitalCard;
+  const home = t.home;
 
   const [formState, setFormState] = useState<FormState>("idle");
   const [agreed, setAgreed] = useState(false);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -129,167 +172,212 @@ export function DigitalCardPage() {
           ================================================================ */}
       <section
         aria-labelledby="dbc-hero-title"
-        className="relative overflow-hidden pt-28 md:pt-36 lg:pt-40 paper-grain"
+        className="relative overflow-hidden pt-24 md:pt-28 lg:pt-32 pb-12 md:pb-20"
       >
-        <div className="hairline-b">
-          <div className="container-wide flex items-center justify-between py-3">
-            <span className="mono-label text-ink/60">{d.hero.eyebrow}</span>
-            <span className="mono-label hidden md:inline text-ink/40">
-              {new Date().getFullYear()}
-            </span>
-          </div>
-        </div>
-
-        <div className="container-wide relative z-10 pt-10 md:pt-14 lg:pt-16 pb-12 md:pb-20">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
-            {/* LEFT — text */}
+        <div className="container-wide">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+            {/* LEFT */}
             <AnimatedSection className="lg:col-span-7">
-              <h1
-                id="dbc-hero-title"
-                className="font-serif text-ink text-[clamp(2.5rem,6.5vw,5.25rem)] leading-[1.02] tracking-[-0.025em] text-balance"
-              >
-                <span className="sr-only">{d.hero.title.join(" ")}</span>
-                <span aria-hidden="true" className="block">
-                  {d.hero.title.map((line, i) => (
-                    <span key={i} className="block">
-                      {line}
-                    </span>
+              {/* Rating pill */}
+              <div className="inline-flex items-center gap-2 rounded-full bg-neutral-50 border border-neutral-200 px-3.5 py-1.5 shadow-soft">
+                <span
+                  className="flex items-center gap-0.5 text-brand"
+                  aria-hidden="true"
+                >
+                  {[0, 1, 2, 3, 4].map((i) => (
+                    <Star
+                      key={i}
+                      size={12}
+                      fill="currentColor"
+                      strokeWidth={0}
+                    />
                   ))}
                 </span>
+                <span className="text-xs font-semibold text-ink">
+                  {home.hero.ratingPill}
+                </span>
+              </div>
+
+              <h1
+                id="dbc-hero-title"
+                className="mt-6 md:mt-8 font-sans font-extrabold text-ink tracking-[-0.035em] leading-[0.98] text-balance text-[clamp(2.75rem,7vw,5.25rem)]"
+              >
+                {d.hero.title.map((line, i) => (
+                  <span key={i} className="block">
+                    {line}
+                  </span>
+                ))}
               </h1>
 
-              <p className="mt-7 md:mt-9 max-w-[60ch] text-ink/70 text-body-lg leading-relaxed text-pretty">
+              <p className="mt-6 md:mt-7 text-body-lg text-ink/60 max-w-[580px] leading-relaxed text-pretty">
                 {d.hero.paragraph}
               </p>
 
-              <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
-                <Link
-                  href="#lead"
-                  className="group inline-flex items-center gap-2.5 bg-amber text-ink px-6 py-3.5 font-medium hairline hover:bg-amber-600 hover:text-paper transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber"
-                >
+              <div className="mt-8 flex flex-wrap items-center gap-3">
+                <Link href="#lead" className="btn-primary">
                   <span>{d.hero.primaryCta}</span>
-                  <span
-                    aria-hidden="true"
-                    className="transition-transform duration-200 group-hover:translate-x-0.5"
-                  >
-                    →
-                  </span>
+                  <ArrowRight size={16} strokeWidth={2.5} />
                 </Link>
-                <Link
-                  href="#features"
-                  className="inline-flex items-center gap-2 text-ink underline underline-offset-8 decoration-ink/20 decoration-1 hover:decoration-ink transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber"
-                >
+                <Link href="#features" className="btn-ghost">
                   <span>{d.hero.secondaryCta}</span>
                 </Link>
               </div>
 
-              <div className="mt-10 md:mt-12">
-                <span className="mono-label text-ink/55 leading-relaxed">
-                  {d.hero.tags}
+              <p className="mt-5 text-sm text-ink/50">{home.hero.footnote}</p>
+            </AnimatedSection>
+
+            {/* RIGHT — hero mockup */}
+            <div className="lg:col-span-5 animate-rise">
+              <HeroCardMockup
+                name={d.hero.cardLabels.name}
+                role={d.hero.cardLabels.role}
+                company={d.hero.cardLabels.company}
+                cardLabel={d.hero.cardLabels.chip}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          TRUST STRIP
+          ================================================================ */}
+      <section
+        aria-label="Trust signals"
+        className="border-t border-b border-neutral-200 bg-white"
+      >
+        <div className="container-wide">
+          <div
+            className="flex items-center justify-center md:justify-between gap-4 md:gap-6 py-5 md:py-6 overflow-x-auto [overscroll-behavior-x:contain]"
+            style={{ scrollbarWidth: "none" }}
+          >
+            <div className="flex items-center gap-2 shrink-0">
+              <span
+                className="flex items-center gap-0.5 text-brand"
+                aria-hidden="true"
+              >
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <Star key={i} size={14} fill="currentColor" strokeWidth={0} />
+                ))}
+              </span>
+              <span className="text-sm font-semibold text-ink whitespace-nowrap">
+                {home.trustStrip.items[0]}
+              </span>
+            </div>
+            {home.trustStrip.items.slice(1).map((item, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-4 md:gap-6 shrink-0"
+              >
+                <span
+                  className="hidden md:inline-block h-1 w-1 rounded-full bg-neutral-300"
+                  aria-hidden="true"
+                />
+                <span className="text-sm font-medium text-ink/60 whitespace-nowrap">
+                  {item}
                 </span>
               </div>
-            </AnimatedSection>
-
-            {/* RIGHT — card visual */}
-            <AnimatedSection delay={0.1} className="lg:col-span-5">
-              <CardHeroVisual />
-            </AnimatedSection>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ================================================================
-          FEATURES BENTO
+          FEATURES
           ================================================================ */}
-      <section id="features" className="section hairline-t bg-paper">
+      <section id="features" className="section bg-white">
         <div className="container-wide">
-          {/* Two-column editorial header */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-12 lg:mb-16">
-            <AnimatedSection className="lg:col-span-7">
-              <div className="mono-label mb-4">{d.features.label}</div>
-              <h2 className="font-serif text-ink text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.06] tracking-[-0.02em] text-balance">
-                {d.features.heading}
-              </h2>
-            </AnimatedSection>
+          <AnimatedSection>
+            <SectionHeading
+              label={d.features.label}
+              headline={d.features.heading}
+              description={d.features.intro}
+              align="center"
+            />
+          </AnimatedSection>
 
-            <AnimatedSection
-              delay={0.1}
-              className="lg:col-span-5 lg:pt-2 flex items-start"
-            >
-              <p className="text-ink/70 text-body-lg leading-relaxed text-pretty">
-                {d.features.intro}
-              </p>
-            </AnimatedSection>
-          </div>
-
-          {/* Bento grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 lg:gap-5">
-            {d.features.items.map((item, i) => {
-              const isAccent = item.icon === "hosting";
-              return (
-                <AnimatedSection
-                  key={i}
-                  delay={0.04 * i}
-                  className={FEATURE_SPANS[i % FEATURE_SPANS.length]}
-                >
-                  <div
-                    className={`h-full rounded-2xl border border-ink/10 p-6 md:p-7 transition-colors duration-300 hover:border-amber/60 ${
-                      isAccent ? "bg-amber/15" : "bg-paper-warm"
-                    }`}
-                  >
-                    <div className="flex items-center gap-3 mb-4">
-                      <div className="flex h-9 w-9 items-center justify-center rounded-lg border border-ink/10 bg-paper text-ink">
-                        {featureIconMap[item.icon]}
-                      </div>
-                      <div className="mono-label text-ink/60">{item.label}</div>
-                    </div>
-                    <h3 className="font-serif text-ink text-[1.375rem] leading-[1.2] tracking-[-0.015em]">
-                      {item.title}
-                    </h3>
-                    <p className="mt-3 text-ink/70 text-sm leading-relaxed text-pretty max-w-prose">
-                      {item.desc}
-                    </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+            {d.features.items.map((item, i) => (
+              <AnimatedSection key={i} delay={0.05 * i}>
+                <div className="pop-card h-full p-6 md:p-8 flex flex-col">
+                  <div className="w-12 h-12 rounded-2xl bg-brand/10 flex items-center justify-center text-brand mb-5">
+                    {featureIconMap[item.icon]}
                   </div>
-                </AnimatedSection>
-              );
-            })}
+                  <h3 className="text-heading font-bold text-ink mb-2 tracking-tight">
+                    {item.title}
+                  </h3>
+                  <p className="text-body text-ink/60 leading-relaxed text-pretty">
+                    {item.desc}
+                  </p>
+                </div>
+              </AnimatedSection>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ================================================================
-          COMPLIANCE TABLE
+          HOW IT WORKS
           ================================================================ */}
-      <section id="compliance" className="section hairline-t bg-paper-cool/40">
+      <section className="section bg-neutral-50">
         <div className="container-wide">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-10 lg:mb-14">
-            <AnimatedSection className="lg:col-span-7">
-              <div className="mono-label mb-4">{d.compliance.label}</div>
-              <h2 className="font-serif text-ink text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.06] tracking-[-0.02em] text-balance">
-                {d.compliance.heading}
-              </h2>
-            </AnimatedSection>
-            <AnimatedSection
-              delay={0.1}
-              className="lg:col-span-5 lg:pt-2 flex items-start"
-            >
-              <p className="text-ink/70 text-body-lg leading-relaxed text-pretty">
-                {d.compliance.intro}
-              </p>
-            </AnimatedSection>
-          </div>
+          <AnimatedSection>
+            <SectionHeading
+              label={d.howItWorks.label}
+              headline={d.howItWorks.heading}
+              align="center"
+            />
+          </AnimatedSection>
 
-          {/* Desktop: real table */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 lg:gap-12">
+            {d.howItWorks.steps.map((step, i) => (
+              <AnimatedSection
+                key={i}
+                delay={0.1 * i}
+                className="flex flex-col items-center text-center"
+              >
+                <div className="w-[5.5rem] h-[5.5rem] rounded-full bg-white border-2 border-brand flex items-center justify-center shadow-soft mb-6">
+                  <span className="font-sans font-black text-brand text-[2.75rem] leading-none">
+                    {i + 1}
+                  </span>
+                </div>
+                <h3 className="text-heading font-bold text-ink mb-3 tracking-tight">
+                  {step.title}
+                </h3>
+                <p className="text-body text-ink/60 leading-relaxed max-w-xs text-pretty">
+                  {step.description}
+                </p>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          SOVEREIGNTY TABLE
+          ================================================================ */}
+      <section className="section bg-white">
+        <div className="container-wide">
+          <AnimatedSection>
+            <SectionHeading
+              label={d.compliance.label}
+              headline={d.compliance.heading}
+              description={d.compliance.intro}
+              align="center"
+            />
+          </AnimatedSection>
+
+          {/* Desktop */}
           <AnimatedSection className="hidden md:block">
-            <div className="overflow-x-auto hairline rounded-2xl bg-paper-warm">
-              <table className="w-full font-mono text-sm">
-                <thead>
-                  <tr className="border-b border-ink/10">
+            <div className="overflow-hidden rounded-3xl border border-neutral-200 bg-white shadow-card">
+              <table className="w-full text-sm">
+                <thead className="bg-neutral-50">
+                  <tr>
                     {d.compliance.cols.map((col, i) => (
                       <th
                         key={i}
                         scope="col"
-                        className="text-left px-5 py-4 mono-label text-ink/60 font-normal"
+                        className="text-left px-6 py-4 text-xs font-semibold uppercase tracking-wide text-ink/60"
                       >
                         {col}
                       </th>
@@ -299,28 +387,48 @@ export function DigitalCardPage() {
                 <tbody>
                   {d.compliance.rows.map((row, i) => {
                     const highlighted = row.highlight === "true";
-                    const dpa = statusPillFor(row.dpa);
-                    const del = statusPillFor(row.del);
-                    const sub = statusPillFor(row.sub);
+                    const dpa = statusTokenFor(row.dpa);
+                    const del = statusTokenFor(row.del);
+                    const sub = statusTokenFor(row.sub);
                     return (
                       <tr
                         key={i}
-                        className={`${
+                        className={`border-t border-neutral-200 ${
                           highlighted
-                            ? "bg-amber/[0.08] font-medium"
-                            : "bg-transparent"
-                        } ${i < d.compliance.rows.length - 1 ? "border-b border-ink/10" : ""}`}
+                            ? "bg-brand/[0.04]"
+                            : "hover:bg-neutral-50/70 transition-colors"
+                        }`}
                       >
-                        <td className="px-5 py-4 text-ink">{row.provider}</td>
-                        <td className="px-5 py-4 text-ink/80">{row.host}</td>
-                        <td className="px-5 py-4">
-                          <StatusChip symbol={sub.symbol} tone={sub.tone} label={row.sub} />
+                        <td
+                          className={`px-6 py-5 ${
+                            highlighted
+                              ? "font-bold text-ink"
+                              : "font-semibold text-ink"
+                          }`}
+                        >
+                          {row.provider}
                         </td>
-                        <td className="px-5 py-4">
-                          <StatusChip symbol={dpa.symbol} tone={dpa.tone} label={row.dpa} />
+                        <td className="px-6 py-5 text-ink/70">{row.host}</td>
+                        <td className="px-6 py-5">
+                          <StatusChip
+                            symbol={sub.symbol}
+                            tone={sub.tone}
+                            label={row.sub}
+                          />
                         </td>
-                        <td className="px-5 py-4">
-                          <StatusChip symbol={del.symbol} tone={del.tone} label={row.del} />
+                        <td className="px-6 py-5">
+                          <StatusChip
+                            symbol={dpa.symbol}
+                            tone={dpa.tone}
+                            label={row.dpa}
+                          />
+                        </td>
+                        <td className="px-6 py-5">
+                          <StatusChip
+                            symbol={del.symbol}
+                            tone={del.tone}
+                            label={row.del}
+                          />
                         </td>
                       </tr>
                     );
@@ -330,45 +438,59 @@ export function DigitalCardPage() {
             </div>
           </AnimatedSection>
 
-          {/* Mobile: stacked cards */}
+          {/* Mobile cards */}
           <div className="md:hidden grid grid-cols-1 gap-4">
             {d.compliance.rows.map((row, i) => {
               const highlighted = row.highlight === "true";
-              const dpa = statusPillFor(row.dpa);
-              const del = statusPillFor(row.del);
-              const sub = statusPillFor(row.sub);
+              const dpa = statusTokenFor(row.dpa);
+              const del = statusTokenFor(row.del);
+              const sub = statusTokenFor(row.sub);
               return (
                 <AnimatedSection key={i} delay={0.05 * i}>
                   <div
-                    className={`rounded-2xl border border-ink/10 p-5 ${
-                      highlighted ? "bg-amber/[0.08]" : "bg-paper-warm"
+                    className={`rounded-2xl border p-5 ${
+                      highlighted
+                        ? "bg-brand/[0.06] border-brand/30"
+                        : "bg-white border-neutral-200"
                     }`}
                   >
                     <div
-                      className={`font-serif text-xl text-ink ${
-                        highlighted ? "font-medium" : ""
+                      className={`text-lg text-ink ${
+                        highlighted ? "font-bold" : "font-semibold"
                       }`}
                     >
                       {row.provider}
                     </div>
-                    <dl className="mt-4 grid grid-cols-1 gap-2.5 font-mono text-xs">
+                    <dl className="mt-4 grid grid-cols-1 gap-3">
                       <Row label={d.compliance.cols[1]} value={row.host} />
                       <Row
                         label={d.compliance.cols[2]}
                         value={
-                          <StatusChip symbol={sub.symbol} tone={sub.tone} label={row.sub} />
+                          <StatusChip
+                            symbol={sub.symbol}
+                            tone={sub.tone}
+                            label={row.sub}
+                          />
                         }
                       />
                       <Row
                         label={d.compliance.cols[3]}
                         value={
-                          <StatusChip symbol={dpa.symbol} tone={dpa.tone} label={row.dpa} />
+                          <StatusChip
+                            symbol={dpa.symbol}
+                            tone={dpa.tone}
+                            label={row.dpa}
+                          />
                         }
                       />
                       <Row
                         label={d.compliance.cols[4]}
                         value={
-                          <StatusChip symbol={del.symbol} tone={del.tone} label={row.del} />
+                          <StatusChip
+                            symbol={del.symbol}
+                            tone={del.tone}
+                            label={row.del}
+                          />
                         }
                       />
                     </dl>
@@ -381,74 +503,78 @@ export function DigitalCardPage() {
       </section>
 
       {/* ================================================================
-          PRICING
+          PRICING — 3 cards
           ================================================================ */}
-      <section id="pricing" className="section hairline-t bg-paper">
+      <section id="pricing" className="section bg-neutral-50">
         <div className="container-wide">
-          <AnimatedSection className="max-w-3xl mb-12 lg:mb-16">
-            <div className="mono-label mb-4">{d.pricing.label}</div>
-            <h2 className="font-serif text-ink text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.06] tracking-[-0.02em] text-balance">
-              {d.pricing.heading}
-            </h2>
+          <AnimatedSection>
+            <SectionHeading
+              label={d.pricing.label}
+              headline={d.pricing.heading}
+              align="center"
+            />
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 lg:gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6 items-stretch max-w-5xl mx-auto">
             {d.pricing.plans.map((plan, i) => {
               const popular = plan.popular === "true";
               return (
-                <AnimatedSection key={i} delay={0.06 * i}>
+                <AnimatedSection key={i} delay={0.08 * i}>
                   <div
-                    className={`relative h-full rounded-2xl border p-7 md:p-8 flex flex-col gap-6 ${
+                    className={`relative h-full rounded-3xl p-7 md:p-8 flex flex-col gap-6 ${
                       popular
-                        ? "border-amber bg-paper-warm shadow-medium"
-                        : "border-ink/10 bg-paper-warm"
+                        ? "bg-white border-2 border-brand shadow-lifted md:-mt-2 md:mb-0"
+                        : "bg-white border border-neutral-200 shadow-card"
                     }`}
                   >
                     {popular && (
-                      <span className="absolute -top-3 left-7 inline-flex items-center gap-1 bg-amber text-ink px-2.5 py-1 mono-label text-[0.65rem] hairline">
-                        <span className="h-1.5 w-1.5 rounded-full bg-ink" />
+                      <span className="absolute -top-3 right-6 inline-flex items-center gap-1 rounded-full bg-brand text-white text-[0.65rem] font-bold uppercase tracking-wider px-3 py-1 shadow-cta">
                         {d.pricing.popularBadge}
                       </span>
                     )}
 
                     <div>
-                      <div className="mono-label text-ink/60">{plan.name}</div>
+                      <div className="text-sm font-semibold uppercase tracking-wide text-ink/55">
+                        {plan.name}
+                      </div>
                       <div className="mt-3 flex items-baseline gap-2 flex-wrap">
-                        <span className="font-serif text-ink text-[clamp(2.5rem,5vw,3.5rem)] leading-none tracking-[-0.02em]">
+                        <span className="font-sans font-extrabold text-ink text-[clamp(2.25rem,4.5vw,3rem)] leading-none tracking-[-0.03em]">
                           {plan.price}
                         </span>
                         {plan.cadence && (
-                          <span className="text-ink/55 text-sm font-mono">
+                          <span className="text-sm text-ink/55">
                             {plan.cadence}
                           </span>
                         )}
                       </div>
                     </div>
 
-                    <ul className="space-y-3 text-sm text-ink/80 flex-1">
+                    <ul className="space-y-3 flex-1">
                       {plan.bullets.map((b, j) => (
                         <li key={j} className="flex items-start gap-3">
-                          <CheckDot className="mt-1 shrink-0 text-ink/60" />
-                          <span className="leading-relaxed text-pretty">{b}</span>
+                          <span
+                            className="mt-0.5 shrink-0 w-5 h-5 rounded-full bg-brand/15 text-brand flex items-center justify-center"
+                            aria-hidden="true"
+                          >
+                            <Check size={12} strokeWidth={3} />
+                          </span>
+                          <span className="text-sm leading-relaxed text-ink/80 text-pretty">
+                            {b}
+                          </span>
                         </li>
                       ))}
                     </ul>
 
                     <Link
                       href={plan.href}
-                      className={`group inline-flex items-center justify-center gap-2.5 px-5 py-3 font-medium hairline transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber ${
+                      className={
                         popular
-                          ? "bg-amber text-ink hover:bg-amber-600 hover:text-paper"
-                          : "bg-paper text-ink hover:bg-ink hover:text-paper"
-                      }`}
+                          ? "btn-primary w-full"
+                          : "btn-secondary w-full"
+                      }
                     >
                       <span>{plan.cta}</span>
-                      <span
-                        aria-hidden="true"
-                        className="transition-transform duration-200 group-hover:translate-x-0.5"
-                      >
-                        →
-                      </span>
+                      <ArrowRight size={16} strokeWidth={2.5} />
                     </Link>
                   </div>
                 </AnimatedSection>
@@ -459,31 +585,88 @@ export function DigitalCardPage() {
       </section>
 
       {/* ================================================================
+          TESTIMONIALS
+          ================================================================ */}
+      <section className="section bg-white">
+        <div className="container-wide">
+          <AnimatedSection>
+            <SectionHeading
+              label={d.testimonials.label}
+              headline={d.testimonials.heading}
+              align="center"
+            />
+          </AnimatedSection>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+            {d.testimonials.items.map((item, i) => (
+              <AnimatedSection key={i} delay={0.08 * i}>
+                <figure className="pop-card h-full p-6 md:p-7 flex flex-col gap-5">
+                  <div
+                    className="flex items-center gap-0.5 text-brand"
+                    aria-label="5 out of 5 stars"
+                  >
+                    {[0, 1, 2, 3, 4].map((j) => (
+                      <Star
+                        key={j}
+                        size={16}
+                        fill="currentColor"
+                        strokeWidth={0}
+                      />
+                    ))}
+                  </div>
+                  <blockquote className="text-ink text-body leading-relaxed text-pretty flex-1">
+                    &ldquo;{item.quote}&rdquo;
+                  </blockquote>
+                  <figcaption className="flex items-center gap-3 pt-4 border-t border-neutral-200">
+                    <div className="h-10 w-10 rounded-full bg-gradient-to-br from-brand to-brand-700 text-white flex items-center justify-center text-sm font-bold shrink-0">
+                      {item.name
+                        .split(" ")
+                        .slice(0, 2)
+                        .map((n) => n[0] ?? "")
+                        .join("")}
+                    </div>
+                    <div className="min-w-0">
+                      <div className="text-sm font-semibold text-ink truncate">
+                        {item.name}
+                      </div>
+                      <div className="text-xs text-ink/55 truncate">
+                        {item.role} · {item.company}
+                      </div>
+                    </div>
+                  </figcaption>
+                </figure>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
           LEAD FORM
           ================================================================ */}
-      <section id="lead" className="section hairline-t bg-paper-cool/40">
+      <section id="lead" className="section bg-neutral-50">
         <div className="container-wide">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
             <AnimatedSection className="lg:col-span-5">
-              <div className="mono-label mb-4">{d.lead.label}</div>
-              <h2 className="font-serif text-ink text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.06] tracking-[-0.02em] text-balance">
+              <div className="eyebrow uppercase mb-4 text-ink/60">
+                {d.lead.label}
+              </div>
+              <h2 className="font-sans font-extrabold text-ink text-[clamp(2rem,4.5vw,3rem)] leading-[1.04] tracking-[-0.03em] text-balance">
                 {d.lead.heading}
               </h2>
-              <p className="mt-6 text-ink/70 text-body-lg leading-relaxed text-pretty max-w-[50ch]">
+              <p className="mt-6 text-body-lg text-ink/60 leading-relaxed max-w-[50ch] text-pretty">
                 {d.lead.intro}
               </p>
             </AnimatedSection>
 
             <AnimatedSection delay={0.1} className="lg:col-span-7">
-              <div className="rounded-2xl hairline bg-paper-warm p-6 md:p-8">
+              <div className="rounded-3xl bg-white border border-neutral-200 shadow-card p-6 md:p-8">
                 {formState === "success" ? (
                   <div className="text-center py-10">
-                    <CheckCircle
-                      size={36}
-                      strokeWidth={1.25}
-                      className="text-ink mx-auto mb-4"
-                    />
-                    <p className="font-serif text-ink text-2xl leading-snug text-balance max-w-md mx-auto">
+                    <div className="w-14 h-14 rounded-full bg-brand/10 text-brand flex items-center justify-center mx-auto mb-5">
+                      <CheckCircle size={28} strokeWidth={2.5} />
+                    </div>
+                    <p className="font-sans font-bold text-ink text-2xl leading-snug text-balance max-w-md mx-auto">
                       {d.lead.fields.success}
                     </p>
                   </div>
@@ -544,13 +727,13 @@ export function DigitalCardPage() {
                         checked={agreed}
                         onChange={(e) => setAgreed(e.target.checked)}
                         required
-                        className="mt-1 h-4 w-4 rounded-sm border-ink/30 text-ink accent-amber-600 focus:ring-2 focus:ring-amber/50"
+                        className="mt-1 h-4 w-4 rounded border-neutral-300 text-brand accent-brand focus:ring-2 focus:ring-brand/30"
                       />
                       <span className="text-xs text-ink/60 leading-relaxed">
                         {d.lead.fields.consent}{" "}
                         <Link
                           href="/privacy"
-                          className="text-ink underline underline-offset-4 decoration-ink/30 hover:decoration-ink"
+                          className="text-ink underline underline-offset-4 decoration-ink/30 hover:decoration-brand hover:text-brand transition-colors"
                         >
                           {d.lead.fields.privacyLink}
                         </Link>
@@ -558,8 +741,8 @@ export function DigitalCardPage() {
                     </label>
 
                     {formState === "error" && (
-                      <div className="flex items-center gap-2 text-sm text-amber-700 bg-amber/10 hairline rounded-lg p-3">
-                        <AlertCircle size={16} strokeWidth={1.25} />
+                      <div className="flex items-center gap-2 text-sm text-brand bg-brand/5 border border-brand/20 rounded-xl p-3">
+                        <AlertCircle size={16} strokeWidth={2} />
                         <span>{d.lead.fields.error}</span>
                       </div>
                     )}
@@ -567,22 +750,21 @@ export function DigitalCardPage() {
                     <button
                       type="submit"
                       disabled={formState === "sending" || !agreed}
-                      className="group inline-flex items-center gap-2.5 bg-amber text-ink px-6 py-3.5 font-medium hairline hover:bg-amber-600 hover:text-paper transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber disabled:opacity-50 disabled:pointer-events-none"
+                      className="btn-primary w-full disabled:opacity-50 disabled:pointer-events-none"
                     >
                       {formState === "sending" ? (
                         <>
-                          <Loader2 size={16} strokeWidth={1.5} className="animate-spin" />
+                          <Loader2
+                            size={16}
+                            strokeWidth={2.5}
+                            className="animate-spin"
+                          />
                           <span>{d.lead.fields.submitting}</span>
                         </>
                       ) : (
                         <>
                           <span>{d.lead.fields.submit}</span>
-                          <span
-                            aria-hidden="true"
-                            className="transition-transform duration-200 group-hover:translate-x-0.5"
-                          >
-                            →
-                          </span>
+                          <ArrowRight size={16} strokeWidth={2.5} />
                         </>
                       )}
                     </button>
@@ -595,34 +777,91 @@ export function DigitalCardPage() {
       </section>
 
       {/* ================================================================
-          BOTTOM CTA
+          FAQ — short accordion
           ================================================================ */}
-      <section className="section bg-ink text-paper paper-grain">
-        <div className="container-wide">
+      <section className="section bg-white">
+        <div className="container-wide max-w-3xl">
+          <AnimatedSection>
+            <SectionHeading
+              label={d.faq.label}
+              headline={d.faq.heading}
+              align="center"
+            />
+          </AnimatedSection>
+
+          <div className="space-y-3">
+            {d.faq.items.map((item, i) => {
+              const isOpen = openFaq === i;
+              return (
+                <AnimatedSection key={i} delay={0.04 * i}>
+                  <div
+                    className={`rounded-2xl border transition-colors ${
+                      isOpen
+                        ? "bg-white border-neutral-300 shadow-card"
+                        : "bg-neutral-50 border-neutral-200"
+                    }`}
+                  >
+                    <button
+                      type="button"
+                      aria-expanded={isOpen}
+                      onClick={() => setOpenFaq(isOpen ? null : i)}
+                      className="w-full flex items-center justify-between gap-4 px-5 md:px-6 py-5 text-left"
+                    >
+                      <span className="text-body font-semibold text-ink">
+                        {item.question}
+                      </span>
+                      <ChevronDown
+                        size={20}
+                        strokeWidth={2.5}
+                        className={`shrink-0 text-ink/50 transition-transform duration-300 ${
+                          isOpen ? "rotate-180 text-brand" : ""
+                        }`}
+                      />
+                    </button>
+                    <div
+                      className={`grid overflow-hidden transition-[grid-template-rows] duration-300 ease-out ${
+                        isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                      }`}
+                    >
+                      <div className="min-h-0">
+                        <p className="px-5 md:px-6 pb-5 text-body text-ink/65 leading-relaxed text-pretty">
+                          {item.answer}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </AnimatedSection>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          FINAL CTA
+          ================================================================ */}
+      <section className="section bg-ink text-white relative overflow-hidden">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-40 left-1/2 -translate-x-1/2 w-[70rem] h-[40rem] rounded-full bg-brand/25 blur-3xl"
+        />
+        <div className="container-wide relative">
           <AnimatedSection>
             <div className="max-w-3xl mx-auto text-center">
-              <div className="mono-label text-amber mb-5">
+              <div className="eyebrow uppercase text-brand-300 mb-5">
                 {d.cta.eyebrow}
               </div>
-              <h2 className="font-serif text-[clamp(2rem,5.5vw,4rem)] leading-[1.05] tracking-[-0.025em] text-balance whitespace-pre-line">
+              <h2 className="font-sans font-extrabold text-white text-[clamp(2.25rem,5.5vw,4rem)] leading-[1.04] tracking-[-0.035em] text-balance whitespace-pre-line">
                 {d.cta.heading}
               </h2>
-              <div className="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
-                <Link
-                  href="/contact"
-                  className="group inline-flex items-center gap-2.5 bg-amber text-ink px-7 py-4 font-medium hover:bg-amber-400 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber"
-                >
+              <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+                <Link href="/contact" className="btn-primary">
                   <span>{d.cta.primaryCta}</span>
-                  <span
-                    aria-hidden="true"
-                    className="transition-transform duration-200 group-hover:translate-x-0.5"
-                  >
-                    →
-                  </span>
+                  <ArrowRight size={16} strokeWidth={2.5} />
                 </Link>
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-2 text-paper underline underline-offset-8 decoration-paper/30 decoration-1 hover:decoration-paper transition-colors duration-200"
+                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 text-white font-semibold px-6 py-3.5 hover:bg-white hover:text-ink transition-colors"
                 >
                   <span>{d.cta.secondaryCta}</span>
                 </Link>
@@ -632,35 +871,5 @@ export function DigitalCardPage() {
         </div>
       </section>
     </>
-  );
-}
-
-/** Pill rendering a glyph + textual label, using hairline border. */
-function StatusChip({
-  symbol,
-  tone,
-  label,
-}: {
-  symbol: string;
-  tone: string;
-  label: string;
-}) {
-  return (
-    <span className="inline-flex items-center gap-1.5 hairline rounded-full px-2.5 py-1 bg-paper text-xs">
-      <span className={`${tone} font-bold`} aria-hidden="true">
-        {symbol}
-      </span>
-      <span className="text-ink/80">{label}</span>
-    </span>
-  );
-}
-
-/** Mobile-card label/value row. */
-function Row({ label, value }: { label: string; value: React.ReactNode }) {
-  return (
-    <div className="flex items-start justify-between gap-3">
-      <dt className="mono-label text-ink/55 shrink-0">{label}</dt>
-      <dd className="text-ink text-right">{value}</dd>
-    </div>
   );
 }

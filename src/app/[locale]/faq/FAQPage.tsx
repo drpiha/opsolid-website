@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
-import { ChevronDown } from "lucide-react";
+import { Plus, ArrowRight } from "lucide-react";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { useLocale } from "@/context/LocaleContext";
 import { cn } from "@/lib/utils";
@@ -29,24 +29,13 @@ export function FAQPage() {
       {/* Hero */}
       <section
         aria-labelledby="faq-title"
-        className="relative pt-32 md:pt-40 pb-12 md:pb-16 paper-grain overflow-hidden"
+        className="relative pt-32 md:pt-40 pb-10 md:pb-14 bg-white"
       >
-        <div className="hairline-b">
-          <div className="container-wide flex items-center justify-between py-3">
-            <span className="mono-label text-ink/60">
-              [ FAQ · 06 ]   QUESTIONS
-            </span>
-            <span className="mono-label hidden md:inline text-ink/40">
-              {new Date().getFullYear()}
-            </span>
-          </div>
-        </div>
-
-        <div className="container-narrow relative z-10 pt-10 md:pt-16 text-center">
-          <div className="mono-label text-ink/60 mb-5">{s.hero.label}</div>
+        <div className="container-narrow text-center">
+          <div className="eyebrow uppercase text-brand mb-4">{s.hero.label}</div>
           <h1
             id="faq-title"
-            className="font-serif text-ink text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[1.04] tracking-[-0.025em] text-balance"
+            className="text-[clamp(2.5rem,6vw,4.5rem)] font-extrabold leading-[1.02] tracking-[-0.035em] text-ink text-balance"
           >
             {s.hero.headline}
           </h1>
@@ -57,7 +46,7 @@ export function FAQPage() {
       </section>
 
       {/* Category filter */}
-      <section className="hairline-t">
+      <section className="bg-white">
         <div className="container-wide py-6">
           <div className="flex flex-wrap items-center justify-center gap-2">
             <FilterChip
@@ -80,36 +69,33 @@ export function FAQPage() {
       </section>
 
       {/* FAQ accordion */}
-      <section className="hairline-t section-sm">
+      <section className="section-sm bg-white">
         <div className="container-narrow">
-          <div className="hairline-t">
+          <div className="border-t border-neutral-200">
             {filteredItems.map((item, i) => {
               const key = `${item.category}-${i}`;
               const isOpen = openItems[key];
-              const index = String(i + 1).padStart(2, "0");
               return (
                 <AnimatedSection key={key} delay={i * 0.04}>
-                  <div className="hairline-b">
+                  <div className="border-b border-neutral-200">
                     <button
                       onClick={() => toggle(key)}
                       aria-expanded={isOpen}
                       aria-controls={`faq-panel-${key}`}
-                      className="w-full flex items-start gap-5 md:gap-6 text-left py-6 md:py-7 group focus-visible:outline-none"
+                      className="w-full flex items-center gap-5 text-left py-6 md:py-7 group focus-visible:outline-none"
                     >
-                      <span className="mono-label text-ink/50 pt-2 shrink-0 hidden sm:block">
-                        Q · {index}
-                      </span>
-                      <h2 className="flex-1 font-serif text-ink text-[1.25rem] md:text-[1.5rem] leading-[1.2] tracking-[-0.015em] text-balance group-hover:text-ink/80 transition-colors">
+                      <h2 className="flex-1 text-lg md:text-xl font-semibold text-ink tracking-[-0.015em] leading-snug text-balance group-hover:text-brand transition-colors">
                         {item.question}
                       </h2>
-                      <ChevronDown
-                        size={20}
+                      <span
                         aria-hidden="true"
                         className={cn(
-                          "shrink-0 mt-1.5 text-amber transition-transform duration-300",
-                          isOpen && "rotate-180"
+                          "shrink-0 flex h-9 w-9 items-center justify-center rounded-full text-brand transition-transform duration-300",
+                          isOpen ? "rotate-45 bg-brand/10" : "rotate-0"
                         )}
-                      />
+                      >
+                        <Plus size={18} strokeWidth={2.25} />
+                      </span>
                     </button>
 
                     <div
@@ -123,12 +109,12 @@ export function FAQPage() {
                       )}
                     >
                       <div className="overflow-hidden">
-                        <div className="pb-6 md:pb-8 sm:pl-[4.25rem] pr-8">
+                        <div className="pb-6 md:pb-8 pr-12">
                           <p className="text-ink/75 text-body leading-relaxed text-pretty">
                             {item.answer}
                           </p>
                           <div className="mt-4">
-                            <span className="mono-label text-ink/50">
+                            <span className="trust-pill">
                               {s.categories[
                                 item.category as keyof typeof s.categories
                               ] || item.category}
@@ -146,34 +132,21 @@ export function FAQPage() {
       </section>
 
       {/* CTA */}
-      <section className="hairline-t bg-ink text-paper paper-grain">
-        <div className="container-wide section">
+      <section className="section-sm bg-neutral-50">
+        <div className="container-wide">
           <AnimatedSection>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
-              <div className="lg:col-span-7">
-                <div className="mono-label text-paper/60 mb-5">
-                  [ NEXT ]   CONVERSATION
-                </div>
-                <h2 className="font-serif text-paper text-[clamp(2rem,5vw,3.75rem)] leading-[1.04] tracking-[-0.025em] text-balance">
-                  {s.cta.headline}
-                </h2>
-                <p className="mt-5 max-w-xl text-paper/70 text-body-lg leading-relaxed text-pretty">
-                  {s.cta.description}
-                </p>
-              </div>
-
-              <div className="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col items-start gap-5 lg:items-end lg:justify-end">
-                <Link
-                  href="/contact"
-                  className="group inline-flex items-center gap-2.5 bg-amber text-ink px-7 py-4 font-medium hairline hover:bg-paper transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber"
-                >
+            <div className="pop-card p-10 md:p-14 text-center max-w-3xl mx-auto">
+              <div className="eyebrow uppercase text-brand mb-4">Next step</div>
+              <h2 className="text-[clamp(1.75rem,4vw,3rem)] font-extrabold leading-[1.08] tracking-[-0.03em] text-ink text-balance">
+                {s.cta.headline}
+              </h2>
+              <p className="mt-5 max-w-xl mx-auto text-ink/70 text-body leading-relaxed text-pretty">
+                {s.cta.description}
+              </p>
+              <div className="mt-8 flex justify-center">
+                <Link href="/contact" className="btn-primary">
                   <span>{s.cta.primaryCta}</span>
-                  <span
-                    aria-hidden="true"
-                    className="transition-transform duration-200 group-hover:translate-x-0.5"
-                  >
-                    →
-                  </span>
+                  <ArrowRight size={16} aria-hidden="true" />
                 </Link>
               </div>
             </div>
@@ -197,10 +170,10 @@ function FilterChip({
     <button
       onClick={onClick}
       className={cn(
-        "rounded-full px-4 py-2 font-mono text-[0.6875rem] tracking-[0.14em] uppercase transition-colors duration-200 focus-visible:outline-none focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber",
+        "rounded-full px-4 py-2 text-xs font-semibold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/30 focus-visible:ring-offset-2",
         active
-          ? "bg-ink text-paper"
-          : "hairline bg-paper-warm text-ink/70 hover:border-ink/25 hover:text-ink"
+          ? "bg-ink text-white"
+          : "bg-neutral-100 text-ink/70 hover:bg-neutral-200 hover:text-ink"
       )}
     >
       {children}

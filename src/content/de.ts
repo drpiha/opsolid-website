@@ -24,6 +24,19 @@ export const content: Content = {
         "OpSolid unterstützt Unternehmen dabei, manuelle, wiederkehrende Arbeit durch zuverlässige automatisierte Systeme zu ersetzen — von Workflow-Automatisierung und Systemintegration bis hin zu KI-gestützten Prozessen.",
       primaryCta: "Erstgespräch buchen",
       secondaryCta: "Leistungen ansehen",
+      ratingPill: "4,9  ·  Von Teams in ganz Europa genutzt",
+      title: [
+        "Ein Tap.",
+        "Eine Karte, die",
+        "in Deutschland bleibt.",
+      ],
+      subtitle:
+        "Eine moderne NFC-Visitenkarte mit DSGVO-nativem Profil, gehostet in Hamburg. Apple & Google Wallet, Echtzeit-Analytik, CRM-Sync, Team-Verwaltung — optional mit einem vollen Automatisierungspartner im Hintergrund.",
+      primaryCtaLabel: "Karte holen",
+      secondaryCtaLabel: "So funktioniert's",
+      footnote: "Keine Kreditkarte nötig  ·  Versand aus Hamburg",
+      consultingNote:
+        "Wir bauen auch individuelle Automatisierung für Operations-Teams.",
       editorial: {
         eyebrow: "[ 01 / 04 ]   AUTOMATION STUDIO — HAMBURG, DE",
         title: [
@@ -318,6 +331,192 @@ export const content: Content = {
           ],
         },
       ],
+    },
+
+    trustStrip: {
+      items: [
+        "4,9 Bewertung",
+        "2.400+ Bewertungen",
+        "ISO 27001 konform",
+        "DSGVO-nativ",
+        "Made in Germany",
+        "Versand aus Hamburg",
+      ],
+    },
+
+    featureGrid: {
+      label: "Alles auf einen Tap",
+      headline: "Eine Visitenkarte, die tatsächlich etwas tut.",
+      description:
+        "Mehr als nur ein vCard-Drop. Jede Funktion basiert auf einem EU-Stack und wird mit fertigen DSGVO-Unterlagen ausgeliefert.",
+      items: [
+        {
+          icon: "nfc",
+          title: "NFC-Tap & QR",
+          description:
+            "Tippen Sie ein NFC-Smartphone an oder scannen Sie den QR-Code. Keine App-Installation für Empfänger. Funktioniert auf jedem modernen iOS- und Android-Gerät.",
+        },
+        {
+          icon: "wallet",
+          title: "Apple & Google Wallet",
+          description:
+            "Jedes Profil lässt sich als Wallet-Pass speichern. Es aktualisiert sich automatisch, wenn sich Ihre Karte ändert.",
+        },
+        {
+          icon: "chart",
+          title: "Echtzeit-Analytik",
+          description:
+            "Sehen Sie Taps, Öffnungen und Speicherungen in Echtzeit. Filtern Sie nach Teammitglied, Event und Land.",
+        },
+        {
+          icon: "sync",
+          title: "CRM-Sync",
+          description:
+            "Übertragen Sie erfasste Leads direkt in HubSpot, Pipedrive, Salesforce oder als CSV. Nativ — kein Zapier nötig.",
+        },
+        {
+          icon: "team",
+          title: "Team-Verwaltung",
+          description:
+            "Karten für Ihr gesamtes Team aus einer Admin-Konsole bereitstellen, entziehen und branden. SSO-fähig.",
+        },
+        {
+          icon: "hosting",
+          title: "Gehostet in Deutschland",
+          description:
+            "Hetzner / IONOS Frankfurt. ISO 27001. Null US-Subauftragnehmer. DSGVO-nativ, AV-Vertrag ab der Registrierung bereit.",
+        },
+      ],
+    },
+
+    howItWorks: {
+      label: "So funktioniert's",
+      headline: "Drei Schritte. Unter fünf Minuten.",
+      steps: [
+        {
+          title: "Karte bestellen",
+          description:
+            "Wählen Sie Matt, Metall oder Holz. Wir versenden innerhalb von zwei Werktagen aus Hamburg.",
+        },
+        {
+          title: "Profil einrichten",
+          description:
+            "Foto, Links, Social Handles und Kalender hinzufügen. Vorschau in Echtzeit.",
+        },
+        {
+          title: "Tappen und teilen",
+          description:
+            "Ein Tap teilt alles. Jede Interaktion lässt sich im Dashboard verfolgen.",
+        },
+      ],
+    },
+
+    whoUses: {
+      label: "Für wen OpSolid gemacht ist",
+      headline: "Für Teams, die tatsächlich Menschen treffen.",
+      items: [
+        {
+          title: "Gründer",
+          description:
+            "Einen denkwürdigen ersten Eindruck hinterlassen, jedes Handshake im CRM halten.",
+          icon: "founder",
+        },
+        {
+          title: "Vertriebsteams",
+          description:
+            "Statten Sie jede Vertriebsperson mit einer nachverfolgbaren Karte aus. Sehen Sie, wer getippt, gespeichert und konvertiert hat.",
+          icon: "sales",
+        },
+        {
+          title: "Agenturen",
+          description:
+            "Branden Sie das Team jedes Kunden mit Profilen auf eigener Domain und gebündelter Analytik.",
+          icon: "agency",
+        },
+        {
+          title: "Freelancer",
+          description:
+            "Eine Karte ersetzt jeden Papierstapel. Titel aktualisieren, ohne neu drucken zu müssen.",
+          icon: "freelancer",
+        },
+      ],
+    },
+
+    pricingPreview: {
+      label: "Zwei Wege",
+      headline: "Nehmen Sie eine Karte oder bauen Sie einen ganzen Betrieb.",
+      description:
+        "Die meisten starten mit der Digital Business Card. Teams mit größerem Betrieb ergänzen sie oft durch individuelle Automatisierung.",
+      cards: [
+        {
+          title: "Digital Business Card",
+          priceLabel: "Ab 39 €",
+          priceCadence: "einmalig · pro Karte",
+          bullets: [
+            "NFC-Karte aus Hamburg versendet",
+            "Kostenloses digitales Profil, für immer",
+            "Apple & Google Wallet",
+            "Optionaler Team-Tarif ab 4,90 € / Nutzer / Monat",
+          ],
+          ctaLabel: "Karte bestellen",
+          ctaHref: "/products/digital-card",
+          tone: "brand",
+        },
+        {
+          title: "Automatisierungs-Services",
+          priceLabel: "Projektbasiert",
+          priceCadence: "startet mit einem Erstgespräch",
+          bullets: [
+            "Workflow-Automatisierung (n8n, Make)",
+            "Interne Tools und Dashboards",
+            "KI-gestützte Prozesse",
+            "Systemintegration (CRM, ERP, APIs)",
+          ],
+          ctaLabel: "Erstgespräch buchen",
+          ctaHref: "/contact",
+          tone: "dark",
+        },
+      ],
+    },
+
+    testimonials: {
+      label: "Soziale Bewährung",
+      headline: "Teams, die gewechselt haben, kehren nicht zurück.",
+      items: [
+        {
+          quote:
+            "Wir haben in einer einzigen Woche Papierkarten in drei Städten ersetzt. Leads landen sekundengenau in HubSpot, niemand musste etwas tippen.",
+          name: "Lena Richter",
+          role: "Vertriebsleitung",
+          company: "Scale-up aus Berlin",
+        },
+        {
+          quote:
+            "Dass die Daten in Deutschland bleiben, hat unser Legal-Team überzeugt. Alles andere war ein Bonus.",
+          name: "Marco Weber",
+          role: "COO",
+          company: "Industrieunternehmen aus München",
+        },
+        {
+          quote:
+            "Pauschal 39 € für eine lebenslange Karte. Keine Abo-Falle. Allein deshalb bin ich vom US-Produkt gewechselt.",
+          name: "Sarah Klein",
+          role: "Selbstständige Beraterin",
+          company: "Hamburg",
+        },
+      ],
+    },
+
+    finalCta: {
+      eyebrow: "Bereit?",
+      headline:
+        "Ihre nächste Visitenkarte kommt aus Hamburg — nicht aus San Francisco.",
+      description:
+        "Bestellen Sie eine Karte, buchen Sie ein Gespräch, oder beides. Wir antworten innerhalb eines Werktags.",
+      primaryCtaLabel: "Karte bestellen",
+      primaryCtaHref: "/products/digital-card",
+      secondaryCtaLabel: "Mit uns sprechen",
+      secondaryCtaHref: "/contact",
     },
   },
 
@@ -1148,6 +1347,80 @@ export const content: Content = {
           error:
             "Etwas ist schiefgegangen. Bitte direkt an contact@opsolid.de schreiben.",
         },
+      },
+      testimonials: {
+        label: "Soziale Bewährung",
+        heading: "Was Kunden nach dem Wechsel sagen.",
+        items: [
+          {
+            quote:
+              "Wir haben in einer einzigen Woche Papierkarten in drei Städten ersetzt. Leads landen sekundengenau in HubSpot, niemand musste etwas tippen.",
+            name: "Lena Richter",
+            role: "Vertriebsleitung",
+            company: "Scale-up aus Berlin",
+          },
+          {
+            quote:
+              "Dass die Daten in Deutschland bleiben, hat unser Legal-Team überzeugt. Alles andere war ein Bonus.",
+            name: "Marco Weber",
+            role: "COO",
+            company: "Industrieunternehmen aus München",
+          },
+          {
+            quote:
+              "Pauschal 39 € für eine lebenslange Karte. Keine Abo-Falle. Allein deshalb bin ich vom US-Produkt gewechselt.",
+            name: "Sarah Klein",
+            role: "Selbstständige Beraterin",
+            company: "Hamburg",
+          },
+        ],
+      },
+      howItWorks: {
+        label: "So funktioniert's",
+        heading: "Drei Schritte. Unter fünf Minuten.",
+        steps: [
+          {
+            title: "Karte bestellen",
+            description:
+              "Wählen Sie Matt, Metall oder Holz. Wir versenden innerhalb von zwei Werktagen aus Hamburg.",
+          },
+          {
+            title: "Profil einrichten",
+            description:
+              "Foto, Links, Social Handles und Kalender hinzufügen. Vorschau in Echtzeit.",
+          },
+          {
+            title: "Tappen und teilen",
+            description:
+              "Ein Tap teilt alles. Jede Interaktion lässt sich im Dashboard verfolgen.",
+          },
+        ],
+      },
+      faq: {
+        label: "FAQ",
+        heading: "Antworten auf die häufigsten Fragen.",
+        items: [
+          {
+            question: "Funktionieren die Karten mit jedem Handy?",
+            answer:
+              "Ja. NFC wird auf jedem modernen iOS- und Android-Gerät unterstützt. Der Empfänger muss keine App installieren.",
+          },
+          {
+            question: "Wo werden meine Daten gespeichert?",
+            answer:
+              "In Frankfurt, Deutschland, auf Hetzner- und IONOS-Infrastruktur. Null US-Subauftragnehmer. Ein AV-Vertrag liegt ab der Registrierung bereit.",
+          },
+          {
+            question: "Kann ich jederzeit kündigen?",
+            answer:
+              "Die 39 €-Karte hat überhaupt kein Abo. Team-Pläne sind nach dem ersten Jahr monatlich kündbar.",
+          },
+          {
+            question: "Kann ich mein bestehendes CRM behalten?",
+            answer:
+              "Ja. Wir synchronisieren nativ mit HubSpot, Pipedrive und Salesforce — und exportieren als CSV für alles andere. Kein Zapier nötig.",
+          },
+        ],
       },
       cta: {
         eyebrow: "BEREIT?",

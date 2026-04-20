@@ -1,48 +1,44 @@
 "use client";
 
+import { Workflow, Plug, LayoutDashboard, Bot } from "lucide-react";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
+import { SectionHeading } from "@/components/shared/SectionHeading";
 import { useLocale } from "@/context/LocaleContext";
+
+const ICONS = [
+  <Workflow key="w" size={22} strokeWidth={2} />,
+  <Plug key="p" size={22} strokeWidth={2} />,
+  <LayoutDashboard key="l" size={22} strokeWidth={2} />,
+  <Bot key="b" size={22} strokeWidth={2} />,
+];
 
 export function WhatWeDo() {
   const { t } = useLocale();
   const s = t.home.whatWeDo;
 
   return (
-    <section className="section hairline-t bg-paper">
+    <section className="section bg-neutral-50">
       <div className="container-wide">
-        {/* Editorial two-column header */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-12 lg:mb-16">
-          <AnimatedSection className="lg:col-span-7">
-            <div className="mono-label mb-4">{s.label}</div>
-            <h2 className="font-serif text-ink text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.06] tracking-[-0.02em] text-balance">
-              {s.headline}
-            </h2>
-          </AnimatedSection>
+        <AnimatedSection>
+          <SectionHeading
+            label={s.label}
+            headline={s.headline}
+            description={s.description}
+            align="center"
+          />
+        </AnimatedSection>
 
-          <AnimatedSection
-            delay={0.1}
-            className="lg:col-span-5 lg:pt-2 flex items-start"
-          >
-            <p className="text-ink/70 text-body-lg leading-relaxed text-pretty">
-              {s.description}
-            </p>
-          </AnimatedSection>
-        </div>
-
-        {/* Points grid — hairline cells */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-t border-l border-ink/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 md:gap-6">
           {s.points.map((point, i) => (
-            <AnimatedSection
-              key={i}
-              delay={0.05 + i * 0.05}
-              className="border-r border-b border-ink/10 p-6 md:p-8 bg-paper-warm flex flex-col gap-3"
-            >
-              <div className="mono-label text-ink/50">
-                {String(i + 1).padStart(2, "0")}
+            <AnimatedSection key={i} delay={0.05 * i}>
+              <div className="pop-card h-full p-6 md:p-7 flex flex-col">
+                <div className="w-11 h-11 rounded-2xl bg-brand/10 flex items-center justify-center text-brand mb-4">
+                  {ICONS[i % ICONS.length]}
+                </div>
+                <p className="text-body text-ink leading-relaxed text-pretty">
+                  {point}
+                </p>
               </div>
-              <p className="text-ink text-body leading-relaxed text-pretty">
-                {point}
-              </p>
             </AnimatedSection>
           ))}
         </div>

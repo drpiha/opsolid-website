@@ -1,18 +1,16 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { Instrument_Serif } from "next/font/google";
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
+import { Inter } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SITE_CONFIG } from "@/lib/constants";
 import { isLocale, DEFAULT_LOCALE } from "@/lib/i18n";
 import "./globals.css";
 
-const instrumentSerif = Instrument_Serif({
+const inter = Inter({
   subsets: ["latin", "latin-ext"],
-  weight: "400",
   display: "swap",
-  variable: "--font-instrument-serif",
+  variable: "--font-inter",
+  weight: ["400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {
@@ -23,26 +21,22 @@ export const metadata: Metadata = {
   },
   description: SITE_CONFIG.description,
   keywords: [
+    "digital business card",
+    "nfc business card",
+    "smart business card",
+    "apple wallet card",
+    "google wallet card",
+    "crm sync",
+    "gdpr business card",
+    "germany digital card",
     "business automation",
     "process automation",
     "workflow systems",
     "systems integration",
     "internal tools",
-    "operational infrastructure",
-    "WhatsApp automation",
-    "Telegram bot",
-    "AI chatbot",
-    "voice assistant",
     "n8n automation",
-    "n8n workflows",
-    "Make automation",
-    "Zapier alternative",
-    "CRM integration",
-    "ERP integration",
-    "workflow automation blog",
-    "automation FAQ",
     "Germany",
-    "Europe",
+    "Hamburg",
     "B2B",
   ],
   authors: [{ name: SITE_CONFIG.name }],
@@ -72,11 +66,8 @@ export default function RootLayout({
   const lang = isLocale(localeHeader) ? localeHeader : DEFAULT_LOCALE;
 
   return (
-    <html
-      lang={lang}
-      className={`${instrumentSerif.variable} ${GeistSans.variable} ${GeistMono.variable}`}
-    >
-      <body className="font-sans antialiased bg-paper text-ink min-h-[100svh] flex flex-col">
+    <html lang={lang} className={inter.variable}>
+      <body className="font-sans antialiased bg-white text-ink min-h-[100svh] flex flex-col">
         {children}
         <Analytics />
       </body>

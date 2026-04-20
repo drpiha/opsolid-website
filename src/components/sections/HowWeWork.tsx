@@ -1,64 +1,72 @@
 "use client";
 
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
+import { SectionHeading } from "@/components/shared/SectionHeading";
 import { useLocale } from "@/context/LocaleContext";
 
 export function HowWeWork() {
   const { t } = useLocale();
-  const s = t.home.howWeWork;
+  const s = t.home.howItWorks;
 
   return (
-    <section className="section hairline-t bg-paper">
+    <section className="section bg-white">
       <div className="container-wide">
-        {/* Editorial two-column header */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-12 lg:mb-16">
-          <AnimatedSection className="lg:col-span-7">
-            <div className="mono-label mb-4">{s.label}</div>
-            <h2 className="font-serif text-ink text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.06] tracking-[-0.02em] text-balance">
-              {s.headline}
-            </h2>
-          </AnimatedSection>
-          <AnimatedSection
-            delay={0.1}
-            className="lg:col-span-5 lg:pt-2 flex items-start"
+        <AnimatedSection>
+          <SectionHeading
+            label={s.label}
+            headline={s.headline}
+            align="center"
+          />
+        </AnimatedSection>
+
+        <div className="relative">
+          {/* Desktop connector — thin dotted line between numbers */}
+          <div
+            className="hidden lg:block absolute left-0 right-0 top-[2.75rem] pointer-events-none"
+            aria-hidden="true"
           >
-            <p className="text-ink/70 text-body leading-relaxed text-pretty">
-              A four-step engagement: discover, design, build, improve.
-              Each step ends with a concrete artifact you can review.
-            </p>
-          </AnimatedSection>
-        </div>
+            <div className="container-wide">
+              <svg
+                className="mx-auto w-[60%] h-[2px]"
+                viewBox="0 0 100 2"
+                preserveAspectRatio="none"
+              >
+                <line
+                  x1="0"
+                  y1="1"
+                  x2="100"
+                  y2="1"
+                  stroke="#E5E5E5"
+                  strokeWidth="1"
+                  strokeDasharray="1 2"
+                />
+              </svg>
+            </div>
+          </div>
 
-        {/* Process steps — hairline grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 border-t border-l border-ink/10">
-          {s.steps.map((step, i) => (
-            <AnimatedSection
-              key={i}
-              delay={0.05 + i * 0.08}
-              className="relative border-r border-b border-ink/10 p-6 md:p-8 bg-paper-warm flex flex-col gap-4 group"
-            >
-              {/* Step number — large serif numeral */}
-              <div className="flex items-baseline gap-3">
-                <span className="font-serif text-[3rem] leading-none text-ink/15 group-hover:text-amber/60 transition-colors duration-500">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span className="mono-label text-ink/50">{step.step}</span>
-              </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 lg:gap-12 relative">
+            {s.steps.map((step, i) => (
+              <AnimatedSection
+                key={i}
+                delay={0.1 * i}
+                className="flex flex-col items-center text-center"
+              >
+                {/* Large outlined number */}
+                <div className="relative w-[5.5rem] h-[5.5rem] rounded-full bg-white border-2 border-brand flex items-center justify-center shadow-soft mb-6">
+                  <span className="font-sans font-black text-brand text-[2.75rem] leading-none">
+                    {i + 1}
+                  </span>
+                </div>
 
-              <h3 className="font-serif text-ink text-[1.375rem] leading-[1.2] tracking-[-0.015em]">
-                {step.title}
-              </h3>
-              <p className="text-ink/70 text-sm leading-relaxed text-pretty">
-                {step.description}
-              </p>
-
-              {/* Amber indicator line on hover */}
-              <div
-                aria-hidden="true"
-                className="absolute top-0 left-0 h-px w-0 bg-amber transition-[width] duration-500 group-hover:w-full"
-              />
-            </AnimatedSection>
-          ))}
+                <h3 className="text-heading font-bold text-ink mb-3 tracking-tight">
+                  {step.title}
+                </h3>
+                <p className="text-body text-ink/60 leading-relaxed max-w-xs text-pretty">
+                  {step.description}
+                </p>
+              </AnimatedSection>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -1,5 +1,6 @@
 "use client";
 
+import { ShieldCheck, MapPin, Scale, Lock } from "lucide-react";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { useLocale } from "@/context/LocaleContext";
 
@@ -7,44 +8,67 @@ export function WhyUs() {
   const { t } = useLocale();
   const s = t.home.whyUs;
 
-  return (
-    <section className="section bg-ink text-paper paper-grain relative">
-      <div className="container-wide relative z-10">
-        {/* Editorial two-column header */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 mb-12 lg:mb-16">
-          <AnimatedSection className="lg:col-span-7">
-            <div className="mono-label text-paper/60 mb-4">{s.label}</div>
-            <h2 className="font-serif text-paper text-[clamp(2rem,4.5vw,3.25rem)] leading-[1.06] tracking-[-0.02em] text-balance">
-              {s.headline}
-            </h2>
-          </AnimatedSection>
-        </div>
+  const pillars = [
+    {
+      icon: <MapPin size={20} strokeWidth={2} />,
+      label: "Hosted in Frankfurt",
+    },
+    {
+      icon: <Scale size={20} strokeWidth={2} />,
+      label: "GDPR-native",
+    },
+    {
+      icon: <ShieldCheck size={20} strokeWidth={2} />,
+      label: "ISO 27001",
+    },
+    {
+      icon: <Lock size={20} strokeWidth={2} />,
+      label: "No US subprocessors",
+    },
+  ];
 
-        {/* Reasons — hairline grid on ink */}
-        <div className="grid grid-cols-1 md:grid-cols-2 border-t border-l border-paper/10 max-w-5xl">
-          {s.points.map((point, i) => (
-            <AnimatedSection
-              key={i}
-              delay={0.05 + i * 0.06}
-              className="border-r border-b border-paper/10 p-6 md:p-8 flex flex-col gap-3 group"
-            >
-              <div className="flex items-center gap-3">
-                <span
-                  aria-hidden="true"
-                  className="h-1.5 w-1.5 rounded-full bg-amber"
-                />
-                <span className="mono-label text-paper/60">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
+  return (
+    <section className="section bg-ink text-white">
+      <div className="container-wide">
+        <div className="relative rounded-3xl bg-ink-800 border border-white/10 p-8 md:p-14 overflow-hidden">
+          {/* Ambient red glow */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-20 -right-20 h-80 w-80 rounded-full bg-brand/20 blur-3xl"
+          />
+
+          <div className="relative grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-10 lg:gap-16 items-center">
+            <AnimatedSection>
+              <div className="eyebrow uppercase mb-4 text-brand-300">
+                {s.label}
               </div>
-              <h3 className="font-serif text-paper text-[1.375rem] leading-[1.2] tracking-[-0.015em]">
-                {point.title}
-              </h3>
-              <p className="text-paper/70 text-sm leading-relaxed text-pretty">
-                {point.description}
+              <h2 className="font-sans font-extrabold text-white text-[clamp(2rem,4.2vw,3rem)] leading-[1.05] tracking-[-0.03em] text-balance">
+                {s.headline}
+              </h2>
+              <p className="mt-6 text-body-lg text-white/70 max-w-xl leading-relaxed text-pretty">
+                {s.points[3]?.description ??
+                  "Built in Germany, not marketed here. Your data, your laws, your company's pace."}
               </p>
             </AnimatedSection>
-          ))}
+
+            <AnimatedSection delay={0.1}>
+              <ul className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                {pillars.map((pillar, i) => (
+                  <li
+                    key={i}
+                    className="flex items-center gap-3 rounded-2xl bg-white/5 border border-white/10 px-4 py-3.5"
+                  >
+                    <span className="shrink-0 w-9 h-9 rounded-xl bg-brand/20 text-brand-300 flex items-center justify-center">
+                      {pillar.icon}
+                    </span>
+                    <span className="text-sm font-semibold text-white">
+                      {pillar.label}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </AnimatedSection>
+          </div>
         </div>
       </div>
     </section>

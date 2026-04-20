@@ -1,37 +1,31 @@
 import { cn } from "@/lib/utils";
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** If true, apply subtle hover affordance (border shift + slight lift). */
+  /** Disable hover lift on the default pop-card surface. */
   hover?: boolean;
-  /**
-   * Deprecated. Previously enabled a glass / backdrop-blur surface.
-   * Kept as a no-op alias of the default surface so existing call sites
-   * continue to type-check while M3+ migrates off it.
-   */
-  glass?: boolean;
+  /** Pre-applies the larger `shadow-lifted` resting state. */
+  elevated?: boolean;
 }
 
 /**
- * Editorial bento card.
- * - Hairline border + paper-warm surface
- * - Generous padding, 2xl radius
- * - Hover: amber-tinted border + 0.5px lift
- * - No drop shadow, no backdrop blur, no gradient fills
+ * Popl/Blinq-style pop-card.
+ * - White surface, neutral-200 border, 1.25rem radius
+ * - Hover: lift + soft drop shadow (provided by `.pop-card`)
+ * - Optional `elevated` variant for feature cards
  */
 export function Card({
   className,
   hover = true,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  glass = false,
+  elevated = false,
   children,
   ...props
 }: CardProps) {
   return (
     <div
       className={cn(
-        "rounded-2xl border border-ink/10 bg-paper-warm p-6 sm:p-8 relative",
-        hover &&
-          "transition duration-300 hover:border-amber/60 hover:-translate-y-0.5",
+        "pop-card p-6 sm:p-8 relative",
+        elevated && "shadow-lifted",
+        !hover && "hover:shadow-none hover:translate-y-0",
         className
       )}
       {...props}
@@ -43,7 +37,7 @@ export function Card({
 
 /**
  * Small square badge for a card-header icon.
- * Uses the hairline + ink style — no gradient fill, no glow.
+ * Neutral outline + ink glyph. The red brand colour is reserved for CTAs.
  */
 export function CardIcon({
   className,
@@ -55,7 +49,7 @@ export function CardIcon({
   return (
     <div
       className={cn(
-        "flex h-11 w-11 items-center justify-center rounded-xl border border-ink/10 bg-paper text-ink",
+        "flex h-11 w-11 items-center justify-center rounded-xl border border-neutral-200 bg-white text-ink",
         className
       )}
     >

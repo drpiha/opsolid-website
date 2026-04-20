@@ -3,20 +3,24 @@
 import { useState, useEffect } from "react";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { usePathname } from "next/navigation";
-import { Menu, X, Globe } from "lucide-react";
+import { Menu, X, Globe, Check } from "lucide-react";
 import { useLocale } from "@/context/LocaleContext";
 import { NAV_LINKS, SITE_CONFIG } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import type { Locale } from "@/content";
 
 const LOCALE_LABELS: Record<Locale, string> = { en: "EN", de: "DE", tr: "TR" };
+const LOCALE_NAMES: Record<Locale, string> = {
+  en: "English",
+  de: "Deutsch",
+  tr: "Türkçe",
+};
 
 /**
- * Editorial, warm-graphite hex logo.
- * Ink outer frame + amber inner cage. Tints via currentColor where needed;
- * specific stops stay as token hexes (`#15120F`, `#E8A252`) for crisp rendering.
+ * Popl-style hex logo — clean ink outer frame with a red inner cage.
+ * The brand red is used sparingly on the inner geometry to echo the CTA.
  */
-function HexLogo({ size = 32 }: { size?: number }) {
+function HexLogo({ size = 30 }: { size?: number }) {
   return (
     <svg
       width={size}
@@ -29,25 +33,18 @@ function HexLogo({ size = 32 }: { size?: number }) {
     >
       <path
         d="M16 2L28.5 9.5V24.5L16 30L3.5 24.5V9.5L16 2Z"
-        stroke="#15120F"
+        stroke="#0A0A0A"
         strokeWidth="1.75"
         fill="none"
       />
       <path
         d="M16 8L23 12V22L16 26L9 22V12L16 8Z"
-        stroke="#E8A252"
+        stroke="#E63946"
         strokeWidth="1.5"
         fill="none"
       />
-      <path d="M9 12L16 16L23 12" stroke="#E8A252" strokeWidth="1.25" fill="none" />
-      <path d="M16 16V26" stroke="#E8A252" strokeWidth="1.25" fill="none" />
-      <path
-        d="M3.5 9.5L16 16L28.5 9.5"
-        stroke="#15120F"
-        strokeWidth="1.25"
-        fill="none"
-        opacity="0.4"
-      />
+      <path d="M9 12L16 16L23 12" stroke="#E63946" strokeWidth="1.25" fill="none" />
+      <path d="M16 16V26" stroke="#E63946" strokeWidth="1.25" fill="none" />
     </svg>
   );
 }
@@ -70,8 +67,7 @@ export function Header() {
     setLangOpen(false);
   }, [pathname]);
 
-  // Lock body scroll while the mobile menu overlay is open. Cleanup on close
-  // and on unmount so the class cannot leak into other routes.
+  // Lock body scroll while the mobile menu overlay is open.
   useEffect(() => {
     if (typeof document === "undefined") return;
     if (isMobileOpen) {
@@ -96,9 +92,9 @@ export function Header() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-colors duration-200 pt-safe",
+        "fixed top-0 left-0 right-0 z-50 transition-colors duration-200 safe-top",
         isScrolled
-          ? "bg-paper/90 backdrop-blur-sm hairline-b"
+          ? "bg-white/90 backdrop-blur-md border-b border-neutral-200"
           : "bg-transparent"
       )}
     >
@@ -107,7 +103,7 @@ export function Header() {
           {/* Logo */}
           <Link
             href="/"
-            className="relative z-50 flex items-center gap-2.5 font-serif text-[1.375rem] leading-none text-ink tracking-[-0.01em]"
+            className="relative z-50 flex items-center gap-2.5 text-[1.25rem] font-extrabold leading-none text-ink tracking-[-0.02em]"
           >
             <HexLogo size={30} />
             <span>{SITE_CONFIG.name}</span>
@@ -122,17 +118,15 @@ export function Header() {
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    "relative px-3 py-2 text-[0.8125rem] font-medium transition-colors duration-200",
-                    active
-                      ? "text-ink"
-                      : "text-ink/70 hover:text-ink"
+                    "relative px-3 py-2 text-sm font-medium transition-colors duration-200",
+                    active ? "text-ink" : "text-ink/70 hover:text-ink"
                   )}
                 >
                   {navLabels[link.href] || link.label}
                   {active && (
                     <span
                       aria-hidden="true"
-                      className="absolute left-3 right-3 -bottom-0.5 h-[2px] bg-amber"
+                      className="absolute left-3 right-3 -bottom-0.5 h-[2px] rounded-full bg-brand"
                     />
                   )}
                 </Link>
@@ -146,49 +140,48 @@ export function Header() {
             <div className="relative">
               <button
                 onClick={() => setLangOpen(!langOpen)}
-                className="mono-label flex items-center gap-1.5 px-2.5 py-1.5 text-ink/70 hover:text-ink transition-colors"
+                className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-ink/70 hover:text-ink hover:bg-neutral-100 transition-colors"
                 aria-label="Change language"
                 aria-expanded={langOpen}
               >
-                <Globe size={13} strokeWidth={1.5} />
+                <Globe size={14} strokeWidth={2} />
                 {LOCALE_LABELS[locale]}
               </button>
               {langOpen && (
                 <div
-                  className="absolute right-0 top-full mt-2 bg-paper hairline overflow-hidden min-w-[120px] motion-safe:animate-fade-in"
+                  className="absolute right-0 top-full mt-2 bg-white border border-neutral-200 rounded-2xl shadow-lifted overflow-hidden min-w-[160px] motion-safe:animate-fade-in"
                   role="menu"
                 >
-                    {(Object.keys(LOCALE_LABELS) as Locale[]).map((l) => (
-                      <button
-                        key={l}
-                        onClick={() => {
-                          setLocale(l);
-                          setLangOpen(false);
-                        }}
-                        role="menuitem"
-                        className={cn(
-                          "flex w-full items-center justify-between px-3 py-2 text-sm transition-colors",
-                          locale === l
-                            ? "text-ink bg-paper-warm"
-                            : "text-ink/70 hover:text-ink hover:bg-paper-warm"
-                        )}
-                      >
-                        <span>
-                          {l === "en" ? "English" : l === "de" ? "Deutsch" : "Türkçe"}
-                        </span>
-                        <span className="mono-label text-ink/40">
+                  {(Object.keys(LOCALE_LABELS) as Locale[]).map((l) => (
+                    <button
+                      key={l}
+                      onClick={() => {
+                        setLocale(l);
+                        setLangOpen(false);
+                      }}
+                      role="menuitem"
+                      className={cn(
+                        "flex w-full items-center justify-between px-4 py-2.5 text-sm transition-colors",
+                        locale === l
+                          ? "text-ink bg-neutral-50 font-semibold"
+                          : "text-ink/70 hover:text-ink hover:bg-neutral-50"
+                      )}
+                    >
+                      <span>{LOCALE_NAMES[l]}</span>
+                      {locale === l ? (
+                        <Check size={14} className="text-brand" />
+                      ) : (
+                        <span className="text-xs font-semibold text-ink/40">
                           {LOCALE_LABELS[l]}
                         </span>
-                      </button>
-                    ))}
+                      )}
+                    </button>
+                  ))}
                 </div>
               )}
             </div>
 
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center bg-amber text-ink hairline px-5 py-2 text-sm font-medium hover:bg-amber-600 hover:text-paper transition-colors"
-            >
+            <Link href="/contact" className="btn-primary text-sm">
               {t.nav.cta}
             </Link>
           </div>
@@ -200,18 +193,18 @@ export function Header() {
                 const next: Record<Locale, Locale> = { en: "de", de: "tr", tr: "en" };
                 setLocale(next[locale]);
               }}
-              className="mono-label flex items-center justify-center w-9 h-9 text-ink/70 hover:text-ink transition-colors"
+              className="flex items-center justify-center w-10 h-10 rounded-full text-xs font-semibold text-ink/70 hover:text-ink hover:bg-neutral-100 transition-colors"
               aria-label="Switch language"
             >
               {LOCALE_LABELS[locale]}
             </button>
             <button
               onClick={() => setIsMobileOpen(!isMobileOpen)}
-              className="relative z-50 flex items-center justify-center w-9 h-9 text-ink hover:bg-paper-warm transition-colors"
+              className="relative z-50 flex items-center justify-center w-10 h-10 rounded-full text-ink hover:bg-neutral-100 transition-colors"
               aria-label={isMobileOpen ? "Close menu" : "Open menu"}
               aria-expanded={isMobileOpen}
             >
-              {isMobileOpen ? <X size={18} strokeWidth={1.5} /> : <Menu size={18} strokeWidth={1.5} />}
+              {isMobileOpen ? <X size={20} strokeWidth={2} /> : <Menu size={20} strokeWidth={2} />}
             </button>
           </div>
         </nav>
@@ -220,55 +213,49 @@ export function Header() {
       {/* Mobile Menu */}
       {isMobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-paper paper-grain md:hidden overflow-y-auto overscroll-contain motion-safe:animate-fade-in"
+          className="fixed inset-0 z-40 bg-white md:hidden overflow-y-auto overscroll-contain motion-safe:animate-fade-in"
           style={{ height: "100dvh" }}
           role="dialog"
           aria-modal="true"
           aria-label="Mobile navigation"
         >
-            <div
-              className="flex flex-col min-h-full px-6"
-              style={{
-                paddingTop: "max(5rem, env(safe-area-inset-top))",
-                paddingBottom: "max(2rem, env(safe-area-inset-bottom))",
-              }}
-            >
-              <div className="mono-label text-ink/50 pb-4">MENU</div>
-              <ul className="flex flex-col hairline-t">
-                {NAV_LINKS.map((link) => {
-                  const active = pathname === link.href;
-                  return (
-                    <li key={link.href} className="hairline-b">
-                      <Link
-                        href={link.href}
-                        className={cn(
-                          "flex items-center justify-between py-4 text-lg font-serif tracking-[-0.01em] transition-colors",
-                          active
-                            ? "text-ink"
-                            : "text-ink/75 hover:text-ink"
-                        )}
-                      >
-                        <span>{navLabels[link.href] || link.label}</span>
-                        {active && (
-                          <span
-                            aria-hidden="true"
-                            className="h-[2px] w-6 bg-amber"
-                          />
-                        )}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
+          <div
+            className="flex flex-col min-h-full px-6"
+            style={{
+              paddingTop: "max(5rem, env(safe-area-inset-top))",
+              paddingBottom: "max(2rem, env(safe-area-inset-bottom))",
+            }}
+          >
+            <ul className="flex flex-col">
+              {NAV_LINKS.map((link) => {
+                const active = pathname === link.href;
+                return (
+                  <li key={link.href} className="border-b border-neutral-200">
+                    <Link
+                      href={link.href}
+                      className={cn(
+                        "flex items-center justify-between py-5 text-2xl font-bold tracking-[-0.02em] transition-colors",
+                        active ? "text-ink" : "text-ink/75 hover:text-ink"
+                      )}
+                    >
+                      <span>{navLabels[link.href] || link.label}</span>
+                      {active && (
+                        <span
+                          aria-hidden="true"
+                          className="h-2 w-2 rounded-full bg-brand"
+                        />
+                      )}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
 
-              <div className="mt-8">
-                <Link
-                  href="/contact"
-                  className="flex items-center justify-center w-full bg-amber text-ink hairline py-3.5 text-base font-medium hover:bg-amber-600 hover:text-paper transition-colors"
-                >
-                  {t.nav.cta}
-                </Link>
-              </div>
+            <div className="mt-10">
+              <Link href="/contact" className="btn-primary w-full">
+                {t.nav.cta}
+              </Link>
+            </div>
           </div>
         </div>
       )}

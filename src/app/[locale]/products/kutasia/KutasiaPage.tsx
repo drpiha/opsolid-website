@@ -3,6 +3,8 @@
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import {
   ArrowUpRight,
+  ArrowRight,
+  ArrowLeft,
   Inbox,
   Bot,
   Layers,
@@ -35,12 +37,12 @@ import {
 import { useLocale } from "@/context/LocaleContext";
 
 const featureIconMap: Record<string, React.ReactNode> = {
-  inbox: <Inbox size={20} />,
-  bot: <Bot size={20} />,
-  layers: <Layers size={20} />,
-  lineChart: <LineChart size={20} />,
-  shield: <Shield size={20} />,
-  languages: <Languages size={20} />,
+  inbox: <Inbox size={22} strokeWidth={1.75} />,
+  bot: <Bot size={22} strokeWidth={1.75} />,
+  layers: <Layers size={22} strokeWidth={1.75} />,
+  lineChart: <LineChart size={22} strokeWidth={1.75} />,
+  shield: <Shield size={22} strokeWidth={1.75} />,
+  languages: <Languages size={22} strokeWidth={1.75} />,
 };
 
 const sectorIconMap: Record<string, React.ReactNode> = {
@@ -62,30 +64,31 @@ const sectorIconMap: Record<string, React.ReactNode> = {
 };
 
 const forWhoIconCycle = [
-  <Building2 size={20} key="b" />,
-  <Users size={20} key="u" />,
-  <Briefcase size={20} key="br" />,
+  <Building2 size={22} key="b" strokeWidth={1.75} />,
+  <Users size={22} key="u" strokeWidth={1.75} />,
+  <Briefcase size={22} key="br" strokeWidth={1.75} />,
 ];
 
 /**
- * Editorial Kutasia schematic — hairline dashboard preview that
- * matches the warm-graphite aesthetic (hairline, no dark surface).
+ * Popl-style Kutasia product preview — a crisp dashboard mock with
+ * white surface, neutral border, and the brand red used sparingly on
+ * the trend line and accent stats.
  */
 function ProductSchematic() {
   return (
     <div className="relative w-full max-w-[520px] mx-auto">
-      <div className="hairline bg-paper-warm rounded-2xl overflow-hidden">
+      <div className="pop-card overflow-hidden p-0 shadow-lifted">
         {/* Top bar */}
-        <div className="flex items-center gap-2 px-5 py-3 hairline-b bg-paper">
-          <span className="h-2 w-2 rounded-full bg-ink/20" />
-          <span className="h-2 w-2 rounded-full bg-ink/20" />
-          <span className="h-2 w-2 rounded-full bg-ink/20" />
-          <span className="ml-3 mono-label text-ink/50">
+        <div className="flex items-center gap-2 px-5 py-3 border-b border-neutral-200 bg-neutral-50">
+          <span className="h-2.5 w-2.5 rounded-full bg-neutral-300" />
+          <span className="h-2.5 w-2.5 rounded-full bg-neutral-300" />
+          <span className="h-2.5 w-2.5 rounded-full bg-neutral-300" />
+          <span className="ml-3 text-xs font-medium text-ink/50">
             kutasia.com/dashboard
           </span>
         </div>
 
-        <div className="p-5 md:p-6 space-y-4">
+        <div className="p-5 md:p-6 space-y-4 bg-white">
           {/* KPI strip */}
           <div className="grid grid-cols-3 gap-2.5">
             {[
@@ -95,12 +98,16 @@ function ProductSchematic() {
             ].map((k, i) => (
               <div
                 key={i}
-                className="hairline bg-paper rounded-xl p-3"
+                className="rounded-xl border border-neutral-200 bg-white p-3"
               >
-                <div className="mono-label text-ink/50">{k.label}</div>
+                <div className="text-[0.65rem] font-semibold uppercase tracking-wider text-ink/50">
+                  {k.label}
+                </div>
                 <div className="mt-1 flex items-baseline gap-1.5">
-                  <span className="font-serif text-lg text-ink">{k.value}</span>
-                  <span className="text-[0.65rem] font-medium text-amber-700">
+                  <span className="text-xl font-bold text-ink tracking-tight">
+                    {k.value}
+                  </span>
+                  <span className="text-[0.65rem] font-semibold text-brand">
                     {k.trend}
                   </span>
                 </div>
@@ -109,8 +116,8 @@ function ProductSchematic() {
           </div>
 
           {/* Chart preview */}
-          <div className="hairline bg-paper rounded-xl p-4">
-            <div className="mono-label text-ink/50 mb-3">
+          <div className="rounded-xl border border-neutral-200 bg-white p-4">
+            <div className="text-[0.65rem] font-semibold uppercase tracking-wider text-ink/50 mb-3">
               Sentiment · Last 7 days
             </div>
             <svg
@@ -120,8 +127,8 @@ function ProductSchematic() {
             >
               <path
                 d="M0,42 Q30,38 45,32 T90,22 T135,28 T180,15 T225,18"
-                stroke="#E8A252"
-                strokeWidth="1.5"
+                stroke="#E63946"
+                strokeWidth="1.75"
                 fill="none"
                 strokeLinecap="round"
                 className="animate-dash"
@@ -130,11 +137,11 @@ function ProductSchematic() {
               />
               <path
                 d="M0,42 Q30,38 45,32 T90,22 T135,28 T180,15 T225,18"
-                stroke="#15120F"
+                stroke="#0A0A0A"
                 strokeWidth="0.5"
                 fill="none"
                 strokeLinecap="round"
-                opacity="0.15"
+                opacity="0.12"
               />
             </svg>
           </div>
@@ -163,20 +170,22 @@ function ProductSchematic() {
             ].map((m, i) => (
               <div
                 key={i}
-                className="flex items-center gap-3 hairline bg-paper rounded-xl px-3 py-2.5"
+                className="flex items-center gap-3 rounded-xl border border-neutral-200 bg-white px-3 py-2.5"
               >
-                <span className="flex h-7 w-7 items-center justify-center rounded-lg hairline bg-paper-warm text-[0.6rem] font-mono text-ink">
+                <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-neutral-100 text-[0.6rem] font-bold text-ink">
                   {m.channel}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <div className="text-xs font-medium text-ink truncate">
+                  <div className="text-xs font-semibold text-ink truncate">
                     {m.from}
                   </div>
                   <div className="text-[0.7rem] text-ink/60 truncate">
                     {m.msg}
                   </div>
                 </div>
-                <span className="mono-label text-ink/60 shrink-0">{m.tag}</span>
+                <span className="text-[0.65rem] font-semibold uppercase tracking-wider text-ink/60 shrink-0">
+                  {m.tag}
+                </span>
               </div>
             ))}
           </div>
@@ -195,43 +204,36 @@ export function KutasiaPage() {
       {/* Hero */}
       <section
         aria-labelledby="kutasia-title"
-        className="relative pt-32 md:pt-40 pb-12 md:pb-16 paper-grain overflow-hidden"
+        className="relative pt-32 md:pt-40 pb-12 md:pb-16 bg-white"
       >
-        <div className="hairline-b">
-          <div className="container-wide flex items-center justify-between py-3">
-            <span className="mono-label text-ink/60">
-              [ PRODUCT · 08 ]   KUTASIA
-            </span>
-            <span className="mono-label hidden md:inline text-ink/40">
-              LIVE
-            </span>
-          </div>
-        </div>
-
-        <div className="container-wide relative z-10 pt-8 md:pt-14">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+        <div className="container-wide">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             {/* Left — text */}
             <div className="lg:col-span-7 animate-fade-in">
               <Link
                 href="/products"
-                className="inline-flex items-center gap-1.5 mono-label text-ink/50 hover:text-ink transition-colors mb-5"
+                className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-ink/50 hover:text-ink transition-colors mb-6"
               >
-                <span aria-hidden="true">←</span>
+                <ArrowLeft size={12} aria-hidden="true" />
                 <span>{k.hero.eyebrow}</span>
               </Link>
 
-              <div className="flex items-center gap-3 mb-5">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl hairline bg-paper-warm text-ink">
-                  <Sparkles size={22} />
+              <div className="flex items-center gap-3 mb-6">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand/10 text-brand">
+                  <Sparkles size={22} strokeWidth={1.75} />
                 </div>
-                <span className="font-serif text-[2rem] text-ink tracking-tight">
+                <span className="text-2xl font-extrabold text-ink tracking-[-0.025em]">
                   {k.hero.label}
+                </span>
+                <span className="trust-pill bg-green-50 text-green-700">
+                  <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
+                  Live
                 </span>
               </div>
 
               <h1
                 id="kutasia-title"
-                className="font-serif text-ink text-[clamp(2.25rem,5.5vw,4.5rem)] leading-[1.04] tracking-[-0.025em] text-balance whitespace-pre-line"
+                className="text-[clamp(2.5rem,6vw,4.5rem)] font-extrabold leading-[1.02] tracking-[-0.035em] text-ink text-balance whitespace-pre-line"
               >
                 {k.hero.headline}
               </h1>
@@ -245,7 +247,7 @@ export function KutasiaPage() {
                 href={k.hero.primaryCtaHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-6 inline-flex items-center gap-2 rounded-full hairline bg-paper-warm px-4 py-1.5 font-mono text-xs text-ink/70 hover:border-ink/25 hover:text-ink transition-colors"
+                className="mt-6 trust-pill hover:bg-neutral-200 transition-colors"
               >
                 <span>{k.hero.domain}</span>
                 <ArrowUpRight size={12} aria-hidden="true" />
@@ -256,18 +258,14 @@ export function KutasiaPage() {
                   href={k.hero.primaryCtaHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2.5 bg-amber text-ink px-7 py-4 font-medium hairline hover:bg-amber-600 hover:text-paper transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber"
+                  className="btn-primary"
                 >
                   <span>{k.hero.primaryCta}</span>
-                  <ArrowUpRight
-                    size={16}
-                    aria-hidden="true"
-                    className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  />
+                  <ArrowUpRight size={16} aria-hidden="true" />
                 </a>
                 <Link
                   href={k.hero.secondaryCtaHref}
-                  className="group inline-flex items-center gap-2 text-ink underline underline-offset-8 decoration-ink/20 decoration-1 hover:decoration-ink transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber px-1"
+                  className="btn-ghost"
                 >
                   <span>{k.hero.secondaryCta}</span>
                 </Link>
@@ -278,13 +276,9 @@ export function KutasiaPage() {
                 {k.trustStrip.map((item, i) => (
                   <div
                     key={i}
-                    className="flex items-center gap-1.5 mono-label text-ink/60"
+                    className="flex items-center gap-1.5 text-xs font-medium text-ink/60"
                   >
-                    <Check
-                      size={12}
-                      className="text-amber-700"
-                      aria-hidden="true"
-                    />
+                    <Check size={13} className="text-brand" aria-hidden="true" />
                     <span>{item}</span>
                   </div>
                 ))}
@@ -299,12 +293,12 @@ export function KutasiaPage() {
         </div>
       </section>
 
-      {/* Features — bento */}
-      <section className="hairline-t section-sm">
+      {/* Features — 3-col pop cards */}
+      <section className="section-sm bg-neutral-50">
         <div className="container-wide">
           <AnimatedSection className="max-w-2xl mb-10 md:mb-14">
-            <div className="mono-label mb-5">[ 01 ] {k.features.label}</div>
-            <h2 className="font-serif text-ink text-[clamp(1.75rem,3.6vw,2.75rem)] leading-[1.08] tracking-[-0.02em] text-balance">
+            <div className="eyebrow uppercase text-brand mb-4">{k.features.label}</div>
+            <h2 className="text-[clamp(1.75rem,3.6vw,2.75rem)] font-extrabold leading-[1.1] tracking-[-0.025em] text-ink text-balance">
               {k.features.headline}
             </h2>
             <p className="mt-5 text-ink/70 text-body-lg leading-relaxed text-pretty">
@@ -312,135 +306,14 @@ export function KutasiaPage() {
             </p>
           </AnimatedSection>
 
-          <StaggerContainer className="grid grid-cols-1 lg:grid-cols-6 gap-5 md:gap-6">
-            {k.features.items.map((item, i) => {
-              // Bento layout: 0 spans 3, 1 spans 3, 2 spans 2, 3 spans 2, 4 spans 2, 5 spans 3 (pattern varies)
-              const spans = [
-                "lg:col-span-3",
-                "lg:col-span-3",
-                "lg:col-span-2",
-                "lg:col-span-2",
-                "lg:col-span-2",
-                "lg:col-span-6",
-              ];
-              return (
-                <StaggerItem key={i} className={spans[i % spans.length]}>
-                  <div className="hairline bg-paper-warm h-full p-6 sm:p-8 rounded-2xl transition duration-300 hover:border-ink/25 hover:-translate-y-0.5">
-                    <div className="flex items-center gap-3 mb-4">
-                      <span className="flex h-10 w-10 items-center justify-center rounded-xl hairline bg-paper text-ink">
-                        {featureIconMap[item.icon]}
-                      </span>
-                      <span className="mono-label text-ink/50">
-                        {String(i + 1).padStart(2, "0")}
-                      </span>
-                    </div>
-                    <h3 className="font-serif text-ink text-[1.375rem] md:text-[1.5rem] leading-[1.2] tracking-[-0.015em] mb-3 text-balance">
-                      {item.title}
-                    </h3>
-                    <p className="text-sm text-ink/70 leading-relaxed text-pretty">
-                      {item.description}
-                    </p>
-                  </div>
-                </StaggerItem>
-              );
-            })}
-          </StaggerContainer>
-        </div>
-      </section>
-
-      {/* Sectors */}
-      <section className="hairline-t bg-paper-warm/40 section-sm">
-        <div className="container-wide">
-          <AnimatedSection className="max-w-2xl mb-10 md:mb-14">
-            <div className="mono-label mb-5">[ 02 ] {k.sectors.label}</div>
-            <h2 className="font-serif text-ink text-[clamp(1.75rem,3.6vw,2.75rem)] leading-[1.08] tracking-[-0.02em] text-balance">
-              {k.sectors.headline}
-            </h2>
-            <p className="mt-5 text-ink/70 text-body-lg leading-relaxed text-pretty">
-              {k.sectors.description}
-            </p>
-          </AnimatedSection>
-
-          <StaggerContainer className="flex flex-wrap gap-2.5 md:gap-3">
-            {k.sectors.list.map((s, i) => (
-              <StaggerItem key={i} stagger={0.02}>
-                <div className="group inline-flex items-center gap-2 rounded-full hairline bg-paper-warm px-4 py-2.5 text-sm text-ink/80 transition-colors hover:border-ink/25 hover:bg-paper">
-                  <span className="text-ink/50 group-hover:text-amber-700 transition-colors">
-                    {sectorIconMap[s.icon] || <Package size={16} />}
-                  </span>
-                  {s.name}
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
-        </div>
-      </section>
-
-      {/* How it helps — before / after */}
-      <section className="hairline-t section-sm">
-        <div className="container-wide">
-          <AnimatedSection className="max-w-2xl mb-10 md:mb-14">
-            <div className="mono-label mb-5">[ 03 ] {k.howItHelps.label}</div>
-            <h2 className="font-serif text-ink text-[clamp(1.75rem,3.6vw,2.75rem)] leading-[1.08] tracking-[-0.02em] text-balance">
-              {k.howItHelps.headline}
-            </h2>
-          </AnimatedSection>
-
-          <div className="border-t border-ink/10">
-            {k.howItHelps.items.map((item, i) => (
-              <AnimatedSection
-                key={i}
-                delay={0.04 * i}
-                className="border-b border-ink/10 grid grid-cols-1 md:grid-cols-[auto_1fr_auto_1fr] items-stretch"
-              >
-                <div className="hidden md:flex items-center px-5 lg:px-8 py-6 border-r border-ink/10 bg-paper-warm">
-                  <span className="mono-label text-ink/50">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                </div>
-                <div className="p-5 md:p-6 lg:p-7 bg-paper-warm/40 border-b md:border-b-0 md:border-r border-ink/10">
-                  <div className="mono-label text-ink/50 mb-2">Before</div>
-                  <p className="text-ink/60 text-body leading-relaxed line-through decoration-ink/25 text-pretty">
-                    {item.before}
-                  </p>
-                </div>
-                <div className="hidden md:flex items-center justify-center px-4 border-r border-ink/10 bg-paper-warm text-amber-700">
-                  <span aria-hidden="true" className="text-xl">
-                    →
-                  </span>
-                </div>
-                <div className="p-5 md:p-6 lg:p-7 bg-paper">
-                  <div className="mono-label text-amber-700 mb-2">
-                    With Kutasia
-                  </div>
-                  <p className="text-ink text-body leading-relaxed text-pretty">
-                    {item.after}
-                  </p>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Built for */}
-      <section className="hairline-t bg-paper-warm/40 section-sm">
-        <div className="container-wide">
-          <AnimatedSection className="max-w-2xl mb-10 md:mb-14">
-            <div className="mono-label mb-5">[ 04 ] {k.forWho.label}</div>
-            <h2 className="font-serif text-ink text-[clamp(1.75rem,3.6vw,2.75rem)] leading-[1.08] tracking-[-0.02em] text-balance">
-              {k.forWho.headline}
-            </h2>
-          </AnimatedSection>
-
-          <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
-            {k.forWho.items.map((item, i) => (
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
+            {k.features.items.map((item, i) => (
               <StaggerItem key={i}>
-                <div className="hairline bg-paper-warm h-full p-6 sm:p-8 rounded-2xl transition duration-300 hover:border-ink/25 hover:-translate-y-0.5">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl hairline bg-paper text-ink mb-5">
-                    {forWhoIconCycle[i % forWhoIconCycle.length]}
+                <div className="pop-card h-full p-7 md:p-8">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-neutral-100 text-ink mb-5">
+                    {featureIconMap[item.icon]}
                   </div>
-                  <h3 className="font-serif text-ink text-[1.375rem] md:text-[1.5rem] leading-[1.2] tracking-[-0.015em] mb-3 text-balance">
+                  <h3 className="text-xl md:text-2xl font-bold text-ink tracking-[-0.02em] mb-3 text-balance">
                     {item.title}
                   </h3>
                   <p className="text-sm text-ink/70 leading-relaxed text-pretty">
@@ -453,41 +326,125 @@ export function KutasiaPage() {
         </div>
       </section>
 
-      {/* CTA — ink block */}
-      <section className="hairline-t bg-ink text-paper paper-grain">
-        <div className="container-wide section">
-          <AnimatedSection>
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-end">
-              <div className="lg:col-span-7">
-                <div className="mono-label text-paper/60 mb-5">
-                  [ NEXT ]   EXPLORE
-                </div>
-                <h2 className="font-serif text-paper text-[clamp(2rem,5vw,3.75rem)] leading-[1.04] tracking-[-0.025em] text-balance">
-                  {k.cta.headline}
-                </h2>
-                <p className="mt-5 max-w-xl text-paper/70 text-body-lg leading-relaxed text-pretty">
-                  {k.cta.description}
-                </p>
-              </div>
+      {/* Sectors */}
+      <section className="section-sm bg-white">
+        <div className="container-wide">
+          <AnimatedSection className="max-w-2xl mb-10 md:mb-14">
+            <div className="eyebrow uppercase text-ink/50 mb-4">{k.sectors.label}</div>
+            <h2 className="text-[clamp(1.75rem,3.6vw,2.75rem)] font-extrabold leading-[1.1] tracking-[-0.025em] text-ink text-balance">
+              {k.sectors.headline}
+            </h2>
+            <p className="mt-5 text-ink/70 text-body-lg leading-relaxed text-pretty">
+              {k.sectors.description}
+            </p>
+          </AnimatedSection>
 
-              <div className="lg:col-span-5 flex flex-col sm:flex-row lg:flex-col items-start gap-4 lg:items-end lg:justify-end">
+          <StaggerContainer className="flex flex-wrap gap-2.5 md:gap-3">
+            {k.sectors.list.map((s, i) => (
+              <StaggerItem key={i} stagger={0.02}>
+                <div className="group inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-4 py-2.5 text-sm font-medium text-ink/80 transition-colors hover:border-ink/30 hover:bg-neutral-50">
+                  <span className="text-ink/50 group-hover:text-brand transition-colors">
+                    {sectorIconMap[s.icon] || <Package size={16} />}
+                  </span>
+                  {s.name}
+                </div>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        </div>
+      </section>
+
+      {/* How it helps — before / after */}
+      <section className="section-sm bg-neutral-50">
+        <div className="container-wide">
+          <AnimatedSection className="max-w-2xl mb-10 md:mb-14">
+            <div className="eyebrow uppercase text-ink/50 mb-4">{k.howItHelps.label}</div>
+            <h2 className="text-[clamp(1.75rem,3.6vw,2.75rem)] font-extrabold leading-[1.1] tracking-[-0.025em] text-ink text-balance">
+              {k.howItHelps.headline}
+            </h2>
+          </AnimatedSection>
+
+          <div className="space-y-4">
+            {k.howItHelps.items.map((item, i) => (
+              <AnimatedSection key={i} delay={0.04 * i}>
+                <div className="pop-card grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] items-stretch gap-0 overflow-hidden p-0">
+                  <div className="p-6 md:p-7 bg-neutral-50 border-b md:border-b-0 md:border-r border-neutral-200">
+                    <div className="eyebrow uppercase text-ink/50 mb-2">Before</div>
+                    <p className="text-ink/60 text-body leading-relaxed line-through decoration-ink/25 text-pretty">
+                      {item.before}
+                    </p>
+                  </div>
+                  <div className="hidden md:flex items-center justify-center px-4 text-brand bg-white">
+                    <ArrowRight size={20} strokeWidth={2} aria-hidden="true" />
+                  </div>
+                  <div className="p-6 md:p-7 bg-white">
+                    <div className="eyebrow uppercase text-brand mb-2">
+                      With Kutasia
+                    </div>
+                    <p className="text-ink text-body leading-relaxed text-pretty">
+                      {item.after}
+                    </p>
+                  </div>
+                </div>
+              </AnimatedSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Built for */}
+      <section className="section-sm bg-white">
+        <div className="container-wide">
+          <AnimatedSection className="max-w-2xl mb-10 md:mb-14">
+            <div className="eyebrow uppercase text-ink/50 mb-4">{k.forWho.label}</div>
+            <h2 className="text-[clamp(1.75rem,3.6vw,2.75rem)] font-extrabold leading-[1.1] tracking-[-0.025em] text-ink text-balance">
+              {k.forWho.headline}
+            </h2>
+          </AnimatedSection>
+
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-6">
+            {k.forWho.items.map((item, i) => (
+              <StaggerItem key={i}>
+                <div className="pop-card h-full p-7 md:p-8">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-neutral-100 text-ink mb-5">
+                    {forWhoIconCycle[i % forWhoIconCycle.length]}
+                  </div>
+                  <h3 className="text-xl md:text-2xl font-bold text-ink tracking-[-0.02em] mb-3 text-balance">
+                    {item.title}
+                  </h3>
+                  <p className="text-sm text-ink/70 leading-relaxed text-pretty">
+                    {item.description}
+                  </p>
+                </div>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="section-sm bg-neutral-50">
+        <div className="container-wide">
+          <AnimatedSection>
+            <div className="pop-card p-10 md:p-14 text-center max-w-3xl mx-auto">
+              <div className="eyebrow uppercase text-brand mb-4">Next step</div>
+              <h2 className="text-[clamp(1.75rem,4vw,3rem)] font-extrabold leading-[1.08] tracking-[-0.03em] text-ink text-balance">
+                {k.cta.headline}
+              </h2>
+              <p className="mt-5 max-w-xl mx-auto text-ink/70 text-body leading-relaxed text-pretty">
+                {k.cta.description}
+              </p>
+              <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
                 <a
                   href={k.hero.primaryCtaHref}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2.5 bg-amber text-ink px-7 py-4 font-medium hairline hover:bg-paper transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber"
+                  className="btn-primary"
                 >
                   <span>{k.cta.primaryCta}</span>
-                  <ArrowUpRight
-                    size={16}
-                    aria-hidden="true"
-                    className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  />
+                  <ArrowUpRight size={16} aria-hidden="true" />
                 </a>
-                <Link
-                  href={k.hero.secondaryCtaHref}
-                  className="inline-flex items-center gap-2 text-paper underline underline-offset-8 decoration-paper/30 decoration-1 hover:decoration-paper transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber px-1"
-                >
+                <Link href={k.hero.secondaryCtaHref} className="btn-ghost">
                   <span>{k.cta.secondaryCta}</span>
                 </Link>
               </div>
