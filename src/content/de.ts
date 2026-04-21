@@ -1332,63 +1332,63 @@ export const content: Content = {
       hero: {
         eyebrow: "[ OPSOLID PRODUKT · 01 ]   DIGITALE VISITENKARTE",
         title: [
-          "Ein Link, ein QR,",
-          "ein Profil —",
-          "gehostet in Deutschland.",
+          "Handgefertigte",
+          "digitale Visitenkarten,",
+          "geliefert in 48 Stunden.",
         ],
         paragraph:
-          "Eine digitale Visitenkarte, die Sie als Link oder QR-Code weitergeben. Optionale NFC-Karte, wenn Sie das physische Antippen möchten. Branchenvorlagen für Immobilien, Salons, Fotografen, Kliniken, Restaurants und mehr. DSGVO-nativ, gehostet in Deutschland — kein US-Abo-Zwang.",
-        primaryCta: "Demo buchen",
-        secondaryCta: "So funktioniert's",
-        tags: "LINK · QR-CODE · NFC (OPTIONAL) · APPLE WALLET · DSGVO",
+          "Ein handgefertigtes, einseitiges digitales Profil, das wir für Sie bauen. Teilbar als Link oder QR-Code. Über 20 Branchenvorlagen als Ausgangspunkt. Deutsches Hosting, DSGVO-nativ — keine Abo-Fallen.",
+        primaryCta: "Karte starten",
+        secondaryCta: "20 Live-Vorlagen ansehen",
+        tags: "LINK · QR-CODE · CUSTOM DESIGN · 48H LIEFERUNG · DEUTSCHES HOSTING",
         cardLabels: {
           name: "Alex Weber",
           role: "Produktdesigner",
-          company: "Studio Nord · Hamburg",
+          company: "Studio Nord",
           nfc: "QR",
-          chip: "SCANNEN ODER ANTIPPEN",
+          chip: "QR-CODE SCANNEN",
         },
       },
       features: {
-        label: "FUNKTIONEN",
-        heading: "Ein Profil, das überall funktioniert — Ihr Link, Ihr QR, Ihre Karte.",
+        label: "WAS SIE BEKOMMEN",
+        heading: "Ein Profil, drei Teilmodi, zwanzig Ausgangspunkte.",
         intro:
-          "Übergeben Sie Ihre Karte, wie es gerade passt: als Link in der E-Mail-Signatur, als QR-Code an der Wand oder als optionale NFC-Karte. Gleiches Profil, drei Übergabemodi.",
+          "Wir gestalten Ihr Profil passend zu Ihrer Branche. Sie teilen es so, wie es gerade passt.",
         items: [
           {
             label: "LINK · 01",
             title: "Teilbarer Link",
-            desc: "Eine saubere URL für E-Mail-Signaturen, WhatsApp-Biografie, Instagram-Link oder Nachrichten. Keine App-Installation beim Empfänger.",
+            desc: "Eine saubere URL auf opsolid.de/c/ihr-name (oder Ihre eigene Domain in Custom). In E-Mail-Signaturen, WhatsApp-Bios, Instagram einsetzen. Keine App-Installation beim Empfänger.",
             icon: "link",
           },
           {
             label: "QR · 02",
-            title: "Dynamischer QR-Code",
-            desc: "Ein druckbarer, neu generierbarer QR-Code. Auf der Scheibe, im Menü, am Messestand oder im Zoom-Hintergrund — immer auf das aktuelle Profil.",
+            title: "QR-Code herunterladen",
+            desc: "PNG- und SVG-Dateien zum Drucken, Einbetten oder Teilen. Auf Fensteraufklebern, Speisekarten, Messebannern oder als Zoom-Hintergrund.",
             icon: "qr",
           },
           {
-            label: "NFC · 03",
-            title: "Optionale NFC-Karte",
-            desc: "Wer eine physische Karte möchte: Matt, Holz oder Metall, Versand aus Hamburg. Komplett optional — das digitale Profil läuft auch ohne.",
-            icon: "nfc",
-          },
-          {
-            label: "VORLAGEN · 04",
-            title: "Branchenvorlagen",
-            desc: "Vorgefertigte Designs für Immobilien, Salons, Kliniken, Fotografen, Restaurants, Steuerberater, Anwälte und mehr. Jeweils eigene Felder, Abschnitte, Tonalität.",
+            label: "VORLAGEN · 03",
+            title: "20 Branchenvorlagen",
+            desc: "Immobilien, Klinik, Restaurant, DJ, Barbier, Fotograf, Architekt, Fitness und mehr. Live-Vorschauen vor Projektstart durchstöbern.",
             icon: "templates",
           },
           {
-            label: "WALLET + CRM · 05",
-            title: "Wallet-Pässe & CRM-Sync",
-            desc: "Apple & Google Wallet-Pässe mit Auto-Update. Erfasste Leads fließen nach HubSpot, Pipedrive, Salesforce oder in ein CSV. Nativ — ohne Zapier.",
+            label: "DESIGN · 04",
+            title: "Handgefertigt für Sie",
+            desc: "Wir passen die Vorlage mit Ihren Daten, Farben und Fotos an. Lieferung in 48–72 Stunden. Überarbeitungen inklusive.",
+            icon: "layout",
+          },
+          {
+            label: "SIGNATUR · 05",
+            title: "E-Mail-Signatur bereit",
+            desc: "Fertigen Snippet in Gmail oder Outlook einfügen. Ihre Karte reist mit jeder E-Mail, die Sie versenden.",
             icon: "wallet",
           },
           {
             label: "HOSTING · 06",
             title: "Gehostet in Deutschland",
-            desc: "Hetzner / IONOS Frankfurt. DSGVO-nativ. Keine US-Subunternehmer. DPA ab Tag eins. Ein-Klick-Löschung, immer.",
+            desc: "Hetzner / IONOS Frankfurt. DSGVO-nativ. Keine US-Subunternehmer. Ein-Klick-Löschung, immer.",
             icon: "hosting",
           },
         ],
@@ -1397,7 +1397,7 @@ export const content: Content = {
         label: "DATENHOHEIT",
         heading: "Wo leben die Daten Ihrer Karte?",
         intro:
-          "Die meisten Mitbewerber hosten stolz in den USA. Wir nicht. Und genau das macht den Unterschied.",
+          "Die meisten Mitbewerber hosten in den USA. Wir nicht. Wenn jemand Ihre Karte scannt, bleiben die Daten in Deutschland.",
         cols: [
           "Anbieter",
           "Hosting-Region",
@@ -1442,163 +1442,183 @@ export const content: Content = {
       },
       pricing: {
         label: "PREISE",
-        heading: "Einmalig, Abo oder gratis. Nie an uns gebunden.",
+        heading: "Drei flexible Stufen. Keine Abo-Fallen.",
         popularBadge: "BELIEBT",
         plans: [
           {
-            name: "Gratis",
-            price: "€0",
-            cadence: "",
+            name: "Starter",
+            price: "€49",
+            cadence: "einmalig · 1. Jahr Hosting inklusive",
             popular: "",
             bullets: [
-              "Digitales Profil, 1 Karte",
-              "Grundlegende Analysen",
-              "OpSolid-Wasserzeichen",
-              "Ideal für Gründer und Freelancer",
+              "1 Branchenvorlage aus unserer Bibliothek",
+              "Link + QR-Code (PNG + SVG)",
+              "2 Überarbeitungen inklusive",
+              "E-Mail-Signatur-Snippet",
+              "1 Jahr Hosting auf opsolid.de/c/ihr-name",
+              "Hosting-Verlängerung: €9/Jahr ab Jahr 2",
             ],
-            cta: "Profil erstellen",
-            href: "/contact?source=dbc-free",
-          },
-          {
-            name: "Team",
-            price: "€4,90",
-            cadence: "pro Nutzer / Monat",
-            popular: "true",
-            bullets: [
-              "Alles aus Gratis",
-              "Erweiterte Analysen",
-              "CRM-Sync (HubSpot, Pipedrive, Salesforce)",
-              "Eigene Domain & Vollbranding",
-              "Roster + SSO",
-              "Jährliche Abrechnung, min. 5 Plätze",
-            ],
-            cta: "Demo buchen",
+            cta: "Starter beginnen",
             href: "#lead",
           },
           {
-            name: "NFC + Lifetime",
-            price: "€39",
-            cadence: "einmalig, pro Karte",
+            name: "Professional",
+            price: "€149",
+            cadence: "einmalig · €9/Jahr Hosting ab Jahr 2",
+            popular: "true",
+            bullets: [
+              "Jede Vorlage + leichte Anpassung",
+              "Eigener Slug (opsolid.de/c/ihre-marke)",
+              "5 Überarbeitungen inklusive",
+              "Analysen (Aufrufe, Link-Klicks)",
+              "E-Mail-Signatur + Social-Media-Grafiken",
+              "Mehrsprachig (DE/EN/TR) optional",
+            ],
+            cta: "Professional beginnen",
+            href: "#lead",
+          },
+          {
+            name: "Custom",
+            price: "Ab €299",
+            cadence: "Angebot pro Projekt",
             popular: "",
             bullets: [
-              "Matte oder Holz-NFC-Karte, Versand aus Hamburg",
-              "Digitaler Account dauerhaft gratis",
-              "Kein Abo, niemals",
-              "Jederzeit auf Team upgraden",
+              "Vollständig individuelles Design (keine Vorlage)",
+              "Eigene Domain (ihrname.de)",
+              "Mehrsprachig (DE/EN/TR)",
+              "Erweiterte Analysen",
+              "Team-Roster (5+ Karten, Preis pro Projekt)",
+              "CRM-Integration bei Bedarf",
             ],
-            cta: "Karte anfragen",
+            cta: "Angebot anfragen",
             href: "#lead",
           },
         ],
       },
       lead: {
         label: "ANFRAGE",
-        heading: "Demo buchen — oder die erste Karte bestellen.",
+        heading: "Erzählen Sie uns von Ihrer Karte.",
         intro:
-          "Sagen Sie uns kurz, wie groß Ihr Team ist und was Sie mit digitalen Karten vorhaben. Antwort innerhalb eines Werktages.",
+          "Teilen Sie Ihre Branche, Basisdaten und die gewünschte Vorlage mit. Wir antworten innerhalb eines Werktages mit einem Vorschau-Link.",
         fields: {
           name: "Vollständiger Name",
           email: "Geschäfts-E-Mail",
           company: "Unternehmen (optional)",
-          teamSize: "Teamgröße",
-          teamSizeOptions: ["1", "2 – 10", "11 – 50", "50+"],
-          message: "Etwas, das wir wissen sollten? (optional)",
+          teamSize: "Wie viele Karten?",
+          teamSizeOptions: ["1", "2 – 5", "6 – 20", "20+"],
+          message:
+            "Noch etwas, das wir wissen sollten? (Branche, Link-Wünsche usw.)",
           consent:
             "Ich willige in die Verarbeitung dieser Daten durch OpSolid zur Bearbeitung meiner Anfrage ein. Siehe Datenschutzerklärung.",
           privacyLink: "Datenschutzerklärung",
           submit: "Anfrage senden",
           submitting: "Wird gesendet…",
           success:
-            "Danke — Antwort innerhalb eines Werktages.",
+            "Danke — Antwort innerhalb eines Werktages mit Vorschau-Link.",
           error:
             "Etwas ist schiefgegangen. Bitte direkt an contact@opsolid.de schreiben.",
         },
       },
       testimonials: {
-        label: "Soziale Bewährung",
-        heading: "Was Kunden nach dem Wechsel sagen.",
+        label: "SOZIALE BEWÄHRUNG",
+        heading: "Was Kunden nach ihrer ersten Karte sagen.",
         items: [
           {
             quote:
-              "Wir haben in einer einzigen Woche Papierkarten in drei Städten ersetzt. Leads landen sekundengenau in HubSpot, niemand musste etwas tippen.",
+              "Die Karte war in zwei Tagen fertig. Der Designer hat tatsächlich verstanden, was eine Maklerin auf einer Profilseite braucht — ich musste kaum etwas ändern.",
             name: "Lena Richter",
-            role: "Vertriebsleitung",
-            company: "Scale-up aus Berlin",
+            role: "Selbstständige Maklerin",
+            company: "Berlin, DE",
           },
           {
             quote:
-              "Dass die Daten in Deutschland bleiben, hat unser Legal-Team überzeugt. Alles andere war ein Bonus.",
+              "Dass die Daten in Deutschland bleiben, hat unser Legal-Team überzeugt. Allein das war den Preis wert.",
             name: "Marco Weber",
             role: "COO",
             company: "Industrieunternehmen aus München",
           },
           {
             quote:
-              "Pauschal 39 € für eine lebenslange Karte. Keine Abo-Falle. Allein deshalb bin ich vom US-Produkt gewechselt.",
+              "Kein Monatsabo. Kein „Enterprise-Stufe“-Upsell. Einmal bezahlt, Karte bekommen, QR bekommen, weitergemacht. Genau das wollte ich.",
             name: "Sarah Klein",
             role: "Selbstständige Beraterin",
-            company: "Hamburg",
+            company: "Berlin, DE",
           },
         ],
       },
       howItWorks: {
-        label: "So funktioniert's",
-        heading: "Drei Schritte. Unter fünf Minuten.",
+        label: "SO LIEFERN WIR",
+        heading: "Vier Schritte. Karte live in 48 Stunden.",
         steps: [
           {
-            title: "Karte bestellen",
+            title: "01 · Bestellung",
             description:
-              "Wählen Sie Matt, Metall oder Holz. Wir versenden innerhalb von zwei Werktagen aus Hamburg.",
+              "Kurzformular ausfüllen: Branche, Basisdaten, bevorzugte Vorlage. Einmalgebühr bezahlen.",
           },
           {
-            title: "Profil einrichten",
+            title: "02 · Design",
             description:
-              "Foto, Links, Social Handles und Kalender hinzufügen. Vorschau in Echtzeit.",
+              "Innerhalb von 48–72 Stunden senden wir Ihnen einen Vorschau-Link Ihres angepassten Profils.",
           },
           {
-            title: "Tappen und teilen",
+            title: "03 · Überarbeitungen",
             description:
-              "Ein Tap teilt alles. Jede Interaktion lässt sich im Dashboard verfolgen.",
+              "Sagen Sie uns, was geändert werden soll. 2–5 Runden je nach Tarif. Keine Express-Gebühren.",
+          },
+          {
+            title: "04 · Lieferung",
+            description:
+              "Sie erhalten: den Live-Link, QR-Code (PNG + SVG), E-Mail-Signatur-Snippet. Alles gehört Ihnen.",
           },
         ],
       },
       faq: {
         label: "FAQ",
-        heading: "Antworten auf die häufigsten Fragen.",
+        heading: "Fragen, direkt beantwortet.",
         items: [
           {
-            question: "Funktionieren die Karten mit jedem Handy?",
+            question: "Wie schnell bekomme ich meine Karte?",
             answer:
-              "Ja. NFC wird auf jedem modernen iOS- und Android-Gerät unterstützt. Der Empfänger muss keine App installieren.",
+              "48–72 Stunden ab dem Moment, in dem wir Ihre Daten und Zahlung haben. Express-Lieferung in Professional und Custom möglich — fragen Sie uns.",
+          },
+          {
+            question: "Versenden Sie eine physische NFC-Karte?",
+            answer:
+              "Noch nicht. Wir konzentrieren uns aktuell auf rein digital: Link + QR. Der Kunde scannt Ihren QR-Code oder öffnet Ihren Link und sieht Ihr Profil. Keine Hardware nötig. Physische NFC-Karten kommen später möglicherweise als Add-on.",
+          },
+          {
+            question: "Kann ich meine Karte später selbst bearbeiten?",
+            answer:
+              "Sie senden uns die Änderungen, wir aktualisieren innerhalb eines Werktages. In Custom richten wir einen einfachen Editor für Sie ein. In Starter und Professional laufen Änderungen über uns.",
           },
           {
             question: "Wo werden meine Daten gespeichert?",
             answer:
-              "In Frankfurt, Deutschland, auf Hetzner- und IONOS-Infrastruktur. Null US-Subauftragnehmer. Ein AV-Vertrag liegt ab der Registrierung bereit.",
+              "Frankfurt, Deutschland — Hetzner / IONOS. Keine US-Subunternehmer. Ein AV-Vertrag liegt auf Anfrage bereit.",
           },
           {
-            question: "Kann ich jederzeit kündigen?",
+            question: "Kann ich meine Karte kündigen oder löschen?",
             answer:
-              "Die 39 €-Karte hat überhaupt kein Abo. Team-Pläne sind nach dem ersten Jahr monatlich kündbar.",
+              "Ja, jederzeit. Ein-Klick-Löschung. Keine Auto-Verlängerungsfallen. Hosting wird ab Jahr 2 jährlich im Voraus bezahlt.",
           },
           {
-            question: "Kann ich mein bestehendes CRM behalten?",
+            question: "Ich brauche 10+ Karten für mein Team. Wie?",
             answer:
-              "Ja. Wir synchronisieren nativ mit HubSpot, Pipedrive und Salesforce — und exportieren als CSV für alles andere. Kein Zapier nötig.",
+              "Custom-Tarif. Wir erstellen ein projektbezogenes Angebot, abhängig davon, wie viel die Karten gemeinsam haben sollen. Schreiben Sie an contact@opsolid.de.",
           },
         ],
       },
       cta: {
         eyebrow: "BEREIT?",
-        heading:
-          "Ihre nächste Visitenkarte kommt aus Hamburg,\nnicht aus San Francisco.",
-        primaryCta: "Termin buchen",
-        secondaryCta: "Zu /contact",
+        heading: "Ihre neue Karte. Live in 48 Stunden.",
+        primaryCta: "Karte starten",
+        secondaryCta: "Vorlagen ansehen",
       },
       meta: {
-        title: "Digitale Visitenkarte — in Deutschland gehostet | OpSolid",
+        title:
+          "Digitale Visitenkarte — Handgefertigt, in Deutschland gehostet | OpSolid",
         description:
-          "Eine moderne NFC-Visitenkarte mit DSGVO-nativem digitalen Profil. Apple & Google Wallet, CRM-Sync, Team-Roster — gehostet in Hamburg, nicht in San Francisco.",
+          "Eine handgefertigte einseitige digitale Visitenkarte mit Link und QR-Code. Über 20 Branchenvorlagen. Lieferung in 48 Stunden. In Deutschland gehostet, DSGVO-nativ.",
       },
     },
 

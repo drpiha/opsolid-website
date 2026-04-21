@@ -3,11 +3,8 @@
 import { useState } from "react";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import {
-  Nfc,
-  Wallet,
-  LineChart,
-  RefreshCw,
-  Users,
+  Mail,
+  LayoutTemplate,
   ServerCog,
   Link2,
   QrCode,
@@ -34,12 +31,9 @@ type FormState = "idle" | "sending" | "success" | "error";
 const featureIconMap: Record<string, React.ReactNode> = {
   link: <Link2 size={22} strokeWidth={2} />,
   qr: <QrCode size={22} strokeWidth={2} />,
-  nfc: <Nfc size={22} strokeWidth={2} />,
   templates: <Layers size={22} strokeWidth={2} />,
-  wallet: <Wallet size={22} strokeWidth={2} />,
-  chart: <LineChart size={22} strokeWidth={2} />,
-  sync: <RefreshCw size={22} strokeWidth={2} />,
-  team: <Users size={22} strokeWidth={2} />,
+  layout: <LayoutTemplate size={22} strokeWidth={2} />,
+  wallet: <Mail size={22} strokeWidth={2} />,
   hosting: <ServerCog size={22} strokeWidth={2} />,
 };
 
@@ -225,7 +219,7 @@ export function DigitalCardPage() {
                   <span>{d.hero.primaryCta}</span>
                   <ArrowRight size={16} strokeWidth={2.5} />
                 </Link>
-                <Link href="#features" className="btn-ghost">
+                <Link href="#templates" className="btn-ghost">
                   <span>{d.hero.secondaryCta}</span>
                 </Link>
               </div>
@@ -290,9 +284,24 @@ export function DigitalCardPage() {
       </section>
 
       {/* ================================================================
+          DEMO GALLERY — 20 live previews (moved above features)
+          ================================================================ */}
+      <section id="templates" className="bg-white">
+        <DemoGallery
+          title={t.products.templatesStrip?.heading ?? "10 industry templates + 10 layouts"}
+          subtitle={t.products.templatesStrip?.paragraph ?? "Live previews — click any card to open a full-size interactive demo."}
+          ctaLabel={t.products.templatesStrip?.cta ?? "Customize this template"}
+          openLabel={t.products.categories?.all ? "Open full preview" : "Open full preview"}
+          filterAll={t.products.categories?.all ?? "All"}
+          filterIndustry={t.products.categories?.customerFacing ?? "Industry"}
+          filterLayout="Layout"
+        />
+      </section>
+
+      {/* ================================================================
           FEATURES
           ================================================================ */}
-      <section id="features" className="section bg-white">
+      <section id="features" className="section bg-neutral-50">
         <div className="container-wide">
           <AnimatedSection>
             <SectionHeading
@@ -324,24 +333,9 @@ export function DigitalCardPage() {
       </section>
 
       {/* ================================================================
-          DEMO GALLERY — 20 live previews
+          HOW WE DELIVER — 4 steps
           ================================================================ */}
-      <section className="bg-white">
-        <DemoGallery
-          title={t.products.templatesStrip?.heading ?? "10 industry templates + 10 layouts"}
-          subtitle={t.products.templatesStrip?.paragraph ?? "Live previews — click any card to open a full-size interactive demo."}
-          ctaLabel={t.products.templatesStrip?.cta ?? "Customize this template"}
-          openLabel={t.products.categories?.all ? "Open full preview" : "Open full preview"}
-          filterAll={t.products.categories?.all ?? "All"}
-          filterIndustry={t.products.categories?.customerFacing ?? "Industry"}
-          filterLayout="Layout"
-        />
-      </section>
-
-      {/* ================================================================
-          HOW IT WORKS
-          ================================================================ */}
-      <section className="section bg-neutral-50">
+      <section className="section bg-white">
         <div className="container-wide">
           <AnimatedSection>
             <SectionHeading
@@ -351,11 +345,11 @@ export function DigitalCardPage() {
             />
           </AnimatedSection>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-8 lg:gap-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-6 lg:gap-8">
             {d.howItWorks.steps.map((step, i) => (
               <AnimatedSection
                 key={i}
-                delay={0.1 * i}
+                delay={0.08 * i}
                 className="flex flex-col items-center text-center"
               >
                 <div className="w-[5.5rem] h-[5.5rem] rounded-full bg-white border-2 border-brand flex items-center justify-center shadow-soft mb-6">
@@ -378,7 +372,7 @@ export function DigitalCardPage() {
       {/* ================================================================
           SOVEREIGNTY TABLE
           ================================================================ */}
-      <section className="section bg-white">
+      <section className="section bg-neutral-50">
         <div className="container-wide">
           <AnimatedSection>
             <SectionHeading
@@ -527,7 +521,7 @@ export function DigitalCardPage() {
       {/* ================================================================
           PRICING — 3 cards
           ================================================================ */}
-      <section id="pricing" className="section bg-neutral-50">
+      <section id="pricing" className="section bg-white">
         <div className="container-wide">
           <AnimatedSection>
             <SectionHeading
@@ -609,7 +603,7 @@ export function DigitalCardPage() {
       {/* ================================================================
           TESTIMONIALS
           ================================================================ */}
-      <section className="section bg-white">
+      <section className="section bg-neutral-50">
         <div className="container-wide">
           <AnimatedSection>
             <SectionHeading
@@ -659,6 +653,67 @@ export function DigitalCardPage() {
                 </figure>
               </AnimatedSection>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================================================================
+          FAQ — short accordion
+          ================================================================ */}
+      <section className="section bg-white">
+        <div className="container-wide max-w-3xl">
+          <AnimatedSection>
+            <SectionHeading
+              label={d.faq.label}
+              headline={d.faq.heading}
+              align="center"
+            />
+          </AnimatedSection>
+
+          <div className="space-y-3">
+            {d.faq.items.map((item, i) => {
+              const isOpen = openFaq === i;
+              return (
+                <AnimatedSection key={i} delay={0.04 * i}>
+                  <div
+                    className={`rounded-2xl border transition-colors ${
+                      isOpen
+                        ? "bg-white border-neutral-300 shadow-card"
+                        : "bg-neutral-50 border-neutral-200"
+                    }`}
+                  >
+                    <button
+                      type="button"
+                      aria-expanded={isOpen}
+                      onClick={() => setOpenFaq(isOpen ? null : i)}
+                      className="w-full flex items-center justify-between gap-4 px-5 md:px-6 py-5 text-left"
+                    >
+                      <span className="text-body font-semibold text-ink">
+                        {item.question}
+                      </span>
+                      <ChevronDown
+                        size={20}
+                        strokeWidth={2.5}
+                        className={`shrink-0 text-ink/50 transition-transform duration-300 ${
+                          isOpen ? "rotate-180 text-brand" : ""
+                        }`}
+                      />
+                    </button>
+                    <div
+                      className={`grid overflow-hidden transition-[grid-template-rows] duration-300 ease-out ${
+                        isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+                      }`}
+                    >
+                      <div className="min-h-0">
+                        <p className="px-5 md:px-6 pb-5 text-body text-ink/65 leading-relaxed text-pretty">
+                          {item.answer}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </AnimatedSection>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -799,67 +854,6 @@ export function DigitalCardPage() {
       </section>
 
       {/* ================================================================
-          FAQ — short accordion
-          ================================================================ */}
-      <section className="section bg-white">
-        <div className="container-wide max-w-3xl">
-          <AnimatedSection>
-            <SectionHeading
-              label={d.faq.label}
-              headline={d.faq.heading}
-              align="center"
-            />
-          </AnimatedSection>
-
-          <div className="space-y-3">
-            {d.faq.items.map((item, i) => {
-              const isOpen = openFaq === i;
-              return (
-                <AnimatedSection key={i} delay={0.04 * i}>
-                  <div
-                    className={`rounded-2xl border transition-colors ${
-                      isOpen
-                        ? "bg-white border-neutral-300 shadow-card"
-                        : "bg-neutral-50 border-neutral-200"
-                    }`}
-                  >
-                    <button
-                      type="button"
-                      aria-expanded={isOpen}
-                      onClick={() => setOpenFaq(isOpen ? null : i)}
-                      className="w-full flex items-center justify-between gap-4 px-5 md:px-6 py-5 text-left"
-                    >
-                      <span className="text-body font-semibold text-ink">
-                        {item.question}
-                      </span>
-                      <ChevronDown
-                        size={20}
-                        strokeWidth={2.5}
-                        className={`shrink-0 text-ink/50 transition-transform duration-300 ${
-                          isOpen ? "rotate-180 text-brand" : ""
-                        }`}
-                      />
-                    </button>
-                    <div
-                      className={`grid overflow-hidden transition-[grid-template-rows] duration-300 ease-out ${
-                        isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-                      }`}
-                    >
-                      <div className="min-h-0">
-                        <p className="px-5 md:px-6 pb-5 text-body text-ink/65 leading-relaxed text-pretty">
-                          {item.answer}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </AnimatedSection>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ================================================================
           FINAL CTA
           ================================================================ */}
       <section className="section bg-ink text-white relative overflow-hidden">
@@ -877,12 +871,12 @@ export function DigitalCardPage() {
                 {d.cta.heading}
               </h2>
               <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-                <Link href="/contact" className="btn-primary">
+                <Link href="#lead" className="btn-primary">
                   <span>{d.cta.primaryCta}</span>
                   <ArrowRight size={16} strokeWidth={2.5} />
                 </Link>
                 <Link
-                  href="/contact"
+                  href="#templates"
                   className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/5 text-white font-semibold px-6 py-3.5 hover:bg-white hover:text-ink transition-colors"
                 >
                   <span>{d.cta.secondaryCta}</span>

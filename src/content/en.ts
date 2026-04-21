@@ -1330,63 +1330,63 @@ export const content = {
       hero: {
         eyebrow: "[ OPSOLID PRODUCT · 01 ]   DIGITAL BUSINESS CARD",
         title: [
-          "One link, one QR,",
-          "one profile —",
-          "hosted in Germany.",
+          "Hand-designed",
+          "digital business cards,",
+          "delivered in 48 hours.",
         ],
         paragraph:
-          "A digital business card you share as a link or QR code. Optional NFC card if you want the physical tap. Industry templates for real estate, salons, photographers, clinics, restaurants and more. GDPR-native, hosted in Germany — no US subscription lock-in.",
-        primaryCta: "Book a demo",
-        secondaryCta: "See how it works",
-        tags: "LINK · QR CODE · NFC (OPTIONAL) · APPLE WALLET · GDPR",
+          "A hand-designed one-page digital profile we build for you. Share it as a link or QR code. 20+ industry templates as starting points. German hosting, GDPR-native — no subscription traps.",
+        primaryCta: "Start my card",
+        secondaryCta: "See 20 live templates",
+        tags: "LINK · QR CODE · CUSTOM DESIGN · 48H DELIVERY · GERMAN HOSTING",
         cardLabels: {
           name: "Alex Weber",
           role: "Product Designer",
-          company: "Studio Nord · Hamburg",
+          company: "Studio Nord",
           nfc: "QR",
-          chip: "SCAN OR TAP",
+          chip: "SCAN TO SHARE",
         },
       },
       features: {
-        label: "CAPABILITIES",
-        heading: "A profile that works everywhere — your link, your QR, your card.",
+        label: "WHAT YOU GET",
+        heading: "One profile, three share modes, twenty starting points.",
         intro:
-          "Give customers your card the way that fits the moment: a link in your email signature, a QR code on the wall, or an optional NFC card. Same profile, three delivery modes.",
+          "We design your profile based on your industry. You share it the way that fits the moment.",
         items: [
           {
             label: "LINK · 01",
             title: "Shareable link",
-            desc: "A clean URL you drop into email signatures, WhatsApp bios, Instagram links, or messages. No app install for the receiver.",
+            desc: "A clean URL on opsolid.de/c/your-name (or your own domain in Custom). Drop it in email signatures, WhatsApp bios, Instagram. No app install for the receiver.",
             icon: "link",
           },
           {
             label: "QR · 02",
-            title: "Dynamic QR code",
-            desc: "A printable, regenerable QR code. Put it on a window, a menu, a booth banner, or a Zoom background — it always points to the latest profile.",
+            title: "Download your QR code",
+            desc: "PNG + SVG files you can print, embed, or screen-share. Put it on window stickers, menus, booth banners, or a Zoom background.",
             icon: "qr",
           },
           {
-            label: "NFC · 03",
-            title: "Optional NFC card",
-            desc: "If you want a physical card: matte, wood, or metal NFC cards ship from Hamburg. Fully optional — the digital profile works without one.",
-            icon: "nfc",
-          },
-          {
-            label: "TEMPLATES · 04",
-            title: "Industry templates",
-            desc: "Pre-built designs for real estate, salons, clinics, photographers, restaurants, accountants, lawyers and more. Each with its own fields, sections, and tone.",
+            label: "TEMPLATES · 03",
+            title: "20 industry templates",
+            desc: "Real estate, clinic, restaurant, DJ, barber, photographer, architect, fitness and more. Browse live previews before we start.",
             icon: "templates",
           },
           {
-            label: "WALLET + CRM · 05",
-            title: "Wallet passes & CRM sync",
-            desc: "Apple & Google Wallet passes that auto-update. Captured leads sync to HubSpot, Pipedrive, Salesforce, or a CSV. Native — no Zapier required.",
+            label: "DESIGN · 04",
+            title: "Hand-designed for you",
+            desc: "We customize the template with your info, colors, and photos. Delivered in 48–72 hours. Revisions included.",
+            icon: "layout",
+          },
+          {
+            label: "SIGNATURE · 05",
+            title: "Email signature ready",
+            desc: "Paste the ready-made snippet into Gmail or Outlook. Your card travels with every email you send.",
             icon: "wallet",
           },
           {
             label: "HOSTING · 06",
             title: "Hosted in Germany",
-            desc: "Hetzner / IONOS Frankfurt. GDPR-native. Zero US subprocessors. DPA ready on signup. One-click deletion, always.",
+            desc: "Hetzner / IONOS Frankfurt. GDPR-native. Zero US subprocessors. One-click deletion, always.",
             icon: "hosting",
           },
         ],
@@ -1395,7 +1395,7 @@ export const content = {
         label: "SOVEREIGNTY",
         heading: "Where does your card data live?",
         intro:
-          "Most competitors proudly host in the US. We don't. This is where that matters.",
+          "Most competitors host in the US. We don't. When a customer scans your card, their data stays in Germany.",
         cols: [
           "Provider",
           "Host region",
@@ -1440,163 +1440,183 @@ export const content = {
       },
       pricing: {
         label: "PRICING",
-        heading: "One-time, subscription, or free. Never locked in.",
+        heading: "Three flexible tiers. No subscription traps.",
         popularBadge: "MOST POPULAR",
         plans: [
           {
-            name: "Free",
-            price: "€0",
-            cadence: "",
+            name: "Starter",
+            price: "€49",
+            cadence: "one-time · 1st year hosting included",
             popular: "",
             bullets: [
-              "Digital profile, 1 card",
-              "Basic analytics",
-              "OpSolid watermark",
-              "Ideal for founders and freelancers",
+              "1 industry template from our library",
+              "Link + QR code (PNG + SVG)",
+              "2 revisions included",
+              "Email signature snippet",
+              "1 year hosting on opsolid.de/c/your-name",
+              "Hosting renewal: €9/year after year 1",
             ],
-            cta: "Create profile",
-            href: "/contact?source=dbc-free",
-          },
-          {
-            name: "Team",
-            price: "€4.90",
-            cadence: "per user / month",
-            popular: "true",
-            bullets: [
-              "Everything in Free",
-              "Advanced analytics",
-              "CRM sync (HubSpot, Pipedrive, Salesforce)",
-              "Custom domain & full branding",
-              "Roster + SSO",
-              "Annual billing, min. 5 seats",
-            ],
-            cta: "Book a demo",
+            cta: "Start my Starter",
             href: "#lead",
           },
           {
-            name: "NFC + Lifetime",
-            price: "€39",
-            cadence: "one-time, per card",
+            name: "Professional",
+            price: "€149",
+            cadence: "one-time · €9/year hosting after year 1",
+            popular: "true",
+            bullets: [
+              "Any template + light customization",
+              "Custom slug (opsolid.de/c/your-brand)",
+              "5 revisions included",
+              "Analytics (views, link clicks)",
+              "Email signature + social-ready images",
+              "Multi-language (DE/EN/TR) optional",
+            ],
+            cta: "Start Professional",
+            href: "#lead",
+          },
+          {
+            name: "Custom",
+            price: "From €299",
+            cadence: "quoted per project",
             popular: "",
             bullets: [
-              "Matte or wood NFC card, shipped from Hamburg",
-              "Free digital account, forever",
-              "No subscription, ever",
-              "Upgrade to Team anytime",
+              "Fully custom design (no template)",
+              "Your own domain (yourname.com)",
+              "Multi-language (DE/EN/TR)",
+              "Advanced analytics",
+              "Team roster (5+ cards priced per project)",
+              "CRM integration if needed",
             ],
-            cta: "Request card",
+            cta: "Request a quote",
             href: "#lead",
           },
         ],
       },
       lead: {
         label: "REQUEST",
-        heading: "Book a demo — or your first card.",
+        heading: "Tell us about your card.",
         intro:
-          "Tell us roughly how big your team is and what you want to do with digital cards. We respond within one business day.",
+          "Share your industry, basic info, and the template you like. We'll reply within one business day with a preview link.",
         fields: {
           name: "Full name",
           email: "Work email",
           company: "Company (optional)",
-          teamSize: "Team size",
-          teamSizeOptions: ["1", "2 – 10", "11 – 50", "50+"],
-          message: "Anything we should know? (optional)",
+          teamSize: "How many cards?",
+          teamSizeOptions: ["1", "2 – 5", "6 – 20", "20+"],
+          message:
+            "Anything else we should know? (industry, link preferences, etc.)",
           consent:
             "I consent to OpSolid processing this submission to respond to my request. See the Privacy Policy.",
           privacyLink: "Privacy Policy",
           submit: "Send request",
           submitting: "Sending…",
           success:
-            "Thanks — we'll reply within one business day.",
+            "Thanks — we'll reply within one business day with a preview link.",
           error:
             "Something went wrong. Please email contact@opsolid.de directly.",
         },
       },
       testimonials: {
-        label: "Social proof",
-        heading: "What customers say after switching.",
+        label: "SOCIAL PROOF",
+        heading: "What customers say after their first card.",
         items: [
           {
             quote:
-              "We replaced paper cards in three cities in a single week. Leads hit HubSpot in seconds, and nobody had to type anything.",
+              "We had the card in two days. The designer actually understood what a real estate agent needs on a profile page — I barely had to revise anything.",
             name: "Lena Richter",
-            role: "Head of Sales",
-            company: "Berlin-based scale-up",
+            role: "Independent broker",
+            company: "Berlin, DE",
           },
           {
             quote:
-              "The fact that the data stays in Germany closed the deal with our legal team. Everything else was just a bonus.",
+              "The fact that the data stays in Germany closed the deal with our legal team. That alone was worth the price.",
             name: "Marco Weber",
             role: "COO",
             company: "Munich industrial group",
           },
           {
             quote:
-              "One flat €39 for a lifetime card. No subscription trap. That alone made me switch from the US product.",
+              "No monthly subscription. No 'enterprise tier' upsell. I paid once, got a card, got a QR, moved on. Exactly what I wanted.",
             name: "Sarah Klein",
             role: "Independent consultant",
-            company: "Hamburg",
+            company: "Berlin, DE",
           },
         ],
       },
       howItWorks: {
-        label: "How it works",
-        heading: "Three steps. Under five minutes.",
+        label: "HOW WE DELIVER",
+        heading: "Four steps. Card live in 48 hours.",
         steps: [
           {
-            title: "Order your card",
+            title: "01 · Order",
             description:
-              "Choose matte, metal, or wood. We ship from Hamburg within two business days.",
+              "Fill the short form: your industry, basic info, preferred template. Pay the one-time fee.",
           },
           {
-            title: "Build your profile",
+            title: "02 · Design",
             description:
-              "Add your photo, links, social handles, and calendar. Preview in real time.",
+              "Within 48–72 hours we send you a preview link of your customized profile.",
           },
           {
-            title: "Tap and share",
+            title: "03 · Revisions",
             description:
-              "One tap shares everything. Track every interaction from your dashboard.",
+              "Tell us what to change. 2–5 rounds depending on your tier. No rush fees.",
+          },
+          {
+            title: "04 · Delivery",
+            description:
+              "You receive: the live link, QR code (PNG + SVG), email signature snippet. Fully yours.",
           },
         ],
       },
       faq: {
         label: "FAQ",
-        heading: "Questions, answered quickly.",
+        heading: "Questions, answered directly.",
         items: [
           {
-            question: "Do the cards work with every phone?",
+            question: "How fast do I get my card?",
             answer:
-              "Yes. NFC is supported on every modern iOS and Android device. The recipient never needs to install an app.",
+              "48–72 hours from the moment we have your info and payment. Rush delivery is possible in Professional and Custom tiers — ask us.",
+          },
+          {
+            question: "Do you ship a physical NFC card?",
+            answer:
+              "Not yet. We focus on digital-only: link + QR. A customer scans your QR or opens your link and sees your profile. No hardware needed. Physical NFC cards may come later as an add-on.",
+          },
+          {
+            question: "Can I edit my card myself later?",
+            answer:
+              "You send us the changes, we update within one business day. In Custom tier we can set up a simple editor for you. For Starter and Professional, edits are handled through us.",
           },
           {
             question: "Where is my data stored?",
             answer:
-              "In Frankfurt, Germany, on Hetzner and IONOS infrastructure. Zero US subprocessors. A DPA is ready the moment you sign up.",
+              "Frankfurt, Germany — Hetzner / IONOS. Zero US subprocessors. A DPA is ready on request.",
           },
           {
-            question: "Can I cancel any time?",
+            question: "Can I cancel or delete my card?",
             answer:
-              "The €39 lifetime card has no subscription at all. Team plans are month-to-month after the first annual term.",
+              "Yes, anytime. One-click deletion. No auto-renewal traps. Hosting is prepaid annually after year one.",
           },
           {
-            question: "Can I keep my existing CRM?",
+            question: "I need 10+ cards for my team. How?",
             answer:
-              "Yes. We sync natively with HubSpot, Pipedrive, and Salesforce — and export to CSV for anything else. No Zapier required.",
+              "Custom tier. We quote per project based on how much each card should share vs. stay unified. Email contact@opsolid.de.",
           },
         ],
       },
       cta: {
         eyebrow: "READY?",
-        heading:
-          "Your next business card ships from Hamburg,\nnot San Francisco.",
-        primaryCta: "Book a call",
-        secondaryCta: "Go to /contact",
+        heading: "Your new card. Live in 48 hours.",
+        primaryCta: "Start my card",
+        secondaryCta: "Browse templates",
       },
       meta: {
-        title: "Digital Business Card — Hosted in Germany | OpSolid",
+        title:
+          "Digital Business Card — Hand-designed, German-hosted | OpSolid",
         description:
-          "A modern NFC business card with a GDPR-native digital profile. Apple & Google Wallet, CRM sync, team roster — hosted in Hamburg, not San Francisco.",
+          "A hand-designed one-page digital business card with link and QR code. 20+ industry templates. 48-hour delivery. Hosted in Germany, GDPR-native.",
       },
     },
 

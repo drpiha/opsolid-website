@@ -1332,63 +1332,63 @@ export const content: Content = {
       hero: {
         eyebrow: "[ OPSOLID ÜRÜN · 01 ]   DİJİTAL KARTVİZİT",
         title: [
-          "Tek link, tek QR,",
-          "tek profil —",
-          "Almanya'da barındırılır.",
+          "El yapımı tasarım",
+          "dijital kartvizitler,",
+          "48 saatte teslim.",
         ],
         paragraph:
-          "Link veya QR kod olarak paylaşacağınız bir dijital kartvizit. Fiziksel dokunuş isterseniz opsiyonel NFC kart. Emlakçı, kuaför, fotoğrafçı, klinik, restoran gibi meslekler için sektör şablonları. GDPR-yerli, Almanya'da barındırılır — ABD abonelik kilidi yok.",
-        primaryCta: "Demo planla",
-        secondaryCta: "Nasıl çalışır",
-        tags: "LİNK · QR KOD · NFC (OPSİYONEL) · APPLE WALLET · GDPR",
+          "Sizin için oluşturduğumuz, tek sayfalık el yapımı bir dijital profil. Link veya QR kod olarak paylaşın. Başlangıç noktası olarak 20+ sektör şablonu. Almanya'da barındırma, GDPR-yerli — abonelik tuzakları yok.",
+        primaryCta: "Kartımı başlat",
+        secondaryCta: "20 canlı şablonu gör",
+        tags: "LİNK · QR KOD · ÖZEL TASARIM · 48 SAAT TESLİMAT · ALMAN HOSTİNG",
         cardLabels: {
           name: "Alex Weber",
           role: "Ürün Tasarımcısı",
-          company: "Studio Nord · Hamburg",
+          company: "Studio Nord",
           nfc: "QR",
-          chip: "TARATIN VEYA DOKUNUN",
+          chip: "QR ILE PAYLAŞ",
         },
       },
       features: {
-        label: "YETENEKLER",
-        heading: "Her yerde çalışan bir profil — linkiniz, QR'ınız, kartınız.",
+        label: "NELER ALIRSINIZ",
+        heading: "Tek profil, üç paylaşım modu, yirmi başlangıç noktası.",
         intro:
-          "Kartınızı duruma göre verin: e-posta imzasında link, duvarda QR kod ya da opsiyonel NFC kart. Aynı profil, üç dağıtım modu.",
+          "Profilinizi sektörünüze göre tasarlarız. Siz de o ana uygun şekilde paylaşırsınız.",
         items: [
           {
             label: "LİNK · 01",
             title: "Paylaşılabilir link",
-            desc: "E-posta imzanıza, WhatsApp biyografinize, Instagram bağlantınıza veya mesajlarınıza eklediğiniz temiz bir URL. Karşı tarafın uygulama yüklemesine gerek yok.",
+            desc: "opsolid.de/c/adiniz üzerinde temiz bir URL (Custom'da kendi alan adınız). E-posta imzalarında, WhatsApp bio'sunda, Instagram'da kullanın. Karşı tarafta uygulama kurulumu gerekmez.",
             icon: "link",
           },
           {
             label: "QR · 02",
-            title: "Dinamik QR kod",
-            desc: "Basılabilir, yeniden üretilebilir QR kod. Vitrinde, menüde, fuar standında ya da Zoom arka planında — her zaman güncel profile yönlendirir.",
+            title: "QR kodunuzu indirin",
+            desc: "Yazdırabileceğiniz, gömeceğiniz veya ekran paylaşacağınız PNG + SVG dosyaları. Vitrin çıkartmalarına, menülere, fuar pankartlarına ya da Zoom arka planına koyun.",
             icon: "qr",
           },
           {
-            label: "NFC · 03",
-            title: "Opsiyonel NFC kart",
-            desc: "Fiziksel kart isterseniz: mat, ahşap veya metal NFC kartlar Hamburg'dan gönderilir. Tamamen opsiyoneldir — dijital profil kart olmadan da çalışır.",
-            icon: "nfc",
-          },
-          {
-            label: "ŞABLON · 04",
-            title: "Sektör şablonları",
-            desc: "Emlakçı, kuaför, klinik, fotoğrafçı, restoran, mali müşavir, avukat ve daha fazlası için hazır tasarımlar. Her biri kendi alanları, bölümleri, tonuyla.",
+            label: "ŞABLON · 03",
+            title: "20 sektör şablonu",
+            desc: "Emlak, klinik, restoran, DJ, berber, fotoğrafçı, mimar, fitness ve daha fazlası. Başlamadan önce canlı önizlemeleri inceleyin.",
             icon: "templates",
           },
           {
-            label: "WALLET + CRM · 05",
-            title: "Wallet kartı ve CRM senkronu",
-            desc: "Otomatik güncellenen Apple & Google Wallet kartları. Yakalanan leadler HubSpot, Pipedrive, Salesforce'a ya da CSV'ye senkronlanır. Yerel — Zapier gerekmez.",
+            label: "TASARIM · 04",
+            title: "Size özel el yapımı",
+            desc: "Şablonu bilgileriniz, renkleriniz ve fotoğraflarınızla uyarlarız. 48–72 saatte teslim. Revizyonlar dahil.",
+            icon: "layout",
+          },
+          {
+            label: "İMZA · 05",
+            title: "E-posta imzasına hazır",
+            desc: "Hazır snippet'i Gmail veya Outlook'a yapıştırın. Kartınız gönderdiğiniz her e-postayla birlikte seyahat eder.",
             icon: "wallet",
           },
           {
-            label: "HOSTING · 06",
+            label: "HOSTİNG · 06",
             title: "Almanya'da barındırılıyor",
-            desc: "Hetzner / IONOS Frankfurt. GDPR-yerli. ABD alt işleyen yok. Kayıt anında DPA hazır. Tek tıkla silme, her zaman.",
+            desc: "Hetzner / IONOS Frankfurt. GDPR-yerli. ABD alt işleyen yok. Her zaman tek tıkla silme.",
             icon: "hosting",
           },
         ],
@@ -1397,7 +1397,7 @@ export const content: Content = {
         label: "VERİ EGEMENLİĞİ",
         heading: "Kartınızın verisi nerede yaşıyor?",
         intro:
-          "Rakiplerin çoğu gururla ABD'de barındırıyor. Biz barındırmıyoruz. Önemli olan tam da bu.",
+          "Rakiplerin çoğu ABD'de barındırıyor. Biz değil. Biri kartınızı taradığında verileri Almanya'da kalır.",
         cols: [
           "Sağlayıcı",
           "Hosting bölgesi",
@@ -1442,163 +1442,183 @@ export const content: Content = {
       },
       pricing: {
         label: "FİYATLANDIRMA",
-        heading: "Tek seferlik, abonelik ya da ücretsiz. Kilitli kalmazsınız.",
+        heading: "Üç esnek paket. Abonelik tuzağı yok.",
         popularBadge: "EN POPÜLER",
         plans: [
           {
-            name: "Ücretsiz",
-            price: "€0",
-            cadence: "",
+            name: "Starter",
+            price: "€49",
+            cadence: "tek seferlik · 1. yıl hosting dahil",
             popular: "",
             bullets: [
-              "Dijital profil, 1 kart",
-              "Temel analiz",
-              "OpSolid filigranı",
-              "Girişimciler ve freelancerlar için ideal",
+              "Kütüphanemizden 1 sektör şablonu",
+              "Link + QR kod (PNG + SVG)",
+              "2 revizyon dahil",
+              "E-posta imza snippet'i",
+              "opsolid.de/c/adiniz üzerinde 1 yıl hosting",
+              "Hosting yenileme: 1. yıldan sonra €9/yıl",
             ],
-            cta: "Profil oluştur",
-            href: "/contact?source=dbc-free",
-          },
-          {
-            name: "Team",
-            price: "€4,90",
-            cadence: "kullanıcı başı / ay",
-            popular: "true",
-            bullets: [
-              "Ücretsiz'deki her şey",
-              "Gelişmiş analiz",
-              "CRM senkronizasyonu (HubSpot, Pipedrive, Salesforce)",
-              "Özel domain ve tam markalama",
-              "Roster + SSO",
-              "Yıllık faturalandırma, min. 5 koltuk",
-            ],
-            cta: "Demo planla",
+            cta: "Starter'ı başlat",
             href: "#lead",
           },
           {
-            name: "NFC + Lifetime",
-            price: "€39",
-            cadence: "tek seferlik, kart başı",
+            name: "Professional",
+            price: "€149",
+            cadence: "tek seferlik · 1. yıldan sonra €9/yıl hosting",
+            popular: "true",
+            bullets: [
+              "Her şablon + hafif özelleştirme",
+              "Özel slug (opsolid.de/c/markaniz)",
+              "5 revizyon dahil",
+              "Analitik (görüntüleme, link tıklamaları)",
+              "E-posta imzası + sosyal medya görselleri",
+              "Çoklu dil (DE/EN/TR) opsiyonel",
+            ],
+            cta: "Professional'ı başlat",
+            href: "#lead",
+          },
+          {
+            name: "Custom",
+            price: "€299'dan başlayan",
+            cadence: "proje bazlı teklif",
             popular: "",
             bullets: [
-              "Mat ya da ahşap NFC kart, Hamburg'dan gönderim",
-              "Sonsuza kadar ücretsiz dijital hesap",
-              "Abonelik yok, asla",
-              "İstediğinde Team'e yükselt",
+              "Tamamen özel tasarım (şablonsuz)",
+              "Kendi alan adınız (adiniz.com)",
+              "Çoklu dil (DE/EN/TR)",
+              "Gelişmiş analitik",
+              "Ekip listesi (5+ kart proje bazlı fiyat)",
+              "Gerektiğinde CRM entegrasyonu",
             ],
-            cta: "Kart iste",
+            cta: "Teklif iste",
             href: "#lead",
           },
         ],
       },
       lead: {
         label: "TALEP",
-        heading: "Demo planla — ya da ilk kartını al.",
+        heading: "Kartınızdan bahsedin.",
         intro:
-          "Ekip büyüklüğünüzü ve dijital kartlarla ne yapmak istediğinizi kısaca yazın. Bir iş günü içinde dönüş yapıyoruz.",
+          "Sektörünüzü, temel bilgilerinizi ve beğendiğiniz şablonu paylaşın. Bir iş günü içinde önizleme linkiyle dönüş yapıyoruz.",
         fields: {
           name: "Ad Soyad",
           email: "İş e-postası",
           company: "Şirket (opsiyonel)",
-          teamSize: "Ekip büyüklüğü",
-          teamSizeOptions: ["1", "2 – 10", "11 – 50", "50+"],
-          message: "Bilmemiz gereken bir şey var mı? (opsiyonel)",
+          teamSize: "Kaç kart?",
+          teamSizeOptions: ["1", "2 – 5", "6 – 20", "20+"],
+          message:
+            "Bilmemiz gereken başka bir şey var mı? (sektör, link tercihleri vb.)",
           consent:
             "Bu talebime yanıt vermesi için OpSolid'in bu verileri işlemesine izin veriyorum. Gizlilik Politikası'na bakabilirsiniz.",
           privacyLink: "Gizlilik Politikası",
           submit: "Talep gönder",
           submitting: "Gönderiliyor…",
           success:
-            "Teşekkürler — bir iş günü içinde dönüş yapacağız.",
+            "Teşekkürler — bir iş günü içinde önizleme linkiyle dönüş yapacağız.",
           error:
             "Bir sorun oluştu. Lütfen doğrudan contact@opsolid.de adresine yazın.",
         },
       },
       testimonials: {
-        label: "Sosyal kanıt",
-        heading: "Geçiş yapan müşteriler ne söylüyor.",
+        label: "SOSYAL KANIT",
+        heading: "İlk kartından sonra müşteriler ne söylüyor.",
         items: [
           {
             quote:
-              "Bir haftada üç şehirdeki kağıt kartları değiştirdik. Müşteri adayları saniyeler içinde HubSpot'a düşüyor, kimsenin bir şey yazmasına gerek kalmadı.",
+              "Kart iki günde hazırdı. Tasarımcı bir emlakçının profil sayfasında neye ihtiyacı olduğunu gerçekten anladı — neredeyse hiç revizyon istemedim.",
             name: "Lena Richter",
-            role: "Satış Direktörü",
-            company: "Berlin merkezli scale-up",
+            role: "Bağımsız emlakçı",
+            company: "Berlin, DE",
           },
           {
             quote:
-              "Verilerin Almanya'da kalması, hukuk ekibimizi ikna etti. Geri kalan her şey artı bir bonustu.",
+              "Verilerin Almanya'da kalması, hukuk ekibimizi ikna etti. Sırf bu bile fiyata değerdi.",
             name: "Marco Weber",
             role: "COO",
             company: "Münih sanayi grubu",
           },
           {
             quote:
-              "Ömür boyu kart için tek seferlik 39 €. Abonelik tuzağı yok. Sırf bu yüzden ABD ürününden geçtim.",
+              "Aylık abonelik yok. „Enterprise paketi“ satışı yok. Bir kez ödedim, kartı aldım, QR'ı aldım, yoluma devam ettim. Tam da istediğim şey.",
             name: "Sarah Klein",
             role: "Bağımsız danışman",
-            company: "Hamburg",
+            company: "Berlin, DE",
           },
         ],
       },
       howItWorks: {
-        label: "Nasıl çalışır",
-        heading: "Üç adım. Beş dakikadan az.",
+        label: "NASIL TESLİM EDİYORUZ",
+        heading: "Dört adım. 48 saatte canlı kart.",
         steps: [
           {
-            title: "Kartınızı sipariş edin",
+            title: "01 · Sipariş",
             description:
-              "Mat, metal veya ahşap seçin. Hamburg'dan iki iş günü içinde kargolarız.",
+              "Kısa formu doldurun: sektörünüz, temel bilgileriniz, tercih ettiğiniz şablon. Tek seferlik ücreti ödeyin.",
           },
           {
-            title: "Profilinizi oluşturun",
+            title: "02 · Tasarım",
             description:
-              "Fotoğrafınızı, bağlantılarınızı, sosyal hesaplarınızı ve takviminizi ekleyin. Anlık önizleme.",
+              "48–72 saat içinde özelleştirilmiş profilinizin önizleme linkini göndeririz.",
           },
           {
-            title: "Dokunun ve paylaşın",
+            title: "03 · Revizyonlar",
             description:
-              "Tek dokunuş her şeyi paylaşır. Her etkileşimi panelinizden takip edin.",
+              "Nelerin değişmesini istediğinizi söyleyin. Paketinize bağlı olarak 2–5 tur. Acele ücreti yok.",
+          },
+          {
+            title: "04 · Teslimat",
+            description:
+              "Alırsınız: canlı link, QR kod (PNG + SVG), e-posta imza snippet'i. Tamamen sizindir.",
           },
         ],
       },
       faq: {
         label: "SSS",
-        heading: "Sık sorulan sorular.",
+        heading: "Sorular, doğrudan yanıtlar.",
         items: [
           {
-            question: "Kartlar her telefonla çalışıyor mu?",
+            question: "Kartımı ne kadar sürede alırım?",
             answer:
-              "Evet. NFC, modern iOS ve Android cihazlarının tümünde desteklenir. Alıcının uygulama kurmasına gerek yoktur.",
+              "Bilgilerinizi ve ödemenizi aldığımız andan itibaren 48–72 saat. Professional ve Custom paketlerde acele teslimat mümkün — bize sorun.",
+          },
+          {
+            question: "Fiziksel NFC kart gönderiyor musunuz?",
+            answer:
+              "Henüz hayır. Şu anda yalnızca dijital odaklıyız: link + QR. Müşteri QR'ınızı tarar veya linkinizi açar ve profilinizi görür. Donanım gerekmez. Fiziksel NFC kartlar ilerleyen dönemde bir ek olarak gelebilir.",
+          },
+          {
+            question: "Kartımı daha sonra kendim düzenleyebilir miyim?",
+            answer:
+              "Değişiklikleri bize gönderirsiniz, bir iş günü içinde güncelleriz. Custom'da sizin için basit bir editör kurabiliriz. Starter ve Professional'da değişiklikler bizden yürütülür.",
           },
           {
             question: "Verilerim nerede saklanıyor?",
             answer:
-              "Almanya / Frankfurt'ta, Hetzner ve IONOS altyapısında. Sıfır ABD alt işleyen. Kayıt olur olmaz DPA hazır.",
+              "Frankfurt, Almanya — Hetzner / IONOS. ABD alt işleyen yok. Talep üzerine DPA hazır.",
           },
           {
-            question: "İstediğim zaman iptal edebilir miyim?",
+            question: "Kartımı iptal edebilir veya silebilir miyim?",
             answer:
-              "39 €'luk ömür boyu kartın aboneliği hiç yok. Ekip planları ilk yıldan sonra aylık olarak iptal edilebilir.",
+              "Evet, istediğiniz zaman. Tek tıkla silme. Otomatik yenileme tuzağı yok. Hosting, 1. yıldan sonra yıllık olarak peşin ödenir.",
           },
           {
-            question: "Mevcut CRM'imi tutabilir miyim?",
+            question: "Ekibim için 10+ karta ihtiyacım var. Nasıl?",
             answer:
-              "Evet. HubSpot, Pipedrive ve Salesforce ile yerli olarak senkronize oluruz — diğer her şey için CSV'ye aktarırız. Zapier gerekmez.",
+              "Custom paket. Kartların ne kadar ortak paylaşacağına ve ne kadar özel kalacağına göre proje bazlı teklif veririz. contact@opsolid.de adresine yazın.",
           },
         ],
       },
       cta: {
         eyebrow: "HAZIR MISIN?",
-        heading:
-          "Bir sonraki kartınız Hamburg'dan gelir,\nSan Francisco'dan değil.",
-        primaryCta: "Görüşme planla",
-        secondaryCta: "/contact'a git",
+        heading: "Yeni kartınız. 48 saatte canlı.",
+        primaryCta: "Kartımı başlat",
+        secondaryCta: "Şablonlara gözat",
       },
       meta: {
-        title: "Dijital Kartvizit — Almanya'da barındırılıyor | OpSolid",
+        title:
+          "Dijital Kartvizit — El yapımı tasarım, Almanya'da barındırma | OpSolid",
         description:
-          "GDPR-yerli dijital profile sahip modern NFC kartvizit. Apple & Google Wallet, CRM senkronizasyonu, ekip listesi — Hamburg'da barındırılıyor, San Francisco'da değil.",
+          "Link ve QR kod içeren el yapımı tasarım, tek sayfalık dijital kartvizit. 20+ sektör şablonu. 48 saatte teslim. Almanya'da barındırılıyor, GDPR-yerli.",
       },
     },
 

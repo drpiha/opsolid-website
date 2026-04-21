@@ -47,7 +47,7 @@ export function IPhoneMockup({
                 loading={loading}
                 sandbox="allow-scripts allow-same-origin allow-popups"
                 className="h-full w-full border-0"
-                scrolling="no"
+                style={{ WebkitOverflowScrolling: "touch", overflowY: "auto" }}
               />
             ) : (
               children

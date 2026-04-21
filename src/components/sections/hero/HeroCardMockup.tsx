@@ -18,8 +18,8 @@ interface HeroCardMockupProps {
 export function HeroCardMockup({
   name = "Alex Weber",
   role = "Product Designer",
-  company = "Studio Nord · Hamburg",
-  cardLabel = "TAP TO SHARE",
+  company = "Studio Nord",
+  cardLabel = "SCAN TO SHARE",
 }: HeroCardMockupProps) {
   const initials =
     name
@@ -138,50 +138,125 @@ export function HeroCardMockup({
             <span>OpSolid</span>
             <span className="flex items-center gap-1 text-brand-300">
               <span className="inline-block h-1.5 w-1.5 rounded-full bg-brand animate-pulse-ring" />
-              NFC
+              QR
             </span>
           </div>
 
           {/* Name block */}
-          <div className="relative mt-5">
+          <div className="relative mt-5 pr-[76px]">
             <div className="text-[13px] font-bold leading-tight">{name}</div>
             <div className="mt-0.5 text-[9px] text-white/70">{role}</div>
             <div className="mt-0.5 text-[8px] text-white/50">{company}</div>
           </div>
 
-          {/* NFC chip + pulse rings */}
-          <div className="absolute bottom-4 left-4 flex items-center gap-2">
-            <div className="relative">
-              {/* Chip */}
-              <div className="relative h-6 w-8 rounded-md bg-gradient-to-br from-neutral-300 to-neutral-500 border border-neutral-400/40 z-10">
-                <div className="absolute inset-1 rounded-[3px] border border-neutral-500/60" />
-                <div className="absolute inset-x-2 top-1/2 h-[1px] bg-neutral-500/50" />
-                <div className="absolute inset-y-1 left-1/2 w-[1px] bg-neutral-500/50" />
-              </div>
-              {/* Pulse rings — only one animate-pulse-ring, ambient layered rings */}
-              <span className="pointer-events-none absolute inset-0 rounded-full border border-brand/50 animate-pulse-ring" />
-            </div>
+          {/* QR code tile — top right, stylized SVG matrix */}
+          <div className="absolute top-3 right-3 h-[64px] w-[64px] rounded-md bg-white p-[6px] shadow-[0_4px_10px_rgba(0,0,0,0.35)]">
+            <svg viewBox="0 0 29 29" className="h-full w-full text-ink" aria-hidden="true">
+              {/* Position markers — 3 corners */}
+              <rect x="0"  y="0"  width="7" height="7" fill="currentColor" />
+              <rect x="1"  y="1"  width="5" height="5" fill="white" />
+              <rect x="2"  y="2"  width="3" height="3" fill="currentColor" />
+              <rect x="22" y="0"  width="7" height="7" fill="currentColor" />
+              <rect x="23" y="1"  width="5" height="5" fill="white" />
+              <rect x="24" y="2"  width="3" height="3" fill="currentColor" />
+              <rect x="0"  y="22" width="7" height="7" fill="currentColor" />
+              <rect x="1"  y="23" width="5" height="5" fill="white" />
+              <rect x="2"  y="24" width="3" height="3" fill="currentColor" />
+              {/* Timing + data modules (pseudo-random blocks) */}
+              <g fill="currentColor">
+                <rect x="9"  y="0"  width="1" height="1" />
+                <rect x="11" y="0"  width="2" height="1" />
+                <rect x="15" y="0"  width="1" height="1" />
+                <rect x="17" y="0"  width="1" height="1" />
+                <rect x="19" y="0"  width="1" height="1" />
+                <rect x="8"  y="2"  width="1" height="3" />
+                <rect x="12" y="2"  width="1" height="1" />
+                <rect x="14" y="2"  width="3" height="1" />
+                <rect x="19" y="2"  width="1" height="1" />
+                <rect x="10" y="4"  width="2" height="1" />
+                <rect x="14" y="4"  width="1" height="2" />
+                <rect x="17" y="4"  width="2" height="1" />
+                <rect x="9"  y="6"  width="1" height="2" />
+                <rect x="12" y="6"  width="1" height="2" />
+                <rect x="16" y="6"  width="2" height="1" />
+                <rect x="20" y="6"  width="1" height="2" />
+                <rect x="0"  y="8"  width="1" height="1" />
+                <rect x="2"  y="8"  width="3" height="1" />
+                <rect x="7"  y="8"  width="2" height="2" />
+                <rect x="11" y="8"  width="1" height="3" />
+                <rect x="14" y="8"  width="2" height="1" />
+                <rect x="18" y="8"  width="1" height="2" />
+                <rect x="22" y="8"  width="1" height="1" />
+                <rect x="24" y="8"  width="3" height="1" />
+                <rect x="4"  y="10" width="1" height="2" />
+                <rect x="7"  y="10" width="1" height="1" />
+                <rect x="13" y="10" width="2" height="2" />
+                <rect x="16" y="10" width="1" height="1" />
+                <rect x="20" y="10" width="3" height="1" />
+                <rect x="25" y="10" width="1" height="2" />
+                <rect x="0"  y="12" width="2" height="1" />
+                <rect x="5"  y="12" width="2" height="1" />
+                <rect x="9"  y="12" width="1" height="2" />
+                <rect x="12" y="12" width="1" height="1" />
+                <rect x="17" y="12" width="3" height="1" />
+                <rect x="22" y="12" width="1" height="2" />
+                <rect x="26" y="12" width="2" height="1" />
+                <rect x="2"  y="14" width="1" height="2" />
+                <rect x="6"  y="14" width="3" height="1" />
+                <rect x="11" y="14" width="2" height="2" />
+                <rect x="15" y="14" width="1" height="1" />
+                <rect x="19" y="14" width="1" height="2" />
+                <rect x="23" y="14" width="2" height="1" />
+                <rect x="4"  y="16" width="2" height="1" />
+                <rect x="8"  y="16" width="1" height="2" />
+                <rect x="14" y="16" width="1" height="1" />
+                <rect x="17" y="16" width="2" height="2" />
+                <rect x="22" y="16" width="1" height="1" />
+                <rect x="25" y="16" width="2" height="1" />
+                <rect x="0"  y="18" width="1" height="2" />
+                <rect x="3"  y="18" width="2" height="1" />
+                <rect x="7"  y="18" width="1" height="1" />
+                <rect x="10" y="18" width="3" height="1" />
+                <rect x="15" y="18" width="1" height="2" />
+                <rect x="20" y="18" width="1" height="1" />
+                <rect x="24" y="18" width="2" height="2" />
+                <rect x="8"  y="20" width="2" height="1" />
+                <rect x="12" y="20" width="1" height="2" />
+                <rect x="17" y="20" width="1" height="1" />
+                <rect x="19" y="20" width="2" height="1" />
+                <rect x="22" y="20" width="1" height="2" />
+                <rect x="26" y="20" width="1" height="2" />
+                <rect x="9"  y="22" width="3" height="1" />
+                <rect x="14" y="22" width="1" height="2" />
+                <rect x="17" y="22" width="2" height="1" />
+                <rect x="21" y="22" width="1" height="1" />
+                <rect x="23" y="22" width="3" height="1" />
+                <rect x="10" y="24" width="1" height="1" />
+                <rect x="13" y="24" width="2" height="1" />
+                <rect x="17" y="24" width="1" height="2" />
+                <rect x="20" y="24" width="1" height="2" />
+                <rect x="22" y="24" width="1" height="1" />
+                <rect x="24" y="24" width="1" height="2" />
+                <rect x="26" y="24" width="1" height="1" />
+                <rect x="9"  y="26" width="2" height="1" />
+                <rect x="13" y="26" width="1" height="1" />
+                <rect x="16" y="26" width="1" height="1" />
+                <rect x="19" y="26" width="2" height="1" />
+                <rect x="23" y="26" width="1" height="1" />
+                <rect x="26" y="26" width="2" height="1" />
+              </g>
+            </svg>
+          </div>
+
+          {/* Scan label — bottom */}
+          <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
             <div className="text-[8px] font-semibold tracking-[0.22em] text-white/60 uppercase">
               {cardLabel}
             </div>
+            <div className="text-[7px] text-white/40 tracking-[0.15em] uppercase">
+              opsolid.de
+            </div>
           </div>
-
-          {/* NFC waves glyph — top right */}
-          <svg
-            className="absolute bottom-5 right-4 text-brand/70"
-            width="28"
-            height="28"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-          >
-            <path d="M5 12a7 7 0 0 1 7-7" opacity="0.4" />
-            <path d="M5 12a10 10 0 0 1 10-10" opacity="0.25" />
-            <path d="M9 12a3 3 0 0 1 3-3" />
-            <circle cx="12" cy="12" r="1" fill="currentColor" />
-          </svg>
         </div>
       </div>
 
