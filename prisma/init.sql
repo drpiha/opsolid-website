@@ -47,8 +47,13 @@ CREATE TABLE "card_orders" (
     "stripe_subscription_id" TEXT,
     "stripe_customer_id" TEXT,
     "status" TEXT NOT NULL,
+    "design_notes" TEXT,
+    "edit_token" TEXT,
     "contacted_at" TIMESTAMP(3),
     "contacted_by_note" TEXT,
+    "paid_at" TIMESTAMP(3),
+    "awaiting_design_at" TIMESTAMP(3),
+    "published_at" TIMESTAMP(3),
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL,
 
@@ -94,6 +99,9 @@ CREATE UNIQUE INDEX "card_orders_slug_key" ON "card_orders"("slug");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "card_orders_stripe_session_id_key" ON "card_orders"("stripe_session_id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "card_orders_edit_token_key" ON "card_orders"("edit_token");
 
 -- CreateIndex
 CREATE INDEX "card_orders_status_idx" ON "card_orders"("status");

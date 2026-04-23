@@ -47,11 +47,12 @@ model CardTemplate {
 
 // -----------------------------------------------------------------------------
 // CardOrder — one customer order. Becomes a published DBC at /c/{slug} after
-// Stripe confirms payment.
-//   status flow: PENDING_PAYMENT -> PAID -> PUBLISHED (slug set)
-//                   |                           |
-//                   +-> CANCELLED     +-> CANCELLED (subscription ended)
-//                                      +-> REFUNDED
+// the in-house designer reviews the raw input (AWAITING_DESIGN) and publishes.
+//   status flow:
+//     PENDING_PAYMENT -> PAID -> AWAITING_DESIGN -> PUBLISHED (slug set)
+//                   |                                    |
+//                   +-> CANCELLED              +-> CANCELLED (subscription ended)
+//                                               +-> REFUNDED
 // -----------------------------------------------------------------------------
 model CardOrder {
   id          String  @id @default(cuid())
@@ -84,8 +85,14 @@ model CardOrder {
 
   status String
 
+  designNotes String? @map("design_notes")
+  editToken   String? @unique @map("edit_token")
+
   contactedAt     DateTime? @map("contacted_at")
   contactedByNote String?   @map("contacted_by_note")
+  paidAt          DateTime? @map("paid_at")
+  awaitingDesignAt DateTime? @map("awaiting_design_at")
+  publishedAt     DateTime? @map("published_at")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
