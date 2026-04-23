@@ -1,0 +1,59 @@
+# =============================================================================
+# OpSolid Website — Docker Compose for Hostinger VPS deploy.
+# Mirrors the /opt/kutasia layout: dedicated Postgres + app container, both on
+# a private network, the app also on the shared `root_default` network so the
+# Traefik reverse proxy can route opsolid.de → container:3000.
+# =============================================================================
+
+services:
+  opsolid-db:
+    image: postgres:16-alpine
+    container_name: opsolid-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: opsolid
+      POSTGRES_PASSWORD: ${OPSOLID_DB_PASSWORD}
+      POSTGRES_DB: opsolid
+    volumes:
+      - opsolid_pgdata:/var/lib/postgresql/data
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U opsolid -d opsolid"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  opsolid:
+    build:
+      context: /opt/opsolid-website
+      dockerfile: Dockerfile
+    container_name: opsolid-app
+    restart: unless-stopped
+    depends_on:
+      opsolid-db:
+        condition: service_healthy
+    env_file:
+      - /opt/opsolid-website/.env
+    volumes:
+      - /var/www/opsolid/uploads:/app/public/uploads
+    networks:
+      - internal
+      - traefik_net
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=root_default
+      - "traefik.http.routers.opsolid.rule=Host(`opsolid.de`) || Host(`www.opsolid.de`)"
+      - traefik.http.routers.opsolid.entrypoints=web,websecure
+      - traefik.http.routers.opsolid.tls=true
+      - traefik.http.routers.opsolid.tls.certresolver=mytlschallenge
+      - traefik.http.services.opsolid.loadbalancer.server.port=3000
+
+volumes:
+  opsolid_pgdata:
+
+networks:
+  internal:
+  traefik_net:
+    name: root_default
+    external: true
