@@ -1,8 +1,46 @@
 # OpSolid Website — Live Status
 
-**Son güncelleme:** 2026-04-23 (ikinci oturum)
-**Aktif dal:** `feat/complete-dbc` (merge sonrası `main`)
+**Son güncelleme:** 2026-04-23 (üçüncü oturum — new-machine pull + smoke test)
+**Aktif dal:** `main` (feat/complete-dbc artık merge edilmiş, main 3 commit önde)
 **Kanonik canlı panel.** Her oturum başında okunur, sonunda güncellenir.
+
+---
+
+## 2026-04-23 üçüncü oturum — new-machine pull + smoke test
+
+Yeni makineye geçiş sürecinin son adımı + canlı sistem doğrulama:
+
+**Tamamlanan**
+- ✅ `drpiha/opsolid-website` taze clone (mayai-website klasörü sync edildi), secrets `$HOME`'a yerleşti (SSH key için CRLF → LF fix gerekli oldu — install.sh'in Windows'ta ürettiği dosyalar CRLF'di, `sed -i 's/\r$//'` ile düzeltildi).
+- ✅ `M2M_ADMIN_TOKEN` `.opsolid-deploy-secrets`'a eklendi (bundle'da yoktu, VPS ile aynı değer olduğu doğrulandı).
+- ✅ Remote `bundle-one-time` branch'i silindi (`git push origin --delete`). Local'de zaten yoktu.
+- ✅ SSH → VPS → `docker ps` geçer: `opsolid-app (Up 1h)`, `opsolid-db (healthy 7h)`, `kutasia-app (Up 1h)`, `kutasia-db (healthy 5d)`.
+- ✅ `GET /api/health` → `{"ok":true,"dbOk":true}`.
+- ✅ `GET /c/claude-test-eokd` → 200 (test kartı hâlâ yayında).
+- ✅ `GET /api/m2m/orders` Bearer ile 200 + order listesi; Bearer'sız `{"error":"Unauthorized","reason":"no_header"}`.
+- ✅ `GET /api/m2m/stats?range=all` Bearer ile `{total:1, published:1, revenue €39 subscription}` döner.
+- ✅ `https://kutasia.com/admin/opsolid-orders` → 307 `/login` (SUPER_ADMIN guard çalışıyor); `/api/admin/opsolid-orders` → 401 (proxy çalışıyor).
+- ✅ SMTP env tümü set (`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `CONTACT_FROM_EMAIL`, `CONTACT_TO_EMAIL`). Son 24h log'da email/SMTP hatası yok.
+- ✅ `docker-compose.yml`'a `opsolid-app` için healthcheck eklendi (`wget /api/health` → `"ok":true`, 30s interval, 20s start_period). **Deploy bekliyor** — operator `docker compose up -d --build opsolid` ile aktive eder.
+
+**Bulgu — Kutasia VPS drift (operator aksiyonu)**
+- `/opt/kutasia` HEAD = `d8c0d49` (2026-04-20). GitHub `origin/master` = `8961d9e` (Track A commit'i, 2026-04-23). **VPS stale.**
+- Admin integration dosyaları (`src/app/(admin)/admin/opsolid-orders/`, `src/app/api/admin/opsolid-orders/`, `src/lib/opsolid/client.ts`) VPS'te **untracked** — önceki oturum bunları VPS'e el ile yerleştirmiş + `docker compose up -d --build kutasia` ile canlıya almış. Sayfa çalışıyor ama git divergent.
+- Ayrıca `admin-shell.tsx` + `env-check.ts` uncommitted modify; `docker-compose.yml` untracked (yeni: `/var/www/kutasia/uploads:/app/public/uploads` volume mount).
+- VPS'te git HTTPS auth yok (`fatal: could not read Username for 'https://github.com'`). Operator PAT remote URL kurmalı veya `git@github.com:drpiha/guestsignal.git` için deploy key eklemeli.
+- Önerilen düzeltme: operator DEV makinesinden `git clone https://github.com/drpiha/guestsignal.git` → VPS'in uncommitted dosyalarını `scp` ile getir → master ile diff'le → tek bir fix branch'e (örn. `hotfix/uploads-volume + env-check`) çıkar → push. Sonra VPS'te (değişiklikleri stash ya da temiz shadow working tree ile) `git pull origin master` → `docker compose up -d --build kutasia`. Karışık pull yerine temiz checkout tercih edilmeli.
+
+**Operatör onayı bekleyen (bu oturum dokunmadı)**
+- LIVE Stripe cutover (madde #4 — `scripts/setup-stripe.ts --live` + `.env` güncelle + restart; detay `deploy/hostinger/CUTOVER.md`).
+- Sentry DSN aç (madde #3 — opsiyonel, boşken SDK no-op, üretim crash olmaz).
+- `test-customer-email.ts` manuel smoke — VPS'te container içinde kod exec kısıtlı (policy); operator DEV makinesinden `SMTP_*` env'ini set edip `npx tsx scripts/test-customer-email.ts <address>` çalıştırabilir.
+- Gerçek test siparişi (madde #6 — browser'dan `/tr/products/digital-card` → şablon seç → Stripe `4242…` → thanks → Kutasia admin'de "Publish" → e-posta kontrol).
+- Kutasia VPS drift reconcile (yukarıdaki bulgu).
+
+**Secrets rotation tavsiyesi**
+Eski makineden yeni makineye geçiş için secret'lar `bundle-one-time` branch'inde GitHub'a 1 kez commit'lendi. Repo private olsa da:
+- SSH key: VPS'te `/root/.ssh/authorized_keys` güncel kalabilir, ama fırsat buldukça yeni bir key oluşturup eskisini remove et.
+- `STRIPE_WEBHOOK_SECRET` + `ADMIN_TOKEN` + `M2M_ADMIN_TOKEN` — dashboard'dan yenileme + `.env` update + container restart ile düşük maliyet. Yüksek aciliyet değil (private repo + branch silindi), ama best-practice olarak önümüzdeki haftada sıradan.
 
 ---
 

@@ -48,6 +48,12 @@ services:
       - traefik.http.routers.opsolid.tls=true
       - traefik.http.routers.opsolid.tls.certresolver=mytlschallenge
       - traefik.http.services.opsolid.loadbalancer.server.port=3000
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- --tries=1 --timeout=3 http://localhost:3000/api/health | grep -q '\"ok\":true' || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
 
 volumes:
   opsolid_pgdata:
