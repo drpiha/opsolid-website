@@ -1680,6 +1680,48 @@ export const content: Content = {
           networkError: "Bağlantı hatası.",
         },
       },
+      edit: {
+        title: "Kartınızı düzenleyin",
+        subtitle:
+          "Yazım hataları, telefon numarası, sosyal linkler — kartınızdaki her şeyi kendiniz düzenleyin. Değişiklikler saniyeler içinde canlıya çıkar.",
+        publicUrlLabel: "Herkese açık kartınız:",
+        contactReadonlyLabel: "İletişim bilgileriniz (salt okunur)",
+        contactReadonlyHint:
+          "E-posta, ad veya telefonu değiştirmek istiyorsanız sipariş e-postanıza yanıt verin — biz hallederiz.",
+        statusLabel: "Sipariş durumu",
+        save: "Değişiklikleri kaydet",
+        saving: "Kaydediliyor …",
+        savedSuccess: "Kaydedildi.",
+        savedError: "Değişiklikler kaydedilemedi. Lütfen tekrar deneyin.",
+        shareHeading: "Kartınızı paylaşın",
+        shareBody:
+          "LinkedIn, Instagram veya e-posta imzanız için 1200×630 boyutunda görseli indirin.",
+        downloadOg: "Sosyal medya görselini indir",
+        shareNotReady:
+          "Paylaşım görseli, kartınız yayımlandıktan sonra kullanılabilir hale gelir.",
+        notFoundTitle: "Bu düzenleme bağlantısı açılamıyor",
+        notFoundBody:
+          "Bu bağlantının süresi dolmuş veya artık geçerli değil. Lütfen sipariş e-postanıza yanıt verin — size yeni bir bağlantı gönderelim.",
+      },
+      cancel: {
+        heading: "Aboneliği iptal et",
+        body: "Kartınız mevcut fatura döneminin sonuna kadar canlı kalır. Ondan sonra tekrar ücretlendirilmezsiniz.",
+        openCta: "Aboneliğimi iptal et",
+        alreadyScheduled:
+          "Aboneliğiniz zaten {date} tarihinde sonlanacak şekilde planlandı.",
+        modalEyebrow: "ONAYLA",
+        modalTitle: "OpSolid Dijital Kartvizit aboneliğini iptal etmek istiyor musunuz?",
+        explainer:
+          "Aboneliğiniz {date} tarihine kadar aktif kalır, ardından yenilenmez. Tekrar ücretlendirilmezsiniz.",
+        explainerNoDate:
+          "Aboneliğiniz mevcut fatura döneminin sonuna kadar aktif kalır, ardından yenilenmez.",
+        keep: "Aboneliği koru",
+        confirm: "İptali onayla",
+        error: "İptal planlanamadı. Lütfen contact@opsolid.de adresine yazın.",
+        doneBody:
+          "İptal planlandı. Kartınız {date} tarihine kadar canlı kalır. Stripe'tan son bir onay e-postası alacaksınız.",
+        doneClose: "Kapat",
+      },
       meta: {
         title:
           "Dijital Kartvizit — El yapımı tasarım, Almanya'da barındırma | OpSolid",

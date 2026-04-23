@@ -1678,6 +1678,48 @@ export const content = {
           networkError: "Network error.",
         },
       },
+      edit: {
+        title: "Edit your card",
+        subtitle:
+          "Typos, phone numbers, social links — fix anything on your card yourself. Changes go live in seconds.",
+        publicUrlLabel: "Your public card:",
+        contactReadonlyLabel: "Your contact details (read-only)",
+        contactReadonlyHint:
+          "Need to change the email, name or phone on file? Reply to your order email and we'll handle it.",
+        statusLabel: "Order status",
+        save: "Save changes",
+        saving: "Saving …",
+        savedSuccess: "Saved.",
+        savedError: "Couldn't save your changes. Please try again.",
+        shareHeading: "Share your card",
+        shareBody:
+          "Download a 1200×630 image of your card to post on LinkedIn, Instagram or include in a signature.",
+        downloadOg: "Download social image",
+        shareNotReady:
+          "The shareable image becomes available once your card is published.",
+        notFoundTitle: "We couldn't open this edit link",
+        notFoundBody:
+          "This link is expired or not valid anymore. Please reply to your order email and we'll send you a fresh link.",
+      },
+      cancel: {
+        heading: "Cancel subscription",
+        body: "Your card stays live until the end of the current billing period. You won't be charged again after that.",
+        openCta: "Cancel my subscription",
+        alreadyScheduled:
+          "Your subscription is already scheduled to end on {date}.",
+        modalEyebrow: "CONFIRM",
+        modalTitle: "Cancel your OpSolid Digital Card?",
+        explainer:
+          "Your subscription stays active until {date}, then stops renewing. You won't be charged again.",
+        explainerNoDate:
+          "Your subscription stays active until the end of the current billing period, then stops renewing.",
+        keep: "Keep subscription",
+        confirm: "Confirm cancel",
+        error: "We couldn't schedule the cancellation. Please email contact@opsolid.de.",
+        doneBody:
+          "Cancellation scheduled. Your card stays live until {date}. You'll get a final confirmation email from Stripe.",
+        doneClose: "Close",
+      },
       meta: {
         title:
           "Digital Business Card — Hand-designed, German-hosted | OpSolid",

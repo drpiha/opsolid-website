@@ -41,6 +41,18 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: card.success ? card.data.bio : undefined,
       type: "profile",
       url: `https://opsolid.de/c/${slug}`,
+      images: [
+        {
+          url: `/c/${slug}.png`,
+          width: 1200,
+          height: 630,
+          alt: `${name}${company ? " · " + company : ""}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      images: [`/c/${slug}.png`],
     },
     robots: { index: false, follow: false },
   };

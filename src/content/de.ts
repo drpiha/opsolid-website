@@ -1680,6 +1680,48 @@ export const content: Content = {
           networkError: "Netzwerkfehler.",
         },
       },
+      edit: {
+        title: "Karte bearbeiten",
+        subtitle:
+          "Tippfehler, Telefonnummern, Social Links — ändern Sie alles selbst. Änderungen sind sofort live.",
+        publicUrlLabel: "Ihre öffentliche Karte:",
+        contactReadonlyLabel: "Ihre Kontaktdaten (nur Anzeige)",
+        contactReadonlyHint:
+          "E-Mail, Name oder Telefon ändern? Antworten Sie auf Ihre Bestell-E-Mail — wir erledigen das.",
+        statusLabel: "Bestellstatus",
+        save: "Änderungen speichern",
+        saving: "Wird gespeichert …",
+        savedSuccess: "Gespeichert.",
+        savedError: "Änderungen konnten nicht gespeichert werden. Bitte erneut versuchen.",
+        shareHeading: "Karte teilen",
+        shareBody:
+          "Laden Sie ein 1200×630-Bild Ihrer Karte herunter — für LinkedIn, Instagram oder Ihre Signatur.",
+        downloadOg: "Social-Bild herunterladen",
+        shareNotReady:
+          "Das Teilen-Bild steht zur Verfügung, sobald Ihre Karte veröffentlicht ist.",
+        notFoundTitle: "Dieser Bearbeitungslink funktioniert nicht",
+        notFoundBody:
+          "Der Link ist abgelaufen oder ungültig. Antworten Sie auf Ihre Bestell-E-Mail — wir senden Ihnen einen neuen Link.",
+      },
+      cancel: {
+        heading: "Abo kündigen",
+        body: "Ihre Karte bleibt bis zum Ende des aktuellen Abrechnungszeitraums online. Danach werden keine weiteren Beträge abgebucht.",
+        openCta: "Abo jetzt kündigen",
+        alreadyScheduled:
+          "Ihr Abo ist bereits zum {date} gekündigt.",
+        modalEyebrow: "BESTÄTIGEN",
+        modalTitle: "OpSolid Digital Card wirklich kündigen?",
+        explainer:
+          "Ihr Abo bleibt bis zum {date} aktiv und verlängert sich danach nicht mehr. Weitere Abbuchungen entfallen.",
+        explainerNoDate:
+          "Ihr Abo bleibt bis zum Ende des aktuellen Abrechnungszeitraums aktiv und verlängert sich danach nicht mehr.",
+        keep: "Abo behalten",
+        confirm: "Kündigung bestätigen",
+        error: "Kündigung konnte nicht geplant werden. Bitte E-Mail an contact@opsolid.de.",
+        doneBody:
+          "Kündigung vorgemerkt. Ihre Karte bleibt bis zum {date} live. Eine abschließende Bestätigung senden wir per E-Mail.",
+        doneClose: "Schließen",
+      },
       meta: {
         title:
           "Digitale Visitenkarte — Handgefertigt, in Deutschland gehostet | OpSolid",
