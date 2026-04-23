@@ -6,16 +6,15 @@
 // React component lives under src/components/cards/templates/<componentKey>.tsx
 // and the thumbnail at /images/templates/card-<id>.png.
 //
-// When adding a new template: (1) add an entry here with the next id and
-// sortOrder, (2) create the React component, (3) drop the thumbnail PNG at
-// public/images/templates/, (4) run the seed script to sync the DB copy.
+// Stripe Price IDs below are from the TEST account (see scripts/setup-stripe.ts).
+// When flipping to LIVE mode, re-run the setup script with the LIVE secret key
+// to create a parallel set of products + prices, then replace the IDs here.
 // =============================================================================
 
 export interface CardTemplateDef {
   id: number;
   slug: string;
   name: string;
-  /** One of the supported sector hints — controls the default copy/colors on the form. */
   sectorHint:
     | "general"
     | "realEstate"
@@ -24,7 +23,6 @@ export interface CardTemplateDef {
     | "creator"
     | "clinic"
     | "freelancer";
-  /** Must match a key in src/components/cards/templates/index.ts */
   componentKey:
     | "Template01"
     | "Template02"
@@ -32,15 +30,8 @@ export interface CardTemplateDef {
     | "Template04"
     | "Template05";
   previewPath: string;
-  /** Price in EUR cents for the one-time purchase option. */
   oneTimeCents: number;
-  /** Price in EUR cents for the yearly subscription option (null = not offered). */
   yearlyCents: number | null;
-  /**
-   * Stripe Price IDs — create these in the Stripe dashboard and paste here.
-   * Until filled, the backend falls back to `price_data` inline pricing
-   * (useful during dev, but a real Price ID is cleaner for reporting).
-   */
   stripeOneTimePriceId?: string;
   stripeYearlyPriceId?: string;
   isActive: boolean;
@@ -48,6 +39,11 @@ export interface CardTemplateDef {
 }
 
 export const cardTemplates: readonly CardTemplateDef[] = [
+  // Pricing rationale (2026-04-23): matches the lowest credible tier in the
+  // DBC market while staying viable in TR at the EUR/TRY ~38 rate.
+  // Comparison (yearly): Lemontaps ~€72, Blinq Pro ~€66, Popl Pro ~€47.
+  // We sit below all of them; one-time is rare in this category, so it's
+  // priced as the "own forever" anchor above the yearly.
   {
     id: 1,
     slug: "minimal-mono",
@@ -55,8 +51,10 @@ export const cardTemplates: readonly CardTemplateDef[] = [
     sectorHint: "general",
     componentKey: "Template01",
     previewPath: "/images/templates/card-01.png",
-    oneTimeCents: 4900, // €49
-    yearlyCents: 2900, // €29/year
+    oneTimeCents: 2900, // €29 (~1.100 TL)
+    yearlyCents: 1900, // €19 / year (~720 TL)
+    stripeOneTimePriceId: "price_1TPLaH25H593hnObCutXteCI",
+    stripeYearlyPriceId: "price_1TPLaI25H593hnObLjPVh9M4",
     isActive: true,
     sortOrder: 1,
   },
@@ -67,8 +65,10 @@ export const cardTemplates: readonly CardTemplateDef[] = [
     sectorHint: "creator",
     componentKey: "Template02",
     previewPath: "/images/templates/card-02.png",
-    oneTimeCents: 5900, // €59
-    yearlyCents: 3900,
+    oneTimeCents: 3900, // €39
+    yearlyCents: 2400, // €24 / year
+    stripeOneTimePriceId: "price_1TPLaI25H593hnObqLsPQUku",
+    stripeYearlyPriceId: "price_1TPLaJ25H593hnObGTW9aPBC",
     isActive: true,
     sortOrder: 2,
   },
@@ -79,8 +79,10 @@ export const cardTemplates: readonly CardTemplateDef[] = [
     sectorHint: "realEstate",
     componentKey: "Template03",
     previewPath: "/images/templates/card-03.png",
-    oneTimeCents: 6900, // €69
-    yearlyCents: 4900,
+    oneTimeCents: 4900, // €49  (premium — real-estate buyer)
+    yearlyCents: 2900, // €29 / year
+    stripeOneTimePriceId: "price_1TPLaJ25H593hnObjNY6xDfE",
+    stripeYearlyPriceId: "price_1TPLaK25H593hnObLsTVic9j",
     isActive: true,
     sortOrder: 3,
   },
@@ -91,8 +93,10 @@ export const cardTemplates: readonly CardTemplateDef[] = [
     sectorHint: "salon",
     componentKey: "Template04",
     previewPath: "/images/templates/card-04.png",
-    oneTimeCents: 5900, // €59
-    yearlyCents: 3900,
+    oneTimeCents: 3900, // €39
+    yearlyCents: 2400,
+    stripeOneTimePriceId: "price_1TPLaK25H593hnObcYJKTL3X",
+    stripeYearlyPriceId: "price_1TPLaL25H593hnOb31kNJvFq",
     isActive: true,
     sortOrder: 4,
   },
@@ -103,8 +107,10 @@ export const cardTemplates: readonly CardTemplateDef[] = [
     sectorHint: "restaurant",
     componentKey: "Template05",
     previewPath: "/images/templates/card-05.png",
-    oneTimeCents: 6900, // €69
-    yearlyCents: 4900,
+    oneTimeCents: 3900, // €39
+    yearlyCents: 2400,
+    stripeOneTimePriceId: "price_1TPLaL25H593hnObS0T81ycc",
+    stripeYearlyPriceId: "price_1TPLaM25H593hnObdoEQvkvU",
     isActive: true,
     sortOrder: 5,
   },
