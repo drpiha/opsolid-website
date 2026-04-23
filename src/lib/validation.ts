@@ -45,7 +45,31 @@ const phone = z
   .max(32, "Telefonnummer zu lang")
   .regex(/^[+0-9 ()\-\/.]+$/, "Ungültige Telefonnummer");
 
-const url = z.string().url("Ungültige URL").max(500);
+/**
+ * Lenient URL:
+ *  - accepts "studio-nord.de" and normalizes to "https://studio-nord.de"
+ *  - rejects obvious garbage ("not a url", "foo bar")
+ *  - strips surrounding whitespace
+ *
+ * Users don't type "https://" for social handles and company sites — failing
+ * the submit over that is bad UX. We normalize instead and let the public
+ * page render it as a real link.
+ */
+const url = z.preprocess(
+  (value) => {
+    if (typeof value !== "string") return value;
+    const trimmed = value.trim();
+    if (!trimmed) return undefined;
+    if (/^https?:\/\//i.test(trimmed)) return trimmed;
+    // If it has a dot and no spaces, treat as a bare host and add https://.
+    if (/^[^\s]+\.[^\s]{2,}$/.test(trimmed)) return `https://${trimmed}`;
+    return trimmed; // let .url() reject the rest
+  },
+  z
+    .string()
+    .url("Ungültige URL — bitte eine gültige Adresse eingeben (z. B. studio-nord.de)")
+    .max(500)
+);
 
 // -----------------------------------------------------------------------------
 // CardData — the JSON blob rendered on the public card page

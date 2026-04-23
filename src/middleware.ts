@@ -76,8 +76,11 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  // Skip: /api, /_next, sitemap.xml, robots.txt, files with extensions, favicon
-  matcher: ["/((?!api|_next|.*\\..*|sitemap\\.xml|robots\\.txt).*)"],
+  // Skip: /api, /_next, static files, sitemap/robots, /c/ (public cards are
+  // locale-agnostic — their content is the user's own copy), /admin/*.
+  matcher: [
+    "/((?!api|_next|.*\\..*|sitemap\\.xml|robots\\.txt|c/|admin).*)",
+  ],
 };
 
 export { LOCALES };
