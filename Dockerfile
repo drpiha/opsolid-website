@@ -38,16 +38,18 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
 # Prisma needs its CLI + schema at runtime to run migrate-deploy on boot.
-# Standalone doesn't include devDependencies, so copy the CLI binary too.
+# Standalone doesn't include devDependencies, so we copy prisma directly.
+# Note: we invoke the CLI via `node node_modules/prisma/build/index.js` —
+# copying the .bin/prisma symlink flattens it and breaks wasm path resolution.
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules/prisma ./node_modules/prisma
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@prisma ./node_modules/@prisma
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules/.bin/prisma ./node_modules/.bin/prisma
 COPY --from=builder --chown=nextjs:nodejs /app/src/generated ./src/generated
 
 USER nextjs
 EXPOSE 3000
 
-# Run pending migrations (no-op if already applied), seed templates,
-# then start the Next.js server.
-CMD ["sh", "-c", "node_modules/.bin/prisma migrate deploy || node_modules/.bin/prisma db push --accept-data-loss; node_modules/.bin/prisma db seed || true; node server.js"]
+# On each boot: apply migrations (or push the schema if no migrations exist),
+# then start the Next.js server. Seeding templates is done once via
+# `docker exec` from the host — it needs tsx which isn't in the runtime image.
+CMD ["sh", "-c", "node node_modules/prisma/build/index.js migrate deploy 2>/dev/null || node node_modules/prisma/build/index.js db push --accept-data-loss; exec node server.js"]
