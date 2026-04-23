@@ -83,12 +83,22 @@ export function AdminOrdersTable({
             return (
               <tr key={r.id} className="border-t border-neutral-100 align-top">
                 <td className="px-4 py-4 font-mono text-xs text-ink/70">
-                  #{String(r.orderNumber).padStart(4, "0")}
+                  <a
+                    href={`/admin/orders/${r.id}?token=${encodeURIComponent(token)}`}
+                    className="hover:text-brand hover:underline"
+                  >
+                    #{String(r.orderNumber).padStart(4, "0")}
+                  </a>
                 </td>
                 <td className="px-4 py-4">
-                  <div className="font-medium text-ink">{r.contactName}</div>
+                  <a
+                    href={`/admin/orders/${r.id}?token=${encodeURIComponent(token)}`}
+                    className="font-medium text-ink hover:text-brand"
+                  >
+                    {r.contactName}
+                  </a>
                   {r.callMeBack && (
-                    <span className="mt-1 inline-block rounded-full bg-brand/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-brand">
+                    <span className="ml-2 inline-block rounded-full bg-brand/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-brand">
                       Call me back
                     </span>
                   )}
