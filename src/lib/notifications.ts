@@ -2,7 +2,12 @@
 // NOTIFICATION MODULE — Telegram, WhatsApp (CallMeBot), Email
 // Sends booking notifications to all configured channels in parallel.
 // Each channel fails silently (logs error) so one failure doesn't block others.
+// Silent failures ARE reported to Sentry (tag: area=admin-notification,
+// channel={telegram|whatsapp|email}) so operators see them without blocking
+// the critical path. Sentry no-ops gracefully when DSN is missing.
 // =============================================================================
+
+import * as Sentry from "@sentry/nextjs";
 
 export interface BookingInfo {
   title: string;
@@ -179,17 +184,21 @@ async function sendEmail(booking: BookingInfo): Promise<void> {
 // ---------------------------------------------------------------------------
 
 export async function notifyBooking(booking: BookingInfo): Promise<void> {
+  const channels = ["telegram", "whatsapp", "email"] as const;
   const results = await Promise.allSettled([
     sendTelegram(booking),
     sendWhatsApp(booking),
     sendEmail(booking),
   ]);
 
-  for (const result of results) {
+  results.forEach((result, i) => {
     if (result.status === "rejected") {
       console.error("[Notification Error]", result.reason);
+      Sentry.captureException(result.reason, {
+        tags: { area: "admin-notification", channel: channels[i], kind: "booking" },
+      });
     }
-  }
+  });
 }
 
 // ---------------------------------------------------------------------------
@@ -378,16 +387,26 @@ async function sendOrderEmail(info: OrderEventInfo): Promise<void> {
 }
 
 export async function notifyOrderEvent(info: OrderEventInfo): Promise<void> {
+  const channels = ["telegram", "whatsapp", "email"] as const;
   const results = await Promise.allSettled([
     sendOrderTelegram(info),
     sendOrderWhatsApp(info),
     sendOrderEmail(info),
   ]);
-  for (const r of results) {
+  results.forEach((r, i) => {
     if (r.status === "rejected") {
       console.error("[Order notification error]", r.reason);
+      Sentry.captureException(r.reason, {
+        tags: {
+          area: "admin-notification",
+          channel: channels[i],
+          kind: "order",
+          event: info.event,
+        },
+        extra: { orderId: info.orderId, orderNumber: info.orderNumber },
+      });
     }
-  }
+  });
 }
 
 // ---------------------------------------------------------------------------

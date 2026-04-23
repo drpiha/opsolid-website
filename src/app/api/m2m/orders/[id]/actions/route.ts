@@ -6,6 +6,7 @@
 // =============================================================================
 
 import { NextRequest, NextResponse } from "next/server";
+import * as Sentry from "@sentry/nextjs";
 import {
   markContactedAction,
   cancelOrderAction,
@@ -39,6 +40,7 @@ export async function POST(
     return NextResponse.json({ error: "Missing action" }, { status: 400 });
   }
 
+  try {
   switch (body.action) {
     case "mark-contacted": {
       const r = await markContactedAction(id, {
@@ -69,5 +71,12 @@ export async function POST(
     }
     default:
       return NextResponse.json({ error: "Unknown action" }, { status: 400 });
+  }
+  } catch (error) {
+    Sentry.captureException(error, {
+      tags: { area: "m2m", endpoint: "actions", action: body.action ?? "unknown" },
+      extra: { orderId: id },
+    });
+    return NextResponse.json({ error: "Internal error" }, { status: 500 });
   }
 }

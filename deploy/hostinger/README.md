@@ -34,7 +34,12 @@ mkdir -p /var/www/opsolid/uploads
 cd /opt/opsolid-website
 docker compose up -d --build
 
-# 6) Check logs
+# 6) Bootstrap the DB (idempotent — init schema + patch + seed templates).
+#    This replaces the old `prisma migrate deploy`-on-boot CMD that kept
+#    crashing with `Cannot find module 'effect'` in the runtime image.
+bash deploy/hostinger/db-bootstrap.sh
+
+# 7) Check logs
 docker logs -f opsolid-app
 ```
 
@@ -78,6 +83,10 @@ After code changes are pushed to GitHub:
 cd /opt/opsolid-website
 GIT_SSH_COMMAND='ssh -i /root/.ssh/opsolid_deploy' git pull
 docker compose up -d --build
+
+# If this pull contains schema SQL changes (new file under prisma/patch_*.sql
+# or an edited init.sql), re-run the bootstrap — it's idempotent:
+bash deploy/hostinger/db-bootstrap.sh
 ```
 
 ## DNS checklist
@@ -97,3 +106,21 @@ Should return `405 Method Not Allowed` (GET not supported — POST only).
 That's a green signal that Traefik + the app are responding for the domain.
 
 Then in the Stripe dashboard, "Send test webhook" against the endpoint.
+
+## Operational docs
+
+- [`BACKUPS.md`](./BACKUPS.md) — daily Postgres dump + 14d retention cron.
+- [`CUTOVER.md`](./CUTOVER.md) — Stripe TEST → LIVE runbook.
+- [`crontab.example`](./crontab.example) — the cron entry for backups.
+- [`db-bootstrap.sh`](./db-bootstrap.sh) — idempotent schema + seed runner.
+- [`backup.sh`](./backup.sh) — the actual backup script (run by cron).
+
+## Health check
+
+```bash
+curl -s https://opsolid.de/api/health
+# {"ok":true,"commit":"<git-sha-or-unknown>","dbOk":true}
+```
+
+Point UptimeRobot or the VPS's own cron at this URL to get alerted when the
+app is up but the DB is unreachable (or vice versa).

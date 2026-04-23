@@ -20,16 +20,24 @@ export async function POST(
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const { id } = await params;
-  const body = (await req.json().catch(() => null)) as {
-    designNotes?: string;
-  } | null;
+  try {
+    const body = (await req.json().catch(() => null)) as {
+      designNotes?: string;
+    } | null;
 
-  const result = await publishOrderAction(id, {
-    designNotes: body?.designNotes,
-    actor: "admin",
-  });
-  if (!result.ok) {
-    return NextResponse.json({ error: result.error }, { status: result.status });
+    const result = await publishOrderAction(id, {
+      designNotes: body?.designNotes,
+      actor: "admin",
+    });
+    if (!result.ok) {
+      return NextResponse.json({ error: result.error }, { status: result.status });
+    }
+    return NextResponse.json({ ok: true, slug: result.slug });
+  } catch (error) {
+    Sentry.captureException(error, {
+      tags: { area: "publish", actor: "admin" },
+      extra: { orderId: id },
+    });
+    return NextResponse.json({ error: "Publish failed" }, { status: 500 });
   }
-  return NextResponse.json({ ok: true, slug: result.slug });
 }

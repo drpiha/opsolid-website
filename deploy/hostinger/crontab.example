@@ -1,0 +1,6 @@
+# OpSolid — /etc/cron.d/opsolid-backup  (install as root)
+# Daily Postgres dump at 03:00 UTC. The 14-day prune is inline in backup.sh so
+# no separate weekly entry is needed.
+#
+#   m  h  dom mon dow  user  command
+    0  3   *   *   *   root  /opt/opsolid-website/deploy/hostinger/backup.sh >> /var/log/opsolid-backup.log 2>&1

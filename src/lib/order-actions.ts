@@ -6,6 +6,7 @@
 // place so we cannot accidentally diverge behaviour between the two admins.
 // =============================================================================
 
+import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/prisma";
 import { OrderStatus } from "@/lib/validation";
 import { buildSlug } from "@/lib/slug";
@@ -192,6 +193,10 @@ export async function publishOrderAction(
     }
   } catch (err) {
     console.error("[order-actions] revision-ready email failed:", err);
+    Sentry.captureException(err, {
+      tags: { area: "customer-email", template: "revision-ready" },
+      extra: { orderId: order.id, orderNumber: order.orderNumber },
+    });
   }
 
   return { ok: true, slug };

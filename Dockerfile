@@ -37,19 +37,22 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
-# Prisma needs its CLI + schema at runtime to run migrate-deploy on boot.
-# Standalone doesn't include devDependencies, so we copy prisma directly.
-# Note: we invoke the CLI via `node node_modules/prisma/build/index.js` —
-# copying the .bin/prisma symlink flattens it and breaks wasm path resolution.
-COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules/prisma ./node_modules/prisma
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@prisma ./node_modules/@prisma
+# The generated Prisma client is required at runtime (imported from
+# @/generated/prisma). Standalone output *usually* picks it up via the trace,
+# but we copy it explicitly to be safe.
 COPY --from=builder --chown=nextjs:nodejs /app/src/generated ./src/generated
+
+# Ship the raw SQL files alongside the app so the host-side db-bootstrap.sh
+# can `docker cp` them into the db container at deploy time (no Prisma CLI
+# in the runtime image → no `effect` module crash on boot).
+COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 
 USER nextjs
 EXPOSE 3000
 
-# On each boot: apply migrations (or push the schema if no migrations exist),
-# then start the Next.js server. Seeding templates is done once via
-# `docker exec` from the host — it needs tsx which isn't in the runtime image.
-CMD ["sh", "-c", "node node_modules/prisma/build/index.js migrate deploy 2>/dev/null || node node_modules/prisma/build/index.js db push --accept-data-loss; exec node server.js"]
+# Pure Next.js start. Schema bootstrap + seed is now a one-shot host step
+# (see deploy/hostinger/db-bootstrap.sh) rather than on every container boot,
+# which (a) eliminates the `Cannot find module 'effect'` crash from Prisma's
+# CLI runtime, (b) speeds up restart, and (c) keeps schema changes auditable
+# instead of magically running on reboot.
+CMD ["node", "server.js"]

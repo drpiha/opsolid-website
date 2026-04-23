@@ -4,6 +4,7 @@
 // =============================================================================
 
 import { NextRequest, NextResponse } from "next/server";
+import * as Sentry from "@sentry/nextjs";
 import { Prisma } from "@/generated/prisma";
 import { prisma } from "@/lib/prisma";
 import { OrderStatus } from "@/lib/validation";
@@ -22,6 +23,7 @@ export async function GET(req: NextRequest) {
       { status: 401 },
     );
   }
+  try {
 
   const url = new URL(req.url);
   const statusParam = url.searchParams.get("status");
@@ -113,4 +115,8 @@ export async function GET(req: NextRequest) {
       pending: pendingCount,
     },
   });
+  } catch (error) {
+    Sentry.captureException(error, { tags: { area: "m2m", endpoint: "orders" } });
+    return NextResponse.json({ error: "Internal error" }, { status: 500 });
+  }
 }

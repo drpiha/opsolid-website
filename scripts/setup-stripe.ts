@@ -2,20 +2,26 @@
  * One-off Stripe setup for OpSolid Digital Card.
  *
  * - Reads STRIPE_SECRET_KEY from env (or the first line of the path given as
- *   the first CLI arg — the dev machine keeps it in ~/.stripe-token).
+ *   the first CLI arg — the dev machine keeps it in ~/.stripe-token). You can
+ *   also pass the key inline via `--live sk_live_...`.
  * - For each template in src/config/card-templates.ts, ensures a Stripe
  *   Product tagged with metadata.opsolidTemplateId exists (creates if not).
- * - Ensures a one-time price and a yearly recurring price exist for each.
+ * - Ensures one-time, monthly, and yearly prices exist for each.
  * - Ensures a webhook endpoint exists pointing at the configured site URL
  *   (/api/webhooks/stripe) and prints its signing secret.
+ * - Prints an `.env.live` block the operator can paste into
+ *   /opt/opsolid-website/.env after running in LIVE mode.
  * - Prints a snippet you can paste into src/config/card-templates.ts
- *   (stripeOneTimePriceId / stripeYearlyPriceId) — or pass --write to have
- *   the script patch the file in place.
+ *   (stripeOneTimePriceId / stripeMonthlyPriceId / stripeYearlyPriceId) — or
+ *   pass --write to have the script patch the file in place.
  *
  * Usage:
- *   tsx scripts/setup-stripe.ts                 # dry-ish: creates, prints IDs
- *   tsx scripts/setup-stripe.ts --write         # patches card-templates.ts
- *   tsx scripts/setup-stripe.ts /path/to/key    # read key from file path
+ *   tsx scripts/setup-stripe.ts                        # TEST-mode dry-ish
+ *   tsx scripts/setup-stripe.ts --write                # TEST mode, patch file
+ *   tsx scripts/setup-stripe.ts --live sk_live_xxx     # LIVE, dry-run
+ *   tsx scripts/setup-stripe.ts --live sk_live_xxx --write  # LIVE + patch
+ *   tsx scripts/setup-stripe.ts /path/to/key           # read key from file
+ *   tsx scripts/setup-stripe.ts --help                 # print this block
  */
 
 import { readFileSync, writeFileSync } from "fs";
@@ -27,7 +33,46 @@ const CONFIG_PATH = resolve(__dirname, "../src/config/card-templates.ts");
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://opsolid.de";
 const WEBHOOK_PATH = "/api/webhooks/stripe";
 
+function printHelp() {
+  console.log(
+    [
+      "Usage:",
+      "  tsx scripts/setup-stripe.ts                        # TEST mode, dry-ish",
+      "  tsx scripts/setup-stripe.ts --write                # TEST mode, patch config",
+      "  tsx scripts/setup-stripe.ts --live sk_live_xxx     # LIVE mode, dry-run",
+      "  tsx scripts/setup-stripe.ts --live sk_live_xxx --write",
+      "  tsx scripts/setup-stripe.ts /path/to/key-file      # read key from path",
+      "",
+      "Env:",
+      "  STRIPE_SECRET_KEY      # sk_test_ or sk_live_ — overridden by --live",
+      "  NEXT_PUBLIC_SITE_URL   # webhook target (defaults to https://opsolid.de)",
+      "",
+      "The script is idempotent: re-running finds existing products + prices by",
+      "metadata and does not duplicate them. Webhook endpoint is matched by URL.",
+    ].join("\n")
+  );
+}
+
+function liveFlagValue(): string | null {
+  const args = process.argv.slice(2);
+  const i = args.indexOf("--live");
+  if (i === -1) return null;
+  const v = args[i + 1];
+  if (!v || v.startsWith("--")) {
+    throw new Error("--live requires a secret key value (sk_live_...)");
+  }
+  return v;
+}
+
 function loadSecretKey(): string {
+  const live = liveFlagValue();
+  if (live) {
+    if (!live.startsWith("sk_live_") && !live.startsWith("sk_test_")) {
+      throw new Error("--live key must start with sk_live_ or sk_test_");
+    }
+    return live;
+  }
+
   const envKey = process.env.STRIPE_SECRET_KEY;
   if (envKey && envKey.startsWith("sk_")) return envKey;
 
@@ -46,16 +91,22 @@ function loadSecretKey(): string {
     }
   }
   throw new Error(
-    "No Stripe secret key — set STRIPE_SECRET_KEY or pass a key file path."
+    "No Stripe secret key — set STRIPE_SECRET_KEY, pass --live sk_live_..., or pass a key file path."
   );
 }
 
 async function main() {
+  if (process.argv.includes("--help") || process.argv.includes("-h")) {
+    printHelp();
+    return;
+  }
+
   const secretKey = loadSecretKey();
   const stripe = new Stripe(secretKey, { typescript: true });
   const writeBack = process.argv.includes("--write");
+  const isLive = secretKey.startsWith("sk_live_");
 
-  console.log(`→ Stripe mode: ${secretKey.startsWith("sk_live") ? "LIVE" : "TEST"}`);
+  console.log(`→ Stripe mode: ${isLive ? "LIVE" : "TEST"}`);
   console.log(`→ Site URL: ${SITE_URL}`);
   console.log(`→ Templates: ${cardTemplates.length}`);
 
@@ -184,6 +235,22 @@ async function main() {
       ? webhookSecret
       : "(existing endpoint — reveal it in the Stripe dashboard → Developers → Webhooks → this endpoint → Signing secret)"
   );
+
+  // Print a .env.live block the operator can paste into /opt/opsolid-website/.env
+  if (isLive) {
+    console.log("\n=== .env.live (paste into /opt/opsolid-website/.env) ===");
+    console.log(
+      [
+        `# --- Stripe LIVE — generated by scripts/setup-stripe.ts ---`,
+        `STRIPE_SECRET_KEY=${secretKey}`,
+        `STRIPE_WEBHOOK_SECRET=${webhookSecret ?? "whsec_REVEAL_FROM_DASHBOARD"}`,
+        `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_live_REPLACE_WITH_DASHBOARD_VALUE`,
+      ].join("\n")
+    );
+    console.log(
+      "# Publishable key lives in Stripe dashboard → Developers → API keys.\n"
+    );
+  }
 
   if (writeBack) {
     // Use a line-based approach (safer than one regex-of-doom on a whole file).
