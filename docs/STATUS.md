@@ -104,17 +104,20 @@ Yeni alanlar (`card_orders`):
 
 ## Deploy checklist — yeni tracker'lar canlıya
 
-- [ ] `prisma/patch_001_design_review.sql` VPS DB'ye uygulandı mı?
-- [ ] `/opt/opsolid-website/.env` — SMTP_HOST/PORT/USER/PASS + CONTACT_FROM_EMAIL + CONTACT_TO_EMAIL dolduruldu mu?
-- [ ] `/opt/opsolid-website/.env` — `M2M_ADMIN_TOKEN` (uzun random) eklendi mi?
-- [ ] Kutasia `/opt/kutasia/.env` — `OPSOLID_ADMIN_API_URL=https://opsolid.de` + `OPSOLID_ADMIN_API_TOKEN=...` (aynı token) eklendi mi?
-- [ ] (Track E bitince) `/opt/opsolid-website/.env` — `SENTRY_DSN`, `NEXT_PUBLIC_SENTRY_DSN` eklendi mi?
-- [ ] (Track E bitince) VPS'te `deploy/hostinger/backup.sh` + crontab entry kuruldu mu?
-- [ ] `docker compose up -d --build` çalıştırıldı mı?
-- [ ] `npx tsx scripts/backfill-edit-tokens.ts` eski siparişler için çalıştırıldı mı?
-- [ ] `npx tsx scripts/test-customer-email.ts operator@example.com` ile SMTP doğrulandı mı?
-- [ ] `curl -I https://opsolid.de/api/health` 200 dönüyor mu?
-- [ ] Kutasia'da `/admin/opsolid-orders` sayfası siparişleri görüyor mu?
+- [x] `prisma/patch_001_design_review.sql` VPS DB'ye uygulandı (5 yeni kolon + unique index + backfill 1 satır).
+- [x] `/opt/opsolid-website/.env` — SMTP_HOST=smtp.gmail.com, SMTP_PORT=465, SMTP_USER, SMTP_PASS, CONTACT_FROM_EMAIL, CONTACT_TO_EMAIL eklendi.
+- [x] `/opt/opsolid-website/.env` — `M2M_ADMIN_TOKEN` (32 byte base64url) eklendi.
+- [x] Kutasia `/opt/kutasia/.env` — `OPSOLID_ADMIN_API_URL=https://opsolid.de` + aynı `OPSOLID_ADMIN_API_TOKEN` eklendi.
+- [ ] `/opt/opsolid-website/.env` — `SENTRY_DSN`, `NEXT_PUBLIC_SENTRY_DSN` **(opsiyonel — boşken SDK no-op)**.
+- [ ] VPS cron: `0 3 * * * /opt/opsolid-website/deploy/hostinger/backup.sh >> /var/log/opsolid-backup.log 2>&1` (operatör kurmalı).
+- [x] `docker compose up -d --build opsolid` + `docker compose up -d --build kutasia` — ikisi de Ready.
+- [x] Eski sipariş (order #1) için `edit_token` backfilled (`UPDATE card_orders SET edit_token = gen_random_uuid()::text WHERE edit_token IS NULL`).
+- [ ] SMTP doğrulama: `npx tsx scripts/test-customer-email.ts operator@example.com` (operatör çalıştırmalı).
+- [x] `curl -I https://opsolid.de/api/health` → `{"ok":true,"commit":"unknown","dbOk":true}`.
+- [x] `curl -H "Authorization: Bearer <token>" https://opsolid.de/api/m2m/orders` → sipariş listesi. Bearer yoksa 401.
+- [x] `https://opsolid.de/c/claude-test-eokd` → 200 (eski public card çalışıyor).
+- [x] `https://kutasia.com/` → 200.
+- [ ] Operatör: Kutasia admin'e giriş → `/admin/opsolid-orders` → sipariş listesi + detay + aksiyonlar doğrulanmalı.
 
 ---
 
