@@ -2,11 +2,12 @@ import Stripe from "stripe";
 
 const secretKey = process.env.STRIPE_SECRET_KEY;
 
-if (!secretKey && process.env.NODE_ENV === "production") {
-  throw new Error("STRIPE_SECRET_KEY is required in production");
-}
-
-export const stripe = new Stripe(secretKey ?? "sk_test_placeholder", {
+// The Stripe SDK is instantiated eagerly so route modules can import `stripe`
+// at the top level. Missing key surfaces as a runtime auth error on the first
+// real API call — we deliberately do NOT throw here because Next.js evaluates
+// route modules during `next build` page-data collection, and the build env
+// (docker builder stage, CI) often has no STRIPE_SECRET_KEY available.
+export const stripe = new Stripe(secretKey ?? "sk_test_placeholder_for_build", {
   typescript: true,
 });
 

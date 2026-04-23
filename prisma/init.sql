@@ -2,7 +2,7 @@
 CREATE SCHEMA IF NOT EXISTS "public";
 
 -- CreateTable
-CREATE TABLE "card_templates" (
+CREATE TABLE IF NOT EXISTS "card_templates" (
     "id" INTEGER NOT NULL,
     "slug" TEXT NOT NULL,
     "name" TEXT NOT NULL,
@@ -24,7 +24,7 @@ CREATE TABLE "card_templates" (
 );
 
 -- CreateTable
-CREATE TABLE "card_orders" (
+CREATE TABLE IF NOT EXISTS "card_orders" (
     "id" TEXT NOT NULL,
     "order_number" SERIAL NOT NULL,
     "slug" TEXT,
@@ -61,7 +61,7 @@ CREATE TABLE "card_orders" (
 );
 
 -- CreateTable
-CREATE TABLE "subscriptions" (
+CREATE TABLE IF NOT EXISTS "subscriptions" (
     "id" TEXT NOT NULL,
     "order_id" TEXT NOT NULL,
     "stripe_subscription_id" TEXT NOT NULL,
@@ -76,7 +76,7 @@ CREATE TABLE "subscriptions" (
 );
 
 -- CreateTable
-CREATE TABLE "order_status_history" (
+CREATE TABLE IF NOT EXISTS "order_status_history" (
     "id" TEXT NOT NULL,
     "order_id" TEXT NOT NULL,
     "from_status" TEXT,
@@ -89,44 +89,48 @@ CREATE TABLE "order_status_history" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "card_templates_slug_key" ON "card_templates"("slug");
+CREATE UNIQUE INDEX IF NOT EXISTS "card_templates_slug_key" ON "card_templates"("slug");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "card_orders_order_number_key" ON "card_orders"("order_number");
+CREATE UNIQUE INDEX IF NOT EXISTS "card_orders_order_number_key" ON "card_orders"("order_number");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "card_orders_slug_key" ON "card_orders"("slug");
+CREATE UNIQUE INDEX IF NOT EXISTS "card_orders_slug_key" ON "card_orders"("slug");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "card_orders_stripe_session_id_key" ON "card_orders"("stripe_session_id");
+CREATE UNIQUE INDEX IF NOT EXISTS "card_orders_stripe_session_id_key" ON "card_orders"("stripe_session_id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "card_orders_edit_token_key" ON "card_orders"("edit_token");
+CREATE UNIQUE INDEX IF NOT EXISTS "card_orders_edit_token_key" ON "card_orders"("edit_token");
 
 -- CreateIndex
-CREATE INDEX "card_orders_status_idx" ON "card_orders"("status");
+CREATE INDEX IF NOT EXISTS "card_orders_status_idx" ON "card_orders"("status");
 
 -- CreateIndex
-CREATE INDEX "card_orders_contact_phone_idx" ON "card_orders"("contact_phone");
+CREATE INDEX IF NOT EXISTS "card_orders_contact_phone_idx" ON "card_orders"("contact_phone");
 
 -- CreateIndex
-CREATE INDEX "card_orders_call_me_back_contacted_at_idx" ON "card_orders"("call_me_back", "contacted_at");
+CREATE INDEX IF NOT EXISTS "card_orders_call_me_back_contacted_at_idx" ON "card_orders"("call_me_back", "contacted_at");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "subscriptions_order_id_key" ON "subscriptions"("order_id");
+CREATE UNIQUE INDEX IF NOT EXISTS "subscriptions_order_id_key" ON "subscriptions"("order_id");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "subscriptions_stripe_subscription_id_key" ON "subscriptions"("stripe_subscription_id");
+CREATE UNIQUE INDEX IF NOT EXISTS "subscriptions_stripe_subscription_id_key" ON "subscriptions"("stripe_subscription_id");
 
 -- CreateIndex
-CREATE INDEX "order_status_history_order_id_created_at_idx" ON "order_status_history"("order_id", "created_at");
+CREATE INDEX IF NOT EXISTS "order_status_history_order_id_created_at_idx" ON "order_status_history"("order_id", "created_at");
 
--- AddForeignKey
-ALTER TABLE "card_orders" ADD CONSTRAINT "card_orders_template_id_fkey" FOREIGN KEY ("template_id") REFERENCES "card_templates"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+-- AddForeignKey (wrapped in DO blocks for idempotency; PG has no IF NOT EXISTS for ADD CONSTRAINT)
+DO $$ BEGIN
+  ALTER TABLE "card_orders" ADD CONSTRAINT "card_orders_template_id_fkey" FOREIGN KEY ("template_id") REFERENCES "card_templates"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
--- AddForeignKey
-ALTER TABLE "subscriptions" ADD CONSTRAINT "subscriptions_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "card_orders"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$ BEGIN
+  ALTER TABLE "subscriptions" ADD CONSTRAINT "subscriptions_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "card_orders"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
--- AddForeignKey
-ALTER TABLE "order_status_history" ADD CONSTRAINT "order_status_history_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "card_orders"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$ BEGIN
+  ALTER TABLE "order_status_history" ADD CONSTRAINT "order_status_history_order_id_fkey" FOREIGN KEY ("order_id") REFERENCES "card_orders"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+EXCEPTION WHEN duplicate_object THEN NULL; END $$;
 
