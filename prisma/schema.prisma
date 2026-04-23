@@ -1,0 +1,136 @@
+// =============================================================================
+// OpSolid — Dijital Kartvizit (DBC) — Prisma Schema
+//
+// Self-serve order pipeline: customer picks a numbered template, fills card
+// content, pays via Stripe (one-time or subscription), we auto-publish at
+// opsolid.de/c/{slug}. Enum-like fields are stored as String with allowed
+// values documented inline and mirrored in src/lib/validation.ts (Zod enums).
+// =============================================================================
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// -----------------------------------------------------------------------------
+// CardTemplate — numbered catalog entry. Seeded via prisma/seed.ts from the
+// authoritative list in src/config/card-templates.ts. The config file is the
+// source of truth; the DB copy lets admin pages join on templateId.
+// -----------------------------------------------------------------------------
+model CardTemplate {
+  id                   Int      @id
+  slug                 String   @unique
+  name                 String
+  sectorHint           String   @map("sector_hint")
+  componentKey         String   @map("component_key")
+  previewPath          String   @map("preview_path")
+  oneTimeCents         Int      @map("one_time_cents")
+  monthlyCents         Int?     @map("monthly_cents")
+  stripeOneTimePriceId String?  @map("stripe_one_time_price_id")
+  stripeMonthlyPriceId String?  @map("stripe_monthly_price_id")
+  isActive             Boolean  @default(true) @map("is_active")
+  sortOrder            Int      @map("sort_order")
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @updatedAt @map("updated_at")
+
+  orders CardOrder[]
+
+  @@map("card_templates")
+}
+
+// -----------------------------------------------------------------------------
+// CardOrder — one customer order. Becomes a published DBC at /c/{slug} after
+// Stripe confirms payment.
+//   status flow: PENDING_PAYMENT -> PAID -> PUBLISHED (slug set)
+//                   |                           |
+//                   +-> CANCELLED     +-> CANCELLED (subscription ended)
+//                                      +-> REFUNDED
+// -----------------------------------------------------------------------------
+model CardOrder {
+  id          String  @id @default(cuid())
+  orderNumber Int     @unique @default(autoincrement()) @map("order_number")
+  slug        String? @unique
+  templateId  Int     @map("template_id")
+
+  contactName  String  @map("contact_name")
+  contactEmail String  @map("contact_email")
+  contactPhone String  @map("contact_phone")
+  callMeBack   Boolean @default(false) @map("call_me_back")
+
+  cardData Json @map("card_data")
+
+  brandPrimaryHex String? @map("brand_primary_hex")
+  brandAccentHex  String? @map("brand_accent_hex")
+
+  photoPath String? @map("photo_path")
+  logoPath  String? @map("logo_path")
+
+  billingMode String @map("billing_mode")
+  amountCents Int    @map("amount_cents")
+  currency    String @default("EUR")
+  locale      String @default("de")
+
+  stripeSessionId       String? @unique @map("stripe_session_id")
+  stripePaymentIntentId String? @map("stripe_payment_intent_id")
+  stripeSubscriptionId  String? @map("stripe_subscription_id")
+  stripeCustomerId      String? @map("stripe_customer_id")
+
+  status String
+
+  contactedAt     DateTime? @map("contacted_at")
+  contactedByNote String?   @map("contacted_by_note")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  template      CardTemplate         @relation(fields: [templateId], references: [id])
+  subscription  Subscription?
+  statusHistory OrderStatusHistory[]
+
+  @@index([status])
+  @@index([contactPhone])
+  @@index([callMeBack, contactedAt])
+  @@map("card_orders")
+}
+
+// -----------------------------------------------------------------------------
+// Subscription — only populated for billingMode=SUBSCRIPTION orders.
+// -----------------------------------------------------------------------------
+model Subscription {
+  id                   String    @id @default(cuid())
+  orderId              String    @unique @map("order_id")
+  stripeSubscriptionId String    @unique @map("stripe_subscription_id")
+  status               String
+  currentPeriodEnd     DateTime  @map("current_period_end")
+  cancelAt             DateTime? @map("cancel_at")
+  canceledAt           DateTime? @map("canceled_at")
+  createdAt            DateTime  @default(now()) @map("created_at")
+  updatedAt            DateTime  @updatedAt @map("updated_at")
+
+  order CardOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@map("subscriptions")
+}
+
+// -----------------------------------------------------------------------------
+// OrderStatusHistory — audit trail of status changes, admin notes, contact log.
+// -----------------------------------------------------------------------------
+model OrderStatusHistory {
+  id         String   @id @default(cuid())
+  orderId    String   @map("order_id")
+  fromStatus String?  @map("from_status")
+  toStatus   String   @map("to_status")
+  note       String?
+  actor      String
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  order CardOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId, createdAt])
+  @@map("order_status_history")
+}

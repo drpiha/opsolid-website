@@ -193,6 +193,134 @@ export async function notifyBooking(booking: BookingInfo): Promise<void> {
 }
 
 // ---------------------------------------------------------------------------
+// Digital Card Order notifications
+// ---------------------------------------------------------------------------
+
+export interface OrderEventInfo {
+  orderId: string;
+  orderNumber: number;
+  contactName: string;
+  contactEmail: string;
+  contactPhone: string;
+  callMeBack: boolean;
+  amountCents: number;
+  billingMode: string;
+  slug: string | null;
+  event: "paid" | "created";
+}
+
+function formatEuroCents(cents: number): string {
+  return new Intl.NumberFormat("de-DE", {
+    style: "currency",
+    currency: "EUR",
+    maximumFractionDigits: 0,
+  }).format(cents / 100);
+}
+
+async function sendOrderTelegram(info: OrderEventInfo): Promise<void> {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chatId) return;
+
+  const flag = info.callMeBack ? "📞 [CALL-ME-BACK]" : "✅";
+  const lines = [
+    `${flag} *New DBC order #${info.orderNumber}*`,
+    ``,
+    `👤 *Name:* ${escapeMarkdown(info.contactName)}`,
+    `📧 *E-Mail:* ${escapeMarkdown(info.contactEmail)}`,
+    `📱 *Phone:* ${escapeMarkdown(info.contactPhone)}`,
+    `💶 *Amount:* ${formatEuroCents(info.amountCents)} (${info.billingMode})`,
+    info.slug ? `🔗 *URL:* opsolid.de/c/${info.slug}` : "",
+  ].filter(Boolean);
+
+  const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: chatId,
+      text: lines.join("\n"),
+      parse_mode: "Markdown",
+    }),
+  });
+  if (!res.ok) throw new Error(`Telegram ${res.status}: ${await res.text()}`);
+}
+
+async function sendOrderWhatsApp(info: OrderEventInfo): Promise<void> {
+  const phone = process.env.WHATSAPP_PHONE;
+  const apiKey = process.env.WHATSAPP_CALLMEBOT_APIKEY;
+  if (!phone || !apiKey) return;
+
+  const flag = info.callMeBack ? "[ARA] " : "";
+  const message = [
+    `${flag}DBC Order #${info.orderNumber}`,
+    `Name: ${info.contactName}`,
+    `Phone: ${info.contactPhone}`,
+    `Email: ${info.contactEmail}`,
+    `Amount: ${formatEuroCents(info.amountCents)} (${info.billingMode})`,
+    info.slug ? `URL: opsolid.de/c/${info.slug}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  const url = `https://api.callmebot.com/whatsapp.php?phone=${phone}&text=${encodeURIComponent(message)}&apikey=${apiKey}`;
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`CallMeBot ${res.status}: ${await res.text()}`);
+}
+
+async function sendOrderEmail(info: OrderEventInfo): Promise<void> {
+  const smtpHost = process.env.SMTP_HOST;
+  const smtpUser = process.env.SMTP_USER;
+  const smtpPass = process.env.SMTP_PASS;
+  const contactTo = process.env.CONTACT_TO_EMAIL;
+  if (!smtpHost || !smtpUser || !smtpPass || !contactTo) return;
+
+  const nodemailer = await import("nodemailer");
+  const transporter = nodemailer.default.createTransport({
+    host: smtpHost,
+    port: Number(process.env.SMTP_PORT) || 587,
+    secure: (process.env.SMTP_PORT || "587") === "465",
+    auth: { user: smtpUser, pass: smtpPass },
+  });
+
+  const prefix = info.callMeBack ? "[ARA] " : "";
+  const subject = `${prefix}DBC Order #${info.orderNumber} — ${info.contactName}`;
+  const text = [
+    `Order #${info.orderNumber}`,
+    `Name: ${info.contactName}`,
+    `Email: ${info.contactEmail}`,
+    `Phone: ${info.contactPhone}`,
+    `Call me back: ${info.callMeBack ? "YES" : "no"}`,
+    `Amount: ${formatEuroCents(info.amountCents)} (${info.billingMode})`,
+    info.slug ? `Published URL: https://opsolid.de/c/${info.slug}` : "",
+    "",
+    "Admin: https://opsolid.de/admin/orders",
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  await transporter.sendMail({
+    from: `"OpSolid Orders" <${smtpUser}>`,
+    to: contactTo,
+    replyTo: info.contactEmail,
+    subject,
+    text,
+  });
+}
+
+export async function notifyOrderEvent(info: OrderEventInfo): Promise<void> {
+  const results = await Promise.allSettled([
+    sendOrderTelegram(info),
+    sendOrderWhatsApp(info),
+    sendOrderEmail(info),
+  ]);
+  for (const r of results) {
+    if (r.status === "rejected") {
+      console.error("[Order notification error]", r.reason);
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 

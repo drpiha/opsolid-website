@@ -9,9 +9,6 @@ import {
   Link2,
   QrCode,
   Layers,
-  Loader2,
-  AlertCircle,
-  CheckCircle,
   Check,
   X,
   AlertTriangle,
@@ -19,14 +16,12 @@ import {
   ArrowRight,
   ChevronDown,
 } from "lucide-react";
-import { Input, Textarea, Select } from "@/components/ui/Input";
 import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import { SectionHeading } from "@/components/shared/SectionHeading";
 import { HeroCardMockup } from "@/components/sections/hero/HeroCardMockup";
-import { DemoGallery } from "@/components/products/DemoGallery";
 import { useLocale } from "@/context/LocaleContext";
-
-type FormState = "idle" | "sending" | "success" | "error";
+import { TemplateGallery } from "./sections/TemplateGallery";
+import { OrderFormSection } from "./sections/OrderFormSection";
 
 const featureIconMap: Record<string, React.ReactNode> = {
   link: <Link2 size={22} strokeWidth={2} />,
@@ -133,36 +128,15 @@ export function DigitalCardPage() {
   const d = t.products.digitalCard;
   const home = t.home;
 
-  const [formState, setFormState] = useState<FormState>("idle");
-  const [agreed, setAgreed] = useState(false);
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [selectedTemplateId, setSelectedTemplateId] = useState<number | null>(1);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setFormState("sending");
-
-    const formData = new FormData(e.currentTarget);
-    const payload = {
-      name: (formData.get("name") as string) || "",
-      email: (formData.get("email") as string) || "",
-      company: (formData.get("company") as string) || "",
-      teamSize: (formData.get("teamSize") as string) || "",
-      message:
-        ((formData.get("message") as string) || "").trim() ||
-        "Digital Business Card request (no additional notes).",
-      source: "digital-card",
-    };
-
-    try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-      if (res.ok) setFormState("success");
-      else setFormState("error");
-    } catch {
-      setFormState("error");
+  const handleTemplateSelect = (id: number) => {
+    setSelectedTemplateId(id);
+    if (typeof window !== "undefined") {
+      window.setTimeout(() => {
+        document.getElementById("order")?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 50);
     }
   };
 
@@ -284,19 +258,20 @@ export function DigitalCardPage() {
       </section>
 
       {/* ================================================================
-          DEMO GALLERY — 20 live previews (moved above features)
+          TEMPLATE GALLERY — numbered self-serve pick
           ================================================================ */}
-      <section id="templates" className="bg-white">
-        <DemoGallery
-          title={t.products.templatesStrip?.heading ?? "10 industry templates + 10 layouts"}
-          subtitle={t.products.templatesStrip?.paragraph ?? "Live previews — click any card to open a full-size interactive demo."}
-          ctaLabel={t.products.templatesStrip?.cta ?? "Customize this template"}
-          openLabel={t.products.categories?.all ? "Open full preview" : "Open full preview"}
-          filterAll={t.products.categories?.all ?? "All"}
-          filterIndustry={t.products.categories?.customerFacing ?? "Industry"}
-          filterLayout="Layout"
-        />
-      </section>
+      <TemplateGallery
+        selectedId={selectedTemplateId}
+        onSelect={handleTemplateSelect}
+      />
+
+      {/* ================================================================
+          ORDER FLOW — self-serve form + live preview + payment
+          ================================================================ */}
+      <OrderFormSection
+        selectedTemplateId={selectedTemplateId}
+        onTemplateChange={setSelectedTemplateId}
+      />
 
       {/* ================================================================
           FEATURES
@@ -718,140 +693,9 @@ export function DigitalCardPage() {
         </div>
       </section>
 
-      {/* ================================================================
-          LEAD FORM
-          ================================================================ */}
-      <section id="lead" className="section bg-neutral-50">
-        <div className="container-wide">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16">
-            <AnimatedSection className="lg:col-span-5">
-              <div className="eyebrow uppercase mb-4 text-ink/60">
-                {d.lead.label}
-              </div>
-              <h2 className="font-sans font-extrabold text-ink text-[clamp(2rem,4.5vw,3rem)] leading-[1.04] tracking-[-0.03em] text-balance">
-                {d.lead.heading}
-              </h2>
-              <p className="mt-6 text-body-lg text-ink/60 leading-relaxed max-w-[50ch] text-pretty">
-                {d.lead.intro}
-              </p>
-            </AnimatedSection>
-
-            <AnimatedSection delay={0.1} className="lg:col-span-7">
-              <div className="rounded-3xl bg-white border border-neutral-200 shadow-card p-6 md:p-8">
-                {formState === "success" ? (
-                  <div className="text-center py-10">
-                    <div className="w-14 h-14 rounded-full bg-brand/10 text-brand flex items-center justify-center mx-auto mb-5">
-                      <CheckCircle size={28} strokeWidth={2.5} />
-                    </div>
-                    <p className="font-sans font-bold text-ink text-2xl leading-snug text-balance max-w-md mx-auto">
-                      {d.lead.fields.success}
-                    </p>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="space-y-5">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <Input
-                        id="dbc-name"
-                        name="name"
-                        label={d.lead.fields.name}
-                        placeholder="Jane Schmidt"
-                        required
-                      />
-                      <Input
-                        id="dbc-email"
-                        name="email"
-                        type="email"
-                        label={d.lead.fields.email}
-                        placeholder="jane@company.de"
-                        required
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-                      <Input
-                        id="dbc-company"
-                        name="company"
-                        label={d.lead.fields.company}
-                        placeholder="Acme GmbH"
-                      />
-                      <Select
-                        id="dbc-teamsize"
-                        name="teamSize"
-                        defaultValue=""
-                        label={d.lead.fields.teamSize}
-                      >
-                        <option value="" disabled>
-                          —
-                        </option>
-                        {d.lead.fields.teamSizeOptions.map((opt, i) => (
-                          <option key={i} value={opt}>
-                            {opt}
-                          </option>
-                        ))}
-                      </Select>
-                    </div>
-
-                    <Textarea
-                      id="dbc-message"
-                      name="message"
-                      label={d.lead.fields.message}
-                      rows={4}
-                    />
-
-                    <label className="flex items-start gap-3 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        checked={agreed}
-                        onChange={(e) => setAgreed(e.target.checked)}
-                        required
-                        className="mt-1 h-4 w-4 rounded border-neutral-300 text-brand accent-brand focus:ring-2 focus:ring-brand/30"
-                      />
-                      <span className="text-xs text-ink/60 leading-relaxed">
-                        {d.lead.fields.consent}{" "}
-                        <Link
-                          href="/privacy"
-                          className="text-ink underline underline-offset-4 decoration-ink/30 hover:decoration-brand hover:text-brand transition-colors"
-                        >
-                          {d.lead.fields.privacyLink}
-                        </Link>
-                      </span>
-                    </label>
-
-                    {formState === "error" && (
-                      <div className="flex items-center gap-2 text-sm text-brand bg-brand/5 border border-brand/20 rounded-xl p-3">
-                        <AlertCircle size={16} strokeWidth={2} />
-                        <span>{d.lead.fields.error}</span>
-                      </div>
-                    )}
-
-                    <button
-                      type="submit"
-                      disabled={formState === "sending" || !agreed}
-                      className="btn-primary w-full disabled:opacity-50 disabled:pointer-events-none"
-                    >
-                      {formState === "sending" ? (
-                        <>
-                          <Loader2
-                            size={16}
-                            strokeWidth={2.5}
-                            className="animate-spin"
-                          />
-                          <span>{d.lead.fields.submitting}</span>
-                        </>
-                      ) : (
-                        <>
-                          <span>{d.lead.fields.submit}</span>
-                          <ArrowRight size={16} strokeWidth={2.5} />
-                        </>
-                      )}
-                    </button>
-                  </form>
-                )}
-              </div>
-            </AnimatedSection>
-          </div>
-        </div>
-      </section>
+      {/* LEAD FORM section removed — replaced by the OrderFormSection above
+          which lets customers complete the entire flow (template → content →
+          payment → publish) without manual lead qualification. */}
 
       {/* ================================================================
           FINAL CTA
