@@ -1,4 +1,12 @@
-# OpSolid Website — Next Session Handoff
+# OpSolid Website — Next Session Handoff — **COMPLETED 2026-04-23**
+
+> **Status: all five tracks landed.** See `docs/STATUS.md` for the post-completion
+> snapshot and the deploy checklist. Commits on `feat/complete-dbc`:
+> `bfe5254` (schema) → `ee8e445` (Track C) → `e51201f` (Track D) →
+> `2bd1642` (Track A + B) → `0eec253` (Track E). Kutasia-side: `8961d9e`.
+> This document is kept for historical context only.
+
+---
 
 **Role:** You are continuing work on the OpSolid Digital Card product. A previous Claude Code session took the product from "lead-form-only marketing page" to "live self-serve flow with Stripe checkout on a Hostinger VPS." Read this document fully, then execute the remaining work described in **§ 4. Your mission**. Use parallel agents aggressively — the work splits cleanly along 4–5 independent tracks.
 
