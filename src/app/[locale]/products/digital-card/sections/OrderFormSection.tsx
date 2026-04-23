@@ -52,7 +52,8 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
   const [logoPath, setLogoPath] = useState<string | null>(null);
   const [photoUploading, setPhotoUploading] = useState(false);
   const [logoUploading, setLogoUploading] = useState(false);
-  const [billingMode, setBillingMode] = useState<keyof typeof BillingMode>("ONE_TIME");
+  const [billingMode, setBillingMode] =
+    useState<keyof typeof BillingMode>("YEARLY");
   const [formState, setFormState] = useState<FormState>("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
@@ -74,9 +75,11 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
 
   const amountCents = useMemo(() => {
     if (!selectedTemplate) return 0;
-    return billingMode === "SUBSCRIPTION"
-      ? selectedTemplate.yearlyCents ?? selectedTemplate.oneTimeCents
-      : selectedTemplate.oneTimeCents;
+    if (billingMode === "MONTHLY")
+      return selectedTemplate.monthlyCents ?? selectedTemplate.oneTimeCents;
+    if (billingMode === "YEARLY")
+      return selectedTemplate.yearlyCents ?? selectedTemplate.oneTimeCents;
+    return selectedTemplate.oneTimeCents;
   }, [selectedTemplate, billingMode]);
 
   const handleFileUpload = async (
@@ -434,26 +437,42 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
               <legend className="text-heading-sm text-ink">
                 {L("billingSection", "Zahlungsmodell")}
               </legend>
-              <div className="grid gap-3 md:grid-cols-2">
+              <div className="grid gap-3 md:grid-cols-3">
+                {selectedTemplate.monthlyCents ? (
+                  <BillingTile
+                    active={billingMode === "MONTHLY"}
+                    onClick={() => setBillingMode("MONTHLY")}
+                    label={L("billingMonthly", "Monatlich")}
+                    priceLabel={`${formatEuro(selectedTemplate.monthlyCents)}/Mon.`}
+                    footer={L(
+                      "monthlyFooter",
+                      "Niedrige Einstiegshürde. Jederzeit kündbar."
+                    )}
+                  />
+                ) : null}
+                {selectedTemplate.yearlyCents ? (
+                  <BillingTile
+                    active={billingMode === "YEARLY"}
+                    onClick={() => setBillingMode("YEARLY")}
+                    label={L("billingYearly", "Jährlich")}
+                    badge={L("billingBestValue", "Beste Wahl")}
+                    priceLabel={`${formatEuro(selectedTemplate.yearlyCents)}/Jahr`}
+                    footer={L(
+                      "yearlyFooter",
+                      "~35 % Ersparnis vs. monatlich. Revisionen inkl."
+                    )}
+                  />
+                ) : null}
                 <BillingTile
                   active={billingMode === "ONE_TIME"}
                   onClick={() => setBillingMode("ONE_TIME")}
                   label={L("billingOneTime", "Einmalzahlung")}
                   priceLabel={formatEuro(selectedTemplate.oneTimeCents)}
-                  footer={L("oneTimeFooter", "Einmalig, Karte lebenslang gehostet.")}
+                  footer={L(
+                    "oneTimeFooter",
+                    "Lebenslang gehostet. Keine Verlängerung."
+                  )}
                 />
-                {selectedTemplate.yearlyCents ? (
-                  <BillingTile
-                    active={billingMode === "SUBSCRIPTION"}
-                    onClick={() => setBillingMode("SUBSCRIPTION")}
-                    label={L("billingSubscription", "Jahresabo")}
-                    priceLabel={`${formatEuro(selectedTemplate.yearlyCents)}/Jahr`}
-                    footer={L(
-                      "subscriptionFooter",
-                      "Inkludiert: Aktualisierungen + Änderungen."
-                    )}
-                  />
-                ) : null}
               </div>
             </fieldset>
 
@@ -471,7 +490,11 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
                 </p>
                 <p className="text-heading text-ink">
                   {formatEuro(amountCents)}
-                  {billingMode === "SUBSCRIPTION" ? " / Jahr" : ""}
+                  {billingMode === "MONTHLY"
+                    ? " / Mon."
+                    : billingMode === "YEARLY"
+                    ? " / Jahr"
+                    : ""}
                 </p>
               </div>
               <button
@@ -587,12 +610,14 @@ function BillingTile({
   active,
   onClick,
   label,
+  badge,
   priceLabel,
   footer,
 }: {
   active: boolean;
   onClick: () => void;
   label: string;
+  badge?: string;
   priceLabel: string;
   footer: string;
 }) {
@@ -600,14 +625,21 @@ function BillingTile({
     <button
       type="button"
       onClick={onClick}
-      className={`rounded-2xl border p-5 text-left transition-colors ${
+      className={`relative rounded-2xl border p-5 text-left transition-colors ${
         active
           ? "border-brand bg-white shadow-soft"
           : "border-neutral-200 bg-white hover:border-ink/40"
       }`}
     >
+      {badge && (
+        <span className="absolute -top-2.5 right-4 rounded-full bg-brand px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
+          {badge}
+        </span>
+      )}
       <span className="block text-heading-sm text-ink">{label}</span>
-      <span className="mt-1 block text-2xl font-semibold text-ink">{priceLabel}</span>
+      <span className="mt-1 block text-2xl font-semibold text-ink">
+        {priceLabel}
+      </span>
       <span className="mt-2 block text-xs text-ink/60">{footer}</span>
     </button>
   );

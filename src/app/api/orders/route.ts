@@ -30,13 +30,15 @@ export async function POST(req: NextRequest) {
 
   // Resolve the amount server-side (never trust the client).
   const amountCents =
-    data.billingMode === "SUBSCRIPTION"
-      ? template.yearlyCents ?? template.oneTimeCents
+    data.billingMode === "MONTHLY"
+      ? template.monthlyCents
+      : data.billingMode === "YEARLY"
+      ? template.yearlyCents
       : template.oneTimeCents;
 
-  if (data.billingMode === "SUBSCRIPTION" && !template.yearlyCents) {
+  if (data.billingMode !== "ONE_TIME" && !amountCents) {
     return NextResponse.json(
-      { error: "This template does not offer a subscription plan." },
+      { error: `This template does not offer a ${data.billingMode.toLowerCase()} plan.` },
       { status: 400 }
     );
   }
@@ -54,7 +56,7 @@ export async function POST(req: NextRequest) {
       photoPath: data.photoPath,
       logoPath: data.logoPath,
       billingMode: data.billingMode,
-      amountCents,
+      amountCents: amountCents!,
       currency: "EUR",
       locale: data.locale,
       status: OrderStatus.PENDING_PAYMENT,
@@ -72,14 +74,16 @@ export async function POST(req: NextRequest) {
   });
 
   const priceId =
-    data.billingMode === "SUBSCRIPTION"
+    data.billingMode === "MONTHLY"
+      ? template.stripeMonthlyPriceId
+      : data.billingMode === "YEARLY"
       ? template.stripeYearlyPriceId
       : template.stripeOneTimePriceId;
 
   try {
     const session = await createCheckoutSession({
       orderId: order.id,
-      amountCents,
+      amountCents: amountCents!,
       currency: "EUR",
       templateName: template.name,
       billingMode: data.billingMode,

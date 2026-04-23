@@ -66,6 +66,7 @@ async function main() {
     templateId: number;
     productId: string;
     oneTimePriceId: string;
+    monthlyPriceId: string;
     yearlyPriceId: string;
   }> = [];
 
@@ -95,60 +96,59 @@ async function main() {
 
     // Pull existing prices for this product so we don't dup them on re-run.
     const prices = await stripe.prices.list({ product: product.id, limit: 20 });
-    const oneTime =
+
+    const findPrice = (
+      type: "one_time" | "recurring",
+      amount: number,
+      interval?: "month" | "year"
+    ) =>
       prices.data.find(
         (p) =>
-          p.type === "one_time" &&
-          p.unit_amount === t.oneTimeCents &&
-          p.currency === "eur"
+          p.type === type &&
+          p.unit_amount === amount &&
+          p.currency === "eur" &&
+          (type === "one_time" ? true : p.recurring?.interval === interval)
       ) ?? null;
-    const yearly =
-      t.yearlyCents
-        ? prices.data.find(
-            (p) =>
-              p.type === "recurring" &&
-              p.recurring?.interval === "year" &&
-              p.unit_amount === t.yearlyCents &&
-              p.currency === "eur"
-          ) ?? null
-        : null;
 
-    let oneTimePrice: Stripe.Price;
-    if (oneTime) {
-      console.log(`  = one-time €${t.oneTimeCents / 100} exists: ${oneTime.id}`);
-      oneTimePrice = oneTime;
-    } else {
-      oneTimePrice = await stripe.prices.create({
-        product: product.id,
-        unit_amount: t.oneTimeCents,
-        currency: "eur",
-        metadata: { opsolidTemplateId: metaKey, kind: "one-time" },
-      });
-      console.log(`  + one-time €${t.oneTimeCents / 100} created: ${oneTimePrice.id}`);
-    }
-
-    let yearlyPriceId = "";
-    if (t.yearlyCents) {
-      if (yearly) {
-        console.log(`  = yearly €${t.yearlyCents / 100}/y exists: ${yearly.id}`);
-        yearlyPriceId = yearly.id;
-      } else {
-        const yp = await stripe.prices.create({
-          product: product.id,
-          unit_amount: t.yearlyCents,
-          currency: "eur",
-          recurring: { interval: "year" },
-          metadata: { opsolidTemplateId: metaKey, kind: "yearly" },
-        });
-        console.log(`  + yearly €${t.yearlyCents / 100}/y created: ${yp.id}`);
-        yearlyPriceId = yp.id;
+    const ensurePrice = async (
+      kind: "monthly" | "yearly" | "one-time",
+      amount: number
+    ): Promise<string> => {
+      const type = kind === "one-time" ? "one_time" : "recurring";
+      const interval = kind === "monthly" ? "month" : kind === "yearly" ? "year" : undefined;
+      const existing = findPrice(type, amount, interval);
+      if (existing) {
+        console.log(
+          `  = ${kind} €${amount / 100}${interval ? "/" + interval[0] : ""} exists: ${existing.id}`
+        );
+        return existing.id;
       }
-    }
+      const created = await stripe.prices.create({
+        product: product.id,
+        unit_amount: amount,
+        currency: "eur",
+        ...(interval ? { recurring: { interval } } : {}),
+        metadata: { opsolidTemplateId: metaKey, kind },
+      });
+      console.log(
+        `  + ${kind} €${amount / 100}${interval ? "/" + interval[0] : ""} created: ${created.id}`
+      );
+      return created.id;
+    };
+
+    const oneTimePriceId = await ensurePrice("one-time", t.oneTimeCents);
+    const monthlyPriceId = t.monthlyCents
+      ? await ensurePrice("monthly", t.monthlyCents)
+      : "";
+    const yearlyPriceId = t.yearlyCents
+      ? await ensurePrice("yearly", t.yearlyCents)
+      : "";
 
     results.push({
       templateId: t.id,
       productId: product.id,
-      oneTimePriceId: oneTimePrice.id,
+      oneTimePriceId,
+      monthlyPriceId,
       yearlyPriceId,
     });
   }
@@ -186,28 +186,48 @@ async function main() {
   );
 
   if (writeBack) {
+    // Use a line-based approach (safer than one regex-of-doom on a whole file).
+    // For each `{ id: N, ... },` object, drop any stale stripe*PriceId lines
+    // and insert the fresh three right before the `isActive:` line.
     let src = readFileSync(CONFIG_PATH, "utf8");
+
     for (const r of results) {
-      const reStart = new RegExp(
-        String.raw`(\{\s*id:\s*${r.templateId},[\s\S]*?)(,\s*isActive:)`,
+      const blockRe = new RegExp(
+        String.raw`(\{\s*id:\s*${r.templateId},[\s\S]*?\n\s*\},)`,
         "m"
       );
-      const priceBlock =
-        `\n    stripeOneTimePriceId: "${r.oneTimePriceId}",` +
+      const match = src.match(blockRe);
+      if (!match) {
+        console.warn(`! could not locate block for template #${r.templateId}`);
+        continue;
+      }
+      const original = match[0];
+      // Strip any existing stripe*PriceId lines (handles re-runs cleanly).
+      const cleaned = original.replace(
+        /\n\s*stripe(?:OneTime|Monthly|Yearly)PriceId:\s*"[^"]*",?/g,
+        ""
+      );
+      const insertBefore = cleaned.match(/(\n\s*)(isActive:)/);
+      if (!insertBefore) {
+        console.warn(`! no isActive anchor for #${r.templateId}`);
+        continue;
+      }
+      const indent = insertBefore[1];
+      const priceLines =
+        `${indent}stripeOneTimePriceId: "${r.oneTimePriceId}",` +
+        (r.monthlyPriceId
+          ? `${indent}stripeMonthlyPriceId: "${r.monthlyPriceId}",`
+          : "") +
         (r.yearlyPriceId
-          ? `\n    stripeYearlyPriceId: "${r.yearlyPriceId}",`
+          ? `${indent}stripeYearlyPriceId: "${r.yearlyPriceId}",`
           : "");
-      // Avoid duplicate injections.
-      if (src.includes(`"${r.oneTimePriceId}"`)) continue;
-
-      src = src.replace(reStart, (_m, head, tail) => {
-        const cleanHead = head.replace(
-          /\n\s*stripe(?:OneTime|Yearly)PriceId:\s*"[^"]*",?/g,
-          ""
-        );
-        return `${cleanHead}${priceBlock}${tail}`;
-      });
+      const patched = cleaned.replace(
+        insertBefore[0],
+        `${priceLines}${insertBefore[0]}`
+      );
+      src = src.replace(original, patched);
     }
+
     writeFileSync(CONFIG_PATH, src);
     console.log(`✓ Patched ${CONFIG_PATH}`);
   } else {

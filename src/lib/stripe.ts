@@ -23,16 +23,16 @@ export interface CreateCheckoutSessionArgs {
   amountCents: number;
   currency: string;
   templateName: string;
-  billingMode: "ONE_TIME" | "SUBSCRIPTION";
+  billingMode: "ONE_TIME" | "MONTHLY" | "YEARLY";
   stripePriceId?: string | null;
   locale: "de" | "en" | "tr";
   customerEmail: string;
 }
 
 /**
- * Creates a Checkout Session for either a one-time payment or a yearly
- * subscription. Falls back to inline `price_data` if no Price ID is configured
- * yet (useful during dev before Stripe dashboard setup).
+ * Creates a Checkout Session for a one-time, monthly, or yearly purchase.
+ * Falls back to inline `price_data` if no Price ID is configured yet (useful
+ * during dev before Stripe dashboard setup).
  */
 export async function createCheckoutSession(
   args: CreateCheckoutSessionArgs
@@ -41,8 +41,14 @@ export async function createCheckoutSession(
   const successUrl = `${siteUrl}/${args.locale}/products/digital-card/thanks/${args.orderId}?session_id={CHECKOUT_SESSION_ID}`;
   const cancelUrl = `${siteUrl}/${args.locale}/products/digital-card#order`;
 
-  const isSubscription = args.billingMode === "SUBSCRIPTION";
+  const isSubscription = args.billingMode !== "ONE_TIME";
   const mode = isSubscription ? "subscription" : "payment";
+  const interval =
+    args.billingMode === "MONTHLY"
+      ? ("month" as const)
+      : args.billingMode === "YEARLY"
+      ? ("year" as const)
+      : undefined;
 
   const lineItem = args.stripePriceId
     ? { price: args.stripePriceId, quantity: 1 }
@@ -58,9 +64,7 @@ export async function createCheckoutSession(
               templateName: args.templateName,
             },
           },
-          ...(isSubscription
-            ? { recurring: { interval: "year" as const } }
-            : {}),
+          ...(interval ? { recurring: { interval } } : {}),
         },
       };
 

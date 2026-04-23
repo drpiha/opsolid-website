@@ -15,7 +15,8 @@ export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus];
 
 export const BillingMode = {
   ONE_TIME: "ONE_TIME",
-  SUBSCRIPTION: "SUBSCRIPTION",
+  MONTHLY: "MONTHLY",
+  YEARLY: "YEARLY",
 } as const;
 export type BillingMode = (typeof BillingMode)[keyof typeof BillingMode];
 
@@ -82,7 +83,11 @@ export type CardData = z.infer<typeof CardDataSchema>;
 
 export const OrderPayloadSchema = z.object({
   templateId: z.number().int().positive(),
-  billingMode: z.enum([BillingMode.ONE_TIME, BillingMode.SUBSCRIPTION]),
+  billingMode: z.enum([
+    BillingMode.ONE_TIME,
+    BillingMode.MONTHLY,
+    BillingMode.YEARLY,
+  ]),
   locale: z.enum(["de", "en", "tr"]).default("de"),
 
   contactName: z.string().trim().min(1).max(120),

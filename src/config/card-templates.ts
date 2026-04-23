@@ -6,9 +6,13 @@
 // React component lives under src/components/cards/templates/<componentKey>.tsx
 // and the thumbnail at /images/templates/card-<id>.png.
 //
-// Stripe Price IDs below are from the TEST account (see scripts/setup-stripe.ts).
-// When flipping to LIVE mode, re-run the setup script with the LIVE secret key
-// to create a parallel set of products + prices, then replace the IDs here.
+// Three billing modes per template:
+//   - monthly (recurring)     — lowest-friction entry
+//   - yearly  (recurring)     — ~35% discount vs monthly, the "sweet spot"
+//   - one-time (lifetime)     — pricey anchor, rare in market
+//
+// Stripe Price IDs are populated by scripts/setup-stripe.ts. Re-run it with
+// the LIVE secret key to get a parallel set for production.
 // =============================================================================
 
 export interface CardTemplateDef {
@@ -30,20 +34,31 @@ export interface CardTemplateDef {
     | "Template04"
     | "Template05";
   previewPath: string;
+  /** One-time "lifetime" purchase — no renewal. */
   oneTimeCents: number;
+  /** Monthly subscription (EUR). Null = not offered for this template. */
+  monthlyCents: number | null;
+  /** Yearly subscription (EUR). Null = not offered. */
   yearlyCents: number | null;
   stripeOneTimePriceId?: string;
+  stripeMonthlyPriceId?: string;
   stripeYearlyPriceId?: string;
   isActive: boolean;
   sortOrder: number;
 }
 
 export const cardTemplates: readonly CardTemplateDef[] = [
-  // Pricing rationale (2026-04-23): matches the lowest credible tier in the
-  // DBC market while staying viable in TR at the EUR/TRY ~38 rate.
-  // Comparison (yearly): Lemontaps ~€72, Blinq Pro ~€66, Popl Pro ~€47.
-  // We sit below all of them; one-time is rare in this category, so it's
-  // priced as the "own forever" anchor above the yearly.
+  // Pricing rationale (2026-04-23 rev2):
+  //
+  // Market floor references (researched 2026-04-23):
+  //   TR: vTAG ₺79/ay Standard (~€2), vTAG Pro+ ₺129/ay (~€3.4), Digi Card
+  //       Starter ₺299/ay (~€7.7). Physical NFC ₺500-600 one-time.
+  //   Global: Blinq Premium $5.89/mo, Lemontaps €6/mo, Popl ~€60/yr teams.
+  //
+  // We match Blinq / Lemontaps on monthly (global market floor) and sit
+  // ~40% below them on yearly — since our annual price anchors long-term.
+  // One-time is deliberately priced ~1.5× yearly so subscription is the
+  // obvious default.
   {
     id: 1,
     slug: "minimal-mono",
@@ -51,10 +66,12 @@ export const cardTemplates: readonly CardTemplateDef[] = [
     sectorHint: "general",
     componentKey: "Template01",
     previewPath: "/images/templates/card-01.png",
-    oneTimeCents: 2900, // €29 (~1.100 TL)
-    yearlyCents: 1900, // €19 / year (~720 TL)
-    stripeOneTimePriceId: "price_1TPLaH25H593hnObCutXteCI",
-    stripeYearlyPriceId: "price_1TPLaI25H593hnObLjPVh9M4",
+    monthlyCents: 500, // €5 / month  (~₺190)
+    yearlyCents: 3900, // €39 / year (~₺1.480) — 35% off monthly
+    oneTimeCents: 7900, // €79 lifetime (~₺3.000)
+    stripeOneTimePriceId: "price_1TPLkX25H593hnObbB3cDjRZ",
+    stripeMonthlyPriceId: "price_1TPLkX25H593hnObFsuYfkwG",
+    stripeYearlyPriceId: "price_1TPLkX25H593hnObhWn3obfm",
     isActive: true,
     sortOrder: 1,
   },
@@ -65,10 +82,12 @@ export const cardTemplates: readonly CardTemplateDef[] = [
     sectorHint: "creator",
     componentKey: "Template02",
     previewPath: "/images/templates/card-02.png",
-    oneTimeCents: 3900, // €39
-    yearlyCents: 2400, // €24 / year
-    stripeOneTimePriceId: "price_1TPLaI25H593hnObqLsPQUku",
-    stripeYearlyPriceId: "price_1TPLaJ25H593hnObGTW9aPBC",
+    monthlyCents: 600, // €6 / month
+    yearlyCents: 4900, // €49 / year
+    oneTimeCents: 9900, // €99 lifetime
+    stripeOneTimePriceId: "price_1TPLkY25H593hnObMOVYfp1B",
+    stripeMonthlyPriceId: "price_1TPLkY25H593hnObd5Q7nkuA",
+    stripeYearlyPriceId: "price_1TPLkY25H593hnObrtlEaUmW",
     isActive: true,
     sortOrder: 2,
   },
@@ -79,10 +98,12 @@ export const cardTemplates: readonly CardTemplateDef[] = [
     sectorHint: "realEstate",
     componentKey: "Template03",
     previewPath: "/images/templates/card-03.png",
-    oneTimeCents: 4900, // €49  (premium — real-estate buyer)
-    yearlyCents: 2900, // €29 / year
-    stripeOneTimePriceId: "price_1TPLaJ25H593hnObjNY6xDfE",
-    stripeYearlyPriceId: "price_1TPLaK25H593hnObLsTVic9j",
+    monthlyCents: 700, // €7 / month   (premium — real-estate buyer)
+    yearlyCents: 5900, // €59 / year
+    oneTimeCents: 12900, // €129 lifetime
+    stripeOneTimePriceId: "price_1TPLkZ25H593hnObjnIT7vxk",
+    stripeMonthlyPriceId: "price_1TPLkZ25H593hnObZUdrkDxI",
+    stripeYearlyPriceId: "price_1TPLkZ25H593hnOb6qOoofB1",
     isActive: true,
     sortOrder: 3,
   },
@@ -93,10 +114,12 @@ export const cardTemplates: readonly CardTemplateDef[] = [
     sectorHint: "salon",
     componentKey: "Template04",
     previewPath: "/images/templates/card-04.png",
-    oneTimeCents: 3900, // €39
-    yearlyCents: 2400,
-    stripeOneTimePriceId: "price_1TPLaK25H593hnObcYJKTL3X",
-    stripeYearlyPriceId: "price_1TPLaL25H593hnOb31kNJvFq",
+    monthlyCents: 600,
+    yearlyCents: 4900,
+    oneTimeCents: 9900,
+    stripeOneTimePriceId: "price_1TPLka25H593hnObJmK5wAeF",
+    stripeMonthlyPriceId: "price_1TPLka25H593hnObfAyNuZ0d",
+    stripeYearlyPriceId: "price_1TPLka25H593hnObXq3wHwq0",
     isActive: true,
     sortOrder: 4,
   },
@@ -107,10 +130,12 @@ export const cardTemplates: readonly CardTemplateDef[] = [
     sectorHint: "restaurant",
     componentKey: "Template05",
     previewPath: "/images/templates/card-05.png",
-    oneTimeCents: 3900, // €39
-    yearlyCents: 2400,
-    stripeOneTimePriceId: "price_1TPLaL25H593hnObS0T81ycc",
-    stripeYearlyPriceId: "price_1TPLaM25H593hnObdoEQvkvU",
+    monthlyCents: 600,
+    yearlyCents: 4900,
+    oneTimeCents: 9900,
+    stripeOneTimePriceId: "price_1TPLkb25H593hnObAB5WaiHB",
+    stripeMonthlyPriceId: "price_1TPLkb25H593hnObuLNC7kEz",
+    stripeYearlyPriceId: "price_1TPLkb25H593hnOb6U92Tq4k",
     isActive: true,
     sortOrder: 5,
   },
