@@ -1,53 +1,89 @@
 import { NextRequest, NextResponse } from "next/server";
 import type Stripe from "stripe";
+import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/prisma";
 import { verifyWebhookSignature } from "@/lib/stripe";
 import { OrderStatus } from "@/lib/validation";
 import { notifyOrderEvent } from "@/lib/notifications";
+import { sendCustomerEmail } from "@/lib/email/send";
+import { normalizeLocale } from "@/lib/email/shell";
+import {
+  renderConfirmationHtml,
+  renderConfirmationText,
+  confirmationSubject,
+} from "@/lib/email/templates/confirmation";
+import {
+  renderCancellationHtml,
+  renderCancellationText,
+  cancellationSubject,
+} from "@/lib/email/templates/cancellation";
+import { getTemplateById } from "@/config/card-templates";
 
 export const runtime = "nodejs";
 
 export async function POST(req: NextRequest) {
-  const rawBody = await req.text();
-  const signature = req.headers.get("stripe-signature") ?? "";
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
-
-  if (!webhookSecret) {
-    console.error("[stripe webhook] STRIPE_WEBHOOK_SECRET not set");
-    return NextResponse.json({ error: "Webhook not configured" }, { status: 500 });
-  }
-
-  let event: Stripe.Event;
   try {
-    event = verifyWebhookSignature(rawBody, signature, webhookSecret);
-  } catch (error) {
-    console.error("[stripe webhook] signature verify failed:", error);
-    return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
-  }
+    const rawBody = await req.text();
+    const signature = req.headers.get("stripe-signature") ?? "";
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-  try {
-    switch (event.type) {
-      case "checkout.session.completed": {
-        const session = event.data.object as Stripe.Checkout.Session;
-        await handleCheckoutCompleted(session);
-        break;
-      }
-      case "customer.subscription.updated":
-      case "customer.subscription.deleted": {
-        const sub = event.data.object as Stripe.Subscription;
-        await handleSubscriptionUpdated(sub);
-        break;
-      }
-      default:
-        // Other events are ignored for now.
-        break;
+    if (!webhookSecret) {
+      console.error("[stripe webhook] STRIPE_WEBHOOK_SECRET not set");
+      Sentry.captureMessage("Stripe webhook secret missing", {
+        level: "error",
+        tags: { area: "stripe-webhook" },
+      });
+      return NextResponse.json({ error: "Webhook not configured" }, { status: 500 });
     }
-  } catch (error) {
-    console.error(`[stripe webhook] handler error for ${event.type}:`, error);
-    return NextResponse.json({ error: "Handler failed" }, { status: 500 });
-  }
 
-  return NextResponse.json({ received: true });
+    let event: Stripe.Event;
+    try {
+      event = verifyWebhookSignature(rawBody, signature, webhookSecret);
+    } catch (error) {
+      console.error("[stripe webhook] signature verify failed:", error);
+      Sentry.captureException(error, {
+        tags: { area: "stripe-webhook", step: "signature" },
+      });
+      return NextResponse.json({ error: "Invalid signature" }, { status: 401 });
+    }
+
+    try {
+      switch (event.type) {
+        case "checkout.session.completed": {
+          const session = event.data.object as Stripe.Checkout.Session;
+          await handleCheckoutCompleted(session);
+          break;
+        }
+        case "customer.subscription.updated":
+        case "customer.subscription.deleted": {
+          const sub = event.data.object as Stripe.Subscription;
+          await handleSubscriptionUpdated(sub);
+          break;
+        }
+        default:
+          // Other events are ignored for now.
+          break;
+      }
+    } catch (error) {
+      console.error(`[stripe webhook] handler error for ${event.type}:`, error);
+      Sentry.captureException(error, {
+        tags: { area: "stripe-webhook", step: "handler", eventType: event.type },
+      });
+      // Return 500 so Stripe retries — business-critical events must not be
+      // silently dropped. Notification-only failures are swallowed deeper in
+      // the handler (see handleCheckoutCompleted) so we still ack Stripe when
+      // the DB transition succeeded but SMTP/Telegram didn't.
+      return NextResponse.json({ error: "Handler failed" }, { status: 500 });
+    }
+
+    return NextResponse.json({ received: true });
+  } catch (error) {
+    // Catch-all: anything above throwing before Stripe handler also surfaces.
+    Sentry.captureException(error, {
+      tags: { area: "stripe-webhook", step: "outer" },
+    });
+    return NextResponse.json({ error: "Webhook failed" }, { status: 500 });
+  }
 }
 
 async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
@@ -143,8 +179,39 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     event: "awaiting_design",
   }).catch((e) => console.error("[stripe webhook] notification error:", e));
 
-  // TODO(track-B): send "designer working" email to the customer here,
-  // reusing the editToken for the eventual self-service edit link.
+  // Customer "designer working" email. Logs and swallows errors — the webhook
+  // must ack Stripe quickly regardless of SMTP outcomes.
+  try {
+    const locale = normalizeLocale(order.locale);
+    const template = getTemplateById(order.templateId);
+    const confirmInput = {
+      orderId: order.id,
+      orderNumber: order.orderNumber,
+      contactName: order.contactName,
+      templateName: template?.name ?? `Template #${order.templateId}`,
+      billingMode: order.billingMode,
+      amountCents: order.amountCents,
+      currency: order.currency,
+      editToken: order.editToken ?? "",
+    };
+    const result = await sendCustomerEmail({
+      to: order.contactEmail,
+      subject: confirmationSubject(confirmInput, locale),
+      html: renderConfirmationHtml(confirmInput, locale),
+      text: renderConfirmationText(confirmInput, locale),
+    });
+    if (!result.skipped) {
+      console.log(
+        `[stripe webhook] confirmation email sent to ${order.contactEmail} (${result.messageId ?? "no-id"})`
+      );
+    }
+  } catch (err) {
+    console.error("[stripe webhook] confirmation email failed:", err);
+    Sentry.captureException(err, {
+      tags: { area: "customer-email", template: "confirmation" },
+      extra: { orderId: order.id, orderNumber: order.orderNumber },
+    });
+  }
 }
 
 async function handleSubscriptionUpdated(sub: Stripe.Subscription) {
@@ -193,5 +260,34 @@ async function handleSubscriptionUpdated(sub: Stripe.Subscription) {
         note: `Subscription canceled (${sub.id})`,
       },
     });
+
+    // Customer cancellation email — log/swallow errors.
+    try {
+      const locale = normalizeLocale(order.locale);
+      const cancelInput = {
+        orderId: order.id,
+        orderNumber: order.orderNumber,
+        contactName: order.contactName,
+        editToken: order.editToken ?? "",
+        accessThrough: new Date(periodEndSec * 1000).toISOString(),
+      };
+      const result = await sendCustomerEmail({
+        to: order.contactEmail,
+        subject: cancellationSubject(cancelInput, locale),
+        html: renderCancellationHtml(cancelInput, locale),
+        text: renderCancellationText(cancelInput, locale),
+      });
+      if (!result.skipped) {
+        console.log(
+          `[stripe webhook] cancellation email sent to ${order.contactEmail} (${result.messageId ?? "no-id"})`
+        );
+      }
+    } catch (err) {
+      console.error("[stripe webhook] cancellation email failed:", err);
+      Sentry.captureException(err, {
+        tags: { area: "customer-email", template: "cancellation" },
+        extra: { orderId: order.id, orderNumber: order.orderNumber },
+      });
+    }
   }
 }

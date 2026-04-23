@@ -39,3 +39,10 @@ next-env.d.ts
 
 .env
 src/generated/
+
+# Operator-local secrets (never commit)
+.opsolid-deploy-secrets
+.opsolid-smtp
+.stripe-token
+.claude.json
+.transfer/

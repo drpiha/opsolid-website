@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
-import { OrderStatus } from "@/lib/validation";
+import {
+  markContactedAction,
+  cancelOrderAction,
+} from "@/lib/order-actions";
 
 export const runtime = "nodejs";
 
@@ -28,47 +30,24 @@ export async function PATCH(
     return NextResponse.json({ error: "Missing action" }, { status: 400 });
   }
 
-  const order = await prisma.cardOrder.findUnique({ where: { id } });
-  if (!order) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
-  }
-
   switch (body.action) {
     case "mark-contacted": {
-      const now = new Date();
-      await prisma.cardOrder.update({
-        where: { id },
-        data: { contactedAt: now, contactedByNote: body.note ?? null },
+      const result = await markContactedAction(id, {
+        note: body.note,
+        actor: "admin",
       });
-      await prisma.orderStatusHistory.create({
-        data: {
-          orderId: id,
-          fromStatus: order.status,
-          toStatus: order.status,
-          actor: "admin",
-          note: `Contacted. ${body.note ?? ""}`.trim(),
-        },
-      });
-      return NextResponse.json({ ok: true });
+      return result.ok
+        ? NextResponse.json({ ok: true })
+        : NextResponse.json({ error: result.error }, { status: result.status });
     }
     case "cancel": {
-      if (order.status === OrderStatus.CANCELLED) {
-        return NextResponse.json({ ok: true });
-      }
-      await prisma.cardOrder.update({
-        where: { id },
-        data: { status: OrderStatus.CANCELLED },
+      const result = await cancelOrderAction(id, {
+        note: body.note,
+        actor: "admin",
       });
-      await prisma.orderStatusHistory.create({
-        data: {
-          orderId: id,
-          fromStatus: order.status,
-          toStatus: OrderStatus.CANCELLED,
-          actor: "admin",
-          note: body.note ?? "Manually cancelled",
-        },
-      });
-      return NextResponse.json({ ok: true });
+      return result.ok
+        ? NextResponse.json({ ok: true })
+        : NextResponse.json({ error: result.error }, { status: result.status });
     }
     default:
       return NextResponse.json({ error: "Unknown action" }, { status: 400 });
