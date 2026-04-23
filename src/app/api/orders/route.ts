@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { OrderPayloadSchema, OrderStatus } from "@/lib/validation";
@@ -60,6 +61,8 @@ export async function POST(req: NextRequest) {
       currency: "EUR",
       locale: data.locale,
       status: OrderStatus.PENDING_PAYMENT,
+      // Track D consumes this to let customers edit from /card/edit/[token].
+      editToken: crypto.randomUUID(),
     },
   });
 

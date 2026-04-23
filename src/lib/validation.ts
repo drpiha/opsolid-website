@@ -7,6 +7,7 @@ import { z } from "zod";
 export const OrderStatus = {
   PENDING_PAYMENT: "PENDING_PAYMENT",
   PAID: "PAID",
+  AWAITING_DESIGN: "AWAITING_DESIGN",
   PUBLISHED: "PUBLISHED",
   CANCELLED: "CANCELLED",
   REFUNDED: "REFUNDED",
@@ -143,6 +144,7 @@ export const AdminStatusUpdateSchema = z.object({
   status: z.enum([
     OrderStatus.PENDING_PAYMENT,
     OrderStatus.PAID,
+    OrderStatus.AWAITING_DESIGN,
     OrderStatus.PUBLISHED,
     OrderStatus.CANCELLED,
     OrderStatus.REFUNDED,

@@ -39,26 +39,37 @@ export default async function AdminOrdersPage({ searchParams }: PageProps) {
     );
   }
 
-  const [callbackOrders, activeOrders, pendingOrders] = await Promise.all([
-    prisma.cardOrder.findMany({
-      where: { callMeBack: true, contactedAt: null, status: "PUBLISHED" },
-      orderBy: { createdAt: "desc" },
-      take: 200,
-    }),
-    prisma.cardOrder.findMany({
-      where: { status: "PUBLISHED" },
-      orderBy: { createdAt: "desc" },
-      take: 100,
-    }),
-    prisma.cardOrder.findMany({
-      where: { status: { in: ["PENDING_PAYMENT", "PAID"] } },
-      orderBy: { createdAt: "desc" },
-      take: 100,
-    }),
-  ]);
+  const [callbackOrders, designOrders, activeOrders, pendingOrders] =
+    await Promise.all([
+      prisma.cardOrder.findMany({
+        where: {
+          callMeBack: true,
+          contactedAt: null,
+          status: { in: ["AWAITING_DESIGN", "PUBLISHED"] },
+        },
+        orderBy: { createdAt: "desc" },
+        take: 200,
+      }),
+      prisma.cardOrder.findMany({
+        where: { status: "AWAITING_DESIGN" },
+        orderBy: { createdAt: "desc" },
+        take: 100,
+      }),
+      prisma.cardOrder.findMany({
+        where: { status: "PUBLISHED" },
+        orderBy: { createdAt: "desc" },
+        take: 100,
+      }),
+      prisma.cardOrder.findMany({
+        where: { status: "PENDING_PAYMENT" },
+        orderBy: { createdAt: "desc" },
+        take: 100,
+      }),
+    ]);
 
   const tabs = [
     { key: "callback", label: `Call-me-back (${callbackOrders.length})` },
+    { key: "design", label: `In design (${designOrders.length})` },
     { key: "active", label: `Active (${activeOrders.length})` },
     { key: "pending", label: `Pending (${pendingOrders.length})` },
   ] as const;
@@ -67,6 +78,8 @@ export default async function AdminOrdersPage({ searchParams }: PageProps) {
   const rows =
     active.key === "callback"
       ? callbackOrders
+      : active.key === "design"
+      ? designOrders
       : active.key === "active"
       ? activeOrders
       : pendingOrders;

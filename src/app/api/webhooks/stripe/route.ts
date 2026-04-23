@@ -3,7 +3,6 @@ import type Stripe from "stripe";
 import { prisma } from "@/lib/prisma";
 import { verifyWebhookSignature } from "@/lib/stripe";
 import { OrderStatus } from "@/lib/validation";
-import { buildSlug } from "@/lib/slug";
 import { notifyOrderEvent } from "@/lib/notifications";
 
 export const runtime = "nodejs";
@@ -65,37 +64,38 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     console.warn("[stripe webhook] order not found", orderId);
     return;
   }
-  if (order.status === "PUBLISHED") return; // idempotent
-
-  // Generate a unique slug (retry if collision — very rare with random suffix).
-  let slug = order.slug;
-  if (!slug) {
-    for (let i = 0; i < 5; i++) {
-      const candidate = buildSlug(order.contactName, order.id);
-      const conflict = await prisma.cardOrder.findUnique({
-        where: { slug: candidate },
-        select: { id: true },
-      });
-      if (!conflict) {
-        slug = candidate;
-        break;
-      }
-    }
+  // Idempotent: anything past PAID has already processed this webhook.
+  if (
+    order.status === OrderStatus.AWAITING_DESIGN ||
+    order.status === OrderStatus.PUBLISHED ||
+    order.status === OrderStatus.PAID
+  ) {
+    return;
   }
 
+  const now = new Date();
+
+  // Stamp payment metadata + transition PENDING_PAYMENT -> PAID. We don't
+  // generate a slug here — the designer does hand-review first, slug is
+  // assigned at the publish endpoint.
   await prisma.cardOrder.update({
     where: { id: orderId },
     data: {
-      status: OrderStatus.PUBLISHED,
-      slug: slug,
+      status: OrderStatus.PAID,
+      paidAt: now,
+      stripeSessionId: order.stripeSessionId ?? session.id,
       stripePaymentIntentId:
         typeof session.payment_intent === "string"
           ? session.payment_intent
-          : null,
+          : order.stripePaymentIntentId,
       stripeSubscriptionId:
-        typeof session.subscription === "string" ? session.subscription : null,
+        typeof session.subscription === "string"
+          ? session.subscription
+          : order.stripeSubscriptionId,
       stripeCustomerId:
-        typeof session.customer === "string" ? session.customer : null,
+        typeof session.customer === "string"
+          ? session.customer
+          : order.stripeCustomerId,
     },
   });
 
@@ -103,13 +103,33 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     data: {
       orderId: orderId,
       fromStatus: order.status,
-      toStatus: OrderStatus.PUBLISHED,
+      toStatus: OrderStatus.PAID,
       actor: "stripe",
       note: `Checkout completed (${session.id})`,
     },
   });
 
-  // Fire notifications (non-blocking, silent failures).
+  // Immediately hand off to the designer queue.
+  await prisma.cardOrder.update({
+    where: { id: orderId },
+    data: {
+      status: OrderStatus.AWAITING_DESIGN,
+      awaitingDesignAt: now,
+    },
+  });
+
+  await prisma.orderStatusHistory.create({
+    data: {
+      orderId: orderId,
+      fromStatus: OrderStatus.PAID,
+      toStatus: OrderStatus.AWAITING_DESIGN,
+      actor: "system",
+      note: "Queued for hand-designed review (48h SLA).",
+    },
+  });
+
+  // Fire notifications (non-blocking, silent failures). Prefer the
+  // awaiting_design event so admin sees "ready for design review".
   notifyOrderEvent({
     orderId: order.id,
     orderNumber: order.orderNumber,
@@ -119,9 +139,12 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     callMeBack: order.callMeBack,
     amountCents: order.amountCents,
     billingMode: order.billingMode,
-    slug: slug ?? null,
-    event: "paid",
+    slug: null,
+    event: "awaiting_design",
   }).catch((e) => console.error("[stripe webhook] notification error:", e));
+
+  // TODO(track-B): send "designer working" email to the customer here,
+  // reusing the editToken for the eventual self-service edit link.
 }
 
 async function handleSubscriptionUpdated(sub: Stripe.Subscription) {

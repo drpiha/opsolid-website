@@ -28,16 +28,19 @@ export default async function ThanksPage({ params }: PageProps) {
   const qrDataUrl = cardUrl ? await QRCode.toDataURL(cardUrl, { width: 320, margin: 1 }) : null;
 
   const isPublished = order.status === "PUBLISHED";
-  const isPending = order.status === "PENDING_PAYMENT" || order.status === "PAID";
+  const isAwaitingDesign =
+    order.status === "PENDING_PAYMENT" ||
+    order.status === "PAID" ||
+    order.status === "AWAITING_DESIGN";
 
   const copy = {
     de: {
       title: isPublished
         ? "Bereit. Ihre Karte ist live."
-        : "Zahlung erhalten — wir veröffentlichen gleich.",
+        : "Zahlung bestätigt — unser Designer fertigt Ihre Karte an.",
       subtitle: isPublished
         ? "Teilen Sie den Link oder den QR-Code."
-        : "Die Veröffentlichung dauert nur wenige Sekunden — aktualisieren Sie diese Seite gleich.",
+        : "Wir gestalten Ihre Karte von Hand. Lieferung innerhalb von 48 Stunden per E-Mail.",
       orderLabel: "Bestellnummer",
       shareLabel: "Ihr Link",
       qrHint: "QR-Code zum Teilen oder Drucken",
@@ -47,10 +50,10 @@ export default async function ThanksPage({ params }: PageProps) {
     en: {
       title: isPublished
         ? "Ready. Your card is live."
-        : "Payment received — publishing your card …",
+        : "Payment confirmed — our designer is hand-crafting your card.",
       subtitle: isPublished
         ? "Share the link or the QR code."
-        : "Publishing takes a few seconds — refresh this page in a moment.",
+        : "We design your card by hand. You'll receive the link by email within 48 hours.",
       orderLabel: "Order number",
       shareLabel: "Your link",
       qrHint: "QR code to share or print",
@@ -60,10 +63,10 @@ export default async function ThanksPage({ params }: PageProps) {
     tr: {
       title: isPublished
         ? "Hazır. Kartınız yayında."
-        : "Ödeme alındı — kart yayına alınıyor …",
+        : "Ödeme alındı — tasarımcımız kartınızı el ile hazırlıyor.",
       subtitle: isPublished
         ? "Linki veya QR kodunu paylaşın."
-        : "Yayın birkaç saniye sürer — birazdan sayfayı yenileyin.",
+        : "Kartınızı elle tasarlıyoruz. 48 saat içinde e-posta ile link göndeririz.",
       orderLabel: "Sipariş no",
       shareLabel: "Linkiniz",
       qrHint: "Paylaşmak veya basmak için QR kod",
@@ -122,11 +125,9 @@ export default async function ThanksPage({ params }: PageProps) {
           </div>
         )}
 
-        {isPending && (
+        {isAwaitingDesign && (
           <div className="mt-10 rounded-3xl border border-neutral-200 bg-white p-6 shadow-soft">
-            <p className="text-sm text-ink/70">
-              {L.subtitle}
-            </p>
+            <p className="text-sm text-ink/70">{L.subtitle}</p>
           </div>
         )}
       </div>

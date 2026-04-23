@@ -206,7 +206,42 @@ export interface OrderEventInfo {
   amountCents: number;
   billingMode: string;
   slug: string | null;
-  event: "paid" | "created";
+  event: "paid" | "awaiting_design" | "published" | "created";
+}
+
+function subjectPrefix(event: OrderEventInfo["event"]): string {
+  switch (event) {
+    case "awaiting_design":
+      return "[TASARIM]";
+    case "published":
+      return "[YAYIN]";
+    case "paid":
+      return "[PAID]";
+    case "created":
+    default:
+      return "[ORDER]";
+  }
+}
+
+function headlineLabel(event: OrderEventInfo["event"]): string {
+  switch (event) {
+    case "awaiting_design":
+      return "Ready for design review";
+    case "published":
+      return "Card published";
+    case "paid":
+      return "Payment received";
+    case "created":
+    default:
+      return "New order";
+  }
+}
+
+function siteBase(): string {
+  return (
+    process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
+    "https://opsolid.de"
+  );
 }
 
 function formatEuroCents(cents: number): string {
@@ -223,14 +258,32 @@ async function sendOrderTelegram(info: OrderEventInfo): Promise<void> {
   if (!token || !chatId) return;
 
   const flag = info.callMeBack ? "📞 [CALL-ME-BACK]" : "✅";
+  const headline =
+    info.event === "awaiting_design"
+      ? "Ready for design review"
+      : info.event === "published"
+      ? "Card published"
+      : info.event === "paid"
+      ? "Payment received"
+      : "New DBC order";
+  const base = siteBase();
+  const adminUrl = `${base}/admin/orders/${info.orderId}`;
   const lines = [
-    `${flag} *New DBC order #${info.orderNumber}*`,
+    `${flag} *${escapeMarkdown(headline)} — #${info.orderNumber}*`,
     ``,
     `👤 *Name:* ${escapeMarkdown(info.contactName)}`,
     `📧 *E-Mail:* ${escapeMarkdown(info.contactEmail)}`,
     `📱 *Phone:* ${escapeMarkdown(info.contactPhone)}`,
     `💶 *Amount:* ${formatEuroCents(info.amountCents)} (${info.billingMode})`,
-    info.slug ? `🔗 *URL:* opsolid.de/c/${info.slug}` : "",
+    info.event === "awaiting_design"
+      ? `🎨 *Admin:* ${escapeMarkdown(adminUrl)}\n⏱ *SLA:* 48h hand-designed delivery`
+      : "",
+    info.event === "published" && info.slug
+      ? `🔗 *URL:* opsolid.de/c/${escapeMarkdown(info.slug)}`
+      : "",
+    info.event === "paid" && info.slug
+      ? `🔗 *URL:* opsolid.de/c/${escapeMarkdown(info.slug)}`
+      : "",
   ].filter(Boolean);
 
   const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
@@ -251,13 +304,20 @@ async function sendOrderWhatsApp(info: OrderEventInfo): Promise<void> {
   if (!phone || !apiKey) return;
 
   const flag = info.callMeBack ? "[ARA] " : "";
+  const prefix = subjectPrefix(info.event);
   const message = [
-    `${flag}DBC Order #${info.orderNumber}`,
+    `${flag}${prefix} DBC #${info.orderNumber} — ${headlineLabel(info.event)}`,
     `Name: ${info.contactName}`,
     `Phone: ${info.contactPhone}`,
     `Email: ${info.contactEmail}`,
     `Amount: ${formatEuroCents(info.amountCents)} (${info.billingMode})`,
-    info.slug ? `URL: opsolid.de/c/${info.slug}` : "",
+    info.event === "awaiting_design"
+      ? `Admin: ${siteBase()}/admin/orders/${info.orderId}`
+      : "",
+    info.event === "awaiting_design" ? "SLA: 48h hand-designed delivery" : "",
+    (info.event === "published" || info.event === "paid") && info.slug
+      ? `URL: opsolid.de/c/${info.slug}`
+      : "",
   ]
     .filter(Boolean)
     .join("\n");
@@ -282,18 +342,28 @@ async function sendOrderEmail(info: OrderEventInfo): Promise<void> {
     auth: { user: smtpUser, pass: smtpPass },
   });
 
-  const prefix = info.callMeBack ? "[ARA] " : "";
-  const subject = `${prefix}DBC Order #${info.orderNumber} — ${info.contactName}`;
+  const callFlag = info.callMeBack ? "[ARA] " : "";
+  const prefix = subjectPrefix(info.event);
+  const base = siteBase();
+  const subject = `${callFlag}${prefix} DBC #${info.orderNumber} — ${info.contactName}`;
   const text = [
-    `Order #${info.orderNumber}`,
+    `${headlineLabel(info.event)} — Order #${info.orderNumber}`,
     `Name: ${info.contactName}`,
     `Email: ${info.contactEmail}`,
     `Phone: ${info.contactPhone}`,
     `Call me back: ${info.callMeBack ? "YES" : "no"}`,
     `Amount: ${formatEuroCents(info.amountCents)} (${info.billingMode})`,
-    info.slug ? `Published URL: https://opsolid.de/c/${info.slug}` : "",
     "",
-    "Admin: https://opsolid.de/admin/orders",
+    info.event === "awaiting_design"
+      ? `Ready for design review. 48h hand-designed SLA.`
+      : "",
+    info.event === "awaiting_design"
+      ? `Admin: ${base}/admin/orders/${info.orderId}`
+      : "",
+    info.event === "published" && info.slug
+      ? `Published URL: ${base}/c/${info.slug}`
+      : "",
+    info.event !== "awaiting_design" ? `Admin: ${base}/admin/orders` : "",
   ]
     .filter(Boolean)
     .join("\n");

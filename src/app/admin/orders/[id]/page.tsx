@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { formatEuro, getTemplateById } from "@/config/card-templates";
 import { CardDataSchema } from "@/lib/validation";
+import { PublishAction } from "./PublishAction";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -63,6 +64,8 @@ export default async function OrderDetailPage({ params, searchParams }: PageProp
             className={`rounded-full px-3 py-1 text-xs font-mono uppercase tracking-wider ${
               order.status === "PUBLISHED"
                 ? "bg-brand/10 text-brand"
+                : order.status === "AWAITING_DESIGN"
+                ? "bg-amber/20 text-ink"
                 : order.status === "PENDING_PAYMENT"
                 ? "bg-neutral-200 text-ink/70"
                 : "bg-ink/10 text-ink"
@@ -71,6 +74,10 @@ export default async function OrderDetailPage({ params, searchParams }: PageProp
             {order.status}
           </span>
         </div>
+
+        {order.status === "AWAITING_DESIGN" && (
+          <PublishAction orderId={order.id} token={token} />
+        )}
 
         <p className="mt-2 text-ink/50">
           {new Date(order.createdAt).toLocaleString("de-DE", {
@@ -286,6 +293,14 @@ export default async function OrderDetailPage({ params, searchParams }: PageProp
                   value={new Date(order.subscription.cancelAt).toLocaleString("de-DE")}
                 />
               )}
+            </Panel>
+          )}
+
+          {order.designNotes && (
+            <Panel title="Designer notes (internal)" span>
+              <p className="whitespace-pre-wrap text-sm text-ink/80">
+                {order.designNotes}
+              </p>
             </Panel>
           )}
 
