@@ -1,128 +1,64 @@
-"use client";
-
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
-import { useLocale } from "@/context/LocaleContext";
 import { KineticMechanism } from "@/components/sections/hero/KineticMechanism";
-import { ArrowRight } from "lucide-react";
+import { Icon } from "@/components/shared/Icon";
 
 /**
- * A title line may contain a single *word* (wrapped in asterisks) rendered in
- * Instrument Serif italic with a copper gradient — the v2 signature editorial
- * move. Lines without a marker render normally.
+ * Homepage hero — verbatim port of the Claude Design v2 mock
+ * (opsolid-design-system/project/ui_kits/website/index.html).
+ * Copy, structure, and class names are 1:1 with the design.
  */
-function TitleLine({ line }: { line: string }) {
-  const parts = line.split(/(\*[^*]+\*)/g).filter(Boolean);
-  return (
-    <span className="block">
-      {parts.map((part, i) => {
-        if (part.startsWith("*") && part.endsWith("*")) {
-          return (
-            <span key={i} className="editorial">
-              {part.slice(1, -1)}
-            </span>
-          );
-        }
-        return <span key={i}>{part}</span>;
-      })}
-    </span>
-  );
-}
-
 export function Hero() {
-  const { t } = useLocale();
-  const hero = t.home.hero as {
-    editorial?: {
-      eyebrow?: string;
-      title?: readonly string[];
-      paragraph?: string;
-      primaryCta?: string;
-      secondaryCta?: string;
-    };
-    ratingPill?: string;
-    title?: readonly string[];
-    subtitle?: string;
-    subheadline?: string;
-    headline?: string;
-    primaryCta?: string;
-    secondaryCta?: string;
-    primaryCtaLabel?: string;
-    secondaryCtaLabel?: string;
-    primaryCtaHref?: string;
-    secondaryCtaHref?: string;
-  };
-  const editorial = hero.editorial;
-
-  const eyebrow =
-    editorial?.eyebrow ?? hero.ratingPill ?? "OPSOLID · AUTOMATION STUDIO";
-  const titleLines: readonly string[] =
-    editorial?.title && editorial.title.length > 0
-      ? editorial.title
-      : hero.title ?? [];
-  const lead = editorial?.paragraph ?? hero.subtitle ?? hero.subheadline;
-  const primaryLabel =
-    editorial?.primaryCta ?? hero.primaryCtaLabel ?? hero.primaryCta;
-  const secondaryLabel =
-    editorial?.secondaryCta ?? hero.secondaryCtaLabel ?? hero.secondaryCta;
-
   return (
-    <section className="os-hero" aria-labelledby="hero-title">
+    <section className="os-hero" data-screen-label="Hero">
       <div className="os-hero-inner">
-        {/* LEFT — editorial stack */}
-        <div className="os-hero-text">
+        <div>
           <div className="os-hero-meta">
-            <span className="meta meta-hot">{eyebrow}</span>
+            <span className="chip chip-hot">
+              <span className="chip-dot chip-dot-live" /> AUTOMATION STUDIO
+            </span>
+            <span className="meta">[ 01 / 04 ] HAMBURG · DE</span>
           </div>
-
-          <h1 id="hero-title" className="os-hero-title text-balance">
-            {titleLines.map((line, i) => (
-              <TitleLine key={i} line={line} />
-            ))}
+          <h1 className="os-hero-title">
+            Automation that <span className="editorial">actually</span>
+            <br />
+            runs your operations — not the other way round.
           </h1>
-
-          {lead && <p className="os-hero-lead text-pretty">{lead}</p>}
-
+          <p className="os-hero-lead">
+            OpSolid builds the systems your operations already pretend to have.
+            Workflow automation, systems integration, internal tools, and
+            AI-assisted processes for mid-sized teams. No rebuild of your stack.
+            No AI theater.
+          </p>
           <div className="os-hero-ctas">
-            <Link
-              href={hero.primaryCtaHref || "/contact"}
-              className="btn btn-primary btn-lg"
-            >
-              <span>{primaryLabel}</span>
-              <ArrowRight size={16} strokeWidth={2} />
+            <Link href="/contact" className="btn btn-primary btn-lg">
+              Book a discovery call <Icon name="arrow" size={18} />
             </Link>
-            <Link
-              href={hero.secondaryCtaHref || "/solutions"}
-              className="btn btn-ghost btn-lg"
-            >
-              {secondaryLabel}
+            <Link href="#capabilities" className="btn btn-ghost btn-lg">
+              See what OpSolid builds
             </Link>
           </div>
-
           <div className="os-hero-stats">
             <div>
               <div className="os-stat-num">
                 <span className="metallic-copper">42</span>
               </div>
-              <div className="os-stat-label">Workflows shipped</div>
+              <div className="os-stat-label">Workflows in production</div>
             </div>
             <div>
               <div className="os-stat-num">
                 <span className="metallic-copper">3.4M</span>
               </div>
-              <div className="os-stat-label">Events / mo</div>
+              <div className="os-stat-label">Events routed / month</div>
             </div>
             <div>
               <div className="os-stat-num">
-                <span className="metallic-copper">EU · DE</span>
+                <span className="metallic-copper">EU</span>
               </div>
-              <div className="os-stat-label">Hosting · data</div>
+              <div className="os-stat-label">Hosted in Frankfurt</div>
             </div>
           </div>
         </div>
-
-        {/* RIGHT — kinetic mechanism */}
-        <div className="os-hero-mech">
-          <KineticMechanism />
-        </div>
+        <KineticMechanism />
       </div>
     </section>
   );

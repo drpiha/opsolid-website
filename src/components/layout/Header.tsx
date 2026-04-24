@@ -1,44 +1,52 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { usePathname } from "next/navigation";
-import { Menu, X, Check } from "lucide-react";
 import { useLocale } from "@/context/LocaleContext";
-import { NAV_LINKS, SITE_CONFIG } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import type { Locale } from "@/content";
 
-const LOCALE_LABELS: Record<Locale, string> = { en: "EN", de: "DE", tr: "TR" };
-const LOCALE_NAMES: Record<Locale, string> = {
-  en: "English",
-  de: "Deutsch",
-  tr: "Türkçe",
-};
-
 /**
- * Copper brand mark — small embossed square that matches the design system's
- * panel recipe: copper gradient fill + inset rim + dark inner face + soft bloom.
+ * Verbatim port of the Claude Design SiteHeader mock
+ * (opsolid-design-system/project/ui_kits/website/components/Site.jsx).
+ * Links mapped to the real Next.js routes; language switch wired to the
+ * existing useLocale() context so EN · DE · TR actually cycle.
  */
-function BrandMark({ size = 24 }: { size?: number }) {
-  return (
-    <span
-      aria-hidden="true"
-      style={{ width: size, height: size }}
-      className="os-brand-mark"
-    />
-  );
-}
+const NAV_ITEMS: Array<{ key: string; label: string; href: string; match: RegExp }> = [
+  { key: "home", label: "Home", href: "/", match: /^\/(en|de|tr)?\/?$/ },
+  {
+    key: "voice",
+    label: "Voice Agent",
+    href: "/products/voice-agent",
+    match: /\/products\/voice-agent/,
+  },
+  {
+    key: "card",
+    label: "Digital Card",
+    href: "/products/digital-card",
+    match: /\/products\/digital-card/,
+  },
+  {
+    key: "kutasia",
+    label: "Kutasia",
+    href: "/products/kutasia",
+    match: /\/products\/kutasia/,
+  },
+  { key: "blog", label: "Journal", href: "/blog", match: /\/blog/ },
+  { key: "contact", label: "Contact", href: "/contact", match: /\/contact/ },
+];
+
+const LOCALE_LABELS: Record<Locale, string> = { en: "EN", de: "DE", tr: "TR" };
+const LOCALE_CYCLE: Record<Locale, Locale> = { en: "de", de: "tr", tr: "en" };
 
 export function Header() {
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [langOpen, setLangOpen] = useState(false);
   const pathname = usePathname();
-  const { locale, setLocale, t } = useLocale();
+  const { locale, setLocale } = useLocale();
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
 
   useEffect(() => {
     setIsMobileOpen(false);
-    setLangOpen(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -49,120 +57,78 @@ export function Header() {
     };
   }, [isMobileOpen]);
 
-  const navLabels: Record<string, string> = {
-    "/solutions": t.nav.solutions,
-    "/products": t.nav.products,
-    "/use-cases": t.nav.useCases,
-    "/blog": t.nav.blog,
-    "/about": t.nav.about,
-    "/contact": t.nav.contact,
-  };
-
   return (
     <header className="os-header safe-top" role="banner">
       <div className="os-header-inner">
-        {/* Brand */}
         <Link href="/" className="os-brand">
-          <BrandMark size={24} />
-          <span>{SITE_CONFIG.name}</span>
+          <span className="os-brand-mark" aria-hidden="true" />
+          OpSolid
         </Link>
 
-        {/* Desktop nav */}
         <nav className="os-nav" aria-label="Primary">
-          {NAV_LINKS.map((link) => {
-            const active = pathname === link.href;
+          {NAV_ITEMS.map((n) => {
+            const active = n.match.test(pathname || "");
             return (
               <Link
-                key={link.href}
-                href={link.href}
+                key={n.key}
+                href={n.href}
                 className={cn("os-nav-link", active && "is-active")}
               >
-                {navLabels[link.href] || link.label}
+                {n.label}
               </Link>
             );
           })}
         </nav>
 
-        {/* Right cluster — lang + CTA + mobile toggle */}
         <div className="os-header-right">
-          <div className="relative hidden md:block">
-            <button
-              onClick={() => setLangOpen(!langOpen)}
-              className="os-lang-switch"
-              aria-label="Change language"
-              aria-expanded={langOpen}
-            >
-              {LOCALE_LABELS[locale]}
-            </button>
-            {langOpen && (
-              <div
-                role="menu"
-                className="absolute right-0 top-full mt-3 min-w-[170px] panel overflow-hidden motion-safe:animate-fade-in"
+          <button
+            className="os-lang-switch"
+            onClick={() => setLocale(LOCALE_CYCLE[locale])}
+            aria-label={`Switch language (current: ${LOCALE_LABELS[locale]})`}
+          >
+            {(["en", "de", "tr"] as Locale[]).map((l, i) => (
+              <span
+                key={l}
+                style={{
+                  color: l === locale ? "var(--copper-300)" : undefined,
+                  fontWeight: l === locale ? 600 : undefined,
+                }}
               >
-                {(Object.keys(LOCALE_LABELS) as Locale[]).map((l) => (
-                  <button
-                    key={l}
-                    onClick={() => {
-                      setLocale(l);
-                      setLangOpen(false);
-                    }}
-                    role="menuitem"
-                    className={cn(
-                      "flex w-full items-center justify-between px-4 py-2.5 text-[13px] transition-colors",
-                      locale === l
-                        ? "text-ink-100 bg-white/[0.04] font-medium"
-                        : "text-ink-300 hover:text-ink-100 hover:bg-white/[0.03]"
-                    )}
-                  >
-                    <span>{LOCALE_NAMES[l]}</span>
-                    {locale === l ? (
-                      <Check size={14} className="text-copper-400" />
-                    ) : (
-                      <span className="text-[10px] font-medium tracking-[0.1em] text-ink-400 font-mono">
-                        {LOCALE_LABELS[l]}
-                      </span>
-                    )}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
+                {i > 0 && " · "}
+                {LOCALE_LABELS[l]}
+              </span>
+            ))}
+          </button>
           <Link
             href="/contact"
             className="btn btn-primary btn-sm hidden md:inline-flex"
+            style={{ padding: "7px 14px" }}
           >
-            {t.nav.cta}
+            Book discovery
           </Link>
 
-          {/* Mobile: lang cycle + menu toggle */}
-          <button
-            onClick={() => {
-              const next: Record<Locale, Locale> = { en: "de", de: "tr", tr: "en" };
-              setLocale(next[locale]);
-            }}
-            className="os-lang-switch md:hidden"
-            aria-label="Switch language"
-          >
-            {LOCALE_LABELS[locale]}
-          </button>
           <button
             onClick={() => setIsMobileOpen(!isMobileOpen)}
             className="os-lang-switch md:hidden"
-            style={{ padding: "6px 8px" }}
+            style={{ padding: "6px 10px" }}
             aria-label={isMobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMobileOpen}
           >
-            {isMobileOpen ? <X size={16} strokeWidth={2} /> : <Menu size={16} strokeWidth={2} />}
+            {isMobileOpen ? "✕" : "≡"}
           </button>
         </div>
       </div>
 
-      {/* Mobile sheet */}
       {isMobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-bg-0/95 backdrop-blur-xl md:hidden overflow-y-auto motion-safe:animate-fade-in"
-          style={{ height: "100dvh" }}
+          className="fixed inset-0 z-40 md:hidden overflow-y-auto motion-safe:animate-fade-in"
+          style={{
+            height: "100dvh",
+            background:
+              "linear-gradient(180deg, rgba(11,14,19,0.96) 0%, rgba(7,9,12,0.98) 100%)",
+            backdropFilter: "blur(18px)",
+            WebkitBackdropFilter: "blur(18px)",
+          }}
           role="dialog"
           aria-modal="true"
           aria-label="Mobile navigation"
@@ -175,39 +141,37 @@ export function Header() {
             }}
           >
             <ul className="flex flex-col">
-              {NAV_LINKS.map((link) => {
-                const active = pathname === link.href;
+              {NAV_ITEMS.map((n) => {
+                const active = n.match.test(pathname || "");
                 return (
                   <li
-                    key={link.href}
-                    className="border-b border-line-soft last:border-b-0"
+                    key={n.key}
+                    style={{ borderBottom: "1px dashed var(--line)" }}
+                    className="last:border-b-0"
                   >
                     <Link
-                      href={link.href}
-                      className={cn(
-                        "flex items-center justify-between py-5 font-display text-[1.75rem] font-medium tracking-[-0.024em] transition-colors",
-                        active
-                          ? "text-copper-300"
-                          : "text-ink-100 hover:text-copper-300"
-                      )}
+                      href={n.href}
+                      style={{
+                        fontFamily: "var(--font-display)",
+                        fontSize: "1.75rem",
+                        fontWeight: 500,
+                        letterSpacing: "-0.024em",
+                        color: active ? "var(--copper-300)" : "var(--ink-100)",
+                      }}
+                      className="flex items-center justify-between py-5 transition-colors"
                     >
-                      <span>{navLabels[link.href] || link.label}</span>
-                      {active && (
-                        <span
-                          aria-hidden="true"
-                          className="h-2 w-2 rounded-full bg-copper-400"
-                          style={{ boxShadow: "0 0 10px rgba(194,121,64,0.7)" }}
-                        />
-                      )}
+                      <span>{n.label}</span>
                     </Link>
                   </li>
                 );
               })}
             </ul>
-
             <div className="mt-10">
-              <Link href="/contact" className="btn btn-primary btn-lg w-full">
-                {t.nav.cta}
+              <Link
+                href="/contact"
+                className="btn btn-primary btn-lg w-full"
+              >
+                Book discovery
               </Link>
             </div>
           </div>
