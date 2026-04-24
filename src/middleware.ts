@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { LOCALES, DEFAULT_LOCALE, isLocale, type Locale } from "@/lib/i18n";
+import { getRetiredRedirectTarget } from "@/lib/redirects";
 
 const COOKIE_NAME = "NEXT_LOCALE";
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
@@ -41,6 +42,27 @@ export function middleware(req: NextRequest) {
   // Check if pathname already starts with a valid locale
   const firstSegment = pathname.split("/")[1];
   const hasLocale = isLocale(firstSegment);
+
+  // Retired-route 301 redirects. Checked before / after locale split so
+  // both /solutions and /en/solutions resolve to the right target with
+  // the locale prefix preserved.
+  const localeForRedirect = hasLocale ? (firstSegment as Locale) : detectLocale(req);
+  const pathWithoutLocale = hasLocale
+    ? pathname.slice(firstSegment.length + 1) || "/"
+    : pathname;
+  const retiredTarget = getRetiredRedirectTarget(pathWithoutLocale);
+  if (retiredTarget !== null) {
+    const url = req.nextUrl.clone();
+    url.pathname =
+      retiredTarget === "/" ? `/${localeForRedirect}` : `/${localeForRedirect}${retiredTarget}`;
+    const response = NextResponse.redirect(url, 301);
+    response.cookies.set(COOKIE_NAME, localeForRedirect, {
+      path: "/",
+      maxAge: COOKIE_MAX_AGE,
+      sameSite: "lax",
+    });
+    return response;
+  }
 
   if (!hasLocale) {
     const locale = detectLocale(req);

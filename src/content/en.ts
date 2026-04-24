@@ -3052,6 +3052,222 @@ export const content = {
       },
     },
   },
+
+  // ===========================================================================
+  // V2 DESIGN-SYSTEM CONTENT (Claude Design industrial-luxury port)
+  //
+  // All redesigned surfaces consume from `t.v2.*`. Keep this tree structurally
+  // identical across en.ts / de.ts / tr.ts. Headlines that carry the editorial
+  // italic signature move are expressed as { pre, italic, post } so each
+  // locale can choose its own natural italic word.
+  //
+  // Voice rules: third-person ("OpSolid builds…"), professional + convincing,
+  // no superlatives, no emoji, em-dashes as rhythm breaks. Technical tool
+  // names and trust-bank phrases (Hosted in Frankfurt, GDPR-native, No vendor
+  // lock-in, No US subprocessors) stay in English across all locales.
+  // ===========================================================================
+  v2: {
+    nav: {
+      home: "Home",
+      voiceAgent: "Voice Agent",
+      digitalCard: "Digital Card",
+      kutasia: "Kutasia",
+      journal: "Journal",
+      contact: "Contact",
+      cta: "Book discovery",
+    },
+
+    footer: {
+      tagline:
+        "Independent automation studio. Hamburg · Frankfurt. GDPR-native infrastructure, no vendor lock-in.",
+      chipLive: "FRA · DE",
+      chipLanguages: "EN · DE · TR",
+      cols: {
+        productsHeading: "Products",
+        servicesHeading: "Services",
+        studioHeading: "Studio",
+        legalHeading: "Legal",
+        services: {
+          workflow: "Workflow automation",
+          integration: "Systems integration",
+          internal: "Internal tools",
+          ai: "AI-assisted processes",
+        },
+        studio: {
+          journal: "Journal",
+          contact: "Contact",
+        },
+        legal: {
+          privacy: "Privacy",
+          imprint: "Imprint",
+        },
+      },
+      base: {
+        copyrightSuffix: "OpSolid UG · Hamburg, DE",
+        trustLine: "GDPR-native · Hosted in Frankfurt · No US subprocessors",
+      },
+    },
+
+    home: {
+      hero: {
+        metaChip: "AUTOMATION STUDIO",
+        metaLabel: "[ 01 / 04 ] HAMBURG · DE",
+        title: {
+          pre: "Automation that ",
+          italic: "actually",
+          post: " runs your operations — not the other way round.",
+        },
+        lead:
+          "OpSolid builds the systems your operations already pretend to have. Workflow automation, systems integration, internal tools, and AI-assisted processes for mid-sized teams. No rebuild of your stack. No AI theater.",
+        ctaPrimary: "Book a discovery call",
+        ctaSecondary: "See what OpSolid builds",
+        stats: [
+          { value: "EU", label: "Hosted in Frankfurt" },
+          { value: "DE · EN · TR", label: "Customer languages" },
+          { value: "Q2 '26", label: "Pilot · taking partners" },
+        ],
+      },
+
+      capabilities: {
+        eyebrow: "[ 02 / 04 ] CAPABILITIES",
+        headline: "Four surfaces OpSolid owns end-to-end.",
+        lead:
+          "Not a platform. Not a marketplace. A small studio that takes operations as they are — manual, half-automated, stitched together — and leaves them running as systems that don't need babysitting.",
+        cards: [
+          {
+            icon: "workflow",
+            title: "Workflow automation",
+            body:
+              "Orders, documents, approvals, communications. Built on n8n, Make, and custom connectors where those fall short — never on black-box SaaS.",
+            tag: "N8N · MAKE · CUSTOM",
+          },
+          {
+            icon: "plug",
+            title: "Systems integration",
+            body:
+              "ERP, CRM, warehouse, billing, messaging — wired together so data moves once and reconciles automatically. Adapters owned by you, not rented.",
+            tag: "ADAPTERS · WEBHOOKS · APIS",
+          },
+          {
+            icon: "bot",
+            title: "AI-assisted processes",
+            body:
+              "Where routing, extraction, or classification earns its keep — and only there. Advised against where it doesn't. Every model call audited and logged.",
+            tag: "LLM · RETELL · VAPI",
+          },
+          {
+            icon: "ship",
+            title: "Internal tools",
+            body:
+              "Admin consoles, ops dashboards, approval queues. Built on the systems you already run so your team has one place to work from.",
+            tag: "REACT · POSTGRES · CAL",
+          },
+          {
+            icon: "radio",
+            title: "Voice & chat agents",
+            body:
+              "Phone answering, WhatsApp triage, web chat. Transferred to humans when the script runs out — never when it's inconvenient for you.",
+            tag: "24/7 · EN · DE · TR",
+          },
+          {
+            icon: "shield",
+            title: "GDPR-native infrastructure",
+            body:
+              "German hosting, EU data residency, ISO 27001-aligned practices. Every customer owns their data, their workflows, and their escape hatch.",
+            tag: "FRA · AV-DSGVO · ISO 27001",
+          },
+        ],
+      },
+
+      specimen: {
+        eyebrow: "[ 03 / 04 ] INDUSTRY BASELINE",
+        title: {
+          pre: "The numbers the industry ",
+          italic: "already",
+          post: " reports.",
+        },
+        body:
+          "OpSolid is pre-market — no fabricated case-study figures. Instead, here is the public baseline against which any automation engagement is measured. Each row cites its source.",
+        chipBefore: "INDUSTRY MEDIAN",
+        chipAfter: "AUTOMATION TARGET",
+        rows: [
+          {
+            label: "Quote-to-cash cycle time",
+            sub: "APQC Open Standards Benchmarking · 2023",
+            value: "3–7 days",
+            delta: "vs. <4h automated",
+          },
+          {
+            label: "Manual touches per order",
+            sub: "Forrester TEI · mid-size operations, 2024",
+            value: "4–9",
+            delta: "vs. 1–2 automated",
+          },
+          {
+            label: "Voice agent p50 latency",
+            sub: "Retell + GPT-4o + Deepgram Nova-3, public 2025 figures",
+            value: "<800ms",
+            delta: "end-to-end, human-parity",
+          },
+          {
+            label: "Vendor lock-in to exit",
+            sub: "OpSolid principle · source is yours",
+            value: "0",
+            delta: "measured in weeks",
+          },
+        ],
+      },
+
+      process: {
+        eyebrow: "[ 04 / 04 ] PROCESS",
+        headline: "Three steps. No lock-in. No mystery.",
+        lead:
+          "Every engagement follows the same shape: map what exists, ship the smallest thing that removes pain, then extend only where it keeps paying off. Recommended where it makes sense — and advised against where it doesn't.",
+        steps: [
+          {
+            num: "01",
+            title: "Operations walkthrough",
+            body:
+              "90-minute deep-dive into how work moves today. Outputs a written map of every manual handoff, every fragile integration, every place the business runs on someone's calendar rather than a system.",
+            chipA: "1 session · 90 min",
+            chipB: "Written map · PDF",
+          },
+          {
+            num: "02",
+            title: "Smallest honest automation",
+            body:
+              "One workflow, end-to-end, in production within three weeks. Built on tools your team can already open and inspect. If the ROI doesn't show up in the first month, the engagement stops there.",
+            chipA: "3 weeks · fixed scope",
+            chipB: "Production-ready",
+            chipBHot: true,
+          },
+          {
+            num: "03",
+            title: "Extend where it keeps paying",
+            body:
+              "Ongoing retainer, monthly or quarterly. New surfaces added only when the existing ones are stable. Handover notes, runbooks, and full source are yours from day one — the exit is always two weeks away.",
+            chipA: "Monthly retainer",
+            chipB: "You own the code",
+          },
+        ],
+      },
+
+      finalCta: {
+        eyebrow: "[ LET'S TALK ]",
+        title: {
+          pre: "Let's see what can ",
+          italic: "actually",
+          post: " be automated.",
+        },
+        lead:
+          "30 minutes. Operations walkthrough, candid opinion, and a written plan. No pitch deck, no sales motion — and no obligation if automation isn't the right tool for the job.",
+        ctaPrimary: "Book a discovery call",
+        ctaSecondary: "Read the journal",
+        trustLine:
+          "BUILT IN GERMANY · GDPR-NATIVE · NO VENDOR LOCK-IN · EN · DE · TR",
+      },
+    },
+  },
 };
 
 type DeepString<T> = T extends string

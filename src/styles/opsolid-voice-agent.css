@@ -1,0 +1,233 @@
+/* =======================================================
+   Voice Agent page — voice visualizer + product surfaces
+   ======================================================= */
+
+/* ---------- Page hero ---------- */
+.va-hero {
+  position: relative;
+  min-height: 100vh;
+  padding: 140px 0 60px;
+  display: flex; align-items: center;
+  overflow: hidden; isolation: isolate;
+}
+.va-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -2;
+  background:
+    radial-gradient(ellipse 70% 55% at 70% 55%, rgba(194,121,64,0.14), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 20% 60%, rgba(80,110,160,0.07), transparent 60%),
+    linear-gradient(180deg, var(--bg-0) 0%, var(--bg-1) 70%, var(--bg-0) 100%);
+}
+.va-hero::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 90% 70% at 60% 50%, #000 50%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 60% 50%, #000 50%, transparent 100%);
+}
+.va-hero-inner {
+  width: 100%; max-width: var(--wrap); margin: 0 auto;
+  padding: 0 var(--gutter);
+  display: grid; grid-template-columns: 1fr 1.05fr; gap: 60px; align-items: center;
+}
+@media (max-width: 1060px) { .va-hero-inner { grid-template-columns: 1fr; } }
+
+/* ---------- Voice visualizer ---------- */
+.vv-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 620px;
+  margin-left: auto;
+  border-radius: var(--r-2xl);
+  background:
+    radial-gradient(circle at 50% 40%, rgba(194,121,64,0.08), transparent 65%),
+    linear-gradient(180deg, var(--bg-3) 0%, var(--bg-1) 100%);
+  border: 1px solid var(--line);
+  box-shadow: var(--rim-top), var(--depth-4);
+  overflow: hidden;
+  isolation: isolate;
+}
+.vv-scribe { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+.vv-radial {
+  position: absolute; left: 50%; top: 50%;
+  width: 82%; height: 82%;
+  transform: translate(-50%, -58%);
+  z-index: 1;
+  filter: drop-shadow(0 0 24px rgba(194,121,64,0.35));
+}
+
+.vv-orb {
+  position: absolute;
+  left: 50%; top: 42%;
+  transform: translate(-50%, -50%);
+  width: 72px; height: 72px;
+  border-radius: 999px;
+  border: 1px solid var(--line-firm);
+  background: radial-gradient(circle at 38% 32%, #3B4150 0%, #181B23 60%, #0A0C10 100%);
+  cursor: pointer;
+  z-index: 3;
+  box-shadow:
+    inset 0 1px 0 rgba(255,240,215,0.3),
+    inset 0 -10px 20px rgba(0,0,0,0.5),
+    var(--depth-3),
+    0 0 40px rgba(194,121,64,0.35);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 180ms var(--ease-snap), box-shadow 400ms var(--ease-mech);
+}
+.vv-orb:hover { transform: translate(-50%, -50%) scale(1.04); }
+.vv-orb-inner {
+  display: flex; align-items: center; justify-content: center;
+  width: 44px; height: 44px; border-radius: 999px;
+  background: var(--copper-grad);
+  color: #1A0E04;
+  box-shadow: inset 0 1px 0 rgba(255,245,225,0.6), inset 0 -1px 0 rgba(0,0,0,0.35);
+}
+.vv-orb.is-playing { animation: vvPulse 2.4s ease-in-out infinite; }
+@keyframes vvPulse {
+  0%, 100% { box-shadow: inset 0 1px 0 rgba(255,240,215,0.3), inset 0 -10px 20px rgba(0,0,0,0.5), var(--depth-3), 0 0 40px rgba(194,121,64,0.35); }
+  50%      { box-shadow: inset 0 1px 0 rgba(255,240,215,0.3), inset 0 -10px 20px rgba(0,0,0,0.5), var(--depth-3), 0 0 80px rgba(194,121,64,0.6); }
+}
+
+/* transcript strip */
+.vv-transcript {
+  position: absolute;
+  left: 7%; right: 7%; bottom: 7%;
+  padding: 16px 20px;
+  background: rgba(11,14,19,0.82);
+  border: 1px solid var(--line-firm);
+  border-radius: var(--r-lg);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--rim-top), var(--depth-3);
+  z-index: 4;
+}
+.vv-tx-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.vv-tx-tag {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em;
+  padding: 3px 8px; border-radius: var(--r-pill);
+  border: 1px solid var(--line);
+}
+.vv-tx-tag.agent  { color: var(--copper-200); border-color: var(--line-hot); background: rgba(194,121,64,0.08); }
+.vv-tx-tag.caller { color: var(--ink-300); }
+.vv-tx-time { font-family: var(--font-mono); font-size: 10px; color: var(--ink-400); }
+.vv-tx-body {
+  font-family: var(--font-editorial); font-style: italic;
+  font-size: 17px; line-height: 1.4; color: var(--ink-100);
+}
+
+/* waveform bars (top-right) */
+.vv-bars {
+  position: absolute;
+  top: 7%; right: 7%;
+  display: flex; align-items: center; gap: 2px;
+  height: 48px;
+  padding: 6px 10px;
+  background: rgba(11,14,19,0.6);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+  z-index: 4;
+}
+.vv-bar {
+  display: block; width: 2px;
+  background: rgba(221,162,102,0.6);
+  border-radius: 2px;
+}
+.vv-bar.is-head { background: #F5D9B8; box-shadow: 0 0 6px rgba(245,217,184,0.9); }
+
+/* meta readouts (top-left) */
+.vv-readouts {
+  position: absolute;
+  top: 7%; left: 7%;
+  display: flex; flex-direction: column; gap: 8px;
+  z-index: 4;
+}
+.vv-readout {
+  display: flex; align-items: baseline; gap: 10px;
+  padding: 6px 10px;
+  background: rgba(11,14,19,0.6);
+  border: 1px solid var(--line);
+  border-radius: var(--r-sm);
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.1em;
+}
+.vv-readout-label { color: var(--ink-400); }
+.vv-readout-value { color: var(--copper-200); font-size: 11px; }
+.vv-readout-value em { color: var(--ink-400); font-style: normal; font-size: 9px; }
+
+/* ---------- Capability sub-grid (for Voice page) ---------- */
+.va-features {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  margin-top: 28px;
+  max-width: 560px;
+}
+@media (max-width: 640px) { .va-features { grid-template-columns: repeat(2, 1fr); } }
+.va-feat {
+  padding: 14px 14px 12px;
+  background: rgba(255,255,255,0.02);
+  border: 1px solid var(--line);
+  border-radius: var(--r-md);
+}
+.va-feat-label {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em;
+  color: var(--copper-300); text-transform: uppercase;
+}
+.va-feat-value {
+  margin-top: 4px;
+  font-family: var(--font-display); font-weight: 500;
+  font-size: 18px; color: var(--ink-100); letter-spacing: -0.01em;
+}
+.va-feat-sub { font-size: 11px; color: var(--ink-400); margin-top: 2px; }
+
+/* ---------- Flow section: 4-step call flow ---------- */
+.va-flow {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+  margin-top: 40px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
+  box-shadow: var(--rim-top), var(--depth-2);
+}
+@media (max-width: 800px) { .va-flow { grid-template-columns: repeat(2, 1fr); } }
+.va-step {
+  position: relative;
+  padding: 28px 24px;
+  border-right: 1px solid var(--line);
+}
+.va-step:last-child { border-right: 0; }
+@media (max-width: 800px) {
+  .va-step:nth-child(2n) { border-right: 0; }
+  .va-step:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+}
+.va-step-num {
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em;
+  color: var(--copper-300);
+}
+.va-step-title {
+  margin-top: 12px;
+  font-family: var(--font-display); font-weight: 500;
+  font-size: 18px; color: var(--ink-100); letter-spacing: -0.012em;
+}
+.va-step-body { margin-top: 8px; font-size: 14px; line-height: 1.55; color: var(--ink-300); }
+
+/* ---------- Spec table ---------- */
+.va-spec {
+  margin-top: 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  background: var(--bg-2);
+}
+.va-spec-row {
+  display: grid; grid-template-columns: 1fr 2fr;
+  padding: 16px 24px;
+  border-bottom: 1px dashed var(--line);
+  align-items: baseline;
+}
+.va-spec-row:last-child { border-bottom: 0; }
+.va-spec-label {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--ink-400);
+}
+.va-spec-value { color: var(--ink-100); font-size: 15px; }
+.va-spec-value .mono { color: var(--copper-200); }

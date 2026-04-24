@@ -9,9 +9,14 @@ type LocaleLinkProps = Omit<LinkProps, "href"> & {
   href: string;
   children?: React.ReactNode;
   className?: string;
+  style?: React.CSSProperties;
   target?: string;
   rel?: string;
+  id?: string;
+  role?: string;
   "aria-label"?: string;
+  "aria-current"?: React.AriaAttributes["aria-current"];
+  onClick?: React.MouseEventHandler<HTMLAnchorElement>;
 };
 
 /**

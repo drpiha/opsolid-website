@@ -8,6 +8,11 @@
    .km-* kinetic mechanism, sections) lives in opsolid-site.css. */
 @import "../styles/opsolid-tokens.css";
 @import "../styles/opsolid-site.css";
+@import "../styles/opsolid-voice-agent.css";
+@import "../styles/opsolid-digital-card.css";
+@import "../styles/opsolid-kutasia.css";
+@import "../styles/opsolid-contact.css";
+@import "../styles/opsolid-blog.css";
 
 @layer base {
   /* Legacy light-mode variables kept for any stragglers still reading them.

@@ -3054,4 +3054,207 @@ export const content: Content = {
       },
     },
   },
+
+  v2: {
+    nav: {
+      home: "Anasayfa",
+      voiceAgent: "Voice Agent",
+      digitalCard: "Digital Card",
+      kutasia: "Kutasia",
+      journal: "Günlük",
+      contact: "İletişim",
+      cta: "Görüşme ayarla",
+    },
+
+    footer: {
+      tagline:
+        "Bağımsız otomasyon stüdyosu. Hamburg · Frankfurt. GDPR-native altyapı, vendor lock-in yok.",
+      chipLive: "FRA · DE",
+      chipLanguages: "EN · DE · TR",
+      cols: {
+        productsHeading: "Ürünler",
+        servicesHeading: "Hizmetler",
+        studioHeading: "Stüdyo",
+        legalHeading: "Hukuki",
+        services: {
+          workflow: "Workflow otomasyonu",
+          integration: "Sistem entegrasyonu",
+          internal: "Dahili araçlar",
+          ai: "Yapay zekâ destekli süreçler",
+        },
+        studio: {
+          journal: "Günlük",
+          contact: "İletişim",
+        },
+        legal: {
+          privacy: "Gizlilik",
+          imprint: "Künye",
+        },
+      },
+      base: {
+        copyrightSuffix: "OpSolid UG · Hamburg, DE",
+        trustLine: "GDPR-native · Hosted in Frankfurt · No US subprocessors",
+      },
+    },
+
+    home: {
+      hero: {
+        metaChip: "AUTOMATION STUDIO",
+        metaLabel: "[ 01 / 04 ] HAMBURG · DE",
+        title: {
+          pre: "Operasyonlarınızı ",
+          italic: "gerçekten",
+          post: " yürüten otomasyon — tersi değil.",
+        },
+        lead:
+          "OpSolid, operasyonlarınızın zaten olduğunu varsaydığı sistemleri gerçekten kurar. Orta ölçekli ekipler için workflow otomasyonu, sistem entegrasyonu, dahili araçlar ve yapay zekâ destekli süreçler. Stack'inizi yeniden kurmak yok. Yapay zekâ tiyatrosu yok.",
+        ctaPrimary: "Discovery görüşmesi ayarla",
+        ctaSecondary: "OpSolid ne inşa eder",
+        stats: [
+          { value: "EU", label: "Hosted in Frankfurt" },
+          { value: "DE · EN · TR", label: "Müşteri dilleri" },
+          { value: "Q2 '26", label: "Pilot · partnerler aranıyor" },
+        ],
+      },
+
+      capabilities: {
+        eyebrow: "[ 02 / 04 ] KAPSAM",
+        headline: "OpSolid'in uçtan uca sahiplendiği dört alan.",
+        lead:
+          "Platform değil. Pazaryeri değil. Operasyonları olduğu hâliyle alan — manuel, yarı otomatik, derme çatma birleştirilmiş — ve bakımsız çalışan sistemler olarak bırakan küçük bir stüdyo.",
+        cards: [
+          {
+            icon: "workflow",
+            title: "Workflow otomasyonu",
+            body:
+              "Siparişler, dokümanlar, onaylar, iletişim. n8n, Make ve bunların yetersiz kaldığı yerde özel konnektörlerle kurulur — black-box SaaS üzerine değil.",
+            tag: "N8N · MAKE · CUSTOM",
+          },
+          {
+            icon: "plug",
+            title: "Sistem entegrasyonu",
+            body:
+              "ERP, CRM, depo, faturalama, mesajlaşma — veri bir kez akacak ve otomatik mutabık kalacak şekilde bağlanır. Adaptörler kiralanmaz, size aittir.",
+            tag: "ADAPTERS · WEBHOOKS · APIS",
+          },
+          {
+            icon: "bot",
+            title: "Yapay zekâ destekli süreçler",
+            body:
+              "Yönlendirme, çıkarım veya sınıflandırma karşılığını verdiği yerde — yalnızca orada. Vermediği yerde önerilmez. Her model çağrısı denetlenir ve loglanır.",
+            tag: "LLM · RETELL · VAPI",
+          },
+          {
+            icon: "ship",
+            title: "Dahili araçlar",
+            body:
+              "Admin konsolları, operasyon panoları, onay kuyrukları. Ekibinizin zaten kullandığı sistemlerin üzerine kurulur — tek bir çalışma yüzeyi.",
+            tag: "REACT · POSTGRES · CAL",
+          },
+          {
+            icon: "radio",
+            title: "Voice & chat agent'ları",
+            body:
+              "Telefon yanıtlama, WhatsApp triyajı, web sohbeti. Script tükendiğinde insana devir — size uygun olmadığında değil.",
+            tag: "24/7 · EN · DE · TR",
+          },
+          {
+            icon: "shield",
+            title: "GDPR-native altyapı",
+            body:
+              "Alman hosting, EU veri rezidanslığı, ISO 27001 uyumlu pratikler. Her müşteri verisinin, workflow'unun ve çıkış kapısının sahibidir.",
+            tag: "FRA · AV-DSGVO · ISO 27001",
+          },
+        ],
+      },
+
+      specimen: {
+        eyebrow: "[ 03 / 04 ] SEKTÖR REFERANSI",
+        title: {
+          pre: "Sektörün ",
+          italic: "zaten",
+          post: " açıkladığı rakamlar.",
+        },
+        body:
+          "OpSolid piyasa öncesinde — uydurma vaka-çalışması rakamı yok. Onun yerine: her otomasyonun ölçüldüğü kamu referansı. Her satır kaynağını belirtir.",
+        chipBefore: "SEKTÖR MEDYANI",
+        chipAfter: "OTOMASYON HEDEFİ",
+        rows: [
+          {
+            label: "Teklif-tahsilat döngü süresi",
+            sub: "APQC Open Standards Benchmarking · 2023",
+            value: "3–7 gün",
+            delta: "otomasyonda <4s",
+          },
+          {
+            label: "Sipariş başına manuel dokunuş",
+            sub: "Forrester TEI · orta ölçekli ops, 2024",
+            value: "4–9",
+            delta: "otomasyonda 1–2",
+          },
+          {
+            label: "Voice agent p50 gecikme",
+            sub: "Retell + GPT-4o + Deepgram Nova-3, kamu 2025 değerleri",
+            value: "<800ms",
+            delta: "uçtan uca, insan eşiği",
+          },
+          {
+            label: "Vendor lock-in çıkış süresi",
+            sub: "OpSolid ilkesi · kaynak kod sizindir",
+            value: "0",
+            delta: "hafta cinsinden ölçülür",
+          },
+        ],
+      },
+
+      process: {
+        eyebrow: "[ 04 / 04 ] SÜREÇ",
+        headline: "Üç adım. Lock-in yok. Sır yok.",
+        lead:
+          "Her iş aynı biçimi izler: mevcut olanı haritala, ağrıyı kaldıran en küçük şeyi teslim et, yalnızca karşılığını vermeye devam ettiği yerde genişlet. Uygun olan yerde önerilir — olmadığı yerde önerilmez.",
+        steps: [
+          {
+            num: "01",
+            title: "Operasyon keşfi",
+            body:
+              "İşin bugün nasıl aktığına dair 90 dakikalık derinlemesine inceleme. Her manuel devir, her kırılgan entegrasyon, işin bir sistemin değil birinin takviminin üzerinde durduğu her yer için yazılı bir harita üretir.",
+            chipA: "1 oturum · 90 dk",
+            chipB: "Yazılı harita · PDF",
+          },
+          {
+            num: "02",
+            title: "En küçük dürüst otomasyon",
+            body:
+              "Bir workflow, uçtan uca, üç haftada canlı. Ekibinizin kendi açıp inceleyebileceği araçlar üzerine kurulur. İlk ayda ROI görünmezse iş orada biter.",
+            chipA: "3 hafta · sabit kapsam",
+            chipB: "Canlıya hazır",
+            chipBHot: true,
+          },
+          {
+            num: "03",
+            title: "Karşılığını vermeye devam ettiği yerde genişlet",
+            body:
+              "Aylık veya üç aylık retainer. Yeni yüzeyler yalnızca mevcutlar kararlıyken eklenir. Devir notları, runbook'lar ve tam kaynak ilk günden sizindir — çıkış her zaman iki hafta uzakta.",
+            chipA: "Aylık retainer",
+            chipB: "Kod sizindir",
+          },
+        ],
+      },
+
+      finalCta: {
+        eyebrow: "[ KONUŞALIM ]",
+        title: {
+          pre: "Neyin ",
+          italic: "gerçekten",
+          post: " otomasyona uygun olduğuna beraber bakalım.",
+        },
+        lead:
+          "30 dakika. Operasyon keşfi, dürüst görüş ve yazılı plan. Pitch deck yok, satış akışı yok — ve otomasyon doğru araç değilse yükümlülük de yok.",
+        ctaPrimary: "Discovery görüşmesi ayarla",
+        ctaSecondary: "Günlüğü oku",
+        trustLine:
+          "BUILT IN GERMANY · GDPR-NATIVE · NO VENDOR LOCK-IN · EN · DE · TR",
+      },
+    },
+  },
 } as const;

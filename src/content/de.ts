@@ -3054,4 +3054,207 @@ export const content: Content = {
       },
     },
   },
+
+  v2: {
+    nav: {
+      home: "Start",
+      voiceAgent: "Voice Agent",
+      digitalCard: "Digital Card",
+      kutasia: "Kutasia",
+      journal: "Journal",
+      contact: "Kontakt",
+      cta: "Gespräch buchen",
+    },
+
+    footer: {
+      tagline:
+        "Unabhängiges Automatisierungsstudio. Hamburg · Frankfurt. GDPR-native Infrastruktur, kein Vendor-Lock-in.",
+      chipLive: "FRA · DE",
+      chipLanguages: "EN · DE · TR",
+      cols: {
+        productsHeading: "Produkte",
+        servicesHeading: "Leistungen",
+        studioHeading: "Studio",
+        legalHeading: "Rechtliches",
+        services: {
+          workflow: "Workflow-Automatisierung",
+          integration: "Systemintegration",
+          internal: "Interne Tools",
+          ai: "KI-gestützte Prozesse",
+        },
+        studio: {
+          journal: "Journal",
+          contact: "Kontakt",
+        },
+        legal: {
+          privacy: "Datenschutz",
+          imprint: "Impressum",
+        },
+      },
+      base: {
+        copyrightSuffix: "OpSolid UG · Hamburg, DE",
+        trustLine: "GDPR-native · Hosted in Frankfurt · No US subprocessors",
+      },
+    },
+
+    home: {
+      hero: {
+        metaChip: "AUTOMATION STUDIO",
+        metaLabel: "[ 01 / 04 ] HAMBURG · DE",
+        title: {
+          pre: "Automatisierung, die Ihre Abläufe ",
+          italic: "tatsächlich",
+          post: " steuert — und nicht umgekehrt.",
+        },
+        lead:
+          "OpSolid baut die Systeme, die Ihre Abläufe schon längst haben sollten. Workflow-Automatisierung, Systemintegration, interne Tools und KI-gestützte Prozesse für mittelständische Teams. Kein Stack-Rebuild. Kein KI-Theater.",
+        ctaPrimary: "Discovery-Call buchen",
+        ctaSecondary: "Was OpSolid baut",
+        stats: [
+          { value: "EU", label: "Hosted in Frankfurt" },
+          { value: "DE · EN · TR", label: "Kundensprachen" },
+          { value: "Q2 '26", label: "Pilot · Partner willkommen" },
+        ],
+      },
+
+      capabilities: {
+        eyebrow: "[ 02 / 04 ] LEISTUNGEN",
+        headline: "Vier Bereiche, die OpSolid durchgängig verantwortet.",
+        lead:
+          "Keine Plattform. Kein Marktplatz. Ein kleines Studio, das Abläufe nimmt, wie sie sind — manuell, halbautomatisiert, zusammengestückelt — und sie als Systeme hinterlässt, die ohne Betreuung laufen.",
+        cards: [
+          {
+            icon: "workflow",
+            title: "Workflow-Automatisierung",
+            body:
+              "Aufträge, Dokumente, Freigaben, Kommunikation. Gebaut auf n8n, Make und eigenen Konnektoren, wo diese nicht ausreichen — nie auf Black-Box-SaaS.",
+            tag: "N8N · MAKE · CUSTOM",
+          },
+          {
+            icon: "plug",
+            title: "Systemintegration",
+            body:
+              "ERP, CRM, Lager, Abrechnung, Messaging — so verbunden, dass Daten einmal fließen und sich automatisch abgleichen. Adapter gehören Ihnen, nicht gemietet.",
+            tag: "ADAPTERS · WEBHOOKS · APIS",
+          },
+          {
+            icon: "bot",
+            title: "KI-gestützte Prozesse",
+            body:
+              "Wo Routing, Extraktion oder Klassifizierung sich rechnet — und nur dort. Abgeraten, wo es nicht passt. Jeder Modellaufruf auditiert und protokolliert.",
+            tag: "LLM · RETELL · VAPI",
+          },
+          {
+            icon: "ship",
+            title: "Interne Tools",
+            body:
+              "Admin-Konsolen, Ops-Dashboards, Freigabequeues. Gebaut auf den Systemen, die Ihr Team ohnehin nutzt — eine einzige Arbeitsoberfläche.",
+            tag: "REACT · POSTGRES · CAL",
+          },
+          {
+            icon: "radio",
+            title: "Voice- & Chat-Agenten",
+            body:
+              "Telefonannahme, WhatsApp-Triage, Web-Chat. Übergabe an Menschen, wenn das Skript endet — nicht wenn es Ihnen unpassend wäre.",
+            tag: "24/7 · EN · DE · TR",
+          },
+          {
+            icon: "shield",
+            title: "GDPR-native Infrastruktur",
+            body:
+              "Deutsches Hosting, EU-Datenresidenz, ISO-27001-konforme Praktiken. Jeder Kunde besitzt seine Daten, Workflows und den Ausstieg.",
+            tag: "FRA · AV-DSGVO · ISO 27001",
+          },
+        ],
+      },
+
+      specimen: {
+        eyebrow: "[ 03 / 04 ] BRANCHENREFERENZ",
+        title: {
+          pre: "Die Zahlen, die die Branche ",
+          italic: "bereits",
+          post: " kennt.",
+        },
+        body:
+          "OpSolid ist vor dem Markt — keine erfundenen Fallstudien-Zahlen. Stattdessen: die öffentliche Referenz, an der jede Automatisierung gemessen wird. Jede Zeile zitiert ihre Quelle.",
+        chipBefore: "BRANCHENMEDIAN",
+        chipAfter: "AUTOMATISIERUNGSZIEL",
+        rows: [
+          {
+            label: "Quote-to-Cash Zykluszeit",
+            sub: "APQC Open Standards Benchmarking · 2023",
+            value: "3–7 Tage",
+            delta: "vs. <4h automatisiert",
+          },
+          {
+            label: "Manuelle Touches pro Auftrag",
+            sub: "Forrester TEI · Mittelstand-Ops, 2024",
+            value: "4–9",
+            delta: "vs. 1–2 automatisiert",
+          },
+          {
+            label: "Voice-Agent p50-Latenz",
+            sub: "Retell + GPT-4o + Deepgram Nova-3, öffentliche Werte 2025",
+            value: "<800ms",
+            delta: "end-to-end, menschennah",
+          },
+          {
+            label: "Vendor-Lock-in bis Ausstieg",
+            sub: "OpSolid-Prinzip · Quellcode gehört Ihnen",
+            value: "0",
+            delta: "gemessen in Wochen",
+          },
+        ],
+      },
+
+      process: {
+        eyebrow: "[ 04 / 04 ] VORGEHEN",
+        headline: "Drei Schritte. Kein Lock-in. Kein Geheimnis.",
+        lead:
+          "Jedes Mandat folgt derselben Form: Bestand kartieren, das Kleinste liefern, das Schmerz entfernt, dann nur dort ausbauen, wo es sich weiter auszahlt. Empfohlen, wo es passt — abgeraten, wo nicht.",
+        steps: [
+          {
+            num: "01",
+            title: "Operations-Walkthrough",
+            body:
+              "90-minütige Tiefenanalyse, wie Arbeit heute fließt. Liefert eine schriftliche Karte jeder manuellen Übergabe, jeder fragilen Integration, jeder Stelle, an der das Geschäft am Kalender einer Person statt an einem System hängt.",
+            chipA: "1 Session · 90 Min.",
+            chipB: "Schriftliche Karte · PDF",
+          },
+          {
+            num: "02",
+            title: "Kleinste ehrliche Automatisierung",
+            body:
+              "Ein Workflow, End-to-End, in drei Wochen produktiv. Gebaut auf Tools, die Ihr Team selbst öffnen und prüfen kann. Wenn sich der ROI im ersten Monat nicht zeigt, endet das Mandat dort.",
+            chipA: "3 Wochen · fixer Umfang",
+            chipB: "Produktionsreif",
+            chipBHot: true,
+          },
+          {
+            num: "03",
+            title: "Ausbau, wo es sich weiter trägt",
+            body:
+              "Laufendes Retainer-Mandat, monatlich oder quartalsweise. Neue Flächen nur, wenn die bestehenden stabil sind. Übergabe-Notizen, Runbooks und vollständiger Quellcode gehören Ihnen ab Tag eins — der Ausstieg ist immer zwei Wochen entfernt.",
+            chipA: "Monatsretainer",
+            chipB: "Quellcode gehört Ihnen",
+          },
+        ],
+      },
+
+      finalCta: {
+        eyebrow: "[ KONTAKT ]",
+        title: {
+          pre: "Sehen wir, was sich ",
+          italic: "tatsächlich",
+          post: " automatisieren lässt.",
+        },
+        lead:
+          "30 Minuten. Operations-Walkthrough, klare Einschätzung und schriftlicher Plan. Kein Pitch-Deck, keine Sales-Motion — und keine Verpflichtung, wenn Automatisierung nicht das richtige Werkzeug ist.",
+        ctaPrimary: "Discovery-Call buchen",
+        ctaSecondary: "Journal lesen",
+        trustLine:
+          "BUILT IN GERMANY · GDPR-NATIVE · NO VENDOR LOCK-IN · EN · DE · TR",
+      },
+    },
+  },
 } as const;

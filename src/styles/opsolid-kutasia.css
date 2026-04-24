@@ -1,0 +1,106 @@
+/* =======================================================
+   Kutasia page — breathing dining-room silhouette
+   ======================================================= */
+.kt-hero { position: relative; min-height: 100vh; padding: 140px 0 60px; display: flex; align-items: center; overflow: hidden; isolation: isolate; }
+.kt-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: -2;
+  background:
+    radial-gradient(ellipse 70% 55% at 65% 55%, rgba(194,121,64,0.12), transparent 60%),
+    linear-gradient(180deg, var(--bg-0), var(--bg-1) 70%, var(--bg-0));
+}
+.kt-hero-inner { width: 100%; max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); display: grid; grid-template-columns: 1fr 1.15fr; gap: 60px; align-items: center; }
+@media (max-width: 1060px) { .kt-hero-inner { grid-template-columns: 1fr; gap: 50px; } }
+
+/* Silhouette stage */
+.ks-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  max-width: 680px;
+  margin-left: auto;
+  border-radius: var(--r-xl);
+  overflow: hidden;
+  background: #040302;
+  box-shadow: var(--rim-top), var(--depth-5);
+  border: 1px solid var(--line-firm);
+}
+.ks-layer {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  transition: transform 120ms linear;
+}
+.ks-bg    { z-index: 1; }
+.ks-mid   { z-index: 2; }
+.ks-front { z-index: 3; }
+.ks-vignette {
+  position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 50%, transparent 40%, rgba(0,0,0,0.65) 100%);
+}
+.ks-glow { animation: ksBreathe 7s ease-in-out infinite; transform-origin: center; }
+@keyframes ksBreathe {
+  0%, 100% { opacity: 0.75; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.06); }
+}
+.ks-flame, .ks-flame-glow { animation: ksFlicker 1.8s ease-in-out infinite; transform-origin: center; }
+.ks-flame-glow { animation-duration: 2.4s; }
+@keyframes ksFlicker {
+  0%, 100% { opacity: 1; transform: scale(1) translateY(0); }
+  33%      { opacity: 0.85; transform: scale(0.96) translateY(0.5px); }
+  66%      { opacity: 1.05; transform: scale(1.04) translateY(-0.5px); }
+}
+.ks-steam {
+  stroke-dasharray: 180;
+  stroke-dashoffset: 180;
+  animation: ksSteam 5s ease-in-out infinite;
+}
+@keyframes ksSteam {
+  0%   { stroke-dashoffset: 180; opacity: 0; }
+  30%  { opacity: 0.7; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+.ks-glint {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: ksGlint 6s ease-in-out infinite;
+}
+@keyframes ksGlint {
+  0%, 60% { stroke-dashoffset: 40; opacity: 0; }
+  65%     { stroke-dashoffset: 0; opacity: 1; }
+  80%     { opacity: 0.7; }
+  100%    { stroke-dashoffset: -40; opacity: 0; }
+}
+
+/* readout overlay */
+.ks-readout {
+  position: absolute;
+  bottom: 18px; left: 18px;
+  z-index: 5;
+  display: flex; flex-direction: column; gap: 4px;
+  padding: 12px 14px;
+  background: rgba(6,5,3,0.78);
+  border: 1px solid var(--line-firm);
+  border-radius: var(--r-md);
+  backdrop-filter: blur(6px);
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em;
+  color: var(--ink-400);
+}
+.ks-readout-row { display: flex; justify-content: space-between; gap: 24px; }
+.ks-readout-val { color: var(--copper-200); }
+
+/* ========== Rooms / modules ========== */
+.kt-rooms { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
+@media (max-width: 900px) { .kt-rooms { grid-template-columns: 1fr; } }
+.kt-room {
+  padding: 28px 28px 24px;
+  background: linear-gradient(180deg, var(--bg-3), var(--bg-2));
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  box-shadow: var(--rim-top), var(--depth-2);
+}
+.kt-room-n { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; color: var(--copper-300); }
+.kt-room-h { font-family: var(--font-display); font-weight: 500; font-size: 20px; margin-top: 10px; color: var(--ink-100); letter-spacing: -0.015em; }
+.kt-room-b { color: var(--ink-300); font-size: 14px; line-height: 1.55; margin-top: 8px; }
+.kt-room-list { margin-top: 14px; display: flex; flex-direction: column; gap: 6px; border-top: 1px dashed var(--line); padding-top: 14px; }
+.kt-room-item { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; color: var(--ink-400); }
+.kt-room-item em { font-style: normal; color: var(--copper-200); }

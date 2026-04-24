@@ -1,7 +1,17 @@
+"use client";
+
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { Icon } from "@/components/shared/Icon";
+import { useLocale } from "@/context/LocaleContext";
 
+/**
+ * Recurring closing CTA — appears at the bottom of home and every product
+ * page. Copy driven by `t.v2.home.finalCta.*`.
+ */
 export function FinalCTA() {
+  const { t } = useLocale();
+  const f = t.v2.home.finalCta;
+
   return (
     <section className="os-final-cta">
       <div className="wrap">
@@ -9,23 +19,22 @@ export function FinalCTA() {
           className="meta meta-hot"
           style={{ marginBottom: 20, display: "inline-block" }}
         >
-          [ LET&rsquo;S TALK ]
+          {f.eyebrow}
         </span>
         <h2>
-          Let&rsquo;s see what can{" "}
-          <span className="editorial">actually</span> be automated.
+          {f.title.pre}
+          <span className="editorial">{f.title.italic}</span>
+          {f.title.post}
         </h2>
         <p className="lead" style={{ marginLeft: "auto", marginRight: "auto" }}>
-          30 minutes. Operations walkthrough, candid opinion, and a written
-          plan. No pitch deck, no sales motion — and no obligation if
-          automation isn&rsquo;t the right tool for the job.
+          {f.lead}
         </p>
         <div className="os-hero-ctas">
           <Link href="/contact" className="btn btn-primary btn-lg">
-            Book a discovery call <Icon name="arrow" size={18} />
+            {f.ctaPrimary} <Icon name="arrow" size={18} />
           </Link>
           <Link href="/blog" className="btn btn-ghost btn-lg">
-            Read the journal
+            {f.ctaSecondary}
           </Link>
         </div>
         <div
@@ -37,7 +46,7 @@ export function FinalCTA() {
             color: "var(--ink-500)",
           }}
         >
-          BUILT IN GERMANY · GDPR-NATIVE · NO VENDOR LOCK-IN · EN · DE · TR
+          {f.trustLine}
         </div>
       </div>
     </section>
