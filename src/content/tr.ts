@@ -1614,6 +1614,27 @@ export const content: Content = {
         primaryCta: "Kartımı başlat",
         secondaryCta: "Şablonlara gözat",
       },
+      preview: {
+        meta: {
+          title: "Dijital Kartvizit — Canlı Önizleme | OpSolid",
+          description:
+            "5 tasarımı telefonunuzda deneyin. Sola sağa kaydırın. Beğendiğiniz tasarımı sipariş verin — €29 tek seferlik, €5/ay veya €39/yıl.",
+        },
+        eyebrow: "CANLI ÖNİZLEME",
+        title: "Tasarımları telefonda deneyin",
+        subtitle:
+          "5 tasarım. Sağa sola kaydırın. Beğendiğinize sipariş verin.",
+        hintSwipe: "Kaydırın",
+        hintArrows: "Tasarımlar arasında ok tuşlarıyla geçin",
+        prev: "Önceki tasarım",
+        next: "Sonraki tasarım",
+        orderCta: "Bu tasarımı sipariş et",
+        secondaryCta: "Tüm tasarımları gör",
+        counter: "{{current}} / {{total}}",
+        priceYearly: "/yıl",
+        priceMonthly: "/ay",
+        priceOneTime: "tek seferlik",
+      },
       order: {
         gallery: {
           title: "Bir tasarım seçin",

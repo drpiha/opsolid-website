@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import {
   Mail,
@@ -130,6 +131,24 @@ export function DigitalCardPage() {
 
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [selectedTemplateId, setSelectedTemplateId] = useState<number | null>(1);
+  const searchParams = useSearchParams();
+
+  // Deep-link: /products/digital-card?template=3 lands on the #order form with
+  // that template already selected. Used by /card-preview "Order this design" CTA.
+  useEffect(() => {
+    const raw = searchParams?.get("template");
+    if (!raw) return;
+    const parsed = Number.parseInt(raw, 10);
+    if (!Number.isFinite(parsed) || parsed <= 0) return;
+    setSelectedTemplateId(parsed);
+    if (typeof window !== "undefined") {
+      window.setTimeout(() => {
+        document
+          .getElementById("order")
+          ?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 80);
+    }
+  }, [searchParams]);
 
   const handleTemplateSelect = (id: number) => {
     setSelectedTemplateId(id);
@@ -192,6 +211,9 @@ export function DigitalCardPage() {
                 <Link href="#lead" className="btn-primary">
                   <span>{d.hero.primaryCta}</span>
                   <ArrowRight size={16} strokeWidth={2.5} />
+                </Link>
+                <Link href="/card-preview" className="btn-ghost">
+                  <span>{d.preview.secondaryCta}</span>
                 </Link>
                 <Link href="#templates" className="btn-ghost">
                   <span>{d.hero.secondaryCta}</span>

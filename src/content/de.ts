@@ -1614,6 +1614,27 @@ export const content: Content = {
         primaryCta: "Karte starten",
         secondaryCta: "Vorlagen ansehen",
       },
+      preview: {
+        meta: {
+          title: "Digitale Visitenkarte — Live-Vorschau | OpSolid",
+          description:
+            "Probieren Sie alle 5 Designs auf Ihrem Handy. Wischen Sie nach links oder rechts. Bestellen Sie das Lieblingsdesign — €29 einmalig, €5/Monat oder €39/Jahr.",
+        },
+        eyebrow: "LIVE-VORSCHAU",
+        title: "Designs auf dem Handy ausprobieren",
+        subtitle:
+          "5 Designs. Nach links oder rechts wischen. Ihr Favorit wird bestellt.",
+        hintSwipe: "Wischen",
+        hintArrows: "Mit den Pfeiltasten durch die Designs blättern",
+        prev: "Vorheriges Design",
+        next: "Nächstes Design",
+        orderCta: "Dieses Design bestellen",
+        secondaryCta: "Alle Designs ansehen",
+        counter: "{{current}} / {{total}}",
+        priceYearly: "/Jahr",
+        priceMonthly: "/Monat",
+        priceOneTime: "einmalig",
+      },
       order: {
         gallery: {
           title: "Wählen Sie ein Design",

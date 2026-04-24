@@ -1612,6 +1612,27 @@ export const content = {
         primaryCta: "Start my card",
         secondaryCta: "Browse templates",
       },
+      preview: {
+        meta: {
+          title: "Digital Business Card — Live Preview | OpSolid",
+          description:
+            "Try all 5 designs on your phone. Swipe left or right. Pick the one you like and order — €29 one-time, €5/month, or €39/year.",
+        },
+        eyebrow: "LIVE PREVIEW",
+        title: "Try the designs on your phone",
+        subtitle:
+          "5 designs. Swipe left or right. Order the one you like.",
+        hintSwipe: "Swipe",
+        hintArrows: "Use arrow keys to move between designs",
+        prev: "Previous design",
+        next: "Next design",
+        orderCta: "Order this design",
+        secondaryCta: "See all designs",
+        counter: "{{current}} / {{total}}",
+        priceYearly: "/yr",
+        priceMonthly: "/mo",
+        priceOneTime: "one-time",
+      },
       order: {
         gallery: {
           title: "Choose a design",
