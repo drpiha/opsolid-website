@@ -73,6 +73,147 @@ const url = z.preprocess(
 );
 
 // -----------------------------------------------------------------------------
+// Video URL — YouTube or Vimeo only. We embed via iframe; allowing arbitrary
+// hosts would expose us to XSS / data-exfil via embedded malicious players.
+// Accepts:
+//   youtube.com/watch?v=…, youtu.be/…, youtube.com/shorts/…, youtube-nocookie.com/embed/…
+//   vimeo.com/<id>, player.vimeo.com/video/<id>
+// -----------------------------------------------------------------------------
+const VIDEO_HOSTS = new Set([
+  "youtube.com",
+  "www.youtube.com",
+  "m.youtube.com",
+  "youtu.be",
+  "youtube-nocookie.com",
+  "www.youtube-nocookie.com",
+  "vimeo.com",
+  "www.vimeo.com",
+  "player.vimeo.com",
+]);
+
+export const videoUrl = z
+  .string()
+  .trim()
+  .url("Bitte eine gültige Video-URL eingeben (YouTube oder Vimeo)")
+  .max(500)
+  .refine(
+    (value) => {
+      try {
+        const host = new URL(value).hostname.toLowerCase();
+        return VIDEO_HOSTS.has(host);
+      } catch {
+        return false;
+      }
+    },
+    { message: "Nur YouTube oder Vimeo Videos sind erlaubt." }
+  );
+
+// -----------------------------------------------------------------------------
+// Layout × Theme — premium template engine keys. Layouts are React components
+// under src/components/cards/templates/layouts/. Themes are palette + typography
+// presets under src/components/cards/templates/themes/. Both validated as
+// non-empty strings here; the renderer falls back gracefully if unknown.
+// (Open enum: 30+ HTML port + 15 hand-built layouts → too many for a literal
+// union, and the renderer's allowlist is the real source of truth.)
+// -----------------------------------------------------------------------------
+const LAYOUT_KEY_RE = /^[A-Za-z][A-Za-z0-9_-]{0,63}$/;
+const THEME_KEY_RE = /^[a-z][a-zA-Z0-9_-]{0,31}$/;
+
+export const layoutKey = z
+  .string()
+  .regex(LAYOUT_KEY_RE, "Ungültiger Layout-Key")
+  .max(64);
+
+export const themeKey = z
+  .string()
+  .regex(THEME_KEY_RE, "Ungültiger Theme-Key")
+  .max(32);
+
+// -----------------------------------------------------------------------------
+// QR styling — preset + colors + logo/photo + optional AI generation metadata.
+// Persisted as JSON on CardOrder.qrStyle so we can re-render on demand.
+// -----------------------------------------------------------------------------
+const qrPreset = z.enum([
+  "classic",
+  "rounded",
+  "dots",
+  "diamond",
+  "gradient",
+  "monoNeon",
+  "watercolor",
+  "brandSync",
+]);
+
+const qrAiStyle = z.enum([
+  "geometric",
+  "liquid",
+  "forest",
+  "cyberpunk",
+  "watercolor",
+  "mosaic",
+]);
+
+export const QrStyleSchema = z
+  .object({
+    preset: qrPreset.default("classic"),
+    primary: hexColor.optional(), // overrides brandPrimaryHex
+    accent: hexColor.optional(), // overrides brandAccentHex
+    withLogo: z.boolean().default(false),
+    withPhoto: z.boolean().default(false),
+    /** AI Art QR (Replicate) — only present after a successful generation. */
+    ai: z
+      .object({
+        prompt: z.string().trim().min(3).max(300),
+        style: qrAiStyle,
+        generatedUrl: z.string().url().max(500),
+        generatedAt: z.string().datetime().optional(),
+      })
+      .optional(),
+  })
+  .strict();
+export type QrStyle = z.infer<typeof QrStyleSchema>;
+
+// -----------------------------------------------------------------------------
+// CustomBlocks — drag-drop block editor state for Bento/Accordion layouts.
+// Each block has a stable id, a type from a known palette, free-form props,
+// and a position on the canvas grid.
+// -----------------------------------------------------------------------------
+const blockType = z.enum([
+  "Avatar",
+  "Heading",
+  "RichText",
+  "Phone",
+  "Email",
+  "WhatsApp",
+  "Website",
+  "Address",
+  "Map",
+  "SocialRow",
+  "VideoEmbed",
+  "Gallery",
+  "CTAButton",
+  "Spotify",
+  "CalendarBook",
+]);
+
+export const BlockSchema = z
+  .object({
+    id: z.string().min(1).max(64),
+    type: blockType,
+    props: z.record(z.string(), z.unknown()).default({}),
+    position: z
+      .object({
+        x: z.number().int().min(0).max(11),
+        y: z.number().int().min(0).max(99),
+        w: z.number().int().min(1).max(12),
+        h: z.number().int().min(1).max(12),
+      })
+      .optional(),
+  })
+  .strict();
+export type CardBlock = z.infer<typeof BlockSchema>;
+
+// -----------------------------------------------------------------------------
 // CardData — the JSON blob rendered on the public card page
 // -----------------------------------------------------------------------------
 
@@ -86,6 +227,9 @@ export const CardDataSchema = z.object({
   website: url.optional(),
   address: z.string().trim().max(500).optional(),
   bio: z.string().trim().max(600).optional(),
+  /** Optional embedded video — YouTube or Vimeo URL only. Rendered by the
+   *  layout if `supportsVideo` and lazy-loaded (click-to-play poster). */
+  videoUrl: videoUrl.optional(),
   socials: z
     .object({
       linkedin: url.optional(),
@@ -125,8 +269,27 @@ export const OrderPayloadSchema = z.object({
   brandAccentHex: hexColor.optional(),
 
   // Upload paths — set by /api/uploads first, then referenced here.
+  // Now point at either /uploads/cards/... (local dev) or a Vercel Blob URL.
   photoPath: z.string().max(500).optional(),
   logoPath: z.string().max(500).optional(),
+
+  // Premium foundation (added 2026-04-23):
+  // ---------------------------------------------------------------------------
+  /** Concierge add-on (+€20). When true, order is queued for designer review
+   *  instead of auto-publishing. Webhook reads this flag. */
+  conciergeAddon: z.boolean().default(false),
+
+  /** Layout × Theme overrides. When set, the renderer uses these instead of
+   *  the catalog template's defaults. Stored on CardOrder for self-serve
+   *  customization without requiring a new template entry. */
+  layoutKey: layoutKey.optional(),
+  themeKey: themeKey.optional(),
+
+  /** Drag-drop block editor state (only used by Bento/Accordion layouts). */
+  customBlocks: z.array(BlockSchema).max(40).optional(),
+
+  /** QR styling preferences — preset + colors + logo/photo, optional AI Art. */
+  qrStyle: QrStyleSchema.optional(),
 });
 export type OrderPayload = z.infer<typeof OrderPayloadSchema>;
 

@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { CardDataSchema } from "@/lib/validation";
 import { getTemplateById } from "@/config/card-templates";
 import { TemplateRenderer } from "@/components/cards/TemplateRenderer";
+import { SaveContactButton } from "@/components/cards/shared/SaveContactButton";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -70,7 +71,7 @@ export default async function CardPage({ params }: PageProps) {
   if (!parsed.success) notFound();
 
   return (
-    <main className="min-h-screen bg-neutral-50 px-4 py-12 md:py-20">
+    <main className="min-h-screen bg-neutral-50 px-4 py-12 pb-32 md:py-20">
       <div className="mx-auto flex w-full max-w-md flex-col items-center">
         <TemplateRenderer
           componentKey={template.componentKey}
@@ -89,6 +90,11 @@ export default async function CardPage({ params }: PageProps) {
           </a>
         </div>
       </div>
+      <SaveContactButton
+        slug={slug}
+        primaryHex={order.brandPrimaryHex}
+        label="Save Contact"
+      />
     </main>
   );
 }

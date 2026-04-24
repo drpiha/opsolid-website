@@ -73,6 +73,29 @@ model CardOrder {
   photoPath String? @map("photo_path")
   logoPath  String? @map("logo_path")
 
+  // Premium foundation fields (added 2026-04-23, dbc-premium-foundation migration)
+  // ---------------------------------------------------------------------------
+  // QR styling: { preset: "rounded"|"dots"|"diamond"|"gradient"|...,
+  //               primary, accent, withLogo, withPhoto, ai?: { prompt, style, generatedUrl } }
+  qrStyle Json? @map("qr_style")
+
+  // Optional embedded video — YouTube or Vimeo URL only (host whitelisted in Zod).
+  videoUrl String? @map("video_url")
+
+  // Concierge add-on (+€20). When true, order goes through designer review
+  // (AWAITING_DESIGN). When false, webhook auto-publishes self-serve.
+  conciergeAddon Boolean @default(false) @map("concierge_addon")
+
+  // Layout × Theme picker (overrides templateId's defaults when set).
+  // layoutKey: "AuroraBento" | "CinemaHero" | ... (15 layouts)
+  // themeKey:  "editorial" | "aurora" | ... (6 themes)
+  layoutKey String? @map("layout_key")
+  themeKey  String? @map("theme_key")
+
+  // Drag-drop block editor state (Bento/Accordion layouts only).
+  // [{ id, type: "Avatar"|"Heading"|"VideoEmbed"|..., props: {...}, position: {x,y,w,h} }]
+  customBlocks Json? @map("custom_blocks")
+
   billingMode String @map("billing_mode")
   amountCents Int    @map("amount_cents")
   currency    String @default("EUR")
@@ -88,11 +111,11 @@ model CardOrder {
   designNotes String? @map("design_notes")
   editToken   String? @unique @map("edit_token")
 
-  contactedAt     DateTime? @map("contacted_at")
-  contactedByNote String?   @map("contacted_by_note")
-  paidAt          DateTime? @map("paid_at")
+  contactedAt      DateTime? @map("contacted_at")
+  contactedByNote  String?   @map("contacted_by_note")
+  paidAt           DateTime? @map("paid_at")
   awaitingDesignAt DateTime? @map("awaiting_design_at")
-  publishedAt     DateTime? @map("published_at")
+  publishedAt      DateTime? @map("published_at")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -100,6 +123,8 @@ model CardOrder {
   template      CardTemplate         @relation(fields: [templateId], references: [id])
   subscription  Subscription?
   statusHistory OrderStatusHistory[]
+  views         CardView[]
+  leads         CardLead[]
 
   @@index([status])
   @@index([contactPhone])
@@ -124,6 +149,47 @@ model Subscription {
   order CardOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   @@map("subscriptions")
+}
+
+// -----------------------------------------------------------------------------
+// CardView — fire-and-forget view tracking from /c/[slug]/page.tsx server
+// component. `source` distinguishes how the visitor reached the card (qr scan,
+// nfc tap, direct link, wallet pass). Geo fields populated from Vercel headers.
+// -----------------------------------------------------------------------------
+model CardView {
+  id        String   @id @default(cuid())
+  orderId   String   @map("order_id")
+  source    String? // qr | nfc | link | wallet
+  ua        String? // user-agent prefix (truncated for privacy)
+  country   String? // Vercel `x-vercel-ip-country`
+  city      String? // Vercel `x-vercel-ip-city`
+  referer   String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  order CardOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId, createdAt])
+  @@map("card_views")
+}
+
+// -----------------------------------------------------------------------------
+// CardLead — opt-in "Bana ulaş" form submissions on a public card page. Owner
+// gets an email notification + sees them in the dashboard at
+// /[locale]/dashboard/cards/[editToken].
+// -----------------------------------------------------------------------------
+model CardLead {
+  id        String   @id @default(cuid())
+  orderId   String   @map("order_id")
+  name      String?
+  email     String?
+  phone     String?
+  message   String?
+  createdAt DateTime @default(now()) @map("created_at")
+
+  order CardOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId, createdAt])
+  @@map("card_leads")
 }
 
 // -----------------------------------------------------------------------------

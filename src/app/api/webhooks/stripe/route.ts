@@ -4,6 +4,7 @@ import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/prisma";
 import { verifyWebhookSignature } from "@/lib/stripe";
 import { OrderStatus } from "@/lib/validation";
+import { ensureUniqueSlug } from "@/lib/slug";
 import { notifyOrderEvent } from "@/lib/notifications";
 import { sendCustomerEmail } from "@/lib/email/send";
 import { normalizeLocale } from "@/lib/email/shell";
@@ -145,27 +146,62 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     },
   });
 
-  // Immediately hand off to the designer queue.
-  await prisma.cardOrder.update({
-    where: { id: orderId },
-    data: {
-      status: OrderStatus.AWAITING_DESIGN,
-      awaitingDesignAt: now,
-    },
-  });
+  // -------------------------------------------------------------------------
+  // Hybrid publish flow (premium foundation, 2026-04-23):
+  //   • conciergeAddon = false (default) → SELF-SERVE auto-publish.
+  //     Generate a slug, set status PUBLISHED + publishedAt, customer's card
+  //     goes live immediately at /c/{slug}. Notification event="published".
+  //   • conciergeAddon = true            → DESIGNER REVIEW.
+  //     Hand off to AWAITING_DESIGN queue, designer publishes manually via
+  //     /api/admin/orders/{id}/publish (existing endpoint, unchanged).
+  //     Notification event="awaiting_design".
+  // -------------------------------------------------------------------------
+  let publishedSlug: string | null = null;
 
-  await prisma.orderStatusHistory.create({
-    data: {
-      orderId: orderId,
-      fromStatus: OrderStatus.PAID,
-      toStatus: OrderStatus.AWAITING_DESIGN,
-      actor: "system",
-      note: "Queued for hand-designed review (48h SLA).",
-    },
-  });
+  if (order.conciergeAddon) {
+    // Existing concierge flow — designer reviews then publishes.
+    await prisma.cardOrder.update({
+      where: { id: orderId },
+      data: {
+        status: OrderStatus.AWAITING_DESIGN,
+        awaitingDesignAt: now,
+      },
+    });
+    await prisma.orderStatusHistory.create({
+      data: {
+        orderId: orderId,
+        fromStatus: OrderStatus.PAID,
+        toStatus: OrderStatus.AWAITING_DESIGN,
+        actor: "system",
+        note: "Concierge add-on: queued for hand-designed review (48h SLA).",
+      },
+    });
+  } else {
+    // Self-serve auto-publish — name-based slug seeded with the order id so
+    // the same order always rolls the same suffix on retry (idempotent).
+    publishedSlug = await ensureUniqueSlug(order.contactName, order.id);
 
-  // Fire notifications (non-blocking, silent failures). Prefer the
-  // awaiting_design event so admin sees "ready for design review".
+    await prisma.cardOrder.update({
+      where: { id: orderId },
+      data: {
+        status: OrderStatus.PUBLISHED,
+        slug: publishedSlug,
+        publishedAt: now,
+      },
+    });
+    await prisma.orderStatusHistory.create({
+      data: {
+        orderId: orderId,
+        fromStatus: OrderStatus.PAID,
+        toStatus: OrderStatus.PUBLISHED,
+        actor: "system",
+        note: `Self-serve auto-publish at /c/${publishedSlug}.`,
+      },
+    });
+  }
+
+  // Fire notifications (non-blocking, silent failures). Event mirrors the
+  // chosen branch above so admin/customer messaging matches what happened.
   notifyOrderEvent({
     orderId: order.id,
     orderNumber: order.orderNumber,
@@ -175,8 +211,8 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     callMeBack: order.callMeBack,
     amountCents: order.amountCents,
     billingMode: order.billingMode,
-    slug: null,
-    event: "awaiting_design",
+    slug: publishedSlug,
+    event: order.conciergeAddon ? "awaiting_design" : "published",
   }).catch((e) => console.error("[stripe webhook] notification error:", e));
 
   // Customer "designer working" email. Logs and swallows errors — the webhook

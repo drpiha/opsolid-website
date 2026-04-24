@@ -1,12 +1,19 @@
+// =============================================================================
+// POST /api/uploads
+//
+// Accepts multipart/form-data with `file` and `kind` fields and persists the
+// asset via the storage adapter (filesystem in dev, Vercel Blob in prod).
+//
+// Limits and types are centralized in src/lib/storage.ts so they stay in sync
+// with the QR-art generation pipeline (which writes via the same adapter).
+// =============================================================================
+
 import { NextRequest, NextResponse } from "next/server";
-import { writeFile, mkdir } from "fs/promises";
-import { join } from "path";
-import { randomBytes } from "crypto";
+import { putAsset, STORAGE_LIMITS } from "@/lib/storage";
 
 export const runtime = "nodejs";
 
-const MAX_BYTES = 2 * 1024 * 1024;
-const ALLOWED = new Set(["image/jpeg", "image/png", "image/svg+xml"]);
+const ALLOWED_KINDS = new Set(["photo", "logo", "gallery"]);
 
 export async function POST(req: NextRequest) {
   const form = await req.formData();
@@ -16,13 +23,19 @@ export async function POST(req: NextRequest) {
   if (!(file instanceof File)) {
     return NextResponse.json({ error: "Missing file" }, { status: 400 });
   }
-  if (!ALLOWED.has(file.type)) {
-    return NextResponse.json({ error: "Unsupported file type" }, { status: 400 });
+  if (!STORAGE_LIMITS.allowedImage.has(file.type)) {
+    return NextResponse.json(
+      { error: "Unsupported file type" },
+      { status: 400 }
+    );
   }
-  if (file.size > MAX_BYTES) {
-    return NextResponse.json({ error: "File too large" }, { status: 413 });
+  if (file.size > STORAGE_LIMITS.maxBytes) {
+    return NextResponse.json(
+      { error: `File too large (max ${STORAGE_LIMITS.maxBytesHuman})` },
+      { status: 413 }
+    );
   }
-  if (!["photo", "logo"].includes(kind)) {
+  if (!ALLOWED_KINDS.has(kind)) {
     return NextResponse.json({ error: "Invalid kind" }, { status: 400 });
   }
 
@@ -31,16 +44,29 @@ export async function POST(req: NextRequest) {
       ? "png"
       : file.type === "image/svg+xml"
       ? "svg"
+      : file.type === "image/webp"
+      ? "webp"
       : "jpg";
-  const dirName = randomBytes(8).toString("hex");
-  const fileName = `${kind}-${Date.now()}.${ext}`;
-  const relPath = `/uploads/cards/${dirName}/${fileName}`;
-  const absDir = join(process.cwd(), "public", "uploads", "cards", dirName);
-  const absPath = join(absDir, fileName);
 
-  await mkdir(absDir, { recursive: true });
-  const buf = Buffer.from(await file.arrayBuffer());
-  await writeFile(absPath, buf);
+  const body = Buffer.from(await file.arrayBuffer());
 
-  return NextResponse.json({ path: relPath });
+  try {
+    const { url } = await putAsset({
+      kind,
+      ext,
+      body,
+      contentType: file.type,
+    });
+    // Backwards-compatible response shape — the OrderFormSection client still
+    // reads `path`, and we want it to keep working without a coordinated
+    // client/server release. The URL is full-qualified for blob driver and
+    // origin-relative for local driver; both work in <img src>.
+    return NextResponse.json({ path: url });
+  } catch (err) {
+    console.error("[uploads] storage error:", err);
+    return NextResponse.json(
+      { error: "Upload failed" },
+      { status: 500 }
+    );
+  }
 }

@@ -56,6 +56,16 @@ export async function POST(req: NextRequest) {
       brandAccentHex: data.brandAccentHex,
       photoPath: data.photoPath,
       logoPath: data.logoPath,
+      // Premium foundation fields (2026-04-23). Persisting them now means the
+      // Stripe webhook can read conciergeAddon when deciding self-serve vs
+      // designer review without a second client round-trip.
+      conciergeAddon: data.conciergeAddon,
+      layoutKey: data.layoutKey,
+      themeKey: data.themeKey,
+      customBlocks: data.customBlocks
+        ? (data.customBlocks as unknown as object)
+        : undefined,
+      qrStyle: data.qrStyle ? (data.qrStyle as unknown as object) : undefined,
       billingMode: data.billingMode,
       amountCents: amountCents!,
       currency: "EUR",
