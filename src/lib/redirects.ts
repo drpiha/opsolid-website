@@ -29,6 +29,14 @@ export const RETIRED_REDIRECTS: Record<string, string> = {
 };
 
 /**
+ * Keys in RETIRED_REDIRECTS that should only match exactly, not as a
+ * path prefix. `/products` redirects to `/` for the bare products index,
+ * but `/products/voice-agent` (etc.) must fall through so those routes
+ * still resolve — they're listed separately with their own targets.
+ */
+const EXACT_ONLY = new Set<string>(["/products"]);
+
+/**
  * If the given locale-stripped pathname is a retired route, returns the
  * replacement path (also locale-less). Otherwise null.
  */
@@ -36,8 +44,11 @@ export function getRetiredRedirectTarget(path: string): string | null {
   // Strip trailing slash except for root
   const normalized = path.length > 1 && path.endsWith("/") ? path.slice(0, -1) : path;
   if (normalized in RETIRED_REDIRECTS) return RETIRED_REDIRECTS[normalized];
-  // Match nested retired routes too (e.g. /about/team → /about rule)
+  // Match nested retired routes too (e.g. /about/team → /about rule).
+  // Keys in EXACT_ONLY (e.g. /products) don't participate so their
+  // sub-routes can resolve to their own handlers.
   for (const key of Object.keys(RETIRED_REDIRECTS)) {
+    if (EXACT_ONLY.has(key)) continue;
     if (normalized.startsWith(key + "/")) return RETIRED_REDIRECTS[key];
   }
   return null;

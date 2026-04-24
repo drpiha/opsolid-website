@@ -3256,5 +3256,89 @@ export const content: Content = {
           "BUILT IN GERMANY · GDPR-NATIVE · NO VENDOR LOCK-IN · EN · DE · TR",
       },
     },
+
+    voiceAgent: {
+      hero: {
+        metaChip: "VOICE AGENT",
+        metaLabel: "[ PRODUCT · 01 ]",
+        title: {
+          pre: "Her çağrıya ",
+          italic: "otuz saniyede",
+          post: " ya da daha kısa sürede yanıt — yedi yirmi dört.",
+        },
+        lead:
+          "Müşterilerinizin kıdemli olmayan bir santralden ayırt edemeyeceği bir voice agent. Intent'e göre yönlendirir, takviminize kayıt eder, script tükendiğinde eskalasyon yapar. Retell veya Vapi üzerinde, uçtan uca denetimli, sizin playbook'unuzla eğitilmiş.",
+        ctaPrimary: "Pilot başlat",
+        ctaSecondary: "Canlı çağrıyı dinle",
+        features: [
+          {
+            label: "LATENCY",
+            value: "<800",
+            unit: "ms p50",
+            sub: "uçtan uca · Retell + GPT-4o",
+          },
+          {
+            label: "LANGUAGES",
+            value: "DE · EN · TR",
+            unit: "",
+            sub: "otomatik algılama",
+          },
+          {
+            label: "UPTIME",
+            value: "%99,9",
+            unit: " hedef",
+            sub: "Retell SLA · sağlayıcı ölçümü",
+          },
+        ],
+      },
+      flow: {
+        eyebrow: "[ ÇAĞRI AKIŞI ]",
+        headline: "Her çağrı, dört hamle.",
+        lead:
+          "Agent, gereken yerde deterministiktir — kimlik, planlama, devir — ve mümkün olan yerde konuşmacıdır. Politika uyduran açık uçlu sohbet yok.",
+        steps: [
+          {
+            num: "01 · GREET",
+            title: "İlk çalıştaki açılış.",
+            body:
+              "Açılış cümlesi markanızın sesinde. Dil, ilk cümleden otomatik algılanır.",
+          },
+          {
+            num: "02 · CLASSIFY",
+            title: "Menüye değil, intent'e göre yönlendir.",
+            body:
+              "Rezervasyon, destek, sevkiyat, teslimat, acil. Ekibinizin gerçek kuyruklarına eşlenir.",
+          },
+          {
+            num: "03 · RESOLVE",
+            title: "İşi yap, kaydı yaz.",
+            body:
+              "Cal.com'a rezervasyon yazar, CRM'i günceller, operasyon kanalına gönderir. Her eylem trace ID ile loglanır.",
+          },
+          {
+            num: "04 · HANDOFF",
+            title: "Başarısız olmadan eskale et.",
+            body:
+              "Güven düştüğünde veya intent yeniyse, tam transkript bağlamıyla insana sıcak devir.",
+          },
+        ],
+      },
+      spec: {
+        eyebrow: "[ TEKNİK ŞARTNAME ]",
+        headline: "Açıp inceleyebileceğiniz araçlar üzerine kurulu.",
+        lead:
+          "Black-box fiyatlandırma katmanı yok. Her katman değiştirilebilir, her prompt sizin git'inizde sürümlü.",
+        rows: [
+          { label: "Platform", value: "Retell AI veya Vapi — sizin seçiminiz" },
+          { label: "ASR", value: "Deepgram Nova-3 · çok dilli" },
+          { label: "LLM", value: "GPT-4o, Claude Sonnet veya gerekirse on-prem" },
+          { label: "TTS", value: "ElevenLabs veya Cartesia · klonlanmış ses" },
+          { label: "Telefon", value: "Twilio · Alman DID · GDPR DPA" },
+          { label: "Entegrasyonlar", value: "Cal.com, HubSpot, Pipedrive, SAP, n8n webhooks" },
+          { label: "Veri rezidansı", value: "EU-west · Frankfurt · US alt-işlemci yok" },
+          { label: "Çıkış maliyeti", value: "İki hafta. Prompt, veri ve numaralar taşınabilir." },
+        ],
+      },
+    },
   },
 } as const;

@@ -3267,6 +3267,90 @@ export const content = {
           "BUILT IN GERMANY · GDPR-NATIVE · NO VENDOR LOCK-IN · EN · DE · TR",
       },
     },
+
+    voiceAgent: {
+      hero: {
+        metaChip: "VOICE AGENT",
+        metaLabel: "[ PRODUCT · 01 ]",
+        title: {
+          pre: "Answer every call in ",
+          italic: "thirty seconds",
+          post: " or less — around the clock.",
+        },
+        lead:
+          "A voice agent your customers can't tell isn't a junior dispatcher. Routes by intent, books into your calendar, escalates when the script runs out. Deployed on Retell or Vapi, audited end-to-end, trained on your actual playbook.",
+        ctaPrimary: "Book a pilot",
+        ctaSecondary: "See a live call",
+        features: [
+          {
+            label: "LATENCY",
+            value: "<800",
+            unit: "ms p50",
+            sub: "end-to-end · Retell + GPT-4o",
+          },
+          {
+            label: "LANGUAGES",
+            value: "DE · EN · TR",
+            unit: "",
+            sub: "auto-detected",
+          },
+          {
+            label: "UPTIME",
+            value: "99.9",
+            unit: "% target",
+            sub: "Retell SLA · vendor-measured",
+          },
+        ],
+      },
+      flow: {
+        eyebrow: "[ CALL FLOW ]",
+        headline: "Every call, four moves.",
+        lead:
+          "The agent is deterministic where it needs to be — identity, scheduling, transfer — and conversational where it can be. No open-ended chat that invents policy.",
+        steps: [
+          {
+            num: "01 · GREET",
+            title: "Pick up within one ring.",
+            body:
+              "Opening line in your brand's voice. Language auto-detected from the first sentence.",
+          },
+          {
+            num: "02 · CLASSIFY",
+            title: "Route by intent, not menu.",
+            body:
+              "Booking, support, dispatch, delivery, emergency. Mapped to your team's actual queues.",
+          },
+          {
+            num: "03 · RESOLVE",
+            title: "Do the thing, write the record.",
+            body:
+              "Books into Cal.com, updates CRM, posts to ops channel. Every action logged with a trace ID.",
+          },
+          {
+            num: "04 · HANDOFF",
+            title: "Escalate before it fails.",
+            body:
+              "If confidence drops or intent is new, warm-transfer to a human with full transcript context.",
+          },
+        ],
+      },
+      spec: {
+        eyebrow: "[ TECHNICAL SPEC ]",
+        headline: "Built on tools you can open and audit.",
+        lead:
+          "No black-box pricing tiers. Every layer swappable, every prompt versioned in your git.",
+        rows: [
+          { label: "Platform", value: "Retell AI or Vapi — you pick" },
+          { label: "ASR", value: "Deepgram Nova-3 · multi-lingual" },
+          { label: "LLM", value: "GPT-4o, Claude Sonnet, or on-prem if needed" },
+          { label: "TTS", value: "ElevenLabs or Cartesia · cloned voice" },
+          { label: "Telephony", value: "Twilio · German DID · GDPR DPA" },
+          { label: "Integrations", value: "Cal.com, HubSpot, Pipedrive, SAP, n8n webhooks" },
+          { label: "Data residency", value: "EU-west · Frankfurt · no US subprocessors" },
+          { label: "Exit cost", value: "Two weeks. Prompts, data, numbers all portable." },
+        ],
+      },
+    },
   },
 };
 

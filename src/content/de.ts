@@ -3256,5 +3256,89 @@ export const content: Content = {
           "BUILT IN GERMANY · GDPR-NATIVE · NO VENDOR LOCK-IN · EN · DE · TR",
       },
     },
+
+    voiceAgent: {
+      hero: {
+        metaChip: "VOICE AGENT",
+        metaLabel: "[ PRODUCT · 01 ]",
+        title: {
+          pre: "Jeden Anruf in ",
+          italic: "dreißig Sekunden",
+          post: " oder weniger beantworten — rund um die Uhr.",
+        },
+        lead:
+          "Ein Voice Agent, den Ihre Kunden nicht von einem Junior-Dispatcher unterscheiden können. Routet nach Intent, bucht in Ihren Kalender, eskaliert, wenn das Skript endet. Auf Retell oder Vapi, end-to-end auditiert, auf Ihrem eigenen Playbook trainiert.",
+        ctaPrimary: "Pilot buchen",
+        ctaSecondary: "Live-Call anhören",
+        features: [
+          {
+            label: "LATENCY",
+            value: "<800",
+            unit: "ms p50",
+            sub: "end-to-end · Retell + GPT-4o",
+          },
+          {
+            label: "LANGUAGES",
+            value: "DE · EN · TR",
+            unit: "",
+            sub: "auto-erkannt",
+          },
+          {
+            label: "UPTIME",
+            value: "99,9",
+            unit: "% Ziel",
+            sub: "Retell SLA · herstellergemessen",
+          },
+        ],
+      },
+      flow: {
+        eyebrow: "[ GESPRÄCHSABLAUF ]",
+        headline: "Jeder Anruf, vier Züge.",
+        lead:
+          "Der Agent ist deterministisch, wo er es sein muss — Identität, Terminvergabe, Übergabe — und konversationell, wo er es sein darf. Keine offene Chat-Runde, die Richtlinien erfindet.",
+        steps: [
+          {
+            num: "01 · GREET",
+            title: "Abheben beim ersten Klingeln.",
+            body:
+              "Einstiegssatz in der Stimme Ihrer Marke. Sprache wird anhand des ersten Satzes automatisch erkannt.",
+          },
+          {
+            num: "02 · CLASSIFY",
+            title: "Routen nach Intent, nicht Menü.",
+            body:
+              "Buchung, Support, Disposition, Lieferung, Notfall. Gemappt auf die tatsächlichen Queues Ihres Teams.",
+          },
+          {
+            num: "03 · RESOLVE",
+            title: "Die Sache erledigen, den Eintrag schreiben.",
+            body:
+              "Bucht in Cal.com, aktualisiert das CRM, postet in den Ops-Kanal. Jede Aktion mit Trace-ID protokolliert.",
+          },
+          {
+            num: "04 · HANDOFF",
+            title: "Eskalieren, bevor es scheitert.",
+            body:
+              "Wenn Confidence sinkt oder der Intent neu ist, warme Übergabe an einen Menschen mit vollem Transkript-Kontext.",
+          },
+        ],
+      },
+      spec: {
+        eyebrow: "[ TECHNISCHE SPEC ]",
+        headline: "Gebaut auf Tools, die Sie öffnen und prüfen können.",
+        lead:
+          "Keine Black-Box-Preisstufen. Jede Schicht austauschbar, jeder Prompt in Ihrem Git versioniert.",
+        rows: [
+          { label: "Plattform", value: "Retell AI oder Vapi — Sie wählen" },
+          { label: "ASR", value: "Deepgram Nova-3 · mehrsprachig" },
+          { label: "LLM", value: "GPT-4o, Claude Sonnet oder on-prem, falls nötig" },
+          { label: "TTS", value: "ElevenLabs oder Cartesia · geklonte Stimme" },
+          { label: "Telefonie", value: "Twilio · deutsche DID · GDPR-DPA" },
+          { label: "Integrationen", value: "Cal.com, HubSpot, Pipedrive, SAP, n8n-Webhooks" },
+          { label: "Datenresidenz", value: "EU-west · Frankfurt · keine US-Subprozessoren" },
+          { label: "Ausstiegskosten", value: "Zwei Wochen. Prompts, Daten und Nummern portabel." },
+        ],
+      },
+    },
   },
 } as const;
