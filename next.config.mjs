@@ -11,6 +11,15 @@ const nextConfig = {
       { protocol: "https", hostname: "images.unsplash.com" },
     ],
   },
+  experimental: {
+    // @napi-rs/canvas ships native .node binaries that webpack can't bundle.
+    // Externalizing tells Next.js to leave it as a runtime require() in
+    // server bundles, which is what we need for the QR rendering pipeline
+    // (src/lib/qr/styled-server.ts, src/lib/qr/ai-art.ts).
+    // jsqr is pure JS but lives next to canvas in our QR pipeline; keeping
+    // them grouped here documents the dependency.
+    serverComponentsExternalPackages: ["@napi-rs/canvas", "jsqr"],
+  },
 };
 
 // -----------------------------------------------------------------------------

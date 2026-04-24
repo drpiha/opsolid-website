@@ -1,28 +1,24 @@
 // =============================================================================
 // OG share image for a published digital card — GET /c/[slug].png
 //
-// 1200×630 PNG rendered by next/og. Composition:
+// 1200×630 PNG rendered by next/og. Composition (premium upgrade 2026-04-23):
 //   • solid background = brandPrimaryHex (fallback #15120F — ink)
-//   • left half: name (big serif-alike), title (medium), company (small),
-//     with a 4-px underline in brandAccentHex beneath the name
-//   • right side: white QR of the public URL, 320×320 inside a rounded
-//     white "card" panel with a thin shadow-ish border, small "Scan to view"
-//     caption beneath
-//   • bottom-left caption: domain and "Digital Card by OpSolid"
-//
-// No external fonts — we lean on a system serif + sans stack via inline CSS.
-// This keeps the route fast and avoids any network fetch at render time.
+//   • subtle radial gradient overlay at the corners for depth
+//   • LEFT: optional avatar (circular, 200px) when photoPath is set,
+//           name (big serif), title, company, accent underline, URL footer
+//   • RIGHT: customer's chosen QR style fetched from /api/qr/[slug]?logo=1,
+//           inside a rounded white panel with a brand-accent border
 //
 // Caching: s-maxage=60 + stale-while-revalidate so edits propagate within a
 // minute without hammering the renderer. Non-PUBLISHED orders return 404
-// to avoid leaking pre-publish data (the card data is still in the DB but
-// the public page 404s until the designer publishes).
+// to avoid leaking pre-publish data.
 // =============================================================================
 
 import { ImageResponse } from "next/og";
-import QRCode from "qrcode";
 import { prisma } from "@/lib/prisma";
 import { CardDataSchema } from "@/lib/validation";
+import { renderQr } from "@/lib/qr/styled-server";
+import { absoluteAssetUrl } from "@/lib/storage";
 import { getSiteUrl } from "@/lib/stripe";
 
 export const runtime = "nodejs";
@@ -40,6 +36,18 @@ const FONT_STACK =
   '"Instrument Serif", "Georgia", "Times New Roman", serif';
 const SANS_STACK =
   'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
+
+const QR_PIXEL_SIZE = 320;
+
+interface SavedQrStyle {
+  preset?: string;
+  primary?: string;
+  accent?: string;
+  withLogo?: boolean;
+  withPhoto?: boolean;
+  ai?: { generatedUrl?: string };
+  savedUrl?: string;
+}
 
 export async function GET(
   _req: Request,
@@ -63,12 +71,40 @@ export async function GET(
   const siteUrl = getSiteUrl();
   const publicUrl = `${siteUrl}/c/${params.slug}`;
 
-  // QR as a data URL — embedded as <img> in the ImageResponse.
-  const qrDataUrl = await QRCode.toDataURL(publicUrl, {
-    margin: 1,
-    width: 320,
-    color: { dark: "#15120F", light: "#FFFFFF" },
-  });
+  // Build the QR. We render server-side here (instead of pointing <img> at
+  // /api/qr/[slug]) so the OG image is fully self-contained — next/og's image
+  // fetcher can be flaky for same-origin URLs during ISR generation.
+  const saved = (order.qrStyle ?? null) as SavedQrStyle | null;
+  let qrDataUrl: string;
+  try {
+    const { bytes } = await renderQr({
+      data: publicUrl,
+      preset: saved?.preset ?? "rounded",
+      primary: saved?.primary ?? "#15120F",
+      accent: saved?.accent ?? accent,
+      format: "png",
+      size: QR_PIXEL_SIZE,
+      // Centered logo or photo when configured. The QR endpoint mirrors this
+      // logic — we keep them in sync so /api/qr and the OG image agree.
+      centerImageUrl:
+        saved?.withLogo && order.logoPath
+          ? absoluteAssetUrl(order.logoPath, siteUrl)
+          : saved?.withPhoto && order.photoPath
+          ? absoluteAssetUrl(order.photoPath, siteUrl)
+          : undefined,
+    });
+    qrDataUrl = `data:image/png;base64,${bytes.toString("base64")}`;
+  } catch (err) {
+    console.error("[og] QR render failed, falling back to plain:", err);
+    // Final fallback: tiny inline SVG so the image still renders something
+    // recognisable rather than a broken OG card.
+    qrDataUrl =
+      "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'/%3E";
+  }
+
+  const photoUrl = order.photoPath
+    ? absoluteAssetUrl(order.photoPath, siteUrl)
+    : null;
 
   return new ImageResponse(
     (
@@ -82,9 +118,20 @@ export async function GET(
           fontFamily: SANS_STACK,
           padding: "72px",
           boxSizing: "border-box",
+          position: "relative",
         }}
       >
-        {/* LEFT: identity block */}
+        {/* Soft radial accent at top-right and bottom-left for premium depth */}
+        <div
+          style={{
+            position: "absolute",
+            inset: 0,
+            background: `radial-gradient(at 88% 12%, ${accent}33 0%, transparent 55%), radial-gradient(at 8% 90%, ${accent}22 0%, transparent 55%)`,
+            display: "flex",
+          }}
+        />
+
+        {/* LEFT: identity block (with optional avatar) */}
         <div
           style={{
             flex: 1,
@@ -92,24 +139,49 @@ export async function GET(
             flexDirection: "column",
             justifyContent: "center",
             paddingRight: "40px",
+            position: "relative",
           }}
         >
+          {photoUrl ? (
+            <div
+              style={{
+                width: 180,
+                height: 180,
+                borderRadius: 90,
+                overflow: "hidden",
+                marginBottom: 28,
+                border: `4px solid ${accent}`,
+                display: "flex",
+              }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={photoUrl}
+                alt=""
+                width={180}
+                height={180}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            </div>
+          ) : (
+            <div
+              style={{
+                fontSize: 20,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                opacity: 0.7,
+                fontFamily: SANS_STACK,
+                display: "flex",
+              }}
+            >
+              OpSolid · Digital Card
+            </div>
+          )}
           <div
             style={{
-              fontSize: 20,
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-              opacity: 0.7,
-              fontFamily: SANS_STACK,
-            }}
-          >
-            OpSolid · Digital Card
-          </div>
-          <div
-            style={{
-              fontSize: 96,
+              fontSize: 88,
               lineHeight: 1.05,
-              marginTop: 24,
+              marginTop: photoUrl ? 0 : 24,
               fontFamily: FONT_STACK,
               fontWeight: 400,
               display: "flex",
@@ -129,8 +201,8 @@ export async function GET(
           {title ? (
             <div
               style={{
-                fontSize: 36,
-                marginTop: 28,
+                fontSize: 32,
+                marginTop: 24,
                 opacity: 0.92,
                 display: "flex",
                 fontFamily: SANS_STACK,
@@ -142,7 +214,7 @@ export async function GET(
           {company ? (
             <div
               style={{
-                fontSize: 26,
+                fontSize: 24,
                 marginTop: 8,
                 opacity: 0.7,
                 display: "flex",
@@ -174,6 +246,7 @@ export async function GET(
             flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
+            position: "relative",
           }}
         >
           <div
@@ -186,7 +259,7 @@ export async function GET(
             }}
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={qrDataUrl} alt="" width={320} height={320} />
+            <img src={qrDataUrl} alt="" width={QR_PIXEL_SIZE} height={QR_PIXEL_SIZE} />
           </div>
           <div
             style={{

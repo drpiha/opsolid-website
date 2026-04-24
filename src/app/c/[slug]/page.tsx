@@ -42,11 +42,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description: card.success ? card.data.bio : undefined,
       type: "profile",
       url: `https://opsolid.de/c/${slug}`,
+      // 1200×630 first (used by Facebook, LinkedIn, Twitter X, Slack, Discord),
+      // then the 600×600 square that WhatsApp / iMessage / Telegram prefer
+      // in chat thumbnails — having both lets each platform pick its best fit.
       images: [
         {
           url: `/c/${slug}.png`,
           width: 1200,
           height: 630,
+          alt: `${name}${company ? " · " + company : ""}`,
+        },
+        {
+          url: `/c/${slug}/wa.png`,
+          width: 600,
+          height: 600,
           alt: `${name}${company ? " · " + company : ""}`,
         },
       ],
