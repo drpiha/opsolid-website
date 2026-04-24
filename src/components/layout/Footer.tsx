@@ -1,13 +1,20 @@
 "use client";
 
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
+import { useLocale } from "@/context/LocaleContext";
 
 /**
- * Verbatim port of the Claude Design SiteFooter mock
- * (opsolid-design-system/project/ui_kits/website/components/Site.jsx).
- * Hrefs mapped to the real Next.js routes; copy and layout preserved.
+ * Footer — industrial-luxury v2 port of SiteFooter mock, content driven
+ * by `t.v2.footer.*`. Four columns (Products / Services / Studio / Legal)
+ * + brand block with live FRA · DE chip, base line with copyright +
+ * trust signals.
  */
 export function Footer() {
+  const { t } = useLocale();
+  const f = t.v2.footer;
+  const n = t.v2.nav;
+  const year = new Date().getFullYear();
+
   return (
     <footer className="os-footer">
       <div className="wrap">
@@ -17,96 +24,75 @@ export function Footer() {
               <span className="os-brand-mark" aria-hidden="true" />
               OpSolid
             </Link>
-            <p>
-              Independent automation studio. Hamburg · Frankfurt. GDPR-native
-              infrastructure, no vendor lock-in.
-            </p>
+            <p>{f.tagline}</p>
             <div style={{ display: "flex", gap: 8, marginTop: 20 }}>
               <span className="chip">
-                <span className="chip-dot chip-dot-live" /> FRA · DE
+                <span className="chip-dot chip-dot-live" /> {f.chipLive}
               </span>
-              <span className="chip">EN · DE · TR</span>
+              <span className="chip">{f.chipLanguages}</span>
             </div>
           </div>
+
           <div className="os-footer-cols">
             <div className="os-footer-col">
-              <div className="os-footer-col-h">Products</div>
+              <div className="os-footer-col-h">{f.cols.productsHeading}</div>
               <ul>
                 <li>
-                  <Link href="/products/voice-agent">Voice Agent</Link>
+                  <Link href="/products/voice-agent">{n.voiceAgent}</Link>
                 </li>
                 <li>
-                  <Link href="/products/digital-card">Digital Card</Link>
+                  <Link href="/products/digital-card">{n.digitalCard}</Link>
                 </li>
                 <li>
-                  <Link href="/products/kutasia">Kutasia</Link>
-                </li>
-                <li>
-                  <Link href="/products/booking-agent">Booking Agent</Link>
-                </li>
-                <li>
-                  <Link href="/products/digital-reception">Reception</Link>
+                  <Link href="/products/kutasia">{n.kutasia}</Link>
                 </li>
               </ul>
             </div>
             <div className="os-footer-col">
-              <div className="os-footer-col-h">Services</div>
+              <div className="os-footer-col-h">{f.cols.servicesHeading}</div>
               <ul>
                 <li>
-                  <Link href="/solutions">Workflow automation</Link>
+                  <Link href="/#capabilities">{f.cols.services.workflow}</Link>
                 </li>
                 <li>
-                  <Link href="/solutions">Systems integration</Link>
+                  <Link href="/#capabilities">{f.cols.services.integration}</Link>
                 </li>
                 <li>
-                  <Link href="/solutions">Internal tools</Link>
+                  <Link href="/#capabilities">{f.cols.services.internal}</Link>
                 </li>
                 <li>
-                  <Link href="/solutions">AI-assisted processes</Link>
+                  <Link href="/#capabilities">{f.cols.services.ai}</Link>
                 </li>
               </ul>
             </div>
             <div className="os-footer-col">
-              <div className="os-footer-col-h">Studio</div>
+              <div className="os-footer-col-h">{f.cols.studioHeading}</div>
               <ul>
                 <li>
-                  <Link href="/about">Process</Link>
+                  <Link href="/blog">{f.cols.studio.journal}</Link>
                 </li>
                 <li>
-                  <Link href="/about">Principles</Link>
-                </li>
-                <li>
-                  <Link href="/blog">Journal</Link>
-                </li>
-                <li>
-                  <Link href="/contact">Contact</Link>
+                  <Link href="/contact">{f.cols.studio.contact}</Link>
                 </li>
               </ul>
             </div>
             <div className="os-footer-col">
-              <div className="os-footer-col-h">Legal</div>
+              <div className="os-footer-col-h">{f.cols.legalHeading}</div>
               <ul>
                 <li>
-                  <Link href="/privacy">Privacy</Link>
+                  <Link href="/privacy">{f.cols.legal.privacy}</Link>
                 </li>
                 <li>
-                  <Link href="/impressum">Imprint</Link>
-                </li>
-                <li>
-                  <Link href="/privacy">DPA</Link>
-                </li>
-                <li>
-                  <Link href="/privacy">GDPR</Link>
+                  <Link href="/impressum">{f.cols.legal.imprint}</Link>
                 </li>
               </ul>
             </div>
           </div>
         </div>
+
         <div className="os-footer-base">
-          <div>© {new Date().getFullYear()} OpSolid UG · Hamburg, DE</div>
-          <div>
-            GDPR-native · Hosted in Frankfurt · No US subprocessors
-          </div>
+          <div>© {year} {f.base.copyrightSuffix}</div>
+          <div>{f.base.trustLine}</div>
         </div>
       </div>
     </footer>

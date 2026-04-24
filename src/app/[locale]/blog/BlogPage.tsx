@@ -2,236 +2,236 @@
 
 import { useState } from "react";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
-import Image from "next/image";
-import { Clock, Calendar, ArrowRight } from "lucide-react";
-import {
-  AnimatedSection,
-  StaggerContainer,
-  StaggerItem,
-} from "@/components/shared/AnimatedSection";
 import { useLocale } from "@/context/LocaleContext";
-import { cn } from "@/lib/utils";
 
-/* Unsplash images mapped by slug for precise control */
-const blogImages: Record<string, string> = {
-  "why-n8n-is-the-future-of-workflow-automation":
-    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=675&fit=crop",
-  "5-signs-your-business-needs-process-automation":
-    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=675&fit=crop",
-  "connecting-crm-erp-the-integration-playbook":
-    "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&h=675&fit=crop",
-  "ai-chatbots-vs-rule-based-bots":
-    "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=675&fit=crop",
-  "make-vs-zapier-vs-n8n-comparison":
-    "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=1200&h=675&fit=crop",
-  "whatsapp-business-automation-guide":
-    "https://images.unsplash.com/photo-1611746872915-64382b5c76da?w=1200&h=675&fit=crop",
-};
-
-/* Fallback images by category */
-const categoryImages: Record<string, string> = {
-  automation:
-    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=675&fit=crop",
-  operations:
-    "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=675&fit=crop",
-  integration:
-    "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=1200&h=675&fit=crop",
-  ai: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&h=675&fit=crop",
-};
-
+/**
+ * Journal index — industrial-luxury v2 port of blog.html.
+ *
+ * Real informational posts (from t.blog.posts) render in the v2 journal
+ * aesthetic: the most recent as a feature block with a lattice art panel,
+ * the rest as a grid. The subscribe panel posts through /api/contact so
+ * anyone interested hears about new pieces.
+ *
+ * If the posts list is empty the surface falls back to the "Vol. 0 —
+ * coming" scaffold so the page still reads as a finished journal shell.
+ */
 export function BlogPage() {
   const { t } = useLocale();
-  const s = t.blog;
-  const [activeCategory, setActiveCategory] = useState("all");
+  const b = t.v2.blog;
+  const posts = t.blog.posts ?? [];
+  const sorted = [...posts].sort((a, b) =>
+    (b.date ?? "").localeCompare(a.date ?? ""),
+  );
+  const [feature, ...rest] = sorted;
 
-  const filteredPosts =
-    activeCategory === "all"
-      ? s.posts
-      : s.posts.filter((post) => post.category === activeCategory);
+  const [email, setEmail] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [result, setResult] = useState<"idle" | "ok" | "error">("idle");
 
-  const categoryKeys = Object.keys(s.categories) as Array<keyof typeof s.categories>;
-
-  const [featured, ...rest] = filteredPosts;
-
-  const resolveImage = (slug: string, category: string) =>
-    blogImages[slug] ||
-    categoryImages[category] ||
-    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=675&fit=crop";
+  const onSubscribe = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (submitting || !email.trim()) return;
+    setSubmitting(true);
+    setResult("idle");
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: "Journal subscriber",
+          email,
+          topics: ["journal-subscribe"],
+          message:
+            "Subscribe to the OpSolid journal — notify on new long-form piece.",
+        }),
+      });
+      setResult(res.ok ? "ok" : "error");
+      if (res.ok) setEmail("");
+    } catch {
+      setResult("error");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <>
-      {/* Hero */}
-      <section
-        aria-labelledby="blog-title"
-        className="relative pt-32 md:pt-40 pb-10 md:pb-14 bg-white"
-      >
-        <div className="container-wide">
-          <AnimatedSection className="max-w-3xl">
-            <div className="eyebrow uppercase text-brand mb-4">{s.hero.label}</div>
-            <h1
-              id="blog-title"
-              className="text-[clamp(2.5rem,6vw,4.5rem)] font-extrabold leading-[1.02] tracking-[-0.035em] text-ink text-balance"
+      <section className="jn-head" data-screen-label="Journal Head">
+        <div className="wrap">
+          <span className="meta meta-hot">{b.head.eyebrow}</span>
+          <h1 className="jn-title">
+            {b.head.title.pre}
+            <span className="editorial">{b.head.title.italic}</span>
+            {b.head.title.post}
+          </h1>
+          <p className="lead" style={{ maxWidth: "62ch", marginTop: 16 }}>
+            {b.head.intro}
+          </p>
+        </div>
+      </section>
+
+      {feature ? (
+        <section className="os-section">
+          <div className="wrap">
+            <Link
+              href={`/blog/${feature.slug}`}
+              className="jn-feature"
+              style={{ textDecoration: "none", color: "inherit" }}
             >
-              {s.hero.headline}
-            </h1>
-            <p className="mt-6 md:mt-8 text-ink/70 text-body-lg leading-relaxed max-w-2xl text-pretty">
-              {s.hero.description}
-            </p>
-          </AnimatedSection>
-        </div>
-      </section>
-
-      {/* Category filter */}
-      <section className="bg-white">
-        <div className="container-wide py-6">
-          <div className="flex flex-wrap items-center justify-center gap-2">
-            {categoryKeys.map((key) => (
-              <button
-                key={key}
-                onClick={() => setActiveCategory(key)}
-                className={cn(
-                  "rounded-full px-4 py-2 text-xs font-semibold transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand/30 focus-visible:ring-offset-2",
-                  activeCategory === key
-                    ? "bg-ink text-white"
-                    : "bg-neutral-100 text-ink/70 hover:bg-neutral-200 hover:text-ink"
-                )}
-              >
-                {s.categories[key]}
-              </button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Featured + grid */}
-      <section className="section-sm bg-neutral-50">
-        <div className="container-wide">
-          {/* Featured post — big 16:9 pop-card hero */}
-          {featured && (
-            <AnimatedSection className="mb-12 md:mb-16">
-              <Link
-                href={`/blog/${featured.slug}`}
-                className="pop-card group block overflow-hidden p-0"
-              >
-                <div className="relative aspect-[16/9] overflow-hidden">
-                  <Image
-                    src={resolveImage(featured.slug, featured.category)}
-                    alt={featured.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                    sizes="(max-width: 1024px) 100vw, 1200px"
-                    priority
-                  />
+              <div className="jn-feature-body">
+                <span className="meta meta-hot">
+                  FEATURED · {(feature.category ?? "NOTE").toUpperCase()}
+                </span>
+                <div className="jn-feature-h" style={{ marginTop: 14 }}>
+                  {feature.title}
                 </div>
-                <div className="p-6 md:p-10">
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="trust-pill bg-brand/10 text-brand">
-                      Featured
-                    </span>
-                    <span className="eyebrow uppercase text-ink/50">
-                      {s.categories[
-                        featured.category as keyof typeof s.categories
-                      ] || featured.category}
-                    </span>
-                  </div>
-                  <h2 className="text-[clamp(1.75rem,3.6vw,2.75rem)] font-extrabold leading-[1.1] tracking-[-0.025em] text-ink mb-4 text-balance group-hover:text-brand transition-colors">
-                    {featured.title}
-                  </h2>
-                  <p className="text-ink/70 text-body leading-relaxed text-pretty line-clamp-3 max-w-3xl">
-                    {featured.excerpt}
-                  </p>
-                  <div className="mt-6 flex flex-wrap items-center gap-4 text-xs text-ink/50">
-                    <span className="flex items-center gap-1.5">
-                      <Calendar size={12} aria-hidden="true" />
-                      {featured.date}
-                    </span>
-                    <span className="flex items-center gap-1.5">
-                      <Clock size={12} aria-hidden="true" />
-                      {featured.readTime} {s.minRead}
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-ink group-hover:text-brand transition-colors">
-                      <span>{s.readMore}</span>
-                      <ArrowRight
-                        size={14}
-                        aria-hidden="true"
-                        className="transition-transform duration-200 group-hover:translate-x-0.5"
-                      />
-                    </span>
-                  </div>
+                <p className="jn-feature-lede">{feature.excerpt}</p>
+                <div className="jn-feature-meta">
+                  {feature.date} · {feature.readTime} MIN
                 </div>
-              </Link>
-            </AnimatedSection>
-          )}
-
-          {/* 3-column grid */}
-          {rest.length > 0 && (
-            <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-              {rest.map((post) => (
-                <StaggerItem key={post.slug}>
-                  <Link
-                    href={`/blog/${post.slug}`}
-                    className="pop-card group block h-full overflow-hidden p-0"
-                  >
-                    <div className="relative aspect-[16/9] overflow-hidden">
-                      <Image
-                        src={resolveImage(post.slug, post.category)}
-                        alt={post.title}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                      />
-                    </div>
-                    <div className="p-6 md:p-7 flex flex-col">
-                      <div className="eyebrow uppercase text-brand mb-3">
-                        {s.categories[
-                          post.category as keyof typeof s.categories
-                        ] || post.category}
-                      </div>
-                      <h3 className="text-lg md:text-xl font-bold text-ink tracking-[-0.015em] leading-snug mb-3 text-balance group-hover:text-brand transition-colors">
-                        {post.title}
-                      </h3>
-                      <p className="text-sm text-ink/70 leading-relaxed text-pretty line-clamp-3 flex-1">
-                        {post.excerpt}
-                      </p>
-                      <div className="mt-5 flex items-center gap-4 text-xs text-ink/50">
-                        <span className="flex items-center gap-1.5">
-                          <Calendar size={12} aria-hidden="true" />
-                          {post.date}
-                        </span>
-                        <span className="flex items-center gap-1.5">
-                          <Clock size={12} aria-hidden="true" />
-                          {post.readTime} {s.minRead}
-                        </span>
-                      </div>
-                    </div>
-                  </Link>
-                </StaggerItem>
-              ))}
-            </StaggerContainer>
-          )}
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="section-sm bg-white">
-        <div className="container-wide">
-          <AnimatedSection>
-            <div className="pop-card p-10 md:p-14 text-center max-w-3xl mx-auto">
-              <div className="eyebrow uppercase text-brand mb-4">Next step</div>
-              <h2 className="text-[clamp(1.75rem,4vw,3rem)] font-extrabold leading-[1.08] tracking-[-0.03em] text-ink text-balance">
-                {s.cta.headline}
-              </h2>
-              <p className="mt-5 max-w-xl mx-auto text-ink/70 text-body leading-relaxed text-pretty">
-                {s.cta.description}
-              </p>
-              <div className="mt-8 flex justify-center">
-                <Link href="/contact" className="btn-primary">
-                  <span>{s.cta.primaryCta}</span>
-                  <ArrowRight size={16} aria-hidden="true" />
-                </Link>
               </div>
+              <div className="jn-feature-art">
+                <svg className="jn-art-lattice" viewBox="0 0 320 200">
+                  {Array.from({ length: 9 }).map((_, i) => (
+                    <line
+                      key={i}
+                      x1={20 + i * 34}
+                      y1={20}
+                      x2={20 + i * 34}
+                      y2={180}
+                    />
+                  ))}
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <line
+                      key={`h-${i}`}
+                      x1={20}
+                      y1={20 + i * 32}
+                      x2={292}
+                      y2={20 + i * 32}
+                    />
+                  ))}
+                  {Array.from({ length: 54 }).map((_, i) => {
+                    const x = 20 + (i % 9) * 34;
+                    const y = 20 + Math.floor(i / 9) * 32;
+                    const on = (i * 37) % 7 < 3;
+                    return on ? (
+                      <circle
+                        key={`d-${i}`}
+                        cx={x}
+                        cy={y}
+                        r="2.5"
+                        className="jn-art-dot"
+                      />
+                    ) : null;
+                  })}
+                </svg>
+              </div>
+            </Link>
+          </div>
+        </section>
+      ) : (
+        <section className="os-section">
+          <div className="wrap">
+            <article className="jn-feature" style={{ pointerEvents: "none" }}>
+              <div className="jn-feature-body">
+                <span className="meta meta-hot">{b.emptyFeature.tag}</span>
+                <div className="jn-feature-h" style={{ marginTop: 14 }}>
+                  {b.emptyFeature.headline}
+                </div>
+                <p className="jn-feature-lede">{b.emptyFeature.lede}</p>
+                <div className="jn-feature-meta">{b.emptyFeature.meta}</div>
+              </div>
+              <div className="jn-feature-art" />
+            </article>
+          </div>
+        </section>
+      )}
+
+      {rest.length > 0 && (
+        <section className="os-section">
+          <div className="wrap">
+            <div className="jn-grid">
+              {rest.map((p) => (
+                <Link
+                  key={p.slug}
+                  href={`/blog/${p.slug}`}
+                  className="jn-post"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  <div className="jn-post-meta">
+                    <span>{(p.category ?? "NOTE").toUpperCase()}</span>
+                    <span>{p.readTime} MIN</span>
+                  </div>
+                  <div className="jn-post-h">{p.title}</div>
+                  <div className="jn-post-s">{p.excerpt}</div>
+                  <div className="jn-post-foot">{p.date}</div>
+                </Link>
+              ))}
             </div>
-          </AnimatedSection>
+          </div>
+        </section>
+      )}
+
+      <section className="os-section">
+        <div className="wrap">
+          <div className="jn-series">
+            <div className="jn-series-copy">
+              <h3 style={{ marginBottom: 12 }}>{b.series.title}</h3>
+              <p className="lead" style={{ maxWidth: "52ch" }}>
+                {b.series.body}
+              </p>
+            </div>
+            <form
+              onSubmit={onSubscribe}
+              style={{
+                display: "flex",
+                gap: 10,
+                flexWrap: "wrap",
+                alignItems: "center",
+                marginTop: 20,
+              }}
+            >
+              <input
+                type="email"
+                required
+                className="field"
+                style={{ maxWidth: 320, flex: "1 1 220px" }}
+                placeholder={b.series.placeholder}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={submitting}
+              />
+              <button
+                type="submit"
+                className="btn btn-primary"
+                disabled={submitting}
+              >
+                {submitting ? "…" : b.series.cta}
+              </button>
+              <span
+                className="meta"
+                style={{ color: "var(--ink-500)", width: "100%" }}
+              >
+                {b.series.legal}
+              </span>
+              {result === "ok" && (
+                <span
+                  className="meta"
+                  style={{ color: "var(--copper-200)", width: "100%" }}
+                >
+                  ✓ {b.series.cta} — thanks.
+                </span>
+              )}
+              {result === "error" && (
+                <span
+                  className="meta"
+                  style={{ color: "var(--signal-err, #B8514B)", width: "100%" }}
+                >
+                  Something didn&rsquo;t send. Try again later.
+                </span>
+              )}
+            </form>
+          </div>
         </div>
       </section>
     </>

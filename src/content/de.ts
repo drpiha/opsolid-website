@@ -3436,6 +3436,121 @@ export const content: Content = {
       },
     },
 
+    contact: {
+      hero: {
+        metaChip: "BOOKING OPEN · 2026 Q2",
+        metaLabel: "[ KONTAKT ]",
+        title: {
+          pre: "Dreißig Minuten. Ein schriftlicher Plan. ",
+          italic: "Kein Pitch-Deck.",
+          post: "",
+        },
+        lead:
+          "Ein kurzes Gespräch. Ein Operations-Walkthrough, eine klare Einschätzung, was automatisiert werden sollte und was nicht, und eine schriftliche Zusammenfassung innerhalb von 48 Stunden in Ihrem Posteingang — ob das Mandat weitergeht oder nicht.",
+        contacts: [
+          {
+            key: "MAIL",
+            value: "drhasanhd@gmail.com",
+            meta: "DE · EN · TR",
+            href: "mailto:drhasanhd@gmail.com",
+          },
+          {
+            key: "TEL",
+            value: "Auf Anfrage",
+            meta: "CET · Geschäftszeiten",
+            href: "",
+          },
+          {
+            key: "STUDIO",
+            value: "Hamburg, DE",
+            meta: "NACH VEREINBARUNG",
+            href: "",
+          },
+          {
+            key: "DATA · EU",
+            value: "Rechenzentrum Frankfurt",
+            meta: "FRA · AV-DSGVO",
+            href: "",
+          },
+        ],
+        trust: [
+          { em: "GDPR", rest: "nativ" },
+          { em: "ISO 27001", rest: "konform" },
+          { em: "KEINE", rest: "US-Subprozessoren" },
+          { em: "KEIN", rest: "Vendor-Lock-in" },
+        ],
+      },
+      form: {
+        title: "Discovery-Call buchen",
+        meta: "FORM · 01",
+        fields: {
+          name: { label: "Name", placeholder: "Ihr vollständiger Name" },
+          company: { label: "Unternehmen", placeholder: "Betreibende Einheit" },
+          email: { label: "E-Mail", placeholder: "sie@firma.de" },
+          phone: { label: "Telefon (optional)", placeholder: "+49 …" },
+          interest: { label: "Interesse an" },
+          message: {
+            label: "Was liegt auf Ihrem Operations-Floor?",
+            placeholder:
+              "Ein, zwei Sätze dazu, was manuell ist, was fragil ist, woran Sie aufhören möchten zu denken.",
+          },
+        },
+        topics: [
+          { key: "automation", label: "Workflow-Automatisierung" },
+          { key: "integration", label: "Systemintegration" },
+          { key: "voice", label: "Voice Agent" },
+          { key: "card", label: "Digital Card" },
+          { key: "kutasia", label: "Kutasia" },
+          { key: "other", label: "Etwas anderes" },
+        ],
+        legal:
+          "Einreichung geht an drhasanhd@gmail.com. Keine Drittanbieter-Analyse, keine Marketing-Liste, kein Follow-up nach 14 Tagen.",
+        submitCta: "Anruf anfragen",
+        success: "Danke — wir antworten innerhalb von 48 Stunden.",
+        error: "Etwas ging schief. Versuchen Sie es erneut oder schreiben Sie direkt.",
+      },
+    },
+
+    blog: {
+      head: {
+        eyebrow: "[ JOURNAL · VOL. 0 ]",
+        title: {
+          pre: "Notizen vom ",
+          italic: "Operations-Floor",
+          post: ".",
+        },
+        intro:
+          "Feldnotizen, Mandatsberichte und gelegentliche klare Meinungen. Die ersten Stücke sind in Arbeit — abonnieren Sie unten, um zu erfahren, wann sie erscheinen.",
+      },
+      emptyFeature: {
+        tag: "IN ARBEIT · LANGFORM",
+        headline:
+          "Die kleinste ehrliche Automatisierung: was Geschäft bewegt vs. was im Deck gut aussieht.",
+        lede:
+          "Eröffnungsstück des Journals. Entwurf in Arbeit — darüber, wie ein n8n-Workflow mit weniger als 20 Zeilen einen ERP-Austausch bei den Messgrößen schlägt, die zählen.",
+        meta: "D. PIHA · GEPLANT · 15 MIN",
+      },
+      series: {
+        title: "Playbooks für Automatisierung ohne Lock-in",
+        body:
+          "Eine laufende Serie. Die ersten sechs Stücke sind geplant — die zweite Hälfte im nächsten Quartal. Keine E-Mail-Blasts, keine Drip-Kampagnen — nur eine Notiz, wenn etwas landet.",
+        placeholder: "sie@firma.de",
+        cta: "Abonnieren",
+        legal: "Eine E-Mail pro Artikel. Abmeldung mit einem Klick.",
+      },
+    },
+
+    legal: {
+      impressum: {
+        eyebrow: "[ LEGAL · IMPRESSUM ]",
+        title: "Impressum",
+      },
+      privacy: {
+        eyebrow: "[ LEGAL · DATENSCHUTZ ]",
+        title: "Datenschutz",
+      },
+    },
+
     kutasia: {
       hero: {
         metaChip: "KUTASIA",

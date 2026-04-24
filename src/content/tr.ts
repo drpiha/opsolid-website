@@ -3436,6 +3436,121 @@ export const content: Content = {
       },
     },
 
+    contact: {
+      hero: {
+        metaChip: "BOOKING OPEN · 2026 Q2",
+        metaLabel: "[ İLETİŞİM ]",
+        title: {
+          pre: "Otuz dakika. Yazılı bir plan. ",
+          italic: "Pitch deck yok.",
+          post: "",
+        },
+        lead:
+          "Kısa bir görüşme. Operasyon keşfi, neyin otomasyona uygun olduğu ve olmadığı konusunda dürüst görüş ve 48 saat içinde gelen kutunuza yazılı bir özet — iş ilerlese de ilerlemese de.",
+        contacts: [
+          {
+            key: "MAIL",
+            value: "drhasanhd@gmail.com",
+            meta: "DE · EN · TR",
+            href: "mailto:drhasanhd@gmail.com",
+          },
+          {
+            key: "TEL",
+            value: "Talep üzerine",
+            meta: "CET · mesai saatleri",
+            href: "",
+          },
+          {
+            key: "STUDIO",
+            value: "Hamburg, DE",
+            meta: "RANDEVU İLE",
+            href: "",
+          },
+          {
+            key: "DATA · EU",
+            value: "Frankfurt veri merkezi",
+            meta: "FRA · AV-DSGVO",
+            href: "",
+          },
+        ],
+        trust: [
+          { em: "GDPR", rest: "native" },
+          { em: "ISO 27001", rest: "uyumlu" },
+          { em: "HAYIR", rest: "US alt-işlemci" },
+          { em: "HAYIR", rest: "vendor lock-in" },
+        ],
+      },
+      form: {
+        title: "Discovery görüşmesi ayarla",
+        meta: "FORM · 01",
+        fields: {
+          name: { label: "Ad", placeholder: "Tam adınız" },
+          company: { label: "Şirket", placeholder: "İşletme" },
+          email: { label: "E-posta", placeholder: "sen@firma.de" },
+          phone: { label: "Telefon (opsiyonel)", placeholder: "+49 …" },
+          interest: { label: "İlgilendiğiniz" },
+          message: {
+            label: "Operasyon zemininde ne var?",
+            placeholder:
+              "Neyin manuel, neyin kırılgan, düşünmeyi bırakmak istediğiniz şey hakkında bir-iki cümle.",
+          },
+        },
+        topics: [
+          { key: "automation", label: "Workflow otomasyonu" },
+          { key: "integration", label: "Sistem entegrasyonu" },
+          { key: "voice", label: "Voice agent" },
+          { key: "card", label: "Digital card" },
+          { key: "kutasia", label: "Kutasia" },
+          { key: "other", label: "Başka bir şey" },
+        ],
+        legal:
+          "Gönderi drhasanhd@gmail.com'a gider. Üçüncü taraf analitik yok, pazarlama listesi yok, 14 günden sonra takip yok.",
+        submitCta: "Görüşme talep et",
+        success: "Teşekkürler — 48 saat içinde yanıt vereceğiz.",
+        error: "Gönderilemedi. Tekrar deneyin veya doğrudan yazın.",
+      },
+    },
+
+    blog: {
+      head: {
+        eyebrow: "[ JOURNAL · VOL. 0 ]",
+        title: {
+          pre: "Operasyon ",
+          italic: "zemininden",
+          post: " notlar.",
+        },
+        intro:
+          "Saha notları, iş raporları ve zaman zaman sağlam bir fikir. İlk yazılar hazırlanıyor — indikleri anda haber almak için aşağıdan abone ol.",
+      },
+      emptyFeature: {
+        tag: "HAZIRLANIYOR · UZUN BİÇİM",
+        headline:
+          "En küçük dürüst otomasyon: bir işi hareket ettiren nedir, deste iyi görünen nedir.",
+        lede:
+          "Günlüğün açılış yazısı. Taslak hazırlanıyor — 20 satırın altında bir n8n workflow'unun ERP değişiminden ölçülen ölçülerde nasıl iyi olduğu üzerine.",
+        meta: "D. PIHA · PLANLANDI · 15 DK",
+      },
+      series: {
+        title: "Lock-in olmadan otomasyon için playbook'lar",
+        body:
+          "Süregelen bir seri. İlk altı yazı planlandı — ikinci yarı gelecek çeyrekte. E-posta patlaması yok, damla kampanyası yok — sadece bir şey indiğinde bir not.",
+        placeholder: "sen@firma.de",
+        cta: "Abone ol",
+        legal: "Yazı başına bir e-posta. Tek tıkla abonelikten çık.",
+      },
+    },
+
+    legal: {
+      impressum: {
+        eyebrow: "[ LEGAL · KÜNYE ]",
+        title: "Künye",
+      },
+      privacy: {
+        eyebrow: "[ LEGAL · GİZLİLİK ]",
+        title: "Gizlilik",
+      },
+    },
+
     kutasia: {
       hero: {
         metaChip: "KUTASIA",

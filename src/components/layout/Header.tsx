@@ -13,28 +13,13 @@ import type { Locale } from "@/content";
  * Links mapped to the real Next.js routes; language switch wired to the
  * existing useLocale() context so EN · DE · TR actually cycle.
  */
-const NAV_ITEMS: Array<{ key: string; label: string; href: string; match: RegExp }> = [
-  { key: "home", label: "Home", href: "/", match: /^\/(en|de|tr)?\/?$/ },
-  {
-    key: "voice",
-    label: "Voice Agent",
-    href: "/products/voice-agent",
-    match: /\/products\/voice-agent/,
-  },
-  {
-    key: "card",
-    label: "Digital Card",
-    href: "/products/digital-card",
-    match: /\/products\/digital-card/,
-  },
-  {
-    key: "kutasia",
-    label: "Kutasia",
-    href: "/products/kutasia",
-    match: /\/products\/kutasia/,
-  },
-  { key: "blog", label: "Journal", href: "/blog", match: /\/blog/ },
-  { key: "contact", label: "Contact", href: "/contact", match: /\/contact/ },
+const NAV_ITEMS: Array<{ key: "home" | "voiceAgent" | "digitalCard" | "kutasia" | "journal" | "contact"; href: string; match: RegExp }> = [
+  { key: "home", href: "/", match: /^\/(en|de|tr)?\/?$/ },
+  { key: "voiceAgent", href: "/products/voice-agent", match: /\/products\/voice-agent/ },
+  { key: "digitalCard", href: "/products/digital-card", match: /\/products\/digital-card/ },
+  { key: "kutasia", href: "/products/kutasia", match: /\/products\/kutasia/ },
+  { key: "journal", href: "/blog", match: /\/blog/ },
+  { key: "contact", href: "/contact", match: /\/contact/ },
 ];
 
 const LOCALE_LABELS: Record<Locale, string> = { en: "EN", de: "DE", tr: "TR" };
@@ -42,8 +27,9 @@ const LOCALE_CYCLE: Record<Locale, Locale> = { en: "de", de: "tr", tr: "en" };
 
 export function Header() {
   const pathname = usePathname();
-  const { locale, setLocale } = useLocale();
+  const { locale, setLocale, t } = useLocale();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const navLabels = t.v2.nav;
 
   useEffect(() => {
     setIsMobileOpen(false);
@@ -74,7 +60,7 @@ export function Header() {
                 href={n.href}
                 className={cn("os-nav-link", active && "is-active")}
               >
-                {n.label}
+                {navLabels[n.key]}
               </Link>
             );
           })}
@@ -104,7 +90,7 @@ export function Header() {
             className="btn btn-primary btn-sm hidden md:inline-flex"
             style={{ padding: "7px 14px" }}
           >
-            Book discovery
+            {navLabels.cta}
           </Link>
 
           <button
@@ -160,7 +146,7 @@ export function Header() {
                       }}
                       className="flex items-center justify-between py-5 transition-colors"
                     >
-                      <span>{n.label}</span>
+                      <span>{navLabels[n.key]}</span>
                     </Link>
                   </li>
                 );
@@ -171,7 +157,7 @@ export function Header() {
                 href="/contact"
                 className="btn btn-primary btn-lg w-full"
               >
-                Book discovery
+                {navLabels.cta}
               </Link>
             </div>
           </div>

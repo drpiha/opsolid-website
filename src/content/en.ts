@@ -3447,6 +3447,121 @@ export const content = {
       },
     },
 
+    contact: {
+      hero: {
+        metaChip: "BOOKING OPEN · 2026 Q2",
+        metaLabel: "[ CONTACT ]",
+        title: {
+          pre: "Thirty minutes. A written plan. ",
+          italic: "No pitch deck.",
+          post: "",
+        },
+        lead:
+          "One short call. An operations walkthrough, a candid opinion on what should and shouldn't be automated, and a written summary in your inbox within 48 hours — whether the engagement moves forward or not.",
+        contacts: [
+          {
+            key: "MAIL",
+            value: "drhasanhd@gmail.com",
+            meta: "DE · EN · TR",
+            href: "mailto:drhasanhd@gmail.com",
+          },
+          {
+            key: "TEL",
+            value: "Available on request",
+            meta: "CET · business hours",
+            href: "",
+          },
+          {
+            key: "STUDIO",
+            value: "Hamburg, DE",
+            meta: "BY APPOINTMENT",
+            href: "",
+          },
+          {
+            key: "DATA · EU",
+            value: "Frankfurt data-centre",
+            meta: "FRA · AV-DSGVO",
+            href: "",
+          },
+        ],
+        trust: [
+          { em: "GDPR", rest: "native" },
+          { em: "ISO 27001", rest: "aligned" },
+          { em: "NO", rest: "US subprocessors" },
+          { em: "NO", rest: "vendor lock-in" },
+        ],
+      },
+      form: {
+        title: "Book a discovery call",
+        meta: "FORM · 01",
+        fields: {
+          name: { label: "Name", placeholder: "Your full name" },
+          company: { label: "Company", placeholder: "Operating entity" },
+          email: { label: "Email", placeholder: "you@company.de" },
+          phone: { label: "Phone (optional)", placeholder: "+49 …" },
+          interest: { label: "Interested in" },
+          message: {
+            label: "What's on your operations floor?",
+            placeholder:
+              "A sentence or two on what's manual, what's fragile, what you'd like to stop thinking about.",
+          },
+        },
+        topics: [
+          { key: "automation", label: "Workflow automation" },
+          { key: "integration", label: "Systems integration" },
+          { key: "voice", label: "Voice agent" },
+          { key: "card", label: "Digital card" },
+          { key: "kutasia", label: "Kutasia" },
+          { key: "other", label: "Something else" },
+        ],
+        legal:
+          "Submission routes to drhasanhd@gmail.com. No third-party analytics, no marketing list, no follow-up after 14 days.",
+        submitCta: "Request call",
+        success: "Thanks — we'll reply within 48 hours.",
+        error: "Something didn't send. Try again or email directly.",
+      },
+    },
+
+    blog: {
+      head: {
+        eyebrow: "[ JOURNAL · VOL. 0 ]",
+        title: {
+          pre: "Notes from the ",
+          italic: "operations floor",
+          post: ".",
+        },
+        intro:
+          "Field notes, engagement reports, and the occasional strong opinion. First pieces are being written — subscribe below to hear when they land.",
+      },
+      emptyFeature: {
+        tag: "COMING · LONG-FORM",
+        headline:
+          "The smallest honest automation: what moves a business vs. what looks good in a deck.",
+        lede:
+          "Opening piece of the journal. Draft in progress — about how a sub-20-line n8n workflow outperforms an ERP replacement on the measurements that matter.",
+        meta: "D. PIHA · SCHEDULED · 15 MIN",
+      },
+      series: {
+        title: "Playbooks for automating operations without lock-in",
+        body:
+          "An ongoing series. First six pieces scheduled — second half next quarter. No email blasts, no drip campaigns, just a note when something lands.",
+        placeholder: "you@company.de",
+        cta: "Subscribe",
+        legal: "One email per post. Unsubscribe in one click.",
+      },
+    },
+
+    legal: {
+      impressum: {
+        eyebrow: "[ LEGAL · IMPRINT ]",
+        title: "Impressum",
+      },
+      privacy: {
+        eyebrow: "[ LEGAL · PRIVACY ]",
+        title: "Privacy",
+      },
+    },
+
     kutasia: {
       hero: {
         metaChip: "KUTASIA",
