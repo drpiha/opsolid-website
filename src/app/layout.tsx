@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import { Inter } from "next/font/google";
+import { Inter, Instrument_Serif, JetBrains_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/next";
 import { SITE_CONFIG } from "@/lib/constants";
 import { isLocale, DEFAULT_LOCALE } from "@/lib/i18n";
@@ -10,7 +11,35 @@ const inter = Inter({
   subsets: ["latin", "latin-ext"],
   display: "swap",
   variable: "--font-inter",
-  weight: ["400", "500", "600", "700", "800", "900"],
+  weight: ["400", "500", "600", "700"],
+});
+
+// Geist isn't a Google Font at this time; Vercel ships it as a static file
+// in the `geist` npm package. We keep it optional — if the package is
+// missing, the CSS stack falls back to Inter for display.
+let geistVariable = "";
+try {
+  // Dynamic require so missing dep in CI doesn't break the build.
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  const { GeistSans } = require("geist/font/sans");
+  geistVariable = GeistSans.variable;
+} catch {
+  geistVariable = "";
+}
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-instrument-serif",
+  weight: ["400"],
+  style: ["normal", "italic"],
+});
+
+const jetBrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-jetbrains-mono",
+  weight: ["400", "500", "600"],
 });
 
 export const metadata: Metadata = {
@@ -65,9 +94,18 @@ export default function RootLayout({
   const localeHeader = headerStore.get("x-locale");
   const lang = isLocale(localeHeader) ? localeHeader : DEFAULT_LOCALE;
 
+  const fontClasses = [
+    inter.variable,
+    instrumentSerif.variable,
+    jetBrainsMono.variable,
+    geistVariable,
+  ]
+    .filter(Boolean)
+    .join(" ");
+
   return (
-    <html lang={lang} className={inter.variable}>
-      <body className="font-sans antialiased bg-white text-ink min-h-[100svh] flex flex-col">
+    <html lang={lang} className={fontClasses}>
+      <body className="grain font-sans antialiased bg-bg-1 text-ink-200 min-h-[100svh] flex flex-col">
         {children}
         <Analytics />
       </body>

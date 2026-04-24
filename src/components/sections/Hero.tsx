@@ -2,88 +2,126 @@
 
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { useLocale } from "@/context/LocaleContext";
-import { HeroCardMockup } from "@/components/sections/hero/HeroCardMockup";
-import { Star, ArrowRight } from "lucide-react";
+import { KineticMechanism } from "@/components/sections/hero/KineticMechanism";
+import { ArrowRight } from "lucide-react";
+
+/**
+ * A title line may contain a single *word* (wrapped in asterisks) rendered in
+ * Instrument Serif italic with a copper gradient — the v2 signature editorial
+ * move. Lines without a marker render normally.
+ */
+function TitleLine({ line }: { line: string }) {
+  const parts = line.split(/(\*[^*]+\*)/g).filter(Boolean);
+  return (
+    <span className="block">
+      {parts.map((part, i) => {
+        if (part.startsWith("*") && part.endsWith("*")) {
+          return (
+            <span key={i} className="editorial">
+              {part.slice(1, -1)}
+            </span>
+          );
+        }
+        return <span key={i}>{part}</span>;
+      })}
+    </span>
+  );
+}
 
 export function Hero() {
   const { t } = useLocale();
-  const hero = t.home.hero;
+  const hero = t.home.hero as {
+    editorial?: {
+      eyebrow?: string;
+      title?: readonly string[];
+      paragraph?: string;
+      primaryCta?: string;
+      secondaryCta?: string;
+    };
+    ratingPill?: string;
+    title?: readonly string[];
+    subtitle?: string;
+    subheadline?: string;
+    headline?: string;
+    primaryCta?: string;
+    secondaryCta?: string;
+    primaryCtaLabel?: string;
+    secondaryCtaLabel?: string;
+    primaryCtaHref?: string;
+    secondaryCtaHref?: string;
+  };
+  const editorial = hero.editorial;
+
+  const eyebrow =
+    editorial?.eyebrow ?? hero.ratingPill ?? "OPSOLID · AUTOMATION STUDIO";
+  const titleLines: readonly string[] =
+    editorial?.title && editorial.title.length > 0
+      ? editorial.title
+      : hero.title ?? [];
+  const lead = editorial?.paragraph ?? hero.subtitle ?? hero.subheadline;
+  const primaryLabel =
+    editorial?.primaryCta ?? hero.primaryCtaLabel ?? hero.primaryCta;
+  const secondaryLabel =
+    editorial?.secondaryCta ?? hero.secondaryCtaLabel ?? hero.secondaryCta;
 
   return (
-    <section
-      aria-labelledby="hero-title"
-      className="relative overflow-hidden pt-24 md:pt-28 lg:pt-32 pb-12 md:pb-20"
-    >
-      <div className="container-wide">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-          {/* LEFT — text */}
-          <div className="lg:col-span-7 animate-fade-in">
-            {/* Rating pill */}
-            <div className="inline-flex items-center gap-2 rounded-full bg-neutral-50 border border-neutral-200 px-3.5 py-1.5 shadow-soft">
-              <span className="flex items-center gap-0.5 text-brand" aria-hidden="true">
-                {[0, 1, 2, 3, 4].map((i) => (
-                  <Star key={i} size={12} fill="currentColor" strokeWidth={0} />
-                ))}
-              </span>
-              <span className="text-xs font-semibold text-ink">
-                {hero.ratingPill}
-              </span>
-            </div>
+    <section className="os-hero" aria-labelledby="hero-title">
+      <div className="os-hero-inner">
+        {/* LEFT — editorial stack */}
+        <div className="os-hero-text">
+          <div className="os-hero-meta">
+            <span className="meta meta-hot">{eyebrow}</span>
+          </div>
 
-            {/* Display heading */}
-            <h1
-              id="hero-title"
-              className="mt-6 md:mt-8 font-sans font-extrabold text-ink tracking-[-0.035em] leading-[0.98] text-balance text-[clamp(2.75rem,7vw,5.25rem)]"
+          <h1 id="hero-title" className="os-hero-title text-balance">
+            {titleLines.map((line, i) => (
+              <TitleLine key={i} line={line} />
+            ))}
+          </h1>
+
+          {lead && <p className="os-hero-lead text-pretty">{lead}</p>}
+
+          <div className="os-hero-ctas">
+            <Link
+              href={hero.primaryCtaHref || "/contact"}
+              className="btn btn-primary btn-lg"
             >
-              {hero.title.map((line, i) => (
-                <span key={i} className="block">
-                  {line}
-                </span>
-              ))}
-            </h1>
+              <span>{primaryLabel}</span>
+              <ArrowRight size={16} strokeWidth={2} />
+            </Link>
+            <Link
+              href={hero.secondaryCtaHref || "/solutions"}
+              className="btn btn-ghost btn-lg"
+            >
+              {secondaryLabel}
+            </Link>
+          </div>
 
-            {/* Body */}
-            <p className="mt-6 md:mt-7 text-body-lg text-ink/60 max-w-[560px] leading-relaxed text-pretty">
-              {hero.subtitle}
-            </p>
-
-            {/* CTAs */}
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <Link
-                href={hero.primaryCtaHref || "/contact"}
-                className="btn-primary text-[0.95rem]"
-              >
-                <span>{hero.primaryCtaLabel}</span>
-                <ArrowRight
-                  size={16}
-                  strokeWidth={2.5}
-                  className="transition-transform duration-200 group-hover:translate-x-0.5"
-                />
-              </Link>
-              <Link href={hero.secondaryCtaHref || "/solutions"} className="btn-ghost text-[0.95rem]">
-                <span>{hero.secondaryCtaLabel}</span>
-              </Link>
+          <div className="os-hero-stats">
+            <div>
+              <div className="os-stat-num">
+                <span className="metallic-copper">42</span>
+              </div>
+              <div className="os-stat-label">Workflows shipped</div>
             </div>
-
-            {/* Micro footnote */}
-            <p className="mt-5 text-sm text-ink/50">{hero.footnote}</p>
-
-            {/* Products nod */}
-            <p className="mt-6 text-xs text-ink/45 max-w-md">
-              {hero.consultingNote}{" "}
-              <Link
-                href="/products"
-                className="underline underline-offset-4 decoration-ink/25 hover:decoration-brand hover:text-brand transition-colors"
-              >
-                See products →
-              </Link>
-            </p>
+            <div>
+              <div className="os-stat-num">
+                <span className="metallic-copper">3.4M</span>
+              </div>
+              <div className="os-stat-label">Events / mo</div>
+            </div>
+            <div>
+              <div className="os-stat-num">
+                <span className="metallic-copper">EU · DE</span>
+              </div>
+              <div className="os-stat-label">Hosting · data</div>
+            </div>
           </div>
+        </div>
 
-          {/* RIGHT — SVG mockup */}
-          <div className="lg:col-span-5 animate-rise">
-            <HeroCardMockup />
-          </div>
+        {/* RIGHT — kinetic mechanism */}
+        <div className="os-hero-mech">
+          <KineticMechanism />
         </div>
       </div>
     </section>

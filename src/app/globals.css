@@ -2,42 +2,50 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --bg:      #FFFFFF;
-    --bg-soft: #F5F5F5;
-    --bg-dim:  #FAFAFA;
-    --fg:      #0A0A0A;
-    --fg-muted:#525252;
-    --fg-soft: #737373;
-    --border:  #E5E5E5;
-    --accent:  #E63946;
-    --accent-dark: #C81E2B;
-  }
+/* OpSolid v2 design system — industrial-luxury dark-first.
+   Tokens + primitives (.btn, .chip, .field, .panel, .grain, .meta, etc.)
+   live in opsolid-tokens.css. Shared site layout (.os-header, .os-hero,
+   .km-* kinetic mechanism, sections) lives in opsolid-site.css. */
+@import "../styles/opsolid-tokens.css";
+@import "../styles/opsolid-site.css";
 
-  * { border-color: var(--border); }
+@layer base {
+  /* Legacy light-mode variables kept for any stragglers still reading them.
+     Values are now dark so nothing accidentally paints white. */
+  :root {
+    --bg:      #0B0E13;
+    --bg-soft: #11151C;
+    --bg-dim:  #171C26;
+    --fg:      #F4F3F0;
+    --fg-muted:#9FA2A9;
+    --fg-soft: #6B717B;
+    --border:  rgba(255,255,255,0.08);
+    --accent:  #C27940;
+    --accent-dark: #A46230;
+  }
 
   html {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
+    background: var(--bg-1);
+    color-scheme: dark;
   }
 
   html, body { overflow-x: clip; max-width: 100%; }
 
   body {
-    color: var(--fg);
-    background: var(--bg);
-    font-family: var(--font-inter), system-ui, sans-serif;
-    font-feature-settings: "ss01", "cv11";
+    color: var(--ink-200);
+    background: var(--bg-1);
+    font-family: var(--font-body);
+    font-feature-settings: "ss02", "cv11";
   }
 
   ::selection {
-    background: var(--accent);
-    color: #FFFFFF;
+    background: var(--copper-500);
+    color: #0A0A0A;
   }
 
-  /* Scroll lock while mobile menu overlay is open */
   body.menu-open {
     overflow: hidden;
     touch-action: none;
@@ -57,93 +65,48 @@
   .text-balance { text-wrap: balance; }
   .text-pretty  { text-wrap: pretty; }
 
+  /* Legacy shim — old code imports .eyebrow, make it the new mono meta. */
   .eyebrow {
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    color: var(--fg-muted);
+    font-family: var(--font-mono);
+    font-size: var(--fs-meta);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-400);
   }
 
-  /* Pop card — default product card pattern */
+  /* Legacy Popl-style cards now paint as dark panels. */
   .pop-card {
-    background: var(--bg);
-    border: 1px solid var(--border);
-    border-radius: 1.25rem;
-    transition: box-shadow 300ms ease, transform 300ms ease;
+    background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
+    border: 1px solid var(--line);
+    border-radius: var(--r-xl);
+    box-shadow: var(--rim-top), var(--depth-2);
+    transition: box-shadow var(--dur-base) var(--ease-snap),
+                transform  var(--dur-base) var(--ease-snap),
+                border-color var(--dur-base) var(--ease-snap);
   }
   .pop-card:hover {
-    box-shadow: 0 20px 40px -12px rgba(10, 10, 10, 0.14), 0 8px 16px -8px rgba(10, 10, 10, 0.08);
+    border-color: var(--line-firm);
+    box-shadow: var(--rim-top), var(--depth-3);
     transform: translateY(-2px);
   }
 
-  /* Primary CTA — red pill */
-  .btn-primary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    background: var(--accent);
-    color: #FFFFFF;
-    font-weight: 600;
-    padding: 0.875rem 1.5rem;
-    border-radius: 999px;
-    transition: background 200ms ease, transform 200ms ease, box-shadow 200ms ease;
-    box-shadow: 0 8px 24px -6px rgba(230, 57, 70, 0.35);
-  }
-  .btn-primary:hover {
-    background: var(--accent-dark);
-    transform: translateY(-1px);
-    box-shadow: 0 12px 28px -6px rgba(230, 57, 70, 0.45);
-  }
-
-  /* Secondary CTA — black pill */
-  .btn-secondary {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    background: var(--fg);
-    color: #FFFFFF;
-    font-weight: 600;
-    padding: 0.875rem 1.5rem;
-    border-radius: 999px;
-    transition: background 200ms ease, transform 200ms ease;
-  }
-  .btn-secondary:hover {
-    background: #262626;
-    transform: translateY(-1px);
-  }
-
-  /* Ghost / tertiary CTA — outlined */
-  .btn-ghost {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
-    background: transparent;
-    color: var(--fg);
-    font-weight: 600;
-    padding: 0.875rem 1.5rem;
-    border-radius: 999px;
-    border: 1px solid var(--border);
-    transition: all 200ms ease;
-  }
-  .btn-ghost:hover {
-    background: var(--bg-soft);
-    border-color: var(--fg);
-  }
-
-  /* Trust pill — small rounded chip */
+  /* Trust pill — monospaced chip on dark. */
   .trust-pill {
     display: inline-flex;
     align-items: center;
-    gap: 0.375rem;
-    padding: 0.375rem 0.75rem;
-    background: var(--bg-soft);
-    border-radius: 999px;
-    font-size: 0.75rem;
+    gap: 6px;
+    padding: 5px 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--line);
+    border-radius: var(--r-pill);
+    font-family: var(--font-mono);
+    font-size: var(--fs-meta);
     font-weight: 500;
-    color: var(--fg-muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-300);
+    box-shadow: var(--rim-top);
   }
 
   .section {
@@ -155,11 +118,10 @@
     padding-bottom: clamp(2.5rem, 6vw, 5rem);
   }
 
-  .container-wide   { @apply mx-auto w-full max-w-[1240px] px-5 sm:px-6 lg:px-8; }
+  .container-wide   { @apply mx-auto w-full max-w-[1280px] px-5 sm:px-6 lg:px-8; }
   .container-narrow { @apply mx-auto w-full max-w-3xl px-5 sm:px-6 lg:px-8; }
   .container-prose  { @apply mx-auto w-full max-w-2xl px-5 sm:px-6; }
 
-  /* safe-area for sticky bars */
   .safe-bottom { padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
   .safe-top    { padding-top:    max(1rem, env(safe-area-inset-top)); }
 
@@ -169,3 +131,60 @@
 @keyframes flowDash {
   to { stroke-dashoffset: -12; }
 }
+
+/* ==============================================================
+   LEGACY SHIM — old Tailwind light-mode classes → dark system.
+   Homepage sections (TrustStrip, SolutionsOverview, HowWeWork, etc.)
+   still ship with bg-white / bg-neutral-* / border-neutral-* / ink-slash.
+   Rewriting each is a follow-up pass. Until then, these overrides keep
+   the page cohesive with the new v2 industrial-luxury dark theme.
+   ============================================================== */
+.bg-white {
+  background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%) !important;
+  color: var(--ink-200);
+}
+.bg-neutral-50  { background: var(--bg-2) !important; }
+.bg-neutral-100 { background: var(--bg-3) !important; }
+.bg-neutral-200 { background: var(--bg-4) !important; }
+.bg-neutral-800,
+.bg-neutral-900,
+.bg-neutral-950 { background: var(--bg-0) !important; }
+
+.border-neutral-100 { border-color: var(--line) !important; }
+.border-neutral-200 { border-color: var(--line-firm) !important; }
+.border-neutral-300 { border-color: var(--line-firm) !important; }
+
+/* Ink-slash opacity pattern (text-ink/70, text-ink/60 ...) was used on a
+   light-ink token; on the new dark palette map these to warm off-white. */
+.text-ink,
+.text-ink\/90,
+.text-ink\/80 { color: var(--ink-100) !important; }
+.text-ink\/70 { color: var(--ink-200) !important; }
+.text-ink\/60,
+.text-ink\/50 { color: var(--ink-300) !important; }
+.text-ink\/40,
+.text-ink\/30 { color: var(--ink-400) !important; }
+
+/* text-neutral-X on dark */
+.text-neutral-50,
+.text-neutral-100 { color: var(--ink-100) !important; }
+.text-neutral-400 { color: var(--ink-300) !important; }
+.text-neutral-500 { color: var(--ink-300) !important; }
+.text-neutral-600 { color: var(--ink-400) !important; }
+.text-neutral-700,
+.text-neutral-800,
+.text-neutral-900 { color: var(--ink-100) !important; }
+
+/* Brand red was used as accent / underline. Copper takes over. */
+.bg-brand,
+.bg-brand-500 { background: var(--copper-500) !important; }
+.text-brand,
+.text-brand-500 { color: var(--copper-400) !important; }
+.border-brand,
+.border-brand-500 { border-color: var(--copper-500) !important; }
+
+/* Hover states relied on light-mode neutrals — keep them subtle on dark. */
+.hover\:bg-neutral-50:hover,
+.hover\:bg-neutral-100:hover { background: rgba(255,255,255,0.04) !important; }
+.hover\:bg-white:hover { background: var(--bg-3) !important; }
+

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { usePathname } from "next/navigation";
-import { Menu, X, Globe, Check } from "lucide-react";
+import { Menu, X, Check } from "lucide-react";
 import { useLocale } from "@/context/LocaleContext";
 import { NAV_LINKS, SITE_CONFIG } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -17,64 +17,33 @@ const LOCALE_NAMES: Record<Locale, string> = {
 };
 
 /**
- * Popl-style hex logo — clean ink outer frame with a red inner cage.
- * The brand red is used sparingly on the inner geometry to echo the CTA.
+ * Copper brand mark — small embossed square that matches the design system's
+ * panel recipe: copper gradient fill + inset rim + dark inner face + soft bloom.
  */
-function HexLogo({ size = 30 }: { size?: number }) {
+function BrandMark({ size = 24 }: { size?: number }) {
   return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 32 32"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+    <span
       aria-hidden="true"
-      className="flex-shrink-0"
-    >
-      <path
-        d="M16 2L28.5 9.5V24.5L16 30L3.5 24.5V9.5L16 2Z"
-        stroke="#0A0A0A"
-        strokeWidth="1.75"
-        fill="none"
-      />
-      <path
-        d="M16 8L23 12V22L16 26L9 22V12L16 8Z"
-        stroke="#E63946"
-        strokeWidth="1.5"
-        fill="none"
-      />
-      <path d="M9 12L16 16L23 12" stroke="#E63946" strokeWidth="1.25" fill="none" />
-      <path d="M16 16V26" stroke="#E63946" strokeWidth="1.25" fill="none" />
-    </svg>
+      style={{ width: size, height: size }}
+      className="os-brand-mark"
+    />
   );
 }
 
 export function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [langOpen, setLangOpen] = useState(false);
   const pathname = usePathname();
   const { locale, setLocale, t } = useLocale();
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
     setIsMobileOpen(false);
     setLangOpen(false);
   }, [pathname]);
 
-  // Lock body scroll while the mobile menu overlay is open.
   useEffect(() => {
     if (typeof document === "undefined") return;
-    if (isMobileOpen) {
-      document.body.classList.add("menu-open");
-    } else {
-      document.body.classList.remove("menu-open");
-    }
+    document.body.classList.toggle("menu-open", isMobileOpen);
     return () => {
       document.body.classList.remove("menu-open");
     };
@@ -90,130 +59,109 @@ export function Header() {
   };
 
   return (
-    <header
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-colors duration-200 safe-top",
-        isScrolled
-          ? "bg-white/90 backdrop-blur-md border-b border-neutral-200"
-          : "bg-transparent"
-      )}
-    >
-      <div className="container-wide">
-        <nav className="flex h-16 md:h-[4.5rem] items-center justify-between">
-          {/* Logo */}
-          <Link
-            href="/"
-            className="relative z-50 flex items-center gap-2.5 text-[1.25rem] font-extrabold leading-none text-ink tracking-[-0.02em]"
-          >
-            <HexLogo size={30} />
-            <span>{SITE_CONFIG.name}</span>
-          </Link>
+    <header className="os-header safe-top" role="banner">
+      <div className="os-header-inner">
+        {/* Brand */}
+        <Link href="/" className="os-brand">
+          <BrandMark size={24} />
+          <span>{SITE_CONFIG.name}</span>
+        </Link>
 
-          {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-1">
-            {NAV_LINKS.map((link) => {
-              const active = pathname === link.href;
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className={cn(
-                    "relative px-3 py-2 text-sm font-medium transition-colors duration-200",
-                    active ? "text-ink" : "text-ink/70 hover:text-ink"
-                  )}
-                >
-                  {navLabels[link.href] || link.label}
-                  {active && (
-                    <span
-                      aria-hidden="true"
-                      className="absolute left-3 right-3 -bottom-0.5 h-[2px] rounded-full bg-brand"
-                    />
-                  )}
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* Desktop right: language + CTA */}
-          <div className="hidden md:flex items-center gap-3">
-            {/* Language switcher */}
-            <div className="relative">
-              <button
-                onClick={() => setLangOpen(!langOpen)}
-                className="flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-semibold text-ink/70 hover:text-ink hover:bg-neutral-100 transition-colors"
-                aria-label="Change language"
-                aria-expanded={langOpen}
+        {/* Desktop nav */}
+        <nav className="os-nav" aria-label="Primary">
+          {NAV_LINKS.map((link) => {
+            const active = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                className={cn("os-nav-link", active && "is-active")}
               >
-                <Globe size={14} strokeWidth={2} />
-                {LOCALE_LABELS[locale]}
-              </button>
-              {langOpen && (
-                <div
-                  className="absolute right-0 top-full mt-2 bg-white border border-neutral-200 rounded-2xl shadow-lifted overflow-hidden min-w-[160px] motion-safe:animate-fade-in"
-                  role="menu"
-                >
-                  {(Object.keys(LOCALE_LABELS) as Locale[]).map((l) => (
-                    <button
-                      key={l}
-                      onClick={() => {
-                        setLocale(l);
-                        setLangOpen(false);
-                      }}
-                      role="menuitem"
-                      className={cn(
-                        "flex w-full items-center justify-between px-4 py-2.5 text-sm transition-colors",
-                        locale === l
-                          ? "text-ink bg-neutral-50 font-semibold"
-                          : "text-ink/70 hover:text-ink hover:bg-neutral-50"
-                      )}
-                    >
-                      <span>{LOCALE_NAMES[l]}</span>
-                      {locale === l ? (
-                        <Check size={14} className="text-brand" />
-                      ) : (
-                        <span className="text-xs font-semibold text-ink/40">
-                          {LOCALE_LABELS[l]}
-                        </span>
-                      )}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+                {navLabels[link.href] || link.label}
+              </Link>
+            );
+          })}
+        </nav>
 
-            <Link href="/contact" className="btn-primary text-sm">
-              {t.nav.cta}
-            </Link>
-          </div>
-
-          {/* Mobile: lang + menu */}
-          <div className="flex md:hidden items-center gap-1">
+        {/* Right cluster — lang + CTA + mobile toggle */}
+        <div className="os-header-right">
+          <div className="relative hidden md:block">
             <button
-              onClick={() => {
-                const next: Record<Locale, Locale> = { en: "de", de: "tr", tr: "en" };
-                setLocale(next[locale]);
-              }}
-              className="flex items-center justify-center w-10 h-10 rounded-full text-xs font-semibold text-ink/70 hover:text-ink hover:bg-neutral-100 transition-colors"
-              aria-label="Switch language"
+              onClick={() => setLangOpen(!langOpen)}
+              className="os-lang-switch"
+              aria-label="Change language"
+              aria-expanded={langOpen}
             >
               {LOCALE_LABELS[locale]}
             </button>
-            <button
-              onClick={() => setIsMobileOpen(!isMobileOpen)}
-              className="relative z-50 flex items-center justify-center w-10 h-10 rounded-full text-ink hover:bg-neutral-100 transition-colors"
-              aria-label={isMobileOpen ? "Close menu" : "Open menu"}
-              aria-expanded={isMobileOpen}
-            >
-              {isMobileOpen ? <X size={20} strokeWidth={2} /> : <Menu size={20} strokeWidth={2} />}
-            </button>
+            {langOpen && (
+              <div
+                role="menu"
+                className="absolute right-0 top-full mt-3 min-w-[170px] panel overflow-hidden motion-safe:animate-fade-in"
+              >
+                {(Object.keys(LOCALE_LABELS) as Locale[]).map((l) => (
+                  <button
+                    key={l}
+                    onClick={() => {
+                      setLocale(l);
+                      setLangOpen(false);
+                    }}
+                    role="menuitem"
+                    className={cn(
+                      "flex w-full items-center justify-between px-4 py-2.5 text-[13px] transition-colors",
+                      locale === l
+                        ? "text-ink-100 bg-white/[0.04] font-medium"
+                        : "text-ink-300 hover:text-ink-100 hover:bg-white/[0.03]"
+                    )}
+                  >
+                    <span>{LOCALE_NAMES[l]}</span>
+                    {locale === l ? (
+                      <Check size={14} className="text-copper-400" />
+                    ) : (
+                      <span className="text-[10px] font-medium tracking-[0.1em] text-ink-400 font-mono">
+                        {LOCALE_LABELS[l]}
+                      </span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
-        </nav>
+
+          <Link
+            href="/contact"
+            className="btn btn-primary btn-sm hidden md:inline-flex"
+          >
+            {t.nav.cta}
+          </Link>
+
+          {/* Mobile: lang cycle + menu toggle */}
+          <button
+            onClick={() => {
+              const next: Record<Locale, Locale> = { en: "de", de: "tr", tr: "en" };
+              setLocale(next[locale]);
+            }}
+            className="os-lang-switch md:hidden"
+            aria-label="Switch language"
+          >
+            {LOCALE_LABELS[locale]}
+          </button>
+          <button
+            onClick={() => setIsMobileOpen(!isMobileOpen)}
+            className="os-lang-switch md:hidden"
+            style={{ padding: "6px 8px" }}
+            aria-label={isMobileOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileOpen}
+          >
+            {isMobileOpen ? <X size={16} strokeWidth={2} /> : <Menu size={16} strokeWidth={2} />}
+          </button>
+        </div>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile sheet */}
       {isMobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-white md:hidden overflow-y-auto overscroll-contain motion-safe:animate-fade-in"
+          className="fixed inset-0 z-40 bg-bg-0/95 backdrop-blur-xl md:hidden overflow-y-auto motion-safe:animate-fade-in"
           style={{ height: "100dvh" }}
           role="dialog"
           aria-modal="true"
@@ -222,7 +170,7 @@ export function Header() {
           <div
             className="flex flex-col min-h-full px-6"
             style={{
-              paddingTop: "max(5rem, env(safe-area-inset-top))",
+              paddingTop: "max(6rem, env(safe-area-inset-top))",
               paddingBottom: "max(2rem, env(safe-area-inset-bottom))",
             }}
           >
@@ -230,19 +178,25 @@ export function Header() {
               {NAV_LINKS.map((link) => {
                 const active = pathname === link.href;
                 return (
-                  <li key={link.href} className="border-b border-neutral-200">
+                  <li
+                    key={link.href}
+                    className="border-b border-line-soft last:border-b-0"
+                  >
                     <Link
                       href={link.href}
                       className={cn(
-                        "flex items-center justify-between py-5 text-2xl font-bold tracking-[-0.02em] transition-colors",
-                        active ? "text-ink" : "text-ink/75 hover:text-ink"
+                        "flex items-center justify-between py-5 font-display text-[1.75rem] font-medium tracking-[-0.024em] transition-colors",
+                        active
+                          ? "text-copper-300"
+                          : "text-ink-100 hover:text-copper-300"
                       )}
                     >
                       <span>{navLabels[link.href] || link.label}</span>
                       {active && (
                         <span
                           aria-hidden="true"
-                          className="h-2 w-2 rounded-full bg-brand"
+                          className="h-2 w-2 rounded-full bg-copper-400"
+                          style={{ boxShadow: "0 0 10px rgba(194,121,64,0.7)" }}
                         />
                       )}
                     </Link>
@@ -252,7 +206,7 @@ export function Header() {
             </ul>
 
             <div className="mt-10">
-              <Link href="/contact" className="btn-primary w-full">
+              <Link href="/contact" className="btn btn-primary btn-lg w-full">
                 {t.nav.cta}
               </Link>
             </div>

@@ -46,3 +46,10 @@ src/generated/
 .stripe-token
 .claude.json
 .transfer/
+
+# Design reference bundle (HTML mocks from claude.ai/design, not source of truth)
+.design-bundle/
+
+# pnpm lock file (project uses npm)
+pnpm-lock.yaml
+
