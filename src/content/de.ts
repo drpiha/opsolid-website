@@ -3340,5 +3340,100 @@ export const content: Content = {
         ],
       },
     },
+
+    digitalCard: {
+      hero: {
+        metaChip: "DIGITAL CARD",
+        metaLabel: "[ PRODUCT · 02 ]",
+        title: {
+          pre: "Eine Visitenkarte, die Ihre Kunden ",
+          italic: "tatsächlich",
+          post: " behalten.",
+        },
+        lead:
+          "Tap-to-share NFC mit QR-Fallback. Als gefräste Metallkarte oder Wallet-Pass. Kontaktdaten, Kalenderlink und Portfolio werden zentral aktualisiert — ohne neue Druckauflage, wenn jemand die Rolle wechselt.",
+        ctaPrimary: "Muster bestellen",
+        ctaSecondary: "Templates ansehen",
+        features: [
+          {
+            label: "MATERIAL",
+            value: "Brass · Matte",
+            sub: "oder recyceltes PVC",
+          },
+          {
+            label: "PROTOCOL",
+            value: "NFC + QR",
+            sub: "NDEF · vCard",
+          },
+          {
+            label: "LEAD TIME",
+            value: "Vorbestellung",
+            sub: "2026 Q2 · DE · versandt",
+          },
+        ],
+      },
+      templates: {
+        eyebrow: "[ BRANCHENVORLAGEN ]",
+        headline: "Ausgangspunkte, keine Zwangsjacken.",
+        lead:
+          "Vorlagenlayouts für Recht, Medizin, Handwerk und Gastronomie — jede mit den Kontaktfeldern, Compliance-Angaben und Kalenderintegrationen, die die Branche tatsächlich nutzt. Jedes Layout ist ein Fork-und-modifizieren-Ausgangspunkt, kein festes Theme.",
+        items: [
+          {
+            sector: "LAW",
+            name: "Anja Weber",
+            role: "Partnerin · Corporate Law",
+            code: "LAW · HAM",
+            cls: "sector-law",
+          },
+          {
+            sector: "CLINIC",
+            name: "Dr. Martin Bauer",
+            role: "Zahnarzt · Privatpraxis",
+            code: "CLINIC · BER",
+            cls: "sector-clinic",
+          },
+          {
+            sector: "TRADES",
+            name: "Jan Meister",
+            role: "Meisterbetrieb · Sanitär",
+            code: "TRADES · FRA",
+            cls: "sector-trades",
+          },
+          {
+            sector: "HOSP",
+            name: "Sofia Aydın",
+            role: "Sommelière · Fine Dining",
+            code: "HOSP · IST",
+            cls: "sector-hosp",
+          },
+        ],
+      },
+      howItWorks: {
+        eyebrow: "[ FUNKTIONSWEISE ]",
+        headline: "Drei Schichten. Ein Tippen.",
+        lead:
+          "Die Hardware wird einmal versandt. Alles hinter dem Tippen wird in Ihrem Dashboard aktualisiert — nicht beim Drucker.",
+        steps: [
+          {
+            num: "01",
+            title: "Tippen oder scannen",
+            body:
+              "NFC löst auf jedem Handy innerhalb von 4 cm aus. QR-Fallback auf der Rückseite für ältere Geräte und Druckmaterial.",
+          },
+          {
+            num: "02",
+            title: "Landen Sie auf Ihrem Portal",
+            body:
+              "Eine einzige gehostete Seite — vCard-Download, Terminbuchung, Portfolio-Links und alles andere, was die Branche braucht.",
+          },
+          {
+            num: "03",
+            title: "Zentral bearbeiten",
+            body:
+              "Neue Rolle, neue Nummer, neue Verfügbarkeit — einmal ändern, wirkt auf jede Karte da draußen.",
+          },
+        ],
+      },
+    },
   },
 } as const;

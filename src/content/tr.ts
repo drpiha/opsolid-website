@@ -3340,5 +3340,100 @@ export const content: Content = {
         ],
       },
     },
+
+    digitalCard: {
+      hero: {
+        metaChip: "DIGITAL CARD",
+        metaLabel: "[ PRODUCT · 02 ]",
+        title: {
+          pre: "Müşterilerinizin ",
+          italic: "gerçekten",
+          post: " sakladığı bir kartvizit.",
+        },
+        lead:
+          "NFC ile dokunarak paylaşım, QR yedeği. İşlenmiş metal kart veya telefon cüzdan geçişi olarak gönderilir. İletişim bilgileri, takvim bağlantısı ve portföy merkezi olarak güncellenir — birinin rolü değiştikçe yeni baskıya gerek kalmaz.",
+        ctaPrimary: "Örnek sipariş et",
+        ctaSecondary: "Şablonlara göz at",
+        features: [
+          {
+            label: "MATERIAL",
+            value: "Brass · Matte",
+            sub: "veya geri dönüşümlü PVC",
+          },
+          {
+            label: "PROTOCOL",
+            value: "NFC + QR",
+            sub: "NDEF · vCard",
+          },
+          {
+            label: "LEAD TIME",
+            value: "Ön sipariş",
+            sub: "2026 Q2 · DE · gönderim",
+          },
+        ],
+      },
+      templates: {
+        eyebrow: "[ SEKTÖR ŞABLONLARI ]",
+        headline: "Başlangıç noktası, deli gömleği değil.",
+        lead:
+          "Hukuk, sağlık, zanaat ve konaklama için şablon düzenleri — her biri sektörün gerçekten kullandığı iletişim alanları, uyumluluk bildirimleri ve takvim entegrasyonları ile. Her düzen kilitli bir tema değil, çatallanıp değiştirilebilen bir başlangıç noktasıdır.",
+        items: [
+          {
+            sector: "LAW",
+            name: "Anja Weber",
+            role: "Partner · Kurumsal Hukuk",
+            code: "LAW · HAM",
+            cls: "sector-law",
+          },
+          {
+            sector: "CLINIC",
+            name: "Dr. Martin Bauer",
+            role: "Diş Hekimi · Özel Muayene",
+            code: "CLINIC · BER",
+            cls: "sector-clinic",
+          },
+          {
+            sector: "TRADES",
+            name: "Jan Meister",
+            role: "Usta · Tesisat",
+            code: "TRADES · FRA",
+            cls: "sector-trades",
+          },
+          {
+            sector: "HOSP",
+            name: "Sofia Aydın",
+            role: "Sommelière · Fine Dining",
+            code: "HOSP · IST",
+            cls: "sector-hosp",
+          },
+        ],
+      },
+      howItWorks: {
+        eyebrow: "[ NASIL ÇALIŞIR ]",
+        headline: "Üç katman. Tek dokunuş.",
+        lead:
+          "Donanım bir kez gönderilir. Dokunuşun ardındaki her şey, baskıda değil sizin panelinizde güncellenir.",
+        steps: [
+          {
+            num: "01",
+            title: "Dokun veya tara",
+            body:
+              "NFC, 4 cm mesafedeki her telefonda tetiklenir. Eski cihazlar ve basılı materyaller için arkada QR yedeği.",
+          },
+          {
+            num: "02",
+            title: "Kendi portalınıza git",
+            body:
+              "Tek bir barındırılan sayfa — vCard indirme, takvim rezervasyonu, portföy bağlantıları ve sektörün ihtiyacı olan her şey.",
+          },
+          {
+            num: "03",
+            title: "Merkezi düzenle",
+            body:
+              "Yeni rol, yeni numara, yeni müsaitlik — bir kez değiştir, dışarıdaki her karta yansır.",
+          },
+        ],
+      },
+    },
   },
 } as const;

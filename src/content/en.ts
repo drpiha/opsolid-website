@@ -3351,6 +3351,101 @@ export const content = {
         ],
       },
     },
+
+    digitalCard: {
+      hero: {
+        metaChip: "DIGITAL CARD",
+        metaLabel: "[ PRODUCT · 02 ]",
+        title: {
+          pre: "A business card your customers ",
+          italic: "actually",
+          post: " keep.",
+        },
+        lead:
+          "Tap-to-share NFC with a QR fallback. Ships as a machined metal card or a phone-wallet pass. Updates your contact details, calendar link, and portfolio centrally — without a print run every time someone changes roles.",
+        ctaPrimary: "Order a sample",
+        ctaSecondary: "Browse templates",
+        features: [
+          {
+            label: "MATERIAL",
+            value: "Brass · Matte",
+            sub: "or recycled PVC",
+          },
+          {
+            label: "PROTOCOL",
+            value: "NFC + QR",
+            sub: "NDEF · vCard",
+          },
+          {
+            label: "LEAD TIME",
+            value: "Pre-order",
+            sub: "2026 Q2 · DE · shipped",
+          },
+        ],
+      },
+      templates: {
+        eyebrow: "[ INDUSTRY TEMPLATES ]",
+        headline: "Starting points, not straitjackets.",
+        lead:
+          "Template layouts for law, medical, skilled trades, and hospitality — each with the contact fields, compliance disclosures, and calendar integrations that sector actually uses. Every layout is a fork-off-and-modify starting point, not a locked theme.",
+        items: [
+          {
+            sector: "LAW",
+            name: "Anja Weber",
+            role: "Partner · Corporate Law",
+            code: "LAW · HAM",
+            cls: "sector-law",
+          },
+          {
+            sector: "CLINIC",
+            name: "Dr. Martin Bauer",
+            role: "Dentist · Private Practice",
+            code: "CLINIC · BER",
+            cls: "sector-clinic",
+          },
+          {
+            sector: "TRADES",
+            name: "Jan Meister",
+            role: "Master Craftsman · Plumbing",
+            code: "TRADES · FRA",
+            cls: "sector-trades",
+          },
+          {
+            sector: "HOSP",
+            name: "Sofia Aydın",
+            role: "Sommelière · Fine Dining",
+            code: "HOSP · IST",
+            cls: "sector-hosp",
+          },
+        ],
+      },
+      howItWorks: {
+        eyebrow: "[ HOW IT WORKS ]",
+        headline: "Three layers. One tap.",
+        lead:
+          "Hardware ships once. Everything on the other side of the tap updates in your dashboard, not at the printer.",
+        steps: [
+          {
+            num: "01",
+            title: "Tap or scan",
+            body:
+              "NFC triggers on any phone within 4cm. QR fallback on the back for older devices and print collateral.",
+          },
+          {
+            num: "02",
+            title: "Land on your portal",
+            body:
+              "A single hosted page — vCard download, calendar booking, portfolio links, and whatever else the sector needs.",
+          },
+          {
+            num: "03",
+            title: "Edit centrally",
+            body:
+              "New role, new number, new availability — change once, propagates to every card out in the world.",
+          },
+        ],
+      },
+    },
   },
 };
 
