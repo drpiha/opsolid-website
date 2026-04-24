@@ -3446,6 +3446,90 @@ export const content = {
         ],
       },
     },
+
+    kutasia: {
+      hero: {
+        metaChip: "KUTASIA",
+        metaLabel: "[ FLAGSHIP · HOSPITALITY ]",
+        title: {
+          pre: "The customer platform for ",
+          italic: "rooms",
+          post: " that remember.",
+        },
+        lead:
+          "Built first for a restaurant in Istanbul. Designed for hotels, chef's tables, wine bars, and private clubs across DE · TR. Reservations, memberships, gifting, and guest memory — in one system the host can actually run from the floor.",
+        ctaPrimary: "Request access",
+        ctaSecondary: "See the modules",
+      },
+      rooms: {
+        eyebrow: "[ MODULES ]",
+        headline: "Five rooms. One house.",
+        lead:
+          "Every module runs standalone and hands off cleanly to the next. Start with reservations, add memberships when the waitlist gets serious, layer in guest memory when service warrants it.",
+        items: [
+          {
+            n: "01 · RESERVATIONS",
+            h: "The first room.",
+            b: "Table inventory, deposits, party-size rules, waitlist. Connected directly to your voice agent and web chat for 24/7 booking.",
+            rows: [
+              { label: "CHANNELS", value: "WEB · PHONE · WA" },
+              { label: "DEPOSIT", value: "STRIPE · SEPA" },
+              { label: "CALENDAR", value: "CAL.COM" },
+            ],
+          },
+          {
+            n: "02 · MEMBERSHIPS",
+            h: "Quiet invitations.",
+            b: "Tiered access for regulars — early booking windows, tasting-menu priority, chef's-table nights. Renewed automatically or by hand.",
+            rows: [
+              { label: "TIERS", value: "3 DEFAULT" },
+              { label: "BILLING", value: "MONTHLY · ANNUAL" },
+              { label: "INVITES", value: "MANUAL · RULE-BASED" },
+            ],
+          },
+          {
+            n: "03 · GUEST MEMORY",
+            h: "What the house remembers.",
+            b: "Notes on allergies, preferences, anniversaries, last wine. Written by the floor team after service, surfaced before the next visit.",
+            rows: [
+              { label: "ENTRY", value: "VOICE · WEB" },
+              { label: "PRIVACY", value: "GDPR · GUEST-OWNED" },
+              { label: "SURFACING", value: "ON BOOKING" },
+            ],
+          },
+          {
+            n: "04 · GIFTING",
+            h: "Presents that arrive.",
+            b: "Gift vouchers, tasting evenings, experience bundles. Printed card, email delivery, or a wallet pass — redeemed in one tap.",
+            rows: [
+              { label: "FORMAT", value: "PRINT · EMAIL · WALLET" },
+              { label: "EXPIRY", value: "CONFIGURABLE" },
+              { label: "SETTLEMENT", value: "STRIPE" },
+            ],
+          },
+          {
+            n: "05 · SERVICE DESK",
+            h: "Calm on the floor.",
+            b: "The single screen your maître d' opens. Tonight's cover list, arrivals, VIP flags, last-second cancellations — everything one glance away.",
+            rows: [
+              { label: "DEVICE", value: "TABLET · DESKTOP" },
+              { label: "ROLES", value: "HOST · MANAGER · CHEF" },
+              { label: "AUDIT", value: "FULL · EXPORTABLE" },
+            ],
+          },
+          {
+            n: "06 · ANALYTICS",
+            h: "Only what matters.",
+            b: "Covers vs. capacity, no-show rate, first-visit to third-visit conversion, spend per cover. No vanity dashboards.",
+            rows: [
+              { label: "EXPORTS", value: "CSV · API" },
+              { label: "PRIVACY", value: "AGGREGATED" },
+              { label: "CADENCE", value: "LIVE · WEEKLY DIGEST" },
+            ],
+          },
+        ],
+      },
+    },
   },
 };
 

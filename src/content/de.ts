@@ -3435,5 +3435,89 @@ export const content: Content = {
         ],
       },
     },
+
+    kutasia: {
+      hero: {
+        metaChip: "KUTASIA",
+        metaLabel: "[ FLAGSHIP · HOSPITALITY ]",
+        title: {
+          pre: "Die Gästeplattform für ",
+          italic: "Räume",
+          post: ", die sich erinnern.",
+        },
+        lead:
+          "Ursprünglich für ein Restaurant in Istanbul gebaut. Konzipiert für Hotels, Chef's Tables, Weinbars und Private Clubs in DE · TR. Reservierungen, Mitgliedschaften, Gutscheine und Gästegedächtnis — in einem System, das der Gastgeber vom Service-Boden aus wirklich führen kann.",
+        ctaPrimary: "Zugang anfragen",
+        ctaSecondary: "Module ansehen",
+      },
+      rooms: {
+        eyebrow: "[ MODULE ]",
+        headline: "Fünf Räume. Ein Haus.",
+        lead:
+          "Jedes Modul läuft eigenständig und übergibt sauber an das nächste. Starten Sie mit Reservierungen, ergänzen Sie Mitgliedschaften, wenn die Warteliste ernst wird, und legen Sie das Gästegedächtnis drauf, wenn der Service es rechtfertigt.",
+        items: [
+          {
+            n: "01 · RESERVIERUNGEN",
+            h: "Der erste Raum.",
+            b: "Tischbestand, Anzahlungen, Gruppen­größen­regeln, Warteliste. Direkt an Ihren Voice Agent und Web-Chat angeschlossen für 24/7-Buchung.",
+            rows: [
+              { label: "CHANNELS", value: "WEB · PHONE · WA" },
+              { label: "DEPOSIT", value: "STRIPE · SEPA" },
+              { label: "CALENDAR", value: "CAL.COM" },
+            ],
+          },
+          {
+            n: "02 · MITGLIEDSCHAFTEN",
+            h: "Leise Einladungen.",
+            b: "Gestufter Zugang für Stammgäste — frühe Buchungsfenster, Priorität beim Tasting-Menü, Chef's-Table-Abende. Automatisch verlängert oder von Hand.",
+            rows: [
+              { label: "TIERS", value: "3 DEFAULT" },
+              { label: "BILLING", value: "MONTHLY · ANNUAL" },
+              { label: "INVITES", value: "MANUAL · RULE-BASED" },
+            ],
+          },
+          {
+            n: "03 · GÄSTEGEDÄCHTNIS",
+            h: "Was das Haus sich merkt.",
+            b: "Notizen zu Allergien, Vorlieben, Jahrestagen, dem letzten Wein. Nach dem Service vom Floor-Team geschrieben, vor dem nächsten Besuch aufbereitet.",
+            rows: [
+              { label: "ENTRY", value: "VOICE · WEB" },
+              { label: "PRIVACY", value: "GDPR · GUEST-OWNED" },
+              { label: "SURFACING", value: "ON BOOKING" },
+            ],
+          },
+          {
+            n: "04 · GUTSCHEINE",
+            h: "Geschenke, die ankommen.",
+            b: "Gutscheine, Tasting-Abende, Experience-Bundles. Gedruckt, per E-Mail oder als Wallet-Pass — in einem Tippen eingelöst.",
+            rows: [
+              { label: "FORMAT", value: "PRINT · EMAIL · WALLET" },
+              { label: "EXPIRY", value: "CONFIGURABLE" },
+              { label: "SETTLEMENT", value: "STRIPE" },
+            ],
+          },
+          {
+            n: "05 · SERVICE DESK",
+            h: "Ruhe am Service.",
+            b: "Der eine Bildschirm, den Ihr Maître d' öffnet. Heutige Cover-Liste, Ankünfte, VIP-Markierungen, Last-Minute-Absagen — alles einen Blick entfernt.",
+            rows: [
+              { label: "DEVICE", value: "TABLET · DESKTOP" },
+              { label: "ROLES", value: "HOST · MANAGER · CHEF" },
+              { label: "AUDIT", value: "FULL · EXPORTABLE" },
+            ],
+          },
+          {
+            n: "06 · ANALYTICS",
+            h: "Nur das, was zählt.",
+            b: "Covers vs. Kapazität, No-Show-Rate, Erstbesuch-zu-Drittbesuch-Konversion, Umsatz pro Cover. Keine Vanity-Dashboards.",
+            rows: [
+              { label: "EXPORTS", value: "CSV · API" },
+              { label: "PRIVACY", value: "AGGREGATED" },
+              { label: "CADENCE", value: "LIVE · WEEKLY DIGEST" },
+            ],
+          },
+        ],
+      },
+    },
   },
 } as const;

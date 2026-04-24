@@ -3435,5 +3435,89 @@ export const content: Content = {
         ],
       },
     },
+
+    kutasia: {
+      hero: {
+        metaChip: "KUTASIA",
+        metaLabel: "[ FLAGSHIP · HOSPITALITY ]",
+        title: {
+          pre: "Hatırlayan ",
+          italic: "odalar",
+          post: " için misafir platformu.",
+        },
+        lead:
+          "İlk olarak İstanbul'daki bir restoran için inşa edildi. DE · TR genelinde oteller, chef's table'lar, şarap barları ve özel kulüpler için tasarlandı. Rezervasyon, üyelik, hediye ve misafir hafızası — ev sahibinin servis zemininden gerçekten yönetebileceği tek sistemde.",
+        ctaPrimary: "Erişim talep et",
+        ctaSecondary: "Modülleri gör",
+      },
+      rooms: {
+        eyebrow: "[ MODÜLLER ]",
+        headline: "Beş oda. Tek ev.",
+        lead:
+          "Her modül kendi başına çalışır ve bir sonrakine temiz devreder. Rezervasyonlarla başla, bekleme listesi ciddileştiğinde üyelik ekle, servis gerektirdiğinde misafir hafızasını katla.",
+        items: [
+          {
+            n: "01 · REZERVASYONLAR",
+            h: "İlk oda.",
+            b: "Masa envanteri, depozito, kişi sayısı kuralları, bekleme listesi. 24/7 rezervasyon için voice agent ve web sohbetinize doğrudan bağlı.",
+            rows: [
+              { label: "CHANNELS", value: "WEB · PHONE · WA" },
+              { label: "DEPOSIT", value: "STRIPE · SEPA" },
+              { label: "CALENDAR", value: "CAL.COM" },
+            ],
+          },
+          {
+            n: "02 · ÜYELİKLER",
+            h: "Sessiz davetler.",
+            b: "Düzenli müşteriler için kademeli erişim — erken rezervasyon pencereleri, tasting-menu önceliği, chef's table geceleri. Otomatik veya elle yenilenir.",
+            rows: [
+              { label: "TIERS", value: "3 DEFAULT" },
+              { label: "BILLING", value: "MONTHLY · ANNUAL" },
+              { label: "INVITES", value: "MANUAL · RULE-BASED" },
+            ],
+          },
+          {
+            n: "03 · MİSAFİR HAFIZASI",
+            h: "Evin hatırladıkları.",
+            b: "Alerjiler, tercihler, yıldönümleri, son şarap notları. Servisten sonra salon ekibi yazar, bir sonraki ziyarette yüzeye çıkar.",
+            rows: [
+              { label: "ENTRY", value: "VOICE · WEB" },
+              { label: "PRIVACY", value: "GDPR · GUEST-OWNED" },
+              { label: "SURFACING", value: "ON BOOKING" },
+            ],
+          },
+          {
+            n: "04 · HEDİYE",
+            h: "Gelen armağanlar.",
+            b: "Hediye çekleri, tasting akşamları, experience paketleri. Basılı kart, e-posta veya cüzdan pass'i — tek dokunuşta kullanılır.",
+            rows: [
+              { label: "FORMAT", value: "PRINT · EMAIL · WALLET" },
+              { label: "EXPIRY", value: "CONFIGURABLE" },
+              { label: "SETTLEMENT", value: "STRIPE" },
+            ],
+          },
+          {
+            n: "05 · SERVICE DESK",
+            h: "Serviste sükûnet.",
+            b: "Maître d'nizin açtığı tek ekran. Gecenin cover listesi, varışlar, VIP işaretleri, son dakika iptalleri — her şey bir bakış uzakta.",
+            rows: [
+              { label: "DEVICE", value: "TABLET · DESKTOP" },
+              { label: "ROLES", value: "HOST · MANAGER · CHEF" },
+              { label: "AUDIT", value: "FULL · EXPORTABLE" },
+            ],
+          },
+          {
+            n: "06 · ANALİTİK",
+            h: "Yalnızca önemli olan.",
+            b: "Cover vs. kapasite, no-show oranı, ilk ziyaret-üçüncü ziyaret dönüşümü, cover başına harcama. Vanity dashboard yok.",
+            rows: [
+              { label: "EXPORTS", value: "CSV · API" },
+              { label: "PRIVACY", value: "AGGREGATED" },
+              { label: "CADENCE", value: "LIVE · WEEKLY DIGEST" },
+            ],
+          },
+        ],
+      },
+    },
   },
 } as const;
