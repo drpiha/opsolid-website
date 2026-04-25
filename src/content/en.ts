@@ -867,7 +867,7 @@ export const content = {
       cta: "Schedule a Call",
     },
     info: {
-      email: "hello@opsolid.de",
+      email: "info@kutasia.com",
       response: "Typical response time: 1-2 business days.",
       location:
         "Available for projects across Europe and internationally.",
@@ -996,7 +996,7 @@ export const content = {
           {
             title: "Right to deletion",
             content:
-              "You may delete your Digital Business Card profile and all associated data with one click inside your account, or by emailing contact@opsolid.de. Deletion is effective within 30 days.",
+              "You may delete your Digital Business Card profile and all associated data with one click inside your account, or by emailing info@kutasia.com. Deletion is effective within 30 days.",
           },
         ],
       },
@@ -1514,7 +1514,7 @@ export const content = {
           success:
             "Thanks — we'll reply within one business day with a preview link.",
           error:
-            "Something went wrong. Please email contact@opsolid.de directly.",
+            "Something went wrong. Please email info@kutasia.com directly.",
         },
       },
       testimonials: {
@@ -1602,7 +1602,7 @@ export const content = {
           {
             question: "I need 10+ cards for my team. How?",
             answer:
-              "Custom tier. We quote per project based on how much each card should share vs. stay unified. Email contact@opsolid.de.",
+              "Custom tier. We quote per project based on how much each card should share vs. stay unified. Email info@kutasia.com.",
           },
         ],
       },
@@ -1736,7 +1736,7 @@ export const content = {
           "Your subscription stays active until the end of the current billing period, then stops renewing.",
         keep: "Keep subscription",
         confirm: "Confirm cancel",
-        error: "We couldn't schedule the cancellation. Please email contact@opsolid.de.",
+        error: "We couldn't schedule the cancellation. Please email info@kutasia.com.",
         doneBody:
           "Cancellation scheduled. Your card stays live until {date}. You'll get a final confirmation email from Stripe.",
         doneClose: "Close",
@@ -2865,7 +2865,7 @@ export const content = {
           success:
             "Thanks — we'll reply within one business day.",
           error:
-            "Something went wrong. Please email contact@opsolid.de directly.",
+            "Something went wrong. Please email info@kutasia.com directly.",
         },
       },
       faq: {
@@ -3458,38 +3458,8 @@ export const content = {
         },
         lead:
           "One short call. An operations walkthrough, a candid opinion on what should and shouldn't be automated, and a written summary in your inbox within 48 hours — whether the engagement moves forward or not.",
-        contacts: [
-          {
-            key: "MAIL",
-            value: "drhasanhd@gmail.com",
-            meta: "DE · EN · TR",
-            href: "mailto:drhasanhd@gmail.com",
-          },
-          {
-            key: "TEL",
-            value: "Available on request",
-            meta: "CET · business hours",
-            href: "",
-          },
-          {
-            key: "STUDIO",
-            value: "Hamburg, DE",
-            meta: "BY APPOINTMENT",
-            href: "",
-          },
-          {
-            key: "DATA · EU",
-            value: "Frankfurt data-centre",
-            meta: "FRA · AV-DSGVO",
-            href: "",
-          },
-        ],
-        trust: [
-          { em: "GDPR", rest: "native" },
-          { em: "ISO 27001", rest: "aligned" },
-          { em: "NO", rest: "US subprocessors" },
-          { em: "NO", rest: "vendor lock-in" },
-        ],
+        contacts: [] as Array<{ key: string; value: string; meta: string; href: string }>,
+        trust: [] as Array<{ em: string; rest: string }>,
       },
       form: {
         title: "Book a discovery call",
@@ -3515,7 +3485,7 @@ export const content = {
           { key: "other", label: "Something else" },
         ],
         legal:
-          "Submission routes to drhasanhd@gmail.com. No third-party analytics, no marketing list, no follow-up after 14 days.",
+          "Submissions are handled directly. No third-party analytics, no marketing list, no follow-up after 14 days.",
         submitCta: "Request call",
         success: "Thanks — we'll reply within 48 hours.",
         error: "Something didn't send. Try again or email directly.",

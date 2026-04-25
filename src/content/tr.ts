@@ -869,7 +869,7 @@ export const content: Content = {
       cta: "Görüşme Planlayın",
     },
     info: {
-      email: "hello@opsolid.de",
+      email: "info@kutasia.com",
       response: "Tipik yanıt süresi: 1-2 iş günü.",
       location:
         "Avrupa genelinde ve uluslararası projelere açıktır.",
@@ -998,7 +998,7 @@ export const content: Content = {
           {
             title: "Silme hakkı",
             content:
-              "Digital Business Card profilinizi ve ilgili tüm verileri hesabınız içinden tek tıklamayla veya contact@opsolid.de adresine e-posta göndererek silebilirsiniz. Silme işlemi 30 gün içinde tamamlanır.",
+              "Digital Business Card profilinizi ve ilgili tüm verileri hesabınız içinden tek tıklamayla veya info@kutasia.com adresine e-posta göndererek silebilirsiniz. Silme işlemi 30 gün içinde tamamlanır.",
           },
         ],
       },
@@ -1516,7 +1516,7 @@ export const content: Content = {
           success:
             "Teşekkürler — bir iş günü içinde önizleme linkiyle dönüş yapacağız.",
           error:
-            "Bir sorun oluştu. Lütfen doğrudan contact@opsolid.de adresine yazın.",
+            "Bir sorun oluştu. Lütfen doğrudan info@kutasia.com adresine yazın.",
         },
       },
       testimonials: {
@@ -1604,7 +1604,7 @@ export const content: Content = {
           {
             question: "Ekibim için 10+ karta ihtiyacım var. Nasıl?",
             answer:
-              "Custom paket. Kartların ne kadar ortak paylaşacağına ve ne kadar özel kalacağına göre proje bazlı teklif veririz. contact@opsolid.de adresine yazın.",
+              "Custom paket. Kartların ne kadar ortak paylaşacağına ve ne kadar özel kalacağına göre proje bazlı teklif veririz. info@kutasia.com adresine yazın.",
           },
         ],
       },
@@ -1738,7 +1738,7 @@ export const content: Content = {
           "Aboneliğiniz mevcut fatura döneminin sonuna kadar aktif kalır, ardından yenilenmez.",
         keep: "Aboneliği koru",
         confirm: "İptali onayla",
-        error: "İptal planlanamadı. Lütfen contact@opsolid.de adresine yazın.",
+        error: "İptal planlanamadı. Lütfen info@kutasia.com adresine yazın.",
         doneBody:
           "İptal planlandı. Kartınız {date} tarihine kadar canlı kalır. Stripe'tan son bir onay e-postası alacaksınız.",
         doneClose: "Kapat",
@@ -2867,7 +2867,7 @@ export const content: Content = {
           success:
             "Teşekkürler — bir iş günü içinde yanıtlayacağız.",
           error:
-            "Bir şeyler yanlış gitti. Lütfen doğrudan contact@opsolid.de adresine yazın.",
+            "Bir şeyler yanlış gitti. Lütfen doğrudan info@kutasia.com adresine yazın.",
         },
       },
       faq: {
@@ -3447,38 +3447,8 @@ export const content: Content = {
         },
         lead:
           "Kısa bir görüşme. Operasyon keşfi, neyin otomasyona uygun olduğu ve olmadığı konusunda dürüst görüş ve 48 saat içinde gelen kutunuza yazılı bir özet — iş ilerlese de ilerlemese de.",
-        contacts: [
-          {
-            key: "MAIL",
-            value: "drhasanhd@gmail.com",
-            meta: "DE · EN · TR",
-            href: "mailto:drhasanhd@gmail.com",
-          },
-          {
-            key: "TEL",
-            value: "Talep üzerine",
-            meta: "CET · mesai saatleri",
-            href: "",
-          },
-          {
-            key: "STUDIO",
-            value: "Hamburg, DE",
-            meta: "RANDEVU İLE",
-            href: "",
-          },
-          {
-            key: "DATA · EU",
-            value: "Frankfurt veri merkezi",
-            meta: "FRA · AV-DSGVO",
-            href: "",
-          },
-        ],
-        trust: [
-          { em: "GDPR", rest: "native" },
-          { em: "ISO 27001", rest: "uyumlu" },
-          { em: "HAYIR", rest: "US alt-işlemci" },
-          { em: "HAYIR", rest: "vendor lock-in" },
-        ],
+        contacts: [],
+        trust: [],
       },
       form: {
         title: "Discovery görüşmesi ayarla",
@@ -3504,7 +3474,7 @@ export const content: Content = {
           { key: "other", label: "Başka bir şey" },
         ],
         legal:
-          "Gönderi drhasanhd@gmail.com'a gider. Üçüncü taraf analitik yok, pazarlama listesi yok, 14 günden sonra takip yok.",
+          "Form gönderileri doğrudan işlenir. Üçüncü taraf analitik yok, pazarlama listesi yok, 14 günden sonra takip yok.",
         submitCta: "Görüşme talep et",
         success: "Teşekkürler — 48 saat içinde yanıt vereceğiz.",
         error: "Gönderilemedi. Tekrar deneyin veya doğrudan yazın.",

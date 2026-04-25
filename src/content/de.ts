@@ -869,7 +869,7 @@ export const content: Content = {
       cta: "Termin vereinbaren",
     },
     info: {
-      email: "hello@opsolid.de",
+      email: "info@kutasia.com",
       response: "Übliche Antwortzeit: 1–2 Werktage.",
       location:
         "Verfügbar für Projekte in ganz Europa und international.",
@@ -998,7 +998,7 @@ export const content: Content = {
           {
             title: "Recht auf Löschung",
             content:
-              "Sie können Ihr Digital Business Card Profil und alle zugehörigen Daten mit einem Klick in Ihrem Konto oder per E-Mail an contact@opsolid.de löschen. Die Löschung wird innerhalb von 30 Tagen wirksam.",
+              "Sie können Ihr Digital Business Card Profil und alle zugehörigen Daten mit einem Klick in Ihrem Konto oder per E-Mail an info@kutasia.com löschen. Die Löschung wird innerhalb von 30 Tagen wirksam.",
           },
         ],
       },
@@ -1516,7 +1516,7 @@ export const content: Content = {
           success:
             "Danke — Antwort innerhalb eines Werktages mit Vorschau-Link.",
           error:
-            "Etwas ist schiefgegangen. Bitte direkt an contact@opsolid.de schreiben.",
+            "Etwas ist schiefgegangen. Bitte direkt an info@kutasia.com schreiben.",
         },
       },
       testimonials: {
@@ -1604,7 +1604,7 @@ export const content: Content = {
           {
             question: "Ich brauche 10+ Karten für mein Team. Wie?",
             answer:
-              "Custom-Tarif. Wir erstellen ein projektbezogenes Angebot, abhängig davon, wie viel die Karten gemeinsam haben sollen. Schreiben Sie an contact@opsolid.de.",
+              "Custom-Tarif. Wir erstellen ein projektbezogenes Angebot, abhängig davon, wie viel die Karten gemeinsam haben sollen. Schreiben Sie an info@kutasia.com.",
           },
         ],
       },
@@ -1738,7 +1738,7 @@ export const content: Content = {
           "Ihr Abo bleibt bis zum Ende des aktuellen Abrechnungszeitraums aktiv und verlängert sich danach nicht mehr.",
         keep: "Abo behalten",
         confirm: "Kündigung bestätigen",
-        error: "Kündigung konnte nicht geplant werden. Bitte E-Mail an contact@opsolid.de.",
+        error: "Kündigung konnte nicht geplant werden. Bitte E-Mail an info@kutasia.com.",
         doneBody:
           "Kündigung vorgemerkt. Ihre Karte bleibt bis zum {date} live. Eine abschließende Bestätigung senden wir per E-Mail.",
         doneClose: "Schließen",
@@ -2867,7 +2867,7 @@ export const content: Content = {
           success:
             "Danke — wir antworten innerhalb eines Werktags.",
           error:
-            "Etwas ist schiefgegangen. Bitte schreiben Sie direkt an contact@opsolid.de.",
+            "Etwas ist schiefgegangen. Bitte schreiben Sie direkt an info@kutasia.com.",
         },
       },
       faq: {
@@ -3447,38 +3447,8 @@ export const content: Content = {
         },
         lead:
           "Ein kurzes Gespräch. Ein Operations-Walkthrough, eine klare Einschätzung, was automatisiert werden sollte und was nicht, und eine schriftliche Zusammenfassung innerhalb von 48 Stunden in Ihrem Posteingang — ob das Mandat weitergeht oder nicht.",
-        contacts: [
-          {
-            key: "MAIL",
-            value: "drhasanhd@gmail.com",
-            meta: "DE · EN · TR",
-            href: "mailto:drhasanhd@gmail.com",
-          },
-          {
-            key: "TEL",
-            value: "Auf Anfrage",
-            meta: "CET · Geschäftszeiten",
-            href: "",
-          },
-          {
-            key: "STUDIO",
-            value: "Hamburg, DE",
-            meta: "NACH VEREINBARUNG",
-            href: "",
-          },
-          {
-            key: "DATA · EU",
-            value: "Rechenzentrum Frankfurt",
-            meta: "FRA · AV-DSGVO",
-            href: "",
-          },
-        ],
-        trust: [
-          { em: "GDPR", rest: "nativ" },
-          { em: "ISO 27001", rest: "konform" },
-          { em: "KEINE", rest: "US-Subprozessoren" },
-          { em: "KEIN", rest: "Vendor-Lock-in" },
-        ],
+        contacts: [],
+        trust: [],
       },
       form: {
         title: "Discovery-Call buchen",
@@ -3504,7 +3474,7 @@ export const content: Content = {
           { key: "other", label: "Etwas anderes" },
         ],
         legal:
-          "Einreichung geht an drhasanhd@gmail.com. Keine Drittanbieter-Analyse, keine Marketing-Liste, kein Follow-up nach 14 Tagen.",
+          "Anfragen werden direkt bearbeitet. Keine Drittanbieter-Analyse, keine Marketing-Liste, kein Follow-up nach 14 Tagen.",
         submitCta: "Anruf anfragen",
         success: "Danke — wir antworten innerhalb von 48 Stunden.",
         error: "Etwas ging schief. Versuchen Sie es erneut oder schreiben Sie direkt.",

@@ -4,6 +4,7 @@ import { formatEuro, getTemplateById } from "@/config/card-templates";
 import { CardDataSchema } from "@/lib/validation";
 import { PublishAction } from "./PublishAction";
 import { LinksPanel } from "./LinksPanel";
+import { ConnectionsPanel } from "./ConnectionsPanel";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -308,6 +309,10 @@ export default async function OrderDetailPage({ params, searchParams }: PageProp
                 {order.designNotes}
               </p>
             </Panel>
+          )}
+
+          {order.status === "PUBLISHED" && (
+            <ConnectionsPanel orderId={order.id} token={token} />
           )}
 
           {order.status === "PUBLISHED" && order.slug && (

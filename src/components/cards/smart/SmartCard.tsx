@@ -28,6 +28,7 @@ import type { CardData } from "@/lib/validation";
 import type { SmartCardSource } from "./SmartCardSource";
 import { encodeSource, describeSource } from "./SmartCardSource";
 import { SendMyInfoButton } from "./SendMyInfoButton";
+import { ExchangeButton } from "./ExchangeButton";
 
 export interface SmartCardProps {
   slug: string;
@@ -39,6 +40,8 @@ export interface SmartCardProps {
   source?: SmartCardSource;
   /** Site origin for absolute URLs (Open Graph, share). */
   siteUrl: string;
+  /** Card owner's locale — used by visitor-facing CTAs (e.g. ExchangeButton). */
+  locale?: "de" | "en" | "tr";
 }
 
 const DEFAULT_PRIMARY = "#C27940"; // copper
@@ -68,6 +71,7 @@ export function SmartCard({
   brandAccentHex,
   source,
   siteUrl,
+  locale = "de",
 }: SmartCardProps) {
   const primary = brandPrimaryHex ?? DEFAULT_PRIMARY;
   const accent = brandAccentHex ?? DEFAULT_ACCENT;
@@ -175,6 +179,7 @@ export function SmartCard({
         )}
 
         <SendMyInfoButton slug={slug} sourceQs={sourceQs} primary={primary} />
+        <ExchangeButton slug={slug} primary={primary} locale={locale} />
       </div>
 
       <SmartCardContactRows cardData={cardData} />
