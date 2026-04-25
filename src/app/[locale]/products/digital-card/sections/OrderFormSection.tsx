@@ -9,7 +9,7 @@ import {
   formatEuro,
   getTemplateById,
 } from "@/config/card-templates";
-import { TemplateRenderer } from "@/components/cards/TemplateRenderer";
+import { SmartCard } from "@/components/cards/smart/SmartCard";
 import { OrderPayloadSchema, BillingMode } from "@/lib/validation";
 import type { CardData } from "@/lib/validation";
 
@@ -86,8 +86,8 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
     file: File,
     kind: "photo" | "logo"
   ): Promise<string | null> => {
-    if (file.size > 2 * 1024 * 1024) {
-      setErrorMsg(L("uploadTooLarge", "Datei zu groß (max 2 MB)."));
+    if (file.size > 5 * 1024 * 1024) {
+      setErrorMsg(L("uploadTooLarge", "Datei zu groß (max 5 MB)."));
       return null;
     }
     const form = new FormData();
@@ -199,7 +199,7 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="grid gap-10 lg:grid-cols-[1fr_minmax(320px,420px)]">
+        <form onSubmit={handleSubmit} className="grid gap-10 lg:grid-cols-[1fr_minmax(360px,460px)]">
           {/* ======================= LEFT: form fields ======================= */}
           <div className="space-y-10">
             {/* Template summary */}
@@ -515,18 +515,27 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
           </div>
 
           {/* ======================= RIGHT: live preview ======================= */}
+          {/* Sticky sidebar with a real SmartCard render. The form grid
+              reserves ~460px on the right so SmartCard's intrinsic 440px
+              max-width fits without scaling — what the customer sees here
+              is exactly what visitors will see at /c/<slug>.
+              `pointer-events-none` blocks accidental clicks on the live
+              share / tel links during preview. */}
           <div className="lg:sticky lg:top-20 lg:self-start">
             <p className="text-eyebrow mb-4 uppercase text-ink/50">
               {L("previewLabel", "Live-Vorschau")}
             </p>
-            <TemplateRenderer
-              componentKey={selectedTemplate.componentKey}
-              cardData={activeCardData}
-              photoPath={photoPath}
-              logoPath={logoPath}
-              brandPrimaryHex={brandPrimaryHex || undefined}
-              brandAccentHex={brandAccentHex || undefined}
-            />
+            <div className="pointer-events-none">
+              <SmartCard
+                slug="preview"
+                cardData={activeCardData}
+                photoPath={photoPath}
+                logoPath={logoPath}
+                brandPrimaryHex={brandPrimaryHex || undefined}
+                brandAccentHex={brandAccentHex || undefined}
+                siteUrl=""
+              />
+            </div>
             <p className="mt-4 text-xs text-ink/50">
               {L(
                 "previewHint",
@@ -551,20 +560,56 @@ function UploadTile({
   uploading: boolean;
   onChange: (file: File) => void;
 }) {
+  // Resolve the upload path to a browser-loadable URL. Storage paths come
+  // back as either absolute URLs (S3/CDN) or root-relative (`/uploads/...`).
+  const previewSrc = current
+    ? current.startsWith("http") || current.startsWith("/")
+      ? current
+      : `/${current}`
+    : null;
+
   return (
     <label className="flex cursor-pointer items-center gap-4 rounded-2xl border border-dashed border-neutral-300 bg-white p-4 transition-colors hover:border-ink/40">
-      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-100 text-ink/60">
-        {uploading ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />}
-      </div>
+      {previewSrc ? (
+        // Uploaded — show the user's image so they instantly see what
+        // they sent. The spinner overlays the thumbnail when re-uploading.
+        <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-neutral-200 bg-neutral-50">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={previewSrc}
+            alt={label}
+            className="h-full w-full object-cover"
+          />
+          {uploading && (
+            <span className="absolute inset-0 flex items-center justify-center bg-black/40 text-white">
+              <Loader2 size={16} className="animate-spin" />
+            </span>
+          )}
+        </div>
+      ) : (
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-ink/60">
+          {uploading ? (
+            <Loader2 size={16} className="animate-spin" />
+          ) : (
+            <Upload size={16} />
+          )}
+        </div>
+      )}
       <div className="min-w-0 flex-1">
         <p className="text-sm font-medium text-ink">{label}</p>
         <p className="truncate text-xs text-ink/50">
-          {current ? current.split("/").pop() : "JPG · PNG · SVG · max 2 MB"}
+          {previewSrc
+            ? uploading
+              ? "Wird ersetzt …"
+              : "Hochgeladen ✓ · klicken zum Ersetzen"
+            : uploading
+              ? "Wird hochgeladen …"
+              : "JPG · PNG · WEBP · max 5 MB"}
         </p>
       </div>
       <input
         type="file"
-        accept="image/jpeg,image/png,image/svg+xml"
+        accept="image/jpeg,image/png,image/svg+xml,image/webp"
         className="sr-only"
         onChange={(e) => {
           const f = e.target.files?.[0];
