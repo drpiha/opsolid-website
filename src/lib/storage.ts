@@ -112,8 +112,14 @@ export async function putAsset(args: PutAssetArgs): Promise<PutAssetResult> {
   const absPath = join(absDir, filename);
   await mkdir(absDir, { recursive: true });
   await writeFile(absPath, args.body);
-  // Same-origin path so <img src="/uploads/cards/.../foo.png"> works in dev.
-  const url = `/uploads/${relPath}`;
+  // Same-origin path. We deliberately route through /api/uploads/<rel> rather
+  // than the bare /uploads/<rel> static path because Next.js `output:
+  // standalone` snapshots the public/ tree at container startup — files
+  // written after startup (every customer upload) hit a hard 404 from the
+  // built-in static handler. The /api/uploads/[...path] route streams from
+  // disk on every request and survives container restarts because the host
+  // volume mount preserves the files.
+  const url = `/api/uploads/${relPath}`;
   return { url, key: url };
 }
 
@@ -135,9 +141,17 @@ export async function deleteAsset(key: string): Promise<void> {
     return;
   }
 
-  // local driver — strip leading slash, resolve under public/.
-  if (!key.startsWith("/uploads/")) return;
-  const absPath = join(process.cwd(), "public", key.replace(/^\//, ""));
+  // local driver — accept both legacy `/uploads/...` keys (from before the
+  // standalone-server fix) and new `/api/uploads/...` keys, then resolve
+  // back to the on-disk path under public/.
+  let relPath: string | null = null;
+  if (key.startsWith("/api/uploads/")) {
+    relPath = key.slice("/api/uploads/".length);
+  } else if (key.startsWith("/uploads/")) {
+    relPath = key.slice("/uploads/".length);
+  }
+  if (!relPath) return;
+  const absPath = join(process.cwd(), "public", "uploads", relPath);
   try {
     await unlink(absPath);
   } catch {

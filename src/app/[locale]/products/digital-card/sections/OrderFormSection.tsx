@@ -533,7 +533,11 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
                 logoPath={logoPath}
                 brandPrimaryHex={brandPrimaryHex || undefined}
                 brandAccentHex={brandAccentHex || undefined}
-                siteUrl=""
+                siteUrl={
+                  typeof window !== "undefined"
+                    ? window.location.origin
+                    : "https://opsolid.de"
+                }
               />
             </div>
             <p className="mt-4 text-xs text-ink/50">

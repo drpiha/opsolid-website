@@ -25,14 +25,27 @@ export interface CardTemplateDef {
     | "salon"
     | "restaurant"
     | "creator"
+    | "freelancer"
+    | "lawyer"
     | "clinic"
-    | "freelancer";
+    | "fitness"
+    | "music"
+    | "architecture"
+    | "retail"
+    | "hospitality"
+    | "events"
+    | "construction"
+    | "tourism"
+    | "corporate"
+    | "tech"
+    | "consultant";
   componentKey:
     | "Template01"
     | "Template02"
     | "Template03"
     | "Template04"
-    | "Template05";
+    | "Template05"
+    | "SmartCard";
   previewPath: string;
   /** One-time "lifetime" purchase — no renewal. */
   oneTimeCents: number;
@@ -138,6 +151,208 @@ export const cardTemplates: readonly CardTemplateDef[] = [
     stripeYearlyPriceId: "price_1TPLkb25H593hnOb6U92Tq4k",
     isActive: true,
     sortOrder: 5,
+  },
+
+  // ---------------------------------------------------------------------------
+  // Sector-tailored SmartCard presets (IDs 6–20). Each entry reuses the
+  // SmartCard component but ships a sector-specific preset (see card-sectors.ts)
+  // so the customer-facing copy/icons read native to the trade. Stripe price
+  // IDs are populated by `npm run setup-stripe` once these become live SKUs.
+  // ---------------------------------------------------------------------------
+  {
+    id: 6,
+    slug: "avukat-hukuk",
+    name: "Anwalt & Kanzlei",
+    sectorHint: "lawyer",
+    componentKey: "SmartCard",
+    previewPath: "/images/templates/card-06.png",
+    oneTimeCents: 12900,
+    monthlyCents: 700,
+    yearlyCents: 5900,
+    isActive: true,
+    sortOrder: 6,
+  },
+  {
+    id: 7,
+    slug: "fotograf-kreatif",
+    name: "Fotografie & Kreativ",
+    sectorHint: "creator",
+    componentKey: "SmartCard",
+    previewPath: "/images/templates/card-07.png",
+    oneTimeCents: 9900,
+    monthlyCents: 600,
+    yearlyCents: 4900,
+    isActive: true,
+    sortOrder: 7,
+  },
+  {
+    id: 8,
+    slug: "doktor-klinik",
+    name: "Arzt & Klinik",
+    sectorHint: "clinic",
+    componentKey: "SmartCard",
+    previewPath: "/images/templates/card-08.png",
+    oneTimeCents: 9900,
+    monthlyCents: 600,
+    yearlyCents: 4900,
+    isActive: true,
+    sortOrder: 8,
+  },
+  {
+    id: 9,
+    slug: "fitness-trainer",
+    name: "Fitness & Personal Training",
+    sectorHint: "fitness",
+    componentKey: "SmartCard",
+    previewPath: "/images/templates/card-09.png",
+    oneTimeCents: 7900,
+    monthlyCents: 500,
+    yearlyCents: 3900,
+    isActive: true,
+    sortOrder: 9,
+  },
+  {
+    id: 10,
+    slug: "dj-muzik",
+    name: "DJ & Musik",
+    sectorHint: "music",
+    componentKey: "SmartCard",
+    previewPath: "/images/templates/card-10.png",
+    oneTimeCents: 9900,
+    monthlyCents: 600,
+    yearlyCents: 4900,
+    isActive: true,
+    sortOrder: 10,
+  },
+  {
+    id: 11,
+    slug: "mimar-tasarim",
+    name: "Architektur & Design",
+    sectorHint: "architecture",
+    componentKey: "SmartCard",
+    previewPath: "/images/templates/card-11.png",
+    oneTimeCents: 12900,
+    monthlyCents: 700,
+    yearlyCents: 5900,
+    isActive: true,
+    sortOrder: 11,
+  },
+  {
+    id: 12,
+    slug: "eticaret-butik",
+    name: "E-Commerce & Boutique",
+    sectorHint: "retail",
+    componentKey: "SmartCard",
+    previewPath: "/images/templates/card-12.png",
+    oneTimeCents: 9900,
+    monthlyCents: 600,
+    yearlyCents: 4900,
+    isActive: true,
+    sortOrder: 12,
+  },
+  {
+    id: 13,
+    slug: "otel-konaklama",
+    name: "Hotel & Hospitality",
+    sectorHint: "hospitality",
+    componentKey: "SmartCard",
+    previewPath: "/images/templates/card-13.png",
+    oneTimeCents: 14900,
+    monthlyCents: 800,
+    yearlyCents: 6900,
+    isActive: true,
+    sortOrder: 13,
+  },
+  {
+    id: 14,
+    slug: "etkinlik-dugun",
+    name: "Event & Hochzeit",
+    sectorHint: "events",
+    componentKey: "SmartCard",
+    previewPath: "/images/templates/card-14.png",
+    oneTimeCents: 9900,
+    monthlyCents: 600,
+    yearlyCents: 4900,
+    isActive: true,
+    sortOrder: 14,
+  },
+  {
+    id: 15,
+    slug: "insaat-muteahhit",
+    name: "Bau & Handwerk",
+    sectorHint: "construction",
+    componentKey: "SmartCard",
+    previewPath: "/images/templates/card-15.png",
+    oneTimeCents: 12900,
+    monthlyCents: 700,
+    yearlyCents: 5900,
+    isActive: true,
+    sortOrder: 15,
+  },
+  {
+    id: 16,
+    slug: "turizm-seyahat",
+    name: "Tourismus & Reise",
+    sectorHint: "tourism",
+    componentKey: "SmartCard",
+    previewPath: "/images/templates/card-16.png",
+    oneTimeCents: 9900,
+    monthlyCents: 600,
+    yearlyCents: 4900,
+    isActive: true,
+    sortOrder: 16,
+  },
+  {
+    id: 17,
+    slug: "kurumsal-ceo",
+    name: "Corporate & Executive",
+    sectorHint: "corporate",
+    componentKey: "SmartCard",
+    previewPath: "/images/templates/card-17.png",
+    oneTimeCents: 14900,
+    monthlyCents: 800,
+    yearlyCents: 6900,
+    isActive: true,
+    sortOrder: 17,
+  },
+  {
+    id: 18,
+    slug: "teknoloji-startup",
+    name: "Tech & Startup",
+    sectorHint: "tech",
+    componentKey: "SmartCard",
+    previewPath: "/images/templates/card-18.png",
+    oneTimeCents: 12900,
+    monthlyCents: 700,
+    yearlyCents: 5900,
+    isActive: true,
+    sortOrder: 18,
+  },
+  {
+    id: 19,
+    slug: "berber-kuafor",
+    name: "Barbier & Friseur",
+    sectorHint: "salon",
+    componentKey: "SmartCard",
+    previewPath: "/images/templates/card-19.png",
+    oneTimeCents: 7900,
+    monthlyCents: 500,
+    yearlyCents: 3900,
+    isActive: true,
+    sortOrder: 19,
+  },
+  {
+    id: 20,
+    slug: "danismanlik-koc",
+    name: "Beratung & Coaching",
+    sectorHint: "consultant",
+    componentKey: "SmartCard",
+    previewPath: "/images/templates/card-20.png",
+    oneTimeCents: 9900,
+    monthlyCents: 600,
+    yearlyCents: 4900,
+    isActive: true,
+    sortOrder: 20,
   },
 ];
 
