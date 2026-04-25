@@ -38,6 +38,11 @@ export default async function OrderDetailPage({ params, searchParams }: PageProp
       template: true,
       subscription: true,
       statusHistory: { orderBy: { createdAt: "asc" } },
+      leads: { orderBy: { createdAt: "desc" } },
+      views: {
+        orderBy: { createdAt: "desc" },
+        take: 50,
+      },
     },
   });
   if (!order) notFound();
@@ -303,6 +308,80 @@ export default async function OrderDetailPage({ params, searchParams }: PageProp
               </p>
             </Panel>
           )}
+
+          <Panel title={`Leads (${order.leads.length})`} span>
+            {order.leads.length === 0 ? (
+              <p className="text-ink/50">No leads yet.</p>
+            ) : (
+              <ul className="space-y-3">
+                {order.leads.map((lead) => (
+                  <li
+                    key={lead.id}
+                    className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4"
+                  >
+                    <div className="flex flex-wrap items-baseline justify-between gap-2">
+                      <span className="text-sm font-semibold text-ink">
+                        {lead.name ?? "(no name)"}
+                      </span>
+                      <span className="text-xs text-ink/50">
+                        {new Date(lead.createdAt).toLocaleString("de-DE")}
+                      </span>
+                    </div>
+                    <div className="mt-2 grid gap-1 text-xs">
+                      {lead.email && (
+                        <a
+                          href={`mailto:${lead.email}`}
+                          className="text-ink underline"
+                        >
+                          {lead.email}
+                        </a>
+                      )}
+                      {lead.phone && (
+                        <a
+                          href={`tel:${lead.phone.replace(/\s/g, "")}`}
+                          className="text-ink underline"
+                        >
+                          {lead.phone}
+                        </a>
+                      )}
+                    </div>
+                    {lead.message && (
+                      <pre className="mt-2 whitespace-pre-wrap text-xs text-ink/70">
+                        {lead.message}
+                      </pre>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </Panel>
+
+          <Panel title={`Views (last ${order.views.length})`} span>
+            {order.views.length === 0 ? (
+              <p className="text-ink/50">No views recorded yet.</p>
+            ) : (
+              <ul className="space-y-1 text-xs">
+                {order.views.map((v) => (
+                  <li
+                    key={v.id}
+                    className="flex flex-wrap items-baseline gap-x-3 border-b border-neutral-100 py-1.5 last:border-b-0"
+                  >
+                    <span className="font-mono text-ink/60">
+                      {new Date(v.createdAt).toLocaleString("de-DE")}
+                    </span>
+                    {v.source && (
+                      <span className="rounded-full bg-neutral-200 px-2 py-0.5 text-[10px] uppercase tracking-wider">
+                        {v.source}
+                      </span>
+                    )}
+                    {v.referer && (
+                      <span className="truncate text-ink/40">{v.referer}</span>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </Panel>
 
           <Panel title="Status history" span>
             <ol className="space-y-2">

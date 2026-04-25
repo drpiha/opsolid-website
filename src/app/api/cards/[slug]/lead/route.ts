@@ -15,6 +15,9 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { OrderStatus } from "@/lib/validation";
 import { readSourceFromSearchParams, describeSource } from "@/components/cards/smart/SmartCardSource";
+import { renderLeadNotification } from "@/lib/email/templates/lead-notification";
+import { sendCustomerEmail } from "@/lib/email/send";
+import { normalizeLocale } from "@/lib/email/shell";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -72,7 +75,13 @@ export async function POST(
 
   const order = await prisma.cardOrder.findUnique({
     where: { slug },
-    select: { id: true, status: true },
+    select: {
+      id: true,
+      status: true,
+      contactEmail: true,
+      contactName: true,
+      locale: true,
+    },
   });
   if (!order || order.status !== OrderStatus.PUBLISHED) {
     return NextResponse.json({ error: "Karte nicht gefunden." }, { status: 404 });
@@ -116,5 +125,56 @@ export async function POST(
     },
   });
 
+  // Fire-and-forget email notification to the card owner. SMTP is optional
+  // (sendCustomerEmail no-ops with a warn log when env is missing) so we
+  // never block the visitor's submit on mail delivery.
+  void notifyCardOwner({ order, parsed: parsed.data, source, sourceLabel, slug });
+
   return NextResponse.json({ ok: true });
+}
+
+async function notifyCardOwner(args: {
+  order: { id: string; contactEmail: string; contactName: string; locale: string };
+  parsed: z.infer<typeof LeadInputSchema>;
+  source: ReturnType<typeof readSourceFromSearchParams>;
+  sourceLabel?: string;
+  slug: string;
+}) {
+  try {
+    const { order, parsed, source, slug } = args;
+    const locale = normalizeLocale(order.locale);
+    const { subject, html, text } = renderLeadNotification(
+      {
+        ownerName: order.contactName,
+        cardSlug: slug,
+        orderId: order.id,
+        visitor: {
+          name: parsed.name,
+          email: parsed.email ?? null,
+          phone: parsed.phone ?? null,
+          company: parsed.company ?? null,
+          message: parsed.message ?? null,
+          interest: parsed.interest ?? null,
+          meetingContext: parsed.meetingContext ?? null,
+        },
+        source: {
+          src: source.src,
+          campaign: source.campaign,
+          event: source.event,
+          location: source.location,
+        },
+      },
+      locale,
+    );
+    await sendCustomerEmail({
+      to: order.contactEmail,
+      subject,
+      html,
+      text,
+      // Hitting "Reply" emails the visitor directly when they provided one.
+      replyTo: parsed.email,
+    });
+  } catch (err) {
+    console.error("[lead] notify-owner failed:", err);
+  }
 }
