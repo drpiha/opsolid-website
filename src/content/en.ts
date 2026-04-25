@@ -3447,38 +3447,8 @@ export const content = {
         },
         lead:
           "One short call. An operations walkthrough, a candid opinion on what should and shouldn't be automated, and a written summary in your inbox within 48 hours — whether the engagement moves forward or not.",
-        contacts: [
-          {
-            key: "MAIL",
-            value: "info@kutasia.com",
-            meta: "DE · EN · TR",
-            href: "mailto:info@kutasia.com",
-          },
-          {
-            key: "TEL",
-            value: "Available on request",
-            meta: "CET · business hours",
-            href: "",
-          },
-          {
-            key: "STUDIO",
-            value: "Hamburg, DE",
-            meta: "BY APPOINTMENT",
-            href: "",
-          },
-          {
-            key: "DATA · EU",
-            value: "Frankfurt data-centre",
-            meta: "FRA · AV-DSGVO",
-            href: "",
-          },
-        ],
-        trust: [
-          { em: "GDPR", rest: "native" },
-          { em: "ISO 27001", rest: "aligned" },
-          { em: "NO", rest: "US subprocessors" },
-          { em: "NO", rest: "vendor lock-in" },
-        ],
+        contacts: [] as Array<{ key: string; value: string; meta: string; href: string }>,
+        trust: [] as Array<{ em: string; rest: string }>,
       },
       form: {
         title: "Book a discovery call",
@@ -3504,7 +3474,7 @@ export const content = {
           { key: "other", label: "Something else" },
         ],
         legal:
-          "Submission routes to info@kutasia.com. No third-party analytics, no marketing list, no follow-up after 14 days.",
+          "Submissions are handled directly. No third-party analytics, no marketing list, no follow-up after 14 days.",
         submitCta: "Request call",
         success: "Thanks — we'll reply within 48 hours.",
         error: "Something didn't send. Try again or email directly.",

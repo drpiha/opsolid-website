@@ -3436,38 +3436,8 @@ export const content: Content = {
         },
         lead:
           "Ein kurzes Gespräch. Ein Operations-Walkthrough, eine klare Einschätzung, was automatisiert werden sollte und was nicht, und eine schriftliche Zusammenfassung innerhalb von 48 Stunden in Ihrem Posteingang — ob das Mandat weitergeht oder nicht.",
-        contacts: [
-          {
-            key: "MAIL",
-            value: "info@kutasia.com",
-            meta: "DE · EN · TR",
-            href: "mailto:info@kutasia.com",
-          },
-          {
-            key: "TEL",
-            value: "Auf Anfrage",
-            meta: "CET · Geschäftszeiten",
-            href: "",
-          },
-          {
-            key: "STUDIO",
-            value: "Hamburg, DE",
-            meta: "NACH VEREINBARUNG",
-            href: "",
-          },
-          {
-            key: "DATA · EU",
-            value: "Rechenzentrum Frankfurt",
-            meta: "FRA · AV-DSGVO",
-            href: "",
-          },
-        ],
-        trust: [
-          { em: "GDPR", rest: "nativ" },
-          { em: "ISO 27001", rest: "konform" },
-          { em: "KEINE", rest: "US-Subprozessoren" },
-          { em: "KEIN", rest: "Vendor-Lock-in" },
-        ],
+        contacts: [],
+        trust: [],
       },
       form: {
         title: "Discovery-Call buchen",
@@ -3493,7 +3463,7 @@ export const content: Content = {
           { key: "other", label: "Etwas anderes" },
         ],
         legal:
-          "Einreichung geht an info@kutasia.com. Keine Drittanbieter-Analyse, keine Marketing-Liste, kein Follow-up nach 14 Tagen.",
+          "Anfragen werden direkt bearbeitet. Keine Drittanbieter-Analyse, keine Marketing-Liste, kein Follow-up nach 14 Tagen.",
         submitCta: "Anruf anfragen",
         success: "Danke — wir antworten innerhalb von 48 Stunden.",
         error: "Etwas ging schief. Versuchen Sie es erneut oder schreiben Sie direkt.",

@@ -3436,38 +3436,8 @@ export const content: Content = {
         },
         lead:
           "Kısa bir görüşme. Operasyon keşfi, neyin otomasyona uygun olduğu ve olmadığı konusunda dürüst görüş ve 48 saat içinde gelen kutunuza yazılı bir özet — iş ilerlese de ilerlemese de.",
-        contacts: [
-          {
-            key: "MAIL",
-            value: "info@kutasia.com",
-            meta: "DE · EN · TR",
-            href: "mailto:info@kutasia.com",
-          },
-          {
-            key: "TEL",
-            value: "Talep üzerine",
-            meta: "CET · mesai saatleri",
-            href: "",
-          },
-          {
-            key: "STUDIO",
-            value: "Hamburg, DE",
-            meta: "RANDEVU İLE",
-            href: "",
-          },
-          {
-            key: "DATA · EU",
-            value: "Frankfurt veri merkezi",
-            meta: "FRA · AV-DSGVO",
-            href: "",
-          },
-        ],
-        trust: [
-          { em: "GDPR", rest: "native" },
-          { em: "ISO 27001", rest: "uyumlu" },
-          { em: "HAYIR", rest: "US alt-işlemci" },
-          { em: "HAYIR", rest: "vendor lock-in" },
-        ],
+        contacts: [],
+        trust: [],
       },
       form: {
         title: "Discovery görüşmesi ayarla",
@@ -3493,7 +3463,7 @@ export const content: Content = {
           { key: "other", label: "Başka bir şey" },
         ],
         legal:
-          "Gönderi info@kutasia.com'a gider. Üçüncü taraf analitik yok, pazarlama listesi yok, 14 günden sonra takip yok.",
+          "Form gönderileri doğrudan işlenir. Üçüncü taraf analitik yok, pazarlama listesi yok, 14 günden sonra takip yok.",
         submitCta: "Görüşme talep et",
         success: "Teşekkürler — 48 saat içinde yanıt vereceğiz.",
         error: "Gönderilemedi. Tekrar deneyin veya doğrudan yazın.",

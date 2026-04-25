@@ -5,6 +5,7 @@ import { CardDataSchema } from "@/lib/validation";
 import { PublishAction } from "./PublishAction";
 import { LinksPanel } from "./LinksPanel";
 import { SectorPanel } from "./SectorPanel";
+import { ConnectionsPanel } from "./ConnectionsPanel";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -316,6 +317,10 @@ export default async function OrderDetailPage({ params, searchParams }: PageProp
             token={token}
             currentSectorKey={card?.sectorKey ?? null}
           />
+
+          {order.status === "PUBLISHED" && (
+            <ConnectionsPanel orderId={order.id} token={token} />
+          )}
 
           {order.status === "PUBLISHED" && order.slug && (
             <LinksPanel orderId={order.id} slug={order.slug} token={token} />

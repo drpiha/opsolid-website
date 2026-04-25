@@ -141,6 +141,9 @@ export default async function CardPage({ params, searchParams }: PageProps) {
           brandAccentHex={order.brandAccentHex}
           source={source}
           siteUrl={siteUrl}
+          locale={
+            order.locale === "en" || order.locale === "tr" ? order.locale : "de"
+          }
         />
       </div>
     </main>

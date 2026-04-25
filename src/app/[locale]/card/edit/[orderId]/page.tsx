@@ -126,12 +126,9 @@ function EditRejectedView({
         </h1>
         <p className="mt-4 text-body text-ink/70">{bodyByReason[reason]}</p>
         <p className="mt-6 text-sm text-ink/50">
-          Need help? Email{" "}
-          <a
-            href="mailto:info@kutasia.com"
-            className="underline underline-offset-4"
-          >
-            info@kutasia.com
+          Need help?{" "}
+          <a href="/contact" className="underline underline-offset-4">
+            Use the contact form
           </a>
           .
         </p>
