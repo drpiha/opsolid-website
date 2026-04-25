@@ -88,10 +88,18 @@ jobs:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
         run: |
-          echo "Waiting 25s for container to settle..."
-          sleep 25
-          ssh -i ~/.ssh/id_deploy "$SSH_USER@$SSH_HOST" \
-            'curl -fsS --max-time 10 http://127.0.0.1:3000/api/health || (echo "Health check failed"; docker logs --tail 80 opsolid-app; exit 1)'
+          echo "Waiting 30s for container to settle..."
+          sleep 30
+          # Test live site through traefik — proves the full stack works.
+          if curl -fsS --max-time 15 https://opsolid.de/api/health | tee /tmp/health.json; then
+            echo ""
+            echo "Health check passed."
+          else
+            echo "Health check failed — dumping container logs."
+            ssh -i ~/.ssh/id_deploy "$SSH_USER@$SSH_HOST" \
+              'docker ps --filter name=opsolid-app --format "{{.Names}} {{.Status}}"; docker logs --tail 80 opsolid-app'
+            exit 1
+          fi
 
       - name: Cleanup SSH key
         if: always()
