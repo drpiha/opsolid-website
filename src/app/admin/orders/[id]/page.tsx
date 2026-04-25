@@ -4,6 +4,7 @@ import { formatEuro, getTemplateById } from "@/config/card-templates";
 import { CardDataSchema } from "@/lib/validation";
 import { PublishAction } from "./PublishAction";
 import { LinksPanel } from "./LinksPanel";
+import { SectorPanel } from "./SectorPanel";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -309,6 +310,12 @@ export default async function OrderDetailPage({ params, searchParams }: PageProp
               </p>
             </Panel>
           )}
+
+          <SectorPanel
+            orderId={order.id}
+            token={token}
+            currentSectorKey={card?.sectorKey ?? null}
+          />
 
           {order.status === "PUBLISHED" && order.slug && (
             <LinksPanel orderId={order.id} slug={order.slug} token={token} />

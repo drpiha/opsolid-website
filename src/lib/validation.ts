@@ -322,6 +322,16 @@ export const CardDataSchema = z.object({
   testimonials: z.array(TestimonialSchema).max(8).optional(),
   /** Up to 4 custom CTA buttons rendered above contact rows. */
   customButtons: z.array(CustomButtonSchema).max(4).optional(),
+  /** Sector preset applied to this card (consultant, real-estate, …). The
+   *  renderer uses this to show a small sector badge and fall back to the
+   *  preset's defaults for any empty service/CTA/FAQ block. Plain string so
+   *  new sectors don't require a schema migration; the renderer's allowlist
+   *  in src/config/card-sectors.ts is the real source of truth. */
+  sectorKey: z
+    .string()
+    .trim()
+    .regex(/^[a-z][a-z0-9-]{1,31}$/i, "Ungültiger Sektor-Key")
+    .optional(),
   designNotes: z.string().trim().max(800).optional(),
 });
 export type CardData = z.infer<typeof CardDataSchema>;

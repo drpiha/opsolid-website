@@ -28,6 +28,7 @@ import type { CardData } from "@/lib/validation";
 import type { SmartCardSource } from "./SmartCardSource";
 import { encodeSource, describeSource } from "./SmartCardSource";
 import { SendMyInfoButton } from "./SendMyInfoButton";
+import { getSectorPreset } from "@/config/card-sectors";
 
 export interface SmartCardProps {
   slug: string;
@@ -69,8 +70,26 @@ export function SmartCard({
   source,
   siteUrl,
 }: SmartCardProps) {
-  const primary = brandPrimaryHex ?? DEFAULT_PRIMARY;
-  const accent = brandAccentHex ?? DEFAULT_ACCENT;
+  const sector = getSectorPreset(cardData.sectorKey);
+  const primary =
+    brandPrimaryHex ?? sector?.primaryHex ?? DEFAULT_PRIMARY;
+  const accent = brandAccentHex ?? sector?.accentHex ?? DEFAULT_ACCENT;
+
+  // Sector preset fills empty blocks. Owner-supplied content always wins —
+  // applySectorPreset() ran at apply-time and produced cardData; here we only
+  // fall back when the owner cleared a block in the editor afterwards.
+  const services =
+    cardData.services && cardData.services.length > 0
+      ? cardData.services
+      : sector?.services ?? undefined;
+  const customButtons =
+    cardData.customButtons && cardData.customButtons.length > 0
+      ? cardData.customButtons
+      : sector?.customButtons ?? undefined;
+  const faqs =
+    cardData.faqs && cardData.faqs.length > 0
+      ? cardData.faqs
+      : sector?.faqs ?? undefined;
 
   const photoUrl = resolveAssetUrl(photoPath ?? undefined);
   const logoUrl = resolveAssetUrl(logoPath ?? undefined);
@@ -109,6 +128,7 @@ export function SmartCard({
         primary={primary}
         accent={accent}
         sourceLabel={sourceLabel}
+        sectorBadge={sector?.name}
       />
 
       <div className="relative -mt-14 px-6 pb-6">
@@ -157,9 +177,9 @@ export function SmartCard({
           primary={primary}
         />
 
-        {cardData.customButtons && cardData.customButtons.length > 0 && (
+        {customButtons && customButtons.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-2">
-            {cardData.customButtons.map((btn, i) => (
+            {customButtons.map((btn, i) => (
               <a
                 key={`${btn.label}-${i}`}
                 href={btn.href}
@@ -181,8 +201,8 @@ export function SmartCard({
 
       {cardData.socials && <SmartCardSocialRow socials={cardData.socials} />}
 
-      {cardData.services && cardData.services.length > 0 && (
-        <SmartCardServices services={cardData.services} accent={primary} />
+      {services && services.length > 0 && (
+        <SmartCardServices services={services} accent={primary} />
       )}
 
       {cardData.gallery && cardData.gallery.length > 0 && (
@@ -210,9 +230,7 @@ export function SmartCard({
         </div>
       )}
 
-      {cardData.faqs && cardData.faqs.length > 0 && (
-        <SmartCardFaq faqs={cardData.faqs} />
-      )}
+      {faqs && faqs.length > 0 && <SmartCardFaq faqs={faqs} />}
 
       {cardData.testimonials && cardData.testimonials.length > 0 && (
         <SmartCardTestimonials items={cardData.testimonials} />
@@ -238,11 +256,13 @@ function SmartCardCover({
   primary,
   accent,
   sourceLabel,
+  sectorBadge,
 }: {
   coverUrl: string | null;
   primary: string;
   accent: string;
   sourceLabel?: string;
+  sectorBadge?: string;
 }) {
   return (
     <div className="relative h-36 w-full overflow-hidden">
@@ -266,15 +286,22 @@ function SmartCardCover({
       {/* Top scrim — keeps the dark theme readable when cover photo is bright. */}
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/0 via-black/0 to-bg-1" />
 
-      <div className="relative flex items-start justify-between p-4">
+      <div className="relative flex items-start justify-between gap-2 p-4">
         <span className="rounded-full bg-bg-1/70 px-3 py-1 font-mono text-[10px] font-medium uppercase tracking-[0.18em] text-ink-300 backdrop-blur">
           OpSolid · Smart Card
         </span>
-        {sourceLabel && (
-          <span className="rounded-full bg-bg-1/70 px-3 py-1 font-mono text-[10px] font-medium tracking-wide text-ink-300 backdrop-blur">
-            {sourceLabel}
-          </span>
-        )}
+        <div className="flex flex-col items-end gap-1">
+          {sectorBadge && (
+            <span className="rounded-full bg-bg-1/70 px-3 py-1 text-[10px] font-medium tracking-wide text-ink-200 backdrop-blur">
+              {sectorBadge}
+            </span>
+          )}
+          {sourceLabel && (
+            <span className="rounded-full bg-bg-1/70 px-3 py-1 font-mono text-[10px] font-medium tracking-wide text-ink-300 backdrop-blur">
+              {sourceLabel}
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );

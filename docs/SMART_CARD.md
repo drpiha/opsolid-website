@@ -1,6 +1,6 @@
 # OpSolid Smart Card — Deployment & Operations
 
-Status as of branch `feature/smart-card-mvp` — Phases 1, 2, 3 complete.
+Status as of branch `feature/smart-card-mvp` — Phases 1, 2, 3, 4 complete.
 
 This is the operations doc for the new Smart Card surface. The product
 docs (pricing, copy, marketing) live elsewhere.
@@ -28,6 +28,19 @@ docs (pricing, copy, marketing) live elsewhere.
 - Founder seed: `prisma/seed.ts` publishes `card.opsolid.de/hasan` so the
   product has a live demo on day one. Idempotent — re-running updates in
   place, no duplicates.
+
+### Phase 4 — Sector presets + Smart Exchange foundation
+- `src/config/card-sectors.ts` — 10 sector starter packs (consultant,
+  real-estate, salon, restaurant, clinic, lawyer, creator, sales-pro,
+  corporate, event). Each fills empty service / CTA / FAQ blocks +
+  suggests brand colors.
+- `CardData.sectorKey` field. SmartCard renders a sector badge and falls
+  back to the preset's services/buttons/FAQs for blocks the owner left
+  empty. Owner-supplied content always wins.
+- Admin `Sector preset` panel on `/admin/orders/[id]` with one-click
+  apply (POST `/api/admin/cards/[id]/sector`).
+- `CardConnection` table + migration `prisma/patch_004_card_connections.sql`
+  for the future Smart Exchange flow (Phase 5 wires the UI).
 
 ### Phase 3 — Short links & QR
 - New `CardLink` and `ScanEvent` tables (migration:
@@ -101,12 +114,17 @@ git pull --ff-only
 # 1. Ship the code
 bash scripts/deploy.sh
 
-# 2. Apply the Phase 3 schema migration (new tables: card_links, scan_events)
+# 2. Apply the Phase 3 schema migration (card_links, scan_events)
 ssh root@srv1150632.hstgr.cloud \
   'docker exec -i opsolid-db psql -U opsolid opsolid' \
   < prisma/patch_003_card_links.sql
 
-# 3. Seed the founder card + sync templates (idempotent)
+# 3. Apply the Phase 4 schema migration (card_connections)
+ssh root@srv1150632.hstgr.cloud \
+  'docker exec -i opsolid-db psql -U opsolid opsolid' \
+  < prisma/patch_004_card_connections.sql
+
+# 4. Seed the founder card + sync templates (idempotent)
 ssh root@srv1150632.hstgr.cloud \
   'docker exec opsolid-app npx prisma db seed'
 ```

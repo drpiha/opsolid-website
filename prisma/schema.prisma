@@ -128,6 +128,11 @@ model CardOrder {
   links         CardLink[]
   scanEvents    ScanEvent[]
 
+  /** Connections received: visitors who sent their own card via Smart Exchange. */
+  ownerConnections   CardConnection[] @relation("OwnerConnections")
+  /** Connections sent: this card was used as the visitor on someone else's card. */
+  visitorConnections CardConnection[] @relation("VisitorConnections")
+
   @@index([status])
   @@index([contactPhone])
   @@index([callMeBack, contactedAt])
@@ -253,6 +258,33 @@ model ScanEvent {
   @@index([orderId, createdAt])
   @@index([linkId, createdAt])
   @@map("scan_events")
+}
+
+// -----------------------------------------------------------------------------
+// CardConnection — Smart Exchange link between two cards. When a visitor with
+// their own published OpSolid card opens someone else's, they can press
+// "Send my card" → we record a CardConnection row both sides can see in their
+// admin (Phase 5 wires the UI). Status flow:
+//   new → accepted | archived
+// -----------------------------------------------------------------------------
+model CardConnection {
+  id              String   @id @default(cuid())
+  ownerCardId     String   @map("owner_card_id")
+  visitorCardId   String   @map("visitor_card_id")
+  source          String?
+  campaign        String?
+  eventName       String?  @map("event_name")
+  note            String?
+  status          String   @default("new")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  ownerCard   CardOrder @relation("OwnerConnections", fields: [ownerCardId], references: [id], onDelete: Cascade)
+  visitorCard CardOrder @relation("VisitorConnections", fields: [visitorCardId], references: [id], onDelete: Cascade)
+
+  @@unique([ownerCardId, visitorCardId])
+  @@index([ownerCardId, createdAt])
+  @@map("card_connections")
 }
 
 // -----------------------------------------------------------------------------
