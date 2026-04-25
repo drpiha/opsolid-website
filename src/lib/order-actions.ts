@@ -152,6 +152,24 @@ export async function publishOrderAction(
     },
   });
 
+  // Auto-create a "main" short link using the slug as the code so
+  // go.opsolid.de/<slug> resolves immediately on publish — no manual admin
+  // step required. Idempotent: re-publishing or seeding leaves any existing
+  // link with this code untouched. We avoid `reserveShortCode` here because
+  // it throws on collision (re-publish would crash); upsert with `update: {}`
+  // is the safer no-op-on-conflict path.
+  await prisma.cardLink.upsert({
+    where: { code: slug },
+    create: {
+      orderId,
+      code: slug,
+      label: "main",
+      source: "nfc",
+      active: true,
+    },
+    update: {},
+  });
+
   notifyOrderEvent({
     orderId: order.id,
     orderNumber: order.orderNumber,

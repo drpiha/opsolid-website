@@ -15,7 +15,7 @@ const FOUNDER_CARD = {
   slug: "hasan",
   templateId: 1,
   contactName: "Hasan Dönmez",
-  contactEmail: "drhasanhd@gmail.com",
+  contactEmail: "info@kutasia.com",
   contactPhone: "+49 176 31020654",
   brandPrimaryHex: "#C27940",
   brandAccentHex: "#1F2530",
@@ -24,7 +24,7 @@ const FOUNDER_CARD = {
     title: "Founder & Automation Engineer",
     position: "IT Project Manager",
     company: "OpSolid",
-    email: "drhasanhd@gmail.com",
+    email: "info@kutasia.com",
     phone: "+49 176 31020654",
     whatsapp: "+49 176 31020654",
     website: "https://opsolid.de",
@@ -96,6 +96,8 @@ async function publishFounderCard() {
   const c = FOUNDER_CARD;
   const existing = await prisma.cardOrder.findUnique({ where: { slug: c.slug } });
 
+  let orderId: string;
+
   if (existing) {
     await prisma.cardOrder.update({
       where: { slug: c.slug },
@@ -110,30 +112,48 @@ async function publishFounderCard() {
         publishedAt: existing.publishedAt ?? new Date(),
       },
     });
+    orderId = existing.id;
     console.log(`[seed] Updated founder card /c/${c.slug}.`);
-    return;
+  } else {
+    const created = await prisma.cardOrder.create({
+      data: {
+        slug: c.slug,
+        templateId: c.templateId,
+        contactName: c.contactName,
+        contactEmail: c.contactEmail,
+        contactPhone: c.contactPhone,
+        cardData: c.cardData,
+        brandPrimaryHex: c.brandPrimaryHex,
+        brandAccentHex: c.brandAccentHex,
+        billingMode: "ONE_TIME",
+        amountCents: 0,
+        currency: "EUR",
+        locale: "de",
+        status: "PUBLISHED",
+        publishedAt: new Date(),
+        paidAt: new Date(),
+      },
+    });
+    orderId = created.id;
+    console.log(`[seed] Published founder card /c/${c.slug}.`);
   }
 
-  await prisma.cardOrder.create({
-    data: {
-      slug: c.slug,
-      templateId: c.templateId,
-      contactName: c.contactName,
-      contactEmail: c.contactEmail,
-      contactPhone: c.contactPhone,
-      cardData: c.cardData,
-      brandPrimaryHex: c.brandPrimaryHex,
-      brandAccentHex: c.brandAccentHex,
-      billingMode: "ONE_TIME",
-      amountCents: 0,
-      currency: "EUR",
-      locale: "de",
-      status: "PUBLISHED",
-      publishedAt: new Date(),
-      paidAt: new Date(),
+  // Ensure the main short link exists for the founder card so
+  // go.opsolid.de/<slug> works immediately. Idempotent — the unique constraint
+  // on `code` plus an empty `update` block means re-running the seed never
+  // disturbs an existing link.
+  await prisma.cardLink.upsert({
+    where: { code: c.slug },
+    create: {
+      orderId,
+      code: c.slug,
+      label: "main",
+      source: "nfc",
+      active: true,
     },
+    update: {},
   });
-  console.log(`[seed] Published founder card /c/${c.slug}.`);
+  console.log(`[seed] Ensured short link go.opsolid.de/${c.slug}.`);
 }
 
 async function main() {
