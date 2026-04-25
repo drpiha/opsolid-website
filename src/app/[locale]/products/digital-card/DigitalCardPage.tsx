@@ -8,6 +8,7 @@ import { useLocale } from "@/context/LocaleContext";
 import { FoilCard } from "@/components/products/digital-card/FoilCard";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { OrderFormSection } from "./sections/OrderFormSection";
+import { TemplateGallery } from "./sections/TemplateGallery";
 
 /**
  * Digital Card page — industrial-luxury v2 port of digital-card.html.
@@ -74,30 +75,10 @@ export function DigitalCardPage() {
         </div>
       </section>
 
-      <section className="os-section" id="templates" data-screen-label="Templates">
-        <div className="wrap">
-          <div className="os-section-head">
-            <span className="meta meta-hot">{d.templates.eyebrow}</span>
-            <h2>{d.templates.headline}</h2>
-            <p className="lead">{d.templates.lead}</p>
-          </div>
-          <div className="dc-templates">
-            {d.templates.items.map((item, i) => (
-              <div key={i} className={"dc-template " + item.cls}>
-                <div className="dc-template-sector">{item.sector}</div>
-                <div>
-                  <div className="dc-template-name">{item.name}</div>
-                  <div className="dc-template-role">{item.role}</div>
-                </div>
-                <div className="dc-template-bottom">
-                  <span>{item.code}</span>
-                  <span className="dc-template-dot" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <TemplateGallery
+        selectedId={selectedTemplateId}
+        onSelect={setSelectedTemplateId}
+      />
 
       <section className="os-section" data-screen-label="How">
         <div className="wrap">

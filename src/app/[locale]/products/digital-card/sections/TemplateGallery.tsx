@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useLocale } from "@/context/LocaleContext";
 import { cardTemplates, formatEuro } from "@/config/card-templates";
 import { SmartCard } from "@/components/cards/smart/SmartCard";
@@ -44,6 +45,43 @@ const SAMPLE_COLORS: Record<number, { primary: string; accent: string }> = {
   3: { primary: "#1D3557", accent: "#E63946" },
   4: { primary: "#6B4226", accent: "#F0A500" },
   5: { primary: "#4A0E8F", accent: "#FF6B6B" },
+  6: { primary: "#1B2A4A", accent: "#C9A84C" },   // Anwalt
+  7: { primary: "#1A1A1A", accent: "#F5C518" },   // Fotografie
+  8: { primary: "#1B6B7B", accent: "#B8E4ED" },   // Arzt
+  9: { primary: "#0D0D0D", accent: "#00E5FF" },   // Fitness
+  10: { primary: "#140B1E", accent: "#8B5CF6" },  // DJ
+  11: { primary: "#2C2C2C", accent: "#D4A574" },  // Architektur
+  12: { primary: "#3D1A40", accent: "#F9A8C9" },  // E-Commerce
+  13: { primary: "#1A3A4A", accent: "#D4AF37" },  // Hotel
+  14: { primary: "#2D1B33", accent: "#FFB6C1" },  // Event
+  15: { primary: "#1C2B3A", accent: "#FF6B00" },  // Bau
+  16: { primary: "#0C3547", accent: "#F97316" },  // Tourismus
+  17: { primary: "#0F1728", accent: "#A8B8D0" },  // Corporate
+  18: { primary: "#0D0926", accent: "#06B6D4" },  // Tech
+  19: { primary: "#0A0A0A", accent: "#C8A951" },  // Barbier
+  20: { primary: "#1A2F23", accent: "#7EBA78" },  // Coaching
+};
+
+const SECTOR_LABELS: Record<string, string> = {
+  all: "Alle",
+  general: "Allgemein",
+  restaurant: "Restaurant",
+  clinic: "Klinik",
+  lawyer: "Kanzlei",
+  realEstate: "Immobilien",
+  salon: "Salon",
+  creator: "Kreativ",
+  fitness: "Fitness",
+  corporate: "Unternehmen",
+  tech: "Technologie",
+  events: "Events",
+  hospitality: "Hotel",
+  consultant: "Beratung",
+  architecture: "Architektur",
+  construction: "Handwerk",
+  retail: "Boutique",
+  tourism: "Tourismus",
+  music: "Musik",
 };
 
 // SmartCard renders at max-w-[440px] (cover height + content). We scale to
@@ -70,6 +108,12 @@ export function TemplateGallery({
     fromPrice: "ab",
   };
 
+  const [sectorFilter, setSectorFilter] = useState("all");
+  const visible =
+    sectorFilter === "all"
+      ? cardTemplates
+      : cardTemplates.filter((tpl) => tpl.sectorHint === sectorFilter);
+
   return (
     <section id="templates" className="py-16 md:py-24">
       <div className="container-wide">
@@ -78,8 +122,25 @@ export function TemplateGallery({
           <p className="mt-3 max-w-xl text-body text-ink/60">{labels.subtitle}</p>
         </div>
 
+        <div className="mb-8 -mx-1 flex gap-2 overflow-x-auto px-1 pb-2">
+          {Object.entries(SECTOR_LABELS).map(([key, label]) => (
+            <button
+              key={key}
+              type="button"
+              onClick={() => setSectorFilter(key)}
+              className={`shrink-0 rounded-full px-4 py-1.5 text-sm font-medium transition-colors ${
+                sectorFilter === key
+                  ? "bg-ink text-white shadow-soft"
+                  : "bg-neutral-100 text-ink/60 hover:bg-neutral-200"
+              }`}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {cardTemplates.map((tpl) => {
+          {visible.map((tpl) => {
             const isSelected = selectedId === tpl.id;
             const colors = SAMPLE_COLORS[tpl.id] ?? SAMPLE_COLORS[1];
             return (
