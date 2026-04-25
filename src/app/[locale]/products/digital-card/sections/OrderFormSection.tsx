@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { Loader2, Upload, AlertCircle } from "lucide-react";
+import type { z } from "zod";
 import { Input, Textarea } from "@/components/ui/Input";
 import { useLocale } from "@/context/LocaleContext";
 import {
@@ -12,6 +13,29 @@ import {
 import { SmartCard } from "@/components/cards/smart/SmartCard";
 import { OrderPayloadSchema, BillingMode } from "@/lib/validation";
 import type { CardData } from "@/lib/validation";
+
+// Map Zod validation issues to a flat record keyed by field path
+// (e.g. "contactEmail" or "cardData.website"). Falls back to the raw
+// Zod message if we don't have a localized label for the path.
+function extractFieldErrors(issues: z.ZodIssue[]): Record<string, string> {
+  const map: Record<string, string> = {};
+  const label: Record<string, string> = {
+    contactName: "Name ist erforderlich",
+    contactEmail: "Bitte gültige E-Mail eingeben",
+    contactPhone: "Bitte gültige Telefonnummer eingeben",
+    "cardData.name": "Name auf der Karte ist erforderlich",
+    "cardData.email": "Bitte gültige E-Mail eingeben",
+    "cardData.phone": "Bitte gültige Telefonnummer eingeben",
+    "cardData.website": "Bitte gültige URL eingeben (https://…)",
+  };
+  for (const issue of issues) {
+    const key = issue.path.join(".");
+    if (!map[key]) {
+      map[key] = label[key] ?? issue.message;
+    }
+  }
+  return map;
+}
 
 type FormState = "idle" | "submitting" | "error";
 
@@ -56,6 +80,17 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
     useState<keyof typeof BillingMode>("YEARLY");
   const [formState, setFormState] = useState<FormState>("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  // Clear a single field's error the moment the user edits it — keeps the
+  // form feeling responsive instead of waiting for the next submit.
+  const clearFieldError = (key: string) =>
+    setFieldErrors((prev) => {
+      if (!prev[key]) return prev;
+      const next = { ...prev };
+      delete next[key];
+      return next;
+    });
 
   const selectedTemplate = useMemo(
     () =>
@@ -149,10 +184,25 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
 
     const parsed = OrderPayloadSchema.safeParse(payload);
     if (!parsed.success) {
-      setErrorMsg(parsed.error.issues[0]?.message ?? L("invalidInput", "Ungültige Eingabe."));
-      setFormState("error");
+      // Surface every issue inline at the offending field instead of just
+      // the first one in a global banner. The global banner stays reserved
+      // for server / network errors below.
+      const errs = extractFieldErrors(parsed.error.issues);
+      setFieldErrors(errs);
+      setFormState("idle");
+      const firstKey = Object.keys(errs)[0];
+      if (firstKey) {
+        const el = document.getElementById(
+          `field-${firstKey.replace(".", "-")}`
+        );
+        el?.scrollIntoView({ behavior: "smooth", block: "center" });
+        // Defer focus until after the smooth scroll begins so it doesn't
+        // fight the scroll animation.
+        setTimeout(() => el?.focus({ preventScroll: true }), 250);
+      }
       return;
     }
+    setFieldErrors({});
 
     try {
       const res = await fetch("/api/orders", {
@@ -199,7 +249,11 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="grid gap-10 lg:grid-cols-[1fr_minmax(360px,460px)]">
+        <form
+          onSubmit={handleSubmit}
+          noValidate
+          className="grid gap-10 lg:grid-cols-[1fr_minmax(360px,460px)]"
+        >
           {/* ======================= LEFT: form fields ======================= */}
           <div className="space-y-10">
             {/* Template summary */}
@@ -223,26 +277,41 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
                 {L("contactSection", "Kontakt — so erreichen wir Sie")}
               </legend>
               <Input
+                id="field-contactName"
                 label={L("contactName", "Ihr Name") + " *"}
                 required
                 value={contactName}
-                onChange={(e) => setContactName(e.target.value)}
+                onChange={(e) => {
+                  setContactName(e.target.value);
+                  clearFieldError("contactName");
+                }}
+                error={fieldErrors.contactName}
                 placeholder="Anna Fischer"
               />
               <Input
+                id="field-contactEmail"
                 type="email"
                 label={L("contactEmail", "E-Mail") + " *"}
                 required
                 value={contactEmail}
-                onChange={(e) => setContactEmail(e.target.value)}
+                onChange={(e) => {
+                  setContactEmail(e.target.value);
+                  clearFieldError("contactEmail");
+                }}
+                error={fieldErrors.contactEmail}
                 placeholder="anna@studio-nord.de"
               />
               <Input
+                id="field-contactPhone"
                 type="tel"
                 label={L("contactPhone", "Telefon") + " *"}
                 required
                 value={contactPhone}
-                onChange={(e) => setContactPhone(e.target.value)}
+                onChange={(e) => {
+                  setContactPhone(e.target.value);
+                  clearFieldError("contactPhone");
+                }}
+                error={fieldErrors.contactPhone}
                 placeholder="+49 160 1234567"
               />
               <label className="flex items-start gap-3 rounded-2xl border border-neutral-200 bg-white p-4">
@@ -287,42 +356,65 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
               </div>
               <div className="grid gap-4 md:grid-cols-2">
                 <Input
-                  label={L("cardName", "Vor- und Nachname")}
+                  id="field-cardData-name"
+                  label={L("cardName", "Vor- und Nachname") + " *"}
                   value={cardData.name}
-                  onChange={(e) => setCard("name", e.target.value)}
+                  onChange={(e) => {
+                    setCard("name", e.target.value);
+                    clearFieldError("cardData.name");
+                  }}
+                  error={fieldErrors["cardData.name"]}
                   placeholder="Anna Fischer"
                 />
                 <Input
+                  id="field-cardData-title"
                   label={L("cardTitle", "Titel / Rolle")}
                   value={cardData.title ?? ""}
                   onChange={(e) => setCard("title", e.target.value)}
                   placeholder="Gründerin"
                 />
                 <Input
+                  id="field-cardData-company"
                   label={L("cardCompany", "Unternehmen")}
                   value={cardData.company ?? ""}
                   onChange={(e) => setCard("company", e.target.value)}
                   placeholder="Studio Nord"
                 />
                 <Input
+                  id="field-cardData-website"
                   label={L("cardWebsite", "Website")}
                   value={cardData.website ?? ""}
-                  onChange={(e) => setCard("website", e.target.value)}
+                  onChange={(e) => {
+                    setCard("website", e.target.value);
+                    clearFieldError("cardData.website");
+                  }}
+                  error={fieldErrors["cardData.website"]}
                   placeholder="https://studio-nord.de"
                 />
                 <Input
+                  id="field-cardData-email"
                   type="email"
                   label={L("cardEmail", "E-Mail (auf Karte)")}
                   value={cardData.email ?? ""}
-                  onChange={(e) => setCard("email", e.target.value)}
+                  onChange={(e) => {
+                    setCard("email", e.target.value);
+                    clearFieldError("cardData.email");
+                  }}
+                  error={fieldErrors["cardData.email"]}
                 />
                 <Input
+                  id="field-cardData-phone"
                   type="tel"
                   label={L("cardPhone", "Telefon (auf Karte)")}
                   value={cardData.phone ?? ""}
-                  onChange={(e) => setCard("phone", e.target.value)}
+                  onChange={(e) => {
+                    setCard("phone", e.target.value);
+                    clearFieldError("cardData.phone");
+                  }}
+                  error={fieldErrors["cardData.phone"]}
                 />
                 <Input
+                  id="field-cardData-whatsapp"
                   type="tel"
                   label={L("cardWhatsapp", "WhatsApp")}
                   value={cardData.whatsapp ?? ""}
@@ -330,6 +422,7 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
                   placeholder="+49 …"
                 />
                 <Input
+                  id="field-cardData-address"
                   label={L("cardAddress", "Adresse")}
                   value={cardData.address ?? ""}
                   onChange={(e) => setCard("address", e.target.value)}
