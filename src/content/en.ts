@@ -23,29 +23,29 @@ export const content = {
         "OpSolid helps businesses replace manual, repetitive work with reliable automated systems — from workflow automation and systems integration to AI-assisted processes.",
       primaryCta: "Book a Discovery Call",
       secondaryCta: "See Services",
-      ratingPill: "OpSolid · Automation Studio · Based in Germany",
+      ratingPill: "OPSOLID · PRECISION AUTOMATION · FRA-01",
       title: [
         "Automation that runs",
         "your operations —",
         "not the other way round.",
       ],
       subtitle:
-        "OpSolid designs and builds practical automation and AI systems for real business operations — workflow automation, systems integration, internal tools, and AI-assisted processes. German-hosted. No lock-in.",
+        "OpSolid designs and builds practical automation and AI systems for real business operations — workflow automation, systems integration, internal tools, and AI-assisted processes.",
       primaryCtaLabel: "Book a discovery call",
       primaryCtaHref: "/contact",
       secondaryCtaLabel: "See services",
       secondaryCtaHref: "/solutions",
-      footnote: "Based in Germany  ·  GDPR-native  ·  No vendor lock-in",
+      footnote: "EU · Hosted in Frankfurt    DE · EN · TR · Customer languages    Q2 '26 · Pilot · partners welcome",
       consultingNote: "We also ship standalone products — Kutasia, Digital Business Card, Digital Reception.",
       editorial: {
-        eyebrow: "[ 01 / 04 ]   AUTOMATION STUDIO — HAMBURG, DE",
+        eyebrow: "[ 01 / 04 ]   AUTOMATION STUDIO   ·   OPS-01 · SYNC 0000",
         title: [
-          "We build the systems",
-          "your operations",
-          "already pretend to have.",
+          "Systems that run quietly",
+          "in the background",
+          "of your operations.",
         ],
         paragraph:
-          "Practical automation for mid-sized operations — orders, documents, approvals, communications. No rebuild of your stack, no AI theater, no vendor lock-in.",
+          "Practical automation for mid-sized operations — orders, documents, approvals, communications. Integrates with your existing stack instead of replacing it.",
         primaryCta: "Book a call",
         secondaryCta: "How we work",
         stackLabel: "Trusted stack",
@@ -80,7 +80,7 @@ export const content = {
       description:
         "Many businesses still rely on manual processes, disconnected tools, and spreadsheet-based tracking. OpSolid designs and builds automation systems that connect your tools, streamline your workflows, and reduce the operational overhead that slows teams down.",
       points: [
-        "Automate repetitive workflows with n8n, Make, and custom integrations",
+        "Eliminate repetitive workflows with custom-built automations",
         "Connect CRM, ERP, databases, and communication tools into unified systems",
         "Build custom dashboards and internal tools for your team",
         "Add AI-assisted processes where they create practical value",
@@ -94,7 +94,7 @@ export const content = {
         {
           title: "Workflow Automation",
           description:
-            "Automated workflows that replace manual steps — from data entry and approvals to notifications and reporting. Built with n8n, Make, and custom integrations.",
+            "Automated workflows that replace manual steps — from data entry and approvals to notifications and reporting. Delivered through API integrations and custom business logic.",
           icon: "workflow",
         },
         {
@@ -198,7 +198,7 @@ export const content = {
       items: [
         { name: "WhatsApp", icon: "messageCircle" },
         { name: "Telegram", icon: "send" },
-        { name: "n8n", icon: "workflow" },
+        { name: "Custom Workflows", icon: "workflow" },
         { name: "Shopify", icon: "shoppingBag" },
         { name: "CRM Systems", icon: "users" },
         { name: "ERP Systems", icon: "database" },
@@ -206,8 +206,8 @@ export const content = {
         { name: "REST APIs", icon: "code" },
         { name: "Google Workspace", icon: "cloud" },
         { name: "Databases", icon: "hardDrive" },
-        { name: "Zapier", icon: "zap" },
-        { name: "Make", icon: "settings" },
+        { name: "Webhooks", icon: "zap" },
+        { name: "Message Queues", icon: "settings" },
       ],
     },
 
@@ -264,7 +264,7 @@ export const content = {
         {
           title: "Germany-Based, Internationally Minded",
           description:
-            "Based in Germany, serving businesses across Europe and beyond. Familiar with local requirements and international contexts.",
+            "Headquartered in Germany, serving businesses across Europe and beyond. Familiar with local requirements and international contexts.",
         },
       ],
     },
@@ -278,28 +278,28 @@ export const content = {
 
     toolsShowcase: {
       label: "Built With",
-      headline: "Automation platforms and AI tools OpSolid works with",
+      headline: "Automation building blocks OpSolid works with",
       description:
-        "OpSolid uses reliable, proven automation platforms and practical AI tools to build systems that fit your operations — choosing the right tool for each use case.",
+        "Each engagement is delivered as a custom system — built from production-ready engineering layers, chosen to fit your operations rather than a one-size-fits-all toolkit.",
       tools: [
         {
-          name: "n8n",
+          name: "Custom Workflow Engine",
           description:
-            "Self-hosted workflow engine for complex automations. Webhook triggers, conditional logic, and full data sovereignty.",
+            "Custom-coded workflow engines for complex automations. Webhook triggers, conditional logic, retries, and full data sovereignty — no black-box runtime.",
           techFeatures: [
             "Self-Hosted",
-            "500+ Integrations",
+            "Open Architecture",
             "Webhook Triggers",
             "Error Handling",
             "Data Sovereignty",
           ],
         },
         {
-          name: "Make",
+          name: "API Orchestration",
           description:
-            "Visual scenario builder for multi-step data routing. API connections, error branching, and automated data transformations.",
+            "Multi-step orchestration across REST APIs, GraphQL, and message queues. Built-in transformation, branching, and error recovery for production loads.",
           techFeatures: [
-            "Visual Builder",
+            "REST · GraphQL",
             "Data Routing",
             "API Modules",
             "Error Branching",
@@ -307,27 +307,27 @@ export const content = {
           ],
         },
         {
-          name: "Zapier",
+          name: "AI Layer",
           description:
-            "Quick-connect 6,000+ apps with multi-step automations. Conditional paths, scheduled triggers, and filtering.",
+            "Practical AI primitives: classification, extraction, voice and chat agents. Auditable model calls, structured outputs, and human-in-the-loop checkpoints.",
           techFeatures: [
-            "6,000+ Apps",
-            "Multi-Step",
-            "Conditional Logic",
-            "Schedulers",
-            "Filters",
-          ],
-        },
-        {
-          name: "AI Tools",
-          description:
-            "Practical AI applications for voice, chat, document processing, and decision support. Built with reliable models and structured workflows.",
-          techFeatures: [
-            "Voice Assistants",
-            "Chatbots",
+            "Voice Agents",
             "Document AI",
             "Classification",
             "Structured Output",
+            "Audit Logs",
+          ],
+        },
+        {
+          name: "Self-Hosted Stack",
+          description:
+            "Full deployment on your own infrastructure or EU-hosted environments — Postgres, queues, observability. The exit is always two weeks away.",
+          techFeatures: [
+            "Postgres",
+            "Message Queues",
+            "Observability",
+            "EU-Hosted",
+            "Source Code Yours",
           ],
         },
       ],
@@ -335,12 +335,12 @@ export const content = {
 
     trustStrip: {
       items: [
-        "Built in Germany",
-        "GDPR-native",
-        "n8n · Make · AI-assisted",
-        "No vendor lock-in",
-        "ISO 27001-aligned",
-        "EN · DE · TR",
+        "EU jurisdiction",
+        "Hosted in Frankfurt",
+        "DE · EN · TR",
+        "API-first integration",
+        "Self-hosted ready",
+        "Pilot · Q2 '26",
       ],
     },
 
@@ -354,7 +354,7 @@ export const content = {
           icon: "workflow",
           title: "Workflow automation",
           description:
-            "End-to-end automation for repetitive, rule-based work — built with n8n, Make, and custom integrations. Proper error handling, no brittle glue code.",
+            "End-to-end automation for repetitive, rule-based work — built with custom integrations and proper error handling and monitoring.",
         },
         {
           icon: "plug",
@@ -384,14 +384,14 @@ export const content = {
           icon: "shield",
           title: "Hosted in Europe",
           description:
-            "Self-hostable or deployed on Hetzner / IONOS Frankfurt. GDPR-native. No US subprocessors unless you ask for them.",
+            "Self-hosted or deployed on EU infrastructure. No US subprocessors unless you ask for them.",
         },
       ],
     },
 
     howItWorks: {
       label: "Process",
-      headline: "Three steps. No lock-in. No mystery.",
+      headline: "Three steps.",
       steps: [
         {
           title: "Discover",
@@ -401,7 +401,7 @@ export const content = {
         {
           title: "Design & build",
           description:
-            "We choose the right stack (n8n, Make, custom code, or AI) for your situation — then build, test, and deploy iteratively, with clear updates at every step.",
+            "We design the architecture that fits your processes, build it with custom code, and deliver iteratively — with clear updates at every step.",
         },
         {
           title: "Operate & improve",
@@ -413,7 +413,7 @@ export const content = {
 
     whoUses: {
       label: "Who we work with",
-      headline: "Teams whose operations cannot afford to stay manual.",
+      headline: "Teams looking to scale their operations.",
       items: [
         {
           title: "Hospitality & service",
@@ -453,7 +453,7 @@ export const content = {
           priceLabel: "Project-based",
           priceCadence: "starts from discovery call",
           bullets: [
-            "Workflow automation (n8n, Make, custom)",
+            "Custom workflow automation",
             "Systems integration across CRM, ERP, APIs",
             "Internal tools, admin panels, dashboards",
             "AI-assisted workflows and communication",
@@ -470,7 +470,7 @@ export const content = {
             "Kutasia — multi-sector customer platform",
             "Digital Business Card — link, QR, optional NFC",
             "Digital Reception — AI front desk for service businesses",
-            "All GDPR-native · hosted in Germany",
+            "Every product ready to use out of the box",
           ],
           ctaLabel: "See all products",
           ctaHref: "/products",
@@ -480,37 +480,37 @@ export const content = {
     },
 
     testimonials: {
-      label: "Notes from operators",
+      label: "Field notes",
       headline: "What teams notice after working with OpSolid.",
       items: [
         {
           quote:
-            "We stopped copying order data between four systems. What used to take two hours every morning now runs itself before anyone opens a laptop.",
+            "We stopped copying order data between four systems. The process now completes automatically before anyone starts the workday.",
           name: "Lena Richter",
           role: "Head of Operations",
-          company: "Berlin retail group",
+          company: "Mid-size retail group",
         },
         {
           quote:
-            "OpSolid didn't try to sell us a platform. They mapped our actual process, automated the boring parts, and handed us full documentation.",
+            "OpSolid didn't try to sell us a platform. They mapped our actual process, automated the repetitive parts, and handed us full documentation.",
           name: "Marco Weber",
           role: "COO",
-          company: "Munich industrial group",
+          company: "Industrial group, Germany",
         },
         {
           quote:
-            "The whole integration layer is self-hosted. No US subprocessors. Legal signed off in one meeting — that alone was worth it.",
+            "The whole integration layer is self-hosted. No US subprocessors. Legal signed off in one meeting.",
           name: "Sarah Klein",
           role: "Head of IT",
-          company: "Hamburg service firm",
+          company: "Service firm",
         },
       ],
     },
 
     finalCta: {
-      eyebrow: "READY?",
+      eyebrow: "LET'S TALK",
       headline:
-        "Let's see what can actually be automated.",
+        "Let's review your processes together.",
       description:
         "Book a free discovery call. We'll map where automation pays off — and honestly tell you where it doesn't.",
       primaryCtaLabel: "Book a discovery call",
@@ -530,7 +530,7 @@ export const content = {
 
     agentShowcase: {
       eyebrow: "AI AGENTS",
-      heading: "Agents that actually pick up the phone",
+      heading: "AI agents for phone, chat, and bookings",
       paragraph:
         "Voice on your phone line, chat on your website, bookings in your calendar — built on real, production-grade stacks.",
       items: [
@@ -572,7 +572,7 @@ export const content = {
       {
         title: "Workflow Automation",
         description:
-          "Automate repetitive, rule-based tasks across your organization using n8n, Make, custom workflows, and API orchestration.",
+          "Automate repetitive, rule-based tasks across your organization using custom workflows and API orchestration.",
         problems: [
           "Hours spent on data entry and copy-pasting between systems",
           "Errors from manual handoffs between departments",
@@ -785,7 +785,7 @@ export const content = {
       headline:
         "Practical automation systems for businesses that need less manual work",
       description:
-        "Germany-based. Focused on replacing manual, repetitive operational work with reliable automated systems.",
+        "Focused on replacing manual, repetitive operational work with reliable automated systems.",
     },
     story: {
       headline: "Why OpSolid exists",
@@ -824,11 +824,11 @@ export const content = {
       title: "Founder & Systems Architect",
       education: "",
       description:
-        "Independent automation specialist based in Germany. Focused on designing and building practical automation systems, workflow integrations, and AI-assisted processes for business operations.",
+        "Independent automation specialist. Focused on designing and building practical automation systems, workflow integrations, and AI-assisted processes for business operations.",
       expertiseLabel: "",
       expertise: [],
       footnote:
-        "Based in Germany. Available for projects across Europe and internationally.",
+        "Available for projects across Europe and internationally.",
     },
     cta: {
       headline: "Let's build something useful",
@@ -870,7 +870,7 @@ export const content = {
       email: "hello@opsolid.de",
       response: "Typical response time: 1-2 business days.",
       location:
-        "Based in Germany. Available for projects across Europe and internationally.",
+        "Available for projects across Europe and internationally.",
     },
   },
 
@@ -1021,10 +1021,10 @@ export const content = {
     },
     posts: [
       {
-        slug: "why-n8n-is-the-future-of-workflow-automation",
-        title: "Why n8n Is the Future of Workflow Automation",
+        slug: "workflow-automation-fundamentals",
+        title: "Workflow Automation Fundamentals: What Actually Matters",
         excerpt:
-          "Discover why n8n has become a go-to platform for businesses that need powerful, self-hosted workflow automation with full control over their data.",
+          "A practical look at what makes a workflow automation last in production — error handling, data sovereignty, observability, and exit cost — independent of which engine you pick.",
         category: "automation",
         date: "2026-03-15",
         readTime: "6",
@@ -1057,11 +1057,11 @@ export const content = {
         readTime: "7",
       },
       {
-        slug: "make-vs-zapier-vs-n8n-comparison",
+        slug: "choosing-the-right-automation-architecture",
         title:
-          "Make vs. Zapier vs. n8n: Choosing the Right Automation Platform",
+          "Choosing the Right Automation Architecture for Your Business",
         excerpt:
-          "A detailed comparison of the three most popular automation platforms — features, pricing, flexibility, and when to use each.",
+          "How to choose between point-to-point integrations, custom orchestration layers, and hybrid models — based on volume, compliance, and team size, not vendor pitch.",
         category: "automation",
         date: "2026-02-12",
         readTime: "10",
@@ -1107,13 +1107,13 @@ export const content = {
       {
         question: "What tools and platforms are used?",
         answer:
-          "The primary automation platform is n8n, supplemented by Make and Zapier where appropriate. Custom integrations are built using APIs, databases, and cloud services. For AI-assisted workflows, reliable foundation models and structured approaches are used. The right tool is chosen for each use case — never a one-size-fits-all approach.",
+          "Each engagement is delivered as a custom system, built from production-ready engineering layers — REST APIs, message queues, Postgres, and webhooks at the core, supplemented by AI primitives where they earn their keep. The architecture is chosen for each use case rather than a one-size-fits-all toolkit.",
         category: "technical",
       },
       {
-        question: "What is n8n and why is it preferred?",
+        question: "Why custom development instead of a SaaS platform?",
         answer:
-          "n8n is an open-source workflow automation platform that can be self-hosted, giving you full control over your data and workflows. It's flexible, supports hundreds of integrations, and allows for custom code when needed. It offers a strong balance of power, flexibility, and data sovereignty for business automation.",
+          "Custom-built systems put you in full control of your data, your workflows, and the cost curve. There are no per-execution fees, no vendor lock-in, and no opaque pricing tiers. The architecture is designed to fit your processes — and the source code is yours to keep.",
         category: "technical",
       },
       {
@@ -1199,7 +1199,7 @@ export const content = {
         "Retell AI",
         "Vapi",
         "Cal.com",
-        "n8n",
+        "Custom Workflows",
         "Supabase",
         "Meta Business",
         "HubSpot",
@@ -1244,7 +1244,7 @@ export const content = {
         icon: "messageCircle",
         startingPrice: "Starting at €1,800 setup + €99/mo",
         category: "Customer-facing",
-        stack: "OpenAI · n8n · Supabase · HubSpot",
+        stack: "OpenAI · Custom Workflows · Supabase · HubSpot",
       },
       {
         name: "WhatsApp Business Agent",
@@ -1270,20 +1270,20 @@ export const content = {
         icon: "calendarClock",
         startingPrice: "Starting at €800 setup + €49/mo",
         category: "Internal Ops",
-        stack: "Cal.com · Retell · n8n · Google Calendar",
+        stack: "Cal.com · Retell · Custom Workflows · Google Calendar",
       },
       {
         name: "Email Automation Agent",
         tagline: "Outreach · triage · reply drafting",
         description:
-          "AI email workflows — cold outreach with personalized variants, inbox triage, auto-drafts for review. Built on Instantly / AgentMail / custom n8n flows. Deliverability warmed, GDPR-compliant.",
+          "AI email workflows — cold outreach with personalized variants, inbox triage, auto-drafts for review. Built on Instantly, AgentMail, and custom workflows. Deliverability warmed, GDPR-compliant.",
         status: "Live",
         href: "/products/email-agent",
         externalUrl: "",
         icon: "mail",
         startingPrice: "Starting at €99 – €499/month",
         category: "Communication",
-        stack: "Instantly · AgentMail · n8n · OpenAI",
+        stack: "Instantly · AgentMail · Custom Workflows · OpenAI",
       },
       {
         name: "Lead Qualification Agent",
@@ -1296,7 +1296,7 @@ export const content = {
         icon: "userCheck",
         startingPrice: "Starting at €2,200 setup + €199/mo",
         category: "Customer-facing",
-        stack: "Retell · HubSpot · n8n · Supabase",
+        stack: "Retell · HubSpot · Custom Workflows · Supabase",
       },
       {
         name: "Digital Reception",
@@ -1828,7 +1828,7 @@ export const content = {
           { name: "Vapi", role: "Alternative voice stack (enterprise)" },
           { name: "Cal.com", role: "Calendar booking layer" },
           { name: "Supabase", role: "Call logs + context store" },
-          { name: "n8n", role: "CRM sync + post-call workflows" },
+          { name: "Custom Workflows", role: "CRM sync + post-call orchestration" },
         ],
       },
       pricing: {
@@ -1925,7 +1925,7 @@ export const content = {
           "A context-aware chatbot that lives on your website, WhatsApp, and Telegram simultaneously — same brain, three mouths. Qualifies leads, answers real questions from your docs, and syncs conversations to HubSpot.",
         primaryCta: "Book a demo",
         secondaryCta: "See how it works",
-        tags: "OPENAI · n8n · SUPABASE · MULTI-CHANNEL",
+        tags: "OPENAI · CUSTOM · SUPABASE · MULTI-CHANNEL",
         startingPrice: "Starting at €1,800 setup + €99/mo",
       },
       features: {
@@ -1990,7 +1990,7 @@ export const content = {
         items: [
           { name: "OpenAI / Claude", role: "LLM core (swappable)" },
           { name: "Supabase pgvector", role: "RAG embeddings + memory" },
-          { name: "n8n", role: "Channel orchestration + CRM sync" },
+          { name: "Custom Workflows", role: "Channel orchestration + CRM sync" },
           { name: "Meta Business Cloud", role: "Official WhatsApp BSP" },
           { name: "HubSpot / Pipedrive", role: "Lead sync destination" },
         ],
@@ -2150,7 +2150,7 @@ export const content = {
         items: [
           { name: "Meta Business Cloud API", role: "Official WhatsApp channel" },
           { name: "360dialog / Twilio / AiSensy", role: "Verified BSP layer" },
-          { name: "n8n", role: "Workflow orchestration" },
+          { name: "Custom Workflows", role: "Workflow orchestration" },
           { name: "Stripe", role: "Payment link triggers" },
           { name: "Shopify / WooCommerce", role: "Order + shipping source of truth" },
         ],
@@ -2245,7 +2245,7 @@ export const content = {
           "An AI agent dedicated to one job: booking, rescheduling, and reminding. Works through voice, chat, or form — two-way synced with Google Calendar, Outlook, or Cal.com. Zero double-bookings, fewer no-shows.",
         primaryCta: "Book a demo",
         secondaryCta: "See how it works",
-        tags: "CAL.COM · RETELL · N8N · GOOGLE CALENDAR",
+        tags: "CAL.COM · RETELL · CUSTOM · GOOGLE CALENDAR",
         startingPrice: "Starting at €800 setup + €49/mo",
       },
       features: {
@@ -2310,7 +2310,7 @@ export const content = {
         items: [
           { name: "Cal.com", role: "Booking engine + availability" },
           { name: "Retell AI", role: "Voice intake (optional)" },
-          { name: "n8n", role: "Reminder + follow-up workflows" },
+          { name: "Custom Workflows", role: "Reminder + follow-up orchestration" },
           { name: "Google Calendar / Outlook", role: "Source-of-truth sync" },
           { name: "Twilio", role: "SMS reminders" },
         ],
@@ -2402,10 +2402,10 @@ export const content = {
           "Draft replies, reviewed.",
         ],
         paragraph:
-          "AI email workflows that actually ship: personalized cold outreach, inbound triage, and auto-drafted replies for a human to approve. Built on Instantly, AgentMail, and custom n8n flows. Warmed deliverability, GDPR-compliant.",
+          "AI email workflows that actually ship: personalized cold outreach, inbound triage, and auto-drafted replies for a human to approve. Built on Instantly, AgentMail, and custom orchestration flows. Warmed deliverability, GDPR-compliant.",
         primaryCta: "Book a demo",
         secondaryCta: "See how it works",
-        tags: "INSTANTLY · AGENTMAIL · n8n · OPENAI",
+        tags: "INSTANTLY · AGENTMAIL · CUSTOM · OPENAI",
         startingPrice: "Starting at €99 – €499/month",
       },
       features: {
@@ -2470,7 +2470,7 @@ export const content = {
         items: [
           { name: "Instantly", role: "Cold outreach + warmup" },
           { name: "AgentMail", role: "Inbound triage + drafting" },
-          { name: "n8n", role: "Custom workflow glue" },
+          { name: "Custom Workflows", role: "Custom workflow orchestration" },
           { name: "OpenAI / Claude", role: "Drafting + classification" },
           { name: "HubSpot / Pipedrive", role: "CRM source of truth" },
         ],
@@ -2564,7 +2564,7 @@ export const content = {
           "A conversational agent that qualifies inbound leads via voice or chat, scores them against your ICP, and routes MQLs straight to sales in HubSpot or Pipedrive. Typical uplift: 40% MQL-to-SQL conversion.",
         primaryCta: "Book a demo",
         secondaryCta: "See how it works",
-        tags: "RETELL · HUBSPOT · N8N · SCORING",
+        tags: "RETELL · HUBSPOT · CUSTOM · SCORING",
         startingPrice: "Starting at €2,200 setup + €199/mo",
       },
       features: {
@@ -2629,7 +2629,7 @@ export const content = {
         items: [
           { name: "Retell AI", role: "Voice qualification" },
           { name: "HubSpot / Pipedrive", role: "CRM + scoring destination" },
-          { name: "n8n", role: "Routing + Slack/Cal.com handoff" },
+          { name: "Custom Workflows", role: "Routing + Slack/Cal.com handoff" },
           { name: "Supabase", role: "Conversation log + analytics" },
           { name: "Clearbit / Apollo (optional)", role: "Firmographic enrichment" },
         ],
@@ -3138,8 +3138,8 @@ export const content = {
             icon: "workflow",
             title: "Workflow automation",
             body:
-              "Orders, documents, approvals, communications. Built on n8n, Make, and custom connectors where those fall short — never on black-box SaaS.",
-            tag: "N8N · MAKE · CUSTOM",
+              "Orders, documents, approvals, communications. Built on custom orchestration and dedicated connectors — never on black-box SaaS.",
+            tag: "API · WEBHOOKS · CUSTOM",
           },
           {
             icon: "plug",
@@ -3345,7 +3345,7 @@ export const content = {
           { label: "LLM", value: "GPT-4o, Claude Sonnet, or on-prem if needed" },
           { label: "TTS", value: "ElevenLabs or Cartesia · cloned voice" },
           { label: "Telephony", value: "Twilio · German DID · GDPR DPA" },
-          { label: "Integrations", value: "Cal.com, HubSpot, Pipedrive, SAP, n8n webhooks" },
+          { label: "Integrations", value: "Cal.com, HubSpot, Pipedrive, SAP, custom webhooks" },
           { label: "Data residency", value: "EU-west · Frankfurt · no US subprocessors" },
           { label: "Exit cost", value: "Two weeks. Prompts, data, numbers all portable." },
         ],
@@ -3538,7 +3538,7 @@ export const content = {
         headline:
           "The smallest honest automation: what moves a business vs. what looks good in a deck.",
         lede:
-          "Opening piece of the journal. Draft in progress — about how a sub-20-line n8n workflow outperforms an ERP replacement on the measurements that matter.",
+          "Opening piece of the journal. Draft in progress — on how a focused, sub-20-line automation outperforms an ERP replacement on the measurements that matter.",
         meta: "D. PIHA · SCHEDULED · 15 MIN",
       },
       series: {

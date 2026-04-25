@@ -1,34 +1,18 @@
 /* ==============================================================
    OpSolid — Design tokens (v2, industrial-luxury)
-   Dark-first graphite + warm copper accent. Geist display,
-   Instrument Serif editorial, Inter body, JetBrains Mono meta.
+   Tri-theme: Light · Hybrid (default) · Dark.
+   Token names never change — only values swap per [data-theme].
+   Geist display, Instrument Serif editorial, Inter body,
+   JetBrains Mono meta.
    ============================================================== */
 
 /* Fonts loaded via next/font in src/app/layout.tsx — no network @import. */
 
+/* ==============================================================
+   THEME-INDEPENDENT TOKENS
+   Copper accent, gradients, motion, type, layout — same everywhere.
+   ============================================================== */
 :root {
-  /* ---------- GROUND ---------- */
-  /* Deep graphite base. Not pure black — has cool blue undertone so copper pops. */
-  --bg-0:      #07090C;   /* deepest — page background behind panels */
-  --bg-1:      #0B0E13;   /* default page */
-  --bg-2:      #11151C;   /* raised surface */
-  --bg-3:      #171C26;   /* card / panel */
-  --bg-4:      #1F2530;   /* elevated within panel */
-  --bg-5:      #2A3140;   /* hover raise */
-
-  /* ---------- LINES & BORDERS ---------- */
-  --line-soft:  rgba(255,255,255,0.04);   /* barely-there divider */
-  --line:       rgba(255,255,255,0.08);   /* default hairline */
-  --line-firm:  rgba(255,255,255,0.14);   /* emphasized border */
-  --line-hot:   rgba(212,143,88,0.35);    /* copper-tinted edge (focus, active) */
-
-  /* ---------- INK (text on dark) ---------- */
-  --ink-100:   #F4F3F0;    /* warm off-white — headlines */
-  --ink-200:   #D8D6D1;    /* body */
-  --ink-300:   #9FA2A9;    /* secondary */
-  --ink-400:   #6B717B;    /* meta */
-  --ink-500:   #454B56;    /* disabled / scaffolding */
-
   /* ---------- COPPER (primary accent) ---------- */
   /* Warm oxidized-copper, not bright orange. Reads as metal, not alert. */
   --copper-50:  #FBEFE0;
@@ -52,26 +36,7 @@
   --warn:      #D4A23A;   /* aged gold — warning */
   --err:       #B8514B;   /* oxblood — error (never primary) */
 
-  /* ---------- GLOW / BLOOM ---------- */
-  --bloom-sm:  0 0 12px rgba(194,121,64,0.45);
-  --bloom-md:  0 0 28px rgba(194,121,64,0.35), 0 0 8px rgba(194,121,64,0.5);
-  --bloom-lg:  0 0 60px rgba(194,121,64,0.28), 0 0 20px rgba(194,121,64,0.4);
-
-  /* ---------- SHADOWS (cinematic depth) ---------- */
-  /* Layered — always combine a close and far shadow for real depth.     */
-  --depth-1:   0 1px 1px rgba(0,0,0,0.35), 0 1px 2px rgba(0,0,0,0.2);
-  --depth-2:   0 2px 4px rgba(0,0,0,0.4), 0 6px 12px rgba(0,0,0,0.35);
-  --depth-3:   0 6px 14px rgba(0,0,0,0.45), 0 20px 40px rgba(0,0,0,0.4);
-  --depth-4:   0 12px 28px rgba(0,0,0,0.5), 0 40px 80px rgba(0,0,0,0.5);
-  --depth-5:   0 24px 48px rgba(0,0,0,0.55), 0 80px 120px rgba(0,0,0,0.55);
-
-  /* Inset highlight — top edge catching virtual light. Pair w/ --depth-* */
-  --rim-top:   inset 0 1px 0 rgba(255,255,255,0.08);
-  --rim-top-strong: inset 0 1px 0 rgba(255,255,255,0.12);
-  --rim-bottom: inset 0 -1px 0 rgba(0,0,0,0.4);
-
   /* ---------- RADII ---------- */
-  /* Tighter than v1 — industrial hardware, not soft marketing card. */
   --r-sm:   4px;
   --r-md:   8px;
   --r-lg:   12px;
@@ -80,9 +45,8 @@
   --r-pill: 9999px;
 
   /* ---------- MOTION ---------- */
-  /* Mechanical ease — feels like machined parts settling. */
-  --ease-mech:  cubic-bezier(0.16, 0.84, 0.24, 1);   /* slow arrive, heavy settle */
-  --ease-snap:  cubic-bezier(0.32, 0.72, 0, 1);      /* UI snap */
+  --ease-mech:  cubic-bezier(0.16, 0.84, 0.24, 1);
+  --ease-snap:  cubic-bezier(0.32, 0.72, 0, 1);
   --ease-out:   cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in:    cubic-bezier(0.7, 0, 0.84, 0);
   --dur-fast:   180ms;
@@ -91,7 +55,6 @@
   --dur-settle: 900ms;
 
   /* ---------- FONTS ---------- */
-  /* These reference next/font variables set in layout.tsx. */
   --font-display: var(--font-geist), "Inter", system-ui, sans-serif;
   --font-editorial: var(--font-instrument-serif), "Times New Roman", serif;
   --font-body: var(--font-inter), system-ui, -apple-system, sans-serif;
@@ -116,6 +79,126 @@
 }
 
 /* ==============================================================
+   HYBRID (default) — warm cocoa paper page, ivory cards, ink text
+   ============================================================== */
+:root,
+:root[data-theme="hybrid"] {
+  --bg-0: #E8DECC;
+  --bg-1: #F4EFE6;        /* PAGE */
+  --bg-2: #FAF6EF;
+  --bg-3: #FFFFFF;        /* card / panel */
+  --bg-4: #FBF7F0;
+  --bg-5: #F4EFE6;
+
+  --ink-100: #15120F;
+  --ink-200: #3A3530;
+  --ink-300: #6B6660;
+  --ink-400: #9A9591;
+  --ink-500: #BFB9B0;
+
+  --line-soft: rgba(21,18,15,0.04);
+  --line:      rgba(21,18,15,0.08);
+  --line-firm: rgba(21,18,15,0.14);
+  --line-hot:  rgba(194,121,64,0.40);
+
+  /* Softer glow on light surfaces — no neon */
+  --bloom-sm: 0 0 8px rgba(194,121,64,0.30);
+  --bloom-md: 0 0 18px rgba(194,121,64,0.22), 0 0 6px rgba(194,121,64,0.30);
+  --bloom-lg: 0 0 36px rgba(194,121,64,0.18), 0 0 14px rgba(194,121,64,0.25);
+
+  /* Cinematic depth — lighter, ink-based on paper */
+  --depth-1: 0 1px 1px rgba(21,18,15,0.06), 0 1px 2px rgba(21,18,15,0.04);
+  --depth-2: 0 2px 4px rgba(21,18,15,0.08), 0 6px 12px rgba(21,18,15,0.06);
+  --depth-3: 0 6px 14px rgba(21,18,15,0.10), 0 20px 40px rgba(21,18,15,0.08);
+  --depth-4: 0 12px 28px rgba(21,18,15,0.12), 0 40px 80px rgba(21,18,15,0.10);
+  --depth-5: 0 24px 48px rgba(21,18,15,0.14), 0 80px 120px rgba(21,18,15,0.12);
+
+  --rim-top: inset 0 1px 0 rgba(255,255,255,0.7);
+  --rim-top-strong: inset 0 1px 0 rgba(255,255,255,0.9);
+  --rim-bottom: inset 0 -1px 0 rgba(21,18,15,0.06);
+
+  color-scheme: light;
+}
+
+/* ==============================================================
+   LIGHT — clean, cool refined paper
+   ============================================================== */
+:root[data-theme="light"] {
+  --bg-0: #DCD7CC;
+  --bg-1: #FAFAF7;        /* PAGE — neutral paper */
+  --bg-2: #F4F3EE;
+  --bg-3: #FFFFFF;
+  --bg-4: #F8F7F2;
+  --bg-5: #ECEAE3;
+
+  --ink-100: #15120F;
+  --ink-200: #3A3530;
+  --ink-300: #6B6660;
+  --ink-400: #9A9591;
+  --ink-500: #BFB9B0;
+
+  --line-soft: rgba(21,18,15,0.04);
+  --line:      rgba(21,18,15,0.08);
+  --line-firm: rgba(21,18,15,0.14);
+  --line-hot:  rgba(194,121,64,0.40);
+
+  --bloom-sm: 0 0 8px rgba(194,121,64,0.30);
+  --bloom-md: 0 0 18px rgba(194,121,64,0.22), 0 0 6px rgba(194,121,64,0.30);
+  --bloom-lg: 0 0 36px rgba(194,121,64,0.18), 0 0 14px rgba(194,121,64,0.25);
+
+  --depth-1: 0 1px 1px rgba(21,18,15,0.05), 0 1px 2px rgba(21,18,15,0.03);
+  --depth-2: 0 2px 4px rgba(21,18,15,0.06), 0 6px 12px rgba(21,18,15,0.05);
+  --depth-3: 0 6px 14px rgba(21,18,15,0.08), 0 20px 40px rgba(21,18,15,0.06);
+  --depth-4: 0 12px 28px rgba(21,18,15,0.10), 0 40px 80px rgba(21,18,15,0.08);
+  --depth-5: 0 24px 48px rgba(21,18,15,0.12), 0 80px 120px rgba(21,18,15,0.10);
+
+  --rim-top: inset 0 1px 0 rgba(255,255,255,0.7);
+  --rim-top-strong: inset 0 1px 0 rgba(255,255,255,0.9);
+  --rim-bottom: inset 0 -1px 0 rgba(21,18,15,0.06);
+
+  color-scheme: light;
+}
+
+/* ==============================================================
+   DARK — graphite (original v2 system)
+   ============================================================== */
+:root[data-theme="dark"] {
+  --bg-0: #07090C;
+  --bg-1: #0B0E13;
+  --bg-2: #11151C;
+  --bg-3: #171C26;
+  --bg-4: #1F2530;
+  --bg-5: #2A3140;
+
+  --ink-100: #F4F3F0;
+  --ink-200: #D8D6D1;
+  --ink-300: #9FA2A9;
+  --ink-400: #6B717B;
+  --ink-500: #454B56;
+
+  --line-soft: rgba(255,255,255,0.04);
+  --line:      rgba(255,255,255,0.08);
+  --line-firm: rgba(255,255,255,0.14);
+  --line-hot:  rgba(212,143,88,0.35);
+
+  --bloom-sm: 0 0 12px rgba(194,121,64,0.45);
+  --bloom-md: 0 0 28px rgba(194,121,64,0.35), 0 0 8px rgba(194,121,64,0.5);
+  --bloom-lg: 0 0 60px rgba(194,121,64,0.28), 0 0 20px rgba(194,121,64,0.4);
+
+  --depth-1: 0 1px 1px rgba(0,0,0,0.35), 0 1px 2px rgba(0,0,0,0.2);
+  --depth-2: 0 2px 4px rgba(0,0,0,0.4), 0 6px 12px rgba(0,0,0,0.35);
+  --depth-3: 0 6px 14px rgba(0,0,0,0.45), 0 20px 40px rgba(0,0,0,0.4);
+  --depth-4: 0 12px 28px rgba(0,0,0,0.5), 0 40px 80px rgba(0,0,0,0.5);
+  --depth-5: 0 24px 48px rgba(0,0,0,0.55), 0 80px 120px rgba(0,0,0,0.55);
+
+  --rim-top: inset 0 1px 0 rgba(255,255,255,0.08);
+  --rim-top-strong: inset 0 1px 0 rgba(255,255,255,0.12);
+  --rim-bottom: inset 0 -1px 0 rgba(0,0,0,0.4);
+
+  color-scheme: dark;
+}
+
+/* ==============================================================
    BASELINE — applies everywhere
    ============================================================== */
 *, *::before, *::after { box-sizing: border-box; }
@@ -124,7 +207,6 @@ html {
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
   background: var(--bg-1);
-  color-scheme: dark;
 }
 body {
   margin: 0;
@@ -144,6 +226,13 @@ body {
   opacity: 0.06;
   mix-blend-mode: overlay;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='3'/><feColorMatrix values='0 0 0 0 0.95  0 0 0 0 0.93  0 0 0 0 0.88  0 0 0 0.85 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+/* Grain lighter on bright themes — paper texture, not TV static */
+:root[data-theme="light"] .grain::before,
+:root[data-theme="hybrid"] .grain::before,
+:root:not([data-theme="dark"]) .grain::before {
+  opacity: 0.035;
+  mix-blend-mode: multiply;
 }
 
 /* ==============================================================
@@ -193,6 +282,12 @@ h4, .h4 {
   color: transparent;
   filter: drop-shadow(0 1px 0 rgba(0,0,0,0.4));
 }
+/* Soften the drop-shadow on light themes so letters don't look sooty */
+:root[data-theme="light"] .metallic-copper,
+:root[data-theme="hybrid"] .metallic-copper,
+:root:not([data-theme="dark"]) .metallic-copper {
+  filter: drop-shadow(0 1px 0 rgba(21,18,15,0.15));
+}
 .metallic-chrome {
   background: var(--chrome-grad);
   -webkit-background-clip: text;
@@ -205,6 +300,11 @@ h4, .h4 {
   background-clip: text;
   color: transparent;
   filter: drop-shadow(0 1px 0 rgba(0,0,0,0.5));
+}
+:root[data-theme="light"] .metallic-brass,
+:root[data-theme="hybrid"] .metallic-brass,
+:root:not([data-theme="dark"]) .metallic-brass {
+  filter: drop-shadow(0 1px 0 rgba(21,18,15,0.18));
 }
 
 p { margin: 0; color: var(--ink-200); }
@@ -233,6 +333,12 @@ p { margin: 0; color: var(--ink-200); }
   color: var(--ink-400);
 }
 .meta-hot { color: var(--copper-300); }
+/* Copper-200 is too pale on paper — drop one step darker on light themes */
+:root[data-theme="light"] .meta-hot,
+:root[data-theme="hybrid"] .meta-hot,
+:root:not([data-theme="dark"]) .meta-hot {
+  color: var(--copper-600);
+}
 
 /* ==============================================================
    LAYOUT UTILITIES
@@ -245,7 +351,7 @@ p { margin: 0; color: var(--ink-200); }
    PRIMITIVES
    ============================================================== */
 
-/* Panel — the default raised surface. Dark gradient + rim + shadow. */
+/* Panel — the default raised surface. Gradient + rim + shadow. */
 .panel {
   background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
   border: 1px solid var(--line);
@@ -311,6 +417,17 @@ p { margin: 0; color: var(--ink-200); }
   border-color: var(--line-hot);
   color: var(--ink-100);
 }
+/* On light themes the ghost variant needs an ink-tinted tint, not white alpha */
+:root[data-theme="light"] .btn-ghost,
+:root[data-theme="hybrid"] .btn-ghost,
+:root:not([data-theme="dark"]) .btn-ghost {
+  background: rgba(21,18,15,0.03);
+}
+:root[data-theme="light"] .btn-ghost:hover,
+:root[data-theme="hybrid"] .btn-ghost:hover,
+:root:not([data-theme="dark"]) .btn-ghost:hover {
+  background: rgba(21,18,15,0.06);
+}
 
 .btn-sm { padding: 8px 14px; font-size: var(--fs-sm); gap: 6px; }
 .btn-lg { padding: 16px 28px; font-size: var(--fs-body-lg); gap: 12px; }
@@ -330,10 +447,21 @@ p { margin: 0; color: var(--ink-200); }
   border: 1px solid var(--line);
   box-shadow: var(--rim-top);
 }
+:root[data-theme="light"] .chip,
+:root[data-theme="hybrid"] .chip,
+:root:not([data-theme="dark"]) .chip {
+  background: rgba(21,18,15,0.03);
+}
 .chip-hot {
   color: var(--copper-200);
   border-color: var(--line-hot);
   background: rgba(194,121,64,0.07);
+}
+:root[data-theme="light"] .chip-hot,
+:root[data-theme="hybrid"] .chip-hot,
+:root:not([data-theme="dark"]) .chip-hot {
+  color: var(--copper-700);
+  background: rgba(194,121,64,0.10);
 }
 .chip-dot {
   width: 6px; height: 6px; border-radius: 999px;
@@ -361,9 +489,20 @@ p { margin: 0; color: var(--ink-200); }
   transition: border-color var(--dur-fast) var(--ease-snap),
               box-shadow var(--dur-fast) var(--ease-snap);
 }
+:root[data-theme="light"] .field,
+:root[data-theme="hybrid"] .field,
+:root:not([data-theme="dark"]) .field {
+  background: #FFFFFF;
+  box-shadow: inset 0 1px 0 rgba(21,18,15,0.04);
+}
 .field:focus {
   border-color: var(--copper-400);
   box-shadow: inset 0 1px 0 rgba(0,0,0,0.25), 0 0 0 3px rgba(194,121,64,0.2);
+}
+:root[data-theme="light"] .field:focus,
+:root[data-theme="hybrid"] .field:focus,
+:root:not([data-theme="dark"]) .field:focus {
+  box-shadow: inset 0 1px 0 rgba(21,18,15,0.04), 0 0 0 3px rgba(194,121,64,0.2);
 }
 .field::placeholder { color: var(--ink-500); }
 
@@ -379,4 +518,4 @@ p { margin: 0; color: var(--ink-200); }
 /* ==============================================================
    SELECTION
    ============================================================== */
-::selection { background: var(--copper-500); color: #0A0A0A; }
+::selection { background: var(--copper-500); color: #1A0E04; }

@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { formatEuro, getTemplateById } from "@/config/card-templates";
 import { CardDataSchema } from "@/lib/validation";
 import { PublishAction } from "./PublishAction";
+import { LinksPanel } from "./LinksPanel";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -307,6 +308,10 @@ export default async function OrderDetailPage({ params, searchParams }: PageProp
                 {order.designNotes}
               </p>
             </Panel>
+          )}
+
+          {order.status === "PUBLISHED" && order.slug && (
+            <LinksPanel orderId={order.id} slug={order.slug} token={token} />
           )}
 
           <Panel title={`Leads (${order.leads.length})`} span>

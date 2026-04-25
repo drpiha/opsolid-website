@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useLocale } from "@/context/LocaleContext";
+import { demoPersonas } from "./demoPersonas";
 
 /**
  * FoilCard — Digital Card page centerpiece.
@@ -10,11 +12,14 @@ import { useEffect, useRef, useState } from "react";
  * tilt; NFC ripple pulses at the corner; flip on click to reveal the
  * QR side. Touch-enabled so mobile gets the tilt too.
  *
- * The displayed card content is an illustrative demo. We use the
- * reserved `example.de` domain and neutral placeholder name so nothing
- * reads as a claimed real customer.
+ * The displayed card content is an illustrative demo that swaps with the
+ * active locale (TR / DE / EN) so the card always feels native to the
+ * reader. Reserved example domains and neutral names keep it clear that
+ * nothing here is a claimed real customer.
  */
 export function FoilCard() {
+  const { locale } = useLocale();
+  const persona = demoPersonas[locale];
   const stageRef = useRef<HTMLDivElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
   const [flipped, setFlipped] = useState(false);
@@ -157,21 +162,21 @@ export function FoilCard() {
             </div>
           </div>
           <div className="fc-person">
-            <div className="fc-name">Lena Schäfer</div>
-            <div className="fc-role">Partner · Legal Operations</div>
+            <div className="fc-name">{persona.name}</div>
+            <div className="fc-role">{persona.role}</div>
           </div>
           <div className="fc-contacts">
             <div className="fc-contact-row">
               <span className="fc-label">MAIL</span>
-              <span className="fc-value">lena@example.de</span>
+              <span className="fc-value">{persona.email}</span>
             </div>
             <div className="fc-contact-row">
               <span className="fc-label">TEL</span>
-              <span className="fc-value">+49 40 1234 · 5678</span>
+              <span className="fc-value">{persona.phone}</span>
             </div>
             <div className="fc-contact-row">
               <span className="fc-label">BASED</span>
-              <span className="fc-value">Hamburg · DE</span>
+              <span className="fc-value">{persona.location}</span>
             </div>
           </div>
           <div className="fc-glare" aria-hidden="true" />
@@ -190,7 +195,7 @@ export function FoilCard() {
           <div className="fc-back-copy">
             <div className="fc-back-title">Scan or tap</div>
             <div className="fc-back-sub">vCard · calendar · portfolio</div>
-            <div className="fc-back-url">opsolid.de/c/demo</div>
+            <div className="fc-back-url">{`opsolid.de/c/${persona.slug}`}</div>
           </div>
         </div>
       </div>

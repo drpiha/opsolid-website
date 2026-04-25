@@ -125,6 +125,8 @@ model CardOrder {
   statusHistory OrderStatusHistory[]
   views         CardView[]
   leads         CardLead[]
+  links         CardLink[]
+  scanEvents    ScanEvent[]
 
   @@index([status])
   @@index([contactPhone])
@@ -190,6 +192,67 @@ model CardLead {
 
   @@index([orderId, createdAt])
   @@map("card_leads")
+}
+
+// -----------------------------------------------------------------------------
+// CardLink — labelled short link for a published card. Code is the path segment
+// at go.opsolid.de/<code> (host-rewritten to /l/<code> by middleware). Each
+// link carries its own source/campaign/event labels so the owner can create
+// distinct links per channel (qr-main, instagram-bio, nfc-card, hannover-messe)
+// and see scan counts per source in the admin.
+//
+// destinationUrl is optional — defaults to /c/<order.slug>. When set, the link
+// can deep-link to a sub-page or external resource (rare; future feature).
+// -----------------------------------------------------------------------------
+model CardLink {
+  id              String   @id @default(cuid())
+  orderId         String   @map("order_id")
+  code            String   @unique
+  label           String?
+  source          String?
+  campaign        String?
+  medium          String?
+  eventName       String?  @map("event_name")
+  destinationUrl  String?  @map("destination_url")
+  active          Boolean  @default(true)
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  order      CardOrder   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  scanEvents ScanEvent[]
+
+  @@index([orderId])
+  @@map("card_links")
+}
+
+// -----------------------------------------------------------------------------
+// ScanEvent — every short-link click on /l/<code>. The event is recorded
+// before the 307 redirect to /c/<slug>, so we have analytics even when the
+// destination page is cached or the user closes the tab mid-redirect.
+//
+// IP is hashed (sha256, no salt yet — Phase 6 will add a rotating server salt)
+// to avoid storing raw addresses. Privacy-by-default: only enough signal to
+// detect duplicate clicks within a short window.
+// -----------------------------------------------------------------------------
+model ScanEvent {
+  id         String   @id @default(cuid())
+  orderId    String   @map("order_id")
+  linkId     String?  @map("link_id")
+  source     String?
+  campaign   String?
+  eventName  String?  @map("event_name")
+  referer    String?
+  userAgent  String?  @map("user_agent")
+  deviceType String?  @map("device_type") // mobile | tablet | desktop | bot
+  ipHash     String?  @map("ip_hash")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  order CardOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  link  CardLink? @relation(fields: [linkId], references: [id], onDelete: SetNull)
+
+  @@index([orderId, createdAt])
+  @@index([linkId, createdAt])
+  @@map("scan_events")
 }
 
 // -----------------------------------------------------------------------------

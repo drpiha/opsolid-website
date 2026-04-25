@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { ClientProviders } from "@/components/ClientProviders";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { AmbientBackdrop } from "@/components/visual/AmbientBackdrop";
 import { SITE_CONFIG } from "@/lib/constants";
 import { LOCALES, type Locale, isLocale } from "@/lib/i18n";
 
@@ -50,8 +51,9 @@ export default function LocaleLayout({
 
   return (
     <ClientProviders initialLocale={params.locale}>
+      <AmbientBackdrop />
       <Header />
-      <main className="flex-1">{children}</main>
+      <main className="flex-1 relative z-[1]">{children}</main>
       <Footer />
     </ClientProviders>
   );

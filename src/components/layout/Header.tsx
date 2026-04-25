@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { usePathname } from "next/navigation";
 import { useLocale } from "@/context/LocaleContext";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { cn } from "@/lib/utils";
 import type { Locale } from "@/content";
 
@@ -67,6 +68,7 @@ export function Header() {
         </nav>
 
         <div className="os-header-right">
+          <ThemeToggle />
           <button
             className="os-lang-switch"
             onClick={() => setLocale(LOCALE_CYCLE[locale])}
@@ -152,10 +154,11 @@ export function Header() {
                 );
               })}
             </ul>
-            <div className="mt-10">
+            <div className="mt-10 flex items-center justify-between gap-4">
+              <ThemeToggle />
               <Link
                 href="/contact"
-                className="btn btn-primary btn-lg w-full"
+                className="btn btn-primary btn-lg flex-1 text-center"
               >
                 {navLabels.cta}
               </Link>

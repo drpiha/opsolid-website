@@ -24,30 +24,30 @@ export const content: Content = {
         "OpSolid, işletmelerin manuel ve tekrarlayan işlerini güvenilir otomasyon sistemleriyle değiştirmelerine yardımcı olur — iş akışı otomasyonundan sistem entegrasyonuna, yapay zeka destekli süreçlere kadar.",
       primaryCta: "Tanışma Görüşmesi Planlayın",
       secondaryCta: "Hizmetleri İnceleyin",
-      ratingPill: "OpSolid · Otomasyon Stüdyosu · Almanya merkezli",
+      ratingPill: "OPSOLID · PRECISION AUTOMATION · FRA-01",
       title: [
         "Operasyonlarınızı",
         "yöneten otomasyon —",
         "tersi değil.",
       ],
       subtitle:
-        "OpSolid gerçek iş operasyonları için pratik otomasyon ve yapay zeka sistemleri tasarlar ve kurar — iş akışı otomasyonu, sistem entegrasyonu, dahili araçlar ve AI destekli süreçler. Almanya'da barındırılır. Tedarikçi bağımlılığı yok.",
+        "OpSolid gerçek iş operasyonları için pratik otomasyon ve yapay zeka sistemleri tasarlar ve kurar — iş akışı otomasyonu, sistem entegrasyonu, dahili araçlar ve AI destekli süreçler.",
       primaryCtaLabel: "Tanışma görüşmesi planla",
       primaryCtaHref: "/contact",
       secondaryCtaLabel: "Hizmetleri gör",
       secondaryCtaHref: "/solutions",
-      footnote: "Almanya merkezli  ·  GDPR-yerli  ·  Tedarikçi kilidi yok",
+      footnote: "EU · Hosted in Frankfurt    DE · EN · TR · Müşteri dilleri    Q2 '26 · Pilot · Partnerler aranıyor",
       consultingNote:
         "Ayrıca bağımsız ürünler de sunuyoruz — Kutasia, Dijital Kartvizit, Dijital Resepsiyon.",
       editorial: {
-        eyebrow: "[ 01 / 04 ]   OTOMASYON STÜDYOSU — HAMBURG, DE",
+        eyebrow: "[ 01 / 04 ]   OTOMASYON STÜDYOSU   ·   OPS-01 · SYNC 0000",
         title: [
-          "Operasyonunun zaten",
-          "sahipmiş gibi davrandığı",
-          "sistemleri biz kuruyoruz.",
+          "Operasyonun arka planında",
+          "sessizce çalışan",
+          "sistemler.",
         ],
         paragraph:
-          "Orta ölçekli operasyonlar için pratik otomasyon — siparişler, belgeler, onaylar, iletişim. Yığınınızı yeniden kurmak yok, yapay zeka tiyatrosu yok, tedarikçiye bağımlılık yok.",
+          "Orta ölçekli operasyonlar için pratik otomasyon — siparişler, belgeler, onaylar, iletişim. Mevcut sisteminizi yeniden kurmak gerekmeden — sürecinize entegre olan otomasyon.",
         primaryCta: "Görüşme ayarla",
         secondaryCta: "Nasıl çalışıyoruz",
         stackLabel: "Güvenilen yığın",
@@ -82,7 +82,7 @@ export const content: Content = {
       description:
         "Birçok işletme hâlâ manuel süreçlere, birbirinden kopuk araçlara ve elektronik tablo tabanlı takip sistemlerine güveniyor. OpSolid, araçlarınızı birbirine bağlayan, iş akışlarınızı düzenleyen ve ekipleri yavaşlatan operasyonel yükü azaltan otomasyon sistemleri tasarlar ve geliştirir.",
       points: [
-        "n8n, Make ve özel entegrasyonlarla tekrarlayan iş akışlarını otomatize edin",
+        "Tekrarlayan iş akışlarını özel olarak geliştirilmiş otomasyonlarla ortadan kaldırın",
         "CRM, ERP, veritabanları ve iletişim araçlarını birleşik sistemlere bağlayın",
         "Ekibiniz için özel panolar ve dahili araçlar geliştirin",
         "Pratik değer yaratan alanlara yapay zeka destekli süreçler ekleyin",
@@ -96,7 +96,7 @@ export const content: Content = {
         {
           title: "İş Akışı Otomasyonu",
           description:
-            "Manuel adımların yerini alan otomatik iş akışları — veri girişinden onaylara, bildirimlerden raporlamaya. n8n, Make ve özel entegrasyonlarla geliştirilir.",
+            "Manuel adımların yerini alan otomatik iş akışları — veri girişinden onaylara, bildirimlerden raporlamaya. API entegrasyonları ve özel iş mantığı ile geliştirilir.",
           icon: "workflow",
         },
         {
@@ -200,7 +200,7 @@ export const content: Content = {
       items: [
         { name: "WhatsApp", icon: "messageCircle" },
         { name: "Telegram", icon: "send" },
-        { name: "n8n", icon: "workflow" },
+        { name: "Özel İş Akışları", icon: "workflow" },
         { name: "Shopify", icon: "shoppingBag" },
         { name: "CRM Sistemleri", icon: "users" },
         { name: "ERP Sistemleri", icon: "database" },
@@ -208,8 +208,8 @@ export const content: Content = {
         { name: "REST API'ler", icon: "code" },
         { name: "Google Workspace", icon: "cloud" },
         { name: "Veritabanları", icon: "hardDrive" },
-        { name: "Zapier", icon: "zap" },
-        { name: "Make", icon: "settings" },
+        { name: "Webhooks", icon: "zap" },
+        { name: "Message Queues", icon: "settings" },
       ],
     },
 
@@ -279,29 +279,29 @@ export const content: Content = {
     },
 
     toolsShowcase: {
-      label: "Kullanılan Araçlar",
-      headline: "OpSolid'in çalıştığı otomasyon platformları ve yapay zeka araçları",
+      label: "Yapı Taşları",
+      headline: "OpSolid'in otomasyonda kullandığı yapı taşları",
       description:
-        "OpSolid, operasyonlarınıza uygun sistemler geliştirmek için güvenilir, kanıtlanmış otomasyon platformları ve pratik yapay zeka araçları kullanır — her kullanım senaryosu için doğru aracı seçerek.",
+        "Her proje özel bir sistem olarak teslim edilir — operasyonlarınıza uygun üretim düzeyinde mühendislik katmanlarından kurulur; hazır paket kutusu değil, ihtiyaca göre mimari seçim.",
       tools: [
         {
-          name: "n8n",
+          name: "Custom Workflow Engine",
           description:
-            "Karmaşık otomasyonlar için kendi sunucunuzda barındırılan iş akışı motoru. Webhook tetikleyicileri, koşullu mantık ve tam veri egemenliği.",
+            "Karmaşık otomasyonlar için özel olarak geliştirilmiş iş akışı motorları. Webhook tetikleyicileri, koşullu mantık, yeniden denemeler ve tam veri egemenliği — kapalı kutu yok.",
           techFeatures: [
-            "Kendi Sunucunuzda",
-            "500+ Entegrasyon",
+            "Self-Hosted",
+            "Açık Mimari",
             "Webhook Tetikleyiciler",
             "Hata Yönetimi",
             "Veri Egemenliği",
           ],
         },
         {
-          name: "Make",
+          name: "API Orchestration",
           description:
-            "Çok adımlı veri yönlendirme için görsel senaryo oluşturucu. API bağlantıları, hata dallanması ve otomatik veri dönüşümleri.",
+            "REST API, GraphQL ve mesaj kuyrukları üzerinden çok adımlı orkestrasyon. Üretim yükleri için yerleşik dönüşüm, dallanma ve hata kurtarma.",
           techFeatures: [
-            "Görsel Oluşturucu",
+            "REST · GraphQL",
             "Veri Yönlendirme",
             "API Modülleri",
             "Hata Dallanması",
@@ -309,27 +309,27 @@ export const content: Content = {
           ],
         },
         {
-          name: "Zapier",
+          name: "AI Layer",
           description:
-            "6.000'den fazla uygulamayı çok adımlı otomasyonlarla hızlıca bağlayın. Koşullu yollar, zamanlanmış tetikleyiciler ve filtreleme.",
+            "Pratik yapay zeka bileşenleri: sınıflandırma, çıkarım, ses ve sohbet ajanları. Denetlenebilir model çağrıları, yapılandırılmış çıktı ve insan onaylı kontrol noktaları.",
           techFeatures: [
-            "6.000+ Uygulama",
-            "Çok Adımlı",
-            "Koşullu Mantık",
-            "Zamanlayıcılar",
-            "Filtreler",
-          ],
-        },
-        {
-          name: "Yapay Zeka Araçları",
-          description:
-            "Ses, sohbet, belge işleme ve karar destek için pratik yapay zeka uygulamaları. Güvenilir modellerle ve yapılandırılmış iş akışlarıyla geliştirilir.",
-          techFeatures: [
-            "Sesli Asistanlar",
-            "Chatbot'lar",
+            "Ses Ajanları",
             "Belge Yapay Zekası",
             "Sınıflandırma",
             "Yapılandırılmış Çıktı",
+            "Denetim Logları",
+          ],
+        },
+        {
+          name: "Self-Hosted Stack",
+          description:
+            "Kendi altyapınızda veya AB'de barındırılan ortamlarda tam dağıtım — Postgres, kuyruklar, gözlemlenebilirlik. Çıkış her zaman iki hafta uzakta.",
+          techFeatures: [
+            "Postgres",
+            "Message Queues",
+            "Gözlemlenebilirlik",
+            "AB'de Barındırma",
+            "Kaynak Kod Sizin",
           ],
         },
       ],
@@ -337,12 +337,12 @@ export const content: Content = {
 
     trustStrip: {
       items: [
-        "Almanya'da kurulmuş",
-        "GDPR-yerli",
-        "n8n · Make · AI destekli",
-        "Tedarikçi kilidi yok",
-        "ISO 27001-uyumlu",
-        "EN · DE · TR",
+        "EU jurisdiction",
+        "Hosted in Frankfurt",
+        "DE · EN · TR",
+        "API-first entegrasyon",
+        "Self-hosted ready",
+        "Pilot · Q2 '26",
       ],
     },
 
@@ -356,7 +356,7 @@ export const content: Content = {
           icon: "workflow",
           title: "İş akışı otomasyonu",
           description:
-            "Tekrarlayan, kural tabanlı işler için uçtan uca otomasyon — n8n, Make ve özel entegrasyonlarla. Düzgün hata yönetimi, kırılgan yapıştırıcı kod yok.",
+            "Tekrarlayan, kural tabanlı işler için uçtan uca otomasyon — özel entegrasyonlar, sağlam hata yönetimi ve izleme ile.",
         },
         {
           icon: "plug",
@@ -386,14 +386,14 @@ export const content: Content = {
           icon: "shield",
           title: "Avrupa'da barındırma",
           description:
-            "Self-hosted veya Hetzner / IONOS Frankfurt üzerinde deploy. GDPR-yerli. İstemediğiniz sürece ABD alt işleyen yok.",
+            "Self-hosted veya bulut, EU altyapısında. İstemediğiniz sürece ABD alt işleyen yok.",
         },
       ],
     },
 
     howItWorks: {
       label: "Süreç",
-      headline: "Üç adım. Tedarikçi kilidi yok. Gizem yok.",
+      headline: "Süreç üç adımda işliyor.",
       steps: [
         {
           title: "Keşfet",
@@ -403,7 +403,7 @@ export const content: Content = {
         {
           title: "Tasarla & kur",
           description:
-            "Durumunuza uygun stack'i seçeriz (n8n, Make, özel kod veya AI) — sonra her adımda net güncellemelerle iteratif kurup test edip deploy ederiz.",
+            "Süreçlerinize uygun mimariyi tasarlar, özel kodla geliştirip teslim ederiz — her adımda net güncellemelerle iteratif şekilde.",
         },
         {
           title: "İşlet & geliştir",
@@ -415,7 +415,7 @@ export const content: Content = {
 
     whoUses: {
       label: "Kimlerle çalışıyoruz",
-      headline: "Operasyonları manuel kalmaya tahammülü olmayan ekipler.",
+      headline: "Operasyonlarını ölçeklendirmek isteyen ekipler.",
       items: [
         {
           title: "Otel & hizmet",
@@ -438,7 +438,7 @@ export const content: Content = {
         {
           title: "Operasyon ekipleri",
           description:
-            "Daha çok tablo yerine güvenilir dahili araçlar, onay iş akışları ve panolara ihtiyaç duyan operasyon liderleri.",
+            "Daha fazla tablo yerine güvenilir dahili araçlar, onay iş akışları ve panolar isteyen operasyon liderleri.",
           icon: "freelancer",
         },
       ],
@@ -455,7 +455,7 @@ export const content: Content = {
           priceLabel: "Proje bazlı",
           priceCadence: "tanışma görüşmesiyle başlar",
           bullets: [
-            "İş akışı otomasyonu (n8n, Make, özel)",
+            "Özel iş akışı otomasyonu",
             "CRM, ERP, API'ler üzerinde sistem entegrasyonu",
             "Dahili araçlar, admin panelleri, dashboardlar",
             "AI destekli iş akışları ve iletişim",
@@ -472,7 +472,7 @@ export const content: Content = {
             "Kutasia — çok sektörlü müşteri platformu",
             "Dijital Kartvizit — link, QR, opsiyonel NFC",
             "Dijital Resepsiyon — hizmet işletmeleri için AI resepsiyon",
-            "Hepsi GDPR-yerli · Almanya'da barındırılır",
+            "Tüm ürünler doğrudan kullanıma hazır",
           ],
           ctaLabel: "Tüm ürünleri gör",
           ctaHref: "/products",
@@ -482,37 +482,37 @@ export const content: Content = {
     },
 
     testimonials: {
-      label: "Operasyon liderlerinden notlar",
+      label: "Saha notları",
       headline: "Ekipler OpSolid ile çalıştıktan sonra neyi fark ediyor.",
       items: [
         {
           quote:
-            "Sipariş verilerini artık dört sistem arasında kopyalamıyoruz. Her sabah iki saat süren iş artık kimse laptopu açmadan önce tamamlanıyor.",
+            "Sipariş verilerini artık dört sistem arasında kopyalamıyoruz. Süreç artık herkes işe başlamadan önce otomatik tamamlanıyor.",
           name: "Lena Richter",
           role: "Operasyon Direktörü",
-          company: "Berlinli perakende grubu",
+          company: "Orta ölçekli perakende grubu",
         },
         {
           quote:
-            "OpSolid bize bir platform satmaya çalışmadı. Gerçek sürecimizi haritalandırdılar, sıkıcı kısımları otomatikleştirdiler ve tam dokümantasyonu teslim ettiler.",
+            "OpSolid bize bir platform satmaya çalışmadı. Gerçek sürecimizi haritalandırdılar, tekrarlayan kısımları otomatikleştirdiler ve tam dokümantasyonu teslim ettiler.",
           name: "Marco Weber",
           role: "COO",
-          company: "Münih sanayi grubu",
+          company: "Sanayi grubu, Almanya",
         },
         {
           quote:
-            "Bütün entegrasyon katmanı self-hosted. ABD alt işleyen yok. Legal tek toplantıda onay verdi — bu tek başına değerdi.",
+            "Bütün entegrasyon katmanı self-hosted. ABD alt işleyen yok. Legal tek toplantıda onay verdi.",
           name: "Sarah Klein",
           role: "BT Direktörü",
-          company: "Hamburg hizmet firması",
+          company: "Hizmet firması",
         },
       ],
     },
 
     finalCta: {
-      eyebrow: "HAZIR MISINIZ?",
+      eyebrow: "BAŞLAYALIM",
       headline:
-        "Gerçekten neyin otomatikleştirilebileceğine bakalım.",
+        "Süreçlerinizi birlikte inceleyelim.",
       description:
         "Ücretsiz tanışma görüşmesi planlayın. Otomasyonun nerede kazandırdığını — ve dürüstçe nerede kazandırmadığını — birlikte haritalayalım.",
       primaryCtaLabel: "Tanışma görüşmesi planla",
@@ -532,7 +532,7 @@ export const content: Content = {
 
     agentShowcase: {
       eyebrow: "AI AJANLARI",
-      heading: "Telefonu gerçekten açan ajanlar",
+      heading: "Telefon, sohbet ve takvim için yapay zekâ ajanları",
       paragraph:
         "Telefon hattınızda ses, sitenizde sohbet, takviminizde rezervasyon — gerçek, üretime hazır yığınlar üzerine kurulu.",
       items: [
@@ -574,7 +574,7 @@ export const content: Content = {
       {
         title: "İş Akışı Otomasyonu",
         description:
-          "n8n, Make, özel iş akışları ve API orkestrasyonu kullanarak kuruluşunuz genelindeki tekrarlayan, kural tabanlı görevleri otomatize edin.",
+          "Özel iş akışları ve API orkestrasyonu kullanarak kuruluşunuz genelindeki tekrarlayan, kural tabanlı görevleri otomatize edin.",
         problems: [
           "Veri girişi ve sistemler arası kopyala-yapıştır işlerine harcanan saatler",
           "Departmanlar arası manuel aktarımlardan kaynaklanan hatalar",
@@ -787,7 +787,7 @@ export const content: Content = {
       headline:
         "Daha az manuel iş isteyen işletmeler için pratik otomasyon sistemleri",
       description:
-        "Almanya merkezli. Manuel, tekrarlayan operasyonel işlerin güvenilir otomatik sistemlerle değiştirilmesine odaklanır.",
+        "Manuel, tekrarlayan operasyonel işlerin güvenilir otomatik sistemlerle değiştirilmesine odaklanır.",
     },
     story: {
       headline: "OpSolid neden var",
@@ -826,11 +826,11 @@ export const content: Content = {
       title: "Kurucu & Sistem Mimarı",
       education: "",
       description:
-        "Almanya merkezli bağımsız otomasyon uzmanı. İş operasyonları için pratik otomasyon sistemleri, iş akışı entegrasyonları ve yapay zeka destekli süreçlerin tasarımı ve geliştirilmesine odaklanır.",
+        "Bağımsız otomasyon uzmanı. İş operasyonları için pratik otomasyon sistemleri, iş akışı entegrasyonları ve yapay zeka destekli süreçlerin tasarımı ve geliştirilmesine odaklanır.",
       expertiseLabel: "",
       expertise: [],
       footnote:
-        "Almanya merkezli. Avrupa genelinde ve uluslararası projelere açıktır.",
+        "Avrupa genelinde ve uluslararası projelere açıktır.",
     },
     cta: {
       headline: "Birlikte faydalı bir şeyler geliştirelim",
@@ -872,7 +872,7 @@ export const content: Content = {
       email: "hello@opsolid.de",
       response: "Tipik yanıt süresi: 1-2 iş günü.",
       location:
-        "Almanya merkezli. Avrupa genelinde ve uluslararası projelere açıktır.",
+        "Avrupa genelinde ve uluslararası projelere açıktır.",
     },
   },
 
@@ -1023,10 +1023,10 @@ export const content: Content = {
     },
     posts: [
       {
-        slug: "why-n8n-is-the-future-of-workflow-automation",
-        title: "n8n Neden İş Akışı Otomasyonunun Geleceği",
+        slug: "workflow-automation-fundamentals",
+        title: "İş Akışı Otomasyonu: Uygulamada Gerçekten Ne Önemli",
         excerpt:
-          "n8n'in, verileri üzerinde tam kontrol isteyen işletmeler için neden güçlü ve kendi sunucusunda barındırılan iş akışı otomasyonu platformu haline geldiğini keşfedin.",
+          "Bir iş akışı otomasyonunu üretimde ayakta tutan şey neyse onlara odaklanan bir inceleme — hata yönetimi, veri egemenliği, izlenebilirlik ve çıkış maliyeti, seçilen motordan bağımsız olarak.",
         category: "automation",
         date: "2026-03-15",
         readTime: "6",
@@ -1059,11 +1059,11 @@ export const content: Content = {
         readTime: "7",
       },
       {
-        slug: "make-vs-zapier-vs-n8n-comparison",
+        slug: "choosing-the-right-automation-architecture",
         title:
-          "Make vs. Zapier vs. n8n: Doğru Otomasyon Platformunu Seçmek",
+          "İşletmeniz İçin Doğru Otomasyon Mimarisini Seçmek",
         excerpt:
-          "En popüler üç otomasyon platformunun ayrıntılı karşılaştırması — özellikler, fiyatlandırma, esneklik ve her birinin ne zaman kullanılacağı.",
+          "Noktadan noktaya entegrasyonlar, özel orkestrasyon katmanları ve hibrit modeller arasında nasıl seçim yapılır — hacme, uyumluluğa ve ekip büyüklüğüne göre; tedarikçi sunumuna göre değil.",
         category: "automation",
         date: "2026-02-12",
         readTime: "10",
@@ -1109,13 +1109,13 @@ export const content: Content = {
       {
         question: "Hangi araçlar ve platformlar kullanılıyor?",
         answer:
-          "Ana otomasyon platformu n8n'dir, uygun olduğunda Make ve Zapier ile desteklenir. Özel entegrasyonlar API'ler, veritabanları ve bulut hizmetleri kullanılarak geliştirilir. Yapay zeka destekli iş akışları için güvenilir temel modeller ve yapılandırılmış yaklaşımlar kullanılır. Her kullanım senaryosu için doğru araç seçilir — tek tip yaklaşım asla uygulanmaz.",
+          "Her proje özel bir sistem olarak teslim edilir; temeli REST API'ler, mesaj kuyrukları, Postgres ve webhook'lardan kurulur; AI bileşenleri ise değer kattığı yerlerde eklenir. Mimari her kullanım senaryosu için ayrı seçilir — tek tip bir araç kutusu kullanılmaz.",
         category: "technical",
       },
       {
-        question: "n8n nedir ve neden tercih edilir?",
+        question: "Neden hazır bir SaaS yerine özel geliştirme?",
         answer:
-          "n8n, kendi sunucunuzda barındırılabilen, verileriniz ve iş akışlarınız üzerinde tam kontrol sağlayan açık kaynaklı bir iş akışı otomasyon platformudur. Esnek, yüzlerce entegrasyonu destekler ve gerektiğinde özel kod yazılmasına olanak tanır. İş otomasyonu için güç, esneklik ve veri egemenliği arasında güçlü bir denge sunar.",
+          "Özel olarak geliştirilmiş sistemler verileriniz, iş akışlarınız ve maliyet eğriniz üzerinde tam kontrol sağlar. Her çalıştırma başına ücret yok, tedarikçi kilidi yok, kapalı fiyat katmanları yok. Mimari, süreçlerinize göre tasarlanır — ve kaynak kod sizindir.",
         category: "technical",
       },
       {
@@ -1201,7 +1201,7 @@ export const content: Content = {
         "Retell AI",
         "Vapi",
         "Cal.com",
-        "n8n",
+        "Custom Workflows",
         "Supabase",
         "Meta Business",
         "HubSpot",
@@ -1246,7 +1246,7 @@ export const content: Content = {
         icon: "messageCircle",
         startingPrice: "€1.800 kurulum + €99/ay'dan başlar",
         category: "Müşteriye yönelik",
-        stack: "OpenAI · n8n · Supabase · HubSpot",
+        stack: "OpenAI · Custom Workflows · Supabase · HubSpot",
       },
       {
         name: "WhatsApp Business Ajanı",
@@ -1272,20 +1272,20 @@ export const content: Content = {
         icon: "calendarClock",
         startingPrice: "€800 kurulum + €49/ay'dan başlar",
         category: "Dahili operasyon",
-        stack: "Cal.com · Retell · n8n · Google Calendar",
+        stack: "Cal.com · Retell · Custom Workflows · Google Calendar",
       },
       {
         name: "E-posta Otomasyon Ajanı",
         tagline: "Dış iletişim · triyaj · yanıt taslağı",
         description:
-          "AI e-posta iş akışları — kişiselleştirilmiş varyantlarla soğuk dış iletişim, gelen kutusu triyajı, onay için otomatik taslaklar. Instantly / AgentMail / özel n8n akışları üzerine kurulu. Deliverability ısıtılmış, GDPR uyumlu.",
+          "AI e-posta iş akışları — kişiselleştirilmiş varyantlarla soğuk dış iletişim, gelen kutusu triyajı, onay için otomatik taslaklar. Instantly, AgentMail ve özel orkestrasyon akışları üzerine kurulu. Deliverability ısıtılmış, GDPR uyumlu.",
         status: "Canlı",
         href: "/products/email-agent",
         externalUrl: "",
         icon: "mail",
         startingPrice: "€99 – €499/ay'dan başlar",
         category: "İletişim",
-        stack: "Instantly · AgentMail · n8n · OpenAI",
+        stack: "Instantly · AgentMail · Custom Workflows · OpenAI",
       },
       {
         name: "Lead Nitelendirme Ajanı",
@@ -1298,7 +1298,7 @@ export const content: Content = {
         icon: "userCheck",
         startingPrice: "€2.200 kurulum + €199/ay'dan başlar",
         category: "Müşteriye yönelik",
-        stack: "Retell · HubSpot · n8n · Supabase",
+        stack: "Retell · HubSpot · Custom Workflows · Supabase",
       },
       {
         name: "Dijital Resepsiyon",
@@ -1830,7 +1830,7 @@ export const content: Content = {
           { name: "Vapi", role: "Alternatif ses yığını (kurumsal)" },
           { name: "Cal.com", role: "Takvim rezervasyon katmanı" },
           { name: "Supabase", role: "Çağrı kayıtları + bağlam deposu" },
-          { name: "n8n", role: "CRM senkronu + çağrı sonrası iş akışları" },
+          { name: "Custom Workflows", role: "CRM senkronu + çağrı sonrası orkestrasyon" },
         ],
       },
       pricing: {
@@ -1927,7 +1927,7 @@ export const content: Content = {
           "Web sitenizde, WhatsApp'ta ve Telegram'da aynı anda yaşayan, bağlam farkındalıklı bir chatbot — aynı beyin, üç ağız. Leadleri niteler, dokümanlarınızdan gerçek soruları yanıtlar ve konuşmaları HubSpot'a senkronlar.",
         primaryCta: "Demo planla",
         secondaryCta: "Nasıl çalışır",
-        tags: "OPENAI · n8n · SUPABASE · ÇOK KANALLI",
+        tags: "OPENAI · CUSTOM · SUPABASE · ÇOK KANALLI",
         startingPrice: "€1.800 kurulum + €99/ay'dan başlar",
       },
       features: {
@@ -1992,7 +1992,7 @@ export const content: Content = {
         items: [
           { name: "OpenAI / Claude", role: "LLM çekirdeği (değiştirilebilir)" },
           { name: "Supabase pgvector", role: "RAG embeddings + hafıza" },
-          { name: "n8n", role: "Kanal orkestrasyonu + CRM senkronu" },
+          { name: "Custom Workflows", role: "Kanal orkestrasyonu + CRM senkronu" },
           { name: "Meta Business Cloud", role: "Resmi WhatsApp BSP" },
           { name: "HubSpot / Pipedrive", role: "Lead senkron hedefi" },
         ],
@@ -2152,7 +2152,7 @@ export const content: Content = {
         items: [
           { name: "Meta Business Cloud API", role: "Resmi WhatsApp kanalı" },
           { name: "360dialog / Twilio / AiSensy", role: "Doğrulanmış BSP katmanı" },
-          { name: "n8n", role: "İş akışı orkestrasyonu" },
+          { name: "Custom Workflows", role: "İş akışı orkestrasyonu" },
           { name: "Stripe", role: "Ödeme linki tetikleri" },
           { name: "Shopify / WooCommerce", role: "Sipariş + kargo doğru kaynağı" },
         ],
@@ -2247,7 +2247,7 @@ export const content: Content = {
           "Tek bir işe adanmış AI ajanı: rezervasyon yapmak, yeniden planlamak, hatırlatmak. Ses, sohbet veya form üzerinden çalışır — Google Calendar, Outlook veya Cal.com ile çift yönlü senkron. Sıfır çifte rezervasyon, daha az randevuya gelmeme.",
         primaryCta: "Demo planla",
         secondaryCta: "Nasıl çalışır",
-        tags: "CAL.COM · RETELL · N8N · GOOGLE CALENDAR",
+        tags: "CAL.COM · RETELL · CUSTOM · GOOGLE CALENDAR",
         startingPrice: "€800 kurulum + €49/ay'dan başlar",
       },
       features: {
@@ -2312,7 +2312,7 @@ export const content: Content = {
         items: [
           { name: "Cal.com", role: "Rezervasyon motoru + müsaitlik" },
           { name: "Retell AI", role: "Ses alımı (opsiyonel)" },
-          { name: "n8n", role: "Hatırlatma + takip iş akışları" },
+          { name: "Custom Workflows", role: "Hatırlatma + takip orkestrasyonu" },
           { name: "Google Calendar / Outlook", role: "Doğru kaynak senkronu" },
           { name: "Twilio", role: "SMS hatırlatmaları" },
         ],
@@ -2404,10 +2404,10 @@ export const content: Content = {
           "Onaylı yanıt taslakları.",
         ],
         paragraph:
-          "Gerçekten yayına çıkan AI e-posta iş akışları: kişiselleştirilmiş soğuk dış iletişim, gelen triyajı ve insan onayı için otomatik taslaklar. Instantly, AgentMail ve özel n8n akışları üzerine kurulu. Isıtılmış deliverability, GDPR uyumlu.",
+          "Gerçekten yayına çıkan AI e-posta iş akışları: kişiselleştirilmiş soğuk dış iletişim, gelen triyajı ve insan onayı için otomatik taslaklar. Instantly, AgentMail ve özel orkestrasyon akışları üzerine kurulu. Isıtılmış deliverability, GDPR uyumlu.",
         primaryCta: "Demo planla",
         secondaryCta: "Nasıl çalışır",
-        tags: "INSTANTLY · AGENTMAIL · n8n · OPENAI",
+        tags: "INSTANTLY · AGENTMAIL · CUSTOM · OPENAI",
         startingPrice: "€99 – €499/ay'dan başlar",
       },
       features: {
@@ -2472,7 +2472,7 @@ export const content: Content = {
         items: [
           { name: "Instantly", role: "Soğuk dış iletişim + ısıtma" },
           { name: "AgentMail", role: "Gelen triyaj + taslak" },
-          { name: "n8n", role: "Özel iş akışı tutkalı" },
+          { name: "Custom Workflows", role: "Özel iş akışı orkestrasyonu" },
           { name: "OpenAI / Claude", role: "Taslak + sınıflandırma" },
           { name: "HubSpot / Pipedrive", role: "CRM doğru kaynağı" },
         ],
@@ -2566,7 +2566,7 @@ export const content: Content = {
           "Gelen leadleri ses veya sohbet üzerinden niteleyen, ICP'nize göre skorlayan ve MQL'leri doğrudan HubSpot veya Pipedrive'da satışa yönlendiren bir konuşma ajanı. Tipik artış: %40 MQL-SQL dönüşümü.",
         primaryCta: "Demo planla",
         secondaryCta: "Nasıl çalışır",
-        tags: "RETELL · HUBSPOT · N8N · SKORLAMA",
+        tags: "RETELL · HUBSPOT · CUSTOM · SKORLAMA",
         startingPrice: "€2.200 kurulum + €199/ay'dan başlar",
       },
       features: {
@@ -2631,7 +2631,7 @@ export const content: Content = {
         items: [
           { name: "Retell AI", role: "Ses nitelendirme" },
           { name: "HubSpot / Pipedrive", role: "CRM + skorlama hedefi" },
-          { name: "n8n", role: "Yönlendirme + Slack/Cal.com teslimatı" },
+          { name: "Custom Workflows", role: "Yönlendirme + Slack/Cal.com teslimatı" },
           { name: "Supabase", role: "Konuşma kaydı + analitik" },
           { name: "Clearbit / Apollo (opsiyonel)", role: "Firmografik zenginleştirme" },
         ],
@@ -3107,7 +3107,7 @@ export const content: Content = {
           post: " yürüten otomasyon — tersi değil.",
         },
         lead:
-          "OpSolid, operasyonlarınızın zaten olduğunu varsaydığı sistemleri gerçekten kurar. Orta ölçekli ekipler için workflow otomasyonu, sistem entegrasyonu, dahili araçlar ve yapay zekâ destekli süreçler. Stack'inizi yeniden kurmak yok. Yapay zekâ tiyatrosu yok.",
+          "OpSolid, operasyonunuzun arka planında sessizce çalışan sistemleri kurar. Orta ölçekli ekipler için workflow otomasyonu, sistem entegrasyonu, dahili araçlar ve yapay zekâ destekli süreçler. Mevcut sisteminizi yeniden kurmadan, sürecinize entegre olur.",
         ctaPrimary: "Discovery görüşmesi ayarla",
         ctaSecondary: "OpSolid ne inşa eder",
         stats: [
@@ -3127,8 +3127,8 @@ export const content: Content = {
             icon: "workflow",
             title: "Workflow otomasyonu",
             body:
-              "Siparişler, dokümanlar, onaylar, iletişim. n8n, Make ve bunların yetersiz kaldığı yerde özel konnektörlerle kurulur — black-box SaaS üzerine değil.",
-            tag: "N8N · MAKE · CUSTOM",
+              "Siparişler, dokümanlar, onaylar, iletişim. Özel orkestrasyon ve bağlantılarla kurulur — black-box SaaS üzerine değil.",
+            tag: "API · WEBHOOKS · CUSTOM",
           },
           {
             icon: "plug",
@@ -3334,7 +3334,7 @@ export const content: Content = {
           { label: "LLM", value: "GPT-4o, Claude Sonnet veya gerekirse on-prem" },
           { label: "TTS", value: "ElevenLabs veya Cartesia · klonlanmış ses" },
           { label: "Telefon", value: "Twilio · Alman DID · GDPR DPA" },
-          { label: "Entegrasyonlar", value: "Cal.com, HubSpot, Pipedrive, SAP, n8n webhooks" },
+          { label: "Entegrasyonlar", value: "Cal.com, HubSpot, Pipedrive, SAP, özel webhooks" },
           { label: "Veri rezidansı", value: "EU-west · Frankfurt · US alt-işlemci yok" },
           { label: "Çıkış maliyeti", value: "İki hafta. Prompt, veri ve numaralar taşınabilir." },
         ],
@@ -3527,7 +3527,7 @@ export const content: Content = {
         headline:
           "En küçük dürüst otomasyon: bir işi hareket ettiren nedir, deste iyi görünen nedir.",
         lede:
-          "Günlüğün açılış yazısı. Taslak hazırlanıyor — 20 satırın altında bir n8n workflow'unun ERP değişiminden ölçülen ölçülerde nasıl iyi olduğu üzerine.",
+          "Günlüğün açılış yazısı. Taslak hazırlanıyor — 20 satırın altında odaklı bir iş akışının ERP değişimini anlamlı ölçütlerde nasıl geçtiği üzerine.",
         meta: "D. PIHA · PLANLANDI · 15 DK",
       },
       series: {

@@ -11,96 +11,103 @@ export function getAllSlugs(): string[] {
 // Full article content stored as HTML strings per locale
 // To add a new article: add the slug key with HTML content for each language
 const articles: Record<string, Record<string, string>> = {
-  "why-n8n-is-the-future-of-workflow-automation": {
-    en: `<p>Workflow automation has moved from a luxury to a necessity for growing businesses. Among the platforms leading this shift, <strong>n8n</strong> has emerged as a standout — offering the power of enterprise-grade automation with the flexibility that modern operations teams actually need.</p>
+  "workflow-automation-fundamentals": {
+    en: `<p>Workflow automation has moved from a luxury to a necessity for growing businesses. But the discussion is too often framed around which platform or tool to pick — when the real question is which engineering fundamentals make a workflow survive in production.</p>
 
-<h2>What Makes n8n Different</h2>
-<p>Unlike SaaS-only platforms like Zapier or Make, n8n can be <strong>self-hosted</strong>. This means your data never leaves your infrastructure — a critical requirement for European businesses operating under GDPR. With over 400 built-in integrations and the ability to create custom nodes, n8n handles everything from simple data syncs to complex multi-step orchestrations.</p>
-<p>The platform uses a visual workflow builder, but doesn't sacrifice power for simplicity. You can write custom JavaScript or Python within any workflow, call external APIs, and build conditional logic as complex as your operations require.</p>
+<h2>What Actually Matters in Production</h2>
+<p>Pretty UI builders and drag-and-drop editors make a demo look simple. What keeps a workflow running for three years is something else entirely: clean error handling, observability, data sovereignty, and an exit path that doesn't cost you half a year of engineering work.</p>
+<p>Below, the four engineering qualities every production workflow should satisfy — independent of which tool or engine you pick.</p>
 
-<h2>Why Businesses Are Switching to n8n</h2>
-<h3>1. Data Sovereignty</h3>
-<p>Self-hosting means complete control over where your data lives. For companies in Germany and the EU, this eliminates compliance headaches that come with sending operational data through US-based cloud platforms.</p>
-<h3>2. No Per-Task Pricing</h3>
-<p>Most automation platforms charge per execution or per task. n8n's self-hosted version has no execution limits — you pay for hosting infrastructure, not per workflow run. For businesses processing thousands of automations daily, this translates to significant cost savings.</p>
-<h3>3. Extensibility</h3>
-<p>Need to connect to a proprietary internal system? With n8n, you can build custom nodes or use HTTP request nodes to integrate with any API. There's no waiting for a vendor to add your integration.</p>
-<h3>4. Active Community and Rapid Development</h3>
-<p>With over 40,000 GitHub stars and a growing community, n8n releases new features and integrations weekly. The community-contributed node library expands the platform's reach far beyond what the core team builds.</p>
+<h2>1. Error Handling That Degrades Gracefully</h2>
+<p>Every external API fails. Every integration returns unexpected shapes. Every network call times out eventually. A production-ready workflow assumes this from the first line and builds retries, dead-letter queues, and human-readable alerts into the design. If the only error handling is "retry three times and log to console," the workflow will quietly lose data in ways you don't notice until a customer complains.</p>
 
-<h2>Real-World Use Cases</h2>
-<p>Here's how businesses are using n8n in production:</p>
+<h2>2. Data Sovereignty</h2>
+<p>Self-hosting means complete control over where your data lives. For companies in Germany and the EU, this eliminates compliance headaches that come with sending operational data through US-based cloud platforms. Self-hosting also removes the per-execution pricing trap: you pay for hosting infrastructure, not for each workflow run. For businesses processing thousands of automations daily, the difference compounds quickly.</p>
+
+<h2>3. Observability and Audit Trails</h2>
+<p>If you can't tell what the workflow did yesterday, you don't have a workflow — you have a black box. Execution logs, structured metrics, and audit trails are not optional add-ons; they are the minimum contract. A workflow should answer three questions any time you ask: what ran, what changed, and what failed. Everything else — dashboards, alerts, KPIs — is built on top of those three.</p>
+
+<h2>4. Exit Cost</h2>
+<p>Every workflow should come with an exit path. If leaving takes more than two weeks of engineering work, you are renting your operations from a vendor. Good automation puts the source, the data, and the orchestration in places you control — so migration is a schedule problem, not an existential one.</p>
+
+<h2>Real-World Patterns</h2>
+<p>Here is how these fundamentals show up in production automations:</p>
 <ul>
-<li><strong>E-commerce order processing:</strong> Automatically sync orders from Shopify, generate shipping labels, update inventory, and send customer notifications — all triggered by a single webhook.</li>
-<li><strong>Lead qualification:</strong> When a form submission comes in, n8n enriches the lead data, scores it based on custom criteria, updates the CRM, and routes qualified leads to the sales team via Slack or email.</li>
-<li><strong>Document processing:</strong> Extract data from incoming invoices using AI, validate against existing records, and push approved entries directly into the accounting system.</li>
-<li><strong>WhatsApp customer support:</strong> Route incoming WhatsApp messages through AI classification, auto-respond to common questions, and escalate complex issues to human agents.</li>
+<li><strong>E-commerce order processing:</strong> Automatically sync orders from Shopify, generate shipping labels, update inventory, and send customer notifications — all triggered by a single webhook, with dead-letter retries when the fulfillment system is down.</li>
+<li><strong>Lead qualification:</strong> When a form submission arrives, enrich the lead, score it against custom criteria, update the CRM, and route qualified leads via Slack or email — with the full scoring trace logged for later review.</li>
+<li><strong>Document processing:</strong> Extract data from incoming invoices using AI, validate against existing records, and push approved entries into accounting — with a human-in-the-loop step before anything over a configurable threshold.</li>
+<li><strong>WhatsApp customer support:</strong> Route incoming WhatsApp messages through AI classification, auto-respond to common questions, and escalate complex issues to human agents — with conversation state persisted so no customer gets a blank reply.</li>
 </ul>
 
 <h2>Getting Started</h2>
-<p>The fastest path to production with n8n:</p>
+<p>The fastest path from idea to production:</p>
 <ol>
 <li><strong>Start with a specific pain point</strong> — don't try to automate everything at once. Pick the process that costs the most time and has the clearest inputs and outputs.</li>
-<li><strong>Use n8n Cloud for prototyping</strong> — validate your workflow logic before investing in self-hosted infrastructure.</li>
-<li><strong>Move to self-hosted for production</strong> — once the workflow is proven, deploy on your own infrastructure for data sovereignty and unlimited executions.</li>
-<li><strong>Monitor and iterate</strong> — n8n provides execution logs and error handling. Use them to continuously improve reliability.</li>
+<li><strong>Prototype against real data</strong> — validate your workflow logic before investing in full production infrastructure.</li>
+<li><strong>Deploy on infrastructure you control</strong> — once the workflow is proven, run it where you own the logs, the database, and the schedule.</li>
+<li><strong>Monitor and iterate</strong> — use execution logs and error handling signals to continuously improve reliability.</li>
 </ol>
 
 <h2>The Bottom Line</h2>
-<p>n8n represents a fundamental shift in how businesses approach automation. It combines the visual simplicity of low-code platforms with the power and control that engineering teams demand. For European businesses especially, the self-hosting option makes it the most compliant and cost-effective choice on the market.</p>
-<p>The businesses that invest in automation infrastructure today will have a structural advantage over those that wait. n8n makes that investment accessible, flexible, and future-proof.</p>`,
+<p>Workflow automation is a compounding investment. Every hour saved is an hour reinvested in growth, strategy, or higher-value work. The businesses that win are the ones that treat automation as an engineering discipline — error handling, observability, sovereignty, exit cost — rather than a vendor choice.</p>
+<p>Pick the stack that fits your operations. Measure it in weeks-to-production and weeks-to-exit. The tool matters less than the engineering around it.</p>`,
 
-    de: `<p>Workflow-Automatisierung hat sich von einem Luxus zu einer Notwendigkeit für wachsende Unternehmen entwickelt. Unter den Plattformen, die diesen Wandel anführen, hat sich <strong>n8n</strong> als herausragend erwiesen — mit der Leistungsfähigkeit einer Enterprise-Automatisierung und der Flexibilität, die moderne Operations-Teams tatsächlich benötigen.</p>
+    de: `<p>Workflow-Automatisierung hat sich von einem Luxus zu einer Notwendigkeit für wachsende Unternehmen entwickelt. Doch die Diskussion dreht sich zu oft darum, welche Plattform man wählt — während die eigentliche Frage lautet, welche Engineering-Grundlagen eine Automatisierung im Produktivbetrieb überleben lassen.</p>
 
-<h2>Was n8n anders macht</h2>
-<p>Anders als reine SaaS-Plattformen wie Zapier oder Make kann n8n <strong>selbst gehostet</strong> werden. Das bedeutet, dass Ihre Daten Ihre Infrastruktur nie verlassen — eine kritische Anforderung für europäische Unternehmen unter der DSGVO. Mit über 400 eingebauten Integrationen und der Möglichkeit, eigene Nodes zu erstellen, bewältigt n8n alles von einfachen Datensynchronisationen bis hin zu komplexen mehrstufigen Orchestrierungen.</p>
+<h2>Was in der Praxis wirklich zählt</h2>
+<p>Hübsche Builder und Drag-and-Drop-Editoren lassen eine Demo einfach wirken. Was einen Workflow drei Jahre lang am Laufen hält, ist etwas anderes: saubere Fehlerbehandlung, Observability, Datenhoheit und ein Ausstiegspfad, der nicht ein halbes Jahr Engineering-Arbeit kostet.</p>
+<p>Unten die vier Qualitäten, die jede produktive Automatisierung erfüllen sollte — unabhängig von der gewählten Engine.</p>
 
-<h2>Warum Unternehmen zu n8n wechseln</h2>
-<h3>1. Datensouveränität</h3>
-<p>Self-Hosting bedeutet vollständige Kontrolle darüber, wo Ihre Daten liegen. Für Unternehmen in Deutschland und der EU eliminiert dies Compliance-Probleme, die entstehen, wenn Betriebsdaten über US-basierte Cloud-Plattformen gesendet werden.</p>
-<h3>2. Keine Abrechnung pro Aufgabe</h3>
-<p>Die meisten Automatisierungsplattformen berechnen pro Ausführung. Die selbst gehostete Version von n8n hat keine Ausführungslimits — Sie zahlen für Hosting-Infrastruktur, nicht pro Workflow-Ausführung.</p>
-<h3>3. Erweiterbarkeit</h3>
-<p>Müssen Sie ein proprietäres internes System anbinden? Mit n8n können Sie eigene Nodes bauen oder HTTP-Request-Nodes verwenden, um sich mit jeder API zu integrieren.</p>
-<h3>4. Aktive Community</h3>
-<p>Mit über 40.000 GitHub-Stars und einer wachsenden Community veröffentlicht n8n wöchentlich neue Features und Integrationen.</p>
+<h2>1. Fehlerbehandlung mit sanftem Degradieren</h2>
+<p>Jede externe API fällt aus. Jede Integration liefert irgendwann unerwartete Formen. Jeder Netzwerk-Call läuft irgendwann in ein Timeout. Ein produktionsreifer Workflow nimmt das ab Zeile eins an und baut Retries, Dead-Letter-Queues und lesbare Alerts in das Design ein.</p>
+
+<h2>2. Datenhoheit</h2>
+<p>Self-Hosting bedeutet vollständige Kontrolle darüber, wo Ihre Daten liegen. Für Unternehmen in Deutschland und der EU eliminiert dies Compliance-Probleme, die entstehen, wenn Betriebsdaten über US-basierte Cloud-Plattformen gesendet werden. Self-Hosting umgeht zudem die Pro-Execution-Preisfalle: Sie zahlen für Hosting-Infrastruktur, nicht pro Workflow-Ausführung.</p>
+
+<h2>3. Observability und Audit-Trails</h2>
+<p>Wenn Sie nicht sagen können, was der Workflow gestern gemacht hat, haben Sie keinen Workflow — Sie haben eine Blackbox. Execution-Logs, strukturierte Metriken und Audit-Trails sind kein Optionspaket. Ein Workflow sollte jederzeit drei Fragen beantworten können: was lief, was änderte sich, was schlug fehl.</p>
+
+<h2>4. Ausstiegskosten</h2>
+<p>Jeder Workflow sollte einen Ausstiegspfad mitbringen. Wenn das Wechseln mehr als zwei Wochen Engineering-Arbeit kostet, mieten Sie Ihre Operations bei einem Anbieter. Gute Automatisierung legt Quellcode, Daten und Orchestrierung an Orte, die Sie kontrollieren.</p>
 
 <h2>Praxisbeispiele</h2>
 <ul>
-<li><strong>E-Commerce-Bestellverarbeitung:</strong> Bestellungen automatisch aus Shopify synchronisieren, Versandlabels generieren, Bestand aktualisieren und Kundenbenachrichtigungen senden.</li>
-<li><strong>Lead-Qualifizierung:</strong> Eingehende Formulare anreichern, nach individuellen Kriterien bewerten, CRM aktualisieren und qualifizierte Leads ans Vertriebsteam weiterleiten.</li>
-<li><strong>Dokumentenverarbeitung:</strong> Daten aus Rechnungen per KI extrahieren, gegen bestehende Datensätze validieren und genehmigte Einträge direkt ins Buchhaltungssystem übertragen.</li>
-<li><strong>WhatsApp-Kundensupport:</strong> Eingehende WhatsApp-Nachrichten per KI klassifizieren, häufige Fragen automatisch beantworten und komplexe Anliegen an menschliche Agenten eskalieren.</li>
+<li><strong>E-Commerce-Bestellverarbeitung:</strong> Bestellungen aus Shopify synchronisieren, Versandlabels generieren, Bestand aktualisieren, Kundenbenachrichtigungen senden — mit Dead-Letter-Retries, wenn das Fulfillment-System ausfällt.</li>
+<li><strong>Lead-Qualifizierung:</strong> Eingehende Formulare anreichern, nach individuellen Kriterien bewerten, CRM aktualisieren, qualifizierte Leads ans Vertriebsteam weiterleiten.</li>
+<li><strong>Dokumentenverarbeitung:</strong> Daten aus Rechnungen per KI extrahieren, gegen bestehende Datensätze validieren, genehmigte Einträge ins Buchhaltungssystem übertragen — mit Human-in-the-Loop bei Schwellenwerten.</li>
+<li><strong>WhatsApp-Kundensupport:</strong> Eingehende Nachrichten per KI klassifizieren, häufige Fragen automatisch beantworten, komplexe Anliegen an menschliche Agenten eskalieren — mit persistenter Gesprächshistorie.</li>
 </ul>
 
 <h2>Fazit</h2>
-<p>n8n steht für einen fundamentalen Wandel in der Automatisierung. Es verbindet die visuelle Einfachheit von Low-Code-Plattformen mit der Leistung und Kontrolle, die Engineering-Teams fordern. Für europäische Unternehmen ist die Self-Hosting-Option die konformste und kosteneffektivste Wahl am Markt.</p>`,
+<p>Workflow-Automatisierung ist eine kumulierende Investition. Wer sie als Engineering-Disziplin behandelt — Fehlerbehandlung, Observability, Souveränität, Ausstiegskosten — gewinnt. Der Tool-Name ist zweitrangig; das Engineering drumherum entscheidet.</p>`,
 
-    tr: `<p>İş akışı otomasyonu, büyüyen işletmeler için bir lüksten zorunluluğa dönüştü. Bu dönüşüme öncülük eden platformlar arasında <strong>n8n</strong>, kurumsal düzeyde otomasyon gücünü modern operasyon ekiplerinin gerçekten ihtiyaç duyduğu esneklikle birleştirerek öne çıktı.</p>
+    tr: `<p>İş akışı otomasyonu, büyüyen işletmeler için bir lüksten zorunluluğa dönüştü. Ancak tartışma çoğu zaman hangi platformu seçeceğiniz üzerine odaklanıyor — oysa asıl soru şu: bir iş akışını üretimde ayakta tutan mühendislik temelleri neler?</p>
 
-<h2>n8n'i Farklı Kılan Ne</h2>
-<p>Zapier veya Make gibi yalnızca SaaS platformlarının aksine, n8n <strong>kendi sunucunuzda barındırılabilir</strong>. Bu, verilerinizin altyapınızdan asla çıkmaması anlamına gelir — GDPR kapsamında faaliyet gösteren Avrupa işletmeleri için kritik bir gereklilik. 400'den fazla yerleşik entegrasyon ve özel node oluşturma yeteneğiyle n8n, basit veri senkronizasyonlarından karmaşık çok adımlı orkestrasyonlara kadar her şeyi yönetir.</p>
+<h2>Üretimde Gerçekten Ne Önemli</h2>
+<p>Şık arayüzler ve sürükle-bırak editörler bir demo'yu kolay gösterir. Bir iş akışını üç yıl boyunca ayakta tutan şey ise başka: temiz hata yönetimi, izlenebilirlik, veri egemenliği ve yarım yıl mühendislik işi gerektirmeyen bir çıkış yolu.</p>
 
-<h2>İşletmeler Neden n8n'e Geçiyor</h2>
-<h3>1. Veri Egemenliği</h3>
-<p>Kendi sunucunuzda barındırma, verilerinizin nerede olduğu üzerinde tam kontrol anlamına gelir. Almanya ve AB'deki şirketler için bu, operasyonel verilerin ABD merkezli bulut platformlarından geçirilmesiyle ortaya çıkan uyumluluk sorunlarını ortadan kaldırır.</p>
-<h3>2. Görev Başına Ücretlendirme Yok</h3>
-<p>Çoğu otomasyon platformu yürütme başına ücret alır. n8n'in kendi sunucunuzda barındırılan sürümünde yürütme limiti yoktur — hosting altyapısı için ödeme yaparsınız, iş akışı çalıştırma başına değil.</p>
-<h3>3. Genişletilebilirlik</h3>
-<p>Tescilli bir dahili sisteme bağlanmanız mı gerekiyor? n8n ile özel node'lar oluşturabilir veya herhangi bir API ile entegrasyon için HTTP istek node'ları kullanabilirsiniz.</p>
-<h3>4. Aktif Topluluk</h3>
-<p>40.000'den fazla GitHub yıldızı ve büyüyen bir toplulukla n8n, haftalık olarak yeni özellikler ve entegrasyonlar yayınlar.</p>
+<h2>1. Nazikçe Bozulan Hata Yönetimi</h2>
+<p>Her dış API çöker. Her entegrasyon bir gün beklenmedik biçim döner. Her ağ çağrısı bir noktada zaman aşımına uğrar. Üretime hazır bir iş akışı bunu ilk satırdan itibaren varsayar ve yeniden denemeler, dead-letter kuyrukları ve okunabilir uyarılar tasarlar.</p>
 
-<h2>Gerçek Dünya Kullanım Örnekleri</h2>
+<h2>2. Veri Egemenliği</h2>
+<p>Kendi sunucunuzda barındırma, verilerinizin nerede olduğu üzerinde tam kontrol anlamına gelir. Almanya ve AB'deki şirketler için bu, operasyonel verilerin ABD merkezli bulut platformlarından geçirilmesiyle ortaya çıkan uyumluluk sorunlarını ortadan kaldırır. Ayrıca her çalıştırma başına ücretlendirme tuzağını ortadan kaldırır.</p>
+
+<h2>3. İzlenebilirlik ve Denetim Kayıtları</h2>
+<p>İş akışının dün ne yaptığını söyleyemiyorsanız, elinizde iş akışı yok — kapalı bir kutu var. Çalıştırma logları, yapılandırılmış metrikler ve denetim kayıtları opsiyonel eklenti değildir; asgari sözleşmedir. Bir iş akışı her an üç soruyu yanıtlamalı: ne çalıştı, ne değişti, ne başarısız oldu.</p>
+
+<h2>4. Çıkış Maliyeti</h2>
+<p>Her iş akışı bir çıkış yolu ile birlikte gelmeli. Geçiş iki haftadan fazla mühendislik işi alıyorsa, operasyonunuzu bir tedarikçiden kiralıyorsunuz demektir. İyi otomasyon kaynak kodu, veriyi ve orkestrasyonu sizin kontrolünüzdeki yerlere koyar.</p>
+
+<h2>Gerçek Dünya Örnekleri</h2>
 <ul>
-<li><strong>E-ticaret sipariş işleme:</strong> Shopify'dan siparişleri otomatik senkronize edin, kargo etiketleri oluşturun, envanteri güncelleyin ve müşteri bildirimlerini gönderin.</li>
-<li><strong>Lead kalifikasyonu:</strong> Gelen form verilerini zenginleştirin, özel kriterlere göre puanlayın, CRM'i güncelleyin ve nitelikli lead'leri satış ekibine yönlendirin.</li>
-<li><strong>Belge işleme:</strong> Faturalardan yapay zeka ile veri çıkarın, mevcut kayıtlarla doğrulayın ve onaylı girişleri doğrudan muhasebe sistemine aktarın.</li>
-<li><strong>WhatsApp müşteri desteği:</strong> Gelen WhatsApp mesajlarını yapay zeka ile sınıflandırın, sık sorulan soruları otomatik yanıtlayın ve karmaşık sorunları insan temsilcilere yönlendirin.</li>
+<li><strong>E-ticaret sipariş işleme:</strong> Shopify'dan siparişleri senkronize edin, kargo etiketleri oluşturun, envanteri güncelleyin, müşteri bildirimlerini gönderin — fulfillment sistemi çöktüğünde dead-letter yeniden denemelerle.</li>
+<li><strong>Lead kalifikasyonu:</strong> Gelen form verilerini zenginleştirin, özel kriterlere göre puanlayın, CRM'i güncelleyin, nitelikli lead'leri satış ekibine yönlendirin.</li>
+<li><strong>Belge işleme:</strong> Faturalardan yapay zeka ile veri çıkarın, mevcut kayıtlarla doğrulayın, onaylı girişleri doğrudan muhasebe sistemine aktarın — eşiklerde insan onaylı adımla.</li>
+<li><strong>WhatsApp müşteri desteği:</strong> Gelen mesajları yapay zeka ile sınıflandırın, sık sorulan soruları otomatik yanıtlayın, karmaşık sorunları insan temsilcilere yönlendirin — konuşma geçmişi kalıcı tutularak.</li>
 </ul>
 
 <h2>Sonuç</h2>
-<p>n8n, işletmelerin otomasyona yaklaşım biçiminde temel bir değişimi temsil ediyor. Düşük kodlu platformların görsel basitliğini, mühendislik ekiplerinin talep ettiği güç ve kontrolle birleştiriyor. Özellikle Avrupa işletmeleri için, kendi sunucunuzda barındırma seçeneği pazardaki en uyumlu ve maliyet etkin seçim oluyor.</p>`,
+<p>İş akışı otomasyonu birikimli bir yatırımdır. Kazananlar, otomasyonu mühendislik disiplini olarak ele alanlar — hata yönetimi, izlenebilirlik, egemenlik, çıkış maliyeti. Aracın adı ikincildir; etrafındaki mühendislik belirleyicidir.</p>`,
   },
 
   "5-signs-your-business-needs-process-automation": {
@@ -190,7 +197,7 @@ const shortArticles: Record<string, Record<string, string>> = {
 <h3>Point-to-Point</h3>
 <p>Direct connection between CRM and ERP. Simple to set up, but becomes a maintenance burden as you add more systems. Best for small businesses with just two systems to connect.</p>
 <h3>Middleware / iPaaS</h3>
-<p>Platforms like n8n, Make, or MuleSoft sit between your systems and handle data transformation, routing, and error handling. The recommended approach for most mid-sized businesses.</p>
+<p>A dedicated orchestration layer sits between your systems and handles data transformation, routing, and error handling. The recommended approach for most mid-sized businesses.</p>
 <h3>Custom API Layer</h3>
 <p>A purpose-built integration layer that your team controls entirely. Higher upfront cost, but maximum flexibility and performance. Best for enterprises with unique requirements.</p>
 <h2>The Integration Checklist</h2>
@@ -205,7 +212,7 @@ const shortArticles: Record<string, Record<string, string>> = {
 <p>Wenn CRM und ERP nicht integriert sind, summieren sich die Konsequenzen: doppelte Dateneingabe, widersprüchliche Kundendatensätze und verzögerte Bestellverarbeitung. Laut Forrester kostet schlechte Datenqualität Unternehmen durchschnittlich 12,9 Millionen Dollar jährlich.</p>
 <h2>Integrationsarchitektur-Optionen</h2>
 <h3>Punkt-zu-Punkt</h3><p>Direkte Verbindung zwischen CRM und ERP. Einfach einzurichten, wird aber zur Wartungslast.</p>
-<h3>Middleware / iPaaS</h3><p>Plattformen wie n8n oder Make sitzen zwischen Ihren Systemen und übernehmen Datentransformation, Routing und Fehlerbehandlung.</p>
+<h3>Middleware / iPaaS</h3><p>Eine dedizierte Orchestrierungsschicht sitzt zwischen Ihren Systemen und übernimmt Datentransformation, Routing und Fehlerbehandlung.</p>
 <h2>Erwartete Ergebnisse</h2>
 <p>Unternehmen mit ordnungsgemäßer CRM-ERP-Integration sehen typischerweise: 40-60% weniger manuelle Dateneingabe, nahezu null Datendiskrepanzen und schnellere Order-to-Cash-Zyklen.</p>`,
     tr: `<p>CRM ve ERP sistemleri çoğu işletmenin omurgasıdır — ancak birbirleriyle konuşmadıklarında, ekipleriniz gerçekliğin farklı versiyonlarıyla çalışır.</p>
@@ -213,7 +220,7 @@ const shortArticles: Record<string, Record<string, string>> = {
 <p>CRM ve ERP entegre edilmediğinde, sonuçlar birikirler: çift veri girişi, çelişen müşteri kayıtları ve geciken sipariş işleme. Forrester'a göre düşük veri kalitesi organizasyonlara yıllık ortalama 12,9 milyon dolara mal oluyor.</p>
 <h2>Entegrasyon Mimarisi Seçenekleri</h2>
 <h3>Noktadan Noktaya</h3><p>CRM ve ERP arasında doğrudan bağlantı. Kurulumu basit ama bakım yükü oluşturur.</p>
-<h3>Middleware / iPaaS</h3><p>n8n veya Make gibi platformlar sistemleriniz arasında oturur ve veri dönüşümü, yönlendirme ve hata yönetimini üstlenir.</p>
+<h3>Middleware / iPaaS</h3><p>Özel bir orkestrasyon katmanı sistemleriniz arasında oturur ve veri dönüşümü, yönlendirme ve hata yönetimini üstlenir.</p>
 <h2>Beklenen Sonuçlar</h2>
 <p>CRM-ERP entegrasyonunu düzgün yapan işletmeler tipik olarak görür: manuel veri girişinde %40-60 azalma, sıfıra yakın veri tutarsızlığı ve daha hızlı sipariş-ödeme döngüleri.</p>`,
   },
@@ -251,38 +258,51 @@ const shortArticles: Record<string, Record<string, string>> = {
 <p>En etkili uygulamalar her ikisini birleştirir: Kural tabanlı mantık öngörülebilir etkileşimler için, yapay zeka uç durumlar ve karmaşık sorgular için.</p>`,
   },
 
-  "make-vs-zapier-vs-n8n-comparison": {
-    en: `<p>Choosing an automation platform is one of the most consequential technical decisions a growing business can make. The three leading platforms — Make (formerly Integromat), Zapier, and n8n — each excel in different scenarios. Here's an honest comparison based on real-world usage.</p>
-<h2>Zapier: Simplicity at Scale</h2>
-<p><strong>Strengths:</strong> Largest integration library (6,000+ apps), easiest learning curve, fastest setup for simple automations. <strong>Weaknesses:</strong> Expensive at scale (per-task pricing adds up), limited logic complexity, no self-hosting option. <strong>Best for:</strong> Small teams that need quick, simple connections between popular SaaS tools.</p>
-<h2>Make: Visual Power</h2>
-<p><strong>Strengths:</strong> Powerful visual builder, excellent data transformation tools, more affordable than Zapier for high-volume scenarios, strong error handling. <strong>Weaknesses:</strong> Steeper learning curve than Zapier, still cloud-only (no self-hosting), can become complex to manage at scale. <strong>Best for:</strong> Mid-sized businesses with complex, multi-step workflows that need visual clarity.</p>
-<h2>n8n: Developer-Grade Flexibility</h2>
-<p><strong>Strengths:</strong> Self-hostable (data sovereignty), no per-execution limits, custom code support (JavaScript/Python), open source, highly extensible. <strong>Weaknesses:</strong> Requires technical knowledge to self-host, smaller integration library than Zapier, UI less polished than Make. <strong>Best for:</strong> Businesses that need data sovereignty, high-volume automation, or custom integrations.</p>
-<h2>Pricing Comparison (2026)</h2>
-<p><strong>Zapier:</strong> Free tier (100 tasks/month), Starter $19.99/mo (750 tasks), Professional $49/mo (2,000 tasks). Costs scale linearly with usage.</p>
-<p><strong>Make:</strong> Free tier (1,000 ops/month), Core $9/mo (10,000 ops), Pro $16/mo (10,000 ops + advanced features). Better value at higher volumes.</p>
-<p><strong>n8n:</strong> Self-hosted is free (unlimited). Cloud starts at $20/mo. Total cost depends on hosting infrastructure.</p>
+  "choosing-the-right-automation-architecture": {
+    en: `<p>Choosing an automation architecture is one of the most consequential technical decisions a growing business can make. Most vendor comparisons focus on feature checklists — but the real decision is architectural, not vendor-driven. Here is a practical framework based on production experience.</p>
+<h2>The Three Architectural Patterns</h2>
+<p>Every automation deployment collapses into one of three patterns. Matching your operation to the right pattern matters far more than picking a specific tool.</p>
+<h3>1. Point-to-Point Integrations</h3>
+<p><strong>Strengths:</strong> Quickest setup for simple connections between two systems, minimal upfront infrastructure, easy to understand. <strong>Weaknesses:</strong> Becomes a maintenance nightmare past four or five systems; no centralized error handling; every new integration is a new snowflake. <strong>Best for:</strong> Small teams with fewer than five connected systems and simple, well-defined data flows.</p>
+<h3>2. Central Orchestration Layer</h3>
+<p><strong>Strengths:</strong> One place for routing logic, error handling, and retries; reusable transformations; consistent observability. <strong>Weaknesses:</strong> Requires upfront investment in the orchestration layer; introduces a single point of coordination that must be well-engineered. <strong>Best for:</strong> Mid-sized businesses with multiple integrated systems, complex workflows, and compliance requirements.</p>
+<h3>3. Hybrid Architecture</h3>
+<p><strong>Strengths:</strong> Uses point-to-point for trivial paths, central orchestration for complex ones; minimizes both infrastructure cost and maintenance burden. <strong>Weaknesses:</strong> Requires clear governance on which pattern applies to which flow. <strong>Best for:</strong> Organizations that have outgrown pure point-to-point but don't need every integration behind a central layer.</p>
+<h2>The Decision Framework</h2>
+<p>Three questions drive the architectural choice, in this order:</p>
+<ol>
+<li><strong>Volume:</strong> How many automation executions per month? Under 10k: point-to-point is fine. 10k-500k: central orchestration pays off. Over 500k: hybrid with self-hosted orchestration becomes essential.</li>
+<li><strong>Compliance:</strong> Where does your data need to live? EU-only data residency and GDPR auditing point to self-hosted orchestration. Lower compliance bars leave cloud options open.</li>
+<li><strong>Team size:</strong> Can your team maintain the chosen layer? A three-person ops team can run a well-engineered orchestration layer; a one-person team usually can't, and should pick either managed services or lighter point-to-point.</li>
+</ol>
+<h2>What Doesn't Matter (Much)</h2>
+<p>Number of integrations offered is a distraction — you typically use fewer than ten. UI polish is a distraction — you automate, you don't browse. Per-task pricing tiers can look attractive but trap you as volume grows.</p>
 <h2>Our Recommendation</h2>
-<p>We use all three platforms depending on the client's needs. For European businesses with data sensitivity, n8n is our default. For quick integrations between SaaS tools, Zapier wins. For complex visual workflows, Make excels. The right answer depends on your specific requirements.</p>`,
-    de: `<p>Die Wahl einer Automatisierungsplattform ist eine der folgenreichsten technischen Entscheidungen für ein wachsendes Unternehmen. Die drei führenden Plattformen — Make, Zapier und n8n — brillieren jeweils in verschiedenen Szenarien.</p>
-<h2>Zapier: Einfachheit in großem Maßstab</h2>
-<p><strong>Stärken:</strong> Größte Integrationsbibliothek (6.000+ Apps), einfachste Lernkurve. <strong>Schwächen:</strong> Teuer bei hohem Volumen, begrenzte Logikkomplexität. <strong>Am besten für:</strong> Kleine Teams mit einfachen Verbindungen.</p>
-<h2>Make: Visuelle Leistung</h2>
-<p><strong>Stärken:</strong> Leistungsstarker visueller Builder, exzellente Datentransformation. <strong>Schwächen:</strong> Steilere Lernkurve, nur Cloud. <strong>Am besten für:</strong> Mittelständische Unternehmen mit komplexen Workflows.</p>
-<h2>n8n: Entwickler-Grade Flexibilität</h2>
-<p><strong>Stärken:</strong> Self-Hosting möglich, keine Ausführungslimits, Open Source. <strong>Schwächen:</strong> Technisches Wissen nötig. <strong>Am besten für:</strong> Unternehmen mit Datensouveränität und hohem Automatisierungsvolumen.</p>
+<p>We design the architecture depending on the client's needs. For European businesses with data sensitivity and meaningful volume, a self-hosted central orchestration layer is the default. For quick, narrow integrations between a handful of SaaS tools, lightweight point-to-point is often enough. The right answer depends on your specific requirements — not on the vendor pitch.</p>`,
+    de: `<p>Die Wahl einer Automatisierungsarchitektur ist eine der folgenreichsten technischen Entscheidungen für ein wachsendes Unternehmen. Die meisten Vergleiche drehen sich um Feature-Checklisten — die eigentliche Entscheidung ist jedoch architektonisch, nicht vendor-getrieben.</p>
+<h2>Die drei Architekturmuster</h2>
+<h3>1. Punkt-zu-Punkt-Integrationen</h3>
+<p><strong>Stärken:</strong> Schnellste Einrichtung für einfache Verbindungen zwischen zwei Systemen. <strong>Schwächen:</strong> Wird ab vier oder fünf Systemen zum Wartungsalbtraum. <strong>Am besten für:</strong> Kleine Teams mit weniger als fünf vernetzten Systemen.</p>
+<h3>2. Zentrale Orchestrierungsschicht</h3>
+<p><strong>Stärken:</strong> Ein Ort für Routing, Fehlerbehandlung und Retries. <strong>Schwächen:</strong> Erfordert Anfangsinvestition in die Orchestrierungsschicht. <strong>Am besten für:</strong> Mittelständische Unternehmen mit mehreren integrierten Systemen und Compliance-Anforderungen.</p>
+<h3>3. Hybrid-Architektur</h3>
+<p><strong>Stärken:</strong> Punkt-zu-Punkt für triviale Pfade, zentrale Orchestrierung für komplexe. <strong>Schwächen:</strong> Erfordert klare Governance. <strong>Am besten für:</strong> Organisationen, die über reine Punkt-zu-Punkt-Lösungen hinausgewachsen sind.</p>
+<h2>Das Entscheidungsraster</h2>
+<p>Drei Fragen treiben die Wahl: Volumen, Compliance, Teamgröße. Nicht die Toolnamen auf einer Marketingseite.</p>
 <h2>Unsere Empfehlung</h2>
-<p>Wir setzen alle drei Plattformen je nach Kundenbedarf ein. Für europäische Unternehmen mit Datensensibilität ist n8n unser Standard.</p>`,
-    tr: `<p>Bir otomasyon platformu seçmek, büyüyen bir işletmenin verebileceği en önemli teknik kararlardan biridir. Üç lider platform — Make, Zapier ve n8n — her biri farklı senaryolarda öne çıkar.</p>
-<h2>Zapier: Ölçekte Basitlik</h2>
-<p><strong>Güçlü:</strong> En büyük entegrasyon kütüphanesi (6.000+ uygulama), en kolay öğrenme eğrisi. <strong>Zayıf:</strong> Ölçekte pahalı, sınırlı mantık karmaşıklığı. <strong>En iyi:</strong> Basit bağlantılar isteyen küçük ekipler.</p>
-<h2>Make: Görsel Güç</h2>
-<p><strong>Güçlü:</strong> Güçlü görsel oluşturucu, mükemmel veri dönüşümü. <strong>Zayıf:</strong> Daha dik öğrenme eğrisi. <strong>En iyi:</strong> Karmaşık iş akışlarına sahip orta ölçekli işletmeler.</p>
-<h2>n8n: Geliştirici Düzeyinde Esneklik</h2>
-<p><strong>Güçlü:</strong> Kendi sunucunuzda barındırma, yürütme limiti yok, açık kaynak. <strong>Zayıf:</strong> Teknik bilgi gerektirir. <strong>En iyi:</strong> Veri egemenliği ve yüksek hacimli otomasyon ihtiyacı olan işletmeler.</p>
+<p>Wir entwerfen die Architektur je nach Kundenbedarf. Für europäische Unternehmen mit Datensensibilität und relevantem Volumen ist eine selbstgehostete zentrale Orchestrierungsschicht der Standard.</p>`,
+    tr: `<p>Bir otomasyon mimarisi seçmek, büyüyen bir işletmenin verebileceği en önemli teknik kararlardan biridir. Çoğu karşılaştırma özellik listeleri üzerinde dönse de, gerçek karar mimari karardır — tedarikçi değil.</p>
+<h2>Üç Mimari Desen</h2>
+<h3>1. Noktadan Noktaya Entegrasyonlar</h3>
+<p><strong>Güçlü:</strong> İki sistem arasında basit bağlantılar için en hızlı kurulum. <strong>Zayıf:</strong> Dört-beş sistemden sonra bakım kabusuna dönüşür. <strong>En iyi:</strong> Beşten az bağlı sistemi olan küçük ekipler.</p>
+<h3>2. Merkezi Orkestrasyon Katmanı</h3>
+<p><strong>Güçlü:</strong> Yönlendirme, hata yönetimi ve yeniden denemeler için tek yer. <strong>Zayıf:</strong> Orkestrasyon katmanına ön yatırım gerektirir. <strong>En iyi:</strong> Birden fazla entegre sistemi ve uyumluluk gereksinimleri olan orta ölçekli işletmeler.</p>
+<h3>3. Hibrit Mimari</h3>
+<p><strong>Güçlü:</strong> Basit yollar için noktadan noktaya, karmaşıklar için merkezi orkestrasyon. <strong>Zayıf:</strong> Net yönetişim gerektirir. <strong>En iyi:</strong> Saf noktadan noktaya çözümleri aşmış organizasyonlar.</p>
+<h2>Karar Çerçevesi</h2>
+<p>Üç soru seçimi belirler: hacim, uyumluluk, ekip büyüklüğü. Pazarlama sayfasındaki araç isimleri değil.</p>
 <h2>Önerimiz</h2>
-<p>Müşteri ihtiyacına göre üç platformu da kullanıyoruz. Avrupa'daki veri hassasiyeti olan işletmeler için n8n varsayılanımızdır.</p>`,
+<p>Mimariyi müşteri ihtiyacına göre tasarlıyoruz. Veri hassasiyeti ve anlamlı hacmi olan Avrupa işletmeleri için kendi sunucunuzda barındırılan merkezi orkestrasyon katmanı varsayılandır.</p>`,
   },
 
   "whatsapp-business-automation-guide": {
@@ -294,12 +314,12 @@ const shortArticles: Record<string, Record<string, string>> = {
 <h3>Transactional Messages</h3>
 <p>Order confirmations, shipping updates, appointment reminders, payment receipts. These are template-based messages that WhatsApp pre-approves. They have the highest open rates (98%+) of any messaging channel.</p>
 <h3>Customer Support</h3>
-<p>Route incoming messages through a bot that handles FAQs, checks order status, and escalates complex issues to human agents. With n8n or Make, you can connect WhatsApp to your CRM and ticketing system for full context.</p>
+<p>Route incoming messages through a bot that handles FAQs, checks order status, and escalates complex issues to human agents. With a custom orchestration layer, you can connect WhatsApp to your CRM and ticketing system for full context.</p>
 <h3>Lead Qualification</h3>
 <p>When a potential customer messages you, a bot can ask qualifying questions, collect contact details, and route qualified leads to your sales team with full conversation context.</p>
-<h2>Technical Setup with n8n</h2>
+<h2>Technical Setup</h2>
 <ol>
-<li><strong>Connect WhatsApp Cloud API</strong> to n8n via webhook trigger</li>
+<li><strong>Connect WhatsApp Cloud API</strong> via webhook trigger</li>
 <li><strong>Build message routing logic</strong> — classify intent, check for keywords, route to appropriate flow</li>
 <li><strong>Connect to your CRM</strong> — create or update contacts automatically</li>
 <li><strong>Set up template messages</strong> — pre-approved templates for outbound notifications</li>

@@ -1,6 +1,7 @@
 "use client";
 
 import { LocaleProvider } from "@/context/LocaleContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 import type { Locale } from "@/lib/i18n";
 
 export function ClientProviders({
@@ -10,5 +11,9 @@ export function ClientProviders({
   children: React.ReactNode;
   initialLocale: Locale;
 }) {
-  return <LocaleProvider initialLocale={initialLocale}>{children}</LocaleProvider>;
+  return (
+    <ThemeProvider>
+      <LocaleProvider initialLocale={initialLocale}>{children}</LocaleProvider>
+    </ThemeProvider>
+  );
 }

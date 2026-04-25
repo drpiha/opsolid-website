@@ -1,10 +1,10 @@
 import type { Config } from "tailwindcss";
 
 /**
- * OpSolid v2 — industrial-luxury dark-first.
- * Canonical tokens live in src/styles/opsolid-tokens.css (CSS variables).
- * Tailwind maps those vars so utilities like `bg-bg-1`, `text-ink-200`,
- * `border-line-firm`, `text-copper-400` resolve to the design system.
+ * OpSolid v2 — industrial-luxury tri-theme (light / hybrid / dark).
+ * Canonical tokens live in src/styles/opsolid-tokens.css (CSS variables,
+ * swapped by [data-theme]). Tailwind maps those vars so `bg-bg-1`,
+ * `text-ink-200`, `border-line-firm` etc. follow the active theme.
  */
 const config: Config = {
   content: [
@@ -12,29 +12,31 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  darkMode: "class",
+  // Accept both `.dark` class and `[data-theme="dark"]` so legacy
+  // `dark:` utility overrides keep working alongside the tri-theme system.
+  darkMode: ["class", '[data-theme="dark"]'],
   theme: {
     extend: {
       colors: {
-        // Graphite ground
-        "bg-0": "#07090C",
-        "bg-1": "#0B0E13",
-        "bg-2": "#11151C",
-        "bg-3": "#171C26",
-        "bg-4": "#1F2530",
-        "bg-5": "#2A3140",
+        // Ground — now CSS variables so the active theme drives them.
+        "bg-0": "var(--bg-0)",
+        "bg-1": "var(--bg-1)",
+        "bg-2": "var(--bg-2)",
+        "bg-3": "var(--bg-3)",
+        "bg-4": "var(--bg-4)",
+        "bg-5": "var(--bg-5)",
 
-        // Warm off-white ink on dark
+        // Ink — theme-aware.
         ink: {
-          DEFAULT: "#F4F3F0",
-          100: "#F4F3F0",
-          200: "#D8D6D1",
-          300: "#9FA2A9",
-          400: "#6B717B",
-          500: "#454B56",
+          DEFAULT: "var(--ink-100)",
+          100: "var(--ink-100)",
+          200: "var(--ink-200)",
+          300: "var(--ink-300)",
+          400: "var(--ink-400)",
+          500: "var(--ink-500)",
         },
 
-        // Oxidized copper accent
+        // Oxidized copper accent — theme-independent (accent color stays put).
         copper: {
           DEFAULT: "#C27940",
           50:  "#FBEFE0",
@@ -56,12 +58,12 @@ const config: Config = {
           err:  "#B8514B",
         },
 
-        // Line alpha helpers (Tailwind can't read rgba css vars directly)
+        // Line tokens — theme-aware (ink-alpha on paper, white-alpha on dark).
         line: {
-          soft: "rgba(255,255,255,0.04)",
-          DEFAULT: "rgba(255,255,255,0.08)",
-          firm: "rgba(255,255,255,0.14)",
-          hot:  "rgba(212,143,88,0.35)",
+          soft: "var(--line-soft)",
+          DEFAULT: "var(--line)",
+          firm: "var(--line-firm)",
+          hot:  "var(--line-hot)",
         },
 
         // Legacy brand names kept so existing code still resolves —

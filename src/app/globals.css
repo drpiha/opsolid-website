@@ -2,12 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-/* OpSolid v2 design system — industrial-luxury dark-first.
+/* OpSolid v2 design system — industrial-luxury tri-theme.
    Tokens + primitives (.btn, .chip, .field, .panel, .grain, .meta, etc.)
-   live in opsolid-tokens.css. Shared site layout (.os-header, .os-hero,
-   .km-* kinetic mechanism, sections) lives in opsolid-site.css. */
+   live in opsolid-tokens.css (theme-aware via [data-theme]).
+   Shared site layout (.os-header, .os-hero, .km-* kinetic mechanism,
+   sections) lives in opsolid-site.css. */
 @import "../styles/opsolid-tokens.css";
 @import "../styles/opsolid-site.css";
+@import "../styles/opsolid-backdrop.css";
 @import "../styles/opsolid-voice-agent.css";
 @import "../styles/opsolid-digital-card.css";
 @import "../styles/opsolid-kutasia.css";
@@ -16,17 +18,17 @@
 
 @layer base {
   /* Legacy light-mode variables kept for any stragglers still reading them.
-     Values are now dark so nothing accidentally paints white. */
+     Mapped to current tokens so they stay in sync with the active theme. */
   :root {
-    --bg:      #0B0E13;
-    --bg-soft: #11151C;
-    --bg-dim:  #171C26;
-    --fg:      #F4F3F0;
-    --fg-muted:#9FA2A9;
-    --fg-soft: #6B717B;
-    --border:  rgba(255,255,255,0.08);
-    --accent:  #C27940;
-    --accent-dark: #A46230;
+    --bg:      var(--bg-1);
+    --bg-soft: var(--bg-2);
+    --bg-dim:  var(--bg-3);
+    --fg:      var(--ink-100);
+    --fg-muted: var(--ink-300);
+    --fg-soft: var(--ink-400);
+    --border:  var(--line);
+    --accent:  var(--copper-500);
+    --accent-dark: var(--copper-600);
   }
 
   html {
@@ -34,7 +36,6 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
     background: var(--bg-1);
-    color-scheme: dark;
   }
 
   html, body { overflow-x: clip; max-width: 100%; }
@@ -48,7 +49,7 @@
 
   ::selection {
     background: var(--copper-500);
-    color: #0A0A0A;
+    color: #1A0E04;
   }
 
   body.menu-open {
@@ -80,7 +81,7 @@
     color: var(--ink-400);
   }
 
-  /* Legacy Popl-style cards now paint as dark panels. */
+  /* Legacy Popl-style cards — paint as panels using theme tokens. */
   .pop-card {
     background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
     border: 1px solid var(--line);
@@ -96,7 +97,7 @@
     transform: translateY(-2px);
   }
 
-  /* Trust pill — monospaced chip on dark. */
+  /* Trust pill — monospaced chip, theme-aware. */
   .trust-pill {
     display: inline-flex;
     align-items: center;
@@ -112,6 +113,11 @@
     text-transform: uppercase;
     color: var(--ink-300);
     box-shadow: var(--rim-top);
+  }
+  :root[data-theme="light"] .trust-pill,
+  :root[data-theme="hybrid"] .trust-pill,
+  :root:not([data-theme="dark"]) .trust-pill {
+    background: rgba(21,18,15,0.03);
   }
 
   .section {
@@ -138,58 +144,59 @@
 }
 
 /* ==============================================================
-   LEGACY SHIM — old Tailwind light-mode classes → dark system.
+   LEGACY SHIM — old Tailwind light-mode classes → dark graphite system.
    Homepage sections (TrustStrip, SolutionsOverview, HowWeWork, etc.)
    still ship with bg-white / bg-neutral-* / border-neutral-* / ink-slash.
-   Rewriting each is a follow-up pass. Until then, these overrides keep
-   the page cohesive with the new v2 industrial-luxury dark theme.
+   These overrides are ONLY for dark mode — on light/hybrid we leave the
+   native Tailwind neutrals + white alone so the paper palette can breathe.
    ============================================================== */
-.bg-white {
+[data-theme="dark"] .bg-white {
   background: linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%) !important;
   color: var(--ink-200);
 }
-.bg-neutral-50  { background: var(--bg-2) !important; }
-.bg-neutral-100 { background: var(--bg-3) !important; }
-.bg-neutral-200 { background: var(--bg-4) !important; }
-.bg-neutral-800,
-.bg-neutral-900,
-.bg-neutral-950 { background: var(--bg-0) !important; }
+[data-theme="dark"] .bg-neutral-50  { background: var(--bg-2) !important; }
+[data-theme="dark"] .bg-neutral-100 { background: var(--bg-3) !important; }
+[data-theme="dark"] .bg-neutral-200 { background: var(--bg-4) !important; }
+[data-theme="dark"] .bg-neutral-800,
+[data-theme="dark"] .bg-neutral-900,
+[data-theme="dark"] .bg-neutral-950 { background: var(--bg-0) !important; }
 
-.border-neutral-100 { border-color: var(--line) !important; }
-.border-neutral-200 { border-color: var(--line-firm) !important; }
-.border-neutral-300 { border-color: var(--line-firm) !important; }
+[data-theme="dark"] .border-neutral-100 { border-color: var(--line) !important; }
+[data-theme="dark"] .border-neutral-200 { border-color: var(--line-firm) !important; }
+[data-theme="dark"] .border-neutral-300 { border-color: var(--line-firm) !important; }
 
 /* Ink-slash opacity pattern (text-ink/70, text-ink/60 ...) was used on a
-   light-ink token; on the new dark palette map these to warm off-white. */
-.text-ink,
-.text-ink\/90,
-.text-ink\/80 { color: var(--ink-100) !important; }
-.text-ink\/70 { color: var(--ink-200) !important; }
-.text-ink\/60,
-.text-ink\/50 { color: var(--ink-300) !important; }
-.text-ink\/40,
-.text-ink\/30 { color: var(--ink-400) !important; }
+   light-ink token; on dark palette map these to warm off-white. */
+[data-theme="dark"] .text-ink,
+[data-theme="dark"] .text-ink\/90,
+[data-theme="dark"] .text-ink\/80 { color: var(--ink-100) !important; }
+[data-theme="dark"] .text-ink\/70 { color: var(--ink-200) !important; }
+[data-theme="dark"] .text-ink\/60,
+[data-theme="dark"] .text-ink\/50 { color: var(--ink-300) !important; }
+[data-theme="dark"] .text-ink\/40,
+[data-theme="dark"] .text-ink\/30 { color: var(--ink-400) !important; }
 
 /* text-neutral-X on dark */
-.text-neutral-50,
-.text-neutral-100 { color: var(--ink-100) !important; }
-.text-neutral-400 { color: var(--ink-300) !important; }
-.text-neutral-500 { color: var(--ink-300) !important; }
-.text-neutral-600 { color: var(--ink-400) !important; }
-.text-neutral-700,
-.text-neutral-800,
-.text-neutral-900 { color: var(--ink-100) !important; }
+[data-theme="dark"] .text-neutral-50,
+[data-theme="dark"] .text-neutral-100 { color: var(--ink-100) !important; }
+[data-theme="dark"] .text-neutral-400 { color: var(--ink-300) !important; }
+[data-theme="dark"] .text-neutral-500 { color: var(--ink-300) !important; }
+[data-theme="dark"] .text-neutral-600 { color: var(--ink-400) !important; }
+[data-theme="dark"] .text-neutral-700,
+[data-theme="dark"] .text-neutral-800,
+[data-theme="dark"] .text-neutral-900 { color: var(--ink-100) !important; }
 
-/* Brand red was used as accent / underline. Copper takes over. */
+/* Brand red was used as accent / underline. Copper takes over, everywhere. */
 .bg-brand,
 .bg-brand-500 { background: var(--copper-500) !important; }
 .text-brand,
-.text-brand-500 { color: var(--copper-400) !important; }
+.text-brand-500 { color: var(--copper-500) !important; }
 .border-brand,
 .border-brand-500 { border-color: var(--copper-500) !important; }
+[data-theme="dark"] .text-brand,
+[data-theme="dark"] .text-brand-500 { color: var(--copper-400) !important; }
 
 /* Hover states relied on light-mode neutrals — keep them subtle on dark. */
-.hover\:bg-neutral-50:hover,
-.hover\:bg-neutral-100:hover { background: rgba(255,255,255,0.04) !important; }
-.hover\:bg-white:hover { background: var(--bg-3) !important; }
-
+[data-theme="dark"] .hover\:bg-neutral-50:hover,
+[data-theme="dark"] .hover\:bg-neutral-100:hover { background: rgba(255,255,255,0.04) !important; }
+[data-theme="dark"] .hover\:bg-white:hover { background: var(--bg-3) !important; }

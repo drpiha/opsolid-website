@@ -50,6 +50,10 @@ src/generated/
 # Design reference bundle (HTML mocks from claude.ai/design, not source of truth)
 .design-bundle/
 
+# Deploy artifacts (built locally by scripts/deploy.sh)
+opsolid-deploy.tar.gz
+*.deploy.tar.gz
+
 # pnpm lock file (project uses npm)
 pnpm-lock.yaml
 

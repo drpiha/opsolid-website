@@ -36,8 +36,27 @@ function detectLocale(req: NextRequest): Locale {
   return DEFAULT_LOCALE;
 }
 
+// Subdomain routing for the Smart Card product:
+//   • card.opsolid.de/<slug> → rewritten to /c/<slug> (public Smart Card)
+//   • go.opsolid.de/<code>   → rewritten to /l/<code> (short-link gateway,
+//                              records ScanEvent and 307s to /c/<slug>)
+// Bare host (no path) bounces to the main site so neither subdomain ever
+// renders the marketing homepage.
+const CARD_HOST = "card.opsolid.de";
+const SHORTLINK_HOST = "go.opsolid.de";
+
 export function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
+  const host = (req.headers.get("host") || "").toLowerCase();
+
+  if (host === CARD_HOST || host === SHORTLINK_HOST) {
+    if (pathname === "/" || pathname === "") {
+      return NextResponse.redirect(new URL("https://opsolid.de/"), 307);
+    }
+    const url = req.nextUrl.clone();
+    url.pathname = host === SHORTLINK_HOST ? `/l${pathname}` : `/c${pathname}`;
+    return NextResponse.rewrite(url);
+  }
 
   // Check if pathname already starts with a valid locale
   const firstSegment = pathname.split("/")[1];
@@ -98,10 +117,10 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  // Skip: /api, /_next, static files, sitemap/robots, /c/ (public cards are
-  // locale-agnostic — their content is the user's own copy), /admin/*.
+  // Skip: /api, /_next, static files, sitemap/robots, /c/ and /l/ (public
+  // card + short-link surfaces are locale-agnostic), /admin/*.
   matcher: [
-    "/((?!api|_next|.*\\..*|sitemap\\.xml|robots\\.txt|c/|admin).*)",
+    "/((?!api|_next|.*\\..*|sitemap\\.xml|robots\\.txt|c/|l/|admin).*)",
   ],
 };
 

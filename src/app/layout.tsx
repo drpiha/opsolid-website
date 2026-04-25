@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { Inter, Instrument_Serif, JetBrains_Mono } from "next/font/google";
-import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/next";
 import { SITE_CONFIG } from "@/lib/constants";
 import { isLocale, DEFAULT_LOCALE } from "@/lib/i18n";
@@ -20,7 +19,7 @@ const inter = Inter({
 let geistVariable = "";
 try {
   // Dynamic require so missing dep in CI doesn't break the build.
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
   const { GeistSans } = require("geist/font/sans");
   geistVariable = GeistSans.variable;
 } catch {
@@ -85,6 +84,11 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
+// Applied inline in <head> before hydration so the first paint already has
+// the correct palette — avoids flash-of-wrong-theme. Mirrors
+// src/context/ThemeContext.tsx (DEFAULT_THEME = "hybrid", key = "opsolid-theme").
+const NO_FLASH_THEME_SCRIPT = `(function(){try{var t=localStorage.getItem('opsolid-theme');if(t!=='light'&&t!=='hybrid'&&t!=='dark'){t='hybrid';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','hybrid');}})();`;
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -104,7 +108,18 @@ export default function RootLayout({
     .join(" ");
 
   return (
-    <html lang={lang} className={fontClasses}>
+    <html
+      lang={lang}
+      className={fontClasses}
+      data-theme="hybrid"
+      suppressHydrationWarning
+    >
+      <head>
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: NO_FLASH_THEME_SCRIPT }}
+        />
+      </head>
       <body className="grain font-sans antialiased bg-bg-1 text-ink-200 min-h-[100svh] flex flex-col">
         {children}
         <Analytics />

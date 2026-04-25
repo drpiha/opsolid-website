@@ -110,7 +110,17 @@ export async function GET(
     centerImageUrl = absoluteAssetUrl(order.photoPath, siteUrl);
   }
 
-  const data = `${siteUrl}/c/${params.slug}`;
+  // Default QR target: canonical card host. When ?code=… is supplied the
+  // QR encodes the short-link URL (go.opsolid.de/<code>) instead, so each
+  // distribution channel (NFC card, Instagram bio, trade-fair signage…) can
+  // own its own QR with per-source scan tracking.
+  const codeParam = (searchParams.get("code") ?? "").trim();
+  const cardHost = process.env.NEXT_PUBLIC_CARD_HOST?.trim() || "card.opsolid.de";
+  const shortHost = process.env.NEXT_PUBLIC_SHORT_HOST?.trim() || "go.opsolid.de";
+  const data =
+    codeParam && /^[a-z0-9-]{3,64}$/.test(codeParam)
+      ? `https://${shortHost}/${codeParam}`
+      : `https://${cardHost}/${params.slug}`;
 
   try {
     const { bytes, contentType } = await renderQr({

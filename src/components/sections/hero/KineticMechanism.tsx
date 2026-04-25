@@ -385,11 +385,6 @@ export function KineticMechanism() {
         <div className="km-lens-glint" />
         <div className="km-lens-flare" />
       </div>
-
-      <div className="km-readout">
-        <span className="km-readout-dot" />
-        <span className="km-readout-text">LIVE · 42 WORKFLOWS · 3.4M EVENTS</span>
-      </div>
     </div>
   );
 }

@@ -24,30 +24,30 @@ export const content: Content = {
         "OpSolid unterstützt Unternehmen dabei, manuelle, wiederkehrende Arbeit durch zuverlässige automatisierte Systeme zu ersetzen — von Workflow-Automatisierung und Systemintegration bis hin zu KI-gestützten Prozessen.",
       primaryCta: "Erstgespräch buchen",
       secondaryCta: "Leistungen ansehen",
-      ratingPill: "OpSolid · Automation Studio · Sitz in Deutschland",
+      ratingPill: "OPSOLID · PRECISION AUTOMATION · FRA-01",
       title: [
         "Automatisierung, die",
         "Ihren Betrieb steuert —",
         "nicht umgekehrt.",
       ],
       subtitle:
-        "OpSolid entwickelt praxisnahe Automatisierungs- und KI-Systeme für den echten Geschäftsbetrieb — Workflow-Automatisierung, Systemintegration, interne Tools und KI-gestützte Prozesse. In Deutschland gehostet. Keine Abhängigkeit vom Anbieter.",
+        "OpSolid entwickelt praxisnahe Automatisierungs- und KI-Systeme für den echten Geschäftsbetrieb — Workflow-Automatisierung, Systemintegration, interne Tools und KI-gestützte Prozesse.",
       primaryCtaLabel: "Erstgespräch buchen",
       primaryCtaHref: "/contact",
       secondaryCtaLabel: "Leistungen ansehen",
       secondaryCtaHref: "/solutions",
-      footnote: "Sitz in Deutschland  ·  DSGVO-nativ  ·  Keine Lock-ins",
+      footnote: "EU · Hosted in Frankfurt    DE · EN · TR · Kundensprachen    Q2 '26 · Pilot · Partner gesucht",
       consultingNote:
         "Wir liefern auch eigenständige Produkte — Kutasia, Digital Business Card, Digital Reception.",
       editorial: {
-        eyebrow: "[ 01 / 04 ]   AUTOMATION STUDIO — HAMBURG, DE",
+        eyebrow: "[ 01 / 04 ]   AUTOMATION STUDIO   ·   OPS-01 · SYNC 0000",
         title: [
-          "Wir bauen die Systeme,",
-          "die euer Betrieb",
-          "längst vorzeigen müsste.",
+          "Systeme, die im Hintergrund",
+          "Ihres Betriebs zuverlässig",
+          "laufen.",
         ],
         paragraph:
-          "Praxisnahe Automatisierung für den Mittelstand — Bestellungen, Dokumente, Freigaben, Kommunikation. Kein Umbau Ihres Stacks, kein KI-Theater, keine Abhängigkeit vom Anbieter.",
+          "Praxisnahe Automatisierung für den Mittelstand — Bestellungen, Dokumente, Freigaben, Kommunikation. Integriert sich in Ihren Stack, statt ihn zu ersetzen.",
         primaryCta: "Termin vereinbaren",
         secondaryCta: "Wie wir arbeiten",
         stackLabel: "Bewährter Stack",
@@ -82,7 +82,7 @@ export const content: Content = {
       description:
         "Viele Unternehmen arbeiten noch mit manuellen Prozessen, voneinander getrennten Tools und tabellenbasierter Nachverfolgung. OpSolid entwickelt und implementiert Automatisierungssysteme, die Ihre Tools verbinden, Ihre Workflows optimieren und den operativen Aufwand reduzieren, der Teams ausbremst.",
       points: [
-        "Wiederkehrende Workflows mit n8n, Make und individuellen Integrationen automatisieren",
+        "Wiederkehrende Workflows mit individuell entwickelten Automatisierungen ablösen",
         "CRM, ERP, Datenbanken und Kommunikationstools zu einheitlichen Systemen verbinden",
         "Individuelle Dashboards und interne Tools für Ihr Team entwickeln",
         "KI-gestützte Prozesse dort einsetzen, wo sie praktischen Mehrwert schaffen",
@@ -96,7 +96,7 @@ export const content: Content = {
         {
           title: "Workflow-Automatisierung",
           description:
-            "Automatisierte Workflows, die manuelle Schritte ersetzen — von Dateneingabe und Freigaben bis hin zu Benachrichtigungen und Reporting. Umgesetzt mit n8n, Make und individuellen Integrationen.",
+            "Automatisierte Workflows, die manuelle Schritte ersetzen — von Dateneingabe und Freigaben bis hin zu Benachrichtigungen und Reporting. Umgesetzt über API-Integrationen und individuelle Geschäftslogik.",
           icon: "workflow",
         },
         {
@@ -200,7 +200,7 @@ export const content: Content = {
       items: [
         { name: "WhatsApp", icon: "messageCircle" },
         { name: "Telegram", icon: "send" },
-        { name: "n8n", icon: "workflow" },
+        { name: "Custom Workflows", icon: "workflow" },
         { name: "Shopify", icon: "shoppingBag" },
         { name: "CRM-Systeme", icon: "users" },
         { name: "ERP-Systeme", icon: "database" },
@@ -208,8 +208,8 @@ export const content: Content = {
         { name: "REST APIs", icon: "code" },
         { name: "Google Workspace", icon: "cloud" },
         { name: "Datenbanken", icon: "hardDrive" },
-        { name: "Zapier", icon: "zap" },
-        { name: "Make", icon: "settings" },
+        { name: "Webhooks", icon: "zap" },
+        { name: "Message Queues", icon: "settings" },
       ],
     },
 
@@ -279,29 +279,29 @@ export const content: Content = {
     },
 
     toolsShowcase: {
-      label: "Technologien",
-      headline: "Automatisierungsplattformen und KI-Tools, mit denen OpSolid arbeitet",
+      label: "Bausteine",
+      headline: "Bausteine, mit denen OpSolid Automatisierung umsetzt",
       description:
-        "OpSolid nutzt bewährte Automatisierungsplattformen und praxisnahe KI-Tools, um Systeme zu entwickeln, die zu Ihrem Betrieb passen — stets mit dem richtigen Werkzeug für jeden Anwendungsfall.",
+        "Jedes Projekt wird als individuelles System ausgeliefert — gebaut aus produktionsreifen Engineering-Schichten, ausgewählt für Ihren Betrieb statt aus einem One-size-fits-all-Werkzeugkasten.",
       tools: [
         {
-          name: "n8n",
+          name: "Custom Workflow Engine",
           description:
-            "Self-hosted Workflow-Engine für komplexe Automatisierungen. Webhook-Trigger, bedingte Logik und vollständige Datenhoheit.",
+            "Individuell entwickelte Workflow-Engines für komplexe Automatisierungen. Webhook-Trigger, bedingte Logik, Retries und vollständige Datenhoheit — keine Black-Box-Laufzeit.",
           techFeatures: [
             "Self-Hosted",
-            "500+ Integrationen",
+            "Offene Architektur",
             "Webhook-Trigger",
             "Fehlerbehandlung",
             "Datenhoheit",
           ],
         },
         {
-          name: "Make",
+          name: "API Orchestration",
           description:
-            "Visueller Szenario-Builder für mehrstufiges Daten-Routing. API-Verbindungen, Fehlerverzweigung und automatisierte Datentransformationen.",
+            "Mehrstufige Orchestrierung über REST APIs, GraphQL und Message Queues. Eingebaute Transformation, Verzweigung und Fehlerbehandlung für den Produktionsbetrieb.",
           techFeatures: [
-            "Visueller Builder",
+            "REST · GraphQL",
             "Daten-Routing",
             "API-Module",
             "Fehlerverzweigung",
@@ -309,27 +309,27 @@ export const content: Content = {
           ],
         },
         {
-          name: "Zapier",
+          name: "AI Layer",
           description:
-            "Schnelle Verbindung von über 6.000 Apps mit mehrstufigen Automatisierungen. Bedingte Pfade, geplante Trigger und Filterung.",
+            "Praxisnahe KI-Bausteine: Klassifizierung, Extraktion, Voice- und Chat-Agenten. Auditierbare Modellaufrufe, strukturierte Ausgaben und Human-in-the-Loop-Checkpoints.",
           techFeatures: [
-            "6.000+ Apps",
-            "Mehrstufig",
-            "Bedingte Logik",
-            "Zeitsteuerung",
-            "Filter",
-          ],
-        },
-        {
-          name: "KI-Tools",
-          description:
-            "Praxisnahe KI-Anwendungen für Sprache, Chat, Dokumentenverarbeitung und Entscheidungsunterstützung. Entwickelt mit zuverlässigen Modellen und strukturierten Workflows.",
-          techFeatures: [
-            "Sprachassistenten",
-            "Chatbots",
+            "Voice-Agenten",
             "Dokumenten-KI",
             "Klassifizierung",
             "Strukturierte Ausgabe",
+            "Audit-Logs",
+          ],
+        },
+        {
+          name: "Self-Hosted Stack",
+          description:
+            "Komplettes Deployment auf Ihrer eigenen Infrastruktur oder in EU-gehosteten Umgebungen — Postgres, Queues, Observability. Der Ausstieg ist immer zwei Wochen entfernt.",
+          techFeatures: [
+            "Postgres",
+            "Message Queues",
+            "Observability",
+            "EU-gehostet",
+            "Quellcode gehört Ihnen",
           ],
         },
       ],
@@ -337,12 +337,12 @@ export const content: Content = {
 
     trustStrip: {
       items: [
-        "Aus Deutschland",
-        "DSGVO-nativ",
-        "n8n · Make · KI-gestützt",
-        "Keine Anbieter-Lock-ins",
-        "ISO 27001-orientiert",
-        "EN · DE · TR",
+        "EU jurisdiction",
+        "Hosted in Frankfurt",
+        "DE · EN · TR",
+        "API-first",
+        "Self-hosted ready",
+        "Pilot · Q2 '26",
       ],
     },
 
@@ -356,7 +356,7 @@ export const content: Content = {
           icon: "workflow",
           title: "Workflow-Automatisierung",
           description:
-            "End-to-End-Automatisierung für repetitive, regelbasierte Arbeit — mit n8n, Make und maßgeschneiderten Integrationen. Saubere Fehlerbehandlung, kein brüchiger Klebecode.",
+            "End-to-End-Automatisierung für repetitive, regelbasierte Arbeit — mit maßgeschneiderten Integrationen. Saubere Fehlerbehandlung und Monitoring von Anfang an.",
         },
         {
           icon: "plug",
@@ -386,14 +386,14 @@ export const content: Content = {
           icon: "shield",
           title: "Gehostet in Europa",
           description:
-            "Self-hosted oder deployed auf Hetzner / IONOS Frankfurt. DSGVO-nativ. Keine US-Subauftragnehmer, außer Sie möchten es explizit.",
+            "Self-hosted oder in EU-Infrastruktur deployed. Keine US-Subauftragnehmer, außer Sie möchten es explizit.",
         },
       ],
     },
 
     howItWorks: {
       label: "Vorgehen",
-      headline: "Drei Schritte. Kein Lock-in. Keine Blackbox.",
+      headline: "Drei Schritte.",
       steps: [
         {
           title: "Analyse",
@@ -403,7 +403,7 @@ export const content: Content = {
         {
           title: "Design & Umsetzung",
           description:
-            "Wir wählen den passenden Stack (n8n, Make, Custom-Code oder KI) und entwickeln, testen und deployen iterativ — mit klaren Updates in jedem Schritt.",
+            "Wir entwerfen die zu Ihren Prozessen passende Architektur, setzen sie mit individuellem Code um und liefern iterativ aus — mit klaren Updates in jedem Schritt.",
         },
         {
           title: "Betrieb & Weiterentwicklung",
@@ -415,7 +415,7 @@ export const content: Content = {
 
     whoUses: {
       label: "Für wen wir arbeiten",
-      headline: "Teams, deren Betrieb nicht manuell bleiben darf.",
+      headline: "Teams, die ihre Abläufe skalieren möchten.",
       items: [
         {
           title: "Hotellerie & Service",
@@ -438,7 +438,7 @@ export const content: Content = {
         {
           title: "Operations-Teams",
           description:
-            "Interne Ops-Leads, die statt noch mehr Tabellen endlich verlässliche interne Tools, Freigabe-Workflows und Dashboards brauchen.",
+            "Interne Ops-Leads, die verlässliche interne Tools, Freigabe-Workflows und Dashboards statt weiterer Tabellen einsetzen möchten.",
           icon: "freelancer",
         },
       ],
@@ -455,7 +455,7 @@ export const content: Content = {
           priceLabel: "Projektbasiert",
           priceCadence: "startet mit einem Erstgespräch",
           bullets: [
-            "Workflow-Automatisierung (n8n, Make, Custom)",
+            "Individuelle Workflow-Automatisierung",
             "Systemintegration über CRM, ERP, APIs",
             "Interne Tools, Admin-Panels, Dashboards",
             "KI-gestützte Workflows und Kommunikation",
@@ -472,7 +472,7 @@ export const content: Content = {
             "Kutasia — Multi-Branchen-Kundenplattform",
             "Digital Business Card — Link, QR, optional NFC",
             "Digital Reception — KI-Empfang für Service-Betriebe",
-            "Alle DSGVO-nativ · gehostet in Deutschland",
+            "Jedes Produkt direkt einsatzbereit",
           ],
           ctaLabel: "Alle Produkte ansehen",
           ctaHref: "/products",
@@ -482,37 +482,37 @@ export const content: Content = {
     },
 
     testimonials: {
-      label: "Notizen von Operations-Leads",
+      label: "Stimmen aus der Praxis",
       headline: "Was Teams nach der Zusammenarbeit mit OpSolid bemerken.",
       items: [
         {
           quote:
-            "Wir kopieren keine Bestelldaten mehr zwischen vier Systemen. Was früher zwei Stunden morgens gekostet hat, läuft jetzt bevor jemand den Laptop öffnet.",
+            "Wir kopieren keine Bestelldaten mehr zwischen vier Systemen. Der Prozess läuft automatisiert vor Arbeitsbeginn — ohne manuelle Dateneingabe.",
           name: "Lena Richter",
           role: "Head of Operations",
-          company: "Berliner Handelsgruppe",
+          company: "Mittelständischer Handel",
         },
         {
           quote:
-            "OpSolid wollte uns keine Plattform verkaufen. Sie haben unseren echten Prozess kartiert, das Langweilige automatisiert und uns volle Dokumentation übergeben.",
+            "OpSolid wollte uns keine Plattform verkaufen. Sie haben unseren echten Prozess kartiert, die repetitiven Teile automatisiert und uns volle Dokumentation übergeben.",
           name: "Marco Weber",
           role: "COO",
-          company: "Industrieunternehmen aus München",
+          company: "Industrieunternehmen, Deutschland",
         },
         {
           quote:
-            "Der gesamte Integrationslayer ist self-hosted. Keine US-Subauftragnehmer. Legal hat in einem einzigen Meeting freigegeben — das allein war es wert.",
+            "Der gesamte Integrationslayer ist self-hosted. Keine US-Subauftragnehmer. Legal hat in einem einzigen Meeting freigegeben.",
           name: "Sarah Klein",
           role: "IT-Leitung",
-          company: "Hamburger Dienstleistungsunternehmen",
+          company: "Dienstleistungsunternehmen",
         },
       ],
     },
 
     finalCta: {
-      eyebrow: "BEREIT?",
+      eyebrow: "ERSTGESPRÄCH",
       headline:
-        "Schauen wir, was sich tatsächlich automatisieren lässt.",
+        "Sehen wir uns Ihre Prozesse gemeinsam an.",
       description:
         "Buchen Sie ein kostenloses Erstgespräch. Wir zeigen ehrlich, wo Automatisierung sich rechnet — und wo nicht.",
       primaryCtaLabel: "Erstgespräch buchen",
@@ -532,7 +532,7 @@ export const content: Content = {
 
     agentShowcase: {
       eyebrow: "KI-AGENTEN",
-      heading: "Agenten, die wirklich ans Telefon gehen",
+      heading: "KI-Agenten für Telefon, Chat und Terminbuchung",
       paragraph:
         "Voice auf Ihrer Telefonleitung, Chat auf Ihrer Website, Buchungen in Ihrem Kalender — gebaut auf echten, produktionsreifen Stacks.",
       items: [
@@ -574,7 +574,7 @@ export const content: Content = {
       {
         title: "Workflow-Automatisierung",
         description:
-          "Automatisieren Sie wiederkehrende, regelbasierte Aufgaben in Ihrem Unternehmen mit n8n, Make, individuellen Workflows und API-Orchestrierung.",
+          "Automatisieren Sie wiederkehrende, regelbasierte Aufgaben in Ihrem Unternehmen mit individuellen Workflows und API-Orchestrierung.",
         problems: [
           "Stunden für Dateneingabe und Copy-Paste zwischen Systemen",
           "Fehler durch manuelle Übergaben zwischen Abteilungen",
@@ -787,7 +787,7 @@ export const content: Content = {
       headline:
         "Praxisnahe Automatisierungssysteme für Unternehmen, die weniger manuelle Arbeit brauchen",
       description:
-        "Sitz in Deutschland. Fokus auf den Ersatz manueller, wiederkehrender operativer Arbeit durch zuverlässige automatisierte Systeme.",
+        "Fokus auf den Ersatz manueller, wiederkehrender operativer Arbeit durch zuverlässige automatisierte Systeme.",
     },
     story: {
       headline: "Warum es OpSolid gibt",
@@ -826,11 +826,11 @@ export const content: Content = {
       title: "Gründer & Systems Architect",
       education: "",
       description:
-        "Unabhängiger Automatisierungsspezialist mit Sitz in Deutschland. Fokussiert auf die Konzeption und Entwicklung praxisnaher Automatisierungssysteme, Workflow-Integrationen und KI-gestützter Prozesse für den Geschäftsbetrieb.",
+        "Unabhängiger Automatisierungsspezialist. Fokussiert auf die Konzeption und Entwicklung praxisnaher Automatisierungssysteme, Workflow-Integrationen und KI-gestützter Prozesse für den Geschäftsbetrieb.",
       expertiseLabel: "",
       expertise: [],
       footnote:
-        "Sitz in Deutschland. Verfügbar für Projekte in ganz Europa und international.",
+        "Verfügbar für Projekte in ganz Europa und international.",
     },
     cta: {
       headline: "Lassen Sie uns etwas Nützliches bauen",
@@ -872,7 +872,7 @@ export const content: Content = {
       email: "hello@opsolid.de",
       response: "Übliche Antwortzeit: 1–2 Werktage.",
       location:
-        "Sitz in Deutschland. Verfügbar für Projekte in ganz Europa und international.",
+        "Verfügbar für Projekte in ganz Europa und international.",
     },
   },
 
@@ -1023,10 +1023,10 @@ export const content: Content = {
     },
     posts: [
       {
-        slug: "why-n8n-is-the-future-of-workflow-automation",
-        title: "Warum n8n die Zukunft der Workflow-Automatisierung ist",
+        slug: "workflow-automation-fundamentals",
+        title: "Workflow-Automatisierung: Was in der Praxis wirklich zählt",
         excerpt:
-          "Erfahren Sie, warum n8n zur bevorzugten Plattform für Unternehmen geworden ist, die leistungsstarke, selbst gehostete Workflow-Automatisierung mit voller Kontrolle über ihre Daten benötigen.",
+          "Ein nüchterner Blick darauf, was eine Workflow-Automatisierung im Produktivbetrieb trägt — Fehlerbehandlung, Datenhoheit, Observability und Ausstiegskosten, unabhängig von der gewählten Engine.",
         category: "automation",
         date: "2026-03-15",
         readTime: "6",
@@ -1059,11 +1059,11 @@ export const content: Content = {
         readTime: "7",
       },
       {
-        slug: "make-vs-zapier-vs-n8n-comparison",
+        slug: "choosing-the-right-automation-architecture",
         title:
-          "Make vs. Zapier vs. n8n: Die richtige Automatisierungsplattform wählen",
+          "Die richtige Automatisierungsarchitektur für Ihr Unternehmen wählen",
         excerpt:
-          "Ein detaillierter Vergleich der drei beliebtesten Automatisierungsplattformen — Funktionen, Preise, Flexibilität und wann welche zum Einsatz kommt.",
+          "Wie man zwischen Point-to-Point-Integrationen, individuellen Orchestrierungsschichten und hybriden Modellen entscheidet — anhand von Volumen, Compliance und Teamgröße, nicht Vendor-Pitch.",
         category: "automation",
         date: "2026-02-12",
         readTime: "10",
@@ -1109,13 +1109,13 @@ export const content: Content = {
       {
         question: "Welche Tools und Plattformen werden eingesetzt?",
         answer:
-          "Die primäre Automatisierungsplattform ist n8n, ergänzt durch Make und Zapier, wo es sinnvoll ist. Individuelle Integrationen werden über APIs, Datenbanken und Cloud-Dienste erstellt. Für KI-gestützte Workflows kommen zuverlässige Foundation Models und strukturierte Ansätze zum Einsatz. Das richtige Tool wird für jeden Anwendungsfall gewählt — nie eine Einheitslösung.",
+          "Jedes Projekt wird als individuelles System ausgeliefert, gebaut aus produktionsreifen Engineering-Schichten — REST APIs, Message Queues, Postgres und Webhooks als Kern, ergänzt durch KI-Primitive, wo sie sich auszahlen. Die Architektur wird pro Anwendungsfall gewählt, nicht nach einem One-size-fits-all-Werkzeugkasten.",
         category: "technical",
       },
       {
-        question: "Was ist n8n und warum wird es bevorzugt?",
+        question: "Warum individuelle Entwicklung statt einer SaaS-Plattform?",
         answer:
-          "n8n ist eine Open-Source-Plattform für Workflow-Automatisierung, die selbst gehostet werden kann und Ihnen volle Kontrolle über Ihre Daten und Workflows gibt. Sie ist flexibel, unterstützt Hunderte von Integrationen und erlaubt bei Bedarf individuellen Code. Sie bietet eine starke Balance aus Leistungsfähigkeit, Flexibilität und Datenhoheit für die Geschäftsautomatisierung.",
+          "Individuell entwickelte Systeme geben Ihnen volle Kontrolle über Ihre Daten, Ihre Workflows und die Kostenkurve. Keine Pro-Execution-Gebühren, kein Vendor-Lock-in, keine intransparenten Preisstufen. Die Architektur wird passgenau für Ihre Prozesse entworfen — und der Quellcode gehört Ihnen.",
         category: "technical",
       },
       {
@@ -1201,7 +1201,7 @@ export const content: Content = {
         "Retell AI",
         "Vapi",
         "Cal.com",
-        "n8n",
+        "Custom Workflows",
         "Supabase",
         "Meta Business",
         "HubSpot",
@@ -1246,7 +1246,7 @@ export const content: Content = {
         icon: "messageCircle",
         startingPrice: "Ab €1.800 Einrichtung + €99/Monat",
         category: "Kundenkontakt",
-        stack: "OpenAI · n8n · Supabase · HubSpot",
+        stack: "OpenAI · Custom Workflows · Supabase · HubSpot",
       },
       {
         name: "WhatsApp-Business-Agent",
@@ -1272,20 +1272,20 @@ export const content: Content = {
         icon: "calendarClock",
         startingPrice: "Ab €800 Einrichtung + €49/Monat",
         category: "Interne Prozesse",
-        stack: "Cal.com · Retell · n8n · Google Calendar",
+        stack: "Cal.com · Retell · Custom Workflows · Google Calendar",
       },
       {
         name: "E-Mail-Automatisierungs-Agent",
         tagline: "Outreach · Triage · Antwortentwürfe",
         description:
-          "KI-E-Mail-Workflows — Cold Outreach mit personalisierten Varianten, Inbox-Triage, Auto-Entwürfe zur Freigabe. Gebaut auf Instantly / AgentMail / eigene n8n-Flows. Zustellbarkeit aufgewärmt, DSGVO-konform.",
+          "KI-E-Mail-Workflows — Cold Outreach mit personalisierten Varianten, Inbox-Triage, Auto-Entwürfe zur Freigabe. Gebaut auf Instantly, AgentMail und individuellen Orchestrierungs-Flows. Zustellbarkeit aufgewärmt, DSGVO-konform.",
         status: "Live",
         href: "/products/email-agent",
         externalUrl: "",
         icon: "mail",
         startingPrice: "Ab €99 – €499/Monat",
         category: "Kommunikation",
-        stack: "Instantly · AgentMail · n8n · OpenAI",
+        stack: "Instantly · AgentMail · Custom Workflows · OpenAI",
       },
       {
         name: "Lead-Qualifizierungs-Agent",
@@ -1298,7 +1298,7 @@ export const content: Content = {
         icon: "userCheck",
         startingPrice: "Ab €2.200 Einrichtung + €199/Monat",
         category: "Kundenkontakt",
-        stack: "Retell · HubSpot · n8n · Supabase",
+        stack: "Retell · HubSpot · Custom Workflows · Supabase",
       },
       {
         name: "Digitale Rezeption",
@@ -1830,7 +1830,7 @@ export const content: Content = {
           { name: "Vapi", role: "Alternativer Voice-Stack (Enterprise)" },
           { name: "Cal.com", role: "Kalenderbuchungsschicht" },
           { name: "Supabase", role: "Anruf-Logs + Kontext-Store" },
-          { name: "n8n", role: "CRM-Sync + Post-Call-Workflows" },
+          { name: "Custom Workflows", role: "CRM-Sync + Post-Call-Orchestrierung" },
         ],
       },
       pricing: {
@@ -1927,7 +1927,7 @@ export const content: Content = {
           "Ein kontextbewusster Chatbot, der gleichzeitig auf Ihrer Website, WhatsApp und Telegram lebt — ein Gehirn, drei Stimmen. Qualifiziert Leads, beantwortet echte Fragen aus Ihren Dokumenten und synchronisiert Gespräche mit HubSpot.",
         primaryCta: "Demo buchen",
         secondaryCta: "So funktioniert's",
-        tags: "OPENAI · n8n · SUPABASE · MULTI-KANAL",
+        tags: "OPENAI · CUSTOM · SUPABASE · MULTI-KANAL",
         startingPrice: "Ab €1.800 Einrichtung + €99/Monat",
       },
       features: {
@@ -1992,7 +1992,7 @@ export const content: Content = {
         items: [
           { name: "OpenAI / Claude", role: "LLM-Kern (austauschbar)" },
           { name: "Supabase pgvector", role: "RAG-Embeddings + Gedächtnis" },
-          { name: "n8n", role: "Kanal-Orchestrierung + CRM-Sync" },
+          { name: "Custom Workflows", role: "Kanal-Orchestrierung + CRM-Sync" },
           { name: "Meta Business Cloud", role: "Offizieller WhatsApp-BSP" },
           { name: "HubSpot / Pipedrive", role: "Lead-Sync-Ziel" },
         ],
@@ -2152,7 +2152,7 @@ export const content: Content = {
         items: [
           { name: "Meta Business Cloud API", role: "Offizieller WhatsApp-Kanal" },
           { name: "360dialog / Twilio / AiSensy", role: "Verifizierte BSP-Schicht" },
-          { name: "n8n", role: "Workflow-Orchestrierung" },
+          { name: "Custom Workflows", role: "Workflow-Orchestrierung" },
           { name: "Stripe", role: "Zahlungslink-Trigger" },
           { name: "Shopify / WooCommerce", role: "Bestell- + Versand-Quelle der Wahrheit" },
         ],
@@ -2247,7 +2247,7 @@ export const content: Content = {
           "Ein KI-Agent für eine Aufgabe: buchen, umbuchen, erinnern. Funktioniert per Voice, Chat oder Formular — mit Zwei-Wege-Sync zu Google Kalender, Outlook oder Cal.com. Null Doppelbuchungen, weniger No-Shows.",
         primaryCta: "Demo buchen",
         secondaryCta: "So funktioniert's",
-        tags: "CAL.COM · RETELL · N8N · GOOGLE KALENDER",
+        tags: "CAL.COM · RETELL · CUSTOM · GOOGLE KALENDER",
         startingPrice: "Ab €800 Einrichtung + €49/Monat",
       },
       features: {
@@ -2312,7 +2312,7 @@ export const content: Content = {
         items: [
           { name: "Cal.com", role: "Buchungs-Engine + Verfügbarkeit" },
           { name: "Retell AI", role: "Voice-Intake (optional)" },
-          { name: "n8n", role: "Erinnerungs- + Nachfass-Workflows" },
+          { name: "Custom Workflows", role: "Erinnerungs- + Nachfass-Orchestrierung" },
           { name: "Google Calendar / Outlook", role: "Quelle-der-Wahrheit-Sync" },
           { name: "Twilio", role: "SMS-Erinnerungen" },
         ],
@@ -2404,10 +2404,10 @@ export const content: Content = {
           "Antwortentwürfe zur Freigabe.",
         ],
         paragraph:
-          "KI-E-Mail-Workflows, die wirklich laufen: personalisierter Cold Outreach, Eingangs-Triage und automatisch erstellte Antwortentwürfe zur Freigabe durch einen Menschen. Gebaut auf Instantly, AgentMail und eigenen n8n-Flows. Aufgewärmte Zustellbarkeit, DSGVO-konform.",
+          "KI-E-Mail-Workflows, die wirklich laufen: personalisierter Cold Outreach, Eingangs-Triage und automatisch erstellte Antwortentwürfe zur Freigabe durch einen Menschen. Gebaut auf Instantly, AgentMail und eigenen Orchestrierungs-Flows. Aufgewärmte Zustellbarkeit, DSGVO-konform.",
         primaryCta: "Demo buchen",
         secondaryCta: "So funktioniert's",
-        tags: "INSTANTLY · AGENTMAIL · n8n · OPENAI",
+        tags: "INSTANTLY · AGENTMAIL · CUSTOM · OPENAI",
         startingPrice: "Ab €99 – €499/Monat",
       },
       features: {
@@ -2472,7 +2472,7 @@ export const content: Content = {
         items: [
           { name: "Instantly", role: "Cold Outreach + Aufwärmung" },
           { name: "AgentMail", role: "Eingangs-Triage + Entwürfe" },
-          { name: "n8n", role: "Individuelle Workflow-Verklebung" },
+          { name: "Custom Workflows", role: "Individuelle Workflow-Orchestrierung" },
           { name: "OpenAI / Claude", role: "Entwürfe + Klassifikation" },
           { name: "HubSpot / Pipedrive", role: "CRM-Quelle der Wahrheit" },
         ],
@@ -2566,7 +2566,7 @@ export const content: Content = {
           "Ein Gesprächs-Agent, der eingehende Leads per Voice oder Chat qualifiziert, gegen Ihr ICP bewertet und MQLs direkt in HubSpot oder Pipedrive an den Vertrieb weiterleitet. Typische Steigerung: 40 % MQL-zu-SQL-Conversion.",
         primaryCta: "Demo buchen",
         secondaryCta: "So funktioniert's",
-        tags: "RETELL · HUBSPOT · N8N · SCORING",
+        tags: "RETELL · HUBSPOT · CUSTOM · SCORING",
         startingPrice: "Ab €2.200 Einrichtung + €199/Monat",
       },
       features: {
@@ -2631,7 +2631,7 @@ export const content: Content = {
         items: [
           { name: "Retell AI", role: "Voice-Qualifizierung" },
           { name: "HubSpot / Pipedrive", role: "CRM + Scoring-Ziel" },
-          { name: "n8n", role: "Routing + Slack-/Cal.com-Übergabe" },
+          { name: "Custom Workflows", role: "Routing + Slack-/Cal.com-Übergabe" },
           { name: "Supabase", role: "Gesprächs-Log + Analyse" },
           { name: "Clearbit / Apollo (optional)", role: "Firmografische Anreicherung" },
         ],
@@ -3107,7 +3107,7 @@ export const content: Content = {
           post: " steuert — und nicht umgekehrt.",
         },
         lead:
-          "OpSolid baut die Systeme, die Ihre Abläufe schon längst haben sollten. Workflow-Automatisierung, Systemintegration, interne Tools und KI-gestützte Prozesse für mittelständische Teams. Kein Stack-Rebuild. Kein KI-Theater.",
+          "OpSolid baut die Systeme, die im Hintergrund Ihres Betriebs zuverlässig laufen. Workflow-Automatisierung, Systemintegration, interne Tools und KI-gestützte Prozesse für mittelständische Teams. Integriert sich in Ihren Stack, statt ihn zu ersetzen.",
         ctaPrimary: "Discovery-Call buchen",
         ctaSecondary: "Was OpSolid baut",
         stats: [
@@ -3127,8 +3127,8 @@ export const content: Content = {
             icon: "workflow",
             title: "Workflow-Automatisierung",
             body:
-              "Aufträge, Dokumente, Freigaben, Kommunikation. Gebaut auf n8n, Make und eigenen Konnektoren, wo diese nicht ausreichen — nie auf Black-Box-SaaS.",
-            tag: "N8N · MAKE · CUSTOM",
+              "Aufträge, Dokumente, Freigaben, Kommunikation. Gebaut auf individueller Orchestrierung und eigenen Konnektoren — nie auf Black-Box-SaaS.",
+            tag: "API · WEBHOOKS · CUSTOM",
           },
           {
             icon: "plug",
@@ -3334,7 +3334,7 @@ export const content: Content = {
           { label: "LLM", value: "GPT-4o, Claude Sonnet oder on-prem, falls nötig" },
           { label: "TTS", value: "ElevenLabs oder Cartesia · geklonte Stimme" },
           { label: "Telefonie", value: "Twilio · deutsche DID · GDPR-DPA" },
-          { label: "Integrationen", value: "Cal.com, HubSpot, Pipedrive, SAP, n8n-Webhooks" },
+          { label: "Integrationen", value: "Cal.com, HubSpot, Pipedrive, SAP, individuelle Webhooks" },
           { label: "Datenresidenz", value: "EU-west · Frankfurt · keine US-Subprozessoren" },
           { label: "Ausstiegskosten", value: "Zwei Wochen. Prompts, Daten und Nummern portabel." },
         ],
@@ -3527,7 +3527,7 @@ export const content: Content = {
         headline:
           "Die kleinste ehrliche Automatisierung: was Geschäft bewegt vs. was im Deck gut aussieht.",
         lede:
-          "Eröffnungsstück des Journals. Entwurf in Arbeit — darüber, wie ein n8n-Workflow mit weniger als 20 Zeilen einen ERP-Austausch bei den Messgrößen schlägt, die zählen.",
+          "Eröffnungsstück des Journals. Entwurf in Arbeit — darüber, wie ein fokussierter Workflow mit weniger als 20 Zeilen einen ERP-Austausch bei den Messgrößen schlägt, die zählen.",
         meta: "D. PIHA · GEPLANT · 15 MIN",
       },
       series: {
