@@ -267,9 +267,24 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
 
             {/* Card content */}
             <fieldset className="space-y-4">
-              <legend className="text-heading-sm text-ink">
-                {L("cardSection", "Inhalt Ihrer Karte")}
-              </legend>
+              <div className="flex items-center justify-between gap-3">
+                <legend className="text-heading-sm text-ink">
+                  {L("cardSection", "Inhalt Ihrer Karte")}
+                </legend>
+                {(contactName || contactEmail || contactPhone) && (
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (!cardData.name && contactName) setCard("name", contactName);
+                      if (!cardData.email && contactEmail) setCard("email", contactEmail);
+                      if (!cardData.phone && contactPhone) setCard("phone", contactPhone);
+                    }}
+                    className="text-xs font-medium text-ink/50 underline underline-offset-2 transition-colors hover:text-ink"
+                  >
+                    {L("copyFromContact", "Von oben übernehmen")}
+                  </button>
+                )}
+              </div>
               <div className="grid gap-4 md:grid-cols-2">
                 <Input
                   label={L("cardName", "Vor- und Nachname")}
