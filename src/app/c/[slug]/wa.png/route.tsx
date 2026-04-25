@@ -61,7 +61,11 @@ export async function GET(
   const accent = order.brandAccentHex ?? FALLBACK_ACCENT;
 
   const siteUrl = getSiteUrl();
-  const publicUrl = `${siteUrl}/c/${params.slug}`;
+  // QR target uses the canonical card host so a scan lands on the prettier URL.
+  // siteUrl below stays anchored to opsolid.de so absoluteAssetUrl resolves
+  // local-driver photo/logo paths correctly during OG image rendering.
+  const cardHost = process.env.NEXT_PUBLIC_CARD_HOST?.trim() || "card.opsolid.de";
+  const publicUrl = `https://${cardHost}/${params.slug}`;
 
   const saved = (order.qrStyle ?? null) as SavedQrStyle | null;
   let qrDataUrl: string;

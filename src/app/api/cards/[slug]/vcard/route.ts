@@ -17,6 +17,10 @@ import { CardDataSchema, OrderStatus } from "@/lib/validation";
 import { buildVCard, vcardFilename } from "@/lib/vcard";
 import { absoluteAssetUrl } from "@/lib/storage";
 import { getSiteUrl } from "@/lib/stripe";
+import {
+  readSourceFromSearchParams,
+  describeSource,
+} from "@/components/cards/smart/SmartCardSource";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -24,7 +28,7 @@ export const dynamic = "force-dynamic";
 const INLINE_PHOTO_LIMIT = 1_500_000; // 1.5 MB
 
 export async function GET(
-  _req: Request,
+  req: Request,
   { params }: { params: { slug: string } }
 ) {
   const order = await prisma.cardOrder.findUnique({
@@ -40,6 +44,10 @@ export async function GET(
     return NextResponse.json({ error: "Invalid card data" }, { status: 500 });
   }
   const cardData = parsed.data;
+
+  const url = new URL(req.url);
+  const source = readSourceFromSearchParams(url.searchParams);
+  const sourceLabel = describeSource(source);
 
   const siteUrl = getSiteUrl();
   const cardPageUrl = `${siteUrl}/c/${params.slug}`;
@@ -78,6 +86,7 @@ export async function GET(
     photoUrl: photoBytes ? undefined : photoUrl,
     photoBytes,
     cardPageUrl,
+    sourceLabel,
   });
 
   return new NextResponse(vcard, {

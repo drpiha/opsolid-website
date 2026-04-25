@@ -69,7 +69,13 @@ export async function GET(
   const accent = order.brandAccentHex ?? FALLBACK_ACCENT;
 
   const siteUrl = getSiteUrl();
-  const publicUrl = `${siteUrl}/c/${params.slug}`;
+  // Canonical share URL points at the prettier `card.opsolid.de` host.
+  // We still honour an explicit override via NEXT_PUBLIC_CARD_HOST so a
+  // custom domain ("card.kunde.de") can supply its own canonical.
+  const cardHost = process.env.NEXT_PUBLIC_CARD_HOST?.trim() || "card.opsolid.de";
+  const publicUrl = `https://${cardHost}/${params.slug}`;
+  // Internal QR target — used as the data payload for the QR code itself.
+  const qrTarget = publicUrl;
 
   // Build the QR. We render server-side here (instead of pointing <img> at
   // /api/qr/[slug]) so the OG image is fully self-contained — next/og's image
@@ -78,7 +84,7 @@ export async function GET(
   let qrDataUrl: string;
   try {
     const { bytes } = await renderQr({
-      data: publicUrl,
+      data: qrTarget,
       preset: saved?.preset ?? "rounded",
       primary: saved?.primary ?? "#15120F",
       accent: saved?.accent ?? accent,
@@ -174,7 +180,7 @@ export async function GET(
                 display: "flex",
               }}
             >
-              OpSolid · Digital Card
+              OpSolid · Smart Card
             </div>
           )}
           <div

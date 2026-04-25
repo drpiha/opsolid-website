@@ -22,6 +22,9 @@ export interface BuildVCardArgs {
   photoBytes?: { mime: string; base64: string };
   /** Public URL of the card page — added as URL field. */
   cardPageUrl: string;
+  /** Optional human-readable source label appended to NOTE so the saved
+   *  contact remembers where it came from (e.g. "Hannover Messe — Hall B12"). */
+  sourceLabel?: string;
 }
 
 const CRLF = "\r\n"; // RFC 6350 mandates CRLF line endings.
@@ -75,7 +78,7 @@ function digitsOnly(phone: string): string {
 }
 
 export function buildVCard(args: BuildVCardArgs): string {
-  const { cardData, photoUrl, photoBytes, cardPageUrl } = args;
+  const { cardData, photoUrl, photoBytes, cardPageUrl, sourceLabel } = args;
   const lines: string[] = [];
 
   lines.push("BEGIN:VCARD");
@@ -107,7 +110,14 @@ export function buildVCard(args: BuildVCardArgs): string {
     // the "street" slot — Contacts apps render that fine as a single line.
     lines.push(`ADR;TYPE=work:;;${esc(cardData.address)};;;;`);
   }
-  if (cardData.bio) lines.push(`NOTE:${esc(cardData.bio)}`);
+  // NOTE: bio + optional source label so the saved contact remembers context
+  // (e.g. "Saved via OpSolid Smart Card. Source: Hannover Messe — Hall B12").
+  const noteParts: string[] = [];
+  if (cardData.bio) noteParts.push(cardData.bio);
+  if (sourceLabel) noteParts.push(`Source: ${sourceLabel}`);
+  if (noteParts.length > 0) {
+    lines.push(`NOTE:${esc(noteParts.join("\n"))}`);
+  }
 
   lines.push(`URL;TYPE=card:${esc(cardPageUrl)}`);
 

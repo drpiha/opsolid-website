@@ -214,12 +214,71 @@ export const BlockSchema = z
 export type CardBlock = z.infer<typeof BlockSchema>;
 
 // -----------------------------------------------------------------------------
-// CardData — the JSON blob rendered on the public card page
+// Smart Card sub-schemas — services, gallery, FAQ, testimonials. All optional;
+// a card with none of these renders the same as before (compact contact card).
+// -----------------------------------------------------------------------------
+
+const ServiceSchema = z
+  .object({
+    title: z.string().trim().min(1).max(120),
+    description: z.string().trim().max(400).optional(),
+    /** Optional explicit price label (rendered as-is). e.g. "ab 49 €" */
+    priceLabel: z.string().trim().max(60).optional(),
+  })
+  .strict();
+export type CardService = z.infer<typeof ServiceSchema>;
+
+const GalleryItemSchema = z
+  .object({
+    src: z.string().trim().max(500), // Storage path, normalized at render time.
+    alt: z.string().trim().max(160).optional(),
+  })
+  .strict();
+export type CardGalleryItem = z.infer<typeof GalleryItemSchema>;
+
+const FaqItemSchema = z
+  .object({
+    q: z.string().trim().min(1).max(240),
+    a: z.string().trim().min(1).max(1200),
+  })
+  .strict();
+export type CardFaqItem = z.infer<typeof FaqItemSchema>;
+
+const TestimonialSchema = z
+  .object({
+    author: z.string().trim().min(1).max(120),
+    role: z.string().trim().max(160).optional(),
+    quote: z.string().trim().min(1).max(600),
+  })
+  .strict();
+export type CardTestimonial = z.infer<typeof TestimonialSchema>;
+
+// Custom CTA buttons rendered above the contact rows. `style` selects the
+// visual treatment (primary = filled brand, secondary = outline, ghost = text).
+const CustomButtonSchema = z
+  .object({
+    label: z.string().trim().min(1).max(48),
+    href: url,
+    style: z.enum(["primary", "secondary", "ghost"]).default("secondary"),
+  })
+  .strict();
+export type CardCustomButton = z.infer<typeof CustomButtonSchema>;
+
+// -----------------------------------------------------------------------------
+// CardData — the JSON blob rendered on the public card page.
+//
+// Smart Card MVP fields (added 2026-04-25, all optional & backward compatible):
+//   - position, coverImage, services[], gallery[], faqs[], testimonials[]
+//   - customButtons[], bookingUrl, brochureUrl
+//   - impressumUrl, privacyUrl (German market: legally required for businesses)
 // -----------------------------------------------------------------------------
 
 export const CardDataSchema = z.object({
   name: z.string().trim().min(1).max(120),
   title: z.string().trim().max(160).optional(),
+  /** Job position (separate from `title` so we can render "Sales Manager"
+   *  alongside a creative title like "Founder & Head of Growth"). */
+  position: z.string().trim().max(160).optional(),
   company: z.string().trim().max(160).optional(),
   email: z.string().email().max(200).optional(),
   phone: phone.optional(),
@@ -227,6 +286,16 @@ export const CardDataSchema = z.object({
   website: url.optional(),
   address: z.string().trim().max(500).optional(),
   bio: z.string().trim().max(600).optional(),
+  /** Cover/hero image rendered behind the avatar. Storage path or full URL. */
+  coverImage: z.string().trim().max(500).optional(),
+  /** Cal.com / Calendly / generic booking URL. Drives the "Randevu Al" CTA. */
+  bookingUrl: url.optional(),
+  /** Public PDF brochure / portfolio link. */
+  brochureUrl: url.optional(),
+  /** Impressum (German legal footer). Strongly recommended for DE business cards. */
+  impressumUrl: url.optional(),
+  /** Datenschutz / Privacy policy link. */
+  privacyUrl: url.optional(),
   /** Optional embedded video — YouTube or Vimeo URL only. Rendered by the
    *  layout if `supportsVideo` and lazy-loaded (click-to-play poster). */
   videoUrl: videoUrl.optional(),
@@ -239,9 +308,20 @@ export const CardDataSchema = z.object({
       youtube: url.optional(),
       github: url.optional(),
       facebook: url.optional(),
+      xing: url.optional(),
     })
     .strict()
     .optional(),
+  /** Up to 12 services / offerings rendered as a list. */
+  services: z.array(ServiceSchema).max(12).optional(),
+  /** Up to 24 manually uploaded gallery images. */
+  gallery: z.array(GalleryItemSchema).max(24).optional(),
+  /** Up to 12 FAQ items rendered as accordion. */
+  faqs: z.array(FaqItemSchema).max(12).optional(),
+  /** Up to 8 testimonials. */
+  testimonials: z.array(TestimonialSchema).max(8).optional(),
+  /** Up to 4 custom CTA buttons rendered above contact rows. */
+  customButtons: z.array(CustomButtonSchema).max(4).optional(),
   designNotes: z.string().trim().max(800).optional(),
 });
 export type CardData = z.infer<typeof CardDataSchema>;
