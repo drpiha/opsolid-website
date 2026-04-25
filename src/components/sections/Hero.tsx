@@ -19,12 +19,16 @@ export function Hero() {
     <section className="os-hero" aria-labelledby="hero-title">
       <div className="os-hero-inner">
         <div>
-          <div className="os-hero-meta">
-            <span className="chip chip-hot">
-              <span className="chip-dot chip-dot-live" /> {h.metaChip}
-            </span>
-            <span className="meta">{h.metaLabel}</span>
-          </div>
+          {(h.metaChip || h.metaLabel) && (
+            <div className="os-hero-meta">
+              {h.metaChip && (
+                <span className="chip chip-hot">
+                  <span className="chip-dot chip-dot-live" /> {h.metaChip}
+                </span>
+              )}
+              {h.metaLabel && <span className="meta">{h.metaLabel}</span>}
+            </div>
+          )}
           <h1 id="hero-title" className="os-hero-title">
             {h.title.pre}
             <span className="editorial">{h.title.italic}</span>
@@ -39,16 +43,18 @@ export function Hero() {
               {h.ctaSecondary}
             </Link>
           </div>
-          <div className="os-hero-stats">
-            {h.stats.map((stat, i) => (
-              <div key={i}>
-                <div className="os-stat-num">
-                  <span className="metallic-copper">{stat.value}</span>
+          {h.stats.length > 0 && (
+            <div className="os-hero-stats">
+              {h.stats.map((stat, i) => (
+                <div key={i}>
+                  <div className="os-stat-num">
+                    <span className="metallic-copper">{stat.value}</span>
+                  </div>
+                  <div className="os-stat-label">{stat.label}</div>
                 </div>
-                <div className="os-stat-label">{stat.label}</div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
         <KineticMechanism />
       </div>

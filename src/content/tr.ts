@@ -24,7 +24,7 @@ export const content: Content = {
         "OpSolid, işletmelerin manuel ve tekrarlayan işlerini güvenilir otomasyon sistemleriyle değiştirmelerine yardımcı olur — iş akışı otomasyonundan sistem entegrasyonuna, yapay zeka destekli süreçlere kadar.",
       primaryCta: "Tanışma Görüşmesi Planlayın",
       secondaryCta: "Hizmetleri İnceleyin",
-      ratingPill: "OPSOLID · PRECISION AUTOMATION · FRA-01",
+      ratingPill: "",
       title: [
         "Operasyonlarınızı",
         "yöneten otomasyon —",
@@ -36,11 +36,11 @@ export const content: Content = {
       primaryCtaHref: "/contact",
       secondaryCtaLabel: "Hizmetleri gör",
       secondaryCtaHref: "/solutions",
-      footnote: "EU · Hosted in Frankfurt    DE · EN · TR · Müşteri dilleri    Q2 '26 · Pilot · Partnerler aranıyor",
+      footnote: "",
       consultingNote:
         "Ayrıca bağımsız ürünler de sunuyoruz — Kutasia, Dijital Kartvizit, Dijital Resepsiyon.",
       editorial: {
-        eyebrow: "[ 01 / 04 ]   OTOMASYON STÜDYOSU   ·   OPS-01 · SYNC 0000",
+        eyebrow: "",
         title: [
           "Operasyonun arka planında",
           "sessizce çalışan",
@@ -336,14 +336,7 @@ export const content: Content = {
     },
 
     trustStrip: {
-      items: [
-        "EU jurisdiction",
-        "Hosted in Frankfurt",
-        "DE · EN · TR",
-        "API-first entegrasyon",
-        "Self-hosted ready",
-        "Pilot · Q2 '26",
-      ],
+      items: [],
     },
 
     featureGrid: {
@@ -869,7 +862,7 @@ export const content: Content = {
       cta: "Görüşme Planlayın",
     },
     info: {
-      email: "hello@opsolid.de",
+      email: "info@kutasia.com",
       response: "Tipik yanıt süresi: 1-2 iş günü.",
       location:
         "Avrupa genelinde ve uluslararası projelere açıktır.",
@@ -998,7 +991,7 @@ export const content: Content = {
           {
             title: "Silme hakkı",
             content:
-              "Digital Business Card profilinizi ve ilgili tüm verileri hesabınız içinden tek tıklamayla veya contact@opsolid.de adresine e-posta göndererek silebilirsiniz. Silme işlemi 30 gün içinde tamamlanır.",
+              "Digital Business Card profilinizi ve ilgili tüm verileri hesabınız içinden tek tıklamayla veya info@kutasia.com adresine e-posta göndererek silebilirsiniz. Silme işlemi 30 gün içinde tamamlanır.",
           },
         ],
       },
@@ -1516,7 +1509,7 @@ export const content: Content = {
           success:
             "Teşekkürler — bir iş günü içinde önizleme linkiyle dönüş yapacağız.",
           error:
-            "Bir sorun oluştu. Lütfen doğrudan contact@opsolid.de adresine yazın.",
+            "Bir sorun oluştu. Lütfen doğrudan info@kutasia.com adresine yazın.",
         },
       },
       testimonials: {
@@ -1604,7 +1597,7 @@ export const content: Content = {
           {
             question: "Ekibim için 10+ karta ihtiyacım var. Nasıl?",
             answer:
-              "Custom paket. Kartların ne kadar ortak paylaşacağına ve ne kadar özel kalacağına göre proje bazlı teklif veririz. contact@opsolid.de adresine yazın.",
+              "Custom paket. Kartların ne kadar ortak paylaşacağına ve ne kadar özel kalacağına göre proje bazlı teklif veririz. info@kutasia.com adresine yazın.",
           },
         ],
       },
@@ -1738,7 +1731,7 @@ export const content: Content = {
           "Aboneliğiniz mevcut fatura döneminin sonuna kadar aktif kalır, ardından yenilenmez.",
         keep: "Aboneliği koru",
         confirm: "İptali onayla",
-        error: "İptal planlanamadı. Lütfen contact@opsolid.de adresine yazın.",
+        error: "İptal planlanamadı. Lütfen info@kutasia.com adresine yazın.",
         doneBody:
           "İptal planlandı. Kartınız {date} tarihine kadar canlı kalır. Stripe'tan son bir onay e-postası alacaksınız.",
         doneClose: "Kapat",
@@ -2867,7 +2860,7 @@ export const content: Content = {
           success:
             "Teşekkürler — bir iş günü içinde yanıtlayacağız.",
           error:
-            "Bir şeyler yanlış gitti. Lütfen doğrudan contact@opsolid.de adresine yazın.",
+            "Bir şeyler yanlış gitti. Lütfen doğrudan info@kutasia.com adresine yazın.",
         },
       },
       faq: {
@@ -3069,7 +3062,7 @@ export const content: Content = {
     footer: {
       tagline:
         "Bağımsız otomasyon stüdyosu. Hamburg · Frankfurt. GDPR-native altyapı, vendor lock-in yok.",
-      chipLive: "FRA · DE",
+      chipLive: "",
       chipLanguages: "EN · DE · TR",
       cols: {
         productsHeading: "Ürünler",
@@ -3093,14 +3086,14 @@ export const content: Content = {
       },
       base: {
         copyrightSuffix: "OpSolid UG · Hamburg, DE",
-        trustLine: "GDPR-native · Hosted in Frankfurt · No US subprocessors",
+        trustLine: "",
       },
     },
 
     home: {
       hero: {
-        metaChip: "AUTOMATION STUDIO",
-        metaLabel: "[ 01 / 04 ] HAMBURG · DE",
+        metaChip: "",
+        metaLabel: "",
         title: {
           pre: "Operasyonlarınızı ",
           italic: "gerçekten",
@@ -3110,11 +3103,7 @@ export const content: Content = {
           "OpSolid, operasyonunuzun arka planında sessizce çalışan sistemleri kurar. Orta ölçekli ekipler için workflow otomasyonu, sistem entegrasyonu, dahili araçlar ve yapay zekâ destekli süreçler. Mevcut sisteminizi yeniden kurmadan, sürecinize entegre olur.",
         ctaPrimary: "Discovery görüşmesi ayarla",
         ctaSecondary: "OpSolid ne inşa eder",
-        stats: [
-          { value: "EU", label: "Hosted in Frankfurt" },
-          { value: "DE · EN · TR", label: "Müşteri dilleri" },
-          { value: "Q2 '26", label: "Pilot · partnerler aranıyor" },
-        ],
+        stats: [],
       },
 
       capabilities: {
@@ -3450,9 +3439,9 @@ export const content: Content = {
         contacts: [
           {
             key: "MAIL",
-            value: "drhasanhd@gmail.com",
+            value: "info@kutasia.com",
             meta: "DE · EN · TR",
-            href: "mailto:drhasanhd@gmail.com",
+            href: "mailto:info@kutasia.com",
           },
           {
             key: "TEL",
@@ -3504,7 +3493,7 @@ export const content: Content = {
           { key: "other", label: "Başka bir şey" },
         ],
         legal:
-          "Gönderi drhasanhd@gmail.com'a gider. Üçüncü taraf analitik yok, pazarlama listesi yok, 14 günden sonra takip yok.",
+          "Gönderi info@kutasia.com'a gider. Üçüncü taraf analitik yok, pazarlama listesi yok, 14 günden sonra takip yok.",
         submitCta: "Görüşme talep et",
         success: "Teşekkürler — 48 saat içinde yanıt vereceğiz.",
         error: "Gönderilemedi. Tekrar deneyin veya doğrudan yazın.",

@@ -189,26 +189,6 @@ export function KineticMechanism() {
             );
           })}
         </g>
-        <text
-          x="44"
-          y="28"
-          fill="rgba(212,162,58,0.65)"
-          fontFamily="var(--font-jetbrains-mono), monospace"
-          fontSize="11"
-          letterSpacing="2"
-        >
-          OPS-01 · SYNC 0000
-        </text>
-        <text
-          x="710"
-          y="28"
-          fill="rgba(255,255,255,0.35)"
-          fontFamily="var(--font-jetbrains-mono), monospace"
-          fontSize="11"
-          letterSpacing="2"
-        >
-          FRA · DE
-        </text>
       </svg>
 
       <div className="km-ring km-ring-outer" ref={outerRingRef}>
@@ -270,17 +250,6 @@ export function KineticMechanism() {
               </g>
             );
           })}
-          <path id="kmArcLabel" d="M 70 230 A 130 130 0 0 0 330 230" fill="none" />
-          <text
-            fontFamily="var(--font-jetbrains-mono), monospace"
-            fontSize="9"
-            fill="rgba(212,162,58,0.8)"
-            letterSpacing="6"
-          >
-            <textPath href="#kmArcLabel" startOffset="4%">
-              OPSOLID · PRECISION AUTOMATION · FRA-01
-            </textPath>
-          </text>
         </svg>
       </div>
 

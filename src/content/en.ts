@@ -23,7 +23,7 @@ export const content = {
         "OpSolid helps businesses replace manual, repetitive work with reliable automated systems — from workflow automation and systems integration to AI-assisted processes.",
       primaryCta: "Book a Discovery Call",
       secondaryCta: "See Services",
-      ratingPill: "OPSOLID · PRECISION AUTOMATION · FRA-01",
+      ratingPill: "",
       title: [
         "Automation that runs",
         "your operations —",
@@ -35,10 +35,10 @@ export const content = {
       primaryCtaHref: "/contact",
       secondaryCtaLabel: "See services",
       secondaryCtaHref: "/solutions",
-      footnote: "EU · Hosted in Frankfurt    DE · EN · TR · Customer languages    Q2 '26 · Pilot · partners welcome",
+      footnote: "",
       consultingNote: "We also ship standalone products — Kutasia, Digital Business Card, Digital Reception.",
       editorial: {
-        eyebrow: "[ 01 / 04 ]   AUTOMATION STUDIO   ·   OPS-01 · SYNC 0000",
+        eyebrow: "",
         title: [
           "Systems that run quietly",
           "in the background",
@@ -334,14 +334,7 @@ export const content = {
     },
 
     trustStrip: {
-      items: [
-        "EU jurisdiction",
-        "Hosted in Frankfurt",
-        "DE · EN · TR",
-        "API-first integration",
-        "Self-hosted ready",
-        "Pilot · Q2 '26",
-      ],
+      items: [] as string[],
     },
 
     featureGrid: {
@@ -867,7 +860,7 @@ export const content = {
       cta: "Schedule a Call",
     },
     info: {
-      email: "hello@opsolid.de",
+      email: "info@kutasia.com",
       response: "Typical response time: 1-2 business days.",
       location:
         "Available for projects across Europe and internationally.",
@@ -996,7 +989,7 @@ export const content = {
           {
             title: "Right to deletion",
             content:
-              "You may delete your Digital Business Card profile and all associated data with one click inside your account, or by emailing contact@opsolid.de. Deletion is effective within 30 days.",
+              "You may delete your Digital Business Card profile and all associated data with one click inside your account, or by emailing info@kutasia.com. Deletion is effective within 30 days.",
           },
         ],
       },
@@ -1514,7 +1507,7 @@ export const content = {
           success:
             "Thanks — we'll reply within one business day with a preview link.",
           error:
-            "Something went wrong. Please email contact@opsolid.de directly.",
+            "Something went wrong. Please email info@kutasia.com directly.",
         },
       },
       testimonials: {
@@ -1602,7 +1595,7 @@ export const content = {
           {
             question: "I need 10+ cards for my team. How?",
             answer:
-              "Custom tier. We quote per project based on how much each card should share vs. stay unified. Email contact@opsolid.de.",
+              "Custom tier. We quote per project based on how much each card should share vs. stay unified. Email info@kutasia.com.",
           },
         ],
       },
@@ -1736,7 +1729,7 @@ export const content = {
           "Your subscription stays active until the end of the current billing period, then stops renewing.",
         keep: "Keep subscription",
         confirm: "Confirm cancel",
-        error: "We couldn't schedule the cancellation. Please email contact@opsolid.de.",
+        error: "We couldn't schedule the cancellation. Please email info@kutasia.com.",
         doneBody:
           "Cancellation scheduled. Your card stays live until {date}. You'll get a final confirmation email from Stripe.",
         doneClose: "Close",
@@ -2865,7 +2858,7 @@ export const content = {
           success:
             "Thanks — we'll reply within one business day.",
           error:
-            "Something went wrong. Please email contact@opsolid.de directly.",
+            "Something went wrong. Please email info@kutasia.com directly.",
         },
       },
       faq: {
@@ -3080,7 +3073,7 @@ export const content = {
     footer: {
       tagline:
         "Independent automation studio. Hamburg · Frankfurt. GDPR-native infrastructure, no vendor lock-in.",
-      chipLive: "FRA · DE",
+      chipLive: "",
       chipLanguages: "EN · DE · TR",
       cols: {
         productsHeading: "Products",
@@ -3104,14 +3097,14 @@ export const content = {
       },
       base: {
         copyrightSuffix: "OpSolid UG · Hamburg, DE",
-        trustLine: "GDPR-native · Hosted in Frankfurt · No US subprocessors",
+        trustLine: "",
       },
     },
 
     home: {
       hero: {
-        metaChip: "AUTOMATION STUDIO",
-        metaLabel: "[ 01 / 04 ] HAMBURG · DE",
+        metaChip: "",
+        metaLabel: "",
         title: {
           pre: "Automation that ",
           italic: "actually",
@@ -3121,11 +3114,7 @@ export const content = {
           "OpSolid builds the systems your operations already pretend to have. Workflow automation, systems integration, internal tools, and AI-assisted processes for mid-sized teams. No rebuild of your stack. No AI theater.",
         ctaPrimary: "Book a discovery call",
         ctaSecondary: "See what OpSolid builds",
-        stats: [
-          { value: "EU", label: "Hosted in Frankfurt" },
-          { value: "DE · EN · TR", label: "Customer languages" },
-          { value: "Q2 '26", label: "Pilot · taking partners" },
-        ],
+        stats: [] as Array<{ value: string; label: string }>,
       },
 
       capabilities: {
@@ -3461,9 +3450,9 @@ export const content = {
         contacts: [
           {
             key: "MAIL",
-            value: "drhasanhd@gmail.com",
+            value: "info@kutasia.com",
             meta: "DE · EN · TR",
-            href: "mailto:drhasanhd@gmail.com",
+            href: "mailto:info@kutasia.com",
           },
           {
             key: "TEL",
@@ -3515,7 +3504,7 @@ export const content = {
           { key: "other", label: "Something else" },
         ],
         legal:
-          "Submission routes to drhasanhd@gmail.com. No third-party analytics, no marketing list, no follow-up after 14 days.",
+          "Submission routes to info@kutasia.com. No third-party analytics, no marketing list, no follow-up after 14 days.",
         submitCta: "Request call",
         success: "Thanks — we'll reply within 48 hours.",
         error: "Something didn't send. Try again or email directly.",

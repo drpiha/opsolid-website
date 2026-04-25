@@ -128,10 +128,10 @@ function EditRejectedView({
         <p className="mt-6 text-sm text-ink/50">
           Need help? Email{" "}
           <a
-            href="mailto:contact@opsolid.de"
+            href="mailto:info@kutasia.com"
             className="underline underline-offset-4"
           >
-            contact@opsolid.de
+            info@kutasia.com
           </a>
           .
         </p>

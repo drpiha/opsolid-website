@@ -24,7 +24,7 @@ export const content: Content = {
         "OpSolid unterstützt Unternehmen dabei, manuelle, wiederkehrende Arbeit durch zuverlässige automatisierte Systeme zu ersetzen — von Workflow-Automatisierung und Systemintegration bis hin zu KI-gestützten Prozessen.",
       primaryCta: "Erstgespräch buchen",
       secondaryCta: "Leistungen ansehen",
-      ratingPill: "OPSOLID · PRECISION AUTOMATION · FRA-01",
+      ratingPill: "",
       title: [
         "Automatisierung, die",
         "Ihren Betrieb steuert —",
@@ -36,11 +36,11 @@ export const content: Content = {
       primaryCtaHref: "/contact",
       secondaryCtaLabel: "Leistungen ansehen",
       secondaryCtaHref: "/solutions",
-      footnote: "EU · Hosted in Frankfurt    DE · EN · TR · Kundensprachen    Q2 '26 · Pilot · Partner gesucht",
+      footnote: "",
       consultingNote:
         "Wir liefern auch eigenständige Produkte — Kutasia, Digital Business Card, Digital Reception.",
       editorial: {
-        eyebrow: "[ 01 / 04 ]   AUTOMATION STUDIO   ·   OPS-01 · SYNC 0000",
+        eyebrow: "",
         title: [
           "Systeme, die im Hintergrund",
           "Ihres Betriebs zuverlässig",
@@ -336,14 +336,7 @@ export const content: Content = {
     },
 
     trustStrip: {
-      items: [
-        "EU jurisdiction",
-        "Hosted in Frankfurt",
-        "DE · EN · TR",
-        "API-first",
-        "Self-hosted ready",
-        "Pilot · Q2 '26",
-      ],
+      items: [],
     },
 
     featureGrid: {
@@ -869,7 +862,7 @@ export const content: Content = {
       cta: "Termin vereinbaren",
     },
     info: {
-      email: "hello@opsolid.de",
+      email: "info@kutasia.com",
       response: "Übliche Antwortzeit: 1–2 Werktage.",
       location:
         "Verfügbar für Projekte in ganz Europa und international.",
@@ -998,7 +991,7 @@ export const content: Content = {
           {
             title: "Recht auf Löschung",
             content:
-              "Sie können Ihr Digital Business Card Profil und alle zugehörigen Daten mit einem Klick in Ihrem Konto oder per E-Mail an contact@opsolid.de löschen. Die Löschung wird innerhalb von 30 Tagen wirksam.",
+              "Sie können Ihr Digital Business Card Profil und alle zugehörigen Daten mit einem Klick in Ihrem Konto oder per E-Mail an info@kutasia.com löschen. Die Löschung wird innerhalb von 30 Tagen wirksam.",
           },
         ],
       },
@@ -1516,7 +1509,7 @@ export const content: Content = {
           success:
             "Danke — Antwort innerhalb eines Werktages mit Vorschau-Link.",
           error:
-            "Etwas ist schiefgegangen. Bitte direkt an contact@opsolid.de schreiben.",
+            "Etwas ist schiefgegangen. Bitte direkt an info@kutasia.com schreiben.",
         },
       },
       testimonials: {
@@ -1604,7 +1597,7 @@ export const content: Content = {
           {
             question: "Ich brauche 10+ Karten für mein Team. Wie?",
             answer:
-              "Custom-Tarif. Wir erstellen ein projektbezogenes Angebot, abhängig davon, wie viel die Karten gemeinsam haben sollen. Schreiben Sie an contact@opsolid.de.",
+              "Custom-Tarif. Wir erstellen ein projektbezogenes Angebot, abhängig davon, wie viel die Karten gemeinsam haben sollen. Schreiben Sie an info@kutasia.com.",
           },
         ],
       },
@@ -1738,7 +1731,7 @@ export const content: Content = {
           "Ihr Abo bleibt bis zum Ende des aktuellen Abrechnungszeitraums aktiv und verlängert sich danach nicht mehr.",
         keep: "Abo behalten",
         confirm: "Kündigung bestätigen",
-        error: "Kündigung konnte nicht geplant werden. Bitte E-Mail an contact@opsolid.de.",
+        error: "Kündigung konnte nicht geplant werden. Bitte E-Mail an info@kutasia.com.",
         doneBody:
           "Kündigung vorgemerkt. Ihre Karte bleibt bis zum {date} live. Eine abschließende Bestätigung senden wir per E-Mail.",
         doneClose: "Schließen",
@@ -2867,7 +2860,7 @@ export const content: Content = {
           success:
             "Danke — wir antworten innerhalb eines Werktags.",
           error:
-            "Etwas ist schiefgegangen. Bitte schreiben Sie direkt an contact@opsolid.de.",
+            "Etwas ist schiefgegangen. Bitte schreiben Sie direkt an info@kutasia.com.",
         },
       },
       faq: {
@@ -3069,7 +3062,7 @@ export const content: Content = {
     footer: {
       tagline:
         "Unabhängiges Automatisierungsstudio. Hamburg · Frankfurt. GDPR-native Infrastruktur, kein Vendor-Lock-in.",
-      chipLive: "FRA · DE",
+      chipLive: "",
       chipLanguages: "EN · DE · TR",
       cols: {
         productsHeading: "Produkte",
@@ -3093,14 +3086,14 @@ export const content: Content = {
       },
       base: {
         copyrightSuffix: "OpSolid UG · Hamburg, DE",
-        trustLine: "GDPR-native · Hosted in Frankfurt · No US subprocessors",
+        trustLine: "",
       },
     },
 
     home: {
       hero: {
-        metaChip: "AUTOMATION STUDIO",
-        metaLabel: "[ 01 / 04 ] HAMBURG · DE",
+        metaChip: "",
+        metaLabel: "",
         title: {
           pre: "Automatisierung, die Ihre Abläufe ",
           italic: "tatsächlich",
@@ -3110,11 +3103,7 @@ export const content: Content = {
           "OpSolid baut die Systeme, die im Hintergrund Ihres Betriebs zuverlässig laufen. Workflow-Automatisierung, Systemintegration, interne Tools und KI-gestützte Prozesse für mittelständische Teams. Integriert sich in Ihren Stack, statt ihn zu ersetzen.",
         ctaPrimary: "Discovery-Call buchen",
         ctaSecondary: "Was OpSolid baut",
-        stats: [
-          { value: "EU", label: "Hosted in Frankfurt" },
-          { value: "DE · EN · TR", label: "Kundensprachen" },
-          { value: "Q2 '26", label: "Pilot · Partner willkommen" },
-        ],
+        stats: [],
       },
 
       capabilities: {
@@ -3450,9 +3439,9 @@ export const content: Content = {
         contacts: [
           {
             key: "MAIL",
-            value: "drhasanhd@gmail.com",
+            value: "info@kutasia.com",
             meta: "DE · EN · TR",
-            href: "mailto:drhasanhd@gmail.com",
+            href: "mailto:info@kutasia.com",
           },
           {
             key: "TEL",
@@ -3504,7 +3493,7 @@ export const content: Content = {
           { key: "other", label: "Etwas anderes" },
         ],
         legal:
-          "Einreichung geht an drhasanhd@gmail.com. Keine Drittanbieter-Analyse, keine Marketing-Liste, kein Follow-up nach 14 Tagen.",
+          "Einreichung geht an info@kutasia.com. Keine Drittanbieter-Analyse, keine Marketing-Liste, kein Follow-up nach 14 Tagen.",
         submitCta: "Anruf anfragen",
         success: "Danke — wir antworten innerhalb von 48 Stunden.",
         error: "Etwas ging schief. Versuchen Sie es erneut oder schreiben Sie direkt.",

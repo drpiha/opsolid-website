@@ -25,12 +25,16 @@ export function Footer() {
               OpSolid
             </Link>
             <p>{f.tagline}</p>
-            <div style={{ display: "flex", gap: 8, marginTop: 20 }}>
-              <span className="chip">
-                <span className="chip-dot chip-dot-live" /> {f.chipLive}
-              </span>
-              <span className="chip">{f.chipLanguages}</span>
-            </div>
+            {(f.chipLive || f.chipLanguages) && (
+              <div style={{ display: "flex", gap: 8, marginTop: 20 }}>
+                {f.chipLive && (
+                  <span className="chip">
+                    <span className="chip-dot chip-dot-live" /> {f.chipLive}
+                  </span>
+                )}
+                {f.chipLanguages && <span className="chip">{f.chipLanguages}</span>}
+              </div>
+            )}
           </div>
 
           <div className="os-footer-cols">
@@ -92,7 +96,7 @@ export function Footer() {
 
         <div className="os-footer-base">
           <div>© {year} {f.base.copyrightSuffix}</div>
-          <div>{f.base.trustLine}</div>
+          {f.base.trustLine && <div>{f.base.trustLine}</div>}
         </div>
       </div>
     </footer>

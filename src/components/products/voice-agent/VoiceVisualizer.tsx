@@ -210,7 +210,7 @@ export function VoiceVisualizer() {
           <span
             className={"vv-tx-tag" + (current.speaker === "agent" ? " agent" : " caller")}
           >
-            {current.speaker === "agent" ? "OPSOLID AGENT" : "CALLER · HAMBURG"}
+            {current.speaker === "agent" ? "OPSOLID AGENT" : "CALLER"}
           </span>
           <span className="vv-tx-time">{mmss(current.t)}</span>
         </div>
