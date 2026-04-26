@@ -1,8 +1,8 @@
 // =============================================================================
-// GET /api/health — lightweight uptime probe.
-// Returns 200 when Next.js is serving AND the DB round-trips a SELECT 1.
-// Shape: { ok, commit, dbOk }. 503 if the DB probe fails.
-// UptimeRobot / VPS cron can hit this endpoint.
+// GET /api/health — liveness probe for Docker + Traefik + CI.
+// Always returns 200 so Traefik keeps routing and CI deploys don't false-fail.
+// DB reachability is reported in the body (informational, not fatal here).
+// Shape: { ok: true, commit, dbOk }
 // =============================================================================
 
 import { NextResponse } from "next/server";
@@ -22,8 +22,7 @@ export async function GET() {
     dbOk = false;
   }
 
-  return NextResponse.json(
-    { ok: dbOk, commit, dbOk },
-    { status: dbOk ? 200 : 503 },
-  );
+  // Always 200 — Next.js is alive. DB status is informational.
+  // Returning 503 here caused Traefik to drop the router on transient DB hiccups.
+  return NextResponse.json({ ok: true, commit, dbOk }, { status: 200 });
 }

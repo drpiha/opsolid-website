@@ -56,11 +56,11 @@ services:
       - traefik.http.routers.opsolid-card.tls.certresolver=mytlschallenge
       - traefik.http.routers.opsolid-card.service=opsolid
     healthcheck:
-      test: ["CMD-SHELL", "wget -qO- --tries=1 --timeout=3 http://127.0.0.1:3000/ >/dev/null 2>&1 || exit 1"]
+      test: ["CMD-SHELL", "wget -qO- --tries=1 --timeout=5 http://127.0.0.1:3000/api/health >/dev/null 2>&1 || exit 1"]
       interval: 30s
-      timeout: 5s
-      retries: 3
-      start_period: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
 
 volumes:
   opsolid_pgdata:

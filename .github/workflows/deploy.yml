@@ -92,19 +92,25 @@ jobs:
           SSH_HOST: ${{ secrets.SSH_HOST }}
           SSH_USER: ${{ secrets.SSH_USER }}
         run: |
-          echo "Waiting 30s for container to settle..."
-          sleep 30
-          # Test live site through traefik — proves the full stack works.
-          if curl -fsS --max-time 15 https://opsolid.de/api/health | tee /tmp/health.json; then
-            echo ""
-            echo "Health check passed."
-          else
-            echo "Health check failed — dumping container logs."
-            ssh -i ~/.ssh/id_deploy -o StrictHostKeyChecking=accept-new \
-              "$SSH_USER@$SSH_HOST" \
-              'docker ps --filter name=opsolid-app --format "{{.Names}} {{.Status}}"; docker logs --tail 80 opsolid-app'
-            exit 1
-          fi
+          echo "Waiting 60s for Docker build + container startup..."
+          sleep 60
+          # Retry up to 8 times (8x15s = 2 more minutes) — Next.js standalone
+          # build inside Docker can take a while on the VPS.
+          for attempt in $(seq 1 8); do
+            echo "==> Health check attempt $attempt/8..."
+            if curl -fsS --max-time 15 https://opsolid.de/api/health | tee /tmp/health.json; then
+              echo ""
+              echo "Health check passed on attempt $attempt."
+              exit 0
+            fi
+            echo "Not ready yet, waiting 15s..."
+            sleep 15
+          done
+          echo "Health check failed after all retries — dumping container logs."
+          ssh -i ~/.ssh/id_deploy -o StrictHostKeyChecking=accept-new \
+            "$SSH_USER@$SSH_HOST" \
+            'docker ps --filter name=opsolid-app --format "{{.Names}} {{.Status}}"; docker logs --tail 80 opsolid-app'
+          exit 1
 
       - name: Cleanup SSH key
         if: always()
