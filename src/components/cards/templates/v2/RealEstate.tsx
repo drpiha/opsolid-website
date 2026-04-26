@@ -29,7 +29,6 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Montserrat, Open_Sans } from "next/font/google";
 import {
   ArrowUpRight,
   Building2,
@@ -55,24 +54,6 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { TemplateProps } from "./types";
-
-// -----------------------------------------------------------------------------
-// Per-template fonts. Scoped via the `realEstateFonts` class on the article,
-// so the font tree-shakes per route and the global type stays clean.
-// -----------------------------------------------------------------------------
-const montserrat = Montserrat({
-  subsets: ["latin", "latin-ext"],
-  weight: ["500", "600", "700", "800"],
-  variable: "--font-realestate-display",
-  display: "swap",
-});
-
-const openSans = Open_Sans({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600"],
-  variable: "--font-realestate-body",
-  display: "swap",
-});
 
 // -----------------------------------------------------------------------------
 // Locked palette. `brandPrimaryHex` / `brandAccentHex` override these per card;
@@ -231,7 +212,7 @@ export function RealEstate({
   return (
     <article
       data-template="real-estate"
-      className={`${montserrat.variable} ${openSans.variable} re-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] bg-white text-[#1a202c] shadow-[0_30px_60px_-30px_rgba(15,23,42,0.35),0_8px_20px_-12px_rgba(15,23,42,0.18)] ring-1 ring-black/5`}
+      className={`re-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] bg-white text-[#1a202c] shadow-[0_30px_60px_-30px_rgba(15,23,42,0.35),0_8px_20px_-12px_rgba(15,23,42,0.18)] ring-1 ring-black/5`}
       style={
         {
           ["--re-primary" as string]: primary,
@@ -239,6 +220,8 @@ export function RealEstate({
           ["--re-primary-rim" as string]: `${primary}33`,
           ["--re-accent" as string]: accent,
           ["--re-accent-soft" as string]: `${accent}1A`,
+          ["--font-realestate-display" as string]: "'Montserrat', system-ui, sans-serif",
+          ["--font-realestate-body" as string]: "'Open Sans', system-ui, sans-serif",
           fontFamily: "var(--font-realestate-body), system-ui, sans-serif",
         } as React.CSSProperties
       }

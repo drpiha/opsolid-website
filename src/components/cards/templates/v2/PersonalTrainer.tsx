@@ -27,7 +27,6 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Bebas_Neue, Inter } from "next/font/google";
 import {
   ArrowUpRight,
   Award,
@@ -55,24 +54,6 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
-
-// -----------------------------------------------------------------------------
-// Per-template fonts. Bebas Neue display (athletic) + Inter body. Scoped via
-// .pt-card so global typography stays clean.
-// -----------------------------------------------------------------------------
-const bebas = Bebas_Neue({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400"],
-  variable: "--font-pt-display",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600", "700", "800"],
-  variable: "--font-pt-body",
-  display: "swap",
-});
 
 // -----------------------------------------------------------------------------
 // Locked palette — power red + energy yellow on near-black. brandPrimaryHex /
@@ -294,7 +275,7 @@ export function PersonalTrainer({
   return (
     <article
       data-template="personal-trainer"
-      className={`${bebas.variable} ${inter.variable} pt-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] text-[${INK_MID}] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.65),0_8px_22px_-12px_rgba(0,0,0,0.45)] ring-1 ring-white/[0.04]`}
+      className={`pt-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] text-[${INK_MID}] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.65),0_8px_22px_-12px_rgba(0,0,0,0.45)] ring-1 ring-white/[0.04]`}
       style={
         {
           background: CANVAS,
@@ -311,6 +292,8 @@ export function PersonalTrainer({
           ["--pt-border" as string]: BORDER,
           ["--card-primary" as string]: primary,
           ["--card-accent" as string]: accent,
+          ["--font-pt-display" as string]: "'Bebas Neue', Impact, sans-serif",
+          ["--font-pt-body" as string]: "'Inter', system-ui, sans-serif",
           fontFamily: "var(--font-pt-body), system-ui, sans-serif",
         } as React.CSSProperties
       }

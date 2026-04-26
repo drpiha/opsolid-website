@@ -28,7 +28,6 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Cormorant_Garamond, Inter } from "next/font/google";
 import {
   ArrowUpRight,
   BedDouble,
@@ -52,24 +51,6 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
-
-// -----------------------------------------------------------------------------
-// Per-template fonts. Scoped via `.ho-card`.
-// -----------------------------------------------------------------------------
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-hotel-display",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600"],
-  variable: "--font-hotel-body",
-  display: "swap",
-});
 
 // -----------------------------------------------------------------------------
 // Locked palette — only `brandPrimaryHex` / `brandAccentHex` flex per card.
@@ -282,7 +263,7 @@ export function Hotel({
   return (
     <article
       data-template="hotel"
-      className={`${cormorant.variable} ${inter.variable} ho-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] shadow-[0_30px_70px_-30px_rgba(31,41,55,0.40),0_8px_22px_-12px_rgba(31,41,55,0.18)] ring-1 ring-[#e3dccd]`}
+      className={`ho-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] shadow-[0_30px_70px_-30px_rgba(31,41,55,0.40),0_8px_22px_-12px_rgba(31,41,55,0.18)] ring-1 ring-[#e3dccd]`}
       style={
         {
           ["--ho-primary" as string]: primary,
@@ -295,6 +276,8 @@ export function Hotel({
           ["--ho-text-mid" as string]: TEXT_MID,
           ["--ho-text-light" as string]: TEXT_LIGHT,
           ["--ho-border" as string]: BORDER,
+          ["--font-hotel-display" as string]: "'Cormorant Garamond', Georgia, serif",
+          ["--font-hotel-body" as string]: "'Inter', system-ui, sans-serif",
           background: PAGE_BG,
           color: TEXT_DARK,
         } as React.CSSProperties

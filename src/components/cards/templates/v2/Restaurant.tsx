@@ -34,7 +34,6 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Playfair_Display, Inter } from "next/font/google";
 import {
   ArrowUpRight,
   CalendarHeart,
@@ -58,24 +57,6 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
-
-// -----------------------------------------------------------------------------
-// Per-template fonts. Scoped via `.rs-card`.
-// -----------------------------------------------------------------------------
-const playfair = Playfair_Display({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-restaurant-display",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600"],
-  variable: "--font-restaurant-body",
-  display: "swap",
-});
 
 // -----------------------------------------------------------------------------
 // Locked palette — only the brand hexes flex per card.
@@ -304,7 +285,7 @@ export function Restaurant({
   return (
     <article
       data-template="restaurant"
-      className={`${playfair.variable} ${inter.variable} rs-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] shadow-[0_30px_70px_-30px_rgba(60,30,15,0.45),0_8px_22px_-12px_rgba(60,30,15,0.18)] ring-1 ring-[#ecdfc8]`}
+      className={`rs-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] shadow-[0_30px_70px_-30px_rgba(60,30,15,0.45),0_8px_22px_-12px_rgba(60,30,15,0.18)] ring-1 ring-[#ecdfc8]`}
       style={
         {
           ["--rs-primary" as string]: primary,
@@ -317,6 +298,8 @@ export function Restaurant({
           ["--rs-text-mid" as string]: TEXT_MID,
           ["--rs-text-light" as string]: TEXT_LIGHT,
           ["--rs-border" as string]: BORDER,
+          ["--font-restaurant-display" as string]: "'Playfair Display', Georgia, serif",
+          ["--font-restaurant-body" as string]: "'Inter', system-ui, sans-serif",
           background: PAGE_BG,
           color: TEXT_DARK,
         } as React.CSSProperties

@@ -27,7 +27,6 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Outfit, Inter } from "next/font/google";
 import {
   ArrowUpRight,
   Award,
@@ -55,23 +54,6 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { TemplateProps } from "./types";
-
-// -----------------------------------------------------------------------------
-// Per-template fonts. Scoped via `.ath-card` so global typography stays clean.
-// -----------------------------------------------------------------------------
-const outfit = Outfit({
-  subsets: ["latin", "latin-ext"],
-  weight: ["500", "600", "700", "800", "900"],
-  variable: "--font-athlete-display",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600"],
-  variable: "--font-athlete-body",
-  display: "swap",
-});
 
 // -----------------------------------------------------------------------------
 // Locked palette. brandPrimaryHex / brandAccentHex override these per card.
@@ -275,7 +257,7 @@ export function Athlete({
   return (
     <article
       data-template="athlete"
-      className={`${outfit.variable} ${inter.variable} ath-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] text-[#d4d4d4] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.55),0_8px_22px_-12px_rgba(0,0,0,0.35)] ring-1 ring-white/[0.04]`}
+      className={`ath-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] text-[#d4d4d4] shadow-[0_30px_60px_-30px_rgba(0,0,0,0.55),0_8px_22px_-12px_rgba(0,0,0,0.35)] ring-1 ring-white/[0.04]`}
       style={
         {
           background: PANEL,
@@ -286,6 +268,8 @@ export function Athlete({
           ["--ath-panel" as string]: PANEL,
           ["--ath-panel-alt" as string]: PANEL_ALT,
           ["--ath-border" as string]: BORDER,
+          ["--font-athlete-display" as string]: "'Outfit', system-ui, sans-serif",
+          ["--font-athlete-body" as string]: "'Inter', system-ui, sans-serif",
           fontFamily: "var(--font-athlete-body), system-ui, sans-serif",
         } as React.CSSProperties
       }

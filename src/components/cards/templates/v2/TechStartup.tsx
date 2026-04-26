@@ -20,7 +20,6 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import {
   ArrowUpRight,
   Calendar,
@@ -44,23 +43,6 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { TemplateProps, TemplateRegistryEntry, SampleData } from "./types";
-
-// -----------------------------------------------------------------------------
-// Per-template fonts.
-// -----------------------------------------------------------------------------
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-tech-display",
-  display: "swap",
-});
-
-const jetbrains = JetBrains_Mono({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-tech-mono",
-  display: "swap",
-});
 
 // -----------------------------------------------------------------------------
 // Default palette — electric purple → hot pink. Override-able via props.
@@ -266,7 +248,7 @@ export function TechStartup({
   return (
     <article
       data-template="tech-startup"
-      className={`${spaceGrotesk.variable} ${jetbrains.variable} ts-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] shadow-[0_30px_70px_-30px_rgba(0,0,0,0.7),0_8px_20px_-12px_rgba(0,0,0,0.55)] ring-1 ring-white/8`}
+      className={`ts-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] shadow-[0_30px_70px_-30px_rgba(0,0,0,0.7),0_8px_20px_-12px_rgba(0,0,0,0.55)] ring-1 ring-white/8`}
       style={
         {
           ["--ts-primary" as string]: primary,
@@ -275,6 +257,8 @@ export function TechStartup({
           ["--ts-accent-soft" as string]: `${accent}26`,
           ["--card-primary" as string]: primary,
           ["--card-accent" as string]: accent,
+          ["--font-tech-display" as string]: "'Space Grotesk', system-ui, sans-serif",
+          ["--font-tech-mono" as string]: "'JetBrains Mono', 'Courier New', monospace",
           background: SURFACE_NIGHT,
           color: INK_HIGH,
           fontFamily: "var(--font-tech-display), system-ui, sans-serif",

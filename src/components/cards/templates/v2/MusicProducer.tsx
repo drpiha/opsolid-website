@@ -23,7 +23,6 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Space_Grotesk } from "next/font/google";
 import {
   ArrowUpRight,
   Calendar,
@@ -46,16 +45,6 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { TemplateProps, TemplateRegistryEntry, SampleData } from "./types";
-
-// -----------------------------------------------------------------------------
-// Per-template font — Space Grotesk only (per spec).
-// -----------------------------------------------------------------------------
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin", "latin-ext"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-mp-display",
-  display: "swap",
-});
 
 // -----------------------------------------------------------------------------
 // Locked defaults — cyan / violet electric duo. Override via brandPrimaryHex.
@@ -270,7 +259,7 @@ export function MusicProducer({
   return (
     <article
       data-template="music-producer"
-      className={`${spaceGrotesk.variable} mp-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] bg-black text-white/85 shadow-[0_30px_70px_-30px_rgba(0,0,0,0.85),0_8px_22px_-12px_rgba(0,0,0,0.6)] ring-1 ring-white/5`}
+      className={`mp-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] bg-black text-white/85 shadow-[0_30px_70px_-30px_rgba(0,0,0,0.85),0_8px_22px_-12px_rgba(0,0,0,0.6)] ring-1 ring-white/5`}
       style={
         {
           ["--mp-primary" as string]: primary,
@@ -279,6 +268,7 @@ export function MusicProducer({
           ["--mp-on-accent" as string]: onAccent,
           ["--card-primary" as string]: primary,
           ["--card-accent" as string]: accent,
+          ["--font-mp-display" as string]: "'Space Grotesk', system-ui, sans-serif",
           fontFamily: "var(--font-mp-display), 'Space Grotesk', system-ui, sans-serif",
         } as React.CSSProperties
       }

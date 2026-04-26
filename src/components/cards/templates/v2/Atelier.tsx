@@ -31,7 +31,6 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Instrument_Serif, Inter } from "next/font/google";
 import { Shield } from "lucide-react";
 
 import { encodeSource, describeSource } from "@/components/cards/smart/SmartCardSource";
@@ -40,24 +39,6 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { WalletDock } from "./shared/WalletDock";
 import type { TemplateProps } from "./types";
-
-// -----------------------------------------------------------------------------
-// Per-template fonts. Scoped via `.at-card`.
-// -----------------------------------------------------------------------------
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  weight: ["400"],
-  style: ["normal", "italic"],
-  variable: "--font-atelier-display",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500"],
-  variable: "--font-atelier-body",
-  display: "swap",
-});
 
 // -----------------------------------------------------------------------------
 // Locked palette.
@@ -175,7 +156,7 @@ export function Atelier({
   return (
     <article
       data-template="atelier"
-      className={`${instrumentSerif.variable} ${inter.variable} at-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] shadow-[0_30px_60px_-30px_rgba(26,26,26,0.20),0_8px_22px_-12px_rgba(26,26,26,0.10)] ring-1 ring-black/[0.04]`}
+      className={`at-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] shadow-[0_30px_60px_-30px_rgba(26,26,26,0.20),0_8px_22px_-12px_rgba(26,26,26,0.10)] ring-1 ring-black/[0.04]`}
       style={
         {
           background: SURFACE,
@@ -183,6 +164,8 @@ export function Atelier({
           ["--at-primary" as string]: primary,
           ["--at-accent" as string]: accent,
           ["--at-hairline" as string]: HAIRLINE,
+          ["--font-atelier-display" as string]: "'Instrument Serif', Georgia, serif",
+          ["--font-atelier-body" as string]: "'Inter', system-ui, sans-serif",
           fontFamily: "var(--font-atelier-body), 'Inter', system-ui, sans-serif",
         } as React.CSSProperties
       }

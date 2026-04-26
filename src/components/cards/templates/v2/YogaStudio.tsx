@@ -29,7 +29,6 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Cormorant_Garamond, Inter } from "next/font/google";
 import {
   ArrowUpRight,
   CalendarCheck,
@@ -55,24 +54,6 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
-
-// -----------------------------------------------------------------------------
-// Per-template fonts. Scoped via .yo-card so global typography stays clean.
-// -----------------------------------------------------------------------------
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-yoga-display",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600"],
-  variable: "--font-yoga-body",
-  display: "swap",
-});
 
 // -----------------------------------------------------------------------------
 // Locked palette — terracotta + sand sunrise. brandPrimaryHex / brandAccentHex
@@ -266,7 +247,7 @@ export function YogaStudio({
   return (
     <article
       data-template="yoga-studio"
-      className={`${cormorant.variable} ${inter.variable} yo-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] shadow-[0_30px_60px_-30px_rgba(134,82,63,0.30),0_8px_20px_-12px_rgba(134,82,63,0.18)] ring-1 ring-[rgba(134,82,63,0.10)]`}
+      className={`yo-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] shadow-[0_30px_60px_-30px_rgba(134,82,63,0.30),0_8px_20px_-12px_rgba(134,82,63,0.18)] ring-1 ring-[rgba(134,82,63,0.10)]`}
       style={
         {
           ["--yo-primary" as string]: primary,
@@ -277,6 +258,8 @@ export function YogaStudio({
           ["--yo-accent-soft" as string]: `${accent}33`,
           ["--card-primary" as string]: primary,
           ["--card-accent" as string]: accent,
+          ["--font-yoga-display" as string]: "'Cormorant Garamond', Georgia, serif",
+          ["--font-yoga-body" as string]: "'Inter', system-ui, sans-serif",
           background: SURFACE_PAGE,
           color: INK,
           fontFamily: "var(--font-yoga-body), system-ui, sans-serif",

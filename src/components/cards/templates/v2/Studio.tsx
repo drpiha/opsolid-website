@@ -22,7 +22,6 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Bebas_Neue, Space_Grotesk, Inter } from "next/font/google";
 import {
   ArrowUpRight,
   Calendar,
@@ -46,30 +45,6 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { TemplateProps, TemplateRegistryEntry, SampleData } from "./types";
-
-// -----------------------------------------------------------------------------
-// Per-template fonts. Bebas Neue is a 400-only family.
-// -----------------------------------------------------------------------------
-const bebas = Bebas_Neue({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400"],
-  variable: "--font-studio-display",
-  display: "swap",
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-studio-body",
-  display: "swap",
-});
-
-const interStudio = Inter({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600"],
-  variable: "--font-studio-mono",
-  display: "swap",
-});
 
 // -----------------------------------------------------------------------------
 // Refined palette — premium Berlin label, not club poster.
@@ -229,7 +204,7 @@ export function Studio({
   return (
     <article
       data-template="studio"
-      className={`${bebas.variable} ${spaceGrotesk.variable} ${interStudio.variable} st-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] bg-black text-white/85 shadow-[0_30px_70px_-30px_rgba(0,0,0,0.7),0_8px_20px_-12px_rgba(0,0,0,0.55)] ring-1 ring-white/5`}
+      className={`st-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] bg-black text-white/85 shadow-[0_30px_70px_-30px_rgba(0,0,0,0.7),0_8px_20px_-12px_rgba(0,0,0,0.55)] ring-1 ring-white/5`}
       style={
         {
           ["--st-primary" as string]: primary,
@@ -238,6 +213,9 @@ export function Studio({
           ["--st-accent-soft" as string]: `${accent}1A`,
           ["--card-primary" as string]: primary,
           ["--card-accent" as string]: accent,
+          ["--font-studio-display" as string]: "'Bebas Neue', Impact, sans-serif",
+          ["--font-studio-body" as string]: "'Space Grotesk', system-ui, sans-serif",
+          ["--font-studio-mono" as string]: "'Inter', system-ui, sans-serif",
           fontFamily: "var(--font-studio-body), system-ui, sans-serif",
         } as React.CSSProperties
       }

@@ -20,7 +20,6 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Oswald, Roboto } from "next/font/google";
 import {
   ArrowUpRight,
   Calendar,
@@ -45,23 +44,6 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { TemplateProps, TemplateRegistryEntry, SampleData } from "./types";
-
-// -----------------------------------------------------------------------------
-// Per-template fonts.
-// -----------------------------------------------------------------------------
-const oswald = Oswald({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-barber-display",
-  display: "swap",
-});
-
-const roboto = Roboto({
-  subsets: ["latin", "latin-ext"],
-  weight: ["300", "400", "500", "700"],
-  variable: "--font-barber-body",
-  display: "swap",
-});
 
 // -----------------------------------------------------------------------------
 // Locked palette — Mayfair barber, not Coney Island.
@@ -212,7 +194,7 @@ export function Barber({
   return (
     <article
       data-template="barber"
-      className={`${oswald.variable} ${roboto.variable} bb-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] text-[#f5f5f0] shadow-[0_30px_70px_-30px_rgba(0,0,0,0.7),0_8px_20px_-12px_rgba(0,0,0,0.55)] ring-1 ring-white/5`}
+      className={`bb-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] text-[#f5f5f0] shadow-[0_30px_70px_-30px_rgba(0,0,0,0.7),0_8px_20px_-12px_rgba(0,0,0,0.55)] ring-1 ring-white/5`}
       style={
         {
           ["--bb-primary" as string]: primary,
@@ -220,6 +202,8 @@ export function Barber({
           ["--bb-accent-soft" as string]: `${accent}1A`,
           ["--card-primary" as string]: primary,
           ["--card-accent" as string]: accent,
+          ["--font-barber-display" as string]: "'Oswald', Impact, sans-serif",
+          ["--font-barber-body" as string]: "'Roboto', system-ui, sans-serif",
           background: "#0d0d0d",
           fontFamily: "var(--font-barber-body), system-ui, sans-serif",
         } as React.CSSProperties

@@ -30,7 +30,6 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Inter, Space_Mono } from "next/font/google";
 import * as Dialog from "@radix-ui/react-dialog";
 import {
   Camera,
@@ -50,20 +49,6 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
-
-const inter = Inter({
-  subsets: ["latin", "latin-ext"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-photographer-body",
-  display: "swap",
-});
-
-const spaceMono = Space_Mono({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "700"],
-  variable: "--font-photographer-mono",
-  display: "swap",
-});
 
 const LOCKED_PRIMARY = "#0e0e0e";
 const LOCKED_ACCENT = "#e8c472";
@@ -217,7 +202,7 @@ export function Photographer({
   return (
     <article
       data-template="photographer"
-      className={`${inter.variable} ${spaceMono.variable} ph-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[20px] shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6),0_8px_22px_-12px_rgba(0,0,0,0.4)]`}
+      className={`ph-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[20px] shadow-[0_30px_70px_-20px_rgba(0,0,0,0.6),0_8px_22px_-12px_rgba(0,0,0,0.4)]`}
       style={
         {
           ["--card-primary" as string]: primary,
@@ -229,6 +214,8 @@ export function Photographer({
           ["--ph-text-60" as string]: "rgba(250,250,250,0.6)",
           ["--ph-text-30" as string]: "rgba(250,250,250,0.3)",
           ["--ph-line" as string]: "rgba(250,250,250,0.08)",
+          ["--font-photographer-body" as string]: "'Inter', system-ui, sans-serif",
+          ["--font-photographer-mono" as string]: "'Space Mono', 'Courier New', monospace",
           background: primary,
           color: "#fafafa",
         } as React.CSSProperties

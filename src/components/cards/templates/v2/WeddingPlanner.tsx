@@ -23,7 +23,6 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Cormorant_Garamond, Dancing_Script } from "next/font/google";
 import {
   ArrowUpRight,
   Calendar,
@@ -47,24 +46,6 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { TemplateProps, TemplateRegistryEntry, SampleData } from "./types";
-
-// -----------------------------------------------------------------------------
-// Per-template fonts.
-// -----------------------------------------------------------------------------
-const cormorant = Cormorant_Garamond({
-  subsets: ["latin", "latin-ext"],
-  weight: ["300", "400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-wp-display",
-  display: "swap",
-});
-
-const dancing = Dancing_Script({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "600", "700"],
-  variable: "--font-wp-script",
-  display: "swap",
-});
 
 // -----------------------------------------------------------------------------
 // Locked defaults — dusty rose + champagne. Override via brandPrimaryHex.
@@ -266,7 +247,7 @@ export function WeddingPlanner({
   return (
     <article
       data-template="wedding-planner"
-      className={`${cormorant.variable} ${dancing.variable} wp-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] shadow-[0_30px_60px_-30px_rgba(157,107,94,0.32),0_8px_22px_-12px_rgba(157,107,94,0.18)] ring-1 ring-black/5`}
+      className={`wp-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] shadow-[0_30px_60px_-30px_rgba(157,107,94,0.32),0_8px_22px_-12px_rgba(157,107,94,0.18)] ring-1 ring-black/5`}
       style={
         {
           background: SURFACE_BASE,
@@ -279,6 +260,8 @@ export function WeddingPlanner({
           ["--wp-accent-soft" as string]: `${accent}26`,
           ["--card-primary" as string]: primary,
           ["--card-accent" as string]: accent,
+          ["--font-wp-display" as string]: "'Cormorant Garamond', Georgia, serif",
+          ["--font-wp-script" as string]: "'Dancing Script', cursive",
           fontFamily: "var(--font-wp-display), 'Cormorant Garamond', Georgia, serif",
         } as React.CSSProperties
       }

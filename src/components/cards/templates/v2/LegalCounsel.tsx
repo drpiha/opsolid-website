@@ -29,7 +29,6 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { IBM_Plex_Serif, IBM_Plex_Sans } from "next/font/google";
 import {
   ArrowUpRight,
   FileDown,
@@ -48,20 +47,6 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
-
-const ibmSerif = IBM_Plex_Serif({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-legal-display",
-  display: "swap",
-});
-
-const ibmSans = IBM_Plex_Sans({
-  subsets: ["latin", "latin-ext"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-legal-body",
-  display: "swap",
-});
 
 const LOCKED_PRIMARY = "#0b1426";
 const LOCKED_ACCENT = "#c8a951";
@@ -179,7 +164,7 @@ export function LegalCounsel({
   return (
     <article
       data-template="legal-counsel"
-      className={`${ibmSerif.variable} ${ibmSans.variable} lc-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[24px] shadow-[0_30px_80px_-30px_rgba(11,20,38,0.55),0_8px_22px_-12px_rgba(11,20,38,0.35)]`}
+      className={`lc-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[24px] shadow-[0_30px_80px_-30px_rgba(11,20,38,0.55),0_8px_22px_-12px_rgba(11,20,38,0.35)]`}
       style={
         {
           ["--card-primary" as string]: primary,
@@ -191,6 +176,8 @@ export function LegalCounsel({
           ["--lc-text" as string]: "#e8ecf2",
           ["--lc-text-mid" as string]: "#8896aa",
           ["--lc-text-dim" as string]: "#5a6a80",
+          ["--font-legal-display" as string]: "'IBM Plex Serif', Georgia, serif",
+          ["--font-legal-body" as string]: "'IBM Plex Sans', system-ui, sans-serif",
           background: primary,
           color: "#e8ecf2",
         } as React.CSSProperties

@@ -34,7 +34,6 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Nunito } from "next/font/google";
 import {
   ArrowUpRight,
   CalendarCheck,
@@ -58,13 +57,6 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
-
-const nunito = Nunito({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "600", "700", "800"],
-  variable: "--font-clinic",
-  display: "swap",
-});
 
 const LOCKED_PRIMARY = "#0d9488";
 const LOCKED_ACCENT = "#ccfbf1";
@@ -195,7 +187,7 @@ export function Clinic({
   return (
     <article
       data-template="clinic"
-      className={`${nunito.variable} cl-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] shadow-[0_30px_60px_-30px_rgba(13,148,136,0.45),0_8px_22px_-12px_rgba(13,148,136,0.20)] ring-1 ring-[#cce6e2]`}
+      className={`cl-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] shadow-[0_30px_60px_-30px_rgba(13,148,136,0.45),0_8px_22px_-12px_rgba(13,148,136,0.20)] ring-1 ring-[#cce6e2]`}
       style={
         {
           ["--card-primary" as string]: primary,
@@ -209,6 +201,7 @@ export function Clinic({
           ["--cl-text-mid" as string]: "#64748b",
           ["--cl-text-dim" as string]: "#94a3b8",
           ["--cl-border" as string]: "#dceeea",
+          ["--font-clinic" as string]: "'Nunito', system-ui, sans-serif",
           background: "#f0faf5",
           color: "#1e293b",
         } as React.CSSProperties

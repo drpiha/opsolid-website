@@ -22,7 +22,6 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Poppins, Nunito } from "next/font/google";
 import {
   ArrowUpRight,
   Heart,
@@ -46,23 +45,6 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { TemplateProps, TemplateRegistryEntry, SampleData } from "./types";
-
-// -----------------------------------------------------------------------------
-// Per-template fonts.
-// -----------------------------------------------------------------------------
-const poppins = Poppins({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-maker-display",
-  display: "swap",
-});
-
-const nunito = Nunito({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-maker-body",
-  display: "swap",
-});
 
 // -----------------------------------------------------------------------------
 // Locked palette — Norwegian ceramic studio, not pop-art.
@@ -226,7 +208,7 @@ export function Maker({
   return (
     <article
       data-template="maker"
-      className={`${poppins.variable} ${nunito.variable} mk-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] shadow-[0_30px_60px_-30px_rgba(120,80,60,0.30),0_8px_20px_-12px_rgba(120,80,60,0.18)] ring-1 ring-[rgba(120,80,60,0.12)]`}
+      className={`mk-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] shadow-[0_30px_60px_-30px_rgba(120,80,60,0.30),0_8px_20px_-12px_rgba(120,80,60,0.18)] ring-1 ring-[rgba(120,80,60,0.12)]`}
       style={
         {
           ["--mk-primary" as string]: primary,
@@ -234,6 +216,8 @@ export function Maker({
           ["--mk-primary-soft" as string]: `${primary}1A`,
           ["--card-primary" as string]: primary,
           ["--card-accent" as string]: accent,
+          ["--font-maker-display" as string]: "'Poppins', system-ui, sans-serif",
+          ["--font-maker-body" as string]: "'Nunito', system-ui, sans-serif",
           background: SURFACE_CREAM,
           color: INK,
           fontFamily: "var(--font-maker-body), system-ui, sans-serif",

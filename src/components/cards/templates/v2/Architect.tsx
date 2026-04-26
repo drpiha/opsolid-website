@@ -23,7 +23,6 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Manrope } from "next/font/google";
 import {
   ArrowUpRight,
   Calendar,
@@ -46,16 +45,6 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { TemplateProps, TemplateRegistryEntry, SampleData } from "./types";
-
-// -----------------------------------------------------------------------------
-// Per-template font.
-// -----------------------------------------------------------------------------
-const manrope = Manrope({
-  subsets: ["latin", "latin-ext"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-  variable: "--font-architect",
-  display: "swap",
-});
 
 // -----------------------------------------------------------------------------
 // Locked palette — Lisbon Bauhaus letterhead.
@@ -199,7 +188,7 @@ export function Architect({
   return (
     <article
       data-template="architect"
-      className={`${manrope.variable} ar-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] shadow-[0_30px_60px_-30px_rgba(21,18,15,0.22),0_8px_20px_-12px_rgba(21,18,15,0.10)] ring-1 ring-[rgba(21,18,15,0.06)]`}
+      className={`ar-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] shadow-[0_30px_60px_-30px_rgba(21,18,15,0.22),0_8px_20px_-12px_rgba(21,18,15,0.10)] ring-1 ring-[rgba(21,18,15,0.06)]`}
       style={
         {
           ["--ar-primary" as string]: primary,
@@ -207,6 +196,7 @@ export function Architect({
           ["--ar-accent-soft" as string]: `${accent}1A`,
           ["--card-primary" as string]: primary,
           ["--card-accent" as string]: accent,
+          ["--font-architect" as string]: "'Manrope', sans-serif",
           background: SURFACE_BEIGE,
           color: primary,
           fontFamily: "var(--font-architect), system-ui, sans-serif",

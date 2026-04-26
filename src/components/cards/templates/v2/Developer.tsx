@@ -21,7 +21,6 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { JetBrains_Mono } from "next/font/google";
 import {
   ArrowUpRight,
   Calendar,
@@ -44,16 +43,6 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { TemplateProps, TemplateRegistryEntry, SampleData } from "./types";
-
-// -----------------------------------------------------------------------------
-// Per-template font — JetBrains Mono ONLY.
-// -----------------------------------------------------------------------------
-const jetbrains = JetBrains_Mono({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-dev-mono",
-  display: "swap",
-});
 
 // -----------------------------------------------------------------------------
 // Default palette — terminal green + cyan. Override-able via props.
@@ -234,7 +223,7 @@ export function Developer({
   return (
     <article
       data-template="developer"
-      className={`${jetbrains.variable} dv-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[20px] shadow-[0_30px_70px_-30px_rgba(0,0,0,0.85),0_8px_20px_-12px_rgba(0,0,0,0.6)] ring-1 ring-white/8`}
+      className={`dv-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[20px] shadow-[0_30px_70px_-30px_rgba(0,0,0,0.85),0_8px_20px_-12px_rgba(0,0,0,0.6)] ring-1 ring-white/8`}
       style={
         {
           ["--dv-primary" as string]: primary,
@@ -243,6 +232,7 @@ export function Developer({
           ["--dv-accent-soft" as string]: `${accent}1F`,
           ["--card-primary" as string]: primary,
           ["--card-accent" as string]: accent,
+          ["--font-dev-mono" as string]: "'JetBrains Mono', 'Courier New', monospace",
           background: SURFACE_TERMINAL,
           color: INK_HIGH,
           fontFamily: "var(--font-dev-mono), ui-monospace, monospace",

@@ -33,7 +33,6 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Playfair_Display, Source_Sans_3 } from "next/font/google";
 import {
   ArrowUpRight,
   CalendarHeart,
@@ -56,21 +55,6 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
-
-const playfair = Playfair_Display({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-kitchen-display",
-  display: "swap",
-});
-
-const sourceSans = Source_Sans_3({
-  subsets: ["latin", "latin-ext"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-kitchen-body",
-  display: "swap",
-});
 
 const LOCKED_PRIMARY = "#3d5a3e";
 const LOCKED_ACCENT = "#c4654a";
@@ -199,7 +183,7 @@ export function KitchenAtelier({
   return (
     <article
       data-template="kitchen-atelier"
-      className={`${playfair.variable} ${sourceSans.variable} ka-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] shadow-[0_30px_70px_-30px_rgba(60,40,20,0.45),0_8px_22px_-12px_rgba(60,40,20,0.18)] ring-1 ring-[#e8d8c1]`}
+      className={`ka-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] shadow-[0_30px_70px_-30px_rgba(60,40,20,0.45),0_8px_22px_-12px_rgba(60,40,20,0.18)] ring-1 ring-[#e8d8c1]`}
       style={
         {
           ["--card-primary" as string]: primary,
@@ -210,6 +194,8 @@ export function KitchenAtelier({
           ["--ka-text-mid" as string]: "#5a5040",
           ["--ka-text-dim" as string]: "#8a7d68",
           ["--ka-border" as string]: "#e8d8c1",
+          ["--font-kitchen-display" as string]: "'Playfair Display', Georgia, serif",
+          ["--font-kitchen-body" as string]: "'Source Sans 3', system-ui, sans-serif",
           background: CREAM,
           color: "#2c2417",
         } as React.CSSProperties

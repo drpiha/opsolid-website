@@ -30,7 +30,6 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Playfair_Display, Source_Sans_3 } from "next/font/google";
 import {
   ArrowUpRight,
   Calendar,
@@ -53,24 +52,6 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { TemplateProps } from "./types";
-
-// -----------------------------------------------------------------------------
-// Per-template fonts. Scoped via `.ed-card`.
-// -----------------------------------------------------------------------------
-const playfair = Playfair_Display({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-editorial-display",
-  display: "swap",
-});
-
-const sourceSans = Source_Sans_3({
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "600"],
-  variable: "--font-editorial-body",
-  display: "swap",
-});
 
 // -----------------------------------------------------------------------------
 // Locked palette.
@@ -238,7 +219,7 @@ export function Editorial({
   return (
     <article
       data-template="editorial"
-      className={`${playfair.variable} ${sourceSans.variable} ed-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] shadow-[0_30px_60px_-30px_rgba(40,55,70,0.32),0_8px_22px_-12px_rgba(40,55,70,0.18)] ring-1 ring-black/5`}
+      className={`ed-card mx-auto w-full max-w-[460px] overflow-hidden rounded-[28px] shadow-[0_30px_60px_-30px_rgba(40,55,70,0.32),0_8px_22px_-12px_rgba(40,55,70,0.18)] ring-1 ring-black/5`}
       style={
         {
           background: SURFACE,
@@ -246,6 +227,8 @@ export function Editorial({
           ["--ed-primary" as string]: primary,
           ["--ed-accent" as string]: accent,
           ["--ed-accent-soft" as string]: `${accent}1A`,
+          ["--font-editorial-display" as string]: "'Playfair Display', Georgia, serif",
+          ["--font-editorial-body" as string]: "'Source Sans 3', system-ui, sans-serif",
           fontFamily: "var(--font-editorial-body), 'Source Sans 3', system-ui, sans-serif",
         } as React.CSSProperties
       }
