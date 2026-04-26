@@ -3219,22 +3219,24 @@ export const content = {
         metaChip: "",
         metaLabel: "",
         title: {
-          pre: "Automation that ",
-          italic: "actually",
-          post: " runs your operations — not the other way round.",
+          pre: "Operational automation, ",
+          italic: "built to fit",
+          post: " the way your business already works",
         },
         lead:
-          "OpSolid builds the systems your operations already pretend to have. Workflow automation, systems integration, internal tools, and AI-assisted processes for mid-sized teams. No rebuild of your stack. No AI theater.",
+          "OpSolid builds the systems your operations quietly need. Workflow automation, systems integration, internal tools, and AI-assisted processes for mid-sized teams — wired into the stack you already run, not on top of it.",
         ctaPrimary: "Book a discovery call",
-        ctaSecondary: "See what OpSolid builds",
+        ctaSecondary: "See what we build",
         stats: [] as Array<{ value: string; label: string }>,
       },
 
       capabilities: {
         eyebrow: "[ 02 / 04 ] CAPABILITIES",
-        headline: "Surfaces OpSolid owns end-to-end.",
+        headline: "What we own end-to-end",
         lead:
           "Not a platform, not a marketplace. A small, focused studio that takes operations as they are — manual, half-automated, stitched together — and leaves them running as systems that don't need constant attention.",
+        seeAffordance: "+ See it run",
+        closeAffordance: "− Close",
         cards: [
           {
             icon: "workflow",
@@ -3286,7 +3288,7 @@ export const content = {
         title: {
           pre: "The numbers automation is ",
           italic: "measured",
-          post: " against.",
+          post: " against",
         },
         body:
           "Every automation is measured against the industry's reference figures. Today's typical state on the left, the result we aim for on the right.",
@@ -3322,7 +3324,7 @@ export const content = {
 
       process: {
         eyebrow: "[ 04 / 04 ] PROCESS",
-        headline: "Three steps. A clear, transparent process.",
+        headline: "Three steps. A clear, transparent process",
         lead:
           "Every engagement follows the same shape: we map what exists, deliver the most critical step first, and extend only where it keeps paying off. Automation is recommended where it makes sense — and advised against where it doesn't.",
         steps: [
@@ -3357,12 +3359,12 @@ export const content = {
       finalCta: {
         eyebrow: "[ LET'S TALK ]",
         title: {
-          pre: "Let's see what can ",
-          italic: "actually",
-          post: " be automated.",
+          pre: "Let's map ",
+          italic: "where automation pays off",
+          post: " in your operation",
         },
         lead:
-          "30 minutes. An operations walkthrough, a clear assessment, and a written plan. No obligation after the call — if automation isn't the right tool, we'll say so together.",
+          "30 minutes. An operations walkthrough, a clear assessment, and a written plan. No obligation after the call — if automation isn't the right tool here, we'll say so plainly.",
         ctaPrimary: "Book a discovery call",
         ctaSecondary: "Read the journal",
         trustLine:
@@ -3377,10 +3379,10 @@ export const content = {
         title: {
           pre: "Answer every call in ",
           italic: "thirty seconds",
-          post: " or less — around the clock.",
+          post: " or less — around the clock",
         },
         lead:
-          "A voice agent your customers can't tell isn't a junior dispatcher. Routes by intent, books into your calendar, escalates when the script runs out. Deployed on Retell or Vapi, audited end-to-end, trained on your actual playbook.",
+          "A voice agent customers can't tell from a junior dispatcher. Routes by intent, books into your calendar, hands off warmly when the script runs out. Deployed on Retell or Vapi, audited end-to-end, trained on your own playbook.",
         ctaPrimary: "Book a pilot",
         ctaSecondary: "See a live call",
         features: [
@@ -3406,7 +3408,7 @@ export const content = {
       },
       flow: {
         eyebrow: "[ CALL FLOW ]",
-        headline: "Every call, four moves.",
+        headline: "Every call, four moves",
         lead:
           "The agent is deterministic where it needs to be — identity, scheduling, transfer — and conversational where it can be. No open-ended chat that invents policy.",
         steps: [
@@ -3438,7 +3440,7 @@ export const content = {
       },
       spec: {
         eyebrow: "[ TECHNICAL SPEC ]",
-        headline: "Built on tools you can open and inspect.",
+        headline: "Built on tools you can open and inspect",
         lead:
           "No closed-off pricing tiers. Every layer is swappable, every setting is versioned on your side.",
         rows: [
@@ -3459,12 +3461,12 @@ export const content = {
         metaChip: "DIGITAL CARD",
         metaLabel: "[ PRODUCT · 02 ]",
         title: {
-          pre: "A business card your customers ",
-          italic: "actually",
-          post: " keep.",
+          pre: "A business card ",
+          italic: "designed to be kept",
+          post: "",
         },
         lead:
-          "Tap-to-share NFC with a QR fallback. Ships as a machined metal card or a phone-wallet pass. Updates your contact details, calendar link, and portfolio centrally — without a print run every time someone changes roles.",
+          "Tap-to-share NFC with a QR fallback. Ships as a machined metal card or a phone-wallet pass. Contact details, calendar link, and portfolio update centrally — no new print run every time someone changes roles.",
         ctaPrimary: "Order a sample",
         ctaSecondary: "Browse templates",
         features: [
@@ -3487,9 +3489,9 @@ export const content = {
       },
       templates: {
         eyebrow: "[ INDUSTRY TEMPLATES ]",
-        headline: "Starting points, not straitjackets.",
+        headline: "Starting points, not straitjackets",
         lead:
-          "Template layouts for law, medical, skilled trades, and hospitality — each with the contact fields, compliance disclosures, and calendar integrations that sector actually uses. Every layout is a fork-off-and-modify starting point, not a locked theme.",
+          "Template layouts for law, medical, skilled trades, and hospitality — each with the contact fields, compliance disclosures, and calendar integrations that sector relies on day-to-day. Every layout is a fork-and-modify starting point, not a locked theme.",
         items: [
           {
             sector: "LAW",
@@ -3523,7 +3525,7 @@ export const content = {
       },
       howItWorks: {
         eyebrow: "[ HOW IT WORKS ]",
-        headline: "Three layers. One tap.",
+        headline: "Three layers. One tap",
         lead:
           "Hardware ships once. Everything on the other side of the tap updates in your dashboard, not at the printer.",
         steps: [
@@ -3555,7 +3557,7 @@ export const content = {
         metaLabel: "[ CONTACT ]",
         title: {
           pre: "Thirty minutes. ",
-          italic: "A written plan.",
+          italic: "A written plan",
           post: "",
         },
         lead:
@@ -3600,7 +3602,7 @@ export const content = {
         title: {
           pre: "Notes from the ",
           italic: "operations floor",
-          post: ".",
+          post: "",
         },
         intro:
           "Field notes, engagement reports, and the occasional strong opinion. First pieces are being written — subscribe below to hear when they land.",
@@ -3608,7 +3610,7 @@ export const content = {
       emptyFeature: {
         tag: "COMING · LONG-FORM",
         headline:
-          "Focused automation: what actually moves a business vs. what just looks good in a deck.",
+          "Focused automation: what moves a business vs. what just looks good in a deck",
         lede:
           "Opening piece of the journal. Draft in progress — on how a focused, sub-20-line automation outperforms an ERP replacement on the measurements that matter.",
         meta: "D. PIHA · SCHEDULED · 15 MIN",
@@ -3639,18 +3641,18 @@ export const content = {
         metaChip: "KUTASIA",
         metaLabel: "[ FLAGSHIP · HOSPITALITY ]",
         title: {
-          pre: "The customer platform for ",
+          pre: "The guest platform for ",
           italic: "rooms",
-          post: " that remember.",
+          post: " that remember",
         },
         lead:
-          "Built first for a restaurant in Istanbul. Designed for hotels, chef's tables, wine bars, and private clubs across DE · TR. Reservations, memberships, gifting, and guest memory — in one system the host can actually run from the floor.",
+          "Built first for a restaurant in Istanbul. Designed for hotels, chef's tables, wine bars, and private clubs across DE · TR. Reservations, memberships, gifting, and guest memory — in one system the host can run from the floor.",
         ctaPrimary: "Request access",
         ctaSecondary: "See the modules",
       },
       rooms: {
         eyebrow: "[ MODULES ]",
-        headline: "Five rooms. One house.",
+        headline: "Five rooms. One house",
         lead:
           "Every module runs standalone and hands off cleanly to the next. Start with reservations, add memberships when the waitlist gets serious, layer in guest memory when service warrants it.",
         items: [

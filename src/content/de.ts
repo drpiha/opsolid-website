@@ -3205,22 +3205,24 @@ export const content: Content = {
         metaChip: "",
         metaLabel: "",
         title: {
-          pre: "Automatisierung, die Ihre Abläufe ",
-          italic: "tatsächlich",
-          post: " steuert — und nicht umgekehrt.",
+          pre: "Operative Automatisierung, ",
+          italic: "zugeschnitten",
+          post: " auf den Betrieb, den Sie bereits führen",
         },
         lead:
-          "OpSolid baut die Systeme, die im Hintergrund Ihres Betriebs zuverlässig laufen. Workflow-Automatisierung, Systemintegration, interne Tools und KI-gestützte Prozesse für mittelständische Teams. Integriert sich in Ihren Stack, statt ihn zu ersetzen.",
+          "OpSolid baut die Systeme, die im Hintergrund Ihres Betriebs leise laufen. Workflow-Automatisierung, Systemintegration, interne Tools und KI-gestützte Prozesse für mittelständische Teams — eingebettet in Ihren bestehenden Stack, statt ihn zu ersetzen.",
         ctaPrimary: "Discovery-Call buchen",
-        ctaSecondary: "Was OpSolid baut",
+        ctaSecondary: "Was wir bauen",
         stats: [],
       },
 
       capabilities: {
         eyebrow: "[ 02 / 04 ] LEISTUNGEN",
-        headline: "Bereiche, die OpSolid durchgängig verantwortet.",
+        headline: "Was wir durchgängig verantworten",
         lead:
           "Keine Plattform, kein Marktplatz. Ein kleines, fokussiertes Studio, das Abläufe nimmt, wie sie sind — manuell, halbautomatisiert oder zusammengestückelt — und sie als Systeme hinterlässt, die ohne ständige Betreuung laufen.",
+        seeAffordance: "+ Live ansehen",
+        closeAffordance: "− Schließen",
         cards: [
           {
             icon: "workflow",
@@ -3272,7 +3274,7 @@ export const content: Content = {
         title: {
           pre: "Die Zahlen, an denen Automatisierung ",
           italic: "gemessen",
-          post: " wird.",
+          post: " wird",
         },
         body:
           "Jede Automatisierung wird an den Referenzwerten der Branche gemessen. Links der heutige Standardzustand, rechts das angestrebte Ergebnis.",
@@ -3308,7 +3310,7 @@ export const content: Content = {
 
       process: {
         eyebrow: "[ 04 / 04 ] VORGEHEN",
-        headline: "Drei Schritte. Ein klar nachvollziehbarer Prozess.",
+        headline: "Drei Schritte. Ein klar nachvollziehbarer Prozess",
         lead:
           "Jedes Mandat folgt derselben Form: Wir kartieren den Bestand, liefern zuerst den entscheidenden Schritt und erweitern nur dort, wo es sich weiter trägt. Automatisierung wird empfohlen, wo sie sinnvoll ist — und davon abgeraten, wo nicht.",
         steps: [
@@ -3343,12 +3345,12 @@ export const content: Content = {
       finalCta: {
         eyebrow: "[ KONTAKT ]",
         title: {
-          pre: "Sehen wir, was sich ",
-          italic: "tatsächlich",
-          post: " automatisieren lässt.",
+          pre: "Klar herausarbeiten, ",
+          italic: "wo Automatisierung sich rechnet",
+          post: "",
         },
         lead:
-          "30 Minuten. Ein Operations-Walkthrough, eine klare Einschätzung und ein schriftlicher Plan. Keine Verpflichtung nach dem Gespräch — wenn Automatisierung nicht das richtige Werkzeug ist, sagen wir es Ihnen offen.",
+          "30 Minuten. Ein Operations-Walkthrough, eine klare Einschätzung und ein schriftlicher Plan. Keine Verpflichtung nach dem Gespräch — wenn Automatisierung nicht das richtige Werkzeug ist, sagen wir das ebenso offen.",
         ctaPrimary: "Discovery-Call buchen",
         ctaSecondary: "Journal lesen",
         trustLine:
@@ -3363,10 +3365,10 @@ export const content: Content = {
         title: {
           pre: "Jeden Anruf in ",
           italic: "dreißig Sekunden",
-          post: " oder weniger beantworten — rund um die Uhr.",
+          post: " oder weniger beantworten — rund um die Uhr",
         },
         lead:
-          "Ein Voice Agent, den Ihre Kunden nicht von einem Junior-Dispatcher unterscheiden können. Routet nach Intent, bucht in Ihren Kalender, eskaliert, wenn das Skript endet. Auf Retell oder Vapi, end-to-end auditiert, auf Ihrem eigenen Playbook trainiert.",
+          "Ein Voice Agent, den Ihre Kunden nicht von einem Junior-Dispatcher unterscheiden können. Routet nach Intent, bucht in Ihren Kalender, übergibt warm an Menschen, wenn das Skript endet. Auf Retell oder Vapi, end-to-end auditiert, auf Ihrem eigenen Playbook trainiert.",
         ctaPrimary: "Pilot buchen",
         ctaSecondary: "Live-Call anhören",
         features: [
@@ -3392,7 +3394,7 @@ export const content: Content = {
       },
       flow: {
         eyebrow: "[ GESPRÄCHSABLAUF ]",
-        headline: "Jeder Anruf, vier Züge.",
+        headline: "Jeder Anruf, vier Züge",
         lead:
           "Der Agent ist deterministisch, wo er es sein muss — Identität, Terminvergabe, Übergabe — und konversationell, wo er es sein darf. Keine offene Chat-Runde, die Richtlinien erfindet.",
         steps: [
@@ -3424,7 +3426,7 @@ export const content: Content = {
       },
       spec: {
         eyebrow: "[ TECHNISCHE SPEC ]",
-        headline: "Gebaut auf Werkzeugen, die Sie öffnen und prüfen können.",
+        headline: "Gebaut auf Werkzeugen, die Sie öffnen und prüfen können",
         lead:
           "Keine geschlossenen Preisstufen. Jede Schicht ist austauschbar, jede Einstellung wird auf Ihrer Seite versioniert.",
         rows: [
@@ -3445,9 +3447,9 @@ export const content: Content = {
         metaChip: "DIGITAL CARD",
         metaLabel: "[ PRODUCT · 02 ]",
         title: {
-          pre: "Eine Visitenkarte, die Ihre Kunden ",
-          italic: "tatsächlich",
-          post: " behalten.",
+          pre: "Eine Visitenkarte, ",
+          italic: "die behalten wird",
+          post: "",
         },
         lead:
           "Tap-to-share NFC mit QR-Fallback. Als gefräste Metallkarte oder Wallet-Pass. Kontaktdaten, Kalenderlink und Portfolio werden zentral aktualisiert — ohne neue Druckauflage, wenn jemand die Rolle wechselt.",
@@ -3473,9 +3475,9 @@ export const content: Content = {
       },
       templates: {
         eyebrow: "[ BRANCHENVORLAGEN ]",
-        headline: "Ausgangspunkte, keine Zwangsjacken.",
+        headline: "Ausgangspunkte, keine Zwangsjacken",
         lead:
-          "Vorlagenlayouts für Recht, Medizin, Handwerk und Gastronomie — jede mit den Kontaktfeldern, Compliance-Angaben und Kalenderintegrationen, die die Branche tatsächlich nutzt. Jedes Layout ist ein Fork-und-modifizieren-Ausgangspunkt, kein festes Theme.",
+          "Vorlagenlayouts für Recht, Medizin, Handwerk und Gastronomie — jede mit den Kontaktfeldern, Compliance-Angaben und Kalenderintegrationen, die in der Branche täglich gebraucht werden. Jedes Layout ist ein Ausgangspunkt zum Forken und Anpassen, kein festes Theme.",
         items: [
           {
             sector: "LAW",
@@ -3509,7 +3511,7 @@ export const content: Content = {
       },
       howItWorks: {
         eyebrow: "[ FUNKTIONSWEISE ]",
-        headline: "Drei Schichten. Ein Tippen.",
+        headline: "Drei Schichten. Ein Tippen",
         lead:
           "Die Hardware wird einmal versandt. Alles hinter dem Tippen wird in Ihrem Dashboard aktualisiert — nicht beim Drucker.",
         steps: [
@@ -3541,7 +3543,7 @@ export const content: Content = {
         metaLabel: "[ KONTAKT ]",
         title: {
           pre: "Dreißig Minuten. ",
-          italic: "Ein schriftlicher Plan.",
+          italic: "Ein schriftlicher Plan",
           post: "",
         },
         lead:
@@ -3586,7 +3588,7 @@ export const content: Content = {
         title: {
           pre: "Notizen vom ",
           italic: "Operations-Floor",
-          post: ".",
+          post: "",
         },
         intro:
           "Feldnotizen, Mandatsberichte und gelegentliche klare Meinungen. Die ersten Stücke sind in Arbeit — abonnieren Sie unten, um zu erfahren, wann sie erscheinen.",
@@ -3594,7 +3596,7 @@ export const content: Content = {
       emptyFeature: {
         tag: "IN ARBEIT · LANGFORM",
         headline:
-          "Fokussierte Automatisierung: was das Geschäft wirklich bewegt vs. was im Deck nur gut aussieht.",
+          "Fokussierte Automatisierung: was das Geschäft bewegt vs. was nur im Deck gut aussieht",
         lede:
           "Eröffnungsstück des Journals. Entwurf in Arbeit — darüber, wie ein fokussierter Workflow mit weniger als 20 Zeilen einen ERP-Austausch bei den Messgrößen schlägt, die zählen.",
         meta: "D. PIHA · GEPLANT · 15 MIN",
@@ -3627,16 +3629,16 @@ export const content: Content = {
         title: {
           pre: "Die Gästeplattform für ",
           italic: "Räume",
-          post: ", die sich erinnern.",
+          post: ", die sich erinnern",
         },
         lead:
-          "Ursprünglich für ein Restaurant in Istanbul gebaut. Konzipiert für Hotels, Chef's Tables, Weinbars und Private Clubs in DE · TR. Reservierungen, Mitgliedschaften, Gutscheine und Gästegedächtnis — in einem System, das der Gastgeber vom Service-Boden aus wirklich führen kann.",
+          "Ursprünglich für ein Restaurant in Istanbul gebaut. Konzipiert für Hotels, Chef's Tables, Weinbars und Private Clubs in DE · TR. Reservierungen, Mitgliedschaften, Gutscheine und Gästegedächtnis — in einem System, das der Gastgeber vom Service-Boden aus selbst führt.",
         ctaPrimary: "Zugang anfragen",
         ctaSecondary: "Module ansehen",
       },
       rooms: {
         eyebrow: "[ MODULE ]",
-        headline: "Fünf Räume. Ein Haus.",
+        headline: "Fünf Räume. Ein Haus",
         lead:
           "Jedes Modul läuft eigenständig und übergibt sauber an das nächste. Starten Sie mit Reservierungen, ergänzen Sie Mitgliedschaften, wenn die Warteliste ernst wird, und legen Sie das Gästegedächtnis drauf, wenn der Service es rechtfertigt.",
         items: [

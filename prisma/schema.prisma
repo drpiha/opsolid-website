@@ -337,3 +337,442 @@ model OrderStatusHistory {
   @@index([orderId, createdAt])
   @@map("order_status_history")
 }
+
+// =============================================================================
+// VOICE AGENT PRODUCT
+//
+// AI phone receptionist product. Works in two modes:
+//   - standalone: sold as OpSolid Voice Agent to any business
+//   - kutasia_module: premium add-on for Kutasia CRM customers
+//
+// Provider abstraction: providerName = "retell" | "vapi" | "mock"
+// All String "enum" fields are documented inline and mirrored in
+// src/lib/voice/validation.ts as Zod enums.
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// VoiceBillingPlan — catalog of available billing tiers. Seeded at deploy time.
+//   planKey: "starter" | "growth" | "enterprise" | "kutasia_addon"
+// -----------------------------------------------------------------------------
+model VoiceBillingPlan {
+  id               String   @id @default(cuid())
+  planKey          String   @unique @map("plan_key")
+  displayName      String   @map("display_name")
+  monthlyMinutes   Int      @map("monthly_minutes")
+  overageRateCents Int      @map("overage_rate_cents")
+  monthlyCents     Int      @map("monthly_cents")
+  yearlyCents      Int?     @map("yearly_cents")
+  features         Json     @default("[]")
+  isActive         Boolean  @default(true) @map("is_active")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  tenants VoiceTenant[]
+
+  @@map("voice_billing_plans")
+}
+
+// -----------------------------------------------------------------------------
+// VoiceTenant — one business customer of the Voice Agent product.
+//   mode:   "standalone" | "kutasia_module"
+//   status: "trial" | "active" | "suspended" | "cancelled"
+//   providerName: "retell" | "vapi" | "mock"
+//   businessCategory: "restaurant" | "clinic" | "hotel" | "generic" | "appointment"
+//
+// Auth: tenantToken (URL ?token= for browser dashboard),
+//       apiToken (Bearer for M2M calls, optional).
+// Tenant provisioned by platform admin; tenantToken delivered by email.
+// -----------------------------------------------------------------------------
+model VoiceTenant {
+  id                  String    @id @default(cuid())
+  slug                String    @unique
+  businessName        String    @map("business_name")
+  contactEmail        String    @map("contact_email")
+  contactPhone        String?   @map("contact_phone")
+  timezone            String    @default("Europe/Berlin")
+  locale              String    @default("de")
+  mode                String    @default("standalone")
+  status              String    @default("trial")
+  planId              String?   @map("plan_id")
+  tenantToken         String    @unique @map("tenant_token")
+  webhookSecret       String    @map("webhook_secret")
+  apiToken            String?   @unique @map("api_token")
+  providerName        String    @default("retell") @map("provider_name")
+  providerAccountId   String?   @map("provider_account_id")
+  businessDescription String?   @map("business_description")
+  businessAddress     String?   @map("business_address")
+  businessCategory    String?   @map("business_category")
+  kutasiaOrderId      String?   @unique @map("kutasia_order_id")
+  featureFlags        Json      @default("{}") @map("feature_flags")
+  trialEndsAt         DateTime? @map("trial_ends_at")
+  createdAt           DateTime  @default(now()) @map("created_at")
+  updatedAt           DateTime  @updatedAt @map("updated_at")
+
+  plan             VoiceBillingPlan?        @relation(fields: [planId], references: [id])
+  agents           VoiceAgent[]
+  phoneNumbers     VoicePhoneNumber[]
+  businessHours    VoiceBusinessHours[]
+  handoffRules     VoiceHandoffRule[]
+  knowledgeBase    VoiceKnowledgeBaseItem[]
+  appointmentRules VoiceAppointmentRule[]
+  integrations     VoiceIntegration[]
+  notifConfigs     VoiceNotificationConfig[]
+  usageRecords     VoiceUsageRecord[]
+  testRuns         VoiceTestRun[]
+
+  @@index([status])
+  @@index([mode])
+  @@map("voice_tenants")
+}
+
+// -----------------------------------------------------------------------------
+// VoiceAgent — one AI receptionist configuration bound to a tenant.
+//   status: "draft" | "active" | "paused" | "archived"
+//   language: "de" | "tr" | "en" | "multilingual"
+//   promptTemplate: "generic_receptionist" | "appointment_business" |
+//                   "restaurant_reservation" | "restaurant_order" |
+//                   "clinic" | "hotel"
+// providerAgentId is the Retell/Vapi agent ID created on the provider side.
+// -----------------------------------------------------------------------------
+model VoiceAgent {
+  id                      String    @id @default(cuid())
+  tenantId                String    @map("tenant_id")
+  name                    String
+  displayName             String    @map("display_name")
+  language                String    @default("de")
+  voiceId                 String    @map("voice_id")
+  status                  String    @default("draft")
+  promptTemplate          String    @map("prompt_template")
+  systemPrompt            String    @map("system_prompt") @db.Text
+  providerAgentId         String?   @unique @map("provider_agent_id")
+  maxDurationSeconds      Int       @default(600) @map("max_duration_seconds")
+  interruptionSensitivity Float     @default(0.8) @map("interruption_sensitivity")
+  responseDelayMs         Int       @default(500) @map("response_delay_ms")
+  endCallPhrases          String[]  @default([]) @map("end_call_phrases")
+  dtmfHandoffDigit        String?   @map("dtmf_handoff_digit")
+  ambientSoundEnabled     Boolean   @default(false) @map("ambient_sound_enabled")
+  providerOverrides       Json      @default("{}") @map("provider_overrides")
+  lastSyncedAt            DateTime? @map("last_synced_at")
+  createdAt               DateTime  @default(now()) @map("created_at")
+  updatedAt               DateTime  @updatedAt @map("updated_at")
+
+  tenant       VoiceTenant      @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  phoneNumbers VoicePhoneNumber[]
+  calls        VoiceCall[]
+  testRuns     VoiceTestRun[]
+
+  @@index([tenantId, status])
+  @@map("voice_agents")
+}
+
+// -----------------------------------------------------------------------------
+// VoicePhoneNumber — a phone number mapped to an agent.
+//   status: "active" | "released" | "pending"
+// providerPhoneId is the Retell/Vapi internal phone number ID.
+// e164Number is the E.164-formatted number (e.g. "+4930123456789").
+// -----------------------------------------------------------------------------
+model VoicePhoneNumber {
+  id              String    @id @default(cuid())
+  tenantId        String    @map("tenant_id")
+  agentId         String?   @map("agent_id")
+  e164Number      String    @unique @map("e164_number")
+  friendlyName    String?   @map("friendly_name")
+  providerPhoneId String?   @unique @map("provider_phone_id")
+  status          String    @default("active")
+  country         String    @default("DE")
+  importedAt      DateTime  @default(now()) @map("imported_at")
+  releasedAt      DateTime? @map("released_at")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  tenant VoiceTenant  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  agent  VoiceAgent?  @relation(fields: [agentId], references: [id], onDelete: SetNull)
+  calls  VoiceCall[]
+
+  @@index([tenantId])
+  @@map("voice_phone_numbers")
+}
+
+// -----------------------------------------------------------------------------
+// VoiceCall — one phone call record.
+//   direction: "inbound" | "outbound"
+//   status: "ringing" | "in_progress" | "ended" | "failed" | "busy" | "no_answer"
+//   disposition: "answered" | "voicemail" | "transferred" | "abandoned"
+//   outcomeType: "appointment_booked" | "order_placed" | "callback_requested" |
+//                "info_provided" | "transferred" | "no_action" | "error"
+//   processingStatus: "pending" | "processing" | "done" | "failed"
+// extractedFields: structured JSON extracted from transcript
+//   { name, email, phone, intent, requestedDate, requestedTime, service,
+//     partySize, orderItems, address, urgency, nextAction, summary }
+// -----------------------------------------------------------------------------
+model VoiceCall {
+  id                 String    @id @default(cuid())
+  agentId            String    @map("agent_id")
+  phoneNumberId      String?   @map("phone_number_id")
+  providerCallId     String    @unique @map("provider_call_id")
+  providerName       String    @map("provider_name")
+  direction          String    @default("inbound")
+  fromNumber         String    @map("from_number")
+  toNumber           String    @map("to_number")
+  status             String
+  disposition        String?
+  outcomeType        String?   @map("outcome_type")
+  detectedLanguage   String?   @map("detected_language")
+  sentiment          String?
+  durationSeconds    Int?      @map("duration_seconds")
+  recordingUrl       String?   @map("recording_url")
+  recordingDeletedAt DateTime? @map("recording_deleted_at")
+  transcriptJson     Json?     @map("transcript_json")
+  transcriptText     String?   @map("transcript_text") @db.Text
+  summaryText        String?   @map("summary_text") @db.Text
+  extractedFields    Json      @default("{}") @map("extracted_fields")
+  callerName         String?   @map("caller_name")
+  callerEmail        String?   @map("caller_email")
+  callerPhone        String?   @map("caller_phone")
+  costUnits          Int?      @map("cost_units")
+  processingStatus   String    @default("pending") @map("processing_status")
+  processingError    String?   @map("processing_error")
+  startedAt          DateTime? @map("started_at")
+  endedAt            DateTime? @map("ended_at")
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @updatedAt @map("updated_at")
+
+  agent       VoiceAgent        @relation(fields: [agentId], references: [id], onDelete: Restrict)
+  phoneNumber VoicePhoneNumber? @relation(fields: [phoneNumberId], references: [id], onDelete: SetNull)
+  events      VoiceCallEvent[]
+  usageRecord VoiceUsageRecord?
+
+  @@index([agentId, startedAt])
+  @@index([providerCallId])
+  @@index([processingStatus])
+  @@index([fromNumber])
+  @@map("voice_calls")
+}
+
+// -----------------------------------------------------------------------------
+// VoiceCallEvent — fine-grained event log per call (audit trail + debug).
+//   eventType: "webhook_received" | "transcript_segment" | "recording_ready" |
+//              "processing_started" | "appointment_created" | "order_created" |
+//              "notification_sent" | "handoff_triggered" | "error"
+// Insert-only (no updates). Each row is immutable.
+// -----------------------------------------------------------------------------
+model VoiceCallEvent {
+  id        String   @id @default(cuid())
+  callId    String   @map("call_id")
+  eventType String   @map("event_type")
+  payload   Json     @default("{}")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  call VoiceCall @relation(fields: [callId], references: [id], onDelete: Cascade)
+
+  @@index([callId, createdAt])
+  @@map("voice_call_events")
+}
+
+// -----------------------------------------------------------------------------
+// VoiceBusinessHours — weekly schedule + holiday overrides per tenant.
+//   aiMode: "always_on" | "overflow" | "outside_hours" | "manual_off"
+//   dayOfWeek: 0=Sunday .. 6=Saturday (JS Date.getDay() convention)
+// Holiday overrides: isOverride=true, overrideDate="YYYY-MM-DD".
+// Regular weekly rows: isOverride=false, overrideDate=null.
+// The unique constraint prevents duplicate rows for the same day/date.
+// -----------------------------------------------------------------------------
+model VoiceBusinessHours {
+  id            String   @id @default(cuid())
+  tenantId      String   @map("tenant_id")
+  dayOfWeek     Int      @map("day_of_week")
+  openTime      String   @map("open_time")
+  closeTime     String   @map("close_time")
+  isClosed      Boolean  @default(false) @map("is_closed")
+  isOverride    Boolean  @default(false) @map("is_override")
+  overrideDate  String?  @map("override_date")
+  overrideLabel String?  @map("override_label")
+  aiMode        String   @default("always_on") @map("ai_mode")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  tenant VoiceTenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@unique([tenantId, dayOfWeek, isOverride, overrideDate])
+  @@index([tenantId])
+  @@map("voice_business_hours")
+}
+
+// -----------------------------------------------------------------------------
+// VoiceHandoffRule — conditions for AI-to-human escalation.
+//   triggerType: "keyword" | "sentiment" | "duration" | "dtmf" | "topic"
+//   actionType: "transfer_call" | "send_sms" | "send_email" | "create_callback_task"
+// Rules evaluated in sortOrder ascending; first match wins.
+// actionConfig example: { transferNumber: "+49...", emailTo: "team@..." }
+// -----------------------------------------------------------------------------
+model VoiceHandoffRule {
+  id           String   @id @default(cuid())
+  tenantId     String   @map("tenant_id")
+  name         String
+  isActive     Boolean  @default(true) @map("is_active")
+  triggerType  String   @map("trigger_type")
+  triggerValue String?  @map("trigger_value")
+  actionType   String   @map("action_type")
+  actionConfig Json     @default("{}") @map("action_config")
+  sortOrder    Int      @default(0) @map("sort_order")
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  tenant VoiceTenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, isActive, sortOrder])
+  @@map("voice_handoff_rules")
+}
+
+// -----------------------------------------------------------------------------
+// VoiceKnowledgeBaseItem — FAQs, menus, pricing, policies the AI can cite.
+//   itemType: "faq" | "menu" | "pricing" | "policy" | "team" | "location" | "custom"
+// Items are rendered into the agent system prompt at sync time.
+// -----------------------------------------------------------------------------
+model VoiceKnowledgeBaseItem {
+  id        String   @id @default(cuid())
+  tenantId  String   @map("tenant_id")
+  itemType  String   @map("item_type")
+  title     String
+  content   String   @db.Text
+  tags      String[] @default([])
+  isActive  Boolean  @default(true) @map("is_active")
+  sortOrder Int      @default(0) @map("sort_order")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  tenant VoiceTenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, isActive, itemType])
+  @@map("voice_knowledge_base_items")
+}
+
+// -----------------------------------------------------------------------------
+// VoiceAppointmentRule — how the AI handles appointment/reservation/order flows.
+//   bookingType: "direct_cal" | "direct_url" | "email_request" | "phone_callback"
+//   conflictPolicy: "reject" | "offer_next" | "waitlist"
+// calApiKey is stored encrypted-at-rest in production (env var encryption layer).
+// requireFields: JSON string array, e.g. ["name","phone","email"]
+// -----------------------------------------------------------------------------
+model VoiceAppointmentRule {
+  id               String   @id @default(cuid())
+  tenantId         String   @map("tenant_id")
+  name             String
+  isActive         Boolean  @default(true) @map("is_active")
+  bookingType      String   @map("booking_type")
+  calApiKey        String?  @map("cal_api_key")
+  calEventTypeId   Int?     @map("cal_event_type_id")
+  bookingUrl       String?  @map("booking_url")
+  bufferMinutes    Int      @default(15) @map("buffer_minutes")
+  minNoticeMinutes Int      @default(60) @map("min_notice_minutes")
+  maxDaysAhead     Int      @default(30) @map("max_days_ahead")
+  slotDurationMin  Int      @default(60) @map("slot_duration_min")
+  conflictPolicy   String   @default("offer_next") @map("conflict_policy")
+  confirmationMsg  String?  @map("confirmation_msg") @db.Text
+  requireFields    Json     @default("[\"name\",\"phone\"]") @map("require_fields")
+  createdAt        DateTime @default(now()) @map("created_at")
+  updatedAt        DateTime @updatedAt @map("updated_at")
+
+  tenant VoiceTenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, isActive])
+  @@map("voice_appointment_rules")
+}
+
+// -----------------------------------------------------------------------------
+// VoiceIntegration — third-party connections (CRM, calendar, POS, webhook).
+//   integrationType: "cal_com" | "google_calendar" | "custom_webhook" | "email_only"
+//   status: "active" | "inactive" | "error"
+// credentialsJson stored encrypted at rest. configJson is non-secret settings.
+// -----------------------------------------------------------------------------
+model VoiceIntegration {
+  id              String    @id @default(cuid())
+  tenantId        String    @map("tenant_id")
+  integrationType String    @map("integration_type")
+  label           String?
+  status          String    @default("inactive")
+  credentialsJson Json?     @map("credentials_json")
+  configJson      Json      @default("{}") @map("config_json")
+  lastTestedAt    DateTime? @map("last_tested_at")
+  lastErrorMsg    String?   @map("last_error_msg")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  tenant VoiceTenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, status])
+  @@map("voice_integrations")
+}
+
+// -----------------------------------------------------------------------------
+// VoiceNotificationConfig — per-tenant post-call notification channels.
+//   channelType: "email" | "telegram" | "whatsapp" | "webhook"
+//   triggerOn: String[] event keys, e.g. ["call_ended","appointment_booked"]
+// config: { to, botToken, chatId, url, secret } — channel-specific settings.
+// Mirrors the channel pattern from src/lib/notifications.ts.
+// -----------------------------------------------------------------------------
+model VoiceNotificationConfig {
+  id          String   @id @default(cuid())
+  tenantId    String   @map("tenant_id")
+  channelType String   @map("channel_type")
+  label       String?
+  isActive    Boolean  @default(true) @map("is_active")
+  triggerOn   String[] @default([]) @map("trigger_on")
+  config      Json     @default("{}")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  tenant VoiceTenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, isActive])
+  @@map("voice_notification_configs")
+}
+
+// -----------------------------------------------------------------------------
+// VoiceUsageRecord — one record per completed call for billing/analytics.
+//   billingMonth: "YYYY-MM"
+//   billableMinutes: ceil(durationSeconds / 60)
+// Aggregated monthly on-demand for billing dashboard.
+// -----------------------------------------------------------------------------
+model VoiceUsageRecord {
+  id              String   @id @default(cuid())
+  tenantId        String   @map("tenant_id")
+  callId          String   @unique @map("call_id")
+  billingMonth    String   @map("billing_month")
+  durationSeconds Int      @map("duration_seconds")
+  billableMinutes Int      @map("billable_minutes")
+  costUnits       Int      @default(0) @map("cost_units")
+  overageUnits    Int      @default(0) @map("overage_units")
+  overageCents    Int      @default(0) @map("overage_cents")
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  tenant VoiceTenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  call   VoiceCall   @relation(fields: [callId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, billingMonth])
+  @@map("voice_usage_records")
+}
+
+// -----------------------------------------------------------------------------
+// VoiceTestRun — record of a test call initiated from the Voice Agent dashboard.
+//   status: "initiated" | "completed" | "failed"
+// providerCallId is set when the provider confirms the call was created.
+// -----------------------------------------------------------------------------
+model VoiceTestRun {
+  id             String    @id @default(cuid())
+  tenantId       String    @map("tenant_id")
+  agentId        String    @map("agent_id")
+  toNumber       String    @map("to_number")
+  providerCallId String?   @unique @map("provider_call_id")
+  status         String    @default("initiated")
+  notes          String?   @db.Text
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+
+  tenant VoiceTenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  agent  VoiceAgent  @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  @@index([tenantId, createdAt])
+  @@map("voice_test_runs")
+}
+

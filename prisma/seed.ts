@@ -156,12 +156,99 @@ async function publishFounderCard() {
   console.log(`[seed] Ensured short link go.opsolid.de/${c.slug}.`);
 }
 
+async function seedVoiceBillingPlans() {
+  const plans = [
+    {
+      planKey: "starter",
+      displayName: "Starter",
+      monthlyMinutes: 120,
+      overageRateCents: 8,
+      monthlyCents: 4900,
+      yearlyCents: 49900,
+      features: ["1 Agent", "1 Rufnummer", "Anrufprotokoll", "E-Mail-Benachrichtigungen"],
+    },
+    {
+      planKey: "growth",
+      displayName: "Growth",
+      monthlyMinutes: 600,
+      overageRateCents: 6,
+      monthlyCents: 14900,
+      yearlyCents: 149900,
+      features: [
+        "3 Agents",
+        "2 Rufnummern",
+        "Terminbuchung (Cal.com)",
+        "Telegram + E-Mail",
+        "Analytics & Stoßzeiten",
+        "Wissensdatenbank",
+      ],
+    },
+    {
+      planKey: "enterprise",
+      displayName: "Enterprise",
+      monthlyMinutes: 2000,
+      overageRateCents: 4,
+      monthlyCents: 39900,
+      yearlyCents: 399900,
+      features: [
+        "Unbegrenzte Agents",
+        "5 Rufnummern",
+        "Mehrsprachig (DE/TR/EN)",
+        "Alle Integrationen",
+        "SLA 99,9 %",
+        "Prioritätssupport",
+      ],
+    },
+    {
+      planKey: "kutasia_addon",
+      displayName: "Kutasia Modul",
+      monthlyMinutes: 300,
+      overageRateCents: 7,
+      monthlyCents: 7900,
+      yearlyCents: 79900,
+      features: [
+        "Kutasia CRM Integration",
+        "1 Agent",
+        "1 Rufnummer",
+        "Terminbuchung",
+        "Call-to-Task automatisch",
+      ],
+    },
+  ];
+
+  for (const plan of plans) {
+    await prisma.voiceBillingPlan.upsert({
+      where: { planKey: plan.planKey },
+      create: {
+        planKey: plan.planKey,
+        displayName: plan.displayName,
+        monthlyMinutes: plan.monthlyMinutes,
+        overageRateCents: plan.overageRateCents,
+        monthlyCents: plan.monthlyCents,
+        yearlyCents: plan.yearlyCents,
+        features: plan.features,
+        isActive: true,
+      },
+      update: {
+        displayName: plan.displayName,
+        monthlyMinutes: plan.monthlyMinutes,
+        overageRateCents: plan.overageRateCents,
+        monthlyCents: plan.monthlyCents,
+        yearlyCents: plan.yearlyCents,
+        features: plan.features,
+      },
+    });
+  }
+  console.log(`[seed] Upserted ${plans.length} voice billing plans.`);
+}
+
 async function main() {
   await syncTemplates();
   const count = await prisma.cardTemplate.count();
   console.log(`[seed] Synced ${cardTemplates.length} templates; DB now has ${count}.`);
 
   await publishFounderCard();
+  await seedVoiceBillingPlans();
 }
 
 main()

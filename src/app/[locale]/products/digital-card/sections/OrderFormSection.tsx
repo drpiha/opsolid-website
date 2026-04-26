@@ -40,9 +40,7 @@ import type { TemplateSupports } from "@/components/cards/templates/v2/types";
 import { OrderPayloadSchema, BillingMode } from "@/lib/validation";
 import type {
   CardData,
-  CustomSection,
   ImagePosition,
-  TypographyPreset,
 } from "@/lib/validation";
 import { PhotoEditor } from "@/components/cards/PhotoEditor";
 import { TYPOGRAPHY_PRESET_LIST } from "@/lib/typographyPresets";

@@ -3206,22 +3206,24 @@ export const content: Content = {
         metaChip: "",
         metaLabel: "",
         title: {
-          pre: "Operasyonlarınızı ",
-          italic: "gerçekten",
-          post: " yürüten otomasyon — tersi değil.",
+          pre: "İşletmenize ",
+          italic: "özel kurulan",
+          post: " operasyonel otomasyon",
         },
         lead:
-          "OpSolid, operasyonunuzun arka planında sessizce çalışan sistemleri kurar. Orta ölçekli ekipler için workflow otomasyonu, sistem entegrasyonu, dahili araçlar ve yapay zekâ destekli süreçler. Mevcut sisteminizi yeniden kurmadan, sürecinize entegre olur.",
-        ctaPrimary: "Discovery görüşmesi ayarla",
-        ctaSecondary: "OpSolid ne inşa eder",
+          "OpSolid, operasyonunuzun arka planında sessizce çalışan sistemler kurar. Orta ölçekli ekipler için iş akışı otomasyonu, sistem entegrasyonu, dahili araçlar ve yapay zekâ destekli süreçler. Mevcut yığınınızı yeniden kurmadan, sürecinize doğrudan entegre olur.",
+        ctaPrimary: "Tanışma görüşmesi planla",
+        ctaSecondary: "Neler inşa ediyoruz",
         stats: [],
       },
 
       capabilities: {
         eyebrow: "[ 02 / 04 ] KAPSAM",
-        headline: "OpSolid'in uçtan uca sahiplendiği alanlar.",
+        headline: "Uçtan uca sahiplendiğimiz alanlar",
         lead:
-          "Platform değil, pazaryeri değil. Operasyonlarınızı olduğu hâliyle alıp — manuel, yarı otomatik ya da derme çatma birleştirilmiş — sürekli müdahale gerektirmeden çalışan sistemler olarak bırakan, küçük ve odaklı bir stüdyo.",
+          "Platform değiliz, pazaryeri değiliz. Operasyonunuzu olduğu hâliyle — manuel, yarı otomatik ya da derme çatma birleştirilmiş — alıp, sürekli müdahale gerektirmeden çalışan sistemler hâlinde bırakan küçük ve odaklı bir stüdyoyuz.",
+        seeAffordance: "+ Çalışırken gör",
+        closeAffordance: "− Kapat",
         cards: [
           {
             icon: "workflow",
@@ -3273,10 +3275,10 @@ export const content: Content = {
         title: {
           pre: "Otomasyonun ",
           italic: "ölçüldüğü",
-          post: " rakamlar.",
+          post: " rakamlar",
         },
         body:
-          "Her otomasyonu, sektörün referans değerleriyle yan yana ölçüyoruz. Solda bugünkü tipik durum; sağda otomasyondan beklenen sonuç.",
+          "Her otomasyonu sektörün referans değerleriyle yan yana ölçüyoruz. Solda bugünkü tipik durum; sağda otomasyonun hedeflediği sonuç.",
         chipBefore: "SEKTÖR MEDYANI",
         chipAfter: "OTOMASYON HEDEFİ",
         rows: [
@@ -3309,7 +3311,7 @@ export const content: Content = {
 
       process: {
         eyebrow: "[ 04 / 04 ] SÜREÇ",
-        headline: "Üç adım. Açık ve şeffaf bir süreç.",
+        headline: "Üç adım. Açık ve şeffaf bir süreç",
         lead:
           "Her iş aynı biçimi izler: mevcut süreci birlikte haritalarız, en kritik adımı önce devreye alırız ve karşılığını vermeye devam ettiği yerde genişletiriz. Otomasyon mantıklı olduğu yerde önerilir, olmadığı yerde önerilmez.",
         steps: [
@@ -3344,13 +3346,13 @@ export const content: Content = {
       finalCta: {
         eyebrow: "[ KONUŞALIM ]",
         title: {
-          pre: "Neyin ",
-          italic: "gerçekten",
-          post: " otomasyona uygun olduğuna beraber bakalım.",
+          pre: "Otomasyonun ",
+          italic: "nerede karşılığını verdiğini",
+          post: " birlikte değerlendirelim",
         },
         lead:
-          "30 dakika. Operasyon keşfi, açık bir değerlendirme ve yazılı bir plan. Görüşme sonrası bir yükümlülük yok — otomasyon doğru çözüm değilse bunu birlikte konuşuruz.",
-        ctaPrimary: "Discovery görüşmesi ayarla",
+          "30 dakika. Operasyon keşfi, açık bir değerlendirme ve yazılı bir plan. Görüşmeden sonra bir yükümlülük yok — otomasyon doğru çözüm değilse bunu da açıkça söyleriz.",
+        ctaPrimary: "Tanışma görüşmesi planla",
         ctaSecondary: "Günlüğü oku",
         trustLine:
           "BUILT IN GERMANY · GDPR-NATIVE · KAYNAK KODU SİZİNLE · EN · DE · TR",
@@ -3364,10 +3366,10 @@ export const content: Content = {
         title: {
           pre: "Her çağrıya ",
           italic: "otuz saniyede",
-          post: " ya da daha kısa sürede yanıt — yedi yirmi dört.",
+          post: " ya da daha kısa sürede yanıt — günün yirmi dört saati",
         },
         lead:
-          "Müşterilerinizin kıdemli olmayan bir santralden ayırt edemeyeceği bir voice agent. Intent'e göre yönlendirir, takviminize kayıt eder, script tükendiğinde eskalasyon yapar. Retell veya Vapi üzerinde, uçtan uca denetimli, sizin playbook'unuzla eğitilmiş.",
+          "Müşterilerinizin santral elemanından ayırt edemeyeceği bir voice agent. Intent'e göre yönlendirir, takviminize kayıt eder, script tükendiğinde insana sıcak devir yapar. Retell veya Vapi üzerinde kurulur, uçtan uca denetlenir, sizin playbook'unuzla eğitilir.",
         ctaPrimary: "Pilot başlat",
         ctaSecondary: "Canlı çağrıyı dinle",
         features: [
@@ -3393,7 +3395,7 @@ export const content: Content = {
       },
       flow: {
         eyebrow: "[ ÇAĞRI AKIŞI ]",
-        headline: "Her çağrı, dört hamle.",
+        headline: "Her çağrı, dört hamlede tamamlanır",
         lead:
           "Agent, gereken yerde deterministiktir — kimlik, planlama, devir — ve mümkün olan yerde konuşmacıdır. Politika uyduran açık uçlu sohbet yok.",
         steps: [
@@ -3425,7 +3427,7 @@ export const content: Content = {
       },
       spec: {
         eyebrow: "[ TEKNİK ŞARTNAME ]",
-        headline: "Açıp inceleyebileceğiniz araçlar üzerine kurulu.",
+        headline: "Açıp inceleyebileceğiniz araçlar üzerine kurulur",
         lead:
           "Kapalı kutu fiyatlandırma katmanı yok. Her katman değiştirilebilir, her ayar sizin tarafınızda sürümlü tutulur.",
         rows: [
@@ -3446,12 +3448,12 @@ export const content: Content = {
         metaChip: "DIGITAL CARD",
         metaLabel: "[ PRODUCT · 02 ]",
         title: {
-          pre: "Müşterilerinizin ",
-          italic: "gerçekten",
-          post: " sakladığı bir kartvizit.",
+          pre: "Saklanmayı ",
+          italic: "hak eden",
+          post: " bir kartvizit",
         },
         lead:
-          "NFC ile dokunarak paylaşım, QR yedeği. İşlenmiş metal kart veya telefon cüzdan geçişi olarak gönderilir. İletişim bilgileri, takvim bağlantısı ve portföy merkezi olarak güncellenir — birinin rolü değiştikçe yeni baskıya gerek kalmaz.",
+          "NFC ile dokunarak paylaşım, QR yedeği. İşlenmiş metal kart ya da telefon cüzdan geçişi olarak gönderilir. İletişim bilgileri, takvim bağlantısı ve portföy tek merkezden güncellenir — biri rol değiştirdiğinde yeni baskıya gerek kalmaz.",
         ctaPrimary: "Örnek sipariş et",
         ctaSecondary: "Şablonlara göz at",
         features: [
@@ -3474,9 +3476,9 @@ export const content: Content = {
       },
       templates: {
         eyebrow: "[ SEKTÖR ŞABLONLARI ]",
-        headline: "Başlangıç noktası, deli gömleği değil.",
+        headline: "Başlangıç noktası — deli gömleği değil",
         lead:
-          "Hukuk, sağlık, zanaat ve konaklama için şablon düzenleri — her biri sektörün gerçekten kullandığı iletişim alanları, uyumluluk bildirimleri ve takvim entegrasyonları ile. Her düzen kilitli bir tema değil, çatallanıp değiştirilebilen bir başlangıç noktasıdır.",
+          "Hukuk, sağlık, zanaat ve konaklama için hazır düzenler — her biri o sektörde fiilen kullanılan iletişim alanları, uyumluluk bildirimleri ve takvim entegrasyonları ile. Kilitli bir tema değil, dilediğiniz gibi çatallayıp değiştirebileceğiniz bir başlangıç noktası.",
         items: [
           {
             sector: "LAW",
@@ -3510,7 +3512,7 @@ export const content: Content = {
       },
       howItWorks: {
         eyebrow: "[ NASIL ÇALIŞIR ]",
-        headline: "Üç katman. Tek dokunuş.",
+        headline: "Üç katman. Tek dokunuş",
         lead:
           "Donanım bir kez gönderilir. Dokunuşun ardındaki her şey, baskıda değil sizin panelinizde güncellenir.",
         steps: [
@@ -3542,7 +3544,7 @@ export const content: Content = {
         metaLabel: "[ İLETİŞİM ]",
         title: {
           pre: "Otuz dakika. ",
-          italic: "Yazılı bir plan.",
+          italic: "Yazılı bir plan",
           post: "",
         },
         lead:
@@ -3587,15 +3589,15 @@ export const content: Content = {
         title: {
           pre: "Operasyon ",
           italic: "zemininden",
-          post: " notlar.",
+          post: " notlar",
         },
         intro:
-          "Saha notları, iş raporları ve zaman zaman sağlam bir fikir. İlk yazılar hazırlanıyor — indikleri anda haber almak için aşağıdan abone ol.",
+          "Saha notları, iş raporları ve zaman zaman sağlam bir fikir. İlk yazılar hazırlanıyor — yayınlandığında haber almak için aşağıdan abone olun.",
       },
       emptyFeature: {
         tag: "HAZIRLANIYOR · UZUN BİÇİM",
         headline:
-          "Odaklı otomasyon: bir işi gerçekten hareket ettiren nedir, sadece sunumda iyi görünen nedir.",
+          "Odaklı otomasyon: bir işi gerçekten ileri taşıyan nedir, yalnızca sunumda iyi görünen nedir",
         lede:
           "Günlüğün açılış yazısı. Taslak hazırlanıyor — 20 satırın altında odaklı bir iş akışının ERP değişimini anlamlı ölçütlerde nasıl geçtiği üzerine.",
         meta: "D. PIHA · PLANLANDI · 15 DK",
@@ -3626,18 +3628,18 @@ export const content: Content = {
         metaChip: "KUTASIA",
         metaLabel: "[ FLAGSHIP · HOSPITALITY ]",
         title: {
-          pre: "Hatırlayan ",
-          italic: "odalar",
-          post: " için misafir platformu.",
+          pre: "Misafirini ",
+          italic: "hatırlayan",
+          post: " mekânlar için tek platform",
         },
         lead:
-          "İlk olarak İstanbul'daki bir restoran için inşa edildi. DE · TR genelinde oteller, chef's table'lar, şarap barları ve özel kulüpler için tasarlandı. Rezervasyon, üyelik, hediye ve misafir hafızası — ev sahibinin servis zemininden gerçekten yönetebileceği tek sistemde.",
+          "İlk olarak İstanbul'da bir restoran için inşa edildi. DE · TR genelinde oteller, chef's table'lar, şarap barları ve özel kulüpler için tasarlandı. Rezervasyon, üyelik, hediye ve misafir hafızası — ev sahibinin servis zemininden tek elden yönetebileceği bir sistemde.",
         ctaPrimary: "Erişim talep et",
         ctaSecondary: "Modülleri gör",
       },
       rooms: {
         eyebrow: "[ MODÜLLER ]",
-        headline: "Beş oda. Tek ev.",
+        headline: "Beş oda. Tek ev",
         lead:
           "Her modül kendi başına çalışır ve bir sonrakine temiz devreder. Rezervasyonlarla başla, bekleme listesi ciddileştiğinde üyelik ekle, servis gerektirdiğinde misafir hafızasını katla.",
         items: [

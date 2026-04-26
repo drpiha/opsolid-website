@@ -411,6 +411,253 @@ body { background: var(--bg-1); color: var(--ink-200); overflow-x: hidden; }
   color: var(--ink-400);
 }
 
+/* Interactive card affordance — appears below the tag when card is hover/focused */
+button.os-cap {
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+  width: 100%;
+  appearance: none;
+  display: block;
+}
+button.os-cap:focus-visible {
+  outline: 2px solid var(--copper-300);
+  outline-offset: 4px;
+}
+.os-cap-affordance {
+  display: block;
+  margin-top: 14px;
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--copper-300);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity var(--dur-base) var(--ease-snap),
+              transform var(--dur-base) var(--ease-snap);
+}
+button.os-cap:hover .os-cap-affordance,
+button.os-cap:focus-visible .os-cap-affordance,
+.os-cap-active .os-cap-affordance {
+  opacity: 1;
+  transform: translateY(0);
+}
+.os-cap-active {
+  border-color: var(--copper-500) !important;
+  box-shadow:
+    var(--rim-top-strong),
+    var(--depth-3),
+    0 0 0 1px rgba(194,121,64,0.25) inset !important;
+}
+.os-cap-active::before {
+  opacity: 1 !important;
+  bottom: -30% !important;
+}
+
+/* Showcase stage — appears below grid when a card is active */
+.os-cap-showcase {
+  margin-top: 32px;
+  min-height: 0;
+}
+.os-cap-showcase-inner {
+  display: grid;
+  grid-template-columns: minmax(260px, 360px) 1fr;
+  gap: clamp(28px, 4vw, 56px);
+  align-items: stretch;
+  padding: clamp(28px, 4vw, 48px);
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 100%, rgba(194,121,64,0.10), transparent 70%),
+    linear-gradient(180deg, var(--bg-3) 0%, var(--bg-2) 100%);
+  border: 1px solid var(--line-firm);
+  border-radius: var(--r-2xl);
+  box-shadow: var(--rim-top-strong), var(--depth-3);
+  isolation: isolate;
+  overflow: hidden;
+}
+@media (max-width: 800px) {
+  .os-cap-showcase-inner {
+    grid-template-columns: 1fr;
+  }
+}
+.os-cap-showcase-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.os-cap-showcase-tag {
+  display: inline-block;
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--copper-400);
+  margin-bottom: 18px;
+}
+.os-cap-showcase-copy h3 {
+  font-size: clamp(1.5rem, 2.4vw, 1.875rem);
+  font-weight: 500;
+  letter-spacing: -0.014em;
+  color: var(--ink-100);
+  margin: 0 0 14px;
+  line-height: 1.18;
+}
+.os-cap-showcase-copy p {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--ink-300);
+  margin: 0;
+  max-width: 36ch;
+}
+.os-cap-showcase-stage {
+  position: relative;
+  min-height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(255,243,225,0.05), transparent 70%),
+    linear-gradient(180deg, #14110E 0%, #0A0907 100%);
+  border: 1px solid rgba(221,162,102,0.18);
+  border-radius: var(--r-xl);
+  padding: 18px;
+  overflow: hidden;
+}
+.os-cap-svg {
+  width: 100%;
+  height: auto;
+  max-height: 240px;
+  display: block;
+}
+
+/* Internal-tools dashboard mock */
+.os-cap-dash {
+  width: 100%;
+  background: linear-gradient(180deg, #1B1814 0%, #0F0D0B 100%);
+  border: 1px solid rgba(221,162,102,0.22);
+  border-radius: 10px;
+  overflow: hidden;
+  font-family: var(--font-body);
+  color: rgba(255,243,225,0.92);
+}
+.os-cap-dash-bar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 14px;
+  background: rgba(0,0,0,0.35);
+  border-bottom: 1px solid rgba(221,162,102,0.18);
+}
+.os-cap-dash-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(221,162,102,0.4);
+}
+.os-cap-dash-title {
+  margin-left: auto;
+  font-family: var(--font-mono); font-size: 9.5px;
+  letter-spacing: 0.18em;
+  color: rgba(245,217,184,0.85);
+}
+.os-cap-dash-body {
+  padding: 12px 14px 14px;
+}
+.os-cap-dash-tabs {
+  display: flex; gap: 6px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(221,162,102,0.12);
+}
+.os-cap-dash-tab {
+  padding: 4px 10px;
+  font-family: var(--font-mono); font-size: 9.5px;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: rgba(255,243,225,0.45);
+  border-radius: 999px;
+  border: 1px solid transparent;
+}
+.os-cap-dash-tab.active {
+  color: #F5D9B8;
+  border-color: rgba(221,162,102,0.4);
+  background: rgba(221,162,102,0.08);
+}
+.os-cap-dash-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(255,243,225,0.06);
+  font-size: 13px;
+}
+.os-cap-dash-label {
+  color: rgba(255,243,225,0.85);
+}
+.os-cap-dash-pill {
+  font-family: var(--font-mono); font-size: 9px;
+  letter-spacing: 0.18em;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid;
+  background: rgba(0,0,0,0.35);
+}
+.os-cap-dash-cta {
+  margin-top: 12px;
+  display: inline-block;
+  padding: 7px 16px;
+  font-size: 12px;
+  border: 1px solid var(--copper-500);
+  border-radius: 8px;
+  color: #F5D9B8;
+  background: linear-gradient(180deg, rgba(194,121,64,0.18), rgba(126,74,36,0.22));
+}
+
+/* Voice waveform + transcript */
+.os-cap-voice {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-family: var(--font-body);
+  color: rgba(255,243,225,0.92);
+}
+.os-cap-voice-wave {
+  display: flex; align-items: center; justify-content: center;
+  gap: 3px;
+  height: 60px;
+}
+.os-cap-voice-bar {
+  display: inline-block;
+  width: 4px; height: 32px;
+  background: linear-gradient(180deg, #F5D9B8 0%, #C27940 60%, #7E4A24 100%);
+  border-radius: 2px;
+  transform-origin: 50% 50%;
+}
+.os-cap-voice-transcript {
+  min-height: 78px;
+  padding: 10px 14px;
+  background: rgba(0,0,0,0.4);
+  border: 1px solid rgba(221,162,102,0.18);
+  border-radius: 10px;
+}
+.os-cap-voice-transcript p {
+  font-size: 13px;
+  margin: 4px 0;
+  color: rgba(255,243,225,0.88);
+  font-style: italic;
+}
+.os-cap-voice-meta {
+  display: flex; justify-content: space-between; gap: 10px;
+  font-family: var(--font-mono); font-size: 9px;
+  letter-spacing: 0.18em;
+  color: rgba(245,217,184,0.7);
+}
+
+/* Reduced-motion fallback */
+.os-cap-fallback {
+  width: 100%;
+  display: flex; align-items: center; justify-content: center;
+  height: 100%;
+  min-height: 200px;
+}
+.os-cap-fallback-label {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.22em;
+  color: rgba(245,217,184,0.7);
+  text-align: center;
+  padding: 0 16px;
+}
+
 /* =======================================================
    SPECIMEN SECTION — big benefit claim
    ======================================================= */
