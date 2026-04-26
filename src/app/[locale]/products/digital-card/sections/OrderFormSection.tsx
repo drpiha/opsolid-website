@@ -38,7 +38,14 @@ import {
 } from "@/components/cards/templates/v2/registry";
 import type { TemplateSupports } from "@/components/cards/templates/v2/types";
 import { OrderPayloadSchema, BillingMode } from "@/lib/validation";
-import type { CardData } from "@/lib/validation";
+import type {
+  CardData,
+  CustomSection,
+  ImagePosition,
+  TypographyPreset,
+} from "@/lib/validation";
+import { PhotoEditor } from "@/components/cards/PhotoEditor";
+import { TYPOGRAPHY_PRESET_LIST } from "@/lib/typographyPresets";
 import {
   CARD_THEME_LIST,
   type CardThemeKey,
@@ -124,6 +131,14 @@ const EMPTY_CARD: CardData = {
   designNotes: "",
 };
 
+// Phase 7.9 — small caption shown next to "Edit position" button
+function formatPositionLabel(pos: ImagePosition | undefined): string | undefined {
+  if (!pos) return undefined;
+  const centred = pos.x === 50 && pos.y === 50;
+  const xy = centred ? "Merkez" : `${Math.round(pos.x)} · ${Math.round(pos.y)}`;
+  return `${xy} · ${pos.scale.toFixed(2)}×`;
+}
+
 // =============================================================================
 // Section component
 // =============================================================================
@@ -176,6 +191,11 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
   // ---- accordion state ---------------------------------------------------
   const [openStep, setOpenStep] = useState<StepId>("contact");
   const [previewOpen, setPreviewOpen] = useState(false);
+  // Phase 7.9 — photo / logo position editor modal
+  const [photoEditorOpen, setPhotoEditorOpen] = useState(false);
+  const [logoEditorOpen, setLogoEditorOpen] = useState(false);
+  // Phase 7.9 — share-link modal (URL-hash preview without payment)
+  const [shareLinkOpen, setShareLinkOpen] = useState(false);
   // Phase 7.8 — desktop full-screen preview modal + per-preview locale switch
   const [fullPreviewOpen, setFullPreviewOpen] = useState(false);
   const [previewLocale, setPreviewLocale] = useState<"de" | "en" | "tr">(
@@ -664,6 +684,8 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
                   logoUploadError={logoUploadError}
                   setLogoUploadError={setLogoUploadError}
                   readPreview={readPreview}
+                  onEditPhoto={() => setPhotoEditorOpen(true)}
+                  onEditLogo={() => setLogoEditorOpen(true)}
                 />
               </AccordionStep>
 
@@ -734,15 +756,25 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
                 </span>
               </div>
               {/* Phase 7.8 — open the preview at full size */}
-              <button
-                type="button"
-                onClick={() => setFullPreviewOpen(true)}
-                className="inline-flex items-center gap-1.5 rounded-full border border-ink/15 bg-white px-2.5 py-1 text-[10.5px] font-semibold text-ink/70 transition-colors hover:border-copper/50 hover:text-ink"
-                aria-label={L("previewExpand", "Open full preview")}
-              >
-                <Maximize2 size={11} aria-hidden />
-                <span>{L("previewExpand", "Vollvorschau")}</span>
-              </button>
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => setShareLinkOpen(true)}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-copper/40 bg-copper/10 px-2.5 py-1 text-[10.5px] font-semibold text-ink transition-colors hover:border-copper hover:bg-copper/20"
+                  aria-label={L("shareLink", "Önizleme linki paylaş")}
+                >
+                  <span>{L("shareLink", "Önizleme linki")}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setFullPreviewOpen(true)}
+                  className="inline-flex items-center gap-1.5 rounded-full border border-ink/15 bg-white px-2.5 py-1 text-[10.5px] font-semibold text-ink/70 transition-colors hover:border-copper/50 hover:text-ink"
+                  aria-label={L("previewExpand", "Open full preview")}
+                >
+                  <Maximize2 size={11} aria-hidden />
+                  <span>{L("previewExpand", "Vollvorschau")}</span>
+                </button>
+              </div>
             </div>
 
             {/* layered frame: outer glow + inner card. Click to expand. */}
@@ -895,6 +927,76 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
           </Dialog.Content>
         </Dialog.Portal>
       </Dialog.Root>
+
+      {/* Phase 7.9 — photo / logo position editor modals */}
+      {photoEditorOpen && (photoPreviewUrl || photoPath) && (
+        <PhotoEditor
+          open={photoEditorOpen}
+          onOpenChange={setPhotoEditorOpen}
+          kind="photo"
+          imageUrl={photoPreviewUrl ?? photoPath ?? ""}
+          initialPosition={cardData.photoPosition}
+          onSave={(pos) => setCard("photoPosition", pos)}
+          labels={{
+            title: L("photoEditorTitle", "Profilfoto pozisyonu"),
+            subtitle: L(
+              "photoEditorSubtitle",
+              "Sürükleyerek konumla, yakınlaştırma için kaydırıcıyı kullan."
+            ),
+            zoom: L("photoEditorZoom", "Yakınlaştırma"),
+            reset: L("photoEditorReset", "Sıfırla"),
+            save: L("photoEditorSave", "Kaydet"),
+            cancel: L("photoEditorCancel", "İptal"),
+            hint: L(
+              "photoEditorHint",
+              "Halka, fotoğrafın görünür merkezini gösterir."
+            ),
+          }}
+        />
+      )}
+      {logoEditorOpen && (logoPreviewUrl || logoPath) && (
+        <PhotoEditor
+          open={logoEditorOpen}
+          onOpenChange={setLogoEditorOpen}
+          kind="logo"
+          imageUrl={logoPreviewUrl ?? logoPath ?? ""}
+          initialPosition={cardData.logoPosition}
+          onSave={(pos) => setCard("logoPosition", pos)}
+          labels={{
+            title: L("logoEditorTitle", "Logo pozisyonu"),
+            subtitle: L(
+              "logoEditorSubtitle",
+              "Logoyu çerçevesinde tam istediğin yere yerleştir."
+            ),
+            zoom: L("photoEditorZoom", "Yakınlaştırma"),
+            reset: L("photoEditorReset", "Sıfırla"),
+            save: L("photoEditorSave", "Kaydet"),
+            cancel: L("photoEditorCancel", "İptal"),
+            hint: L(
+              "photoEditorHint",
+              "Halka, fotoğrafın görünür merkezini gösterir."
+            ),
+          }}
+        />
+      )}
+
+      {/* Phase 7.9 — share-link modal (URL-hash preview without payment) */}
+      {shareLinkOpen && (
+        <ShareLinkModal
+          open={shareLinkOpen}
+          onOpenChange={setShareLinkOpen}
+          payload={{
+            templateId: selectedTemplate?.id ?? 1,
+            cardData: activeCardData,
+            photoPath: photoPath ?? undefined,
+            logoPath: logoPath ?? undefined,
+            brandPrimaryHex: brandPrimaryHex || undefined,
+            brandAccentHex: brandAccentHex || undefined,
+            locale: previewLocale,
+          }}
+          L={L}
+        />
+      )}
     </section>
   );
 }
@@ -1280,6 +1382,8 @@ function StepCardContent({
   logoUploadError,
   setLogoUploadError,
   readPreview,
+  onEditPhoto,
+  onEditLogo,
 }: {
   L: (k: string, f: string) => string;
   cardData: CardData;
@@ -1315,6 +1419,8 @@ function StepCardContent({
   logoUploadError: string | null;
   setLogoUploadError: (v: string | null) => void;
   readPreview: (file: File) => Promise<string>;
+  onEditPhoto: () => void;
+  onEditLogo: () => void;
 }) {
   return (
     <>
@@ -1453,10 +1559,13 @@ function StepCardContent({
               "templateNoPhoto",
               "Dieses Design verwendet kein Foto."
             )}
+            onEdit={onEditPhoto}
+            positionLabel={formatPositionLabel(cardData.photoPosition)}
             onRemove={() => {
               setPhotoPath(null);
               setPhotoPreviewUrl(null);
               setPhotoUploadError(null);
+              setCard("photoPosition", undefined);
             }}
             onFileSelect={async (file) => {
               const allowed = ["image/jpeg", "image/png", "image/webp"];
@@ -1501,10 +1610,13 @@ function StepCardContent({
               "templateNoLogo",
               "Dieses Design verwendet kein Logo."
             )}
+            onEdit={onEditLogo}
+            positionLabel={formatPositionLabel(cardData.logoPosition)}
             onRemove={() => {
               setLogoPath(null);
               setLogoPreviewUrl(null);
               setLogoUploadError(null);
+              setCard("logoPosition", undefined);
             }}
             onFileSelect={async (file) => {
               const allowed = ["image/jpeg", "image/png", "image/webp"];
@@ -1579,7 +1691,136 @@ function StepCardContent({
           </div>
         </SubFieldset>
       )}
+
+      {/* Phase 7.9 — Custom Sections editor (up to 6 free-form sections) */}
+      <CustomSectionsEditor cardData={cardData} setCard={setCard} L={L} />
     </>
+  );
+}
+
+// =============================================================================
+// Phase 7.9 — Custom sections editor: lets the customer add up to 6 titled
+// blocks of free-form text that templates render at the bottom of the card.
+// =============================================================================
+
+function CustomSectionsEditor({
+  cardData,
+  setCard,
+  L,
+}: {
+  cardData: CardData;
+  setCard: <K extends keyof CardData>(key: K, value: CardData[K]) => void;
+  L: (k: string, f: string) => string;
+}) {
+  const sections = cardData.customSections ?? [];
+  const updateSections = (next: CustomSection[]) =>
+    setCard("customSections", next.length ? next : undefined);
+  const addSection = () => {
+    if (sections.length >= 6) return;
+    const id =
+      typeof crypto !== "undefined" && crypto.randomUUID
+        ? crypto.randomUUID()
+        : Math.random().toString(36).slice(2, 10);
+    updateSections([...sections, { id, title: "", body: "" }]);
+  };
+  const updateSection = (i: number, patch: Partial<CustomSection>) => {
+    const next = sections.slice();
+    next[i] = { ...next[i], ...patch };
+    updateSections(next);
+  };
+  const removeSection = (i: number) => {
+    updateSections(sections.filter((_, j) => j !== i));
+  };
+
+  const atLimit = sections.length >= 6;
+
+  return (
+    <SubFieldset
+      label={L("customSectionsSection", "Özel bölümler (opsiyonel)")}
+      hint={L(
+        "customSectionsHint",
+        "En fazla 6 bölüm ekleyebilirsin — ödüller, diller, ne istersen."
+      )}
+    >
+      {sections.length > 0 && (
+        <div className="space-y-3">
+          {sections.map((section, i) => {
+            const remaining = 800 - (section.body?.length ?? 0);
+            return (
+              <div
+                key={section.id}
+                className="relative space-y-3 rounded-2xl border border-line bg-bg-1 p-4"
+              >
+                <button
+                  type="button"
+                  onClick={() => removeSection(i)}
+                  aria-label={L("customSectionRemove", "Kaldır")}
+                  className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full border border-line bg-white text-ink/55 transition-colors hover:border-line-firm hover:text-ink"
+                >
+                  <X size={12} />
+                </button>
+                <Input
+                  label={L("customSectionTitle", "Başlık")}
+                  maxLength={60}
+                  value={section.title}
+                  onChange={(e) => updateSection(i, { title: e.target.value })}
+                  placeholder={L(
+                    "customSectionTitlePh",
+                    "Örn. Diller, Ödüller, Basın"
+                  )}
+                />
+                <div>
+                  <Textarea
+                    label={L("customSectionBody", "İçerik")}
+                    rows={3}
+                    maxLength={800}
+                    value={section.body}
+                    onChange={(e) => updateSection(i, { body: e.target.value })}
+                    placeholder={L(
+                      "customSectionBodyPh",
+                      "Açıklama — kartını açan herkesin göreceği metin."
+                    )}
+                  />
+                  <p
+                    className={[
+                      "mt-1 text-right text-[10px] mono-label",
+                      remaining < 60 ? "text-copper" : "text-ink/40",
+                    ].join(" ")}
+                  >
+                    {section.body?.length ?? 0} / 800
+                  </p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      <div className="flex items-center justify-between gap-3 pt-1">
+        <button
+          type="button"
+          onClick={addSection}
+          disabled={atLimit}
+          className={[
+            "inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold transition-all",
+            atLimit
+              ? "cursor-not-allowed border border-line bg-bg-1 text-ink/35"
+              : "border border-copper/40 bg-copper/10 text-ink hover:border-copper hover:bg-copper/20",
+          ].join(" ")}
+        >
+          <span aria-hidden className="text-base leading-none">
+            +
+          </span>
+          {L("customSectionAdd", "Bölüm ekle")}
+        </button>
+        <span className="mono-label text-[10px] uppercase tracking-wider text-ink/45">
+          {L("customSectionsCount", "{n} / 6").replace(
+            "{n}",
+            String(sections.length)
+          )}
+        </span>
+      </div>
+    </SubFieldset>
   );
 }
 
@@ -1697,6 +1938,69 @@ function StepBranding({
             </button>
           </div>
         )}
+      </SubFieldset>
+
+      {/* Phase 7.9 — Typography preset picker. The customer can override the
+          template's built-in fonts with one of four curated pairings. */}
+      <SubFieldset
+        label={L("typographySection", "Tipografi (opsiyonel)")}
+        hint={L(
+          "typographyHint",
+          "Şablonun fontlarını değiştirir. Şablon varsayılanı seçili kalırsa şablonun kendi fontları kullanılır."
+        )}
+      >
+        <div className="grid grid-cols-2 gap-2.5 md:grid-cols-3">
+          {TYPOGRAPHY_PRESET_LIST.map((preset) => {
+            const active =
+              (cardData.typographyPreset ?? "default") === preset.key;
+            const labelKey = `typography${
+              preset.key.charAt(0).toUpperCase() + preset.key.slice(1)
+            }Label`;
+            const descKey = `typography${
+              preset.key.charAt(0).toUpperCase() + preset.key.slice(1)
+            }Desc`;
+            return (
+              <button
+                key={preset.key}
+                type="button"
+                onClick={() =>
+                  setCard(
+                    "typographyPreset",
+                    preset.key === "default" ? undefined : preset.key
+                  )
+                }
+                className={[
+                  "group relative flex flex-col items-start gap-2 rounded-2xl border bg-white p-3.5 text-left transition-all",
+                  active
+                    ? "border-copper bg-copper/5 ring-2 ring-copper/30"
+                    : "border-line hover:border-copper/40 hover:bg-bg-1",
+                ].join(" ")}
+              >
+                <span
+                  className="leading-none text-3xl text-ink"
+                  style={{
+                    fontFamily:
+                      preset.displayFamily ||
+                      "Geist, Inter, system-ui, sans-serif",
+                  }}
+                >
+                  {preset.sample}
+                </span>
+                <span className="block text-xs font-semibold text-ink">
+                  {L(labelKey, preset.label)}
+                </span>
+                <span className="block text-[10.5px] leading-snug text-ink/55">
+                  {L(descKey, preset.description)}
+                </span>
+                {active && (
+                  <span className="absolute right-2 top-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-copper text-white">
+                    <Check size={9} strokeWidth={3} />
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
       </SubFieldset>
 
       <Textarea
@@ -1863,6 +2167,8 @@ function DragDropZone({
   uploadError,
   onFileSelect,
   onRemove,
+  onEdit,
+  positionLabel,
   L,
   disabled = false,
   disabledReason,
@@ -1875,6 +2181,10 @@ function DragDropZone({
   uploadError: string | null;
   onFileSelect: (file: File) => void;
   onRemove: () => void;
+  /** Phase 7.9 — opens the PhotoEditor modal. Only shown when an image is set. */
+  onEdit?: () => void;
+  /** Optional small caption beside Edit ("Center · 1.0×"). */
+  positionLabel?: string;
   L: (k: string, f: string) => string;
   disabled?: boolean;
   disabledReason?: string;
@@ -1937,6 +2247,21 @@ function DragDropZone({
                 ? L("uploading", "Wird hochgeladen…")
                 : L("uploadDone", "Hochgeladen")}
             </p>
+            {/* Phase 7.9 — show edit button + position summary inline */}
+            {onEdit && !uploading && (
+              <button
+                type="button"
+                onClick={onEdit}
+                className="mt-1 inline-flex items-center gap-1 rounded-full border border-copper/40 bg-copper/10 px-2 py-0.5 text-[10px] font-semibold text-ink transition-colors hover:border-copper hover:bg-copper/20"
+              >
+                {L("editPosition", "Pozisyonu düzenle")}
+                {positionLabel && (
+                  <span className="font-mono text-[9px] text-ink/55">
+                    · {positionLabel}
+                  </span>
+                )}
+              </button>
+            )}
           </div>
           <button
             type="button"
@@ -2183,16 +2508,190 @@ function LivePreview({
     if (typeof window !== "undefined") setSiteUrl(window.location.origin);
   }, []);
 
+  // Phase 7.9 — wire up image position + typography preset CSS variables.
+  // Templates with `.tpl-photo` / `.tpl-logo` on their <img> elements pick
+  // these up automatically; templates that opt-in to `--tpl-font-display` /
+  // `--tpl-font-body` for typography overrides do the same.
+  const photoPos = cardData.photoPosition;
+  const logoPos = cardData.logoPosition;
+  const tpKey = cardData.typographyPreset;
+  const wrapperStyle: React.CSSProperties = {
+    "--tpl-photo-x": `${photoPos?.x ?? 50}%`,
+    "--tpl-photo-y": `${photoPos?.y ?? 50}%`,
+    "--tpl-photo-scale": String(photoPos?.scale ?? 1),
+    "--tpl-logo-x": `${logoPos?.x ?? 50}%`,
+    "--tpl-logo-y": `${logoPos?.y ?? 50}%`,
+    "--tpl-logo-scale": String(logoPos?.scale ?? 1),
+  } as React.CSSProperties;
+  if (tpKey && tpKey !== "default") {
+    // Lazy import via a synchronous lookup; the file is tiny (<2KB).
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
+    const { getTypographyPreset } = require("@/lib/typographyPresets") as {
+      getTypographyPreset: typeof import("@/lib/typographyPresets").getTypographyPreset;
+    };
+    const preset = getTypographyPreset(tpKey);
+    if (preset.displayFamily) {
+      (wrapperStyle as Record<string, string>)["--tpl-font-display"] =
+        preset.displayFamily;
+    }
+    if (preset.bodyFamily) {
+      (wrapperStyle as Record<string, string>)["--tpl-font-body"] =
+        preset.bodyFamily;
+    }
+  }
+
   return (
-    <Template
-      slug={slug}
-      cardData={cardData}
-      photoPath={photoPath}
-      logoPath={logoPath}
-      brandPrimaryHex={brandPrimaryHex}
-      brandAccentHex={brandAccentHex}
-      siteUrl={siteUrl}
-      locale={locale}
-    />
+    <div data-card-tpl style={wrapperStyle}>
+      <Template
+        slug={slug}
+        cardData={cardData}
+        photoPath={photoPath}
+        logoPath={logoPath}
+        brandPrimaryHex={brandPrimaryHex}
+        brandAccentHex={brandAccentHex}
+        siteUrl={siteUrl}
+        locale={locale}
+      />
+    </div>
+  );
+}
+
+// =============================================================================
+// Phase 7.9 — Share-link modal: encode the live form state as a URL hash so the
+// customer can share a "preview link" *before* paying. The /c/preview/[token]
+// page reads the same hash and renders an identical card.
+// =============================================================================
+
+interface SharePayload {
+  templateId: number;
+  cardData: CardData;
+  photoPath?: string;
+  logoPath?: string;
+  brandPrimaryHex?: string;
+  brandAccentHex?: string;
+  locale: "de" | "en" | "tr";
+}
+
+function encodeSharePayload(p: SharePayload): string {
+  // We use base64url so the result is safe to drop straight into a URL hash
+  // (no '+', '/', '=' that browsers / chat apps tend to mangle).
+  const json = JSON.stringify(p);
+  // btoa needs latin-1; encode UTF-8 first via TextEncoder + manual base64.
+  const bytes = new TextEncoder().encode(json);
+  let binary = "";
+  for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+  const b64 = btoa(binary);
+  return b64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+function ShareLinkModal({
+  open,
+  onOpenChange,
+  payload,
+  L,
+}: {
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+  payload: SharePayload;
+  L: (k: string, f: string) => string;
+}) {
+  const [copied, setCopied] = React.useState(false);
+  const [shareUrl, setShareUrl] = React.useState("");
+
+  React.useEffect(() => {
+    if (!open) return;
+    const origin =
+      typeof window !== "undefined" ? window.location.origin : "https://opsolid.de";
+    const hash = encodeSharePayload(payload);
+    setShareUrl(`${origin}/${payload.locale}/c/preview#d=${hash}`);
+    setCopied(false);
+  }, [open, payload]);
+
+  const copy = async () => {
+    try {
+      await navigator.clipboard.writeText(shareUrl);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2200);
+    } catch {
+      // Fallback — select the input so the customer can copy manually.
+      const el = document.getElementById("share-link-input") as HTMLInputElement | null;
+      el?.select();
+    }
+  };
+
+  return (
+    <Dialog.Root open={open} onOpenChange={onOpenChange}>
+      <Dialog.Portal>
+        <Dialog.Overlay className="fixed inset-0 z-[80] bg-neutral-950/70 backdrop-blur-sm data-[state=open]:animate-fade-in" />
+        <Dialog.Content className="fixed left-1/2 top-1/2 z-[80] w-[min(94vw,540px)] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl border border-ink/10 bg-bg-0 shadow-[0_30px_80px_-20px_rgba(20,18,15,0.5)]">
+          <div className="flex items-start justify-between border-b border-ink/10 px-6 py-5">
+            <div>
+              <Dialog.Title className="font-serif text-heading-sm text-ink">
+                {L("shareLinkTitle", "Önizleme linkini paylaş")}
+              </Dialog.Title>
+              <Dialog.Description className="mt-1 text-xs text-ink/55">
+                {L(
+                  "shareLinkSubtitle",
+                  "Kartını ödeme yapmadan başkalarına gönder. Bağlantıdaki veriler 30 gün boyunca okunabilir."
+                )}
+              </Dialog.Description>
+            </div>
+            <Dialog.Close asChild>
+              <button
+                type="button"
+                className="rounded-full border border-ink/15 bg-white p-2 text-ink/60 transition-colors hover:border-ink/40 hover:text-ink"
+                aria-label={L("photoEditorCancel", "Schließen")}
+              >
+                <X size={14} />
+              </button>
+            </Dialog.Close>
+          </div>
+
+          <div className="px-6 py-5">
+            <label
+              htmlFor="share-link-input"
+              className="mono-label block text-[10px] uppercase tracking-[0.2em] text-ink/55"
+            >
+              {L("shareLinkUrl", "Link")}
+            </label>
+            <div className="mt-2 flex items-center gap-2">
+              <input
+                id="share-link-input"
+                readOnly
+                value={shareUrl}
+                onFocus={(e) => e.target.select()}
+                className="min-w-0 flex-1 rounded-xl border border-ink/15 bg-white px-3 py-2 font-mono text-[11px] text-ink/80 focus:border-copper focus:outline-none"
+              />
+              <button
+                type="button"
+                onClick={copy}
+                className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-neutral-900 px-4 py-2 text-xs font-semibold text-neutral-50 shadow-[0_4px_12px_-4px_rgba(20,18,15,0.4)] transition-transform hover:scale-[1.02]"
+              >
+                {copied
+                  ? L("shareLinkCopied", "Kopyalandı ✓")
+                  : L("shareLinkCopy", "Kopyala")}
+              </button>
+            </div>
+
+            <a
+              href={shareUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-3 inline-flex items-center gap-1.5 text-xs text-copper underline-offset-4 hover:underline"
+            >
+              {L("shareLinkOpen", "Yeni sekmede aç")}
+              <ArrowRight size={11} />
+            </a>
+
+            <p className="mt-4 rounded-xl border border-line-soft bg-bg-1/60 px-3 py-2.5 text-[11px] italic text-ink/55">
+              {L(
+                "shareLinkNote",
+                "Bağlantı tüm form bilgilerini içerir; ödeme yapana kadar kart yayında değildir."
+              )}
+            </p>
+          </div>
+        </Dialog.Content>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 }

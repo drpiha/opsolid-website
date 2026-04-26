@@ -265,6 +265,49 @@ const CustomButtonSchema = z
 export type CardCustomButton = z.infer<typeof CustomButtonSchema>;
 
 // -----------------------------------------------------------------------------
+// Phase 7.9 — Image position & zoom for the uploaded photo/logo.
+// Stored as percentages so it renders identically across template frames.
+// -----------------------------------------------------------------------------
+export const ImagePositionSchema = z
+  .object({
+    x: z.number().min(0).max(100),
+    y: z.number().min(0).max(100),
+    scale: z.number().min(0.5).max(3),
+  })
+  .strict();
+export type ImagePosition = z.infer<typeof ImagePositionSchema>;
+
+// -----------------------------------------------------------------------------
+// Phase 7.9 — Custom sections the customer can add to their card.
+// Templates render these at the bottom of the card. Title is required, body
+// is required, optional photo path renders as a small image alongside the body.
+// -----------------------------------------------------------------------------
+export const CustomSectionSchema = z
+  .object({
+    id: z.string().trim().min(1).max(40),
+    title: z.string().trim().min(1).max(60),
+    body: z.string().trim().min(1).max(800),
+    mediaPath: z.string().trim().max(500).optional(),
+  })
+  .strict();
+export type CustomSection = z.infer<typeof CustomSectionSchema>;
+
+// -----------------------------------------------------------------------------
+// Phase 7.9 — Typography preset. Overrides the template's display + body fonts
+// when set to anything other than "default". Each preset maps to a Google Font
+// pair declared in `src/lib/typographyPresets.ts`.
+// -----------------------------------------------------------------------------
+export const TYPOGRAPHY_PRESETS = [
+  "default",
+  "modern",
+  "classic",
+  "editorial",
+  "bold",
+] as const;
+export const typographyPreset = z.enum(TYPOGRAPHY_PRESETS);
+export type TypographyPreset = z.infer<typeof typographyPreset>;
+
+// -----------------------------------------------------------------------------
 // CardData — the JSON blob rendered on the public card page.
 //
 // Smart Card MVP fields (added 2026-04-25, all optional & backward compatible):
@@ -333,6 +376,14 @@ export const CardDataSchema = z.object({
     .regex(/^[a-z][a-z0-9-]{1,31}$/i, "Ungültiger Sektor-Key")
     .optional(),
   designNotes: z.string().trim().max(800).optional(),
+  /** Phase 7.9 — pan/zoom applied to the uploaded profile photo. */
+  photoPosition: ImagePositionSchema.optional(),
+  /** Phase 7.9 — pan/zoom applied to the uploaded logo. */
+  logoPosition: ImagePositionSchema.optional(),
+  /** Phase 7.9 — up to 6 free-form sections rendered at the bottom of the card. */
+  customSections: z.array(CustomSectionSchema).max(6).optional(),
+  /** Phase 7.9 — typography preset; overrides template fonts when non-default. */
+  typographyPreset: typographyPreset.optional(),
 });
 export type CardData = z.infer<typeof CardDataSchema>;
 

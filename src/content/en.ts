@@ -1715,6 +1715,56 @@ export const content = {
           previewOpenInNewTab: "Open in new tab",
           previewLanguage: "Card language",
           previewNoPaymentNote: "Preview only — no payment required",
+          // Phase 7.9 — photo position editor
+          editPosition: "Edit position",
+          photoEditorTitle: "Profile photo position",
+          photoEditorSubtitle: "Drag to position, slide to zoom.",
+          logoEditorTitle: "Logo position",
+          logoEditorSubtitle:
+            "Place the logo exactly where you want it in its frame.",
+          photoEditorZoom: "Zoom",
+          photoEditorReset: "Reset",
+          photoEditorSave: "Save",
+          photoEditorCancel: "Cancel",
+          photoEditorHint: "The ring shows the visible centre of the image.",
+          // Phase 7.9 — share-link modal
+          shareLink: "Preview link",
+          shareLinkTitle: "Share preview link",
+          shareLinkSubtitle:
+            "Send your card to others before paying. Anyone with the link can read it.",
+          shareLinkUrl: "Link",
+          shareLinkCopy: "Copy",
+          shareLinkCopied: "Copied ✓",
+          shareLinkOpen: "Open in new tab",
+          shareLinkNote:
+            "The link contains all form data; the card is not published until you pay.",
+          // Phase 7.9 — custom sections editor
+          customSectionsSection: "Custom sections (optional)",
+          customSectionsHint:
+            "Add up to 6 sections — awards, languages, anything you want.",
+          customSectionAdd: "Add section",
+          customSectionTitle: "Title",
+          customSectionTitlePh: "e.g. Languages, Awards, Press",
+          customSectionBody: "Content",
+          customSectionBodyPh:
+            "Body text — visible to anyone who opens your card.",
+          customSectionRemove: "Remove",
+          customSectionsCount: "{n} of 6",
+          // Phase 7.9 — typography presets
+          typographySection: "Typography (optional)",
+          typographyHint:
+            "Override the template's fonts. Leave on default to use the template's own typography.",
+          typographyDefaultLabel: "Template default",
+          typographyDefaultDesc: "Uses the template's own typography.",
+          typographyModernLabel: "Modern",
+          typographyModernDesc: "Inter + Manrope — minimalist, corporate.",
+          typographyClassicLabel: "Classic",
+          typographyClassicDesc:
+            "Cormorant Garamond + Source Sans 3 — elegant, traditional.",
+          typographyEditorialLabel: "Editorial",
+          typographyEditorialDesc: "Playfair Display + Inter — magazine feel.",
+          typographyBoldLabel: "Bold",
+          typographyBoldDesc: "Bebas Neue + Inter — striking, sporty.",
           billingSection: "Billing mode",
           billingMonthly: "Monthly",
           monthlyFooter: "Lowest barrier. Cancel any time.",

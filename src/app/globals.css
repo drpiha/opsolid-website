@@ -72,6 +72,32 @@
   .text-balance { text-wrap: balance; }
   .text-pretty  { text-wrap: pretty; }
 
+  /* -----------------------------------------------------------------------
+   * Phase 7.9 — uploaded photo / logo position & zoom.
+   *
+   * Templates apply `.tpl-photo` / `.tpl-logo` to their <img> element. The
+   * surrounding LivePreview wrapper sets the CSS variables based on the
+   * customer's saved photoPosition / logoPosition. Defaults centre the image
+   * at 1× scale so legacy cards render unchanged.
+   * --------------------------------------------------------------------- */
+  .tpl-photo {
+    object-fit: cover;
+    object-position: var(--tpl-photo-x, 50%) var(--tpl-photo-y, 50%);
+    transform: scale(var(--tpl-photo-scale, 1));
+    transform-origin: center;
+  }
+  .tpl-logo {
+    object-fit: contain;
+    object-position: var(--tpl-logo-x, 50%) var(--tpl-logo-y, 50%);
+    transform: scale(var(--tpl-logo-scale, 1));
+    transform-origin: center;
+  }
+  .tpl-photo-bg {
+    background-position: var(--tpl-photo-x, 50%) var(--tpl-photo-y, 50%);
+    background-size: calc(100% * var(--tpl-photo-scale, 1)) auto;
+    background-repeat: no-repeat;
+  }
+
   /* Legacy shim — old code imports .eyebrow, make it the new mono meta. */
   .eyebrow {
     font-family: var(--font-mono);
