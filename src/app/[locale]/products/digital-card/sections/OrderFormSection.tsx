@@ -46,6 +46,7 @@ import type {
 } from "@/lib/validation";
 import { PhotoEditor } from "@/components/cards/PhotoEditor";
 import { TYPOGRAPHY_PRESET_LIST } from "@/lib/typographyPresets";
+import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
 import {
   CARD_THEME_LIST,
   type CardThemeKey,
@@ -2540,6 +2541,14 @@ function LivePreview({
     }
   }
 
+  // Phase 7.9 — dark templates need the white-on-dark variant for the custom
+  // sections block so the eyebrow + body text stays readable.
+  const isDarkTemplate = entry
+    ? ["barber", "developer", "music-producer", "studio", "tech-startup"].includes(
+        entry.key
+      )
+    : false;
+
   return (
     <div data-card-tpl style={wrapperStyle}>
       <Template
@@ -2551,6 +2560,11 @@ function LivePreview({
         brandAccentHex={brandAccentHex}
         siteUrl={siteUrl}
         locale={locale}
+      />
+      <CustomSectionsBlock
+        sections={cardData.customSections}
+        accentHex={brandAccentHex}
+        tone={isDarkTemplate ? "dark" : "light"}
       />
     </div>
   );

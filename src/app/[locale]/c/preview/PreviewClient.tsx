@@ -9,6 +9,7 @@ import type { CardData } from "@/lib/validation";
 import { SmartCard } from "@/components/cards/smart/SmartCard";
 import { getTemplateEntry } from "@/components/cards/templates/v2/registry";
 import { getTypographyPreset } from "@/lib/typographyPresets";
+import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
 
 interface SharePayload {
   templateId: number;
@@ -145,6 +146,18 @@ export function PreviewClient({ pageLocale }: { pageLocale: string }) {
           brandAccentHex={payload.brandAccentHex ?? null}
           siteUrl={siteUrl}
           locale={payload.locale}
+        />
+        <CustomSectionsBlock
+          sections={payload.cardData.customSections}
+          accentHex={payload.brandAccentHex}
+          tone={
+            entry &&
+            ["barber", "developer", "music-producer", "studio", "tech-startup"].includes(
+              entry.key
+            )
+              ? "dark"
+              : "light"
+          }
         />
       </div>
     </main>

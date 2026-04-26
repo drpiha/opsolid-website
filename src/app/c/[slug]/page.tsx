@@ -16,6 +16,7 @@
 
 import { existsSync } from "node:fs";
 import { join } from "node:path";
+import type * as React from "react";
 import { notFound } from "next/navigation";
 import { headers } from "next/headers";
 import type { Metadata } from "next";
@@ -26,6 +27,7 @@ import { WalletButtons } from "@/components/cards/smart/WalletButtons";
 import { readSourceFromSearchParams } from "@/components/cards/smart/SmartCardSource";
 import { getSiteUrl } from "@/lib/stripe";
 import { getTemplateEntry } from "@/components/cards/templates/v2/registry";
+import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -186,9 +188,45 @@ export default async function CardPage({ params, searchParams }: PageProps) {
   const entry = getTemplateEntry(order.templateId);
   const Template = entry?.Component ?? SmartCard;
 
+  // Phase 7.9 — image position + typography preset wiring (CSS variables on a
+  // wrapper). Same logic as the form-side LivePreview so what the customer
+  // configured renders identically here.
+  const photoPos = parsed.data.photoPosition;
+  const logoPos = parsed.data.logoPosition;
+  const wrapperStyle: React.CSSProperties = {
+    "--tpl-photo-x": `${photoPos?.x ?? 50}%`,
+    "--tpl-photo-y": `${photoPos?.y ?? 50}%`,
+    "--tpl-photo-scale": String(photoPos?.scale ?? 1),
+    "--tpl-logo-x": `${logoPos?.x ?? 50}%`,
+    "--tpl-logo-y": `${logoPos?.y ?? 50}%`,
+    "--tpl-logo-scale": String(logoPos?.scale ?? 1),
+  } as React.CSSProperties;
+  if (parsed.data.typographyPreset && parsed.data.typographyPreset !== "default") {
+    const { getTypographyPreset } = await import("@/lib/typographyPresets");
+    const preset = getTypographyPreset(parsed.data.typographyPreset);
+    if (preset.displayFamily) {
+      (wrapperStyle as Record<string, string>)["--tpl-font-display"] =
+        preset.displayFamily;
+    }
+    if (preset.bodyFamily) {
+      (wrapperStyle as Record<string, string>)["--tpl-font-body"] =
+        preset.bodyFamily;
+    }
+  }
+
+  const isDarkTemplate = entry
+    ? ["barber", "developer", "music-producer", "studio", "tech-startup"].includes(
+        entry.key
+      )
+    : false;
+
   return (
     <main className="min-h-screen bg-bg-0 px-4 py-8 pb-24 sm:py-12">
-      <div className="mx-auto w-full max-w-[460px]">
+      <div
+        className="mx-auto w-full max-w-[460px]"
+        data-card-tpl
+        style={wrapperStyle}
+      >
         <Template
           slug={slug}
           cardData={parsed.data}
@@ -200,6 +238,11 @@ export default async function CardPage({ params, searchParams }: PageProps) {
           siteUrl={siteUrl}
           locale={localeKey}
           walletSlot={<WalletButtons slug={slug} />}
+        />
+        <CustomSectionsBlock
+          sections={parsed.data.customSections}
+          accentHex={order.brandAccentHex ?? undefined}
+          tone={isDarkTemplate ? "dark" : "light"}
         />
       </div>
     </main>
