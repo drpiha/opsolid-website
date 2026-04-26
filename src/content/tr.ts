@@ -1751,6 +1751,7 @@ export const content: Content = {
             "Açıklama — kartını açan herkesin göreceği metin.",
           customSectionRemove: "Kaldır",
           customSectionsCount: "{n} / 6",
+          customSectionAddImage: "Resim ekle (opsiyonel)",
           typographySection: "Tipografi (opsiyonel)",
           typographyHint:
             "Şablonun fontlarını değiştirir. Şablon varsayılanı seçili kalırsa şablonun kendi fontları kullanılır.",

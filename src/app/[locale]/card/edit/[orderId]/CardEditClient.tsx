@@ -14,11 +14,16 @@
 // =============================================================================
 
 import { useEffect, useMemo, useState } from "react";
-import { Loader2, Upload, AlertCircle, CheckCircle2 } from "lucide-react";
+import { Loader2, Upload, AlertCircle, CheckCircle2, Check } from "lucide-react";
 import { Input, Textarea } from "@/components/ui/Input";
 import { useLocale } from "@/context/LocaleContext";
 import { TemplateRenderer } from "@/components/cards/TemplateRenderer";
-import type { CardData } from "@/lib/validation";
+import type { CardData, ImagePosition } from "@/lib/validation";
+import { PhotoEditor } from "@/components/cards/PhotoEditor";
+import { CustomSectionsEditor } from "@/components/cards/order-form/CustomSectionsEditor";
+import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
+import { TYPOGRAPHY_PRESET_LIST, getTypographyPreset } from "@/lib/typographyPresets";
+import { getTemplateEntry } from "@/components/cards/templates/v2/registry";
 
 type FormState = "idle" | "saving" | "saved" | "error";
 
@@ -60,6 +65,9 @@ export function CardEditClient(props: Props) {
   const [formState, setFormState] = useState<FormState>("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [cancelOpen, setCancelOpen] = useState(false);
+  // Phase 7.9 — photo / logo position editor modals
+  const [photoEditorOpen, setPhotoEditorOpen] = useState(false);
+  const [logoEditorOpen, setLogoEditorOpen] = useState(false);
 
   // Auto-open cancel modal when URL ends with #cancel (linked from email).
   useEffect(() => {
@@ -119,6 +127,13 @@ export function CardEditClient(props: Props) {
       socials: Object.fromEntries(
         Object.entries(cardData.socials ?? {}).filter(([, v]) => v)
       ) as CardData["socials"],
+      // Phase 7.9 — keep customSections / photoPosition / logoPosition /
+      // typographyPreset on the wire; the validator will strip falsy
+      // optionals on the server.
+      customSections: cardData.customSections,
+      photoPosition: cardData.photoPosition,
+      logoPosition: cardData.logoPosition,
+      typographyPreset: cardData.typographyPreset,
     };
 
     const payload = {
@@ -317,28 +332,171 @@ export function CardEditClient(props: Props) {
                 {form.uploadSection}
               </legend>
               <div className="grid gap-4 md:grid-cols-2">
-                <UploadTile
-                  label={form.photoLabel}
-                  current={photoPath}
-                  uploading={photoUploading}
-                  onChange={async (file) => {
-                    setPhotoUploading(true);
-                    const path = await handleFileUpload(file, "photo");
-                    if (path) setPhotoPath(path);
-                    setPhotoUploading(false);
-                  }}
-                />
-                <UploadTile
-                  label={form.logoLabel}
-                  current={logoPath}
-                  uploading={logoUploading}
-                  onChange={async (file) => {
-                    setLogoUploading(true);
-                    const path = await handleFileUpload(file, "logo");
-                    if (path) setLogoPath(path);
-                    setLogoUploading(false);
-                  }}
-                />
+                <div>
+                  <UploadTile
+                    label={form.photoLabel}
+                    current={photoPath}
+                    uploading={photoUploading}
+                    onChange={async (file) => {
+                      setPhotoUploading(true);
+                      const path = await handleFileUpload(file, "photo");
+                      if (path) setPhotoPath(path);
+                      setPhotoUploading(false);
+                    }}
+                  />
+                  {photoPath && (
+                    <div className="mt-2 flex items-center justify-between gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setPhotoEditorOpen(true)}
+                        className="inline-flex items-center gap-1 rounded-full border border-copper/40 bg-copper/10 px-2.5 py-1 text-[10.5px] font-semibold text-ink transition-colors hover:border-copper hover:bg-copper/20"
+                      >
+                        {form.editPosition ?? "Edit position"}
+                        {cardData.photoPosition && (
+                          <span className="font-mono text-[9px] text-ink/55">
+                            · {Math.round(cardData.photoPosition.x)}·
+                            {Math.round(cardData.photoPosition.y)} ·
+                            {cardData.photoPosition.scale.toFixed(2)}×
+                          </span>
+                        )}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setPhotoPath(null);
+                          setCard("photoPosition", undefined);
+                        }}
+                        className="text-[10.5px] text-ink/45 hover:text-ink"
+                      >
+                        {form.uploadRemove ?? "Remove"}
+                      </button>
+                    </div>
+                  )}
+                </div>
+                <div>
+                  <UploadTile
+                    label={form.logoLabel}
+                    current={logoPath}
+                    uploading={logoUploading}
+                    onChange={async (file) => {
+                      setLogoUploading(true);
+                      const path = await handleFileUpload(file, "logo");
+                      if (path) setLogoPath(path);
+                      setLogoUploading(false);
+                    }}
+                  />
+                  {logoPath && (
+                    <div className="mt-2 flex items-center justify-between gap-2">
+                      <button
+                        type="button"
+                        onClick={() => setLogoEditorOpen(true)}
+                        className="inline-flex items-center gap-1 rounded-full border border-copper/40 bg-copper/10 px-2.5 py-1 text-[10.5px] font-semibold text-ink transition-colors hover:border-copper hover:bg-copper/20"
+                      >
+                        {form.editPosition ?? "Edit position"}
+                        {cardData.logoPosition && (
+                          <span className="font-mono text-[9px] text-ink/55">
+                            · {Math.round(cardData.logoPosition.x)}·
+                            {Math.round(cardData.logoPosition.y)} ·
+                            {cardData.logoPosition.scale.toFixed(2)}×
+                          </span>
+                        )}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setLogoPath(null);
+                          setCard("logoPosition", undefined);
+                        }}
+                        className="text-[10.5px] text-ink/45 hover:text-ink"
+                      >
+                        {form.uploadRemove ?? "Remove"}
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </fieldset>
+
+            {/* Phase 7.9 — Custom Sections */}
+            <fieldset className="space-y-4">
+              <legend className="text-heading-sm text-ink">
+                {form.customSectionsSection ?? "Özel bölümler"}
+              </legend>
+              {form.customSectionsHint && (
+                <p className="-mt-2 text-xs text-ink/55">
+                  {form.customSectionsHint}
+                </p>
+              )}
+              <CustomSectionsEditor
+                cardData={cardData}
+                setCard={setCard}
+                L={(k, fb) => (form as Record<string, string>)[k] ?? fb}
+                handleFileUpload={handleFileUpload}
+              />
+            </fieldset>
+
+            {/* Phase 7.9 — Typography preset */}
+            <fieldset className="space-y-4">
+              <legend className="text-heading-sm text-ink">
+                {form.typographySection ?? "Tipografi"}
+              </legend>
+              {form.typographyHint && (
+                <p className="-mt-2 text-xs text-ink/55">
+                  {form.typographyHint}
+                </p>
+              )}
+              <div className="grid grid-cols-2 gap-2.5 md:grid-cols-3">
+                {TYPOGRAPHY_PRESET_LIST.map((preset) => {
+                  const active =
+                    (cardData.typographyPreset ?? "default") === preset.key;
+                  const labelKey = `typography${
+                    preset.key.charAt(0).toUpperCase() + preset.key.slice(1)
+                  }Label`;
+                  const descKey = `typography${
+                    preset.key.charAt(0).toUpperCase() + preset.key.slice(1)
+                  }Desc`;
+                  const formMap = form as Record<string, string>;
+                  return (
+                    <button
+                      key={preset.key}
+                      type="button"
+                      onClick={() =>
+                        setCard(
+                          "typographyPreset",
+                          preset.key === "default" ? undefined : preset.key
+                        )
+                      }
+                      className={[
+                        "group relative flex flex-col items-start gap-2 rounded-2xl border bg-white p-3.5 text-left transition-all",
+                        active
+                          ? "border-copper bg-copper/5 ring-2 ring-copper/30"
+                          : "border-line hover:border-copper/40 hover:bg-bg-1",
+                      ].join(" ")}
+                    >
+                      <span
+                        className="leading-none text-3xl text-ink"
+                        style={{
+                          fontFamily:
+                            preset.displayFamily ||
+                            "Geist, Inter, system-ui, sans-serif",
+                        }}
+                      >
+                        {preset.sample}
+                      </span>
+                      <span className="block text-xs font-semibold text-ink">
+                        {formMap[labelKey] ?? preset.label}
+                      </span>
+                      <span className="block text-[10.5px] leading-snug text-ink/55">
+                        {formMap[descKey] ?? preset.description}
+                      </span>
+                      {active && (
+                        <span className="absolute right-2 top-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-copper text-white">
+                          <Check size={9} strokeWidth={3} />
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
               </div>
             </fieldset>
 
@@ -453,8 +611,9 @@ export function CardEditClient(props: Props) {
             <p className="text-eyebrow mb-4 uppercase text-ink/50">
               {form.previewLabel}
             </p>
-            <TemplateRenderer
-              componentKey={props.templateComponentKey}
+            <EditPreview
+              templateId={props.templateId}
+              templateComponentKey={props.templateComponentKey}
               cardData={activeCardData}
               photoPath={photoPath}
               logoPath={logoPath}
@@ -465,6 +624,50 @@ export function CardEditClient(props: Props) {
           </div>
         </form>
       </div>
+
+      {/* Phase 7.9 — photo / logo position editor modals */}
+      {photoEditorOpen && photoPath && (
+        <PhotoEditor
+          open={photoEditorOpen}
+          onOpenChange={setPhotoEditorOpen}
+          kind="photo"
+          imageUrl={photoPath.startsWith("/") || photoPath.startsWith("http") ? photoPath : `/${photoPath}`}
+          initialPosition={cardData.photoPosition}
+          onSave={(pos: ImagePosition) => setCard("photoPosition", pos)}
+          labels={{
+            title: form.photoEditorTitle ?? "Profilfoto-Position",
+            subtitle:
+              form.photoEditorSubtitle ?? "Drag to position, slide to zoom.",
+            zoom: form.photoEditorZoom ?? "Zoom",
+            reset: form.photoEditorReset ?? "Reset",
+            save: form.photoEditorSave ?? "Save",
+            cancel: form.photoEditorCancel ?? "Cancel",
+            hint:
+              form.photoEditorHint ?? "The ring shows the visible centre.",
+          }}
+        />
+      )}
+      {logoEditorOpen && logoPath && (
+        <PhotoEditor
+          open={logoEditorOpen}
+          onOpenChange={setLogoEditorOpen}
+          kind="logo"
+          imageUrl={logoPath.startsWith("/") || logoPath.startsWith("http") ? logoPath : `/${logoPath}`}
+          initialPosition={cardData.logoPosition}
+          onSave={(pos: ImagePosition) => setCard("logoPosition", pos)}
+          labels={{
+            title: form.logoEditorTitle ?? "Logo position",
+            subtitle:
+              form.logoEditorSubtitle ?? "Place the logo where you want it.",
+            zoom: form.photoEditorZoom ?? "Zoom",
+            reset: form.photoEditorReset ?? "Reset",
+            save: form.photoEditorSave ?? "Save",
+            cancel: form.photoEditorCancel ?? "Cancel",
+            hint:
+              form.photoEditorHint ?? "The ring shows the visible centre.",
+          }}
+        />
+      )}
 
       {cancelOpen && (
         <CancelModal
@@ -684,6 +887,92 @@ function ColorField({
           className="h-12 flex-1 rounded-full border border-neutral-200 bg-white px-5 font-mono text-sm"
         />
       </div>
+    </div>
+  );
+}
+
+// -----------------------------------------------------------------------------
+// Phase 7.9 — preview wrapper that mirrors the order form's LivePreview:
+// applies the photo/logo position + typography preset CSS variables and renders
+// the v2 template (falling back to TemplateRenderer for legacy ids).
+// -----------------------------------------------------------------------------
+function EditPreview({
+  templateId,
+  templateComponentKey,
+  cardData,
+  photoPath,
+  logoPath,
+  brandPrimaryHex,
+  brandAccentHex,
+}: {
+  templateId: number;
+  templateComponentKey: string;
+  cardData: CardData;
+  photoPath: string | null;
+  logoPath: string | null;
+  brandPrimaryHex?: string;
+  brandAccentHex?: string;
+}) {
+  const entry = getTemplateEntry(templateId);
+  const Template = entry?.Component;
+
+  const photoPos = cardData.photoPosition;
+  const logoPos = cardData.logoPosition;
+  const tpKey = cardData.typographyPreset;
+  const wrapperStyle: Record<string, string> = {
+    "--tpl-photo-x": `${photoPos?.x ?? 50}%`,
+    "--tpl-photo-y": `${photoPos?.y ?? 50}%`,
+    "--tpl-photo-scale": String(photoPos?.scale ?? 1),
+    "--tpl-logo-x": `${logoPos?.x ?? 50}%`,
+    "--tpl-logo-y": `${logoPos?.y ?? 50}%`,
+    "--tpl-logo-scale": String(logoPos?.scale ?? 1),
+  };
+  if (tpKey && tpKey !== "default") {
+    const preset = getTypographyPreset(tpKey);
+    if (preset.displayFamily) wrapperStyle["--tpl-font-display"] = preset.displayFamily;
+    if (preset.bodyFamily) wrapperStyle["--tpl-font-body"] = preset.bodyFamily;
+  }
+
+  const isDarkTemplate = entry
+    ? ["barber", "developer", "music-producer", "studio", "tech-startup"].includes(
+        entry.key
+      )
+    : false;
+
+  // Compute siteUrl on the client only.
+  const [siteUrl, setSiteUrl] = useState("https://opsolid.de");
+  useEffect(() => {
+    if (typeof window !== "undefined") setSiteUrl(window.location.origin);
+  }, []);
+
+  return (
+    <div data-card-tpl style={wrapperStyle as React.CSSProperties}>
+      {Template ? (
+        <Template
+          slug="preview"
+          cardData={cardData}
+          photoPath={photoPath}
+          logoPath={logoPath}
+          brandPrimaryHex={brandPrimaryHex ?? null}
+          brandAccentHex={brandAccentHex ?? null}
+          siteUrl={siteUrl}
+          locale="de"
+        />
+      ) : (
+        <TemplateRenderer
+          componentKey={templateComponentKey}
+          cardData={cardData}
+          photoPath={photoPath}
+          logoPath={logoPath}
+          brandPrimaryHex={brandPrimaryHex}
+          brandAccentHex={brandAccentHex}
+        />
+      )}
+      <CustomSectionsBlock
+        sections={cardData.customSections}
+        accentHex={brandAccentHex}
+        tone={isDarkTemplate ? "dark" : "light"}
+      />
     </div>
   );
 }

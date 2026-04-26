@@ -1750,6 +1750,7 @@ export const content = {
             "Body text — visible to anyone who opens your card.",
           customSectionRemove: "Remove",
           customSectionsCount: "{n} of 6",
+          customSectionAddImage: "Add image (optional)",
           // Phase 7.9 — typography presets
           typographySection: "Typography (optional)",
           typographyHint:

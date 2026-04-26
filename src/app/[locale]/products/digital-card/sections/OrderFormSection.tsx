@@ -47,6 +47,7 @@ import type {
 import { PhotoEditor } from "@/components/cards/PhotoEditor";
 import { TYPOGRAPHY_PRESET_LIST } from "@/lib/typographyPresets";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
+import { CustomSectionsEditor } from "@/components/cards/order-form/CustomSectionsEditor";
 import {
   CARD_THEME_LIST,
   type CardThemeKey,
@@ -1694,134 +1695,21 @@ function StepCardContent({
       )}
 
       {/* Phase 7.9 — Custom Sections editor (up to 6 free-form sections) */}
-      <CustomSectionsEditor cardData={cardData} setCard={setCard} L={L} />
+      <SubFieldset
+        label={L("customSectionsSection", "Özel bölümler (opsiyonel)")}
+        hint={L(
+          "customSectionsHint",
+          "En fazla 6 bölüm ekleyebilirsin — ödüller, diller, ne istersen."
+        )}
+      >
+        <CustomSectionsEditor
+          cardData={cardData}
+          setCard={setCard}
+          L={L}
+          handleFileUpload={handleFileUpload}
+        />
+      </SubFieldset>
     </>
-  );
-}
-
-// =============================================================================
-// Phase 7.9 — Custom sections editor: lets the customer add up to 6 titled
-// blocks of free-form text that templates render at the bottom of the card.
-// =============================================================================
-
-function CustomSectionsEditor({
-  cardData,
-  setCard,
-  L,
-}: {
-  cardData: CardData;
-  setCard: <K extends keyof CardData>(key: K, value: CardData[K]) => void;
-  L: (k: string, f: string) => string;
-}) {
-  const sections = cardData.customSections ?? [];
-  const updateSections = (next: CustomSection[]) =>
-    setCard("customSections", next.length ? next : undefined);
-  const addSection = () => {
-    if (sections.length >= 6) return;
-    const id =
-      typeof crypto !== "undefined" && crypto.randomUUID
-        ? crypto.randomUUID()
-        : Math.random().toString(36).slice(2, 10);
-    updateSections([...sections, { id, title: "", body: "" }]);
-  };
-  const updateSection = (i: number, patch: Partial<CustomSection>) => {
-    const next = sections.slice();
-    next[i] = { ...next[i], ...patch };
-    updateSections(next);
-  };
-  const removeSection = (i: number) => {
-    updateSections(sections.filter((_, j) => j !== i));
-  };
-
-  const atLimit = sections.length >= 6;
-
-  return (
-    <SubFieldset
-      label={L("customSectionsSection", "Özel bölümler (opsiyonel)")}
-      hint={L(
-        "customSectionsHint",
-        "En fazla 6 bölüm ekleyebilirsin — ödüller, diller, ne istersen."
-      )}
-    >
-      {sections.length > 0 && (
-        <div className="space-y-3">
-          {sections.map((section, i) => {
-            const remaining = 800 - (section.body?.length ?? 0);
-            return (
-              <div
-                key={section.id}
-                className="relative space-y-3 rounded-2xl border border-line bg-bg-1 p-4"
-              >
-                <button
-                  type="button"
-                  onClick={() => removeSection(i)}
-                  aria-label={L("customSectionRemove", "Kaldır")}
-                  className="absolute right-3 top-3 flex h-7 w-7 items-center justify-center rounded-full border border-line bg-white text-ink/55 transition-colors hover:border-line-firm hover:text-ink"
-                >
-                  <X size={12} />
-                </button>
-                <Input
-                  label={L("customSectionTitle", "Başlık")}
-                  maxLength={60}
-                  value={section.title}
-                  onChange={(e) => updateSection(i, { title: e.target.value })}
-                  placeholder={L(
-                    "customSectionTitlePh",
-                    "Örn. Diller, Ödüller, Basın"
-                  )}
-                />
-                <div>
-                  <Textarea
-                    label={L("customSectionBody", "İçerik")}
-                    rows={3}
-                    maxLength={800}
-                    value={section.body}
-                    onChange={(e) => updateSection(i, { body: e.target.value })}
-                    placeholder={L(
-                      "customSectionBodyPh",
-                      "Açıklama — kartını açan herkesin göreceği metin."
-                    )}
-                  />
-                  <p
-                    className={[
-                      "mt-1 text-right text-[10px] mono-label",
-                      remaining < 60 ? "text-copper" : "text-ink/40",
-                    ].join(" ")}
-                  >
-                    {section.body?.length ?? 0} / 800
-                  </p>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-
-      <div className="flex items-center justify-between gap-3 pt-1">
-        <button
-          type="button"
-          onClick={addSection}
-          disabled={atLimit}
-          className={[
-            "inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-semibold transition-all",
-            atLimit
-              ? "cursor-not-allowed border border-line bg-bg-1 text-ink/35"
-              : "border border-copper/40 bg-copper/10 text-ink hover:border-copper hover:bg-copper/20",
-          ].join(" ")}
-        >
-          <span aria-hidden className="text-base leading-none">
-            +
-          </span>
-          {L("customSectionAdd", "Bölüm ekle")}
-        </button>
-        <span className="mono-label text-[10px] uppercase tracking-wider text-ink/45">
-          {L("customSectionsCount", "{n} / 6").replace(
-            "{n}",
-            String(sections.length)
-          )}
-        </span>
-      </div>
-    </SubFieldset>
   );
 }
 

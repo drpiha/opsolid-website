@@ -1750,6 +1750,7 @@ export const content: Content = {
             "Fließtext — sichtbar für jeden, der Ihre Karte öffnet.",
           customSectionRemove: "Entfernen",
           customSectionsCount: "{n} von 6",
+          customSectionAddImage: "Bild hinzufügen (optional)",
           typographySection: "Typografie (optional)",
           typographyHint:
             "Überschreiben Sie die Schriften der Vorlage. Standard belassen, um die Schriften der Vorlage zu verwenden.",
