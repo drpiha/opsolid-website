@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
 // Clinic — v2 template (id=5, key="clinic").
@@ -462,7 +462,7 @@ function Header({
               width={64}
               height={64}
               unoptimized
-              className="h-7 w-7 rounded-full object-cover"
+              className="h-7 w-7 rounded-full object-cover tpl-logo"
             />
           ) : (
             <Plus
@@ -492,7 +492,7 @@ function Header({
               width={120}
               height={120}
               unoptimized
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover tpl-photo"
             />
           </div>
         </div>

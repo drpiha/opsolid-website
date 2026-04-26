@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
 // Barber — barber / men's grooming / classic salon (id=7, key="barber").
@@ -402,7 +402,7 @@ function Header({
               alt={company ? `${company} logo` : "Logo"}
               width={64}
               height={64}
-              className="h-7 w-7 object-contain"
+              className="h-7 w-7 object-contain tpl-logo"
               unoptimized
             />
           ) : (
@@ -503,7 +503,7 @@ function ProfileStrip({
             width={120}
             height={120}
             unoptimized
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover tpl-photo"
           />
         ) : (
           <span

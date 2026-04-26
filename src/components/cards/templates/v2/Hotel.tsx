@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
 // Hotel — v2 template (id=15, key="hotel").
@@ -553,7 +553,7 @@ function Hero({
             priority
             unoptimized
             sizes="(max-width: 460px) 100vw, 460px"
-            className="object-cover"
+            className="object-cover tpl-photo"
           />
         ) : (
           <div
@@ -606,7 +606,7 @@ function Hero({
                   width={56}
                   height={56}
                   unoptimized
-                  className="h-8 w-8 object-contain"
+                  className="h-8 w-8 object-contain tpl-logo"
                 />
               ) : (
                 <span

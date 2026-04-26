@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
 // Architect — architecture practice / interior design (id=9, key="architect").
@@ -359,7 +359,7 @@ function Header({
             width={68}
             height={68}
             unoptimized
-            className="h-[34px] w-[34px] object-contain"
+            className="h-[34px] w-[34px] object-contain tpl-logo"
           />
         ) : (
           <>

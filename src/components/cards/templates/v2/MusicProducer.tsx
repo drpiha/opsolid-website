@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
 // MusicProducer — v2 template (id=20, key="music-producer").
@@ -557,7 +557,7 @@ function Hero({
                   fill
                   unoptimized
                   sizes="88px"
-                  className="object-cover"
+                  className="object-cover tpl-photo"
                 />
               ) : logoUrl ? (
                 <Image
@@ -565,7 +565,7 @@ function Hero({
                   alt={company ? `${company} logo` : name}
                   width={120}
                   height={120}
-                  className="h-[60%] w-[60%] object-contain"
+                  className="h-[60%] w-[60%] object-contain tpl-logo"
                   unoptimized
                 />
               ) : (

@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
 // Developer — software engineer / open-source maintainer (id=17, key="developer").
@@ -517,7 +517,7 @@ function Identity({
               width={96}
               height={96}
               unoptimized
-              className="h-9 w-9 object-contain"
+              className="h-9 w-9 object-contain tpl-logo"
             />
           </div>
         ) : (

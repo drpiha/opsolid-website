@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
 // Universal — sector-agnostic v2 template (id=13, key="universal").
@@ -192,7 +192,7 @@ export function Universal({
               <img
                 src={logoUrl}
                 alt=""
-                className="h-full w-full object-contain p-1"
+                className="h-full w-full object-contain p-1 tpl-logo"
               />
             </div>
           ) : (
@@ -253,7 +253,7 @@ export function Universal({
               <img
                 src={photoUrl}
                 alt=""
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover tpl-photo"
               />
             </div>
             <div className="min-w-0">

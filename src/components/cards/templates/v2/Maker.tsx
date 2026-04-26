@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
 // Maker — e-commerce / artisan / small-batch maker (id=8, key="maker").
@@ -424,7 +424,7 @@ function ShopHeader({
             width={144}
             height={144}
             unoptimized
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover tpl-photo"
           />
         ) : (
           <span

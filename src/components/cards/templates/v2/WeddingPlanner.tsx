@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
 // WeddingPlanner — v2 template (id=21, key="wedding-planner").
@@ -526,7 +526,7 @@ function Hero({
                 fill
                 unoptimized
                 sizes="92px"
-                className="object-cover"
+                className="object-cover tpl-photo"
               />
             ) : logoUrl ? (
               <Image
@@ -534,7 +534,7 @@ function Hero({
                 alt={company ? `${company} logo` : name}
                 width={140}
                 height={140}
-                className="h-[68%] w-[68%] object-contain"
+                className="h-[68%] w-[68%] object-contain tpl-logo"
                 unoptimized
               />
             ) : (

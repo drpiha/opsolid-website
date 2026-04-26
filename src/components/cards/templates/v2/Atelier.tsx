@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
 // Atelier — v2 template (id=12, key="atelier").  Cross-industry minimalist.
@@ -296,7 +296,7 @@ function Hero({
               alt=""
               width={56}
               height={56}
-              className="h-7 w-7 object-contain opacity-90"
+              className="h-7 w-7 object-contain opacity-90 tpl-logo"
               unoptimized
             />
           ) : null}
@@ -374,7 +374,7 @@ function Hero({
               fill
               sizes="96px"
               unoptimized
-              className="object-cover"
+              className="object-cover tpl-photo"
             />
           </div>
         )}

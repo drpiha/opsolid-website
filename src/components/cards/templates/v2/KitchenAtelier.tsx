@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
 // KitchenAtelier — v2 template (id=3, key="kitchen-atelier").
@@ -494,7 +494,7 @@ function Hero({
             priority
             unoptimized
             sizes="(max-width: 460px) 100vw, 460px"
-            className="object-cover"
+            className="object-cover tpl-photo"
           />
         ) : (
           <div
@@ -611,7 +611,7 @@ function SealOverlay({
             width={64}
             height={64}
             unoptimized
-            className="relative z-10 h-8 w-8 rounded-full object-contain"
+            className="relative z-10 h-8 w-8 rounded-full object-contain tpl-logo"
           />
         ) : (
           <span

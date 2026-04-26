@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
 // YogaStudio — v2 template (id=18, key="yoga-studio").
@@ -495,7 +495,7 @@ function SunriseHeader({
               width={64}
               height={64}
               unoptimized
-              className="h-9 w-9 rounded-full object-cover"
+              className="h-9 w-9 rounded-full object-cover tpl-logo"
             />
           ) : (
             <LotusGlyph color={onPrimary} />
@@ -520,7 +520,7 @@ function SunriseHeader({
               width={150}
               height={150}
               unoptimized
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover tpl-photo"
             />
           </div>
         </div>

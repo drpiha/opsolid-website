@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
 // RealEstate — reference v2 template (id=1, key="real-estate").
@@ -395,7 +395,7 @@ function Hero({
             priority
             unoptimized
             sizes="(max-width: 460px) 100vw, 460px"
-            className="object-cover"
+            className="object-cover tpl-photo"
           />
         ) : (
           <div
@@ -441,7 +441,7 @@ function Hero({
                 alt={company ? `${company} logo` : "Logo"}
                 width={64}
                 height={64}
-                className="h-8 w-8 object-contain"
+                className="h-8 w-8 object-contain tpl-logo"
                 unoptimized
               />
             ) : (

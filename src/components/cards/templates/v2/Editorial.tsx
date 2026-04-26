@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
 // Editorial — v2 template (id=11, key="editorial").  Cross-industry premium.
@@ -427,7 +427,7 @@ function Hero({
           priority
           unoptimized
           sizes="(max-width: 460px) 100vw, 460px"
-          className="object-cover"
+          className="object-cover tpl-photo"
         />
       ) : (
         <div
@@ -536,7 +536,7 @@ function Seal({
           alt=""
           width={size * 2}
           height={size * 2}
-          className="h-[70%] w-[70%] object-contain"
+          className="h-[70%] w-[70%] object-contain tpl-logo"
           unoptimized
         />
       ) : (

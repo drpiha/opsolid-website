@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
 // PersonalTrainer — v2 template (id=19, key="personal-trainer").
@@ -456,7 +456,7 @@ function Hero({
           priority
           unoptimized
           sizes="(max-width: 460px) 100vw, 460px"
-          className="object-cover"
+          className="object-cover tpl-photo"
           style={{
             filter: "saturate(1.05) contrast(1.12) brightness(0.45)",
             transform: "scale(1.05)",
@@ -525,7 +525,7 @@ function Hero({
               alt=""
               width={64}
               height={64}
-              className="h-7 w-7 object-contain"
+              className="h-7 w-7 object-contain tpl-logo"
               unoptimized
             />
           ) : (

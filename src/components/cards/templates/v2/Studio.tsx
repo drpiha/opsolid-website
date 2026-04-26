@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
 // Studio — DJ / music producer / electronic artist (id=6, key="studio").
@@ -448,7 +448,7 @@ function Hero({
               alt={company ? `${company} logo` : "Logo"}
               width={64}
               height={64}
-              className="h-10 w-10 object-contain"
+              className="h-10 w-10 object-contain tpl-logo"
               unoptimized
             />
           ) : (

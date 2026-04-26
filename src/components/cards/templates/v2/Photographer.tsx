@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
 // Photographer — v2 template (id=4, key="photographer").
@@ -493,7 +493,7 @@ function Header({
             fill
             unoptimized
             sizes="44px"
-            className="object-cover"
+            className="object-cover tpl-photo"
           />
         ) : (
           <span

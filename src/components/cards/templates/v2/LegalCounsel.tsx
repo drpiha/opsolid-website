@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
 // LegalCounsel — v2 template (id=2, key="legal-counsel").
@@ -401,7 +401,7 @@ function Header({
             alt={company ? `${company} logo` : "Firm logo"}
             width={64}
             height={64}
-            className="h-7 w-7 object-contain"
+            className="h-7 w-7 object-contain tpl-logo"
             unoptimized
           />
         ) : (

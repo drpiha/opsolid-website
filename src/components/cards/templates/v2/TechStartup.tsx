@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
 // TechStartup — tech startup / SaaS founder / AI builder (id=16, key="tech-startup").
@@ -528,7 +528,7 @@ function Hero({
                 width={128}
                 height={128}
                 unoptimized
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover tpl-photo"
               />
             </div>
           ) : (
@@ -578,7 +578,7 @@ function Hero({
                   width={48}
                   height={48}
                   unoptimized
-                  className="h-5 w-5 object-contain"
+                  className="h-5 w-5 object-contain tpl-logo"
                 />
               </div>
             )}
