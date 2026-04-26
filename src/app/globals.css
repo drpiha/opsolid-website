@@ -15,6 +15,7 @@
 @import "../styles/opsolid-kutasia.css";
 @import "../styles/opsolid-contact.css";
 @import "../styles/opsolid-blog.css";
+@import "../components/cards/smart/themes.css";
 
 @layer base {
   /* Legacy light-mode variables kept for any stragglers still reading them.

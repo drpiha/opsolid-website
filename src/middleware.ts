@@ -45,9 +45,76 @@ function detectLocale(req: NextRequest): Locale {
 const CARD_HOST = "card.opsolid.de";
 const SHORTLINK_HOST = "go.opsolid.de";
 
-export function middleware(req: NextRequest) {
+// Phase 6 — third-party hosts (custom domains) that don't match any of our
+// own subdomains hit the custom-domain resolver. Anything in KNOWN_HOSTS
+// falls through to existing locale logic; everything else is treated as a
+// custom-domain candidate and resolved via /api/domain-resolve.
+//
+// NOTE: This works in dev (via local hosts file or matching Host header).
+// Production routing requires a Traefik HostRegexp catch-all router that is
+// not yet deployed; see plan §A "Custom Domain" — UNRESOLVED ops blocker.
+const KNOWN_HOSTS = new Set<string>([
+  CARD_HOST,
+  SHORTLINK_HOST,
+  "opsolid.de",
+  "www.opsolid.de",
+  "localhost",
+  "localhost:3000",
+]);
+
+const STATIC_FILE_RE = /\.[a-z0-9]+$/i;
+
+export async function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
   const host = (req.headers.get("host") || "").toLowerCase();
+
+  // -- Phase 6: custom-domain resolver --------------------------------------
+  // Run BEFORE locale detection so customer hosts never get redirected
+  // into /<locale>/… and never hit the retired-route table.
+  if (host && !KNOWN_HOSTS.has(host)) {
+    // Skip framework / static / API paths — these must hit Next directly so
+    // /api/domain-resolve itself keeps working when called via fetch below.
+    if (
+      pathname.startsWith("/api/") ||
+      pathname.startsWith("/_next/") ||
+      STATIC_FILE_RE.test(pathname)
+    ) {
+      return NextResponse.next();
+    }
+
+    try {
+      const resolveUrl = `${req.nextUrl.origin}/api/domain-resolve/${encodeURIComponent(host)}`;
+      const lookup = await fetch(resolveUrl, { next: { revalidate: 300 } });
+      if (lookup.ok) {
+        const body = (await lookup.json().catch(() => null)) as
+          | { slug?: string }
+          | null;
+        const slug = body?.slug;
+        if (slug && typeof slug === "string") {
+          const url = req.nextUrl.clone();
+          url.pathname = `/c/${slug}${pathname === "/" ? "" : pathname}`;
+          // Preserve query string verbatim (search already on cloned URL).
+          return NextResponse.rewrite(url);
+        }
+        // 200 but no slug → treat as miss.
+        const url = req.nextUrl.clone();
+        url.pathname = "/c/404";
+        url.search = "";
+        return NextResponse.rewrite(url);
+      }
+      // Non-200 (typically 404) → branded miss page.
+      const url = req.nextUrl.clone();
+      url.pathname = "/c/404";
+      url.search = "";
+      return NextResponse.rewrite(url);
+    } catch {
+      // Fail open: if the resolver is unreachable (e.g. dev rebuild), let
+      // the request continue so localhost:3000 traffic that arrives with an
+      // unfamiliar Host header doesn't get blackholed.
+      return NextResponse.next();
+    }
+    // Unreachable; the branches above all return.
+  }
 
   if (host === CARD_HOST || host === SHORTLINK_HOST) {
     if (pathname === "/" || pathname === "") {
@@ -57,6 +124,7 @@ export function middleware(req: NextRequest) {
     url.pathname = host === SHORTLINK_HOST ? `/l${pathname}` : `/c${pathname}`;
     return NextResponse.rewrite(url);
   }
+  // ------------------------------------------------------------------------
 
   // Check if pathname already starts with a valid locale
   const firstSegment = pathname.split("/")[1];

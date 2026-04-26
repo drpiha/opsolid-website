@@ -1,0 +1,225 @@
+/* =============================================================================
+   SmartCard theme presets — applied via [data-theme="..."] on the root <article>.
+
+   Design intent:
+     - aurora    : deep violet + nightfall ink. Luminous radial cover. Soft
+                   bloom around the avatar. Wide-tracked display headline.
+     - editorial : warm graphite + amber. Serif headline upgrade. Thicker
+                   hairline rules. Restrained, magazine-style chrome.
+     - cinema    : near-black + gold leaf. Taller cover with vignette. All-caps
+                   labels with luxe letter-spacing. Underline-style CTAs.
+
+   These rules only adjust CSS custom properties, gradients, type scale, and
+   border-radius/letter-spacing. They never reflow or rewrite SmartCard's DOM —
+   the layout is untouched so the preview the customer sees in the order form
+   matches the published card 1:1.
+
+   Selector strategy: SmartCard does not yet expose stable BEM-style class
+   hooks, so we rely on the article's own structure. The owning element of each
+   visual layer is matched by the Tailwind utility combinations actually used
+   in SmartCard.tsx. If those classes change, also update this file.
+   ========================================================================== */
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   AURORA — Luminous violet · Modern, premium tech feel.
+   ────────────────────────────────────────────────────────────────────────── */
+
+[data-theme="aurora"] {
+  --card-primary: #7c5cff;
+  --card-accent: #1a1b26;
+  --card-cover-from: #7c5cff;
+  --card-cover-via: #4836a8;
+  --card-cover-to: #0c0d18;
+  --card-display-tracking: -0.018em;
+  --card-display-weight: 500;
+  --card-cta-radius: 1rem;
+  --card-hairline: rgba(124, 92, 255, 0.18);
+}
+
+/* Cover — replace fallback gradient with a luminous aurora wash. Targets the
+   absolutely-positioned cover wrapper (h-36 in SmartCardCover). */
+[data-theme="aurora"] > div.relative.h-36 > div.h-full.w-full {
+  background:
+    radial-gradient(140% 100% at 8% 0%, rgba(255, 255, 255, 0.18), transparent 40%),
+    radial-gradient(120% 120% at 100% 100%, rgba(124, 92, 255, 0.55), transparent 55%),
+    linear-gradient(140deg, #7c5cff 0%, #4836a8 38%, #1a1b26 78%, #0c0d18 100%) !important;
+}
+
+/* Subtle aurora bloom shadow around the avatar (the rounded-3xl tile). */
+[data-theme="aurora"] .relative.h-28.w-28,
+[data-theme="aurora"] div.flex.h-28.w-28 {
+  box-shadow:
+    0 0 0 1px rgba(124, 92, 255, 0.3),
+    0 12px 38px -8px rgba(124, 92, 255, 0.55),
+    0 6px 18px -8px rgba(0, 0, 0, 0.45);
+}
+
+/* Display name — looser letter-spacing, lighter weight for an airy feel. */
+[data-theme="aurora"] h1.font-editorial {
+  letter-spacing: var(--card-display-tracking);
+  font-weight: var(--card-display-weight);
+}
+
+/* CTA pill rounding — softer corners than default 16px. */
+[data-theme="aurora"] a[class*="rounded-2xl"][class*="border-transparent"],
+[data-theme="aurora"] button[class*="rounded-2xl"][class*="border-transparent"] {
+  border-radius: var(--card-cta-radius);
+}
+
+/* Tighten the eyebrow color so violet section heads read as muted plum. */
+[data-theme="aurora"] h2.text-eyebrow {
+  color: #6f5fb8;
+  letter-spacing: 0.16em;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   EDITORIAL — Warm graphite + amber. Magazine typography.
+   ────────────────────────────────────────────────────────────────────────── */
+
+[data-theme="editorial"] {
+  --card-primary: #15120f;
+  --card-accent: #e8a252;
+  --card-display-tracking: -0.022em;
+  --card-display-weight: 400;
+  --card-hairline-color: rgba(21, 18, 15, 0.16);
+}
+
+/* Cover — warm graphite wash, amber bloom in the upper-right. */
+[data-theme="editorial"] > div.relative.h-36 > div.h-full.w-full {
+  background:
+    radial-gradient(120% 80% at 92% 8%, rgba(232, 162, 82, 0.42), transparent 55%),
+    radial-gradient(120% 120% at 0% 100%, rgba(21, 18, 15, 0.85), transparent 60%),
+    linear-gradient(150deg, #2b2722 0%, #15120f 70%) !important;
+}
+
+/* Headline becomes a true editorial serif. font-editorial already maps to
+   Instrument Serif in tailwind.config; this just enforces the weight + size
+   feel of a magazine deck. */
+[data-theme="editorial"] h1.font-editorial {
+  font-weight: var(--card-display-weight);
+  letter-spacing: var(--card-display-tracking);
+  font-style: normal;
+}
+
+/* Section sub-heads (h2.text-eyebrow) — uppercase amber smallcaps. */
+[data-theme="editorial"] h2.text-eyebrow {
+  color: #c98438;
+  letter-spacing: 0.22em;
+  font-weight: 600;
+}
+
+/* Hairline rules between sections — thicker, warm graphite tone. SmartCard
+   uses `border-t border-line` on each section block. */
+[data-theme="editorial"] div.border-t.border-line {
+  border-top-width: 1.5px;
+  border-top-color: var(--card-hairline-color);
+}
+[data-theme="editorial"] footer.border-t.border-line {
+  border-top-width: 1.5px;
+  border-top-color: var(--card-hairline-color);
+}
+
+/* CTAs — boxier, slightly larger radius for a print-feel button. */
+[data-theme="editorial"] a[class*="rounded-2xl"][class*="border-transparent"] {
+  border-radius: 0.875rem;
+}
+
+/* Amber highlight on contact-row hover indicators (the small bullet icon
+   container inside each row) — feels like a hand-drawn editorial accent. */
+[data-theme="editorial"] a[class*="rounded-2xl"]:hover span[class*="bg-bg-3"] {
+  background: rgba(232, 162, 82, 0.16);
+  color: #c98438;
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   CINEMA — Theatrical near-black · gold accents · letter-spaced caps.
+   ────────────────────────────────────────────────────────────────────────── */
+
+[data-theme="cinema"] {
+  --card-primary: #0e0e0e;
+  --card-accent: #c0a672;
+  --card-display-tracking: 0.005em;
+  --card-display-weight: 500;
+}
+
+/* Cover — taller, deep vignette + gold rim light. */
+[data-theme="cinema"] > div.relative.h-36 {
+  height: 11.5rem; /* 184px — bumps the cover ~32px taller for theatrical feel */
+}
+[data-theme="cinema"] > div.relative.h-36 > div.h-full.w-full {
+  background:
+    radial-gradient(140% 90% at 50% 0%, rgba(192, 166, 114, 0.32), transparent 55%),
+    radial-gradient(120% 80% at 50% 100%, rgba(0, 0, 0, 0.88), transparent 70%),
+    linear-gradient(180deg, #1a1814 0%, #0e0e0e 60%, #050505 100%) !important;
+}
+/* Add a thin gold rim along the cover bottom — CSS shadow trick on the cover
+   wrapper's child (the gradient div fills its parent). */
+[data-theme="cinema"] > div.relative.h-36::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(192, 166, 114, 0.5) 50%, transparent 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Display name — slightly heavier weight, near-zero tracking, ink black. */
+[data-theme="cinema"] h1.font-editorial {
+  font-weight: var(--card-display-weight);
+  letter-spacing: var(--card-display-tracking);
+  color: #0e0e0e;
+}
+
+/* All small-cap labels (h2.text-eyebrow + cover badges) — wide gold caps. */
+[data-theme="cinema"] h2.text-eyebrow {
+  color: #9a8458;
+  letter-spacing: 0.24em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+[data-theme="cinema"] span[class*="font-mono"][class*="uppercase"] {
+  color: #c0a672;
+  letter-spacing: 0.22em;
+}
+
+/* Avatar — gold ring instead of brand color. Targets the outline rule
+   inline-styled by SmartCardAvatar. We can't override inline outline, so we
+   add a separate ring via box-shadow on the avatar tile. */
+[data-theme="cinema"] .relative.h-28.w-28,
+[data-theme="cinema"] div.flex.h-28.w-28 {
+  box-shadow:
+    0 0 0 1px rgba(192, 166, 114, 0.4),
+    0 14px 32px -10px rgba(0, 0, 0, 0.55);
+}
+
+/* CTA pills — flat black with gold underline on hover (theatrical). */
+[data-theme="cinema"] a[class*="rounded-2xl"][class*="border-transparent"] {
+  border-radius: 0.625rem;
+  position: relative;
+}
+[data-theme="cinema"] a[class*="rounded-2xl"][class*="border-transparent"]::after {
+  content: "";
+  position: absolute;
+  left: 16%;
+  right: 16%;
+  bottom: 6px;
+  height: 1px;
+  background: rgba(192, 166, 114, 0.45);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 240ms ease;
+}
+[data-theme="cinema"] a[class*="rounded-2xl"][class*="border-transparent"]:hover::after {
+  transform: scaleX(1);
+}
+
+/* Footer — gold "Powered by" link on hover. */
+[data-theme="cinema"] footer a[href*="opsolid.de"]:hover {
+  color: #c0a672;
+}

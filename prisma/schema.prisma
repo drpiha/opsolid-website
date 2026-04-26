@@ -117,6 +117,13 @@ model CardOrder {
   awaitingDesignAt DateTime? @map("awaiting_design_at")
   publishedAt      DateTime? @map("published_at")
 
+  // Phase 6 — per-card custom domain. Customer points
+  // CNAME card.theirdomain.com → card.opsolid.de; we verify via DNS lookup
+  // and once verified, middleware rewrites that host to /c/{slug}.
+  customDomain           String?   @unique @map("custom_domain")
+  customDomainVerified   Boolean   @default(false) @map("custom_domain_verified")
+  customDomainVerifiedAt DateTime? @map("custom_domain_verified_at")
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -127,6 +134,7 @@ model CardOrder {
   leads         CardLead[]
   links         CardLink[]
   scanEvents    ScanEvent[]
+  webhooks      CardWebhook[]
 
   /** Connections received: visitors who sent their own card via Smart Exchange. */
   ownerConnections   CardConnection[] @relation("OwnerConnections")
@@ -285,6 +293,31 @@ model CardConnection {
   @@unique([ownerCardId, visitorCardId])
   @@index([ownerCardId, createdAt])
   @@map("card_connections")
+}
+
+// -----------------------------------------------------------------------------
+// CardWebhook — outbound CRM webhook subscription for a card. Events fired:
+//   lead.created       — when a CardLead is inserted via /api/cards/[slug]/lead
+//   connection.created — when a CardConnection is upserted via .../exchange
+// Each request is signed with HMAC-SHA256 of the body using `secret`. Failures
+// are fire-and-forget (logged to Sentry); they do not block the user request.
+// -----------------------------------------------------------------------------
+model CardWebhook {
+  id                 String    @id @default(cuid())
+  orderId            String    @map("order_id")
+  url                String
+  secret             String
+  events             String[]  @default(["lead.created", "connection.created"])
+  active             Boolean   @default(true)
+  lastDeliveryAt     DateTime? @map("last_delivery_at")
+  lastDeliveryStatus Int?      @map("last_delivery_status")
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime  @updatedAt @map("updated_at")
+
+  order CardOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
+
+  @@index([orderId, active])
+  @@map("card_webhooks")
 }
 
 // -----------------------------------------------------------------------------

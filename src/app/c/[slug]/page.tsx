@@ -20,6 +20,7 @@ import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { CardDataSchema } from "@/lib/validation";
 import { SmartCard } from "@/components/cards/smart/SmartCard";
+import { WalletButtons } from "@/components/cards/smart/WalletButtons";
 import { readSourceFromSearchParams } from "@/components/cards/smart/SmartCardSource";
 import { getSiteUrl } from "@/lib/stripe";
 
@@ -144,6 +145,7 @@ export default async function CardPage({ params, searchParams }: PageProps) {
           locale={
             order.locale === "en" || order.locale === "tr" ? order.locale : "de"
           }
+          walletSlot={<WalletButtons slug={slug} />}
         />
       </div>
     </main>

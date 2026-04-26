@@ -21,6 +21,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { OrderStatus } from "@/lib/validation";
+import { dispatchWebhook } from "@/lib/webhook";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -133,6 +134,23 @@ export async function POST(
   // covers clock drift / DB precision quirks.
   const existing =
     result.updatedAt.getTime() - result.createdAt.getTime() > 1;
+
+  // Only fire the outbound webhook on the first-time creation path. Repeat
+  // exchanges of the same (owner, visitor) pair re-touch the existing row
+  // and would otherwise duplicate-notify the customer's CRM.
+  if (!existing) {
+    dispatchWebhook(owner.id, "connection.created", {
+      id: result.id,
+      ownerCardId: result.ownerCardId,
+      visitorCardId: result.visitorCardId,
+      source: result.source,
+      campaign: result.campaign,
+      eventName: result.eventName,
+      note: result.note,
+      status: result.status,
+      createdAt: result.createdAt.toISOString(),
+    });
+  }
 
   return NextResponse.json(
     existing ? { ok: true, existing: true } : { ok: true },

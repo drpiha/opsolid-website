@@ -43,6 +43,16 @@ export interface SmartCardProps {
   siteUrl: string;
   /** Card owner's locale — used by visitor-facing CTAs (e.g. ExchangeButton). */
   locale?: "de" | "en" | "tr";
+  /**
+   * Optional server-rendered slot for Apple/Google Wallet buttons. SmartCard
+   * is a client component, so it cannot read non-public env vars at render
+   * time — the parent (server) computes the buttons and passes them in via
+   * this slot. Renders directly above the footer when provided.
+   *
+   * Producer: `<WalletButtons slug={slug} />` from
+   * `@/components/cards/smart/WalletButtons`.
+   */
+  walletSlot?: React.ReactNode;
 }
 
 const DEFAULT_PRIMARY = "#C27940"; // copper
@@ -73,6 +83,7 @@ export function SmartCard({
   source,
   siteUrl,
   locale = "de",
+  walletSlot,
 }: SmartCardProps) {
   const sector = getSectorPreset(cardData.sectorKey);
   const primary =
@@ -114,8 +125,15 @@ export function SmartCard({
   const phoneDigits = cardData.phone ? digitsOnly(cardData.phone) : "";
   const waDigits = cardData.whatsapp ? getWhatsAppNumber(cardData.whatsapp) : "";
 
+  // Theme key drives `[data-theme="..."]` CSS in cards/smart/themes.css. The
+  // CardData type may not yet include themeKey (Agent D extends it); fall back
+  // to "default" so the selector always matches a real bucket.
+  const themeKey =
+    (cardData as { themeKey?: string }).themeKey ?? "default";
+
   return (
     <article
+      data-theme={themeKey}
       className="mx-auto w-full max-w-[440px] overflow-hidden rounded-[28px] bg-bg-1 text-ink shadow-depth-3 ring-1 ring-line"
       style={
         {
@@ -239,6 +257,10 @@ export function SmartCard({
 
       {cardData.testimonials && cardData.testimonials.length > 0 && (
         <SmartCardTestimonials items={cardData.testimonials} />
+      )}
+
+      {walletSlot && (
+        <div className="border-t border-line px-6 pt-5">{walletSlot}</div>
       )}
 
       <SmartCardFooter

@@ -6,6 +6,8 @@ import { PublishAction } from "./PublishAction";
 import { LinksPanel } from "./LinksPanel";
 import { SectorPanel } from "./SectorPanel";
 import { ConnectionsPanel } from "./ConnectionsPanel";
+import { DomainPanel } from "./DomainPanel";
+import { WebhookPanel } from "./WebhookPanel";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -317,6 +319,20 @@ export default async function OrderDetailPage({ params, searchParams }: PageProp
             token={token}
             currentSectorKey={card?.sectorKey ?? null}
           />
+
+          {order.status === "PUBLISHED" && (
+            <DomainPanel
+              orderId={order.id}
+              token={token}
+              currentDomain={order.customDomain}
+              verified={order.customDomainVerified}
+              verifiedAt={order.customDomainVerifiedAt?.toISOString() ?? null}
+            />
+          )}
+
+          {order.status === "PUBLISHED" && (
+            <WebhookPanel orderId={order.id} token={token} />
+          )}
 
           {order.status === "PUBLISHED" && (
             <ConnectionsPanel orderId={order.id} token={token} />

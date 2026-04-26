@@ -18,6 +18,7 @@ import { readSourceFromSearchParams, describeSource } from "@/components/cards/s
 import { renderLeadNotification } from "@/lib/email/templates/lead-notification";
 import { sendCustomerEmail } from "@/lib/email/send";
 import { normalizeLocale } from "@/lib/email/shell";
+import { dispatchWebhook } from "@/lib/webhook";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -115,7 +116,7 @@ export async function POST(
   if (parsed.data.company) messageParts.push(`Unternehmen: ${parsed.data.company}`);
   if (sourceLabel) messageParts.push(`Quelle: ${sourceLabel}`);
 
-  await prisma.cardLead.create({
+  const lead = await prisma.cardLead.create({
     data: {
       orderId: order.id,
       name: parsed.data.name,
@@ -129,6 +130,28 @@ export async function POST(
   // (sendCustomerEmail no-ops with a warn log when env is missing) so we
   // never block the visitor's submit on mail delivery.
   void notifyCardOwner({ order, parsed: parsed.data, source, sourceLabel, slug });
+
+  // Fire-and-forget outbound CRM webhook. Failures are logged to Sentry and
+  // never block the response. We only emit a structured subset of the lead
+  // fields — internal IDs and the unparsed concatenated `message` blob stay
+  // out of the envelope so receivers see the same shape regardless of how
+  // we evolve the storage schema.
+  dispatchWebhook(order.id, "lead.created", {
+    id: lead.id,
+    slug,
+    name: parsed.data.name,
+    email: parsed.data.email ?? null,
+    phone: parsed.data.phone ?? null,
+    company: parsed.data.company ?? null,
+    message: parsed.data.message ?? null,
+    interest: parsed.data.interest ?? null,
+    source: {
+      src: source.src,
+      campaign: source.campaign,
+      event: source.event,
+    },
+    createdAt: lead.createdAt.toISOString(),
+  });
 
   return NextResponse.json({ ok: true });
 }

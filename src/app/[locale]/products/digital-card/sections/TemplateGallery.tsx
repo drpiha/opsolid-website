@@ -2,43 +2,13 @@
 
 import { useState } from "react";
 import { useLocale } from "@/context/LocaleContext";
-import { cardTemplates, formatEuro } from "@/config/card-templates";
-import { SmartCard } from "@/components/cards/smart/SmartCard";
-import { Check } from "lucide-react";
-import type { CardData } from "@/lib/validation";
+import { cardTemplates, formatEuro, type CardTemplateDef } from "@/config/card-templates";
+import { Check, ImageOff } from "lucide-react";
 
-const SAMPLE: Record<"de" | "en" | "tr", CardData> = {
-  de: {
-    name: "Anna Fischer",
-    title: "Inhaberin",
-    company: "Studio Nord",
-    phone: "+49 160 1234567",
-    email: "anna@studio-nord.de",
-    website: "https://studio-nord.de",
-    bio: "Design und Beratung seit 2018.",
-  },
-  en: {
-    name: "Anna Fischer",
-    title: "Founder",
-    company: "Studio Nord",
-    phone: "+49 160 1234567",
-    email: "anna@studio-nord.de",
-    website: "https://studio-nord.de",
-    bio: "Design and consulting since 2018.",
-  },
-  tr: {
-    name: "Anna Fischer",
-    title: "Kurucu",
-    company: "Studio Nord",
-    phone: "+49 160 1234567",
-    email: "anna@studio-nord.de",
-    website: "https://studio-nord.de",
-    bio: "2018'den beri tasarım ve danışmanlık.",
-  },
-};
-
-// Distinct color samples per template — gives the gallery visual variety
-// without requiring a separate set of design tokens per card variant.
+// Distinct color samples per template — drives the gradient placeholder when
+// the static thumbnail under /images/templates/card-XX.png is missing. We keep
+// the full table here (rather than reading from card-sectors.ts) so designers
+// can tune the placeholder without touching the live render colors.
 const SAMPLE_COLORS: Record<number, { primary: string; accent: string }> = {
   1: { primary: "#C27940", accent: "#1F2530" },
   2: { primary: "#2D6A4F", accent: "#1B2B23" },
@@ -84,13 +54,6 @@ const SECTOR_LABELS: Record<string, string> = {
   music: "Musik",
 };
 
-// SmartCard renders at max-w-[440px] (cover height + content). We scale to
-// fit a 240×400 thumbnail tile. 240 / 440 ≈ 0.545.
-const PREVIEW_WIDTH = 240;
-const PREVIEW_HEIGHT = 400;
-const SMARTCARD_INTRINSIC = 440;
-const SCALE = PREVIEW_WIDTH / SMARTCARD_INTRINSIC;
-
 export function TemplateGallery({
   selectedId,
   onSelect,
@@ -98,8 +61,7 @@ export function TemplateGallery({
   selectedId: number | null;
   onSelect: (id: number) => void;
 }) {
-  const { locale, t } = useLocale();
-  const sample = SAMPLE[locale as "de" | "en" | "tr"] ?? SAMPLE.de;
+  const { t } = useLocale();
   const labels = t.products.digitalCard.order?.gallery ?? {
     title: "Wählen Sie ein Design",
     subtitle: "Jedes Design ist nummeriert. Geben Sie die Nummer bei Rückruf an.",
@@ -146,41 +108,17 @@ export function TemplateGallery({
             return (
               <div
                 key={tpl.id}
-                className={`group relative rounded-3xl border bg-white p-5 transition-shadow ${
+                className={`group relative rounded-3xl border bg-white p-5 transition-all duration-300 ${
                   isSelected
-                    ? "border-brand shadow-card"
-                    : "border-neutral-200 hover:shadow-card"
+                    ? "scale-[1.015] border-copper/60 shadow-card ring-2 ring-copper/40"
+                    : "border-neutral-200 hover:-translate-y-0.5 hover:shadow-card"
                 }`}
               >
                 <div className="absolute -top-3 left-5 z-10 rounded-full bg-ink px-3 py-1 font-mono text-xs font-semibold text-white shadow-soft">
                   #{String(tpl.id).padStart(2, "0")}
                 </div>
 
-                {/* Scaled SmartCard preview — pointer-events-none so the
-                    card chrome cannot be interacted with from inside the
-                    gallery tile. The clipped wrapper limits the tile's
-                    visual footprint. */}
-                <div
-                  className="pointer-events-none mx-auto mt-2 overflow-hidden rounded-2xl bg-bg-1"
-                  style={{ width: PREVIEW_WIDTH, height: PREVIEW_HEIGHT }}
-                  aria-hidden
-                >
-                  <div
-                    className="origin-top-left"
-                    style={{
-                      width: SMARTCARD_INTRINSIC,
-                      transform: `scale(${SCALE})`,
-                    }}
-                  >
-                    <SmartCard
-                      slug={`preview-${tpl.id}`}
-                      cardData={sample}
-                      brandPrimaryHex={colors.primary}
-                      brandAccentHex={colors.accent}
-                      siteUrl=""
-                    />
-                  </div>
-                </div>
+                <ThumbnailWithFallback template={tpl} colors={colors} />
 
                 <div className="mt-6 flex items-end justify-between gap-3">
                   <div>
@@ -214,4 +152,145 @@ export function TemplateGallery({
       </div>
     </section>
   );
+}
+
+// -----------------------------------------------------------------------------
+// ThumbnailWithFallback — renders the static preview at /images/templates/...
+// and gracefully degrades to a branded gradient placeholder when the file is
+// missing (most thumbnails are placeholder until the design pass ships).
+//
+// The placeholder is intentionally premium: layered radial gradients keyed off
+// the template's hex colors, an embossed initial mark, and a subtle "no preview
+// yet" hint with a vignette ring. This way an unfinished gallery still looks
+// intentional rather than broken.
+// -----------------------------------------------------------------------------
+
+function ThumbnailWithFallback({
+  template,
+  colors,
+}: {
+  template: CardTemplateDef;
+  colors: { primary: string; accent: string };
+}) {
+  const [errored, setErrored] = useState(false);
+
+  return (
+    <div className="relative mx-auto mt-2 aspect-[9/16] w-full max-w-[280px] overflow-hidden rounded-2xl bg-neutral-100 ring-1 ring-neutral-200/80 shadow-[0_18px_36px_-22px_rgba(15,15,15,0.35)]">
+      {!errored ? (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={template.previewPath}
+          alt={template.name}
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-full w-full object-cover"
+          onError={() => setErrored(true)}
+        />
+      ) : (
+        <ThumbnailPlaceholder
+          name={template.name}
+          id={template.id}
+          colors={colors}
+        />
+      )}
+
+      {/* Top-edge gloss — gives every tile a slight three-dimensional pickup
+          regardless of whether the image or the placeholder is showing. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-px"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.45) 50%, transparent 100%)",
+        }}
+      />
+    </div>
+  );
+}
+
+function ThumbnailPlaceholder({
+  name,
+  id,
+  colors,
+}: {
+  name: string;
+  id: number;
+  colors: { primary: string; accent: string };
+}) {
+  const initials = name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((w) => w[0]?.toUpperCase() ?? "")
+    .join("") || `#${id}`;
+
+  return (
+    <div
+      className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center"
+      style={{
+        background: `
+          radial-gradient(120% 70% at 18% 12%, ${hexA(colors.accent, 0.42)}, transparent 55%),
+          radial-gradient(120% 90% at 100% 100%, ${hexA(colors.primary, 0.55)}, transparent 60%),
+          linear-gradient(155deg, ${colors.primary} 0%, ${darken(colors.primary)} 65%, #0a0a0a 100%)
+        `,
+      }}
+    >
+      {/* Subtle inner ring — adds depth without competing with the type. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-3 rounded-xl"
+        style={{ boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.08)" }}
+      />
+
+      {/* Initial mark — embossed, monospace for cleanliness. */}
+      <div
+        className="font-mono text-5xl font-light tracking-[0.04em] text-white/95"
+        style={{
+          textShadow: "0 2px 12px rgba(0,0,0,0.45)",
+        }}
+      >
+        {initials}
+      </div>
+
+      <div
+        className="mt-3 h-px w-12"
+        style={{ background: hexA(colors.accent, 0.6) }}
+      />
+
+      <p className="mt-3 max-w-[18ch] font-display text-sm leading-snug text-white/85">
+        {name}
+      </p>
+
+      <span className="mt-5 inline-flex items-center gap-1.5 rounded-full bg-black/30 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.2em] text-white/70 backdrop-blur">
+        <ImageOff size={11} strokeWidth={2} />
+        Vorschau folgt
+      </span>
+    </div>
+  );
+}
+
+// -----------------------------------------------------------------------------
+// Tiny color helpers — kept inline so the gallery file stays self-contained.
+// The placeholder is the only consumer; promoting these to a shared util would
+// be premature.
+// -----------------------------------------------------------------------------
+
+function hexA(hex: string, alpha: number): string {
+  const m = /^#?([a-f0-9]{6})$/i.exec(hex);
+  if (!m) return `rgba(20,20,20,${alpha})`;
+  const n = parseInt(m[1], 16);
+  const r = (n >> 16) & 0xff;
+  const g = (n >> 8) & 0xff;
+  const b = n & 0xff;
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+function darken(hex: string): string {
+  const m = /^#?([a-f0-9]{6})$/i.exec(hex);
+  if (!m) return "#0a0a0a";
+  const n = parseInt(m[1], 16);
+  const r = Math.max(0, Math.round(((n >> 16) & 0xff) * 0.55));
+  const g = Math.max(0, Math.round(((n >> 8) & 0xff) * 0.55));
+  const b = Math.max(0, Math.round((n & 0xff) * 0.55));
+  return `rgb(${r}, ${g}, ${b})`;
 }

@@ -13,6 +13,11 @@ import {
 import { SmartCard } from "@/components/cards/smart/SmartCard";
 import { OrderPayloadSchema, BillingMode } from "@/lib/validation";
 import type { CardData } from "@/lib/validation";
+import {
+  CARD_THEME_LIST,
+  type CardThemeKey,
+  type CardThemePreset,
+} from "@/lib/cardThemes";
 
 // Map Zod validation issues to a flat record keyed by field path
 // (e.g. "contactEmail" or "cardData.website"). Falls back to the raw
@@ -72,6 +77,12 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
   const [callMeBack, setCallMeBack] = useState(false);
   const [brandPrimaryHex, setBrandPrimaryHex] = useState("");
   const [brandAccentHex, setBrandAccentHex] = useState("");
+  // Style preset — "Aurora" / "Editorial" / "Cinema" (or undefined = Custom).
+  // The preset CSS-only differentiates the rendered card via `data-theme` on
+  // the SmartCard root. `layoutKey` is recorded for forward-compat; the
+  // current renderer ignores it.
+  const [themeKey, setThemeKey] = useState<CardThemeKey | undefined>(undefined);
+  const [layoutKey, setLayoutKey] = useState<string | undefined>(undefined);
   const [photoPath, setPhotoPath] = useState<string | null>(null);
   const [logoPath, setLogoPath] = useState<string | null>(null);
   const [photoUploading, setPhotoUploading] = useState(false);
@@ -142,6 +153,26 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
   const setSocial = (key: keyof NonNullable<CardData["socials"]>, value: string) =>
     setCardData((c) => ({ ...c, socials: { ...(c.socials ?? {}), [key]: value } }));
 
+  /**
+   * Apply (or clear) a style preset. Selecting a preset:
+   *   - sets `themeKey` + `layoutKey`
+   *   - seeds `brandPrimaryHex` / `brandAccentHex` only when the user has not
+   *     yet entered a custom value, so we never overwrite intentional input.
+   * Selecting "Custom" clears both keys but leaves any colors the user
+   * already chose alone.
+   */
+  const applyPreset = (preset: CardThemePreset | null) => {
+    if (preset) {
+      setThemeKey(preset.key);
+      setLayoutKey(preset.layoutKey);
+      setBrandPrimaryHex((current) => current || preset.primaryHex);
+      setBrandAccentHex((current) => current || preset.accentHex);
+    } else {
+      setThemeKey(undefined);
+      setLayoutKey(undefined);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!selectedTemplate) return;
@@ -180,6 +211,10 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
       brandAccentHex: brandAccentHex || undefined,
       photoPath: photoPath || undefined,
       logoPath: logoPath || undefined,
+      // Phase 6 — style preset. Both fields stay optional; when undefined the
+      // SmartCard renders with default theme + sector colors.
+      themeKey: themeKey || undefined,
+      layoutKey: layoutKey || undefined,
     };
 
     const parsed = OrderPayloadSchema.safeParse(payload);
@@ -509,6 +544,42 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
               </div>
             </fieldset>
 
+            {/* Style preset (Phase 6) — three CSS-only presets that drive
+                the SmartCard's `data-theme` attribute. Selecting a preset
+                seeds the brand color pickers below; the user can still
+                override either color afterwards. */}
+            <fieldset className="space-y-4">
+              <legend className="text-heading-sm text-ink">
+                {L("themeSection", "Stilvorlage (optional)")}
+              </legend>
+              <p className="-mt-1 max-w-xl text-xs text-ink/55">
+                {L(
+                  "themeSectionHint",
+                  "Wählen Sie eine vordefinierte Stimmung — Farben, Typografie und Akzente werden im Vorschaufenster sofort angepasst."
+                )}
+              </p>
+              <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
+                {CARD_THEME_LIST.map((preset) => (
+                  <PresetTile
+                    key={preset.key}
+                    preset={preset}
+                    active={themeKey === preset.key}
+                    onClick={() => applyPreset(preset)}
+                  />
+                ))}
+                <PresetTile
+                  preset={null}
+                  active={themeKey === undefined}
+                  onClick={() => applyPreset(null)}
+                  customLabel={L("themeCustom", "Eigener Stil")}
+                  customDescription={L(
+                    "themeCustomHint",
+                    "Eigene Farben ohne vordefiniertes Theme."
+                  )}
+                />
+              </div>
+            </fieldset>
+
             {/* Branding */}
             <fieldset className="space-y-4">
               <legend className="text-heading-sm text-ink">
@@ -760,6 +831,59 @@ function ColorField({
         />
       </div>
     </div>
+  );
+}
+
+function PresetTile({
+  preset,
+  active,
+  onClick,
+  customLabel,
+  customDescription,
+}: {
+  preset: import("@/lib/cardThemes").CardThemePreset | null;
+  active: boolean;
+  onClick: () => void;
+  customLabel?: string;
+  customDescription?: string;
+}) {
+  const label = preset ? preset.label : (customLabel ?? "Custom");
+  const description = preset ? preset.description : (customDescription ?? "");
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`relative rounded-2xl border p-4 text-left transition-colors ${
+        active
+          ? "border-brand bg-white shadow-soft"
+          : "border-neutral-200 bg-white hover:border-ink/40"
+      }`}
+    >
+      {preset && (
+        <div className="mb-3 flex gap-1.5">
+          <span
+            className="h-4 w-4 rounded-full ring-1 ring-black/10"
+            style={{ background: preset.primaryHex }}
+          />
+          <span
+            className="h-4 w-4 rounded-full ring-1 ring-black/10"
+            style={{ background: preset.accentHex }}
+          />
+        </div>
+      )}
+      {!preset && (
+        <div className="mb-3 flex gap-1.5">
+          <span className="h-4 w-4 rounded-full bg-gradient-to-br from-neutral-200 to-neutral-400 ring-1 ring-black/10" />
+        </div>
+      )}
+      <span className="block text-sm font-semibold text-ink">{label}</span>
+      {description && (
+        <span className="mt-1 block text-xs leading-snug text-ink/55">
+          {description}
+        </span>
+      )}
+    </button>
   );
 }
 
