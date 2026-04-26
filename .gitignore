@@ -57,3 +57,4 @@ opsolid-deploy.tar.gz
 # pnpm lock file (project uses npm)
 pnpm-lock.yaml
 
+/public/uploads/

@@ -65,6 +65,14 @@ export interface CardTemplateDef {
   stripeYearlyPriceId?: string;
   isActive: boolean;
   sortOrder: number;
+  /**
+   * Phase 7 marker. `true` for ids 13..20 — sector-tailored SmartCard presets
+   * that don't yet have a hand-built v2 component. The Phase 7.2 carousel
+   * filters these out so customers only see the curated 12-template line-up.
+   * Legacy entries continue to render via SmartCard fallback for any
+   * pre-existing CardOrder rows whose templateId points here.
+   */
+  legacy?: boolean;
 }
 
 export const cardTemplates: readonly CardTemplateDef[] = [
@@ -81,9 +89,14 @@ export const cardTemplates: readonly CardTemplateDef[] = [
   // obvious default.
   {
     id: 1,
-    slug: "minimal-mono",
-    name: "Minimal Mono",
-    sectorHint: "general",
+    slug: "real-estate",
+    // Phase 7.1 alignment — id=1 is the Real Estate (kart_01) v2 component.
+    // Pricing/Stripe IDs unchanged; only the human-facing name + sector hint
+    // are updated to match the v2 registry. The carousel and order form both
+    // resolve visuals via templateRegistry[1], so the catalog entry only
+    // governs billing + filter-pill metadata.
+    name: "Real Estate",
+    sectorHint: "realEstate",
     componentKey: "SmartCard",
     themeKey: "editorial",
     previewPath: "/images/templates/card-01.png",
@@ -290,30 +303,42 @@ export const cardTemplates: readonly CardTemplateDef[] = [
     isActive: true,
     sortOrder: 12,
   },
+  // ---------------------------------------------------------------------------
+  // Phase 7.7 — id=13 is the new "Universal Pro" sector-agnostic v2 template.
+  // (The previous legacy "Hotel & Hospitality" placeholder under id=13 was
+  // never surfaced by the carousel — `legacy: true` filtered it out — so
+  // promoting this slot to a real v2 template doesn't hide anything customers
+  // could already buy. Stripe price IDs are placeholders until run-stripe.)
+  //
+  // ---------------------------------------------------------------------------
+  // Phase 7 legacy entries (ids 14..20). Kept so any pre-existing CardOrder
+  // row whose templateId is here still resolves to a label + billing record.
+  // The carousel filters these out via `legacy: true`; SmartCard handles render.
+  // ---------------------------------------------------------------------------
   {
     id: 13,
-    slug: "otel-konaklama",
-    name: "Hotel & Hospitality",
-    sectorHint: "hospitality",
+    slug: "universal-pro",
+    name: "Universal Pro",
+    sectorHint: "consultant",
     componentKey: "SmartCard",
-    themeKey: "cinema",
     previewPath: "/images/templates/card-13.png",
-    oneTimeCents: 14900,
-    monthlyCents: 800,
-    yearlyCents: 6900,
-    stripeOneTimePriceId: "price_1TQCky25H593hnObgPizsdIE",
-    stripeMonthlyPriceId: "price_1TQCky25H593hnObfKUmM1zs",
-    stripeYearlyPriceId: "price_1TQCky25H593hnOb3FrAwQCN",
+    monthlyCents: 500,
+    yearlyCents: 3900,
+    oneTimeCents: 7900,
     isActive: true,
     sortOrder: 13,
   },
+  // ---------------------------------------------------------------------------
+  // Phase 7.8 — designer-team v2 templates promoted from legacy. Stripe price
+  // IDs preserved (re-used for the new SKUs); name/sector/legacy adjusted to
+  // reflect the new sector-specific designs the v2 registry now wires up.
+  // ---------------------------------------------------------------------------
   {
     id: 14,
-    slug: "etkinlik-dugun",
-    name: "Event & Hochzeit",
-    sectorHint: "events",
+    slug: "trattoria",
+    name: "Trattoria",
+    sectorHint: "restaurant",
     componentKey: "SmartCard",
-    themeKey: "editorial",
     previewPath: "/images/templates/card-14.png",
     oneTimeCents: 9900,
     monthlyCents: 600,
@@ -326,11 +351,10 @@ export const cardTemplates: readonly CardTemplateDef[] = [
   },
   {
     id: 15,
-    slug: "insaat-muteahhit",
-    name: "Bau & Handwerk",
-    sectorHint: "construction",
+    slug: "boutique-hotel",
+    name: "Boutique Hotel",
+    sectorHint: "hospitality",
     componentKey: "SmartCard",
-    themeKey: "editorial",
     previewPath: "/images/templates/card-15.png",
     oneTimeCents: 12900,
     monthlyCents: 700,
@@ -343,11 +367,10 @@ export const cardTemplates: readonly CardTemplateDef[] = [
   },
   {
     id: 16,
-    slug: "turizm-seyahat",
-    name: "Tourismus & Reise",
-    sectorHint: "tourism",
+    slug: "tech-startup",
+    name: "Tech Startup",
+    sectorHint: "tech",
     componentKey: "SmartCard",
-    themeKey: "editorial",
     previewPath: "/images/templates/card-16.png",
     oneTimeCents: 9900,
     monthlyCents: 600,
@@ -360,15 +383,14 @@ export const cardTemplates: readonly CardTemplateDef[] = [
   },
   {
     id: 17,
-    slug: "kurumsal-ceo",
-    name: "Corporate & Executive",
-    sectorHint: "corporate",
+    slug: "developer",
+    name: "Developer",
+    sectorHint: "tech",
     componentKey: "SmartCard",
-    themeKey: "cinema",
     previewPath: "/images/templates/card-17.png",
-    oneTimeCents: 14900,
-    monthlyCents: 800,
-    yearlyCents: 6900,
+    oneTimeCents: 9900,
+    monthlyCents: 600,
+    yearlyCents: 4900,
     stripeOneTimePriceId: "price_1TQCl225H593hnObmevKBs9x",
     stripeMonthlyPriceId: "price_1TQCl325H593hnObCyJqEMB5",
     stripeYearlyPriceId: "price_1TQCl325H593hnObrHbt5rbh",
@@ -377,15 +399,14 @@ export const cardTemplates: readonly CardTemplateDef[] = [
   },
   {
     id: 18,
-    slug: "teknoloji-startup",
-    name: "Tech & Startup",
-    sectorHint: "tech",
+    slug: "yoga-studio",
+    name: "Yoga Studio",
+    sectorHint: "fitness",
     componentKey: "SmartCard",
-    themeKey: "aurora",
     previewPath: "/images/templates/card-18.png",
-    oneTimeCents: 12900,
-    monthlyCents: 700,
-    yearlyCents: 5900,
+    oneTimeCents: 9900,
+    monthlyCents: 600,
+    yearlyCents: 4900,
     stripeOneTimePriceId: "price_1TQCl425H593hnObjDMOJ69q",
     stripeMonthlyPriceId: "price_1TQCl425H593hnObf504NEXe",
     stripeYearlyPriceId: "price_1TQCl425H593hnObhBvTqugn",
@@ -394,15 +415,14 @@ export const cardTemplates: readonly CardTemplateDef[] = [
   },
   {
     id: 19,
-    slug: "berber-kuafor",
-    name: "Barbier & Friseur",
-    sectorHint: "salon",
+    slug: "personal-trainer",
+    name: "Personal Trainer",
+    sectorHint: "fitness",
     componentKey: "SmartCard",
-    themeKey: "cinema",
     previewPath: "/images/templates/card-19.png",
-    oneTimeCents: 7900,
-    monthlyCents: 500,
-    yearlyCents: 3900,
+    oneTimeCents: 9900,
+    monthlyCents: 600,
+    yearlyCents: 4900,
     stripeOneTimePriceId: "price_1TQCl525H593hnObl2DslNta",
     stripeMonthlyPriceId: "price_1TQCl525H593hnObO56KdLOz",
     stripeYearlyPriceId: "price_1TQCl625H593hnObXBVOMCqm",
@@ -411,11 +431,10 @@ export const cardTemplates: readonly CardTemplateDef[] = [
   },
   {
     id: 20,
-    slug: "danismanlik-koc",
-    name: "Beratung & Coaching",
-    sectorHint: "consultant",
+    slug: "music-producer",
+    name: "Music Producer",
+    sectorHint: "music",
     componentKey: "SmartCard",
-    themeKey: "editorial",
     previewPath: "/images/templates/card-20.png",
     oneTimeCents: 9900,
     monthlyCents: 600,
@@ -425,6 +444,19 @@ export const cardTemplates: readonly CardTemplateDef[] = [
     stripeYearlyPriceId: "price_1TQCl725H593hnObpVPgYQCx",
     isActive: true,
     sortOrder: 20,
+  },
+  {
+    id: 21,
+    slug: "wedding-planner",
+    name: "Wedding Planner",
+    sectorHint: "events",
+    componentKey: "SmartCard",
+    previewPath: "/images/templates/card-21.png",
+    oneTimeCents: 9900,
+    monthlyCents: 600,
+    yearlyCents: 4900,
+    isActive: true,
+    sortOrder: 21,
   },
 ];
 

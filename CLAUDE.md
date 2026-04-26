@@ -60,11 +60,15 @@ Each route follows a two-file pattern:
 
 ### Brand Colors
 
-Editorial warm-graphite palette (no blue/violet/teal). Override in `tailwind.config.ts`:
-- `ink` — primary text / dark surfaces (#15120F)
-- `paper` / `paper-warm` / `paper-cool` — light backgrounds (#F4EFE6 / #FAF6EF / #ECE6D8)
-- `amber` — primary CTA accent (#E8A252)
-- `olive` — secondary accent (#B8C48A)
-- `steel` — neutral grey (#9CA3A0)
+OpSolid v2 industrial-luxury tri-theme (light · hybrid · dark). Canonical CSS variables live in `src/styles/opsolid-tokens.css`; `tailwind.config.ts` maps them so utilities follow the active `[data-theme]`.
+- `bg-bg-{0..5}` — theme-aware surface ladder (page → cards → raised panels)
+- `text-ink` / `text-ink-{100..500}` — theme-aware text scale
+- `border-line-soft|line|line-firm|line-hot` — theme-aware hairlines
+- `copper-{50..900}` (DEFAULT `#C27940`) — primary accent (warm oxidized copper, not orange). Theme-independent.
+- `brand-*` — legacy alias mapped to copper so old code keeps resolving.
+- `neutral-{50..950}` — graphite scale, theme-independent. Use `bg-neutral-900` + `text-neutral-50` for "dark pill on light page" intent that must stay constant across themes.
+- `signal-ok|warn|err` — semantic only, sparing use.
 
-Typography: Instrument Serif (`font-serif` / all h1/h2/h3) + Geist Sans (body) + Geist Mono (mono-labels). Utilities: `.mono-label`, `.hairline`, `.paper-grain`, `.section`. No `framer-motion`, no gradient-mesh backgrounds, no glassmorphism.
+Legacy `amber`, `paper`, `paper-warm`, `paper-cool`, `olive`, `steel` tokens are removed — Tailwind silently drops classes that reference them. Use the table above instead.
+
+Typography: Geist (display + h1/h2), Instrument Serif (`.editorial` italic callouts), Inter (body), JetBrains Mono (`.meta` / `.mono-label`). Utilities: `.panel`, `.btn`, `.btn-primary`, `.btn-ghost`, `.chip`, `.field`, `.metallic-copper`, `.grain`, `.wrap`, `.section`. No `framer-motion` for full-page choreography (only Embla + small AnimatedSection observers); no gradient-mesh; no glassmorphism.

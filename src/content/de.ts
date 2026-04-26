@@ -287,7 +287,7 @@ export const content: Content = {
         {
           name: "Custom Workflow Engine",
           description:
-            "Individuell entwickelte Workflow-Engines für komplexe Automatisierungen. Webhook-Trigger, bedingte Logik, Retries und vollständige Datenhoheit — keine Black-Box-Laufzeit.",
+            "Individuell entwickelte Workflow-Engines für komplexe Automatisierungen. Webhook-Trigger, bedingte Logik, Retries und vollständige Datenhoheit — keine geschlossene Laufzeitumgebung.",
           techFeatures: [
             "Self-Hosted",
             "Offene Architektur",
@@ -507,7 +507,7 @@ export const content: Content = {
       headline:
         "Sehen wir uns Ihre Prozesse gemeinsam an.",
       description:
-        "Buchen Sie ein kostenloses Erstgespräch. Wir zeigen ehrlich, wo Automatisierung sich rechnet — und wo nicht.",
+        "Buchen Sie ein kostenloses Erstgespräch. Wir zeigen Ihnen, wo Automatisierung sich rechnet — und wo nicht.",
       primaryCtaLabel: "Erstgespräch buchen",
       primaryCtaHref: "/contact",
       secondaryCtaLabel: "Leistungen ansehen",
@@ -808,7 +808,7 @@ export const content: Content = {
             "Was zählt, sind eingesparte Stunden, reduzierte Fehler und verbesserte Prozesse — keine Feature-Listen.",
         },
         {
-          title: "Pragmatisch und ehrlich bleiben",
+          title: "Pragmatisch und klar bleiben",
           description:
             "Automatisierung wird dort empfohlen, wo sie sinnvoll ist — und dort davon abgeraten, wo sie es nicht ist.",
         },
@@ -1108,7 +1108,7 @@ export const content: Content = {
       {
         question: "Warum individuelle Entwicklung statt einer SaaS-Plattform?",
         answer:
-          "Individuell entwickelte Systeme geben Ihnen volle Kontrolle über Ihre Daten, Ihre Workflows und die Kostenkurve. Keine Pro-Execution-Gebühren, kein Vendor-Lock-in, keine intransparenten Preisstufen. Die Architektur wird passgenau für Ihre Prozesse entworfen — und der Quellcode gehört Ihnen.",
+          "Individuell entwickelte Systeme geben Ihnen volle Kontrolle über Ihre Daten, Ihre Workflows und die Kostenkurve. Keine Gebühren pro Ausführung, keine intransparenten Preisstufen, keine Abhängigkeit vom Anbieter. Die Architektur wird passgenau für Ihre Prozesse entworfen — und der Quellcode gehört Ihnen.",
         category: "technical",
       },
       {
@@ -1636,6 +1636,30 @@ export const content: Content = {
           selectCta: "Dieses Design wählen",
           selected: "Ausgewählt",
           fromPrice: "ab",
+          demoCta: "Demo",
+          demoModalChoose: "Diese Vorlage wählen",
+          demoModalBack: "Zurück zur Galerie",
+          comingSoon: "Bald verfügbar",
+          comingSoonHint: "Diese Vorlage ist in Vorbereitung.",
+          prevSlide: "Vorheriges Design",
+          nextSlide: "Nächstes Design",
+          slideOf: "{{current}} von {{total}}",
+          sectorAll: "Alle",
+          sectorRealEstate: "Immobilien",
+          sectorLawyer: "Kanzlei",
+          sectorRestaurant: "Restaurant",
+          sectorCreator: "Kreativ",
+          sectorClinic: "Klinik",
+          sectorMusic: "Musik",
+          sectorSalon: "Salon",
+          sectorRetail: "Boutique",
+          sectorArchitecture: "Architektur",
+          sectorFitness: "Fitness",
+          sectorHospitality: "Hotel",
+          sectorConsultant: "Beratung",
+          sectorTech: "Tech",
+          sectorEvents: "Events",
+          monthlyShort: "/Mo.",
         },
         form: {
           eyebrow: "BESTELLUNG",
@@ -1652,6 +1676,7 @@ export const content: Content = {
           callMeBackHint:
             "Wir melden uns innerhalb eines Werktags, um Details zu klären.",
           cardSection: "Inhalt Ihrer Karte",
+          copyFromContact: "Von oben übernehmen",
           cardName: "Vor- und Nachname",
           cardTitle: "Titel / Rolle",
           cardCompany: "Unternehmen",
@@ -1671,9 +1696,27 @@ export const content: Content = {
           brandSection: "Markenfarben (optional)",
           primaryColor: "Primärfarbe",
           accentColor: "Akzentfarbe",
-          designNotes: "Anmerkungen zum Design (optional)",
+          designNotes: "Besondere Wünsche (optional)",
           designNotesPh:
-            "Haben Sie besondere Wünsche? Schriften, Logos, Beispiele …",
+            "Schriftart, Logo-Anpassungen, Layout-Wünsche — wir lesen jeden Auftrag vor Veröffentlichung durch.",
+          resetColors: "Vorlagenfarben wiederherstellen",
+          uploadWrongType: "Format nicht unterstützt. Bitte JPG, PNG oder WebP.",
+          dragHere: "Hierher ziehen oder klicken",
+          uploadHint: "JPG, PNG, WebP · max 5 MB",
+          uploadRemove: "Entfernen",
+          submitLabel: "Bezahlen & Karte veröffentlichen",
+          selectionModeLabel: "Design auswählen",
+          templateColors: "Vorlagenfarben",
+          uploadDone: "Hochgeladen",
+          uploading: "Wird hochgeladen…",
+          templateNoPhoto: "Dieses Design verwendet kein Foto.",
+          templateNoLogo: "Dieses Design verwendet kein Logo.",
+          templateNoAsset: "Dieses Design verwendet dieses Element nicht.",
+          previewExpand: "Vollvorschau öffnen",
+          previewClose: "Vorschau schließen",
+          previewOpenInNewTab: "In neuem Tab öffnen",
+          previewLanguage: "Kartensprache",
+          previewNoPaymentNote: "Nur Vorschau — keine Zahlung nötig",
           billingSection: "Zahlungsmodell",
           billingMonthly: "Monatlich",
           monthlyFooter: "Niedrige Einstiegshürde. Jederzeit kündbar.",
@@ -1692,6 +1735,25 @@ export const content: Content = {
           serverError: "Serverfehler. Bitte erneut versuchen.",
           noCheckoutUrl: "Keine Zahlungs-URL erhalten.",
           networkError: "Netzwerkfehler.",
+          step1Title: "Kontakt",
+          step1Summary: "So erreichen wir Sie",
+          step1Next: "Weiter zum Karteninhalt",
+          step2Title: "Karteninhalt",
+          step2Summary: "Was auf Ihrer Karte erscheint",
+          step2Next: "Weiter zum Branding",
+          step3Title: "Branding",
+          step3Summary: "Farben, Stil, Designnotizen",
+          step3Next: "Weiter zur Zahlung",
+          step4Title: "Zahlung",
+          step4Summary: "Wählen Sie Ihren Plan",
+          stepIndicator: "Schritt {current} von {total}",
+          stepEmpty: "Bitte ausfüllen",
+          previewLabelMobile: "Vorschau",
+          previewSheetTitle: "Live-Vorschau",
+          previewSheetClose: "Schließen",
+          previewLiveBadge: "Live-Vorschau",
+          previewLiveHint: "Aktualisiert sich beim Tippen",
+          stepLockedHint: "Vorherigen Schritt abschließen, um fortzufahren",
         },
       },
       edit: {
@@ -1875,7 +1937,7 @@ export const content: Content = {
       },
       faq: {
         label: "FAQ",
-        heading: "Ehrliche Antworten.",
+        heading: "Klare Antworten.",
         items: [
           {
             q: "Merken Anrufer, dass es eine KI ist?",
@@ -2039,7 +2101,7 @@ export const content: Content = {
       },
       faq: {
         label: "FAQ",
-        heading: "Ehrliche Antworten.",
+        heading: "Klare Antworten.",
         items: [
           {
             q: "Halluziniert er und beschädigt unsere Marke?",
@@ -2199,7 +2261,7 @@ export const content: Content = {
       },
       faq: {
         label: "FAQ",
-        heading: "Ehrliche Antworten zu einem undurchsichtigen Kanal.",
+        heading: "Klare Antworten zu einem undurchsichtigen Kanal.",
         items: [
           {
             q: "Warum nicht eine günstigere inoffizielle WhatsApp-Bibliothek nutzen?",
@@ -2359,7 +2421,7 @@ export const content: Content = {
       },
       faq: {
         label: "FAQ",
-        heading: "Ehrliche Antworten.",
+        heading: "Klare Antworten.",
         items: [
           {
             q: "Kann ich meinen bestehenden Cal.com-Account behalten?",
@@ -2518,7 +2580,7 @@ export const content: Content = {
       },
       faq: {
         label: "FAQ",
-        heading: "Ehrliche Antworten zu einem standardmäßig spammigen Kanal.",
+        heading: "Klare Antworten zu einem standardmäßig spammigen Kanal.",
         items: [
           {
             q: "Ist KI-geschriebene Cold-E-Mail nicht einfach Spam?",
@@ -2678,7 +2740,7 @@ export const content: Content = {
       },
       faq: {
         label: "FAQ",
-        heading: "Ehrliche Antworten.",
+        heading: "Klare Antworten.",
         items: [
           {
             q: "Bleiben Leads bei einer KI wirklich dran?",
@@ -2791,7 +2853,7 @@ export const content: Content = {
       },
       pricing: {
         label: "PREISE",
-        heading: "Klein, ehrlich, monatlich. Jederzeit kündbar.",
+        heading: "Klein, klar, monatlich. Jederzeit kündbar.",
         popularBadge: "AM BELIEBTESTEN",
         plans: [
           {
@@ -2865,7 +2927,7 @@ export const content: Content = {
       },
       faq: {
         label: "FAQ",
-        heading: "Ehrliche Antworten.",
+        heading: "Klare Antworten.",
         items: [
           {
             question: "Ersetzt das mein Empfangspersonal?",
@@ -3061,7 +3123,7 @@ export const content: Content = {
 
     footer: {
       tagline:
-        "Unabhängiges Automatisierungsstudio. Hamburg · Frankfurt. GDPR-native Infrastruktur, kein Vendor-Lock-in.",
+        "Unabhängiges Automatisierungsstudio. Hamburg · Frankfurt. GDPR-native Infrastruktur; der Quellcode bleibt bei Ihnen.",
       chipLive: "",
       chipLanguages: "EN · DE · TR",
       cols: {
@@ -3108,15 +3170,15 @@ export const content: Content = {
 
       capabilities: {
         eyebrow: "[ 02 / 04 ] LEISTUNGEN",
-        headline: "Vier Bereiche, die OpSolid durchgängig verantwortet.",
+        headline: "Bereiche, die OpSolid durchgängig verantwortet.",
         lead:
-          "Keine Plattform. Kein Marktplatz. Ein kleines Studio, das Abläufe nimmt, wie sie sind — manuell, halbautomatisiert, zusammengestückelt — und sie als Systeme hinterlässt, die ohne Betreuung laufen.",
+          "Keine Plattform, kein Marktplatz. Ein kleines, fokussiertes Studio, das Abläufe nimmt, wie sie sind — manuell, halbautomatisiert oder zusammengestückelt — und sie als Systeme hinterlässt, die ohne ständige Betreuung laufen.",
         cards: [
           {
             icon: "workflow",
             title: "Workflow-Automatisierung",
             body:
-              "Aufträge, Dokumente, Freigaben, Kommunikation. Gebaut auf individueller Orchestrierung und eigenen Konnektoren — nie auf Black-Box-SaaS.",
+              "Aufträge, Dokumente, Freigaben, Kommunikation. Auf Ihre Prozesse zugeschnitten, mit eigener Orchestrierung und Konnektoren — nicht auf geschlossener Standard-SaaS.",
             tag: "API · WEBHOOKS · CUSTOM",
           },
           {
@@ -3160,61 +3222,61 @@ export const content: Content = {
       specimen: {
         eyebrow: "[ 03 / 04 ] BRANCHENREFERENZ",
         title: {
-          pre: "Die Zahlen, die die Branche ",
-          italic: "bereits",
-          post: " kennt.",
+          pre: "Die Zahlen, an denen Automatisierung ",
+          italic: "gemessen",
+          post: " wird.",
         },
         body:
-          "OpSolid ist vor dem Markt — keine erfundenen Fallstudien-Zahlen. Stattdessen: die öffentliche Referenz, an der jede Automatisierung gemessen wird. Jede Zeile zitiert ihre Quelle.",
+          "Jede Automatisierung wird an den Referenzwerten der Branche gemessen. Links der heutige Standardzustand, rechts das angestrebte Ergebnis.",
         chipBefore: "BRANCHENMEDIAN",
         chipAfter: "AUTOMATISIERUNGSZIEL",
         rows: [
           {
-            label: "Quote-to-Cash Zykluszeit",
-            sub: "APQC Open Standards Benchmarking · 2023",
+            label: "Quote-to-Cash-Zykluszeit",
+            sub: "Branchenreferenz · Mittelstand",
             value: "3–7 Tage",
-            delta: "vs. <4h automatisiert",
+            delta: "vs. <4 h automatisiert",
           },
           {
-            label: "Manuelle Touches pro Auftrag",
-            sub: "Forrester TEI · Mittelstand-Ops, 2024",
+            label: "Manuelle Schritte pro Auftrag",
+            sub: "Branchenreferenz · Mittelstand",
             value: "4–9",
             delta: "vs. 1–2 automatisiert",
           },
           {
-            label: "Voice-Agent p50-Latenz",
-            sub: "Retell + GPT-4o + Deepgram Nova-3, öffentliche Werte 2025",
-            value: "<800ms",
-            delta: "end-to-end, menschennah",
+            label: "Antwortlatenz der Sprach-KI",
+            sub: "Branchenreferenz · 2025",
+            value: "<800 ms",
+            delta: "end-to-end, natürlicher Fluss",
           },
           {
-            label: "Vendor-Lock-in bis Ausstieg",
-            sub: "OpSolid-Prinzip · Quellcode gehört Ihnen",
+            label: "Zeit bis zum Ausstieg",
+            sub: "OpSolid · Quellcode bleibt bei Ihnen",
             value: "0",
-            delta: "gemessen in Wochen",
+            delta: "Übergabe innerhalb von Wochen",
           },
         ],
       },
 
       process: {
         eyebrow: "[ 04 / 04 ] VORGEHEN",
-        headline: "Drei Schritte. Kein Lock-in. Kein Geheimnis.",
+        headline: "Drei Schritte. Ein klar nachvollziehbarer Prozess.",
         lead:
-          "Jedes Mandat folgt derselben Form: Bestand kartieren, das Kleinste liefern, das Schmerz entfernt, dann nur dort ausbauen, wo es sich weiter auszahlt. Empfohlen, wo es passt — abgeraten, wo nicht.",
+          "Jedes Mandat folgt derselben Form: Wir kartieren den Bestand, liefern zuerst den entscheidenden Schritt und erweitern nur dort, wo es sich weiter trägt. Automatisierung wird empfohlen, wo sie sinnvoll ist — und davon abgeraten, wo nicht.",
         steps: [
           {
             num: "01",
             title: "Operations-Walkthrough",
             body:
-              "90-minütige Tiefenanalyse, wie Arbeit heute fließt. Liefert eine schriftliche Karte jeder manuellen Übergabe, jeder fragilen Integration, jeder Stelle, an der das Geschäft am Kalender einer Person statt an einem System hängt.",
+              "Eine 90-minütige Tiefenanalyse, wie Arbeit heute fließt. Liefert eine schriftliche Karte jeder manuellen Übergabe, jeder fragilen Integration und jeder Stelle, an der das Geschäft am Kalender einer Person statt an einem System hängt.",
             chipA: "1 Session · 90 Min.",
             chipB: "Schriftliche Karte · PDF",
           },
           {
             num: "02",
-            title: "Kleinste ehrliche Automatisierung",
+            title: "Eine fokussierte erste Lieferung",
             body:
-              "Ein Workflow, End-to-End, in drei Wochen produktiv. Gebaut auf Tools, die Ihr Team selbst öffnen und prüfen kann. Wenn sich der ROI im ersten Monat nicht zeigt, endet das Mandat dort.",
+              "Ein Workflow, End-to-End, in drei Wochen produktiv. Gebaut auf Tools, die Ihr Team selbst öffnen und prüfen kann. Wenn sich das erwartete Ergebnis im ersten Monat nicht zeigt, endet das Mandat dort.",
             chipA: "3 Wochen · fixer Umfang",
             chipB: "Produktionsreif",
             chipBHot: true,
@@ -3223,8 +3285,8 @@ export const content: Content = {
             num: "03",
             title: "Ausbau, wo es sich weiter trägt",
             body:
-              "Laufendes Retainer-Mandat, monatlich oder quartalsweise. Neue Flächen nur, wenn die bestehenden stabil sind. Übergabe-Notizen, Runbooks und vollständiger Quellcode gehören Ihnen ab Tag eins — der Ausstieg ist immer zwei Wochen entfernt.",
-            chipA: "Monatsretainer",
+              "Laufende Betreuung, monatlich oder quartalsweise. Neue Flächen nur, wenn die bestehenden stabil sind. Übergabe-Notizen, Runbooks und vollständiger Quellcode gehören Ihnen ab Tag eins — Sie können jederzeit innerhalb von zwei Wochen selbst übernehmen.",
+            chipA: "Monatliche Betreuung",
             chipB: "Quellcode gehört Ihnen",
           },
         ],
@@ -3238,11 +3300,11 @@ export const content: Content = {
           post: " automatisieren lässt.",
         },
         lead:
-          "30 Minuten. Operations-Walkthrough, klare Einschätzung und schriftlicher Plan. Kein Pitch-Deck, keine Sales-Motion — und keine Verpflichtung, wenn Automatisierung nicht das richtige Werkzeug ist.",
+          "30 Minuten. Ein Operations-Walkthrough, eine klare Einschätzung und ein schriftlicher Plan. Keine Verpflichtung nach dem Gespräch — wenn Automatisierung nicht das richtige Werkzeug ist, sagen wir es Ihnen offen.",
         ctaPrimary: "Discovery-Call buchen",
         ctaSecondary: "Journal lesen",
         trustLine:
-          "BUILT IN GERMANY · GDPR-NATIVE · NO VENDOR LOCK-IN · EN · DE · TR",
+          "BUILT IN GERMANY · GDPR-NATIVE · QUELLCODE BLEIBT BEI IHNEN · EN · DE · TR",
       },
     },
 
@@ -3264,7 +3326,7 @@ export const content: Content = {
             label: "LATENCY",
             value: "<800",
             unit: "ms p50",
-            sub: "end-to-end · Retell + GPT-4o",
+            sub: "end-to-end · in Echtzeit",
           },
           {
             label: "LANGUAGES",
@@ -3314,18 +3376,18 @@ export const content: Content = {
       },
       spec: {
         eyebrow: "[ TECHNISCHE SPEC ]",
-        headline: "Gebaut auf Tools, die Sie öffnen und prüfen können.",
+        headline: "Gebaut auf Werkzeugen, die Sie öffnen und prüfen können.",
         lead:
-          "Keine Black-Box-Preisstufen. Jede Schicht austauschbar, jeder Prompt in Ihrem Git versioniert.",
+          "Keine geschlossenen Preisstufen. Jede Schicht ist austauschbar, jede Einstellung wird auf Ihrer Seite versioniert.",
         rows: [
-          { label: "Plattform", value: "Retell AI oder Vapi — Sie wählen" },
-          { label: "ASR", value: "Deepgram Nova-3 · mehrsprachig" },
-          { label: "LLM", value: "GPT-4o, Claude Sonnet oder on-prem, falls nötig" },
-          { label: "TTS", value: "ElevenLabs oder Cartesia · geklonte Stimme" },
-          { label: "Telefonie", value: "Twilio · deutsche DID · GDPR-DPA" },
-          { label: "Integrationen", value: "Cal.com, HubSpot, Pipedrive, SAP, individuelle Webhooks" },
+          { label: "Plattform", value: "Nach Ihrer Vorgabe eingerichtet" },
+          { label: "Spracherkennung", value: "Mehrsprachig, in Echtzeit" },
+          { label: "Sprachverständnis", value: "Führende Produktionsmodelle; bei Bedarf on-premise" },
+          { label: "Sprachausgabe", value: "Auf Ihre Marke abgestimmter Klang" },
+          { label: "Telefonie", value: "Deutsche Rufnummer · AV-Vertrag" },
+          { label: "Integrationen", value: "Cal.com, HubSpot, Pipedrive, SAP und individuelle Anbindungen" },
           { label: "Datenresidenz", value: "EU-west · Frankfurt · keine US-Subprozessoren" },
-          { label: "Ausstiegskosten", value: "Zwei Wochen. Prompts, Daten und Nummern portabel." },
+          { label: "Übergabezeit", value: "Zwei Wochen. Einstellungen, Daten und Nummern portabel." },
         ],
       },
     },
@@ -3430,8 +3492,8 @@ export const content: Content = {
         metaChip: "BOOKING OPEN · 2026 Q2",
         metaLabel: "[ KONTAKT ]",
         title: {
-          pre: "Dreißig Minuten. Ein schriftlicher Plan. ",
-          italic: "Kein Pitch-Deck.",
+          pre: "Dreißig Minuten. ",
+          italic: "Ein schriftlicher Plan.",
           post: "",
         },
         lead:
@@ -3463,7 +3525,7 @@ export const content: Content = {
           { key: "other", label: "Etwas anderes" },
         ],
         legal:
-          "Anfragen werden direkt bearbeitet. Keine Drittanbieter-Analyse, keine Marketing-Liste, kein Follow-up nach 14 Tagen.",
+          "Anfragen erreichen uns direkt. Wir nutzen keine Drittanbieter-Analyse; Sie kommen auf keine Marketingliste, und es gibt kein automatisches Follow-up nach 14 Tagen.",
         submitCta: "Anruf anfragen",
         success: "Danke — wir antworten innerhalb von 48 Stunden.",
         error: "Etwas ging schief. Versuchen Sie es erneut oder schreiben Sie direkt.",
@@ -3484,13 +3546,13 @@ export const content: Content = {
       emptyFeature: {
         tag: "IN ARBEIT · LANGFORM",
         headline:
-          "Die kleinste ehrliche Automatisierung: was Geschäft bewegt vs. was im Deck gut aussieht.",
+          "Fokussierte Automatisierung: was das Geschäft wirklich bewegt vs. was im Deck nur gut aussieht.",
         lede:
           "Eröffnungsstück des Journals. Entwurf in Arbeit — darüber, wie ein fokussierter Workflow mit weniger als 20 Zeilen einen ERP-Austausch bei den Messgrößen schlägt, die zählen.",
         meta: "D. PIHA · GEPLANT · 15 MIN",
       },
       series: {
-        title: "Playbooks für Automatisierung ohne Lock-in",
+        title: "Praktische Playbooks für Automatisierung",
         body:
           "Eine laufende Serie. Die ersten sechs Stücke sind geplant — die zweite Hälfte im nächsten Quartal. Keine E-Mail-Blasts, keine Drip-Kampagnen — nur eine Notiz, wenn etwas landet.",
         placeholder: "sie@firma.de",

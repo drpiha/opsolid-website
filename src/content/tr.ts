@@ -507,7 +507,7 @@ export const content: Content = {
       headline:
         "Süreçlerinizi birlikte inceleyelim.",
       description:
-        "Ücretsiz tanışma görüşmesi planlayın. Otomasyonun nerede kazandırdığını — ve dürüstçe nerede kazandırmadığını — birlikte haritalayalım.",
+        "Ücretsiz tanışma görüşmesi planlayın. Otomasyonun nerede kazandırdığını — ve nerede kazandırmadığını — birlikte ele alalım.",
       primaryCtaLabel: "Tanışma görüşmesi planla",
       primaryCtaHref: "/contact",
       secondaryCtaLabel: "Hizmetleri gör",
@@ -808,9 +808,9 @@ export const content: Content = {
             "Önemli olan tasarruf edilen saatler, azaltılan hatalar ve iyileştirilen süreçlerdir — özellik listeleri değil.",
         },
         {
-          title: "Pratik kalın, dürüst olun",
+          title: "Pratik ve net kalın",
           description:
-            "Otomasyon mantıklı olan yerde önerilir — mantıklı olmayan yerde tavsiye edilmez.",
+            "Otomasyon mantıklı olduğu yerde önerilir; olmadığı yerde önerilmez.",
         },
       ],
     },
@@ -1636,6 +1636,30 @@ export const content: Content = {
           selectCta: "Bu tasarımı seç",
           selected: "Seçildi",
           fromPrice: "başlangıç",
+          demoCta: "Demo",
+          demoModalChoose: "Bu şablonu seç",
+          demoModalBack: "Galeriye dön",
+          comingSoon: "Yakında",
+          comingSoonHint: "Bu tasarım hazırlanıyor.",
+          prevSlide: "Önceki tasarım",
+          nextSlide: "Sonraki tasarım",
+          slideOf: "{{current}} / {{total}}",
+          sectorAll: "Tümü",
+          sectorRealEstate: "Emlak",
+          sectorLawyer: "Hukuk",
+          sectorRestaurant: "Restoran",
+          sectorCreator: "Kreatif",
+          sectorClinic: "Klinik",
+          sectorMusic: "Müzik",
+          sectorSalon: "Kuaför",
+          sectorRetail: "Butik",
+          sectorArchitecture: "Mimari",
+          sectorFitness: "Fitness",
+          sectorHospitality: "Otel",
+          sectorConsultant: "Danışmanlık",
+          sectorTech: "Teknoloji",
+          sectorEvents: "Etkinlik",
+          monthlyShort: "/ay",
         },
         form: {
           eyebrow: "SİPARİŞ",
@@ -1652,6 +1676,7 @@ export const content: Content = {
           callMeBackHint:
             "1 iş günü içinde detayları netleştirmek için size dönüş yapacağız.",
           cardSection: "Kart içeriğiniz",
+          copyFromContact: "Yukarıdaki bilgileri kullan",
           cardName: "Ad ve soyad",
           cardTitle: "Ünvan / rol",
           cardCompany: "Şirket",
@@ -1671,9 +1696,27 @@ export const content: Content = {
           brandSection: "Marka renkleri (opsiyonel)",
           primaryColor: "Ana renk",
           accentColor: "Vurgu rengi",
-          designNotes: "Tasarım notları (opsiyonel)",
+          designNotes: "Özel istekler (isteğe bağlı)",
           designNotesPh:
-            "Özel bir şey mi var? Font, logo, referans örnek …",
+            "Yazı tipi, logo düzenlemeleri, düzen tercihleri — her siparişi yayınlamadan önce inceliyoruz.",
+          resetColors: "Şablon renklerini sıfırla",
+          uploadWrongType: "Desteklenmeyen format. JPG, PNG veya WebP kullanın.",
+          dragHere: "Buraya sürükleyin veya tıklayın",
+          uploadHint: "JPG, PNG, WebP · maks 5 MB",
+          uploadRemove: "Kaldır",
+          submitLabel: "Öde ve kartımı yayınla",
+          selectionModeLabel: "Tasarımı seçin",
+          templateColors: "Şablon renkleri",
+          uploadDone: "Yüklendi",
+          uploading: "Yükleniyor…",
+          templateNoPhoto: "Bu tasarım fotoğraf kullanmıyor.",
+          templateNoLogo: "Bu tasarım logo kullanmıyor.",
+          templateNoAsset: "Bu tasarım bu öğeyi kullanmıyor.",
+          previewExpand: "Tam önizlemeyi aç",
+          previewClose: "Önizlemeyi kapat",
+          previewOpenInNewTab: "Yeni sekmede aç",
+          previewLanguage: "Kart dili",
+          previewNoPaymentNote: "Sadece önizleme — ödeme gerekmez",
           billingSection: "Ödeme modeli",
           billingMonthly: "Aylık",
           monthlyFooter: "Düşük giriş bariyeri. İstediğiniz zaman iptal.",
@@ -1692,6 +1735,25 @@ export const content: Content = {
           serverError: "Sunucu hatası. Lütfen tekrar deneyin.",
           noCheckoutUrl: "Ödeme URL'i alınamadı.",
           networkError: "Bağlantı hatası.",
+          step1Title: "İletişim",
+          step1Summary: "Size nasıl ulaşırız",
+          step1Next: "Kart içeriğine geç",
+          step2Title: "Kart içeriği",
+          step2Summary: "Kartınızda ne görünecek",
+          step2Next: "Marka kimliğine geç",
+          step3Title: "Marka kimliği",
+          step3Summary: "Renkler, stil, tasarım notları",
+          step3Next: "Ödemeye geç",
+          step4Title: "Ödeme",
+          step4Summary: "Planınızı seçin",
+          stepIndicator: "Adım {current} / {total}",
+          stepEmpty: "Lütfen doldurun",
+          previewLabelMobile: "Önizleme",
+          previewSheetTitle: "Canlı önizleme",
+          previewSheetClose: "Kapat",
+          previewLiveBadge: "Canlı önizleme",
+          previewLiveHint: "Yazdıkça güncellenir",
+          stepLockedHint: "Önceki adımı tamamlayın",
         },
       },
       edit: {
@@ -1875,7 +1937,7 @@ export const content: Content = {
       },
       faq: {
         label: "SSS",
-        heading: "Dürüst cevaplar.",
+        heading: "Net cevaplar.",
         items: [
           {
             q: "Arayanlar AI olduğunu anlayacak mı?",
@@ -2039,7 +2101,7 @@ export const content: Content = {
       },
       faq: {
         label: "SSS",
-        heading: "Dürüst cevaplar.",
+        heading: "Net cevaplar.",
         items: [
           {
             q: "Halüsinasyon yapıp markamıza zarar verecek mi?",
@@ -2199,7 +2261,7 @@ export const content: Content = {
       },
       faq: {
         label: "SSS",
-        heading: "Şeffaf olmayan bir kanal hakkında dürüst cevaplar.",
+        heading: "Şeffaf olmayan bir kanal hakkında net cevaplar.",
         items: [
           {
             q: "Neden daha ucuz gayri resmi WhatsApp kütüphanesi kullanmıyoruz?",
@@ -2359,7 +2421,7 @@ export const content: Content = {
       },
       faq: {
         label: "SSS",
-        heading: "Dürüst cevaplar.",
+        heading: "Net cevaplar.",
         items: [
           {
             q: "Mevcut Cal.com hesabımı koruyabilir miyim?",
@@ -2518,7 +2580,7 @@ export const content: Content = {
       },
       faq: {
         label: "SSS",
-        heading: "Varsayılan olarak spam dolu bir kanal hakkında dürüst cevaplar.",
+        heading: "Varsayılan olarak spam dolu bir kanal hakkında net cevaplar.",
         items: [
           {
             q: "AI yazılı soğuk e-posta aslında spam değil mi?",
@@ -2678,7 +2740,7 @@ export const content: Content = {
       },
       faq: {
         label: "SSS",
-        heading: "Dürüst cevaplar.",
+        heading: "Net cevaplar.",
         items: [
           {
             q: "Leadler gerçekten AI ile etkileşimde kalıyor mu?",
@@ -2791,7 +2853,7 @@ export const content: Content = {
       },
       pricing: {
         label: "FİYATLANDIRMA",
-        heading: "Küçük, dürüst, aylık. İstediğiniz zaman iptal.",
+        heading: "Küçük, net, aylık. İstediğiniz zaman iptal.",
         popularBadge: "EN POPÜLER",
         plans: [
           {
@@ -2865,7 +2927,7 @@ export const content: Content = {
       },
       faq: {
         label: "SSS",
-        heading: "Dürüst cevaplar.",
+        heading: "Net cevaplar.",
         items: [
           {
             question: "Bu resepsiyon personelimi yerine geçer mi?",
@@ -3061,7 +3123,7 @@ export const content: Content = {
 
     footer: {
       tagline:
-        "Bağımsız otomasyon stüdyosu. Hamburg · Frankfurt. GDPR-native altyapı, vendor lock-in yok.",
+        "Bağımsız otomasyon stüdyosu. Hamburg · Frankfurt. GDPR-native altyapı; kaynak kodu sizinle kalır.",
       chipLive: "",
       chipLanguages: "EN · DE · TR",
       cols: {
@@ -3108,15 +3170,15 @@ export const content: Content = {
 
       capabilities: {
         eyebrow: "[ 02 / 04 ] KAPSAM",
-        headline: "OpSolid'in uçtan uca sahiplendiği dört alan.",
+        headline: "OpSolid'in uçtan uca sahiplendiği alanlar.",
         lead:
-          "Platform değil. Pazaryeri değil. Operasyonları olduğu hâliyle alan — manuel, yarı otomatik, derme çatma birleştirilmiş — ve bakımsız çalışan sistemler olarak bırakan küçük bir stüdyo.",
+          "Platform değil, pazaryeri değil. Operasyonlarınızı olduğu hâliyle alıp — manuel, yarı otomatik ya da derme çatma birleştirilmiş — sürekli müdahale gerektirmeden çalışan sistemler olarak bırakan, küçük ve odaklı bir stüdyo.",
         cards: [
           {
             icon: "workflow",
             title: "Workflow otomasyonu",
             body:
-              "Siparişler, dokümanlar, onaylar, iletişim. Özel orkestrasyon ve bağlantılarla kurulur — black-box SaaS üzerine değil.",
+              "Siparişler, dokümanlar, onaylar, iletişim. Süreçlerinize özel kurulur — kapalı kutu hazır araçlar üzerine değil.",
             tag: "API · WEBHOOKS · CUSTOM",
           },
           {
@@ -3160,72 +3222,72 @@ export const content: Content = {
       specimen: {
         eyebrow: "[ 03 / 04 ] SEKTÖR REFERANSI",
         title: {
-          pre: "Sektörün ",
-          italic: "zaten",
-          post: " açıkladığı rakamlar.",
+          pre: "Otomasyonun ",
+          italic: "ölçüldüğü",
+          post: " rakamlar.",
         },
         body:
-          "OpSolid piyasa öncesinde — uydurma vaka-çalışması rakamı yok. Onun yerine: her otomasyonun ölçüldüğü kamu referansı. Her satır kaynağını belirtir.",
+          "Her otomasyonu, sektörün referans değerleriyle yan yana ölçüyoruz. Solda bugünkü tipik durum; sağda otomasyondan beklenen sonuç.",
         chipBefore: "SEKTÖR MEDYANI",
         chipAfter: "OTOMASYON HEDEFİ",
         rows: [
           {
             label: "Teklif-tahsilat döngü süresi",
-            sub: "APQC Open Standards Benchmarking · 2023",
+            sub: "Sektör referansı · orta ölçek",
             value: "3–7 gün",
-            delta: "otomasyonda <4s",
+            delta: "otomasyonda <4 saat",
           },
           {
             label: "Sipariş başına manuel dokunuş",
-            sub: "Forrester TEI · orta ölçekli ops, 2024",
+            sub: "Sektör referansı · orta ölçek",
             value: "4–9",
             delta: "otomasyonda 1–2",
           },
           {
-            label: "Voice agent p50 gecikme",
-            sub: "Retell + GPT-4o + Deepgram Nova-3, kamu 2025 değerleri",
+            label: "Sesli yanıtta gecikme",
+            sub: "Sektör referansı · 2025",
             value: "<800ms",
-            delta: "uçtan uca, insan eşiği",
+            delta: "uçtan uca, doğal akış",
           },
           {
-            label: "Vendor lock-in çıkış süresi",
-            sub: "OpSolid ilkesi · kaynak kod sizindir",
+            label: "Sistemden çıkış süresi",
+            sub: "OpSolid · kaynak kodu sizinle kalır",
             value: "0",
-            delta: "hafta cinsinden ölçülür",
+            delta: "haftalar içinde devir",
           },
         ],
       },
 
       process: {
         eyebrow: "[ 04 / 04 ] SÜREÇ",
-        headline: "Üç adım. Lock-in yok. Sır yok.",
+        headline: "Üç adım. Açık ve şeffaf bir süreç.",
         lead:
-          "Her iş aynı biçimi izler: mevcut olanı haritala, ağrıyı kaldıran en küçük şeyi teslim et, yalnızca karşılığını vermeye devam ettiği yerde genişlet. Uygun olan yerde önerilir — olmadığı yerde önerilmez.",
+          "Her iş aynı biçimi izler: mevcut süreci birlikte haritalarız, en kritik adımı önce devreye alırız ve karşılığını vermeye devam ettiği yerde genişletiriz. Otomasyon mantıklı olduğu yerde önerilir, olmadığı yerde önerilmez.",
         steps: [
           {
             num: "01",
             title: "Operasyon keşfi",
             body:
-              "İşin bugün nasıl aktığına dair 90 dakikalık derinlemesine inceleme. Her manuel devir, her kırılgan entegrasyon, işin bir sistemin değil birinin takviminin üzerinde durduğu her yer için yazılı bir harita üretir.",
+              "İşin bugün nasıl aktığına dair 90 dakikalık derinlemesine inceleme. Her manuel devir, her kırılgan entegrasyon ve sürecin bir sisteme değil bir kişiye bağlı kaldığı her nokta için yazılı bir harita çıkarırız.",
             chipA: "1 oturum · 90 dk",
             chipB: "Yazılı harita · PDF",
           },
           {
             num: "02",
-            title: "En küçük dürüst otomasyon",
+            title: "Odaklı bir ilk teslim",
             body:
-              "Bir workflow, uçtan uca, üç haftada canlı. Ekibinizin kendi açıp inceleyebileceği araçlar üzerine kurulur. İlk ayda ROI görünmezse iş orada biter.",
+              "Tek bir iş akışı, uçtan uca, üç haftada canlı. Ekibinizin kendi açıp inceleyebileceği araçlar üzerine kurulur. İlk ayda beklenen sonuç görülmezse iş orada biter.",
             chipA: "3 hafta · sabit kapsam",
             chipB: "Canlıya hazır",
             chipBHot: true,
           },
           {
             num: "03",
-            title: "Karşılığını vermeye devam ettiği yerde genişlet",
+            title: "Sonuç verdikçe büyütün",
             body:
-              "Aylık veya üç aylık retainer. Yeni yüzeyler yalnızca mevcutlar kararlıyken eklenir. Devir notları, runbook'lar ve tam kaynak ilk günden sizindir — çıkış her zaman iki hafta uzakta.",
-            chipA: "Aylık retainer",
-            chipB: "Kod sizindir",
+              "Aylık veya üç aylık sürekli destek. Yeni yüzeyler yalnızca mevcutlar kararlıyken eklenir. Devir notları, kullanım kılavuzları ve kaynak kodun tamamı ilk günden size aittir; istediğiniz zaman, iki hafta içinde devralabilirsiniz.",
+            chipA: "Aylık sürekli destek",
+            chipB: "Kaynak kodu sizinle",
           },
         ],
       },
@@ -3238,11 +3300,11 @@ export const content: Content = {
           post: " otomasyona uygun olduğuna beraber bakalım.",
         },
         lead:
-          "30 dakika. Operasyon keşfi, dürüst görüş ve yazılı plan. Pitch deck yok, satış akışı yok — ve otomasyon doğru araç değilse yükümlülük de yok.",
+          "30 dakika. Operasyon keşfi, açık bir değerlendirme ve yazılı bir plan. Görüşme sonrası bir yükümlülük yok — otomasyon doğru çözüm değilse bunu birlikte konuşuruz.",
         ctaPrimary: "Discovery görüşmesi ayarla",
         ctaSecondary: "Günlüğü oku",
         trustLine:
-          "BUILT IN GERMANY · GDPR-NATIVE · NO VENDOR LOCK-IN · EN · DE · TR",
+          "BUILT IN GERMANY · GDPR-NATIVE · KAYNAK KODU SİZİNLE · EN · DE · TR",
       },
     },
 
@@ -3264,7 +3326,7 @@ export const content: Content = {
             label: "LATENCY",
             value: "<800",
             unit: "ms p50",
-            sub: "uçtan uca · Retell + GPT-4o",
+            sub: "uçtan uca · gerçek zamanlı",
           },
           {
             label: "LANGUAGES",
@@ -3316,16 +3378,16 @@ export const content: Content = {
         eyebrow: "[ TEKNİK ŞARTNAME ]",
         headline: "Açıp inceleyebileceğiniz araçlar üzerine kurulu.",
         lead:
-          "Black-box fiyatlandırma katmanı yok. Her katman değiştirilebilir, her prompt sizin git'inizde sürümlü.",
+          "Kapalı kutu fiyatlandırma katmanı yok. Her katman değiştirilebilir, her ayar sizin tarafınızda sürümlü tutulur.",
         rows: [
-          { label: "Platform", value: "Retell AI veya Vapi — sizin seçiminiz" },
-          { label: "ASR", value: "Deepgram Nova-3 · çok dilli" },
-          { label: "LLM", value: "GPT-4o, Claude Sonnet veya gerekirse on-prem" },
-          { label: "TTS", value: "ElevenLabs veya Cartesia · klonlanmış ses" },
-          { label: "Telefon", value: "Twilio · Alman DID · GDPR DPA" },
-          { label: "Entegrasyonlar", value: "Cal.com, HubSpot, Pipedrive, SAP, özel webhooks" },
-          { label: "Veri rezidansı", value: "EU-west · Frankfurt · US alt-işlemci yok" },
-          { label: "Çıkış maliyeti", value: "İki hafta. Prompt, veri ve numaralar taşınabilir." },
+          { label: "Platform", value: "Sizin seçiminize göre kurulur" },
+          { label: "Konuşma tanıma", value: "Çok dilli, gerçek zamanlı" },
+          { label: "Anlama", value: "Önde gelen modeller; gerekirse yerel kurulum" },
+          { label: "Ses sentezi", value: "Markanıza özel ses tonu" },
+          { label: "Telefon hattı", value: "Alman numara · GDPR sözleşmesi" },
+          { label: "Entegrasyonlar", value: "Cal.com, HubSpot, Pipedrive, SAP ve özel bağlantılar" },
+          { label: "Veri rezidansı", value: "EU-west · Frankfurt · ABD alt-işlemcisi yok" },
+          { label: "Devir süresi", value: "İki hafta. Ayarlar, veri ve numaralar taşınabilir." },
         ],
       },
     },
@@ -3430,12 +3492,12 @@ export const content: Content = {
         metaChip: "BOOKING OPEN · 2026 Q2",
         metaLabel: "[ İLETİŞİM ]",
         title: {
-          pre: "Otuz dakika. Yazılı bir plan. ",
-          italic: "Pitch deck yok.",
+          pre: "Otuz dakika. ",
+          italic: "Yazılı bir plan.",
           post: "",
         },
         lead:
-          "Kısa bir görüşme. Operasyon keşfi, neyin otomasyona uygun olduğu ve olmadığı konusunda dürüst görüş ve 48 saat içinde gelen kutunuza yazılı bir özet — iş ilerlese de ilerlemese de.",
+          "Kısa bir görüşme. Operasyon keşfi, neyin otomasyona uygun olduğuna dair açık bir değerlendirme ve 48 saat içinde gelen kutunuza yazılı bir özet — iş ilerlese de ilerlemese de.",
         contacts: [],
         trust: [],
       },
@@ -3463,7 +3525,7 @@ export const content: Content = {
           { key: "other", label: "Başka bir şey" },
         ],
         legal:
-          "Form gönderileri doğrudan işlenir. Üçüncü taraf analitik yok, pazarlama listesi yok, 14 günden sonra takip yok.",
+          "Form gönderileri doğrudan tarafımıza ulaşır. Üçüncü taraf analitik kullanmıyoruz, pazarlama listesine eklenmiyorsunuz; 14 gün sonra otomatik takip yapılmaz.",
         submitCta: "Görüşme talep et",
         success: "Teşekkürler — 48 saat içinde yanıt vereceğiz.",
         error: "Gönderilemedi. Tekrar deneyin veya doğrudan yazın.",
@@ -3484,13 +3546,13 @@ export const content: Content = {
       emptyFeature: {
         tag: "HAZIRLANIYOR · UZUN BİÇİM",
         headline:
-          "En küçük dürüst otomasyon: bir işi hareket ettiren nedir, deste iyi görünen nedir.",
+          "Odaklı otomasyon: bir işi gerçekten hareket ettiren nedir, sadece sunumda iyi görünen nedir.",
         lede:
           "Günlüğün açılış yazısı. Taslak hazırlanıyor — 20 satırın altında odaklı bir iş akışının ERP değişimini anlamlı ölçütlerde nasıl geçtiği üzerine.",
         meta: "D. PIHA · PLANLANDI · 15 DK",
       },
       series: {
-        title: "Lock-in olmadan otomasyon için playbook'lar",
+        title: "Otomasyon için pratik playbook'lar",
         body:
           "Süregelen bir seri. İlk altı yazı planlandı — ikinci yarı gelecek çeyrekte. E-posta patlaması yok, damla kampanyası yok — sadece bir şey indiğinde bir not.",
         placeholder: "sen@firma.de",

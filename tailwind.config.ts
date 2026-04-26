@@ -173,14 +173,27 @@ const config: Config = {
         "settle": "900ms",
       },
       animation: {
-        "fade-in":  "fade-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards",
-        "rise":     "rise 0.7s cubic-bezier(0.16, 0.84, 0.24, 1) forwards",
+        "fade-in":   "fade-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards",
+        "fade-out":  "fade-out 0.18s cubic-bezier(0.4, 0, 1, 1) forwards",
+        "rise":      "rise 0.7s cubic-bezier(0.16, 0.84, 0.24, 1) forwards",
         "pulse-bloom": "pulseBloom 2.2s ease-in-out infinite",
+        // Modal entrance/exit — gentle fade + slight scale-from-0.96. Phase 7.2.
+        "modal-in":  "modal-in 0.24s cubic-bezier(0.22, 1, 0.36, 1) forwards",
+        "modal-out": "modal-out 0.18s cubic-bezier(0.4, 0, 1, 1) forwards",
+        // Mobile bottom-sheet — translates from offscreen (100%) to rest. Phase 7.3.
+        "slide-up":  "slide-up 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards",
+        // Form chip pulse — fired once when the customer picks a new template
+        // in the carousel (Phase 7.7).
+        "form-focus-pulse": "form-focus-pulse 400ms ease-in-out 1",
       },
       keyframes: {
         "fade-in": {
           from: { opacity: "0" },
           to:   { opacity: "1" },
+        },
+        "fade-out": {
+          from: { opacity: "1" },
+          to:   { opacity: "0" },
         },
         "rise": {
           from: { opacity: "0", transform: "translateY(16px)" },
@@ -189,6 +202,22 @@ const config: Config = {
         "pulseBloom": {
           "0%, 100%": { boxShadow: "0 0 4px rgba(194,121,64,0.5)" },
           "50%":      { boxShadow: "0 0 14px rgba(194,121,64,0.9), 0 0 24px rgba(194,121,64,0.4)" },
+        },
+        "modal-in": {
+          from: { opacity: "0", transform: "scale(0.96)" },
+          to:   { opacity: "1", transform: "scale(1)" },
+        },
+        "modal-out": {
+          from: { opacity: "1", transform: "scale(1)" },
+          to:   { opacity: "0", transform: "scale(0.98)" },
+        },
+        "slide-up": {
+          from: { transform: "translateY(100%)" },
+          to:   { transform: "translateY(0)" },
+        },
+        "form-focus-pulse": {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%":      { transform: "scale(1.02)" },
         },
       },
     },

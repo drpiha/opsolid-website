@@ -186,9 +186,16 @@ export async function middleware(req: NextRequest) {
 
 export const config = {
   // Skip: /api, /_next, static files, sitemap/robots, /c/ and /l/ (public
-  // card + short-link surfaces are locale-agnostic), /admin/*.
+  // card + short-link surfaces are locale-agnostic), /admin/*, /dev/*.
+  //
+  // /dev/* is a development-only namespace (gated by NODE_ENV inside each
+  // route) and does not need locale resolution. Skipping the middleware
+  // also prevents dev routes from hitting the custom-domain resolver when
+  // the dev server happens to run on a port that isn't in KNOWN_HOSTS
+  // (e.g. port 3001 when 3000 is already taken — the Phase 7.5 thumbnail
+  // script picks a free port dynamically).
   matcher: [
-    "/((?!api|_next|.*\\..*|sitemap\\.xml|robots\\.txt|c/|l/|admin).*)",
+    "/((?!api|_next|.*\\..*|sitemap\\.xml|robots\\.txt|c/|l/|admin|dev/).*)",
   ],
 };
 

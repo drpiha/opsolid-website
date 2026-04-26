@@ -1,7 +1,28 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Loader2, Upload, AlertCircle } from "lucide-react";
+import * as React from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type ReactNode,
+} from "react";
+import * as Dialog from "@radix-ui/react-dialog";
+import {
+  Loader2,
+  AlertCircle,
+  Check,
+  ChevronDown,
+  ArrowRight,
+  X,
+  Eye,
+  Lock,
+  Camera,
+  Building2,
+  Maximize2,
+} from "lucide-react";
 import type { z } from "zod";
 import { Input, Textarea } from "@/components/ui/Input";
 import { useLocale } from "@/context/LocaleContext";
@@ -11,6 +32,11 @@ import {
   getTemplateById,
 } from "@/config/card-templates";
 import { SmartCard } from "@/components/cards/smart/SmartCard";
+import {
+  getTemplateEntry,
+  templateRegistry,
+} from "@/components/cards/templates/v2/registry";
+import type { TemplateSupports } from "@/components/cards/templates/v2/types";
 import { OrderPayloadSchema, BillingMode } from "@/lib/validation";
 import type { CardData } from "@/lib/validation";
 import {
@@ -18,6 +44,10 @@ import {
   type CardThemeKey,
   type CardThemePreset,
 } from "@/lib/cardThemes";
+
+// =============================================================================
+// Validation helpers
+// =============================================================================
 
 // Map Zod validation issues to a flat record keyed by field path
 // (e.g. "contactEmail" or "cardData.website"). Falls back to the raw
@@ -42,7 +72,37 @@ function extractFieldErrors(issues: z.ZodIssue[]): Record<string, string> {
   return map;
 }
 
+// Map a field path back to the accordion step that owns it. Used by the
+// submit-error scroll handler so we can auto-open the right step before
+// scrolling to the offending input.
+function stepForFieldPath(path: string): StepId {
+  if (path.startsWith("contact") || path === "callMeBack") return "contact";
+  if (path.startsWith("cardData.")) return "card";
+  if (path.startsWith("brand") || path === "themeKey" || path === "layoutKey")
+    return "branding";
+  if (path === "billingMode") return "billing";
+  return "card";
+}
+
 type FormState = "idle" | "submitting" | "error";
+type StepId = "contact" | "card" | "branding" | "billing";
+
+const STEP_ORDER: StepId[] = ["contact", "card", "branding", "billing"];
+
+// Default supports object — covers templates not yet in the v2 registry so
+// we still render every input group when the customer picks an id 2..20.
+const DEFAULT_SUPPORTS: TemplateSupports = {
+  services: true,
+  faqs: true,
+  testimonials: true,
+  gallery: true,
+  video: true,
+  brochure: true,
+  socials: true,
+  themeSwitch: true,
+  photo: true,
+  logo: true,
+};
 
 interface Props {
   selectedTemplateId: number | null;
@@ -64,12 +124,23 @@ const EMPTY_CARD: CardData = {
   designNotes: "",
 };
 
+// =============================================================================
+// Section component
+// =============================================================================
+
 export function OrderFormSection({ selectedTemplateId }: Props) {
   const { locale, t } = useLocale();
   const order = t.products.digitalCard.order ?? {};
-  const L = (key: string, fallback: string) =>
-    (order.form && (order.form as Record<string, string>)[key]) || fallback;
+  // Stable identity prevents downstream useMemos (summaries, etc.) from
+  // re-running every render. The function only depends on `order.form`,
+  // which is itself stable inside a given locale.
+  const L = useCallback(
+    (key: string, fallback: string) =>
+      (order.form && (order.form as Record<string, string>)[key]) || fallback,
+    [order.form]
+  );
 
+  // ---- form state (preserved verbatim from previous version) -------------
   const [cardData, setCardData] = useState<CardData>(EMPTY_CARD);
   const [contactName, setContactName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
@@ -77,10 +148,6 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
   const [callMeBack, setCallMeBack] = useState(false);
   const [brandPrimaryHex, setBrandPrimaryHex] = useState("");
   const [brandAccentHex, setBrandAccentHex] = useState("");
-  // Style preset — "Aurora" / "Editorial" / "Cinema" (or undefined = Custom).
-  // The preset CSS-only differentiates the rendered card via `data-theme` on
-  // the SmartCard root. `layoutKey` is recorded for forward-compat; the
-  // current renderer ignores it.
   const [themeKey, setThemeKey] = useState<CardThemeKey | undefined>(undefined);
   const [layoutKey, setLayoutKey] = useState<string | undefined>(undefined);
   const [photoPath, setPhotoPath] = useState<string | null>(null);
@@ -92,6 +159,28 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
   const [formState, setFormState] = useState<FormState>("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+
+  // Phase 7.7 — auto-reset colors when the user switches templates, unless
+  // they've already customised them.
+  const [colorsCustomised, setColorsCustomised] = useState(false);
+  // Phase 7.7 — bumped on every template change to retrigger the chip pulse.
+  const [pulseKey, setPulseKey] = useState(0);
+  // Phase 7.7 — instant in-form preview while the upload completes in the
+  // background. The data-URL is shown in both the upload tile and the live
+  // preview, then replaced with the final server path on success.
+  const [photoPreviewUrl, setPhotoPreviewUrl] = useState<string | null>(null);
+  const [logoPreviewUrl, setLogoPreviewUrl] = useState<string | null>(null);
+  const [photoUploadError, setPhotoUploadError] = useState<string | null>(null);
+  const [logoUploadError, setLogoUploadError] = useState<string | null>(null);
+
+  // ---- accordion state ---------------------------------------------------
+  const [openStep, setOpenStep] = useState<StepId>("contact");
+  const [previewOpen, setPreviewOpen] = useState(false);
+  // Phase 7.8 — desktop full-screen preview modal + per-preview locale switch
+  const [fullPreviewOpen, setFullPreviewOpen] = useState(false);
+  const [previewLocale, setPreviewLocale] = useState<"de" | "en" | "tr">(
+    ["de", "en", "tr"].includes(locale) ? (locale as "de" | "en" | "tr") : "de"
+  );
 
   // Clear a single field's error the moment the user edits it — keeps the
   // form feeling responsive instead of waiting for the next submit.
@@ -109,6 +198,46 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
     [selectedTemplateId]
   );
 
+  // Phase 7.7 — registry entry drives the visual name (the catalog entry can
+  // disagree, e.g. catalog id=2="Warm Serif" vs registry id=2="Legal Counsel").
+  const v2Entry = useMemo(
+    () => getTemplateEntry(selectedTemplateId ?? selectedTemplate?.id),
+    [selectedTemplateId, selectedTemplate?.id]
+  );
+
+  const supports: TemplateSupports = useMemo(() => {
+    if (!selectedTemplate) return DEFAULT_SUPPORTS;
+    const entry = templateRegistry[selectedTemplate.id];
+    return entry?.supports ?? DEFAULT_SUPPORTS;
+  }, [selectedTemplate]);
+
+  // Phase 7.7/7.8 — react to a fresh template selection from the carousel:
+  //   - bump the pulse key so the chip animates once
+  //   - if the customer is still on step 1, keep them there; otherwise leave
+  //     them in the step they chose (Phase 7.8: forcing back to step 1 was
+  //     reported as annoying mid-flow)
+  //   - if they haven't customised colors yet, seed with the new template's
+  //     defaults (otherwise their picks survive the swap)
+  const hasSelectedBeforeRef = useRef(false);
+  useEffect(() => {
+    if (selectedTemplateId == null) return;
+    setPulseKey((k) => k + 1);
+    // Only bounce back to step 1 on the *first* template pick — once the
+    // customer has moved past contact, respect where they are.
+    if (!hasSelectedBeforeRef.current) {
+      setOpenStep("contact");
+      hasSelectedBeforeRef.current = true;
+    }
+    if (!colorsCustomised) {
+      const entry = getTemplateEntry(selectedTemplateId);
+      if (entry) {
+        setBrandPrimaryHex(entry.defaults.brandPrimaryHex);
+        setBrandAccentHex(entry.defaults.brandAccentHex);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedTemplateId]);
+
   const activeCardData: CardData = useMemo(() => {
     const display: CardData = {
       ...cardData,
@@ -116,8 +245,20 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
       phone: cardData.phone || contactPhone || undefined,
       email: cardData.email || contactEmail || undefined,
     };
+    // Phase-1 audit bug fix: SmartCard reads `themeKey` off cardData via a
+    // type-cast (`(cardData as { themeKey?: string }).themeKey`). Merge the
+    // form's themeKey state into the preview payload so the theme picker
+    // visibly drives the live preview's `data-theme` attribute.
+    if (themeKey) {
+      (display as CardData & { themeKey?: string; layoutKey?: string }).themeKey =
+        themeKey;
+    }
+    if (layoutKey) {
+      (display as CardData & { themeKey?: string; layoutKey?: string }).layoutKey =
+        layoutKey;
+    }
     return display;
-  }, [cardData, contactName, contactPhone, contactEmail]);
+  }, [cardData, contactName, contactPhone, contactEmail, themeKey, layoutKey]);
 
   const amountCents = useMemo(() => {
     if (!selectedTemplate) return 0;
@@ -148,9 +289,26 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
     return json.path ?? null;
   };
 
+  // Phase 7.7 — read the picked file as a data URL so we can show it
+  // immediately while the real upload finishes in the background.
+  const readPreview = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result;
+        if (typeof result === "string") resolve(result);
+        else reject(new Error("FileReader returned non-string result"));
+      };
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(file);
+    });
+
   const setCard = <K extends keyof CardData>(key: K, value: CardData[K]) =>
     setCardData((c) => ({ ...c, [key]: value }));
-  const setSocial = (key: keyof NonNullable<CardData["socials"]>, value: string) =>
+  const setSocial = (
+    key: keyof NonNullable<CardData["socials"]>,
+    value: string
+  ) =>
     setCardData((c) => ({ ...c, socials: { ...(c.socials ?? {}), [key]: value } }));
 
   /**
@@ -158,8 +316,6 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
    *   - sets `themeKey` + `layoutKey`
    *   - seeds `brandPrimaryHex` / `brandAccentHex` only when the user has not
    *     yet entered a custom value, so we never overwrite intentional input.
-   * Selecting "Custom" clears both keys but leaves any colors the user
-   * already chose alone.
    */
   const applyPreset = (preset: CardThemePreset | null) => {
     if (preset) {
@@ -173,6 +329,7 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
     }
   };
 
+  // ---- submit handler ----------------------------------------------------
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!selectedTemplate) return;
@@ -211,29 +368,30 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
       brandAccentHex: brandAccentHex || undefined,
       photoPath: photoPath || undefined,
       logoPath: logoPath || undefined,
-      // Phase 6 — style preset. Both fields stay optional; when undefined the
-      // SmartCard renders with default theme + sector colors.
       themeKey: themeKey || undefined,
       layoutKey: layoutKey || undefined,
     };
 
     const parsed = OrderPayloadSchema.safeParse(payload);
     if (!parsed.success) {
-      // Surface every issue inline at the offending field instead of just
-      // the first one in a global banner. The global banner stays reserved
-      // for server / network errors below.
       const errs = extractFieldErrors(parsed.error.issues);
       setFieldErrors(errs);
       setFormState("idle");
       const firstKey = Object.keys(errs)[0];
       if (firstKey) {
-        const el = document.getElementById(
-          `field-${firstKey.replace(".", "-")}`
-        );
-        el?.scrollIntoView({ behavior: "smooth", block: "center" });
-        // Defer focus until after the smooth scroll begins so it doesn't
-        // fight the scroll animation.
-        setTimeout(() => el?.focus({ preventScroll: true }), 250);
+        // Auto-open the step that owns the offending field before scrolling,
+        // otherwise the input would be hidden inside a collapsed accordion.
+        const targetStep = stepForFieldPath(firstKey);
+        setOpenStep(targetStep);
+        // Defer scrollIntoView one tick so the accordion expansion animation
+        // doesn't fight the smooth scroll.
+        setTimeout(() => {
+          const el = document.getElementById(
+            `field-${firstKey.replace(".", "-")}`
+          );
+          el?.scrollIntoView({ behavior: "smooth", block: "center" });
+          setTimeout(() => el?.focus({ preventScroll: true }), 250);
+        }, 60);
       }
       return;
     }
@@ -247,7 +405,9 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
       });
       if (!res.ok) {
         const body = (await res.json().catch(() => ({}))) as { error?: string };
-        setErrorMsg(body.error ?? L("serverError", "Serverfehler. Bitte erneut versuchen."));
+        setErrorMsg(
+          body.error ?? L("serverError", "Serverfehler. Bitte erneut versuchen.")
+        );
         setFormState("error");
         return;
       }
@@ -264,19 +424,112 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
     }
   };
 
+  // ---- step summaries ----------------------------------------------------
+  const summaries: Record<StepId, string> = useMemo(() => {
+    const empty = L("stepEmpty", "Bitte ausfüllen");
+    const contactBits = [contactName, contactEmail, contactPhone].filter(Boolean);
+    const cardBits = [cardData.name, cardData.title, cardData.company].filter(
+      Boolean
+    );
+
+    const billingMap: Record<keyof typeof BillingMode, string> = {
+      MONTHLY: L("billingMonthly", "Monatlich"),
+      YEARLY: L("billingYearly", "Jährlich"),
+      ONE_TIME: L("billingOneTime", "Einmalzahlung"),
+    };
+
+    return {
+      contact:
+        contactBits.length > 0 ? contactBits.slice(0, 2).join(" · ") : empty,
+      card: cardBits.length > 0 ? cardBits.slice(0, 2).join(" · ") : empty,
+      branding: (() => {
+        // Phase 7.7 — when the customer hasn't customised colors, the swatch
+        // chip should read "template colors · <template name>", not the raw
+        // primary hex (which they didn't pick).
+        const bits: string[] = [];
+        if (colorsCustomised && brandPrimaryHex) {
+          bits.push(brandPrimaryHex.toUpperCase());
+        } else if (brandPrimaryHex) {
+          bits.push(L("templateColors", "Şablon renkleri"));
+        }
+        if (v2Entry) {
+          bits.push(v2Entry.name);
+        } else if (themeKey) {
+          const preset = CARD_THEME_LIST.find((p) => p.key === themeKey);
+          if (preset) bits.push(preset.label);
+        }
+        return bits.length > 0
+          ? bits.join(" · ")
+          : L("step3Summary", "Farben, Stil, Designnotizen");
+      })(),
+      billing: `${billingMap[billingMode]} · ${formatEuro(amountCents)}`,
+    };
+  }, [
+    L,
+    contactName,
+    contactEmail,
+    contactPhone,
+    cardData.name,
+    cardData.title,
+    cardData.company,
+    themeKey,
+    brandPrimaryHex,
+    billingMode,
+    amountCents,
+    colorsCustomised,
+    v2Entry,
+  ]);
+
+  // ---- next-step navigation ---------------------------------------------
+  const stepIndex = STEP_ORDER.indexOf(openStep);
+  const goToStep = (id: StepId) => {
+    setOpenStep(id);
+    // Scroll the newly opened step into view on mobile so the user always
+    // sees the freshly opened section without hunting for it.
+    setTimeout(() => {
+      const el = document.getElementById(`step-${id}`);
+      el?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 80);
+  };
+
   if (!selectedTemplate) return null;
 
+  // ---- preview component (sticky desktop / sheet mobile) ----------------
+  // Phase 7.7 — prefer the local data-URL preview while a real upload is in
+  // flight so the live preview reflects the customer's pick instantly.
+  // Phase 7.8 — locale is driven by `previewLocale` so the customer can flip
+  // the card output language inside the preview without leaving the form.
+  const previewNode = (
+    <LivePreview
+      templateId={selectedTemplateId ?? selectedTemplate?.id ?? 1}
+      slug="preview"
+      cardData={activeCardData}
+      photoPath={photoPreviewUrl ?? photoPath}
+      logoPath={logoPreviewUrl ?? logoPath}
+      brandPrimaryHex={brandPrimaryHex || undefined}
+      brandAccentHex={brandAccentHex || undefined}
+      locale={previewLocale}
+    />
+  );
+
   return (
-    <section id="order" className="border-t border-neutral-200 bg-neutral-50 py-16 md:py-24">
-      <div className="container-wide">
-        <div className="mb-10 md:mb-14">
-          <p className="text-eyebrow uppercase tracking-wider text-ink/50">
-            {L("eyebrow", "Bestellung")}
+    <section
+      className="relative border-t border-neutral-200/70 bg-gradient-to-b from-bg-0 to-bg-1 py-16 md:py-24"
+    >
+      {/* Decorative top hairline + warm grain — multi-layered backdrop */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ink/15 to-transparent" />
+      <div className="pointer-events-none absolute inset-0 paper-grain opacity-[0.35]" />
+
+      <div className="container relative mx-auto max-w-7xl px-6">
+        {/* ---- header ------------------------------------------------- */}
+        <div className="mb-10 max-w-2xl md:mb-14">
+          <p className="mono-label uppercase tracking-[0.2em] text-ink/55">
+            {L("eyebrow", "BESTELLUNG")}
           </p>
-          <h2 className="mt-3 font-display text-display-sm text-ink">
+          <h2 className="mt-3 font-serif text-display-sm leading-[1.05] text-ink">
             {L("title", "Ihre Daten, Ihr Design, Ihre Karte.")}
           </h2>
-          <p className="mt-3 max-w-xl text-body text-ink/60">
+          <p className="mt-4 max-w-xl text-body text-ink/65">
             {L(
               "subtitle",
               "Füllen Sie das Formular aus — die Karte wird direkt nach der Zahlung unter opsolid.de/c/… veröffentlicht."
@@ -287,521 +540,1469 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
         <form
           onSubmit={handleSubmit}
           noValidate
-          className="grid gap-10 lg:grid-cols-[1fr_minmax(360px,460px)]"
+          className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(360px,460px)] lg:gap-12"
         >
-          {/* ======================= LEFT: form fields ======================= */}
-          <div className="space-y-10">
-            {/* Template summary */}
-            <div className="flex items-center justify-between rounded-2xl border border-neutral-200 bg-white p-4">
-              <div>
-                <span className="text-eyebrow uppercase text-ink/50">
+          {/* =====================================================
+              LEFT — stepped accordion
+              ===================================================== */}
+          <div className="min-w-0 space-y-6">
+            {/* selected template chip */}
+            <div
+              key={pulseKey}
+              className="flex items-center justify-between gap-4 rounded-3xl border border-neutral-200/80 bg-white/85 p-4 shadow-[0_1px_0_0_rgba(0,0,0,0.02),0_8px_32px_-12px_rgba(20,18,15,0.08)] backdrop-blur-sm animate-form-focus-pulse"
+            >
+              <div className="min-w-0">
+                <span className="mono-label text-[10px] uppercase tracking-[0.18em] text-ink/50">
                   {L("selectedTemplate", "Gewähltes Design")}
                 </span>
-                <p className="mt-1 text-heading-sm text-ink">
-                  #{String(selectedTemplate.id).padStart(2, "0")} · {selectedTemplate.name}
-                </p>
-              </div>
-              <a href="#templates" className="btn-ghost text-sm">
-                {L("changeTemplate", "Ändern")}
-              </a>
-            </div>
-
-            {/* Contact */}
-            <fieldset className="space-y-4">
-              <legend className="text-heading-sm text-ink">
-                {L("contactSection", "Kontakt — so erreichen wir Sie")}
-              </legend>
-              <Input
-                id="field-contactName"
-                label={L("contactName", "Ihr Name") + " *"}
-                required
-                value={contactName}
-                onChange={(e) => {
-                  setContactName(e.target.value);
-                  clearFieldError("contactName");
-                }}
-                error={fieldErrors.contactName}
-                placeholder="Anna Fischer"
-              />
-              <Input
-                id="field-contactEmail"
-                type="email"
-                label={L("contactEmail", "E-Mail") + " *"}
-                required
-                value={contactEmail}
-                onChange={(e) => {
-                  setContactEmail(e.target.value);
-                  clearFieldError("contactEmail");
-                }}
-                error={fieldErrors.contactEmail}
-                placeholder="anna@studio-nord.de"
-              />
-              <Input
-                id="field-contactPhone"
-                type="tel"
-                label={L("contactPhone", "Telefon") + " *"}
-                required
-                value={contactPhone}
-                onChange={(e) => {
-                  setContactPhone(e.target.value);
-                  clearFieldError("contactPhone");
-                }}
-                error={fieldErrors.contactPhone}
-                placeholder="+49 160 1234567"
-              />
-              <label className="flex items-start gap-3 rounded-2xl border border-neutral-200 bg-white p-4">
-                <input
-                  type="checkbox"
-                  className="mt-1 h-4 w-4 accent-brand"
-                  checked={callMeBack}
-                  onChange={(e) => setCallMeBack(e.target.checked)}
-                />
-                <span className="text-sm text-ink">
-                  <strong>{L("callMeBack", "Rufen Sie mich an")}</strong>
-                  <br />
-                  <span className="text-ink/60">
-                    {L(
-                      "callMeBackHint",
-                      "Wir melden uns innerhalb eines Werktags, um Details zu klären."
-                    )}
-                  </span>
-                </span>
-              </label>
-            </fieldset>
-
-            {/* Card content */}
-            <fieldset className="space-y-4">
-              <div className="flex items-center justify-between gap-3">
-                <legend className="text-heading-sm text-ink">
-                  {L("cardSection", "Inhalt Ihrer Karte")}
-                </legend>
-                {(contactName || contactEmail || contactPhone) && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (!cardData.name && contactName) setCard("name", contactName);
-                      if (!cardData.email && contactEmail) setCard("email", contactEmail);
-                      if (!cardData.phone && contactPhone) setCard("phone", contactPhone);
-                    }}
-                    className="text-xs font-medium text-ink/50 underline underline-offset-2 transition-colors hover:text-ink"
-                  >
-                    {L("copyFromContact", "Von oben übernehmen")}
-                  </button>
-                )}
-              </div>
-              <div className="grid gap-4 md:grid-cols-2">
-                <Input
-                  id="field-cardData-name"
-                  label={L("cardName", "Vor- und Nachname") + " *"}
-                  value={cardData.name}
-                  onChange={(e) => {
-                    setCard("name", e.target.value);
-                    clearFieldError("cardData.name");
-                  }}
-                  error={fieldErrors["cardData.name"]}
-                  placeholder="Anna Fischer"
-                />
-                <Input
-                  id="field-cardData-title"
-                  label={L("cardTitle", "Titel / Rolle")}
-                  value={cardData.title ?? ""}
-                  onChange={(e) => setCard("title", e.target.value)}
-                  placeholder="Gründerin"
-                />
-                <Input
-                  id="field-cardData-company"
-                  label={L("cardCompany", "Unternehmen")}
-                  value={cardData.company ?? ""}
-                  onChange={(e) => setCard("company", e.target.value)}
-                  placeholder="Studio Nord"
-                />
-                <Input
-                  id="field-cardData-website"
-                  label={L("cardWebsite", "Website")}
-                  value={cardData.website ?? ""}
-                  onChange={(e) => {
-                    setCard("website", e.target.value);
-                    clearFieldError("cardData.website");
-                  }}
-                  error={fieldErrors["cardData.website"]}
-                  placeholder="https://studio-nord.de"
-                />
-                <Input
-                  id="field-cardData-email"
-                  type="email"
-                  label={L("cardEmail", "E-Mail (auf Karte)")}
-                  value={cardData.email ?? ""}
-                  onChange={(e) => {
-                    setCard("email", e.target.value);
-                    clearFieldError("cardData.email");
-                  }}
-                  error={fieldErrors["cardData.email"]}
-                />
-                <Input
-                  id="field-cardData-phone"
-                  type="tel"
-                  label={L("cardPhone", "Telefon (auf Karte)")}
-                  value={cardData.phone ?? ""}
-                  onChange={(e) => {
-                    setCard("phone", e.target.value);
-                    clearFieldError("cardData.phone");
-                  }}
-                  error={fieldErrors["cardData.phone"]}
-                />
-                <Input
-                  id="field-cardData-whatsapp"
-                  type="tel"
-                  label={L("cardWhatsapp", "WhatsApp")}
-                  value={cardData.whatsapp ?? ""}
-                  onChange={(e) => setCard("whatsapp", e.target.value)}
-                  placeholder="+49 …"
-                />
-                <Input
-                  id="field-cardData-address"
-                  label={L("cardAddress", "Adresse")}
-                  value={cardData.address ?? ""}
-                  onChange={(e) => setCard("address", e.target.value)}
-                />
-              </div>
-              <Textarea
-                label={L("cardBio", "Kurzbeschreibung")}
-                value={cardData.bio ?? ""}
-                onChange={(e) => setCard("bio", e.target.value)}
-                rows={3}
-                placeholder={L("cardBioPh", "Ein Satz zu Ihnen / Ihrem Unternehmen.")}
-              />
-            </fieldset>
-
-            {/* Socials */}
-            <fieldset className="space-y-4">
-              <legend className="text-heading-sm text-ink">
-                {L("socialSection", "Social Links (optional)")}
-              </legend>
-              <div className="grid gap-4 md:grid-cols-2">
-                <Input
-                  label="LinkedIn"
-                  value={cardData.socials?.linkedin ?? ""}
-                  onChange={(e) => setSocial("linkedin", e.target.value)}
-                  placeholder="https://linkedin.com/in/…"
-                />
-                <Input
-                  label="Instagram"
-                  value={cardData.socials?.instagram ?? ""}
-                  onChange={(e) => setSocial("instagram", e.target.value)}
-                  placeholder="https://instagram.com/…"
-                />
-                <Input
-                  label="X (Twitter)"
-                  value={cardData.socials?.x ?? ""}
-                  onChange={(e) => setSocial("x", e.target.value)}
-                />
-                <Input
-                  label="TikTok"
-                  value={cardData.socials?.tiktok ?? ""}
-                  onChange={(e) => setSocial("tiktok", e.target.value)}
-                />
-                <Input
-                  label="YouTube"
-                  value={cardData.socials?.youtube ?? ""}
-                  onChange={(e) => setSocial("youtube", e.target.value)}
-                />
-                <Input
-                  label="GitHub"
-                  value={cardData.socials?.github ?? ""}
-                  onChange={(e) => setSocial("github", e.target.value)}
-                />
-              </div>
-            </fieldset>
-
-            {/* Uploads */}
-            <fieldset className="space-y-4">
-              <legend className="text-heading-sm text-ink">
-                {L("uploadSection", "Foto & Logo (optional)")}
-              </legend>
-              <div className="grid gap-4 md:grid-cols-2">
-                <UploadTile
-                  label={L("photoLabel", "Profilfoto")}
-                  current={photoPath}
-                  uploading={photoUploading}
-                  onChange={async (file) => {
-                    setPhotoUploading(true);
-                    const path = await handleFileUpload(file, "photo");
-                    if (path) setPhotoPath(path);
-                    setPhotoUploading(false);
-                  }}
-                />
-                <UploadTile
-                  label={L("logoLabel", "Logo")}
-                  current={logoPath}
-                  uploading={logoUploading}
-                  onChange={async (file) => {
-                    setLogoUploading(true);
-                    const path = await handleFileUpload(file, "logo");
-                    if (path) setLogoPath(path);
-                    setLogoUploading(false);
-                  }}
-                />
-              </div>
-            </fieldset>
-
-            {/* Style preset (Phase 6) — three CSS-only presets that drive
-                the SmartCard's `data-theme` attribute. Selecting a preset
-                seeds the brand color pickers below; the user can still
-                override either color afterwards. */}
-            <fieldset className="space-y-4">
-              <legend className="text-heading-sm text-ink">
-                {L("themeSection", "Stilvorlage (optional)")}
-              </legend>
-              <p className="-mt-1 max-w-xl text-xs text-ink/55">
-                {L(
-                  "themeSectionHint",
-                  "Wählen Sie eine vordefinierte Stimmung — Farben, Typografie und Akzente werden im Vorschaufenster sofort angepasst."
-                )}
-              </p>
-              <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-4">
-                {CARD_THEME_LIST.map((preset) => (
-                  <PresetTile
-                    key={preset.key}
-                    preset={preset}
-                    active={themeKey === preset.key}
-                    onClick={() => applyPreset(preset)}
-                  />
-                ))}
-                <PresetTile
-                  preset={null}
-                  active={themeKey === undefined}
-                  onClick={() => applyPreset(null)}
-                  customLabel={L("themeCustom", "Eigener Stil")}
-                  customDescription={L(
-                    "themeCustomHint",
-                    "Eigene Farben ohne vordefiniertes Theme."
-                  )}
-                />
-              </div>
-            </fieldset>
-
-            {/* Branding */}
-            <fieldset className="space-y-4">
-              <legend className="text-heading-sm text-ink">
-                {L("brandSection", "Markenfarben (optional)")}
-              </legend>
-              <div className="grid gap-4 md:grid-cols-2">
-                <ColorField
-                  label={L("primaryColor", "Primärfarbe")}
-                  value={brandPrimaryHex}
-                  onChange={setBrandPrimaryHex}
-                />
-                <ColorField
-                  label={L("accentColor", "Akzentfarbe")}
-                  value={brandAccentHex}
-                  onChange={setBrandAccentHex}
-                />
-              </div>
-            </fieldset>
-
-            {/* Design notes */}
-            <Textarea
-              label={L("designNotes", "Anmerkungen zum Design (optional)")}
-              value={cardData.designNotes ?? ""}
-              onChange={(e) => setCard("designNotes", e.target.value)}
-              rows={3}
-              placeholder={L(
-                "designNotesPh",
-                "Haben Sie besondere Wünsche? Schriften, Logos, Beispiele …"
-              )}
-            />
-
-            {/* Billing */}
-            <fieldset className="space-y-4">
-              <legend className="text-heading-sm text-ink">
-                {L("billingSection", "Zahlungsmodell")}
-              </legend>
-              <div className="grid gap-3 md:grid-cols-3">
-                {selectedTemplate.monthlyCents ? (
-                  <BillingTile
-                    active={billingMode === "MONTHLY"}
-                    onClick={() => setBillingMode("MONTHLY")}
-                    label={L("billingMonthly", "Monatlich")}
-                    priceLabel={`${formatEuro(selectedTemplate.monthlyCents)}/Mon.`}
-                    footer={L(
-                      "monthlyFooter",
-                      "Niedrige Einstiegshürde. Jederzeit kündbar."
-                    )}
-                  />
-                ) : null}
-                {selectedTemplate.yearlyCents ? (
-                  <BillingTile
-                    active={billingMode === "YEARLY"}
-                    onClick={() => setBillingMode("YEARLY")}
-                    label={L("billingYearly", "Jährlich")}
-                    badge={L("billingBestValue", "Beste Wahl")}
-                    priceLabel={`${formatEuro(selectedTemplate.yearlyCents)}/Jahr`}
-                    footer={L(
-                      "yearlyFooter",
-                      "~35 % Ersparnis vs. monatlich. Revisionen inkl."
-                    )}
-                  />
-                ) : null}
-                <BillingTile
-                  active={billingMode === "ONE_TIME"}
-                  onClick={() => setBillingMode("ONE_TIME")}
-                  label={L("billingOneTime", "Einmalzahlung")}
-                  priceLabel={formatEuro(selectedTemplate.oneTimeCents)}
-                  footer={L(
-                    "oneTimeFooter",
-                    "Lebenslang gehostet. Keine Verlängerung."
-                  )}
-                />
-              </div>
-            </fieldset>
-
-            {errorMsg && (
-              <div className="flex items-start gap-3 rounded-2xl border border-brand/30 bg-brand/5 p-4 text-sm text-brand">
-                <AlertCircle size={16} className="mt-0.5 shrink-0" />
-                <span>{errorMsg}</span>
-              </div>
-            )}
-
-            <div className="flex items-center justify-between gap-4 rounded-2xl border border-neutral-200 bg-white p-5">
-              <div>
-                <p className="text-eyebrow uppercase text-ink/50">
-                  {L("totalLabel", "Zu zahlen")}
-                </p>
-                <p className="text-heading text-ink">
-                  {formatEuro(amountCents)}
-                  {billingMode === "MONTHLY"
-                    ? " / Mon."
-                    : billingMode === "YEARLY"
-                    ? " / Jahr"
-                    : ""}
+                <p className="mt-1.5 truncate font-serif text-heading-sm text-ink">
+                  #{String(selectedTemplate.id).padStart(2, "0")}
+                  <span className="text-ink/30"> · </span>
+                  {v2Entry?.name ?? selectedTemplate?.name ?? ""}
                 </p>
               </div>
               <button
-                type="submit"
-                className="btn-primary text-base"
-                disabled={formState === "submitting"}
+                type="button"
+                onClick={() => {
+                  document
+                    .getElementById("templates")
+                    ?.scrollIntoView({ behavior: "smooth", block: "start" });
+                  window.dispatchEvent(
+                    new CustomEvent("enter-template-selection")
+                  );
+                }}
+                className="shrink-0 rounded-full border border-ink/15 bg-white px-4 py-2 text-xs font-semibold text-ink transition-colors hover:border-ink/40 hover:bg-bg-1"
               >
-                {formState === "submitting" ? (
-                  <Loader2 size={16} className="animate-spin" />
-                ) : null}
-                <span>
-                  {formState === "submitting"
-                    ? L("submitting", "Wird verarbeitet …")
-                    : L("submit", "Zahlen & Karte veröffentlichen")}
-                </span>
+                {L("changeTemplate", "Ändern")}
               </button>
+            </div>
+
+            {/* step indicator */}
+            <StepIndicator
+              steps={STEP_ORDER.map((id) => ({
+                id,
+                label: stepLabel(id, L),
+                done: isStepComplete(id, {
+                  contactName,
+                  contactEmail,
+                  contactPhone,
+                  cardData,
+                  brandPrimaryHex,
+                  themeKey,
+                  billingMode,
+                }),
+              }))}
+              activeId={openStep}
+              onSelect={goToStep}
+              indicatorTpl={L("stepIndicator", "Schritt {current} von {total}")}
+              activeIndex={stepIndex}
+            />
+
+            {/* accordion */}
+            <div className="overflow-hidden rounded-3xl border border-neutral-200/80 bg-white/95 shadow-[0_1px_0_0_rgba(0,0,0,0.02),0_24px_60px_-30px_rgba(20,18,15,0.18)]">
+              <AccordionStep
+                id="contact"
+                stepNumber={1}
+                title={L("step1Title", "Kontakt")}
+                summary={summaries.contact}
+                open={openStep === "contact"}
+                onToggle={(next) => setOpenStep(next ? "contact" : openStep)}
+                onNext={() => goToStep("card")}
+                nextLabel={L("step1Next", "Weiter zum Karteninhalt")}
+              >
+                <StepContact
+                  L={L}
+                  contactName={contactName}
+                  setContactName={setContactName}
+                  contactEmail={contactEmail}
+                  setContactEmail={setContactEmail}
+                  contactPhone={contactPhone}
+                  setContactPhone={setContactPhone}
+                  callMeBack={callMeBack}
+                  setCallMeBack={setCallMeBack}
+                  fieldErrors={fieldErrors}
+                  clearFieldError={clearFieldError}
+                />
+              </AccordionStep>
+
+              <AccordionStep
+                id="card"
+                stepNumber={2}
+                title={L("step2Title", "Karteninhalt")}
+                summary={summaries.card}
+                open={openStep === "card"}
+                onToggle={(next) => setOpenStep(next ? "card" : openStep)}
+                onNext={() => goToStep("branding")}
+                nextLabel={L("step2Next", "Weiter zum Branding")}
+              >
+                <StepCardContent
+                  L={L}
+                  cardData={cardData}
+                  setCard={setCard}
+                  setSocial={setSocial}
+                  contactName={contactName}
+                  contactEmail={contactEmail}
+                  contactPhone={contactPhone}
+                  fieldErrors={fieldErrors}
+                  clearFieldError={clearFieldError}
+                  photoPath={photoPath}
+                  setPhotoPath={setPhotoPath}
+                  logoPath={logoPath}
+                  setLogoPath={setLogoPath}
+                  photoUploading={photoUploading}
+                  setPhotoUploading={setPhotoUploading}
+                  logoUploading={logoUploading}
+                  setLogoUploading={setLogoUploading}
+                  handleFileUpload={handleFileUpload}
+                  supports={supports}
+                  photoPreviewUrl={photoPreviewUrl}
+                  setPhotoPreviewUrl={setPhotoPreviewUrl}
+                  logoPreviewUrl={logoPreviewUrl}
+                  setLogoPreviewUrl={setLogoPreviewUrl}
+                  photoUploadError={photoUploadError}
+                  setPhotoUploadError={setPhotoUploadError}
+                  logoUploadError={logoUploadError}
+                  setLogoUploadError={setLogoUploadError}
+                  readPreview={readPreview}
+                />
+              </AccordionStep>
+
+              <AccordionStep
+                id="branding"
+                stepNumber={3}
+                title={L("step3Title", "Branding")}
+                summary={summaries.branding}
+                open={openStep === "branding"}
+                onToggle={(next) => setOpenStep(next ? "branding" : openStep)}
+                onNext={() => goToStep("billing")}
+                nextLabel={L("step3Next", "Weiter zur Zahlung")}
+              >
+                <StepBranding
+                  L={L}
+                  brandPrimaryHex={brandPrimaryHex}
+                  setBrandPrimaryHex={setBrandPrimaryHex}
+                  brandAccentHex={brandAccentHex}
+                  setBrandAccentHex={setBrandAccentHex}
+                  themeKey={themeKey}
+                  applyPreset={applyPreset}
+                  cardData={cardData}
+                  setCard={setCard}
+                  supports={supports}
+                  templateDefaults={v2Entry?.defaults}
+                  onColorsCustomised={() => setColorsCustomised(true)}
+                  onColorsReset={() => setColorsCustomised(false)}
+                />
+              </AccordionStep>
+
+              <AccordionStep
+                id="billing"
+                stepNumber={4}
+                title={L("step4Title", "Zahlung")}
+                summary={summaries.billing}
+                open={openStep === "billing"}
+                onToggle={(next) => setOpenStep(next ? "billing" : openStep)}
+                isLast
+              >
+                <StepBilling
+                  L={L}
+                  selectedTemplate={selectedTemplate}
+                  billingMode={billingMode}
+                  setBillingMode={setBillingMode}
+                  amountCents={amountCents}
+                  formState={formState}
+                  errorMsg={errorMsg}
+                />
+              </AccordionStep>
             </div>
           </div>
 
-          {/* ======================= RIGHT: live preview ======================= */}
-          {/* Sticky sidebar with a real SmartCard render. The form grid
-              reserves ~460px on the right so SmartCard's intrinsic 440px
-              max-width fits without scaling — what the customer sees here
-              is exactly what visitors will see at /c/<slug>.
-              `pointer-events-none` blocks accidental clicks on the live
-              share / tel links during preview. */}
-          <div className="lg:sticky lg:top-20 lg:self-start">
-            <p className="text-eyebrow mb-4 uppercase text-ink/50">
-              {L("previewLabel", "Live-Vorschau")}
-            </p>
-            <div className="pointer-events-none">
-              <SmartCard
-                slug="preview"
-                cardData={activeCardData}
-                photoPath={photoPath}
-                logoPath={logoPath}
-                brandPrimaryHex={brandPrimaryHex || undefined}
-                brandAccentHex={brandAccentHex || undefined}
-                siteUrl={
-                  typeof window !== "undefined"
-                    ? window.location.origin
-                    : "https://opsolid.de"
-                }
-              />
+          {/* =====================================================
+              RIGHT — sticky live preview (desktop)
+              ===================================================== */}
+          <aside
+            aria-label="Live preview"
+            className="hidden lg:block lg:self-start lg:sticky lg:top-24"
+          >
+            <div className="mb-3 flex items-center justify-between gap-2.5">
+              <div className="flex items-center gap-2.5">
+                <span className="relative inline-flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-copper/60 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-copper" />
+                </span>
+                <span className="mono-label text-[10px] uppercase tracking-[0.22em] text-ink/55">
+                  {L("previewLiveBadge", "Live-Vorschau")}
+                </span>
+              </div>
+              {/* Phase 7.8 — open the preview at full size */}
+              <button
+                type="button"
+                onClick={() => setFullPreviewOpen(true)}
+                className="inline-flex items-center gap-1.5 rounded-full border border-ink/15 bg-white px-2.5 py-1 text-[10.5px] font-semibold text-ink/70 transition-colors hover:border-copper/50 hover:text-ink"
+                aria-label={L("previewExpand", "Open full preview")}
+              >
+                <Maximize2 size={11} aria-hidden />
+                <span>{L("previewExpand", "Vollvorschau")}</span>
+              </button>
             </div>
-            <p className="mt-4 text-xs text-ink/50">
-              {L(
-                "previewHint",
-                "Die Vorschau aktualisiert sich live — so sieht Ihre Karte nach Veröffentlichung aus."
-              )}
+
+            {/* layered frame: outer glow + inner card. Click to expand. */}
+            <button
+              type="button"
+              onClick={() => setFullPreviewOpen(true)}
+              className="group relative block w-full text-left"
+              aria-label={L("previewExpand", "Open full preview")}
+            >
+              <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-copper/25 via-transparent to-copper-300/15 blur-2xl opacity-60 transition-opacity group-hover:opacity-90" />
+              <div className="relative overflow-hidden rounded-[2rem] border border-ink/10 bg-white shadow-[0_1px_0_0_rgba(0,0,0,0.04),0_30px_80px_-30px_rgba(20,18,15,0.4)] transition-transform group-hover:-translate-y-0.5">
+                <div className="pointer-events-none">{previewNode}</div>
+                {/* hover hint overlay */}
+                <div className="pointer-events-none absolute inset-0 flex items-end justify-center bg-gradient-to-t from-ink/40 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100">
+                  <span className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[11px] font-semibold text-ink shadow-md">
+                    <Maximize2 size={12} />
+                    {L("previewExpand", "Vollvorschau öffnen")}
+                  </span>
+                </div>
+              </div>
+            </button>
+
+            <p className="mt-3 text-center text-xs italic text-ink/50">
+              {L("previewLiveHint", "Aktualisiert sich beim Tippen")}
             </p>
-          </div>
+          </aside>
         </form>
+      </div>
+
+      {/* =====================================================
+          MOBILE — floating preview pill + Radix bottom-sheet
+          ===================================================== */}
+      <Dialog.Root open={previewOpen} onOpenChange={setPreviewOpen}>
+        <Dialog.Trigger asChild>
+          <button
+            type="button"
+            className="fixed bottom-5 right-5 z-40 inline-flex items-center gap-2 rounded-full border border-copper/40 bg-neutral-900 px-5 py-3 text-sm font-semibold text-neutral-50 shadow-[0_18px_40px_-12px_rgba(20,18,15,0.45),0_0_24px_-6px_rgba(194,121,64,0.55)] transition-transform hover:scale-[1.02] active:scale-[0.98] lg:hidden"
+            style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
+          >
+            <Eye size={16} aria-hidden />
+            <span>{L("previewLabelMobile", "Vorschau")}</span>
+            <ArrowRight size={14} aria-hidden />
+          </button>
+        </Dialog.Trigger>
+        <Dialog.Portal>
+          <Dialog.Overlay className="fixed inset-0 z-50 bg-neutral-950/60 backdrop-blur-sm data-[state=open]:animate-fade-in" />
+          <Dialog.Content className="fixed inset-x-0 bottom-0 z-50 max-h-[92vh] overflow-hidden rounded-t-3xl border-t border-ink/10 bg-bg-0 shadow-[0_-30px_80px_-30px_rgba(20,18,15,0.5)] data-[state=open]:animate-slide-up lg:hidden">
+            <div className="flex items-center justify-between border-b border-ink/10 px-5 py-4">
+              <div className="flex items-center gap-2">
+                <span className="relative inline-flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-copper/60 opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-copper" />
+                </span>
+                <Dialog.Title className="font-serif text-heading-sm text-ink">
+                  {L("previewSheetTitle", "Live-Vorschau")}
+                </Dialog.Title>
+              </div>
+              <Dialog.Close asChild>
+                <button
+                  type="button"
+                  className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 bg-white text-ink/70 transition-colors hover:border-ink/40 hover:text-ink"
+                  aria-label={L("previewSheetClose", "Schließen")}
+                >
+                  <X size={16} />
+                </button>
+              </Dialog.Close>
+            </div>
+            <div
+              className="overflow-y-auto p-4"
+              style={{ maxHeight: "calc(92vh - 4rem)" }}
+            >
+              <div className="pointer-events-none mx-auto max-w-md overflow-hidden rounded-3xl border border-ink/10 bg-white shadow-[0_30px_80px_-30px_rgba(20,18,15,0.3)]">
+                {previewNode}
+              </div>
+              <p className="mt-3 text-center text-xs italic text-ink/50">
+                {L("previewLiveHint", "Aktualisiert sich beim Tippen")}
+              </p>
+            </div>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+
+      {/* =====================================================
+          DESKTOP / TABLET — full-screen preview modal (Phase 7.8)
+          ===================================================== */}
+      <Dialog.Root open={fullPreviewOpen} onOpenChange={setFullPreviewOpen}>
+        <Dialog.Portal>
+          <Dialog.Overlay className="fixed inset-0 z-50 bg-neutral-950/75 backdrop-blur-md data-[state=open]:animate-fade-in" />
+          <Dialog.Content
+            aria-describedby={undefined}
+            className="fixed inset-x-0 inset-y-0 z-50 mx-auto my-4 flex max-w-5xl flex-col overflow-hidden rounded-3xl border border-ink/10 bg-bg-0 shadow-[0_40px_120px_-30px_rgba(0,0,0,0.65)] data-[state=open]:animate-fade-in sm:inset-y-6 sm:my-0"
+          >
+            {/* Header — title, language switch, close */}
+            <div className="flex flex-wrap items-center justify-between gap-3 border-b border-ink/10 bg-white/95 px-5 py-4 backdrop-blur-sm">
+              <div className="flex items-center gap-2.5">
+                <Maximize2 size={16} className="text-copper" />
+                <Dialog.Title className="font-serif text-heading-sm text-ink">
+                  {v2Entry?.name ?? selectedTemplate?.name ?? "Preview"}
+                </Dialog.Title>
+                <span className="rounded-full border border-copper/30 bg-copper/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-copper">
+                  {L("previewNoPaymentNote", "Preview only")}
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                {/* Language switch */}
+                <div className="flex items-center gap-1 rounded-full border border-ink/15 bg-white p-1">
+                  <span className="px-2 text-[10px] font-semibold uppercase tracking-wider text-ink/45">
+                    {L("previewLanguage", "Lang")}
+                  </span>
+                  {(["de", "en", "tr"] as const).map((loc) => (
+                    <button
+                      key={loc}
+                      type="button"
+                      onClick={() => setPreviewLocale(loc)}
+                      className={[
+                        "rounded-full px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider transition-colors",
+                        previewLocale === loc
+                          ? "bg-ink text-white"
+                          : "text-ink/55 hover:bg-bg-1 hover:text-ink",
+                      ].join(" ")}
+                    >
+                      {loc}
+                    </button>
+                  ))}
+                </div>
+                <Dialog.Close asChild>
+                  <button
+                    type="button"
+                    aria-label={L("previewClose", "Close preview")}
+                    className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-ink/15 bg-white text-ink/70 transition-colors hover:border-ink/40 hover:text-ink"
+                  >
+                    <X size={16} />
+                  </button>
+                </Dialog.Close>
+              </div>
+            </div>
+
+            {/* Body — large scrollable preview */}
+            <div className="flex-1 overflow-y-auto bg-gradient-to-b from-bg-1 to-bg-0 p-6">
+              <div className="mx-auto max-w-md overflow-hidden rounded-[2rem] border border-ink/10 bg-white shadow-[0_30px_80px_-30px_rgba(20,18,15,0.4)]">
+                {previewNode}
+              </div>
+              <p className="mt-4 text-center text-xs italic text-ink/50">
+                {L(
+                  "previewNoPaymentNote",
+                  "Preview only — no payment required"
+                )}
+              </p>
+            </div>
+          </Dialog.Content>
+        </Dialog.Portal>
+      </Dialog.Root>
+    </section>
+  );
+}
+
+// =============================================================================
+// Step labels + completion checks
+// =============================================================================
+
+function stepLabel(id: StepId, L: (k: string, f: string) => string): string {
+  switch (id) {
+    case "contact":
+      return L("step1Title", "Kontakt");
+    case "card":
+      return L("step2Title", "Karteninhalt");
+    case "branding":
+      return L("step3Title", "Branding");
+    case "billing":
+      return L("step4Title", "Zahlung");
+  }
+}
+
+function isStepComplete(
+  id: StepId,
+  state: {
+    contactName: string;
+    contactEmail: string;
+    contactPhone: string;
+    cardData: CardData;
+    brandPrimaryHex: string;
+    themeKey: CardThemeKey | undefined;
+    billingMode: keyof typeof BillingMode;
+  }
+): boolean {
+  switch (id) {
+    case "contact":
+      return Boolean(
+        state.contactName && state.contactEmail && state.contactPhone
+      );
+    case "card":
+      return Boolean(state.cardData.name);
+    case "branding":
+      // Optional step — considered "touched" rather than required.
+      return Boolean(state.brandPrimaryHex || state.themeKey);
+    case "billing":
+      return Boolean(state.billingMode);
+  }
+}
+
+// =============================================================================
+// Step indicator (top of the form)
+// =============================================================================
+
+function StepIndicator({
+  steps,
+  activeId,
+  onSelect,
+  indicatorTpl,
+  activeIndex,
+}: {
+  steps: { id: StepId; label: string; done: boolean }[];
+  activeId: StepId;
+  onSelect: (id: StepId) => void;
+  indicatorTpl: string;
+  activeIndex: number;
+}) {
+  const total = steps.length;
+  const text = indicatorTpl
+    .replace("{current}", String(activeIndex + 1))
+    .replace("{total}", String(total));
+  return (
+    <div className="rounded-3xl border border-neutral-200/80 bg-white/70 p-4 backdrop-blur-sm">
+      <div className="mb-3 flex items-center justify-between">
+        <span className="mono-label text-[10px] uppercase tracking-[0.22em] text-ink/55">
+          {text}
+        </span>
+        <span className="text-xs text-ink/45">
+          {steps.filter((s) => s.done).length}/{total}
+        </span>
+      </div>
+      <div className="flex items-center gap-2">
+        {steps.map((s, idx) => {
+          const isActive = s.id === activeId;
+          return (
+            <button
+              key={s.id}
+              type="button"
+              onClick={() => onSelect(s.id)}
+              className="group flex flex-1 items-center gap-2 text-left"
+              aria-label={s.label}
+            >
+              <span
+                className={`relative grid h-7 w-7 shrink-0 place-items-center rounded-full text-[11px] font-semibold transition-all ${
+                  isActive
+                    ? "bg-neutral-900 text-neutral-50 shadow-[0_4px_12px_-4px_rgba(20,18,15,0.5)]"
+                    : s.done
+                      ? "bg-copper text-ink"
+                      : "border border-ink/20 bg-white text-ink/55"
+                }`}
+              >
+                {s.done && !isActive ? <Check size={12} strokeWidth={3} /> : idx + 1}
+              </span>
+              <span className="hidden truncate text-xs font-medium text-ink/70 sm:block group-hover:text-ink">
+                {s.label}
+              </span>
+              {idx < total - 1 && (
+                <span
+                  aria-hidden
+                  className={`hidden h-px flex-1 sm:block ${
+                    s.done ? "bg-copper/60" : "bg-ink/15"
+                  }`}
+                />
+              )}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+// =============================================================================
+// Accordion primitive — custom (Radix Accordion not in deps).
+// =============================================================================
+
+function AccordionStep({
+  id,
+  stepNumber,
+  title,
+  summary,
+  open,
+  onToggle,
+  children,
+  onNext,
+  nextLabel,
+  isLast,
+}: {
+  id: StepId;
+  stepNumber: number;
+  title: string;
+  summary: string;
+  open: boolean;
+  onToggle: (next: boolean) => void;
+  children: ReactNode;
+  onNext?: () => void;
+  nextLabel?: string;
+  isLast?: boolean;
+}) {
+  const contentRef = useRef<HTMLDivElement>(null);
+  const [height, setHeight] = useState<number | "auto">(open ? "auto" : 0);
+
+  // Smoothly transition height between 0 and content height. Using a fixed
+  // pixel measurement keeps the open/close animation snappy without CSS hacks.
+  useEffect(() => {
+    const el = contentRef.current;
+    if (!el) return;
+    if (open) {
+      const h = el.scrollHeight;
+      setHeight(h);
+      // After the transition completes, set to "auto" so internal layout
+      // changes (validation messages, image previews) don't get clipped.
+      const t = setTimeout(() => setHeight("auto"), 320);
+      return () => clearTimeout(t);
+    }
+    // Snap to current height first, then animate to 0 — required because
+    // CSS transitions don't run from `auto`.
+    const current = el.scrollHeight;
+    setHeight(current);
+    requestAnimationFrame(() => setHeight(0));
+  }, [open]);
+
+  return (
+    <section
+      id={`step-${id}`}
+      className={`group/step relative ${!isLast ? "border-b border-neutral-200/70" : ""}`}
+    >
+      <button
+        type="button"
+        onClick={() => onToggle(!open)}
+        aria-expanded={open}
+        aria-controls={`step-content-${id}`}
+        className={`flex w-full items-center gap-4 px-5 py-5 text-left transition-colors md:px-7 md:py-6 ${
+          open ? "bg-bg-1/60" : "hover:bg-bg-1/40"
+        }`}
+      >
+        <span
+          className={`grid h-9 w-9 shrink-0 place-items-center rounded-full text-sm font-semibold transition-colors ${
+            open
+              ? "bg-neutral-900 text-neutral-50"
+              : "border border-ink/15 bg-white text-ink/70"
+          }`}
+        >
+          {stepNumber}
+        </span>
+        <div className="min-w-0 flex-1">
+          <h3 className="font-serif text-heading-sm leading-tight text-ink">
+            {title}
+          </h3>
+          {!open && (
+            <p className="mt-1 truncate text-sm text-ink/55">{summary}</p>
+          )}
+        </div>
+        <ChevronDown
+          size={18}
+          aria-hidden
+          className={`shrink-0 text-ink/50 transition-transform duration-200 ${
+            open ? "rotate-180" : ""
+          }`}
+        />
+      </button>
+
+      <div
+        id={`step-content-${id}`}
+        role="region"
+        aria-labelledby={`step-${id}`}
+        style={{
+          height: typeof height === "number" ? `${height}px` : "auto",
+          transition: "height 280ms cubic-bezier(0.32, 0.72, 0, 1)",
+          overflow: "hidden",
+        }}
+      >
+        <div ref={contentRef} className="px-5 pb-7 md:px-7">
+          <div className="space-y-6">{children}</div>
+          {onNext && (
+            <div className="mt-7 flex justify-end border-t border-ink/10 pt-5">
+              <button
+                type="button"
+                onClick={onNext}
+                className="group/next inline-flex items-center gap-2 rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-neutral-50 shadow-[0_4px_12px_-4px_rgba(20,18,15,0.4)] transition-transform hover:scale-[1.015] active:scale-[0.98]"
+              >
+                <span>{nextLabel}</span>
+                <ArrowRight
+                  size={14}
+                  aria-hidden
+                  className="transition-transform group-hover/next:translate-x-0.5"
+                />
+              </button>
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );
 }
 
-function UploadTile({
-  label,
-  current,
-  uploading,
-  onChange,
-}: {
-  label: string;
-  current: string | null;
-  uploading: boolean;
-  onChange: (file: File) => void;
-}) {
-  // Resolve the upload path to a browser-loadable URL. Storage paths come
-  // back as either absolute URLs (S3/CDN) or root-relative (`/uploads/...`).
-  const previewSrc = current
-    ? current.startsWith("http") || current.startsWith("/")
-      ? current
-      : `/${current}`
-    : null;
+// =============================================================================
+// STEP 1 — Contact
+// =============================================================================
 
+function StepContact({
+  L,
+  contactName,
+  setContactName,
+  contactEmail,
+  setContactEmail,
+  contactPhone,
+  setContactPhone,
+  callMeBack,
+  setCallMeBack,
+  fieldErrors,
+  clearFieldError,
+}: {
+  L: (k: string, f: string) => string;
+  contactName: string;
+  setContactName: (v: string) => void;
+  contactEmail: string;
+  setContactEmail: (v: string) => void;
+  contactPhone: string;
+  setContactPhone: (v: string) => void;
+  callMeBack: boolean;
+  setCallMeBack: (v: boolean) => void;
+  fieldErrors: Record<string, string>;
+  clearFieldError: (key: string) => void;
+}) {
   return (
-    <label className="flex cursor-pointer items-center gap-4 rounded-2xl border border-dashed border-neutral-300 bg-white p-4 transition-colors hover:border-ink/40">
-      {previewSrc ? (
-        // Uploaded — show the user's image so they instantly see what
-        // they sent. The spinner overlays the thumbnail when re-uploading.
-        <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-neutral-200 bg-neutral-50">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={previewSrc}
-            alt={label}
-            className="h-full w-full object-cover"
-          />
-          {uploading && (
-            <span className="absolute inset-0 flex items-center justify-center bg-black/40 text-white">
-              <Loader2 size={16} className="animate-spin" />
-            </span>
-          )}
-        </div>
-      ) : (
-        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-neutral-100 text-ink/60">
-          {uploading ? (
-            <Loader2 size={16} className="animate-spin" />
-          ) : (
-            <Upload size={16} />
-          )}
-        </div>
-      )}
-      <div className="min-w-0 flex-1">
-        <p className="text-sm font-medium text-ink">{label}</p>
-        <p className="truncate text-xs text-ink/50">
-          {previewSrc
-            ? uploading
-              ? "Wird ersetzt …"
-              : "Hochgeladen ✓ · klicken zum Ersetzen"
-            : uploading
-              ? "Wird hochgeladen …"
-              : "JPG · PNG · WEBP · max 5 MB"}
-        </p>
+    <>
+      <div className="grid gap-4 md:grid-cols-2">
+        <Input
+          id="field-contactName"
+          label={L("contactName", "Ihr Name") + " *"}
+          required
+          value={contactName}
+          onChange={(e) => {
+            setContactName(e.target.value);
+            clearFieldError("contactName");
+          }}
+          error={fieldErrors.contactName}
+          placeholder="Anna Fischer"
+          autoComplete="name"
+        />
+        <Input
+          id="field-contactEmail"
+          type="email"
+          label={L("contactEmail", "E-Mail") + " *"}
+          required
+          value={contactEmail}
+          onChange={(e) => {
+            setContactEmail(e.target.value);
+            clearFieldError("contactEmail");
+          }}
+          error={fieldErrors.contactEmail}
+          placeholder="anna@studio-nord.de"
+          autoComplete="email"
+        />
       </div>
-      <input
-        type="file"
-        accept="image/jpeg,image/png,image/svg+xml,image/webp"
-        className="sr-only"
+      <Input
+        id="field-contactPhone"
+        type="tel"
+        label={L("contactPhone", "Telefon") + " *"}
+        required
+        value={contactPhone}
         onChange={(e) => {
-          const f = e.target.files?.[0];
-          if (f) onChange(f);
+          setContactPhone(e.target.value);
+          clearFieldError("contactPhone");
         }}
+        error={fieldErrors.contactPhone}
+        placeholder="+49 160 1234567"
+        autoComplete="tel"
       />
-    </label>
+      <label className="group flex cursor-pointer items-start gap-3 rounded-2xl border border-neutral-200/80 bg-white p-4 transition-colors hover:border-ink/30">
+        <span className="relative mt-0.5 flex h-5 w-5 shrink-0">
+          <input
+            type="checkbox"
+            className="peer absolute inset-0 cursor-pointer opacity-0"
+            checked={callMeBack}
+            onChange={(e) => setCallMeBack(e.target.checked)}
+          />
+          <span
+            className={`absolute inset-0 grid place-items-center rounded-md border transition-colors ${
+              callMeBack
+                ? "border-copper bg-copper text-ink"
+                : "border-ink/25 bg-white"
+            }`}
+          >
+            {callMeBack && <Check size={12} strokeWidth={3} />}
+          </span>
+        </span>
+        <span className="text-sm text-ink">
+          <strong className="block font-semibold">
+            {L("callMeBack", "Rufen Sie mich an")}
+          </strong>
+          <span className="mt-0.5 block text-ink/60">
+            {L(
+              "callMeBackHint",
+              "Wir melden uns innerhalb eines Werktags, um Details zu klären."
+            )}
+          </span>
+        </span>
+      </label>
+    </>
   );
 }
+
+// =============================================================================
+// STEP 2 — Card content (cardData + uploads + socials)
+// =============================================================================
+
+function StepCardContent({
+  L,
+  cardData,
+  setCard,
+  setSocial,
+  contactName,
+  contactEmail,
+  contactPhone,
+  fieldErrors,
+  clearFieldError,
+  photoPath,
+  setPhotoPath,
+  logoPath,
+  setLogoPath,
+  photoUploading,
+  setPhotoUploading,
+  logoUploading,
+  setLogoUploading,
+  handleFileUpload,
+  supports,
+  photoPreviewUrl,
+  setPhotoPreviewUrl,
+  logoPreviewUrl,
+  setLogoPreviewUrl,
+  photoUploadError,
+  setPhotoUploadError,
+  logoUploadError,
+  setLogoUploadError,
+  readPreview,
+}: {
+  L: (k: string, f: string) => string;
+  cardData: CardData;
+  setCard: <K extends keyof CardData>(key: K, value: CardData[K]) => void;
+  setSocial: (
+    key: keyof NonNullable<CardData["socials"]>,
+    value: string
+  ) => void;
+  contactName: string;
+  contactEmail: string;
+  contactPhone: string;
+  fieldErrors: Record<string, string>;
+  clearFieldError: (key: string) => void;
+  photoPath: string | null;
+  setPhotoPath: (v: string | null) => void;
+  logoPath: string | null;
+  setLogoPath: (v: string | null) => void;
+  photoUploading: boolean;
+  setPhotoUploading: (v: boolean) => void;
+  logoUploading: boolean;
+  setLogoUploading: (v: boolean) => void;
+  handleFileUpload: (
+    file: File,
+    kind: "photo" | "logo"
+  ) => Promise<string | null>;
+  supports: TemplateSupports;
+  photoPreviewUrl: string | null;
+  setPhotoPreviewUrl: (v: string | null) => void;
+  logoPreviewUrl: string | null;
+  setLogoPreviewUrl: (v: string | null) => void;
+  photoUploadError: string | null;
+  setPhotoUploadError: (v: string | null) => void;
+  logoUploadError: string | null;
+  setLogoUploadError: (v: string | null) => void;
+  readPreview: (file: File) => Promise<string>;
+}) {
+  return (
+    <>
+      {/* copy-from-contact affordance */}
+      {(contactName || contactEmail || contactPhone) && (
+        <div className="-mt-1 flex justify-end">
+          <button
+            type="button"
+            onClick={() => {
+              if (!cardData.name && contactName) setCard("name", contactName);
+              if (!cardData.email && contactEmail) setCard("email", contactEmail);
+              if (!cardData.phone && contactPhone) setCard("phone", contactPhone);
+            }}
+            className="inline-flex items-center gap-1.5 rounded-full border border-copper/50 bg-copper/10 px-3 py-1.5 text-xs font-semibold text-ink transition-colors hover:border-copper hover:bg-copper/20"
+          >
+            <span aria-hidden className="text-sm leading-none">
+              ↑
+            </span>
+            {L("copyFromContact", "Von oben übernehmen")}
+          </button>
+        </div>
+      )}
+
+      <div className="grid gap-4 md:grid-cols-2">
+        <Input
+          id="field-cardData-name"
+          label={L("cardName", "Vor- und Nachname") + " *"}
+          value={cardData.name}
+          onChange={(e) => {
+            setCard("name", e.target.value);
+            clearFieldError("cardData.name");
+          }}
+          error={fieldErrors["cardData.name"]}
+          placeholder="Anna Fischer"
+        />
+        <Input
+          id="field-cardData-title"
+          label={L("cardTitle", "Titel / Rolle")}
+          value={cardData.title ?? ""}
+          onChange={(e) => setCard("title", e.target.value)}
+          placeholder="Gründerin"
+        />
+        <Input
+          id="field-cardData-company"
+          label={L("cardCompany", "Unternehmen")}
+          value={cardData.company ?? ""}
+          onChange={(e) => setCard("company", e.target.value)}
+          placeholder="Studio Nord"
+        />
+        <Input
+          id="field-cardData-website"
+          label={L("cardWebsite", "Website")}
+          value={cardData.website ?? ""}
+          onChange={(e) => {
+            setCard("website", e.target.value);
+            clearFieldError("cardData.website");
+          }}
+          error={fieldErrors["cardData.website"]}
+          placeholder="https://studio-nord.de"
+        />
+        <Input
+          id="field-cardData-email"
+          type="email"
+          label={L("cardEmail", "E-Mail (auf Karte)")}
+          value={cardData.email ?? ""}
+          onChange={(e) => {
+            setCard("email", e.target.value);
+            clearFieldError("cardData.email");
+          }}
+          error={fieldErrors["cardData.email"]}
+        />
+        <Input
+          id="field-cardData-phone"
+          type="tel"
+          label={L("cardPhone", "Telefon (auf Karte)")}
+          value={cardData.phone ?? ""}
+          onChange={(e) => {
+            setCard("phone", e.target.value);
+            clearFieldError("cardData.phone");
+          }}
+          error={fieldErrors["cardData.phone"]}
+        />
+        <Input
+          id="field-cardData-whatsapp"
+          type="tel"
+          label={L("cardWhatsapp", "WhatsApp")}
+          value={cardData.whatsapp ?? ""}
+          onChange={(e) => setCard("whatsapp", e.target.value)}
+          placeholder="+49 …"
+        />
+        <Input
+          id="field-cardData-address"
+          label={L("cardAddress", "Adresse")}
+          value={cardData.address ?? ""}
+          onChange={(e) => setCard("address", e.target.value)}
+        />
+      </div>
+
+      <div>
+        <Textarea
+          label={L("cardBio", "Kurzbeschreibung")}
+          value={cardData.bio ?? ""}
+          onChange={(e) => setCard("bio", e.target.value)}
+          rows={3}
+          maxLength={200}
+          placeholder={L("cardBioPh", "Ein Satz zu Ihnen / Ihrem Unternehmen.")}
+        />
+        {/* Phase 7.7 — character counter, turns copper near the limit so the
+            customer notices before the input clamps. */}
+        <p
+          className={[
+            "mt-1 text-right text-[11px] mono-label",
+            (200 - (cardData.bio?.length ?? 0)) < 20
+              ? "text-copper"
+              : "text-ink/40",
+          ].join(" ")}
+        >
+          {cardData.bio?.length ?? 0} / 200
+        </p>
+      </div>
+
+      {/* Uploads — Phase 7.8: always show BOTH photo + logo so the user can
+          tell which is which. If the chosen template doesn't render one, we
+          render a muted "n/a" version with an explanation rather than hiding it. */}
+      <SubFieldset label={L("uploadSection", "Foto & Logo (optional)")}>
+        <div className="grid gap-4 md:grid-cols-2">
+          <DragDropZone
+            label={L("photoLabel", "Profilfoto")}
+            kind="photo"
+            current={photoPath}
+            previewUrl={photoPreviewUrl}
+            uploading={photoUploading}
+            uploadError={photoUploadError}
+            disabled={!supports.photo}
+            disabledReason={L(
+              "templateNoPhoto",
+              "Dieses Design verwendet kein Foto."
+            )}
+            onRemove={() => {
+              setPhotoPath(null);
+              setPhotoPreviewUrl(null);
+              setPhotoUploadError(null);
+            }}
+            onFileSelect={async (file) => {
+              const allowed = ["image/jpeg", "image/png", "image/webp"];
+              if (!allowed.includes(file.type)) {
+                setPhotoUploadError(
+                  L(
+                    "uploadWrongType",
+                    "Format nicht unterstützt. Bitte JPG, PNG oder WebP."
+                  )
+                );
+                return;
+              }
+              if (file.size > 5 * 1024 * 1024) {
+                setPhotoUploadError(
+                  L("uploadTooLarge", "Datei zu groß (max 5 MB).")
+                );
+                return;
+              }
+              setPhotoUploadError(null);
+              try {
+                const preview = await readPreview(file);
+                setPhotoPreviewUrl(preview);
+              } catch {
+                /* preview is optional, never block the real upload */
+              }
+              setPhotoUploading(true);
+              const path = await handleFileUpload(file, "photo");
+              if (path) setPhotoPath(path);
+              setPhotoUploading(false);
+            }}
+            L={L}
+          />
+          <DragDropZone
+            label={L("logoLabel", "Logo")}
+            kind="logo"
+            current={logoPath}
+            previewUrl={logoPreviewUrl}
+            uploading={logoUploading}
+            uploadError={logoUploadError}
+            disabled={!supports.logo}
+            disabledReason={L(
+              "templateNoLogo",
+              "Dieses Design verwendet kein Logo."
+            )}
+            onRemove={() => {
+              setLogoPath(null);
+              setLogoPreviewUrl(null);
+              setLogoUploadError(null);
+            }}
+            onFileSelect={async (file) => {
+              const allowed = ["image/jpeg", "image/png", "image/webp"];
+              if (!allowed.includes(file.type)) {
+                setLogoUploadError(
+                  L(
+                    "uploadWrongType",
+                    "Format nicht unterstützt. Bitte JPG, PNG oder WebP."
+                  )
+                );
+                return;
+              }
+              if (file.size > 5 * 1024 * 1024) {
+                setLogoUploadError(
+                  L("uploadTooLarge", "Datei zu groß (max 5 MB).")
+                );
+                return;
+              }
+              setLogoUploadError(null);
+              try {
+                const preview = await readPreview(file);
+                setLogoPreviewUrl(preview);
+              } catch {
+                /* preview is optional, never block the real upload */
+              }
+              setLogoUploading(true);
+              const path = await handleFileUpload(file, "logo");
+              if (path) setLogoPath(path);
+              setLogoUploading(false);
+            }}
+            L={L}
+          />
+        </div>
+      </SubFieldset>
+
+      {/* Socials — only when supported */}
+      {supports.socials && (
+        <SubFieldset label={L("socialSection", "Social Links (optional)")}>
+          <div className="grid gap-4 md:grid-cols-2">
+            <Input
+              label="LinkedIn"
+              value={cardData.socials?.linkedin ?? ""}
+              onChange={(e) => setSocial("linkedin", e.target.value)}
+              placeholder="https://linkedin.com/in/…"
+            />
+            <Input
+              label="Instagram"
+              value={cardData.socials?.instagram ?? ""}
+              onChange={(e) => setSocial("instagram", e.target.value)}
+              placeholder="https://instagram.com/…"
+            />
+            <Input
+              label="X (Twitter)"
+              value={cardData.socials?.x ?? ""}
+              onChange={(e) => setSocial("x", e.target.value)}
+            />
+            <Input
+              label="TikTok"
+              value={cardData.socials?.tiktok ?? ""}
+              onChange={(e) => setSocial("tiktok", e.target.value)}
+            />
+            <Input
+              label="YouTube"
+              value={cardData.socials?.youtube ?? ""}
+              onChange={(e) => setSocial("youtube", e.target.value)}
+            />
+            <Input
+              label="GitHub"
+              value={cardData.socials?.github ?? ""}
+              onChange={(e) => setSocial("github", e.target.value)}
+            />
+          </div>
+        </SubFieldset>
+      )}
+    </>
+  );
+}
+
+// =============================================================================
+// STEP 3 — Branding (theme picker + colors + design notes)
+// =============================================================================
+
+function StepBranding({
+  L,
+  brandPrimaryHex,
+  setBrandPrimaryHex,
+  brandAccentHex,
+  setBrandAccentHex,
+  themeKey,
+  applyPreset,
+  cardData,
+  setCard,
+  supports,
+  templateDefaults,
+  onColorsCustomised,
+  onColorsReset,
+}: {
+  L: (k: string, f: string) => string;
+  brandPrimaryHex: string;
+  setBrandPrimaryHex: (v: string) => void;
+  brandAccentHex: string;
+  setBrandAccentHex: (v: string) => void;
+  themeKey: CardThemeKey | undefined;
+  applyPreset: (preset: CardThemePreset | null) => void;
+  cardData: CardData;
+  setCard: <K extends keyof CardData>(key: K, value: CardData[K]) => void;
+  supports: TemplateSupports;
+  templateDefaults: { brandPrimaryHex: string; brandAccentHex: string } | undefined;
+  onColorsCustomised: () => void;
+  onColorsReset: () => void;
+}) {
+  return (
+    <>
+      {/* Theme picker — only when supported by the chosen template */}
+      {supports.themeSwitch && (
+        <SubFieldset
+          label={L("themeSection", "Stilvorlage (optional)")}
+          hint={L(
+            "themeSectionHint",
+            "Wählen Sie eine vordefinierte Stimmung — Farben, Typografie und Akzente werden im Vorschaufenster sofort angepasst."
+          )}
+        >
+          <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
+            {CARD_THEME_LIST.map((preset) => (
+              <PresetTile
+                key={preset.key}
+                preset={preset}
+                active={themeKey === preset.key}
+                onClick={() => applyPreset(preset)}
+              />
+            ))}
+            <PresetTile
+              preset={null}
+              active={themeKey === undefined}
+              onClick={() => applyPreset(null)}
+              customLabel={L("themeCustom", "Eigener Stil")}
+              customDescription={L(
+                "themeCustomHint",
+                "Eigene Farben ohne vordefiniertes Theme."
+              )}
+            />
+          </div>
+        </SubFieldset>
+      )}
+
+      {/* Brand colors */}
+      <SubFieldset label={L("brandSection", "Markenfarben (optional)")}>
+        <div className="grid gap-4 md:grid-cols-2">
+          <ColorField
+            label={L("primaryColor", "Primärfarbe")}
+            value={brandPrimaryHex}
+            onChange={(v) => {
+              setBrandPrimaryHex(v);
+              onColorsCustomised();
+            }}
+          />
+          <ColorField
+            label={L("accentColor", "Akzentfarbe")}
+            value={brandAccentHex}
+            onChange={(v) => {
+              setBrandAccentHex(v);
+              onColorsCustomised();
+            }}
+          />
+        </div>
+        {templateDefaults && (
+          <div className="flex items-center gap-3 pt-1">
+            <div className="flex items-center gap-1.5">
+              <span
+                className="inline-block h-4 w-4 rounded-full border border-line-soft"
+                style={{ background: templateDefaults.brandPrimaryHex }}
+                aria-hidden
+              />
+              <span
+                className="inline-block h-4 w-4 rounded-full border border-line-soft"
+                style={{ background: templateDefaults.brandAccentHex }}
+                aria-hidden
+              />
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setBrandPrimaryHex(templateDefaults.brandPrimaryHex);
+                setBrandAccentHex(templateDefaults.brandAccentHex);
+                onColorsReset();
+              }}
+              className="text-xs text-ink/50 underline-offset-2 hover:text-ink hover:underline"
+            >
+              {L("resetColors", "Reset to template defaults")}
+            </button>
+          </div>
+        )}
+      </SubFieldset>
+
+      <Textarea
+        label={L("designNotes", "Anmerkungen zum Design (optional)")}
+        value={cardData.designNotes ?? ""}
+        onChange={(e) => setCard("designNotes", e.target.value)}
+        rows={3}
+        placeholder={L(
+          "designNotesPh",
+          "Haben Sie besondere Wünsche? Schriften, Logos, Beispiele …"
+        )}
+      />
+    </>
+  );
+}
+
+// =============================================================================
+// STEP 4 — Billing + submit
+// =============================================================================
+
+function StepBilling({
+  L,
+  selectedTemplate,
+  billingMode,
+  setBillingMode,
+  amountCents,
+  formState,
+  errorMsg,
+}: {
+  L: (k: string, f: string) => string;
+  selectedTemplate: import("@/config/card-templates").CardTemplateDef;
+  billingMode: keyof typeof BillingMode;
+  setBillingMode: (m: keyof typeof BillingMode) => void;
+  amountCents: number;
+  formState: FormState;
+  errorMsg: string | null;
+}) {
+  return (
+    <>
+      <SubFieldset label={L("billingSection", "Zahlungsmodell")}>
+        <div className="grid gap-3 md:grid-cols-3">
+          {selectedTemplate.monthlyCents ? (
+            <BillingTile
+              active={billingMode === "MONTHLY"}
+              onClick={() => setBillingMode("MONTHLY")}
+              label={L("billingMonthly", "Monatlich")}
+              priceLabel={`${formatEuro(selectedTemplate.monthlyCents)}/Mon.`}
+              footer={L(
+                "monthlyFooter",
+                "Niedrige Einstiegshürde. Jederzeit kündbar."
+              )}
+            />
+          ) : null}
+          {selectedTemplate.yearlyCents ? (
+            <BillingTile
+              active={billingMode === "YEARLY"}
+              onClick={() => setBillingMode("YEARLY")}
+              label={L("billingYearly", "Jährlich")}
+              badge={L("billingBestValue", "Beste Wahl")}
+              priceLabel={`${formatEuro(selectedTemplate.yearlyCents)}/Jahr`}
+              footer={L(
+                "yearlyFooter",
+                "~35 % Ersparnis vs. monatlich. Revisionen inkl."
+              )}
+            />
+          ) : null}
+          <BillingTile
+            active={billingMode === "ONE_TIME"}
+            onClick={() => setBillingMode("ONE_TIME")}
+            label={L("billingOneTime", "Einmalzahlung")}
+            priceLabel={formatEuro(selectedTemplate.oneTimeCents)}
+            footer={L(
+              "oneTimeFooter",
+              "Lebenslang gehostet. Keine Verlängerung."
+            )}
+          />
+        </div>
+      </SubFieldset>
+
+      {errorMsg && (
+        <div className="flex items-start gap-3 rounded-2xl border border-brand/30 bg-brand/5 p-4 text-sm text-brand">
+          <AlertCircle size={16} className="mt-0.5 shrink-0" />
+          <span>{errorMsg}</span>
+        </div>
+      )}
+
+      {/* total + submit */}
+      <div className="flex flex-col items-stretch justify-between gap-4 rounded-2xl border border-ink/15 bg-neutral-900 p-5 text-neutral-50 sm:flex-row sm:items-center">
+        <div>
+          <p className="mono-label text-[10px] uppercase tracking-[0.2em] text-neutral-50/60">
+            {L("totalLabel", "Zu zahlen")}
+          </p>
+          <p className="mt-1 font-serif text-heading text-neutral-50">
+            {formatEuro(amountCents)}
+            <span className="text-neutral-50/55">
+              {billingMode === "MONTHLY"
+                ? " / Mon."
+                : billingMode === "YEARLY"
+                  ? " / Jahr"
+                  : ""}
+            </span>
+          </p>
+        </div>
+        <button
+          type="submit"
+          className="inline-flex items-center justify-center gap-2 rounded-full bg-copper px-6 py-3 text-base font-semibold text-ink shadow-[0_8px_24px_-8px_rgba(194,121,64,0.55)] transition-transform hover:scale-[1.02] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+          disabled={formState === "submitting"}
+        >
+          {formState === "submitting" ? (
+            <Loader2 size={16} className="animate-spin" />
+          ) : (
+            <Lock size={14} aria-hidden />
+          )}
+          <span>
+            {formState === "submitting"
+              ? L("submitting", "Wird verarbeitet …")
+              : L("submitLabel", "Bezahlen & Karte veröffentlichen")}
+          </span>
+        </button>
+      </div>
+    </>
+  );
+}
+
+// =============================================================================
+// Sub-fieldset — visual grouping inside an open accordion step.
+// =============================================================================
+
+function SubFieldset({
+  label,
+  hint,
+  children,
+}: {
+  label: string;
+  hint?: string;
+  children: ReactNode;
+}) {
+  return (
+    <fieldset className="space-y-3">
+      <legend className="mono-label text-[11px] uppercase tracking-[0.18em] text-ink/55">
+        {label}
+      </legend>
+      {hint && <p className="-mt-1 max-w-xl text-xs text-ink/55">{hint}</p>}
+      {children}
+    </fieldset>
+  );
+}
+
+// =============================================================================
+// Drag-and-drop upload zone (Phase 7.7) — replaces UploadTile in StepCardContent.
+//
+// Adds drag-over visual feedback, instant data-URL preview on the parent (so
+// the live preview reflects the pick before the upload settles), inline error
+// surface for wrong formats, and a clearer "Remove" affordance once a file
+// has been uploaded.
+// =============================================================================
+
+function DragDropZone({
+  label,
+  kind,
+  current,
+  previewUrl,
+  uploading,
+  uploadError,
+  onFileSelect,
+  onRemove,
+  L,
+  disabled = false,
+  disabledReason,
+}: {
+  label: string;
+  kind: "photo" | "logo";
+  current: string | null;
+  previewUrl: string | null;
+  uploading: boolean;
+  uploadError: string | null;
+  onFileSelect: (file: File) => void;
+  onRemove: () => void;
+  L: (k: string, f: string) => string;
+  disabled?: boolean;
+  disabledReason?: string;
+}) {
+  const inputRef = React.useRef<HTMLInputElement>(null);
+  const [dragging, setDragging] = React.useState(false);
+
+  // Resolve whatever we want to render right now:
+  //   1. local data-URL preview (instant, not yet persisted) wins
+  //   2. then the persisted server path
+  const displayed = (() => {
+    if (previewUrl) return previewUrl;
+    if (!current) return null;
+    if (current.startsWith("data:") || current.startsWith("blob:")) return current;
+    if (current.startsWith("http") || current.startsWith("/")) return current;
+    return `/${current}`;
+  })();
+
+  // Phase 7.8 — when the chosen template doesn't render this asset, we still
+  // show the field (so the user knows which is which) but visually mute it
+  // and explain why it's unavailable.
+  if (disabled) {
+    return (
+      <div className="relative opacity-60">
+        <div className="mb-1.5 flex items-center gap-1.5">
+          <p className="text-xs font-medium text-ink/70">{label}</p>
+          <span className="rounded-full border border-line-soft bg-bg-1 px-1.5 py-[1px] text-[9px] uppercase tracking-wider text-ink/45">
+            n/a
+          </span>
+        </div>
+        <div className="flex w-full flex-col items-center gap-2 rounded-2xl border-2 border-dashed border-line bg-bg-1 px-4 py-5">
+          {kind === "photo" ? (
+            <Camera size={22} className="text-ink/20" />
+          ) : (
+            <Building2 size={22} className="text-ink/20" />
+          )}
+          <span className="text-center text-xs font-medium text-ink/45">
+            {disabledReason ??
+              L("templateNoAsset", "Dieses Design verwendet dieses Element nicht.")}
+          </span>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="relative">
+      <p className="mb-1.5 text-xs font-medium text-ink/70">{label}</p>
+      {displayed ? (
+        <div className="relative flex items-center gap-3 rounded-2xl border border-line bg-bg-1 p-3">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={displayed}
+            alt=""
+            className="h-14 w-14 rounded-xl object-cover"
+          />
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-xs text-ink/60">
+              {uploading
+                ? L("uploading", "Wird hochgeladen…")
+                : L("uploadDone", "Hochgeladen")}
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={onRemove}
+            aria-label={L("uploadRemove", "Remove")}
+            className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-line bg-white text-ink/50 transition-colors hover:border-line-firm hover:text-ink"
+          >
+            <X size={13} />
+          </button>
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={() => inputRef.current?.click()}
+          onDragOver={(e) => {
+            e.preventDefault();
+            setDragging(true);
+          }}
+          onDragLeave={() => setDragging(false)}
+          onDrop={(e) => {
+            e.preventDefault();
+            setDragging(false);
+            const file = e.dataTransfer.files[0];
+            if (file) onFileSelect(file);
+          }}
+          className={[
+            "flex w-full flex-col items-center gap-2 rounded-2xl border-2 border-dashed px-4 py-5 transition-colors",
+            dragging
+              ? "border-copper bg-copper/5"
+              : "border-line bg-bg-0 hover:border-copper/50 hover:bg-bg-1",
+          ].join(" ")}
+        >
+          {kind === "photo" ? (
+            <Camera size={22} className="text-ink/30" />
+          ) : (
+            <Building2 size={22} className="text-ink/30" />
+          )}
+          <span className="text-xs font-medium text-ink/60">
+            {L("dragHere", "Drag here or click to upload")}
+          </span>
+          <span className="text-[10px] text-ink/40">
+            {L("uploadHint", "JPG, PNG, WebP · max 5 MB")}
+          </span>
+        </button>
+      )}
+      {uploadError && (
+        <p className="mt-1.5 text-[11px] text-signal-err">{uploadError}</p>
+      )}
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        className="sr-only"
+        onChange={(e) => {
+          const file = e.target.files?.[0];
+          if (file) onFileSelect(file);
+          e.target.value = "";
+        }}
+      />
+    </div>
+  );
+}
+
+// =============================================================================
+// Color field
+// =============================================================================
 
 function ColorField({
   label,
@@ -816,23 +2017,29 @@ function ColorField({
     <div>
       <label className="mb-2 block text-sm font-semibold text-ink">{label}</label>
       <div className="flex items-center gap-2">
-        <input
-          type="color"
-          value={value || "#0A0A0A"}
-          onChange={(e) => onChange(e.target.value)}
-          className="h-12 w-16 cursor-pointer rounded-2xl border border-neutral-200 bg-white p-1"
-        />
+        <span className="relative inline-flex h-12 w-16 shrink-0 overflow-hidden rounded-2xl border border-neutral-200 bg-white">
+          <input
+            type="color"
+            value={value || "#0A0A0A"}
+            onChange={(e) => onChange(e.target.value)}
+            className="absolute inset-0 h-full w-full cursor-pointer border-0 bg-transparent p-0"
+          />
+        </span>
         <input
           type="text"
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder="#0A0A0A"
-          className="h-12 flex-1 rounded-full border border-neutral-200 bg-white px-5 font-mono text-sm"
+          className="h-12 flex-1 rounded-full border border-neutral-200 bg-white px-5 font-mono text-sm focus:border-brand focus:outline-none focus:ring-2 focus:ring-brand/20"
         />
       </div>
     </div>
   );
 }
+
+// =============================================================================
+// Theme preset tile
+// =============================================================================
 
 function PresetTile({
   preset,
@@ -841,40 +2048,44 @@ function PresetTile({
   customLabel,
   customDescription,
 }: {
-  preset: import("@/lib/cardThemes").CardThemePreset | null;
+  preset: CardThemePreset | null;
   active: boolean;
   onClick: () => void;
   customLabel?: string;
   customDescription?: string;
 }) {
-  const label = preset ? preset.label : (customLabel ?? "Custom");
-  const description = preset ? preset.description : (customDescription ?? "");
+  const label = preset ? preset.label : customLabel ?? "Custom";
+  const description = preset ? preset.description : customDescription ?? "";
 
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`relative rounded-2xl border p-4 text-left transition-colors ${
+      className={`group relative rounded-2xl border p-4 text-left transition-all ${
         active
-          ? "border-brand bg-white shadow-soft"
-          : "border-neutral-200 bg-white hover:border-ink/40"
+          ? "border-ink bg-white shadow-[0_8px_24px_-12px_rgba(20,18,15,0.3)]"
+          : "border-neutral-200 bg-white hover:border-ink/40 hover:shadow-[0_4px_12px_-6px_rgba(20,18,15,0.15)]"
       }`}
     >
-      {preset && (
+      {active && (
+        <span className="absolute right-3 top-3 grid h-5 w-5 place-items-center rounded-full bg-copper text-ink">
+          <Check size={11} strokeWidth={3} />
+        </span>
+      )}
+      {preset ? (
         <div className="mb-3 flex gap-1.5">
           <span
-            className="h-4 w-4 rounded-full ring-1 ring-black/10"
+            className="h-5 w-5 rounded-full ring-1 ring-black/10"
             style={{ background: preset.primaryHex }}
           />
           <span
-            className="h-4 w-4 rounded-full ring-1 ring-black/10"
+            className="h-5 w-5 rounded-full ring-1 ring-black/10"
             style={{ background: preset.accentHex }}
           />
         </div>
-      )}
-      {!preset && (
+      ) : (
         <div className="mb-3 flex gap-1.5">
-          <span className="h-4 w-4 rounded-full bg-gradient-to-br from-neutral-200 to-neutral-400 ring-1 ring-black/10" />
+          <span className="h-5 w-5 rounded-full bg-gradient-to-br from-neutral-200 to-neutral-400 ring-1 ring-black/10" />
         </div>
       )}
       <span className="block text-sm font-semibold text-ink">{label}</span>
@@ -886,6 +2097,10 @@ function PresetTile({
     </button>
   );
 }
+
+// =============================================================================
+// Billing tile
+// =============================================================================
 
 function BillingTile({
   active,
@@ -906,22 +2121,78 @@ function BillingTile({
     <button
       type="button"
       onClick={onClick}
-      className={`relative rounded-2xl border p-5 text-left transition-colors ${
+      className={`group relative rounded-2xl border p-5 text-left transition-all ${
         active
-          ? "border-brand bg-white shadow-soft"
-          : "border-neutral-200 bg-white hover:border-ink/40"
+          ? "border-ink bg-white shadow-[0_8px_24px_-12px_rgba(20,18,15,0.35)]"
+          : "border-neutral-200 bg-white hover:border-ink/40 hover:shadow-[0_4px_12px_-6px_rgba(20,18,15,0.12)]"
       }`}
     >
       {badge && (
-        <span className="absolute -top-2.5 right-4 rounded-full bg-brand px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
+        <span className="absolute -top-2.5 right-4 rounded-full bg-copper px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-ink">
           {badge}
         </span>
       )}
-      <span className="block text-heading-sm text-ink">{label}</span>
-      <span className="mt-1 block text-2xl font-semibold text-ink">
+      {active && (
+        <span className="absolute left-4 top-4 grid h-5 w-5 place-items-center rounded-full bg-neutral-900 text-neutral-50">
+          <Check size={11} strokeWidth={3} />
+        </span>
+      )}
+      <span className="block font-serif text-heading-sm text-ink">{label}</span>
+      <span className="mt-1 block font-serif text-2xl font-semibold text-ink">
         {priceLabel}
       </span>
       <span className="mt-2 block text-xs text-ink/60">{footer}</span>
     </button>
+  );
+}
+
+// =============================================================================
+// Live preview — registry-resolved component, fallback to SmartCard.
+// =============================================================================
+
+/**
+ * Resolves the v2 registry component for the chosen template id and renders
+ * it with identical props to `/c/[slug]/page.tsx`. Falls back to SmartCard
+ * for unmapped ids so the preview always has *something* on screen.
+ */
+function LivePreview({
+  templateId,
+  slug,
+  cardData,
+  photoPath,
+  logoPath,
+  brandPrimaryHex,
+  brandAccentHex,
+  locale,
+}: {
+  templateId: number;
+  slug: string;
+  cardData: CardData;
+  photoPath: string | null;
+  logoPath: string | null;
+  brandPrimaryHex?: string;
+  brandAccentHex?: string;
+  locale: "de" | "en" | "tr";
+}) {
+  const entry = getTemplateEntry(templateId);
+  const Template = entry?.Component ?? SmartCard;
+  // Compute siteUrl on the client only — `window` doesn't exist during SSR
+  // for this client component's first paint, so we lazily resolve once.
+  const [siteUrl, setSiteUrl] = useState("https://opsolid.de");
+  useEffect(() => {
+    if (typeof window !== "undefined") setSiteUrl(window.location.origin);
+  }, []);
+
+  return (
+    <Template
+      slug={slug}
+      cardData={cardData}
+      photoPath={photoPath}
+      logoPath={logoPath}
+      brandPrimaryHex={brandPrimaryHex}
+      brandAccentHex={brandAccentHex}
+      siteUrl={siteUrl}
+      locale={locale}
+    />
   );
 }

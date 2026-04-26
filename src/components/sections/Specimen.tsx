@@ -3,9 +3,9 @@
 import { useLocale } from "@/context/LocaleContext";
 
 /**
- * Specimen — industry-baseline card. OpSolid is pre-market, so every row is
- * a publicly cited figure (APQC, Forrester, Retell/GPT-4o/Deepgram public
- * specs, OpSolid principle). No invented case-study numbers.
+ * Specimen — industry-baseline card. Each row shows the reference figure
+ * the automation is measured against on the left, and the target outcome
+ * on the right. Copy lives in the locale files.
  */
 export function Specimen() {
   const { t } = useLocale();

@@ -239,8 +239,8 @@ export function VoiceVisualizer() {
           <span className="vv-readout-value">DE · EN · TR</span>
         </div>
         <div className="vv-readout">
-          <span className="vv-readout-label">MODEL</span>
-          <span className="vv-readout-value">RETELL · GPT-4o</span>
+          <span className="vv-readout-label">MODE</span>
+          <span className="vv-readout-value">REAL-TIME · LIVE</span>
         </div>
       </div>
     </div>
