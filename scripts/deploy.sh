@@ -59,10 +59,10 @@ rm -f "$TARBALL"
 docker ps --filter "name=opsolid-app" --format "table {{.Names}}\t{{.Status}}"
 EOF
 
-echo "==> Waiting 25s, then health-checking"
-sleep 25
+echo "==> Waiting 35s for container to reach healthy state"
+sleep 35
 ssh -i "$SSH_KEY" "$SSH_USER@$SSH_HOST" \
-  'curl -fsS --max-time 10 http://127.0.0.1:3000/api/health' \
+  'status=$(docker inspect opsolid-app --format "{{.State.Health.Status}}" 2>/dev/null); echo "Container health: $status"; [ "$status" = "healthy" ]' \
   && echo "==> Deploy OK" \
   || { echo "==> Health check failed"; ssh -i "$SSH_KEY" "$SSH_USER@$SSH_HOST" 'docker logs --tail 80 opsolid-app'; exit 1; }
 

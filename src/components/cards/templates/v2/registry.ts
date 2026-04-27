@@ -20,27 +20,27 @@
 // =============================================================================
 
 import { RealEstate } from "./RealEstate";
-import { legalCounselEntry } from "./LegalCounsel";
-import { kitchenAtelierEntry } from "./KitchenAtelier";
-import { photographerEntry } from "./Photographer";
-import { clinicEntry } from "./Clinic";
-import { studioEntry } from "./Studio";
-import { barberEntry } from "./Barber";
-import { makerEntry } from "./Maker";
-import { architectEntry } from "./Architect";
-import { athleteEntry } from "./Athlete";
-import { editorialEntry } from "./Editorial";
-import { atelierEntry } from "./Atelier";
-import { universalEntry } from "./Universal";
+import { legalCounselEntry, LegalCounsel } from "./LegalCounsel";
+import { kitchenAtelierEntry, KitchenAtelier } from "./KitchenAtelier";
+import { photographerEntry, Photographer } from "./Photographer";
+import { clinicEntry, Clinic } from "./Clinic";
+import { studioEntry, Studio } from "./Studio";
+import { barberEntry, Barber } from "./Barber";
+import { makerEntry, Maker } from "./Maker";
+import { architectEntry, Architect } from "./Architect";
+import { athleteEntry, Athlete } from "./Athlete";
+import { editorialEntry, Editorial } from "./Editorial";
+import { atelierEntry, Atelier } from "./Atelier";
+import { universalEntry, Universal } from "./Universal";
 // Phase 7.8 — designer-team batch (ids 14-21)
-import { restaurantEntry } from "./Restaurant";
-import { hotelEntry } from "./Hotel";
-import { techStartupEntry } from "./TechStartup";
-import { developerEntry } from "./Developer";
-import { yogaStudioEntry } from "./YogaStudio";
-import { personalTrainerEntry } from "./PersonalTrainer";
-import { musicProducerEntry } from "./MusicProducer";
-import { weddingPlannerEntry } from "./WeddingPlanner";
+import { restaurantEntry, Restaurant } from "./Restaurant";
+import { hotelEntry, Hotel } from "./Hotel";
+import { techStartupEntry, TechStartup } from "./TechStartup";
+import { developerEntry, Developer } from "./Developer";
+import { yogaStudioEntry, YogaStudio } from "./YogaStudio";
+import { personalTrainerEntry, PersonalTrainer } from "./PersonalTrainer";
+import { musicProducerEntry, MusicProducer } from "./MusicProducer";
+import { weddingPlannerEntry, WeddingPlanner } from "./WeddingPlanner";
 import type { TemplateRegistryEntry } from "./types";
 
 export const templateRegistry: Record<number, TemplateRegistryEntry> = {
@@ -68,27 +68,31 @@ export const templateRegistry: Record<number, TemplateRegistryEntry> = {
     },
     sampleSlug: "demo-real-estate",
   },
-  2: legalCounselEntry,
-  3: kitchenAtelierEntry,
-  4: photographerEntry,
-  5: clinicEntry,
-  6: studioEntry,
-  7: barberEntry,
-  8: makerEntry,
-  9: architectEntry,
-  10: athleteEntry,
-  11: editorialEntry,
-  12: atelierEntry,
-  13: universalEntry,
+  // Each entry spreads the template's own metadata but overrides Component
+  // with a direct named import so the Next.js RSC bundler can trace a stable
+  // module reference (e.g. LegalCounsel.tsx#LegalCounsel). Without this,
+  // the runtime cannot locate the component in the React Client Manifest.
+  2: { ...legalCounselEntry, Component: LegalCounsel },
+  3: { ...kitchenAtelierEntry, Component: KitchenAtelier },
+  4: { ...photographerEntry, Component: Photographer },
+  5: { ...clinicEntry, Component: Clinic },
+  6: { ...studioEntry, Component: Studio },
+  7: { ...barberEntry, Component: Barber },
+  8: { ...makerEntry, Component: Maker },
+  9: { ...architectEntry, Component: Architect },
+  10: { ...athleteEntry, Component: Athlete },
+  11: { ...editorialEntry, Component: Editorial },
+  12: { ...atelierEntry, Component: Atelier },
+  13: { ...universalEntry, Component: Universal },
   // Phase 7.8 — designer-team additions (8 sector-tailored designs)
-  14: restaurantEntry,
-  15: hotelEntry,
-  16: techStartupEntry,
-  17: developerEntry,
-  18: yogaStudioEntry,
-  19: personalTrainerEntry,
-  20: musicProducerEntry,
-  21: weddingPlannerEntry,
+  14: { ...restaurantEntry, Component: Restaurant },
+  15: { ...hotelEntry, Component: Hotel },
+  16: { ...techStartupEntry, Component: TechStartup },
+  17: { ...developerEntry, Component: Developer },
+  18: { ...yogaStudioEntry, Component: YogaStudio },
+  19: { ...personalTrainerEntry, Component: PersonalTrainer },
+  20: { ...musicProducerEntry, Component: MusicProducer },
+  21: { ...weddingPlannerEntry, Component: WeddingPlanner },
 };
 
 /**
