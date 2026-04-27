@@ -3,13 +3,28 @@
 // =============================================================================
 // Phase 7.9 — Custom sections editor (shared between the create form and the
 // post-purchase edit page). Lets the customer add up to 6 free-form titled
-// blocks of text, each with an optional inline image.
+// blocks of text, each with optional inline images.
+//
+// Phase 8 — multi-image: each section now carries up to 6 photos via the
+// new `media[]` field. Legacy `mediaPath` is migrated transparently:
+//   - existing single-image sections continue to render until the user
+//     edits the section, at which point we lift the legacy path into the
+//     new array shape.
+//   - new sections only ever write to `media[]`.
 // =============================================================================
 
 import * as React from "react";
 import { X, Camera } from "lucide-react";
 import { Input, Textarea } from "@/components/ui/Input";
-import type { CardData, CustomSection } from "@/lib/validation";
+import {
+  type CardData,
+  type CustomSection,
+  type SectionMedia,
+} from "@/lib/validation";
+
+const MAX_MEDIA_PER_SECTION = 6;
+const MAX_FILE_SIZE_MB = 5;
+const ALLOWED_MIME = ["image/jpeg", "image/png", "image/webp"];
 
 interface Props {
   cardData: CardData;
@@ -20,6 +35,16 @@ interface Props {
     file: File,
     kind: "photo" | "logo"
   ) => Promise<string | null>;
+}
+
+/**
+ * Read the merged media list for a section, lifting legacy `mediaPath` into
+ * the new `media[]` shape when present. Pure — does not mutate the section.
+ */
+function effectiveMedia(section: CustomSection): SectionMedia[] {
+  if (section.media && section.media.length > 0) return section.media;
+  if (section.mediaPath) return [{ src: section.mediaPath }];
+  return [];
 }
 
 export function CustomSectionsEditor({
@@ -115,46 +140,48 @@ function SectionCard({
   L: (k: string, f: string) => string;
 }) {
   const fileRef = React.useRef<HTMLInputElement>(null);
-  const [uploading, setUploading] = React.useState(false);
-  const [previewUrl, setPreviewUrl] = React.useState<string | null>(null);
+  const [uploadingCount, setUploadingCount] = React.useState(0);
 
+  // The single source of truth for this section's images. Lifts legacy
+  // `mediaPath` on first render so subsequent edits only write to `media[]`.
+  const media = effectiveMedia(section);
   const remaining = 800 - (section.body?.length ?? 0);
+  const slotsLeft = MAX_MEDIA_PER_SECTION - media.length;
 
-  const handleFile = async (file: File) => {
-    const allowed = ["image/jpeg", "image/png", "image/webp"];
-    if (!allowed.includes(file.type)) return;
-    if (file.size > 5 * 1024 * 1024) return;
+  const setMedia = (next: SectionMedia[]) => {
+    // Forward-only writes: drop the legacy mediaPath as soon as the user
+    // touches the section so future reads go through `media[]` directly.
+    onChange({ media: next.length ? next : undefined, mediaPath: undefined });
+  };
 
-    // instant preview
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const result = e.target?.result;
-      if (typeof result === "string") setPreviewUrl(result);
-    };
-    reader.readAsDataURL(file);
+  const handleFiles = async (files: FileList) => {
+    const valid: File[] = [];
+    for (const file of Array.from(files)) {
+      if (!ALLOWED_MIME.includes(file.type)) continue;
+      if (file.size > MAX_FILE_SIZE_MB * 1024 * 1024) continue;
+      valid.push(file);
+    }
+    if (valid.length === 0) return;
 
-    setUploading(true);
-    const path = await handleFileUpload(file, "photo");
-    setUploading(false);
-    if (path) {
-      onChange({ mediaPath: path });
-      setPreviewUrl(null);
+    // Cap at remaining slots.
+    const accepted = valid.slice(0, slotsLeft);
+    setUploadingCount((c) => c + accepted.length);
+
+    const newItems: SectionMedia[] = [];
+    for (const file of accepted) {
+      const path = await handleFileUpload(file, "photo");
+      if (path) newItems.push({ src: path });
+      setUploadingCount((c) => Math.max(0, c - 1));
+    }
+
+    if (newItems.length > 0) {
+      setMedia([...media, ...newItems]);
     }
   };
 
-  const displayed = (() => {
-    if (previewUrl) return previewUrl;
-    if (!section.mediaPath) return null;
-    if (
-      section.mediaPath.startsWith("data:") ||
-      section.mediaPath.startsWith("blob:") ||
-      section.mediaPath.startsWith("http") ||
-      section.mediaPath.startsWith("/")
-    ) {
-      return section.mediaPath;
-    }
-    return `/${section.mediaPath}`;
-  })();
+  const removeMediaAt = (idx: number) => {
+    setMedia(media.filter((_, i) => i !== idx));
+  };
 
   return (
     <div className="relative space-y-3 rounded-2xl border border-line bg-bg-1 p-4">
@@ -200,51 +227,83 @@ function SectionCard({
         </p>
       </div>
 
-      {/* Optional inline image — Phase 7.9 C3 */}
-      <div className="flex items-center gap-3">
-        {displayed ? (
-          <div className="flex flex-1 items-center gap-3 rounded-xl border border-line bg-white px-3 py-2">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={displayed}
-              alt=""
-              className="h-12 w-12 rounded-lg object-cover"
-            />
-            <span className="flex-1 truncate text-[11px] text-ink/55">
-              {uploading
-                ? L("uploading", "Wird hochgeladen…")
-                : L("uploadDone", "Hochgeladen")}
-            </span>
-            <button
-              type="button"
-              onClick={() => {
-                onChange({ mediaPath: undefined });
-                setPreviewUrl(null);
-              }}
-              aria-label={L("uploadRemove", "Remove")}
-              className="flex h-7 w-7 items-center justify-center rounded-full border border-line bg-white text-ink/55 transition-colors hover:border-line-firm hover:text-ink"
-            >
-              <X size={11} />
-            </button>
+      {/* Phase 8 — multi-image (max 6) per section. */}
+      <div className="space-y-2">
+        {media.length > 0 ? (
+          <div className="flex flex-wrap gap-2">
+            {media.map((item, idx) => {
+              const url = item.src.startsWith("/") || item.src.startsWith("http")
+                ? item.src
+                : `/${item.src}`;
+              return (
+                <div
+                  key={idx}
+                  className="relative h-16 w-16 overflow-hidden rounded-lg border border-line bg-white"
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={url}
+                    alt={item.alt ?? ""}
+                    className="h-full w-full object-cover"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeMediaAt(idx)}
+                    aria-label={L("uploadRemove", "Remove")}
+                    className="absolute -right-1 -top-1 flex h-5 w-5 items-center justify-center rounded-full border border-line bg-white text-ink/65 shadow-sm transition-colors hover:border-line-firm hover:text-ink"
+                  >
+                    <X size={10} />
+                  </button>
+                </div>
+              );
+            })}
+            {Array.from({ length: uploadingCount }).map((_, i) => (
+              <div
+                key={`up-${i}`}
+                className="flex h-16 w-16 items-center justify-center rounded-lg border border-dashed border-copper/40 bg-copper/5 text-[9px] mono-label uppercase text-copper"
+              >
+                {L("uploading", "…")}
+              </div>
+            ))}
+            {slotsLeft > uploadingCount ? (
+              <button
+                type="button"
+                onClick={() => fileRef.current?.click()}
+                className="flex h-16 w-16 items-center justify-center rounded-lg border border-dashed border-line bg-bg-0 text-ink/55 transition-colors hover:border-copper/60 hover:text-ink"
+                aria-label={L("customSectionAddImage", "Resim ekle")}
+              >
+                <Camera size={16} />
+              </button>
+            ) : null}
           </div>
         ) : (
           <button
             type="button"
             onClick={() => fileRef.current?.click()}
-            className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-xl border border-dashed border-line bg-bg-0 px-3 py-2.5 text-[11px] font-semibold text-ink/55 transition-colors hover:border-copper/50 hover:text-ink"
+            className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-dashed border-line bg-bg-0 px-3 py-3 text-[11px] font-semibold text-ink/55 transition-colors hover:border-copper/50 hover:text-ink"
           >
             <Camera size={13} />
-            {L("customSectionAddImage", "Resim ekle (opsiyonel)")}
+            {L(
+              "customSectionAddImageMulti",
+              "Resim ekle (en fazla 6, opsiyonel)"
+            )}
           </button>
         )}
+
+        <p className="mono-label text-[10px] uppercase tracking-wider text-ink/45">
+          {L("customSectionPhotosCount", "{n} / 6")
+            .replace("{n}", String(media.length + uploadingCount))}
+        </p>
+
         <input
           ref={fileRef}
           type="file"
-          accept="image/jpeg,image/png,image/webp"
+          accept={ALLOWED_MIME.join(",")}
+          multiple
           className="sr-only"
           onChange={(e) => {
-            const file = e.target.files?.[0];
-            if (file) void handleFile(file);
+            const files = e.target.files;
+            if (files && files.length > 0) void handleFiles(files);
             e.target.value = "";
           }}
         />

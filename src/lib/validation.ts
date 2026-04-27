@@ -279,18 +279,51 @@ export type ImagePosition = z.infer<typeof ImagePositionSchema>;
 
 // -----------------------------------------------------------------------------
 // Phase 7.9 — Custom sections the customer can add to their card.
-// Templates render these at the bottom of the card. Title is required, body
-// is required, optional photo path renders as a small image alongside the body.
+// Phase 8 — multi-image: each section now carries an optional `media[]` array
+// of up to 6 images. The legacy `mediaPath: string` field is preserved for
+// backward compatibility — readers must call `readSectionMedia()` to merge
+// both shapes. New writes go to `media[]`; `mediaPath` is no longer set.
 // -----------------------------------------------------------------------------
+const SectionMediaSchema = z
+  .object({
+    src: z.string().trim().max(500),
+    alt: z.string().trim().max(160).optional(),
+  })
+  .strict();
+export type SectionMedia = z.infer<typeof SectionMediaSchema>;
+
 export const CustomSectionSchema = z
   .object({
     id: z.string().trim().min(1).max(40),
     title: z.string().trim().min(1).max(60),
     body: z.string().trim().min(1).max(800),
+    /** @deprecated since Phase 8 — kept for backward compat with pre-Phase-8
+     *  cards. New writes use `media[]` instead. Readers should always go
+     *  through `readSectionMedia(section)` which merges both shapes. */
     mediaPath: z.string().trim().max(500).optional(),
+    /** Phase 8 — up to 6 inline images per section, rendered as 1 spotlight
+     *  (1 image), 2-col grid (2-3 images), or 3-col grid (4-6 images). */
+    media: z.array(SectionMediaSchema).max(6).optional(),
   })
   .strict();
 export type CustomSection = z.infer<typeof CustomSectionSchema>;
+
+/**
+ * Returns the unified list of images for a custom section, merging the
+ * legacy `mediaPath` field into the new `media[]` array. Always use this
+ * helper at render and edit sites — never read `media` or `mediaPath`
+ * directly.
+ *
+ * Order of precedence:
+ *  1. `media[]` if present and non-empty (new shape).
+ *  2. `mediaPath` wrapped in a single-item list (legacy shape).
+ *  3. Empty array.
+ */
+export function readSectionMedia(section: CustomSection): SectionMedia[] {
+  if (section.media && section.media.length > 0) return section.media;
+  if (section.mediaPath) return [{ src: section.mediaPath }];
+  return [];
+}
 
 // -----------------------------------------------------------------------------
 // Phase 7.9 — Typography preset. Overrides the template's display + body fonts
