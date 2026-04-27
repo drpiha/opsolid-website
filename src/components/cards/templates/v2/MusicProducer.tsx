@@ -1251,6 +1251,7 @@ export const musicProducerEntry: TemplateRegistryEntry = {
     brandAccentHex: LOCKED_ACCENT,
   },
   sampleSlug: "demo-music-producer",
+  nameRules: { transform: "uppercase", maxDisplayLength: 24 },
 };
 
 // source: Unsplash — https://unsplash.com/license (free for commercial use).

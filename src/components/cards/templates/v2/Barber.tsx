@@ -1050,6 +1050,7 @@ export const barberEntry: TemplateRegistryEntry = {
     brandAccentHex: LOCKED_ACCENT,
   },
   sampleSlug: "sample-barber",
+  nameRules: { transform: "uppercase", maxDisplayLength: 24 },
 };
 
 export const barberSample: SampleData = {

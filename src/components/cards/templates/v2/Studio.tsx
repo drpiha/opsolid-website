@@ -1078,6 +1078,7 @@ export const studioEntry: TemplateRegistryEntry = {
     brandAccentHex: LOCKED_ACCENT,
   },
   sampleSlug: "sample-studio",
+  nameRules: { transform: "uppercase", maxDisplayLength: 24 },
 };
 
 export const studioSample: SampleData = {

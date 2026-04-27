@@ -1303,6 +1303,7 @@ export const athleteEntry: TemplateRegistryEntry = {
     brandAccentHex: LOCKED_ACCENT,
   },
   sampleSlug: "demo-athlete",
+  nameRules: { transform: "uppercase", maxDisplayLength: 24 },
 };
 
 // source: Unsplash (license: https://unsplash.com/license) — free for commercial use.

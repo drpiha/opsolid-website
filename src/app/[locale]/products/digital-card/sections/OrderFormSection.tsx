@@ -36,7 +36,7 @@ import {
   getTemplateEntry,
   templateRegistry,
 } from "@/components/cards/templates/v2/registry";
-import type { TemplateSupports } from "@/components/cards/templates/v2/types";
+import type { TemplateSupports, TemplateNameRules } from "@/components/cards/templates/v2/types";
 import { OrderPayloadSchema, BillingMode } from "@/lib/validation";
 import type {
   CardData,
@@ -665,6 +665,7 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
                   contactPhone={contactPhone}
                   fieldErrors={fieldErrors}
                   clearFieldError={clearFieldError}
+                  nameRules={v2Entry?.nameRules}
                   photoPath={photoPath}
                   setPhotoPath={setPhotoPath}
                   logoPath={logoPath}
@@ -1363,6 +1364,7 @@ function StepCardContent({
   contactPhone,
   fieldErrors,
   clearFieldError,
+  nameRules,
   photoPath,
   setPhotoPath,
   logoPath,
@@ -1397,6 +1399,7 @@ function StepCardContent({
   contactPhone: string;
   fieldErrors: Record<string, string>;
   clearFieldError: (key: string) => void;
+  nameRules?: TemplateNameRules;
   photoPath: string | null;
   setPhotoPath: (v: string | null) => void;
   logoPath: string | null;
@@ -1445,17 +1448,42 @@ function StepCardContent({
       )}
 
       <div className="grid gap-4 md:grid-cols-2">
-        <Input
-          id="field-cardData-name"
-          label={L("cardName", "Vor- und Nachname") + " *"}
-          value={cardData.name}
-          onChange={(e) => {
-            setCard("name", e.target.value);
-            clearFieldError("cardData.name");
-          }}
-          error={fieldErrors["cardData.name"]}
-          placeholder="Anna Fischer"
-        />
+        <div className="space-y-1.5">
+          <Input
+            id="field-cardData-name"
+            label={L("cardName", "Vor- und Nachname") + " *"}
+            value={cardData.name}
+            onChange={(e) => {
+              setCard("name", e.target.value);
+              clearFieldError("cardData.name");
+            }}
+            error={fieldErrors["cardData.name"]}
+            placeholder="Anna Fischer"
+          />
+          {cardData.name ? (
+            <div className="flex items-center gap-2">
+              <span
+                className="inline-block max-w-full truncate rounded-full border border-copper/30 bg-copper/5 px-3 py-1 text-xs font-medium text-ink"
+                style={{
+                  textTransform: nameRules?.transform === "uppercase" ? "uppercase" : "none",
+                  letterSpacing: nameRules?.transform === "uppercase" ? "0.12em" : "normal",
+                }}
+              >
+                {cardData.name}
+              </span>
+              {nameRules?.transform === "uppercase" && (
+                <span className="mono-label text-[9px] uppercase tracking-wider text-ink/40">
+                  {L("namePreviewHint", "Bu şablon isimleri büyük harfle gösterir")}
+                </span>
+              )}
+              {nameRules?.maxDisplayLength && cardData.name.length > nameRules.maxDisplayLength && (
+                <span className="mono-label text-[9px] uppercase tracking-wider text-copper">
+                  {L("nameTooLong", "Uzun — taşabilir")}
+                </span>
+              )}
+            </div>
+          ) : null}
+        </div>
         <Input
           id="field-cardData-title"
           label={L("cardTitle", "Titel / Rolle")}

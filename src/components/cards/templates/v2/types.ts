@@ -74,6 +74,23 @@ export interface TemplateSupports {
 }
 
 /**
+ * How a template renders the card owner's name. Used by the order form to
+ * show a live preview chip so the customer sees exactly how their name will
+ * appear before submitting.
+ *
+ * `transform: "uppercase"` — template CSS upper-cases the name (barber, dev…).
+ * `transform: "none"` — template renders the name as-typed (default).
+ * `maxDisplayLength` — soft warning threshold; the form shows a hint above this.
+ */
+export interface TemplateNameRules {
+  transform?: "uppercase" | "none";
+  /** CSS font-family string used for the preview chip. */
+  displayFont?: string;
+  /** Soft character limit — name renders but may wrap or scale. */
+  maxDisplayLength?: number;
+}
+
+/**
  * Single source of truth for a template. The registry is `Record<number, …>`
  * keyed by `CardOrder.templateId` — same number the customer sees in the UI
  * and the same number stored in Stripe metadata.
@@ -98,6 +115,8 @@ export interface TemplateRegistryEntry {
   };
   /** Dev-only slug used by `/dev/template-gallery` to render this template. */
   sampleSlug: string;
+  /** Optional name rendering rules — drives the live preview chip in the order form. */
+  nameRules?: TemplateNameRules;
 }
 
 /**
