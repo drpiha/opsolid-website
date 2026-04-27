@@ -13,8 +13,18 @@
 // customer from their inbox to the confirmation modal.
 // =============================================================================
 
-import { useEffect, useMemo, useState } from "react";
-import { Loader2, Upload, AlertCircle, CheckCircle2, Check } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  Loader2,
+  Upload,
+  AlertCircle,
+  CheckCircle2,
+  Check,
+  Camera,
+  ChevronDown,
+  ChevronUp,
+  X,
+} from "lucide-react";
 import { Input, Textarea } from "@/components/ui/Input";
 import { useLocale } from "@/context/LocaleContext";
 import { TemplateRenderer } from "@/components/cards/TemplateRenderer";
@@ -201,6 +211,14 @@ export function CardEditClient(props: Props) {
         >
           {/* ================ LEFT ================ */}
           <div className="space-y-10">
+            {/* Album pending approvals — visitor uploads awaiting owner action */}
+            {props.slug && props.status === "PUBLISHED" && (
+              <AlbumPendingPanel
+                slug={props.slug}
+                editToken={props.editToken}
+              />
+            )}
+
             {/* Contact — read-only */}
             <div className="rounded-2xl border border-neutral-200 bg-white p-5">
               <p className="text-eyebrow uppercase text-ink/50">
@@ -697,6 +715,10 @@ export function CardEditClient(props: Props) {
           onClose={() => setCancelOpen(false)}
         />
       )}
+
+      {props.slug && props.status === "PUBLISHED" && (
+        <OwnerPhotoFab slug={props.slug} editToken={props.editToken} />
+      )}
     </main>
   );
 }
@@ -994,5 +1016,306 @@ function EditPreview({
         tone={isDarkTemplate ? "dark" : "light"}
       />
     </div>
+  );
+}
+
+// =============================================================================
+// AlbumPendingPanel — owner approval queue for visitor album uploads.
+//
+// Mounts a single GET to /api/cards/[slug]/album/pending; shows nothing when
+// the queue is empty, otherwise a copper-tinted bar that expands into a
+// thumbnail list with Approve / Reject affordances per row. Each PATCH
+// optimistically removes the row from local state so the count is always in
+// sync with what the owner actually sees.
+// =============================================================================
+interface PendingPhoto {
+  id: string;
+  photoPath: string | null;
+  caption: string | null;
+  uploaderName: string | null;
+  uploaderType: string | null;
+  createdAt: string;
+}
+
+function AlbumPendingPanel({
+  slug,
+  editToken,
+}: {
+  slug: string;
+  editToken: string;
+}) {
+  const [photos, setPhotos] = useState<PendingPhoto[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [expanded, setExpanded] = useState(false);
+  const [busyIds, setBusyIds] = useState<Set<string>>(new Set());
+
+  useEffect(() => {
+    let cancelled = false;
+    setLoading(true);
+    fetch(
+      `/api/cards/${slug}/album/pending?t=${encodeURIComponent(editToken)}`,
+      { cache: "no-store" },
+    )
+      .then((res) =>
+        res.ok ? (res.json() as Promise<{ photos: PendingPhoto[] }>) : null,
+      )
+      .then((data) => {
+        if (cancelled || !data) return;
+        setPhotos(data.photos);
+      })
+      .catch(() => {
+        /* swallow — the panel is non-critical */
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [slug, editToken]);
+
+  const decide = async (id: string, status: "APPROVED" | "REJECTED") => {
+    setBusyIds((prev) => {
+      const next = new Set(prev);
+      next.add(id);
+      return next;
+    });
+    try {
+      const res = await fetch(
+        `/api/cards/${slug}/album/${id}?t=${encodeURIComponent(editToken)}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ status }),
+        },
+      );
+      if (res.ok) {
+        setPhotos((prev) => prev.filter((p) => p.id !== id));
+      }
+    } finally {
+      setBusyIds((prev) => {
+        const next = new Set(prev);
+        next.delete(id);
+        return next;
+      });
+    }
+  };
+
+  if (loading) return null;
+  if (photos.length === 0) return null;
+
+  return (
+    <div className="overflow-hidden rounded-2xl border border-copper/30 bg-copper/[0.06]">
+      <button
+        type="button"
+        onClick={() => setExpanded((v) => !v)}
+        className="flex w-full items-center justify-between gap-3 px-5 py-4 text-left transition hover:bg-copper/[0.1]"
+      >
+        <span className="flex items-center gap-3">
+          <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-copper text-white">
+            <Camera size={16} />
+          </span>
+          <span className="min-w-0">
+            <span className="block text-[13px] font-semibold text-ink">
+              {photos.length} yeni fotoğraf onay bekliyor
+            </span>
+            <span className="block text-[11px] text-ink/55">
+              Albümde herkese görünmesi için onayla.
+            </span>
+          </span>
+        </span>
+        {expanded ? (
+          <ChevronUp size={16} className="text-ink/55" />
+        ) : (
+          <ChevronDown size={16} className="text-ink/55" />
+        )}
+      </button>
+
+      {expanded && (
+        <ul className="divide-y divide-copper/15 border-t border-copper/15 bg-white">
+          {photos.map((p) => {
+            const busy = busyIds.has(p.id);
+            return (
+              <li
+                key={p.id}
+                className="flex items-start gap-3 px-4 py-3 sm:px-5"
+              >
+                <div className="h-[60px] w-[60px] shrink-0 overflow-hidden rounded-lg bg-neutral-100 ring-1 ring-black/5">
+                  {p.photoPath ? (
+                    /* eslint-disable-next-line @next/next/no-img-element */
+                    <img
+                      src={p.photoPath}
+                      alt={p.caption ?? ""}
+                      className="h-full w-full object-cover"
+                    />
+                  ) : null}
+                </div>
+                <div className="min-w-0 flex-1">
+                  {p.uploaderName && (
+                    <p className="truncate text-[12px] font-semibold text-ink">
+                      {p.uploaderName}
+                    </p>
+                  )}
+                  {p.caption && (
+                    <p className="line-clamp-2 text-[12px] leading-snug text-ink/65">
+                      {p.caption}
+                    </p>
+                  )}
+                  <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-ink/40">
+                    {new Date(p.createdAt).toLocaleDateString()}
+                  </p>
+                </div>
+                <div className="flex shrink-0 items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => decide(p.id, "APPROVED")}
+                    disabled={busy}
+                    aria-label="Onayla"
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-green-600/30 bg-green-600/10 text-green-700 transition hover:bg-green-600/20 disabled:opacity-50"
+                  >
+                    {busy ? (
+                      <Loader2 size={12} className="animate-spin" />
+                    ) : (
+                      <Check size={14} strokeWidth={2.5} />
+                    )}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => decide(p.id, "REJECTED")}
+                    disabled={busy}
+                    aria-label="Reddet"
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-brand/30 bg-brand/10 text-brand transition hover:bg-brand/20 disabled:opacity-50"
+                  >
+                    <X size={14} strokeWidth={2.5} />
+                  </button>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+// =============================================================================
+// OwnerPhotoFab — fixed-position camera button for the card owner. One tap
+// opens the OS file/camera picker; the selected file is uploaded straight to
+// the album as APPROVED via ?asOwner=1. Sized for thumb reach on mobile and
+// tucked into the bottom-right on desktop.
+// =============================================================================
+type FabState =
+  | { kind: "idle" }
+  | { kind: "uploading" }
+  | { kind: "success" }
+  | { kind: "error"; message: string };
+
+function OwnerPhotoFab({
+  slug,
+  editToken,
+}: {
+  slug: string;
+  editToken: string;
+}) {
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const [state, setState] = useState<FabState>({ kind: "idle" });
+  const toastTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (toastTimer.current) clearTimeout(toastTimer.current);
+    };
+  }, []);
+
+  const flashToast = (next: FabState, ms = 2000) => {
+    setState(next);
+    if (toastTimer.current) clearTimeout(toastTimer.current);
+    toastTimer.current = setTimeout(() => setState({ kind: "idle" }), ms);
+  };
+
+  const handleSelect = async (file: File | null) => {
+    if (!file) return;
+    if (!["image/jpeg", "image/png", "image/webp"].includes(file.type)) {
+      flashToast({
+        kind: "error",
+        message: "Sadece JPEG, PNG veya WEBP",
+      });
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      flashToast({ kind: "error", message: "Dosya çok büyük (max 5 MB)" });
+      return;
+    }
+
+    setState({ kind: "uploading" });
+    try {
+      const fd = new FormData();
+      fd.append("photo", file);
+      const res = await fetch(
+        `/api/cards/${slug}/album?asOwner=1&t=${encodeURIComponent(editToken)}`,
+        { method: "POST", body: fd },
+      );
+      if (!res.ok) {
+        flashToast({ kind: "error", message: "Hata oluştu" });
+        return;
+      }
+      flashToast({ kind: "success" });
+    } catch {
+      flashToast({ kind: "error", message: "Hata oluştu" });
+    } finally {
+      // Reset the input so the same file can be re-picked if the upload failed.
+      if (inputRef.current) inputRef.current.value = "";
+    }
+  };
+
+  const uploading = state.kind === "uploading";
+
+  return (
+    <>
+      <input
+        ref={inputRef}
+        type="file"
+        accept="image/jpeg,image/png,image/webp"
+        capture="environment"
+        className="sr-only"
+        onChange={(e) => handleSelect(e.target.files?.[0] ?? null)}
+      />
+
+      {/* Toast — always rendered so transitions don't pop the layout */}
+      {state.kind !== "idle" && (
+        <div
+          role="status"
+          aria-live="polite"
+          className={[
+            "fixed bottom-24 right-6 z-50 max-w-[80vw] rounded-full px-4 py-2 text-[12px] font-semibold shadow-lg transition",
+            state.kind === "success"
+              ? "bg-green-600 text-white shadow-green-600/30"
+              : state.kind === "error"
+                ? "bg-brand text-white shadow-brand/30"
+                : "bg-ink/90 text-white shadow-black/30",
+          ].join(" ")}
+        >
+          {state.kind === "success"
+            ? "✓ Eklendi"
+            : state.kind === "error"
+              ? state.message
+              : "Yükleniyor..."}
+        </div>
+      )}
+
+      <button
+        type="button"
+        onClick={() => inputRef.current?.click()}
+        disabled={uploading}
+        aria-label="Fotoğraf ekle"
+        className="fixed bottom-6 right-6 z-40 inline-flex h-14 w-14 items-center justify-center rounded-full bg-copper text-white shadow-lg shadow-copper/30 transition hover:bg-copper-700 active:scale-95 disabled:cursor-not-allowed disabled:opacity-70"
+      >
+        {uploading ? (
+          <Loader2 size={20} className="animate-spin" />
+        ) : (
+          <Camera size={20} />
+        )}
+      </button>
+    </>
   );
 }

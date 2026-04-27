@@ -28,6 +28,7 @@ import { readSourceFromSearchParams } from "@/components/cards/smart/SmartCardSo
 import { getSiteUrl } from "@/lib/stripe";
 import { getTemplateEntry } from "@/components/cards/templates/v2/registry";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
+import { AlbumSection } from "@/components/cards/album/AlbumSection";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -264,6 +265,11 @@ export default async function CardPage({ params, searchParams }: PageProps) {
         />
         <CustomSectionsBlock
           sections={parsed.data.customSections}
+          accentHex={order.brandAccentHex ?? undefined}
+          tone={isDarkTemplate ? "dark" : "light"}
+        />
+        <AlbumSection
+          slug={slug}
           accentHex={order.brandAccentHex ?? undefined}
           tone={isDarkTemplate ? "dark" : "light"}
         />

@@ -117,13 +117,15 @@ export async function GET(
       orderBy: [{ approvedAt: "desc" }, { createdAt: "desc" }],
       skip: (page - 1) * pageSize,
       take: pageSize,
-      select: {
-        id: true,
-        photoPath: true,
-        caption: true,
-        uploaderName: true,
-        connectionId: true,
-        approvedAt: true,
+      include: {
+        // Pull just the visitor side's contactName so the public album can
+        // surface "📎 Asya Konak ile" badges without leaking the full
+        // CardConnection record.
+        connection: {
+          include: {
+            visitorCard: { select: { contactName: true } },
+          },
+        },
       },
     }),
   ]);
@@ -134,6 +136,7 @@ export async function GET(
     caption: row.caption,
     uploaderName: row.uploaderName,
     connectionId: row.connectionId,
+    connectionName: row.connection?.visitorCard?.contactName ?? null,
     approvedAt: row.approvedAt?.toISOString() ?? null,
   }));
 
