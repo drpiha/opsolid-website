@@ -92,7 +92,7 @@ jobs:
           done
 
           echo "==> Running prisma db push (idempotent schema sync)"
-          docker compose exec -T opsolid npx prisma db push
+          docker compose exec -T opsolid node_modules/.bin/prisma db push
 
           echo "==> Cleaning up"
           rm -f "$TARBALL"
