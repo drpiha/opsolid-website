@@ -48,6 +48,7 @@ done
 
 run_sql "init.sql"                    "$REPO_ROOT/prisma/init.sql"
 run_sql "patch_001_design_review.sql" "$REPO_ROOT/prisma/patch_001_design_review.sql"
+run_sql "patch_002_voice_agent.sql"   "$REPO_ROOT/prisma/patch_002_voice_agent.sql"
 run_sql "seed.sql"                    "$REPO_ROOT/prisma/seed.sql"
 
 echo "== bootstrap ok =="

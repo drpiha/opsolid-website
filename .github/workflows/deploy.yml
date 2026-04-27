@@ -77,22 +77,11 @@ jobs:
           cd "$DEPLOY_DIR"
           tar -xzf "$TARBALL"
 
+          echo "==> Running DB schema bootstrap (idempotent SQL patches)"
+          bash "$DEPLOY_DIR/deploy/hostinger/db-bootstrap.sh"
+
           echo "==> Rebuilding opsolid container (db and others untouched)"
           docker compose up -d --build opsolid
-
-          echo "==> Waiting for app container to be running..."
-          for i in $(seq 1 24); do
-            STATUS=$(docker inspect --format='{{.State.Status}}' opsolid-app 2>/dev/null || echo "not_found")
-            if [ "$STATUS" = "running" ]; then
-              echo "Container running (attempt $i)"
-              break
-            fi
-            echo "  Status: $STATUS ($i/24) — waiting 5s..."
-            sleep 5
-          done
-
-          echo "==> Running prisma db push (idempotent schema sync)"
-          docker compose exec -T opsolid node_modules/.bin/prisma db push
 
           echo "==> Cleaning up"
           rm -f "$TARBALL"
