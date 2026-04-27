@@ -161,7 +161,20 @@ export default async function CardPage({ params, searchParams }: PageProps) {
   if (!order) notFound();
 
   const parsed = CardDataSchema.safeParse(order.cardData);
-  if (!parsed.success) notFound();
+  if (!parsed.success) {
+    // Phase 8 — log the parse failure so prod logs surface the bad field
+    // instead of silently 404-ing. The slug is a public identifier; the
+    // issue list is a small zod report. Safe to log.
+    console.error("[card render] CardDataSchema parse failed", {
+      slug,
+      orderId: order.id,
+      issues: parsed.error.issues.map((i) => ({
+        path: i.path.join("."),
+        message: i.message,
+      })),
+    });
+    notFound();
+  }
 
   const source = readSourceFromSearchParams(sp);
 
@@ -201,16 +214,26 @@ export default async function CardPage({ params, searchParams }: PageProps) {
     "--tpl-logo-y": `${logoPos?.y ?? 50}%`,
     "--tpl-logo-scale": String(logoPos?.scale ?? 1),
   } as React.CSSProperties;
+  // Phase 8 — typography preset is best-effort. A missing/renamed preset
+  // file or font value used to crash the SSR render; we now log + ignore.
   if (parsed.data.typographyPreset && parsed.data.typographyPreset !== "default") {
-    const { getTypographyPreset } = await import("@/lib/typographyPresets");
-    const preset = getTypographyPreset(parsed.data.typographyPreset);
-    if (preset.displayFamily) {
-      (wrapperStyle as Record<string, string>)["--tpl-font-display"] =
-        preset.displayFamily;
-    }
-    if (preset.bodyFamily) {
-      (wrapperStyle as Record<string, string>)["--tpl-font-body"] =
-        preset.bodyFamily;
+    try {
+      const { getTypographyPreset } = await import("@/lib/typographyPresets");
+      const preset = getTypographyPreset(parsed.data.typographyPreset);
+      if (preset?.displayFamily) {
+        (wrapperStyle as Record<string, string>)["--tpl-font-display"] =
+          preset.displayFamily;
+      }
+      if (preset?.bodyFamily) {
+        (wrapperStyle as Record<string, string>)["--tpl-font-body"] =
+          preset.bodyFamily;
+      }
+    } catch (e) {
+      console.error("[card render] typography preset load failed", {
+        slug,
+        preset: parsed.data.typographyPreset,
+        error: e instanceof Error ? e.message : String(e),
+      });
     }
   }
 
