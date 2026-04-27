@@ -488,3 +488,27 @@ export const AdminStatusUpdateSchema = z.object({
   ]),
   note: z.string().max(500).optional(),
 });
+
+// -----------------------------------------------------------------------------
+// Album photo schemas (Workstream E)
+//
+// Album = card-bound photo wall. Owner uploads land as APPROVED, visitor
+// uploads land as PENDING and surface only after owner approval. caption is
+// optional free text; connectionId optionally tags a photo to an existing
+// CardConnection ("taken with that person").
+// -----------------------------------------------------------------------------
+export const AlbumPhotoStatusSchema = z.enum(["PENDING", "APPROVED", "REJECTED"]);
+export type AlbumPhotoStatus = z.infer<typeof AlbumPhotoStatusSchema>;
+
+export const AlbumUploadSchema = z.object({
+  caption: z.string().trim().max(500).optional(),
+  uploaderName: z.string().trim().max(120).optional(),
+});
+export type AlbumUpload = z.infer<typeof AlbumUploadSchema>;
+
+export const AlbumPatchSchema = z.object({
+  status: AlbumPhotoStatusSchema.optional(),
+  caption: z.string().trim().max(500).optional(),
+  connectionId: z.string().nullable().optional(),
+});
+export type AlbumPatch = z.infer<typeof AlbumPatchSchema>;

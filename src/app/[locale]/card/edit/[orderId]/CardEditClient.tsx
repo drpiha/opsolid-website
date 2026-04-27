@@ -21,6 +21,7 @@ import { TemplateRenderer } from "@/components/cards/TemplateRenderer";
 import type { CardData, ImagePosition } from "@/lib/validation";
 import { PhotoEditor } from "@/components/cards/PhotoEditor";
 import { CustomSectionsEditor } from "@/components/cards/order-form/CustomSectionsEditor";
+import { GalleryEditor } from "@/components/cards/order-form/GalleryEditor";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
 import { TYPOGRAPHY_PRESET_LIST, getTypographyPreset } from "@/lib/typographyPresets";
 import { getTemplateEntry } from "@/components/cards/templates/v2/registry";
@@ -131,6 +132,7 @@ export function CardEditClient(props: Props) {
       // typographyPreset on the wire; the validator will strip falsy
       // optionals on the server.
       customSections: cardData.customSections,
+      gallery: cardData.gallery,
       photoPosition: cardData.photoPosition,
       logoPosition: cardData.logoPosition,
       typographyPreset: cardData.typographyPreset,
@@ -415,6 +417,24 @@ export function CardEditClient(props: Props) {
                   )}
                 </div>
               </div>
+            </fieldset>
+
+            {/* Gallery — up to 24 photos rendered on the public card */}
+            <fieldset className="space-y-4">
+              <legend className="text-heading-sm text-ink">
+                {(form as Record<string, string>).gallerySection ?? "Galeri"}
+              </legend>
+              {(form as Record<string, string>).galleryHint && (
+                <p className="-mt-2 text-xs text-ink/55">
+                  {(form as Record<string, string>).galleryHint}
+                </p>
+              )}
+              <GalleryEditor
+                gallery={cardData.gallery}
+                onGalleryChange={(next) => setCard("gallery", next)}
+                handleFileUpload={handleFileUpload}
+                L={(k, fb) => (form as Record<string, string>)[k] ?? fb}
+              />
             </fieldset>
 
             {/* Phase 7.9 — Custom Sections */}

@@ -141,6 +141,9 @@ model CardOrder {
   /** Connections sent: this card was used as the visitor on someone else's card. */
   visitorConnections CardConnection[] @relation("VisitorConnections")
 
+  /** Album photos contributed to this card by owner or visitors. */
+  albumPhotos CardAlbumPhoto[]
+
   @@index([status])
   @@index([contactPhone])
   @@index([callMeBack, contactedAt])
@@ -290,9 +293,41 @@ model CardConnection {
   ownerCard   CardOrder @relation("OwnerConnections", fields: [ownerCardId], references: [id], onDelete: Cascade)
   visitorCard CardOrder @relation("VisitorConnections", fields: [visitorCardId], references: [id], onDelete: Cascade)
 
+  /** Album photos tagged as "with this connection". */
+  albumPhotos CardAlbumPhoto[]
+
   @@unique([ownerCardId, visitorCardId])
   @@index([ownerCardId, createdAt])
   @@map("card_connections")
+}
+
+// -----------------------------------------------------------------------------
+// CardAlbumPhoto — kart başına album fotoğrafı. Sahip veya ziyaretçi yükler.
+//   uploaderType: "owner" | "visitor"
+//   status: "PENDING" | "APPROVED" | "REJECTED"
+// Visitor fotoğrafları sahip onayından sonra görünür.
+// connectionId: opsiyonel FK → CardConnection (bu fotoğrafı kimin ile çekildi)
+// uploaderIpHash: sha256(ip + salt) — abuse detection, raw IP saklanmaz.
+// -----------------------------------------------------------------------------
+model CardAlbumPhoto {
+  id              String   @id @default(cuid())
+  cardOrderId     String   @map("card_order_id")
+  uploaderType    String   @map("uploader_type") // "owner" | "visitor"
+  uploaderName    String?  @map("uploader_name")
+  uploaderIpHash  String?  @map("uploader_ip_hash")
+  photoPath       String   @map("photo_path")
+  caption         String?  @db.Text
+  connectionId    String?  @map("connection_id")
+  status          String   @default("PENDING")
+  createdAt       DateTime @default(now()) @map("created_at")
+  approvedAt      DateTime? @map("approved_at")
+
+  cardOrder   CardOrder      @relation(fields: [cardOrderId], references: [id], onDelete: Cascade)
+  connection  CardConnection? @relation(fields: [connectionId], references: [id], onDelete: SetNull)
+
+  @@index([cardOrderId, status])
+  @@index([connectionId])
+  @@map("card_album_photos")
 }
 
 // -----------------------------------------------------------------------------
