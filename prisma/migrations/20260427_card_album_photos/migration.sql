@@ -13,7 +13,7 @@
 -- enough entropy for abuse detection without ever persisting raw IPs.
 -- =============================================================================
 
-CREATE TABLE "card_album_photos" (
+CREATE TABLE IF NOT EXISTS "card_album_photos" (
     "id" TEXT NOT NULL,
     "card_order_id" TEXT NOT NULL,
     "uploader_type" TEXT NOT NULL,
@@ -29,8 +29,17 @@ CREATE TABLE "card_album_photos" (
     CONSTRAINT "card_album_photos_pkey" PRIMARY KEY ("id")
 );
 
-CREATE INDEX "card_album_photos_card_order_id_status_idx" ON "card_album_photos"("card_order_id", "status");
-CREATE INDEX "card_album_photos_connection_id_idx" ON "card_album_photos"("connection_id");
+CREATE INDEX IF NOT EXISTS "card_album_photos_card_order_id_status_idx" ON "card_album_photos"("card_order_id", "status");
+CREATE INDEX IF NOT EXISTS "card_album_photos_connection_id_idx" ON "card_album_photos"("connection_id");
 
-ALTER TABLE "card_album_photos" ADD CONSTRAINT "card_album_photos_card_order_id_fkey" FOREIGN KEY ("card_order_id") REFERENCES "card_orders"("id") ON DELETE CASCADE ON UPDATE CASCADE;
-ALTER TABLE "card_album_photos" ADD CONSTRAINT "card_album_photos_connection_id_fkey" FOREIGN KEY ("connection_id") REFERENCES "card_connections"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'card_album_photos_card_order_id_fkey') THEN
+    ALTER TABLE "card_album_photos" ADD CONSTRAINT "card_album_photos_card_order_id_fkey" FOREIGN KEY ("card_order_id") REFERENCES "card_orders"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+  END IF;
+END $$;
+
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_constraint WHERE conname = 'card_album_photos_connection_id_fkey') THEN
+    ALTER TABLE "card_album_photos" ADD CONSTRAINT "card_album_photos_connection_id_fkey" FOREIGN KEY ("connection_id") REFERENCES "card_connections"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+  END IF;
+END $$;
