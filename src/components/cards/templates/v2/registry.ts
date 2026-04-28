@@ -41,6 +41,16 @@ import { yogaStudioEntry, YogaStudio } from "./YogaStudio";
 import { personalTrainerEntry, PersonalTrainer } from "./PersonalTrainer";
 import { musicProducerEntry, MusicProducer } from "./MusicProducer";
 import { weddingPlannerEntry, WeddingPlanner } from "./WeddingPlanner";
+// Phase 7.10 Batch A — Dentist, Psychologist, Beauty (ids 22-30)
+import { dentistEntry, Dentist } from "./Dentist";
+import { dentistPureEntry, DentistPure } from "./DentistPure";
+import { dentistVividEntry, DentistVivid } from "./DentistVivid";
+import { psychologistEntry, Psychologist } from "./Psychologist";
+import { psychologistPureEntry, PsychologistPure } from "./PsychologistPure";
+import { psychologistVividEntry, PsychologistVivid } from "./PsychologistVivid";
+import { beautySalonEntry, BeautySalon } from "./BeautySalon";
+import { beautySalonNoirEntry, BeautySalonNoir } from "./BeautySalonNoir";
+import { beautySalonPureEntry, BeautySalonPure } from "./BeautySalonPure";
 import type { TemplateRegistryEntry } from "./types";
 
 export const templateRegistry: Record<number, TemplateRegistryEntry> = {
@@ -93,6 +103,16 @@ export const templateRegistry: Record<number, TemplateRegistryEntry> = {
   19: { ...personalTrainerEntry, Component: PersonalTrainer },
   20: { ...musicProducerEntry, Component: MusicProducer },
   21: { ...weddingPlannerEntry, Component: WeddingPlanner },
+  // Phase 7.10 Batch A — Dentist · Psychologist · Beauty (3 sectors × 3 styles)
+  22: { ...dentistEntry, Component: Dentist },
+  23: { ...dentistPureEntry, Component: DentistPure },
+  24: { ...dentistVividEntry, Component: DentistVivid },
+  25: { ...psychologistEntry, Component: Psychologist },
+  26: { ...psychologistPureEntry, Component: PsychologistPure },
+  27: { ...psychologistVividEntry, Component: PsychologistVivid },
+  28: { ...beautySalonEntry, Component: BeautySalon },
+  29: { ...beautySalonNoirEntry, Component: BeautySalonNoir },
+  30: { ...beautySalonPureEntry, Component: BeautySalonPure },
 };
 
 /**
@@ -131,7 +151,10 @@ export type PlannedSector =
   | "hospitality"
   | "consultant"
   | "tech"
-  | "events";
+  | "events"
+  | "dentist"
+  | "psychologist"
+  | "beauty";
 
 export interface PlannedTemplate {
   id: number;
@@ -163,4 +186,14 @@ export const plannedLineup: readonly PlannedTemplate[] = [
   { id: 19, key: "personal-trainer", name: "Personal Trainer", sector: "fitness" },
   { id: 20, key: "music-producer", name: "Music Producer", sector: "music" },
   { id: 21, key: "wedding-planner", name: "Wedding Planner", sector: "events" },
+  // Phase 7.10 Batch A
+  { id: 22, key: "dentist", name: "Dentist", sector: "dentist" },
+  { id: 23, key: "dentist-pure", name: "Dentist — Pure", sector: "dentist" },
+  { id: 24, key: "dentist-vivid", name: "Dentist — Vivid", sector: "dentist" },
+  { id: 25, key: "psychologist", name: "Psychologist", sector: "psychologist" },
+  { id: 26, key: "psychologist-pure", name: "Psychologist — Pure", sector: "psychologist" },
+  { id: 27, key: "psychologist-vivid", name: "Psychologist — Vivid", sector: "psychologist" },
+  { id: 28, key: "beauty-salon", name: "Beauty Salon", sector: "beauty" },
+  { id: 29, key: "beauty-salon-noir", name: "Beauty Salon — Noir", sector: "beauty" },
+  { id: 30, key: "beauty-salon-pure", name: "Beauty Salon — Pure", sector: "beauty" },
 ];
