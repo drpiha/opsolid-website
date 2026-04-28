@@ -3,6 +3,13 @@ import type { NextRequest } from "next/server";
 import { LOCALES, DEFAULT_LOCALE, isLocale, type Locale } from "@/lib/i18n";
 import { getRetiredRedirectTarget } from "@/lib/redirects";
 
+function voiceIsEnabled(): boolean {
+  const v = process.env.VOICE_AGENT_ENABLED;
+  if (!v) return false;
+  const t = v.trim().toLowerCase();
+  return t === "1" || t === "true" || t === "yes" || t === "on";
+}
+
 const COOKIE_NAME = "NEXT_LOCALE";
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
 
@@ -67,6 +74,27 @@ const STATIC_FILE_RE = /\.[a-z0-9]+$/i;
 export async function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
   const host = (req.headers.get("host") || "").toLowerCase();
+
+  // -- Voice Agent master kill switch ---------------------------------------
+  // Gate /api/voice/* and /voice/* when VOICE_AGENT_ENABLED is falsy.
+  // Exceptions: webhooks (must keep receiving Retell events) and diagnostics
+  // (used to debug why the flag is off). Runs before locale/domain logic.
+  if (pathname.startsWith("/api/voice") || pathname.startsWith("/voice")) {
+    if (!voiceIsEnabled()) {
+      const isWebhook = pathname.startsWith("/api/voice/webhooks/");
+      const isDiagnostics = pathname === "/api/voice/admin/diagnostics";
+      if (!isWebhook && !isDiagnostics) {
+        if (pathname.startsWith("/api/voice")) {
+          return NextResponse.json(
+            { error: "Voice Agent is disabled", reason: "feature_disabled" },
+            { status: 503 },
+          );
+        }
+        return NextResponse.redirect(new URL("/", req.url));
+      }
+    }
+  }
+  // -------------------------------------------------------------------------
 
   // -- Phase 6: custom-domain resolver --------------------------------------
   // Run BEFORE locale detection so customer hosts never get redirected
@@ -194,8 +222,12 @@ export const config = {
   // the dev server happens to run on a port that isn't in KNOWN_HOSTS
   // (e.g. port 3001 when 3000 is already taken — the Phase 7.5 thumbnail
   // script picks a free port dynamically).
+  //
+  // /api/voice/* is listed explicitly so the VOICE_AGENT_ENABLED gate runs
+  // at the edge even though other /api/* paths are excluded from locale logic.
   matcher: [
     "/((?!api|_next|.*\\..*|sitemap\\.xml|robots\\.txt|c/|l/|admin|dev/).*)",
+    "/api/voice/:path*",
   ],
 };
 

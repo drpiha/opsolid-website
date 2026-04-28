@@ -47,7 +47,7 @@ export async function GET(req: NextRequest) {
   let providerError: string | null = null;
   try {
     const p = getVoiceProvider();
-    providerName = p.constructor.name;
+    providerName = p.name;
     providerOk = true;
   } catch (err) {
     providerError = err instanceof Error ? err.message : String(err);

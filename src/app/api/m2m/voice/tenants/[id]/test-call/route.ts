@@ -2,57 +2,49 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/prisma";
-import {
-  requireTenantToken,
-  TenantTokenError,
-} from "@/lib/voice/auth/tenant-token";
+import { authorizeM2M } from "@/lib/auth/m2m";
 import { getVoiceProvider } from "@/lib/voice/provider";
-import { isTenantEnabled } from "@/lib/voice/feature-flags";
 
 export const runtime = "nodejs";
 
+// -----------------------------------------------------------------------------
+// POST /api/m2m/voice/tenants/:id/test-call
+//
+// Initiates an outbound test call for a tenant. Uses M2M auth instead of
+// tenant token — Kutasia admin can trigger this during onboarding.
+//
+// If agentId is omitted the first active agent for the tenant is used.
+// The tenant's first active phone number is used as the caller ID
+// (Retell requires a from_number for outbound calls).
+//
+// Auth: Authorization: Bearer <M2M_ADMIN_TOKEN>
+// -----------------------------------------------------------------------------
+
 const E164 = /^\+[1-9]\d{1,14}$/;
 
-const TestCallBodyZ = z
+const TestCallM2MZ = z
   .object({
     toNumber: z
       .string()
       .regex(E164, "toNumber must match E.164 format (+CCxxxxxxxx)"),
-    agentId: z.string().cuid(),
+    agentId: z.string().cuid().optional(),
     notes: z.string().max(500).optional(),
   })
   .strict();
 
-function unauthorized(err: unknown): NextResponse {
-  if (err instanceof TenantTokenError) {
-    const status = err.status;
-    return NextResponse.json({ error: err.message }, { status });
-  }
-  return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-}
-
-// -----------------------------------------------------------------------------
-// POST — initiate an outbound test call to verify the agent + telephony path.
-// Gated by VOICE_TEST_CALL_ENABLED feature flag. Records a VoiceTestRun row
-// regardless of provider success so failed attempts are auditable.
-// -----------------------------------------------------------------------------
 export async function POST(
   req: NextRequest,
-  { params }: { params: Promise<{ tenantId: string }> },
+  { params }: { params: Promise<{ id: string }> },
 ) {
-  const { tenantId } = await params;
-  try {
-    await requireTenantToken(req, tenantId);
-  } catch (err) {
-    return unauthorized(err);
-  }
-
-  if (!(await isTenantEnabled("VOICE_TEST_CALL_ENABLED", tenantId))) {
+  const auth = authorizeM2M(req);
+  if (!auth.ok) {
     return NextResponse.json(
-      { error: "Test calls are disabled", reason: "feature_disabled" },
-      { status: 403 },
+      { error: "Unauthorized", reason: auth.reason },
+      { status: 401 },
     );
   }
+
+  const { id: tenantId } = await params;
 
   let body: unknown;
   try {
@@ -61,7 +53,7 @@ export async function POST(
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
   }
 
-  const parsed = TestCallBodyZ.safeParse(body);
+  const parsed = TestCallM2MZ.safeParse(body);
   if (!parsed.success) {
     return NextResponse.json(
       {
@@ -74,17 +66,35 @@ export async function POST(
   const input = parsed.data;
 
   try {
-    const agent = await prisma.voiceAgent.findFirst({
-      where: { id: input.agentId, tenantId },
-      select: {
-        id: true,
-        providerAgentId: true,
-        status: true,
-      },
+    const tenantExists = await prisma.voiceTenant.findUnique({
+      where: { id: tenantId },
+      select: { id: true },
     });
+    if (!tenantExists) {
+      return NextResponse.json(
+        { error: "Tenant not found" },
+        { status: 404 },
+      );
+    }
+
+    // Resolve agent — explicit ID or first active agent.
+    const agentWhere = input.agentId
+      ? { id: input.agentId, tenantId }
+      : { tenantId, status: "active" as const };
+
+    const agent = await prisma.voiceAgent.findFirst({
+      where: agentWhere,
+      select: { id: true, providerAgentId: true, status: true },
+    });
+
     if (!agent) {
       return NextResponse.json(
-        { error: "Agent not found in this tenant", reason: "bad_agent" },
+        {
+          error: input.agentId
+            ? "Agent not found in this tenant"
+            : "No active agent found for this tenant",
+          reason: "no_agent",
+        },
         { status: 404 },
       );
     }
@@ -92,16 +102,14 @@ export async function POST(
     if (!agent.providerAgentId) {
       return NextResponse.json(
         {
-          error: "Agent not synced to provider yet",
+          error: "Agent not synced to provider yet. Run provision-agent first.",
           reason: "agent_not_synced",
         },
         { status: 400 },
       );
     }
 
-    // Retell requires a from_number for outbound calls. Resolve the tenant's
-    // first active phone number automatically — the caller shouldn't have to
-    // know which number is bound.
+    // Retell requires a from_number for outbound calls.
     const phone = await prisma.voicePhoneNumber.findFirst({
       where: { tenantId, status: "active" },
       select: { e164Number: true },
@@ -109,15 +117,14 @@ export async function POST(
     if (!phone) {
       return NextResponse.json(
         {
-          error: "No active phone number found for this tenant. Import a phone number first.",
+          error:
+            "No active phone number found for this tenant. Import a phone number first.",
           reason: "no_phone_number",
         },
         { status: 422 },
       );
     }
 
-    // Create the test run row first so we always have an audit record, even
-    // if the provider rejects the request a moment later.
     const testRun = await prisma.voiceTestRun.create({
       data: {
         tenantId,
@@ -149,10 +156,13 @@ export async function POST(
       const errorMsg = err instanceof Error ? err.message : "Provider error";
       await prisma.voiceTestRun.update({
         where: { id: testRun.id },
-        data: { status: "failed", notes: `${input.notes ?? ""}\nERROR: ${errorMsg}`.trim() },
+        data: {
+          status: "failed",
+          notes: `${input.notes ?? ""}\nERROR: ${errorMsg}`.trim(),
+        },
       });
       Sentry.captureException(err, {
-        tags: { area: "voice-tenant", route: "test-call.provider" },
+        tags: { area: "m2m-voice", route: "test-call.provider" },
         extra: { tenantId, agentId: agent.id },
       });
       return NextResponse.json(
@@ -177,7 +187,7 @@ export async function POST(
     );
   } catch (err) {
     Sentry.captureException(err, {
-      tags: { area: "voice-tenant", route: "test-call.outer" },
+      tags: { area: "m2m-voice", route: "test-call.outer" },
       extra: { tenantId },
     });
     return NextResponse.json(

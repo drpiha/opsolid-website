@@ -57,8 +57,8 @@ export default function NewTenantPage() {
         const body = (await res.json().catch(() => ({}))) as { error?: string };
         throw new Error(body.error ?? `HTTP ${res.status}`);
       }
-      const json = (await res.json()) as CreateResponse;
-      setCreated(json);
+      const json = (await res.json()) as { data: CreateResponse };
+      setCreated(json.data);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Anlegen fehlgeschlagen");
     } finally {
