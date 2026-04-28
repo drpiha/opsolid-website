@@ -17,88 +17,39 @@ concurrency:
 jobs:
   deploy:
     name: Build and ship to /opt/opsolid-website
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, linux, vps]
     timeout-minutes: 20
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Configure SSH
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_HOST: ${{ secrets.SSH_HOST }}
+      - name: Extract files to deploy directory
         run: |
-          mkdir -p ~/.ssh
-          chmod 700 ~/.ssh
-          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_deploy
-          chmod 600 ~/.ssh/id_deploy
-          # Best-effort known_hosts seed — ssh/scp commands also use
-          # StrictHostKeyChecking=accept-new so we are not blocked if this
-          # fails (DNS hiccup, rate limit on the target).
-          ssh-keyscan -T 10 -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null || true
-          chmod 644 ~/.ssh/known_hosts
-
-      - name: Build deploy tarball
-        run: |
-          tar -czf /tmp/opsolid-deploy.tar.gz \
-            --exclude='./.env' \
-            --exclude='./.env.local' \
-            --exclude='./node_modules' \
-            --exclude='./.next' \
-            --exclude='./.git' \
-            --exclude='./.github' \
-            --exclude='./.design-bundle' \
-            --exclude='./_kutasia_tmp' \
-            --exclude='./tsconfig.tsbuildinfo' \
-            .
-          ls -lh /tmp/opsolid-deploy.tar.gz
-
-      - name: Upload tarball to VPS
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USER: ${{ secrets.SSH_USER }}
-        run: |
-          scp -i ~/.ssh/id_deploy -o StrictHostKeyChecking=accept-new \
-            /tmp/opsolid-deploy.tar.gz \
-            "$SSH_USER@$SSH_HOST:/tmp/opsolid-deploy.tar.gz"
-
-      - name: Extract and rebuild on VPS
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USER: ${{ secrets.SSH_USER }}
-        run: |
-          ssh -i ~/.ssh/id_deploy -o StrictHostKeyChecking=accept-new \
-            "$SSH_USER@$SSH_HOST" bash -se <<'EOF'
-          set -euo pipefail
           DEPLOY_DIR=/opt/opsolid-website
-          TARBALL=/tmp/opsolid-deploy.tar.gz
 
-          echo "==> Extracting tarball into $DEPLOY_DIR"
-          cd "$DEPLOY_DIR"
-          tar -xzf "$TARBALL"
+          echo "==> Syncing source files to $DEPLOY_DIR (overlay, no delete)"
+          rsync -a \
+            --exclude='.env' \
+            --exclude='.env.local' \
+            --exclude='node_modules' \
+            --exclude='.git' \
+            --exclude='.github' \
+            --exclude='.next' \
+            --exclude='.design-bundle' \
+            --exclude='_kutasia_tmp' \
+            --exclude='tsconfig.tsbuildinfo' \
+            --exclude='public/uploads' \
+            ./ "$DEPLOY_DIR/"
 
-          echo "==> Running DB schema bootstrap (idempotent SQL patches)"
-          bash "$DEPLOY_DIR/deploy/hostinger/db-bootstrap.sh"
-
-          echo "==> Rebuilding opsolid container (db and others untouched)"
+      - name: Rebuild opsolid container
+        run: |
+          cd /opt/opsolid-website
           docker compose up -d --build opsolid
 
-          echo "==> Cleaning up"
-          rm -f "$TARBALL"
-
-          echo "==> Container status"
-          docker ps --filter "name=opsolid-app" --format "table {{.Names}}\t{{.Status}}"
-          EOF
-
       - name: Health check
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USER: ${{ secrets.SSH_USER }}
         run: |
-          echo "Waiting 60s for Docker build + container startup..."
+          echo "Waiting 60s for build + startup..."
           sleep 60
-          # Retry up to 8 times (8x15s = 2 more minutes) — Next.js standalone
-          # build inside Docker can take a while on the VPS.
           for attempt in $(seq 1 8); do
             echo "==> Health check attempt $attempt/8..."
             if curl -fsS --max-time 15 https://opsolid.de/api/health | tee /tmp/health.json; then
@@ -109,12 +60,6 @@ jobs:
             echo "Not ready yet, waiting 15s..."
             sleep 15
           done
-          echo "Health check failed after all retries — dumping container logs."
-          ssh -i ~/.ssh/id_deploy -o StrictHostKeyChecking=accept-new \
-            "$SSH_USER@$SSH_HOST" \
-            'docker ps --filter name=opsolid-app --format "{{.Names}} {{.Status}}"; docker logs --tail 80 opsolid-app'
+          echo "Health check failed — container logs:"
+          docker logs --tail 80 opsolid-app
           exit 1
-
-      - name: Cleanup SSH key
-        if: always()
-        run: rm -f ~/.ssh/id_deploy
