@@ -36,6 +36,26 @@ import { yogaStudioSample } from "@/components/cards/templates/v2/YogaStudio";
 import { personalTrainerSample } from "@/components/cards/templates/v2/PersonalTrainer";
 import { musicProducerSample } from "@/components/cards/templates/v2/MusicProducer";
 import { weddingPlannerSample } from "@/components/cards/templates/v2/WeddingPlanner";
+// Phase 7.10 Batch A — Dentist · Psychologist · Beauty (ids 22-30)
+import { dentistSample } from "@/components/cards/templates/v2/Dentist";
+import { dentistPureSample } from "@/components/cards/templates/v2/DentistPure";
+import { dentistVividSample } from "@/components/cards/templates/v2/DentistVivid";
+import { psychologistSample } from "@/components/cards/templates/v2/Psychologist";
+import { psychologistPureSample } from "@/components/cards/templates/v2/PsychologistPure";
+import { psychologistVividSample } from "@/components/cards/templates/v2/PsychologistVivid";
+import { beautySalonSample } from "@/components/cards/templates/v2/BeautySalon";
+import { beautySalonNoirSample } from "@/components/cards/templates/v2/BeautySalonNoir";
+import { beautySalonPureSample } from "@/components/cards/templates/v2/BeautySalonPure";
+// Phase 7.10 Batch B — Accounting · Software · Content Creator (ids 31-39)
+import { accountingSample } from "@/components/cards/templates/v2/Accounting";
+import { accountingNoirSample } from "@/components/cards/templates/v2/AccountingNoir";
+import { accountingPureSample } from "@/components/cards/templates/v2/AccountingPure";
+import { softwareDevSample } from "@/components/cards/templates/v2/SoftwareDev";
+import { softwareDevPureSample } from "@/components/cards/templates/v2/SoftwareDevPure";
+import { softwareDevVividSample } from "@/components/cards/templates/v2/SoftwareDevVivid";
+import { contentCreatorSample } from "@/components/cards/templates/v2/ContentCreator";
+import { contentCreatorNoirSample } from "@/components/cards/templates/v2/ContentCreatorNoir";
+import { contentCreatorPureSample } from "@/components/cards/templates/v2/ContentCreatorPure";
 
 // id=1 — RealEstate. Persona: Hannah Walker, senior listing agent in Berlin.
 // photo: Unsplash, by Christina Wocintechchat
@@ -134,6 +154,26 @@ export const cardTemplateSamples: Record<number, SampleData> = {
   19: personalTrainerSample,
   20: musicProducerSample,
   21: weddingPlannerSample,
+  // Phase 7.10 Batch A
+  22: dentistSample,
+  23: dentistPureSample,
+  24: dentistVividSample,
+  25: psychologistSample,
+  26: psychologistPureSample,
+  27: psychologistVividSample,
+  28: beautySalonSample,
+  29: beautySalonNoirSample,
+  30: beautySalonPureSample,
+  // Phase 7.10 Batch B
+  31: accountingSample,
+  32: accountingNoirSample,
+  33: accountingPureSample,
+  34: softwareDevSample,
+  35: softwareDevPureSample,
+  36: softwareDevVividSample,
+  37: contentCreatorSample,
+  38: contentCreatorNoirSample,
+  39: contentCreatorPureSample,
 };
 
 export function getTemplateSample(id: number): SampleData | undefined {

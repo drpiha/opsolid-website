@@ -51,6 +51,16 @@ import { psychologistVividEntry, PsychologistVivid } from "./PsychologistVivid";
 import { beautySalonEntry, BeautySalon } from "./BeautySalon";
 import { beautySalonNoirEntry, BeautySalonNoir } from "./BeautySalonNoir";
 import { beautySalonPureEntry, BeautySalonPure } from "./BeautySalonPure";
+// Phase 7.10 Batch B — Accounting, Software, Content Creator (ids 31-39)
+import { accountingEntry, Accounting } from "./Accounting";
+import { accountingNoirEntry, AccountingNoir } from "./AccountingNoir";
+import { accountingPureEntry, AccountingPure } from "./AccountingPure";
+import { softwareDevEntry, SoftwareDev } from "./SoftwareDev";
+import { softwareDevPureEntry, SoftwareDevPure } from "./SoftwareDevPure";
+import { softwareDevVividEntry, SoftwareDevVivid } from "./SoftwareDevVivid";
+import { contentCreatorEntry, ContentCreator } from "./ContentCreator";
+import { contentCreatorNoirEntry, ContentCreatorNoir } from "./ContentCreatorNoir";
+import { contentCreatorPureEntry, ContentCreatorPure } from "./ContentCreatorPure";
 import type { TemplateRegistryEntry } from "./types";
 
 export const templateRegistry: Record<number, TemplateRegistryEntry> = {
@@ -113,6 +123,16 @@ export const templateRegistry: Record<number, TemplateRegistryEntry> = {
   28: { ...beautySalonEntry, Component: BeautySalon },
   29: { ...beautySalonNoirEntry, Component: BeautySalonNoir },
   30: { ...beautySalonPureEntry, Component: BeautySalonPure },
+  // Phase 7.10 Batch B — Accounting · Software · Content Creator (3 sectors × 3 styles)
+  31: { ...accountingEntry, Component: Accounting },
+  32: { ...accountingNoirEntry, Component: AccountingNoir },
+  33: { ...accountingPureEntry, Component: AccountingPure },
+  34: { ...softwareDevEntry, Component: SoftwareDev },
+  35: { ...softwareDevPureEntry, Component: SoftwareDevPure },
+  36: { ...softwareDevVividEntry, Component: SoftwareDevVivid },
+  37: { ...contentCreatorEntry, Component: ContentCreator },
+  38: { ...contentCreatorNoirEntry, Component: ContentCreatorNoir },
+  39: { ...contentCreatorPureEntry, Component: ContentCreatorPure },
 };
 
 /**
@@ -154,7 +174,10 @@ export type PlannedSector =
   | "events"
   | "dentist"
   | "psychologist"
-  | "beauty";
+  | "beauty"
+  | "accounting"
+  | "software"
+  | "content-creator";
 
 export interface PlannedTemplate {
   id: number;
@@ -196,4 +219,14 @@ export const plannedLineup: readonly PlannedTemplate[] = [
   { id: 28, key: "beauty-salon", name: "Beauty Salon", sector: "beauty" },
   { id: 29, key: "beauty-salon-noir", name: "Beauty Salon — Noir", sector: "beauty" },
   { id: 30, key: "beauty-salon-pure", name: "Beauty Salon — Pure", sector: "beauty" },
+  // Phase 7.10 Batch B
+  { id: 31, key: "accounting", name: "Accounting", sector: "accounting" },
+  { id: 32, key: "accounting-noir", name: "Accounting — Noir", sector: "accounting" },
+  { id: 33, key: "accounting-pure", name: "Accounting — Pure", sector: "accounting" },
+  { id: 34, key: "software-dev", name: "Software Dev", sector: "software" },
+  { id: 35, key: "software-dev-pure", name: "Software Dev — Pure", sector: "software" },
+  { id: 36, key: "software-dev-vivid", name: "Software Dev — Vivid", sector: "software" },
+  { id: 37, key: "content-creator", name: "Content Creator", sector: "content-creator" },
+  { id: 38, key: "content-creator-noir", name: "Content Creator — Noir", sector: "content-creator" },
+  { id: 39, key: "content-creator-pure", name: "Content Creator — Pure", sector: "content-creator" },
 ];

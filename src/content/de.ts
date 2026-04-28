@@ -1659,6 +1659,12 @@ export const content: Content = {
           sectorConsultant: "Beratung",
           sectorTech: "Tech",
           sectorEvents: "Events",
+          sectorDentist: "Zahnarzt",
+          sectorPsychologist: "Therapeut",
+          sectorBeauty: "Beauty",
+          sectorAccounting: "Buchhaltung",
+          sectorSoftware: "Software & IT",
+          sectorContentCreator: "Content Creator",
           monthlyShort: "/Mo.",
         },
         form: {
