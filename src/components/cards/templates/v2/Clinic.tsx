@@ -963,7 +963,7 @@ function CTASection({
 }) {
   return (
     <section className="mx-4 mt-4 rounded-3xl bg-white p-5 shadow-[0_2px_16px_-6px_rgba(13,148,136,0.10)] ring-1 ring-[var(--cl-border)]">
-      <SendMyInfoSlot slug={slug} sourceQs={sourceQs} primary={primary} />
+      <SendMyInfoSlot slug={slug} sourceQs={sourceQs} primary={primary} locale={locale} />
       <ExchangeSlot slug={slug} primary={accent} locale={locale} />
     </section>
   );

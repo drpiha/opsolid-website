@@ -591,7 +591,7 @@ function CTABlock({
       </a>
 
       <div className="mt-3">
-        <SendMyInfoSlot slug={slug} sourceQs={sourceQs} primary={primary} />
+        <SendMyInfoSlot slug={slug} sourceQs={sourceQs} primary={primary} locale={locale} />
         <ExchangeSlot slug={slug} primary={accent} locale={locale} />
       </div>
     </section>

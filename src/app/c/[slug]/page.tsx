@@ -29,6 +29,12 @@ import { getSiteUrl } from "@/lib/stripe";
 import { getTemplateEntry } from "@/components/cards/templates/v2/registry";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
 import { AlbumSection } from "@/components/cards/album/AlbumSection";
+import { QRFlipOverlay } from "@/components/cards/QRFlipOverlay";
+import {
+  OwnerToolbar,
+  constantTimeEquals,
+} from "@/components/cards/OwnerToolbar";
+import { contents } from "@/content";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -117,17 +123,20 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       alt: altText,
     });
   }
+  // Phase 8 — WA preview switched to 1080×1350 (4:5 portrait) so WhatsApp
+  // and Instagram can render a tall hero with photo + name. The wide 1200×630
+  // is kept as a fallback for Twitter/LinkedIn link cards.
   ogImages.push(
+    {
+      url: `/c/${slug}/wa.png`,
+      width: 1080,
+      height: 1350,
+      alt: altText,
+    },
     {
       url: `/c/${slug}.png`,
       width: 1200,
       height: 630,
-      alt: altText,
-    },
-    {
-      url: `/c/${slug}/wa.png`,
-      width: 600,
-      height: 600,
       alt: altText,
     },
   );
@@ -244,8 +253,40 @@ export default async function CardPage({ params, searchParams }: PageProps) {
       )
     : false;
 
+  const publicUrl = await publicCardUrl(slug);
+  const shareTitle = `${parsed.data.name}${parsed.data.company ? " · " + parsed.data.company : ""}`;
+  const qrLabels = contents[localeKey].card.qr;
+
+  // Phase 8 — owner toolbar. Visitors who arrive with `?owner=<editToken>` are
+  // promoted to "owner view": a small floating bar with edit + share affordances
+  // appears at the top of the page. The token is verified in constant time
+  // against `order.editToken`; mismatched values silently fall through to the
+  // public render path.
+  const ownerTokenRaw = sp.owner;
+  const ownerToken =
+    typeof ownerTokenRaw === "string" ? ownerTokenRaw : ownerTokenRaw?.[0];
+  const isOwner = Boolean(
+    ownerToken &&
+      order.editToken &&
+      constantTimeEquals(ownerToken, order.editToken),
+  );
+  const ownerLabels = contents[localeKey].card.owner;
+  const editHref = `/${localeKey}/card/edit/${order.id}?token=${order.editToken ?? ""}`;
+
   return (
     <main className="min-h-screen bg-bg-0 px-4 py-8 pb-24 sm:py-12">
+      {isOwner && (
+        <OwnerToolbar
+          editHref={editHref}
+          publicUrl={publicUrl}
+          shareTitle={shareTitle}
+          labels={{
+            publicBannerLabel: ownerLabels.publicBannerLabel,
+            editLabel: ownerLabels.editLabel,
+            shareLabel: ownerLabels.shareLabel,
+          }}
+        />
+      )}
       <div
         className="mx-auto w-full max-w-[460px]"
         data-card-tpl
@@ -274,6 +315,13 @@ export default async function CardPage({ params, searchParams }: PageProps) {
           tone={isDarkTemplate ? "dark" : "light"}
         />
       </div>
+      <QRFlipOverlay
+        slug={slug}
+        publicUrl={publicUrl}
+        shareTitle={shareTitle}
+        accentHex={order.brandAccentHex ?? undefined}
+        labels={qrLabels}
+      />
     </main>
   );
 }

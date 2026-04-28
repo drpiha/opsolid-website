@@ -4,7 +4,7 @@ import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/prisma";
 import { verifyWebhookSignature } from "@/lib/stripe";
 import { OrderStatus } from "@/lib/validation";
-import { ensureUniqueSlug } from "@/lib/slug";
+import { ensureUniqueSlug, isSlugAvailable } from "@/lib/slug";
 import { notifyOrderEvent } from "@/lib/notifications";
 import { sendCustomerEmail } from "@/lib/email/send";
 import { normalizeLocale } from "@/lib/email/shell";
@@ -177,9 +177,16 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
       },
     });
   } else {
-    // Self-serve auto-publish — name-based slug seeded with the order id so
-    // the same order always rolls the same suffix on retry (idempotent).
-    publishedSlug = await ensureUniqueSlug(order.contactName, order.id);
+    // Self-serve auto-publish — Phase 8: prefer the customer-chosen slug
+    // (`desiredSlug`) when it's still free at publish time. Fall back to
+    // the auto-generated `name-xxxx` form when there's no choice or the
+    // chosen slug got snatched between order create and webhook (rare but
+    // possible — desiredSlug isn't reserved in DB until publish).
+    if (order.desiredSlug && (await isSlugAvailable(order.desiredSlug))) {
+      publishedSlug = order.desiredSlug;
+    } else {
+      publishedSlug = await ensureUniqueSlug(order.contactName, order.id);
+    }
 
     await prisma.cardOrder.update({
       where: { id: orderId },

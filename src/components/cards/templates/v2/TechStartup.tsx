@@ -1053,7 +1053,7 @@ function CTASection({
 }) {
   return (
     <section className="px-6 py-2">
-      <SendMyInfoSlot slug={slug} sourceQs={sourceQs} primary={accent} />
+      <SendMyInfoSlot slug={slug} sourceQs={sourceQs} primary={accent} locale={locale} />
       <ExchangeSlot slug={slug} primary={primary} locale={locale} />
     </section>
   );

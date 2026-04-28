@@ -1,17 +1,12 @@
 // =============================================================================
-// SendMyInfoSlot — wraps the existing `SendMyInfoButton` so each v2 template
-// can theme the trigger without re-implementing the modal/lead-post logic.
-//
-// `SendMyInfoButton` already accepts a `primary` colour and styles the
-// trigger inline with that. This slot only adds an outer wrapper class hook
-// and a small `tone` switch — it does NOT fork the modal or the API call.
-// Phase 6 lead-post behaviour is preserved 1:1.
+// SendMyInfoSlot — wraps SendMyInfoButton so each v2 template can theme the
+// trigger without re-implementing the modal/lead-post logic. Resolves the
+// owner's persisted locale (DE/EN/TR) into a labels bag and passes it through.
 // =============================================================================
-
-"use client";
 
 import * as React from "react";
 import { SendMyInfoButton } from "@/components/cards/smart/SendMyInfoButton";
+import { contents } from "@/content";
 
 export interface SendMyInfoSlotProps {
   slug: string;
@@ -20,6 +15,8 @@ export interface SendMyInfoSlotProps {
   primary: string;
   /** Outer wrapper classes — usually a `mt-x` to slot into the template flow. */
   className?: string;
+  /** Owner's persisted locale (from CardOrder.locale). Defaults to "de". */
+  locale?: "de" | "en" | "tr";
 }
 
 export function SendMyInfoSlot({
@@ -27,10 +24,17 @@ export function SendMyInfoSlot({
   sourceQs,
   primary,
   className,
+  locale = "de",
 }: SendMyInfoSlotProps) {
+  const labels = contents[locale].card.send;
   return (
     <div className={className}>
-      <SendMyInfoButton slug={slug} sourceQs={sourceQs} primary={primary} />
+      <SendMyInfoButton
+        slug={slug}
+        sourceQs={sourceQs}
+        primary={primary}
+        labels={labels}
+      />
     </div>
   );
 }

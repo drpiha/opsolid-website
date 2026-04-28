@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import { OrderPayloadSchema, OrderStatus } from "@/lib/validation";
 import { getTemplateById } from "@/config/card-templates";
 import { createCheckoutSession } from "@/lib/stripe";
+import { validateManualSlug, isSlugAvailable } from "@/lib/slug";
 
 export const runtime = "nodejs";
 
@@ -44,6 +45,28 @@ export async function POST(req: NextRequest) {
     );
   }
 
+  // Phase 8 — validate optional customer-chosen slug *before* creating the
+  // order. We re-validate uniqueness in the publish flow as well; this early
+  // check just produces a fast, friendly error in the form rather than
+  // surfacing it after the Stripe checkout round-trip.
+  let desiredSlug: string | undefined;
+  if (data.desiredSlug) {
+    const v = validateManualSlug(data.desiredSlug);
+    if (!v.ok) {
+      return NextResponse.json(
+        { error: "slug_invalid", reason: v.reason },
+        { status: 400 },
+      );
+    }
+    if (!(await isSlugAvailable(v.slug))) {
+      return NextResponse.json(
+        { error: "slug_taken" },
+        { status: 409 },
+      );
+    }
+    desiredSlug = v.slug;
+  }
+
   const order = await prisma.cardOrder.create({
     data: {
       templateId: template.id,
@@ -73,6 +96,9 @@ export async function POST(req: NextRequest) {
       status: OrderStatus.PENDING_PAYMENT,
       // Track D consumes this to let customers edit from /card/edit/[token].
       editToken: crypto.randomUUID(),
+      // Phase 8 — customer-chosen slug; webhook/admin publish prefers this
+      // over the auto-generated `name-xxxx` form.
+      desiredSlug,
     },
   });
 

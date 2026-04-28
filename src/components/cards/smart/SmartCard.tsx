@@ -27,7 +27,7 @@ import {
 import type { CardData } from "@/lib/validation";
 import type { SmartCardSource } from "./SmartCardSource";
 import { encodeSource, describeSource } from "./SmartCardSource";
-import { SendMyInfoButton } from "./SendMyInfoButton";
+import { SendMyInfoSlot } from "@/components/cards/templates/v2/shared/SendMyInfoSlot";
 import { getSectorPreset } from "@/config/card-sectors";
 import { ExchangeButton } from "./ExchangeButton";
 
@@ -216,7 +216,12 @@ export function SmartCard({
           </div>
         )}
 
-        <SendMyInfoButton slug={slug} sourceQs={sourceQs} primary={primary} />
+        <SendMyInfoSlot
+          slug={slug}
+          sourceQs={sourceQs}
+          primary={primary}
+          locale={locale}
+        />
         <ExchangeButton slug={slug} primary={primary} locale={locale} />
       </div>
 

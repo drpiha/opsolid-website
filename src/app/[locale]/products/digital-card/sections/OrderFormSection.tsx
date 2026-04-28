@@ -171,6 +171,9 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
   const [logoUploading, setLogoUploading] = useState(false);
   const [billingMode, setBillingMode] =
     useState<keyof typeof BillingMode>("YEARLY");
+  // Phase 8 — customer-chosen slug (without forced random suffix). Empty
+  // string lets the server fall back to `name-xxxx` auto-generation.
+  const [desiredSlug, setDesiredSlug] = useState("");
   const [formState, setFormState] = useState<FormState>("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
@@ -390,6 +393,7 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
       logoPath: logoPath || undefined,
       themeKey: themeKey || undefined,
       layoutKey: layoutKey || undefined,
+      desiredSlug: desiredSlug.trim() ? desiredSlug.trim() : undefined,
     };
 
     const parsed = OrderPayloadSchema.safeParse(payload);
@@ -424,10 +428,26 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
         body: JSON.stringify(parsed.data),
       });
       if (!res.ok) {
-        const body = (await res.json().catch(() => ({}))) as { error?: string };
-        setErrorMsg(
-          body.error ?? L("serverError", "Serverfehler. Bitte erneut versuchen.")
-        );
+        const body = (await res.json().catch(() => ({}))) as {
+          error?: string;
+          reason?: string;
+        };
+        if (body.error === "slug_taken") {
+          setErrorMsg(
+            L("slugTakenError", "Bu kart adresi alınmış. Başka bir adres seç."),
+          );
+          setOpenStep("billing");
+        } else if (body.error === "slug_invalid") {
+          setErrorMsg(
+            L("slugInvalidError", "Geçersiz kart adresi. Formatı kontrol et."),
+          );
+          setOpenStep("billing");
+        } else {
+          setErrorMsg(
+            body.error ??
+              L("serverError", "Serverfehler. Bitte erneut versuchen."),
+          );
+        }
         setFormState("error");
         return;
       }
@@ -734,6 +754,9 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
                   amountCents={amountCents}
                   formState={formState}
                   errorMsg={errorMsg}
+                  desiredSlug={desiredSlug}
+                  setDesiredSlug={setDesiredSlug}
+                  contactName={contactName}
                 />
               </AccordionStep>
             </div>
@@ -1944,6 +1967,9 @@ function StepBilling({
   amountCents,
   formState,
   errorMsg,
+  desiredSlug,
+  setDesiredSlug,
+  contactName,
 }: {
   L: (k: string, f: string) => string;
   selectedTemplate: import("@/config/card-templates").CardTemplateDef;
@@ -1952,9 +1978,27 @@ function StepBilling({
   amountCents: number;
   formState: FormState;
   errorMsg: string | null;
+  desiredSlug: string;
+  setDesiredSlug: (v: string) => void;
+  contactName: string;
 }) {
   return (
     <>
+      <SubFieldset
+        label={L("slugSection", "Kart adresi")}
+        hint={L(
+          "slugHint",
+          "Kartının URL'i. Boş bırakırsan ad-soyaddan otomatik üretilir.",
+        )}
+      >
+        <SlugField
+          L={L}
+          value={desiredSlug}
+          onChange={setDesiredSlug}
+          contactName={contactName}
+        />
+      </SubFieldset>
+
       <SubFieldset label={L("billingSection", "Zahlungsmodell")}>
         <div className="grid gap-3 md:grid-cols-3">
           {selectedTemplate.monthlyCents ? (
@@ -2038,6 +2082,134 @@ function StepBilling({
       </div>
     </>
   );
+}
+
+// =============================================================================
+// SlugField — Phase 8 customer-chosen card URL with debounced availability
+// check. Empty input is valid (server falls back to `name-xxxx`); a typed
+// value is validated for format + uniqueness via /api/orders/slug-available.
+// =============================================================================
+
+type SlugStatus =
+  | { kind: "idle" }
+  | { kind: "checking" }
+  | { kind: "available"; slug: string }
+  | { kind: "taken" }
+  | { kind: "invalid"; reason: string }
+  | { kind: "error" };
+
+function SlugField({
+  L,
+  value,
+  onChange,
+  contactName,
+}: {
+  L: (k: string, f: string) => string;
+  value: string;
+  onChange: (v: string) => void;
+  contactName: string;
+}) {
+  const [status, setStatus] = useState<SlugStatus>({ kind: "idle" });
+
+  useEffect(() => {
+    const trimmed = value.trim();
+    if (!trimmed) {
+      setStatus({ kind: "idle" });
+      return;
+    }
+    setStatus({ kind: "checking" });
+    const handle = setTimeout(async () => {
+      try {
+        const res = await fetch(
+          `/api/orders/slug-available?s=${encodeURIComponent(trimmed)}`,
+          { cache: "no-store" },
+        );
+        const body = (await res.json()) as
+          | { ok: true; slug: string; available: boolean }
+          | { ok: false; reason: string };
+        if (!body.ok) {
+          setStatus({ kind: "invalid", reason: body.reason });
+          return;
+        }
+        setStatus(
+          body.available
+            ? { kind: "available", slug: body.slug }
+            : { kind: "taken" },
+        );
+      } catch {
+        setStatus({ kind: "error" });
+      }
+    }, 500);
+    return () => clearTimeout(handle);
+  }, [value]);
+
+  const previewBase =
+    contactName
+      .toLowerCase()
+      .normalize("NFKD")
+      .replace(/[̀-ͯ]/g, "")
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 40) || "card";
+
+  return (
+    <div className="space-y-1.5">
+      <div className="flex items-stretch overflow-hidden rounded-2xl border border-ink/15 bg-bg-2 focus-within:border-copper">
+        <span className="flex items-center px-3 text-xs text-ink/55">
+          opsolid.de/c/
+        </span>
+        <input
+          type="text"
+          inputMode="text"
+          autoComplete="off"
+          spellCheck={false}
+          value={value}
+          onChange={(e) => onChange(e.target.value.toLowerCase())}
+          placeholder={previewBase}
+          className="flex-1 bg-transparent px-2 py-2.5 text-sm text-ink placeholder-ink/40 focus:outline-none"
+          maxLength={40}
+        />
+      </div>
+      <p
+        className={cn(
+          "text-[11px]",
+          status.kind === "available" && "text-signal-ok",
+          status.kind === "taken" && "text-signal-err",
+          status.kind === "invalid" && "text-signal-err",
+          status.kind === "error" && "text-signal-warn",
+          (status.kind === "idle" || status.kind === "checking") &&
+            "text-ink/45",
+        )}
+      >
+        {status.kind === "idle" &&
+          L(
+            "slugIdle",
+            "Boş bırakılırsa otomatik atanır",
+          ) +
+            ` · opsolid.de/c/${previewBase}-xxxx`}
+        {status.kind === "checking" && L("slugChecking", "Kontrol ediliyor…")}
+        {status.kind === "available" &&
+          L("slugAvailable", "Müsait") + ` · opsolid.de/c/${status.slug}`}
+        {status.kind === "taken" && L("slugTaken", "Bu adres alınmış")}
+        {status.kind === "invalid" &&
+          (status.reason === "too_short"
+            ? L("slugTooShort", "En az 3 karakter olmalı")
+            : status.reason === "too_long"
+              ? L("slugTooLong", "En fazla 40 karakter olabilir")
+              : status.reason === "reserved"
+                ? L("slugReserved", "Bu adres rezerve")
+                : L(
+                    "slugInvalid",
+                    "Sadece küçük harf, rakam ve tire — başta/sonda tire olmaz",
+                  ))}
+        {status.kind === "error" && L("slugCheckError", "Kontrol başarısız")}
+      </p>
+    </div>
+  );
+}
+
+function cn(...parts: (string | false | null | undefined)[]): string {
+  return parts.filter(Boolean).join(" ");
 }
 
 // =============================================================================

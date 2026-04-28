@@ -9,7 +9,7 @@
 import * as Sentry from "@sentry/nextjs";
 import { prisma } from "@/lib/prisma";
 import { OrderStatus } from "@/lib/validation";
-import { buildSlug } from "@/lib/slug";
+import { buildSlug, isSlugAvailable } from "@/lib/slug";
 import { notifyOrderEvent } from "@/lib/notifications";
 import { sendCustomerEmail } from "@/lib/email/send";
 import { normalizeLocale } from "@/lib/email/shell";
@@ -102,6 +102,9 @@ export async function publishOrderAction(
   }
 
   let slug = order.slug;
+  if (!slug && order.desiredSlug && (await isSlugAvailable(order.desiredSlug))) {
+    slug = order.desiredSlug;
+  }
   if (!slug) {
     for (let i = 0; i < 5; i++) {
       const candidate = buildSlug(order.contactName, order.id);

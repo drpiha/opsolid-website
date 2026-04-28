@@ -182,6 +182,22 @@ export function CardEditClient(props: Props) {
   return (
     <main className="min-h-screen bg-neutral-50 py-16 md:py-20">
       <div className="container-wide">
+        <div
+          className="mb-6 flex items-start gap-3 rounded-2xl border px-4 py-3 text-sm"
+          style={{
+            background: "rgba(34,197,94,0.06)",
+            borderColor: "rgba(34,197,94,0.25)",
+            color: "#1a4d2e",
+          }}
+        >
+          <CheckCircle2
+            size={18}
+            className="mt-0.5 shrink-0"
+            style={{ color: "#16a34a" }}
+          />
+          <span>{t.card.owner.banner}</span>
+        </div>
+
         <div className="mb-10 max-w-3xl">
           <p className="text-eyebrow uppercase tracking-wider text-ink/50">
             OpSolid · Digital Card

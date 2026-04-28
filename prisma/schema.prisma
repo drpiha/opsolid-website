@@ -112,6 +112,12 @@ model CardOrder {
   designNotes String? @map("design_notes")
   editToken   String? @unique @map("edit_token")
 
+  // Phase 8 — customer-chosen slug captured at order creation. Validated
+  // for format + uniqueness then. The webhook/admin publish flow prefers
+  // this value (re-checked for uniqueness) over the auto-generated
+  // `name-xxxx` form.
+  desiredSlug String? @map("desired_slug")
+
   contactedAt      DateTime? @map("contacted_at")
   contactedByNote  String?   @map("contacted_by_note")
   paidAt           DateTime? @map("paid_at")

@@ -1134,7 +1134,7 @@ function CTASection({
     <section className="mx-5 mt-5 rounded-3xl bg-white p-5"
       style={{ border: `1px solid ${HAIRLINE}`, boxShadow: "0 2px 12px -8px rgba(134,82,63,0.10)" }}
     >
-      <SendMyInfoSlot slug={slug} sourceQs={sourceQs} primary={primary} />
+      <SendMyInfoSlot slug={slug} sourceQs={sourceQs} primary={primary} locale={locale} />
       <ExchangeSlot slug={slug} primary={primary} locale={locale} />
     </section>
   );

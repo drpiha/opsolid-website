@@ -464,6 +464,22 @@ export const OrderPayloadSchema = z.object({
 
   /** QR styling preferences — preset + colors + logo/photo, optional AI Art. */
   qrStyle: QrStyleSchema.optional(),
+
+  /** Phase 8 — customer-chosen slug (without forced random suffix). When set,
+   *  the server validates the format + uniqueness before allocating it; on
+   *  collision the request is rejected with `slug_taken` so the form can
+   *  prompt the user. When omitted, the server generates `name-xxxx` as
+   *  before. Validation duplicates `validateManualSlug()` on the server side. */
+  desiredSlug: z
+    .string()
+    .trim()
+    .min(3, "Kart adresi en az 3 karakter olmalı")
+    .max(40, "Kart adresi en fazla 40 karakter olabilir")
+    .regex(
+      /^[a-z0-9](?:[a-z0-9-]{1,38}[a-z0-9])?$/,
+      "Sadece küçük harf, rakam ve tire (-) — başta/sonda tire olmaz",
+    )
+    .optional(),
 });
 export type OrderPayload = z.infer<typeof OrderPayloadSchema>;
 

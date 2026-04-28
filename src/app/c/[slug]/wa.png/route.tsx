@@ -1,21 +1,19 @@
 // =============================================================================
 // WhatsApp-optimized OG image — GET /c/[slug]/wa.png
 //
-// Why a separate route from /c/[slug].png? WhatsApp picks the *first* og:image
-// it sees and crops aggressively to a near-square thumbnail (≈400×400) for
-// link previews in chats. A 1200×630 image gets cropped to a thin horizontal
-// slice and looks awful. This 600×600 1:1 version is offered as a secondary
-// `og:image` so WhatsApp picks the square one and the rest of the world keeps
-// the wide one.
+// Phase 8 redesign: 1080×1350 portrait (4:5). The portrait aspect renders
+// big in WhatsApp's link preview because the platform shrinks square images
+// aggressively but allocates more vertical space to taller posts. We drop
+// the QR (link previews exist to make the link feel personal — the QR has
+// its own surface in-app) and let the profile photo + name dominate.
 //
-// Composition: stacked layout — avatar at top, name below, QR at bottom.
-// All three readable in a small WhatsApp thumbnail.
+// Composition: large circular avatar at top, big serif name below, optional
+// title/company, accent hairline near the bottom, small domain footer.
 // =============================================================================
 
 import { ImageResponse } from "next/og";
 import { prisma } from "@/lib/prisma";
 import { CardDataSchema } from "@/lib/validation";
-import { renderQr } from "@/lib/qr/styled-server";
 import { absoluteAssetUrl } from "@/lib/storage";
 import { getSiteUrl } from "@/lib/stripe";
 
@@ -23,7 +21,8 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const revalidate = 60;
 
-const SIDE = 600;
+const WIDTH = 1080;
+const HEIGHT = 1350;
 const FALLBACK_PRIMARY = "#15120F";
 const FALLBACK_ACCENT = "#E8A252";
 
@@ -31,16 +30,6 @@ const FONT_STACK =
   '"Instrument Serif", "Georgia", "Times New Roman", serif';
 const SANS_STACK =
   'ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif';
-
-const QR_PIXEL_SIZE = 220;
-
-interface SavedQrStyle {
-  preset?: string;
-  primary?: string;
-  accent?: string;
-  withLogo?: boolean;
-  withPhoto?: boolean;
-}
 
 export async function GET(
   _req: Request,
@@ -56,44 +45,19 @@ export async function GET(
   const parsed = CardDataSchema.safeParse(order.cardData);
   const name = parsed.success ? parsed.data.name : order.contactName;
   const title = parsed.success ? parsed.data.title ?? "" : "";
+  const company = parsed.success ? parsed.data.company ?? "" : "";
 
   const primary = order.brandPrimaryHex ?? FALLBACK_PRIMARY;
   const accent = order.brandAccentHex ?? FALLBACK_ACCENT;
 
   const siteUrl = getSiteUrl();
-  // QR target uses the canonical card host so a scan lands on the prettier URL.
-  // siteUrl below stays anchored to opsolid.de so absoluteAssetUrl resolves
-  // local-driver photo/logo paths correctly during OG image rendering.
-  const cardHost = process.env.NEXT_PUBLIC_CARD_HOST?.trim() || "card.opsolid.de";
-  const publicUrl = `https://${cardHost}/${params.slug}`;
-
-  const saved = (order.qrStyle ?? null) as SavedQrStyle | null;
-  let qrDataUrl: string;
-  try {
-    const { bytes } = await renderQr({
-      data: publicUrl,
-      preset: saved?.preset ?? "rounded",
-      primary: saved?.primary ?? "#15120F",
-      accent: saved?.accent ?? accent,
-      format: "png",
-      size: QR_PIXEL_SIZE,
-      centerImageUrl:
-        saved?.withLogo && order.logoPath
-          ? absoluteAssetUrl(order.logoPath, siteUrl)
-          : saved?.withPhoto && order.photoPath
-          ? absoluteAssetUrl(order.photoPath, siteUrl)
-          : undefined,
-    });
-    qrDataUrl = `data:image/png;base64,${bytes.toString("base64")}`;
-  } catch (err) {
-    console.error("[og:wa] QR render failed:", err);
-    qrDataUrl =
-      "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'/%3E";
-  }
-
   const photoUrl = order.photoPath
     ? absoluteAssetUrl(order.photoPath, siteUrl)
     : null;
+
+  const cardHost =
+    process.env.NEXT_PUBLIC_CARD_HOST?.trim() || "card.opsolid.de";
+  const displayHost = cardHost.replace(/^https?:\/\//, "");
 
   return new ImageResponse(
     (
@@ -104,11 +68,11 @@ export async function GET(
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
-          justifyContent: "center",
+          justifyContent: "space-between",
           background: primary,
           color: "#FFFFFF",
           fontFamily: SANS_STACK,
-          padding: "40px",
+          padding: "80px 60px 60px",
           boxSizing: "border-box",
           position: "relative",
         }}
@@ -117,78 +81,153 @@ export async function GET(
           style={{
             position: "absolute",
             inset: 0,
-            background: `radial-gradient(at 50% 0%, ${accent}33 0%, transparent 60%)`,
+            background: `radial-gradient(at 50% 0%, ${accent}3a 0%, transparent 65%), radial-gradient(at 50% 100%, ${accent}22 0%, transparent 60%)`,
             display: "flex",
           }}
         />
 
-        {photoUrl ? (
-          <div
-            style={{
-              width: 140,
-              height: 140,
-              borderRadius: 70,
-              overflow: "hidden",
-              border: `4px solid ${accent}`,
-              display: "flex",
-              marginBottom: 16,
-            }}
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={photoUrl}
-              alt=""
-              width={140}
-              height={140}
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          </div>
-        ) : null}
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            zIndex: 1,
+            marginTop: 40,
+          }}
+        >
+          {photoUrl ? (
+            <div
+              style={{
+                width: 480,
+                height: 480,
+                borderRadius: 240,
+                overflow: "hidden",
+                border: `8px solid ${accent}`,
+                display: "flex",
+                boxShadow: "0 30px 80px rgba(0,0,0,0.45)",
+              }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={photoUrl}
+                alt=""
+                width={480}
+                height={480}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            </div>
+          ) : (
+            <div
+              style={{
+                width: 480,
+                height: 480,
+                borderRadius: 240,
+                background: `${accent}33`,
+                border: `8px solid ${accent}`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontFamily: FONT_STACK,
+                fontSize: 200,
+                color: accent,
+              }}
+            >
+              {(name ?? "?").charAt(0).toUpperCase()}
+            </div>
+          )}
+        </div>
 
         <div
           style={{
-            fontSize: 56,
-            lineHeight: 1.05,
-            fontFamily: FONT_STACK,
             display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            zIndex: 1,
             textAlign: "center",
+            paddingLeft: 40,
+            paddingRight: 40,
           }}
         >
-          {name}
+          <div
+            style={{
+              fontSize: 120,
+              lineHeight: 1.02,
+              fontFamily: FONT_STACK,
+              display: "flex",
+              textAlign: "center",
+              maxWidth: 960,
+            }}
+          >
+            {name}
+          </div>
+          {title ? (
+            <div
+              style={{
+                fontSize: 40,
+                marginTop: 20,
+                opacity: 0.9,
+                display: "flex",
+                fontFamily: SANS_STACK,
+                textAlign: "center",
+                letterSpacing: "0.01em",
+              }}
+            >
+              {title}
+            </div>
+          ) : null}
+          {company ? (
+            <div
+              style={{
+                fontSize: 32,
+                marginTop: 10,
+                opacity: 0.65,
+                display: "flex",
+                fontFamily: SANS_STACK,
+                textAlign: "center",
+              }}
+            >
+              {company}
+            </div>
+          ) : null}
         </div>
-        {title ? (
+
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            zIndex: 1,
+            width: "100%",
+          }}
+        >
+          <div
+            style={{
+              width: 120,
+              height: 4,
+              background: accent,
+              borderRadius: 2,
+              marginBottom: 22,
+              display: "flex",
+            }}
+          />
           <div
             style={{
               fontSize: 22,
-              marginTop: 8,
-              opacity: 0.85,
+              opacity: 0.55,
+              letterSpacing: "0.16em",
+              textTransform: "uppercase",
               display: "flex",
               fontFamily: SANS_STACK,
-              textAlign: "center",
             }}
           >
-            {title}
+            {displayHost}
           </div>
-        ) : null}
-
-        <div
-          style={{
-            background: "#FFFFFF",
-            borderRadius: 22,
-            padding: 16,
-            display: "flex",
-            border: `4px solid ${accent}`,
-            marginTop: 28,
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={qrDataUrl} alt="" width={QR_PIXEL_SIZE} height={QR_PIXEL_SIZE} />
         </div>
       </div>
     ),
     {
-      width: SIDE,
-      height: SIDE,
+      width: WIDTH,
+      height: HEIGHT,
       headers: {
         "Cache-Control": "public, s-maxage=60, stale-while-revalidate=600",
       },
