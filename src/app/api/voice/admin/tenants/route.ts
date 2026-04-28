@@ -40,6 +40,7 @@ const CreateVoiceTenantZ = z.object({
   businessCategory: z
     .enum(["restaurant", "clinic", "hotel", "generic", "appointment"])
     .optional(),
+  kutasiaOrderId: z.string().cuid().optional(),
   featureFlags: z.record(z.string(), z.unknown()).optional(),
 });
 
@@ -95,6 +96,7 @@ export async function GET(req: NextRequest) {
         planId: true,
         providerName: true,
         businessCategory: true,
+        kutasiaOrderId: true,
         trialEndsAt: true,
         createdAt: true,
         updatedAt: true,
@@ -168,6 +170,7 @@ export async function POST(req: NextRequest) {
         businessDescription: input.businessDescription,
         businessAddress: input.businessAddress,
         businessCategory: input.businessCategory,
+        kutasiaOrderId: input.kutasiaOrderId,
         featureFlags: (input.featureFlags ?? {}) as object,
       },
     });
@@ -189,6 +192,7 @@ export async function POST(req: NextRequest) {
           planId: tenant.planId,
           providerName: tenant.providerName,
           businessCategory: tenant.businessCategory,
+          kutasiaOrderId: tenant.kutasiaOrderId,
           tenantToken: tenant.tenantToken,
           webhookSecret: tenant.webhookSecret,
           createdAt: tenant.createdAt,
