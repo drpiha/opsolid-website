@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selim Aydın — Kurucu Mimar | Aydın Mimarlık</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --hero-grad: linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #0c4a6e 100%);
+    --card: #ffffff;
+    --bg-soft: #f1f5f9;
+    --accent: #0ea5e9;
+    --accent-2: #f59e0b;
+    --ink: #0f172a;
+    --ink-soft: #334155;
+    --mute: #64748b;
+    --mute-2: #94a3b8;
+    --line: #e2e8f0;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Open Sans', sans-serif;
+    background: #e2e8f0;
+    color: var(--ink-soft);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3, .display { font-family: 'Poppins', sans-serif; }
+
+  .card-container {
+    max-width: 460px;
+    margin: 0 auto;
+    background: var(--bg-soft);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* HERO */
+  .hero {
+    background: var(--hero-grad);
+    padding: 48px 28px 110px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40%; right: -30%;
+    width: 380px; height: 380px;
+    background: radial-gradient(circle, rgba(245,158,11,0.18), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: -50%; left: -20%;
+    width: 360px; height: 360px;
+    background: radial-gradient(circle, rgba(14,165,233,0.22), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .hero-inner { position: relative; z-index: 2; }
+  .hero-firm {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .hero-firm::before {
+    content: '';
+    width: 28px; height: 2px; background: var(--accent-2);
+  }
+  .hero-name {
+    font-size: 38px;
+    font-weight: 800;
+    color: #fff;
+    line-height: 1.05;
+    letter-spacing: -1px;
+  }
+  .hero-name span { color: var(--accent-2); }
+  .hero-tag {
+    margin-top: 14px;
+    font-size: 14px;
+    color: rgba(255,255,255,0.78);
+    line-height: 1.55;
+    max-width: 90%;
+  }
+
+  /* FLOATING CARD */
+  .float-card {
+    margin: -78px 24px 0;
+    background: var(--card);
+    border-radius: 20px;
+    padding: 24px 22px;
+    box-shadow: 0 20px 50px -20px rgba(15,23,42,0.35), 0 4px 14px rgba(15,23,42,0.08);
+    position: relative;
+    z-index: 5;
+  }
+  .float-row {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 18px;
+    align-items: center;
+  }
+  .float-photo {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #fff;
+    box-shadow: 0 4px 14px rgba(15,23,42,0.18);
+  }
+  .float-info .role {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .float-info .nm {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .float-info .firm {
+    font-size: 12px;
+    color: var(--mute);
+    margin-top: 2px;
+  }
+
+  /* STATS GRID */
+  .stats {
+    margin: 28px 24px 0;
+    background: var(--card);
+    border-radius: 20px;
+    padding: 24px 8px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    box-shadow: 0 4px 14px rgba(15,23,42,0.05);
+  }
+  .stat {
+    text-align: center;
+    padding: 4px;
+    position: relative;
+  }
+  .stat:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 14%;
+    width: 1px; height: 72%;
+    background: var(--line);
+  }
+  .stat .num {
+    font-family: 'Poppins', sans-serif;
+    font-size: 26px;
+    font-weight: 800;
+    color: var(--accent);
+    line-height: 1;
+  }
+  .stat:nth-child(2) .num { color: var(--accent-2); }
+  .stat:nth-child(3) .num { color: var(--accent); }
+  .stat:nth-child(4) .num { color: var(--accent-2); }
+  .stat .lbl {
+    margin-top: 6px;
+    font-size: 10px;
+    letter-spacing: 1.2px;
+    color: var(--mute);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* SECTION HEADER */
+  .sh {
+    padding: 32px 28px 14px;
+  }
+  .sh .eb {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .sh h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.4px;
+  }
+
+  /* SERVICES 2-COL GRID */
+  .services {
+    padding: 0 24px 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .svc {
+    background: var(--card);
+    border-radius: 16px;
+    padding: 18px 16px;
+    box-shadow: 0 2px 8px rgba(15,23,42,0.05);
+    transition: transform 0.2s ease, box-shadow 0.25s ease, border-color 0.2s;
+    border: 1px solid var(--line);
+  }
+  .svc:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(15,23,42,0.08); border-color: var(--accent); }
+  .svc-ico {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 12px;
+    background: rgba(14,165,233,0.1);
+    color: var(--accent);
+  }
+  .svc:nth-child(2) .svc-ico { background: rgba(245,158,11,0.12); color: var(--accent-2); }
+  .svc:nth-child(3) .svc-ico { background: rgba(14,165,233,0.1); color: var(--accent); }
+  .svc:nth-child(4) .svc-ico { background: rgba(245,158,11,0.12); color: var(--accent-2); }
+  .svc:nth-child(5) .svc-ico { background: rgba(14,165,233,0.1); color: var(--accent); }
+  .svc-ico svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .svc-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .svc-desc {
+    font-size: 11px;
+    color: var(--mute);
+    margin-top: 4px;
+    line-height: 1.45;
+  }
+
+  /* CTA */
+  .cta-block {
+    margin: 28px 24px 0;
+    background: linear-gradient(135deg, var(--accent) 0%, #0284c7 100%);
+    border-radius: 20px;
+    padding: 26px 22px;
+    color: #fff;
+    box-shadow: 0 10px 30px -10px rgba(14,165,233,0.5);
+    position: relative;
+    overflow: hidden;
+  }
+  .cta-block::after {
+    content: '';
+    position: absolute;
+    top: -40%; right: -30%;
+    width: 200px; height: 200px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+  }
+  .cta-block .ttl {
+    font-family: 'Poppins', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    line-height: 1.25;
+    position: relative; z-index: 2;
+  }
+  .cta-block .sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.85);
+    margin-top: 6px;
+    position: relative; z-index: 2;
+  }
+  .cta-row {
+    margin-top: 16px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    position: relative; z-index: 2;
+  }
+  .cta-btn {
+    padding: 12px 14px;
+    border-radius: 12px;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    transition: transform 0.15s ease;
+  }
+  .cta-btn:hover { transform: translateY(-2px); }
+  .cta-btn.solid { background: #fff; color: var(--accent); }
+  .cta-btn.ghost { background: rgba(255,255,255,0.18); color: #fff; border: 1.5px solid rgba(255,255,255,0.4); }
+
+  /* PROJECT REFERENCE PANEL */
+  .ref {
+    margin: 28px 24px 0;
+    background: var(--card);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(15,23,42,0.05);
+    border: 1px solid var(--line);
+  }
+  .ref-img {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+  }
+  .ref-body {
+    padding: 22px 22px 20px;
+    background: linear-gradient(180deg, rgba(245,158,11,0.06), transparent);
+  }
+  .ref-tag {
+    display: inline-block;
+    background: var(--accent-2);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .ref-name {
+    font-family: 'Poppins', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .ref-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .ref-meta div .k {
+    font-size: 9px;
+    letter-spacing: 1.2px;
+    color: var(--mute);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .ref-meta div .v {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink);
+    margin-top: 2px;
+  }
+
+  /* CONTACT GRID */
+  .contact-grid {
+    margin: 28px 24px 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .ct {
+    background: var(--card);
+    border-radius: 14px;
+    padding: 14px;
+    text-decoration: none;
+    color: var(--ink);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border: 1px solid var(--line);
+    transition: border-color 0.2s, transform 0.15s ease;
+  }
+  .ct:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .ct .ic {
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    background: rgba(14,165,233,0.1);
+    color: var(--accent);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .ct.email .ic { background: rgba(245,158,11,0.12); color: var(--accent-2); }
+  .ct .ic svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .ct .tx { line-height: 1.25; min-width: 0; }
+  .ct .tx .l { font-size: 9px; color: var(--mute); letter-spacing: 1px; text-transform: uppercase; font-weight: 600; }
+  .ct .tx .v { font-size: 12px; font-weight: 600; color: var(--ink); margin-top: 2px; word-break: break-all; }
+
+  /* SOCIAL ROW */
+  .social {
+    margin: 18px 24px 0;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+  }
+  .social a {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none;
+    color: var(--mute);
+    transition: all 0.2s;
+  }
+  .social a:hover { transform: translateY(-2px); color: var(--accent); border-color: var(--accent); }
+  .social a svg { width: 18px; height: 18px; fill: currentColor; }
+
+  /* QR */
+  .qr-section {
+    padding: 36px 28px 24px;
+    text-align: center;
+  }
+  .qr-label {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    color: var(--accent);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+  #qrcode {
+    display: inline-block;
+    padding: 14px;
+    background: #fff;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(15,23,42,0.1);
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 22px 28px 36px;
+    text-align: center;
+  }
+  .footer-mark {
+    font-family: 'Poppins', sans-serif;
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .footer-mark span { color: var(--accent); }
+  .footer-copy {
+    font-size: 10px;
+    color: var(--mute-2);
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { transition: none; opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card-container">
+
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-firm">Aydın Mimarlık</div>
+      <h1 class="hero-name">Selim <span>Aydın</span></h1>
+      <p class="hero-tag">Çağdaş yaşam alanlarını sürdürülebilir mimari ile şekillendiriyoruz.</p>
+    </div>
+  </section>
+
+  <section class="float-card reveal">
+    <div class="float-row">
+      <img src="https://i.pravatar.cc/200?img=52" alt="Selim Aydın" class="float-photo" width="80" height="80">
+      <div class="float-info">
+        <div class="role">Kurucu Mimar</div>
+        <div class="nm">Selim Aydın</div>
+        <div class="firm">14 yıl pratik / 8 ülke</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats reveal">
+    <div class="stat"><div class="num">14</div><div class="lbl">Yıl</div></div>
+    <div class="stat"><div class="num">85+</div><div class="lbl">Proje</div></div>
+    <div class="stat"><div class="num">8</div><div class="lbl">Ülke</div></div>
+    <div class="stat"><div class="num">4</div><div class="lbl">Ödül</div></div>
+  </section>
+
+  <div class="sh reveal">
+    <div class="eb">— Hizmetler</div>
+    <h2>Uzmanlık Alanları</h2>
+  </div>
+  <section class="services reveal">
+    <div class="svc">
+      <div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M3 12l9-9 9 9M5 10v10h14V10"/></svg></div>
+      <div class="svc-title">Lüks Konut</div>
+      <div class="svc-desc">Bireye özel boğaz villaları, özel rezidans projeleri.</div>
+    </div>
+    <div class="svc">
+      <div class="svc-ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+      <div class="svc-title">Ticari Ofis</div>
+      <div class="svc-desc">Kurumsal headquarter ve esnek çalışma alanları.</div>
+    </div>
+    <div class="svc">
+      <div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M12 2v8M3 10l9 4 9-4M3 14l9 4 9-4M3 18l9 4 9-4"/></svg></div>
+      <div class="svc-title">Kentsel Dönüşüm</div>
+      <div class="svc-desc">Tarihi dokuyu koruyan rejenerasyon projeleri.</div>
+    </div>
+    <div class="svc">
+      <div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg></div>
+      <div class="svc-title">İç Mimari</div>
+      <div class="svc-desc">Karakter dolu mekan tasarımı ve detaylandırma.</div>
+    </div>
+    <div class="svc" style="grid-column: 1 / -1;">
+      <div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M2 22c1.5-2 4-3 6-3s4 1 6 3M2 17c1.5-2 4-3 6-3s4 1 6 3M2 12c1.5-2 4-3 6-3s4 1 6 3M22 12c-2 0-4-1-5-3-1 2-3 3-5 3"/></svg></div>
+      <div class="svc-title">Sürdürülebilir Tasarım</div>
+      <div class="svc-desc">LEED &amp; BREEAM sertifikalı, düşük karbonlu mimari çözümler.</div>
+    </div>
+  </section>
+
+  <section class="cta-block reveal">
+    <div class="ttl">Projenizi birlikte tasarlayalım.</div>
+    <div class="sub">Ücretsiz keşif görüşmesi için randevu oluşturun.</div>
+    <div class="cta-row">
+      <a href="tel:+902125551177" class="cta-btn solid">Hemen Ara</a>
+      <a href="https://wa.me/902125551177?text=Merhaba%2C%20mimari%20proje%20g%C3%B6r%C3%BC%C5%9Fmesi%20rica%20ediyorum." target="_blank" rel="noopener" class="cta-btn ghost">WhatsApp</a>
+    </div>
+  </section>
+
+  <div class="sh reveal">
+    <div class="eb">— Featured</div>
+    <h2>Öne Çıkan Proje</h2>
+  </div>
+  <section class="ref reveal">
+    <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80" alt="Featured project" class="ref-img" loading="lazy">
+    <div class="ref-body">
+      <span class="ref-tag">Featured</span>
+      <div class="ref-name">Boğaz Konağı Restorasyonu</div>
+      <div class="ref-meta">
+        <div><div class="k">Konum</div><div class="v">Sarıyer</div></div>
+        <div><div class="k">Yıl</div><div class="v">2024</div></div>
+        <div><div class="k">Tip</div><div class="v">Restorasyon</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-grid reveal">
+    <a href="tel:+902125551177" class="ct">
+      <div class="ic"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+      <div class="tx"><div class="l">Telefon</div><div class="v">+90 212 555 11 77</div></div>
+    </a>
+    <a href="mailto:selim@aydinmimarlik.com" class="ct email">
+      <div class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg></div>
+      <div class="tx"><div class="l">E-Posta</div><div class="v">selim@aydinmimarlik.com</div></div>
+    </a>
+    <a href="https://aydinmimarlik.com" target="_blank" rel="noopener" class="ct" style="grid-column: 1 / -1;">
+      <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></div>
+      <div class="tx"><div class="l">Web</div><div class="v">aydinmimarlik.com</div></div>
+    </a>
+  </section>
+
+  <div class="social reveal">
+    <a href="https://instagram.com/aydinmimarlik" target="_blank" rel="noopener" aria-label="Instagram">
+      <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+    </a>
+    <a href="https://wa.me/902125551177" target="_blank" rel="noopener" aria-label="WhatsApp">
+      <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    </a>
+    <a href="https://aydinmimarlik.com" target="_blank" rel="noopener" aria-label="Web">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+    </a>
+  </div>
+
+  <section class="qr-section reveal">
+    <div class="qr-label">Tüm Projeler — QR</div>
+    <div id="qrcode"></div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-mark">Aydın <span>Mimarlık</span></div>
+    <div class="footer-copy">&copy; 2024 — Tüm hakları saklıdır</div>
+  </footer>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -25px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
+
+  var qrEl = document.getElementById('qrcode');
+  if (qrEl && typeof QRCode !== 'undefined') {
+    new QRCode(qrEl, {
+      text: 'https://aydinmimarlik.com',
+      width: 130, height: 130,
+      colorDark: '#0f172a', colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

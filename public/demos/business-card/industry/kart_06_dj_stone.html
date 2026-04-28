@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Kaan Oz - Analog DJ &amp; Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#f0e8da;
+  --card:#faf4ea;
+  --card-2:#f5ecd9;
+  --accent:#6b3a2a;
+  --accent-2:#c8a500;
+  --ink:#3a2618;
+  --ink-2:#6e553e;
+  --muted:#9d846b;
+  --line:#e3d6c0;
+  --line-2:#d4c4a8;
+}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Nunito',sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  -webkit-font-smoothing:antialiased;
+}
+.card{
+  width:100%;
+  max-width:460px;
+  min-height:100vh;
+  background:var(--card);
+  position:relative;
+  overflow:hidden;
+}
+.reveal{
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1);
+}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* HEADER */
+.warm-header{
+  position:relative;
+  padding:48px 24px 60px;
+  text-align:center;
+  background:
+    radial-gradient(ellipse 600px 300px at 50% 0%, rgba(200,165,0,0.12), transparent 60%),
+    var(--card-2);
+  border-bottom:1px solid var(--line);
+}
+.warm-header .ornament{
+  font-family:'Playfair Display',serif;
+  font-size:18px;
+  color:var(--accent-2);
+  letter-spacing:8px;
+  margin-bottom:14px;
+}
+.warm-header .pre{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:14px;
+  color:var(--accent);
+  margin-bottom:6px;
+}
+.warm-header h1{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:42px;
+  letter-spacing:1px;
+  color:var(--ink);
+  line-height:1.05;
+}
+.warm-header .est{
+  font-family:'Nunito',sans-serif;
+  font-size:11px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-top:14px;
+}
+
+/* WAVE DIVIDER */
+.wave-divider{
+  position:relative;
+  height:30px;
+  margin-top:-1px;
+  background:var(--card-2);
+}
+.wave-divider svg{
+  width:100%;
+  height:30px;
+  display:block;
+}
+
+/* CIRCULAR PHOTO */
+.photo-circle{
+  width:140px;height:140px;
+  border-radius:50%;
+  margin:-70px auto 0;
+  padding:6px;
+  background:var(--card);
+  position:relative;
+  z-index:2;
+  box-shadow:0 8px 24px rgba(107,58,42,0.18);
+}
+.photo-circle::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  border:2px dashed var(--accent-2);
+  opacity:0.4;
+  animation:rot 30s linear infinite;
+}
+@keyframes rot{from{transform:rotate(0);}to{transform:rotate(360deg);}}
+.photo-circle img{
+  width:100%;height:100%;
+  border-radius:50%;
+  object-fit:cover;
+  display:block;
+}
+
+/* BIO */
+.bio-block{
+  text-align:center;
+  padding:24px 30px 28px;
+}
+.bio-name{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:26px;
+  color:var(--ink);
+  margin-bottom:6px;
+}
+.bio-role{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:15px;
+  color:var(--accent);
+  margin-bottom:16px;
+}
+.bio-quote{
+  font-size:13px;
+  line-height:1.7;
+  color:var(--ink-2);
+  font-weight:500;
+}
+.bio-quote::before, .bio-quote::after{
+  font-family:'Playfair Display',serif;
+  color:var(--accent-2);
+  font-size:18px;
+}
+.bio-quote::before{content:'\201C ';}
+.bio-quote::after{content:' \201D';}
+
+/* PHILOSOPHY */
+.philosophy{
+  margin:0 20px 24px;
+  padding:24px;
+  background:var(--card-2);
+  border-radius:16px;
+  border:1px solid var(--line);
+}
+.philo-title{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:14px;
+  color:var(--accent);
+  letter-spacing:1px;
+  text-align:center;
+  margin-bottom:6px;
+}
+.philo-h{
+  font-family:'Playfair Display',serif;
+  font-size:20px;
+  font-weight:700;
+  color:var(--ink);
+  text-align:center;
+  margin-bottom:14px;
+}
+.philo-text{
+  font-size:13.5px;
+  line-height:1.75;
+  color:var(--ink-2);
+  font-weight:500;
+}
+.philo-text strong{color:var(--accent);font-weight:700;}
+
+/* SECTION */
+.section{padding:24px 20px;}
+.sect-title{
+  text-align:center;
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:24px;
+  color:var(--ink);
+  margin-bottom:6px;
+  letter-spacing:0.5px;
+}
+.sect-sub{
+  text-align:center;
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:13px;
+  color:var(--muted);
+  margin-bottom:20px;
+}
+
+/* SERVICES */
+.services{display:grid;gap:14px;}
+.service{
+  display:flex;
+  align-items:flex-start;
+  gap:14px;
+  padding:18px;
+  background:var(--card-2);
+  border:1px solid var(--line);
+  border-radius:14px;
+  transition:all 0.25s;
+}
+.service:hover{
+  border-color:var(--accent-2);
+  transform:translateY(-2px);
+  box-shadow:0 8px 20px rgba(107,58,42,0.1);
+}
+.service-icon{
+  flex-shrink:0;
+  width:44px;height:44px;
+  border-radius:12px;
+  background:var(--accent);
+  color:#fff7ea;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.service-icon svg{width:22px;height:22px;}
+.service-info h3{
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:15px;
+  color:var(--ink);
+  margin-bottom:3px;
+}
+.service-info p{
+  font-size:12.5px;
+  color:var(--ink-2);
+  line-height:1.5;
+}
+
+/* TESTIMONIAL */
+.testimonial{
+  margin:24px 20px;
+  padding:24px;
+  background:linear-gradient(135deg,var(--card-2) 0%, #f0e2c9 100%);
+  border:1px solid var(--line-2);
+  border-radius:18px;
+  text-align:center;
+  position:relative;
+}
+.testimonial .quote-mark{
+  font-family:'Playfair Display',serif;
+  font-size:60px;
+  color:var(--accent-2);
+  line-height:0.6;
+  margin-bottom:8px;
+  opacity:0.5;
+}
+.testimonial p{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:15px;
+  line-height:1.6;
+  color:var(--ink);
+  margin-bottom:14px;
+}
+.testimonial .author{
+  font-family:'Nunito',sans-serif;
+  font-size:12px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--accent);
+  font-weight:700;
+}
+
+/* GENRES */
+.genre-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  justify-content:center;
+}
+.gtag{
+  padding:8px 16px;
+  background:var(--card);
+  border:1.5px solid var(--accent-2);
+  border-radius:999px;
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:13px;
+  color:var(--accent);
+}
+
+/* CTA */
+.cta-block{padding:8px 20px 24px;}
+.cta-warm{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  width:100%;
+  padding:18px;
+  background:var(--accent);
+  color:#fff7ea;
+  border:none;
+  border-radius:999px;
+  font-family:'Playfair Display',serif;
+  font-weight:700;
+  font-size:15px;
+  text-decoration:none;
+  letter-spacing:0.5px;
+  box-shadow:0 8px 20px rgba(107,58,42,0.25);
+  transition:all 0.3s;
+}
+.cta-warm:hover{
+  background:var(--ink);
+  transform:translateY(-2px);
+  box-shadow:0 12px 26px rgba(107,58,42,0.35);
+}
+.cta-light{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  width:100%;
+  padding:14px;
+  background:transparent;
+  border:1.5px solid var(--accent-2);
+  color:var(--accent);
+  border-radius:999px;
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:13px;
+  text-decoration:none;
+  margin-top:10px;
+  transition:all 0.2s;
+}
+.cta-light:hover{background:var(--accent-2);color:#fff7ea;}
+
+/* SOCIAL */
+.socials-row{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  margin-top:14px;
+}
+.s-circ{
+  width:42px;height:42px;
+  border-radius:50%;
+  background:var(--card);
+  border:1.5px solid var(--line-2);
+  color:var(--accent);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+  transition:all 0.2s;
+}
+.s-circ:hover{
+  border-color:var(--accent-2);
+  background:var(--card-2);
+}
+.s-circ svg{width:18px;height:18px;}
+
+/* QR */
+.qr-warm{
+  margin:16px 20px;
+  padding:24px;
+  background:var(--card-2);
+  border:1px solid var(--line);
+  border-radius:18px;
+  text-align:center;
+}
+.qr-warm .lbl{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:13px;
+  color:var(--accent);
+  margin-bottom:14px;
+}
+.qr-frame{
+  display:inline-block;
+  padding:14px;
+  background:#fff;
+  border:1px solid var(--line-2);
+  border-radius:14px;
+}
+#qrcode{display:flex;}
+
+/* FOOTER */
+.footer{
+  text-align:center;
+  padding:24px 20px 32px;
+  border-top:1px solid var(--line);
+  margin-top:8px;
+}
+.footer .om{
+  font-family:'Playfair Display',serif;
+  font-size:18px;
+  color:var(--accent-2);
+  letter-spacing:8px;
+  margin-bottom:8px;
+}
+.footer p{
+  font-family:'Playfair Display',serif;
+  font-style:italic;
+  font-size:12px;
+  color:var(--muted);
+}
+
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none;}
+  .photo-circle::before{animation:none;}
+}
+</style>
+</head>
+<body>
+<div class="card">
+
+  <!-- HEADER -->
+  <header class="warm-header">
+    <div class="ornament">&sect; &sect; &sect;</div>
+    <div class="pre">D&Uuml;NDEN BUG&Uuml;NE</div>
+    <h1>Kaan &Ouml;z<br>Music &amp; Sessions</h1>
+    <div class="est">EST. 2016 &middot; ISTANBUL</div>
+  </header>
+
+  <div class="wave-divider">
+    <svg viewBox="0 0 460 30" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,15 Q57.5,0 115,15 T230,15 T345,15 T460,15 L460,30 L0,30 Z" fill="#faf4ea"/>
+    </svg>
+  </div>
+
+  <!-- PHOTO -->
+  <div class="photo-circle reveal">
+    <img src="https://i.pravatar.cc/200?img=33" alt="Kaan Oz" loading="eager">
+  </div>
+
+  <!-- BIO -->
+  <div class="bio-block reveal">
+    <h2 class="bio-name">Kaan &Ouml;z</h2>
+    <p class="bio-role">DJ &amp; Producer</p>
+    <p class="bio-quote">M&uuml;zik bir frekans de&#287;il, bir hat&#305;rad&#305;r. Her plak&#305;n bir hik&acirc;yesi var.</p>
+  </div>
+
+  <!-- PHILOSOPHY -->
+  <div class="philosophy reveal">
+    <div class="philo-title">&mdash; M&Uuml;Z&#304;K FELSEFEM &mdash;</div>
+    <h3 class="philo-h">Analog'un Sicakligi</h3>
+    <p class="philo-text">
+      <strong>10 y&#305;ld&#305;r</strong> vinyl ve modular synth ile &ccedil;al&#305;&#351;&#305;yorum. House, deep techno ve afro house tabanl&#305; setlerimde, dijital h&#305;z&#305;n yerine zaman&#305;n yava&#351;l&#305;&#287;&#305;n&#305; ar&#305;yorum. M&uuml;zik benim i&ccedil;in bir ya&#351;am ritmi.
+    </p>
+  </div>
+
+  <!-- GENRES -->
+  <section class="section reveal">
+    <h3 class="sect-title">M&uuml;zik T&uuml;rlerim</h3>
+    <p class="sect-sub">&mdash; sahnede &ccedil;ald&#305;klar&#305;m &mdash;</p>
+    <div class="genre-list">
+      <span class="gtag">House</span>
+      <span class="gtag">Deep Techno</span>
+      <span class="gtag">Afro House</span>
+      <span class="gtag">Melodic</span>
+      <span class="gtag">Progressive</span>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section reveal">
+    <h3 class="sect-title">Hizmetlerim</h3>
+    <p class="sect-sub">&mdash; nelerle ilgileniyorum &mdash;</p>
+    <div class="services">
+      <div class="service">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <div class="service-info">
+          <h3>Kul&uuml;p &amp; Festival Setleri</h3>
+          <p>2-6 saatlik live performance, m&uuml;zik dan&#305;&#351;manl&#305;&#287;&#305;.</p>
+        </div>
+      </div>
+      <div class="service">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+        </div>
+        <div class="service-info">
+          <h3>D&uuml;&#287;&uuml;n &amp; &Ouml;zel Etkinlikler</h3>
+          <p>S&#305;cak ve kalite odakl&#305;, t&uuml;m geceyi tasarlayan setler.</p>
+        </div>
+      </div>
+      <div class="service">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        </div>
+        <div class="service-info">
+          <h3>St&uuml;dyo Prod&uuml;ksiyon</h3>
+          <p>Original tracks, remix ve mastering hizmeti.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIAL -->
+  <div class="testimonial reveal">
+    <div class="quote-mark">&ldquo;</div>
+    <p>VOLT'da Kaan'&#305;n setiyle ge&ccedil;irdi&#287;imiz gece, y&#305;l&#305;n en iyi etkinli&#287;iydi. Atmosferi kelimelerle anlat&#305;lamaz.</p>
+    <div class="author">&mdash; Mert K., Etkinlik Organizat&ouml;r&uuml;</div>
+  </div>
+
+  <!-- CTA -->
+  <div class="cta-block reveal">
+    <a href="https://wa.me/905357774422?text=Merhaba%20Kaan%2C%20DJ%20performans%20teklifi" class="cta-warm" target="_blank" rel="noopener">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
+      Sahne Teklifi G&ouml;nder
+    </a>
+    <a href="mailto:booking@kaanozmusic.com" class="cta-light">booking@kaanozmusic.com</a>
+    <div class="socials-row">
+      <a class="s-circ" href="https://instagram.com/kaanozmusic" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+      <a class="s-circ" href="https://open.spotify.com" target="_blank" rel="noopener" aria-label="Spotify">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+      </a>
+      <a class="s-circ" href="https://soundcloud.com" target="_blank" rel="noopener" aria-label="SoundCloud">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 11v8h2v-8H7zm-4 2v6h2v-6H3zm8-4v12h2V9h-2zm4-2v14h2V7h-2zm4 4c-.5 0-1 .1-1.4.3.5-2.4-1.4-4.6-3.6-4.3v8h7c1.4 0 2.5-1.1 2.5-2.5S20.4 11 19 11z"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- QR -->
+  <div class="qr-warm reveal">
+    <div class="lbl">&mdash; M&uuml;zi&#287;ime ula&#351;&#305;n &mdash;</div>
+    <div class="qr-frame"><div id="qrcode"></div></div>
+  </div>
+
+  <footer class="footer">
+    <div class="om">&sect; &sect; &sect;</div>
+    <p>&copy; 2026 Kaan &Ouml;z &middot; kaanozmusic.com</p>
+  </footer>
+</div>
+
+<script>
+(function(){
+  try{
+    new QRCode(document.getElementById('qrcode'),{
+      text:'https://kaanozmusic.com',
+      width:128,height:128,
+      colorDark:'#6b3a2a',colorLight:'#ffffff',
+      correctLevel:QRCode.CorrectLevel.M
+    });
+  }catch(e){}
+  var r=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+    },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+    r.forEach(function(el){io.observe(el);});
+  }else{r.forEach(function(el){el.classList.add('visible');});}
+})();
+</script>
+</body>
+</html>

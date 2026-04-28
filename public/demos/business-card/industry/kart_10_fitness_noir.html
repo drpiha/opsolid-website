@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ceren Demir — Fitness Coach | Ceren Fitness Coaching</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #050505;
+    --card: #0d0d0d;
+    --card-2: #131313;
+    --red: #dc2626;
+    --orange: #f97316;
+    --gray-100: #f5f5f5;
+    --gray-300: #d4d4d4;
+    --gray-400: #a3a3a3;
+    --gray-500: #737373;
+    --gray-600: #525252;
+    --line: #1f1f1f;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: #000;
+    color: var(--gray-300);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .card-container {
+    max-width: 460px;
+    margin: 0 auto;
+    background: var(--bg);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  .display { font-family: 'Oswald', sans-serif; }
+
+  /* HERO BLACK */
+  .hero {
+    padding: 56px 28px 40px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -50%; right: -30%;
+    width: 360px; height: 360px;
+    background: radial-gradient(circle, rgba(220,38,38,0.18), transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    letter-spacing: 6px;
+    color: var(--red);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-eyebrow::before {
+    content: '';
+    width: 32px; height: 2px;
+    background: var(--red);
+  }
+  .hero-name {
+    font-family: 'Oswald', sans-serif;
+    font-size: 64px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 0.9;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-name .surname {
+    display: block;
+    color: var(--gray-500);
+    font-weight: 500;
+    font-size: 56px;
+  }
+  .hero-cta-line {
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-cta {
+    font-family: 'Oswald', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .hero-cta span { color: var(--red); }
+  .hero-arrow {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    background: var(--red);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .hero-arrow svg { width: 16px; height: 16px; stroke: #fff; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* STATS */
+  .stats {
+    background: var(--card);
+    padding: 32px 28px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+  .stat {
+    text-align: center;
+    padding: 4px 6px;
+    position: relative;
+  }
+  .stat:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 0; top: 14%;
+    width: 1px; height: 72%;
+    background: var(--line);
+  }
+  .stat-num {
+    font-family: 'Oswald', sans-serif;
+    font-size: 44px;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+  .stat-num span.unit {
+    font-size: 18px;
+    color: var(--red);
+    font-weight: 500;
+    margin-left: 2px;
+  }
+  .stat-num.alt { color: var(--orange); }
+  .stat-lbl {
+    margin-top: 8px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--gray-500);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* FULL WIDTH PHOTO */
+  .full-photo {
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    position: relative;
+  }
+  .full-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.85) contrast(1.15) brightness(0.85);
+  }
+  .full-photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(5,5,5,0.95) 100%);
+  }
+  .full-photo .label {
+    position: absolute;
+    left: 24px; bottom: 22px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 12px;
+    letter-spacing: 4px;
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: 600;
+    z-index: 2;
+  }
+  .full-photo .label::before {
+    content: '';
+    display: inline-block;
+    width: 24px; height: 2px;
+    background: var(--red);
+    margin-right: 12px;
+    vertical-align: middle;
+  }
+
+  /* SECTION HEADER */
+  .sh {
+    padding: 36px 28px 18px;
+  }
+  .sh .nb {
+    font-family: 'Oswald', sans-serif;
+    font-size: 10px;
+    letter-spacing: 3px;
+    color: var(--red);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .sh h2 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.05;
+  }
+
+  /* SERVICES (red border-left) */
+  .svc-list {
+    padding: 0 28px 8px;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .svc-list li {
+    background: var(--card);
+    border-left: 4px solid var(--red);
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .svc-list li:nth-child(2n) { border-left-color: var(--orange); }
+  .svc-list li:hover { background: var(--card-2); }
+  .svc-list li .info .ttl {
+    font-family: 'Oswald', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+  }
+  .svc-list li .info .desc {
+    font-size: 12px;
+    color: var(--gray-500);
+    margin-top: 4px;
+  }
+  .svc-list li .price {
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--red);
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+    text-align: right;
+  }
+  .svc-list li:nth-child(2n) .price { color: var(--orange); }
+  .svc-list li .price small {
+    display: block;
+    font-size: 9px;
+    color: var(--gray-500);
+    font-weight: 500;
+    margin-top: 2px;
+    letter-spacing: 1px;
+  }
+
+  /* PULL QUOTE */
+  .pq {
+    margin: 36px 28px 0;
+    padding: 32px 24px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    position: relative;
+  }
+  .pq::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--red), var(--orange));
+  }
+  .pq-text {
+    font-family: 'Oswald', sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.25;
+    letter-spacing: -0.3px;
+    text-transform: uppercase;
+  }
+  .pq-text span { color: var(--red); }
+  .pq-cite {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--gray-500);
+    text-transform: uppercase;
+  }
+  .pq-cite strong {
+    display: block;
+    color: var(--orange);
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    margin-bottom: 2px;
+  }
+
+  /* BEFORE / AFTER */
+  .ba {
+    padding: 0 28px 8px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+  }
+  .ba-cell {
+    position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+    background: var(--card);
+  }
+  .ba-cell img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: grayscale(0.7) contrast(1.1);
+  }
+  .ba-cell .stamp {
+    position: absolute;
+    top: 14px; left: 14px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    padding: 5px 12px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .ba-cell.before .stamp { background: rgba(0,0,0,0.75); color: var(--gray-300); border: 1px solid var(--gray-500); }
+  .ba-cell.after .stamp { background: var(--red); color: #fff; }
+  .ba-cell .result {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 16px 14px 12px;
+    background: linear-gradient(180deg, transparent, rgba(5,5,5,0.95));
+    color: #fff;
+    font-family: 'Oswald', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .ba-cell .result span { color: var(--orange); }
+
+  /* RED CTA */
+  .red-cta {
+    margin: 36px 28px 0;
+    padding: 32px 24px;
+    background: linear-gradient(135deg, var(--red) 0%, var(--orange) 100%);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .red-cta::after {
+    content: '';
+    position: absolute;
+    top: -60%; right: -30%;
+    width: 240px; height: 240px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 50%;
+  }
+  .red-cta .ttl {
+    font-family: 'Oswald', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    line-height: 1.1;
+    position: relative; z-index: 2;
+  }
+  .red-cta .sub {
+    margin-top: 8px;
+    font-size: 12px;
+    color: rgba(255,255,255,0.85);
+    position: relative; z-index: 2;
+    letter-spacing: 0.3px;
+  }
+  .red-cta .btns {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    position: relative; z-index: 2;
+  }
+  .red-cta .btns a {
+    padding: 13px 14px;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: transform 0.15s ease, background 0.2s ease;
+  }
+  .red-cta .btns a:hover { transform: translateY(-2px); }
+  .red-cta .btns a.solid { background: #000; color: #fff; }
+  .red-cta .btns a.solid:hover { background: #1a1a1a; }
+  .red-cta .btns a.ghost { background: rgba(255,255,255,0.18); color: #fff; border: 1.5px solid rgba(255,255,255,0.5); }
+
+  /* CONTACT LIST */
+  .contact {
+    padding: 36px 28px 8px;
+  }
+  .ct-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+  }
+  .ct-list a {
+    background: var(--card);
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+    color: var(--gray-300);
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  .ct-list a:hover { background: var(--card-2); color: #fff; }
+  .ct-list a .ic {
+    width: 36px; height: 36px;
+    background: rgba(220,38,38,0.12);
+    color: var(--red);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .ct-list a:nth-child(2) .ic { background: rgba(249,115,22,0.12); color: var(--orange); }
+  .ct-list a .ic svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .ct-list a .val { word-break: break-word; }
+
+  /* QR */
+  .qr-section {
+    padding: 36px 28px 24px;
+    text-align: center;
+    border-top: 1px solid var(--line);
+    margin-top: 28px;
+  }
+  .qr-label {
+    font-family: 'Oswald', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--red);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+  #qrcode {
+    display: inline-block;
+    padding: 14px;
+    background: #fff;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 22px 28px 36px;
+    text-align: center;
+    border-top: 1px solid var(--line);
+  }
+  .footer-mark {
+    font-family: 'Oswald', sans-serif;
+    font-size: 18px;
+    color: #fff;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .footer-mark span { color: var(--red); }
+  .footer-copy {
+    font-size: 9px;
+    color: var(--gray-600);
+    margin-top: 6px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { transition: none; opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card-container">
+
+  <section class="hero">
+    <div class="hero-eyebrow">Personal Coach</div>
+    <h1 class="hero-name">CEREN<span class="surname">Demir</span></h1>
+    <div class="hero-cta-line">
+      <div class="hero-cta">Get <span>Results</span>.</div>
+      <div class="hero-arrow"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></div>
+    </div>
+  </section>
+
+  <section class="stats reveal">
+    <div class="stat">
+      <div class="stat-num">8<span class="unit">YR</span></div>
+      <div class="stat-lbl">Tecrübe</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num alt">600<span class="unit">+</span></div>
+      <div class="stat-lbl">Müşteri</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">94<span class="unit">%</span></div>
+      <div class="stat-lbl">Dönüşüm</div>
+    </div>
+  </section>
+
+  <div class="full-photo reveal">
+    <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=900&q=80" alt="Antrenman" loading="lazy">
+    <div class="label">Train. Push. Repeat.</div>
+  </div>
+
+  <div class="sh reveal">
+    <div class="nb">— 01 / Programlar</div>
+    <h2>Hizmetler</h2>
+  </div>
+
+  <ul class="svc-list reveal">
+    <li>
+      <div class="info">
+        <div class="ttl">1-1 Online Koçluk</div>
+        <div class="desc">Kişiye özel program + haftalık takip</div>
+      </div>
+      <div class="price">&#8378;2.500<small>/AY</small></div>
+    </li>
+    <li>
+      <div class="info">
+        <div class="ttl">Grup Koçluk</div>
+        <div class="desc">Online grup dersleri + topluluk</div>
+      </div>
+      <div class="price">&#8378;800<small>/AY</small></div>
+    </li>
+    <li>
+      <div class="info">
+        <div class="ttl">Beslenme Planı</div>
+        <div class="desc">Tek seferlik makro planlama</div>
+      </div>
+      <div class="price">&#8378;1.500<small>/PAKET</small></div>
+    </li>
+    <li>
+      <div class="info">
+        <div class="ttl">12 Hafta Dönüşüm</div>
+        <div class="desc">Antrenman + beslenme + takip</div>
+      </div>
+      <div class="price">&#8378;4.500<small>/PAKET</small></div>
+    </li>
+  </ul>
+
+  <section class="pq reveal">
+    <p class="pq-text">"Bahaneler tükenir, <span>sonuçlar kalır</span>. Senin işin sadece başlamak."</p>
+    <div class="pq-cite"><strong>Ceren Demir</strong>Kurucu Koç</div>
+  </section>
+
+  <div class="sh reveal">
+    <div class="nb">— 02 / Sonuçlar</div>
+    <h2>Önce / Sonra</h2>
+  </div>
+
+  <div class="ba reveal">
+    <div class="ba-cell before">
+      <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=600&q=80" alt="Önce" loading="lazy">
+      <span class="stamp">Önce</span>
+      <div class="result">Selin K.</div>
+    </div>
+    <div class="ba-cell after">
+      <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=600&q=80" alt="Sonra" loading="lazy">
+      <span class="stamp">Sonra</span>
+      <div class="result">16 hafta &middot; <span>-14 kg</span></div>
+    </div>
+  </div>
+
+  <section class="red-cta reveal">
+    <div class="ttl">Programa Başla</div>
+    <div class="sub">İlk konsültasyon ücretsiz. Şimdi yaz.</div>
+    <div class="btns">
+      <a href="tel:+905323337755" class="solid">Hemen Ara</a>
+      <a href="https://wa.me/905323337755?text=Merhaba%2C%20fitness%20program%C4%B1%20i%C3%A7in%20bilgi%20almak%20istiyorum." target="_blank" rel="noopener" class="ghost">WhatsApp</a>
+    </div>
+  </section>
+
+  <div class="sh reveal">
+    <div class="nb">— 03 / İletişim</div>
+    <h2>Bağlantı</h2>
+  </div>
+
+  <section class="contact reveal">
+    <ul class="ct-list">
+      <li><a href="tel:+905323337755">
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></span>
+        <span class="val">+90 532 333 77 55</span>
+      </a></li>
+      <li><a href="mailto:ceren@cerencoaching.com">
+        <span class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg></span>
+        <span class="val">ceren@cerencoaching.com</span>
+      </a></li>
+      <li><a href="https://cerencoaching.com" target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></span>
+        <span class="val">cerencoaching.com</span>
+      </a></li>
+      <li><a href="https://instagram.com/cerencoaching" target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></span>
+        <span class="val">@cerencoaching &middot; 45K</span>
+      </a></li>
+    </ul>
+  </section>
+
+  <section class="qr-section reveal">
+    <div class="qr-label">Programa Kaydol</div>
+    <div id="qrcode"></div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-mark">Ceren <span>Coaching</span></div>
+    <div class="footer-copy">All Rights Reserved &copy; 2024</div>
+  </footer>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -25px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
+
+  var qrEl = document.getElementById('qrcode');
+  if (qrEl && typeof QRCode !== 'undefined') {
+    new QRCode(qrEl, {
+      text: 'https://cerencoaching.com',
+      width: 130, height: 130,
+      colorDark: '#050505', colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

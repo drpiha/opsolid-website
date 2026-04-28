@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naz Erdogan | Naz Events - Etkinlik Portfolio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #fdf8ff;
+            --card: #ffffff;
+            --accent: #7e22ce;
+            --accent-soft: #f3e8ff;
+            --accent-2: #e879f9;
+            --ink: #2a1430;
+            --muted: #6b5c75;
+            --line: #efe5f3;
+            --line-2: #e0cce8;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--card);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        .header {
+            padding: 56px 32px 32px;
+            border-bottom: 1px solid var(--line);
+        }
+        .brand-mark {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 32px;
+        }
+        .brand-mark::before {
+            content: "";
+            width: 24px; height: 1px;
+            background: var(--accent);
+        }
+        .name-block {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+        }
+        .name-block .avatar {
+            width: 72px; height: 72px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        .name-block .info { flex: 1; }
+        .name-block .name {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.6px;
+            line-height: 1.15;
+        }
+        .name-block .role {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+        .header .credential {
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--ink);
+        }
+        .header .credential strong { color: var(--accent); font-weight: 700; }
+
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-bottom: 1px solid var(--line);
+        }
+        .action {
+            padding: 18px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--ink);
+            border-right: 1px solid var(--line);
+            transition: all 0.2s ease;
+        }
+        .action:last-child { border-right: none; }
+        .action:hover { background: var(--accent-soft); color: var(--accent); }
+        .action .icon { font-size: 18px; margin-bottom: 6px; }
+        .action .label {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        .section { padding: 44px 32px; border-bottom: 1px solid var(--line); }
+        .section-label {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .services-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .service-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--line);
+        }
+        .service-item:last-child { border-bottom: none; }
+        .service-item .num {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent);
+            min-width: 28px;
+        }
+        .service-item .body { flex: 1; }
+        .service-item .name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ink);
+        }
+        .service-item .desc {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+        .stat-cell {
+            text-align: center;
+            padding: 18px 8px;
+            background: var(--accent-soft);
+            border-radius: 14px;
+        }
+        .stat-cell .num {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--accent);
+            line-height: 1;
+            letter-spacing: -0.5px;
+        }
+        .stat-cell .label {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 6px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .clients-list { display: flex; flex-wrap: wrap; gap: 8px; }
+        .client {
+            padding: 8px 14px;
+            background: #fff;
+            border: 1px solid var(--line-2);
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--ink);
+        }
+
+        .contact-list { display: flex; flex-direction: column; gap: 0; }
+        .contact-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--line);
+            text-decoration: none;
+            color: var(--ink);
+        }
+        .contact-item:last-child { border-bottom: none; }
+        .contact-item .key {
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        .contact-item .val { font-size: 13px; transition: color 0.2s ease; }
+        .contact-item:hover .val { color: var(--accent); }
+
+        .cta {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: var(--accent);
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            margin-top: 22px;
+            transition: all 0.25s ease;
+        }
+        .cta:hover { background: #6b21a8; transform: translateY(-1px); }
+
+        .qr-section { padding: 44px 32px; text-align: center; }
+        .qr-heading {
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        #qrcode {
+            display: inline-block;
+            padding: 12px;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+        }
+        .vcard-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-top: 22px;
+            padding: 14px;
+            background: transparent;
+            color: var(--ink);
+            border: 1px solid var(--line-2);
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .vcard-btn:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+        .footer {
+            text-align: center;
+            padding: 28px;
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 1px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="header">
+            <div class="brand-mark">Naz Events - Portfolio</div>
+            <div class="name-block">
+                <img class="avatar" src="https://i.pravatar.cc/200?img=41" alt="Naz Erdogan">
+                <div class="info">
+                    <div class="name">Naz Erdogan</div>
+                    <div class="role">Etkinlik Tasarimcisi</div>
+                </div>
+            </div>
+            <div class="credential">9 yil deneyim - <strong>400+ etkinlik</strong> - 180+ dugun</div>
+        </div>
+
+        <div class="actions">
+            <a href="tel:+905307773388" class="action">
+                <div class="icon">&#128222;</div>
+                <div class="label">Ara</div>
+            </a>
+            <a href="https://wa.me/905307773388" target="_blank" rel="noopener noreferrer" class="action">
+                <div class="icon">&#128172;</div>
+                <div class="label">WhatsApp</div>
+            </a>
+            <a href="mailto:info@nazevents.com" class="action">
+                <div class="icon">&#9993;&#65039;</div>
+                <div class="label">E-posta</div>
+            </a>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-label">Hizmetler</div>
+            <div class="services-list">
+                <div class="service-item">
+                    <span class="num">01</span>
+                    <div class="body">
+                        <div class="name">Dugun Organizasyonu</div>
+                        <div class="desc">Konsept, lokasyon, dekor, koordinasyon</div>
+                    </div>
+                </div>
+                <div class="service-item">
+                    <span class="num">02</span>
+                    <div class="body">
+                        <div class="name">Kurumsal Etkinlik</div>
+                        <div class="desc">Lansman, gala, konferans, kokteyl</div>
+                    </div>
+                </div>
+                <div class="service-item">
+                    <span class="num">03</span>
+                    <div class="body">
+                        <div class="name">Dogum Gunu & Surpriz</div>
+                        <div class="desc">Tema partiler, ozel kutlamalar</div>
+                    </div>
+                </div>
+                <div class="service-item">
+                    <span class="num">04</span>
+                    <div class="body">
+                        <div class="name">Mezuniyet & Balo</div>
+                        <div class="desc">Tema gecesi tasarimi</div>
+                    </div>
+                </div>
+                <div class="service-item">
+                    <span class="num">05</span>
+                    <div class="body">
+                        <div class="name">Konsept Tasarim</div>
+                        <div class="desc">Mekan, dekor, atmosfer planlamasi</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-label">Rakamlarla</div>
+            <div class="stats-row">
+                <div class="stat-cell">
+                    <div class="num">9</div>
+                    <div class="label">Yil</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="num">400+</div>
+                    <div class="label">Etkinlik</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="num">4.9</div>
+                    <div class="label">Puan</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-label">Calistigim Markalar</div>
+            <div class="clients-list">
+                <span class="client">Mandarin Oriental</span>
+                <span class="client">Cirikan Sarayi</span>
+                <span class="client">Raffles</span>
+                <span class="client">Four Seasons</span>
+                <span class="client">Vakko</span>
+                <span class="client">Mercedes-Benz</span>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-label">Iletisim</div>
+            <div class="contact-list">
+                <a href="tel:+905307773388" class="contact-item">
+                    <span class="key">Telefon</span>
+                    <span class="val">+90 530 777 33 88</span>
+                </a>
+                <a href="mailto:info@nazevents.com" class="contact-item">
+                    <span class="key">E-posta</span>
+                    <span class="val">info@nazevents.com</span>
+                </a>
+                <a href="https://nazevents.com" target="_blank" rel="noopener noreferrer" class="contact-item">
+                    <span class="key">Web</span>
+                    <span class="val">nazevents.com</span>
+                </a>
+                <a href="https://instagram.com/nazevents" target="_blank" rel="noopener noreferrer" class="contact-item">
+                    <span class="key">Instagram</span>
+                    <span class="val">@nazevents</span>
+                </a>
+            </div>
+            <a href="https://wa.me/905307773388?text=Merhaba%20Naz%2C%20etkinli%C4%9Fim%20i%C3%A7in%20teklif%20almak%20istiyorum." target="_blank" rel="noopener noreferrer" class="cta">Etkinlik Brifingi Talep Et</a>
+        </div>
+
+        <div class="qr-section reveal">
+            <div class="qr-heading">Portfolio Linki</div>
+            <div id="qrcode" role="img" aria-label="QR kod"></div>
+            <button class="vcard-btn" id="vcardBtn" type="button">
+                <span>&#128229;</span> Rehbere Kaydet
+            </button>
+        </div>
+
+        <footer class="footer">&copy; 2026 Naz Events - Istanbul - nazevents.com</footer>
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+        function initScrollReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function(el) { el.classList.add('visible'); }); return;
+            }
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+            els.forEach(function(el) { io.observe(el); });
+        }
+        function initQR() {
+            var c = document.getElementById('qrcode');
+            if (c && typeof QRCode !== 'undefined') {
+                new QRCode(c, {
+                    text: window.location.href,
+                    width: 130, height: 130,
+                    colorDark: '#7e22ce', colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            }
+        }
+        function initVCard() {
+            var btn = document.getElementById('vcardBtn');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var v = ['BEGIN:VCARD','VERSION:3.0','N:Erdogan;Naz;;;','FN:Naz Erdogan',
+                    'ORG:Naz Events','TITLE:Etkinlik Tasarimcisi',
+                    'TEL;TYPE=CELL:+90 530 777 33 88',
+                    'EMAIL;TYPE=INTERNET:info@nazevents.com',
+                    'URL:https://nazevents.com','END:VCARD'].join('\r\n');
+                var blob = new Blob([v], { type: 'text/vcard;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url; a.download = 'Naz_Erdogan.vcf';
+                document.body.appendChild(a); a.click();
+                document.body.removeChild(a); URL.revokeObjectURL(url);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            initScrollReveal(); initQR(); initVCard();
+        });
+    })();
+    </script>
+</body>
+</html>

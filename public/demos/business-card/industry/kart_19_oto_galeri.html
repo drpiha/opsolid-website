@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarik Arslan | Arslan Premium Otomotiv - Luks Araclar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #080808;
+            --card: #111111;
+            --card-2: #181818;
+            --card-3: #0c0c0c;
+            --line: rgba(255,255,255,0.08);
+            --line-2: rgba(255,255,255,0.16);
+            --gold: #c8a964;
+            --gold-bright: #d4b876;
+            --gold-soft: rgba(200,169,100,0.12);
+            --text: #f5f5f7;
+            --text-soft: rgba(245,245,247,0.78);
+            --text-muted: rgba(245,245,247,0.5);
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        h1, h2, h3, .display { font-family: 'Rajdhani', sans-serif; font-weight: 600; letter-spacing: 0.5px; }
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--card);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.55);
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* HERO with car image */
+        .hero {
+            position: relative;
+            height: 260px;
+            overflow: hidden;
+        }
+        .hero img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+            filter: brightness(0.9) contrast(1.05);
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(8,8,8,0.3) 0%, rgba(8,8,8,0.6) 60%, var(--card) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 32px 28px 40px;
+        }
+        .hero-brand {
+            display: inline-block;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+        .hero-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+        .hero-tagline {
+            font-size: 12px;
+            color: var(--text-soft);
+            margin-top: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        /* PROFILE STRIP */
+        .profile-strip {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--line);
+        }
+        .profile-strip .avatar {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--gold);
+            padding: 2px;
+            flex-shrink: 0;
+        }
+        .profile-strip .info { flex: 1; }
+        .profile-strip .name {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 17px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .profile-strip .title {
+            font-size: 11px;
+            color: var(--gold);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* QUICK */
+        .quick-contact {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid var(--line);
+        }
+        .quick-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 18px;
+            border: none;
+            background: transparent;
+            color: var(--text);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-right: 1px solid var(--line);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .quick-btn:last-child { border-right: none; }
+        .quick-btn:hover { background: var(--gold-soft); color: var(--gold); }
+        .quick-btn .ico { font-size: 16px; }
+
+        /* SECTION */
+        .section { padding: 40px 28px; }
+        .section-label {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .section-label::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--line);
+        }
+
+        /* FEATURED CAR */
+        .featured-car {
+            background: var(--card-2);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+        .featured-car .car-image {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+        .featured-car .car-image img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+        .featured-car .badge {
+            position: absolute;
+            top: 14px; left: 14px;
+            padding: 5px 12px;
+            background: var(--gold);
+            color: var(--bg);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .featured-car .body {
+            padding: 22px;
+        }
+        .featured-car .model {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .featured-car .variant {
+            font-size: 12px;
+            color: var(--text-muted);
+            letter-spacing: 0.5px;
+            margin-bottom: 18px;
+        }
+        .car-spec-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 18px;
+            padding: 16px 0;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+        .car-spec {
+            text-align: center;
+        }
+        .car-spec .key {
+            font-size: 9px;
+            color: var(--text-muted);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .car-spec .val {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .car-price {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+        }
+        .car-price .label {
+            font-size: 10px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .car-price .amount {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        /* BRANDS */
+        .brand-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            border-top: 1px solid var(--line);
+            border-left: 1px solid var(--line);
+        }
+        .brand-cell {
+            padding: 22px 12px;
+            text-align: center;
+            border-right: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            transition: all 0.3s ease;
+        }
+        .brand-cell:hover {
+            background: var(--gold-soft);
+        }
+        .brand-cell .name {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-soft);
+        }
+        .brand-cell:hover .name { color: var(--gold); }
+
+        /* SERVICES */
+        .services-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .service-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--line);
+        }
+        .service-row:last-child { border-bottom: none; }
+        .service-row .ico {
+            color: var(--gold);
+            font-size: 18px;
+            margin-right: 14px;
+        }
+        .service-row .name {
+            flex: 1;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            color: var(--text);
+        }
+        .service-row .arrow {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* STATS */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            background: var(--card-3);
+        }
+        .stat-cell {
+            padding: 26px 12px;
+            text-align: center;
+            border-right: 1px solid var(--line);
+        }
+        .stat-cell:last-child { border-right: none; }
+        .stat-cell .num {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1;
+        }
+        .stat-cell .label {
+            font-size: 9px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* CONTACT */
+        .contact-block { padding: 36px 28px; }
+        .contact-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--line);
+            text-decoration: none;
+            color: var(--text);
+        }
+        .contact-row:last-child { border-bottom: none; }
+        .contact-row .key {
+            font-size: 10px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .contact-row .val {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+        .contact-row:hover .val { color: var(--gold); }
+
+        /* CTA */
+        .cta-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 20px;
+            background: var(--gold);
+            color: var(--bg);
+            border: none;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .cta-btn:hover { background: var(--gold-bright); }
+
+        /* QR */
+        .qr-section { padding: 40px 28px; text-align: center; }
+        .qr-heading {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 11px;
+            color: var(--gold);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+        #qrcode {
+            display: inline-block;
+            padding: 12px;
+            background: #fff;
+        }
+        .vcard-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px;
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--line-2);
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .vcard-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+        .footer {
+            text-align: center;
+            padding: 28px;
+            border-top: 1px solid var(--line);
+        }
+        .footer .footer-name {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .footer .footer-sub {
+            font-size: 10px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="hero">
+            <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?w=900&q=80" alt="Luks otomotiv showroom" loading="eager">
+            <div class="hero-overlay">
+                <span class="hero-brand">Arslan Premium Otomotiv</span>
+                <h1 class="hero-name">Tarik Arslan</h1>
+                <div class="hero-tagline">Premium Auto Dealership - Istanbul</div>
+            </div>
+        </div>
+
+        <div class="profile-strip reveal">
+            <img class="avatar" src="https://i.pravatar.cc/200?img=54" alt="Tarik Arslan">
+            <div class="info">
+                <div class="name">Tarik Arslan</div>
+                <div class="title">Founder - 15 Yil Tecrube</div>
+            </div>
+        </div>
+
+        <div class="quick-contact">
+            <a href="tel:+902125559944" class="quick-btn">
+                <span class="ico">&#128222;</span> Ara
+            </a>
+            <a href="https://wa.me/902125559944" target="_blank" rel="noopener noreferrer" class="quick-btn">
+                <span class="ico">&#128172;</span> Mesaj
+            </a>
+            <a href="mailto:tarik@arslanotomotiv.com" class="quick-btn">
+                <span class="ico">&#9993;&#65039;</span> Mail
+            </a>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-label">Featured Vehicle</div>
+            <div class="featured-car">
+                <div class="car-image">
+                    <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=700&q=80" alt="Featured car" loading="lazy">
+                    <span class="badge">Available</span>
+                </div>
+                <div class="body">
+                    <div class="model">Porsche 911 Turbo S</div>
+                    <div class="variant">2024 - GT Silver Metallic</div>
+                    <div class="car-spec-row">
+                        <div class="car-spec">
+                            <div class="key">KM</div>
+                            <div class="val">3.500</div>
+                        </div>
+                        <div class="car-spec">
+                            <div class="key">HP</div>
+                            <div class="val">650</div>
+                        </div>
+                        <div class="car-spec">
+                            <div class="key">0-100</div>
+                            <div class="val">2.6s</div>
+                        </div>
+                    </div>
+                    <div class="car-price">
+                        <span class="label">Price</span>
+                        <span class="amount">&#8364;385.000</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="reveal">
+            <div class="section-label" style="padding: 0 28px; margin-bottom: 0;">Marka Portfoyu</div>
+            <div class="brand-grid">
+                <div class="brand-cell"><div class="name">BMW</div></div>
+                <div class="brand-cell"><div class="name">Mercedes</div></div>
+                <div class="brand-cell"><div class="name">Audi</div></div>
+                <div class="brand-cell"><div class="name">Porsche</div></div>
+                <div class="brand-cell"><div class="name">Tesla</div></div>
+                <div class="brand-cell"><div class="name">Lambo</div></div>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-label">Hizmetler</div>
+            <div class="services-list">
+                <div class="service-row">
+                    <span class="ico">&#128663;</span>
+                    <span class="name">Yeni Arac Satisi</span>
+                    <span class="arrow">&#8250;</span>
+                </div>
+                <div class="service-row">
+                    <span class="ico">&#128666;</span>
+                    <span class="name">Ikinci El & Premium</span>
+                    <span class="arrow">&#8250;</span>
+                </div>
+                <div class="service-row">
+                    <span class="ico">&#128747;</span>
+                    <span class="name">Import / Export</span>
+                    <span class="arrow">&#8250;</span>
+                </div>
+                <div class="service-row">
+                    <span class="ico">&#128202;</span>
+                    <span class="name">Ekspertiz & Degerleme</span>
+                    <span class="arrow">&#8250;</span>
+                </div>
+                <div class="service-row">
+                    <span class="ico">&#128181;</span>
+                    <span class="name">Finansman & Leasing</span>
+                    <span class="arrow">&#8250;</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-section reveal">
+            <div class="stat-cell">
+                <div class="num" data-target="15">0</div>
+                <div class="label">Yil</div>
+            </div>
+            <div class="stat-cell">
+                <div class="num" data-target="3000" data-suffix="+">0</div>
+                <div class="label">Satis</div>
+            </div>
+            <div class="stat-cell">
+                <div class="num">15M+</div>
+                <div class="label">EUR Portfoy</div>
+            </div>
+        </div>
+
+        <div class="contact-block reveal">
+            <div class="section-label" style="padding: 0; margin-bottom: 18px;">Iletisim</div>
+            <a href="tel:+902125559944" class="contact-row">
+                <span class="key">Telefon</span>
+                <span class="val">+90 212 555 99 44</span>
+            </a>
+            <a href="mailto:tarik@arslanotomotiv.com" class="contact-row">
+                <span class="key">E-Posta</span>
+                <span class="val">tarik@arslanotomotiv.com</span>
+            </a>
+            <a href="https://arslanotomotiv.com" target="_blank" rel="noopener noreferrer" class="contact-row">
+                <span class="key">Web</span>
+                <span class="val">arslanotomotiv.com</span>
+            </a>
+            <a href="https://instagram.com/arslanotomotiv" target="_blank" rel="noopener noreferrer" class="contact-row">
+                <span class="key">Instagram</span>
+                <span class="val">@arslanotomotiv</span>
+            </a>
+        </div>
+
+        <a href="https://wa.me/902125559944?text=Merhaba%20Tar%C4%B1k%20Bey%2C%20test%20s%C3%BCr%C3%BC%C5%9F%C3%BC%20talep%20ediyorum." target="_blank" rel="noopener noreferrer" class="cta-btn">
+            Test Surusu Iste
+        </a>
+
+        <div class="qr-section reveal">
+            <div class="qr-heading">Showroom Linki</div>
+            <div id="qrcode" role="img" aria-label="QR kod"></div>
+            <button class="vcard-btn" id="vcardBtn" type="button">Rehbere Kaydet</button>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-name">Arslan Premium</div>
+            <div class="footer-sub">&copy; 2026 - Istanbul</div>
+        </footer>
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+        function initScrollReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function(el) { el.classList.add('visible'); }); return;
+            }
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function(el) { io.observe(el); });
+        }
+        function initStatCounters() {
+            var nums = document.querySelectorAll('.stat-cell .num[data-target]');
+            if (!('IntersectionObserver' in window)) {
+                nums.forEach(function(el) { el.textContent = el.getAttribute('data-target') + (el.getAttribute('data-suffix') || ''); });
+                return;
+            }
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) {
+                        var el = e.target;
+                        var t = parseInt(el.getAttribute('data-target'), 10);
+                        var suf = el.getAttribute('data-suffix') || '';
+                        animate(el, 0, t, 1800, suf);
+                        io.unobserve(el);
+                    }
+                });
+            }, { threshold: 0.5 });
+            nums.forEach(function(el) { io.observe(el); });
+        }
+        function animate(el, s, e, d, suf) {
+            var start = null;
+            function step(ts) {
+                if (!start) start = ts;
+                var p = Math.min((ts - start) / d, 1);
+                var eased = 1 - Math.pow(1 - p, 3);
+                var v = Math.floor(s + (e - s) * eased);
+                el.textContent = v.toLocaleString('tr-TR') + suf;
+                if (p < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }
+        function initQR() {
+            var c = document.getElementById('qrcode');
+            if (c && typeof QRCode !== 'undefined') {
+                new QRCode(c, {
+                    text: window.location.href,
+                    width: 130, height: 130,
+                    colorDark: '#080808', colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            }
+        }
+        function initVCard() {
+            var btn = document.getElementById('vcardBtn');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var v = ['BEGIN:VCARD','VERSION:3.0','N:Arslan;Tarik;;;','FN:Tarik Arslan',
+                    'ORG:Arslan Premium Otomotiv','TITLE:Founder',
+                    'TEL;TYPE=WORK:+90 212 555 99 44',
+                    'EMAIL;TYPE=INTERNET:tarik@arslanotomotiv.com',
+                    'URL:https://arslanotomotiv.com','END:VCARD'].join('\r\n');
+                var blob = new Blob([v], { type: 'text/vcard;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url; a.download = 'Tarik_Arslan.vcf';
+                document.body.appendChild(a); a.click();
+                document.body.removeChild(a); URL.revokeObjectURL(url);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            initScrollReveal(); initStatCounters(); initQR(); initVCard();
+        });
+    })();
+    </script>
+</body>
+</html>

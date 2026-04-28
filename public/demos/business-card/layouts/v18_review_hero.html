@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pınar Şen | Yaşam Koçu &amp; NLP Uzmanı</title>
+    <meta property="og:title" content="Pınar Şen | Yaşam Koçu">
+    <meta property="og:description" content="247 mutlu müşteri · 4.9/5 puan · Yaşam koçluğu ve NLP danışmanlığı.">
+    <meta property="og:type" content="profile">
+    <meta property="og:locale" content="tr_TR">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #fff9f0;
+            --card: #ffffff;
+            --amber: #f59e0b;
+            --amber-soft: #fef3c7;
+            --ink: #111111;
+            --muted: #666666;
+            --star: #fbbf24;
+            --border: #f0e6d2;
+            --pink: #fce7e7;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--card);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* Hero rating */
+        .rh-hero {
+            background: linear-gradient(180deg, var(--bg) 0%, var(--card) 100%);
+            padding: 36px 24px 28px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .rh-name {
+            font-size: 26px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            color: var(--ink);
+            margin-bottom: 6px;
+        }
+        .rh-role {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 14px;
+            color: var(--muted);
+            margin-bottom: 22px;
+        }
+        .rating-block {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            background: var(--card);
+            padding: 22px 28px;
+            border-radius: 24px;
+            border: 1px solid var(--border);
+            box-shadow: 0 8px 30px rgba(245, 158, 11, 0.1);
+        }
+        .rating-score {
+            font-size: 56px;
+            font-weight: 800;
+            color: var(--ink);
+            line-height: 1;
+            letter-spacing: -2px;
+            margin-bottom: 8px;
+        }
+        .rating-score .max {
+            font-size: 22px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+        .stars {
+            display: flex;
+            gap: 2px;
+            margin-bottom: 8px;
+        }
+        .star {
+            color: var(--star);
+            font-size: 22px;
+            line-height: 1;
+        }
+        .rating-count {
+            font-size: 12px;
+            color: var(--muted);
+            font-weight: 600;
+        }
+        .rating-count strong { color: var(--ink); }
+
+        /* Trust badges */
+        .trust-row {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            padding: 16px 24px;
+            background: var(--amber-soft);
+        }
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--card);
+            padding: 6px 12px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--ink);
+        }
+        .trust-badge .star { font-size: 12px; }
+
+        /* Bio */
+        .rh-bio {
+            padding: 32px 24px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .rh-bio img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+            border: 4px solid var(--amber-soft);
+        }
+        .rh-bio .info { flex: 1; }
+        .rh-bio .info h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .rh-bio .info p {
+            font-family: 'Lora', serif;
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.55;
+        }
+
+        /* Section */
+        .rh-section {
+            padding: 32px 24px;
+        }
+        .rh-section h2 {
+            font-size: 18px;
+            font-weight: 800;
+            margin-bottom: 18px;
+            text-align: center;
+            letter-spacing: -0.3px;
+        }
+        .rh-section h2 em {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-weight: 400;
+            color: var(--amber);
+        }
+
+        /* Reviews */
+        .review-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .review-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 18px 18px 16px;
+        }
+        .review-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .review-head .who {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .review-head .who-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--amber);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 12px;
+        }
+        .review-head .who-info .who-name {
+            font-size: 13px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .review-head .who-info .who-when {
+            font-size: 11px;
+            color: var(--muted);
+        }
+        .review-head .stars-mini {
+            display: flex;
+            gap: 1px;
+        }
+        .review-head .stars-mini .star {
+            font-size: 13px;
+        }
+        .review-text {
+            font-family: 'Lora', serif;
+            font-size: 13px;
+            line-height: 1.55;
+            color: var(--ink);
+            font-style: italic;
+        }
+
+        /* Services */
+        .rh-services-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .rh-service-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+        .rh-service-row .check {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: var(--amber);
+            color: #fff;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        .rh-service-row .stext { font-size: 13.5px; font-weight: 600; flex: 1; }
+        .rh-service-row .sprice { font-size: 12px; color: var(--amber); font-weight: 700; }
+
+        /* CTA */
+        .rh-cta-wrap {
+            padding: 24px;
+        }
+        .rh-cta {
+            display: block;
+            background: var(--ink);
+            color: var(--bg);
+            padding: 18px 24px;
+            border-radius: 16px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 800;
+            font-size: 15px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .rh-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(0,0,0,0.25);
+        }
+        .rh-cta .badge {
+            display: inline-block;
+            background: var(--amber);
+            color: var(--ink);
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 100px;
+            margin-left: 8px;
+            font-weight: 800;
+            letter-spacing: 1px;
+        }
+
+        /* Contact mini */
+        .rh-contact {
+            padding: 0 24px 28px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .rh-contact-btn {
+            padding: 12px 14px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-decoration: none;
+            text-align: center;
+            transition: border-color 0.25s ease;
+        }
+        .rh-contact-btn:hover { border-color: var(--amber); }
+        .rh-contact-btn .lab {
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .rh-contact-btn .val {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        /* QR */
+        .rh-qr {
+            padding: 24px;
+            background: var(--amber-soft);
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        .rh-qr-frame {
+            display: inline-block;
+            padding: 14px;
+            background: var(--card);
+            border-radius: 14px;
+            box-shadow: 0 4px 14px rgba(245, 158, 11, 0.2);
+        }
+        .rh-qr p {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 12px;
+            font-family: 'Lora', serif;
+            font-style: italic;
+        }
+        #qrcode img, #qrcode canvas { display: block; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+
+        <div class="rh-hero">
+            <h1 class="rh-name">Pınar Şen</h1>
+            <div class="rh-role">Yaşam Koçu &amp; NLP Uzmanı</div>
+            <div class="rating-block">
+                <div class="rating-score">4.9<span class="max">/5</span></div>
+                <div class="stars" aria-label="5 yıldız üzerinden 4.9">
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                    <span class="star">★</span>
+                </div>
+                <div class="rating-count"><strong>247</strong> doğrulanmış yorum</div>
+            </div>
+        </div>
+
+        <div class="trust-row">
+            <div class="trust-badge"><span class="star">★</span> Google</div>
+            <div class="trust-badge"><span class="star">★</span> Trustpilot</div>
+            <div class="trust-badge"><span class="star">★</span> Doktortakvimi</div>
+        </div>
+
+        <div class="rh-bio reveal">
+            <img src="https://i.pravatar.cc/200?img=49" alt="Pınar Şen">
+            <div class="info">
+                <h3>Merhaba, ben Pınar.</h3>
+                <p>12 yıllık deneyimimle 1500'den fazla kişinin hayatına yön bulmasına eşlik ettim. ICF Sertifikalı koç, NLP Master Practitioner.</p>
+            </div>
+        </div>
+
+        <div class="rh-section reveal">
+            <h2>Müşteri <em>Yorumları</em></h2>
+            <div class="review-cards">
+                <div class="review-card">
+                    <div class="review-head">
+                        <div class="who">
+                            <div class="who-avatar">AT</div>
+                            <div class="who-info">
+                                <div class="who-name">Ayşe T.</div>
+                                <div class="who-when">3 hafta önce</div>
+                            </div>
+                        </div>
+                        <div class="stars-mini">
+                            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                        </div>
+                    </div>
+                    <div class="review-text">"Pınar Hanım'la çalışmak hayatımda dönüm noktası oldu. 6 seans sonunda kendimi çok daha net hissediyorum."</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-head">
+                        <div class="who">
+                            <div class="who-avatar">MK</div>
+                            <div class="who-info">
+                                <div class="who-name">Murat K.</div>
+                                <div class="who-when">1 ay önce</div>
+                            </div>
+                        </div>
+                        <div class="stars-mini">
+                            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                        </div>
+                    </div>
+                    <div class="review-text">"İş kararlarımda netlik ve cesaret kazandım. Çok teşekkürler."</div>
+                </div>
+                <div class="review-card">
+                    <div class="review-head">
+                        <div class="who">
+                            <div class="who-avatar">SO</div>
+                            <div class="who-info">
+                                <div class="who-name">Selin O.</div>
+                                <div class="who-when">2 ay önce</div>
+                            </div>
+                        </div>
+                        <div class="stars-mini">
+                            <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                        </div>
+                    </div>
+                    <div class="review-text">"Empatik, profesyonel ve son derece etkili. İlk seanstan itibaren güven duydum."</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rh-section reveal" style="background: var(--bg); margin: 0 -1px;">
+            <h2>Hizmet <em>paketleri</em></h2>
+            <div class="rh-services-list">
+                <div class="rh-service-row">
+                    <div class="check">★</div>
+                    <div class="stext">Bireysel Koçluk</div>
+                    <div class="sprice">90 dk</div>
+                </div>
+                <div class="rh-service-row">
+                    <div class="check">★</div>
+                    <div class="stext">NLP Atölyeleri</div>
+                    <div class="sprice">3 gün</div>
+                </div>
+                <div class="rh-service-row">
+                    <div class="check">★</div>
+                    <div class="stext">Kariyer Koçluğu</div>
+                    <div class="sprice">6 seans</div>
+                </div>
+                <div class="rh-service-row">
+                    <div class="check">★</div>
+                    <div class="stext">Online Mentorluk</div>
+                    <div class="sprice">aylık</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="rh-cta-wrap reveal">
+            <a href="https://cal.com/pinarsen" target="_blank" rel="noopener" class="rh-cta">
+                Ücretsiz Keşif Seansı Al
+                <span class="badge">30 dk</span>
+            </a>
+        </div>
+
+        <div class="rh-contact reveal">
+            <a href="tel:+905304442211" class="rh-contact-btn">
+                <div class="lab">Telefon</div>
+                <div class="val">+90 530 444 22 11</div>
+            </a>
+            <a href="mailto:pinar@pinarsenyasam.com" class="rh-contact-btn">
+                <div class="lab">E-posta</div>
+                <div class="val">pinar@pinarsenyasam.com</div>
+            </a>
+            <a href="https://wa.me/905304442211" target="_blank" rel="noopener" class="rh-contact-btn">
+                <div class="lab">WhatsApp</div>
+                <div class="val">Mesaj Gönder</div>
+            </a>
+            <a href="https://instagram.com/pinarsenyasam" target="_blank" rel="noopener" class="rh-contact-btn">
+                <div class="lab">Instagram</div>
+                <div class="val">@pinarsenyasam</div>
+            </a>
+        </div>
+
+        <div class="rh-qr reveal">
+            <div class="rh-qr-frame">
+                <div id="qrcode"></div>
+            </div>
+            <p>Tara ve randevu sayfama hızlıca ulaş.</p>
+        </div>
+
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+        function initScrollReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function(el){ el.classList.add('visible'); });
+                return;
+            }
+            var io = new IntersectionObserver(function(entries){
+                entries.forEach(function(e){
+                    if (e.isIntersecting) {
+                        e.target.classList.add('visible');
+                        io.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function(el){ io.observe(el); });
+        }
+        function initQR() {
+            if (typeof QRCode === 'undefined') return;
+            new QRCode(document.getElementById('qrcode'), {
+                text: 'https://pinarsenyasam.com',
+                width: 110,
+                height: 110,
+                colorDark: '#111111',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function(){
+            initScrollReveal();
+            initQR();
+        });
+    })();
+    </script>
+</body>
+</html>

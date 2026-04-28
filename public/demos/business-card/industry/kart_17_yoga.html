@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sera Ozdogan | Sera Yoga & Wellness - Yoga Egitmeni</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #f0ede6;
+            --card: #faf7f2;
+            --card-warm: #f3ede2;
+            --accent: #4a7c6f;
+            --accent-dark: #3a625a;
+            --accent-2: #c8a500;
+            --ink: #2d3a36;
+            --ink-soft: #5a6b66;
+            --line: #e3dccf;
+            --shadow-sm: 0 2px 8px rgba(74,124,111,0.06);
+            --shadow-md: 0 8px 24px rgba(74,124,111,0.1);
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+        h1, h2, h3, .serif { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; }
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--card);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            height: 280px;
+            overflow: hidden;
+        }
+        .hero img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(45,58,54,0.2) 0%, rgba(45,58,54,0.55) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 28px 28px 60px;
+            color: #fff;
+        }
+        .hero-mantra {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 22px;
+            font-weight: 400;
+            line-height: 1.4;
+            margin-bottom: 4px;
+        }
+        .hero-mantra .accent {
+            background: linear-gradient(180deg, transparent 65%, rgba(200,165,0,0.6) 65%);
+            padding: 0 4px;
+        }
+        .hero-loc {
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.85);
+        }
+
+        /* WAVE DIVIDER */
+        .wave-divider {
+            position: relative;
+            margin-top: -40px;
+            height: 40px;
+            background: var(--card);
+            border-top-left-radius: 60% 40px;
+            border-top-right-radius: 60% 40px;
+        }
+
+        /* PROFILE */
+        .profile {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 0 28px 24px;
+            margin-top: -64px;
+            position: relative;
+            z-index: 2;
+        }
+        .profile .avatar-wrap {
+            position: relative;
+            width: 120px; height: 120px;
+            border-radius: 50%;
+            padding: 6px;
+            background: var(--card);
+            margin-bottom: 16px;
+            box-shadow: var(--shadow-md);
+        }
+        .profile .avatar-wrap::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: conic-gradient(from 90deg, var(--accent), var(--accent-2), var(--accent));
+            z-index: -1;
+            padding: 2px;
+        }
+        .profile .avatar {
+            width: 100%; height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--card);
+        }
+        .profile .name {
+            font-family: 'Fraunces', serif;
+            font-size: 30px;
+            font-style: italic;
+            font-weight: 400;
+            color: var(--ink);
+            line-height: 1.1;
+        }
+        .profile .credential {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 6px;
+        }
+        .profile .studio-name {
+            font-size: 14px;
+            color: var(--ink-soft);
+            margin-top: 2px;
+        }
+
+        /* QUICK CONTACT */
+        .quick-contact {
+            display: flex;
+            gap: 10px;
+            padding: 14px 28px 24px;
+        }
+        .pill {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 12px 8px;
+            border-radius: 999px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+        .pill--call { background: var(--accent); color: #fff; }
+        .pill--call:hover { background: var(--accent-dark); transform: translateY(-1px); }
+        .pill--whatsapp { background: #25d366; color: #fff; }
+        .pill--whatsapp:hover { background: #1fb855; transform: translateY(-1px); }
+        .pill--email { background: var(--accent-2); color: #fff; }
+        .pill--email:hover { background: #a88800; transform: translateY(-1px); }
+
+        /* SECTION */
+        .section { padding: 28px; }
+        .section-title {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--accent);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-title::before {
+            content: "";
+            width: 28px; height: 1px;
+            background: var(--accent-2);
+        }
+
+        /* PHILOSOPHY */
+        .philosophy {
+            background: var(--card-warm);
+            padding: 32px 28px;
+            position: relative;
+        }
+        .philosophy::before {
+            content: '"';
+            position: absolute;
+            top: 8px; left: 18px;
+            font-family: 'Fraunces', serif;
+            font-size: 90px;
+            color: var(--accent-2);
+            opacity: 0.2;
+            line-height: 1;
+        }
+        .philosophy .text {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 16px;
+            color: var(--ink);
+            line-height: 1.7;
+            position: relative;
+            padding-left: 14px;
+        }
+
+        /* CLASSES */
+        .class-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .class-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 20px;
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-left: 3px solid var(--accent);
+            border-radius: 14px;
+            transition: all 0.25s ease;
+        }
+        .class-card:hover {
+            transform: translateX(4px);
+            box-shadow: var(--shadow-md);
+        }
+        .class-card .body { flex: 1; }
+        .class-card .name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 2px;
+        }
+        .class-card .desc {
+            font-size: 12px;
+            color: var(--ink-soft);
+        }
+        .class-card .price {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 18px;
+            font-weight: 400;
+            color: var(--accent);
+            white-space: nowrap;
+            margin-left: 12px;
+        }
+
+        /* SPECIALTIES */
+        .spec-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .spec {
+            padding: 14px;
+            background: var(--card-warm);
+            border-radius: 12px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent-dark);
+        }
+        .spec .ico {
+            font-size: 22px;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        /* RETREAT BANNER */
+        .retreat {
+            margin: 0 28px;
+            padding: 32px 24px;
+            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            border-radius: 20px;
+            color: #fff;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .retreat::before {
+            content: "";
+            position: absolute;
+            top: -40px; right: -40px;
+            width: 140px; height: 140px;
+            background: radial-gradient(circle, rgba(200,165,0,0.4), transparent 70%);
+        }
+        .retreat::after {
+            content: "";
+            position: absolute;
+            bottom: -50px; left: -50px;
+            width: 160px; height: 160px;
+            background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
+        }
+        .retreat .label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent-2);
+            margin-bottom: 10px;
+        }
+        .retreat .title {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+        .retreat .desc {
+            font-size: 13px;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 18px;
+        }
+        .retreat .price {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 18px;
+            color: var(--accent-2);
+        }
+
+        /* STATS */
+        .stats-section {
+            background: var(--card-warm);
+            padding: 32px 28px;
+            margin: 0;
+        }
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+        .stat-item .stat-num {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 28px;
+            color: var(--accent);
+            line-height: 1.1;
+        }
+        .stat-item .stat-label {
+            font-size: 11px;
+            color: var(--ink-soft);
+            margin-top: 4px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* CTA */
+        .booking-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 16px;
+            background: #25d366;
+            color: #fff;
+            border-radius: 14px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .booking-cta:hover {
+            background: #1fb855;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 22px rgba(37,211,102,0.35);
+        }
+
+        /* QR */
+        .qr-section { text-align: center; }
+        .qr-heading {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 16px;
+            color: var(--accent);
+            margin-bottom: 14px;
+        }
+        #qrcode {
+            display: inline-block;
+            padding: 12px;
+            background: #fff;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .vcard-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 18px;
+            padding: 14px;
+            background: transparent;
+            color: var(--accent);
+            border: 1.5px solid var(--accent);
+            border-radius: 14px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .vcard-btn:hover { background: var(--accent); color: #fff; }
+
+        .footer {
+            text-align: center;
+            padding: 28px;
+            background: var(--accent);
+            color: #fff;
+        }
+        .footer .footer-name {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 16px;
+            color: var(--accent-2);
+            margin-bottom: 4px;
+        }
+        .footer .footer-sub {
+            font-size: 11px;
+            color: rgba(255,255,255,0.65);
+            letter-spacing: 1px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <!-- HERO -->
+        <div class="hero">
+            <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=900&q=80" alt="Yoga ortami" loading="eager">
+            <div class="hero-overlay">
+                <h1 class="hero-mantra"><span class="accent">Nefes</span> ile baslar,<br>denge ile devam eder.</h1>
+                <span class="hero-loc">Sera Yoga - Izmir</span>
+            </div>
+        </div>
+
+        <div class="wave-divider"></div>
+
+        <!-- PROFILE -->
+        <div class="profile reveal">
+            <div class="avatar-wrap">
+                <img class="avatar" src="https://i.pravatar.cc/200?img=44" alt="Sera Ozdogan">
+            </div>
+            <h2 class="name">Sera Ozdogan</h2>
+            <div class="credential">RYT-500 - Sertifikali Egitmen</div>
+            <div class="studio-name">Sera Yoga & Wellness</div>
+        </div>
+
+        <!-- QUICK CONTACT -->
+        <div class="quick-contact reveal">
+            <a href="tel:+905304449977" class="pill pill--call"><span>&#128222;</span> Ara</a>
+            <a href="https://wa.me/905304449977?text=Merhaba%20Sera%2C%20ders%20rezervasyonu%20yapmak%20istiyorum." target="_blank" rel="noopener noreferrer" class="pill pill--whatsapp"><span>&#128172;</span> WhatsApp</a>
+            <a href="mailto:sera@serayoga.com" class="pill pill--email"><span>&#9993;&#65039;</span> E-posta</a>
+        </div>
+
+        <!-- PHILOSOPHY -->
+        <div class="philosophy reveal">
+            <p class="text">Yoga, matin uzerindeki birkac harekettem cok daha fazlasi. Hayata duruslu, nefese sadik ve bedenle uyum icinde olmanin sanati. 6 yildir ogrencilerime bu yolculukta esliik ediyorum.</p>
+        </div>
+
+        <!-- CLASSES -->
+        <div class="section reveal">
+            <h3 class="section-title">Ders Turleri</h3>
+            <div class="class-list">
+                <div class="class-card">
+                    <div class="body">
+                        <div class="name">Ozel Yoga</div>
+                        <div class="desc">Birebir, kisiye ozel program</div>
+                    </div>
+                    <div class="price">&#8378;500 / seans</div>
+                </div>
+                <div class="class-card">
+                    <div class="body">
+                        <div class="name">Grup Dersi</div>
+                        <div class="desc">Hatha & Vinyasa - 6 kisilik</div>
+                    </div>
+                    <div class="price">&#8378;150 / ders</div>
+                </div>
+                <div class="class-card">
+                    <div class="body">
+                        <div class="name">Online Program</div>
+                        <div class="desc">Aylik, sinirsiz erisim</div>
+                    </div>
+                    <div class="price">&#8378;1.200 / ay</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SPECIALTIES -->
+        <div class="section reveal" style="padding-top: 0;">
+            <h3 class="section-title">Uzmanlik</h3>
+            <div class="spec-grid">
+                <div class="spec"><span class="ico">&#127807;</span>Hatha Yoga</div>
+                <div class="spec"><span class="ico">&#9728;&#65039;</span>Vinyasa</div>
+                <div class="spec"><span class="ico">&#129728;</span>Restoratif</div>
+                <div class="spec"><span class="ico">&#128131;</span>Meditasyon</div>
+            </div>
+        </div>
+
+        <!-- RETREAT -->
+        <div class="reveal" style="padding-bottom: 28px;">
+            <div class="retreat">
+                <div class="label">Ozel Etkinlik</div>
+                <h3 class="title">Bahar Retreat<br>2026 - Cesme</h3>
+                <p class="desc">3 gun 2 gece - sahil yogasi, meditasyon, organik mutfak</p>
+                <div class="price">&#8378;3.500 - &#8378;8.000</div>
+            </div>
+        </div>
+
+        <!-- STATS -->
+        <div class="stats-section reveal">
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-num" data-target="6">0</div>
+                    <div class="stat-label">Yil</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num" data-target="350" data-suffix="+">0</div>
+                    <div class="stat-label">Ogrenci</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num" data-target="18" data-suffix="K">0</div>
+                    <div class="stat-label">Topluluk</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BOOKING CTA -->
+        <div class="section reveal">
+            <a href="https://wa.me/905304449977?text=Merhaba%20Sera%2C%20ders%20rezervasyonu%20yapmak%20istiyorum." target="_blank" rel="noopener noreferrer" class="booking-cta">
+                <span>&#128172;</span> Ders Rezervasyonu
+            </a>
+        </div>
+
+        <!-- QR -->
+        <div class="section qr-section reveal" style="padding-top: 0;">
+            <div class="qr-heading">Studyoyu Paylas</div>
+            <div id="qrcode" role="img" aria-label="QR kod"></div>
+            <button class="vcard-btn" id="vcardBtn" type="button">
+                <span>&#128229;</span> Rehbere Kaydet
+            </button>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-name">Sera Yoga & Wellness</div>
+            <div class="footer-sub">Izmir - serayoga.com</div>
+        </footer>
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+        function initScrollReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function(el) { el.classList.add('visible'); }); return;
+            }
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function(el) { io.observe(el); });
+        }
+        function initStatCounters() {
+            var nums = document.querySelectorAll('.stat-num[data-target]');
+            if (!('IntersectionObserver' in window)) {
+                nums.forEach(function(el) { el.textContent = el.getAttribute('data-target') + (el.getAttribute('data-suffix') || ''); });
+                return;
+            }
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) {
+                        var el = e.target;
+                        var target = parseInt(el.getAttribute('data-target'), 10);
+                        var suffix = el.getAttribute('data-suffix') || '';
+                        animate(el, 0, target, 1600, suffix);
+                        io.unobserve(el);
+                    }
+                });
+            }, { threshold: 0.5 });
+            nums.forEach(function(el) { io.observe(el); });
+        }
+        function animate(el, s, e, d, suf) {
+            var start = null;
+            function step(ts) {
+                if (!start) start = ts;
+                var p = Math.min((ts - start) / d, 1);
+                var eased = 1 - Math.pow(1 - p, 3);
+                el.textContent = Math.floor(s + (e - s) * eased) + suf;
+                if (p < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }
+        function initQR() {
+            var c = document.getElementById('qrcode');
+            if (c && typeof QRCode !== 'undefined') {
+                new QRCode(c, {
+                    text: window.location.href,
+                    width: 140, height: 140,
+                    colorDark: '#4a7c6f', colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            }
+        }
+        function initVCard() {
+            var btn = document.getElementById('vcardBtn');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var v = ['BEGIN:VCARD','VERSION:3.0','N:Ozdogan;Sera;;;','FN:Sera Ozdogan',
+                    'ORG:Sera Yoga & Wellness','TITLE:Yoga Egitmeni - RYT-500',
+                    'TEL;TYPE=CELL:+90 530 444 99 77',
+                    'EMAIL;TYPE=INTERNET:sera@serayoga.com',
+                    'URL:https://serayoga.com','ADR;TYPE=WORK:;;;Izmir;;;Turkiye',
+                    'END:VCARD'].join('\r\n');
+                var blob = new Blob([v], { type: 'text/vcard;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url; a.download = 'Sera_Ozdogan.vcf';
+                document.body.appendChild(a); a.click();
+                document.body.removeChild(a); URL.revokeObjectURL(url);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            initScrollReveal(); initStatCounters(); initQR(); initVCard();
+        });
+    })();
+    </script>
+</body>
+</html>

@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uzm. Psk. Aylin Kara | Guvenli Alan Psikoloji</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;1,400&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #f5f0ea;
+            --card: #fdfaf6;
+            --accent: #7c6d8a;
+            --accent-dark: #5d4f6e;
+            --accent-soft: #ebe3f0;
+            --gold: #c8a500;
+            --text: #2d2638;
+            --text-muted: #786a82;
+            --line: #e7ddd5;
+            --warm: #f8f0e6;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .card {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--card);
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        .editorial {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            height: 280px;
+            overflow: hidden;
+        }
+        .hero img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: saturate(0.8) brightness(0.95);
+        }
+        .hero::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(180deg, rgba(124,109,138,0.05) 0%, rgba(124,109,138,0.4) 60%, rgba(45,38,56,0.85) 100%);
+        }
+        .hero-content {
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            padding: 28px 32px;
+            color: #fff;
+        }
+        .hero-tag {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: #e7d3a8;
+            margin-bottom: 8px;
+        }
+        .hero-title {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 24px;
+            font-weight: 400;
+            line-height: 1.3;
+            color: #fdfaf6;
+        }
+
+        /* PROFILE */
+        .profile {
+            margin-top: -52px;
+            padding: 0 32px;
+            position: relative;
+            z-index: 5;
+            text-align: center;
+        }
+        .avatar {
+            width: 110px; height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 6px solid var(--card);
+            box-shadow: 0 12px 30px rgba(45,38,56,0.18);
+            margin-bottom: 16px;
+        }
+        .name {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--text);
+            letter-spacing: -0.3px;
+        }
+        .title {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+        .clinic-tag {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 16px;
+            background: var(--accent-soft);
+            color: var(--accent-dark);
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+        }
+
+        /* WELCOME QUOTE */
+        .welcome {
+            padding: 28px 32px 0;
+            text-align: center;
+        }
+        .welcome p {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 15px;
+            color: var(--text);
+            line-height: 1.7;
+            position: relative;
+        }
+        .welcome::before {
+            content: '';
+            display: block;
+            width: 32px;
+            height: 1px;
+            background: var(--accent);
+            margin: 0 auto 18px;
+        }
+
+        /* QUICK ACTIONS */
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 28px 32px 0;
+        }
+        .act {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 8px;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 11.5px;
+            font-weight: 700;
+            transition: all 0.3s ease;
+        }
+        .act:hover { transform: translateY(-2px); border-color: var(--accent); }
+        .act .ic {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: var(--accent-soft);
+            color: var(--accent-dark);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .act svg { width: 18px; height: 18px; }
+
+        /* SECTION */
+        .section {
+            padding: 32px;
+        }
+        .section-head {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+        .section-eyebrow {
+            font-size: 10.5px;
+            font-weight: 700;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+        .section-title {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--text);
+            line-height: 1.3;
+        }
+        .section-divider {
+            width: 32px;
+            height: 1px;
+            background: var(--accent);
+            margin: 12px auto 0;
+        }
+
+        /* SPECIALTIES */
+        .spec-list {
+            display: grid;
+            gap: 12px;
+        }
+        .spec-card {
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 18px 18px 18px 22px;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .spec-card::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 0; bottom: 0;
+            width: 3px;
+            background: var(--accent);
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        .spec-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+        .spec-card:hover::before { opacity: 1; }
+        .spec-num {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 22px;
+            color: var(--accent);
+            font-weight: 400;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+        .spec-text .nm {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 3px;
+        }
+        .spec-text .ds {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        /* FORMAT */
+        .formats {
+            display: flex;
+            gap: 10px;
+        }
+        .fmt {
+            flex: 1;
+            padding: 16px 14px;
+            background: var(--warm);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            text-align: center;
+        }
+        .fmt-ic {
+            font-size: 22px;
+            margin-bottom: 6px;
+        }
+        .fmt-name {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .fmt-price {
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--accent-dark);
+            margin-top: 4px;
+        }
+
+        /* STATS */
+        .stats-band {
+            background: var(--accent-dark);
+            color: #fdfaf6;
+            margin: 0;
+            padding: 28px 24px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            text-align: center;
+        }
+        .stb {
+            border-right: 1px solid rgba(255,255,255,0.15);
+        }
+        .stb:last-child { border-right: none; }
+        .stb .n {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 26px;
+            font-weight: 400;
+            color: #e7d3a8;
+        }
+        .stb .l {
+            font-size: 10.5px;
+            opacity: 0.85;
+            margin-top: 6px;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+        }
+
+        /* EDUCATION */
+        .edu-card {
+            background: var(--warm);
+            border-radius: 18px;
+            padding: 24px;
+        }
+        .edu-row {
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(124,109,138,0.15);
+            display: flex;
+            gap: 14px;
+        }
+        .edu-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .edu-row:first-child { padding-top: 0; }
+        .edu-icon {
+            width: 36px; height: 36px;
+            border-radius: 50%;
+            background: var(--accent);
+            color: #fdfaf6;
+            display: flex; align-items: center; justify-content: center;
+            flex-shrink: 0;
+        }
+        .edu-icon svg { width: 18px; height: 18px; }
+        .edu-text .nm {
+            font-size: 13.5px;
+            font-weight: 700;
+            color: var(--text);
+        }
+        .edu-text .ds {
+            font-size: 11.5px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+
+        /* TESTIMONIAL */
+        .testimonial {
+            text-align: center;
+        }
+        .quote-mark {
+            font-family: 'Lora', serif;
+            font-size: 50px;
+            color: var(--accent);
+            opacity: 0.3;
+            line-height: 0.8;
+            margin-bottom: 12px;
+        }
+        .quote-text {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 16px;
+            line-height: 1.65;
+            color: var(--text);
+        }
+        .quote-author {
+            font-size: 11.5px;
+            font-weight: 700;
+            color: var(--accent-dark);
+            margin-top: 16px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* CTA */
+        .cta-zone {
+            padding: 0 32px 8px;
+        }
+        .cta-btn {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 18px;
+            background: var(--accent-dark);
+            color: #fdfaf6;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            box-shadow: 0 10px 30px rgba(93,79,110,0.3);
+            transition: all 0.3s ease;
+        }
+        .cta-btn:hover { transform: translateY(-2px); background: var(--accent); }
+        .cta-btn svg { width: 20px; height: 20px; }
+
+        /* QR */
+        .qr {
+            text-align: center;
+            padding: 30px 32px;
+        }
+        #qrcode {
+            display: inline-block;
+            padding: 14px;
+            background: #fff;
+            border-radius: 18px;
+            border: 1px solid var(--line);
+        }
+        .qr-l {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 12px;
+        }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 26px 32px 30px;
+            background: var(--warm);
+            border-top: 1px solid var(--line);
+        }
+        .footer .nm {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 14px;
+            color: var(--accent-dark);
+        }
+        .footer .sb {
+            font-size: 10.5px;
+            color: var(--text-muted);
+            margin-top: 6px;
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 360px) {
+            .formats { flex-direction: column; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            * { transition: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+
+        <!-- HERO -->
+        <div class="hero">
+            <img src="https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=460&h=560&fit=crop&q=80" alt="Sakin ortam">
+            <div class="hero-content">
+                <div class="hero-tag">Guvenli Alan Psikoloji</div>
+                <div class="hero-title">"Sizinle olmak,<br>sizi anlamak icin."</div>
+            </div>
+        </div>
+
+        <!-- PROFILE -->
+        <div class="profile reveal">
+            <img class="avatar" src="https://i.pravatar.cc/200?img=49" alt="Aylin Kara">
+            <div class="name">Uzm. Psk. Aylin Kara</div>
+            <div class="title">Uzman Psikolog &middot; Psikoterapist</div>
+            <span class="clinic-tag">Online &middot; Yuz Yuze</span>
+        </div>
+
+        <!-- WELCOME -->
+        <div class="welcome reveal">
+            <p>Hayatinizdaki zorluklari paylasabileceginiz, yargilanmadan dinlenebileceginiz bir alan sunuyorum. Birlikte iyilesmenin yolunu bulalim.</p>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="actions reveal">
+            <a href="tel:+905308884411" class="act">
+                <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" d="M3 5a2 2 0 012-2h2.6a1 1 0 01.95.68l1.5 4.5a1 1 0 01-.27 1L8 11.5a14 14 0 005.5 5.5l2.3-1.78a1 1 0 011-.27l4.5 1.5a1 1 0 01.7.95V20a2 2 0 01-2 2A18 18 0 013 5z"/></svg></span>
+                Telefon
+            </a>
+            <a href="https://wa.me/905308884411?text=Merhaba%2C%20seans%20randevusu%20almak%20istiyorum." target="_blank" rel="noopener" class="act">
+                <span class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.74.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 004.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.91-7.01A9.84 9.84 0 0012.04 2z"/></svg></span>
+                WhatsApp
+            </a>
+            <a href="mailto:aylin@guvenlialan.com" class="act">
+                <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></span>
+                E-posta
+            </a>
+        </div>
+
+        <!-- SPECIALTIES -->
+        <div class="section reveal">
+            <div class="section-head">
+                <div class="section-eyebrow">Calisma Alanlarim</div>
+                <div class="section-title">Birlikte calisabilecegimiz konular</div>
+                <div class="section-divider"></div>
+            </div>
+            <div class="spec-list">
+                <div class="spec-card">
+                    <div class="spec-num">01</div>
+                    <div class="spec-text">
+                        <div class="nm">Depresyon &amp; Anksiyete</div>
+                        <div class="ds">Bilissel davranisci terapi ile temel duygulanim bozukluklarinda destek.</div>
+                    </div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-num">02</div>
+                    <div class="spec-text">
+                        <div class="nm">Iliski Danismanligi</div>
+                        <div class="ds">Cift ve aile dinamiklerinde iletisim ve baglanma calismalari.</div>
+                    </div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-num">03</div>
+                    <div class="spec-text">
+                        <div class="nm">Travma &amp; EMDR</div>
+                        <div class="ds">EMDR Level 2 ile travmatik yasantilarin islenmesi.</div>
+                    </div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-num">04</div>
+                    <div class="spec-text">
+                        <div class="nm">Kisilik Bozukluklari</div>
+                        <div class="ds">Uzun donemli psikoterapi ile derin kisilerarasi calisma.</div>
+                    </div>
+                </div>
+                <div class="spec-card">
+                    <div class="spec-num">05</div>
+                    <div class="spec-text">
+                        <div class="nm">Kariyer Danismanligi</div>
+                        <div class="ds">Tukenmislik, kariyer gecisi ve is hayati dinamikleri.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FORMAT & PRICES -->
+        <div class="section reveal" style="padding-top: 0;">
+            <div class="section-head">
+                <div class="section-eyebrow">Seans Formati</div>
+                <div class="section-title">Size uygun olani secin</div>
+                <div class="section-divider"></div>
+            </div>
+            <div class="formats">
+                <div class="fmt">
+                    <div class="fmt-ic">&#128104;&#8205;&#127979;</div>
+                    <div class="fmt-name">Bireysel</div>
+                    <div class="fmt-price">&#8378;800</div>
+                </div>
+                <div class="fmt">
+                    <div class="fmt-ic">&#128157;</div>
+                    <div class="fmt-name">Cift</div>
+                    <div class="fmt-price">&#8378;1.100</div>
+                </div>
+                <div class="fmt">
+                    <div class="fmt-ic">&#128187;</div>
+                    <div class="fmt-name">Online</div>
+                    <div class="fmt-price">&#8378;650</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STATS -->
+        <div class="stats-band reveal">
+            <div class="stb"><div class="n">9</div><div class="l">YIL</div></div>
+            <div class="stb"><div class="n">800+</div><div class="l">SEANS</div></div>
+            <div class="stb"><div class="n">2 Format</div><div class="l">YUZ YUZE / ONLINE</div></div>
+        </div>
+
+        <!-- EDUCATION -->
+        <div class="section reveal">
+            <div class="section-head">
+                <div class="section-eyebrow">Egitim &amp; Sertifika</div>
+                <div class="section-title">Akademik yolculugum</div>
+                <div class="section-divider"></div>
+            </div>
+            <div class="edu-card">
+                <div class="edu-row">
+                    <div class="edu-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" d="M12 14L3 9l9-5 9 5-9 5z"/><path stroke-linecap="round" d="M21 9v5M6 11v5a6 6 0 0012 0v-5"/></svg></div>
+                    <div class="edu-text">
+                        <div class="nm">Klinik Psikoloji Yuksek Lisans</div>
+                        <div class="ds">Istanbul Universitesi &middot; 2014 - 2016</div>
+                    </div>
+                </div>
+                <div class="edu-row">
+                    <div class="edu-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" d="M5 13l4 4L19 7"/></svg></div>
+                    <div class="edu-text">
+                        <div class="nm">EMDR Level 2 Egitimi</div>
+                        <div class="ds">EMDR Avrupa Akreditasyonu &middot; 2019</div>
+                    </div>
+                </div>
+                <div class="edu-row">
+                    <div class="edu-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M9 12l2 2 4-4"/></svg></div>
+                    <div class="edu-text">
+                        <div class="nm">Bilissel Davranisci Terapi</div>
+                        <div class="ds">CBT Sertifika Programi &middot; 2017</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TESTIMONIAL -->
+        <div class="section testimonial reveal" style="padding-top: 0;">
+            <div class="quote-mark">"</div>
+            <p class="quote-text">Aylin Hanim ile calismak hayatimi degistirdi. Guvenli ve destekleyici bir ortam sunuyor.</p>
+            <div class="quote-author">— Anonim Danisan</div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-zone reveal">
+            <a href="https://wa.me/905308884411?text=Merhaba%2C%20seans%20randevusu%20almak%20istiyorum." target="_blank" rel="noopener" class="cta-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+                Ilk Gorusme Talep Et
+            </a>
+        </div>
+
+        <!-- QR -->
+        <div class="qr reveal">
+            <div id="qrcode"></div>
+            <div class="qr-l">Kartviziti telefonunla tara</div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="nm">guvenlialan.com</div>
+            <div class="sb">@GUVENLIALAN.PSIKOLOJI &middot; &copy; 2026</div>
+        </footer>
+
+    </div>
+
+    <script>
+    (function() {
+        function initReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) { els.forEach(function(e) { e.classList.add('visible'); }); return; }
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(en) { if (en.isIntersecting) { en.target.classList.add('visible'); io.unobserve(en.target); } });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function(e) { io.observe(e); });
+        }
+        function initQR() {
+            var c = document.getElementById('qrcode');
+            if (c && typeof QRCode !== 'undefined') {
+                new QRCode(c, { text: window.location.href, width: 130, height: 130, colorDark: '#5d4f6e', colorLight: '#fdfaf6', correctLevel: QRCode.CorrectLevel.M });
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function() { initReveal(); initQR(); });
+    })();
+    </script>
+</body>
+</html>

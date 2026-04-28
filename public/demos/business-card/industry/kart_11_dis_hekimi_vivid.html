@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Burak Yilmaz | Yilmaz Dental Clinic</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --hero-grad: linear-gradient(135deg, #0d9488 0%, #0891b2 50%, #06b6d4 100%);
+            --accent: #0891b2;
+            --accent-dark: #0e7490;
+            --bg: #ecfeff;
+            --card: #ffffff;
+            --text: #0f172a;
+            --text-muted: #64748b;
+            --line: #e2e8f0;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .card {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--card);
+            min-height: 100vh;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            padding: 36px 28px 90px;
+            background: var(--hero-grad);
+            color: #fff;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 260px; height: 260px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.18) 0%, transparent 65%);
+        }
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px; left: -50px;
+            width: 220px; height: 220px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 70%);
+        }
+        .hero-top {
+            position: relative; z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 26px;
+        }
+        .hero-logo {
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+        .hero-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+            backdrop-filter: blur(8px);
+        }
+        .hero-status .dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: #4ade80;
+            box-shadow: 0 0 0 4px rgba(74,222,128,0.3);
+        }
+        .hero-name {
+            position: relative; z-index: 2;
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -0.7px;
+            line-height: 1.1;
+        }
+        .hero-title {
+            position: relative; z-index: 2;
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0.9;
+            margin-top: 8px;
+        }
+
+        /* FLOATING CARD */
+        .float-card {
+            margin: -64px 18px 0;
+            padding: 20px;
+            background: #fff;
+            border-radius: 24px;
+            box-shadow: 0 20px 50px rgba(8,145,178,0.18);
+            position: relative;
+            z-index: 5;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .avatar {
+            width: 72px; height: 72px;
+            border-radius: 22px;
+            object-fit: cover;
+            border: 3px solid #fff;
+            box-shadow: 0 4px 12px rgba(8,145,178,0.2);
+            flex-shrink: 0;
+        }
+        .float-info .nm {
+            font-size: 16px;
+            font-weight: 700;
+        }
+        .float-info .tt {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+        .float-info .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 6px;
+            padding: 3px 10px;
+            background: linear-gradient(135deg, #f59e0b, #fbbf24);
+            color: #fff;
+            border-radius: 20px;
+            font-size: 10.5px;
+            font-weight: 700;
+        }
+
+        /* MAIN CTA */
+        .main-cta {
+            margin: 22px 22px 0;
+        }
+        .pri-btn {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 18px;
+            background: var(--hero-grad);
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            border-radius: 18px;
+            font-family: inherit;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 12px 30px rgba(8,145,178,0.35);
+            transition: all 0.25s ease;
+        }
+        .pri-btn:hover { transform: translateY(-2px); box-shadow: 0 18px 40px rgba(8,145,178,0.45); }
+        .pri-btn svg { width: 22px; height: 22px; }
+        .pri-btn .sub { font-size: 11px; opacity: 0.85; font-weight: 500; display: block; }
+
+        /* QUICK ACTIONS */
+        .qa {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            padding: 18px 22px 0;
+        }
+        .qa a {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 14px 6px;
+            background: #f0fbfc;
+            border: 1px solid #cffafe;
+            border-radius: 14px;
+            text-decoration: none;
+            color: var(--text);
+            font-size: 11px;
+            font-weight: 600;
+            transition: all 0.25s ease;
+        }
+        .qa a:hover { transform: translateY(-2px); border-color: var(--accent); }
+        .qa a .ic {
+            width: 36px; height: 36px;
+            border-radius: 12px;
+            background: #fff;
+            color: var(--accent);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .qa a svg { width: 18px; height: 18px; }
+
+        /* SECTION */
+        .section { padding: 28px 22px; }
+        .section h3 {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section h3 .num {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent);
+            background: #ecfeff;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-feature-settings: 'tnum';
+        }
+
+        /* SERVICE GRID */
+        .svc-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .svc-cell {
+            padding: 18px 14px;
+            background: linear-gradient(135deg, #f0fbfc 0%, #ecfeff 100%);
+            border-radius: 18px;
+            border: 1px solid #cffafe;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .svc-cell::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 60px; height: 60px;
+            background: radial-gradient(circle, rgba(8,145,178,0.08) 0%, transparent 70%);
+        }
+        .svc-cell:hover { transform: translateY(-2px); border-color: var(--accent); }
+        .svc-cell .ic {
+            width: 40px; height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), #06b6d4);
+            color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            margin-bottom: 12px;
+            position: relative; z-index: 2;
+        }
+        .svc-cell svg { width: 20px; height: 20px; }
+        .svc-cell .nm {
+            font-size: 13px;
+            font-weight: 700;
+            position: relative; z-index: 2;
+        }
+        .svc-cell .ds {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 3px;
+            position: relative; z-index: 2;
+        }
+
+        /* STATS BAR */
+        .stats {
+            margin: 0 22px;
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%);
+            border-radius: 22px;
+            padding: 24px 18px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            color: #fff;
+        }
+        .stat-x {
+            text-align: center;
+            border-right: 1px solid rgba(255,255,255,0.1);
+        }
+        .stat-x:last-child { border-right: none; }
+        .stat-x .n {
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #06b6d4, #06d6a0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .stat-x .l {
+            font-size: 10px;
+            opacity: 0.7;
+            margin-top: 4px;
+        }
+
+        /* CREDENTIAL CHIPS */
+        .chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 14px;
+            background: #fff;
+            border: 1.5px solid var(--line);
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .chip svg {
+            width: 14px; height: 14px;
+            color: var(--accent);
+        }
+
+        /* TESTIMONIAL */
+        .ttm {
+            background: linear-gradient(135deg, #0d9488 0%, #06b6d4 100%);
+            color: #fff;
+            border-radius: 24px;
+            padding: 24px;
+            margin: 0 22px;
+            position: relative;
+            overflow: hidden;
+        }
+        .ttm::before {
+            content: '"';
+            position: absolute;
+            top: -10px; right: 16px;
+            font-size: 100px;
+            font-family: Georgia, serif;
+            opacity: 0.2;
+            line-height: 1;
+        }
+        .ttm .stars {
+            color: #fbbf24;
+            font-size: 14px;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+        }
+        .ttm .q {
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.6;
+            margin-bottom: 14px;
+        }
+        .ttm .a {
+            font-size: 12px;
+            font-weight: 600;
+            opacity: 0.9;
+        }
+
+        /* HOURS */
+        .hrs {
+            margin: 22px;
+            display: flex;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            overflow: hidden;
+        }
+        .hrs-icon {
+            width: 70px;
+            background: linear-gradient(135deg, var(--accent), #06b6d4);
+            display: flex; align-items: center; justify-content: center;
+            color: #fff;
+        }
+        .hrs-icon svg { width: 26px; height: 26px; }
+        .hrs-text {
+            padding: 16px 18px;
+            flex: 1;
+        }
+        .hrs-text .l {
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+        .hrs-text .v {
+            font-size: 14px;
+            font-weight: 700;
+            margin-top: 2px;
+        }
+
+        /* QR */
+        .qr {
+            text-align: center;
+            padding: 30px 22px;
+        }
+        #qrcode {
+            display: inline-block;
+            padding: 14px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(8,145,178,0.12);
+        }
+        .qr-l {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 14px;
+            font-weight: 600;
+        }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 24px;
+            background: linear-gradient(180deg, transparent, #ecfeff);
+        }
+        .footer .nm {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--accent);
+        }
+        .footer .sb {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        @media (max-width: 360px) {
+            .stats { grid-template-columns: repeat(2, 1fr); gap: 14px 6px; }
+            .stat-x { border-right: none; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            * { transition: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+
+        <!-- HERO -->
+        <div class="hero reveal">
+            <div class="hero-top">
+                <div class="hero-logo">YILMAZ DENTAL</div>
+                <div class="hero-status"><span class="dot"></span> Online Randevu</div>
+            </div>
+            <div class="hero-name">Dr. Burak<br>Yilmaz</div>
+            <div class="hero-title">Dis Hekimi &middot; Implant Uzmani</div>
+        </div>
+
+        <!-- FLOATING -->
+        <div class="float-card reveal">
+            <img class="avatar" src="https://i.pravatar.cc/200?img=11" alt="Dr. Burak Yilmaz">
+            <div class="float-info">
+                <div class="nm">Dr. Burak Yilmaz</div>
+                <div class="tt">12 yil deneyim &middot; ITI Uzmani</div>
+                <span class="badge">&#9733; 4.9 Puan</span>
+            </div>
+        </div>
+
+        <!-- MAIN CTA -->
+        <div class="main-cta reveal">
+            <a href="https://wa.me/902124448822?text=Merhaba%2C%20randevu%20almak%20istiyorum." target="_blank" rel="noopener" class="pri-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" d="M8 7V3M16 7V3M3 11h18M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                <span>
+                    Agrisiz Randevu Al
+                    <span class="sub">7/24 WhatsApp ile</span>
+                </span>
+            </a>
+        </div>
+
+        <!-- QA -->
+        <div class="qa reveal">
+            <a href="tel:+902124448822">
+                <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" d="M3 5a2 2 0 012-2h2.6a1 1 0 01.95.68l1.5 4.5a1 1 0 01-.27 1L8 11.5a14 14 0 005.5 5.5l2.3-1.78a1 1 0 011-.27l4.5 1.5a1 1 0 01.7.95V20a2 2 0 01-2 2A18 18 0 013 5z"/></svg></span>
+                Telefon
+            </a>
+            <a href="mailto:randevu@yilmazdental.com">
+                <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path stroke-linecap="round" d="M3 8l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg></span>
+                E-posta
+            </a>
+            <a href="https://instagram.com/yilmazdental" target="_blank" rel="noopener">
+                <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></span>
+                Instagram
+            </a>
+        </div>
+
+        <!-- SERVICES -->
+        <div class="section reveal">
+            <h3>Hizmetler <span class="num">05</span></h3>
+            <div class="svc-grid">
+                <div class="svc-cell">
+                    <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2c2 2 2 4 2 6s-1 4-1 7c0 2 1 7-1 7s-1-3-1-5-1-2-2-2-1 2-1 5-1 5-2 5c-1 0-2-2-2-7 0-3 1-7 2-9 1-3 4-4 6-2z"/></svg></div>
+                    <div class="nm">Implant</div>
+                    <div class="ds">Tedavisi</div>
+                </div>
+                <div class="svc-cell">
+                    <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 5l3 3-3 3m6-6l3 3-3 3"/></svg></div>
+                    <div class="nm">Zirkonyum</div>
+                    <div class="ds">Kaplama</div>
+                </div>
+                <div class="svc-cell">
+                    <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 12h8M12 8v8"/></svg></div>
+                    <div class="nm">Beyazlatma</div>
+                    <div class="ds">Tek seansta</div>
+                </div>
+                <div class="svc-cell">
+                    <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12c3-3 6-3 9 0s6 3 9 0M3 18c3-3 6-3 9 0s6 3 9 0"/></svg></div>
+                    <div class="nm">Invisalign</div>
+                    <div class="ds">Seffaf plak</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- STATS -->
+        <div class="stats reveal">
+            <div class="stat-x"><div class="n">12+</div><div class="l">Yil</div></div>
+            <div class="stat-x"><div class="n">3.5K</div><div class="l">Hasta</div></div>
+            <div class="stat-x"><div class="n">800+</div><div class="l">Implant</div></div>
+            <div class="stat-x"><div class="n">4.9</div><div class="l">Puan</div></div>
+        </div>
+
+        <!-- CREDS -->
+        <div class="section reveal">
+            <h3>Sertifikalar</h3>
+            <div class="chips">
+                <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> ITI Implant Uzmani</span>
+                <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Invisalign Provider</span>
+                <span class="chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg> Smile Design Sert.</span>
+            </div>
+        </div>
+
+        <!-- HOURS -->
+        <div class="hrs reveal">
+            <div class="hrs-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path stroke-linecap="round" d="M12 7v5l3 2"/></svg></div>
+            <div class="hrs-text">
+                <div class="l">CALISMA SAATLERI</div>
+                <div class="v">Hafta Ici 09:00 - 18:00</div>
+            </div>
+        </div>
+
+        <!-- TESTIMONIAL -->
+        <div class="ttm reveal">
+            <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+            <p class="q">"Dr. Yilmaz sayesinde yillardir cekimserlik duydugum implant tedavisini yaptirdim. Agrisiz ve mukemmel sonuc."</p>
+            <div class="a">— Hande K., Memnun Hasta</div>
+        </div>
+
+        <!-- QR -->
+        <div class="qr reveal">
+            <div id="qrcode"></div>
+            <div class="qr-l">Kartviziti telefonunla tara</div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <div class="nm">yilmazdental.com</div>
+            <div class="sb">@yilmazdental &middot; &copy; 2026</div>
+        </footer>
+
+    </div>
+
+    <script>
+    (function() {
+        function initReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) { els.forEach(function(e) { e.classList.add('visible'); }); return; }
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(en) { if (en.isIntersecting) { en.target.classList.add('visible'); io.unobserve(en.target); } });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function(e) { io.observe(e); });
+        }
+        function initQR() {
+            var c = document.getElementById('qrcode');
+            if (c && typeof QRCode !== 'undefined') {
+                new QRCode(c, { text: window.location.href, width: 130, height: 130, colorDark: '#0891b2', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function() { initReveal(); initQR(); });
+    })();
+    </script>
+</body>
+</html>

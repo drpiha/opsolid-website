@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ceren Demir — Fitness Coach | Ceren Fitness Coaching</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f2f8f5;
+    --card: #ffffff;
+    --ink: #0f1f1a;
+    --ink-soft: #1f3a31;
+    --green: #065f46;
+    --green-soft: #047857;
+    --gold: #f59e0b;
+    --mute: #4b5e58;
+    --mute-2: #8a9b94;
+    --line: #d8e6e0;
+    --line-soft: #e6efe9;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #e8f0eb;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .card-container {
+    max-width: 460px;
+    margin: 0 auto;
+    background: var(--bg);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  .mono { font-family: 'Space Grotesk', sans-serif; }
+
+  /* HEADER */
+  .header {
+    padding: 22px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--line);
+    background: var(--card);
+  }
+  .h-firm {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    color: var(--ink);
+    text-transform: uppercase;
+  }
+  .h-id {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--mute);
+    text-transform: uppercase;
+  }
+
+  /* PROFILE */
+  .profile {
+    padding: 36px 28px 32px;
+    display: grid;
+    grid-template-columns: 1fr 110px;
+    gap: 20px;
+    align-items: start;
+    border-bottom: 1px solid var(--line);
+    background: var(--card);
+  }
+  .profile-info { padding-top: 4px; }
+  .profile-eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    color: var(--green);
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .profile-eyebrow::before {
+    content: '';
+    width: 24px; height: 2px;
+    background: var(--gold);
+  }
+  .profile-name {
+    font-size: 50px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 0.95;
+    letter-spacing: -2px;
+  }
+  .profile-role {
+    margin-top: 14px;
+    font-size: 13px;
+    color: var(--mute);
+    font-weight: 400;
+    letter-spacing: 0.2px;
+  }
+  .profile-photo {
+    width: 110px; height: 110px;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.05);
+  }
+
+  /* META TABLE */
+  .meta-row {
+    padding: 14px 28px;
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 16px;
+    align-items: baseline;
+    border-bottom: 1px solid var(--line-soft);
+    font-size: 13px;
+    background: var(--card);
+  }
+  .meta-row .k {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1.8px;
+    color: var(--mute-2);
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .meta-row .v {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
+  /* SECTION HEADER */
+  .sec-head {
+    padding: 32px 28px 8px;
+  }
+  .sec-num {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    color: var(--mute-2);
+    margin-bottom: 6px;
+  }
+  .sec-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.3px;
+  }
+
+  /* CERTIFICATIONS */
+  .certs {
+    padding: 8px 28px 32px;
+  }
+  .cert-list {
+    list-style: none;
+    border-top: 1px solid var(--line);
+  }
+  .cert-list li {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--line-soft);
+    display: grid;
+    grid-template-columns: 60px 1fr auto;
+    gap: 14px;
+    align-items: center;
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .cert-list li .badge {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    color: #fff;
+    background: var(--green);
+    padding: 5px 10px;
+    border-radius: 4px;
+    letter-spacing: 1.2px;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  .cert-list li:nth-child(2n) .badge { background: var(--gold); color: var(--ink); }
+  .cert-list li .info .ttl { color: var(--ink); font-weight: 500; }
+  .cert-list li .info .org {
+    font-size: 11px;
+    color: var(--mute);
+    margin-top: 2px;
+  }
+  .cert-list li .yr {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    color: var(--green);
+    letter-spacing: 1px;
+    font-weight: 500;
+  }
+
+  /* PROGRAMS */
+  .programs {
+    padding: 8px 28px 32px;
+    background: var(--bg);
+  }
+  .prog-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .prog-list li {
+    padding: 18px 18px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 14px;
+    align-items: center;
+    transition: border-color 0.2s, transform 0.15s;
+  }
+  .prog-list li:hover { border-color: var(--green); transform: translateY(-2px); }
+  .prog-list li .info .ttl {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+  }
+  .prog-list li .info .desc {
+    font-size: 12px;
+    color: var(--mute);
+    margin-top: 2px;
+  }
+  .prog-list li .price {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--green);
+    text-align: right;
+  }
+  .prog-list li .price small {
+    display: block;
+    font-size: 9px;
+    color: var(--mute);
+    font-weight: 500;
+    letter-spacing: 1px;
+    margin-top: 2px;
+    text-transform: uppercase;
+  }
+
+  /* STATS */
+  .stats {
+    padding: 32px 28px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+    background: var(--card);
+  }
+  .stat-cell {
+    text-align: left;
+    padding: 4px 0;
+    position: relative;
+  }
+  .stat-cell:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: 16px; top: 12%;
+    width: 1px; height: 76%;
+    background: var(--line);
+  }
+  .stat-num {
+    font-size: 40px;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: -1.5px;
+    line-height: 1;
+  }
+  .stat-num sub {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 14px;
+    color: var(--green);
+    font-weight: 400;
+    margin-left: 1px;
+  }
+  .stat-lbl {
+    margin-top: 8px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1.8px;
+    color: var(--mute);
+    text-transform: uppercase;
+  }
+
+  /* CONTACT TABLE */
+  .contact {
+    padding: 8px 28px 32px;
+  }
+  .contact-table {
+    width: 100%;
+    margin-top: 14px;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .contact-table tr { border-top: 1px solid var(--line-soft); }
+  .contact-table tr:first-child { border-top: 1px solid var(--line); }
+  .contact-table tr:last-child { border-bottom: 1px solid var(--line); }
+  .contact-table td {
+    padding: 14px 0;
+    color: var(--ink);
+    vertical-align: middle;
+  }
+  .contact-table td:first-child {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    letter-spacing: 1.8px;
+    color: var(--mute-2);
+    text-transform: uppercase;
+    font-weight: 500;
+    width: 110px;
+  }
+  .contact-table td a {
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.2s;
+  }
+  .contact-table td a:hover { border-color: var(--green); }
+
+  /* QR */
+  .qr-section {
+    padding: 28px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    border-top: 1px solid var(--line);
+    background: var(--card);
+  }
+  #qrcode {
+    background: #fff;
+    padding: 8px;
+    border: 1px solid var(--line);
+  }
+  .qr-text { flex: 1; }
+  .qr-text .lbl {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    color: var(--mute-2);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .qr-text .desc {
+    font-size: 12px;
+    color: var(--mute);
+    line-height: 1.5;
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 22px 28px 32px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: var(--card);
+  }
+  .footer .mark {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    color: var(--ink);
+  }
+  .footer .copy {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    color: var(--mute-2);
+    text-transform: uppercase;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { transition: none; opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card-container">
+
+  <header class="header">
+    <div class="h-firm">Ceren Fitness Coaching</div>
+    <div class="h-id">EVIDENCE-BASED &middot; '16</div>
+  </header>
+
+  <section class="profile reveal">
+    <div class="profile-info">
+      <div class="profile-eyebrow">Performance Coach</div>
+      <h1 class="profile-name">Ceren<br>Demir</h1>
+      <p class="profile-role">Bilim temelli antrenman ve beslenme planlamasıyla 8 yılda 600+ kişinin dönüşümüne öncülük etti.</p>
+    </div>
+    <img src="https://i.pravatar.cc/200?img=25" alt="Ceren Demir" class="profile-photo" width="110" height="110">
+  </section>
+
+  <div class="meta-row reveal"><div class="k">Stüdyo</div><div class="v">Etiler, İstanbul</div></div>
+  <div class="meta-row reveal"><div class="k">Pratik</div><div class="v">Online + Yüz yüze</div></div>
+  <div class="meta-row reveal"><div class="k">Dil</div><div class="v">Türkçe / English</div></div>
+
+  <section class="certs reveal">
+    <div class="sec-head" style="padding:32px 0 8px;">
+      <div class="sec-num">— 01</div>
+      <div class="sec-title">Sertifikalar</div>
+    </div>
+    <ul class="cert-list">
+      <li>
+        <span class="badge">ACE</span>
+        <div class="info">
+          <div class="ttl">Certified Personal Trainer</div>
+          <div class="org">American Council on Exercise</div>
+        </div>
+        <span class="yr">2017</span>
+      </li>
+      <li>
+        <span class="badge">PN</span>
+        <div class="info">
+          <div class="ttl">Precision Nutrition L1 + L2</div>
+          <div class="org">Beslenme Koçluğu</div>
+        </div>
+        <span class="yr">2019</span>
+      </li>
+      <li>
+        <span class="badge">CPR</span>
+        <div class="info">
+          <div class="ttl">CPR / AED &amp; First Aid</div>
+          <div class="org">Red Cross</div>
+        </div>
+        <span class="yr">2023</span>
+      </li>
+      <li>
+        <span class="badge">FRC</span>
+        <div class="info">
+          <div class="ttl">Functional Range Conditioning</div>
+          <div class="org">Mobility Specialist</div>
+        </div>
+        <span class="yr">2021</span>
+      </li>
+    </ul>
+  </section>
+
+  <section class="programs reveal">
+    <div class="sec-head" style="padding:0 0 14px;">
+      <div class="sec-num">— 02</div>
+      <div class="sec-title">Program Türleri</div>
+    </div>
+    <ul class="prog-list">
+      <li>
+        <div class="info">
+          <div class="ttl">1-1 Online Koçluk</div>
+          <div class="desc">Kişiye özel program + haftalık takip</div>
+        </div>
+        <div class="price">&#8378;2.500<small>aylık</small></div>
+      </li>
+      <li>
+        <div class="info">
+          <div class="ttl">Grup Koçluk</div>
+          <div class="desc">Online grup + topluluk desteği</div>
+        </div>
+        <div class="price">&#8378;800<small>aylık</small></div>
+      </li>
+      <li>
+        <div class="info">
+          <div class="ttl">Beslenme Planı</div>
+          <div class="desc">Tek seferlik makro planlama</div>
+        </div>
+        <div class="price">&#8378;1.500<small>paket</small></div>
+      </li>
+      <li>
+        <div class="info">
+          <div class="ttl">12 Hafta Dönüşüm</div>
+          <div class="desc">Antrenman + beslenme + takip</div>
+        </div>
+        <div class="price">&#8378;4.500<small>paket</small></div>
+      </li>
+    </ul>
+  </section>
+
+  <section class="stats reveal">
+    <div class="stat-cell">
+      <div class="stat-num">600<sub>+</sub></div>
+      <div class="stat-lbl">Dönüşüm</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">8<sub>yr</sub></div>
+      <div class="stat-lbl">Pratik</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-num">73<sub>K</sub></div>
+      <div class="stat-lbl">Takipçi</div>
+    </div>
+  </section>
+
+  <section class="contact reveal">
+    <div class="sec-head" style="padding:32px 0 0;">
+      <div class="sec-num">— 03</div>
+      <div class="sec-title">İletişim</div>
+    </div>
+    <table class="contact-table">
+      <tr><td>Telefon</td><td><a href="tel:+905323337755">+90 532 333 77 55</a></td></tr>
+      <tr><td>E-Posta</td><td><a href="mailto:ceren@cerencoaching.com">ceren@cerencoaching.com</a></td></tr>
+      <tr><td>Web</td><td><a href="https://cerencoaching.com" target="_blank" rel="noopener">cerencoaching.com</a></td></tr>
+      <tr><td>Instagram</td><td><a href="https://instagram.com/cerencoaching" target="_blank" rel="noopener">@cerencoaching · 45K</a></td></tr>
+      <tr><td>YouTube</td><td><a href="https://youtube.com/@cerencoaching" target="_blank" rel="noopener">@cerencoaching · 28K</a></td></tr>
+    </table>
+  </section>
+
+  <section class="qr-section reveal">
+    <div id="qrcode"></div>
+    <div class="qr-text">
+      <div class="lbl">QR — cerencoaching.com</div>
+      <div class="desc">Programlar ve ücretsiz danışmanlık.</div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="mark">Ceren Fitness Coaching</div>
+    <div class="copy">&copy; 2024 — Evidence-based</div>
+  </footer>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -20px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
+
+  var qrEl = document.getElementById('qrcode');
+  if (qrEl && typeof QRCode !== 'undefined') {
+    new QRCode(qrEl, {
+      text: 'https://cerencoaching.com',
+      width: 88, height: 88,
+      colorDark: '#065f46', colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

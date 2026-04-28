@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sera Ozdogan | Sera Yoga - Wellness App</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #f6fef9;
+            --card: #ffffff;
+            --emerald-1: #065f46;
+            --emerald-2: #059669;
+            --emerald-3: #34d399;
+            --accent-soft: #d1fae5;
+            --ink: #0f1f1a;
+            --muted: #5a6660;
+            --line: #e8efea;
+            --shadow-md: 0 8px 28px rgba(5,150,105,0.12);
+            --shadow-lg: 0 18px 50px rgba(5,150,105,0.18);
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--card);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            padding: 56px 28px 56px;
+            background: linear-gradient(135deg, #065f46 0%, #059669 50%, #34d399 100%);
+            color: #fff;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 280px; height: 280px;
+            background: radial-gradient(circle, rgba(255,255,255,0.15), transparent 70%);
+            border-radius: 50%;
+        }
+        .hero::after {
+            content: "";
+            position: absolute;
+            bottom: -80px; left: -50px;
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, rgba(255,255,255,0.08), transparent 70%);
+            border-radius: 50%;
+        }
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-name {
+            font-size: 30px;
+            font-weight: 700;
+            margin: 18px 0 6px;
+            letter-spacing: -0.6px;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-role {
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255,255,255,0.85);
+            position: relative;
+            z-index: 2;
+        }
+        .hero-mantra {
+            margin-top: 28px;
+            font-size: 14px;
+            color: rgba(255,255,255,0.92);
+            line-height: 1.7;
+            font-style: italic;
+            font-weight: 400;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* PROFILE */
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 0 28px;
+            margin-top: -36px;
+            position: relative;
+            z-index: 3;
+        }
+        .profile .avatar {
+            width: 72px; height: 72px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #fff;
+            box-shadow: var(--shadow-md);
+        }
+        .profile .info {
+            background: #fff;
+            border-radius: 14px;
+            padding: 12px 16px;
+            box-shadow: var(--shadow-md);
+            flex: 1;
+        }
+        .profile .role {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--emerald-2);
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+        }
+        .profile .credential {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        /* QUICK */
+        .quick { display: flex; gap: 10px; padding: 24px 28px 8px; }
+        .pill {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 12px;
+            border-radius: 14px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+        .pill--call { background: var(--emerald-1); color: #fff; }
+        .pill--call:hover { background: #064e3b; transform: translateY(-1px); }
+        .pill--whatsapp { background: #25d366; color: #fff; }
+        .pill--whatsapp:hover { background: #1fb855; transform: translateY(-1px); }
+        .pill--email { background: var(--emerald-2); color: #fff; }
+        .pill--email:hover { background: #047857; transform: translateY(-1px); }
+
+        /* SECTION */
+        .section { padding: 28px; }
+        .section-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title::before {
+            content: "";
+            width: 4px; height: 22px;
+            background: var(--emerald-2);
+            border-radius: 2px;
+        }
+
+        /* CLASS CATEGORIES */
+        .cats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .cat-card {
+            padding: 22px 16px;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            text-align: center;
+            transition: all 0.25s ease;
+            cursor: pointer;
+        }
+        .cat-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--emerald-3);
+            box-shadow: var(--shadow-md);
+        }
+        .cat-card .ico-wrap {
+            width: 52px; height: 52px;
+            margin: 0 auto 12px;
+            border-radius: 16px;
+            background: var(--accent-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+        .cat-card .name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--ink);
+        }
+        .cat-card .meta {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        /* PRICE GRID */
+        .price-grid {
+            display: grid;
+            gap: 10px;
+        }
+        .price-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 20px;
+            background: linear-gradient(135deg, var(--accent-soft) 0%, #fff 100%);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+        }
+        .price-card .body {
+            display: flex;
+            flex-direction: column;
+        }
+        .price-card .name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--ink);
+        }
+        .price-card .desc {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+        .price-card .amount {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--emerald-2);
+        }
+
+        /* STATS */
+        .stats-section {
+            padding: 32px 28px;
+            background: linear-gradient(135deg, var(--emerald-1) 0%, var(--emerald-2) 100%);
+            color: #fff;
+        }
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+        }
+        .stat-item .stat-num {
+            font-size: 30px;
+            font-weight: 800;
+            color: var(--emerald-3);
+            line-height: 1;
+        }
+        .stat-item .stat-label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.78);
+            margin-top: 6px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* CTA */
+        .free-trial {
+            margin: 28px;
+            padding: 28px 24px;
+            background: linear-gradient(135deg, #fff 0%, var(--accent-soft) 100%);
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .free-trial::before {
+            content: "";
+            position: absolute;
+            top: -30px; right: -30px;
+            width: 120px; height: 120px;
+            background: radial-gradient(circle, rgba(52,211,153,0.2), transparent 70%);
+        }
+        .free-trial .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--emerald-2);
+            color: #fff;
+            border-radius: 999px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+        .free-trial .title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 8px;
+        }
+        .free-trial .desc {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 18px;
+        }
+        .trial-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--emerald-2);
+            color: #fff;
+            border-radius: 999px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .trial-btn:hover {
+            background: var(--emerald-1);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 24px rgba(5,150,105,0.35);
+        }
+
+        /* QR */
+        .qr-section { padding: 28px; text-align: center; }
+        .qr-heading {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--emerald-1);
+            margin-bottom: 14px;
+            letter-spacing: 1px;
+        }
+        #qrcode {
+            display: inline-block;
+            padding: 12px;
+            background: #fff;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+        }
+        .vcard-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-top: 18px;
+            padding: 14px;
+            background: var(--ink);
+            color: #fff;
+            border: none;
+            border-radius: 14px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .vcard-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+        .footer {
+            text-align: center;
+            padding: 24px;
+            background: var(--ink);
+            color: rgba(255,255,255,0.55);
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+        .footer .footer-name { color: var(--emerald-3); font-weight: 700; margin-bottom: 4px; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="hero">
+            <span class="hero-tag">&#127807; Sera Yoga - Izmir</span>
+            <h1 class="hero-name">Sera Ozdogan</h1>
+            <div class="hero-role">RYT-500 Sertifikali Yoga Egitmeni</div>
+            <p class="hero-mantra">"Bedeninle bagini kur, nefesini dinle, ana don. Yoga yolculugu burada basliyor."</p>
+        </div>
+
+        <div class="profile reveal">
+            <img class="avatar" src="https://i.pravatar.cc/200?img=44" alt="Sera Ozdogan">
+            <div class="info">
+                <div class="role">Yoga & Wellness</div>
+                <div class="credential">6 yil - 350+ ogrenci</div>
+            </div>
+        </div>
+
+        <div class="quick reveal">
+            <a href="tel:+905304449977" class="pill pill--call"><span>&#128222;</span> Ara</a>
+            <a href="https://wa.me/905304449977" target="_blank" rel="noopener noreferrer" class="pill pill--whatsapp"><span>&#128172;</span> WhatsApp</a>
+            <a href="mailto:sera@serayoga.com" class="pill pill--email"><span>&#9993;&#65039;</span> E-posta</a>
+        </div>
+
+        <div class="section reveal">
+            <h2 class="section-title">Ders Kategorileri</h2>
+            <div class="cats">
+                <div class="cat-card">
+                    <div class="ico-wrap">&#127807;</div>
+                    <div class="name">Hatha</div>
+                    <div class="meta">Temel - 60 dk</div>
+                </div>
+                <div class="cat-card">
+                    <div class="ico-wrap">&#9728;&#65039;</div>
+                    <div class="name">Vinyasa</div>
+                    <div class="meta">Akiskan - 75 dk</div>
+                </div>
+                <div class="cat-card">
+                    <div class="ico-wrap">&#129728;</div>
+                    <div class="name">Restoratif</div>
+                    <div class="meta">Yumusak - 90 dk</div>
+                </div>
+                <div class="cat-card">
+                    <div class="ico-wrap">&#128131;</div>
+                    <div class="name">Meditasyon</div>
+                    <div class="meta">Sessizlik - 30 dk</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <h2 class="section-title">Hizmetler</h2>
+            <div class="price-grid">
+                <div class="price-card">
+                    <div class="body">
+                        <div class="name">Ozel Yoga</div>
+                        <div class="desc">Birebir, kisiye ozel</div>
+                    </div>
+                    <div class="amount">&#8378;500</div>
+                </div>
+                <div class="price-card">
+                    <div class="body">
+                        <div class="name">Grup Dersi</div>
+                        <div class="desc">6 kisilik kucuk grup</div>
+                    </div>
+                    <div class="amount">&#8378;150</div>
+                </div>
+                <div class="price-card">
+                    <div class="body">
+                        <div class="name">Online Aylik</div>
+                        <div class="desc">Sinirsiz erisim</div>
+                    </div>
+                    <div class="amount">&#8378;1.200</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-section reveal">
+            <div class="stats-row">
+                <div class="stat-item">
+                    <div class="stat-num" data-target="6">0</div>
+                    <div class="stat-label">Yil Tecrube</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num" data-target="350" data-suffix="+">0</div>
+                    <div class="stat-label">Ogrenci</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num" data-target="18" data-suffix="K">0</div>
+                    <div class="stat-label">Topluluk</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="reveal">
+            <div class="free-trial">
+                <span class="badge">Yeni Baslayanlara</span>
+                <div class="title">Ilk Ders Ucretsiz</div>
+                <p class="desc">Yoga yolculuguna basliyorsan ilk dersin bizden. Tani, dene, karar ver.</p>
+                <a href="https://wa.me/905304449977?text=Merhaba%20Sera%2C%20ilk%20%C3%BCcretsiz%20deneme%20dersi%20i%C3%A7in%20yaz%C4%B1yorum." target="_blank" rel="noopener noreferrer" class="trial-btn">
+                    <span>&#128172;</span> Hemen Rezervasyon
+                </a>
+            </div>
+        </div>
+
+        <div class="qr-section reveal">
+            <div class="qr-heading">Studyoyu Paylas</div>
+            <div id="qrcode" role="img" aria-label="QR kod"></div>
+            <button class="vcard-btn" id="vcardBtn" type="button">
+                <span>&#128229;</span> Rehbere Kaydet
+            </button>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-name">Sera Yoga &amp; Wellness</div>
+            <div>&copy; 2026 - Izmir - serayoga.com</div>
+        </footer>
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+        function initScrollReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function(el) { el.classList.add('visible'); }); return;
+            }
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function(el) { io.observe(el); });
+        }
+        function initStatCounters() {
+            var nums = document.querySelectorAll('.stat-num[data-target]');
+            if (!('IntersectionObserver' in window)) {
+                nums.forEach(function(el) { el.textContent = el.getAttribute('data-target') + (el.getAttribute('data-suffix') || ''); });
+                return;
+            }
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) {
+                        var el = e.target;
+                        var t = parseInt(el.getAttribute('data-target'), 10);
+                        var suf = el.getAttribute('data-suffix') || '';
+                        animate(el, 0, t, 1600, suf);
+                        io.unobserve(el);
+                    }
+                });
+            }, { threshold: 0.5 });
+            nums.forEach(function(el) { io.observe(el); });
+        }
+        function animate(el, s, e, d, suf) {
+            var start = null;
+            function step(ts) {
+                if (!start) start = ts;
+                var p = Math.min((ts - start) / d, 1);
+                var eased = 1 - Math.pow(1 - p, 3);
+                el.textContent = Math.floor(s + (e - s) * eased) + suf;
+                if (p < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }
+        function initQR() {
+            var c = document.getElementById('qrcode');
+            if (c && typeof QRCode !== 'undefined') {
+                new QRCode(c, {
+                    text: window.location.href,
+                    width: 130, height: 130,
+                    colorDark: '#065f46', colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            }
+        }
+        function initVCard() {
+            var btn = document.getElementById('vcardBtn');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var v = ['BEGIN:VCARD','VERSION:3.0','N:Ozdogan;Sera;;;','FN:Sera Ozdogan',
+                    'ORG:Sera Yoga & Wellness','TITLE:Yoga Egitmeni - RYT-500',
+                    'TEL;TYPE=CELL:+90 530 444 99 77',
+                    'EMAIL;TYPE=INTERNET:sera@serayoga.com',
+                    'URL:https://serayoga.com','END:VCARD'].join('\r\n');
+                var blob = new Blob([v], { type: 'text/vcard;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url; a.download = 'Sera_Ozdogan.vcf';
+                document.body.appendChild(a); a.click();
+                document.body.removeChild(a); URL.revokeObjectURL(url);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            initScrollReveal(); initStatCounters(); initQR(); initVCard();
+        });
+    })();
+    </script>
+</body>
+</html>

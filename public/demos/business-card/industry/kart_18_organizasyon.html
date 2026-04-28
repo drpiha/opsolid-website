@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naz Erdogan | Naz Events - Etkinlik & Organizasyon</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Cormorant+Garamond:ital@1&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #fdf8ff;
+            --card: #ffffff;
+            --purple-1: #701a75;
+            --purple-2: #a21caf;
+            --purple-3: #e879f9;
+            --gold: #fbbf24;
+            --gold-soft: #fef3c7;
+            --ink: #2a1430;
+            --muted: #6b5c75;
+            --line: #efe5f3;
+            --shadow-md: 0 8px 24px rgba(162,28,175,0.12);
+            --shadow-lg: 0 18px 50px rgba(162,28,175,0.18);
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; }
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--card);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            box-shadow: var(--shadow-lg);
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            padding: 64px 28px 56px;
+            background: linear-gradient(135deg, #701a75 0%, #a21caf 50%, #e879f9 100%);
+            color: #fff;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: -80px; right: -80px;
+            width: 280px; height: 280px;
+            background: radial-gradient(circle, rgba(251,191,36,0.32), transparent 65%);
+            border-radius: 50%;
+        }
+        .hero::after {
+            content: "";
+            position: absolute;
+            bottom: -100px; left: -50px;
+            width: 240px; height: 240px;
+            background: radial-gradient(circle, rgba(255,255,255,0.14), transparent 70%);
+            border-radius: 50%;
+        }
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 14px;
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 36px;
+            font-weight: 400;
+            line-height: 1.1;
+            margin: 22px 0 16px;
+            letter-spacing: -0.8px;
+            position: relative;
+            z-index: 2;
+        }
+        .hero-tagline .gold {
+            color: var(--gold);
+            font-weight: 500;
+        }
+        .hero-brand {
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            color: rgba(255,255,255,0.85);
+            text-transform: uppercase;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* PROFILE */
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 0 28px;
+            margin-top: -36px;
+            position: relative;
+            z-index: 3;
+        }
+        .profile .avatar {
+            width: 76px; height: 76px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #fff;
+            box-shadow: var(--shadow-md);
+            flex-shrink: 0;
+        }
+        .profile .info {
+            background: #fff;
+            border-radius: 16px;
+            padding: 14px 18px;
+            box-shadow: var(--shadow-md);
+            flex: 1;
+        }
+        .profile .name {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--purple-1);
+            letter-spacing: -0.3px;
+        }
+        .profile .role {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--purple-2);
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+        .profile .rating {
+            font-size: 12px;
+            color: var(--gold);
+            margin-top: 4px;
+        }
+        .profile .rating .num { color: var(--ink); font-weight: 700; }
+
+        /* QUICK */
+        .quick { display: flex; gap: 10px; padding: 24px 28px 8px; }
+        .pill {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 12px 8px;
+            border-radius: 14px;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+        .pill--call { background: var(--purple-1); color: #fff; }
+        .pill--call:hover { background: #5b1462; transform: translateY(-1px); box-shadow: var(--shadow-md); }
+        .pill--whatsapp { background: #25d366; color: #fff; }
+        .pill--whatsapp:hover { background: #1fb855; transform: translateY(-1px); }
+        .pill--email { background: var(--gold); color: var(--ink); }
+        .pill--email:hover { background: #f59e0b; transform: translateY(-1px); }
+
+        /* SECTION */
+        .section { padding: 28px; }
+        .section-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--purple-1);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-title::before {
+            content: "";
+            width: 4px; height: 24px;
+            background: linear-gradient(180deg, var(--purple-2), var(--gold));
+            border-radius: 2px;
+        }
+
+        /* SERVICES GRID */
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .service-card {
+            position: relative;
+            padding: 22px 18px;
+            background: linear-gradient(135deg, #fff 0%, #fdf8ff 100%);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        .service-card::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--purple-2), var(--gold));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .service-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--purple-3);
+            box-shadow: var(--shadow-md);
+        }
+        .service-card:hover::before { opacity: 1; }
+        .service-card .ico {
+            font-size: 28px;
+            margin-bottom: 10px;
+            display: block;
+        }
+        .service-card .name {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--ink);
+            margin-bottom: 4px;
+        }
+        .service-card .desc {
+            font-size: 11.5px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        /* STATS */
+        .stats-section {
+            margin: 0 28px;
+            padding: 28px 24px;
+            background: linear-gradient(135deg, var(--purple-1), var(--purple-2));
+            border-radius: 22px;
+            color: #fff;
+            position: relative;
+            overflow: hidden;
+        }
+        .stats-section::before {
+            content: "";
+            position: absolute;
+            top: -40px; right: -40px;
+            width: 140px; height: 140px;
+            background: radial-gradient(circle, rgba(251,191,36,0.3), transparent 70%);
+        }
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            position: relative;
+        }
+        .stat-item .stat-num {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--gold);
+            line-height: 1;
+        }
+        .stat-item .stat-label {
+            font-size: 11px;
+            color: rgba(255,255,255,0.78);
+            margin-top: 6px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* CLIENTS */
+        .clients-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .client-tag {
+            padding: 8px 14px;
+            background: var(--gold-soft);
+            border: 1px solid #fcd34d;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        /* TESTIMONIAL */
+        .testimonial {
+            margin: 0 28px;
+            padding: 28px 24px;
+            background: var(--gold-soft);
+            border-radius: 18px;
+            position: relative;
+        }
+        .testimonial::before {
+            content: '"';
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 80px;
+            color: var(--gold);
+            position: absolute;
+            top: -10px; left: 16px;
+            line-height: 1;
+            opacity: 0.6;
+        }
+        .testimonial .quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 17px;
+            color: var(--ink);
+            line-height: 1.5;
+            margin-bottom: 14px;
+            padding-left: 16px;
+        }
+        .testimonial .author {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--purple-1);
+            letter-spacing: 0.5px;
+            padding-left: 16px;
+        }
+
+        /* CTA */
+        .booking-cta {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--purple-1), var(--purple-2));
+            color: #fff;
+            border-radius: 16px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 15px;
+            font-weight: 800;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .booking-cta::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -50%;
+            width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(251,191,36,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        .booking-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(112,26,117,0.4); }
+        .booking-cta:hover::before { left: 100%; }
+
+        /* QR */
+        .qr-section { padding: 28px; text-align: center; }
+        .qr-heading {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--purple-1);
+            margin-bottom: 14px;
+            letter-spacing: 1px;
+        }
+        #qrcode {
+            display: inline-block;
+            padding: 14px;
+            background: #fff;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+        }
+        .vcard-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-top: 18px;
+            padding: 14px;
+            background: transparent;
+            color: var(--purple-1);
+            border: 1.5px solid var(--purple-1);
+            border-radius: 14px;
+            font-family: 'Nunito', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .vcard-btn:hover { background: var(--purple-1); color: #fff; }
+
+        .footer {
+            text-align: center;
+            padding: 24px;
+            background: var(--purple-1);
+            color: #fff;
+        }
+        .footer .footer-name {
+            font-size: 13px;
+            font-weight: 800;
+            color: var(--gold);
+            margin-bottom: 4px;
+            letter-spacing: 1.5px;
+        }
+        .footer .footer-sub {
+            font-size: 11px;
+            color: rgba(255,255,255,0.55);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="hero">
+            <span class="hero-tag">&#127870; Wedding & Events</span>
+            <h1 class="hero-tagline">Hayalinizdeki<br><span class="gold">gunu</span> birlikte<br>tasarlayalim.</h1>
+            <div class="hero-brand">NAZ EVENTS - Istanbul</div>
+        </div>
+
+        <div class="profile reveal">
+            <img class="avatar" src="https://i.pravatar.cc/200?img=41" alt="Naz Erdogan">
+            <div class="info">
+                <div class="name">Naz Erdogan</div>
+                <div class="role">Etkinlik Tasarimcisi</div>
+                <div class="rating">&#9733;&#9733;&#9733;&#9733;&#9733; <span class="num">4.9 / 5.0</span> - 400+ etkinlik</div>
+            </div>
+        </div>
+
+        <div class="quick reveal">
+            <a href="tel:+905307773388" class="pill pill--call"><span>&#128222;</span> Ara</a>
+            <a href="https://wa.me/905307773388?text=Merhaba%20Naz%2C%20etkinlik%20organizasyonu%20i%C3%A7in%20yaz%C4%B1yorum." target="_blank" rel="noopener noreferrer" class="pill pill--whatsapp"><span>&#128172;</span> WhatsApp</a>
+            <a href="mailto:info@nazevents.com" class="pill pill--email"><span>&#9993;&#65039;</span> E-posta</a>
+        </div>
+
+        <div class="section reveal">
+            <h2 class="section-title">Hizmetler</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <span class="ico">&#128141;</span>
+                    <div class="name">Dugun</div>
+                    <div class="desc">Konsept, lokasyon, koordinasyon</div>
+                </div>
+                <div class="service-card">
+                    <span class="ico">&#127970;</span>
+                    <div class="name">Kurumsal</div>
+                    <div class="desc">Lansman, gala, konferans</div>
+                </div>
+                <div class="service-card">
+                    <span class="ico">&#127874;</span>
+                    <div class="name">Dogum Gunu</div>
+                    <div class="desc">Surpriz organizasyonlar</div>
+                </div>
+                <div class="service-card">
+                    <span class="ico">&#127891;</span>
+                    <div class="name">Mezuniyet</div>
+                    <div class="desc">Tema partileri, balolar</div>
+                </div>
+                <div class="service-card">
+                    <span class="ico">&#127914;</span>
+                    <div class="name">Konsept Tasarimi</div>
+                    <div class="desc">Mekan, dekor, atmosfer</div>
+                </div>
+                <div class="service-card">
+                    <span class="ico">&#128247;</span>
+                    <div class="name">Foto & Video</div>
+                    <div class="desc">Profesyonel ekip</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="reveal" style="margin-bottom: 28px;">
+            <div class="stats-section">
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-num" data-target="9">0</div>
+                        <div class="stat-label">Yil</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num" data-target="400" data-suffix="+">0</div>
+                        <div class="stat-label">Etkinlik</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num" data-target="180" data-suffix="+">0</div>
+                        <div class="stat-label">Dugun</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section reveal" style="padding-top: 0;">
+            <h2 class="section-title">Calistigim Markalar</h2>
+            <div class="clients-list">
+                <span class="client-tag">Mandarin Oriental</span>
+                <span class="client-tag">Cirikan Sarayi</span>
+                <span class="client-tag">Raffles</span>
+                <span class="client-tag">Four Seasons</span>
+                <span class="client-tag">Vakko</span>
+                <span class="client-tag">Mercedes-Benz</span>
+            </div>
+        </div>
+
+        <div class="reveal" style="margin-bottom: 28px;">
+            <div class="testimonial">
+                <p class="quote">"Naz, hayalimizdeki dugunu kelimenin tam anlamiyla gerceklestirdi. Her detay incelikle dusunulmustu."</p>
+                <div class="author">- Ayse & Murat, Cirikan Sarayi 2025</div>
+            </div>
+        </div>
+
+        <div class="section reveal" style="padding-top: 0;">
+            <a href="https://wa.me/905307773388?text=Merhaba%20Naz%2C%20etkinli%C4%9Fim%20i%C3%A7in%20teklif%20almak%20istiyorum." target="_blank" rel="noopener noreferrer" class="booking-cta">
+                <span>&#128172;</span> Hayalinizdeki Etkinligi Tasarlayalim
+            </a>
+        </div>
+
+        <div class="qr-section reveal">
+            <div class="qr-heading">Kartviziti Paylas</div>
+            <div id="qrcode" role="img" aria-label="QR kod"></div>
+            <button class="vcard-btn" id="vcardBtn" type="button">
+                <span>&#128229;</span> Rehbere Kaydet
+            </button>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-name">NAZ EVENTS</div>
+            <div class="footer-sub">&copy; 2026 - Etkinlik & Dugun Organizasyonu - Istanbul</div>
+        </footer>
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+        function initScrollReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function(el) { el.classList.add('visible'); }); return;
+            }
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function(el) { io.observe(el); });
+        }
+        function initStatCounters() {
+            var nums = document.querySelectorAll('.stat-num[data-target]');
+            if (!('IntersectionObserver' in window)) {
+                nums.forEach(function(el) { el.textContent = el.getAttribute('data-target') + (el.getAttribute('data-suffix') || ''); });
+                return;
+            }
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) {
+                        var el = e.target;
+                        var t = parseInt(el.getAttribute('data-target'), 10);
+                        var suf = el.getAttribute('data-suffix') || '';
+                        animate(el, 0, t, 1800, suf);
+                        io.unobserve(el);
+                    }
+                });
+            }, { threshold: 0.5 });
+            nums.forEach(function(el) { io.observe(el); });
+        }
+        function animate(el, s, e, d, suf) {
+            var start = null;
+            function step(ts) {
+                if (!start) start = ts;
+                var p = Math.min((ts - start) / d, 1);
+                var eased = 1 - Math.pow(1 - p, 3);
+                el.textContent = Math.floor(s + (e - s) * eased) + suf;
+                if (p < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }
+        function initQR() {
+            var c = document.getElementById('qrcode');
+            if (c && typeof QRCode !== 'undefined') {
+                new QRCode(c, {
+                    text: window.location.href,
+                    width: 140, height: 140,
+                    colorDark: '#701a75', colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            }
+        }
+        function initVCard() {
+            var btn = document.getElementById('vcardBtn');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var v = ['BEGIN:VCARD','VERSION:3.0','N:Erdogan;Naz;;;','FN:Naz Erdogan',
+                    'ORG:Naz Events','TITLE:Etkinlik Tasarimcisi',
+                    'TEL;TYPE=CELL:+90 530 777 33 88',
+                    'EMAIL;TYPE=INTERNET:info@nazevents.com',
+                    'URL:https://nazevents.com','END:VCARD'].join('\r\n');
+                var blob = new Blob([v], { type: 'text/vcard;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url; a.download = 'Naz_Erdogan.vcf';
+                document.body.appendChild(a); a.click();
+                document.body.removeChild(a); URL.revokeObjectURL(url);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            initScrollReveal(); initStatCounters(); initQR(); initVCard();
+        });
+    })();
+    </script>
+</body>
+</html>

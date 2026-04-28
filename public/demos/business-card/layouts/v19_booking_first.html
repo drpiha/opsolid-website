@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deniz Yıldırım | Kariyer &amp; Motivasyon Koçu</title>
+    <meta property="og:title" content="Deniz Yıldırım | Randevu Al">
+    <meta property="og:description" content="Online seans rezervasyonu — kariyer ve motivasyon koçluğu.">
+    <meta property="og:type" content="profile">
+    <meta property="og:locale" content="tr_TR">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #f0f8ff;
+            --card: #ffffff;
+            --blue: #2563eb;
+            --blue-soft: #dbeafe;
+            --blue-dark: #1d4ed8;
+            --green: #10b981;
+            --green-soft: #d1fae5;
+            --ink: #0f172a;
+            --muted: #64748b;
+            --border: #e2e8f0;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--card);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* Header */
+        .bf-header {
+            padding: 28px 24px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+        }
+        .bf-name-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .bf-photo {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--blue-soft);
+        }
+        .bf-info .who {
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .bf-info .where {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+        .live-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--green-soft);
+            color: var(--green);
+            padding: 6px 10px;
+            border-radius: 100px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 0 0 var(--green);
+            animation: pulse 1.8s infinite;
+        }
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5); }
+            70% { box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        /* Booking Hero */
+        .booking-hero {
+            background: linear-gradient(180deg, var(--card) 0%, var(--bg) 100%);
+            padding: 36px 24px 32px;
+            text-align: center;
+        }
+        .booking-hero .small {
+            font-size: 11px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--blue);
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .booking-hero h1 {
+            font-size: 30px;
+            font-weight: 800;
+            line-height: 1.1;
+            color: var(--ink);
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+        .booking-hero p {
+            font-size: 13.5px;
+            color: var(--muted);
+            margin-bottom: 24px;
+        }
+
+        /* Calendar mock */
+        .cal-mock {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 18px;
+            margin-bottom: 18px;
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.08);
+        }
+        .cal-mock-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--border);
+        }
+        .cal-month {
+            font-size: 13px;
+            font-weight: 700;
+        }
+        .cal-arrows {
+            display: flex;
+            gap: 8px;
+        }
+        .cal-arrow {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--blue-soft);
+            color: var(--blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .cal-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+        .cal-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 8px;
+            color: var(--ink);
+        }
+        .cal-day.head {
+            font-size: 9px;
+            color: var(--muted);
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+        .cal-day.muted { color: var(--border); }
+        .cal-day.available {
+            background: var(--blue-soft);
+            color: var(--blue-dark);
+        }
+        .cal-day.selected {
+            background: var(--blue);
+            color: #fff;
+            font-weight: 800;
+        }
+
+        /* Slot row */
+        .slot-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+        .slot {
+            padding: 10px 4px;
+            text-align: center;
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--ink);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .slot:hover {
+            border-color: var(--blue);
+            color: var(--blue);
+        }
+        .slot.active {
+            background: var(--blue);
+            color: #fff;
+            border-color: var(--blue);
+        }
+        .slot.gone {
+            color: var(--border);
+            text-decoration: line-through;
+            cursor: not-allowed;
+        }
+
+        /* Big CTA */
+        .booking-cta {
+            display: block;
+            background: var(--blue);
+            color: #fff;
+            padding: 18px 24px;
+            border-radius: 14px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 800;
+            font-size: 15px;
+            letter-spacing: 0.3px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 8px 22px rgba(37, 99, 235, 0.25);
+        }
+        .booking-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 28px rgba(37, 99, 235, 0.35);
+            background: var(--blue-dark);
+        }
+
+        /* Packages */
+        .bf-section {
+            padding: 32px 24px 12px;
+        }
+        .bf-section h2 {
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 18px;
+            letter-spacing: -0.3px;
+        }
+        .bf-section h2 .accent { color: var(--blue); }
+
+        .pkg-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .pkg {
+            background: var(--card);
+            border: 1.5px solid var(--border);
+            border-radius: 14px;
+            padding: 16px 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 14px;
+            transition: border-color 0.25s ease;
+        }
+        .pkg:hover { border-color: var(--blue); }
+        .pkg.featured {
+            border-color: var(--blue);
+            background: var(--blue-soft);
+        }
+        .pkg .pinfo { flex: 1; }
+        .pkg .pname {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+        .pkg .pdur {
+            font-size: 11px;
+            color: var(--muted);
+        }
+        .pkg .price {
+            font-size: 18px;
+            font-weight: 800;
+            color: var(--blue);
+            letter-spacing: -0.5px;
+        }
+        .pkg.featured .pname::after {
+            content: 'Popüler';
+            display: inline-block;
+            background: var(--blue);
+            color: #fff;
+            font-size: 9px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 6px;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+            vertical-align: 2px;
+        }
+
+        /* Steps */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .step-card {
+            padding: 16px 14px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+        }
+        .step-card .step-n {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: var(--blue-soft);
+            color: var(--blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        .step-card .step-t {
+            font-size: 12.5px;
+            font-weight: 700;
+            margin-bottom: 3px;
+        }
+        .step-card .step-d {
+            font-size: 11px;
+            color: var(--muted);
+            line-height: 1.45;
+        }
+
+        /* Social proof */
+        .proof-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px;
+            background: var(--green-soft);
+            border-radius: 14px;
+            margin: 12px 24px 24px;
+        }
+        .proof-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--green);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+        .proof-text {
+            font-size: 12.5px;
+            color: var(--ink);
+            font-weight: 600;
+            line-height: 1.45;
+        }
+        .proof-text strong { color: var(--green); }
+
+        /* About mini */
+        .bf-about {
+            padding: 20px 24px;
+            background: var(--bg);
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .bf-about img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        .bf-about .info { flex: 1; min-width: 0; }
+        .bf-about .ic {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .bf-about .id {
+            font-size: 11.5px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+        .bf-about .credentials {
+            display: flex;
+            gap: 6px;
+            margin-top: 6px;
+            flex-wrap: wrap;
+        }
+        .bf-about .credentials span {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 2px 8px;
+            border-radius: 100px;
+            font-size: 9px;
+            font-weight: 700;
+            color: var(--blue);
+            letter-spacing: 0.5px;
+        }
+
+        /* Contact */
+        .bf-contact {
+            padding: 24px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .bf-contact-btn {
+            padding: 14px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.25s ease;
+        }
+        .bf-contact-btn:hover {
+            border-color: var(--blue);
+            transform: translateY(-2px);
+        }
+        .bf-contact-btn .ic {
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 4px;
+            font-weight: 700;
+        }
+        .bf-contact-btn .val {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        /* QR */
+        .bf-qr {
+            padding: 24px;
+            text-align: center;
+            background: var(--blue-soft);
+            border-top: 1px solid var(--border);
+        }
+        .bf-qr-frame {
+            display: inline-block;
+            padding: 14px;
+            background: var(--card);
+            border-radius: 12px;
+        }
+        .bf-qr-cap {
+            font-size: 11px;
+            color: var(--blue-dark);
+            margin-top: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        #qrcode img, #qrcode canvas { display: block; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            .live-dot { animation: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+
+        <div class="bf-header">
+            <div class="bf-name-row">
+                <img src="https://i.pravatar.cc/200?img=58" alt="Deniz Yıldırım" class="bf-photo">
+                <div class="bf-info">
+                    <div class="who">Deniz Yıldırım</div>
+                    <div class="where">Kariyer &amp; Motivasyon Koçu</div>
+                </div>
+            </div>
+            <div class="live-badge">
+                <span class="live-dot"></span>
+                Aktif
+            </div>
+        </div>
+
+        <div class="booking-hero reveal">
+            <div class="small">— Randevu Al —</div>
+            <h1>Bir sonraki adımını<br>birlikte planlayalım.</h1>
+            <p>30 dakikalık ücretsiz keşif görüşmesi için tarih seç.</p>
+
+            <div class="cal-mock">
+                <div class="cal-mock-head">
+                    <div class="cal-month">Mayıs 2026</div>
+                    <div class="cal-arrows">
+                        <div class="cal-arrow">‹</div>
+                        <div class="cal-arrow">›</div>
+                    </div>
+                </div>
+                <div class="cal-grid">
+                    <div class="cal-day head">P</div>
+                    <div class="cal-day head">S</div>
+                    <div class="cal-day head">Ç</div>
+                    <div class="cal-day head">P</div>
+                    <div class="cal-day head">C</div>
+                    <div class="cal-day head">C</div>
+                    <div class="cal-day head">P</div>
+                    <div class="cal-day muted">28</div>
+                    <div class="cal-day muted">29</div>
+                    <div class="cal-day muted">30</div>
+                    <div class="cal-day">1</div>
+                    <div class="cal-day available">2</div>
+                    <div class="cal-day available">3</div>
+                    <div class="cal-day">4</div>
+                    <div class="cal-day available">5</div>
+                    <div class="cal-day available">6</div>
+                    <div class="cal-day selected">7</div>
+                    <div class="cal-day available">8</div>
+                    <div class="cal-day available">9</div>
+                    <div class="cal-day">10</div>
+                    <div class="cal-day">11</div>
+                    <div class="cal-day available">12</div>
+                    <div class="cal-day available">13</div>
+                    <div class="cal-day available">14</div>
+                </div>
+            </div>
+
+            <div class="slot-row">
+                <div class="slot gone">10:00</div>
+                <div class="slot">11:00</div>
+                <div class="slot active">14:00</div>
+                <div class="slot">15:30</div>
+            </div>
+
+            <a href="https://cal.com/denizyildirim" target="_blank" rel="noopener" class="booking-cta">
+                Randevuyu Onayla →
+            </a>
+        </div>
+
+        <div class="bf-section reveal">
+            <h2>Seans <span class="accent">paketleri</span></h2>
+            <div class="pkg-list">
+                <div class="pkg">
+                    <div class="pinfo">
+                        <div class="pname">Keşif Görüşmesi</div>
+                        <div class="pdur">30 dk · Online</div>
+                    </div>
+                    <div class="price">Ücretsiz</div>
+                </div>
+                <div class="pkg featured">
+                    <div class="pinfo">
+                        <div class="pname">6 Seans Paketi</div>
+                        <div class="pdur">6 × 60 dk · Yüz yüze veya online</div>
+                    </div>
+                    <div class="price">₺7.200</div>
+                </div>
+                <div class="pkg">
+                    <div class="pinfo">
+                        <div class="pname">3 Aylık Mentorluk</div>
+                        <div class="pdur">12 seans + WhatsApp destek</div>
+                    </div>
+                    <div class="price">₺16.800</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bf-section reveal">
+            <h2>Nasıl <span class="accent">çalışır</span></h2>
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-n">1</div>
+                    <div class="step-t">Tarih seç</div>
+                    <div class="step-d">Sana uygun günü işaretle</div>
+                </div>
+                <div class="step-card">
+                    <div class="step-n">2</div>
+                    <div class="step-t">Form doldur</div>
+                    <div class="step-d">Kısa hedef formu</div>
+                </div>
+                <div class="step-card">
+                    <div class="step-n">3</div>
+                    <div class="step-t">Görüşme</div>
+                    <div class="step-d">Zoom/Meet bağlantısı</div>
+                </div>
+                <div class="step-card">
+                    <div class="step-n">4</div>
+                    <div class="step-t">Yol haritası</div>
+                    <div class="step-d">Birlikte plan kuralım</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="proof-row reveal">
+            <div class="proof-icon">★</div>
+            <div class="proof-text">Geçen hafta <strong>17 kişiye</strong> kariyer dönüşümünde rehberlik ettim.</div>
+        </div>
+
+        <div class="bf-about reveal">
+            <img src="https://i.pravatar.cc/200?img=58" alt="Deniz Yıldırım">
+            <div class="info">
+                <div class="ic">12 yıllık tecrübe, 800+ danışan</div>
+                <div class="id">ICF Sertifikalı Profesyonel Koç. Boğaziçi Üniversitesi Psikoloji mezunu.</div>
+                <div class="credentials">
+                    <span>ICF</span>
+                    <span>NLP Master</span>
+                    <span>BoUni</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="bf-contact reveal">
+            <a href="tel:+905327775544" class="bf-contact-btn">
+                <div class="ic">Tel</div>
+                <div class="val">+90 532 777 55 44</div>
+            </a>
+            <a href="mailto:deniz@denizyildirim.com" class="bf-contact-btn">
+                <div class="ic">E-posta</div>
+                <div class="val">deniz@denizyildirim.com</div>
+            </a>
+            <a href="https://wa.me/905327775544" target="_blank" rel="noopener" class="bf-contact-btn">
+                <div class="ic">WhatsApp</div>
+                <div class="val">Mesaj at</div>
+            </a>
+            <a href="https://denizyildirim.com" target="_blank" rel="noopener" class="bf-contact-btn">
+                <div class="ic">Web</div>
+                <div class="val">denizyildirim.com</div>
+            </a>
+        </div>
+
+        <div class="bf-qr reveal">
+            <div class="bf-qr-frame">
+                <div id="qrcode"></div>
+            </div>
+            <div class="bf-qr-cap">— Randevu Linkini Aç —</div>
+        </div>
+
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+        function initScrollReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function(el){ el.classList.add('visible'); });
+                return;
+            }
+            var io = new IntersectionObserver(function(entries){
+                entries.forEach(function(e){
+                    if (e.isIntersecting) {
+                        e.target.classList.add('visible');
+                        io.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function(el){ io.observe(el); });
+        }
+        function initQR() {
+            if (typeof QRCode === 'undefined') return;
+            new QRCode(document.getElementById('qrcode'), {
+                text: 'https://cal.com/denizyildirim',
+                width: 110,
+                height: 110,
+                colorDark: '#2563eb',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function(){
+            initScrollReveal();
+            initQR();
+        });
+    })();
+    </script>
+</body>
+</html>

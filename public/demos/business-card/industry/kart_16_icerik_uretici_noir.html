@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuna Yilmaz | Studio - Icerik Uretici</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #080808;
+            --card: #111111;
+            --card-2: #181818;
+            --line: rgba(255,255,255,0.08);
+            --line-strong: rgba(255,255,255,0.16);
+            --accent: #ff0000;
+            --accent-2: #c8a964;
+            --text: #f5f5f7;
+            --text-muted: rgba(245,245,247,0.55);
+            --text-soft: rgba(245,245,247,0.78);
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--card);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+        }
+        h1, h2, h3 { font-family: 'Syne', sans-serif; }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        .hero-studio {
+            position: relative;
+            padding: 60px 28px 40px;
+            background: radial-gradient(ellipse at top right, rgba(255,0,0,0.18), transparent 60%),
+                        radial-gradient(ellipse at bottom left, rgba(200,169,100,0.1), transparent 60%);
+            overflow: hidden;
+        }
+        .hero-studio::before {
+            content: "";
+            position: absolute;
+            top: 30px; right: 30px;
+            width: 12px; height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(255,0,0,0.25), 0 0 20px rgba(255,0,0,0.6);
+            animation: rec 1.4s ease-in-out infinite;
+        }
+        @keyframes rec { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .studio-label {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--accent-2);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .studio-name {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -1px;
+            line-height: 1.1;
+        }
+        .studio-name .accent { color: var(--accent); font-weight: 800; }
+        .studio-tagline {
+            font-size: 14px;
+            color: var(--text-soft);
+            margin-top: 14px;
+            font-weight: 300;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .spotlight {
+            margin: 40px 28px 0;
+            padding: 28px 24px;
+            background: linear-gradient(135deg, var(--card-2) 0%, #0d0d0d 100%);
+            border: 1px solid var(--line-strong);
+            border-radius: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .spotlight::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--accent-2), transparent);
+        }
+        .spotlight .label {
+            font-size: 10px;
+            color: var(--accent-2);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+        .spotlight .number {
+            font-size: 64px;
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -2px;
+            background: linear-gradient(135deg, #fff 0%, var(--accent-2) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .spotlight .sub {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .profile-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 32px 28px 0;
+        }
+        .profile-row .avatar {
+            width: 64px; height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--accent-2);
+            padding: 3px;
+        }
+        .profile-row .info .role {
+            font-size: 11px;
+            color: var(--accent-2);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .profile-row .info .niche {
+            font-size: 13px;
+            color: var(--text-soft);
+            margin-top: 4px;
+        }
+
+        .section { padding: 36px 28px; }
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 24px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section-title::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--line);
+        }
+
+        .platforms { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+        .platform-card {
+            padding: 20px 12px;
+            background: var(--card-2);
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+        .platform-card:hover { border-color: var(--accent-2); transform: translateY(-3px); }
+        .platform-card .icon { font-size: 24px; margin-bottom: 10px; }
+        .platform-card.yt .icon { color: var(--accent); }
+        .platform-card .name {
+            font-size: 10px;
+            color: var(--text-muted);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 6px;
+        }
+        .platform-card .count {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .achievement-panel {
+            background: var(--card-2);
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 24px;
+        }
+        .achievement-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--line);
+        }
+        .achievement-row:last-child { border-bottom: none; }
+        .achievement-row .label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            color: var(--text-soft);
+        }
+        .achievement-row .label .ico { color: var(--accent-2); }
+        .achievement-row .value { font-size: 14px; font-weight: 700; }
+
+        .niches { display: flex; flex-wrap: wrap; gap: 8px; }
+        .niche-tag {
+            padding: 8px 14px;
+            background: transparent;
+            border: 1px solid var(--line-strong);
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-soft);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .contact-block {
+            padding: 36px 28px;
+            background: var(--card-2);
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+        .contact-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--line);
+            text-decoration: none;
+            color: var(--text);
+        }
+        .contact-row:last-child { border-bottom: none; }
+        .contact-row .key {
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        .contact-row .value { font-size: 13px; transition: color 0.2s ease; }
+        .contact-row:hover .value { color: var(--accent-2); }
+
+        .cta-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 18px;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .cta-btn:hover { background: #cc0000; }
+
+        .qr-section { text-align: center; padding: 36px 28px; }
+        .qr-heading {
+            font-size: 12px;
+            color: var(--accent-2);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+        #qrcode {
+            display: inline-block;
+            padding: 14px;
+            background: #fff;
+            border-radius: 8px;
+        }
+        .vcard-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            padding: 16px;
+            background: transparent;
+            color: var(--accent-2);
+            border: 1px solid var(--accent-2);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 22px;
+        }
+        .vcard-btn:hover { background: var(--accent-2); color: var(--bg); }
+
+        .footer { text-align: center; padding: 26px; border-top: 1px solid var(--line); }
+        .footer .footer-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent-2);
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+        }
+        .footer .footer-sub {
+            font-size: 10px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            .hero-studio::before { animation: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="hero-studio">
+            <div class="studio-label">Studio - On Air</div>
+            <h1 class="studio-name">Tuna<br><span class="accent">Creates</span></h1>
+            <p class="studio-tagline">Teknolojiyi anlatmak, hayati optimize etmek - 285K aboneyle hikayeler.</p>
+        </div>
+
+        <div class="spotlight reveal">
+            <div class="label">Toplam Erisim</div>
+            <div class="number">5M+</div>
+            <div class="sub">Izlenme - Tum Platformlar</div>
+        </div>
+
+        <div class="profile-row reveal">
+            <img class="avatar" src="https://i.pravatar.cc/200?img=3" alt="Tuna Yilmaz">
+            <div class="info">
+                <div class="role">Tuna Yilmaz</div>
+                <div class="niche">Icerik Ureticisi - Vlogger</div>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <h2 class="section-title">Platformlar</h2>
+            <div class="platforms">
+                <a href="https://youtube.com/@tunacreates" target="_blank" rel="noopener noreferrer" class="platform-card yt">
+                    <div class="icon">&#9654;&#65039;</div>
+                    <div class="name">YouTube</div>
+                    <div class="count">285K</div>
+                </a>
+                <a href="https://instagram.com/tunacreates" target="_blank" rel="noopener noreferrer" class="platform-card">
+                    <div class="icon">&#128247;</div>
+                    <div class="name">Instagram</div>
+                    <div class="count">68K</div>
+                </a>
+                <a href="https://tiktok.com/@tunacreates" target="_blank" rel="noopener noreferrer" class="platform-card">
+                    <div class="icon">&#127925;</div>
+                    <div class="name">TikTok</div>
+                    <div class="count">120K</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <h2 class="section-title">Basarilar</h2>
+            <div class="achievement-panel">
+                <div class="achievement-row">
+                    <span class="label"><span class="ico">&#9733;</span> Toplam Abone</span>
+                    <span class="value">473K+</span>
+                </div>
+                <div class="achievement-row">
+                    <span class="label"><span class="ico">&#127942;</span> YouTube Gumus Plak</span>
+                    <span class="value">2024</span>
+                </div>
+                <div class="achievement-row">
+                    <span class="label"><span class="ico">&#128241;</span> Reels Erisimi</span>
+                    <span class="value">12M+/ay</span>
+                </div>
+                <div class="achievement-row">
+                    <span class="label"><span class="ico">&#129309;</span> Sponsorluk</span>
+                    <span class="value">120+ marka</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <h2 class="section-title">Uzmanlik</h2>
+            <div class="niches">
+                <span class="niche-tag">Teknoloji</span>
+                <span class="niche-tag">Kisisel Gelisim</span>
+                <span class="niche-tag">Uretkenlik</span>
+                <span class="niche-tag">Vlog</span>
+                <span class="niche-tag">Inceleme</span>
+                <span class="niche-tag">Gear</span>
+            </div>
+        </div>
+
+        <div class="contact-block reveal">
+            <a href="tel:+905301118855" class="contact-row">
+                <span class="key">Telefon</span>
+                <span class="value">+90 530 111 88 55</span>
+            </a>
+            <a href="mailto:iletisim@tunayilmaz.com" class="contact-row">
+                <span class="key">Sponsor</span>
+                <span class="value">iletisim@tunayilmaz.com</span>
+            </a>
+            <a href="https://tunayilmaz.com" target="_blank" rel="noopener noreferrer" class="contact-row">
+                <span class="key">Web</span>
+                <span class="value">tunayilmaz.com</span>
+            </a>
+        </div>
+
+        <a href="mailto:iletisim@tunayilmaz.com?subject=Sponsorluk%20Talebi" class="cta-btn">Sponsorluk Icin Yaz</a>
+
+        <div class="qr-section reveal">
+            <div class="qr-heading">Connect</div>
+            <div id="qrcode" role="img" aria-label="QR kod"></div>
+            <button class="vcard-btn" id="vcardBtn" type="button">Rehbere Kaydet</button>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-name">TUNA CREATES STUDIO</div>
+            <div class="footer-sub">&copy; 2026</div>
+        </footer>
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+        function initScrollReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function(el) { el.classList.add('visible'); }); return;
+            }
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function(el) { io.observe(el); });
+        }
+        function initQR() {
+            var c = document.getElementById('qrcode');
+            if (c && typeof QRCode !== 'undefined') {
+                new QRCode(c, {
+                    text: window.location.href,
+                    width: 130, height: 130,
+                    colorDark: '#080808', colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            }
+        }
+        function initVCard() {
+            var btn = document.getElementById('vcardBtn');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var v = ['BEGIN:VCARD','VERSION:3.0','N:Yilmaz;Tuna;;;','FN:Tuna Yilmaz',
+                    'ORG:Tuna Creates','TITLE:Icerik Uretici',
+                    'TEL;TYPE=CELL:+90 530 111 88 55',
+                    'EMAIL;TYPE=INTERNET:iletisim@tunayilmaz.com',
+                    'URL:https://tunayilmaz.com','END:VCARD'].join('\r\n');
+                var blob = new Blob([v], { type: 'text/vcard;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url; a.download = 'Tuna_Yilmaz.vcf';
+                document.body.appendChild(a); a.click();
+                document.body.removeChild(a); URL.revokeObjectURL(url);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            initScrollReveal(); initQR(); initVCard();
+        });
+    })();
+    </script>
+</body>
+</html>

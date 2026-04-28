@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elif Yaman | Atelier - Dark Luxury Interior</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #080808;
+            --card: #111111;
+            --card-2: #181818;
+            --line: rgba(255,255,255,0.08);
+            --line-2: rgba(200,169,100,0.22);
+            --gold: #c8a964;
+            --gold-bright: #d4b876;
+            --gold-soft: rgba(200,169,100,0.1);
+            --text: #f3ede4;
+            --text-soft: rgba(243,237,228,0.78);
+            --text-muted: rgba(243,237,228,0.5);
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+        .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 400; }
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--card);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            height: 460px;
+            overflow: hidden;
+        }
+        .hero img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7) contrast(1.05);
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(8,8,8,0.2) 0%, rgba(8,8,8,0.85) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 36px 32px 50px;
+        }
+        .atelier-mark {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+        .hero-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 56px;
+            font-weight: 300;
+            line-height: 1;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--text) 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-line {
+            margin: 22px 0 18px;
+            width: 40px; height: 1px;
+            background: var(--gold);
+        }
+        .hero-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 17px;
+            color: var(--text-soft);
+            line-height: 1.5;
+            max-width: 320px;
+        }
+
+        /* PROFILE BLOCK */
+        .profile-block {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 32px;
+            border-bottom: 1px solid var(--line);
+            background: var(--card-2);
+        }
+        .profile-block .avatar {
+            width: 64px; height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--gold);
+            padding: 3px;
+        }
+        .profile-block .info .name {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 22px;
+            font-weight: 400;
+        }
+        .profile-block .info .role {
+            font-size: 11px;
+            color: var(--gold);
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* SECTION */
+        .section { padding: 48px 32px; }
+        .section-label {
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .section-label::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--line-2);
+        }
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 30px;
+            font-weight: 400;
+            color: var(--text);
+            line-height: 1.15;
+            margin-bottom: 24px;
+            letter-spacing: -0.5px;
+        }
+
+        /* PHILOSOPHY */
+        .philosophy-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 18px;
+            color: var(--text-soft);
+            line-height: 1.65;
+            border-left: 1px solid var(--gold);
+            padding-left: 18px;
+        }
+
+        /* FULL-WIDTH PROJECT */
+        .full-project {
+            position: relative;
+            margin: 0 -32px;
+            height: 360px;
+            overflow: hidden;
+        }
+        .full-project img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            filter: brightness(0.8) contrast(1.05);
+        }
+        .full-project .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, transparent 30%, rgba(8,8,8,0.85) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 32px;
+        }
+        .full-project .badge {
+            font-size: 9px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+        .full-project .name {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 26px;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+        .full-project .desc {
+            font-size: 13px;
+            color: var(--text-soft);
+            font-weight: 300;
+            line-height: 1.6;
+            max-width: 320px;
+        }
+
+        /* SERVICES */
+        .services-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .service-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            padding: 18px 0;
+            border-bottom: 1px solid var(--line);
+        }
+        .service-row:last-child { border-bottom: none; }
+        .service-row .num {
+            font-size: 11px;
+            color: var(--gold);
+            font-weight: 500;
+            letter-spacing: 2px;
+        }
+        .service-row .name {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 18px;
+            color: var(--text);
+            font-weight: 400;
+            text-align: right;
+        }
+
+        /* AWARDS */
+        .awards {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .award-row {
+            padding: 18px 0;
+            border-bottom: 1px solid var(--line);
+        }
+        .award-row:last-child { border-bottom: none; }
+        .award-row .title {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 16px;
+            color: var(--text);
+        }
+        .award-row .meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 4px;
+            font-size: 10px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .award-row .meta .year { color: var(--gold); }
+
+        /* STATS */
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+        .stat-cell {
+            padding: 28px 12px;
+            text-align: center;
+            border-right: 1px solid var(--line);
+        }
+        .stat-cell:last-child { border-right: none; }
+        .stat-cell .num {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 32px;
+            color: var(--gold);
+            line-height: 1;
+        }
+        .stat-cell .label {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        /* CONTACT */
+        .contact-block { padding: 36px 32px; }
+        .contact-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--line);
+            text-decoration: none;
+            color: var(--text);
+        }
+        .contact-row:last-child { border-bottom: none; }
+        .contact-row .key {
+            font-size: 10px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .contact-row .val {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 15px;
+            transition: color 0.2s ease;
+        }
+        .contact-row:hover .val { color: var(--gold); }
+
+        /* CTA */
+        .cta-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 22px;
+            background: transparent;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            border-left: none;
+            border-right: none;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.4s ease;
+        }
+        .cta-btn:hover { background: var(--gold); color: var(--bg); }
+
+        /* QR */
+        .qr-section { padding: 44px 32px; text-align: center; }
+        .qr-heading {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 16px;
+            color: var(--gold);
+            margin-bottom: 22px;
+        }
+        #qrcode {
+            display: inline-block;
+            padding: 14px;
+            background: #fff;
+        }
+        .vcard-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 22px;
+            padding: 14px;
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--line-2);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .vcard-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+        .footer {
+            text-align: center;
+            padding: 32px;
+            border-top: 1px solid var(--line);
+        }
+        .footer .footer-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 18px;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+        .footer .footer-sub {
+            font-size: 10px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="hero">
+            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=900&q=80" alt="Ic mekan">
+            <div class="hero-overlay">
+                <div class="atelier-mark">Atelier - Est. 2015</div>
+                <h1 class="hero-name">Elif<br>Yaman</h1>
+                <div class="hero-line"></div>
+                <p class="hero-tagline">Mekanin sessizligini, dokunun zamansiz dilini ariyorum.</p>
+            </div>
+        </div>
+
+        <div class="profile-block">
+            <img class="avatar" src="https://i.pravatar.cc/200?img=47" alt="Elif Yaman">
+            <div class="info">
+                <div class="name">Elif Yaman</div>
+                <div class="role">Founder - Interior Architect</div>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-label">Manifesto</div>
+            <h2 class="section-title">Her detay,<br>bir niyetin yankisidir.</h2>
+            <p class="philosophy-text">Tasarim, malzeme ile zamanin sessiz pazarlikla belirlenir. 11 yildir 6 ulkede ozel projeler ureten Atelier, mahremiyetin ve ritmin estetigini takip ediyor.</p>
+        </div>
+
+        <div class="reveal">
+            <div class="full-project">
+                <img src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=900&q=80" alt="Featured project">
+                <div class="overlay">
+                    <div class="badge">Konut - Bosphorus 2025</div>
+                    <div class="name">The Penthouse</div>
+                    <p class="desc">320 m&sup2; - dogal mermer, mese, patina pirinc. Bogazin kuzey isigina ayarlanmis sakin bir ritim.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-label">Hizmet Atelyesi</div>
+            <div class="services-list">
+                <div class="service-row">
+                    <span class="num">01</span>
+                    <span class="name">Konut Ic Mimari</span>
+                </div>
+                <div class="service-row">
+                    <span class="num">02</span>
+                    <span class="name">Otel & Butik Otel</span>
+                </div>
+                <div class="service-row">
+                    <span class="num">03</span>
+                    <span class="name">Ofis & Showroom</span>
+                </div>
+                <div class="service-row">
+                    <span class="num">04</span>
+                    <span class="name">Konsept Gelistirme</span>
+                </div>
+                <div class="service-row">
+                    <span class="num">05</span>
+                    <span class="name">FF&E Sourcing</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-label">Tanidiklar</div>
+            <div class="awards">
+                <div class="award-row">
+                    <div class="title">Architizer A+ Award - Konut Ic Mekan</div>
+                    <div class="meta"><span>New York</span><span class="year">2023</span></div>
+                </div>
+                <div class="award-row">
+                    <div class="title">Iconic Awards - Interior Innovation</div>
+                    <div class="meta"><span>Frankfurt</span><span class="year">2024</span></div>
+                </div>
+                <div class="award-row">
+                    <div class="title">AD Magazine - Featured Project</div>
+                    <div class="meta"><span>Italy</span><span class="year">2025</span></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats-section reveal">
+            <div class="stat-cell">
+                <div class="num">11</div>
+                <div class="label">Yil</div>
+            </div>
+            <div class="stat-cell">
+                <div class="num">150+</div>
+                <div class="label">Proje</div>
+            </div>
+            <div class="stat-cell">
+                <div class="num">6</div>
+                <div class="label">Ulke</div>
+            </div>
+        </div>
+
+        <div class="contact-block reveal">
+            <div class="section-label" style="margin-bottom: 18px;">Iletisim</div>
+            <a href="tel:+902124445533" class="contact-row">
+                <span class="key">Telefon</span>
+                <span class="val">+90 212 444 55 33</span>
+            </a>
+            <a href="mailto:elif@elifyamandesign.com" class="contact-row">
+                <span class="key">Studio</span>
+                <span class="val">elif@elifyamandesign.com</span>
+            </a>
+            <a href="https://elifyamandesign.com" target="_blank" rel="noopener noreferrer" class="contact-row">
+                <span class="key">Web</span>
+                <span class="val">elifyamandesign.com</span>
+            </a>
+            <a href="https://instagram.com/elifyamandesign" target="_blank" rel="noopener noreferrer" class="contact-row">
+                <span class="key">Instagram</span>
+                <span class="val">@elifyamandesign</span>
+            </a>
+        </div>
+
+        <a href="mailto:elif@elifyamandesign.com?subject=Atelier%20Brifingi" class="cta-btn">Brifing Talep Et</a>
+
+        <div class="qr-section reveal">
+            <div class="qr-heading">Atelye Linki</div>
+            <div id="qrcode" role="img" aria-label="QR kod"></div>
+            <button class="vcard-btn" id="vcardBtn" type="button">Rehbere Kaydet</button>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-name">Elif Yaman Atelier</div>
+            <div class="footer-sub">Istanbul - Established 2015</div>
+        </footer>
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+        function initScrollReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function(el) { el.classList.add('visible'); }); return;
+            }
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function(el) { io.observe(el); });
+        }
+        function initQR() {
+            var c = document.getElementById('qrcode');
+            if (c && typeof QRCode !== 'undefined') {
+                new QRCode(c, {
+                    text: window.location.href,
+                    width: 130, height: 130,
+                    colorDark: '#080808', colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            }
+        }
+        function initVCard() {
+            var btn = document.getElementById('vcardBtn');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var v = ['BEGIN:VCARD','VERSION:3.0','N:Yaman;Elif;;;','FN:Elif Yaman',
+                    'ORG:Elif Yaman Atelier','TITLE:Interior Architect',
+                    'TEL;TYPE=WORK:+90 212 444 55 33',
+                    'EMAIL;TYPE=INTERNET:elif@elifyamandesign.com',
+                    'URL:https://elifyamandesign.com','END:VCARD'].join('\r\n');
+                var blob = new Blob([v], { type: 'text/vcard;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url; a.download = 'Elif_Yaman.vcf';
+                document.body.appendChild(a); a.click();
+                document.body.removeChild(a); URL.revokeObjectURL(url);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            initScrollReveal(); initQR(); initVCard();
+        });
+    })();
+    </script>
+</body>
+</html>

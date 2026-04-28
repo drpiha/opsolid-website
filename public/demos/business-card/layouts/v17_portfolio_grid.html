@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zeynep Kara | UX/UI Tasarımcısı</title>
+    <meta property="og:title" content="Zeynep Kara | UX/UI Tasarımcısı">
+    <meta property="og:description" content="Dijital ürün tasarımı, kullanıcı deneyimi ve marka arayüz çözümleri.">
+    <meta property="og:type" content="profile">
+    <meta property="og:locale" content="tr_TR">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0f0f0f;
+            --card: #1a1a1a;
+            --grid-bg: #222222;
+            --white: #ffffff;
+            --gold: #c8a964;
+            --text: #f0f0f0;
+            --muted: #909090;
+            --border: rgba(255, 255, 255, 0.08);
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--bg);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* Header */
+        .pf-header {
+            padding: 32px 24px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .pf-header .pf-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--white);
+            letter-spacing: -0.3px;
+        }
+        .pf-header .pf-tag {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 500;
+            padding: 5px 10px;
+            border: 1px solid var(--gold);
+            border-radius: 100px;
+        }
+
+        /* Big section title */
+        .pf-bigtitle {
+            padding: 0 24px 24px;
+        }
+        .pf-bigtitle h1 {
+            font-size: 38px;
+            font-weight: 500;
+            line-height: 0.95;
+            color: var(--white);
+            letter-spacing: -1.5px;
+            margin-bottom: 12px;
+        }
+        .pf-bigtitle h1 em {
+            font-style: italic;
+            color: var(--gold);
+            font-weight: 300;
+        }
+        .pf-bigtitle p {
+            font-size: 13px;
+            color: var(--muted);
+            max-width: 360px;
+            line-height: 1.55;
+        }
+
+        /* 2x2 grid */
+        .pf-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            padding: 0 24px 28px;
+        }
+        .pf-cell {
+            aspect-ratio: 1 / 1.1;
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--grid-bg);
+            cursor: pointer;
+        }
+        .pf-cell img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .pf-cell:hover img { transform: scale(1.05); }
+        .pf-cell .pf-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 60%, transparent 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 14px;
+            transition: background 0.3s ease;
+        }
+        .pf-cell:hover .pf-overlay {
+            background: linear-gradient(to top, rgba(200,169,100,0.85) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
+        }
+        .pf-cell .pf-cat {
+            font-size: 9px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 4px;
+            transition: color 0.3s ease;
+        }
+        .pf-cell:hover .pf-cat { color: var(--white); }
+        .pf-cell .pf-pname {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--white);
+            line-height: 1.2;
+        }
+
+        /* Stats */
+        .pf-stats {
+            padding: 36px 24px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 4px;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .pf-stats .scell { text-align: center; }
+        .pf-stats .num {
+            font-size: 36px;
+            font-weight: 500;
+            color: var(--white);
+            line-height: 1;
+            letter-spacing: -1.5px;
+        }
+        .pf-stats .num em {
+            color: var(--gold);
+            font-style: normal;
+        }
+        .pf-stats .lbl {
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 8px;
+            font-weight: 500;
+        }
+
+        /* Inline profile */
+        .pf-profile {
+            padding: 32px 24px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            border-bottom: 1px solid var(--border);
+        }
+        .pf-profile img {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid var(--gold);
+        }
+        .pf-profile .info { flex: 1; }
+        .pf-profile .who {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--white);
+        }
+        .pf-profile .role {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        /* Workflow */
+        .pf-workflow {
+            padding: 36px 24px;
+        }
+        .pf-workflow h2 {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+        .step-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .step {
+            display: grid;
+            grid-template-columns: 50px 1fr;
+            gap: 16px;
+            align-items: center;
+            padding: 16px 18px;
+            background: var(--card);
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            transition: border-color 0.3s ease;
+        }
+        .step:hover { border-color: var(--gold); }
+        .step .step-num {
+            font-size: 28px;
+            font-weight: 300;
+            color: var(--gold);
+            line-height: 1;
+            text-align: center;
+            font-feature-settings: "tnum";
+        }
+        .step .step-info { min-width: 0; }
+        .step .step-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--white);
+            margin-bottom: 2px;
+        }
+        .step .step-desc {
+            font-size: 11.5px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        /* Contact */
+        .pf-contact {
+            padding: 0 24px 28px;
+        }
+        .pf-contact h2 {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 600;
+            margin: 12px 0 16px;
+        }
+        .pf-btns {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        .pf-btn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--white);
+            transition: all 0.25s ease;
+        }
+        .pf-btn:hover {
+            border-color: var(--gold);
+            background: #1f1f1f;
+            transform: translateX(4px);
+        }
+        .pf-btn .pfb-key {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-right: 12px;
+        }
+        .pf-btn .pfb-val {
+            font-size: 13px;
+            font-weight: 500;
+            flex: 1;
+        }
+        .pf-btn .pfb-arrow {
+            font-size: 16px;
+            color: var(--gold);
+        }
+
+        /* QR */
+        .pf-qr {
+            padding: 32px 24px;
+            background: var(--card);
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        .pf-qr-frame {
+            display: inline-block;
+            padding: 14px;
+            background: var(--white);
+            border-radius: 12px;
+        }
+        .pf-qr-cap {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-top: 14px;
+            font-weight: 600;
+        }
+        #qrcode img, #qrcode canvas { display: block; }
+
+        /* Footer */
+        .pf-footer {
+            padding: 22px 24px 32px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+        .pf-footer .gold { color: var(--gold); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            .pf-cell img { transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+
+        <div class="pf-header">
+            <div class="pf-name">Zeynep Kara</div>
+            <div class="pf-tag">Designer</div>
+        </div>
+
+        <div class="pf-bigtitle reveal">
+            <h1>Ürün ve marka arayüzleri için <em>tasarım stüdyom.</em></h1>
+            <p>Dijital ürünleri, kullanıcılarının gerçekten anladığı şekilde tasarlıyorum. UX araştırmadan ekran tasarımına bütünsel hizmet.</p>
+        </div>
+
+        <div class="pf-grid reveal">
+            <div class="pf-cell">
+                <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=460&h=460&fit=crop&q=80" alt="Fintech App">
+                <div class="pf-overlay">
+                    <div class="pf-cat">Mobile · Fintech</div>
+                    <div class="pf-pname">Wallet Redesign</div>
+                </div>
+            </div>
+            <div class="pf-cell">
+                <img src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=460&h=460&fit=crop&q=80" alt="SaaS Dashboard">
+                <div class="pf-overlay">
+                    <div class="pf-cat">Web · SaaS</div>
+                    <div class="pf-pname">Analytics Suite</div>
+                </div>
+            </div>
+            <div class="pf-cell">
+                <img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?w=460&h=460&fit=crop&q=80" alt="Brand Identity">
+                <div class="pf-overlay">
+                    <div class="pf-cat">Brand · Visual</div>
+                    <div class="pf-pname">Vela Coffee</div>
+                </div>
+            </div>
+            <div class="pf-cell">
+                <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=460&h=460&fit=crop&q=80" alt="E-commerce">
+                <div class="pf-overlay">
+                    <div class="pf-cat">Web · E-commerce</div>
+                    <div class="pf-pname">Aralia Studio</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pf-stats reveal">
+            <div class="scell">
+                <div class="num">86<em>+</em></div>
+                <div class="lbl">Proje</div>
+            </div>
+            <div class="scell">
+                <div class="num">42</div>
+                <div class="lbl">Müşteri</div>
+            </div>
+            <div class="scell">
+                <div class="num">9<em>yr</em></div>
+                <div class="lbl">Deneyim</div>
+            </div>
+        </div>
+
+        <div class="pf-profile reveal">
+            <img src="https://i.pravatar.cc/200?img=44" alt="Zeynep Kara">
+            <div class="info">
+                <div class="who">Zeynep Kara</div>
+                <div class="role">Senior UX/UI Designer · İstanbul</div>
+            </div>
+        </div>
+
+        <div class="pf-workflow reveal">
+            <h2>— Nasıl Çalışıyorum</h2>
+            <div class="step-grid">
+                <div class="step">
+                    <div class="step-num">01</div>
+                    <div class="step-info">
+                        <div class="step-title">Keşif &amp; Araştırma</div>
+                        <div class="step-desc">Kullanıcı görüşmeleri, rakip analizi, hedef tespiti</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">02</div>
+                    <div class="step-info">
+                        <div class="step-title">Tasarım Sürümü</div>
+                        <div class="step-desc">Wireframe, prototip, görsel tasarım iterasyonları</div>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">03</div>
+                    <div class="step-info">
+                        <div class="step-title">Doğrulama &amp; Teslim</div>
+                        <div class="step-desc">Kullanıcı testi, geliştirici handoff, design system</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pf-contact reveal">
+            <h2>— İletişim</h2>
+            <div class="pf-btns">
+                <a href="tel:+905328884411" class="pf-btn">
+                    <span class="pfb-key">Tel</span>
+                    <span class="pfb-val">+90 532 888 44 11</span>
+                    <span class="pfb-arrow">→</span>
+                </a>
+                <a href="mailto:zeynep@zeynepkara.design" class="pf-btn">
+                    <span class="pfb-key">Mail</span>
+                    <span class="pfb-val">zeynep@zeynepkara.design</span>
+                    <span class="pfb-arrow">→</span>
+                </a>
+                <a href="https://dribbble.com/zeynepkara" target="_blank" rel="noopener" class="pf-btn">
+                    <span class="pfb-key">Dribbble</span>
+                    <span class="pfb-val">@zeynepkara</span>
+                    <span class="pfb-arrow">→</span>
+                </a>
+                <a href="https://zeynepkara.design" target="_blank" rel="noopener" class="pf-btn">
+                    <span class="pfb-key">Web</span>
+                    <span class="pfb-val">zeynepkara.design</span>
+                    <span class="pfb-arrow">→</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="pf-qr reveal">
+            <div class="pf-qr-frame">
+                <div id="qrcode"></div>
+            </div>
+            <div class="pf-qr-cap">— Portfolio'yu Aç</div>
+        </div>
+
+        <footer class="pf-footer">
+            <span>Zeynep Kara <span class="gold">©</span> 2026</span>
+            <span class="gold">Studio · İstanbul</span>
+        </footer>
+
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+        function initScrollReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function(el){ el.classList.add('visible'); });
+                return;
+            }
+            var io = new IntersectionObserver(function(entries){
+                entries.forEach(function(e){
+                    if (e.isIntersecting) {
+                        e.target.classList.add('visible');
+                        io.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function(el){ io.observe(el); });
+        }
+        function initQR() {
+            if (typeof QRCode === 'undefined') return;
+            new QRCode(document.getElementById('qrcode'), {
+                text: 'https://zeynepkara.design',
+                width: 110,
+                height: 110,
+                colorDark: '#0f0f0f',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function(){
+            initScrollReveal();
+            initQR();
+        });
+    })();
+    </script>
+</body>
+</html>

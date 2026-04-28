@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Kaan Oz - DJ &amp; Producer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#f8f8f8;
+  --card:#ffffff;
+  --ink:#111111;
+  --ink-2:#444444;
+  --muted:#888888;
+  --line:#e5e5e5;
+  --line-2:#d4d4d4;
+  --accent:#6d28d9;
+}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  -webkit-font-smoothing:antialiased;
+}
+.card{
+  width:100%;
+  max-width:460px;
+  min-height:100vh;
+  background:var(--card);
+  position:relative;
+}
+.reveal{
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity 0.6s cubic-bezier(0.22,1,0.36,1), transform 0.6s cubic-bezier(0.22,1,0.36,1);
+}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+.hr{height:1px;background:var(--line);margin:0;}
+.hr-thick{height:1px;background:var(--ink);margin:0;}
+
+.meta{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+}
+
+.hero{padding:48px 28px 32px;}
+.hero .top-meta{
+  display:flex;
+  justify-content:space-between;
+  margin-bottom:32px;
+}
+.hero h1{
+  font-family:'DM Sans',sans-serif;
+  font-weight:700;
+  font-size:72px;
+  line-height:0.92;
+  letter-spacing:-3px;
+  color:var(--ink);
+}
+.hero h1 .dot{color:var(--accent);}
+.hero .role{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--ink-2);
+  margin-top:24px;
+}
+
+.profile{
+  display:grid;
+  grid-template-columns:120px 1fr;
+  gap:20px;
+  padding:32px 28px;
+  align-items:start;
+}
+.photo{
+  width:120px;
+  height:120px;
+  background:var(--bg);
+  overflow:hidden;
+  position:relative;
+}
+.photo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  filter:grayscale(100%) contrast(1.05);
+  display:block;
+}
+.profile-info h2{
+  font-family:'DM Sans',sans-serif;
+  font-weight:600;
+  font-size:22px;
+  letter-spacing:-0.5px;
+  color:var(--ink);
+}
+.profile-info .loc{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--muted);
+  letter-spacing:1px;
+  margin-top:6px;
+}
+.profile-info .bio{
+  font-size:14px;
+  line-height:1.55;
+  color:var(--ink-2);
+  margin-top:14px;
+  font-weight:400;
+}
+
+.section{padding:32px 28px;}
+.sect-label{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  padding-bottom:14px;
+  margin-bottom:20px;
+  border-bottom:1px solid var(--line);
+}
+.sect-label .name{
+  font-family:'DM Sans',sans-serif;
+  font-weight:600;
+  font-size:13px;
+  letter-spacing:0.5px;
+  text-transform:uppercase;
+  color:var(--ink);
+}
+.sect-label .idx{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:1.5px;
+}
+
+.detail-table{width:100%;}
+.detail-row{
+  display:grid;
+  grid-template-columns:110px 1fr;
+  gap:16px;
+  padding:12px 0;
+  border-bottom:1px solid var(--line);
+  font-size:13px;
+}
+.detail-row:last-child{border-bottom:none;}
+.detail-row .k{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  padding-top:2px;
+}
+.detail-row .v{
+  font-weight:500;
+  color:var(--ink);
+  font-size:14px;
+}
+
+.mix-list{display:flex;flex-direction:column;}
+.mix-row{
+  display:grid;
+  grid-template-columns:24px 1fr auto;
+  gap:14px;
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+  align-items:center;
+}
+.mix-row:last-child{border-bottom:none;}
+.mix-row .num{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--muted);
+}
+.mix-row .name{
+  font-size:14px;
+  font-weight:500;
+  color:var(--ink);
+}
+.mix-row .name .sub{
+  display:block;
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:1px;
+  text-transform:uppercase;
+  margin-top:2px;
+  font-weight:400;
+}
+.mix-row .dur{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--muted);
+}
+
+.event-row{
+  display:grid;
+  grid-template-columns:64px 1fr auto;
+  gap:14px;
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+  align-items:center;
+}
+.event-row:last-child{border-bottom:none;}
+.event-row .date{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--ink);
+  letter-spacing:1px;
+}
+.event-row .place .v{
+  font-weight:500;
+  font-size:14px;
+}
+.event-row .place .c{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:1px;
+  text-transform:uppercase;
+  margin-top:2px;
+}
+.event-row .arrow{
+  color:var(--accent);
+  font-family:'DM Mono',monospace;
+  font-size:14px;
+}
+
+.plat-row{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:14px;
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+  align-items:center;
+}
+.plat-row:last-child{border-bottom:none;}
+.plat-row .nm{
+  font-family:'DM Sans',sans-serif;
+  font-weight:500;
+  font-size:14px;
+}
+.plat-row a{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--accent);
+  text-decoration:none;
+  letter-spacing:0.5px;
+}
+.plat-row a:hover{text-decoration:underline;}
+
+.cta{
+  display:block;
+  width:100%;
+  padding:18px;
+  background:var(--ink);
+  color:#fff;
+  text-align:center;
+  text-decoration:none;
+  font-family:'DM Sans',sans-serif;
+  font-weight:500;
+  font-size:14px;
+  letter-spacing:0.5px;
+  transition:background 0.2s;
+}
+.cta:hover{background:var(--accent);}
+.cta-ghost{
+  display:block;
+  width:100%;
+  padding:16px;
+  background:transparent;
+  border:1px solid var(--line-2);
+  color:var(--ink);
+  text-align:center;
+  text-decoration:none;
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  margin-top:10px;
+  transition:all 0.2s;
+}
+.cta-ghost:hover{
+  border-color:var(--ink);
+  background:var(--bg);
+}
+
+.qr-section{
+  padding:32px 28px;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  border-top:1px solid var(--line);
+}
+.qr-frame{
+  background:#fff;
+  padding:8px;
+  border:1px solid var(--line-2);
+  flex-shrink:0;
+}
+#qrcode{display:flex;}
+.qr-text .l{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+}
+.qr-text .v{
+  font-family:'DM Sans',sans-serif;
+  font-weight:500;
+  font-size:14px;
+  margin-top:4px;
+  color:var(--ink);
+}
+
+.footer{
+  padding:24px 28px 32px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-top:1px solid var(--ink);
+}
+.footer .l{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+}
+.footer .r{
+  font-family:'DM Sans',sans-serif;
+  font-weight:600;
+  font-size:11px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none;}
+}
+</style>
+</head>
+<body>
+<div class="card">
+
+  <section class="hero reveal">
+    <div class="top-meta">
+      <span class="meta">DJ // Producer</span>
+      <span class="meta">EST. 2016</span>
+    </div>
+    <h1>Kaan<br>&Ouml;z<span class="dot">.</span></h1>
+    <div class="role">Resident DJ &mdash; Istanbul, TR</div>
+  </section>
+
+  <div class="hr-thick"></div>
+
+  <div class="profile reveal">
+    <div class="photo">
+      <img src="https://i.pravatar.cc/200?img=33" alt="Kaan Oz" loading="eager">
+    </div>
+    <div class="profile-info">
+      <h2>Kaan &Ouml;z</h2>
+      <div class="loc">41&deg;0085'N / 28&deg;9784'E</div>
+      <p class="bio">House, deep techno ve afro house s&#305;n&#305;r&#305;nda gezinen ses tasar&#305;m&#305;. 10 y&#305;ld&#305;r kulup, festival ve radyo session'lar&#305;.</p>
+    </div>
+  </div>
+
+  <div class="hr"></div>
+
+  <section class="section reveal">
+    <div class="sect-label"><span class="name">Profile</span><span class="idx">/ 01</span></div>
+    <div class="detail-table">
+      <div class="detail-row"><div class="k">Years</div><div class="v">10+ years</div></div>
+      <div class="detail-row"><div class="k">Events</div><div class="v">450+ played</div></div>
+      <div class="detail-row"><div class="k">Listeners</div><div class="v">85.000 monthly</div></div>
+      <div class="detail-row"><div class="k">Genres</div><div class="v">House, Deep Techno, Afro, Melodic</div></div>
+      <div class="detail-row"><div class="k">BPM Range</div><div class="v">118 &mdash; 128</div></div>
+    </div>
+  </section>
+
+  <div class="hr"></div>
+
+  <section class="section reveal">
+    <div class="sect-label"><span class="name">Latest Mixes</span><span class="idx">/ 02</span></div>
+    <div class="mix-list">
+      <div class="mix-row">
+        <div class="num">01</div>
+        <div class="name">Deep Sessions Vol. 14<span class="sub">Recorded at VOLT</span></div>
+        <div class="dur">62:40</div>
+      </div>
+      <div class="mix-row">
+        <div class="num">02</div>
+        <div class="name">Bosphorus After Dark<span class="sub">Live set / 2026</span></div>
+        <div class="dur">75:18</div>
+      </div>
+      <div class="mix-row">
+        <div class="num">03</div>
+        <div class="name">Afro House Selects<span class="sub">Studio mix</span></div>
+        <div class="dur">58:22</div>
+      </div>
+      <div class="mix-row">
+        <div class="num">04</div>
+        <div class="name">Melodic Techno Edits<span class="sub">DJ tools</span></div>
+        <div class="dur">48:55</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="hr"></div>
+
+  <section class="section reveal">
+    <div class="sect-label"><span class="name">Upcoming Sets</span><span class="idx">/ 03</span></div>
+    <div class="event-row">
+      <div class="date">15 / 06</div>
+      <div class="place"><div class="v">Fabric London</div><div class="c">Farringdon, UK</div></div>
+      <div class="arrow">&rarr;</div>
+    </div>
+    <div class="event-row">
+      <div class="date">22 / 06</div>
+      <div class="place"><div class="v">Watergate Berlin</div><div class="c">Kreuzberg, DE</div></div>
+      <div class="arrow">&rarr;</div>
+    </div>
+    <div class="event-row">
+      <div class="date">29 / 06</div>
+      <div class="place"><div class="v">VOLT Istanbul</div><div class="c">Beyoglu, TR</div></div>
+      <div class="arrow">&rarr;</div>
+    </div>
+  </section>
+
+  <div class="hr"></div>
+
+  <section class="section reveal">
+    <div class="sect-label"><span class="name">Platforms</span><span class="idx">/ 04</span></div>
+    <div class="plat-row"><div class="nm">Instagram</div><a href="https://instagram.com/kaanozmusic" target="_blank" rel="noopener">@kaanozmusic &rarr;</a></div>
+    <div class="plat-row"><div class="nm">Spotify</div><a href="https://open.spotify.com" target="_blank" rel="noopener">Kaan Oz &rarr;</a></div>
+    <div class="plat-row"><div class="nm">SoundCloud</div><a href="https://soundcloud.com" target="_blank" rel="noopener">/kaanozmusic &rarr;</a></div>
+    <div class="plat-row"><div class="nm">Website</div><a href="https://kaanozmusic.com" target="_blank" rel="noopener">kaanozmusic.com &rarr;</a></div>
+  </section>
+
+  <div class="hr"></div>
+
+  <section class="section reveal">
+    <div class="sect-label"><span class="name">Booking</span><span class="idx">/ 05</span></div>
+    <a href="https://wa.me/905357774422?text=Merhaba%20Kaan%2C%20DJ%20performans%20teklifi" class="cta" target="_blank" rel="noopener">Send Booking Request</a>
+    <a href="mailto:booking@kaanozmusic.com" class="cta-ghost">booking@kaanozmusic.com</a>
+  </section>
+
+  <div class="qr-section reveal">
+    <div class="qr-frame"><div id="qrcode"></div></div>
+    <div class="qr-text">
+      <div class="l">/ Scan</div>
+      <div class="v">kaanozmusic.com</div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <span class="l">&copy; 2026</span>
+    <span class="r">KAAN OZ</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  try{
+    new QRCode(document.getElementById('qrcode'),{
+      text:'https://kaanozmusic.com',
+      width:88,height:88,
+      colorDark:'#111111',colorLight:'#ffffff',
+      correctLevel:QRCode.CorrectLevel.M
+    });
+  }catch(e){}
+  var r=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+    },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+    r.forEach(function(el){io.observe(el);});
+  }else{r.forEach(function(el){el.classList.add('visible');});}
+})();
+</script>
+</body>
+</html>

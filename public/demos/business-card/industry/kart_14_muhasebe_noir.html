@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mehmet Sahin | Sahin &amp; Sahin - Mali Musavirlik (Noir)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Serif:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #080c14;
+            --card: #0f1520;
+            --card-2: #161e2c;
+            --gold: #c8a964;
+            --gold-soft: rgba(200,169,100,.15);
+            --blue: #3b82f6;
+            --text: #e6edf7;
+            --text-muted: #8a96aa;
+            --line: rgba(200,169,100,.18);
+            --line-soft: rgba(255,255,255,.08);
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background-color: #04060b;
+            color: var(--text);
+            line-height: 1.65;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--bg);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            height: 240px;
+            overflow: hidden;
+            background: #000;
+        }
+        .hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: .35;
+            filter: grayscale(.4) contrast(1.1);
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(180deg, rgba(8,12,20,.4) 0%, rgba(8,12,20,.95) 100%),
+                radial-gradient(ellipse at 70% 30%, rgba(200,169,100,.18), transparent 60%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 30px 28px;
+        }
+        .hero-mark {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .hero-mark::before, .hero-mark::after {
+            content: '';
+            width: 24px;
+            height: 1px;
+            background: var(--gold);
+            opacity: .5;
+        }
+        .hero-title {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 26px;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.15;
+            letter-spacing: .3px;
+        }
+        .hero-tag {
+            font-size: 12px;
+            color: rgba(255,255,255,.6);
+            margin-top: 8px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        /* PROFILE */
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 26px 28px;
+            border-bottom: 1px solid var(--line);
+            background: linear-gradient(180deg, var(--card) 0%, var(--bg) 100%);
+        }
+        .avatar-wrap {
+            position: relative;
+            flex-shrink: 0;
+        }
+        .avatar {
+            width: 78px;
+            height: 78px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--gold);
+            box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px rgba(200,169,100,.3);
+            filter: contrast(1.05);
+        }
+        .profile .name {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 21px;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.2;
+        }
+        .profile .title {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            margin-top: 4px;
+            letter-spacing: .3px;
+        }
+        .profile .firm {
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--gold);
+            margin-top: 8px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* CREDENTIAL GRID */
+        .creds {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: var(--line-soft);
+        }
+        .cred {
+            background: var(--card);
+            padding: 16px 10px;
+            text-align: center;
+        }
+        .cred-num {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--gold);
+            line-height: 1;
+        }
+        .cred-label {
+            font-size: 9.5px;
+            color: var(--text-muted);
+            margin-top: 6px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        /* QUICK ACTIONS */
+        .actions {
+            display: flex;
+            gap: 8px;
+            padding: 22px 28px;
+        }
+        .pill {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 13px 8px;
+            border-radius: 4px;
+            font-family: inherit;
+            font-size: 12.5px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all .25s ease;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            border: 1px solid var(--gold);
+        }
+        .pill--primary { background: var(--gold); color: #0a0d12; }
+        .pill--primary:hover { background: #d8bb74; }
+        .pill--ghost { background: transparent; color: var(--gold); }
+        .pill--ghost:hover { background: var(--gold-soft); }
+        .pill--blue { background: transparent; color: var(--blue); border-color: var(--blue); }
+        .pill--blue:hover { background: rgba(59,130,246,.1); }
+
+        /* SECTION */
+        .section { padding: 32px 28px; }
+        .section + .section { padding-top: 0; }
+
+        .section-mark {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-mark::before {
+            content: '';
+            width: 30px;
+            height: 1px;
+            background: var(--gold);
+            opacity: .6;
+        }
+        .section-title {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 18px;
+            line-height: 1.2;
+        }
+
+        .bio {
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.85;
+        }
+        .bio strong { color: var(--gold); font-weight: 500; }
+
+        /* SERVICES */
+        .services-list { list-style: none; }
+        .service-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 18px 0;
+            border-bottom: 1px solid var(--line-soft);
+        }
+        .service-item:last-child { border-bottom: none; }
+        .service-num {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gold);
+            letter-spacing: 1px;
+            min-width: 26px;
+            padding-top: 2px;
+        }
+        .service-content { flex: 1; }
+        .service-name {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+        .service-desc {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* CONTACT */
+        .contact-grid {
+            display: grid;
+            gap: 1px;
+            background: var(--line-soft);
+            border: 1px solid var(--line-soft);
+        }
+        .contact-line {
+            background: var(--card);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 18px;
+            font-size: 13px;
+            text-decoration: none;
+            transition: background .2s;
+        }
+        .contact-line:hover { background: var(--card-2); }
+        .contact-line .key {
+            font-size: 9.5px;
+            font-weight: 600;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .contact-line .val {
+            color: var(--text);
+            font-weight: 400;
+            font-family: 'IBM Plex Sans', sans-serif;
+        }
+
+        /* CTA */
+        .cta-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 18px 20px;
+            background: linear-gradient(135deg, var(--gold) 0%, #ad8e4a 100%);
+            color: #0a0d12;
+            border: none;
+            border-radius: 4px;
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all .3s ease;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(200,169,100,.25);
+        }
+
+        /* QR */
+        .qr-section { text-align: center; }
+        .qr-heading {
+            font-size: 9.5px;
+            font-weight: 600;
+            color: var(--gold);
+            margin-bottom: 14px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        #qrcode {
+            display: inline-block;
+            padding: 14px;
+            background: #fff;
+            border-radius: 6px;
+        }
+        #qrcode img { display: block; }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 26px 28px;
+            background: #04060b;
+            border-top: 1px solid var(--line);
+        }
+        .footer-name {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gold);
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+        .footer-sub { font-size: 10px; color: var(--text-muted); letter-spacing: 1.5px; text-transform: uppercase; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="hero">
+            <img src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=920&q=80" alt="Premium mali musavirlik ofisi" loading="eager">
+            <div class="hero-overlay">
+                <div class="hero-mark">Wealth Advisory</div>
+                <div class="hero-title">Sahin &amp; Sahin<br>Mali Musavirlik</div>
+                <div class="hero-tag">Est. 2006 - Izmir</div>
+            </div>
+        </div>
+
+        <div class="profile reveal">
+            <div class="avatar-wrap">
+                <img class="avatar" src="https://i.pravatar.cc/200?img=6" alt="CPA Mehmet Sahin">
+            </div>
+            <div>
+                <div class="name">CPA Mehmet Sahin</div>
+                <div class="title">Serbest Muhasebeci Mali Musavir</div>
+                <div class="firm">Yonetici Ortak</div>
+            </div>
+        </div>
+
+        <div class="creds reveal">
+            <div class="cred"><div class="cred-num">200+</div><div class="cred-label">Sirket</div></div>
+            <div class="cred"><div class="cred-num">20</div><div class="cred-label">Yil</div></div>
+            <div class="cred"><div class="cred-num">15</div><div class="cred-label">Uzman</div></div>
+        </div>
+
+        <div class="actions reveal">
+            <a href="tel:+902324442211" class="pill pill--primary">&#128222; Ara</a>
+            <a href="mailto:mehmet@sahinsmmm.com" class="pill pill--ghost">&#9993;&#65039; Mail</a>
+            <a href="https://linkedin.com/in/mehmetsahin" class="pill pill--blue" target="_blank" rel="noopener">in</a>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-mark">Profile</div>
+            <h2 class="section-title">Yonetici ortak ve mali musavir</h2>
+            <p class="bio">SMMM ruhsatli mali musavir ve <strong>20 yillik mesleki birikim</strong> ile, kucuk olcekli isletmelerden kurumsal sirketlere kadar 200'u askin muvekkilime stratejik finans yonetimi ve vergi planlamasi hizmeti sunuyorum. TURMOB uyesi olarak surekli mevzuat takibi ve etik standart uyumu kapsaminda hareket ediyoruz.</p>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-mark">Practice Areas</div>
+            <h2 class="section-title">Hizmet alanlarimiz</h2>
+            <ul class="services-list">
+                <li class="service-item">
+                    <span class="service-num">I.</span>
+                    <div class="service-content">
+                        <div class="service-name">Vergi &amp; Mali Danismanlik</div>
+                        <div class="service-desc">Stratejik vergi planlama, optimizasyon, transfer fiyatlandirma ve uluslararasi vergilendirme</div>
+                    </div>
+                </li>
+                <li class="service-item">
+                    <span class="service-num">II.</span>
+                    <div class="service-content">
+                        <div class="service-name">Bagimsiz Denetim</div>
+                        <div class="service-desc">KGK lisansli denetim, risk analizi, ic kontrol sistemleri</div>
+                    </div>
+                </li>
+                <li class="service-item">
+                    <span class="service-num">III.</span>
+                    <div class="service-content">
+                        <div class="service-name">Sirket Yapilanmasi</div>
+                        <div class="service-desc">Kurulus, birlesme, devir, tasfiye, hukuki sirket isleri</div>
+                    </div>
+                </li>
+                <li class="service-item">
+                    <span class="service-num">IV.</span>
+                    <div class="service-content">
+                        <div class="service-name">Bordro &amp; SGK Yonetimi</div>
+                        <div class="service-desc">Personel maas, tesvik, izin ve kidem hesaplamalari</div>
+                    </div>
+                </li>
+                <li class="service-item">
+                    <span class="service-num">V.</span>
+                    <div class="service-content">
+                        <div class="service-name">ARGE &amp; Tesvik Danismanligi</div>
+                        <div class="service-desc">5746 sayili kanun, KOSGEB, TUBITAK destek basvurulari</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-mark">Contact</div>
+            <h2 class="section-title">Iletisim kanallari</h2>
+            <div class="contact-grid">
+                <a href="tel:+902324442211" class="contact-line"><span class="key">Tel</span><span class="val">+90 232 444 22 11</span></a>
+                <a href="mailto:mehmet@sahinsmmm.com" class="contact-line"><span class="key">Mail</span><span class="val">mehmet@sahinsmmm.com</span></a>
+                <a href="https://sahinsmmm.com" target="_blank" rel="noopener" class="contact-line"><span class="key">Web</span><span class="val">sahinsmmm.com</span></a>
+                <a href="https://linkedin.com/in/mehmetsahin" target="_blank" rel="noopener" class="contact-line"><span class="key">LinkedIn</span><span class="val">/in/mehmetsahin</span></a>
+                <div class="contact-line"><span class="key">Adres</span><span class="val">Alsancak / Izmir</span></div>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <a href="https://wa.me/902324442211?text=Ucretsiz%20danismanlik%20talep%20ediyorum." class="cta-btn" target="_blank" rel="noopener">
+                <span>&#128197;</span> Randevu Talep Et
+            </a>
+        </div>
+
+        <div class="section qr-section reveal">
+            <div class="qr-heading">Share Card</div>
+            <div id="qrcode" role="img" aria-label="QR kod"></div>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-name">Sahin &amp; Sahin Mali Musavirlik</div>
+            <div class="footer-sub">&copy; 2026 - All rights reserved</div>
+        </footer>
+    </div>
+
+    <script>
+    (function(){
+        'use strict';
+        function initReveal(){
+            var els = document.querySelectorAll('.reveal');
+            if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('visible');}); return; }
+            var obs = new IntersectionObserver(function(entries){
+                entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('visible'); obs.unobserve(en.target);} });
+            },{threshold:.12, rootMargin:'0px 0px -40px 0px'});
+            els.forEach(function(e){obs.observe(e);});
+        }
+        function initQR(){
+            var c = document.getElementById('qrcode');
+            if(c && typeof QRCode !== 'undefined'){
+                new QRCode(c,{text:window.location.href, width:140, height:140, colorDark:'#0f1520', colorLight:'#ffffff', correctLevel:QRCode.CorrectLevel.M});
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function(){ initReveal(); initQR(); });
+    })();
+    </script>
+</body>
+</html>

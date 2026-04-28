@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Burak Yilmaz | Yilmaz Dental Clinic</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #f8fffe;
+            --card: #ffffff;
+            --accent: #0d9488;
+            --accent-dark: #115e59;
+            --text: #111111;
+            --text-muted: #6b7280;
+            --line: #e5e7eb;
+            --line-soft: #f3f4f6;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.55;
+            font-weight: 400;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .card {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--card);
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.22,1,0.36,1), transform 0.7s cubic-bezier(0.22,1,0.36,1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* HEADER */
+        .header {
+            padding: 44px 36px 28px;
+            border-bottom: 1px solid var(--line);
+        }
+        .meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10.5px;
+            font-weight: 500;
+            letter-spacing: 1.6px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+        }
+        .meta-line {
+            flex: 1;
+            height: 1px;
+            background: var(--line);
+            margin: 0 12px;
+        }
+        .header-name {
+            font-size: 30px;
+            font-weight: 500;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 8px;
+        }
+        .header-name strong { font-weight: 700; }
+        .header-title {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+        .header-clinic {
+            margin-top: 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent-dark);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        .header-clinic::before {
+            content: '';
+            width: 14px; height: 1.5px;
+            background: var(--accent);
+        }
+
+        /* AVATAR ROW */
+        .avatar-row {
+            padding: 28px 36px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            border-bottom: 1px solid var(--line);
+        }
+        .avatar {
+            width: 56px; height: 56px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        .avatar-info .lbl {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        .avatar-info .val {
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 2px;
+        }
+        .avatar-pulse {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.4px;
+            color: var(--accent-dark);
+        }
+        .avatar-pulse .dot {
+            width: 6px; height: 6px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        /* SECTION */
+        .section {
+            padding: 32px 36px;
+            border-bottom: 1px solid var(--line);
+        }
+        .section h3 {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            color: var(--text);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .section h3::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--line);
+        }
+
+        /* CONTACT TABLE */
+        .contact-table {
+            display: grid;
+            gap: 14px;
+        }
+        .row {
+            display: grid;
+            grid-template-columns: 90px 1fr;
+            gap: 16px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--line-soft);
+            align-items: baseline;
+        }
+        .row:last-child { border-bottom: none; }
+        .row .k {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+        .row .v {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text);
+        }
+        .row .v a {
+            color: var(--text);
+            text-decoration: none;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 1px;
+            transition: border-color 0.2s;
+        }
+        .row .v a:hover { border-color: var(--accent); }
+
+        /* SERVICES LIST */
+        .svc-list {
+            display: flex;
+            flex-direction: column;
+        }
+        .svc-row {
+            display: grid;
+            grid-template-columns: 32px 1fr auto;
+            gap: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--line-soft);
+            align-items: center;
+        }
+        .svc-row:last-child { border-bottom: none; }
+        .svc-num {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--accent);
+            font-feature-settings: 'tnum';
+        }
+        .svc-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text);
+        }
+        .svc-tag {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        /* CREDENTIALS WALL */
+        .creds {
+            display: grid;
+            gap: 0;
+        }
+        .cred {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--line-soft);
+        }
+        .cred:last-child { border-bottom: none; }
+        .cred-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 4px;
+        }
+        .cred-name {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        .cred-year {
+            font-size: 10.5px;
+            font-weight: 600;
+            color: var(--accent-dark);
+            font-feature-settings: 'tnum';
+            letter-spacing: 1px;
+        }
+        .cred-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        /* STATS */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+        .stat {
+            padding: 22px 6px;
+            text-align: center;
+            border-right: 1px solid var(--line-soft);
+        }
+        .stat:last-child { border-right: none; }
+        .stat-n {
+            font-size: 24px;
+            font-weight: 500;
+            letter-spacing: -0.6px;
+            color: var(--text);
+            font-feature-settings: 'tnum';
+        }
+        .stat-l {
+            font-size: 9.5px;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        /* CTA */
+        .cta-section {
+            padding: 32px 36px;
+            border-bottom: 1px solid var(--line);
+        }
+        .btn {
+            display: flex;
+            width: 100%;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 22px;
+            background: var(--text);
+            color: #fff;
+            text-decoration: none;
+            border: none;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn:hover { background: var(--accent-dark); }
+        .btn .arr { font-size: 16px; }
+        .btn-secondary {
+            margin-top: 10px;
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--line);
+        }
+        .btn-secondary:hover { background: var(--line-soft); color: var(--text); }
+
+        /* TESTIMONIAL */
+        .testimonial-pure {
+            padding: 32px 36px;
+            border-bottom: 1px solid var(--line);
+        }
+        .testimonial-pure .quote {
+            font-size: 16px;
+            font-weight: 400;
+            color: var(--text);
+            line-height: 1.55;
+            letter-spacing: -0.2px;
+        }
+        .testimonial-pure .meta-row {
+            margin-top: 18px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1.3px;
+            font-weight: 600;
+        }
+        .testimonial-pure .stars {
+            color: var(--accent);
+            letter-spacing: 1px;
+        }
+
+        /* QR */
+        .qr {
+            padding: 32px 36px;
+            text-align: center;
+            border-bottom: 1px solid var(--line);
+        }
+        #qrcode {
+            display: inline-block;
+        }
+        .qr .lbl {
+            font-size: 10.5px;
+            font-weight: 600;
+            letter-spacing: 1.4px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 16px;
+        }
+
+        /* FOOTER */
+        .footer {
+            padding: 28px 36px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            * { transition: none !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+
+        <!-- HEADER -->
+        <header class="header reveal">
+            <div class="meta">
+                <span>TR / IST</span>
+                <span class="meta-line"></span>
+                <span>EST. 2014</span>
+            </div>
+            <h1 class="header-name">Dr. Burak<br><strong>Yilmaz</strong></h1>
+            <div class="header-title">Dis Hekimi &middot; Implant Uzmani</div>
+            <div class="header-clinic">Yilmaz Dental Clinic</div>
+        </header>
+
+        <!-- AVATAR -->
+        <div class="avatar-row reveal">
+            <img class="avatar" src="https://i.pravatar.cc/200?img=11" alt="Dr. Burak Yilmaz">
+            <div class="avatar-info">
+                <div class="lbl">Hekim</div>
+                <div class="val">Klinik direktoru</div>
+            </div>
+            <div class="avatar-pulse"><span class="dot"></span> Acik</div>
+        </div>
+
+        <!-- CONTACT -->
+        <section class="section reveal">
+            <h3>Iletisim</h3>
+            <div class="contact-table">
+                <div class="row"><div class="k">Telefon</div><div class="v"><a href="tel:+902124448822">+90 212 444 88 22</a></div></div>
+                <div class="row"><div class="k">E-posta</div><div class="v"><a href="mailto:randevu@yilmazdental.com">randevu@yilmazdental.com</a></div></div>
+                <div class="row"><div class="k">Web</div><div class="v"><a href="https://yilmazdental.com" target="_blank" rel="noopener">yilmazdental.com</a></div></div>
+                <div class="row"><div class="k">Instagram</div><div class="v"><a href="https://instagram.com/yilmazdental" target="_blank" rel="noopener">@yilmazdental</a></div></div>
+                <div class="row"><div class="k">Saatler</div><div class="v">Hafta ici 09:00 — 18:00</div></div>
+            </div>
+        </section>
+
+        <!-- STATS -->
+        <div class="stats reveal">
+            <div class="stat"><div class="stat-n">12</div><div class="stat-l">YIL</div></div>
+            <div class="stat"><div class="stat-n">3.5K</div><div class="stat-l">HASTA</div></div>
+            <div class="stat"><div class="stat-n">800</div><div class="stat-l">IMPLANT</div></div>
+            <div class="stat"><div class="stat-n">4.9</div><div class="stat-l">PUAN</div></div>
+        </div>
+
+        <!-- SERVICES -->
+        <section class="section reveal">
+            <h3>Tedavi Hizmetleri</h3>
+            <div class="svc-list">
+                <div class="svc-row"><span class="svc-num">01</span><span class="svc-name">Implant tedavisi</span><span class="svc-tag">Cerrahi</span></div>
+                <div class="svc-row"><span class="svc-num">02</span><span class="svc-name">Zirkonyum kaplama</span><span class="svc-tag">Estetik</span></div>
+                <div class="svc-row"><span class="svc-num">03</span><span class="svc-name">Dis beyazlatma</span><span class="svc-tag">Estetik</span></div>
+                <div class="svc-row"><span class="svc-num">04</span><span class="svc-name">Invisalign ortodonti</span><span class="svc-tag">Plak</span></div>
+                <div class="svc-row"><span class="svc-num">05</span><span class="svc-name">Estetik dis hekimligi</span><span class="svc-tag">Smile</span></div>
+            </div>
+        </section>
+
+        <!-- CREDENTIALS -->
+        <section class="section reveal">
+            <h3>Sertifika</h3>
+            <div class="creds">
+                <div class="cred">
+                    <div class="cred-head">
+                        <div class="cred-name">ITI Implant Uzmanligi</div>
+                        <div class="cred-year">2018</div>
+                    </div>
+                    <div class="cred-desc">International Team for Implantology — Sertifikali Uzman</div>
+                </div>
+                <div class="cred">
+                    <div class="cred-head">
+                        <div class="cred-name">Invisalign Certified Provider</div>
+                        <div class="cred-year">2020</div>
+                    </div>
+                    <div class="cred-desc">Seffaf plak ortodonti tedavisi sertifikasyonu</div>
+                </div>
+                <div class="cred">
+                    <div class="cred-head">
+                        <div class="cred-name">Estetik Dis Hekimligi Egitimi</div>
+                        <div class="cred-year">2016</div>
+                    </div>
+                    <div class="cred-desc">Hollywood smile design ve laminate veneer protokolleri</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TESTIMONIAL -->
+        <div class="testimonial-pure reveal">
+            <p class="quote">"Dr. Yilmaz sayesinde yillardir cekimserlik duydugum implant tedavisini yaptirdim. Agrisiz ve mukemmel sonuc."</p>
+            <div class="meta-row">
+                <span>— Hande K.</span>
+                <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-section reveal">
+            <a href="https://wa.me/902124448822?text=Merhaba%2C%20randevu%20almak%20istiyorum." target="_blank" rel="noopener" class="btn">
+                <span>Randevu Talep Et</span>
+                <span class="arr">&rarr;</span>
+            </a>
+            <a href="tel:+902124448822" class="btn btn-secondary">
+                <span>Klinigi Ara</span>
+                <span class="arr">&rarr;</span>
+            </a>
+        </div>
+
+        <!-- QR -->
+        <div class="qr reveal">
+            <div id="qrcode" role="img" aria-label="QR kod"></div>
+            <div class="lbl">SCAN &middot; SAVE &middot; SHARE</div>
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <span>&copy; 2026</span>
+            <span>YILMAZ DENTAL</span>
+        </footer>
+
+    </div>
+
+    <script>
+    (function() {
+        function initReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) { els.forEach(function(e) { e.classList.add('visible'); }); return; }
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(en) {
+                    if (en.isIntersecting) { en.target.classList.add('visible'); io.unobserve(en.target); }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function(e) { io.observe(e); });
+        }
+        function initQR() {
+            var c = document.getElementById('qrcode');
+            if (c && typeof QRCode !== 'undefined') {
+                new QRCode(c, { text: window.location.href, width: 130, height: 130, colorDark: '#111111', colorLight: '#ffffff', correctLevel: QRCode.CorrectLevel.M });
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function() { initReveal(); initQR(); });
+    })();
+    </script>
+</body>
+</html>

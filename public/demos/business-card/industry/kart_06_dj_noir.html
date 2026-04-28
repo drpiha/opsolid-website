@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>DJ Kaan Oz - Underground Resident DJ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#050507;
+  --card:#0d0d12;
+  --card-2:#15151c;
+  --line:#1f1f29;
+  --line-2:#2a2a36;
+  --accent:#a855f7;
+  --accent-2:#ec4899;
+  --neon:0 0 24px rgba(168,85,247,0.45);
+  --text:#f5f5f7;
+  --muted:#9494a3;
+  --dim:#5e5e6e;
+}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Space Mono',monospace;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  -webkit-font-smoothing:antialiased;
+}
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background:
+    radial-gradient(800px 400px at 20% 0%, rgba(168,85,247,0.08), transparent 60%),
+    radial-gradient(600px 300px at 80% 100%, rgba(236,72,153,0.06), transparent 60%);
+  pointer-events:none;
+  z-index:0;
+}
+.card-wrapper{
+  width:100%;
+  max-width:460px;
+  min-height:100vh;
+  position:relative;
+  z-index:1;
+  padding-bottom:40px;
+}
+.reveal{
+  opacity:0;
+  transform:translateY(28px);
+  transition:opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* HERO */
+.hero{
+  position:relative;
+  padding:64px 24px 48px;
+  text-align:left;
+  overflow:hidden;
+  border-bottom:1px solid var(--line);
+}
+.hero-meta{
+  font-family:'Space Mono',monospace;
+  font-size:11px;
+  color:var(--accent);
+  letter-spacing:3px;
+  text-transform:uppercase;
+  margin-bottom:14px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.hero-meta::before{
+  content:'';
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--accent);
+  box-shadow:var(--neon);
+  animation:blink 1.6s ease-in-out infinite;
+}
+@keyframes blink{
+  0%,100%{opacity:1;}
+  50%{opacity:0.3;}
+}
+.dj-name{
+  font-family:'Syne',sans-serif;
+  font-weight:800;
+  font-size:clamp(56px,16vw,84px);
+  line-height:0.92;
+  letter-spacing:-2px;
+  color:var(--text);
+  text-shadow:0 0 40px rgba(168,85,247,0.35);
+}
+.dj-name span{
+  display:block;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.hero-tag{
+  margin-top:18px;
+  font-size:13px;
+  color:var(--muted);
+  letter-spacing:0.5px;
+  line-height:1.6;
+  max-width:340px;
+}
+
+/* AUDIO BARS */
+.bars{
+  display:flex;
+  align-items:flex-end;
+  gap:4px;
+  height:48px;
+  margin-top:24px;
+}
+.bars .bar{
+  flex:1;
+  background:linear-gradient(180deg,var(--accent),var(--accent-2));
+  border-radius:2px;
+  animation:eq 1.2s ease-in-out infinite alternate;
+  box-shadow:0 0 8px rgba(168,85,247,0.5);
+}
+.bars .bar:nth-child(1){height:30%;animation-delay:0.0s;}
+.bars .bar:nth-child(2){height:60%;animation-delay:0.1s;}
+.bars .bar:nth-child(3){height:80%;animation-delay:0.2s;}
+.bars .bar:nth-child(4){height:45%;animation-delay:0.3s;}
+.bars .bar:nth-child(5){height:90%;animation-delay:0.05s;}
+.bars .bar:nth-child(6){height:55%;animation-delay:0.25s;}
+.bars .bar:nth-child(7){height:70%;animation-delay:0.15s;}
+.bars .bar:nth-child(8){height:35%;animation-delay:0.4s;}
+.bars .bar:nth-child(9){height:65%;animation-delay:0.3s;}
+.bars .bar:nth-child(10){height:50%;animation-delay:0.2s;}
+.bars .bar:nth-child(11){height:85%;animation-delay:0.0s;}
+.bars .bar:nth-child(12){height:40%;animation-delay:0.35s;}
+.bars .bar:nth-child(13){height:75%;animation-delay:0.1s;}
+.bars .bar:nth-child(14){height:55%;animation-delay:0.45s;}
+.bars .bar:nth-child(15){height:30%;animation-delay:0.5s;}
+.bars .bar:nth-child(16){height:60%;animation-delay:0.15s;}
+.bars .bar:nth-child(17){height:80%;animation-delay:0.25s;}
+.bars .bar:nth-child(18){height:45%;animation-delay:0.4s;}
+@keyframes eq{
+  0%{transform:scaleY(0.4);}
+  100%{transform:scaleY(1);}
+}
+
+/* PROFILE */
+.profile{
+  display:flex;
+  align-items:center;
+  gap:18px;
+  padding:28px 24px;
+  border-bottom:1px solid var(--line);
+}
+.avatar{
+  width:84px;height:84px;
+  border-radius:50%;
+  padding:3px;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  box-shadow:var(--neon);
+  flex-shrink:0;
+}
+.avatar img{
+  width:100%;height:100%;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid var(--bg);
+  display:block;
+}
+.profile-info h2{
+  font-family:'Syne',sans-serif;
+  font-weight:700;
+  font-size:18px;
+  color:var(--text);
+  margin-bottom:4px;
+}
+.profile-info p{
+  font-size:11px;
+  color:var(--accent);
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+
+/* STATS */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  border-bottom:1px solid var(--line);
+}
+.stat{
+  text-align:center;
+  padding:24px 8px;
+  border-right:1px solid var(--line);
+}
+.stat:last-child{border-right:none;}
+.stat .num{
+  font-family:'Syne',sans-serif;
+  font-weight:800;
+  font-size:24px;
+  background:linear-gradient(135deg,var(--accent),var(--accent-2));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.stat .lbl{
+  font-size:9px;
+  color:var(--muted);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  margin-top:4px;
+}
+
+/* SECTION */
+.section{padding:32px 24px;border-bottom:1px solid var(--line);}
+.sect-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:20px;
+}
+.sect-title{
+  font-family:'Syne',sans-serif;
+  font-weight:700;
+  font-size:14px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+}
+.sect-num{
+  font-family:'Space Mono',monospace;
+  font-size:10px;
+  color:var(--dim);
+  letter-spacing:2px;
+}
+
+/* GENRE PILLS */
+.genres{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+.pill{
+  padding:8px 14px;
+  border:1px solid var(--line-2);
+  border-radius:999px;
+  font-size:11px;
+  font-family:'Space Mono',monospace;
+  color:var(--muted);
+  letter-spacing:1px;
+  text-transform:uppercase;
+  transition:all 0.2s;
+}
+.pill.hot{
+  border-color:var(--accent);
+  color:var(--accent);
+  background:rgba(168,85,247,0.08);
+}
+
+/* EVENTS */
+.events{display:flex;flex-direction:column;gap:12px;}
+.event{
+  display:flex;
+  gap:16px;
+  padding:18px;
+  background:var(--card);
+  border:1px solid var(--line);
+  border-radius:8px;
+  position:relative;
+  transition:all 0.25s;
+}
+.event:hover{
+  border-color:var(--accent);
+  transform:translateX(4px);
+  box-shadow:-4px 0 0 var(--accent);
+}
+.event-date{
+  flex-shrink:0;
+  text-align:center;
+  min-width:54px;
+  padding-right:14px;
+  border-right:1px solid var(--line-2);
+}
+.event-date .d{
+  font-family:'Syne',sans-serif;
+  font-weight:800;
+  font-size:28px;
+  color:var(--accent);
+  line-height:1;
+}
+.event-date .m{
+  font-family:'Space Mono',monospace;
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:1.5px;
+  margin-top:4px;
+}
+.event-info{flex:1;min-width:0;}
+.event-info .v{
+  font-family:'Syne',sans-serif;
+  font-weight:700;
+  font-size:14px;
+  color:var(--text);
+  margin-bottom:4px;
+}
+.event-info .c{
+  font-size:11px;
+  color:var(--muted);
+  letter-spacing:0.5px;
+}
+.event-info .t{
+  font-family:'Space Mono',monospace;
+  font-size:10px;
+  color:var(--accent-2);
+  margin-top:6px;
+  letter-spacing:1px;
+}
+
+/* CONTACT */
+.cta-neon{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  width:100%;
+  padding:16px;
+  background:transparent;
+  border:1.5px solid var(--accent);
+  border-radius:6px;
+  color:var(--accent);
+  font-family:'Syne',sans-serif;
+  font-weight:700;
+  font-size:13px;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  text-decoration:none;
+  cursor:pointer;
+  transition:all 0.25s;
+  box-shadow:var(--neon), inset 0 0 0 0 var(--accent);
+}
+.cta-neon:hover{
+  background:var(--accent);
+  color:var(--bg);
+  box-shadow:0 0 30px rgba(168,85,247,0.7);
+}
+.cta-secondary{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  width:100%;
+  padding:14px;
+  background:var(--card);
+  border:1px solid var(--line-2);
+  border-radius:6px;
+  color:var(--muted);
+  font-family:'Space Mono',monospace;
+  font-size:11px;
+  letter-spacing:1.5px;
+  text-decoration:none;
+  text-transform:uppercase;
+  margin-top:10px;
+  transition:all 0.2s;
+}
+.cta-secondary:hover{
+  border-color:var(--muted);
+  color:var(--text);
+}
+.cta-secondary svg{flex-shrink:0;}
+
+/* SOCIAL */
+.socials{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:8px;
+  margin-top:14px;
+}
+.soc{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  height:44px;
+  background:var(--card);
+  border:1px solid var(--line-2);
+  border-radius:6px;
+  color:var(--muted);
+  text-decoration:none;
+  transition:all 0.2s;
+}
+.soc:hover{
+  border-color:var(--accent);
+  color:var(--accent);
+  box-shadow:var(--neon);
+}
+.soc svg{width:18px;height:18px;}
+
+/* QR */
+.qr-section{padding:32px 24px;text-align:center;border-bottom:1px solid var(--line);}
+.qr-frame{
+  display:inline-block;
+  padding:14px;
+  background:var(--card);
+  border:1px solid var(--line-2);
+  border-radius:8px;
+  margin-top:14px;
+}
+#qrcode{display:flex;}
+.qr-tag{
+  font-family:'Space Mono',monospace;
+  font-size:10px;
+  color:var(--dim);
+  letter-spacing:2px;
+  text-transform:uppercase;
+  margin-top:14px;
+}
+
+/* FOOTER */
+.footer{
+  padding:24px 24px 8px;
+  text-align:center;
+  font-family:'Space Mono',monospace;
+  font-size:10px;
+  color:var(--dim);
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+.footer .glow{color:var(--accent);}
+
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none;}
+  .bars .bar{animation:none;}
+  .hero-meta::before{animation:none;}
+}
+</style>
+</head>
+<body>
+<div class="card-wrapper">
+
+  <section class="hero reveal">
+    <div class="hero-meta">REC // Live Set 04:32</div>
+    <h1 class="dj-name">KAAN<span>OZ.</span></h1>
+    <p class="hero-tag">Underground house &amp; deep techno resident. Istanbul'dan Berlin'e karanl&#305;k zeminlerin DJ'i.</p>
+    <div class="bars" aria-hidden="true">
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+      <div class="bar"></div><div class="bar"></div>
+    </div>
+  </section>
+
+  <div class="profile reveal">
+    <div class="avatar">
+      <img src="https://i.pravatar.cc/200?img=33" alt="DJ Kaan Oz" loading="eager">
+    </div>
+    <div class="profile-info">
+      <h2>Kaan &Ouml;z</h2>
+      <p>Resident // Producer</p>
+    </div>
+  </div>
+
+  <div class="stats reveal">
+    <div class="stat"><div class="num">10Y</div><div class="lbl">Years Active</div></div>
+    <div class="stat"><div class="num">450+</div><div class="lbl">Events</div></div>
+    <div class="stat"><div class="num">85K</div><div class="lbl">Spotify</div></div>
+  </div>
+
+  <section class="section reveal">
+    <div class="sect-head">
+      <div class="sect-title">Genres</div>
+      <div class="sect-num">// 01</div>
+    </div>
+    <div class="genres">
+      <span class="pill hot">House</span>
+      <span class="pill hot">Deep Techno</span>
+      <span class="pill">Afro House</span>
+      <span class="pill">Melodic</span>
+      <span class="pill">Progressive</span>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="sect-head">
+      <div class="sect-title">Upcoming</div>
+      <div class="sect-num">// 02</div>
+    </div>
+    <div class="events">
+      <div class="event">
+        <div class="event-date"><div class="d">15</div><div class="m">JUN</div></div>
+        <div class="event-info">
+          <div class="v">Fabric London</div>
+          <div class="c">Farringdon, UK</div>
+          <div class="t">23:00 - 04:00</div>
+        </div>
+      </div>
+      <div class="event">
+        <div class="event-date"><div class="d">22</div><div class="m">JUN</div></div>
+        <div class="event-info">
+          <div class="v">Watergate Berlin</div>
+          <div class="c">Kreuzberg, DE</div>
+          <div class="t">00:00 - 06:00</div>
+        </div>
+      </div>
+      <div class="event">
+        <div class="event-date"><div class="d">29</div><div class="m">JUN</div></div>
+        <div class="event-info">
+          <div class="v">VOLT Istanbul</div>
+          <div class="c">Beyoglu, TR</div>
+          <div class="t">22:00 - 04:00</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <div class="sect-head">
+      <div class="sect-title">Booking</div>
+      <div class="sect-num">// 03</div>
+    </div>
+    <a href="https://wa.me/905357774422?text=Merhaba%20Kaan%2C%20DJ%20performans%20teklifi" class="cta-neon" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347"/></svg>
+      Book Now
+    </a>
+    <a href="mailto:booking@kaanozmusic.com" class="cta-secondary">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      booking@kaanozmusic.com
+    </a>
+    <div class="socials">
+      <a class="soc" href="https://instagram.com/kaanozmusic" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+      <a class="soc" href="https://open.spotify.com" target="_blank" rel="noopener" aria-label="Spotify">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+      </a>
+      <a class="soc" href="https://soundcloud.com" target="_blank" rel="noopener" aria-label="SoundCloud">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 11v8h2v-8H7zm-4 2v6h2v-6H3zm8-4v12h2V9h-2zm4-2v14h2V7h-2zm4 4c-.5 0-1 .1-1.4.3.5-2.4-1.4-4.6-3.6-4.3v8h7c1.4 0 2.5-1.1 2.5-2.5S20.4 11 19 11z"/></svg>
+      </a>
+      <a class="soc" href="https://kaanozmusic.com" target="_blank" rel="noopener" aria-label="Website">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+      </a>
+    </div>
+  </section>
+
+  <div class="qr-section reveal">
+    <div class="sect-title">Scan</div>
+    <div class="qr-frame"><div id="qrcode"></div></div>
+    <div class="qr-tag">// kaanozmusic.com</div>
+  </div>
+
+  <footer class="footer">
+    <span class="glow">// </span>2026 KAAN OZ MUSIC<span class="glow"> //</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  try{
+    new QRCode(document.getElementById('qrcode'),{
+      text:'https://kaanozmusic.com',
+      width:128,height:128,
+      colorDark:'#a855f7',colorLight:'#0d0d12',
+      correctLevel:QRCode.CorrectLevel.M
+    });
+  }catch(e){}
+
+  var reveals=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('visible');
+          io.unobserve(entry.target);
+        }
+      });
+    },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+    reveals.forEach(function(el){io.observe(el);});
+  }else{
+    reveals.forEach(function(el){el.classList.add('visible');});
+  }
+})();
+</script>
+</body>
+</html>

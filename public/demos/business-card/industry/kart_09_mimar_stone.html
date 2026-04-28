@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Selim Aydın — Kurucu Mimar | Aydın Mimarlık</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,400&family=Nunito:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #ede8e0;
+    --card: #f8f4ec;
+    --card-warm: #f1ebde;
+    --ink: #2a2418;
+    --warm: #5c4a2a;
+    --warm-soft: #7a6541;
+    --gold: #c8a500;
+    --gold-soft: #d9be3c;
+    --mute: #8a7e64;
+    --mute-2: #b6a98c;
+    --line: #ddd2bb;
+    --line-soft: #e6dec9;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  .card-container {
+    max-width: 460px;
+    margin: 0 auto;
+    background: var(--card);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  .serif { font-family: 'Fraunces', serif; }
+
+  /* WARM HEADER */
+  .header {
+    position: relative;
+    background: linear-gradient(180deg, #d4c2a0 0%, #c9b58e 60%, #c5b189 100%);
+    padding: 38px 28px 70px;
+    color: var(--ink);
+    text-align: center;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      radial-gradient(circle at 20% 30%, rgba(255,245,220,0.35), transparent 50%),
+      radial-gradient(circle at 80% 70%, rgba(140,110,60,0.18), transparent 60%);
+    pointer-events: none;
+  }
+  .header-inner { position: relative; z-index: 2; }
+  .header-mark {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 18px;
+    letter-spacing: 1px;
+    color: var(--warm);
+    margin-bottom: 6px;
+  }
+  .header-title {
+    font-family: 'Fraunces', serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    color: var(--warm-soft);
+    text-transform: uppercase;
+  }
+  .header-divider {
+    margin: 14px auto 0;
+    width: 60px; height: 1px;
+    background: var(--warm-soft);
+    position: relative;
+  }
+  .header-divider::before, .header-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    width: 4px; height: 4px;
+    background: var(--warm);
+    border-radius: 50%;
+  }
+  .header-divider::before { left: -10px; }
+  .header-divider::after { right: -10px; }
+
+  /* WAVE DIVIDER */
+  .wave-divider {
+    position: relative;
+    height: 38px;
+    margin-top: -1px;
+    background: var(--card);
+  }
+  .wave-divider svg {
+    position: absolute;
+    top: -38px; left: 0;
+    width: 100%;
+    height: 38px;
+    display: block;
+  }
+
+  /* PROFILE */
+  .profile {
+    margin-top: -42px;
+    padding: 0 28px;
+    text-align: center;
+    position: relative;
+    z-index: 5;
+  }
+  .profile-photo-wrap {
+    position: relative;
+    display: inline-block;
+    padding: 6px;
+    background: var(--card);
+    border-radius: 50%;
+    box-shadow: 0 8px 24px rgba(92,74,42,0.18);
+  }
+  .profile-photo {
+    width: 116px; height: 116px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid var(--card);
+    background: linear-gradient(180deg, rgba(196,124,74,0.15), transparent);
+  }
+  .profile-name {
+    font-family: 'Fraunces', serif;
+    font-size: 32px;
+    color: var(--ink);
+    margin-top: 18px;
+    line-height: 1.1;
+  }
+  .profile-name em {
+    font-style: italic;
+    color: var(--warm);
+    font-weight: 400;
+  }
+  .profile-role {
+    font-size: 12px;
+    letter-spacing: 2.5px;
+    color: var(--warm-soft);
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-top: 8px;
+  }
+
+  /* PHILOSOPHY */
+  .phil {
+    padding: 36px 28px 12px;
+    text-align: center;
+  }
+  .phil .label {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--warm);
+    margin-bottom: 12px;
+  }
+  .phil-text {
+    font-family: 'Fraunces', serif;
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--ink);
+    font-weight: 400;
+  }
+  .phil-text em { font-style: italic; color: var(--warm); }
+
+  /* SECTION HEADER */
+  .sh {
+    padding: 32px 28px 18px;
+    text-align: center;
+  }
+  .sh .ornament {
+    width: 28px; height: 28px;
+    margin: 0 auto 10px;
+    color: var(--gold);
+    opacity: 0.85;
+  }
+  .sh h2 {
+    font-family: 'Fraunces', serif;
+    font-size: 24px;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .sh h2 em { font-style: italic; color: var(--warm); }
+  .sh .sub {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--mute);
+    letter-spacing: 0.5px;
+  }
+
+  /* SERVICES */
+  .services {
+    padding: 0 24px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .svc {
+    background: var(--card-warm);
+    border-radius: 18px;
+    padding: 18px 18px;
+    border: 1px solid var(--line);
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 14px;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(92,74,42,0.05);
+    transition: transform 0.2s ease, box-shadow 0.25s ease;
+  }
+  .svc:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(92,74,42,0.1); }
+  .svc-ico {
+    width: 44px; height: 44px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, var(--gold-soft), #b8a04a);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .svc-ico svg { width: 20px; height: 20px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .svc-info .ttl {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    color: var(--ink);
+    font-weight: 400;
+  }
+  .svc-info .desc {
+    font-size: 12px;
+    color: var(--mute);
+    margin-top: 3px;
+    line-height: 1.5;
+  }
+
+  /* FEATURED PROJECT */
+  .feat {
+    margin: 0 24px;
+    background: var(--card-warm);
+    border-radius: 22px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    box-shadow: 0 4px 12px rgba(92,74,42,0.08);
+  }
+  .feat-img-wrap {
+    position: relative;
+    aspect-ratio: 5/4;
+    overflow: hidden;
+  }
+  .feat-img-wrap img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    filter: sepia(0.18) saturate(1.05);
+  }
+  .feat-img-wrap::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 50%, rgba(42,36,24,0.55) 100%);
+  }
+  .feat-tag {
+    position: absolute;
+    top: 14px; left: 14px;
+    background: var(--card);
+    color: var(--warm);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    padding: 6px 12px;
+    border-radius: 30px;
+    text-transform: uppercase;
+    z-index: 2;
+  }
+  .feat-overlay {
+    position: absolute;
+    bottom: 16px; left: 16px; right: 16px;
+    z-index: 2;
+    color: #fff;
+  }
+  .feat-overlay .ttl {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    line-height: 1.2;
+  }
+  .feat-overlay .ttl em { font-style: italic; }
+  .feat-overlay .meta {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-top: 4px;
+    color: rgba(255,255,255,0.85);
+  }
+  .feat-body {
+    padding: 18px 22px 20px;
+  }
+  .feat-body p {
+    font-size: 13px;
+    color: var(--warm-soft);
+    line-height: 1.6;
+  }
+
+  /* TESTIMONIAL */
+  .testi {
+    margin: 28px 24px 0;
+    padding: 26px 24px;
+    background: linear-gradient(180deg, #ebe1c8, #e3d6b3);
+    border-radius: 22px;
+    border: 1px solid var(--line);
+    text-align: center;
+    position: relative;
+  }
+  .testi::before {
+    content: '"';
+    font-family: 'Fraunces', serif;
+    font-size: 70px;
+    line-height: 1;
+    color: var(--warm);
+    position: absolute;
+    top: 8px; left: 18px;
+    opacity: 0.35;
+  }
+  .testi-text {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink);
+  }
+  .testi-cite {
+    margin-top: 12px;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    color: var(--warm);
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .testi-cite span {
+    display: block;
+    text-transform: none;
+    letter-spacing: 0;
+    font-weight: 500;
+    color: var(--mute);
+    font-size: 11px;
+    margin-top: 2px;
+  }
+
+  /* STATS */
+  .stats {
+    padding: 32px 28px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    text-align: center;
+  }
+  .stat .num {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 30px;
+    color: var(--warm);
+    line-height: 1;
+  }
+  .stat .lbl {
+    margin-top: 6px;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    color: var(--mute);
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+
+  /* CONTACT */
+  .contact {
+    padding: 0 24px 8px;
+  }
+  .ct-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .ct-list a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    background: var(--card-warm);
+    border: 1px solid var(--line);
+    border-radius: 50px;
+    text-decoration: none;
+    color: var(--ink);
+    font-size: 13px;
+    font-weight: 500;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .ct-list a:hover { background: #ece2c9; transform: translateY(-1px); }
+  .ct-list a .ic {
+    width: 36px; height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--gold-soft), #b8a04a);
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .ct-list a .ic svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* CTA ROUNDED */
+  .cta-round {
+    margin: 26px 24px 0;
+    display: flex;
+    gap: 10px;
+  }
+  .cta-round a {
+    flex: 1;
+    padding: 14px 18px;
+    border-radius: 50px;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+    transition: transform 0.15s ease, box-shadow 0.2s ease;
+  }
+  .cta-round a.solid {
+    background: var(--warm);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(92,74,42,0.25);
+  }
+  .cta-round a.outline {
+    background: transparent;
+    color: var(--warm);
+    border: 1.5px solid var(--warm);
+  }
+  .cta-round a:hover { transform: translateY(-2px); }
+
+  /* QR */
+  .qr-section {
+    padding: 36px 28px 24px;
+    text-align: center;
+  }
+  .qr-label {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--warm);
+    margin-bottom: 14px;
+  }
+  #qrcode {
+    display: inline-block;
+    padding: 14px;
+    background: #fff;
+    border-radius: 22px;
+    box-shadow: 0 6px 16px rgba(92,74,42,0.15);
+    border: 1px solid var(--line);
+  }
+
+  /* FOOTER */
+  .footer {
+    padding: 24px 28px 36px;
+    text-align: center;
+    border-top: 1px solid var(--line-soft);
+  }
+  .footer-mark {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: var(--warm);
+  }
+  .footer-copy {
+    font-size: 10px;
+    color: var(--mute-2);
+    margin-top: 4px;
+    letter-spacing: 0.5px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { transition: none; opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card-container">
+
+  <header class="header">
+    <div class="header-inner">
+      <div class="header-mark">Aydın Mimarlık</div>
+      <div class="header-title">Atelier &middot; İstanbul</div>
+      <div class="header-divider"></div>
+    </div>
+  </header>
+  <div class="wave-divider">
+    <svg viewBox="0 0 460 38" preserveAspectRatio="none">
+      <path d="M0,0 C115,38 230,38 345,18 C390,10 425,8 460,0 L460,38 L0,38 Z" fill="#f8f4ec"/>
+    </svg>
+  </div>
+
+  <section class="profile reveal">
+    <div class="profile-photo-wrap">
+      <img src="https://i.pravatar.cc/200?img=52" alt="Selim Aydın" class="profile-photo" width="116" height="116">
+    </div>
+    <h1 class="profile-name">Selim <em>Aydın</em></h1>
+    <div class="profile-role">Kurucu Mimar</div>
+  </section>
+
+  <section class="phil reveal">
+    <div class="label">Felsefem</div>
+    <p class="phil-text">Mimarlık <em>insan ile yer</em> arasındaki sessiz bağdır. Doğal malzeme, ışık ve zamanla olgunlaşan dokular kullanarak nesiller boyu kalacak yaşam alanları tasarlıyorum.</p>
+  </section>
+
+  <div class="sh reveal">
+    <svg class="ornament" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M2 12h20M5 5l14 14M19 5L5 19"/></svg>
+    <h2>Hizmet <em>Alanlarım</em></h2>
+    <div class="sub">Tasarım, restorasyon ve sürdürülebilirlik</div>
+  </div>
+
+  <section class="services reveal">
+    <div class="svc">
+      <div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-5 7 5v13M9 21v-6h6v6"/></svg></div>
+      <div class="svc-info">
+        <div class="ttl">Lüks Konut</div>
+        <div class="desc">Boğaz villaları ve özel rezidans projeleri.</div>
+      </div>
+    </div>
+    <div class="svc">
+      <div class="svc-ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/></svg></div>
+      <div class="svc-info">
+        <div class="ttl">Ticari Ofis</div>
+        <div class="desc">Karakter dolu kurumsal mekanlar.</div>
+      </div>
+    </div>
+    <div class="svc">
+      <div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M2 22c1.5-2 4-3 6-3s4 1 6 3M2 17c1.5-2 4-3 6-3s4 1 6 3M2 12c1.5-2 4-3 6-3s4 1 6 3"/></svg></div>
+      <div class="svc-info">
+        <div class="ttl">Sürdürülebilir Tasarım</div>
+        <div class="desc">Düşük karbonlu, yerel malzemeli mimari.</div>
+      </div>
+    </div>
+    <div class="svc">
+      <div class="svc-ico"><svg viewBox="0 0 24 24"><path d="M12 2v8M3 10l9 4 9-4M3 14l9 4 9-4"/></svg></div>
+      <div class="svc-info">
+        <div class="ttl">Kentsel Dönüşüm &amp; İç Mimari</div>
+        <div class="desc">Tarihi dokuyu koruyan müdahaleler.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="sh reveal">
+    <svg class="ornament" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+    <h2>Öne Çıkan <em>Çalışma</em></h2>
+  </div>
+
+  <section class="feat reveal">
+    <div class="feat-img-wrap">
+      <span class="feat-tag">Featured</span>
+      <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=80" alt="Boğaz Konağı Restorasyonu" loading="lazy">
+      <div class="feat-overlay">
+        <div class="ttl">Boğaz <em>Konağı</em> Restorasyonu</div>
+        <div class="meta">Sarıyer &middot; 2024</div>
+      </div>
+    </div>
+    <div class="feat-body">
+      <p>19. yüzyıldan kalma yalı yapısının özgün ahşap karkası korunarak modern yaşam standartlarına taşındı. Yerel ustalarla üretilen el yapımı detaylar ve enerji-pozitif sistemler bir arada.</p>
+    </div>
+  </section>
+
+  <section class="testi reveal">
+    <p class="testi-text">Selim Bey'in tasarımı bizim için sadece bir ev değil, ailemizin hikayesini taşıyan bir mekan oldu. Her köşesinde ince işçilik ve düşünce var.</p>
+    <div class="testi-cite">Aylin K.<span>Boğaz Konağı sahibi</span></div>
+  </section>
+
+  <section class="stats reveal">
+    <div class="stat"><div class="num">14</div><div class="lbl">Yıl</div></div>
+    <div class="stat"><div class="num">85+</div><div class="lbl">Proje</div></div>
+    <div class="stat"><div class="num">8</div><div class="lbl">Ülke</div></div>
+    <div class="stat"><div class="num">4</div><div class="lbl">Ödül</div></div>
+  </section>
+
+  <div class="sh reveal">
+    <svg class="ornament" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+    <h2>İletişim <em>Kuralım</em></h2>
+  </div>
+
+  <section class="contact reveal">
+    <ul class="ct-list">
+      <li><a href="tel:+902125551177">
+        <span class="ic"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></span>
+        +90 212 555 11 77
+      </a></li>
+      <li><a href="mailto:selim@aydinmimarlik.com">
+        <span class="ic"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="22,4 12,13 2,4"/></svg></span>
+        selim@aydinmimarlik.com
+      </a></li>
+      <li><a href="https://aydinmimarlik.com" target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg></span>
+        aydinmimarlik.com
+      </a></li>
+      <li><a href="https://instagram.com/aydinmimarlik" target="_blank" rel="noopener">
+        <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></span>
+        @aydinmimarlik
+      </a></li>
+    </ul>
+  </section>
+
+  <div class="cta-round reveal">
+    <a href="tel:+902125551177" class="solid">Ara</a>
+    <a href="https://wa.me/902125551177" target="_blank" rel="noopener" class="outline">WhatsApp</a>
+  </div>
+
+  <section class="qr-section reveal">
+    <div class="qr-label">Portfolyo</div>
+    <div id="qrcode"></div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-mark">Aydın Mimarlık</div>
+    <div class="footer-copy">&copy; 2024 — Atelier &middot; İstanbul</div>
+  </footer>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+  var revealObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -20px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(function(el) { revealObserver.observe(el); });
+
+  var qrEl = document.getElementById('qrcode');
+  if (qrEl && typeof QRCode !== 'undefined') {
+    new QRCode(qrEl, {
+      text: 'https://aydinmimarlik.com',
+      width: 130, height: 130,
+      colorDark: '#5c4a2a', colorLight: '#ffffff',
+      correctLevel: QRCode.CorrectLevel.M
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

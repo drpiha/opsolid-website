@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ozan Celik | Full-Stack Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg: #0d1117;
+            --card: #161b22;
+            --panel: #21262d;
+            --panel-2: #1c2128;
+            --line: #30363d;
+            --line-soft: #21262d;
+            --text: #e6edf3;
+            --text-muted: #7d8590;
+            --text-dim: #484f58;
+            --blue: #58a6ff;
+            --green: #3fb950;
+            --purple: #bc8cff;
+            --orange: #f0883e;
+            --red: #ff7b72;
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--bg);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* TOP NAV BAR */
+        .topbar {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 18px;
+            background: var(--panel);
+            border-bottom: 1px solid var(--line);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+        .topbar-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        .topbar-dot.r { background: #ff5f57; }
+        .topbar-dot.y { background: #febc2e; }
+        .topbar-dot.g { background: #28c840; }
+        .topbar-path {
+            margin-left: 12px;
+            color: var(--text-dim);
+        }
+        .topbar-path .file { color: var(--blue); }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            padding: 32px 24px 28px;
+            background:
+                radial-gradient(ellipse at top right, rgba(88,166,255,.08), transparent 60%),
+                radial-gradient(ellipse at bottom left, rgba(63,185,80,.06), transparent 60%);
+            border-bottom: 1px solid var(--line);
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,.02) 1px, transparent 1px);
+            background-size: 24px 24px;
+            pointer-events: none;
+        }
+
+        .availability {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(63,185,80,.12);
+            border: 1px solid rgba(63,185,80,.3);
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--green);
+            margin-bottom: 24px;
+            position: relative;
+        }
+        .live-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--green);
+            box-shadow: 0 0 0 3px rgba(63,185,80,.2);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%,100% { box-shadow: 0 0 0 3px rgba(63,185,80,.2); }
+            50% { box-shadow: 0 0 0 6px rgba(63,185,80,.05); }
+        }
+
+        .profile-row {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            position: relative;
+            z-index: 1;
+        }
+        .avatar-wrap {
+            position: relative;
+            flex-shrink: 0;
+        }
+        .avatar {
+            width: 84px;
+            height: 84px;
+            border-radius: 16px;
+            object-fit: cover;
+            border: 1px solid var(--line);
+        }
+        .avatar-glow {
+            position: absolute;
+            inset: -2px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, var(--blue), var(--purple), var(--green));
+            opacity: .5;
+            z-index: -1;
+            filter: blur(8px);
+        }
+
+        .name {
+            font-size: 22px;
+            font-weight: 600;
+            color: #fff;
+            line-height: 1.2;
+            letter-spacing: -.3px;
+        }
+        .handle {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12.5px;
+            color: var(--blue);
+            margin-top: 4px;
+        }
+        .role {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-top: 6px;
+        }
+
+        .bio {
+            margin-top: 24px;
+            font-size: 14px;
+            color: var(--text-muted);
+            line-height: 1.75;
+            position: relative;
+            z-index: 1;
+        }
+        .bio strong { color: var(--text); font-weight: 500; }
+
+        /* ACTIONS */
+        .actions {
+            display: flex;
+            gap: 8px;
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--line);
+        }
+        .pill {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 8px;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 12.5px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all .2s ease;
+            border: 1px solid var(--line);
+        }
+        .pill--primary { background: var(--green); color: #0d1117; border-color: var(--green); font-weight: 600; }
+        .pill--primary:hover { background: #46c956; transform: translateY(-1px); }
+        .pill--ghost { background: var(--panel); color: var(--text); }
+        .pill--ghost:hover { background: var(--panel-2); border-color: var(--text-muted); }
+
+        /* SECTION */
+        .section { padding: 26px 24px; border-bottom: 1px solid var(--line); }
+        .section:last-of-type { border-bottom: none; }
+
+        .section-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 18px;
+        }
+        .section-title {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            font-weight: 500;
+            color: var(--text-muted);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .section-title::before {
+            content: '#';
+            color: var(--blue);
+            font-weight: 700;
+        }
+        .section-link {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--blue);
+            text-decoration: none;
+            border-bottom: 1px dashed transparent;
+        }
+        .section-link:hover { border-bottom-color: var(--blue); }
+
+        /* STACK CHIPS */
+        .stack-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--text);
+            transition: all .2s ease;
+        }
+        .chip:hover {
+            border-color: var(--blue);
+            color: var(--blue);
+        }
+        .chip-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+        .chip[data-color="react"] .chip-dot { background: #61dafb; }
+        .chip[data-color="next"] .chip-dot { background: #fff; }
+        .chip[data-color="node"] .chip-dot { background: #339933; }
+        .chip[data-color="ts"] .chip-dot { background: #3178c6; }
+        .chip[data-color="pg"] .chip-dot { background: #336791; }
+        .chip[data-color="aws"] .chip-dot { background: #ff9900; }
+        .chip[data-color="docker"] .chip-dot { background: #2496ed; }
+        .chip[data-color="tw"] .chip-dot { background: #06b6d4; }
+
+        /* STATS */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 1px;
+            background: var(--line);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .stat-cell {
+            background: var(--panel);
+            padding: 18px 12px;
+            text-align: center;
+        }
+        .stat-num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--green);
+            line-height: 1;
+        }
+        .stat-label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 6px;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        /* PROJECTS */
+        .project-list {
+            display: grid;
+            gap: 12px;
+        }
+        .project-card {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 16px;
+            transition: all .25s ease;
+        }
+        .project-card:hover {
+            border-color: var(--blue);
+            transform: translateY(-2px);
+        }
+        .project-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        .project-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--blue);
+        }
+        .project-stars {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .project-desc {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            line-height: 1.55;
+            margin-bottom: 12px;
+        }
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            font-weight: 500;
+            padding: 3px 8px;
+            border-radius: 999px;
+            background: rgba(88,166,255,.1);
+            color: var(--blue);
+            border: 1px solid rgba(88,166,255,.2);
+        }
+
+        /* SERVICES LIST */
+        .svc-list {
+            display: grid;
+            gap: 10px;
+        }
+        .svc-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 16px;
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            transition: border-color .2s;
+        }
+        .svc-row:hover { border-color: var(--blue); }
+        .svc-name {
+            font-size: 13.5px;
+            font-weight: 500;
+            color: var(--text);
+        }
+        .svc-name .meta {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+        .svc-price {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            color: var(--green);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* CONTACT GRID */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .contact-cell {
+            background: var(--panel);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 14px;
+            text-decoration: none;
+            transition: all .2s ease;
+        }
+        .contact-cell:hover {
+            border-color: var(--blue);
+            transform: translateY(-2px);
+        }
+        .contact-cell .key {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+        .contact-cell .val {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12.5px;
+            color: var(--text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* CTA */
+        .cta-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 16px;
+            background: var(--green);
+            color: #0d1117;
+            border: none;
+            border-radius: 8px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all .25s ease;
+            letter-spacing: .5px;
+        }
+        .cta-btn:hover {
+            background: #46c956;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(63,185,80,.3);
+        }
+
+        /* QR */
+        .qr-section { text-align: center; }
+        .qr-heading {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+        }
+        #qrcode {
+            display: inline-block;
+            padding: 14px;
+            background: #fff;
+            border-radius: 8px;
+        }
+        #qrcode img { display: block; }
+
+        /* FOOTER */
+        .footer {
+            text-align: center;
+            padding: 22px;
+            background: var(--panel);
+            border-top: 1px solid var(--line);
+        }
+        .footer-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+        .footer-name .at { color: var(--blue); }
+        .footer-sub {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 10px;
+            color: var(--text-dim);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            .live-dot { animation: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="topbar">
+            <span class="topbar-dot r"></span>
+            <span class="topbar-dot y"></span>
+            <span class="topbar-dot g"></span>
+            <span class="topbar-path">~/portfolio/<span class="file">ozan-celik.dev</span></span>
+        </div>
+
+        <div class="hero reveal">
+            <div class="availability">
+                <span class="live-dot"></span>
+                Available for new projects
+            </div>
+            <div class="profile-row">
+                <div class="avatar-wrap">
+                    <div class="avatar-glow"></div>
+                    <img class="avatar" src="https://i.pravatar.cc/200?img=7" alt="Ozan Celik">
+                </div>
+                <div>
+                    <div class="name">Ozan Celik</div>
+                    <div class="handle">@ozancelik</div>
+                    <div class="role">Full-Stack Developer</div>
+                </div>
+            </div>
+            <p class="bio">8 yildir <strong>SaaS urunleri</strong>, <strong>API entegrasyonlari</strong> ve <strong>MVP</strong> gelistiriyorum. 60+ proje, 25+ memnun musteri. Frontend'den DevOps'a kadar full-stack uzmanligim ile, fikrinizi production'a tasimaniza yardimci olurum.</p>
+        </div>
+
+        <div class="actions reveal">
+            <a href="mailto:ozan@ozancelik.dev" class="pill pill--primary">$ ./hire-me.sh</a>
+            <a href="https://github.com/ozancelik" class="pill pill--ghost" target="_blank" rel="noopener">&#xf09b; GitHub</a>
+            <a href="https://ozancelik.dev" class="pill pill--ghost" target="_blank" rel="noopener">&#127760; Web</a>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-head">
+                <div class="section-title">tech_stack</div>
+                <a href="#" class="section-link">view all &rarr;</a>
+            </div>
+            <div class="stack-grid">
+                <span class="chip" data-color="react"><span class="chip-dot"></span>React</span>
+                <span class="chip" data-color="next"><span class="chip-dot"></span>Next.js</span>
+                <span class="chip" data-color="ts"><span class="chip-dot"></span>TypeScript</span>
+                <span class="chip" data-color="node"><span class="chip-dot"></span>Node.js</span>
+                <span class="chip" data-color="pg"><span class="chip-dot"></span>PostgreSQL</span>
+                <span class="chip" data-color="aws"><span class="chip-dot"></span>AWS</span>
+                <span class="chip" data-color="docker"><span class="chip-dot"></span>Docker</span>
+                <span class="chip" data-color="tw"><span class="chip-dot"></span>Tailwind</span>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-head">
+                <div class="section-title">stats</div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-cell"><div class="stat-num" data-target="60">0</div><div class="stat-label">projects</div></div>
+                <div class="stat-cell"><div class="stat-num" data-target="25">0</div><div class="stat-label">clients</div></div>
+                <div class="stat-cell"><div class="stat-num" data-target="12">0</div><div class="stat-label">k stars</div></div>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-head">
+                <div class="section-title">featured_projects</div>
+                <a href="https://github.com/ozancelik" class="section-link" target="_blank" rel="noopener">github &rarr;</a>
+            </div>
+            <div class="project-list">
+                <div class="project-card">
+                    <div class="project-head">
+                        <span class="project-name">saas-starter-kit</span>
+                        <span class="project-stars">&#9733; 4.2k</span>
+                    </div>
+                    <div class="project-desc">Production-ready Next.js 14 SaaS boilerplate with auth, billing, and multi-tenant.</div>
+                    <div class="project-tags">
+                        <span class="tag">Next.js</span><span class="tag">Stripe</span><span class="tag">Prisma</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-head">
+                        <span class="project-name">api-gateway-pro</span>
+                        <span class="project-stars">&#9733; 3.8k</span>
+                    </div>
+                    <div class="project-desc">High-performance API gateway with rate limiting, caching, and observability.</div>
+                    <div class="project-tags">
+                        <span class="tag">Node.js</span><span class="tag">Redis</span><span class="tag">Docker</span>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-head">
+                        <span class="project-name">analytics-dashboard</span>
+                        <span class="project-stars">&#9733; 2.1k</span>
+                    </div>
+                    <div class="project-desc">Real-time analytics dashboard with WebSocket streams and beautiful charts.</div>
+                    <div class="project-tags">
+                        <span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">D3</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-head">
+                <div class="section-title">services</div>
+            </div>
+            <div class="svc-list">
+                <div class="svc-row">
+                    <div class="svc-name">SaaS Gelistirme<span class="meta">// full-stack, prod-ready</span></div>
+                    <div class="svc-price">&#8378;50K+</div>
+                </div>
+                <div class="svc-row">
+                    <div class="svc-name">API Entegrasyonu<span class="meta">// REST, GraphQL, webhooks</span></div>
+                    <div class="svc-price">&#8378;15K+</div>
+                </div>
+                <div class="svc-row">
+                    <div class="svc-name">MVP Gelistirme<span class="meta">// 4-8 hafta teslim</span></div>
+                    <div class="svc-price">&#8378;25K+</div>
+                </div>
+                <div class="svc-row">
+                    <div class="svc-name">Teknik Danismanlik<span class="meta">// architecture, code review</span></div>
+                    <div class="svc-price">&#8378;1.5K/saat</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-head">
+                <div class="section-title">contact</div>
+            </div>
+            <div class="contact-grid">
+                <a href="mailto:ozan@ozancelik.dev" class="contact-cell">
+                    <div class="key">email</div>
+                    <div class="val">ozan@ozancelik.dev</div>
+                </a>
+                <a href="tel:+905356663311" class="contact-cell">
+                    <div class="key">phone</div>
+                    <div class="val">+90 535 666 33 11</div>
+                </a>
+                <a href="https://github.com/ozancelik" target="_blank" rel="noopener" class="contact-cell">
+                    <div class="key">github</div>
+                    <div class="val">/ozancelik</div>
+                </a>
+                <a href="https://linkedin.com/in/ozancelik" target="_blank" rel="noopener" class="contact-cell">
+                    <div class="key">linkedin</div>
+                    <div class="val">/in/ozancelik</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <a href="mailto:ozan@ozancelik.dev?subject=Proje%20Teklifi" class="cta-btn">
+                <span>&#9889;</span> $ npm run hire-me
+            </a>
+        </div>
+
+        <div class="section qr-section reveal">
+            <div class="qr-heading">scan_to_share</div>
+            <div id="qrcode" role="img" aria-label="QR kod"></div>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-name"><span class="at">@</span>ozancelik <span class="at">::</span> ozancelik.dev</div>
+            <div class="footer-sub">// (c) 2026 - Built with Next.js</div>
+        </footer>
+    </div>
+
+    <script>
+    (function(){
+        'use strict';
+        function initReveal(){
+            var els = document.querySelectorAll('.reveal');
+            if(!('IntersectionObserver' in window)){ els.forEach(function(e){e.classList.add('visible');}); return; }
+            var obs = new IntersectionObserver(function(entries){
+                entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('visible'); obs.unobserve(en.target);} });
+            },{threshold:.12, rootMargin:'0px 0px -40px 0px'});
+            els.forEach(function(e){obs.observe(e);});
+        }
+        function initStats(){
+            var nums = document.querySelectorAll('.stat-num[data-target]');
+            if(!('IntersectionObserver' in window)){ nums.forEach(function(n){n.textContent = n.getAttribute('data-target')+'+';}); return; }
+            var obs = new IntersectionObserver(function(entries){
+                entries.forEach(function(en){
+                    if(en.isIntersecting){
+                        var el = en.target, target = parseInt(el.getAttribute('data-target'),10), suffix='+';
+                        var start=null;
+                        function step(t){
+                            if(!start) start=t;
+                            var p = Math.min((t-start)/1500,1), eased = 1-Math.pow(1-p,3);
+                            el.textContent = Math.floor(target*eased)+suffix;
+                            if(p<1) requestAnimationFrame(step);
+                        }
+                        requestAnimationFrame(step);
+                        obs.unobserve(el);
+                    }
+                });
+            },{threshold:.5});
+            nums.forEach(function(n){obs.observe(n);});
+        }
+        function initQR(){
+            var c = document.getElementById('qrcode');
+            if(c && typeof QRCode !== 'undefined'){
+                new QRCode(c,{text:window.location.href, width:140, height:140, colorDark:'#0d1117', colorLight:'#ffffff', correctLevel:QRCode.CorrectLevel.M});
+            }
+        }
+        document.addEventListener('DOMContentLoaded', function(){ initReveal(); initStats(); initQR(); });
+    })();
+    </script>
+</body>
+</html>

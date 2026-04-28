@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>YildizStore - Modern D2C Brand</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#f4f4f2;
+  --card:#ffffff;
+  --ink:#111111;
+  --ink-2:#444444;
+  --muted:#888888;
+  --line:#e5e5e3;
+  --line-2:#d4d4d0;
+  --accent:#e8a838;
+  --accent-2:#a86d10;
+}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  min-height:100vh;
+  display:flex;
+  justify-content:center;
+  -webkit-font-smoothing:antialiased;
+}
+.card{
+  width:100%;
+  max-width:460px;
+  min-height:100vh;
+  background:var(--card);
+  position:relative;
+}
+.reveal{
+  opacity:0;
+  transform:translateY(24px);
+  transition:opacity 0.65s cubic-bezier(0.22,1,0.36,1), transform 0.65s cubic-bezier(0.22,1,0.36,1);
+}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+.hr{height:1px;background:var(--line);}
+.hr-thick{height:1px;background:var(--ink);}
+
+.meta{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+}
+
+/* HERO */
+.hero{padding:48px 28px 36px;}
+.hero .top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:36px;
+}
+.hero .logo-mark{
+  width:36px;height:36px;
+  background:var(--ink);
+  color:var(--card);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'DM Sans',sans-serif;
+  font-weight:700;
+  font-size:14px;
+  letter-spacing:0.5px;
+}
+.hero h1{
+  font-family:'DM Sans',sans-serif;
+  font-weight:700;
+  font-size:64px;
+  line-height:0.92;
+  letter-spacing:-3px;
+  color:var(--ink);
+}
+.hero h1 .accent{color:var(--accent);}
+.hero .desc{
+  font-size:14px;
+  line-height:1.55;
+  color:var(--ink-2);
+  margin-top:20px;
+  font-weight:400;
+  max-width:360px;
+}
+.hero .role{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-top:24px;
+}
+
+/* PROFILE */
+.profile{
+  display:grid;
+  grid-template-columns:96px 1fr;
+  gap:18px;
+  padding:28px;
+  align-items:center;
+}
+.photo{
+  width:96px;height:96px;
+  background:var(--bg);
+  overflow:hidden;
+}
+.photo img{
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;
+}
+.profile-info h2{
+  font-family:'DM Sans',sans-serif;
+  font-weight:600;
+  font-size:18px;
+  color:var(--ink);
+  letter-spacing:-0.3px;
+}
+.profile-info .lbl{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  margin-top:4px;
+}
+.profile-info .since{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--ink);
+  margin-top:8px;
+  display:inline-block;
+  padding:3px 8px;
+  background:var(--bg);
+  border:1px solid var(--line-2);
+}
+
+/* SECTION */
+.section{padding:32px 28px;}
+.sect-label{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  padding-bottom:14px;
+  margin-bottom:20px;
+  border-bottom:1px solid var(--line);
+}
+.sect-label .name{
+  font-family:'DM Sans',sans-serif;
+  font-weight:600;
+  font-size:13px;
+  letter-spacing:0.5px;
+  text-transform:uppercase;
+  color:var(--ink);
+}
+.sect-label .idx{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:1.5px;
+}
+
+/* CATEGORIES — minimal liste */
+.cat-list{display:flex;flex-direction:column;}
+.cat-row{
+  display:grid;
+  grid-template-columns:32px 1fr auto auto;
+  gap:14px;
+  align-items:center;
+  padding:18px 0;
+  border-bottom:1px solid var(--line);
+  text-decoration:none;
+  color:var(--ink);
+  transition:all 0.2s;
+}
+.cat-row:last-child{border-bottom:none;}
+.cat-row:hover{padding-left:6px;}
+.cat-row .num{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--muted);
+}
+.cat-row .nm{
+  font-size:15px;
+  font-weight:500;
+  color:var(--ink);
+}
+.cat-row .nm .sub{
+  display:block;
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:1px;
+  text-transform:uppercase;
+  margin-top:2px;
+  font-weight:400;
+}
+.cat-row .price{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--ink);
+}
+.cat-row .arr{
+  color:var(--accent-2);
+  font-family:'DM Mono',monospace;
+  font-size:14px;
+}
+
+/* ORDER TABLE */
+.order-table{width:100%;}
+.order-row{
+  display:grid;
+  grid-template-columns:130px 1fr;
+  gap:16px;
+  padding:12px 0;
+  border-bottom:1px solid var(--line);
+  font-size:13px;
+}
+.order-row:last-child{border-bottom:none;}
+.order-row .k{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  padding-top:2px;
+}
+.order-row .v{
+  font-weight:500;
+  color:var(--ink);
+  font-size:14px;
+}
+.order-row .v.accent{color:var(--accent-2);}
+
+/* STATS */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+.stat-cell{
+  padding:24px 28px;
+  border-right:1px solid var(--line);
+}
+.stat-cell:nth-child(2){border-right:none;}
+.stat-cell:nth-child(3){border-top:1px solid var(--line);border-right:1px solid var(--line);}
+.stat-cell:nth-child(4){border-top:1px solid var(--line);}
+.stat-cell .n{
+  font-family:'DM Sans',sans-serif;
+  font-weight:600;
+  font-size:28px;
+  letter-spacing:-1px;
+  color:var(--ink);
+}
+.stat-cell .l{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  margin-top:4px;
+}
+
+/* PLATFORM */
+.plat-row{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:14px;
+  padding:14px 0;
+  border-bottom:1px solid var(--line);
+  align-items:center;
+}
+.plat-row:last-child{border-bottom:none;}
+.plat-row .nm{font-weight:500;font-size:14px;}
+.plat-row a{
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  color:var(--accent-2);
+  text-decoration:none;
+  letter-spacing:0.5px;
+}
+.plat-row a:hover{text-decoration:underline;}
+
+/* CTA */
+.cta{
+  display:block;
+  width:100%;
+  padding:18px;
+  background:var(--ink);
+  color:var(--card);
+  text-align:center;
+  text-decoration:none;
+  font-family:'DM Sans',sans-serif;
+  font-weight:500;
+  font-size:14px;
+  letter-spacing:0.5px;
+  transition:background 0.2s;
+}
+.cta:hover{background:var(--accent-2);}
+.cta-ghost{
+  display:block;
+  width:100%;
+  padding:16px;
+  background:transparent;
+  border:1px solid var(--line-2);
+  color:var(--ink);
+  text-align:center;
+  text-decoration:none;
+  font-family:'DM Mono',monospace;
+  font-size:11px;
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+  margin-top:10px;
+  transition:all 0.2s;
+}
+.cta-ghost:hover{border-color:var(--ink);background:var(--bg);}
+
+/* QR */
+.qr-section{
+  padding:32px 28px;
+  display:flex;
+  align-items:center;
+  gap:20px;
+  border-top:1px solid var(--line);
+}
+.qr-frame{
+  background:#fff;
+  padding:8px;
+  border:1px solid var(--line-2);
+  flex-shrink:0;
+}
+#qrcode{display:flex;}
+.qr-text .l{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+}
+.qr-text .v{
+  font-weight:500;
+  font-size:14px;
+  margin-top:4px;
+  color:var(--ink);
+}
+
+.footer{
+  padding:24px 28px 32px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  border-top:1px solid var(--ink);
+}
+.footer .l{
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  color:var(--muted);
+  letter-spacing:1.5px;
+  text-transform:uppercase;
+}
+.footer .r{
+  font-weight:600;
+  font-size:11px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none;}
+}
+</style>
+</head>
+<body>
+<div class="card">
+
+  <!-- HERO -->
+  <section class="hero reveal">
+    <div class="top">
+      <div class="logo-mark">YS</div>
+      <span class="meta">EST. 2021 / TR</span>
+    </div>
+    <h1>Y&#305;ld&#305;z<br>Store<span class="accent">.</span></h1>
+    <p class="desc">El yap&#305;m&#305; tak&#305;, do&#287;al ta&#351; ve &ouml;zel tasar&#305;m i&ccedil;in modern D2C marka. Her par&ccedil;a stokta s&#305;n&#305;rl&#305;.</p>
+    <div class="role">Maker &mdash; Curator &mdash; Founder</div>
+  </section>
+
+  <div class="hr-thick"></div>
+
+  <!-- PROFILE -->
+  <div class="profile reveal">
+    <div class="photo"><img src="https://i.pravatar.cc/200?img=62" alt="Ece Yildiz" loading="eager"></div>
+    <div class="profile-info">
+      <h2>Ece Y&#305;ld&#305;z</h2>
+      <div class="lbl">Founder &amp; Designer</div>
+      <span class="since">5 y&#305;l / Istanbul atelier</span>
+    </div>
+  </div>
+
+  <div class="hr"></div>
+
+  <!-- CATEGORIES -->
+  <section class="section reveal">
+    <div class="sect-label"><span class="name">Categories</span><span class="idx">/ 01</span></div>
+    <div class="cat-list">
+      <a href="#" class="cat-row">
+        <div class="num">01</div>
+        <div class="nm">El Yap&#305;m&#305; Kolye<span class="sub">Sezon koleksiyonu</span></div>
+        <div class="price">&#8378; 480+</div>
+        <div class="arr">&rarr;</div>
+      </a>
+      <a href="#" class="cat-row">
+        <div class="num">02</div>
+        <div class="nm">Y&uuml;z&uuml;k &amp; K&uuml;pe<span class="sub">925 ayar g&uuml;m&uuml;&#351;</span></div>
+        <div class="price">&#8378; 320+</div>
+        <div class="arr">&rarr;</div>
+      </a>
+      <a href="#" class="cat-row">
+        <div class="num">03</div>
+        <div class="nm">Do&#287;al Ta&#351; Bileklik<span class="sub">Energy &amp; minerals</span></div>
+        <div class="price">&#8378; 540+</div>
+        <div class="arr">&rarr;</div>
+      </a>
+      <a href="#" class="cat-row">
+        <div class="num">04</div>
+        <div class="nm">&Ouml;zel Tasar&#305;m<span class="sub">Custom / 2-3 hafta</span></div>
+        <div class="price">&#8378; 950+</div>
+        <div class="arr">&rarr;</div>
+      </a>
+      <a href="#" class="cat-row">
+        <div class="num">05</div>
+        <div class="nm">Gift Box<span class="sub">Hediyelik kutu seti</span></div>
+        <div class="price">&#8378; 280+</div>
+        <div class="arr">&rarr;</div>
+      </a>
+    </div>
+  </section>
+
+  <div class="hr"></div>
+
+  <!-- ORDER -->
+  <section class="section reveal">
+    <div class="sect-label"><span class="name">Order Info</span><span class="idx">/ 02</span></div>
+    <div class="order-table">
+      <div class="order-row"><div class="k">Kargo</div><div class="v accent">&Uuml;cretsiz / &#8378;500 &uuml;zeri</div></div>
+      <div class="order-row"><div class="k">Teslimat</div><div class="v">2 &mdash; 4 i&#351; g&uuml;n&uuml;</div></div>
+      <div class="order-row"><div class="k">Hediye Paketi</div><div class="v">Dahil</div></div>
+      <div class="order-row"><div class="k">&Ouml;deme</div><div class="v">Kart, Havale, Taksit</div></div>
+      <div class="order-row"><div class="k">&#304;ade</div><div class="v">14 g&uuml;n koruma</div></div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <div class="stats reveal">
+    <div class="stat-cell"><div class="n">5y</div><div class="l">Atelier</div></div>
+    <div class="stat-cell"><div class="n">12.000+</div><div class="l">Sip&acirc;ri&#351;</div></div>
+    <div class="stat-cell"><div class="n">4.9</div><div class="l">2400+ yorum</div></div>
+    <div class="stat-cell"><div class="n">67K</div><div class="l">Instagram</div></div>
+  </div>
+
+  <!-- PLATFORM -->
+  <section class="section reveal">
+    <div class="sect-label"><span class="name">Channels</span><span class="idx">/ 03</span></div>
+    <div class="plat-row"><div class="nm">Web Store</div><a href="https://yildizstore.com" target="_blank" rel="noopener">yildizstore.com &rarr;</a></div>
+    <div class="plat-row"><div class="nm">Instagram</div><a href="https://instagram.com/yildizstore" target="_blank" rel="noopener">@yildizstore &rarr;</a></div>
+    <div class="plat-row"><div class="nm">WhatsApp</div><a href="https://wa.me/905302228811" target="_blank" rel="noopener">+90 530 222 88 11 &rarr;</a></div>
+    <div class="plat-row"><div class="nm">E-mail</div><a href="mailto:siparis@yildizstore.com">siparis@yildizstore.com &rarr;</a></div>
+  </section>
+
+  <div class="hr"></div>
+
+  <!-- CTA -->
+  <section class="section reveal">
+    <div class="sect-label"><span class="name">Order</span><span class="idx">/ 04</span></div>
+    <a href="https://wa.me/905302228811?text=Merhaba%2C%20YildizStore%20koleksiyonu%20hakkinda%20bilgi" class="cta" target="_blank" rel="noopener">Sip&acirc;ri&#351;e Ba&#351;la</a>
+    <a href="https://yildizstore.com" target="_blank" rel="noopener" class="cta-ghost">yildizstore.com</a>
+  </section>
+
+  <!-- QR -->
+  <div class="qr-section reveal">
+    <div class="qr-frame"><div id="qrcode"></div></div>
+    <div class="qr-text">
+      <div class="l">/ Scan to shop</div>
+      <div class="v">yildizstore.com</div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <span class="l">&copy; 2026</span>
+    <span class="r">YILDIZSTORE</span>
+  </footer>
+</div>
+
+<script>
+(function(){
+  try{
+    new QRCode(document.getElementById('qrcode'),{
+      text:'https://yildizstore.com',
+      width:88,height:88,
+      colorDark:'#111111',colorLight:'#ffffff',
+      correctLevel:QRCode.CorrectLevel.M
+    });
+  }catch(e){}
+  var r=document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+    },{threshold:0.1,rootMargin:'0px 0px -40px 0px'});
+    r.forEach(function(el){io.observe(el);});
+  }else{r.forEach(function(el){el.classList.add('visible');});}
+})();
+</script>
+</body>
+</html>

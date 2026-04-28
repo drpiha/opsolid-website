@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tarik Arslan | Arslan Premium Otomotiv - Portfoy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #f4f4f2;
+            --card: #ffffff;
+            --ink: #111111;
+            --ink-2: #2a2a2a;
+            --gold: #c8a964;
+            --gold-soft: #f5efde;
+            --line: #e5e5e3;
+            --line-2: #d4d4d2;
+            --muted: #6b6b6b;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--card);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        .header {
+            padding: 56px 32px 32px;
+            border-bottom: 1px solid var(--line);
+        }
+        .brand-mark {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 32px;
+        }
+        .brand-mark::before {
+            content: "";
+            width: 24px; height: 1px;
+            background: var(--ink);
+        }
+        .name-block {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+        }
+        .name-block .avatar {
+            width: 68px; height: 68px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        .name-block .name {
+            font-size: 26px;
+            font-weight: 700;
+            letter-spacing: -0.6px;
+            line-height: 1.15;
+        }
+        .name-block .role {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+        .header .credential {
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--ink);
+        }
+        .header .credential strong { color: var(--gold); font-weight: 700; }
+
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            border-bottom: 1px solid var(--line);
+        }
+        .action {
+            padding: 18px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--ink);
+            border-right: 1px solid var(--line);
+            transition: all 0.2s ease;
+        }
+        .action:last-child { border-right: none; }
+        .action:hover { background: var(--gold-soft); }
+        .action .icon { font-size: 18px; margin-bottom: 6px; }
+        .action .label {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        .section { padding: 44px 32px; border-bottom: 1px solid var(--line); }
+        .section-label {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--ink);
+            margin-bottom: 20px;
+        }
+
+        /* PORTFOLIO PREVIEW */
+        .portfolio-row {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            scrollbar-width: none;
+        }
+        .portfolio-row::-webkit-scrollbar { display: none; }
+        .portfolio-card {
+            flex: 0 0 200px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--line);
+            background: var(--card);
+            text-decoration: none;
+            color: var(--ink);
+            transition: all 0.25s ease;
+        }
+        .portfolio-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+        }
+        .portfolio-card .thumb {
+            height: 110px;
+            overflow: hidden;
+            background: var(--bg);
+        }
+        .portfolio-card .thumb img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+        .portfolio-card .body { padding: 12px 14px 14px; }
+        .portfolio-card .model {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--ink);
+        }
+        .portfolio-card .price {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--gold);
+            margin-top: 4px;
+        }
+
+        /* BRAND LIST */
+        .brand-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+        .brand-cell {
+            padding: 16px 8px;
+            text-align: center;
+            background: var(--gold-soft);
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--ink);
+            letter-spacing: 0.5px;
+        }
+
+        /* SERVICES */
+        .services-list { display: flex; flex-direction: column; gap: 0; }
+        .service-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--line);
+        }
+        .service-item:last-child { border-bottom: none; }
+        .service-item .num {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--gold);
+            min-width: 28px;
+        }
+        .service-item .body { flex: 1; }
+        .service-item .name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ink);
+        }
+        .service-item .desc {
+            font-size: 12px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        .stats-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+        }
+        .stat-cell {
+            text-align: center;
+            padding: 18px 8px;
+            background: #fafafa;
+            border: 1px solid var(--line);
+            border-radius: 14px;
+        }
+        .stat-cell .num {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--ink);
+            line-height: 1;
+        }
+        .stat-cell .label {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 6px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .contact-list { display: flex; flex-direction: column; gap: 0; }
+        .contact-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--line);
+            text-decoration: none;
+            color: var(--ink);
+        }
+        .contact-item:last-child { border-bottom: none; }
+        .contact-item .key {
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        .contact-item .val { font-size: 13px; transition: color 0.2s ease; }
+        .contact-item:hover .val { color: var(--gold); }
+
+        .cta {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background: var(--ink);
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            margin-top: 22px;
+            transition: all 0.25s ease;
+        }
+        .cta:hover { background: var(--ink-2); transform: translateY(-1px); }
+
+        .qr-section { padding: 44px 32px; text-align: center; }
+        .qr-heading {
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        #qrcode {
+            display: inline-block;
+            padding: 12px;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+        }
+        .vcard-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-top: 22px;
+            padding: 14px;
+            background: transparent;
+            color: var(--ink);
+            border: 1px solid var(--line-2);
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .vcard-btn:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+        .footer {
+            text-align: center;
+            padding: 28px;
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 1px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="header">
+            <div class="brand-mark">Arslan Premium - Portfoy</div>
+            <div class="name-block">
+                <img class="avatar" src="https://i.pravatar.cc/200?img=54" alt="Tarik Arslan">
+                <div>
+                    <div class="name">Tarik Arslan</div>
+                    <div class="role">Premium Otomotiv - Founder</div>
+                </div>
+            </div>
+            <div class="credential">15 yil tecrube - <strong>3.000+ arac</strong> - 15M EUR portfoy</div>
+        </div>
+
+        <div class="actions">
+            <a href="tel:+902125559944" class="action">
+                <div class="icon">&#128222;</div>
+                <div class="label">Ara</div>
+            </a>
+            <a href="https://wa.me/902125559944" target="_blank" rel="noopener noreferrer" class="action">
+                <div class="icon">&#128172;</div>
+                <div class="label">WhatsApp</div>
+            </a>
+            <a href="mailto:tarik@arslanotomotiv.com" class="action">
+                <div class="icon">&#9993;&#65039;</div>
+                <div class="label">E-posta</div>
+            </a>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-label">Stoktaki Araclar</div>
+            <div class="portfolio-row">
+                <a href="https://arslanotomotiv.com" target="_blank" rel="noopener noreferrer" class="portfolio-card">
+                    <div class="thumb"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400&q=80" alt="Porsche" loading="lazy"></div>
+                    <div class="body">
+                        <div class="model">Porsche 911 Turbo S</div>
+                        <div class="price">&#8364;385.000</div>
+                    </div>
+                </a>
+                <a href="https://arslanotomotiv.com" target="_blank" rel="noopener noreferrer" class="portfolio-card">
+                    <div class="thumb"><img src="https://images.unsplash.com/photo-1555215695-3004980ad54e?w=400&q=80" alt="BMW" loading="lazy"></div>
+                    <div class="body">
+                        <div class="model">BMW M5 Competition</div>
+                        <div class="price">&#8364;165.000</div>
+                    </div>
+                </a>
+                <a href="https://arslanotomotiv.com" target="_blank" rel="noopener noreferrer" class="portfolio-card">
+                    <div class="thumb"><img src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?w=400&q=80" alt="Mercedes" loading="lazy"></div>
+                    <div class="body">
+                        <div class="model">Mercedes G63 AMG</div>
+                        <div class="price">&#8364;320.000</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-label">Marka Portfoyu</div>
+            <div class="brand-list">
+                <div class="brand-cell">BMW</div>
+                <div class="brand-cell">Mercedes</div>
+                <div class="brand-cell">Audi</div>
+                <div class="brand-cell">Porsche</div>
+                <div class="brand-cell">Tesla</div>
+                <div class="brand-cell">Lamborghini</div>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-label">Hizmetler</div>
+            <div class="services-list">
+                <div class="service-item">
+                    <span class="num">01</span>
+                    <div class="body">
+                        <div class="name">Yeni Arac Satisi</div>
+                        <div class="desc">Premium markalar - bayi anlasmasi</div>
+                    </div>
+                </div>
+                <div class="service-item">
+                    <span class="num">02</span>
+                    <div class="body">
+                        <div class="name">Ikinci El & Premium</div>
+                        <div class="desc">Ekspertizden gecmis luks portfoy</div>
+                    </div>
+                </div>
+                <div class="service-item">
+                    <span class="num">03</span>
+                    <div class="body">
+                        <div class="name">Import / Export</div>
+                        <div class="desc">Avrupa-Turkiye ozel siparis</div>
+                    </div>
+                </div>
+                <div class="service-item">
+                    <span class="num">04</span>
+                    <div class="body">
+                        <div class="name">Degerleme & Ekspertiz</div>
+                        <div class="desc">Detayli rapor + piyasa analizi</div>
+                    </div>
+                </div>
+                <div class="service-item">
+                    <span class="num">05</span>
+                    <div class="body">
+                        <div class="name">Finansman</div>
+                        <div class="desc">Banka & leasing destegi</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-label">Rakamlarla</div>
+            <div class="stats-row">
+                <div class="stat-cell">
+                    <div class="num">15</div>
+                    <div class="label">Yil</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="num">3.000+</div>
+                    <div class="label">Satis</div>
+                </div>
+                <div class="stat-cell">
+                    <div class="num">15M+</div>
+                    <div class="label">EUR Portfoy</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-label">Iletisim</div>
+            <div class="contact-list">
+                <a href="tel:+902125559944" class="contact-item">
+                    <span class="key">Telefon</span>
+                    <span class="val">+90 212 555 99 44</span>
+                </a>
+                <a href="mailto:tarik@arslanotomotiv.com" class="contact-item">
+                    <span class="key">E-posta</span>
+                    <span class="val">tarik@arslanotomotiv.com</span>
+                </a>
+                <a href="https://arslanotomotiv.com" target="_blank" rel="noopener noreferrer" class="contact-item">
+                    <span class="key">Web</span>
+                    <span class="val">arslanotomotiv.com</span>
+                </a>
+                <a href="https://instagram.com/arslanotomotiv" target="_blank" rel="noopener noreferrer" class="contact-item">
+                    <span class="key">Instagram</span>
+                    <span class="val">@arslanotomotiv</span>
+                </a>
+            </div>
+            <a href="https://wa.me/902125559944?text=Merhaba%20Tar%C4%B1k%20Bey%2C%20test%20s%C3%BCr%C3%BC%C5%9F%C3%BC%20talep%20ediyorum." target="_blank" rel="noopener noreferrer" class="cta">Test Surusu Iste</a>
+        </div>
+
+        <div class="qr-section reveal">
+            <div class="qr-heading">Showroom Linki</div>
+            <div id="qrcode" role="img" aria-label="QR kod"></div>
+            <button class="vcard-btn" id="vcardBtn" type="button">
+                <span>&#128229;</span> Rehbere Kaydet
+            </button>
+        </div>
+
+        <footer class="footer">&copy; 2026 Arslan Premium Otomotiv - Istanbul</footer>
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+        function initScrollReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function(el) { el.classList.add('visible'); }); return;
+            }
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+            els.forEach(function(el) { io.observe(el); });
+        }
+        function initQR() {
+            var c = document.getElementById('qrcode');
+            if (c && typeof QRCode !== 'undefined') {
+                new QRCode(c, {
+                    text: window.location.href,
+                    width: 130, height: 130,
+                    colorDark: '#111111', colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            }
+        }
+        function initVCard() {
+            var btn = document.getElementById('vcardBtn');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var v = ['BEGIN:VCARD','VERSION:3.0','N:Arslan;Tarik;;;','FN:Tarik Arslan',
+                    'ORG:Arslan Premium Otomotiv','TITLE:Founder',
+                    'TEL;TYPE=WORK:+90 212 555 99 44',
+                    'EMAIL;TYPE=INTERNET:tarik@arslanotomotiv.com',
+                    'URL:https://arslanotomotiv.com','END:VCARD'].join('\r\n');
+                var blob = new Blob([v], { type: 'text/vcard;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url; a.download = 'Tarik_Arslan.vcf';
+                document.body.appendChild(a); a.click();
+                document.body.removeChild(a); URL.revokeObjectURL(url);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            initScrollReveal(); initQR(); initVCard();
+        });
+    })();
+    </script>
+</body>
+</html>

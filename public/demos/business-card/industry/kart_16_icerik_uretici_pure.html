@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tuna Yilmaz | Media Kit - Icerik Uretici</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #fafafa;
+            --card: #ffffff;
+            --ink: #111111;
+            --ink-2: #2a2a2a;
+            --line: #ececec;
+            --line-2: #d4d4d4;
+            --accent: #111111;
+            --accent-2: #ff0000;
+            --muted: #717171;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--card);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(24px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* HEADER */
+        .header {
+            padding: 56px 32px 40px;
+            border-bottom: 1px solid var(--line);
+        }
+        .brand-mark {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 36px;
+        }
+        .brand-mark::before {
+            content: "";
+            width: 24px; height: 1px;
+            background: var(--ink);
+        }
+        .name-block {
+            display: flex;
+            align-items: flex-start;
+            gap: 18px;
+        }
+        .name-block .avatar {
+            width: 64px; height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+        .name-block .info { flex: 1; }
+        .name-block .name {
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: -0.8px;
+            line-height: 1.15;
+        }
+        .name-block .role {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 4px;
+        }
+        .channel-line {
+            margin-top: 16px;
+            font-size: 13px;
+            color: var(--ink-2);
+        }
+        .channel-line strong { color: var(--accent-2); font-weight: 600; }
+
+        /* QUICK ACTIONS */
+        .actions {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            border-bottom: 1px solid var(--line);
+        }
+        .action {
+            padding: 18px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--ink);
+            border-right: 1px solid var(--line);
+            transition: all 0.2s ease;
+        }
+        .action:last-child { border-right: none; }
+        .action:hover { background: #fafafa; }
+        .action .icon { font-size: 18px; margin-bottom: 6px; }
+        .action .label {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* SECTION */
+        .section { padding: 48px 32px; border-bottom: 1px solid var(--line); }
+        .section-label {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 20px;
+        }
+
+        /* STATS TABLE */
+        .stats-table { width: 100%; }
+        .stats-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            padding: 18px 0;
+            border-bottom: 1px solid var(--line);
+        }
+        .stats-row:last-child { border-bottom: none; }
+        .stats-row .platform {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--ink);
+        }
+        .stats-row .platform .handle {
+            font-size: 11px;
+            color: var(--muted);
+            margin-left: 8px;
+            font-weight: 400;
+        }
+        .stats-row .count {
+            font-size: 22px;
+            font-weight: 700;
+            color: var(--accent-2);
+            letter-spacing: -0.5px;
+        }
+
+        /* CATEGORIES */
+        .cat-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .cat {
+            padding: 8px 14px;
+            background: #f4f4f4;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--ink-2);
+        }
+
+        /* COLLABORATION */
+        .collab-card {
+            padding: 28px;
+            background: #fafafa;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+        }
+        .collab-card .heading {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--ink);
+            letter-spacing: -0.3px;
+            margin-bottom: 8px;
+        }
+        .collab-card .desc {
+            font-size: 13px;
+            color: var(--muted);
+            line-height: 1.65;
+            margin-bottom: 20px;
+        }
+        .price-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-top: 1px solid var(--line);
+            font-size: 13px;
+        }
+        .price-line .label { color: var(--ink-2); }
+        .price-line .price { font-weight: 700; color: var(--ink); }
+        .collab-cta {
+            display: block;
+            width: 100%;
+            padding: 14px;
+            margin-top: 20px;
+            background: var(--ink);
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.2s ease;
+        }
+        .collab-cta:hover { background: var(--ink-2); }
+
+        /* CONTACT */
+        .contact-list { display: flex; flex-direction: column; gap: 0; }
+        .contact-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--line);
+            text-decoration: none;
+            color: var(--ink);
+        }
+        .contact-item:last-child { border-bottom: none; }
+        .contact-item .key {
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        .contact-item .val {
+            font-size: 13px;
+            color: var(--ink);
+            transition: color 0.2s ease;
+        }
+        .contact-item:hover .val { color: var(--accent-2); }
+
+        /* QR */
+        .qr-section { text-align: center; }
+        .qr-heading {
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+        }
+        #qrcode {
+            display: inline-block;
+            padding: 12px;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+        }
+        .vcard-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            margin-top: 22px;
+            padding: 14px;
+            background: transparent;
+            color: var(--ink);
+            border: 1px solid var(--line-2);
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .vcard-btn:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+        .footer {
+            text-align: center;
+            padding: 28px 32px;
+            font-size: 11px;
+            color: var(--muted);
+            letter-spacing: 1px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="header">
+            <div class="brand-mark">Tuna Creates - Media Kit</div>
+            <div class="name-block">
+                <img class="avatar" src="https://i.pravatar.cc/200?img=3" alt="Tuna Yilmaz">
+                <div class="info">
+                    <div class="name">Tuna Yilmaz</div>
+                    <div class="role">Icerik Ureticisi - YouTube</div>
+                </div>
+            </div>
+            <div class="channel-line">YouTube'da <strong>285K abone</strong> - 5M+ toplam izlenme</div>
+        </div>
+
+        <div class="actions">
+            <a href="tel:+905301118855" class="action">
+                <div class="icon">&#128222;</div>
+                <div class="label">Ara</div>
+            </a>
+            <a href="https://wa.me/905301118855" target="_blank" rel="noopener noreferrer" class="action">
+                <div class="icon">&#128172;</div>
+                <div class="label">WhatsApp</div>
+            </a>
+            <a href="mailto:iletisim@tunayilmaz.com" class="action">
+                <div class="icon">&#9993;&#65039;</div>
+                <div class="label">E-posta</div>
+            </a>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-label">Erisim & Topluluk</div>
+            <div class="stats-table">
+                <div class="stats-row">
+                    <div class="platform">YouTube <span class="handle">@tunacreates</span></div>
+                    <div class="count">285K</div>
+                </div>
+                <div class="stats-row">
+                    <div class="platform">Instagram <span class="handle">@tunacreates</span></div>
+                    <div class="count">68K</div>
+                </div>
+                <div class="stats-row">
+                    <div class="platform">TikTok <span class="handle">@tunacreates</span></div>
+                    <div class="count">120K</div>
+                </div>
+                <div class="stats-row">
+                    <div class="platform">Aylik Erisim</div>
+                    <div class="count">5M+</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-label">Icerik Kategorileri</div>
+            <div class="cat-list">
+                <span class="cat">Teknoloji</span>
+                <span class="cat">Kisisel Gelisim</span>
+                <span class="cat">Uretkenlik</span>
+                <span class="cat">Vlog</span>
+                <span class="cat">Inceleme</span>
+                <span class="cat">Tutorial</span>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-label">Sponsorluk Imkanlari</div>
+            <div class="collab-card">
+                <div class="heading">Markaniz icin ozel icerik</div>
+                <div class="desc">Hedef kitlenize ulasacak organik, dogru tonda icerik. Olcumlenebilir sonuclar ve seffaf raporlama.</div>
+                <div class="price-line">
+                    <span class="label">Sponsorluk Videosu</span>
+                    <span class="price">&#8378;15K - &#8378;40K</span>
+                </div>
+                <div class="price-line">
+                    <span class="label">Reklam Filmi</span>
+                    <span class="price">&#8378;30K+</span>
+                </div>
+                <div class="price-line">
+                    <span class="label">Sosyal Medya Paketi</span>
+                    <span class="price">&#8378;20K+</span>
+                </div>
+                <a href="mailto:iletisim@tunayilmaz.com?subject=Sponsorluk%20Talebi" class="collab-cta">Isbirligi Icin Yaz</a>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-label">Iletisim</div>
+            <div class="contact-list">
+                <a href="tel:+905301118855" class="contact-item">
+                    <span class="key">Telefon</span>
+                    <span class="val">+90 530 111 88 55</span>
+                </a>
+                <a href="mailto:iletisim@tunayilmaz.com" class="contact-item">
+                    <span class="key">E-posta</span>
+                    <span class="val">iletisim@tunayilmaz.com</span>
+                </a>
+                <a href="https://tunayilmaz.com" target="_blank" rel="noopener noreferrer" class="contact-item">
+                    <span class="key">Web</span>
+                    <span class="val">tunayilmaz.com</span>
+                </a>
+                <a href="https://youtube.com/@tunacreates" target="_blank" rel="noopener noreferrer" class="contact-item">
+                    <span class="key">YouTube</span>
+                    <span class="val">@tunacreates</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="section qr-section reveal">
+            <div class="qr-heading">Profilimi Paylas</div>
+            <div id="qrcode" role="img" aria-label="QR kod"></div>
+            <button class="vcard-btn" id="vcardBtn" type="button">
+                <span>&#128229;</span> Rehbere Kaydet
+            </button>
+        </div>
+
+        <footer class="footer">&copy; 2026 Tuna Yilmaz - Tum haklari saklidir.</footer>
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+        function initScrollReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function(el) { el.classList.add('visible'); }); return;
+            }
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+            els.forEach(function(el) { io.observe(el); });
+        }
+        function initQR() {
+            var c = document.getElementById('qrcode');
+            if (c && typeof QRCode !== 'undefined') {
+                new QRCode(c, {
+                    text: window.location.href,
+                    width: 130, height: 130,
+                    colorDark: '#111111', colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            }
+        }
+        function initVCard() {
+            var btn = document.getElementById('vcardBtn');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var v = ['BEGIN:VCARD','VERSION:3.0','N:Yilmaz;Tuna;;;','FN:Tuna Yilmaz',
+                    'ORG:Tuna Creates','TITLE:Icerik Uretici',
+                    'TEL;TYPE=CELL:+90 530 111 88 55',
+                    'EMAIL;TYPE=INTERNET:iletisim@tunayilmaz.com',
+                    'URL:https://tunayilmaz.com','END:VCARD'].join('\r\n');
+                var blob = new Blob([v], { type: 'text/vcard;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url; a.download = 'Tuna_Yilmaz.vcf';
+                document.body.appendChild(a); a.click();
+                document.body.removeChild(a); URL.revokeObjectURL(url);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            initScrollReveal(); initQR(); initVCard();
+        });
+    })();
+    </script>
+</body>
+</html>

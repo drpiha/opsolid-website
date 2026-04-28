@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elif Yaman | Interior Design - Ic Mimar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@1,9..144,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #f5ede4;
+            --card: #fdf8f3;
+            --card-warm: #f5ebe0;
+            --accent: #5c3d1e;
+            --accent-soft: #ebd7be;
+            --accent-2: #c8a500;
+            --ink: #2a1d12;
+            --ink-soft: #5a4a3a;
+            --line: #e3d5c2;
+            --line-2: #d4c2a8;
+            --shadow-md: 0 8px 24px rgba(92,61,30,0.1);
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+        .serif { font-family: 'Fraunces', serif; font-style: italic; font-weight: 400; }
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--card);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* HERO */
+        .hero {
+            position: relative;
+            height: 320px;
+            overflow: hidden;
+        }
+        .hero img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(42,29,18,0.1) 0%, rgba(42,29,18,0.55) 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 28px 28px 60px;
+            color: #fff;
+        }
+        .issue-mark {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 3.5px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 14px;
+        }
+        .issue-mark::before {
+            content: "";
+            width: 28px; height: 1px;
+            background: var(--accent-2);
+        }
+        .hero-headline {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 32px;
+            font-weight: 400;
+            line-height: 1.1;
+            letter-spacing: -0.5px;
+        }
+        .hero-headline em {
+            color: var(--accent-2);
+            font-style: italic;
+        }
+
+        /* PROFILE */
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 0 28px;
+            margin-top: -36px;
+            position: relative;
+            z-index: 2;
+        }
+        .profile .avatar {
+            width: 76px; height: 76px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--card);
+            box-shadow: var(--shadow-md);
+            flex-shrink: 0;
+        }
+        .profile .info {
+            background: var(--card);
+            border-radius: 16px;
+            padding: 14px 18px;
+            box-shadow: var(--shadow-md);
+            flex: 1;
+        }
+        .profile .name {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 20px;
+            color: var(--accent);
+            font-weight: 400;
+        }
+        .profile .role {
+            font-size: 12px;
+            color: var(--ink-soft);
+            margin-top: 2px;
+            letter-spacing: 0.5px;
+        }
+
+        /* QUICK */
+        .quick { display: flex; gap: 10px; padding: 24px 28px 8px; }
+        .pill {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 12px 8px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+        .pill--call { background: var(--accent); color: #fff; }
+        .pill--call:hover { background: #4a3018; transform: translateY(-1px); }
+        .pill--whatsapp { background: #25d366; color: #fff; }
+        .pill--whatsapp:hover { background: #1fb855; transform: translateY(-1px); }
+        .pill--email { background: var(--accent-2); color: #fff; }
+        .pill--email:hover { background: #a88800; transform: translateY(-1px); }
+
+        /* SECTION */
+        .section { padding: 36px 28px; }
+        .section-label {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 8px;
+        }
+        .section-title {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 26px;
+            font-weight: 400;
+            color: var(--accent);
+            line-height: 1.2;
+            margin-bottom: 20px;
+            letter-spacing: -0.3px;
+        }
+
+        /* PHILOSOPHY */
+        .editorial-text {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 17px;
+            color: var(--ink);
+            line-height: 1.65;
+            position: relative;
+            padding-left: 16px;
+            border-left: 2px solid var(--accent-2);
+        }
+
+        /* FEATURED PROJECT */
+        .featured-project {
+            border-radius: 22px;
+            overflow: hidden;
+            background: var(--card-warm);
+        }
+        .featured-project .image {
+            height: 230px;
+            overflow: hidden;
+        }
+        .featured-project .image img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+        .featured-project .body {
+            padding: 22px 24px;
+        }
+        .featured-project .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--accent);
+            color: var(--card);
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            border-radius: 999px;
+            margin-bottom: 10px;
+        }
+        .featured-project .name {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--accent);
+            margin-bottom: 6px;
+        }
+        .featured-project .desc {
+            font-size: 13px;
+            color: var(--ink-soft);
+            line-height: 1.6;
+        }
+
+        /* PROJECT GRID */
+        .project-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+        .project-card {
+            background: var(--card-warm);
+            border-radius: 14px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        .project-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-md);
+        }
+        .project-card .img-wrap {
+            height: 100px;
+            overflow: hidden;
+        }
+        .project-card img {
+            width: 100%; height: 100%;
+            object-fit: cover;
+        }
+        .project-card .body {
+            padding: 12px 14px 16px;
+        }
+        .project-card .name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 2px;
+        }
+        .project-card .meta {
+            font-size: 11px;
+            color: var(--ink-soft);
+        }
+
+        /* SERVICES */
+        .services-list { display: flex; flex-direction: column; gap: 0; }
+        .service-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--line);
+        }
+        .service-row:last-child { border-bottom: none; }
+        .service-row .num {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 14px;
+            color: var(--accent-2);
+            min-width: 32px;
+        }
+        .service-row .name {
+            flex: 1;
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 16px;
+            color: var(--ink);
+            font-weight: 400;
+        }
+
+        /* AWARDS */
+        .awards-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .award {
+            display: flex;
+            gap: 14px;
+            padding: 16px 18px;
+            background: var(--card-warm);
+            border-radius: 12px;
+            border-left: 3px solid var(--accent-2);
+        }
+        .award .ico {
+            font-size: 24px;
+            color: var(--accent-2);
+        }
+        .award .body { flex: 1; }
+        .award .title {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 15px;
+            color: var(--accent);
+        }
+        .award .year {
+            font-size: 11px;
+            color: var(--ink-soft);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-top: 2px;
+        }
+
+        /* STATS */
+        .stats-section {
+            margin: 28px;
+            padding: 28px 24px;
+            background: var(--accent);
+            border-radius: 22px;
+            color: var(--card);
+            position: relative;
+            overflow: hidden;
+        }
+        .stats-section::before {
+            content: "";
+            position: absolute;
+            top: -30px; right: -30px;
+            width: 120px; height: 120px;
+            background: radial-gradient(circle, rgba(200,165,0,0.35), transparent 70%);
+        }
+        .stats-row {
+            display: flex;
+            justify-content: space-around;
+            text-align: center;
+            position: relative;
+        }
+        .stat-item .stat-num {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 34px;
+            color: var(--accent-2);
+            line-height: 1;
+        }
+        .stat-item .stat-label {
+            font-size: 11px;
+            color: rgba(253,248,243,0.78);
+            margin-top: 6px;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        /* CONTACT */
+        .contact-list { display: flex; flex-direction: column; gap: 0; }
+        .contact-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--line);
+            text-decoration: none;
+            color: var(--ink);
+        }
+        .contact-item:last-child { border-bottom: none; }
+        .contact-item .key {
+            font-size: 11px;
+            color: var(--ink-soft);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        .contact-item .val {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 15px;
+            color: var(--ink);
+            transition: color 0.2s ease;
+        }
+        .contact-item:hover .val { color: var(--accent-2); }
+
+        /* CTA */
+        .cta {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: var(--accent);
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 14px;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 22px;
+            transition: all 0.3s ease;
+        }
+        .cta:hover { background: #4a3018; transform: translateY(-2px); box-shadow: var(--shadow-md); }
+
+        /* QR */
+        .qr-section { padding: 36px 28px; text-align: center; }
+        .qr-heading {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 16px;
+            color: var(--accent);
+            margin-bottom: 16px;
+        }
+        #qrcode {
+            display: inline-block;
+            padding: 12px;
+            background: #fff;
+            border-radius: 14px;
+            border: 1px solid var(--line);
+        }
+        .vcard-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 18px;
+            padding: 14px;
+            background: transparent;
+            color: var(--accent);
+            border: 1.5px solid var(--accent);
+            border-radius: 14px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .vcard-btn:hover { background: var(--accent); color: #fff; }
+
+        .footer {
+            text-align: center;
+            padding: 28px;
+            background: var(--accent);
+            color: var(--card);
+        }
+        .footer .footer-name {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 16px;
+            color: var(--accent-2);
+            margin-bottom: 4px;
+        }
+        .footer .footer-sub {
+            font-size: 11px;
+            color: rgba(253,248,243,0.55);
+            letter-spacing: 1px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="hero">
+            <img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=900&q=80" alt="Ic mekan" loading="eager">
+            <div class="hero-overlay">
+                <div class="issue-mark">Issue 11 - Spring 2026</div>
+                <h1 class="hero-headline">Mekan,<br>insanin <em>iz dustugu</em><br>en sessiz dil.</h1>
+            </div>
+        </div>
+
+        <div class="profile reveal">
+            <img class="avatar" src="https://i.pravatar.cc/200?img=47" alt="Elif Yaman">
+            <div class="info">
+                <div class="name">Elif Yaman</div>
+                <div class="role">Interior Design Studio - Istanbul</div>
+            </div>
+        </div>
+
+        <div class="quick reveal">
+            <a href="tel:+902124445533" class="pill pill--call"><span>&#128222;</span> Ara</a>
+            <a href="https://wa.me/902124445533" target="_blank" rel="noopener noreferrer" class="pill pill--whatsapp"><span>&#128172;</span> WhatsApp</a>
+            <a href="mailto:elif@elifyamandesign.com" class="pill pill--email"><span>&#9993;&#65039;</span> E-posta</a>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-label">Felsefe</div>
+            <h2 class="section-title">Hikayeyi mekanin<br>icine ormek.</h2>
+            <p class="editorial-text">Bir tasariminin guzelligi, malzemenin sadakatinde ve detayin sessizliginde gizlidir. 11 yildir 6 ulkede, kendi rituellerini saklayan mekanlar tasarliyorum.</p>
+        </div>
+
+        <div class="section reveal" style="padding-top: 0;">
+            <div class="section-label">Featured Project</div>
+            <div class="featured-project">
+                <div class="image">
+                    <img src="https://images.unsplash.com/photo-1600210492493-0946911123ea?w=700&q=80" alt="Featured project" loading="lazy">
+                </div>
+                <div class="body">
+                    <span class="badge">Konut - 2025</span>
+                    <div class="name">Bosphorus Penthouse</div>
+                    <div class="desc">Bogaz manzarali 320 m&sup2; konutta, dogal mermer, mese ve patina pirinc detaylari ile tasarlanan sakin bir gunluk yasam alani.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section reveal" style="padding-top: 0;">
+            <div class="section-label">Selected Works</div>
+            <div class="project-grid">
+                <div class="project-card">
+                    <div class="img-wrap"><img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=400&q=80" alt="Proje" loading="lazy"></div>
+                    <div class="body">
+                        <div class="name">Cesme Villa</div>
+                        <div class="meta">Konut - 480 m&sup2;</div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="img-wrap"><img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=400&q=80" alt="Proje" loading="lazy"></div>
+                    <div class="body">
+                        <div class="name">Maxx Royal Lobby</div>
+                        <div class="meta">Otel - 800 m&sup2;</div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="img-wrap"><img src="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=400&q=80" alt="Proje" loading="lazy"></div>
+                    <div class="body">
+                        <div class="name">Levent Office</div>
+                        <div class="meta">Ofis - 1.200 m&sup2;</div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="img-wrap"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&q=80" alt="Proje" loading="lazy"></div>
+                    <div class="body">
+                        <div class="name">Bodrum Retreat</div>
+                        <div class="meta">Konut - 360 m&sup2;</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section reveal" style="padding-top: 0;">
+            <div class="section-label">Hizmetler</div>
+            <div class="services-list">
+                <div class="service-row">
+                    <span class="num">01</span>
+                    <span class="name">Konut Ic Tasarimi</span>
+                </div>
+                <div class="service-row">
+                    <span class="num">02</span>
+                    <span class="name">Otel & Butik Otel</span>
+                </div>
+                <div class="service-row">
+                    <span class="num">03</span>
+                    <span class="name">Ofis & Showroom</span>
+                </div>
+                <div class="service-row">
+                    <span class="num">04</span>
+                    <span class="name">Konsept Tasarim</span>
+                </div>
+                <div class="service-row">
+                    <span class="num">05</span>
+                    <span class="name">FF&E Sourcing</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section reveal" style="padding-top: 0;">
+            <div class="section-label">Awards</div>
+            <div class="awards-grid">
+                <div class="award">
+                    <span class="ico">&#127942;</span>
+                    <div class="body">
+                        <div class="title">Architizer A+ Award - Konut Ic Mekan</div>
+                        <div class="year">2023</div>
+                    </div>
+                </div>
+                <div class="award">
+                    <span class="ico">&#9733;</span>
+                    <div class="body">
+                        <div class="title">Iconic Awards - Interior Innovation</div>
+                        <div class="year">2024</div>
+                    </div>
+                </div>
+                <div class="award">
+                    <span class="ico">&#128218;</span>
+                    <div class="body">
+                        <div class="title">AD Magazine - Featured Project</div>
+                        <div class="year">2025</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="reveal">
+            <div class="stats-section">
+                <div class="stats-row">
+                    <div class="stat-item">
+                        <div class="stat-num" data-target="11">0</div>
+                        <div class="stat-label">Yil</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num" data-target="150" data-suffix="+">0</div>
+                        <div class="stat-label">Proje</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-num" data-target="6">0</div>
+                        <div class="stat-label">Ulke</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section reveal" style="padding-top: 0;">
+            <div class="section-label">Iletisim</div>
+            <div class="contact-list">
+                <a href="tel:+902124445533" class="contact-item">
+                    <span class="key">Telefon</span>
+                    <span class="val">+90 212 444 55 33</span>
+                </a>
+                <a href="mailto:elif@elifyamandesign.com" class="contact-item">
+                    <span class="key">Studio</span>
+                    <span class="val">elif@elifyamandesign.com</span>
+                </a>
+                <a href="https://elifyamandesign.com" target="_blank" rel="noopener noreferrer" class="contact-item">
+                    <span class="key">Web</span>
+                    <span class="val">elifyamandesign.com</span>
+                </a>
+                <a href="https://instagram.com/elifyamandesign" target="_blank" rel="noopener noreferrer" class="contact-item">
+                    <span class="key">Instagram</span>
+                    <span class="val">@elifyamandesign</span>
+                </a>
+            </div>
+            <a href="mailto:elif@elifyamandesign.com?subject=Proje%20Brifingi" class="cta">Proje Brifingi Talep Et</a>
+        </div>
+
+        <div class="qr-section reveal">
+            <div class="qr-heading">Studyo Linki</div>
+            <div id="qrcode" role="img" aria-label="QR kod"></div>
+            <button class="vcard-btn" id="vcardBtn" type="button">
+                <span>&#128229;</span> Rehbere Kaydet
+            </button>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-name">Elif Yaman Interior Design</div>
+            <div class="footer-sub">Istanbul - elifyamandesign.com</div>
+        </footer>
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+        function initScrollReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function(el) { el.classList.add('visible'); }); return;
+            }
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function(el) { io.observe(el); });
+        }
+        function initStatCounters() {
+            var nums = document.querySelectorAll('.stat-num[data-target]');
+            if (!('IntersectionObserver' in window)) {
+                nums.forEach(function(el) { el.textContent = el.getAttribute('data-target') + (el.getAttribute('data-suffix') || ''); });
+                return;
+            }
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) {
+                        var el = e.target;
+                        var t = parseInt(el.getAttribute('data-target'), 10);
+                        var suf = el.getAttribute('data-suffix') || '';
+                        animate(el, 0, t, 1800, suf);
+                        io.unobserve(el);
+                    }
+                });
+            }, { threshold: 0.5 });
+            nums.forEach(function(el) { io.observe(el); });
+        }
+        function animate(el, s, e, d, suf) {
+            var start = null;
+            function step(ts) {
+                if (!start) start = ts;
+                var p = Math.min((ts - start) / d, 1);
+                var eased = 1 - Math.pow(1 - p, 3);
+                el.textContent = Math.floor(s + (e - s) * eased) + suf;
+                if (p < 1) requestAnimationFrame(step);
+            }
+            requestAnimationFrame(step);
+        }
+        function initQR() {
+            var c = document.getElementById('qrcode');
+            if (c && typeof QRCode !== 'undefined') {
+                new QRCode(c, {
+                    text: window.location.href,
+                    width: 130, height: 130,
+                    colorDark: '#5c3d1e', colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            }
+        }
+        function initVCard() {
+            var btn = document.getElementById('vcardBtn');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var v = ['BEGIN:VCARD','VERSION:3.0','N:Yaman;Elif;;;','FN:Elif Yaman',
+                    'ORG:Elif Yaman Interior Design','TITLE:Ic Mimar - Founder',
+                    'TEL;TYPE=WORK:+90 212 444 55 33',
+                    'EMAIL;TYPE=INTERNET:elif@elifyamandesign.com',
+                    'URL:https://elifyamandesign.com','END:VCARD'].join('\r\n');
+                var blob = new Blob([v], { type: 'text/vcard;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url; a.download = 'Elif_Yaman.vcf';
+                document.body.appendChild(a); a.click();
+                document.body.removeChild(a); URL.revokeObjectURL(url);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            initScrollReveal(); initStatCounters(); initQR(); initVCard();
+        });
+    })();
+    </script>
+</body>
+</html>

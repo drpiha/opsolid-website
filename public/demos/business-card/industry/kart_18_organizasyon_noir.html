@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Naz Erdogan | Naz Events Atelier - Black Tie Gala</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #080508;
+            --card: #130810;
+            --card-2: #1a0d18;
+            --line: rgba(255,255,255,0.08);
+            --line-2: rgba(200,169,100,0.22);
+            --gold: #c8a964;
+            --gold-soft: rgba(200,169,100,0.12);
+            --pink: #e879f9;
+            --text: #f5f0ed;
+            --text-soft: rgba(245,240,237,0.78);
+            --text-muted: rgba(245,240,237,0.5);
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+        .serif { font-family: 'Cormorant Garamond', serif; font-style: italic; font-weight: 400; }
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--card);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            box-shadow: 0 30px 80px rgba(0,0,0,0.6);
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* HERO GALA */
+        .hero-gala {
+            position: relative;
+            padding: 80px 32px 60px;
+            background: radial-gradient(ellipse at top right, rgba(232,121,249,0.16), transparent 55%),
+                        radial-gradient(ellipse at bottom left, rgba(200,169,100,0.14), transparent 55%);
+            text-align: center;
+            overflow: hidden;
+        }
+        .hero-gala::before {
+            content: "";
+            position: absolute;
+            top: 24px; left: 50%;
+            transform: translateX(-50%);
+            width: 60px; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+        .hero-gala::after {
+            content: "";
+            position: absolute;
+            bottom: 24px; left: 50%;
+            transform: translateX(-50%);
+            width: 60px; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+        .hero-tag {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 24px;
+        }
+        .hero-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 48px;
+            font-weight: 300;
+            line-height: 1.05;
+            letter-spacing: -1px;
+            background: linear-gradient(135deg, var(--text) 0%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-line {
+            margin: 20px auto;
+            width: 1px; height: 32px;
+            background: var(--gold);
+        }
+        .hero-tagline {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 17px;
+            color: var(--text-soft);
+            line-height: 1.5;
+            max-width: 320px;
+            margin: 0 auto;
+        }
+
+        /* PROFILE */
+        .profile-block {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 32px 32px;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+            background: var(--card-2);
+        }
+        .profile-block .avatar {
+            width: 64px; height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--gold);
+            padding: 3px;
+        }
+        .profile-block .info .name {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 22px;
+            color: var(--text);
+            font-weight: 400;
+        }
+        .profile-block .info .role {
+            font-size: 11px;
+            color: var(--gold);
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* SECTION */
+        .section { padding: 48px 32px; }
+        .section-label {
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 28px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .section-label::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--line-2);
+        }
+
+        /* SERVICES */
+        .services {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+        .service-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            padding: 18px 0;
+            border-bottom: 1px solid var(--line);
+        }
+        .service-row:last-child { border-bottom: none; }
+        .service-row .name {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 18px;
+            color: var(--text);
+            font-weight: 400;
+        }
+        .service-row .num {
+            font-size: 11px;
+            color: var(--gold);
+            font-weight: 500;
+            letter-spacing: 2px;
+        }
+
+        /* PRESTIGE TESTIMONIAL */
+        .prestige {
+            margin: 0 32px;
+            padding: 36px 28px;
+            background: var(--card-2);
+            border: 1px solid var(--line-2);
+            border-radius: 0;
+            position: relative;
+        }
+        .prestige::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            width: 40px; height: 1px;
+            background: var(--gold);
+        }
+        .prestige::after {
+            content: "";
+            position: absolute;
+            bottom: 0; right: 0;
+            width: 40px; height: 1px;
+            background: var(--gold);
+        }
+        .prestige .quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 19px;
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+        .prestige .author {
+            font-size: 10px;
+            color: var(--gold);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* CLIENTS */
+        .clients-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0;
+            justify-content: center;
+        }
+        .client-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 16px;
+            color: var(--text-soft);
+            padding: 8px 16px;
+            position: relative;
+        }
+        .client-name:not(:last-child)::after {
+            content: "-";
+            position: absolute;
+            right: -2px;
+            color: var(--gold);
+        }
+
+        /* STATS */
+        .gala-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            border-top: 1px solid var(--line);
+            border-bottom: 1px solid var(--line);
+        }
+        .gala-stat {
+            padding: 28px 16px;
+            text-align: center;
+            border-right: 1px solid var(--line);
+        }
+        .gala-stat:last-child { border-right: none; }
+        .gala-stat .num {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 32px;
+            font-weight: 400;
+            color: var(--gold);
+            line-height: 1;
+        }
+        .gala-stat .label {
+            font-size: 10px;
+            color: var(--text-muted);
+            margin-top: 8px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        /* CONTACT */
+        .contact-rows { padding: 36px 32px; }
+        .contact-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--line);
+            text-decoration: none;
+            color: var(--text);
+        }
+        .contact-row:last-child { border-bottom: none; }
+        .contact-row .key {
+            font-size: 10px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .contact-row .val {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 15px;
+            color: var(--text);
+            transition: color 0.2s ease;
+        }
+        .contact-row:hover .val { color: var(--gold); }
+
+        /* CTA */
+        .cta-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            width: 100%;
+            padding: 22px;
+            background: transparent;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            border-left: none;
+            border-right: none;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            transition: all 0.4s ease;
+        }
+        .cta-btn:hover { background: var(--gold); color: var(--bg); }
+
+        /* QR */
+        .qr-section { padding: 44px 32px; text-align: center; }
+        .qr-heading {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 16px;
+            color: var(--gold);
+            margin-bottom: 22px;
+        }
+        #qrcode {
+            display: inline-block;
+            padding: 14px;
+            background: #fff;
+            border-radius: 0;
+        }
+        .vcard-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 22px;
+            padding: 14px;
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--line-2);
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .vcard-btn:hover { border-color: var(--gold); color: var(--gold); }
+
+        .footer {
+            text-align: center;
+            padding: 32px;
+            border-top: 1px solid var(--line);
+        }
+        .footer .footer-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 18px;
+            color: var(--gold);
+            margin-bottom: 8px;
+        }
+        .footer .footer-sub {
+            font-size: 10px;
+            color: var(--text-muted);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="hero-gala">
+            <div class="hero-tag">Atelier Naz Events</div>
+            <h1 class="hero-name">Naz<br>Erdogan</h1>
+            <div class="hero-line"></div>
+            <p class="hero-tagline">Hayalinizdeki gunu ozenle tasarlayan unutulmaz bir mimaridir.</p>
+        </div>
+
+        <div class="profile-block">
+            <img class="avatar" src="https://i.pravatar.cc/200?img=41" alt="Naz Erdogan">
+            <div class="info">
+                <div class="name">Naz Erdogan</div>
+                <div class="role">Etkinlik Mimari</div>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-label">Hizmet Atelyesi</div>
+            <div class="services">
+                <div class="service-row">
+                    <span class="name">Wedding Architecture</span>
+                    <span class="num">01</span>
+                </div>
+                <div class="service-row">
+                    <span class="name">Corporate Galas</span>
+                    <span class="num">02</span>
+                </div>
+                <div class="service-row">
+                    <span class="name">Private Celebrations</span>
+                    <span class="num">03</span>
+                </div>
+                <div class="service-row">
+                    <span class="name">Concept Design</span>
+                    <span class="num">04</span>
+                </div>
+                <div class="service-row">
+                    <span class="name">Destination Events</span>
+                    <span class="num">05</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="reveal">
+            <div class="prestige">
+                <p class="quote">"Naz, dugunumuzu kelimenin tam anlamiyla bir sanat eserine donusturdu. Her detayda bir incelik vardi."</p>
+                <div class="author">Sebnem & Tolga - Mandarin Oriental, 2025</div>
+            </div>
+        </div>
+
+        <div class="section reveal">
+            <div class="section-label">Atfedilen Markalar</div>
+            <div class="clients-list">
+                <span class="client-name">Mandarin Oriental</span>
+                <span class="client-name">Cirikan Sarayi</span>
+                <span class="client-name">Raffles</span>
+                <span class="client-name">Four Seasons</span>
+                <span class="client-name">Vakko</span>
+                <span class="client-name">Mercedes-Benz</span>
+            </div>
+        </div>
+
+        <div class="gala-stats reveal">
+            <div class="gala-stat">
+                <div class="num">9</div>
+                <div class="label">Yil</div>
+            </div>
+            <div class="gala-stat">
+                <div class="num">400+</div>
+                <div class="label">Etkinlik</div>
+            </div>
+            <div class="gala-stat">
+                <div class="num">180+</div>
+                <div class="label">Dugun</div>
+            </div>
+        </div>
+
+        <div class="contact-rows reveal">
+            <a href="tel:+905307773388" class="contact-row">
+                <span class="key">Telefon</span>
+                <span class="val">+90 530 777 33 88</span>
+            </a>
+            <a href="mailto:info@nazevents.com" class="contact-row">
+                <span class="key">E-posta</span>
+                <span class="val">info@nazevents.com</span>
+            </a>
+            <a href="https://nazevents.com" target="_blank" rel="noopener noreferrer" class="contact-row">
+                <span class="key">Web</span>
+                <span class="val">nazevents.com</span>
+            </a>
+            <a href="https://instagram.com/nazevents" target="_blank" rel="noopener noreferrer" class="contact-row">
+                <span class="key">Instagram</span>
+                <span class="val">@nazevents</span>
+            </a>
+        </div>
+
+        <a href="mailto:info@nazevents.com?subject=Etkinlik%20Talebi" class="cta-btn">Ozel Brifing Talep Et</a>
+
+        <div class="qr-section reveal">
+            <div class="qr-heading">Atelye Linki</div>
+            <div id="qrcode" role="img" aria-label="QR kod"></div>
+            <button class="vcard-btn" id="vcardBtn" type="button">Rehbere Kaydet</button>
+        </div>
+
+        <footer class="footer">
+            <div class="footer-name">Naz Events</div>
+            <div class="footer-sub">Atelier - Istanbul</div>
+        </footer>
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+        function initScrollReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function(el) { el.classList.add('visible'); }); return;
+            }
+            var io = new IntersectionObserver(function(entries) {
+                entries.forEach(function(e) {
+                    if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function(el) { io.observe(el); });
+        }
+        function initQR() {
+            var c = document.getElementById('qrcode');
+            if (c && typeof QRCode !== 'undefined') {
+                new QRCode(c, {
+                    text: window.location.href,
+                    width: 130, height: 130,
+                    colorDark: '#080508', colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            }
+        }
+        function initVCard() {
+            var btn = document.getElementById('vcardBtn');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var v = ['BEGIN:VCARD','VERSION:3.0','N:Erdogan;Naz;;;','FN:Naz Erdogan',
+                    'ORG:Naz Events Atelier','TITLE:Etkinlik Mimari',
+                    'TEL;TYPE=CELL:+90 530 777 33 88',
+                    'EMAIL;TYPE=INTERNET:info@nazevents.com',
+                    'URL:https://nazevents.com','END:VCARD'].join('\r\n');
+                var blob = new Blob([v], { type: 'text/vcard;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url; a.download = 'Naz_Erdogan.vcf';
+                document.body.appendChild(a); a.click();
+                document.body.removeChild(a); URL.revokeObjectURL(url);
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            initScrollReveal(); initQR(); initVCard();
+        });
+    })();
+    </script>
+</body>
+</html>
