@@ -10,7 +10,7 @@
 // =============================================================================
 
 import * as React from "react";
-import { Pencil, Share2, Copy, Check } from "lucide-react";
+import { Pencil, Share2, Check } from "lucide-react";
 
 interface Props {
   editHref: string;
