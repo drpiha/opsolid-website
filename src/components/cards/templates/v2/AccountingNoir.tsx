@@ -193,7 +193,7 @@ export function AccountingNoir({
   walletSlot,
 }: TemplateProps) {
   const t = COPY[locale] ?? COPY.de;
-  const primary = brandPrimaryHex || LOCKED_PRIMARY;
+  void brandPrimaryHex;
   const accent = brandAccentHex || LOCKED_ACCENT;
   // Use accent for the gold throughout (palette intent of NOIR)
   const gold = accent;

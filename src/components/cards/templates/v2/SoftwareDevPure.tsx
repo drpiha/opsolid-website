@@ -36,7 +36,7 @@ const INK_DIM = "#94a3b8";
 const HAIRLINE = "#e5e7eb";
 const HAIRLINE_SOFT = "#f1f5f9";
 
-function readableTextOn(hex: string | null | undefined): string {
+function _readableTextOn(hex: string | null | undefined): string {
   if (!hex) return "#1a1a1a";
   const h = hex.replace("#", "");
   const r = parseInt(h.slice(0, 2), 16);
@@ -44,6 +44,7 @@ function readableTextOn(hex: string | null | undefined): string {
   const b = parseInt(h.slice(4, 6), 16);
   return (0.299 * r + 0.587 * g + 0.114 * b) / 255 > 0.55 ? "#1a1a1a" : "#ffffff";
 }
+void _readableTextOn;
 
 function resolveAssetUrl(path: string | null | undefined): string | null {
   if (!path) return null;

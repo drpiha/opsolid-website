@@ -25,7 +25,6 @@ import {
   ArrowUpRight,
   CalendarClock,
   Code2,
-  Github,
   Mail,
   MessageCircle,
   Phone,
@@ -541,8 +540,7 @@ export function SoftwareDev({
       <footer className="mono px-6 py-6 text-center text-[10.5px]" style={{ color: INK_DIM }}>
         <div className="inline-flex items-center gap-2">
           <Code2 size={11} />
-          <span>// © {year} {cardData.name}</span>
-          <Github size={11} />
+          <span>{`// © ${year} ${cardData.name}`}</span>
         </div>
         <div className="mt-2 inline-flex items-center gap-1.5">
           <Shield size={11} strokeWidth={1.6} />

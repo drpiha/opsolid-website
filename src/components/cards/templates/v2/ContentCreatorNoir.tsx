@@ -41,7 +41,6 @@ import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#0f172a";
 const LOCKED_ACCENT = "#f97316";
-const BG = "#080808";
 const CARD = "#111111";
 const CARD_2 = "#181818";
 const RED = "#ff2a2a";
