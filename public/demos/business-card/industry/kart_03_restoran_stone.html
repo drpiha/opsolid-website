@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nour Kitchen - Sef Tarik Ozturk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f2ebe0;
+    --card: #fdf9f3;
+    --card-warm: #f6efe1;
+    --accent: #5c3d1e;
+    --accent-light: #7a5234;
+    --accent2: #e8a838;
+    --text: #2a1c0e;
+    --text-muted: #7a6449;
+    --border: #ddd0be;
+    --shadow: 0 4px 20px rgba(92,61,30,0.08);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  .card-wrapper {
+    width: 100%;
+    max-width: 460px;
+    background: var(--bg);
+    min-height: 100vh;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* 1. Warm Header with Wave */
+  .header {
+    position: relative;
+    background: linear-gradient(180deg, #f0e3cf 0%, var(--bg) 100%);
+    padding: 40px 28px 0;
+    text-align: center;
+  }
+  .header .est {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--accent2);
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  .header h1 {
+    font-family: 'Lora', serif;
+    font-size: 40px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: -0.5px;
+    line-height: 1.05;
+    margin-bottom: 4px;
+  }
+  .header h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent2);
+  }
+  .header .tagline {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+  }
+  .header-orn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 24px;
+  }
+  .header-orn .line {
+    width: 50px;
+    height: 1px;
+    background: var(--accent);
+    opacity: 0.4;
+  }
+  .header-orn .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent2);
+    border-radius: 50%;
+  }
+  .header svg.wave {
+    width: 100%;
+    height: 50px;
+    display: block;
+    margin-top: 8px;
+  }
+
+  /* 2. Oval Photo Frame */
+  .photo-block {
+    margin: -10px 28px 0;
+    position: relative;
+    text-align: center;
+  }
+  .photo-frame {
+    width: 200px;
+    height: 240px;
+    margin: 0 auto;
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    overflow: hidden;
+    border: 6px solid var(--card);
+    box-shadow: 0 12px 40px -10px rgba(92,61,30,0.3);
+    position: relative;
+  }
+  .photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .photo-frame::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(92,61,30,0.15) 100%);
+    border-radius: inherit;
+  }
+  .photo-meta {
+    margin-top: 18px;
+  }
+  .photo-meta .name {
+    font-family: 'Lora', serif;
+    font-size: 19px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .photo-meta .role {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  /* 3. Story */
+  .story {
+    padding: 36px 32px 28px;
+    text-align: center;
+  }
+  .story .label {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--accent2);
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+  .story h2 {
+    font-family: 'Lora', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 14px;
+    letter-spacing: -0.3px;
+  }
+  .story p {
+    font-family: 'Lora', serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--text);
+    font-weight: 400;
+  }
+  .story p + p { margin-top: 12px; }
+
+  /* 4. Warm Service Cards */
+  .services {
+    padding: 0 24px 28px;
+  }
+  .services-title {
+    font-family: 'Lora', serif;
+    font-size: 21px;
+    font-weight: 600;
+    color: var(--accent);
+    text-align: center;
+    margin-bottom: 6px;
+  }
+  .services-sub {
+    text-align: center;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 22px;
+  }
+  .service-card {
+    background: var(--card);
+    border-radius: 18px;
+    padding: 18px 18px;
+    margin-bottom: 10px;
+    display: grid;
+    grid-template-columns: 50px 1fr auto;
+    gap: 14px;
+    align-items: center;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    transition: transform 0.25s ease;
+  }
+  .service-card:hover { transform: translateX(3px); }
+  .service-card .ic {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #f4d49e 0%, var(--accent2) 100%);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--accent);
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    font-weight: 600;
+    box-shadow: 0 4px 10px rgba(232,168,56,0.3);
+  }
+  .service-card h3 {
+    font-family: 'Lora', serif;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1.2;
+  }
+  .service-card p {
+    font-size: 12.5px;
+    color: var(--text-muted);
+    margin-top: 2px;
+    font-weight: 500;
+  }
+  .service-card .price {
+    font-family: 'Lora', serif;
+    font-size: 17px;
+    color: var(--accent2);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  /* 5. Today Special */
+  .today-special {
+    margin: 0 24px 28px;
+    background: linear-gradient(135deg, #fdf4e3 0%, #f6e6c8 100%);
+    border-radius: 22px;
+    padding: 22px 24px;
+    border: 1.5px solid var(--accent2);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .today-special::before {
+    content: '';
+    position: absolute;
+    top: -30px; right: -30px;
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background: rgba(232,168,56,0.18);
+  }
+  .today-special .badge {
+    display: inline-block;
+    background: var(--accent);
+    color: var(--card);
+    padding: 4px 14px;
+    border-radius: 50px;
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .today-special h3 {
+    font-family: 'Lora', serif;
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .today-special p {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 8px;
+  }
+  .today-special .price-line {
+    font-family: 'Lora', serif;
+    font-size: 22px;
+    color: var(--accent2);
+    font-weight: 600;
+  }
+
+  /* 6. Testimonial */
+  .testimonial {
+    margin: 0 24px 28px;
+    background: var(--card);
+    border-radius: 22px;
+    padding: 28px 24px 22px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+    position: relative;
+  }
+  .testimonial::before {
+    content: '"';
+    position: absolute;
+    top: -8px;
+    left: 22px;
+    font-family: 'Lora', serif;
+    font-size: 64px;
+    color: var(--accent2);
+    line-height: 1;
+  }
+  .testimonial .quote {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 15px;
+    line-height: 1.65;
+    color: var(--text);
+    padding-top: 12px;
+    margin-bottom: 14px;
+  }
+  .testimonial .who {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-top: 1px dashed var(--border);
+    padding-top: 12px;
+  }
+  .testimonial .who img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--accent2);
+    object-fit: cover;
+  }
+  .testimonial .who .info {
+    font-size: 12.5px;
+  }
+  .testimonial .who .info strong {
+    font-family: 'Lora', serif;
+    color: var(--accent);
+    font-size: 14px;
+    display: block;
+  }
+  .testimonial .who .info span {
+    color: var(--text-muted);
+    font-style: italic;
+  }
+  .testimonial .stars {
+    color: var(--accent2);
+    margin-left: auto;
+    letter-spacing: 1.5px;
+  }
+
+  /* 7. Hours */
+  .hours {
+    margin: 0 24px 28px;
+    background: var(--card-warm);
+    border-radius: 22px;
+    padding: 22px 24px;
+    border: 1px dashed var(--border);
+  }
+  .hours h3 {
+    font-family: 'Lora', serif;
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--accent);
+    text-align: center;
+    margin-bottom: 14px;
+  }
+  .hours-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    font-family: 'Lora', serif;
+    font-size: 14px;
+  }
+  .hours-row + .hours-row { border-top: 1px dashed var(--border); }
+  .hours-row .day { color: var(--text); }
+  .hours-row .time { color: var(--accent2); font-weight: 600; }
+
+  /* 8. Contact */
+  .contact-buttons {
+    padding: 0 24px 24px;
+  }
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    padding: 16px;
+    border-radius: 50px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    text-decoration: none;
+    margin-bottom: 10px;
+    transition: all 0.25s ease;
+    border: 2px solid transparent;
+  }
+  .btn.primary {
+    background: var(--accent);
+    color: var(--card);
+    box-shadow: 0 6px 18px -4px rgba(92,61,30,0.4);
+  }
+  .btn.primary:hover { background: var(--accent-light); transform: translateY(-2px); }
+  .btn.secondary {
+    background: var(--card);
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+  .btn.secondary:hover {
+    background: var(--accent2);
+    color: var(--card);
+    border-color: var(--accent2);
+  }
+  .btn-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .btn-row .btn { margin-bottom: 0; }
+
+  /* QR */
+  .qr-section {
+    margin: 0 24px 24px;
+    background: var(--card);
+    border-radius: 22px;
+    padding: 24px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border);
+  }
+  .qr-section h3 {
+    font-family: 'Lora', serif;
+    font-size: 17px;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .qr-section p {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 18px;
+  }
+  #qrcode {
+    display: inline-block;
+    padding: 12px;
+    background: var(--card-warm);
+    border-radius: 14px;
+    border: 1px dashed var(--accent2);
+  }
+  #qrcode img, #qrcode canvas { display: block; }
+
+  .footer {
+    text-align: center;
+    padding: 22px;
+    font-family: 'Lora', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--text-muted);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { transition: none; opacity: 1; transform: none; }
+    .service-card, .btn { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card-wrapper">
+
+  <div class="header">
+    <div class="est">~ Karakoy 2018 ~</div>
+    <h1>Nour <em>Kitchen</em></h1>
+    <div class="tagline">Akdeniz &amp; Fusion Mutfagi</div>
+    <div class="header-orn">
+      <div class="line"></div>
+      <div class="dot"></div>
+      <div class="line"></div>
+    </div>
+    <svg class="wave" viewBox="0 0 460 50" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,30 Q115,5 230,30 T460,30 L460,50 L0,50 Z" fill="#f2ebe0"/>
+    </svg>
+  </div>
+
+  <div class="photo-block reveal">
+    <div class="photo-frame">
+      <img src="https://i.pravatar.cc/300?img=12" alt="Sef Tarik Ozturk">
+    </div>
+    <div class="photo-meta">
+      <div class="name">Sef Tarik Ozturk</div>
+      <div class="role">Executive Chef &amp; Kurucu</div>
+    </div>
+  </div>
+
+  <div class="story reveal">
+    <div class="label">~ Hikayemiz ~</div>
+    <h2>Topragin sundugu sofra</h2>
+    <p>Nour, "isik" demek. Mutfagimizda her sabah taze ciftciler, kadim Akdeniz lezzetleri ve modern tekniklerle bulusur.</p>
+    <p>8 yildir Karakoy'un kalbinde, sade ve durust mutfagin pesindeyiz.</p>
+  </div>
+
+  <div class="services reveal">
+    <div class="services-title">Sezonun Ozelleri</div>
+    <div class="services-sub">Mutfaktan secme tabaklar</div>
+
+    <div class="service-card">
+      <div class="ic">L</div>
+      <div>
+        <h3>Levrek Ceviche</h3>
+        <p>Yuzu, jalapeno, taze kisniş</p>
+      </div>
+      <div class="price">320</div>
+    </div>
+    <div class="service-card">
+      <div class="ic">K</div>
+      <div>
+        <h3>Kuzu Rack</h3>
+        <p>7 saat sous-vide, kekik jus</p>
+      </div>
+      <div class="price">580</div>
+    </div>
+    <div class="service-card">
+      <div class="ic">R</div>
+      <div>
+        <h3>Mevsim Risotto</h3>
+        <p>Porcini, parmigiano, beyaz truf</p>
+      </div>
+      <div class="price">280</div>
+    </div>
+    <div class="service-card">
+      <div class="ic">B</div>
+      <div>
+        <h3>Truffle Buratta</h3>
+        <p>San daniele, bal, ceviz</p>
+      </div>
+      <div class="price">240</div>
+    </div>
+  </div>
+
+  <div class="today-special reveal">
+    <div class="badge">Bugun Ne Var</div>
+    <h3>Sefin Sezon Menusu</h3>
+    <p>5 tabaklik degustasyon &middot; mevsime gore degisir &middot; sef tarafindan secilir</p>
+    <div class="price-line">650 TL</div>
+  </div>
+
+  <div class="testimonial reveal">
+    <div class="quote">Karakoy'un kalbinde, samimi servis ve mukemmel tabaklar. Levrek ceviche'yi denemeden donmeyin &mdash; Tarik Sef'in elinden cikan her seyde sicaklik var.</div>
+    <div class="who">
+      <img src="https://i.pravatar.cc/100?img=32" alt="Yorum sahibi">
+      <div class="info">
+        <strong>Selin K.</strong>
+        <span>Time Out Istanbul</span>
+      </div>
+      <div class="stars">5 / 5</div>
+    </div>
+  </div>
+
+  <div class="hours reveal">
+    <h3>Calisma Saatleri</h3>
+    <div class="hours-row">
+      <span class="day">Salı &mdash; Cumartesi</span>
+      <span class="time">12:00 - 23:00</span>
+    </div>
+    <div class="hours-row">
+      <span class="day">Pazar</span>
+      <span class="time">11:00 - 17:00</span>
+    </div>
+    <div class="hours-row">
+      <span class="day">Pazartesi</span>
+      <span class="time">Kapali</span>
+    </div>
+  </div>
+
+  <div class="contact-buttons reveal">
+    <a href="tel:+902124447788" class="btn primary">Rezervasyon Yap</a>
+    <div class="btn-row">
+      <a href="https://wa.me/902124447788?text=Merhaba" target="_blank" rel="noopener" class="btn secondary">WhatsApp</a>
+      <a href="#menu" class="btn secondary">Menu</a>
+    </div>
+    <a href="https://maps.google.com/?q=Nour+Kitchen+Karakoy" target="_blank" rel="noopener" class="btn secondary">Konumumuz</a>
+  </div>
+
+  <div class="qr-section reveal">
+    <h3>Sofraya davetlisin</h3>
+    <p>Telefonunla tara, kartviziti yaninda goture</p>
+    <div id="qrcode"></div>
+  </div>
+
+  <footer class="footer">
+    Nour Kitchen &middot; Karakoy 2018
+  </footer>
+
+</div>
+
+<script>
+  (function() {
+    var els = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+      els.forEach(function(el) { obs.observe(el); });
+    } else {
+      els.forEach(function(el) { el.classList.add('visible'); });
+    }
+  })();
+
+  (function() {
+    var qr = document.getElementById('qrcode');
+    if (qr && typeof QRCode !== 'undefined') {
+      new QRCode(qr, {
+        text: window.location.href,
+        width: 120,
+        height: 120,
+        colorDark: '#5c3d1e',
+        colorLight: '#fdf9f3',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

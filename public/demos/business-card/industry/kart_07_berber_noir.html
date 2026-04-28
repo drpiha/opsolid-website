@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Berk Kıraç — Kıraç Barber Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --bg:#0a0805;
+    --card:#141008;
+    --panel:#1f1a10;
+    --gold:#d4a017;
+    --gold-light:#e8c057;
+    --red:#8b1a1a;
+    --red-light:#a82929;
+    --text:#f0ede8;
+    --muted:#a09080;
+    --border:rgba(212,160,23,0.2);
+    --border-soft:rgba(255,255,255,0.06);
+  }
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    -webkit-font-smoothing:antialiased;
+  }
+  .card{
+    width:100%;
+    max-width:460px;
+    margin:0 auto;
+    background:var(--bg);
+    padding-bottom:32px;
+  }
+
+  .reveal{
+    opacity:0;
+    transform:translateY(30px);
+    transition:opacity 0.8s cubic-bezier(.16,1,.3,1), transform 0.8s cubic-bezier(.16,1,.3,1);
+  }
+  .reveal.visible{opacity:1;transform:translateY(0);}
+
+  /* Vintage stripe */
+  .stripe{
+    height:6px;
+    background:repeating-linear-gradient(90deg,
+      var(--gold) 0px, var(--gold) 12px,
+      var(--red) 12px, var(--red) 24px,
+      var(--text) 24px, var(--text) 36px
+    );
+  }
+  .stripe.thin{
+    height:3px;
+    background:linear-gradient(90deg,transparent 0%,var(--gold) 50%,transparent 100%);
+  }
+
+  /* Header */
+  .header{
+    background:var(--card);
+    padding:48px 28px 36px;
+    text-align:center;
+    position:relative;
+    border-bottom:1px solid var(--border-soft);
+  }
+  .header .est{
+    display:inline-block;
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:13px;
+    color:var(--gold);
+    letter-spacing:3px;
+    margin-bottom:14px;
+    padding-bottom:10px;
+    position:relative;
+  }
+  .header .est::after{
+    content:'';
+    position:absolute;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:36px;
+    height:1px;
+    background:var(--gold);
+  }
+  .header .name-display{
+    font-family:'Bebas Neue',sans-serif;
+    font-weight:400;
+    font-size:64px;
+    line-height:0.9;
+    letter-spacing:2px;
+    color:var(--text);
+    margin-bottom:6px;
+  }
+  .header .name-display .second{
+    color:var(--gold);
+    display:block;
+    font-size:64px;
+  }
+  .header .tagline{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:15px;
+    color:var(--muted);
+    margin-top:14px;
+    letter-spacing:0.5px;
+  }
+  .header .ornament{
+    margin-top:18px;
+    color:var(--gold);
+    font-size:14px;
+    letter-spacing:8px;
+  }
+
+  /* Profile */
+  .profile-band{
+    background:var(--panel);
+    padding:24px 28px;
+    display:grid;
+    grid-template-columns:80px 1fr;
+    gap:18px;
+    align-items:center;
+    border-top:1px solid var(--border-soft);
+    border-bottom:1px solid var(--border-soft);
+  }
+  .profile-photo{
+    width:80px;
+    height:80px;
+    border-radius:50%;
+    padding:3px;
+    background:linear-gradient(135deg,var(--gold) 0%,var(--red) 100%);
+  }
+  .profile-photo img{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid var(--panel);
+    display:block;
+    filter:saturate(0.75) contrast(1.1);
+  }
+  .profile-info .role{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:13px;
+    color:var(--gold);
+    letter-spacing:1px;
+    margin-bottom:4px;
+  }
+  .profile-info .pname{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:24px;
+    letter-spacing:2px;
+    color:var(--text);
+    line-height:1.1;
+    margin-bottom:6px;
+  }
+  .profile-info .city{
+    font-family:'Inter',sans-serif;
+    font-weight:400;
+    font-size:11px;
+    color:var(--muted);
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+  }
+
+  /* Stats vintage */
+  .stats{
+    padding:36px 28px 0;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:0;
+    border-bottom:1px solid var(--border-soft);
+    padding-bottom:36px;
+  }
+  .stat{
+    text-align:center;
+    padding:0 8px;
+    border-right:1px solid var(--border-soft);
+  }
+  .stat:last-child{border-right:none;}
+  .stat-num{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:42px;
+    color:var(--gold);
+    line-height:1;
+    letter-spacing:1px;
+    margin-bottom:6px;
+  }
+  .stat-label{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:11px;
+    color:var(--muted);
+    letter-spacing:1.5px;
+    text-transform:lowercase;
+  }
+
+  /* Section */
+  .section{
+    padding:36px 28px 0;
+  }
+  .section-tag{
+    font-family:'Inter',sans-serif;
+    font-weight:400;
+    font-size:10.5px;
+    letter-spacing:4px;
+    text-transform:uppercase;
+    color:var(--gold);
+    text-align:center;
+    margin-bottom:6px;
+  }
+  .section-title{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:30px;
+    letter-spacing:2.5px;
+    text-align:center;
+    margin-bottom:6px;
+    color:var(--text);
+  }
+  .section-sub{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:13px;
+    color:var(--muted);
+    text-align:center;
+    margin-bottom:24px;
+  }
+  .section-sub::after{
+    content:'';
+    display:block;
+    width:36px;
+    height:1px;
+    background:var(--gold);
+    margin:14px auto 0;
+  }
+
+  /* Service list */
+  .service-list{
+    background:var(--panel);
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+  }
+  .service-row{
+    display:flex;
+    align-items:baseline;
+    padding:16px 24px;
+    border-bottom:1px dashed var(--border-soft);
+  }
+  .service-row:last-child{border-bottom:none;}
+  .service-row.featured{
+    background:linear-gradient(90deg,rgba(212,160,23,0.08) 0%,transparent 100%);
+    border-left:3px solid var(--gold);
+  }
+  .service-name{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:500;
+    font-size:16px;
+    color:var(--text);
+    letter-spacing:0.3px;
+  }
+  .service-row.featured .service-name{color:var(--gold-light);}
+  .service-dots{
+    flex:1;
+    margin:0 12px;
+    border-bottom:1px dotted rgba(160,144,128,0.3);
+    align-self:center;
+    margin-bottom:5px;
+  }
+  .service-price{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:20px;
+    color:var(--gold);
+    letter-spacing:1px;
+  }
+  .service-row.featured .service-price{color:var(--gold-light);font-size:22px;}
+
+  /* Gallery */
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:8px;
+    padding:0 28px;
+  }
+  .gallery a{
+    display:block;
+    aspect-ratio:1;
+    overflow:hidden;
+    position:relative;
+    border:1px solid var(--border-soft);
+  }
+  .gallery img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:transform 0.5s cubic-bezier(.16,1,.3,1), filter 0.5s ease;
+    filter:saturate(0.8) contrast(1.05);
+  }
+  .gallery a:hover img{
+    transform:scale(1.06);
+    filter:saturate(1) contrast(1.1);
+  }
+  .gallery a::after{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:linear-gradient(180deg,transparent 60%,rgba(0,0,0,0.5) 100%);
+    pointer-events:none;
+  }
+
+  /* Testimonial */
+  .quote{
+    margin:36px 28px 0;
+    padding:32px 28px 28px;
+    background:var(--panel);
+    border:1px solid var(--border);
+    text-align:center;
+    position:relative;
+  }
+  .quote::before, .quote::after{
+    content:'';
+    position:absolute;
+    width:24px;
+    height:24px;
+    border:1px solid var(--gold);
+  }
+  .quote::before{top:-1px;left:-1px;border-right:none;border-bottom:none;}
+  .quote::after{bottom:-1px;right:-1px;border-left:none;border-top:none;}
+  .quote .qmark{
+    font-family:'Cormorant Garamond',serif;
+    font-size:48px;
+    color:var(--gold);
+    line-height:1;
+    margin-bottom:8px;
+    font-style:italic;
+  }
+  .quote p{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:16px;
+    line-height:1.6;
+    color:var(--text);
+    margin-bottom:14px;
+  }
+  .quote cite{
+    font-family:'Inter',sans-serif;
+    font-style:normal;
+    font-size:10.5px;
+    font-weight:400;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--gold);
+  }
+
+  /* Hours */
+  .hours-grid{
+    margin:0 28px;
+    background:var(--panel);
+    border:1px solid var(--border-soft);
+  }
+  .hours-row-h{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:14px 22px;
+    border-bottom:1px solid var(--border-soft);
+    font-size:14px;
+  }
+  .hours-row-h:last-child{border-bottom:none;}
+  .hours-row-h.today{
+    background:rgba(212,160,23,0.08);
+    border-left:3px solid var(--gold);
+  }
+  .hours-row-h .day{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:500;
+    color:var(--text);
+    letter-spacing:0.5px;
+  }
+  .hours-row-h .time{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:15px;
+    color:var(--gold);
+    letter-spacing:1px;
+  }
+  .hours-row-h .closed{color:var(--red-light);font-style:italic;}
+
+  /* CTA */
+  .cta-stack{
+    margin:36px 28px 0;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:18px 24px;
+    text-decoration:none;
+    font-family:'Bebas Neue',sans-serif;
+    font-size:16px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    transition:all 0.3s ease;
+    border:1.5px solid transparent;
+  }
+  .btn-gold{
+    background:transparent;
+    color:var(--gold);
+    border-color:var(--gold);
+    position:relative;
+    overflow:hidden;
+  }
+  .btn-gold::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:linear-gradient(135deg,var(--gold) 0%,var(--gold-light) 100%);
+    transform:translateY(100%);
+    transition:transform 0.4s cubic-bezier(.16,1,.3,1);
+    z-index:0;
+  }
+  .btn-gold:hover{color:var(--bg);}
+  .btn-gold:hover::before{transform:translateY(0);}
+  .btn-gold span{position:relative;z-index:1;}
+  .btn-line{
+    background:var(--card);
+    color:var(--text);
+    border-color:var(--border-soft);
+  }
+  .btn-line:hover{
+    border-color:var(--gold);
+    color:var(--gold);
+  }
+  .btn-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  /* QR */
+  .qr-block{
+    margin:36px 28px 0;
+    padding:32px 28px;
+    background:var(--panel);
+    border:1px solid var(--border-soft);
+    text-align:center;
+    position:relative;
+  }
+  .qr-block::before{
+    content:'';
+    position:absolute;
+    top:0;left:24px;right:24px;
+    height:1px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  }
+  .qr-block .label{
+    font-family:'Inter',sans-serif;
+    font-weight:400;
+    font-size:10.5px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:18px;
+  }
+  #qrcode{
+    display:inline-block;
+    padding:14px;
+    background:#fff;
+    border-radius:4px;
+  }
+
+  /* Footer */
+  .footer{
+    text-align:center;
+    padding:32px 28px 0;
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:13px;
+    color:var(--muted);
+    letter-spacing:0.5px;
+  }
+  .footer .ornament{
+    color:var(--gold);
+    margin:0 8px;
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    .gallery img{transition:none;}
+  }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <div class="stripe"></div>
+
+  <header class="header reveal">
+    <div class="est">— Est. 2014 · İzmir —</div>
+    <h1 class="name-display">BERK<span class="second">KIRAÇ</span></h1>
+    <div class="tagline">Master Berber & Hair Stylist</div>
+    <div class="ornament">&#10086; &#10086; &#10086;</div>
+  </header>
+
+  <div class="stripe"></div>
+
+  <div class="profile-band reveal">
+    <div class="profile-photo">
+      <img src="https://i.pravatar.cc/200?img=33" alt="Berk Kıraç">
+    </div>
+    <div class="profile-info">
+      <div class="role">Founder & Master</div>
+      <div class="pname">Kıraç Barber Studio</div>
+      <div class="city">Alsancak — İzmir</div>
+    </div>
+  </div>
+
+  <div class="stats reveal">
+    <div class="stat">
+      <div class="stat-num">12</div>
+      <div class="stat-label">yıl</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">4K+</div>
+      <div class="stat-label">müşteri</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">28K</div>
+      <div class="stat-label">takipçi</div>
+    </div>
+  </div>
+
+  <section class="section reveal">
+    <div class="section-tag">— Menu —</div>
+    <h2 class="section-title">Hizmetler</h2>
+    <p class="section-sub">Atelyenin sunduğu klasik & modern bakım</p>
+  </section>
+  <div class="service-list reveal">
+    <div class="service-row">
+      <span class="service-name">Klasik Tıraş</span>
+      <span class="service-dots"></span>
+      <span class="service-price">₺250</span>
+    </div>
+    <div class="service-row">
+      <span class="service-name">Saç Kesimi</span>
+      <span class="service-dots"></span>
+      <span class="service-price">₺350</span>
+    </div>
+    <div class="service-row">
+      <span class="service-name">Sakal Şekillendirme</span>
+      <span class="service-dots"></span>
+      <span class="service-price">₺200</span>
+    </div>
+    <div class="service-row">
+      <span class="service-name">Cilt Bakımı</span>
+      <span class="service-dots"></span>
+      <span class="service-price">₺400</span>
+    </div>
+    <div class="service-row featured">
+      <span class="service-name">Komple Paket</span>
+      <span class="service-dots"></span>
+      <span class="service-price">₺750</span>
+    </div>
+  </div>
+
+  <section class="section reveal">
+    <div class="section-tag">— Atelye —</div>
+    <h2 class="section-title">Çalışmalarım</h2>
+    <p class="section-sub">Son dönem işler</p>
+  </section>
+  <div class="gallery reveal">
+    <a href="https://instagram.com/berkkiracbarber" target="_blank" rel="noopener" aria-label="Çalışma 1">
+      <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=460&h=460&fit=crop&q=80" alt="Saç stili 1" loading="lazy">
+    </a>
+    <a href="https://instagram.com/berkkiracbarber" target="_blank" rel="noopener" aria-label="Çalışma 2">
+      <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=460&h=460&fit=crop&q=80" alt="Saç stili 2" loading="lazy">
+    </a>
+    <a href="https://instagram.com/berkkiracbarber" target="_blank" rel="noopener" aria-label="Çalışma 3">
+      <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=460&h=460&fit=crop&q=80" alt="Saç stili 3" loading="lazy">
+    </a>
+    <a href="https://instagram.com/berkkiracbarber" target="_blank" rel="noopener" aria-label="Çalışma 4">
+      <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=460&h=460&fit=crop&q=80" alt="Saç stili 4" loading="lazy">
+    </a>
+  </div>
+
+  <div class="quote reveal">
+    <div class="qmark">&#10078;</div>
+    <p>Şehirdeki en iyi berber. Berk Abi'nin elinden çıkan her tıraş mükemmel.</p>
+    <cite>— Mert A.</cite>
+  </div>
+
+  <section class="section reveal">
+    <div class="section-tag">— Saatler —</div>
+    <h2 class="section-title">Çalışma Saatleri</h2>
+    <p class="section-sub">Atelyeyi ziyaret etmek için</p>
+  </section>
+  <div class="hours-grid reveal" id="hoursGrid">
+    <div class="hours-row-h" data-day="1"><span class="day">Pazartesi</span><span class="time">10:00 — 21:00</span></div>
+    <div class="hours-row-h" data-day="2"><span class="day">Salı</span><span class="time">10:00 — 21:00</span></div>
+    <div class="hours-row-h" data-day="3"><span class="day">Çarşamba</span><span class="time">10:00 — 21:00</span></div>
+    <div class="hours-row-h" data-day="4"><span class="day">Perşembe</span><span class="time">10:00 — 21:00</span></div>
+    <div class="hours-row-h" data-day="5"><span class="day">Cuma</span><span class="time">10:00 — 22:00</span></div>
+    <div class="hours-row-h" data-day="6"><span class="day">Cumartesi</span><span class="time">10:00 — 22:00</span></div>
+    <div class="hours-row-h" data-day="0"><span class="day">Pazar</span><span class="time closed">Kapalı</span></div>
+  </div>
+
+  <div class="cta-stack reveal">
+    <a href="https://wa.me/905324448877?text=Merhaba%2C%20randevu%20almak%20istiyorum." class="btn btn-gold" target="_blank" rel="noopener">
+      <span>Randevu Al</span>
+    </a>
+    <div class="btn-row">
+      <a href="tel:+905324448877" class="btn btn-line">Telefon</a>
+      <a href="https://instagram.com/berkkiracbarber" class="btn btn-line" target="_blank" rel="noopener">Instagram</a>
+    </div>
+    <a href="https://kiracbarber.com" class="btn btn-line" target="_blank" rel="noopener">Galeri / Website</a>
+  </div>
+
+  <div class="qr-block reveal">
+    <div class="label">Randevu için QR Okutun</div>
+    <div id="qrcode"></div>
+  </div>
+
+  <div class="footer reveal">
+    Kıraç Barber Studio <span class="ornament">&#10086;</span> 2026 <span class="ornament">&#10086;</span> İzmir
+  </div>
+
+  <div class="stripe" style="margin-top:32px;"></div>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var today = new Date().getDay();
+  document.querySelectorAll('#hoursGrid .hours-row-h').forEach(function(r){
+    if(parseInt(r.getAttribute('data-day'),10) === today){r.classList.add('today');}
+  });
+
+  try{
+    new QRCode(document.getElementById('qrcode'),{
+      text:window.location.href,
+      width:130,height:130,
+      colorDark:'#0a0805',colorLight:'#ffffff',
+      correctLevel:QRCode.CorrectLevel.H
+    });
+  }catch(e){
+    var q=document.getElementById('qrcode');
+    q.textContent='QR kod yüklenemedi';
+    q.style.color='#a09080';q.style.padding='20px';q.style.fontSize='12px';
+  }
+
+  var els = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+    },{threshold:0.1, rootMargin:'0px 0px -40px 0px'});
+    els.forEach(function(el){io.observe(el);});
+  }else{
+    els.forEach(function(el){el.classList.add('visible');});
+  }
+})();
+</script>
+</body>
+</html>

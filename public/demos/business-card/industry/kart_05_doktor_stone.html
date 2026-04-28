@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Dr. Emre Kaya — Holistik Ortopedi Yaklaşımı</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --bg:#f0ebe4;
+    --card:#fdf8f3;
+    --warm:#f7f0e6;
+    --sage:#4a7c6f;
+    --sage-dark:#365e54;
+    --sage-soft:#a8c0b6;
+    --gold:#c8a500;
+    --gold-warm:#b8951e;
+    --text:#1e2d26;
+    --muted:#6b7c72;
+    --border:#dcd4c5;
+  }
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Nunito',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    -webkit-font-smoothing:antialiased;
+  }
+  .card{
+    width:100%;
+    max-width:460px;
+    margin:0 auto;
+    background:var(--bg);
+    padding-bottom:32px;
+  }
+  .reveal{
+    opacity:0;
+    transform:translateY(30px);
+    transition:opacity 0.8s cubic-bezier(.16,1,.3,1), transform 0.8s cubic-bezier(.16,1,.3,1);
+  }
+  .reveal.visible{opacity:1;transform:translateY(0);}
+
+  /* Warm header */
+  .header{
+    background:linear-gradient(180deg,#ede4d3 0%,#f0ebe4 100%);
+    padding:36px 28px 0;
+    text-align:center;
+    position:relative;
+  }
+  .header .stamp{
+    display:inline-block;
+    padding:6px 16px;
+    border:1px solid var(--sage);
+    border-radius:999px;
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-size:11px;
+    letter-spacing:1px;
+    color:var(--sage);
+    margin-bottom:14px;
+    background:rgba(74,124,111,0.05);
+  }
+  .header h1{
+    font-family:'Playfair Display',serif;
+    font-weight:400;
+    font-size:13px;
+    letter-spacing:5px;
+    color:var(--muted);
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .header .clinic-name{
+    font-family:'Playfair Display',serif;
+    font-weight:700;
+    font-size:24px;
+    color:var(--text);
+    margin-bottom:24px;
+  }
+
+  /* SVG wave */
+  .wave{
+    display:block;
+    width:100%;
+    height:60px;
+    margin-top:0;
+  }
+  .wave path{fill:var(--card);}
+
+  /* Profile */
+  .profile{
+    background:var(--card);
+    padding:8px 28px 36px;
+    text-align:center;
+    position:relative;
+  }
+  .profile-photo-wrap{
+    width:140px;
+    height:140px;
+    margin:0 auto 22px;
+    border-radius:50%;
+    padding:5px;
+    background:linear-gradient(135deg,var(--sage) 0%,var(--gold-warm) 100%);
+    box-shadow:0 8px 32px -8px rgba(74,124,111,0.35);
+  }
+  .profile-photo-wrap img{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid var(--card);
+    display:block;
+    filter:sepia(0.1) saturate(0.95);
+  }
+  .name{
+    font-family:'Playfair Display',serif;
+    font-weight:700;
+    font-size:32px;
+    line-height:1.1;
+    margin-bottom:6px;
+  }
+  .name .accent{color:var(--sage);font-style:italic;font-weight:400;}
+  .role{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:15px;
+    color:var(--muted);
+    margin-bottom:14px;
+  }
+  .ornament{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    color:var(--gold-warm);
+    font-size:14px;
+  }
+  .ornament::before, .ornament::after{
+    content:'';
+    width:40px;
+    height:1px;
+    background:var(--gold-warm);
+    opacity:0.4;
+  }
+
+  /* Section frame */
+  .section{
+    margin:0 16px 22px;
+    background:var(--card);
+    border-radius:14px;
+    padding:28px 24px;
+    border:1px solid var(--border);
+    box-shadow:0 4px 16px -4px rgba(74,124,111,0.08);
+  }
+
+  .section-title{
+    font-family:'Playfair Display',serif;
+    font-weight:700;
+    font-size:20px;
+    color:var(--text);
+    margin-bottom:6px;
+    text-align:center;
+  }
+  .section-subtitle{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-size:12.5px;
+    color:var(--sage);
+    margin-bottom:22px;
+    text-align:center;
+    letter-spacing:0.5px;
+  }
+
+  /* Philosophy */
+  .philosophy{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:16px;
+    line-height:1.7;
+    color:var(--text);
+    text-align:center;
+    padding:0 8px;
+  }
+  .philosophy::before, .philosophy::after{
+    content:'';
+    display:block;
+    width:32px;
+    height:1px;
+    background:var(--gold-warm);
+    margin:0 auto;
+    opacity:0.5;
+  }
+  .philosophy::before{margin-bottom:18px;}
+  .philosophy::after{margin-top:18px;}
+
+  /* Specialties */
+  .spec-list{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:12px;
+  }
+  .spec-item{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:14px 16px;
+    background:var(--warm);
+    border:1px solid var(--border);
+    border-radius:10px;
+    transition:transform 0.25s ease, border-color 0.25s ease;
+  }
+  .spec-item:hover{
+    transform:translateX(2px);
+    border-color:var(--sage);
+  }
+  .spec-icon{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
+    background:rgba(74,124,111,0.12);
+    color:var(--sage);
+    flex-shrink:0;
+  }
+  .spec-name{
+    font-family:'Nunito',sans-serif;
+    font-weight:600;
+    font-size:14px;
+    color:var(--text);
+    line-height:1.3;
+  }
+  .spec-desc{
+    font-size:12px;
+    color:var(--muted);
+    line-height:1.4;
+    margin-top:2px;
+  }
+
+  /* Steps */
+  .steps{
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+  .step{
+    display:grid;
+    grid-template-columns:48px 1fr;
+    gap:14px;
+    align-items:flex-start;
+  }
+  .step-num{
+    width:48px;
+    height:48px;
+    border-radius:50%;
+    background:var(--sage);
+    color:#fff;
+    font-family:'Playfair Display',serif;
+    font-weight:700;
+    font-size:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    box-shadow:0 4px 14px -4px rgba(74,124,111,0.5);
+  }
+  .step-body h4{
+    font-family:'Playfair Display',serif;
+    font-weight:700;
+    font-size:15px;
+    color:var(--text);
+    margin-bottom:4px;
+  }
+  .step-body p{
+    font-size:13px;
+    color:var(--muted);
+    line-height:1.5;
+  }
+
+  /* Hours */
+  .hours-list{
+    background:var(--warm);
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+  }
+  .hours-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 16px;
+    border-bottom:1px solid var(--border);
+    font-size:13.5px;
+  }
+  .hours-row:last-child{border-bottom:none;}
+  .hours-row.today{
+    background:rgba(74,124,111,0.1);
+    color:var(--sage-dark);
+    font-weight:600;
+  }
+  .hours-row .day{font-weight:500;}
+  .hours-row .time{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    color:var(--muted);
+  }
+  .hours-row.today .time{color:var(--sage-dark);font-style:normal;font-weight:600;}
+  .hours-row .closed{color:var(--gold-warm);font-style:italic;}
+
+  /* Quote */
+  .quote-block{
+    background:linear-gradient(135deg,#ede4d3 0%,#e6dac5 100%);
+    border-radius:14px;
+    padding:32px 28px;
+    text-align:center;
+    margin:0 16px 22px;
+    position:relative;
+    overflow:hidden;
+  }
+  .quote-block::before{
+    content:'"';
+    position:absolute;
+    top:-12px;
+    left:18px;
+    font-family:'Playfair Display',serif;
+    font-size:90px;
+    color:var(--gold-warm);
+    opacity:0.4;
+    line-height:1;
+    font-weight:700;
+  }
+  .quote-block p{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:16px;
+    line-height:1.7;
+    color:var(--text);
+    margin-bottom:14px;
+    position:relative;
+  }
+  .quote-block cite{
+    font-family:'Nunito',sans-serif;
+    font-style:normal;
+    font-size:11.5px;
+    font-weight:600;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--sage-dark);
+  }
+
+  /* CTA */
+  .cta-stack{
+    margin:0 16px 22px;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:16px 24px;
+    border-radius:999px;
+    text-decoration:none;
+    font-family:'Nunito',sans-serif;
+    font-size:14px;
+    font-weight:700;
+    letter-spacing:0.5px;
+    transition:all 0.3s ease;
+    border:1.5px solid transparent;
+  }
+  .btn-primary{
+    background:var(--sage);
+    color:#fff;
+    box-shadow:0 6px 20px -6px rgba(74,124,111,0.5);
+  }
+  .btn-primary:hover{
+    background:var(--sage-dark);
+    transform:translateY(-2px);
+    box-shadow:0 10px 28px -6px rgba(74,124,111,0.55);
+  }
+  .btn-line{
+    background:var(--card);
+    color:var(--text);
+    border-color:var(--border);
+  }
+  .btn-line:hover{
+    border-color:var(--sage);
+    color:var(--sage);
+  }
+  .btn-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  /* QR */
+  .qr-section{
+    margin:0 16px 22px;
+    text-align:center;
+    padding:32px 24px;
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:14px;
+  }
+  .qr-section .label{
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-size:13px;
+    color:var(--muted);
+    margin-bottom:18px;
+  }
+  #qrcode{
+    display:inline-block;
+    padding:14px;
+    background:var(--warm);
+    border:2px solid var(--border);
+    border-radius:14px;
+  }
+
+  .footer{
+    text-align:center;
+    padding:18px 16px 0;
+    font-family:'Playfair Display',serif;
+    font-style:italic;
+    font-size:12px;
+    color:var(--muted);
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+  }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <header class="header reveal">
+    <div class="stamp">M.D. — Fellowship · Est. 2010</div>
+    <h1>Holistik Yaklaşım</h1>
+    <div class="clinic-name">Kaya Ortopedi Kliniği</div>
+  </header>
+
+  <svg class="wave" viewBox="0 0 460 60" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0,30 C115,60 230,0 345,30 C400,45 430,40 460,30 L460,60 L0,60 Z"/>
+  </svg>
+
+  <section class="profile reveal">
+    <div class="profile-photo-wrap">
+      <img src="https://i.pravatar.cc/200?img=15" alt="Dr. Emre Kaya">
+    </div>
+    <h2 class="name"><span class="accent">Dr.</span> Emre Kaya</h2>
+    <p class="role">Ortopedi & Travmatoloji Uzmanı</p>
+    <div class="ornament">&#10047;</div>
+  </section>
+
+  <section class="section reveal">
+    <h3 class="section-title">Yaklaşımım</h3>
+    <p class="section-subtitle">Bütünsel iyileşme felsefesi</p>
+    <p class="philosophy">
+      Hareket, insanın en temel özgürlüğüdür. 16 yıllık klinik deneyimimde, ameliyat masasından çok hastanın yaşam kalitesine odaklandım. Her vaka kendine özgüdür, her tedavi de öyle olmalıdır.
+    </p>
+  </section>
+
+  <section class="section reveal">
+    <h3 class="section-title">Uzmanlıklar</h3>
+    <p class="section-subtitle">Uyguladığım tedavi alanları</p>
+    <div class="spec-list">
+      <div class="spec-item">
+        <div class="spec-icon">&#x1F9B5;</div>
+        <div>
+          <div class="spec-name">Diz & Kalça Replasmanı</div>
+          <div class="spec-desc">Modern protez teknikleri</div>
+        </div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-icon">&#x26BD;</div>
+        <div>
+          <div class="spec-name">Spor Yaralanmaları</div>
+          <div class="spec-desc">Profesyonel & amatör sporcu bakımı</div>
+        </div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-icon">&#x1F9B4;</div>
+        <div>
+          <div class="spec-name">Omurga Cerrahisi</div>
+          <div class="spec-desc">Minimal invaziv yaklaşımlar</div>
+        </div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-icon">&#x1F50D;</div>
+        <div>
+          <div class="spec-name">Artroskopi & Fraktür Tedavisi</div>
+          <div class="spec-desc">Kapalı eklem cerrahisi ve travma</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <h3 class="section-title">Randevu Süreciniz</h3>
+    <p class="section-subtitle">Adım adım rehber</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">I</div>
+        <div class="step-body">
+          <h4>İlk İletişim</h4>
+          <p>WhatsApp veya telefonla bizi arayın, durumunuzu kısaca paylaşın.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">II</div>
+        <div class="step-body">
+          <h4>Randevu Planı</h4>
+          <p>Sizin için uygun bir saate randevu oluşturulur, hatırlatma gönderilir.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">III</div>
+        <div class="step-body">
+          <h4>Muayene & Plan</h4>
+          <p>Detaylı muayene sonrası kişiye özel tedavi planı birlikte oluşturulur.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">IV</div>
+        <div class="step-body">
+          <h4>Takip Süreci</h4>
+          <p>Tedavi sürecinde düzenli takip ve bireysel danışmanlık.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section reveal">
+    <h3 class="section-title">Klinik Saatleri</h3>
+    <p class="section-subtitle">Sizi bekliyoruz</p>
+    <div class="hours-list" id="hoursList">
+      <div class="hours-row" data-day="1"><span class="day">Pazartesi</span><span class="time">09:00 — 17:00</span></div>
+      <div class="hours-row" data-day="2"><span class="day">Salı</span><span class="time">09:00 — 17:00</span></div>
+      <div class="hours-row" data-day="3"><span class="day">Çarşamba</span><span class="time">09:00 — 17:00</span></div>
+      <div class="hours-row" data-day="4"><span class="day">Perşembe</span><span class="time">09:00 — 17:00</span></div>
+      <div class="hours-row" data-day="5"><span class="day">Cuma</span><span class="time">09:00 — 17:00</span></div>
+      <div class="hours-row" data-day="6"><span class="day">Cumartesi</span><span class="time">09:00 — 13:00</span></div>
+      <div class="hours-row" data-day="0"><span class="day">Pazar</span><span class="time closed">Kapalı</span></div>
+    </div>
+  </section>
+
+  <div class="quote-block reveal">
+    <p>Dr. Kaya'nın ameliyatı sayesinde 6 ay önce yürüyemiyordum, şimdi koşuyorum.</p>
+    <cite>— Ali T.</cite>
+  </div>
+
+  <div class="cta-stack reveal">
+    <a href="https://wa.me/903127772233?text=Merhaba%2C%20randevu%20almak%20istiyorum." class="btn btn-primary" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Randevu Al
+    </a>
+    <div class="btn-row">
+      <a href="mailto:dr.kaya@kayaortopedi.com.tr" class="btn btn-line">E-posta</a>
+      <a href="https://maps.google.com/?q=Cankaya+Atatürk+Bul+124+Ankara" class="btn btn-line" target="_blank" rel="noopener">Harita</a>
+    </div>
+    <a href="https://linkedin.com/in/dremrekaya" class="btn btn-line" target="_blank" rel="noopener">LinkedIn Profili</a>
+  </div>
+
+  <div class="qr-section reveal">
+    <div class="label">Randevu için QR okutun</div>
+    <div id="qrcode"></div>
+  </div>
+
+  <div class="footer reveal">— Kaya Ortopedi Kliniği · 2026 · Ankara —</div>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var today = new Date().getDay();
+  document.querySelectorAll('#hoursList .hours-row').forEach(function(r){
+    if(parseInt(r.getAttribute('data-day'),10) === today){r.classList.add('today');}
+  });
+
+  try{
+    new QRCode(document.getElementById('qrcode'),{
+      text:window.location.href,
+      width:130,height:130,
+      colorDark:'#4a7c6f',colorLight:'#f7f0e6',
+      correctLevel:QRCode.CorrectLevel.M
+    });
+  }catch(e){
+    var q=document.getElementById('qrcode');
+    q.textContent='QR kod yüklenemedi';
+    q.style.color='#6b7c72';q.style.padding='20px';q.style.fontSize='12px';
+  }
+
+  var els = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+    },{threshold:0.1, rootMargin:'0px 0px -40px 0px'});
+    els.forEach(function(el){io.observe(el);});
+  }else{
+    els.forEach(function(el){el.classList.add('visible');});
+  }
+})();
+</script>
+</body>
+</html>

@@ -369,24 +369,36 @@ export class RetellProvider implements VoiceProvider {
   /**
    * Verify Retell webhook signature.
    *
-   * Retell signs the raw request body with HMAC-SHA256, key = API key,
-   * digest base64-encoded. The provider sends it in `x-retell-signature`.
-   *
-   * We use timingSafeEqual to avoid leaking byte-by-byte timing info.
+   * Retell's signature format is `v=<unix_ms>,d=<hex_digest>` where the digest
+   * is `HMAC-SHA256(apiKey, rawBody + unix_ms)` hex-encoded. The provider also
+   * enforces a 5-minute replay window. This mirrors the official retell-sdk
+   * `verify()` helper exactly, but stays synchronous so the route handler does
+   * not need to await it.
    */
   verifyWebhookSignature(
     rawBody: string,
     headers: Record<string, string>,
   ): boolean {
-    const provided = headers["x-retell-signature"] ?? headers["X-Retell-Signature"];
+    const provided =
+      headers["x-retell-signature"] ?? headers["X-Retell-Signature"];
     if (!provided) return false;
 
+    const match = /^v=(\d+),d=(.+)$/.exec(provided.trim());
+    if (!match) return false;
+
+    const timestamp = Number(match[1]);
+    const digest = match[2];
+    if (!Number.isFinite(timestamp) || !digest) return false;
+
+    const FIVE_MINUTES = 5 * 60 * 1000;
+    if (Math.abs(Date.now() - timestamp) > FIVE_MINUTES) return false;
+
     const expected = createHmac("sha256", this.apiKey)
-      .update(rawBody, "utf8")
-      .digest("base64");
+      .update(rawBody + String(timestamp), "utf8")
+      .digest("hex");
 
     const a = Buffer.from(expected, "utf8");
-    const b = Buffer.from(provided, "utf8");
+    const b = Buffer.from(digest, "utf8");
     if (a.length !== b.length) return false;
 
     try {

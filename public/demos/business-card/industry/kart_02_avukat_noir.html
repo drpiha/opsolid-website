@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Av. Selin Kaya | Kaya Hukuk Burosu - Editorial Luxury</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --body-bg: #080808;
+            --card-bg: #111111;
+            --panel-bg: #1a1a1d;
+            --panel-bg-2: #16161a;
+            --gold: #c8a964;
+            --gold-soft: rgba(200, 169, 100, 0.6);
+            --copper: #b87333;
+            --text-primary: #f0ede8;
+            --text-muted: #9a9090;
+            --text-dimmed: #6b6260;
+            --border: rgba(200, 169, 100, 0.15);
+            --border-strong: rgba(200, 169, 100, 0.35);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--body-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 700; }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* HEADER */
+        .header {
+            position: relative;
+            padding: 36px 28px 28px;
+            background: linear-gradient(180deg, #0d0d0d 0%, #131313 100%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, var(--gold) 50%, transparent 100%);
+        }
+
+        .header-top {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 28px;
+        }
+
+        .header-avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1.5px solid var(--gold);
+            box-shadow: 0 0 0 3px rgba(200, 169, 100, 0.08);
+            flex-shrink: 0;
+        }
+
+        .header-meta { flex: 1; min-width: 0; }
+
+        .since-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 6px;
+        }
+
+        .since-badge::before {
+            content: '';
+            width: 18px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .firm-tag {
+            font-size: 11px;
+            color: var(--text-dimmed);
+            font-weight: 400;
+            letter-spacing: 0.8px;
+        }
+
+        .header-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 700;
+            line-height: 1.05;
+            color: var(--text-primary);
+            letter-spacing: -1px;
+            margin-bottom: 10px;
+        }
+
+        .header-name em {
+            font-style: italic;
+            font-weight: 400;
+            color: var(--gold);
+        }
+
+        .header-title {
+            font-size: 12.5px;
+            color: var(--text-muted);
+            font-weight: 300;
+            letter-spacing: 0.4px;
+            line-height: 1.55;
+        }
+
+        .gold-rule {
+            height: 1px;
+            background: linear-gradient(90deg, transparent 0%, var(--gold-soft) 30%, var(--gold-soft) 70%, transparent 100%);
+            margin: 0 28px;
+        }
+
+        /* STATS BAR */
+        .stats-bar {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            padding: 28px 0;
+            background: var(--panel-bg-2);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stat-cell {
+            text-align: center;
+            padding: 0 12px;
+            position: relative;
+        }
+
+        .stat-cell + .stat-cell::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 12%;
+            height: 76%;
+            width: 1px;
+            background: var(--border);
+        }
+
+        .stat-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1;
+            letter-spacing: -0.5px;
+        }
+
+        .stat-num sup {
+            font-size: 14px;
+            color: var(--copper);
+            margin-left: 2px;
+            vertical-align: top;
+            top: 4px;
+            position: relative;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-top: 8px;
+        }
+
+        /* SECTION SHELL */
+        .section { padding: 36px 28px; border-bottom: 1px solid var(--border); }
+
+        .eyebrow {
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .eyebrow::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 400;
+            font-style: italic;
+            color: var(--text-primary);
+            margin-bottom: 24px;
+            letter-spacing: -0.3px;
+        }
+
+        /* SERVICES */
+        .services-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .service-row {
+            display: flex;
+            align-items: stretch;
+            background: var(--panel-bg);
+            border-left: 2px solid var(--gold);
+            padding: 16px 18px;
+            transition: background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .service-row:hover {
+            background: #1f1f23;
+            border-left-color: var(--copper);
+        }
+
+        .service-num {
+            font-family: 'Playfair Display', serif;
+            font-size: 13px;
+            font-weight: 400;
+            font-style: italic;
+            color: var(--gold);
+            margin-right: 18px;
+            min-width: 28px;
+            letter-spacing: 1px;
+            padding-top: 2px;
+        }
+
+        .service-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 15px;
+            font-weight: 400;
+            color: var(--text-primary);
+            line-height: 1.45;
+        }
+
+        /* PULL QUOTE */
+        .pull-quote-section {
+            padding: 48px 28px;
+            text-align: center;
+            background: var(--panel-bg-2);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .pull-quote-mark {
+            font-family: 'Playfair Display', serif;
+            font-size: 64px;
+            line-height: 0.5;
+            color: var(--gold);
+            opacity: 0.5;
+            margin-bottom: 4px;
+        }
+
+        .pull-quote {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 400;
+            font-size: 19px;
+            line-height: 1.5;
+            color: var(--text-primary);
+            max-width: 360px;
+            margin: 0 auto 22px;
+            letter-spacing: -0.2px;
+        }
+
+        .pull-quote-attr {
+            font-size: 10.5px;
+            font-weight: 500;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .pull-quote-attr::before,
+        .pull-quote-attr::after {
+            content: '';
+            width: 24px;
+            height: 1px;
+            background: var(--gold-soft);
+        }
+
+        /* SLOGAN */
+        .slogan-section {
+            padding: 32px 28px;
+            text-align: center;
+        }
+
+        .slogan {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 17px;
+            color: var(--gold);
+            font-weight: 400;
+            line-height: 1.5;
+            letter-spacing: 0.2px;
+        }
+
+        /* CONTACT GRID */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .contact-tile {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding: 16px 14px;
+            background: var(--panel-bg);
+            border: 1px solid var(--border);
+            text-decoration: none;
+            transition: border-color 0.3s ease, background 0.3s ease;
+        }
+
+        .contact-tile:hover {
+            border-color: var(--gold);
+            background: #1f1f23;
+        }
+
+        .contact-tile-label {
+            font-size: 9.5px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .contact-tile-icon {
+            width: 14px;
+            height: 14px;
+            fill: none;
+            stroke: var(--gold);
+            stroke-width: 1.6;
+        }
+
+        .contact-tile-value {
+            font-size: 13px;
+            color: var(--text-primary);
+            font-weight: 400;
+            word-break: break-word;
+            line-height: 1.4;
+        }
+
+        .contact-tile--full { grid-column: span 2; }
+
+        /* QR + VCARD */
+        .footer-panel {
+            padding: 36px 28px 32px;
+            background: var(--panel-bg-2);
+            text-align: center;
+        }
+
+        .qr-frame {
+            display: inline-block;
+            padding: 14px;
+            background: #f0ede8;
+            border-radius: 4px;
+            margin-bottom: 16px;
+            box-shadow: 0 0 0 1px var(--border-strong), 0 8px 28px rgba(0, 0, 0, 0.5);
+        }
+
+        .qr-frame img { display: block; }
+
+        .qr-caption {
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 28px;
+        }
+
+        .vcard-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+            padding: 16px 24px;
+            background: transparent;
+            color: var(--gold);
+            border: 1px solid var(--gold);
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .vcard-btn:hover {
+            background: var(--gold);
+            color: #0d0d0d;
+        }
+
+        .vcard-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.6;
+        }
+
+        .footer-bottom {
+            padding: 22px 28px;
+            text-align: center;
+            background: #0a0a0a;
+        }
+
+        .footer-bottom .name {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 13px;
+            color: var(--gold);
+            margin-bottom: 4px;
+        }
+
+        .footer-bottom .copy {
+            font-size: 10px;
+            color: var(--text-dimmed);
+            letter-spacing: 1px;
+        }
+
+        @media (max-width: 380px) {
+            .header-name { font-size: 30px; }
+            .stat-num { font-size: 22px; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .contact-tile--full { grid-column: span 1; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            .service-row, .contact-tile, .vcard-btn { transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+
+        <!-- HEADER -->
+        <header class="header">
+            <div class="header-top">
+                <img class="header-avatar" src="https://i.pravatar.cc/200?img=47" alt="Av. Selin Kaya profil">
+                <div class="header-meta">
+                    <div class="since-badge">Since 2013</div>
+                    <div class="firm-tag">KAYA HUKUK BUROSU &middot; ISTANBUL</div>
+                </div>
+            </div>
+            <h1 class="header-name">Av. Selin<br><em>Kaya</em></h1>
+            <div class="header-title">Kidemli Hukuk Danismani &middot; Is &amp; Ticaret Hukuku</div>
+        </header>
+
+        <div class="gold-rule"></div>
+
+        <!-- STATS -->
+        <div class="stats-bar reveal">
+            <div class="stat-cell">
+                <div class="stat-num">12<sup>+</sup></div>
+                <div class="stat-label">Yil Deneyim</div>
+            </div>
+            <div class="stat-cell">
+                <div class="stat-num">800<sup>+</sup></div>
+                <div class="stat-label">Dava</div>
+            </div>
+            <div class="stat-cell">
+                <div class="stat-num">94<sup>%</sup></div>
+                <div class="stat-label">Basari</div>
+            </div>
+        </div>
+
+        <!-- SERVICES -->
+        <section class="section reveal">
+            <div class="eyebrow">Uzmanlik</div>
+            <h2 class="section-title">Hizmet Alanlarim</h2>
+            <div class="services-list">
+                <div class="service-row">
+                    <span class="service-num">I</span>
+                    <span class="service-name">Is &amp; Ticaret Hukuku</span>
+                </div>
+                <div class="service-row">
+                    <span class="service-num">II</span>
+                    <span class="service-name">Sirket Kurulusu &amp; M&amp;A</span>
+                </div>
+                <div class="service-row">
+                    <span class="service-num">III</span>
+                    <span class="service-name">Fikri Mulkiyet</span>
+                </div>
+                <div class="service-row">
+                    <span class="service-num">IV</span>
+                    <span class="service-name">Istihdam Hukuku</span>
+                </div>
+                <div class="service-row">
+                    <span class="service-num">V</span>
+                    <span class="service-name">Uluslararasi Tahkim</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- PULL QUOTE -->
+        <section class="pull-quote-section reveal">
+            <div class="pull-quote-mark" aria-hidden="true">&ldquo;</div>
+            <p class="pull-quote">
+                Selin Hanim'in uzman rehberligi sayesinde karmasik bir ticari anlasmazligi basariyla cozduk.
+            </p>
+            <div class="pull-quote-attr">Mehmet T. &middot; CEO</div>
+        </section>
+
+        <!-- SLOGAN -->
+        <div class="slogan-section reveal">
+            <div class="slogan">&ldquo;Hukuki Guvenceniz, Basarinizin Temeli&rdquo;</div>
+        </div>
+
+        <!-- CONTACT -->
+        <section class="section reveal" style="border-bottom: none;">
+            <div class="eyebrow">Iletisim</div>
+            <h2 class="section-title">Bize Ulasin</h2>
+            <div class="contact-grid">
+                <a href="tel:+902125554433" class="contact-tile">
+                    <span class="contact-tile-label">
+                        <svg class="contact-tile-icon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>
+                        Telefon
+                    </span>
+                    <span class="contact-tile-value">+90 212 555 44 33</span>
+                </a>
+                <a href="https://wa.me/902125554433?text=Merhaba%2C%20hukuki%20dan%C4%B1%C5%9Fmanl%C4%B1k%20talep%20etmek%20istiyorum." class="contact-tile" target="_blank" rel="noopener noreferrer">
+                    <span class="contact-tile-label">
+                        <svg class="contact-tile-icon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+                        WhatsApp
+                    </span>
+                    <span class="contact-tile-value">Mesaj Gonder</span>
+                </a>
+                <a href="mailto:selin@kayahukuk.av.tr" class="contact-tile">
+                    <span class="contact-tile-label">
+                        <svg class="contact-tile-icon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        E-posta
+                    </span>
+                    <span class="contact-tile-value">selin@kayahukuk.av.tr</span>
+                </a>
+                <a href="https://linkedin.com/in/selinkayaav" class="contact-tile" target="_blank" rel="noopener noreferrer">
+                    <span class="contact-tile-label">
+                        <svg class="contact-tile-icon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                        LinkedIn
+                    </span>
+                    <span class="contact-tile-value">in/selinkayaav</span>
+                </a>
+                <a href="https://kayahukuk.av.tr" class="contact-tile contact-tile--full" target="_blank" rel="noopener noreferrer">
+                    <span class="contact-tile-label">
+                        <svg class="contact-tile-icon" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                        Web Sitesi
+                    </span>
+                    <span class="contact-tile-value">kayahukuk.av.tr</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- QR + VCARD -->
+        <div class="footer-panel reveal">
+            <div class="qr-frame">
+                <div id="qrcode" role="img" aria-label="QR kod"></div>
+            </div>
+            <div class="qr-caption">Kartviziti Tarayin</div>
+            <button class="vcard-btn" id="vcardBtn" type="button">
+                <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Rehbere Kaydet
+            </button>
+        </div>
+
+        <footer class="footer-bottom">
+            <div class="name">Av. Selin Kaya &middot; Kaya Hukuk Burosu</div>
+            <div class="copy">&copy; 2026 Tum Haklari Saklidir</div>
+        </footer>
+
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+
+        function initScrollReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function(e){ e.classList.add('visible'); });
+                return;
+            }
+            var obs = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function(e){ obs.observe(e); });
+        }
+
+        function initQR() {
+            var c = document.getElementById('qrcode');
+            if (c && typeof QRCode !== 'undefined') {
+                new QRCode(c, {
+                    text: window.location.href,
+                    width: 132,
+                    height: 132,
+                    colorDark: '#0a0a0a',
+                    colorLight: '#f0ede8',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            }
+        }
+
+        function initVCard() {
+            var btn = document.getElementById('vcardBtn');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var data = [
+                    'BEGIN:VCARD',
+                    'VERSION:3.0',
+                    'N:Kaya;Selin;;Av.;',
+                    'FN:Av. Selin Kaya',
+                    'ORG:Kaya Hukuk Burosu',
+                    'TITLE:Kidemli Hukuk Danismani',
+                    'TEL;TYPE=WORK:+90 212 555 44 33',
+                    'EMAIL;TYPE=INTERNET:selin@kayahukuk.av.tr',
+                    'URL:https://kayahukuk.av.tr',
+                    'NOTE:Kaya Hukuk Burosu - Is & Ticaret Hukuku',
+                    'END:VCARD'
+                ].join('\r\n');
+                var blob = new Blob([data], { type: 'text/vcard;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'Selin_Kaya.vcf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initScrollReveal();
+            initQR();
+            initVCard();
+        });
+    })();
+    </script>
+</body>
+</html>

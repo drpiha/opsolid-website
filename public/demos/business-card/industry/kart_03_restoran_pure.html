@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nour Kitchen - Sef Tarik Ozturk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f8f6f3;
+    --card: #ffffff;
+    --accent: #1a1a1a;
+    --accent2: #c8a500;
+    --text: #111111;
+    --text-muted: #888888;
+    --border: #e8e4df;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Bricolage Grotesque', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  .card-wrapper {
+    width: 100%;
+    max-width: 460px;
+    background: var(--bg);
+    min-height: 100vh;
+    position: relative;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* 1. Massive Type Header */
+  .type-header {
+    padding: 56px 28px 28px;
+  }
+  .type-header .meta-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+    font-weight: 500;
+  }
+  .type-header .meta-line .dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent2);
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+  }
+  .type-header h1 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 68px;
+    font-weight: 700;
+    letter-spacing: -3px;
+    line-height: 0.92;
+    margin-bottom: 8px;
+  }
+  .type-header h1 .ital {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent2);
+  }
+  .type-header .subtitle {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 19px;
+    color: var(--text-muted);
+    margin-top: 8px;
+  }
+
+  /* 2. Hero with chef strip */
+  .chef-strip {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 16px;
+    align-items: center;
+    padding: 20px 28px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .chef-strip img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.05);
+    border-radius: 2px;
+  }
+  .chef-strip .who h2 {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+  }
+  .chef-strip .who p {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .chef-strip .who .stats {
+    display: flex;
+    gap: 14px;
+    margin-top: 8px;
+    font-size: 11px;
+    letter-spacing: 0.8px;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .chef-strip .who .stats span:not(:last-child)::after {
+    content: '·';
+    margin-left: 14px;
+    color: var(--text-muted);
+  }
+
+  /* 3. About */
+  .about {
+    padding: 36px 28px;
+  }
+  .about .label {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .about p {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 19px;
+    line-height: 1.55;
+    color: var(--text);
+  }
+  .about .signature {
+    margin-top: 16px;
+    font-family: 'EB Garamond', serif;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  /* 4. Featured Dishes Grid */
+  .dishes {
+    padding: 0 28px 36px;
+  }
+  .dishes .label {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+  .dishes-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+  .dish-img {
+    aspect-ratio: 1;
+    border-radius: 2px;
+    overflow: hidden;
+    background: var(--card);
+  }
+  .dish-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+  .dish-img:hover img { transform: scale(1.06); }
+
+  .dishes-list {
+    margin-top: 16px;
+  }
+  .dish-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: baseline;
+  }
+  .dish-row:last-child { border-bottom: none; }
+  .dish-row .name {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.2px;
+  }
+  .dish-row .desc {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .dish-row .price {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+
+  /* 5. Hours */
+  .hours-table {
+    margin: 0 28px 36px;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+  }
+  .hours-table .label {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .hours-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    font-size: 14px;
+  }
+  .hours-row + .hours-row { border-top: 1px dashed var(--border); }
+  .hours-row .day {
+    font-weight: 500;
+  }
+  .hours-row .time {
+    color: var(--text-muted);
+    font-feature-settings: "tnum";
+  }
+
+  /* 6. Contact - tabular */
+  .contact-table {
+    margin: 0 28px 36px;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+  }
+  .contact-table .label {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .contact-row {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    padding: 10px 0;
+    align-items: baseline;
+    border-bottom: 1px solid var(--border);
+  }
+  .contact-row:last-child { border-bottom: none; }
+  .contact-row .key {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .contact-row .val {
+    font-size: 15px;
+    color: var(--text);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .contact-row a.val:hover { color: var(--accent2); }
+
+  /* CTA */
+  .cta-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 0 28px 28px;
+  }
+  .btn {
+    padding: 16px 18px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    border-radius: 2px;
+    transition: all 0.25s ease;
+    border: 1px solid var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .btn.primary {
+    background: var(--accent);
+    color: var(--bg);
+  }
+  .btn.primary:hover {
+    background: var(--accent2);
+    border-color: var(--accent2);
+  }
+  .btn.secondary {
+    background: transparent;
+    color: var(--accent);
+  }
+  .btn.secondary:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  /* QR */
+  .qr-section {
+    padding: 28px 28px;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 20px;
+  }
+  .qr-section .qr-text h4 {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    margin-bottom: 4px;
+  }
+  .qr-section .qr-text p {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  #qrcode {
+    background: var(--card);
+    padding: 8px;
+    border: 1px solid var(--border);
+    border-radius: 2px;
+  }
+  #qrcode img, #qrcode canvas { display: block; }
+
+  .footer {
+    padding: 22px 28px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { transition: none; opacity: 1; transform: none; }
+    .dish-img img { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card-wrapper">
+
+  <div class="type-header">
+    <div class="meta-line">
+      <span><span class="dot"></span>Acik &middot; Salı &mdash; Pzr</span>
+      <span>Karakoy IST</span>
+    </div>
+    <h1>Nour<br><span class="ital">kitchen</span></h1>
+    <div class="subtitle">Akdeniz &amp; Fusion Mutfagi</div>
+  </div>
+
+  <div class="chef-strip reveal">
+    <img src="https://i.pravatar.cc/200?img=12" alt="Sef Tarik Ozturk">
+    <div class="who">
+      <h2>Sef Tarik Ozturk</h2>
+      <p>Executive Chef &amp; Kurucu</p>
+      <div class="stats">
+        <span>8 yil</span>
+        <span>Bib Gourmand</span>
+        <span>4.9 / 5</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="about reveal">
+    <div class="label">Felsefemiz</div>
+    <p>"Sade malzeme, dogru teknik ve mevsimin sundugunu dinlemek. Mutfak yalan soylemez; her tabak duruslu, her detay niyetli."</p>
+    <div class="signature">&mdash; Tarik Ozturk</div>
+  </div>
+
+  <div class="dishes reveal">
+    <div class="label">Sezonun Ozelleri</div>
+    <div class="dishes-grid">
+      <div class="dish-img"><img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=300&h=300&fit=crop&q=80" alt="Levrek Ceviche" loading="lazy"></div>
+      <div class="dish-img"><img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=300&h=300&fit=crop&q=80" alt="Truffle Buratta" loading="lazy"></div>
+      <div class="dish-img"><img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=300&h=300&fit=crop&q=80" alt="Risotto" loading="lazy"></div>
+    </div>
+    <div class="dishes-list">
+      <div class="dish-row">
+        <div class="name">Levrek Ceviche</div>
+        <div class="desc">yuzu &middot; jalapeno &middot; avokado</div>
+        <div class="price">320</div>
+      </div>
+      <div class="dish-row">
+        <div class="name">Kuzu Rack</div>
+        <div class="desc">sous-vide &middot; kekik jus</div>
+        <div class="price">580</div>
+      </div>
+      <div class="dish-row">
+        <div class="name">Mevsim Risotto</div>
+        <div class="desc">porcini &middot; truf yagi</div>
+        <div class="price">280</div>
+      </div>
+      <div class="dish-row">
+        <div class="name">Truffle Buratta</div>
+        <div class="desc">san daniele &middot; bal &middot; ceviz</div>
+        <div class="price">240</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hours-table reveal">
+    <div class="label">Saatler</div>
+    <div class="hours-row">
+      <div class="day">Salı &mdash; Cumartesi</div>
+      <div class="time">12:00 &mdash; 23:00</div>
+    </div>
+    <div class="hours-row">
+      <div class="day">Pazar</div>
+      <div class="time">11:00 &mdash; 17:00</div>
+    </div>
+    <div class="hours-row">
+      <div class="day">Pazartesi</div>
+      <div class="time">Kapali</div>
+    </div>
+  </div>
+
+  <div class="contact-table reveal">
+    <div class="label">Iletisim</div>
+    <div class="contact-row">
+      <span class="key">Tel</span>
+      <a href="tel:+902124447788" class="val">+90 212 444 77 88</a>
+    </div>
+    <div class="contact-row">
+      <span class="key">E-posta</span>
+      <a href="mailto:rezervasyon@nourkitchen.com" class="val">rezervasyon@nourkitchen.com</a>
+    </div>
+    <div class="contact-row">
+      <span class="key">Web</span>
+      <a href="https://nourkitchen.com" target="_blank" rel="noopener" class="val">nourkitchen.com</a>
+    </div>
+    <div class="contact-row">
+      <span class="key">Instagram</span>
+      <a href="https://instagram.com/nourkitchen" target="_blank" rel="noopener" class="val">@nourkitchen</a>
+    </div>
+    <div class="contact-row">
+      <span class="key">Adres</span>
+      <span class="val">Karakoy, Istanbul</span>
+    </div>
+  </div>
+
+  <div class="cta-row reveal">
+    <a href="tel:+902124447788" class="btn primary">Rezervasyon</a>
+    <a href="https://wa.me/902124447788" target="_blank" rel="noopener" class="btn secondary">WhatsApp</a>
+    <a href="#menu" class="btn secondary">Menu</a>
+    <a href="https://maps.google.com/?q=Nour+Kitchen+Karakoy" target="_blank" rel="noopener" class="btn secondary">Konum</a>
+  </div>
+
+  <div class="qr-section reveal">
+    <div class="qr-text">
+      <h4>Kartviziti paylas</h4>
+      <p>Telefonunla taratarak masaya gore bir oneri al.</p>
+    </div>
+    <div id="qrcode"></div>
+  </div>
+
+  <footer class="footer">
+    <span>Nour Kitchen &copy; 2026</span>
+    <span>Karakoy &middot; IST</span>
+  </footer>
+
+</div>
+
+<script>
+  (function() {
+    var els = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+      els.forEach(function(el) { obs.observe(el); });
+    } else {
+      els.forEach(function(el) { el.classList.add('visible'); });
+    }
+  })();
+
+  (function() {
+    var qr = document.getElementById('qrcode');
+    if (qr && typeof QRCode !== 'undefined') {
+      new QRCode(qr, {
+        text: window.location.href,
+        width: 90,
+        height: 90,
+        colorDark: '#1a1a1a',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

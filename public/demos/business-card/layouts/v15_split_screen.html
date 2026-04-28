@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cem Arslan | İnsan Kaynakları Direktörü</title>
+    <meta property="og:title" content="Cem Arslan | İnsan Kaynakları Direktörü">
+    <meta property="og:description" content="Yetenek yönetimi, kurumsal kültür ve liderlik gelişim danışmanlığı.">
+    <meta property="og:type" content="profile">
+    <meta property="og:locale" content="tr_TR">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --dark: #1a1a2e;
+            --dark-2: #232342;
+            --light: #ffffff;
+            --bg: #f8f9fc;
+            --amber: #f59e0b;
+            --amber-soft: #fef3c7;
+            --text-light: #f0f0f0;
+            --text-muted-light: #a8a8c0;
+            --text-dark: #111111;
+            --text-muted: #555555;
+            --hairline: #e2e8f0;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--light);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* Top dark panel */
+        .split-top {
+            background: var(--dark);
+            position: relative;
+            padding: 40px 28px 100px;
+            text-align: center;
+            color: var(--text-light);
+        }
+        .split-top::before {
+            content: '';
+            position: absolute;
+            top: 28px;
+            left: 28px;
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--amber);
+            font-weight: 600;
+        }
+        .split-eyebrow {
+            font-size: 10px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--amber);
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+        .split-photo {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 20px;
+            display: block;
+            border: 4px solid var(--dark-2);
+            box-shadow: 0 0 0 2px var(--amber);
+        }
+        .split-name {
+            font-size: 30px;
+            font-weight: 800;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+        .split-role {
+            font-size: 13px;
+            color: var(--text-muted-light);
+            letter-spacing: 1px;
+        }
+
+        /* Diagonal divider */
+        .diagonal-divider {
+            position: relative;
+            margin-top: -1px;
+            background: var(--dark);
+            height: 70px;
+            overflow: hidden;
+        }
+        .diagonal-divider::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--light);
+            clip-path: polygon(0 100%, 100% 50%, 100% 100%);
+        }
+
+        /* Floating badge */
+        .floating-badge {
+            position: absolute;
+            top: -28px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--amber);
+            color: var(--dark);
+            padding: 12px 24px;
+            border-radius: 100px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            box-shadow: 0 8px 24px rgba(245, 158, 11, 0.4);
+            white-space: nowrap;
+            z-index: 5;
+        }
+
+        /* Bottom panel */
+        .split-bottom {
+            position: relative;
+            background: var(--light);
+            padding: 50px 28px 36px;
+        }
+
+        /* Service list */
+        .split-services {
+            margin-bottom: 32px;
+        }
+        .split-services h2 {
+            font-size: 11px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--amber);
+            font-weight: 700;
+            margin-bottom: 18px;
+            text-align: center;
+        }
+        .service-line {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--hairline);
+        }
+        .service-line:last-child { border-bottom: none; }
+        .service-line .num {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--amber);
+            min-width: 36px;
+            line-height: 1;
+        }
+        .service-line .info { flex: 1; }
+        .service-line .title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 2px;
+        }
+        .service-line .desc {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Bio */
+        .split-bio {
+            background: var(--bg);
+            border-radius: 18px;
+            padding: 24px;
+            margin-bottom: 28px;
+            border-left: 4px solid var(--amber);
+        }
+        .split-bio h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+        .split-bio p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.7;
+        }
+
+        /* Action buttons */
+        .split-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 28px;
+        }
+        .split-btn {
+            padding: 14px 16px;
+            border-radius: 12px;
+            text-decoration: none;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .split-btn:hover { transform: translateY(-2px); }
+        .split-btn--primary {
+            background: var(--dark);
+            color: #fff;
+        }
+        .split-btn--primary:hover {
+            box-shadow: 0 8px 20px rgba(26, 26, 46, 0.3);
+        }
+        .split-btn--accent {
+            background: var(--amber);
+            color: var(--dark);
+        }
+        .split-btn--accent:hover {
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
+        }
+        .split-btn--full {
+            grid-column: span 2;
+            background: #25d366;
+            color: #fff;
+        }
+        .split-btn--full:hover {
+            box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+        }
+
+        /* Contact rows */
+        .split-contact {
+            background: var(--dark-2);
+            border-radius: 18px;
+            padding: 22px;
+            margin-bottom: 24px;
+        }
+        .split-contact h3 {
+            font-size: 11px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--amber);
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+        .contact-line {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 13px;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .contact-line:last-child { border-bottom: none; }
+        .contact-line .key {
+            font-size: 10px;
+            color: var(--text-muted-light);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            min-width: 70px;
+        }
+        .contact-line .val { flex: 1; font-weight: 500; }
+
+        /* QR */
+        .split-qr {
+            text-align: center;
+            padding: 20px;
+            background: var(--bg);
+            border-radius: 16px;
+        }
+        .split-qr-frame {
+            display: inline-block;
+            padding: 10px;
+            background: #fff;
+            border-radius: 12px;
+            border: 2px solid var(--dark);
+        }
+        .split-qr-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-top: 10px;
+            font-weight: 600;
+        }
+        #qrcode img, #qrcode canvas { display: block; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+
+        <div class="split-top">
+            <div class="split-eyebrow">Talent · Culture · Leadership</div>
+            <img src="https://i.pravatar.cc/200?img=68" alt="Cem Arslan" class="split-photo">
+            <h1 class="split-name">Cem Arslan</h1>
+            <div class="split-role">İnsan Kaynakları Direktörü · İzmir</div>
+        </div>
+
+        <div class="diagonal-divider"></div>
+
+        <div class="split-bottom">
+            <div class="floating-badge">15+ yıl deneyim</div>
+
+            <div class="split-services reveal">
+                <h2>— Hizmetler —</h2>
+                <div class="service-line">
+                    <div class="num">01</div>
+                    <div class="info">
+                        <div class="title">Yetenek Yönetimi</div>
+                        <div class="desc">İşe alım stratejisi ve seçme süreçleri</div>
+                    </div>
+                </div>
+                <div class="service-line">
+                    <div class="num">02</div>
+                    <div class="info">
+                        <div class="title">Kurumsal Kültür</div>
+                        <div class="desc">Değer haritası ve kültürel dönüşüm</div>
+                    </div>
+                </div>
+                <div class="service-line">
+                    <div class="num">03</div>
+                    <div class="info">
+                        <div class="title">Liderlik Gelişimi</div>
+                        <div class="desc">C-level mentorluk ve atölyeler</div>
+                    </div>
+                </div>
+                <div class="service-line">
+                    <div class="num">04</div>
+                    <div class="info">
+                        <div class="title">Performans Sistemleri</div>
+                        <div class="desc">OKR, 360° geri bildirim mimarisi</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="split-bio reveal">
+                <h3>Vizyonum</h3>
+                <p>İnsanların kendilerini güvende ve değerli hissettiği iş yerleri kurmak. Kurumların büyümesi, çalışanların büyümesinden ayrı düşünülemez.</p>
+            </div>
+
+            <div class="split-actions reveal">
+                <a href="tel:+902325557788" class="split-btn split-btn--primary">Ara</a>
+                <a href="mailto:cem@cemarslan.com" class="split-btn split-btn--accent">E-posta</a>
+                <a href="https://wa.me/902325557788" target="_blank" rel="noopener" class="split-btn split-btn--full">WhatsApp ile Mesaj</a>
+            </div>
+
+            <div class="split-contact reveal">
+                <h3>İletişim Bilgileri</h3>
+                <a href="tel:+902325557788" class="contact-line">
+                    <span class="key">Telefon</span>
+                    <span class="val">+90 232 555 77 88</span>
+                </a>
+                <a href="mailto:cem@cemarslan.com" class="contact-line">
+                    <span class="key">E-posta</span>
+                    <span class="val">cem@cemarslan.com</span>
+                </a>
+                <a href="https://cemarslan.com" target="_blank" rel="noopener" class="contact-line">
+                    <span class="key">Web</span>
+                    <span class="val">cemarslan.com</span>
+                </a>
+                <a href="https://linkedin.com/in/cemarslan" target="_blank" rel="noopener" class="contact-line">
+                    <span class="key">LinkedIn</span>
+                    <span class="val">/in/cemarslan</span>
+                </a>
+            </div>
+
+            <div class="split-qr reveal">
+                <div class="split-qr-frame">
+                    <div id="qrcode"></div>
+                </div>
+                <div class="split-qr-label">Bağlantımızı Sakla</div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+        function initScrollReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function(el){ el.classList.add('visible'); });
+                return;
+            }
+            var io = new IntersectionObserver(function(entries){
+                entries.forEach(function(e){
+                    if (e.isIntersecting) {
+                        e.target.classList.add('visible');
+                        io.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function(el){ io.observe(el); });
+        }
+        function initQR() {
+            if (typeof QRCode === 'undefined') return;
+            new QRCode(document.getElementById('qrcode'), {
+                text: 'https://cemarslan.com',
+                width: 100,
+                height: 100,
+                colorDark: '#1a1a2e',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function(){
+            initScrollReveal();
+            initQR();
+        });
+    })();
+    </script>
+</body>
+</html>

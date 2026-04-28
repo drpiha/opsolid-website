@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Dr. Emre Kaya — Ortopedi ve Travmatoloji Uzmanı</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@300;400;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --bg:#080c10;
+    --card:#0f1318;
+    --panel:#151c25;
+    --teal:#0d9488;
+    --teal-bright:#14b8a6;
+    --gold:#c8a964;
+    --gold-soft:#a78a4d;
+    --text:#e8ecf0;
+    --muted:#8896a8;
+    --border:rgba(13,148,136,0.2);
+    --border-soft:rgba(255,255,255,0.06);
+  }
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'IBM Plex Sans',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    -webkit-font-smoothing:antialiased;
+  }
+  .card{
+    width:100%;
+    max-width:460px;
+    margin:0 auto;
+    background:var(--bg);
+    position:relative;
+    padding-bottom:32px;
+  }
+  .reveal{
+    opacity:0;
+    transform:translateY(30px);
+    transition:opacity 0.8s cubic-bezier(.16,1,.3,1), transform 0.8s cubic-bezier(.16,1,.3,1);
+  }
+  .reveal.visible{opacity:1;transform:translateY(0);}
+
+  /* Header */
+  .header{
+    background:var(--card);
+    padding:36px 28px 32px 32px;
+    position:relative;
+    border-bottom:1px solid var(--border-soft);
+  }
+  .header::before{
+    content:'';
+    position:absolute;
+    top:24px;
+    left:0;
+    width:3px;
+    height:calc(100% - 48px);
+    background:linear-gradient(180deg,var(--teal) 0%,var(--gold) 100%);
+  }
+  .header-meta{
+    font-family:'IBM Plex Sans',monospace;
+    font-size:10.5px;
+    font-weight:500;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:14px;
+  }
+  .clinic-name{
+    font-family:'IBM Plex Serif',serif;
+    font-weight:300;
+    font-size:14px;
+    letter-spacing:1.5px;
+    color:var(--muted);
+    text-transform:uppercase;
+  }
+
+  /* Profile */
+  .profile{
+    text-align:center;
+    padding:36px 28px 28px;
+    background:var(--card);
+    position:relative;
+  }
+  .photo-frame{
+    width:128px;
+    height:128px;
+    margin:0 auto 22px;
+    border-radius:50%;
+    padding:3px;
+    background:linear-gradient(135deg,var(--teal) 0%,var(--gold) 100%);
+    position:relative;
+    box-shadow:0 0 40px rgba(13,148,136,0.25);
+  }
+  .photo-frame img{
+    width:100%;
+    height:100%;
+    border-radius:50%;
+    object-fit:cover;
+    border:3px solid var(--card);
+    display:block;
+    filter:saturate(0.85) contrast(1.05);
+  }
+  .name{
+    font-family:'IBM Plex Serif',serif;
+    font-weight:400;
+    font-size:30px;
+    letter-spacing:0.5px;
+    line-height:1.15;
+    margin-bottom:6px;
+  }
+  .name .prefix{color:var(--gold);font-style:italic;font-weight:300;}
+  .title{
+    font-family:'IBM Plex Sans',sans-serif;
+    font-size:12px;
+    font-weight:400;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    color:var(--teal);
+    margin-bottom:18px;
+  }
+  .credentials{
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  .chip{
+    display:inline-flex;
+    align-items:center;
+    padding:5px 12px;
+    border:1px solid var(--border);
+    background:rgba(13,148,136,0.06);
+    border-radius:999px;
+    font-size:10.5px;
+    font-weight:500;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--text);
+  }
+  .chip.gold{
+    border-color:rgba(200,169,100,0.35);
+    background:rgba(200,169,100,0.08);
+    color:var(--gold);
+  }
+
+  /* Section */
+  .section{
+    padding:32px 28px 0;
+  }
+  .section-label{
+    font-family:'IBM Plex Sans',monospace;
+    font-size:10px;
+    font-weight:500;
+    letter-spacing:3.5px;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:14px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .section-label::before{
+    content:'';
+    width:24px;
+    height:1px;
+    background:var(--gold);
+  }
+  .section-title{
+    font-family:'IBM Plex Serif',serif;
+    font-weight:400;
+    font-size:22px;
+    margin-bottom:20px;
+    letter-spacing:0.3px;
+  }
+
+  /* Specialties — numbered */
+  .spec-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .spec-row{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    padding:14px 16px;
+    background:var(--panel);
+    border-left:2px solid var(--teal);
+    border-radius:0 8px 8px 0;
+    transition:transform 0.25s ease, border-color 0.25s ease;
+  }
+  .spec-row:hover{
+    transform:translateX(2px);
+    border-left-color:var(--gold);
+  }
+  .spec-num{
+    font-family:'IBM Plex Serif',serif;
+    font-weight:300;
+    font-size:13px;
+    color:var(--gold);
+    min-width:28px;
+    letter-spacing:1px;
+  }
+  .spec-name{
+    font-size:13.5px;
+    font-weight:400;
+    color:var(--text);
+    line-height:1.4;
+  }
+
+  /* Hours grid */
+  .hours-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:1px;
+    background:var(--border-soft);
+    border:1px solid var(--border-soft);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  .hours-cell{
+    background:var(--panel);
+    padding:14px 16px;
+    display:flex;
+    flex-direction:column;
+    gap:4px;
+  }
+  .hours-cell.today{
+    background:linear-gradient(135deg,rgba(13,148,136,0.18) 0%,rgba(13,148,136,0.08) 100%);
+    border-left:2px solid var(--teal);
+  }
+  .hours-day{
+    font-family:'IBM Plex Sans',monospace;
+    font-size:9.5px;
+    font-weight:500;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .hours-cell.today .hours-day{color:var(--teal-bright);}
+  .hours-time{
+    font-family:'IBM Plex Serif',serif;
+    font-size:13px;
+    font-weight:400;
+    color:var(--text);
+    letter-spacing:0.3px;
+  }
+  .hours-time.closed{color:var(--gold-soft);font-style:italic;}
+
+  /* Clinic info */
+  .clinic-card{
+    background:var(--panel);
+    border:1px solid var(--border-soft);
+    border-radius:10px;
+    padding:24px;
+    position:relative;
+  }
+  .clinic-card::before{
+    content:'';
+    position:absolute;
+    top:0;left:24px;right:24px;
+    height:1px;
+    background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  }
+  .clinic-line{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    padding:10px 0;
+    border-bottom:1px dashed var(--border-soft);
+    gap:14px;
+  }
+  .clinic-line:last-child{border-bottom:none;padding-bottom:0;}
+  .clinic-line:first-child{padding-top:0;}
+  .clinic-key{
+    font-family:'IBM Plex Sans',monospace;
+    font-size:10px;
+    font-weight:500;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--muted);
+    flex-shrink:0;
+  }
+  .clinic-val{
+    font-size:13px;
+    font-weight:400;
+    color:var(--text);
+    text-align:right;
+    line-height:1.5;
+  }
+  .clinic-val a{color:var(--text);text-decoration:none;border-bottom:1px solid var(--border);}
+  .clinic-val a:hover{color:var(--teal-bright);}
+
+  /* CTA */
+  .cta-stack{
+    padding:36px 28px 0;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:18px 24px;
+    border-radius:8px;
+    text-decoration:none;
+    font-size:13px;
+    font-weight:500;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    transition:all 0.3s ease;
+    border:1px solid transparent;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,var(--teal) 0%,var(--teal-bright) 100%);
+    color:#fff;
+    box-shadow:0 4px 24px rgba(13,148,136,0.3);
+  }
+  .btn-primary:hover{
+    transform:translateY(-1px);
+    box-shadow:0 6px 32px rgba(13,148,136,0.45);
+  }
+  .btn-ghost{
+    background:transparent;
+    color:var(--text);
+    border-color:var(--border);
+  }
+  .btn-ghost:hover{
+    border-color:var(--gold);
+    color:var(--gold);
+  }
+  .btn-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  /* Testimonial */
+  .quote{
+    margin-top:22px;
+    padding:24px 24px 22px;
+    background:var(--panel);
+    border-radius:10px;
+    border:1px solid var(--border-soft);
+    position:relative;
+  }
+  .quote::before{
+    content:'"';
+    position:absolute;
+    top:-8px;
+    left:18px;
+    font-family:'IBM Plex Serif',serif;
+    font-size:60px;
+    color:var(--gold);
+    line-height:1;
+    font-weight:600;
+  }
+  .quote p{
+    font-family:'IBM Plex Serif',serif;
+    font-style:italic;
+    font-weight:300;
+    font-size:14.5px;
+    line-height:1.65;
+    color:var(--text);
+    margin-bottom:12px;
+  }
+  .quote cite{
+    font-family:'IBM Plex Sans',monospace;
+    font-size:10.5px;
+    font-weight:500;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--gold);
+    font-style:normal;
+  }
+
+  /* QR */
+  .qr-block{
+    margin:36px 28px 0;
+    padding:28px;
+    background:var(--panel);
+    border:1px solid var(--border-soft);
+    border-radius:10px;
+    text-align:center;
+  }
+  .qr-block .label{
+    font-family:'IBM Plex Sans',monospace;
+    font-size:10px;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:18px;
+  }
+  #qrcode{
+    display:inline-block;
+    padding:14px;
+    background:#fff;
+    border-radius:6px;
+  }
+
+  /* Footer */
+  .footer{
+    text-align:center;
+    padding:36px 28px 0;
+    font-family:'IBM Plex Sans',monospace;
+    font-size:10px;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .footer .accent{color:var(--gold);}
+
+  @media(prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+  }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <header class="header reveal">
+    <div class="header-meta">M.D. — PhD — Ankara</div>
+    <div class="clinic-name">Kaya Ortopedi Kliniği</div>
+  </header>
+
+  <section class="profile reveal" aria-label="Profil">
+    <div class="photo-frame">
+      <img src="https://i.pravatar.cc/200?img=15" alt="Dr. Emre Kaya" loading="eager">
+    </div>
+    <h1 class="name"><span class="prefix">Dr.</span> Emre Kaya</h1>
+    <div class="title">Ortopedi & Travmatoloji</div>
+    <div class="credentials">
+      <span class="chip gold">M.D.</span>
+      <span class="chip">PhD</span>
+      <span class="chip">Uzman</span>
+      <span class="chip gold">Fellowship</span>
+    </div>
+  </section>
+
+  <section class="section reveal" aria-label="Uzmanlık alanları">
+    <div class="section-label">Klinik Pratik</div>
+    <h2 class="section-title">Uzmanlık Alanları</h2>
+    <div class="spec-list">
+      <div class="spec-row"><div class="spec-num">01</div><div class="spec-name">Diz & Kalça Replasmanı</div></div>
+      <div class="spec-row"><div class="spec-num">02</div><div class="spec-name">Spor Yaralanmaları & Artroskopik Cerrahi</div></div>
+      <div class="spec-row"><div class="spec-num">03</div><div class="spec-name">Omurga Cerrahisi</div></div>
+      <div class="spec-row"><div class="spec-num">04</div><div class="spec-name">Fraktür Tedavisi & Travma</div></div>
+      <div class="spec-row"><div class="spec-num">05</div><div class="spec-name">Pediatrik Ortopedi</div></div>
+    </div>
+  </section>
+
+  <section class="section reveal" aria-label="Randevu saatleri">
+    <div class="section-label">Klinik Saatleri</div>
+    <h2 class="section-title">Randevu Programı</h2>
+    <div class="hours-grid" id="hoursGrid">
+      <div class="hours-cell" data-day="1"><div class="hours-day">Pazartesi</div><div class="hours-time">09:00 — 17:00</div></div>
+      <div class="hours-cell" data-day="2"><div class="hours-day">Salı</div><div class="hours-time">09:00 — 17:00</div></div>
+      <div class="hours-cell" data-day="3"><div class="hours-day">Çarşamba</div><div class="hours-time">09:00 — 17:00</div></div>
+      <div class="hours-cell" data-day="4"><div class="hours-day">Perşembe</div><div class="hours-time">09:00 — 17:00</div></div>
+      <div class="hours-cell" data-day="5"><div class="hours-day">Cuma</div><div class="hours-time">09:00 — 17:00</div></div>
+      <div class="hours-cell" data-day="6"><div class="hours-day">Cumartesi</div><div class="hours-time">09:00 — 13:00</div></div>
+    </div>
+  </section>
+
+  <section class="section reveal" aria-label="Klinik bilgisi">
+    <div class="section-label">Klinik Bilgisi</div>
+    <h2 class="section-title">Kliniğimiz</h2>
+    <div class="clinic-card">
+      <div class="clinic-line"><span class="clinic-key">Adres</span><span class="clinic-val">Çankaya Mah. Atatürk Bul. No: 124, Çankaya / Ankara</span></div>
+      <div class="clinic-line"><span class="clinic-key">Telefon</span><span class="clinic-val"><a href="tel:+903127772233">+90 312 777 22 33</a></span></div>
+      <div class="clinic-line"><span class="clinic-key">E-posta</span><span class="clinic-val"><a href="mailto:dr.kaya@kayaortopedi.com.tr">dr.kaya@kayaortopedi.com.tr</a></span></div>
+      <div class="clinic-line"><span class="clinic-key">Web</span><span class="clinic-val"><a href="https://kayaortopedi.com.tr" target="_blank" rel="noopener">kayaortopedi.com.tr</a></span></div>
+      <div class="clinic-line"><span class="clinic-key">Eğitim</span><span class="clinic-val">Hacettepe Tıp Fakültesi · Johns Hopkins Fellowship</span></div>
+    </div>
+
+    <div class="quote">
+      <p>Dr. Kaya'nın ameliyatı sayesinde 6 ay önce yürüyemiyordum, şimdi koşuyorum. Hem teknik hem insani olarak fark yaratıyor.</p>
+      <cite>— Ali T., Hasta</cite>
+    </div>
+  </section>
+
+  <div class="cta-stack reveal">
+    <a href="https://wa.me/903127772233?text=Merhaba%2C%20randevu%20almak%20istiyorum." class="btn btn-primary" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      Randevu Al
+    </a>
+    <div class="btn-row">
+      <a href="mailto:dr.kaya@kayaortopedi.com.tr" class="btn btn-ghost">E-posta</a>
+      <a href="https://maps.google.com/?q=Cankaya+Atatürk+Bul+124+Ankara" target="_blank" rel="noopener" class="btn btn-ghost">Harita</a>
+    </div>
+    <a href="https://linkedin.com/in/dremrekaya" target="_blank" rel="noopener" class="btn btn-ghost">LinkedIn Profili</a>
+  </div>
+
+  <div class="qr-block reveal">
+    <div class="label">Randevu için QR Okutun</div>
+    <div id="qrcode"></div>
+  </div>
+
+  <footer class="footer reveal">
+    <span class="accent">Kaya Ortopedi Kliniği</span> · 2026 · Ankara
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // Today highlight
+  var today = new Date().getDay();
+  document.querySelectorAll('#hoursGrid .hours-cell').forEach(function(c){
+    if(parseInt(c.getAttribute('data-day'),10) === today){c.classList.add('today');}
+  });
+
+  // QR
+  try{
+    new QRCode(document.getElementById('qrcode'),{
+      text:window.location.href,
+      width:130,height:130,
+      colorDark:'#0d9488',colorLight:'#ffffff',
+      correctLevel:QRCode.CorrectLevel.M
+    });
+  }catch(e){
+    var q=document.getElementById('qrcode');
+    q.textContent='QR kod yüklenemedi';
+    q.style.color='#8896a8';q.style.padding='20px';q.style.fontSize='12px';
+  }
+
+  // Reveal
+  var els = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+    },{threshold:0.1, rootMargin:'0px 0px -40px 0px'});
+    els.forEach(function(el){io.observe(el);});
+  }else{
+    els.forEach(function(el){el.classList.add('visible');});
+  }
+})();
+</script>
+</body>
+</html>

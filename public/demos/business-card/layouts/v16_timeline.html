@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prof. Dr. Hüseyin Aktaş | Ekonomi Profesörü</title>
+    <meta property="og:title" content="Prof. Dr. Hüseyin Aktaş">
+    <meta property="og:description" content="Ekonomi profesörü, makro analiz ve kurumsal danışmanlık.">
+    <meta property="og:type" content="profile">
+    <meta property="og:locale" content="tr_TR">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #f0f4f8;
+            --card: #ffffff;
+            --teal: #0f766e;
+            --teal-soft: #ccfbf1;
+            --teal-dark: #0d5a54;
+            --text: #0f172a;
+            --muted: #64748b;
+            --border: #e2e8f0;
+            --line: #cbd5e1;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--card);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* Header */
+        .tl-header {
+            padding: 36px 28px 28px;
+            background: linear-gradient(180deg, var(--card) 0%, var(--bg) 100%);
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 16px;
+            align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .tl-name-block { min-width: 0; }
+        .tl-prefix {
+            font-family: 'IBM Plex Serif', serif;
+            font-style: italic;
+            font-size: 13px;
+            color: var(--teal);
+            margin-bottom: 4px;
+        }
+        .tl-name {
+            font-size: 24px;
+            font-weight: 600;
+            line-height: 1.15;
+            color: var(--text);
+            letter-spacing: -0.3px;
+            margin-bottom: 6px;
+        }
+        .tl-title {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.4;
+        }
+        .tl-photo {
+            width: 84px;
+            height: 84px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--teal);
+            flex-shrink: 0;
+        }
+
+        /* Quick info */
+        .tl-quick {
+            display: flex;
+            justify-content: space-around;
+            padding: 16px 24px;
+            background: var(--card);
+            border-bottom: 1px solid var(--border);
+        }
+        .tl-quick .qcell {
+            text-align: center;
+        }
+        .tl-quick .qnum {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--teal);
+            line-height: 1;
+        }
+        .tl-quick .qlabel {
+            font-size: 10px;
+            color: var(--muted);
+            margin-top: 4px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        /* Section */
+        .tl-section {
+            padding: 32px 28px;
+            border-bottom: 1px solid var(--border);
+        }
+        .tl-section h2 {
+            font-family: 'IBM Plex Serif', serif;
+            font-style: italic;
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--text);
+            margin-bottom: 24px;
+        }
+        .tl-section h2::before {
+            content: '§';
+            color: var(--teal);
+            margin-right: 6px;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 24px;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 6px;
+            bottom: 6px;
+            width: 2px;
+            background: var(--line);
+        }
+        .tl-item {
+            position: relative;
+            padding-bottom: 26px;
+        }
+        .tl-item:last-child { padding-bottom: 0; }
+        .tl-item::before {
+            content: '';
+            position: absolute;
+            left: -23px;
+            top: 4px;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--teal);
+            border: 3px solid var(--card);
+            box-shadow: 0 0 0 2px var(--teal);
+        }
+        .tl-item.now::before {
+            background: var(--card);
+            box-shadow: 0 0 0 2px var(--teal), 0 0 0 5px var(--teal-soft);
+        }
+        .tl-item .yr {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 13px;
+            color: var(--teal);
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        .tl-item .yr .now-tag {
+            background: var(--teal);
+            color: #fff;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 9px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-left: 8px;
+            font-weight: 600;
+            vertical-align: 2px;
+        }
+        .tl-item .role {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+            line-height: 1.3;
+            margin-bottom: 2px;
+        }
+        .tl-item .place {
+            font-size: 12px;
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        /* Publications */
+        .pub-list {
+            list-style: none;
+        }
+        .pub-list li {
+            padding: 14px 16px;
+            background: var(--bg);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--teal);
+        }
+        .pub-list li:last-child { margin-bottom: 0; }
+        .pub-list .ptitle {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 13.5px;
+            color: var(--text);
+            line-height: 1.45;
+            margin-bottom: 4px;
+            font-weight: 400;
+        }
+        .pub-list .pmeta {
+            font-size: 11px;
+            color: var(--muted);
+            font-family: 'IBM Plex Sans', sans-serif;
+        }
+
+        /* Services */
+        .service-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .service-pill {
+            padding: 14px 14px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 12px;
+            color: var(--text);
+            font-weight: 500;
+            line-height: 1.3;
+            transition: border-color 0.25s ease, transform 0.25s ease;
+        }
+        .service-pill:hover {
+            border-color: var(--teal);
+            transform: translateY(-2px);
+        }
+        .service-pill .ic {
+            display: block;
+            font-size: 11px;
+            color: var(--teal);
+            margin-bottom: 4px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        /* Contact */
+        .tl-contact {
+            padding: 32px 28px;
+            background: var(--bg);
+        }
+        .tl-contact h2 {
+            font-family: 'IBM Plex Serif', serif;
+            font-style: italic;
+            font-size: 22px;
+            margin-bottom: 18px;
+            color: var(--text);
+        }
+        .tl-contact h2::before {
+            content: '§';
+            color: var(--teal);
+            margin-right: 6px;
+        }
+        .tl-contact-row {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 16px;
+            background: var(--card);
+            border-radius: 10px;
+            margin-bottom: 8px;
+            text-decoration: none;
+            color: var(--text);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        .tl-contact-row:hover {
+            transform: translateX(4px);
+            box-shadow: 0 4px 12px rgba(15, 118, 110, 0.1);
+        }
+        .tl-contact-row .ic {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--teal-soft);
+            color: var(--teal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 13px;
+            flex-shrink: 0;
+        }
+        .tl-contact-row .info { flex: 1; min-width: 0; }
+        .tl-contact-row .key {
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 2px;
+        }
+        .tl-contact-row .val {
+            font-size: 13px;
+            font-weight: 500;
+        }
+        .tl-contact-row .arrow {
+            font-size: 16px;
+            color: var(--muted);
+        }
+
+        /* QR */
+        .tl-qr {
+            padding: 32px 28px;
+            text-align: center;
+        }
+        .tl-qr-box {
+            display: inline-block;
+            padding: 14px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+        }
+        .tl-qr-cap {
+            font-family: 'IBM Plex Serif', serif;
+            font-style: italic;
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 12px;
+        }
+        #qrcode img, #qrcode canvas { display: block; }
+
+        /* Footer */
+        .tl-footer {
+            padding: 22px 28px 32px;
+            text-align: center;
+            font-size: 11px;
+            color: var(--muted);
+            font-family: 'IBM Plex Serif', serif;
+            font-style: italic;
+            border-top: 1px solid var(--border);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+
+        <div class="tl-header">
+            <div class="tl-name-block">
+                <div class="tl-prefix">Prof. Dr.</div>
+                <h1 class="tl-name">Hüseyin Aktaş</h1>
+                <div class="tl-title">Ekonomi Profesörü &amp; Kurumsal Danışman · Ankara</div>
+            </div>
+            <img src="https://i.pravatar.cc/200?img=51" alt="Hüseyin Aktaş" class="tl-photo">
+        </div>
+
+        <div class="tl-quick">
+            <div class="qcell">
+                <div class="qnum">28</div>
+                <div class="qlabel">Yıl</div>
+            </div>
+            <div class="qcell">
+                <div class="qnum">42</div>
+                <div class="qlabel">Yayın</div>
+            </div>
+            <div class="qcell">
+                <div class="qnum">14</div>
+                <div class="qlabel">Kitap</div>
+            </div>
+            <div class="qcell">
+                <div class="qnum">120+</div>
+                <div class="qlabel">Atıf</div>
+            </div>
+        </div>
+
+        <div class="tl-section reveal">
+            <h2>Kariyer Yolu</h2>
+            <div class="timeline">
+                <div class="tl-item now">
+                    <div class="yr">2024 — bugün <span class="now-tag">Aktif</span></div>
+                    <div class="role">Profesör &amp; Bölüm Başkanı</div>
+                    <div class="place">Bilkent Üniversitesi, Ekonomi Bölümü</div>
+                </div>
+                <div class="tl-item">
+                    <div class="yr">2018 — 2024</div>
+                    <div class="role">Doçent &amp; Senior Researcher</div>
+                    <div class="place">ODTÜ, İktisadi ve İdari Bilimler</div>
+                </div>
+                <div class="tl-item">
+                    <div class="yr">2014 — 2018</div>
+                    <div class="role">Kıdemli Ekonomist</div>
+                    <div class="place">Türkiye Cumhuriyet Merkez Bankası</div>
+                </div>
+                <div class="tl-item">
+                    <div class="yr">2010 — 2014</div>
+                    <div class="role">Doktora &amp; Visiting Scholar</div>
+                    <div class="place">London School of Economics</div>
+                </div>
+                <div class="tl-item">
+                    <div class="yr">2006 — 2010</div>
+                    <div class="role">Yüksek Lisans &amp; Lisans</div>
+                    <div class="place">Boğaziçi Üniversitesi</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tl-section reveal">
+            <h2>Seçili Yayınlar</h2>
+            <ul class="pub-list">
+                <li>
+                    <div class="ptitle">Gelişmekte Olan Ekonomilerde Para Politikası Aktarımı</div>
+                    <div class="pmeta">Türkiye Ekonomi Araştırmaları, 2024</div>
+                </li>
+                <li>
+                    <div class="ptitle">Enflasyon Hedeflemesi: Türkiye Vakası 2002–2023</div>
+                    <div class="pmeta">İletişim Yayınları, 2023 (kitap)</div>
+                </li>
+                <li>
+                    <div class="ptitle">Kur Şokları ve Bilanço Etkisi: Sektörel Bir İnceleme</div>
+                    <div class="pmeta">Journal of Emerging Markets, 2022</div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="tl-section reveal">
+            <h2>Danışmanlık Hizmetleri</h2>
+            <div class="service-list">
+                <div class="service-pill">
+                    <span class="ic">A1</span>
+                    Makro Ekonomik Analiz
+                </div>
+                <div class="service-pill">
+                    <span class="ic">A2</span>
+                    Strateji Atölyeleri
+                </div>
+                <div class="service-pill">
+                    <span class="ic">A3</span>
+                    Konferans &amp; Eğitim
+                </div>
+                <div class="service-pill">
+                    <span class="ic">A4</span>
+                    Bilirkişi Raporu
+                </div>
+            </div>
+        </div>
+
+        <div class="tl-contact reveal">
+            <h2>İletişim</h2>
+            <a href="tel:+903124441122" class="tl-contact-row">
+                <div class="ic">T</div>
+                <div class="info">
+                    <div class="key">Telefon</div>
+                    <div class="val">+90 312 444 11 22</div>
+                </div>
+                <span class="arrow">→</span>
+            </a>
+            <a href="mailto:huseyin@huseyinaktas.com" class="tl-contact-row">
+                <div class="ic">@</div>
+                <div class="info">
+                    <div class="key">E-posta</div>
+                    <div class="val">huseyin@huseyinaktas.com</div>
+                </div>
+                <span class="arrow">→</span>
+            </a>
+            <a href="https://huseyinaktas.com" target="_blank" rel="noopener" class="tl-contact-row">
+                <div class="ic">W</div>
+                <div class="info">
+                    <div class="key">Web</div>
+                    <div class="val">huseyinaktas.com</div>
+                </div>
+                <span class="arrow">→</span>
+            </a>
+            <a href="https://scholar.google.com" target="_blank" rel="noopener" class="tl-contact-row">
+                <div class="ic">G</div>
+                <div class="info">
+                    <div class="key">Akademik</div>
+                    <div class="val">Google Scholar profili</div>
+                </div>
+                <span class="arrow">→</span>
+            </a>
+        </div>
+
+        <div class="tl-qr reveal">
+            <div class="tl-qr-box">
+                <div id="qrcode"></div>
+            </div>
+            <div class="tl-qr-cap">Kartı paylaş, akademik takvime ekle.</div>
+        </div>
+
+        <footer class="tl-footer">
+            Prof. Dr. Hüseyin Aktaş · 2026
+        </footer>
+
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+        function initScrollReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function(el){ el.classList.add('visible'); });
+                return;
+            }
+            var io = new IntersectionObserver(function(entries){
+                entries.forEach(function(e){
+                    if (e.isIntersecting) {
+                        e.target.classList.add('visible');
+                        io.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function(el){ io.observe(el); });
+        }
+        function initQR() {
+            if (typeof QRCode === 'undefined') return;
+            new QRCode(document.getElementById('qrcode'), {
+                text: 'https://huseyinaktas.com',
+                width: 110,
+                height: 110,
+                colorDark: '#0f766e',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function(){
+            initScrollReveal();
+            initQR();
+        });
+    })();
+    </script>
+</body>
+</html>

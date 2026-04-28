@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alp Demir | Finans Direktörü</title>
+    <meta property="og:title" content="Alp Demir | Finans Direktörü">
+    <meta property="og:description" content="Kurumsal finans, yatırım stratejisi ve risk yönetimi danışmanlığı.">
+    <meta property="og:type" content="profile">
+    <meta property="og:locale" content="tr_TR">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --noir-bg: #080808;
+            --noir-card: #111111;
+            --noir-panel: #1a1a1a;
+            --gold: #c8a964;
+            --gold-soft: #a78c52;
+            --text: #f0ede8;
+            --text-muted: #9a9080;
+            --border: rgba(200, 169, 100, 0.18);
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--noir-bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--noir-card);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* Monogram header */
+        .noir-header {
+            padding: 32px 28px 20px;
+            display: flex;
+            justify-content: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .monogram {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            border: 1.5px solid var(--gold);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--gold);
+            letter-spacing: 1px;
+        }
+
+        /* Profile circle */
+        .noir-profile {
+            text-align: center;
+            padding: 36px 28px 28px;
+        }
+        .noir-avatar {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            border: 2px solid var(--gold);
+            padding: 4px;
+            box-shadow: 0 0 30px rgba(200, 169, 100, 0.25);
+        }
+        .noir-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            display: block;
+        }
+        .noir-name {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-weight: 400;
+            font-size: 44px;
+            line-height: 1.05;
+            color: var(--text);
+            letter-spacing: -1px;
+            margin-bottom: 14px;
+        }
+        .noir-title {
+            font-size: 11px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: var(--gold);
+            font-weight: 500;
+            margin-bottom: 18px;
+        }
+        .noir-tagline {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 13px;
+            color: var(--text-muted);
+            letter-spacing: 1px;
+        }
+        .gold-divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            margin: 8px 60px;
+        }
+
+        /* Numbered list */
+        .noir-section {
+            padding: 36px 28px 12px;
+        }
+        .noir-section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 400;
+            color: var(--text);
+            margin-bottom: 24px;
+            letter-spacing: 0.5px;
+        }
+        .noir-section-title::after {
+            content: '';
+            display: block;
+            width: 30px;
+            height: 1px;
+            background: var(--gold);
+            margin-top: 10px;
+        }
+        .numbered-list {
+            list-style: none;
+        }
+        .numbered-list li {
+            display: flex;
+            gap: 18px;
+            padding: 14px 0 14px 18px;
+            border-left: 2px solid var(--gold);
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, rgba(200, 169, 100, 0.04), transparent);
+        }
+        .numbered-list .num {
+            font-family: 'Playfair Display', serif;
+            font-size: 14px;
+            color: var(--gold);
+            font-weight: 700;
+            min-width: 24px;
+        }
+        .numbered-list .item-content { flex: 1; }
+        .numbered-list .item-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text);
+            margin-bottom: 3px;
+        }
+        .numbered-list .item-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.55;
+        }
+
+        /* Stats grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1px;
+            background: var(--border);
+            margin: 0 -28px;
+            padding: 1px 0;
+        }
+        .stat-cell {
+            background: var(--noir-panel);
+            text-align: center;
+            padding: 26px 14px;
+        }
+        .stat-cell .num {
+            font-family: 'Playfair Display', serif;
+            font-size: 38px;
+            font-weight: 700;
+            color: var(--gold);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .stat-cell .label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        /* Pull quote */
+        .pull-quote {
+            padding: 50px 36px;
+            text-align: center;
+            background: var(--noir-panel);
+            position: relative;
+        }
+        .pull-quote::before {
+            content: '"';
+            font-family: 'Playfair Display', serif;
+            font-size: 100px;
+            color: var(--gold);
+            opacity: 0.25;
+            position: absolute;
+            top: 4px;
+            left: 24px;
+            line-height: 1;
+        }
+        .pull-quote .quote-text {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 18px;
+            line-height: 1.55;
+            color: var(--text);
+            margin-bottom: 18px;
+            position: relative;
+            z-index: 1;
+        }
+        .pull-quote .quote-author {
+            font-size: 11px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        /* Contact grid */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1px;
+            background: var(--border);
+        }
+        .contact-cell {
+            background: var(--noir-panel);
+            padding: 22px 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            text-decoration: none;
+            color: var(--text);
+            transition: background 0.3s ease;
+        }
+        .contact-cell:hover { background: #222; }
+        .contact-cell .ic {
+            color: var(--gold);
+            font-size: 14px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .contact-cell .val {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text);
+            word-break: break-word;
+        }
+
+        /* QR */
+        .qr-block {
+            padding: 36px 28px;
+            text-align: center;
+            background: var(--noir-card);
+        }
+        .qr-frame {
+            display: inline-block;
+            padding: 20px;
+            background: var(--text);
+            border: 1.5px solid var(--gold);
+            margin-bottom: 14px;
+        }
+        #qrcode img, #qrcode canvas { display: block; }
+        .qr-caption {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--gold);
+        }
+
+        /* Footer */
+        .noir-footer {
+            padding: 28px 28px 36px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+        }
+        .noir-footer .fname {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 14px;
+            color: var(--gold);
+            margin-bottom: 4px;
+        }
+        .noir-footer .fcopy {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+
+        <div class="noir-header">
+            <div class="monogram">AD</div>
+        </div>
+
+        <div class="noir-profile reveal">
+            <div class="noir-avatar">
+                <img src="https://i.pravatar.cc/200?img=12" alt="Alp Demir">
+            </div>
+            <h1 class="noir-name">Alp Demir</h1>
+            <div class="noir-title">Finans Direktörü</div>
+            <div class="gold-divider"></div>
+            <div class="noir-tagline">Since 2008 — İstanbul</div>
+        </div>
+
+        <div class="noir-section reveal">
+            <h2 class="noir-section-title">Uzmanlık Alanlarım</h2>
+            <ol class="numbered-list">
+                <li>
+                    <span class="num">01</span>
+                    <div class="item-content">
+                        <div class="item-title">Kurumsal Finans</div>
+                        <div class="item-desc">Sermaye yapısı, M&amp;A süreçleri ve değerleme.</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="num">02</span>
+                    <div class="item-content">
+                        <div class="item-title">Yatırım Stratejisi</div>
+                        <div class="item-desc">Portföy yönetimi ve uzun vadeli planlama.</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="num">03</span>
+                    <div class="item-content">
+                        <div class="item-title">Risk Yönetimi</div>
+                        <div class="item-desc">Finansal risk modelleme ve hedge stratejileri.</div>
+                    </div>
+                </li>
+                <li>
+                    <span class="num">04</span>
+                    <div class="item-content">
+                        <div class="item-title">Bütçe &amp; Forecast</div>
+                        <div class="item-desc">Çeyreklik raporlama ve nakit akış planlaması.</div>
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+        <div class="stats-grid reveal">
+            <div class="stat-cell">
+                <div class="num">17</div>
+                <div class="label">Yıl</div>
+            </div>
+            <div class="stat-cell">
+                <div class="num">42</div>
+                <div class="label">Proje</div>
+            </div>
+            <div class="stat-cell">
+                <div class="num">28</div>
+                <div class="label">Kurum</div>
+            </div>
+        </div>
+
+        <div class="pull-quote reveal">
+            <div class="quote-text">Sayılar yalan söylemez. Stratejiler ise sadece doğru sayılar üzerine kurulduğunda işe yarar.</div>
+            <div class="quote-author">— Alp Demir</div>
+        </div>
+
+        <div class="noir-section reveal">
+            <h2 class="noir-section-title">İletişim</h2>
+        </div>
+
+        <div class="contact-grid reveal">
+            <a href="tel:+902128884455" class="contact-cell">
+                <span class="ic">Telefon</span>
+                <span class="val">+90 212 888 44 55</span>
+            </a>
+            <a href="mailto:alp.demir@alpdemir.com" class="contact-cell">
+                <span class="ic">E-posta</span>
+                <span class="val">alp.demir@alpdemir.com</span>
+            </a>
+            <a href="https://alpdemir.com" target="_blank" rel="noopener" class="contact-cell">
+                <span class="ic">Web</span>
+                <span class="val">alpdemir.com</span>
+            </a>
+            <a href="https://linkedin.com/in/alpdemir" target="_blank" rel="noopener" class="contact-cell">
+                <span class="ic">LinkedIn</span>
+                <span class="val">/in/alpdemir</span>
+            </a>
+        </div>
+
+        <div class="qr-block reveal">
+            <div class="qr-frame">
+                <div id="qrcode"></div>
+            </div>
+            <div class="qr-caption">Kartı Paylaş</div>
+        </div>
+
+        <footer class="noir-footer">
+            <div class="fname">Alp Demir</div>
+            <div class="fcopy">© 2026 — Tüm Haklar Saklıdır</div>
+        </footer>
+
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+        function initScrollReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function(el){ el.classList.add('visible'); });
+                return;
+            }
+            var io = new IntersectionObserver(function(entries){
+                entries.forEach(function(e){
+                    if (e.isIntersecting) {
+                        e.target.classList.add('visible');
+                        io.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function(el){ io.observe(el); });
+        }
+        function initQR() {
+            if (typeof QRCode === 'undefined') return;
+            new QRCode(document.getElementById('qrcode'), {
+                text: 'https://alpdemir.com',
+                width: 128,
+                height: 128,
+                colorDark: '#080808',
+                colorLight: '#f0ede8',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function(){
+            initScrollReveal();
+            initQR();
+        });
+    })();
+    </script>
+</body>
+</html>

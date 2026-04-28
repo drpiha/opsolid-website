@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Berk Kıraç — Kıraç Barber Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --bg:#f4f4f2;
+    --card:#ffffff;
+    --warm:#faf9f6;
+    --ink:#111111;
+    --ink-soft:#444444;
+    --gold:#c8a500;
+    --text:#111111;
+    --muted:#666666;
+    --border:#e5e5e3;
+    --hairline:#eeeeec;
+  }
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'DM Sans',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  .card{
+    width:100%;
+    max-width:460px;
+    margin:0 auto;
+    background:var(--card);
+    padding:40px 32px 48px;
+  }
+
+  .reveal{
+    opacity:0;
+    transform:translateY(30px);
+    transition:opacity 0.7s cubic-bezier(.16,1,.3,1), transform 0.7s cubic-bezier(.16,1,.3,1);
+  }
+  .reveal.visible{opacity:1;transform:translateY(0);}
+
+  /* Eyebrow */
+  .eyebrow{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:11px;
+    font-weight:500;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    color:var(--ink);
+    margin-bottom:20px;
+  }
+  .eyebrow .dot{
+    width:6px;height:6px;
+    border-radius:50%;
+    background:var(--gold);
+  }
+  .eyebrow::after{
+    content:'';
+    flex:1;
+    height:1px;
+    background:var(--border);
+  }
+
+  /* Display name */
+  .display-name{
+    font-family:'DM Sans',sans-serif;
+    font-weight:300;
+    font-size:58px;
+    line-height:0.95;
+    letter-spacing:-2.5px;
+    color:var(--ink);
+    margin-bottom:8px;
+  }
+  .display-name .em{font-weight:600;}
+  .display-title{
+    font-family:'Source Serif 4',serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:18px;
+    color:var(--muted);
+    margin-bottom:32px;
+  }
+
+  /* Profile band */
+  .profile-band{
+    display:grid;
+    grid-template-columns:96px 1fr;
+    gap:18px;
+    align-items:center;
+    padding:22px 0;
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    margin-bottom:32px;
+  }
+  .profile-photo{
+    width:96px;
+    height:96px;
+    overflow:hidden;
+    background:var(--bg);
+  }
+  .profile-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    filter:grayscale(0.5) contrast(1.05);
+    display:block;
+  }
+  .profile-info .role{
+    font-size:11px;
+    font-weight:500;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:6px;
+  }
+  .profile-info .credentials{
+    font-family:'Source Serif 4',serif;
+    font-style:italic;
+    font-size:14px;
+    color:var(--text);
+    line-height:1.5;
+  }
+
+  /* Bio */
+  .bio{
+    font-family:'Source Serif 4',serif;
+    font-style:italic;
+    font-weight:400;
+    font-size:17px;
+    line-height:1.65;
+    color:var(--text);
+    margin-bottom:36px;
+  }
+
+  /* Stats */
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:12px;
+    margin-bottom:36px;
+    padding:20px 0;
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+  }
+  .stat{text-align:center;}
+  .stat-num{
+    font-weight:300;
+    font-size:32px;
+    letter-spacing:-1px;
+    color:var(--text);
+    line-height:1;
+    margin-bottom:6px;
+  }
+  .stat-num .gold{color:var(--gold);font-weight:600;}
+  .stat-label{
+    font-size:10px;
+    font-weight:500;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+
+  /* Service menu — proper table layout */
+  .menu-section{margin-bottom:36px;}
+  .menu-section h3{
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    color:var(--ink);
+    margin-bottom:14px;
+    padding-bottom:8px;
+    border-bottom:1px solid var(--border);
+  }
+  .menu-row{
+    display:grid;
+    grid-template-columns:1fr auto;
+    align-items:baseline;
+    gap:12px;
+    padding:12px 0;
+    border-bottom:1px solid var(--hairline);
+  }
+  .menu-row:last-child{border-bottom:none;}
+  .menu-row.featured{
+    background:var(--warm);
+    margin:0 -12px;
+    padding:14px 12px;
+    border:1px solid var(--border);
+    border-radius:4px;
+  }
+  .menu-name{
+    font-size:14px;
+    font-weight:500;
+    color:var(--text);
+    line-height:1.35;
+  }
+  .menu-desc{
+    font-family:'Source Serif 4',serif;
+    font-style:italic;
+    font-size:12px;
+    color:var(--muted);
+    margin-top:3px;
+  }
+  .menu-price{
+    font-size:14px;
+    font-weight:600;
+    color:var(--text);
+    white-space:nowrap;
+  }
+  .menu-row.featured .menu-name{font-weight:600;}
+  .menu-row.featured .menu-price{color:var(--gold);}
+
+  /* Gallery */
+  .gallery-section{margin-bottom:36px;}
+  .gallery-section h3{
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    color:var(--ink);
+    margin-bottom:14px;
+    padding-bottom:8px;
+    border-bottom:1px solid var(--border);
+  }
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:6px;
+  }
+  .gallery-grid a{
+    display:block;
+    aspect-ratio:1;
+    overflow:hidden;
+    background:var(--bg);
+  }
+  .gallery-grid img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:transform 0.4s cubic-bezier(.16,1,.3,1);
+    filter:grayscale(0.3);
+  }
+  .gallery-grid a:hover img{
+    transform:scale(1.04);
+    filter:grayscale(0);
+  }
+
+  /* Hours table */
+  .hours-table{margin-bottom:36px;}
+  .hours-table h3{
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    color:var(--ink);
+    margin-bottom:14px;
+    padding-bottom:8px;
+    border-bottom:1px solid var(--border);
+  }
+  .hours-table .row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:10px 0;
+    border-bottom:1px solid var(--hairline);
+    font-size:13px;
+  }
+  .hours-table .row:last-child{border-bottom:none;}
+  .hours-table .row.today{
+    color:var(--ink);
+    font-weight:600;
+  }
+  .hours-table .row.today::before{
+    content:'';
+    width:6px;height:6px;
+    border-radius:50%;
+    background:var(--gold);
+    margin-right:10px;
+  }
+  .hours-table .day{font-weight:500;}
+  .hours-table .time{
+    font-family:'Source Serif 4',serif;
+    color:var(--muted);
+  }
+  .hours-table .row.today .time{color:var(--ink);font-style:italic;}
+  .hours-table .closed{color:var(--gold);font-style:italic;}
+
+  /* Contact */
+  .contact-list{margin-bottom:36px;}
+  .contact-list h3{
+    font-size:10.5px;
+    font-weight:600;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    color:var(--ink);
+    margin-bottom:14px;
+    padding-bottom:8px;
+    border-bottom:1px solid var(--border);
+  }
+  .contact-list .row{
+    display:grid;
+    grid-template-columns:90px 1fr;
+    align-items:center;
+    padding:10px 0;
+    border-bottom:1px solid var(--hairline);
+    font-size:13px;
+  }
+  .contact-list .row:last-child{border-bottom:none;}
+  .contact-list .key{
+    font-size:10px;
+    font-weight:500;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .contact-list .val{font-weight:500;color:var(--text);}
+  .contact-list .val a{
+    color:var(--text);
+    text-decoration:none;
+    border-bottom:1px solid transparent;
+    transition:border-color 0.2s;
+  }
+  .contact-list .val a:hover{border-bottom-color:var(--ink);}
+
+  /* CTA */
+  .cta-grid{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-bottom:36px;
+  }
+  .btn{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:16px 22px;
+    border-radius:4px;
+    text-decoration:none;
+    font-size:13px;
+    font-weight:500;
+    letter-spacing:1px;
+    transition:all 0.25s ease;
+    border:1px solid transparent;
+  }
+  .btn-fill{background:var(--ink);color:#fff;}
+  .btn-fill:hover{background:var(--gold);}
+  .btn-line{
+    background:transparent;
+    color:var(--text);
+    border-color:var(--border);
+  }
+  .btn-line:hover{border-color:var(--ink);}
+  .btn-row{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  /* QR */
+  .qr-section{
+    text-align:center;
+    padding-top:36px;
+    border-top:1px solid var(--border);
+    margin-bottom:32px;
+  }
+  .qr-section .label{
+    font-size:10.5px;
+    font-weight:500;
+    letter-spacing:2.5px;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:18px;
+  }
+  #qrcode{
+    display:inline-block;
+    padding:10px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:4px;
+  }
+
+  .footer{
+    text-align:center;
+    font-family:'Source Serif 4',serif;
+    font-style:italic;
+    font-size:12px;
+    color:var(--muted);
+    padding-top:24px;
+    border-top:1px solid var(--hairline);
+  }
+
+  @media(prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    .gallery-grid img{transition:none;}
+  }
+</style>
+</head>
+<body>
+<div class="card">
+
+  <div class="eyebrow reveal"><span class="dot"></span> Kıraç Barber Studio · İzmir</div>
+
+  <h1 class="display-name reveal">Berk<br><span class="em">Kıraç</span></h1>
+  <p class="display-title reveal">Master Berber & Hair Stylist</p>
+
+  <div class="profile-band reveal">
+    <div class="profile-photo">
+      <img src="https://i.pravatar.cc/200?img=33" alt="Berk Kıraç">
+    </div>
+    <div class="profile-info">
+      <div class="role">Founder · Sahip</div>
+      <div class="credentials">12 yıllık tecrübe ile klasik & modern erkek bakımı sunan, premium ürün kullanan bağımsız atelye.</div>
+    </div>
+  </div>
+
+  <p class="bio reveal">
+    Her tıraşın bir form, her sakalın bir karakter taşıdığına inanıyorum. Atelyemde aceleye yer yok — sadece her detayın hak ettiği zaman.
+  </p>
+
+  <div class="stats reveal">
+    <div class="stat">
+      <div class="stat-num">12<span style="font-size:14px;color:var(--muted);"> yıl</span></div>
+      <div class="stat-label">Tecrübe</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num"><span class="gold">4K</span><span style="font-size:14px;color:var(--muted);">+</span></div>
+      <div class="stat-label">Müşteri</div>
+    </div>
+    <div class="stat">
+      <div class="stat-num">28<span style="font-size:14px;color:var(--muted);">K</span></div>
+      <div class="stat-label">Takipçi</div>
+    </div>
+  </div>
+
+  <div class="menu-section reveal">
+    <h3>Hizmet Menüsü</h3>
+    <div class="menu-row">
+      <div>
+        <div class="menu-name">Klasik Tıraş</div>
+        <div class="menu-desc">Sıcak havlu, jilet, kolonya</div>
+      </div>
+      <div class="menu-price">₺250</div>
+    </div>
+    <div class="menu-row">
+      <div>
+        <div class="menu-name">Saç Kesimi</div>
+        <div class="menu-desc">Konsültasyon dahil, kişiye özel</div>
+      </div>
+      <div class="menu-price">₺350</div>
+    </div>
+    <div class="menu-row">
+      <div>
+        <div class="menu-name">Sakal Şekillendirme</div>
+        <div class="menu-desc">Yüz hattına uygun tasarım</div>
+      </div>
+      <div class="menu-price">₺200</div>
+    </div>
+    <div class="menu-row">
+      <div>
+        <div class="menu-name">Cilt Bakımı</div>
+        <div class="menu-desc">Premium ürünlerle yüz bakımı</div>
+      </div>
+      <div class="menu-price">₺400</div>
+    </div>
+    <div class="menu-row featured">
+      <div>
+        <div class="menu-name">Komple Paket</div>
+        <div class="menu-desc">Saç + sakal + cilt bakımı + tıraş</div>
+      </div>
+      <div class="menu-price">₺750</div>
+    </div>
+  </div>
+
+  <div class="gallery-section reveal">
+    <h3>Atelye / Çalışmalar</h3>
+    <div class="gallery-grid">
+      <a href="https://instagram.com/berkkiracbarber" target="_blank" rel="noopener">
+        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=460&h=460&fit=crop&q=80" alt="Çalışma 1" loading="lazy">
+      </a>
+      <a href="https://instagram.com/berkkiracbarber" target="_blank" rel="noopener">
+        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=460&h=460&fit=crop&q=80" alt="Çalışma 2" loading="lazy">
+      </a>
+      <a href="https://instagram.com/berkkiracbarber" target="_blank" rel="noopener">
+        <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=460&h=460&fit=crop&q=80" alt="Çalışma 3" loading="lazy">
+      </a>
+      <a href="https://instagram.com/berkkiracbarber" target="_blank" rel="noopener">
+        <img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=460&h=460&fit=crop&q=80" alt="Çalışma 4" loading="lazy">
+      </a>
+    </div>
+  </div>
+
+  <div class="hours-table reveal">
+    <h3>Çalışma Saatleri</h3>
+    <div id="hoursList">
+      <div class="row" data-day="1"><span class="day">Pazartesi</span><span class="time">10:00 — 21:00</span></div>
+      <div class="row" data-day="2"><span class="day">Salı</span><span class="time">10:00 — 21:00</span></div>
+      <div class="row" data-day="3"><span class="day">Çarşamba</span><span class="time">10:00 — 21:00</span></div>
+      <div class="row" data-day="4"><span class="day">Perşembe</span><span class="time">10:00 — 21:00</span></div>
+      <div class="row" data-day="5"><span class="day">Cuma</span><span class="time">10:00 — 22:00</span></div>
+      <div class="row" data-day="6"><span class="day">Cumartesi</span><span class="time">10:00 — 22:00</span></div>
+      <div class="row" data-day="0"><span class="day">Pazar</span><span class="time closed">Kapalı</span></div>
+    </div>
+  </div>
+
+  <div class="contact-list reveal">
+    <h3>İletişim</h3>
+    <div class="row"><span class="key">Telefon</span><span class="val"><a href="tel:+905324448877">+90 532 444 88 77</a></span></div>
+    <div class="row"><span class="key">WhatsApp</span><span class="val"><a href="https://wa.me/905324448877" target="_blank" rel="noopener">+90 532 444 88 77</a></span></div>
+    <div class="row"><span class="key">Instagram</span><span class="val"><a href="https://instagram.com/berkkiracbarber" target="_blank" rel="noopener">@berkkiracbarber</a></span></div>
+    <div class="row"><span class="key">Adres</span><span class="val">Alsancak Mah. Cumhuriyet Bul. No: 142, Konak / İzmir</span></div>
+  </div>
+
+  <div class="cta-grid reveal">
+    <a href="https://wa.me/905324448877?text=Merhaba%2C%20randevu%20almak%20istiyorum." class="btn btn-fill" target="_blank" rel="noopener">Randevu Al</a>
+    <div class="btn-row">
+      <a href="tel:+905324448877" class="btn btn-line">Telefon</a>
+      <a href="https://instagram.com/berkkiracbarber" class="btn btn-line" target="_blank" rel="noopener">Instagram</a>
+    </div>
+    <a href="https://kiracbarber.com" class="btn btn-line" target="_blank" rel="noopener">Galeri / Website</a>
+  </div>
+
+  <div class="qr-section reveal">
+    <div class="label">Randevu için QR Okutun</div>
+    <div id="qrcode"></div>
+  </div>
+
+  <div class="footer reveal">© 2026 Kıraç Barber Studio</div>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  var today = new Date().getDay();
+  document.querySelectorAll('#hoursList .row').forEach(function(r){
+    if(parseInt(r.getAttribute('data-day'),10) === today){r.classList.add('today');}
+  });
+
+  try{
+    new QRCode(document.getElementById('qrcode'),{
+      text:window.location.href,
+      width:120,height:120,
+      colorDark:'#111111',colorLight:'#ffffff',
+      correctLevel:QRCode.CorrectLevel.M
+    });
+  }catch(e){
+    var q=document.getElementById('qrcode');
+    q.textContent='QR kod yüklenemedi';
+  }
+
+  var els = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');io.unobserve(e.target);}});
+    },{threshold:0.1, rootMargin:'0px 0px -40px 0px'});
+    els.forEach(function(el){io.observe(el);});
+  }else{
+    els.forEach(function(el){el.classList.add('visible');});
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elif Çelik | Proje Yönetimi Danışmanı</title>
+    <meta property="og:title" content="Elif Çelik | Proje Yönetimi Danışmanı">
+    <meta property="og:description" content="Kurumsal proje yönetimi, agile dönüşüm ve süreç optimizasyonu.">
+    <meta property="og:type" content="profile">
+    <meta property="og:locale" content="tr_TR">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #f2f2f2;
+            --card: #ffffff;
+            --red: #cc0000;
+            --black: #000000;
+            --muted: #666666;
+            --border: #cccccc;
+            --hairline: #e8e8e8;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--black);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--card);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* Hero block */
+        .swiss-hero {
+            padding: 56px 32px 36px;
+            border-left: 6px solid var(--red);
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+            justify-content: space-between;
+        }
+        .swiss-hero .name-block {
+            flex: 1;
+            min-width: 0;
+        }
+        .swiss-hero .swiss-name {
+            font-size: 60px;
+            font-weight: 700;
+            line-height: 0.95;
+            letter-spacing: -3px;
+            color: var(--black);
+            margin-bottom: 14px;
+        }
+        .swiss-hero .swiss-name .surname { display: block; font-weight: 300; }
+        .swiss-hero .swiss-tag {
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--red);
+        }
+        .swiss-photo {
+            width: 96px;
+            height: 96px;
+            object-fit: cover;
+            filter: grayscale(1) contrast(1.1);
+            flex-shrink: 0;
+        }
+
+        /* Hairline */
+        .hairline {
+            height: 1px;
+            background: var(--black);
+            margin: 0 32px;
+        }
+        .hairline-soft {
+            height: 1px;
+            background: var(--hairline);
+            margin: 0 32px;
+        }
+
+        /* Meta grid */
+        .swiss-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            padding: 24px 32px;
+            gap: 16px;
+        }
+        .swiss-meta .cell {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .swiss-meta .key {
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 500;
+        }
+        .swiss-meta .val {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--black);
+            line-height: 1.3;
+        }
+
+        /* Section */
+        .swiss-section {
+            padding: 40px 32px 24px;
+        }
+        .swiss-section h2 {
+            font-size: 12px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 22px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .swiss-section h2::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--black);
+        }
+
+        /* Minimal list */
+        .swiss-list {
+            list-style: none;
+        }
+        .swiss-list li {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--black);
+            padding: 8px 0;
+            display: flex;
+            align-items: baseline;
+            gap: 14px;
+        }
+        .swiss-list li::before {
+            content: '—';
+            color: var(--red);
+            font-weight: 500;
+            flex-shrink: 0;
+        }
+
+        /* Two col table */
+        .swiss-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-top: 1px solid var(--hairline);
+        }
+        .swiss-table .row {
+            display: contents;
+        }
+        .swiss-table .row > div {
+            padding: 14px 0;
+            border-bottom: 1px solid var(--hairline);
+            font-size: 13px;
+        }
+        .swiss-table .col-key {
+            color: var(--muted);
+            font-weight: 500;
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding-right: 14px;
+        }
+        .swiss-table .col-val {
+            font-weight: 500;
+            color: var(--black);
+        }
+
+        /* Contact table */
+        .contact-table {
+            border-top: 1px solid var(--black);
+            border-bottom: 1px solid var(--black);
+            margin: 0 32px;
+        }
+        .contact-row {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--hairline);
+            text-decoration: none;
+            color: var(--black);
+            font-size: 13px;
+            transition: background 0.2s ease;
+        }
+        .contact-row:last-child { border-bottom: none; }
+        .contact-row:hover { background: var(--bg); }
+        .contact-row .ic {
+            font-size: 11px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 500;
+            padding-left: 4px;
+        }
+        .contact-row .val {
+            font-weight: 500;
+        }
+
+        /* QR */
+        .swiss-qr-row {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 40px 32px;
+            gap: 20px;
+        }
+        .swiss-qr-row .qr-info {
+            flex: 1;
+        }
+        .swiss-qr-row .qr-label {
+            font-size: 10px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 6px;
+        }
+        .swiss-qr-row .qr-text {
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.5px;
+        }
+        .swiss-qr-row .qr-mark {
+            color: var(--red);
+        }
+        #qrcode img, #qrcode canvas {
+            display: block;
+        }
+
+        /* Footer */
+        .swiss-footer {
+            padding: 24px 32px 36px;
+            display: flex;
+            justify-content: space-between;
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            border-top: 1px solid var(--hairline);
+        }
+
+        @media (max-width: 380px) {
+            .swiss-hero .swiss-name { font-size: 48px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+
+        <div class="swiss-hero reveal">
+            <div class="name-block">
+                <h1 class="swiss-name">Elif<span class="surname">Çelik</span></h1>
+                <div class="swiss-tag">Proje Yönetimi · Ankara</div>
+            </div>
+            <img src="https://i.pravatar.cc/200?img=20" alt="Elif Çelik" class="swiss-photo">
+        </div>
+
+        <div class="hairline-soft"></div>
+
+        <div class="swiss-meta reveal">
+            <div class="cell">
+                <span class="key">Ünvan</span>
+                <span class="val">PMP, Senior Consultant</span>
+            </div>
+            <div class="cell">
+                <span class="key">Şirket</span>
+                <span class="val">Çelik Consulting</span>
+            </div>
+            <div class="cell">
+                <span class="key">Şehir</span>
+                <span class="val">Ankara, TR</span>
+            </div>
+        </div>
+
+        <div class="hairline"></div>
+
+        <div class="swiss-section reveal">
+            <h2>Uzmanlık</h2>
+            <ul class="swiss-list">
+                <li>Agile &amp; Scrum dönüşüm süreçleri</li>
+                <li>PMO kurulumu ve yönetimi</li>
+                <li>Süreç optimizasyonu (Lean / Six Sigma)</li>
+                <li>Risk &amp; kalite yönetimi</li>
+                <li>Stratejik planlama atölyeleri</li>
+                <li>Stakeholder iletişim mimarisi</li>
+            </ul>
+        </div>
+
+        <div class="swiss-section reveal">
+            <h2>Eğitim &amp; Deneyim</h2>
+            <div class="swiss-table">
+                <div class="row">
+                    <div class="col-key">2024 — bugün</div>
+                    <div class="col-val">Çelik Consulting / Kurucu</div>
+                </div>
+                <div class="row">
+                    <div class="col-key">2018 — 2024</div>
+                    <div class="col-val">PMO Direktörü, Anadolu Holding</div>
+                </div>
+                <div class="row">
+                    <div class="col-key">2014 — 2018</div>
+                    <div class="col-val">Senior PM, Ericsson Türkiye</div>
+                </div>
+                <div class="row">
+                    <div class="col-key">2012</div>
+                    <div class="col-val">PMP Sertifikasyon (PMI)</div>
+                </div>
+                <div class="row">
+                    <div class="col-key">2008 — 2012</div>
+                    <div class="col-val">Bilkent Üniversitesi, MBA</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="swiss-section reveal">
+            <h2>İletişim</h2>
+        </div>
+
+        <div class="contact-table reveal">
+            <a href="tel:+903125553344" class="contact-row">
+                <span class="ic">Tel</span>
+                <span class="val">+90 312 555 33 44</span>
+            </a>
+            <a href="mailto:elif.celik@elifcelik.com" class="contact-row">
+                <span class="ic">E-posta</span>
+                <span class="val">elif.celik@elifcelik.com</span>
+            </a>
+            <a href="https://elifcelik.com" target="_blank" rel="noopener" class="contact-row">
+                <span class="ic">Web</span>
+                <span class="val">elifcelik.com</span>
+            </a>
+            <a href="https://linkedin.com/in/elifcelik" target="_blank" rel="noopener" class="contact-row">
+                <span class="ic">LinkedIn</span>
+                <span class="val">/in/elifcelik</span>
+            </a>
+        </div>
+
+        <div class="swiss-qr-row reveal">
+            <div class="qr-info">
+                <div class="qr-label">Dijital Kart</div>
+                <div class="qr-text">Tara<span class="qr-mark">.</span><br>Bağlan<span class="qr-mark">.</span></div>
+            </div>
+            <div id="qrcode"></div>
+        </div>
+
+        <footer class="swiss-footer">
+            <span>Elif Çelik</span>
+            <span>© 2026</span>
+        </footer>
+
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+        function initScrollReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function(el){ el.classList.add('visible'); });
+                return;
+            }
+            var io = new IntersectionObserver(function(entries){
+                entries.forEach(function(e){
+                    if (e.isIntersecting) {
+                        e.target.classList.add('visible');
+                        io.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function(el){ io.observe(el); });
+        }
+        function initQR() {
+            if (typeof QRCode === 'undefined') return;
+            new QRCode(document.getElementById('qrcode'), {
+                text: 'https://elifcelik.com',
+                width: 96,
+                height: 96,
+                colorDark: '#000000',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function(){
+            initScrollReveal();
+            initQR();
+        });
+    })();
+    </script>
+</body>
+</html>

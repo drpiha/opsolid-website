@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leyla Yaman - Dugun &amp; Portre Fotografcisi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@300;400;500;600;700&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f2f2f2;
+    --card: #ffffff;
+    --accent: #111111;
+    --accent2: #d4af37;
+    --text: #111111;
+    --text-muted: #777777;
+    --border: #e3e3e3;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Bricolage Grotesque', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+  }
+  .card-wrapper {
+    width: 100%;
+    max-width: 460px;
+    background: var(--bg);
+    min-height: 100vh;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* 1. Mega Type Header */
+  .type-header {
+    padding: 56px 28px 28px;
+  }
+  .type-header .meta-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    margin-bottom: 36px;
+    font-weight: 500;
+  }
+  .type-header .meta-line .l {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .type-header .meta-line .dot {
+    width: 6px; height: 6px;
+    background: var(--accent2);
+    border-radius: 50%;
+  }
+  .type-header h1 {
+    font-family: 'Bricolage Grotesque', sans-serif;
+    font-size: 64px;
+    font-weight: 700;
+    letter-spacing: -3px;
+    line-height: 0.92;
+  }
+  .type-header h1 .ital {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--text-muted);
+  }
+  .type-header .subtitle {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 19px;
+    color: var(--text-muted);
+    margin-top: 10px;
+  }
+
+  /* 2. Profile strip */
+  .profile-strip {
+    display: grid;
+    grid-template-columns: 80px 1fr;
+    gap: 16px;
+    align-items: center;
+    padding: 20px 28px;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+  }
+  .profile-strip img {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    filter: grayscale(1) contrast(1.05);
+  }
+  .profile-strip .who h2 {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+  }
+  .profile-strip .who p {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .profile-strip .stats {
+    display: flex;
+    gap: 14px;
+    margin-top: 8px;
+    font-size: 11px;
+    letter-spacing: 0.8px;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .profile-strip .stats span:not(:last-child)::after {
+    content: '·';
+    margin-left: 14px;
+    color: var(--text-muted);
+  }
+
+  /* 3. About */
+  .about {
+    padding: 36px 28px;
+  }
+  .about .label {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .about p {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 19px;
+    line-height: 1.55;
+  }
+  .about .signature {
+    margin-top: 16px;
+    font-family: 'EB Garamond', serif;
+    font-size: 14px;
+    color: var(--text-muted);
+  }
+
+  /* 4. Portfolio 2x2 grid */
+  .portfolio {
+    padding: 0 28px 36px;
+  }
+  .portfolio .label {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    font-weight: 600;
+    margin-bottom: 18px;
+    display: flex;
+    justify-content: space-between;
+  }
+  .portfolio .label .more {
+    color: var(--text);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .portfolio-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+  }
+  .pf-img {
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    background: var(--card);
+    position: relative;
+  }
+  .pf-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(1);
+    transition: filter 0.5s ease, transform 0.5s ease;
+  }
+  .pf-img:hover img { filter: grayscale(0); transform: scale(1.02); }
+  .pf-img .cap {
+    position: absolute;
+    bottom: 8px;
+    left: 8px;
+    right: 8px;
+    font-size: 10.5px;
+    color: #fff;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-weight: 500;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.7);
+  }
+
+  /* 5. Services list */
+  .services {
+    margin: 0 28px 36px;
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+  }
+  .services .label {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .svc-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 12px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: baseline;
+  }
+  .svc-row:last-child { border-bottom: none; }
+  .svc-row .num {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--accent2);
+    width: 22px;
+  }
+  .svc-row .name {
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.2px;
+  }
+  .svc-row .meta {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+
+  /* 6. Packages */
+  .packages {
+    margin: 0 28px 36px;
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+  }
+  .packages .label {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .pkg-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: baseline;
+  }
+  .pkg-row:last-child { border-bottom: none; }
+  .pkg-row .name {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+  }
+  .pkg-row .desc {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+  .pkg-row .price {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+
+  /* 7. Contact tabular */
+  .contact-table {
+    margin: 0 28px 28px;
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+  }
+  .contact-table .label {
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    font-weight: 600;
+    margin-bottom: 14px;
+  }
+  .c-row {
+    display: grid;
+    grid-template-columns: 90px 1fr;
+    padding: 10px 0;
+    align-items: baseline;
+    border-bottom: 1px solid var(--border);
+  }
+  .c-row:last-child { border-bottom: none; }
+  .c-row .key {
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .c-row .val {
+    font-size: 15px;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .c-row a.val:hover { color: var(--accent2); }
+
+  /* CTA */
+  .cta-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    padding: 0 28px 28px;
+  }
+  .btn {
+    padding: 16px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    transition: all 0.25s ease;
+    border: 1px solid var(--accent);
+  }
+  .btn.primary { background: var(--accent); color: #fff; }
+  .btn.primary:hover { background: var(--accent2); border-color: var(--accent2); }
+  .btn.secondary { background: transparent; color: var(--accent); }
+  .btn.secondary:hover { background: var(--accent); color: #fff; }
+
+  /* QR */
+  .qr-section {
+    padding: 28px 28px;
+    border-top: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: center;
+  }
+  .qr-section .qr-text h4 {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    margin-bottom: 4px;
+  }
+  .qr-section .qr-text p {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+  #qrcode {
+    background: var(--card);
+    padding: 8px;
+    border: 1px solid var(--border);
+  }
+  #qrcode img, #qrcode canvas { display: block; }
+
+  .footer {
+    padding: 22px 28px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--text-muted);
+    letter-spacing: 1px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { transition: none; opacity: 1; transform: none; }
+    .pf-img img { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card-wrapper">
+
+  <div class="type-header">
+    <div class="meta-line">
+      <span class="l"><span class="dot"></span>Available 2026</span>
+      <span>Istanbul &middot; Worldwide</span>
+    </div>
+    <h1>Leyla<br><span class="ital">yaman</span></h1>
+    <div class="subtitle">Dugun &amp; Portre Fotografcisi</div>
+  </div>
+
+  <div class="profile-strip reveal">
+    <img src="https://i.pravatar.cc/200?img=44" alt="Leyla Yaman">
+    <div class="who">
+      <h2>Leyla Yaman</h2>
+      <p>Photographer &amp; Storyteller</p>
+      <div class="stats">
+        <span>7 yil</span>
+        <span>280+ dugun</span>
+        <span>15 ulke</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="about reveal">
+    <div class="label">Yaklaşim</div>
+    <p>"Sahnelenmiş pozlardan cok, ani durust dokumlemeyi seviyorum. Iyi bir kare bana hep ayni seyi sorar: bu an gercekten yasandi mi?"</p>
+    <div class="signature">&mdash; Leyla Yaman</div>
+  </div>
+
+  <div class="portfolio reveal">
+    <div class="label">
+      <span>Portfolio</span>
+      <a href="https://leylayamanphoto.com" target="_blank" rel="noopener" class="more">tumune bak</a>
+    </div>
+    <div class="portfolio-grid">
+      <div class="pf-img">
+        <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=400&h=500&fit=crop&q=80" alt="Dugun" loading="lazy">
+        <div class="cap">Dugun &middot; 2024</div>
+      </div>
+      <div class="pf-img">
+        <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?w=400&h=500&fit=crop&q=80" alt="Portre" loading="lazy">
+        <div class="cap">Portre</div>
+      </div>
+      <div class="pf-img">
+        <img src="https://images.unsplash.com/photo-1516724562728-afc824a36e84?w=400&h=500&fit=crop&q=80" alt="Moda" loading="lazy">
+        <div class="cap">Moda</div>
+      </div>
+      <div class="pf-img">
+        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=500&fit=crop&q=80" alt="Cift" loading="lazy">
+        <div class="cap">Soz &middot; Nisan</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="services reveal">
+    <div class="label">Hizmetler</div>
+    <div class="svc-row">
+      <span class="num">01</span>
+      <span class="name">Dugun Fotografciligi</span>
+      <span class="meta">tum gun</span>
+    </div>
+    <div class="svc-row">
+      <span class="num">02</span>
+      <span class="name">Portre &amp; Aile</span>
+      <span class="meta">studyo / disari</span>
+    </div>
+    <div class="svc-row">
+      <span class="num">03</span>
+      <span class="name">Moda &amp; Ticari</span>
+      <span class="meta">marka / lookbook</span>
+    </div>
+    <div class="svc-row">
+      <span class="num">04</span>
+      <span class="name">Nisan &amp; Soz</span>
+      <span class="meta">yarim gun</span>
+    </div>
+    <div class="svc-row">
+      <span class="num">05</span>
+      <span class="name">Kurumsal Etkinlik</span>
+      <span class="meta">on talep</span>
+    </div>
+  </div>
+
+  <div class="packages reveal">
+    <div class="label">Paketler</div>
+    <div class="pkg-row">
+      <div>
+        <div class="name">Essential</div>
+        <div class="desc">Yarim gun &middot; 200 retus</div>
+      </div>
+      <div class="price">₺8.500</div>
+    </div>
+    <div class="pkg-row">
+      <div>
+        <div class="name">Premium</div>
+        <div class="desc">Tum gun &middot; 400 retus &middot; album</div>
+      </div>
+      <div class="price">₺14.000</div>
+    </div>
+    <div class="pkg-row">
+      <div>
+        <div class="name">Luxury</div>
+        <div class="desc">2 fotografci &middot; pre-wedding &middot; premium</div>
+      </div>
+      <div class="price">₺22.000</div>
+    </div>
+  </div>
+
+  <div class="contact-table reveal">
+    <div class="label">Iletisim</div>
+    <div class="c-row">
+      <span class="key">Tel</span>
+      <a href="tel:+905302228844" class="val">+90 530 222 88 44</a>
+    </div>
+    <div class="c-row">
+      <span class="key">E-posta</span>
+      <a href="mailto:leyla@leylayanmanphoto.com" class="val">leyla@leylayanmanphoto.com</a>
+    </div>
+    <div class="c-row">
+      <span class="key">Web</span>
+      <a href="https://leylayamanphoto.com" target="_blank" rel="noopener" class="val">leylayamanphoto.com</a>
+    </div>
+    <div class="c-row">
+      <span class="key">Instagram</span>
+      <a href="https://instagram.com/leylayanmanphoto" target="_blank" rel="noopener" class="val">@leylayanmanphoto</a>
+    </div>
+    <div class="c-row">
+      <span class="key">Konum</span>
+      <span class="val">Istanbul, Turkiye</span>
+    </div>
+  </div>
+
+  <div class="cta-row reveal">
+    <a href="https://leylayamanphoto.com" target="_blank" rel="noopener" class="btn primary">Portfolio</a>
+    <a href="https://instagram.com/leylayanmanphoto" target="_blank" rel="noopener" class="btn secondary">Instagram</a>
+    <a href="https://wa.me/905302228844" target="_blank" rel="noopener" class="btn secondary">WhatsApp</a>
+    <a href="mailto:leyla@leylayanmanphoto.com" class="btn secondary">E-posta</a>
+  </div>
+
+  <div class="qr-section reveal">
+    <div class="qr-text">
+      <h4>Kartviziti paylas</h4>
+      <p>Cekim teklifi icin tara, hemen yaz.</p>
+    </div>
+    <div id="qrcode"></div>
+  </div>
+
+  <footer class="footer">
+    <span>Leyla Yaman &copy; 2026</span>
+    <span>Istanbul</span>
+  </footer>
+
+</div>
+
+<script>
+  (function() {
+    var els = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      var obs = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('visible');
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+      els.forEach(function(el) { obs.observe(el); });
+    } else {
+      els.forEach(function(el) { el.classList.add('visible'); });
+    }
+  })();
+
+  (function() {
+    var qr = document.getElementById('qrcode');
+    if (qr && typeof QRCode !== 'undefined') {
+      new QRCode(qr, {
+        text: window.location.href,
+        width: 90,
+        height: 90,
+        colorDark: '#111111',
+        colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.M
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kemal Yildiz | Yildiz Gayrimenkul - Swiss Minimal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Lora:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --body-bg: #f2f2f0;
+            --card-bg: #ffffff;
+            --accent: #1a1a2e;
+            --accent-2: #c8a964;
+            --text: #111111;
+            --text-muted: #777777;
+            --border: #e0e0e0;
+            --border-light: #ececea;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--body-bg);
+            color: var(--text);
+            line-height: 1.55;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* HEADER */
+        .header {
+            padding: 40px 32px 28px;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .header-photo {
+            width: 92px;
+            height: 110px;
+            object-fit: cover;
+            filter: grayscale(20%) contrast(1.05);
+            flex-shrink: 0;
+        }
+
+        .header-info { flex: 1; min-width: 0; }
+
+        .header-eyebrow {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 10px;
+            font-weight: 500;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--accent-2);
+            margin-bottom: 10px;
+        }
+
+        .header-name {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 44px;
+            font-weight: 500;
+            line-height: 0.95;
+            letter-spacing: -2.5px;
+            color: var(--accent);
+            margin-bottom: 14px;
+        }
+
+        .header-title {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            font-weight: 400;
+        }
+
+        .hairline {
+            height: 1px;
+            background: var(--border);
+            margin: 0 32px;
+        }
+
+        /* META ROW */
+        .meta-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 16px 32px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 11px;
+            color: var(--text-muted);
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .meta-row span strong {
+            color: var(--text);
+            font-weight: 600;
+        }
+
+        /* SECTIONS */
+        .section { padding: 32px; }
+        .section + .section { padding-top: 0; }
+
+        .section-label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .section-h {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 22px;
+            font-weight: 500;
+            color: var(--accent);
+            line-height: 1.2;
+            letter-spacing: -0.5px;
+            margin-bottom: 18px;
+        }
+
+        /* ABOUT */
+        .about-text {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 15px;
+            line-height: 1.7;
+            color: var(--text);
+            font-weight: 400;
+        }
+
+        /* SLOGAN */
+        .slogan-block {
+            padding: 28px 32px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .slogan-block .slogan {
+            font-family: 'Lora', serif;
+            font-style: italic;
+            font-size: 16px;
+            color: var(--accent);
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        /* SPECIALIZATION LIST */
+        .spec-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .spec-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .spec-row:last-child { border-bottom: none; }
+
+        .spec-line {
+            width: 28px;
+            height: 1px;
+            background: var(--accent-2);
+            flex-shrink: 0;
+        }
+
+        .spec-name {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text);
+            letter-spacing: -0.1px;
+        }
+
+        /* STATS — 2 col */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat-cell {
+            padding: 22px 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stat-cell:nth-child(odd) { border-right: 1px solid var(--border); }
+        .stat-cell:nth-last-child(-n+2) { border-bottom: none; }
+
+        .stat-cell .num {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 28px;
+            font-weight: 500;
+            color: var(--accent);
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+
+        .stat-cell .label {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 6px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        /* CONTACT TABLE */
+        .contact-table {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--border-light);
+            text-decoration: none;
+            color: var(--text);
+            transition: color 0.2s ease;
+        }
+
+        .contact-row:last-child { border-bottom: none; }
+        .contact-row:hover { color: var(--accent-2); }
+
+        .contact-row .left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .contact-row .left svg {
+            width: 16px;
+            height: 16px;
+            stroke: var(--text-muted);
+            fill: none;
+            stroke-width: 1.5;
+            flex-shrink: 0;
+        }
+
+        .contact-row:hover .left svg { stroke: var(--accent-2); }
+
+        .contact-row .lbl {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .contact-row .val {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13.5px;
+            font-weight: 500;
+            color: var(--text);
+            text-align: right;
+            word-break: break-all;
+            max-width: 60%;
+        }
+
+        /* QR + VCARD ROW */
+        .footer-row {
+            display: flex;
+            gap: 20px;
+            padding: 32px;
+            align-items: center;
+            border-top: 1px solid var(--border);
+        }
+
+        .qr-block {
+            flex-shrink: 0;
+        }
+
+        #qrcode {
+            display: block;
+            padding: 6px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+        }
+
+        #qrcode img { display: block; }
+
+        .footer-side {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .footer-side .label {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
+        .footer-side .heading {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 17px;
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 14px;
+            line-height: 1.25;
+            letter-spacing: -0.4px;
+        }
+
+        .vcard-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border: 1px solid var(--accent);
+            background: var(--accent);
+            color: var(--card-bg);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background 0.25s ease, color 0.25s ease;
+            letter-spacing: 0.3px;
+        }
+
+        .vcard-link:hover {
+            background: transparent;
+            color: var(--accent);
+        }
+
+        .vcard-link svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 1.6;
+        }
+
+        /* FOOTER */
+        .footer-bottom {
+            padding: 22px 32px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            background: var(--body-bg);
+        }
+
+        .footer-bottom .name {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 4px;
+            letter-spacing: 0.3px;
+        }
+
+        .footer-bottom .copy {
+            font-size: 10.5px;
+            color: var(--text-muted);
+            font-weight: 400;
+            letter-spacing: 0.5px;
+        }
+
+        @media (max-width: 380px) {
+            .header-name { font-size: 36px; }
+            .header { gap: 14px; padding: 32px 24px 24px; }
+            .section { padding: 24px; }
+            .footer-row { flex-direction: column; align-items: stretch; }
+            .qr-block { align-self: center; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+            .contact-row, .vcard-link { transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+
+        <!-- HEADER -->
+        <header class="header">
+            <img class="header-photo" src="https://i.pravatar.cc/200?img=68" alt="Kemal Yildiz">
+            <div class="header-info reveal">
+                <div class="header-eyebrow">Yildiz Gayrimenkul</div>
+                <h1 class="header-name">Kemal<br>Yildiz</h1>
+                <div class="header-title">Kidemli Gayrimenkul Danismani &mdash; Izmir</div>
+            </div>
+        </header>
+
+        <div class="hairline"></div>
+
+        <div class="meta-row">
+            <span><strong>2007</strong> Aktif</span>
+            <span><strong>Izmir</strong> Bolge</span>
+            <span><strong>TR</strong> Lisansli</span>
+        </div>
+
+        <div class="hairline"></div>
+
+        <!-- ABOUT -->
+        <section class="section reveal">
+            <div class="section-label">Hakkimda</div>
+            <p class="about-text">
+                Bir mulkun gercek degeri, sahibinin hayalleriyle olcusur. Izmir'in en prestijli lokasyonlarinda 18 yildir muvekkillerime sade, dogru ve uzun vadeli kazanc odakli danismanlik sunuyorum.
+            </p>
+        </section>
+
+        <!-- SLOGAN -->
+        <div class="slogan-block reveal">
+            <p class="slogan">&ldquo;Hayalinizdeki Evi Gercege Donusturuyorum.&rdquo;</p>
+        </div>
+
+        <!-- SPECIALIZATION -->
+        <section class="section reveal">
+            <div class="section-label">Uzmanlik Alanlari</div>
+            <h2 class="section-h">Hizmet Yelpazesi</h2>
+            <div class="spec-list">
+                <div class="spec-row">
+                    <span class="spec-line"></span>
+                    <span class="spec-name">Luks Konut Satisi</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-line"></span>
+                    <span class="spec-name">Ticari Mulk Kiralama</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-line"></span>
+                    <span class="spec-name">Arazi &amp; Arsa Yatirimi</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-line"></span>
+                    <span class="spec-name">Yatirim Danismanligi</span>
+                </div>
+                <div class="spec-row">
+                    <span class="spec-line"></span>
+                    <span class="spec-name">Mulk Degerleme</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- STATS 2-COL -->
+        <div class="stats-grid reveal">
+            <div class="stat-cell">
+                <div class="num">18</div>
+                <div class="label">Yil Deneyim</div>
+            </div>
+            <div class="stat-cell">
+                <div class="num">520+</div>
+                <div class="label">Tamamlanan Satis</div>
+            </div>
+            <div class="stat-cell">
+                <div class="num">2.4Mr</div>
+                <div class="label">Toplam Portfoy (TL)</div>
+            </div>
+            <div class="stat-cell">
+                <div class="num">98%</div>
+                <div class="label">Memnuniyet</div>
+            </div>
+        </div>
+
+        <!-- TESTIMONIAL -->
+        <section class="section reveal">
+            <div class="section-label">Referans</div>
+            <p class="about-text" style="font-size: 14px;">
+                &ldquo;Kemal Bey sayesinde 3 mulkumu mukemmel fiyatlarla sattim. Profesyonelligi ve durustlugu paha bicilmez.&rdquo;
+            </p>
+            <div style="font-family: 'DM Sans', sans-serif; font-size: 11.5px; font-weight: 600; color: var(--accent); margin-top: 14px; letter-spacing: 0.4px;">
+                Selin K. &mdash; Izmir
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section class="section reveal" style="border-top: 1px solid var(--border);">
+            <div class="section-label">Iletisim</div>
+            <h2 class="section-h">Bana Ulasin</h2>
+            <div class="contact-table">
+                <a href="tel:+905328901234" class="contact-row">
+                    <div class="left">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.36 1.9.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0122 16.92z"/></svg>
+                        <span class="lbl">Telefon</span>
+                    </div>
+                    <span class="val">+90 532 890 12 34</span>
+                </a>
+                <a href="https://wa.me/905328901234?text=Merhaba%20Kemal%20Bey" class="contact-row" target="_blank" rel="noopener noreferrer">
+                    <div class="left">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+                        <span class="lbl">WhatsApp</span>
+                    </div>
+                    <span class="val">Mesaj Gonder</span>
+                </a>
+                <a href="mailto:kemal@yildizemak.com" class="contact-row">
+                    <div class="left">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                        <span class="lbl">E-posta</span>
+                    </div>
+                    <span class="val">kemal@yildizemak.com</span>
+                </a>
+                <a href="https://yildizemak.com" class="contact-row" target="_blank" rel="noopener noreferrer">
+                    <div class="left">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                        <span class="lbl">Web</span>
+                    </div>
+                    <span class="val">yildizemak.com</span>
+                </a>
+                <a href="https://instagram.com/kemalyildizemak" class="contact-row" target="_blank" rel="noopener noreferrer">
+                    <div class="left">
+                        <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+                        <span class="lbl">Instagram</span>
+                    </div>
+                    <span class="val">@kemalyildizemak</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- QR + VCARD -->
+        <div class="footer-row reveal">
+            <div class="qr-block">
+                <div id="qrcode" role="img" aria-label="QR kod"></div>
+            </div>
+            <div class="footer-side">
+                <div class="label">Hizli Erisim</div>
+                <div class="heading">Kartviziti tarayin veya rehbere ekleyin</div>
+                <button class="vcard-link" id="vcardBtn" type="button">
+                    <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Rehbere Kaydet
+                </button>
+            </div>
+        </div>
+
+        <footer class="footer-bottom">
+            <div class="name">Kemal Yildiz &mdash; Yildiz Gayrimenkul</div>
+            <div class="copy">&copy; 2026 Tum Haklari Saklidir.</div>
+        </footer>
+
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+
+        function initScrollReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function(e){ e.classList.add('visible'); });
+                return;
+            }
+            var obs = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        obs.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+            els.forEach(function(e){ obs.observe(e); });
+        }
+
+        function initQR() {
+            var c = document.getElementById('qrcode');
+            if (c && typeof QRCode !== 'undefined') {
+                new QRCode(c, {
+                    text: window.location.href,
+                    width: 96,
+                    height: 96,
+                    colorDark: '#1a1a2e',
+                    colorLight: '#ffffff',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            }
+        }
+
+        function initVCard() {
+            var btn = document.getElementById('vcardBtn');
+            if (!btn) return;
+            btn.addEventListener('click', function() {
+                var data = [
+                    'BEGIN:VCARD',
+                    'VERSION:3.0',
+                    'N:Yildiz;Kemal;;;',
+                    'FN:Kemal Yildiz',
+                    'ORG:Yildiz Gayrimenkul',
+                    'TITLE:Kidemli Gayrimenkul Danismani',
+                    'TEL;TYPE=CELL:+90 532 890 12 34',
+                    'EMAIL;TYPE=INTERNET:kemal@yildizemak.com',
+                    'URL:https://yildizemak.com',
+                    'NOTE:Yildiz Gayrimenkul - Izmir',
+                    'END:VCARD'
+                ].join('\r\n');
+                var blob = new Blob([data], { type: 'text/vcard;charset=utf-8' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = 'Kemal_Yildiz.vcf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            initScrollReveal();
+            initQR();
+            initVCard();
+        });
+    })();
+    </script>
+</body>
+</html>

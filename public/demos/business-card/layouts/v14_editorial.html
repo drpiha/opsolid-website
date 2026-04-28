@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mert Yılmaz | Yaratıcı Direktör</title>
+    <meta property="og:title" content="Mert Yılmaz | Yaratıcı Direktör">
+    <meta property="og:description" content="Marka kimliği, editoryal tasarım ve görsel iletişim danışmanlığı.">
+    <meta property="og:type" content="profile">
+    <meta property="og:locale" content="tr_TR">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..700;1,9..144,400..700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #f8f5f0;
+            --card: #ffffff;
+            --ink: #111111;
+            --red: #e63946;
+            --muted: #666666;
+            --hairline: #d8d4cc;
+        }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+        .card-container {
+            max-width: 460px;
+            margin: 0 auto;
+            background: var(--card);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* Asymmetric top */
+        .ed-top {
+            display: grid;
+            grid-template-columns: 20px 1fr;
+            min-height: 200px;
+        }
+        .ed-sidebar {
+            background: var(--red);
+            position: relative;
+        }
+        .ed-sidebar::after {
+            content: 'ISSUE 04';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(-90deg);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 9px;
+            letter-spacing: 4px;
+            color: rgba(255,255,255,0.8);
+            white-space: nowrap;
+            font-weight: 600;
+        }
+        .ed-name-block {
+            padding: 36px 28px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .ed-eyebrow {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--red);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .ed-name {
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            font-size: 54px;
+            line-height: 0.95;
+            letter-spacing: -2px;
+            color: var(--ink);
+        }
+        .ed-name .first { display: block; font-style: italic; font-weight: 400; }
+
+        /* Cover photo */
+        .ed-photo {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            display: block;
+            filter: contrast(1.05);
+        }
+
+        /* Big quote */
+        .ed-quote {
+            padding: 50px 32px 44px;
+            text-align: center;
+            border-bottom: 1px solid var(--hairline);
+        }
+        .ed-quote .label {
+            font-size: 10px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--red);
+            font-weight: 600;
+            margin-bottom: 18px;
+        }
+        .ed-quote .text {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-weight: 400;
+            font-size: 30px;
+            line-height: 1.2;
+            color: var(--ink);
+            letter-spacing: -0.5px;
+        }
+        .ed-quote .text em {
+            font-style: normal;
+            color: var(--red);
+        }
+
+        /* Two col */
+        .ed-cols {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border-bottom: 1px solid var(--hairline);
+        }
+        .ed-col {
+            padding: 32px 24px;
+            border-right: 1px solid var(--hairline);
+        }
+        .ed-col:last-child { border-right: none; }
+        .ed-col h3 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 10px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--red);
+            margin-bottom: 14px;
+        }
+        .ed-col p {
+            font-family: 'Fraunces', serif;
+            font-size: 14px;
+            line-height: 1.55;
+            color: var(--ink);
+            font-weight: 400;
+        }
+        .ed-col ul {
+            list-style: none;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .ed-col ul li {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--ink);
+            padding: 6px 0;
+            border-bottom: 1px dashed var(--hairline);
+        }
+        .ed-col ul li:last-child { border-bottom: none; }
+
+        /* Portfolio cards */
+        .ed-portfolio {
+            padding: 36px 28px;
+        }
+        .ed-portfolio h2 {
+            font-family: 'Fraunces', serif;
+            font-weight: 700;
+            font-size: 26px;
+            margin-bottom: 22px;
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+        .ed-portfolio h2 .num {
+            font-size: 12px;
+            color: var(--red);
+            vertical-align: super;
+            font-weight: 600;
+            font-family: 'DM Sans', sans-serif;
+            letter-spacing: 2px;
+        }
+        .ed-project {
+            display: grid;
+            grid-template-columns: 64px 1fr auto;
+            gap: 14px;
+            padding: 14px 0;
+            border-top: 1px solid var(--hairline);
+            align-items: center;
+        }
+        .ed-project:last-child { border-bottom: 1px solid var(--hairline); }
+        .ed-project .yr {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 18px;
+            color: var(--red);
+            font-weight: 400;
+        }
+        .ed-project .info { min-width: 0; }
+        .ed-project .pname {
+            font-family: 'Fraunces', serif;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--ink);
+            line-height: 1.2;
+            margin-bottom: 2px;
+        }
+        .ed-project .pcat {
+            font-size: 10px;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 500;
+        }
+        .ed-project .arrow {
+            font-size: 18px;
+            color: var(--ink);
+        }
+
+        /* Contact asymmetric */
+        .ed-contact-wrap {
+            background: var(--ink);
+            color: var(--bg);
+            padding: 36px 28px;
+            position: relative;
+        }
+        .ed-contact-wrap::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background: var(--red);
+        }
+        .ed-contact-wrap h2 {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-weight: 400;
+            font-size: 28px;
+            margin-bottom: 24px;
+        }
+        .ed-contact-list {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .ed-contact-list a {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-bottom: 1px dashed rgba(248, 245, 240, 0.2);
+            padding-bottom: 12px;
+            text-decoration: none;
+            color: var(--bg);
+            transition: color 0.25s ease;
+        }
+        .ed-contact-list a:hover { color: var(--red); }
+        .ed-contact-list .lbl {
+            font-size: 10px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--red);
+            font-weight: 600;
+        }
+        .ed-contact-list .val {
+            font-family: 'Fraunces', serif;
+            font-size: 15px;
+            font-weight: 500;
+        }
+
+        /* QR with frame */
+        .ed-qr {
+            padding: 36px 28px;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            gap: 22px;
+            border-bottom: 1px solid var(--hairline);
+        }
+        .ed-qr-frame {
+            padding: 10px;
+            background: var(--card);
+            border: 2px solid var(--ink);
+            position: relative;
+        }
+        .ed-qr-frame::before {
+            content: '';
+            position: absolute;
+            inset: -8px;
+            border: 1px solid var(--red);
+            pointer-events: none;
+        }
+        .ed-qr-text { flex: 1; }
+        .ed-qr-text h3 {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-weight: 400;
+            font-size: 22px;
+            margin-bottom: 6px;
+        }
+        .ed-qr-text p {
+            font-size: 12px;
+            color: var(--muted);
+        }
+        #qrcode img, #qrcode canvas { display: block; }
+
+        /* Footer */
+        .ed-footer {
+            padding: 22px 28px 32px;
+            text-align: center;
+            font-size: 10px;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+        .ed-footer span { color: var(--red); }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal { opacity: 1; transform: none; transition: none; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+
+        <div class="ed-top">
+            <div class="ed-sidebar"></div>
+            <div class="ed-name-block reveal">
+                <div class="ed-eyebrow">Yaratıcı Direktör</div>
+                <h1 class="ed-name"><span class="first">Mert</span>Yılmaz</h1>
+            </div>
+        </div>
+
+        <img src="https://images.unsplash.com/photo-1561070791-2526d30994b8?w=460&h=300&fit=crop&q=80" alt="Editorial cover" class="ed-photo reveal">
+
+        <div class="ed-quote reveal">
+            <div class="label">Manifesto No. 04</div>
+            <div class="text">İyi tasarım <em>sessizdir</em>;<br>kötü tasarım bağırır.</div>
+        </div>
+
+        <div class="ed-cols reveal">
+            <div class="ed-col">
+                <h3>Hakkında</h3>
+                <p>15 yılı aşkın süredir markaların görsel kimliğini şekillendiriyorum. Editoryal estetik ve fonksiyonel tasarım kesişiminde çalışmayı seviyorum.</p>
+            </div>
+            <div class="ed-col">
+                <h3>Yetkinlikler</h3>
+                <ul>
+                    <li>Marka Kimliği</li>
+                    <li>Editoryal Tasarım</li>
+                    <li>Sanat Yönetmenliği</li>
+                    <li>Tipografi</li>
+                    <li>Print &amp; Yayıncılık</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="ed-portfolio reveal">
+            <h2>Seçili Projeler <span class="num">No. 03</span></h2>
+            <div class="ed-project">
+                <div class="yr">'25</div>
+                <div class="info">
+                    <div class="pname">Aralık Magazin</div>
+                    <div class="pcat">Editoryal · Print</div>
+                </div>
+                <span class="arrow">→</span>
+            </div>
+            <div class="ed-project">
+                <div class="yr">'24</div>
+                <div class="info">
+                    <div class="pname">Hala Coffee Roasters</div>
+                    <div class="pcat">Marka Kimliği</div>
+                </div>
+                <span class="arrow">→</span>
+            </div>
+            <div class="ed-project">
+                <div class="yr">'23</div>
+                <div class="info">
+                    <div class="pname">Kırmızı Kitap Yayınevi</div>
+                    <div class="pcat">Tipografi · Logo</div>
+                </div>
+                <span class="arrow">→</span>
+            </div>
+        </div>
+
+        <div class="ed-contact-wrap reveal">
+            <h2>İletişim.</h2>
+            <div class="ed-contact-list">
+                <a href="tel:+905307771122">
+                    <span class="lbl">Tel</span>
+                    <span class="val">+90 530 777 11 22</span>
+                </a>
+                <a href="mailto:mert@mertyilmaz.co">
+                    <span class="lbl">Mail</span>
+                    <span class="val">mert@mertyilmaz.co</span>
+                </a>
+                <a href="https://mertyilmaz.co" target="_blank" rel="noopener">
+                    <span class="lbl">Web</span>
+                    <span class="val">mertyilmaz.co</span>
+                </a>
+                <a href="https://instagram.com/mert.studio" target="_blank" rel="noopener">
+                    <span class="lbl">Insta</span>
+                    <span class="val">@mert.studio</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="ed-qr reveal">
+            <div class="ed-qr-frame">
+                <div id="qrcode"></div>
+            </div>
+            <div class="ed-qr-text">
+                <h3>Tara,<br>kütüphaneye al.</h3>
+                <p>Dijital kartı telefonuna kaydet.</p>
+            </div>
+        </div>
+
+        <footer class="ed-footer">
+            Mert Yılmaz <span>·</span> Stüdyo İstanbul <span>·</span> 2026
+        </footer>
+
+    </div>
+
+    <script>
+    (function() {
+        'use strict';
+        function initScrollReveal() {
+            var els = document.querySelectorAll('.reveal');
+            if (!('IntersectionObserver' in window)) {
+                els.forEach(function(el){ el.classList.add('visible'); });
+                return;
+            }
+            var io = new IntersectionObserver(function(entries){
+                entries.forEach(function(e){
+                    if (e.isIntersecting) {
+                        e.target.classList.add('visible');
+                        io.unobserve(e.target);
+                    }
+                });
+            }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+            els.forEach(function(el){ io.observe(el); });
+        }
+        function initQR() {
+            if (typeof QRCode === 'undefined') return;
+            new QRCode(document.getElementById('qrcode'), {
+                text: 'https://mertyilmaz.co',
+                width: 96,
+                height: 96,
+                colorDark: '#111111',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        }
+        document.addEventListener('DOMContentLoaded', function(){
+            initScrollReveal();
+            initQR();
+        });
+    })();
+    </script>
+</body>
+</html>

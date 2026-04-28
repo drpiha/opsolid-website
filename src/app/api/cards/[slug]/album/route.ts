@@ -24,6 +24,10 @@ import {
   OrderStatus,
 } from "@/lib/validation";
 import { requireEditToken, EditTokenError } from "@/lib/auth/edit-token";
+import { renderAlbumPhotoPending } from "@/lib/email/templates/album-photo-pending";
+import { sendCustomerEmail } from "@/lib/email/send";
+import { absoluteAssetUrl } from "@/lib/storage";
+import { getSiteUrl } from "@/lib/stripe";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -172,7 +176,14 @@ export async function POST(
 
   const order = await prisma.cardOrder.findUnique({
     where: { slug },
-    select: { id: true, status: true, editToken: true },
+    select: {
+      id: true,
+      status: true,
+      editToken: true,
+      contactEmail: true,
+      contactName: true,
+      locale: true,
+    },
   });
   if (!order || order.status !== OrderStatus.PUBLISHED) {
     return NextResponse.json({ error: "Karte nicht gefunden." }, { status: 404 });
@@ -276,5 +287,56 @@ export async function POST(
     select: { id: true, status: true },
   });
 
+  // Phase 8 — visitor uploads notify the owner so they don't have to poll the
+  // dashboard. Owner uploads bypass this entirely. Failures are logged but
+  // never leak into the response — the upload succeeded either way.
+  if (!asOwner && order.editToken) {
+    void notifyOwnerOfAlbumPhoto({
+      ownerEmail: order.contactEmail,
+      ownerName: order.contactName,
+      ownerLocale: order.locale,
+      orderId: order.id,
+      editToken: order.editToken,
+      slug,
+      photoPath: storedUrl,
+      uploaderName: parsed.data.uploaderName,
+      caption: parsed.data.caption,
+    });
+  }
+
   return NextResponse.json(created, { status: 201 });
+}
+
+async function notifyOwnerOfAlbumPhoto(args: {
+  ownerEmail: string;
+  ownerName: string;
+  ownerLocale: string;
+  orderId: string;
+  editToken: string;
+  slug: string;
+  photoPath: string;
+  uploaderName?: string | null;
+  caption?: string | null;
+}) {
+  try {
+    const photoUrl = absoluteAssetUrl(args.photoPath, getSiteUrl());
+    const { subject, html, text } = renderAlbumPhotoPending({
+      ownerName: args.ownerName,
+      ownerLocale: args.ownerLocale,
+      cardSlug: args.slug,
+      orderId: args.orderId,
+      editToken: args.editToken,
+      photoUrl,
+      uploaderName: args.uploaderName ?? null,
+      caption: args.caption ?? null,
+    });
+    await sendCustomerEmail({
+      to: args.ownerEmail,
+      subject,
+      html,
+      text,
+    });
+  } catch (err) {
+    console.error("[album] notify-owner failed:", err);
+  }
 }
