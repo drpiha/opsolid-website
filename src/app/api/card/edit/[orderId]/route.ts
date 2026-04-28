@@ -17,6 +17,7 @@ import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { CardDataSchema, OrderStatus } from "@/lib/validation";
 import { EditTokenError, requireEditToken } from "@/lib/auth/edit-token";
+import { validateManualSlug, isSlugAvailable } from "@/lib/slug";
 
 export const runtime = "nodejs";
 
@@ -38,6 +39,14 @@ const PatchSchema = z.object({
   logoPath: z
     .string()
     .max(500)
+    .optional()
+    .or(z.literal("").transform(() => undefined)),
+  /** Phase 8 — optional slug rename. Only honored on PUBLISHED orders; the
+   *  old slug is appended to slug_history for 308 redirects. */
+  slug: z
+    .string()
+    .trim()
+    .max(40)
     .optional()
     .or(z.literal("").transform(() => undefined)),
 });
@@ -90,6 +99,32 @@ export async function PATCH(
       ? [order.designNotes?.trim(), designerHint].filter(Boolean).join("\n")
       : order.designNotes;
 
+    // Phase 8 — slug rename. Only meaningful on PUBLISHED orders. Validates
+    // the new slug, checks uniqueness, then atomically swaps slug + appends
+    // the old one to slug_history so old links keep working via 308 redirect.
+    let nextSlug: string | null = null;
+    let oldSlugForHistory: string | null = null;
+    if (data.slug && data.slug !== order.slug) {
+      if (order.status !== OrderStatus.PUBLISHED) {
+        return NextResponse.json(
+          { error: "slug_rename_unsupported_state", status: order.status },
+          { status: 409 },
+        );
+      }
+      const v = validateManualSlug(data.slug);
+      if (!v.ok) {
+        return NextResponse.json(
+          { error: "slug_invalid", reason: v.reason },
+          { status: 400 },
+        );
+      }
+      if (!(await isSlugAvailable(v.slug))) {
+        return NextResponse.json({ error: "slug_taken" }, { status: 409 });
+      }
+      nextSlug = v.slug;
+      oldSlugForHistory = order.slug;
+    }
+
     await prisma.cardOrder.update({
       where: { id: order.id },
       data: {
@@ -99,6 +134,14 @@ export async function PATCH(
         photoPath: data.photoPath ?? null,
         logoPath: data.logoPath ?? null,
         designNotes: nextDesignNotes,
+        ...(nextSlug
+          ? {
+              slug: nextSlug,
+              slugHistory: oldSlugForHistory
+                ? { push: oldSlugForHistory }
+                : undefined,
+            }
+          : {}),
       },
     });
 
@@ -109,11 +152,13 @@ export async function PATCH(
         fromStatus: order.status,
         toStatus: order.status,
         actor: "customer-self-edit",
-        note: designerHint ?? "Customer edited card content",
+        note: nextSlug
+          ? `Customer renamed slug ${oldSlugForHistory} → ${nextSlug}`
+          : (designerHint ?? "Customer edited card content"),
       },
     });
 
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true, slug: nextSlug ?? order.slug });
   } catch (err) {
     if (err instanceof EditTokenError) {
       return NextResponse.json({ error: err.code }, { status: err.status });

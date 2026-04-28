@@ -17,7 +17,7 @@
 import { existsSync } from "node:fs";
 import { join } from "node:path";
 import type * as React from "react";
-import { notFound } from "next/navigation";
+import { notFound, permanentRedirect } from "next/navigation";
 import { headers } from "next/headers";
 import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
@@ -50,6 +50,22 @@ async function loadOrder(slug: string) {
   });
   if (!order || order.status !== "PUBLISHED") return null;
   return order;
+}
+
+/**
+ * Phase 8 — when a slug doesn't resolve directly, look it up in slug_history
+ * (populated when the owner renames their card). Returns the current slug
+ * so the caller can issue a 308 redirect.
+ */
+async function findRenamedSlug(oldSlug: string): Promise<string | null> {
+  const order = await prisma.cardOrder.findFirst({
+    where: {
+      status: "PUBLISHED",
+      slugHistory: { has: oldSlug },
+    },
+    select: { slug: true },
+  });
+  return order?.slug ?? null;
 }
 
 /**
@@ -168,7 +184,13 @@ export default async function CardPage({ params, searchParams }: PageProps) {
   const { slug } = await params;
   const sp = await searchParams;
   const order = await loadOrder(slug);
-  if (!order) notFound();
+  if (!order) {
+    // Phase 8 — owner may have renamed their card. Try slug_history before
+    // giving up, then 308-redirect so old WhatsApp / QR links keep working.
+    const renamed = await findRenamedSlug(slug);
+    if (renamed) permanentRedirect(`/c/${renamed}`);
+    notFound();
+  }
 
   const parsed = CardDataSchema.safeParse(order.cardData);
   if (!parsed.success) {

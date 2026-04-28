@@ -118,6 +118,11 @@ model CardOrder {
   // `name-xxxx` form.
   desiredSlug String? @map("desired_slug")
 
+  // Phase 8 — every previous slug this card has had. Populated when the
+  // owner renames their card from the edit page; the public route uses it
+  // for 308 redirects so old WhatsApp / QR links keep working forever.
+  slugHistory String[] @default([]) @map("slug_history")
+
   contactedAt      DateTime? @map("contacted_at")
   contactedByNote  String?   @map("contacted_by_note")
   paidAt           DateTime? @map("paid_at")

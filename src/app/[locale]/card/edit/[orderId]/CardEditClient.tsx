@@ -79,6 +79,10 @@ export function CardEditClient(props: Props) {
   // Phase 7.9 — photo / logo position editor modals
   const [photoEditorOpen, setPhotoEditorOpen] = useState(false);
   const [logoEditorOpen, setLogoEditorOpen] = useState(false);
+  // Phase 8 — slug rename. `currentSlug` reflects the live slug; `editableSlug`
+  // is the working draft. Saved on the next form submit alongside cardData.
+  const [currentSlug, setCurrentSlug] = useState<string | null>(props.slug);
+  const [editableSlug, setEditableSlug] = useState<string>(props.slug ?? "");
 
   // Auto-open cancel modal when URL ends with #cancel (linked from email).
   useEffect(() => {
@@ -154,6 +158,13 @@ export function CardEditClient(props: Props) {
       brandAccentHex: brandAccentHex || undefined,
       photoPath: photoPath || undefined,
       logoPath: logoPath || undefined,
+      // Phase 8 — only include slug when it actually changed; the server
+      // ignores undefined and only acts on a value that differs from the
+      // current order.slug.
+      slug:
+        editableSlug && editableSlug !== currentSlug
+          ? editableSlug
+          : undefined,
     };
 
     try {
@@ -167,9 +178,27 @@ export function CardEditClient(props: Props) {
       );
       if (!res.ok) {
         const body = (await res.json().catch(() => ({}))) as { error?: string };
-        setErrorMsg(body.error ?? edit.savedError);
+        if (body.error === "slug_taken") {
+          setErrorMsg("Bu kart adresi alınmış. Başka bir adres seç.");
+        } else if (body.error === "slug_invalid") {
+          setErrorMsg("Geçersiz kart adresi formatı.");
+        } else if (body.error === "slug_rename_unsupported_state") {
+          setErrorMsg("Kart adresi sadece yayında olan kartlar için değiştirilebilir.");
+        } else {
+          setErrorMsg(body.error ?? edit.savedError);
+        }
         setFormState("error");
         return;
+      }
+      // Phase 8 — server returns the (possibly updated) slug so the UI can
+      // reflect the rename without a full reload.
+      const ok = (await res.json().catch(() => ({}))) as {
+        ok?: boolean;
+        slug?: string | null;
+      };
+      if (ok.slug && ok.slug !== currentSlug) {
+        setCurrentSlug(ok.slug);
+        setEditableSlug(ok.slug);
       }
       setFormState("saved");
       setTimeout(() => setFormState("idle"), 3500);
@@ -206,18 +235,43 @@ export function CardEditClient(props: Props) {
             {edit.title}
           </h1>
           <p className="mt-3 text-body text-ink/60">{edit.subtitle}</p>
-          {props.slug && props.status === "PUBLISHED" && (
-            <p className="mt-3 text-sm text-ink/60">
-              {edit.publicUrlLabel}{" "}
-              <a
-                href={`/c/${props.slug}`}
-                className="font-medium text-ink underline underline-offset-4"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                /c/{props.slug}
-              </a>
-            </p>
+          {currentSlug && props.status === "PUBLISHED" && (
+            <div className="mt-4 max-w-md space-y-1.5">
+              <label className="mono-label block text-[10px] uppercase tracking-[0.2em] text-ink/55">
+                {edit.publicUrlLabel ?? "Kart adresi"}
+              </label>
+              <div className="flex items-stretch overflow-hidden rounded-2xl border border-ink/15 bg-white focus-within:border-copper">
+                <span className="flex items-center px-3 text-xs text-ink/55">
+                  opsolid.de/c/
+                </span>
+                <input
+                  type="text"
+                  value={editableSlug}
+                  onChange={(e) =>
+                    setEditableSlug(e.target.value.toLowerCase().trim())
+                  }
+                  spellCheck={false}
+                  autoComplete="off"
+                  maxLength={40}
+                  className="flex-1 bg-transparent px-2 py-2 text-sm text-ink focus:outline-none"
+                />
+                <a
+                  href={`/c/${currentSlug}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center border-l border-ink/15 px-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-ink/65 transition-colors hover:bg-bg-2 hover:text-ink"
+                  title="Aç"
+                >
+                  ↗
+                </a>
+              </div>
+              {editableSlug && editableSlug !== currentSlug && (
+                <p className="text-[11px] text-copper">
+                  ⚠ Yeni adres &laquo;Kaydet&raquo; basıldığında uygulanır. Eski
+                  adres otomatik olarak yeni adrese yönlenir.
+                </p>
+              )}
+            </div>
           )}
         </div>
 
