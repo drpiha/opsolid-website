@@ -3457,9 +3457,9 @@ export const content: Content = {
         ctaSecondary: "Templates ansehen",
         features: [
           {
-            label: "MATERIAL",
-            value: "Brass · Matte",
-            sub: "oder recyceltes PVC",
+            label: "FORMAT",
+            value: "Digitale Karte",
+            sub: "NFC · QR · Link",
           },
           {
             label: "PROTOCOL",
@@ -3467,9 +3467,9 @@ export const content: Content = {
             sub: "NDEF · vCard",
           },
           {
-            label: "LEAD TIME",
-            value: "Vorbestellung",
-            sub: "2026 Q2 · DE · versandt",
+            label: "PHYSICAL",
+            value: "Brass · Matt",
+            sub: "→ Demnächst",
           },
         ],
       },

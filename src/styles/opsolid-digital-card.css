@@ -59,7 +59,21 @@
     0 20px 40px rgba(0,0,0,0.5);
   color: var(--ink-100);
 }
-.fc-back { transform: rotateY(180deg); }
+.fc-back {
+  transform: rotateY(180deg);
+  background:
+    repeating-linear-gradient(
+      92deg,
+      rgba(255,255,255,0.018) 0px, rgba(255,255,255,0) 2px,
+      rgba(0,0,0,0.05) 3px, rgba(0,0,0,0) 4px
+    ),
+    linear-gradient(160deg, #3B1F0E 0%, #5C2D12 35%, #3A1A08 70%, #2A1207 100%);
+  border: 1px solid rgba(180,110,60,0.3);
+  box-shadow:
+    inset 0 1px 0 rgba(255,200,140,0.18),
+    inset 0 0 0 1px rgba(0,0,0,0.35),
+    0 40px 80px rgba(0,0,0,0.6);
+}
 
 /* holographic foil sheen */
 .fc-foil {

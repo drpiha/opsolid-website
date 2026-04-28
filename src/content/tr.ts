@@ -3458,9 +3458,9 @@ export const content: Content = {
         ctaSecondary: "Şablonlara göz at",
         features: [
           {
-            label: "MATERIAL",
-            value: "Brass · Matte",
-            sub: "veya geri dönüşümlü PVC",
+            label: "FORMAT",
+            value: "Dijital Kart",
+            sub: "NFC · QR · Link",
           },
           {
             label: "PROTOCOL",
@@ -3468,9 +3468,9 @@ export const content: Content = {
             sub: "NDEF · vCard",
           },
           {
-            label: "LEAD TIME",
-            value: "Ön sipariş",
-            sub: "2026 Q2 · DE · gönderim",
+            label: "PHYSICAL",
+            value: "Pirinç · Mat",
+            sub: "→ Yakında",
           },
         ],
       },

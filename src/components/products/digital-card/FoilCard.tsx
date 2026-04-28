@@ -6,16 +6,11 @@ import { demoPersonas } from "./demoPersonas";
 
 /**
  * FoilCard — Digital Card page centerpiece.
- * Ported from the Claude Design v2 bundle (components/FoilCard.jsx).
  *
- * Cursor-reactive 3D tilt + holographic foil sheen that shifts hue with
- * tilt; NFC ripple pulses at the corner; flip on click to reveal the
- * QR side. Touch-enabled so mobile gets the tilt too.
- *
- * The displayed card content is an illustrative demo that swaps with the
- * active locale (TR / DE / EN) so the card always feels native to the
- * reader. Reserved example domains and neutral names keep it clear that
- * nothing here is a claimed real customer.
+ * Cursor-reactive 3D tilt + holographic foil sheen. Hover the right half of
+ * the card to flip to the QR back; hover left to return. Click/keyboard also
+ * toggle as a fallback for touch users. Mouse-driven flip uses a 350 ms
+ * debounce so casual cursor passes don't trigger it.
  */
 export function FoilCard() {
   const { locale } = useLocale();
@@ -23,6 +18,14 @@ export function FoilCard() {
   const stageRef = useRef<HTMLDivElement | null>(null);
   const cardRef = useRef<HTMLDivElement | null>(null);
   const [flipped, setFlipped] = useState(false);
+  // Refs so the useEffect closure always sees current values without re-running.
+  const flippedRef = useRef(false);
+  const flipTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const toggleFlip = (to: boolean) => {
+    flippedRef.current = to;
+    setFlipped(to);
+  };
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -40,6 +43,24 @@ export function FoilCard() {
     let glare = 50;
     let tgtGlare = 50;
 
+    const scheduleFlip = (to: boolean) => {
+      if (flipTimerRef.current !== null) return;
+      flipTimerRef.current = setTimeout(() => {
+        flipTimerRef.current = null;
+        if (flippedRef.current !== to) {
+          flippedRef.current = to;
+          setFlipped(to);
+        }
+      }, 350);
+    };
+
+    const cancelFlip = () => {
+      if (flipTimerRef.current !== null) {
+        clearTimeout(flipTimerRef.current);
+        flipTimerRef.current = null;
+      }
+    };
+
     const applyFromPoint = (clientX: number, clientY: number) => {
       const r = stage.getBoundingClientRect();
       const cx = r.left + r.width / 2;
@@ -49,6 +70,16 @@ export function FoilCard() {
       tgtRy = Math.max(-1, Math.min(1, dx)) * 14;
       tgtRx = Math.max(-1, Math.min(1, -dy)) * 10;
       tgtGlare = 50 + dx * 35;
+
+      if (!reduceMotion) {
+        if (dx > 0.6 && !flippedRef.current) {
+          scheduleFlip(true);
+        } else if (dx < -0.6 && flippedRef.current) {
+          scheduleFlip(false);
+        } else if (dx < 0.4 && dx > -0.4) {
+          cancelFlip();
+        }
+      }
     };
 
     const onMouseMove = (e: MouseEvent) => applyFromPoint(e.clientX, e.clientY);
@@ -60,6 +91,7 @@ export function FoilCard() {
       tgtRx = 0;
       tgtRy = 0;
       tgtGlare = 50;
+      cancelFlip();
     };
 
     if (!reduceMotion) {
@@ -83,6 +115,7 @@ export function FoilCard() {
 
     return () => {
       cancelAnimationFrame(raf);
+      cancelFlip();
       window.removeEventListener("mousemove", onMouseMove);
       window.removeEventListener("touchmove", onTouchMove);
       stage.removeEventListener("mouseleave", onLeave);
@@ -125,14 +158,14 @@ export function FoilCard() {
       <div
         className={"fc-card" + (flipped ? " is-flipped" : "")}
         ref={cardRef}
-        onClick={() => setFlipped((f) => !f)}
+        onClick={() => toggleFlip(!flippedRef.current)}
         role="button"
         tabIndex={0}
-        aria-label={flipped ? "Flip card to front" : "Flip card to QR"}
+        aria-label={flipped ? "Flip card to front" : "Hover right side or tap to flip"}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
-            setFlipped((f) => !f);
+            toggleFlip(!flippedRef.current);
           }
         }}
       >
@@ -180,7 +213,7 @@ export function FoilCard() {
             </div>
           </div>
           <div className="fc-glare" aria-hidden="true" />
-          <div className="fc-hint">TAP TO SHARE · FLIP FOR QR</div>
+          <div className="fc-hint">TAP TO SHARE · HOVER TO FLIP</div>
         </div>
 
         {/* BACK */}

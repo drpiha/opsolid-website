@@ -3471,9 +3471,9 @@ export const content = {
         ctaSecondary: "Browse templates",
         features: [
           {
-            label: "MATERIAL",
-            value: "Brass · Matte",
-            sub: "or recycled PVC",
+            label: "FORMAT",
+            value: "Digital Card",
+            sub: "NFC · QR · Link",
           },
           {
             label: "PROTOCOL",
@@ -3481,9 +3481,9 @@ export const content = {
             sub: "NDEF · vCard",
           },
           {
-            label: "LEAD TIME",
-            value: "Pre-order",
-            sub: "2026 Q2 · DE · shipped",
+            label: "PHYSICAL",
+            value: "Brass · Matte",
+            sub: "→ Coming soon",
           },
         ],
       },

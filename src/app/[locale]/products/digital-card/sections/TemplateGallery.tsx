@@ -112,11 +112,11 @@ export function TemplateGallery({
 
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "center",
-    loop: false,
-    dragFree: false,
+    loop: true,
+    dragFree: true,
     containScroll: "trimSnaps",
     skipSnaps: false,
-    duration: 26,
+    duration: 42,
   });
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -557,8 +557,9 @@ const CarouselSlide = React.memo(function CarouselSlide({
   // Physics-based scale/opacity from progress (0 = at center, ±1 = neighbour).
   // tween() smooths the absolute distance with a small ease.
   const distance = Math.min(1, Math.abs(progress));
-  const scale = reducedMotion ? 1 : 1 - 0.08 * distance; // 1.0 → 0.92
-  const opacity = reducedMotion ? 1 : 1 - 0.35 * distance; // 1.0 → 0.65
+  const scale   = reducedMotion ? 1 : 1 - 0.18 * distance; // 1.0 → 0.82
+  const opacity = reducedMotion ? 1 : 1 - 0.48 * distance; // 1.0 → 0.52
+  const rotateY = reducedMotion ? 0 : progress * 28;        // ±28° at neighbours
 
   const hasComponent = !!slide.registry;
   const hasSample = !!getTemplateSample(slide.id);
@@ -579,9 +580,9 @@ const CarouselSlide = React.memo(function CarouselSlide({
       aria-label={slide.registry?.name ?? slide.planned.name}
     >
       <motion.div
-        animate={{ scale, opacity }}
-        transition={{ type: "spring", stiffness: 220, damping: 32, mass: 0.8 }}
-        style={{ transformOrigin: "center top" }}
+        animate={{ scale, opacity, rotateY }}
+        transition={{ type: "spring", stiffness: 180, damping: 40, mass: 0.9 }}
+        style={{ transformOrigin: "center center", perspective: 1200 }}
         className="flex flex-col items-stretch"
       >
         {/* Sector eyebrow */}
@@ -597,8 +598,8 @@ const CarouselSlide = React.memo(function CarouselSlide({
         {/* Frame */}
         <button
           type="button"
-          onClick={onCenter}
-          aria-label={`Focus ${slide.registry?.name ?? slide.planned.name}`}
+          onClick={onDemo}
+          aria-label={`Preview ${slide.registry?.name ?? slide.planned.name}`}
           className={`group/frame relative mx-auto block w-full overflow-hidden rounded-[28px] bg-bg-1 transition-all duration-500 ease-out ${
             isSelected
               ? "ring-2 ring-copper/65 ring-offset-2 ring-offset-bg-0 shadow-[0_28px_60px_-26px_rgba(15,15,15,0.45),0_8px_22px_-12px_rgba(194,121,64,0.35)]"
