@@ -106,36 +106,41 @@ export function buildSlug(
 }
 
 /**
- * Generate a slug from `name` and verify it doesn't collide with any existing
- * `CardOrder.slug`. On collision, regenerate with a fresh random suffix —
- * the suffix space (4 base36 chars = 1.6M combinations) makes collisions
- * vanishingly rare even with millions of cards sharing the same display name.
+ * Generate a slug from `name` that is unique in CardOrder.
  *
- * Used by:
- *   • Stripe webhook on self-serve auto-publish (conciergeAddon=false)
- *   • Admin publish endpoint when a designer manually publishes a concierge
- *     order
+ * Strategy (in order):
+ *   1. Try the bare normalized name: "anna-fischer"
+ *   2. Try numeric suffixes: "anna-fischer-2", "anna-fischer-3", …
+ *   3. Fall back to a random 4-char base36 suffix after 8 numeric attempts
  *
- * Throws after MAX_RETRIES so a runaway loop in the unlikely event of a DB-
- * wide collision storm becomes observable instead of hanging the request.
+ * This keeps auto-generated slugs clean and human-readable while still
+ * guaranteeing uniqueness.
  */
-const MAX_SLUG_RETRIES = 6;
+const MAX_SLUG_RETRIES = 8;
 
 export async function ensureUniqueSlug(
   name: string,
   seed?: string
 ): Promise<string> {
-  for (let attempt = 0; attempt < MAX_SLUG_RETRIES; attempt++) {
-    // Pass `seed` only on the first try — subsequent retries should re-roll
-    // the suffix to actually have a chance of resolving the collision.
-    const slug = buildSlug(name, attempt === 0 ? seed : undefined);
-    const existing = await prisma.cardOrder.findUnique({
-      where: { slug },
-      select: { id: true },
-    });
-    if (!existing) return slug;
+  const base = normalizeSlugBase(name) || "card";
+
+  // First attempt: bare name (no suffix)
+  const bare = base;
+  if (!(await prisma.cardOrder.findUnique({ where: { slug: bare }, select: { id: true } }))) {
+    return bare;
   }
-  throw new Error(
-    `Failed to generate unique slug for "${name}" after ${MAX_SLUG_RETRIES} attempts`
-  );
+
+  // Numeric suffixes: anna-fischer-2, -3, …
+  for (let n = 2; n <= MAX_SLUG_RETRIES; n++) {
+    const slug = `${base}-${n}`;
+    if (!(await prisma.cardOrder.findUnique({ where: { slug }, select: { id: true } }))) {
+      return slug;
+    }
+  }
+
+  // Last resort: random 4-char base36 (same as before, handles extreme collision)
+  const suffix =
+    seed?.slice(-4) ??
+    Math.random().toString(36).replace(/[^a-z0-9]/g, "").slice(-4);
+  return `${base}-${suffix}`;
 }

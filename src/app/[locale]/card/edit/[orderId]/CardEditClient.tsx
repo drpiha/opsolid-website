@@ -289,6 +289,14 @@ export function CardEditClient(props: Props) {
               />
             )}
 
+            {/* CRM — leads and card connections */}
+            {/* {props.status === "PUBLISHED" && (
+              <LeadsPanel
+                orderId={props.orderId}
+                editToken={props.editToken}
+              />
+            )} */}
+
             {/* Contact — read-only */}
             <div className="rounded-2xl border border-neutral-200 bg-white p-5">
               <p className="text-eyebrow uppercase text-ink/50">
@@ -999,6 +1007,158 @@ function ColorField({
           className="h-12 flex-1 rounded-full border border-neutral-200 bg-white px-5 font-mono text-sm"
         />
       </div>
+    </div>
+  );
+}
+
+// -----------------------------------------------------------------------------
+// CRM panel — shows received leads and card-to-card connections.
+// Fetches from GET /api/card/edit/[orderId]/crm?t=<editToken> on first open.
+// -----------------------------------------------------------------------------
+type CrmLead = {
+  id: string;
+  name: string | null;
+  email: string | null;
+  phone: string | null;
+  message: string | null;
+  createdAt: string;
+};
+type CrmConnection = {
+  id: string;
+  visitorSlug: string;
+  visitorName: string;
+  source: string | null;
+  note: string | null;
+  createdAt: string;
+};
+
+function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string }) {
+  const [open, setOpen] = useState(false);
+  const [leads, setLeads] = useState<CrmLead[] | null>(null);
+  const [connections, setConnections] = useState<CrmConnection[] | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [tab, setTab] = useState<"leads" | "connections">("leads");
+
+  const load = async () => {
+    if (leads !== null) return;
+    setLoading(true);
+    try {
+      const res = await fetch(
+        `/api/card/edit/${orderId}/crm?t=${encodeURIComponent(editToken)}`
+      );
+      if (res.ok) {
+        const j = await res.json() as { leads: CrmLead[]; connections: CrmConnection[] };
+        setLeads(j.leads);
+        setConnections(j.connections);
+      }
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const toggle = () => {
+    if (!open) void load();
+    setOpen((o) => !o);
+  };
+
+  const total = (leads?.length ?? 0) + (connections?.length ?? 0);
+
+  return (
+    <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white">
+      <button
+        type="button"
+        onClick={toggle}
+        className="flex w-full items-center justify-between px-5 py-4 text-left"
+      >
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-semibold text-ink">Bağlantılar (CRM)</span>
+          {total > 0 && (
+            <span className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-copper/15 px-1.5 text-[10px] font-semibold text-copper">
+              {total}
+            </span>
+          )}
+        </div>
+        {open ? <ChevronUp size={16} className="text-ink/40" /> : <ChevronDown size={16} className="text-ink/40" />}
+      </button>
+
+      {open && (
+        <div className="border-t border-neutral-100">
+          {/* Tabs */}
+          <div className="flex border-b border-neutral-100 px-5 pt-2">
+            {(["leads", "connections"] as const).map((t) => (
+              <button
+                key={t}
+                type="button"
+                onClick={() => setTab(t)}
+                className={`mr-4 pb-2 text-xs font-semibold uppercase tracking-wide transition ${
+                  tab === t ? "border-b-2 border-copper text-copper" : "text-ink/50 hover:text-ink"
+                }`}
+              >
+                {t === "leads" ? `Gelen Bilgiler (${leads?.length ?? "…"})` : `Kart Bağlantıları (${connections?.length ?? "…"})`}
+              </button>
+            ))}
+          </div>
+
+          <div className="px-5 py-4">
+            {loading && (
+              <div className="flex items-center gap-2 text-sm text-ink/50">
+                <Loader2 size={14} className="animate-spin" />
+                Yükleniyor…
+              </div>
+            )}
+
+            {!loading && tab === "leads" && (
+              leads?.length === 0 ? (
+                <p className="text-sm text-ink/40">Henüz bilgi gönderilmedi.</p>
+              ) : (
+                <ul className="space-y-3">
+                  {leads?.map((l) => (
+                    <li key={l.id} className="rounded-xl border border-neutral-100 bg-neutral-50 p-3 text-sm">
+                      <div className="flex items-start justify-between gap-2">
+                        <span className="font-semibold text-ink">{l.name ?? "—"}</span>
+                        <span className="shrink-0 text-[10px] text-ink/40">
+                          {new Date(l.createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                      {l.email && <a href={`mailto:${l.email}`} className="mt-1 block text-xs text-copper hover:underline">{l.email}</a>}
+                      {l.phone && <p className="mt-0.5 text-xs text-ink/60">{l.phone}</p>}
+                      {l.message && <p className="mt-1 text-xs text-ink/50 line-clamp-2">{l.message}</p>}
+                    </li>
+                  ))}
+                </ul>
+              )
+            )}
+
+            {!loading && tab === "connections" && (
+              connections?.length === 0 ? (
+                <p className="text-sm text-ink/40">Henüz kart bağlantısı yok.</p>
+              ) : (
+                <ul className="space-y-3">
+                  {connections?.map((c) => (
+                    <li key={c.id} className="rounded-xl border border-neutral-100 bg-neutral-50 p-3 text-sm">
+                      <div className="flex items-start justify-between gap-2">
+                        <span className="font-semibold text-ink">{c.visitorName}</span>
+                        <span className="shrink-0 text-[10px] text-ink/40">
+                          {new Date(c.createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                      <a
+                        href={`/c/${c.visitorSlug}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="mt-1 block text-xs text-copper hover:underline"
+                      >
+                        opsolid.de/c/{c.visitorSlug}
+                      </a>
+                      {c.source && <p className="mt-0.5 text-[10px] uppercase tracking-wide text-ink/40">{c.source}</p>}
+                    </li>
+                  ))}
+                </ul>
+              )
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

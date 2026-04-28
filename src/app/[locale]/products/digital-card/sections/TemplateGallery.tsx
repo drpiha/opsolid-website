@@ -66,6 +66,9 @@ const SECTOR_TRANSLATION_KEY: Record<PlannedSector, string> = {
   consultant: "sectorConsultant",
   tech: "sectorTech",
   events: "sectorEvents",
+  dentist: "sectorDentist",
+  psychologist: "sectorPsychologist",
+  beauty: "sectorBeauty",
 };
 
 interface SlideModel {
@@ -531,7 +534,7 @@ const CarouselSlide = React.memo(function CarouselSlide({
   sectorLabel,
   onPick,
   onDemo,
-  onCenter,
+  onCenter: _onCenter,
   reducedMotion,
 }: {
   slide: SlideModel;
