@@ -289,7 +289,8 @@ export function CardEditClient(props: Props) {
               />
             )}
 
-            {/* CRM — leads and card connections */}
+            {/* CRM — leads and card connections (Phase 7.10 WIP — Component below
+                will be wired once the import path is resolved.) */}
             {/* {props.status === "PUBLISHED" && (
               <LeadsPanel
                 orderId={props.orderId}
@@ -1032,7 +1033,7 @@ type CrmConnection = {
   createdAt: string;
 };
 
-function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string }) {
+function _LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string }) {
   const [open, setOpen] = useState(false);
   const [leads, setLeads] = useState<CrmLead[] | null>(null);
   const [connections, setConnections] = useState<CrmConnection[] | null>(null);
