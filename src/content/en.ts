@@ -1663,6 +1663,10 @@ export const content = {
           sectorAccounting: "Accounting",
           sectorSoftware: "Software & IT",
           sectorContentCreator: "Content Creator",
+          sectorWellness: "Wellness",
+          sectorEventPlanner: "Event Planner",
+          sectorAuto: "Auto Dealer",
+          sectorInterior: "Interior Design",
           monthlyShort: "/mo",
         },
         form: {
@@ -3789,7 +3793,7 @@ export const content = {
     },
     owner: {
       banner: "You're the owner of this card — changes go live instantly.",
-      publicBannerLabel: "Owner view",
+      publicBannerLabel: "Your card",
       editLabel: "Edit",
       previewLabel: "Preview mode",
       shareLabel: "Share link",

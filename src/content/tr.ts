@@ -1665,6 +1665,10 @@ export const content: Content = {
           sectorAccounting: "Muhasebe",
           sectorSoftware: "Yazılım & BT",
           sectorContentCreator: "İçerik Üretici",
+          sectorWellness: "Wellness",
+          sectorEventPlanner: "Organizasyon",
+          sectorAuto: "Oto Galeri",
+          sectorInterior: "İç Mimar",
           monthlyShort: "/ay",
         },
         form: {
@@ -3779,7 +3783,7 @@ export const content: Content = {
     owner: {
       banner:
         "Bu kartın sahibi sensin — değişiklikler kaydedildiğinde anında yayınlanır.",
-      publicBannerLabel: "Sahip görünümü",
+      publicBannerLabel: "Senin kartın",
       editLabel: "Düzenle",
       previewLabel: "Önizleme modu",
       shareLabel: "Linki paylaş",

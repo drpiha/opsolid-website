@@ -256,11 +256,11 @@ export function CardEditClient(props: Props) {
                   className="flex-1 bg-transparent px-2 py-2 text-sm text-ink focus:outline-none"
                 />
                 <a
-                  href={`/c/${currentSlug}`}
+                  href={`/c/${currentSlug}?owner=${encodeURIComponent(props.editToken)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center border-l border-ink/15 px-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-ink/65 transition-colors hover:bg-bg-2 hover:text-ink"
-                  title="Aç"
+                  title="Kartı sahip modunda görüntüle"
                 >
                   ↗
                 </a>

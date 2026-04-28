@@ -1665,6 +1665,10 @@ export const content: Content = {
           sectorAccounting: "Buchhaltung",
           sectorSoftware: "Software & IT",
           sectorContentCreator: "Content Creator",
+          sectorWellness: "Wellness",
+          sectorEventPlanner: "Event Planner",
+          sectorAuto: "Autohändler",
+          sectorInterior: "Interior Design",
           monthlyShort: "/Mo.",
         },
         form: {
@@ -3778,7 +3782,7 @@ export const content: Content = {
     owner: {
       banner:
         "Du bist der Inhaber dieser Karte — Änderungen werden sofort veröffentlicht.",
-      publicBannerLabel: "Inhaber-Ansicht",
+      publicBannerLabel: "Deine Karte",
       editLabel: "Bearbeiten",
       previewLabel: "Vorschau-Modus",
       shareLabel: "Link teilen",
