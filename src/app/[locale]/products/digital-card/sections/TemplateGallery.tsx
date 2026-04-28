@@ -72,6 +72,10 @@ const SECTOR_TRANSLATION_KEY: Record<PlannedSector, string> = {
   accounting: "sectorAccounting",
   software: "sectorSoftware",
   "content-creator": "sectorContentCreator",
+  wellness: "sectorWellness",
+  "event-planner": "sectorEventPlanner",
+  auto: "sectorAuto",
+  interior: "sectorInterior",
 };
 
 interface SlideModel {

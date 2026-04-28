@@ -56,6 +56,19 @@ import { softwareDevVividSample } from "@/components/cards/templates/v2/Software
 import { contentCreatorSample } from "@/components/cards/templates/v2/ContentCreator";
 import { contentCreatorNoirSample } from "@/components/cards/templates/v2/ContentCreatorNoir";
 import { contentCreatorPureSample } from "@/components/cards/templates/v2/ContentCreatorPure";
+// Phase 7.10 Batch C — Wellness · Events · Auto · Interior (ids 40-51)
+import { wellnessTeacherSample } from "@/components/cards/templates/v2/WellnessTeacher";
+import { wellnessTeacherPureSample } from "@/components/cards/templates/v2/WellnessTeacherPure";
+import { wellnessTeacherVividSample } from "@/components/cards/templates/v2/WellnessTeacherVivid";
+import { eventPlannerSample } from "@/components/cards/templates/v2/EventPlanner";
+import { eventPlannerNoirSample } from "@/components/cards/templates/v2/EventPlannerNoir";
+import { eventPlannerPureSample } from "@/components/cards/templates/v2/EventPlannerPure";
+import { autoDealerSample } from "@/components/cards/templates/v2/AutoDealer";
+import { autoDealerPureSample } from "@/components/cards/templates/v2/AutoDealerPure";
+import { autoDealerVividSample } from "@/components/cards/templates/v2/AutoDealerVivid";
+import { interiorDesignSample } from "@/components/cards/templates/v2/InteriorDesign";
+import { interiorDesignNoirSample } from "@/components/cards/templates/v2/InteriorDesignNoir";
+import { interiorDesignVividSample } from "@/components/cards/templates/v2/InteriorDesignVivid";
 
 // id=1 — RealEstate. Persona: Hannah Walker, senior listing agent in Berlin.
 // photo: Unsplash, by Christina Wocintechchat
@@ -174,6 +187,19 @@ export const cardTemplateSamples: Record<number, SampleData> = {
   37: contentCreatorSample,
   38: contentCreatorNoirSample,
   39: contentCreatorPureSample,
+  // Phase 7.10 Batch C
+  40: wellnessTeacherSample,
+  41: wellnessTeacherPureSample,
+  42: wellnessTeacherVividSample,
+  43: eventPlannerSample,
+  44: eventPlannerNoirSample,
+  45: eventPlannerPureSample,
+  46: autoDealerSample,
+  47: autoDealerPureSample,
+  48: autoDealerVividSample,
+  49: interiorDesignSample,
+  50: interiorDesignNoirSample,
+  51: interiorDesignVividSample,
 };
 
 export function getTemplateSample(id: number): SampleData | undefined {

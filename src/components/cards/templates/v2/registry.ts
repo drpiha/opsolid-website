@@ -61,6 +61,19 @@ import { softwareDevVividEntry, SoftwareDevVivid } from "./SoftwareDevVivid";
 import { contentCreatorEntry, ContentCreator } from "./ContentCreator";
 import { contentCreatorNoirEntry, ContentCreatorNoir } from "./ContentCreatorNoir";
 import { contentCreatorPureEntry, ContentCreatorPure } from "./ContentCreatorPure";
+// Phase 7.10 Batch C — Yoga/Wellness, Events, Auto, Interior (ids 40-51)
+import { wellnessTeacherEntry, WellnessTeacher } from "./WellnessTeacher";
+import { wellnessTeacherPureEntry, WellnessTeacherPure } from "./WellnessTeacherPure";
+import { wellnessTeacherVividEntry, WellnessTeacherVivid } from "./WellnessTeacherVivid";
+import { eventPlannerEntry, EventPlanner } from "./EventPlanner";
+import { eventPlannerNoirEntry, EventPlannerNoir } from "./EventPlannerNoir";
+import { eventPlannerPureEntry, EventPlannerPure } from "./EventPlannerPure";
+import { autoDealerEntry, AutoDealer } from "./AutoDealer";
+import { autoDealerPureEntry, AutoDealerPure } from "./AutoDealerPure";
+import { autoDealerVividEntry, AutoDealerVivid } from "./AutoDealerVivid";
+import { interiorDesignEntry, InteriorDesign } from "./InteriorDesign";
+import { interiorDesignNoirEntry, InteriorDesignNoir } from "./InteriorDesignNoir";
+import { interiorDesignVividEntry, InteriorDesignVivid } from "./InteriorDesignVivid";
 import type { TemplateRegistryEntry } from "./types";
 
 export const templateRegistry: Record<number, TemplateRegistryEntry> = {
@@ -133,6 +146,19 @@ export const templateRegistry: Record<number, TemplateRegistryEntry> = {
   37: { ...contentCreatorEntry, Component: ContentCreator },
   38: { ...contentCreatorNoirEntry, Component: ContentCreatorNoir },
   39: { ...contentCreatorPureEntry, Component: ContentCreatorPure },
+  // Phase 7.10 Batch C — Wellness · Events · Auto · Interior (4 sectors × 3 styles)
+  40: { ...wellnessTeacherEntry, Component: WellnessTeacher },
+  41: { ...wellnessTeacherPureEntry, Component: WellnessTeacherPure },
+  42: { ...wellnessTeacherVividEntry, Component: WellnessTeacherVivid },
+  43: { ...eventPlannerEntry, Component: EventPlanner },
+  44: { ...eventPlannerNoirEntry, Component: EventPlannerNoir },
+  45: { ...eventPlannerPureEntry, Component: EventPlannerPure },
+  46: { ...autoDealerEntry, Component: AutoDealer },
+  47: { ...autoDealerPureEntry, Component: AutoDealerPure },
+  48: { ...autoDealerVividEntry, Component: AutoDealerVivid },
+  49: { ...interiorDesignEntry, Component: InteriorDesign },
+  50: { ...interiorDesignNoirEntry, Component: InteriorDesignNoir },
+  51: { ...interiorDesignVividEntry, Component: InteriorDesignVivid },
 };
 
 /**
@@ -177,7 +203,11 @@ export type PlannedSector =
   | "beauty"
   | "accounting"
   | "software"
-  | "content-creator";
+  | "content-creator"
+  | "wellness"
+  | "event-planner"
+  | "auto"
+  | "interior";
 
 export interface PlannedTemplate {
   id: number;
@@ -229,4 +259,17 @@ export const plannedLineup: readonly PlannedTemplate[] = [
   { id: 37, key: "content-creator", name: "Content Creator", sector: "content-creator" },
   { id: 38, key: "content-creator-noir", name: "Content Creator — Noir", sector: "content-creator" },
   { id: 39, key: "content-creator-pure", name: "Content Creator — Pure", sector: "content-creator" },
+  // Phase 7.10 Batch C
+  { id: 40, key: "wellness-teacher", name: "Wellness Teacher", sector: "wellness" },
+  { id: 41, key: "wellness-teacher-pure", name: "Wellness — Pure", sector: "wellness" },
+  { id: 42, key: "wellness-teacher-vivid", name: "Wellness — Vivid", sector: "wellness" },
+  { id: 43, key: "event-planner", name: "Event Planner", sector: "event-planner" },
+  { id: 44, key: "event-planner-noir", name: "Event Planner — Noir", sector: "event-planner" },
+  { id: 45, key: "event-planner-pure", name: "Event Planner — Pure", sector: "event-planner" },
+  { id: 46, key: "auto-dealer", name: "Auto Dealer", sector: "auto" },
+  { id: 47, key: "auto-dealer-pure", name: "Auto Dealer — Pure", sector: "auto" },
+  { id: 48, key: "auto-dealer-vivid", name: "Auto Dealer — Vivid", sector: "auto" },
+  { id: 49, key: "interior-design", name: "Interior Design", sector: "interior" },
+  { id: 50, key: "interior-design-noir", name: "Interior — Noir", sector: "interior" },
+  { id: 51, key: "interior-design-vivid", name: "Interior — Vivid", sector: "interior" },
 ];
