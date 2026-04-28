@@ -1033,7 +1033,8 @@ type CrmConnection = {
   createdAt: string;
 };
 
-function _LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string }) {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string }) {
   const [open, setOpen] = useState(false);
   const [leads, setLeads] = useState<CrmLead[] | null>(null);
   const [connections, setConnections] = useState<CrmConnection[] | null>(null);
