@@ -24,6 +24,12 @@ import {
   ChevronDown,
   ChevronUp,
   X,
+  Download,
+  Copy,
+  CheckCheck,
+  Mail,
+  Phone,
+  MessageCircle,
 } from "lucide-react";
 import { Input, Textarea } from "@/components/ui/Input";
 import { useLocale } from "@/context/LocaleContext";
@@ -290,10 +296,11 @@ export function CardEditClient(props: Props) {
             )}
 
             {/* Analytics + CRM panels — visible once card is published */}
-            {props.status === "PUBLISHED" && (
+            {props.status === "PUBLISHED" && props.slug && (
               <AnalyticsPanel
                 orderId={props.orderId}
                 editToken={props.editToken}
+                slug={props.slug}
               />
             )}
             {props.status === "PUBLISHED" && (
@@ -1028,9 +1035,23 @@ type AnalyticsData = {
   bySource: { qr: number; nfc: number; link: number; wallet: number; other: number };
 };
 
-function AnalyticsPanel({ orderId, editToken }: { orderId: string; editToken: string }) {
+function AnalyticsPanel({
+  orderId,
+  editToken,
+  slug,
+}: {
+  orderId: string;
+  editToken: string;
+  slug: string;
+}) {
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(true);
+  const [copied, setCopied] = useState(false);
+
+  const cardUrl =
+    typeof window !== "undefined"
+      ? `${window.location.origin}/c/${slug}`
+      : `/c/${slug}`;
 
   useEffect(() => {
     void fetch(`/api/card/edit/${orderId}/analytics?t=${encodeURIComponent(editToken)}`)
@@ -1039,9 +1060,16 @@ function AnalyticsPanel({ orderId, editToken }: { orderId: string; editToken: st
       .finally(() => setLoading(false));
   }, [orderId, editToken]);
 
-  const stats: { label: string; value: number | string }[] = data
+  const handleCopy = () => {
+    void navigator.clipboard.writeText(cardUrl).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+
+  const stats: { label: string; value: number }[] = data
     ? [
-        { label: "Toplam Görüntülenme", value: data.total },
+        { label: "Toplam", value: data.total },
         { label: "Son 7 Gün", value: data.last7d },
         { label: "Son 30 Gün", value: data.last30d },
       ]
@@ -1060,11 +1088,32 @@ function AnalyticsPanel({ orderId, editToken }: { orderId: string; editToken: st
   return (
     <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white">
       <div className="flex items-center justify-between px-5 py-4">
-        <span className="text-sm font-semibold text-ink">Kart Analitiği</span>
+        <span className="text-sm font-semibold text-ink">Görüntülenme Analitiği</span>
         {data && (
-          <span className="text-[11px] text-ink/40">Toplam {data.total} görüntülenme</span>
+          <span className="text-[11px] font-semibold text-copper">{data.total} görüntülenme</span>
         )}
       </div>
+
+      {/* Quick actions */}
+      <div className="flex gap-2 border-t border-neutral-100 px-5 py-3">
+        <button
+          type="button"
+          onClick={handleCopy}
+          className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-1.5 text-xs font-medium text-ink/70 transition hover:bg-neutral-100 active:scale-95"
+        >
+          {copied ? <CheckCheck size={12} className="text-green-600" /> : <Copy size={12} />}
+          {copied ? "Kopyalandı!" : "Linki Kopyala"}
+        </button>
+        <a
+          href={`/api/qr/${slug}?format=png`}
+          download={`qr-${slug}.png`}
+          className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-1.5 text-xs font-medium text-ink/70 transition hover:bg-neutral-100 active:scale-95"
+        >
+          <Download size={12} />
+          QR İndir
+        </a>
+      </div>
+
       <div className="border-t border-neutral-100 px-5 py-4">
         {loading && (
           <div className="flex items-center gap-2 text-sm text-ink/50">
@@ -1072,14 +1121,14 @@ function AnalyticsPanel({ orderId, editToken }: { orderId: string; editToken: st
           </div>
         )}
         {!loading && !data && (
-          <p className="text-sm text-ink/40">Analitik verileri yüklenemedi.</p>
+          <p className="text-sm text-ink/40">Analitik yüklenemedi.</p>
         )}
         {!loading && data && (
           <>
             <div className="grid grid-cols-3 gap-3">
               {stats.map((s) => (
                 <div key={s.label} className="rounded-xl bg-neutral-50 p-3 text-center">
-                  <div className="text-2xl font-bold text-ink">{s.value}</div>
+                  <div className="text-2xl font-bold tabular-nums text-ink">{s.value}</div>
                   <div className="mt-0.5 text-[10px] text-ink/50">{s.label}</div>
                 </div>
               ))}
@@ -1089,13 +1138,18 @@ function AnalyticsPanel({ orderId, editToken }: { orderId: string; editToken: st
                 {sources.map((s) => (
                   <span
                     key={s.key}
-                    className="inline-flex items-center gap-1 rounded-full bg-neutral-100 px-2.5 py-1 text-[11px] text-ink/70"
+                    className="inline-flex items-center gap-1 rounded-full border border-neutral-100 bg-neutral-50 px-2.5 py-1 text-[11px] text-ink/70"
                   >
                     <span className="font-medium">{s.key}</span>
-                    <span className="text-ink/40">{s.value}</span>
+                    <span className="font-bold text-copper">{s.value}</span>
                   </span>
                 ))}
               </div>
+            )}
+            {data.total === 0 && (
+              <p className="mt-2 text-xs text-ink/40">
+                Henüz görüntülenme yok. Kartını paylaştıkça burada görünecek.
+              </p>
             )}
           </>
         )}
@@ -1210,12 +1264,44 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                       <div className="flex items-start justify-between gap-2">
                         <span className="font-semibold text-ink">{l.name ?? "—"}</span>
                         <span className="shrink-0 text-[10px] text-ink/40">
-                          {new Date(l.createdAt).toLocaleDateString()}
+                          {new Date(l.createdAt).toLocaleDateString("tr-TR")}
                         </span>
                       </div>
-                      {l.email && <a href={`mailto:${l.email}`} className="mt-1 block text-xs text-copper hover:underline">{l.email}</a>}
-                      {l.phone && <p className="mt-0.5 text-xs text-ink/60">{l.phone}</p>}
-                      {l.message && <p className="mt-1 text-xs text-ink/50 line-clamp-2">{l.message}</p>}
+                      {l.message && (
+                        <p className="mt-1.5 text-xs text-ink/60 line-clamp-2">{l.message}</p>
+                      )}
+                      {/* Reply action buttons */}
+                      <div className="mt-2.5 flex flex-wrap gap-1.5">
+                        {l.email && (
+                          <a
+                            href={`mailto:${l.email}?subject=OpSolid Smart Kart — Yanıt`}
+                            className="inline-flex items-center gap-1 rounded-md bg-white border border-neutral-200 px-2 py-1 text-[11px] font-medium text-ink/70 transition hover:border-copper/40 hover:text-copper active:scale-95"
+                          >
+                            <Mail size={11} />
+                            {l.email}
+                          </a>
+                        )}
+                        {l.phone && (
+                          <>
+                            <a
+                              href={`tel:${l.phone}`}
+                              className="inline-flex items-center gap-1 rounded-md bg-white border border-neutral-200 px-2 py-1 text-[11px] font-medium text-ink/70 transition hover:border-copper/40 hover:text-copper active:scale-95"
+                            >
+                              <Phone size={11} />
+                              Ara
+                            </a>
+                            <a
+                              href={`https://wa.me/${l.phone.replace(/[^0-9]/g, "")}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1 rounded-md bg-white border border-neutral-200 px-2 py-1 text-[11px] font-medium text-ink/70 transition hover:border-green-500/40 hover:text-green-600 active:scale-95"
+                            >
+                              <MessageCircle size={11} />
+                              WhatsApp
+                            </a>
+                          </>
+                        )}
+                      </div>
                     </li>
                   ))}
                 </ul>
