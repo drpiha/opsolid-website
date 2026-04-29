@@ -15,6 +15,7 @@ export const OrderStatus = {
 export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus];
 
 export const BillingMode = {
+  FREE: "FREE",
   ONE_TIME: "ONE_TIME",
   MONTHLY: "MONTHLY",
   YEARLY: "YEARLY",
@@ -427,6 +428,7 @@ export type CardData = z.infer<typeof CardDataSchema>;
 export const OrderPayloadSchema = z.object({
   templateId: z.number().int().positive(),
   billingMode: z.enum([
+    BillingMode.FREE,
     BillingMode.ONE_TIME,
     BillingMode.MONTHLY,
     BillingMode.YEARLY,

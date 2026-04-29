@@ -285,6 +285,7 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
 
   const amountCents = useMemo(() => {
     if (!selectedTemplate) return 0;
+    if (billingMode === "FREE") return 0;
     if (billingMode === "MONTHLY")
       return selectedTemplate.monthlyCents ?? selectedTemplate.oneTimeCents;
     if (billingMode === "YEARLY")
@@ -451,7 +452,16 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
         setFormState("error");
         return;
       }
-      const json = (await res.json()) as { checkoutUrl?: string };
+      const json = (await res.json()) as {
+        checkoutUrl?: string;
+        editUrl?: string;
+        cardUrl?: string;
+      };
+      // FREE tier: card is already published — go straight to the edit page.
+      if (json.editUrl) {
+        window.location.href = json.editUrl;
+        return;
+      }
       if (!json.checkoutUrl) {
         setErrorMsg(L("noCheckoutUrl", "Keine Zahlungs-URL erhalten."));
         setFormState("error");
@@ -473,6 +483,7 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
     );
 
     const billingMap: Record<keyof typeof BillingMode, string> = {
+      FREE: L("billingFree", "Kostenlos"),
       MONTHLY: L("billingMonthly", "Monatlich"),
       YEARLY: L("billingYearly", "Jährlich"),
       ONE_TIME: L("billingOneTime", "Einmalzahlung"),
@@ -2001,6 +2012,18 @@ function StepBilling({
 
       <SubFieldset label={L("billingSection", "Zahlungsmodell")}>
         <div className="grid gap-3 md:grid-cols-3">
+          {/* FREE tier — always shown first, instant publish, no payment */}
+          <BillingTile
+            active={billingMode === "FREE"}
+            onClick={() => setBillingMode("FREE")}
+            label={L("billingFree", "Kostenlos")}
+            badge={L("billingFreeNew", "Neu")}
+            priceLabel={L("billingFreePrice", "€0 — sofort live")}
+            footer={L(
+              "billingFreeFooter",
+              "Kein Kreditkarte. Direkt starten."
+            )}
+          />
           {selectedTemplate.monthlyCents ? (
             <BillingTile
               active={billingMode === "MONTHLY"}
@@ -2047,39 +2070,66 @@ function StepBilling({
       )}
 
       {/* total + submit */}
-      <div className="flex flex-col items-stretch justify-between gap-4 rounded-2xl border border-ink/15 bg-neutral-900 p-5 text-neutral-50 sm:flex-row sm:items-center">
-        <div>
-          <p className="mono-label text-[10px] uppercase tracking-[0.2em] text-neutral-50/60">
-            {L("totalLabel", "Zu zahlen")}
-          </p>
-          <p className="mt-1 font-serif text-heading text-neutral-50">
-            {formatEuro(amountCents)}
-            <span className="text-neutral-50/55">
-              {billingMode === "MONTHLY"
-                ? " / Mon."
-                : billingMode === "YEARLY"
-                  ? " / Jahr"
-                  : ""}
+      {billingMode === "FREE" ? (
+        <div className="flex flex-col items-stretch justify-between gap-4 rounded-2xl border border-copper/30 bg-copper/8 p-5 sm:flex-row sm:items-center">
+          <div>
+            <p className="mono-label text-[10px] uppercase tracking-[0.2em] text-ink/50">
+              {L("freeTierLabel", "Kostenlos starten")}
+            </p>
+            <p className="mt-1 text-sm text-ink/70">
+              {L("freeTierHint", "Kein Kreditkarte erforderlich. Karte wird sofort veröffentlicht.")}
+            </p>
+          </div>
+          <button
+            type="submit"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-copper px-6 py-3 text-base font-semibold text-ink shadow-[0_8px_24px_-8px_rgba(194,121,64,0.55)] transition-transform hover:scale-[1.02] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+            disabled={formState === "submitting"}
+          >
+            {formState === "submitting" ? (
+              <Loader2 size={16} className="animate-spin" />
+            ) : null}
+            <span>
+              {formState === "submitting"
+                ? L("submitting", "Wird verarbeitet …")
+                : L("freeTierSubmit", "Karte kostenlos erstellen →")}
             </span>
-          </p>
+          </button>
         </div>
-        <button
-          type="submit"
-          className="inline-flex items-center justify-center gap-2 rounded-full bg-copper px-6 py-3 text-base font-semibold text-ink shadow-[0_8px_24px_-8px_rgba(194,121,64,0.55)] transition-transform hover:scale-[1.02] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
-          disabled={formState === "submitting"}
-        >
-          {formState === "submitting" ? (
-            <Loader2 size={16} className="animate-spin" />
-          ) : (
-            <Lock size={14} aria-hidden />
-          )}
-          <span>
-            {formState === "submitting"
-              ? L("submitting", "Wird verarbeitet …")
-              : L("submitLabel", "Bezahlen & Karte veröffentlichen")}
-          </span>
-        </button>
-      </div>
+      ) : (
+        <div className="flex flex-col items-stretch justify-between gap-4 rounded-2xl border border-ink/15 bg-neutral-900 p-5 text-neutral-50 sm:flex-row sm:items-center">
+          <div>
+            <p className="mono-label text-[10px] uppercase tracking-[0.2em] text-neutral-50/60">
+              {L("totalLabel", "Zu zahlen")}
+            </p>
+            <p className="mt-1 font-serif text-heading text-neutral-50">
+              {formatEuro(amountCents)}
+              <span className="text-neutral-50/55">
+                {billingMode === "MONTHLY"
+                  ? " / Mon."
+                  : billingMode === "YEARLY"
+                    ? " / Jahr"
+                    : ""}
+              </span>
+            </p>
+          </div>
+          <button
+            type="submit"
+            className="inline-flex items-center justify-center gap-2 rounded-full bg-copper px-6 py-3 text-base font-semibold text-ink shadow-[0_8px_24px_-8px_rgba(194,121,64,0.55)] transition-transform hover:scale-[1.02] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+            disabled={formState === "submitting"}
+          >
+            {formState === "submitting" ? (
+              <Loader2 size={16} className="animate-spin" />
+            ) : (
+              <Lock size={14} aria-hidden />
+            )}
+            <span>
+              {formState === "submitting"
+                ? L("submitting", "Wird verarbeitet …")
+                : L("submitLabel", "Bezahlen & Karte veröffentlichen")}
+            </span>
+          </button>
+        </div>
+      )}
     </>
   );
 }

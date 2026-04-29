@@ -4,7 +4,8 @@ import { prisma } from "@/lib/prisma";
 import { OrderPayloadSchema, OrderStatus } from "@/lib/validation";
 import { getTemplateById } from "@/config/card-templates";
 import { createCheckoutSession } from "@/lib/stripe";
-import { validateManualSlug, isSlugAvailable } from "@/lib/slug";
+import { validateManualSlug, isSlugAvailable, ensureUniqueSlug } from "@/lib/slug";
+import { getSiteUrl } from "@/lib/stripe";
 
 export const runtime = "nodejs";
 
@@ -30,25 +31,27 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Unknown template" }, { status: 404 });
   }
 
-  // Resolve the amount server-side (never trust the client).
-  const amountCents =
-    data.billingMode === "MONTHLY"
-      ? template.monthlyCents
-      : data.billingMode === "YEARLY"
-      ? template.yearlyCents
-      : template.oneTimeCents;
+  // FREE tier bypasses Stripe entirely — amount is always 0.
+  const isFree = data.billingMode === "FREE";
 
-  if (data.billingMode !== "ONE_TIME" && !amountCents) {
+  // Resolve the amount server-side (never trust the client).
+  const amountCents = isFree
+    ? 0
+    : data.billingMode === "MONTHLY"
+    ? template.monthlyCents
+    : data.billingMode === "YEARLY"
+    ? template.yearlyCents
+    : template.oneTimeCents;
+
+  if (!isFree && data.billingMode !== "ONE_TIME" && !amountCents) {
     return NextResponse.json(
       { error: `This template does not offer a ${data.billingMode.toLowerCase()} plan.` },
       { status: 400 }
     );
   }
 
-  // Phase 8 — validate optional customer-chosen slug *before* creating the
-  // order. We re-validate uniqueness in the publish flow as well; this early
-  // check just produces a fast, friendly error in the form rather than
-  // surfacing it after the Stripe checkout round-trip.
+  // Validate optional customer-chosen slug before creating the order.
+  // Re-validated in the publish flow for paid tiers; for FREE we set it now.
   let desiredSlug: string | undefined;
   if (data.desiredSlug) {
     const v = validateManualSlug(data.desiredSlug);
@@ -67,6 +70,13 @@ export async function POST(req: NextRequest) {
     desiredSlug = v.slug;
   }
 
+  // FREE: generate slug now so the card URL is immediately available.
+  const freeSlug = isFree
+    ? desiredSlug ?? (await ensureUniqueSlug(data.cardData.name ?? data.contactName))
+    : undefined;
+
+  const editToken = crypto.randomUUID();
+
   const order = await prisma.cardOrder.create({
     data: {
       templateId: template.id,
@@ -79,10 +89,7 @@ export async function POST(req: NextRequest) {
       brandAccentHex: data.brandAccentHex,
       photoPath: data.photoPath,
       logoPath: data.logoPath,
-      // Premium foundation fields (2026-04-23). Persisting them now means the
-      // Stripe webhook can read conciergeAddon when deciding self-serve vs
-      // designer review without a second client round-trip.
-      conciergeAddon: data.conciergeAddon,
+      conciergeAddon: isFree ? false : data.conciergeAddon,
       layoutKey: data.layoutKey,
       themeKey: data.themeKey,
       customBlocks: data.customBlocks
@@ -90,15 +97,16 @@ export async function POST(req: NextRequest) {
         : undefined,
       qrStyle: data.qrStyle ? (data.qrStyle as unknown as object) : undefined,
       billingMode: data.billingMode,
-      amountCents: amountCents!,
+      amountCents: amountCents ?? 0,
       currency: "EUR",
       locale: data.locale,
-      status: OrderStatus.PENDING_PAYMENT,
-      // Track D consumes this to let customers edit from /card/edit/[token].
-      editToken: crypto.randomUUID(),
-      // Phase 8 — customer-chosen slug; webhook/admin publish prefers this
-      // over the auto-generated `name-xxxx` form.
-      desiredSlug,
+      // FREE goes straight to PUBLISHED; paid starts at PENDING_PAYMENT.
+      status: isFree ? OrderStatus.PUBLISHED : OrderStatus.PENDING_PAYMENT,
+      slug: freeSlug,
+      paidAt: isFree ? new Date() : undefined,
+      publishedAt: isFree ? new Date() : undefined,
+      editToken,
+      desiredSlug: isFree ? undefined : desiredSlug,
     },
   });
 
@@ -106,12 +114,23 @@ export async function POST(req: NextRequest) {
     data: {
       orderId: order.id,
       fromStatus: null,
-      toStatus: OrderStatus.PENDING_PAYMENT,
+      toStatus: isFree ? OrderStatus.PUBLISHED : OrderStatus.PENDING_PAYMENT,
       actor: "system",
-      note: "Order created, awaiting Stripe checkout",
+      note: isFree
+        ? "Free tier — published immediately (no payment)"
+        : "Order created, awaiting Stripe checkout",
     },
   });
 
+  // FREE: return card URL + edit link, no Stripe.
+  if (isFree) {
+    const siteUrl = getSiteUrl();
+    const cardUrl = `${siteUrl}/c/${freeSlug}`;
+    const editUrl = `/${data.locale}/card/edit/${order.id}?token=${editToken}`;
+    return NextResponse.json({ orderId: order.id, editToken, cardUrl, editUrl });
+  }
+
+  // Paid tiers: create Stripe checkout session.
   const priceId =
     data.billingMode === "MONTHLY"
       ? template.stripeMonthlyPriceId
@@ -125,7 +144,8 @@ export async function POST(req: NextRequest) {
       amountCents: amountCents!,
       currency: "EUR",
       templateName: template.name,
-      billingMode: data.billingMode,
+      // FREE never reaches this branch — cast is safe.
+      billingMode: data.billingMode as "ONE_TIME" | "MONTHLY" | "YEARLY",
       stripePriceId: priceId,
       locale: data.locale,
       customerEmail: data.contactEmail,
