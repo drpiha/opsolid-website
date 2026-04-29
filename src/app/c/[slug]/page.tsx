@@ -30,6 +30,7 @@ import { getTemplateEntry } from "@/components/cards/templates/v2/registry";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
 import { AlbumSection } from "@/components/cards/album/AlbumSection";
 import { QRFlipOverlay } from "@/components/cards/QRFlipOverlay";
+import { ShareButton } from "@/components/cards/ShareButton";
 import {
   OwnerToolbar,
   constantTimeEquals,
@@ -343,6 +344,11 @@ export default async function CardPage({ params, searchParams }: PageProps) {
         shareTitle={shareTitle}
         accentHex={order.brandAccentHex ?? undefined}
         labels={qrLabels}
+      />
+      {/* Phase 5 — share drawer trigger (bottom-left, QR occupies bottom-right) */}
+      <ShareButton
+        slug={slug}
+        accentHex={order.brandAccentHex ?? undefined}
       />
     </main>
   );

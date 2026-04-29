@@ -24,9 +24,10 @@ import {
   ChevronDown,
   ChevronUp,
   X,
-  Download,
   Copy,
   CheckCheck,
+  ExternalLink,
+  Share2,
   Mail,
   Phone,
   MessageCircle,
@@ -41,6 +42,7 @@ import { GalleryEditor } from "@/components/cards/order-form/GalleryEditor";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
 import { TYPOGRAPHY_PRESET_LIST, getTypographyPreset } from "@/lib/typographyPresets";
 import { getTemplateEntry } from "@/components/cards/templates/v2/registry";
+import { ShareDrawer } from "@/components/cards/ShareDrawer";
 
 type FormState = "idle" | "saving" | "saved" | "error";
 
@@ -89,6 +91,8 @@ export function CardEditClient(props: Props) {
   // is the working draft. Saved on the next form submit alongside cardData.
   const [currentSlug, setCurrentSlug] = useState<string | null>(props.slug);
   const [editableSlug, setEditableSlug] = useState<string>(props.slug ?? "");
+  // Phase 5 — share drawer
+  const [shareOpen, setShareOpen] = useState(false);
 
   // Auto-open cancel modal when URL ends with #cancel (linked from email).
   useEffect(() => {
@@ -287,6 +291,14 @@ export function CardEditClient(props: Props) {
         >
           {/* ================ LEFT ================ */}
           <div className="space-y-10">
+            {/* Phase 4 — Live banner: shown only when card is published */}
+            {props.status === "PUBLISHED" && currentSlug && (
+              <LiveBanner
+                slug={currentSlug}
+                onShare={() => setShareOpen(true)}
+              />
+            )}
+
             {/* Album pending approvals — visitor uploads awaiting owner action */}
             {props.slug && props.status === "PUBLISHED" && (
               <AlbumPendingPanel
@@ -301,6 +313,7 @@ export function CardEditClient(props: Props) {
                 orderId={props.orderId}
                 editToken={props.editToken}
                 slug={props.slug}
+                onShare={() => setShareOpen(true)}
               />
             )}
             {props.status === "PUBLISHED" && (
@@ -810,7 +823,86 @@ export function CardEditClient(props: Props) {
       {props.slug && props.status === "PUBLISHED" && (
         <OwnerPhotoFab slug={props.slug} editToken={props.editToken} />
       )}
+
+      {/* Phase 5 — Share drawer */}
+      {currentSlug && (
+        <ShareDrawer
+          slug={currentSlug}
+          open={shareOpen}
+          onClose={() => setShareOpen(false)}
+        />
+      )}
     </main>
+  );
+}
+
+// -----------------------------------------------------------------------------
+// Phase 4 — LiveBanner: shown at the top of the edit page when status is
+// PUBLISHED and a slug is available. Provides quick copy + open affordances
+// with a copper accent so it reads as a positive/live signal.
+// -----------------------------------------------------------------------------
+function LiveBanner({
+  slug,
+  onShare,
+}: {
+  slug: string;
+  onShare: () => void;
+}) {
+  const [copied, setCopied] = useState(false);
+  const cardUrl = `https://opsolid.de/c/${slug}`;
+
+  const handleCopy = () => {
+    void navigator.clipboard.writeText(cardUrl).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
+  };
+
+  return (
+    <div className="bg-copper-500/10 border border-copper-500/20 rounded-2xl px-4 py-3 flex items-center gap-4">
+      {/* Left: pulse dot + label */}
+      <div className="flex items-center gap-2 shrink-0">
+        <span className="relative flex h-2.5 w-2.5">
+          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-60" />
+          <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
+        </span>
+        <span className="text-ink font-medium text-sm whitespace-nowrap">Kartın Yayında</span>
+      </div>
+
+      {/* Center: clickable URL */}
+      <a
+        href={cardUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex-1 text-copper-500 text-sm font-mono hover:underline truncate min-w-0"
+      >
+        opsolid.de/c/{slug}
+      </a>
+
+      {/* Right: action buttons */}
+      <div className="flex items-center gap-2 shrink-0">
+        <button
+          type="button"
+          onClick={handleCopy}
+          className="text-xs px-3 py-1.5 rounded-lg border border-line-soft bg-bg-2 text-ink hover:bg-bg-3 transition-colors inline-flex items-center gap-1.5"
+        >
+          {copied ? (
+            <CheckCheck size={12} className="text-green-600" />
+          ) : (
+            <Copy size={12} />
+          )}
+          {copied ? "Kopyalandı" : "Kopyala"}
+        </button>
+        <button
+          type="button"
+          onClick={onShare}
+          className="text-xs px-3 py-1.5 rounded-lg bg-copper-500 text-white hover:bg-copper-600 transition-colors inline-flex items-center gap-1.5"
+        >
+          <ExternalLink size={12} />
+          Kartı Gör →
+        </button>
+      </div>
+    </div>
   );
 }
 
@@ -1039,19 +1131,15 @@ function AnalyticsPanel({
   orderId,
   editToken,
   slug,
+  onShare,
 }: {
   orderId: string;
   editToken: string;
   slug: string;
+  onShare: () => void;
 }) {
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(true);
-  const [copied, setCopied] = useState(false);
-
-  const cardUrl =
-    typeof window !== "undefined"
-      ? `${window.location.origin}/c/${slug}`
-      : `/c/${slug}`;
 
   useEffect(() => {
     void fetch(`/api/card/edit/${orderId}/analytics?t=${encodeURIComponent(editToken)}`)
@@ -1059,13 +1147,6 @@ function AnalyticsPanel({
       .then((j) => setData(j as AnalyticsData | null))
       .finally(() => setLoading(false));
   }, [orderId, editToken]);
-
-  const handleCopy = () => {
-    void navigator.clipboard.writeText(cardUrl).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    });
-  };
 
   const stats: { label: string; value: number }[] = data
     ? [
@@ -1094,24 +1175,16 @@ function AnalyticsPanel({
         )}
       </div>
 
-      {/* Quick actions */}
+      {/* Quick actions — Phase 5: single Paylaş button opens ShareDrawer */}
       <div className="flex gap-2 border-t border-neutral-100 px-5 py-3">
         <button
           type="button"
-          onClick={handleCopy}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-1.5 text-xs font-medium text-ink/70 transition hover:bg-neutral-100 active:scale-95"
+          onClick={onShare}
+          className="inline-flex items-center gap-1.5 rounded-lg border border-copper-500/30 bg-copper-500/10 px-3 py-1.5 text-xs font-semibold text-copper-500 transition hover:bg-copper-500/20 active:scale-95"
         >
-          {copied ? <CheckCheck size={12} className="text-green-600" /> : <Copy size={12} />}
-          {copied ? "Kopyalandı!" : "Linki Kopyala"}
+          <Share2 size={12} />
+          Paylaş →
         </button>
-        <a
-          href={`/api/qr/${slug}?format=png`}
-          download={`qr-${slug}.png`}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-neutral-200 bg-neutral-50 px-3 py-1.5 text-xs font-medium text-ink/70 transition hover:bg-neutral-100 active:scale-95"
-        >
-          <Download size={12} />
-          QR İndir
-        </a>
       </div>
 
       <div className="border-t border-neutral-100 px-5 py-4">
