@@ -38,7 +38,6 @@ import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#1a2b9e";
 const LOCKED_ACCENT = "#4a90d9";
-const PAGE = "#f3f4f6";
 const SURFACE = "#ffffff";
 const NAVY = "#0f172a";
 const NAVY_2 = "#1e3a5f";
@@ -545,10 +544,6 @@ export function LegalCounselVivid({
           label={t.walletLabel}
           className="mx-6 mt-4 rounded-[20px] p-5"
           labelClassName="mb-3 text-[10.5px] font-semibold uppercase tracking-[0.18em] text-center"
-          style={{
-            background: `${ACCENT}0a`,
-            border: `1.5px solid ${BORDER}`,
-          }}
         >
           <div style={{ ["--card-primary" as string]: accent }}>{walletSlot}</div>
         </WalletDock>

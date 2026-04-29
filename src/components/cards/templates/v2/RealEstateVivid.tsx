@@ -29,7 +29,6 @@ import {
   Calendar,
   Globe,
   Home,
-  Instagram,
   Mail,
   MessageCircle,
   Phone,
@@ -179,7 +178,7 @@ export function RealEstateVivid({
   const t = COPY[locale] ?? COPY.de;
   const primary = brandPrimaryHex || LOCKED_PRIMARY;
   const accent = brandAccentHex || LOCKED_ACCENT;
-  const onPrimary = readableTextOn(primary);
+  void readableTextOn;
 
   const photoUrl = resolveAssetUrl(photoPath);
   const initials = getInitials(cardData.name);
@@ -509,7 +508,7 @@ export function RealEstateVivid({
             external
             grad="linear-gradient(135deg, #f58529 0%, #dd2a7b 50%, #8134af 100%)"
             ariaLabel="Instagram"
-            Icon={Instagram}
+            Icon={ArrowUpRight}
           />
         )}
         {cardData.website && (
@@ -579,7 +578,6 @@ export function RealEstateVivid({
           label={t.walletLabel}
           className="mx-6 mt-5 rounded-[20px] p-5"
           labelClassName="mb-3 text-center text-[10.5px] font-semibold uppercase tracking-[0.18em]"
-          style={{ background: PAGE, border: `1px solid ${HAIRLINE}` }}
         >
           <div style={{ ["--card-primary" as string]: primary }}>{walletSlot}</div>
         </WalletDock>

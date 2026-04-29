@@ -177,11 +177,7 @@ export function RealEstatePure({
   const onPrimary = readableTextOn(primary);
 
   const photoUrl = resolveAssetUrl(photoPath);
-
-  const phoneDigits = cardData.phone ? digitsOnly(cardData.phone) : "";
-  const waDigits = cardData.whatsapp
-    ? digitsOnly(cardData.whatsapp).replace(/^\+/, "")
-    : "";
+  void digitsOnly;
 
   const nameParts = cardData.name.trim().split(/\s+/);
   const firstName = nameParts.slice(0, -1).join(" ") || cardData.name;
@@ -444,7 +440,6 @@ export function RealEstatePure({
           label={t.walletLabel}
           className="px-8 py-6"
           labelClassName="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-center"
-          style={{ borderTop: `1px solid ${HAIRLINE}`, color: INK_MUTED }}
         >
           <div style={{ ["--card-primary" as string]: primary }}>{walletSlot}</div>
         </WalletDock>

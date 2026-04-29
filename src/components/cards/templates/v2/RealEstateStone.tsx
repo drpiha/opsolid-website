@@ -24,7 +24,6 @@ import * as React from "react";
 import Image from "next/image";
 import { Globe, Home, Mail, MessageCircle, Phone, Shield, Star } from "lucide-react";
 
-import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
@@ -34,7 +33,6 @@ import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 const LOCKED_PRIMARY = "#6b5340"; // warm taupe primary
 const LOCKED_ACCENT = "#c8a951"; // warm gold accent
 
-const BODY_BG = "#f5efe3";
 const CARD = "#fdf8f0";
 const PAPER_WARM = "#f8f1e3";
 const PAPER_DEEP_1 = "#f8efde";
@@ -544,11 +542,6 @@ export function RealEstateStone({
           label={t.walletLabel}
           className="px-7 py-6"
           labelClassName="mb-3 text-center text-[10.5px] font-semibold uppercase tracking-[0.18em]"
-          style={{
-            background: PAPER_WARM,
-            color: primary,
-            borderTop: `1px solid ${BORDER_SOFT}`,
-          }}
         >
           <div style={{ ["--card-primary" as string]: primary }}>{walletSlot}</div>
         </WalletDock>

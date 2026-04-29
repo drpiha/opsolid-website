@@ -573,7 +573,6 @@ export function LegalCounselStone({
           label={t.walletLabel}
           className="px-7 py-6"
           labelClassName="mb-3 text-[10.5px] font-semibold uppercase tracking-[0.18em] text-center"
-          style={{ background: PAPER_WARM, borderTop: `1px solid ${BORDER_SOFT}` }}
         >
           <div style={{ ["--card-primary" as string]: ACCENT }}>{walletSlot}</div>
         </WalletDock>

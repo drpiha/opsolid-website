@@ -24,7 +24,7 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Globe, Linkedin, Mail, MessageCircle, Phone } from "lucide-react";
+import { Globe, Mail, MessageCircle, Phone } from "lucide-react";
 
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
@@ -37,7 +37,6 @@ const LOCKED_PRIMARY = "#ffffff";
 const LOCKED_ACCENT = "#1a2b4a";
 const PAGE = "#f2f0ed";
 const SURFACE = "#ffffff";
-const ACCENT = "#1c2b4a";
 const ACCENT_2 = "#8b0000";
 const INK = "#111111";
 const INK_SOFT = "#666666";
@@ -519,7 +518,6 @@ export function LegalCounselPure({
           label={t.walletLabel}
           className="border-t px-8 py-6"
           labelClassName="mb-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-center"
-          style={{ borderColor: HAIRLINE }}
         >
           <div style={{ ["--card-primary" as string]: accent }}>{walletSlot}</div>
         </WalletDock>
@@ -566,7 +564,6 @@ export function LegalCounselPure({
       {/* import-only safe */}
       <span className="hidden">
         <Globe size={1} />
-        <Linkedin size={1} />
       </span>
     </article>
   );

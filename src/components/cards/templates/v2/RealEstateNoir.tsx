@@ -26,8 +26,6 @@ import * as React from "react";
 import Image from "next/image";
 import {
   Globe,
-  Instagram,
-  Linkedin,
   Mail,
   MapPin,
   MessageCircle,
@@ -47,7 +45,6 @@ const LOCKED_PRIMARY = "#0d0d0d";
 const LOCKED_ACCENT = "#c8a951";
 
 // Locked dark canvas constants — only `primary` and `accent` respond to brand.
-const BG = "#080808";
 const CARD = "#111111";
 const PANEL = "#1a1a1d";
 const PANEL_2 = "#16161a";
@@ -189,7 +186,7 @@ export function RealEstateNoir({
   const t = COPY[locale] ?? COPY.de;
   const primary = brandPrimaryHex || LOCKED_PRIMARY;
   const accent = brandAccentHex || LOCKED_ACCENT;
-  const onAccent = readableTextOn(accent);
+  void readableTextOn;
 
   const photoUrl = resolveAssetUrl(photoPath);
   const initials = getInitials(cardData.name);
@@ -507,7 +504,6 @@ export function RealEstateNoir({
           label={t.walletLabel}
           className="border-t px-7 py-6"
           labelClassName="mb-3 text-center text-[10px] font-medium uppercase"
-          style={{ borderColor: `${accent}26`, color: accent, background: PANEL_2 }}
         >
           <div style={{ ["--card-primary" as string]: accent }}>{walletSlot}</div>
         </WalletDock>
@@ -569,8 +565,6 @@ export function RealEstateNoir({
         </div>
         {/* unused but kept for tree-shaking */}
         <span className="hidden">
-          <Linkedin size={1} />
-          <Instagram size={1} />
           <MapPin size={1} />
           <Quote size={1} />
         </span>
