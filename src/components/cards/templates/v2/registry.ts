@@ -74,6 +74,15 @@ import { autoDealerVividEntry, AutoDealerVivid } from "./AutoDealerVivid";
 import { interiorDesignEntry, InteriorDesign } from "./InteriorDesign";
 import { interiorDesignNoirEntry, InteriorDesignNoir } from "./InteriorDesignNoir";
 import { interiorDesignVividEntry, InteriorDesignVivid } from "./InteriorDesignVivid";
+// Phase 7.11 Batch D-1 — Real Estate + Legal style variants (ids 52-59)
+import { realEstateNoirEntry, RealEstateNoir } from "./RealEstateNoir";
+import { realEstatePureEntry, RealEstatePure } from "./RealEstatePure";
+import { realEstateVividEntry, RealEstateVivid } from "./RealEstateVivid";
+import { realEstateStoneEntry, RealEstateStone } from "./RealEstateStone";
+import { legalCounselNoirEntry, LegalCounselNoir } from "./LegalCounselNoir";
+import { legalCounselPureEntry, LegalCounselPure } from "./LegalCounselPure";
+import { legalCounselVividEntry, LegalCounselVivid } from "./LegalCounselVivid";
+import { legalCounselStoneEntry, LegalCounselStone } from "./LegalCounselStone";
 import type { TemplateRegistryEntry } from "./types";
 
 export const templateRegistry: Record<number, TemplateRegistryEntry> = {
@@ -159,6 +168,15 @@ export const templateRegistry: Record<number, TemplateRegistryEntry> = {
   49: { ...interiorDesignEntry, Component: InteriorDesign },
   50: { ...interiorDesignNoirEntry, Component: InteriorDesignNoir },
   51: { ...interiorDesignVividEntry, Component: InteriorDesignVivid },
+  // Phase 7.11 Batch D-1 — Real Estate + Legal style variants (4 styles × 2 sectors)
+  52: { ...realEstateNoirEntry, Component: RealEstateNoir },
+  53: { ...realEstatePureEntry, Component: RealEstatePure },
+  54: { ...realEstateVividEntry, Component: RealEstateVivid },
+  55: { ...realEstateStoneEntry, Component: RealEstateStone },
+  56: { ...legalCounselNoirEntry, Component: LegalCounselNoir },
+  57: { ...legalCounselPureEntry, Component: LegalCounselPure },
+  58: { ...legalCounselVividEntry, Component: LegalCounselVivid },
+  59: { ...legalCounselStoneEntry, Component: LegalCounselStone },
 };
 
 /**
@@ -272,4 +290,13 @@ export const plannedLineup: readonly PlannedTemplate[] = [
   { id: 49, key: "interior-design", name: "Interior Design", sector: "interior" },
   { id: 50, key: "interior-design-noir", name: "Interior — Noir", sector: "interior" },
   { id: 51, key: "interior-design-vivid", name: "Interior — Vivid", sector: "interior" },
+  // Phase 7.11 Batch D-1
+  { id: 52, key: "real-estate-noir", name: "Real Estate — Noir", sector: "real-estate" },
+  { id: 53, key: "real-estate-pure", name: "Real Estate — Pure", sector: "real-estate" },
+  { id: 54, key: "real-estate-vivid", name: "Real Estate — Vivid", sector: "real-estate" },
+  { id: 55, key: "real-estate-stone", name: "Real Estate — Stone", sector: "real-estate" },
+  { id: 56, key: "legal-counsel-noir", name: "Legal Counsel — Noir", sector: "lawyer" },
+  { id: 57, key: "legal-counsel-pure", name: "Legal Counsel — Pure", sector: "lawyer" },
+  { id: 58, key: "legal-counsel-vivid", name: "Legal Counsel — Vivid", sector: "lawyer" },
+  { id: 59, key: "legal-counsel-stone", name: "Legal Counsel — Stone", sector: "lawyer" },
 ];

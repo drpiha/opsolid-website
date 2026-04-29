@@ -123,10 +123,9 @@ export function TemplateGallery({
   const [emblaRef, emblaApi] = useEmblaCarousel({
     align: "center",
     loop: true,
-    dragFree: true,
-    containScroll: "trimSnaps",
+    dragFree: false,
     skipSnaps: false,
-    duration: 42,
+    duration: 38,
   });
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -160,7 +159,12 @@ export function TemplateGallery({
       // Per-slide normalised distance from the viewport center. Drives the
       // scale + opacity interpolation. loop:false keeps this trivially linear
       // — when we later need loop:true, branch on api.internalEngine().options.loop.
-      const next = snaps.map((snap) => snap - scrollProgress);
+      const next = snaps.map((snap) => {
+        let d = snap - scrollProgress;
+        if (d > 0.5) d -= 1;
+        if (d < -0.5) d += 1;
+        return d;
+      });
       setSlideProgress(next);
     };
     const onSlidesInView = (api: EmblaCarouselType) => {
@@ -301,6 +305,8 @@ export function TemplateGallery({
                     index={index}
                     isSelected={index === selectedIndex}
                     progress={progress}
+                    isCoverflowActive={sectorFilter === "all" && slides.length > 4}
+                    slidesCount={slides.length}
                     inView={
                       slidesInView.has(index) ||
                       Math.abs(index - selectedIndex) <= 1
@@ -543,6 +549,8 @@ const CarouselSlide = React.memo(function CarouselSlide({
   onDemo,
   onCenter: _onCenter,
   reducedMotion,
+  isCoverflowActive,
+  slidesCount,
 }: {
   slide: SlideModel;
   index: number;
@@ -563,13 +571,18 @@ const CarouselSlide = React.memo(function CarouselSlide({
   onDemo: () => void;
   onCenter: () => void;
   reducedMotion: boolean;
+  isCoverflowActive: boolean;
+  slidesCount: number;
 }) {
-  // Physics-based scale/opacity from progress (0 = at center, ±1 = neighbour).
-  // tween() smooths the absolute distance with a small ease.
-  const distance = Math.min(1, Math.abs(progress));
-  const scale   = reducedMotion ? 1 : 1 - 0.18 * distance; // 1.0 → 0.82
-  const opacity = reducedMotion ? 1 : 1 - 0.48 * distance; // 1.0 → 0.52
-  const rotateY = reducedMotion ? 0 : progress * 28;        // ±28° at neighbours
+  const slotWidth = slidesCount > 1 ? 1 / slidesCount : 1;
+  const active    = isCoverflowActive && !reducedMotion;
+  const slots     = active ? progress / slotWidth : 0;
+  const absSlots  = Math.min(3, Math.abs(slots));
+  const scale   = active ? 1 - 0.045 * absSlots : 1;
+  const opacity = active ? 1 - 0.18  * absSlots : 1;
+  const rotateY = active ? Math.max(-85, Math.min(85, slots * 26)) : 0;
+  const drumR   = 380;
+  const drumZ   = active ? drumR * (Math.cos((rotateY * Math.PI) / 180) - 1) : 0;
 
   const hasComponent = !!slide.registry;
   const hasSample = !!getTemplateSample(slide.id);
@@ -590,9 +603,9 @@ const CarouselSlide = React.memo(function CarouselSlide({
       aria-label={slide.registry?.name ?? slide.planned.name}
     >
       <motion.div
-        animate={{ scale, opacity, rotateY }}
-        transition={{ type: "spring", stiffness: 180, damping: 40, mass: 0.9 }}
-        style={{ transformOrigin: "center center", perspective: 1200 }}
+        animate={{ scale, opacity, rotateY, z: drumZ }}
+        transition={{ type: "spring", stiffness: 260, damping: 34, mass: 0.7 }}
+        style={{ transformOrigin: "center center", perspective: 1400 }}
         className="flex flex-col items-stretch"
       >
         {/* Sector eyebrow */}

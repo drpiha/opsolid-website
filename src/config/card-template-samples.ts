@@ -69,6 +69,15 @@ import { autoDealerVividSample } from "@/components/cards/templates/v2/AutoDeale
 import { interiorDesignSample } from "@/components/cards/templates/v2/InteriorDesign";
 import { interiorDesignNoirSample } from "@/components/cards/templates/v2/InteriorDesignNoir";
 import { interiorDesignVividSample } from "@/components/cards/templates/v2/InteriorDesignVivid";
+// Phase 7.11 Batch D-1 — Real Estate + Legal style variants (ids 52-59)
+import { realEstateNoirSample } from "@/components/cards/templates/v2/RealEstateNoir";
+import { realEstatePureSample } from "@/components/cards/templates/v2/RealEstatePure";
+import { realEstateVividSample } from "@/components/cards/templates/v2/RealEstateVivid";
+import { realEstateStoneSample } from "@/components/cards/templates/v2/RealEstateStone";
+import { legalCounselNoirSample } from "@/components/cards/templates/v2/LegalCounselNoir";
+import { legalCounselPureSample } from "@/components/cards/templates/v2/LegalCounselPure";
+import { legalCounselVividSample } from "@/components/cards/templates/v2/LegalCounselVivid";
+import { legalCounselStoneSample } from "@/components/cards/templates/v2/LegalCounselStone";
 
 // id=1 — RealEstate. Persona: Hannah Walker, senior listing agent in Berlin.
 // photo: Unsplash, by Christina Wocintechchat
@@ -200,6 +209,15 @@ export const cardTemplateSamples: Record<number, SampleData> = {
   49: interiorDesignSample,
   50: interiorDesignNoirSample,
   51: interiorDesignVividSample,
+  // Phase 7.11 Batch D-1
+  52: realEstateNoirSample,
+  53: realEstatePureSample,
+  54: realEstateVividSample,
+  55: realEstateStoneSample,
+  56: legalCounselNoirSample,
+  57: legalCounselPureSample,
+  58: legalCounselVividSample,
+  59: legalCounselStoneSample,
 };
 
 export function getTemplateSample(id: number): SampleData | undefined {
