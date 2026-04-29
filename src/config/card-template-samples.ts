@@ -78,6 +78,42 @@ import { legalCounselNoirSample } from "@/components/cards/templates/v2/LegalCou
 import { legalCounselPureSample } from "@/components/cards/templates/v2/LegalCounselPure";
 import { legalCounselVividSample } from "@/components/cards/templates/v2/LegalCounselVivid";
 import { legalCounselStoneSample } from "@/components/cards/templates/v2/LegalCounselStone";
+// Phase 7.11 Batch D-2 — Restaurant + Photographer style variants (ids 60-67)
+import { restaurantNoirSample } from "@/components/cards/templates/v2/RestaurantNoir";
+import { restaurantPureSample } from "@/components/cards/templates/v2/RestaurantPure";
+import { restaurantVividSample } from "@/components/cards/templates/v2/RestaurantVivid";
+import { restaurantStoneSample } from "@/components/cards/templates/v2/RestaurantStone";
+import { photographerNoirSample } from "@/components/cards/templates/v2/PhotographerNoir";
+import { photographerPureSample } from "@/components/cards/templates/v2/PhotographerPure";
+import { photographerVividSample } from "@/components/cards/templates/v2/PhotographerVivid";
+import { photographerStoneSample } from "@/components/cards/templates/v2/PhotographerStone";
+// Phase 7.11 Batch D-3 — Clinic + DJ style variants (ids 68-75)
+import { clinicNoirSample } from "@/components/cards/templates/v2/ClinicNoir";
+import { clinicPureSample } from "@/components/cards/templates/v2/ClinicPure";
+import { clinicVividSample } from "@/components/cards/templates/v2/ClinicVivid";
+import { clinicStoneSample } from "@/components/cards/templates/v2/ClinicStone";
+import { djNoirSample } from "@/components/cards/templates/v2/DJNoir";
+import { djPureSample } from "@/components/cards/templates/v2/DJPure";
+import { djVividSample } from "@/components/cards/templates/v2/DJVivid";
+import { djStoneSample } from "@/components/cards/templates/v2/DJStone";
+// Phase 7.11 Batch D-4 — Barber + E-commerce style variants (ids 76-83)
+import { barberNoirSample } from "@/components/cards/templates/v2/BarberNoir";
+import { barberPureSample } from "@/components/cards/templates/v2/BarberPure";
+import { barberVividSample } from "@/components/cards/templates/v2/BarberVivid";
+import { barberStoneSample } from "@/components/cards/templates/v2/BarberStone";
+import { ecommerceSample } from "@/components/cards/templates/v2/Ecommerce";
+import { ecommerceNoirSample } from "@/components/cards/templates/v2/EcommerceNoir";
+import { ecommercePureSample } from "@/components/cards/templates/v2/EcommercePure";
+import { ecommerceVividSample } from "@/components/cards/templates/v2/EcommerceVivid";
+// Phase 7.11 Batch D-5 — Architect + Fitness style variants (ids 84-91)
+import { architectNoirSample } from "@/components/cards/templates/v2/ArchitectNoir";
+import { architectPureSample } from "@/components/cards/templates/v2/ArchitectPure";
+import { architectVividSample } from "@/components/cards/templates/v2/ArchitectVivid";
+import { architectStoneSample } from "@/components/cards/templates/v2/ArchitectStone";
+import { fitnessNoirSample } from "@/components/cards/templates/v2/FitnessNoir";
+import { fitnessPureSample } from "@/components/cards/templates/v2/FitnessPure";
+import { fitnessVividSample } from "@/components/cards/templates/v2/FitnessVivid";
+import { fitnessStoneSample } from "@/components/cards/templates/v2/FitnessStone";
 
 // id=1 — RealEstate. Persona: Hannah Walker, senior listing agent in Berlin.
 // photo: Unsplash, by Christina Wocintechchat
@@ -218,6 +254,42 @@ export const cardTemplateSamples: Record<number, SampleData> = {
   57: legalCounselPureSample,
   58: legalCounselVividSample,
   59: legalCounselStoneSample,
+  // Phase 7.11 Batch D-2
+  60: restaurantNoirSample,
+  61: restaurantPureSample,
+  62: restaurantVividSample,
+  63: restaurantStoneSample,
+  64: photographerNoirSample,
+  65: photographerPureSample,
+  66: photographerVividSample,
+  67: photographerStoneSample,
+  // Phase 7.11 Batch D-3
+  68: clinicNoirSample,
+  69: clinicPureSample,
+  70: clinicVividSample,
+  71: clinicStoneSample,
+  72: djNoirSample,
+  73: djPureSample,
+  74: djVividSample,
+  75: djStoneSample,
+  // Phase 7.11 Batch D-4
+  76: barberNoirSample,
+  77: barberPureSample,
+  78: barberVividSample,
+  79: barberStoneSample,
+  80: ecommerceSample,
+  81: ecommerceNoirSample,
+  82: ecommercePureSample,
+  83: ecommerceVividSample,
+  // Phase 7.11 Batch D-5
+  84: architectNoirSample,
+  85: architectPureSample,
+  86: architectVividSample,
+  87: architectStoneSample,
+  88: fitnessNoirSample,
+  89: fitnessPureSample,
+  90: fitnessVividSample,
+  91: fitnessStoneSample,
 };
 
 export function getTemplateSample(id: number): SampleData | undefined {

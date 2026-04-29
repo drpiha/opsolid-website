@@ -83,6 +83,42 @@ import { legalCounselNoirEntry, LegalCounselNoir } from "./LegalCounselNoir";
 import { legalCounselPureEntry, LegalCounselPure } from "./LegalCounselPure";
 import { legalCounselVividEntry, LegalCounselVivid } from "./LegalCounselVivid";
 import { legalCounselStoneEntry, LegalCounselStone } from "./LegalCounselStone";
+// Phase 7.11 Batch D-2 — Restaurant + Photographer style variants (ids 60-67)
+import { restaurantNoirEntry, RestaurantNoir } from "./RestaurantNoir";
+import { restaurantPureEntry, RestaurantPure } from "./RestaurantPure";
+import { restaurantVividEntry, RestaurantVivid } from "./RestaurantVivid";
+import { restaurantStoneEntry, RestaurantStone } from "./RestaurantStone";
+import { photographerNoirEntry, PhotographerNoir } from "./PhotographerNoir";
+import { photographerPureEntry, PhotographerPure } from "./PhotographerPure";
+import { photographerVividEntry, PhotographerVivid } from "./PhotographerVivid";
+import { photographerStoneEntry, PhotographerStone } from "./PhotographerStone";
+// Phase 7.11 Batch D-3 — Clinic + DJ style variants (ids 68-75)
+import { clinicNoirEntry, ClinicNoir } from "./ClinicNoir";
+import { clinicPureEntry, ClinicPure } from "./ClinicPure";
+import { clinicVividEntry, ClinicVivid } from "./ClinicVivid";
+import { clinicStoneEntry, ClinicStone } from "./ClinicStone";
+import { djNoirEntry, DJNoir } from "./DJNoir";
+import { djPureEntry, DJPure } from "./DJPure";
+import { djVividEntry, DJVivid } from "./DJVivid";
+import { djStoneEntry, DJStone } from "./DJStone";
+// Phase 7.11 Batch D-4 — Barber + E-commerce style variants (ids 76-83)
+import { barberNoirEntry, BarberNoir } from "./BarberNoir";
+import { barberPureEntry, BarberPure } from "./BarberPure";
+import { barberVividEntry, BarberVivid } from "./BarberVivid";
+import { barberStoneEntry, BarberStone } from "./BarberStone";
+import { ecommerceEntry, Ecommerce } from "./Ecommerce";
+import { ecommerceNoirEntry, EcommerceNoir } from "./EcommerceNoir";
+import { ecommercePureEntry, EcommercePure } from "./EcommercePure";
+import { ecommerceVividEntry, EcommerceVivid } from "./EcommerceVivid";
+// Phase 7.11 Batch D-5 — Architect + Fitness style variants (ids 84-91)
+import { architectNoirEntry, ArchitectNoir } from "./ArchitectNoir";
+import { architectPureEntry, ArchitectPure } from "./ArchitectPure";
+import { architectVividEntry, ArchitectVivid } from "./ArchitectVivid";
+import { architectStoneEntry, ArchitectStone } from "./ArchitectStone";
+import { fitnessNoirEntry, FitnessNoir } from "./FitnessNoir";
+import { fitnessPureEntry, FitnessPure } from "./FitnessPure";
+import { fitnessVividEntry, FitnessVivid } from "./FitnessVivid";
+import { fitnessStoneEntry, FitnessStone } from "./FitnessStone";
 import type { TemplateRegistryEntry } from "./types";
 
 export const templateRegistry: Record<number, TemplateRegistryEntry> = {
@@ -177,6 +213,42 @@ export const templateRegistry: Record<number, TemplateRegistryEntry> = {
   57: { ...legalCounselPureEntry, Component: LegalCounselPure },
   58: { ...legalCounselVividEntry, Component: LegalCounselVivid },
   59: { ...legalCounselStoneEntry, Component: LegalCounselStone },
+  // Phase 7.11 Batch D-2 — Restaurant + Photographer style variants (4 styles × 2 sectors)
+  60: { ...restaurantNoirEntry, Component: RestaurantNoir },
+  61: { ...restaurantPureEntry, Component: RestaurantPure },
+  62: { ...restaurantVividEntry, Component: RestaurantVivid },
+  63: { ...restaurantStoneEntry, Component: RestaurantStone },
+  64: { ...photographerNoirEntry, Component: PhotographerNoir },
+  65: { ...photographerPureEntry, Component: PhotographerPure },
+  66: { ...photographerVividEntry, Component: PhotographerVivid },
+  67: { ...photographerStoneEntry, Component: PhotographerStone },
+  // Phase 7.11 Batch D-3 — Clinic + DJ style variants (4 styles × 2 sectors)
+  68: { ...clinicNoirEntry, Component: ClinicNoir },
+  69: { ...clinicPureEntry, Component: ClinicPure },
+  70: { ...clinicVividEntry, Component: ClinicVivid },
+  71: { ...clinicStoneEntry, Component: ClinicStone },
+  72: { ...djNoirEntry, Component: DJNoir },
+  73: { ...djPureEntry, Component: DJPure },
+  74: { ...djVividEntry, Component: DJVivid },
+  75: { ...djStoneEntry, Component: DJStone },
+  // Phase 7.11 Batch D-4 — Barber + E-commerce style variants (ids 76-83)
+  76: { ...barberNoirEntry, Component: BarberNoir },
+  77: { ...barberPureEntry, Component: BarberPure },
+  78: { ...barberVividEntry, Component: BarberVivid },
+  79: { ...barberStoneEntry, Component: BarberStone },
+  80: { ...ecommerceEntry, Component: Ecommerce },
+  81: { ...ecommerceNoirEntry, Component: EcommerceNoir },
+  82: { ...ecommercePureEntry, Component: EcommercePure },
+  83: { ...ecommerceVividEntry, Component: EcommerceVivid },
+  // Phase 7.11 Batch D-5 — Architect + Fitness style variants (ids 84-91)
+  84: { ...architectNoirEntry, Component: ArchitectNoir },
+  85: { ...architectPureEntry, Component: ArchitectPure },
+  86: { ...architectVividEntry, Component: ArchitectVivid },
+  87: { ...architectStoneEntry, Component: ArchitectStone },
+  88: { ...fitnessNoirEntry, Component: FitnessNoir },
+  89: { ...fitnessPureEntry, Component: FitnessPure },
+  90: { ...fitnessVividEntry, Component: FitnessVivid },
+  91: { ...fitnessStoneEntry, Component: FitnessStone },
 };
 
 /**
@@ -299,4 +371,40 @@ export const plannedLineup: readonly PlannedTemplate[] = [
   { id: 57, key: "legal-counsel-pure", name: "Legal Counsel — Pure", sector: "lawyer" },
   { id: 58, key: "legal-counsel-vivid", name: "Legal Counsel — Vivid", sector: "lawyer" },
   { id: 59, key: "legal-counsel-stone", name: "Legal Counsel — Stone", sector: "lawyer" },
+  // Phase 7.11 Batch D-2
+  { id: 60, key: "restaurant-noir", name: "Restaurant — Noir", sector: "restaurant" },
+  { id: 61, key: "restaurant-pure", name: "Restaurant — Pure", sector: "restaurant" },
+  { id: 62, key: "restaurant-vivid", name: "Restaurant — Vivid", sector: "restaurant" },
+  { id: 63, key: "restaurant-stone", name: "Restaurant — Stone", sector: "restaurant" },
+  { id: 64, key: "photographer-noir", name: "Photographer — Noir", sector: "creator" },
+  { id: 65, key: "photographer-pure", name: "Photographer — Pure", sector: "creator" },
+  { id: 66, key: "photographer-vivid", name: "Photographer — Vivid", sector: "creator" },
+  { id: 67, key: "photographer-stone", name: "Photographer — Stone", sector: "creator" },
+  // Phase 7.11 Batch D-3
+  { id: 68, key: "clinic-noir", name: "Clinic — Noir", sector: "clinic" },
+  { id: 69, key: "clinic-pure", name: "Clinic — Pure", sector: "clinic" },
+  { id: 70, key: "clinic-vivid", name: "Clinic — Vivid", sector: "clinic" },
+  { id: 71, key: "clinic-stone", name: "Clinic — Stone", sector: "clinic" },
+  { id: 72, key: "dj-noir", name: "DJ — Noir", sector: "music" },
+  { id: 73, key: "dj-pure", name: "DJ — Pure", sector: "music" },
+  { id: 74, key: "dj-vivid", name: "DJ — Vivid", sector: "music" },
+  { id: 75, key: "dj-stone", name: "DJ — Stone", sector: "music" },
+  // Phase 7.11 Batch D-4 — Barber + E-commerce style variants (ids 76-83)
+  { id: 76, key: "barber-noir", name: "Barber — Noir", sector: "salon" },
+  { id: 77, key: "barber-pure", name: "Barber — Pure", sector: "salon" },
+  { id: 78, key: "barber-vivid", name: "Barber — Vivid", sector: "salon" },
+  { id: 79, key: "barber-stone", name: "Barber — Stone", sector: "salon" },
+  { id: 80, key: "ecommerce", name: "E-commerce", sector: "retail" },
+  { id: 81, key: "ecommerce-noir", name: "E-commerce — Noir", sector: "retail" },
+  { id: 82, key: "ecommerce-pure", name: "E-commerce — Pure", sector: "retail" },
+  { id: 83, key: "ecommerce-vivid", name: "E-commerce — Vivid", sector: "retail" },
+  // Phase 7.11 Batch D-5 — Architect + Fitness style variants (ids 84-91)
+  { id: 84, key: "architect-noir", name: "Architect — Noir", sector: "architecture" },
+  { id: 85, key: "architect-pure", name: "Architect — Pure", sector: "architecture" },
+  { id: 86, key: "architect-vivid", name: "Architect — Vivid", sector: "architecture" },
+  { id: 87, key: "architect-stone", name: "Architect — Stone", sector: "architecture" },
+  { id: 88, key: "fitness-noir", name: "Fitness — Noir", sector: "fitness" },
+  { id: 89, key: "fitness-pure", name: "Fitness — Pure", sector: "fitness" },
+  { id: 90, key: "fitness-vivid", name: "Fitness — Vivid", sector: "fitness" },
+  { id: 91, key: "fitness-stone", name: "Fitness — Stone", sector: "fitness" },
 ];
