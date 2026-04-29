@@ -81,7 +81,6 @@ interface DnCopy {
   treatments: string;
   credentials: string;
   hours: string;
-  hoursValue: string;
   appointmentBadge: string;
   patientReview: string;
   contact: string;
@@ -92,6 +91,8 @@ interface DnCopy {
   impressum: string;
   privacy: string;
   share: string;
+  servicesLabel: string;
+  reviewsLabel: string;
 }
 
 const COPY: Record<"de" | "en" | "tr", DnCopy> = {
@@ -102,8 +103,7 @@ const COPY: Record<"de" | "en" | "tr", DnCopy> = {
     email: "E-Mail",
     treatments: "Behandlungen",
     credentials: "Zertifikate & Spezialisierung",
-    hours: "Praxiszeiten",
-    hoursValue: "Mo–Fr · 09:00 – 18:00",
+    hours: "Praxisadresse",
     appointmentBadge: "Notfalltermine möglich",
     patientReview: "Patientenstimme",
     contact: "Kontakt",
@@ -114,6 +114,8 @@ const COPY: Record<"de" | "en" | "tr", DnCopy> = {
     impressum: "Impressum",
     privacy: "Datenschutz",
     share: "Teilen",
+    servicesLabel: "Behandlungen",
+    reviewsLabel: "Bewertungen",
   },
   en: {
     bookAppointment: "Book appointment",
@@ -122,8 +124,7 @@ const COPY: Record<"de" | "en" | "tr", DnCopy> = {
     email: "Email",
     treatments: "Treatments",
     credentials: "Credentials & specialisations",
-    hours: "Clinic hours",
-    hoursValue: "Mon–Fri · 09:00 – 18:00",
+    hours: "Practice address",
     appointmentBadge: "Same-day appointments",
     patientReview: "Patient review",
     contact: "Contact",
@@ -134,6 +135,8 @@ const COPY: Record<"de" | "en" | "tr", DnCopy> = {
     impressum: "Imprint",
     privacy: "Privacy",
     share: "Share",
+    servicesLabel: "Treatments",
+    reviewsLabel: "Reviews",
   },
   tr: {
     bookAppointment: "Hemen Randevu Al",
@@ -142,8 +145,7 @@ const COPY: Record<"de" | "en" | "tr", DnCopy> = {
     email: "E-posta",
     treatments: "Tedavi Hizmetleri",
     credentials: "Sertifika & Uzmanlık",
-    hours: "Klinik Saatleri",
-    hoursValue: "Pzt–Cum · 09:00 – 18:00",
+    hours: "Klinik Adresi",
     appointmentBadge: "Acil Randevu Mevcut",
     patientReview: "Hasta Yorumu",
     contact: "İletişim",
@@ -154,6 +156,8 @@ const COPY: Record<"de" | "en" | "tr", DnCopy> = {
     impressum: "Künye",
     privacy: "Gizlilik",
     share: "Paylaş",
+    servicesLabel: "Tedaviler",
+    reviewsLabel: "Yorum",
   },
 };
 
@@ -179,6 +183,7 @@ export function Dentist({
   const initials = getInitials(cardData.name);
 
   const services = cardData.services ?? [];
+  const testimonials = cardData.testimonials ?? [];
 
   const sourceQs = source ? encodeSource(source) : "";
   const sourceLabel = source ? describeSource(source) : undefined;
@@ -208,7 +213,7 @@ export function Dentist({
     >
       <style jsx global>{`
         .dn-card {
-          font-family: "Nunito", "Inter", system-ui, sans-serif;
+          font-family: var(--tpl-font-body, "Nunito", "Inter", system-ui, sans-serif);
           line-height: 1.55;
           color: ${INK};
         }
@@ -363,8 +368,8 @@ export function Dentist({
         )}
       </section>
 
-      {/* HOURS STRIP */}
-      <section className="px-6 pt-4">
+      {/* ADDRESS STRIP */}
+      {cardData.address && <section className="px-6 pt-4">
         <div
           className="flex items-center gap-3.5 rounded-2xl bg-white p-4"
           style={{ border: `1px solid ${HAIRLINE}` }}
@@ -385,11 +390,11 @@ export function Dentist({
               {t.hours}
             </p>
             <p className="mt-0.5 text-[14px] font-extrabold" style={{ color: INK }}>
-              {t.hoursValue}
+              {cardData.address}
             </p>
           </div>
         </div>
-      </section>
+      </section>}
 
       {/* SERVICES */}
       {services.length > 0 && (
@@ -434,27 +439,34 @@ export function Dentist({
         </section>
       )}
 
-      {/* STATS BAND — compact 4-up */}
-      <section className="px-6">
-        <div
-          className="grid grid-cols-4 gap-1 rounded-[22px] p-5 text-white"
-          style={{
-            background: `linear-gradient(135deg, ${primary} 0%, ${TEAL_DARK} 100%)`,
-          }}
-        >
-          {[
-            { n: "12+", l: locale === "tr" ? "Yıl" : locale === "de" ? "Jahre" : "Years" },
-            { n: "3.5K+", l: locale === "tr" ? "Hasta" : locale === "de" ? "Patienten" : "Patients" },
-            { n: "98%", l: locale === "tr" ? "Memnuniyet" : locale === "de" ? "Zufrieden" : "Happy" },
-            { n: "4.9", l: locale === "tr" ? "Puan" : locale === "de" ? "Bewertung" : "Rating" },
-          ].map((stat) => (
-            <div key={stat.l} className="text-center">
-              <div className="text-[20px] font-extrabold leading-none">{stat.n}</div>
-              <div className="mt-1 text-[9.5px] font-semibold opacity-85">{stat.l}</div>
+      {/* STATS BAND — driven by real data */}
+      {(() => {
+        const statsItems = [
+          ...(services.length ? [{ n: String(services.length), l: t.servicesLabel }] : []),
+          ...(testimonials.length ? [{ n: String(testimonials.length), l: t.reviewsLabel }] : []),
+        ];
+        if (statsItems.length === 0) return null;
+        return (
+          <section className="px-6">
+            <div
+              className="rounded-[22px] p-5 text-white"
+              style={{
+                background: `linear-gradient(135deg, ${primary} 0%, ${TEAL_DARK} 100%)`,
+                display: "grid",
+                gridTemplateColumns: `repeat(${statsItems.length}, 1fr)`,
+                gap: "0.25rem",
+              }}
+            >
+              {statsItems.map((stat) => (
+                <div key={stat.l} className="text-center">
+                  <div className="text-[20px] font-extrabold leading-none">{stat.n}</div>
+                  <div className="mt-1 text-[9.5px] font-semibold opacity-85">{stat.l}</div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </section>
+          </section>
+        );
+      })()}
 
       {/* CREDENTIALS — derived from FAQs (Q acts as cert name, A as detail) */}
       {cardData.faqs && cardData.faqs.length > 0 && (

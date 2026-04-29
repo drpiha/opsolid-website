@@ -119,6 +119,12 @@ import { fitnessNoirEntry, FitnessNoir } from "./FitnessNoir";
 import { fitnessPureEntry, FitnessPure } from "./FitnessPure";
 import { fitnessVividEntry, FitnessVivid } from "./FitnessVivid";
 import { fitnessStoneEntry, FitnessStone } from "./FitnessStone";
+// Phase 7.12 Batch E-1 — Universal layout templates v11-v15 (ids 92-96)
+import { layoutNoirLuxuryEntry, LayoutNoirLuxury } from "./LayoutNoirLuxury";
+import { layoutPureSwissEntry, LayoutPureSwiss } from "./LayoutPureSwiss";
+import { layoutVividBoldEntry, LayoutVividBold } from "./LayoutVividBold";
+import { layoutEditorialEntry, LayoutEditorial } from "./LayoutEditorial";
+import { layoutSplitScreenEntry, LayoutSplitScreen } from "./LayoutSplitScreen";
 import type { TemplateRegistryEntry } from "./types";
 
 export const templateRegistry: Record<number, TemplateRegistryEntry> = {
@@ -249,6 +255,12 @@ export const templateRegistry: Record<number, TemplateRegistryEntry> = {
   89: { ...fitnessPureEntry, Component: FitnessPure },
   90: { ...fitnessVividEntry, Component: FitnessVivid },
   91: { ...fitnessStoneEntry, Component: FitnessStone },
+  // Phase 7.12 Batch E-1 — Universal layout templates v11-v15 (ids 92-96)
+  92: { ...layoutNoirLuxuryEntry, Component: LayoutNoirLuxury },
+  93: { ...layoutPureSwissEntry, Component: LayoutPureSwiss },
+  94: { ...layoutVividBoldEntry, Component: LayoutVividBold },
+  95: { ...layoutEditorialEntry, Component: LayoutEditorial },
+  96: { ...layoutSplitScreenEntry, Component: LayoutSplitScreen },
 };
 
 /**
@@ -407,4 +419,10 @@ export const plannedLineup: readonly PlannedTemplate[] = [
   { id: 89, key: "fitness-pure", name: "Fitness — Pure", sector: "fitness" },
   { id: 90, key: "fitness-vivid", name: "Fitness — Vivid", sector: "fitness" },
   { id: 91, key: "fitness-stone", name: "Fitness — Stone", sector: "fitness" },
+  // Phase 7.12 Batch E-1 — Universal layout templates v11-v15 (ids 92-96)
+  { id: 92, key: "layout-noir-luxury", name: "Noir Luxury", sector: "consultant" },
+  { id: 93, key: "layout-pure-swiss", name: "Pure Swiss", sector: "consultant" },
+  { id: 94, key: "layout-vivid-bold", name: "Vivid Bold", sector: "consultant" },
+  { id: 95, key: "layout-editorial", name: "Editorial", sector: "consultant" },
+  { id: 96, key: "layout-split-screen", name: "Split Screen", sector: "consultant" },
 ];

@@ -96,9 +96,8 @@ interface AcnCopy {
   impressum: string;
   privacy: string;
   share: string;
-  yearsLabel: string;
-  clientsLabel: string;
-  ratingLabel: string;
+  servicesLabel: string;
+  reviewsLabel: string;
 }
 
 const COPY: Record<"de" | "en" | "tr", AcnCopy> = {
@@ -124,9 +123,8 @@ const COPY: Record<"de" | "en" | "tr", AcnCopy> = {
     impressum: "Impressum",
     privacy: "Datenschutz",
     share: "Teilen",
-    yearsLabel: "Jahre",
-    clientsLabel: "Mandanten",
-    ratingLabel: "Bewertung",
+    servicesLabel: "Leistungen",
+    reviewsLabel: "Bewertungen",
   },
   en: {
     estLine: "Tax advisor · Berlin",
@@ -150,9 +148,8 @@ const COPY: Record<"de" | "en" | "tr", AcnCopy> = {
     impressum: "Imprint",
     privacy: "Privacy",
     share: "Share",
-    yearsLabel: "Years",
-    clientsLabel: "Clients",
-    ratingLabel: "Rating",
+    servicesLabel: "Services",
+    reviewsLabel: "Reviews",
   },
   tr: {
     estLine: "Mali Müşavir · Berlin",
@@ -176,9 +173,8 @@ const COPY: Record<"de" | "en" | "tr", AcnCopy> = {
     impressum: "Künye",
     privacy: "Gizlilik",
     share: "Paylaş",
-    yearsLabel: "Yıl",
-    clientsLabel: "Müvekkil",
-    ratingLabel: "Puan",
+    servicesLabel: "Hizmetler",
+    reviewsLabel: "Yorum",
   },
 };
 
@@ -222,11 +218,11 @@ export function AccountingNoir({
     >
       <style jsx global>{`
         .acn-card {
-          font-family: "IBM Plex Sans", system-ui, sans-serif;
+          font-family: var(--tpl-font-body, "IBM Plex Sans", system-ui, sans-serif);
           line-height: 1.65;
         }
         .acn-card .serif {
-          font-family: "IBM Plex Serif", Georgia, serif;
+          font-family: var(--tpl-font-display, "IBM Plex Serif", Georgia, serif);
         }
         .acn-card a { color: inherit; }
       `}</style>
@@ -319,39 +315,45 @@ export function AccountingNoir({
         </div>
       </section>
 
-      {/* CREDENTIAL GRID 3-up */}
-      <section
-        className="grid grid-cols-3"
-        style={{
-          gap: 1,
-          background: HAIRLINE_SOFT,
-        }}
-      >
-        {[
-          { n: "15", l: t.yearsLabel },
-          { n: "200+", l: t.clientsLabel },
-          { n: "4.9", l: t.ratingLabel },
-        ].map((stat) => (
-          <div
-            key={stat.l}
-            className="px-2 py-4 text-center"
-            style={{ background: CARD }}
+      {/* CREDENTIAL GRID — driven by real data */}
+      {(() => {
+        const statsItems = [
+          ...(cardData.services?.length ? [{ n: String(cardData.services.length), l: t.servicesLabel }] : []),
+          ...(testimonials.length ? [{ n: String(testimonials.length), l: t.reviewsLabel }] : []),
+        ];
+        if (statsItems.length === 0) return null;
+        return (
+          <section
+            className="grid"
+            style={{
+              gridTemplateColumns: `repeat(${statsItems.length}, 1fr)`,
+              gap: 1,
+              background: HAIRLINE_SOFT,
+            }}
           >
-            <div
-              className="serif text-[22px] font-semibold leading-none"
-              style={{ color: gold }}
-            >
-              {stat.n}
-            </div>
-            <div
-              className="mt-1.5 text-[9.5px] font-medium uppercase"
-              style={{ color: INK_SOFT, letterSpacing: "1.5px" }}
-            >
-              {stat.l}
-            </div>
-          </div>
-        ))}
-      </section>
+            {statsItems.map((stat) => (
+              <div
+                key={stat.l}
+                className="px-2 py-4 text-center"
+                style={{ background: CARD }}
+              >
+                <div
+                  className="serif text-[22px] font-semibold leading-none"
+                  style={{ color: gold }}
+                >
+                  {stat.n}
+                </div>
+                <div
+                  className="mt-1.5 text-[9.5px] font-medium uppercase"
+                  style={{ color: INK_SOFT, letterSpacing: "1.5px" }}
+                >
+                  {stat.l}
+                </div>
+              </div>
+            ))}
+          </section>
+        );
+      })()}
 
       {/* QUICK ACTIONS */}
       <section

@@ -220,11 +220,11 @@ export function RealEstateNoir({
     >
       <style jsx global>{`
         .ren-card {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Inter', system-ui, sans-serif);
           line-height: 1.6;
         }
         .ren-card .serif {
-          font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--tpl-font-display, 'Playfair Display', 'Cormorant Garamond', Georgia, serif);
         }
         .ren-card a { color: inherit; }
       `}</style>

@@ -64,10 +64,8 @@ interface BspCopy {
   callStudio: string;
   saveContact: string;
   walletLabel: string;
-  experience: string;
-  treatments: string;
-  followers: string;
-  rating: string;
+  servicesLabel: string;
+  reviewsLabel: string;
   share: string;
   poweredBy: string;
 }
@@ -86,10 +84,8 @@ const COPY: Record<"de" | "en" | "tr", BspCopy> = {
     callStudio: "Studio anrufen",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
-    experience: "Jahre",
-    treatments: "Behandl.",
-    followers: "Follower",
-    rating: "Bewertung",
+    servicesLabel: "Leistungen",
+    reviewsLabel: "Bewertungen",
     share: "Teilen",
     poweredBy: "Powered by",
   },
@@ -106,10 +102,8 @@ const COPY: Record<"de" | "en" | "tr", BspCopy> = {
     callStudio: "Call studio",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
-    experience: "Years",
-    treatments: "Treats.",
-    followers: "Followers",
-    rating: "Rating",
+    servicesLabel: "Services",
+    reviewsLabel: "Reviews",
     share: "Share",
     poweredBy: "Powered by",
   },
@@ -126,10 +120,8 @@ const COPY: Record<"de" | "en" | "tr", BspCopy> = {
     callStudio: "Stüdyoyu Ara",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
-    experience: "Yıl",
-    treatments: "İşlem",
-    followers: "Takipçi",
-    rating: "Puan",
+    servicesLabel: "Hizmetler",
+    reviewsLabel: "Yorum",
     share: "Paylaş",
     poweredBy: "Powered by",
   },
@@ -174,7 +166,7 @@ export function BeautySalonPure({
       <style jsx global>{`
         .bsp-card { line-height: 1.6; }
         .bsp-card a { color: inherit; }
-        .bsp-editorial { font-family: 'Cormorant Garamond', Georgia, serif; }
+        .bsp-editorial { font-family: var(--tpl-font-display, 'Cormorant Garamond', Georgia, serif); }
       `}</style>
 
       {/* HEADER */}
@@ -241,17 +233,19 @@ export function BeautySalonPure({
             {cardData.company}
           </div>
         </div>
-        <div className="text-right">
-          <div className="text-[12px] tracking-[1px]" style={{ color: GOLD }}>
-            ★★★★★
+        {testimonials.length > 0 && (
+          <div className="text-right">
+            <div className="text-[12px] tracking-[1px]" style={{ color: GOLD }}>
+              ★★★★★
+            </div>
+            <div
+              className="mt-0.5 text-[10.5px] font-semibold tracking-[0.5px]"
+              style={{ color: INK_SOFT }}
+            >
+              {testimonials.length} {t.reviewsLabel}
+            </div>
           </div>
-          <div
-            className="mt-0.5 text-[10.5px] font-semibold tracking-[0.5px]"
-            style={{ color: INK_SOFT }}
-          >
-            4.9 / 5.0
-          </div>
-        </div>
+        )}
       </div>
 
       {/* CONTACT */}
@@ -259,19 +253,28 @@ export function BeautySalonPure({
         <ContactRows cardData={cardData} locale={locale} variant="hairline" accentHex={primary} />
       </BspSection>
 
-      {/* STATS */}
-      <div
-        className="grid grid-cols-4"
-        style={{
-          borderTop: `1px solid ${HAIRLINE}`,
-          borderBottom: `1px solid ${HAIRLINE}`,
-        }}
-      >
-        <BspStat n="7" l={t.experience} />
-        <BspStat n="5K" l={t.treatments} />
-        <BspStat n="42K" l={t.followers} />
-        <BspStat n="4.9" l={t.rating} last />
-      </div>
+      {/* STATS — driven by real data */}
+      {(() => {
+        const statsItems = [
+          ...(services.length ? [{ n: String(services.length), l: t.servicesLabel }] : []),
+          ...(testimonials.length ? [{ n: String(testimonials.length), l: t.reviewsLabel }] : []),
+        ];
+        if (statsItems.length === 0) return null;
+        return (
+          <div
+            style={{
+              borderTop: `1px solid ${HAIRLINE}`,
+              borderBottom: `1px solid ${HAIRLINE}`,
+              display: "grid",
+              gridTemplateColumns: `repeat(${statsItems.length}, 1fr)`,
+            }}
+          >
+            {statsItems.map((stat, i) => (
+              <BspStat key={stat.l} n={stat.n} l={stat.l} last={i === statsItems.length - 1} />
+            ))}
+          </div>
+        );
+      })()}
 
       {/* SERVICES */}
       {services.length > 0 && (

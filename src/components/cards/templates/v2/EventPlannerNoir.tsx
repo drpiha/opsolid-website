@@ -172,13 +172,13 @@ export function EventPlannerNoir({
     >
       <style jsx global>{`
         .epn-card {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Inter', system-ui, sans-serif);
           font-weight: 300;
           line-height: 1.7;
           background: ${PAGE};
         }
         .epn-card .serif {
-          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--tpl-font-display, 'Cormorant Garamond', Georgia, serif);
           font-style: italic;
           font-weight: 400;
         }

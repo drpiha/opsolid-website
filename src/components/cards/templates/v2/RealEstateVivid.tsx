@@ -208,10 +208,10 @@ export function RealEstateVivid({
     >
       <style jsx global>{`
         .rev-card {
-          font-family: 'Poppins', 'Open Sans', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Poppins', 'Open Sans', system-ui, sans-serif);
           line-height: 1.55;
         }
-        .rev-card .display { font-family: 'Poppins', system-ui, sans-serif; }
+        .rev-card .display { font-family: var(--tpl-font-display, 'Poppins', system-ui, sans-serif); }
         .rev-card a { color: inherit; }
         @keyframes rev-pulse {
           0%, 100% { opacity: 1; }

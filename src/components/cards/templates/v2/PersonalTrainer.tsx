@@ -300,7 +300,7 @@ export function PersonalTrainer({
     >
       <style jsx global>{`
         .pt-card {
-          font-family: var(--font-pt-body), "Inter", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-pt-body), "Inter", system-ui, sans-serif);
           line-height: 1.55;
           color: ${INK_MID};
         }
@@ -312,7 +312,7 @@ export function PersonalTrainer({
           font-weight: 400;
         }
         .pt-card .pt-mono {
-          font-family: var(--font-pt-body), "Inter", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-pt-body), "Inter", system-ui, sans-serif);
           letter-spacing: 0.22em;
           text-transform: uppercase;
           font-feature-settings: "tnum";

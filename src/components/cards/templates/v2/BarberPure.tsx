@@ -160,12 +160,12 @@ export function BarberPure({
     >
       <style jsx global>{`
         .barber-pure-card {
-          font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'DM Sans', 'Inter', system-ui, sans-serif);
           line-height: 1.5;
           -webkit-font-smoothing: antialiased;
         }
         .barber-pure-card .serif {
-          font-family: 'Source Serif Pro', 'Source Serif 4', 'Cormorant Garamond', serif;
+          font-family: var(--tpl-font-display, 'Source Serif Pro', 'Source Serif 4', 'Cormorant Garamond', serif);
         }
         .barber-pure-card a { color: inherit; }
       `}</style>

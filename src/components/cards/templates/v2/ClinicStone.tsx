@@ -208,12 +208,12 @@ export function ClinicStone({
     >
       <style jsx global>{`
         .cstone-card {
-          font-family: 'Nunito', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Nunito', system-ui, sans-serif);
           line-height: 1.55;
           -webkit-font-smoothing: antialiased;
         }
         .cstone-card .serif {
-          font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--tpl-font-display, 'Playfair Display', 'Cormorant Garamond', Georgia, serif);
         }
         .cstone-card a { color: inherit; }
       `}</style>

@@ -226,15 +226,15 @@ export function Maker({
     >
       <style jsx global>{`
         .mk-card {
-          font-family: var(--font-maker-body), "Nunito", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-maker-body), "Nunito", system-ui, sans-serif);
           line-height: 1.65;
         }
         .mk-card .mk-display {
-          font-family: var(--font-maker-display), "Poppins", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-maker-display), "Poppins", system-ui, sans-serif);
           letter-spacing: -0.01em;
         }
         .mk-card .mk-mono {
-          font-family: var(--font-maker-display), "Poppins", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-maker-display), "Poppins", system-ui, sans-serif);
           letter-spacing: 0.22em;
           text-transform: uppercase;
           font-feature-settings: "tnum";

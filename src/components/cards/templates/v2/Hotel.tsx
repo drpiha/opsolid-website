@@ -285,19 +285,19 @@ export function Hotel({
     >
       <style jsx global>{`
         .ho-card {
-          font-family: var(--font-hotel-body), "Inter", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-hotel-body), "Inter", system-ui, sans-serif);
           line-height: 1.65;
         }
         .ho-card .ho-display {
-          font-family: var(--font-hotel-display), "Cormorant Garamond", Georgia, serif;
+          font-family:var(--tpl-font-body,  var(--font-hotel-display), "Cormorant Garamond", Georgia, serif);
           letter-spacing: 0.005em;
         }
         .ho-card .ho-italic {
-          font-family: var(--font-hotel-display), "Cormorant Garamond", Georgia, serif;
+          font-family:var(--tpl-font-body,  var(--font-hotel-display), "Cormorant Garamond", Georgia, serif);
           font-style: italic;
         }
         .ho-card .ho-eyebrow {
-          font-family: var(--font-hotel-body), "Inter", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-hotel-body), "Inter", system-ui, sans-serif);
           letter-spacing: 0.32em;
           text-transform: uppercase;
           font-weight: 500;

@@ -223,18 +223,18 @@ export function Photographer({
     >
       <style jsx global>{`
         .ph-card {
-          font-family: var(--font-photographer-body), Inter, system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-photographer-body), Inter, system-ui, sans-serif);
           line-height: 1.55;
           letter-spacing: -0.005em;
         }
         .ph-card .ph-mono,
         .ph-card h1.ph-mono,
         .ph-card h2.ph-mono {
-          font-family: var(--font-photographer-mono), "Space Mono", monospace;
+          font-family:var(--tpl-font-body,  var(--font-photographer-mono), "Space Mono", monospace);
           letter-spacing: 0.04em;
         }
         .ph-card .ph-eyebrow {
-          font-family: var(--font-photographer-mono), "Space Mono", monospace;
+          font-family:var(--tpl-font-body,  var(--font-photographer-mono), "Space Mono", monospace);
           letter-spacing: 0.32em;
           text-transform: uppercase;
           font-size: 9.5px;

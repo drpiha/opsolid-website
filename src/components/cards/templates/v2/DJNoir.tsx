@@ -164,7 +164,7 @@ export function DJNoir({
     >
       <style jsx global>{`
         .djnoir-card {
-          font-family: 'Space Mono', 'JetBrains Mono', monospace;
+          font-family: var(--tpl-font-body, 'Space Mono', 'JetBrains Mono', monospace);
           line-height: 1.55;
           -webkit-font-smoothing: antialiased;
           position: relative;
@@ -180,7 +180,7 @@ export function DJNoir({
           z-index: 0;
         }
         .djnoir-card .display {
-          font-family: 'Syne', 'Inter', sans-serif;
+          font-family: var(--tpl-font-display, 'Syne', 'Inter', sans-serif);
         }
         .djnoir-card .relz { position: relative; z-index: 1; }
         .djnoir-card a { color: inherit; }

@@ -190,12 +190,12 @@ export function ArchitectVivid({
     >
       <style jsx global>{`
         .architect-vivid-card {
-          font-family: 'Open Sans', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Open Sans', system-ui, sans-serif);
           line-height: 1.55;
           -webkit-font-smoothing: antialiased;
         }
         .architect-vivid-card .display {
-          font-family: 'Poppins', system-ui, sans-serif;
+          font-family: var(--tpl-font-display, 'Poppins', system-ui, sans-serif);
         }
         .architect-vivid-card a { color: inherit; }
       `}</style>

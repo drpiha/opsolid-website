@@ -222,16 +222,16 @@ export function Studio({
     >
       <style jsx global>{`
         .st-card {
-          font-family: var(--font-studio-body), "Space Grotesk", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-studio-body), "Space Grotesk", system-ui, sans-serif);
           line-height: 1.65;
         }
         .st-card .st-display {
-          font-family: var(--font-studio-display), "Bebas Neue", "Impact", sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-studio-display), "Bebas Neue", "Impact", sans-serif);
           letter-spacing: 0.06em;
           line-height: 0.95;
         }
         .st-card .st-mono {
-          font-family: var(--font-studio-mono), "Inter", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-studio-mono), "Inter", system-ui, sans-serif);
           letter-spacing: 0.32em;
           text-transform: uppercase;
           font-feature-settings: "tnum";

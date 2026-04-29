@@ -178,15 +178,15 @@ export function BarberNoir({
     >
       <style jsx global>{`
         .barber-noir-card {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Inter', system-ui, sans-serif);
           line-height: 1.55;
           -webkit-font-smoothing: antialiased;
         }
         .barber-noir-card .display {
-          font-family: 'Bebas Neue', 'Oswald', 'Inter', sans-serif;
+          font-family: var(--tpl-font-display, 'Bebas Neue', 'Oswald', 'Inter', sans-serif);
         }
         .barber-noir-card .serif {
-          font-family: 'Cormorant Garamond', 'Playfair Display', serif;
+          font-family: var(--tpl-font-display, 'Cormorant Garamond', 'Playfair Display', serif);
         }
         .barber-noir-card a { color: inherit; }
       `}</style>

@@ -182,12 +182,12 @@ export function DJPure({
     >
       <style jsx global>{`
         .djpure-card {
-          font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'DM Sans', 'Inter', system-ui, sans-serif);
           line-height: 1.55;
           -webkit-font-smoothing: antialiased;
         }
         .djpure-card .mono {
-          font-family: 'DM Mono', 'JetBrains Mono', ui-monospace, monospace;
+          font-family: var(--tpl-font-display, 'DM Mono', 'JetBrains Mono', ui-monospace, monospace);
         }
         .djpure-card a { color: inherit; }
       `}</style>

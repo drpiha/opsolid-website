@@ -190,12 +190,12 @@ export function Ecommerce({
     >
       <style jsx global>{`
         .ecommerce-card {
-          font-family: 'Nunito', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Nunito', system-ui, sans-serif);
           line-height: 1.55;
           -webkit-font-smoothing: antialiased;
         }
         .ecommerce-card .display {
-          font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-display, 'Poppins', 'Inter', system-ui, sans-serif);
         }
         .ecommerce-card a { color: inherit; }
       `}</style>

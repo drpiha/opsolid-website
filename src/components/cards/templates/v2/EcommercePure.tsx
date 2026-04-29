@@ -79,10 +79,8 @@ interface Copy {
   orderH: string;
   channelsH: string;
   orderRefH: string;
-  yearsLabel: string;
-  ordersLabel: string;
-  ratingLabel: string;
-  followersLabel: string;
+  servicesLabel: string;
+  reviewsLabel: string;
   bookBtn: string;
   websiteCta: string;
   saveContact: string;
@@ -100,10 +98,8 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     orderH: "Order Info",
     channelsH: "Channels",
     orderRefH: "Order",
-    yearsLabel: "Atelier",
-    ordersLabel: "Bestellungen",
-    ratingLabel: "Rating",
-    followersLabel: "Instagram",
+    servicesLabel: "Produkte",
+    reviewsLabel: "Bewertungen",
     bookBtn: "Bestellung starten",
     websiteCta: "Website",
     saveContact: "Kontakt speichern",
@@ -119,10 +115,8 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     orderH: "Order Info",
     channelsH: "Channels",
     orderRefH: "Order",
-    yearsLabel: "Atelier",
-    ordersLabel: "Orders",
-    ratingLabel: "Rating",
-    followersLabel: "Instagram",
+    servicesLabel: "Products",
+    reviewsLabel: "Reviews",
     bookBtn: "Start order",
     websiteCta: "Website",
     saveContact: "Save contact",
@@ -138,10 +132,8 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     orderH: "Sipariş Bilgisi",
     channelsH: "Kanallar",
     orderRefH: "Order",
-    yearsLabel: "Atelier",
-    ordersLabel: "Sipariş",
-    ratingLabel: "Rating",
-    followersLabel: "Instagram",
+    servicesLabel: "Ürünler",
+    reviewsLabel: "Yorum",
     bookBtn: "Siparişe Başla",
     websiteCta: "Website",
     saveContact: "Kişiyi Kaydet",
@@ -170,7 +162,9 @@ export function EcommercePure({
     ? digitsOnly(cardData.whatsapp).replace(/^\+/, "")
     : "";
 
-  const services = (cardData.services ?? []).slice(0, 5);
+  const allServices = cardData.services ?? [];
+  const services = allServices.slice(0, 5);
+  const testimonials = cardData.testimonials ?? [];
   const monogram = getInitials(cardData.company || cardData.name);
   const cityFromAddress = cardData.address?.split(",").slice(-1)[0]?.trim();
   const nameParts = (cardData.company || cardData.name).trim().split(/\s+/);
@@ -185,12 +179,12 @@ export function EcommercePure({
     >
       <style jsx global>{`
         .ecommerce-pure-card {
-          font-family: 'DM Sans', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'DM Sans', system-ui, sans-serif);
           line-height: 1.5;
           -webkit-font-smoothing: antialiased;
         }
         .ecommerce-pure-card .mono {
-          font-family: 'DM Mono', 'JetBrains Mono', monospace;
+          font-family: var(--tpl-font-display, 'DM Mono', 'JetBrains Mono', monospace);
         }
         .ecommerce-pure-card a { color: inherit; }
       `}</style>
@@ -426,39 +420,43 @@ export function EcommercePure({
         </div>
       </section>
 
-      {/* STATS */}
-      <div
-        className="grid grid-cols-2"
-        style={{ borderTop: `1px solid ${LINE}`, borderBottom: `1px solid ${LINE}` }}
-      >
-        {[
-          { num: "5y", label: t.yearsLabel },
-          { num: "12K+", label: t.ordersLabel },
-          { num: "4.9", label: t.ratingLabel },
-          { num: "67K", label: t.followersLabel },
-        ].map((s, i) => (
+      {/* STATS — driven by real data */}
+      {(() => {
+        const statsItems = [
+          ...(allServices.length ? [{ num: String(allServices.length), label: t.servicesLabel }] : []),
+          ...(testimonials.length ? [{ num: String(testimonials.length), label: t.reviewsLabel }] : []),
+        ];
+        if (statsItems.length === 0) return null;
+        return (
           <div
-            key={i}
-            className="px-7 py-6"
-            style={{
-              borderRight: i % 2 === 0 ? `1px solid ${LINE}` : "none",
-              borderTop: i >= 2 ? `1px solid ${LINE}` : "none",
-            }}
+            className="grid grid-cols-2"
+            style={{ borderTop: `1px solid ${LINE}`, borderBottom: `1px solid ${LINE}` }}
           >
-            <div
-              style={{ fontWeight: 600, fontSize: 28, letterSpacing: "-1px", color: INK }}
-            >
-              {s.num}
-            </div>
-            <div
-              className="mono uppercase"
-              style={{ fontSize: 10, color: MUTED, letterSpacing: "1.5px", marginTop: 4 }}
-            >
-              {s.label}
-            </div>
+            {statsItems.map((s, i) => (
+              <div
+                key={s.label}
+                className="px-7 py-6"
+                style={{
+                  borderRight: i % 2 === 0 ? `1px solid ${LINE}` : "none",
+                  borderTop: i >= 2 ? `1px solid ${LINE}` : "none",
+                }}
+              >
+                <div
+                  style={{ fontWeight: 600, fontSize: 28, letterSpacing: "-1px", color: INK }}
+                >
+                  {s.num}
+                </div>
+                <div
+                  className="mono uppercase"
+                  style={{ fontSize: 10, color: MUTED, letterSpacing: "1.5px", marginTop: 4 }}
+                >
+                  {s.label}
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        );
+      })()}
 
       {/* CHANNELS / CONTACT */}
       <section className="px-7 py-9">

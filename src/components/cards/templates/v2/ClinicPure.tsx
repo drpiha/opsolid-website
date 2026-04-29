@@ -184,12 +184,12 @@ export function ClinicPure({
     >
       <style jsx global>{`
         .cpure-card {
-          font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'DM Sans', 'Inter', system-ui, sans-serif);
           line-height: 1.5;
           -webkit-font-smoothing: antialiased;
         }
         .cpure-card .serif {
-          font-family: 'Source Serif 4', 'Source Serif Pro', Georgia, serif;
+          font-family: var(--tpl-font-display, 'Source Serif 4', 'Source Serif Pro', Georgia, serif);
         }
         .cpure-card a { color: inherit; }
       `}</style>

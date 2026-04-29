@@ -241,7 +241,7 @@ export function Developer({
     >
       <style jsx global>{`
         .dv-card {
-          font-family: var(--font-dev-mono), "JetBrains Mono", ui-monospace, monospace;
+          font-family:var(--tpl-font-body,  var(--font-dev-mono), "JetBrains Mono", ui-monospace, monospace);
           line-height: 1.6;
           font-feature-settings: "tnum", "ss01", "cv01";
         }

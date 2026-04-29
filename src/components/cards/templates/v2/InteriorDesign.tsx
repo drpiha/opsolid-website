@@ -206,12 +206,12 @@ export function InteriorDesign({
     >
       <style jsx global>{`
         .id-card {
-          font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'DM Sans', 'Inter', system-ui, sans-serif);
           line-height: 1.7;
           background: ${PAGE};
         }
         .id-card .serif {
-          font-family: 'Fraunces', Georgia, serif;
+          font-family: var(--tpl-font-display, 'Fraunces', Georgia, serif);
           font-style: italic;
           font-weight: 400;
         }

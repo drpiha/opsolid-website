@@ -186,7 +186,7 @@ export function LegalCounsel({
       {/* Scoped per-template typography. Only inside `.lc-card`. */}
       <style jsx global>{`
         .lc-card {
-          font-family: var(--font-legal-body), "IBM Plex Sans", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-legal-body), "IBM Plex Sans", system-ui, sans-serif);
           line-height: 1.6;
           font-feature-settings: "ss01";
           letter-spacing: 0.005em;
@@ -195,11 +195,11 @@ export function LegalCounsel({
         .lc-card h1.lc-serif,
         .lc-card h2.lc-serif,
         .lc-card h3.lc-serif {
-          font-family: var(--font-legal-display), "IBM Plex Serif", "Cormorant Garamond", Georgia, serif;
+          font-family:var(--tpl-font-body,  var(--font-legal-display), "IBM Plex Serif", "Cormorant Garamond", Georgia, serif);
           letter-spacing: -0.005em;
         }
         .lc-card .lc-mono {
-          font-family: var(--font-legal-body), "IBM Plex Sans", monospace;
+          font-family:var(--tpl-font-body,  var(--font-legal-body), "IBM Plex Sans", monospace);
           letter-spacing: 0.22em;
           text-transform: uppercase;
           font-feature-settings: "ss01", "tnum";

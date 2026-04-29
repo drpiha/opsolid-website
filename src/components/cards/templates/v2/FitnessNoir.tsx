@@ -203,12 +203,12 @@ export function FitnessNoir({
     >
       <style jsx global>{`
         .fitness-noir-card {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Inter', system-ui, sans-serif);
           line-height: 1.55;
           -webkit-font-smoothing: antialiased;
         }
         .fitness-noir-card .display {
-          font-family: 'Oswald', 'Bebas Neue', system-ui, sans-serif;
+          font-family: var(--tpl-font-display, 'Oswald', 'Bebas Neue', system-ui, sans-serif);
         }
         .fitness-noir-card a { color: inherit; }
       `}</style>

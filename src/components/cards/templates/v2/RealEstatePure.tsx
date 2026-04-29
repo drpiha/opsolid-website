@@ -201,11 +201,11 @@ export function RealEstatePure({
     >
       <style jsx global>{`
         .rep-card {
-          font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'DM Sans', 'Inter', system-ui, sans-serif);
           line-height: 1.55;
         }
         .rep-card .serif-italic {
-          font-family: 'Lora', 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--tpl-font-display, 'Lora', 'Cormorant Garamond', Georgia, serif);
           font-style: italic;
         }
         .rep-card a { color: inherit; }

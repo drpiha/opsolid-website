@@ -94,9 +94,8 @@ interface Copy {
   whatsappBtn: string;
   emailBtn: string;
   servicesH: string;
-  yearsLabel: string;
-  eventsLabel: string;
-  weddingsLabel: string;
+  servicesLabel: string;
+  reviewsLabel: string;
   clientsH: string;
   testimonialH: string;
   cta: string;
@@ -104,7 +103,6 @@ interface Copy {
   walletLabel: string;
   poweredBy: string;
   contact: string;
-  rating: string;
 }
 
 const COPY: Record<"de" | "en" | "tr", Copy> = {
@@ -118,9 +116,8 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     whatsappBtn: "WhatsApp",
     emailBtn: "E-Mail",
     servicesH: "Leistungen",
-    yearsLabel: "Jahre",
-    eventsLabel: "Events",
-    weddingsLabel: "Hochzeiten",
+    servicesLabel: "Leistungen",
+    reviewsLabel: "Bewertungen",
     clientsH: "Vertrauen mir",
     testimonialH: "Stimmen",
     cta: "Lass uns dein Event entwerfen",
@@ -128,7 +125,6 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
     contact: "Kontakt",
-    rating: "4.9 / 5.0 · 400+ Events",
   },
   en: {
     tag: "Wedding & Events",
@@ -140,9 +136,8 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
     servicesH: "Services",
-    yearsLabel: "Years",
-    eventsLabel: "Events",
-    weddingsLabel: "Weddings",
+    servicesLabel: "Services",
+    reviewsLabel: "Reviews",
     clientsH: "Trusted by",
     testimonialH: "Voices",
     cta: "Let's design your event",
@@ -150,7 +145,6 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
     contact: "Contact",
-    rating: "4.9 / 5.0 · 400+ events",
   },
   tr: {
     tag: "Wedding & Events",
@@ -162,9 +156,8 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     whatsappBtn: "WhatsApp",
     emailBtn: "E-posta",
     servicesH: "Hizmetler",
-    yearsLabel: "Yıl",
-    eventsLabel: "Etkinlik",
-    weddingsLabel: "Düğün",
+    servicesLabel: "Hizmetler",
+    reviewsLabel: "Yorum",
     clientsH: "Çalıştığım Markalar",
     testimonialH: "Yorumlar",
     cta: "Hayalinizdeki Etkinliği Tasarlayalım",
@@ -172,7 +165,6 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
     contact: "İletişim",
-    rating: "4.9 / 5.0 · 400+ etkinlik",
   },
 };
 
@@ -233,11 +225,11 @@ export function EventPlanner({
     >
       <style jsx global>{`
         .ep-card {
-          font-family: 'Nunito', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Nunito', 'Inter', system-ui, sans-serif);
           line-height: 1.6;
         }
         .ep-card .serif {
-          font-family: 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--tpl-font-display, 'Cormorant Garamond', Georgia, serif);
           font-style: italic;
         }
         .ep-card a { color: inherit; }
@@ -329,14 +321,16 @@ export function EventPlanner({
           >
             {cardData.position || t.role}
           </div>
-          <div className="mt-1 flex items-center gap-1.5 text-[12px]" style={{ color: accent }}>
-            {[0, 1, 2, 3, 4].map((i) => (
-              <Star key={i} size={11} fill="currentColor" strokeWidth={0} />
-            ))}
-            <span className="font-bold" style={{ color: INK }}>
-              {t.rating}
-            </span>
-          </div>
+          {testimonials.length > 0 && (
+            <div className="mt-1 flex items-center gap-1.5 text-[12px]" style={{ color: accent }}>
+              {[0, 1, 2, 3, 4].map((i) => (
+                <Star key={i} size={11} fill="currentColor" strokeWidth={0} />
+              ))}
+              <span className="font-bold" style={{ color: INK }}>
+                {testimonials.length} {t.reviewsLabel}
+              </span>
+            </div>
+          )}
         </div>
       </section>
 
@@ -404,27 +398,36 @@ export function EventPlanner({
         </div>
       </section>
 
-      {/* STATS BANNER */}
-      <section className="px-7 pt-7">
-        <div
-          className="relative overflow-hidden rounded-[22px] px-6 py-7"
-          style={{
-            background: `linear-gradient(135deg, ${primaryDeep} 0%, ${primary} 100%)`,
-            color: "#fff",
-          }}
-        >
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full"
-            style={{ background: `radial-gradient(circle, ${accent}66, transparent 70%)` }}
-          />
-          <div className="relative flex justify-around text-center">
-            <Stat num="9" label={t.yearsLabel} accent={accent} />
-            <Stat num="400+" label={t.eventsLabel} accent={accent} />
-            <Stat num="180+" label={t.weddingsLabel} accent={accent} />
-          </div>
-        </div>
-      </section>
+      {/* STATS BANNER — driven by real data */}
+      {(() => {
+        const statsItems = [
+          ...(services.length ? [{ num: String(services.length), label: t.servicesLabel }] : []),
+          ...(testimonials.length ? [{ num: String(testimonials.length), label: t.reviewsLabel }] : []),
+        ];
+        if (statsItems.length === 0) return null;
+        return (
+          <section className="px-7 pt-7">
+            <div
+              className="relative overflow-hidden rounded-[22px] px-6 py-7"
+              style={{
+                background: `linear-gradient(135deg, ${primaryDeep} 0%, ${primary} 100%)`,
+                color: "#fff",
+              }}
+            >
+              <div
+                aria-hidden
+                className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full"
+                style={{ background: `radial-gradient(circle, ${accent}66, transparent 70%)` }}
+              />
+              <div className="relative flex justify-around text-center">
+                {statsItems.map((s) => (
+                  <Stat key={s.label} num={s.num} label={s.label} accent={accent} />
+                ))}
+              </div>
+            </div>
+          </section>
+        );
+      })()}
 
       {/* CLIENT TAGS */}
       <section className="px-7 pt-7">

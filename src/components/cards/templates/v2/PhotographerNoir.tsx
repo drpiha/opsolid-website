@@ -193,12 +193,12 @@ export function PhotographerNoir({
     >
       <style jsx global>{`
         .phn-card {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Inter', system-ui, sans-serif);
           line-height: 1.6;
           -webkit-font-smoothing: antialiased;
         }
         .phn-card .serif {
-          font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+          font-family: var(--tpl-font-display, 'Cormorant Garamond', 'Playfair Display', Georgia, serif);
         }
         .phn-card a { color: inherit; }
       `}</style>

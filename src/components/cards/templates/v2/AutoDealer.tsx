@@ -89,7 +89,6 @@ interface Copy {
   brandsH: string;
   servicesH: string;
   statsH: string;
-  yearsLabel: string;
   carsLabel: string;
   warrantyLabel: string;
   cta: string;
@@ -97,7 +96,6 @@ interface Copy {
   walletLabel: string;
   poweredBy: string;
   contact: string;
-  founderTitle: string;
 }
 
 const COPY: Record<"de" | "en" | "tr", Copy> = {
@@ -114,7 +112,6 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     brandsH: "Marken",
     servicesH: "Services",
     statsH: "In Zahlen",
-    yearsLabel: "Jahre",
     carsLabel: "Fahrzeuge",
     warrantyLabel: "Garantie",
     cta: "Termin vereinbaren",
@@ -122,7 +119,6 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
     contact: "Kontakt",
-    founderTitle: "Founder · 15 Jahre Erfahrung",
   },
   en: {
     callBtn: "Call",
@@ -137,7 +133,6 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     brandsH: "Brands",
     servicesH: "Services",
     statsH: "By the numbers",
-    yearsLabel: "Years",
     carsLabel: "Cars sold",
     warrantyLabel: "Warranty",
     cta: "Book a viewing",
@@ -145,7 +140,6 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
     contact: "Contact",
-    founderTitle: "Founder · 15 yrs experience",
   },
   tr: {
     callBtn: "Ara",
@@ -160,7 +154,6 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     brandsH: "Markalar",
     servicesH: "Hizmetler",
     statsH: "Rakamlarla",
-    yearsLabel: "Yıl",
     carsLabel: "Araç",
     warrantyLabel: "Garanti",
     cta: "Test Sürüşü Al",
@@ -168,7 +161,6 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
     contact: "İletişim",
-    founderTitle: "Founder · 15 Yıl Tecrübe",
   },
 };
 
@@ -201,7 +193,8 @@ export function AutoDealer({
     ? digitsOnly(cardData.whatsapp).replace(/^\+/, "")
     : "";
 
-  const services = cardData.services ?? [];
+  const allServices = cardData.services ?? [];
+  const services = allServices;
   const featured = services[0];
   const year = new Date().getFullYear();
 
@@ -217,13 +210,13 @@ export function AutoDealer({
     >
       <style jsx global>{`
         .ad-card {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Inter', system-ui, sans-serif);
           font-weight: 300;
           line-height: 1.6;
           background: ${PAGE};
         }
         .ad-card .display {
-          font-family: 'Rajdhani', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-display, 'Rajdhani', 'Inter', system-ui, sans-serif);
           font-weight: 600;
           letter-spacing: 0.5px;
         }
@@ -304,12 +297,14 @@ export function AutoDealer({
             >
               {cardData.name}
             </div>
-            <div
-              className="mt-1 text-[11px] uppercase"
-              style={{ color: accent, letterSpacing: "2px" }}
-            >
-              {t.founderTitle}
-            </div>
+            {(cardData.position || cardData.title) && (
+              <div
+                className="mt-1 text-[11px] uppercase"
+                style={{ color: accent, letterSpacing: "2px" }}
+              >
+                {cardData.position || cardData.title}
+              </div>
+            )}
           </div>
         </section>
 
@@ -462,18 +457,20 @@ export function AutoDealer({
         </section>
 
         {/* STATS */}
-        <section
-          className="mt-10 grid grid-cols-3"
-          style={{
-            background: SURFACE_3,
-            borderTop: `1px solid ${HAIRLINE}`,
-            borderBottom: `1px solid ${HAIRLINE}`,
-          }}
-        >
-          <StatCell num="15" label={t.yearsLabel} accent={accent} right />
-          <StatCell num="800+" label={t.carsLabel} accent={accent} right />
-          <StatCell num="12mo" label={t.warrantyLabel} accent={accent} />
-        </section>
+        {allServices.length > 0 && (
+          <section
+            className="mt-10 grid"
+            style={{
+              background: SURFACE_3,
+              borderTop: `1px solid ${HAIRLINE}`,
+              borderBottom: `1px solid ${HAIRLINE}`,
+              gridTemplateColumns: "1fr 1fr",
+            }}
+          >
+            <StatCell num={String(allServices.length)} label={t.carsLabel} accent={accent} right />
+            <StatCell num="12mo" label={t.warrantyLabel} accent={accent} />
+          </section>
+        )}
 
         {/* CONTACT */}
         <section className="px-7 py-10">

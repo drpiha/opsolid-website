@@ -70,9 +70,8 @@ interface Copy {
   ctaSecondary: string;
   ctaTertiary: string;
   ctaQuad: string;
-  statYears: string;
-  statShoots: string;
-  statRating: string;
+  servicesLabel: string;
+  reviewsLabel: string;
   saveContact: string;
   walletLabel: string;
   poweredBy: string;
@@ -91,9 +90,8 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     ctaSecondary: "WhatsApp",
     ctaTertiary: "Portfolio",
     ctaQuad: "Anfahrt",
-    statYears: "7 Jahre",
-    statShoots: "280+ Shootings",
-    statRating: "4,9 / 5",
+    servicesLabel: "Pakete",
+    reviewsLabel: "Bewertungen",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
@@ -110,9 +108,8 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     ctaSecondary: "WhatsApp",
     ctaTertiary: "Portfolio",
     ctaQuad: "Directions",
-    statYears: "7 years",
-    statShoots: "280+ shoots",
-    statRating: "4.9 / 5",
+    servicesLabel: "Packages",
+    reviewsLabel: "Reviews",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
@@ -129,9 +126,8 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     ctaSecondary: "WhatsApp",
     ctaTertiary: "Portföy",
     ctaQuad: "Konum",
-    statYears: "7 yıl",
-    statShoots: "280+ çekim",
-    statRating: "4,9 / 5",
+    servicesLabel: "Paketler",
+    reviewsLabel: "Yorum",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
@@ -159,6 +155,7 @@ export function PhotographerPure({
     ? digitsOnly(cardData.whatsapp).replace(/^\+/, "")
     : "";
   const services = (cardData.services ?? []).slice(0, 5);
+  const testimonials = cardData.testimonials ?? [];
 
   const nameParts = cardData.name.trim().split(/\s+/);
   const nameFirst = nameParts.slice(0, -1).join(" ") || cardData.name;
@@ -172,12 +169,12 @@ export function PhotographerPure({
     >
       <style jsx global>{`
         .phpure-card {
-          font-family: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Bricolage Grotesque', 'Inter', system-ui, sans-serif);
           line-height: 1.55;
           -webkit-font-smoothing: antialiased;
         }
         .phpure-card .serif-i {
-          font-family: 'EB Garamond', 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--tpl-font-display, 'EB Garamond', 'Cormorant Garamond', Georgia, serif);
           font-style: italic;
           font-weight: 400;
         }
@@ -267,16 +264,22 @@ export function PhotographerPure({
               {cardData.position}
             </p>
           )}
-          <div
-            className="mt-2 flex flex-wrap items-center gap-x-3.5 gap-y-1 text-[11px] font-medium"
-            style={{ color: INK, letterSpacing: "0.5px" }}
-          >
-            <span>{t.statYears}</span>
-            <span style={{ color: INK_SOFT }}>·</span>
-            <span>{t.statShoots}</span>
-            <span style={{ color: INK_SOFT }}>·</span>
-            <span>{t.statRating}</span>
-          </div>
+          {(services.length > 0 || testimonials.length > 0) && (
+            <div
+              className="mt-2 flex flex-wrap items-center gap-x-3.5 gap-y-1 text-[11px] font-medium"
+              style={{ color: INK, letterSpacing: "0.5px" }}
+            >
+              {services.length > 0 && (
+                <span>{services.length} {t.servicesLabel}</span>
+              )}
+              {services.length > 0 && testimonials.length > 0 && (
+                <span style={{ color: INK_SOFT }}>·</span>
+              )}
+              {testimonials.length > 0 && (
+                <span>{testimonials.length} {t.reviewsLabel}</span>
+              )}
+            </div>
+          )}
         </div>
       </div>
 

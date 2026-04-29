@@ -212,10 +212,10 @@ export function SoftwareDev({
     >
       <style jsx global>{`
         .sd-card {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Inter', system-ui, sans-serif);
           line-height: 1.6;
         }
-        .sd-card .mono { font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace; }
+        .sd-card .mono { font-family: var(--tpl-font-display, 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace); }
         .sd-card a { color: inherit; }
       `}</style>
 

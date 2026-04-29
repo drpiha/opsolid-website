@@ -77,12 +77,9 @@ interface DnvCopy {
   services: string;
   certifications: string;
   hours: string;
-  hoursValue: string;
   testimonial: string;
-  experience: string;
-  patients: string;
-  treatments: string;
-  rating: string;
+  servicesLabel: string;
+  reviewsLabel: string;
   saveContact: string;
   walletLabel: string;
   share: string;
@@ -100,13 +97,10 @@ const COPY: Record<"de" | "en" | "tr", DnvCopy> = {
     ig: "Instagram",
     services: "Behandlungen",
     certifications: "Zertifikate",
-    hours: "Sprechzeiten",
-    hoursValue: "Mo – Fr · 09:00 – 18:00",
+    hours: "Praxisadresse",
     testimonial: "Stimmen",
-    experience: "Jahre",
-    patients: "Patienten",
-    treatments: "Behandl.",
-    rating: "Bewertung",
+    servicesLabel: "Behandlungen",
+    reviewsLabel: "Bewertungen",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     share: "Teilen",
@@ -122,13 +116,10 @@ const COPY: Record<"de" | "en" | "tr", DnvCopy> = {
     ig: "Instagram",
     services: "Treatments",
     certifications: "Credentials",
-    hours: "Hours",
-    hoursValue: "Mon – Fri · 09:00 – 18:00",
+    hours: "Practice address",
     testimonial: "Voices",
-    experience: "Years",
-    patients: "Patients",
-    treatments: "Treat.",
-    rating: "Rating",
+    servicesLabel: "Treatments",
+    reviewsLabel: "Reviews",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     share: "Share",
@@ -144,13 +135,10 @@ const COPY: Record<"de" | "en" | "tr", DnvCopy> = {
     ig: "Instagram",
     services: "Hizmetler",
     certifications: "Sertifikalar",
-    hours: "Çalışma Saatleri",
-    hoursValue: "Hafta İçi 09:00 – 18:00",
+    hours: "Klinik Adresi",
     testimonial: "Hasta Yorumu",
-    experience: "Yıl",
-    patients: "Hasta",
-    treatments: "Tedavi",
-    rating: "Puan",
+    servicesLabel: "Tedaviler",
+    reviewsLabel: "Yorum",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     share: "Paylaş",
@@ -283,15 +271,19 @@ export function DentistVivid({
           )}
           <div className="min-w-0 flex-1">
             <div className="text-[16px] font-bold leading-tight">{cardData.name}</div>
-            <div className="mt-1 text-[12px]" style={{ color: INK_SOFT }}>
-              12 Yıl · ITI Uzmanı
-            </div>
-            <span
-              className="mt-1.5 inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10.5px] font-bold text-white"
-              style={{ background: "linear-gradient(135deg, #f59e0b, #fbbf24)" }}
-            >
-              <Star size={10} fill="currentColor" strokeWidth={0} /> 4.9
-            </span>
+            {(cardData.position || cardData.title) && (
+              <div className="mt-1 text-[12px]" style={{ color: INK_SOFT }}>
+                {cardData.position || cardData.title}
+              </div>
+            )}
+            {testimonials.length > 0 && (
+              <span
+                className="mt-1.5 inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-[10.5px] font-bold text-white"
+                style={{ background: "linear-gradient(135deg, #f59e0b, #fbbf24)" }}
+              >
+                <Star size={10} fill="currentColor" strokeWidth={0} /> {testimonials.length}
+              </span>
+            )}
           </div>
         </div>
       </section>
@@ -398,18 +390,29 @@ export function DentistVivid({
         </section>
       )}
 
-      {/* STATS */}
-      <section
-        className="mx-[22px] grid grid-cols-4 gap-2 rounded-[22px] p-5 text-white"
-        style={{
-          background: "linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%)",
-        }}
-      >
-        <VividStat n="12+" l={t.experience} primary={primary} accent={accent} />
-        <VividStat n="3.5K" l={t.patients} primary={primary} accent={accent} />
-        <VividStat n="800+" l={t.treatments} primary={primary} accent={accent} last />
-        <VividStat n="4.9" l={t.rating} primary={primary} accent={accent} last />
-      </section>
+      {/* STATS — driven by real data */}
+      {(() => {
+        const statsItems = [
+          ...(services.length ? [{ n: String(services.length), l: t.servicesLabel }] : []),
+          ...(testimonials.length ? [{ n: String(testimonials.length), l: t.reviewsLabel }] : []),
+        ];
+        if (statsItems.length === 0) return null;
+        return (
+          <section
+            className="mx-[22px] rounded-[22px] p-5 text-white"
+            style={{
+              background: "linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%)",
+              display: "grid",
+              gridTemplateColumns: `repeat(${statsItems.length}, 1fr)`,
+              gap: "0.5rem",
+            }}
+          >
+            {statsItems.map((stat, i) => (
+              <VividStat key={stat.l} n={stat.n} l={stat.l} primary={primary} accent={accent} last={i === statsItems.length - 1} />
+            ))}
+          </section>
+        );
+      })()}
 
       {/* CREDENTIAL CHIPS */}
       {credentials.length > 0 && (
@@ -436,28 +439,30 @@ export function DentistVivid({
         </section>
       )}
 
-      {/* HOURS */}
-      <section className="px-[22px] pb-3">
-        <div
-          className="flex overflow-hidden rounded-[18px] bg-white"
-          style={{ border: `1px solid ${HAIRLINE}` }}
-        >
+      {/* ADDRESS STRIP */}
+      {cardData.address && (
+        <section className="px-[22px] pb-3">
           <div
-            className="flex w-[70px] items-center justify-center text-white"
-            style={{ background: heroGrad }}
+            className="flex overflow-hidden rounded-[18px] bg-white"
+            style={{ border: `1px solid ${HAIRLINE}` }}
           >
-            <Clock size={26} strokeWidth={2} />
-          </div>
-          <div className="flex-1 px-5 py-4">
-            <div className="text-[11px] font-semibold" style={{ color: INK_SOFT }}>
-              {t.hours}
+            <div
+              className="flex w-[70px] items-center justify-center text-white"
+              style={{ background: heroGrad }}
+            >
+              <Clock size={26} strokeWidth={2} />
             </div>
-            <div className="mt-0.5 text-[14px] font-bold" style={{ color: INK }}>
-              {t.hoursValue}
+            <div className="flex-1 px-5 py-4">
+              <div className="text-[11px] font-semibold" style={{ color: INK_SOFT }}>
+                {t.hours}
+              </div>
+              <div className="mt-0.5 text-[14px] font-bold" style={{ color: INK }}>
+                {cardData.address}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* TESTIMONIAL */}
       {testimonials.length > 0 && (

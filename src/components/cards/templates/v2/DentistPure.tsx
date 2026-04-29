@@ -55,10 +55,8 @@ interface DnpCopy {
   callClinic: string;
   saveContact: string;
   walletLabel: string;
-  experience: string;
-  patients: string;
-  treatments: string;
-  rating: string;
+  servicesLabel: string;
+  reviewsLabel: string;
   open: string;
   practitioner: string;
   practitionerValue: string;
@@ -77,10 +75,8 @@ const COPY: Record<"de" | "en" | "tr", DnpCopy> = {
     callClinic: "Praxis anrufen",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
-    experience: "Jahre",
-    patients: "Patienten",
-    treatments: "Behandl.",
-    rating: "Bewertung",
+    servicesLabel: "Behandlungen",
+    reviewsLabel: "Bewertungen",
     open: "Offen",
     practitioner: "Praxis",
     practitionerValue: "Klinikleiter",
@@ -97,10 +93,8 @@ const COPY: Record<"de" | "en" | "tr", DnpCopy> = {
     callClinic: "Call the clinic",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
-    experience: "Years",
-    patients: "Patients",
-    treatments: "Treat.",
-    rating: "Rating",
+    servicesLabel: "Treatments",
+    reviewsLabel: "Reviews",
     open: "Open",
     practitioner: "Practice",
     practitionerValue: "Clinical lead",
@@ -117,10 +111,8 @@ const COPY: Record<"de" | "en" | "tr", DnpCopy> = {
     callClinic: "Kliniği Ara",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
-    experience: "Yıl",
-    patients: "Hasta",
-    treatments: "Tedavi",
-    rating: "Puan",
+    servicesLabel: "Tedaviler",
+    reviewsLabel: "Yorum",
     open: "Açık",
     practitioner: "Hekim",
     practitionerValue: "Klinik direktörü",
@@ -251,13 +243,28 @@ export function DentistPure({
         <ContactRows cardData={cardData} locale={locale} variant="hairline" accentHex={primary} />
       </Section>
 
-      {/* STATS */}
-      <div className="grid grid-cols-4" style={{ borderTop: `1px solid ${HAIRLINE}`, borderBottom: `1px solid ${HAIRLINE}` }}>
-        <PureStat n="12" l={t.experience} />
-        <PureStat n="3.5K" l={t.patients} />
-        <PureStat n="800" l={t.treatments} />
-        <PureStat n="4.9" l={t.rating} last />
-      </div>
+      {/* STATS — driven by real data */}
+      {(() => {
+        const statsItems = [
+          ...(services.length ? [{ n: String(services.length), l: t.servicesLabel }] : []),
+          ...(testimonials.length ? [{ n: String(testimonials.length), l: t.reviewsLabel }] : []),
+        ];
+        if (statsItems.length === 0) return null;
+        return (
+          <div
+            style={{
+              borderTop: `1px solid ${HAIRLINE}`,
+              borderBottom: `1px solid ${HAIRLINE}`,
+              display: "grid",
+              gridTemplateColumns: `repeat(${statsItems.length}, 1fr)`,
+            }}
+          >
+            {statsItems.map((stat, i) => (
+              <PureStat key={stat.l} n={stat.n} l={stat.l} last={i === statsItems.length - 1} />
+            ))}
+          </div>
+        );
+      })()}
 
       {/* SERVICES */}
       {services.length > 0 && (

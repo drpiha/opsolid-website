@@ -72,9 +72,7 @@ interface AcpCopy {
   walletLabel: string;
   share: string;
   poweredBy: string;
-  yearsLabel: string;
-  clientsLabel: string;
-  ratingLabel: string;
+  reviewsLabel: string;
   responseLabel: string;
   online: string;
   practitioner: string;
@@ -94,9 +92,7 @@ const COPY: Record<"de" | "en" | "tr", AcpCopy> = {
     walletLabel: "Auf Smartphone speichern",
     share: "Teilen",
     poweredBy: "Powered by",
-    yearsLabel: "Jahre",
-    clientsLabel: "Mandanten",
-    ratingLabel: "Bewertung",
+    reviewsLabel: "Bewertungen",
     responseLabel: "Antwort",
     online: "Online",
     practitioner: "Kanzlei",
@@ -114,9 +110,7 @@ const COPY: Record<"de" | "en" | "tr", AcpCopy> = {
     walletLabel: "Add to wallet",
     share: "Share",
     poweredBy: "Powered by",
-    yearsLabel: "Years",
-    clientsLabel: "Clients",
-    ratingLabel: "Rating",
+    reviewsLabel: "Reviews",
     responseLabel: "Response",
     online: "Online",
     practitioner: "Practice",
@@ -134,9 +128,7 @@ const COPY: Record<"de" | "en" | "tr", AcpCopy> = {
     walletLabel: "Cüzdana ekle",
     share: "Paylaş",
     poweredBy: "Powered by",
-    yearsLabel: "Yıl",
-    clientsLabel: "Müvekkil",
-    ratingLabel: "Puan",
+    reviewsLabel: "Yorum",
     responseLabel: "Yanıt",
     online: "Online",
     practitioner: "Ofis",
@@ -187,7 +179,7 @@ export function AccountingPure({
     >
       <style jsx global>{`
         .acp-card { line-height: 1.6; }
-        .acp-card .serif { font-family: 'IBM Plex Serif', 'Cormorant Garamond', Georgia, serif; }
+        .acp-card .serif { font-family: var(--tpl-font-display, 'IBM Plex Serif', 'Cormorant Garamond', Georgia, serif); }
         .acp-card a { color: inherit; }
       `}</style>
 
@@ -359,19 +351,28 @@ export function AccountingPure({
         </PureSection>
       )}
 
-      {/* STATS 4-up */}
-      <div
-        className="grid grid-cols-4"
-        style={{
-          borderTop: `1px solid ${HAIRLINE}`,
-          borderBottom: `1px solid ${HAIRLINE}`,
-        }}
-      >
-        <PureStat n="15" l={t.yearsLabel} />
-        <PureStat n="200+" l={t.clientsLabel} />
-        <PureStat n="98%" l={locale === "tr" ? "Memnun" : locale === "de" ? "Zufrieden" : "Happy"} />
-        <PureStat n="4.9" l={t.ratingLabel} last />
-      </div>
+      {/* STATS — driven by real data */}
+      {(() => {
+        const statsItems = [
+          ...(services.length ? [{ n: String(services.length), l: t.services }] : []),
+          ...(testimonials.length ? [{ n: String(testimonials.length), l: t.reviewsLabel }] : []),
+        ];
+        if (statsItems.length === 0) return null;
+        return (
+          <div
+            className="grid"
+            style={{
+              borderTop: `1px solid ${HAIRLINE}`,
+              borderBottom: `1px solid ${HAIRLINE}`,
+              gridTemplateColumns: `repeat(${statsItems.length}, 1fr)`,
+            }}
+          >
+            {statsItems.map((stat, i) => (
+              <PureStat key={stat.l} n={stat.n} l={stat.l} last={i === statsItems.length - 1} />
+            ))}
+          </div>
+        );
+      })()}
 
       {/* TESTIMONIAL */}
       {testimonials.length > 0 && (

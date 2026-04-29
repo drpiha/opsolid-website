@@ -183,12 +183,12 @@ export function LegalCounselNoir({
     >
       <style jsx global>{`
         .lcn-card {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Inter', system-ui, sans-serif);
           line-height: 1.6;
           -webkit-font-smoothing: antialiased;
         }
         .lcn-card .serif {
-          font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--tpl-font-display, 'Playfair Display', 'Cormorant Garamond', Georgia, serif);
         }
         .lcn-card a { color: inherit; }
       `}</style>

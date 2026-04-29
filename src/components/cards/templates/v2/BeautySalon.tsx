@@ -75,10 +75,8 @@ interface BsCopy {
   beforeAfter: string;
   beforeAfterDesc: string;
   beforeAfterCta: string;
-  experience: string;
-  treatments: string;
-  followers: string;
-  rating: string;
+  servicesLabel: string;
+  reviewsLabel: string;
   saveContact: string;
   walletLabel: string;
   share: string;
@@ -96,10 +94,8 @@ const COPY: Record<"de" | "en" | "tr", BsCopy> = {
     beforeAfter: "Vorher / Nachher",
     beforeAfterDesc: "5.000+ zufriedene Kund:innen — sehen Sie die Ergebnisse",
     beforeAfterCta: "Auf Instagram ansehen",
-    experience: "Jahre",
-    treatments: "Behandl.",
-    followers: "Follower",
-    rating: "Bewertung",
+    servicesLabel: "Leistungen",
+    reviewsLabel: "Bewertungen",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     share: "Teilen",
@@ -115,10 +111,8 @@ const COPY: Record<"de" | "en" | "tr", BsCopy> = {
     beforeAfter: "Before / After",
     beforeAfterDesc: "5,000+ happy clients — see the transformations",
     beforeAfterCta: "View on Instagram",
-    experience: "Years",
-    treatments: "Treats.",
-    followers: "Followers",
-    rating: "Rating",
+    servicesLabel: "Services",
+    reviewsLabel: "Reviews",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     share: "Share",
@@ -134,10 +128,8 @@ const COPY: Record<"de" | "en" | "tr", BsCopy> = {
     beforeAfter: "Önce / Sonra",
     beforeAfterDesc: "5.000+ memnun müşteriden öncesi / sonrası fotoğraflar",
     beforeAfterCta: "Instagram'da gör",
-    experience: "Yıl",
-    treatments: "İşlem",
-    followers: "Takipçi",
-    rating: "Puan",
+    servicesLabel: "Hizmetler",
+    reviewsLabel: "Yorum",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     share: "Paylaş",
@@ -210,12 +202,14 @@ export function BeautySalon({
           <div className="text-[13px] font-extrabold uppercase tracking-[1.5px]">
             {cardData.company}
           </div>
-          <span
-            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-extrabold"
-            style={{ background: GOLD, color: INK }}
-          >
-            <Star size={11} fill={INK} strokeWidth={0} /> 4.9
-          </span>
+          {testimonials.length > 0 && (
+            <span
+              className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-extrabold"
+              style={{ background: GOLD, color: INK }}
+            >
+              <Star size={11} fill={INK} strokeWidth={0} /> {testimonials.length}
+            </span>
+          )}
         </div>
         <h1 className="relative z-10 text-[36px] font-black leading-none tracking-[-1.2px]">
           {cardData.name}
@@ -303,9 +297,11 @@ export function BeautySalon({
           <div className="text-[18px] font-extrabold" style={{ color: INK }}>
             {cardData.name}
           </div>
-          <div className="mt-0.5 text-[12px] font-semibold" style={{ color: INK_SOFT }}>
-            7 yıl deneyim · 5.000+ işlem
-          </div>
+          {(cardData.position || cardData.title) && (
+            <div className="mt-0.5 text-[12px] font-semibold" style={{ color: INK_SOFT }}>
+              {cardData.position || cardData.title}
+            </div>
+          )}
           <div className="mt-2 flex gap-1.5">
             <span
               className="rounded-full px-2.5 py-0.5 text-[10.5px] font-extrabold uppercase tracking-[0.4px] text-white"
@@ -480,18 +476,29 @@ export function BeautySalon({
         </section>
       )}
 
-      {/* STATS */}
-      <section
-        className="mx-[22px] grid grid-cols-4 gap-1.5 rounded-[22px] p-6 text-white"
-        style={{
-          background: "linear-gradient(135deg, #1a0a13 0%, #4c0519 100%)",
-        }}
-      >
-        <BsStat n="7" l={t.experience} primary={primary} accent={accent} />
-        <BsStat n="5K+" l={t.treatments} primary={primary} accent={accent} />
-        <BsStat n="42K" l={t.followers} primary={primary} accent={accent} />
-        <BsStat n="4.9" l={t.rating} primary={primary} accent={accent} last />
-      </section>
+      {/* STATS — driven by real data */}
+      {(() => {
+        const statsItems = [
+          ...(services.length ? [{ n: String(services.length), l: t.servicesLabel }] : []),
+          ...(testimonials.length ? [{ n: String(testimonials.length), l: t.reviewsLabel }] : []),
+        ];
+        if (statsItems.length === 0) return null;
+        return (
+          <section
+            className="mx-[22px] rounded-[22px] p-6 text-white"
+            style={{
+              background: "linear-gradient(135deg, #1a0a13 0%, #4c0519 100%)",
+              display: "grid",
+              gridTemplateColumns: `repeat(${statsItems.length}, 1fr)`,
+              gap: "0.375rem",
+            }}
+          >
+            {statsItems.map((stat, i) => (
+              <BsStat key={stat.l} n={stat.n} l={stat.l} primary={primary} accent={accent} last={i === statsItems.length - 1} />
+            ))}
+          </section>
+        );
+      })()}
 
       {/* TESTIMONIAL */}
       {testimonials.length > 0 && (

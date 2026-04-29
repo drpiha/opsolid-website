@@ -222,11 +222,11 @@ export function SoftwareDevVivid({
     >
       <style jsx global>{`
         .sdv-card {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Inter', system-ui, sans-serif);
           line-height: 1.6;
         }
-        .sdv-card .display { font-family: 'Syne', 'Inter', sans-serif; }
-        .sdv-card .mono { font-family: 'JetBrains Mono', monospace; }
+        .sdv-card .display { font-family: var(--tpl-font-display, 'Syne', 'Inter', sans-serif); }
+        .sdv-card .mono { font-family: var(--tpl-font-display, 'JetBrains Mono', monospace); }
         .sdv-card a { color: inherit; }
       `}</style>
 

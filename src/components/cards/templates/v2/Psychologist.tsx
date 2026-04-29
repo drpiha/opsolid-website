@@ -198,7 +198,7 @@ export function Psychologist({
       <style jsx global>{`
         .ps-card { line-height: 1.65; }
         .ps-card a { color: inherit; }
-        .ps-editorial { font-family: 'Lora', Georgia, serif; font-style: italic; font-weight: 400; }
+        .ps-editorial { font-family: var(--tpl-font-display, 'Lora', Georgia, serif); font-style: italic; font-weight: 400; }
       `}</style>
 
       {/* HERO */}

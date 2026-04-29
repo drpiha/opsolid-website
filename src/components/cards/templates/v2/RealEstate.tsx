@@ -229,7 +229,7 @@ export function RealEstate({
       {/* Scoped per-template typography — only inside `.re-card`. */}
       <style jsx global>{`
         .re-card {
-          font-family: var(--font-realestate-body), "Open Sans", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-realestate-body), "Open Sans", system-ui, sans-serif);
           font-feature-settings: "ss01", "cv11";
           line-height: 1.55;
         }
@@ -237,16 +237,16 @@ export function RealEstate({
         .re-card h1.re-display,
         .re-card h2.re-display,
         .re-card h3.re-display {
-          font-family: var(--font-realestate-display), "Montserrat", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-realestate-display), "Montserrat", system-ui, sans-serif);
           letter-spacing: -0.012em;
         }
         .re-card .re-mono {
-          font-family: var(--font-realestate-display), "Montserrat", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-realestate-display), "Montserrat", system-ui, sans-serif);
           letter-spacing: 0.18em;
           text-transform: uppercase;
         }
         .re-card .re-serif {
-          font-family: "Cormorant Garamond", "Georgia", "Times New Roman", serif;
+          font-family: var(--tpl-font-body, "Cormorant Garamond", "Georgia", "Times New Roman", serif);
           font-feature-settings: "lnum";
           letter-spacing: 0.005em;
         }

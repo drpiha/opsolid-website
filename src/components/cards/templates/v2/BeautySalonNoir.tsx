@@ -74,10 +74,8 @@ interface BsnCopy {
   callStudio: string;
   saveContact: string;
   walletLabel: string;
-  experience: string;
-  treatments: string;
-  followers: string;
-  rating: string;
+  servicesLabel: string;
+  reviewsLabel: string;
   studio: string;
   share: string;
   poweredBy: string;
@@ -96,10 +94,8 @@ const COPY: Record<"de" | "en" | "tr", BsnCopy> = {
     callStudio: "Studio anrufen",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
-    experience: "Jahre",
-    treatments: "Behandl.",
-    followers: "Follower",
-    rating: "Rating",
+    servicesLabel: "Leistungen",
+    reviewsLabel: "Bewertungen",
     studio: "Studio",
     share: "Teilen",
     poweredBy: "Powered by",
@@ -116,10 +112,8 @@ const COPY: Record<"de" | "en" | "tr", BsnCopy> = {
     callStudio: "Call studio",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
-    experience: "Years",
-    treatments: "Treats.",
-    followers: "Followers",
-    rating: "Rating",
+    servicesLabel: "Services",
+    reviewsLabel: "Reviews",
     studio: "Studio",
     share: "Share",
     poweredBy: "Powered by",
@@ -136,10 +130,8 @@ const COPY: Record<"de" | "en" | "tr", BsnCopy> = {
     callStudio: "Stüdyoyu Ara",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
-    experience: "Yıl",
-    treatments: "İşlem",
-    followers: "Followers",
-    rating: "Rating",
+    servicesLabel: "Hizmetler",
+    reviewsLabel: "Yorum",
     studio: "Studio",
     share: "Paylaş",
     poweredBy: "Powered by",
@@ -166,6 +158,7 @@ export function BeautySalonNoir({
     : "";
 
   const services = cardData.services ?? [];
+  const testimonials = cardData.testimonials ?? [];
 
   const nameParts = cardData.name.trim().split(/\s+/);
   const firstName = nameParts.slice(0, -1).join(" ") || cardData.name;
@@ -184,7 +177,7 @@ export function BeautySalonNoir({
       <style jsx global>{`
         .bsn-card { line-height: 1.6; }
         .bsn-card a { color: inherit; }
-        .bsn-editorial { font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; }
+        .bsn-editorial { font-family: var(--tpl-font-display, 'Cormorant Garamond', Georgia, serif); font-style: italic; }
       `}</style>
 
       {/* Decorative halos */}
@@ -290,14 +283,16 @@ export function BeautySalonNoir({
             {cardData.address?.split(",").slice(-2)[0]?.trim() || cardData.company}
           </div>
         </div>
-        <div className="text-right">
-          <div className="bsn-editorial text-[22px]" style={{ color: accent }}>
-            4.9
+        {testimonials.length > 0 && (
+          <div className="text-right">
+            <div className="bsn-editorial text-[22px]" style={{ color: accent }}>
+              {testimonials.length}
+            </div>
+            <div className="mt-px text-[9px] uppercase tracking-[1.5px]" style={{ color: INK_SOFT }}>
+              {t.reviewsLabel}
+            </div>
           </div>
-          <div className="mt-px text-[9px] uppercase tracking-[1.5px]" style={{ color: INK_SOFT }}>
-            42K Followers
-          </div>
-        </div>
+        )}
       </div>
 
       {/* CONTACT */}
@@ -350,20 +345,30 @@ export function BeautySalonNoir({
         </BsnSection>
       )}
 
-      {/* STATS */}
-      <section
-        className="relative z-10 grid grid-cols-4"
-        style={{
-          background: PANEL,
-          borderTop: `1px solid ${HAIRLINE}`,
-          borderBottom: `1px solid ${HAIRLINE}`,
-        }}
-      >
-        <BsnStat n="7" l={t.experience} accent={accent} />
-        <BsnStat n="5K" l={t.treatments} accent={accent} />
-        <BsnStat n="42K" l={t.followers} accent={accent} />
-        <BsnStat n="4.9" l={t.rating} accent={accent} last />
-      </section>
+      {/* STATS — driven by real data */}
+      {(() => {
+        const statsItems = [
+          ...(services.length ? [{ n: String(services.length), l: t.servicesLabel }] : []),
+          ...(testimonials.length ? [{ n: String(testimonials.length), l: t.reviewsLabel }] : []),
+        ];
+        if (statsItems.length === 0) return null;
+        return (
+          <section
+            className="relative z-10"
+            style={{
+              background: PANEL,
+              borderTop: `1px solid ${HAIRLINE}`,
+              borderBottom: `1px solid ${HAIRLINE}`,
+              display: "grid",
+              gridTemplateColumns: `repeat(${statsItems.length}, 1fr)`,
+            }}
+          >
+            {statsItems.map((stat, i) => (
+              <BsnStat key={stat.l} n={stat.n} l={stat.l} accent={accent} last={i === statsItems.length - 1} />
+            ))}
+          </section>
+        );
+      })()}
 
       {/* QUOTE */}
       <section

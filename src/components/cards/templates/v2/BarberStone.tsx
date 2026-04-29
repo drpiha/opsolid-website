@@ -167,12 +167,12 @@ export function BarberStone({
     >
       <style jsx global>{`
         .barber-stone-card {
-          font-family: 'Nunito', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Nunito', system-ui, sans-serif);
           line-height: 1.55;
           -webkit-font-smoothing: antialiased;
         }
         .barber-stone-card .serif {
-          font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+          font-family: var(--tpl-font-display, 'Playfair Display', 'Cormorant Garamond', serif);
         }
         .barber-stone-card a { color: inherit; }
       `}</style>

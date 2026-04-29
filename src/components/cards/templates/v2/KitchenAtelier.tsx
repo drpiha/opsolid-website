@@ -203,21 +203,21 @@ export function KitchenAtelier({
     >
       <style jsx global>{`
         .ka-card {
-          font-family: var(--font-kitchen-body), "Source Sans 3", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-kitchen-body), "Source Sans 3", system-ui, sans-serif);
           line-height: 1.65;
         }
         .ka-card .ka-display,
         .ka-card h1.ka-display,
         .ka-card h2.ka-display,
         .ka-card h3.ka-display {
-          font-family: var(--font-kitchen-display), "Playfair Display", Georgia, serif;
+          font-family:var(--tpl-font-body,  var(--font-kitchen-display), "Playfair Display", Georgia, serif);
         }
         .ka-card .ka-italic {
-          font-family: var(--font-kitchen-display), "Playfair Display", Georgia, serif;
+          font-family:var(--tpl-font-body,  var(--font-kitchen-display), "Playfair Display", Georgia, serif);
           font-style: italic;
         }
         .ka-card .ka-eyebrow {
-          font-family: var(--font-kitchen-display), "Playfair Display", Georgia, serif;
+          font-family:var(--tpl-font-body,  var(--font-kitchen-display), "Playfair Display", Georgia, serif);
           font-style: italic;
           letter-spacing: 0.04em;
         }

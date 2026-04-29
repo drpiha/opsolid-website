@@ -168,12 +168,12 @@ export function PhotographerStone({
     >
       <style jsx global>{`
         .phs-card {
-          font-family: 'Nunito', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Nunito', 'Inter', system-ui, sans-serif);
           line-height: 1.6;
           -webkit-font-smoothing: antialiased;
         }
         .phs-card .serif {
-          font-family: 'Lora', 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--tpl-font-display, 'Lora', 'Cormorant Garamond', Georgia, serif);
         }
         .phs-card a { color: inherit; }
       `}</style>

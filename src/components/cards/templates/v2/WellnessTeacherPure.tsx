@@ -162,12 +162,12 @@ export function WellnessTeacherPure({
     >
       <style jsx global>{`
         .wtp-card {
-          font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'DM Sans', 'Inter', system-ui, sans-serif);
           line-height: 1.7;
           background: ${PAGE};
         }
         .wtp-card .serif {
-          font-family: 'Lora', Georgia, serif;
+          font-family: var(--tpl-font-display, 'Lora', Georgia, serif);
           font-style: italic;
         }
         .wtp-card a { color: inherit; }

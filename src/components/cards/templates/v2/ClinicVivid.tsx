@@ -165,12 +165,12 @@ export function ClinicVivid({
     >
       <style jsx global>{`
         .cvivid-card {
-          font-family: 'Open Sans', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Open Sans', 'Inter', system-ui, sans-serif);
           line-height: 1.55;
           -webkit-font-smoothing: antialiased;
         }
         .cvivid-card .display {
-          font-family: 'Poppins', 'Inter', sans-serif;
+          font-family: var(--tpl-font-display, 'Poppins', 'Inter', sans-serif);
         }
         .cvivid-card a { color: inherit; }
       `}</style>

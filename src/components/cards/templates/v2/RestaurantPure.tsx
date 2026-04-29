@@ -70,15 +70,8 @@ interface Copy {
   whatsappBtn: string;
   menuBtn: string;
   directionsBtn: string;
-  hoursMain: string;
-  hoursWeekend: string;
-  hoursClosed: string;
-  hoursMainTime: string;
-  hoursWeekendTime: string;
-  hoursClosedTime: string;
-  statYears: string;
-  statAward: string;
-  statRating: string;
+  servicesLabel: string;
+  reviewsLabel: string;
   saveContact: string;
   walletLabel: string;
   poweredBy: string;
@@ -89,21 +82,14 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     metaOpen: "Geöffnet · Di – So",
     philosophy: "Philosophie",
     dishes: "Saisonale Spezialitäten",
-    hours: "Öffnungszeiten",
+    hours: "Adresse",
     contact: "Kontakt",
     reserveBtn: "Reservierung",
     whatsappBtn: "WhatsApp",
     menuBtn: "Menü",
     directionsBtn: "Anfahrt",
-    hoursMain: "Di – Sa",
-    hoursWeekend: "Sonntag",
-    hoursClosed: "Montag",
-    hoursMainTime: "12:00 – 23:00",
-    hoursWeekendTime: "11:00 – 17:00",
-    hoursClosedTime: "Geschlossen",
-    statYears: "Jahre",
-    statAward: "Bib Gourmand",
-    statRating: "4,9 / 5",
+    servicesLabel: "Gerichte",
+    reviewsLabel: "Bewertungen",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
@@ -112,21 +98,14 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     metaOpen: "Open · Tue – Sun",
     philosophy: "Philosophy",
     dishes: "Seasonal Specials",
-    hours: "Hours",
+    hours: "Address",
     contact: "Contact",
     reserveBtn: "Reserve",
     whatsappBtn: "WhatsApp",
     menuBtn: "Menu",
     directionsBtn: "Directions",
-    hoursMain: "Tue – Sat",
-    hoursWeekend: "Sunday",
-    hoursClosed: "Monday",
-    hoursMainTime: "12:00 – 23:00",
-    hoursWeekendTime: "11:00 – 17:00",
-    hoursClosedTime: "Closed",
-    statYears: "Years",
-    statAward: "Bib Gourmand",
-    statRating: "4.9 / 5",
+    servicesLabel: "Dishes",
+    reviewsLabel: "Reviews",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
@@ -135,21 +114,14 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     metaOpen: "Açık · Salı – Pazar",
     philosophy: "Felsefemiz",
     dishes: "Sezon Özellikleri",
-    hours: "Saatler",
+    hours: "Adres",
     contact: "İletişim",
     reserveBtn: "Rezervasyon",
     whatsappBtn: "WhatsApp",
     menuBtn: "Menü",
     directionsBtn: "Konum",
-    hoursMain: "Salı – Cumartesi",
-    hoursWeekend: "Pazar",
-    hoursClosed: "Pazartesi",
-    hoursMainTime: "12:00 – 23:00",
-    hoursWeekendTime: "11:00 – 17:00",
-    hoursClosedTime: "Kapalı",
-    statYears: "yıl",
-    statAward: "Bib Gourmand",
-    statRating: "4,9 / 5",
+    servicesLabel: "Yemek",
+    reviewsLabel: "Yorum",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
@@ -178,6 +150,7 @@ export function RestaurantPure({
     : "";
 
   const services = (cardData.services ?? []).slice(0, 5);
+  const testimonials = cardData.testimonials ?? [];
   const restaurantName = cardData.company || cardData.name;
   const tagline = cardData.title || cardData.position || "";
   const city = cardData.address?.split(",").slice(-2)[0]?.trim() || "Berlin";
@@ -195,12 +168,12 @@ export function RestaurantPure({
     >
       <style jsx global>{`
         .rsp-card {
-          font-family: 'Bricolage Grotesque', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Bricolage Grotesque', 'Inter', system-ui, sans-serif);
           line-height: 1.55;
           -webkit-font-smoothing: antialiased;
         }
         .rsp-card .serif-i {
-          font-family: 'EB Garamond', 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--tpl-font-display, 'EB Garamond', 'Cormorant Garamond', Georgia, serif);
           font-style: italic;
           font-weight: 400;
         }
@@ -300,16 +273,16 @@ export function RestaurantPure({
               {cardData.position}
             </p>
           )}
-          <div
-            className="mt-2 flex flex-wrap items-center gap-x-3.5 gap-y-1 text-[11px] font-medium"
-            style={{ color: INK, letterSpacing: "0.5px" }}
-          >
-            <span>{`12 ${t.statYears}`}</span>
-            <span style={{ color: INK_SOFT }}>·</span>
-            <span>{t.statAward}</span>
-            <span style={{ color: INK_SOFT }}>·</span>
-            <span>{t.statRating}</span>
-          </div>
+          {(services.length > 0 || testimonials.length > 0) && (
+            <div
+              className="mt-2 flex flex-wrap items-center gap-x-3.5 gap-y-1 text-[11px] font-medium"
+              style={{ color: INK, letterSpacing: "0.5px" }}
+            >
+              {services.length > 0 && <span>{services.length} {t.servicesLabel}</span>}
+              {services.length > 0 && testimonials.length > 0 && <span style={{ color: INK_SOFT }}>·</span>}
+              {testimonials.length > 0 && <span>{testimonials.length} {t.reviewsLabel}</span>}
+            </div>
+          )}
         </div>
       </div>
 
@@ -406,18 +379,16 @@ export function RestaurantPure({
         </section>
       )}
 
-      {/* HOURS TABLE */}
-      <section
-        className="mx-7 mb-9 pt-5"
-        style={{ borderTop: `1px solid ${HAIRLINE}` }}
-      >
-        <PureLabel>{t.hours}</PureLabel>
-        <div className="mt-3.5">
-          <HoursRow day={t.hoursMain} time={t.hoursMainTime} />
-          <HoursRow day={t.hoursWeekend} time={t.hoursWeekendTime} dashed />
-          <HoursRow day={t.hoursClosed} time={t.hoursClosedTime} dashed muted />
-        </div>
-      </section>
+      {/* ADDRESS */}
+      {cardData.address && (
+        <section
+          className="mx-7 mb-9 pt-5"
+          style={{ borderTop: `1px solid ${HAIRLINE}` }}
+        >
+          <PureLabel>{t.hours}</PureLabel>
+          <div className="mt-3.5 text-[14px]" style={{ color: INK }}>{cardData.address}</div>
+        </section>
+      )}
 
       {/* CONTACT TABLE */}
       <section
@@ -561,37 +532,6 @@ function PureLabel({ children }: { children: React.ReactNode }) {
       style={{ color: ACCENT_2, letterSpacing: "2.5px" }}
     >
       {children}
-    </div>
-  );
-}
-
-function HoursRow({
-  day,
-  time,
-  dashed,
-  muted,
-}: {
-  day: string;
-  time: string;
-  dashed?: boolean;
-  muted?: boolean;
-}) {
-  return (
-    <div
-      className="flex items-center justify-between py-2.5 text-[14px]"
-      style={{
-        borderTop: dashed ? `1px dashed ${HAIRLINE}` : "none",
-      }}
-    >
-      <span style={{ color: INK, fontWeight: 500 }}>{day}</span>
-      <span
-        style={{
-          color: muted ? INK_SOFT : INK,
-          fontFeatureSettings: '"tnum"',
-        }}
-      >
-        {time}
-      </span>
     </div>
   );
 }

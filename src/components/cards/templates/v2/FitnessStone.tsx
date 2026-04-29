@@ -223,12 +223,12 @@ export function FitnessStone({
     >
       <style jsx global>{`
         .fitness-stone-card {
-          font-family: 'Nunito', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Nunito', system-ui, sans-serif);
           line-height: 1.65;
           -webkit-font-smoothing: antialiased;
         }
         .fitness-stone-card .serif {
-          font-family: 'Fraunces', 'Cormorant Garamond', serif;
+          font-family: var(--tpl-font-display, 'Fraunces', 'Cormorant Garamond', serif);
         }
         .fitness-stone-card a { color: inherit; }
       `}</style>

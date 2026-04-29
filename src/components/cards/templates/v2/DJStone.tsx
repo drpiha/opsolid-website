@@ -186,12 +186,12 @@ export function DJStone({
     >
       <style jsx global>{`
         .djstone-card {
-          font-family: 'Nunito', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Nunito', 'Inter', system-ui, sans-serif);
           line-height: 1.6;
           -webkit-font-smoothing: antialiased;
         }
         .djstone-card .serif {
-          font-family: 'Playfair Display', 'Lora', Georgia, serif;
+          font-family: var(--tpl-font-display, 'Playfair Display', 'Lora', Georgia, serif);
         }
         .djstone-card a { color: inherit; }
         @keyframes djstone-rot {

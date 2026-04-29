@@ -194,7 +194,7 @@ export function PhotographerVivid({
     >
       <style jsx global>{`
         .phv-card {
-          font-family: 'Nunito', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Nunito', 'Inter', system-ui, sans-serif);
           line-height: 1.5;
           -webkit-font-smoothing: antialiased;
         }

@@ -205,7 +205,7 @@ export function FitnessVivid({
     >
       <style jsx global>{`
         .fitness-vivid-card {
-          font-family: 'Poppins', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Poppins', system-ui, sans-serif);
           line-height: 1.55;
           -webkit-font-smoothing: antialiased;
         }

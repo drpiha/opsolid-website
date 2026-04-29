@@ -209,14 +209,14 @@ export function Clinic({
     >
       <style jsx global>{`
         .cl-card {
-          font-family: var(--font-clinic), Nunito, system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-clinic), Nunito, system-ui, sans-serif);
           line-height: 1.6;
         }
         .cl-card .cl-display,
         .cl-card h1.cl-display,
         .cl-card h2.cl-display,
         .cl-card h3.cl-display {
-          font-family: var(--font-clinic), Nunito, system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-clinic), Nunito, system-ui, sans-serif);
           font-weight: 800;
           letter-spacing: -0.01em;
         }

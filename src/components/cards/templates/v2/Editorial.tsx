@@ -235,29 +235,29 @@ export function Editorial({
     >
       <style jsx global>{`
         .ed-card {
-          font-family: var(--font-editorial-body), "Source Sans 3", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-editorial-body), "Source Sans 3", system-ui, sans-serif);
           line-height: 1.65;
         }
         .ed-card .ed-display,
         .ed-card h1.ed-display,
         .ed-card h2.ed-display,
         .ed-card h3.ed-display {
-          font-family: var(--font-editorial-display), "Playfair Display", Georgia, serif;
+          font-family:var(--tpl-font-body,  var(--font-editorial-display), "Playfair Display", Georgia, serif);
           letter-spacing: 0.005em;
           font-feature-settings: "lnum";
         }
         .ed-card .ed-italic {
-          font-family: var(--font-editorial-display), "Playfair Display", Georgia, serif;
+          font-family:var(--tpl-font-body,  var(--font-editorial-display), "Playfair Display", Georgia, serif);
           font-style: italic;
         }
         .ed-card .ed-mono {
-          font-family: var(--font-editorial-body), "Source Sans 3", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-editorial-body), "Source Sans 3", system-ui, sans-serif);
           letter-spacing: 0.32em;
           text-transform: uppercase;
           font-weight: 600;
         }
         .ed-card .ed-dropcap::first-letter {
-          font-family: var(--font-editorial-display), "Playfair Display", Georgia, serif;
+          font-family:var(--tpl-font-body,  var(--font-editorial-display), "Playfair Display", Georgia, serif);
           font-weight: 600;
           font-size: 3.4em;
           line-height: 0.85;

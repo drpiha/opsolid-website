@@ -182,12 +182,12 @@ export function FitnessPure({
     >
       <style jsx global>{`
         .fitness-pure-card {
-          font-family: 'DM Sans', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'DM Sans', system-ui, sans-serif);
           line-height: 1.55;
           -webkit-font-smoothing: antialiased;
         }
         .fitness-pure-card .mono {
-          font-family: 'Space Grotesk', 'JetBrains Mono', sans-serif;
+          font-family: var(--tpl-font-display, 'Space Grotesk', 'JetBrains Mono', sans-serif);
         }
         .fitness-pure-card a { color: inherit; }
       `}</style>

@@ -210,12 +210,12 @@ export function AutoDealerVivid({
     >
       <style jsx global>{`
         .adv-card {
-          font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Poppins', 'Inter', system-ui, sans-serif);
           line-height: 1.6;
           background: ${PAGE};
         }
         .adv-card .display {
-          font-family: 'Rajdhani', 'Poppins', system-ui, sans-serif;
+          font-family: var(--tpl-font-display, 'Rajdhani', 'Poppins', system-ui, sans-serif);
           font-weight: 700;
         }
         .adv-card a { color: inherit; }

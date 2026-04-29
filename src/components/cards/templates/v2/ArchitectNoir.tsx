@@ -180,12 +180,12 @@ export function ArchitectNoir({
     >
       <style jsx global>{`
         .architect-noir-card {
-          font-family: 'Space Grotesk', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Space Grotesk', system-ui, sans-serif);
           line-height: 1.55;
           -webkit-font-smoothing: antialiased;
         }
         .architect-noir-card .serif {
-          font-family: 'Fraunces', 'Cormorant Garamond', serif;
+          font-family: var(--tpl-font-display, 'Fraunces', 'Cormorant Garamond', serif);
         }
         .architect-noir-card a { color: inherit; }
       `}</style>

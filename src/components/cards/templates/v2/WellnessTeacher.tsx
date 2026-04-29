@@ -218,11 +218,11 @@ export function WellnessTeacher({
     >
       <style jsx global>{`
         .wt-card {
-          font-family: 'Nunito', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Nunito', 'Inter', system-ui, sans-serif);
           line-height: 1.7;
         }
         .wt-card .serif {
-          font-family: 'Fraunces', 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--tpl-font-display, 'Fraunces', 'Cormorant Garamond', Georgia, serif);
           font-style: italic;
           font-weight: 400;
         }

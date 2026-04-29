@@ -205,16 +205,16 @@ export function Architect({
     >
       <style jsx global>{`
         .ar-card {
-          font-family: var(--font-architect), "Manrope", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-architect), "Manrope", system-ui, sans-serif);
           line-height: 1.65;
         }
         .ar-card .ar-display {
-          font-family: var(--font-architect), "Manrope", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-architect), "Manrope", system-ui, sans-serif);
           letter-spacing: -0.018em;
           font-weight: 700;
         }
         .ar-card .ar-mono {
-          font-family: var(--font-architect), "Manrope", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-architect), "Manrope", system-ui, sans-serif);
           letter-spacing: 0.32em;
           text-transform: uppercase;
           font-feature-settings: "tnum";

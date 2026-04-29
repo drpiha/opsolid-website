@@ -193,6 +193,7 @@ export function ContentCreator({
     : "";
 
   const services = cardData.services ?? [];
+  const testimonials = cardData.testimonials ?? [];
 
   const igHandle = platformHandleFromUrl(cardData.socials?.instagram, "@creator");
   const tikHandle = platformHandleFromUrl(cardData.socials?.tiktok, "@creator");
@@ -212,10 +213,10 @@ export function ContentCreator({
     >
       <style jsx global>{`
         .cc-card {
-          font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Poppins', 'Inter', system-ui, sans-serif);
           line-height: 1.6;
         }
-        .cc-card .display { font-family: 'Poppins', system-ui, sans-serif; }
+        .cc-card .display { font-family: var(--tpl-font-display, 'Poppins', system-ui, sans-serif); }
         .cc-card a { color: inherit; }
         @keyframes cc-pulse {
           0%,100% { transform: scale(1); opacity: 1; }
@@ -477,7 +478,7 @@ export function ContentCreator({
         </section>
       )}
 
-      {/* RATING STRIP */}
+      {/* REACH / REVIEWS STRIP */}
       <section className="px-7 pt-7">
         <div
           className="flex items-center justify-between rounded-2xl px-4 py-3.5"
@@ -489,16 +490,18 @@ export function ContentCreator({
               {t.totalReach}
             </span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <div className="flex" style={{ color: accent }}>
-              {[0, 1, 2, 3, 4].map((i) => (
-                <Star key={i} size={13} fill="currentColor" strokeWidth={0} />
-              ))}
+          {testimonials.length > 0 && (
+            <div className="flex items-center gap-1.5">
+              <div className="flex" style={{ color: accent }}>
+                {[0, 1, 2, 3, 4].map((i) => (
+                  <Star key={i} size={13} fill="currentColor" strokeWidth={0} />
+                ))}
+              </div>
+              <span className="text-[11.5px] font-bold" style={{ color: INK }}>
+                {testimonials.length}
+              </span>
             </div>
-            <span className="text-[11.5px] font-bold" style={{ color: INK }}>
-              4.9
-            </span>
-          </div>
+          )}
         </div>
       </section>
 

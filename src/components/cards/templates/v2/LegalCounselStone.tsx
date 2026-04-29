@@ -194,12 +194,12 @@ export function LegalCounselStone({
     >
       <style jsx global>{`
         .lcs-card {
-          font-family: 'Nunito', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Nunito', system-ui, sans-serif);
           line-height: 1.65;
           -webkit-font-smoothing: antialiased;
         }
         .lcs-card .serif {
-          font-family: 'Fraunces', 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--tpl-font-display, 'Fraunces', 'Cormorant Garamond', Georgia, serif);
         }
         .lcs-card a { color: inherit; }
       `}</style>

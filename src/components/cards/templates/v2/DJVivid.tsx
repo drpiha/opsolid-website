@@ -202,12 +202,12 @@ export function DJVivid({
     >
       <style jsx global>{`
         .djviv-card {
-          font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Poppins', 'Inter', system-ui, sans-serif);
           line-height: 1.5;
           -webkit-font-smoothing: antialiased;
         }
         .djviv-card .display {
-          font-family: 'Bebas Neue', 'Anton', 'Inter', sans-serif;
+          font-family: var(--tpl-font-display, 'Bebas Neue', 'Anton', 'Inter', sans-serif);
         }
         .djviv-card a { color: inherit; }
         @keyframes djviv-pulse {

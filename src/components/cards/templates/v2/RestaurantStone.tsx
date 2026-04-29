@@ -79,9 +79,8 @@ interface Copy {
   ctaPrimary: string;
   ctaSecondary: string;
   ctaTertiary: string;
-  statYears: string;
-  statAward: string;
-  statRating: string;
+  dishesLabel: string;
+  reviewsLabel: string;
   saveContact: string;
   walletLabel: string;
   poweredBy: string;
@@ -105,9 +104,8 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     ctaPrimary: "Tisch reservieren",
     ctaSecondary: "Karte ansehen",
     ctaTertiary: "Anfahrt",
-    statYears: "Jahre",
-    statAward: "Bib",
-    statRating: "Sterne",
+    dishesLabel: "Gerichte",
+    reviewsLabel: "Bewertungen",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
@@ -129,9 +127,8 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     ctaPrimary: "Reserve a table",
     ctaSecondary: "View menu",
     ctaTertiary: "Directions",
-    statYears: "Years",
-    statAward: "Bib",
-    statRating: "Stars",
+    dishesLabel: "Dishes",
+    reviewsLabel: "Reviews",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
@@ -153,9 +150,8 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     ctaPrimary: "Rezervasyon yap",
     ctaSecondary: "Menüyü gör",
     ctaTertiary: "Konum",
-    statYears: "Yıl",
-    statAward: "Bib",
-    statRating: "Puan",
+    dishesLabel: "Yemek",
+    reviewsLabel: "Yorum",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
@@ -180,7 +176,9 @@ export function RestaurantStone({
   const photoUrl = resolveAssetUrl(photoPath);
   const phoneDigits = cardData.phone ? digitsOnly(cardData.phone) : "";
 
-  const services = (cardData.services ?? []).slice(0, 4);
+  const allServices = cardData.services ?? [];
+  const services = allServices.slice(0, 4);
+  const testimonials = cardData.testimonials ?? [];
   const restaurantName = cardData.company || cardData.name;
   const tagline = cardData.title || cardData.position || "";
   const city = cardData.address?.split(",").slice(-2)[0]?.trim() || "Berlin";
@@ -197,12 +195,12 @@ export function RestaurantStone({
     >
       <style jsx global>{`
         .rss-card {
-          font-family: 'Nunito', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Nunito', 'Inter', system-ui, sans-serif);
           line-height: 1.6;
           -webkit-font-smoothing: antialiased;
         }
         .rss-card .serif {
-          font-family: 'Lora', 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--tpl-font-display, 'Lora', 'Cormorant Garamond', Georgia, serif);
         }
         .rss-card a { color: inherit; }
       `}</style>
@@ -358,11 +356,20 @@ export function RestaurantStone({
       )}
 
       {/* STATS */}
-      <div className="grid grid-cols-3 gap-2 px-6 pb-7">
-        <StoneStat num="12" label={t.statYears} />
-        <StoneStat num="Bib" label={t.statAward} />
-        <StoneStat num="4.9" label={t.statRating} />
-      </div>
+      {(() => {
+        const statsItems = [
+          ...(allServices.length > 0 ? [{ n: String(allServices.length), l: t.dishesLabel }] : []),
+          ...(testimonials.length > 0 ? [{ n: String(testimonials.length), l: t.reviewsLabel }] : []),
+        ];
+        if (statsItems.length === 0) return null;
+        return (
+          <div className="grid gap-2 px-6 pb-7" style={{ gridTemplateColumns: `repeat(${statsItems.length}, 1fr)` }}>
+            {statsItems.map((stat) => (
+              <StoneStat key={stat.l} num={stat.n} label={stat.l} />
+            ))}
+          </div>
+        );
+      })()}
 
       {/* SPECIALTIES */}
       {services.length > 0 && (

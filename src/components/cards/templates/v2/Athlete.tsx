@@ -276,16 +276,16 @@ export function Athlete({
     >
       <style jsx global>{`
         .ath-card {
-          font-family: var(--font-athlete-body), "Inter", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-athlete-body), "Inter", system-ui, sans-serif);
           line-height: 1.55;
           color: #d4d4d4;
         }
         .ath-card .ath-display {
-          font-family: var(--font-athlete-display), "Outfit", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-athlete-display), "Outfit", system-ui, sans-serif);
           letter-spacing: -0.02em;
         }
         .ath-card .ath-mono {
-          font-family: var(--font-athlete-display), "Outfit", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-athlete-display), "Outfit", system-ui, sans-serif);
           letter-spacing: 0.22em;
           text-transform: uppercase;
         }

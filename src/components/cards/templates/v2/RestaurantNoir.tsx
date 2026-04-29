@@ -93,9 +93,8 @@ interface Copy {
   callBtn: string;
   whatsappBtn: string;
   emailBtn: string;
-  yearsLabel: string;
-  awardLabel: string;
-  ratingLabel: string;
+  servicesLabel: string;
+  reviewsLabel: string;
   saveContact: string;
   walletLabel: string;
   poweredBy: string;
@@ -118,9 +117,8 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     callBtn: "Anrufen",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-Mail",
-    yearsLabel: "Jahre",
-    awardLabel: "Bib Gourmand",
-    ratingLabel: "Google",
+    servicesLabel: "Gerichte",
+    reviewsLabel: "Bewertungen",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
@@ -141,9 +139,8 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     callBtn: "Call",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
-    yearsLabel: "Years",
-    awardLabel: "Bib Gourmand",
-    ratingLabel: "Google",
+    servicesLabel: "Dishes",
+    reviewsLabel: "Reviews",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
@@ -164,9 +161,8 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     callBtn: "Ara",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-posta",
-    yearsLabel: "Yıl",
-    awardLabel: "Bib Gourmand",
-    ratingLabel: "Google",
+    servicesLabel: "Yemek",
+    reviewsLabel: "Yorum",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
@@ -196,7 +192,9 @@ export function RestaurantNoir({
     ? digitsOnly(cardData.whatsapp).replace(/^\+/, "")
     : "";
 
-  const services = (cardData.services ?? []).slice(0, 5);
+  const allServices = cardData.services ?? [];
+  const services = allServices.slice(0, 5);
+  const testimonials = cardData.testimonials ?? [];
   const restaurantName = cardData.company || cardData.name;
   const tagline = cardData.title || cardData.position || "";
   const city = cardData.address?.split(",").slice(-2)[0]?.trim() || "Berlin";
@@ -209,12 +207,12 @@ export function RestaurantNoir({
     >
       <style jsx global>{`
         .rsn-card {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Inter', system-ui, sans-serif);
           line-height: 1.6;
           -webkit-font-smoothing: antialiased;
         }
         .rsn-card .serif {
-          font-family: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+          font-family: var(--tpl-font-display, 'Cormorant Garamond', 'Playfair Display', Georgia, serif);
         }
         .rsn-card a { color: inherit; }
       `}</style>
@@ -430,18 +428,29 @@ export function RestaurantNoir({
         </section>
       )}
 
-      {/* STATS ROW */}
-      <div
-        className="grid grid-cols-3 py-7"
-        style={{
-          background: SURFACE_3,
-          borderBottom: `1px solid ${HAIRLINE}`,
-        }}
-      >
-        <NoirStat num="12" label={t.yearsLabel} accent={accent} />
-        <NoirStat num="Bib" label={t.awardLabel} accent={accent} divider />
-        <NoirStat num="4.9" label={t.ratingLabel} accent={accent} divider />
-      </div>
+      {/* STATS ROW — driven by real data */}
+      {(() => {
+        const statsItems = [
+          ...(allServices.length ? [{ num: String(allServices.length), label: t.servicesLabel }] : []),
+          ...(testimonials.length ? [{ num: String(testimonials.length), label: t.reviewsLabel }] : []),
+        ];
+        if (statsItems.length === 0) return null;
+        return (
+          <div
+            className="py-7"
+            style={{
+              background: SURFACE_3,
+              borderBottom: `1px solid ${HAIRLINE}`,
+              display: "grid",
+              gridTemplateColumns: `repeat(${statsItems.length}, 1fr)`,
+            }}
+          >
+            {statsItems.map((s, i) => (
+              <NoirStat key={s.label} num={s.num} label={s.label} accent={accent} divider={i > 0} />
+            ))}
+          </div>
+        );
+      })()}
 
       {/* HOURS — 2-cell grid with vertical rule */}
       <section

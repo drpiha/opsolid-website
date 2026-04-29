@@ -211,16 +211,16 @@ export function Barber({
     >
       <style jsx global>{`
         .bb-card {
-          font-family: var(--font-barber-body), "Roboto", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-barber-body), "Roboto", system-ui, sans-serif);
           line-height: 1.65;
         }
         .bb-card .bb-display {
-          font-family: var(--font-barber-display), "Oswald", "Impact", sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-barber-display), "Oswald", "Impact", sans-serif);
           letter-spacing: 0.18em;
           text-transform: uppercase;
         }
         .bb-card .bb-mono {
-          font-family: var(--font-barber-display), "Oswald", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-barber-display), "Oswald", system-ui, sans-serif);
           letter-spacing: 0.32em;
           text-transform: uppercase;
           font-feature-settings: "tnum";

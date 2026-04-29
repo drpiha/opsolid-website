@@ -65,12 +65,9 @@ function digitsOnly(value: string): string {
 }
 
 interface Copy {
-  ratingPill: string;
   taglineFallback: string;
-  yearsLabel: string;
-  ordersLabel: string;
-  ratingLabel: string;
-  followersLabel: string;
+  servicesLabel: string;
+  reviewsLabel: string;
   collectionH: string;
   collectionSub: string;
   bookBtn: string;
@@ -84,12 +81,9 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr", Copy> = {
   de: {
-    ratingPill: "★ 4.9 / 2400+ Bewertungen",
     taglineFallback: "Online Boutique",
-    yearsLabel: "Atelier",
-    ordersLabel: "Bestellungen",
-    ratingLabel: "Rating",
-    followersLabel: "Instagram",
+    servicesLabel: "Produkte",
+    reviewsLabel: "Bewertungen",
     collectionH: "Kollektion",
     collectionSub: "Sezonun par­çaları",
     bookBtn: "Sofort bestellen",
@@ -101,12 +95,9 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     poweredBy: "Powered by",
   },
   en: {
-    ratingPill: "★ 4.9 / 2400+ reviews",
     taglineFallback: "Online Boutique",
-    yearsLabel: "Atelier",
-    ordersLabel: "Orders",
-    ratingLabel: "Rating",
-    followersLabel: "Instagram",
+    servicesLabel: "Products",
+    reviewsLabel: "Reviews",
     collectionH: "Collection",
     collectionSub: "This season's pieces",
     bookBtn: "Order now",
@@ -118,12 +109,9 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    ratingPill: "★ 4.9 / 2400+ yorum",
     taglineFallback: "Online Butik",
-    yearsLabel: "Atelier",
-    ordersLabel: "Sipariş",
-    ratingLabel: "Rating",
-    followersLabel: "Instagram",
+    servicesLabel: "Ürünler",
+    reviewsLabel: "Yorum",
     collectionH: "Koleksiyon",
     collectionSub: "Sezonun parçaları",
     bookBtn: "Hemen Sipariş Ver",
@@ -156,7 +144,9 @@ export function EcommerceVivid({
     ? digitsOnly(cardData.whatsapp).replace(/^\+/, "")
     : "";
 
-  const services = (cardData.services ?? []).slice(0, 5);
+  const allServices = cardData.services ?? [];
+  const services = allServices.slice(0, 5);
+  const testimonials = cardData.testimonials ?? [];
   const cityFromAddress = cardData.address?.split(",").slice(-1)[0]?.trim();
   const nameParts = (cardData.company || cardData.name).trim().split(/\s+/);
   const nameFirst = nameParts[0] ?? cardData.name;
@@ -181,12 +171,12 @@ export function EcommerceVivid({
     >
       <style jsx global>{`
         .ecommerce-vivid-card {
-          font-family: 'Poppins', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Poppins', system-ui, sans-serif);
           line-height: 1.55;
           -webkit-font-smoothing: antialiased;
         }
         .ecommerce-vivid-card .display {
-          font-family: 'Bebas Neue', 'Oswald', system-ui, sans-serif;
+          font-family: var(--tpl-font-display, 'Bebas Neue', 'Oswald', system-ui, sans-serif);
         }
         .ecommerce-vivid-card a { color: inherit; }
       `}</style>
@@ -204,23 +194,25 @@ export function EcommerceVivid({
             pointerEvents: "none",
           }}
         />
-        <span
-          className="relative inline-flex items-center gap-2 rounded-full"
-          style={{
-            padding: "8px 14px",
-            background: "rgba(255,255,255,0.85)",
-            fontSize: 11,
-            fontWeight: 700,
-            color: TEXT,
-            letterSpacing: "1.5px",
-            textTransform: "uppercase",
-            marginBottom: 24,
-            boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
-          }}
-        >
-          <span style={{ color: ACCENT_RED, fontSize: 14 }}>★</span>
-          {t.ratingPill}
-        </span>
+        {testimonials.length > 0 && (
+          <span
+            className="relative inline-flex items-center gap-2 rounded-full"
+            style={{
+              padding: "8px 14px",
+              background: "rgba(255,255,255,0.85)",
+              fontSize: 11,
+              fontWeight: 700,
+              color: TEXT,
+              letterSpacing: "1.5px",
+              textTransform: "uppercase",
+              marginBottom: 24,
+              boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
+            }}
+          >
+            <span style={{ color: ACCENT_RED, fontSize: 14 }}>★</span>
+            {testimonials.length} {t.reviewsLabel}
+          </span>
+        )}
         <h1
           className="display relative"
           style={{
@@ -317,44 +309,48 @@ export function EcommerceVivid({
             </div>
           </div>
         </div>
-        <div className="mt-4 grid grid-cols-2 gap-2">
-          {[
-            { num: "5y", label: t.yearsLabel },
-            { num: "12K+", label: t.ordersLabel },
-            { num: "4.9", label: t.ratingLabel },
-            { num: "67K", label: t.followersLabel },
-          ].map((s, i) => (
-            <div
-              key={i}
-              className="rounded-2xl px-3.5 py-3.5 text-center"
-              style={{ background: "linear-gradient(135deg, #fff5f5, #fffbeb)" }}
-            >
-              <div
-                className="display"
-                style={{
-                  fontSize: 26,
-                  letterSpacing: "1px",
-                  color: ACCENT_RED,
-                  lineHeight: 1,
-                }}
-              >
-                {s.num}
-              </div>
-              <div
-                className="uppercase"
-                style={{
-                  fontSize: 10,
-                  color: TEXT_2,
-                  fontWeight: 600,
-                  letterSpacing: "0.5px",
-                  marginTop: 5,
-                }}
-              >
-                {s.label}
-              </div>
+        {(() => {
+          const statsItems = [
+            ...(allServices.length ? [{ num: String(allServices.length), label: t.servicesLabel }] : []),
+            ...(testimonials.length ? [{ num: String(testimonials.length), label: t.reviewsLabel }] : []),
+          ];
+          if (statsItems.length === 0) return null;
+          return (
+            <div className="mt-4 grid grid-cols-2 gap-2">
+              {statsItems.map((s) => (
+                <div
+                  key={s.label}
+                  className="rounded-2xl px-3.5 py-3.5 text-center"
+                  style={{ background: "linear-gradient(135deg, #fff5f5, #fffbeb)" }}
+                >
+                  <div
+                    className="display"
+                    style={{
+                      fontSize: 26,
+                      letterSpacing: "1px",
+                      color: ACCENT_RED,
+                      lineHeight: 1,
+                    }}
+                  >
+                    {s.num}
+                  </div>
+                  <div
+                    className="uppercase"
+                    style={{
+                      fontSize: 10,
+                      color: TEXT_2,
+                      fontWeight: 600,
+                      letterSpacing: "0.5px",
+                      marginTop: 5,
+                    }}
+                  >
+                    {s.label}
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          );
+        })()}
       </section>
 
       {/* COLLECTION */}

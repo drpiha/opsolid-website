@@ -172,13 +172,13 @@ export function ArchitectPure({
     >
       <style jsx global>{`
         .architect-pure-card {
-          font-family: 'DM Sans', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'DM Sans', system-ui, sans-serif);
           line-height: 1.55;
           -webkit-font-smoothing: antialiased;
           font-feature-settings: "ss01", "kern";
         }
         .architect-pure-card .mono {
-          font-family: 'Space Grotesk', 'JetBrains Mono', sans-serif;
+          font-family: var(--tpl-font-display, 'Space Grotesk', 'JetBrains Mono', sans-serif);
         }
         .architect-pure-card a { color: inherit; }
       `}</style>

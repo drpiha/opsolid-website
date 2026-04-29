@@ -114,6 +114,12 @@ import { fitnessNoirSample } from "@/components/cards/templates/v2/FitnessNoir";
 import { fitnessPureSample } from "@/components/cards/templates/v2/FitnessPure";
 import { fitnessVividSample } from "@/components/cards/templates/v2/FitnessVivid";
 import { fitnessStoneSample } from "@/components/cards/templates/v2/FitnessStone";
+// Phase 7.12 Batch E-1 — Universal layout templates v11-v15 (ids 92-96)
+import { layoutNoirLuxurySample } from "@/components/cards/templates/v2/LayoutNoirLuxury";
+import { layoutPureSwissSample } from "@/components/cards/templates/v2/LayoutPureSwiss";
+import { layoutVividBoldSample } from "@/components/cards/templates/v2/LayoutVividBold";
+import { layoutEditorialSample } from "@/components/cards/templates/v2/LayoutEditorial";
+import { layoutSplitScreenSample } from "@/components/cards/templates/v2/LayoutSplitScreen";
 
 // id=1 — RealEstate. Persona: Hannah Walker, senior listing agent in Berlin.
 // photo: Unsplash, by Christina Wocintechchat
@@ -290,6 +296,12 @@ export const cardTemplateSamples: Record<number, SampleData> = {
   89: fitnessPureSample,
   90: fitnessVividSample,
   91: fitnessStoneSample,
+  // Phase 7.12 Batch E-1 — Universal layout templates v11-v15
+  92: layoutNoirLuxurySample,
+  93: layoutPureSwissSample,
+  94: layoutVividBoldSample,
+  95: layoutEditorialSample,
+  96: layoutSplitScreenSample,
 };
 
 export function getTemplateSample(id: number): SampleData | undefined {

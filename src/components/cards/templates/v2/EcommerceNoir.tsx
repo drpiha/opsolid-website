@@ -79,10 +79,8 @@ interface Copy {
   collectionPre: string;
   collectionH: string;
   collectionSub: string;
-  yearsLabel: string;
-  ordersLabel: string;
-  ratingLabel: string;
-  followersLabel: string;
+  servicesLabel: string;
+  reviewsLabel: string;
   serviceH: string;
   serviceSub: string;
   bookBtn: string;
@@ -101,10 +99,8 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     collectionPre: "FW26",
     collectionH: "Kollektion",
     collectionSub: "Kuratierte Mode & Accessoires",
-    yearsLabel: "Atelier",
-    ordersLabel: "Bestellungen",
-    ratingLabel: "Rating",
-    followersLabel: "Instagram",
+    servicesLabel: "Produkte",
+    reviewsLabel: "Bewertungen",
     serviceH: "Le Service",
     serviceSub: "— Unsere Leistungen —",
     bookBtn: "Bestellung aufgeben",
@@ -121,10 +117,8 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     collectionPre: "FW26",
     collectionH: "Collection",
     collectionSub: "Curated fashion & accessories",
-    yearsLabel: "Atelier",
-    ordersLabel: "Orders",
-    ratingLabel: "Rating",
-    followersLabel: "Instagram",
+    servicesLabel: "Products",
+    reviewsLabel: "Reviews",
     serviceH: "Le Service",
     serviceSub: "— What we offer —",
     bookBtn: "Place order",
@@ -141,10 +135,8 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     collectionPre: "SS26",
     collectionH: "Koleksiyon",
     collectionSub: "Kuratörlü moda ve aksesuar",
-    yearsLabel: "Atelier",
-    ordersLabel: "Sipariş",
-    ratingLabel: "Rating",
-    followersLabel: "Instagram",
+    servicesLabel: "Ürünler",
+    reviewsLabel: "Yorum",
     serviceH: "Le Service",
     serviceSub: "— Hizmetlerimiz —",
     bookBtn: "Sipariş Ver",
@@ -175,7 +167,9 @@ export function EcommerceNoir({
     ? digitsOnly(cardData.whatsapp).replace(/^\+/, "")
     : "";
 
-  const services = (cardData.services ?? []).slice(0, 5);
+  const allServices = cardData.services ?? [];
+  const services = allServices.slice(0, 5);
+  const testimonials = cardData.testimonials ?? [];
   const featured = services[0];
   const remaining = services.slice(1, 5);
   const monogram = getInitials(cardData.company || cardData.name);
@@ -189,13 +183,13 @@ export function EcommerceNoir({
     >
       <style jsx global>{`
         .ecommerce-noir-card {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Inter', system-ui, sans-serif);
           font-weight: 300;
           line-height: 1.55;
           -webkit-font-smoothing: antialiased;
         }
         .ecommerce-noir-card .serif {
-          font-family: 'Playfair Display', 'Cormorant Garamond', serif;
+          font-family: var(--tpl-font-display, 'Playfair Display', 'Cormorant Garamond', serif);
         }
         .ecommerce-noir-card a { color: inherit; }
       `}</style>
@@ -482,45 +476,49 @@ export function EcommerceNoir({
         </>
       )}
 
-      {/* STATS */}
-      <div
-        className="grid grid-cols-2"
-        style={{ borderTop: `1px solid ${LINE}`, borderBottom: `1px solid ${LINE}` }}
-      >
-        {[
-          { num: "5y", label: t.yearsLabel },
-          { num: "12K+", label: t.ordersLabel },
-          { num: "4.9", label: t.ratingLabel },
-          { num: "67K", label: t.followersLabel },
-        ].map((s, i) => (
+      {/* STATS — driven by real data */}
+      {(() => {
+        const statsItems = [
+          ...(allServices.length ? [{ num: String(allServices.length), label: t.servicesLabel }] : []),
+          ...(testimonials.length ? [{ num: String(testimonials.length), label: t.reviewsLabel }] : []),
+        ];
+        if (statsItems.length === 0) return null;
+        return (
           <div
-            key={i}
-            className="px-3 py-6 text-center"
-            style={{
-              borderRight: i % 2 === 0 ? `1px solid ${LINE}` : "none",
-              borderTop: i >= 2 ? `1px solid ${LINE}` : "none",
-            }}
+            className="grid grid-cols-2"
+            style={{ borderTop: `1px solid ${LINE}`, borderBottom: `1px solid ${LINE}` }}
           >
-            <div
-              className="serif"
-              style={{ fontSize: 26, color: accent, fontWeight: 400 }}
-            >
-              {s.num}
-            </div>
-            <div
-              className="uppercase"
-              style={{
-                fontSize: 9,
-                color: MUTED,
-                letterSpacing: "2px",
-                marginTop: 4,
-              }}
-            >
-              {s.label}
-            </div>
+            {statsItems.map((s, i) => (
+              <div
+                key={s.label}
+                className="px-3 py-6 text-center"
+                style={{
+                  borderRight: i % 2 === 0 ? `1px solid ${LINE}` : "none",
+                  borderTop: i >= 2 ? `1px solid ${LINE}` : "none",
+                }}
+              >
+                <div
+                  className="serif"
+                  style={{ fontSize: 26, color: accent, fontWeight: 400 }}
+                >
+                  {s.num}
+                </div>
+                <div
+                  className="uppercase"
+                  style={{
+                    fontSize: 9,
+                    color: MUTED,
+                    letterSpacing: "2px",
+                    marginTop: 4,
+                  }}
+                >
+                  {s.label}
+                </div>
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
+        );
+      })()}
 
       {/* SERVICES */}
       <section

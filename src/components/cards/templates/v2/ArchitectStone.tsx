@@ -191,12 +191,12 @@ export function ArchitectStone({
     >
       <style jsx global>{`
         .architect-stone-card {
-          font-family: 'Nunito', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Nunito', system-ui, sans-serif);
           line-height: 1.65;
           -webkit-font-smoothing: antialiased;
         }
         .architect-stone-card .serif {
-          font-family: 'Fraunces', 'Cormorant Garamond', serif;
+          font-family: var(--tpl-font-display, 'Fraunces', 'Cormorant Garamond', serif);
         }
         .architect-stone-card a { color: inherit; }
       `}</style>

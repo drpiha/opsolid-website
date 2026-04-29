@@ -275,18 +275,18 @@ export function MusicProducer({
     >
       <style jsx global>{`
         .mp-card {
-          font-family: var(--font-mp-display), "Space Grotesk", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-mp-display), "Space Grotesk", system-ui, sans-serif);
           line-height: 1.55;
           letter-spacing: -0.005em;
         }
         .mp-card .mp-display {
-          font-family: var(--font-mp-display), "Space Grotesk", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-mp-display), "Space Grotesk", system-ui, sans-serif);
           font-weight: 700;
           letter-spacing: -0.035em;
           line-height: 0.92;
         }
         .mp-card .mp-mono {
-          font-family: var(--font-mp-display), "Space Grotesk", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-mp-display), "Space Grotesk", system-ui, sans-serif);
           letter-spacing: 0.32em;
           text-transform: uppercase;
           font-weight: 600;

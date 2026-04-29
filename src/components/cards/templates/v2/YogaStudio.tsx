@@ -268,7 +268,7 @@ export function YogaStudio({
     >
       <style jsx global>{`
         .yo-card {
-          font-family: var(--font-yoga-body), "Inter", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-yoga-body), "Inter", system-ui, sans-serif);
           line-height: 1.65;
           color: ${INK};
         }
@@ -283,7 +283,7 @@ export function YogaStudio({
           font-style: italic;
         }
         .yo-card .yo-mono {
-          font-family: var(--font-yoga-body), "Inter", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-yoga-body), "Inter", system-ui, sans-serif);
           letter-spacing: 0.22em;
           text-transform: uppercase;
           font-feature-settings: "tnum";

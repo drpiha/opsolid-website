@@ -201,12 +201,12 @@ export function LegalCounselPure({
     >
       <style jsx global>{`
         .lcp-card {
-          font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'DM Sans', 'Inter', system-ui, sans-serif);
           line-height: 1.55;
           -webkit-font-smoothing: antialiased;
         }
         .lcp-card .serif-i {
-          font-family: 'Lora', 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--tpl-font-display, 'Lora', 'Cormorant Garamond', Georgia, serif);
           font-style: italic;
           font-weight: 400;
         }

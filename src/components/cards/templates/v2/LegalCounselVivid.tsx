@@ -169,12 +169,12 @@ export function LegalCounselVivid({
     >
       <style jsx global>{`
         .lcv-card {
-          font-family: 'Open Sans', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Open Sans', system-ui, sans-serif);
           line-height: 1.55;
           -webkit-font-smoothing: antialiased;
         }
         .lcv-card .display {
-          font-family: 'Poppins', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-display, 'Poppins', 'Inter', system-ui, sans-serif);
         }
         .lcv-card a { color: inherit; }
       `}</style>

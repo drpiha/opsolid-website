@@ -98,9 +98,8 @@ interface AcCopy {
   impressum: string;
   privacy: string;
   share: string;
-  yearsLabel: string;
-  clientsLabel: string;
-  ratingLabel: string;
+  servicesLabel: string;
+  reviewsLabel: string;
   free: string;
 }
 
@@ -123,9 +122,8 @@ const COPY: Record<"de" | "en" | "tr", AcCopy> = {
     impressum: "Impressum",
     privacy: "Datenschutz",
     share: "Teilen",
-    yearsLabel: "Jahre",
-    clientsLabel: "Mandanten",
-    ratingLabel: "Bewertung",
+    servicesLabel: "Leistungen",
+    reviewsLabel: "Bewertungen",
     free: "Erstgespräch · gratis",
   },
   en: {
@@ -146,9 +144,8 @@ const COPY: Record<"de" | "en" | "tr", AcCopy> = {
     impressum: "Imprint",
     privacy: "Privacy",
     share: "Share",
-    yearsLabel: "Years",
-    clientsLabel: "Clients",
-    ratingLabel: "Rating",
+    servicesLabel: "Services",
+    reviewsLabel: "Reviews",
     free: "First chat · free",
   },
   tr: {
@@ -169,9 +166,8 @@ const COPY: Record<"de" | "en" | "tr", AcCopy> = {
     impressum: "Künye",
     privacy: "Gizlilik",
     share: "Paylaş",
-    yearsLabel: "Yıl",
-    clientsLabel: "Müvekkil",
-    ratingLabel: "Puan",
+    servicesLabel: "Hizmetler",
+    reviewsLabel: "Yorum",
     free: "İlk Görüşme · Ücretsiz",
   },
 };
@@ -222,11 +218,11 @@ export function Accounting({
     >
       <style jsx global>{`
         .ac-card {
-          font-family: "IBM Plex Sans", system-ui, sans-serif;
+          font-family: var(--tpl-font-body, "IBM Plex Sans", system-ui, sans-serif);
           line-height: 1.6;
         }
         .ac-card .serif {
-          font-family: "IBM Plex Serif", Georgia, serif;
+          font-family: var(--tpl-font-display, "IBM Plex Serif", Georgia, serif);
         }
         .ac-card a { color: inherit; }
       `}</style>
@@ -322,33 +318,31 @@ export function Accounting({
         </div>
       </section>
 
-      {/* CREDENTIAL BADGES */}
-      <section
-        className="flex flex-wrap gap-2 px-7 py-5"
-        style={{ background: SURFACE_PAGE }}
-      >
-        {[
-          locale === "tr" ? "IHK Sertifikalı" : locale === "de" ? "IHK-zertifiziert" : "IHK certified",
-          locale === "tr" ? "GmbH Uzmanı" : locale === "de" ? "GmbH-Spezialist" : "GmbH specialist",
-          locale === "tr" ? "Dijital Muhasebe" : locale === "de" ? "Digitale Buchhaltung" : "Digital bookkeeping",
-        ].map((label) => (
-          <span
-            key={label}
-            className="inline-flex items-center gap-1.5 rounded-md bg-white px-3 py-[7px] text-[11.5px] font-semibold"
-            style={{
-              color: primary,
-              border: `1px solid ${HAIRLINE_FIRM}`,
-              letterSpacing: "0.3px",
-            }}
-          >
+      {/* CREDENTIAL BADGES — driven by cardData.services */}
+      {(cardData.services?.length ?? 0) > 0 && (
+        <section
+          className="flex flex-wrap gap-2 px-7 py-5"
+          style={{ background: SURFACE_PAGE }}
+        >
+          {(cardData.services ?? []).slice(0, 6).map((service) => (
             <span
-              className="block h-1.5 w-1.5 rounded-full"
-              style={{ background: accent }}
-            />
-            {label}
-          </span>
-        ))}
-      </section>
+              key={service.title}
+              className="inline-flex items-center gap-1.5 rounded-md bg-white px-3 py-[7px] text-[11.5px] font-semibold"
+              style={{
+                color: primary,
+                border: `1px solid ${HAIRLINE_FIRM}`,
+                letterSpacing: "0.3px",
+              }}
+            >
+              <span
+                className="block h-1.5 w-1.5 rounded-full"
+                style={{ background: accent }}
+              />
+              {service.title}
+            </span>
+          ))}
+        </section>
+      )}
 
       {/* QUICK ACTIONS */}
       <section
@@ -458,39 +452,49 @@ export function Accounting({
         </section>
       )}
 
-      {/* STATS BAND */}
-      <section className="px-7 pt-7">
-        <div
-          className="relative grid grid-cols-3 gap-3 overflow-hidden rounded-[10px] px-4 py-7"
-          style={{ background: primary }}
-        >
-          <div
-            aria-hidden
-            className="absolute inset-x-0 top-0 h-[3px]"
-            style={{ background: accent }}
-          />
-          {[
-            { n: "15+", l: t.yearsLabel },
-            { n: "200+", l: t.clientsLabel },
-            { n: "4.9", l: t.ratingLabel },
-          ].map((stat) => (
-            <div key={stat.l} className="text-center">
+      {/* STATS BAND — driven by real data */}
+      {(() => {
+        const statsItems = [
+          ...(cardData.services?.length ? [{ n: String(cardData.services.length), l: t.servicesLabel }] : []),
+          ...(cardData.testimonials?.length ? [{ n: String(cardData.testimonials.length), l: t.reviewsLabel }] : []),
+        ];
+        if (statsItems.length === 0) return null;
+        return (
+          <section className="px-7 pt-7">
+            <div
+              className="relative overflow-hidden rounded-[10px] px-4 py-7"
+              style={{
+                background: primary,
+                display: "grid",
+                gridTemplateColumns: `repeat(${statsItems.length}, 1fr)`,
+                gap: "0.75rem",
+              }}
+            >
               <div
-                className="serif text-[28px] font-semibold leading-none"
-                style={{ color: accent }}
-              >
-                {stat.n}
-              </div>
-              <div
-                className="mt-1.5 text-[10.5px] font-medium uppercase"
-                style={{ color: `${onPrimary}bf`, letterSpacing: "1px" }}
-              >
-                {stat.l}
-              </div>
+                aria-hidden
+                className="absolute inset-x-0 top-0 h-[3px]"
+                style={{ background: accent }}
+              />
+              {statsItems.map((stat) => (
+                <div key={stat.l} className="text-center">
+                  <div
+                    className="serif text-[28px] font-semibold leading-none"
+                    style={{ color: accent }}
+                  >
+                    {stat.n}
+                  </div>
+                  <div
+                    className="mt-1.5 text-[10.5px] font-medium uppercase"
+                    style={{ color: `${onPrimary}bf`, letterSpacing: "1px" }}
+                  >
+                    {stat.l}
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </section>
+          </section>
+        );
+      })()}
 
       {/* CONTACT TABLE */}
       <section className="px-7 pt-7">

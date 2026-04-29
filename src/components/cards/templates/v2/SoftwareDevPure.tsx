@@ -180,7 +180,7 @@ export function SoftwareDevPure({
     >
       <style jsx global>{`
         .sdp-card { line-height: 1.6; }
-        .sdp-card .mono { font-family: 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace; }
+        .sdp-card .mono { font-family: var(--tpl-font-display, 'JetBrains Mono', 'SFMono-Regular', Consolas, monospace); }
         .sdp-card a { color: inherit; }
       `}</style>
 

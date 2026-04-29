@@ -307,19 +307,19 @@ export function Restaurant({
     >
       <style jsx global>{`
         .rs-card {
-          font-family: var(--font-restaurant-body), "Inter", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-restaurant-body), "Inter", system-ui, sans-serif);
           line-height: 1.65;
         }
         .rs-card .rs-display {
-          font-family: var(--font-restaurant-display), "Playfair Display", Georgia, serif;
+          font-family:var(--tpl-font-body,  var(--font-restaurant-display), "Playfair Display", Georgia, serif);
           letter-spacing: 0.005em;
         }
         .rs-card .rs-italic {
-          font-family: var(--font-restaurant-display), "Playfair Display", Georgia, serif;
+          font-family:var(--tpl-font-body,  var(--font-restaurant-display), "Playfair Display", Georgia, serif);
           font-style: italic;
         }
         .rs-card .rs-eyebrow {
-          font-family: var(--font-restaurant-display), "Playfair Display", Georgia, serif;
+          font-family:var(--tpl-font-body,  var(--font-restaurant-display), "Playfair Display", Georgia, serif);
           font-style: italic;
           letter-spacing: 0.04em;
         }

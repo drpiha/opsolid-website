@@ -267,23 +267,23 @@ export function TechStartup({
     >
       <style jsx global>{`
         .ts-card {
-          font-family: var(--font-tech-display), "Space Grotesk", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-tech-display), "Space Grotesk", system-ui, sans-serif);
           line-height: 1.55;
         }
         .ts-card .ts-mono {
-          font-family: var(--font-tech-mono), "JetBrains Mono", ui-monospace, monospace;
+          font-family:var(--tpl-font-body,  var(--font-tech-mono), "JetBrains Mono", ui-monospace, monospace);
           letter-spacing: 0.02em;
           font-feature-settings: "tnum", "ss01";
         }
         .ts-card .ts-eyebrow {
-          font-family: var(--font-tech-mono), "JetBrains Mono", ui-monospace, monospace;
+          font-family:var(--tpl-font-body,  var(--font-tech-mono), "JetBrains Mono", ui-monospace, monospace);
           letter-spacing: 0.24em;
           text-transform: uppercase;
           font-weight: 600;
           font-feature-settings: "tnum";
         }
         .ts-card .ts-display {
-          font-family: var(--font-tech-display), "Space Grotesk", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-tech-display), "Space Grotesk", system-ui, sans-serif);
           letter-spacing: -0.03em;
           font-weight: 700;
           line-height: 0.95;

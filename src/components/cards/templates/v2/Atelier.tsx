@@ -172,17 +172,17 @@ export function Atelier({
     >
       <style jsx global>{`
         .at-card {
-          font-family: var(--font-atelier-body), "Inter", system-ui, sans-serif;
+          font-family:var(--tpl-font-body,  var(--font-atelier-body), "Inter", system-ui, sans-serif);
           line-height: 1.7;
           color: ${TEXT_DARK};
         }
         .at-card .at-display {
-          font-family: var(--font-atelier-display), "Instrument Serif", "Cormorant Garamond", Georgia, serif;
+          font-family:var(--tpl-font-body,  var(--font-atelier-display), "Instrument Serif", "Cormorant Garamond", Georgia, serif);
           font-weight: 400;
           letter-spacing: -0.005em;
         }
         .at-card .at-italic {
-          font-family: var(--font-atelier-display), "Instrument Serif", "Cormorant Garamond", Georgia, serif;
+          font-family:var(--tpl-font-body,  var(--font-atelier-display), "Instrument Serif", "Cormorant Garamond", Georgia, serif);
           font-weight: 400;
           font-style: italic;
         }

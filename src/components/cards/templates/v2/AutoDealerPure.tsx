@@ -177,7 +177,7 @@ export function AutoDealerPure({
     >
       <style jsx global>{`
         .adp-card {
-          font-family: 'DM Sans', 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'DM Sans', 'Inter', system-ui, sans-serif);
           line-height: 1.6;
           background: ${PAGE};
         }

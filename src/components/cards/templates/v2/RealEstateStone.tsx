@@ -207,11 +207,11 @@ export function RealEstateStone({
     >
       <style jsx global>{`
         .res-card {
-          font-family: 'Nunito', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Nunito', system-ui, sans-serif);
           line-height: 1.65;
         }
         .res-card .serif {
-          font-family: 'Fraunces', 'Cormorant Garamond', Georgia, serif;
+          font-family: var(--tpl-font-display, 'Fraunces', 'Cormorant Garamond', Georgia, serif);
         }
         .res-card a { color: inherit; }
       `}</style>

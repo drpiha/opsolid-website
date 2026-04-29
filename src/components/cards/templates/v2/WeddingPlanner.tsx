@@ -268,34 +268,34 @@ export function WeddingPlanner({
     >
       <style jsx global>{`
         .wp-card {
-          font-family: var(--font-wp-display), "Cormorant Garamond", Georgia, serif;
+          font-family:var(--tpl-font-body,  var(--font-wp-display), "Cormorant Garamond", Georgia, serif);
           line-height: 1.65;
           color: ${TEXT_DARK};
         }
         .wp-card .wp-display {
-          font-family: var(--font-wp-display), "Cormorant Garamond", Georgia, serif;
+          font-family:var(--tpl-font-body,  var(--font-wp-display), "Cormorant Garamond", Georgia, serif);
           letter-spacing: 0.005em;
           font-feature-settings: "lnum";
         }
         .wp-card .wp-italic {
-          font-family: var(--font-wp-display), "Cormorant Garamond", Georgia, serif;
+          font-family:var(--tpl-font-body,  var(--font-wp-display), "Cormorant Garamond", Georgia, serif);
           font-style: italic;
           font-weight: 500;
         }
         .wp-card .wp-script {
-          font-family: var(--font-wp-script), "Dancing Script", "Brush Script MT", cursive;
+          font-family:var(--tpl-font-body,  var(--font-wp-script), "Dancing Script", "Brush Script MT", cursive);
           font-weight: 600;
           letter-spacing: 0.005em;
         }
         .wp-card .wp-mono {
-          font-family: var(--font-wp-display), "Cormorant Garamond", Georgia, serif;
+          font-family:var(--tpl-font-body,  var(--font-wp-display), "Cormorant Garamond", Georgia, serif);
           letter-spacing: 0.32em;
           text-transform: uppercase;
           font-weight: 600;
           font-size: 10px;
         }
         .wp-card .wp-body {
-          font-family: var(--font-wp-display), "Cormorant Garamond", Georgia, serif;
+          font-family:var(--tpl-font-body,  var(--font-wp-display), "Cormorant Garamond", Georgia, serif);
           font-weight: 400;
         }
       `}</style>

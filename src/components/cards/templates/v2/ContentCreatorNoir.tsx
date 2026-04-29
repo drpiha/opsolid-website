@@ -198,10 +198,10 @@ export function ContentCreatorNoir({
     >
       <style jsx global>{`
         .ccn-card {
-          font-family: 'Inter', system-ui, sans-serif;
+          font-family: var(--tpl-font-body, 'Inter', system-ui, sans-serif);
           line-height: 1.6;
         }
-        .ccn-card .display { font-family: 'Syne', 'Inter', sans-serif; }
+        .ccn-card .display { font-family: var(--tpl-font-display, 'Syne', 'Inter', sans-serif); }
         .ccn-card a { color: inherit; }
         @keyframes ccn-rec {
           0%, 100% { opacity: 1; }
