@@ -92,7 +92,7 @@ export async function GET(
   return new NextResponse(vcard, {
     status: 200,
     headers: {
-      "Content-Type": "text/vcard; charset=utf-8",
+      "Content-Type": "text/x-vcard; charset=utf-8",
       "Content-Disposition": `attachment; filename="${vcardFilename(cardData.name)}"`,
       // Short browser cache so a "Save Contact" tap doesn't re-render the file
       // each time, but new edits propagate fast (we re-read the order on

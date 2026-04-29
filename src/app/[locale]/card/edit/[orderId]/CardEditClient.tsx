@@ -289,14 +289,19 @@ export function CardEditClient(props: Props) {
               />
             )}
 
-            {/* CRM — leads and card connections (Phase 7.10 WIP — Component below
-                will be wired once the import path is resolved.) */}
-            {/* {props.status === "PUBLISHED" && (
+            {/* Analytics + CRM panels — visible once card is published */}
+            {props.status === "PUBLISHED" && (
+              <AnalyticsPanel
+                orderId={props.orderId}
+                editToken={props.editToken}
+              />
+            )}
+            {props.status === "PUBLISHED" && (
               <LeadsPanel
                 orderId={props.orderId}
                 editToken={props.editToken}
               />
-            )} */}
+            )}
 
             {/* Contact — read-only */}
             <div className="rounded-2xl border border-neutral-200 bg-white p-5">
@@ -1013,6 +1018,93 @@ function ColorField({
 }
 
 // -----------------------------------------------------------------------------
+// Analytics panel — shows view counts for the card owner.
+// Fetches from GET /api/card/edit/[orderId]/analytics?t=<editToken>.
+// -----------------------------------------------------------------------------
+type AnalyticsData = {
+  total: number;
+  last7d: number;
+  last30d: number;
+  bySource: { qr: number; nfc: number; link: number; wallet: number; other: number };
+};
+
+function AnalyticsPanel({ orderId, editToken }: { orderId: string; editToken: string }) {
+  const [data, setData] = useState<AnalyticsData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    void fetch(`/api/card/edit/${orderId}/analytics?t=${encodeURIComponent(editToken)}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => setData(j as AnalyticsData | null))
+      .finally(() => setLoading(false));
+  }, [orderId, editToken]);
+
+  const stats: { label: string; value: number | string }[] = data
+    ? [
+        { label: "Toplam Görüntülenme", value: data.total },
+        { label: "Son 7 Gün", value: data.last7d },
+        { label: "Son 30 Gün", value: data.last30d },
+      ]
+    : [];
+
+  const sources = data
+    ? [
+        { key: "QR", value: data.bySource.qr },
+        { key: "Link", value: data.bySource.link },
+        { key: "NFC", value: data.bySource.nfc },
+        { key: "Cüzdan", value: data.bySource.wallet },
+        { key: "Diğer", value: data.bySource.other },
+      ].filter((s) => s.value > 0)
+    : [];
+
+  return (
+    <div className="overflow-hidden rounded-2xl border border-neutral-200 bg-white">
+      <div className="flex items-center justify-between px-5 py-4">
+        <span className="text-sm font-semibold text-ink">Kart Analitiği</span>
+        {data && (
+          <span className="text-[11px] text-ink/40">Toplam {data.total} görüntülenme</span>
+        )}
+      </div>
+      <div className="border-t border-neutral-100 px-5 py-4">
+        {loading && (
+          <div className="flex items-center gap-2 text-sm text-ink/50">
+            <Loader2 size={14} className="animate-spin" /> Yükleniyor…
+          </div>
+        )}
+        {!loading && !data && (
+          <p className="text-sm text-ink/40">Analitik verileri yüklenemedi.</p>
+        )}
+        {!loading && data && (
+          <>
+            <div className="grid grid-cols-3 gap-3">
+              {stats.map((s) => (
+                <div key={s.label} className="rounded-xl bg-neutral-50 p-3 text-center">
+                  <div className="text-2xl font-bold text-ink">{s.value}</div>
+                  <div className="mt-0.5 text-[10px] text-ink/50">{s.label}</div>
+                </div>
+              ))}
+            </div>
+            {sources.length > 0 && (
+              <div className="mt-3 flex flex-wrap gap-2">
+                {sources.map((s) => (
+                  <span
+                    key={s.key}
+                    className="inline-flex items-center gap-1 rounded-full bg-neutral-100 px-2.5 py-1 text-[11px] text-ink/70"
+                  >
+                    <span className="font-medium">{s.key}</span>
+                    <span className="text-ink/40">{s.value}</span>
+                  </span>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// -----------------------------------------------------------------------------
 // CRM panel — shows received leads and card-to-card connections.
 // Fetches from GET /api/card/edit/[orderId]/crm?t=<editToken> on first open.
 // -----------------------------------------------------------------------------
@@ -1033,7 +1125,6 @@ type CrmConnection = {
   createdAt: string;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string }) {
   const [open, setOpen] = useState(false);
   const [leads, setLeads] = useState<CrmLead[] | null>(null);
