@@ -72,8 +72,8 @@ export async function GET(
       website: cardData.website,
       primaryHex: order.brandPrimaryHex ?? null,
       cardUrl,
-      photoPath: cardData.photoPath ?? null,
-      logoPath: cardData.logoPath ?? null,
+      photoPath: order.photoPath ?? null,
+      logoPath: order.logoPath ?? null,
     });
 
     const saveUrl = `https://pay.google.com/gp/v/save/${jwt}`;

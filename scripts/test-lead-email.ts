@@ -57,7 +57,7 @@ async function main() {
             interest: null,
             meetingContext: testInfo.visitor.meetingContext,
           },
-          source: { src: "test", campaign: null, event: null, location: null },
+          source: { src: "test" },
         },
         normalizeLocale("de"),
       );
