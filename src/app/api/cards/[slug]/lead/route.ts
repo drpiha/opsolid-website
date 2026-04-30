@@ -14,7 +14,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { OrderStatus } from "@/lib/validation";
-import { readSourceFromSearchParams, describeSource } from "@/components/cards/smart/SmartCardSource";
+import { readSourceFromSearchParams } from "@/components/cards/smart/SmartCardSource";
 import { renderLeadNotification } from "@/lib/email/templates/lead-notification";
 import { sendCustomerEmail } from "@/lib/email/send";
 import { normalizeLocale } from "@/lib/email/shell";
@@ -104,17 +104,6 @@ export async function POST(
 
   const url = new URL(req.url);
   const source = readSourceFromSearchParams(url.searchParams);
-  const sourceLabel = describeSource(source);
-
-  // Compose the message body so existing CardLead.message field captures the
-  // full visit context. Phase 2 will split these into dedicated columns.
-  const messageParts: string[] = [];
-  if (parsed.data.message) messageParts.push(parsed.data.message);
-  if (parsed.data.interest) messageParts.push(`Interesse: ${parsed.data.interest}`);
-  if (parsed.data.meetingContext)
-    messageParts.push(`Kontext: ${parsed.data.meetingContext}`);
-  if (parsed.data.company) messageParts.push(`Unternehmen: ${parsed.data.company}`);
-  if (sourceLabel) messageParts.push(`Quelle: ${sourceLabel}`);
 
   const lead = await prisma.cardLead.create({
     data: {
@@ -122,14 +111,17 @@ export async function POST(
       name: parsed.data.name,
       email: parsed.data.email,
       phone: parsed.data.phone,
-      message: messageParts.join("\n") || null,
+      message: parsed.data.message ?? null,
+      interest: parsed.data.interest ?? null,
+      meetingContext: parsed.data.meetingContext ?? null,
+      company: parsed.data.company ?? null,
     },
   });
 
   // Fire-and-forget email notification to the card owner. SMTP is optional
   // (sendCustomerEmail no-ops with a warn log when env is missing) so we
   // never block the visitor's submit on mail delivery.
-  void notifyCardOwner({ order, parsed: parsed.data, source, sourceLabel, slug });
+  void notifyCardOwner({ order, parsed: parsed.data, source, slug });
 
   // Fire-and-forget outbound CRM webhook. Failures are logged to Sentry and
   // never block the response. We only emit a structured subset of the lead
@@ -160,7 +152,6 @@ async function notifyCardOwner(args: {
   order: { id: string; contactEmail: string; contactName: string; locale: string };
   parsed: z.infer<typeof LeadInputSchema>;
   source: ReturnType<typeof readSourceFromSearchParams>;
-  sourceLabel?: string;
   slug: string;
 }) {
   try {
