@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "generate-thumbnails": "tsx scripts/generate-template-thumbnails.ts",
-    "create-sample-order": "tsx scripts/create-sample-order.ts"
+    "create-sample-order": "tsx scripts/create-sample-order.ts",
+    "test:lead": "tsx scripts/test-lead-email.ts"
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",
