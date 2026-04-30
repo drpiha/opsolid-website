@@ -334,35 +334,9 @@ export function CardEditClient(props: Props) {
               />
             )}
 
-            {/* Contact — read-only */}
-            <div className="rounded-2xl border border-neutral-200 bg-white p-5">
-              <p className="text-eyebrow uppercase text-ink/50">
-                {edit.contactReadonlyLabel}
-              </p>
-              <dl className="mt-3 grid gap-2 text-sm text-ink/80 md:grid-cols-3">
-                <div>
-                  <dt className="text-xs uppercase text-ink/50">
-                    {form.contactName}
-                  </dt>
-                  <dd className="mt-1">{props.contactName}</dd>
-                </div>
-                <div>
-                  <dt className="text-xs uppercase text-ink/50">
-                    {form.contactEmail}
-                  </dt>
-                  <dd className="mt-1 break-all">{props.contactEmail}</dd>
-                </div>
-                <div>
-                  <dt className="text-xs uppercase text-ink/50">
-                    {form.contactPhone}
-                  </dt>
-                  <dd className="mt-1">{props.contactPhone}</dd>
-                </div>
-              </dl>
-              <p className="mt-4 text-xs text-ink/50">
-                {edit.contactReadonlyHint}
-              </p>
-            </div>
+            {/* Contact-readonly block removed — the same fields are editable
+                directly in the card-content section below, so a separate
+                read-only mirror is just visual noise. */}
 
             {/* Card content */}
             <fieldset className="space-y-4">
@@ -721,7 +695,7 @@ export function CardEditClient(props: Props) {
               <p className="mt-1 text-sm text-ink/60">{edit.shareBody}</p>
               {props.slug && props.status === "PUBLISHED" ? (
                 <a
-                  href={`/c/${props.slug}/og.png`}
+                  href={`/c/${props.slug}/wa.png`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-4 inline-flex btn-ghost text-sm"
@@ -1342,6 +1316,16 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [savingId, setSavingId] = useState<string | null>(null);
   const [expandedNotes, setExpandedNotes] = useState<Set<string>>(new Set());
+  // Compact-row expansion: clicking a row reveals the full detail panel.
+  // Default collapsed so the CRM reads as a tight table at a glance.
+  const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
+  const toggleRow = (id: string) =>
+    setExpandedRows((s) => {
+      const n = new Set(s);
+      if (n.has(id)) n.delete(id);
+      else n.add(id);
+      return n;
+    });
   const [noteEdits, _setNoteEdits] = useState<Record<string, string>>({});
   void noteEdits; // reserved for future controlled note editing
 
@@ -1519,175 +1503,218 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
               leads?.length === 0 ? (
                 <p className="text-sm text-ink/40">{e.crmEmptyLeads}</p>
               ) : (
-                <ul className="space-y-3">
-                  {leads?.map((l) => (
-                    <li
-                      key={l.id}
-                      className="rounded-xl border border-neutral-100 bg-neutral-50 p-3 text-sm"
-                    >
-                      {/* Row 1: name + date + chips */}
-                      <div className="flex flex-wrap items-start justify-between gap-2">
-                        <div className="flex flex-wrap items-center gap-1.5">
-                          <span className="font-semibold text-ink">{l.name ?? "—"}</span>
-                          {statusChip(l.status ?? "new")}
-                          {/* Priority dot — red when priority > 0 */}
-                          {(l.priority ?? 0) > 0 && (
-                            <span
-                              title={`Öncelik: ${l.priority}`}
-                              className="inline-block h-2 w-2 rounded-full bg-red-500"
-                            />
-                          )}
-                          {savingId === l.id && (
-                            <Loader2 size={11} className="animate-spin text-copper/60" />
-                          )}
-                        </div>
-                        <span className="shrink-0 text-[10px] text-ink/40">
-                          {new Date(l.createdAt).toLocaleDateString("tr-TR")}
-                        </span>
-                      </div>
-
-                      {/* Row 2: company + meetingContext */}
-                      {(l.company ?? l.meetingContext) && (
-                        <p className="mt-1 text-[11px] text-ink/50">
-                          {[l.company, l.meetingContext].filter(Boolean).join(" · ")}
-                        </p>
-                      )}
-
-                      {/* Row 3: message / interest preview */}
-                      {(l.message ?? l.interest) && (
-                        <p className="mt-1.5 text-xs text-ink/60 line-clamp-2">
-                          {l.message ?? l.interest}
-                        </p>
-                      )}
-
-                      {/* Tags */}
-                      <div className="mt-2 flex flex-wrap gap-1">
-                        {(l.tags ?? []).map((tag) => (
+                <ul className="divide-y divide-neutral-100 rounded-lg border border-neutral-100 bg-white">
+                  {leads?.map((l) => {
+                    const isExpanded = expandedRows.has(l.id);
+                    return (
+                      <li key={l.id}>
+                        {/* Compact row — click to expand */}
+                        <button
+                          type="button"
+                          onClick={() => toggleRow(l.id)}
+                          className={`flex w-full items-center gap-3 px-3 py-2.5 text-left text-sm transition ${
+                            isExpanded ? "bg-neutral-50" : "hover:bg-neutral-50"
+                          }`}
+                        >
+                          {/* Priority dot */}
                           <span
-                            key={tag}
-                            className="inline-flex items-center gap-1 rounded-full bg-copper/10 px-2 py-0.5 text-[10px] font-medium text-copper"
-                          >
-                            {tag}
+                            className={`h-2 w-2 shrink-0 rounded-full ${
+                              (l.priority ?? 0) > 0 ? "bg-red-500" : "bg-transparent"
+                            }`}
+                            aria-hidden
+                          />
+                          {/* Name + secondary */}
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-2">
+                              <span className="truncate font-semibold text-ink">
+                                {l.name ?? "—"}
+                              </span>
+                              {savingId === l.id && (
+                                <Loader2 size={11} className="animate-spin text-copper/60" />
+                              )}
+                            </div>
+                            <div className="mt-0.5 truncate text-[11px] text-ink/50">
+                              {[l.company, l.meetingContext, l.email]
+                                .filter(Boolean)
+                                .join(" · ") || "—"}
+                            </div>
+                          </div>
+                          {/* Status chip */}
+                          <span className="shrink-0">{statusChip(l.status ?? "new")}</span>
+                          {/* Date */}
+                          <span className="shrink-0 hidden sm:block text-[10px] tabular-nums text-ink/40">
+                            {new Date(l.createdAt).toLocaleDateString()}
+                          </span>
+                          {/* Chevron */}
+                          {isExpanded ? (
+                            <ChevronUp size={14} className="shrink-0 text-ink/40" />
+                          ) : (
+                            <ChevronDown size={14} className="shrink-0 text-ink/40" />
+                          )}
+                        </button>
+
+                        {/* Expanded panel */}
+                        {isExpanded && (
+                          <div className="space-y-3 border-t border-neutral-100 bg-neutral-50/60 px-3 py-3 text-sm">
+                            {/* Date (full) on mobile, hidden on desktop where row already shows it */}
+                            <div className="text-[11px] text-ink/45 sm:hidden">
+                              {new Date(l.createdAt).toLocaleString()}
+                            </div>
+
+                            {/* Message + interest */}
+                            {l.message && (
+                              <p className="whitespace-pre-wrap text-xs text-ink/75">
+                                {l.message}
+                              </p>
+                            )}
+                            {l.interest && (
+                              <p className="text-[11px] text-ink/55">
+                                <span className="mono-label uppercase tracking-wide">
+                                  Interesse
+                                </span>{" "}
+                                · {l.interest}
+                              </p>
+                            )}
+
+                            {/* Reply buttons */}
+                            <div className="flex flex-wrap gap-1.5">
+                              {l.email && (
+                                <a
+                                  href={`mailto:${l.email}`}
+                                  className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink/70 transition hover:border-copper/40 hover:text-copper active:scale-95"
+                                >
+                                  <Mail size={11} />
+                                  {l.email}
+                                </a>
+                              )}
+                              {l.phone && (
+                                <>
+                                  <a
+                                    href={`tel:${l.phone}`}
+                                    className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink/70 transition hover:border-copper/40 hover:text-copper active:scale-95"
+                                  >
+                                    <Phone size={11} />
+                                    {l.phone}
+                                  </a>
+                                  <a
+                                    href={`https://wa.me/${l.phone.replace(/[^0-9]/g, "")}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink/70 transition hover:border-green-500/40 hover:text-green-600 active:scale-95"
+                                  >
+                                    <MessageCircle size={11} />
+                                    WhatsApp
+                                  </a>
+                                </>
+                              )}
+                            </div>
+
+                            {/* Tags */}
+                            <div className="flex flex-wrap gap-1">
+                              {(l.tags ?? []).map((tag) => (
+                                <span
+                                  key={tag}
+                                  className="inline-flex items-center gap-1 rounded-full bg-copper/10 px-2 py-0.5 text-[10px] font-medium text-copper"
+                                >
+                                  {tag}
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      void patchLead(l.id, {
+                                        tags: (l.tags ?? []).filter((t) => t !== tag),
+                                      })
+                                    }
+                                    className="text-copper/60 hover:text-copper leading-none"
+                                  >
+                                    ×
+                                  </button>
+                                </span>
+                              ))}
+                              <TagInput
+                                onAdd={(newTag) => {
+                                  if (!(l.tags ?? []).includes(newTag)) {
+                                    void patchLead(l.id, {
+                                      tags: [...(l.tags ?? []), newTag],
+                                    });
+                                  }
+                                }}
+                              />
+                            </div>
+
+                            {/* Status + priority */}
+                            <div className="flex flex-wrap items-center gap-2">
+                              <select
+                                value={l.status ?? "new"}
+                                onChange={(ev) =>
+                                  void patchLead(l.id, { status: ev.target.value })
+                                }
+                                className="rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] text-ink/70 focus:border-copper/50 focus:outline-none"
+                              >
+                                <option value="new">{e.leadStatusNew}</option>
+                                <option value="contacted">{e.leadStatusContacted}</option>
+                                <option value="qualified">{e.leadStatusQualified}</option>
+                                <option value="archived">{e.leadStatusArchived}</option>
+                              </select>
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  void patchLead(l.id, {
+                                    priority: (l.priority ?? 0) > 0 ? 0 : 1,
+                                  })
+                                }
+                                className={`rounded-md border px-2 py-1 text-[11px] font-medium transition ${
+                                  (l.priority ?? 0) > 0
+                                    ? "border-red-200 bg-red-50 text-red-600 hover:bg-red-100"
+                                    : "border-neutral-200 bg-white text-ink/50 hover:border-copper/30 hover:text-copper"
+                                }`}
+                              >
+                                {(l.priority ?? 0) > 0 ? "★" : "☆"}
+                              </button>
+                            </div>
+
+                            {/* Owner notes */}
+                            {expandedNotes.has(l.id) ? (
+                              <textarea
+                                key={l.id}
+                                defaultValue={l.ownerNotes ?? ""}
+                                placeholder={e.addNotePlaceholder}
+                                onBlur={(ev) => {
+                                  const val = ev.target.value;
+                                  if (val !== (l.ownerNotes ?? "")) {
+                                    void patchLead(l.id, { ownerNotes: val });
+                                  }
+                                }}
+                                className="w-full resize-none rounded-lg border border-neutral-200 bg-white p-2 text-xs text-ink/70 placeholder-ink/30 focus:border-copper/40 focus:outline-none"
+                                rows={3}
+                              />
+                            ) : l.ownerNotes ? (
+                              <p className="rounded-lg border border-neutral-100 bg-white p-2 text-xs text-ink/65 whitespace-pre-wrap">
+                                {l.ownerNotes}
+                              </p>
+                            ) : null}
                             <button
                               type="button"
                               onClick={() =>
-                                void patchLead(l.id, {
-                                  tags: (l.tags ?? []).filter((t) => t !== tag),
+                                setExpandedNotes((s) => {
+                                  const n = new Set(s);
+                                  if (n.has(l.id)) n.delete(l.id);
+                                  else n.add(l.id);
+                                  return n;
                                 })
                               }
-                              className="text-copper/60 hover:text-copper leading-none"
+                              className="text-[11px] text-ink/40 hover:text-copper"
                             >
-                              ×
+                              {expandedNotes.has(l.id)
+                                ? e.closeNote
+                                : l.ownerNotes
+                                ? e.editNote
+                                : e.addNote}
                             </button>
-                          </span>
-                        ))}
-                        <TagInput
-                          onAdd={(newTag) => {
-                            if (!(l.tags ?? []).includes(newTag)) {
-                              void patchLead(l.id, { tags: [...(l.tags ?? []), newTag] });
-                            }
-                          }}
-                        />
-                      </div>
-
-                      {/* Quick status selector + priority toggle */}
-                      <div className="mt-2.5 flex flex-wrap items-center gap-2">
-                        <select
-                          value={l.status ?? "new"}
-                          onChange={(e) => void patchLead(l.id, { status: e.target.value })}
-                          className="rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] text-ink/70 focus:border-copper/50 focus:outline-none"
-                        >
-                          <option value="new">Yeni</option>
-                          <option value="contacted">İletişim</option>
-                          <option value="qualified">Nitelikli</option>
-                          <option value="archived">Arşiv</option>
-                        </select>
-                        <button
-                          type="button"
-                          onClick={() =>
-                            void patchLead(l.id, {
-                              priority: (l.priority ?? 0) > 0 ? 0 : 1,
-                            })
-                          }
-                          className={`rounded-md border px-2 py-1 text-[11px] font-medium transition ${
-                            (l.priority ?? 0) > 0
-                              ? "border-red-200 bg-red-50 text-red-600 hover:bg-red-100"
-                              : "border-neutral-200 bg-white text-ink/50 hover:border-copper/30 hover:text-copper"
-                          }`}
-                        >
-                          {(l.priority ?? 0) > 0 ? "Öncelikli" : "Öncelik"}
-                        </button>
-                      </div>
-
-                      {/* Reply buttons */}
-                      <div className="mt-2.5 flex flex-wrap gap-1.5">
-                        {l.email && (
-                          <a
-                            href={`mailto:${l.email}?subject=OpSolid Smart Kart — Yanıt`}
-                            className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink/70 transition hover:border-copper/40 hover:text-copper active:scale-95"
-                          >
-                            <Mail size={11} />
-                            {l.email}
-                          </a>
+                          </div>
                         )}
-                        {l.phone && (
-                          <>
-                            <a
-                              href={`tel:${l.phone}`}
-                              className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink/70 transition hover:border-copper/40 hover:text-copper active:scale-95"
-                            >
-                              <Phone size={11} />
-                              Ara
-                            </a>
-                            <a
-                              href={`https://wa.me/${l.phone.replace(/[^0-9]/g, "")}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink/70 transition hover:border-green-500/40 hover:text-green-600 active:scale-95"
-                            >
-                              <MessageCircle size={11} />
-                              WhatsApp
-                            </a>
-                          </>
-                        )}
-                      </div>
-
-                      {/* Owner notes — collapsible inline editor */}
-                      {expandedNotes.has(l.id) && (
-                        <textarea
-                          key={l.id}
-                          defaultValue={l.ownerNotes ?? ""}
-                          placeholder={e.addNotePlaceholder}
-                          onBlur={(ev) => {
-                            const val = ev.target.value;
-                            if (val !== (l.ownerNotes ?? "")) {
-                              void patchLead(l.id, { ownerNotes: val });
-                            }
-                          }}
-                          className="mt-2 w-full resize-none rounded-lg border border-neutral-200 bg-neutral-50 p-2 text-xs text-ink/70 placeholder-ink/30 focus:border-copper/40 focus:outline-none"
-                          rows={3}
-                        />
-                      )}
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setExpandedNotes((s) => {
-                            const n = new Set(s);
-                            if (n.has(l.id)) n.delete(l.id);
-                            else n.add(l.id);
-                            return n;
-                          })
-                        }
-                        className="mt-1.5 text-[11px] text-ink/40 hover:text-copper"
-                      >
-                        {expandedNotes.has(l.id)
-                          ? e.closeNote
-                          : l.ownerNotes
-                          ? e.editNote
-                          : e.addNote}
-                      </button>
-                    </li>
-                  ))}
+                      </li>
+                    );
+                  })}
                 </ul>
               )
             )}
@@ -1697,182 +1724,213 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
               connections?.length === 0 ? (
                 <p className="text-sm text-ink/40">{e.crmEmptyConnections}</p>
               ) : (
-                <ul className="space-y-3">
-                  {connections?.map((c) => (
-                    <li
-                      key={c.id}
-                      className="rounded-xl border border-neutral-100 bg-neutral-50 p-3 text-sm"
-                    >
-                      {/* Row 1: name + date + chip */}
-                      <div className="flex flex-wrap items-start justify-between gap-2">
-                        <div className="flex flex-wrap items-center gap-1.5">
-                          <span className="font-semibold text-ink">{c.visitorName}</span>
-                          {statusChip(c.status ?? "new")}
-                          {(c.priority ?? 0) > 0 && (
-                            <span
-                              title={`Öncelik: ${c.priority}`}
-                              className="inline-block h-2 w-2 rounded-full bg-red-500"
-                            />
-                          )}
-                          {savingId === c.id && (
-                            <Loader2 size={11} className="animate-spin text-copper/60" />
-                          )}
-                        </div>
-                        <span className="shrink-0 text-[10px] text-ink/40">
-                          {new Date(c.createdAt).toLocaleDateString("tr-TR")}
-                        </span>
-                      </div>
-
-                      {/* Visitor card link */}
-                      {c.visitorSlug && (
-                        <a
-                          href={`/c/${c.visitorSlug}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="mt-1 block text-xs text-copper hover:underline"
+                <ul className="divide-y divide-neutral-100 rounded-lg border border-neutral-100 bg-white">
+                  {connections?.map((c) => {
+                    const isExpanded = expandedRows.has(c.id);
+                    return (
+                      <li key={c.id}>
+                        {/* Compact row */}
+                        <button
+                          type="button"
+                          onClick={() => toggleRow(c.id)}
+                          className={`flex w-full items-center gap-3 px-3 py-2.5 text-left text-sm transition ${
+                            isExpanded ? "bg-neutral-50" : "hover:bg-neutral-50"
+                          }`}
                         >
-                          opsolid.de/c/{c.visitorSlug}
-                        </a>
-                      )}
-                      {c.source && (
-                        <p className="mt-0.5 text-[10px] uppercase tracking-wide text-ink/40">
-                          {c.source}
-                        </p>
-                      )}
-
-                      {/* Tags */}
-                      <div className="mt-2 flex flex-wrap gap-1">
-                        {(c.tags ?? []).map((tag) => (
                           <span
-                            key={tag}
-                            className="inline-flex items-center gap-1 rounded-full bg-copper/10 px-2 py-0.5 text-[10px] font-medium text-copper"
-                          >
-                            {tag}
+                            className={`h-2 w-2 shrink-0 rounded-full ${
+                              (c.priority ?? 0) > 0 ? "bg-red-500" : "bg-transparent"
+                            }`}
+                            aria-hidden
+                          />
+                          <div className="min-w-0 flex-1">
+                            <div className="flex items-center gap-2">
+                              <span className="truncate font-semibold text-ink">
+                                {c.visitorName}
+                              </span>
+                              {savingId === c.id && (
+                                <Loader2 size={11} className="animate-spin text-copper/60" />
+                              )}
+                            </div>
+                            <div className="mt-0.5 truncate text-[11px] text-ink/50">
+                              {[c.visitorSlug && `/c/${c.visitorSlug}`, c.source]
+                                .filter(Boolean)
+                                .join(" · ") || "—"}
+                            </div>
+                          </div>
+                          <span className="shrink-0">{statusChip(c.status ?? "new")}</span>
+                          <span className="shrink-0 hidden sm:block text-[10px] tabular-nums text-ink/40">
+                            {new Date(c.createdAt).toLocaleDateString()}
+                          </span>
+                          {isExpanded ? (
+                            <ChevronUp size={14} className="shrink-0 text-ink/40" />
+                          ) : (
+                            <ChevronDown size={14} className="shrink-0 text-ink/40" />
+                          )}
+                        </button>
+
+                        {/* Expanded panel */}
+                        {isExpanded && (
+                          <div className="space-y-3 border-t border-neutral-100 bg-neutral-50/60 px-3 py-3 text-sm">
+                            <div className="text-[11px] text-ink/45 sm:hidden">
+                              {new Date(c.createdAt).toLocaleString()}
+                            </div>
+
+                            {c.visitorSlug && (
+                              <a
+                                href={`/c/${c.visitorSlug}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="block text-xs text-copper hover:underline"
+                              >
+                                opsolid.de/c/{c.visitorSlug} ↗
+                              </a>
+                            )}
+                            {c.source && (
+                              <p className="text-[10px] uppercase tracking-wide text-ink/45">
+                                Source · {c.source}
+                              </p>
+                            )}
+
+                            {/* Reply buttons */}
+                            <div className="flex flex-wrap gap-1.5">
+                              {c.visitorEmail && (
+                                <a
+                                  href={`mailto:${c.visitorEmail}`}
+                                  className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink/70 transition hover:border-copper/40 hover:text-copper active:scale-95"
+                                >
+                                  <Mail size={11} />
+                                  {c.visitorEmail}
+                                </a>
+                              )}
+                              {c.visitorPhone && (
+                                <>
+                                  <a
+                                    href={`tel:${c.visitorPhone}`}
+                                    className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink/70 transition hover:border-copper/40 hover:text-copper active:scale-95"
+                                  >
+                                    <Phone size={11} />
+                                    {c.visitorPhone}
+                                  </a>
+                                  <a
+                                    href={`https://wa.me/${c.visitorPhone.replace(/[^0-9]/g, "")}`}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink/70 transition hover:border-green-500/40 hover:text-green-600 active:scale-95"
+                                  >
+                                    <MessageCircle size={11} />
+                                    WhatsApp
+                                  </a>
+                                </>
+                              )}
+                            </div>
+
+                            {/* Tags */}
+                            <div className="flex flex-wrap gap-1">
+                              {(c.tags ?? []).map((tag) => (
+                                <span
+                                  key={tag}
+                                  className="inline-flex items-center gap-1 rounded-full bg-copper/10 px-2 py-0.5 text-[10px] font-medium text-copper"
+                                >
+                                  {tag}
+                                  <button
+                                    type="button"
+                                    onClick={() =>
+                                      void patchConnection(c.id, {
+                                        tags: (c.tags ?? []).filter((t) => t !== tag),
+                                      })
+                                    }
+                                    className="text-copper/60 hover:text-copper leading-none"
+                                  >
+                                    ×
+                                  </button>
+                                </span>
+                              ))}
+                              <TagInput
+                                onAdd={(newTag) => {
+                                  if (!(c.tags ?? []).includes(newTag)) {
+                                    void patchConnection(c.id, {
+                                      tags: [...(c.tags ?? []), newTag],
+                                    });
+                                  }
+                                }}
+                              />
+                            </div>
+
+                            {/* Status + priority */}
+                            <div className="flex flex-wrap items-center gap-2">
+                              <select
+                                value={c.status ?? "new"}
+                                onChange={(ev) =>
+                                  void patchConnection(c.id, { status: ev.target.value })
+                                }
+                                className="rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] text-ink/70 focus:border-copper/50 focus:outline-none"
+                              >
+                                <option value="new">{e.leadStatusNew}</option>
+                                <option value="contacted">{e.leadStatusContacted}</option>
+                                <option value="qualified">{e.leadStatusQualified}</option>
+                                <option value="archived">{e.leadStatusArchived}</option>
+                              </select>
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  void patchConnection(c.id, {
+                                    priority: (c.priority ?? 0) > 0 ? 0 : 1,
+                                  })
+                                }
+                                className={`rounded-md border px-2 py-1 text-[11px] font-medium transition ${
+                                  (c.priority ?? 0) > 0
+                                    ? "border-red-200 bg-red-50 text-red-600 hover:bg-red-100"
+                                    : "border-neutral-200 bg-white text-ink/50 hover:border-copper/30 hover:text-copper"
+                                }`}
+                              >
+                                {(c.priority ?? 0) > 0 ? "★" : "☆"}
+                              </button>
+                            </div>
+
+                            {/* Owner note */}
+                            {expandedNotes.has(c.id) ? (
+                              <textarea
+                                key={c.id}
+                                defaultValue={c.note ?? ""}
+                                placeholder={e.connectionNotePlaceholder}
+                                onBlur={(ev) => {
+                                  const val = ev.target.value;
+                                  if (val !== (c.note ?? "")) {
+                                    void patchConnection(c.id, { note: val });
+                                  }
+                                }}
+                                className="w-full resize-none rounded-lg border border-neutral-200 bg-white p-2 text-xs text-ink/70 placeholder-ink/30 focus:border-copper/40 focus:outline-none"
+                                rows={3}
+                              />
+                            ) : c.note ? (
+                              <p className="rounded-lg border border-neutral-100 bg-white p-2 text-xs text-ink/65 whitespace-pre-wrap">
+                                {c.note}
+                              </p>
+                            ) : null}
                             <button
                               type="button"
                               onClick={() =>
-                                void patchConnection(c.id, {
-                                  tags: (c.tags ?? []).filter((t) => t !== tag),
+                                setExpandedNotes((s) => {
+                                  const n = new Set(s);
+                                  if (n.has(c.id)) n.delete(c.id);
+                                  else n.add(c.id);
+                                  return n;
                                 })
                               }
-                              className="text-copper/60 hover:text-copper leading-none"
+                              className="text-[11px] text-ink/40 hover:text-copper"
                             >
-                              ×
+                              {expandedNotes.has(c.id)
+                                ? e.closeNote
+                                : c.note
+                                ? e.editNote
+                                : e.addNote}
                             </button>
-                          </span>
-                        ))}
-                        <TagInput
-                          onAdd={(newTag) => {
-                            if (!(c.tags ?? []).includes(newTag)) {
-                              void patchConnection(c.id, { tags: [...(c.tags ?? []), newTag] });
-                            }
-                          }}
-                        />
-                      </div>
-
-                      {/* Quick status selector + priority */}
-                      <div className="mt-2.5 flex flex-wrap items-center gap-2">
-                        <select
-                          value={c.status ?? "new"}
-                          onChange={(e) =>
-                            void patchConnection(c.id, { status: e.target.value })
-                          }
-                          className="rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] text-ink/70 focus:border-copper/50 focus:outline-none"
-                        >
-                          <option value="new">Yeni</option>
-                          <option value="contacted">İletişim</option>
-                          <option value="qualified">Nitelikli</option>
-                          <option value="archived">Arşiv</option>
-                          <option value="accepted">Kabul</option>
-                        </select>
-                        <button
-                          type="button"
-                          onClick={() =>
-                            void patchConnection(c.id, {
-                              priority: (c.priority ?? 0) > 0 ? 0 : 1,
-                            })
-                          }
-                          className={`rounded-md border px-2 py-1 text-[11px] font-medium transition ${
-                            (c.priority ?? 0) > 0
-                              ? "border-red-200 bg-red-50 text-red-600 hover:bg-red-100"
-                              : "border-neutral-200 bg-white text-ink/50 hover:border-copper/30 hover:text-copper"
-                          }`}
-                        >
-                          {(c.priority ?? 0) > 0 ? "Öncelikli" : "Öncelik"}
-                        </button>
-                      </div>
-
-                      {/* Reply buttons — visitorEmail/visitorPhone extracted by backend.
-                          TODO: backend agent must return visitorEmail + visitorPhone
-                          from visitorCard.cardData in the CRM GET response. */}
-                      <div className="mt-2.5 flex flex-wrap gap-1.5">
-                        {c.visitorEmail && (
-                          <a
-                            href={`mailto:${c.visitorEmail}?subject=OpSolid Smart Kart — Yanıt`}
-                            className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink/70 transition hover:border-copper/40 hover:text-copper active:scale-95"
-                          >
-                            <Mail size={11} />
-                            {c.visitorEmail}
-                          </a>
+                          </div>
                         )}
-                        {c.visitorPhone && (
-                          <>
-                            <a
-                              href={`tel:${c.visitorPhone}`}
-                              className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink/70 transition hover:border-copper/40 hover:text-copper active:scale-95"
-                            >
-                              <Phone size={11} />
-                              Ara
-                            </a>
-                            <a
-                              href={`https://wa.me/${c.visitorPhone.replace(/[^0-9]/g, "")}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink/70 transition hover:border-green-500/40 hover:text-green-600 active:scale-95"
-                            >
-                              <MessageCircle size={11} />
-                              WhatsApp
-                            </a>
-                          </>
-                        )}
-                      </div>
-
-                      {/* Owner note — collapsible inline editor */}
-                      {expandedNotes.has(c.id) && (
-                        <textarea
-                          key={c.id}
-                          defaultValue={c.note ?? ""}
-                          placeholder={e.connectionNotePlaceholder}
-                          onBlur={(ev) => {
-                            const val = ev.target.value;
-                            if (val !== (c.note ?? "")) {
-                              void patchConnection(c.id, { note: val });
-                            }
-                          }}
-                          className="mt-2 w-full resize-none rounded-lg border border-neutral-200 bg-neutral-50 p-2 text-xs text-ink/70 placeholder-ink/30 focus:border-copper/40 focus:outline-none"
-                          rows={3}
-                        />
-                      )}
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setExpandedNotes((s) => {
-                            const n = new Set(s);
-                            if (n.has(c.id)) n.delete(c.id);
-                            else n.add(c.id);
-                            return n;
-                          })
-                        }
-                        className="mt-1.5 text-[11px] text-ink/40 hover:text-copper"
-                      >
-                        {expandedNotes.has(c.id)
-                          ? e.closeNote
-                          : c.note
-                          ? e.editNote
-                          : e.addNote}
-                      </button>
-                    </li>
-                  ))}
+                      </li>
+                    );
+                  })}
                 </ul>
               )
             )}

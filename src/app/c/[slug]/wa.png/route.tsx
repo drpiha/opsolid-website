@@ -202,18 +202,8 @@ export async function GET(
         >
           <div
             style={{
-              width: 120,
-              height: 4,
-              background: accent,
-              borderRadius: 2,
-              marginBottom: 22,
-              display: "flex",
-            }}
-          />
-          <div
-            style={{
               fontSize: 22,
-              opacity: 0.55,
+              opacity: 0.5,
               letterSpacing: "0.16em",
               textTransform: "uppercase",
               display: "flex",

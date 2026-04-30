@@ -68,6 +68,17 @@ export function PhotoEditor({
     }
   }, [open, initialPosition]);
 
+  // Mouse-wheel zoom — natural on desktop, ignored on touch (pinch-to-zoom
+  // would conflict with the pan gesture).
+  const onWheel = useCallback((e: React.WheelEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? -0.1 : 0.1;
+    setPosition((p) => ({
+      ...p,
+      scale: Math.min(4, Math.max(0.5, p.scale + delta)),
+    }));
+  }, []);
+
   const onPointerDown = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
       e.preventDefault();
@@ -88,14 +99,20 @@ export function PhotoEditor({
     const rect = frameRef.current.getBoundingClientRect();
     const dx = e.clientX - dragStartRef.current.x;
     const dy = e.clientY - dragStartRef.current.y;
-    // Convert pixel drag to a percentage shift. Inverting because dragging
-    // right should push the image right, which means object-position % goes
-    // down (we move the focal point left).
-    const dxPct = (-dx / rect.width) * 100;
-    const dyPct = (-dy / rect.height) * 100;
-    const nextX = Math.min(100, Math.max(0, dragStartRef.current.px + dxPct));
-    const nextY = Math.min(100, Math.max(0, dragStartRef.current.py + dyPct));
-    setPosition((p) => ({ ...p, x: nextX, y: nextY }));
+    // Convert pixel drag to a percentage shift, scaled inversely to the zoom
+    // factor — at scale 2× a 100px drag should move the focal point half as
+    // far in source-image space, otherwise pans feel jumpy and the user can
+    // never settle on the area they want. Sign inverted so dragging right
+    // pushes the image right (object-position % moves the focal point left).
+    setPosition((p) => {
+      const dxPct = (-dx / (rect.width * p.scale)) * 100;
+      const dyPct = (-dy / (rect.height * p.scale)) * 100;
+      return {
+        ...p,
+        x: Math.min(100, Math.max(0, dragStartRef.current!.px + dxPct)),
+        y: Math.min(100, Math.max(0, dragStartRef.current!.py + dyPct)),
+      };
+    });
   }, []);
 
   const onPointerUp = useCallback(() => {
@@ -104,7 +121,7 @@ export function PhotoEditor({
   }, []);
 
   const handleScale = (next: number) => {
-    setPosition((p) => ({ ...p, scale: Math.min(3, Math.max(0.5, next)) }));
+    setPosition((p) => ({ ...p, scale: Math.min(4, Math.max(0.5, next)) }));
   };
 
   const reset = () => setPosition(DEFAULT_POSITION);
@@ -149,6 +166,7 @@ export function PhotoEditor({
               onPointerMove={onPointerMove}
               onPointerUp={onPointerUp}
               onPointerCancel={onPointerUp}
+              onWheel={onWheel}
               className={[
                 "relative mx-auto cursor-grab touch-none select-none overflow-hidden border border-ink/15 bg-neutral-100 active:cursor-grabbing",
                 isLogo
@@ -197,7 +215,7 @@ export function PhotoEditor({
               <input
                 type="range"
                 min={0.5}
-                max={3}
+                max={4}
                 step={0.05}
                 value={position.scale}
                 onChange={(e) => handleScale(Number(e.target.value))}
