@@ -1329,7 +1329,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [savingId, setSavingId] = useState<string | null>(null);
   const [expandedNotes, setExpandedNotes] = useState<Set<string>>(new Set());
-  const [noteEdits, setNoteEdits] = useState<Record<string, string>>({});
+  const [noteEdits, _setNoteEdits] = useState<Record<string, string>>({});
   void noteEdits; // reserved for future controlled note editing
 
   const load = async (forceReload = false) => {
@@ -1646,7 +1646,8 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                         onClick={() =>
                           setExpandedNotes((s) => {
                             const n = new Set(s);
-                            n.has(l.id) ? n.delete(l.id) : n.add(l.id);
+                            if (n.has(l.id)) n.delete(l.id);
+                            else n.add(l.id);
                             return n;
                           })
                         }
@@ -1830,7 +1831,8 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                         onClick={() =>
                           setExpandedNotes((s) => {
                             const n = new Set(s);
-                            n.has(c.id) ? n.delete(c.id) : n.add(c.id);
+                            if (n.has(c.id)) n.delete(c.id);
+                            else n.add(c.id);
                             return n;
                           })
                         }

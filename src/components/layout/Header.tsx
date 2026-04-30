@@ -32,10 +32,6 @@ export function Header() {
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const navLabels = t.v2.nav;
 
-  // Hide marketing chrome on customer self-service surfaces (edit panel,
-  // login, dashboard). Those are app-mode pages, not site pages.
-  if (pathname && /\/card\/edit\//.test(pathname)) return null;
-
   useEffect(() => {
     setIsMobileOpen(false);
   }, [pathname]);
@@ -47,6 +43,11 @@ export function Header() {
       document.body.classList.remove("menu-open");
     };
   }, [isMobileOpen]);
+
+  // Hide marketing chrome on customer self-service surfaces (edit panel,
+  // login, dashboard). Those are app-mode pages, not site pages.
+  // Must come AFTER all hooks to keep their call order stable.
+  if (pathname && /\/card\/edit\//.test(pathname)) return null;
 
   return (
     <header className="os-header safe-top" role="banner">
