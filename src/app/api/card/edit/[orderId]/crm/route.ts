@@ -1,12 +1,22 @@
 // GET /api/card/edit/[orderId]/crm?t=<editToken>
 // Returns leads and card-to-card connections for the card owner's CRM panel.
 // Gated by the same edit token as the PATCH endpoint.
+//
+// Query params:
+//   ?search=<text>    — search in lead name/email/company/message/ownerNotes
+//   ?status=<status>  — filter leads by status
+//   ?tag=<tag>        — filter by tag (exact match in tags array)
+//   ?limit=<n>        — pagination limit (default 50, max 200)
+//   ?offset=<n>       — pagination offset (default 0)
 
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { EditTokenError, requireEditToken } from "@/lib/auth/edit-token";
 
 export const runtime = "nodejs";
+
+const DEFAULT_LIMIT = 50;
+const MAX_LIMIT = 200;
 
 export async function GET(
   req: NextRequest,
@@ -15,28 +25,71 @@ export async function GET(
   try {
     const order = await requireEditToken(req, params.orderId);
 
+    const url = new URL(req.url);
+    const search = url.searchParams.get("search")?.trim() || undefined;
+    const statusFilter = url.searchParams.get("status")?.trim() || undefined;
+    const tagFilter = url.searchParams.get("tag")?.trim() || undefined;
+    const limitRaw = parseInt(url.searchParams.get("limit") ?? "", 10);
+    const offsetRaw = parseInt(url.searchParams.get("offset") ?? "", 10);
+    const limit = isNaN(limitRaw) ? DEFAULT_LIMIT : Math.min(Math.max(1, limitRaw), MAX_LIMIT);
+    const offset = isNaN(offsetRaw) ? 0 : Math.max(0, offsetRaw);
+
+    const searchFilter = search
+      ? {
+          OR: [
+            { name: { contains: search, mode: "insensitive" as const } },
+            { email: { contains: search, mode: "insensitive" as const } },
+            { company: { contains: search, mode: "insensitive" as const } },
+            { message: { contains: search, mode: "insensitive" as const } },
+            { ownerNotes: { contains: search, mode: "insensitive" as const } },
+          ],
+        }
+      : {};
+
+    const leadWhere = {
+      orderId: order.id,
+      ...(statusFilter ? { status: statusFilter } : {}),
+      ...(tagFilter ? { tags: { has: tagFilter } } : {}),
+      ...searchFilter,
+    };
+
     const [leads, connections] = await Promise.all([
       prisma.cardLead.findMany({
-        where: { orderId: order.id },
+        where: leadWhere,
         orderBy: { createdAt: "desc" },
-        take: 100,
+        skip: offset,
+        take: limit,
         select: {
           id: true,
           name: true,
           email: true,
           phone: true,
           message: true,
+          interest: true,
+          meetingContext: true,
+          company: true,
+          ownerNotes: true,
+          tags: true,
+          status: true,
+          priority: true,
+          lastContactedAt: true,
           createdAt: true,
         },
       }),
       prisma.cardConnection.findMany({
         where: { ownerCardId: order.id },
         orderBy: { createdAt: "desc" },
-        take: 100,
+        skip: offset,
+        take: limit,
         select: {
           id: true,
           source: true,
+          eventName: true,
           note: true,
+          status: true,
+          tags: true,
+          priority: true,
+          lastContactedAt: true,
           createdAt: true,
           visitorCard: {
             select: {
@@ -49,13 +102,18 @@ export async function GET(
     ]);
 
     const connectionsOut = connections.map((c) => {
-      const data = c.visitorCard.cardData as { name?: string } | null;
+      const data = c.visitorCard.cardData as { name?: string; email?: string; phone?: string; company?: string } | null;
       return {
         id: c.id,
         visitorSlug: c.visitorCard.slug,
         visitorName: data?.name ?? c.visitorCard.slug,
         source: c.source,
+        eventName: c.eventName,
         note: c.note,
+        status: c.status,
+        tags: c.tags,
+        priority: c.priority,
+        lastContactedAt: c.lastContactedAt,
         createdAt: c.createdAt,
       };
     });
