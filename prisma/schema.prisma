@@ -214,11 +214,25 @@ model CardLead {
   email     String?
   phone     String?
   message   String?
+
+  // Phase 6 — separate structured fields (previously concat'd into message)
+  interest        String?   // "Pricing", "Demo", "General"
+  meetingContext  String?   @map("meeting_context")  // "Hannover Messe 2026"
+  company         String?
+
+  // Phase 6 — owner-side CRM fields
+  ownerNotes      String?   @db.Text @map("owner_notes")
+  tags            String[]  @default([])
+  status          String    @default("new")  // "new"|"contacted"|"qualified"|"archived"
+  priority        Int       @default(0)      // 0=normal, 1=high, 2=urgent
+  lastContactedAt DateTime? @map("last_contacted_at")
+
   createdAt DateTime @default(now()) @map("created_at")
 
   order CardOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   @@index([orderId, createdAt])
+  @@index([orderId, status])
   @@map("card_leads")
 }
 
@@ -299,6 +313,12 @@ model CardConnection {
   eventName       String?  @map("event_name")
   note            String?
   status          String   @default("new")
+
+  // Phase 6 — owner-side CRM fields
+  tags            String[] @default([])
+  priority        Int      @default(0)
+  lastContactedAt DateTime? @map("last_contacted_at")
+
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime @updatedAt @map("updated_at")
 

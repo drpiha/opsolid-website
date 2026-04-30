@@ -312,7 +312,6 @@ export function CardEditClient(props: Props) {
               <AnalyticsPanel
                 orderId={props.orderId}
                 editToken={props.editToken}
-                slug={props.slug}
                 onShare={() => setShareOpen(true)}
               />
             )}
@@ -1130,12 +1129,10 @@ type AnalyticsData = {
 function AnalyticsPanel({
   orderId,
   editToken,
-  slug,
   onShare,
 }: {
   orderId: string;
   editToken: string;
-  slug: string;
   onShare: () => void;
 }) {
   const [data, setData] = useState<AnalyticsData | null>(null);
