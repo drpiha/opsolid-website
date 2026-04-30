@@ -19,6 +19,7 @@ import { renderLeadNotification } from "@/lib/email/templates/lead-notification"
 import { sendCustomerEmail } from "@/lib/email/send";
 import { normalizeLocale } from "@/lib/email/shell";
 import { dispatchWebhook } from "@/lib/webhook";
+import { sendLeadTelegram } from "@/lib/notifications";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -82,6 +83,7 @@ export async function POST(
       contactEmail: true,
       contactName: true,
       locale: true,
+      editToken: true,
     },
   });
   if (!order || order.status !== OrderStatus.PUBLISHED) {
@@ -123,6 +125,22 @@ export async function POST(
   // never block the visitor's submit on mail delivery.
   void notifyCardOwner({ order, parsed: parsed.data, source, slug });
 
+  // Fire-and-forget Telegram notification to the card owner.
+  void sendLeadTelegram({
+    ownerName: order.contactName,
+    cardSlug: slug,
+    orderId: order.id,
+    editToken: order.editToken,
+    visitor: {
+      name: parsed.data.name,
+      email: parsed.data.email ?? null,
+      phone: parsed.data.phone ?? null,
+      company: parsed.data.company ?? null,
+      meetingContext: parsed.data.meetingContext ?? null,
+      message: parsed.data.message ?? null,
+    },
+  });
+
   // Fire-and-forget outbound CRM webhook. Failures are logged to Sentry and
   // never block the response. We only emit a structured subset of the lead
   // fields — internal IDs and the unparsed concatenated `message` blob stay
@@ -149,7 +167,7 @@ export async function POST(
 }
 
 async function notifyCardOwner(args: {
-  order: { id: string; contactEmail: string; contactName: string; locale: string };
+  order: { id: string; contactEmail: string; contactName: string; locale: string; editToken: string | null };
   parsed: z.infer<typeof LeadInputSchema>;
   source: ReturnType<typeof readSourceFromSearchParams>;
   slug: string;

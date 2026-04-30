@@ -31,6 +31,8 @@ import {
   Mail,
   Phone,
   MessageCircle,
+  Search,
+  Download,
 } from "lucide-react";
 import { Input, Textarea } from "@/components/ui/Input";
 import { useLocale } from "@/context/LocaleContext";

@@ -410,6 +410,56 @@ export async function notifyOrderEvent(info: OrderEventInfo): Promise<void> {
 }
 
 // ---------------------------------------------------------------------------
+// Lead notifications
+// ---------------------------------------------------------------------------
+
+export interface LeadNotificationInfo {
+  ownerName: string;
+  cardSlug: string;
+  orderId: string;
+  editToken: string | null;
+  visitor: {
+    name: string;
+    email?: string | null;
+    phone?: string | null;
+    company?: string | null;
+    meetingContext?: string | null;
+    message?: string | null;
+  };
+}
+
+export async function sendLeadTelegram(info: LeadNotificationInfo): Promise<void> {
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  if (!token || !chatId) return;
+
+  const base = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://opsolid.de";
+  const crmUrl = info.editToken
+    ? `${base}/de/card/edit/${info.orderId}?token=${info.editToken}`
+    : `${base}/admin/orders/${info.orderId}`;
+
+  const lines = [
+    `🔔 *Yeni Lead — opsolid.de/c/${escapeMarkdown(info.cardSlug)}*`,
+    ``,
+    `👤 *İsim:* ${escapeMarkdown(info.visitor.name)}`,
+    `📧 *Email:* ${escapeMarkdown(info.visitor.email ?? "—")}`,
+    `📱 *Telefon:* ${escapeMarkdown(info.visitor.phone ?? "—")}`,
+    `🏢 *Şirket:* ${escapeMarkdown(info.visitor.company ?? "—")}`,
+    `📍 *Bağlam:* ${escapeMarkdown(info.visitor.meetingContext ?? "—")}`,
+    info.visitor.message ? `💬 *Mesaj:* ${escapeMarkdown(info.visitor.message)}` : "",
+    ``,
+    `🔗 [CRM'de Aç](${crmUrl})`,
+  ].filter((l) => l !== undefined).join("\n");
+
+  const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ chat_id: chatId, text: lines, parse_mode: "Markdown" }),
+  });
+  if (!res.ok) throw new Error(`Telegram lead ${res.status}: ${await res.text()}`);
+}
+
+// ---------------------------------------------------------------------------
 // Helpers
 // ---------------------------------------------------------------------------
 
