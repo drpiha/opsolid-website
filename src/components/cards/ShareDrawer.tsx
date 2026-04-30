@@ -3,18 +3,12 @@
 // =============================================================================
 // ShareDrawer — Phase 5.
 //
-// Bottom sheet on mobile, centered modal on desktop. Opens with a CSS
-// slide-up transition (no framer-motion). Uses Radix Dialog for accessible
-// focus-trapping and overlay management (already a project dependency via
-// QRFlipOverlay).
+// Bottom sheet on mobile, centered modal on desktop. Uses Radix Dialog for
+// accessible focus-trapping. Localized via t.card.share.
 //
-// Slots (in render order):
-//   1. QR code image (from /api/qr/{slug}?format=png)
-//   2. QR download link
-//   3. Copy link with 2s ✓ feedback
-//   4. WhatsApp share
-//   5. vCard download
-//   6. E-mail signature snippet
+// `context="owner"` swaps the vCard row label from "Save contact" to
+// "My vCard — forward" since on the edit page the owner is the one being
+// shared, not the one being saved.
 // =============================================================================
 
 import * as React from "react";
@@ -27,19 +21,24 @@ import {
   Share2,
   ExternalLink,
 } from "lucide-react";
+import { useLocale } from "@/context/LocaleContext";
 
 export interface ShareDrawerProps {
   slug: string;
   open: boolean;
   onClose: () => void;
+  /** "owner" on the edit page, "visitor" on the public card page. */
+  context?: "owner" | "visitor";
 }
 
 const SITE = "https://opsolid.de";
 
-export function ShareDrawer({ slug, open, onClose }: ShareDrawerProps) {
+export function ShareDrawer({ slug, open, onClose, context = "visitor" }: ShareDrawerProps) {
+  const { t } = useLocale();
+  const s = t.card.share;
   const cardUrl = `${SITE}/c/${slug}`;
   const qrPng = `/api/qr/${encodeURIComponent(slug)}?format=png`;
-  const emailSignatureHtml = `<a href="${cardUrl}">Digital Kartvizit</a>`;
+  const emailSignatureHtml = `<a href="${cardUrl}">${cardUrl}</a>`;
 
   const [linkCopied, setLinkCopied] = React.useState(false);
   const [sigCopied, setSigCopied] = React.useState(false);
@@ -64,41 +63,35 @@ export function ShareDrawer({ slug, open, onClose }: ShareDrawerProps) {
     }
   }, [emailSignatureHtml]);
 
+  const isOwner = context === "owner";
+
   return (
     <Dialog.Root open={open} onOpenChange={(v) => !v && onClose()}>
       <Dialog.Portal>
-        {/* Overlay */}
         <Dialog.Overlay className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm data-[state=open]:animate-fade-in data-[state=closed]:animate-fade-out" />
 
-        {/* Sheet — bottom sheet on mobile, centered card on md+ */}
         <Dialog.Content
           className={[
-            // Positioning
             "fixed bottom-0 left-0 right-0 z-50",
             "md:bottom-auto md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2",
-            // Size
             "w-full md:max-w-sm",
-            // Surface
+            "max-h-[85vh] overflow-y-auto overscroll-contain",
             "bg-bg-0 rounded-t-3xl md:rounded-2xl",
-            // Spacing
-            "p-6",
-            // Outline suppression
+            "p-5 pb-[max(20px,env(safe-area-inset-bottom))]",
             "outline-none",
-            // Entry animation
             "data-[state=open]:animate-slide-up md:data-[state=open]:animate-modal-in",
             "data-[state=closed]:animate-fade-out",
           ].join(" ")}
           aria-describedby={undefined}
         >
-          {/* Header */}
-          <div className="mb-5 flex items-center justify-between">
+          <div className="mb-4 flex items-center justify-between">
             <Dialog.Title className="text-sm font-semibold text-ink">
-              Kartı Paylaş
+              {s.title}
             </Dialog.Title>
             <Dialog.Close asChild>
               <button
                 type="button"
-                aria-label="Kapat"
+                aria-label={s.close}
                 className="rounded-full p-1.5 text-ink-300 transition-colors hover:bg-bg-3 hover:text-ink"
               >
                 <X size={18} strokeWidth={2} />
@@ -106,53 +99,40 @@ export function ShareDrawer({ slug, open, onClose }: ShareDrawerProps) {
             </Dialog.Close>
           </div>
 
-          {/* 1. QR Code */}
           <div className="mb-4 flex justify-center">
             <div className="rounded-xl bg-white p-3 ring-1 ring-line-soft shadow-sm">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={qrPng}
                 alt="QR"
-                width={240}
-                height={240}
+                width={200}
+                height={200}
                 className="mx-auto rounded-xl"
               />
             </div>
           </div>
 
-          {/* Actions grid */}
           <div className="space-y-2">
-            {/* 2. QR download */}
-            <a
-              href={qrPng}
-              download={`qr-${slug}.png`}
-              className={rowBase}
-            >
+            <a href={qrPng} download={`qr-${slug}.png`} className={rowBase}>
               <Download size={16} className="shrink-0 text-ink-300" />
-              <span className="flex-1 text-sm font-medium text-ink">QR İndir</span>
+              <span className="flex-1 text-sm font-medium text-ink">{s.qrDownload}</span>
               <ExternalLink size={14} className="shrink-0 text-ink-400" />
             </a>
 
-            {/* 3. Copy link */}
-            <button
-              type="button"
-              onClick={copyLink}
-              className={rowBase}
-            >
+            <button type="button" onClick={copyLink} className={rowBase}>
               {linkCopied ? (
                 <CheckCheck size={16} className="shrink-0 text-green-600" />
               ) : (
                 <Copy size={16} className="shrink-0 text-ink-300" />
               )}
               <span className="flex-1 text-left text-sm font-medium text-ink">
-                {linkCopied ? "Kopyalandı!" : "Linki Kopyala"}
+                {linkCopied ? s.copied : s.copyLink}
               </span>
               <span className="truncate text-xs font-mono text-ink-400 max-w-[120px]">
-                opsolid.de/c/{slug}
+                /c/{slug}
               </span>
             </button>
 
-            {/* 4. WhatsApp */}
             <a
               href={`https://wa.me/?text=${encodeURIComponent(cardUrl)}`}
               target="_blank"
@@ -161,29 +141,30 @@ export function ShareDrawer({ slug, open, onClose }: ShareDrawerProps) {
             >
               <Share2 size={16} className="shrink-0 text-green-600" />
               <span className="flex-1 text-sm font-medium text-ink">
-                WhatsApp&apos;ta Paylaş
+                {s.whatsapp}
               </span>
               <ExternalLink size={14} className="shrink-0 text-ink-400" />
             </a>
 
-            {/* 5. vCard download */}
-            <a
-              href={`/api/cards/${slug}/vcard`}
-              download
-              className={rowBase}
-            >
+            <a href={`/api/cards/${slug}/vcard`} download className={rowBase}>
               <Download size={16} className="shrink-0 text-copper-500" />
-              <span className="flex-1 text-sm font-medium text-ink">
-                Kontağı Kaydet
+              <span className="flex-1 min-w-0">
+                <span className="block text-sm font-medium text-ink truncate">
+                  {isOwner ? s.vcardOwner : s.vcardVisitor}
+                </span>
+                {isOwner && (
+                  <span className="block text-[11px] text-ink-400 truncate">
+                    {s.vcardOwnerHint}
+                  </span>
+                )}
               </span>
-              <span className="text-[11px] font-mono text-ink-400">.vcf</span>
+              <span className="text-[11px] font-mono text-ink-400 shrink-0">.vcf</span>
             </a>
 
-            {/* 6. E-mail signature */}
             <div className="rounded-lg border border-line-soft bg-bg-2 p-3">
               <div className="mb-2 flex items-center justify-between gap-2">
                 <span className="text-xs font-semibold text-ink-300 uppercase tracking-wide">
-                  E-posta İmzası
+                  {s.emailSignature}
                 </span>
                 <button
                   type="button"
@@ -195,7 +176,7 @@ export function ShareDrawer({ slug, open, onClose }: ShareDrawerProps) {
                   ) : (
                     <Copy size={11} />
                   )}
-                  {sigCopied ? "Kopyalandı" : "Kopyala"}
+                  {sigCopied ? s.copied : s.copy}
                 </button>
               </div>
               <code className="block break-all rounded bg-bg-3 px-2 py-1.5 text-[11px] font-mono text-ink-300 leading-relaxed">
@@ -204,14 +185,13 @@ export function ShareDrawer({ slug, open, onClose }: ShareDrawerProps) {
             </div>
           </div>
 
-          {/* Primary CTA — open card in new tab */}
           <a
             href={cardUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl bg-copper-500 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-copper-600"
           >
-            Kartı Aç
+            {s.openCard}
             <ExternalLink size={14} strokeWidth={2.2} />
           </a>
         </Dialog.Content>
@@ -220,6 +200,5 @@ export function ShareDrawer({ slug, open, onClose }: ShareDrawerProps) {
   );
 }
 
-// Shared row style for action items
 const rowBase =
   "flex w-full items-center gap-3 rounded-lg border border-line-soft bg-bg-1 px-3 py-2.5 transition-colors hover:bg-bg-2 hover:border-line active:scale-[0.99]";

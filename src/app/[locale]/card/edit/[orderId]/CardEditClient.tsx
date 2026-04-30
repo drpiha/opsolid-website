@@ -221,8 +221,8 @@ export function CardEditClient(props: Props) {
   };
 
   return (
-    <main className="min-h-screen bg-neutral-50 py-16 md:py-20">
-      <div className="container-wide">
+    <main className="min-h-screen bg-neutral-50 py-8 md:py-16 overflow-x-hidden">
+      <div className="container-wide max-w-full">
         <div
           className="mb-6 flex items-start gap-3 rounded-2xl border px-4 py-3 text-sm"
           style={{
@@ -272,15 +272,14 @@ export function CardEditClient(props: Props) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center border-l border-ink/15 px-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-ink/65 transition-colors hover:bg-bg-2 hover:text-ink"
-                  title="Kartı sahip modunda görüntüle"
+                  title={edit.viewAsOwner}
                 >
                   ↗
                 </a>
               </div>
               {editableSlug && editableSlug !== currentSlug && (
                 <p className="text-[11px] text-copper">
-                  ⚠ Yeni adres &laquo;Kaydet&raquo; basıldığında uygulanır. Eski
-                  adres otomatik olarak yeni adrese yönlenir.
+                  ⚠ {edit.slugRenameWarning}
                 </p>
               )}
             </div>
@@ -825,10 +824,11 @@ export function CardEditClient(props: Props) {
         <OwnerPhotoFab slug={props.slug} editToken={props.editToken} />
       )}
 
-      {/* Phase 5 — Share drawer */}
+      {/* Phase 5 — Share drawer (owner context: vCard label is "forward mine") */}
       {currentSlug && (
         <ShareDrawer
           slug={currentSlug}
+          context="owner"
           open={shareOpen}
           onClose={() => setShareOpen(false)}
         />
@@ -849,6 +849,9 @@ function LiveBanner({
   slug: string;
   onShare: () => void;
 }) {
+  const { t } = useLocale();
+  const edit = t.products.digitalCard.edit;
+  const share = t.card.share;
   const [copied, setCopied] = useState(false);
   const cardUrl = `https://opsolid.de/c/${slug}`;
 
@@ -867,7 +870,7 @@ function LiveBanner({
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-60" />
           <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
         </span>
-        <span className="text-ink font-medium text-[13px] whitespace-nowrap">Kartın Yayında</span>
+        <span className="text-ink font-medium text-[13px] whitespace-nowrap">{edit.liveBadge}</span>
       </div>
 
       {/* Center: clickable URL */}
@@ -892,7 +895,7 @@ function LiveBanner({
           ) : (
             <Copy size={12} />
           )}
-          {copied ? "Kopyalandı" : "Kopyala"}
+          {copied ? share.copied : share.copy}
         </button>
         <button
           type="button"
@@ -900,7 +903,7 @@ function LiveBanner({
           className="min-h-[36px] text-xs px-3 py-1.5 rounded-lg bg-copper-500 text-white hover:bg-copper-600 transition-colors inline-flex items-center gap-1.5"
         >
           <ExternalLink size={12} />
-          Kartı Gör →
+          {share.openCard}
         </button>
       </div>
     </div>
@@ -1137,6 +1140,8 @@ function AnalyticsPanel({
   editToken: string;
   onShare: () => void;
 }) {
+  const { t } = useLocale();
+  const edit = t.products.digitalCard.edit;
   const [data, setData] = useState<AnalyticsData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -1149,9 +1154,9 @@ function AnalyticsPanel({
 
   const stats: { label: string; value: number }[] = data
     ? [
-        { label: "Toplam", value: data.total },
-        { label: "Son 7 Gün", value: data.last7d },
-        { label: "Son 30 Gün", value: data.last30d },
+        { label: edit.analyticsTotal, value: data.total },
+        { label: edit.analyticsLast7, value: data.last7d },
+        { label: edit.analyticsLast30, value: data.last30d },
       ]
     : [];
 
@@ -1160,8 +1165,8 @@ function AnalyticsPanel({
         { key: "QR", value: data.bySource.qr },
         { key: "Link", value: data.bySource.link },
         { key: "NFC", value: data.bySource.nfc },
-        { key: "Cüzdan", value: data.bySource.wallet },
-        { key: "Diğer", value: data.bySource.other },
+        { key: edit.sourceWallet, value: data.bySource.wallet },
+        { key: edit.sourceOther, value: data.bySource.other },
       ].filter((s) => s.value > 0)
     : [];
 
@@ -1189,11 +1194,11 @@ function AnalyticsPanel({
       <div className="border-t border-neutral-100 px-5 py-4">
         {loading && (
           <div className="flex items-center gap-2 text-sm text-ink/50">
-            <Loader2 size={14} className="animate-spin" /> Yükleniyor…
+            <Loader2 size={14} className="animate-spin" /> {edit.analyticsLoading}
           </div>
         )}
         {!loading && !data && (
-          <p className="text-sm text-ink/40">Analitik yüklenemedi.</p>
+          <p className="text-sm text-ink/40">{edit.analyticsEmpty}</p>
         )}
         {!loading && data && (
           <>
@@ -1291,12 +1296,18 @@ function TagInput({ onAdd }: { onAdd: (tag: string) => void }) {
 }
 
 function statusChip(status: string) {
+  return <StatusChip status={status} />;
+}
+
+function StatusChip({ status }: { status: string }) {
+  const { t } = useLocale();
+  const e = t.products.digitalCard.edit;
   const map: Record<string, { bg: string; text: string; label: string }> = {
-    new:       { bg: "bg-neutral-100",  text: "text-ink/50",    label: "Yeni" },
-    contacted: { bg: "bg-blue-50",      text: "text-blue-600",  label: "İletişim" },
-    qualified: { bg: "bg-green-50",     text: "text-green-600", label: "Nitelikli" },
-    archived:  { bg: "bg-neutral-50",   text: "text-ink/30",    label: "Arşiv" },
-    accepted:  { bg: "bg-green-50",     text: "text-green-600", label: "Kabul" },
+    new:       { bg: "bg-neutral-100",  text: "text-ink/50",    label: e.leadStatusNew },
+    contacted: { bg: "bg-blue-50",      text: "text-blue-600",  label: e.leadStatusContacted },
+    qualified: { bg: "bg-green-50",     text: "text-green-600", label: e.leadStatusQualified },
+    archived:  { bg: "bg-neutral-50",   text: "text-ink/30",    label: e.leadStatusArchived },
+    accepted:  { bg: "bg-green-50",     text: "text-green-600", label: e.leadStatusQualified },
   };
   const s = map[status] ?? map.new;
   return (

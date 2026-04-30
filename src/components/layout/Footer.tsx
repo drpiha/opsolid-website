@@ -1,6 +1,7 @@
 "use client";
 
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
+import { usePathname } from "next/navigation";
 import { useLocale } from "@/context/LocaleContext";
 
 /**
@@ -10,10 +11,14 @@ import { useLocale } from "@/context/LocaleContext";
  * trust signals.
  */
 export function Footer() {
+  const pathname = usePathname();
   const { t } = useLocale();
   const f = t.v2.footer;
   const n = t.v2.nav;
   const year = new Date().getFullYear();
+
+  // Mirror Header — hide on customer self-service surfaces.
+  if (pathname && /\/card\/edit\//.test(pathname)) return null;
 
   return (
     <footer className="os-footer">

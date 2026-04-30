@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 /**
  * AmbientBackdrop — soft, theme-aware ambient field behind the entire app.
@@ -12,6 +13,7 @@ import { useEffect, useState } from "react";
  * Respects prefers-reduced-motion and goes static on viewports below `md`.
  */
 export function AmbientBackdrop() {
+  const pathname = usePathname();
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -19,6 +21,9 @@ export function AmbientBackdrop() {
     const id = requestAnimationFrame(() => setReady(true));
     return () => cancelAnimationFrame(id);
   }, []);
+
+  // Skip the marketing backdrop on customer self-service surfaces.
+  if (pathname && /\/card\/edit\//.test(pathname)) return null;
 
   return (
     <div

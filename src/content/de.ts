@@ -1819,6 +1819,21 @@ export const content: Content = {
         subtitle:
           "Tippfehler, Telefonnummern, Social Links — ändern Sie alles selbst. Änderungen sind sofort live.",
         publicUrlLabel: "Ihre öffentliche Karte:",
+        liveBadge: "Karte ist live",
+        slugRenameWarning:
+          "Die neue Adresse wird mit «Speichern» übernommen. Die alte leitet automatisch um.",
+        viewAsOwner: "Als Inhaber ansehen",
+        analyticsLoading: "Lädt…",
+        analyticsEmpty: "Statistiken nicht verfügbar.",
+        analyticsLast7: "Letzte 7 Tage",
+        analyticsLast30: "Letzte 30 Tage",
+        analyticsTotal: "Gesamt",
+        sourceWallet: "Wallet",
+        sourceOther: "Andere",
+        leadStatusContacted: "Kontaktiert",
+        leadStatusArchived: "Archiv",
+        leadStatusNew: "Neu",
+        leadStatusQualified: "Qualifiziert",
         contactReadonlyLabel: "Ihre Kontaktdaten (nur Anzeige)",
         contactReadonlyHint:
           "E-Mail, Name oder Telefon ändern? Antworten Sie auf Ihre Bestell-E-Mail — wir erledigen das.",
@@ -3778,6 +3793,20 @@ export const content: Content = {
     },
     vcard: {
       label: "vCard speichern",
+    },
+    share: {
+      title: "Karte teilen",
+      close: "Schließen",
+      qrDownload: "QR herunterladen",
+      copyLink: "Link kopieren",
+      copied: "Kopiert!",
+      whatsapp: "Über WhatsApp teilen",
+      vcardVisitor: "Kontakt speichern",
+      vcardOwner: "Meine vCard (.vcf)",
+      vcardOwnerHint: "Weiterleiten — andere speichern dich in ihren Kontakten",
+      emailSignature: "E-Mail-Signatur",
+      copy: "Kopieren",
+      openCard: "Karte öffnen",
     },
     owner: {
       banner:

@@ -1837,6 +1837,21 @@ export const content = {
         notFoundTitle: "We couldn't open this edit link",
         notFoundBody:
           "This link is expired or not valid anymore. Please reply to your order email and we'll send you a fresh link.",
+        liveBadge: "Card is live",
+        slugRenameWarning:
+          "The new address takes effect once you press «Save». The old address auto-redirects to the new one.",
+        viewAsOwner: "View as owner",
+        analyticsLoading: "Loading…",
+        analyticsEmpty: "Analytics not available.",
+        analyticsLast7: "Last 7 days",
+        analyticsLast30: "Last 30 days",
+        analyticsTotal: "Total",
+        sourceWallet: "Wallet",
+        sourceOther: "Other",
+        leadStatusContacted: "Contacted",
+        leadStatusArchived: "Archived",
+        leadStatusNew: "New",
+        leadStatusQualified: "Qualified",
       },
       cancel: {
         heading: "Cancel subscription",
@@ -3790,6 +3805,20 @@ export const content = {
     },
     vcard: {
       label: "Save vCard",
+    },
+    share: {
+      title: "Share card",
+      close: "Close",
+      qrDownload: "Download QR",
+      copyLink: "Copy link",
+      copied: "Copied!",
+      whatsapp: "Share on WhatsApp",
+      vcardVisitor: "Save contact",
+      vcardOwner: "My vCard (.vcf)",
+      vcardOwnerHint: "Forward — saves you to their contacts",
+      emailSignature: "Email signature",
+      copy: "Copy",
+      openCard: "Open card",
     },
     owner: {
       banner: "You're the owner of this card — changes go live instantly.",

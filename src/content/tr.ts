@@ -1819,6 +1819,21 @@ export const content: Content = {
         title: "Kartınızı düzenleyin",
         subtitle:
           "Yazım hataları, telefon numarası, sosyal linkler — kartınızdaki her şeyi kendiniz düzenleyin. Değişiklikler saniyeler içinde canlıya çıkar.",
+        liveBadge: "Kartın yayında",
+        slugRenameWarning:
+          "Yeni adres «Kaydet»'e basıldığında uygulanır. Eski adres otomatik olarak yeni adrese yönlenir.",
+        viewAsOwner: "Sahip modunda görüntüle",
+        analyticsLoading: "Yükleniyor…",
+        analyticsEmpty: "Analitik yüklenemedi.",
+        analyticsLast7: "Son 7 gün",
+        analyticsLast30: "Son 30 gün",
+        analyticsTotal: "Toplam",
+        sourceWallet: "Cüzdan",
+        sourceOther: "Diğer",
+        leadStatusContacted: "İletişim",
+        leadStatusArchived: "Arşiv",
+        leadStatusNew: "Yeni",
+        leadStatusQualified: "Nitelikli",
         publicUrlLabel: "Herkese açık kartınız:",
         contactReadonlyLabel: "İletişim bilgileriniz (salt okunur)",
         contactReadonlyHint:
@@ -3779,6 +3794,20 @@ export const content: Content = {
     },
     vcard: {
       label: "vCard'ı kaydet",
+    },
+    share: {
+      title: "Kartı paylaş",
+      close: "Kapat",
+      qrDownload: "QR indir",
+      copyLink: "Linki kopyala",
+      copied: "Kopyalandı!",
+      whatsapp: "WhatsApp'ta paylaş",
+      vcardVisitor: "Kişiyi kaydet",
+      vcardOwner: "vCard'ım (.vcf)",
+      vcardOwnerHint: "İlet — karşı taraf seni rehberine kaydeder",
+      emailSignature: "E-posta imzası",
+      copy: "Kopyala",
+      openCard: "Kartı aç",
     },
     owner: {
       banner:
