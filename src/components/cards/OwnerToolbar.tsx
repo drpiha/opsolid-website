@@ -79,17 +79,6 @@ export function OwnerToolbar({
   );
 }
 
-/**
- * Small helper for the server component — copy a single byte at a time and
- * compare with constant time. Re-implemented here so the public card page
- * can stay free of node:crypto for the typical (non-owner) request path,
- * which is the hot path served from CDN.
- */
-export function constantTimeEquals(a: string, b: string): boolean {
-  if (a.length !== b.length) return false;
-  let mismatch = 0;
-  for (let i = 0; i < a.length; i++) {
-    mismatch |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  }
-  return mismatch === 0;
-}
+// `constantTimeEquals` lives in `@/lib/constantTime` so server components can
+// import it without going through the "use client" boundary (which would turn
+// the function into a client proxy → "TypeError: D is not a function").

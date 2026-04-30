@@ -32,10 +32,8 @@ import { OwnerModeProvider } from "@/context/OwnerMode";
 import { AlbumSection } from "@/components/cards/album/AlbumSection";
 import { QRFlipOverlay } from "@/components/cards/QRFlipOverlay";
 import { ShareButton } from "@/components/cards/ShareButton";
-import {
-  OwnerToolbar,
-  constantTimeEquals,
-} from "@/components/cards/OwnerToolbar";
+import { OwnerToolbar } from "@/components/cards/OwnerToolbar";
+import { constantTimeEquals } from "@/lib/constantTime";
 import { contents } from "@/content";
 
 export const runtime = "nodejs";
