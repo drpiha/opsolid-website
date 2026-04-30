@@ -31,6 +31,10 @@ export interface BuildGoogleWalletJwtArgs {
   primaryHex?: string | null;
   /** QR target — the card's canonical public URL. */
   cardUrl: string;
+  /** Profile photo path (absolute URL or site-relative path like /uploads/...). */
+  photoPath?: string | null;
+  /** Company logo path (absolute URL or site-relative path). */
+  logoPath?: string | null;
 }
 
 const DEFAULT_BG_HEX = "#15120F";
@@ -98,6 +102,7 @@ export async function buildGoogleWalletJwt(
   const classId = explicitClassId || `${issuerId}.opsolid_smart_card`;
   const objectId = `${issuerId}.${args.slug}`;
   const hexBackgroundColor = safeHex(args.primaryHex);
+  const siteBase = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://opsolid.de").replace(/\/$/, "");
 
   const creds = loadServiceAccount();
   const privateKeyPem = normalizePrivateKey(creds.private_key);
@@ -113,11 +118,45 @@ export async function buildGoogleWalletJwt(
   if (args.email) textModulesData.push({ id: "email", header: "Email", body: args.email });
   if (args.website) textModulesData.push({ id: "website", header: "Website", body: args.website });
 
+  // Add heroImage if photoPath provided
+  const heroImage = args.photoPath
+    ? {
+        heroImage: {
+          sourceUri: {
+            uri: args.photoPath.startsWith("http")
+              ? args.photoPath
+              : `${siteBase}${args.photoPath}`,
+          },
+          contentDescription: {
+            defaultValue: { language: "en-US", value: args.name },
+          },
+        },
+      }
+    : {};
+
+  // Add logo if logoPath provided
+  const logoObj = args.logoPath
+    ? {
+        logo: {
+          sourceUri: {
+            uri: args.logoPath.startsWith("http")
+              ? args.logoPath
+              : `${siteBase}${args.logoPath}`,
+          },
+          contentDescription: {
+            defaultValue: { language: "en-US", value: args.company ?? args.name },
+          },
+        },
+      }
+    : {};
+
   const genericObject = {
     id: objectId,
     classId,
     genericType: "GENERIC_TYPE_UNSPECIFIED",
     hexBackgroundColor,
+    ...logoObj,
+    ...heroImage,
     cardTitle: {
       defaultValue: { language: "en-US", value: "OpSolid · Smart Card" },
     },

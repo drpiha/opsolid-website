@@ -860,14 +860,14 @@ function LiveBanner({
   };
 
   return (
-    <div className="bg-copper-500/10 border border-copper-500/20 rounded-2xl px-4 py-3 flex items-center gap-4">
+    <div className="bg-copper-500/10 border border-copper-500/20 rounded-2xl px-4 py-3 flex flex-wrap items-center gap-x-4 gap-y-2">
       {/* Left: pulse dot + label */}
       <div className="flex items-center gap-2 shrink-0">
         <span className="relative flex h-2.5 w-2.5">
           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-500 opacity-60" />
           <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500" />
         </span>
-        <span className="text-ink font-medium text-sm whitespace-nowrap">Kartın Yayında</span>
+        <span className="text-ink font-medium text-[13px] whitespace-nowrap">Kartın Yayında</span>
       </div>
 
       {/* Center: clickable URL */}
@@ -875,17 +875,17 @@ function LiveBanner({
         href={cardUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex-1 text-copper-500 text-sm font-mono hover:underline truncate min-w-0"
+        className="flex-1 min-w-[120px] text-copper-500 text-[13px] font-mono hover:underline truncate"
       >
         opsolid.de/c/{slug}
       </a>
 
-      {/* Right: action buttons */}
+      {/* Right: action buttons — min-h-[44px] for touch */}
       <div className="flex items-center gap-2 shrink-0">
         <button
           type="button"
           onClick={handleCopy}
-          className="text-xs px-3 py-1.5 rounded-lg border border-line-soft bg-bg-2 text-ink hover:bg-bg-3 transition-colors inline-flex items-center gap-1.5"
+          className="min-h-[36px] text-xs px-3 py-1.5 rounded-lg border border-line-soft bg-bg-2 text-ink hover:bg-bg-3 transition-colors inline-flex items-center gap-1.5"
         >
           {copied ? (
             <CheckCheck size={12} className="text-green-600" />
@@ -897,7 +897,7 @@ function LiveBanner({
         <button
           type="button"
           onClick={onShare}
-          className="text-xs px-3 py-1.5 rounded-lg bg-copper-500 text-white hover:bg-copper-600 transition-colors inline-flex items-center gap-1.5"
+          className="min-h-[36px] text-xs px-3 py-1.5 rounded-lg bg-copper-500 text-white hover:bg-copper-600 transition-colors inline-flex items-center gap-1.5"
         >
           <ExternalLink size={12} />
           Kartı Gör →
