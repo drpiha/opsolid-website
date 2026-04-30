@@ -1852,6 +1852,22 @@ export const content = {
         leadStatusArchived: "Archived",
         leadStatusNew: "New",
         leadStatusQualified: "Qualified",
+        crmHeaderTitle: "Connections (CRM)",
+        crmHeaderHint:
+          "Visitors who fill the form on your card and other cardholders who exchange with you appear here. You also receive an email per entry.",
+        crmTabLeads: "Inbox",
+        crmTabConnections: "Card connections",
+        crmFilterAll: "All",
+        crmSearchPlaceholder: "Name, email, company, tag…",
+        crmLoading: "Loading…",
+        crmEmptyLeads: "No incoming info yet.",
+        crmEmptyConnections: "No card connections yet.",
+        addNotePlaceholder:
+          "Context: where we met, what we discussed, follow-up notes…",
+        editNote: "Edit note",
+        closeNote: "Hide note",
+        addNote: "Add note",
+        connectionNotePlaceholder: "Add a note about this connection…",
       },
       cancel: {
         heading: "Cancel subscription",

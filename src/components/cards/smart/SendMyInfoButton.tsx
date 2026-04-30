@@ -14,6 +14,7 @@
 import { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { Send, X, CheckCircle2 } from "lucide-react";
+import { useIsOwner } from "@/context/OwnerMode";
 
 export interface SendLabels {
   triggerLabel: string;
@@ -56,8 +57,13 @@ type SubmitState =
   | { kind: "error"; message: string };
 
 export function SendMyInfoButton({ slug, sourceQs, primary, labels }: Props) {
+  const isOwner = useIsOwner();
   const [open, setOpen] = useState(false);
   const [state, setState] = useState<SubmitState>({ kind: "idle" });
+
+  // Owner previewing own card has no visitor flow — hide the CTA entirely
+  // so they don't see "send my info" on their own card.
+  if (isOwner) return null;
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();

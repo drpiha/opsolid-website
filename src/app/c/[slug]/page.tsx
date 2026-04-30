@@ -28,6 +28,7 @@ import { readSourceFromSearchParams } from "@/components/cards/smart/SmartCardSo
 import { getSiteUrl } from "@/lib/stripe";
 import { getTemplateEntry } from "@/components/cards/templates/v2/registry";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
+import { OwnerModeProvider } from "@/context/OwnerMode";
 import { AlbumSection } from "@/components/cards/album/AlbumSection";
 import { QRFlipOverlay } from "@/components/cards/QRFlipOverlay";
 import { ShareButton } from "@/components/cards/ShareButton";
@@ -151,7 +152,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       alt: altText,
     },
     {
-      url: `/c/${slug}.png`,
+      url: `/c/${slug}/og.png`,
       width: 1200,
       height: 630,
       alt: altText,
@@ -160,7 +161,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   const twitterImages: string[] = [];
   if (templateThumbExists) twitterImages.push(templateThumbUrl);
-  twitterImages.push(`/c/${slug}.png`);
+  twitterImages.push(`/c/${slug}/og.png`);
 
   return {
     title: `${name}${title ? " — " + title : ""} · OpSolid Smart Card`,
@@ -297,59 +298,61 @@ export default async function CardPage({ params, searchParams }: PageProps) {
   const editHref = `/${localeKey}/card/edit/${order.id}?token=${order.editToken ?? ""}`;
 
   return (
-    <main className="min-h-screen bg-bg-0 px-4 py-8 pb-24 sm:py-12">
-      {isOwner && (
-        <OwnerToolbar
-          editHref={editHref}
+    <OwnerModeProvider isOwner={isOwner}>
+      <main className="min-h-screen bg-bg-0 px-4 py-8 pb-24 sm:py-12">
+        {isOwner && (
+          <OwnerToolbar
+            editHref={editHref}
+            publicUrl={publicUrl}
+            shareTitle={shareTitle}
+            labels={{
+              publicBannerLabel: ownerLabels.publicBannerLabel,
+              editLabel: ownerLabels.editLabel,
+              shareLabel: ownerLabels.shareLabel,
+            }}
+          />
+        )}
+        <div
+          className="mx-auto w-full max-w-[460px]"
+          data-card-tpl
+          style={wrapperStyle}
+        >
+          <Template
+            slug={slug}
+            cardData={parsed.data}
+            photoPath={order.photoPath}
+            logoPath={order.logoPath}
+            brandPrimaryHex={order.brandPrimaryHex}
+            brandAccentHex={order.brandAccentHex}
+            source={source}
+            siteUrl={siteUrl}
+            locale={localeKey}
+            walletSlot={<WalletButtons slug={slug} />}
+          />
+          <CustomSectionsBlock
+            sections={parsed.data.customSections}
+            accentHex={order.brandAccentHex ?? undefined}
+            tone={isDarkTemplate ? "dark" : "light"}
+          />
+          <AlbumSection
+            slug={slug}
+            accentHex={order.brandAccentHex ?? undefined}
+            tone={isDarkTemplate ? "dark" : "light"}
+          />
+        </div>
+        <QRFlipOverlay
+          slug={slug}
           publicUrl={publicUrl}
           shareTitle={shareTitle}
-          labels={{
-            publicBannerLabel: ownerLabels.publicBannerLabel,
-            editLabel: ownerLabels.editLabel,
-            shareLabel: ownerLabels.shareLabel,
-          }}
-        />
-      )}
-      <div
-        className="mx-auto w-full max-w-[460px]"
-        data-card-tpl
-        style={wrapperStyle}
-      >
-        <Template
-          slug={slug}
-          cardData={parsed.data}
-          photoPath={order.photoPath}
-          logoPath={order.logoPath}
-          brandPrimaryHex={order.brandPrimaryHex}
-          brandAccentHex={order.brandAccentHex}
-          source={source}
-          siteUrl={siteUrl}
-          locale={localeKey}
-          walletSlot={<WalletButtons slug={slug} />}
-        />
-        <CustomSectionsBlock
-          sections={parsed.data.customSections}
           accentHex={order.brandAccentHex ?? undefined}
-          tone={isDarkTemplate ? "dark" : "light"}
+          labels={qrLabels}
         />
-        <AlbumSection
+        {/* Phase 5 — share drawer trigger (bottom-left, QR occupies bottom-right) */}
+        <ShareButton
           slug={slug}
           accentHex={order.brandAccentHex ?? undefined}
-          tone={isDarkTemplate ? "dark" : "light"}
         />
-      </div>
-      <QRFlipOverlay
-        slug={slug}
-        publicUrl={publicUrl}
-        shareTitle={shareTitle}
-        accentHex={order.brandAccentHex ?? undefined}
-        labels={qrLabels}
-      />
-      {/* Phase 5 — share drawer trigger (bottom-left, QR occupies bottom-right) */}
-      <ShareButton
-        slug={slug}
-        accentHex={order.brandAccentHex ?? undefined}
-      />
-    </main>
+      </main>
+    </OwnerModeProvider>
   );
 }

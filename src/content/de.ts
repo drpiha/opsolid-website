@@ -1834,6 +1834,22 @@ export const content: Content = {
         leadStatusArchived: "Archiv",
         leadStatusNew: "Neu",
         leadStatusQualified: "Qualifiziert",
+        crmHeaderTitle: "Kontakte (CRM)",
+        crmHeaderHint:
+          "Hier landen Besucher, die das Formular ausfüllen, und andere Karteninhaber, die ihre Karte an dich senden. Du bekommst zusätzlich eine E-Mail pro Eintrag.",
+        crmTabLeads: "Eingang",
+        crmTabConnections: "Karten-Verbindungen",
+        crmFilterAll: "Alle",
+        crmSearchPlaceholder: "Name, E-Mail, Firma, Tag…",
+        crmLoading: "Lädt…",
+        crmEmptyLeads: "Noch keine eingegangenen Anfragen.",
+        crmEmptyConnections: "Noch keine Karten-Verbindungen.",
+        addNotePlaceholder:
+          "Kontext: wo getroffen, was besprochen, Follow-up-Notizen…",
+        editNote: "Notiz bearbeiten",
+        closeNote: "Notiz schließen",
+        addNote: "Notiz hinzufügen",
+        connectionNotePlaceholder: "Notiz zu dieser Verbindung hinzufügen…",
         contactReadonlyLabel: "Ihre Kontaktdaten (nur Anzeige)",
         contactReadonlyHint:
           "E-Mail, Name oder Telefon ändern? Antworten Sie auf Ihre Bestell-E-Mail — wir erledigen das.",

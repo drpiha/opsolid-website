@@ -117,7 +117,10 @@ export function CardEditClient(props: Props) {
     file: File,
     kind: "photo" | "logo"
   ): Promise<string | null> => {
-    if (file.size > 2 * 1024 * 1024) {
+    // Match the storage adapter's hard cap (5 MB) — modern phone cameras shoot
+    // 3–5 MB JPEGs, so the previous 2 MB client gate silently rejected every
+    // camera upload. Server still validates via STORAGE_LIMITS.maxBytes.
+    if (file.size > 5 * 1024 * 1024) {
       setErrorMsg(form.uploadTooLarge);
       return null;
     }
@@ -126,7 +129,15 @@ export function CardEditClient(props: Props) {
     f.append("kind", kind);
     const res = await fetch("/api/uploads", { method: "POST", body: f });
     if (!res.ok) {
-      setErrorMsg(form.uploadFailed);
+      // Surface the API's specific error so the customer sees "File too large"
+      // instead of a generic "upload failed" — the editor caps differently than
+      // the server, so the cause is usually format/size related.
+      try {
+        const j = (await res.json()) as { error?: string };
+        setErrorMsg(j.error ?? form.uploadFailed);
+      } catch {
+        setErrorMsg(form.uploadFailed);
+      }
       return null;
     }
     const j = (await res.json()) as { path?: string };
@@ -710,7 +721,7 @@ export function CardEditClient(props: Props) {
               <p className="mt-1 text-sm text-ink/60">{edit.shareBody}</p>
               {props.slug && props.status === "PUBLISHED" ? (
                 <a
-                  href={`/c/${props.slug}.png`}
+                  href={`/c/${props.slug}/og.png`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-4 inline-flex btn-ghost text-sm"
@@ -1318,6 +1329,8 @@ function StatusChip({ status }: { status: string }) {
 }
 
 function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string }) {
+  const { t } = useLocale();
+  const e = t.products.digitalCard.edit;
   const [open, setOpen] = useState(false);
   const [leads, setLeads] = useState<CrmLead[] | null>(null);
   const [connections, setConnections] = useState<CrmConnection[] | null>(null);
@@ -1414,42 +1427,56 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
         onClick={toggle}
         className="flex w-full items-center justify-between px-5 py-4 text-left"
       >
-        <div className="flex items-center gap-2">
-          <span className="text-sm font-semibold text-ink">Bağlantılar (CRM)</span>
-          {total > 0 && (
-            <span className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-copper/15 px-1.5 text-[10px] font-semibold text-copper">
-              {total}
-            </span>
-          )}
+        <div className="flex flex-1 items-start gap-2">
+          <div className="flex flex-1 flex-col">
+            <div className="flex items-center gap-2">
+              <span className="text-sm font-semibold text-ink">{e.crmHeaderTitle}</span>
+              {total > 0 && (
+                <span className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-copper/15 px-1.5 text-[10px] font-semibold text-copper">
+                  {total}
+                </span>
+              )}
+            </div>
+            {!open && (
+              <p className="mt-1 text-[11px] leading-relaxed text-ink/55">
+                {e.crmHeaderHint}
+              </p>
+            )}
+          </div>
         </div>
-        {open ? <ChevronUp size={16} className="text-ink/40" /> : <ChevronDown size={16} className="text-ink/40" />}
+        {open ? <ChevronUp size={16} className="text-ink/40 shrink-0" /> : <ChevronDown size={16} className="text-ink/40 shrink-0" />}
       </button>
 
       {open && (
         <div className="border-t border-neutral-100">
+          {/* Hint inside panel too — visible after opening */}
+          <p className="px-5 pt-3 text-[11px] leading-relaxed text-ink/55">
+            {e.crmHeaderHint}
+          </p>
+
           {/* ── Search + filter bar ── */}
           <div className="flex flex-wrap items-center gap-2 px-5 pb-3 pt-3 border-b border-neutral-100">
             <div className="relative flex-1 min-w-[160px]">
               <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-ink/30" />
               <input
                 type="text"
-                placeholder="İsim, email, şirket, etiket..."
+                placeholder={e.crmSearchPlaceholder}
                 value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && void load(true)}
+                onChange={(ev) => setSearch(ev.target.value)}
+                onKeyDown={(ev) => ev.key === "Enter" && void load(true)}
                 className="w-full rounded-lg border border-neutral-200 bg-white py-1.5 pl-8 pr-3 text-xs text-ink placeholder-ink/30 focus:border-copper/50 focus:outline-none"
               />
             </div>
             <select
               value={statusFilter}
-              onChange={(e) => { setStatusFilter(e.target.value); void load(true); }}
+              onChange={(ev) => { setStatusFilter(ev.target.value); void load(true); }}
               className="rounded-lg border border-neutral-200 bg-white px-2 py-1.5 text-xs text-ink/70 focus:border-copper/50 focus:outline-none"
             >
-              <option value="all">Tümü</option>
-              <option value="new">Yeni</option>
-              <option value="contacted">İletişim</option>
-              <option value="qualified">Nitelikli</option>
-              <option value="archived">Arşiv</option>
+              <option value="all">{e.crmFilterAll}</option>
+              <option value="new">{e.leadStatusNew}</option>
+              <option value="contacted">{e.leadStatusContacted}</option>
+              <option value="qualified">{e.leadStatusQualified}</option>
+              <option value="archived">{e.leadStatusArchived}</option>
             </select>
             <a
               href={`/api/card/edit/${orderId}/crm/export?t=${encodeURIComponent(editToken)}`}
@@ -1463,18 +1490,18 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
 
           {/* ── Tabs ── */}
           <div className="flex border-b border-neutral-100 px-5 pt-2">
-            {(["leads", "connections"] as const).map((t) => (
+            {(["leads", "connections"] as const).map((tabKey) => (
               <button
-                key={t}
+                key={tabKey}
                 type="button"
-                onClick={() => setTab(t)}
+                onClick={() => setTab(tabKey)}
                 className={`mr-4 pb-2 text-xs font-semibold uppercase tracking-wide transition ${
-                  tab === t ? "border-b-2 border-copper text-copper" : "text-ink/50 hover:text-ink"
+                  tab === tabKey ? "border-b-2 border-copper text-copper" : "text-ink/50 hover:text-ink"
                 }`}
               >
-                {t === "leads"
-                  ? `Gelen Bilgiler (${leads?.length ?? "…"})`
-                  : `Kart Bağlantıları (${connections?.length ?? "…"})`}
+                {tabKey === "leads"
+                  ? `${e.crmTabLeads} (${leads?.length ?? "…"})`
+                  : `${e.crmTabConnections} (${connections?.length ?? "…"})`}
               </button>
             ))}
           </div>
@@ -1483,14 +1510,14 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
             {loading && (
               <div className="flex items-center gap-2 text-sm text-ink/50">
                 <Loader2 size={14} className="animate-spin" />
-                Yükleniyor…
+                {e.crmLoading}
               </div>
             )}
 
             {/* ── Leads tab ── */}
             {!loading && tab === "leads" && (
               leads?.length === 0 ? (
-                <p className="text-sm text-ink/40">Henüz bilgi gönderilmedi.</p>
+                <p className="text-sm text-ink/40">{e.crmEmptyLeads}</p>
               ) : (
                 <ul className="space-y-3">
                   {leads?.map((l) => (
@@ -1630,9 +1657,9 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                         <textarea
                           key={l.id}
                           defaultValue={l.ownerNotes ?? ""}
-                          placeholder="Bağlam: nerede tanıştık, ne konuştuk, takip notu..."
-                          onBlur={(e) => {
-                            const val = e.target.value;
+                          placeholder={e.addNotePlaceholder}
+                          onBlur={(ev) => {
+                            const val = ev.target.value;
                             if (val !== (l.ownerNotes ?? "")) {
                               void patchLead(l.id, { ownerNotes: val });
                             }
@@ -1654,10 +1681,10 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                         className="mt-1.5 text-[11px] text-ink/40 hover:text-copper"
                       >
                         {expandedNotes.has(l.id)
-                          ? "Notu kapat"
+                          ? e.closeNote
                           : l.ownerNotes
-                          ? "Notu düzenle"
-                          : "Not ekle"}
+                          ? e.editNote
+                          : e.addNote}
                       </button>
                     </li>
                   ))}
@@ -1668,7 +1695,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
             {/* ── Connections tab ── */}
             {!loading && tab === "connections" && (
               connections?.length === 0 ? (
-                <p className="text-sm text-ink/40">Henüz kart bağlantısı yok.</p>
+                <p className="text-sm text-ink/40">{e.crmEmptyConnections}</p>
               ) : (
                 <ul className="space-y-3">
                   {connections?.map((c) => (
@@ -1815,9 +1842,9 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                         <textarea
                           key={c.id}
                           defaultValue={c.note ?? ""}
-                          placeholder="Bu bağlantı hakkında not ekle..."
-                          onBlur={(e) => {
-                            const val = e.target.value;
+                          placeholder={e.connectionNotePlaceholder}
+                          onBlur={(ev) => {
+                            const val = ev.target.value;
                             if (val !== (c.note ?? "")) {
                               void patchConnection(c.id, { note: val });
                             }
@@ -1839,10 +1866,10 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                         className="mt-1.5 text-[11px] text-ink/40 hover:text-copper"
                       >
                         {expandedNotes.has(c.id)
-                          ? "Notu kapat"
+                          ? e.closeNote
                           : c.note
-                          ? "Notu düzenle"
-                          : "Not ekle"}
+                          ? e.editNote
+                          : e.addNote}
                       </button>
                     </li>
                   ))}

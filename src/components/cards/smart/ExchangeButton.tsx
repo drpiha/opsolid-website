@@ -15,6 +15,7 @@
 
 import { useEffect, useState } from "react";
 import { Send, X, CheckCircle2, AlertCircle, Info, Download, CreditCard } from "lucide-react";
+import { useIsOwner } from "@/context/OwnerMode";
 
 interface Props {
   slug: string;
@@ -92,6 +93,7 @@ const LS_KEY = "myCardSlug";
 
 export function ExchangeButton({ slug, primary, locale = "de" }: Props) {
   const t = STRINGS[locale] ?? STRINGS.en;
+  const isOwner = useIsOwner();
 
   const [open, setOpen] = useState(false);
   const [noCardView, setNoCardView] = useState<NoCardView>("choice");
@@ -126,6 +128,11 @@ export function ExchangeButton({ slug, primary, locale = "de" }: Props) {
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);
+
+  // Hide the visitor-side exchange CTA when the card owner is previewing
+  // their own card via `?owner=<editToken>`. Must come AFTER all hooks so
+  // the call order stays stable across renders.
+  if (isOwner) return null;
 
   function readSourceFromUrl() {
     try {

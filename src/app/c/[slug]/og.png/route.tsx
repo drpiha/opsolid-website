@@ -1,5 +1,9 @@
 // =============================================================================
-// OG share image for a published digital card — GET /c/[slug].png
+// OG share image for a published digital card — GET /c/[slug]/og.png
+//
+// (Lives inside the [slug] folder to avoid a Next.js routing ambiguity where
+// `/c/[slug].png` was being swallowed by `/c/[slug]/page.tsx` with `.png`
+// becoming part of the slug. Mirror the pattern used by `wa.png/route.tsx`.)
 //
 // 1200×630 PNG rendered by next/og. Composition (premium upgrade 2026-04-23):
 //   • solid background = brandPrimaryHex (fallback #15120F — ink)

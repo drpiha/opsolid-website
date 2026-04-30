@@ -1834,6 +1834,22 @@ export const content: Content = {
         leadStatusArchived: "Arşiv",
         leadStatusNew: "Yeni",
         leadStatusQualified: "Nitelikli",
+        crmHeaderTitle: "Bağlantılar (CRM)",
+        crmHeaderHint:
+          "Kartını ziyaret edip formu dolduranlar ve sana kartını gönderen diğer kart sahipleri buraya düşer. Her kayıt için ayrıca email alırsın.",
+        crmTabLeads: "Gelen kutusu",
+        crmTabConnections: "Kart bağlantıları",
+        crmFilterAll: "Tümü",
+        crmSearchPlaceholder: "İsim, email, şirket, etiket…",
+        crmLoading: "Yükleniyor…",
+        crmEmptyLeads: "Henüz gelen bilgi yok.",
+        crmEmptyConnections: "Henüz kart bağlantısı yok.",
+        addNotePlaceholder:
+          "Bağlam: nerede tanıştık, ne konuştuk, takip notu…",
+        editNote: "Notu düzenle",
+        closeNote: "Notu kapat",
+        addNote: "Not ekle",
+        connectionNotePlaceholder: "Bu bağlantı hakkında not ekle…",
         publicUrlLabel: "Herkese açık kartınız:",
         contactReadonlyLabel: "İletişim bilgileriniz (salt okunur)",
         contactReadonlyHint:
