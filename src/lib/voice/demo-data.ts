@@ -13,6 +13,12 @@ export const DEMO_TENANT_SLUG = "demo-restaurant-berlin";
 // ---------------------------------------------------------------------------
 
 export async function seedVoiceDemoData(tenantId: string): Promise<void> {
+  if (process.env.NODE_ENV === "production") {
+    throw new Error(
+      "seedVoiceDemoData refuses to run in NODE_ENV=production — demo data would contaminate real tenant records",
+    );
+  }
+
   const tenant = await prisma.voiceTenant.findUnique({
     where: { id: tenantId },
   });

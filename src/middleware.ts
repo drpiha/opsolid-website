@@ -79,6 +79,12 @@ export async function middleware(req: NextRequest) {
   // Gate /api/voice/* and /voice/* when VOICE_AGENT_ENABLED is falsy.
   // Exceptions: webhooks (must keep receiving Retell events) and diagnostics
   // (used to debug why the flag is off). Runs before locale/domain logic.
+  //
+  // After the gate decision, /api/voice/* paths must short-circuit and never
+  // fall through to locale logic — the matcher includes them so the gate can
+  // run, but API responses are locale-agnostic. Without this early return the
+  // unprefixed locale branch below would 307 the request to /en/api/voice/...,
+  // which doesn't exist as a Next route → 404.
   if (pathname.startsWith("/api/voice") || pathname.startsWith("/voice")) {
     if (!voiceIsEnabled()) {
       const isWebhook = pathname.startsWith("/api/voice/webhooks/");
@@ -92,6 +98,9 @@ export async function middleware(req: NextRequest) {
         }
         return NextResponse.redirect(new URL("/", req.url));
       }
+    }
+    if (pathname.startsWith("/api/voice")) {
+      return NextResponse.next();
     }
   }
   // -------------------------------------------------------------------------

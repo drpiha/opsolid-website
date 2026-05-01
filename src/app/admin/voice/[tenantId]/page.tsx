@@ -11,6 +11,7 @@ import VoiceStatusBadge from "@/components/voice/dashboard/VoiceStatusBadge";
 import { formatDateTime, maskToken } from "@/components/voice/dashboard/format";
 import TenantTokenReveal from "./TenantTokenReveal";
 import TenantStatusControl from "./TenantStatusControl";
+import DiagnosticsCard from "./DiagnosticsCard";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -157,6 +158,10 @@ export default async function AdminTenantDetail({
             currentStatus={tenant.status}
             adminToken={token}
           />
+
+          {/* System diagnostics — shared health snapshot, useful while
+              wiring up a new tenant or debugging webhook issues. */}
+          <DiagnosticsCard adminToken={token} />
         </div>
 
         {/* Token reveal panel */}
