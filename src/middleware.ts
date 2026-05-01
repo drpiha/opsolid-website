@@ -80,11 +80,13 @@ export async function middleware(req: NextRequest) {
   // Exceptions: webhooks (must keep receiving Retell events) and diagnostics
   // (used to debug why the flag is off). Runs before locale/domain logic.
   //
-  // After the gate decision, /api/voice/* paths must short-circuit and never
-  // fall through to locale logic — the matcher includes them so the gate can
-  // run, but API responses are locale-agnostic. Without this early return the
-  // unprefixed locale branch below would 307 the request to /en/api/voice/...,
-  // which doesn't exist as a Next route → 404.
+  // After the gate decision, BOTH /api/voice/* and /voice/* must short-circuit
+  // and never fall through to locale logic. Voice surfaces are locale-agnostic
+  // (the customer dashboard pages render their own language directly from KB
+  // content / agent config, not from a /:locale prefix). Without this early
+  // return, the unprefixed-locale branch below would 307 the request to
+  // /en/voice/[slug]/... or /en/api/voice/... — neither exists as a Next
+  // route, so the user sees 404.
   if (pathname.startsWith("/api/voice") || pathname.startsWith("/voice")) {
     if (!voiceIsEnabled()) {
       const isWebhook = pathname.startsWith("/api/voice/webhooks/");
@@ -99,9 +101,7 @@ export async function middleware(req: NextRequest) {
         return NextResponse.redirect(new URL("/", req.url));
       }
     }
-    if (pathname.startsWith("/api/voice")) {
-      return NextResponse.next();
-    }
+    return NextResponse.next();
   }
   // -------------------------------------------------------------------------
 
