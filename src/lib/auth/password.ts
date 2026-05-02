@@ -43,11 +43,11 @@ let cached: Argon2Module | null = null;
 function loadArgon2(): Argon2Module {
   if (cached) return cached;
   try {
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
     const mod = require("argon2") as Argon2Module;
     cached = mod;
     return mod;
-  } catch (err) {
+  } catch {
     throw new Error(
       "[auth/password] argon2 native module is not installed. " +
         "Run `npm install argon2` (or `@node-rs/argon2` and update the import) " +
