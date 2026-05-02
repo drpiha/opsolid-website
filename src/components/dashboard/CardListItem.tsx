@@ -127,11 +127,9 @@ export function CardListItem({ card, locale }: Props) {
   };
 
   const handleDelete = async () => {
-    // TODO (B0.6): POST /api/cards/[id]/delete endpoint does not exist yet.
-    // Once the endpoint is created, remove the alert and uncomment the fetch.
     setDeleting(true);
     try {
-      const res = await fetch(`/api/cards/${card.id}/delete`, {
+      const res = await fetch(`/api/account/cards/${card.id}/delete`, {
         method: "POST",
         credentials: "same-origin",
       });

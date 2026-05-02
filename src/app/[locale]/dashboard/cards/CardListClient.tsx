@@ -94,7 +94,7 @@ function ClaimBanner({
   const handleClaim = async (cardId: string) => {
     setClaiming((prev) => ({ ...prev, [cardId]: "loading" }));
     try {
-      const res = await fetch(`/api/cards/${cardId}/claim`, {
+      const res = await fetch(`/api/account/cards/${cardId}/claim`, {
         method: "POST",
         credentials: "same-origin",
       });
