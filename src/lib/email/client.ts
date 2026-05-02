@@ -58,13 +58,13 @@ function resolveFrom(override?: string): string {
 // Sentry capture helper (optional — silently skipped when Sentry not present)
 // ---------------------------------------------------------------------------
 
-async function captureToSentry(err: unknown, context: object): Promise<void> {
+async function captureToSentry(err: unknown, context: Record<string, unknown>): Promise<void> {
   try {
     const Sentry = await import("@sentry/nextjs");
-    Sentry.withScope((scope) => {
-      scope.setExtras(context);
-      Sentry.captureException(err);
-    });
+    // captureException accepts a CaptureContext with an `extra` field —
+    // simpler and avoids Sentry's strict setExtra type that broke the
+    // build under newer @sentry/nextjs versions.
+    Sentry.captureException(err, { extra: context });
   } catch {
     // Sentry not available — ignore
   }
