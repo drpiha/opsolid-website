@@ -46,6 +46,21 @@ jobs:
             --exclude='public/uploads' \
             ./ "$DEPLOY_DIR/"
 
+      - name: Apply pending DB migrations (idempotent)
+        run: |
+          cd /opt/opsolid-website
+          # db-bootstrap.sh applies all patch_*.sql files via psql against the
+          # opsolid-db container. Each patch uses IF NOT EXISTS guards so
+          # re-runs are safe. Runs BEFORE the app container rebuild so the new
+          # code never starts against an out-of-sync schema.
+          if [ -x deploy/hostinger/db-bootstrap.sh ]; then
+            REPO_ROOT=/opt/opsolid-website ./deploy/hostinger/db-bootstrap.sh
+          else
+            echo "WARN: db-bootstrap.sh not executable; chmod +x and try again"
+            chmod +x deploy/hostinger/db-bootstrap.sh
+            REPO_ROOT=/opt/opsolid-website ./deploy/hostinger/db-bootstrap.sh
+          fi
+
       - name: Rebuild opsolid container
         run: |
           cd /opt/opsolid-website

@@ -5,7 +5,7 @@ import { getConsent, setConsent } from "@/lib/consent";
 import { useLocale } from "@/context/LocaleContext";
 
 export function ConsentBanner() {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export function ConsentBanner() {
       </h2>
       <p className="mt-2 text-sm text-ink/70">{t.consent.body}</p>
       <p className="mt-2 text-xs text-ink/50">
-        <a href="/datenschutz" className="underline hover:text-ink">
+        <a href={`/${locale}/privacy`} className="underline hover:text-ink">
           {t.consent.privacyLink}
         </a>
       </p>
