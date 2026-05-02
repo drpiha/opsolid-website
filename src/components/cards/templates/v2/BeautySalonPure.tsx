@@ -1,14 +1,14 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// BeautySalonPure — v2 template (id=30, key="beauty-salon-pure").
+// BeautySalonPure â€” v2 template (id=30, key="beauty-salon-pure").
 //
-// Sector: beauty studio — PURE variant. Mood: minimalist white + blush, gold
+// Sector: beauty studio â€” PURE variant. Mood: minimalist white + blush, gold
 // hairline rules, Cormorant Garamond display + DM Sans body. Inspired by
 // kart_13_guzellik_pure.html.
 //
 // Locked design DNA (only colors respond to brand):
-//   - Centered eyebrow (studio · city) + ultra-light Cormorant name + gold
+//   - Centered eyebrow (studio Â· city) + ultra-light Cormorant name + gold
 //     dot/line divider + role + EST. line.
 //   - Avatar row 64 px with gold star rating column.
 //   - Centered eyebrow + italic serif sub for sections.
@@ -110,19 +110,19 @@ const COPY: Record<"de" | "en" | "tr", BspCopy> = {
   tr: {
     premium: "Premium",
     studioLine: "EST. 2018",
-    contact: "İletişim",
+    contact: "Ä°letiÅŸim",
     contactSub: "Reach Out",
     menu: "Hizmetler",
     menuSub: "The Menu",
     studioPhilosophy: "Studio Philosophy",
     studioPhilosophyQuote: "Beauty is the way you live, not just the way you look.",
     bookAppointment: "Randevu Al",
-    callStudio: "Stüdyoyu Ara",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
+    callStudio: "StÃ¼dyoyu Ara",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
     servicesLabel: "Hizmetler",
     reviewsLabel: "Yorum",
-    share: "Paylaş",
+    share: "PaylaÅŸ",
     poweredBy: "Powered by",
   },
 };
@@ -178,7 +178,7 @@ export function BeautySalonPure({
           className="mb-3 text-[9.5px] font-semibold uppercase tracking-[3px]"
           style={{ color: primary }}
         >
-          {cardData.company} · {city}
+          {cardData.company} Â· {city}
         </div>
         <h1
           className="bsp-editorial text-[56px] font-light leading-[0.95] tracking-[-1.5px]"
@@ -195,13 +195,13 @@ export function BeautySalonPure({
           <span className="block h-px w-7" style={{ background: GOLD }} />
         </div>
         <div className="text-[12px] tracking-[0.5px]" style={{ color: INK_SOFT }}>
-          {cardData.position} {cardData.title && `· ${cardData.title}`}
+          {cardData.position} {cardData.title && `Â· ${cardData.title}`}
         </div>
         <div
           className="mt-3 text-[10px] font-semibold uppercase tracking-[2.5px]"
           style={{ color: GOLD }}
         >
-          {t.studioLine} · {t.premium}
+          {t.studioLine} Â· {t.premium}
         </div>
       </header>
 
@@ -215,7 +215,7 @@ export function BeautySalonPure({
           style={{ background: PAGE, border: `2px solid ${HAIRLINE_SOFT}` }}
         >
           {photoUrl ? (
-            <Image src={photoUrl} alt="" width={140} height={140} unoptimized className="h-full w-full object-cover" />
+            <Image src={photoUrl} alt="" width={140} height={140} unoptimized className="h-full w-full object-cover tpl-photo" />
           ) : (
             <span className="text-[14px] font-bold" style={{ color: primary }}>
               {cardData.name.slice(0, 2).toUpperCase()}
@@ -236,7 +236,7 @@ export function BeautySalonPure({
         {testimonials.length > 0 && (
           <div className="text-right">
             <div className="text-[12px] tracking-[1px]" style={{ color: GOLD }}>
-              ★★★★★
+              â˜…â˜…â˜…â˜…â˜…
             </div>
             <div
               className="mt-0.5 text-[10.5px] font-semibold tracking-[0.5px]"
@@ -253,7 +253,7 @@ export function BeautySalonPure({
         <ContactRows cardData={cardData} locale={locale} variant="hairline" accentHex={primary} />
       </BspSection>
 
-      {/* STATS — driven by real data */}
+      {/* STATS â€” driven by real data */}
       {(() => {
         const statsItems = [
           ...(services.length ? [{ n: String(services.length), l: t.servicesLabel }] : []),
@@ -343,7 +343,7 @@ export function BeautySalonPure({
             className="mt-4 text-[10px] font-semibold uppercase tracking-[2px]"
             style={{ color: primary }}
           >
-            — {testimonials[0].author}
+            â€” {testimonials[0].author}
           </div>
         </section>
       )}
@@ -371,7 +371,7 @@ export function BeautySalonPure({
             className="mt-4 text-[10px] font-semibold uppercase tracking-[2px]"
             style={{ color: primary }}
           >
-            — {t.studioPhilosophy}
+            â€” {t.studioPhilosophy}
           </div>
         </section>
       )}
@@ -434,7 +434,7 @@ export function BeautySalonPure({
         className="flex items-center justify-between px-10 py-7 text-[9.5px] font-semibold uppercase tracking-[1.8px]"
         style={{ color: INK_SOFT }}
       >
-        <span>© MMXXVI</span>
+        <span>Â© MMXXVI</span>
         <span>{cardData.company}</span>
       </footer>
       <div
@@ -521,7 +521,7 @@ function BspStat({ n, l, last }: { n: string; l: string; last?: boolean }) {
 export const beautySalonPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 30,
   key: "beauty-salon-pure",
-  name: "Beauty Salon — Pure",
+  name: "Beauty Salon â€” Pure",
   industry: "Beauty studio (editorial pure variant)",
   supports: {
     services: true,
@@ -552,17 +552,17 @@ export const beautySalonPureSample: SampleData = {
     email: "buse@beautybybuse.de",
     website: "beautybybuse.de",
     address: "Friedrichstr. 67, 10117 Berlin",
-    bio: "Premium beauty studio. 7 yıl deneyim · 5.000+ memnun müşteri.",
+    bio: "Premium beauty studio. 7 yÄ±l deneyim Â· 5.000+ memnun mÃ¼ÅŸteri.",
     services: [
-      { title: "Microblading", description: "Kalıcı kaş tasarımı", priceLabel: "€280" },
-      { title: "Eyeliner", description: "Kalıcı makyaj", priceLabel: "€220" },
-      { title: "Lash Lift & Tint", description: "Volume / classic", priceLabel: "€65" },
-      { title: "Hidrafacial", description: "Cilt protokolu", priceLabel: "€85" },
+      { title: "Microblading", description: "KalÄ±cÄ± kaÅŸ tasarÄ±mÄ±", priceLabel: "â‚¬280" },
+      { title: "Eyeliner", description: "KalÄ±cÄ± makyaj", priceLabel: "â‚¬220" },
+      { title: "Lash Lift & Tint", description: "Volume / classic", priceLabel: "â‚¬65" },
+      { title: "Hidrafacial", description: "Cilt protokolu", priceLabel: "â‚¬85" },
       { title: "Lazer Epilasyon", description: "Diode paketleri", priceLabel: "Paket" },
-      { title: "Kaş Laminasyonu", description: "Brow lift", priceLabel: "€55" },
+      { title: "KaÅŸ Laminasyonu", description: "Brow lift", priceLabel: "â‚¬55" },
     ],
     testimonials: [
-      { author: "Selin K.", quote: "Microblading sonucu inanılmaz doğal duruyor. Buse'nin elinden çıkmış her ayrıntı kusursuz." },
+      { author: "Selin K.", quote: "Microblading sonucu inanÄ±lmaz doÄŸal duruyor. Buse'nin elinden Ã§Ä±kmÄ±ÅŸ her ayrÄ±ntÄ± kusursuz." },
     ],
     socials: {
       instagram: "https://instagram.com/beautybybuse",
@@ -575,3 +575,4 @@ export const beautySalonPureSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

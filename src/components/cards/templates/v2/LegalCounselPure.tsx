@@ -1,21 +1,21 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// LegalCounselPure — v2 template (id=57, key="legal-counsel-pure").
+// LegalCounselPure â€” v2 template (id=57, key="legal-counsel-pure").
 //
-// Sector: Lawyer / Rechtsanwalt — PURE variant. Mood: Swiss minimal,
+// Sector: Lawyer / Rechtsanwalt â€” PURE variant. Mood: Swiss minimal,
 // editorial white, deep navy headlines, hairline rows, Lora italic body.
 // Inspired by kart_02_avukat_pure.html.
 //
 // Design DNA:
-//   - Header: portrait card-photo (92×110) on left + eyebrow + huge sans
+//   - Header: portrait card-photo (92Ã—110) on left + eyebrow + huge sans
 //     name + italic Lora title on right.
 //   - Hairline divider above and below a 3-cell meta-row (admit year, bar,
 //     languages).
 //   - About section: italic Lora paragraph, no quote glyph.
 //   - Slogan strip: hairline-bordered italic line.
 //   - Spec list: hairline rows with short colored leading rule.
-//   - Stats grid 2×2 with hairline borders.
+//   - Stats grid 2Ã—2 with hairline borders.
 //   - Education / Membership 2-column block (signature noir-pure detail).
 //   - Reference block.
 //   - Contact table: hairline rows with right-aligned values.
@@ -91,7 +91,7 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr", Copy> = {
   de: {
-    about: "Über mich",
+    about: "Ãœber mich",
     practice: "Praxisgebiete",
     practiceH: "Leistungsspektrum",
     reference: "Referenz",
@@ -139,27 +139,27 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    about: "Hakkımda",
-    practice: "Uzmanlık Alanları",
+    about: "HakkÄ±mda",
+    practice: "UzmanlÄ±k AlanlarÄ±",
     practiceH: "Hizmet Yelpazesi",
     reference: "Referans",
-    contact: "İletişim",
-    contactH: "Bize Ulaşın",
-    education: "Eğitim & Üyelik",
-    educationLabel: "Eğitim",
-    membershipLabel: "Üyelik",
+    contact: "Ä°letiÅŸim",
+    contactH: "Bize UlaÅŸÄ±n",
+    education: "EÄŸitim & Ãœyelik",
+    educationLabel: "EÄŸitim",
+    membershipLabel: "Ãœyelik",
     callBtn: "Ara",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-posta",
     metaActive: "Aktif",
     metaBar: "Baro",
     metaLanguages: "Dil",
-    yearsLabel: "Yıl Tecrübe",
+    yearsLabel: "YÄ±l TecrÃ¼be",
     casesLabel: "Tamamlanan Dava",
-    winRateLabel: "Başarı Oranı",
+    winRateLabel: "BaÅŸarÄ± OranÄ±",
     langsLabel: "Dil",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
   },
 };
@@ -222,7 +222,7 @@ export function LegalCounselPure({
             width={92}
             height={110}
             unoptimized
-            className="flex-shrink-0 object-cover"
+            className="flex-shrink-0 object-cover tpl-photo"
             style={{
               width: 92,
               height: 110,
@@ -265,7 +265,7 @@ export function LegalCounselPure({
             className="serif-i text-[13px] leading-[1.5]"
             style={{ color: INK_SOFT }}
           >
-            {[cardData.position, cardData.title].filter(Boolean).join(" — ") ||
+            {[cardData.position, cardData.title].filter(Boolean).join(" â€” ") ||
               "Senior Counsel"}
           </div>
         </div>
@@ -340,10 +340,10 @@ export function LegalCounselPure({
           className="serif-i text-[16px] leading-[1.5]"
           style={{ color: accent }}
         >
-          {"“"}
+          {"â€œ"}
           {cardData.bio?.split(/[.!?]/)[0]?.trim() ||
-            "Hukuki Güvenceniz, Başarınızın Temeli"}
-          {"”"}
+            "Hukuki GÃ¼venceniz, BaÅŸarÄ±nÄ±zÄ±n Temeli"}
+          {"â€"}
         </p>
       </div>
 
@@ -411,7 +411,7 @@ export function LegalCounselPure({
           accent={accent}
           divider="rt"
         />
-        <PureStat num="3" label={`${t.langsLabel} · DE/EN/TR`} accent={accent} divider="t" />
+        <PureStat num="3" label={`${t.langsLabel} Â· DE/EN/TR`} accent={accent} divider="t" />
       </div>
 
       {/* EDUCATION 2-COL */}
@@ -427,7 +427,7 @@ export function LegalCounselPure({
             </h4>
             <ul className="m-0 list-none p-0 text-[12.5px]">
               <li className="py-1.5 leading-snug" style={{ color: INK, fontWeight: 500 }}>
-                Humboldt-Universität
+                Humboldt-UniversitÃ¤t
                 <span className="block text-[10.5px] font-normal" style={{ color: INK_SOFT }}>
                   Jura, 2003
                 </span>
@@ -457,7 +457,7 @@ export function LegalCounselPure({
               <li className="py-1.5 leading-snug" style={{ color: INK, fontWeight: 500 }}>
                 DAV
                 <span className="block text-[10.5px] font-normal" style={{ color: INK_SOFT }}>
-                  2008—
+                  2008â€”
                 </span>
               </li>
             </ul>
@@ -473,16 +473,16 @@ export function LegalCounselPure({
             className="serif-i mt-3 text-[14px] leading-[1.7]"
             style={{ color: INK }}
           >
-            {"“"}
+            {"â€œ"}
             {testimonial.quote}
-            {"”"}
+            {"â€"}
           </p>
           <div
             className="mt-3.5 text-[11.5px] font-semibold"
             style={{ color: accent, letterSpacing: "0.4px" }}
           >
             {testimonial.author}
-            {testimonial.role ? ` — ${testimonial.role}` : ""}
+            {testimonial.role ? ` â€” ${testimonial.role}` : ""}
           </div>
         </section>
       )}
@@ -542,13 +542,13 @@ export function LegalCounselPure({
           style={{ color: accent, letterSpacing: "0.3px" }}
         >
           {cardData.name}
-          {cardData.company ? ` — ${cardData.company}` : ""}
+          {cardData.company ? ` â€” ${cardData.company}` : ""}
         </div>
         <div
           className="mt-1 text-[10.5px]"
           style={{ color: INK_SOFT, letterSpacing: "0.5px" }}
         >
-          © {new Date().getFullYear()} · {t.poweredBy}{" "}
+          Â© {new Date().getFullYear()} Â· {t.poweredBy}{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"
@@ -655,7 +655,7 @@ function PureAction({
 export const legalCounselPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 57,
   key: "legal-counsel-pure",
-  name: "Legal Counsel — Pure",
+  name: "Legal Counsel â€” Pure",
   industry: "Lawyer / Rechtsanwalt",
   supports: {
     services: true,
@@ -682,14 +682,14 @@ export const legalCounselPureSample: SampleData = {
   cardData: {
     name: "Dr. Klaus Bauer",
     position: "Rechtsanwalt",
-    title: "Fachanwalt für Strafrecht",
+    title: "Fachanwalt fÃ¼r Strafrecht",
     company: "Bauer & Partner",
     email: "bauer@bauer-partner.de",
     phone: "+49 30 555 7890",
     whatsapp: "+49 170 555 7890",
     website: "bauer-partner.de",
     address: "Unter den Linden 21, 10117 Berlin",
-    bio: "Recht ist kein Wettkampf, sondern Sorgfalt. Seit zwei Jahrzehnten in der Berliner Rechtsanwaltskammer eingetragen — und seit ebenso langer Zeit überzeugt davon, dass kürzeste Briefe oft die besten Ergebnisse bringen.",
+    bio: "Recht ist kein Wettkampf, sondern Sorgfalt. Seit zwei Jahrzehnten in der Berliner Rechtsanwaltskammer eingetragen â€” und seit ebenso langer Zeit Ã¼berzeugt davon, dass kÃ¼rzeste Briefe oft die besten Ergebnisse bringen.",
     bookingUrl: "https://cal.com/bauer-partner/intro",
     brochureUrl: "https://bauer-partner.de/profil.pdf",
     impressumUrl: "https://bauer-partner.de/impressum",
@@ -700,15 +700,15 @@ export const legalCounselPureSample: SampleData = {
       xing: "https://xing.com/profile/Klaus_Bauer",
     },
     services: [
-      { title: "Strafrecht", description: "Beratung und Vertretung im Strafverfahren.", priceLabel: "€200 Erstberatung" },
-      { title: "Familienrecht", description: "Scheidung, Sorgerecht, Unterhalt.", priceLabel: "ab €300/h" },
-      { title: "Arbeitsrecht", description: "Kündigung, Aufhebung, Vergütung.", priceLabel: "Erfolgshonorar" },
+      { title: "Strafrecht", description: "Beratung und Vertretung im Strafverfahren.", priceLabel: "â‚¬200 Erstberatung" },
+      { title: "Familienrecht", description: "Scheidung, Sorgerecht, Unterhalt.", priceLabel: "ab â‚¬300/h" },
+      { title: "Arbeitsrecht", description: "KÃ¼ndigung, Aufhebung, VergÃ¼tung.", priceLabel: "Erfolgshonorar" },
     ],
     testimonials: [
       {
         author: "Mehmet T.",
         role: "Mandant",
-        quote: "Dr. Bauer hat ruhig, präzise und mit unfehlbarem Gespür für den richtigen Moment verhandelt.",
+        quote: "Dr. Bauer hat ruhig, prÃ¤zise und mit unfehlbarem GespÃ¼r fÃ¼r den richtigen Moment verhandelt.",
       },
     ],
   },
@@ -718,3 +718,4 @@ export const legalCounselPureSample: SampleData = {
   brandPrimaryHex: "#ffffff",
   brandAccentHex: "#1a2b4a",
 };
+

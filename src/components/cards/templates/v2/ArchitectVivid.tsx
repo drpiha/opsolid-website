@@ -295,7 +295,7 @@ export function ArchitectVivid({
               width={80}
               height={80}
               unoptimized
-              className="rounded-full object-cover"
+              className="rounded-full object-cover tpl-photo"
               style={{
                 border: "4px solid #fff",
                 boxShadow: "0 4px 14px rgba(15,23,42,0.18)",

@@ -1,13 +1,13 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// AutoDealerVivid — v2 template (id=48, key="auto-dealer-vivid").
+// AutoDealerVivid â€” v2 template (id=48, key="auto-dealer-vivid").
 //
-// Sector: Premium pre-owned auto dealer — VIVID variant. Mood: bold red /
+// Sector: Premium pre-owned auto dealer â€” VIVID variant. Mood: bold red /
 // black, sporty and energetic. Inspired by kart_19_oto_galeri_vivid.html.
 //
 // Locked design DNA (only colors respond to brand):
-//   - Hero: gradient (black→primary→deep) with radial glow + bottom hairline,
+//   - Hero: gradient (blackâ†’primaryâ†’deep) with radial glow + bottom hairline,
 //     pill tag, oversized uppercase Rajdhani name, tagline, and a horizontal
 //     hero-stats row (3 numbers).
 //   - Profile strip floats over hero (-36 px) with avatar + white card chip.
@@ -103,7 +103,7 @@ interface Copy {
 const COPY: Record<"de" | "en" | "tr", Copy> = {
   de: {
     tag: "Premium Auto",
-    tagline: "Geprüfte Premium-Gebrauchtwagen, mit echter Garantie und ehrlichem Preis.",
+    tagline: "GeprÃ¼fte Premium-Gebrauchtwagen, mit echter Garantie und ehrlichem Preis.",
     callBtn: "Anrufen",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-Mail",
@@ -147,25 +147,25 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
   },
   tr: {
     tag: "Premium Auto",
-    tagline: "Kontrolden geçmiş premium ikinci el araçlar — gerçek garanti, dürüst fiyat.",
+    tagline: "Kontrolden geÃ§miÅŸ premium ikinci el araÃ§lar â€” gerÃ§ek garanti, dÃ¼rÃ¼st fiyat.",
     callBtn: "Ara",
     whatsappBtn: "WhatsApp",
     emailBtn: "Mail",
-    featuredH: "Öne Çıkan",
+    featuredH: "Ã–ne Ã‡Ä±kan",
     featuredBadge: "Top Pick",
-    yearLabel: "Yıl",
+    yearLabel: "YÄ±l",
     transLabel: "Vites",
-    fuelLabel: "Yakıt",
+    fuelLabel: "YakÄ±t",
     brandsH: "Markalar",
     servicesH: "Hizmetler",
-    yearsLabel: "Yıl",
-    carsLabel: "Araç",
+    yearsLabel: "YÄ±l",
+    carsLabel: "AraÃ§",
     warrantyLabel: "Garanti",
-    cta: "Test Sürüşü Al",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
+    cta: "Test SÃ¼rÃ¼ÅŸÃ¼ Al",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
-    contact: "İletişim",
+    contact: "Ä°letiÅŸim",
   },
 };
 
@@ -289,7 +289,7 @@ export function AutoDealerVivid({
             }}
           >
             {photoUrl ? (
-              <Image src={photoUrl} alt="" fill sizes="72px" unoptimized className="object-cover" />
+              <Image src={photoUrl} alt="" fill sizes="72px" unoptimized className="object-cover tpl-photo" />
             ) : (
               <div
                 className="display flex h-full w-full items-center justify-center text-[20px] font-bold"
@@ -316,7 +316,7 @@ export function AutoDealerVivid({
               className="mt-1 text-[11px] uppercase"
               style={{ color: primary, letterSpacing: "1.5px" }}
             >
-              {cardData.position || "Founder · 15 yrs"}
+              {cardData.position || "Founder Â· 15 yrs"}
             </div>
           </div>
         </section>
@@ -408,7 +408,7 @@ export function AutoDealerVivid({
                     className="display text-[26px] font-bold"
                     style={{ color: primary }}
                   >
-                    {featured.priceLabel || "—"}
+                    {featured.priceLabel || "â€”"}
                   </span>
                 </div>
               </div>
@@ -551,7 +551,7 @@ export function AutoDealerVivid({
             className="mt-1.5 text-[10.5px]"
             style={{ color: "rgba(255,255,255,0.55)", letterSpacing: "1px" }}
           >
-            © {year} · {t.poweredBy}{" "}
+            Â© {year} Â· {t.poweredBy}{" "}
             <a
               href="https://opsolid.de/products/digital-card"
               target="_blank"
@@ -681,7 +681,7 @@ function CarSpec({
 export const autoDealerVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 48,
   key: "auto-dealer-vivid",
-  name: "Auto Dealer — Vivid",
+  name: "Auto Dealer â€” Vivid",
   industry: "Premium auto dealer / showroom",
   supports: {
     services: true,
@@ -703,13 +703,13 @@ export const autoDealerVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   nameRules: { transform: "uppercase" },
 };
 
-// photo: Unsplash, premium car. Unsplash License — free, no attribution required.
+// photo: Unsplash, premium car. Unsplash License â€” free, no attribution required.
 export const autoDealerVividSample: SampleData = {
   templateId: 48,
   slug: "demo-auto-dealer-vivid",
   cardData: {
-    name: "Tarık Arslan",
-    position: "Otomotiv Danışmanı",
+    name: "TarÄ±k Arslan",
+    position: "Otomotiv DanÄ±ÅŸmanÄ±",
     title: "Founder",
     company: "Arslan Automobile",
     email: "tarik@arslanautomobile.de",
@@ -717,13 +717,13 @@ export const autoDealerVividSample: SampleData = {
     whatsapp: "+49 170 882 3456",
     website: "arslanautomobile.de",
     address: "Charlottenburg, Berlin",
-    bio: "Premium Auto Dealership — geprüft, garantiert, ehrlich verhandelt.",
+    bio: "Premium Auto Dealership â€” geprÃ¼ft, garantiert, ehrlich verhandelt.",
     bookingUrl: "https://cal.com/arslanautomobile/intro",
     sectorKey: "retail",
     services: [
-      { title: "BMW M5 Competition", description: "2022 · 18.000 km · Carbon Black", priceLabel: "€89.500" },
-      { title: "Mercedes E220d", description: "2020 · 62.000 km · Silber", priceLabel: "€42.500" },
-      { title: "Audi A6 Avant", description: "2022 · 24.000 km · Grau", priceLabel: "€49.800" },
+      { title: "BMW M5 Competition", description: "2022 Â· 18.000 km Â· Carbon Black", priceLabel: "â‚¬89.500" },
+      { title: "Mercedes E220d", description: "2020 Â· 62.000 km Â· Silber", priceLabel: "â‚¬42.500" },
+      { title: "Audi A6 Avant", description: "2022 Â· 24.000 km Â· Grau", priceLabel: "â‚¬49.800" },
       { title: "Garantie 12 Monate", description: "Auf alle Premium-Modelle" },
       { title: "Inzahlungnahme", description: "Faire Bewertung in 24 h" },
       { title: "Finanzierung", description: "Ab 2,9 % effektiv" },
@@ -739,3 +739,4 @@ export const autoDealerVividSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

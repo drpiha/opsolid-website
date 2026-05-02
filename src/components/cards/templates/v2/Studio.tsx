@@ -298,7 +298,7 @@ export function Studio({
 
       {cardData.bio && (
         <Section title={t.about} accent={accent}>
-          <p className="text-[14px] leading-[1.85] text-white/72">{cardData.bio}</p>
+          <p className="text-[14px] leading-[1.85] text-white/90">{cardData.bio}</p>
         </Section>
       )}
 
@@ -735,7 +735,7 @@ function TrackList({
                 {item.title}
               </h3>
               {item.description && (
-                <p className="mt-1 line-clamp-2 text-[12px] leading-snug text-white/60">
+                <p className="mt-1 line-clamp-2 text-[12px] leading-snug text-white/75">
                   {item.description}
                 </p>
               )}

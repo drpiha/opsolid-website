@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import { Inter, Instrument_Serif, JetBrains_Mono } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
+import { ConditionalAnalytics } from "@/components/shared/ConditionalAnalytics";
 import { SITE_CONFIG } from "@/lib/constants";
 import { isLocale, DEFAULT_LOCALE } from "@/lib/i18n";
+import { ConsentBanner } from "@/components/shared/ConsentBanner";
 import "./globals.css";
 
 const inter = Inter({
@@ -122,7 +123,12 @@ export default function RootLayout({
       </head>
       <body className="grain font-sans antialiased bg-bg-1 text-ink-200 min-h-[100svh] flex flex-col">
         {children}
-        <Analytics />
+        {/* C5 — ConsentBanner sets the localStorage flag; ConditionalAnalytics
+            (a client component) watches it and only mounts <Analytics /> after
+            the user accepts. We can't pass `beforeSend` from this server layout
+            because RSC cannot serialize functions across the boundary. */}
+        <ConsentBanner />
+        <ConditionalAnalytics />
       </body>
     </html>
   );

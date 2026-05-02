@@ -1,16 +1,16 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// PsychologistVivid — v2 template (id=27, key="psychologist-vivid").
+// PsychologistVivid â€” v2 template (id=27, key="psychologist-vivid").
 //
-// Sector: psychologist — VIVID variant. Mood: deep indigo/violet gradient,
+// Sector: psychologist â€” VIVID variant. Mood: deep indigo/violet gradient,
 // warm, modern. Inspired by kart_12_psikolog_vivid.html.
 //
 // Locked design DNA (only colors respond to brand):
 //   - Centered hero: indigo/violet gradient with decorative blob halos +
 //     pill ("New clients welcome") + bold sans name.
 //   - Floating circular avatar (-64 px) framed in white.
-//   - Big primary CTA right under (Request first session · free intro).
+//   - Big primary CTA right under (Request first session Â· free intro).
 //   - 3-up quick action row (Phone/Email/Instagram).
 //   - Session packages 3-up tiles: middle one featured (gradient-fill).
 //   - Specialty pills (round pills with single-letter accent dots).
@@ -89,7 +89,7 @@ interface PsvCopy {
 const COPY: Record<"de" | "en" | "tr", PsvCopy> = {
   de: {
     newClients: "Neue Klient:innen willkommen",
-    bookFirst: "Erstgespräch anfragen",
+    bookFirst: "ErstgesprÃ¤ch anfragen",
     bookHint: "Kostenloses Kennenlernen",
     call: "Telefon",
     email: "E-Mail",
@@ -124,21 +124,21 @@ const COPY: Record<"de" | "en" | "tr", PsvCopy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    newClients: "Yeni Danışanlara Açığım",
-    bookFirst: "İlk Görüşme Talep Et",
-    bookHint: "Ücretsiz tanışma seansı",
+    newClients: "Yeni DanÄ±ÅŸanlara AÃ§Ä±ÄŸÄ±m",
+    bookFirst: "Ä°lk GÃ¶rÃ¼ÅŸme Talep Et",
+    bookHint: "Ãœcretsiz tanÄ±ÅŸma seansÄ±",
     call: "Telefon",
     email: "E-posta",
     ig: "Instagram",
     packages: "Seans Paketleri",
-    popular: "Popüler",
-    specialties: "Çalışma Alanları",
-    experience: "Yıl Deneyim",
+    popular: "PopÃ¼ler",
+    specialties: "Ã‡alÄ±ÅŸma AlanlarÄ±",
+    experience: "YÄ±l Deneyim",
     sessions: "Seans",
     formats: "Format",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
-    share: "Paylaş",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
+    share: "PaylaÅŸ",
     poweredBy: "Powered by",
   },
 };
@@ -221,7 +221,7 @@ export function PsychologistVivid({
           {cardData.name}
         </h1>
         <div className="relative z-10 mt-2 text-[13.5px] font-normal opacity-90">
-          {cardData.position} {cardData.title && `· ${cardData.title}`}
+          {cardData.position} {cardData.title && `Â· ${cardData.title}`}
         </div>
       </header>
 
@@ -235,7 +235,7 @@ export function PsychologistVivid({
               width={232}
               height={232}
               unoptimized
-              className="block h-[116px] w-[116px] rounded-full object-cover"
+              className="block h-[116px] w-[116px] rounded-full object-cover tpl-photo"
             />
           ) : (
             <div
@@ -433,13 +433,13 @@ export function PsychologistVivid({
               &ldquo;
             </span>
             <div className="mb-3 text-[14px]" style={{ color: "#fbbf24", letterSpacing: "2px" }}>
-              ★★★★★
+              â˜…â˜…â˜…â˜…â˜…
             </div>
             <p className="text-[14.5px] font-medium leading-[1.6]">
               &ldquo;{testimonials[0].quote}&rdquo;
             </p>
             <div className="mt-3.5 text-[12px] font-semibold opacity-90">
-              — {testimonials[0].author}
+              â€” {testimonials[0].author}
               {testimonials[0].role && `, ${testimonials[0].role}`}
             </div>
           </article>
@@ -490,7 +490,7 @@ export function PsychologistVivid({
           {cardData.website || cardData.company}
         </div>
         <div className="mt-1 text-[11px]" style={{ color: INK_SOFT }}>
-          {cardData.company} · © {new Date().getFullYear()}
+          {cardData.company} Â· Â© {new Date().getFullYear()}
         </div>
         <div
           className="mt-3 inline-flex items-center gap-1.5 text-[11px]"
@@ -584,7 +584,7 @@ function PsvStat({
 export const psychologistVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 27,
   key: "psychologist-vivid",
-  name: "Psychologist — Vivid",
+  name: "Psychologist â€” Vivid",
   industry: "Psychologist / therapist (vivid gradient variant)",
   supports: {
     services: true,
@@ -615,22 +615,22 @@ export const psychologistVividSample: SampleData = {
     email: "aylin@psycho-berlin.de",
     website: "psycho-berlin.de",
     address: "Rosenthaler Str. 40, 10178 Berlin",
-    bio: "Ein geschützter Raum, in dem wir gemeinsam an dem arbeiten, was Ihr Leben zum Leuchten bringt.",
-    bookingUrl: "https://wa.me/491702113456?text=Erstgespräch",
+    bio: "Ein geschÃ¼tzter Raum, in dem wir gemeinsam an dem arbeiten, was Ihr Leben zum Leuchten bringt.",
+    bookingUrl: "https://wa.me/491702113456?text=ErstgesprÃ¤ch",
     services: [
-      { title: "Einzeltherapie", description: "60 min", priceLabel: "€120" },
-      { title: "Paartherapie", description: "90 min", priceLabel: "€160" },
-      { title: "Online", description: "50 min", priceLabel: "€90" },
+      { title: "Einzeltherapie", description: "60 min", priceLabel: "â‚¬120" },
+      { title: "Paartherapie", description: "90 min", priceLabel: "â‚¬160" },
+      { title: "Online", description: "50 min", priceLabel: "â‚¬90" },
     ],
     faqs: [
       { q: "Depression", a: "Kurzzeit-CBT" },
       { q: "Beziehungen", a: "Paar/Familie" },
       { q: "Trauma", a: "EMDR Level 2" },
-      { q: "Persönlichkeit", a: "Langzeit" },
+      { q: "PersÃ¶nlichkeit", a: "Langzeit" },
       { q: "Karriere", a: "Burnout" },
     ],
     testimonials: [
-      { author: "Anonim Danışan", quote: "Aylin Hanım ile çalışmak hayatımı değiştirdi. Güvenli ve destekleyici bir ortam sunuyor." },
+      { author: "Anonim DanÄ±ÅŸan", quote: "Aylin HanÄ±m ile Ã§alÄ±ÅŸmak hayatÄ±mÄ± deÄŸiÅŸtirdi. GÃ¼venli ve destekleyici bir ortam sunuyor." },
     ],
     socials: { instagram: "https://instagram.com/guvenlialan.psikoloji" },
     sectorKey: "clinic",
@@ -640,3 +640,4 @@ export const psychologistVividSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

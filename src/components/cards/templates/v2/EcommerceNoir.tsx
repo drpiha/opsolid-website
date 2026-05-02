@@ -1,17 +1,17 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// EcommerceNoir — v2 template (id=81, key="ecommerce-noir").
+// EcommerceNoir â€” v2 template (id=81, key="ecommerce-noir").
 //
-// Sector: E-commerce / Online boutique — NOIR variant. Mood: dark luxury
+// Sector: E-commerce / Online boutique â€” NOIR variant. Mood: dark luxury
 // boutique, deep ink surface, champagne-gold trim, Playfair Display + Inter
 // light. Inspired by kart_08_eticaret_noir.html.
 //
 // Design DNA (different from default Ecommerce, EcommercePure/Vivid):
 //   - 80px circular monogram in gold-stroke ring with horizontal hairline ears.
 //   - Centred Playfair brand-h1 with mono-uppercase eyebrow + italic French
-//     "Maison fondée…" tag.
-//   - Profile band with 62px gold-ring avatar + Founder—Curator role caps.
+//     "Maison fondÃ©eâ€¦" tag.
+//   - Profile band with 62px gold-ring avatar + Founderâ€”Curator role caps.
 //   - Featured-piece card: 4:3 image with limited-edition gold badge over
 //     darkened gradient.
 //   - Collection 2x2 category grid with hover gold inner-frame and SVG icons.
@@ -64,8 +64,8 @@ function digitsOnly(value: string): string {
 
 function getInitials(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "•";
-  if (parts.length === 1) return (parts[0][0] ?? "•").toUpperCase();
+  if (parts.length === 0) return "â€¢";
+  if (parts.length === 1) return (parts[0][0] ?? "â€¢").toUpperCase();
   return (
     (parts[0][0] ?? "").toUpperCase() + (parts[parts.length - 1][0] ?? "").toUpperCase()
   );
@@ -93,16 +93,16 @@ interface Copy {
 const COPY: Record<"de" | "en" | "tr", Copy> = {
   de: {
     brandPre: "Premium Kollektion",
-    brandTag: "Maison fondée en 2021",
+    brandTag: "Maison fondÃ©e en 2021",
     taglineFallback: "Founder & Curator",
-    featuredEyebrow: "— Featured Piece —",
+    featuredEyebrow: "â€” Featured Piece â€”",
     collectionPre: "FW26",
     collectionH: "Kollektion",
     collectionSub: "Kuratierte Mode & Accessoires",
     servicesLabel: "Produkte",
     reviewsLabel: "Bewertungen",
     serviceH: "Le Service",
-    serviceSub: "— Unsere Leistungen —",
+    serviceSub: "â€” Unsere Leistungen â€”",
     bookBtn: "Bestellung aufgeben",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
@@ -111,16 +111,16 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
   },
   en: {
     brandPre: "Premium Collection",
-    brandTag: "Maison fondée en 2021",
+    brandTag: "Maison fondÃ©e en 2021",
     taglineFallback: "Founder & Curator",
-    featuredEyebrow: "— Featured Piece —",
+    featuredEyebrow: "â€” Featured Piece â€”",
     collectionPre: "FW26",
     collectionH: "Collection",
     collectionSub: "Curated fashion & accessories",
     servicesLabel: "Products",
     reviewsLabel: "Reviews",
     serviceH: "Le Service",
-    serviceSub: "— What we offer —",
+    serviceSub: "â€” What we offer â€”",
     bookBtn: "Place order",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
@@ -129,19 +129,19 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
   },
   tr: {
     brandPre: "Premium Koleksiyon",
-    brandTag: "Maison fondée en 2021",
+    brandTag: "Maison fondÃ©e en 2021",
     taglineFallback: "Founder & Curator",
-    featuredEyebrow: "— Featured Piece —",
+    featuredEyebrow: "â€” Featured Piece â€”",
     collectionPre: "SS26",
     collectionH: "Koleksiyon",
-    collectionSub: "Kuratörlü moda ve aksesuar",
-    servicesLabel: "Ürünler",
+    collectionSub: "KuratÃ¶rlÃ¼ moda ve aksesuar",
+    servicesLabel: "ÃœrÃ¼nler",
     reviewsLabel: "Yorum",
     serviceH: "Le Service",
-    serviceSub: "— Hizmetlerimiz —",
-    bookBtn: "Sipariş Ver",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
+    serviceSub: "â€” Hizmetlerimiz â€”",
+    bookBtn: "SipariÅŸ Ver",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
     qrLabel: "Scan to shop",
   },
@@ -279,7 +279,7 @@ export function EcommerceNoir({
               width={56}
               height={56}
               unoptimized
-              className="block h-full w-full rounded-full object-cover"
+              className="block h-full w-full rounded-full object-cover tpl-photo"
             />
           ) : (
             <div
@@ -329,7 +329,7 @@ export function EcommerceNoir({
                   alt={featured.title}
                   fill
                   unoptimized
-                  className="object-cover"
+                  className="object-cover tpl-photo"
                   style={{ filter: "brightness(0.9)" }}
                 />
               ) : (
@@ -476,7 +476,7 @@ export function EcommerceNoir({
         </>
       )}
 
-      {/* STATS — driven by real data */}
+      {/* STATS â€” driven by real data */}
       {(() => {
         const statsItems = [
           ...(allServices.length ? [{ num: String(allServices.length), label: t.servicesLabel }] : []),
@@ -542,10 +542,10 @@ export function EcommerceNoir({
           style={{ background: LINE, gap: 1 }}
         >
           <SvcRow k="Kargo" v="Free / Closed Box" v_gold />
-          <SvcRow k="Lieferung" v="2 — 4 Werktage" />
+          <SvcRow k="Lieferung" v="2 â€” 4 Werktage" />
           <SvcRow k="Geschenkverpackung" v="Inklusive" v_gold />
-          <SvcRow k="Custom" v="2 — 3 Wochen" />
-          <SvcRow k="Zahlung" v="Karte, Banküberweisung" />
+          <SvcRow k="Custom" v="2 â€” 3 Wochen" />
+          <SvcRow k="Zahlung" v="Karte, BankÃ¼berweisung" />
         </div>
       </section>
 
@@ -599,8 +599,8 @@ export function EcommerceNoir({
         className="serif italic px-6 py-6 text-center"
         style={{ fontSize: 13, color: MUTED, borderTop: `1px solid ${LINE}` }}
       >
-        © {new Date().getFullYear()} — {cardData.company || cardData.name} Maison
-        {cityFromAddress ? ` · ${cityFromAddress}` : ""}
+        Â© {new Date().getFullYear()} â€” {cardData.company || cardData.name} Maison
+        {cityFromAddress ? ` Â· ${cityFromAddress}` : ""}
         <div className="mt-2" style={{ color: DIM, fontStyle: "normal" }}>
           {t.poweredBy}{" "}
           <a
@@ -636,7 +636,7 @@ export function EcommerceNoir({
 export const ecommerceNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 81,
   key: "ecommerce-noir",
-  name: "E-commerce — Noir",
+  name: "E-commerce â€” Noir",
   industry: "E-commerce / Dark luxury boutique",
   supports: {
     services: true,
@@ -657,21 +657,21 @@ export const ecommerceNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-ecommerce-noir",
 };
 
-// photo: Unsplash, https://unsplash.com/photos/eF7HN40WbAQ — Free, no attribution required.
+// photo: Unsplash, https://unsplash.com/photos/eF7HN40WbAQ â€” Free, no attribution required.
 export const ecommerceNoirSample: SampleData = {
   templateId: 81,
   slug: "demo-ecommerce-noir",
   cardData: {
     name: "Zeynep Kaya",
-    position: "Gründerin & CEO",
-    title: "Gründerin & CEO",
+    position: "GrÃ¼nderin & CEO",
+    title: "GrÃ¼nderin & CEO",
     company: "Pazar Shop",
     email: "zeynep@pazar-shop.de",
     phone: "+49 172 556 7891",
     whatsapp: "+49 172 556 7891",
     website: "pazar-shop.de",
-    address: "Oranienstraße 30, 10999 Berlin",
-    bio: "Kuratierte Mode & Accessoires aus der Türkei & Deutschland. Kostenloser Versand ab €50.",
+    address: "OranienstraÃŸe 30, 10999 Berlin",
+    bio: "Kuratierte Mode & Accessoires aus der TÃ¼rkei & Deutschland. Kostenloser Versand ab â‚¬50.",
     bookingUrl: "https://pazar-shop.de/shop",
     impressumUrl: "https://pazar-shop.de/impressum",
     privacyUrl: "https://pazar-shop.de/datenschutz",
@@ -681,9 +681,9 @@ export const ecommerceNoirSample: SampleData = {
       tiktok: "https://tiktok.com/@pazarshop",
     },
     services: [
-      { title: "Seidenschal", description: "Handbedruckt, Premium-Seide.", priceLabel: "€89" },
-      { title: "Handtasche", description: "Vollnarbenleder, handgenäht.", priceLabel: "€145" },
-      { title: "Schmuckset", description: "Versilbert, kuratiert.", priceLabel: "€65" },
+      { title: "Seidenschal", description: "Handbedruckt, Premium-Seide.", priceLabel: "â‚¬89" },
+      { title: "Handtasche", description: "Vollnarbenleder, handgenÃ¤ht.", priceLabel: "â‚¬145" },
+      { title: "Schmuckset", description: "Versilbert, kuratiert.", priceLabel: "â‚¬65" },
     ],
   },
   photoUrl:
@@ -692,3 +692,4 @@ export const ecommerceNoirSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

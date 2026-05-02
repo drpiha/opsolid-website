@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// LegalCounselVivid — v2 template (id=58, key="legal-counsel-vivid").
+// LegalCounselVivid â€” v2 template (id=58, key="legal-counsel-vivid").
 //
-// Sector: Lawyer / Rechtsanwalt — VIVID variant. Mood: deep navy gradient
+// Sector: Lawyer / Rechtsanwalt â€” VIVID variant. Mood: deep navy gradient
 // hero with electric blue + amber accents, energetic modern,
 // Poppins display + Open Sans body. Inspired by kart_02_avukat_vivid.html.
 //
@@ -72,7 +72,7 @@ function digitsOnly(value: string): string {
 
 function getInitials(name: string): string {
   const parts = name.replace(/^(Dr\.?|Av\.?|Prof\.?)\s+/i, "").trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "·";
+  if (parts.length === 0) return "Â·";
   return (parts[0][0] ?? "").toUpperCase() + (parts[parts.length - 1]?.[0] ?? "").toUpperCase();
 }
 
@@ -94,11 +94,11 @@ interface Copy {
 const COPY: Record<"de" | "en" | "tr", Copy> = {
   de: {
     servicesH: "Praxisgebiete",
-    servicesSub: "Strategische Rechtsberatung für Sie und Ihr Unternehmen",
+    servicesSub: "Strategische Rechtsberatung fÃ¼r Sie und Ihr Unternehmen",
     contactH: "Kontakt",
     contactSub: "Mit einem Klick Verbindung aufnehmen",
-    ctaLabel: "Kostenloses Erstgespräch",
-    pillActive: "Aktiv · Berlin",
+    ctaLabel: "Kostenloses ErstgesprÃ¤ch",
+    pillActive: "Aktiv Â· Berlin",
     yearsLabel: "Jahre",
     casesLabel: "Mandate",
     winRateLabel: "Erfolg",
@@ -112,7 +112,7 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     contactH: "Reach out",
     contactSub: "One-tap contact",
     ctaLabel: "Free initial consultation",
-    pillActive: "Active · Berlin",
+    pillActive: "Active Â· Berlin",
     yearsLabel: "Years",
     casesLabel: "Mandates",
     winRateLabel: "Win rate",
@@ -121,17 +121,17 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    servicesH: "Uzmanlık Alanları",
-    servicesSub: "Stratejik hukuki çözümler",
-    contactH: "Bize Ulaşın",
-    contactSub: "Tek dokunuşla iletişim",
-    ctaLabel: "Ücretsiz Ön Görüşme",
-    pillActive: "Aktif · Berlin",
-    yearsLabel: "Yıl",
+    servicesH: "UzmanlÄ±k AlanlarÄ±",
+    servicesSub: "Stratejik hukuki Ã§Ã¶zÃ¼mler",
+    contactH: "Bize UlaÅŸÄ±n",
+    contactSub: "Tek dokunuÅŸla iletiÅŸim",
+    ctaLabel: "Ãœcretsiz Ã–n GÃ¶rÃ¼ÅŸme",
+    pillActive: "Aktif Â· Berlin",
+    yearsLabel: "YÄ±l",
     casesLabel: "Dava",
-    winRateLabel: "Başarı",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
+    winRateLabel: "BaÅŸarÄ±",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
   },
 };
@@ -226,7 +226,7 @@ export function LegalCounselVivid({
             width={76}
             height={76}
             unoptimized
-            className="flex-shrink-0 object-cover"
+            className="flex-shrink-0 object-cover tpl-photo"
             style={{
               width: 76,
               height: 76,
@@ -260,7 +260,7 @@ export function LegalCounselVivid({
             className="mb-2 truncate text-[12px] font-medium leading-snug"
             style={{ color: TEXT_SOFT }}
           >
-            {[cardData.position, cardData.title].filter(Boolean).join(" · ") ||
+            {[cardData.position, cardData.title].filter(Boolean).join(" Â· ") ||
               "Senior Counsel"}
           </div>
           <span
@@ -281,7 +281,7 @@ export function LegalCounselVivid({
         </div>
       </div>
 
-      {/* QSTATS — navy gradient */}
+      {/* QSTATS â€” navy gradient */}
       <div
         className="relative mx-6 mt-7 grid grid-cols-3 overflow-hidden rounded-[18px] px-2 py-4.5"
         style={{
@@ -408,7 +408,7 @@ export function LegalCounselVivid({
               color: "rgba(245,158,11,0.22)",
             }}
           >
-            {"“"}
+            {"â€œ"}
           </span>
           <p
             className="relative mb-4 text-[14.5px] font-medium leading-[1.6]"
@@ -527,7 +527,7 @@ export function LegalCounselVivid({
         <ContactRows cardData={cardData} locale={locale} variant="hairline" accentHex={accent} />
       </section>
 
-      {/* WALLET / SEND / EXCHANGE — soft tinted card */}
+      {/* WALLET / SEND / EXCHANGE â€” soft tinted card */}
       <section
         className="mx-6 mt-7 rounded-[20px] p-5.5"
         style={{
@@ -562,13 +562,13 @@ export function LegalCounselVivid({
           style={{ color: TEXT }}
         >
           {cardData.name}
-          {cardData.company ? ` · ${cardData.company}` : ""}
+          {cardData.company ? ` Â· ${cardData.company}` : ""}
         </div>
         <div
           className="mt-1 text-[11px]"
           style={{ color: TEXT_SOFT }}
         >
-          © {new Date().getFullYear()} · {t.poweredBy}{" "}
+          Â© {new Date().getFullYear()} Â· {t.poweredBy}{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"
@@ -580,7 +580,7 @@ export function LegalCounselVivid({
           </a>
         </div>
         {/* keep onPrimary referenced for theming */}
-        <span className="hidden" style={{ color: onPrimary }}>·</span>
+        <span className="hidden" style={{ color: onPrimary }}>Â·</span>
       </footer>
     </article>
   );
@@ -654,7 +654,7 @@ function VividTile({
 export const legalCounselVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 58,
   key: "legal-counsel-vivid",
-  name: "Legal Counsel — Vivid",
+  name: "Legal Counsel â€” Vivid",
   industry: "Lawyer / Rechtsanwalt",
   supports: {
     services: true,
@@ -681,14 +681,14 @@ export const legalCounselVividSample: SampleData = {
   cardData: {
     name: "Dr. Klaus Bauer",
     position: "Rechtsanwalt",
-    title: "Fachanwalt für Strafrecht",
+    title: "Fachanwalt fÃ¼r Strafrecht",
     company: "Bauer & Partner",
     email: "bauer@bauer-partner.de",
     phone: "+49 30 555 7890",
     whatsapp: "+49 170 555 7890",
     website: "bauer-partner.de",
     address: "Unter den Linden 21, 10117 Berlin",
-    bio: "Strafrecht, Familienrecht und Arbeitsrecht — pragmatisch, präzise und persönlich.",
+    bio: "Strafrecht, Familienrecht und Arbeitsrecht â€” pragmatisch, prÃ¤zise und persÃ¶nlich.",
     bookingUrl: "https://cal.com/bauer-partner/intro",
     brochureUrl: "https://bauer-partner.de/profil.pdf",
     impressumUrl: "https://bauer-partner.de/impressum",
@@ -699,17 +699,17 @@ export const legalCounselVividSample: SampleData = {
       xing: "https://xing.com/profile/Klaus_Bauer",
     },
     services: [
-      { title: "Strafrecht", description: "Verteidigung im Ermittlungsverfahren.", priceLabel: "€200 Erstberatung" },
-      { title: "Familienrecht", description: "Scheidung & Sorgerecht.", priceLabel: "ab €300/h" },
-      { title: "Arbeitsrecht", description: "Kündigungsschutz & Aufhebung.", priceLabel: "Erfolgshonorar" },
+      { title: "Strafrecht", description: "Verteidigung im Ermittlungsverfahren.", priceLabel: "â‚¬200 Erstberatung" },
+      { title: "Familienrecht", description: "Scheidung & Sorgerecht.", priceLabel: "ab â‚¬300/h" },
+      { title: "Arbeitsrecht", description: "KÃ¼ndigungsschutz & Aufhebung.", priceLabel: "Erfolgshonorar" },
       { title: "M&A", description: "Vertragsgestaltung & Due Diligence." },
       { title: "Compliance", description: "BaFin / HinSchG, Investigations & Whistleblower-Frameworks." },
     ],
     testimonials: [
       {
         author: "Mehmet T.",
-        role: "CEO · Holding",
-        quote: "Dr. Bauer hat ruhig, präzise und mit unfehlbarem Gespür für den richtigen Moment verhandelt.",
+        role: "CEO Â· Holding",
+        quote: "Dr. Bauer hat ruhig, prÃ¤zise und mit unfehlbarem GespÃ¼r fÃ¼r den richtigen Moment verhandelt.",
       },
     ],
   },
@@ -719,3 +719,4 @@ export const legalCounselVividSample: SampleData = {
   brandPrimaryHex: "#1a2b9e",
   brandAccentHex: "#4a90d9",
 };
+

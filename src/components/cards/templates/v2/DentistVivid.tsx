@@ -1,13 +1,13 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// DentistVivid — v2 template (id=24, key="dentist-vivid").
+// DentistVivid â€” v2 template (id=24, key="dentist-vivid").
 //
-// Sector: dental clinic — VIVID variant. Mood: bold teal/cyan gradient,
+// Sector: dental clinic â€” VIVID variant. Mood: bold teal/cyan gradient,
 // energetic, modern. Inspired by kart_11_dis_hekimi_vivid.html.
 //
 // Locked design DNA (only colors respond to brand):
-//   - Hero band with primary→accent diagonal gradient + decorative blob halos.
+//   - Hero band with primaryâ†’accent diagonal gradient + decorative blob halos.
 //   - Floating "card" (-64 px overlap) with portrait + rating badge.
 //   - Big primary-gradient CTA at the top, then 3-up quick action row.
 //   - Services as 2-col gradient-filled chips (no list of plain text).
@@ -128,7 +128,7 @@ const COPY: Record<"de" | "en" | "tr", DnvCopy> = {
   },
   tr: {
     online: "Online Randevu",
-    bookCta: "Ağrısız Randevu Al",
+    bookCta: "AÄŸrÄ±sÄ±z Randevu Al",
     bookHint: "7/24 WhatsApp ile",
     call: "Telefon",
     email: "E-posta",
@@ -139,11 +139,11 @@ const COPY: Record<"de" | "en" | "tr", DnvCopy> = {
     testimonial: "Hasta Yorumu",
     servicesLabel: "Tedaviler",
     reviewsLabel: "Yorum",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
-    share: "Paylaş",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
+    share: "PaylaÅŸ",
     poweredBy: "Powered by",
-    populari: "Popüler",
+    populari: "PopÃ¼ler",
   },
 };
 
@@ -231,7 +231,7 @@ export function DentistVivid({
           {cardData.name}
         </h1>
         <div className="relative z-10 mt-2 text-[14px] font-medium opacity-90">
-          {cardData.position} {cardData.title && `· ${cardData.title}`}
+          {cardData.position} {cardData.title && `Â· ${cardData.title}`}
         </div>
       </header>
 
@@ -248,7 +248,7 @@ export function DentistVivid({
               width={90}
               height={90}
               unoptimized
-              className="h-[72px] w-[72px] flex-shrink-0 rounded-[22px] object-cover"
+              className="h-[72px] w-[72px] flex-shrink-0 rounded-[22px] object-cover tpl-logo"
               style={{ border: "3px solid #fff", boxShadow: `0 4px 12px ${primary}33` }}
             />
           ) : photoUrl ? (
@@ -258,7 +258,7 @@ export function DentistVivid({
               width={90}
               height={90}
               unoptimized
-              className="h-[72px] w-[72px] flex-shrink-0 rounded-[22px] object-cover"
+              className="h-[72px] w-[72px] flex-shrink-0 rounded-[22px] object-cover tpl-photo"
               style={{ border: "3px solid #fff", boxShadow: `0 4px 12px ${primary}33` }}
             />
           ) : (
@@ -390,7 +390,7 @@ export function DentistVivid({
         </section>
       )}
 
-      {/* STATS — driven by real data */}
+      {/* STATS â€” driven by real data */}
       {(() => {
         const statsItems = [
           ...(services.length ? [{ n: String(services.length), l: t.servicesLabel }] : []),
@@ -478,13 +478,13 @@ export function DentistVivid({
               &ldquo;
             </span>
             <div className="mb-3 text-[14px]" style={{ color: "#fbbf24", letterSpacing: "2px" }}>
-              ★★★★★
+              â˜…â˜…â˜…â˜…â˜…
             </div>
             <p className="text-[14px] font-medium leading-[1.6]">
               &ldquo;{testimonials[0].quote}&rdquo;
             </p>
             <div className="mt-3.5 text-[12px] font-semibold opacity-90">
-              — {testimonials[0].author}
+              â€” {testimonials[0].author}
               {testimonials[0].role && `, ${testimonials[0].role}`}
             </div>
           </article>
@@ -535,7 +535,7 @@ export function DentistVivid({
           {cardData.website || cardData.company}
         </div>
         <div className="mt-1 text-[11px]" style={{ color: INK_SOFT }}>
-          {cardData.company} · © {new Date().getFullYear()}
+          {cardData.company} Â· Â© {new Date().getFullYear()}
         </div>
         <div
           className="mt-3 inline-flex items-center gap-1.5 text-[11px]"
@@ -632,7 +632,7 @@ function VividStat({
 export const dentistVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 24,
   key: "dentist-vivid",
-  name: "Dentist — Vivid",
+  name: "Dentist â€” Vivid",
   industry: "Dental clinic / dentist (vivid gradient variant)",
   supports: {
     services: true,
@@ -654,33 +654,33 @@ export const dentistVividSample: SampleData = {
   templateId: 24,
   slug: "demo-dentist-vivid",
   cardData: {
-    name: "Dr. Burak Yılmaz",
-    position: "Diş Hekimi · Implant Uzmanı",
+    name: "Dr. Burak YÄ±lmaz",
+    position: "DiÅŸ Hekimi Â· Implant UzmanÄ±",
     title: "Estetik & Cerrahi",
-    company: "Estetik Diş Kliniği",
+    company: "Estetik DiÅŸ KliniÄŸi",
     phone: "+49 30 445 6789",
     whatsapp: "+49 170 445 6789",
     email: "burak@estetikdis.de",
     website: "estetikdis.de",
-    address: "Kurfürstendamm 45, 10707 Berlin",
-    bio: "Spezialist für ästhetische Zahnmedizin und Implantologie. Über 12 Jahre Erfahrung — vereinbaren Sie Ihr kostenloses Erstgespräch.",
+    address: "KurfÃ¼rstendamm 45, 10707 Berlin",
+    bio: "Spezialist fÃ¼r Ã¤sthetische Zahnmedizin und Implantologie. Ãœber 12 Jahre Erfahrung â€” vereinbaren Sie Ihr kostenloses ErstgesprÃ¤ch.",
     bookingUrl: "https://wa.me/491704456789?text=Termin",
     services: [
-      { title: "Implant", description: "Tedavisi", priceLabel: "ab €1.200" },
-      { title: "Zirkonyum", description: "Kaplama", priceLabel: "€680" },
-      { title: "Beyazlatma", description: "Tek seansta", priceLabel: "€350" },
-      { title: "Invisalign", description: "Şeffaf plak", priceLabel: "€3.900" },
+      { title: "Implant", description: "Tedavisi", priceLabel: "ab â‚¬1.200" },
+      { title: "Zirkonyum", description: "Kaplama", priceLabel: "â‚¬680" },
+      { title: "Beyazlatma", description: "Tek seansta", priceLabel: "â‚¬350" },
+      { title: "Invisalign", description: "Åžeffaf plak", priceLabel: "â‚¬3.900" },
     ],
     faqs: [
-      { q: "ITI Implant Uzmanı", a: "Sertifikalı uzman" },
-      { q: "Invisalign Provider", a: "Şeffaf plak ortodonti" },
+      { q: "ITI Implant UzmanÄ±", a: "SertifikalÄ± uzman" },
+      { q: "Invisalign Provider", a: "Åžeffaf plak ortodonti" },
       { q: "Smile Design Sert.", a: "Hollywood smile design" },
     ],
     testimonials: [
       {
         author: "Hande K.",
         role: "Memnun Hasta",
-        quote: "Dr. Yılmaz sayesinde yıllardır çekimserlik duyduğum implant tedavisini yaptırdım. Ağrısız ve mükemmel sonuç.",
+        quote: "Dr. YÄ±lmaz sayesinde yÄ±llardÄ±r Ã§ekimserlik duyduÄŸum implant tedavisini yaptÄ±rdÄ±m. AÄŸrÄ±sÄ±z ve mÃ¼kemmel sonuÃ§.",
       },
     ],
     socials: { instagram: "https://instagram.com/estetikdis.berlin" },
@@ -691,3 +691,4 @@ export const dentistVividSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

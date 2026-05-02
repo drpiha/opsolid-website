@@ -418,6 +418,14 @@ export const CardDataSchema = z.object({
   customSections: z.array(CustomSectionSchema).max(6).optional(),
   /** Phase 7.9 — typography preset; overrides template fonts when non-default. */
   typographyPreset: typographyPreset.optional(),
+  /** Faz 6.6 — owner-curated banner above the public card (seasonal greetings,
+   *  out-of-office, "currently accepting clients"). Empty `text` means no banner. */
+  statusMessage: z
+    .object({
+      text: z.string().trim().max(200),
+      tone: z.enum(["info", "warm", "celebration"]).default("info"),
+    })
+    .optional(),
 });
 export type CardData = z.infer<typeof CardDataSchema>;
 

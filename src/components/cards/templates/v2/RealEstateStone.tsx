@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// RealEstateStone — v2 template (id=55, key="real-estate-stone").
+// RealEstateStone â€” v2 template (id=55, key="real-estate-stone").
 //
-// Sector: real estate / broker — STONE variant. Mood: warm taupe paper banner,
+// Sector: real estate / broker â€” STONE variant. Mood: warm taupe paper banner,
 // Fraunces serif italic, sepia-tinted circular portrait, earthy greys & golds,
 // rounded warm panels. Inspired by kart_01_emlak_stone.html.
 //
@@ -70,8 +70,8 @@ function digitsOnly(value: string): string {
 
 function getInitials(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "•";
-  return (parts[0][0] ?? "•").toUpperCase() + (parts[parts.length - 1]?.[0] ?? "").toUpperCase();
+  if (parts.length === 0) return "â€¢";
+  return (parts[0][0] ?? "â€¢").toUpperCase() + (parts[parts.length - 1]?.[0] ?? "").toUpperCase();
 }
 
 interface ResCopy {
@@ -100,7 +100,7 @@ const COPY: Record<"de" | "en" | "tr", ResCopy> = {
   de: {
     bannerEyebrow: "Mit Sorgfalt seit 2014",
     storyEyebrow: "Meine Geschichte",
-    storyTitle: "Bewährte Vermittlung",
+    storyTitle: "BewÃ¤hrte Vermittlung",
     servicesTitle: "Was ich tue",
     contactTitle: "Lassen Sie uns reden",
     contactCall: "Telefon",
@@ -109,8 +109,8 @@ const COPY: Record<"de" | "en" | "tr", ResCopy> = {
     contactEmail: "E-Mail",
     contactWeb: "Web",
     yearsLabel: "Jahre",
-    closedLabel: "Abschlüsse",
-    portfolioLabel: "Portfolio €",
+    closedLabel: "AbschlÃ¼sse",
+    portfolioLabel: "Portfolio â‚¬",
     saveContact: "In Kontakte speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
@@ -131,7 +131,7 @@ const COPY: Record<"de" | "en" | "tr", ResCopy> = {
     contactWeb: "Web",
     yearsLabel: "Years",
     closedLabel: "Closed",
-    portfolioLabel: "Portfolio €",
+    portfolioLabel: "Portfolio â‚¬",
     saveContact: "Save to contacts",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
@@ -142,23 +142,23 @@ const COPY: Record<"de" | "en" | "tr", ResCopy> = {
   tr: {
     bannerEyebrow: "2014'ten beri sevgiyle",
     storyEyebrow: "Hikayem",
-    storyTitle: "Güvenilir Aracılık",
+    storyTitle: "GÃ¼venilir AracÄ±lÄ±k",
     servicesTitle: "Yapabildiklerim",
-    contactTitle: "Beraber Konuşalım",
+    contactTitle: "Beraber KonuÅŸalÄ±m",
     contactCall: "Telefon",
     contactWa: "WhatsApp",
-    contactWaSub: "Bana yazın",
+    contactWaSub: "Bana yazÄ±n",
     contactEmail: "E-posta",
     contactWeb: "Web",
-    yearsLabel: "Yıl",
-    closedLabel: "Satış",
-    portfolioLabel: "Portföy ₺",
+    yearsLabel: "YÄ±l",
+    closedLabel: "SatÄ±ÅŸ",
+    portfolioLabel: "PortfÃ¶y â‚º",
     saveContact: "Rehbere Kaydet",
-    walletLabel: "Cüzdana ekle",
+    walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
-    impressum: "Künye",
+    impressum: "KÃ¼nye",
     privacy: "Gizlilik",
-    share: "Paylaş",
+    share: "PaylaÅŸ",
   },
 };
 
@@ -237,7 +237,7 @@ export function RealEstateStone({
           className="serif relative mb-4 text-[13px] italic font-normal"
           style={{ color: primary, letterSpacing: "0.5px" }}
         >
-          {cardData.company || "Walker & Stein"} · {t.bannerEyebrow}
+          {cardData.company || "Walker & Stein"} Â· {t.bannerEyebrow}
         </div>
         <div
           className="relative mx-auto mb-5"
@@ -267,7 +267,7 @@ export function RealEstateStone({
                 fill
                 sizes="132px"
                 unoptimized
-                className="object-cover"
+                className="object-cover tpl-photo"
                 style={{ filter: "sepia(0.18) contrast(1.05) saturate(1.08)" }}
               />
             ) : (
@@ -298,7 +298,7 @@ export function RealEstateStone({
           className="relative mt-2 text-[13px] font-medium"
           style={{ color: TEXT_MUTED, letterSpacing: "0.3px" }}
         >
-          {[cardData.position, region].filter(Boolean).join(" · ")}
+          {[cardData.position, region].filter(Boolean).join(" Â· ")}
         </div>
       </header>
 
@@ -335,7 +335,7 @@ export function RealEstateStone({
               className="serif mt-4 block text-[16px] italic font-medium"
               style={{ color: primary }}
             >
-              — {cardData.name}
+              â€” {cardData.name}
             </span>
           </p>
         </section>
@@ -445,7 +445,7 @@ export function RealEstateStone({
               style={{ color: primary }}
             >
               {reference.author}
-              {reference.role && <span style={{ color: TEXT_MUTED, fontWeight: 600 }}> · {reference.role}</span>}
+              {reference.role && <span style={{ color: TEXT_MUTED, fontWeight: 600 }}> Â· {reference.role}</span>}
             </span>
           </div>
         </div>
@@ -514,7 +514,7 @@ export function RealEstateStone({
           className="serif mb-4 text-[13px] italic"
           style={{ color: primary }}
         >
-          {cardData.address || `${cardData.company || "Walker & Stein"} · ${region}`}
+          {cardData.address || `${cardData.company || "Walker & Stein"} Â· ${region}`}
         </p>
         <a
           href={`/api/cards/${encodeURIComponent(slug)}/vcard`}
@@ -565,7 +565,7 @@ export function RealEstateStone({
           {cardData.name}
           {cardData.company && (
             <span style={{ color: TEXT_MUTED, fontStyle: "normal", fontWeight: 600 }}>
-              {" · "}
+              {" Â· "}
               {cardData.company}
             </span>
           )}
@@ -574,7 +574,7 @@ export function RealEstateStone({
           className="mt-1 text-[11px]"
           style={{ color: TEXT_MUTED }}
         >
-          © {year} · {t.poweredBy}{" "}
+          Â© {year} Â· {t.poweredBy}{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"
@@ -736,7 +736,7 @@ function PillBtn({
 export const realEstateStoneEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 55,
   key: "real-estate-stone",
-  name: "Real Estate — Stone",
+  name: "Real Estate â€” Stone",
   industry: "Real estate agent / broker",
   supports: {
     services: true,
@@ -757,7 +757,7 @@ export const realEstateStoneEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-real-estate-stone",
 };
 
-// photo: Unsplash, by Christina Wocintechchat — Unsplash License, no attribution required.
+// photo: Unsplash, by Christina Wocintechchat â€” Unsplash License, no attribution required.
 export const realEstateStoneSample: SampleData = {
   templateId: 55,
   slug: "demo-real-estate-stone",
@@ -770,7 +770,7 @@ export const realEstateStoneSample: SampleData = {
     phone: "+49 30 1234 5678",
     whatsapp: "+49 170 1234 567",
     website: "walker-stein.de",
-    address: "Kurfürstendamm 188, 10707 Berlin",
+    address: "KurfÃ¼rstendamm 188, 10707 Berlin",
     bio: "Selling a home means safeguarding a dream. Twelve years in Berlin's most thoughtful neighbourhoods has taught me to speak plainly, advise honestly, and keep my word. To me, a card is a promise.",
     bookingUrl: "https://cal.com/walker-stein/intro",
     brochureUrl: "https://walker-stein.de/portfolio.pdf",
@@ -782,9 +782,9 @@ export const realEstateStoneSample: SampleData = {
       instagram: "https://instagram.com/walker.stein.berlin",
     },
     services: [
-      { title: "Charlottenburg Townhouse", priceLabel: "€2.85M" },
+      { title: "Charlottenburg Townhouse", priceLabel: "â‚¬2.85M" },
       { title: "Wannsee Waterfront Build", priceLabel: "FOR SALE" },
-      { title: "Mitte Penthouse", priceLabel: "€1.65M" },
+      { title: "Mitte Penthouse", priceLabel: "â‚¬1.65M" },
       { title: "Investment Advisory" },
       { title: "Property Valuation" },
     ],
@@ -802,3 +802,4 @@ export const realEstateStoneSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

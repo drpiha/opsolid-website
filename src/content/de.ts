@@ -6,6 +6,14 @@
 import type { Content } from "./en";
 
 export const content: Content = {
+  consent: {
+    title: "Cookies & Analyse",
+    body: "Wir setzen ein minimales Analyse-Tool ein, um die Nutzung von OpSolid zu verstehen. Keine Marketing-Cookies, keine Profilbildung. Du kannst deine Wahl jederzeit ändern.",
+    privacyLink: "Datenschutzerklärung lesen",
+    accept: "Akzeptieren",
+    reject: "Ablehnen",
+  },
+
   nav: {
     solutions: "Leistungen",
     products: "Produkte",
@@ -1850,6 +1858,19 @@ export const content: Content = {
         closeNote: "Notiz schließen",
         addNote: "Notiz hinzufügen",
         connectionNotePlaceholder: "Notiz zu dieser Verbindung hinzufügen…",
+        unsavedChanges: "Ungespeicherte Änderungen",
+        allSaved: "Alles gespeichert",
+        revert: "Verwerfen",
+        untitledCard: "Unbenannte Karte",
+        viewLive: "Live ansehen",
+        sectionPersonBrand: "Person & Marke",
+        sectionContact: "Kontakt",
+        sectionContent: "Inhalt",
+        sectionPublish: "Veröffentlichung & Status",
+        adjustPhoto: "Foto anpassen",
+        adjustLogo: "Logo anpassen",
+        expandSection: "Bereich öffnen",
+        collapseSection: "Bereich schließen",
         contactReadonlyLabel: "Ihre Kontaktdaten (nur Anzeige)",
         contactReadonlyHint:
           "E-Mail, Name oder Telefon ändern? Antworten Sie auf Ihre Bestell-E-Mail — wir erledigen das.",
@@ -3807,6 +3828,10 @@ export const content: Content = {
       genericError: "Senden fehlgeschlagen. Bitte später erneut versuchen.",
       rateLimited: "Zu viele Einsendungen. Bitte später erneut versuchen.",
     },
+    wallet: {
+      notConfigured:
+        "Wallet-Unterstützung wird konfiguriert. Apple/Google Wallet-Buttons erscheinen nach der Aktivierung.",
+    },
     vcard: {
       label: "vCard speichern",
     },
@@ -3823,6 +3848,12 @@ export const content: Content = {
       emailSignature: "E-Mail-Signatur",
       copy: "Kopieren",
       openCard: "Karte öffnen",
+      shareButtonAriaLabel: "Karte teilen",
+    },
+    error: {
+      title: "Diese Karte kann gerade nicht geöffnet werden",
+      body: "Wir konnten den Kartendatensatz nicht laden. Bitte versuche es in wenigen Sekunden erneut.",
+      retry: "Erneut versuchen",
     },
     owner: {
       banner:
@@ -3832,5 +3863,6 @@ export const content: Content = {
       previewLabel: "Vorschau-Modus",
       shareLabel: "Link teilen",
     },
+    languageSwitcher: "Sprache",
   },
 } as const;

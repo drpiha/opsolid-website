@@ -238,7 +238,7 @@ export function AccountingPure({
               width={120}
               height={120}
               unoptimized
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover tpl-photo"
             />
           ) : (
             <span className="text-[14px] font-bold" style={{ color: accent }}>

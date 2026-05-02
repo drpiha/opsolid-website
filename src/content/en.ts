@@ -5,6 +5,14 @@
 // =============================================================================
 
 export const content = {
+  consent: {
+    title: "Cookies & analytics",
+    body: "We use minimal analytics to understand how you use OpSolid. No marketing cookies, no profiling. You can change your choice anytime.",
+    privacyLink: "Read our privacy policy",
+    accept: "Accept",
+    reject: "Reject",
+  },
+
   nav: {
     solutions: "Services",
     products: "Products",
@@ -1868,6 +1876,20 @@ export const content = {
         closeNote: "Hide note",
         addNote: "Add note",
         connectionNotePlaceholder: "Add a note about this connection…",
+        unsavedChanges: "Unsaved changes",
+        allSaved: "All changes saved",
+        revert: "Revert",
+        untitledCard: "Untitled card",
+        viewLive: "View live",
+        // B7 — section labels + photo/logo thumbnail affordances
+        sectionPersonBrand: "Person & Brand",
+        sectionContact: "Contact",
+        sectionContent: "Content",
+        sectionPublish: "Publishing & Status",
+        adjustPhoto: "Adjust photo",
+        adjustLogo: "Adjust logo",
+        expandSection: "Expand section",
+        collapseSection: "Collapse section",
       },
       cancel: {
         heading: "Cancel subscription",
@@ -3819,6 +3841,10 @@ export const content = {
       genericError: "Sending failed. Please try again later.",
       rateLimited: "Too many submissions. Please try again later.",
     },
+    wallet: {
+      notConfigured:
+        "Wallet support is being configured. This card will show Apple/Google Wallet buttons once activated.",
+    },
     vcard: {
       label: "Save vCard",
     },
@@ -3835,6 +3861,12 @@ export const content = {
       emailSignature: "Email signature",
       copy: "Copy",
       openCard: "Open card",
+      shareButtonAriaLabel: "Share card",
+    },
+    error: {
+      title: "This card can't be opened right now",
+      body: "We couldn't load this card. Please try again in a few seconds.",
+      retry: "Try again",
     },
     owner: {
       banner: "You're the owner of this card — changes go live instantly.",
@@ -3843,6 +3875,7 @@ export const content = {
       previewLabel: "Preview mode",
       shareLabel: "Share link",
     },
+    languageSwitcher: "Language",
   },
 };
 

@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// BarberNoir — v2 template (id=76, key="barber-noir").
+// BarberNoir â€” v2 template (id=76, key="barber-noir").
 //
-// Sector: Barber / Men's grooming — NOIR variant. Mood: Mayfair luxury barber,
+// Sector: Barber / Men's grooming â€” NOIR variant. Mood: Mayfair luxury barber,
 // near-black surfaces, vintage gold + burgundy stripe ornaments, Bebas Neue
 // display + Cormorant Garamond italic. Inspired by kart_07_berber_noir.html.
 //
@@ -85,16 +85,16 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     yearsLabel: "jahre",
     clientsLabel: "kunden",
     followersLabel: "follower",
-    servicesEyebrow: "— Menü —",
+    servicesEyebrow: "â€” MenÃ¼ â€”",
     servicesH: "Leistungen",
     servicesSub: "Klassische & moderne Herrenpflege",
-    contactEyebrow: "— Kontakt —",
+    contactEyebrow: "â€” Kontakt â€”",
     contactH: "Termin & Kontakt",
     bookBtn: "Termin reservieren",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
-    hoursH: "Öffnungszeiten",
+    hoursH: "Ã–ffnungszeiten",
   },
   en: {
     estPrefix: "Est.",
@@ -102,10 +102,10 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     yearsLabel: "years",
     clientsLabel: "clients",
     followersLabel: "followers",
-    servicesEyebrow: "— Menu —",
+    servicesEyebrow: "â€” Menu â€”",
     servicesH: "Services",
     servicesSub: "Classic & modern grooming",
-    contactEyebrow: "— Contact —",
+    contactEyebrow: "â€” Contact â€”",
     contactH: "Book & Contact",
     bookBtn: "Book appointment",
     saveContact: "Save contact",
@@ -116,19 +116,19 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
   tr: {
     estPrefix: "Est.",
     taglineFallback: "Master Berber & Stylist",
-    yearsLabel: "yıl",
-    clientsLabel: "müşteri",
-    followersLabel: "takipçi",
-    servicesEyebrow: "— Menü —",
+    yearsLabel: "yÄ±l",
+    clientsLabel: "mÃ¼ÅŸteri",
+    followersLabel: "takipÃ§i",
+    servicesEyebrow: "â€” MenÃ¼ â€”",
     servicesH: "Hizmetler",
-    servicesSub: "Klasik & modern erkek bakımı",
-    contactEyebrow: "— İletişim —",
-    contactH: "Randevu & İletişim",
+    servicesSub: "Klasik & modern erkek bakÄ±mÄ±",
+    contactEyebrow: "â€” Ä°letiÅŸim â€”",
+    contactH: "Randevu & Ä°letiÅŸim",
     bookBtn: "Randevu Al",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
-    hoursH: "Çalışma Saatleri",
+    hoursH: "Ã‡alÄ±ÅŸma Saatleri",
   },
 };
 
@@ -206,9 +206,9 @@ export function BarberNoir({
             letterSpacing: "3px",
           }}
         >
-          {`— ${t.estPrefix} ${new Date().getFullYear() - 14}${
-            cityFromAddress ? ` · ${cityFromAddress}` : ""
-          } —`}
+          {`â€” ${t.estPrefix} ${new Date().getFullYear() - 14}${
+            cityFromAddress ? ` Â· ${cityFromAddress}` : ""
+          } â€”`}
           <span
             aria-hidden
             className="absolute left-1/2 bottom-0 -translate-x-1/2"
@@ -252,7 +252,7 @@ export function BarberNoir({
           className="mt-4"
           style={{ color: accent, fontSize: 14, letterSpacing: "8px" }}
         >
-          ✦ ✦ ✦
+          âœ¦ âœ¦ âœ¦
         </div>
       </header>
 
@@ -283,7 +283,7 @@ export function BarberNoir({
               width={74}
               height={74}
               unoptimized
-              className="block h-full w-full rounded-full object-cover"
+              className="block h-full w-full rounded-full object-cover tpl-photo"
               style={{
                 border: `2px solid ${SURFACE_3}`,
                 filter: "saturate(0.75) contrast(1.1)",
@@ -488,7 +488,7 @@ export function BarberNoir({
             className="serif italic mb-2"
             style={{ fontSize: 48, color: accent, lineHeight: 1 }}
           >
-            “
+            â€œ
           </div>
           <p
             className="serif italic"
@@ -510,7 +510,7 @@ export function BarberNoir({
               color: accent,
             }}
           >
-            — {cardData.name}
+            â€” {cardData.name}
           </cite>
         </section>
       )}
@@ -617,12 +617,12 @@ export function BarberNoir({
         style={{ fontSize: 13, color: TEXT_SOFT, letterSpacing: "0.5px" }}
       >
         {cardData.company || cardData.name}{" "}
-        <span style={{ color: accent, margin: "0 8px" }}>✦</span>{" "}
+        <span style={{ color: accent, margin: "0 8px" }}>âœ¦</span>{" "}
         {new Date().getFullYear()}
         {cityFromAddress && (
           <>
             {" "}
-            <span style={{ color: accent, margin: "0 8px" }}>✦</span> {cityFromAddress}
+            <span style={{ color: accent, margin: "0 8px" }}>âœ¦</span> {cityFromAddress}
           </>
         )}
         <div className="mt-2" style={{ color: TEXT_DIM }}>
@@ -708,7 +708,7 @@ function SectHead({
 export const barberNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 76,
   key: "barber-noir",
-  name: "Barber — Noir",
+  name: "Barber â€” Noir",
   industry: "Barber / Mayfair luxury barbershop",
   supports: {
     services: true,
@@ -729,7 +729,7 @@ export const barberNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-barber-noir",
 };
 
-// photo: Unsplash, https://unsplash.com/photos/jqe5lY4ROMQ — Free, no attribution required.
+// photo: Unsplash, https://unsplash.com/photos/jqe5lY4ROMQ â€” Free, no attribution required.
 export const barberNoirSample: SampleData = {
   templateId: 76,
   slug: "demo-barber-noir",
@@ -742,8 +742,8 @@ export const barberNoirSample: SampleData = {
     phone: "+49 176 223 4568",
     whatsapp: "+49 176 223 4568",
     website: "tabarbershop.de",
-    address: "Friedrichstraße 88, 10117 Berlin",
-    bio: "Master Barber seit 15 Jahren. Klassischer Herrenschnitt, Heißrasur, Premium Fades. Termine online.",
+    address: "FriedrichstraÃŸe 88, 10117 Berlin",
+    bio: "Master Barber seit 15 Jahren. Klassischer Herrenschnitt, HeiÃŸrasur, Premium Fades. Termine online.",
     bookingUrl: "https://cal.com/tabarbershop/booking",
     impressumUrl: "https://tabarbershop.de/impressum",
     privacyUrl: "https://tabarbershop.de/datenschutz",
@@ -752,9 +752,9 @@ export const barberNoirSample: SampleData = {
       instagram: "https://instagram.com/ta.barbershop",
     },
     services: [
-      { title: "Premium Haarschnitt", description: "Beratung, Schnitt, Styling.", priceLabel: "€35" },
-      { title: "Heißrasur", description: "Klassische Rasur mit heißem Tuch.", priceLabel: "€28" },
-      { title: "Kombination", description: "Schnitt + Heißrasur in einem Termin.", priceLabel: "€55" },
+      { title: "Premium Haarschnitt", description: "Beratung, Schnitt, Styling.", priceLabel: "â‚¬35" },
+      { title: "HeiÃŸrasur", description: "Klassische Rasur mit heiÃŸem Tuch.", priceLabel: "â‚¬28" },
+      { title: "Kombination", description: "Schnitt + HeiÃŸrasur in einem Termin.", priceLabel: "â‚¬55" },
     ],
   },
   photoUrl:
@@ -763,3 +763,4 @@ export const barberNoirSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

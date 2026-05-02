@@ -10,6 +10,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
+import { useLocale } from "@/context/LocaleContext";
 
 export default function CardError({
   error,
@@ -18,6 +19,9 @@ export default function CardError({
   error: Error & { digest?: string };
   reset: () => void;
 }) {
+  const { t } = useLocale();
+  const labels = t.card.error;
+
   useEffect(() => {
     console.error("[card render]", {
       message: error.message,
@@ -33,16 +37,14 @@ export default function CardError({
           <span aria-hidden className="text-xl">·</span>
         </div>
         <h1 className="text-xl font-semibold tracking-tight">
-          Bu kart şu an açılamıyor
+          {labels.title}
         </h1>
         <p className="mt-3 text-sm leading-6 text-ink-300">
-          Geçici bir aksaklık. Birkaç saniye sonra tekrar deneyin ya da kart
-          sahibiyle iletişime geçin. Sorun devam ederse kart sahibi bizimle
-          iletişime geçebilir.
+          {labels.body}
         </p>
         {error.digest ? (
           <p className="mt-4 font-mono text-[11px] text-ink-400">
-            Referans: {error.digest}
+            Referanz: {error.digest}
           </p>
         ) : null}
         <div className="mt-8 flex flex-col items-center gap-2 text-sm">
@@ -51,13 +53,13 @@ export default function CardError({
             onClick={reset}
             className="rounded-full border border-line bg-bg-1 px-5 py-2 transition hover:border-line-firm"
           >
-            Yeniden dene
+            {labels.retry}
           </button>
           <Link
             href="/"
             className="text-ink-400 underline-offset-2 hover:underline"
           >
-            Ana sayfaya dön
+            OpSolid
           </Link>
         </div>
       </div>

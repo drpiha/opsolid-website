@@ -1,19 +1,19 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// DentistPure — v2 template (id=23, key="dentist-pure").
+// DentistPure â€” v2 template (id=23, key="dentist-pure").
 //
-// Sector: dental clinic — PURE variant. Mood: editorial whitespace, near-zero
+// Sector: dental clinic â€” PURE variant. Mood: editorial whitespace, near-zero
 // surface decoration, hairline rules. Inspired by kart_11_dis_hekimi_pure.html.
 //
 // Locked design DNA (only colors respond to brand):
-//   - No hero photo. Editorial header — meta line (TR / IST · EST. 2014),
+//   - No hero photo. Editorial header â€” meta line (TR / IST Â· EST. 2014),
 //     two-line serif name (light + bold), supporting title in muted text.
 //   - Avatar row (60 px circle) with role label + open-status dot.
 //   - Numbered services list with right-aligned discipline tag (no icons).
 //   - Stats grid (4 cells) framed by hairlines only.
 //   - Testimonial: large pulled quote, 17 px serif, star row inline.
-//   - CTA pair: solid ink button → ghost outline button.
+//   - CTA pair: solid ink button â†’ ghost outline button.
 // =============================================================================
 
 import * as React from "react";
@@ -82,7 +82,7 @@ const COPY: Record<"de" | "en" | "tr", DnpCopy> = {
     practitionerValue: "Klinikleiter",
     share: "Teilen",
     poweredBy: "Powered by",
-    scanShareSave: "Scan · Speichern · Teilen",
+    scanShareSave: "Scan Â· Speichern Â· Teilen",
   },
   en: {
     contact: "Contact",
@@ -100,25 +100,25 @@ const COPY: Record<"de" | "en" | "tr", DnpCopy> = {
     practitionerValue: "Clinical lead",
     share: "Share",
     poweredBy: "Powered by",
-    scanShareSave: "Scan · Save · Share",
+    scanShareSave: "Scan Â· Save Â· Share",
   },
   tr: {
-    contact: "İletişim",
+    contact: "Ä°letiÅŸim",
     services: "Tedavi Hizmetleri",
     certifications: "Sertifika",
     testimonial: "Hasta Yorumu",
     bookAppointment: "Randevu Talep Et",
-    callClinic: "Kliniği Ara",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
+    callClinic: "KliniÄŸi Ara",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
     servicesLabel: "Tedaviler",
     reviewsLabel: "Yorum",
-    open: "Açık",
+    open: "AÃ§Ä±k",
     practitioner: "Hekim",
-    practitionerValue: "Klinik direktörü",
-    share: "Paylaş",
+    practitionerValue: "Klinik direktÃ¶rÃ¼",
+    share: "PaylaÅŸ",
     poweredBy: "Powered by",
-    scanShareSave: "Scan · Save · Share",
+    scanShareSave: "Scan Â· Save Â· Share",
   },
 };
 
@@ -188,7 +188,7 @@ export function DentistPure({
           {cardData.position}
           {cardData.title && (
             <>
-              {" · "}
+              {" Â· "}
               <span>{cardData.title}</span>
             </>
           )}
@@ -214,7 +214,7 @@ export function DentistPure({
           style={{ background: HAIRLINE_SOFT }}
         >
           {photoUrl ? (
-            <Image src={photoUrl} alt="" width={120} height={120} unoptimized className="h-full w-full object-cover" />
+            <Image src={photoUrl} alt="" width={120} height={120} unoptimized className="h-full w-full object-cover tpl-photo" />
           ) : (
             <span className="text-[14px] font-bold" style={{ color: primary }}>
               {cardData.name.slice(0, 2).toUpperCase()}
@@ -243,7 +243,7 @@ export function DentistPure({
         <ContactRows cardData={cardData} locale={locale} variant="hairline" accentHex={primary} />
       </Section>
 
-      {/* STATS — driven by real data */}
+      {/* STATS â€” driven by real data */}
       {(() => {
         const statsItems = [
           ...(services.length ? [{ n: String(services.length), l: t.servicesLabel }] : []),
@@ -330,8 +330,8 @@ export function DentistPure({
             className="mt-5 flex items-center justify-between text-[11px] font-semibold uppercase tracking-[1.3px]"
             style={{ color: INK_SOFT }}
           >
-            <span>— {testimonials[0].author}</span>
-            <span style={{ color: primary, letterSpacing: "1px" }}>★★★★★</span>
+            <span>â€” {testimonials[0].author}</span>
+            <span style={{ color: primary, letterSpacing: "1px" }}>â˜…â˜…â˜…â˜…â˜…</span>
           </div>
         </div>
       )}
@@ -388,7 +388,7 @@ export function DentistPure({
         className="flex items-center justify-between px-9 py-7 text-[10px] font-semibold uppercase tracking-[1.5px]"
         style={{ color: INK_SOFT }}
       >
-        <span>© {year}</span>
+        <span>Â© {year}</span>
         <span>{cardData.company || cardData.name}</span>
       </footer>
       <div
@@ -450,7 +450,7 @@ function PureStat({ n, l, last }: { n: string; l: string; last?: boolean }) {
 export const dentistPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 23,
   key: "dentist-pure",
-  name: "Dentist — Pure",
+  name: "Dentist â€” Pure",
   industry: "Dental clinic / dentist (editorial pure variant)",
   supports: {
     services: true,
@@ -468,37 +468,37 @@ export const dentistPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-dentist-pure",
 };
 
-// photo: Unsplash, Caroline LM. Unsplash License — free, no attribution required.
+// photo: Unsplash, Caroline LM. Unsplash License â€” free, no attribution required.
 export const dentistPureSample: SampleData = {
   templateId: 23,
   slug: "demo-dentist-pure",
   cardData: {
-    name: "Dr. Burak Yılmaz",
-    position: "Diş Hekimi",
+    name: "Dr. Burak YÄ±lmaz",
+    position: "DiÅŸ Hekimi",
     title: "Implant & Estetik",
-    company: "Estetik Diş Kliniği",
+    company: "Estetik DiÅŸ KliniÄŸi",
     phone: "+49 30 445 6789",
     whatsapp: "+49 170 445 6789",
     email: "burak@estetikdis.de",
     website: "estetikdis.de",
-    address: "Kurfürstendamm 45, 10707 Berlin",
-    bio: "Spezialist für ästhetische Zahnmedizin und Implantologie. Über 12 Jahre Erfahrung — vereinbaren Sie Ihr kostenloses Erstgespräch.",
+    address: "KurfÃ¼rstendamm 45, 10707 Berlin",
+    bio: "Spezialist fÃ¼r Ã¤sthetische Zahnmedizin und Implantologie. Ãœber 12 Jahre Erfahrung â€” vereinbaren Sie Ihr kostenloses ErstgesprÃ¤ch.",
     services: [
       { title: "Implantologie", priceLabel: "Chirurgie" },
-      { title: "Bleaching", priceLabel: "Ästhetik" },
-      { title: "Veneers", priceLabel: "Ästhetik" },
+      { title: "Bleaching", priceLabel: "Ã„sthetik" },
+      { title: "Veneers", priceLabel: "Ã„sthetik" },
       { title: "Invisalign", priceLabel: "Schiene" },
       { title: "Smile Design", priceLabel: "Konsult." },
     ],
     faqs: [
-      { q: "ITI Implantologie", a: "International Team for Implantology — zertifizierter Spezialist." },
-      { q: "Invisalign Provider", a: "Zertifizierung für unsichtbare Aligner-Therapie." },
+      { q: "ITI Implantologie", a: "International Team for Implantology â€” zertifizierter Spezialist." },
+      { q: "Invisalign Provider", a: "Zertifizierung fÃ¼r unsichtbare Aligner-Therapie." },
       { q: "Smile Design Training", a: "Hollywood Smile Protokolle und Veneer-Spezialisierung." },
     ],
     testimonials: [
       {
         author: "Cem Y.",
-        quote: "Endlich wieder lachen ohne mich zu schämen. Top Arbeit, schmerzfrei und transparente Beratung.",
+        quote: "Endlich wieder lachen ohne mich zu schÃ¤men. Top Arbeit, schmerzfrei und transparente Beratung.",
       },
     ],
     socials: { instagram: "https://instagram.com/estetikdis.berlin" },
@@ -509,3 +509,4 @@ export const dentistPureSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

@@ -1,15 +1,14 @@
 // =============================================================================
-// CUSTOMER EMAIL SENDER
-// Small wrapper around nodemailer used by the customer-facing order emails
-// (confirmation, revision-ready, cancellation). Mirrors the transport setup
-// used by src/lib/notifications.ts so SMTP env wiring stays identical.
+// EMAIL SEND HELPERS
 //
-// Design rules:
-//   - Gracefully no-op (warn + return null) if SMTP is not configured. Callers
-//     must not crash when env is missing — important for preview/dev builds.
-//   - From: CONTACT_FROM_EMAIL override, else SMTP_USER.
-//   - Reply-To: defaults to CONTACT_TO_EMAIL (operator inbox) so when a
-//     customer hits reply, we answer them — not bounce to a no-reply.
+// Two layers:
+//   1. sendCustomerEmail() — legacy nodemailer wrapper for order emails
+//      (confirmation, revision-ready, cancellation). Used by existing callers;
+//      do not change its signature.
+//
+//   2. Auth send helpers (bottom of file) — consume client.ts (Resend > SMTP >
+//      console) and the new auth templates. Exported for B0.2 auth routes:
+//        sendMagicLinkEmail / sendWelcomeEmail / sendPasswordResetEmail
 // =============================================================================
 
 export interface SendCustomerEmailInput {
@@ -25,6 +24,10 @@ export interface SendCustomerEmailResult {
   skipped: boolean;
   reason?: string;
 }
+
+// ---------------------------------------------------------------------------
+// SECTION 1 — Legacy order email sender (nodemailer, unchanged)
+// ---------------------------------------------------------------------------
 
 export async function sendCustomerEmail(
   input: SendCustomerEmailInput
@@ -69,4 +72,94 @@ export async function sendCustomerEmail(
     messageId: info.messageId ?? null,
     skipped: false,
   };
+}
+
+// ---------------------------------------------------------------------------
+// SECTION 2 — Auth email helpers (Resend > SMTP > console via client.ts)
+// ---------------------------------------------------------------------------
+
+import { sendEmail, type SendEmailResult } from "./client";
+import {
+  renderMagicLinkHtml,
+  renderMagicLinkText,
+  magicLinkSubject,
+} from "./templates/magic-link";
+import {
+  renderWelcomeHtml,
+  renderWelcomeText,
+  welcomeSubject,
+} from "./templates/welcome";
+import {
+  renderPasswordResetHtml,
+  renderPasswordResetText,
+  passwordResetSubject,
+} from "./templates/password-reset";
+
+export interface SendMagicLinkEmailInput {
+  to: string;
+  link: string;
+  locale: string;
+  brandName?: string;
+}
+
+export async function sendMagicLinkEmail(
+  input: SendMagicLinkEmailInput
+): Promise<SendEmailResult> {
+  const templateInput = {
+    link: input.link,
+    locale: input.locale,
+    brandName: input.brandName,
+  };
+  return sendEmail({
+    to: input.to,
+    subject: magicLinkSubject(input.locale),
+    html: renderMagicLinkHtml(templateInput),
+    text: renderMagicLinkText(templateInput),
+  });
+}
+
+export interface SendWelcomeEmailInput {
+  to: string;
+  name?: string;
+  locale: string;
+  dashboardUrl: string;
+}
+
+export async function sendWelcomeEmail(
+  input: SendWelcomeEmailInput
+): Promise<SendEmailResult> {
+  const templateInput = {
+    name: input.name,
+    locale: input.locale,
+    dashboardUrl: input.dashboardUrl,
+  };
+  return sendEmail({
+    to: input.to,
+    subject: welcomeSubject(input.locale),
+    html: renderWelcomeHtml(templateInput),
+    text: renderWelcomeText(templateInput),
+  });
+}
+
+export interface SendPasswordResetEmailInput {
+  to: string;
+  link: string;
+  locale: string;
+  expiresInMinutes: number;
+}
+
+export async function sendPasswordResetEmail(
+  input: SendPasswordResetEmailInput
+): Promise<SendEmailResult> {
+  const templateInput = {
+    link: input.link,
+    locale: input.locale,
+    expiresInMinutes: input.expiresInMinutes,
+  };
+  return sendEmail({
+    to: input.to,
+    subject: passwordResetSubject(input.locale),
+    html: renderPasswordResetHtml(templateInput),
+    text: renderPasswordResetText(templateInput),
+  });
 }

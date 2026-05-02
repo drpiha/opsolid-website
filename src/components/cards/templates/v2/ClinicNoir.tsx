@@ -1,15 +1,15 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// ClinicNoir — v2 template (id=68, key="clinic-noir").
+// ClinicNoir â€” v2 template (id=68, key="clinic-noir").
 //
-// Sector: Doctor / Clinic — NOIR variant. Mood: dark midnight blue surface
-// with cool silver/teal accents — premium private practice (Privatpraxis).
+// Sector: Doctor / Clinic â€” NOIR variant. Mood: dark midnight blue surface
+// with cool silver/teal accents â€” premium private practice (Privatpraxis).
 // Inspired by kart_05_doktor_noir.html.
 //
 // Design DNA (different from default Clinic.tsx):
 //   - Pitch-dark midnight-blue surface with a sky-teal vertical pinstripe.
-//   - Compact eyebrow header (M.D. caps + clinic name) — no big photo card.
+//   - Compact eyebrow header (M.D. caps + clinic name) â€” no big photo card.
 //   - Profile block: 128px circular gold-teal gradient ring portrait.
 //   - Name in serif italic with teal "Dr." prefix; credential chips below.
 //   - Numbered (01..05) practice areas with teal left-rule cards.
@@ -86,11 +86,11 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr", Copy> = {
   de: {
-    metaLabel: "M.D. — Privatpraxis · Berlin",
+    metaLabel: "M.D. â€” Privatpraxis Â· Berlin",
     practiceEyebrow: "Praxisgebiete",
     practiceH: "Schwerpunkte",
     clinicEyebrow: "Praxis",
-    clinicH: "Über die Praxis",
+    clinicH: "Ãœber die Praxis",
     contactEyebrow: "Kontakt",
     contactH: "Termin & Erreichbarkeit",
     bookBtn: "Termin anfragen",
@@ -107,7 +107,7 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     webKey: "Web",
   },
   en: {
-    metaLabel: "M.D. — Private Practice · Berlin",
+    metaLabel: "M.D. â€” Private Practice Â· Berlin",
     practiceEyebrow: "Practice",
     practiceH: "Specialties",
     clinicEyebrow: "Clinic",
@@ -128,20 +128,20 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     webKey: "Web",
   },
   tr: {
-    metaLabel: "M.D. — Özel Muayenehane · Berlin",
-    practiceEyebrow: "Uzmanlık",
-    practiceH: "Çalışma Alanları",
+    metaLabel: "M.D. â€” Ã–zel Muayenehane Â· Berlin",
+    practiceEyebrow: "UzmanlÄ±k",
+    practiceH: "Ã‡alÄ±ÅŸma AlanlarÄ±",
     clinicEyebrow: "Klinik",
-    clinicH: "Muayenehane Hakkında",
-    contactEyebrow: "İletişim",
-    contactH: "Randevu & İletişim",
+    clinicH: "Muayenehane HakkÄ±nda",
+    contactEyebrow: "Ä°letiÅŸim",
+    contactH: "Randevu & Ä°letiÅŸim",
     bookBtn: "Randevu Al",
     callBtn: "Ara",
     emailBtn: "E-posta",
     mapBtn: "Harita",
     whatsappBtn: "WhatsApp",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
     addressKey: "Adres",
     phoneKey: "Telefon",
@@ -206,7 +206,7 @@ export function ClinicNoir({
         .cnoir-card a { color: inherit; }
       `}</style>
 
-      {/* HEADER — eyebrow only */}
+      {/* HEADER â€” eyebrow only */}
       <header
         className="relative px-7 py-9"
         style={{
@@ -237,7 +237,7 @@ export function ClinicNoir({
         )}
       </header>
 
-      {/* PROFILE — circular gradient ring portrait */}
+      {/* PROFILE â€” circular gradient ring portrait */}
       <section
         className="px-7 py-9 text-center"
         style={{ background: SURFACE_2 }}
@@ -260,7 +260,7 @@ export function ClinicNoir({
               width={122}
               height={122}
               unoptimized
-              className="h-full w-full rounded-full object-cover"
+              className="h-full w-full rounded-full object-cover tpl-photo"
               style={{
                 border: `3px solid ${SURFACE_2}`,
                 filter: "saturate(0.85) contrast(1.05)",
@@ -359,7 +359,7 @@ export function ClinicNoir({
         )}
       </section>
 
-      {/* PRACTICE AREAS — numbered list */}
+      {/* PRACTICE AREAS â€” numbered list */}
       {services.length > 0 && (
         <section
           className="px-7 pb-9 pt-7"
@@ -502,7 +502,7 @@ export function ClinicNoir({
             className="serif block leading-[0.5]"
             style={{ color: accent, opacity: 0.45, fontSize: "64px", marginBottom: 6 }}
           >
-            {"“"}
+            {"â€œ"}
           </span>
           <p
             className="serif mx-auto mb-5 max-w-[360px] text-[16.5px] italic leading-[1.65]"
@@ -517,7 +517,7 @@ export function ClinicNoir({
             <span aria-hidden className="block h-px w-5" style={{ background: GOLD, opacity: 0.6 }} />
             <span>
               {testimonial.author}
-              {testimonial.role ? ` · ${testimonial.role}` : ""}
+              {testimonial.role ? ` Â· ${testimonial.role}` : ""}
             </span>
             <span aria-hidden className="block h-px w-5" style={{ background: GOLD, opacity: 0.6 }} />
           </div>
@@ -649,7 +649,7 @@ export function ClinicNoir({
         <span style={{ color: GOLD }}>
           {cardData.company || cardData.name}
         </span>
-        {" · "}© {new Date().getFullYear()} · {t.poweredBy}{" "}
+        {" Â· "}Â© {new Date().getFullYear()} Â· {t.poweredBy}{" "}
         <a
           href="https://opsolid.de/products/digital-card"
           target="_blank"
@@ -774,7 +774,7 @@ function ClinicLine({
 export const clinicNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 68,
   key: "clinic-noir",
-  name: "Clinic — Noir",
+  name: "Clinic â€” Noir",
   industry: "Doctor / Private clinic",
   supports: {
     services: true,
@@ -795,21 +795,21 @@ export const clinicNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-clinic-noir",
 };
 
-// photo: Unsplash, doctor portrait. Unsplash License — free, no attribution required.
+// photo: Unsplash, doctor portrait. Unsplash License â€” free, no attribution required.
 export const clinicNoirSample: SampleData = {
   templateId: 68,
   slug: "demo-clinic-noir",
   cardData: {
-    name: "Dr. Ayşe Demir",
-    position: "Fachärztin",
-    title: "Allgemeinmedizin & Präventivmedizin",
+    name: "Dr. AyÅŸe Demir",
+    position: "FachÃ¤rztin",
+    title: "Allgemeinmedizin & PrÃ¤ventivmedizin",
     company: "Praxis am Ku'damm",
     email: "ayse@praxis-demir.de",
     phone: "+49 30 334 5678",
     whatsapp: "+49 170 334 5678",
     website: "praxis-demir.de",
-    address: "Kurfürstendamm 188, 10707 Berlin",
-    bio: "Fachärztin für Allgemeinmedizin & Präventivmedizin. Individuell, ganzheitlich, digital erreichbar.",
+    address: "KurfÃ¼rstendamm 188, 10707 Berlin",
+    bio: "FachÃ¤rztin fÃ¼r Allgemeinmedizin & PrÃ¤ventivmedizin. Individuell, ganzheitlich, digital erreichbar.",
     bookingUrl: "https://cal.com/praxis-demir/intro",
     brochureUrl: "https://praxis-demir.de/profil.pdf",
     impressumUrl: "https://praxis-demir.de/impressum",
@@ -822,26 +822,26 @@ export const clinicNoirSample: SampleData = {
     services: [
       {
         title: "Vorsorgeuntersuchung",
-        description: "Ganzheitlicher Check-up — Labor, EKG, Lifestyle-Beratung.",
-        priceLabel: "ab €80",
+        description: "Ganzheitlicher Check-up â€” Labor, EKG, Lifestyle-Beratung.",
+        priceLabel: "ab â‚¬80",
       },
       {
         title: "Reisemedizin",
-        description: "Impfungen, Beratung & Notfallset für individuelle Reisen.",
-        priceLabel: "€120",
+        description: "Impfungen, Beratung & Notfallset fÃ¼r individuelle Reisen.",
+        priceLabel: "â‚¬120",
       },
       {
         title: "Online-Konsultation",
         description: "Videosprechstunde, Rezept-Service, sichere Plattform.",
-        priceLabel: "€60",
+        priceLabel: "â‚¬60",
       },
     ],
     testimonials: [
       {
         author: "Mehmet K.",
-        role: "Patient — Vorsorge",
+        role: "Patient â€” Vorsorge",
         quote:
-          "Sehr aufmerksam, nimmt sich Zeit und erklärt alles verständlich. Genau die Praxis, die ich gesucht habe.",
+          "Sehr aufmerksam, nimmt sich Zeit und erklÃ¤rt alles verstÃ¤ndlich. Genau die Praxis, die ich gesucht habe.",
       },
     ],
   },
@@ -851,3 +851,4 @@ export const clinicNoirSample: SampleData = {
   brandPrimaryHex: "#0a1628",
   brandAccentHex: "#4fc3f7",
 };
+

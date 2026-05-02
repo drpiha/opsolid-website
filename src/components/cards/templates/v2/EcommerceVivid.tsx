@@ -1,14 +1,14 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// EcommerceVivid — v2 template (id=83, key="ecommerce-vivid").
+// EcommerceVivid â€” v2 template (id=83, key="ecommerce-vivid").
 //
-// Sector: E-commerce / Online boutique — VIVID variant. Mood: bold gradient
+// Sector: E-commerce / Online boutique â€” VIVID variant. Mood: bold gradient
 // hero, energetic D2C brand, Bebas Neue + Poppins. Inspired by
 // kart_08_eticaret_vivid.html.
 //
 // Design DNA (different from default Ecommerce, EcommerceNoir/Pure):
-//   - 3-stop violet→pink→peach gradient hero with rating pill + Bebas mega
+//   - 3-stop violetâ†’pinkâ†’peach gradient hero with rating pill + Bebas mega
 //     lockup + tracked uppercase tagline.
 //   - Floating profile card (-72 mt) with 72px gold-ring avatar + accent role
 //     + 2x2 mini-stat tile grid.
@@ -85,7 +85,7 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     servicesLabel: "Produkte",
     reviewsLabel: "Bewertungen",
     collectionH: "Kollektion",
-    collectionSub: "Sezonun par­çaları",
+    collectionSub: "Sezonun parÂ­Ã§alarÄ±",
     bookBtn: "Sofort bestellen",
     emailLabel: "E-Mail",
     phoneLabel: "Telefon",
@@ -110,16 +110,16 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
   },
   tr: {
     taglineFallback: "Online Butik",
-    servicesLabel: "Ürünler",
+    servicesLabel: "ÃœrÃ¼nler",
     reviewsLabel: "Yorum",
     collectionH: "Koleksiyon",
-    collectionSub: "Sezonun parçaları",
-    bookBtn: "Hemen Sipariş Ver",
+    collectionSub: "Sezonun parÃ§alarÄ±",
+    bookBtn: "Hemen SipariÅŸ Ver",
     emailLabel: "E-posta",
     phoneLabel: "Telefon",
-    qrLabel: "Koleksiyona Göz At",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
+    qrLabel: "Koleksiyona GÃ¶z At",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
   },
 };
@@ -209,7 +209,7 @@ export function EcommerceVivid({
               boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
             }}
           >
-            <span style={{ color: ACCENT_RED, fontSize: 14 }}>★</span>
+            <span style={{ color: ACCENT_RED, fontSize: 14 }}>â˜…</span>
             {testimonials.length} {t.reviewsLabel}
           </span>
         )}
@@ -278,7 +278,7 @@ export function EcommerceVivid({
                 width={66}
                 height={66}
                 unoptimized
-                className="block h-full w-full object-cover"
+                className="block h-full w-full object-cover tpl-photo"
               />
             ) : (
               <div
@@ -305,7 +305,7 @@ export function EcommerceVivid({
               }}
             >
               {cardData.title || cardData.position || t.taglineFallback}
-              {cityFromAddress ? ` · ${cityFromAddress}` : ""}
+              {cityFromAddress ? ` Â· ${cityFromAddress}` : ""}
             </div>
           </div>
         </div>
@@ -462,7 +462,7 @@ export function EcommerceVivid({
           >
             {t.bookBtn}
             <span aria-hidden style={{ fontSize: 18 }}>
-              →
+              â†’
             </span>
           </a>
           <div className="mt-2.5 grid grid-cols-2 gap-2.5">
@@ -478,7 +478,7 @@ export function EcommerceVivid({
                   fontWeight: 600,
                 }}
               >
-                ✉ {t.emailLabel}
+                âœ‰ {t.emailLabel}
               </a>
             )}
             {cardData.phone && (
@@ -493,7 +493,7 @@ export function EcommerceVivid({
                   fontWeight: 600,
                 }}
               >
-                ☎ {t.phoneLabel}
+                â˜Ž {t.phoneLabel}
               </a>
             )}
           </div>
@@ -553,7 +553,7 @@ export function EcommerceVivid({
         className="px-5 py-6 text-center"
         style={{ fontSize: 11, color: MUTED, fontWeight: 500 }}
       >
-        © {new Date().getFullYear()} {cardData.company || cardData.name} ·{" "}
+        Â© {new Date().getFullYear()} {cardData.company || cardData.name} Â·{" "}
         {cardData.website || "shop"}
         <div className="mt-2" style={{ color: MUTED }}>
           {t.poweredBy}{" "}
@@ -578,7 +578,7 @@ export function EcommerceVivid({
 export const ecommerceVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 83,
   key: "ecommerce-vivid",
-  name: "E-commerce — Vivid",
+  name: "E-commerce â€” Vivid",
   industry: "E-commerce / Energetic D2C brand",
   supports: {
     services: true,
@@ -599,21 +599,21 @@ export const ecommerceVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-ecommerce-vivid",
 };
 
-// photo: Unsplash, https://unsplash.com/photos/eF7HN40WbAQ — Free, no attribution required.
+// photo: Unsplash, https://unsplash.com/photos/eF7HN40WbAQ â€” Free, no attribution required.
 export const ecommerceVividSample: SampleData = {
   templateId: 83,
   slug: "demo-ecommerce-vivid",
   cardData: {
     name: "Zeynep Kaya",
-    position: "Gründerin & CEO",
-    title: "Gründerin & CEO",
+    position: "GrÃ¼nderin & CEO",
+    title: "GrÃ¼nderin & CEO",
     company: "Pazar Shop",
     email: "zeynep@pazar-shop.de",
     phone: "+49 172 556 7891",
     whatsapp: "+49 172 556 7891",
     website: "pazar-shop.de",
-    address: "Oranienstraße 30, 10999 Berlin",
-    bio: "Kuratierte Mode & Accessoires aus der Türkei & Deutschland. Kostenloser Versand ab €50.",
+    address: "OranienstraÃŸe 30, 10999 Berlin",
+    bio: "Kuratierte Mode & Accessoires aus der TÃ¼rkei & Deutschland. Kostenloser Versand ab â‚¬50.",
     bookingUrl: "https://pazar-shop.de/shop",
     impressumUrl: "https://pazar-shop.de/impressum",
     privacyUrl: "https://pazar-shop.de/datenschutz",
@@ -623,9 +623,9 @@ export const ecommerceVividSample: SampleData = {
       tiktok: "https://tiktok.com/@pazarshop",
     },
     services: [
-      { title: "Seidenschal", description: "Handbedruckt, Premium-Seide.", priceLabel: "€89" },
-      { title: "Handtasche", description: "Vollnarbenleder, handgenäht.", priceLabel: "€145" },
-      { title: "Schmuckset", description: "Versilbert, kuratiert.", priceLabel: "€65" },
+      { title: "Seidenschal", description: "Handbedruckt, Premium-Seide.", priceLabel: "â‚¬89" },
+      { title: "Handtasche", description: "Vollnarbenleder, handgenÃ¤ht.", priceLabel: "â‚¬145" },
+      { title: "Schmuckset", description: "Versilbert, kuratiert.", priceLabel: "â‚¬65" },
     ],
   },
   photoUrl:
@@ -634,3 +634,4 @@ export const ecommerceVividSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

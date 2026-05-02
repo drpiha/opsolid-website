@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// ClinicVivid — v2 template (id=70, key="clinic-vivid").
+// ClinicVivid â€” v2 template (id=70, key="clinic-vivid").
 //
-// Sector: Doctor / Clinic — VIVID variant. Mood: modern health-tech, bold
+// Sector: Doctor / Clinic â€” VIVID variant. Mood: modern health-tech, bold
 // teal-to-turquoise gradient, rounded geometry, Poppins display.
 // Inspired by kart_05_doktor_vivid.html.
 //
@@ -12,10 +12,10 @@
 //   - Floating profile card overlapping hero with name/role/badges.
 //   - 3-up rounded stat tiles below profile.
 //   - Big online-CTA gradient block (book WhatsApp).
-//   - Specialty 2×2 grid of soft-tinted icon tiles.
+//   - Specialty 2Ã—2 grid of soft-tinted icon tiles.
 //   - Hours block with today highlight.
 //   - Testimonial card with gradient quote glyph.
-//   - 2×2 contact grid with colored icon chips.
+//   - 2Ã—2 contact grid with colored icon chips.
 //   - QR-style gradient block.
 // =============================================================================
 
@@ -77,7 +77,7 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr", Copy> = {
   de: {
-    heroTag: "Allgemeinmedizin · Berlin",
+    heroTag: "Allgemeinmedizin Â· Berlin",
     yearsLabel: "Jahre",
     patientsLabel: "Patienten",
     satisfactionLabel: "Zufrieden",
@@ -85,14 +85,14 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     testimonialsH: "Stimmen",
     contactH: "Kontakt",
     bookH: "Online-Termin",
-    bookSub: "WhatsApp · schneller Antwort, sofortige Bestätigung.",
+    bookSub: "WhatsApp Â· schneller Antwort, sofortige BestÃ¤tigung.",
     bookBtn: "Termin anfragen",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
   },
   en: {
-    heroTag: "Family medicine · Berlin",
+    heroTag: "Family medicine Â· Berlin",
     yearsLabel: "Years",
     patientsLabel: "Patients",
     satisfactionLabel: "Satisfied",
@@ -100,25 +100,25 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     testimonialsH: "Testimonials",
     contactH: "Contact",
     bookH: "Online booking",
-    bookSub: "WhatsApp — fast reply, instant confirmation.",
+    bookSub: "WhatsApp â€” fast reply, instant confirmation.",
     bookBtn: "Request appointment",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
   },
   tr: {
-    heroTag: "Aile Hekimliği · Berlin",
-    yearsLabel: "Yıl",
+    heroTag: "Aile HekimliÄŸi Â· Berlin",
+    yearsLabel: "YÄ±l",
     patientsLabel: "Hasta",
     satisfactionLabel: "Memnun",
     servicesH: "Hizmetler",
     testimonialsH: "Hasta Sesi",
-    contactH: "İletişim",
+    contactH: "Ä°letiÅŸim",
     bookH: "Online Randevu",
-    bookSub: "WhatsApp üzerinden hızlı randevu, anında onay.",
+    bookSub: "WhatsApp Ã¼zerinden hÄ±zlÄ± randevu, anÄ±nda onay.",
     bookBtn: "Randevu Al",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
   },
 };
@@ -220,7 +220,7 @@ export function ClinicVivid({
             style={{ color: "#ffffff" }}
           >
             {cardData.company}
-            {cityFromAddress && ` · ${cityFromAddress}`}
+            {cityFromAddress && ` Â· ${cityFromAddress}`}
           </div>
         </div>
       </header>
@@ -255,7 +255,7 @@ export function ClinicVivid({
                 width={88}
                 height={88}
                 unoptimized
-                className="block h-full w-full rounded-full object-cover"
+                className="block h-full w-full rounded-full object-cover tpl-photo"
                 style={{ border: `3px solid ${SURFACE}` }}
               />
             ) : (
@@ -458,7 +458,7 @@ export function ClinicVivid({
               color: "transparent",
             }}
           >
-            {"“"}
+            {"â€œ"}
           </span>
           <p
             className="mb-3 text-[14.5px] font-medium leading-[1.6]"
@@ -470,8 +470,8 @@ export function ClinicVivid({
             className="display text-[11.5px] font-bold uppercase"
             style={{ color: primary, letterSpacing: "0.5px" }}
           >
-            — {testimonial.author}
-            {testimonial.role ? ` · ${testimonial.role}` : ""}
+            â€” {testimonial.author}
+            {testimonial.role ? ` Â· ${testimonial.role}` : ""}
           </div>
         </div>
       )}
@@ -568,7 +568,7 @@ export function ClinicVivid({
         className="px-4 py-7 text-center text-[11px] font-medium"
         style={{ color: INK_SOFT }}
       >
-        © {new Date().getFullYear()} {cardData.company || cardData.name} · {t.poweredBy}{" "}
+        Â© {new Date().getFullYear()} {cardData.company || cardData.name} Â· {t.poweredBy}{" "}
         <a
           href="https://opsolid.de/products/digital-card"
           target="_blank"
@@ -700,7 +700,7 @@ function ContactTile({
 export const clinicVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 70,
   key: "clinic-vivid",
-  name: "Clinic — Vivid",
+  name: "Clinic â€” Vivid",
   industry: "Doctor / Health-tech clinic",
   supports: {
     services: true,
@@ -721,21 +721,21 @@ export const clinicVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-clinic-vivid",
 };
 
-// photo: Unsplash, doctor portrait. Unsplash License — free, no attribution required.
+// photo: Unsplash, doctor portrait. Unsplash License â€” free, no attribution required.
 export const clinicVividSample: SampleData = {
   templateId: 70,
   slug: "demo-clinic-vivid",
   cardData: {
-    name: "Dr. Ayşe Demir",
-    position: "Fachärztin",
-    title: "Allgemeinmedizin & Präventivmedizin",
+    name: "Dr. AyÅŸe Demir",
+    position: "FachÃ¤rztin",
+    title: "Allgemeinmedizin & PrÃ¤ventivmedizin",
     company: "Praxis am Ku'damm",
     email: "ayse@praxis-demir.de",
     phone: "+49 30 334 5678",
     whatsapp: "+49 170 334 5678",
     website: "praxis-demir.de",
-    address: "Kurfürstendamm 188, 10707 Berlin",
-    bio: "Fachärztin für Allgemeinmedizin & Präventivmedizin. Individuell, ganzheitlich, digital erreichbar.",
+    address: "KurfÃ¼rstendamm 188, 10707 Berlin",
+    bio: "FachÃ¤rztin fÃ¼r Allgemeinmedizin & PrÃ¤ventivmedizin. Individuell, ganzheitlich, digital erreichbar.",
     bookingUrl: "https://cal.com/praxis-demir/intro",
     brochureUrl: "https://praxis-demir.de/profil.pdf",
     impressumUrl: "https://praxis-demir.de/impressum",
@@ -746,17 +746,17 @@ export const clinicVividSample: SampleData = {
       instagram: "https://instagram.com/praxis.demir",
     },
     services: [
-      { title: "Vorsorge", description: "Check-up & Labor", priceLabel: "ab €80" },
-      { title: "Reisemedizin", description: "Impfung & Beratung", priceLabel: "€120" },
-      { title: "Online", description: "Videosprechstunde", priceLabel: "€60" },
-      { title: "Hausbesuch", description: "Premium-Service", priceLabel: "€180" },
+      { title: "Vorsorge", description: "Check-up & Labor", priceLabel: "ab â‚¬80" },
+      { title: "Reisemedizin", description: "Impfung & Beratung", priceLabel: "â‚¬120" },
+      { title: "Online", description: "Videosprechstunde", priceLabel: "â‚¬60" },
+      { title: "Hausbesuch", description: "Premium-Service", priceLabel: "â‚¬180" },
     ],
     testimonials: [
       {
         author: "Mehmet K.",
         role: "Patient",
         quote:
-          "Sehr aufmerksam, nimmt sich Zeit und erklärt alles verständlich.",
+          "Sehr aufmerksam, nimmt sich Zeit und erklÃ¤rt alles verstÃ¤ndlich.",
       },
     ],
   },
@@ -766,3 +766,4 @@ export const clinicVividSample: SampleData = {
   brandPrimaryHex: "#0891b2",
   brandAccentHex: "#22d3ee",
 };
+

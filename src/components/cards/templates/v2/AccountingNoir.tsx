@@ -280,7 +280,7 @@ export function AccountingNoir({
               fill
               sizes="78px"
               unoptimized
-              className="object-cover"
+              className="object-cover tpl-photo"
               style={{ filter: "contrast(1.05)" }}
             />
           ) : (

@@ -1,22 +1,27 @@
 // =============================================================================
-// WalletButtons — server component that renders Apple/Google Wallet buttons,
-// gated on env-var presence so the buttons disappear silently in dev/prod
-// where wallet certs aren't configured (no broken click target).
+// WalletButtons — renders Apple/Google Wallet buttons when configured.
+// When certs are missing (dev/prod without env vars), visitors see nothing
+// but the card owner sees a small info note instead of blank space.
 //
 // Reads `isAppleWalletConfigured()` / `isGoogleWalletConfigured()` at request
 // time. Each button links to the matching API route, which itself returns 503
 // if the env disappears between server-render and click (defense in depth).
 //
+// Owner detection via `useIsOwner()` context; locale via prop.
 // Visual style: matches the existing footer's warm-graphite + premium chrome.
 // Multi-layer treatment per design memory — ring + shadow + subtle gradient,
 // not a flat-padding-typography pill.
 // =============================================================================
+
+"use client";
 
 import { Wallet } from "lucide-react";
 import {
   isAppleWalletConfigured,
   isGoogleWalletConfigured,
 } from "@/lib/wallet/config";
+import { useIsOwner } from "@/context/OwnerMode";
+import { useLocale } from "@/context/LocaleContext";
 
 export interface WalletButtonsProps {
   slug: string;
@@ -25,7 +30,20 @@ export interface WalletButtonsProps {
 export function WalletButtons({ slug }: WalletButtonsProps) {
   const apple = isAppleWalletConfigured();
   const google = isGoogleWalletConfigured();
-  if (!apple && !google) return null;
+  const isOwner = useIsOwner();
+  const { t } = useLocale();
+
+  if (!apple && !google) {
+    // Cert yok — ziyaretçilere hiç bir şey gösterme
+    if (!isOwner) return null;
+
+    // Owner'a küçük bilgi notu
+    return (
+      <div className="rounded-xl border border-dashed border-line-soft/40 bg-bg-1/50 px-4 py-3 text-center">
+        <p className="text-xs text-ink/55">{t.card.wallet.notConfigured}</p>
+      </div>
+    );
+  }
 
   const slugEnc = encodeURIComponent(slug);
 

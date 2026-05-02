@@ -1,18 +1,18 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// BarberVivid — v2 template (id=78, key="barber-vivid").
+// BarberVivid â€” v2 template (id=78, key="barber-vivid").
 //
-// Sector: Barber / Men's grooming — VIVID variant. Mood: bold red/black urban
+// Sector: Barber / Men's grooming â€” VIVID variant. Mood: bold red/black urban
 // barbershop, gradient hero + floating profile card + tile-based service grid.
 // Inspired by kart_07_berber_vivid.html.
 //
 // Design DNA (different from Barber.tsx id=7, BarberNoir/Pure/Stone):
-//   - 200 px gradient hero (deep navy → midnight) with circle ornaments + tag
+//   - 200 px gradient hero (deep navy â†’ midnight) with circle ornaments + tag
 //     pill + shop name.
 //   - Floating profile card (-90 mt) with 88 px gradient ring avatar + role +
 //     badge pill row.
-//   - 3-tile quick stats (rounded white cards with red→orange gradient digits).
+//   - 3-tile quick stats (rounded white cards with redâ†’orange gradient digits).
 //   - Service grid 2-col with featured row spanning both columns + dark hero
 //     gradient background.
 //   - Big gradient CTA card with arrow + WhatsApp tagline.
@@ -113,16 +113,16 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
   tr: {
     tagPill: "Premium Berber",
     taglineFallback: "Master Berber & Stylist",
-    yearsLabel: "Yıl",
-    clientsLabel: "Müşteri",
-    followersLabel: "Takipçi",
+    yearsLabel: "YÄ±l",
+    clientsLabel: "MÃ¼ÅŸteri",
+    followersLabel: "TakipÃ§i",
     servicesH: "Hizmetler",
-    ctaH: "Anında Randevu",
-    ctaSub: "WhatsApp ile saniyeler içinde rezervasyon",
-    contactH: "İletişim",
+    ctaH: "AnÄ±nda Randevu",
+    ctaSub: "WhatsApp ile saniyeler iÃ§inde rezervasyon",
+    contactH: "Ä°letiÅŸim",
     bookBtn: "Randevu Al",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
   },
 };
@@ -216,7 +216,7 @@ export function BarberVivid({
             }}
           >
             {t.tagPill}
-            {cityFromAddress ? ` · ${cityFromAddress}` : ""}
+            {cityFromAddress ? ` Â· ${cityFromAddress}` : ""}
           </span>
           <div
             className="display"
@@ -253,7 +253,7 @@ export function BarberVivid({
               width={82}
               height={82}
               unoptimized
-              className="block h-full w-full rounded-full object-cover"
+              className="block h-full w-full rounded-full object-cover tpl-photo"
               style={{ border: `3px solid ${SURFACE}` }}
             />
           ) : (
@@ -466,7 +466,7 @@ export function BarberVivid({
           >
             {t.bookBtn}
             <span aria-hidden style={{ fontSize: 16 }}>
-              →
+              â†’
             </span>
           </a>
         </section>
@@ -497,7 +497,7 @@ export function BarberVivid({
               fontWeight: 800,
             }}
           >
-            “
+            â€œ
           </span>
           <p
             style={{
@@ -514,7 +514,7 @@ export function BarberVivid({
             className="display not-italic uppercase"
             style={{ fontSize: 11.5, fontWeight: 700, color: RED, letterSpacing: "0.5px" }}
           >
-            — {cardData.name}
+            â€” {cardData.name}
           </cite>
         </section>
       )}
@@ -584,8 +584,8 @@ export function BarberVivid({
         className="px-6 py-6 text-center"
         style={{ fontSize: 11, color: MUTED, fontWeight: 500 }}
       >
-        © {new Date().getFullYear()} {cardData.company || cardData.name}
-        {cityFromAddress && ` · ${cityFromAddress}`}
+        Â© {new Date().getFullYear()} {cardData.company || cardData.name}
+        {cityFromAddress && ` Â· ${cityFromAddress}`}
         <div className="mt-2" style={{ color: MUTED }}>
           {t.poweredBy}{" "}
           <a
@@ -636,7 +636,7 @@ function Pill({
 export const barberVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 78,
   key: "barber-vivid",
-  name: "Barber — Vivid",
+  name: "Barber â€” Vivid",
   industry: "Barber / Modern urban barbershop",
   supports: {
     services: true,
@@ -657,7 +657,7 @@ export const barberVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-barber-vivid",
 };
 
-// photo: Unsplash, https://unsplash.com/photos/jqe5lY4ROMQ — Free, no attribution required.
+// photo: Unsplash, https://unsplash.com/photos/jqe5lY4ROMQ â€” Free, no attribution required.
 export const barberVividSample: SampleData = {
   templateId: 78,
   slug: "demo-barber-vivid",
@@ -670,8 +670,8 @@ export const barberVividSample: SampleData = {
     phone: "+49 176 223 4568",
     whatsapp: "+49 176 223 4568",
     website: "tabarbershop.de",
-    address: "Friedrichstraße 88, 10117 Berlin",
-    bio: "Master Barber seit 15 Jahren. Klassischer Herrenschnitt, Heißrasur, Premium Fades. Termine online.",
+    address: "FriedrichstraÃŸe 88, 10117 Berlin",
+    bio: "Master Barber seit 15 Jahren. Klassischer Herrenschnitt, HeiÃŸrasur, Premium Fades. Termine online.",
     bookingUrl: "https://cal.com/tabarbershop/booking",
     impressumUrl: "https://tabarbershop.de/impressum",
     privacyUrl: "https://tabarbershop.de/datenschutz",
@@ -680,9 +680,9 @@ export const barberVividSample: SampleData = {
       instagram: "https://instagram.com/ta.barbershop",
     },
     services: [
-      { title: "Premium Haarschnitt", description: "Beratung, Schnitt, Styling.", priceLabel: "€35" },
-      { title: "Heißrasur", description: "Klassische Rasur mit heißem Tuch.", priceLabel: "€28" },
-      { title: "Kombination", description: "Schnitt + Heißrasur in einem Termin.", priceLabel: "€55" },
+      { title: "Premium Haarschnitt", description: "Beratung, Schnitt, Styling.", priceLabel: "â‚¬35" },
+      { title: "HeiÃŸrasur", description: "Klassische Rasur mit heiÃŸem Tuch.", priceLabel: "â‚¬28" },
+      { title: "Kombination", description: "Schnitt + HeiÃŸrasur in einem Termin.", priceLabel: "â‚¬55" },
     ],
   },
   photoUrl:
@@ -691,3 +691,4 @@ export const barberVividSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

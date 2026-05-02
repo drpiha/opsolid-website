@@ -11,6 +11,9 @@
 // `#cancel` anchor → auto-opens the cancel modal on mount. That anchor is
 // embedded in the email "cancel subscription" CTA so a single link takes the
 // customer from their inbox to the confirmation modal.
+//
+// A4+A6 — sticky save bar, dirty state, sticky top header, 4 section headings.
+// B7    — expand/collapse sections, premium photo/logo thumbnail entry buttons.
 // =============================================================================
 
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -33,6 +36,7 @@ import {
   MessageCircle,
   Search,
   Download,
+  Pencil,
 } from "lucide-react";
 import { Input, Textarea } from "@/components/ui/Input";
 import { useLocale } from "@/context/LocaleContext";
@@ -45,6 +49,7 @@ import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/Cust
 import { TYPOGRAPHY_PRESET_LIST, getTypographyPreset } from "@/lib/typographyPresets";
 import { getTemplateEntry } from "@/components/cards/templates/v2/registry";
 import { ShareDrawer } from "@/components/cards/ShareDrawer";
+import { StickySaveBar } from "./StickySaveBar";
 
 type FormState = "idle" | "saving" | "saved" | "error";
 
@@ -95,6 +100,63 @@ export function CardEditClient(props: Props) {
   const [editableSlug, setEditableSlug] = useState<string>(props.slug ?? "");
   // Phase 5 — share drawer
   const [shareOpen, setShareOpen] = useState(false);
+
+  // A4 — dirty state tracking. Stores the form snapshot at mount (or last
+  // successful save). JSON comparison is sufficient here because CardData
+  // contains no Date / function / circular values.
+  // slug stored as empty-string when null to match editableSlug initialisation
+  const initialFormRef = useRef({
+    cardData: props.cardData,
+    photoPath: props.photoPath,
+    logoPath: props.logoPath,
+    brandPrimaryHex: props.brandPrimaryHex,
+    brandAccentHex: props.brandAccentHex,
+    slug: props.slug ?? "",
+  });
+
+  const isDirty = useMemo(() => {
+    return (
+      JSON.stringify({
+        cardData,
+        photoPath,
+        logoPath,
+        brandPrimaryHex,
+        brandAccentHex,
+        slug: editableSlug,
+      }) !==
+      JSON.stringify({
+        cardData: initialFormRef.current.cardData,
+        photoPath: initialFormRef.current.photoPath,
+        logoPath: initialFormRef.current.logoPath,
+        brandPrimaryHex: initialFormRef.current.brandPrimaryHex,
+        brandAccentHex: initialFormRef.current.brandAccentHex,
+        slug: initialFormRef.current.slug,
+      })
+    );
+  }, [cardData, photoPath, logoPath, brandPrimaryHex, brandAccentHex, editableSlug]);
+
+  // A4 — revert: restore all mutable state to the last-saved snapshot.
+  const handleRevert = () => {
+    const snap = initialFormRef.current;
+    setCardData(snap.cardData);
+    setPhotoPath(snap.photoPath);
+    setLogoPath(snap.logoPath);
+    setBrandPrimaryHex(snap.brandPrimaryHex ?? "");
+    setBrandAccentHex(snap.brandAccentHex ?? "");
+    setEditableSlug(snap.slug ?? "");
+  };
+
+  // B7 — expand/collapse sections. Only "person-brand" open by default.
+  const [openSections, setOpenSections] = useState<Set<string>>(
+    () => new Set(["person-brand"])
+  );
+  const toggleSection = (id: string) =>
+    setOpenSections((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
 
   // Auto-open cancel modal when URL ends with #cancel (linked from email).
   useEffect(() => {
@@ -223,16 +285,75 @@ export function CardEditClient(props: Props) {
         setCurrentSlug(ok.slug);
         setEditableSlug(ok.slug);
       }
+      // A4 — advance the "clean" snapshot so isDirty resets after save.
+      // Keep slug as "" when null to stay consistent with initialFormRef init.
+      initialFormRef.current = {
+        cardData: normalized,
+        photoPath: photoPath ?? null,
+        logoPath: logoPath ?? null,
+        brandPrimaryHex: brandPrimaryHex || null,
+        brandAccentHex: brandAccentHex || null,
+        slug: ok.slug ?? currentSlug ?? "",
+      };
       setFormState("saved");
-      setTimeout(() => setFormState("idle"), 3500);
+      setTimeout(() => setFormState("idle"), 1500);
     } catch {
       setErrorMsg(edit.savedError);
       setFormState("error");
     }
   };
 
+  const publicUrl = currentSlug
+    ? `/c/${currentSlug}?owner=${encodeURIComponent(props.editToken)}`
+    : null;
+
+  // A6 — status badge label map
+  const statusBadgeMap: Record<string, { label: string; cls: string }> = {
+    PUBLISHED: { label: "Live", cls: "bg-green-100 text-green-700" },
+    PENDING:   { label: "Ausstehend", cls: "bg-neutral-100 text-ink/60" },
+    DRAFT:     { label: "Entwurf", cls: "bg-neutral-100 text-ink/60" },
+    CANCELLED: { label: "Storniert", cls: "bg-red-50 text-red-600" },
+  };
+  const badgeInfo = statusBadgeMap[props.status] ?? { label: props.status, cls: "bg-neutral-100 text-ink/60" };
+
+  // B7 — helper: resolve photo/logo path to a valid src
+  const resolveAsset = (path: string) =>
+    path.startsWith("/") || path.startsWith("http") ? path : `/${path}`;
+
   return (
-    <main className="min-h-screen bg-neutral-50 py-8 md:py-16 overflow-x-hidden">
+    <>
+    {/* A6 — Sticky top header: card name + status + slug + view live */}
+    <header className="sticky top-0 z-20 border-b border-line bg-bg-0/90 backdrop-blur-md">
+      <div className="mx-auto flex max-w-2xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
+        <div className="min-w-0 flex-1">
+          <h1 className="truncate font-serif text-xl text-ink">
+            {cardData.name || edit.untitledCard}
+          </h1>
+          <div className="mt-0.5 flex items-center gap-2 text-xs text-ink/55">
+            <span
+              className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold ${badgeInfo.cls}`}
+            >
+              {badgeInfo.label}
+            </span>
+            {currentSlug && (
+              <span className="font-mono truncate">/{currentSlug}</span>
+            )}
+          </div>
+        </div>
+        {publicUrl && (
+          <a
+            href={publicUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 rounded-full border border-ink/15 bg-white px-3 py-1.5 text-xs font-semibold text-ink/70 transition-colors hover:border-ink/40 hover:text-ink"
+          >
+            {edit.viewLive}
+          </a>
+        )}
+      </div>
+    </header>
+
+    <main className="min-h-screen bg-neutral-50 pb-28 pt-6 md:pt-10 overflow-x-hidden">
       <div className="container-wide max-w-full">
         <div
           className="mb-6 flex items-start gap-3 rounded-2xl border px-4 py-3 text-sm"
@@ -254,10 +375,7 @@ export function CardEditClient(props: Props) {
           <p className="text-eyebrow uppercase tracking-wider text-ink/50">
             OpSolid · Digital Card
           </p>
-          <h1 className="mt-3 font-display text-display-sm text-ink">
-            {edit.title}
-          </h1>
-          <p className="mt-3 text-body text-ink/60">{edit.subtitle}</p>
+          <p className="mt-2 text-body text-ink/60">{edit.subtitle}</p>
           {currentSlug && props.status === "PUBLISHED" && (
             <div className="mt-4 max-w-md space-y-1.5">
               <label className="mono-label block text-[10px] uppercase tracking-[0.2em] text-ink/55">
@@ -337,6 +455,33 @@ export function CardEditClient(props: Props) {
             {/* Contact-readonly block removed — the same fields are editable
                 directly in the card-content section below, so a separate
                 read-only mirror is just visual noise. */}
+
+            {/* ── B7 Section 1: Person & Brand ── */}
+            <section>
+              <button
+                type="button"
+                onClick={() => toggleSection("person-brand")}
+                className="flex w-full items-center justify-between gap-3 mt-8 mb-3 text-left"
+                aria-expanded={openSections.has("person-brand")}
+                aria-label={
+                  openSections.has("person-brand")
+                    ? edit.collapseSection
+                    : edit.expandSection
+                }
+              >
+                <h2 className="font-serif text-lg text-ink">
+                  {edit.sectionPersonBrand}
+                </h2>
+                <ChevronDown
+                  size={18}
+                  className={[
+                    "text-ink/40 shrink-0 motion-safe:transition-transform motion-safe:duration-200",
+                    openSections.has("person-brand") ? "rotate-180" : "",
+                  ].join(" ")}
+                  aria-hidden="true"
+                />
+              </button>
+              <div hidden={!openSections.has("person-brand")} className="space-y-4">
 
             {/* Card content */}
             <fieldset className="space-y-4">
@@ -435,7 +580,7 @@ export function CardEditClient(props: Props) {
               </div>
             </fieldset>
 
-            {/* Uploads */}
+            {/* Uploads — B7 premium thumbnail entry for photo + logo */}
             <fieldset className="space-y-4">
               <legend className="text-heading-sm text-ink">
                 {form.uploadSection}
@@ -454,20 +599,28 @@ export function CardEditClient(props: Props) {
                     }}
                   />
                   {photoPath && (
-                    <div className="mt-2 flex items-center justify-between gap-2">
+                    <div className="mt-2 flex items-center gap-3">
+                      {/* B7 — premium 64×64 thumbnail entry button */}
                       <button
                         type="button"
                         onClick={() => setPhotoEditorOpen(true)}
-                        className="inline-flex items-center gap-1 rounded-full border border-copper/40 bg-copper/10 px-2.5 py-1 text-[10.5px] font-semibold text-ink transition-colors hover:border-copper hover:bg-copper/20"
+                        className="group relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-ink/15 bg-neutral-100"
+                        aria-label={edit.adjustPhoto}
+                        title={edit.adjustPhoto}
                       >
-                        {form.editPosition ?? "Edit position"}
-                        {cardData.photoPosition && (
-                          <span className="font-mono text-[9px] text-ink/55">
-                            · {Math.round(cardData.photoPosition.x)}·
-                            {Math.round(cardData.photoPosition.y)} ·
-                            {cardData.photoPosition.scale.toFixed(2)}×
-                          </span>
-                        )}
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={resolveAsset(photoPath)}
+                          alt=""
+                          className="h-full w-full object-cover"
+                          style={{
+                            objectPosition: `${cardData.photoPosition?.x ?? 50}% ${cardData.photoPosition?.y ?? 50}%`,
+                            transform: `scale(${cardData.photoPosition?.scale ?? 1})`,
+                          }}
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-ink/0 opacity-0 transition-all group-hover:bg-ink/40 group-hover:opacity-100">
+                          <Pencil size={14} className="text-white" />
+                        </div>
                       </button>
                       <button
                         type="button"
@@ -495,20 +648,28 @@ export function CardEditClient(props: Props) {
                     }}
                   />
                   {logoPath && (
-                    <div className="mt-2 flex items-center justify-between gap-2">
+                    <div className="mt-2 flex items-center gap-3">
+                      {/* B7 — premium 64×64 thumbnail entry button */}
                       <button
                         type="button"
                         onClick={() => setLogoEditorOpen(true)}
-                        className="inline-flex items-center gap-1 rounded-full border border-copper/40 bg-copper/10 px-2.5 py-1 text-[10.5px] font-semibold text-ink transition-colors hover:border-copper hover:bg-copper/20"
+                        className="group relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-ink/15 bg-neutral-100"
+                        aria-label={edit.adjustLogo}
+                        title={edit.adjustLogo}
                       >
-                        {form.editPosition ?? "Edit position"}
-                        {cardData.logoPosition && (
-                          <span className="font-mono text-[9px] text-ink/55">
-                            · {Math.round(cardData.logoPosition.x)}·
-                            {Math.round(cardData.logoPosition.y)} ·
-                            {cardData.logoPosition.scale.toFixed(2)}×
-                          </span>
-                        )}
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={resolveAsset(logoPath)}
+                          alt=""
+                          className="h-full w-full object-cover"
+                          style={{
+                            objectPosition: `${cardData.logoPosition?.x ?? 50}% ${cardData.logoPosition?.y ?? 50}%`,
+                            transform: `scale(${cardData.logoPosition?.scale ?? 1})`,
+                          }}
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-ink/0 opacity-0 transition-all group-hover:bg-ink/40 group-hover:opacity-100">
+                          <Pencil size={14} className="text-white" />
+                        </div>
                       </button>
                       <button
                         type="button"
@@ -525,6 +686,36 @@ export function CardEditClient(props: Props) {
                 </div>
               </div>
             </fieldset>
+
+              </div>{/* end collapsible: person-brand */}
+            </section>{/* end Section 1: Person & Brand */}
+
+            {/* ── B7 Section 2: Content ── */}
+            <section>
+              <button
+                type="button"
+                onClick={() => toggleSection("content")}
+                className="flex w-full items-center justify-between gap-3 mt-8 mb-3 text-left"
+                aria-expanded={openSections.has("content")}
+                aria-label={
+                  openSections.has("content")
+                    ? edit.collapseSection
+                    : edit.expandSection
+                }
+              >
+                <h2 className="font-serif text-lg text-ink">
+                  {edit.sectionContent}
+                </h2>
+                <ChevronDown
+                  size={18}
+                  className={[
+                    "text-ink/40 shrink-0 motion-safe:transition-transform motion-safe:duration-200",
+                    openSections.has("content") ? "rotate-180" : "",
+                  ].join(" ")}
+                  aria-hidden="true"
+                />
+              </button>
+              <div hidden={!openSections.has("content")} className="space-y-4">
 
             {/* Gallery — up to 24 photos rendered on the public card */}
             <fieldset className="space-y-4">
@@ -561,6 +752,36 @@ export function CardEditClient(props: Props) {
                 handleFileUpload={handleFileUpload}
               />
             </fieldset>
+
+              </div>{/* end collapsible: content */}
+            </section>{/* end Section 2: Content */}
+
+            {/* ── B7 Section 3: Contact (typography + branding; full split in B8) ── */}
+            <section>
+              <button
+                type="button"
+                onClick={() => toggleSection("contact")}
+                className="flex w-full items-center justify-between gap-3 mt-8 mb-3 text-left"
+                aria-expanded={openSections.has("contact")}
+                aria-label={
+                  openSections.has("contact")
+                    ? edit.collapseSection
+                    : edit.expandSection
+                }
+              >
+                <h2 className="font-serif text-lg text-ink">
+                  {edit.sectionContact}
+                </h2>
+                <ChevronDown
+                  size={18}
+                  className={[
+                    "text-ink/40 shrink-0 motion-safe:transition-transform motion-safe:duration-200",
+                    openSections.has("contact") ? "rotate-180" : "",
+                  ].join(" ")}
+                  aria-hidden="true"
+                />
+              </button>
+              <div hidden={!openSections.has("contact")} className="space-y-4">
 
             {/* Phase 7.9 — Typography preset */}
             <fieldset className="space-y-4">
@@ -654,6 +875,36 @@ export function CardEditClient(props: Props) {
               placeholder={form.designNotesPh}
             />
 
+              </div>{/* end collapsible: contact */}
+            </section>{/* end Section 3: Contact */}
+
+            {/* ── B7 Section 4: Publishing & Status ── */}
+            <section>
+              <button
+                type="button"
+                onClick={() => toggleSection("publish")}
+                className="flex w-full items-center justify-between gap-3 mt-8 mb-3 text-left"
+                aria-expanded={openSections.has("publish")}
+                aria-label={
+                  openSections.has("publish")
+                    ? edit.collapseSection
+                    : edit.expandSection
+                }
+              >
+                <h2 className="font-serif text-lg text-ink">
+                  {edit.sectionPublish}
+                </h2>
+                <ChevronDown
+                  size={18}
+                  className={[
+                    "text-ink/40 shrink-0 motion-safe:transition-transform motion-safe:duration-200",
+                    openSections.has("publish") ? "rotate-180" : "",
+                  ].join(" ")}
+                  aria-hidden="true"
+                />
+              </button>
+              <div hidden={!openSections.has("publish")} className="space-y-4">
+
             {errorMsg && (
               <div className="flex items-start gap-3 rounded-2xl border border-brand/30 bg-brand/5 p-4 text-sm text-brand">
                 <AlertCircle size={16} className="mt-0.5 shrink-0" />
@@ -668,26 +919,18 @@ export function CardEditClient(props: Props) {
               </div>
             )}
 
-            <div className="flex items-center justify-between gap-4 rounded-2xl border border-neutral-200 bg-white p-5">
+            {/* Status info block — save button moved to StickySaveBar (A4) */}
+            <div className="flex items-center gap-4 rounded-2xl border border-neutral-200 bg-white p-5">
               <div>
                 <p className="text-eyebrow uppercase text-ink/50">
                   {edit.statusLabel}
                 </p>
-                <p className="text-heading-sm text-ink">{props.status}</p>
+                <p className="text-heading-sm text-ink">{badgeInfo.label}</p>
               </div>
-              <button
-                type="submit"
-                className="btn-primary text-base"
-                disabled={formState === "saving"}
-              >
-                {formState === "saving" ? (
-                  <Loader2 size={16} className="animate-spin" />
-                ) : null}
-                <span>
-                  {formState === "saving" ? edit.saving : edit.save}
-                </span>
-              </button>
             </div>
+
+              </div>{/* end collapsible: publish */}
+            </section>{/* end Section 4: Publishing & Status */}
 
             {/* Download OG image + cancel subscription */}
             <div className="rounded-2xl border border-neutral-200 bg-white p-5">
@@ -749,6 +992,14 @@ export function CardEditClient(props: Props) {
             />
             <p className="mt-4 text-xs text-ink/50">{form.previewHint}</p>
           </div>
+
+          {/* A4 — StickySaveBar lives inside <form> so its type="submit" button
+              triggers handleSubmit without JS overhead. */}
+          <StickySaveBar
+            isDirty={isDirty}
+            formState={formState}
+            onRevert={handleRevert}
+          />
         </form>
       </div>
 
@@ -819,6 +1070,7 @@ export function CardEditClient(props: Props) {
         />
       )}
     </main>
+    </>
   );
 }
 

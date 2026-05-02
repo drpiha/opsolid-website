@@ -69,6 +69,31 @@ function digitsOnly(phone: string): string {
   return phone.replace(/[^+0-9]/g, "");
 }
 
+/**
+ * Returns true when running on an Android browser.
+ * Safe to call server-side (SSR) — returns false when navigator is undefined.
+ */
+function isAndroidUA(): boolean {
+  if (typeof navigator === "undefined") return false;
+  return /android/i.test(navigator.userAgent);
+}
+
+/**
+ * Build the vCard endpoint URL, appending ?v=3 for Android clients and
+ * stitching any existing sourceQs onto the query string correctly.
+ *
+ * sourceQs is either "" or starts with "?" (e.g. "?src=nfc&event=messe").
+ */
+function vcardHref(slug: string, sourceQs: string): string {
+  const base = `/api/cards/${encodeURIComponent(slug)}/vcard`;
+  const android = isAndroidUA();
+  if (!android && !sourceQs) return base;
+  if (android && !sourceQs) return `${base}?v=3`;
+  // sourceQs starts with "?" — merge with version param when needed
+  if (android) return `${base}?v=3&${sourceQs.replace(/^\?/, "")}`;
+  return `${base}${sourceQs}`;
+}
+
 function getWhatsAppNumber(value: string): string {
   return digitsOnly(value).replace(/^\+/, "");
 }
@@ -168,7 +193,8 @@ export function SmartCard({
               alt={cardData.company ? `${cardData.company} logo` : "Logo"}
               width={56}
               height={56}
-              className="h-9 w-auto object-contain"
+              // Phase 6.7 A5 — `tpl-logo` honours --tpl-logo-x/y/scale.
+              className="tpl-logo h-9 w-auto object-contain"
               unoptimized
             />
           </div>
@@ -197,24 +223,9 @@ export function SmartCard({
           waDigits={waDigits}
           sourceQs={sourceQs}
           primary={primary}
+          locale={locale}
+          customButtons={customButtons}
         />
-
-        {customButtons && customButtons.length > 0 && (
-          <div className="mt-3 flex flex-wrap gap-2">
-            {customButtons.map((btn, i) => (
-              <a
-                key={`${btn.label}-${i}`}
-                href={btn.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={ctaButtonClass(btn.style)}
-                style={btn.style === "primary" ? { background: primary, color: "#fff" } : undefined}
-              >
-                {btn.label}
-              </a>
-            ))}
-          </div>
-        )}
 
         <SendMyInfoSlot
           slug={slug}
@@ -273,6 +284,7 @@ export function SmartCard({
         slug={slug}
         impressumUrl={cardData.impressumUrl}
         privacyUrl={cardData.privacyUrl}
+        locale={locale}
       />
     </article>
   );
@@ -361,7 +373,10 @@ function SmartCardAvatar({
           alt={name}
           width={224}
           height={224}
-          className="h-full w-full object-cover"
+          // Phase 6.7 A5 — `tpl-photo` wires this <img> into the
+          // --tpl-photo-x/y/scale variables set by the page wrapper, so the
+          // owner's saved pan/zoom is rendered on the public card.
+          className="tpl-photo h-full w-full object-cover"
           unoptimized
           priority
         />
@@ -378,6 +393,12 @@ function SmartCardAvatar({
   );
 }
 
+const SAVE_LABELS: Record<"de" | "en" | "tr", string> = {
+  de: "Speichern",
+  en: "Save Contact",
+  tr: "Kaydet",
+};
+
 function SmartCardCTAs({
   slug,
   cardData,
@@ -385,6 +406,8 @@ function SmartCardCTAs({
   waDigits,
   sourceQs,
   primary,
+  locale = "de",
+  customButtons,
 }: {
   slug: string;
   cardData: CardData;
@@ -392,80 +415,114 @@ function SmartCardCTAs({
   waDigits: string;
   sourceQs: string;
   primary: string;
+  locale?: "de" | "en" | "tr";
+  customButtons?: CardData["customButtons"];
 }) {
-  const items: Array<{
+  const saveLabel = SAVE_LABELS[locale];
+
+  const secondaryItems: Array<{
     icon: React.ReactNode;
     label: string;
     href: string;
-    download?: boolean;
-    primary?: boolean;
-  }> = [
-    {
-      icon: <UserPlus size={18} strokeWidth={2.2} />,
-      label: "Speichern",
-      href: `/api/cards/${encodeURIComponent(slug)}/vcard${sourceQs}`,
-      download: true,
-      primary: true,
-    },
-  ];
+  }> = [];
+
   if (phoneDigits) {
-    items.push({
+    secondaryItems.push({
       icon: <Phone size={18} strokeWidth={2.2} />,
       label: "Anrufen",
       href: `tel:${phoneDigits}`,
     });
   }
   if (waDigits) {
-    items.push({
+    secondaryItems.push({
       icon: <MessageCircle size={18} strokeWidth={2.2} />,
       label: "WhatsApp",
       href: `https://wa.me/${waDigits}`,
     });
   }
   if (cardData.email) {
-    items.push({
+    secondaryItems.push({
       icon: <Mail size={18} strokeWidth={2.2} />,
       label: "E-Mail",
       href: `mailto:${cardData.email}`,
     });
   }
   if (cardData.bookingUrl) {
-    items.push({
+    secondaryItems.push({
       icon: <Calendar size={18} strokeWidth={2.2} />,
       label: "Termin",
       href: cardData.bookingUrl,
     });
   }
 
+  // Cap secondary grid at 4 items so the auto-fit grid stays tidy.
+  const visibleSecondary = secondaryItems.slice(0, 4);
+  const secondaryCols =
+    visibleSecondary.length <= 2 ? visibleSecondary.length : 4;
+
   return (
-    <div className="mt-6 grid grid-cols-3 gap-2 sm:grid-cols-4">
-      {items.map((item, i) => (
-        <a
-          key={`${item.label}-${i}`}
-          href={item.href}
-          download={item.download}
-          target={item.href.startsWith("http") ? "_blank" : undefined}
-          rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
-          className={`group flex flex-col items-center justify-center gap-1.5 rounded-2xl border px-2 py-3 text-center text-[11px] font-medium transition active:scale-[0.97] ${
-            item.primary
-              ? "border-transparent text-white shadow-depth-2"
-              : "border-line bg-bg-2 text-ink hover:border-line-firm hover:bg-bg-3"
+    <div className="mt-6">
+      {/* Primary action — full-width, 52pt minimum touch target */}
+      <a
+        href={vcardHref(slug, sourceQs)}
+        className="flex min-h-[52px] w-full items-center justify-center gap-2 rounded-2xl bg-neutral-900 px-6 py-4 text-base font-semibold text-neutral-50 shadow-[0_8px_24px_-8px_rgba(20,18,15,0.4)] transition-transform active:scale-[0.98]"
+        aria-label={saveLabel}
+      >
+        <UserPlus size={20} />
+        <span>{saveLabel}</span>
+      </a>
+
+      {/* Custom buttons — below primary, above secondary grid */}
+      {customButtons && customButtons.length > 0 && (
+        <div
+          className={`mt-3 grid gap-2 ${
+            customButtons.length === 1 ? "grid-cols-1" : "grid-cols-2"
           }`}
-          style={item.primary ? { background: primary } : undefined}
-          aria-label={item.label}
         >
-          <span
-            className={`flex h-9 w-9 items-center justify-center rounded-xl ${
-              item.primary
-                ? "bg-white/15 text-white"
-                : "bg-bg-3 text-ink-200 group-hover:text-ink"
-            }`}
-          >
-            {item.icon}
-          </span>
-          <span>{item.label}</span>
-        </a>
-      ))}
+          {customButtons.map((btn, i) => (
+            <a
+              key={`${btn.label}-${i}`}
+              href={btn.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={ctaButtonClass(btn.style)}
+              style={
+                btn.style === "primary"
+                  ? { background: primary, color: "#fff" }
+                  : undefined
+              }
+            >
+              {btn.label}
+            </a>
+          ))}
+        </div>
+      )}
+
+      {/* Secondary actions — 2-4 column auto-fit grid */}
+      {visibleSecondary.length > 0 && (
+        <div
+          className={`mt-3 grid gap-2`}
+          style={{ gridTemplateColumns: `repeat(${secondaryCols}, minmax(0, 1fr))` }}
+        >
+          {visibleSecondary.map((item, i) => (
+            <a
+              key={`${item.label}-${i}`}
+              href={item.href}
+              target={item.href.startsWith("http") ? "_blank" : undefined}
+              rel={
+                item.href.startsWith("http") ? "noopener noreferrer" : undefined
+              }
+              className="group flex flex-col items-center justify-center gap-1 rounded-xl border border-ink/15 bg-white px-3 py-2.5 min-h-[64px] text-xs font-medium text-ink/80 transition-colors hover:border-ink/40 hover:text-ink active:scale-[0.97]"
+              aria-label={item.label}
+            >
+              <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-bg-3 text-ink-200 group-hover:text-ink">
+                {item.icon}
+              </span>
+              <span>{item.label}</span>
+            </a>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -694,6 +751,16 @@ function SmartCardVideo({ url }: { url: string }) {
             loading="lazy"
             allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
+            // Sandbox isolates the embedded YouTube/Vimeo frame from our origin.
+            // - allow-scripts: required for the player runtime.
+            // - allow-same-origin: required for the player postMessage
+            //   handshake (without it the player treats itself as null
+            //   origin and refuses to load).
+            // - allow-presentation: enables AirPlay / Cast surface.
+            // - allow-popups + allow-popups-to-escape-sandbox: lets the
+            //   "Watch on YouTube" link open without inheriting sandbox.
+            sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox"
+            referrerPolicy="no-referrer-when-downgrade"
             className="absolute inset-0 h-full w-full"
           />
         </div>
@@ -765,21 +832,29 @@ function SmartCardTestimonials({
   );
 }
 
+const FOOTER_SHARE_LABELS: Record<"de" | "en" | "tr", string> = {
+  de: "Teilen",
+  en: "Share",
+  tr: "Paylaş",
+};
+
 function SmartCardFooter({
   siteUrl,
   slug,
   impressumUrl,
   privacyUrl,
+  locale = "de",
 }: {
   siteUrl: string;
   slug: string;
   impressumUrl?: string;
   privacyUrl?: string;
+  locale?: "de" | "en" | "tr";
 }) {
   return (
     <footer className="border-t border-line bg-bg-2/40 px-6 py-5">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px] text-ink-400">
-        <ShareButton siteUrl={siteUrl} slug={slug} />
+        <ShareButton siteUrl={siteUrl} slug={slug} locale={locale} />
         {impressumUrl && (
           <a
             href={impressumUrl}
@@ -817,11 +892,21 @@ function SmartCardFooter({
   );
 }
 
-function ShareButton({ siteUrl, slug }: { siteUrl: string; slug: string }) {
+function ShareButton({
+  siteUrl,
+  slug,
+  locale = "de",
+}: {
+  siteUrl: string;
+  slug: string;
+  locale?: "de" | "en" | "tr";
+}) {
   const url = `${siteUrl}/c/${slug}`;
+  const label = FOOTER_SHARE_LABELS[locale];
   return (
     <button
       type="button"
+      aria-label={label}
       onClick={async () => {
         if (typeof navigator !== "undefined" && "share" in navigator) {
           try {
@@ -838,7 +923,7 @@ function ShareButton({ siteUrl, slug }: { siteUrl: string; slug: string }) {
       className="inline-flex items-center gap-1.5 underline-offset-2 hover:text-ink hover:underline"
     >
       <Share2 size={11} strokeWidth={2.2} />
-      Teilen
+      {label}
     </button>
   );
 }

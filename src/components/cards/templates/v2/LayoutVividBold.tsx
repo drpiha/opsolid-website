@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// LayoutVividBold — v2 universal template (id=94, key="layout-vivid-bold").
+// LayoutVividBold â€” v2 universal template (id=94, key="layout-vivid-bold").
 //
-// Sector: ANY. Inspired by layouts/v13_vivid_bold.html — Poppins + bold gradient
+// Sector: ANY. Inspired by layouts/v13_vivid_bold.html â€” Poppins + bold gradient
 // hero, floating profile card with copper-ringed avatar, chip row of services,
 // 3-stat grid, 2x2 service tiles with coloured icon squares, gradient CTA,
 // gradient testimonial bubble, stacked social row, gradient QR strip.
@@ -51,7 +51,7 @@ function digitsOnly(value: string): string {
 
 function getInitials(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "·";
+  if (parts.length === 0) return "Â·";
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
@@ -78,10 +78,10 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr", Copy> = {
   de: {
-    heroTag: "Strategie · Wachstum · Innovation",
+    heroTag: "Strategie Â· Wachstum Â· Innovation",
     heroLine1Pre: "Wir gestalten",
     heroLine1Em: "mutige",
-    heroLine2: "Geschäftsstrategien.",
+    heroLine2: "GeschÃ¤ftsstrategien.",
     servicesTitlePre: "Was ich",
     servicesTitleEm: "anbiete",
     packagesTitlePre: "Service",
@@ -92,12 +92,12 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     walletLabel: "In Wallet speichern",
     poweredBy: "Powered by",
     statClients: "Kunden",
-    statRoas: "Ø ROI",
+    statRoas: "Ã˜ ROI",
     statReach: "Jahre",
     testimonialTitle: "Stimmen",
   },
   en: {
-    heroTag: "Strategy · Growth · Innovation",
+    heroTag: "Strategy Â· Growth Â· Innovation",
     heroLine1Pre: "We craft",
     heroLine1Em: "bold",
     heroLine2: "business strategies.",
@@ -116,23 +116,23 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     testimonialTitle: "What clients say",
   },
   tr: {
-    heroTag: "Strateji · Büyüme · İnovasyon",
+    heroTag: "Strateji Â· BÃ¼yÃ¼me Â· Ä°novasyon",
     heroLine1Pre: "Cesur",
-    heroLine1Em: "iş",
-    heroLine2: "stratejileri tasarlıyoruz.",
+    heroLine1Em: "iÅŸ",
+    heroLine2: "stratejileri tasarlÄ±yoruz.",
     servicesTitlePre: "Benim",
-    servicesTitleEm: "sunduklarım",
+    servicesTitleEm: "sunduklarÄ±m",
     packagesTitlePre: "Hizmet",
     packagesTitleEm: "paketleri",
-    ctaLabel: "Ücretsiz Strateji Görüşmesi",
-    qrTitle: "Bağlantıda kalalım",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana Ekle",
+    ctaLabel: "Ãœcretsiz Strateji GÃ¶rÃ¼ÅŸmesi",
+    qrTitle: "BaÄŸlantÄ±da kalalÄ±m",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana Ekle",
     poweredBy: "Powered by",
-    statClients: "Müşteri",
+    statClients: "MÃ¼ÅŸteri",
     statRoas: "Ort. ROI",
-    statReach: "Yıl",
-    testimonialTitle: "Görüşler",
+    statReach: "YÄ±l",
+    testimonialTitle: "GÃ¶rÃ¼ÅŸler",
   },
 };
 
@@ -255,7 +255,7 @@ export function LayoutVividBold({
                 fill
                 unoptimized
                 sizes="64px"
-                className="object-cover"
+                className="object-cover tpl-photo"
               />
             </div>
           ) : (
@@ -308,7 +308,7 @@ export function LayoutVividBold({
               >
                 {[cardData.company, cardData.address?.split(",").slice(-1)[0].trim()]
                   .filter(Boolean)
-                  .join(" · ")}
+                  .join(" Â· ")}
               </div>
             )}
           </div>
@@ -479,7 +479,7 @@ export function LayoutVividBold({
           }}
         >
           {t.ctaLabel}
-          <span aria-hidden style={{ marginLeft: 8 }}>→</span>
+          <span aria-hidden style={{ marginLeft: 8 }}>â†’</span>
         </a>
       </section>
 
@@ -505,7 +505,7 @@ export function LayoutVividBold({
               lineHeight: 1,
             }}
           >
-            “
+            â€œ
           </span>
           <p
             className="relative"
@@ -646,7 +646,7 @@ export const layoutVividBoldEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 94,
   key: "layout-vivid-bold",
   name: "Vivid Bold",
-  industry: "Universal — any sector",
+  industry: "Universal â€” any sector",
   supports: {
     services: true,
     faqs: false,
@@ -666,12 +666,12 @@ export const layoutVividBoldEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-layout-vivid-bold",
 };
 
-// photo: Unsplash, https://unsplash.com/photos/photo-1560250097-0dc05888fffb — Free, no attribution required.
+// photo: Unsplash, https://unsplash.com/photos/photo-1560250097-0dc05888fffb â€” Free, no attribution required.
 export const layoutVividBoldSample: SampleData = {
   templateId: 94,
   slug: "demo-layout-vivid-bold",
   cardData: {
-    name: "Alex Müller",
+    name: "Alex MÃ¼ller",
     title: "Strategy & Innovation Consultant",
     position: "Strategy & Innovation Consultant",
     company: "AM Advisory",
@@ -679,7 +679,7 @@ export const layoutVividBoldSample: SampleData = {
     phone: "+49 30 556 7890",
     whatsapp: "+49 30 556 7890",
     website: "amadvisory.de",
-    address: "Friedrichstraße 76, 10117 Berlin",
+    address: "FriedrichstraÃŸe 76, 10117 Berlin",
     bio: "Unternehmensberater mit Fokus auf digitale Transformation und Strategieentwicklung. 15+ Jahre Erfahrung.",
     bookingUrl: "https://cal.com/amadvisory/intro",
     impressumUrl: "https://amadvisory.de/impressum",
@@ -690,10 +690,10 @@ export const layoutVividBoldSample: SampleData = {
       instagram: "https://instagram.com/alex.advisory",
     },
     services: [
-      { title: "Digital Transformation", description: "Aylık yönetim", priceLabel: "€3.500/Tag" },
-      { title: "Strategy Workshop", description: "Vorstand-Klausur", priceLabel: "€1.800/Tag" },
-      { title: "Executive Coaching", description: "1:1 Sparring", priceLabel: "€400/h" },
-      { title: "Strategic Audit", description: "6-Wochen-Audit", priceLabel: "ab €18.000" },
+      { title: "Digital Transformation", description: "AylÄ±k yÃ¶netim", priceLabel: "â‚¬3.500/Tag" },
+      { title: "Strategy Workshop", description: "Vorstand-Klausur", priceLabel: "â‚¬1.800/Tag" },
+      { title: "Executive Coaching", description: "1:1 Sparring", priceLabel: "â‚¬400/h" },
+      { title: "Strategic Audit", description: "6-Wochen-Audit", priceLabel: "ab â‚¬18.000" },
     ],
     testimonials: [
       {
@@ -709,3 +709,4 @@ export const layoutVividBoldSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

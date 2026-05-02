@@ -958,6 +958,7 @@ function ReelSection({
             title="Training reel"
             allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowFullScreen
+            sandbox="allow-scripts allow-same-origin allow-presentation allow-popups"
             className="absolute inset-0 h-full w-full"
             style={{ border: 0 }}
           />

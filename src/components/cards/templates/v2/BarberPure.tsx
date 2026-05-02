@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// BarberPure — v2 template (id=77, key="barber-pure").
+// BarberPure â€” v2 template (id=77, key="barber-pure").
 //
-// Sector: Barber / Men's grooming — PURE variant. Mood: Japanese barbershop
+// Sector: Barber / Men's grooming â€” PURE variant. Mood: Japanese barbershop
 // precision, near-white surface, tightly tracked DM Sans display + Source
 // Serif italic accents. Inspired by kart_07_berber_pure.html.
 //
@@ -85,8 +85,8 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     yearsLabel: "Jahre",
     clientsLabel: "Kunden",
     followersLabel: "Follower",
-    menuH: "Service Menü",
-    hoursH: "Öffnungszeiten",
+    menuH: "Service MenÃ¼",
+    hoursH: "Ã–ffnungszeiten",
     contactH: "Kontakt",
     ctaH: "Termin buchen",
     bookBtn: "Termin reservieren",
@@ -112,16 +112,16 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
   tr: {
     eyebrow: "Premium Berber",
     taglineFallback: "Master Berber & Stylist",
-    yearsLabel: "Yıl",
-    clientsLabel: "Müşteri",
-    followersLabel: "Takipçi",
-    menuH: "Hizmet Menüsü",
-    hoursH: "Çalışma Saatleri",
-    contactH: "İletişim",
+    yearsLabel: "YÄ±l",
+    clientsLabel: "MÃ¼ÅŸteri",
+    followersLabel: "TakipÃ§i",
+    menuH: "Hizmet MenÃ¼sÃ¼",
+    hoursH: "Ã‡alÄ±ÅŸma Saatleri",
+    contactH: "Ä°letiÅŸim",
     ctaH: "Randevu",
     bookBtn: "Randevu Al",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
   },
 };
@@ -182,7 +182,7 @@ export function BarberPure({
           />
           <span className="uppercase">
             {t.eyebrow}
-            {cityFromAddress ? ` · ${cityFromAddress}` : ""}
+            {cityFromAddress ? ` Â· ${cityFromAddress}` : ""}
           </span>
           <span aria-hidden className="flex-1" style={{ height: 1, background: LINE }} />
         </div>
@@ -230,7 +230,7 @@ export function BarberPure({
                 width={96}
                 height={96}
                 unoptimized
-                className="block h-full w-full object-cover"
+                className="block h-full w-full object-cover tpl-photo"
                 style={{ filter: "grayscale(0.5) contrast(1.05)" }}
               />
             ) : (
@@ -473,7 +473,7 @@ export function BarberPure({
           className="serif italic pt-6 text-center"
           style={{ fontSize: 12, color: MUTED, borderTop: `1px solid ${HAIRLINE}` }}
         >
-          © {new Date().getFullYear()} {cardData.company || cardData.name}
+          Â© {new Date().getFullYear()} {cardData.company || cardData.name}
           <div className="mt-2" style={{ color: MUTED }}>
             {t.poweredBy}{" "}
             <a
@@ -498,7 +498,7 @@ export function BarberPure({
 export const barberPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 77,
   key: "barber-pure",
-  name: "Barber — Pure",
+  name: "Barber â€” Pure",
   industry: "Barber / Japanese-precision barbershop",
   supports: {
     services: true,
@@ -519,7 +519,7 @@ export const barberPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-barber-pure",
 };
 
-// photo: Unsplash, https://unsplash.com/photos/jqe5lY4ROMQ — Free, no attribution required.
+// photo: Unsplash, https://unsplash.com/photos/jqe5lY4ROMQ â€” Free, no attribution required.
 export const barberPureSample: SampleData = {
   templateId: 77,
   slug: "demo-barber-pure",
@@ -532,8 +532,8 @@ export const barberPureSample: SampleData = {
     phone: "+49 176 223 4568",
     whatsapp: "+49 176 223 4568",
     website: "tabarbershop.de",
-    address: "Friedrichstraße 88, 10117 Berlin",
-    bio: "Master Barber seit 15 Jahren. Klassischer Herrenschnitt, Heißrasur, Premium Fades. Termine online.",
+    address: "FriedrichstraÃŸe 88, 10117 Berlin",
+    bio: "Master Barber seit 15 Jahren. Klassischer Herrenschnitt, HeiÃŸrasur, Premium Fades. Termine online.",
     bookingUrl: "https://cal.com/tabarbershop/booking",
     impressumUrl: "https://tabarbershop.de/impressum",
     privacyUrl: "https://tabarbershop.de/datenschutz",
@@ -542,9 +542,9 @@ export const barberPureSample: SampleData = {
       instagram: "https://instagram.com/ta.barbershop",
     },
     services: [
-      { title: "Premium Haarschnitt", description: "Beratung, Schnitt, Styling.", priceLabel: "€35" },
-      { title: "Heißrasur", description: "Klassische Rasur mit heißem Tuch.", priceLabel: "€28" },
-      { title: "Kombination", description: "Schnitt + Heißrasur in einem Termin.", priceLabel: "€55" },
+      { title: "Premium Haarschnitt", description: "Beratung, Schnitt, Styling.", priceLabel: "â‚¬35" },
+      { title: "HeiÃŸrasur", description: "Klassische Rasur mit heiÃŸem Tuch.", priceLabel: "â‚¬28" },
+      { title: "Kombination", description: "Schnitt + HeiÃŸrasur in einem Termin.", priceLabel: "â‚¬55" },
     ],
   },
   photoUrl:
@@ -553,3 +553,4 @@ export const barberPureSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

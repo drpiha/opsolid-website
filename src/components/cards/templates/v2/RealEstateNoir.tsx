@@ -1,20 +1,20 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// RealEstateNoir — v2 template (id=52, key="real-estate-noir").
+// RealEstateNoir â€” v2 template (id=52, key="real-estate-noir").
 //
-// Sector: real estate / broker — NOIR variant. Mood: editorial luxury,
+// Sector: real estate / broker â€” NOIR variant. Mood: editorial luxury,
 // near-black canvas, gold (#c8a951) hairline ornaments, Playfair Display
 // serif italic, Roman-numeral service list, gold-rim circular avatar,
 // stats bar with serif numerals + sup markers. Inspired by
-// kart_01_emlak_noir.html — re-implemented natively.
+// kart_01_emlak_noir.html â€” re-implemented natively.
 //
 // Design DNA (different from the default RealEstate.tsx):
 //   - No big hero photo. Compact 64 px circular avatar with gold ring.
 //   - Header: "SINCE YYYY" badge, serif name with italic last word in gold,
 //     thin gold rule sweeping side-to-side.
 //   - Stats bar 3-up: serif numerals + small superscript markers.
-//   - Services: editorial Roman-numeral list (I · II · III…), serif names,
+//   - Services: editorial Roman-numeral list (I Â· II Â· IIIâ€¦), serif names,
 //     2px gold left-bar.
 //   - Pull-quote section: oversized gold open-quote, italic serif quote.
 //   - Italic serif slogan strip.
@@ -44,7 +44,7 @@ import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 const LOCKED_PRIMARY = "#0d0d0d";
 const LOCKED_ACCENT = "#c8a951";
 
-// Locked dark canvas constants — only `primary` and `accent` respond to brand.
+// Locked dark canvas constants â€” only `primary` and `accent` respond to brand.
 const CARD = "#111111";
 const PANEL = "#1a1a1d";
 const PANEL_2 = "#16161a";
@@ -76,8 +76,8 @@ function digitsOnly(value: string): string {
 
 function getInitials(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "•";
-  return (parts[0][0] ?? "•").toUpperCase() + (parts[parts.length - 1]?.[0] ?? "").toUpperCase();
+  if (parts.length === 0) return "â€¢";
+  return (parts[0][0] ?? "â€¢").toUpperCase() + (parts[parts.length - 1]?.[0] ?? "").toUpperCase();
 }
 
 const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
@@ -109,7 +109,7 @@ const COPY: Record<"de" | "en" | "tr", RenCopy> = {
   de: {
     since: "Seit",
     experience: "Jahre",
-    closed: "Abschlüsse",
+    closed: "AbschlÃ¼sse",
     portfolio: "Portfolio",
     services: "Leistungen",
     servicesTitle: "Spezialgebiete",
@@ -151,26 +151,26 @@ const COPY: Record<"de" | "en" | "tr", RenCopy> = {
     share: "Share",
   },
   tr: {
-    since: "Sektörde",
-    experience: "Yıl",
-    closed: "Satış",
-    portfolio: "Portföy",
+    since: "SektÃ¶rde",
+    experience: "YÄ±l",
+    closed: "SatÄ±ÅŸ",
+    portfolio: "PortfÃ¶y",
     services: "Hizmetler",
-    servicesTitle: "Uzmanlık Alanlarım",
+    servicesTitle: "UzmanlÄ±k AlanlarÄ±m",
     voices: "Referanslar",
-    contact: "İletişim",
-    contactTitle: "Bana Ulaşın",
+    contact: "Ä°letiÅŸim",
+    contactTitle: "Bana UlaÅŸÄ±n",
     social: "Sosyal",
     saveContact: "Rehbere kaydet",
     callTile: "Telefon",
     whatsappTile: "WhatsApp",
     emailTile: "E-posta",
     webTile: "Web Sitesi",
-    walletLabel: "Cüzdana ekle",
+    walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
-    impressum: "Künye",
+    impressum: "KÃ¼nye",
     privacy: "Gizlilik",
-    share: "Paylaş",
+    share: "PaylaÅŸ",
   },
 };
 
@@ -261,7 +261,7 @@ export function RealEstateNoir({
                 fill
                 sizes="64px"
                 unoptimized
-                className="object-cover"
+                className="object-cover tpl-photo"
               />
             ) : (
               <div
@@ -311,7 +311,7 @@ export function RealEstateNoir({
           className="mt-2.5 text-[12.5px] font-light"
           style={{ color: TEXT_MUTED, letterSpacing: "0.4px", lineHeight: 1.55 }}
         >
-          {[cardData.position, cardData.title].filter(Boolean).join(" · ")}
+          {[cardData.position, cardData.title].filter(Boolean).join(" Â· ")}
         </div>
       </header>
 
@@ -335,10 +335,10 @@ export function RealEstateNoir({
       >
         <StatCell num="12" sup="+" label={t.experience} accent={accent} />
         <StatCell num="180" sup="+" label={t.closed} accent={accent} divider />
-        <StatCell num="€2.4" sup="B" label={t.portfolio} accent={accent} divider />
+        <StatCell num="â‚¬2.4" sup="B" label={t.portfolio} accent={accent} divider />
       </div>
 
-      {/* SERVICES — Roman numerals */}
+      {/* SERVICES â€” Roman numerals */}
       {services.length > 0 && (
         <Section accent={accent} eyebrow={t.services} title={t.servicesTitle}>
           <div className="flex flex-col gap-2.5">
@@ -407,7 +407,7 @@ export function RealEstateNoir({
           >
             <span aria-hidden style={{ display: "inline-block", width: 24, height: 1, background: `${accent}99` }} />
             {featuredQuote.author}
-            {featuredQuote.role && <span style={{ color: TEXT_MUTED }}>· {featuredQuote.role}</span>}
+            {featuredQuote.role && <span style={{ color: TEXT_MUTED }}>Â· {featuredQuote.role}</span>}
             <span aria-hidden style={{ display: "inline-block", width: 24, height: 1, background: `${accent}99` }} />
           </div>
         </section>
@@ -425,7 +425,7 @@ export function RealEstateNoir({
         </div>
       )}
 
-      {/* CONTACT — 2-up tile grid */}
+      {/* CONTACT â€” 2-up tile grid */}
       <Section accent={accent} eyebrow={t.contact} title={t.contactTitle}>
         <div className="grid grid-cols-2 gap-2.5">
           {phoneDigits && (
@@ -474,7 +474,7 @@ export function RealEstateNoir({
         <ExchangeSlot slug={slug} primary={accent} locale={locale} />
       </section>
 
-      {/* FOOTER PANEL — vCard */}
+      {/* FOOTER PANEL â€” vCard */}
       <div
         className="px-7 pb-8 pt-9 text-center"
         style={{ background: PANEL_2 }}
@@ -528,7 +528,7 @@ export function RealEstateNoir({
           {cardData.name}
           {cardData.company && (
             <span style={{ color: TEXT_MUTED, fontStyle: "normal" }}>
-              {" · "}
+              {" Â· "}
               {cardData.company}
             </span>
           )}
@@ -537,7 +537,7 @@ export function RealEstateNoir({
           className="mt-1 text-[10px]"
           style={{ color: TEXT_DIMMED, letterSpacing: "1px" }}
         >
-          © {year} · {t.poweredBy}{" "}
+          Â© {year} Â· {t.poweredBy}{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"
@@ -709,7 +709,7 @@ function ContactTile({
 export const realEstateNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 52,
   key: "real-estate-noir",
-  name: "Real Estate — Noir",
+  name: "Real Estate â€” Noir",
   industry: "Real estate agent / broker",
   supports: {
     services: true,
@@ -731,7 +731,7 @@ export const realEstateNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
 };
 
 // Persona: Hannah Walker, Senior Listing Agent, Walker & Stein, Berlin.
-// photo: Unsplash, by Christina Wocintechchat — Unsplash License, no attribution required.
+// photo: Unsplash, by Christina Wocintechchat â€” Unsplash License, no attribution required.
 export const realEstateNoirSample: SampleData = {
   templateId: 52,
   slug: "demo-real-estate-noir",
@@ -744,7 +744,7 @@ export const realEstateNoirSample: SampleData = {
     phone: "+49 30 1234 5678",
     whatsapp: "+49 170 1234 567",
     website: "walker-stein.de",
-    address: "Kurfürstendamm 188, 10707 Berlin",
+    address: "KurfÃ¼rstendamm 188, 10707 Berlin",
     bio: "Twelve years pairing discerning clients with Berlin's most distinctive homes. Discreet representation, decisive negotiation, lasting trust.",
     bookingUrl: "https://cal.com/walker-stein/intro",
     brochureUrl: "https://walker-stein.de/portfolio.pdf",
@@ -756,9 +756,9 @@ export const realEstateNoirSample: SampleData = {
       instagram: "https://instagram.com/walker.stein.berlin",
     },
     services: [
-      { title: "Charlottenburg Townhouse", priceLabel: "€2.85M" },
+      { title: "Charlottenburg Townhouse", priceLabel: "â‚¬2.85M" },
       { title: "Wannsee Waterfront Build", priceLabel: "FOR SALE" },
-      { title: "Mitte Penthouse", priceLabel: "€1.65M" },
+      { title: "Mitte Penthouse", priceLabel: "â‚¬1.65M" },
     ],
     testimonials: [
       {
@@ -775,3 +775,4 @@ export const realEstateNoirSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

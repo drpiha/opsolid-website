@@ -29,10 +29,11 @@ import { getSiteUrl } from "@/lib/stripe";
 import { getTemplateEntry } from "@/components/cards/templates/v2/registry";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
 import { OwnerModeProvider } from "@/context/OwnerMode";
-import { AlbumSection } from "@/components/cards/album/AlbumSection";
 import { QRFlipOverlay } from "@/components/cards/QRFlipOverlay";
 import { ShareButton } from "@/components/cards/ShareButton";
 import { OwnerToolbar } from "@/components/cards/OwnerToolbar";
+import { StatusBanner } from "@/components/cards/StatusBanner";
+import { LocaleSwitcher } from "@/components/cards/LocaleSwitcher";
 import { constantTimeEquals } from "@/lib/constantTime";
 import { contents } from "@/content";
 
@@ -121,16 +122,36 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const templateThumbExists = existsSync(thumbDiskPath);
   const templateThumbUrl = `${siteOrigin}/images/templates/${thumbFilename}`;
 
-  // Build the OG image array. Order matters: most social platforms
-  // (Facebook, LinkedIn, X) pick the first image they can fetch
-  // successfully.
-  //   1. Per-template static thumbnail (Phase 7.5) — fast, branded,
-  //      shipped as a PNG so unfurls never hit the dynamic OG route.
-  //      Only included when the file actually exists on disk.
-  //   2. Dynamic OG 1200×630 — legacy / per-card override path.
-  //   3. WhatsApp 600×600 1:1 — chat-thumbnail aspect ratio.
+  // Build the OG image array. Order matters: most social platforms pick
+  // the first image they can fetch successfully.
+  //   1. Personalized wa.png 1080×1350 4:5 — tall hero with the card's
+  //      actual photo + name, what users actually want to see in chats.
+  //   2. Personalized og.png 1200×630 — wide card for Twitter/LinkedIn.
+  //   3. Per-template static thumbnail — last-resort fallback if the
+  //      dynamic routes are slow or rate-limited; not picked first
+  //      because it's a generic template image, not the user's card.
   const altText = `${name}${company ? " · " + company : ""}`;
-  const ogImages: NonNullable<NonNullable<Metadata["openGraph"]>["images"]> = [];
+  // Cache-busting: every save updates `order.updatedAt` (Prisma @updatedAt).
+  // Social scrapers (WhatsApp, Telegram, LinkedIn) hash the URL to key their
+  // preview cache — appending the epoch timestamp ensures each save produces
+  // a URL that scrapers treat as a new resource, bypassing stale previews.
+  // The image route handlers ignore query parameters; Next.js revalidate=60
+  // remains in effect and is keyed on the path only (no behaviour change).
+  const v = order.updatedAt.getTime();
+  const ogImages: NonNullable<NonNullable<Metadata["openGraph"]>["images"]> = [
+    {
+      url: `/c/${slug}/wa.png?v=${v}`,
+      width: 1080,
+      height: 1350,
+      alt: altText,
+    },
+    {
+      url: `/c/${slug}/og.png?v=${v}`,
+      width: 1200,
+      height: 630,
+      alt: altText,
+    },
+  ];
   if (templateThumbExists) {
     ogImages.push({
       url: templateThumbUrl,
@@ -139,27 +160,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       alt: altText,
     });
   }
-  // Phase 8 — WA preview switched to 1080×1350 (4:5 portrait) so WhatsApp
-  // and Instagram can render a tall hero with photo + name. The wide 1200×630
-  // is kept as a fallback for Twitter/LinkedIn link cards.
-  ogImages.push(
-    {
-      url: `/c/${slug}/wa.png`,
-      width: 1080,
-      height: 1350,
-      alt: altText,
-    },
-    {
-      url: `/c/${slug}/og.png`,
-      width: 1200,
-      height: 630,
-      alt: altText,
-    },
-  );
 
-  const twitterImages: string[] = [];
+  const twitterImages: string[] = [`/c/${slug}/og.png?v=${v}`];
   if (templateThumbExists) twitterImages.push(templateThumbUrl);
-  twitterImages.push(`/c/${slug}/og.png`);
 
   return {
     title: `${name}${title ? " — " + title : ""} · OpSolid Smart Card`,
@@ -225,8 +228,19 @@ export default async function CardPage({ params, searchParams }: PageProps) {
     .catch(() => {});
 
   const siteUrl = getSiteUrl();
+
+  // Faz 6.7 B4 — visitor language priority: ?lang= > order.locale > "de" default.
+  // Validate against the supported locale set so ?lang=foo gracefully falls
+  // back instead of blowing up downstream consumers.
+  const requestedLang = (sp.lang ?? "").toString().toLowerCase();
+  const validLang = (["de", "en", "tr"] as const).includes(
+    requestedLang as "de" | "en" | "tr",
+  )
+    ? (requestedLang as "de" | "en" | "tr")
+    : null;
   const localeKey: "de" | "en" | "tr" =
-    order.locale === "en" || order.locale === "tr" ? order.locale : "de";
+    validLang ??
+    (order.locale === "en" || order.locale === "tr" ? order.locale : "de");
 
   // v2 registry lookup. Falls back to SmartCard when the order's templateId
   // hasn't been ported yet — preserves existing live cards 1:1.
@@ -293,11 +307,12 @@ export default async function CardPage({ params, searchParams }: PageProps) {
       constantTimeEquals(ownerToken, order.editToken),
   );
   const ownerLabels = contents[localeKey].card.owner;
-  const editHref = `/${localeKey}/card/edit/${order.id}?token=${order.editToken ?? ""}`;
+  const langSwitcherLabel = contents[localeKey].card.languageSwitcher;
+  const editHref = `/${localeKey}/card/edit/${order.id}?t=${order.editToken ?? ""}`;
 
   return (
     <OwnerModeProvider isOwner={isOwner}>
-      <main className="min-h-screen bg-bg-0 px-4 py-8 pb-24 sm:py-12">
+      <main className="flex min-h-[100dvh] flex-col bg-bg-0 px-4 py-6 pb-24 sm:py-10">
         {isOwner && (
           <OwnerToolbar
             editHref={editHref}
@@ -310,8 +325,15 @@ export default async function CardPage({ params, searchParams }: PageProps) {
             }}
           />
         )}
+        {parsed.data.statusMessage?.text?.trim() ? (
+          <StatusBanner
+            text={parsed.data.statusMessage.text}
+            tone={parsed.data.statusMessage.tone}
+            accentHex={order.brandAccentHex}
+          />
+        ) : null}
         <div
-          className="mx-auto w-full max-w-[460px]"
+          className="mx-auto w-full max-w-[420px] flex-1"
           data-card-tpl
           style={wrapperStyle}
         >
@@ -332,11 +354,10 @@ export default async function CardPage({ params, searchParams }: PageProps) {
             accentHex={order.brandAccentHex ?? undefined}
             tone={isDarkTemplate ? "dark" : "light"}
           />
-          <AlbumSection
-            slug={slug}
-            accentHex={order.brandAccentHex ?? undefined}
-            tone={isDarkTemplate ? "dark" : "light"}
-          />
+          {/* Faz 6.7 B4 — visitor locale switcher, below card content */}
+          <div className="mt-6 flex justify-center">
+            <LocaleSwitcher current={localeKey} ariaLabel={langSwitcherLabel} />
+          </div>
         </div>
         <QRFlipOverlay
           slug={slug}
@@ -349,6 +370,7 @@ export default async function CardPage({ params, searchParams }: PageProps) {
         <ShareButton
           slug={slug}
           accentHex={order.brandAccentHex ?? undefined}
+          locale={localeKey}
         />
       </main>
     </OwnerModeProvider>

@@ -1,21 +1,21 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// RestaurantPure — v2 template (id=61, key="restaurant-pure").
+// RestaurantPure â€” v2 template (id=61, key="restaurant-pure").
 //
-// Sector: Restaurant — PURE variant. Mood: white menu-card, oversized
+// Sector: Restaurant â€” PURE variant. Mood: white menu-card, oversized
 // Bricolage display type with EB Garamond italic, hairline tables.
 // Inspired by kart_03_restoran_pure.html.
 //
 // Design DNA (distinct from KitchenAtelier and Restaurant defaults):
-//   - Mega type header — "Open · Tue–Sun" + city meta line, then huge
+//   - Mega type header â€” "Open Â· Tueâ€“Sun" + city meta line, then huge
 //     Bricolage name with italic last word in mustard accent.
-//   - Chef strip — small grayscale photo (80×80) + name + role + stat row.
-//   - About — italic Garamond pull-paragraph with signature.
-//   - Dishes — 3-square thumbnail row + tabular dish list with prices.
-//   - Hours table — dashed hairline rows.
-//   - Contact table — left-aligned key column, right value column.
-//   - 2×2 CTA grid — primary black + ghost.
+//   - Chef strip â€” small grayscale photo (80Ã—80) + name + role + stat row.
+//   - About â€” italic Garamond pull-paragraph with signature.
+//   - Dishes â€” 3-square thumbnail row + tabular dish list with prices.
+//   - Hours table â€” dashed hairline rows.
+//   - Contact table â€” left-aligned key column, right value column.
+//   - 2Ã—2 CTA grid â€” primary black + ghost.
 //   - QR / share strip.
 // =============================================================================
 
@@ -79,14 +79,14 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr", Copy> = {
   de: {
-    metaOpen: "Geöffnet · Di – So",
+    metaOpen: "GeÃ¶ffnet Â· Di â€“ So",
     philosophy: "Philosophie",
-    dishes: "Saisonale Spezialitäten",
+    dishes: "Saisonale SpezialitÃ¤ten",
     hours: "Adresse",
     contact: "Kontakt",
     reserveBtn: "Reservierung",
     whatsappBtn: "WhatsApp",
-    menuBtn: "Menü",
+    menuBtn: "MenÃ¼",
     directionsBtn: "Anfahrt",
     servicesLabel: "Gerichte",
     reviewsLabel: "Bewertungen",
@@ -95,7 +95,7 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     poweredBy: "Powered by",
   },
   en: {
-    metaOpen: "Open · Tue – Sun",
+    metaOpen: "Open Â· Tue â€“ Sun",
     philosophy: "Philosophy",
     dishes: "Seasonal Specials",
     hours: "Address",
@@ -111,19 +111,19 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    metaOpen: "Açık · Salı – Pazar",
+    metaOpen: "AÃ§Ä±k Â· SalÄ± â€“ Pazar",
     philosophy: "Felsefemiz",
-    dishes: "Sezon Özellikleri",
+    dishes: "Sezon Ã–zellikleri",
     hours: "Adres",
-    contact: "İletişim",
+    contact: "Ä°letiÅŸim",
     reserveBtn: "Rezervasyon",
     whatsappBtn: "WhatsApp",
-    menuBtn: "Menü",
+    menuBtn: "MenÃ¼",
     directionsBtn: "Konum",
     servicesLabel: "Yemek",
     reviewsLabel: "Yorum",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
   },
 };
@@ -155,7 +155,7 @@ export function RestaurantPure({
   const tagline = cardData.title || cardData.position || "";
   const city = cardData.address?.split(",").slice(-2)[0]?.trim() || "Berlin";
 
-  // Display name split — first word(s) plain, last word italic / mustard
+  // Display name split â€” first word(s) plain, last word italic / mustard
   const nameParts = restaurantName.trim().split(/\s+/);
   const nameLead = nameParts[0] ?? restaurantName;
   const nameTail = nameParts.slice(1).join(" ");
@@ -236,7 +236,7 @@ export function RestaurantPure({
             width={80}
             height={80}
             unoptimized
-            className="object-cover"
+            className="object-cover tpl-photo"
             style={{
               width: 80,
               height: 80,
@@ -279,7 +279,7 @@ export function RestaurantPure({
               style={{ color: INK, letterSpacing: "0.5px" }}
             >
               {services.length > 0 && <span>{services.length} {t.servicesLabel}</span>}
-              {services.length > 0 && testimonials.length > 0 && <span style={{ color: INK_SOFT }}>·</span>}
+              {services.length > 0 && testimonials.length > 0 && <span style={{ color: INK_SOFT }}>Â·</span>}
               {testimonials.length > 0 && <span>{testimonials.length} {t.reviewsLabel}</span>}
             </div>
           )}
@@ -294,15 +294,15 @@ export function RestaurantPure({
             className="serif-i mt-3 text-[19px] leading-[1.55]"
             style={{ color: INK }}
           >
-            {"“"}
+            {"â€œ"}
             {cardData.bio}
-            {"”"}
+            {"â€"}
           </p>
           <div
             className="serif-i mt-3 text-[14px]"
             style={{ color: INK_SOFT }}
           >
-            — {cardData.name}
+            â€” {cardData.name}
           </div>
         </section>
       )}
@@ -326,7 +326,7 @@ export function RestaurantPure({
                     alt=""
                     fill
                     unoptimized
-                    className="object-cover"
+                    className="object-cover tpl-photo"
                     style={{
                       filter: idx === 1 ? "saturate(1.1)" : "grayscale(0.2)",
                     }}
@@ -401,7 +401,7 @@ export function RestaurantPure({
         </div>
       </section>
 
-      {/* CTA GRID 2×2 */}
+      {/* CTA GRID 2Ã—2 */}
       <div className="grid grid-cols-2 gap-2 px-7 pb-7">
         {phoneDigits && (
           <a
@@ -505,10 +505,10 @@ export function RestaurantPure({
         style={{ borderTop: `1px solid ${HAIRLINE}`, color: INK_SOFT, letterSpacing: "1px" }}
       >
         <span>
-          {restaurantName} © {new Date().getFullYear()}
+          {restaurantName} Â© {new Date().getFullYear()}
         </span>
         <span>
-          {city} ·{" "}
+          {city} Â·{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"
@@ -543,7 +543,7 @@ function PureLabel({ children }: { children: React.ReactNode }) {
 export const restaurantPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 61,
   key: "restaurant-pure",
-  name: "Restaurant — Pure",
+  name: "Restaurant â€” Pure",
   industry: "Restaurant / Fine dining",
   supports: {
     services: true,
@@ -569,15 +569,15 @@ export const restaurantPureSample: SampleData = {
   slug: "demo-restaurant-pure",
   cardData: {
     name: "Marco Bianchi",
-    position: "Küchenchef & Inhaber",
-    title: "Trattoria · seit 2012",
+    position: "KÃ¼chenchef & Inhaber",
+    title: "Trattoria Â· seit 2012",
     company: "Trattoria Bianchi",
     email: "marco@trattoriabianchi.de",
     phone: "+49 30 776 5432",
     whatsapp: "+49 30 776 5432",
     website: "trattoriabianchi.de",
-    address: "Schöneberger Ufer 14, 10785 Berlin",
-    bio: "Authentische italienische Küche seit 2012. Saisonale Produkte, hausgemachte Pasta, warme Atmosphäre.",
+    address: "SchÃ¶neberger Ufer 14, 10785 Berlin",
+    bio: "Authentische italienische KÃ¼che seit 2012. Saisonale Produkte, hausgemachte Pasta, warme AtmosphÃ¤re.",
     bookingUrl: "https://cal.com/trattoria-bianchi/table",
     brochureUrl: "https://trattoriabianchi.de/menu.pdf",
     impressumUrl: "https://trattoriabianchi.de/impressum",
@@ -590,18 +590,18 @@ export const restaurantPureSample: SampleData = {
     services: [
       {
         title: "Pasta al Tartufo",
-        description: "tagliatelle frische · trüffel · parmigiano",
-        priceLabel: "€24",
+        description: "tagliatelle frische Â· trÃ¼ffel Â· parmigiano",
+        priceLabel: "â‚¬24",
       },
       {
         title: "Tagliata di Manzo",
-        description: "rinderfilet · rucola · balsamico",
-        priceLabel: "€32",
+        description: "rinderfilet Â· rucola Â· balsamico",
+        priceLabel: "â‚¬32",
       },
       {
-        title: "Tiramisù",
-        description: "mascarpone · espresso · marsala",
-        priceLabel: "€9",
+        title: "TiramisÃ¹",
+        description: "mascarpone Â· espresso Â· marsala",
+        priceLabel: "â‚¬9",
       },
     ],
   },
@@ -611,3 +611,4 @@ export const restaurantPureSample: SampleData = {
   brandPrimaryHex: "#f9f7f2",
   brandAccentHex: "#1a1a1a",
 };
+

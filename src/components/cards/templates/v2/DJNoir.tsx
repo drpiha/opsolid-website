@@ -1,16 +1,16 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// DJNoir — v2 template (id=72, key="dj-noir").
+// DJNoir â€” v2 template (id=72, key="dj-noir").
 //
-// Sector: DJ / Music — NOIR variant. Mood: pitch-black underground club,
+// Sector: DJ / Music â€” NOIR variant. Mood: pitch-black underground club,
 // neon purple/cyan accents, animated EQ bars, Syne display + Space Mono.
 // Inspired by kart_06_dj_noir.html.
 //
 // Design DNA (different from default Studio.tsx and MusicProducer.tsx):
 //   - Pitch-black with neon-purple/pink radial glows.
 //   - REC // Live Set hero meta with blinking dot.
-//   - Mega Syne clamp(56-84px) name with second word in purple→pink gradient.
+//   - Mega Syne clamp(56-84px) name with second word in purpleâ†’pink gradient.
 //   - 18-bar animated SVG EQ frequency display below hero.
 //   - Compact profile row (84px gradient ring avatar + Resident//Producer cap).
 //   - 3-cell stat divider strip (years/events/listeners).
@@ -111,13 +111,13 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     yearsLabel: "Aktif",
     eventsLabel: "Etkinlik",
     listenersLabel: "Dinleyici",
-    genresH: "Türler",
-    upcomingH: "Yaklaşan",
+    genresH: "TÃ¼rler",
+    upcomingH: "YaklaÅŸan",
     bookingH: "Booking",
-    contactH: "İletişim",
+    contactH: "Ä°letiÅŸim",
     bookBtn: "Booking Talebi",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
   },
 };
@@ -299,7 +299,7 @@ export function DJNoir({
               width={78}
               height={78}
               unoptimized
-              className="block h-full w-full rounded-full object-cover"
+              className="block h-full w-full rounded-full object-cover tpl-photo"
               style={{ border: `2px solid ${SURFACE}` }}
             />
           ) : (
@@ -568,8 +568,8 @@ export function DJNoir({
         style={{ color: TEXT_DIM, letterSpacing: "2px" }}
       >
         <span style={{ color: accent }}>{"// "}</span>
-        © {new Date().getFullYear()} {cardData.name.toUpperCase()}
-        {cityFromAddress && ` · ${cityFromAddress.toUpperCase()}`}
+        Â© {new Date().getFullYear()} {cardData.name.toUpperCase()}
+        {cityFromAddress && ` Â· ${cityFromAddress.toUpperCase()}`}
         <span style={{ color: accent }}>{" //"}</span>
         <div className="mt-2" style={{ color: TEXT_DIM }}>
           {t.poweredBy}{" "}
@@ -613,7 +613,7 @@ export function DJNoir({
 export const djNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 72,
   key: "dj-noir",
-  name: "DJ — Noir",
+  name: "DJ â€” Noir",
   industry: "DJ / Underground club",
   supports: {
     services: true,
@@ -634,7 +634,7 @@ export const djNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-dj-noir",
 };
 
-// photo: Unsplash, DJ portrait. Unsplash License — free, no attribution required.
+// photo: Unsplash, DJ portrait. Unsplash License â€” free, no attribution required.
 export const djNoirSample: SampleData = {
   templateId: 72,
   slug: "demo-dj-noir",
@@ -647,7 +647,7 @@ export const djNoirSample: SampleData = {
     phone: "+49 178 445 1234",
     whatsapp: "+49 178 445 1234",
     website: "djkaya.de",
-    address: "Köpenicker Str. 70, 10179 Berlin",
+    address: "KÃ¶penicker Str. 70, 10179 Berlin",
     bio: "Techno & House DJ aus Berlin. Resident DJ im Tresor & Berghain Kantine. Booking: booking@djkaya.de",
     bookingUrl: "https://cal.com/djkaya/booking",
     brochureUrl: "https://djkaya.de/presskit.pdf",
@@ -663,17 +663,17 @@ export const djNoirSample: SampleData = {
       {
         title: "Club Night",
         description: "2-4h Set, full sound check.",
-        priceLabel: "ab €800",
+        priceLabel: "ab â‚¬800",
       },
       {
         title: "Festival Set",
         description: "60-120min main stage with rider.",
-        priceLabel: "ab €2.400",
+        priceLabel: "ab â‚¬2.400",
       },
       {
         title: "Private Event",
         description: "All-night set, custom playlist.",
-        priceLabel: "ab €1.200",
+        priceLabel: "ab â‚¬1.200",
       },
     ],
   },
@@ -683,3 +683,4 @@ export const djNoirSample: SampleData = {
   brandPrimaryHex: "#000000",
   brandAccentHex: "#a855f7",
 };
+

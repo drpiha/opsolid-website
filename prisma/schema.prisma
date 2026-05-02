@@ -18,6 +18,88 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// =============================================================================
+// AUTH (Faz 7.0a) — User accounts, sessions, magic-link tokens.
+//
+// Auth model is password-or-magic-link (either works). passwordHash is nullable
+// so magic-link-only signups don't carry a fake hash. Sessions store SHA-256 of
+// the actual session cookie value (never plaintext). MagicLinkToken is single-
+// use: usedAt set when consumed; expires after 15 min.
+//
+// CardOrder.userId is added below as a nullable FK with onDelete: SetNull, so
+// account deletion turns a user's cards into "orphan" cards (still publicly
+// viewable, no longer editable). A future "claim card" flow (B0.6) lets old
+// editToken-only cards be linked to a User account.
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// User — auth identity. Email is the unique handle (lowercased in app code
+// before insert). emailVerifiedAt is set when the user clicks a magic link,
+// so an unverified row may exist briefly between signup and first link click.
+// locale defaults to "de"; valid values mirror the i18n catalog: de | en | tr.
+// -----------------------------------------------------------------------------
+model User {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  emailVerifiedAt DateTime? @map("email_verified_at")
+  passwordHash    String?   @map("password_hash")
+  name            String?
+  locale          String    @default("de")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  sessions        Session[]
+  magicLinkTokens MagicLinkToken[]
+  cardOrders      CardOrder[]
+
+  @@index([email])
+  @@map("users")
+}
+
+// -----------------------------------------------------------------------------
+// Session — server-side session record. tokenHash is SHA-256 of the random
+// session token issued in the Set-Cookie. Plaintext token never persisted.
+// userAgent is truncated to ~255 chars in app code; ipHash is sha256(ip+salt)
+// for analytics, never raw IP. Sessions revoked by setting revokedAt; expired
+// sessions cleaned by retention cron.
+// -----------------------------------------------------------------------------
+model Session {
+  id        String    @id @default(cuid())
+  userId    String    @map("user_id")
+  tokenHash String    @unique @map("token_hash")
+  userAgent String?   @map("user_agent")
+  ipHash    String?   @map("ip_hash")
+  expiresAt DateTime  @map("expires_at")
+  revokedAt DateTime? @map("revoked_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("sessions")
+}
+
+// -----------------------------------------------------------------------------
+// MagicLinkToken — single-use email login token. tokenHash = sha256(token).
+// usedAt set when consumed; subsequent attempts to reuse must be rejected.
+// expiresAt typically createdAt + 15 min. Retention cron purges expired rows.
+// -----------------------------------------------------------------------------
+model MagicLinkToken {
+  id        String    @id @default(cuid())
+  userId    String    @map("user_id")
+  tokenHash String    @unique @map("token_hash")
+  expiresAt DateTime  @map("expires_at")
+  usedAt    DateTime? @map("used_at")
+  createdAt DateTime  @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([expiresAt])
+  @@map("magic_link_tokens")
+}
+
 // -----------------------------------------------------------------------------
 // CardTemplate — numbered catalog entry. Seeded via prisma/seed.ts from the
 // authoritative list in src/config/card-templates.ts. The config file is the
@@ -60,6 +142,13 @@ model CardOrder {
   orderNumber Int     @unique @default(autoincrement()) @map("order_number")
   slug        String? @unique
   templateId  Int     @map("template_id")
+
+  // Faz 7.0a — owner of the card. Nullable for legacy cards created before
+  // accounts existed (and pre-account self-serve orders). onDelete: SetNull
+  // so deleting an account turns the cards into "orphan" public cards rather
+  // than wiping the customer-facing page. A future "claim card" flow (B0.6)
+  // lets editToken-only cards be linked to a User.
+  userId String? @map("user_id")
 
   contactName  String  @map("contact_name")
   contactEmail String  @map("contact_email")
@@ -140,6 +229,7 @@ model CardOrder {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   template      CardTemplate         @relation(fields: [templateId], references: [id])
+  user          User?                @relation(fields: [userId], references: [id], onDelete: SetNull)
   subscription  Subscription?
   statusHistory OrderStatusHistory[]
   views         CardView[]
@@ -148,17 +238,24 @@ model CardOrder {
   scanEvents    ScanEvent[]
   webhooks      CardWebhook[]
 
-  /** Connections received: visitors who sent their own card via Smart Exchange. */
+  /**
+   * Connections received: visitors who sent their own card via Smart Exchange.
+   */
   ownerConnections   CardConnection[] @relation("OwnerConnections")
-  /** Connections sent: this card was used as the visitor on someone else's card. */
+  /**
+   * Connections sent: this card was used as the visitor on someone else's card.
+   */
   visitorConnections CardConnection[] @relation("VisitorConnections")
 
-  /** Album photos contributed to this card by owner or visitors. */
+  /**
+   * Album photos contributed to this card by owner or visitors.
+   */
   albumPhotos CardAlbumPhoto[]
 
   @@index([status])
   @@index([contactPhone])
   @@index([callMeBack, contactedAt])
+  @@index([userId])
   @@map("card_orders")
 }
 
@@ -199,6 +296,9 @@ model CardView {
   order CardOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
   @@index([orderId, createdAt])
+  // PII retention (Faz A8.3) — supports cron scan
+  // `WHERE createdAt < NOW() - INTERVAL '13 months'`.
+  @@index([createdAt])
   @@map("card_views")
 }
 
@@ -208,23 +308,23 @@ model CardView {
 // /[locale]/dashboard/cards/[editToken].
 // -----------------------------------------------------------------------------
 model CardLead {
-  id        String   @id @default(cuid())
-  orderId   String   @map("order_id")
-  name      String?
-  email     String?
-  phone     String?
-  message   String?
+  id      String  @id @default(cuid())
+  orderId String  @map("order_id")
+  name    String?
+  email   String?
+  phone   String?
+  message String?
 
   // Phase 6 — separate structured fields (previously concat'd into message)
-  interest        String?   // "Pricing", "Demo", "General"
-  meetingContext  String?   @map("meeting_context")  // "Hannover Messe 2026"
-  company         String?
+  interest       String? // "Pricing", "Demo", "General"
+  meetingContext String? @map("meeting_context") // "Hannover Messe 2026"
+  company        String?
 
   // Phase 6 — owner-side CRM fields
-  ownerNotes      String?   @db.Text @map("owner_notes")
+  ownerNotes      String?   @map("owner_notes") @db.Text
   tags            String[]  @default([])
-  status          String    @default("new")  // "new"|"contacted"|"qualified"|"archived"
-  priority        Int       @default(0)      // 0=normal, 1=high, 2=urgent
+  status          String    @default("new") // "new"|"contacted"|"qualified"|"archived"
+  priority        Int       @default(0) // 0=normal, 1=high, 2=urgent
   lastContactedAt DateTime? @map("last_contacted_at")
 
   createdAt DateTime @default(now()) @map("created_at")
@@ -233,6 +333,8 @@ model CardLead {
 
   @@index([orderId, createdAt])
   @@index([orderId, status])
+  // PII retention (Faz A8.3).
+  @@index([createdAt])
   @@map("card_leads")
 }
 
@@ -247,18 +349,18 @@ model CardLead {
 // can deep-link to a sub-page or external resource (rare; future feature).
 // -----------------------------------------------------------------------------
 model CardLink {
-  id              String   @id @default(cuid())
-  orderId         String   @map("order_id")
-  code            String   @unique
-  label           String?
-  source          String?
-  campaign        String?
-  medium          String?
-  eventName       String?  @map("event_name")
-  destinationUrl  String?  @map("destination_url")
-  active          Boolean  @default(true)
-  createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime @updatedAt @map("updated_at")
+  id             String   @id @default(cuid())
+  orderId        String   @map("order_id")
+  code           String   @unique
+  label          String?
+  source         String?
+  campaign       String?
+  medium         String?
+  eventName      String?  @map("event_name")
+  destinationUrl String?  @map("destination_url")
+  active         Boolean  @default(true)
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
 
   order      CardOrder   @relation(fields: [orderId], references: [id], onDelete: Cascade)
   scanEvents ScanEvent[]
@@ -294,6 +396,8 @@ model ScanEvent {
 
   @@index([orderId, createdAt])
   @@index([linkId, createdAt])
+  // PII retention (Faz A8.3).
+  @@index([createdAt])
   @@map("scan_events")
 }
 
@@ -305,31 +409,35 @@ model ScanEvent {
 //   new → accepted | archived
 // -----------------------------------------------------------------------------
 model CardConnection {
-  id              String   @id @default(cuid())
-  ownerCardId     String   @map("owner_card_id")
-  visitorCardId   String   @map("visitor_card_id")
-  source          String?
-  campaign        String?
-  eventName       String?  @map("event_name")
-  note            String?
-  status          String   @default("new")
+  id            String  @id @default(cuid())
+  ownerCardId   String  @map("owner_card_id")
+  visitorCardId String  @map("visitor_card_id")
+  source        String?
+  campaign      String?
+  eventName     String? @map("event_name")
+  note          String?
+  status        String  @default("new")
 
   // Phase 6 — owner-side CRM fields
-  tags            String[] @default([])
-  priority        Int      @default(0)
+  tags            String[]  @default([])
+  priority        Int       @default(0)
   lastContactedAt DateTime? @map("last_contacted_at")
 
-  createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   ownerCard   CardOrder @relation("OwnerConnections", fields: [ownerCardId], references: [id], onDelete: Cascade)
   visitorCard CardOrder @relation("VisitorConnections", fields: [visitorCardId], references: [id], onDelete: Cascade)
 
-  /** Album photos tagged as "with this connection". */
+  /**
+   * Album photos tagged as "with this connection".
+   */
   albumPhotos CardAlbumPhoto[]
 
   @@unique([ownerCardId, visitorCardId])
   @@index([ownerCardId, createdAt])
+  // PII retention (Faz A8.3).
+  @@index([createdAt])
   @@map("card_connections")
 }
 
@@ -342,20 +450,20 @@ model CardConnection {
 // uploaderIpHash: sha256(ip + salt) — abuse detection, raw IP saklanmaz.
 // -----------------------------------------------------------------------------
 model CardAlbumPhoto {
-  id              String   @id @default(cuid())
-  cardOrderId     String   @map("card_order_id")
-  uploaderType    String   @map("uploader_type") // "owner" | "visitor"
-  uploaderName    String?  @map("uploader_name")
-  uploaderIpHash  String?  @map("uploader_ip_hash")
-  photoPath       String   @map("photo_path")
-  caption         String?  @db.Text
-  connectionId    String?  @map("connection_id")
-  status          String   @default("PENDING")
-  createdAt       DateTime @default(now()) @map("created_at")
-  approvedAt      DateTime? @map("approved_at")
+  id             String    @id @default(cuid())
+  cardOrderId    String    @map("card_order_id")
+  uploaderType   String    @map("uploader_type") // "owner" | "visitor"
+  uploaderName   String?   @map("uploader_name")
+  uploaderIpHash String?   @map("uploader_ip_hash")
+  photoPath      String    @map("photo_path")
+  caption        String?   @db.Text
+  connectionId   String?   @map("connection_id")
+  status         String    @default("PENDING")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  approvedAt     DateTime? @map("approved_at")
 
-  cardOrder   CardOrder      @relation(fields: [cardOrderId], references: [id], onDelete: Cascade)
-  connection  CardConnection? @relation(fields: [connectionId], references: [id], onDelete: SetNull)
+  cardOrder  CardOrder       @relation(fields: [cardOrderId], references: [id], onDelete: Cascade)
+  connection CardConnection? @relation(fields: [connectionId], references: [id], onDelete: SetNull)
 
   @@index([cardOrderId, status])
   @@index([connectionId])
@@ -475,7 +583,7 @@ model VoiceTenant {
   createdAt           DateTime  @default(now()) @map("created_at")
   updatedAt           DateTime  @updatedAt @map("updated_at")
 
-  plan             VoiceBillingPlan?        @relation(fields: [planId], references: [id])
+  plan             VoiceBillingPlan?         @relation(fields: [planId], references: [id])
   agents           VoiceAgent[]
   phoneNumbers     VoicePhoneNumber[]
   businessHours    VoiceBusinessHours[]
@@ -523,7 +631,7 @@ model VoiceAgent {
   createdAt               DateTime  @default(now()) @map("created_at")
   updatedAt               DateTime  @updatedAt @map("updated_at")
 
-  tenant       VoiceTenant      @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  tenant       VoiceTenant        @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   phoneNumbers VoicePhoneNumber[]
   calls        VoiceCall[]
   testRuns     VoiceTestRun[]
@@ -552,8 +660,8 @@ model VoicePhoneNumber {
   createdAt       DateTime  @default(now()) @map("created_at")
   updatedAt       DateTime  @updatedAt @map("updated_at")
 
-  tenant VoiceTenant  @relation(fields: [tenantId], references: [id], onDelete: Cascade)
-  agent  VoiceAgent?  @relation(fields: [agentId], references: [id], onDelete: SetNull)
+  tenant VoiceTenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  agent  VoiceAgent? @relation(fields: [agentId], references: [id], onDelete: SetNull)
   calls  VoiceCall[]
 
   @@index([tenantId])
@@ -826,15 +934,15 @@ model VoiceUsageRecord {
 // providerCallId is set when the provider confirms the call was created.
 // -----------------------------------------------------------------------------
 model VoiceTestRun {
-  id             String    @id @default(cuid())
-  tenantId       String    @map("tenant_id")
-  agentId        String    @map("agent_id")
-  toNumber       String    @map("to_number")
-  providerCallId String?   @unique @map("provider_call_id")
-  status         String    @default("initiated")
-  notes          String?   @db.Text
-  createdAt      DateTime  @default(now()) @map("created_at")
-  updatedAt      DateTime  @updatedAt @map("updated_at")
+  id             String   @id @default(cuid())
+  tenantId       String   @map("tenant_id")
+  agentId        String   @map("agent_id")
+  toNumber       String   @map("to_number")
+  providerCallId String?  @unique @map("provider_call_id")
+  status         String   @default("initiated")
+  notes          String?  @db.Text
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
 
   tenant VoiceTenant @relation(fields: [tenantId], references: [id], onDelete: Cascade)
   agent  VoiceAgent  @relation(fields: [agentId], references: [id], onDelete: Cascade)
@@ -842,4 +950,3 @@ model VoiceTestRun {
   @@index([tenantId, createdAt])
   @@map("voice_test_runs")
 }
-

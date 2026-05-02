@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// LegalCounselNoir — v2 template (id=56, key="legal-counsel-noir").
+// LegalCounselNoir â€” v2 template (id=56, key="legal-counsel-noir").
 //
-// Sector: Lawyer / Rechtsanwalt — NOIR variant. Mood: editorial luxury,
+// Sector: Lawyer / Rechtsanwalt â€” NOIR variant. Mood: editorial luxury,
 // near-black surface, warm-gold pinstripe, Playfair Display serif italic.
 // Inspired by kart_02_avukat_noir.html.
 //
@@ -12,9 +12,9 @@
 //   - Header: "SINCE YEAR" cap label + firm tag, big two-line italic-serif
 //     name with gold last word, small uppercase title strip.
 //   - Centered gold rule between header and stats bar.
-//   - Stats bar: 3 cells (Years · Cases · Win-rate) with gold serif numerals
+//   - Stats bar: 3 cells (Years Â· Cases Â· Win-rate) with gold serif numerals
 //     + copper superscripts.
-//   - Practice areas: numbered list (I·II·III·IV·V) with gold left-rule cards.
+//   - Practice areas: numbered list (IÂ·IIÂ·IIIÂ·IVÂ·V) with gold left-rule cards.
 //   - Pull quote on a darker panel with oversized gold quote glyph.
 //   - Italic-serif slogan / firm motto strip.
 //   - Contact rows on near-black surface.
@@ -70,8 +70,8 @@ function getInitials(name: string): string {
     .trim()
     .split(/\s+/)
     .filter(Boolean);
-  if (parts.length === 0) return "·";
-  if (parts.length === 1) return (parts[0][0] ?? "·").toUpperCase();
+  if (parts.length === 0) return "Â·";
+  if (parts.length === 1) return (parts[0][0] ?? "Â·").toUpperCase();
   return (parts[0][0] ?? "").toUpperCase() + (parts[parts.length - 1][0] ?? "").toUpperCase();
 }
 
@@ -127,18 +127,18 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
   },
   tr: {
     sinceLabel: "2005'ten beri",
-    practiceEyebrow: "Uzmanlık",
-    practiceH: "Uzmanlık Alanları",
-    contactEyebrow: "İletişim",
-    contactH: "Bize Ulaşın",
+    practiceEyebrow: "UzmanlÄ±k",
+    practiceH: "UzmanlÄ±k AlanlarÄ±",
+    contactEyebrow: "Ä°letiÅŸim",
+    contactH: "Bize UlaÅŸÄ±n",
     callBtn: "Ara",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-posta",
-    yearsLabel: "Yıl",
+    yearsLabel: "YÄ±l",
     casesLabel: "Dava",
-    winRateLabel: "Başarı",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
+    winRateLabel: "BaÅŸarÄ±",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
   },
 };
@@ -216,7 +216,7 @@ export function LegalCounselNoir({
               width={64}
               height={64}
               unoptimized
-              className="h-16 w-16 flex-shrink-0 rounded-full object-cover"
+              className="h-16 w-16 flex-shrink-0 rounded-full object-cover tpl-photo"
               style={{
                 border: `1.5px solid ${accent}`,
                 boxShadow: "0 0 0 3px rgba(200,169,100,0.08)",
@@ -250,7 +250,7 @@ export function LegalCounselNoir({
               >
                 {cardData.company}
                 {cardData.address?.split(",").slice(-1)[0]?.trim()
-                  ? ` · ${cardData.address.split(",").slice(-1)[0]?.trim()}`
+                  ? ` Â· ${cardData.address.split(",").slice(-1)[0]?.trim()}`
                   : ""}
               </div>
             )}
@@ -276,7 +276,7 @@ export function LegalCounselNoir({
             className="text-[12.5px] font-light leading-snug"
             style={{ color: TEXT_SOFT, letterSpacing: "0.4px" }}
           >
-            {[cardData.position, cardData.title].filter(Boolean).join(" · ")}
+            {[cardData.position, cardData.title].filter(Boolean).join(" Â· ")}
           </div>
         )}
       </header>
@@ -327,7 +327,7 @@ export function LegalCounselNoir({
         )}
       </section>
 
-      {/* PRACTICE AREAS — numbered list */}
+      {/* PRACTICE AREAS â€” numbered list */}
       {services.length > 0 && (
         <section
           className="px-7 pb-9 pt-2"
@@ -397,7 +397,7 @@ export function LegalCounselNoir({
             className="serif block leading-[0.5]"
             style={{ color: accent, opacity: 0.5, fontSize: "64px", marginBottom: 4 }}
           >
-            {"“"}
+            {"â€œ"}
           </span>
           <p
             className="serif mx-auto mb-5 max-w-[360px] text-[19px] italic leading-[1.5]"
@@ -412,7 +412,7 @@ export function LegalCounselNoir({
             <span aria-hidden className="block h-px w-6" style={{ background: "rgba(200,169,100,0.6)" }} />
             <span>
               {testimonial.author}
-              {testimonial.role ? ` · ${testimonial.role}` : ""}
+              {testimonial.role ? ` Â· ${testimonial.role}` : ""}
             </span>
             <span aria-hidden className="block h-px w-6" style={{ background: "rgba(200,169,100,0.6)" }} />
           </div>
@@ -426,9 +426,9 @@ export function LegalCounselNoir({
             className="serif text-[17px] italic leading-[1.5]"
             style={{ color: accent, letterSpacing: "0.2px", fontWeight: 400 }}
           >
-            {"“"}
+            {"â€œ"}
             {cardData.bio}
-            {"”"}
+            {"â€"}
           </p>
         </div>
       )}
@@ -491,13 +491,13 @@ export function LegalCounselNoir({
       >
         <div className="serif mb-1 text-[13px] italic" style={{ color: accent }}>
           {cardData.name}
-          {cardData.company ? ` · ${cardData.company}` : ""}
+          {cardData.company ? ` Â· ${cardData.company}` : ""}
         </div>
         <div
           className="text-[10px]"
           style={{ color: TEXT_MUTED, letterSpacing: "1px" }}
         >
-          © {new Date().getFullYear()} · {t.poweredBy}{" "}
+          Â© {new Date().getFullYear()} Â· {t.poweredBy}{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"
@@ -618,7 +618,7 @@ function NoirAction({
 export const legalCounselNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 56,
   key: "legal-counsel-noir",
-  name: "Legal Counsel — Noir",
+  name: "Legal Counsel â€” Noir",
   industry: "Lawyer / Rechtsanwalt",
   supports: {
     services: true,
@@ -639,21 +639,21 @@ export const legalCounselNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-legal-counsel-noir",
 };
 
-// photo: Unsplash, lawyer portrait. Unsplash License — free, no attribution required.
+// photo: Unsplash, lawyer portrait. Unsplash License â€” free, no attribution required.
 export const legalCounselNoirSample: SampleData = {
   templateId: 56,
   slug: "demo-legal-counsel-noir",
   cardData: {
     name: "Dr. Klaus Bauer",
     position: "Rechtsanwalt",
-    title: "Fachanwalt für Strafrecht",
+    title: "Fachanwalt fÃ¼r Strafrecht",
     company: "Bauer & Partner",
     email: "bauer@bauer-partner.de",
     phone: "+49 30 555 7890",
     whatsapp: "+49 170 555 7890",
     website: "bauer-partner.de",
     address: "Unter den Linden 21, 10117 Berlin",
-    bio: "Zwei Jahrzehnte am Verhandlungstisch — Strafrecht, Familienrecht, Arbeitsrecht. Klare Sprache, kurze Briefe, lange Beziehungen.",
+    bio: "Zwei Jahrzehnte am Verhandlungstisch â€” Strafrecht, Familienrecht, Arbeitsrecht. Klare Sprache, kurze Briefe, lange Beziehungen.",
     bookingUrl: "https://cal.com/bauer-partner/intro",
     brochureUrl: "https://bauer-partner.de/profil.pdf",
     impressumUrl: "https://bauer-partner.de/impressum",
@@ -667,24 +667,24 @@ export const legalCounselNoirSample: SampleData = {
       {
         title: "Strafrecht",
         description: "Beratung und Vertretung in Ermittlungs- und Strafverfahren.",
-        priceLabel: "Erstberatung €200",
+        priceLabel: "Erstberatung â‚¬200",
       },
       {
         title: "Familienrecht",
-        description: "Scheidung, Sorgerecht, Unterhalt — diskret und lösungsorientiert.",
-        priceLabel: "ab €300/h",
+        description: "Scheidung, Sorgerecht, Unterhalt â€” diskret und lÃ¶sungsorientiert.",
+        priceLabel: "ab â‚¬300/h",
       },
       {
         title: "Arbeitsrecht",
-        description: "Kündigungsschutz, Aufhebungsverträge, Vergütungsstreitigkeiten.",
+        description: "KÃ¼ndigungsschutz, AufhebungsvertrÃ¤ge, VergÃ¼tungsstreitigkeiten.",
         priceLabel: "Erfolgshonorar",
       },
     ],
     testimonials: [
       {
         author: "Mehmet T.",
-        role: "Mandant — Strafverfahren",
-        quote: "Dr. Bauer hat ruhig, präzise und mit unfehlbarem Gespür für den richtigen Moment verhandelt.",
+        role: "Mandant â€” Strafverfahren",
+        quote: "Dr. Bauer hat ruhig, prÃ¤zise und mit unfehlbarem GespÃ¼r fÃ¼r den richtigen Moment verhandelt.",
       },
     ],
   },
@@ -694,3 +694,4 @@ export const legalCounselNoirSample: SampleData = {
   brandPrimaryHex: "#1a1a1a",
   brandAccentHex: "#c8a951",
 };
+

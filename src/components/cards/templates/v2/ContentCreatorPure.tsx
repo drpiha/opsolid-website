@@ -1,16 +1,16 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// ContentCreatorPure — v2 template (id=39, key="content-creator-pure").
+// ContentCreatorPure â€” v2 template (id=39, key="content-creator-pure").
 //
-// Sector: Influencer / content creator — PURE variant. Mood: editorial media-
+// Sector: Influencer / content creator â€” PURE variant. Mood: editorial media-
 // kit on white, DM Sans, large left-aligned name with brand-mark, hairline
 // stats table, clean collab card. Inspired by kart_16_icerik_uretici_pure.html.
 //
 // Locked design DNA (only colors respond to brand):
-//   - Header: brand-mark line ("MEDIA KIT — 2026"), large 28 px name beside
+//   - Header: brand-mark line ("MEDIA KIT â€” 2026"), large 28 px name beside
 //     64 px round avatar; channel-line callout shows total reach in primary.
-//   - Quick actions: 3-column equal grid (DM · Mail · Web), no rounding.
+//   - Quick actions: 3-column equal grid (DM Â· Mail Â· Web), no rounding.
 //   - Stats table: each platform a row with handle and big primary count
 //     right-aligned.
 //   - Categories chips.
@@ -100,14 +100,14 @@ interface CcpCopy {
 
 const COPY: Record<"de" | "en" | "tr", CcpCopy> = {
   de: {
-    mediaKit: "Media Kit · 2026",
+    mediaKit: "Media Kit Â· 2026",
     totalReach: "120K+ Reichweite",
-    channels: "Kanäle",
+    channels: "KanÃ¤le",
     contact: "Kontakt",
     about: "Profil",
     collab: "Kooperationen",
     collabBlurb:
-      "Wir arbeiten mit Marken, deren Werte wir teilen. Premium-Storytelling für Lifestyle-, Travel- und Wellness-Brands.",
+      "Wir arbeiten mit Marken, deren Werte wir teilen. Premium-Storytelling fÃ¼r Lifestyle-, Travel- und Wellness-Brands.",
     partner: "Jetzt anfragen",
     scheduleCall: "Anfrage senden",
     callMe: "Direkt anrufen",
@@ -123,7 +123,7 @@ const COPY: Record<"de" | "en" | "tr", CcpCopy> = {
     web: "Web",
   },
   en: {
-    mediaKit: "Media Kit · 2026",
+    mediaKit: "Media Kit Â· 2026",
     totalReach: "120K+ reach",
     channels: "Channels",
     contact: "Contact",
@@ -146,23 +146,23 @@ const COPY: Record<"de" | "en" | "tr", CcpCopy> = {
     web: "Web",
   },
   tr: {
-    mediaKit: "Media Kit · 2026",
-    totalReach: "120K+ Erişim",
+    mediaKit: "Media Kit Â· 2026",
+    totalReach: "120K+ EriÅŸim",
     channels: "Kanallar",
-    contact: "İletişim",
+    contact: "Ä°letiÅŸim",
     about: "Profil",
-    collab: "İş Birlikleri",
+    collab: "Ä°ÅŸ Birlikleri",
     collabBlurb:
-      "Değerlerini paylaştığım markalarla çalışıyorum. Lifestyle, travel ve wellness markaları için premium hikâye anlatımı.",
-    partner: "Şimdi Sor",
-    scheduleCall: "Talep Gönder",
+      "DeÄŸerlerini paylaÅŸtÄ±ÄŸÄ±m markalarla Ã§alÄ±ÅŸÄ±yorum. Lifestyle, travel ve wellness markalarÄ± iÃ§in premium hikÃ¢ye anlatÄ±mÄ±.",
+    partner: "Åžimdi Sor",
+    scheduleCall: "Talep GÃ¶nder",
     callMe: "Direkt Ara",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
-    share: "Paylaş",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
+    share: "PaylaÅŸ",
     poweredBy: "Powered by",
-    startingFrom: "başlangıç",
-    responseLabel: "Yanıt Süresi",
+    startingFrom: "baÅŸlangÄ±Ã§",
+    responseLabel: "YanÄ±t SÃ¼resi",
     categories: "Konular",
     dm: "DM",
     mail: "Mail",
@@ -199,7 +199,7 @@ export function ContentCreatorPure({
   const year = new Date().getFullYear();
 
   const minPriceLabel =
-    services.find((s) => s.priceLabel)?.priceLabel || "€450";
+    services.find((s) => s.priceLabel)?.priceLabel || "â‚¬450";
 
   return (
     <article
@@ -240,7 +240,7 @@ export function ContentCreatorPure({
                 width={120}
                 height={120}
                 unoptimized
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover tpl-photo"
               />
             ) : (
               <div
@@ -267,11 +267,11 @@ export function ContentCreatorPure({
           <strong style={{ color: accent, fontWeight: 600 }}>
             {t.totalReach}
           </strong>
-          {" "}· Lifestyle · Travel · Premium Brands
+          {" "}Â· Lifestyle Â· Travel Â· Premium Brands
         </p>
       </header>
 
-      {/* QUICK ACTIONS — 3-up flat */}
+      {/* QUICK ACTIONS â€” 3-up flat */}
       <section
         className="grid grid-cols-3"
         style={{ borderBottom: `1px solid ${HAIRLINE}` }}
@@ -303,7 +303,7 @@ export function ContentCreatorPure({
         )}
       </section>
 
-      {/* CHANNELS — stats table */}
+      {/* CHANNELS â€” stats table */}
       <section
         className="px-8 py-12"
         style={{ borderBottom: `1px solid ${HAIRLINE}` }}
@@ -514,7 +514,7 @@ export function ContentCreatorPure({
         className="flex items-center justify-between px-8 py-7 text-[10px] font-medium uppercase"
         style={{ color: INK_DIM, letterSpacing: "1.5px" }}
       >
-        <span>© {year}</span>
+        <span>Â© {year}</span>
         <span>{cardData.company || cardData.name}</span>
       </footer>
       <div
@@ -617,7 +617,7 @@ function PureAction({
 export const contentCreatorPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 39,
   key: "content-creator-pure",
-  name: "Content Creator — Pure",
+  name: "Content Creator â€” Pure",
   industry: "Influencer / content creator (editorial pure variant)",
   supports: {
     services: true,
@@ -642,10 +642,10 @@ export const contentCreatorPureSample: SampleData = {
   templateId: 39,
   slug: "demo-content-creator-pure",
   cardData: {
-    name: "Tuna Yılmaz",
+    name: "Tuna YÄ±lmaz",
     position: "Content Creator",
     title: "Lifestyle & Travel",
-    company: "Tuna Yılmaz Media",
+    company: "Tuna YÄ±lmaz Media",
     email: "tuna@tunayilmaz.de",
     phone: "+49 178 556 7890",
     whatsapp: "+49 178 556 7890",
@@ -655,10 +655,10 @@ export const contentCreatorPureSample: SampleData = {
     bookingUrl: "https://cal.com/tunayilmaz/booking",
     sectorKey: "creator",
     services: [
-      { title: "Instagram Post", priceLabel: "€450" },
-      { title: "TikTok Video", priceLabel: "€380" },
-      { title: "YouTube Integration", priceLabel: "€800" },
-      { title: "Story Series", priceLabel: "€250" },
+      { title: "Instagram Post", priceLabel: "â‚¬450" },
+      { title: "TikTok Video", priceLabel: "â‚¬380" },
+      { title: "YouTube Integration", priceLabel: "â‚¬800" },
+      { title: "Story Series", priceLabel: "â‚¬250" },
     ],
     socials: {
       instagram: "https://instagram.com/tunayilmaz",
@@ -672,3 +672,4 @@ export const contentCreatorPureSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

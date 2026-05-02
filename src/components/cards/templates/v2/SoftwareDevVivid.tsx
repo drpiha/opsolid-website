@@ -1,14 +1,14 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// SoftwareDevVivid — v2 template (id=36, key="software-dev-vivid").
+// SoftwareDevVivid â€” v2 template (id=36, key="software-dev-vivid").
 //
-// Sector: Software engineer — VIVID variant. Mood: bold purple/electric blue
+// Sector: Software engineer â€” VIVID variant. Mood: bold purple/electric blue
 // gradient hero, oversized Syne display name, mint-green availability accent,
 // floating white card overlap. Inspired by kart_15_yazilim_vivid.html.
 //
 // Locked design DNA (only colors respond to brand):
-//   - Hero: dark→purple→primary diagonal gradient with mint and purple radial
+//   - Hero: darkâ†’purpleâ†’primary diagonal gradient with mint and purple radial
 //     blob halos; Syne 42 px display name with mint accent on lastname; mono
 //     handle below; tagline.
 //   - Floating card (-80 px overlap) with avatar, gradient border ring, role,
@@ -73,8 +73,8 @@ function digitsOnly(value: string): string {
 
 function getInitials(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "•";
-  return (parts[0][0] ?? "•").toUpperCase() + (parts[parts.length - 1]?.[0] ?? "").toUpperCase();
+  if (parts.length === 0) return "â€¢";
+  return (parts[0][0] ?? "â€¢").toUpperCase() + (parts[parts.length - 1]?.[0] ?? "").toUpperCase();
 }
 
 interface SdvCopy {
@@ -103,13 +103,13 @@ interface SdvCopy {
 
 const COPY: Record<"de" | "en" | "tr", SdvCopy> = {
   de: {
-    available: "Verfügbar für neue Projekte",
+    available: "VerfÃ¼gbar fÃ¼r neue Projekte",
     hireMe: "Hire me",
     call: "Anrufen",
     whatsapp: "WhatsApp",
     email: "E-Mail",
-    scheduleCta: "Kostenloses Tech-Gespräch",
-    ctaSub: "30 Min · Online · Unverbindlich",
+    scheduleCta: "Kostenloses Tech-GesprÃ¤ch",
+    ctaSub: "30 Min Â· Online Â· Unverbindlich",
     stack: "Stack",
     services: "Services",
     contact: "Kontakt",
@@ -132,7 +132,7 @@ const COPY: Record<"de" | "en" | "tr", SdvCopy> = {
     whatsapp: "WhatsApp",
     email: "Email",
     scheduleCta: "Free tech intro call",
-    ctaSub: "30 min · online · no commitment",
+    ctaSub: "30 min Â· online Â· no commitment",
     stack: "Stack",
     services: "Services",
     contact: "Contact",
@@ -149,27 +149,27 @@ const COPY: Record<"de" | "en" | "tr", SdvCopy> = {
     tagline: "Web apps that scale. APIs that last.",
   },
   tr: {
-    available: "Yeni Projeler İçin Müsait",
-    hireMe: "İşe Al",
+    available: "Yeni Projeler Ä°Ã§in MÃ¼sait",
+    hireMe: "Ä°ÅŸe Al",
     call: "Ara",
     whatsapp: "WhatsApp",
     email: "E-posta",
-    scheduleCta: "Ücretsiz Teknoloji Görüşmesi",
-    ctaSub: "30 dk · Online · Bağlayıcı Değil",
+    scheduleCta: "Ãœcretsiz Teknoloji GÃ¶rÃ¼ÅŸmesi",
+    ctaSub: "30 dk Â· Online Â· BaÄŸlayÄ±cÄ± DeÄŸil",
     stack: "Stack",
     services: "Hizmetler",
-    contact: "İletişim",
+    contact: "Ä°letiÅŸim",
     social: "Sosyal",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
-    share: "Paylaş",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
+    share: "PaylaÅŸ",
     poweredBy: "Powered by",
-    yearsLabel: "Yıl",
+    yearsLabel: "YÄ±l",
     projectsLabel: "Proje",
-    clientsLabel: "Müşteri",
-    experience: "Tecrübe",
-    experienceVal: "7+ Yıl",
-    tagline: "Ölçeklenebilir web uygulamaları. Sağlam API'ler.",
+    clientsLabel: "MÃ¼ÅŸteri",
+    experience: "TecrÃ¼be",
+    experienceVal: "7+ YÄ±l",
+    tagline: "Ã–lÃ§eklenebilir web uygulamalarÄ±. SaÄŸlam API'ler.",
   },
 };
 
@@ -329,7 +329,7 @@ export function SoftwareDevVivid({
                 style={{ border: `3px solid ${SURFACE}` }}
               >
                 {photoUrl ? (
-                  <Image src={photoUrl} alt="" fill sizes="72px" unoptimized className="object-cover" />
+                  <Image src={photoUrl} alt="" fill sizes="72px" unoptimized className="object-cover tpl-photo" />
                 ) : (
                   <div
                     className="display flex h-full w-full items-center justify-center text-[24px] font-bold"
@@ -345,7 +345,7 @@ export function SoftwareDevVivid({
                 className="text-[12px] font-semibold uppercase"
                 style={{ color: primary, letterSpacing: "1.2px" }}
               >
-                {cardData.position?.split("·")[0]?.trim() || cardData.title || "Developer"}
+                {cardData.position?.split("Â·")[0]?.trim() || cardData.title || "Developer"}
               </div>
               <div
                 className="display text-[22px] font-bold leading-[1.15]"
@@ -355,7 +355,7 @@ export function SoftwareDevVivid({
               </div>
               <div className="mt-1 text-[12px]" style={{ color: INK_SOFT }}>
                 {t.experienceVal}
-                {cardData.address && ` · ${cardData.address.split(",").slice(-1)[0]?.trim()}`}
+                {cardData.address && ` Â· ${cardData.address.split(",").slice(-1)[0]?.trim()}`}
               </div>
             </div>
           </div>
@@ -436,7 +436,7 @@ export function SoftwareDevVivid({
         </div>
       </section>
 
-      {/* SERVICES — 2-col grid */}
+      {/* SERVICES â€” 2-col grid */}
       {services.length > 0 && (
         <section className="px-6 pt-7">
           <VividTitle primary={primary}>{t.services}</VividTitle>
@@ -574,7 +574,7 @@ export function SoftwareDevVivid({
           <span>{cardData.name}</span>
         </div>
         <div className="mt-2 text-[10.5px]" style={{ color: INK_SOFT }}>
-          © {year} · {t.poweredBy}{" "}
+          Â© {year} Â· {t.poweredBy}{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"
@@ -664,7 +664,7 @@ function VividAction({
 export const softwareDevVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 36,
   key: "software-dev-vivid",
-  name: "Software Dev — Vivid",
+  name: "Software Dev â€” Vivid",
   industry: "Software engineer / developer (vivid gradient variant)",
   supports: {
     services: true,
@@ -689,8 +689,8 @@ export const softwareDevVividSample: SampleData = {
   templateId: 36,
   slug: "demo-software-dev-vivid",
   cardData: {
-    name: "Ozan Çelik",
-    position: "Full-Stack · Cloud · DX",
+    name: "Ozan Ã‡elik",
+    position: "Full-Stack Â· Cloud Â· DX",
     title: "Senior Engineer",
     company: "Freelance",
     email: "ozan@ozancelik.dev",
@@ -702,9 +702,9 @@ export const softwareDevVividSample: SampleData = {
     bookingUrl: "https://cal.com/ozancelik/intro",
     sectorKey: "tech",
     services: [
-      { title: "Web App Development", description: "Next.js · React · TypeScript", priceLabel: "ab €4.800" },
-      { title: "API Integration", description: "REST · GraphQL · Stripe", priceLabel: "ab €1.200" },
-      { title: "Tech Consulting", description: "Architecture · code review", priceLabel: "€150/h" },
+      { title: "Web App Development", description: "Next.js Â· React Â· TypeScript", priceLabel: "ab â‚¬4.800" },
+      { title: "API Integration", description: "REST Â· GraphQL Â· Stripe", priceLabel: "ab â‚¬1.200" },
+      { title: "Tech Consulting", description: "Architecture Â· code review", priceLabel: "â‚¬150/h" },
     ],
     socials: {
       github: "https://github.com/ozancelik",
@@ -718,3 +718,4 @@ export const softwareDevVividSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

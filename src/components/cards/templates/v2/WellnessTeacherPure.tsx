@@ -1,19 +1,19 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// WellnessTeacherPure — v2 template (id=41, key="wellness-teacher-pure").
+// WellnessTeacherPure â€” v2 template (id=41, key="wellness-teacher-pure").
 //
-// Sector: Yoga teacher / wellness — PURE variant. Mood: white/cream zen
+// Sector: Yoga teacher / wellness â€” PURE variant. Mood: white/cream zen
 // minimalism, hairline rows, breath divider mark, soft sage accents.
 // Inspired by kart_17_yoga_pure.html.
 //
 // Locked design DNA (only colors respond to brand):
-//   - Header is centered: tiny "Breathe — Move — Be" caplabel between two
+//   - Header is centered: tiny "Breathe â€” Move â€” Be" caplabel between two
 //     hairlines, small round avatar, name in DM-Sans medium, credential pill,
 //     italic studio name.
 //   - Three-up icon action grid divided by hairlines.
-//   - Sections are vertical hairline lists: philosophy text · weekly schedule
-//     · pricing rows · contact rows.
+//   - Sections are vertical hairline lists: philosophy text Â· weekly schedule
+//     Â· pricing rows Â· contact rows.
 //   - Single big primary CTA at bottom.
 //   - QR section is referenced by the SendMyInfoSlot/Exchange wallet block.
 // =============================================================================
@@ -77,7 +77,7 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr", Copy> = {
   de: {
-    breathLine: "Breathe — Move — Be",
+    breathLine: "Breathe â€” Move â€” Be",
     certified: "RYT-500 Certified",
     callBtn: "Anrufen",
     whatsappBtn: "WhatsApp",
@@ -92,7 +92,7 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     poweredBy: "Powered by",
   },
   en: {
-    breathLine: "Breathe — Move — Be",
+    breathLine: "Breathe â€” Move â€” Be",
     certified: "RYT-500 Certified",
     callBtn: "Call",
     whatsappBtn: "WhatsApp",
@@ -107,25 +107,25 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    breathLine: "Nefes — Hareket — An",
-    certified: "RYT-500 Sertifikalı",
+    breathLine: "Nefes â€” Hareket â€” An",
+    certified: "RYT-500 SertifikalÄ±",
     callBtn: "Ara",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-posta",
     philosophy: "Felsefem",
-    weeklyProgram: "Haftalık Program",
+    weeklyProgram: "HaftalÄ±k Program",
     services: "Hizmetler",
-    contact: "İletişim",
+    contact: "Ä°letiÅŸim",
     bookCta: "Ders Rezervasyonu",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
   },
 };
 
 const SCHEDULE = [
   { day: { de: "Montag", en: "Monday", tr: "Pazartesi" }, klass: "Hatha Yoga", time: "19:00" },
-  { day: { de: "Mittwoch", en: "Wednesday", tr: "Çarşamba" }, klass: "Vinyasa Flow", time: "18:30" },
+  { day: { de: "Mittwoch", en: "Wednesday", tr: "Ã‡arÅŸamba" }, klass: "Vinyasa Flow", time: "18:30" },
   { day: { de: "Freitag", en: "Friday", tr: "Cuma" }, klass: "Restorative", time: "20:00" },
   { day: { de: "Samstag", en: "Saturday", tr: "Cumartesi" }, klass: "Morning Practice", time: "08:00" },
 ];
@@ -200,7 +200,7 @@ export function WellnessTeacherPure({
             style={{ border: `1px solid ${HAIRLINE}`, position: "relative" }}
           >
             {photoUrl ? (
-              <Image src={photoUrl} alt="" fill sizes="96px" unoptimized className="object-cover" />
+              <Image src={photoUrl} alt="" fill sizes="96px" unoptimized className="object-cover tpl-photo" />
             ) : (
               <div
                 className="flex h-full w-full items-center justify-center text-[24px]"
@@ -275,7 +275,7 @@ export function WellnessTeacherPure({
               className="serif mt-5 text-[16px] leading-[1.7]"
               style={{ color: INK }}
             >
-              “{cardData.bio}”
+              â€œ{cardData.bio}â€
             </p>
           </section>
         )}
@@ -404,7 +404,7 @@ export function WellnessTeacherPure({
           className="px-8 py-7 text-center text-[11px]"
           style={{ color: INK_SOFT, letterSpacing: "1px" }}
         >
-          © {year} {cardData.name} · {t.poweredBy}{" "}
+          Â© {year} {cardData.name} Â· {t.poweredBy}{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"
@@ -484,7 +484,7 @@ function ActionTile({
 export const wellnessTeacherPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 41,
   key: "wellness-teacher-pure",
-  name: "Wellness — Pure",
+  name: "Wellness â€” Pure",
   industry: "Yoga teacher / wellness coach (solo)",
   supports: {
     services: true,
@@ -505,13 +505,13 @@ export const wellnessTeacherPureEntry: Omit<TemplateRegistryEntry, "Component"> 
   sampleSlug: "demo-wellness-teacher-pure",
 };
 
-// photo: Unsplash, yoga teacher portrait. Unsplash License — free, no attribution required.
+// photo: Unsplash, yoga teacher portrait. Unsplash License â€” free, no attribution required.
 export const wellnessTeacherPureSample: SampleData = {
   templateId: 41,
   slug: "demo-wellness-teacher-pure",
   cardData: {
-    name: "Sera Özdoğan",
-    position: "Yoga-Lehrerin · Wellness Coach",
+    name: "Sera Ã–zdoÄŸan",
+    position: "Yoga-Lehrerin Â· Wellness Coach",
     title: "RYT 500",
     company: "Sera Yoga & Wellness",
     email: "sera@serayoga.de",
@@ -519,14 +519,14 @@ export const wellnessTeacherPureSample: SampleData = {
     whatsapp: "+49 176 223 4567",
     website: "serayoga.de",
     address: "Prenzlauer Berg, Berlin",
-    bio: "Yoga ist die Kunst, dem Atem treu zu bleiben und mit dem Körper im Einklang zu sein. Seit sechs Jahren begleite ich meine Schüler:innen auf dieser Reise.",
+    bio: "Yoga ist die Kunst, dem Atem treu zu bleiben und mit dem KÃ¶rper im Einklang zu sein. Seit sechs Jahren begleite ich meine SchÃ¼ler:innen auf dieser Reise.",
     bookingUrl: "https://cal.com/serayoga/intro",
     sectorKey: "fitness",
     services: [
-      { title: "Einzelstunde", description: "60 min · 1:1, individuell", priceLabel: "€80" },
-      { title: "Monatskurs", description: "4×/Woche · kleine Gruppe", priceLabel: "€160" },
-      { title: "Retreat", description: "3 Tage · Vollpension", priceLabel: "€480" },
-      { title: "Online-Session", description: "30 min · live", priceLabel: "€35" },
+      { title: "Einzelstunde", description: "60 min Â· 1:1, individuell", priceLabel: "â‚¬80" },
+      { title: "Monatskurs", description: "4Ã—/Woche Â· kleine Gruppe", priceLabel: "â‚¬160" },
+      { title: "Retreat", description: "3 Tage Â· Vollpension", priceLabel: "â‚¬480" },
+      { title: "Online-Session", description: "30 min Â· live", priceLabel: "â‚¬35" },
     ],
     socials: {
       instagram: "https://instagram.com/serayoga",
@@ -539,3 +539,4 @@ export const wellnessTeacherPureSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

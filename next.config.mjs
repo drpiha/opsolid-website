@@ -1,10 +1,60 @@
 import { withSentryConfig } from "@sentry/nextjs";
 
+// C3 — Security headers applied to all responses.
+// CSP is report-only for now (no block) so a misconfigured directive doesn't
+// break live cards; upgrade to enforce once the policy is validated in prod.
+const securityHeaders = [
+  {
+    key: "X-Frame-Options",
+    value: "SAMEORIGIN",
+  },
+  {
+    key: "X-Content-Type-Options",
+    value: "nosniff",
+  },
+  {
+    key: "Referrer-Policy",
+    value: "strict-origin-when-cross-origin",
+  },
+  {
+    key: "Permissions-Policy",
+    value: "camera=(), microphone=(), geolocation=()",
+  },
+  {
+    key: "Strict-Transport-Security",
+    value: "max-age=63072000; includeSubDomains; preload",
+  },
+  {
+    // Report-only CSP — change to Content-Security-Policy to enforce.
+    // Allows YouTube embeds (youtube.com, youtube-nocookie.com) and
+    // Vercel Analytics (va.vercel-scripts.com).
+    key: "Content-Security-Policy-Report-Only",
+    value: [
+      "default-src 'self'",
+      "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://va.vercel-scripts.com",
+      "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+      "font-src 'self' https://fonts.gstatic.com",
+      "img-src 'self' data: blob: https:",
+      "media-src 'self' https:",
+      "frame-src https://www.youtube.com https://www.youtube-nocookie.com",
+      "connect-src 'self' https://vitals.vercel-insights.com https://va.vercel-scripts.com",
+    ].join("; "),
+  },
+];
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   // Lean Docker image: only copies the runtime bundle, no node_modules.
   output: "standalone",
+  async headers() {
+    return [
+      {
+        source: "/(.*)",
+        headers: securityHeaders,
+      },
+    ];
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [

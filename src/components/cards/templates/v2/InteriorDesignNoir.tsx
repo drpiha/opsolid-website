@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// InteriorDesignNoir — v2 template (id=50, key="interior-design-noir").
+// InteriorDesignNoir â€” v2 template (id=50, key="interior-design-noir").
 //
-// Sector: Interior designer — NOIR variant. Mood: black / marble, editorial
+// Sector: Interior designer â€” NOIR variant. Mood: black / marble, editorial
 // luxury, magazine-style centered hero. Inspired by the noir layout in the
 // reference HTML set.
 //
@@ -85,24 +85,24 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr", Copy> = {
   de: {
-    eyebrow: "INTERIOR ATELIER · BERLIN",
+    eyebrow: "INTERIOR ATELIER Â· BERLIN",
     tagline:
-      "Räume, die langsam reifen. Materialien, die altern dürfen. Ein Atelier für ruhige, dauerhafte Wohnarchitektur.",
+      "RÃ¤ume, die langsam reifen. Materialien, die altern dÃ¼rfen. Ein Atelier fÃ¼r ruhige, dauerhafte Wohnarchitektur.",
     role: "Interior Designerin",
     callBtn: "Anrufen",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-Mail",
-    featuredH: "Ausgewählt",
-    featuredCaption: "Mitte Penthouse · 2026",
+    featuredH: "AusgewÃ¤hlt",
+    featuredCaption: "Mitte Penthouse Â· 2026",
     servicesH: "Atelier",
     contactH: "Kontakt",
-    cta: "Erstgespräch anfragen",
+    cta: "ErstgesprÃ¤ch anfragen",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
   },
   en: {
-    eyebrow: "INTERIOR ATELIER · BERLIN",
+    eyebrow: "INTERIOR ATELIER Â· BERLIN",
     tagline:
       "Rooms that age slowly. Materials allowed to grow older. A studio for quiet, durable residential architecture.",
     role: "Interior Designer",
@@ -110,7 +110,7 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
     featuredH: "Selected",
-    featuredCaption: "Mitte Penthouse · 2026",
+    featuredCaption: "Mitte Penthouse Â· 2026",
     servicesH: "Atelier",
     contactH: "Contact",
     cta: "Request a consultation",
@@ -119,20 +119,20 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    eyebrow: "INTERIOR ATELIER · BERLIN",
+    eyebrow: "INTERIOR ATELIER Â· BERLIN",
     tagline:
-      "Yavaş olgunlaşan mekânlar. Yaşlanmasına izin verilen malzemeler. Sessiz ve kalıcı bir konut mimarisi atölyesi.",
-    role: "İç Mimar",
+      "YavaÅŸ olgunlaÅŸan mekÃ¢nlar. YaÅŸlanmasÄ±na izin verilen malzemeler. Sessiz ve kalÄ±cÄ± bir konut mimarisi atÃ¶lyesi.",
+    role: "Ä°Ã§ Mimar",
     callBtn: "Ara",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-posta",
-    featuredH: "Seçilmiş",
-    featuredCaption: "Mitte Penthouse · 2026",
-    servicesH: "Atölye",
-    contactH: "İletişim",
-    cta: "Görüşme Talep Et",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
+    featuredH: "SeÃ§ilmiÅŸ",
+    featuredCaption: "Mitte Penthouse Â· 2026",
+    servicesH: "AtÃ¶lye",
+    contactH: "Ä°letiÅŸim",
+    cta: "GÃ¶rÃ¼ÅŸme Talep Et",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
   },
 };
@@ -257,7 +257,7 @@ export function InteriorDesignNoir({
           >
             <div className="relative h-full w-full overflow-hidden rounded-full">
               {photoUrl ? (
-                <Image src={photoUrl} alt="" fill sizes="64px" unoptimized className="object-cover" />
+                <Image src={photoUrl} alt="" fill sizes="64px" unoptimized className="object-cover tpl-photo" />
               ) : (
                 <div
                   className="serif flex h-full w-full items-center justify-center text-[18px]"
@@ -281,7 +281,7 @@ export function InteriorDesignNoir({
           </div>
         </section>
 
-        {/* QUICK ACTIONS — hairline strip */}
+        {/* QUICK ACTIONS â€” hairline strip */}
         <section
           className="grid grid-cols-3 text-center"
           style={{ borderBottom: `1px solid ${HAIRLINE}` }}
@@ -314,7 +314,7 @@ export function InteriorDesignNoir({
                 style={{ background: SURFACE_2 }}
               >
                 {photoUrl ? (
-                  <Image src={photoUrl} alt="" fill sizes="460px" unoptimized className="object-cover" />
+                  <Image src={photoUrl} alt="" fill sizes="460px" unoptimized className="object-cover tpl-photo" />
                 ) : null}
               </div>
               <div
@@ -446,7 +446,7 @@ export function InteriorDesignNoir({
             className="mt-2 text-[10px] uppercase"
             style={{ color: TEXT_MUTED, letterSpacing: "2px" }}
           >
-            © {year} · {t.poweredBy}{" "}
+            Â© {year} Â· {t.poweredBy}{" "}
             <a
               href="https://opsolid.de/products/digital-card"
               target="_blank"
@@ -526,7 +526,7 @@ function NoirAction({
 export const interiorDesignNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 50,
   key: "interior-design-noir",
-  name: "Interior — Noir",
+  name: "Interior â€” Noir",
   industry: "Interior designer / studio",
   supports: {
     services: true,
@@ -547,7 +547,7 @@ export const interiorDesignNoirEntry: Omit<TemplateRegistryEntry, "Component"> =
   sampleSlug: "demo-interior-design-noir",
 };
 
-// photo: Unsplash, modern interior. Unsplash License — free, no attribution required.
+// photo: Unsplash, modern interior. Unsplash License â€” free, no attribution required.
 export const interiorDesignNoirSample: SampleData = {
   templateId: 50,
   slug: "demo-interior-design-noir",
@@ -562,11 +562,11 @@ export const interiorDesignNoirSample: SampleData = {
     website: "elifdesign.de",
     address: "Mitte, Berlin",
     bio:
-      "Räume, die langsam reifen. Materialien, die altern dürfen. Ein Atelier für ruhige, dauerhafte Wohnarchitektur.",
+      "RÃ¤ume, die langsam reifen. Materialien, die altern dÃ¼rfen. Ein Atelier fÃ¼r ruhige, dauerhafte Wohnarchitektur.",
     bookingUrl: "https://cal.com/elifdesign/intro",
     sectorKey: "architecture",
     services: [
-      { title: "Mitte Penthouse", description: "Vollprojekt · 240 m² · Marmor · Eichenholz · Bronze.", priceLabel: undefined },
+      { title: "Mitte Penthouse", description: "Vollprojekt Â· 240 mÂ² Â· Marmor Â· Eichenholz Â· Bronze.", priceLabel: undefined },
       { title: "Residential" },
       { title: "Hospitality" },
       { title: "Office" },
@@ -584,3 +584,4 @@ export const interiorDesignNoirSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

@@ -1,20 +1,20 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// WellnessTeacherVivid — v2 template (id=42, key="wellness-teacher-vivid").
+// WellnessTeacherVivid â€” v2 template (id=42, key="wellness-teacher-vivid").
 //
-// Sector: Yoga teacher / wellness — VIVID variant. Mood: sunset gradient,
+// Sector: Yoga teacher / wellness â€” VIVID variant. Mood: sunset gradient,
 // energetic poppy emerald-style, white app cards, follower stats glow strip.
 // Inspired by kart_17_yoga_vivid.html. Default colors here use a vibrant
 // orange-amber (sunrise) palette so it visually contrasts with the sage
 // default and the white pure variant.
 //
 // Locked design DNA (only colors respond to brand):
-//   - Hero: tall gradient panel (primary→deep) with rounded radial glows,
+//   - Hero: tall gradient panel (primaryâ†’deep) with rounded radial glows,
 //     a "tag" pill, big bold name, role line and a mantra paragraph.
 //   - Profile strip floats over hero (-36 px) with avatar + white card chip.
-//   - 3 quick-action pills (Call · WhatsApp · Email).
-//   - Class categories: 2×2 grid of icon cards with rounded squircle wrap.
+//   - 3 quick-action pills (Call Â· WhatsApp Â· Email).
+//   - Class categories: 2Ã—2 grid of icon cards with rounded squircle wrap.
 //   - Service price cards: gradient row backgrounds.
 //   - Stats panel: gradient banner with three numbers.
 //   - Free trial CTA card at the end.
@@ -105,16 +105,16 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     tag: "Yoga & Wellness",
     role: "Zertifizierte RYT-500 Yoga-Lehrerin",
     mantra:
-      "Komm zurück in deinen Körper. Atme. Sei hier. Yoga beginnt genau in diesem Moment.",
+      "Komm zurÃ¼ck in deinen KÃ¶rper. Atme. Sei hier. Yoga beginnt genau in diesem Moment.",
     callBtn: "Anrufen",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-Mail",
     classCats: "Stundenkategorien",
     services: "Pakete",
     yearsLabel: "Jahre",
-    studentsLabel: "Schüler:innen",
+    studentsLabel: "SchÃ¼ler:innen",
     communityLabel: "Community",
-    trialBadge: "Für Anfänger:innen",
+    trialBadge: "FÃ¼r AnfÃ¤nger:innen",
     trialTitle: "Erste Stunde kostenlos",
     trialDesc:
       "Du beginnst gerade mit Yoga? Die erste Stunde geht aufs Haus. Kennenlernen, ausprobieren, entscheiden.",
@@ -149,26 +149,26 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
   },
   tr: {
     tag: "Yoga & Wellness",
-    role: "RYT-500 Sertifikalı Yoga Eğitmeni",
+    role: "RYT-500 SertifikalÄ± Yoga EÄŸitmeni",
     mantra:
-      "Bedenine geri dön. Nefesini dinle. Tam burada ol. Yoga yolculuğu burada başlıyor.",
+      "Bedenine geri dÃ¶n. Nefesini dinle. Tam burada ol. Yoga yolculuÄŸu burada baÅŸlÄ±yor.",
     callBtn: "Ara",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-posta",
     classCats: "Ders Kategorileri",
     services: "Paketler",
-    yearsLabel: "Yıl",
-    studentsLabel: "Öğrenci",
+    yearsLabel: "YÄ±l",
+    studentsLabel: "Ã–ÄŸrenci",
     communityLabel: "Topluluk",
-    trialBadge: "Yeni Başlayanlara",
-    trialTitle: "İlk Ders Ücretsiz",
+    trialBadge: "Yeni BaÅŸlayanlara",
+    trialTitle: "Ä°lk Ders Ãœcretsiz",
     trialDesc:
-      "Yoga yolculuğuna başlıyorsan ilk dersin bizden. Tanı, dene, karar ver.",
+      "Yoga yolculuÄŸuna baÅŸlÄ±yorsan ilk dersin bizden. TanÄ±, dene, karar ver.",
     trialBtn: "Hemen Rezervasyon",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
-    contact: "İletişim",
+    contact: "Ä°letiÅŸim",
   },
 };
 
@@ -256,7 +256,7 @@ export function WellnessTeacherVivid({
           >
             <Leaf size={12} strokeWidth={2} />
             {t.tag}
-            {cardData.address ? ` · ${cardData.address.split(",")[0]?.trim()}` : ""}
+            {cardData.address ? ` Â· ${cardData.address.split(",")[0]?.trim()}` : ""}
           </span>
           <h1
             className="mt-5 text-[30px] font-bold leading-[1.05] tracking-[-0.6px]"
@@ -273,7 +273,7 @@ export function WellnessTeacherVivid({
             className="mt-7 text-[14px] italic leading-[1.7]"
             style={{ color: "rgba(255,255,255,0.92)" }}
           >
-            “{cardData.bio || t.mantra}”
+            â€œ{cardData.bio || t.mantra}â€
           </p>
         </div>
       </header>
@@ -289,7 +289,7 @@ export function WellnessTeacherVivid({
           }}
         >
           {photoUrl ? (
-            <Image src={photoUrl} alt="" fill sizes="72px" unoptimized className="object-cover" />
+            <Image src={photoUrl} alt="" fill sizes="72px" unoptimized className="object-cover tpl-photo" />
           ) : (
             <div
               className="flex h-full w-full items-center justify-center text-[22px] font-bold"
@@ -310,10 +310,10 @@ export function WellnessTeacherVivid({
             className="text-[12px] font-semibold uppercase"
             style={{ color: primary, letterSpacing: "0.8px" }}
           >
-            {cardData.position?.split("·")[0]?.trim() || "Yoga Teacher"}
+            {cardData.position?.split("Â·")[0]?.trim() || "Yoga Teacher"}
           </div>
           <div className="mt-0.5 text-[13px]" style={{ color: INK_SOFT }}>
-            6 {t.yearsLabel} · 350+ {t.studentsLabel}
+            6 {t.yearsLabel} Â· 350+ {t.studentsLabel}
           </div>
         </div>
       </section>
@@ -528,7 +528,7 @@ export function WellnessTeacherVivid({
           {cardData.company || cardData.name}
         </div>
         <div className="mt-1">
-          © {year} · {t.poweredBy}{" "}
+          Â© {year} Â· {t.poweredBy}{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"
@@ -624,7 +624,7 @@ function Stat({ num, label, accent }: { num: string; label: string; accent: stri
 export const wellnessTeacherVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 42,
   key: "wellness-teacher-vivid",
-  name: "Wellness — Vivid",
+  name: "Wellness â€” Vivid",
   industry: "Yoga teacher / wellness coach (solo)",
   supports: {
     services: true,
@@ -645,13 +645,13 @@ export const wellnessTeacherVividEntry: Omit<TemplateRegistryEntry, "Component">
   sampleSlug: "demo-wellness-teacher-vivid",
 };
 
-// photo: Unsplash, yoga teacher portrait. Unsplash License — free, no attribution required.
+// photo: Unsplash, yoga teacher portrait. Unsplash License â€” free, no attribution required.
 export const wellnessTeacherVividSample: SampleData = {
   templateId: 42,
   slug: "demo-wellness-teacher-vivid",
   cardData: {
-    name: "Sera Özdoğan",
-    position: "Yoga-Lehrerin · Wellness Coach",
+    name: "Sera Ã–zdoÄŸan",
+    position: "Yoga-Lehrerin Â· Wellness Coach",
     title: "RYT-500 zertifiziert",
     company: "Sera Yoga & Wellness",
     email: "sera@serayoga.de",
@@ -659,13 +659,13 @@ export const wellnessTeacherVividSample: SampleData = {
     whatsapp: "+49 176 223 4567",
     website: "serayoga.de",
     address: "Friedrichshain, Berlin",
-    bio: "Atem, Bewegung, Achtsamkeit. Jede Stunde ist eine Einladung, kurz aus dem Lärm zu treten und in den eigenen Körper zurückzukehren.",
+    bio: "Atem, Bewegung, Achtsamkeit. Jede Stunde ist eine Einladung, kurz aus dem LÃ¤rm zu treten und in den eigenen KÃ¶rper zurÃ¼ckzukehren.",
     bookingUrl: "https://cal.com/serayoga/intro",
     sectorKey: "fitness",
     services: [
-      { title: "Einzelstunde", description: "60 min · 1:1, individuell", priceLabel: "€80" },
-      { title: "Monatskurs", description: "4×/Woche, kleine Gruppe", priceLabel: "€160" },
-      { title: "Retreat", description: "3 Tage · Vollpension", priceLabel: "€480" },
+      { title: "Einzelstunde", description: "60 min Â· 1:1, individuell", priceLabel: "â‚¬80" },
+      { title: "Monatskurs", description: "4Ã—/Woche, kleine Gruppe", priceLabel: "â‚¬160" },
+      { title: "Retreat", description: "3 Tage Â· Vollpension", priceLabel: "â‚¬480" },
     ],
     socials: {
       instagram: "https://instagram.com/serayoga",
@@ -679,3 +679,4 @@ export const wellnessTeacherVividSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

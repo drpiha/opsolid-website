@@ -1,20 +1,20 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// RealEstatePure — v2 template (id=53, key="real-estate-pure").
+// RealEstatePure â€” v2 template (id=53, key="real-estate-pure").
 //
-// Sector: real estate / broker — PURE variant. Mood: Swiss minimal, white
+// Sector: real estate / broker â€” PURE variant. Mood: Swiss minimal, white
 // canvas, hairline rules, DM Sans + Lora italic, grid-stats. Inspired by
-// kart_01_emlak_pure.html — re-implemented natively in React + Tailwind.
+// kart_01_emlak_pure.html â€” re-implemented natively in React + Tailwind.
 //
 // Design DNA (different from default RealEstate.tsx):
-//   - Header: tall portrait photo (92×110 px) on the left, big ultra-tight
+//   - Header: tall portrait photo (92Ã—110 px) on the left, big ultra-tight
 //     name on the right with a small gold eyebrow and italic Lora subtitle.
-//   - Meta row: 3 light hairlines (Year · Region · Lic.).
+//   - Meta row: 3 light hairlines (Year Â· Region Â· Lic.).
 //   - About: italic serif paragraph.
 //   - Slogan strip with hairlines top/bottom.
 //   - Specialisation list: line + label rows with bottom-hairlines.
-//   - Stats grid: 2×2 with hairline cell dividers.
+//   - Stats grid: 2Ã—2 with hairline cell dividers.
 //   - Testimonial section.
 //   - Contact: hairline list with right-aligned values.
 //   - Footer row: small QR placeholder + vCard CTA.
@@ -89,7 +89,7 @@ interface RepCopy {
 
 const COPY: Record<"de" | "en" | "tr", RepCopy> = {
   de: {
-    about: "Über mich",
+    about: "Ãœber mich",
     specialisation: "Spezialgebiete",
     serviceRange: "Leistungsspektrum",
     contact: "Kontakt",
@@ -102,7 +102,7 @@ const COPY: Record<"de" | "en" | "tr", RepCopy> = {
     privacy: "Datenschutz",
     share: "Teilen",
     yearsLabel: "Jahre Erfahrung",
-    closedLabel: "Abschlüsse",
+    closedLabel: "AbschlÃ¼sse",
     portfolioLabel: "Portfolio Volumen",
     satisfactionLabel: "Zufriedenheit",
     metaActive: "Aktiv",
@@ -137,27 +137,27 @@ const COPY: Record<"de" | "en" | "tr", RepCopy> = {
     metaLicValue: "DE",
   },
   tr: {
-    about: "Hakkımda",
-    specialisation: "Uzmanlık Alanları",
+    about: "HakkÄ±mda",
+    specialisation: "UzmanlÄ±k AlanlarÄ±",
     serviceRange: "Hizmet Yelpazesi",
-    contact: "İletişim",
-    contactReach: "Bana Ulaşın",
-    ref: "Müvekkil Yorumu",
+    contact: "Ä°letiÅŸim",
+    contactReach: "Bana UlaÅŸÄ±n",
+    ref: "MÃ¼vekkil Yorumu",
     saveContact: "Rehbere kaydet",
-    walletLabel: "Cüzdana ekle",
+    walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
-    impressum: "Künye",
+    impressum: "KÃ¼nye",
     privacy: "Gizlilik",
-    share: "Paylaş",
-    yearsLabel: "Yıl Deneyim",
-    closedLabel: "Tamamlanan Satış",
-    portfolioLabel: "Portföy Hacmi",
+    share: "PaylaÅŸ",
+    yearsLabel: "YÄ±l Deneyim",
+    closedLabel: "Tamamlanan SatÄ±ÅŸ",
+    portfolioLabel: "PortfÃ¶y Hacmi",
     satisfactionLabel: "Memnuniyet",
     metaActive: "Aktif",
     metaActiveValue: "2014",
-    metaRegion: "Bölge",
+    metaRegion: "BÃ¶lge",
     metaRegionValue: "Berlin",
-    metaLic: "Lisanslı",
+    metaLic: "LisanslÄ±",
     metaLicValue: "DE",
   },
 };
@@ -224,7 +224,7 @@ export function RealEstatePure({
               fill
               sizes="92px"
               unoptimized
-              className="object-cover"
+              className="object-cover tpl-photo"
               style={{ filter: "grayscale(20%) contrast(1.05)" }}
             />
           </div>
@@ -258,7 +258,7 @@ export function RealEstatePure({
             className="serif-italic mt-3.5 text-[13px]"
             style={{ color: INK_MUTED, lineHeight: 1.5 }}
           >
-            {[cardData.position, cardData.address?.split(",").slice(-1)[0]?.trim()].filter(Boolean).join(" — ")}
+            {[cardData.position, cardData.address?.split(",").slice(-1)[0]?.trim()].filter(Boolean).join(" â€” ")}
           </div>
         </div>
       </header>
@@ -348,14 +348,14 @@ export function RealEstatePure({
         </section>
       )}
 
-      {/* STATS GRID 2×2 */}
+      {/* STATS GRID 2Ã—2 */}
       <div
         className="grid grid-cols-2"
         style={{ borderTop: `1px solid ${HAIRLINE}` }}
       >
         <StatCell num="12" label={t.yearsLabel} primary={primary} divRight />
         <StatCell num="180+" label={t.closedLabel} primary={primary} />
-        <StatCell num="€2.4B" label={t.portfolioLabel} primary={primary} divRight last />
+        <StatCell num="â‚¬2.4B" label={t.portfolioLabel} primary={primary} divRight last />
         <StatCell num="98%" label={t.satisfactionLabel} primary={primary} last />
       </div>
 
@@ -374,7 +374,7 @@ export function RealEstatePure({
             style={{ color: primary, letterSpacing: "0.4px" }}
           >
             {reference.author}
-            {reference.role && <span style={{ color: INK_MUTED, fontWeight: 400 }}> — {reference.role}</span>}
+            {reference.role && <span style={{ color: INK_MUTED, fontWeight: 400 }}> â€” {reference.role}</span>}
           </div>
         </section>
       )}
@@ -395,7 +395,7 @@ export function RealEstatePure({
         <ExchangeSlot slug={slug} primary={primary} locale={locale} />
       </section>
 
-      {/* FOOTER ROW — vCard CTA */}
+      {/* FOOTER ROW â€” vCard CTA */}
       <div
         className="flex flex-col gap-4 px-8 py-8 sm:flex-row sm:items-center"
         style={{ borderTop: `1px solid ${HAIRLINE}` }}
@@ -461,13 +461,13 @@ export function RealEstatePure({
           style={{ color: primary, letterSpacing: "0.3px" }}
         >
           {cardData.name}
-          {cardData.company && ` — ${cardData.company}`}
+          {cardData.company && ` â€” ${cardData.company}`}
         </div>
         <div
           className="mt-1 text-[10.5px]"
           style={{ color: INK_MUTED, letterSpacing: "0.5px" }}
         >
-          © {year} · {t.poweredBy}{" "}
+          Â© {year} Â· {t.poweredBy}{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"
@@ -570,7 +570,7 @@ function StatCell({
 export const realEstatePureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 53,
   key: "real-estate-pure",
-  name: "Real Estate — Pure",
+  name: "Real Estate â€” Pure",
   industry: "Real estate agent / broker",
   supports: {
     services: true,
@@ -591,7 +591,7 @@ export const realEstatePureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-real-estate-pure",
 };
 
-// photo: Unsplash, by Christina Wocintechchat — Unsplash License, no attribution required.
+// photo: Unsplash, by Christina Wocintechchat â€” Unsplash License, no attribution required.
 export const realEstatePureSample: SampleData = {
   templateId: 53,
   slug: "demo-real-estate-pure",
@@ -604,8 +604,8 @@ export const realEstatePureSample: SampleData = {
     phone: "+49 30 1234 5678",
     whatsapp: "+49 170 1234 567",
     website: "walker-stein.de",
-    address: "Kurfürstendamm 188, 10707 Berlin",
-    bio: "A property's true value is measured in its owner's intention. Twelve years across Berlin's most prestigious districts — calm, accurate, long-horizon advice.",
+    address: "KurfÃ¼rstendamm 188, 10707 Berlin",
+    bio: "A property's true value is measured in its owner's intention. Twelve years across Berlin's most prestigious districts â€” calm, accurate, long-horizon advice.",
     bookingUrl: "https://cal.com/walker-stein/intro",
     brochureUrl: "https://walker-stein.de/portfolio.pdf",
     impressumUrl: "https://walker-stein.de/impressum",
@@ -616,11 +616,11 @@ export const realEstatePureSample: SampleData = {
       instagram: "https://instagram.com/walker.stein.berlin",
     },
     services: [
-      { title: "Charlottenburg Townhouse", priceLabel: "€2.85M" },
+      { title: "Charlottenburg Townhouse", priceLabel: "â‚¬2.85M" },
       { title: "Wannsee Waterfront Build", priceLabel: "FOR SALE" },
-      { title: "Mitte Penthouse", priceLabel: "€1.65M" },
-      { title: "Investment Advisory", priceLabel: "—" },
-      { title: "Property Valuation", priceLabel: "—" },
+      { title: "Mitte Penthouse", priceLabel: "â‚¬1.65M" },
+      { title: "Investment Advisory", priceLabel: "â€”" },
+      { title: "Property Valuation", priceLabel: "â€”" },
     ],
     testimonials: [
       {
@@ -636,3 +636,4 @@ export const realEstatePureSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

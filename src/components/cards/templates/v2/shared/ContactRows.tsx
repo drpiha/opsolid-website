@@ -216,7 +216,7 @@ function ContactRowDefault({
   // (Studio, MusicProducer, Developer, TechStartup) get legible contact rows
   // without each having to override every Tailwind class via rowClassName.
   const isDark = tone === "dark";
-  const labelClass = isDark ? "text-white/55" : "text-ink-400";
+  const labelClass = isDark ? "text-white/72" : "text-ink-400";
   const valueClass = isDark ? "text-white/90" : "text-ink";
   const hairlineBorder = isDark ? "border-white/10" : "border-black/8";
   const compactHover = isDark ? "hover:bg-white/[0.04]" : "hover:bg-black/[0.04]";

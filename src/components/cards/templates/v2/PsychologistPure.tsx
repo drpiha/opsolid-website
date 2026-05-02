@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// PsychologistPure — v2 template (id=26, key="psychologist-pure").
+// PsychologistPure â€” v2 template (id=26, key="psychologist-pure").
 //
-// Sector: psychologist — PURE variant. Mood: editorial cream + minimal,
+// Sector: psychologist â€” PURE variant. Mood: editorial cream + minimal,
 // hairline rules, DM Sans, two-tone tabular layouts. Inspired by
 // kart_12_psikolog_pure.html. Maximum whitespace, no decoration.
 //
@@ -103,20 +103,20 @@ const COPY: Record<"de" | "en" | "tr", PspCopy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    contact: "İletişim",
-    specialties: "Çalışma Alanları",
-    prices: "Seans Ücretleri",
-    education: "Eğitim & Sertifika",
-    approach: "Yaklaşım",
-    sessionMode: "Online + Yüz Yüze",
+    contact: "Ä°letiÅŸim",
+    specialties: "Ã‡alÄ±ÅŸma AlanlarÄ±",
+    prices: "Seans Ãœcretleri",
+    education: "EÄŸitim & Sertifika",
+    approach: "YaklaÅŸÄ±m",
+    sessionMode: "Online + YÃ¼z YÃ¼ze",
     bookSession: "Seans Randevusu Talep Et",
     callMe: "Telefonla Ara",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
-    experience: "Yıl Deneyim",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
+    experience: "YÄ±l Deneyim",
     sessions: "Seans",
     formats: "Format",
-    share: "Paylaş",
+    share: "PaylaÅŸ",
     poweredBy: "Powered by",
   },
 };
@@ -183,7 +183,7 @@ export function PsychologistPure({
           )}
         </h1>
         <div className="mt-2.5 text-[13.5px]" style={{ color: INK_SOFT }}>
-          {cardData.position} {cardData.title && `· ${cardData.title}`}
+          {cardData.position} {cardData.title && `Â· ${cardData.title}`}
         </div>
       </header>
 
@@ -197,7 +197,7 @@ export function PsychologistPure({
           style={{ background: HAIRLINE_SOFT, border: `2px solid ${primary}1a` }}
         >
           {photoUrl ? (
-            <Image src={photoUrl} alt="" width={120} height={120} unoptimized className="h-full w-full object-cover" />
+            <Image src={photoUrl} alt="" width={120} height={120} unoptimized className="h-full w-full object-cover tpl-photo" />
           ) : (
             <span className="text-[14px] font-bold" style={{ color: primary }}>
               {cardData.name.slice(0, 2).toUpperCase()}
@@ -209,7 +209,7 @@ export function PsychologistPure({
             {t.approach}
           </div>
           <div className="mt-0.5 text-[14px] font-medium" style={{ color: INK }}>
-            CBT · EMDR
+            CBT Â· EMDR
           </div>
         </div>
         <div
@@ -338,8 +338,8 @@ export function PsychologistPure({
             className="mt-5 flex items-center justify-between text-[10.5px] font-semibold uppercase tracking-[1.4px]"
             style={{ color: INK_SOFT }}
           >
-            <span>— {testimonials[0].author}</span>
-            <span style={{ color: primary }}>★★★★★</span>
+            <span>â€” {testimonials[0].author}</span>
+            <span style={{ color: primary }}>â˜…â˜…â˜…â˜…â˜…</span>
           </div>
         </div>
       )}
@@ -395,7 +395,7 @@ export function PsychologistPure({
         className="flex items-center justify-between px-10 py-7 text-[10px] font-semibold uppercase tracking-[1.5px]"
         style={{ color: INK_SOFT }}
       >
-        <span>© {new Date().getFullYear()}</span>
+        <span>Â© {new Date().getFullYear()}</span>
         <span>{cardData.company || cardData.name}</span>
       </footer>
       <div
@@ -456,7 +456,7 @@ function PspStat({ n, l, last }: { n: string; l: string; last?: boolean }) {
 export const psychologistPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 26,
   key: "psychologist-pure",
-  name: "Psychologist — Pure",
+  name: "Psychologist â€” Pure",
   industry: "Psychologist / therapist (editorial pure variant)",
   supports: {
     services: true,
@@ -487,24 +487,24 @@ export const psychologistPureSample: SampleData = {
     email: "aylin@psycho-berlin.de",
     website: "psycho-berlin.de",
     address: "Rosenthaler Str. 40, 10178 Berlin",
-    bio: "Ein Raum, in dem Sie ohne Bewertung gehört werden — und wir gemeinsam einen Weg finden, der zu Ihrem Leben passt.",
+    bio: "Ein Raum, in dem Sie ohne Bewertung gehÃ¶rt werden â€” und wir gemeinsam einen Weg finden, der zu Ihrem Leben passt.",
     services: [
-      { title: "Einzeltherapie", description: "60 Minuten · Praxis", priceLabel: "€120" },
-      { title: "Paartherapie", description: "90 Minuten · Praxis", priceLabel: "€160" },
-      { title: "Online-Beratung", description: "50 Minuten · Video", priceLabel: "€90" },
+      { title: "Einzeltherapie", description: "60 Minuten Â· Praxis", priceLabel: "â‚¬120" },
+      { title: "Paartherapie", description: "90 Minuten Â· Praxis", priceLabel: "â‚¬160" },
+      { title: "Online-Beratung", description: "50 Minuten Â· Video", priceLabel: "â‚¬90" },
     ],
     faqs: [
       { q: "Depression & Angst", a: "CBT-basierte Kurzzeittherapie" },
       { q: "Beziehungsberatung", a: "Paar und Familie" },
       { q: "Trauma & EMDR", a: "EMDR Level 2" },
-      { q: "Persönlichkeit", a: "Langfristige Therapie" },
-      { q: "Karriere", a: "Burnout und Übergänge" },
-      { q: "Klinische Psychologie M.Sc.", a: "Istanbul Universität · 2014 – 2016" },
-      { q: "EMDR Level 2 Training", a: "EMDR Europe Akkreditierung · 2019" },
-      { q: "CBT Sertifika Programmı", a: "Kognitive Verhaltenstherapie · 2017" },
+      { q: "PersÃ¶nlichkeit", a: "Langfristige Therapie" },
+      { q: "Karriere", a: "Burnout und ÃœbergÃ¤nge" },
+      { q: "Klinische Psychologie M.Sc.", a: "Istanbul UniversitÃ¤t Â· 2014 â€“ 2016" },
+      { q: "EMDR Level 2 Training", a: "EMDR Europe Akkreditierung Â· 2019" },
+      { q: "CBT Sertifika ProgrammÄ±", a: "Kognitive Verhaltenstherapie Â· 2017" },
     ],
     testimonials: [
-      { author: "Anonim Danışan", quote: "Aylin Hanım ile çalışmak hayatımı değiştirdi. Güvenli ve destekleyici bir ortam sunuyor." },
+      { author: "Anonim DanÄ±ÅŸan", quote: "Aylin HanÄ±m ile Ã§alÄ±ÅŸmak hayatÄ±mÄ± deÄŸiÅŸtirdi. GÃ¼venli ve destekleyici bir ortam sunuyor." },
     ],
     socials: { instagram: "https://instagram.com/guvenlialan.psikoloji" },
     sectorKey: "clinic",
@@ -514,3 +514,4 @@ export const psychologistPureSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

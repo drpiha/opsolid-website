@@ -26,6 +26,7 @@
 import crypto from "node:crypto";
 import { prisma } from "@/lib/prisma";
 import * as Sentry from "@sentry/nextjs";
+import { validateWebhookUrlCached } from "@/lib/webhook-validator";
 
 export type WebhookEvent = "lead.created" | "connection.created";
 
@@ -105,6 +106,25 @@ async function deliverOne(
 
   let status: number | null = null;
   try {
+    // SSRF guard with 5-min TTL cache. Validation can be flipped by DNS
+    // rebinding between registration and dispatch, so we re-check here even
+    // though the registration endpoint already validated. A rejection here
+    // is treated as a delivery failure (Sentry warning) — we do NOT want a
+    // poisoned subscription to silently succeed.
+    const guard = await validateWebhookUrlCached(sub.url);
+    if (!guard.ok) {
+      Sentry.captureMessage(
+        `webhook blocked by SSRF guard (${guard.reason}) for ${sub.url}`,
+        {
+          level: "warning",
+          tags: { surface: "webhook.delivery.blocked", event },
+          extra: { webhookId: sub.id, reason: guard.reason },
+        },
+      );
+      clearTimeout(timeout);
+      return;
+    }
+
     const res = await fetch(sub.url, {
       method: "POST",
       headers: {

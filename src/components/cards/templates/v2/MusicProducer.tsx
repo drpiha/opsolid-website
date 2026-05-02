@@ -361,7 +361,7 @@ export function MusicProducer({
 
       {cardData.bio && (
         <Section title={t.about} accent={accent}>
-          <p className="text-[14px] leading-[1.85] text-white/72">{cardData.bio}</p>
+          <p className="text-[14px] leading-[1.85] text-white/90">{cardData.bio}</p>
         </Section>
       )}
 
@@ -612,7 +612,7 @@ function Hero({
         )}
 
         {title && (
-          <p className="relative z-10 mt-2.5 text-[13px] font-medium text-white/70">
+          <p className="relative z-10 mt-2.5 text-[13px] font-medium text-white/90">
             {title}
           </p>
         )}

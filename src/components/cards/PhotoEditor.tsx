@@ -16,6 +16,7 @@
 
 import * as React from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import * as Sentry from "@sentry/nextjs";
 import * as Dialog from "@radix-ui/react-dialog";
 import { X, ZoomIn, ZoomOut, RotateCcw, Check } from "lucide-react";
 import type { ImagePosition } from "@/lib/validation";
@@ -59,6 +60,7 @@ export function PhotoEditor({
   const dragStartRef = useRef<{ x: number; y: number; px: number; py: number } | null>(
     null
   );
+  const pointerDownTimeRef = useRef<number>(0);
   const frameRef = useRef<HTMLDivElement | null>(null);
 
   // Re-seed when the modal opens so it always reflects the current saved value.
@@ -82,6 +84,7 @@ export function PhotoEditor({
   const onPointerDown = useCallback(
     (e: React.PointerEvent<HTMLDivElement>) => {
       e.preventDefault();
+      pointerDownTimeRef.current = Date.now();
       draggingRef.current = true;
       dragStartRef.current = {
         x: e.clientX,
@@ -89,7 +92,8 @@ export function PhotoEditor({
         px: position.x,
         py: position.y,
       };
-      (e.target as Element).setPointerCapture?.(e.pointerId);
+      // Capture so move/up fire even if pointer leaves the element (drag over edges).
+      (e.currentTarget as Element).setPointerCapture?.(e.pointerId);
     },
     [position]
   );
@@ -115,10 +119,71 @@ export function PhotoEditor({
     });
   }, []);
 
-  const onPointerUp = useCallback(() => {
-    draggingRef.current = false;
-    dragStartRef.current = null;
-  }, []);
+  const onPointerUp = useCallback(
+    (e: React.PointerEvent<HTMLDivElement>) => {
+      // H1 — release capture so subsequent events aren't routed here.
+      (e.currentTarget as Element).releasePointerCapture?.(e.pointerId);
+
+      const start = dragStartRef.current;
+      const tapDuration = Date.now() - pointerDownTimeRef.current;
+      // H2 — timestamp + distance threshold to distinguish tap vs drag.
+      const distance = start
+        ? Math.sqrt(
+            Math.pow(e.clientX - start.x, 2) + Math.pow(e.clientY - start.y, 2)
+          )
+        : Infinity;
+      const wasDrag = distance > 4;
+
+      // H3 — open-state guard: frameRef is non-null only while the dialog is mounted.
+      const isTap = !wasDrag && frameRef.current != null && start != null;
+
+      const breadcrumbData = {
+        pointerType: e.pointerType,           // "touch" | "mouse" | "pen"
+        tapDuration,
+        distance: Math.round(distance),
+        wasDrag,
+        hypothesis: "H1+H2+H3",               // all three guards are active
+        kind,
+      };
+
+      if (isTap) {
+        const rect = frameRef.current!.getBoundingClientRect();
+        const tapX = ((e.clientX - rect.left) / rect.width) * 100;
+        const tapY = ((e.clientY - rect.top) / rect.height) * 100;
+        setPosition((p) => ({
+          ...p,
+          x: Math.min(100, Math.max(0, tapX)),
+          y: Math.min(100, Math.max(0, tapY)),
+        }));
+
+        Sentry.addBreadcrumb({
+          category: "ui.tap-to-focus",
+          message: "applied",
+          level: "info",
+          data: breadcrumbData,
+        });
+
+        if (process.env.NODE_ENV !== "production") {
+          console.debug("[tap-to-focus] applied", breadcrumbData);
+        }
+      } else {
+        Sentry.addBreadcrumb({
+          category: "ui.tap-to-focus",
+          message: "aborted",
+          level: "info",
+          data: breadcrumbData,
+        });
+
+        if (process.env.NODE_ENV !== "production") {
+          console.debug("[tap-to-focus] aborted", breadcrumbData);
+        }
+      }
+
+      draggingRef.current = false;
+      dragStartRef.current = null;
+    },
+    [kind]
+  );
 
   const handleScale = (next: number) => {
     setPosition((p) => ({ ...p, scale: Math.min(4, Math.max(0.5, next)) }));

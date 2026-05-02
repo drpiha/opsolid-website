@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// SoftwareDevPure — v2 template (id=35, key="software-dev-pure").
+// SoftwareDevPure â€” v2 template (id=35, key="software-dev-pure").
 //
-// Sector: Software engineer — PURE variant. Mood: editorial whitespace, blue
+// Sector: Software engineer â€” PURE variant. Mood: editorial whitespace, blue
 // accent, JetBrains Mono labels, light surface, oversized hero name. Inspired
 // by kart_15_yazilim_pure.html.
 //
@@ -79,7 +79,7 @@ interface SdpCopy {
 
 const COPY: Record<"de" | "en" | "tr", SdpCopy> = {
   de: {
-    available: "Verfügbar",
+    available: "VerfÃ¼gbar",
     contact: "Kontakt",
     about: "Profil",
     stack: "Stack",
@@ -94,7 +94,7 @@ const COPY: Record<"de" | "en" | "tr", SdpCopy> = {
     projectsLabel: "Projekte",
     responseLabel: "Antwort",
     developer: "Developer",
-    remote: "Remote · Berlin",
+    remote: "Remote Â· Berlin",
   },
   en: {
     available: "Available",
@@ -112,25 +112,25 @@ const COPY: Record<"de" | "en" | "tr", SdpCopy> = {
     projectsLabel: "Projects",
     responseLabel: "Response",
     developer: "Developer",
-    remote: "Remote · Berlin",
+    remote: "Remote Â· Berlin",
   },
   tr: {
-    available: "Müsait",
-    contact: "İletişim",
+    available: "MÃ¼sait",
+    contact: "Ä°letiÅŸim",
     about: "Profil",
     stack: "Stack",
     services: "Hizmetler",
-    scheduleCall: "Görüşme Planla",
+    scheduleCall: "GÃ¶rÃ¼ÅŸme Planla",
     callMe: "Direkt Ara",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
-    share: "Paylaş",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
+    share: "PaylaÅŸ",
     poweredBy: "Powered by",
-    yearsLabel: "Yıl",
+    yearsLabel: "YÄ±l",
     projectsLabel: "Proje",
-    responseLabel: "Yanıt",
-    developer: "Geliştirici",
-    remote: "Remote · Berlin",
+    responseLabel: "YanÄ±t",
+    developer: "GeliÅŸtirici",
+    remote: "Remote Â· Berlin",
   },
 };
 
@@ -241,7 +241,7 @@ export function SoftwareDevPure({
               width={120}
               height={120}
               unoptimized
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover tpl-photo"
             />
           ) : (
             <span className="text-[14px] font-bold" style={{ color: accent }}>
@@ -415,7 +415,7 @@ export function SoftwareDevPure({
         className="mono flex items-center justify-between px-8 py-7 text-[10px] uppercase"
         style={{ color: INK_DIM, letterSpacing: "1.5px" }}
       >
-        <span>© {year}</span>
+        <span>Â© {year}</span>
         <span>{handle}</span>
       </footer>
       <div
@@ -505,7 +505,7 @@ function PureStat({
 export const softwareDevPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 35,
   key: "software-dev-pure",
-  name: "Software Dev — Pure",
+  name: "Software Dev â€” Pure",
   industry: "Software engineer / developer (editorial pure variant)",
   supports: {
     services: true,
@@ -530,9 +530,9 @@ export const softwareDevPureSample: SampleData = {
   templateId: 35,
   slug: "demo-software-dev-pure",
   cardData: {
-    name: "Ozan Çelik",
+    name: "Ozan Ã‡elik",
     position: "Full-Stack Engineer",
-    title: "React · Node · AWS",
+    title: "React Â· Node Â· AWS",
     company: "Freelance",
     email: "ozan@ozancelik.dev",
     phone: "+49 176 334 5678",
@@ -542,9 +542,9 @@ export const softwareDevPureSample: SampleData = {
     bookingUrl: "https://cal.com/ozancelik/intro",
     sectorKey: "tech",
     services: [
-      { title: "Web App Development", description: "Next.js · React · TypeScript", priceLabel: "ab €4.800" },
-      { title: "API Integration", description: "REST · GraphQL · Stripe", priceLabel: "ab €1.200" },
-      { title: "Tech Consulting", description: "Architecture · code review", priceLabel: "€150/h" },
+      { title: "Web App Development", description: "Next.js Â· React Â· TypeScript", priceLabel: "ab â‚¬4.800" },
+      { title: "API Integration", description: "REST Â· GraphQL Â· Stripe", priceLabel: "ab â‚¬1.200" },
+      { title: "Tech Consulting", description: "Architecture Â· code review", priceLabel: "â‚¬150/h" },
     ],
     socials: {
       github: "https://github.com/ozancelik",
@@ -558,3 +558,4 @@ export const softwareDevPureSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

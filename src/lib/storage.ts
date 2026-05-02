@@ -56,11 +56,20 @@ const MAX_BYTES = 5 * 1024 * 1024; // 5 MB per file (was 2 MB before premium upg
 export const STORAGE_LIMITS = {
   maxBytes: MAX_BYTES,
   maxBytesHuman: "5 MB",
-  /** Image MIME types accepted everywhere (photo, logo, gallery, AI QR). */
+  /**
+   * Image MIME types accepted by user-facing upload endpoints (photo, logo,
+   * gallery). SVG is intentionally absent — see Faz 6.7 / C1: SVG can carry
+   * inline `<script>` / `onload=` payloads that browsers execute when the
+   * asset is rendered through an `<img>` whose `src` resolves to an SVG, or
+   * when the file is opened in a new tab. Even with re-encoding via sharp we
+   * have no clean path to render a sanitized SVG without losing the vector
+   * benefits, so we drop the format entirely. Server-generated assets (AI QR
+   * PNG) bypass this gate by calling `putAsset` directly with their own
+   * trusted bytes.
+   */
   allowedImage: new Set([
     "image/jpeg",
     "image/png",
-    "image/svg+xml",
     "image/webp",
   ]),
 } as const;

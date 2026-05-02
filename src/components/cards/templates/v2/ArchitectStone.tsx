@@ -313,7 +313,7 @@ export function ArchitectStone({
               width={116}
               height={116}
               unoptimized
-              className="rounded-full object-cover"
+              className="rounded-full object-cover tpl-photo"
               style={{
                 width: 116,
                 height: 116,

@@ -14,7 +14,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { CardDataSchema, OrderStatus } from "@/lib/validation";
-import { buildVCard, vcardFilename } from "@/lib/vcard";
+import { buildVCard, buildVCard3, vcardFilename } from "@/lib/vcard";
 import { absoluteAssetUrl } from "@/lib/storage";
 import { getSiteUrl } from "@/lib/stripe";
 import {
@@ -81,7 +81,11 @@ export async function GET(
     }
   }
 
-  const vcard = buildVCard({
+  // A3 — ?v=3 requests vCard 3.0 for Android compatibility. SmartCard appends
+  // this when isAndroidUA() is true. All other clients get 4.0 (default).
+  const vcardVersion = url.searchParams.get("v");
+  const builder = vcardVersion === "3" ? buildVCard3 : buildVCard;
+  const vcard = builder({
     cardData,
     photoUrl: photoBytes ? undefined : photoUrl,
     photoBytes,
@@ -89,11 +93,22 @@ export async function GET(
     sourceLabel,
   });
 
+  // B2 — Apple devices (iPhone / iPad / iPod / Mac Safari) open a native
+  // contact sheet when Content-Disposition is `inline`. Android and desktop
+  // non-Safari browsers trigger a file download with `attachment`.
+  const ua = req.headers.get("user-agent") ?? "";
+  const isApple = /iphone|ipad|ipod|mac os/i.test(ua);
+  const disposition = isApple ? "inline" : "attachment";
+
   return new NextResponse(vcard, {
     status: 200,
     headers: {
-      "Content-Type": "text/x-vcard; charset=utf-8",
-      "Content-Disposition": `attachment; filename="${vcardFilename(cardData.name)}"`,
+      // B2 — text/vcard (RFC 6350 registered MIME) is required for iOS Safari
+      // to open the native Contacts sheet. text/x-vcard is a legacy alias that
+      // works on desktop but NOT on iOS — the OS ignores it and prompts a
+      // file download instead of opening Contacts.
+      "Content-Type": "text/vcard; charset=utf-8",
+      "Content-Disposition": `${disposition}; filename="${vcardFilename(cardData.name)}"`,
       // Short browser cache so a "Save Contact" tap doesn't re-render the file
       // each time, but new edits propagate fast (we re-read the order on
       // every request anyway — this is just network-level caching).

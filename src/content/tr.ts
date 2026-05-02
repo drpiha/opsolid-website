@@ -6,6 +6,14 @@
 import type { Content } from "./en";
 
 export const content: Content = {
+  consent: {
+    title: "Çerezler ve analitik",
+    body: "OpSolid'in nasıl kullanıldığını anlamak için minimal analitik kullanıyoruz. Pazarlama çerezi, profilleme yok. Tercihini istediğin zaman değiştirebilirsin.",
+    privacyLink: "Gizlilik politikamızı okuyun",
+    accept: "Kabul et",
+    reject: "Reddet",
+  },
+
   nav: {
     solutions: "Hizmetler",
     products: "Ürünler",
@@ -1850,6 +1858,19 @@ export const content: Content = {
         closeNote: "Notu kapat",
         addNote: "Not ekle",
         connectionNotePlaceholder: "Bu bağlantı hakkında not ekle…",
+        unsavedChanges: "Kaydedilmemiş değişiklikler",
+        allSaved: "Tümü kaydedildi",
+        revert: "Geri al",
+        untitledCard: "İsimsiz kart",
+        viewLive: "Canlıyı gör",
+        sectionPersonBrand: "Kişi & Marka",
+        sectionContact: "İletişim",
+        sectionContent: "İçerik",
+        sectionPublish: "Yayın & Durum",
+        adjustPhoto: "Fotoğrafı ayarla",
+        adjustLogo: "Logoyu ayarla",
+        expandSection: "Bölümü aç",
+        collapseSection: "Bölümü kapat",
         publicUrlLabel: "Herkese açık kartınız:",
         contactReadonlyLabel: "İletişim bilgileriniz (salt okunur)",
         contactReadonlyHint:
@@ -3808,6 +3829,10 @@ export const content: Content = {
       genericError: "Gönderilemedi. Daha sonra tekrar dene.",
       rateLimited: "Çok fazla gönderim. Daha sonra tekrar dene.",
     },
+    wallet: {
+      notConfigured:
+        "Wallet desteği yapılandırılıyor. Etkinleştirildiğinde Apple/Google Wallet butonları görünecek.",
+    },
     vcard: {
       label: "vCard'ı kaydet",
     },
@@ -3824,6 +3849,12 @@ export const content: Content = {
       emailSignature: "E-posta imzası",
       copy: "Kopyala",
       openCard: "Kartı aç",
+      shareButtonAriaLabel: "Kartı paylaş",
+    },
+    error: {
+      title: "Bu kart şu an açılamıyor",
+      body: "Kart verisi yüklenemedi. Birkaç saniye sonra yeniden dene.",
+      retry: "Yeniden dene",
     },
     owner: {
       banner:
@@ -3833,5 +3864,6 @@ export const content: Content = {
       previewLabel: "Önizleme modu",
       shareLabel: "Linki paylaş",
     },
+    languageSwitcher: "Dil",
   },
 } as const;

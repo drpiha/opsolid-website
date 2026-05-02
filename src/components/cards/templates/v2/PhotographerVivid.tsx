@@ -1,19 +1,19 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// PhotographerVivid — v2 template (id=66, key="photographer-vivid").
+// PhotographerVivid â€” v2 template (id=66, key="photographer-vivid").
 //
-// Sector: Creator / Photographer — VIVID variant. Mood: bold purple→indigo
+// Sector: Creator / Photographer â€” VIVID variant. Mood: bold purpleâ†’indigo
 // gradient, energetic social-media photographer, modern app feel.
 // Inspired by kart_04_fotograf_vivid.html.
 //
 // Design DNA:
-//   - Hero (220 px) with deep navy → indigo → violet gradient and
+//   - Hero (220 px) with deep navy â†’ indigo â†’ violet gradient and
 //     amber blob accents, status badge ("Available 2026") + city tag.
-//   - Floating card — squircle photo + bold name + role + chips row.
+//   - Floating card â€” squircle photo + bold name + role + chips row.
 //   - 3-up stat tiles (rounded card shadows).
 //   - Service / package cards in a 2-col grid with numbered tiles.
-//   - Big violet→amber CTA + 3-up mini links.
+//   - Big violetâ†’amber CTA + 3-up mini links.
 //   - Quote / review card on indigo gradient with amber quote glyph.
 //   - Social grid 4-up.
 //   - Gradient share / QR panel.
@@ -66,8 +66,8 @@ function digitsOnly(value: string): string {
 
 function getInitials(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "·";
-  if (parts.length === 1) return (parts[0][0] ?? "·").toUpperCase();
+  if (parts.length === 0) return "Â·";
+  if (parts.length === 1) return (parts[0][0] ?? "Â·").toUpperCase();
   return (parts[0][0] ?? "").toUpperCase() + (parts[parts.length - 1][0] ?? "").toUpperCase();
 }
 
@@ -93,10 +93,10 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr", Copy> = {
   de: {
-    badge: "Verfügbar 2026",
+    badge: "VerfÃ¼gbar 2026",
     recsTitle: "Meine",
     recsTitleAccent: "Pakete",
-    recsSub: "Auf jede Geschichte zugeschnitten — vom Porträt bis zur Hochzeit.",
+    recsSub: "Auf jede Geschichte zugeschnitten â€” vom PortrÃ¤t bis zur Hochzeit.",
     ctaBig: "Termin buchen",
     whatsappLabel: "WhatsApp",
     portfolioLabel: "Portfolio",
@@ -105,7 +105,7 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     shareSub: "Neue Shootings zuerst auf Instagram.",
     yearsLabel: "Jahre",
     shootsLabel: "Shootings",
-    countriesLabel: "Länder",
+    countriesLabel: "LÃ¤nder",
     reviewLabel: "Kunden-Review",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
@@ -115,7 +115,7 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     badge: "Available 2026",
     recsTitle: "My",
     recsTitleAccent: "Packages",
-    recsSub: "Tailored for every story — from portrait to wedding.",
+    recsSub: "Tailored for every story â€” from portrait to wedding.",
     ctaBig: "Book a session",
     whatsappLabel: "WhatsApp",
     portfolioLabel: "Portfolio",
@@ -131,22 +131,22 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    badge: "2026 Müsait",
-    recsTitle: "Çalışma",
+    badge: "2026 MÃ¼sait",
+    recsTitle: "Ã‡alÄ±ÅŸma",
     recsTitleAccent: "Paketleri",
-    recsSub: "Her hikayeye özel — portreden düğüne.",
+    recsSub: "Her hikayeye Ã¶zel â€” portreden dÃ¼ÄŸÃ¼ne.",
     ctaBig: "Randevu al",
     whatsappLabel: "WhatsApp",
-    portfolioLabel: "Portföy",
+    portfolioLabel: "PortfÃ¶y",
     directionsLabel: "Konum",
     shareTitle: "Beni takip et",
-    shareSub: "Yeni çekimleri önce Instagram'da.",
-    yearsLabel: "Yıl",
-    shootsLabel: "Çekim",
-    countriesLabel: "Ülke",
-    reviewLabel: "Müşteri Yorumu",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
+    shareSub: "Yeni Ã§ekimleri Ã¶nce Instagram'da.",
+    yearsLabel: "YÄ±l",
+    shootsLabel: "Ã‡ekim",
+    countriesLabel: "Ãœlke",
+    reviewLabel: "MÃ¼ÅŸteri Yorumu",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
   },
 };
@@ -257,7 +257,7 @@ export function PhotographerVivid({
               width={76}
               height={76}
               unoptimized
-              className="object-cover"
+              className="object-cover tpl-photo"
               style={{
                 width: 76,
                 height: 76,
@@ -422,7 +422,7 @@ export function PhotographerVivid({
         </div>
       </section>
 
-      {/* QUOTE PANEL — gradient on indigo */}
+      {/* QUOTE PANEL â€” gradient on indigo */}
       {cardData.bio && (
         <div
           className="relative mx-5 mt-6 overflow-hidden rounded-[20px] px-6 py-7 text-white"
@@ -556,7 +556,7 @@ export function PhotographerVivid({
         className="px-6 py-5 text-center text-[12px] font-semibold"
         style={{ color: TEXT_SOFT }}
       >
-        {cardData.name} © {new Date().getFullYear()} · {city} ·{" "}
+        {cardData.name} Â© {new Date().getFullYear()} Â· {city} Â·{" "}
         <a
           href="https://opsolid.de/products/digital-card"
           target="_blank"
@@ -671,7 +671,7 @@ function SocialTile({
 export const photographerVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 66,
   key: "photographer-vivid",
-  name: "Photographer — Vivid",
+  name: "Photographer â€” Vivid",
   industry: "Photographer / Social-media creator",
   supports: {
     services: true,
@@ -698,14 +698,14 @@ export const photographerVividSample: SampleData = {
   cardData: {
     name: "Lena Schwarz",
     position: "Fotografin / Videografin",
-    title: "Wedding · Portrait · Brand",
+    title: "Wedding Â· Portrait Â· Brand",
     company: "Lena Schwarz Studio",
     email: "lena@lenaschwarz.de",
     phone: "+49 176 889 0123",
     whatsapp: "+49 176 889 0123",
     website: "lenaschwarz.de",
-    address: "Mariannenstraße 7, 10999 Berlin",
-    bio: "Hochzeits- und Porträtfotografin aus Berlin. Natürliches Licht, echte Momente, zeitlose Bilder.",
+    address: "MariannenstraÃŸe 7, 10999 Berlin",
+    bio: "Hochzeits- und PortrÃ¤tfotografin aus Berlin. NatÃ¼rliches Licht, echte Momente, zeitlose Bilder.",
     bookingUrl: "https://cal.com/lena-schwarz/intro",
     brochureUrl: "https://lenaschwarz.de/portfolio.pdf",
     impressumUrl: "https://lenaschwarz.de/impressum",
@@ -718,23 +718,23 @@ export const photographerVividSample: SampleData = {
     services: [
       {
         title: "Hochzeit",
-        description: "ganzer tag · zwei fotografen",
-        priceLabel: "ab €2.800",
+        description: "ganzer tag Â· zwei fotografen",
+        priceLabel: "ab â‚¬2.800",
       },
       {
-        title: "Porträt",
-        description: "studio oder natürliches licht",
-        priceLabel: "€350 / 2h",
+        title: "PortrÃ¤t",
+        description: "studio oder natÃ¼rliches licht",
+        priceLabel: "â‚¬350 / 2h",
       },
       {
         title: "Produkt",
-        description: "kampagnen · lookbooks",
-        priceLabel: "ab €480",
+        description: "kampagnen Â· lookbooks",
+        priceLabel: "ab â‚¬480",
       },
       {
         title: "Branding",
-        description: "personal · creator content",
-        priceLabel: "ab €680",
+        description: "personal Â· creator content",
+        priceLabel: "ab â‚¬680",
       },
     ],
   },
@@ -744,3 +744,4 @@ export const photographerVividSample: SampleData = {
   brandPrimaryHex: "#7c3aed",
   brandAccentHex: "#a78bfa",
 };
+

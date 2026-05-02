@@ -1,19 +1,19 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// InteriorDesignVivid — v2 template (id=51, key="interior-design-vivid").
+// InteriorDesignVivid â€” v2 template (id=51, key="interior-design-vivid").
 //
-// Sector: Interior designer — VIVID variant. Mood: bold contemporary primary
+// Sector: Interior designer â€” VIVID variant. Mood: bold contemporary primary
 // (default electric blue) with white surfaces, large photo block, color
 // pops. Inspired by the vivid-architect / interior layouts.
 //
 // Locked design DNA (only colors respond to brand):
-//   - Hero: gradient panel (deep→primary→accent) with bold tag pill,
+//   - Hero: gradient panel (deepâ†’primaryâ†’accent) with bold tag pill,
 //     uppercase chunky name, role line, and 3 hero stats.
 //   - Profile strip floats over hero.
 //   - 3 quick action pills.
 //   - Featured project card: large photo with overlaid badge + caption.
-//   - Services grid: 2×2 cards with icons in primary-tinted squircle.
+//   - Services grid: 2Ã—2 cards with icons in primary-tinted squircle.
 //   - Process: timeline of 3 numbered nodes connected by accent rule.
 //   - CTA: gradient bold button.
 // =============================================================================
@@ -113,7 +113,7 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     yearsLabel: "Jahre",
     projectsLabel: "Projekte",
     awardsLabel: "Awards",
-    cta: "Erstgespräch buchen",
+    cta: "ErstgesprÃ¤ch buchen",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
@@ -145,21 +145,21 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     callBtn: "Ara",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-posta",
-    featuredH: "Güncel Proje",
-    featuredBadge: "Öne Çıkan",
+    featuredH: "GÃ¼ncel Proje",
+    featuredBadge: "Ã–ne Ã‡Ä±kan",
     servicesH: "Hizmetler",
-    processH: "Süreç",
+    processH: "SÃ¼reÃ§",
     step1: "Brief",
     step2: "Konsept",
     step3: "Uygulama",
-    yearsLabel: "Yıl",
+    yearsLabel: "YÄ±l",
     projectsLabel: "Proje",
-    awardsLabel: "Ödül",
-    cta: "Görüşme Talep Et",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
+    awardsLabel: "Ã–dÃ¼l",
+    cta: "GÃ¶rÃ¼ÅŸme Talep Et",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
-    contact: "İletişim",
+    contact: "Ä°letiÅŸim",
   },
 };
 
@@ -277,7 +277,7 @@ export function InteriorDesignVivid({
             }}
           >
             {photoUrl ? (
-              <Image src={photoUrl} alt="" fill sizes="72px" unoptimized className="object-cover" />
+              <Image src={photoUrl} alt="" fill sizes="72px" unoptimized className="object-cover tpl-photo" />
             ) : (
               <div
                 className="flex h-full w-full items-center justify-center text-[22px] font-extrabold"
@@ -298,7 +298,7 @@ export function InteriorDesignVivid({
               {cardData.company || "Interior Studio"}
             </div>
             <div className="mt-0.5 text-[13px]" style={{ color: INK_SOFT }}>
-              {cardData.title || "Wohn · Office · Hotel"}
+              {cardData.title || "Wohn Â· Office Â· Hotel"}
             </div>
           </div>
         </section>
@@ -339,7 +339,7 @@ export function InteriorDesignVivid({
             >
               <div className="relative h-[200px]">
                 {photoUrl ? (
-                  <Image src={photoUrl} alt="" fill sizes="460px" unoptimized className="object-cover" />
+                  <Image src={photoUrl} alt="" fill sizes="460px" unoptimized className="object-cover tpl-photo" />
                 ) : (
                   <div
                     className="h-full w-full"
@@ -449,7 +449,7 @@ export function InteriorDesignVivid({
                         color: INK,
                       }}
                     >
-                      {String(i + 1).padStart(2, "0")} · {step}
+                      {String(i + 1).padStart(2, "0")} Â· {step}
                     </span>
                   </li>
                 );
@@ -526,7 +526,7 @@ export function InteriorDesignVivid({
             {(cardData.company || cardData.name).toUpperCase()}
           </div>
           <div className="mt-1.5 text-[10.5px]" style={{ color: "rgba(255,255,255,0.55)" }}>
-            © {year} · {t.poweredBy}{" "}
+            Â© {year} Â· {t.poweredBy}{" "}
             <a
               href="https://opsolid.de/products/digital-card"
               target="_blank"
@@ -628,7 +628,7 @@ function Pill({
 export const interiorDesignVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 51,
   key: "interior-design-vivid",
-  name: "Interior — Vivid",
+  name: "Interior â€” Vivid",
   industry: "Interior designer / studio",
   supports: {
     services: true,
@@ -649,14 +649,14 @@ export const interiorDesignVividEntry: Omit<TemplateRegistryEntry, "Component"> 
   sampleSlug: "demo-interior-design-vivid",
 };
 
-// photo: Unsplash, modern interior. Unsplash License — free, no attribution required.
+// photo: Unsplash, modern interior. Unsplash License â€” free, no attribution required.
 export const interiorDesignVividSample: SampleData = {
   templateId: 51,
   slug: "demo-interior-design-vivid",
   cardData: {
     name: "Elif Yaman",
     position: "Interior Designerin",
-    title: "Wohn · Büro · Hotel",
+    title: "Wohn Â· BÃ¼ro Â· Hotel",
     company: "Elif Design Studio",
     email: "elif@elifdesign.de",
     phone: "+49 173 778 9012",
@@ -664,15 +664,15 @@ export const interiorDesignVividSample: SampleData = {
     website: "elifdesign.de",
     address: "Mitte, Berlin",
     bio:
-      "Mutige, zeitgenössische Interiors mit einer klaren Materialhaltung. Wir entwerfen Räume, die Haltung zeigen — ohne laut zu werden.",
+      "Mutige, zeitgenÃ¶ssische Interiors mit einer klaren Materialhaltung. Wir entwerfen RÃ¤ume, die Haltung zeigen â€” ohne laut zu werden.",
     bookingUrl: "https://cal.com/elifdesign/intro",
     sectorKey: "architecture",
     services: [
-      { title: "Mitte Penthouse", description: "240 m² · Marmor · Eiche · Bronze", priceLabel: "ab €18.000" },
-      { title: "Raumplanung", description: "Concept · Layout · Materialien" },
+      { title: "Mitte Penthouse", description: "240 mÂ² Â· Marmor Â· Eiche Â· Bronze", priceLabel: "ab â‚¬18.000" },
+      { title: "Raumplanung", description: "Concept Â· Layout Â· Materialien" },
       { title: "Vollprojekt", description: "Konzept bis Umsetzung" },
       { title: "Online-Beratung", description: "Strategie pro Stunde" },
-      { title: "Hospitality Design", description: "Hotellerie & Boutique-Cafés" },
+      { title: "Hospitality Design", description: "Hotellerie & Boutique-CafÃ©s" },
     ],
     socials: {
       instagram: "https://instagram.com/elifdesign.interior",
@@ -685,3 +685,4 @@ export const interiorDesignVividSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

@@ -1,14 +1,14 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// BeautySalonNoir — v2 template (id=29, key="beauty-salon-noir").
+// BeautySalonNoir â€” v2 template (id=29, key="beauty-salon-noir").
 //
-// Sector: beauty studio — NOIR variant. Mood: editorial dark, rose-gold + gold
+// Sector: beauty studio â€” NOIR variant. Mood: editorial dark, rose-gold + gold
 // accents on near-black surface, italic Cormorant serif name. Inspired by
 // kart_13_guzellik_noir.html.
 //
 // Locked design DNA (only colors respond to brand):
-//   - Centered header on dark canvas: gold marker line · STUDIO NAME · gold marker;
+//   - Centered header on dark canvas: gold marker line Â· STUDIO NAME Â· gold marker;
 //     Cormorant italic huge name with primary gradient on last name; pink neon
 //     "Premium Beauty Bar" pill below.
 //   - Avatar row: 64 px circle with gold/pink gradient ring; gold rating chip.
@@ -120,20 +120,20 @@ const COPY: Record<"de" | "en" | "tr", BsnCopy> = {
   },
   tr: {
     premiumBeautyBar: "Premium Beauty Bar",
-    contact: "İletişim",
+    contact: "Ä°letiÅŸim",
     contactSub: "Reach Out",
     menu: "Hizmetler",
     menuSub: "The Menu",
     studioPhilosophy: "Studio Philosophy",
     studioPhilosophyQuote: "Beauty is where the obvious ends and the extraordinary begins.",
     bookAppointment: "Randevu Al",
-    callStudio: "Stüdyoyu Ara",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
+    callStudio: "StÃ¼dyoyu Ara",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
     servicesLabel: "Hizmetler",
     reviewsLabel: "Yorum",
     studio: "Studio",
-    share: "Paylaş",
+    share: "PaylaÅŸ",
     poweredBy: "Powered by",
   },
 };
@@ -232,7 +232,7 @@ export function BeautySalonNoir({
           className="mt-4 text-[11px] font-semibold uppercase tracking-[2.5px]"
           style={{ color: INK_SOFT }}
         >
-          {cardData.position} {cardData.title && `· ${cardData.title}`}
+          {cardData.position} {cardData.title && `Â· ${cardData.title}`}
         </div>
         <span
           className="mt-5 inline-flex items-center gap-2 rounded-full px-4 py-2 text-[10.5px] font-bold uppercase tracking-[2px]"
@@ -267,7 +267,7 @@ export function BeautySalonNoir({
             style={{ border: `3px solid ${CARD}` }}
           >
             {photoUrl ? (
-              <Image src={photoUrl} alt="" width={140} height={140} unoptimized className="h-full w-full object-cover" />
+              <Image src={photoUrl} alt="" width={140} height={140} unoptimized className="h-full w-full object-cover tpl-photo" />
             ) : (
               <div className="flex h-full w-full items-center justify-center text-[14px] font-bold" style={{ background: PANEL, color: primary }}>
                 {cardData.name.slice(0, 2).toUpperCase()}
@@ -345,7 +345,7 @@ export function BeautySalonNoir({
         </BsnSection>
       )}
 
-      {/* STATS — driven by real data */}
+      {/* STATS â€” driven by real data */}
       {(() => {
         const statsItems = [
           ...(services.length ? [{ n: String(services.length), l: t.servicesLabel }] : []),
@@ -392,7 +392,7 @@ export function BeautySalonNoir({
           className="mt-5 text-[9.5px] font-bold uppercase tracking-[3px]"
           style={{ color: accent }}
         >
-          — {t.studioPhilosophy}
+          â€” {t.studioPhilosophy}
         </div>
       </section>
 
@@ -457,7 +457,7 @@ export function BeautySalonNoir({
         className="relative z-10 flex items-center justify-between px-8 py-7 text-[9.5px] font-bold uppercase tracking-[2px]"
         style={{ color: INK_SOFT }}
       >
-        <span style={{ color: primary }}>© MMXXVI</span>
+        <span style={{ color: primary }}>Â© MMXXVI</span>
         <span>{cardData.company}</span>
       </footer>
       <div
@@ -551,7 +551,7 @@ function BsnStat({
 export const beautySalonNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 29,
   key: "beauty-salon-noir",
-  name: "Beauty Salon — Noir",
+  name: "Beauty Salon â€” Noir",
   industry: "Beauty studio (editorial dark variant)",
   supports: {
     services: true,
@@ -582,17 +582,17 @@ export const beautySalonNoirSample: SampleData = {
     email: "buse@beautybybuse.de",
     website: "beautybybuse.de",
     address: "Friedrichstr. 67, 10117 Berlin",
-    bio: "7 yıl deneyim · 5.000+ memnun müşteri.",
+    bio: "7 yÄ±l deneyim Â· 5.000+ memnun mÃ¼ÅŸteri.",
     services: [
-      { title: "Microblading", description: "Kalıcı kaş tasarımı", priceLabel: "€280" },
-      { title: "Eyeliner", description: "Kalıcı makyaj", priceLabel: "€220" },
-      { title: "Lash Lift & Tint", description: "Kirpik bakımı", priceLabel: "€65" },
-      { title: "Hidrafacial", description: "Cilt protokolu", priceLabel: "€85" },
+      { title: "Microblading", description: "KalÄ±cÄ± kaÅŸ tasarÄ±mÄ±", priceLabel: "â‚¬280" },
+      { title: "Eyeliner", description: "KalÄ±cÄ± makyaj", priceLabel: "â‚¬220" },
+      { title: "Lash Lift & Tint", description: "Kirpik bakÄ±mÄ±", priceLabel: "â‚¬65" },
+      { title: "Hidrafacial", description: "Cilt protokolu", priceLabel: "â‚¬85" },
       { title: "Lazer Epilasyon", description: "Diode paketleri", priceLabel: "Paket" },
-      { title: "Kaş Laminasyonu", description: "Brow lift", priceLabel: "€55" },
+      { title: "KaÅŸ Laminasyonu", description: "Brow lift", priceLabel: "â‚¬55" },
     ],
     testimonials: [
-      { author: "Selin K.", quote: "Microblading sonucu inanılmaz doğal duruyor." },
+      { author: "Selin K.", quote: "Microblading sonucu inanÄ±lmaz doÄŸal duruyor." },
     ],
     socials: {
       instagram: "https://instagram.com/beautybybuse",
@@ -605,3 +605,4 @@ export const beautySalonNoirSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+

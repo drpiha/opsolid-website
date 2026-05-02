@@ -1,9 +1,9 @@
-"use client";
+﻿"use client";
 
 // =============================================================================
-// BarberStone — v2 template (id=79, key="barber-stone").
+// BarberStone â€” v2 template (id=79, key="barber-stone").
 //
-// Sector: Barber / Men's grooming — STONE variant. Mood: heritage / nostalgic
+// Sector: Barber / Men's grooming â€” STONE variant. Mood: heritage / nostalgic
 // barbershop, warm cream + mahogany, Playfair Display + Nunito sans.
 // Inspired by kart_07_berber_stone.html.
 //
@@ -11,10 +11,10 @@
 //   - Warm cream gradient header with stamped pill eyebrow + tracked uppercase
 //     subtitle + Playfair shop name + italic est. line.
 //   - SVG wave divider into card surface.
-//   - 140 px circular mahogany→gold-warm avatar with sepia photo.
+//   - 140 px circular mahoganyâ†’gold-warm avatar with sepia photo.
 //   - Centred Playfair name with italic accent + ornament rule.
 //   - Cards on rounded panels with mahogany borders and warm shadows.
-//   - Vintage double-bordered price list with ☘ ornament caps.
+//   - Vintage double-bordered price list with â˜˜ ornament caps.
 //   - Quote block on linen gradient with oversized faded quote-mark.
 //   - Pill-shaped mahogany primary CTA and cream-line ghost row.
 // =============================================================================
@@ -83,23 +83,23 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr", Copy> = {
   de: {
-    stamp: "Heritage · Handwerk · Tradition",
+    stamp: "Heritage Â· Handwerk Â· Tradition",
     prefix: "Klassische Herrenpflege",
     estPrefix: "Est.",
     taglineFallback: "Master Barber & Stylist",
     philoLabel: "Atelier Philosophie",
     philoSub: "Jedes Detail verdient seine Zeit",
     servicesH: "Leistungsliste",
-    servicesSub: "Stets ausgewogen, stets sorgfältig",
+    servicesSub: "Stets ausgewogen, stets sorgfÃ¤ltig",
     craftH: "Handwerk",
-    craftSub: "Was im Atelier zählt",
+    craftSub: "Was im Atelier zÃ¤hlt",
     bookBtn: "Termin reservieren",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
   },
   en: {
-    stamp: "Heritage · Craft · Tradition",
+    stamp: "Heritage Â· Craft Â· Tradition",
     prefix: "Classic Men's Grooming",
     estPrefix: "Est.",
     taglineFallback: "Master Barber & Stylist",
@@ -115,19 +115,19 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    stamp: "Heritage · Zanaat · Gelenek",
-    prefix: "Klasik Erkek Bakımı",
+    stamp: "Heritage Â· Zanaat Â· Gelenek",
+    prefix: "Klasik Erkek BakÄ±mÄ±",
     estPrefix: "Est.",
     taglineFallback: "Master Berber & Stylist",
     philoLabel: "Atelye Felsefesi",
-    philoSub: "Her detay, hak ettiği özeni ister",
+    philoSub: "Her detay, hak ettiÄŸi Ã¶zeni ister",
     servicesH: "Hizmet Listesi",
-    servicesSub: "Her zaman dengeli, her zaman özenli",
-    craftH: "Zanaatım",
-    craftSub: "Atelyenin uzmanlık alanları",
+    servicesSub: "Her zaman dengeli, her zaman Ã¶zenli",
+    craftH: "ZanaatÄ±m",
+    craftSub: "Atelyenin uzmanlÄ±k alanlarÄ±",
     bookBtn: "Randevu Al",
-    saveContact: "Kişiyi Kaydet",
-    walletLabel: "Cüzdana ekle",
+    saveContact: "KiÅŸiyi Kaydet",
+    walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
   },
 };
@@ -223,8 +223,8 @@ export function BarberStone({
           className="serif italic"
           style={{ fontSize: 13, color: GOLD_WARM, marginBottom: 24 }}
         >
-          — {t.estPrefix} {new Date().getFullYear() - 14}
-          {cityFromAddress ? ` · ${cityFromAddress}` : ""} —
+          â€” {t.estPrefix} {new Date().getFullYear() - 14}
+          {cityFromAddress ? ` Â· ${cityFromAddress}` : ""} â€”
         </div>
       </header>
 
@@ -264,7 +264,7 @@ export function BarberStone({
               width={130}
               height={130}
               unoptimized
-              className="block h-full w-full rounded-full object-cover"
+              className="block h-full w-full rounded-full object-cover tpl-photo"
               style={{
                 border: `4px solid ${SURFACE}`,
                 filter: "sepia(0.18) saturate(0.9) contrast(1.05)",
@@ -317,7 +317,7 @@ export function BarberStone({
           style={{ color: GOLD_WARM, fontSize: 14 }}
         >
           <span style={{ width: 40, height: 1, background: GOLD_WARM, opacity: 0.4 }} />
-          ✿
+          âœ¿
           <span style={{ width: 40, height: 1, background: GOLD_WARM, opacity: 0.4 }} />
         </div>
       </section>
@@ -404,7 +404,7 @@ export function BarberStone({
                 fontSize: 16,
               }}
             >
-              ☘
+              â˜˜
             </span>
             <span
               aria-hidden
@@ -419,7 +419,7 @@ export function BarberStone({
                 fontSize: 16,
               }}
             >
-              ☘
+              â˜˜
             </span>
             {services.map((svc, i) => {
               const featured = i === services.length - 1 && services.length > 2;
@@ -501,7 +501,7 @@ export function BarberStone({
               fontWeight: 700,
             }}
           >
-            “
+            â€œ
           </span>
           <p
             className="serif italic relative"
@@ -524,7 +524,7 @@ export function BarberStone({
               color: MAHOG,
             }}
           >
-            — {cardData.name}
+            â€” {cardData.name}
           </cite>
         </div>
       )}
@@ -623,8 +623,8 @@ export function BarberStone({
         className="serif italic px-6 pt-5 pb-7 text-center"
         style={{ fontSize: 12, color: MAHOG_SOFT }}
       >
-        — {cardData.company || cardData.name} · {new Date().getFullYear()}
-        {cityFromAddress ? ` · ${cityFromAddress}` : ""} —
+        â€” {cardData.company || cardData.name} Â· {new Date().getFullYear()}
+        {cityFromAddress ? ` Â· ${cityFromAddress}` : ""} â€”
         <div className="mt-2" style={{ color: MUTED }}>
           {t.poweredBy}{" "}
           <a
@@ -648,7 +648,7 @@ export function BarberStone({
 export const barberStoneEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 79,
   key: "barber-stone",
-  name: "Barber — Stone",
+  name: "Barber â€” Stone",
   industry: "Barber / Heritage classic barbershop",
   supports: {
     services: true,
@@ -669,7 +669,7 @@ export const barberStoneEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-barber-stone",
 };
 
-// photo: Unsplash, https://unsplash.com/photos/jqe5lY4ROMQ — Free, no attribution required.
+// photo: Unsplash, https://unsplash.com/photos/jqe5lY4ROMQ â€” Free, no attribution required.
 export const barberStoneSample: SampleData = {
   templateId: 79,
   slug: "demo-barber-stone",
@@ -682,8 +682,8 @@ export const barberStoneSample: SampleData = {
     phone: "+49 176 223 4568",
     whatsapp: "+49 176 223 4568",
     website: "tabarbershop.de",
-    address: "Friedrichstraße 88, 10117 Berlin",
-    bio: "Master Barber seit 15 Jahren. Klassischer Herrenschnitt, Heißrasur, Premium Fades. Termine online.",
+    address: "FriedrichstraÃŸe 88, 10117 Berlin",
+    bio: "Master Barber seit 15 Jahren. Klassischer Herrenschnitt, HeiÃŸrasur, Premium Fades. Termine online.",
     bookingUrl: "https://cal.com/tabarbershop/booking",
     impressumUrl: "https://tabarbershop.de/impressum",
     privacyUrl: "https://tabarbershop.de/datenschutz",
@@ -692,9 +692,9 @@ export const barberStoneSample: SampleData = {
       instagram: "https://instagram.com/ta.barbershop",
     },
     services: [
-      { title: "Premium Haarschnitt", description: "Beratung, Schnitt, Styling.", priceLabel: "€35" },
-      { title: "Heißrasur", description: "Klassische Rasur mit heißem Tuch.", priceLabel: "€28" },
-      { title: "Kombination", description: "Schnitt + Heißrasur in einem Termin.", priceLabel: "€55" },
+      { title: "Premium Haarschnitt", description: "Beratung, Schnitt, Styling.", priceLabel: "â‚¬35" },
+      { title: "HeiÃŸrasur", description: "Klassische Rasur mit heiÃŸem Tuch.", priceLabel: "â‚¬28" },
+      { title: "Kombination", description: "Schnitt + HeiÃŸrasur in einem Termin.", priceLabel: "â‚¬55" },
     ],
   },
   photoUrl:
@@ -703,3 +703,4 @@ export const barberStoneSample: SampleData = {
   brandPrimaryHex: LOCKED_PRIMARY,
   brandAccentHex: LOCKED_ACCENT,
 };
+
