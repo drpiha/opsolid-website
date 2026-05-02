@@ -167,7 +167,7 @@ export async function rotateSession(
       return next;
     });
     return { refreshToken: newToken, expiresAt, sessionId: created.id };
-  } catch (err) {
+  } catch {
     // Race or DB error — caller treats as auth failure.
     return null;
   }

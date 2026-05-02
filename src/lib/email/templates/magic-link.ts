@@ -11,7 +11,6 @@
 // =============================================================================
 
 import {
-  button,
   escapeHtml,
   paragraph,
   renderShellHtml,
