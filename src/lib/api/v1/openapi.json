@@ -1,0 +1,528 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "OpSolid Public API",
+    "version": "1.0.0",
+    "description": "Versioned public API for OpSolid Digital Business Cards. Bearer-only JWT auth on `/auth/*` (after login) and `/cards/*`. Public reads at `/public/cards/*`. Stable contract — fields will not be renamed or removed without a v2 bump.",
+    "contact": { "email": "support@opsolid.de" }
+  },
+  "servers": [
+    { "url": "https://opsolid.de/api/v1", "description": "Production" },
+    { "url": "https://card.opsolid.de/api/v1", "description": "Production (card host)" }
+  ],
+  "tags": [
+    { "name": "auth", "description": "Authentication: login / refresh / logout / me" },
+    { "name": "cards", "description": "Authenticated CRUD over the caller's own cards" },
+    { "name": "public", "description": "Unauthenticated reads of published cards" },
+    { "name": "leads", "description": "Public lead capture submitted from a card surface" }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "HS256-signed access token returned by /auth/login or /auth/refresh. 15 minute TTL — refresh proactively from the client."
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "required": ["error"],
+        "properties": {
+          "error": {
+            "type": "object",
+            "required": ["code", "message"],
+            "properties": {
+              "code": { "type": "string", "example": "invalid_credentials" },
+              "message": { "type": "string", "example": "Invalid email or password." },
+              "details": {}
+            }
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "required": ["id", "email"],
+        "properties": {
+          "id": { "type": "string" },
+          "email": { "type": "string", "format": "email" },
+          "name": { "type": ["string", "null"] },
+          "locale": { "type": ["string", "null"], "enum": ["de", "en", "tr", null] },
+          "emailVerifiedAt": { "type": ["string", "null"], "format": "date-time" }
+        }
+      },
+      "AuthTokenPair": {
+        "type": "object",
+        "required": ["accessToken", "refreshToken", "sessionExpiresAt", "user"],
+        "properties": {
+          "accessToken": { "type": "string", "description": "Short-lived (15 min) HS256 JWT." },
+          "refreshToken": { "type": "string", "description": "Opaque rotation token. Single-use; replaced on every /auth/refresh." },
+          "sessionExpiresAt": { "type": "string", "format": "date-time" },
+          "user": { "$ref": "#/components/schemas/User" }
+        }
+      },
+      "Card": {
+        "type": "object",
+        "required": ["id", "status", "templateId", "cardData", "createdAt", "updatedAt"],
+        "properties": {
+          "id": { "type": "string" },
+          "slug": { "type": ["string", "null"] },
+          "status": {
+            "type": "string",
+            "enum": ["PENDING_PAYMENT", "PAID", "AWAITING_DESIGN", "PUBLISHED", "CANCELLED", "REFUNDED"]
+          },
+          "templateId": { "type": "integer" },
+          "layoutKey": { "type": ["string", "null"] },
+          "themeKey": { "type": ["string", "null"] },
+          "cardData": { "type": "object", "description": "Renderable card content. See CardDataSchema in src/lib/validation.ts." },
+          "brandPrimaryHex": { "type": ["string", "null"] },
+          "brandAccentHex": { "type": ["string", "null"] },
+          "photoPath": { "type": ["string", "null"] },
+          "logoPath": { "type": ["string", "null"] },
+          "qrStyle": { "type": ["object", "null"] },
+          "videoUrl": { "type": ["string", "null"] },
+          "publishedAt": { "type": ["string", "null"], "format": "date-time" },
+          "createdAt": { "type": "string", "format": "date-time" },
+          "updatedAt": { "type": "string", "format": "date-time" }
+        }
+      },
+      "PublicCard": {
+        "type": "object",
+        "required": ["slug", "status", "templateId", "cardData"],
+        "properties": {
+          "slug": { "type": "string" },
+          "status": { "type": "string", "enum": ["PUBLISHED"] },
+          "templateId": { "type": "integer" },
+          "layoutKey": { "type": ["string", "null"] },
+          "themeKey": { "type": ["string", "null"] },
+          "cardData": { "type": "object" },
+          "brandPrimaryHex": { "type": ["string", "null"] },
+          "brandAccentHex": { "type": ["string", "null"] },
+          "photoPath": { "type": ["string", "null"] },
+          "logoPath": { "type": ["string", "null"] },
+          "publishedAt": { "type": ["string", "null"], "format": "date-time" }
+        }
+      },
+      "CardCreateInput": {
+        "type": "object",
+        "required": ["templateId", "cardData"],
+        "properties": {
+          "templateId": { "type": "integer" },
+          "cardData": { "type": "object" },
+          "desiredSlug": {
+            "type": "string",
+            "pattern": "^[a-z0-9](?:[a-z0-9-]{1,38}[a-z0-9])?$",
+            "minLength": 3,
+            "maxLength": 40
+          },
+          "layoutKey": { "type": "string" },
+          "themeKey": { "type": "string" },
+          "brandPrimaryHex": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+          "brandAccentHex": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" }
+        }
+      },
+      "CardPatchInput": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "cardData": { "type": "object" },
+          "status": { "type": "string", "enum": ["PUBLISHED", "CANCELLED"] },
+          "slug": { "type": "string" },
+          "layoutKey": { "type": "string" },
+          "themeKey": { "type": "string" },
+          "brandPrimaryHex": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+          "brandAccentHex": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" }
+        }
+      },
+      "LeadInput": {
+        "type": "object",
+        "required": ["name", "consent"],
+        "properties": {
+          "name": { "type": "string", "minLength": 1, "maxLength": 160 },
+          "email": { "type": "string", "format": "email" },
+          "phone": { "type": "string", "maxLength": 40 },
+          "company": { "type": "string", "maxLength": 160 },
+          "message": { "type": "string", "maxLength": 2000 },
+          "interest": { "type": "string", "maxLength": 160 },
+          "meetingContext": { "type": "string", "maxLength": 160 },
+          "consent": { "type": "boolean", "enum": [true] }
+        }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Missing or invalid bearer token.",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      },
+      "RateLimited": {
+        "description": "Rate limit exceeded.",
+        "headers": {
+          "Retry-After": { "schema": { "type": "string" } }
+        },
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      },
+      "NotFound": {
+        "description": "Resource not found (or not visible to caller).",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      },
+      "BadRequest": {
+        "description": "Invalid payload.",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      },
+      "Conflict": {
+        "description": "Resource conflict (e.g. slug already taken).",
+        "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
+      }
+    }
+  },
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Sign in with email + password",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": { "type": "string", "format": "email" },
+                  "password": { "type": "string", "minLength": 1 }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Authenticated.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AuthTokenPair" } } }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    },
+    "/auth/magic-link": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Request a magic-link email (always 202)",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email"],
+                "properties": {
+                  "email": { "type": "string", "format": "email" },
+                  "locale": { "type": "string", "enum": ["de", "en", "tr"] }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "If the address is valid, a sign-in link has been sent.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "message": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    },
+    "/auth/refresh": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Rotate refresh token",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["refreshToken"],
+                "properties": { "refreshToken": { "type": "string" } }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Rotated.",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/AuthTokenPair" } } }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    },
+    "/auth/logout": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Revoke a refresh token",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": { "refreshToken": { "type": "string" } }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Always 200 — revoking an unknown token is a no-op.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "ok": { "type": "boolean" } }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "tags": ["auth"],
+        "summary": "Resolve the authenticated user profile",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "User profile.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "user": { "$ref": "#/components/schemas/User" } }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/cards": {
+      "get": {
+        "tags": ["cards"],
+        "summary": "List the caller's cards",
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          { "name": "limit", "in": "query", "schema": { "type": "integer", "minimum": 1, "maximum": 100, "default": 20 } },
+          { "name": "cursor", "in": "query", "schema": { "type": "string" }, "description": "Opaque cursor returned in the previous response's `nextCursor`." }
+        ],
+        "responses": {
+          "200": {
+            "description": "Page of cards.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["items", "nextCursor"],
+                  "properties": {
+                    "items": { "type": "array", "items": { "$ref": "#/components/schemas/Card" } },
+                    "nextCursor": { "type": ["string", "null"] }
+                  }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      },
+      "post": {
+        "tags": ["cards"],
+        "summary": "Create a FREE-tier card",
+        "security": [{ "bearerAuth": [] }],
+        "description": "Creates a published FREE-tier card immediately. Paid creation requires the web /api/orders flow with Stripe Checkout.",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CardCreateInput" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "Created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "card": { "$ref": "#/components/schemas/Card" } }
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/Conflict" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    },
+    "/cards/{id}": {
+      "parameters": [
+        { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+      ],
+      "get": {
+        "tags": ["cards"],
+        "summary": "Read a card the caller owns",
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Card.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "card": { "$ref": "#/components/schemas/Card" } }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      },
+      "patch": {
+        "tags": ["cards"],
+        "summary": "Update a card",
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/CardPatchInput" } } }
+        },
+        "responses": {
+          "200": {
+            "description": "Updated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "card": { "$ref": "#/components/schemas/Card" } }
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "409": { "$ref": "#/components/responses/Conflict" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      },
+      "delete": {
+        "tags": ["cards"],
+        "summary": "Soft-delete a card (set status=CANCELLED)",
+        "security": [{ "bearerAuth": [] }],
+        "description": "Hard delete is intentionally not exposed in v1 — it would cascade to leads / views / connections. Use the admin surface for permanent removal.",
+        "responses": {
+          "200": {
+            "description": "Soft-deleted.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "id": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    },
+    "/public/cards/{slug}": {
+      "parameters": [
+        { "name": "slug", "in": "path", "required": true, "schema": { "type": "string", "pattern": "^[a-z0-9-]{3,60}$" } }
+      ],
+      "get": {
+        "tags": ["public"],
+        "summary": "Read a published card by slug (no auth)",
+        "responses": {
+          "200": {
+            "description": "Public card snapshot. Cached for 60s.",
+            "headers": {
+              "Cache-Control": { "schema": { "type": "string" } }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": { "card": { "$ref": "#/components/schemas/PublicCard" } }
+                }
+              }
+            }
+          },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    },
+    "/public/cards/{slug}/leads": {
+      "parameters": [
+        { "name": "slug", "in": "path", "required": true, "schema": { "type": "string", "pattern": "^[a-z0-9-]{3,60}$" } }
+      ],
+      "post": {
+        "tags": ["leads"],
+        "summary": "Submit a lead to a published card (public)",
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/LeadInput" } } }
+        },
+        "responses": {
+          "201": {
+            "description": "Lead recorded.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "lead": {
+                      "type": "object",
+                      "properties": {
+                        "id": { "type": "string" },
+                        "createdAt": { "type": "string", "format": "date-time" }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "429": { "$ref": "#/components/responses/RateLimited" }
+        }
+      }
+    }
+  }
+}

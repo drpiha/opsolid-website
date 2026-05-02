@@ -19,7 +19,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Loader2,
-  Upload,
   AlertCircle,
   CheckCircle2,
   Check,
@@ -36,22 +35,21 @@ import {
   MessageCircle,
   Search,
   Download,
-  Pencil,
 } from "lucide-react";
-import { Input, Textarea } from "@/components/ui/Input";
 import { useLocale } from "@/context/LocaleContext";
 import { TemplateRenderer } from "@/components/cards/TemplateRenderer";
 import type { CardData, ImagePosition } from "@/lib/validation";
 import { PhotoEditor } from "@/components/cards/PhotoEditor";
-import { CustomSectionsEditor } from "@/components/cards/order-form/CustomSectionsEditor";
-import { GalleryEditor } from "@/components/cards/order-form/GalleryEditor";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
-import { TYPOGRAPHY_PRESET_LIST, getTypographyPreset } from "@/lib/typographyPresets";
+import { getTypographyPreset } from "@/lib/typographyPresets";
 import { getTemplateEntry } from "@/components/cards/templates/v2/registry";
 import { ShareDrawer } from "@/components/cards/ShareDrawer";
 import { StickySaveBar } from "./StickySaveBar";
-
-type FormState = "idle" | "saving" | "saved" | "error";
+import PersonBrandSection from "./sections/PersonBrandSection";
+import ContentSection from "./sections/ContentSection";
+import ContactSection from "./sections/ContactSection";
+import PublishSection from "./sections/PublishSection";
+import type { FormState } from "./sections/types";
 
 interface Props {
   orderId: string;
@@ -456,481 +454,55 @@ export function CardEditClient(props: Props) {
                 directly in the card-content section below, so a separate
                 read-only mirror is just visual noise. */}
 
-            {/* ── B7 Section 1: Person & Brand ── */}
-            <section>
-              <button
-                type="button"
-                onClick={() => toggleSection("person-brand")}
-                className="flex w-full items-center justify-between gap-3 mt-8 mb-3 text-left"
-                aria-expanded={openSections.has("person-brand")}
-                aria-label={
-                  openSections.has("person-brand")
-                    ? edit.collapseSection
-                    : edit.expandSection
-                }
-              >
-                <h2 className="font-serif text-lg text-ink">
-                  {edit.sectionPersonBrand}
-                </h2>
-                <ChevronDown
-                  size={18}
-                  className={[
-                    "text-ink/40 shrink-0 motion-safe:transition-transform motion-safe:duration-200",
-                    openSections.has("person-brand") ? "rotate-180" : "",
-                  ].join(" ")}
-                  aria-hidden="true"
-                />
-              </button>
-              <div hidden={!openSections.has("person-brand")} className="space-y-4">
-
-            {/* Card content */}
-            <fieldset className="space-y-4">
-              <legend className="text-heading-sm text-ink">
-                {form.cardSection}
-              </legend>
-              <div className="grid gap-4 md:grid-cols-2">
-                <Input
-                  label={form.cardName}
-                  value={cardData.name}
-                  onChange={(e) => setCard("name", e.target.value)}
-                />
-                <Input
-                  label={form.cardTitle}
-                  value={cardData.title ?? ""}
-                  onChange={(e) => setCard("title", e.target.value)}
-                />
-                <Input
-                  label={form.cardCompany}
-                  value={cardData.company ?? ""}
-                  onChange={(e) => setCard("company", e.target.value)}
-                />
-                <Input
-                  label={form.cardWebsite}
-                  value={cardData.website ?? ""}
-                  onChange={(e) => setCard("website", e.target.value)}
-                />
-                <Input
-                  type="email"
-                  label={form.cardEmail}
-                  value={cardData.email ?? ""}
-                  onChange={(e) => setCard("email", e.target.value)}
-                />
-                <Input
-                  type="tel"
-                  label={form.cardPhone}
-                  value={cardData.phone ?? ""}
-                  onChange={(e) => setCard("phone", e.target.value)}
-                />
-                <Input
-                  type="tel"
-                  label={form.cardWhatsapp}
-                  value={cardData.whatsapp ?? ""}
-                  onChange={(e) => setCard("whatsapp", e.target.value)}
-                />
-                <Input
-                  label={form.cardAddress}
-                  value={cardData.address ?? ""}
-                  onChange={(e) => setCard("address", e.target.value)}
-                />
-              </div>
-              <Textarea
-                label={form.cardBio}
-                value={cardData.bio ?? ""}
-                onChange={(e) => setCard("bio", e.target.value)}
-                rows={3}
-              />
-            </fieldset>
-
-            {/* Socials */}
-            <fieldset className="space-y-4">
-              <legend className="text-heading-sm text-ink">
-                {form.socialSection}
-              </legend>
-              <div className="grid gap-4 md:grid-cols-2">
-                <Input
-                  label="LinkedIn"
-                  value={cardData.socials?.linkedin ?? ""}
-                  onChange={(e) => setSocial("linkedin", e.target.value)}
-                />
-                <Input
-                  label="Instagram"
-                  value={cardData.socials?.instagram ?? ""}
-                  onChange={(e) => setSocial("instagram", e.target.value)}
-                />
-                <Input
-                  label="X (Twitter)"
-                  value={cardData.socials?.x ?? ""}
-                  onChange={(e) => setSocial("x", e.target.value)}
-                />
-                <Input
-                  label="TikTok"
-                  value={cardData.socials?.tiktok ?? ""}
-                  onChange={(e) => setSocial("tiktok", e.target.value)}
-                />
-                <Input
-                  label="YouTube"
-                  value={cardData.socials?.youtube ?? ""}
-                  onChange={(e) => setSocial("youtube", e.target.value)}
-                />
-                <Input
-                  label="GitHub"
-                  value={cardData.socials?.github ?? ""}
-                  onChange={(e) => setSocial("github", e.target.value)}
-                />
-              </div>
-            </fieldset>
-
-            {/* Uploads — B7 premium thumbnail entry for photo + logo */}
-            <fieldset className="space-y-4">
-              <legend className="text-heading-sm text-ink">
-                {form.uploadSection}
-              </legend>
-              <div className="grid gap-4 md:grid-cols-2">
-                <div>
-                  <UploadTile
-                    label={form.photoLabel}
-                    current={photoPath}
-                    uploading={photoUploading}
-                    onChange={async (file) => {
-                      setPhotoUploading(true);
-                      const path = await handleFileUpload(file, "photo");
-                      if (path) setPhotoPath(path);
-                      setPhotoUploading(false);
-                    }}
-                  />
-                  {photoPath && (
-                    <div className="mt-2 flex items-center gap-3">
-                      {/* B7 — premium 64×64 thumbnail entry button */}
-                      <button
-                        type="button"
-                        onClick={() => setPhotoEditorOpen(true)}
-                        className="group relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-ink/15 bg-neutral-100"
-                        aria-label={edit.adjustPhoto}
-                        title={edit.adjustPhoto}
-                      >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={resolveAsset(photoPath)}
-                          alt=""
-                          className="h-full w-full object-cover"
-                          style={{
-                            objectPosition: `${cardData.photoPosition?.x ?? 50}% ${cardData.photoPosition?.y ?? 50}%`,
-                            transform: `scale(${cardData.photoPosition?.scale ?? 1})`,
-                          }}
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center bg-ink/0 opacity-0 transition-all group-hover:bg-ink/40 group-hover:opacity-100">
-                          <Pencil size={14} className="text-white" />
-                        </div>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setPhotoPath(null);
-                          setCard("photoPosition", undefined);
-                        }}
-                        className="text-[10.5px] text-ink/45 hover:text-ink"
-                      >
-                        {form.uploadRemove ?? "Remove"}
-                      </button>
-                    </div>
-                  )}
-                </div>
-                <div>
-                  <UploadTile
-                    label={form.logoLabel}
-                    current={logoPath}
-                    uploading={logoUploading}
-                    onChange={async (file) => {
-                      setLogoUploading(true);
-                      const path = await handleFileUpload(file, "logo");
-                      if (path) setLogoPath(path);
-                      setLogoUploading(false);
-                    }}
-                  />
-                  {logoPath && (
-                    <div className="mt-2 flex items-center gap-3">
-                      {/* B7 — premium 64×64 thumbnail entry button */}
-                      <button
-                        type="button"
-                        onClick={() => setLogoEditorOpen(true)}
-                        className="group relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-ink/15 bg-neutral-100"
-                        aria-label={edit.adjustLogo}
-                        title={edit.adjustLogo}
-                      >
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img
-                          src={resolveAsset(logoPath)}
-                          alt=""
-                          className="h-full w-full object-cover"
-                          style={{
-                            objectPosition: `${cardData.logoPosition?.x ?? 50}% ${cardData.logoPosition?.y ?? 50}%`,
-                            transform: `scale(${cardData.logoPosition?.scale ?? 1})`,
-                          }}
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center bg-ink/0 opacity-0 transition-all group-hover:bg-ink/40 group-hover:opacity-100">
-                          <Pencil size={14} className="text-white" />
-                        </div>
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setLogoPath(null);
-                          setCard("logoPosition", undefined);
-                        }}
-                        className="text-[10.5px] text-ink/45 hover:text-ink"
-                      >
-                        {form.uploadRemove ?? "Remove"}
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </fieldset>
-
-              </div>{/* end collapsible: person-brand */}
-            </section>{/* end Section 1: Person & Brand */}
-
-            {/* ── B7 Section 2: Content ── */}
-            <section>
-              <button
-                type="button"
-                onClick={() => toggleSection("content")}
-                className="flex w-full items-center justify-between gap-3 mt-8 mb-3 text-left"
-                aria-expanded={openSections.has("content")}
-                aria-label={
-                  openSections.has("content")
-                    ? edit.collapseSection
-                    : edit.expandSection
-                }
-              >
-                <h2 className="font-serif text-lg text-ink">
-                  {edit.sectionContent}
-                </h2>
-                <ChevronDown
-                  size={18}
-                  className={[
-                    "text-ink/40 shrink-0 motion-safe:transition-transform motion-safe:duration-200",
-                    openSections.has("content") ? "rotate-180" : "",
-                  ].join(" ")}
-                  aria-hidden="true"
-                />
-              </button>
-              <div hidden={!openSections.has("content")} className="space-y-4">
-
-            {/* Gallery — up to 24 photos rendered on the public card */}
-            <fieldset className="space-y-4">
-              <legend className="text-heading-sm text-ink">
-                {(form as Record<string, string>).gallerySection ?? "Galeri"}
-              </legend>
-              {(form as Record<string, string>).galleryHint && (
-                <p className="-mt-2 text-xs text-ink/55">
-                  {(form as Record<string, string>).galleryHint}
-                </p>
-              )}
-              <GalleryEditor
-                gallery={cardData.gallery}
-                onGalleryChange={(next) => setCard("gallery", next)}
-                handleFileUpload={handleFileUpload}
-                L={(k, fb) => (form as Record<string, string>)[k] ?? fb}
-              />
-            </fieldset>
-
-            {/* Phase 7.9 — Custom Sections */}
-            <fieldset className="space-y-4">
-              <legend className="text-heading-sm text-ink">
-                {form.customSectionsSection ?? "Özel bölümler"}
-              </legend>
-              {form.customSectionsHint && (
-                <p className="-mt-2 text-xs text-ink/55">
-                  {form.customSectionsHint}
-                </p>
-              )}
-              <CustomSectionsEditor
-                cardData={cardData}
-                setCard={setCard}
-                L={(k, fb) => (form as Record<string, string>)[k] ?? fb}
-                handleFileUpload={handleFileUpload}
-              />
-            </fieldset>
-
-              </div>{/* end collapsible: content */}
-            </section>{/* end Section 2: Content */}
-
-            {/* ── B7 Section 3: Contact (typography + branding; full split in B8) ── */}
-            <section>
-              <button
-                type="button"
-                onClick={() => toggleSection("contact")}
-                className="flex w-full items-center justify-between gap-3 mt-8 mb-3 text-left"
-                aria-expanded={openSections.has("contact")}
-                aria-label={
-                  openSections.has("contact")
-                    ? edit.collapseSection
-                    : edit.expandSection
-                }
-              >
-                <h2 className="font-serif text-lg text-ink">
-                  {edit.sectionContact}
-                </h2>
-                <ChevronDown
-                  size={18}
-                  className={[
-                    "text-ink/40 shrink-0 motion-safe:transition-transform motion-safe:duration-200",
-                    openSections.has("contact") ? "rotate-180" : "",
-                  ].join(" ")}
-                  aria-hidden="true"
-                />
-              </button>
-              <div hidden={!openSections.has("contact")} className="space-y-4">
-
-            {/* Phase 7.9 — Typography preset */}
-            <fieldset className="space-y-4">
-              <legend className="text-heading-sm text-ink">
-                {form.typographySection ?? "Tipografi"}
-              </legend>
-              {form.typographyHint && (
-                <p className="-mt-2 text-xs text-ink/55">
-                  {form.typographyHint}
-                </p>
-              )}
-              <div className="grid grid-cols-2 gap-2.5 md:grid-cols-3">
-                {TYPOGRAPHY_PRESET_LIST.map((preset) => {
-                  const active =
-                    (cardData.typographyPreset ?? "default") === preset.key;
-                  const labelKey = `typography${
-                    preset.key.charAt(0).toUpperCase() + preset.key.slice(1)
-                  }Label`;
-                  const descKey = `typography${
-                    preset.key.charAt(0).toUpperCase() + preset.key.slice(1)
-                  }Desc`;
-                  const formMap = form as Record<string, string>;
-                  return (
-                    <button
-                      key={preset.key}
-                      type="button"
-                      onClick={() =>
-                        setCard(
-                          "typographyPreset",
-                          preset.key === "default" ? undefined : preset.key
-                        )
-                      }
-                      className={[
-                        "group relative flex flex-col items-start gap-2 rounded-2xl border bg-white p-3.5 text-left transition-all",
-                        active
-                          ? "border-copper bg-copper/5 ring-2 ring-copper/30"
-                          : "border-line hover:border-copper/40 hover:bg-bg-1",
-                      ].join(" ")}
-                    >
-                      <span
-                        className="leading-none text-3xl text-ink"
-                        style={{
-                          fontFamily:
-                            preset.displayFamily ||
-                            "Geist, Inter, system-ui, sans-serif",
-                        }}
-                      >
-                        {preset.sample}
-                      </span>
-                      <span className="block text-xs font-semibold text-ink">
-                        {formMap[labelKey] ?? preset.label}
-                      </span>
-                      <span className="block text-[10.5px] leading-snug text-ink/55">
-                        {formMap[descKey] ?? preset.description}
-                      </span>
-                      {active && (
-                        <span className="absolute right-2 top-2 inline-flex h-4 w-4 items-center justify-center rounded-full bg-copper text-white">
-                          <Check size={9} strokeWidth={3} />
-                        </span>
-                      )}
-                    </button>
-                  );
-                })}
-              </div>
-            </fieldset>
-
-            {/* Branding */}
-            <fieldset className="space-y-4">
-              <legend className="text-heading-sm text-ink">
-                {form.brandSection}
-              </legend>
-              <div className="grid gap-4 md:grid-cols-2">
-                <ColorField
-                  label={form.primaryColor}
-                  value={brandPrimaryHex}
-                  onChange={setBrandPrimaryHex}
-                />
-                <ColorField
-                  label={form.accentColor}
-                  value={brandAccentHex}
-                  onChange={setBrandAccentHex}
-                />
-              </div>
-            </fieldset>
-
-            <Textarea
-              label={form.designNotes}
-              value={cardData.designNotes ?? ""}
-              onChange={(e) => setCard("designNotes", e.target.value)}
-              rows={3}
-              placeholder={form.designNotesPh}
+            {/* B7 — 4 collapsible sections, lifted to standalone components in
+                A8.2 (sections/*Section.tsx). State stays here in the
+                orchestrator; sections are controlled. */}
+            <PersonBrandSection
+              cardData={cardData}
+              setCard={setCard}
+              setSocial={setSocial}
+              photoPath={photoPath}
+              setPhotoPath={setPhotoPath}
+              logoPath={logoPath}
+              setLogoPath={setLogoPath}
+              photoUploading={photoUploading}
+              setPhotoUploading={setPhotoUploading}
+              logoUploading={logoUploading}
+              setLogoUploading={setLogoUploading}
+              handleFileUpload={handleFileUpload}
+              onOpenPhotoEditor={() => setPhotoEditorOpen(true)}
+              onOpenLogoEditor={() => setLogoEditorOpen(true)}
+              resolveAsset={resolveAsset}
+              openSections={openSections}
+              toggleSection={toggleSection}
             />
 
-              </div>{/* end collapsible: contact */}
-            </section>{/* end Section 3: Contact */}
+            <ContentSection
+              cardData={cardData}
+              setCard={setCard}
+              handleFileUpload={handleFileUpload}
+              openSections={openSections}
+              toggleSection={toggleSection}
+            />
 
-            {/* ── B7 Section 4: Publishing & Status ── */}
-            <section>
-              <button
-                type="button"
-                onClick={() => toggleSection("publish")}
-                className="flex w-full items-center justify-between gap-3 mt-8 mb-3 text-left"
-                aria-expanded={openSections.has("publish")}
-                aria-label={
-                  openSections.has("publish")
-                    ? edit.collapseSection
-                    : edit.expandSection
-                }
-              >
-                <h2 className="font-serif text-lg text-ink">
-                  {edit.sectionPublish}
-                </h2>
-                <ChevronDown
-                  size={18}
-                  className={[
-                    "text-ink/40 shrink-0 motion-safe:transition-transform motion-safe:duration-200",
-                    openSections.has("publish") ? "rotate-180" : "",
-                  ].join(" ")}
-                  aria-hidden="true"
-                />
-              </button>
-              <div hidden={!openSections.has("publish")} className="space-y-4">
+            <ContactSection
+              cardData={cardData}
+              setCard={setCard}
+              brandPrimaryHex={brandPrimaryHex}
+              setBrandPrimaryHex={setBrandPrimaryHex}
+              brandAccentHex={brandAccentHex}
+              setBrandAccentHex={setBrandAccentHex}
+              openSections={openSections}
+              toggleSection={toggleSection}
+            />
 
-            {errorMsg && (
-              <div className="flex items-start gap-3 rounded-2xl border border-brand/30 bg-brand/5 p-4 text-sm text-brand">
-                <AlertCircle size={16} className="mt-0.5 shrink-0" />
-                <span>{errorMsg}</span>
-              </div>
-            )}
-
-            {formState === "saved" && (
-              <div className="flex items-start gap-3 rounded-2xl border border-green-600/30 bg-green-600/5 p-4 text-sm text-green-700">
-                <CheckCircle2 size={16} className="mt-0.5 shrink-0" />
-                <span>{edit.savedSuccess}</span>
-              </div>
-            )}
-
-            {/* Status info block — save button moved to StickySaveBar (A4) */}
-            <div className="flex items-center gap-4 rounded-2xl border border-neutral-200 bg-white p-5">
-              <div>
-                <p className="text-eyebrow uppercase text-ink/50">
-                  {edit.statusLabel}
-                </p>
-                <p className="text-heading-sm text-ink">{badgeInfo.label}</p>
-              </div>
-            </div>
-
-              </div>{/* end collapsible: publish */}
-            </section>{/* end Section 4: Publishing & Status */}
+            <PublishSection
+              errorMsg={errorMsg}
+              formState={formState}
+              badgeInfo={badgeInfo}
+              openSections={openSections}
+              toggleSection={toggleSection}
+            />
 
             {/* Download OG image + cancel subscription */}
             <div className="rounded-2xl border border-neutral-200 bg-white p-5">
@@ -1288,74 +860,9 @@ function CancelModal({
 }
 
 // -----------------------------------------------------------------------------
-// Local copies of UploadTile/ColorField to avoid coupling with the order form.
-// Identical shape to the order page so the customer experience is consistent.
+// UploadTile + ColorField were moved into sections/PersonBrandSection.tsx and
+// sections/ContactSection.tsx respectively as part of the A8.2 split.
 // -----------------------------------------------------------------------------
-function UploadTile({
-  label,
-  current,
-  uploading,
-  onChange,
-}: {
-  label: string;
-  current: string | null;
-  uploading: boolean;
-  onChange: (file: File) => void;
-}) {
-  return (
-    <label className="flex cursor-pointer items-center gap-4 rounded-2xl border border-dashed border-neutral-300 bg-white p-4 transition-colors hover:border-ink/40">
-      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-100 text-ink/60">
-        {uploading ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />}
-      </div>
-      <div className="min-w-0 flex-1">
-        <p className="text-sm font-medium text-ink">{label}</p>
-        <p className="truncate text-xs text-ink/50">
-          {current ? current.split("/").pop() : "JPG · PNG · SVG · max 2 MB"}
-        </p>
-      </div>
-      <input
-        type="file"
-        accept="image/jpeg,image/png,image/svg+xml"
-        className="sr-only"
-        onChange={(e) => {
-          const f = e.target.files?.[0];
-          if (f) onChange(f);
-        }}
-      />
-    </label>
-  );
-}
-
-function ColorField({
-  label,
-  value,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-}) {
-  return (
-    <div>
-      <label className="mb-2 block text-sm font-semibold text-ink">{label}</label>
-      <div className="flex items-center gap-2">
-        <input
-          type="color"
-          value={value || "#0A0A0A"}
-          onChange={(e) => onChange(e.target.value)}
-          className="h-12 w-16 cursor-pointer rounded-2xl border border-neutral-200 bg-white p-1"
-        />
-        <input
-          type="text"
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder="#0A0A0A"
-          className="h-12 flex-1 rounded-full border border-neutral-200 bg-white px-5 font-mono text-sm"
-        />
-      </div>
-    </div>
-  );
-}
 
 // -----------------------------------------------------------------------------
 // Analytics panel — shows view counts for the card owner.
