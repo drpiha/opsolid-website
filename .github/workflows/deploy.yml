@@ -27,8 +27,13 @@ jobs:
         run: |
           DEPLOY_DIR=/opt/opsolid-website
 
-          echo "==> Syncing source files to $DEPLOY_DIR (overlay, no delete)"
-          rsync -a \
+          echo "==> Syncing source files to $DEPLOY_DIR (mirror, with delete)"
+          # --delete drops files on the VPS that no longer exist in the repo
+          # (e.g. after a `git revert`). Without it, orphaned source files
+          # break the next build because tsc/next picks them up. The exclude
+          # list below is the protection layer for runtime data (uploads,
+          # .env, prisma .next cache).
+          rsync -a --delete \
             --exclude='.env' \
             --exclude='.env.local' \
             --exclude='node_modules' \
