@@ -68,6 +68,13 @@ function extractToken(reqOrToken: NextRequest | string | null | undefined): stri
     const match = /^Bearer\s+(.+)$/i.exec(authHeader.trim());
     if (match) return match[1].trim();
   }
+
+  // voice_token cookie — set by middleware after lifting `?token=…` off the
+  // dashboard URL. Read it as a third source so client-side form submits
+  // (which no longer have the token in the URL) still authenticate.
+  const cookieToken = reqOrToken.cookies.get("voice_token")?.value;
+  if (cookieToken) return cookieToken;
+
   return null;
 }
 

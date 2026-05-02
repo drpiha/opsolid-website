@@ -118,7 +118,10 @@ export async function middleware(req: NextRequest) {
           httpOnly: true,
           sameSite: "strict",
           secure: process.env.NODE_ENV === "production",
-          path: "/voice",
+          // path "/" so the cookie is also sent to /api/voice/* routes —
+          // form submits from /voice/[slug]/agents/new etc. need the API
+          // to read the same cookie via requireTenantToken.
+          path: "/",
           maxAge: 60 * 60 * 24, // 1 day; tenant re-shares dashboard link as needed
         });
         return res;
