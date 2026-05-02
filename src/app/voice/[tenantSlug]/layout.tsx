@@ -10,6 +10,7 @@
  */
 
 import { timingSafeEqual } from "node:crypto";
+import { cookies } from "next/headers";
 import { Suspense } from "react";
 import VoiceDashboardSidebar from "@/components/voice/dashboard/VoiceDashboardSidebar";
 import { prisma } from "@/lib/prisma";
@@ -22,10 +23,13 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
+// Note: Next.js Layout components do not receive `searchParams` (only Pages do).
+// The tenant token arrives via the `voice_token` cookie set by middleware when
+// it sees `?token=…` on the URL. This also keeps the secret out of browser
+// history and Referer headers (gap-report finding G9).
 interface LayoutProps {
   children: React.ReactNode;
   params: Promise<{ tenantSlug: string }>;
-  searchParams: Promise<{ token?: string }>;
 }
 
 function safeEqual(a: string, b: string): boolean {
@@ -76,10 +80,10 @@ function UnauthorizedScreen({
 export default async function VoiceDashboardLayout({
   children,
   params,
-  searchParams,
 }: LayoutProps) {
   const { tenantSlug } = await params;
-  const { token = "" } = await searchParams;
+  const cookieStore = await cookies();
+  const token = cookieStore.get("voice_token")?.value ?? "";
 
   const tenant = await prisma.voiceTenant.findUnique({
     where: { slug: tenantSlug },

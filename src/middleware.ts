@@ -101,6 +101,29 @@ export async function middleware(req: NextRequest) {
         return NextResponse.redirect(new URL("/", req.url));
       }
     }
+    // Voice dashboard tenant token: lift `?token=…` off the URL into a
+    // httpOnly cookie. Keeps the secret out of browser history, Referer
+    // headers, and our own access logs (gap-report finding G9). The Layout
+    // reads it via `cookies()` instead of `searchParams` (which Next.js no
+    // longer passes to layouts).
+    if (pathname.startsWith("/voice/")) {
+      const incomingToken = req.nextUrl.searchParams.get("token");
+      if (incomingToken) {
+        const cleanUrl = new URL(pathname, req.nextUrl);
+        req.nextUrl.searchParams.forEach((value, key) => {
+          if (key !== "token") cleanUrl.searchParams.set(key, value);
+        });
+        const res = NextResponse.redirect(cleanUrl);
+        res.cookies.set("voice_token", incomingToken, {
+          httpOnly: true,
+          sameSite: "strict",
+          secure: process.env.NODE_ENV === "production",
+          path: "/voice",
+          maxAge: 60 * 60 * 24, // 1 day; tenant re-shares dashboard link as needed
+        });
+        return res;
+      }
+    }
     return NextResponse.next();
   }
   // -------------------------------------------------------------------------
