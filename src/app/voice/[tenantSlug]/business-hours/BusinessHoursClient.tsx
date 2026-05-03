@@ -82,12 +82,21 @@ export default function BusinessHoursClient({
     setSavingHours(true);
     setHoursError(null);
     try {
+      // The API expects a bare array of weekly rows (PutBodyZ = z.array(...)),
+      // not a wrapper object. Sending { weekly: rows } produced a 400.
+      const payload = rows.map((r) => ({
+        dayOfWeek: r.dayOfWeek,
+        openTime: r.openTime,
+        closeTime: r.closeTime,
+        isClosed: r.isClosed,
+        aiMode: r.aiMode,
+      }));
       const res = await fetch(
         `/api/voice/${tenantId}/business-hours${tokenQ}`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ weekly: rows }),
+          body: JSON.stringify(payload),
         },
       );
       if (!res.ok) throw new Error(`HTTP ${res.status}`);

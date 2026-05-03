@@ -94,6 +94,34 @@ export default function BusinessHoursGrid({
     setDirty(false);
   };
 
+  const applyAlwaysOpenAllDays = () => {
+    setRows((prev) =>
+      prev.map((r) => ({
+        ...r,
+        openTime: "00:00",
+        closeTime: "23:59",
+        isClosed: false,
+        aiMode: "always_on",
+      })),
+    );
+    setDirty(true);
+  };
+
+  const applyMonFriToWholeWeek = () => {
+    setRows((prev) => {
+      const monday = prev.find((r) => r.dayOfWeek === 1);
+      if (!monday) return prev;
+      return prev.map((r) => ({
+        ...r,
+        openTime: monday.openTime,
+        closeTime: monday.closeTime,
+        isClosed: monday.isClosed,
+        aiMode: monday.aiMode,
+      }));
+    });
+    setDirty(true);
+  };
+
   return (
     <section className="panel overflow-hidden p-0">
       <header className="flex items-center justify-between border-b border-line px-5 py-3">
@@ -105,24 +133,44 @@ export default function BusinessHoursGrid({
             Zeiten in 24-Stunden-Format · Lokale Zeitzone
           </p>
         </div>
-        <button
-          type="button"
-          onClick={handleSave}
-          disabled={loading || !dirty}
-          className="btn btn-primary btn-sm disabled:cursor-not-allowed disabled:opacity-50"
-        >
-          {loading ? (
-            <>
-              <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden />
-              Speichert…
-            </>
-          ) : (
-            <>
-              <Save className="h-3.5 w-3.5" aria-hidden />
-              Speichern
-            </>
-          )}
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={applyAlwaysOpenAllDays}
+            disabled={loading}
+            className="btn btn-ghost btn-sm disabled:cursor-not-allowed disabled:opacity-50"
+            title="Alle 7 Tage auf 00:00 – 23:59, Modus 'Immer aktiv'"
+          >
+            7/24 für alle
+          </button>
+          <button
+            type="button"
+            onClick={applyMonFriToWholeWeek}
+            disabled={loading}
+            className="btn btn-ghost btn-sm disabled:cursor-not-allowed disabled:opacity-50"
+            title="Montagswerte auf alle Tage übertragen"
+          >
+            Mo. übernehmen
+          </button>
+          <button
+            type="button"
+            onClick={handleSave}
+            disabled={loading || !dirty}
+            className="btn btn-primary btn-sm disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {loading ? (
+              <>
+                <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden />
+                Speichert…
+              </>
+            ) : (
+              <>
+                <Save className="h-3.5 w-3.5" aria-hidden />
+                Speichern
+              </>
+            )}
+          </button>
+        </div>
       </header>
 
       <ul className="divide-y divide-line">
