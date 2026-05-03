@@ -295,7 +295,7 @@ export function DJVivid({
                   alt={cardData.name}
                   fill
                   unoptimized
-                  className="object-cover"
+                  className="object-cover tpl-photo"
                   sizes="80px"
                 />
               </div>

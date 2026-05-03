@@ -273,7 +273,7 @@ export function ArchitectPure({
               fill
               unoptimized
               sizes="110px"
-              className="object-cover"
+              className="object-cover tpl-photo"
               style={{ filter: "grayscale(1) contrast(1.05)" }}
             />
           </div>

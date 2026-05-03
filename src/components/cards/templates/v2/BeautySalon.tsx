@@ -232,7 +232,7 @@ export function BeautySalon({
               width={920}
               height={460}
               unoptimized
-              className="h-full w-full object-cover"
+              className="h-full w-full object-cover tpl-photo"
             />
           ) : (
             <div
@@ -278,7 +278,7 @@ export function BeautySalon({
             width={90}
             height={90}
             unoptimized
-            className="h-[72px] w-[72px] flex-shrink-0 rounded-[22px] object-cover"
+            className="h-[72px] w-[72px] flex-shrink-0 rounded-[22px] object-cover tpl-logo"
             style={{ border: "3px solid #fff", boxShadow: `0 6px 16px ${primary}40` }}
           />
         ) : (

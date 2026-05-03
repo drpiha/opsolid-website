@@ -238,7 +238,7 @@ export function WellnessTeacher({
             fill
             sizes="460px"
             unoptimized
-            className="object-cover"
+            className="object-cover tpl-photo"
             priority
           />
         ) : (
@@ -320,7 +320,7 @@ export function WellnessTeacher({
                   fill
                   sizes="120px"
                   unoptimized
-                  className="object-cover"
+                  className="object-cover tpl-photo"
                 />
               ) : (
                 <div

@@ -184,7 +184,7 @@ export function LayoutNoirLuxury({
                 fill
                 unoptimized
                 sizes="130px"
-                className="object-cover"
+                className="object-cover tpl-photo"
               />
             </div>
           </div>

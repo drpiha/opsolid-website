@@ -291,7 +291,7 @@ export function RestaurantNoir({
             alt={restaurantName}
             fill
             unoptimized
-            className="object-cover"
+            className="object-cover tpl-photo"
             style={{ filter: "brightness(0.78) contrast(1.05)" }}
             sizes="460px"
           />

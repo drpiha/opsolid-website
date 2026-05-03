@@ -295,7 +295,7 @@ export function EventPlanner({
           }}
         >
           {photoUrl ? (
-            <Image src={photoUrl} alt="" fill sizes="76px" unoptimized className="object-cover" />
+            <Image src={photoUrl} alt="" fill sizes="76px" unoptimized className="object-cover tpl-photo" />
           ) : (
             <div
               className="flex h-full w-full items-center justify-center text-[22px] font-bold"

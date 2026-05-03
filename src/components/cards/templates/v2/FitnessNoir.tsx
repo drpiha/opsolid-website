@@ -397,7 +397,7 @@ export function FitnessNoir({
             fill
             unoptimized
             sizes="(max-width: 460px) 100vw, 460px"
-            className="object-cover"
+            className="object-cover tpl-photo"
             style={{ filter: "grayscale(0.85) contrast(1.15) brightness(0.85)" }}
           />
           <span

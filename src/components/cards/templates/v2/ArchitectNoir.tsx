@@ -325,7 +325,7 @@ export function ArchitectNoir({
               fill
               unoptimized
               sizes="(max-width: 460px) 100vw, 460px"
-              className="object-cover"
+              className="object-cover tpl-photo"
               style={{ filter: "grayscale(0.2) contrast(1.05)" }}
             />
             <span

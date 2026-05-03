@@ -279,7 +279,7 @@ export function InteriorDesign({
             }}
           >
             {photoUrl ? (
-              <Image src={photoUrl} alt="" fill sizes="76px" unoptimized className="object-cover" />
+              <Image src={photoUrl} alt="" fill sizes="76px" unoptimized className="object-cover tpl-photo" />
             ) : (
               <div
                 className="serif flex h-full w-full items-center justify-center text-[22px]"
@@ -366,7 +366,7 @@ export function InteriorDesign({
             >
               <div className="relative h-[230px] overflow-hidden">
                 {photoUrl ? (
-                  <Image src={photoUrl} alt="" fill sizes="460px" unoptimized className="object-cover" />
+                  <Image src={photoUrl} alt="" fill sizes="460px" unoptimized className="object-cover tpl-photo" />
                 ) : (
                   <div
                     className="h-full w-full"

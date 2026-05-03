@@ -236,7 +236,7 @@ export function LayoutEditorial({
             fill
             unoptimized
             sizes="(max-width: 460px) 100vw, 460px"
-            className="object-cover"
+            className="object-cover tpl-photo"
             style={{ filter: "contrast(1.05)" }}
           />
         </div>

@@ -234,7 +234,7 @@ export function AutoDealer({
               sizes="460px"
               unoptimized
               priority
-              className="object-cover"
+              className="object-cover tpl-photo"
               style={{ filter: "brightness(0.9) contrast(1.05)" }}
             />
           ) : (
@@ -279,7 +279,7 @@ export function AutoDealer({
           >
             <div className="relative h-full w-full overflow-hidden rounded-full">
               {photoUrl ? (
-                <Image src={photoUrl} alt="" fill sizes="60px" unoptimized className="object-cover" />
+                <Image src={photoUrl} alt="" fill sizes="60px" unoptimized className="object-cover tpl-photo" />
               ) : (
                 <div
                   className="display flex h-full w-full items-center justify-center text-[16px] font-bold"

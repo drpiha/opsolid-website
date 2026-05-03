@@ -286,7 +286,7 @@ export function Accounting({
                 fill
                 sizes="72px"
                 unoptimized
-                className="object-cover"
+                className="object-cover tpl-photo"
               />
             ) : (
               <div

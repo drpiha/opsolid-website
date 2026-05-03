@@ -282,7 +282,7 @@ export function DJStone({
                 alt={cardData.name}
                 fill
                 unoptimized
-                className="rounded-full object-cover"
+                className="rounded-full object-cover tpl-photo"
                 style={{ filter: "sepia(0.18) contrast(1.04) saturate(0.92)" }}
                 sizes="140px"
               />

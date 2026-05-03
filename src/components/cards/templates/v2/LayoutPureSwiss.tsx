@@ -183,7 +183,7 @@ export function LayoutPureSwiss({
               fill
               unoptimized
               sizes="96px"
-              className="object-cover"
+              className="object-cover tpl-photo"
             />
           </div>
         )}

@@ -264,7 +264,7 @@ export function Ecommerce({
               width={52}
               height={52}
               unoptimized
-              className="block h-full w-full rounded-full object-cover"
+              className="block h-full w-full rounded-full object-cover tpl-photo"
               style={{ border: `2px solid ${PINK}` }}
             />
           ) : (

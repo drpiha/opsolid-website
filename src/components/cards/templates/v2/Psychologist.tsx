@@ -210,7 +210,7 @@ export function Psychologist({
             width={920}
             height={560}
             unoptimized
-            className="absolute inset-0 h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-cover tpl-photo"
             style={{ filter: "saturate(0.85) brightness(0.95)" }}
           />
         ) : (
@@ -251,7 +251,7 @@ export function Psychologist({
               width={220}
               height={220}
               unoptimized
-              className="mb-4 inline-block h-[110px] w-[110px] rounded-full object-cover"
+              className="mb-4 inline-block h-[110px] w-[110px] rounded-full object-cover tpl-photo"
               style={{ border: `6px solid ${SURFACE_CARD}`, boxShadow: "0 12px 30px rgba(45,38,56,0.18)" }}
             />
           ) : (

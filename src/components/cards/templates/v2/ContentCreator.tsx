@@ -324,7 +324,7 @@ export function ContentCreator({
             }}
           >
             {photoUrl ? (
-              <Image src={photoUrl} alt="" fill sizes="72px" unoptimized className="object-cover" />
+              <Image src={photoUrl} alt="" fill sizes="72px" unoptimized className="object-cover tpl-photo" />
             ) : (
               <div
                 className="display flex h-full w-full items-center justify-center text-[22px] font-bold"

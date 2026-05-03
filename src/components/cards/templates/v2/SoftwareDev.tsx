@@ -290,7 +290,7 @@ export function SoftwareDev({
                   fill
                   sizes="84px"
                   unoptimized
-                  className="object-cover"
+                  className="object-cover tpl-photo"
                 />
               ) : (
                 <div

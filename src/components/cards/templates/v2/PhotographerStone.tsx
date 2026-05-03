@@ -263,7 +263,7 @@ export function PhotographerStone({
               alt={cardData.name}
               fill
               unoptimized
-              className="object-cover"
+              className="object-cover tpl-photo"
               style={{ filter: "sepia(0.16) contrast(1.05) saturate(1.05)" }}
               sizes="200px"
             />
