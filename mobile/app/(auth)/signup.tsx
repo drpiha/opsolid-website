@@ -13,68 +13,33 @@ import { Input } from '../../src/components/ui/Input';
 import { Button } from '../../src/components/ui/Button';
 import { useTheme } from '../../src/lib/theme/ThemeProvider';
 import { copper } from '../../src/lib/theme/tokens';
-import { login, requestMagicLink } from '../../src/lib/auth/api';
-import { useAuthStore } from '../../src/lib/auth/store';
+import { requestMagicLink } from '../../src/lib/auth/api';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-type Mode = 'magic-link' | 'password';
-
-export default function LoginScreen() {
+export default function SignupScreen() {
   const theme = useTheme();
   const router = useRouter();
-  const setUser = useAuthStore((s) => s.setUser);
   const locale = detectLocale();
   const strings = useTranslations(locale).auth;
 
-  const [mode, setMode] = useState<Mode>('magic-link');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  function validateEmail(): boolean {
-    if (!EMAIL_RE.test(email.trim())) {
-      setError(strings.errorInvalidEmail);
-      return false;
-    }
-    return true;
-  }
-
   async function handleMagicLink() {
     setError(null);
-    if (!validateEmail()) return;
+    if (!EMAIL_RE.test(email.trim())) {
+      setError(strings.errorInvalidEmail);
+      return;
+    }
     setLoading(true);
     try {
       await requestMagicLink(email.trim(), locale);
       router.push(`/(auth)/magic-link?email=${encodeURIComponent(email.trim())}`);
     } catch {
       setError(strings.errorGeneric);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  async function handlePasswordLogin() {
-    setError(null);
-    if (!validateEmail()) return;
-    if (password.length < 8) {
-      setError(strings.errorWeakPassword);
-      return;
-    }
-    setLoading(true);
-    try {
-      const user = await login(email.trim(), password);
-      setUser(user);
-      router.replace('/(app)/cards');
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : '';
-      if (msg.includes('401') || msg.includes('invalid_credentials')) {
-        setError(strings.errorBadCreds);
-      } else {
-        setError(strings.errorGeneric);
-      }
     } finally {
       setLoading(false);
     }
@@ -92,7 +57,7 @@ export default function LoginScreen() {
             OPSOLID
           </Text>
           <Text style={[styles.welcome, { color: theme.ink[100] }]}>
-            {strings.welcome}
+            Create your OpSolid account
           </Text>
           <Text style={[styles.tagline, { color: theme.ink[300] }]}>
             {strings.tagline}
@@ -120,68 +85,33 @@ export default function LoginScreen() {
             keyboardType="email-address"
             textContentType="emailAddress"
             autoComplete="email"
-            returnKeyType={mode === 'magic-link' ? 'send' : 'next'}
-            onSubmitEditing={mode === 'magic-link' ? handleMagicLink : undefined}
+            returnKeyType="send"
+            onSubmitEditing={handleMagicLink}
           />
 
-          {mode === 'password' ? (
-            <Input
-              label={strings.passwordPlaceholder}
-              placeholder={strings.passwordPlaceholder}
-              value={password}
-              onChangeText={(v) => { setPassword(v); setError(null); }}
-              secureTextEntry
-              textContentType="password"
-              autoComplete="current-password"
-              returnKeyType="done"
-              onSubmitEditing={handlePasswordLogin}
-            />
-          ) : null}
+          <Button
+            label={strings.signupCta}
+            onPress={handleMagicLink}
+            loading={loading}
+            style={styles.ctaButton}
+          />
 
-          {mode === 'magic-link' ? (
-            <Button
-              label={strings.magicLinkCta}
-              onPress={handleMagicLink}
-              loading={loading}
-              style={styles.ctaButton}
-            />
-          ) : (
-            <Button
-              label={strings.loginCta}
-              onPress={handlePasswordLogin}
-              loading={loading}
-              style={styles.ctaButton}
-            />
-          )}
-
-          {/* Mode toggle */}
-          <TouchableOpacity
-            onPress={() => {
-              setMode(mode === 'magic-link' ? 'password' : 'magic-link');
-              setError(null);
-            }}
-            style={styles.toggleRow}
-            accessibilityRole="button"
-          >
-            <Text style={[styles.toggleText, { color: copper[500] }]}>
-              {mode === 'magic-link'
-                ? strings.passwordToggle
-                : strings.magicLinkBack}
-            </Text>
-          </TouchableOpacity>
+          <Text style={[styles.note, { color: theme.ink[400] }]}>
+            We'll send a sign-in link to your email. No password needed.
+          </Text>
         </View>
 
         {/* Footer link */}
         <View style={styles.footer}>
           <Text style={[styles.footerHint, { color: theme.ink[300] }]}>
-            {strings.signupHint}{' '}
+            {strings.loginHint}{' '}
           </Text>
           <TouchableOpacity
-            onPress={() => router.push('/(auth)/signup')}
+            onPress={() => router.push('/(auth)/login')}
             accessibilityRole="link"
           >
             <Text style={[styles.footerLink, { color: copper[500] }]}>
-              {strings.signupCta}
+              {strings.loginCta}
             </Text>
           </TouchableOpacity>
         </View>
@@ -230,13 +160,10 @@ const styles = StyleSheet.create({
   ctaButton: {
     marginTop: 4,
   },
-  toggleRow: {
-    alignItems: 'center',
-    paddingVertical: 8,
-  },
-  toggleText: {
-    fontSize: 14,
-    fontWeight: '500',
+  note: {
+    fontSize: 12,
+    textAlign: 'center',
+    lineHeight: 18,
   },
   footer: {
     flexDirection: 'row',
