@@ -79,6 +79,7 @@ export default function AgentForm({
   });
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [savedAt, setSavedAt] = useState<number | null>(null);
 
   const isEdit = Boolean(agent?.id);
   const hasProvider = Boolean(agent?.providerAgentId);
@@ -112,6 +113,8 @@ export default function AgentForm({
       }
       const saved = (await res.json()) as AgentLike;
       onSaved?.(saved);
+      setSavedAt(Date.now());
+      setTimeout(() => setSavedAt(null), 4000);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Unbekannter Fehler");
     } finally {
@@ -259,6 +262,11 @@ export default function AgentForm({
           {error}
         </div>
       )}
+      {savedAt && !error && (
+        <div className="rounded-md border border-signal-ok/30 bg-signal-ok/[0.08] px-4 py-3 text-[12px] text-signal-ok">
+          ✓ Gespeichert.
+        </div>
+      )}
       <div className="flex items-center justify-end gap-3">
         <button
           type="submit"
@@ -272,7 +280,7 @@ export default function AgentForm({
           ) : (
             <Save className="h-3.5 w-3.5" aria-hidden />
           )}
-          {hasProvider ? "Speichern & Synchronisieren" : "Speichern"}
+          {hasProvider ? "Speichern" : "Speichern"}
         </button>
       </div>
     </form>

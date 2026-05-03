@@ -69,6 +69,63 @@ export async function GET(
   }
 }
 
+// POST — create a single new notification config. The dashboard's "Kanal
+// hinzufügen" form sends one config at a time; PUT (full-replace) was awkward
+// for that flow.
+export async function POST(
+  req: NextRequest,
+  { params }: { params: Promise<{ tenantId: string }> },
+) {
+  const { tenantId } = await params;
+  try {
+    await requireTenantToken(req, tenantId);
+  } catch (err) {
+    return unauthorized(err);
+  }
+
+  let body: unknown;
+  try {
+    body = await req.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
+
+  const parsed = NotifConfigZ.safeParse(body);
+  if (!parsed.success) {
+    return NextResponse.json(
+      {
+        error: parsed.error.issues[0]?.message ?? "Validation failed",
+        reason: "validation_failed",
+      },
+      { status: 400 },
+    );
+  }
+  const cfg = parsed.data;
+
+  try {
+    const created = await prisma.voiceNotificationConfig.create({
+      data: {
+        tenantId,
+        channelType: cfg.channelType,
+        label: cfg.label ?? null,
+        isActive: cfg.isActive ?? true,
+        triggerOn: cfg.triggerOn ?? [],
+        config: (cfg.config ?? {}) as object,
+      },
+    });
+    return NextResponse.json({ data: created }, { status: 201 });
+  } catch (err) {
+    Sentry.captureException(err, {
+      tags: { area: "voice-tenant", route: "notifications.create" },
+      extra: { tenantId },
+    });
+    return NextResponse.json(
+      { error: "Failed to create notification config" },
+      { status: 500 },
+    );
+  }
+}
+
 export async function PUT(
   req: NextRequest,
   { params }: { params: Promise<{ tenantId: string }> },
