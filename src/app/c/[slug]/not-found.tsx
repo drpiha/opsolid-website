@@ -1,12 +1,4 @@
-"use client";
-
-// =============================================================================
-// /c/[slug] not-found — locale-aware 404 for missing card slugs.
-// Reads ?lang= query param; falls back to "en". B6 acceptance: locale-aware
-// error messages for de / tr / en.
-// =============================================================================
-
-import { useSearchParams } from "next/navigation";
+import { headers } from "next/headers";
 
 const copy = {
   de: {
@@ -24,14 +16,32 @@ const copy = {
     body: "Bu dijital kartvizit mevcut değil veya kaldırılmış.",
     home: "Ana sayfaya dön",
   },
-};
+} as const;
 
 type Lang = keyof typeof copy;
 
+function detectLang(): Lang {
+  const h = headers();
+  const referer = h.get("referer") ?? "";
+  if (referer) {
+    try {
+      const u = new URL(referer);
+      const q = u.searchParams.get("lang");
+      if (q === "de" || q === "tr" || q === "en") return q;
+    } catch {
+      // ignore malformed referer
+    }
+  }
+  const accept = (h.get("accept-language") ?? "").toLowerCase();
+  if (accept.startsWith("de")) return "de";
+  if (accept.startsWith("tr")) return "tr";
+  return "en";
+}
+
 export default function NotFound() {
-  const params = useSearchParams();
-  const lang = (params.get("lang") ?? "en") as Lang;
-  const t = copy[lang] ?? copy.en;
+  const lang = detectLang();
+  const t = copy[lang];
+  const homeHref = lang === "en" ? "/" : `/${lang}`;
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center gap-6 px-6 text-center bg-bg-0">
@@ -41,8 +51,8 @@ export default function NotFound() {
       <h1 className="font-display text-3xl font-medium text-ink">{t.title}</h1>
       <p className="max-w-md text-sm text-ink-400">{t.body}</p>
       <a
-        href={lang === "en" ? "/" : `/${lang}`}
-        className="rounded-full bg-copper-500 px-6 py-2 text-sm text-white hover:bg-copper-600 transition-colors"
+        href={homeHref}
+        className="rounded-full bg-copper-500 px-6 py-2 text-sm text-white transition-colors hover:bg-copper-600"
       >
         {t.home}
       </a>
