@@ -6,6 +6,10 @@ import {
   TenantTokenError,
 } from "@/lib/voice/auth/tenant-token";
 import { getVoiceProvider } from "@/lib/voice/provider";
+import {
+  renderKnowledgeBaseSection,
+  renderHandoffSection,
+} from "@/lib/voice/prompts";
 
 export const runtime = "nodejs";
 
@@ -54,6 +58,36 @@ export async function POST(
 
     const provider = getVoiceProvider();
 
+    // Compose the prompt sent to the provider:
+    //   stored systemPrompt (textarea content)
+    //   + Wissensdatenbank section (all active KB items for the tenant)
+    //   + Eskalationsregeln section (all active handoff rules for the tenant)
+    // Without this, KB items live in the DB but the AI never sees them.
+    const [kbItems, handoffRules] = await Promise.all([
+      prisma.voiceKnowledgeBaseItem.findMany({
+        where: { tenantId, isActive: true },
+        orderBy: [{ itemType: "asc" }, { sortOrder: "asc" }],
+        select: { itemType: true, title: true, content: true },
+      }),
+      prisma.voiceHandoffRule.findMany({
+        where: { tenantId, isActive: true },
+        orderBy: { sortOrder: "asc" },
+        select: {
+          name: true,
+          triggerType: true,
+          triggerValue: true,
+          actionType: true,
+        },
+      }),
+    ]);
+
+    const sections: string[] = [agent.systemPrompt.trim()];
+    const kbSection = renderKnowledgeBaseSection(kbItems);
+    if (kbSection) sections.push(kbSection);
+    const handoffSection = renderHandoffSection(handoffRules);
+    if (handoffSection) sections.push(handoffSection);
+    const composedPrompt = sections.join("\n\n");
+
     if (agent.providerAgentId) {
       await provider.updateAgent({
         providerId: agent.providerAgentId,
@@ -61,7 +95,7 @@ export async function POST(
         displayName: agent.displayName,
         language: agent.language,
         voiceId: agent.voiceId,
-        systemPrompt: agent.systemPrompt,
+        systemPrompt: composedPrompt,
         maxDurationSeconds: agent.maxDurationSeconds,
         interruptionSensitivity: agent.interruptionSensitivity,
         responseDelayMs: agent.responseDelayMs,
@@ -88,7 +122,7 @@ export async function POST(
       displayName: agent.displayName,
       language: agent.language,
       voiceId: agent.voiceId,
-      systemPrompt: agent.systemPrompt,
+      systemPrompt: composedPrompt,
       maxDurationSeconds: agent.maxDurationSeconds,
       interruptionSensitivity: agent.interruptionSensitivity,
       responseDelayMs: agent.responseDelayMs,
