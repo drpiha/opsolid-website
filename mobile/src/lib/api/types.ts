@@ -20,11 +20,48 @@ export type AuthMeResponse = {
 
 // POST /api/v1/auth/magic-link  {email, locale}  → 202 no body
 
-// GET /api/v1/cards  (Bearer)
-export type CardListResponse = {
-  cards: CardSummary[];
+// -----------------------------------------------------------------------
+// Card types — full ApiCard shape mirrors OpenAPI spec.
+// CardSummary is kept for backward compat (C7.1 code).
+// New code should use ApiCard.
+// -----------------------------------------------------------------------
+
+export type CardStatus = 'DRAFT' | 'PUBLISHED' | 'CANCELLED';
+
+// Full card shape — GET /api/v1/cards/{id} and GET /api/v1/cards items
+export type ApiCard = {
+  id: string;
+  slug: string | null;
+  status: CardStatus;
+  templateId: number;
+  layoutKey: string | null;
+  themeKey: string | null;
+  cardData: Record<string, unknown>;
+  brandPrimaryHex: string | null;
+  brandAccentHex: string | null;
+  photoPath: string | null;
+  logoPath: string | null;
+  qrStyle: Record<string, unknown> | null;
+  videoUrl: string | null;
+  publishedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
 };
 
+// GET /api/v1/cards (Bearer) — cursor-paginated list
+export type CardListResponse = {
+  items: ApiCard[];
+  nextCursor: string | null;
+};
+
+// GET /api/v1/cards/:id (Bearer)
+export type CardDetailResponse = { card: ApiCard };
+
+// DELETE /api/v1/cards/:id (Bearer)
+export type CardDeleteResponse = { ok: true; id: string };
+
+// Backward-compat summary shape from C7.1 — kept so existing imports don't break.
+// Prefer ApiCard for new code.
 export type CardSummary = {
   id: string;
   slug: string | null;
@@ -33,12 +70,6 @@ export type CardSummary = {
   status: 'DRAFT' | 'PUBLISHED' | 'ARCHIVED';
   views: number;
   updatedAt: string;
-};
-
-// GET /api/v1/cards/:id  (Bearer) — placeholder, extend in C7.4
-export type CardDetailResponse = CardSummary & {
-  // Full card fields will be added during C7.4 (card detail screen)
-  [key: string]: unknown;
 };
 
 // Generic API error shape returned by the backend
