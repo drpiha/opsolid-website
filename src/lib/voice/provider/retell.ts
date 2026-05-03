@@ -182,6 +182,26 @@ export class RetellProvider implements VoiceProvider {
 
   async updateAgent(input: UpdateAgentInput): Promise<void> {
     try {
+      // Retell stores the system prompt on the LLM record (response_engine.
+      // llm_id), NOT on the agent. agent.update silently drops any
+      // general_prompt key, which is why earlier updates appeared to succeed
+      // but the prompt in Retell stayed pinned to the version from the
+      // original create call. To actually push prompt changes we must:
+      //   1. retrieve the agent to learn its llm_id
+      //   2. call llm.update with the new general_prompt
+      // before issuing the agent.update for everything else.
+      if (input.systemPrompt !== undefined) {
+        const agent = await this.client.agent.retrieve(input.providerId);
+        const engine = (agent as { response_engine?: unknown }).response_engine as
+          | { type?: string; llm_id?: string }
+          | undefined;
+        if (engine?.type === "retell-llm" && engine.llm_id) {
+          await this.client.llm.update(engine.llm_id, {
+            general_prompt: input.systemPrompt,
+          } as never);
+        }
+      }
+
       const params: Record<string, unknown> = {};
       if (input.name !== undefined) params.agent_name = input.name;
       if (input.voiceId !== undefined) params.voice_id = input.voiceId;
