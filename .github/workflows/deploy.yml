@@ -8,6 +8,7 @@ on:
       - ".github/workflows/daily-blog-update.yml"
       - "scripts/**"
       - "deploy/hostinger/**"
+      - "mobile/**"
   workflow_dispatch:
 
 concurrency:
@@ -44,6 +45,7 @@ jobs:
             --exclude='_kutasia_tmp' \
             --exclude='tsconfig.tsbuildinfo' \
             --exclude='public/uploads' \
+            --exclude='mobile' \
             ./ "$DEPLOY_DIR/"
 
       - name: Apply pending DB migrations (idempotent)

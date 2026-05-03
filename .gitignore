@@ -54,6 +54,14 @@ src/generated/
 opsolid-deploy.tar.gz
 *.deploy.tar.gz
 
+# Mobile app (Expo) — generated / installed artifacts
+mobile/node_modules/
+mobile/.expo/
+mobile/dist/
+mobile/web-build/
+mobile/ios/
+mobile/android/
+
 # pnpm lock file (project uses npm)
 pnpm-lock.yaml
 
