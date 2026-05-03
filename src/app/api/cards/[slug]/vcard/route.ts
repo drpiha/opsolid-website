@@ -93,12 +93,15 @@ export async function GET(
     sourceLabel,
   });
 
-  // B2 — Apple devices (iPhone / iPad / iPod / Mac Safari) open a native
-  // contact sheet when Content-Disposition is `inline`. Android and desktop
-  // non-Safari browsers trigger a file download with `attachment`.
+  // B2 — iOS Safari opens a native contact sheet when Content-Disposition is
+  // `inline`; Android triggers a file download with `attachment`. For all
+  // other clients (desktop browsers, no UA) `inline` is the safe default —
+  // browsers either open the system contact handler or prompt a download,
+  // whereas `attachment` always forces a download and breaks native contact
+  // import on iOS when accessed outside of the SmartCard page.
   const ua = req.headers.get("user-agent") ?? "";
-  const isApple = /iphone|ipad|ipod|mac os/i.test(ua);
-  const disposition = isApple ? "inline" : "attachment";
+  const isAndroid = /android/i.test(ua);
+  const disposition = isAndroid ? "attachment" : "inline";
 
   return new NextResponse(vcard, {
     status: 200,
