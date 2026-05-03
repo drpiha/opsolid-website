@@ -21,7 +21,7 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { ArrowUpRight, Calendar } from "lucide-react";
+import { ArrowUpRight, Calendar, Download } from "lucide-react";
 
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
@@ -456,11 +456,25 @@ export function PhotographerStone({
         <ContactRows cardData={cardData} locale={locale} variant="tile" accentHex={ACCENT_DEEP} />
       </section>
 
-      {/* WALLET / SEND / EXCHANGE */}
+      {/* SAVE CONTACT + WALLET / SEND / EXCHANGE */}
       <section
-        className="px-6 py-7"
+        className="px-6 py-7 space-y-3"
         style={{ background: SURFACE_2, borderTop: `1px solid ${BORDER_SOFT}` }}
       >
+        <a
+          href={`/api/cards/${slug}/vcard`}
+          className="serif flex items-center justify-center gap-2 w-full min-h-[52px] rounded-[14px] text-[15px] transition-colors"
+          style={{
+            background: ACCENT_DEEP,
+            color: SURFACE,
+            fontWeight: 600,
+            boxShadow: "0 8px 24px -8px rgba(61,43,31,0.45)",
+            letterSpacing: "0.2px",
+          }}
+        >
+          <Download size={18} strokeWidth={2.2} />
+          {t.saveContact}
+        </a>
         <SendMyInfoSlot slug={slug} sourceQs="" primary={ACCENT_DEEP} locale={locale} />
         <ExchangeSlot slug={slug} primary={ACCENT_DEEP} locale={locale} />
       </section>

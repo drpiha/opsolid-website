@@ -33,6 +33,7 @@ import Image from "next/image";
 import * as Dialog from "@radix-ui/react-dialog";
 import {
   Camera,
+  Download,
   Mail,
   MapPin,
   Phone,
@@ -87,6 +88,7 @@ interface PhCopy {
   privacy: string;
   share: string;
   closeLightbox: string;
+  saveContact: string;
 }
 
 const COPY: Record<"de" | "en" | "tr", PhCopy> = {
@@ -107,6 +109,7 @@ const COPY: Record<"de" | "en" | "tr", PhCopy> = {
     privacy: "Datenschutz",
     share: "Teilen",
     closeLightbox: "Schließen",
+    saveContact: "Kontakt speichern",
   },
   en: {
     portfolio: "Portfolio",
@@ -125,6 +128,7 @@ const COPY: Record<"de" | "en" | "tr", PhCopy> = {
     privacy: "Privacy",
     share: "Share",
     closeLightbox: "Close",
+    saveContact: "Save contact",
   },
   tr: {
     portfolio: "Portföy",
@@ -143,6 +147,7 @@ const COPY: Record<"de" | "en" | "tr", PhCopy> = {
     privacy: "Gizlilik",
     share: "Paylaş",
     closeLightbox: "Kapat",
+    saveContact: "Kişiyi Kaydet",
   },
 };
 
@@ -360,6 +365,7 @@ export function Photographer({
         locale={locale}
         primary={accent}
         accent="#fafafa"
+        saveContactLabel={t.saveContact}
       />
 
       {walletSlot && (
@@ -757,15 +763,25 @@ function CTASection({
   locale,
   primary,
   accent,
+  saveContactLabel,
 }: {
   slug: string;
   sourceQs: string;
   locale: "de" | "en" | "tr";
   primary: string;
   accent: string;
+  saveContactLabel: string;
 }) {
   return (
-    <section className="px-6 py-7">
+    <section className="px-6 py-7 space-y-3">
+      <a
+        href={`/api/cards/${slug}/vcard`}
+        className="flex items-center justify-center gap-2 w-full min-h-[52px] rounded-xl text-[14px] font-medium transition-colors"
+        style={{ background: primary, color: "#0e0e0e" }}
+      >
+        <Download size={18} strokeWidth={1.6} />
+        {saveContactLabel}
+      </a>
       <SendMyInfoSlot slug={slug} sourceQs={sourceQs} primary={primary} locale={locale} />
       <ExchangeSlot slug={slug} primary={accent} locale={locale} />
     </section>

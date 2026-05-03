@@ -24,7 +24,7 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { Mail, MessageCircle, Phone } from "lucide-react";
+import { Download, Mail, MessageCircle, Phone } from "lucide-react";
 
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
@@ -581,11 +581,24 @@ export function PhotographerNoir({
         )}
       </section>
 
-      {/* WALLET / SEND / EXCHANGE */}
+      {/* SAVE CONTACT + WALLET / SEND / EXCHANGE */}
       <section
-        className="px-7 py-7"
+        className="px-7 py-7 space-y-3"
         style={{ background: SURFACE_3, borderTop: `1px solid ${HAIRLINE}` }}
       >
+        <a
+          href={`/api/cards/${slug}/vcard`}
+          className="flex items-center justify-center gap-2 w-full min-h-[52px] border text-[11px] font-medium uppercase transition-colors"
+          style={{
+            background: "transparent",
+            borderColor: accent,
+            color: accent,
+            letterSpacing: "3px",
+          }}
+        >
+          <Download size={14} strokeWidth={1.6} />
+          {t.saveContact}
+        </a>
         <SendMyInfoSlot slug={slug} sourceQs="" primary={accent} locale={locale} />
         <ExchangeSlot slug={slug} primary={accent} locale={locale} />
       </section>

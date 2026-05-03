@@ -20,6 +20,7 @@
 
 import * as React from "react";
 import Image from "next/image";
+import { Download } from "lucide-react";
 
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
@@ -398,6 +399,23 @@ export function PhotographerPure({
           <ContactRows cardData={cardData} locale={locale} variant="hairline" accentHex={accent} />
         </div>
       </section>
+
+      {/* SAVE CONTACT */}
+      <div className="px-7 pb-4">
+        <a
+          href={`/api/cards/${slug}/vcard`}
+          className="flex items-center justify-center gap-2 w-full min-h-[52px] rounded-none text-[13px] font-semibold transition-colors"
+          style={{
+            background: accent,
+            color: PAGE,
+            border: `1px solid ${accent}`,
+            letterSpacing: "0.3px",
+          }}
+        >
+          <Download size={17} strokeWidth={1.7} />
+          {t.saveContact}
+        </a>
+      </div>
 
       {/* CTA GRID */}
       <div className="grid grid-cols-2 gap-2 px-7 pb-7">

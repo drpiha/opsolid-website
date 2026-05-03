@@ -21,7 +21,7 @@
 
 import * as React from "react";
 import Image from "next/image";
-import { ArrowUpRight, Calendar, MapPin, MessageCircle, Phone, Star } from "lucide-react";
+import { ArrowUpRight, Calendar, Download, MapPin, MessageCircle, Phone, Star } from "lucide-react";
 
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
@@ -387,8 +387,25 @@ export function PhotographerVivid({
         </section>
       )}
 
+      {/* SAVE CONTACT */}
+      <section className="px-5 pb-0 pt-6">
+        <a
+          href={`/api/cards/${slug}/vcard`}
+          className="mb-2.5 flex items-center justify-center gap-2 rounded-[16px] px-5 py-4 text-[15px] font-extrabold transition-all hover:-translate-y-0.5"
+          style={{
+            background: primary,
+            color: "#fff",
+            boxShadow: `0 10px 24px -6px ${primary}80`,
+            letterSpacing: "0.3px",
+          }}
+        >
+          <Download size={18} strokeWidth={2.4} />
+          {t.saveContact}
+        </a>
+      </section>
+
       {/* BIG CTA */}
-      <section className="px-5 pb-2 pt-6">
+      <section className="px-5 pb-2 pt-3">
         {phoneDigits && (
           <a
             href={`tel:${phoneDigits}`}
