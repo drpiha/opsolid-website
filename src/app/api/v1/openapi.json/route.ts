@@ -94,6 +94,18 @@ const spec = {
           },
         },
       },
+      MagicLinkVerifyRequest: {
+        type: "object",
+        required: ["token"],
+        properties: {
+          token: {
+            type: "string",
+            minLength: 8,
+            maxLength: 512,
+            description: "The single-use token delivered in the magic-link email URL.",
+          },
+        },
+      },
       // -------------------------------------------------------------------------
       // Users
       // -------------------------------------------------------------------------
@@ -438,6 +450,63 @@ const spec = {
           },
           "401": {
             description: "Missing or invalid Bearer token.",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Error" },
+              },
+            },
+          },
+        },
+      },
+    },
+    "/api/v1/auth/magic-link/verify": {
+      post: {
+        operationId: "authMagicLinkVerify",
+        tags: ["auth"],
+        summary: "Consume a magic-link token and return JWT",
+        description:
+          "Mobile / API equivalent of the cookie-based /api/auth/magic-link/verify GET. Single-use: the token is burned on first call. Mirror of authLogin's response shape. Rate-limited: 30 req / hour / IP.",
+        security: [],
+        requestBody: {
+          required: true,
+          content: {
+            "application/json": {
+              schema: { $ref: "#/components/schemas/MagicLinkVerifyRequest" },
+            },
+          },
+        },
+        responses: {
+          "200": {
+            description: "Token consumed; new session and tokens issued.",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/AuthResponse" },
+              },
+            },
+          },
+          "400": {
+            description: "Malformed token.",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Error" },
+                example: { error: "invalid_or_expired_link", message: "Invalid or expired link." },
+              },
+            },
+          },
+          "401": {
+            description: "Token unknown, already used, or expired.",
+            content: {
+              "application/json": {
+                schema: { $ref: "#/components/schemas/Error" },
+                example: { error: "invalid_or_expired_link", message: "Invalid or expired link." },
+              },
+            },
+          },
+          "429": {
+            description: "Rate limit exceeded.",
+            headers: {
+              "Retry-After": { schema: { type: "integer" } },
+            },
             content: {
               "application/json": {
                 schema: { $ref: "#/components/schemas/Error" },

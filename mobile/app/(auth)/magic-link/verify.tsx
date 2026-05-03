@@ -1,13 +1,3 @@
-// TODO C7.3-followup — BACKEND: /api/v1/auth/magic-link/verify endpoint is missing.
-// The web path /api/auth/magic-link/verify uses a cookie-only session exchange and
-// cannot be reused by mobile. A new JWT-returning endpoint is needed at:
-//   POST /api/v1/auth/magic-link/verify  { token: string }
-//   → { accessToken, refreshToken, user }
-// Until this endpoint exists, deep-link verification will return a 404 and this
-// screen will show an error state. Users can still authenticate via the password
-// fallback on the login screen.
-// Track in: C7.3-followup / Hat B backend sprint.
-
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Text, View, StyleSheet } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
