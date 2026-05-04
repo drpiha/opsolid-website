@@ -97,10 +97,10 @@ export async function issueMagicLink(
     },
   });
 
-  // The caller adds the locale prefix (eg /de/auth/magic-link/verify?...).
-  // We use a raw, locale-less path here so call sites that already have a
-  // locale-aware URL builder can compose it themselves.
-  const link = `${RAW_SITE_URL}/auth/magic-link/verify?token=${encodeURIComponent(token)}`;
+  // Link points at the API GET route which consumes the token, sets the
+  // refresh cookie, and 302-redirects to /dashboard/cards (locale-resolved
+  // by middleware downstream).
+  const link = `${RAW_SITE_URL}/api/auth/magic-link/verify?token=${encodeURIComponent(token)}`;
 
   return {
     token,
