@@ -69,6 +69,7 @@ export interface CreateAgentInput {
   dtmfHandoffDigit: string | null;
   responseDelayMs: number;
   interruptionSensitivity: number;
+  llmModel?: string;
   providerOverrides: Record<string, unknown>;
 }
 

@@ -150,7 +150,7 @@ export class RetellProvider implements VoiceProvider {
       // providerOverrides.response_engine.
       const llm = await this.client.llm.create({
         general_prompt: input.systemPrompt,
-        model: "gpt-4.1-mini",
+        model: (input.llmModel ?? "gpt-5-mini") as never,
       });
 
       const overrides = input.providerOverrides as Record<string, unknown>;
@@ -190,15 +190,22 @@ export class RetellProvider implements VoiceProvider {
       //   1. retrieve the agent to learn its llm_id
       //   2. call llm.update with the new general_prompt
       // before issuing the agent.update for everything else.
-      if (input.systemPrompt !== undefined) {
+      if (input.systemPrompt !== undefined || input.llmModel !== undefined) {
         const agent = await this.client.agent.retrieve(input.providerId);
         const engine = (agent as { response_engine?: unknown }).response_engine as
           | { type?: string; llm_id?: string }
           | undefined;
         if (engine?.type === "retell-llm" && engine.llm_id) {
-          await this.client.llm.update(engine.llm_id, {
-            general_prompt: input.systemPrompt,
-          } as never);
+          const llmPatch: Record<string, unknown> = {};
+          if (input.systemPrompt !== undefined) {
+            llmPatch.general_prompt = input.systemPrompt;
+          }
+          if (input.llmModel !== undefined) {
+            llmPatch.model = input.llmModel;
+          }
+          if (Object.keys(llmPatch).length > 0) {
+            await this.client.llm.update(engine.llm_id, llmPatch as never);
+          }
         }
       }
 

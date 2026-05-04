@@ -56,6 +56,7 @@ run_sql "patch_011_add_user_auth.sql"       "$REPO_ROOT/prisma/patch_011_add_use
 run_sql "patch_012_add_retention_indexes.sql" "$REPO_ROOT/prisma/patch_012_add_retention_indexes.sql"
 run_sql "patch_013_add_pii_redacted_at.sql" "$REPO_ROOT/prisma/patch_013_add_pii_redacted_at.sql"
 run_sql "patch_014_add_user_role.sql"       "$REPO_ROOT/prisma/patch_014_add_user_role.sql"
+run_sql "patch_015_voice_agent_llm_model.sql" "$REPO_ROOT/prisma/patch_015_voice_agent_llm_model.sql"
 run_sql "seed.sql"                    "$REPO_ROOT/prisma/seed.sql"
 
 echo "== bootstrap ok =="

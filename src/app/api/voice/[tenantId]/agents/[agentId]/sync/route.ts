@@ -101,6 +101,7 @@ export async function POST(
         responseDelayMs: agent.responseDelayMs,
         endCallPhrases: agent.endCallPhrases,
         ambientSoundEnabled: agent.ambientSoundEnabled,
+        llmModel: agent.llmModel,
         providerOverrides: agent.providerOverrides as Record<string, unknown>,
       });
       await prisma.voiceAgent.update({
@@ -129,6 +130,7 @@ export async function POST(
       endCallPhrases: agent.endCallPhrases,
       dtmfHandoffDigit: agent.dtmfHandoffDigit,
       ambientSoundEnabled: agent.ambientSoundEnabled,
+      llmModel: agent.llmModel,
       providerOverrides: agent.providerOverrides as Record<string, unknown>,
     });
 

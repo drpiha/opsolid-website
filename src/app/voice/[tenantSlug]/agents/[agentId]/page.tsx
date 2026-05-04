@@ -80,6 +80,7 @@ export default async function AgentDetailPage({
           maxDurationSeconds: agent.maxDurationSeconds,
           status: agent.status as "draft" | "active" | "paused",
           providerAgentId: agent.providerAgentId,
+          llmModel: agent.llmModel,
         }}
       />
 

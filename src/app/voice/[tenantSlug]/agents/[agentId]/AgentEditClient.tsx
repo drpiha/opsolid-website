@@ -11,7 +11,7 @@ interface AgentEditClientProps {
   tenantId: string;
   tenantSlug: string;
   token: string;
-  agent: Required<Pick<AgentLike, "id" | "name" | "displayName" | "language" | "promptTemplate" | "voiceId" | "systemPrompt" | "maxDurationSeconds" | "status">> & { providerAgentId: string | null };
+  agent: Required<Pick<AgentLike, "id" | "name" | "displayName" | "language" | "promptTemplate" | "voiceId" | "systemPrompt" | "maxDurationSeconds" | "status" | "llmModel">> & { providerAgentId: string | null };
 }
 
 export default function AgentEditClient({

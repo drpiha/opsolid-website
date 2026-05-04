@@ -160,14 +160,18 @@ export async function PATCH(
         ...(input.ambientSoundEnabled !== undefined && {
           ambientSoundEnabled: input.ambientSoundEnabled,
         }),
+        ...(input.llmModel !== undefined && {
+          llmModel: input.llmModel,
+        }),
         ...(input.providerOverrides !== undefined && {
           providerOverrides: input.providerOverrides as object,
         }),
       },
     });
 
-    // If the agent has a provider record AND prompt/voice/duration changed,
-    // push the diff to the provider. Best-effort — operator can re-sync.
+    // If the agent has a provider record AND prompt/voice/duration/model
+    // changed, push the diff to the provider. Best-effort — operator can
+    // re-sync.
     const promptChanged =
       input.systemPrompt !== undefined &&
       input.systemPrompt !== existing.systemPrompt;
@@ -176,12 +180,14 @@ export async function PATCH(
     const durationChanged =
       input.maxDurationSeconds !== undefined &&
       input.maxDurationSeconds !== existing.maxDurationSeconds;
+    const modelChanged =
+      input.llmModel !== undefined && input.llmModel !== existing.llmModel;
 
     let providerSynced = false;
     let providerError: string | null = null;
     if (
       existing.providerAgentId &&
-      (promptChanged || voiceChanged || durationChanged)
+      (promptChanged || voiceChanged || durationChanged || modelChanged)
     ) {
       try {
         const provider = getVoiceProvider();
@@ -196,6 +202,7 @@ export async function PATCH(
           responseDelayMs: updated.responseDelayMs,
           endCallPhrases: updated.endCallPhrases,
           ambientSoundEnabled: updated.ambientSoundEnabled,
+          llmModel: updated.llmModel,
           providerOverrides: updated.providerOverrides as Record<string, unknown>,
         });
         await prisma.voiceAgent.update({

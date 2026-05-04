@@ -137,6 +137,7 @@ export async function POST(
         endCallPhrases: input.endCallPhrases ?? [],
         dtmfHandoffDigit: input.dtmfHandoffDigit ?? null,
         ambientSoundEnabled: input.ambientSoundEnabled ?? false,
+        llmModel: input.llmModel ?? "gpt-5-mini",
         providerOverrides: (input.providerOverrides ?? {}) as object,
       },
     });
@@ -160,6 +161,7 @@ export async function POST(
           endCallPhrases: agent.endCallPhrases,
           dtmfHandoffDigit: agent.dtmfHandoffDigit,
           ambientSoundEnabled: agent.ambientSoundEnabled,
+          llmModel: agent.llmModel,
           providerOverrides: agent.providerOverrides as Record<string, unknown>,
         });
         if (result?.providerId) {

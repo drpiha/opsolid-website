@@ -222,6 +222,7 @@ export const CreateVoiceAgentZ = z.object({
     .regex(/^[0-9*#]$/, "must be a single DTMF digit")
     .optional(),
   ambientSoundEnabled: z.boolean().optional(),
+  llmModel: z.string().min(1).max(80).optional(),
   providerOverrides: z.record(z.string(), z.unknown()).optional(),
 });
 export type CreateVoiceAgentInput = z.infer<typeof CreateVoiceAgentZ>;
