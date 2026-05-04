@@ -64,8 +64,20 @@ export async function POST(req: Request) {
   try {
     const issued = await issueMagicLink(email, { locale });
     const localeForCopy = locale ?? "de";
-    const html = renderMagicLinkHtml({ link: issued.link, locale: localeForCopy });
-    const text = renderMagicLinkText({ link: issued.link, locale: localeForCopy });
+    // Always include the opsolid:// deep-link as a secondary CTA. We can't
+    // know whether the user will open the email on phone or desktop, so the
+    // single email serves both surfaces. Desktop users without the app
+    // installed simply ignore the "Open in app" button.
+    const html = renderMagicLinkHtml({
+      link: issued.link,
+      appLink: issued.appLink,
+      locale: localeForCopy,
+    });
+    const text = renderMagicLinkText({
+      link: issued.link,
+      appLink: issued.appLink,
+      locale: localeForCopy,
+    });
     const subject = magicLinkSubject(localeForCopy);
     void sendEmail({ to: email, subject, html, text }).catch((err) => {
       void captureAuthEvent("magic_link_email_failed", {

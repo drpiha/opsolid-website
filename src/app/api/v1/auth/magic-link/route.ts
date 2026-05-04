@@ -75,8 +75,19 @@ export async function POST(req: Request) {
 
   try {
     const issued = await issueMagicLink(email, { locale });
-    const html = renderMagicLinkHtml({ link: issued.link, locale: localeForCopy });
-    const text = renderMagicLinkText({ link: issued.link, locale: localeForCopy });
+    // The v1 route is hit by the mobile client. Render BOTH the web fallback
+    // link AND the opsolid:// deep-link so the same email works whether the
+    // user opens it on their phone (deep link) or on desktop (browser link).
+    const html = renderMagicLinkHtml({
+      link: issued.link,
+      appLink: issued.appLink,
+      locale: localeForCopy,
+    });
+    const text = renderMagicLinkText({
+      link: issued.link,
+      appLink: issued.appLink,
+      locale: localeForCopy,
+    });
     const subject = magicLinkSubject(localeForCopy);
     void sendEmail({ to: email, subject, html, text }).catch(() => {
       /* logged in the email client; never surfaced */

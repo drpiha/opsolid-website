@@ -18,7 +18,15 @@ export interface MagicLinkCopy {
   headline: string;
   greeting: string;
   lead: string;
+  /** Single-CTA primary label when no app deep-link is offered (e.g. "Sign in"). */
   cta: string;
+  /** Primary "open in app" deep-link CTA label (mobile-first emails). */
+  appCta: string;
+  /**
+   * Secondary "open in browser instead" label, paired with `appCta` when
+   * the email contains both an app deep-link and a web fallback URL.
+   */
+  webCta: string;
   expiry: string;
   ignore: string;
   signoff: string;
@@ -61,6 +69,8 @@ export const COPY: Record<Locale, LocaleCopy> = {
       greeting: "Guten Tag,",
       lead: "Sie haben eine Anmeldung bei OpSolid angefordert. Klicken Sie auf den Button, um sich anzumelden.",
       cta: "Anmelden",
+      appCta: "In der App öffnen",
+      webCta: "Im Browser öffnen",
       expiry: "Dieser Link ist 15 Minuten gültig und kann nur einmal verwendet werden.",
       ignore: "Falls Sie diese Anfrage nicht gestellt haben, können Sie diese E-Mail ignorieren. Ihr Konto ist sicher.",
       signoff: "OpSolid",
@@ -95,6 +105,8 @@ export const COPY: Record<Locale, LocaleCopy> = {
       greeting: "Hello,",
       lead: "You requested a sign-in link for OpSolid. Click the button below to authenticate.",
       cta: "Sign in",
+      appCta: "Open in app",
+      webCta: "Open in browser",
       expiry: "This link expires in 15 minutes and can only be used once.",
       ignore: "If you did not request this, you can safely ignore this email. Your account is secure.",
       signoff: "OpSolid",
@@ -129,6 +141,8 @@ export const COPY: Record<Locale, LocaleCopy> = {
       greeting: "Merhaba,",
       lead: "OpSolid için giriş bağlantısı talep ettiniz. Giriş yapmak için aşağıdaki butona tıklayın.",
       cta: "Giriş yap",
+      appCta: "Uygulamada aç",
+      webCta: "Tarayıcıda aç",
       expiry: "Bu bağlantı 15 dakika geçerlidir ve yalnızca bir kez kullanılabilir.",
       ignore: "Bu talebi siz yapmadıysanız bu e-postayı görmezden gelebilirsiniz. Hesabınız güvende.",
       signoff: "OpSolid",

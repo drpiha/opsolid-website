@@ -34,8 +34,22 @@ const RAW_SITE_URL = (
 export interface IssuedMagicLink {
   /** Plaintext token — embed in email URL, never store. */
   token: string;
-  /** Full URL the user clicks. Locale prefix is the caller's responsibility. */
+  /** Full HTTPS URL for the browser/cookie flow. Locale prefix is the caller's responsibility. */
   link: string;
+  /**
+   * Deep-link URL for the mobile app
+   * (`opsolid://magic-link/verify?token=…`).
+   *
+   * The path mirrors the Expo Router file at
+   * `mobile/app/(auth)/magic-link/verify.tsx`. Route groups in parentheses
+   * (e.g. `(auth)`) do not appear in the URL, so the deep link skips the
+   * group and resolves directly to the segment.
+   *
+   * If the app is not installed, Android/iOS shows "no app can handle this
+   * link" — acceptable for MVP because the email always also includes the
+   * web `link` as a fallback CTA.
+   */
+  appLink: string;
   userId: string;
   email: string;
   expiresAt: Date;
@@ -102,9 +116,19 @@ export async function issueMagicLink(
   // by middleware downstream).
   const link = `${RAW_SITE_URL}/api/auth/magic-link/verify?token=${encodeURIComponent(token)}`;
 
+  // Deep-link for the mobile app. Expo Router file-system routing handles
+  // `mobile/app/(auth)/magic-link/verify.tsx` when the scheme is set to
+  // "opsolid" in `mobile/app.json`. Route groups (parens) are stripped
+  // from the URL — the public path is /magic-link/verify, not
+  // /(auth)/magic-link/verify. If the app is not installed, Android/iOS
+  // shows "no app handles this link" — users fall back to the browser CTA
+  // in the same email.
+  const appLink = `opsolid://magic-link/verify?token=${encodeURIComponent(token)}`;
+
   return {
     token,
     link,
+    appLink,
     userId: user.id,
     email: user.email,
     expiresAt,
