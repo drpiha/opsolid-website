@@ -5,7 +5,13 @@
 
 # --- Stage 1: deps -----------------------------------------------------------
 FROM node:22-alpine AS deps
-RUN apk add --no-cache libc6-compat openssl
+# python3 + make + g++ are required to compile argon2's native addon during
+# `npm ci`. Without them the node-pre-gyp fallback source build fails and
+# argon2 is silently absent, causing password hash/verify to throw 500 at
+# runtime. These tools are only needed in the build stage — the compiled
+# .node binary is copied forward into the runner via the standalone trace,
+# so the final image stays minimal.
+RUN apk add --no-cache libc6-compat openssl python3 make g++
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --no-audit --no-fund
