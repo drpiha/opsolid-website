@@ -26,24 +26,25 @@ export interface AgentFormValues {
   llmModel: string;
 }
 
-// Curated catalog of LLM models exposed by Retell. Sorted by Retell's own
-// quality/price tiers so the dashboard mirrors the provider's UI ordering.
-// `value` is the model ID Retell expects in `client.llm.create({ model })`;
-// `label` is the human-readable name + per-minute cost shown in the dropdown.
+// Curated catalog of LLM models exposed by Retell. Values match the exact
+// enum Retell's API accepts (see error response from /update-llm: request/
+// body/model must be equal to one of the allowed values). Anything outside
+// this list is rejected with HTTP 400.
 const LLM_MODELS: { group: string; options: { value: string; label: string }[] }[] = [
   {
     group: "Versatile & highly intelligent",
     options: [
       { value: "gpt-5.5", label: "GPT 5.5  ($0.16/min)" },
       { value: "gpt-5.4", label: "GPT 5.4  ($0.08/min)" },
-      { value: "gpt-5.4-fast", label: "GPT 5.4 Fast  ($0.16/min)" },
       { value: "gpt-5.2", label: "GPT 5.2  ($0.056/min)" },
       { value: "gpt-5.1", label: "GPT 5.1  ($0.05/min)" },
-      { value: "gpt-5.1-fast", label: "GPT 5.1 Fast  ($0.08/min)" },
       { value: "gpt-5", label: "GPT 5  ($0.04/min)" },
-      { value: "claude-sonnet-4.6", label: "Claude 4.6 Sonnet  ($0.08/min)" },
-      { value: "claude-sonnet-4.5", label: "Claude 4.5 Sonnet  ($0.08/min)" },
+      { value: "claude-4.6-sonnet", label: "Claude 4.6 Sonnet  ($0.08/min)" },
+      { value: "claude-4.5-sonnet", label: "Claude 4.5 Sonnet  ($0.08/min)" },
+      { value: "claude-4.0-sonnet", label: "Claude 4.0 Sonnet  ($0.08/min)" },
       { value: "gemini-3.0-flash", label: "Gemini 3.0 Flash  ($0.027/min)" },
+      { value: "gpt-4.1", label: "GPT 4.1  ($0.045/min)" },
+      { value: "gpt-4o", label: "GPT 4o" },
     ],
   },
   {
@@ -53,17 +54,15 @@ const LLM_MODELS: { group: string; options: { value: string; label: string }[] }
       { value: "gpt-5.4-nano", label: "GPT 5.4 nano  ($0.010/min)" },
       { value: "gpt-5-mini", label: "GPT 5 mini  ($0.012/min)" },
       { value: "gpt-5-nano", label: "GPT 5 nano  ($0.003/min)" },
-      { value: "claude-haiku-4.5", label: "Claude 4.5 Haiku  ($0.025/min)" },
+      { value: "claude-4.5-haiku", label: "Claude 4.5 Haiku  ($0.025/min)" },
       { value: "gemini-3.1-flash-lite", label: "Gemini 3.1 Flash Lite  ($0.014/min)" },
+      { value: "gemini-2.5-flash", label: "Gemini 2.5 Flash" },
       { value: "gemini-2.5-flash-lite", label: "Gemini 2.5 Flash Lite  ($0.006/min)" },
-    ],
-  },
-  {
-    group: "Speech-to-speech (rarely needed for Retell)",
-    options: [
-      { value: "gpt-realtime-mini", label: "GPT Realtime mini  ($0.07/min)" },
-      { value: "gpt-realtime", label: "GPT Realtime  ($0.345/min)" },
-      { value: "gpt-realtime-1.5", label: "GPT Realtime 1.5  ($0.345/min)" },
+      { value: "gemini-2.0-flash", label: "Gemini 2.0 Flash" },
+      { value: "gemini-2.0-flash-lite", label: "Gemini 2.0 Flash Lite" },
+      { value: "gpt-4.1-mini", label: "GPT 4.1 mini  ($0.016/min)" },
+      { value: "gpt-4.1-nano", label: "GPT 4.1 nano  ($0.004/min)" },
+      { value: "gpt-4o-mini", label: "GPT 4o mini" },
     ],
   },
 ];
