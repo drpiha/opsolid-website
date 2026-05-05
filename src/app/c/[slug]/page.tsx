@@ -34,6 +34,7 @@ import { ShareButton } from "@/components/cards/ShareButton";
 import { OwnerToolbar } from "@/components/cards/OwnerToolbar";
 import { StatusBanner } from "@/components/cards/StatusBanner";
 import { LocaleSwitcher } from "@/components/cards/LocaleSwitcher";
+import { SaveCardButton } from "@/components/cards/SaveCardButton";
 import { constantTimeEquals } from "@/lib/constantTime";
 import { contents } from "@/content";
 
@@ -88,7 +89,8 @@ async function publicCardUrl(slug: string): Promise<string> {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { slug } = await params;
   const order = await loadOrder(slug);
-  if (!order) return { title: "OpSolid Smart Card", robots: { index: false } };
+  // Phase 8.1 — private cards must not leak metadata to crawlers/scrapers.
+  if (!order || order.visibility === 'private') return { title: "OpSolid Smart Card", robots: { index: false } };
 
   const card = CardDataSchema.safeParse(order.cardData);
   const name = card.success ? card.data.name : order.contactName;
@@ -192,6 +194,15 @@ export default async function CardPage({ params, searchParams }: PageProps) {
     // giving up, then 308-redirect so old WhatsApp / QR links keep working.
     const renamed = await findRenamedSlug(slug);
     if (renamed) permanentRedirect(`/c/${renamed}`);
+    notFound();
+  }
+
+  // Phase 8.1 — visibility enforcement on the page route.
+  // "private" cards return 404 to all visitors. Owners can still reach their
+  // card via the dashboard edit link (which uses a different route). This is
+  // an MVP-safe check: no session reading, consistent with API route behaviour.
+  // "unlisted" cards are accessible by direct link — no action needed here.
+  if (order.visibility === 'private') {
     notFound();
   }
 
@@ -354,8 +365,12 @@ export default async function CardPage({ params, searchParams }: PageProps) {
             accentHex={order.brandAccentHex ?? undefined}
             tone={isDarkTemplate ? "dark" : "light"}
           />
-          {/* Faz 6.7 B4 — visitor locale switcher, below card content */}
-          <div className="mt-6 flex justify-center">
+          {/* Phase 8.3 — save + locale row below card content */}
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+            {/* Only show save button to non-owners — owners manage via dashboard */}
+            {!isOwner && (
+              <SaveCardButton slug={slug} locale={localeKey} />
+            )}
             <LocaleSwitcher current={localeKey} ariaLabel={langSwitcherLabel} />
           </div>
         </div>

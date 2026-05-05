@@ -54,6 +54,7 @@ model User {
   sessions        Session[]
   magicLinkTokens MagicLinkToken[]
   cardOrders      CardOrder[]
+  savedCards      SavedCard[]
 
   @@index([email])
   @@map("users")
@@ -228,6 +229,19 @@ model CardOrder {
   customDomainVerified   Boolean   @default(false) @map("custom_domain_verified")
   customDomainVerifiedAt DateTime? @map("custom_domain_verified_at")
 
+  // Phase 8.1 — Card visibility and discovery
+  // visibility: "public" = discoverable + directly accessible
+  //             "unlisted" = accessible by direct link only, not in discovery
+  //             "private" = only accessible by card owner (returns 404 to others)
+  visibility        String   @default("public") @map("visibility")
+  openToNetworking  Boolean  @default(false) @map("open_to_networking")
+  acceptingClients  Boolean  @default(false) @map("accepting_clients")
+  // Discovery metadata — populated from cardData during publish or user update
+  industry          String?  @map("industry")
+  city              String?  @map("city")
+  country           String?  @default("DE") @map("country")
+  languages         String[] @default([]) @map("languages")
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -255,10 +269,17 @@ model CardOrder {
    */
   albumPhotos CardAlbumPhoto[]
 
+  /**
+   * Users who have bookmarked this card (Phase 8.3). Owner-private CRM data.
+   */
+  savedByUsers SavedCard[]
+
   @@index([status])
   @@index([contactPhone])
   @@index([callMeBack, contactedAt])
   @@index([userId])
+  @@index([visibility, status])
+  @@index([openToNetworking, status])
   @@map("card_orders")
 }
 
@@ -475,6 +496,34 @@ model CardAlbumPhoto {
   @@index([cardOrderId, status])
   @@index([connectionId])
   @@map("card_album_photos")
+}
+
+// =============================================================================
+// Phase 8.3 — SavedCard: User bookmarks another person's card.
+// One user can save a card at most once (@@unique). Cascade-deletes with user.
+// CRM fields (notes, tags, metWhere, followUpAt, status, starred) are
+// owner-private — never exposed to the card owner being saved.
+// =============================================================================
+model SavedCard {
+  id          String    @id @default(cuid())
+  userId      String    @map("user_id")
+  cardOrderId String    @map("card_order_id")
+  notes       String?
+  tags        String[]  @default([])
+  metWhere    String?   @map("met_where")
+  followUpAt  DateTime? @map("follow_up_at")
+  // "new" | "contacted" | "customer" | "partner" | "archived"
+  status      String    @default("new")
+  starred     Boolean   @default(false)
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cardOrder CardOrder @relation(fields: [cardOrderId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, cardOrderId])
+  @@index([userId])
+  @@map("saved_cards")
 }
 
 // -----------------------------------------------------------------------------

@@ -50,6 +50,7 @@ import ContentSection from "./sections/ContentSection";
 import ContactSection from "./sections/ContactSection";
 import PublishSection from "./sections/PublishSection";
 import type { FormState } from "./sections/types";
+import { CardQualityWidget } from "@/components/dashboard/CardQualityWidget";
 
 interface Props {
   orderId: string;
@@ -71,6 +72,10 @@ interface Props {
   hasSubscription: boolean;
   subscriptionCancelAt: string | null;
   subscriptionPeriodEnd: string | null;
+  /** Phase 8.1 — discovery / visibility settings */
+  visibility: "public" | "unlisted" | "private";
+  openToNetworking: boolean;
+  acceptingClients: boolean;
 }
 
 export function CardEditClient(props: Props) {
@@ -98,6 +103,10 @@ export function CardEditClient(props: Props) {
   const [editableSlug, setEditableSlug] = useState<string>(props.slug ?? "");
   // Phase 5 — share drawer
   const [shareOpen, setShareOpen] = useState(false);
+  // Phase 8.1 — discovery / visibility settings
+  const [visibility, setVisibility] = useState<"public" | "unlisted" | "private">(props.visibility);
+  const [openToNetworking, setOpenToNetworking] = useState(props.openToNetworking);
+  const [acceptingClients, setAcceptingClients] = useState(props.acceptingClients);
 
   // A4 — dirty state tracking. Stores the form snapshot at mount (or last
   // successful save). JSON comparison is sufficient here because CardData
@@ -110,6 +119,9 @@ export function CardEditClient(props: Props) {
     brandPrimaryHex: props.brandPrimaryHex,
     brandAccentHex: props.brandAccentHex,
     slug: props.slug ?? "",
+    visibility: props.visibility,
+    openToNetworking: props.openToNetworking,
+    acceptingClients: props.acceptingClients,
   });
 
   const isDirty = useMemo(() => {
@@ -121,6 +133,9 @@ export function CardEditClient(props: Props) {
         brandPrimaryHex,
         brandAccentHex,
         slug: editableSlug,
+        visibility,
+        openToNetworking,
+        acceptingClients,
       }) !==
       JSON.stringify({
         cardData: initialFormRef.current.cardData,
@@ -129,9 +144,12 @@ export function CardEditClient(props: Props) {
         brandPrimaryHex: initialFormRef.current.brandPrimaryHex,
         brandAccentHex: initialFormRef.current.brandAccentHex,
         slug: initialFormRef.current.slug,
+        visibility: initialFormRef.current.visibility,
+        openToNetworking: initialFormRef.current.openToNetworking,
+        acceptingClients: initialFormRef.current.acceptingClients,
       })
     );
-  }, [cardData, photoPath, logoPath, brandPrimaryHex, brandAccentHex, editableSlug]);
+  }, [cardData, photoPath, logoPath, brandPrimaryHex, brandAccentHex, editableSlug, visibility, openToNetworking, acceptingClients]);
 
   // A4 — revert: restore all mutable state to the last-saved snapshot.
   const handleRevert = () => {
@@ -142,6 +160,9 @@ export function CardEditClient(props: Props) {
     setBrandPrimaryHex(snap.brandPrimaryHex ?? "");
     setBrandAccentHex(snap.brandAccentHex ?? "");
     setEditableSlug(snap.slug ?? "");
+    setVisibility(snap.visibility);
+    setOpenToNetworking(snap.openToNetworking);
+    setAcceptingClients(snap.acceptingClients);
   };
 
   // B7 — expand/collapse sections. Only "person-brand" open by default.
@@ -172,6 +193,33 @@ export function CardEditClient(props: Props) {
       ...c,
       socials: { ...(c.socials ?? {}), [key]: value },
     }));
+
+  // Quality widget — navigate to a section by opening its accordion panel.
+  // targetSection values from card-quality.ts: "brand" | "contact" | "content" | "publish"
+  const handleNavigateToSection = (targetSection: string) => {
+    const sectionId =
+      targetSection === "brand"
+        ? "person-brand"
+        : targetSection === "contact"
+        ? "contact"
+        : targetSection === "content"
+        ? "content"
+        : targetSection === "publish"
+        ? "publish"
+        : targetSection;
+    setOpenSections((prev) => {
+      const next = new Set(prev);
+      next.add(sectionId);
+      return next;
+    });
+    // Scroll to the section after the state update settles.
+    setTimeout(() => {
+      document.getElementById(`section-${sectionId}`)?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 80);
+  };
 
   const handleFileUpload = async (
     file: File,
@@ -248,6 +296,11 @@ export function CardEditClient(props: Props) {
         editableSlug && editableSlug !== currentSlug
           ? editableSlug
           : undefined,
+      // Phase 8.1 — always include discovery settings so the server keeps
+      // them in sync on every save.
+      visibility,
+      openToNetworking,
+      acceptingClients,
     };
 
     try {
@@ -292,6 +345,9 @@ export function CardEditClient(props: Props) {
         brandPrimaryHex: brandPrimaryHex || null,
         brandAccentHex: brandAccentHex || null,
         slug: ok.slug ?? currentSlug ?? "",
+        visibility,
+        openToNetworking,
+        acceptingClients,
       };
       setFormState("saved");
       setTimeout(() => setFormState("idle"), 1500);
@@ -454,6 +510,16 @@ export function CardEditClient(props: Props) {
                 directly in the card-content section below, so a separate
                 read-only mirror is just visual noise. */}
 
+            {/* Phase 8.2 — Quality score widget: always visible, collapses to
+                a small ring gauge. Shows top-3 actionable suggestions with
+                one-tap navigation into the relevant accordion section. */}
+            <CardQualityWidget
+              orderId={props.orderId}
+              editToken={props.editToken}
+              locale="de"
+              onNavigateToSection={handleNavigateToSection}
+            />
+
             {/* B7 — 4 collapsible sections, lifted to standalone components in
                 A8.2 (sections/*Section.tsx). State stays here in the
                 orchestrator; sections are controlled. */}
@@ -502,6 +568,12 @@ export function CardEditClient(props: Props) {
               badgeInfo={badgeInfo}
               openSections={openSections}
               toggleSection={toggleSection}
+              visibility={visibility}
+              onVisibilityChange={setVisibility}
+              openToNetworking={openToNetworking}
+              onOpenToNetworkingChange={setOpenToNetworking}
+              acceptingClients={acceptingClients}
+              onAcceptingClientsChange={setAcceptingClients}
             />
 
             {/* Download OG image + cancel subscription */}

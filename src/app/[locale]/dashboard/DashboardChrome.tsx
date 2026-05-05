@@ -58,14 +58,28 @@ export function DashboardChrome({ userEmail, locale }: Props) {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-bg-1/95 backdrop-blur-sm">
       <div className="mx-auto flex w-full max-w-[1180px] items-center justify-between px-4 py-3 sm:px-6 lg:px-10">
-        {/* Wordmark */}
-        <a
-          href={`/${locale}`}
-          className="font-mono text-sm font-semibold uppercase tracking-[0.12em] text-copper-500"
-          aria-label={`${SITE_CONFIG.name} — go to homepage`}
-        >
-          {SITE_CONFIG.name}
-        </a>
+        {/* Wordmark + nav */}
+        <div className="flex items-center gap-4">
+          <a
+            href={`/${locale}`}
+            className="font-mono text-sm font-semibold uppercase tracking-[0.12em] text-copper-500"
+            aria-label={`${SITE_CONFIG.name} — go to homepage`}
+          >
+            {SITE_CONFIG.name}
+          </a>
+          <a
+            href={`/${locale}/discover`}
+            className="hidden sm:inline-flex items-center text-xs font-medium text-ink-400 transition-colors hover:text-ink"
+          >
+            {locale === "de" ? "Entdecken" : locale === "tr" ? "Keşfet" : "Discover"}
+          </a>
+          <a
+            href={`/${locale}/dashboard/contacts`}
+            className="hidden sm:inline-flex items-center text-xs font-medium text-ink-400 transition-colors hover:text-ink"
+          >
+            {locale === "de" ? "Kontakte" : locale === "tr" ? "Kişiler" : "Contacts"}
+          </a>
+        </div>
 
         <div className="flex items-center gap-3">
           {/* Locale switcher — visible on all sizes */}
@@ -150,6 +164,13 @@ export function DashboardChrome({ userEmail, locale }: Props) {
                   </div>
                 </div>
 
+                <a
+                  href={`/${locale}/dashboard/contacts`}
+                  onClick={() => setMenuOpen(false)}
+                  className="flex w-full items-center gap-2 px-4 py-2.5 text-sm text-ink-400 transition-colors hover:bg-bg-2 hover:text-ink"
+                >
+                  {locale === "de" ? "Kontakte" : locale === "tr" ? "Kişiler" : "Contacts"}
+                </a>
                 <button
                   type="button"
                   onClick={handleLogout}

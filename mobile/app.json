@@ -8,10 +8,25 @@
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "de.opsolid.mobile"
+      "bundleIdentifier": "de.opsolid.mobile",
+      "associatedDomains": ["applinks:opsolid.de"]
     },
     "android": {
-      "package": "de.opsolid.mobile"
+      "package": "de.opsolid.mobile",
+      "intentFilters": [
+        {
+          "action": "VIEW",
+          "autoVerify": true,
+          "data": [
+            {
+              "scheme": "https",
+              "host": "opsolid.de",
+              "pathPrefix": "/api/auth/magic-link/verify"
+            }
+          ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        }
+      ]
     },
     "web": {
       "bundler": "metro"

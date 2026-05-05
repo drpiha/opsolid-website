@@ -79,6 +79,15 @@ export default async function CardEditPage({ params, searchParams }: PageProps) 
       hasSubscription={!!subscription}
       subscriptionCancelAt={subscription?.cancelAt?.toISOString() ?? null}
       subscriptionPeriodEnd={subscription?.currentPeriodEnd?.toISOString() ?? null}
+      visibility={
+        (["public", "unlisted", "private"].includes(
+          (order as { visibility?: string }).visibility ?? "",
+        )
+          ? (order as { visibility?: string }).visibility
+          : "unlisted") as "public" | "unlisted" | "private"
+      }
+      openToNetworking={(order as { openToNetworking?: boolean }).openToNetworking ?? false}
+      acceptingClients={(order as { acceptingClients?: boolean }).acceptingClients ?? false}
     />
   );
 }

@@ -34,6 +34,8 @@ export const CARD_API_SELECT = {
   publishedAt: true,
   createdAt: true,
   updatedAt: true,
+  // Phase 8.1 — needed for visibility enforcement in public API + page route
+  visibility: true,
 } as const;
 
 export type ApiCardRow = Pick<
@@ -55,6 +57,7 @@ export interface ApiCard {
   logoPath: string | null;
   qrStyle: unknown;
   videoUrl: string | null;
+  visibility: string;
   publishedAt: string | null;
   createdAt: string;
   updatedAt: string;
@@ -75,6 +78,7 @@ export function toApiCard(row: ApiCardRow): ApiCard {
     logoPath: row.logoPath,
     qrStyle: row.qrStyle,
     videoUrl: row.videoUrl,
+    visibility: row.visibility,
     publishedAt: row.publishedAt?.toISOString() ?? null,
     createdAt: row.createdAt.toISOString(),
     updatedAt: row.updatedAt.toISOString(),

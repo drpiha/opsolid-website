@@ -49,6 +49,10 @@ const PatchSchema = z.object({
     .max(40)
     .optional()
     .or(z.literal("").transform(() => undefined)),
+  /** Phase 8.1 — discovery visibility and networking flags. */
+  visibility: z.enum(["public", "unlisted", "private"]).optional(),
+  openToNetworking: z.boolean().optional(),
+  acceptingClients: z.boolean().optional(),
 });
 
 const NON_EDITABLE_STATUSES = new Set<string>([
@@ -134,6 +138,10 @@ export async function PATCH(
         photoPath: data.photoPath ?? null,
         logoPath: data.logoPath ?? null,
         designNotes: nextDesignNotes,
+        // Phase 8.1 — persist discovery/visibility settings when provided.
+        ...(data.visibility !== undefined ? { visibility: data.visibility } : {}),
+        ...(data.openToNetworking !== undefined ? { openToNetworking: data.openToNetworking } : {}),
+        ...(data.acceptingClients !== undefined ? { acceptingClients: data.acceptingClients } : {}),
         ...(nextSlug
           ? {
               slug: nextSlug,

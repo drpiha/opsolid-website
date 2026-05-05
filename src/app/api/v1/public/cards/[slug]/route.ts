@@ -57,6 +57,14 @@ export async function GET(
     return applyCors(errorJson("not_found", "Card not found.", 404), req);
   }
 
+  // Phase 8.1 — visibility enforcement.
+  // "private" cards are owner-only; all other callers receive a 404 so the
+  // existence of the slug is not leaked. "unlisted" cards are accessible by
+  // direct link (this endpoint) but excluded from discovery — no change here.
+  if (card.visibility === 'private') {
+    return applyCors(errorJson("not_found", "Card not found.", 404), req);
+  }
+
   return applyCors(
     NextResponse.json(
       { card: toPublicApiCard(card) },
