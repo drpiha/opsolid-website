@@ -1,6 +1,6 @@
 import * as SecureStore from 'expo-secure-store';
 
-const API_BASE = process.env.EXPO_PUBLIC_API_BASE ?? 'https://opsolid.de';
+export const API_BASE = process.env.EXPO_PUBLIC_API_BASE ?? 'https://opsolid.de';
 
 // In-memory cache so we don't hit SecureStore on every request.
 let accessToken: string | null = null;

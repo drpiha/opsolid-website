@@ -3889,6 +3889,8 @@ export const content: Content = {
       dontHaveAccount: "Noch kein Konto?",
       signUpLink: "Jetzt registrieren",
       expandPassword: "+ Passwort verwenden",
+      orDivider: "oder",
+      googleCta: "Mit Google fortfahren",
     },
     magicLink: {
       title: "Posteingang prüfen",

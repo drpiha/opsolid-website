@@ -3890,6 +3890,8 @@ export const content: Content = {
       dontHaveAccount: "Hesabınız yok mu?",
       signUpLink: "Hesap oluştur",
       expandPassword: "+ şifre kullan",
+      orDivider: "veya",
+      googleCta: "Google ile devam et",
     },
     magicLink: {
       title: "Gelen kutunuzu kontrol edin",

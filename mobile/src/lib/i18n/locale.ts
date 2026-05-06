@@ -33,6 +33,9 @@ export const t = {
       errorInvalidEmail: 'Please enter a valid email.',
       errorWeakPassword: 'Password must be at least 8 characters.',
       errorBadCreds: 'Email or password incorrect.',
+      googleCta: 'Continue with Google',
+      orDivider: 'or',
+      googleError: 'Google sign-in failed. Try again.',
     },
     cards: {
       title: 'My Cards',
@@ -110,6 +113,9 @@ export const t = {
       errorInvalidEmail: 'Bitte geben Sie eine gültige E-Mail-Adresse ein.',
       errorWeakPassword: 'Passwort muss mindestens 8 Zeichen haben.',
       errorBadCreds: 'E-Mail oder Passwort falsch.',
+      googleCta: 'Mit Google fortfahren',
+      orDivider: 'oder',
+      googleError: 'Google-Anmeldung fehlgeschlagen. Erneut versuchen.',
     },
     cards: {
       title: 'Meine Karten',
@@ -188,6 +194,9 @@ export const t = {
       errorInvalidEmail: 'Geçerli bir e-posta girin.',
       errorWeakPassword: 'Şifre en az 8 karakter olmalı.',
       errorBadCreds: 'E-posta veya şifre yanlış.',
+      googleCta: 'Google ile devam et',
+      orDivider: 'veya',
+      googleError: 'Google girişi başarısız. Tekrar deneyin.',
     },
     cards: {
       title: 'Kartlarım',

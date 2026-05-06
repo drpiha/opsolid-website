@@ -3901,6 +3901,8 @@ export const content = {
       dontHaveAccount: "Don't have an account?",
       signUpLink: "Create one",
       expandPassword: "+ use password",
+      orDivider: "or",
+      googleCta: "Continue with Google",
     },
     magicLink: {
       title: "Check your inbox",

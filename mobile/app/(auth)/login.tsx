@@ -13,7 +13,7 @@ import { Input } from '../../src/components/ui/Input';
 import { Button } from '../../src/components/ui/Button';
 import { useTheme } from '../../src/lib/theme/ThemeProvider';
 import { copper } from '../../src/lib/theme/tokens';
-import { login, requestMagicLink } from '../../src/lib/auth/api';
+import { login, requestMagicLink, signInWithGoogle } from '../../src/lib/auth/api';
 import { useAuthStore } from '../../src/lib/auth/store';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
 
@@ -32,6 +32,7 @@ export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
+  const [googleLoading, setGoogleLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   function validateEmail(): boolean {
@@ -53,6 +54,22 @@ export default function LoginScreen() {
       setError(strings.errorGeneric);
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function handleGoogleSignIn() {
+    setError(null);
+    setGoogleLoading(true);
+    try {
+      const user = await signInWithGoogle();
+      if (user) {
+        setUser(user);
+        router.replace('/(app)/cards');
+      }
+    } catch {
+      setError(strings.googleError);
+    } finally {
+      setGoogleLoading(false);
     }
   }
 
@@ -169,6 +186,23 @@ export default function LoginScreen() {
                 : strings.magicLinkBack}
             </Text>
           </TouchableOpacity>
+
+          {/* Divider */}
+          <View style={styles.dividerRow}>
+            <View style={[styles.dividerLine, { backgroundColor: theme.bg[3] }]} />
+            <Text style={[styles.dividerText, { color: theme.ink[400] }]}>
+              {strings.orDivider}
+            </Text>
+            <View style={[styles.dividerLine, { backgroundColor: theme.bg[3] }]} />
+          </View>
+
+          {/* Google sign-in */}
+          <Button
+            label={strings.googleCta}
+            onPress={handleGoogleSignIn}
+            loading={googleLoading}
+            variant="secondary"
+          />
         </View>
 
         {/* Footer link */}
@@ -237,6 +271,21 @@ const styles = StyleSheet.create({
   toggleText: {
     fontSize: 14,
     fontWeight: '500',
+  },
+  dividerRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+  },
+  dividerLine: {
+    flex: 1,
+    height: 1,
+  },
+  dividerText: {
+    fontSize: 12,
+    fontWeight: '500',
+    letterSpacing: 0.5,
+    textTransform: 'uppercase',
   },
   footer: {
     flexDirection: 'row',
