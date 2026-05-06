@@ -191,11 +191,17 @@ export default function CardDetailScreen() {
 
         {/* Actions */}
         <View style={styles.actions}>
+          <Button
+            label={t.edit}
+            onPress={() => router.push(`/(app)/cards/edit/${card.id}` as never)}
+            variant="secondary"
+          />
           {card.slug && card.status === 'PUBLISHED' ? (
             <Button
               label={t.openWeb}
               onPress={handleOpenWeb}
               variant="primary"
+              style={{ marginTop: 12 }}
             />
           ) : null}
           <Button

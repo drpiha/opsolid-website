@@ -78,3 +78,34 @@ export type ApiError = {
   message?: string;
   statusCode?: number;
 };
+
+// POST /api/v1/cards
+export type CardCreateInput = {
+  templateId: number;
+  cardData: {
+    name: string;
+    email?: string;
+    phone?: string;
+    title?: string;
+    company?: string;
+  };
+  desiredSlug?: string;
+};
+
+// PATCH /api/v1/cards/:id
+export type CardPatchInput = {
+  cardData?: {
+    name?: string;
+    email?: string;
+    phone?: string;
+    title?: string;
+    company?: string;
+  };
+  photoPath?: string | null;
+  logoPath?: string | null;
+  status?: 'PUBLISHED' | 'CANCELLED';
+  slug?: string;
+};
+
+// POST /api/uploads → { path }
+export type UploadResponse = { path: string };

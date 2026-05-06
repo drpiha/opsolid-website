@@ -66,6 +66,14 @@ export default function AppLayout() {
         }}
       />
       <Tabs.Screen
+        name="cards/create"
+        options={{ href: null, title: t.cards.createTitle }}
+      />
+      <Tabs.Screen
+        name="cards/edit/[id]"
+        options={{ href: null, title: t.cards.editTitle }}
+      />
+      <Tabs.Screen
         name="settings"
         options={{
           title: t.settings.title,

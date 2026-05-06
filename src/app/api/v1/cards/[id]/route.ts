@@ -51,6 +51,8 @@ const PatchSchema = z
       .string()
       .regex(/^#[0-9a-fA-F]{6}$/)
       .optional(),
+    photoPath: z.string().max(500).nullable().optional(),
+    logoPath: z.string().max(500).nullable().optional(),
   })
   .strict();
 
@@ -160,6 +162,8 @@ export async function PATCH(
     if (parsed.data.brandAccentHex !== undefined) {
       updateData.brandAccentHex = parsed.data.brandAccentHex;
     }
+    if (parsed.data.photoPath !== undefined) updateData.photoPath = parsed.data.photoPath;
+    if (parsed.data.logoPath !== undefined) updateData.logoPath = parsed.data.logoPath;
     if (parsed.data.status !== undefined) {
       updateData.status = parsed.data.status;
       if (parsed.data.status === OrderStatus.PUBLISHED && !existing.status) {

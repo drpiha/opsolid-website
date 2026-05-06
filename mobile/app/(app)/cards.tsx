@@ -1,13 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 import {
   View,
-  Text,
   FlatList,
   ActivityIndicator,
   RefreshControl,
   StyleSheet,
 } from 'react-native';
-import { Stack } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
+import { TouchableOpacity, Text } from 'react-native';
 import { ScreenContainer } from '../../src/components/ui/ScreenContainer';
 import { Button } from '../../src/components/ui/Button';
 import { CardListItem } from '../../src/components/cards/CardListItem';
@@ -18,6 +18,7 @@ import { copper } from '../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
 
 export default function CardsListScreen() {
+  const router = useRouter();
   const theme = useTheme();
   const t = useTranslations(detectLocale()).cards;
 
@@ -84,7 +85,19 @@ export default function CardsListScreen() {
 
   return (
     <>
-      <Stack.Screen options={{ title: t.title }} />
+      <Stack.Screen
+        options={{
+          title: t.title,
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => router.push('/(app)/cards/create' as never)}
+              style={{ paddingHorizontal: 4 }}
+            >
+              <Text style={{ color: copper[500], fontSize: 24, lineHeight: 28 }}>+</Text>
+            </TouchableOpacity>
+          ),
+        }}
+      />
       <ScreenContainer>
         {loading ? (
           <View style={styles.center}>

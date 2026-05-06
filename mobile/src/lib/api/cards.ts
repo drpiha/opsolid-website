@@ -43,3 +43,50 @@ export async function deleteCard(id: string): Promise<void> {
     { method: 'DELETE' },
   );
 }
+
+/**
+ * POST /api/v1/cards — create a FREE-tier card.
+ */
+export async function createCard(input: import('./types').CardCreateInput): Promise<ApiCard> {
+  const res = await apiFetch<{ card: ApiCard }>('/api/v1/cards', {
+    method: 'POST',
+    body: JSON.stringify(input),
+  });
+  return res.card;
+}
+
+/**
+ * PATCH /api/v1/cards/:id — update card fields.
+ */
+export async function updateCard(
+  id: string,
+  patch: import('./types').CardPatchInput,
+): Promise<ApiCard> {
+  const res = await apiFetch<{ card: ApiCard }>(
+    `/api/v1/cards/${encodeURIComponent(id)}`,
+    { method: 'PATCH', body: JSON.stringify(patch) },
+  );
+  return res.card;
+}
+
+const API_BASE = process.env.EXPO_PUBLIC_API_BASE ?? 'https://opsolid.de';
+
+/**
+ * Upload a local image to /api/uploads and return the server path.
+ * Uses raw fetch so FormData sets the multipart boundary correctly.
+ */
+export async function uploadPhoto(
+  uri: string,
+  mimeType: string = 'image/jpeg',
+): Promise<string> {
+  const form = new FormData();
+  const ext = mimeType === 'image/png' ? 'png' : 'jpg';
+  // React Native FormData accepts { uri, name, type } for file blobs
+  form.append('file', { uri, name: `photo.${ext}`, type: mimeType } as unknown as Blob);
+  form.append('kind', 'photo');
+
+  const res = await fetch(`${API_BASE}/api/uploads`, { method: 'POST', body: form });
+  if (!res.ok) throw new Error(`Upload failed: ${res.status}`);
+  const data = (await res.json()) as { path: string };
+  return data.path;
+}
