@@ -26,10 +26,16 @@ jobs:
 
       - name: Ensure deploy directory is writable
         run: |
-          # Reclaim ownership if a previous root-run process (docker build context,
-          # manual root command) flipped file ownership away from the runner user.
-          # This is a no-op when ownership is already correct.
-          sudo chown -R "$(id -un):$(id -gn)" /opt/opsolid-website
+          # Reclaim ownership without needing passwordless sudo for chown.
+          # The docker daemon runs as root, so we spin up a throwaway alpine
+          # container to chown /opt/opsolid-website back to the runner user.
+          # No-op when ownership is already correct (alpine chown is idempotent).
+          RUNNER_UID=$(id -u)
+          RUNNER_GID=$(id -g)
+          docker run --rm \
+            -v /opt/opsolid-website:/target \
+            alpine \
+            chown -R "${RUNNER_UID}:${RUNNER_GID}" /target
 
       - name: Extract files to deploy directory
         run: |
