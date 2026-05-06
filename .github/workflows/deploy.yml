@@ -24,6 +24,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Ensure deploy directory is writable
+        run: |
+          # Reclaim ownership if a previous root-run process (docker build context,
+          # manual root command) flipped file ownership away from the runner user.
+          # This is a no-op when ownership is already correct.
+          sudo chown -R "$(id -un):$(id -gn)" /opt/opsolid-website
+
       - name: Extract files to deploy directory
         run: |
           DEPLOY_DIR=/opt/opsolid-website
