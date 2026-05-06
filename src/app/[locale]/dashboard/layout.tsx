@@ -7,7 +7,7 @@
 // =============================================================================
 
 import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
+import { cookies, headers } from "next/headers";
 import { getSessionUser, REFRESH_COOKIE_NAME } from "@/lib/auth/session";
 import { DashboardChrome } from "./DashboardChrome";
 
@@ -34,7 +34,13 @@ export default async function DashboardLayout({ children, params }: Props) {
   const user = refreshToken ? await getSessionUser(refreshToken) : null;
 
   if (!user) {
-    redirect(`/${locale}/login?next=/dashboard/cards`);
+    const headersList = await headers();
+    const xPathname = headersList.get("x-pathname") ?? "";
+    const cleanPath = xPathname.split("?")[0];
+    const nextPath = cleanPath.startsWith(`/${locale}/`)
+      ? cleanPath.slice(1 + locale.length)
+      : "/dashboard/cards";
+    redirect(`/${locale}/login?next=${nextPath}`);
   }
 
   return (
