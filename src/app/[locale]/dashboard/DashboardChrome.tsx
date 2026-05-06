@@ -79,6 +79,12 @@ export function DashboardChrome({ userEmail, locale }: Props) {
           >
             {locale === "de" ? "Kontakte" : locale === "tr" ? "Kişiler" : "Contacts"}
           </a>
+          <a
+            href={`/${locale}/dashboard/inbox`}
+            className="hidden sm:inline-flex items-center text-xs font-medium text-ink-400 transition-colors hover:text-ink"
+          >
+            {locale === "de" ? "Posteingang" : locale === "tr" ? "Gelen Kutusu" : "Inbox"}
+          </a>
         </div>
 
         <div className="flex items-center gap-3">
@@ -170,6 +176,13 @@ export function DashboardChrome({ userEmail, locale }: Props) {
                   className="flex w-full items-center gap-2 px-4 py-2.5 text-sm text-ink-400 transition-colors hover:bg-bg-2 hover:text-ink"
                 >
                   {locale === "de" ? "Kontakte" : locale === "tr" ? "Kişiler" : "Contacts"}
+                </a>
+                <a
+                  href={`/${locale}/dashboard/inbox`}
+                  onClick={() => setMenuOpen(false)}
+                  className="flex w-full items-center gap-2 px-4 py-2.5 text-sm text-ink-400 transition-colors hover:bg-bg-2 hover:text-ink"
+                >
+                  {locale === "de" ? "Posteingang" : locale === "tr" ? "Gelen Kutusu" : "Inbox"}
                 </a>
                 <button
                   type="button"

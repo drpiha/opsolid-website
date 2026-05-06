@@ -281,6 +281,12 @@ model CardOrder {
    */
   feedback CardFeedback[]
 
+  /**
+   * Actions sent/received via Smart Action Inbox (Phase 8.5).
+   */
+  sentActions     CardAction[] @relation("ActionSender")
+  receivedActions CardAction[] @relation("ActionReceiver")
+
   @@index([status])
   @@index([contactPhone])
   @@index([callMeBack, contactedAt])
@@ -556,6 +562,32 @@ model CardFeedback {
   @@unique([giverId, cardOrderId])
   @@index([cardOrderId])
   @@map("card_feedback")
+}
+
+// =============================================================================
+// Phase 8.5 — CardAction: action-based inbox between card owners.
+// NOT a chat — one structured request per sender per receiver per type.
+// Sender must own a PUBLISHED card. Receiver is identified by card slug.
+// =============================================================================
+model CardAction {
+  id             String    @id @default(cuid())
+  senderCardId   String    @map("sender_card_id")
+  receiverCardId String    @map("receiver_card_id")
+  // "request_contact" | "request_quote" | "request_meeting" | "ask_collaboration" | "send_card"
+  type           String    @map("type")
+  // "pending" | "accepted" | "declined" | "archived"
+  status         String    @default("pending") @map("status")
+  message        String?   @db.VarChar(1000) @map("message")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+  resolvedAt     DateTime? @map("resolved_at")
+
+  senderCard   CardOrder @relation("ActionSender",   fields: [senderCardId],   references: [id], onDelete: Cascade)
+  receiverCard CardOrder @relation("ActionReceiver", fields: [receiverCardId], references: [id], onDelete: Cascade)
+
+  @@index([receiverCardId, status])
+  @@index([senderCardId])
+  @@map("card_actions")
 }
 
 // -----------------------------------------------------------------------------
