@@ -18,7 +18,6 @@
     },
     "android": {
       "package": "de.opsolid.mobile",
-      "newArchEnabled": false,
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.READ_MEDIA_IMAGES",

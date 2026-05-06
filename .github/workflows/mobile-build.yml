@@ -1,15 +1,15 @@
 name: Build & Release Android APK
 
 # Trigger manually from GitHub Actions tab — no Expo account, no EAS token needed.
-# Uses expo prebuild (generates native Android project) + Gradle (builds the APK).
-# Result: a GitHub Release with a downloadable .apk file.
+# Builds a RELEASE APK (production mode, JS bundle always embedded, no Metro).
+# Signs with a CI-generated keystore — fine for direct install / testing.
 
 on:
   workflow_dispatch:
 
 jobs:
   build:
-    name: Prebuild → Gradle → GitHub Release
+    name: Prebuild → Gradle Release → GitHub Release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -45,10 +45,15 @@ jobs:
         working-directory: mobile
         run: npx expo prebuild --platform android --no-install
 
-      - name: Configure gradle — standalone APK, old arch for compatibility
+      - name: Generate signing keystore
         run: |
-          echo "BUNDLE_IN_DEBUG=true" >> mobile/android/gradle.properties
-          echo "newArchEnabled=false" >> mobile/android/gradle.properties
+          keytool -genkey -v \
+            -keystore opsolid-release.keystore \
+            -alias opsolid \
+            -keyalg RSA -keysize 2048 -validity 10000 \
+            -dname "CN=OpSolid, OU=Mobile, O=OpSolid, L=Munich, ST=Bavaria, C=DE" \
+            -storepass opsolid123 -keypass opsolid123 2>/dev/null
+          echo "Keystore generated"
 
       - name: Cache Gradle
         uses: actions/cache@v4
@@ -62,15 +67,20 @@ jobs:
       - name: gradlew permissions
         run: chmod +x mobile/android/gradlew
 
-      - name: Build debug APK
+      - name: Build release APK (production mode — bundle always embedded)
         working-directory: mobile/android
-        run: ./gradlew assembleDebug --no-daemon
+        run: |
+          ./gradlew assembleRelease --no-daemon \
+            -Pandroid.injected.signing.store.file=${{ github.workspace }}/opsolid-release.keystore \
+            -Pandroid.injected.signing.store.password=opsolid123 \
+            -Pandroid.injected.signing.key.alias=opsolid \
+            -Pandroid.injected.signing.key.password=opsolid123
 
       - name: Collect APK
         run: |
           VERSION=$(node -p "require('./mobile/package.json').version")
           APK="opsolid-android-${VERSION}-b${{ github.run_number }}.apk"
-          cp mobile/android/app/build/outputs/apk/debug/app-debug.apk "$APK"
+          cp mobile/android/app/build/outputs/apk/release/app-release.apk "$APK"
           echo "APK=$APK" >> "$GITHUB_ENV"
           ls -lh "$APK"
 
@@ -88,5 +98,5 @@ jobs:
             2. Android → Ayarlar → Güvenlik → "Bilinmeyen kaynaklardan yükle" → Tarayıcı için aç
             3. APK'ya dokunup kur → OpSolid açılır
 
-            > Debug sürümü — test için. Üretim build'i Play Store'dan gelecek.
+            > Release APK — production mode, JS bundle gömülü.
           files: ${{ env.APK }}
