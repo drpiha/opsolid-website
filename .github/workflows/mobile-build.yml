@@ -1,88 +1,87 @@
 name: Build & Release Android APK
 
-# Trigger: manually from GitHub Actions tab
-# After running, the APK appears as a GitHub Release (pre-release).
-# Download the .apk file on your phone and install it.
-# Android: Settings → Security → "Install unknown apps" must be enabled.
+# Trigger manually from GitHub Actions tab — no Expo account, no EAS token needed.
+# Uses expo prebuild (generates native Android project) + Gradle (builds the APK).
+# Result: a GitHub Release with a downloadable .apk file.
 
 on:
   workflow_dispatch:
 
 jobs:
   build:
-    name: EAS Build → GitHub Release
+    name: Prebuild → Gradle → GitHub Release
     runs-on: ubuntu-latest
     permissions:
-      contents: write   # needed to create GitHub Releases
+      contents: write
 
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Set up Node.js 20
+      - name: Java 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Node 20
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
           cache-dependency-path: mobile/package-lock.json
 
-      - name: Install mobile dependencies
+      - name: Install JS deps
         working-directory: mobile
         run: npm ci
 
-      - name: Set up Expo + EAS CLI
-        uses: expo/expo-github-action@v8
-        with:
-          eas-version: latest
-          token: ${{ secrets.EXPO_TOKEN }}
+      - name: Accept Android SDK licenses
+        run: |
+          yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses 2>/dev/null \
+            || yes | "$ANDROID_HOME/tools/bin/sdkmanager" --licenses 2>/dev/null \
+            || true
 
-      - name: Build Android APK on EAS cloud
+      - name: expo prebuild — generate Android project
         working-directory: mobile
+        run: npx expo prebuild --platform android --no-install
+
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ hashFiles('mobile/android/**/*.gradle*', 'mobile/android/gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: gradle-
+
+      - name: gradlew permissions
+        run: chmod +x mobile/android/gradlew
+
+      - name: Build debug APK
+        working-directory: mobile/android
+        run: ./gradlew assembleDebug --no-daemon
+
+      - name: Collect APK
         run: |
-          # --wait blocks until the EAS cloud build is done (~10-15 min).
-          # --json writes the build result object to stdout; progress to stderr.
-          eas build \
-            --platform android \
-            --profile preview \
-            --non-interactive \
-            --wait \
-            --json > /tmp/eas-build.json 2>/tmp/eas-build.log
+          VERSION=$(node -p "require('./mobile/package.json').version")
+          APK="opsolid-android-${VERSION}-b${{ github.run_number }}.apk"
+          cp mobile/android/app/build/outputs/apk/debug/app-debug.apk "$APK"
+          echo "APK=$APK" >> "$GITHUB_ENV"
+          ls -lh "$APK"
 
-          # Echo build log to Actions console for debugging
-          cat /tmp/eas-build.log || true
-
-          # Extract the direct-download URL from the result JSON
-          APK_URL=$(python3 - <<'EOF'
-          import json, sys
-          with open('/tmp/eas-build.json') as f:
-              raw = f.read().strip()
-          # EAS may return a single object or a one-element array
-          data = json.loads(raw)
-          builds = data if isinstance(data, list) else [data]
-          print(builds[0]['artifacts']['buildUrl'])
-          EOF
-          )
-          echo "APK_URL=$APK_URL" >> "$GITHUB_ENV"
-          echo "Artifact URL: $APK_URL"
-
-      - name: Download APK from EAS
-        run: |
-          curl -fL "$APK_URL" -o "opsolid-android-b${{ github.run_number }}.apk"
-          ls -lh opsolid-android-b${{ github.run_number }}.apk
-
-      - name: Publish as GitHub Release
+      - name: GitHub Release
         uses: softprops/action-gh-release@v2
         with:
           tag_name: android-build-${{ github.run_number }}
-          name: "OpSolid Android — Build #${{ github.run_number }}"
+          name: "OpSolid Android v0.1.0 — Build #${{ github.run_number }}"
           prerelease: true
           body: |
             ## OpSolid Android APK — Build #${{ github.run_number }}
 
-            **Kurulum (Android):**
-            1. Aşağıdan `opsolid-android-b${{ github.run_number }}.apk` dosyasını indir
-            2. Telefonda Ayarlar → Güvenlik → "Bilinmeyen kaynaklardan kur" → Aç
-            3. APK'ya dokunup kur
+            **Kurulum (WiFi gerekmiyor):**
+            1. Aşağıdaki `.apk` dosyasına tıkla → indir
+            2. Android → Ayarlar → Güvenlik → "Bilinmeyen kaynaklardan yükle" → Tarayıcı için aç
+            3. APK'ya dokunup kur → OpSolid açılır
 
-            > Bu build bir test (pre-release) sürümüdür. Production sürümü Play Store'dan gelecek.
-          files: opsolid-android-b${{ github.run_number }}.apk
+            > Debug sürümü — test için. Üretim build'i Play Store'dan gelecek.
+          files: ${{ env.APK }}
