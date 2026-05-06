@@ -152,7 +152,7 @@ export default function DiscoverScreen() {
 
   return (
     <View style={[styles.root, { backgroundColor: theme.bg[0] }]}>
-      <Stack.Screen options={{ headerShown: false }} />
+      <Stack.Screen options={{ title: t.title }} />
 
       {/* Search bar */}
       <View
