@@ -8,7 +8,13 @@ import {
 import { useTheme } from '../../src/lib/theme/ThemeProvider';
 import { copper } from '../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
-import { CreditCard, Settings as SettingsIcon } from 'lucide-react-native';
+import {
+  CreditCard,
+  Compass,
+  Users,
+  Mail,
+  Settings as SettingsIcon,
+} from 'lucide-react-native';
 
 export default function AppLayout() {
   const status = useAuthStore((s) => s.status);
@@ -32,7 +38,6 @@ export default function AppLayout() {
     return <Redirect href="/(auth)/login" />;
   }
 
-  // Awaiting biometric check — keep blank (splash already hidden)
   if (!unlocked) return null;
 
   return (
@@ -52,36 +57,43 @@ export default function AppLayout() {
         name="cards"
         options={{
           title: t.cards.title,
-          tabBarIcon: ({ color, size }) => (
-            <CreditCard size={size} color={color} />
-          ),
+          tabBarIcon: ({ color, size }) => <CreditCard size={size} color={color} />,
         }}
       />
-      {/* Detail screen — hidden from tab bar, still reachable via router.push */}
       <Tabs.Screen
-        name="cards/[id]"
+        name="discover"
         options={{
-          href: null,
-          title: t.cards.detailTitle,
+          title: t.discover.title,
+          tabBarIcon: ({ color, size }) => <Compass size={size} color={color} />,
         }}
       />
       <Tabs.Screen
-        name="cards/create"
-        options={{ href: null, title: t.cards.createTitle }}
+        name="contacts"
+        options={{
+          title: t.contacts.title,
+          tabBarIcon: ({ color, size }) => <Users size={size} color={color} />,
+        }}
       />
       <Tabs.Screen
-        name="cards/edit/[id]"
-        options={{ href: null, title: t.cards.editTitle }}
+        name="inbox"
+        options={{
+          title: t.inbox.title,
+          tabBarIcon: ({ color, size }) => <Mail size={size} color={color} />,
+        }}
       />
       <Tabs.Screen
         name="settings"
         options={{
           title: t.settings.title,
-          tabBarIcon: ({ color, size }) => (
-            <SettingsIcon size={size} color={color} />
-          ),
+          tabBarIcon: ({ color, size }) => <SettingsIcon size={size} color={color} />,
         }}
       />
+
+      {/* Hidden routes — reachable via router.push, not shown in tab bar */}
+      <Tabs.Screen name="cards/[id]" options={{ href: null, title: t.cards.detailTitle }} />
+      <Tabs.Screen name="cards/create" options={{ href: null, title: t.cards.createTitle }} />
+      <Tabs.Screen name="cards/edit/[id]" options={{ href: null, title: t.cards.editTitle }} />
+      <Tabs.Screen name="public/[slug]" options={{ href: null, title: '' }} />
     </Tabs>
   );
 }
