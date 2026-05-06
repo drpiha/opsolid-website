@@ -52,6 +52,7 @@ import PublishSection from "./sections/PublishSection";
 import type { FormState } from "./sections/types";
 import { CardQualityWidget } from "@/components/dashboard/CardQualityWidget";
 import { FeedbackPanel } from "@/components/dashboard/FeedbackPanel";
+import { CardCoachPanel } from "@/components/dashboard/CardCoachPanel";
 
 interface Props {
   orderId: string;
@@ -525,6 +526,14 @@ export function CardEditClient(props: Props) {
             <FeedbackPanel
               orderId={props.orderId}
               editToken={props.editToken}
+            />
+
+            {/* Phase 8.6 — full coaching suggestion list with section navigation */}
+            <CardCoachPanel
+              orderId={props.orderId}
+              editToken={props.editToken}
+              locale="de"
+              onNavigateToSection={handleNavigateToSection}
             />
 
             {/* B7 — 4 collapsible sections, lifted to standalone components in
