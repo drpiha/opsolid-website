@@ -139,6 +139,7 @@ export async function POST(req: NextRequest) {
           email: user.email,
           name: user.name,
           locale: user.locale,
+          role: user.role,
           emailVerifiedAt: user.emailVerifiedAt?.toISOString() ?? null,
         },
         accessToken,

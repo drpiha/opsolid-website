@@ -10,12 +10,20 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { putAsset, STORAGE_LIMITS } from "@/lib/storage";
+import { requireUser, AuthError } from "@/lib/auth/require-user";
 
 export const runtime = "nodejs";
 
 const ALLOWED_KINDS = new Set(["photo", "logo", "gallery"]);
 
 export async function POST(req: NextRequest) {
+  try {
+    await requireUser(req);
+  } catch (err) {
+    if (err instanceof AuthError) return err.toResponse();
+    throw err;
+  }
+
   const form = await req.formData();
   const file = form.get("file");
   const kind = String(form.get("kind") ?? "asset");

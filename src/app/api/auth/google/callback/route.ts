@@ -27,13 +27,14 @@ const STATE_COOKIE = "opsolid_oauth_state";
 const GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token";
 
 function clearStateCookie(): string {
+  const isProd = process.env.NODE_ENV === "production";
   return serializeCookie({
     name: STATE_COOKIE,
     value: "",
     maxAge: 0,
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
+    secure: isProd,
+    sameSite: isProd ? "none" : "lax",
   });
 }
 
@@ -114,20 +115,30 @@ export async function GET(req: NextRequest) {
     return errorRedirect("de", "oauth_network_error");
   }
 
-  // Decode id_token payload (we got it directly from Google — no signature
-  // verification needed since it came over TLS from our own request).
+  // Verify id_token via Google's tokeninfo endpoint — cryptographic signature
+  // check + audience/expiry enforcement, not just base64 decode.
   let email: string;
   let name: string | null;
   try {
-    const [, payloadB64] = idToken.split(".");
-    const claims = JSON.parse(
-      Buffer.from(payloadB64, "base64url").toString(),
-    ) as { email?: string; name?: string; email_verified?: boolean };
-    if (!claims.email) throw new Error("no email in id_token");
+    const verifyRes = await fetch(
+      `https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(idToken)}`,
+    );
+    if (!verifyRes.ok) {
+      return errorRedirect("de", "oauth_token_invalid");
+    }
+    const claims = (await verifyRes.json()) as {
+      email?: string;
+      name?: string;
+      email_verified?: string;
+      aud?: string;
+    };
+    if (!claims.email) throw new Error("no email in token claims");
+    if (claims.aud !== clientId) throw new Error("token audience mismatch");
+    if (claims.email_verified !== "true") throw new Error("email not verified");
     email = claims.email.trim().toLowerCase();
     name = claims.name ?? null;
   } catch (err) {
-    console.error("[google/callback] id_token decode error:", err);
+    console.error("[google/callback] token verify error:", err);
     return errorRedirect("de", "oauth_token_decode");
   }
 

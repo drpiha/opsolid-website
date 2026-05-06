@@ -57,6 +57,12 @@ export async function GET(req: NextRequest) {
     `${GOOGLE_AUTH_URL}?${params.toString()}`,
   );
 
+  // SameSite=None; Secure for mobile WebView OAuth flows where the redirect
+  // from Google back to the callback is a cross-site top-level navigation.
+  // SameSite=Lax works for desktop Chrome but can be dropped by some Android
+  // WebView implementations. None is safe here because the cookie is
+  // httpOnly + short-lived (10 min) and carries only a CSRF nonce.
+  const isProd = process.env.NODE_ENV === "production";
   res.headers.append(
     "Set-Cookie",
     serializeCookie({
@@ -64,8 +70,8 @@ export async function GET(req: NextRequest) {
       value: nonce,
       maxAge: STATE_TTL_SECONDS,
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      secure: isProd,
+      sameSite: isProd ? "none" : "lax",
     }),
   );
 

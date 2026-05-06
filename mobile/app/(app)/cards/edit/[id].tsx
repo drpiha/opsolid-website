@@ -14,11 +14,10 @@ import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
 import { getCard, updateCard, uploadPhoto } from '../../../../src/lib/api/cards';
 import type { ApiCard } from '../../../../src/lib/api/types';
+import { API_BASE } from '../../../../src/lib/api/client';
 import { useTheme } from '../../../../src/lib/theme/ThemeProvider';
 import { copper } from '../../../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../../../src/lib/i18n/locale';
-
-const API_BASE = process.env.EXPO_PUBLIC_API_BASE ?? 'https://opsolid.de';
 
 export default function CardEditScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();

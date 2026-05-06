@@ -6,13 +6,14 @@ import {
   ScrollView,
   TouchableOpacity,
   Alert,
-  ActivityIndicator,
+  ActivityIndicator, // used for save indicator in header
   Image,
   StyleSheet,
 } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
 import { createCard, updateCard, uploadPhoto } from '../../../src/lib/api/cards';
+// uploadPhoto is called inside handleCreate, after card creation succeeds
 import { useTheme } from '../../../src/lib/theme/ThemeProvider';
 import { copper } from '../../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../../src/lib/i18n/locale';
@@ -23,15 +24,15 @@ export default function CardCreateScreen() {
   const t = useTranslations(detectLocale()).cards;
 
   const [saving, setSaving] = useState(false);
-  const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
   const [name, setName] = useState('');
   const [jobTitle, setJobTitle] = useState('');
   const [company, setCompany] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
+  // Store local URI only; upload happens inside handleCreate after the card exists
   const [photoUri, setPhotoUri] = useState<string | null>(null);
-  const [pendingPhotoPath, setPendingPhotoPath] = useState<string | null>(null);
+  const [photoMimeType, setPhotoMimeType] = useState<string>('image/jpeg');
 
   async function pickPhoto() {
     const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -47,15 +48,7 @@ export default function CardCreateScreen() {
 
     const asset = result.assets[0];
     setPhotoUri(asset.uri);
-    setUploadingPhoto(true);
-    try {
-      const path = await uploadPhoto(asset.uri, asset.mimeType ?? 'image/jpeg');
-      setPendingPhotoPath(path);
-    } catch {
-      Alert.alert('Upload failed', 'Could not upload photo. Try again.');
-    } finally {
-      setUploadingPhoto(false);
-    }
+    setPhotoMimeType(asset.mimeType ?? 'image/jpeg');
   }
 
   async function handleCreate() {
@@ -65,6 +58,8 @@ export default function CardCreateScreen() {
     }
     setSaving(true);
     try {
+      // Create card first, then upload photo anchored to the new card id.
+      // This prevents orphan assets if createCard() fails.
       const created = await createCard({
         templateId: 1,
         cardData: {
@@ -76,8 +71,16 @@ export default function CardCreateScreen() {
         },
       });
 
-      if (pendingPhotoPath) {
-        await updateCard(created.id, { photoPath: pendingPhotoPath });
+      if (photoUri) {
+        try {
+          const path = await uploadPhoto(photoUri, photoMimeType);
+          await updateCard(created.id, { photoPath: path });
+        } catch {
+          // Non-fatal: card created, photo failed — user can add later
+          Alert.alert('', 'Card created, but photo upload failed. You can add it later.');
+          router.back();
+          return;
+        }
       }
 
       Alert.alert('', t.createSuccess, [{ text: 'OK', onPress: () => router.back() }]);
@@ -113,19 +116,17 @@ export default function CardCreateScreen() {
         {/* Photo */}
         <TouchableOpacity
           onPress={() => void pickPhoto()}
-          disabled={uploadingPhoto}
+          disabled={saving}
           style={[styles.photoWrap, { borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[1] }]}
         >
-          {uploadingPhoto ? (
-            <ActivityIndicator color={copper[500]} />
-          ) : photoUri ? (
+          {photoUri ? (
             <Image source={{ uri: photoUri }} style={styles.photo} />
           ) : (
             <Text style={[styles.photoPlaceholder, { color: theme.ink[400] }]}>
               {t.addPhoto}
             </Text>
           )}
-          {photoUri && !uploadingPhoto && (
+          {photoUri && (
             <View style={styles.photoEditBadge}>
               <Text style={styles.photoEditBadgeText}>{t.changePhoto}</Text>
             </View>

@@ -2,7 +2,7 @@
 // Cards API wrappers — all calls use apiFetch for Bearer + refresh rotation.
 // -----------------------------------------------------------------------
 
-import { apiFetch } from './client';
+import { apiFetch, API_BASE } from './client';
 import type {
   ApiCard,
   CardListResponse,
@@ -68,8 +68,6 @@ export async function updateCard(
   );
   return res.card;
 }
-
-const API_BASE = process.env.EXPO_PUBLIC_API_BASE ?? 'https://opsolid.de';
 
 /**
  * Upload a local image to /api/uploads and return the server path.

@@ -101,7 +101,7 @@ export default function CardDetailScreen() {
   }
 
   const contactName =
-    (card.cardData?.contactName as string | undefined) ??
+    (card.cardData?.name as string | undefined) ??
     card.slug ??
     card.id.slice(0, 8);
   const title = (card.cardData?.title as string | undefined) ?? '';
