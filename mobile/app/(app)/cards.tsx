@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import {
   View,
   FlatList,
@@ -6,7 +6,7 @@ import {
   RefreshControl,
   StyleSheet,
 } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
+import { Stack, useRouter, useFocusEffect } from 'expo-router';
 import { TouchableOpacity, Text } from 'react-native';
 import { ScreenContainer } from '../../src/components/ui/ScreenContainer';
 import { Button } from '../../src/components/ui/Button';
@@ -22,6 +22,7 @@ export default function CardsListScreen() {
   const theme = useTheme();
   const t = useTranslations(detectLocale()).cards;
 
+  const mounted = useRef(false);
   const [items, setItems] = useState<ApiCard[]>([]);
   const [cursor, setCursor] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -59,6 +60,15 @@ export default function CardsListScreen() {
     // Run once on mount — intentionally omitting `load` from deps
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Refresh when screen regains focus after create/edit — skip initial mount
+  useFocusEffect(
+    useCallback(() => {
+      if (!mounted.current) { mounted.current = true; return; }
+      void load('refresh');
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []),
+  );
 
   const renderEmpty = () => (
     <View style={styles.empty}>

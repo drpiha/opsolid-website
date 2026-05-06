@@ -40,7 +40,7 @@ export const t = {
     cards: {
       title: 'My Cards',
       empty: 'No cards yet.',
-      emptyHint: 'Create your first card on opsolid.de',
+      emptyHint: 'Tap + to create your first card.',
       views: 'views',
       status: {
         DRAFT: 'Draft',
@@ -120,7 +120,7 @@ export const t = {
     cards: {
       title: 'Meine Karten',
       empty: 'Noch keine Karten.',
-      emptyHint: 'Erstellen Sie Ihre erste Karte auf opsolid.de',
+      emptyHint: 'Tippen Sie auf + um Ihre erste Karte zu erstellen.',
       views: 'Aufrufe',
       status: {
         DRAFT: 'Entwurf',
@@ -201,7 +201,7 @@ export const t = {
     cards: {
       title: 'Kartlarım',
       empty: 'Henüz kart yok.',
-      emptyHint: 'İlk kartınızı opsolid.de üzerinden oluşturun',
+      emptyHint: 'İlk kartınızı oluşturmak için + tuşuna basın.',
       views: 'görüntlenme',
       status: {
         DRAFT: 'Taslak',

@@ -3,6 +3,7 @@ import { useRouter } from 'expo-router';
 import { useTheme } from '../../lib/theme/ThemeProvider';
 import { copper, signal } from '../../lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../lib/i18n/locale';
+import { API_BASE } from '../../lib/api/client';
 import type { ApiCard, CardStatus } from '../../lib/api/types';
 
 function statusColor(status: CardStatus): string {
@@ -17,12 +18,14 @@ export function CardListItem({ card }: { card: ApiCard }) {
   const t = useTranslations(detectLocale()).cards;
 
   const contactName =
-    (card.cardData?.contactName as string | undefined) ??
+    (card.cardData?.name as string | undefined) ??
     card.slug ??
     card.id.slice(0, 8);
 
   const photoUri = card.photoPath
-    ? `https://opsolid.de${card.photoPath}`
+    ? card.photoPath.startsWith('http')
+      ? card.photoPath
+      : `${API_BASE}${card.photoPath}`
     : null;
 
   return (
