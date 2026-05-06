@@ -55,6 +55,7 @@ model User {
   magicLinkTokens MagicLinkToken[]
   cardOrders      CardOrder[]
   savedCards      SavedCard[]
+  feedbackGiven   CardFeedback[]
 
   @@index([email])
   @@map("users")
@@ -241,6 +242,7 @@ model CardOrder {
   city              String?  @map("city")
   country           String?  @default("DE") @map("country")
   languages         String[] @default([]) @map("languages")
+  feedbackEnabled   Boolean  @default(false) @map("feedback_enabled")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -273,6 +275,11 @@ model CardOrder {
    * Users who have bookmarked this card (Phase 8.3). Owner-private CRM data.
    */
   savedByUsers SavedCard[]
+
+  /**
+   * Structured feedback submitted by logged-in users (Phase 8.4).
+   */
+  feedback CardFeedback[]
 
   @@index([status])
   @@index([contactPhone])
@@ -524,6 +531,31 @@ model SavedCard {
   @@unique([userId, cardOrderId])
   @@index([userId])
   @@map("saved_cards")
+}
+
+// =============================================================================
+// Phase 8.4 — CardFeedback: structured design/content feedback on a card.
+// Only logged-in users can submit. One submission per user per card.
+// Owner sees aggregate scores; individual feedback is private to submitter.
+// feedbackEnabled must be true on the card for submissions to be accepted.
+// =============================================================================
+model CardFeedback {
+  id          String    @id @default(cuid())
+  cardOrderId String    @map("card_order_id")
+  giverId     String    @map("giver_id")
+  // ratings: { design: 1-5, readability: 1-5, photo: 1-5, cta: 1-5,
+  //            mobile: 1-5, trust: 1-5, content: 1-5 }
+  ratings     Json      @map("ratings")
+  comment     String?   @db.VarChar(500) @map("comment")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  piiRedactedAt DateTime? @map("pii_redacted_at")
+
+  cardOrder CardOrder @relation(fields: [cardOrderId], references: [id], onDelete: Cascade)
+  giver     User      @relation(fields: [giverId], references: [id], onDelete: Cascade)
+
+  @@unique([giverId, cardOrderId])
+  @@index([cardOrderId])
+  @@map("card_feedback")
 }
 
 // -----------------------------------------------------------------------------

@@ -51,6 +51,7 @@ import ContactSection from "./sections/ContactSection";
 import PublishSection from "./sections/PublishSection";
 import type { FormState } from "./sections/types";
 import { CardQualityWidget } from "@/components/dashboard/CardQualityWidget";
+import { FeedbackPanel } from "@/components/dashboard/FeedbackPanel";
 
 interface Props {
   orderId: string;
@@ -518,6 +519,12 @@ export function CardEditClient(props: Props) {
               editToken={props.editToken}
               locale="de"
               onNavigateToSection={handleNavigateToSection}
+            />
+
+            {/* Phase 8.4 — feedback collection toggle + aggregate view */}
+            <FeedbackPanel
+              orderId={props.orderId}
+              editToken={props.editToken}
             />
 
             {/* B7 — 4 collapsible sections, lifted to standalone components in

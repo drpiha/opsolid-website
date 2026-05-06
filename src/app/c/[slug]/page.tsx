@@ -35,6 +35,7 @@ import { OwnerToolbar } from "@/components/cards/OwnerToolbar";
 import { StatusBanner } from "@/components/cards/StatusBanner";
 import { LocaleSwitcher } from "@/components/cards/LocaleSwitcher";
 import { SaveCardButton } from "@/components/cards/SaveCardButton";
+import { FeedbackWidget } from "@/components/cards/FeedbackWidget";
 import { constantTimeEquals } from "@/lib/constantTime";
 import { contents } from "@/content";
 
@@ -373,6 +374,8 @@ export default async function CardPage({ params, searchParams }: PageProps) {
             )}
             <LocaleSwitcher current={localeKey} ariaLabel={langSwitcherLabel} />
           </div>
+          {/* Phase 8.4 — feedback widget. Self-hides when enabled:false from API */}
+          <FeedbackWidget slug={slug} locale={localeKey} />
         </div>
         <QRFlipOverlay
           slug={slug}
