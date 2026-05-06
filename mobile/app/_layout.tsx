@@ -12,7 +12,16 @@ export default function RootLayout() {
   const status = useAuthStore((s) => s.status);
 
   useEffect(() => {
-    hydrate().finally(() => SplashScreen.hideAsync());
+    // Belt-and-suspenders: hide splash even if hydrate hangs longer than 10s.
+    // A stuck splash is the #1 cause of "app doesn't open" reports.
+    const safetyTimer = setTimeout(() => {
+      SplashScreen.hideAsync().catch(() => {});
+    }, 10000);
+    hydrate().finally(() => {
+      clearTimeout(safetyTimer);
+      SplashScreen.hideAsync().catch(() => {});
+    });
+    return () => clearTimeout(safetyTimer);
   }, [hydrate]);
 
   // Hold splash open while hydrating

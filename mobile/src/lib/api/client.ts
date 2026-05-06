@@ -2,6 +2,19 @@ import * as SecureStore from 'expo-secure-store';
 
 export const API_BASE = process.env.EXPO_PUBLIC_API_BASE ?? 'https://opsolid.de';
 
+// Hard ceiling on every API request. Without this, a phone with no network /
+// wrong DNS hangs SplashScreen forever during hydrate(), which the user reads
+// as "app doesn't open". 8s is enough for a slow 3G round-trip.
+const REQUEST_TIMEOUT_MS = 8000;
+
+function fetchWithTimeout(input: string, init: RequestInit): Promise<Response> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+  return fetch(input, { ...init, signal: controller.signal }).finally(() =>
+    clearTimeout(timer),
+  );
+}
+
 // In-memory cache so we don't hit SecureStore on every request.
 let accessToken: string | null = null;
 
@@ -33,7 +46,7 @@ async function refreshAccessToken(): Promise<string> {
     const refresh = await SecureStore.getItemAsync('opsolid.refreshToken');
     if (!refresh) throw new Error('NO_REFRESH_TOKEN');
 
-    const res = await fetch(`${API_BASE}/api/v1/auth/refresh`, {
+    const res = await fetchWithTimeout(`${API_BASE}/api/v1/auth/refresh`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ refreshToken: refresh }),
@@ -74,13 +87,13 @@ export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise
 
   if (token) headers['Authorization'] = `Bearer ${token}`;
 
-  let res = await fetch(`${API_BASE}${path}`, { ...init, headers });
+  let res = await fetchWithTimeout(`${API_BASE}${path}`, { ...init, headers });
 
   if (res.status === 401 && token) {
     try {
       const fresh = await refreshAccessToken();
       headers['Authorization'] = `Bearer ${fresh}`;
-      res = await fetch(`${API_BASE}${path}`, { ...init, headers });
+      res = await fetchWithTimeout(`${API_BASE}${path}`, { ...init, headers });
     } catch {
       throw new Error('UNAUTHORIZED');
     }
