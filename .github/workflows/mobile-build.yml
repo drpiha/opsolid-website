@@ -1,0 +1,88 @@
+name: Build & Release Android APK
+
+# Trigger: manually from GitHub Actions tab
+# After running, the APK appears as a GitHub Release (pre-release).
+# Download the .apk file on your phone and install it.
+# Android: Settings → Security → "Install unknown apps" must be enabled.
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: EAS Build → GitHub Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # needed to create GitHub Releases
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: mobile/package-lock.json
+
+      - name: Install mobile dependencies
+        working-directory: mobile
+        run: npm ci
+
+      - name: Set up Expo + EAS CLI
+        uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Build Android APK on EAS cloud
+        working-directory: mobile
+        run: |
+          # --wait blocks until the EAS cloud build is done (~10-15 min).
+          # --json writes the build result object to stdout; progress to stderr.
+          eas build \
+            --platform android \
+            --profile preview \
+            --non-interactive \
+            --wait \
+            --json > /tmp/eas-build.json 2>/tmp/eas-build.log
+
+          # Echo build log to Actions console for debugging
+          cat /tmp/eas-build.log || true
+
+          # Extract the direct-download URL from the result JSON
+          APK_URL=$(python3 - <<'EOF'
+          import json, sys
+          with open('/tmp/eas-build.json') as f:
+              raw = f.read().strip()
+          # EAS may return a single object or a one-element array
+          data = json.loads(raw)
+          builds = data if isinstance(data, list) else [data]
+          print(builds[0]['artifacts']['buildUrl'])
+          EOF
+          )
+          echo "APK_URL=$APK_URL" >> "$GITHUB_ENV"
+          echo "Artifact URL: $APK_URL"
+
+      - name: Download APK from EAS
+        run: |
+          curl -fL "$APK_URL" -o "opsolid-android-b${{ github.run_number }}.apk"
+          ls -lh opsolid-android-b${{ github.run_number }}.apk
+
+      - name: Publish as GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: android-build-${{ github.run_number }}
+          name: "OpSolid Android — Build #${{ github.run_number }}"
+          prerelease: true
+          body: |
+            ## OpSolid Android APK — Build #${{ github.run_number }}
+
+            **Kurulum (Android):**
+            1. Aşağıdan `opsolid-android-b${{ github.run_number }}.apk` dosyasını indir
+            2. Telefonda Ayarlar → Güvenlik → "Bilinmeyen kaynaklardan kur" → Aç
+            3. APK'ya dokunup kur
+
+            > Bu build bir test (pre-release) sürümüdür. Production sürümü Play Store'dan gelecek.
+          files: opsolid-android-b${{ github.run_number }}.apk

@@ -9,10 +9,22 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "de.opsolid.mobile",
-      "associatedDomains": ["applinks:opsolid.de"]
+      "associatedDomains": ["applinks:opsolid.de"],
+      "infoPlist": {
+        "NSCameraUsageDescription": "OpSolid needs camera access to take a profile photo.",
+        "NSPhotoLibraryUsageDescription": "OpSolid needs photo library access to set a profile photo.",
+        "NSFaceIDUsageDescription": "OpSolid uses Face ID to protect your account."
+      }
     },
     "android": {
       "package": "de.opsolid.mobile",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.READ_MEDIA_IMAGES",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.USE_BIOMETRIC",
+        "android.permission.USE_FINGERPRINT"
+      ],
       "intentFilters": [
         {
           "action": "VIEW",
@@ -34,7 +46,14 @@
     "plugins": [
       "expo-router",
       "expo-secure-store",
-      "expo-local-authentication"
+      "expo-local-authentication",
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "OpSolid needs photo library access to set a profile photo.",
+          "cameraPermission": "OpSolid needs camera access to take a profile photo."
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
