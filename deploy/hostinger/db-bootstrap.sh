@@ -57,6 +57,10 @@ run_sql "patch_012_add_retention_indexes.sql" "$REPO_ROOT/prisma/patch_012_add_r
 run_sql "patch_013_add_pii_redacted_at.sql" "$REPO_ROOT/prisma/patch_013_add_pii_redacted_at.sql"
 run_sql "patch_014_add_user_role.sql"       "$REPO_ROOT/prisma/patch_014_add_user_role.sql"
 run_sql "patch_015_voice_agent_llm_model.sql" "$REPO_ROOT/prisma/patch_015_voice_agent_llm_model.sql"
+run_sql "patch_015_card_visibility.sql"       "$REPO_ROOT/prisma/patch_015_card_visibility.sql"
+run_sql "patch_016_saved_cards.sql"           "$REPO_ROOT/prisma/patch_016_saved_cards.sql"
+run_sql "patch_017_card_feedback.sql"         "$REPO_ROOT/prisma/patch_017_card_feedback.sql"
+run_sql "patch_018_card_actions.sql"          "$REPO_ROOT/prisma/patch_018_card_actions.sql"
 run_sql "seed.sql"                    "$REPO_ROOT/prisma/seed.sql"
 
 echo "== bootstrap ok =="

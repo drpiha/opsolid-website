@@ -5,10 +5,10 @@
  * Usage:
  *   npx tsx scripts/apply-patches.ts [patch_file1.sql] [patch_file2.sql] ...
  *
- * If no files are given, applies patch_015 and patch_016 by default.
+ * If no files are given, applies patches 015–018 (Phase 8.1–8.5) by default.
  *
  * Example:
- *   npx tsx scripts/apply-patches.ts prisma/patch_015_card_visibility.sql prisma/patch_016_saved_cards.sql
+ *   npx tsx scripts/apply-patches.ts prisma/patch_017_card_feedback.sql prisma/patch_018_card_actions.sql
  */
 
 import { PrismaClient } from "../src/generated/prisma";
@@ -20,6 +20,8 @@ const prisma = new PrismaClient();
 const DEFAULT_PATCHES = [
   "prisma/patch_015_card_visibility.sql",
   "prisma/patch_016_saved_cards.sql",
+  "prisma/patch_017_card_feedback.sql",
+  "prisma/patch_018_card_actions.sql",
 ];
 
 function splitStatements(sql: string): string[] {
