@@ -9,7 +9,7 @@
 //      generator if applicable; we use a locale-less default that the locale
 //      middleware will redirect to /<locale>/dashboard/cards).
 //
-// Failure → redirect to /auth/login?error=invalid_or_expired_link.
+// Failure → redirect to /login?error=invalid_or_expired_link.
 //
 // We accept GET (browser navigation) only. The token is single-use, so even
 // if a referrer leak occurs the token is already burned.
@@ -38,7 +38,7 @@ const RATE_WINDOW_MS = 60 * 60 * 1000;
 
 function loginErrorRedirect(): NextResponse {
   return NextResponse.redirect(
-    `${SITE_URL}/auth/login?error=invalid_or_expired_link`,
+    `${SITE_URL}/login?error=invalid_or_expired_link`,
     { status: 302 },
   );
 }
