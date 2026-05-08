@@ -1,54 +1,30 @@
 <!--
-  Adaptive icon foreground for Android 8+. Transparent background.
-  All visible content lives inside the 432x432 "safe zone" centered at 512,512
-  (Android crops the outer 192px on a 1024 canvas for circular masks).
-  Same Folded Corner glyph as icon-concept-3.svg but scaled and stripped of
-  the white-square background so Android's adaptiveIcon.backgroundColor
-  controls the surrounding fill.
+  Verso adaptive-icon foreground (Android 8+).
+  Same Compass v3c geometry but no background fill (transparent).
+  Android composes our `adaptiveIcon.backgroundColor: #F4F1EC` behind it.
+  Glyph mass scaled to fit Android's 432×432 safe circle inside the 1024 canvas.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
-  <defs>
-    <linearGradient id="ink-body-fg" x1="0" y1="0" x2="0.3" y2="1">
-      <stop offset="0%" stop-color="#232830"/>
-      <stop offset="100%" stop-color="#15120F"/>
-    </linearGradient>
-    <linearGradient id="teal-chamfer-fg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="#2DD4C4"/>
-      <stop offset="100%" stop-color="#0D9488"/>
-    </linearGradient>
-  </defs>
+  <!-- North spike — turquoise, dominant. Scaled to safe circle ~r216 from center. -->
+  <path d="M 512 296 L 552 432 L 512 472 L 472 432 Z" fill="#1AA6B7"/>
 
-  <!--
-    Card body: 296,296 → 728,728 (432x432, centered, fits Android's safe circle).
-    Chamfer cut at top-right: 100px.
-    Top-right corner: (628,296) on top edge → (728,396) on right edge.
-  -->
-  <path
-    d="M 296 296 L 628 296 L 728 396 L 728 728 L 296 728 Z"
-    fill="url(#ink-body-fg)"
-  />
+  <!-- South spike — ink -->
+  <path d="M 512 728 L 552 592 L 512 552 L 472 592 Z" fill="#0E1416"/>
 
-  <!-- Chamfer triangle accent -->
-  <polygon
-    points="628,296 728,296 728,396"
-    fill="url(#teal-chamfer-fg)"
-  />
+  <!-- East spike — ink -->
+  <path d="M 728 512 L 592 552 L 552 512 L 592 472 Z" fill="#0E1416"/>
 
-  <!-- Inner frame (turquoise outline) -->
-  <path
-    d="M 344 344 L 620 344 L 680 404 L 680 680 L 344 680 Z"
-    fill="none"
-    stroke="#1AA6B7"
-    stroke-width="9"
-    stroke-opacity="0.55"
-  />
+  <!-- West spike — ink -->
+  <path d="M 296 512 L 432 552 L 472 512 L 432 472 Z" fill="#0E1416"/>
 
-  <!-- Avatar circle, top-left of inner frame -->
-  <circle cx="430" cy="430" r="38" fill="none" stroke="#FFFFFF" stroke-width="11" stroke-opacity="0.65"/>
-  <circle cx="430" cy="430" r="16" fill="#FFFFFF" opacity="0.50"/>
+  <!-- Inner hub diamond -->
+  <path d="M 512 472 L 552 512 L 512 552 L 472 512 Z" fill="#0F4F58"/>
 
-  <!-- Three content rows in the lower portion -->
-  <line x1="386" y1="540" x2="650" y2="540" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round" stroke-opacity="0.85"/>
-  <line x1="386" y1="582" x2="558" y2="582" stroke="#1AA6B7" stroke-width="12" stroke-linecap="round" stroke-opacity="0.85"/>
-  <line x1="386" y1="618" x2="600" y2="618" stroke="#FFFFFF" stroke-width="12" stroke-linecap="round" stroke-opacity="0.45"/>
+  <!-- Center pivot dot -->
+  <circle cx="512" cy="512" r="14" fill="#1AA6B7"/>
+
+  <!-- "+" affordance, scaled and pulled into safe circle. NE bisector. -->
+  <circle cx="650" cy="378" r="46" fill="#0E1416"/>
+  <line x1="626" y1="378" x2="674" y2="378" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round"/>
+  <line x1="650" y1="354" x2="650" y2="402" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round"/>
 </svg>

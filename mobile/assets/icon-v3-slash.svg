@@ -1,0 +1,27 @@
+<!--
+  Verso v3 — Two-Stroke Slash
+  Two confident strokes at a 70°/110° intersection.
+  Thick ink stroke crosses a thinner turquoise stroke — like a hanko seal
+  or a felt-tip flourish, NOT a letterform. Slightly off-center for tension.
+  Solid stroke fills, rounded caps.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Warm paper background -->
+  <rect width="1024" height="1024" fill="#F4F1EC"/>
+
+  <g stroke-linecap="round" fill="none">
+    <!-- Heavy ink stroke (NW → SE), 70° from horizontal.
+         Slightly upper-left of canvas center for asymmetric weight. -->
+    <line x1="248" y1="232" x2="752" y2="784"
+      stroke="#0E1416" stroke-width="118"/>
+
+    <!-- Lighter turquoise stroke (NE → SW), 110° from horizontal — crosses
+         the ink slightly above center. Thinner; reads as a counter-mark. -->
+    <line x1="784" y1="296" x2="288" y2="772"
+      stroke="#1AA6B7" stroke-width="74"/>
+  </g>
+
+  <!-- Tiny ink terminal mark at the high end of the turquoise stroke,
+       like a calligrapher's lift-off droplet. Adds craft without busy detail. -->
+  <circle cx="784" cy="296" r="22" fill="#0E1416"/>
+</svg>

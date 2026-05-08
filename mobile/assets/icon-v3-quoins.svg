@@ -1,0 +1,35 @@
+<!--
+  Verso v3 — Stacked Quoins
+  Four solid blocks stacked vertically, each slightly horizontally offset
+  to imply a leaning press of typeset slugs. Whole stack rotates 6° clockwise.
+  Letterpress quoins / Coptic spine reference, rendered as architectural
+  blocks — pure construction, no glyphs.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <rect width="1024" height="1024" fill="#F4F1EC"/>
+
+  <!-- Stack rotates 6° clockwise around canvas center.
+       Each block: 384 wide × 120 tall, 6px gap.
+       Stack vertically centered (y = 263..761, height 498).
+       Horizontal offsets create the "leaning slugs" effect. -->
+  <g transform="rotate(6 512 512)">
+    <!-- Block 1: turquoise, base of the stack visually -->
+    <rect x="320" y="263" width="384" height="120" rx="4" fill="#1AA6B7"/>
+
+    <!-- Block 2: deep teal, offset 20px left -->
+    <rect x="300" y="389" width="384" height="120" rx="4" fill="#0F4F58"/>
+
+    <!-- Block 3: turquoise, offset 20px right of center -->
+    <rect x="340" y="515" width="384" height="120" rx="4" fill="#1AA6B7"/>
+
+    <!-- Block 4: deep teal, offset slightly left -->
+    <rect x="310" y="641" width="384" height="120" rx="4" fill="#0F4F58"/>
+  </g>
+
+  <!-- One ink notch at the top-right of the topmost block — the foot of a
+       typeset character, the only "detail" allowed. Survives at 48px as a
+       single dot of contrast. -->
+  <g transform="rotate(6 512 512)">
+    <rect x="664" y="291" width="32" height="64" fill="#0E1416"/>
+  </g>
+</svg>

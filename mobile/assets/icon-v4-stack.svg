@@ -1,0 +1,37 @@
+<!--
+  Verso v4 — STACK
+  A short deck of 3 cards seen from above. Bottom two cards are subtle
+  layers (lower opacity) and the top card is fanned 8° clockwise to suggest
+  "a hand of cards" or "deck-able collection." Each card has an avatar dot
+  and 2 content rows in turquoise (punch-through).
+  At 48px the silhouette reads as "stacked white shapes with one tilted."
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <rect width="1024" height="1024" fill="#1AA6B7"/>
+
+  <!-- Bottom card — most translucent, base layer -->
+  <rect x="270" y="476" width="500" height="316" rx="28" fill="#FFFFFF" fill-opacity="0.42"/>
+
+  <!-- Middle card — slight offset -->
+  <rect x="278" y="442" width="500" height="316" rx="28" fill="#FFFFFF" fill-opacity="0.72"/>
+
+  <!-- Top card — fully opaque, fanned 8° clockwise about its center -->
+  <g transform="rotate(8 530 568)">
+    <rect x="280" y="410" width="500" height="316" rx="28" fill="#FFFFFF"/>
+    <!-- Avatar dot -->
+    <circle cx="346" cy="478" r="34" fill="#1AA6B7"/>
+    <!-- Top content rows: name + title -->
+    <rect x="402" y="458" width="244" height="20" rx="10" fill="#1AA6B7"/>
+    <rect x="402" y="490" width="172" height="16" rx="8" fill="#1AA6B7"/>
+    <!-- Bottom content rows: faint detail lines -->
+    <rect x="320" y="592" width="408" height="16" rx="8" fill="#1AA6B7" fill-opacity="0.55"/>
+    <rect x="320" y="630" width="320" height="16" rx="8" fill="#1AA6B7" fill-opacity="0.55"/>
+    <rect x="320" y="668" width="248" height="16" rx="8" fill="#1AA6B7" fill-opacity="0.40"/>
+  </g>
+
+  <!-- "+" affordance — overlaps the corner of the top card slightly,
+       reinforcing "add a card to the deck." -->
+  <circle cx="812" cy="212" r="60" fill="#0E1416"/>
+  <line x1="785" y1="212" x2="839" y2="212" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round"/>
+  <line x1="812" y1="185" x2="812" y2="239" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round"/>
+</svg>

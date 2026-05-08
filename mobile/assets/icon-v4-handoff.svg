@@ -1,0 +1,33 @@
+<!--
+  Verso v4 — HANDOFF
+  Two outline avatar circles overlapping, with a double-ended curved arrow
+  between them. Reads as "exchanging cards / introducing." Social register
+  Hasan asked for ("küçük bir sosyal havası"), without depicting a card.
+  At 48px collapses to two-circle silhouette + arrow tension between them.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <rect width="1024" height="1024" fill="#1AA6B7"/>
+
+  <!-- Left avatar: outline ring + inner head/shoulder silhouette -->
+  <circle cx="320" cy="512" r="148" fill="none" stroke="#FFFFFF" stroke-width="26"/>
+  <circle cx="320" cy="468" r="42" fill="#FFFFFF"/>
+  <path d="M 256 580 Q 320 540, 384 580 L 384 600 L 256 600 Z" fill="#FFFFFF"/>
+
+  <!-- Right avatar: same construction -->
+  <circle cx="704" cy="512" r="148" fill="none" stroke="#FFFFFF" stroke-width="26"/>
+  <circle cx="704" cy="468" r="42" fill="#FFFFFF"/>
+  <path d="M 640 580 Q 704 540, 768 580 L 768 600 L 640 600 Z" fill="#FFFFFF"/>
+
+  <!-- Top arc — left → right (with arrow tip) -->
+  <path d="M 376 396 Q 512 320, 648 396" fill="none" stroke="#FFFFFF" stroke-width="22" stroke-linecap="round"/>
+  <polygon points="624,378 670,396 624,414" fill="#FFFFFF"/>
+
+  <!-- Bottom arc — right → left (with arrow tip) -->
+  <path d="M 648 628 Q 512 704, 376 628" fill="none" stroke="#FFFFFF" stroke-width="22" stroke-linecap="round"/>
+  <polygon points="400,610 354,628 400,646" fill="#FFFFFF"/>
+
+  <!-- "+" affordance -->
+  <circle cx="812" cy="212" r="60" fill="#0E1416"/>
+  <line x1="785" y1="212" x2="839" y2="212" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round"/>
+  <line x1="812" y1="185" x2="812" y2="239" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round"/>
+</svg>

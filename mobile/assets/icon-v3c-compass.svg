@@ -1,0 +1,39 @@
+<!--
+  Verso v3c — Compass Rose, refined per Hasan:
+  - Paper #F4F1EC background kept (he liked it).
+  - Spikes scaled up (longer reach + wider base) so the mark fills the icon.
+  - Smooth, rounded "+" placed in the NE bisector — in the empty triangle
+    between the N and E spikes, NOT at the corner — soft circular bg + round-
+    capped strokes so it reads "sympathetic / friendly," not sharp.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Warm paper background — kept as Hasan asked -->
+  <rect width="1024" height="1024" fill="#F4F1EC"/>
+
+  <!-- North spike — turquoise, dominant. Tip 152 (slightly outside 192 safe
+       inset on the centerline; iOS mask only clips corners, so center-edge
+       is safe). Wider base than v3 (wings at x±56 instead of ±40). -->
+  <path d="M 512 152 L 568 432 L 512 480 L 456 432 Z" fill="#1AA6B7"/>
+
+  <!-- South spike — ink, mirrors north -->
+  <path d="M 512 872 L 568 592 L 512 544 L 456 592 Z" fill="#0E1416"/>
+
+  <!-- East spike — ink, reaches near the right safe edge -->
+  <path d="M 872 512 L 592 568 L 544 512 L 592 456 Z" fill="#0E1416"/>
+
+  <!-- West spike — ink, mirrors east -->
+  <path d="M 152 512 L 432 568 L 480 512 L 432 456 Z" fill="#0E1416"/>
+
+  <!-- Inner hub diamond — deep teal, ties the four points together -->
+  <path d="M 512 480 L 544 512 L 512 544 L 480 512 Z" fill="#0F4F58"/>
+
+  <!-- Center pivot dot — turquoise -->
+  <circle cx="512" cy="512" r="18" fill="#1AA6B7"/>
+
+  <!-- "+" affordance: smooth, rounded, in the NE bisector empty space.
+       Centered at (700, 320) — between the N and E spikes, not at the corner.
+       Soft circular ink bg + round-capped white strokes for friendly tone. -->
+  <circle cx="700" cy="320" r="64" fill="#0E1416"/>
+  <line x1="666" y1="320" x2="734" y2="320" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round"/>
+  <line x1="700" y1="286" x2="700" y2="354" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round"/>
+</svg>

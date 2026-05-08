@@ -1,0 +1,45 @@
+<!--
+  Verso v3b — Compass Rose, refined.
+  Per Hasan: "compass güzel, ama arkaplan beyaz olunca kötü ve basit
+  görünüyor. Modern uygulamalarda olduğu gibi düzgün bir arkaplan olsun.
+  Compass az daha büyük olsun."
+
+  Changes vs v3:
+  - Background: solid turquoise #1AA6B7 (Things 3 / Linear / Cron register)
+  - North spike: paper #F4F1EC (was turquoise), longer + wider base
+  - S/E/W: ink #0E1416 (kept), all four reach the safe edge
+  - Center pivot: paper #F4F1EC dot inside an ink ring
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Solid turquoise background — confident, modern brand surface -->
+  <rect width="1024" height="1024" fill="#1AA6B7"/>
+
+  <!-- Subtle radial highlight in the upper-left to give depth without glassmorphism -->
+  <defs>
+    <radialGradient id="v3b-light" cx="32%" cy="28%" r="60%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#0F4F58" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#v3b-light)"/>
+
+  <!-- North spike — paper, dominant. Tip pinned to the top of the safe zone.
+       Wider base than v3 (wings at x±84) for more visual presence. -->
+  <path d="M 512 168 L 596 444 L 512 488 L 428 444 Z" fill="#F4F1EC"/>
+
+  <!-- South spike — ink, equal length to the new N (no longer shorter; the
+       turquoise BG already differentiates N. All spikes reach near the safe edge). -->
+  <path d="M 512 856 L 580 580 L 512 536 L 444 580 Z" fill="#0E1416"/>
+
+  <!-- East spike — ink -->
+  <path d="M 856 512 L 580 580 L 536 512 L 580 444 Z" fill="#0E1416"/>
+
+  <!-- West spike — ink -->
+  <path d="M 168 512 L 444 444 L 488 512 L 444 580 Z" fill="#0E1416"/>
+
+  <!-- Inner diamond hub — paper, ties the four points together -->
+  <path d="M 512 488 L 536 512 L 512 536 L 488 512 Z" fill="#F4F1EC"/>
+
+  <!-- Center pivot dot — ink against paper hub, the anchor -->
+  <circle cx="512" cy="512" r="14" fill="#0E1416"/>
+</svg>

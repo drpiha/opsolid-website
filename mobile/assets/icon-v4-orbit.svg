@@ -1,0 +1,42 @@
+<!--
+  Verso v4 — ORBIT
+  A central avatar (the user) with three satellite dots at 120° intervals on
+  a dashed ring. Reads as "your network / who is around your card." Telegram-
+  style 2-stop diagonal gradient gives depth without glassmorphism.
+  At 48px the central avatar holds; the dashed ring softens but a "dot-around-
+  dot" silhouette remains.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="v4-orbit-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2DC1CC"/>
+      <stop offset="100%" stop-color="#1AA6B7"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#v4-orbit-bg)"/>
+
+  <!-- Dashed orbit ring, radius 288 -->
+  <circle cx="512" cy="512" r="288" fill="none" stroke="#FFFFFF" stroke-width="5" stroke-dasharray="14 22" stroke-opacity="0.55"/>
+
+  <!-- Central avatar — solid white disc with internal silhouette -->
+  <circle cx="512" cy="512" r="118" fill="#FFFFFF"/>
+  <!-- Head -->
+  <circle cx="512" cy="486" r="36" fill="#1AA6B7"/>
+  <!-- Shoulders -->
+  <path d="M 460 580 Q 512 552, 564 580 L 564 596 L 460 596 Z" fill="#1AA6B7"/>
+
+  <!-- Three satellite contacts at 12 / 4 / 8 o'clock -->
+  <circle cx="512" cy="224" r="32" fill="#FFFFFF"/>
+  <circle cx="762" cy="656" r="32" fill="#FFFFFF"/>
+  <circle cx="262" cy="656" r="32" fill="#FFFFFF"/>
+
+  <!-- Tiny inner dots inside each satellite (reads as a face when present) -->
+  <circle cx="512" cy="218" r="10" fill="#1AA6B7"/>
+  <circle cx="762" cy="650" r="10" fill="#1AA6B7"/>
+  <circle cx="262" cy="650" r="10" fill="#1AA6B7"/>
+
+  <!-- "+" affordance -->
+  <circle cx="812" cy="212" r="60" fill="#0E1416"/>
+  <line x1="785" y1="212" x2="839" y2="212" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round"/>
+  <line x1="812" y1="185" x2="812" y2="239" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round"/>
+</svg>

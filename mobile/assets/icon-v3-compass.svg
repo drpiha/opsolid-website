@@ -1,0 +1,30 @@
+<!--
+  Verso v3 — Compass Rose
+  Four-point star with the north spike dominant in turquoise, the other
+  three (S, E, W) shorter and in ink. Reads as orientation / "you are here".
+  Tight, geometric, no decorative scrollwork.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <rect width="1024" height="1024" fill="#F4F1EC"/>
+
+  <!-- North spike — turquoise, longest. Diamond/kite shape.
+       Outer tip at top of safe zone (y=192).
+       Wings at y=432, inner at y=480 (close to center). -->
+  <path d="M 512 192 L 552 432 L 512 480 L 472 432 Z" fill="#1AA6B7"/>
+
+  <!-- South spike — ink, shorter. -->
+  <path d="M 512 752 L 548 568 L 512 532 L 476 568 Z" fill="#0E1416"/>
+
+  <!-- East spike — ink, shorter (matches south length). -->
+  <path d="M 752 512 L 568 476 L 532 512 L 568 548 Z" fill="#0E1416"/>
+
+  <!-- West spike — ink, shorter. -->
+  <path d="M 272 512 L 456 476 L 492 512 L 456 548 Z" fill="#0E1416"/>
+
+  <!-- Connecting square frame around the inner backstops — light hairline,
+       suggests the compass "rose" geometry without scrolly ornament. -->
+  <path d="M 512 480 L 532 512 L 512 532 L 492 512 Z" fill="#0F4F58"/>
+
+  <!-- Center pivot dot — turquoise, the anchor point. -->
+  <circle cx="512" cy="512" r="22" fill="#1AA6B7"/>
+</svg>

@@ -1,0 +1,38 @@
+<!--
+  Verso v4 — TAG
+  WhatsApp/Telegram register: solid turquoise BG + single white glyph + corner "+".
+  The mark is a conference name-tag silhouette: rounded rectangle with a lanyard
+  slot at top, an avatar dot, and 2 content rows. The rows + avatar are punched
+  out as turquoise (the BG color), so the tag reads as solid white at distance,
+  badge-of-identity at full size.
+  At 48px the silhouette holds as "tall white badge" — clearly different from a
+  credit-card horizontal rectangle.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <!-- Solid turquoise — Verso primary -->
+  <rect width="1024" height="1024" fill="#1AA6B7"/>
+
+  <!-- White tag body, 5:7 portrait, centered -->
+  <rect x="252" y="168" width="520" height="708" rx="42" fill="#FFFFFF"/>
+
+  <!-- Lanyard slot (turquoise cut-through) -->
+  <rect x="460" y="206" width="104" height="22" rx="11" fill="#1AA6B7"/>
+
+  <!-- Avatar disc — turquoise cut-through, sits in upper third -->
+  <circle cx="512" cy="402" r="84" fill="#1AA6B7"/>
+
+  <!-- Name row -->
+  <rect x="316" y="580" width="392" height="44" rx="22" fill="#1AA6B7"/>
+
+  <!-- Title row, narrower -->
+  <rect x="316" y="650" width="252" height="28" rx="14" fill="#1AA6B7"/>
+
+  <!-- Action row marker -->
+  <rect x="316" y="710" width="180" height="20" rx="10" fill="#1AA6B7"/>
+
+  <!-- Top-right "+" affordance: ink disc + white plus.
+       Positioned safely inside iOS 22% mask. -->
+  <circle cx="812" cy="212" r="60" fill="#0E1416"/>
+  <line x1="785" y1="212" x2="839" y2="212" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round"/>
+  <line x1="812" y1="185" x2="812" y2="239" stroke="#FFFFFF" stroke-width="16" stroke-linecap="round"/>
+</svg>
