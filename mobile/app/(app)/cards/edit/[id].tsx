@@ -94,10 +94,15 @@ function asServices(v: unknown): ServiceItem[] {
   for (const raw of v) {
     if (!raw || typeof raw !== 'object') continue;
     const o = raw as Record<string, unknown>;
+    // Server shape uses `priceLabel`; tolerate legacy `price` for any rows
+    // that may have been saved before the boundary fix landed.
+    const priceLabel = typeof o.priceLabel === 'string' ? o.priceLabel
+      : typeof o.price === 'string' ? o.price
+      : undefined;
     out.push({
       title: typeof o.title === 'string' ? o.title : '',
       description: typeof o.description === 'string' ? o.description : undefined,
-      price: typeof o.price === 'string' ? o.price : undefined,
+      price: priceLabel,
     });
   }
   return out;
@@ -108,9 +113,13 @@ function asCustomButtons(v: unknown): CustomButton[] {
   for (const raw of v) {
     if (!raw || typeof raw !== 'object') continue;
     const o = raw as Record<string, unknown>;
+    // Server shape uses `href`; tolerate legacy `url`.
+    const href = typeof o.href === 'string' ? o.href
+      : typeof o.url === 'string' ? o.url
+      : '';
     out.push({
       label: typeof o.label === 'string' ? o.label : '',
-      url: typeof o.url === 'string' ? o.url : '',
+      url: href,
     });
   }
   return out;
@@ -121,10 +130,14 @@ function asFaqs(v: unknown): FaqItem[] {
   for (const raw of v) {
     if (!raw || typeof raw !== 'object') continue;
     const o = raw as Record<string, unknown>;
-    out.push({
-      question: typeof o.question === 'string' ? o.question : '',
-      answer: typeof o.answer === 'string' ? o.answer : '',
-    });
+    // Server shape uses short `q`/`a`; tolerate legacy `question`/`answer`.
+    const question = typeof o.q === 'string' ? o.q
+      : typeof o.question === 'string' ? o.question
+      : '';
+    const answer = typeof o.a === 'string' ? o.a
+      : typeof o.answer === 'string' ? o.answer
+      : '';
+    out.push({ question, answer });
   }
   return out;
 }
@@ -449,7 +462,11 @@ export default function CardEditScreen() {
 
 const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  scroll: { padding: 16, paddingBottom: 48 },
+  // paddingBottom 160 leaves headroom above the soft keyboard on iOS so the
+  // last form fields (Discovery / country) remain visible while typing.
+  // Sprint D added 5 sections at the bottom; the previous 48 was sized for
+  // the pre-Sprint-D form and clipped the tail.
+  scroll: { padding: 16, paddingBottom: 160 },
   saveBtn: { paddingHorizontal: 4 },
   saveBtnText: { fontSize: 16, fontWeight: '600' },
   photoWrap: {

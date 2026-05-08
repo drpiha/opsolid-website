@@ -292,7 +292,11 @@ export default function CardCreateScreen() {
 }
 
 const styles = StyleSheet.create({
-  scroll: { padding: 16, paddingBottom: 48 },
+  // paddingBottom 160 leaves headroom above the soft keyboard on iOS so the
+  // last form fields (Discovery / country) remain visible while typing.
+  // Sprint D added 5 sections at the bottom; the previous 48 was sized for
+  // the pre-Sprint-D form and clipped the tail.
+  scroll: { padding: 16, paddingBottom: 160 },
   saveBtn: { paddingHorizontal: 4 },
   saveBtnText: { fontSize: 16, fontWeight: '600' },
   photoWrap: {

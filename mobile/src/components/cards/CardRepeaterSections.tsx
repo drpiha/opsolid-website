@@ -330,39 +330,50 @@ export function FaqsSection({
 }
 
 // ---------- normalizers ----------
-export function cleanServices(items: ServiceItem[]): ServiceItem[] {
-  const out: ServiceItem[] = [];
+// Note: these emit the SERVER-side shape, not the local UI shape. The form
+// state holds friendly mobile keys (price/url/question/answer); the server's
+// CardDataSchema (src/lib/validation.ts) defines `.strict()` sub-schemas with
+// `priceLabel`, `href`+`style`, `q`/`a`. We translate at the boundary so the
+// PATCH/POST passes invalid_payload validation. Without this map the create
+// endpoint returns 400 and the mobile alert shows "yüklenemedi". Keep the
+// return type as `unknown[]` to make the boundary cast explicit.
+export function cleanServices(items: ServiceItem[]): Array<{ title: string; description?: string; priceLabel?: string }> {
+  const out: Array<{ title: string; description?: string; priceLabel?: string }> = [];
   for (const it of items) {
     const title = (it.title ?? '').trim();
     if (!title) continue;
-    const row: ServiceItem = { title };
+    const row: { title: string; description?: string; priceLabel?: string } = { title };
     const desc = (it.description ?? '').trim();
     if (desc) row.description = desc;
     const price = (it.price ?? '').trim();
-    if (price) row.price = price;
+    if (price) row.priceLabel = price;
     out.push(row);
   }
   return out;
 }
 
-export function cleanCustomButtons(items: CustomButton[]): CustomButton[] {
-  const out: CustomButton[] = [];
+export function cleanCustomButtons(items: CustomButton[]): Array<{ label: string; href: string; style: 'secondary' }> {
+  const out: Array<{ label: string; href: string; style: 'secondary' }> = [];
   for (const it of items) {
     const label = (it.label ?? '').trim();
     const url = (it.url ?? '').trim();
     if (!label || !url) continue;
-    out.push({ label, url });
+    // Server CustomButtonSchema requires `href` (not `url`) and `style`
+    // defaults to 'secondary'. We always send 'secondary' since the mobile
+    // editor doesn't expose a style picker yet.
+    out.push({ label, href: url, style: 'secondary' });
   }
   return out;
 }
 
-export function cleanFaqs(items: FaqItem[]): FaqItem[] {
-  const out: FaqItem[] = [];
+export function cleanFaqs(items: FaqItem[]): Array<{ q: string; a: string }> {
+  const out: Array<{ q: string; a: string }> = [];
   for (const it of items) {
     const question = (it.question ?? '').trim();
     const answer = (it.answer ?? '').trim();
     if (!question || !answer) continue;
-    out.push({ question, answer });
+    // Server FaqItemSchema uses short keys `q` / `a`.
+    out.push({ q: question, a: answer });
   }
   return out;
 }
