@@ -21,6 +21,10 @@ import {
   BrandColorsSection,
   VisibilitySection,
   DiscoverySection,
+  TemplateSection,
+  LayoutSection,
+  ThemeSection,
+  QrStyleSection,
   DEFAULT_PRIMARY_HEX,
   DEFAULT_ACCENT_HEX,
   stripEmpty,
@@ -30,6 +34,9 @@ import type {
   SocialsState,
   Visibility,
   DiscoveryState,
+  LayoutKey,
+  CardThemeKey,
+  QrStylePreset,
 } from '../../../src/components/cards/CardFormSections';
 
 export default function CardCreateScreen() {
@@ -54,6 +61,10 @@ export default function CardCreateScreen() {
     openToNetworking: false, acceptingClients: false,
     industry: '', city: '', country: '',
   });
+  const [templateId, setTemplateId] = useState<number>(1);
+  const [layoutKey, setLayoutKey] = useState<LayoutKey>('bento');
+  const [themeKey, setThemeKey] = useState<CardThemeKey>('aurora');
+  const [qrPreset, setQrPreset] = useState<QrStylePreset>('classic');
 
   const [photoUri, setPhotoUri] = useState<string | null>(null);
   const [photoMimeType, setPhotoMimeType] = useState<string>('image/jpeg');
@@ -124,21 +135,36 @@ export default function CardCreateScreen() {
       });
 
       const created = await createCard({
-        templateId: 1,
+        templateId,
+        layoutKey,
+        themeKey,
         // The CardCreateInput type is intentionally narrow — server accepts
         // arbitrary keys, so cast through unknown.
         cardData: cardData as unknown as { name: string },
       });
 
+      // Apply qrStyle and (if needed) photo after creation. POST schema
+      // doesn't accept qrStyle so we PATCH it in. Default preset 'classic'
+      // means we always send something — backend stores the column.
+      const postPatch: import('../../../src/lib/api/types').CardPatchInput = {
+        qrStyle: { preset: qrPreset },
+      };
+
       if (photoUri) {
         try {
           const path = await uploadPhoto(photoUri, photoMimeType);
-          await updateCard(created.id, { photoPath: path });
+          postPatch.photoPath = path;
         } catch {
           Alert.alert('', 'Card created, but photo upload failed. You can add it later.');
           router.back();
           return;
         }
+      }
+
+      try {
+        await updateCard(created.id, postPatch);
+      } catch {
+        // Non-fatal: card exists, qrStyle is optional. Surface a soft warning.
       }
 
       Alert.alert('', t.createSuccess, [{ text: 'OK', onPress: () => router.back() }]);
@@ -200,6 +226,10 @@ export default function CardCreateScreen() {
           onPrimaryChange={setPrimaryHex}
           onAccentChange={setAccentHex}
         />
+        <TemplateSection theme={theme} value={templateId} onChange={setTemplateId} />
+        <LayoutSection theme={theme} value={layoutKey} onChange={setLayoutKey} />
+        <ThemeSection theme={theme} value={themeKey} onChange={setThemeKey} />
+        <QrStyleSection theme={theme} value={qrPreset} onChange={setQrPreset} />
         <VisibilitySection theme={theme} value={visibility} onChange={setVisibility} />
         <DiscoverySection theme={theme} values={discovery} onChange={setDiscoveryField} />
       </ScrollView>

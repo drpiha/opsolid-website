@@ -16,13 +16,14 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { AuthError } from "@/lib/auth/require-user";
-import { CardDataSchema, OrderStatus } from "@/lib/validation";
+import { CardDataSchema, OrderStatus, QrStyleSchema } from "@/lib/validation";
 import { validateManualSlug, isSlugAvailable } from "@/lib/slug";
 import { requireBearerUser } from "@/lib/api/v1/bearer-only";
 import { errorJson, readJsonBody } from "@/lib/api/v1/errors";
 import { applyCors, corsPreflight } from "@/lib/api/v1/cors";
 import { rateLimit } from "@/lib/api/v1/rate-limit";
 import { CARD_API_SELECT, toApiCard } from "@/lib/api/v1/card-mapping";
+import { getTemplateById } from "@/config/card-templates";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -41,6 +42,10 @@ const PatchSchema = z
       ])
       .optional(),
     slug: z.string().trim().min(3).max(40).optional(),
+    /** Switch the card to a different active template. The renderer keys
+     *  layout/theme defaults off templateId, so allowing this on PATCH lets
+     *  mobile re-skin a card without recreating it. */
+    templateId: z.number().int().positive().optional(),
     layoutKey: z.string().trim().max(64).optional(),
     themeKey: z.string().trim().max(32).optional(),
     brandPrimaryHex: z
@@ -53,6 +58,10 @@ const PatchSchema = z
       .optional(),
     photoPath: z.string().max(500).nullable().optional(),
     logoPath: z.string().max(500).nullable().optional(),
+    /** QR style preset + colors. Stored on the dedicated CardOrder.qrStyle
+     *  column (separate from cardData) so the renderer can read it without
+     *  re-parsing the form blob. */
+    qrStyle: QrStyleSchema.optional(),
   })
   .strict();
 
@@ -154,6 +163,18 @@ export async function PATCH(
 
     const updateData: Record<string, unknown> = {};
     if (parsed.data.cardData) updateData.cardData = parsed.data.cardData;
+    if (parsed.data.templateId !== undefined) {
+      // Only allow switching to an active catalog entry. Pricing / billing
+      // mode are not re-evaluated here — this is a free-tier visual swap.
+      const tpl = getTemplateById(parsed.data.templateId);
+      if (!tpl || !tpl.isActive) {
+        return applyCors(
+          errorJson("unknown_template", "Unknown template.", 404),
+          req,
+        );
+      }
+      updateData.templateId = tpl.id;
+    }
     if (parsed.data.layoutKey !== undefined) updateData.layoutKey = parsed.data.layoutKey;
     if (parsed.data.themeKey !== undefined) updateData.themeKey = parsed.data.themeKey;
     if (parsed.data.brandPrimaryHex !== undefined) {
@@ -164,6 +185,7 @@ export async function PATCH(
     }
     if (parsed.data.photoPath !== undefined) updateData.photoPath = parsed.data.photoPath;
     if (parsed.data.logoPath !== undefined) updateData.logoPath = parsed.data.logoPath;
+    if (parsed.data.qrStyle !== undefined) updateData.qrStyle = parsed.data.qrStyle;
     if (parsed.data.status !== undefined) {
       updateData.status = parsed.data.status;
       if (parsed.data.status === OrderStatus.PUBLISHED && !existing.status) {

@@ -23,6 +23,10 @@ import {
   BrandColorsSection,
   VisibilitySection,
   DiscoverySection,
+  TemplateSection,
+  LayoutSection,
+  ThemeSection,
+  QrStyleSection,
   DEFAULT_PRIMARY_HEX,
   DEFAULT_ACCENT_HEX,
   stripEmpty,
@@ -32,6 +36,9 @@ import type {
   SocialsState,
   Visibility,
   DiscoveryState,
+  LayoutKey,
+  CardThemeKey,
+  QrStylePreset,
 } from '../../../../src/components/cards/CardFormSections';
 
 function asString(v: unknown): string {
@@ -42,6 +49,26 @@ function asBool(v: unknown): boolean {
 }
 function asVisibility(v: unknown): Visibility {
   return v === 'private' || v === 'unlisted' ? v : 'public';
+}
+const LAYOUT_OPTS: readonly LayoutKey[] = ['bento', 'accordion', 'cinema', 'editorial', 'split'];
+function asLayout(v: unknown): LayoutKey {
+  return typeof v === 'string' && (LAYOUT_OPTS as readonly string[]).includes(v)
+    ? (v as LayoutKey)
+    : 'bento';
+}
+const THEME_OPTS: readonly CardThemeKey[] = ['aurora', 'editorial', 'cinema'];
+function asThemeKey(v: unknown): CardThemeKey {
+  return typeof v === 'string' && (THEME_OPTS as readonly string[]).includes(v)
+    ? (v as CardThemeKey)
+    : 'aurora';
+}
+const QR_OPTS: readonly QrStylePreset[] = [
+  'classic', 'rounded', 'dots', 'gradient', 'monoNeon', 'watercolor',
+];
+function asQrPreset(v: unknown): QrStylePreset {
+  return typeof v === 'string' && (QR_OPTS as readonly string[]).includes(v)
+    ? (v as QrStylePreset)
+    : 'classic';
 }
 
 export default function CardEditScreen() {
@@ -70,6 +97,10 @@ export default function CardEditScreen() {
     openToNetworking: false, acceptingClients: false,
     industry: '', city: '', country: '',
   });
+  const [templateId, setTemplateId] = useState<number>(1);
+  const [layoutKey, setLayoutKey] = useState<LayoutKey>('bento');
+  const [themeKey, setThemeKey] = useState<CardThemeKey>('aurora');
+  const [qrPreset, setQrPreset] = useState<QrStylePreset>('classic');
 
   const [photoPath, setPhotoPath] = useState<string | null>(null);
 
@@ -125,6 +156,13 @@ export default function CardEditScreen() {
           country: asString(cd.country),
         });
         setPhotoPath(c.photoPath ?? null);
+        // Template / layout / theme / qrStyle hydration. layoutKey + themeKey
+        // live on top-level columns; qrStyle is a JSON column.
+        setTemplateId(typeof c.templateId === 'number' ? c.templateId : 1);
+        setLayoutKey(asLayout(c.layoutKey ?? cd.layoutKey));
+        setThemeKey(asThemeKey(c.themeKey ?? cd.themeKey));
+        const qr = (c.qrStyle ?? {}) as Record<string, unknown>;
+        setQrPreset(asQrPreset(qr.preset));
       })
       .catch(() => Alert.alert('', t.errorLoad))
       .finally(() => setLoading(false));
@@ -186,10 +224,20 @@ export default function CardEditScreen() {
         if (cardData[k] === undefined) delete cardData[k];
       });
 
+      // Preserve any qrStyle subfields (colors, AI metadata) that the server
+      // already has — we only override `preset`. The rest is spread from the
+      // last-loaded card.
+      const existingQr = (card?.qrStyle ?? {}) as Record<string, unknown>;
+      const qrStyle = { ...existingQr, preset: qrPreset } as import('../../../../src/lib/api/types').QrStylePatch;
+
       await updateCard(id, {
         // Server accepts arbitrary keys; CardPatchInput is intentionally narrow.
         cardData: cardData as unknown as { name?: string },
         photoPath: photoPath,
+        templateId,
+        layoutKey,
+        themeKey,
+        qrStyle,
       });
       Alert.alert('', t.saveSuccess, [{ text: 'OK', onPress: () => router.back() }]);
     } catch {
@@ -266,6 +314,10 @@ export default function CardEditScreen() {
           onPrimaryChange={setPrimaryHex}
           onAccentChange={setAccentHex}
         />
+        <TemplateSection theme={theme} value={templateId} onChange={setTemplateId} />
+        <LayoutSection theme={theme} value={layoutKey} onChange={setLayoutKey} />
+        <ThemeSection theme={theme} value={themeKey} onChange={setThemeKey} />
+        <QrStyleSection theme={theme} value={qrPreset} onChange={setQrPreset} />
         <VisibilitySection theme={theme} value={visibility} onChange={setVisibility} />
         <DiscoverySection theme={theme} values={discovery} onChange={setDiscoveryField} />
 

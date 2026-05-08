@@ -4,7 +4,7 @@
 // paddingHorizontal 14, paddingVertical 12, fontSize 15.
 // -----------------------------------------------------------------------
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -12,11 +12,18 @@ import {
   TouchableOpacity,
   Switch,
   StyleSheet,
+  ScrollView,
+  ActivityIndicator,
+  Image,
+  FlatList,
+  Dimensions,
 } from 'react-native';
-import { ChevronDown, ChevronUp } from 'lucide-react-native';
+import { Check, ChevronDown, ChevronUp } from 'lucide-react-native';
 import type { ThemeTokens } from '../../lib/theme/tokens';
 import { copper } from '../../lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../lib/i18n/locale';
+import { listTemplates, type Template } from '../../lib/api/templates';
+import { API_BASE } from '../../lib/api/client';
 
 // ---------- Field shape ----------
 export type BasicFieldsState = {
@@ -368,6 +375,393 @@ export function DiscoverySection({
   );
 }
 
+// ---------- TemplateSection ----------
+// 96 templates is too many to render eagerly. We use FlatList with
+// `numColumns={3}`, fixed-height rows (`getItemLayout`) and a small windowSize
+// so the parent ScrollView stays smooth. The container has a fixed height so
+// the inner FlatList scrolls independently — without that, on Android the
+// nested scroll fights for the gesture and rows under the fold never paint.
+const SCREEN_WIDTH = Dimensions.get('window').width;
+const TEMPLATE_GRID_HEIGHT = 320;
+const TEMPLATE_COLUMNS = 3;
+const TEMPLATE_GAP = 8;
+// Subtract container horizontal padding (none — section already padded by
+// parent ScrollView's padding=16) and intra-cell gap from screen width.
+function templateCellWidth(): number {
+  const horizontalPadding = 16 * 2; // matches parent ScrollView padding
+  const totalGap = TEMPLATE_GAP * (TEMPLATE_COLUMNS - 1);
+  return Math.floor(
+    (SCREEN_WIDTH - horizontalPadding - totalGap) / TEMPLATE_COLUMNS,
+  );
+}
+const TEMPLATE_CELL_WIDTH = templateCellWidth();
+// Card aspect is portrait (~3:5). Add label height so getItemLayout matches
+// the rendered row.
+const TEMPLATE_CELL_IMAGE_HEIGHT = Math.round(TEMPLATE_CELL_WIDTH / 0.6);
+const TEMPLATE_CELL_LABEL_HEIGHT = 22;
+const TEMPLATE_ROW_HEIGHT =
+  TEMPLATE_CELL_IMAGE_HEIGHT + TEMPLATE_CELL_LABEL_HEIGHT + TEMPLATE_GAP;
+
+export function TemplateSection({
+  theme,
+  value,
+  onChange,
+}: {
+  theme: ThemeTokens;
+  value: number;
+  onChange: (templateId: number) => void;
+}) {
+  const t = useTranslations(detectLocale()).cards;
+  const [items, setItems] = useState<Template[] | null>(null);
+  const [error, setError] = useState(false);
+  const [sector, setSector] = useState<string>('all');
+
+  useEffect(() => {
+    let cancelled = false;
+    void listTemplates()
+      .then((res) => {
+        if (!cancelled) setItems(res.items);
+      })
+      .catch(() => {
+        if (!cancelled) setError(true);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Derive unique sector list from loaded templates. Stable order = first
+  // appearance in the catalog (which is already sortOrder ascending).
+  const sectors = (() => {
+    if (!items) return [] as string[];
+    const seen = new Set<string>();
+    const out: string[] = [];
+    for (const it of items) {
+      const s = it.sectorHint ?? 'general';
+      if (!seen.has(s)) {
+        seen.add(s);
+        out.push(s);
+      }
+    }
+    return out;
+  })();
+
+  const filtered = items
+    ? sector === 'all'
+      ? items
+      : items.filter((it) => (it.sectorHint ?? 'general') === sector)
+    : [];
+
+  const renderCell = ({ item }: { item: Template }) => {
+    const selected = item.id === value;
+    const previewUri = item.previewPath
+      ? item.previewPath.startsWith('http')
+        ? item.previewPath
+        : `${API_BASE}${item.previewPath}`
+      : null;
+    return (
+      <TouchableOpacity
+        activeOpacity={0.85}
+        onPress={() => onChange(item.id)}
+        style={[
+          styles.templateCell,
+          {
+            width: TEMPLATE_CELL_WIDTH,
+            borderColor: selected ? copper[500] : theme.line.DEFAULT,
+            borderWidth: selected ? 2 : 1,
+            backgroundColor: theme.bg[1],
+          },
+        ]}
+      >
+        <View
+          style={{
+            width: '100%',
+            height: TEMPLATE_CELL_IMAGE_HEIGHT,
+            backgroundColor: copper[50],
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          {previewUri ? (
+            <Image
+              source={{ uri: previewUri }}
+              style={{ width: '100%', height: '100%' }}
+              resizeMode="cover"
+            />
+          ) : (
+            <Text
+              numberOfLines={2}
+              style={[styles.templatePlaceholder, { color: copper[700] }]}
+            >
+              {item.name}
+            </Text>
+          )}
+          {selected && (
+            <View style={[styles.templateCheck, { backgroundColor: copper[500] }]}>
+              <Check size={12} color="#FFFFFF" />
+            </View>
+          )}
+        </View>
+        <Text
+          numberOfLines={1}
+          style={[styles.templateLabel, { color: theme.ink[200] }]}
+        >
+          {item.name}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
+
+  return (
+    <View style={styles.section}>
+      <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+        {t.sectionTemplate}
+      </Text>
+
+      {items && items.length > 0 && (
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.chipRow}
+        >
+          {(['all', ...sectors] as string[]).map((s) => {
+            const selected = s === sector;
+            return (
+              <TouchableOpacity
+                key={s}
+                onPress={() => setSector(s)}
+                activeOpacity={0.8}
+                style={[
+                  styles.sectorChip,
+                  {
+                    backgroundColor: selected ? copper[500] : theme.bg[1],
+                    borderColor: selected ? copper[500] : theme.line.DEFAULT,
+                  },
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.sectorChipText,
+                    { color: selected ? '#FFFFFF' : theme.ink[200] },
+                  ]}
+                >
+                  {s === 'all' ? t.sectorAll : s}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+      )}
+
+      <View style={[styles.templateGridWrap, { borderColor: theme.line.DEFAULT }]}>
+        {items === null && !error ? (
+          <View style={styles.templateCenter}>
+            <ActivityIndicator size="small" color={copper[500]} />
+          </View>
+        ) : error ? (
+          <View style={styles.templateCenter}>
+            <Text style={{ color: theme.ink[400], fontSize: 13 }}>
+              {t.templatesError}
+            </Text>
+          </View>
+        ) : filtered.length === 0 ? (
+          <View style={styles.templateCenter}>
+            <Text style={{ color: theme.ink[400], fontSize: 13 }}>
+              {t.templatesEmpty}
+            </Text>
+          </View>
+        ) : (
+          <FlatList
+            data={filtered}
+            keyExtractor={(it) => String(it.id)}
+            renderItem={renderCell}
+            numColumns={TEMPLATE_COLUMNS}
+            columnWrapperStyle={{ gap: TEMPLATE_GAP }}
+            contentContainerStyle={{ gap: TEMPLATE_GAP, paddingVertical: 4 }}
+            initialNumToRender={9}
+            windowSize={5}
+            getItemLayout={(_, index) => ({
+              length: TEMPLATE_ROW_HEIGHT,
+              offset: TEMPLATE_ROW_HEIGHT * Math.floor(index / TEMPLATE_COLUMNS),
+              index,
+            })}
+            nestedScrollEnabled
+            showsVerticalScrollIndicator={false}
+          />
+        )}
+      </View>
+    </View>
+  );
+}
+
+// ---------- LayoutSection ----------
+const LAYOUT_KEYS = ['bento', 'accordion', 'cinema', 'editorial', 'split'] as const;
+export type LayoutKey = (typeof LAYOUT_KEYS)[number];
+
+export function LayoutSection({
+  theme,
+  value,
+  onChange,
+}: {
+  theme: ThemeTokens;
+  value: LayoutKey;
+  onChange: (v: LayoutKey) => void;
+}) {
+  const t = useTranslations(detectLocale()).cards;
+  return (
+    <View style={styles.section}>
+      <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+        {t.sectionLayout}
+      </Text>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.chipRow}
+      >
+        {LAYOUT_KEYS.map((k) => {
+          const selected = value === k;
+          return (
+            <TouchableOpacity
+              key={k}
+              onPress={() => onChange(k)}
+              activeOpacity={0.8}
+              style={[
+                styles.sectorChip,
+                {
+                  backgroundColor: selected ? copper[500] : theme.bg[1],
+                  borderColor: selected ? copper[500] : theme.line.DEFAULT,
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.sectorChipText,
+                  { color: selected ? '#FFFFFF' : theme.ink[200] },
+                ]}
+              >
+                {t.layouts[k]}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </ScrollView>
+    </View>
+  );
+}
+
+// ---------- ThemeSection ----------
+const THEME_KEYS = ['aurora', 'editorial', 'cinema'] as const;
+export type CardThemeKey = (typeof THEME_KEYS)[number];
+
+export function ThemeSection({
+  theme,
+  value,
+  onChange,
+}: {
+  theme: ThemeTokens;
+  value: CardThemeKey;
+  onChange: (v: CardThemeKey) => void;
+}) {
+  const t = useTranslations(detectLocale()).cards;
+  return (
+    <View style={styles.section}>
+      <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+        {t.sectionTheme}
+      </Text>
+      <View style={styles.segmentRow}>
+        {THEME_KEYS.map((k) => {
+          const selected = value === k;
+          return (
+            <TouchableOpacity
+              key={k}
+              onPress={() => onChange(k)}
+              activeOpacity={0.8}
+              style={[
+                styles.segmentPill,
+                {
+                  backgroundColor: selected ? copper[500] : theme.bg[1],
+                  borderColor: selected ? copper[500] : theme.line.DEFAULT,
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.segmentText,
+                  { color: selected ? '#FFFFFF' : theme.ink[200] },
+                ]}
+              >
+                {t.themes[k]}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+    </View>
+  );
+}
+
+// ---------- QrStyleSection ----------
+const QR_STYLE_KEYS = [
+  'classic',
+  'rounded',
+  'dots',
+  'gradient',
+  'monoNeon',
+  'watercolor',
+] as const;
+export type QrStylePreset = (typeof QR_STYLE_KEYS)[number];
+
+export function QrStyleSection({
+  theme,
+  value,
+  onChange,
+}: {
+  theme: ThemeTokens;
+  value: QrStylePreset;
+  onChange: (v: QrStylePreset) => void;
+}) {
+  const t = useTranslations(detectLocale()).cards;
+  return (
+    <View style={styles.section}>
+      <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+        {t.sectionQrStyle}
+      </Text>
+      <ScrollView
+        horizontal
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.chipRow}
+      >
+        {QR_STYLE_KEYS.map((k) => {
+          const selected = value === k;
+          return (
+            <TouchableOpacity
+              key={k}
+              onPress={() => onChange(k)}
+              activeOpacity={0.8}
+              style={[
+                styles.sectorChip,
+                {
+                  backgroundColor: selected ? copper[500] : theme.bg[1],
+                  borderColor: selected ? copper[500] : theme.line.DEFAULT,
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.sectorChipText,
+                  { color: selected ? '#FFFFFF' : theme.ink[200] },
+                ]}
+              >
+                {k}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </ScrollView>
+    </View>
+  );
+}
+
 // ---------- helpers exposed to screens ----------
 /** Strip empty string keys from a record before saving. */
 export function stripEmpty<T extends Record<string, string>>(obj: T): Partial<T> {
@@ -424,4 +818,46 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
   },
   switchLabel: { fontSize: 15, fontWeight: '500' },
+  // Template/Layout/Theme/QR
+  chipRow: { flexDirection: 'row', gap: 8, paddingVertical: 4 },
+  sectorChip: {
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 999,
+    borderWidth: 1,
+  },
+  sectorChipText: { fontSize: 13, fontWeight: '500', textTransform: 'capitalize' },
+  templateGridWrap: {
+    height: TEMPLATE_GRID_HEIGHT,
+    borderWidth: 1,
+    borderRadius: 12,
+    padding: 6,
+  },
+  templateCenter: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  templateCell: {
+    borderRadius: 10,
+    overflow: 'hidden',
+  },
+  templatePlaceholder: {
+    fontSize: 11,
+    fontWeight: '600',
+    textAlign: 'center',
+    paddingHorizontal: 6,
+  },
+  templateCheck: {
+    position: 'absolute',
+    top: 4,
+    right: 4,
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  templateLabel: {
+    fontSize: 11,
+    fontWeight: '500',
+    paddingHorizontal: 6,
+    paddingVertical: 4,
+  },
 });

@@ -90,6 +90,24 @@ export type CardCreateInput = {
     company?: string;
   };
   desiredSlug?: string;
+  layoutKey?: string;
+  themeKey?: string;
+};
+
+// QR style payload — matches the server QrStyleSchema (subset of fields used
+// by the mobile picker; AI sub-object is preserved by spreading existing data).
+export type QrStylePatch = {
+  preset?: 'classic' | 'rounded' | 'dots' | 'diamond' | 'gradient' | 'monoNeon' | 'watercolor' | 'brandSync';
+  primary?: string;
+  accent?: string;
+  withLogo?: boolean;
+  withPhoto?: boolean;
+  ai?: {
+    prompt: string;
+    style: 'geometric' | 'liquid' | 'forest' | 'cyberpunk' | 'watercolor' | 'mosaic';
+    generatedUrl: string;
+    generatedAt?: string;
+  };
 };
 
 // PATCH /api/v1/cards/:id
@@ -105,6 +123,10 @@ export type CardPatchInput = {
   logoPath?: string | null;
   status?: 'PUBLISHED' | 'CANCELLED';
   slug?: string;
+  templateId?: number;
+  layoutKey?: string;
+  themeKey?: string;
+  qrStyle?: QrStylePatch;
 };
 
 // POST /api/uploads → { path }
