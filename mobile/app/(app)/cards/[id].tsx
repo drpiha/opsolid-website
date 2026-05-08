@@ -6,11 +6,14 @@ import {
   ActivityIndicator,
   Linking,
   Alert,
+  Pressable,
   StyleSheet,
 } from 'react-native';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
+import { QrCode } from 'lucide-react-native';
 import { ScreenContainer } from '../../../src/components/ui/ScreenContainer';
 import { Button } from '../../../src/components/ui/Button';
+import { QrCodeModal } from '../../../src/components/cards/QrCodeModal';
 import { getCard, deleteCard } from '../../../src/lib/api/cards';
 import type { ApiCard } from '../../../src/lib/api/types';
 import { useTheme } from '../../../src/lib/theme/ThemeProvider';
@@ -27,6 +30,7 @@ export default function CardDetailScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [deleting, setDeleting] = useState(false);
+  const [qrOpen, setQrOpen] = useState(false);
 
   const load = useCallback(async () => {
     if (!id) return;
@@ -109,10 +113,26 @@ export default function CardDetailScreen() {
   const email = (card.cardData?.email as string | undefined) ?? '';
   const phone = (card.cardData?.phone as string | undefined) ?? '';
 
+  const canShowQr = !!card.slug && card.status === 'PUBLISHED';
+
   return (
     <>
       <Stack.Screen
-        options={{ title: t.detailTitle, headerBackTitle: t.title }}
+        options={{
+          title: t.detailTitle,
+          headerBackTitle: t.title,
+          headerRight: canShowQr
+            ? () => (
+                <Pressable
+                  onPress={() => setQrOpen(true)}
+                  style={styles.headerBtn}
+                  hitSlop={8}
+                >
+                  <QrCode size={22} color={copper[500]} />
+                </Pressable>
+              )
+            : undefined,
+        }}
       />
       <ScrollView
         contentContainerStyle={[
@@ -213,6 +233,13 @@ export default function CardDetailScreen() {
           />
         </View>
       </ScrollView>
+      {canShowQr && card.slug ? (
+        <QrCodeModal
+          visible={qrOpen}
+          slug={card.slug}
+          onClose={() => setQrOpen(false)}
+        />
+      ) : null}
     </>
   );
 }
@@ -263,5 +290,8 @@ const styles = StyleSheet.create({
   actions: {
     marginTop: 16,
     gap: 12,
+  },
+  headerBtn: {
+    paddingRight: 4,
   },
 });

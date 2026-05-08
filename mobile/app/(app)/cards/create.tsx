@@ -2,21 +2,35 @@ import { useState } from 'react';
 import {
   View,
   Text,
-  TextInput,
   ScrollView,
   TouchableOpacity,
   Alert,
-  ActivityIndicator, // used for save indicator in header
+  ActivityIndicator,
   Image,
   StyleSheet,
 } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
 import { createCard, updateCard, uploadPhoto } from '../../../src/lib/api/cards';
-// uploadPhoto is called inside handleCreate, after card creation succeeds
 import { useTheme } from '../../../src/lib/theme/ThemeProvider';
 import { copper } from '../../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../../src/lib/i18n/locale';
+import {
+  BasicFieldsSection,
+  SocialsSection,
+  BrandColorsSection,
+  VisibilitySection,
+  DiscoverySection,
+  DEFAULT_PRIMARY_HEX,
+  DEFAULT_ACCENT_HEX,
+  stripEmpty,
+} from '../../../src/components/cards/CardFormSections';
+import type {
+  BasicFieldsState,
+  SocialsState,
+  Visibility,
+  DiscoveryState,
+} from '../../../src/components/cards/CardFormSections';
 
 export default function CardCreateScreen() {
   const router = useRouter();
@@ -25,14 +39,34 @@ export default function CardCreateScreen() {
 
   const [saving, setSaving] = useState(false);
 
-  const [name, setName] = useState('');
-  const [jobTitle, setJobTitle] = useState('');
-  const [company, setCompany] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  // Store local URI only; upload happens inside handleCreate after the card exists
+  const [basics, setBasics] = useState<BasicFieldsState>({
+    name: '', jobTitle: '', position: '', company: '', email: '',
+    phone: '', whatsapp: '', website: '', address: '', bio: '',
+  });
+  const [socials, setSocials] = useState<SocialsState>({
+    linkedin: '', instagram: '', x: '', tiktok: '',
+    youtube: '', github: '', facebook: '', xing: '',
+  });
+  const [primaryHex, setPrimaryHex] = useState(DEFAULT_PRIMARY_HEX);
+  const [accentHex, setAccentHex] = useState(DEFAULT_ACCENT_HEX);
+  const [visibility, setVisibility] = useState<Visibility>('public');
+  const [discovery, setDiscovery] = useState<DiscoveryState>({
+    openToNetworking: false, acceptingClients: false,
+    industry: '', city: '', country: '',
+  });
+
   const [photoUri, setPhotoUri] = useState<string | null>(null);
   const [photoMimeType, setPhotoMimeType] = useState<string>('image/jpeg');
+
+  function setBasic<K extends keyof BasicFieldsState>(k: K, v: BasicFieldsState[K]) {
+    setBasics((s) => ({ ...s, [k]: v }));
+  }
+  function setSocial<K extends keyof SocialsState>(k: K, v: SocialsState[K]) {
+    setSocials((s) => ({ ...s, [k]: v }));
+  }
+  function setDiscoveryField<K extends keyof DiscoveryState>(k: K, v: DiscoveryState[K]) {
+    setDiscovery((s) => ({ ...s, [k]: v }));
+  }
 
   async function pickPhoto() {
     const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -52,23 +86,48 @@ export default function CardCreateScreen() {
   }
 
   async function handleCreate() {
-    if (!name.trim()) {
+    if (!basics.name.trim()) {
       Alert.alert('', 'Name is required.');
       return;
     }
     setSaving(true);
     try {
-      // Create card first, then upload photo anchored to the new card id.
-      // This prevents orphan assets if createCard() fails.
+      // Build cardData from all sections. Strip empty strings.
+      const socialsClean = stripEmpty(socials);
+      const cardData: Record<string, unknown> = {
+        name: basics.name.trim(),
+        title: basics.jobTitle.trim() || undefined,
+        position: basics.position.trim() || undefined,
+        company: basics.company.trim() || undefined,
+        email: basics.email.trim() || undefined,
+        phone: basics.phone.trim() || undefined,
+        whatsapp: basics.whatsapp.trim() || undefined,
+        website: basics.website.trim() || undefined,
+        address: basics.address.trim() || undefined,
+        bio: basics.bio.trim() || undefined,
+        brandPrimaryHex: primaryHex,
+        brandAccentHex: accentHex,
+        visibility,
+        openToNetworking: discovery.openToNetworking,
+        acceptingClients: discovery.acceptingClients,
+        industry: discovery.industry.trim() || undefined,
+        city: discovery.city.trim() || undefined,
+        country: discovery.country.trim() || undefined,
+      };
+      if (Object.keys(socialsClean).length > 0) {
+        cardData.socials = socialsClean;
+      }
+
+      // Drop undefined keys before sending
+      Object.keys(cardData).forEach((k) => {
+        if (cardData[k] === undefined) delete cardData[k];
+      });
+
       const created = await createCard({
         templateId: 1,
-        cardData: {
-          name: name.trim(),
-          title: jobTitle.trim() || undefined,
-          company: company.trim() || undefined,
-          email: email.trim() || undefined,
-          phone: phone.trim() || undefined,
-        },
+        // The CardCreateInput type is intentionally narrow — server accepts
+        // arbitrary keys, so cast through unknown.
+        cardData: cardData as unknown as { name: string },
       });
 
       if (photoUri) {
@@ -76,7 +135,6 @@ export default function CardCreateScreen() {
           const path = await uploadPhoto(photoUri, photoMimeType);
           await updateCard(created.id, { photoPath: path });
         } catch {
-          // Non-fatal: card created, photo failed — user can add later
           Alert.alert('', 'Card created, but photo upload failed. You can add it later.');
           router.back();
           return;
@@ -133,36 +191,24 @@ export default function CardCreateScreen() {
           )}
         </TouchableOpacity>
 
-        {/* Fields */}
-        {[
-          { label: t.fieldName, value: name, onChange: setName, placeholder: t.namePlaceholder, required: true },
-          { label: t.fieldJobTitle, value: jobTitle, onChange: setJobTitle, placeholder: t.titlePlaceholder },
-          { label: t.fieldCompany, value: company, onChange: setCompany, placeholder: t.companyPlaceholder },
-          { label: t.fieldEmail, value: email, onChange: setEmail, placeholder: 'name@example.com', keyboard: 'email-address' as const },
-          { label: t.fieldPhone, value: phone, onChange: setPhone, placeholder: '+49 …', keyboard: 'phone-pad' as const },
-        ].map((field) => (
-          <View key={field.label} style={styles.fieldWrap}>
-            <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
-              {field.label}{field.required ? ' *' : ''}
-            </Text>
-            <TextInput
-              style={[styles.input, { color: theme.ink[100], borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[1] }]}
-              value={field.value}
-              onChangeText={field.onChange}
-              placeholder={field.placeholder}
-              placeholderTextColor={theme.ink[500]}
-              keyboardType={field.keyboard ?? 'default'}
-              autoCapitalize={field.keyboard ? 'none' : 'words'}
-            />
-          </View>
-        ))}
+        <BasicFieldsSection theme={theme} values={basics} onChange={setBasic} />
+        <SocialsSection theme={theme} values={socials} onChange={setSocial} />
+        <BrandColorsSection
+          theme={theme}
+          primaryHex={primaryHex}
+          accentHex={accentHex}
+          onPrimaryChange={setPrimaryHex}
+          onAccentChange={setAccentHex}
+        />
+        <VisibilitySection theme={theme} value={visibility} onChange={setVisibility} />
+        <DiscoverySection theme={theme} values={discovery} onChange={setDiscoveryField} />
       </ScrollView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  scroll: { padding: 16, gap: 16, paddingBottom: 48 },
+  scroll: { padding: 16, paddingBottom: 48 },
   saveBtn: { paddingHorizontal: 4 },
   saveBtnText: { fontSize: 16, fontWeight: '600' },
   photoWrap: {
@@ -177,7 +223,4 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)', paddingVertical: 4, alignItems: 'center',
   },
   photoEditBadgeText: { color: '#fff', fontSize: 10 },
-  fieldWrap: { gap: 6 },
-  fieldLabel: { fontSize: 12, fontWeight: '500', textTransform: 'uppercase', letterSpacing: 0.4 },
-  input: { borderWidth: 1, borderRadius: 10, paddingHorizontal: 14, paddingVertical: 12, fontSize: 15 },
 });

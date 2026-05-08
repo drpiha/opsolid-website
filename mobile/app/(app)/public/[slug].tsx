@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import {
   View,
   Text,
@@ -8,19 +8,153 @@ import {
   Pressable,
   Linking,
   Alert,
+  Share,
   StyleSheet,
 } from 'react-native';
 import { Stack, useLocalSearchParams } from 'expo-router';
-import { Bookmark, BookmarkCheck, Mail, Phone, Globe } from 'lucide-react-native';
+import {
+  Bookmark,
+  BookmarkCheck,
+  Mail,
+  Phone,
+  Globe,
+  QrCode,
+  Share2,
+  ExternalLink,
+  MapPin,
+  MessageCircle,
+  Calendar,
+  Play,
+  Briefcase,
+  Camera,
+  Video,
+} from 'lucide-react-native';
 import { getPublicCard } from '../../../src/lib/api/discover';
 import { saveCard, unsaveCard, checkSaved } from '../../../src/lib/api/contacts';
 import { saveCardToDeviceContacts } from '../../../src/lib/contacts/native';
 import type { ApiCard } from '../../../src/lib/api/types';
 import { useTheme } from '../../../src/lib/theme/ThemeProvider';
-import { copper, signal } from '../../../src/lib/theme/tokens';
+import { copper } from '../../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../../src/lib/i18n/locale';
 import { API_BASE } from '../../../src/lib/api/client';
 import { Button } from '../../../src/components/ui/Button';
+import { QrCodeModal } from '../../../src/components/cards/QrCodeModal';
+
+type ServiceItem = { title: string; description?: string; price?: string };
+type CustomButton = { label: string; url: string };
+type Socials = {
+  linkedin?: string;
+  instagram?: string;
+  x?: string;
+  tiktok?: string;
+  youtube?: string;
+  github?: string;
+  facebook?: string;
+  xing?: string;
+};
+
+const SOCIAL_KEYS: (keyof Socials)[] = [
+  'linkedin',
+  'instagram',
+  'x',
+  'tiktok',
+  'youtube',
+  'github',
+  'facebook',
+  'xing',
+];
+
+function pickString(v: unknown): string | undefined {
+  return typeof v === 'string' && v.length > 0 ? v : undefined;
+}
+
+function pickServices(v: unknown): ServiceItem[] {
+  if (!Array.isArray(v)) return [];
+  const out: ServiceItem[] = [];
+  for (const raw of v) {
+    if (!raw || typeof raw !== 'object') continue;
+    const o = raw as Record<string, unknown>;
+    const title = pickString(o.title);
+    if (!title) continue;
+    out.push({
+      title,
+      description: pickString(o.description),
+      price: pickString(o.price),
+    });
+    if (out.length >= 12) break;
+  }
+  return out;
+}
+
+function pickButtons(v: unknown): CustomButton[] {
+  if (!Array.isArray(v)) return [];
+  const out: CustomButton[] = [];
+  for (const raw of v) {
+    if (!raw || typeof raw !== 'object') continue;
+    const o = raw as Record<string, unknown>;
+    const label = pickString(o.label);
+    const url = pickString(o.url);
+    if (!label || !url) continue;
+    out.push({ label, url });
+    if (out.length >= 4) break;
+  }
+  return out;
+}
+
+function pickSocials(v: unknown): Socials {
+  if (!v || typeof v !== 'object') return {};
+  const o = v as Record<string, unknown>;
+  const out: Socials = {};
+  for (const k of SOCIAL_KEYS) {
+    const u = pickString(o[k]);
+    if (u) out[k] = u;
+  }
+  return out;
+}
+
+// lucide-react-native v1 dropped brand icons (Linkedin, Instagram, Twitter,
+// YouTube, Github, Facebook), so we render the social row with semantically
+// related generic icons + a label underneath. The label disambiguates the
+// network for the user without us shipping custom brand SVGs.
+function socialIcon(key: keyof Socials, color: string) {
+  const size = 20;
+  switch (key) {
+    case 'instagram':
+    case 'tiktok':
+      return <Camera size={size} color={color} />;
+    case 'youtube':
+      return <Video size={size} color={color} />;
+    case 'linkedin':
+    case 'xing':
+      return <Briefcase size={size} color={color} />;
+    case 'github':
+    case 'facebook':
+    case 'x':
+    default:
+      return <ExternalLink size={size} color={color} />;
+  }
+}
+
+function socialLabel(key: keyof Socials): string {
+  switch (key) {
+    case 'linkedin':
+      return 'LinkedIn';
+    case 'instagram':
+      return 'Instagram';
+    case 'x':
+      return 'X';
+    case 'tiktok':
+      return 'TikTok';
+    case 'youtube':
+      return 'YouTube';
+    case 'github':
+      return 'GitHub';
+    case 'facebook':
+      return 'Facebook';
+    case 'xing':
+      return 'Xing';
+  }
+}
 
 export default function PublicCardScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
@@ -32,6 +166,7 @@ export default function PublicCardScreen() {
   const [error, setError] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [qrOpen, setQrOpen] = useState(false);
 
   useEffect(() => {
     if (!slug) return;
@@ -120,11 +255,21 @@ export default function PublicCardScreen() {
   }
 
   const data = card.cardData as Record<string, unknown>;
-  const name = (data.name as string) ?? slug ?? '';
-  const title = data.title as string | undefined;
-  const company = data.company as string | undefined;
-  const email = data.email as string | undefined;
-  const phone = data.phone as string | undefined;
+  const name = pickString(data.name) ?? slug ?? '';
+  const title = pickString(data.title);
+  const position = pickString(data.position);
+  const company = pickString(data.company);
+  const email = pickString(data.email);
+  const phone = pickString(data.phone);
+  const bio = pickString(data.bio);
+  const whatsapp = pickString(data.whatsapp);
+  const website = pickString(data.website);
+  const address = pickString(data.address);
+  const bookingUrl = pickString(data.bookingUrl);
+  const videoUrl = pickString(data.videoUrl) ?? card.videoUrl ?? undefined;
+  const socials = pickSocials(data.socials);
+  const services = pickServices(data.services);
+  const customButtons = pickButtons(data.customButtons);
 
   const photoUri = card.photoPath
     ? card.photoPath.startsWith('http')
@@ -132,26 +277,66 @@ export default function PublicCardScreen() {
       : `${API_BASE}${card.photoPath}`
     : null;
 
+  const socialEntries = SOCIAL_KEYS
+    .map((k) => ({ key: k, url: socials[k] }))
+    .filter((s): s is { key: keyof Socials; url: string } => !!s.url);
+
+  async function handleShareCard() {
+    if (!card?.slug) return;
+    const url = `https://opsolid.de/c/${card.slug}`;
+    try {
+      await Share.share({
+        message: `${name} — ${url}`,
+        url,
+      });
+    } catch {
+      // user cancelled — silent
+    }
+  }
+
+  function openMaps(addr: string) {
+    void Linking.openURL(
+      `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(addr)}`,
+    );
+  }
+
+  function openWhatsapp(num: string) {
+    const digits = num.replace(/\D/g, '');
+    if (!digits) return;
+    void Linking.openURL(`https://wa.me/${digits}`);
+  }
+
   return (
     <View style={[styles.root, { backgroundColor: theme.bg[0] }]}>
       <Stack.Screen
         options={{
           title: name,
           headerRight: () => (
-            <Pressable
-              onPress={() => void toggleSave()}
-              disabled={saving}
-              style={styles.saveBtn}
-              hitSlop={8}
-            >
-              {saving ? (
-                <ActivityIndicator size="small" color={copper[500]} />
-              ) : saved ? (
-                <BookmarkCheck size={22} color={copper[500]} />
-              ) : (
-                <Bookmark size={22} color={copper[500]} />
-              )}
-            </Pressable>
+            <View style={styles.headerActions}>
+              {card.slug ? (
+                <Pressable
+                  onPress={() => setQrOpen(true)}
+                  style={styles.headerBtn}
+                  hitSlop={8}
+                >
+                  <QrCode size={22} color={copper[500]} />
+                </Pressable>
+              ) : null}
+              <Pressable
+                onPress={() => void toggleSave()}
+                disabled={saving}
+                style={styles.headerBtn}
+                hitSlop={8}
+              >
+                {saving ? (
+                  <ActivityIndicator size="small" color={copper[500]} />
+                ) : saved ? (
+                  <BookmarkCheck size={22} color={copper[500]} />
+                ) : (
+                  <Bookmark size={22} color={copper[500]} />
+                )}
+              </Pressable>
+            </View>
           ),
         }}
       />
@@ -173,6 +358,10 @@ export default function PublicCardScreen() {
 
           {title ? (
             <Text style={[styles.jobTitle, { color: theme.ink[300] }]}>{title}</Text>
+          ) : null}
+
+          {position && position !== title ? (
+            <Text style={[styles.jobTitle, { color: theme.ink[400] }]}>{position}</Text>
           ) : null}
 
           {company ? (
@@ -226,6 +415,169 @@ export default function PublicCardScreen() {
           </Pressable>
         )}
 
+        {/* Share card pressable */}
+        {card.slug ? (
+          <Pressable
+            onPress={() => void handleShareCard()}
+            style={[styles.shareRow, { backgroundColor: theme.bg[1], borderColor: theme.line.DEFAULT }]}
+          >
+            <Share2 size={16} color={copper[500]} />
+            <Text style={[styles.shareRowLabel, { color: theme.ink[100] }]}>{t.shareCard}</Text>
+          </Pressable>
+        ) : null}
+
+        {/* Bio */}
+        {bio ? (
+          <View style={styles.bioWrap}>
+            <Text style={[styles.bio, { color: theme.ink[200] }]}>{bio}</Text>
+          </View>
+        ) : null}
+
+        {/* Socials */}
+        {socialEntries.length > 0 ? (
+          <View style={styles.socialRow}>
+            {socialEntries.map((s) => (
+              <Pressable
+                key={s.key}
+                onPress={() => void Linking.openURL(s.url)}
+                style={[
+                  styles.socialBtn,
+                  { backgroundColor: theme.bg[1], borderColor: theme.line.DEFAULT },
+                ]}
+                hitSlop={6}
+                accessibilityLabel={socialLabel(s.key)}
+              >
+                {socialIcon(s.key, copper[500])}
+                <Text style={[styles.socialLabel, { color: theme.ink[400] }]}>
+                  {socialLabel(s.key)}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+        ) : null}
+
+        {/* WhatsApp */}
+        {whatsapp ? (
+          <Pressable
+            onPress={() => openWhatsapp(whatsapp)}
+            style={[styles.actionRow, { backgroundColor: theme.bg[1], borderColor: theme.line.DEFAULT }]}
+          >
+            <View style={[styles.contactIcon, { backgroundColor: theme.bg[2] }]}>
+              <MessageCircle size={16} color={copper[500]} />
+            </View>
+            <Text style={[styles.actionLabel, { color: theme.ink[100] }]}>{t.whatsapp}</Text>
+          </Pressable>
+        ) : null}
+
+        {/* Website */}
+        {website ? (
+          <Pressable
+            onPress={() => void Linking.openURL(website)}
+            style={[styles.actionRow, { backgroundColor: theme.bg[1], borderColor: theme.line.DEFAULT }]}
+          >
+            <View style={[styles.contactIcon, { backgroundColor: theme.bg[2] }]}>
+              <Globe size={16} color={copper[500]} />
+            </View>
+            <Text style={[styles.actionLabel, { color: theme.ink[100] }]}>{t.website}</Text>
+          </Pressable>
+        ) : null}
+
+        {/* Booking CTA */}
+        {bookingUrl ? (
+          <View style={styles.ctaWrap}>
+            <Pressable
+              onPress={() => void Linking.openURL(bookingUrl)}
+              style={[styles.bookCta, { backgroundColor: copper[500] }]}
+            >
+              <Calendar size={18} color="#fff" />
+              <Text style={styles.bookCtaText}>{t.requestMeeting}</Text>
+            </Pressable>
+          </View>
+        ) : null}
+
+        {/* Video */}
+        {videoUrl ? (
+          <Pressable
+            onPress={() => void Linking.openURL(videoUrl)}
+            style={[styles.actionRow, { backgroundColor: theme.bg[1], borderColor: theme.line.DEFAULT }]}
+          >
+            <View style={[styles.contactIcon, { backgroundColor: theme.bg[2] }]}>
+              <Play size={16} color={copper[500]} />
+            </View>
+            <Text style={[styles.actionLabel, { color: theme.ink[100] }]}>{t.watchVideo}</Text>
+          </Pressable>
+        ) : null}
+
+        {/* Services */}
+        {services.length > 0 ? (
+          <View style={styles.blockWrap}>
+            <Text style={[styles.blockHeading, { color: theme.ink[300] }]}>{t.services}</Text>
+            <View style={[styles.section, { backgroundColor: theme.bg[1], borderColor: theme.line.DEFAULT }]}>
+              {services.map((svc, i) => (
+                <View
+                  key={`${svc.title}-${i}`}
+                  style={[
+                    styles.serviceRow,
+                    {
+                      borderBottomColor:
+                        i < services.length - 1 ? theme.line.DEFAULT : 'transparent',
+                    },
+                  ]}
+                >
+                  <View style={styles.serviceHeader}>
+                    <Text style={[styles.serviceTitle, { color: theme.ink[100] }]}>
+                      {svc.title}
+                    </Text>
+                    {svc.price ? (
+                      <Text style={[styles.servicePrice, { color: copper[500] }]}>
+                        {svc.price}
+                      </Text>
+                    ) : null}
+                  </View>
+                  {svc.description ? (
+                    <Text style={[styles.serviceDesc, { color: theme.ink[400] }]}>
+                      {svc.description}
+                    </Text>
+                  ) : null}
+                </View>
+              ))}
+            </View>
+          </View>
+        ) : null}
+
+        {/* Custom buttons */}
+        {customButtons.length > 0 ? (
+          <View style={styles.customBtnWrap}>
+            {customButtons.map((btn, i) => (
+              <Button
+                key={`${btn.label}-${i}`}
+                label={btn.label}
+                onPress={() => void Linking.openURL(btn.url)}
+                variant="secondary"
+                style={i > 0 ? { marginTop: 10 } : undefined}
+              />
+            ))}
+          </View>
+        ) : null}
+
+        {/* Address */}
+        {address ? (
+          <View style={styles.blockWrap}>
+            <Text style={[styles.blockHeading, { color: theme.ink[300] }]}>{t.address}</Text>
+            <Pressable
+              onPress={() => openMaps(address)}
+              style={[styles.actionRow, { backgroundColor: theme.bg[1], borderColor: theme.line.DEFAULT }]}
+            >
+              <View style={[styles.contactIcon, { backgroundColor: theme.bg[2] }]}>
+                <MapPin size={16} color={copper[500]} />
+              </View>
+              <Text style={[styles.actionLabel, { color: theme.ink[100] }]} numberOfLines={3}>
+                {address}
+              </Text>
+            </Pressable>
+          </View>
+        ) : null}
+
         {/* Save CTA */}
         <View style={styles.saveRow}>
           <Pressable
@@ -248,6 +600,14 @@ export default function PublicCardScreen() {
           </Pressable>
         </View>
       </ScrollView>
+
+      {card.slug ? (
+        <QrCodeModal
+          visible={qrOpen}
+          slug={card.slug}
+          onClose={() => setQrOpen(false)}
+        />
+      ) : null}
     </View>
   );
 }
@@ -257,7 +617,8 @@ const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: 'center', alignItems: 'center', padding: 24 },
   errorText: { fontSize: 16, textAlign: 'center' },
   scroll: { paddingBottom: 40 },
-  saveBtn: { paddingRight: 4 },
+  headerActions: { flexDirection: 'row', alignItems: 'center', gap: 14 },
+  headerBtn: { paddingRight: 4 },
   hero: {
     alignItems: 'center',
     paddingTop: 40,
@@ -318,10 +679,103 @@ const styles = StyleSheet.create({
     padding: 14,
     borderRadius: 12,
     borderWidth: StyleSheet.hairlineWidth,
-    marginBottom: 28,
+    marginBottom: 12,
   },
   webLabel: { fontSize: 13 },
-  saveRow: { paddingHorizontal: 16 },
+  shareRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    marginHorizontal: 16,
+    padding: 14,
+    borderRadius: 12,
+    borderWidth: StyleSheet.hairlineWidth,
+    marginBottom: 20,
+  },
+  shareRowLabel: { fontSize: 14, fontWeight: '500' },
+  bioWrap: {
+    paddingHorizontal: 24,
+    marginBottom: 20,
+  },
+  bio: { fontSize: 15, lineHeight: 22 },
+  socialRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+    paddingHorizontal: 16,
+    marginBottom: 16,
+  },
+  socialBtn: {
+    minWidth: 80,
+    paddingHorizontal: 12,
+    paddingVertical: 10,
+    borderRadius: 12,
+    borderWidth: StyleSheet.hairlineWidth,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  socialLabel: {
+    fontSize: 13,
+    fontWeight: '500',
+  },
+  actionRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    marginHorizontal: 16,
+    padding: 14,
+    borderRadius: 12,
+    borderWidth: StyleSheet.hairlineWidth,
+    marginBottom: 12,
+  },
+  actionLabel: { fontSize: 15, flex: 1 },
+  ctaWrap: {
+    paddingHorizontal: 16,
+    marginBottom: 12,
+  },
+  bookCta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+    paddingVertical: 14,
+    borderRadius: 14,
+  },
+  bookCtaText: { color: '#fff', fontSize: 15, fontWeight: '600' },
+  blockWrap: {
+    marginTop: 8,
+    marginBottom: 4,
+  },
+  blockHeading: {
+    fontSize: 12,
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 0.6,
+    paddingHorizontal: 24,
+    marginBottom: 8,
+  },
+  serviceRow: {
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    gap: 4,
+  },
+  serviceHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 8,
+  },
+  serviceTitle: { fontSize: 15, fontWeight: '600', flex: 1 },
+  servicePrice: { fontSize: 14, fontWeight: '600' },
+  serviceDesc: { fontSize: 13, lineHeight: 18 },
+  customBtnWrap: {
+    paddingHorizontal: 16,
+    marginTop: 8,
+    marginBottom: 12,
+  },
+  saveRow: { paddingHorizontal: 16, marginTop: 16 },
   saveCta: {
     paddingVertical: 14,
     borderRadius: 14,

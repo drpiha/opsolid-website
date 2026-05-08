@@ -24,27 +24,21 @@ export async function saveCardToDeviceContacts(card: ApiCard): Promise<SaveResul
       ? `${API_BASE}${card.photoPath}`
       : (card.photoPath ?? undefined);
 
-  const urls = [];
-  if (card.slug) urls.push({ label: 'OpSolid', url: `https://opsolid.de/c/${card.slug}` });
+  const urlAddresses: { label: string; url: string }[] = [];
+  if (card.slug) {
+    urlAddresses.push({ label: 'OpSolid', url: `https://opsolid.de/c/${card.slug}` });
+  }
 
-  const contact: Contacts.Contact = {
-    [Contacts.Fields.ContactType]: Contacts.ContactTypes.Person,
-    [Contacts.Fields.FirstName]: firstName,
-    [Contacts.Fields.LastName]: lastName,
-    [Contacts.Fields.Name]: fullName,
+  const contact = {
     name: fullName,
-    contactType: Contacts.ContactTypes.Person,
     firstName,
     lastName,
     company,
     jobTitle,
-    emails: email
-      ? [{ email, label: Contacts.EmailLabels.Work, isPrimary: true }]
-      : undefined,
-    phoneNumbers: phone
-      ? [{ number: phone, label: Contacts.PhoneNumberLabels.Mobile, isPrimary: true }]
-      : undefined,
-    urlAddresses: urls.length ? urls : undefined,
+    contactType: Contacts.ContactTypes.Person,
+    emails: email ? [{ email, label: 'work', isPrimary: true }] : undefined,
+    phoneNumbers: phone ? [{ number: phone, label: 'mobile', isPrimary: true }] : undefined,
+    urlAddresses: urlAddresses.length ? urlAddresses : undefined,
     image: photoUrl ? { uri: photoUrl } : undefined,
   } as unknown as Contacts.Contact;
 

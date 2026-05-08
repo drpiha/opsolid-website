@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import {
   View,
   Text,
-  TextInput,
   ScrollView,
   TouchableOpacity,
   Alert,
@@ -18,6 +17,32 @@ import { API_BASE } from '../../../../src/lib/api/client';
 import { useTheme } from '../../../../src/lib/theme/ThemeProvider';
 import { copper } from '../../../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../../../src/lib/i18n/locale';
+import {
+  BasicFieldsSection,
+  SocialsSection,
+  BrandColorsSection,
+  VisibilitySection,
+  DiscoverySection,
+  DEFAULT_PRIMARY_HEX,
+  DEFAULT_ACCENT_HEX,
+  stripEmpty,
+} from '../../../../src/components/cards/CardFormSections';
+import type {
+  BasicFieldsState,
+  SocialsState,
+  Visibility,
+  DiscoveryState,
+} from '../../../../src/components/cards/CardFormSections';
+
+function asString(v: unknown): string {
+  return typeof v === 'string' ? v : '';
+}
+function asBool(v: unknown): boolean {
+  return v === true;
+}
+function asVisibility(v: unknown): Visibility {
+  return v === 'private' || v === 'unlisted' ? v : 'public';
+}
 
 export default function CardEditScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -30,23 +55,75 @@ export default function CardEditScreen() {
   const [saving, setSaving] = useState(false);
   const [uploadingPhoto, setUploadingPhoto] = useState(false);
 
-  const [name, setName] = useState('');
-  const [jobTitle, setJobTitle] = useState('');
-  const [company, setCompany] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [basics, setBasics] = useState<BasicFieldsState>({
+    name: '', jobTitle: '', position: '', company: '', email: '',
+    phone: '', whatsapp: '', website: '', address: '', bio: '',
+  });
+  const [socials, setSocials] = useState<SocialsState>({
+    linkedin: '', instagram: '', x: '', tiktok: '',
+    youtube: '', github: '', facebook: '', xing: '',
+  });
+  const [primaryHex, setPrimaryHex] = useState(DEFAULT_PRIMARY_HEX);
+  const [accentHex, setAccentHex] = useState(DEFAULT_ACCENT_HEX);
+  const [visibility, setVisibility] = useState<Visibility>('public');
+  const [discovery, setDiscovery] = useState<DiscoveryState>({
+    openToNetworking: false, acceptingClients: false,
+    industry: '', city: '', country: '',
+  });
+
   const [photoPath, setPhotoPath] = useState<string | null>(null);
+
+  function setBasic<K extends keyof BasicFieldsState>(k: K, v: BasicFieldsState[K]) {
+    setBasics((s) => ({ ...s, [k]: v }));
+  }
+  function setSocial<K extends keyof SocialsState>(k: K, v: SocialsState[K]) {
+    setSocials((s) => ({ ...s, [k]: v }));
+  }
+  function setDiscoveryField<K extends keyof DiscoveryState>(k: K, v: DiscoveryState[K]) {
+    setDiscovery((s) => ({ ...s, [k]: v }));
+  }
 
   useEffect(() => {
     if (!id) return;
     void getCard(id)
       .then((c) => {
         setCard(c);
-        setName((c.cardData?.name as string) ?? '');
-        setJobTitle((c.cardData?.title as string) ?? '');
-        setCompany((c.cardData?.company as string) ?? '');
-        setEmail((c.cardData?.email as string) ?? '');
-        setPhone((c.cardData?.phone as string) ?? '');
+        const cd = c.cardData ?? {};
+        setBasics({
+          name: asString(cd.name),
+          jobTitle: asString(cd.title),
+          position: asString(cd.position),
+          company: asString(cd.company),
+          email: asString(cd.email),
+          phone: asString(cd.phone),
+          whatsapp: asString(cd.whatsapp),
+          website: asString(cd.website),
+          address: asString(cd.address),
+          bio: asString(cd.bio),
+        });
+        const cdSocials = (cd.socials ?? {}) as Record<string, unknown>;
+        setSocials({
+          linkedin: asString(cdSocials.linkedin),
+          instagram: asString(cdSocials.instagram),
+          x: asString(cdSocials.x),
+          tiktok: asString(cdSocials.tiktok),
+          youtube: asString(cdSocials.youtube),
+          github: asString(cdSocials.github),
+          facebook: asString(cdSocials.facebook),
+          xing: asString(cdSocials.xing),
+        });
+        // Brand colors live both at top level (CardOrder cols) and inside cardData.
+        // Prefer top-level since the API returns them there explicitly.
+        setPrimaryHex(c.brandPrimaryHex || asString(cd.brandPrimaryHex) || DEFAULT_PRIMARY_HEX);
+        setAccentHex(c.brandAccentHex || asString(cd.brandAccentHex) || DEFAULT_ACCENT_HEX);
+        setVisibility(asVisibility(cd.visibility));
+        setDiscovery({
+          openToNetworking: asBool(cd.openToNetworking),
+          acceptingClients: asBool(cd.acceptingClients),
+          industry: asString(cd.industry),
+          city: asString(cd.city),
+          country: asString(cd.country),
+        });
         setPhotoPath(c.photoPath ?? null);
       })
       .catch(() => Alert.alert('', t.errorLoad))
@@ -78,17 +155,40 @@ export default function CardEditScreen() {
   }
 
   async function handleSave() {
-    if (!id || !name.trim()) return;
+    if (!id || !basics.name.trim()) return;
     setSaving(true);
     try {
+      const socialsClean = stripEmpty(socials);
+      const cardData: Record<string, unknown> = {
+        name: basics.name.trim(),
+        title: basics.jobTitle.trim() || undefined,
+        position: basics.position.trim() || undefined,
+        company: basics.company.trim() || undefined,
+        email: basics.email.trim() || undefined,
+        phone: basics.phone.trim() || undefined,
+        whatsapp: basics.whatsapp.trim() || undefined,
+        website: basics.website.trim() || undefined,
+        address: basics.address.trim() || undefined,
+        bio: basics.bio.trim() || undefined,
+        brandPrimaryHex: primaryHex,
+        brandAccentHex: accentHex,
+        visibility,
+        openToNetworking: discovery.openToNetworking,
+        acceptingClients: discovery.acceptingClients,
+        industry: discovery.industry.trim() || undefined,
+        city: discovery.city.trim() || undefined,
+        country: discovery.country.trim() || undefined,
+      };
+      if (Object.keys(socialsClean).length > 0) {
+        cardData.socials = socialsClean;
+      }
+      Object.keys(cardData).forEach((k) => {
+        if (cardData[k] === undefined) delete cardData[k];
+      });
+
       await updateCard(id, {
-        cardData: {
-          name: name.trim(),
-          title: jobTitle.trim() || undefined,
-          company: company.trim() || undefined,
-          email: email.trim() || undefined,
-          phone: phone.trim() || undefined,
-        },
+        // Server accepts arbitrary keys; CardPatchInput is intentionally narrow.
+        cardData: cardData as unknown as { name?: string },
         photoPath: photoPath,
       });
       Alert.alert('', t.saveSuccess, [{ text: 'OK', onPress: () => router.back() }]);
@@ -157,31 +257,19 @@ export default function CardEditScreen() {
           )}
         </TouchableOpacity>
 
-        {/* Fields */}
-        {[
-          { label: t.fieldName, value: name, onChange: setName, placeholder: t.namePlaceholder, required: true },
-          { label: t.fieldJobTitle, value: jobTitle, onChange: setJobTitle, placeholder: t.titlePlaceholder },
-          { label: t.fieldCompany, value: company, onChange: setCompany, placeholder: t.companyPlaceholder },
-          { label: t.fieldEmail, value: email, onChange: setEmail, placeholder: 'name@example.com', keyboard: 'email-address' as const },
-          { label: t.fieldPhone, value: phone, onChange: setPhone, placeholder: '+49 …', keyboard: 'phone-pad' as const },
-        ].map((field) => (
-          <View key={field.label} style={styles.fieldWrap}>
-            <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
-              {field.label}{field.required ? ' *' : ''}
-            </Text>
-            <TextInput
-              style={[styles.input, { color: theme.ink[100], borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[1] }]}
-              value={field.value}
-              onChangeText={field.onChange}
-              placeholder={field.placeholder}
-              placeholderTextColor={theme.ink[500]}
-              keyboardType={field.keyboard ?? 'default'}
-              autoCapitalize={field.keyboard ? 'none' : 'words'}
-            />
-          </View>
-        ))}
+        <BasicFieldsSection theme={theme} values={basics} onChange={setBasic} />
+        <SocialsSection theme={theme} values={socials} onChange={setSocial} />
+        <BrandColorsSection
+          theme={theme}
+          primaryHex={primaryHex}
+          accentHex={accentHex}
+          onPrimaryChange={setPrimaryHex}
+          onAccentChange={setAccentHex}
+        />
+        <VisibilitySection theme={theme} value={visibility} onChange={setVisibility} />
+        <DiscoverySection theme={theme} values={discovery} onChange={setDiscoveryField} />
 
-        {/* Status (only for published cards — allow toggling off) */}
+        {/* Status (only for published cards) */}
         {card?.status === 'PUBLISHED' && (
           <View style={[styles.statusRow, { borderColor: theme.line.DEFAULT }]}>
             <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>Status</Text>
@@ -197,7 +285,7 @@ export default function CardEditScreen() {
 
 const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  scroll: { padding: 16, gap: 16, paddingBottom: 48 },
+  scroll: { padding: 16, paddingBottom: 48 },
   saveBtn: { paddingHorizontal: 4 },
   saveBtnText: { fontSize: 16, fontWeight: '600' },
   photoWrap: {
@@ -212,8 +300,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)', paddingVertical: 4, alignItems: 'center',
   },
   photoEditBadgeText: { color: '#fff', fontSize: 10 },
-  fieldWrap: { gap: 6 },
   fieldLabel: { fontSize: 12, fontWeight: '500', textTransform: 'uppercase', letterSpacing: 0.4 },
-  input: { borderWidth: 1, borderRadius: 10, paddingHorizontal: 14, paddingVertical: 12, fontSize: 15 },
-  statusRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 12, borderTopWidth: 1 },
+  statusRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 12, borderTopWidth: 1, marginTop: 24 },
 });

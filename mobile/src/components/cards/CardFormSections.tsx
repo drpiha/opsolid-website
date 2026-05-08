@@ -1,0 +1,427 @@
+// -----------------------------------------------------------------------
+// CardFormSections — shared section components for cards/create + cards/edit.
+// Match inline styles in create.tsx (line 148–156): borderRadius 10,
+// paddingHorizontal 14, paddingVertical 12, fontSize 15.
+// -----------------------------------------------------------------------
+
+import { useState } from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Switch,
+  StyleSheet,
+} from 'react-native';
+import { ChevronDown, ChevronUp } from 'lucide-react-native';
+import type { ThemeTokens } from '../../lib/theme/tokens';
+import { copper } from '../../lib/theme/tokens';
+import { useTranslations, detectLocale } from '../../lib/i18n/locale';
+
+// ---------- Field shape ----------
+export type BasicFieldsState = {
+  name: string;
+  jobTitle: string;
+  position: string;
+  company: string;
+  email: string;
+  phone: string;
+  whatsapp: string;
+  website: string;
+  address: string;
+  bio: string;
+};
+
+export type SocialsState = {
+  linkedin: string;
+  instagram: string;
+  x: string;
+  tiktok: string;
+  youtube: string;
+  github: string;
+  facebook: string;
+  xing: string;
+};
+
+export type Visibility = 'public' | 'unlisted' | 'private';
+
+export type DiscoveryState = {
+  openToNetworking: boolean;
+  acceptingClients: boolean;
+  industry: string;
+  city: string;
+  country: string;
+};
+
+const HEX_RE = /^#[0-9A-F]{6}$/i;
+export const DEFAULT_PRIMARY_HEX = '#C27940';
+export const DEFAULT_ACCENT_HEX = '#1F2937';
+
+// ---------- BasicFieldsSection ----------
+export function BasicFieldsSection({
+  theme,
+  values,
+  onChange,
+}: {
+  theme: ThemeTokens;
+  values: BasicFieldsState;
+  onChange: <K extends keyof BasicFieldsState>(k: K, v: BasicFieldsState[K]) => void;
+}) {
+  const t = useTranslations(detectLocale()).cards;
+
+  const fields = [
+    { key: 'name' as const, label: t.fieldName, placeholder: t.namePlaceholder, required: true },
+    { key: 'jobTitle' as const, label: t.fieldJobTitle, placeholder: t.titlePlaceholder },
+    { key: 'position' as const, label: t.fieldPosition, placeholder: t.positionPlaceholder },
+    { key: 'company' as const, label: t.fieldCompany, placeholder: t.companyPlaceholder },
+    { key: 'email' as const, label: t.fieldEmail, placeholder: 'name@example.com', keyboard: 'email-address' as const },
+    { key: 'phone' as const, label: t.fieldPhone, placeholder: '+49 …', keyboard: 'phone-pad' as const },
+    { key: 'whatsapp' as const, label: t.fieldWhatsapp, placeholder: '+49 …', keyboard: 'phone-pad' as const },
+    { key: 'website' as const, label: t.fieldWebsite, placeholder: t.websitePlaceholder, keyboard: 'url' as const },
+    { key: 'address' as const, label: t.fieldAddress, placeholder: t.addressPlaceholder },
+  ];
+
+  return (
+    <View style={styles.section}>
+      {fields.map((f) => (
+        <View key={f.key} style={styles.fieldWrap}>
+          <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+            {f.label}{f.required ? ' *' : ''}
+          </Text>
+          <TextInput
+            style={[styles.input, { color: theme.ink[100], borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[1] }]}
+            value={values[f.key]}
+            onChangeText={(v) => onChange(f.key, v)}
+            placeholder={f.placeholder}
+            placeholderTextColor={theme.ink[500]}
+            keyboardType={f.keyboard ?? 'default'}
+            autoCapitalize={f.keyboard ? 'none' : 'words'}
+          />
+        </View>
+      ))}
+      {/* Bio (multi-line) */}
+      <View style={styles.fieldWrap}>
+        <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>{t.fieldBio}</Text>
+        <TextInput
+          style={[
+            styles.input,
+            styles.multiline,
+            { color: theme.ink[100], borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[1] },
+          ]}
+          value={values.bio}
+          onChangeText={(v) => onChange('bio', v.slice(0, 500))}
+          placeholder={t.bioPlaceholder}
+          placeholderTextColor={theme.ink[500]}
+          multiline
+          numberOfLines={4}
+          maxLength={500}
+          textAlignVertical="top"
+        />
+        <Text style={[styles.charCounter, { color: theme.ink[400] }]}>
+          {values.bio.length}/500
+        </Text>
+      </View>
+    </View>
+  );
+}
+
+// ---------- SocialsSection ----------
+export function SocialsSection({
+  theme,
+  values,
+  onChange,
+}: {
+  theme: ThemeTokens;
+  values: SocialsState;
+  onChange: <K extends keyof SocialsState>(k: K, v: SocialsState[K]) => void;
+}) {
+  const t = useTranslations(detectLocale()).cards;
+  const [open, setOpen] = useState(false);
+
+  const fields: { key: keyof SocialsState; label: string; placeholder: string }[] = [
+    { key: 'linkedin', label: 'LinkedIn', placeholder: 'linkedin.com/in/yourname' },
+    { key: 'instagram', label: 'Instagram', placeholder: 'instagram.com/yourname' },
+    { key: 'x', label: 'X (Twitter)', placeholder: 'x.com/yourname' },
+    { key: 'tiktok', label: 'TikTok', placeholder: 'tiktok.com/@yourname' },
+    { key: 'youtube', label: 'YouTube', placeholder: 'youtube.com/@yourname' },
+    { key: 'github', label: 'GitHub', placeholder: 'github.com/yourname' },
+    { key: 'facebook', label: 'Facebook', placeholder: 'facebook.com/yourname' },
+    { key: 'xing', label: 'Xing', placeholder: 'xing.com/profile/yourname' },
+  ];
+
+  return (
+    <View style={styles.section}>
+      <TouchableOpacity
+        onPress={() => setOpen((o) => !o)}
+        style={styles.collapseHeader}
+        activeOpacity={0.7}
+      >
+        <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+          {t.sectionSocials}
+        </Text>
+        {open
+          ? <ChevronUp size={18} color={theme.ink[400]} />
+          : <ChevronDown size={18} color={theme.ink[400]} />}
+      </TouchableOpacity>
+      {open && (
+        <View style={styles.section}>
+          {fields.map((f) => (
+            <View key={f.key} style={styles.fieldWrap}>
+              <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>{f.label}</Text>
+              <TextInput
+                style={[styles.input, { color: theme.ink[100], borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[1] }]}
+                value={values[f.key]}
+                onChangeText={(v) => onChange(f.key, v)}
+                placeholder={f.placeholder}
+                placeholderTextColor={theme.ink[500]}
+                keyboardType="url"
+                autoCapitalize="none"
+              />
+            </View>
+          ))}
+        </View>
+      )}
+    </View>
+  );
+}
+
+// ---------- BrandColorsSection ----------
+function HexRow({
+  theme,
+  label,
+  value,
+  onValid,
+}: {
+  theme: ThemeTokens;
+  label: string;
+  value: string;
+  onValid: (next: string) => void;
+}) {
+  const [draft, setDraft] = useState(value);
+
+  function handleBlur() {
+    if (HEX_RE.test(draft)) {
+      const normalized = draft.toUpperCase();
+      setDraft(normalized);
+      onValid(normalized);
+    } else {
+      setDraft(value);
+    }
+  }
+
+  // Show a valid swatch even while user is typing
+  const swatchColor = HEX_RE.test(draft) ? draft : value;
+
+  return (
+    <View style={styles.brandRow}>
+      <View style={[styles.swatch, { backgroundColor: swatchColor, borderColor: theme.line.DEFAULT }]} />
+      <View style={[styles.fieldWrap, { flex: 1 }]}>
+        <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>{label}</Text>
+        <TextInput
+          style={[styles.input, { color: theme.ink[100], borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[1] }]}
+          value={draft}
+          onChangeText={setDraft}
+          onBlur={handleBlur}
+          placeholder="#XXXXXX"
+          placeholderTextColor={theme.ink[500]}
+          autoCapitalize="characters"
+          maxLength={7}
+          autoCorrect={false}
+        />
+      </View>
+    </View>
+  );
+}
+
+export function BrandColorsSection({
+  theme,
+  primaryHex,
+  accentHex,
+  onPrimaryChange,
+  onAccentChange,
+}: {
+  theme: ThemeTokens;
+  primaryHex: string;
+  accentHex: string;
+  onPrimaryChange: (v: string) => void;
+  onAccentChange: (v: string) => void;
+}) {
+  const t = useTranslations(detectLocale()).cards;
+
+  return (
+    <View style={styles.section}>
+      <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>{t.sectionBrand}</Text>
+      <HexRow theme={theme} label={t.brandPrimary} value={primaryHex} onValid={onPrimaryChange} />
+      <HexRow theme={theme} label={t.brandAccent} value={accentHex} onValid={onAccentChange} />
+    </View>
+  );
+}
+
+// ---------- VisibilitySection ----------
+export function VisibilitySection({
+  theme,
+  value,
+  onChange,
+}: {
+  theme: ThemeTokens;
+  value: Visibility;
+  onChange: (v: Visibility) => void;
+}) {
+  const t = useTranslations(detectLocale()).cards;
+
+  const pills: { key: Visibility; label: string }[] = [
+    { key: 'public', label: t.visibilityPublic },
+    { key: 'unlisted', label: t.visibilityUnlisted },
+    { key: 'private', label: t.visibilityPrivate },
+  ];
+
+  return (
+    <View style={styles.section}>
+      <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>{t.sectionVisibility}</Text>
+      <View style={styles.segmentRow}>
+        {pills.map((p) => {
+          const selected = value === p.key;
+          return (
+            <TouchableOpacity
+              key={p.key}
+              onPress={() => onChange(p.key)}
+              activeOpacity={0.8}
+              style={[
+                styles.segmentPill,
+                {
+                  backgroundColor: selected ? copper[500] : theme.bg[1],
+                  borderColor: selected ? copper[500] : theme.line.DEFAULT,
+                },
+              ]}
+            >
+              <Text
+                style={[
+                  styles.segmentText,
+                  { color: selected ? '#FFFFFF' : theme.ink[200] },
+                ]}
+              >
+                {p.label}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+      <Text style={[styles.hint, { color: theme.ink[400] }]}>{t.visibilityHint}</Text>
+    </View>
+  );
+}
+
+// ---------- DiscoverySection ----------
+export function DiscoverySection({
+  theme,
+  values,
+  onChange,
+}: {
+  theme: ThemeTokens;
+  values: DiscoveryState;
+  onChange: <K extends keyof DiscoveryState>(k: K, v: DiscoveryState[K]) => void;
+}) {
+  const t = useTranslations(detectLocale()).cards;
+
+  return (
+    <View style={styles.section}>
+      <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>{t.sectionDiscovery}</Text>
+
+      <View style={[styles.switchRow, { borderColor: theme.line.DEFAULT }]}>
+        <Text style={[styles.switchLabel, { color: theme.ink[100] }]}>{t.openToNetworking}</Text>
+        <Switch
+          value={values.openToNetworking}
+          onValueChange={(v) => onChange('openToNetworking', v)}
+          trackColor={{ false: theme.bg[2], true: copper[500] }}
+          thumbColor="#FFFFFF"
+        />
+      </View>
+
+      <View style={[styles.switchRow, { borderColor: theme.line.DEFAULT }]}>
+        <Text style={[styles.switchLabel, { color: theme.ink[100] }]}>{t.acceptingClients}</Text>
+        <Switch
+          value={values.acceptingClients}
+          onValueChange={(v) => onChange('acceptingClients', v)}
+          trackColor={{ false: theme.bg[2], true: copper[500] }}
+          thumbColor="#FFFFFF"
+        />
+      </View>
+
+      {[
+        { key: 'industry' as const, label: t.fieldIndustry, placeholder: t.industryPlaceholder },
+        { key: 'city' as const, label: t.fieldCity, placeholder: '' },
+        { key: 'country' as const, label: t.fieldCountry, placeholder: '' },
+      ].map((f) => (
+        <View key={f.key} style={styles.fieldWrap}>
+          <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>{f.label}</Text>
+          <TextInput
+            style={[styles.input, { color: theme.ink[100], borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[1] }]}
+            value={values[f.key]}
+            onChangeText={(v) => onChange(f.key, v)}
+            placeholder={f.placeholder}
+            placeholderTextColor={theme.ink[500]}
+            autoCapitalize="words"
+          />
+        </View>
+      ))}
+    </View>
+  );
+}
+
+// ---------- helpers exposed to screens ----------
+/** Strip empty string keys from a record before saving. */
+export function stripEmpty<T extends Record<string, string>>(obj: T): Partial<T> {
+  const out: Partial<T> = {};
+  (Object.keys(obj) as (keyof T)[]).forEach((k) => {
+    const v = obj[k];
+    if (typeof v === 'string' && v.trim() !== '') out[k] = v.trim() as T[keyof T];
+  });
+  return out;
+}
+
+const styles = StyleSheet.create({
+  section: { gap: 16, marginTop: 24 },
+  fieldWrap: { gap: 6 },
+  fieldLabel: { fontSize: 12, fontWeight: '500', textTransform: 'uppercase', letterSpacing: 0.4 },
+  input: {
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    fontSize: 15,
+  },
+  multiline: { minHeight: 100 },
+  charCounter: { fontSize: 11, textAlign: 'right' },
+  collapseHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 4,
+  },
+  brandRow: { flexDirection: 'row', alignItems: 'flex-end', gap: 12 },
+  swatch: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    borderWidth: 1,
+    marginBottom: 6,
+  },
+  segmentRow: { flexDirection: 'row', gap: 8 },
+  segmentPill: {
+    flex: 1,
+    paddingVertical: 10,
+    borderRadius: 999,
+    borderWidth: 1,
+    alignItems: 'center',
+  },
+  segmentText: { fontSize: 14, fontWeight: '600' },
+  hint: { fontSize: 12, lineHeight: 16 },
+  switchRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 12,
+    borderTopWidth: 1,
+  },
+  switchLabel: { fontSize: 15, fontWeight: '500' },
+});
