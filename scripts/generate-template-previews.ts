@@ -1,15 +1,18 @@
 // =============================================================================
-// Template thumbnail generator (Phase 7.5).
+// Template preview generator (Phase 7.5 → Sprint F1).
 //
 // Renders every v2 template at /dev/template-preview/<slug> via a running
 // Next dev server, screenshots a 540x960 viewport, and writes the PNG to
 // public/images/templates/card-XX.png where XX is the zero-padded templateId.
 // Those PNGs are then served as `og:image` on /c/[slug]/page.tsx for any
-// order whose templateId matches.
+// order whose templateId matches, AND consumed by the mobile app's template
+// picker so users see real renders, not wireframes.
 //
 // USAGE
 //   1. In one terminal:    npm run dev
-//   2. In another:         npm run generate-thumbnails
+//   2. In another:         npm run gen:template-previews
+//
+// (Back-compat alias: `npm run generate-thumbnails` runs the same script.)
 //
 // This script does NOT start a dev server — it expects one already running
 // on $BASE_URL (default http://localhost:3000). If the server isn't up, all
@@ -25,7 +28,7 @@
 //     can't find one in the standard install locations on your platform.
 //
 // EXIT CODES
-//   0  — at least one thumbnail captured
+//   0  — at least one preview captured
 //   1  — every capture failed (or fatal pre-flight error)
 // =============================================================================
 
@@ -33,13 +36,14 @@ import { existsSync, mkdirSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
+import { cardTemplates } from "../src/config/card-templates";
+import { cardTemplateSamples } from "../src/config/card-template-samples";
+
 // ---------------------------------------------------------------------------
-// Hard-coded sample list. Mirrors `cardTemplateSamples` in
-// `src/config/card-template-samples.ts` — the script can't import that file
-// directly because it pulls in `@/`-aliased TypeScript modules that need
-// Next's compiler. Each slug is verified against the per-template sample
-// files at the time of writing; if you add or rename a sample, update this
-// list.
+// Sample list — derived at runtime from the catalog so we never drift again.
+// `tsx` resolves the `@/`-alias paths inside `card-template-samples.ts` via
+// the project tsconfig, so importing here works as long as the script is run
+// through `tsx` (see `gen:template-previews` script in package.json).
 // ---------------------------------------------------------------------------
 
 interface SampleRef {
@@ -47,20 +51,23 @@ interface SampleRef {
   slug: string;
 }
 
-const SAMPLES: readonly SampleRef[] = [
-  { id: 1, slug: "demo-real-estate" },
-  { id: 2, slug: "demo-legal-counsel" },
-  { id: 3, slug: "demo-kitchen-atelier" },
-  { id: 4, slug: "demo-photographer" },
-  { id: 5, slug: "demo-clinic" },
-  { id: 6, slug: "sample-studio" },
-  { id: 7, slug: "sample-barber" },
-  { id: 8, slug: "sample-maker" },
-  { id: 9, slug: "sample-architect" },
-  { id: 10, slug: "demo-athlete" },
-  { id: 11, slug: "demo-editorial" },
-  { id: 12, slug: "demo-atelier" },
-];
+const SAMPLES: readonly SampleRef[] = cardTemplates
+  .filter((t) => t.isActive && cardTemplateSamples[t.id])
+  .map((t) => ({ id: t.id, slug: cardTemplateSamples[t.id].slug }));
+
+// Surface mismatches (active templates without sample data, or vice versa)
+// to stderr so a CI run flags real catalog gaps instead of silently writing
+// fewer PNGs than expected.
+{
+  const missingSamples = cardTemplates
+    .filter((t) => t.isActive && !cardTemplateSamples[t.id])
+    .map((t) => t.id);
+  if (missingSamples.length > 0) {
+    console.error(
+      `[warn] ${missingSamples.length} active templates have no sample data: ${missingSamples.join(", ")}`,
+    );
+  }
+}
 
 // ---------------------------------------------------------------------------
 // Config
@@ -74,6 +81,9 @@ const BASE_URL = (process.env.BASE_URL ?? "http://localhost:3000").replace(
   "",
 );
 const PAGE_NAVIGATION_TIMEOUT_MS = 45_000;
+// 4-way page concurrency keeps wall time under ~90s for 96 captures while
+// staying well below the dev server's typical max concurrent compile load.
+const CONCURRENCY = Number(process.env.PREVIEW_CONCURRENCY ?? 4);
 
 // ---------------------------------------------------------------------------
 // Chrome executable detection
@@ -200,63 +210,84 @@ async function main() {
 
   const successes: SampleRef[] = [];
   const failures: FailureRecord[] = [];
+  const total = SAMPLES.length;
+  let completed = 0;
+
+  // Lightweight semaphore via a worker pool — no extra dep. Each worker
+  // pulls the next sample off `queue` and runs a single capture; when the
+  // queue drains, the worker resolves. Errors per-capture are logged and
+  // never rethrown so one broken sample can't take down the whole run.
+  const queue = SAMPLES.slice();
+
+  async function captureOne(ref: SampleRef): Promise<void> {
+    const { id, slug } = ref;
+    const filename = `card-${String(id).padStart(2, "0")}.png`;
+    const outputPath = join(OUTPUT_DIR, filename);
+    const route = `${BASE_URL}/dev/template-preview/${slug}`;
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const page: any = await browser.newPage();
+    try {
+      await page.setViewport(VIEWPORT);
+
+      // `networkidle0` waits for in-flight requests to settle. Combined
+      // with `document.fonts.ready` below, this gives next/font enough
+      // headroom to swap in real glyphs before we capture.
+      await page.goto(route, {
+        waitUntil: "networkidle0",
+        timeout: PAGE_NAVIGATION_TIMEOUT_MS,
+      });
+
+      await page.evaluate(async () => {
+        if (typeof document !== "undefined" && document.fonts?.ready) {
+          await document.fonts.ready;
+        }
+      });
+      await new Promise((r) => setTimeout(r, 250));
+
+      await page.screenshot({
+        path: outputPath,
+        type: "png",
+        clip: {
+          x: 0,
+          y: 0,
+          width: VIEWPORT.width,
+          height: VIEWPORT.height,
+        },
+      });
+
+      successes.push({ id, slug });
+      completed += 1;
+      console.log(`[${completed}/${total}] ${slug} -> ${filename} ok`);
+    } catch (err) {
+      const message = err instanceof Error ? err.message : String(err);
+      failures.push({ id, slug, error: message });
+      completed += 1;
+      // Log to stderr so CI can grep for failures without losing the
+      // per-capture detail; we deliberately don't rethrow.
+      console.error(
+        `[${completed}/${total}] ${slug} -> ${filename} FAILED: ${message}`,
+      );
+    } finally {
+      await page.close().catch(() => {
+        /* page may already be closed */
+      });
+    }
+  }
+
+  async function worker(): Promise<void> {
+    while (true) {
+      const next = queue.shift();
+      if (!next) return;
+      await captureOne(next);
+    }
+  }
 
   try {
-    const total = SAMPLES.length;
-    for (let i = 0; i < total; i++) {
-      const { id, slug } = SAMPLES[i];
-      const filename = `card-${String(id).padStart(2, "0")}.png`;
-      const outputPath = join(OUTPUT_DIR, filename);
-      const route = `${BASE_URL}/dev/template-preview/${slug}`;
-      const progress = `[${i + 1}/${total}]`;
-
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      const page: any = await browser.newPage();
-      try {
-        await page.setViewport(VIEWPORT);
-
-        // `networkidle0` waits for in-flight requests to settle. Combined
-        // with `document.fonts.ready` below, this gives next/font enough
-        // headroom to swap in real glyphs before we capture.
-        await page.goto(route, {
-          waitUntil: "networkidle0",
-          timeout: PAGE_NAVIGATION_TIMEOUT_MS,
-        });
-
-        // Fail fast if the page rendered NotFound rather than the template.
-        // The template-preview route always wraps the template in <article>
-        // (templates render their own <article>), so missing it means the
-        // route 404'd or the template failed to mount.
-        await page.evaluate(async () => {
-          if (typeof document !== "undefined" && document.fonts?.ready) {
-            await document.fonts.ready;
-          }
-        });
-        await new Promise((r) => setTimeout(r, 250));
-
-        await page.screenshot({
-          path: outputPath,
-          type: "png",
-          clip: {
-            x: 0,
-            y: 0,
-            width: VIEWPORT.width,
-            height: VIEWPORT.height,
-          },
-        });
-
-        successes.push({ id, slug });
-        console.log(`${progress} ${slug} -> ${filename} ok`);
-      } catch (err) {
-        const message = err instanceof Error ? err.message : String(err);
-        failures.push({ id, slug, error: message });
-        console.error(`${progress} ${slug} -> ${filename} FAILED: ${message}`);
-      } finally {
-        await page.close().catch(() => {
-          /* page may already be closed */
-        });
-      }
-    }
+    const workerCount = Math.max(1, Math.min(CONCURRENCY, total));
+    console.log(`Capturing ${total} previews with concurrency=${workerCount}.`);
+    const workers = Array.from({ length: workerCount }, () => worker());
+    await Promise.all(workers);
   } finally {
     await browser.close().catch(() => {
       /* browser may already be closed */
