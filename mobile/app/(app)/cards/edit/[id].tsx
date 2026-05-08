@@ -8,6 +8,8 @@ import {
   ActivityIndicator,
   Image,
   StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
@@ -278,10 +280,17 @@ export default function CardEditScreen() {
           ),
         }}
       />
+      <KeyboardAvoidingView
+        style={{ flex: 1, backgroundColor: theme.bg[0] }}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+      >
       <ScrollView
         style={{ backgroundColor: theme.bg[0] }}
         contentContainerStyle={styles.scroll}
         keyboardShouldPersistTaps="handled"
+        keyboardDismissMode="interactive"
+        automaticallyAdjustKeyboardInsets
       >
         {/* Photo */}
         <TouchableOpacity
@@ -331,6 +340,7 @@ export default function CardEditScreen() {
           </View>
         )}
       </ScrollView>
+      </KeyboardAvoidingView>
     </>
   );
 }

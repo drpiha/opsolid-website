@@ -19,6 +19,7 @@
     },
     "android": {
       "package": "de.opsolid.mobile",
+      "softwareKeyboardLayoutMode": "resize",
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.READ_MEDIA_IMAGES",
