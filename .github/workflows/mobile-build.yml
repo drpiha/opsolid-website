@@ -55,10 +55,14 @@ jobs:
           fi
           echo "$KEYSTORE_BASE64" | base64 -d > opsolid-release.keystore
           ls -l opsolid-release.keystore
-          # Sanity-check the SHA-256 fingerprint so a corrupted secret fails fast
-          # rather than producing an APK that won't install over previous builds.
+          # Sanity-check that the password decrypts the keystore so a corrupted
+          # secret fails fast rather than producing an unsigned APK. keytool
+          # exits non-zero if the password is wrong; we don't grep the output
+          # because the SHA-256 line label varies by locale.
           keytool -list -keystore opsolid-release.keystore \
-            -storepass "${{ secrets.KEYSTORE_PASSWORD }}" -alias opsolid | grep "SHA256:"
+            -storepass "${{ secrets.KEYSTORE_PASSWORD }}" -alias opsolid \
+            >/dev/null
+          echo "Keystore restored and verified."
 
       - name: Cache Gradle
         uses: actions/cache@v4
