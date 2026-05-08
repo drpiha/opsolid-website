@@ -32,8 +32,12 @@ import {
   ServicesSection,
   CustomButtonsSection,
   FaqsSection,
+  StatusBannerSection,
+  FeedbackSection,
+  STATUS_BANNER_TONES,
   DEFAULT_PRIMARY_HEX,
   DEFAULT_ACCENT_HEX,
+  DEFAULT_STATUS_BANNER,
   stripEmpty,
   cleanServices,
   cleanCustomButtons,
@@ -50,6 +54,8 @@ import type {
   ServiceItem,
   CustomButton,
   FaqItem,
+  StatusBannerState,
+  StatusBannerTone,
 } from '../../../../src/components/cards/CardFormSections';
 
 function asString(v: unknown): string {
@@ -122,6 +128,19 @@ function asFaqs(v: unknown): FaqItem[] {
   }
   return out;
 }
+function asStatusBanner(v: unknown): StatusBannerState {
+  if (!v || typeof v !== 'object') return DEFAULT_STATUS_BANNER;
+  const o = v as Record<string, unknown>;
+  const toneRaw = typeof o.tone === 'string' ? o.tone : 'info';
+  const tone: StatusBannerTone = (STATUS_BANNER_TONES as readonly string[]).includes(toneRaw)
+    ? (toneRaw as StatusBannerTone)
+    : 'info';
+  return {
+    enabled: o.enabled === true,
+    text: typeof o.text === 'string' ? o.text.slice(0, 200) : '',
+    tone,
+  };
+}
 
 export default function CardEditScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -156,6 +175,10 @@ export default function CardEditScreen() {
   const [services, setServices] = useState<ServiceItem[]>([]);
   const [customButtons, setCustomButtons] = useState<CustomButton[]>([]);
   const [faqs, setFaqs] = useState<FaqItem[]>([]);
+  const [statusBanner, setStatusBanner] = useState<StatusBannerState>(
+    DEFAULT_STATUS_BANNER,
+  );
+  const [feedbackEnabled, setFeedbackEnabled] = useState<boolean>(false);
 
   const [photoPath, setPhotoPath] = useState<string | null>(null);
 
@@ -221,6 +244,10 @@ export default function CardEditScreen() {
         setServices(asServices(cd.services));
         setCustomButtons(asCustomButtons(cd.customButtons));
         setFaqs(asFaqs(cd.faqs));
+        setStatusBanner(asStatusBanner(cd.statusBanner));
+        // feedbackEnabled lives on top-level CardOrder column (Phase 8.4),
+        // exposed on owner GET /api/v1/cards/:id (CARD_API_SELECT).
+        setFeedbackEnabled(c.feedbackEnabled === true);
       })
       .catch(() => Alert.alert('', t.errorLoad))
       .finally(() => setLoading(false));
@@ -284,6 +311,13 @@ export default function CardEditScreen() {
       if (buttonsClean.length > 0) cardData.customButtons = buttonsClean;
       const faqsClean = cleanFaqs(faqs);
       if (faqsClean.length > 0) cardData.faqs = faqsClean;
+      // Status banner — always persist (even when disabled, so toggling off
+      // round-trips to the server and clears the public viewer banner).
+      cardData.statusBanner = {
+        enabled: statusBanner.enabled,
+        text: statusBanner.text.trim(),
+        tone: statusBanner.tone,
+      };
       Object.keys(cardData).forEach((k) => {
         if (cardData[k] === undefined) delete cardData[k];
       });
@@ -302,6 +336,7 @@ export default function CardEditScreen() {
         layoutKey,
         themeKey,
         qrStyle,
+        feedbackEnabled,
       });
       Alert.alert('', t.saveSuccess, [{ text: 'OK', onPress: () => router.back() }]);
     } catch {
@@ -392,6 +427,8 @@ export default function CardEditScreen() {
         <ServicesSection theme={theme} items={services} onChange={setServices} />
         <CustomButtonsSection theme={theme} items={customButtons} onChange={setCustomButtons} />
         <FaqsSection theme={theme} items={faqs} onChange={setFaqs} />
+        <StatusBannerSection theme={theme} value={statusBanner} onChange={setStatusBanner} />
+        <FeedbackSection theme={theme} value={feedbackEnabled} onChange={setFeedbackEnabled} />
         <VisibilitySection theme={theme} value={visibility} onChange={setVisibility} />
         <DiscoverySection theme={theme} values={discovery} onChange={setDiscoveryField} />
 

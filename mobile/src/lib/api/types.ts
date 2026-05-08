@@ -43,6 +43,10 @@ export type ApiCard = {
   logoPath: string | null;
   qrStyle: Record<string, unknown> | null;
   videoUrl: string | null;
+  // Phase 8.4 — present on /api/v1/cards GET + /api/v1/cards/:id GET (owner
+  // endpoints only). The public /api/v1/public/cards/:slug shape omits it;
+  // visitors infer the toggle state from /api/cards/:slug/feedback aggregate.
+  feedbackEnabled?: boolean;
   publishedAt: string | null;
   createdAt: string;
   updatedAt: string;
@@ -127,6 +131,7 @@ export type CardPatchInput = {
   layoutKey?: string;
   themeKey?: string;
   qrStyle?: QrStylePatch;
+  feedbackEnabled?: boolean;
 };
 
 // POST /api/uploads → { path }

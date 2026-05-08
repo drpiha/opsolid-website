@@ -762,6 +762,183 @@ export function QrStyleSection({
   );
 }
 
+// ---------- StatusBannerSection ----------
+// Sprint 5 — owners can pin a single banner ("Out of office", "Now booking
+// for Q3", etc) to the top of their public viewer. Three pieces of state:
+// enabled toggle, free text (200 char ceiling), and tone (info/success/warn/
+// announce). State lives under cardData.statusBanner so it round-trips
+// through the existing PATCH cardData path with no schema work.
+export const STATUS_BANNER_TONES = ['info', 'success', 'warn', 'announce'] as const;
+export type StatusBannerTone = (typeof STATUS_BANNER_TONES)[number];
+
+export type StatusBannerState = {
+  enabled: boolean;
+  text: string;
+  tone: StatusBannerTone;
+};
+
+export const DEFAULT_STATUS_BANNER: StatusBannerState = {
+  enabled: false,
+  text: '',
+  tone: 'info',
+};
+
+const STATUS_BANNER_TEXT_MAX = 200;
+
+// Tone background tints for the live preview chip and (mirrored on the public
+// viewer) the rendered banner. Alpha-blended so they read as faint surfaces
+// regardless of the underlying theme bg.
+function statusBannerToneBg(tone: StatusBannerTone, theme: ThemeTokens): string {
+  switch (tone) {
+    case 'info':
+      return theme.bg[2];
+    case 'success':
+      return 'rgba(127, 178, 134, 0.15)'; // signal.ok @ 0.15
+    case 'warn':
+      return 'rgba(212, 162, 58, 0.15)'; // signal.warn @ 0.15
+    case 'announce':
+      return 'rgba(127, 221, 228, 0.20)'; // teal[200] @ 0.20
+  }
+}
+
+export function StatusBannerSection({
+  theme,
+  value,
+  onChange,
+}: {
+  theme: ThemeTokens;
+  value: StatusBannerState;
+  onChange: (next: StatusBannerState) => void;
+}) {
+  const t = useTranslations(detectLocale()).crm.statusBanner;
+  const disabled = !value.enabled;
+
+  return (
+    <View style={styles.section}>
+      <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+        {t.section}
+      </Text>
+
+      <View style={[styles.switchRow, { borderColor: theme.line.DEFAULT }]}>
+        <Text style={[styles.switchLabel, { color: theme.ink[100] }]}>
+          {t.toggle}
+        </Text>
+        <Switch
+          value={value.enabled}
+          onValueChange={(v) => onChange({ ...value, enabled: v })}
+          trackColor={{ false: theme.bg[2], true: copper[500] }}
+          thumbColor="#FFFFFF"
+        />
+      </View>
+
+      <View style={styles.fieldWrap}>
+        <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+          {t.textLabel}
+        </Text>
+        <TextInput
+          style={[
+            styles.input,
+            {
+              color: theme.ink[100],
+              borderColor: theme.line.DEFAULT,
+              backgroundColor: theme.bg[1],
+              opacity: disabled ? 0.5 : 1,
+            },
+          ]}
+          value={value.text}
+          onChangeText={(v) =>
+            onChange({ ...value, text: v.slice(0, STATUS_BANNER_TEXT_MAX) })
+          }
+          placeholder={t.textPlaceholder}
+          placeholderTextColor={theme.ink[500]}
+          editable={!disabled}
+          maxLength={STATUS_BANNER_TEXT_MAX}
+        />
+        <Text style={[styles.charCounter, { color: theme.ink[400] }]}>
+          {value.text.length}/{STATUS_BANNER_TEXT_MAX}
+        </Text>
+      </View>
+
+      <View style={styles.fieldWrap}>
+        <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+          {t.toneLabel}
+        </Text>
+        <View style={styles.segmentRow}>
+          {STATUS_BANNER_TONES.map((tone) => {
+            const selected = value.tone === tone;
+            const tint = statusBannerToneBg(tone, theme);
+            return (
+              <TouchableOpacity
+                key={tone}
+                onPress={() => !disabled && onChange({ ...value, tone })}
+                activeOpacity={0.8}
+                disabled={disabled}
+                style={[
+                  styles.tonePill,
+                  {
+                    backgroundColor: tint,
+                    borderColor: selected ? copper[500] : theme.line.DEFAULT,
+                    borderWidth: selected ? 2 : 1,
+                    opacity: disabled ? 0.5 : 1,
+                  },
+                ]}
+              >
+                <Text
+                  style={[
+                    styles.toneText,
+                    { color: theme.ink[100] },
+                  ]}
+                >
+                  {t.tones[tone]}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      </View>
+    </View>
+  );
+}
+
+// ---------- FeedbackSection ----------
+// Sprint 5 — single switch that maps to the top-level CardOrder.feedbackEnabled
+// column (not cardData). The PATCH /api/v1/cards/[id] zod schema accepts it as
+// of this sprint; the server's /feedback POST hard-checks the column to allow
+// or refuse visitor submissions.
+export function FeedbackSection({
+  theme,
+  value,
+  onChange,
+}: {
+  theme: ThemeTokens;
+  value: boolean;
+  onChange: (v: boolean) => void;
+}) {
+  const t = useTranslations(detectLocale()).crm.feedbackToggle;
+
+  return (
+    <View style={styles.section}>
+      <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+        {t.section}
+      </Text>
+
+      <View style={[styles.switchRow, { borderColor: theme.line.DEFAULT }]}>
+        <Text style={[styles.switchLabel, { color: theme.ink[100] }]}>
+          {t.toggle}
+        </Text>
+        <Switch
+          value={value}
+          onValueChange={onChange}
+          trackColor={{ false: theme.bg[2], true: copper[500] }}
+          thumbColor="#FFFFFF"
+        />
+      </View>
+
+      <Text style={[styles.hint, { color: theme.ink[400] }]}>{t.hint}</Text>
+    </View>
+  );
+}
+
 // ---------- Repeater sections (Services / CustomButtons / FAQs) ----------
 // Extracted to CardRepeaterSections.tsx so this file stays under 1200 lines.
 // Re-exported here so existing imports keep working.
@@ -877,4 +1054,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 6,
     paddingVertical: 4,
   },
+  // StatusBanner tone preview chips — flex-equal so all four fit one row
+  tonePill: {
+    flex: 1,
+    paddingVertical: 10,
+    paddingHorizontal: 6,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  toneText: { fontSize: 12, fontWeight: '600', textTransform: 'capitalize' },
 });

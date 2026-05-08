@@ -30,21 +30,37 @@ import {
   Video,
   ChevronDown,
   ChevronUp,
+  BadgeAlert,
+  Send,
+  Star,
+  MessageSquare,
 } from 'lucide-react-native';
 import { getPublicCard } from '../../../src/lib/api/discover';
+import { listCards } from '../../../src/lib/api/cards';
 import { saveCard, unsaveCard, checkSaved } from '../../../src/lib/api/contacts';
 import { saveCardToDeviceContacts } from '../../../src/lib/contacts/native';
+import { sendCardExchange, getFeedbackAggregate } from '../../../src/lib/api/crm';
+import type { FeedbackAggregate } from '../../../src/lib/api/crm';
 import type { ApiCard } from '../../../src/lib/api/types';
 import { useTheme } from '../../../src/lib/theme/ThemeProvider';
+import type { ThemeTokens } from '../../../src/lib/theme/tokens';
 import { copper } from '../../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../../src/lib/i18n/locale';
+import { useAuthStore } from '../../../src/lib/auth/store';
 import { API_BASE } from '../../../src/lib/api/client';
 import { Button } from '../../../src/components/ui/Button';
 import { QrCodeModal } from '../../../src/components/cards/QrCodeModal';
+import { LeadFormModal } from '../../../src/components/cards/LeadFormModal';
+import {
+  FeedbackModal,
+  FeedbackBreakdownModal,
+} from '../../../src/components/cards/FeedbackModal';
 
 type ServiceItem = { title: string; description?: string; price?: string };
 type CustomButton = { label: string; url: string };
 type FaqItem = { question: string; answer: string };
+type StatusBannerTone = 'info' | 'success' | 'warn' | 'announce';
+type StatusBanner = { enabled: boolean; text: string; tone: StatusBannerTone };
 type Socials = {
   linkedin?: string;
   instagram?: string;
@@ -130,6 +146,51 @@ function pickSocials(v: unknown): Socials {
   return out;
 }
 
+const STATUS_BANNER_TONES = ['info', 'success', 'warn', 'announce'] as const;
+
+function pickStatusBanner(v: unknown): StatusBanner | null {
+  if (!v || typeof v !== 'object') return null;
+  const o = v as Record<string, unknown>;
+  const text = pickString(o.text);
+  if (!text) return null;
+  // enabled defaults to true when the key is missing — owners who set a
+  // banner text without explicitly setting `enabled` expect it to show.
+  const enabled = o.enabled === false ? false : true;
+  if (!enabled) return null;
+  const toneRaw = typeof o.tone === 'string' ? o.tone : 'info';
+  const tone: StatusBannerTone = (STATUS_BANNER_TONES as readonly string[]).includes(toneRaw)
+    ? (toneRaw as StatusBannerTone)
+    : 'info';
+  return { enabled, text: text.slice(0, 200), tone };
+}
+
+// Average all 7 category averages into a single overall score, rounded to
+// one decimal. Categories with 0 (no submissions for that category, which
+// shouldn't normally happen but is defensively handled) are excluded.
+function aggregateMean(averages: Record<string, number>): number {
+  const vals = Object.values(averages).filter((v) => typeof v === 'number' && v > 0);
+  if (vals.length === 0) return 0;
+  const m = vals.reduce((a, b) => a + b, 0) / vals.length;
+  return Math.round(m * 10) / 10;
+}
+
+function statusBannerStyle(tone: StatusBannerTone, theme: ThemeTokens): {
+  bg: string;
+  border: string;
+} {
+  switch (tone) {
+    case 'success':
+      return { bg: 'rgba(127, 178, 134, 0.15)', border: 'rgba(127, 178, 134, 0.35)' };
+    case 'warn':
+      return { bg: 'rgba(212, 162, 58, 0.15)', border: 'rgba(212, 162, 58, 0.35)' };
+    case 'announce':
+      return { bg: 'rgba(127, 221, 228, 0.20)', border: 'rgba(127, 221, 228, 0.40)' };
+    case 'info':
+    default:
+      return { bg: theme.bg[2], border: theme.line.DEFAULT };
+  }
+}
+
 // lucide-react-native v1 dropped brand icons (Linkedin, Instagram, Twitter,
 // YouTube, Github, Facebook), so we render the social row with semantically
 // related generic icons + a label underneath. The label disambiguates the
@@ -177,7 +238,12 @@ function socialLabel(key: keyof Socials): string {
 export default function PublicCardScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const theme = useTheme();
-  const t = useTranslations(detectLocale()).publicCard;
+  const locale = detectLocale();
+  const t = useTranslations(locale).publicCard;
+  const tCrm = useTranslations(locale).crm;
+
+  const authUser = useAuthStore((s) => s.user);
+  const isAuthenticated = !!authUser;
 
   const [card, setCard] = useState<ApiCard | null>(null);
   const [loading, setLoading] = useState(true);
@@ -186,6 +252,18 @@ export default function PublicCardScreen() {
   const [saving, setSaving] = useState(false);
   const [qrOpen, setQrOpen] = useState(false);
   const [expandedFaqs, setExpandedFaqs] = useState<Set<number>>(new Set());
+
+  // Sprint 5 — CRM state. The lead form is open to anonymous visitors; the
+  // exchange button + feedback widget are owner-action features that require
+  // the visitor to have their own published card / be logged in.
+  const [leadOpen, setLeadOpen] = useState(false);
+  const [feedbackOpen, setFeedbackOpen] = useState(false);
+  const [breakdownOpen, setBreakdownOpen] = useState(false);
+  const [feedbackAggregate, setFeedbackAggregate] = useState<FeedbackAggregate | null>(null);
+  // The current user's first published card — used for Smart Exchange. If
+  // the user owns no PUBLISHED cards, the exchange button stays hidden.
+  const [ownPublishedCard, setOwnPublishedCard] = useState<ApiCard | null>(null);
+  const [exchanging, setExchanging] = useState(false);
 
   function toggleFaq(idx: number) {
     setExpandedFaqs((prev) => {
@@ -201,6 +279,52 @@ export default function PublicCardScreen() {
     void loadCard(slug);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug]);
+
+  // Prefetch the public feedback aggregate. The endpoint always returns 200
+  // (with enabled:false when the toggle is off), so we don't need to gate
+  // this on anything other than the slug.
+  useEffect(() => {
+    if (!slug) return;
+    let cancelled = false;
+    void getFeedbackAggregate(slug)
+      .then((agg) => {
+        if (!cancelled) setFeedbackAggregate(agg);
+      })
+      .catch(() => {
+        // Network or 5xx — leave aggregate null; the entry button + row both
+        // gate on `enabled === true`, so this just means no widget shows.
+        if (!cancelled) setFeedbackAggregate(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [slug]);
+
+  // Look up the visitor's own published cards once. We pull a small page and
+  // pick the first PUBLISHED card to use as visitorSlug for the exchange POST.
+  // Only authenticated users have any cards, so we short-circuit otherwise.
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setOwnPublishedCard(null);
+      return;
+    }
+    let cancelled = false;
+    void listCards({ limit: 20 })
+      .then((res) => {
+        if (cancelled) return;
+        const published = res.items.find(
+          (c) => c.status === 'PUBLISHED' && !!c.slug,
+        );
+        setOwnPublishedCard(published ?? null);
+      })
+      .catch(() => {
+        // Don't surface — the exchange button just stays hidden.
+        if (!cancelled) setOwnPublishedCard(null);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [isAuthenticated]);
 
   async function loadCard(s: string) {
     setLoading(true);
@@ -254,6 +378,39 @@ export default function PublicCardScreen() {
     }
   }
 
+  async function handleSmartExchange() {
+    if (!slug || !ownPublishedCard?.slug || exchanging) return;
+    const ownName =
+      pickString((ownPublishedCard.cardData as Record<string, unknown>)?.name) ??
+      ownPublishedCard.slug;
+    Alert.alert(
+      tCrm.exchange.confirmTitle,
+      tCrm.exchange.confirmBody.replace('{name}', ownName),
+      [
+        { text: tCrm.exchange.cancel, style: 'cancel' },
+        {
+          text: tCrm.exchange.confirmSend,
+          onPress: () => {
+            setExchanging(true);
+            void sendCardExchange(slug, { visitorSlug: ownPublishedCard.slug! })
+              .then(() => {
+                Alert.alert('', tCrm.exchange.success);
+              })
+              .catch((err) => {
+                const msg = err instanceof Error ? err.message : '';
+                if (msg.includes('existing')) {
+                  Alert.alert('', tCrm.exchange.existing);
+                } else {
+                  Alert.alert('', tCrm.exchange.error);
+                }
+              })
+              .finally(() => setExchanging(false));
+          },
+        },
+      ],
+    );
+  }
+
   if (loading) {
     return (
       <View style={[styles.root, { backgroundColor: theme.bg[0] }]}>
@@ -299,6 +456,18 @@ export default function PublicCardScreen() {
   const services = pickServices(data.services);
   const customButtons = pickButtons(data.customButtons);
   const faqs = pickFaqs(data.faqs);
+  const statusBanner = pickStatusBanner(data.statusBanner);
+
+  // Visiting your own card? Compare the viewing slug to the cached own
+  // published-card slug. The exchange + feedback features are gated on this
+  // because the server hard-rejects self-exchange and self-review.
+  const isOwnCard = !!ownPublishedCard?.slug && ownPublishedCard.slug === card.slug;
+  const showSmartExchange = !!ownPublishedCard?.slug && !isOwnCard;
+  const showFeedbackButton =
+    isAuthenticated && !isOwnCard && feedbackAggregate?.enabled === true;
+  const aggregateAverage = feedbackAggregate && feedbackAggregate.count > 0
+    ? aggregateMean(feedbackAggregate.averages)
+    : null;
 
   const photoUri = card.photoPath
     ? card.photoPath.startsWith('http')
@@ -371,6 +540,53 @@ export default function PublicCardScreen() {
       />
 
       <ScrollView contentContainerStyle={styles.scroll}>
+        {/* Status banner — owner-set "Out of office" / "Now booking" line.
+            Renders only when enabled and tone-tinted to match the four
+            supported moods. Sits ABOVE the hero so it's the first thing
+            visitors see. */}
+        {statusBanner ? (() => {
+          const toneStyle = statusBannerStyle(statusBanner.tone, theme);
+          return (
+            <View
+              style={[
+                styles.statusBanner,
+                { backgroundColor: toneStyle.bg, borderColor: toneStyle.border },
+              ]}
+            >
+              <BadgeAlert size={16} color={theme.ink[200]} />
+              <Text
+                style={[styles.statusBannerText, { color: theme.ink[100] }]}
+                numberOfLines={3}
+              >
+                {statusBanner.text}
+              </Text>
+            </View>
+          );
+        })() : null}
+
+        {/* Feedback aggregate — only when the card has feedback enabled AND
+            at least one rating has been submitted. Tap to open per-category
+            breakdown. */}
+        {feedbackAggregate?.enabled && feedbackAggregate.count > 0 && aggregateAverage ? (
+          <Pressable
+            onPress={() => setBreakdownOpen(true)}
+            style={[
+              styles.aggregateRow,
+              { backgroundColor: theme.bg[1], borderColor: theme.line.DEFAULT },
+            ]}
+          >
+            <Star size={14} color={copper[500]} fill={copper[500]} />
+            <Text style={[styles.aggregateText, { color: theme.ink[100] }]}>
+              {(feedbackAggregate.count === 1
+                ? tCrm.feedback.aggregateOne
+                : tCrm.feedback.aggregate
+              )
+                .replace('{rating}', aggregateAverage.toFixed(1))
+                .replace('{count}', String(feedbackAggregate.count))}
+            </Text>
+          </Pressable>
+        ) : null}
+
         {/* Hero */}
         <View style={styles.hero}>
           <View style={[styles.photoWrap, { backgroundColor: theme.bg[2] }]}>
@@ -671,6 +887,68 @@ export default function PublicCardScreen() {
             )}
           </Pressable>
         </View>
+
+        {/* Lead form CTA — public, anonymous-friendly. Sits below Save so the
+            primary "save card" path stays the loudest CTA on the screen. */}
+        {!isOwnCard ? (
+          <View style={styles.crmCtaRow}>
+            <Pressable
+              onPress={() => setLeadOpen(true)}
+              style={[
+                styles.crmCta,
+                { backgroundColor: theme.bg[1], borderColor: copper[500] },
+              ]}
+            >
+              <MessageSquare size={16} color={copper[500]} />
+              <Text style={[styles.crmCtaText, { color: copper[500] }]}>
+                {tCrm.lead.cta}
+              </Text>
+            </Pressable>
+          </View>
+        ) : null}
+
+        {/* Smart Exchange — only when the visitor has their own published card
+            and isn't viewing it. */}
+        {showSmartExchange ? (
+          <View style={styles.crmCtaRow}>
+            <Pressable
+              onPress={() => void handleSmartExchange()}
+              disabled={exchanging}
+              style={[
+                styles.crmCta,
+                { backgroundColor: theme.bg[1], borderColor: theme.line.DEFAULT },
+              ]}
+            >
+              {exchanging ? (
+                <ActivityIndicator size="small" color={copper[500]} />
+              ) : (
+                <Send size={16} color={copper[500]} />
+              )}
+              <Text style={[styles.crmCtaText, { color: theme.ink[100] }]}>
+                {tCrm.exchange.cta}
+              </Text>
+            </Pressable>
+          </View>
+        ) : null}
+
+        {/* Feedback rating button — only when the card has feedbackEnabled,
+            the user is logged in, and they're not viewing their own card. */}
+        {showFeedbackButton ? (
+          <View style={styles.crmCtaRow}>
+            <Pressable
+              onPress={() => setFeedbackOpen(true)}
+              style={[
+                styles.crmCta,
+                { backgroundColor: theme.bg[1], borderColor: theme.line.DEFAULT },
+              ]}
+            >
+              <Star size={16} color={copper[500]} />
+              <Text style={[styles.crmCtaText, { color: theme.ink[100] }]}>
+                {tCrm.feedback.cta}
+              </Text>
+            </Pressable>
+          </View>
+        ) : null}
       </ScrollView>
 
       {card.slug ? (
@@ -678,6 +956,31 @@ export default function PublicCardScreen() {
           visible={qrOpen}
           slug={card.slug}
           onClose={() => setQrOpen(false)}
+        />
+      ) : null}
+
+      {card.slug ? (
+        <LeadFormModal
+          visible={leadOpen}
+          slug={card.slug}
+          onClose={() => setLeadOpen(false)}
+        />
+      ) : null}
+
+      {card.slug ? (
+        <FeedbackModal
+          visible={feedbackOpen}
+          slug={card.slug}
+          onClose={() => setFeedbackOpen(false)}
+        />
+      ) : null}
+
+      {feedbackAggregate ? (
+        <FeedbackBreakdownModal
+          visible={breakdownOpen}
+          averages={feedbackAggregate.averages}
+          count={feedbackAggregate.count}
+          onClose={() => setBreakdownOpen(false)}
         />
       ) : null}
     </View>
@@ -870,4 +1173,45 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingBottom: 14,
   },
+  // Sprint 5 — status banner above hero
+  statusBanner: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 10,
+    marginHorizontal: 16,
+    marginTop: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    borderRadius: 12,
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  statusBannerText: { fontSize: 14, fontWeight: '500', flex: 1 },
+  // Sprint 5 — feedback aggregate row
+  aggregateRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    alignSelf: 'center',
+    marginTop: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 999,
+    borderWidth: StyleSheet.hairlineWidth,
+  },
+  aggregateText: { fontSize: 13, fontWeight: '600' },
+  // Sprint 5 — CRM CTA row (lead / exchange / feedback)
+  crmCtaRow: {
+    paddingHorizontal: 16,
+    marginTop: 10,
+  },
+  crmCta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+    paddingVertical: 14,
+    borderRadius: 14,
+    borderWidth: 1,
+  },
+  crmCtaText: { fontSize: 15, fontWeight: '600' },
 });

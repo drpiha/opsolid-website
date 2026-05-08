@@ -30,8 +30,11 @@ import {
   ServicesSection,
   CustomButtonsSection,
   FaqsSection,
+  StatusBannerSection,
+  FeedbackSection,
   DEFAULT_PRIMARY_HEX,
   DEFAULT_ACCENT_HEX,
+  DEFAULT_STATUS_BANNER,
   stripEmpty,
   cleanServices,
   cleanCustomButtons,
@@ -48,6 +51,7 @@ import type {
   ServiceItem,
   CustomButton,
   FaqItem,
+  StatusBannerState,
 } from '../../../src/components/cards/CardFormSections';
 
 export default function CardCreateScreen() {
@@ -79,6 +83,10 @@ export default function CardCreateScreen() {
   const [services, setServices] = useState<ServiceItem[]>([]);
   const [customButtons, setCustomButtons] = useState<CustomButton[]>([]);
   const [faqs, setFaqs] = useState<FaqItem[]>([]);
+  const [statusBanner, setStatusBanner] = useState<StatusBannerState>(
+    DEFAULT_STATUS_BANNER,
+  );
+  const [feedbackEnabled, setFeedbackEnabled] = useState<boolean>(false);
 
   const [photoUri, setPhotoUri] = useState<string | null>(null);
   const [photoMimeType, setPhotoMimeType] = useState<string>('image/jpeg');
@@ -150,6 +158,16 @@ export default function CardCreateScreen() {
       const faqsClean = cleanFaqs(faqs);
       if (faqsClean.length > 0) cardData.faqs = faqsClean;
 
+      // Status banner — only persist when there's something meaningful to
+      // store (saves payload bytes and avoids littering inactive defaults).
+      if (statusBanner.enabled || statusBanner.text.trim().length > 0) {
+        cardData.statusBanner = {
+          enabled: statusBanner.enabled,
+          text: statusBanner.text.trim(),
+          tone: statusBanner.tone,
+        };
+      }
+
       // Drop undefined keys before sending
       Object.keys(cardData).forEach((k) => {
         if (cardData[k] === undefined) delete cardData[k];
@@ -164,12 +182,14 @@ export default function CardCreateScreen() {
         cardData: cardData as unknown as { name: string },
       });
 
-      // Apply qrStyle and (if needed) photo after creation. POST schema
-      // doesn't accept qrStyle so we PATCH it in. Default preset 'classic'
-      // means we always send something — backend stores the column.
+      // Apply qrStyle, feedbackEnabled, and (if needed) photo after creation.
+      // POST schema doesn't accept qrStyle / feedbackEnabled so we PATCH them.
+      // Default preset 'classic' means we always send something — backend
+      // stores the column.
       const postPatch: import('../../../src/lib/api/types').CardPatchInput = {
         qrStyle: { preset: qrPreset },
       };
+      if (feedbackEnabled) postPatch.feedbackEnabled = true;
 
       if (photoUri) {
         try {
@@ -261,6 +281,8 @@ export default function CardCreateScreen() {
         <ServicesSection theme={theme} items={services} onChange={setServices} />
         <CustomButtonsSection theme={theme} items={customButtons} onChange={setCustomButtons} />
         <FaqsSection theme={theme} items={faqs} onChange={setFaqs} />
+        <StatusBannerSection theme={theme} value={statusBanner} onChange={setStatusBanner} />
+        <FeedbackSection theme={theme} value={feedbackEnabled} onChange={setFeedbackEnabled} />
         <VisibilitySection theme={theme} value={visibility} onChange={setVisibility} />
         <DiscoverySection theme={theme} values={discovery} onChange={setDiscoveryField} />
       </ScrollView>

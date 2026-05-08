@@ -62,6 +62,10 @@ const PatchSchema = z
      *  column (separate from cardData) so the renderer can read it without
      *  re-parsing the form blob. */
     qrStyle: QrStyleSchema.optional(),
+    /** Phase 8.4 — toggle visitor-side rating widget. When false, the public
+     *  /feedback aggregate returns enabled:false and POST /feedback responds
+     *  403 feedback_disabled. Owners flip this from the card edit screen. */
+    feedbackEnabled: z.boolean().optional(),
   })
   .strict();
 
@@ -186,6 +190,9 @@ export async function PATCH(
     if (parsed.data.photoPath !== undefined) updateData.photoPath = parsed.data.photoPath;
     if (parsed.data.logoPath !== undefined) updateData.logoPath = parsed.data.logoPath;
     if (parsed.data.qrStyle !== undefined) updateData.qrStyle = parsed.data.qrStyle;
+    if (parsed.data.feedbackEnabled !== undefined) {
+      updateData.feedbackEnabled = parsed.data.feedbackEnabled;
+    }
     if (parsed.data.status !== undefined) {
       updateData.status = parsed.data.status;
       if (parsed.data.status === OrderStatus.PUBLISHED && !existing.status) {

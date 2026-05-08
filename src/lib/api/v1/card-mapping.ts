@@ -36,6 +36,9 @@ export const CARD_API_SELECT = {
   updatedAt: true,
   // Phase 8.1 — needed for visibility enforcement in public API + page route
   visibility: true,
+  // Phase 8.4 — exposed on owner GET so the mobile edit form can hydrate the
+  // toggle. Stays out of toPublicApiCard (visitors infer it from /feedback GET).
+  feedbackEnabled: true,
 } as const;
 
 export type ApiCardRow = Pick<
@@ -58,6 +61,7 @@ export interface ApiCard {
   qrStyle: unknown;
   videoUrl: string | null;
   visibility: string;
+  feedbackEnabled: boolean;
   publishedAt: string | null;
   createdAt: string;
   updatedAt: string;
@@ -79,6 +83,7 @@ export function toApiCard(row: ApiCardRow): ApiCard {
     qrStyle: row.qrStyle,
     videoUrl: row.videoUrl,
     visibility: row.visibility,
+    feedbackEnabled: row.feedbackEnabled,
     publishedAt: row.publishedAt?.toISOString() ?? null,
     createdAt: row.createdAt.toISOString(),
     updatedAt: row.updatedAt.toISOString(),
