@@ -57,7 +57,7 @@ export default function SignupScreen() {
             OPSOLID
           </Text>
           <Text style={[styles.welcome, { color: theme.ink[100] }]}>
-            Create your OpSolid account
+            {strings.signupHeadline}
           </Text>
           <Text style={[styles.tagline, { color: theme.ink[300] }]}>
             {strings.tagline}
@@ -97,7 +97,7 @@ export default function SignupScreen() {
           />
 
           <Text style={[styles.note, { color: theme.ink[400] }]}>
-            We'll send a sign-in link to your email. No password needed.
+            {strings.signupNote}
           </Text>
         </View>
 

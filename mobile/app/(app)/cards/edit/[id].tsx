@@ -49,7 +49,7 @@ export default function CardEditScreen() {
         setPhone((c.cardData?.phone as string) ?? '');
         setPhotoPath(c.photoPath ?? null);
       })
-      .catch(() => Alert.alert(t.errorLoad))
+      .catch(() => Alert.alert('', t.errorLoad))
       .finally(() => setLoading(false));
   }, [id, t.errorLoad]);
 
@@ -58,7 +58,7 @@ export default function CardEditScreen() {
     if (!perm.granted) return;
 
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ['images'],
       allowsEditing: true,
       aspect: [1, 1],
       quality: 0.85,
@@ -93,7 +93,7 @@ export default function CardEditScreen() {
       });
       Alert.alert('', t.saveSuccess, [{ text: 'OK', onPress: () => router.back() }]);
     } catch {
-      Alert.alert(t.errorLoad);
+      Alert.alert('', t.errorLoad);
     } finally {
       setSaving(false);
     }

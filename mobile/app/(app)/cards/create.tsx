@@ -39,7 +39,7 @@ export default function CardCreateScreen() {
     if (!perm.granted) return;
 
     const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ['images'],
       allowsEditing: true,
       aspect: [1, 1],
       quality: 0.85,
@@ -85,7 +85,7 @@ export default function CardCreateScreen() {
 
       Alert.alert('', t.createSuccess, [{ text: 'OK', onPress: () => router.back() }]);
     } catch {
-      Alert.alert(t.errorLoad);
+      Alert.alert('', t.errorLoad);
     } finally {
       setSaving(false);
     }

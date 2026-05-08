@@ -36,6 +36,11 @@ export const t = {
       googleCta: 'Continue with Google',
       orDivider: 'or',
       googleError: 'Google sign-in failed. Try again.',
+      signupHeadline: 'Create your OpSolid account',
+      signupNote: "We'll send a sign-in link to your email. No password needed.",
+      didntGetIt: "Didn't get it? Resend",
+      resendIn: 'Resend in {s}s',
+      backToSignIn: 'Back to sign in',
     },
     cards: {
       title: 'My Cards',
@@ -127,6 +132,8 @@ export const t = {
       errorLoad: 'Could not load card.',
       retry: 'Try again',
       loginToAction: 'Sign in to connect',
+      contactsSaved: 'Saved to your Contacts.',
+      contactsDenied: 'Contacts permission denied — saved to OpSolid only.',
     },
     settings: {
       title: 'Settings',
@@ -167,6 +174,12 @@ export const t = {
       googleCta: 'Mit Google fortfahren',
       orDivider: 'oder',
       googleError: 'Google-Anmeldung fehlgeschlagen. Erneut versuchen.',
+      signupHeadline: 'OpSolid-Konto erstellen',
+      signupNote:
+        'Wir senden Ihnen einen Anmeldelink per E-Mail. Kein Passwort nötig.',
+      didntGetIt: 'Nichts erhalten? Erneut senden',
+      resendIn: 'Erneut in {s}s',
+      backToSignIn: 'Zurück zur Anmeldung',
     },
     cards: {
       title: 'Meine Karten',
@@ -258,6 +271,9 @@ export const t = {
       errorLoad: 'Karte konnte nicht geladen werden.',
       retry: 'Erneut versuchen',
       loginToAction: 'Anmelden um zu vernetzen',
+      contactsSaved: 'In Ihren Kontakten gespeichert.',
+      contactsDenied:
+        'Zugriff auf Kontakte verweigert — nur in OpSolid gespeichert.',
     },
     settings: {
       title: 'Einstellungen',
@@ -299,6 +315,11 @@ export const t = {
       googleCta: 'Google ile devam et',
       orDivider: 'veya',
       googleError: 'Google girişi başarısız. Tekrar deneyin.',
+      signupHeadline: 'OpSolid hesabı oluştur',
+      signupNote: 'E-postanıza giriş linki göndereceğiz. Şifre gerekmez.',
+      didntGetIt: 'Gelmedi mi? Tekrar gönder',
+      resendIn: '{s}sn sonra tekrar gönder',
+      backToSignIn: 'Girişe dön',
     },
     cards: {
       title: 'Kartlarım',
@@ -391,6 +412,9 @@ export const t = {
       errorLoad: 'Kart yüklenemedi.',
       retry: 'Tekrar dene',
       loginToAction: 'Bağlanmak için giriş yapın',
+      contactsSaved: 'Kişilerinize kaydedildi.',
+      contactsDenied:
+        'Kişiler izni reddedildi — sadece OpSolid içine kaydedildi.',
     },
     settings: {
       title: 'Ayarlar',

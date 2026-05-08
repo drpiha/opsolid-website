@@ -32,7 +32,8 @@
     "react-native-svg": "15.13.0",
     "lucide-react-native": "^1.14.0",
     "expo-image-picker": "~17.0.0",
-    "expo-web-browser": "~15.0.0"
+    "expo-web-browser": "~15.0.0",
+    "expo-contacts": "~15.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.25.0",

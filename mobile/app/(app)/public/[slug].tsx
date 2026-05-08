@@ -14,6 +14,7 @@ import { Stack, useLocalSearchParams } from 'expo-router';
 import { Bookmark, BookmarkCheck, Mail, Phone, Globe } from 'lucide-react-native';
 import { getPublicCard } from '../../../src/lib/api/discover';
 import { saveCard, unsaveCard, checkSaved } from '../../../src/lib/api/contacts';
+import { saveCardToDeviceContacts } from '../../../src/lib/contacts/native';
 import type { ApiCard } from '../../../src/lib/api/types';
 import { useTheme } from '../../../src/lib/theme/ThemeProvider';
 import { copper, signal } from '../../../src/lib/theme/tokens';
@@ -68,6 +69,15 @@ export default function PublicCardScreen() {
       } else {
         await saveCard(slug);
         setSaved(true);
+        // Mirror to device Contacts so the user can find this person from
+        // their phone's Contacts app — server save alone isn't enough for
+        // people who reach out via the dialer or default messaging app.
+        const result = await saveCardToDeviceContacts(card);
+        if (result === 'saved') {
+          Alert.alert('', t.contactsSaved);
+        } else if (result === 'denied') {
+          Alert.alert('', t.contactsDenied);
+        }
       }
     } catch (err) {
       const msg = err instanceof Error ? err.message : '';

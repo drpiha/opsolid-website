@@ -13,7 +13,8 @@
       "infoPlist": {
         "NSCameraUsageDescription": "OpSolid needs camera access to take a profile photo.",
         "NSPhotoLibraryUsageDescription": "OpSolid needs photo library access to set a profile photo.",
-        "NSFaceIDUsageDescription": "OpSolid uses Face ID to protect your account."
+        "NSFaceIDUsageDescription": "OpSolid uses Face ID to protect your account.",
+        "NSContactsUsageDescription": "OpSolid saves cards to your Contacts so you can find them later."
       }
     },
     "android": {
@@ -23,7 +24,9 @@
         "android.permission.READ_MEDIA_IMAGES",
         "android.permission.READ_EXTERNAL_STORAGE",
         "android.permission.USE_BIOMETRIC",
-        "android.permission.USE_FINGERPRINT"
+        "android.permission.USE_FINGERPRINT",
+        "android.permission.WRITE_CONTACTS",
+        "android.permission.READ_CONTACTS"
       ],
       "intentFilters": [
         {
@@ -52,6 +55,12 @@
         {
           "photosPermission": "OpSolid needs photo library access to set a profile photo.",
           "cameraPermission": "OpSolid needs camera access to take a profile photo."
+        }
+      ],
+      [
+        "expo-contacts",
+        {
+          "contactsPermission": "OpSolid saves cards to your Contacts so you can find them later."
         }
       ]
     ],

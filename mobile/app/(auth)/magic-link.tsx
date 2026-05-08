@@ -72,8 +72,8 @@ export default function MagicLinkSentScreen() {
           <Button
             label={
               cooldown > 0
-                ? `Resend in ${cooldown}s`
-                : "Didn't get it? Resend"
+                ? strings.resendIn.replace('{s}', String(cooldown))
+                : strings.didntGetIt
             }
             onPress={handleResend}
             variant="secondary"
@@ -87,7 +87,7 @@ export default function MagicLinkSentScreen() {
             accessibilityRole="button"
           >
             <Text style={[styles.backText, { color: theme.ink[300] }]}>
-              Back to sign in
+              {strings.backToSignIn}
             </Text>
           </TouchableOpacity>
         </View>
