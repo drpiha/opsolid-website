@@ -1,13 +1,26 @@
 import { getLocales } from 'expo-localization';
+import { getLocaleOverride } from './localeStore';
 
 export type Locale = 'en' | 'de' | 'tr';
 
-export function detectLocale(): Locale {
+/** OS-detected locale, ignoring any user override. */
+export function detectOsLocale(): Locale {
   const locales = getLocales();
   const code = (locales[0]?.languageCode ?? 'en').toLowerCase();
   if (code === 'de') return 'de';
   if (code === 'tr') return 'tr';
   return 'en';
+}
+
+/**
+ * Effective locale for the app. First consults the SecureStore-backed
+ * override (synchronous read of the in-memory zustand atom — the atom is
+ * hydrated from SecureStore at root layout mount). Falls back to OS locale.
+ */
+export function detectLocale(): Locale {
+  const override = getLocaleOverride();
+  if (override) return override;
+  return detectOsLocale();
 }
 
 export const t = {
@@ -219,6 +232,29 @@ export const t = {
       signOut: 'Sign out',
       about: 'About',
       version: 'Version',
+      appearance: 'Appearance',
+      themeLight: 'Light',
+      themeSystem: 'System',
+      themeDark: 'Dark',
+      language: 'Language',
+      languageEn: 'EN',
+      languageDe: 'DE',
+      languageTr: 'TR',
+      languageSystemDefault: 'Use system default',
+      languageOsHint: 'Detected from your device: {locale}',
+      security: 'Security',
+      notifications: 'Notifications',
+      notificationsComingSoon: 'Push notifications — coming soon',
+      privacyData: 'Privacy & Data',
+      exportData: 'Export my data',
+      deleteAccount: 'Delete account',
+      comingSoon: 'Coming soon',
+      buildNumber: 'Build',
+      platform: 'Platform',
+      copiedToClipboard: 'Copied',
+      whatsNew: "What's new",
+      whatsNewTitle: 'Recent updates',
+      close: 'Close',
     },
     crm: {
       lead: {
@@ -515,6 +551,29 @@ export const t = {
       signOut: 'Abmelden',
       about: 'Über',
       version: 'Version',
+      appearance: 'Erscheinungsbild',
+      themeLight: 'Hell',
+      themeSystem: 'System',
+      themeDark: 'Dunkel',
+      language: 'Sprache',
+      languageEn: 'EN',
+      languageDe: 'DE',
+      languageTr: 'TR',
+      languageSystemDefault: 'Systemstandard verwenden',
+      languageOsHint: 'Vom Gerät erkannt: {locale}',
+      security: 'Sicherheit',
+      notifications: 'Benachrichtigungen',
+      notificationsComingSoon: 'Push-Benachrichtigungen — bald verfügbar',
+      privacyData: 'Datenschutz & Daten',
+      exportData: 'Meine Daten exportieren',
+      deleteAccount: 'Konto löschen',
+      comingSoon: 'Bald verfügbar',
+      buildNumber: 'Build',
+      platform: 'Plattform',
+      copiedToClipboard: 'Kopiert',
+      whatsNew: 'Neuigkeiten',
+      whatsNewTitle: 'Letzte Aktualisierungen',
+      close: 'Schließen',
     },
     crm: {
       lead: {
@@ -813,6 +872,29 @@ export const t = {
       signOut: 'Çıkış yap',
       about: 'Hakkında',
       version: 'Sürüm',
+      appearance: 'Görünüm',
+      themeLight: 'Aydınlık',
+      themeSystem: 'Sistem',
+      themeDark: 'Karanlık',
+      language: 'Dil',
+      languageEn: 'EN',
+      languageDe: 'DE',
+      languageTr: 'TR',
+      languageSystemDefault: 'Sistem varsayılanını kullan',
+      languageOsHint: 'Cihazdan algılandı: {locale}',
+      security: 'Güvenlik',
+      notifications: 'Bildirimler',
+      notificationsComingSoon: 'Push bildirimleri — yakında',
+      privacyData: 'Gizlilik ve Veri',
+      exportData: 'Verilerimi indir',
+      deleteAccount: 'Hesabımı sil',
+      comingSoon: 'Yakında',
+      buildNumber: 'Yapı',
+      platform: 'Platform',
+      copiedToClipboard: 'Kopyalandı',
+      whatsNew: 'Yenilikler',
+      whatsNewTitle: 'Son güncellemeler',
+      close: 'Kapat',
     },
     crm: {
       lead: {

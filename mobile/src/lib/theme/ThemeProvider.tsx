@@ -3,12 +3,20 @@ import type { ReactNode } from 'react';
 import { useColorScheme } from 'react-native';
 import { getTheme } from './tokens';
 import type { ThemeTokens } from './tokens';
+import { useThemeStore } from './themeStore';
 
 const ThemeContext = createContext<ThemeTokens | null>(null);
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const scheme = useColorScheme();
-  const theme = getTheme(scheme === 'dark' ? 'dark' : 'light');
+  const mode = useThemeStore((s) => s.mode);
+  // useColorScheme must always be called (rules of hooks); we only consult
+  // its return value when the user picked 'system'.
+  const osScheme = useColorScheme();
+
+  const resolved: 'light' | 'dark' =
+    mode === 'system' ? (osScheme === 'dark' ? 'dark' : 'light') : mode;
+
+  const theme = getTheme(resolved);
   return <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>;
 }
 

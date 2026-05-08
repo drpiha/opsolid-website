@@ -151,10 +151,13 @@ const hybridTheme: ThemeTokens = {
 };
 
 // ---------- LIGHT — clean, cool refined paper ----------
+// bg[1] warmed from #FAFAF7 → #F9F6F0 per Sprint F5 brief — slightly warmer
+// ivory removes the "blank settings screen" association without losing
+// WCAG AA contrast on any ink token.
 const lightTheme: ThemeTokens = {
   bg: {
     0: '#DCD7CC',
-    1: '#FAFAF7',
+    1: '#F9F6F0',
     2: '#F4F3EE',
     3: '#FFFFFF',
     4: '#F8F7F2',
@@ -173,7 +176,7 @@ const lightTheme: ThemeTokens = {
     firm:    'rgba(21,18,15,0.14)',
     hot:     'rgba(194,121,64,0.40)',
   },
-  pageBg:        '#FAFAF7',
+  pageBg:        '#F9F6F0',
   text:          '#15120F',
   textSecondary: '#3A3530',
   textMuted:     '#6B6660',
