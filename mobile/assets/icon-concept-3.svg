@@ -1,0 +1,124 @@
+<!--
+  Concept 3: "Folded Corner" — Geometric Construction
+  Idea: A bold square with one corner (top-right) replaced by a precise 45°
+  chamfer cut, and a small contrasting triangle fills that chamfer. This is
+  the universal "page/document with folded corner" reduced to pure geometry —
+  but executed as a thick-stroked outline rather than a filled card, which
+  removes the literal "business card" reading and makes it abstract. The chamfer
+  corner becomes the icon's single memorable detail: the one imperfection in
+  an otherwise perfect square is where all the attention lands.
+  At 48px: the chamfer reads as a notched corner on a bold square — immediately
+  distinctive even without the color fill detail. The silhouette is a nonagon
+  (9-sided) but reads as "square with corner cut," which is cognitively simple.
+  Color roles: white #FFFFFF as the icon background (clean, light, breathing
+  room — contrasts well on iOS dark home-screen backgrounds), ink #15120F as
+  the main square outline and body fill (authoritative, ties to brand), turquoise
+  #14B8A6 as the chamfer triangle fill and a fine inner accent line (the single
+  pop of color that makes the icon memorable on a shelf full of dark icons).
+  iOS safe zone: the square is 640×640 centered at 512,512, so all edges sit
+  192px from the icon edge — comfortably outside the 225px corner-clip radius.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <!-- Clean white background with the faintest warm tint to avoid sterile pure-white -->
+    <linearGradient id="white-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#F0FEFD"/>
+    </linearGradient>
+
+    <!-- Turquoise fill for the chamfer triangle accent -->
+    <linearGradient id="teal-chamfer" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2DD4C4"/>
+      <stop offset="100%" stop-color="#0D9488"/>
+    </linearGradient>
+
+    <!-- Ink gradient for the main square body -->
+    <linearGradient id="ink-body" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#232830"/>
+      <stop offset="100%" stop-color="#15120F"/>
+    </linearGradient>
+
+    <!-- Shadow to lift the square off the white background -->
+    <filter id="card-shadow" x="-18%" y="-18%" width="136%" height="136%">
+      <feDropShadow dx="0" dy="12" stdDeviation="32" flood-color="#15120F" flood-opacity="0.18"/>
+      <feDropShadow dx="0" dy="4"  stdDeviation="10" flood-color="#15120F" flood-opacity="0.10"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="url(#white-bg)"/>
+
+  <!--
+    CHAMFERED SQUARE CONSTRUCTION
+    Square: 192,192 → 832,832 (640×640)
+    Chamfer cut size: 148px (cuts the top-right corner)
+    So the top-right corner moves from (832,192) to two points:
+      - Top edge chamfer start:  (832-148, 192) = (684, 192)
+      - Right edge chamfer start: (832, 192+148) = (832, 340)
+
+    Path (clockwise from top-left):
+      M 192 192   (top-left)
+      L 684 192   (top edge, stopping before chamfer)
+      L 832 340   (chamfer diagonal goes to right edge)
+      L 832 832   (right edge continues down)
+      L 192 832   (bottom edge)
+      Z           (closes back to top-left)
+  -->
+
+  <!-- Main square body with chamfer -->
+  <path
+    d="M 192 192 L 684 192 L 832 340 L 832 832 L 192 832 Z"
+    fill="url(#ink-body)"
+    filter="url(#card-shadow)"
+  />
+
+  <!--
+    CHAMFER TRIANGLE: fills the cut corner with turquoise.
+    Triangle vertices:
+      (684, 192) — where top edge meets chamfer
+      (832, 192) — the actual corner point (behind the cut)
+      (832, 340) — where chamfer meets right edge
+  -->
+  <polygon
+    points="684,192 832,192 832,340"
+    fill="url(#teal-chamfer)"
+  />
+
+  <!--
+    INNER ACCENT: a smaller chamfered rectangle inset 72px from the outer square.
+    This creates a "frame within a frame" — the second layer that elevates it
+    from flat to structured. Only the outline is drawn, in turquoise.
+    Inner square: 264,264 → 760,760
+    Inner chamfer at same 148px ratio scaled to inner size: ~87px
+    Inner chamfer points: top-right at (760-87, 264)=(673,264) and (760, 264+87)=(760,351)
+  -->
+  <path
+    d="M 264 264 L 673 264 L 760 351 L 760 760 L 264 760 Z"
+    fill="none"
+    stroke="#14B8A6"
+    stroke-width="14"
+    stroke-opacity="0.55"
+    stroke-linejoin="miter"
+  />
+
+  <!--
+    Three horizontal lines inside the square evoking card content rows.
+    These sit in the lower 60% of the inner frame, giving the geometric shape
+    a subtle "data/content" reading without being literal card text.
+    Widths are varied (long/short/medium) to suggest a name-line + detail-lines hierarchy.
+    At 48px these vanish completely, keeping the silhouette clean.
+    At 1024px they add the premium detail layer required.
+  -->
+  <line x1="318" y1="540" x2="706" y2="540" stroke="#FFFFFF" stroke-width="24" stroke-linecap="round" stroke-opacity="0.82"/>
+  <line x1="318" y1="600" x2="560" y2="600" stroke="#14B8A6" stroke-width="18" stroke-linecap="round" stroke-opacity="0.72"/>
+  <line x1="318" y1="654" x2="640" y2="654" stroke="#FFFFFF" stroke-width="18" stroke-linecap="round" stroke-opacity="0.45"/>
+
+  <!--
+    Small circle in the top-left quadrant of the inner frame — a contact
+    avatar placeholder. Circles read as faces/people universally.
+    Center: 390, 390  Radius: 58
+  -->
+  <circle cx="390" cy="390" r="58" fill="none" stroke="#FFFFFF" stroke-width="18" stroke-opacity="0.65"/>
+  <circle cx="390" cy="390" r="24" fill="#FFFFFF" opacity="0.50"/>
+
+</svg>

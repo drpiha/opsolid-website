@@ -1,0 +1,96 @@
+<!--
+  Concept 2: "Split-K" — Custom Letterform Mark
+  Letter choice: K, not M/N/O/V.
+  Rationale: M and N both produce busy silhouettes with four vertical strokes
+  at small sizes. O becomes a ring (cliché). V is too directional/arrow-like.
+  K has exactly three strokes — a vertical stem plus two diagonals — which maps
+  perfectly onto the "three people / three layers / connection" reading of a
+  business card product. The custom touch: the two diagonal arms are physically
+  detached from the stem by a deliberate 28px gap (the "air gap"), so the glyph
+  reads simultaneously as a letter and as two arrows pointing to a source.
+  At 48px the gap closes visually due to antialiasing and the K reads as solid,
+  so the icon works at both scales with different personalities.
+  Color roles: ink #15120F fills the background (authority, premium restraint),
+  turquoise #14B8A6 fills the glyph strokes (energy, friendliness, mobile
+  identity distinct from web), white #FFFFFF is unused here — the contrast
+  between turquoise on near-black is sufficient and adding white would dilute
+  the two-color punch.
+  iOS safe zone: letterform occupies the 680×680 center square, well inside
+  the 22% corner-radius mask (which clips ~225px from each corner at 1024px).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <!-- Background: deep ink with very subtle warm gradient to avoid flat black -->
+    <linearGradient id="ink-bg" x1="0" y1="0" x2="0.6" y2="1">
+      <stop offset="0%" stop-color="#1F2530"/>
+      <stop offset="100%" stop-color="#0B0E13"/>
+    </linearGradient>
+
+    <!-- Turquoise gradient on the letterform itself: top-to-bottom brightening -->
+    <linearGradient id="glyph-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2DD4C4"/>
+      <stop offset="100%" stop-color="#0D9488"/>
+    </linearGradient>
+
+    <!-- Subtle glow behind the K to lift it off the dark background -->
+    <filter id="k-glow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="24" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+
+    <filter id="k-shadow" x="-15%" y="-15%" width="130%" height="130%">
+      <feDropShadow dx="0" dy="0" stdDeviation="20" flood-color="#14B8A6" flood-opacity="0.30"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1024" height="1024" fill="url(#ink-bg)"/>
+
+  <!--
+    CUSTOM K CONSTRUCTION
+    The K sits on a 680×680 canvas centered at 512,512.
+    Left edge of stem: 172 (512 - 340)
+    Right edge glyph: 852 (512 + 340)
+    Top of cap: 172, Bottom: 852
+
+    Stroke-based approach — three strokes, rounded caps, uniform weight 88px.
+    The vertical stem is full height (172→852).
+    The upper diagonal runs from the stem's midpoint-plus-gap (512-14=498, y=512+14=526 is top of gap)
+      outward to top-right.
+    The lower diagonal runs from stem midpoint-minus-gap outward to bottom-right.
+    Gap = 28px each side from center = 56px total gap.
+
+    Stem: (260, 172) → (260, 852)   [x=260 = 172+88, center of stroke at 172+44=216... let's use x=280 for visual weight]
+
+    Let me use a clean coordinate system:
+    - Stem center X: 310
+    - Stem runs Y: 172 to 852 (680px tall)
+    - Arm junction Y: 512 (center)
+    - Air gap: 32px each side (so arms start at y=480 upper, y=544 lower)
+    - Upper arm: from (342, 480) to (820, 182)   [leaving 32px gap from stem right edge at 354]
+    - Lower arm: from (342, 544) to (820, 842)
+    Stroke width: 90px, linecap round
+  -->
+
+  <g filter="url(#k-shadow)" fill="none" stroke="url(#glyph-grad)" stroke-linecap="round" stroke-linejoin="round">
+
+    <!-- Vertical stem -->
+    <line x1="310" y1="172" x2="310" y2="852" stroke-width="90"/>
+
+    <!-- Upper diagonal arm — starts detached from stem, angles to top-right -->
+    <line x1="368" y1="474" x2="824" y2="178" stroke-width="90"/>
+
+    <!-- Lower diagonal arm — mirrors upper, angles to bottom-right -->
+    <line x1="368" y1="550" x2="824" y2="846" stroke-width="90"/>
+
+  </g>
+
+  <!--
+    Small turquoise accent dot at the junction gap — the "gap" becomes
+    a feature: a tiny circular node suggesting a connection point.
+    Radius 28, white fill so it reads as a highlight/join at larger sizes
+    but disappears into the K silhouette at 48px.
+  -->
+  <circle cx="338" cy="512" r="26" fill="#FFFFFF" opacity="0.90"/>
+
+</svg>

@@ -1,25 +1,35 @@
 {
   "expo": {
-    "name": "OpSolid",
+    "name": "Verso",
     "slug": "opsolid-mobile",
     "version": "0.1.0",
     "orientation": "portrait",
     "scheme": "opsolid",
     "userInterfaceStyle": "automatic",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#F4F1EC"
+    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "de.opsolid.mobile",
       "associatedDomains": ["applinks:opsolid.de"],
       "infoPlist": {
-        "NSCameraUsageDescription": "OpSolid needs camera access to take a profile photo.",
-        "NSPhotoLibraryUsageDescription": "OpSolid needs photo library access to set a profile photo.",
-        "NSFaceIDUsageDescription": "OpSolid uses Face ID to protect your account.",
-        "NSContactsUsageDescription": "OpSolid saves cards to your Contacts so you can find them later."
+        "NSCameraUsageDescription": "Verso needs camera access to take a profile photo.",
+        "NSPhotoLibraryUsageDescription": "Verso needs photo library access to set a profile photo.",
+        "NSFaceIDUsageDescription": "Verso uses Face ID to protect your account.",
+        "NSContactsUsageDescription": "Verso saves cards to your Contacts so you can find them later."
       }
     },
     "android": {
       "package": "de.opsolid.mobile",
       "softwareKeyboardLayoutMode": "resize",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#F4F1EC"
+      },
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.READ_MEDIA_IMAGES",
@@ -54,14 +64,14 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "OpSolid needs photo library access to set a profile photo.",
-          "cameraPermission": "OpSolid needs camera access to take a profile photo."
+          "photosPermission": "Verso needs photo library access to set a profile photo.",
+          "cameraPermission": "Verso needs camera access to take a profile photo."
         }
       ],
       [
         "expo-contacts",
         {
-          "contactsPermission": "OpSolid saves cards to your Contacts so you can find them later."
+          "contactsPermission": "Verso saves cards to your Contacts so you can find them later."
         }
       ]
     ],

@@ -13,8 +13,8 @@ export function detectLocale(): Locale {
 export const t = {
   en: {
     auth: {
-      welcome: 'Welcome to OpSolid',
-      tagline: 'Your premium digital business card',
+      welcome: 'Welcome to Verso',
+      tagline: 'Your premium digital business card — by OpSolid',
       magicLinkCta: 'Continue with email',
       passwordToggle: 'Use password instead',
       magicLinkBack: 'Use email link instead',
@@ -36,7 +36,7 @@ export const t = {
       googleCta: 'Continue with Google',
       orDivider: 'or',
       googleError: 'Google sign-in failed. Try again.',
-      signupHeadline: 'Create your OpSolid account',
+      signupHeadline: 'Create your Verso account',
       signupNote: "We'll send a sign-in link to your email. No password needed.",
       didntGetIt: "Didn't get it? Resend",
       resendIn: 'Resend in {s}s',
@@ -198,7 +198,7 @@ export const t = {
       retry: 'Try again',
       loginToAction: 'Sign in to connect',
       contactsSaved: 'Saved to your Contacts.',
-      contactsDenied: 'Contacts permission denied — saved to OpSolid only.',
+      contactsDenied: 'Contacts permission denied — saved to Verso only.',
       services: 'Services',
       address: 'Address',
       website: 'Website',
@@ -226,7 +226,7 @@ export const t = {
   },
   de: {
     auth: {
-      welcome: 'Willkommen bei OpSolid',
+      welcome: 'Willkommen bei Verso',
       tagline: 'Ihre Premium-Visitenkarte',
       magicLinkCta: 'Per E-Mail fortfahren',
       passwordToggle: 'Stattdessen Passwort verwenden',
@@ -249,7 +249,7 @@ export const t = {
       googleCta: 'Mit Google fortfahren',
       orDivider: 'oder',
       googleError: 'Google-Anmeldung fehlgeschlagen. Erneut versuchen.',
-      signupHeadline: 'OpSolid-Konto erstellen',
+      signupHeadline: 'Verso-Konto erstellen',
       signupNote:
         'Wir senden Ihnen einen Anmeldelink per E-Mail. Kein Passwort nötig.',
       didntGetIt: 'Nichts erhalten? Erneut senden',
@@ -413,7 +413,7 @@ export const t = {
       loginToAction: 'Anmelden um zu vernetzen',
       contactsSaved: 'In Ihren Kontakten gespeichert.',
       contactsDenied:
-        'Zugriff auf Kontakte verweigert — nur in OpSolid gespeichert.',
+        'Zugriff auf Kontakte verweigert — nur in Verso gespeichert.',
       services: 'Leistungen',
       address: 'Adresse',
       website: 'Website',
@@ -442,7 +442,7 @@ export const t = {
   },
   tr: {
     auth: {
-      welcome: "OpSolid'e Hoş Geldiniz",
+      welcome: "Verso'ya Hoş Geldiniz",
       tagline: 'Premium dijital kartvizitiniz',
       magicLinkCta: 'E-posta ile devam et',
       passwordToggle: 'Şifre ile devam et',
@@ -465,7 +465,7 @@ export const t = {
       googleCta: 'Google ile devam et',
       orDivider: 'veya',
       googleError: 'Google girişi başarısız. Tekrar deneyin.',
-      signupHeadline: 'OpSolid hesabı oluştur',
+      signupHeadline: 'Verso hesabı oluştur',
       signupNote: 'E-postanıza giriş linki göndereceğiz. Şifre gerekmez.',
       didntGetIt: 'Gelmedi mi? Tekrar gönder',
       resendIn: '{s}sn sonra tekrar gönder',
@@ -629,7 +629,7 @@ export const t = {
       loginToAction: 'Bağlanmak için giriş yapın',
       contactsSaved: 'Kişilerinize kaydedildi.',
       contactsDenied:
-        'Kişiler izni reddedildi — sadece OpSolid içine kaydedildi.',
+        'Kişiler izni reddedildi — sadece Verso içine kaydedildi.',
       services: 'Hizmetler',
       address: 'Adres',
       website: 'Web sitesi',

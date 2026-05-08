@@ -5,7 +5,10 @@
 // Theme-aware tokens (bg, ink, line) vary by light/dark mode.
 // -----------------------------------------------------------------------
 
-// ---------- COPPER (primary accent — theme-independent) ----------
+// ---------- COPPER (legacy primary accent — kept only for "by OpSolid" credit) ----------
+// Verso (the mobile sub-brand) uses TEAL as its primary accent. Copper survives
+// solely for the OpSolid-credit lockup. Do not introduce new copper-on-button
+// usage in mobile code; reach for `teal` or the `accent` semantic alias instead.
 export const copper = {
   50:      '#FBEFE0',
   100:     '#F5D9B8',
@@ -18,6 +21,41 @@ export const copper = {
   700:     '#7E4A24',
   800:     '#56321A',
   900:     '#331D10',
+} as const;
+
+// ---------- TEAL (Verso primary — theme-independent) ----------
+// Aegean palette, defined in project_verso_brand.md. Use as primary CTA,
+// links, focus rings, and brand surfaces. Pair with surface-light or
+// surface-dark; never put copper on the same component above 8px.
+export const teal = {
+  50:      '#E0F7F8',
+  100:     '#B0EAEE',
+  200:     '#7FDDE4',
+  300:     '#4DCFD9',
+  400:     '#2DC1CC',
+  DEFAULT: '#1AA6B7',
+  500:     '#1AA6B7',
+  600:     '#157E91',
+  700:     '#0F4F58',  // primary-dark — depth, hover, dark-mode surfaces
+  800:     '#0A3940',
+  900:     '#062229',
+} as const;
+
+// ---------- VERSO SEMANTIC ALIASES ----------
+// Use these instead of reaching for raw `teal[500]` so the brand can rotate
+// without touching every component. Components that show the OpSolid credit
+// badge use `accentCredit`.
+export const accent = teal.DEFAULT;          // primary brand accent
+export const accentDark = teal[700];         // hover / depth
+export const accentCredit = copper.DEFAULT;  // ONLY for "by OpSolid" badge
+
+// ---------- VERSO SURFACES (Aegean palette) ----------
+// surfaceLight: warm paper, slightly cooler than the OpSolid hybrid paper.
+// surfaceDark:  ink-blue-black; cool bias is intentional, premium dark apps
+//               (Linear, Things 3) bias dark surfaces slightly cool.
+export const surface = {
+  light: '#F4F1EC',
+  dark:  '#0B1A1F',
 } as const;
 
 // ---------- NEUTRAL / graphite scale (theme-independent) ----------
