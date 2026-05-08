@@ -44,6 +44,15 @@ export function Header() {
     };
   }, [isMobileOpen]);
 
+  useEffect(() => {
+    if (!isMobileOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsMobileOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [isMobileOpen]);
+
   // Hide marketing chrome on customer self-service surfaces (edit panel,
   // login, dashboard). Those are app-mode pages, not site pages.
   // Must come AFTER all hooks to keep their call order stable.
@@ -114,9 +123,10 @@ export function Header() {
 
       {isMobileOpen && (
         <div
-          className="fixed inset-0 z-40 md:hidden overflow-y-auto motion-safe:animate-fade-in"
+          className="fixed inset-0 z-[60] md:hidden overflow-y-auto motion-safe:animate-fade-in"
           style={{
             height: "100dvh",
+            pointerEvents: "auto",
             background:
               "linear-gradient(180deg, rgba(11,14,19,0.96) 0%, rgba(7,9,12,0.98) 100%)",
             backdropFilter: "blur(18px)",
@@ -125,6 +135,9 @@ export function Header() {
           role="dialog"
           aria-modal="true"
           aria-label="Mobile navigation"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setIsMobileOpen(false);
+          }}
         >
           <div
             className="flex flex-col min-h-full px-6"
