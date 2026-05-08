@@ -28,6 +28,8 @@ import {
   Briefcase,
   Camera,
   Video,
+  ChevronDown,
+  ChevronUp,
 } from 'lucide-react-native';
 import { getPublicCard } from '../../../src/lib/api/discover';
 import { saveCard, unsaveCard, checkSaved } from '../../../src/lib/api/contacts';
@@ -42,6 +44,7 @@ import { QrCodeModal } from '../../../src/components/cards/QrCodeModal';
 
 type ServiceItem = { title: string; description?: string; price?: string };
 type CustomButton = { label: string; url: string };
+type FaqItem = { question: string; answer: string };
 type Socials = {
   linkedin?: string;
   instagram?: string;
@@ -81,6 +84,21 @@ function pickServices(v: unknown): ServiceItem[] {
       description: pickString(o.description),
       price: pickString(o.price),
     });
+    if (out.length >= 12) break;
+  }
+  return out;
+}
+
+function pickFaqs(v: unknown): FaqItem[] {
+  if (!Array.isArray(v)) return [];
+  const out: FaqItem[] = [];
+  for (const raw of v) {
+    if (!raw || typeof raw !== 'object') continue;
+    const o = raw as Record<string, unknown>;
+    const question = pickString(o.question);
+    const answer = pickString(o.answer);
+    if (!question || !answer) continue;
+    out.push({ question, answer });
     if (out.length >= 12) break;
   }
   return out;
@@ -167,6 +185,16 @@ export default function PublicCardScreen() {
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
   const [qrOpen, setQrOpen] = useState(false);
+  const [expandedFaqs, setExpandedFaqs] = useState<Set<number>>(new Set());
+
+  function toggleFaq(idx: number) {
+    setExpandedFaqs((prev) => {
+      const next = new Set(prev);
+      if (next.has(idx)) next.delete(idx);
+      else next.add(idx);
+      return next;
+    });
+  }
 
   useEffect(() => {
     if (!slug) return;
@@ -270,6 +298,7 @@ export default function PublicCardScreen() {
   const socials = pickSocials(data.socials);
   const services = pickServices(data.services);
   const customButtons = pickButtons(data.customButtons);
+  const faqs = pickFaqs(data.faqs);
 
   const photoUri = card.photoPath
     ? card.photoPath.startsWith('http')
@@ -560,6 +589,49 @@ export default function PublicCardScreen() {
           </View>
         ) : null}
 
+        {/* FAQs accordion */}
+        {faqs.length > 0 ? (
+          <View style={styles.blockWrap}>
+            <Text style={[styles.blockHeading, { color: theme.ink[300] }]}>{t.faqs}</Text>
+            <View style={[styles.section, { backgroundColor: theme.bg[1], borderColor: theme.line.DEFAULT }]}>
+              {faqs.map((faq, i) => {
+                const open = expandedFaqs.has(i);
+                return (
+                  <View
+                    key={`${faq.question}-${i}`}
+                    style={{
+                      borderBottomWidth: i < faqs.length - 1 ? StyleSheet.hairlineWidth : 0,
+                      borderBottomColor: theme.line.DEFAULT,
+                    }}
+                  >
+                    <Pressable
+                      onPress={() => toggleFaq(i)}
+                      style={styles.faqQuestionRow}
+                    >
+                      <Text
+                        style={[styles.faqQuestion, { color: theme.ink[100] }]}
+                        numberOfLines={open ? undefined : 2}
+                      >
+                        {faq.question}
+                      </Text>
+                      {open ? (
+                        <ChevronUp size={18} color={theme.ink[400]} />
+                      ) : (
+                        <ChevronDown size={18} color={theme.ink[400]} />
+                      )}
+                    </Pressable>
+                    {open ? (
+                      <Text style={[styles.faqAnswer, { color: theme.ink[300] }]}>
+                        {faq.answer}
+                      </Text>
+                    ) : null}
+                  </View>
+                );
+              })}
+            </View>
+          </View>
+        ) : null}
+
         {/* Address */}
         {address ? (
           <View style={styles.blockWrap}>
@@ -783,4 +855,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   saveCtaText: { fontSize: 15, fontWeight: '600' },
+  faqQuestionRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: 12,
+    paddingHorizontal: 16,
+    paddingVertical: 14,
+  },
+  faqQuestion: { fontSize: 15, fontWeight: '600', flex: 1 },
+  faqAnswer: {
+    fontSize: 14,
+    lineHeight: 20,
+    paddingHorizontal: 16,
+    paddingBottom: 14,
+  },
 });

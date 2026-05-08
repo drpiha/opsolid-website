@@ -7,11 +7,19 @@ import {
   Pressable,
   Image,
   RefreshControl,
-  ScrollView,
   StyleSheet,
   Alert,
 } from 'react-native';
 import { Stack, useRouter, useFocusEffect } from 'expo-router';
+import {
+  Mailbox,
+  UserPlus,
+  FileText,
+  Calendar,
+  Send,
+  Users,
+  MessageSquare,
+} from 'lucide-react-native';
 import { listInbox, resolveAction } from '../../src/lib/api/inbox';
 import type { InboxItem, InboxActionStatus } from '../../src/lib/api/inbox';
 import { useTheme } from '../../src/lib/theme/ThemeProvider';
@@ -93,6 +101,26 @@ export default function InboxScreen() {
     return map[type] ?? type;
   }
 
+  function typeIcon(type: string, color: string) {
+    const size = 18;
+    switch (type) {
+      case 'request_contact':
+        return <UserPlus size={size} color={color} />;
+      case 'request_quote':
+        return <FileText size={size} color={color} />;
+      case 'request_meeting':
+        return <Calendar size={size} color={color} />;
+      case 'send_card':
+        return <Send size={size} color={color} />;
+      case 'ask_collaboration':
+        return <Users size={size} color={color} />;
+      case 'give_feedback':
+        return <MessageSquare size={size} color={color} />;
+      default:
+        return <Mailbox size={size} color={color} />;
+    }
+  }
+
   function statusColor(status: string): string {
     if (status === 'accepted') return signal.ok;
     if (status === 'declined') return '#B8514B';
@@ -130,6 +158,10 @@ export default function InboxScreen() {
                 {senderName.charAt(0).toUpperCase()}
               </Text>
             )}
+          </View>
+
+          <View style={[styles.typeBadge, { backgroundColor: theme.bg[2] }]}>
+            {typeIcon(item.type, copper[600])}
           </View>
 
           <View style={styles.headerBody}>
@@ -191,39 +223,87 @@ export default function InboxScreen() {
     { key: 'all', label: t.all },
   ];
 
+  // Render markdown-lite: split by ** to bold inline. Keeps things tiny without
+  // pulling in a markdown lib.
+  function renderInline(line: string, baseColor: string) {
+    const parts = line.split('**');
+    return parts.map((part, i) => (
+      <Text
+        key={i}
+        style={{
+          color: baseColor,
+          fontWeight: i % 2 === 1 ? '600' : '400',
+        }}
+      >
+        {part}
+      </Text>
+    ));
+  }
+
+  function renderEmptyExplainer() {
+    const paragraphs = t.aboutBody.split('\n\n');
+    return (
+      <View style={styles.emptyWrap}>
+        <View
+          style={[
+            styles.aboutCard,
+            { backgroundColor: theme.bg[1], borderColor: theme.line.DEFAULT },
+          ]}
+        >
+          <View style={[styles.aboutIcon, { backgroundColor: theme.bg[2] }]}>
+            <Mailbox size={28} color={copper[500]} />
+          </View>
+          <Text style={[styles.aboutTitle, { color: theme.ink[100] }]}>
+            {t.aboutTitle}
+          </Text>
+          {paragraphs.map((p, i) => (
+            <Text
+              key={i}
+              style={[
+                styles.aboutBody,
+                { color: theme.ink[300], marginTop: i === 0 ? 0 : 12 },
+              ]}
+            >
+              {renderInline(p, theme.ink[300])}
+            </Text>
+          ))}
+        </View>
+      </View>
+    );
+  }
+
   return (
     <>
       <Stack.Screen options={{ title: t.title }} />
       <View style={[styles.root, { backgroundColor: theme.bg[0] }]}>
-        {/* Filter chips */}
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          style={[styles.filterRow, { borderBottomColor: theme.line.DEFAULT }]}
-          contentContainerStyle={styles.filterContent}
-        >
-          {filters.map((f) => (
-            <Pressable
-              key={f.key}
-              onPress={() => handleFilterChange(f.key)}
-              style={[
-                styles.chip,
-                filter === f.key
-                  ? { backgroundColor: copper[500] }
-                  : { backgroundColor: theme.bg[1], borderWidth: StyleSheet.hairlineWidth, borderColor: theme.line.DEFAULT },
-              ]}
-            >
-              <Text
+        {/* Filter chips — only when there are items */}
+        {items.length > 0 && !loading && !error ? (
+          <View
+            style={[styles.filterRow, { borderBottomColor: theme.line.DEFAULT }]}
+          >
+            {filters.map((f) => (
+              <Pressable
+                key={f.key}
+                onPress={() => handleFilterChange(f.key)}
                 style={[
-                  styles.chipText,
-                  { color: filter === f.key ? '#fff' : theme.ink[300] },
+                  styles.chip,
+                  filter === f.key
+                    ? { backgroundColor: copper[500] }
+                    : { backgroundColor: theme.bg[1], borderWidth: StyleSheet.hairlineWidth, borderColor: theme.line.DEFAULT },
                 ]}
               >
-                {f.label}
-              </Text>
-            </Pressable>
-          ))}
-        </ScrollView>
+                <Text
+                  style={[
+                    styles.chipText,
+                    { color: filter === f.key ? '#fff' : theme.ink[300] },
+                  ]}
+                >
+                  {f.label}
+                </Text>
+              </Pressable>
+            ))}
+          </View>
+        ) : null}
 
         {loading ? (
           <View style={styles.center}>
@@ -231,7 +311,7 @@ export default function InboxScreen() {
           </View>
         ) : error ? (
           <View style={styles.center}>
-            <Text style={[styles.emptyTitle, { color: '#B8514B' }]}>{error}</Text>
+            <Text style={[styles.errorTitle, { color: '#B8514B' }]}>{error}</Text>
             <Button
               label={t.retry}
               onPress={() => void load('initial', filter)}
@@ -244,12 +324,7 @@ export default function InboxScreen() {
             data={items}
             keyExtractor={(c) => c.id}
             renderItem={renderItem}
-            ListEmptyComponent={
-              <View style={styles.center}>
-                <Text style={[styles.emptyTitle, { color: theme.ink[100] }]}>{t.empty}</Text>
-                <Text style={[styles.emptyHint, { color: theme.ink[400] }]}>{t.emptyHint}</Text>
-              </View>
-            }
+            ListEmptyComponent={renderEmptyExplainer()}
             refreshControl={
               <RefreshControl
                 refreshing={refreshing}
@@ -259,7 +334,7 @@ export default function InboxScreen() {
             }
             contentContainerStyle={
               items.length === 0
-                ? { flex: 1, justifyContent: 'center' }
+                ? { flexGrow: 1, justifyContent: 'center', paddingHorizontal: 16, paddingVertical: 16 }
                 : { paddingVertical: 8, paddingHorizontal: 16 }
             }
           />
@@ -273,28 +348,57 @@ const styles = StyleSheet.create({
   root: { flex: 1 },
   filterRow: {
     flexShrink: 0,
+    flexDirection: 'row',
+    gap: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
-  filterContent: {
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    gap: 8,
-    flexDirection: 'row',
-  },
   chip: {
-    paddingHorizontal: 14,
-    paddingVertical: 7,
-    borderRadius: 20,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
   },
-  chipText: { fontSize: 13, fontWeight: '500' },
+  chipText: { fontSize: 12, fontWeight: '500' },
   center: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24,
   },
-  emptyTitle: { fontSize: 17, fontWeight: '500', marginBottom: 6, textAlign: 'center' },
-  emptyHint: { fontSize: 14, textAlign: 'center' },
+  errorTitle: { fontSize: 17, fontWeight: '500', marginBottom: 6, textAlign: 'center' },
+  emptyWrap: {
+    paddingHorizontal: 4,
+    paddingVertical: 8,
+    alignItems: 'center',
+  },
+  aboutCard: {
+    borderRadius: 14,
+    borderWidth: StyleSheet.hairlineWidth,
+    padding: 16,
+    alignItems: 'center',
+    maxWidth: 420,
+    width: '100%',
+  },
+  aboutIcon: {
+    width: 56,
+    height: 56,
+    borderRadius: 14,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 12,
+  },
+  aboutTitle: {
+    fontSize: 17,
+    fontWeight: '700',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  aboutBody: {
+    fontSize: 14,
+    lineHeight: 20,
+    textAlign: 'center',
+  },
   card: {
     borderRadius: 14,
     borderWidth: StyleSheet.hairlineWidth,
@@ -304,12 +408,12 @@ const styles = StyleSheet.create({
   cardHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
+    gap: 10,
     padding: 12,
   },
   avatar: {
-    width: 48,
-    height: 48,
+    width: 44,
+    height: 44,
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
@@ -317,7 +421,15 @@ const styles = StyleSheet.create({
     flexShrink: 0,
   },
   avatarImg: { width: '100%', height: '100%' },
-  avatarInitial: { fontSize: 18, fontWeight: '600' },
+  avatarInitial: { fontSize: 17, fontWeight: '600' },
+  typeBadge: {
+    width: 32,
+    height: 32,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexShrink: 0,
+  },
   headerBody: { flex: 1, gap: 2 },
   senderName: { fontSize: 15, fontWeight: '500' },
   senderSub: { fontSize: 12 },

@@ -29,9 +29,15 @@ import {
   LayoutSection,
   ThemeSection,
   QrStyleSection,
+  ServicesSection,
+  CustomButtonsSection,
+  FaqsSection,
   DEFAULT_PRIMARY_HEX,
   DEFAULT_ACCENT_HEX,
   stripEmpty,
+  cleanServices,
+  cleanCustomButtons,
+  cleanFaqs,
 } from '../../../../src/components/cards/CardFormSections';
 import type {
   BasicFieldsState,
@@ -41,6 +47,9 @@ import type {
   LayoutKey,
   CardThemeKey,
   QrStylePreset,
+  ServiceItem,
+  CustomButton,
+  FaqItem,
 } from '../../../../src/components/cards/CardFormSections';
 
 function asString(v: unknown): string {
@@ -73,6 +82,47 @@ function asQrPreset(v: unknown): QrStylePreset {
     : 'classic';
 }
 
+function asServices(v: unknown): ServiceItem[] {
+  if (!Array.isArray(v)) return [];
+  const out: ServiceItem[] = [];
+  for (const raw of v) {
+    if (!raw || typeof raw !== 'object') continue;
+    const o = raw as Record<string, unknown>;
+    out.push({
+      title: typeof o.title === 'string' ? o.title : '',
+      description: typeof o.description === 'string' ? o.description : undefined,
+      price: typeof o.price === 'string' ? o.price : undefined,
+    });
+  }
+  return out;
+}
+function asCustomButtons(v: unknown): CustomButton[] {
+  if (!Array.isArray(v)) return [];
+  const out: CustomButton[] = [];
+  for (const raw of v) {
+    if (!raw || typeof raw !== 'object') continue;
+    const o = raw as Record<string, unknown>;
+    out.push({
+      label: typeof o.label === 'string' ? o.label : '',
+      url: typeof o.url === 'string' ? o.url : '',
+    });
+  }
+  return out;
+}
+function asFaqs(v: unknown): FaqItem[] {
+  if (!Array.isArray(v)) return [];
+  const out: FaqItem[] = [];
+  for (const raw of v) {
+    if (!raw || typeof raw !== 'object') continue;
+    const o = raw as Record<string, unknown>;
+    out.push({
+      question: typeof o.question === 'string' ? o.question : '',
+      answer: typeof o.answer === 'string' ? o.answer : '',
+    });
+  }
+  return out;
+}
+
 export default function CardEditScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
@@ -103,6 +153,9 @@ export default function CardEditScreen() {
   const [layoutKey, setLayoutKey] = useState<LayoutKey>('bento');
   const [themeKey, setThemeKey] = useState<CardThemeKey>('aurora');
   const [qrPreset, setQrPreset] = useState<QrStylePreset>('classic');
+  const [services, setServices] = useState<ServiceItem[]>([]);
+  const [customButtons, setCustomButtons] = useState<CustomButton[]>([]);
+  const [faqs, setFaqs] = useState<FaqItem[]>([]);
 
   const [photoPath, setPhotoPath] = useState<string | null>(null);
 
@@ -165,6 +218,9 @@ export default function CardEditScreen() {
         setThemeKey(asThemeKey(c.themeKey ?? cd.themeKey));
         const qr = (c.qrStyle ?? {}) as Record<string, unknown>;
         setQrPreset(asQrPreset(qr.preset));
+        setServices(asServices(cd.services));
+        setCustomButtons(asCustomButtons(cd.customButtons));
+        setFaqs(asFaqs(cd.faqs));
       })
       .catch(() => Alert.alert('', t.errorLoad))
       .finally(() => setLoading(false));
@@ -222,6 +278,12 @@ export default function CardEditScreen() {
       if (Object.keys(socialsClean).length > 0) {
         cardData.socials = socialsClean;
       }
+      const servicesClean = cleanServices(services);
+      if (servicesClean.length > 0) cardData.services = servicesClean;
+      const buttonsClean = cleanCustomButtons(customButtons);
+      if (buttonsClean.length > 0) cardData.customButtons = buttonsClean;
+      const faqsClean = cleanFaqs(faqs);
+      if (faqsClean.length > 0) cardData.faqs = faqsClean;
       Object.keys(cardData).forEach((k) => {
         if (cardData[k] === undefined) delete cardData[k];
       });
@@ -327,6 +389,9 @@ export default function CardEditScreen() {
         <LayoutSection theme={theme} value={layoutKey} onChange={setLayoutKey} />
         <ThemeSection theme={theme} value={themeKey} onChange={setThemeKey} />
         <QrStyleSection theme={theme} value={qrPreset} onChange={setQrPreset} />
+        <ServicesSection theme={theme} items={services} onChange={setServices} />
+        <CustomButtonsSection theme={theme} items={customButtons} onChange={setCustomButtons} />
+        <FaqsSection theme={theme} items={faqs} onChange={setFaqs} />
         <VisibilitySection theme={theme} value={visibility} onChange={setVisibility} />
         <DiscoverySection theme={theme} values={discovery} onChange={setDiscoveryField} />
 

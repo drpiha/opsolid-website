@@ -762,6 +762,23 @@ export function QrStyleSection({
   );
 }
 
+// ---------- Repeater sections (Services / CustomButtons / FAQs) ----------
+// Extracted to CardRepeaterSections.tsx so this file stays under 1200 lines.
+// Re-exported here so existing imports keep working.
+export {
+  ServicesSection,
+  CustomButtonsSection,
+  FaqsSection,
+  cleanServices,
+  cleanCustomButtons,
+  cleanFaqs,
+} from './CardRepeaterSections';
+export type {
+  ServiceItem,
+  CustomButton,
+  FaqItem,
+} from './CardRepeaterSections';
+
 // ---------- helpers exposed to screens ----------
 /** Strip empty string keys from a record before saving. */
 export function stripEmpty<T extends Record<string, string>>(obj: T): Partial<T> {

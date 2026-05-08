@@ -27,9 +27,15 @@ import {
   LayoutSection,
   ThemeSection,
   QrStyleSection,
+  ServicesSection,
+  CustomButtonsSection,
+  FaqsSection,
   DEFAULT_PRIMARY_HEX,
   DEFAULT_ACCENT_HEX,
   stripEmpty,
+  cleanServices,
+  cleanCustomButtons,
+  cleanFaqs,
 } from '../../../src/components/cards/CardFormSections';
 import type {
   BasicFieldsState,
@@ -39,6 +45,9 @@ import type {
   LayoutKey,
   CardThemeKey,
   QrStylePreset,
+  ServiceItem,
+  CustomButton,
+  FaqItem,
 } from '../../../src/components/cards/CardFormSections';
 
 export default function CardCreateScreen() {
@@ -67,6 +76,9 @@ export default function CardCreateScreen() {
   const [layoutKey, setLayoutKey] = useState<LayoutKey>('bento');
   const [themeKey, setThemeKey] = useState<CardThemeKey>('aurora');
   const [qrPreset, setQrPreset] = useState<QrStylePreset>('classic');
+  const [services, setServices] = useState<ServiceItem[]>([]);
+  const [customButtons, setCustomButtons] = useState<CustomButton[]>([]);
+  const [faqs, setFaqs] = useState<FaqItem[]>([]);
 
   const [photoUri, setPhotoUri] = useState<string | null>(null);
   const [photoMimeType, setPhotoMimeType] = useState<string>('image/jpeg');
@@ -130,6 +142,13 @@ export default function CardCreateScreen() {
       if (Object.keys(socialsClean).length > 0) {
         cardData.socials = socialsClean;
       }
+
+      const servicesClean = cleanServices(services);
+      if (servicesClean.length > 0) cardData.services = servicesClean;
+      const buttonsClean = cleanCustomButtons(customButtons);
+      if (buttonsClean.length > 0) cardData.customButtons = buttonsClean;
+      const faqsClean = cleanFaqs(faqs);
+      if (faqsClean.length > 0) cardData.faqs = faqsClean;
 
       // Drop undefined keys before sending
       Object.keys(cardData).forEach((k) => {
@@ -239,6 +258,9 @@ export default function CardCreateScreen() {
         <LayoutSection theme={theme} value={layoutKey} onChange={setLayoutKey} />
         <ThemeSection theme={theme} value={themeKey} onChange={setThemeKey} />
         <QrStyleSection theme={theme} value={qrPreset} onChange={setQrPreset} />
+        <ServicesSection theme={theme} items={services} onChange={setServices} />
+        <CustomButtonsSection theme={theme} items={customButtons} onChange={setCustomButtons} />
+        <FaqsSection theme={theme} items={faqs} onChange={setFaqs} />
         <VisibilitySection theme={theme} value={visibility} onChange={setVisibility} />
         <DiscoverySection theme={theme} values={discovery} onChange={setDiscoveryField} />
       </ScrollView>
