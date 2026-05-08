@@ -45,15 +45,20 @@ jobs:
         working-directory: mobile
         run: npx expo prebuild --platform android --no-install
 
-      - name: Generate signing keystore
+      - name: Restore stable signing keystore from secret
+        env:
+          KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
         run: |
-          keytool -genkey -v \
-            -keystore opsolid-release.keystore \
-            -alias opsolid \
-            -keyalg RSA -keysize 2048 -validity 10000 \
-            -dname "CN=OpSolid, OU=Mobile, O=OpSolid, L=Munich, ST=Bavaria, C=DE" \
-            -storepass opsolid123 -keypass opsolid123 2>/dev/null
-          echo "Keystore generated"
+          if [ -z "$KEYSTORE_BASE64" ]; then
+            echo "::error::KEYSTORE_BASE64 secret missing — set it (and KEYSTORE_PASSWORD) in repo settings."
+            exit 1
+          fi
+          echo "$KEYSTORE_BASE64" | base64 -d > opsolid-release.keystore
+          ls -l opsolid-release.keystore
+          # Sanity-check the SHA-256 fingerprint so a corrupted secret fails fast
+          # rather than producing an APK that won't install over previous builds.
+          keytool -list -keystore opsolid-release.keystore \
+            -storepass "${{ secrets.KEYSTORE_PASSWORD }}" -alias opsolid | grep "SHA256:"
 
       - name: Cache Gradle
         uses: actions/cache@v4
@@ -72,9 +77,9 @@ jobs:
         run: |
           ./gradlew assembleRelease --no-daemon \
             -Pandroid.injected.signing.store.file=${{ github.workspace }}/opsolid-release.keystore \
-            -Pandroid.injected.signing.store.password=opsolid123 \
+            -Pandroid.injected.signing.store.password=${{ secrets.KEYSTORE_PASSWORD }} \
             -Pandroid.injected.signing.key.alias=opsolid \
-            -Pandroid.injected.signing.key.password=opsolid123
+            -Pandroid.injected.signing.key.password=${{ secrets.KEYSTORE_PASSWORD }}
 
       - name: Collect APK
         run: |
