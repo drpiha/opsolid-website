@@ -93,6 +93,13 @@ export default function AppLayout() {
       <Tabs.Screen name="cards/[id]" options={{ href: null, title: t.cards.detailTitle }} />
       <Tabs.Screen name="cards/create" options={{ href: null, title: t.cards.createTitle }} />
       <Tabs.Screen name="cards/edit/[id]" options={{ href: null, title: t.cards.editTitle }} />
+      {/* Sprint 6 — full-screen template preview reachable from the edit form's
+          template carousel. Header is rendered inside the screen itself so
+          it can place its own close button + page indicator. */}
+      <Tabs.Screen
+        name="cards/template-preview"
+        options={{ href: null, headerShown: false, title: '' }}
+      />
       <Tabs.Screen name="public/[slug]" options={{ href: null, title: '' }} />
     </Tabs>
   );

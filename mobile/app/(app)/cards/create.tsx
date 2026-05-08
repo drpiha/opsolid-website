@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import {
   View,
   Text,
@@ -11,12 +11,13 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
+import { Stack, useFocusEffect, useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
 import { createCard, updateCard, uploadPhoto } from '../../../src/lib/api/cards';
 import { useTheme } from '../../../src/lib/theme/ThemeProvider';
-import { copper } from '../../../src/lib/theme/tokens';
+import { copper, teal } from '../../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../../src/lib/i18n/locale';
+import { useTemplatePickerStore } from '../../../src/store/templatePickerStore';
 import {
   BasicFieldsSection,
   SocialsSection,
@@ -54,12 +55,16 @@ import type {
   StatusBannerState,
 } from '../../../src/components/cards/CardFormSections';
 
+// Sprint 6 — three-tab segmented control mirrors edit/[id].tsx.
+type Tab = 'profil' | 'tasarim' | 'gelismis';
+
 export default function CardCreateScreen() {
   const router = useRouter();
   const theme = useTheme();
   const t = useTranslations(detectLocale()).cards;
 
   const [saving, setSaving] = useState(false);
+  const [activeTab, setActiveTab] = useState<Tab>('profil');
 
   const [basics, setBasics] = useState<BasicFieldsState>({
     name: '', jobTitle: '', position: '', company: '', email: '',
@@ -100,6 +105,14 @@ export default function CardCreateScreen() {
   function setDiscoveryField<K extends keyof DiscoveryState>(k: K, v: DiscoveryState[K]) {
     setDiscovery((s) => ({ ...s, [k]: v }));
   }
+
+  // Apply any picked template id pushed by the modal preview screen.
+  useFocusEffect(
+    useCallback(() => {
+      const picked = useTemplatePickerStore.getState().consume();
+      if (picked != null) setTemplateId(picked);
+    }, []),
+  );
 
   async function pickPhoto() {
     const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -216,6 +229,12 @@ export default function CardCreateScreen() {
     }
   }
 
+  const tabs: { key: Tab; label: string }[] = [
+    { key: 'profil', label: t.tabProfile },
+    { key: 'tasarim', label: t.tabDesign },
+    { key: 'gelismis', label: t.tabAdvanced },
+  ];
+
   return (
     <>
       <Stack.Screen
@@ -238,67 +257,144 @@ export default function CardCreateScreen() {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
       >
-      <ScrollView
-        style={{ backgroundColor: theme.bg[0] }}
-        contentContainerStyle={styles.scroll}
-        keyboardShouldPersistTaps="handled"
-        keyboardDismissMode="interactive"
-        automaticallyAdjustKeyboardInsets
-      >
-        {/* Photo */}
-        <TouchableOpacity
-          onPress={() => void pickPhoto()}
-          disabled={saving}
-          style={[styles.photoWrap, { borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[1] }]}
-        >
-          {photoUri ? (
-            <Image source={{ uri: photoUri }} style={styles.photo} />
-          ) : (
-            <Text style={[styles.photoPlaceholder, { color: theme.ink[400] }]}>
-              {t.addPhoto}
-            </Text>
-          )}
-          {photoUri && (
-            <View style={styles.photoEditBadge}>
-              <Text style={styles.photoEditBadgeText}>{t.changePhoto}</Text>
-            </View>
-          )}
-        </TouchableOpacity>
+        {/* Tab bar */}
+        <View style={[styles.tabBar, { backgroundColor: theme.bg[1], borderBottomColor: theme.line.DEFAULT }]}>
+          {tabs.map((tab) => {
+            const active = activeTab === tab.key;
+            return (
+              <TouchableOpacity
+                key={tab.key}
+                onPress={() => setActiveTab(tab.key)}
+                style={[
+                  styles.tabPill,
+                  active && { borderBottomColor: teal[500] },
+                ]}
+                activeOpacity={0.85}
+              >
+                <Text
+                  style={[
+                    styles.tabText,
+                    { color: active ? teal[500] : theme.ink[400] },
+                  ]}
+                >
+                  {tab.label}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
 
-        <BasicFieldsSection theme={theme} values={basics} onChange={setBasic} />
-        <SocialsSection theme={theme} values={socials} onChange={setSocial} />
-        <BrandColorsSection
-          theme={theme}
-          primaryHex={primaryHex}
-          accentHex={accentHex}
-          onPrimaryChange={setPrimaryHex}
-          onAccentChange={setAccentHex}
-        />
-        <TemplateSection theme={theme} value={templateId} onChange={setTemplateId} />
-        <LayoutSection theme={theme} value={layoutKey} onChange={setLayoutKey} />
-        <ThemeSection theme={theme} value={themeKey} onChange={setThemeKey} />
-        <QrStyleSection theme={theme} value={qrPreset} onChange={setQrPreset} />
-        <ServicesSection theme={theme} items={services} onChange={setServices} />
-        <CustomButtonsSection theme={theme} items={customButtons} onChange={setCustomButtons} />
-        <FaqsSection theme={theme} items={faqs} onChange={setFaqs} />
-        <StatusBannerSection theme={theme} value={statusBanner} onChange={setStatusBanner} />
-        <FeedbackSection theme={theme} value={feedbackEnabled} onChange={setFeedbackEnabled} />
-        <VisibilitySection theme={theme} value={visibility} onChange={setVisibility} />
-        <DiscoverySection theme={theme} values={discovery} onChange={setDiscoveryField} />
-      </ScrollView>
+        {activeTab === 'profil' && (
+          <ScrollView
+            key="profil"
+            style={{ backgroundColor: theme.bg[0] }}
+            contentContainerStyle={styles.scroll}
+            keyboardShouldPersistTaps="handled"
+            keyboardDismissMode="interactive"
+            automaticallyAdjustKeyboardInsets
+          >
+            {/* Photo */}
+            <TouchableOpacity
+              onPress={() => void pickPhoto()}
+              disabled={saving}
+              style={[styles.photoWrap, { borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[1] }]}
+            >
+              {photoUri ? (
+                <Image source={{ uri: photoUri }} style={styles.photo} />
+              ) : (
+                <Text style={[styles.photoPlaceholder, { color: theme.ink[400] }]}>
+                  {t.addPhoto}
+                </Text>
+              )}
+              {photoUri && (
+                <View style={styles.photoEditBadge}>
+                  <Text style={styles.photoEditBadgeText}>{t.changePhoto}</Text>
+                </View>
+              )}
+            </TouchableOpacity>
+
+            <BasicFieldsSection theme={theme} values={basics} onChange={setBasic} />
+            <SocialsSection theme={theme} values={socials} onChange={setSocial} />
+            <ServicesSection theme={theme} items={services} onChange={setServices} />
+            <CustomButtonsSection theme={theme} items={customButtons} onChange={setCustomButtons} />
+            <FaqsSection theme={theme} items={faqs} onChange={setFaqs} />
+          </ScrollView>
+        )}
+
+        {activeTab === 'tasarim' && (
+          <ScrollView
+            key="tasarim"
+            style={{ backgroundColor: theme.bg[0] }}
+            contentContainerStyle={styles.scroll}
+            keyboardShouldPersistTaps="handled"
+          >
+            <TemplateSection
+              theme={theme}
+              value={templateId}
+              onChange={setTemplateId}
+              onPreviewRequest={(tplId) => {
+                router.push({
+                  pathname: '/(app)/cards/template-preview',
+                  params: { selectedId: String(tplId) },
+                });
+              }}
+            />
+            <LayoutSection theme={theme} value={layoutKey} onChange={setLayoutKey} />
+            <ThemeSection theme={theme} value={themeKey} onChange={setThemeKey} />
+            <BrandColorsSection
+              theme={theme}
+              primaryHex={primaryHex}
+              accentHex={accentHex}
+              onPrimaryChange={setPrimaryHex}
+              onAccentChange={setAccentHex}
+            />
+            <QrStyleSection theme={theme} value={qrPreset} onChange={setQrPreset} />
+            {/* No live-preview FAB on create — there's no slug yet to preview. */}
+          </ScrollView>
+        )}
+
+        {activeTab === 'gelismis' && (
+          <ScrollView
+            key="gelismis"
+            style={{ backgroundColor: theme.bg[0] }}
+            contentContainerStyle={styles.scroll}
+            keyboardShouldPersistTaps="handled"
+            keyboardDismissMode="interactive"
+            automaticallyAdjustKeyboardInsets
+          >
+            <StatusBannerSection theme={theme} value={statusBanner} onChange={setStatusBanner} />
+            <FeedbackSection theme={theme} value={feedbackEnabled} onChange={setFeedbackEnabled} />
+            <VisibilitySection theme={theme} value={visibility} onChange={setVisibility} />
+            <DiscoverySection theme={theme} values={discovery} onChange={setDiscoveryField} />
+          </ScrollView>
+        )}
       </KeyboardAvoidingView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
-  // paddingBottom 160 leaves headroom above the soft keyboard on iOS so the
-  // last form fields (Discovery / country) remain visible while typing.
-  // Sprint D added 5 sections at the bottom; the previous 48 was sized for
-  // the pre-Sprint-D form and clipped the tail.
   scroll: { padding: 16, paddingBottom: 160 },
   saveBtn: { paddingHorizontal: 4 },
   saveBtnText: { fontSize: 16, fontWeight: '600' },
+  tabBar: {
+    flexDirection: 'row',
+    height: 44,
+    borderBottomWidth: 1,
+  },
+  tabPill: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderBottomWidth: 2,
+    borderBottomColor: 'transparent',
+  },
+  tabText: {
+    fontSize: 13,
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
   photoWrap: {
     width: 96, height: 96, borderRadius: 48, borderWidth: 1,
     alignSelf: 'center', justifyContent: 'center', alignItems: 'center',

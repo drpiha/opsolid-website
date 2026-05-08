@@ -11,7 +11,18 @@
 
 import { Sparkles } from "lucide-react";
 
-type Tone = "info" | "warm" | "celebration";
+// Two generations of tone vocabulary live in the wild:
+//   - Phase 6.6 web ("info" | "warm" | "celebration") — `cardData.statusMessage`
+//   - Sprint 6 mobile ("info" | "success" | "warn" | "announce") — `cardData.statusBanner`
+// The component accepts the union; the page preference order (statusBanner →
+// statusMessage) is enforced upstream in src/app/c/[slug]/page.tsx.
+type Tone =
+  | "info"
+  | "warm"
+  | "celebration"
+  | "success"
+  | "warn"
+  | "announce";
 
 interface Props {
   text: string;
@@ -23,14 +34,19 @@ export function StatusBanner({ text, tone = "info", accentHex }: Props) {
   const trimmed = text.trim();
   if (!trimmed) return null;
 
-  // Per-tone classes are kept inline — three variants is below the threshold
-  // where a CVA wrapper would pay for itself.
+  // Per-tone classes are kept inline — six variants still sits below the
+  // threshold where a CVA wrapper would pay for itself.
   const classes =
-    tone === "celebration"
+    tone === "celebration" || tone === "announce"
       ? "border-copper-500/40 bg-copper-500/10 text-ink"
-      : tone === "warm"
+      : tone === "warm" || tone === "warn"
         ? "border-copper-500/25 bg-copper-50/60 text-ink"
-        : "border-line bg-bg-1 text-ink";
+        : tone === "success"
+          ? "border-[rgba(127,178,134,0.40)] bg-[rgba(127,178,134,0.12)] text-ink"
+          : "border-line bg-bg-1 text-ink";
+
+  // Tones that render a Sparkles glyph: the celebratory / announcement family.
+  const showIcon = tone === "celebration" || tone === "announce";
 
   return (
     <div
@@ -41,12 +57,12 @@ export function StatusBanner({ text, tone = "info", accentHex }: Props) {
         classes,
       ].join(" ")}
       style={
-        tone === "celebration" && accentHex
+        showIcon && accentHex
           ? { borderColor: `${accentHex}55`, backgroundColor: `${accentHex}14` }
           : undefined
       }
     >
-      {tone === "celebration" && (
+      {showIcon && (
         <Sparkles
           size={14}
           className="shrink-0 text-copper"

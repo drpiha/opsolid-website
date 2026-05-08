@@ -301,6 +301,41 @@ export default async function CardPage({ params, searchParams }: PageProps) {
       )
     : false;
 
+  // Sprint 6 — `?preview=1` mode lets the mobile edit screen render an unsaved
+  // configuration without a DB write. Each design knob is read from
+  // searchParams and, if present, overrides the persisted value before the
+  // template renders. No auth gate (the preview overlay is signed-in-only on
+  // the mobile side, and the underlying card must already be public for the
+  // page to render at all).
+  const isPreview = sp.preview === "1" || sp.preview === "true";
+  const previewParam = (key: string): string | undefined => {
+    const v = sp[key];
+    if (typeof v === "string" && v.trim().length > 0) return v;
+    return undefined;
+  };
+  const overrideLayout = isPreview ? previewParam("layout") : undefined;
+  const overrideTheme = isPreview ? previewParam("theme") : undefined;
+  const overrideQr = isPreview ? previewParam("qr") : undefined;
+  const overridePrimary = isPreview ? previewParam("primary") : undefined;
+  const overrideAccent = isPreview ? previewParam("accent") : undefined;
+
+  const effectivePrimaryHex = overridePrimary ?? order.brandPrimaryHex;
+  const effectiveAccentHex = overrideAccent ?? order.brandAccentHex;
+
+  // Templates read `themeKey` off cardData. Mutate a shallow clone so the
+  // override flows through without disturbing the parsed schema (zod gave us
+  // a frozen object on success — copy the data we'll pass to the template).
+  const renderedCardData =
+    overrideTheme || overrideLayout
+      ? {
+          ...parsed.data,
+          ...(overrideTheme ? { themeKey: overrideTheme } : {}),
+          ...(overrideLayout ? { layoutKey: overrideLayout } : {}),
+        }
+      : parsed.data;
+  // Avoid an unused-var warning when both overrides are absent.
+  void overrideQr;
+
   const publicUrl = await publicCardUrl(slug);
   const shareTitle = `${parsed.data.name}${parsed.data.company ? " · " + parsed.data.company : ""}`;
   const qrLabels = contents[localeKey].card.qr;
@@ -337,11 +372,21 @@ export default async function CardPage({ params, searchParams }: PageProps) {
             }}
           />
         )}
-        {parsed.data.statusMessage?.text?.trim() ? (
+        {/* Status banner — prefer the new Sprint 6 `statusBanner` shape (with
+            `enabled` flag + 4 tones), fall back to the legacy `statusMessage`
+            for cards saved before the schema reconciliation. */}
+        {parsed.data.statusBanner?.enabled &&
+        parsed.data.statusBanner.text.trim() ? (
+          <StatusBanner
+            text={parsed.data.statusBanner.text}
+            tone={parsed.data.statusBanner.tone}
+            accentHex={effectiveAccentHex}
+          />
+        ) : parsed.data.statusMessage?.text?.trim() ? (
           <StatusBanner
             text={parsed.data.statusMessage.text}
             tone={parsed.data.statusMessage.tone}
-            accentHex={order.brandAccentHex}
+            accentHex={effectiveAccentHex}
           />
         ) : null}
         <div
@@ -351,11 +396,11 @@ export default async function CardPage({ params, searchParams }: PageProps) {
         >
           <Template
             slug={slug}
-            cardData={parsed.data}
+            cardData={renderedCardData}
             photoPath={order.photoPath}
             logoPath={order.logoPath}
-            brandPrimaryHex={order.brandPrimaryHex}
-            brandAccentHex={order.brandAccentHex}
+            brandPrimaryHex={effectivePrimaryHex}
+            brandAccentHex={effectiveAccentHex}
             source={source}
             siteUrl={siteUrl}
             locale={localeKey}
@@ -363,7 +408,7 @@ export default async function CardPage({ params, searchParams }: PageProps) {
           />
           <CustomSectionsBlock
             sections={parsed.data.customSections}
-            accentHex={order.brandAccentHex ?? undefined}
+            accentHex={effectiveAccentHex ?? undefined}
             tone={isDarkTemplate ? "dark" : "light"}
           />
           {/* Phase 8.3 — save + locale row below card content */}
@@ -381,13 +426,13 @@ export default async function CardPage({ params, searchParams }: PageProps) {
           slug={slug}
           publicUrl={publicUrl}
           shareTitle={shareTitle}
-          accentHex={order.brandAccentHex ?? undefined}
+          accentHex={effectiveAccentHex ?? undefined}
           labels={qrLabels}
         />
         {/* Phase 5 — share drawer trigger (bottom-left, QR occupies bottom-right) */}
         <ShareButton
           slug={slug}
-          accentHex={order.brandAccentHex ?? undefined}
+          accentHex={effectiveAccentHex ?? undefined}
           locale={localeKey}
         />
       </main>

@@ -419,11 +419,26 @@ export const CardDataSchema = z.object({
   /** Phase 7.9 — typography preset; overrides template fonts when non-default. */
   typographyPreset: typographyPreset.optional(),
   /** Faz 6.6 — owner-curated banner above the public card (seasonal greetings,
-   *  out-of-office, "currently accepting clients"). Empty `text` means no banner. */
+   *  out-of-office, "currently accepting clients"). Empty `text` means no banner.
+   *
+   *  LEGACY SHAPE: kept for back-compat with cards saved before Sprint 6 mobile
+   *  introduced the 4-tone variant. New writes go to `statusBanner` below. */
   statusMessage: z
     .object({
       text: z.string().trim().max(200),
       tone: z.enum(["info", "warm", "celebration"]).default("info"),
+    })
+    .optional(),
+  /** Sprint 6 (mobile) — new banner shape with `enabled` flag and 4 tones
+   *  (info / success / warn / announce). The mobile edit form writes here.
+   *  The web public viewer prefers this and falls back to `statusMessage`. */
+  statusBanner: z
+    .object({
+      enabled: z.boolean().default(false),
+      text: z.string().trim().max(200),
+      tone: z
+        .enum(["info", "success", "warn", "announce"])
+        .default("info"),
     })
     .optional(),
 });

@@ -156,6 +156,10 @@ export const t = {
       addService: 'Add service',
       addButton: 'Add button',
       addFaq: 'Add FAQ',
+      tabProfile: 'Profile',
+      tabDesign: 'Design',
+      tabAdvanced: 'Advanced',
+      preview: 'Preview',
     },
     discover: {
       title: 'Discover',
@@ -473,6 +477,10 @@ export const t = {
       addService: 'Leistung hinzufügen',
       addButton: 'Button hinzufügen',
       addFaq: 'FAQ hinzufügen',
+      tabProfile: 'Profil',
+      tabDesign: 'Design',
+      tabAdvanced: 'Erweitert',
+      preview: 'Vorschau',
     },
     discover: {
       title: 'Entdecken',
@@ -794,6 +802,10 @@ export const t = {
       addService: 'Hizmet ekle',
       addButton: 'Buton ekle',
       addFaq: 'SSS ekle',
+      tabProfile: 'Profil',
+      tabDesign: 'Tasarım',
+      tabAdvanced: 'Gelişmiş',
+      preview: 'Önizleme',
     },
     discover: {
       title: 'Keşfet',

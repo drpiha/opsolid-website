@@ -16,7 +16,6 @@ import {
   ActivityIndicator,
   Image,
   FlatList,
-  Dimensions,
 } from 'react-native';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react-native';
 import type { ThemeTokens } from '../../lib/theme/tokens';
@@ -193,15 +192,25 @@ export function SocialsSection({
 }
 
 // ---------- BrandColorsSection ----------
+// `pairedHex` is the *other* color in the brand pair (primary's pair is
+// accent and vice-versa). Both rows show a 100×60 split mini-card so the
+// user can see how the two read together — a single 36px swatch was too
+// small to telegraph contrast.
 function HexRow({
   theme,
   label,
   value,
+  pairedHex,
+  isPrimary,
   onValid,
 }: {
   theme: ThemeTokens;
   label: string;
   value: string;
+  pairedHex: string;
+  /** When true, this row is the *primary* slot — its color fills the wider
+   *  60% pane on the left of the mini-card, mimicking the rendered card. */
+  isPrimary: boolean;
   onValid: (next: string) => void;
 }) {
   const [draft, setDraft] = useState(value);
@@ -216,12 +225,21 @@ function HexRow({
     }
   }
 
-  // Show a valid swatch even while user is typing
-  const swatchColor = HEX_RE.test(draft) ? draft : value;
+  // Show a valid color even while user is typing — only blurring with an
+  // invalid string reverts the in-form value.
+  const liveColor = HEX_RE.test(draft) ? draft : value;
+  // The two panes always show (primary, accent) regardless of which row
+  // owns the input. The owning row supplies its `liveColor`; the partner
+  // row supplies the persisted `pairedHex`.
+  const leftFill = isPrimary ? liveColor : pairedHex;
+  const rightFill = isPrimary ? pairedHex : liveColor;
 
   return (
     <View style={styles.brandRow}>
-      <View style={[styles.swatch, { backgroundColor: swatchColor, borderColor: theme.line.DEFAULT }]} />
+      <View style={[styles.miniCard, { borderColor: theme.line.DEFAULT }]}>
+        <View style={[styles.miniCardLeft, { backgroundColor: leftFill }]} />
+        <View style={[styles.miniCardRight, { backgroundColor: rightFill }]} />
+      </View>
       <View style={[styles.fieldWrap, { flex: 1 }]}>
         <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>{label}</Text>
         <TextInput
@@ -258,8 +276,22 @@ export function BrandColorsSection({
   return (
     <View style={styles.section}>
       <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>{t.sectionBrand}</Text>
-      <HexRow theme={theme} label={t.brandPrimary} value={primaryHex} onValid={onPrimaryChange} />
-      <HexRow theme={theme} label={t.brandAccent} value={accentHex} onValid={onAccentChange} />
+      <HexRow
+        theme={theme}
+        label={t.brandPrimary}
+        value={primaryHex}
+        pairedHex={accentHex}
+        isPrimary={true}
+        onValid={onPrimaryChange}
+      />
+      <HexRow
+        theme={theme}
+        label={t.brandAccent}
+        value={accentHex}
+        pairedHex={primaryHex}
+        isPrimary={false}
+        onValid={onAccentChange}
+      />
     </View>
   );
 }
@@ -376,40 +408,31 @@ export function DiscoverySection({
 }
 
 // ---------- TemplateSection ----------
-// 96 templates is too many to render eagerly. We use FlatList with
-// `numColumns={3}`, fixed-height rows (`getItemLayout`) and a small windowSize
-// so the parent ScrollView stays smooth. The container has a fixed height so
-// the inner FlatList scrolls independently — without that, on Android the
-// nested scroll fights for the gesture and rows under the fold never paint.
-const SCREEN_WIDTH = Dimensions.get('window').width;
-const TEMPLATE_GRID_HEIGHT = 320;
-const TEMPLATE_COLUMNS = 3;
-const TEMPLATE_GAP = 8;
-// Subtract container horizontal padding (none — section already padded by
-// parent ScrollView's padding=16) and intra-cell gap from screen width.
-function templateCellWidth(): number {
-  const horizontalPadding = 16 * 2; // matches parent ScrollView padding
-  const totalGap = TEMPLATE_GAP * (TEMPLATE_COLUMNS - 1);
-  return Math.floor(
-    (SCREEN_WIDTH - horizontalPadding - totalGap) / TEMPLATE_COLUMNS,
-  );
-}
-const TEMPLATE_CELL_WIDTH = templateCellWidth();
-// Card aspect is portrait (~3:5). Add label height so getItemLayout matches
-// the rendered row.
-const TEMPLATE_CELL_IMAGE_HEIGHT = Math.round(TEMPLATE_CELL_WIDTH / 0.6);
-const TEMPLATE_CELL_LABEL_HEIGHT = 22;
-const TEMPLATE_ROW_HEIGHT =
-  TEMPLATE_CELL_IMAGE_HEIGHT + TEMPLATE_CELL_LABEL_HEIGHT + TEMPLATE_GAP;
+// Sprint 6 — horizontal snap carousel replaces the 3-column nested grid.
+// The previous grid fought the parent ScrollView for vertical gestures on
+// Android (nested-scroll arbitration is unreliable). Going horizontal lets
+// the parent ScrollView own vertical entirely; the carousel only handles
+// the X axis, no gesture conflict.
+//
+// Each cell is 160x240 (3:5 portrait aspect, comfortable at thumb's reach).
+// snapToInterval = cell + gap so each swipe lands a single template.
+//
+// Tap-to-select still fires onChange(item.id). Tap-to-preview opens the
+// full-screen modal (template-preview.tsx) — same gesture, both handlers.
+const TEMPLATE_CELL_WIDTH = 160;
+const TEMPLATE_CELL_HEIGHT = 240;
+const TEMPLATE_GAP = 12;
 
 export function TemplateSection({
   theme,
   value,
   onChange,
+  onPreviewRequest,
 }: {
   theme: ThemeTokens;
   value: number;
   onChange: (templateId: number) => void;
+  onPreviewRequest?: (templateId: number, sector: string) => void;
 }) {
   const t = useTranslations(detectLocale()).cards;
   const [items, setItems] = useState<Template[] | null>(null);
@@ -462,11 +485,15 @@ export function TemplateSection({
     return (
       <TouchableOpacity
         activeOpacity={0.85}
-        onPress={() => onChange(item.id)}
+        onPress={() => {
+          onChange(item.id);
+          onPreviewRequest?.(item.id, sector);
+        }}
         style={[
           styles.templateCell,
           {
             width: TEMPLATE_CELL_WIDTH,
+            height: TEMPLATE_CELL_HEIGHT,
             borderColor: selected ? copper[500] : theme.line.DEFAULT,
             borderWidth: selected ? 2 : 1,
             backgroundColor: theme.bg[1],
@@ -475,8 +502,7 @@ export function TemplateSection({
       >
         <View
           style={{
-            width: '100%',
-            height: TEMPLATE_CELL_IMAGE_HEIGHT,
+            flex: 1,
             backgroundColor: copper[50],
             justifyContent: 'center',
             alignItems: 'center',
@@ -553,43 +579,37 @@ export function TemplateSection({
         </ScrollView>
       )}
 
-      <View style={[styles.templateGridWrap, { borderColor: theme.line.DEFAULT }]}>
-        {items === null && !error ? (
-          <View style={styles.templateCenter}>
-            <ActivityIndicator size="small" color={copper[500]} />
-          </View>
-        ) : error ? (
-          <View style={styles.templateCenter}>
-            <Text style={{ color: theme.ink[400], fontSize: 13 }}>
-              {t.templatesError}
-            </Text>
-          </View>
-        ) : filtered.length === 0 ? (
-          <View style={styles.templateCenter}>
-            <Text style={{ color: theme.ink[400], fontSize: 13 }}>
-              {t.templatesEmpty}
-            </Text>
-          </View>
-        ) : (
-          <FlatList
-            data={filtered}
-            keyExtractor={(it) => String(it.id)}
-            renderItem={renderCell}
-            numColumns={TEMPLATE_COLUMNS}
-            columnWrapperStyle={{ gap: TEMPLATE_GAP }}
-            contentContainerStyle={{ gap: TEMPLATE_GAP, paddingVertical: 4 }}
-            initialNumToRender={9}
-            windowSize={5}
-            getItemLayout={(_, index) => ({
-              length: TEMPLATE_ROW_HEIGHT,
-              offset: TEMPLATE_ROW_HEIGHT * Math.floor(index / TEMPLATE_COLUMNS),
-              index,
-            })}
-            nestedScrollEnabled
-            showsVerticalScrollIndicator={false}
-          />
-        )}
-      </View>
+      {items === null && !error ? (
+        <View style={styles.templateCarouselFallback}>
+          <ActivityIndicator size="small" color={copper[500]} />
+        </View>
+      ) : error ? (
+        <View style={styles.templateCarouselFallback}>
+          <Text style={{ color: theme.ink[400], fontSize: 13 }}>
+            {t.templatesError}
+          </Text>
+        </View>
+      ) : filtered.length === 0 ? (
+        <View style={styles.templateCarouselFallback}>
+          <Text style={{ color: theme.ink[400], fontSize: 13 }}>
+            {t.templatesEmpty}
+          </Text>
+        </View>
+      ) : (
+        <FlatList
+          data={filtered}
+          keyExtractor={(it) => String(it.id)}
+          renderItem={renderCell}
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.templateCarouselContent}
+          ItemSeparatorComponent={() => <View style={{ width: TEMPLATE_GAP }} />}
+          snapToInterval={TEMPLATE_CELL_WIDTH + TEMPLATE_GAP}
+          decelerationRate="fast"
+          initialNumToRender={6}
+          windowSize={5}
+        />
+      )}
     </View>
   );
 }
@@ -987,13 +1007,20 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   brandRow: { flexDirection: 'row', alignItems: 'flex-end', gap: 12 },
-  swatch: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+  // Sprint 6 — split mini-card replaces the round 36×36 swatch. The new chip
+  // is 100×60 and shows the *pair* (primary 60% / accent 40%) so the user
+  // can read both at once while editing either hex code.
+  miniCard: {
+    width: 100,
+    height: 60,
+    borderRadius: 12,
     borderWidth: 1,
+    overflow: 'hidden',
+    flexDirection: 'row',
     marginBottom: 6,
   },
+  miniCardLeft: { flex: 3 }, // 60% — primaryHex
+  miniCardRight: { flex: 2 }, // 40% — accentHex
   segmentRow: { flexDirection: 'row', gap: 8 },
   segmentPill: {
     flex: 1,
@@ -1021,15 +1048,17 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   sectorChipText: { fontSize: 13, fontWeight: '500', textTransform: 'capitalize' },
-  templateGridWrap: {
-    height: TEMPLATE_GRID_HEIGHT,
-    borderWidth: 1,
-    borderRadius: 12,
-    padding: 6,
+  templateCarouselContent: {
+    paddingVertical: 6,
+    paddingRight: 16,
   },
-  templateCenter: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  templateCarouselFallback: {
+    height: TEMPLATE_CELL_HEIGHT,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   templateCell: {
-    borderRadius: 10,
+    borderRadius: 12,
     overflow: 'hidden',
   },
   templatePlaceholder: {
