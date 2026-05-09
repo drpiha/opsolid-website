@@ -38,18 +38,26 @@ mobile/
 
 ## Current state — confirmed by git log + last session
 
-Latest mobile-relevant commit: see `git log --oneline -10 -- mobile/`. As of last write, sprints 0–4 + Inbox UX + keyboard fix are merged on `main`. Sprint 5 (CRM features) and gallery multi-upload are NOT yet started.
+Latest mobile-relevant commit: `1c25bd2` (black-screen fix). The full sprint history through Sprint 7 is in `mobile/PROGRESS.md` — read that for the canonical timeline. Build #21 ships everything through commit `1c25bd2`.
 
-**Awaiting deployment:**
-- `scripts/seed-public-cards.ts` is committed but has NOT been run on production. It needs to be on the VPS (`/opt/opsolid-website`) and then executed once. The Deploy-to-VPS workflow (`paths-ignore: scripts/**`) does NOT trigger on script changes — trigger it manually with `gh workflow run "Deploy to VPS"` after a fresh `main` push.
-- After deploy, run on prod: `ssh root@72.62.0.111 "cd /opt/opsolid-website && docker exec opsolid-app npx tsx scripts/seed-public-cards.ts"`. Idempotent. Inserts demo cards for Musk, Gates, Cook, Nadella, Pichai, Huang, Sandberg, Jobs.
+**Stable keystore is in GitHub Secrets** (`KEYSTORE_BASE64` + `KEYSTORE_PASSWORD`). Local backup at `~/.opsolid/opsolid-release.keystore`. Never re-generate without rotating both — every installed app would need uninstall.
+
+**Production seed status:**
+- Templates table has all 96 ids (`scripts/seed-templates.ts` ran on 2026-05-08).
+- Discover has 16 demo cards (`scripts/seed-public-cards.ts` ran on 2026-05-08, refactored to import `PrismaClient` from `src/generated/prisma` directly so it works in the container).
 
 ## Pending work — read PROGRESS.md "Pending" section for details
 
-1. **Sprint 5 — CRM** (highest user value): lead form on public card, Smart Exchange ("send my card"), feedback widget (7-category 1–5 ratings), status banner edit/render. Server endpoints already exist: `POST /api/cards/[slug]/lead`, `POST /api/cards/[slug]/exchange`, `POST /api/cards/[slug]/feedback`.
-2. **Photo gallery** — `cardData.gallery` up to 24 images. Multi-pick via expo-image-picker (already in deps), reorder, delete, public viewer lightbox.
-3. **Stable signing keystore** — `mobile-build.yml` regenerates the keystore each run; every install therefore requires `adb uninstall` (clears Google session, biometric pref, secure-store tokens). Move keystore to GitHub secret `KEYSTORE_BASE64` + `KEYSTORE_PASSWORD` so all builds sign with the same key. **This is the most-painful UX issue right now** — fix early.
-4. **Deferred** (skip unless asked): Apple/Google Wallet pass, custom domain, album moderation, push notifications.
+The next three sprints, in order:
+
+1. **Sprint F2 — Events / Fairs feature** (new Prisma model `Event` + `EventAttendee`, mobile screens, Discover rail, owner attendance toggle on Gelişmiş tab). Seed 4 fictional fairs.
+2. **Sprint F3 — Contacts seed + UX** (Quick "Save sample contacts" button on empty Contacts state; verify save-card flow refreshes on focus).
+3. **Sprint F4 — Inbox messaging thread** (`Message` model on `CardConnection`, thread view at `(app)/inbox/[connectionId].tsx`, server endpoints).
+
+**Polish backlog:**
+- Save-error alert in `mobile/app/(app)/cards/edit/[id].tsx:377` still says `t.errorLoad`; add `cards.errorSave` and use it.
+- Migrate `CardDeckTile.handlePressIn` from `Vibration.vibrate` to `expo-haptics` if/when adding the dep is OK.
+- React Native Wallet passes (Apple + Google), custom domain, push notifications — deferred.
 
 ## Gotchas the previous session hit
 
