@@ -87,6 +87,10 @@ Two strategy docs were produced 2026-05-09 to plan Verso's path to category lead
 
 The plan's "Next-session resume" block names `mobile/assets/m1-implementation-plan.md` as the very first deliverable for the milestone-execution session — that file does NOT exist yet; it's the next thing to produce.
 
+### Carrd comparison plan — 2026-05-09
+
+3. **`mobile/assets/carrd-comparison-plan.md`** — research-scout audit of Carrd.co (one-page site builder, $9–$49/yr) vs Verso. Verso wins on mobile-first creation, NFC/QR/vCard share, smart-exchange, inbox messaging, Discover/Events network, 96 curated templates, EU-native hosting. Carrd wins on free-form composition, form builder + 18 ESP integrations, embed-anything, password protection, HTML export. **Adopt** 7 of 8 gaps into M1/M3/M5 (form-builder-lite + ESP webhooks → M1; curated embed whitelist + linktree template + gallery lightbox → M3; password protection + HTML export + Stripe tip-button + custom-domain wizard → M5). **Reject** free-form composition (kills the curation moat) and A/B variants (solo-dev tax). **No M7 needed** — splintering Form/Password/Embeds would compete with M3 and M5 for the same hours. Pricing: hold Verso Pro at **€7/mo / €60/yr** — same annual ballpark as Carrd Pro Plus but for a richer surface. External one-liner inside the file.
+
 ### Pickup prompt for the next session
 
 > "Verso is feature-complete through Sprint F4. The strategic plan in `mobile/assets/world-class-milestone-plan.md` lists six milestones; M1 (Frictionless creation) is next. Read both world-class docs, answer the five open questions Hasan flagged in the plan (or note Hasan's answers in chat), then produce `mobile/assets/m1-implementation-plan.md` — a file-and-line implementation brief like the prior `edit-experience-brief.md`. After Hasan reviews M1, dispatch a maker agent."
