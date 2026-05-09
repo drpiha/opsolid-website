@@ -223,7 +223,7 @@ export default function CardCreateScreen() {
 
       Alert.alert('', t.createSuccess, [{ text: 'OK', onPress: () => router.back() }]);
     } catch {
-      Alert.alert('', t.errorLoad);
+      Alert.alert('', t.errorSave);
     } finally {
       setSaving(false);
     }

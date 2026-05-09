@@ -72,8 +72,6 @@ The contributing sprints are tagged in commit messages (`Sprint F2`, `Sprint F3`
 
 ## Polish backlog (lower priority, after smoke-test)
 
-- Save catch in `mobile/app/(app)/cards/edit/[id].tsx` line 377 still says `t.errorLoad` (could not load) on save errors. Add `cards.errorSave` i18n key and use it.
-- Migrate `CardDeckTile.handlePressIn` from RN core `Vibration.vibrate` to `expo-haptics` (one file).
 - Add a regression test for `_layout.tsx` that mounts with `useAuthStore` stubbed to never resolve, fast-forward 10s with `jest.useFakeTimers()`, assert the rendered tree is no longer the loading View. Prevents black-screen regressions.
 
 ---
@@ -148,6 +146,7 @@ Shipped (2026-05-09):
 - **Magic-link email fallback.** Mobile `requestMagicLink(email, locale)` accepts the full `Locale` type but maps `es`/`it`/`fr`/`ar` → `en` before posting to `/api/v1/auth/magic-link` — server email templates only ship in en/de/tr today. **TODO** (post-M6): translate the magic-link templates into the four new locales (`src/lib/email/templates/copy.ts`).
   - **M6 follow-up — auth email templates [DONE — committed].** `src/lib/email/templates/copy.ts` `Locale` widened to all 7; `src/lib/email/shell.ts` adds a wider `Locale` (auth) + narrow `TransactionalLocale` alias (legacy order-flow emails stay 3-locale) and emits `<html dir="rtl">` + body `direction:rtl;text-align:right` when locale is `ar` (CTA buttons stay center-aligned via their wrapping presentation tables). Magic-link, welcome, and password-reset emails now ship in en/de/tr/es/it/fr/ar; both `/api/auth/magic-link` and `/api/v1/auth/magic-link` Zod enums widened; mobile `requestMagicLink` no longer maps `es|it|fr|ar` → `en`.
 - **Templates locale narrowing.** The 96 v2 templates ship per-template copy tables keyed on `'de' | 'en' | 'tr'`. Rather than rewrite all 96, `TemplateProps.locale` stays narrow and a new `narrowTemplateLocale()` helper in `src/components/cards/templates/v2/types.ts` widens to `Locale` at the call site, falling back to `en` for the new locales. Public card visuals therefore render in English on `/c/<slug>?lang=es|it|fr|ar`; a per-template translation pass is post-M6 polish.
+- **M6 polish pass.** New `cards.errorSave` i18n key in all 7 locales (en/de/tr/es/it/fr/ar); `edit/[id].tsx` handleSave catch + `create.tsx` handleCreate catch now use it instead of the wrong `cards.errorLoad`. `CardDeckTile.handlePressIn` migrated from RN core `Vibration.vibrate(10)` to `expo-haptics` `Haptics.impactAsync(ImpactFeedbackStyle.Light)` — `expo-haptics: ~15.0.0` added as the documented Sprint 7 follow-up dep.
 
 **Known TODOs (intentionally deferred — better to ship 95% than block):**
 
@@ -452,9 +451,10 @@ Shipped:
 Deploy steps for Hasan:
 1. `docker exec opsolid-app npx prisma migrate deploy` (applies `20260509120000_add_messages`).
 
-### Sprint F-Polish (lower priority)
-- Save catch in `mobile/app/(app)/cards/edit/[id].tsx` line 377 still says `t.errorLoad` (could not load) on save errors. Add `cards.errorSave` i18n key and use it.
-- Consider migrating from RN core `Vibration.vibrate` to `expo-haptics` for the card-deck press feedback. One file change in `CardDeckTile.handlePressIn`.
+### Sprint F-Polish [DONE — committed]
+Shipped (M6 polish pass, this commit):
+- `cards.errorSave` i18n key added across all 7 locales (`mobile/src/lib/i18n/locale.ts`); `mobile/app/(app)/cards/edit/[id].tsx` handleSave catch + `mobile/app/(app)/cards/create.tsx` handleCreate catch now show "Couldn't save changes. Try again." (and locale equivalents) instead of the misleading "Could not load card" copy.
+- `CardDeckTile.handlePressIn` migrated from RN core `Vibration.vibrate(10)` to `expo-haptics` `Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light)` for proper iOS Taptic Engine feedback. Added `expo-haptics: ~15.0.0` (SDK 54 compatible, ~30KB) — the one documented dep addition flagged by Sprint 7's brief. No other Vibration call-sites existed (Sprint 4/5/6 modals use Reanimated press-state only).
 
 ## Deferred (low value vs cost)
 - Apple Wallet / Google Wallet passes

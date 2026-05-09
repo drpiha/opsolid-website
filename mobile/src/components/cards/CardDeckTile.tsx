@@ -5,7 +5,6 @@ import {
   Image,
   Pressable,
   StyleSheet,
-  Vibration,
   useWindowDimensions,
 } from 'react-native';
 import Animated, {
@@ -13,6 +12,7 @@ import Animated, {
   useAnimatedStyle,
   withSpring,
 } from 'react-native-reanimated';
+import * as Haptics from 'expo-haptics';
 import { useRouter } from 'expo-router';
 import type { ApiCard } from '../../lib/api/types';
 import { useTheme } from '../../lib/theme/ThemeProvider';
@@ -53,10 +53,10 @@ function statusDotColor(status: ApiCard['status']): string {
 
 /**
  * 5:3 tile rendering brand band, accent dot, avatar, name/title, slug, status
- * dot. Press feedback is a Reanimated worklet (scale 0.97). Haptic-style
- * feedback uses RN core `Vibration` (10ms) since expo-haptics isn't in deps
- * — Vibration is best-effort and silently no-ops on iOS, which matches
- * Apple's accessibility guidance for non-critical taps.
+ * dot. Press feedback is a Reanimated worklet (scale 0.97). Tactile feedback
+ * uses `expo-haptics` `ImpactFeedbackStyle.Light` — proper iOS Taptic Engine
+ * + Android haptics for tap-style interactions, consistent with Apple's
+ * Human Interface Guidelines for non-critical UI confirmations.
  */
 export function CardDeckTile({
   card,
@@ -97,14 +97,9 @@ export function CardDeckTile({
   const handlePressIn = useCallback(() => {
     scale.value = withSpring(0.97, { damping: 20, stiffness: 300 });
     shadowOpacity.value = withSpring(0.20, { damping: 20, stiffness: 300 });
-    // Light tactile feedback. Vibration is JS-thread (not worklet-safe to
-    // call from inside the worklet anyway).
-    try {
-      Vibration.vibrate(10);
-    } catch {
-      // Some platforms / emulators throw — never let tactile feedback
-      // bring down a tap.
-    }
+    // Light tactile feedback. impactAsync runs on the JS thread (not
+    // worklet-safe) and silently no-ops on devices without haptic hardware.
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light).catch(() => {});
   }, [scale, shadowOpacity]);
 
   const handlePressOut = useCallback(() => {

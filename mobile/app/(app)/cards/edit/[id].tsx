@@ -564,7 +564,7 @@ export default function CardEditScreen() {
 
       Alert.alert('', t.saveSuccess, [{ text: 'OK', onPress: () => router.back() }]);
     } catch {
-      Alert.alert('', t.errorLoad);
+      Alert.alert('', t.errorSave);
     } finally {
       setSaving(false);
     }
