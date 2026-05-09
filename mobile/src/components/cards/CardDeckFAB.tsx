@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { forwardRef, useEffect } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import Animated, {
@@ -23,8 +23,14 @@ type Props = {
  * Pulse animation runs as a worklet `withRepeat(withSequence(...), -1, true)`
  * only when the deck is empty. Once the user creates their first card the
  * pulse stops and the FAB stays at scale 1.
+ *
+ * Accepts a forwarded `ref` on the outer absolutely-positioned wrap so the
+ * coaching-mark Tour A can `measureInWindow` it for the spotlight cutout.
  */
-export function CardDeckFAB({ onPress, pulse }: Props) {
+export const CardDeckFAB = forwardRef<View, Props>(function CardDeckFAB(
+  { onPress, pulse },
+  ref,
+) {
   const insets = useSafeAreaInsets();
   const scale = useSharedValue(1);
 
@@ -50,6 +56,8 @@ export function CardDeckFAB({ onPress, pulse }: Props) {
 
   return (
     <View
+      ref={ref}
+      collapsable={false}
       style={[
         styles.wrap,
         { bottom: 32 + insets.bottom, right: 24 },
@@ -69,7 +77,7 @@ export function CardDeckFAB({ onPress, pulse }: Props) {
       </Animated.View>
     </View>
   );
-}
+});
 
 const styles = StyleSheet.create({
   wrap: {

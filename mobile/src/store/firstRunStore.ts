@@ -10,6 +10,18 @@
 // Auto-skip: `markEverPublished(true)` flips the `first-card` tour to
 // "seen" without prompting — if the user already has cards, the empty-deck
 // coaching marks would feel patronizing on first launch of a new build.
+// It also sets a separate `everPublished` flag so the cards screen can
+// short-circuit Tour A even before the persisted `seenTours` map writes.
+//
+// Wave 2 additions (M7):
+//   - `everPublished` — boolean mirror of `markEverPublished(true)` so a
+//     re-installer who already has cards doesn't see Tour A. Persists.
+//   - `pendingCelebration` / `markPendingCelebration` — set by the
+//     onboarding publish handler immediately before navigating to the
+//     newly-created card detail screen. The card detail screen reads it
+//     once on mount, renders the celebration banner, and clears the flag.
+//     Persists so a kill-the-app-mid-publish user still sees the banner
+//     when they re-open.
 // -----------------------------------------------------------------------
 
 import { create } from 'zustand';
@@ -18,6 +30,8 @@ import * as SecureStore from 'expo-secure-store';
 import type { TourId } from '../lib/tour/types';
 
 const STORAGE_KEY = 'verso.firstrun.seenTours';
+const STORAGE_KEY_EVER_PUBLISHED = 'verso.firstrun.everPublished';
+const STORAGE_KEY_PENDING_CELEBRATION = 'verso.firstrun.pendingCelebration';
 
 export type SeenToursMap = Record<TourId, boolean>;
 
@@ -31,6 +45,13 @@ const INITIAL_SEEN: SeenToursMap = {
 
 type FirstRunStore = {
   seenTours: SeenToursMap;
+  /** Mirror flag — true once the user has ever had a published card on
+   *  this device. Survives card deletion (i.e. it's never reset) so a
+   *  user who deletes their only card still doesn't re-enter Tour A. */
+  everPublished: boolean;
+  /** Set by the onboarding publish handler. The card detail screen
+   *  consumes it once on mount and clears it. */
+  pendingCelebration: boolean;
   hydrated: boolean;
   /** Read the persisted map. Idempotent. */
   hydrate: () => Promise<void>;
@@ -44,6 +65,12 @@ type FirstRunStore = {
    * Pass `false` to leave state alone (no-op for symmetry).
    */
   markEverPublished: (value: boolean) => void;
+  /**
+   * Toggle the "show celebration banner on next card detail mount" flag.
+   * Onboarding publish handler calls `(true)`. Card detail mount calls
+   * `(false)` after rendering the banner.
+   */
+  markPendingCelebration: (value: boolean) => void;
 };
 
 function persist(seen: SeenToursMap): void {
@@ -57,26 +84,52 @@ function persist(seen: SeenToursMap): void {
   }
 }
 
+function persistFlag(key: string, value: boolean): void {
+  try {
+    if (value) {
+      SecureStore.setItemAsync(key, '1').catch(() => {});
+    } else {
+      SecureStore.deleteItemAsync(key).catch(() => {});
+    }
+  } catch {
+    // ignore
+  }
+}
+
 export const useFirstRunStore = create<FirstRunStore>((set, get) => ({
   seenTours: { ...INITIAL_SEEN },
+  everPublished: false,
+  pendingCelebration: false,
   hydrated: false,
 
   hydrate: async () => {
     if (get().hydrated) return;
     try {
-      const raw = await SecureStore.getItemAsync(STORAGE_KEY);
-      if (!raw) {
-        set({ hydrated: true });
-        return;
+      const [raw, everPublished, pendingCelebration] = await Promise.all([
+        SecureStore.getItemAsync(STORAGE_KEY),
+        SecureStore.getItemAsync(STORAGE_KEY_EVER_PUBLISHED),
+        SecureStore.getItemAsync(STORAGE_KEY_PENDING_CELEBRATION),
+      ]);
+      let merged: SeenToursMap = { ...INITIAL_SEEN };
+      if (raw) {
+        try {
+          const parsed = JSON.parse(raw) as Partial<SeenToursMap>;
+          // Merge defensively — older builds may have shipped without all five
+          // tour ids. Any missing key falls back to `false` (= unseen).
+          merged = { ...INITIAL_SEEN, ...parsed };
+        } catch {
+          // Corrupt JSON → start fresh on the seen map but keep the flags below.
+        }
       }
-      const parsed = JSON.parse(raw) as Partial<SeenToursMap>;
-      // Merge defensively — older builds may have shipped without all five
-      // tour ids. Any missing key falls back to `false` (= unseen).
-      const merged: SeenToursMap = { ...INITIAL_SEEN, ...parsed };
-      set({ seenTours: merged, hydrated: true });
+      set({
+        seenTours: merged,
+        everPublished: everPublished === '1',
+        pendingCelebration: pendingCelebration === '1',
+        hydrated: true,
+      });
     } catch {
-      // Corrupt JSON or SecureStore failure → start fresh. The user re-sees
-      // the tour, which is acceptable.
+      // SecureStore failure → start fresh. The user re-sees the tour, which
+      // is acceptable.
       set({ hydrated: true });
     }
   },
@@ -90,9 +143,15 @@ export const useFirstRunStore = create<FirstRunStore>((set, get) => ({
   },
 
   resetAll: () => {
-    set({ seenTours: { ...INITIAL_SEEN } });
+    set({
+      seenTours: { ...INITIAL_SEEN },
+      everPublished: false,
+      pendingCelebration: false,
+    });
     try {
       SecureStore.deleteItemAsync(STORAGE_KEY).catch(() => {});
+      SecureStore.deleteItemAsync(STORAGE_KEY_EVER_PUBLISHED).catch(() => {});
+      SecureStore.deleteItemAsync(STORAGE_KEY_PENDING_CELEBRATION).catch(() => {});
     } catch {
       // ignore
     }
@@ -100,10 +159,24 @@ export const useFirstRunStore = create<FirstRunStore>((set, get) => ({
 
   markEverPublished: (value) => {
     if (!value) return;
-    const current = get().seenTours;
-    if (current['first-card']) return;
-    const next: SeenToursMap = { ...current, 'first-card': true };
-    set({ seenTours: next });
-    persist(next);
+    const state = get();
+    // Update both the seenTours short-circuit AND the explicit everPublished
+    // flag — different consumers use different gates.
+    if (!state.everPublished) {
+      set({ everPublished: true });
+      persistFlag(STORAGE_KEY_EVER_PUBLISHED, true);
+    }
+    if (!state.seenTours['first-card']) {
+      const next: SeenToursMap = { ...state.seenTours, 'first-card': true };
+      set({ seenTours: next });
+      persist(next);
+    }
+  },
+
+  markPendingCelebration: (value) => {
+    const current = get().pendingCelebration;
+    if (current === value) return;
+    set({ pendingCelebration: value });
+    persistFlag(STORAGE_KEY_PENDING_CELEBRATION, value);
   },
 }));

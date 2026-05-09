@@ -7,30 +7,49 @@ import {
   Linking,
   Alert,
   Pressable,
+  Share,
   StyleSheet,
+  TouchableOpacity,
 } from 'react-native';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { QrCode } from 'lucide-react-native';
+import { CheckCircle, QrCode, Share2, X } from 'lucide-react-native';
 import { ScreenContainer } from '../../../src/components/ui/ScreenContainer';
 import { Button } from '../../../src/components/ui/Button';
 import { QrCodeModal } from '../../../src/components/cards/QrCodeModal';
 import { getCard, deleteCard } from '../../../src/lib/api/cards';
 import type { ApiCard } from '../../../src/lib/api/types';
 import { useTheme } from '../../../src/lib/theme/ThemeProvider';
-import { copper } from '../../../src/lib/theme/tokens';
+import { copper, teal } from '../../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../../src/lib/i18n/locale';
+import { useFirstRunStore } from '../../../src/store/firstRunStore';
 
 export default function CardDetailScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const theme = useTheme();
-  const t = useTranslations(detectLocale()).cards;
+  const tAll = useTranslations(detectLocale());
+  const t = tAll.cards;
+  const tCardLive = tAll.cardLive;
 
   const [card, setCard] = useState<ApiCard | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [deleting, setDeleting] = useState(false);
   const [qrOpen, setQrOpen] = useState(false);
+
+  // M7 Wave 2 — first-publish celebration banner.
+  // The onboarding publish handler sets `pendingCelebration` on
+  // firstRunStore right before navigating here. We snapshot it once on mount
+  // so a second-by-second re-render of the store doesn't blink the banner;
+  // dismissing it (via X, the share button, or simply navigating away)
+  // clears the persisted flag.
+  const [showCelebration, setShowCelebration] = useState(() =>
+    useFirstRunStore.getState().pendingCelebration,
+  );
+  const dismissCelebration = useCallback(() => {
+    setShowCelebration(false);
+    useFirstRunStore.getState().markPendingCelebration(false);
+  }, []);
 
   const load = useCallback(async () => {
     if (!id) return;
@@ -54,6 +73,16 @@ export default function CardDetailScreen() {
     if (!card?.slug) return;
     void Linking.openURL(`https://opsolid.de/c/${card.slug}`);
   };
+
+  const handleShare = useCallback(async () => {
+    if (!card?.slug) return;
+    const url = `https://opsolid.de/c/${card.slug}`;
+    try {
+      await Share.share({ message: url, url });
+    } catch {
+      // User cancelled or platform refused — non-fatal.
+    }
+  }, [card?.slug]);
 
   const handleDelete = () => {
     if (!card) return;
@@ -140,6 +169,50 @@ export default function CardDetailScreen() {
           { backgroundColor: theme.bg[0] },
         ]}
       >
+        {/* M7 Wave 2 — first-publish celebration. Renders once when the
+            onboarding publish handler set pendingCelebration on the store.
+            The share-icon button reuses the system share sheet (same URL the
+            "Open on the web" button uses). The X dismisses without sharing. */}
+        {showCelebration ? (
+          <View
+            style={[
+              styles.celebration,
+              {
+                backgroundColor: teal[500] + '20',
+                borderColor: teal[500],
+              },
+            ]}
+          >
+            <View style={styles.celebrationIcon}>
+              <CheckCircle size={24} color="#FFFFFF" />
+            </View>
+            <View style={styles.celebrationText}>
+              <Text style={[styles.celebrationTitle, { color: theme.ink[100] }]}>
+                {tCardLive.title}
+              </Text>
+              <Text style={[styles.celebrationBody, { color: theme.ink[300] }]}>
+                {tCardLive.body}
+              </Text>
+            </View>
+            <TouchableOpacity
+              onPress={() => {
+                void handleShare();
+              }}
+              style={styles.celebrationBtn}
+              accessibilityLabel="Share"
+            >
+              <Share2 size={20} color={teal[600]} />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={dismissCelebration}
+              style={styles.celebrationBtn}
+              accessibilityLabel="Dismiss"
+            >
+              <X size={18} color={theme.ink[400]} />
+            </TouchableOpacity>
+          </View>
+        ) : null}
+
         {/* Hero card */}
         <View
           style={[
@@ -293,5 +366,35 @@ const styles = StyleSheet.create({
   },
   headerBtn: {
     paddingRight: 4,
+  },
+  celebration: {
+    borderWidth: 1,
+    borderRadius: 12,
+    padding: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  celebrationIcon: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: teal[500],
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  celebrationText: {
+    flex: 1,
+  },
+  celebrationTitle: {
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  celebrationBody: {
+    fontSize: 13,
+    marginTop: 2,
+  },
+  celebrationBtn: {
+    padding: 8,
   },
 });

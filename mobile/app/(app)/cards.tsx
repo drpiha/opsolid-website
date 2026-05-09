@@ -20,6 +20,8 @@ import { useTheme } from '../../src/lib/theme/ThemeProvider';
 import { teal } from '../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
 import { useOnboardingDraftStore } from '../../src/store/onboardingDraftStore';
+import { useFirstRunStore } from '../../src/store/firstRunStore';
+import { useTour } from '../../src/components/tour/TourContext';
 import { useAuthStore } from '../../src/lib/auth/store';
 import { fetchMe } from '../../src/lib/auth/api';
 
@@ -30,7 +32,9 @@ const LIST_THRESHOLD = 10;
 export default function CardsListScreen() {
   const router = useRouter();
   const theme = useTheme();
-  const t = useTranslations(detectLocale()).cards;
+  const tAll = useTranslations(detectLocale());
+  const t = tAll.cards;
+  const tTour = tAll.tour;
 
   const mounted = useRef(false);
   const [items, setItems] = useState<ApiCard[]>([]);
@@ -41,6 +45,22 @@ export default function CardsListScreen() {
   const user = useAuthStore((s) => s.user);
   const setAuthUser = useAuthStore((s) => s.setUser);
   const [paywallOpen, setPaywallOpen] = useState(false);
+
+  // M7 Wave 2 — Tour A (first-card) gating.
+  // We track these on `firstRunStore` (separate from `onboardingDraftStore`'s
+  // `everPublished`, which gates the wizard auto-redirect). The tour-side
+  // flag is set when we observe sorted.length > 0 OR when the wizard's
+  // publish handler completes — both paths feed `markEverPublished(true)`.
+  const { startTour } = useTour();
+  const seenTours = useFirstRunStore((s) => s.seenTours);
+  const tourEverPublished = useFirstRunStore((s) => s.everPublished);
+
+  // Anchor refs for Tour A spotlight cutouts. Wrapped around the empty-state
+  // hero and the FAB respectively — measureInWindow needs a measurable native
+  // View, and the components themselves render Pressables which can be flaky
+  // to measure on Android. The wrappers are pure layout (no styling).
+  const cardDeckEmptyRef = useRef<View>(null);
+  const cardDeckFABRef = useRef<View>(null);
 
   const load = useCallback(
     async (mode: 'initial' | 'refresh') => {
@@ -85,6 +105,69 @@ export default function CardsListScreen() {
         return bT - aT;
       }),
     [items],
+  );
+
+  // M7 Wave 2 — once we observe the user has at least one card, mark the
+  // tour-side `everPublished` flag. This handles the reinstall case: the
+  // wizard's `everPublished` lives in onboardingDraftStore (cleared on
+  // SecureStore wipe) but if the server still has cards, we don't want to
+  // re-run Tour A. The check is idempotent inside `markEverPublished`.
+  useEffect(() => {
+    if (sorted.length > 0 && !tourEverPublished) {
+      useFirstRunStore.getState().markEverPublished(true);
+    }
+  }, [sorted.length, tourEverPublished]);
+
+  // M7 Wave 2 — Tour A (first-card) trigger. Fires when:
+  //   - the cards list has finished loading (no spinner / no error)
+  //   - the deck is empty (no cards yet — the empty-state hero is mounted)
+  //   - the user hasn't seen / skipped this tour before
+  //   - the user has never published a card (reinstall guard)
+  // The 600ms delay lets the focus animation + initial layout pass settle so
+  // measureInWindow returns finite, non-zero coords for the empty hero ref.
+  useFocusEffect(
+    useCallback(() => {
+      if (loading) return;
+      if (sorted.length > 0) return;
+      if (seenTours['first-card']) return;
+      if (tourEverPublished) return;
+
+      const timer = setTimeout(() => {
+        startTour({
+          tourId: 'first-card',
+          steps: [
+            {
+              key: 'A-1',
+              targetRef: cardDeckEmptyRef,
+              title: tTour.firstCardTitle1,
+              body: tTour.firstCardBody1,
+              ctaLabel: tTour.next,
+            },
+            {
+              key: 'A-2',
+              targetRef: cardDeckFABRef,
+              title: tTour.firstCardTitle2,
+              body: tTour.firstCardBody2,
+              ctaLabel: tTour.firstCardCta2,
+              action: async () => goCreate(),
+            },
+            {
+              key: 'A-3',
+              targetRef: null,
+              title: tTour.firstCardTitle3,
+              body: tTour.firstCardBody3,
+              ctaLabel: tTour.done,
+            },
+          ],
+        });
+      }, 600);
+
+      return () => clearTimeout(timer);
+      // goCreate is stable enough for our purposes — reading from
+      // route/router/state inside the closure is fine; we rely on the
+      // outer `seenTours['first-card']` to keep this from re-firing.
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [loading, sorted.length, seenTours, tourEverPublished, startTour]),
   );
 
   function goCreate() {
@@ -148,23 +231,29 @@ export default function CardsListScreen() {
             ) : error && sorted.length === 0 ? (
               renderError()
             ) : isEmpty ? (
-              <CardDeckEmpty
-                onPress={goCreate}
-                headline={
-                  detectLocale() === 'de'
-                    ? 'Erstellen Sie Ihre erste Karte'
-                    : detectLocale() === 'tr'
-                      ? 'İlk kartınızı oluşturun'
-                      : 'Create your first card'
-                }
-                subline={
-                  detectLocale() === 'de'
-                    ? 'Dauert nur 30 Sekunden'
-                    : detectLocale() === 'tr'
-                      ? '30 saniye sürer'
-                      : 'It takes 30 seconds'
-                }
-              />
+              <View
+                ref={cardDeckEmptyRef}
+                collapsable={false}
+                style={styles.tourAnchorFlex}
+              >
+                <CardDeckEmpty
+                  onPress={goCreate}
+                  headline={
+                    detectLocale() === 'de'
+                      ? 'Erstellen Sie Ihre erste Karte'
+                      : detectLocale() === 'tr'
+                        ? 'İlk kartınızı oluşturun'
+                        : 'Create your first card'
+                  }
+                  subline={
+                    detectLocale() === 'de'
+                      ? 'Dauert nur 30 Sekunden'
+                      : detectLocale() === 'tr'
+                        ? '30 saniye sürer'
+                        : 'It takes 30 seconds'
+                  }
+                />
+              </View>
             ) : isList ? (
               <CardDeckList cards={sorted} />
             ) : (
@@ -178,7 +267,11 @@ export default function CardsListScreen() {
             screen-root level (outside ScreenContainer) so its 24pt right
             inset is measured from the screen edge, not the container padding. */}
         {!loading && !error && (
-          <CardDeckFAB onPress={goCreate} pulse={sorted.length === 0} />
+          <CardDeckFAB
+            ref={cardDeckFABRef}
+            onPress={goCreate}
+            pulse={sorted.length === 0}
+          />
         )}
       </View>
       <PaywallModal
@@ -217,5 +310,8 @@ const styles = StyleSheet.create({
   errText: {
     fontSize: 16,
     textAlign: 'center',
+  },
+  tourAnchorFlex: {
+    flex: 1,
   },
 });
