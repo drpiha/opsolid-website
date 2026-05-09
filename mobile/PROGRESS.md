@@ -87,6 +87,63 @@ Two strategy docs were produced 2026-05-09 to plan Verso's path to category lead
 
 The plan's "Next-session resume" block names `mobile/assets/m1-implementation-plan.md` as the very first deliverable for the milestone-execution session — that file does NOT exist yet; it's the next thing to produce.
 
+### M5 — Premium tier [DONE — committed]
+
+Shipped (2026-05-09):
+
+- **Subscription model + Stripe integration.** New Prisma model `UserSubscription` (user-scoped, `userId @unique`, single row per user, distinct from the legacy order-scoped `Subscription` which stays untouched and keeps powering per-card recurring orders from the marketing site). Adds `User.proSince` (denormalised "is Pro" check, flipped by webhook) and `User.stripeCustomerId` (cached customer id). New `DomainRequest` model for Pro custom-domain provisioning. Migration `20260513000000_add_subscriptions_pro/migration.sql` is hand-written, idempotent (`IF NOT EXISTS` everywhere), additive only.
+- **Stripe Checkout + Customer Portal endpoints.** `POST /api/v1/billing/checkout` (auth-gated, body `{ interval: 'monthly'|'yearly' }`) creates the Stripe customer on first call, looks up the configured Price ID from `STRIPE_PRICE_PRO_MONTHLY` / `STRIPE_PRICE_PRO_YEARLY` env vars, returns the Checkout URL. `POST /api/v1/billing/portal` opens the Stripe Customer Portal for cancel / update card / view invoices. `GET /api/v1/billing/me` returns the current Pro flags + subscription details for the mobile Settings tab.
+- **Stripe webhook extensions.** `POST /api/webhooks/stripe` now handles `customer.subscription.{created,updated,deleted}` + `invoice.{paid,payment_failed}` — single new helper `upsertUserSubscriptionFromStripe` in `src/lib/billing/pro.ts` upserts on `userId @unique` and flips `User.proSince`. Idempotency: the unique index on `userId` makes the upsert a single SQL statement, replays of the same event are no-ops. Legacy order-scoped subscription handler is untouched — the new helper short-circuits when `metadata.userId` is missing (legacy events are identified by `metadata.orderId` and stay on their original handler). `proSince` is flipped to `null` only on terminal statuses (canceled / unpaid / incomplete_expired); past_due keeps access during retry.
+- **Free vs Pro feature gates.** New helper `src/lib/auth/pro.ts` exports `isPro(user)` and `cardLimitForUser(user)`. Free = 1 active card; Pro = 5. `POST /api/v1/cards` now counts the user's non-cancelled cards and returns 402 `pro_required` with `{ limit, currentCount, tier }` details when over cap. Mobile `cards.tsx` FAB tap intercepts the same condition client-side and opens the paywall modal — server is the source of truth, client is UX.
+- **Carrd amendments — password protection.** `cardData.password` (argon2id hash via existing `src/lib/auth/password.ts`) added to `CardDataSchema`. The hash never round-trips: owner GET via `toApiCard` redacts `password` to `passwordSet: boolean`, public GET via `toPublicApiCard` does the same. Owners change/clear with a fresh plain string in PATCH; the route's `cardData` merge preserves the existing hash when the field is absent. Public viewer (`/c/[slug]/page.tsx`) renders `LockScreen` when `cardData.password` is set + visitor isn't owner + `verso_unlock_<slug>` cookie is missing. `POST /api/cards/[slug]/unlock` verifies the password (constant-time argon2 verify) and sets a 24h httpOnly cookie. Mobile edit form: new `PasswordSection` in CardFormSections (Gelişmiş tab).
+- **Carrd amendments — HTML export.** Pro-only `GET /api/v1/cards/[id]/export` returns a self-contained `text/html` document with all CSS inlined, no JS, `Content-Disposition: attachment`. We deliberately render hand-tuned HTML rather than SSR-snapshot the React tree because the templates pull dynamic theme tokens, fonts loaded from /api/fonts, and other deps that don't survive a static export. Mobile Settings → Pro → Export HTML opens a card picker; tap → fetch the HTML bytes → wrap in a `data:text/html;base64,…` URL → open in `expo-web-browser` so the user can share/save via the OS share sheet (avoids pulling in `expo-file-system` + `expo-sharing`).
+- **Carrd amendments — Stripe tip jar.** `cardData.tipJar: { enabled, label, stripePriceId }` added to `CardDataSchema`. Pro-gated owner-side; `stripePriceId` is silently dropped on save for non-Pro users. New public endpoint `POST /api/cards/[slug]/tip` creates a one-time Stripe Checkout Session for the configured Price and returns the URL. Defence in depth: the route also rechecks the owner is currently Pro before issuing the session, so a downgraded card's tip button stops working immediately. v1 routes payments to the platform Stripe (Hasan curates handful of sample prices); v2 will add Stripe Connect for owner accounts. Mobile edit form: new `TipJarSection` in CardFormSections.
+- **Pro features — custom domain (v1, manual).** `POST /api/v1/billing/domain-request` (Pro-gated) accepts `{ domain, cardOrderId?, notes? }`, validates the domain regex, persists a `DomainRequest` row at `status="pending"`, fires a best-effort email to `OPSOLID_MAINTAINER_EMAIL` (or `SMTP_FROM`) with the request details. v1 = manual provision via existing Traefik+ACME plan; v2 (out of scope) = self-serve DNS verification. Mobile Settings → Pro → "Request a custom domain" opens an inline form modal.
+- **Pro features — advanced analytics.** Pro-only `GET /api/v1/cards/[id]/analytics` aggregates 30-day totals (views, unique visitors, leads, saves, mutual saves, shares) + share-events grouped by channel from existing `CardView`, `CardLead`, `SavedCard`, `ShareEvent` tables. Approximate unique-visitor metric (UA + country + city) until a `CardView.ipHash` column lands in v2. New mobile screen `(app)/analytics.tsx` with a horizontal card picker + 6-stat grid + per-channel bar chart.
+- **Paywall modal.** New `mobile/src/components/billing/PaywallModal.tsx` — single shared modal triggered by every Pro-gated tap (5-card limit, custom domain, analytics, HTML export, password protection, tip jar). Two CTAs: "Aylık €7" + "Yıllık €60 (-28%)". Each opens Stripe Checkout in `expo-web-browser`; on return the caller refreshes `/api/v1/auth/me` to pick up the new `isPro` state.
+- **`auth/me` extensions.** `GET /api/v1/auth/me` now returns `isPro` + `proSince` so mobile gates render correctly. `User` from `requireBearerUser` already includes `proSince` (it's a regular column on the row), so no extra DB hit; PATCH `/api/v1/auth/me` adds `proSince` to its select for symmetry.
+- **i18n.** New `billing.*` (paywall copy) and `pro.*` (Settings Pro section + analytics + password/tip-jar labels) blocks for en/de/tr in `mobile/src/lib/i18n/locale.ts`.
+
+Decisions logged:
+
+- **Free tier limit = 1 card; Pro = 5.** Aligns with the milestone-plan recommendation and Hasan's pre-answered question. Sharper conversion gate than 3-card free.
+- **Pro pricing = €7/mo or €60/yr (28% saving).** Both Stripe-managed via env-driven Price IDs (`STRIPE_PRICE_PRO_MONTHLY` / `STRIPE_PRICE_PRO_YEARLY`). Annual saving is the carrot for upfront commitment without sales-call complexity.
+- **Custom domain v1 = manual provision.** A Pro-gated form that emails the maintainer + creates a `DomainRequest` row at `status=pending`. The maintainer then provisions manually via the existing Traefik+ACME plan (`project_deferred_todos.md`). v2 will self-serve via DNS verification + automatic ACME issuance — deliberately deferred.
+- **Stripe webhook idempotency.** The user-scoped `UserSubscription.userId @unique` lets `upsert` be the single mutation; replays of any subscription event are no-ops. `User.proSince` is set only on first activation (we read-then-write to avoid overwriting an earlier timestamp on a "subscription.updated" event for an already-active sub). Cancellation flips `proSince=null` only on terminal statuses (canceled / unpaid / incomplete_expired); past_due keeps access during Stripe's retry window.
+- **HTML export technique = hand-tuned static HTML, not React SSR.** The card templates use dynamic theme tokens, fonts loaded via /api/fonts, and other deps that don't survive a static export to a single-file `.html`. The hand-tuned page captures everything a vCard-equivalent needs (name/title/company/bio + contacts + socials + services + buttons + brand colors via CSS custom properties) and renders identically offline. Mobile uses `data:text/html;base64,…` + `expo-web-browser` to avoid pulling in `expo-file-system` + `expo-sharing` (the brief said no new mobile deps).
+- **Password handling preserves the existing hash on PATCH.** The owner-side cardData GET redacts `password` to `passwordSet: boolean`, so the round-trip from edit form to PATCH never has the hash to send back. The PATCH route's `cardData` merge logic specifically copies `previous.password` into `merged` when the incoming payload omits the field, so a typical "edit name + save" doesn't accidentally clear a password set earlier. To clear, the owner sends an empty string explicitly (mobile edit form: `clear: true` flag in `PasswordState` → `cardData.password = ""`).
+- **No new mobile deps.** `expo-web-browser` was already in the tree (M3 referrals) — Stripe Checkout + HTML export both use it. Avoided `expo-file-system` + `expo-sharing` on the export path by using `data:text/html;base64,…` URLs.
+- **Server-side argon2 reuse, not bcrypt.** `src/lib/auth/password.ts` already exposes `hashPassword` + `verifyPassword` (argon2id, used by the user account password path). Reusing the same primitive keeps the dependency surface flat.
+
+Deploy steps for Hasan:
+
+1. **Apply the migration** on the VPS:
+   ```bash
+   docker exec opsolid-app npx prisma migrate deploy
+   ```
+   Applies `20260513000000_add_subscriptions_pro/migration.sql` (creates `user_subscriptions` + `domain_requests` tables, adds `users.pro_since` + `users.stripe_customer_id` columns). Additive + idempotent (`IF NOT EXISTS` everywhere).
+
+2. **Set Stripe env vars** on the VPS:
+   ```
+   STRIPE_SECRET_KEY=<sk_live_…>
+   STRIPE_WEBHOOK_SECRET=<whsec_…>
+   STRIPE_PRICE_PRO_MONTHLY=<price_…>   # €7/mo recurring
+   STRIPE_PRICE_PRO_YEARLY=<price_…>    # €60/yr recurring
+   # Optional: maintainer destination for domain-request emails
+   OPSOLID_MAINTAINER_EMAIL=<your@email>
+   ```
+   Then `docker compose up -d --force-recreate opsolid` (env_file changes don't apply on `restart` — see `feedback_docker_env_file.md`).
+
+3. **Configure the Stripe webhook endpoint** at `https://opsolid.de/api/webhooks/stripe` (the existing endpoint — extended in this milestone). Subscribe to events:
+   - `checkout.session.completed` (already handled, untouched)
+   - `customer.subscription.created`
+   - `customer.subscription.updated`
+   - `customer.subscription.deleted`
+   - `invoice.paid`
+   - `invoice.payment_failed`
+
+4. APK rebuild via the usual `gh workflow run` — ships the paywall modal, Settings Pro section, analytics screen, and password/tip-jar form sections on the next build.
+
 ### M4 — Real-time comms [DONE — committed]
 
 Shipped (2026-05-09):

@@ -20,6 +20,11 @@ export type AuthMeResponse = {
   // any unset key defaulted to true; mobile Settings reads from this and
   // PATCHes deltas via /api/v1/auth/me.
   notificationPrefs?: NotificationPrefs;
+  // M5 — Premium tier. `isPro` is the denormalised gate every feature CTA
+  // should branch on. `proSince` is the timestamp the subscription became
+  // active (null when never Pro / lapsed).
+  isPro?: boolean;
+  proSince?: string | null;
   // Optional fields that may not appear on every response shape.
   name?: string | null;
   locale?: string;

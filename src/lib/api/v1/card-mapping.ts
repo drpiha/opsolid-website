@@ -89,7 +89,7 @@ export function toApiCard(row: ApiCardRow): ApiCard {
     templateId: row.templateId,
     layoutKey: row.layoutKey,
     themeKey: row.themeKey,
-    cardData: row.cardData,
+    cardData: redactCardDataForOwner(row.cardData),
     brandPrimaryHex: row.brandPrimaryHex,
     brandAccentHex: row.brandAccentHex,
     photoPath: row.photoPath,
@@ -148,26 +148,53 @@ export function toPublicApiCard(row: ApiCardRow): PublicApiCard {
 function stripSensitiveFromCardData(cardData: unknown): unknown {
   if (!cardData || typeof cardData !== "object") return cardData;
   const cd = cardData as Record<string, unknown>;
-  const cf = cd.contactForm as Record<string, unknown> | undefined;
-  if (!cf || typeof cf !== "object") return cardData;
-  const esps = cf.esps as Record<string, unknown> | undefined;
-  if (!esps) return cardData;
-  // Build a sanitized esps object — keep the presence flags (so the public
-  // viewer can render the form) but never echo the apiKey / webhook URL.
-  const sanitizedEsps: Record<string, unknown> = {};
-  for (const provider of Object.keys(esps)) {
-    const v = esps[provider];
-    if (!v || typeof v !== "object") continue;
-    const cfg = v as Record<string, unknown>;
-    const safe: Record<string, unknown> = {};
-    for (const [k, val] of Object.entries(cfg)) {
-      if (k === "apiKey" || k === "url") continue;
-      safe[k] = val;
-    }
-    sanitizedEsps[provider] = safe;
+  // M5 — never expose the password hash on public reads. Replace with the
+  // boolean `passwordSet` so the public viewer can decide whether to render
+  // the lock screen.
+  const out: Record<string, unknown> = { ...cd };
+  if ("password" in out) {
+    out.passwordSet =
+      typeof out.password === "string" && (out.password as string).length > 0;
+    delete out.password;
   }
-  return {
-    ...cd,
-    contactForm: { ...cf, esps: sanitizedEsps },
-  };
+
+  const cf = out.contactForm as Record<string, unknown> | undefined;
+  if (cf && typeof cf === "object") {
+    const esps = cf.esps as Record<string, unknown> | undefined;
+    if (esps) {
+      // Build a sanitized esps object — keep the presence flags (so the
+      // public viewer can render the form) but never echo apiKey / webhook URL.
+      const sanitizedEsps: Record<string, unknown> = {};
+      for (const provider of Object.keys(esps)) {
+        const v = esps[provider];
+        if (!v || typeof v !== "object") continue;
+        const cfg = v as Record<string, unknown>;
+        const safe: Record<string, unknown> = {};
+        for (const [k, val] of Object.entries(cfg)) {
+          if (k === "apiKey" || k === "url") continue;
+          safe[k] = val;
+        }
+        sanitizedEsps[provider] = safe;
+      }
+      out.contactForm = { ...cf, esps: sanitizedEsps };
+    }
+  }
+  return out;
+}
+
+/**
+ * M5 — owner-side cardData redaction. The owner can read everything they
+ * configured EXCEPT the raw password hash. We replace `password` with
+ * `passwordSet: boolean` so the edit form can render "(password set — change?)".
+ * If the owner wants to clear or change the password they POST a fresh plain
+ * string; the existing hash never round-trips client-side.
+ */
+function redactCardDataForOwner(cardData: unknown): unknown {
+  if (!cardData || typeof cardData !== "object") return cardData;
+  const cd = cardData as Record<string, unknown>;
+  if (!("password" in cd)) return cd;
+  const out: Record<string, unknown> = { ...cd };
+  out.passwordSet = typeof cd.password === "string" && (cd.password as string).length > 0;
+  delete out.password;
+  return out;
 }

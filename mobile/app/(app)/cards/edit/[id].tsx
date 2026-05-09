@@ -24,6 +24,9 @@ import { useTheme } from '../../../../src/lib/theme/ThemeProvider';
 import { copper, teal } from '../../../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../../../src/lib/i18n/locale';
 import { useTemplatePickerStore } from '../../../../src/store/templatePickerStore';
+import { useAuthStore } from '../../../../src/lib/auth/store';
+import { fetchMe } from '../../../../src/lib/auth/api';
+import { PaywallModal } from '../../../../src/components/billing/PaywallModal';
 import {
   BasicFieldsSection,
   SocialsSection,
@@ -43,8 +46,14 @@ import {
   ContactFormSection,
   TagsSection,
   EmbedsSection,
+  PasswordSection,
+  TipJarSection,
+  DEFAULT_PASSWORD_STATE,
+  DEFAULT_TIP_JAR,
   asEmbeds,
   type EmbedItem,
+  type PasswordState,
+  type TipJarState,
   asTags,
   DEFAULT_CONTACT_FORM,
   STATUS_BANNER_TONES,
@@ -215,7 +224,12 @@ export default function CardEditScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const router = useRouter();
   const theme = useTheme();
-  const t = useTranslations(detectLocale()).cards;
+  const tAll = useTranslations(detectLocale());
+  const t = tAll.cards;
+  const tProSection = tAll.pro;
+  const authUser = useAuthStore((s) => s.user);
+  const setAuthUser = useAuthStore((s) => s.setUser);
+  const isProUser = Boolean(authUser?.isPro);
 
   const [card, setCard] = useState<ApiCard | null>(null);
   const [loading, setLoading] = useState(true);
@@ -266,6 +280,18 @@ export default function CardEditScreen() {
   // POST when the chip selection has actually changed.
   const [attendingEventIds, setAttendingEventIds] = useState<string[]>([]);
   const [originalEventIds, setOriginalEventIds] = useState<string[]>([]);
+
+  // M5 — password protection + tip jar (Pro-only). Hydrated from
+  // `cardData.passwordSet` (the server-redacted boolean) and
+  // `cardData.tipJar`. Saves are intercepted in handleSave to drop password
+  // when unchanged so the existing hash is preserved.
+  const [passwordState, setPasswordState] = useState<PasswordState>(
+    DEFAULT_PASSWORD_STATE,
+  );
+  const [tipJar, setTipJar] = useState<TipJarState>(DEFAULT_TIP_JAR);
+  const [paywallReason, setPaywallReason] = useState<
+    'password_protection' | 'tip_jar' | null
+  >(null);
 
   const [photoPath, setPhotoPath] = useState<string | null>(null);
 
@@ -355,6 +381,24 @@ export default function CardEditScreen() {
           : [];
         setAttendingEventIds(initialEventIds);
         setOriginalEventIds(initialEventIds);
+
+        // M5 — passwordSet is the redacted boolean the server emits on owner
+        // GET (the actual hash never round-trips). tipJar is a structured
+        // object with an `enabled` flag.
+        setPasswordState({
+          passwordSet: (cd as Record<string, unknown>).passwordSet === true,
+          newPassword: '',
+          clear: false,
+        });
+        const tj = (cd as Record<string, unknown>).tipJar as
+          | { enabled?: boolean; label?: string; stripePriceId?: string | null }
+          | undefined;
+        setTipJar({
+          enabled: tj?.enabled === true,
+          label: typeof tj?.label === 'string' ? tj.label : '',
+          stripePriceId:
+            typeof tj?.stripePriceId === 'string' ? tj.stripePriceId : '',
+        });
       })
       .catch(() => Alert.alert('', t.errorLoad))
       .finally(() => setLoading(false));
@@ -457,6 +501,28 @@ export default function CardEditScreen() {
           ...(Object.keys(esps).length > 0 ? { esps } : {}),
         };
       }
+      // M5 — password protection. The server expects:
+      //  - field omitted entirely → keep existing hash
+      //  - "" or null              → clear existing hash
+      //  - non-empty string         → server hashes + stores
+      // We never send the existing hash back (we don't have it client-side).
+      if (passwordState.clear) {
+        cardData.password = "";
+      } else if (passwordState.newPassword.length >= 4) {
+        cardData.password = passwordState.newPassword;
+      }
+      // M5 — tip jar. Always persist when enabled; on disable we round-trip
+      // the off state so the public viewer hides the button.
+      if (tipJar.enabled) {
+        cardData.tipJar = {
+          enabled: true,
+          label: tipJar.label.trim() || 'Tip',
+          stripePriceId: tipJar.stripePriceId.trim() || null,
+        };
+      } else {
+        cardData.tipJar = { enabled: false, label: tipJar.label.trim(), stripePriceId: null };
+      }
+
       Object.keys(cardData).forEach((k) => {
         if (cardData[k] === undefined) delete cardData[k];
       });
@@ -682,6 +748,39 @@ export default function CardEditScreen() {
             <VisibilitySection theme={theme} value={visibility} onChange={setVisibility} />
             <DiscoverySection theme={theme} values={discovery} onChange={setDiscoveryField} />
 
+            {/* M5 — Pro features (password + tip jar). Sections render for
+                all users; the toggles are gated on isPro and open the
+                paywall on tap when the user isn't a Pro subscriber. */}
+            <PasswordSection
+              theme={theme}
+              value={passwordState}
+              onChange={setPasswordState}
+              isPro={isProUser}
+              onProGate={() => setPaywallReason('password_protection')}
+              labels={{
+                title: tProSection.passwordSection,
+                set: tProSection.passwordSet,
+                hint: tProSection.passwordHint,
+                placeholder: tProSection.passwordPlaceholder,
+                clear: tProSection.passwordClear,
+              }}
+            />
+            <TipJarSection
+              theme={theme}
+              value={tipJar}
+              onChange={setTipJar}
+              isPro={isProUser}
+              onProGate={() => setPaywallReason('tip_jar')}
+              labels={{
+                title: tProSection.tipJarSection,
+                enabled: tProSection.tipJarEnabled,
+                label: tProSection.tipJarLabel,
+                labelPlaceholder: tProSection.tipJarLabelPlaceholder,
+                priceId: tProSection.tipJarPriceId,
+                priceIdHint: tProSection.tipJarPriceIdHint,
+              }}
+            />
+
             {/* Status (only for published cards) */}
             {card?.status === 'PUBLISHED' && (
               <View style={[styles.statusRow, { borderColor: theme.line.DEFAULT }]}>
@@ -746,6 +845,23 @@ export default function CardEditScreen() {
           </View>
         </View>
       </Modal>
+      {paywallReason ? (
+        <PaywallModal
+          visible
+          onClose={() => setPaywallReason(null)}
+          reason={paywallReason}
+          onReturned={() => {
+            void (async () => {
+              try {
+                const me = await fetchMe();
+                setAuthUser(me);
+              } catch {
+                // ignore
+              }
+            })();
+          }}
+        />
+      ) : null}
     </>
   );
 }

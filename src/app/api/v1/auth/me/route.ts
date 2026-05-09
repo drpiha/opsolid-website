@@ -50,7 +50,10 @@ function userBody(user: {
   locale: string;
   emailVerifiedAt: Date | null;
   notificationPrefs: unknown;
+  proSince?: Date | null;
 }) {
+  const proSince = user.proSince ?? null;
+  const isProNow = proSince !== null && proSince <= new Date();
   return {
     user: {
       id: user.id,
@@ -67,6 +70,9 @@ function userBody(user: {
         eventReminders: true,
         ...((user.notificationPrefs as Record<string, boolean> | null) ?? {}),
       },
+      // M5 — Pro tier flags. Mobile gates feature CTAs on `isPro`.
+      isPro: isProNow,
+      proSince: proSince ? proSince.toISOString() : null,
     },
   };
 }
@@ -146,6 +152,7 @@ export async function PATCH(req: Request) {
         locale: true,
         emailVerifiedAt: true,
         notificationPrefs: true,
+        proSince: true,
       },
     });
 

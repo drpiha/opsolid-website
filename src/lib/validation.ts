@@ -538,6 +538,37 @@ export const CardDataSchema = z.object({
     })
     .strict()
     .optional(),
+  /**
+   * M5 — Password-protected card (Carrd amendment).
+   * Owner-set argon2id hash of the visitor passphrase. When non-null and the
+   * visitor isn't authenticated as the owner, the public viewer renders a
+   * lock screen + POST /api/cards/[slug]/unlock sets a 24h cookie. The hash
+   * format is owned by `src/lib/auth/password.ts` (argon2id) and is never
+   * exposed on the public-API mapping (see `card-mapping.ts`).
+   *
+   * On the wire from the mobile edit form, the client sends a `password`
+   * STRING (plain) which the server hashes inside the PATCH route before
+   * persisting. To clear the password the client sends an empty string OR
+   * sets the field to null. To leave unchanged, the client OMITS the field
+   * entirely (so a typical PATCH never accidentally resets the password).
+   */
+  password: z.string().max(200).nullable().optional(),
+  /**
+   * M5 — Stripe-powered tip jar (Carrd amendment, Pro-only feature).
+   * `stripePriceId`: a one-time Stripe Price the maintainer creates in the
+   *   dashboard and copies into the field. v2 will let users connect their
+   *   own Stripe accounts; v1 routes payments to the platform Stripe.
+   * The field is mirrored on the public-API mapping but never touches the
+   * Stripe secret key — only the price id, which is itself public.
+   */
+  tipJar: z
+    .object({
+      enabled: z.boolean().default(false),
+      label: z.string().trim().max(60).default(""),
+      stripePriceId: z.string().trim().min(0).max(120).nullable().optional(),
+    })
+    .strict()
+    .optional(),
 });
 export type CardData = z.infer<typeof CardDataSchema>;
 

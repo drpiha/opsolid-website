@@ -24,6 +24,8 @@ import { applyCors, corsPreflight } from "@/lib/api/v1/cors";
 import { rateLimit } from "@/lib/api/v1/rate-limit";
 import { CARD_API_SELECT, toApiCard } from "@/lib/api/v1/card-mapping";
 import { getTemplateById } from "@/config/card-templates";
+import { hashPassword } from "@/lib/auth/password";
+import { isPro } from "@/lib/auth/pro";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -166,7 +168,71 @@ export async function PATCH(
     }
 
     const updateData: Record<string, unknown> = {};
-    if (parsed.data.cardData) updateData.cardData = parsed.data.cardData;
+    if (parsed.data.cardData) {
+      // M5 — password + tipJar handling (Carrd amendments).
+      // The schema accepts `password` as a plain string; the wire shape from
+      // mobile is "fresh password to set" or "" (empty) to clear. We hash
+      // here before persisting so plaintext never touches the DB.
+      const incoming = parsed.data.cardData as Record<string, unknown>;
+
+      // Tip jar is Pro-gated. Quietly drop the field for non-Pro users so an
+      // accidental enable on a downgraded card doesn't render to visitors.
+      const proCheck = await prisma.user.findUnique({
+        where: { id: user.id },
+        select: { proSince: true },
+      });
+      const userIsPro = isPro({ proSince: proCheck?.proSince ?? null });
+      if (!userIsPro) {
+        if (incoming.tipJar && typeof incoming.tipJar === "object") {
+          // Strip stripePriceId (which only Pro users can configure) but keep
+          // the visible enabled/label so the form value round-trips. Visitors
+          // never see the tip button when not Pro (the public route checks
+          // owner pro status defensively).
+          delete (incoming.tipJar as Record<string, unknown>).stripePriceId;
+        }
+        // Same for the password field — non-Pro users can't enable it.
+        if ("password" in incoming) {
+          delete incoming.password;
+        }
+      }
+
+      if ("password" in incoming) {
+        const raw = incoming.password;
+        if (raw === null || raw === "") {
+          delete incoming.password;
+          // Mark for in-place merge below: explicit clear via separate path.
+          (updateData as Record<string, unknown>).__password_clear = true;
+        } else if (typeof raw === "string" && raw.length >= 4) {
+          incoming.password = await hashPassword(raw);
+        } else {
+          delete incoming.password;
+        }
+      }
+
+      // Merge with existing cardData so the password (and other unspecified
+      // keys we don't want the client to wipe) persists across PATCHes that
+      // don't re-send them. The mobile edit form sends a full cardData blob
+      // EXCEPT it omits `password` when the user didn't touch it (so the
+      // existing hash is preserved). If `__password_clear` was set, we
+      // remove the password key entirely.
+      const existingCardData = await prisma.cardOrder.findUnique({
+        where: { id: params.id },
+        select: { cardData: true },
+      });
+      const previous =
+        (existingCardData?.cardData as Record<string, unknown> | null) ?? {};
+      const merged: Record<string, unknown> = { ...incoming };
+      if (
+        typeof previous.password === "string" &&
+        previous.password.length > 0 &&
+        !(updateData as Record<string, unknown>).__password_clear &&
+        !("password" in incoming)
+      ) {
+        merged.password = previous.password;
+      }
+      delete (updateData as Record<string, unknown>).__password_clear;
+      updateData.cardData = merged;
+    }
     if (parsed.data.templateId !== undefined) {
       // Only allow switching to an active catalog entry. Pricing / billing
       // mode are not re-evaluated here — this is a free-tier visual swap.

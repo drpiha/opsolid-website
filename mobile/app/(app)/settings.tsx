@@ -11,6 +11,7 @@ import {
   Platform,
   Pressable,
   Share,
+  ActivityIndicator,
 } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import Constants from 'expo-constants';
@@ -20,7 +21,17 @@ import { BrandHeader } from '../../src/components/ui/BrandHeader';
 import { useAuthStore } from '../../src/lib/auth/store';
 import { getMyReferral, type ReferralMeResponse } from '../../src/lib/api/referrals';
 import { getShareSummary, type ShareSummary } from '../../src/lib/api/share-events';
-import { patchMe } from '../../src/lib/auth/api';
+import { patchMe, fetchMe } from '../../src/lib/auth/api';
+import {
+  openProPortal,
+  submitDomainRequest,
+  cardExportPath,
+} from '../../src/lib/api/billing';
+import { listCards } from '../../src/lib/api/cards';
+import { getAccessToken, API_BASE } from '../../src/lib/api/client';
+import { PaywallModal } from '../../src/components/billing/PaywallModal';
+import * as WebBrowser from 'expo-web-browser';
+import { TextInput } from 'react-native';
 import type { NotificationPrefs } from '../../src/lib/api/types';
 import {
   isBiometricEnabled,
@@ -524,6 +535,25 @@ export default function SettingsScreen() {
           />
         </Card>
 
+        {/* ---------- M5 — PRO ---------- */}
+        <ProSection
+          theme={theme}
+          isPro={Boolean(user?.isPro)}
+          locale={activeLocale}
+          tPro={tAll.pro}
+          tBilling={tAll.billing}
+          onUpgraded={async () => {
+            try {
+              const me = await fetchMe();
+              const setUser = useAuthStore.getState().setUser;
+              setUser(me);
+            } catch {
+              // ignore
+            }
+          }}
+          router={router}
+        />
+
         {/* ---------- PRIVACY & DATA ---------- */}
         <SectionHeader theme={theme}>{t.privacyData}</SectionHeader>
         <Card theme={theme} disabled>
@@ -878,6 +908,414 @@ function WhatsNewModal({
         </ScrollView>
       </View>
     </Modal>
+  );
+}
+
+// -------------------------------------------------------------------------
+// M5 — Pro section
+// -------------------------------------------------------------------------
+
+function ProSection({
+  theme,
+  isPro,
+  tPro,
+  tBilling,
+  onUpgraded,
+  router,
+}: {
+  theme: ReturnType<typeof useTheme>;
+  isPro: boolean;
+  locale: Locale;
+  tPro: ReturnType<typeof useTranslations>['pro'];
+  tBilling: ReturnType<typeof useTranslations>['billing'];
+  onUpgraded: () => Promise<void>;
+  router: ReturnType<typeof useRouter>;
+}) {
+  const [paywallReason, setPaywallReason] = useState<
+    'card_limit' | 'custom_domain' | 'analytics' | 'html_export' | 'tip_jar' | 'password_protection' | null
+  >(null);
+  const [domainOpen, setDomainOpen] = useState(false);
+  const [domain, setDomain] = useState('');
+  const [domainNotes, setDomainNotes] = useState('');
+  const [domainBusy, setDomainBusy] = useState(false);
+  const [domainErr, setDomainErr] = useState<string | null>(null);
+
+  // HTML export — small inline picker that lists cards on demand.
+  const [exportPickerOpen, setExportPickerOpen] = useState(false);
+  const [exportCards, setExportCards] = useState<
+    { id: string; slug: string | null; name: string }[] | null
+  >(null);
+
+  async function handleManagePortal() {
+    try {
+      const { url } = await openProPortal();
+      await WebBrowser.openBrowserAsync(url);
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : '';
+      if (msg.includes('no_subscription')) {
+        // Fall back to upgrade flow.
+        setPaywallReason('card_limit');
+      } else {
+        Alert.alert(tBilling.errorTitle, tBilling.errorGeneric);
+      }
+    }
+  }
+
+  async function handleSubmitDomain() {
+    if (!domain.trim() || domainBusy) return;
+    setDomainBusy(true);
+    setDomainErr(null);
+    try {
+      await submitDomainRequest({
+        domain: domain.trim(),
+        notes: domainNotes.trim() || undefined,
+      });
+      setDomainOpen(false);
+      setDomain('');
+      setDomainNotes('');
+      Alert.alert('', tPro.requestDomainSuccess);
+    } catch (e) {
+      const msg = e instanceof Error ? e.message : '';
+      if (msg.includes('pro_required')) {
+        setDomainOpen(false);
+        setPaywallReason('custom_domain');
+      } else {
+        setDomainErr(tPro.requestDomainError);
+      }
+    } finally {
+      setDomainBusy(false);
+    }
+  }
+
+  async function openExportPicker() {
+    if (!isPro) {
+      setPaywallReason('html_export');
+      return;
+    }
+    setExportPickerOpen(true);
+    if (exportCards === null) {
+      try {
+        const res = await listCards({ limit: 50 });
+        setExportCards(
+          res.items.map((c) => ({
+            id: c.id,
+            slug: c.slug,
+            name:
+              ((c.cardData as { name?: string })?.name as string | undefined) ??
+              c.slug ??
+              c.id,
+          })),
+        );
+      } catch {
+        setExportCards([]);
+      }
+    }
+  }
+
+  async function handleExport(cardId: string) {
+    setExportPickerOpen(false);
+    try {
+      const token = await getAccessToken();
+      const res = await fetch(`${API_BASE}${cardExportPath(cardId)}`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      if (!res.ok) {
+        if (res.status === 402) {
+          setPaywallReason('html_export');
+          return;
+        }
+        throw new Error(`HTTP ${res.status}`);
+      }
+      const html = await res.text();
+      // Dump to a data: URL — opens in the in-app browser, user can save
+      // via the browser's share sheet. Avoids pulling in expo-file-system.
+      const dataUrl = `data:text/html;charset=utf-8,${encodeURIComponent(html)}`;
+      await WebBrowser.openBrowserAsync(dataUrl);
+    } catch {
+      Alert.alert('', tPro.htmlExportError);
+    }
+  }
+
+  return (
+    <>
+      <SectionHeader theme={theme}>{tPro.sectionTitle}</SectionHeader>
+      <Card theme={theme}>
+        {isPro ? (
+          <ProRow
+            theme={theme}
+            label={tPro.manageSubscription}
+            body={tPro.manageBody}
+            onPress={() => void handleManagePortal()}
+          />
+        ) : (
+          <ProRow
+            theme={theme}
+            label={tBilling.title}
+            body={tBilling.priceMonthly + ' / ' + tBilling.priceYearly}
+            onPress={() => setPaywallReason('card_limit')}
+          />
+        )}
+        <Divider theme={theme} />
+        <ProRow
+          theme={theme}
+          label={tPro.cardAnalytics}
+          body={tPro.cardAnalyticsBody}
+          onPress={() =>
+            isPro
+              ? router.push('/(app)/analytics' as never)
+              : setPaywallReason('analytics')
+          }
+        />
+        <Divider theme={theme} />
+        <ProRow
+          theme={theme}
+          label={tPro.htmlExport}
+          body={tPro.htmlExportBody}
+          onPress={() => void openExportPicker()}
+        />
+        <Divider theme={theme} />
+        <ProRow
+          theme={theme}
+          label={tPro.requestDomain}
+          body={tPro.requestDomainBody}
+          onPress={() =>
+            isPro ? setDomainOpen(true) : setPaywallReason('custom_domain')
+          }
+        />
+      </Card>
+
+      {/* Domain request modal */}
+      <Modal
+        visible={domainOpen}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setDomainOpen(false)}
+      >
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'rgba(0,0,0,0.45)',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: theme.bg[1],
+              borderTopLeftRadius: 24,
+              borderTopRightRadius: 24,
+              padding: 24,
+              paddingBottom: 32,
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: '700',
+                color: theme.ink[100],
+                marginBottom: 12,
+              }}
+            >
+              {tPro.requestDomainTitle}
+            </Text>
+            <TextInput
+              value={domain}
+              onChangeText={setDomain}
+              placeholder={tPro.requestDomainPlaceholder}
+              placeholderTextColor={theme.ink[400]}
+              autoCapitalize="none"
+              autoCorrect={false}
+              keyboardType="url"
+              style={{
+                borderWidth: 1,
+                borderColor: theme.line.DEFAULT,
+                borderRadius: 8,
+                padding: 12,
+                fontSize: 14,
+                color: theme.ink[100],
+                backgroundColor: theme.bg[0],
+                marginBottom: 10,
+              }}
+            />
+            <TextInput
+              value={domainNotes}
+              onChangeText={setDomainNotes}
+              placeholder={tPro.requestDomainNotes}
+              placeholderTextColor={theme.ink[400]}
+              multiline
+              numberOfLines={3}
+              style={{
+                borderWidth: 1,
+                borderColor: theme.line.DEFAULT,
+                borderRadius: 8,
+                padding: 12,
+                fontSize: 14,
+                color: theme.ink[100],
+                backgroundColor: theme.bg[0],
+                marginBottom: 12,
+                minHeight: 70,
+                textAlignVertical: 'top',
+              }}
+            />
+            {domainErr ? (
+              <Text style={{ color: '#B8514B', fontSize: 12, marginBottom: 8 }}>
+                {domainErr}
+              </Text>
+            ) : null}
+            <Button
+              label={domainBusy ? '…' : tPro.requestDomainSubmit}
+              onPress={() => void handleSubmitDomain()}
+              disabled={domainBusy || !domain.trim()}
+            />
+            <Button
+              label={tPro.cancel}
+              onPress={() => setDomainOpen(false)}
+              variant="ghost"
+              style={{ marginTop: 8 }}
+            />
+          </View>
+        </View>
+      </Modal>
+
+      {/* Export picker modal */}
+      <Modal
+        visible={exportPickerOpen}
+        transparent
+        animationType="slide"
+        onRequestClose={() => setExportPickerOpen(false)}
+      >
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'rgba(0,0,0,0.45)',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <View
+            style={{
+              backgroundColor: theme.bg[1],
+              borderTopLeftRadius: 24,
+              borderTopRightRadius: 24,
+              padding: 24,
+              paddingBottom: 32,
+              maxHeight: '70%',
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: '700',
+                color: theme.ink[100],
+                marginBottom: 12,
+              }}
+            >
+              {tPro.htmlExportPickCard}
+            </Text>
+            <ScrollView>
+              {exportCards === null ? (
+                <ActivityIndicator color={teal[500]} style={{ padding: 20 }} />
+              ) : exportCards.length === 0 ? (
+                <Text
+                  style={{
+                    color: theme.ink[400],
+                    padding: 16,
+                    textAlign: 'center',
+                  }}
+                >
+                  —
+                </Text>
+              ) : (
+                exportCards.map((c) => (
+                  <TouchableOpacity
+                    key={c.id}
+                    onPress={() => void handleExport(c.id)}
+                    activeOpacity={0.7}
+                    style={{
+                      paddingVertical: 14,
+                      borderBottomWidth: StyleSheet.hairlineWidth,
+                      borderBottomColor: theme.line.DEFAULT,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: theme.ink[100],
+                        fontSize: 15,
+                        fontWeight: '500',
+                      }}
+                    >
+                      {c.name}
+                    </Text>
+                    {c.slug ? (
+                      <Text
+                        style={{
+                          color: theme.ink[400],
+                          fontSize: 12,
+                          marginTop: 2,
+                        }}
+                      >
+                        /c/{c.slug}
+                      </Text>
+                    ) : null}
+                  </TouchableOpacity>
+                ))
+              )}
+            </ScrollView>
+            <Button
+              label={tPro.cancel}
+              onPress={() => setExportPickerOpen(false)}
+              variant="ghost"
+              style={{ marginTop: 12 }}
+            />
+          </View>
+        </View>
+      </Modal>
+
+      {paywallReason ? (
+        <PaywallModal
+          visible
+          onClose={() => setPaywallReason(null)}
+          reason={paywallReason}
+          onReturned={() => void onUpgraded()}
+        />
+      ) : null}
+    </>
+  );
+}
+
+function ProRow({
+  theme,
+  label,
+  body,
+  onPress,
+}: {
+  theme: ReturnType<typeof useTheme>;
+  label: string;
+  body: string;
+  onPress: () => void;
+}) {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      activeOpacity={0.7}
+      style={{
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingVertical: 4,
+      }}
+    >
+      <View style={{ flex: 1, paddingRight: 12 }}>
+        <Text style={[styles.value, { color: theme.ink[100] }]}>{label}</Text>
+        <Text
+          style={[
+            styles.label,
+            { color: theme.ink[400], marginTop: 2, fontSize: 12 },
+          ]}
+        >
+          {body}
+        </Text>
+      </View>
+      <Text style={{ color: theme.ink[400], fontSize: 18 }}>›</Text>
+    </TouchableOpacity>
   );
 }
 

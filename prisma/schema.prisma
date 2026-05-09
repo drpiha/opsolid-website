@@ -58,6 +58,19 @@ model User {
    * fan-out when the relevant category is explicitly `false`.
    */
   notificationPrefs Json? @map("notification_prefs")
+
+  /**
+   * M5 — Premium tier.
+   * `proSince` is the denormalised "is Pro" check. Set by the Stripe webhook
+   * when a subscription becomes active; cleared (set null) when it ends.
+   * `stripeCustomerId` is cached from the first checkout so subsequent
+   * billing/portal calls don't have to look the customer up by email.
+   * Source-of-truth state lives on `userSubscription`; these two columns are
+   * fast-path mirrors only.
+   */
+  proSince         DateTime? @map("pro_since")
+  stripeCustomerId String?   @map("stripe_customer_id")
+
   createdAt       DateTime  @default(now()) @map("created_at")
   updatedAt       DateTime  @updatedAt @map("updated_at")
 
@@ -87,6 +100,20 @@ model User {
    * place rather than creating a duplicate.
    */
   pushDevices PushDevice[]
+
+  /**
+   * M5 — Pro subscription (zero-or-one). Stripe-managed. The webhook also
+   * mirrors active state into the denormalised `proSince` column above so the
+   * "is Pro" check on every card create stays a single-column read.
+   */
+  userSubscription UserSubscription?
+
+  /**
+   * M5 — pending custom-domain provisioning requests submitted from Settings
+   * Pro section. v1 = manual provision via existing Traefik+ACME plan; v2 =
+   * self-serve. Multiple requests per user allowed (resubmit / change domain).
+   */
+  domainRequests DomainRequest[]
 
   @@index([email])
   @@map("users")
@@ -329,6 +356,12 @@ model CardOrder {
    * /api/v1/share-events/summary.
    */
   shareEvents ShareEvent[]
+
+  /**
+   * M5 — domain provisioning requests for this card. Optional FK; a
+   * DomainRequest may be made for the user without a specific card attached.
+   */
+  domainRequests DomainRequest[]
 
   @@index([status])
   @@index([contactPhone])
@@ -875,6 +908,72 @@ model PushDevice {
   @@index([userId])
   @@index([expoPushToken])
   @@map("push_devices")
+}
+
+// =============================================================================
+// M5 — Premium tier
+//
+// UserSubscription — user-scoped Pro subscription (€7/mo or €60/yr).
+//
+// Distinct from the legacy order-scoped `Subscription` model above (which
+// stays untouched and keeps powering the per-card recurring orders booked
+// from the marketing site). One row per user (`userId @unique`).
+//
+// `status` mirrors Stripe values: active | past_due | canceled | trialing |
+// unpaid | incomplete | incomplete_expired. A row stays around after
+// cancellation so we can show "lapsed since X" in the UI; the denormalised
+// `User.proSince` is what gates feature access.
+//
+// The Stripe webhook is the single writer. All other code paths read this
+// table read-only.
+// =============================================================================
+model UserSubscription {
+  id                   String   @id @default(cuid())
+  userId               String   @unique @map("user_id")
+  stripeCustomerId     String?  @map("stripe_customer_id")
+  stripeSubscriptionId String?  @unique @map("stripe_subscription_id")
+  status               String
+  priceId              String?  @map("price_id")
+  currentPeriodEnd     DateTime? @map("current_period_end")
+  cancelAtPeriodEnd    Boolean  @default(false) @map("cancel_at_period_end")
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([stripeCustomerId])
+  @@index([status])
+  @@map("user_subscriptions")
+}
+
+// =============================================================================
+// M5 — DomainRequest
+//
+// Pro-only "request a custom domain" form (see Settings > Pro section). v1
+// fires an email to the maintainer + creates a row at status="pending"; the
+// maintainer then provisions the domain manually via the existing
+// Traefik+ACME plan from `project_deferred_todos.md`. v2 will self-serve via
+// DNS verification + automatic ACME issuance.
+//
+// status: "pending" | "provisioned" | "failed" | "cancelled"
+// =============================================================================
+model DomainRequest {
+  id          String   @id @default(cuid())
+  userId      String   @map("user_id")
+  cardOrderId String?  @map("card_order_id")
+  domain      String
+  notes       String?
+  status      String   @default("pending")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+  resolvedAt  DateTime? @map("resolved_at")
+
+  user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  cardOrder CardOrder? @relation(fields: [cardOrderId], references: [id], onDelete: SetNull)
+
+  @@index([userId])
+  @@index([status])
+  @@map("domain_requests")
 }
 
 // =============================================================================

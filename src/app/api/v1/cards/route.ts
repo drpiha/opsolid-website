@@ -33,6 +33,8 @@ import {
   CARD_API_SELECT,
   toApiCard,
 } from "@/lib/api/v1/card-mapping";
+import { cardLimitForUser, isPro, FREE_TIER_LIMIT, PRO_TIER_LIMIT } from "@/lib/auth/pro";
+import { hashPassword } from "@/lib/auth/password";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -156,6 +158,35 @@ export async function POST(req: Request) {
     }
     const data = parsed.data;
 
+    // M5 — Free tier card limit. Free = 1 active card; Pro = 5. Active means
+    // not soft-deleted (status !== 'CANCELLED'). The gate counts via the same
+    // owner scope used elsewhere.
+    const cap = cardLimitForUser(user);
+    const activeCount = await prisma.cardOrder.count({
+      where: {
+        userId: user.id,
+        status: { not: OrderStatus.CANCELLED },
+      },
+    });
+    if (activeCount >= cap) {
+      return applyCors(
+        errorJson(
+          "pro_required",
+          isPro(user)
+            ? `Pro tier card limit (${PRO_TIER_LIMIT}) reached.`
+            : `Free tier card limit (${FREE_TIER_LIMIT}) reached. Upgrade to Pro to create up to ${PRO_TIER_LIMIT} cards.`,
+          402,
+          undefined,
+          {
+            limit: cap,
+            currentCount: activeCount,
+            tier: isPro(user) ? "pro" : "free",
+          },
+        ),
+        req,
+      );
+    }
+
     const template = getTemplateById(data.templateId);
     if (!template || !template.isActive) {
       return applyCors(
@@ -189,6 +220,29 @@ export async function POST(req: Request) {
 
     const editToken = crypto.randomUUID();
 
+    // M5 — password hashing on create. Pro-only fields are stripped for free
+    // users so an accidental include during signup doesn't persist a password
+    // that only Pro accounts should be able to set.
+    const cardDataIncoming: Record<string, unknown> = {
+      ...(data.cardData as unknown as Record<string, unknown>),
+    };
+    if (!isPro(user)) {
+      if (cardDataIncoming.tipJar && typeof cardDataIncoming.tipJar === "object") {
+        delete (cardDataIncoming.tipJar as Record<string, unknown>).stripePriceId;
+      }
+      if ("password" in cardDataIncoming) delete cardDataIncoming.password;
+    }
+    if ("password" in cardDataIncoming) {
+      const raw = cardDataIncoming.password;
+      if (raw === null || raw === "") {
+        delete cardDataIncoming.password;
+      } else if (typeof raw === "string" && raw.length >= 4) {
+        cardDataIncoming.password = await hashPassword(raw);
+      } else {
+        delete cardDataIncoming.password;
+      }
+    }
+
     const created = await prisma.cardOrder.create({
       data: {
         templateId: template.id,
@@ -197,7 +251,7 @@ export async function POST(req: Request) {
         contactEmail: data.cardData.email ?? user.email,
         contactPhone: data.cardData.phone ?? "",
         callMeBack: false,
-        cardData: data.cardData,
+        cardData: cardDataIncoming as never,
         brandPrimaryHex: data.brandPrimaryHex,
         brandAccentHex: data.brandAccentHex,
         layoutKey: data.layoutKey,

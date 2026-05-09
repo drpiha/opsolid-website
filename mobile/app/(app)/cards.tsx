@@ -13,12 +13,17 @@ import { CardDeck } from '../../src/components/cards/CardDeck';
 import { CardDeckList } from '../../src/components/cards/CardDeckList';
 import { CardDeckEmpty } from '../../src/components/cards/CardDeckEmpty';
 import { CardDeckFAB } from '../../src/components/cards/CardDeckFAB';
+import { PaywallModal } from '../../src/components/billing/PaywallModal';
 import { listCards } from '../../src/lib/api/cards';
 import type { ApiCard } from '../../src/lib/api/types';
 import { useTheme } from '../../src/lib/theme/ThemeProvider';
 import { teal } from '../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
 import { useOnboardingDraftStore } from '../../src/store/onboardingDraftStore';
+import { useAuthStore } from '../../src/lib/auth/store';
+import { fetchMe } from '../../src/lib/auth/api';
+
+const FREE_TIER_LIMIT = 1;
 
 const LIST_THRESHOLD = 10;
 
@@ -33,6 +38,9 @@ export default function CardsListScreen() {
   const [error, setError] = useState<string | null>(null);
 
   const everPublished = useOnboardingDraftStore((s) => s.everPublished);
+  const user = useAuthStore((s) => s.user);
+  const setAuthUser = useAuthStore((s) => s.setUser);
+  const [paywallOpen, setPaywallOpen] = useState(false);
 
   const load = useCallback(
     async (mode: 'initial' | 'refresh') => {
@@ -80,6 +88,15 @@ export default function CardsListScreen() {
   );
 
   function goCreate() {
+    // M5 — free-tier 1-card cap. When the user already has 1+ cards AND isn't
+    // Pro, replace the navigation with the paywall modal. The server enforces
+    // the same gate (POST /api/v1/cards returns 402 pro_required) — this
+    // client-side check is purely for UX, the server is the source of truth.
+    const isProUser = Boolean(user?.isPro);
+    if (!isProUser && sorted.length >= FREE_TIER_LIMIT) {
+      setPaywallOpen(true);
+      return;
+    }
     // Always start from the wizard if the user has never published. The
     // wizard sets everPublished:true on success; once that's set the user
     // is past the "calm onboarding" need and lands directly in the full
@@ -88,6 +105,16 @@ export default function CardsListScreen() {
       router.push('/(app)/onboarding' as never);
     } else {
       router.push('/(app)/cards/create' as never);
+    }
+  }
+
+  // After a checkout return, refresh /auth/me so the isPro flag updates.
+  async function handlePaywallReturned() {
+    try {
+      const me = await fetchMe();
+      setAuthUser(me);
+    } catch {
+      // ignore — next mount will refresh
     }
   }
 
@@ -154,6 +181,12 @@ export default function CardsListScreen() {
           <CardDeckFAB onPress={goCreate} pulse={sorted.length === 0} />
         )}
       </View>
+      <PaywallModal
+        visible={paywallOpen}
+        onClose={() => setPaywallOpen(false)}
+        reason="card_limit"
+        onReturned={() => void handlePaywallReturned()}
+      />
     </>
   );
 }

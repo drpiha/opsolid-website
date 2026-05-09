@@ -1814,6 +1814,212 @@ export function asTags(v: unknown): string[] {
   return Array.from(new Set(out)).slice(0, MAX_TAGS_PER_CARD);
 }
 
+// ---------- M5 — Pro-only sections ----------
+
+export type PasswordState = {
+  /** True when the server says a password is currently set. Read-only — the
+   *  hash never round-trips, so the form can only set or clear, not display. */
+  passwordSet: boolean;
+  /** Owner-typed plain string for the next save. Empty = leave unchanged.
+   *  Use the explicit `clear` flag to remove the password. */
+  newPassword: string;
+  clear: boolean;
+};
+
+export const DEFAULT_PASSWORD_STATE: PasswordState = {
+  passwordSet: false,
+  newPassword: '',
+  clear: false,
+};
+
+export function PasswordSection({
+  theme,
+  value,
+  onChange,
+  isPro,
+  onProGate,
+  labels,
+}: {
+  theme: ThemeTokens;
+  value: PasswordState;
+  onChange: (next: PasswordState) => void;
+  isPro: boolean;
+  onProGate: () => void;
+  labels: {
+    title: string;
+    set: string;
+    hint: string;
+    placeholder: string;
+    clear: string;
+  };
+}) {
+  return (
+    <View style={styles.section}>
+      <Text style={[styles.fieldLabel, { color: theme.ink[300] }]}>
+        {labels.title}
+      </Text>
+      <Text style={{ color: theme.ink[400], fontSize: 12 }}>{labels.hint}</Text>
+      {value.passwordSet && !value.clear ? (
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            paddingVertical: 8,
+          }}
+        >
+          <Text style={{ color: theme.ink[200], fontSize: 14 }}>
+            🔒 {labels.set}
+          </Text>
+          <TouchableOpacity
+            onPress={() => onChange({ ...value, clear: true })}
+            activeOpacity={0.7}
+          >
+            <Text style={{ color: '#B8514B', fontSize: 13, fontWeight: '600' }}>
+              {labels.clear}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      ) : null}
+      <TextInput
+        value={value.newPassword}
+        onChangeText={(v) => onChange({ ...value, newPassword: v, clear: false })}
+        placeholder={labels.placeholder}
+        placeholderTextColor={theme.ink[400]}
+        secureTextEntry
+        editable={isPro}
+        onFocus={isPro ? undefined : onProGate}
+        autoCapitalize="none"
+        autoCorrect={false}
+        style={[
+          styles.input,
+          {
+            borderColor: theme.line.DEFAULT,
+            backgroundColor: theme.bg[1],
+            color: theme.ink[100],
+            opacity: isPro ? 1 : 0.5,
+          },
+        ]}
+      />
+    </View>
+  );
+}
+
+export type TipJarState = {
+  enabled: boolean;
+  label: string;
+  stripePriceId: string;
+};
+
+export const DEFAULT_TIP_JAR: TipJarState = {
+  enabled: false,
+  label: '',
+  stripePriceId: '',
+};
+
+export function TipJarSection({
+  theme,
+  value,
+  onChange,
+  isPro,
+  onProGate,
+  labels,
+}: {
+  theme: ThemeTokens;
+  value: TipJarState;
+  onChange: (next: TipJarState) => void;
+  isPro: boolean;
+  onProGate: () => void;
+  labels: {
+    title: string;
+    enabled: string;
+    label: string;
+    labelPlaceholder: string;
+    priceId: string;
+    priceIdHint: string;
+  };
+}) {
+  return (
+    <View style={styles.section}>
+      <Text style={[styles.fieldLabel, { color: theme.ink[300] }]}>
+        {labels.title}
+      </Text>
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Text style={{ color: theme.ink[200], fontSize: 14 }}>
+          {labels.enabled}
+        </Text>
+        <Switch
+          value={value.enabled && isPro}
+          onValueChange={(v) => {
+            if (!isPro) {
+              onProGate();
+              return;
+            }
+            onChange({ ...value, enabled: v });
+          }}
+          trackColor={{ false: theme.bg[2], true: '#C27940' }}
+          thumbColor="#fff"
+        />
+      </View>
+      {value.enabled && isPro ? (
+        <>
+          <View style={styles.fieldWrap}>
+            <Text style={[styles.fieldLabel, { color: theme.ink[300] }]}>
+              {labels.label}
+            </Text>
+            <TextInput
+              value={value.label}
+              onChangeText={(v) => onChange({ ...value, label: v })}
+              placeholder={labels.labelPlaceholder}
+              placeholderTextColor={theme.ink[400]}
+              maxLength={60}
+              style={[
+                styles.input,
+                {
+                  borderColor: theme.line.DEFAULT,
+                  backgroundColor: theme.bg[1],
+                  color: theme.ink[100],
+                },
+              ]}
+            />
+          </View>
+          <View style={styles.fieldWrap}>
+            <Text style={[styles.fieldLabel, { color: theme.ink[300] }]}>
+              {labels.priceId}
+            </Text>
+            <TextInput
+              value={value.stripePriceId}
+              onChangeText={(v) => onChange({ ...value, stripePriceId: v.trim() })}
+              placeholder="price_…"
+              placeholderTextColor={theme.ink[400]}
+              autoCapitalize="none"
+              autoCorrect={false}
+              style={[
+                styles.input,
+                {
+                  borderColor: theme.line.DEFAULT,
+                  backgroundColor: theme.bg[1],
+                  color: theme.ink[100],
+                  fontFamily: 'monospace' as never,
+                },
+              ]}
+            />
+            <Text style={{ color: theme.ink[400], fontSize: 11 }}>
+              {labels.priceIdHint}
+            </Text>
+          </View>
+        </>
+      ) : null}
+    </View>
+  );
+}
+
 // ---------- helpers exposed to screens ----------
 /** Strip empty string keys from a record before saving. */
 export function stripEmpty<T extends Record<string, string>>(obj: T): Partial<T> {

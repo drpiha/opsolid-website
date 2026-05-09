@@ -19,6 +19,11 @@ import {
   cancellationSubject,
 } from "@/lib/email/templates/cancellation";
 import { getTemplateById } from "@/config/card-templates";
+import {
+  upsertUserSubscriptionFromStripe,
+  applyInvoicePaid,
+  applyInvoiceFailed,
+} from "@/lib/billing/pro";
 
 export const runtime = "nodejs";
 
@@ -55,10 +60,25 @@ export async function POST(req: NextRequest) {
           await handleCheckoutCompleted(session);
           break;
         }
+        case "customer.subscription.created":
         case "customer.subscription.updated":
         case "customer.subscription.deleted": {
           const sub = event.data.object as Stripe.Subscription;
+          // M5 — Pro subscription path. The helper short-circuits when the
+          // subscription has no userId metadata (legacy order-scoped subs are
+          // identified by `metadata.orderId` and stay on the original handler).
+          await upsertUserSubscriptionFromStripe(sub);
           await handleSubscriptionUpdated(sub);
+          break;
+        }
+        case "invoice.paid": {
+          const invoice = event.data.object as Stripe.Invoice;
+          await applyInvoicePaid(invoice);
+          break;
+        }
+        case "invoice.payment_failed": {
+          const invoice = event.data.object as Stripe.Invoice;
+          await applyInvoiceFailed(invoice);
           break;
         }
         default:

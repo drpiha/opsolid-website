@@ -38,8 +38,10 @@ import { SaveCardButton } from "@/components/cards/SaveCardButton";
 import { FeedbackWidget } from "@/components/cards/FeedbackWidget";
 import { CreateYoursBanner } from "@/components/cards/CreateYoursBanner";
 import { EmbedsBlock } from "@/components/cards/EmbedsBlock";
+import { LockScreen } from "@/components/cards/LockScreen";
 import { constantTimeEquals } from "@/lib/constantTime";
 import { contents } from "@/content";
+import { unlockCookieName } from "@/lib/cards/unlock-cookie";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -226,6 +228,75 @@ export default async function CardPage({ params, searchParams }: PageProps) {
   }
 
   const source = readSourceFromSearchParams(sp);
+
+  // -------------------------------------------------------------------------
+  // M5 — password-protected card gate.
+  // The password hash lives in `cardData.password`. When set + visitor isn't
+  // authenticated as the owner (via `?owner=<editToken>`) and doesn't carry
+  // the `verso_unlock_<slug>` cookie, render the lock screen. The owner
+  // bypass uses the existing editToken constant-time check to avoid leaking
+  // hash existence on a wrong owner token.
+  // -------------------------------------------------------------------------
+  const cardDataRaw = parsed.data as Record<string, unknown>;
+  const passwordHash =
+    typeof cardDataRaw.password === "string" && cardDataRaw.password.length > 0
+      ? (cardDataRaw.password as string)
+      : null;
+
+  if (passwordHash) {
+    const ownerTokenRaw0 = sp.owner;
+    const ownerToken0 =
+      typeof ownerTokenRaw0 === "string" ? ownerTokenRaw0 : ownerTokenRaw0?.[0];
+    const isOwner0 = Boolean(
+      ownerToken0 &&
+        order.editToken &&
+        constantTimeEquals(ownerToken0, order.editToken),
+    );
+    const cookieHeader0 = (await headers()).get("cookie") ?? "";
+    const cookieName0 = unlockCookieName(slug);
+    const hasUnlockCookie = cookieHeader0
+      .split(";")
+      .map((c) => c.trim())
+      .some((c) => c.startsWith(`${cookieName0}=`));
+    if (!isOwner0 && !hasUnlockCookie) {
+      const lockLocaleKey =
+        order.locale === "en" || order.locale === "tr" ? order.locale : "de";
+      const labels =
+        lockLocaleKey === "de"
+          ? {
+              title: "Geschützte Karte",
+              subtitle: "Bitte gib das Passwort ein, um diese Karte zu sehen.",
+              placeholder: "Passwort",
+              submit: "Entsperren",
+              submitting: "…",
+              error: "Falsches Passwort.",
+            }
+          : lockLocaleKey === "tr"
+            ? {
+                title: "Şifreli kart",
+                subtitle: "Bu kartı görmek için şifreyi gir.",
+                placeholder: "Şifre",
+                submit: "Aç",
+                submitting: "…",
+                error: "Yanlış şifre.",
+              }
+            : {
+                title: "Locked card",
+                subtitle: "Enter the password to view this card.",
+                placeholder: "Password",
+                submit: "Unlock",
+                submitting: "…",
+                error: "Wrong password.",
+              };
+      return <LockScreen slug={slug} labels={labels} />;
+    }
+  }
+
+  // Strip the password hash from the data passed to the renderer — it must
+  // never reach the browser bundle.
+  if ("password" in cardDataRaw) {
+    delete (cardDataRaw as Record<string, unknown>).password;
+  }
 
   // Fire-and-forget view tracking. We deliberately await on a Promise.race
   // so a slow DB write can't block the page render — the render proceeds
