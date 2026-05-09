@@ -35,6 +35,7 @@ import { OwnerToolbar } from "@/components/cards/OwnerToolbar";
 import { StatusBanner } from "@/components/cards/StatusBanner";
 import { LocaleSwitcher } from "@/components/cards/LocaleSwitcher";
 import { SaveCardButton } from "@/components/cards/SaveCardButton";
+import { SaveToContactsButton } from "@/components/cards/SaveToContactsButton";
 import { FeedbackWidget } from "@/components/cards/FeedbackWidget";
 import { CreateYoursBanner } from "@/components/cards/CreateYoursBanner";
 import { EmbedsBlock } from "@/components/cards/EmbedsBlock";
@@ -505,6 +506,9 @@ export default async function CardPage({ params, searchParams }: PageProps) {
             {!isOwner && (
               <SaveCardButton slug={slug} locale={localeKey} />
             )}
+            {/* M7 — vCard download. Public endpoint, hits /api/v1/cards/:id/vcard
+                and triggers the native Contacts import sheet on iOS/Android. */}
+            <SaveToContactsButton cardId={order.id} locale={localeKey} />
             <LocaleSwitcher current={localeKey} ariaLabel={langSwitcherLabel} />
           </div>
           {/* Phase 8.4 — feedback widget. Self-hides when enabled:false from API */}

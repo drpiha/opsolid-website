@@ -4199,7 +4199,7 @@ export const content: Content = {
         "Wallet-Unterstützung wird konfiguriert. Apple/Google Wallet-Buttons erscheinen nach der Aktivierung.",
     },
     vcard: {
-      label: "vCard speichern",
+      label: "In Kontakte speichern",
     },
     share: {
       title: "Karte teilen",

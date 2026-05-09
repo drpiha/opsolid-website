@@ -4212,7 +4212,7 @@ export const content = {
         "Wallet support is being configured. This card will show Apple/Google Wallet buttons once activated.",
     },
     vcard: {
-      label: "Save vCard",
+      label: "Save to contacts",
     },
     share: {
       title: "Share card",

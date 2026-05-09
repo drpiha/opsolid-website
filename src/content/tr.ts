@@ -4200,7 +4200,7 @@ export const content: Content = {
         "Wallet desteği yapılandırılıyor. Etkinleştirildiğinde Apple/Google Wallet butonları görünecek.",
     },
     vcard: {
-      label: "vCard'ı kaydet",
+      label: "Rehbere kaydet",
     },
     share: {
       title: "Kartı paylaş",

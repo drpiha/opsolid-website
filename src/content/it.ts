@@ -73,6 +73,12 @@ const overrides: DeepPartial<Content> = {
       cta: "Prenota call",
     },
   },
+  // M7 — vCard "Save to contacts" button on the public card page.
+  card: {
+    vcard: {
+      label: "Salva nei contatti",
+    },
+  },
 };
 
 export const content: Content = merge(en, overrides);
