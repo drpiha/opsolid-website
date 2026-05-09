@@ -22,6 +22,10 @@ import type { ThemeTokens } from '../../lib/theme/tokens';
 import { copper } from '../../lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../lib/i18n/locale';
 import { listTemplates, type Template } from '../../lib/api/templates';
+import {
+  listEvents as listEventsApi,
+  type EventListItem as EventsListItem,
+} from '../../lib/api/events';
 import { API_BASE } from '../../lib/api/client';
 
 // ---------- Field shape ----------
@@ -959,6 +963,106 @@ export function FeedbackSection({
   );
 }
 
+// ---------- EventsAttendingSection (Sprint F2) ----------
+// Multi-select chip list of upcoming events. Pre-checked = currently attending.
+// Loads events lazily on mount. While loading, renders a small spinner row so
+// the section's height doesn't jump when the response lands.
+//
+// Save path: caller persists selectedIds via POST /api/v1/cards/:id/events
+// (see updateCardEvents() in src/lib/api/events.ts) AFTER the main PATCH so
+// a partial save still leaves the card itself in a consistent shape.
+export function EventsAttendingSection({
+  theme,
+  selectedIds,
+  onChange,
+}: {
+  theme: ThemeTokens;
+  selectedIds: string[];
+  onChange: (ids: string[]) => void;
+}) {
+  const tEvents = useTranslations(detectLocale()).events;
+  const [events, setEvents] = useState<EventsListItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let cancelled = false;
+    void listEventsApi()
+      .then((res) => {
+        if (!cancelled) setEvents(res.items);
+      })
+      .catch(() => {
+        if (!cancelled) setEvents([]);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  function toggle(id: string) {
+    const next = selectedIds.includes(id)
+      ? selectedIds.filter((x) => x !== id)
+      : [...selectedIds, id];
+    onChange(next);
+  }
+
+  return (
+    <View style={styles.section}>
+      <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+        {tEvents.sectionAttending}
+      </Text>
+      <Text style={[styles.hint, { color: theme.ink[400] }]}>
+        {tEvents.sectionAttendingHint}
+      </Text>
+
+      {loading ? (
+        <View style={{ paddingVertical: 12, alignItems: 'flex-start' }}>
+          <ActivityIndicator size="small" color={copper[500]} />
+        </View>
+      ) : events.length === 0 ? (
+        <Text style={[styles.hint, { color: theme.ink[500], fontStyle: 'italic' }]}>
+          {tEvents.empty}
+        </Text>
+      ) : (
+        <View style={styles.eventChipWrap}>
+          {events.map((ev) => {
+            const selected = selectedIds.includes(ev.id);
+            return (
+              <TouchableOpacity
+                key={ev.id}
+                onPress={() => toggle(ev.id)}
+                activeOpacity={0.85}
+                style={[
+                  styles.eventChip,
+                  {
+                    backgroundColor: selected ? copper[500] : theme.bg[1],
+                    borderColor: selected ? copper[500] : theme.line.DEFAULT,
+                  },
+                ]}
+              >
+                {selected && (
+                  <Check size={12} color="#FFFFFF" strokeWidth={2.5} />
+                )}
+                <Text
+                  style={[
+                    styles.eventChipText,
+                    { color: selected ? '#FFFFFF' : theme.ink[200] },
+                  ]}
+                  numberOfLines={1}
+                >
+                  {ev.name}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </View>
+      )}
+    </View>
+  );
+}
+
 // ---------- Repeater sections (Services / CustomButtons / FAQs) ----------
 // Extracted to CardRepeaterSections.tsx so this file stays under 1200 lines.
 // Re-exported here so existing imports keep working.
@@ -1093,4 +1197,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   toneText: { fontSize: 12, fontWeight: '600', textTransform: 'capitalize' },
+  // Sprint F2 — Events attending chips
+  eventChipWrap: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  eventChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 999,
+    borderWidth: 1,
+    maxWidth: '100%',
+  },
+  eventChipText: {
+    fontSize: 13,
+    fontWeight: '500',
+    flexShrink: 1,
+  },
 });

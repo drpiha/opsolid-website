@@ -11,6 +11,7 @@ import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
 import { useOnboardingDraftStore } from '../../src/store/onboardingDraftStore';
 import { listCards } from '../../src/lib/api/cards';
 import {
+  CalendarDays,
   CreditCard,
   Compass,
   Users,
@@ -121,6 +122,13 @@ export default function AppLayout() {
         }}
       />
       <Tabs.Screen
+        name="events/index"
+        options={{
+          title: t.events.title,
+          tabBarIcon: ({ color, size }) => <CalendarDays size={size} color={color} />,
+        }}
+      />
+      <Tabs.Screen
         name="contacts"
         options={{
           title: t.contacts.title,
@@ -154,6 +162,8 @@ export default function AppLayout() {
         options={{ href: null, headerShown: false, title: '' }}
       />
       <Tabs.Screen name="public/[slug]" options={{ href: null, title: '' }} />
+      {/* Sprint F2 — event detail. Tab is `events/index`; deep route is hidden. */}
+      <Tabs.Screen name="events/[slug]" options={{ href: null, title: '' }} />
       {/* Sprint 7 — first-run wizard. Hidden from tab bar; reached via the
           0-card redirect in the effect above, or via the FAB on /cards
           when `everPublished` hasn't been set yet. */}

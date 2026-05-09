@@ -8,23 +8,30 @@ import {
   Pressable,
   Image,
   RefreshControl,
+  ScrollView,
   StyleSheet,
 } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
-import { Search } from 'lucide-react-native';
+import { Search, ChevronRight, Users as UsersIcon } from 'lucide-react-native';
 import { discoverCards } from '../../src/lib/api/discover';
 import type { DiscoverCard } from '../../src/lib/api/discover';
+import { listEvents } from '../../src/lib/api/events';
+import type { EventListItem } from '../../src/lib/api/events';
 import { useTheme } from '../../src/lib/theme/ThemeProvider';
-import { copper } from '../../src/lib/theme/tokens';
+import { copper, teal } from '../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
 import { API_BASE } from '../../src/lib/api/client';
 import { Button } from '../../src/components/ui/Button';
 import { BrandHeader } from '../../src/components/ui/BrandHeader';
+import { EventCover } from '../../src/components/events/EventCover';
+import { formatEventDateRange } from '../../src/lib/events/format';
 
 export default function DiscoverScreen() {
   const router = useRouter();
   const theme = useTheme();
-  const t = useTranslations(detectLocale()).discover;
+  const locale = detectLocale();
+  const t = useTranslations(locale).discover;
+  const tEvents = useTranslations(locale).events;
 
   const [query, setQuery] = useState('');
   const [items, setItems] = useState<DiscoverCard[]>([]);
@@ -33,6 +40,11 @@ export default function DiscoverScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  // Sprint F2 — events rail. Independent fetch from cards (cheap public GET,
+  // 120s cache on the server). Rail is hidden if the rail-fetch fails or
+  // returns empty so the search experience stays clean.
+  const [events, setEvents] = useState<EventListItem[]>([]);
 
   const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const activeQuery = useRef('');
@@ -64,6 +76,10 @@ export default function DiscoverScreen() {
   useEffect(() => {
     activeQuery.current = '';
     void load('initial', '');
+    // Fire-and-forget — rail is silent on failure, never blocks search.
+    void listEvents({ limit: 6 })
+      .then((res) => setEvents(res.items))
+      .catch(() => setEvents([]));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -151,10 +167,100 @@ export default function DiscoverScreen() {
     );
   }
 
+  // Sprint F2 — horizontal events rail. Above the search field per spec.
+  // Tile dimensions: 220×140 cover-on-top, 64px text block under. Total height
+  // ~204px including margins. 4 tiles visible side-by-side on standard widths;
+  // user scrolls horizontally for the rest. Tap → /(app)/events/[slug].
+  function renderEventsRail() {
+    if (events.length === 0) return null;
+    return (
+      <View style={styles.railWrap}>
+        <View style={styles.railHeader}>
+          <Text style={[styles.railTitle, { color: theme.ink[100] }]}>
+            {t.upcomingEvents}
+          </Text>
+          <Pressable
+            onPress={() => router.push('/(app)/events' as never)}
+            hitSlop={8}
+            style={styles.railSeeAll}
+          >
+            <Text style={[styles.railSeeAllText, { color: teal[600] }]}>
+              {t.seeAllEvents}
+            </Text>
+            <ChevronRight size={14} color={teal[600]} />
+          </Pressable>
+        </View>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.railScroll}
+        >
+          {events.map((ev) => {
+            const dateLine = formatEventDateRange(ev.startAt, ev.endAt, locale);
+            return (
+              <Pressable
+                key={ev.id}
+                onPress={() => router.push(`/(app)/events/${ev.slug}` as never)}
+                style={({ pressed }) => [
+                  styles.railTile,
+                  {
+                    backgroundColor: theme.bg[1],
+                    borderColor: theme.line.DEFAULT,
+                  },
+                  pressed && styles.pressed,
+                ]}
+              >
+                <EventCover
+                  slug={ev.slug}
+                  name={ev.name}
+                  coverPath={ev.coverPath}
+                  width={200}
+                  height={108}
+                  borderRadius={10}
+                  initialsFontSize={42}
+                />
+                <View style={styles.railTileBody}>
+                  <Text
+                    style={[styles.railTileName, { color: theme.ink[100] }]}
+                    numberOfLines={1}
+                  >
+                    {ev.name}
+                  </Text>
+                  <Text
+                    style={[styles.railTileMeta, { color: theme.ink[400] }]}
+                    numberOfLines={1}
+                  >
+                    {ev.city} · {dateLine}
+                  </Text>
+                  <View style={styles.railTileFoot}>
+                    <UsersIcon size={11} color={teal[700]} />
+                    <Text style={[styles.railTileCount, { color: teal[700] }]}>
+                      {ev.attendeeCount === 1
+                        ? tEvents.attendeeCountOne
+                        : tEvents.attendeeCount.replace(
+                            '{count}',
+                            String(ev.attendeeCount),
+                          )}
+                    </Text>
+                  </View>
+                </View>
+              </Pressable>
+            );
+          })}
+        </ScrollView>
+      </View>
+    );
+  }
+
   return (
     <View style={[styles.root, { backgroundColor: theme.bg[0] }]}>
       <Stack.Screen options={{ title: t.title }} />
       <BrandHeader />
+
+      {/* Sprint F2 — events rail. Above the search field per spec. Rail
+          is hidden when there are no upcoming events so the screen falls
+          back to the original search-first layout. */}
+      {renderEventsRail()}
 
       {/* Search bar */}
       <View
@@ -294,4 +400,53 @@ const styles = StyleSheet.create({
     borderRadius: 6,
   },
   badgeText: { fontSize: 10, fontWeight: '600' },
+  // ---------- Events rail (Sprint F2) ----------
+  railWrap: {
+    paddingTop: 8,
+    paddingBottom: 4,
+  },
+  railHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    marginBottom: 8,
+  },
+  railTitle: {
+    fontSize: 13,
+    fontWeight: '700',
+    textTransform: 'uppercase',
+    letterSpacing: 0.6,
+  },
+  railSeeAll: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 2,
+  },
+  railSeeAllText: { fontSize: 13, fontWeight: '600' },
+  railScroll: {
+    paddingHorizontal: 12,
+    paddingBottom: 6,
+    gap: 10,
+  },
+  railTile: {
+    width: 220,
+    borderRadius: 12,
+    borderWidth: StyleSheet.hairlineWidth,
+    overflow: 'hidden',
+    marginRight: 0,
+  },
+  railTileBody: {
+    padding: 10,
+    gap: 3,
+  },
+  railTileName: { fontSize: 14, fontWeight: '600', lineHeight: 17 },
+  railTileMeta: { fontSize: 11 },
+  railTileFoot: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 3,
+    marginTop: 4,
+  },
+  railTileCount: { fontSize: 11, fontWeight: '600' },
 });

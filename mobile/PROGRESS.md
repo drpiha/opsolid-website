@@ -52,14 +52,21 @@ See git log between `9964d4f` and `45ccf99`. Sprint 0 (crash fix), Sprint 1 (pub
 
 These are the remaining high-value tracks on the roadmap. Hasan asked the assistant to **proceed autonomously** — do them in this order without waiting for review.
 
-### Sprint F2 — Events / Fairs feature
-- New Prisma model `Event` (id, slug, name, location, startAt, endAt, description, coverPath?, isActive).
-- M2M `EventAttendee` linking `Event` and `CardOrder`.
-- Owner toggle on the edit-form Gelişmiş tab: "I'm attending [Event picker]" — multi-select.
-- Mobile screens: `(app)/events/index.tsx` (list, sorted by startAt asc), `(app)/events/[slug].tsx` (detail + attendee grid using existing `CardListItem` shape).
-- Discover tab gets a horizontal "Upcoming events" rail above the search field.
-- Server endpoint: `GET /api/v1/events`, `GET /api/v1/events/[slug]`, `POST /api/v1/cards/[id]/events` (toggle attendance).
-- Seed 4 fictional Munich/Hamburg/Istanbul fairs and assign 6-8 of the seeded demo cards to each so the feature is visible immediately.
+### Sprint F2 — Events / Fairs feature [DONE — committed]
+Shipped:
+- Prisma `Event` + `EventAttendee` models, migration `20260509000000_add_events`.
+- Server endpoints `GET /api/v1/events`, `GET /api/v1/events/[slug]`, `POST /api/v1/cards/[id]/events`. Past-events filter: `endAt >= now() - 24h`. List capped at 50.
+- `card-mapping.ts` exposes `attendingEventIds: string[]` on owner GET (stripped from `toPublicApiCard`).
+- Mobile: 6th tab "Events" between Discover and Contacts (lucide `CalendarDays`). Screens at `(app)/events/index.tsx` (list) + `(app)/events/[slug].tsx` (detail + 3-col attendee grid). API client `mobile/src/lib/api/events.ts`.
+- `EventCover` component (initials gradient fallback when `coverPath === null`).
+- Discover tab: horizontal rail above search, `listEvents({limit:6})`, see-all link → `/(app)/events`.
+- `EventsAttendingSection` chip multi-select on edit form Gelişmiş tab. Edit screen sends `eventIds: string[]` to `POST /api/v1/cards/:id/events` after the main PATCH, only when the chip selection changed.
+- Seed `scripts/seed-events.ts` — 4 events (DMEXCO, Bits & Pretzels, Webrazzi Zirvesi, IHM) with the spec'd demo attendees. Idempotent upsert by slug.
+- i18n: `events.*` + `discover.upcomingEvents/seeAllEvents` keys for en/de/tr.
+
+Deploy steps for Hasan:
+1. `docker exec opsolid-app npx prisma migrate deploy` (applies `20260509000000_add_events`).
+2. `docker exec opsolid-app npx tsx scripts/seed-events.ts` (after seed-public-cards has run; resolves attendee slugs to ids).
 
 ### Sprint F3 — Contacts seed + UX
 - Discover is now populated; Contacts is empty for Hasan's account because nothing has been "saved." Two paths:

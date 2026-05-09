@@ -47,6 +47,9 @@ export type ApiCard = {
   // endpoints only). The public /api/v1/public/cards/:slug shape omits it;
   // visitors infer the toggle state from /api/cards/:slug/feedback aggregate.
   feedbackEnabled?: boolean;
+  // Sprint F2 — events the card is currently attending. Owner-only; absent on
+  // the public viewer shape. Array of Event ids (NOT slugs).
+  attendingEventIds?: string[];
   publishedAt: string | null;
   createdAt: string;
   updatedAt: string;

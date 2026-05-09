@@ -17,6 +17,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { Eye, X } from 'lucide-react-native';
 import { WebView } from 'react-native-webview';
 import { getCard, updateCard, uploadPhoto } from '../../../../src/lib/api/cards';
+import { updateCardEvents } from '../../../../src/lib/api/events';
 import type { ApiCard } from '../../../../src/lib/api/types';
 import { API_BASE } from '../../../../src/lib/api/client';
 import { useTheme } from '../../../../src/lib/theme/ThemeProvider';
@@ -38,6 +39,7 @@ import {
   FaqsSection,
   StatusBannerSection,
   FeedbackSection,
+  EventsAttendingSection,
   STATUS_BANNER_TONES,
   DEFAULT_PRIMARY_HEX,
   DEFAULT_ACCENT_HEX,
@@ -203,6 +205,12 @@ export default function CardEditScreen() {
     DEFAULT_STATUS_BANNER,
   );
   const [feedbackEnabled, setFeedbackEnabled] = useState<boolean>(false);
+  // Sprint F2 — events the card is attending. Mirrors `attendingEventIds` from
+  // the owner GET. Saved via a separate POST after the main PATCH (see
+  // handleSave). Track the originally-loaded set so we only fire the events
+  // POST when the chip selection has actually changed.
+  const [attendingEventIds, setAttendingEventIds] = useState<string[]>([]);
+  const [originalEventIds, setOriginalEventIds] = useState<string[]>([]);
 
   const [photoPath, setPhotoPath] = useState<string | null>(null);
 
@@ -282,6 +290,13 @@ export default function CardEditScreen() {
         // feedbackEnabled lives on top-level CardOrder column (Phase 8.4),
         // exposed on owner GET /api/v1/cards/:id (CARD_API_SELECT).
         setFeedbackEnabled(c.feedbackEnabled === true);
+        // Sprint F2 — attendingEventIds is exposed on owner GET via
+        // CARD_API_SELECT.attendingEvents → toApiCard flattens to ids.
+        const initialEventIds = Array.isArray(c.attendingEventIds)
+          ? c.attendingEventIds
+          : [];
+        setAttendingEventIds(initialEventIds);
+        setOriginalEventIds(initialEventIds);
       })
       .catch(() => Alert.alert('', t.errorLoad))
       .finally(() => setLoading(false));
@@ -372,6 +387,25 @@ export default function CardEditScreen() {
         qrStyle,
         feedbackEnabled,
       });
+
+      // Sprint F2 — sync event attendance via the dedicated POST endpoint,
+      // but only when the chip selection actually changed. We compare sorted
+      // arrays so order-only diffs (which are meaningless) don't trigger a
+      // network round-trip.
+      const a = [...attendingEventIds].sort();
+      const b = [...originalEventIds].sort();
+      const changed = a.length !== b.length || a.some((v, i) => v !== b[i]);
+      if (changed) {
+        try {
+          await updateCardEvents(id, attendingEventIds);
+          setOriginalEventIds(attendingEventIds);
+        } catch (eventsErr) {
+          // Card itself saved; surface a softer warning so the user knows
+          // the events update needs a retry.
+          console.warn('[cards/edit] events update failed:', eventsErr);
+        }
+      }
+
       Alert.alert('', t.saveSuccess, [{ text: 'OK', onPress: () => router.back() }]);
     } catch {
       Alert.alert('', t.errorLoad);
@@ -547,6 +581,11 @@ export default function CardEditScreen() {
           >
             <StatusBannerSection theme={theme} value={statusBanner} onChange={setStatusBanner} />
             <FeedbackSection theme={theme} value={feedbackEnabled} onChange={setFeedbackEnabled} />
+            <EventsAttendingSection
+              theme={theme}
+              selectedIds={attendingEventIds}
+              onChange={setAttendingEventIds}
+            />
             <VisibilitySection theme={theme} value={visibility} onChange={setVisibility} />
             <DiscoverySection theme={theme} values={discovery} onChange={setDiscoveryField} />
 

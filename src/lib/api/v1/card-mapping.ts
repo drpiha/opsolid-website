@@ -15,6 +15,10 @@ import type { CardOrder } from "@/generated/prisma";
 /**
  * The subset of CardOrder we need for serialization. Selecting only these
  * fields at the DB layer keeps wire size + memory bounded.
+ *
+ * Note: nested `attendingEvents` is a relation include, not a column. The
+ * generated row shape gains `attendingEvents: { eventId: string }[]` which
+ * `toApiCard` flattens into `attendingEventIds`.
  */
 export const CARD_API_SELECT = {
   id: true,
@@ -39,12 +43,20 @@ export const CARD_API_SELECT = {
   // Phase 8.4 — exposed on owner GET so the mobile edit form can hydrate the
   // toggle. Stays out of toPublicApiCard (visitors infer it from /feedback GET).
   feedbackEnabled: true,
+  // Sprint F2 — currently-attending events. Owner-only on the wire (we strip
+  // it in toPublicApiCard). Mobile edit form pre-fills the EventsAttendingSection
+  // chip multi-select from this array.
+  attendingEvents: { select: { eventId: true } },
 } as const;
 
+// `Pick` from CardOrder doesn't capture relation includes; merge the relation
+// shape in explicitly so consumers see `attendingEvents` typed correctly.
 export type ApiCardRow = Pick<
   CardOrder,
-  keyof typeof CARD_API_SELECT
->;
+  Exclude<keyof typeof CARD_API_SELECT, "attendingEvents">
+> & {
+  attendingEvents: { eventId: string }[];
+};
 
 export interface ApiCard {
   id: string;
@@ -62,6 +74,8 @@ export interface ApiCard {
   videoUrl: string | null;
   visibility: string;
   feedbackEnabled: boolean;
+  /** Sprint F2 — events this card is currently attending. Owner-only. */
+  attendingEventIds: string[];
   publishedAt: string | null;
   createdAt: string;
   updatedAt: string;
@@ -84,6 +98,7 @@ export function toApiCard(row: ApiCardRow): ApiCard {
     videoUrl: row.videoUrl,
     visibility: row.visibility,
     feedbackEnabled: row.feedbackEnabled,
+    attendingEventIds: (row.attendingEvents ?? []).map((a) => a.eventId),
     publishedAt: row.publishedAt?.toISOString() ?? null,
     createdAt: row.createdAt.toISOString(),
     updatedAt: row.updatedAt.toISOString(),
