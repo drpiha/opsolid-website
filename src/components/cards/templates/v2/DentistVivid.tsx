@@ -87,7 +87,7 @@ interface DnvCopy {
   populari: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", DnvCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DnvCopy> = {
   de: {
     online: "Online Termin",
     bookCta: "Schmerzfrei Termin buchen",
@@ -144,6 +144,90 @@ const COPY: Record<"de" | "en" | "tr", DnvCopy> = {
     share: "PaylaÅŸ",
     poweredBy: "Powered by",
     populari: "PopÃ¼ler",
+  },
+  es: {
+
+    online: "Reserva online",
+    bookCta: "Reserva una visita sin dolor",
+    bookHint: "24/7 por WhatsApp",
+    call: "Llamar",
+    email: "Correo",
+    ig: "Instagram",
+    services: "Tratamientos",
+    certifications: "Credenciales",
+    hours: "Dirección del despacho",
+    testimonial: "Voces",
+    servicesLabel: "Tratamientos",
+    reviewsLabel: "Reseñas",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    share: "Compartir",
+    poweredBy: "Desarrollado por",
+    populari: "Popular",
+  
+  },
+  it: {
+
+    online: "Prenotazione online",
+    bookCta: "Prenota una visita senza dolore",
+    bookHint: "24/7 via WhatsApp",
+    call: "Chiama",
+    email: "Email",
+    ig: "Instagram",
+    services: "Trattamenti",
+    certifications: "Credenziali",
+    hours: "Indirizzo dello studio",
+    testimonial: "Voci",
+    servicesLabel: "Trattamenti",
+    reviewsLabel: "Recensioni",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    share: "Condividi",
+    poweredBy: "Realizzato con",
+    populari: "Popolari",
+  
+  },
+  fr: {
+
+    online: "Réservation en ligne",
+    bookCta: "Réserver une visite sans douleur",
+    bookHint: "24/7 via WhatsApp",
+    call: "Appeler",
+    email: "E-mail",
+    ig: "Instagram",
+    services: "Soins",
+    certifications: "Références",
+    hours: "Adresse du cabinet",
+    testimonial: "Témoignages",
+    servicesLabel: "Soins",
+    reviewsLabel: "Avis",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    share: "Partager",
+    poweredBy: "Propulsé par",
+    populari: "Populaires",
+  
+  },
+  ar: {
+
+    online: "حجز إلكتروني",
+    bookCta: "احجز زيارة بدون ألم",
+    bookHint: "24/7 عبر واتساب",
+    call: "اتصال",
+    email: "البريد الإلكتروني",
+    ig: "إنستغرام",
+    services: "العلاجات",
+    certifications: "المؤهلات",
+    hours: "عنوان المكتب",
+    testimonial: "أصوات",
+    servicesLabel: "العلاجات",
+    reviewsLabel: "التقييمات",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    share: "مشاركة",
+    poweredBy: "مشغل بواسطة",
+    populari: "شائع",
+  
   },
 };
 

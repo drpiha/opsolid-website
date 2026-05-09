@@ -79,7 +79,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     yearsLabel: "Jahre",
     patientsLabel: "Patienten",
@@ -136,6 +136,90 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "KiÅŸiyi Kaydet",
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    yearsLabel: "Años",
+    patientsLabel: "Pacientes",
+    satisfactionLabel: "Satisfacción",
+    educationH: "Formación",
+    specialtiesH: "Especialidades",
+    contactH: "Contacto",
+    servicesH: "Servicios",
+    bookBtn: "Solicitar cita",
+    emailBtn: "Correo",
+    mapBtn: "Cómo llegar",
+    phoneKey: "Teléfono",
+    emailKey: "Correo",
+    webKey: "Web",
+    addressKey: "Dirección",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    yearsLabel: "Anni",
+    patientsLabel: "Pazienti",
+    satisfactionLabel: "Soddisfazione",
+    educationH: "Formazione",
+    specialtiesH: "Specialità",
+    contactH: "Contatto",
+    servicesH: "Servizi",
+    bookBtn: "Richiedi appuntamento",
+    emailBtn: "Email",
+    mapBtn: "Indicazioni",
+    phoneKey: "Telefono",
+    emailKey: "Email",
+    webKey: "Web",
+    addressKey: "Indirizzo",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    yearsLabel: "Années",
+    patientsLabel: "Patients",
+    satisfactionLabel: "Satisfaction",
+    educationH: "Formation",
+    specialtiesH: "Spécialités",
+    contactH: "Contact",
+    servicesH: "Services",
+    bookBtn: "Demander un rendez-vous",
+    emailBtn: "E-mail",
+    mapBtn: "Itinéraire",
+    phoneKey: "Téléphone",
+    emailKey: "E-mail",
+    webKey: "Web",
+    addressKey: "Adresse",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    yearsLabel: "سنوات",
+    patientsLabel: "المرضى",
+    satisfactionLabel: "الرضا",
+    educationH: "التعليم",
+    specialtiesH: "التخصصات",
+    contactH: "اتصال",
+    servicesH: "الخدمات",
+    bookBtn: "طلب موعد",
+    emailBtn: "البريد الإلكتروني",
+    mapBtn: "الاتجاهات",
+    phoneKey: "هاتف",
+    emailKey: "البريد الإلكتروني",
+    webKey: "ويب",
+    addressKey: "العنوان",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 
@@ -506,7 +590,7 @@ function PureStat({
   sup?: string;
   label: string;
   accent: string;
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
 }) {
   void accent;
   void locale;

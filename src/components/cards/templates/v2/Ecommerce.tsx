@@ -89,7 +89,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     taglineFallback: "Online Boutique",
     productsH: "Unsere Produkte",
@@ -131,6 +131,70 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    taglineFallback: "Boutique en línea",
+    productsH: "Nuestros productos",
+    orderInfoH: "Información del pedido",
+    orderInfoLine1: "Envío gratis a partir de 50 €",
+    orderInfoLine2: "Entrega en 2–4 días hábiles",
+    orderInfoLine3: "Envoltorio para regalo disponible",
+    contactH: "Contacto",
+    orderBtn: "Pedido",
+    bookBtn: "Pedir por WhatsApp",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    taglineFallback: "Boutique online",
+    productsH: "I nostri prodotti",
+    orderInfoH: "Info ordine",
+    orderInfoLine1: "Spedizione gratuita oltre i 50 €",
+    orderInfoLine2: "Consegna in 2–4 giorni lavorativi",
+    orderInfoLine3: "Confezione regalo disponibile",
+    contactH: "Contatto",
+    orderBtn: "Ordine",
+    bookBtn: "Ordina via WhatsApp",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    taglineFallback: "Boutique en ligne",
+    productsH: "Nos produits",
+    orderInfoH: "Info commande",
+    orderInfoLine1: "Livraison gratuite dès 50 €",
+    orderInfoLine2: "Livraison sous 2–4 jours ouvrés",
+    orderInfoLine3: "Emballage cadeau disponible",
+    contactH: "Contact",
+    orderBtn: "Commande",
+    bookBtn: "Commander via WhatsApp",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    taglineFallback: "متجر إلكتروني",
+    productsH: "منتجاتنا",
+    orderInfoH: "معلومات الطلب",
+    orderInfoLine1: "شحن مجاني للطلبات فوق 50 €",
+    orderInfoLine2: "التسليم خلال 2–4 أيام عمل",
+    orderInfoLine3: "تغليف الهدايا متوفر",
+    contactH: "اتصال",
+    orderBtn: "طلب",
+    bookBtn: "اطلب عبر واتساب",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

@@ -99,7 +99,7 @@ interface SdCopy {
   bookHint: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", SdCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdCopy> = {
   de: {
     available: "// available for hire",
     call: "Anrufen",
@@ -162,6 +162,98 @@ const COPY: Record<"de" | "en" | "tr", SdCopy> = {
     starsLabel: "GitHub ★",
     hireMe: "İşe Al",
     bookHint: "İlk görüşme ücretsiz",
+  },
+  es: {
+
+    available: "// disponible para contratar",
+    call: "Llamar",
+    whatsapp: "WhatsApp",
+    email: "Correo",
+    scheduleCall: "Programar una llamada",
+    callMe: "Llamada directa",
+    stack: "// stack",
+    services: "// servicios",
+    contact: "// contacto",
+    social: "// enlaces",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    share: "Compartir",
+    poweredBy: "Desarrollado por",
+    yearsLabel: "Años",
+    projectsLabel: "Proyectos",
+    starsLabel: "GitHub ★",
+    hireMe: "Contrátame",
+    bookHint: "Primera sesión gratis",
+  
+  },
+  it: {
+
+    available: "// disponibile per assunzione",
+    call: "Chiama",
+    whatsapp: "WhatsApp",
+    email: "Email",
+    scheduleCall: "Programma una chiamata",
+    callMe: "Chiama direttamente",
+    stack: "// stack",
+    services: "// servizi",
+    contact: "// contatto",
+    social: "// link",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    share: "Condividi",
+    poweredBy: "Realizzato con",
+    yearsLabel: "Anni",
+    projectsLabel: "Progetti",
+    starsLabel: "GitHub ★",
+    hireMe: "Assumimi",
+    bookHint: "Prima sessione gratuita",
+  
+  },
+  fr: {
+
+    available: "// disponible à l'embauche",
+    call: "Appeler",
+    whatsapp: "WhatsApp",
+    email: "E-mail",
+    scheduleCall: "Programmer un appel",
+    callMe: "Appeler directement",
+    stack: "// stack",
+    services: "// services",
+    contact: "// contact",
+    social: "// liens",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    share: "Partager",
+    poweredBy: "Propulsé par",
+    yearsLabel: "Années",
+    projectsLabel: "Projets",
+    starsLabel: "GitHub ★",
+    hireMe: "M'embaucher",
+    bookHint: "Première séance offerte",
+  
+  },
+  ar: {
+
+    available: "// متاح للتوظيف",
+    call: "اتصال",
+    whatsapp: "واتساب",
+    email: "البريد الإلكتروني",
+    scheduleCall: "حدد موعد مكالمة",
+    callMe: "اتصال مباشر",
+    stack: "// منظومة",
+    services: "// خدمات",
+    contact: "// اتصال",
+    social: "// روابط",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    share: "مشاركة",
+    poweredBy: "مشغل بواسطة",
+    yearsLabel: "سنوات",
+    projectsLabel: "المشاريع",
+    starsLabel: "GitHub ★",
+    hireMe: "وظفني",
+    bookHint: "الجلسة الأولى مجانية",
+  
   },
 };
 

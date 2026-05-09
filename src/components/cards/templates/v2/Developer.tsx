@@ -106,7 +106,7 @@ interface DvCopy {
   available: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", DvCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DvCopy> = {
   de: {
     saveContact: "Kontakt sichern",
     callNow: "Anrufen",
@@ -172,6 +172,102 @@ const COPY: Record<"de" | "en" | "tr", DvCopy> = {
     poweredBy: "powered by",
     shellPrompt: "~",
     available: "available",
+  },
+  es: {
+
+    saveContact: "Guardar contacto",
+    callNow: "Llamar",
+    whatsapp: "WhatsApp",
+    email: "Correo",
+    book: "Reservar",
+    about: "acerca",
+    contact: "contacto",
+    workTitle: "trabajo",
+    social: "redes",
+    walletLabel: "Añadir a la cartera",
+    runCmd: "npm run hire",
+    cmdLabel: "Hablemos",
+    cmdHint: "Respuesta normalmente en 24 horas",
+    status: "estado",
+    uptime: "disponible",
+    impressum: "aviso legal",
+    privacy: "privacidad",
+    poweredBy: "desarrollado por",
+    shellPrompt: "~",
+    available: "disponible",
+  
+  },
+  it: {
+
+    saveContact: "Salva contatto",
+    callNow: "Chiama",
+    whatsapp: "WhatsApp",
+    email: "Posta",
+    book: "Prenota",
+    about: "chi siamo",
+    contact: "contatto",
+    workTitle: "lavoro",
+    social: "social",
+    walletLabel: "Aggiungi al wallet",
+    runCmd: "npm run hire",
+    cmdLabel: "Parliamo",
+    cmdHint: "Risposta solitamente entro 24 ore",
+    status: "stato",
+    uptime: "disponibile",
+    impressum: "impressum",
+    privacy: "privacy",
+    poweredBy: "realizzato con",
+    shellPrompt: "~",
+    available: "disponibile",
+  
+  },
+  fr: {
+
+    saveContact: "Enregistrer le contact",
+    callNow: "Appeler",
+    whatsapp: "WhatsApp",
+    email: "Courrier",
+    book: "Réserver",
+    about: "à propos",
+    contact: "contact",
+    workTitle: "travail",
+    social: "réseaux",
+    walletLabel: "Ajouter au portefeuille",
+    runCmd: "npm run hire",
+    cmdLabel: "Discutons",
+    cmdHint: "Réponse généralement sous 24 heures",
+    status: "statut",
+    uptime: "disponible",
+    impressum: "mentions légales",
+    privacy: "confidentialité",
+    poweredBy: "propulsé par",
+    shellPrompt: "~",
+    available: "disponible",
+  
+  },
+  ar: {
+
+    saveContact: "حفظ جهة الاتصال",
+    callNow: "اتصال",
+    whatsapp: "واتساب",
+    email: "بريد",
+    book: "احجز",
+    about: "حول",
+    contact: "اتصال",
+    workTitle: "عمل",
+    social: "تواصل",
+    walletLabel: "إضافة إلى المحفظة",
+    runCmd: "npm run hire",
+    cmdLabel: "لنتحدث",
+    cmdHint: "الرد عادة خلال 24 ساعة",
+    status: "الحالة",
+    uptime: "متاح",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    poweredBy: "مشغل بواسطة",
+    shellPrompt: "~",
+    available: "متاح",
+  
   },
 };
 
@@ -955,7 +1051,7 @@ function CTASection({
 }: {
   slug: string;
   sourceQs: string;
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   primary: string;
   accent: string;
 }) {

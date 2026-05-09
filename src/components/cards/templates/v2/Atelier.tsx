@@ -75,7 +75,7 @@ interface AtCopy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", AtCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AtCopy> = {
   de: {
     selectedWork: "Ausgewählte Arbeiten",
     contact: "Kontakt",
@@ -108,6 +108,58 @@ const COPY: Record<"de" | "en" | "tr", AtCopy> = {
     impressum: "Künye",
     privacy: "Gizlilik",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    selectedWork: "Trabajo seleccionado",
+    contact: "Contacto",
+    social: "En otros lugares",
+    walletLabel: "Añadir a la cartera",
+    saveContact: "Guardar contacto",
+    brochure: "Folio",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    selectedWork: "Lavori selezionati",
+    contact: "Contatto",
+    social: "Altrove",
+    walletLabel: "Aggiungi al wallet",
+    saveContact: "Salva contatto",
+    brochure: "Folio",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    selectedWork: "Travaux sélectionnés",
+    contact: "Contact",
+    social: "Ailleurs",
+    walletLabel: "Ajouter au portefeuille",
+    saveContact: "Enregistrer le contact",
+    brochure: "Folio",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    selectedWork: "أعمال مختارة",
+    contact: "اتصال",
+    social: "في أماكن أخرى",
+    walletLabel: "إضافة إلى المحفظة",
+    saveContact: "حفظ جهة الاتصال",
+    brochure: "الملف",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 
@@ -569,7 +621,7 @@ function CTABlock({
 }: {
   slug: string;
   sourceQs: string;
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   primary: string;
   accent: string;
   saveContactLabel: string;

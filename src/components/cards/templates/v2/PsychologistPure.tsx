@@ -67,7 +67,7 @@ interface PspCopy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", PspCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PspCopy> = {
   de: {
     contact: "Kontakt",
     specialties: "Schwerpunkte",
@@ -118,6 +118,82 @@ const COPY: Record<"de" | "en" | "tr", PspCopy> = {
     formats: "Format",
     share: "PaylaÅŸ",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    contact: "Contacto",
+    specialties: "Áreas de enfoque",
+    prices: "Tarifas de sesión",
+    education: "Entrenamiento",
+    approach: "Enfoque",
+    sessionMode: "Online y presencial",
+    bookSession: "Solicitar una sesión",
+    callMe: "Llámame",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    experience: "Años",
+    sessions: "Sesiones",
+    formats: "Formatos",
+    share: "Compartir",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    contact: "Contatto",
+    specialties: "Aree di focus",
+    prices: "Tariffe sessione",
+    education: "Allenamento",
+    approach: "Approccio",
+    sessionMode: "Online e in presenza",
+    bookSession: "Richiedi una sessione",
+    callMe: "Chiamami",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    experience: "Anni",
+    sessions: "Sessioni",
+    formats: "Formati",
+    share: "Condividi",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    contact: "Contact",
+    specialties: "Domaines de focus",
+    prices: "Tarifs des séances",
+    education: "Entraînement",
+    approach: "Approche",
+    sessionMode: "En ligne et en personne",
+    bookSession: "Demander une séance",
+    callMe: "Appelle-moi",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    experience: "Années",
+    sessions: "Séances",
+    formats: "Formats",
+    share: "Partager",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    contact: "اتصال",
+    specialties: "مجالات التركيز",
+    prices: "رسوم الجلسة",
+    education: "التدريب",
+    approach: "النهج",
+    sessionMode: "عبر الإنترنت وحضوري",
+    bookSession: "اطلب جلسة",
+    callMe: "اتصل بي",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    experience: "سنوات",
+    sessions: "الجلسات",
+    formats: "الصيغ",
+    share: "مشاركة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

@@ -100,7 +100,7 @@ interface AcnCopy {
   reviewsLabel: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", AcnCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCopy> = {
   de: {
     estLine: "Steuerberater · Berlin",
     steuerberatung: "Steuerberatung",
@@ -175,6 +175,114 @@ const COPY: Record<"de" | "en" | "tr", AcnCopy> = {
     share: "Paylaş",
     servicesLabel: "Hizmetler",
     reviewsLabel: "Yorum",
+  },
+  es: {
+
+    estLine: "Asesor fiscal · Berlín",
+    steuerberatung: "Despacho fiscal",
+    consultTagline: "Discreto · Preciso · Confiable",
+    call: "Llamar",
+    whatsapp: "WhatsApp",
+    email: "Correo",
+    about: "Acerca de",
+    services: "Servicios",
+    philosophy: "Filosofía del despacho",
+    philosophyQuote:
+      "Understand taxes, found GmbH, work digitally. Your reliable partner.",
+    contact: "Contacto",
+    social: "Seguir",
+    bookConsult: "Reservar una reunión",
+    callOffice: "Llamar a la oficina",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    share: "Compartir",
+    servicesLabel: "Servicios",
+    reviewsLabel: "Reseñas",
+  
+  },
+  it: {
+
+    estLine: "Consulente fiscale · Berlino",
+    steuerberatung: "Studio fiscale",
+    consultTagline: "Discreto · Preciso · Affidabile",
+    call: "Chiama",
+    whatsapp: "WhatsApp",
+    email: "Email",
+    about: "Chi siamo",
+    services: "Servizi",
+    philosophy: "Filosofia dello studio",
+    philosophyQuote:
+      "Understand taxes, found GmbH, work digitally. Your reliable partner.",
+    contact: "Contatto",
+    social: "Segui",
+    bookConsult: "Prenota un incontro",
+    callOffice: "Chiama l'ufficio",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    share: "Condividi",
+    servicesLabel: "Servizi",
+    reviewsLabel: "Recensioni",
+  
+  },
+  fr: {
+
+    estLine: "Conseiller fiscal · Berlin",
+    steuerberatung: "Cabinet fiscal",
+    consultTagline: "Discret · Précis · Fiable",
+    call: "Appeler",
+    whatsapp: "WhatsApp",
+    email: "E-mail",
+    about: "À propos",
+    services: "Services",
+    philosophy: "Philosophie du cabinet",
+    philosophyQuote:
+      "Understand taxes, found GmbH, work digitally. Your reliable partner.",
+    contact: "Contact",
+    social: "Suivre",
+    bookConsult: "Prendre rendez-vous",
+    callOffice: "Appeler le bureau",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    share: "Partager",
+    servicesLabel: "Services",
+    reviewsLabel: "Avis",
+  
+  },
+  ar: {
+
+    estLine: "مستشار ضريبي · برلين",
+    steuerberatung: "ممارسة ضريبية",
+    consultTagline: "خاص · دقيق · موثوق",
+    call: "اتصال",
+    whatsapp: "واتساب",
+    email: "البريد الإلكتروني",
+    about: "حول",
+    services: "الخدمات",
+    philosophy: "فلسفة المكتب",
+    philosophyQuote:
+      "Understand taxes, found GmbH, work digitally. Your reliable partner.",
+    contact: "اتصال",
+    social: "متابعة",
+    bookConsult: "احجز موعداً",
+    callOffice: "اتصل بالمكتب",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    share: "مشاركة",
+    servicesLabel: "الخدمات",
+    reviewsLabel: "التقييمات",
+  
   },
 };
 

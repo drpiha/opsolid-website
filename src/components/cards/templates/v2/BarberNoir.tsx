@@ -78,7 +78,7 @@ interface Copy {
   hoursH: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     estPrefix: "Est.",
     taglineFallback: "Master Barber & Stylist",
@@ -129,6 +129,82 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
     hoursH: "Ã‡alÄ±ÅŸma Saatleri",
+  },
+  es: {
+
+    estPrefix: "Est.",
+    taglineFallback: "Maestro barbero y estilista",
+    yearsLabel: "años",
+    clientsLabel: "clientes",
+    followersLabel: "seguidores",
+    servicesEyebrow: "â€” Menu â€”",
+    servicesH: "Servicios",
+    servicesSub: "Arreglo clásico y moderno",
+    contactEyebrow: "â€” Contact â€”",
+    contactH: "Reservar y contactar",
+    bookBtn: "Reservar cita",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    hoursH: "Horario",
+  
+  },
+  it: {
+
+    estPrefix: "Est.",
+    taglineFallback: "Master Barber e Stylist",
+    yearsLabel: "anni",
+    clientsLabel: "clienti",
+    followersLabel: "follower",
+    servicesEyebrow: "â€” Menu â€”",
+    servicesH: "Servizi",
+    servicesSub: "Grooming classico e moderno",
+    contactEyebrow: "â€” Contact â€”",
+    contactH: "Prenota e contatta",
+    bookBtn: "Prenota un appuntamento",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    hoursH: "Orari",
+  
+  },
+  fr: {
+
+    estPrefix: "Est.",
+    taglineFallback: "Maître barbier et styliste",
+    yearsLabel: "ans",
+    clientsLabel: "clients",
+    followersLabel: "abonnés",
+    servicesEyebrow: "â€” Menu â€”",
+    servicesH: "Services",
+    servicesSub: "Soins classiques et modernes",
+    contactEyebrow: "â€” Contact â€”",
+    contactH: "Réserver et contacter",
+    bookBtn: "Prendre rendez-vous",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    hoursH: "Horaires",
+  
+  },
+  ar: {
+
+    estPrefix: "تأسس",
+    taglineFallback: "حلاق رئيسي ومصفف",
+    yearsLabel: "سنة",
+    clientsLabel: "عملاء",
+    followersLabel: "متابعون",
+    servicesEyebrow: "â€” Menu â€”",
+    servicesH: "الخدمات",
+    servicesSub: "عناية كلاسيكية وحديثة",
+    contactEyebrow: "â€” Contact â€”",
+    contactH: "احجز واتصل",
+    bookBtn: "حجز موعد",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    hoursH: "ساعات العمل",
+  
   },
 };
 

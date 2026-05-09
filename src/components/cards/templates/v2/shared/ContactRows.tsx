@@ -52,18 +52,60 @@ function getWhatsAppNumber(value: string): string {
   return digitsOnly(value).replace(/^\+/, "");
 }
 
-const LABELS: Record<ContactChannel, Record<"de" | "en" | "tr", string>> = {
-  phone: { de: "Telefon", en: "Phone", tr: "Telefon" },
-  whatsapp: { de: "WhatsApp", en: "WhatsApp", tr: "WhatsApp" },
-  email: { de: "E-Mail", en: "Email", tr: "E-posta" },
-  website: { de: "Website", en: "Website", tr: "Web sitesi" },
-  address: { de: "Adresse", en: "Address", tr: "Adres" },
+type SharedLocale = "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
+
+const LABELS: Record<ContactChannel, Record<SharedLocale, string>> = {
+  phone: {
+    de: "Telefon",
+    en: "Phone",
+    tr: "Telefon",
+    es: "Teléfono",
+    it: "Telefono",
+    fr: "Téléphone",
+    ar: "هاتف",
+  },
+  whatsapp: {
+    de: "WhatsApp",
+    en: "WhatsApp",
+    tr: "WhatsApp",
+    es: "WhatsApp",
+    it: "WhatsApp",
+    fr: "WhatsApp",
+    ar: "واتساب",
+  },
+  email: {
+    de: "E-Mail",
+    en: "Email",
+    tr: "E-posta",
+    es: "Correo",
+    it: "Email",
+    fr: "E-mail",
+    ar: "البريد الإلكتروني",
+  },
+  website: {
+    de: "Website",
+    en: "Website",
+    tr: "Web sitesi",
+    es: "Sitio web",
+    it: "Sito web",
+    fr: "Site web",
+    ar: "الموقع",
+  },
+  address: {
+    de: "Adresse",
+    en: "Address",
+    tr: "Adres",
+    es: "Dirección",
+    it: "Indirizzo",
+    fr: "Adresse",
+    ar: "العنوان",
+  },
 };
 
 /** Build the canonical row list for a card. Pure data; no JSX. */
 export function buildContactRows(
   cardData: CardData,
-  locale: "de" | "en" | "tr" = "de",
+  locale: SharedLocale = "de",
 ): ContactRow[] {
   const rows: ContactRow[] = [];
   if (cardData.phone) {
@@ -123,7 +165,7 @@ export type ContactRowsVariant = "tile" | "hairline" | "compact";
 
 export interface ContactRowsProps {
   cardData: CardData;
-  locale?: "de" | "en" | "tr";
+  locale?: SharedLocale;
   /** Visual variant. Templates can pass `className` instead for full control. */
   variant?: ContactRowsVariant;
   /**

@@ -98,7 +98,7 @@ interface CcnCopy {
   nicheValue: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", CcnCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcnCopy> = {
   de: {
     studioLabel: "Tuna Â· Studio",
     studioTagline: "Cinematic storytelling for ambitious brands.",
@@ -155,6 +155,90 @@ const COPY: Record<"de" | "en" | "tr", CcnCopy> = {
     followers: "TakipÃ§i",
     niche: "Alan",
     nicheValue: "Lifestyle Â· Travel Â· Premium",
+  },
+  es: {
+
+    studioLabel: "Tuna Â· Studio",
+    studioTagline: "Narrativa cinematográfica para marcas ambiciosas.",
+    totalReach: "Alcance total",
+    contact: "Contacto",
+    collab: "Colaboración",
+    platforms: "Plataformas",
+    about: "Acerca de",
+    bookingCta: "Solicitud de reserva",
+    bookingSub: "Respuesta en 24 h",
+    callMe: "Llamada directa",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    share: "Compartir",
+    poweredBy: "Desarrollado por",
+    followers: "Seguidores",
+    niche: "Nicho",
+    nicheValue: "Lifestyle Â· Travel Â· Premium",
+  
+  },
+  it: {
+
+    studioLabel: "Tuna Â· Studio",
+    studioTagline: "Narrazione cinematografica per brand ambiziosi.",
+    totalReach: "Copertura totale",
+    contact: "Contatto",
+    collab: "Collab",
+    platforms: "Piattaforme",
+    about: "Chi siamo",
+    bookingCta: "Richiesta di prenotazione",
+    bookingSub: "Risposta entro 24h",
+    callMe: "Chiama direttamente",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    share: "Condividi",
+    poweredBy: "Realizzato con",
+    followers: "Follower",
+    niche: "Nicchia",
+    nicheValue: "Lifestyle Â· Travel Â· Premium",
+  
+  },
+  fr: {
+
+    studioLabel: "Tuna Â· Studio",
+    studioTagline: "Narration cinématographique pour marques ambitieuses.",
+    totalReach: "Portée totale",
+    contact: "Contact",
+    collab: "Collab",
+    platforms: "Plateformes",
+    about: "À propos",
+    bookingCta: "Demande de réservation",
+    bookingSub: "Réponse sous 24 h",
+    callMe: "Appeler directement",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    share: "Partager",
+    poweredBy: "Propulsé par",
+    followers: "Abonnés",
+    niche: "Niche",
+    nicheValue: "Lifestyle Â· Travel Â· Premium",
+  
+  },
+  ar: {
+
+    studioLabel: "Tuna Â· Studio",
+    studioTagline: "سرد سينمائي للعلامات الطموحة.",
+    totalReach: "الوصول الكلي",
+    contact: "اتصال",
+    collab: "تعاون",
+    platforms: "المنصات",
+    about: "حول",
+    bookingCta: "طلب حجز",
+    bookingSub: "الرد خلال 24 ساعة",
+    callMe: "اتصال مباشر",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    share: "مشاركة",
+    poweredBy: "مشغل بواسطة",
+    followers: "متابعون",
+    niche: "تخصص",
+    nicheValue: "Lifestyle Â· Travel Â· Premium",
+  
   },
 };
 

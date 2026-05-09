@@ -91,7 +91,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     servicesH: "Praxisgebiete",
     servicesSub: "Strategische Rechtsberatung fÃ¼r Sie und Ihr Unternehmen",
@@ -133,6 +133,70 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "KiÅŸiyi Kaydet",
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    servicesH: "Áreas de práctica",
+    servicesSub: "Asesoría jurídica estratégica para ti y tu negocio",
+    contactH: "Contacta",
+    contactSub: "Contacto con un toque",
+    ctaLabel: "Consulta inicial gratuita",
+    pillActive: "Active Â· Berlin",
+    yearsLabel: "Años",
+    casesLabel: "Mandatos",
+    winRateLabel: "Tasa de éxito",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    servicesH: "Aree di pratica",
+    servicesSub: "Consulenza legale strategica per te e la tua attività",
+    contactH: "Contattaci",
+    contactSub: "Contatto con un tap",
+    ctaLabel: "Prima consulenza gratuita",
+    pillActive: "Active Â· Berlin",
+    yearsLabel: "Anni",
+    casesLabel: "Mandati",
+    winRateLabel: "Tasso di successo",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    servicesH: "Domaines de pratique",
+    servicesSub: "Conseil juridique stratégique pour vous et votre entreprise",
+    contactH: "Nous contacter",
+    contactSub: "Contact en un clic",
+    ctaLabel: "Première consultation gratuite",
+    pillActive: "Active Â· Berlin",
+    yearsLabel: "Années",
+    casesLabel: "Mandats",
+    winRateLabel: "Taux de réussite",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    servicesH: "مجالات الممارسة",
+    servicesSub: "استشارة قانونية استراتيجية لك ولأعمالك",
+    contactH: "تواصل",
+    contactSub: "اتصال بنقرة",
+    ctaLabel: "استشارة أولية مجانية",
+    pillActive: "Active Â· Berlin",
+    yearsLabel: "سنوات",
+    casesLabel: "تكليفات",
+    winRateLabel: "معدل النجاح",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

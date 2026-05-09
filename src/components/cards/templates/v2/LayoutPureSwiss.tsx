@@ -56,7 +56,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     metaRoleLabel: "Rolle",
     metaCompanyLabel: "Firma",
@@ -89,6 +89,58 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana Ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    metaRoleLabel: "Rol",
+    metaCompanyLabel: "Empresa",
+    metaLocationLabel: "Ubicación",
+    expertiseTitle: "Experiencia",
+    experienceTitle: "Experiencia",
+    contactTitle: "Contacto",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    metaRoleLabel: "Ruolo",
+    metaCompanyLabel: "Azienda",
+    metaLocationLabel: "Posizione",
+    expertiseTitle: "Competenze",
+    experienceTitle: "Esperienza",
+    contactTitle: "Contatto",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    metaRoleLabel: "Rôle",
+    metaCompanyLabel: "Société",
+    metaLocationLabel: "Lieu",
+    expertiseTitle: "Expertise",
+    experienceTitle: "Expérience",
+    contactTitle: "Contact",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    metaRoleLabel: "الدور",
+    metaCompanyLabel: "الشركة",
+    metaLocationLabel: "الموقع",
+    expertiseTitle: "الخبرة",
+    experienceTitle: "الخبرة",
+    contactTitle: "اتصال",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

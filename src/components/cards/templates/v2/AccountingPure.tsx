@@ -79,7 +79,7 @@ interface AcpCopy {
   practitionerValue: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", AcpCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcpCopy> = {
   de: {
     contact: "Kontakt",
     about: "Profil",
@@ -133,6 +133,86 @@ const COPY: Record<"de" | "en" | "tr", AcpCopy> = {
     online: "Online",
     practitioner: "Ofis",
     practitionerValue: "Yönetici Ortak",
+  },
+  es: {
+
+    contact: "Contacto",
+    about: "Perfil",
+    services: "Servicios",
+    highlights: "Destacados",
+    testimonial: "Reseña de cliente",
+    bookConsult: "Reservar consulta",
+    callOffice: "Llamar a la oficina",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    share: "Compartir",
+    poweredBy: "Desarrollado por",
+    reviewsLabel: "Reseñas",
+    responseLabel: "Respuesta",
+    online: "En línea",
+    practitioner: "Despacho",
+    practitionerValue: "Socio gestor",
+  
+  },
+  it: {
+
+    contact: "Contatto",
+    about: "Profilo",
+    services: "Servizi",
+    highlights: "In evidenza",
+    testimonial: "Recensione cliente",
+    bookConsult: "Prenota consulenza",
+    callOffice: "Chiama l'ufficio",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    share: "Condividi",
+    poweredBy: "Realizzato con",
+    reviewsLabel: "Recensioni",
+    responseLabel: "Risposta",
+    online: "Online",
+    practitioner: "Studio",
+    practitionerValue: "Socio amministratore",
+  
+  },
+  fr: {
+
+    contact: "Contact",
+    about: "Profil",
+    services: "Services",
+    highlights: "Points forts",
+    testimonial: "Avis client",
+    bookConsult: "Réserver une consultation",
+    callOffice: "Appeler le bureau",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    share: "Partager",
+    poweredBy: "Propulsé par",
+    reviewsLabel: "Avis",
+    responseLabel: "Réponse",
+    online: "En ligne",
+    practitioner: "Cabinet",
+    practitionerValue: "Associé gérant",
+  
+  },
+  ar: {
+
+    contact: "اتصال",
+    about: "الملف الشخصي",
+    services: "الخدمات",
+    highlights: "الأبرز",
+    testimonial: "تقييم العميل",
+    bookConsult: "احجز استشارة",
+    callOffice: "اتصل بالمكتب",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    share: "مشاركة",
+    poweredBy: "مشغل بواسطة",
+    reviewsLabel: "التقييمات",
+    responseLabel: "الاستجابة",
+    online: "عبر الإنترنت",
+    practitioner: "ممارسة",
+    practitionerValue: "الشريك الإداري",
+  
   },
 };
 

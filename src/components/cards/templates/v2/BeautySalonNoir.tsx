@@ -81,7 +81,7 @@ interface BsnCopy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", BsnCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsnCopy> = {
   de: {
     premiumBeautyBar: "Premium Beauty Bar",
     contact: "Kontakt",
@@ -135,6 +135,86 @@ const COPY: Record<"de" | "en" | "tr", BsnCopy> = {
     studio: "Studio",
     share: "PaylaÅŸ",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    premiumBeautyBar: "Bar de belleza premium",
+    contact: "Contacto",
+    contactSub: "Contacta",
+    menu: "Servicios",
+    menuSub: "La carta",
+    studioPhilosophy: "Filosofía del estudio",
+    studioPhilosophyQuote: "La belleza es donde lo obvio termina y lo extraordinario comienza.",
+    bookAppointment: "Reservar cita",
+    callStudio: "Llamar al estudio",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    servicesLabel: "Servicios",
+    reviewsLabel: "Reseñas",
+    studio: "Estudio",
+    share: "Compartir",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    premiumBeautyBar: "Beauty Bar premium",
+    contact: "Contatto",
+    contactSub: "Contattaci",
+    menu: "Servizi",
+    menuSub: "Il menù",
+    studioPhilosophy: "Filosofia dello studio",
+    studioPhilosophyQuote: "La bellezza è dove finisce l'ovvio e inizia lo straordinario.",
+    bookAppointment: "Prenota un appuntamento",
+    callStudio: "Chiama lo studio",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    servicesLabel: "Servizi",
+    reviewsLabel: "Recensioni",
+    studio: "Studio",
+    share: "Condividi",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    premiumBeautyBar: "Bar beauté premium",
+    contact: "Contact",
+    contactSub: "Nous contacter",
+    menu: "Services",
+    menuSub: "Le menu",
+    studioPhilosophy: "Philosophie du studio",
+    studioPhilosophyQuote: "La beauté commence là où l'évident s'arrête et où l'extraordinaire commence.",
+    bookAppointment: "Prendre rendez-vous",
+    callStudio: "Appeler le studio",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    servicesLabel: "Services",
+    reviewsLabel: "Avis",
+    studio: "Studio",
+    share: "Partager",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    premiumBeautyBar: "بار تجميل فاخر",
+    contact: "اتصال",
+    contactSub: "تواصل",
+    menu: "الخدمات",
+    menuSub: "القائمة",
+    studioPhilosophy: "فلسفة الاستوديو",
+    studioPhilosophyQuote: "الجمال هو حيث ينتهي البديهي ويبدأ الاستثنائي.",
+    bookAppointment: "حجز موعد",
+    callStudio: "اتصل بالاستوديو",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    servicesLabel: "الخدمات",
+    reviewsLabel: "التقييمات",
+    studio: "استوديو",
+    share: "مشاركة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

@@ -22,19 +22,25 @@ import type { SmartCardSource } from "@/components/cards/smart/SmartCardSource";
 import type { Locale } from "@/lib/i18n";
 
 /**
- * The 96 v2 templates only ship copy tables for `en`/`de`/`tr` — for the
- * M6 locales (es/it/fr/ar) we narrow to the closest covered locale.
- * Spanish/Italian/French map to English (Latin script, professional
- * register); Arabic also maps to English (the per-template copy is short
- * enough that English is the safest fallback while a native-language pass
- * is being commissioned).
+ * Locales the per-template copy tables now ship for. Widened from the
+ * original `'en' | 'de' | 'tr'` triplet to all 7 site locales as part of
+ * the M6 follow-up — every template's COPY map now has matching `es`,
+ * `it`, `fr`, and `ar` entries.
+ */
+export type TemplateLocale = "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
+
+/**
+ * Kept as a passthrough for safety so existing call-sites don't break.
+ * Previously narrowed `Locale` (7 locales) to the 3-locale subset the
+ * templates supported; now that the templates ship full coverage, this
+ * just hands the locale back unchanged. Left in place so a future
+ * narrowing requirement (e.g., a brand-new locale that templates don't
+ * yet cover) can be wired up here in one spot.
  */
 export function narrowTemplateLocale(
   locale: Locale | undefined,
-): "de" | "en" | "tr" | undefined {
-  if (locale === "de" || locale === "en" || locale === "tr") return locale;
-  if (locale === undefined) return undefined;
-  return "en";
+): TemplateLocale | undefined {
+  return locale;
 }
 
 /**
@@ -47,11 +53,10 @@ export interface TemplateProps {
   cardData: CardData;
   /**
    * Card owner's locale — visitor-facing CTAs (Exchange, footer) localise on
-   * this. Narrowed to en/de/tr because the per-template copy tables only
-   * cover those three; for es/it/fr/ar the public-card surface falls back to
-   * English at the call site (see `narrowTemplateLocale()`).
+   * this. Widened to all 7 site locales (en/de/tr/es/it/fr/ar) now that
+   * each template's copy table ships matching entries.
    */
-  locale?: "de" | "en" | "tr";
+  locale?: TemplateLocale;
   /** Storage path or full URL of the owner's profile photo. */
   photoPath?: string | null;
   /** Storage path or full URL of the owner's logo / mark. */

@@ -100,7 +100,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     est: "Established 2012",
     chefEyebrow: "Unsere Küche",
@@ -166,6 +166,102 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    est: "Establecido en 2012",
+    chefEyebrow: "Nuestra cocina",
+    menuEyebrow: "Selección de temporada",
+    menuH: "À la carte",
+    hoursEyebrow: "Horario de apertura",
+    hoursMain: "Mar – Sáb",
+    hoursMainSub: "Servicio de cena",
+    hoursWeekend: "Domingo",
+    hoursWeekendSub: "Solo brunch",
+    ctaEyebrow: "Reservar mesa",
+    ctaBtn: "Reserva",
+    contactEyebrow: "Contacto",
+    callBtn: "Llamar",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Correo",
+    servicesLabel: "Platos",
+    reviewsLabel: "Reseñas",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    est: "Fondato nel 2012",
+    chefEyebrow: "La nostra cucina",
+    menuEyebrow: "Selezioni stagionali",
+    menuH: "À la carte",
+    hoursEyebrow: "Orari di apertura",
+    hoursMain: "Mar – Sab",
+    hoursMainSub: "Servizio cena",
+    hoursWeekend: "Domenica",
+    hoursWeekendSub: "Solo brunch",
+    ctaEyebrow: "Prenota un tavolo",
+    ctaBtn: "Prenotazione",
+    contactEyebrow: "Contatto",
+    callBtn: "Chiama",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Email",
+    servicesLabel: "Piatti",
+    reviewsLabel: "Recensioni",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    est: "Établi en 2012",
+    chefEyebrow: "Notre cuisine",
+    menuEyebrow: "Sélections de saison",
+    menuH: "À la carte",
+    hoursEyebrow: "Horaires d'ouverture",
+    hoursMain: "Mar – Sam",
+    hoursMainSub: "Service du dîner",
+    hoursWeekend: "Dimanche",
+    hoursWeekendSub: "Brunch uniquement",
+    ctaEyebrow: "Réserver une table",
+    ctaBtn: "Réservation",
+    contactEyebrow: "Contact",
+    callBtn: "Appeler",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "E-mail",
+    servicesLabel: "Plats",
+    reviewsLabel: "Avis",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    est: "تأسس في 2012",
+    chefEyebrow: "مطبخنا",
+    menuEyebrow: "مختارات الموسم",
+    menuH: "حسب الطلب",
+    hoursEyebrow: "ساعات الافتتاح",
+    hoursMain: "ثلاثاء – سبت",
+    hoursMainSub: "خدمة العشاء",
+    hoursWeekend: "الأحد",
+    hoursWeekendSub: "برانش فقط",
+    ctaEyebrow: "احجز طاولة",
+    ctaBtn: "حجز",
+    contactEyebrow: "اتصال",
+    callBtn: "اتصال",
+    whatsappBtn: "واتساب",
+    emailBtn: "البريد الإلكتروني",
+    servicesLabel: "الأطباق",
+    reviewsLabel: "التقييمات",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

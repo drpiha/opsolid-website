@@ -77,7 +77,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     metaOpen: "GeÃ¶ffnet Â· Di â€“ So",
     philosophy: "Philosophie",
@@ -125,6 +125,78 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "KiÅŸiyi Kaydet",
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    metaOpen: "Open Â· Tue â€“ Sun",
+    philosophy: "Filosofía",
+    dishes: "Especiales de temporada",
+    hours: "Dirección",
+    contact: "Contacto",
+    reserveBtn: "Reservar",
+    whatsappBtn: "WhatsApp",
+    menuBtn: "Carta",
+    directionsBtn: "Cómo llegar",
+    servicesLabel: "Platos",
+    reviewsLabel: "Reseñas",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    metaOpen: "Open Â· Tue â€“ Sun",
+    philosophy: "Filosofia",
+    dishes: "Specialità stagionali",
+    hours: "Indirizzo",
+    contact: "Contatto",
+    reserveBtn: "Prenota",
+    whatsappBtn: "WhatsApp",
+    menuBtn: "Menù",
+    directionsBtn: "Indicazioni",
+    servicesLabel: "Piatti",
+    reviewsLabel: "Recensioni",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    metaOpen: "Open Â· Tue â€“ Sun",
+    philosophy: "Philosophie",
+    dishes: "Spécialités de saison",
+    hours: "Adresse",
+    contact: "Contact",
+    reserveBtn: "Réserver",
+    whatsappBtn: "WhatsApp",
+    menuBtn: "Menu",
+    directionsBtn: "Itinéraire",
+    servicesLabel: "Plats",
+    reviewsLabel: "Avis",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    metaOpen: "Open Â· Tue â€“ Sun",
+    philosophy: "الفلسفة",
+    dishes: "عروض الموسم",
+    hours: "العنوان",
+    contact: "اتصال",
+    reserveBtn: "احجز",
+    whatsappBtn: "واتساب",
+    menuBtn: "القائمة",
+    directionsBtn: "الاتجاهات",
+    servicesLabel: "الأطباق",
+    reviewsLabel: "التقييمات",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

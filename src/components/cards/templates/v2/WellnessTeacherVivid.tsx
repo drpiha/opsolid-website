@@ -100,7 +100,7 @@ interface Copy {
   contact: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     tag: "Yoga & Wellness",
     role: "Zertifizierte RYT-500 Yoga-Lehrerin",
@@ -169,6 +169,106 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
     contact: "Ä°letiÅŸim",
+  },
+  es: {
+
+    tag: "Yoga y bienestar",
+    role: "Profesor de yoga certificado RYT-500",
+    mantra:
+      "Come back to your body. Breathe. Be here. Yoga starts in exactly this moment.",
+    callBtn: "Llamar",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Correo",
+    classCats: "Categorías de clase",
+    services: "Paquetes",
+    yearsLabel: "Años",
+    studentsLabel: "Estudiantes",
+    communityLabel: "Comunidad",
+    trialBadge: "Principiantes bienvenidos",
+    trialTitle: "Primera clase gratis",
+    trialDesc:
+      "Just starting with yoga? Your first class is on me. Try it, feel it, decide for yourself.",
+    trialBtn: "Reservar ahora",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    contact: "Contacto",
+  
+  },
+  it: {
+
+    tag: "Yoga e benessere",
+    role: "Insegnante di yoga certificato RYT-500",
+    mantra:
+      "Come back to your body. Breathe. Be here. Yoga starts in exactly this moment.",
+    callBtn: "Chiama",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Email",
+    classCats: "Categorie di classi",
+    services: "Pacchetti",
+    yearsLabel: "Anni",
+    studentsLabel: "Studenti",
+    communityLabel: "Comunità",
+    trialBadge: "Principianti benvenuti",
+    trialTitle: "Prima lezione gratuita",
+    trialDesc:
+      "Just starting with yoga? Your first class is on me. Try it, feel it, decide for yourself.",
+    trialBtn: "Prenota ora",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    contact: "Contatto",
+  
+  },
+  fr: {
+
+    tag: "Yoga et bien-être",
+    role: "Professeur de yoga certifié RYT-500",
+    mantra:
+      "Come back to your body. Breathe. Be here. Yoga starts in exactly this moment.",
+    callBtn: "Appeler",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "E-mail",
+    classCats: "Catégories de cours",
+    services: "Forfaits",
+    yearsLabel: "Années",
+    studentsLabel: "Étudiants",
+    communityLabel: "Communauté",
+    trialBadge: "Débutants bienvenus",
+    trialTitle: "Premier cours offert",
+    trialDesc:
+      "Just starting with yoga? Your first class is on me. Try it, feel it, decide for yourself.",
+    trialBtn: "Réserver maintenant",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    contact: "Contact",
+  
+  },
+  ar: {
+
+    tag: "اليوغا والعافية",
+    role: "معلم يوغا معتمد RYT-500",
+    mantra:
+      "Come back to your body. Breathe. Be here. Yoga starts in exactly this moment.",
+    callBtn: "اتصال",
+    whatsappBtn: "واتساب",
+    emailBtn: "البريد الإلكتروني",
+    classCats: "فئات الحصص",
+    services: "الباقات",
+    yearsLabel: "سنوات",
+    studentsLabel: "الطلاب",
+    communityLabel: "المجتمع",
+    trialBadge: "نرحب بالمبتدئين",
+    trialTitle: "الحصة الأولى مجانية",
+    trialDesc:
+      "Just starting with yoga? Your first class is on me. Try it, feel it, decide for yourself.",
+    trialBtn: "احجز الآن",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    contact: "اتصال",
+  
   },
 };
 

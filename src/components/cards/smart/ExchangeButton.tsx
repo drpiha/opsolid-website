@@ -20,7 +20,7 @@ import { useIsOwner } from "@/context/OwnerMode";
 interface Props {
   slug: string;
   primary: string;
-  locale?: "de" | "en" | "tr";
+  locale?: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
 }
 
 type Status = "idle" | "submitting" | "ok" | "duplicate" | "error";
@@ -92,7 +92,10 @@ const STRINGS = {
 const LS_KEY = "myCardSlug";
 
 export function ExchangeButton({ slug, primary, locale = "de" }: Props) {
-  const t = STRINGS[locale] ?? STRINGS.en;
+  // The exchange modal copy ships in en/de/tr today; for es/it/fr/ar we fall
+  // back to en at runtime until the modal copy is widened.
+  const narrowedLocale = (locale === "de" || locale === "en" || locale === "tr") ? locale : "en";
+  const t = STRINGS[narrowedLocale] ?? STRINGS.en;
   const isOwner = useIsOwner();
 
   const [open, setOpen] = useState(false);

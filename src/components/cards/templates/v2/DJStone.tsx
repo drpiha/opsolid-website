@@ -86,7 +86,7 @@ interface Copy {
   philoEmphasis: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     headerEyebrow: "Von gestern auf heute",
     headerH: "Music & Sessions",
@@ -146,6 +146,94 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    headerEyebrow: "De ayer a hoy",
+    headerH: "Música y sesiones",
+    estLine: "EST. 2016 · BERLÍN",
+    philoLabel: "— Filosofía musical —",
+    philoH: "La calidez de lo analógico",
+    philoText:
+      "I have been working with vinyl and modular synth. House, deep techno and afro house sets — instead of digital speed, I seek the slowness of time. Music, for me, is a life rhythm.",
+    philoEmphasis: "Durante 10 años",
+    genresH: "Géneros",
+    genresSub: "— lo que pongo —",
+    servicesH: "Servicios",
+    servicesSub: "— sets y sesiones —",
+    ctaPrimary: "Enviar solicitud de escenario",
+    ctaSecondary: "Correo",
+    scanLabel: "— Escucha mi música —",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    headerEyebrow: "Da ieri a oggi",
+    headerH: "Musica e sessioni",
+    estLine: "EST. 2016 · BERLINO",
+    philoLabel: "— Filosofia musicale —",
+    philoH: "Il calore dell'analogico",
+    philoText:
+      "I have been working with vinyl and modular synth. House, deep techno and afro house sets — instead of digital speed, I seek the slowness of time. Music, for me, is a life rhythm.",
+    philoEmphasis: "Da 10 anni",
+    genresH: "Generi",
+    genresSub: "— cosa suono —",
+    servicesH: "Servizi",
+    servicesSub: "— set e sessioni —",
+    ctaPrimary: "Invia richiesta palco",
+    ctaSecondary: "Email",
+    scanLabel: "— Ascolta la mia musica —",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    headerEyebrow: "D'hier à aujourd'hui",
+    headerH: "Musique et sessions",
+    estLine: "EST. 2016 · BERLIN",
+    philoLabel: "— Philosophie musicale —",
+    philoH: "La chaleur de l'analogique",
+    philoText:
+      "I have been working with vinyl and modular synth. House, deep techno and afro house sets — instead of digital speed, I seek the slowness of time. Music, for me, is a life rhythm.",
+    philoEmphasis: "Depuis 10 ans",
+    genresH: "Genres",
+    genresSub: "— ce que je joue —",
+    servicesH: "Services",
+    servicesSub: "— sets et sessions —",
+    ctaPrimary: "Envoyer la demande de scène",
+    ctaSecondary: "E-mail",
+    scanLabel: "— Écoutez ma musique —",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    headerEyebrow: "من الأمس إلى اليوم",
+    headerH: "موسيقى وجلسات",
+    estLine: "تأسس 2016 · برلين",
+    philoLabel: "— فلسفة الموسيقى —",
+    philoH: "دفء الأنالوج",
+    philoText:
+      "I have been working with vinyl and modular synth. House, deep techno and afro house sets — instead of digital speed, I seek the slowness of time. Music, for me, is a life rhythm.",
+    philoEmphasis: "منذ 10 سنوات",
+    genresH: "الأنواع",
+    genresSub: "— ما أشغله —",
+    servicesH: "الخدمات",
+    servicesSub: "— عروض وجلسات —",
+    ctaPrimary: "إرسال طلب العرض",
+    ctaSecondary: "البريد الإلكتروني",
+    scanLabel: "— استمع إلى موسيقاي —",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

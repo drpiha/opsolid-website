@@ -89,7 +89,7 @@ interface ArCopy {
   philosophy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", ArCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ArCopy> = {
   de: {
     saveContact: "Speichern",
     callNow: "Anrufen",
@@ -149,6 +149,94 @@ const COPY: Record<"de" | "en" | "tr", ArCopy> = {
     privacy: "Gizlilik",
     poweredBy: "Powered by",
     philosophy: "Yaklaşım",
+  },
+  es: {
+
+    saveContact: "Guardar contacto",
+    callNow: "Llamar",
+    whatsapp: "WhatsApp",
+    email: "Correo",
+    book: "Reservar",
+    selectedProjects: "Proyectos seleccionados",
+    about: "Estudio",
+    contact: "Contacto",
+    voices: "Voces",
+    social: "Redes",
+    studio: "Estudio",
+    walletLabel: "Añadir a la cartera",
+    portfolioCta: "Portafolio (PDF)",
+    portfolioHint: "Lista completa de proyectos",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    poweredBy: "Desarrollado por",
+    philosophy: "Enfoque",
+  
+  },
+  it: {
+
+    saveContact: "Salva contatto",
+    callNow: "Chiama",
+    whatsapp: "WhatsApp",
+    email: "Email",
+    book: "Prenota",
+    selectedProjects: "Progetti selezionati",
+    about: "Studio",
+    contact: "Contatto",
+    voices: "Voci",
+    social: "Social",
+    studio: "Studio",
+    walletLabel: "Aggiungi al wallet",
+    portfolioCta: "Portfolio (PDF)",
+    portfolioHint: "Elenco completo dei progetti",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    poweredBy: "Realizzato con",
+    philosophy: "Approccio",
+  
+  },
+  fr: {
+
+    saveContact: "Enregistrer le contact",
+    callNow: "Appeler",
+    whatsapp: "WhatsApp",
+    email: "E-mail",
+    book: "Réserver",
+    selectedProjects: "Projets sélectionnés",
+    about: "Studio",
+    contact: "Contact",
+    voices: "Témoignages",
+    social: "Réseaux",
+    studio: "Studio",
+    walletLabel: "Ajouter au portefeuille",
+    portfolioCta: "Portfolio (PDF)",
+    portfolioHint: "Liste complète des projets",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    poweredBy: "Propulsé par",
+    philosophy: "Approche",
+  
+  },
+  ar: {
+
+    saveContact: "حفظ جهة الاتصال",
+    callNow: "اتصال",
+    whatsapp: "واتساب",
+    email: "البريد الإلكتروني",
+    book: "احجز",
+    selectedProjects: "مشاريع مختارة",
+    about: "استوديو",
+    contact: "اتصال",
+    voices: "أصوات",
+    social: "التواصل",
+    studio: "استوديو",
+    walletLabel: "إضافة إلى المحفظة",
+    portfolioCta: "المعرض (PDF)",
+    portfolioHint: "قائمة المشاريع الكاملة",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    poweredBy: "مشغل بواسطة",
+    philosophy: "النهج",
+  
   },
 };
 
@@ -904,7 +992,7 @@ function CTASection({
 }: {
   slug: string;
   sourceQs: string;
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   primary: string;
   accent: string;
 }) {

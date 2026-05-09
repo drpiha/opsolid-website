@@ -129,7 +129,7 @@ interface HoCopy {
   address: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", HoCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", HoCopy> = {
   de: {
     bookStay: "Aufenthalt buchen",
     callConcierge: "Concierge anrufen",
@@ -219,6 +219,134 @@ const COPY: Record<"de" | "en" | "tr", HoCopy> = {
     saveContact: "Kişiyi kaydet",
     web: "Web",
     address: "Adres",
+  },
+  es: {
+
+    bookStay: "Reserva tu estancia",
+    callConcierge: "Llamar al conserje",
+    whatsapp: "WhatsApp",
+    email: "Correo",
+    directions: "Cómo llegar",
+    suitesEyebrow: "Suites y tarifas",
+    suites: "Suites",
+    artOfStayEyebrow: "La casa",
+    artOfStay: "Nuestra historia",
+    guestsEyebrow: "De nuestros huéspedes",
+    guests: "Libro de visitas",
+    conciergeEyebrow: "Conserje",
+    concierge: "Correspondencia",
+    galleryEyebrow: "De la casa",
+    gallery: "Impresiones",
+    socialEyebrow: "Mantente conectado",
+    social: "Seguir",
+    walletLabel: "Añadir a la cartera",
+    brochureCta: "Folleto de la casa (PDF)",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    poweredBy: "Desarrollado por",
+    share: "Compartir",
+    estd: "est.",
+    reservations: "Reservas",
+    saveContact: "Guardar contacto",
+    web: "Web",
+    address: "Dirección",
+  
+  },
+  it: {
+
+    bookStay: "Prenota il tuo soggiorno",
+    callConcierge: "Chiama il concierge",
+    whatsapp: "WhatsApp",
+    email: "Email",
+    directions: "Indicazioni",
+    suitesEyebrow: "Suite e tariffe",
+    suites: "Suite",
+    artOfStayEyebrow: "La casa",
+    artOfStay: "La nostra storia",
+    guestsEyebrow: "Dai nostri ospiti",
+    guests: "Libro degli ospiti",
+    conciergeEyebrow: "Concierge",
+    concierge: "Corrispondenza",
+    galleryEyebrow: "Dalla casa",
+    gallery: "Impressioni",
+    socialEyebrow: "Resta connesso",
+    social: "Segui",
+    walletLabel: "Aggiungi al wallet",
+    brochureCta: "Brochure della casa (PDF)",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    poweredBy: "Realizzato con",
+    share: "Condividi",
+    estd: "est.",
+    reservations: "Prenotazioni",
+    saveContact: "Salva contatto",
+    web: "Web",
+    address: "Indirizzo",
+  
+  },
+  fr: {
+
+    bookStay: "Réservez votre séjour",
+    callConcierge: "Appeler la conciergerie",
+    whatsapp: "WhatsApp",
+    email: "E-mail",
+    directions: "Itinéraire",
+    suitesEyebrow: "Suites et tarifs",
+    suites: "Suites",
+    artOfStayEyebrow: "La maison",
+    artOfStay: "Notre histoire",
+    guestsEyebrow: "De nos hôtes",
+    guests: "Livre d'or",
+    conciergeEyebrow: "Conciergerie",
+    concierge: "Correspondance",
+    galleryEyebrow: "De la maison",
+    gallery: "Impressions",
+    socialEyebrow: "Restez connecté",
+    social: "Suivre",
+    walletLabel: "Ajouter au portefeuille",
+    brochureCta: "Brochure de la maison (PDF)",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    poweredBy: "Propulsé par",
+    share: "Partager",
+    estd: "est.",
+    reservations: "Réservations",
+    saveContact: "Enregistrer le contact",
+    web: "Web",
+    address: "Adresse",
+  
+  },
+  ar: {
+
+    bookStay: "احجز إقامتك",
+    callConcierge: "اتصل بخدمة الكونسيرج",
+    whatsapp: "واتساب",
+    email: "البريد الإلكتروني",
+    directions: "الاتجاهات",
+    suitesEyebrow: "الأجنحة والأسعار",
+    suites: "أجنحة",
+    artOfStayEyebrow: "المنزل",
+    artOfStay: "قصتنا",
+    guestsEyebrow: "من ضيوفنا",
+    guests: "سجل الضيوف",
+    conciergeEyebrow: "الكونسيرج",
+    concierge: "المراسلات",
+    galleryEyebrow: "من المنزل",
+    gallery: "الانطباعات",
+    socialEyebrow: "ابقَ على تواصل",
+    social: "متابعة",
+    walletLabel: "إضافة إلى المحفظة",
+    brochureCta: "كتيب المنزل (PDF)",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    poweredBy: "مشغل بواسطة",
+    share: "مشاركة",
+    estd: "تأسس",
+    reservations: "الحجوزات",
+    saveContact: "حفظ جهة الاتصال",
+    web: "ويب",
+    address: "العنوان",
+  
   },
 };
 
@@ -1158,7 +1286,7 @@ function CTASection({
 }: {
   slug: string;
   sourceQs: string;
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   primary: string;
   accent: string;
   saveContactLabel: string;

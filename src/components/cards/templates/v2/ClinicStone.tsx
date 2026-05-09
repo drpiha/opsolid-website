@@ -82,7 +82,7 @@ interface Copy {
   steps: { h: string; p: string }[];
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     stamp: "M.D. â€” FachÃ¤rztin Â· Est. 2014",
     preH: "Ganzheitlicher Ansatz",
@@ -163,6 +163,106 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
       { h: "Muayene & Plan", p: "DetaylÄ± muayene sonrasÄ± kiÅŸiye Ã¶zel plan." },
       { h: "Takip SÃ¼reci", p: "DÃ¼zenli takip ve bireysel danÄ±ÅŸmanlÄ±k." },
     ],
+  },
+  es: {
+
+    stamp: "M.D. â€” Specialist Â· Est. 2014",
+    preH: "Enfoque holístico",
+    approachH: "Mi enfoque",
+    approachSub: "Sanación integral",
+    servicesH: "Servicios",
+    servicesSub: "Dónde puedo acompañarte",
+    stepsH: "Tu flujo de cita",
+    stepsSub: "Paso a paso",
+    contactH: "Contacto",
+    bookBtn: "Solicitar cita",
+    emailBtn: "Correo",
+    mapBtn: "Cómo llegar",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    steps: [
+      { h: "First contact", p: "Reach out by WhatsApp or phone â€” describe briefly." },
+      { h: "Appointment", p: "We find a suitable time and send a reminder." },
+      { h: "Consultation", p: "Thorough exam, plan tailored to you." },
+      { h: "Follow-up", p: "Regular check-ins and personal guidance." },
+    ],
+  
+  },
+  it: {
+
+    stamp: "M.D. â€” Specialist Â· Est. 2014",
+    preH: "Approccio olistico",
+    approachH: "Il mio approccio",
+    approachSub: "Guarigione integrale",
+    servicesH: "Servizi",
+    servicesSub: "Dove posso accompagnarti",
+    stepsH: "Il tuo percorso di appuntamento",
+    stepsSub: "Passo dopo passo",
+    contactH: "Contatto",
+    bookBtn: "Richiedi appuntamento",
+    emailBtn: "Email",
+    mapBtn: "Indicazioni",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    steps: [
+      { h: "First contact", p: "Reach out by WhatsApp or phone â€” describe briefly." },
+      { h: "Appointment", p: "We find a suitable time and send a reminder." },
+      { h: "Consultation", p: "Thorough exam, plan tailored to you." },
+      { h: "Follow-up", p: "Regular check-ins and personal guidance." },
+    ],
+  
+  },
+  fr: {
+
+    stamp: "M.D. â€” Specialist Â· Est. 2014",
+    preH: "Approche holistique",
+    approachH: "Mon approche",
+    approachSub: "Guérison globale",
+    servicesH: "Services",
+    servicesSub: "Où je peux vous accompagner",
+    stepsH: "Votre parcours de rendez-vous",
+    stepsSub: "Étape par étape",
+    contactH: "Contact",
+    bookBtn: "Demander un rendez-vous",
+    emailBtn: "E-mail",
+    mapBtn: "Itinéraire",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    steps: [
+      { h: "First contact", p: "Reach out by WhatsApp or phone â€” describe briefly." },
+      { h: "Appointment", p: "We find a suitable time and send a reminder." },
+      { h: "Consultation", p: "Thorough exam, plan tailored to you." },
+      { h: "Follow-up", p: "Regular check-ins and personal guidance." },
+    ],
+  
+  },
+  ar: {
+
+    stamp: "M.D. â€” Specialist Â· Est. 2014",
+    preH: "نهج شامل",
+    approachH: "نهجي",
+    approachSub: "شفاء شامل",
+    servicesH: "الخدمات",
+    servicesSub: "حيث يمكنني مرافقتك",
+    stepsH: "مسار موعدك",
+    stepsSub: "خطوة بخطوة",
+    contactH: "اتصال",
+    bookBtn: "طلب موعد",
+    emailBtn: "البريد الإلكتروني",
+    mapBtn: "الاتجاهات",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    steps: [
+      { h: "First contact", p: "Reach out by WhatsApp or phone â€” describe briefly." },
+      { h: "Appointment", p: "We find a suitable time and send a reminder." },
+      { h: "Consultation", p: "Thorough exam, plan tailored to you." },
+      { h: "Follow-up", p: "Regular check-ins and personal guidance." },
+    ],
+  
   },
 };
 

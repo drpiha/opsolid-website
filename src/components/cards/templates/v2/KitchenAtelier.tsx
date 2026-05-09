@@ -98,7 +98,7 @@ interface KaCopy {
   share: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", KaCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy> = {
   de: {
     tastingMenu: "Heute am Pass",
     dishes: "Aus der Küche",
@@ -143,6 +143,74 @@ const COPY: Record<"de" | "en" | "tr", KaCopy> = {
     privacy: "Gizlilik",
     poweredBy: "Powered by",
     share: "Paylaş",
+  },
+  es: {
+
+    tastingMenu: "Cata de esta noche",
+    dishes: "Desde el pase",
+    testimonials: "Nuestros huéspedes dicen",
+    contact: "Reservas",
+    social: "Seguir",
+    walletLabel: "Añadir a la cartera",
+    reservation: "Reservar mesa",
+    about: "El chef",
+    brochureCta: "Carta completa (PDF)",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    poweredBy: "Desarrollado por",
+    share: "Compartir",
+  
+  },
+  it: {
+
+    tastingMenu: "Degustazione di stasera",
+    dishes: "Dal passaggio",
+    testimonials: "I nostri ospiti dicono",
+    contact: "Prenotazioni",
+    social: "Segui",
+    walletLabel: "Aggiungi al wallet",
+    reservation: "Prenota un tavolo",
+    about: "Lo chef",
+    brochureCta: "Menù completo (PDF)",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    poweredBy: "Realizzato con",
+    share: "Condividi",
+  
+  },
+  fr: {
+
+    tastingMenu: "Dégustation du soir",
+    dishes: "Depuis le passe",
+    testimonials: "Nos hôtes témoignent",
+    contact: "Réservations",
+    social: "Suivre",
+    walletLabel: "Ajouter au portefeuille",
+    reservation: "Réserver une table",
+    about: "Le chef",
+    brochureCta: "Menu complet (PDF)",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    poweredBy: "Propulsé par",
+    share: "Partager",
+  
+  },
+  ar: {
+
+    tastingMenu: "ذواقة هذه الليلة",
+    dishes: "من الممر",
+    testimonials: "ماذا يقول الضيوف",
+    contact: "الحجوزات",
+    social: "متابعة",
+    walletLabel: "إضافة إلى المحفظة",
+    reservation: "احجز طاولة",
+    about: "الشيف",
+    brochureCta: "القائمة الكاملة (PDF)",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    poweredBy: "مشغل بواسطة",
+    share: "مشاركة",
+  
   },
 };
 
@@ -948,7 +1016,7 @@ function CTASection({
 }: {
   slug: string;
   sourceQs: string;
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   primary: string;
   accent: string;
 }) {

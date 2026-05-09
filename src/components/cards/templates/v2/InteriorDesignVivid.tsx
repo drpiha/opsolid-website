@@ -97,7 +97,7 @@ interface Copy {
   contact: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     tag: "Interior Studio",
     callBtn: "Anrufen",
@@ -160,6 +160,98 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
     contact: "Ä°letiÅŸim",
+  },
+  es: {
+
+    tag: "Estudio de interiorismo",
+    callBtn: "Llamar",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Correo",
+    featuredH: "Proyecto actual",
+    featuredBadge: "Destacado",
+    servicesH: "Servicios",
+    processH: "Proceso",
+    step1: "Resumen",
+    step2: "Concepto",
+    step3: "Construir",
+    yearsLabel: "Años",
+    projectsLabel: "Proyectos",
+    awardsLabel: "Premios",
+    cta: "Reservar una consulta",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    contact: "Contacto",
+  
+  },
+  it: {
+
+    tag: "Studio di interior design",
+    callBtn: "Chiama",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Email",
+    featuredH: "Progetto in corso",
+    featuredBadge: "In evidenza",
+    servicesH: "Servizi",
+    processH: "Processo",
+    step1: "Brief",
+    step2: "Concept",
+    step3: "Costruire",
+    yearsLabel: "Anni",
+    projectsLabel: "Progetti",
+    awardsLabel: "Premi",
+    cta: "Prenota una consulenza",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    contact: "Contatto",
+  
+  },
+  fr: {
+
+    tag: "Studio d'intérieur",
+    callBtn: "Appeler",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "E-mail",
+    featuredH: "Projet en cours",
+    featuredBadge: "À la une",
+    servicesH: "Services",
+    processH: "Processus",
+    step1: "Brief",
+    step2: "Concept",
+    step3: "Construire",
+    yearsLabel: "Années",
+    projectsLabel: "Projets",
+    awardsLabel: "Récompenses",
+    cta: "Réserver une consultation",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    contact: "Contact",
+  
+  },
+  ar: {
+
+    tag: "استوديو التصميم الداخلي",
+    callBtn: "اتصال",
+    whatsappBtn: "واتساب",
+    emailBtn: "البريد الإلكتروني",
+    featuredH: "المشروع الحالي",
+    featuredBadge: "مميز",
+    servicesH: "الخدمات",
+    processH: "العملية",
+    step1: "موجز",
+    step2: "المفهوم",
+    step3: "بناء",
+    yearsLabel: "سنوات",
+    projectsLabel: "المشاريع",
+    awardsLabel: "جوائز",
+    cta: "احجز استشارة",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    contact: "اتصال",
+  
   },
 };
 

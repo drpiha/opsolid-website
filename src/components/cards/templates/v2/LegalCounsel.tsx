@@ -87,7 +87,7 @@ interface LcCopy {
   share: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", LcCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", LcCopy> = {
   de: {
     practiceAreas: "Praxisgebiete",
     testimonials: "Empfehlungen",
@@ -126,6 +126,66 @@ const COPY: Record<"de" | "en" | "tr", LcCopy> = {
     privacy: "Gizlilik",
     poweredBy: "Powered by",
     share: "Paylaş",
+  },
+  es: {
+
+    practiceAreas: "Áreas de práctica",
+    testimonials: "Voces",
+    contact: "Contacto",
+    social: "Conectar",
+    walletLabel: "Añadir a la cartera",
+    about: "Perfil",
+    brochureCta: "Ver perfil del despacho",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    poweredBy: "Desarrollado por",
+    share: "Compartir",
+  
+  },
+  it: {
+
+    practiceAreas: "Aree di pratica",
+    testimonials: "Voci",
+    contact: "Contatto",
+    social: "Connetti",
+    walletLabel: "Aggiungi al wallet",
+    about: "Profilo",
+    brochureCta: "Vedi profilo dello studio",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    poweredBy: "Realizzato con",
+    share: "Condividi",
+  
+  },
+  fr: {
+
+    practiceAreas: "Domaines de pratique",
+    testimonials: "Témoignages",
+    contact: "Contact",
+    social: "Connecter",
+    walletLabel: "Ajouter au portefeuille",
+    about: "Profil",
+    brochureCta: "Voir le profil du cabinet",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    poweredBy: "Propulsé par",
+    share: "Partager",
+  
+  },
+  ar: {
+
+    practiceAreas: "مجالات الممارسة",
+    testimonials: "أصوات",
+    contact: "اتصال",
+    social: "تواصل",
+    walletLabel: "إضافة إلى المحفظة",
+    about: "الملف الشخصي",
+    brochureCta: "عرض ملف المكتب",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    poweredBy: "مشغل بواسطة",
+    share: "مشاركة",
+  
   },
 };
 
@@ -706,7 +766,7 @@ function CTASection({
 }: {
   slug: string;
   sourceQs: string;
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   primary: string;
   accent: string;
 }) {

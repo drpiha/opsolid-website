@@ -81,7 +81,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     est: "Etabliert 2018",
     storyLabel: "Manifest",
@@ -132,6 +132,82 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    est: "Establecido en 2018",
+    storyLabel: "Manifiesto",
+    storyH: "Momentos reales, contados con honestidad",
+    storySig: "— hecho con amor",
+    servicesLabel: "Paquetes",
+    servicesH: "Inversión",
+    ctaPrimary: "Reservar una sesión",
+    ctaSecondary: "Portafolio",
+    ctaTertiary: "Cómo llegar",
+    statYears: "Años",
+    statShoots: "Sesiones",
+    statCountries: "Países",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    est: "Fondato nel 2018",
+    storyLabel: "Manifesto",
+    storyH: "Momenti reali, raccontati con onestà",
+    storySig: "— fatto con amore",
+    servicesLabel: "Pacchetti",
+    servicesH: "Investimento",
+    ctaPrimary: "Prenota una sessione",
+    ctaSecondary: "Portfolio",
+    ctaTertiary: "Indicazioni",
+    statYears: "Anni",
+    statShoots: "Servizi fotografici",
+    statCountries: "Paesi",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    est: "Établi en 2018",
+    storyLabel: "Manifeste",
+    storyH: "Des moments réels, racontés avec honnêteté",
+    storySig: "— fait avec amour",
+    servicesLabel: "Forfaits",
+    servicesH: "Investissement",
+    ctaPrimary: "Réserver une séance",
+    ctaSecondary: "Portfolio",
+    ctaTertiary: "Itinéraire",
+    statYears: "Années",
+    statShoots: "Séances photo",
+    statCountries: "Pays",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    est: "تأسس في 2018",
+    storyLabel: "البيان",
+    storyH: "لحظات حقيقية، رويت بصدق",
+    storySig: "— صنع بحب",
+    servicesLabel: "الباقات",
+    servicesH: "الاستثمار",
+    ctaPrimary: "احجز جلسة",
+    ctaSecondary: "المعرض",
+    ctaTertiary: "الاتجاهات",
+    statYears: "سنوات",
+    statShoots: "تصوير",
+    statCountries: "الدول",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

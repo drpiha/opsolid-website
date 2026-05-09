@@ -84,7 +84,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     taglineFallback: "Atelier-Architekt",
     atelierLabel: "Atelier · Berlin",
@@ -144,6 +144,94 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    taglineFallback: "Arquitecto del estudio",
+    atelierLabel: "Atelier · Berlín",
+    philLabel: "Filosofía",
+    servicesH: "Suite de servicios",
+    servicesSub: "Diseño, restauración y sostenibilidad",
+    featuredH: "Trabajo destacado",
+    testiCite: "Propietario del proyecto",
+    contactH: "Contacto",
+    ctaPrimary: "Llamar",
+    ctaSecondary: "WhatsApp",
+    yearsLabel: "Años",
+    projectsLabel: "Proyectos",
+    countriesLabel: "Países",
+    awardsLabel: "Premios",
+    bookBtn: "Reservar cita",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    taglineFallback: "Architetto dell'atelier",
+    atelierLabel: "Atelier · Berlino",
+    philLabel: "Filosofia",
+    servicesH: "Suite dei servizi",
+    servicesSub: "Design, restauro e sostenibilità",
+    featuredH: "Lavori in evidenza",
+    testiCite: "Titolare del progetto",
+    contactH: "Contatto",
+    ctaPrimary: "Chiama",
+    ctaSecondary: "WhatsApp",
+    yearsLabel: "Anni",
+    projectsLabel: "Progetti",
+    countriesLabel: "Paesi",
+    awardsLabel: "Premi",
+    bookBtn: "Prenota un appuntamento",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    taglineFallback: "Architecte d'atelier",
+    atelierLabel: "Atelier · Berlin",
+    philLabel: "Philosophie",
+    servicesH: "Suite de services",
+    servicesSub: "Design, restauration et durabilité",
+    featuredH: "Travaux en vedette",
+    testiCite: "Propriétaire du projet",
+    contactH: "Contact",
+    ctaPrimary: "Appeler",
+    ctaSecondary: "WhatsApp",
+    yearsLabel: "Années",
+    projectsLabel: "Projets",
+    countriesLabel: "Pays",
+    awardsLabel: "Récompenses",
+    bookBtn: "Prendre rendez-vous",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    taglineFallback: "مهندس الأتيليه",
+    atelierLabel: "أتيليه · برلين",
+    philLabel: "الفلسفة",
+    servicesH: "حزمة الخدمات",
+    servicesSub: "تصميم وترميم واستدامة",
+    featuredH: "أعمال مميزة",
+    testiCite: "صاحب المشروع",
+    contactH: "اتصال",
+    ctaPrimary: "اتصال",
+    ctaSecondary: "واتساب",
+    yearsLabel: "سنوات",
+    projectsLabel: "المشاريع",
+    countriesLabel: "الدول",
+    awardsLabel: "جوائز",
+    bookBtn: "حجز موعد",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

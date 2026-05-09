@@ -100,7 +100,7 @@ interface MkCopy {
   handmade: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", MkCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", MkCopy> = {
   de: {
     saveContact: "Speichern",
     callNow: "Anrufen",
@@ -166,6 +166,102 @@ const COPY: Record<"de" | "en" | "tr", MkCopy> = {
     privacy: "Gizlilik",
     poweredBy: "Powered by",
     handmade: "El yapımı · küçük seri",
+  },
+  es: {
+
+    saveContact: "Guardar contacto",
+    callNow: "Llamar",
+    whatsapp: "WhatsApp",
+    email: "Correo",
+    shop: "Tienda",
+    shopAll: "Ver todo",
+    about: "Sobre el estudio",
+    contact: "Contacto",
+    voices: "Voces",
+    social: "Redes",
+    walletLabel: "Añadir a la cartera",
+    ctaWhatsapp: "Pedir por WhatsApp",
+    ctaWhatsappHint: "Respuesta en 24 horas",
+    productsTitle: "Piezas actuales",
+    galleryTitle: "Desde el estudio",
+    buy: "Comprar",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    poweredBy: "Desarrollado por",
+    handmade: "Hecho a mano · pequeña producción",
+  
+  },
+  it: {
+
+    saveContact: "Salva contatto",
+    callNow: "Chiama",
+    whatsapp: "WhatsApp",
+    email: "Email",
+    shop: "Negozio",
+    shopAll: "Sfoglia tutto",
+    about: "Sullo studio",
+    contact: "Contatto",
+    voices: "Voci",
+    social: "Social",
+    walletLabel: "Aggiungi al wallet",
+    ctaWhatsapp: "Ordina via WhatsApp",
+    ctaWhatsappHint: "Risposta entro 24 ore",
+    productsTitle: "Pezzi attuali",
+    galleryTitle: "Dallo studio",
+    buy: "Acquista",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    poweredBy: "Realizzato con",
+    handmade: "Fatto a mano · piccola produzione",
+  
+  },
+  fr: {
+
+    saveContact: "Enregistrer le contact",
+    callNow: "Appeler",
+    whatsapp: "WhatsApp",
+    email: "E-mail",
+    shop: "Boutique",
+    shopAll: "Tout parcourir",
+    about: "À propos du studio",
+    contact: "Contact",
+    voices: "Témoignages",
+    social: "Réseaux",
+    walletLabel: "Ajouter au portefeuille",
+    ctaWhatsapp: "Commander via WhatsApp",
+    ctaWhatsappHint: "Réponse sous 24 heures",
+    productsTitle: "Pièces actuelles",
+    galleryTitle: "Depuis le studio",
+    buy: "Acheter",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    poweredBy: "Propulsé par",
+    handmade: "Fait main · petite production",
+  
+  },
+  ar: {
+
+    saveContact: "حفظ جهة الاتصال",
+    callNow: "اتصال",
+    whatsapp: "واتساب",
+    email: "البريد الإلكتروني",
+    shop: "المتجر",
+    shopAll: "تصفح الكل",
+    about: "عن الاستوديو",
+    contact: "اتصال",
+    voices: "أصوات",
+    social: "التواصل",
+    walletLabel: "إضافة إلى المحفظة",
+    ctaWhatsapp: "اطلب عبر واتساب",
+    ctaWhatsappHint: "الرد خلال 24 ساعة",
+    productsTitle: "القطع الحالية",
+    galleryTitle: "من الاستوديو",
+    buy: "اشترِ",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    poweredBy: "مشغل بواسطة",
+    handmade: "يدوي · إنتاج محدود",
+  
   },
 };
 
@@ -992,7 +1088,7 @@ function CTASection({
 }: {
   slug: string;
   sourceQs: string;
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   primary: string;
   accent: string;
 }) {

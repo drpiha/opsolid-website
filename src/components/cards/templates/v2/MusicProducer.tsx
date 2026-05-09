@@ -110,7 +110,7 @@ interface MpCopy {
   share: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", MpCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", MpCopy> = {
   de: {
     saveContact: "Speichern",
     callNow: "Anrufen",
@@ -176,6 +176,102 @@ const COPY: Record<"de" | "en" | "tr", MpCopy> = {
     listen: "Dinle",
     nowPlaying: "Şu an çalıyor",
     share: "Paylaş",
+  },
+  es: {
+
+    saveContact: "Guardar contacto",
+    callNow: "Llamar",
+    whatsapp: "WhatsApp",
+    email: "Correo",
+    book: "Reserva",
+    listenOn: "Escuchar en",
+    releases: "Últimos lanzamientos",
+    about: "Acerca de",
+    contact: "Contacto",
+    upcoming: "Próximos espectáculos",
+    social: "Redes",
+    walletLabel: "Añadir a la cartera",
+    bookingCta: "Solicitud de reserva",
+    bookingHint: "Para clubs, festivales y reservas privadas",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    poweredBy: "Desarrollado por",
+    listen: "Escuchar",
+    nowPlaying: "Ahora en streaming",
+    share: "Compartir",
+  
+  },
+  it: {
+
+    saveContact: "Salva contatto",
+    callNow: "Chiama",
+    whatsapp: "WhatsApp",
+    email: "Email",
+    book: "Prenotazione",
+    listenOn: "Ascolta su",
+    releases: "Ultime uscite",
+    about: "Chi siamo",
+    contact: "Contatto",
+    upcoming: "Prossimi spettacoli",
+    social: "Social",
+    walletLabel: "Aggiungi al wallet",
+    bookingCta: "Richiesta di prenotazione",
+    bookingHint: "Per club, festival e prenotazioni private",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    poweredBy: "Realizzato con",
+    listen: "Ascolta",
+    nowPlaying: "Ora in streaming",
+    share: "Condividi",
+  
+  },
+  fr: {
+
+    saveContact: "Enregistrer le contact",
+    callNow: "Appeler",
+    whatsapp: "WhatsApp",
+    email: "E-mail",
+    book: "Réservation",
+    listenOn: "Écouter sur",
+    releases: "Dernières sorties",
+    about: "À propos",
+    contact: "Contact",
+    upcoming: "Spectacles à venir",
+    social: "Réseaux",
+    walletLabel: "Ajouter au portefeuille",
+    bookingCta: "Demande de réservation",
+    bookingHint: "Pour clubs, festivals et réservations privées",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    poweredBy: "Propulsé par",
+    listen: "Écouter",
+    nowPlaying: "En streaming",
+    share: "Partager",
+  
+  },
+  ar: {
+
+    saveContact: "حفظ جهة الاتصال",
+    callNow: "اتصال",
+    whatsapp: "واتساب",
+    email: "البريد الإلكتروني",
+    book: "الحجز",
+    listenOn: "استمع على",
+    releases: "أحدث الإصدارات",
+    about: "حول",
+    contact: "اتصال",
+    upcoming: "العروض القادمة",
+    social: "التواصل",
+    walletLabel: "إضافة إلى المحفظة",
+    bookingCta: "استفسار الحجز",
+    bookingHint: "للنوادي والمهرجانات والحجوزات الخاصة",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    poweredBy: "مشغل بواسطة",
+    listen: "استمع",
+    nowPlaying: "البث الآن",
+    share: "مشاركة",
+  
   },
 };
 
@@ -1098,7 +1194,7 @@ function CTASection({
 }: {
   slug: string;
   sourceQs: string;
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   primary: string;
   accent: string;
 }) {

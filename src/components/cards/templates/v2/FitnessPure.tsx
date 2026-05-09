@@ -89,7 +89,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     taglineFallback: "Performance Coach",
     studioLabel: "Studio",
@@ -143,6 +143,86 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    taglineFallback: "Coach de rendimiento",
+    studioLabel: "Estudio",
+    practiceLabel: "Despacho",
+    languageLabel: "Idiomas",
+    practiceValue: "Online y presencial",
+    languageValue: "Inglés / Alemán",
+    certsTitle: "Certificaciones",
+    programsTitle: "Programas",
+    contactTitle: "Contacto",
+    transformationsLabel: "Transformaciones",
+    yearsLabel: "Años",
+    followersLabel: "Seguidores",
+    bookBtn: "Reservar cita",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    taglineFallback: "Performance Coach",
+    studioLabel: "Studio",
+    practiceLabel: "Studio",
+    languageLabel: "Lingue",
+    practiceValue: "Online e in presenza",
+    languageValue: "Inglese / Tedesco",
+    certsTitle: "Certificazioni",
+    programsTitle: "Programmi",
+    contactTitle: "Contatto",
+    transformationsLabel: "Trasformazioni",
+    yearsLabel: "Anni",
+    followersLabel: "Follower",
+    bookBtn: "Prenota un appuntamento",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    taglineFallback: "Coach de performance",
+    studioLabel: "Studio",
+    practiceLabel: "Cabinet",
+    languageLabel: "Langues",
+    practiceValue: "En ligne et en personne",
+    languageValue: "Anglais / Allemand",
+    certsTitle: "Certifications",
+    programsTitle: "Programmes",
+    contactTitle: "Contact",
+    transformationsLabel: "Transformations",
+    yearsLabel: "Années",
+    followersLabel: "Abonnés",
+    bookBtn: "Prendre rendez-vous",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    taglineFallback: "مدرب الأداء",
+    studioLabel: "استوديو",
+    practiceLabel: "ممارسة",
+    languageLabel: "اللغات",
+    practiceValue: "عبر الإنترنت وحضوري",
+    languageValue: "إنجليزية / ألمانية",
+    certsTitle: "الشهادات",
+    programsTitle: "البرامج",
+    contactTitle: "اتصال",
+    transformationsLabel: "التحولات",
+    yearsLabel: "سنوات",
+    followersLabel: "متابعون",
+    bookBtn: "حجز موعد",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

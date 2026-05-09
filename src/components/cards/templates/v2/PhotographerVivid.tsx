@@ -91,7 +91,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     badge: "VerfÃ¼gbar 2026",
     recsTitle: "Meine",
@@ -148,6 +148,90 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "KiÅŸiyi Kaydet",
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    badge: "Disponible 2026",
+    recsTitle: "Mi",
+    recsTitleAccent: "Paquetes",
+    recsSub: "Tailored for every story â€” from portrait to wedding.",
+    ctaBig: "Reservar una sesión",
+    whatsappLabel: "WhatsApp",
+    portfolioLabel: "Portafolio",
+    directionsLabel: "Cómo llegar",
+    shareTitle: "Sígueme",
+    shareSub: "Nuevas sesiones primero en Instagram.",
+    yearsLabel: "Años",
+    shootsLabel: "Sesiones",
+    countriesLabel: "Países",
+    reviewLabel: "Reseña de cliente",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    badge: "Disponibile 2026",
+    recsTitle: "Il mio",
+    recsTitleAccent: "Pacchetti",
+    recsSub: "Tailored for every story â€” from portrait to wedding.",
+    ctaBig: "Prenota una sessione",
+    whatsappLabel: "WhatsApp",
+    portfolioLabel: "Portfolio",
+    directionsLabel: "Indicazioni",
+    shareTitle: "Seguimi",
+    shareSub: "Nuovi servizi prima su Instagram.",
+    yearsLabel: "Anni",
+    shootsLabel: "Servizi fotografici",
+    countriesLabel: "Paesi",
+    reviewLabel: "Recensione cliente",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    badge: "Disponible 2026",
+    recsTitle: "Mon",
+    recsTitleAccent: "Forfaits",
+    recsSub: "Tailored for every story â€” from portrait to wedding.",
+    ctaBig: "Réserver une séance",
+    whatsappLabel: "WhatsApp",
+    portfolioLabel: "Portfolio",
+    directionsLabel: "Itinéraire",
+    shareTitle: "Me suivre",
+    shareSub: "Nouvelles séances d'abord sur Instagram.",
+    yearsLabel: "Années",
+    shootsLabel: "Séances photo",
+    countriesLabel: "Pays",
+    reviewLabel: "Avis client",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    badge: "متاح 2026",
+    recsTitle: "خاصتي",
+    recsTitleAccent: "الباقات",
+    recsSub: "Tailored for every story â€” from portrait to wedding.",
+    ctaBig: "احجز جلسة",
+    whatsappLabel: "واتساب",
+    portfolioLabel: "المعرض",
+    directionsLabel: "الاتجاهات",
+    shareTitle: "تابعني",
+    shareSub: "جلسات جديدة أولاً على إنستغرام.",
+    yearsLabel: "سنوات",
+    shootsLabel: "تصوير",
+    countriesLabel: "الدول",
+    reviewLabel: "تقييم العميل",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

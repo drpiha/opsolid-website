@@ -121,7 +121,7 @@ interface YoCopy {
   studio: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", YoCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", YoCopy> = {
   de: {
     schedule: "Kommende Klassen",
     scheduleEyebrow: "Stundenplan",
@@ -208,6 +208,130 @@ const COPY: Record<"de" | "en" | "tr", YoCopy> = {
     share: "Paylaş",
     breathe: "Nefes Al · Hareket Et · Ol",
     studio: "Stüdyo",
+  },
+  es: {
+
+    schedule: "Próximas clases",
+    scheduleEyebrow: "Agenda",
+    classes: "Clases",
+    bookSession: "Reservar una sesión",
+    about: "Sobre el maestro",
+    aboutEyebrow: "Profesor",
+    contact: "Contacto",
+    contactEyebrow: "Directo",
+    voices: "Voces",
+    voicesEyebrow: "Reflexiones",
+    faqs: "Preguntas frecuentes",
+    faqsEyebrow: "Bueno saber",
+    social: "Seguir",
+    socialEyebrow: "Redes",
+    walletLabel: "Añadir a la cartera",
+    bookCta: "Reserva una clase online",
+    dropIn: "Sin cita previa",
+    dropInHint: "Primera clase invita la casa",
+    call: "Llamar",
+    email: "Correo",
+    directions: "Cómo llegar",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    poweredBy: "Desarrollado por",
+    share: "Compartir",
+    breathe: "Respira · Muévete · Sé",
+    studio: "Estudio",
+  
+  },
+  it: {
+
+    schedule: "Prossime lezioni",
+    scheduleEyebrow: "Agenda",
+    classes: "Lezioni",
+    bookSession: "Prenota una sessione",
+    about: "Sull'insegnante",
+    aboutEyebrow: "Insegnante",
+    contact: "Contatto",
+    contactEyebrow: "Diretto",
+    voices: "Voci",
+    voicesEyebrow: "Riflessioni",
+    faqs: "Domande frequenti",
+    faqsEyebrow: "Buono a sapersi",
+    social: "Segui",
+    socialEyebrow: "Social",
+    walletLabel: "Aggiungi al wallet",
+    bookCta: "Prenota una lezione online",
+    dropIn: "Benvenuti senza prenotazione",
+    dropInHint: "Prima lezione offerta",
+    call: "Chiama",
+    email: "Email",
+    directions: "Indicazioni",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    poweredBy: "Realizzato con",
+    share: "Condividi",
+    breathe: "Respira · Muoviti · Sii",
+    studio: "Studio",
+  
+  },
+  fr: {
+
+    schedule: "Cours à venir",
+    scheduleEyebrow: "Agenda",
+    classes: "Cours",
+    bookSession: "Réserver une séance",
+    about: "À propos du professeur",
+    aboutEyebrow: "Professeur",
+    contact: "Contact",
+    contactEyebrow: "Direct",
+    voices: "Témoignages",
+    voicesEyebrow: "Réflexions",
+    faqs: "Questions fréquentes",
+    faqsEyebrow: "Bon à savoir",
+    social: "Suivre",
+    socialEyebrow: "Réseaux",
+    walletLabel: "Ajouter au portefeuille",
+    bookCta: "Réserver un cours en ligne",
+    dropIn: "Sans rendez-vous bienvenue",
+    dropInHint: "Premier cours offert",
+    call: "Appeler",
+    email: "E-mail",
+    directions: "Itinéraire",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    poweredBy: "Propulsé par",
+    share: "Partager",
+    breathe: "Respire · Bouge · Sois",
+    studio: "Studio",
+  
+  },
+  ar: {
+
+    schedule: "الحصص القادمة",
+    scheduleEyebrow: "الجدول",
+    classes: "الحصص",
+    bookSession: "احجز جلسة",
+    about: "عن المعلم",
+    aboutEyebrow: "المعلم",
+    contact: "اتصال",
+    contactEyebrow: "مباشر",
+    voices: "أصوات",
+    voicesEyebrow: "تأملات",
+    faqs: "الأسئلة الشائعة",
+    faqsEyebrow: "من الجيد معرفة",
+    social: "متابعة",
+    socialEyebrow: "التواصل",
+    walletLabel: "إضافة إلى المحفظة",
+    bookCta: "احجز حصة عبر الإنترنت",
+    dropIn: "بدون موعد مرحب بكم",
+    dropInHint: "الحصة الأولى على حسابنا",
+    call: "اتصال",
+    email: "البريد الإلكتروني",
+    directions: "الاتجاهات",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    poweredBy: "مشغل بواسطة",
+    share: "مشاركة",
+    breathe: "تنفس · تحرك · كن",
+    studio: "استوديو",
+  
   },
 };
 
@@ -997,7 +1121,7 @@ function ContactSection({
   translations,
 }: {
   cardData: TemplateProps["cardData"];
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   primary: string;
   accent: string;
   translations: YoCopy;
@@ -1127,7 +1251,7 @@ function CTASection({
 }: {
   slug: string;
   sourceQs: string;
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   primary: string;
 }) {
   return (

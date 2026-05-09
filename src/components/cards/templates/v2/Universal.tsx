@@ -78,7 +78,7 @@ interface UniCopy {
   elsewhere: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", UniCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", UniCopy> = {
   de: {
     contact: "Kontakt",
     about: "Über mich",
@@ -96,6 +96,38 @@ const COPY: Record<"de" | "en" | "tr", UniCopy> = {
     about: "Hakkımda",
     cta: "Bana ulaşın",
     elsewhere: "Diğer kanallar",
+  },
+  es: {
+
+    contact: "Ponte en contacto",
+    about: "Acerca de",
+    cta: "Contáctame",
+    elsewhere: "En otros lugares",
+  
+  },
+  it: {
+
+    contact: "Mettiti in contatto",
+    about: "Chi siamo",
+    cta: "Contattami",
+    elsewhere: "Altrove",
+  
+  },
+  fr: {
+
+    contact: "Prendre contact",
+    about: "À propos",
+    cta: "Me contacter",
+    elsewhere: "Ailleurs",
+  
+  },
+  ar: {
+
+    contact: "تواصل معنا",
+    about: "حول",
+    cta: "اتصل بي",
+    elsewhere: "في أماكن أخرى",
+  
   },
 };
 

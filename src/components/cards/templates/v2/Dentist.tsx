@@ -95,7 +95,7 @@ interface DnCopy {
   reviewsLabel: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", DnCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DnCopy> = {
   de: {
     bookAppointment: "Termin vereinbaren",
     call: "Anrufen",
@@ -158,6 +158,98 @@ const COPY: Record<"de" | "en" | "tr", DnCopy> = {
     share: "Paylaş",
     servicesLabel: "Tedaviler",
     reviewsLabel: "Yorum",
+  },
+  es: {
+
+    bookAppointment: "Reservar cita",
+    call: "Llamar",
+    whatsapp: "WhatsApp",
+    email: "Correo",
+    treatments: "Tratamientos",
+    credentials: "Credenciales y especializaciones",
+    hours: "Dirección del despacho",
+    appointmentBadge: "Citas el mismo día",
+    patientReview: "Reseña de paciente",
+    contact: "Contacto",
+    social: "Seguir",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    share: "Compartir",
+    servicesLabel: "Tratamientos",
+    reviewsLabel: "Reseñas",
+  
+  },
+  it: {
+
+    bookAppointment: "Prenota un appuntamento",
+    call: "Chiama",
+    whatsapp: "WhatsApp",
+    email: "Email",
+    treatments: "Trattamenti",
+    credentials: "Credenziali e specializzazioni",
+    hours: "Indirizzo dello studio",
+    appointmentBadge: "Appuntamenti in giornata",
+    patientReview: "Recensione paziente",
+    contact: "Contatto",
+    social: "Segui",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    share: "Condividi",
+    servicesLabel: "Trattamenti",
+    reviewsLabel: "Recensioni",
+  
+  },
+  fr: {
+
+    bookAppointment: "Prendre rendez-vous",
+    call: "Appeler",
+    whatsapp: "WhatsApp",
+    email: "E-mail",
+    treatments: "Soins",
+    credentials: "Références et spécialisations",
+    hours: "Adresse du cabinet",
+    appointmentBadge: "Rendez-vous le jour même",
+    patientReview: "Avis patient",
+    contact: "Contact",
+    social: "Suivre",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    share: "Partager",
+    servicesLabel: "Soins",
+    reviewsLabel: "Avis",
+  
+  },
+  ar: {
+
+    bookAppointment: "حجز موعد",
+    call: "اتصال",
+    whatsapp: "واتساب",
+    email: "البريد الإلكتروني",
+    treatments: "العلاجات",
+    credentials: "المؤهلات والتخصصات",
+    hours: "عنوان المكتب",
+    appointmentBadge: "مواعيد في نفس اليوم",
+    patientReview: "تقييم المريض",
+    contact: "اتصال",
+    social: "متابعة",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    share: "مشاركة",
+    servicesLabel: "العلاجات",
+    reviewsLabel: "التقييمات",
+  
   },
 };
 

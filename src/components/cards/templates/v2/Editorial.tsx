@@ -113,7 +113,7 @@ interface EdCopy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", EdCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", EdCopy> = {
   de: {
     saveContact: "Speichern",
     callNow: "Anrufen",
@@ -176,6 +176,98 @@ const COPY: Record<"de" | "en" | "tr", EdCopy> = {
     impressum: "Künye",
     privacy: "Gizlilik",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    saveContact: "Guardar contacto",
+    callNow: "Llamar",
+    whatsapp: "WhatsApp",
+    email: "Correo",
+    book: "Reservar",
+    about: "Acerca de",
+    services: "Servicios",
+    servicesEyebrow: "Atelier",
+    inquire: "Consultar",
+    portfolio: "Portafolio",
+    voices: "Voces",
+    contact: "Contacto",
+    contactEyebrow: "Correspondencia",
+    social: "Redes",
+    brochure: "Ver folleto",
+    walletLabel: "Añadir a la cartera",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    saveContact: "Salva contatto",
+    callNow: "Chiama",
+    whatsapp: "WhatsApp",
+    email: "Email",
+    book: "Prenota",
+    about: "Chi siamo",
+    services: "Servizi",
+    servicesEyebrow: "Atelier",
+    inquire: "Richiedi",
+    portfolio: "Portfolio",
+    voices: "Voci",
+    contact: "Contatto",
+    contactEyebrow: "Corrispondenza",
+    social: "Social",
+    brochure: "Vedi brochure",
+    walletLabel: "Aggiungi al wallet",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    saveContact: "Enregistrer le contact",
+    callNow: "Appeler",
+    whatsapp: "WhatsApp",
+    email: "E-mail",
+    book: "Réserver",
+    about: "À propos",
+    services: "Services",
+    servicesEyebrow: "Atelier",
+    inquire: "Demander",
+    portfolio: "Portfolio",
+    voices: "Témoignages",
+    contact: "Contact",
+    contactEyebrow: "Correspondance",
+    social: "Réseaux",
+    brochure: "Voir la brochure",
+    walletLabel: "Ajouter au portefeuille",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    saveContact: "حفظ جهة الاتصال",
+    callNow: "اتصال",
+    whatsapp: "واتساب",
+    email: "البريد الإلكتروني",
+    book: "احجز",
+    about: "حول",
+    services: "الخدمات",
+    servicesEyebrow: "أتيليه",
+    inquire: "استفسر",
+    portfolio: "المعرض",
+    voices: "أصوات",
+    contact: "اتصال",
+    contactEyebrow: "المراسلات",
+    social: "التواصل",
+    brochure: "عرض الكتيب",
+    walletLabel: "إضافة إلى المحفظة",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 
@@ -987,7 +1079,7 @@ function ContactSection({
   translations,
 }: {
   cardData: TemplateProps["cardData"];
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   primary: string;
   accent: string;
   translations: EdCopy;
@@ -1109,7 +1201,7 @@ function CTASection({
 }: {
   slug: string;
   sourceQs: string;
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   primary: string;
   accent: string;
 }) {

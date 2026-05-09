@@ -90,7 +90,7 @@ interface Copy {
   qrLabel: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     brandPre: "Premium Kollektion",
     brandTag: "Maison fondÃ©e en 2021",
@@ -144,6 +144,86 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
     qrLabel: "Scan to shop",
+  },
+  es: {
+
+    brandPre: "Colección Premium",
+    brandTag: "Maison fondÃ©e en 2021",
+    taglineFallback: "Fundador y curador",
+    featuredEyebrow: "â€” Featured Piece â€”",
+    collectionPre: "FW26",
+    collectionH: "Colección",
+    collectionSub: "Moda y accesorios seleccionados",
+    servicesLabel: "Productos",
+    reviewsLabel: "Reseñas",
+    serviceH: "El servicio",
+    serviceSub: "â€” What we offer â€”",
+    bookBtn: "Realizar pedido",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    qrLabel: "Escanear para comprar",
+  
+  },
+  it: {
+
+    brandPre: "Collezione Premium",
+    brandTag: "Maison fondÃ©e en 2021",
+    taglineFallback: "Fondatore e curatore",
+    featuredEyebrow: "â€” Featured Piece â€”",
+    collectionPre: "FW26",
+    collectionH: "Collezione",
+    collectionSub: "Moda e accessori selezionati",
+    servicesLabel: "Prodotti",
+    reviewsLabel: "Recensioni",
+    serviceH: "Il servizio",
+    serviceSub: "â€” What we offer â€”",
+    bookBtn: "Effettua ordine",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    qrLabel: "Scansiona per acquistare",
+  
+  },
+  fr: {
+
+    brandPre: "Collection Premium",
+    brandTag: "Maison fondÃ©e en 2021",
+    taglineFallback: "Fondateur et curateur",
+    featuredEyebrow: "â€” Featured Piece â€”",
+    collectionPre: "FW26",
+    collectionH: "Collection",
+    collectionSub: "Mode et accessoires sélectionnés",
+    servicesLabel: "Produits",
+    reviewsLabel: "Avis",
+    serviceH: "Le service",
+    serviceSub: "â€” What we offer â€”",
+    bookBtn: "Passer commande",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    qrLabel: "Scanner pour acheter",
+  
+  },
+  ar: {
+
+    brandPre: "المجموعة المميزة",
+    brandTag: "Maison fondÃ©e en 2021",
+    taglineFallback: "مؤسس ومنسق",
+    featuredEyebrow: "â€” Featured Piece â€”",
+    collectionPre: "FW26",
+    collectionH: "مجموعة",
+    collectionSub: "أزياء وإكسسوارات مختارة",
+    servicesLabel: "المنتجات",
+    reviewsLabel: "التقييمات",
+    serviceH: "الخدمة",
+    serviceSub: "â€” What we offer â€”",
+    bookBtn: "إتمام الطلب",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    qrLabel: "امسح للتسوق",
+  
   },
 };
 

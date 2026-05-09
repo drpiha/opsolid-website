@@ -84,7 +84,7 @@ interface BsCopy {
   studio: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", BsCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsCopy> = {
   de: {
     certified: "Zertifiziert",
     premium: "Premium",
@@ -135,6 +135,82 @@ const COPY: Record<"de" | "en" | "tr", BsCopy> = {
     share: "Paylaş",
     poweredBy: "Powered by",
     studio: "Beauty Studio",
+  },
+  es: {
+
+    certified: "Certificado",
+    premium: "Premium",
+    bookCta: "Reservar ahora",
+    servicesTitle: "Servicios",
+    servicesSub: "Belleza premium y maquillaje permanente",
+    beforeAfter: "Antes / Después",
+    beforeAfterDesc: "5.000+ clientes felices — mira las transformaciones",
+    beforeAfterCta: "Ver en Instagram",
+    servicesLabel: "Servicios",
+    reviewsLabel: "Reseñas",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    share: "Compartir",
+    poweredBy: "Desarrollado por",
+    studio: "Estudio de belleza",
+  
+  },
+  it: {
+
+    certified: "Certificato",
+    premium: "Premium",
+    bookCta: "Prenota ora",
+    servicesTitle: "Servizi",
+    servicesSub: "Bellezza premium e trucco permanente",
+    beforeAfter: "Prima / Dopo",
+    beforeAfterDesc: "5.000+ clienti felici — guarda le trasformazioni",
+    beforeAfterCta: "Vedi su Instagram",
+    servicesLabel: "Servizi",
+    reviewsLabel: "Recensioni",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    share: "Condividi",
+    poweredBy: "Realizzato con",
+    studio: "Studio di bellezza",
+  
+  },
+  fr: {
+
+    certified: "Certifié",
+    premium: "Premium",
+    bookCta: "Réserver maintenant",
+    servicesTitle: "Services",
+    servicesSub: "Beauté premium et maquillage permanent",
+    beforeAfter: "Avant / Après",
+    beforeAfterDesc: "5 000+ clients heureux — voyez les transformations",
+    beforeAfterCta: "Voir sur Instagram",
+    servicesLabel: "Services",
+    reviewsLabel: "Avis",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    share: "Partager",
+    poweredBy: "Propulsé par",
+    studio: "Studio de beauté",
+  
+  },
+  ar: {
+
+    certified: "معتمد",
+    premium: "مميز",
+    bookCta: "احجز الآن",
+    servicesTitle: "الخدمات",
+    servicesSub: "تجميل فاخر ومكياج دائم",
+    beforeAfter: "قبل / بعد",
+    beforeAfterDesc: "5,000+ عميل سعيد — شاهد التحولات",
+    beforeAfterCta: "عرض على إنستغرام",
+    servicesLabel: "الخدمات",
+    reviewsLabel: "التقييمات",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    share: "مشاركة",
+    poweredBy: "مشغل بواسطة",
+    studio: "استوديو تجميل",
+  
   },
 };
 

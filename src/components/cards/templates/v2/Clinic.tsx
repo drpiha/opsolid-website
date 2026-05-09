@@ -95,7 +95,7 @@ interface ClCopy {
   share: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", ClCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ClCopy> = {
   de: {
     bookAppt: "Termin",
     call: "Anrufen",
@@ -152,6 +152,90 @@ const COPY: Record<"de" | "en" | "tr", ClCopy> = {
     impressum: "Künye",
     privacy: "Gizlilik",
     share: "Paylaş",
+  },
+  es: {
+
+    bookAppt: "Reservar",
+    call: "Llamar",
+    directions: "Cómo llegar",
+    treatments: "Tratamientos",
+    about: "Sobre la clínica",
+    hours: "Horario de apertura",
+    contact: "Contacto",
+    testimonials: "Voces de pacientes",
+    faqs: "Preguntas frecuentes",
+    social: "Seguir",
+    walletLabel: "Añadir a la cartera",
+    appointment: "Reservar cita",
+    closed: "Cerrado",
+    poweredBy: "Desarrollado por",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    share: "Compartir",
+  
+  },
+  it: {
+
+    bookAppt: "Prenota",
+    call: "Chiama",
+    directions: "Indicazioni",
+    treatments: "Trattamenti",
+    about: "Sulla clinica",
+    hours: "Orari di apertura",
+    contact: "Contatto",
+    testimonials: "Voci dei pazienti",
+    faqs: "Domande frequenti",
+    social: "Segui",
+    walletLabel: "Aggiungi al wallet",
+    appointment: "Prenota un appuntamento",
+    closed: "Chiuso",
+    poweredBy: "Realizzato con",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    share: "Condividi",
+  
+  },
+  fr: {
+
+    bookAppt: "Réserver",
+    call: "Appeler",
+    directions: "Itinéraire",
+    treatments: "Soins",
+    about: "À propos de la clinique",
+    hours: "Horaires d'ouverture",
+    contact: "Contact",
+    testimonials: "Témoignages de patients",
+    faqs: "Questions fréquentes",
+    social: "Suivre",
+    walletLabel: "Ajouter au portefeuille",
+    appointment: "Prendre rendez-vous",
+    closed: "Fermé",
+    poweredBy: "Propulsé par",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    share: "Partager",
+  
+  },
+  ar: {
+
+    bookAppt: "احجز",
+    call: "اتصال",
+    directions: "الاتجاهات",
+    treatments: "العلاجات",
+    about: "عن العيادة",
+    hours: "ساعات الافتتاح",
+    contact: "اتصال",
+    testimonials: "آراء المرضى",
+    faqs: "الأسئلة الشائعة",
+    social: "متابعة",
+    walletLabel: "إضافة إلى المحفظة",
+    appointment: "حجز موعد",
+    closed: "مغلق",
+    poweredBy: "مشغل بواسطة",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    share: "مشاركة",
+  
   },
 };
 
@@ -957,7 +1041,7 @@ function CTASection({
 }: {
   slug: string;
   sourceQs: string;
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   primary: string;
   accent: string;
 }) {

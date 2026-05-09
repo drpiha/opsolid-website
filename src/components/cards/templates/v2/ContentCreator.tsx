@@ -107,7 +107,7 @@ interface CcCopy {
   nicheValue: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", CcCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcCopy> = {
   de: {
     live: "On Air",
     followers: "Follower",
@@ -167,6 +167,94 @@ const COPY: Record<"de" | "en" | "tr", CcCopy> = {
     totalReach: "Toplam Erişim",
     niche: "Alan",
     nicheValue: "Lifestyle · Travel",
+  },
+  es: {
+
+    live: "En el aire",
+    followers: "Seguidores",
+    collab: "MD",
+    callDm: "Enviar MD",
+    email: "Reserva",
+    web: "Sitio web",
+    about: "Acerca de",
+    platforms: "Plataformas",
+    collabPackages: "Paquetes de colaboración",
+    contact: "Contacto",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    share: "Compartir",
+    poweredBy: "Desarrollado por",
+    partnerCta: "Colaboremos",
+    totalReach: "Alcance total",
+    niche: "Nicho",
+    nicheValue: "Estilo de vida · Viajes",
+  
+  },
+  it: {
+
+    live: "In onda",
+    followers: "Follower",
+    collab: "DM",
+    callDm: "Invia DM",
+    email: "Prenotazione",
+    web: "Sito web",
+    about: "Chi siamo",
+    platforms: "Piattaforme",
+    collabPackages: "Pacchetti collab",
+    contact: "Contatto",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    share: "Condividi",
+    poweredBy: "Realizzato con",
+    partnerCta: "Collaboriamo",
+    totalReach: "Copertura totale",
+    niche: "Nicchia",
+    nicheValue: "Lifestyle · Viaggi",
+  
+  },
+  fr: {
+
+    live: "À l'antenne",
+    followers: "Abonnés",
+    collab: "DM",
+    callDm: "Envoyer un DM",
+    email: "Réservation",
+    web: "Site web",
+    about: "À propos",
+    platforms: "Plateformes",
+    collabPackages: "Forfaits collab",
+    contact: "Contact",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    share: "Partager",
+    poweredBy: "Propulsé par",
+    partnerCta: "Collaborons",
+    totalReach: "Portée totale",
+    niche: "Niche",
+    nicheValue: "Lifestyle · Voyage",
+  
+  },
+  ar: {
+
+    live: "على الهواء",
+    followers: "متابعون",
+    collab: "رسالة خاصة",
+    callDm: "أرسل رسالة خاصة",
+    email: "الحجز",
+    web: "الموقع",
+    about: "حول",
+    platforms: "المنصات",
+    collabPackages: "حزم التعاون",
+    contact: "اتصال",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    share: "مشاركة",
+    poweredBy: "مشغل بواسطة",
+    partnerCta: "لنتعاون",
+    totalReach: "الوصول الكلي",
+    niche: "تخصص",
+    nicheValue: "أسلوب حياة · سفر",
+  
   },
 };
 

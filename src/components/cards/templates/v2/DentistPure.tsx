@@ -65,7 +65,7 @@ interface DnpCopy {
   scanShareSave: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", DnpCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DnpCopy> = {
   de: {
     contact: "Kontakt",
     services: "Behandlungen",
@@ -119,6 +119,86 @@ const COPY: Record<"de" | "en" | "tr", DnpCopy> = {
     share: "PaylaÅŸ",
     poweredBy: "Powered by",
     scanShareSave: "Scan Â· Save Â· Share",
+  },
+  es: {
+
+    contact: "Contacto",
+    services: "Tratamientos",
+    certifications: "Credenciales",
+    testimonial: "Voces",
+    bookAppointment: "Solicitar cita",
+    callClinic: "Llamar a la clínica",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    servicesLabel: "Tratamientos",
+    reviewsLabel: "Reseñas",
+    open: "Abierto",
+    practitioner: "Despacho",
+    practitionerValue: "Director clínico",
+    share: "Compartir",
+    poweredBy: "Desarrollado por",
+    scanShareSave: "Scan Â· Save Â· Share",
+  
+  },
+  it: {
+
+    contact: "Contatto",
+    services: "Trattamenti",
+    certifications: "Credenziali",
+    testimonial: "Voci",
+    bookAppointment: "Richiedi appuntamento",
+    callClinic: "Chiama la clinica",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    servicesLabel: "Trattamenti",
+    reviewsLabel: "Recensioni",
+    open: "Aperto",
+    practitioner: "Studio",
+    practitionerValue: "Responsabile clinico",
+    share: "Condividi",
+    poweredBy: "Realizzato con",
+    scanShareSave: "Scan Â· Save Â· Share",
+  
+  },
+  fr: {
+
+    contact: "Contact",
+    services: "Soins",
+    certifications: "Références",
+    testimonial: "Témoignages",
+    bookAppointment: "Demander un rendez-vous",
+    callClinic: "Appeler la clinique",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    servicesLabel: "Soins",
+    reviewsLabel: "Avis",
+    open: "Ouvert",
+    practitioner: "Cabinet",
+    practitionerValue: "Responsable clinique",
+    share: "Partager",
+    poweredBy: "Propulsé par",
+    scanShareSave: "Scan Â· Save Â· Share",
+  
+  },
+  ar: {
+
+    contact: "اتصال",
+    services: "العلاجات",
+    certifications: "المؤهلات",
+    testimonial: "أصوات",
+    bookAppointment: "طلب موعد",
+    callClinic: "اتصل بالعيادة",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    servicesLabel: "العلاجات",
+    reviewsLabel: "التقييمات",
+    open: "مفتوح",
+    practitioner: "ممارسة",
+    practitionerValue: "مدير سريري",
+    share: "مشاركة",
+    poweredBy: "مشغل بواسطة",
+    scanShareSave: "Scan Â· Save Â· Share",
+  
   },
 };
 

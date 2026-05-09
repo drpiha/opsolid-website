@@ -91,7 +91,7 @@ interface PsCopy {
   voiceTagline: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", PsCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsCopy> = {
   de: {
     practice: "Online · Praxis",
     call: "Telefon",
@@ -154,6 +154,98 @@ const COPY: Record<"de" | "en" | "tr", PsCopy> = {
     share: "Paylaş",
     poweredBy: "Powered by",
     voiceTagline: "Sizinle olmak, sizi anlamak için.",
+  },
+  es: {
+
+    practice: "Online · presencial",
+    call: "Llamar",
+    email: "Correo",
+    whatsapp: "WhatsApp",
+    specialtiesEyebrow: "Áreas de enfoque",
+    specialtiesTitle: "En qué podemos trabajar juntos",
+    formatEyebrow: "Formatos de sesión",
+    formatTitle: "Elige lo que te conviene",
+    educationEyebrow: "Entrenamiento",
+    educationTitle: "Mi trayectoria académica",
+    experience: "Años",
+    sessions: "Sesiones",
+    formats: "Formatos",
+    bookFirstSession: "Solicitar primera sesión",
+    walletLabel: "Añadir a la cartera",
+    saveContact: "Guardar contacto",
+    share: "Compartir",
+    poweredBy: "Desarrollado por",
+    voiceTagline: "Estar contigo, comprenderte.",
+  
+  },
+  it: {
+
+    practice: "Online · in presenza",
+    call: "Chiama",
+    email: "Email",
+    whatsapp: "WhatsApp",
+    specialtiesEyebrow: "Aree di focus",
+    specialtiesTitle: "Su cosa possiamo lavorare insieme",
+    formatEyebrow: "Formati di sessione",
+    formatTitle: "Scegli ciò che fa per te",
+    educationEyebrow: "Allenamento",
+    educationTitle: "Il mio percorso accademico",
+    experience: "Anni",
+    sessions: "Sessioni",
+    formats: "Formati",
+    bookFirstSession: "Richiedi la prima sessione",
+    walletLabel: "Aggiungi al wallet",
+    saveContact: "Salva contatto",
+    share: "Condividi",
+    poweredBy: "Realizzato con",
+    voiceTagline: "Esserci con te, capirti.",
+  
+  },
+  fr: {
+
+    practice: "En ligne · en personne",
+    call: "Appeler",
+    email: "E-mail",
+    whatsapp: "WhatsApp",
+    specialtiesEyebrow: "Domaines de focus",
+    specialtiesTitle: "Sur quoi nous pouvons travailler ensemble",
+    formatEyebrow: "Formats de séance",
+    formatTitle: "Choisissez ce qui vous convient",
+    educationEyebrow: "Entraînement",
+    educationTitle: "Mon parcours académique",
+    experience: "Années",
+    sessions: "Séances",
+    formats: "Formats",
+    bookFirstSession: "Demander la première séance",
+    walletLabel: "Ajouter au portefeuille",
+    saveContact: "Enregistrer le contact",
+    share: "Partager",
+    poweredBy: "Propulsé par",
+    voiceTagline: "Être avec vous, vous comprendre.",
+  
+  },
+  ar: {
+
+    practice: "عبر الإنترنت · حضوري",
+    call: "اتصال",
+    email: "البريد الإلكتروني",
+    whatsapp: "واتساب",
+    specialtiesEyebrow: "مجالات التركيز",
+    specialtiesTitle: "على ماذا يمكننا العمل معاً",
+    formatEyebrow: "صيغ الجلسات",
+    formatTitle: "اختر ما يناسبك",
+    educationEyebrow: "التدريب",
+    educationTitle: "مسيرتي الأكاديمية",
+    experience: "سنوات",
+    sessions: "الجلسات",
+    formats: "الصيغ",
+    bookFirstSession: "اطلب الجلسة الأولى",
+    walletLabel: "إضافة إلى المحفظة",
+    saveContact: "حفظ جهة الاتصال",
+    share: "مشاركة",
+    poweredBy: "مشغل بواسطة",
+    voiceTagline: "أن أكون معك، أن أفهمك.",
+  
   },
 };
 

@@ -77,7 +77,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     recLabel: "REC // Live Set",
     yearsLabel: "Active",
@@ -119,6 +119,70 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "KiÅŸiyi Kaydet",
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    recLabel: "REC // Live Set",
+    yearsLabel: "Activo",
+    eventsLabel: "Eventos",
+    listenersLabel: "Oyentes",
+    genresH: "Géneros",
+    upcomingH: "Próximamente",
+    bookingH: "Reserva",
+    contactH: "Contacto",
+    bookBtn: "Reservar ahora",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    recLabel: "REC // Live Set",
+    yearsLabel: "Attivo",
+    eventsLabel: "Eventi",
+    listenersLabel: "Ascoltatori",
+    genresH: "Generi",
+    upcomingH: "Prossimi",
+    bookingH: "Prenotazione",
+    contactH: "Contatto",
+    bookBtn: "Prenota ora",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    recLabel: "REC // Live Set",
+    yearsLabel: "Actif",
+    eventsLabel: "Événements",
+    listenersLabel: "Auditeurs",
+    genresH: "Genres",
+    upcomingH: "À venir",
+    bookingH: "Réservation",
+    contactH: "Contact",
+    bookBtn: "Réserver maintenant",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    recLabel: "تسجيل // عرض حي",
+    yearsLabel: "نشط",
+    eventsLabel: "الفعاليات",
+    listenersLabel: "المستمعون",
+    genresH: "الأنواع",
+    upcomingH: "قادم",
+    bookingH: "الحجز",
+    contactH: "اتصال",
+    bookBtn: "احجز الآن",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

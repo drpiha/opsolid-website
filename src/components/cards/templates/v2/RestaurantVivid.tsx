@@ -93,7 +93,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     badgeOpen: "GeÃ¶ffnet Â· 12:00 â€“ 23:00",
     recsTitle: "Saisonale",
@@ -159,6 +159,102 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "KiÅŸiyi Kaydet",
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    badgeOpen: "Open Â· 12:00 â€“ 23:00",
+    recsTitle: "De temporada",
+    recsTitleAccent: "Selección",
+    recsSub: "Ingredientes seleccionados, platos firma del chef.",
+    ctaBig: "Reservar mesa",
+    hoursTitle: "Horario de apertura",
+    hoursMain: "Tue â€“ Sat",
+    hoursWeekend: "Domingo",
+    hoursClosed: "Lunes",
+    hoursMainTime: "12:00 â€“ 23:00",
+    hoursWeekendTime: "11:00 â€“ 17:00",
+    hoursClosedTime: "Cerrado",
+    whatsappLabel: "WhatsApp",
+    menuLabel: "Carta",
+    directionsLabel: "Cómo llegar",
+    shareTitle: "Síguenos",
+    shareSub: "Sé el primero en conocer las nuevas cartas.",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    badgeOpen: "Open Â· 12:00 â€“ 23:00",
+    recsTitle: "Stagionale",
+    recsTitleAccent: "Selezioni",
+    recsSub: "Ingredienti selezionati, piatti firma dello chef.",
+    ctaBig: "Prenota un tavolo",
+    hoursTitle: "Orari di apertura",
+    hoursMain: "Tue â€“ Sat",
+    hoursWeekend: "Domenica",
+    hoursClosed: "Lunedì",
+    hoursMainTime: "12:00 â€“ 23:00",
+    hoursWeekendTime: "11:00 â€“ 17:00",
+    hoursClosedTime: "Chiuso",
+    whatsappLabel: "WhatsApp",
+    menuLabel: "Menù",
+    directionsLabel: "Indicazioni",
+    shareTitle: "Seguici",
+    shareSub: "Sii il primo a sapere dei nuovi menù.",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    badgeOpen: "Open Â· 12:00 â€“ 23:00",
+    recsTitle: "De saison",
+    recsTitleAccent: "Sélections",
+    recsSub: "Ingrédients sélectionnés, plats signature du chef.",
+    ctaBig: "Réserver une table",
+    hoursTitle: "Horaires d'ouverture",
+    hoursMain: "Tue â€“ Sat",
+    hoursWeekend: "Dimanche",
+    hoursClosed: "Lundi",
+    hoursMainTime: "12:00 â€“ 23:00",
+    hoursWeekendTime: "11:00 â€“ 17:00",
+    hoursClosedTime: "Fermé",
+    whatsappLabel: "WhatsApp",
+    menuLabel: "Menu",
+    directionsLabel: "Itinéraire",
+    shareTitle: "Nous suivre",
+    shareSub: "Soyez le premier informé des nouveaux menus.",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    badgeOpen: "Open Â· 12:00 â€“ 23:00",
+    recsTitle: "موسمي",
+    recsTitleAccent: "المختارات",
+    recsSub: "مكونات منتقاة، أطباق توقيع الشيف.",
+    ctaBig: "احجز طاولة",
+    hoursTitle: "ساعات الافتتاح",
+    hoursMain: "Tue â€“ Sat",
+    hoursWeekend: "الأحد",
+    hoursClosed: "الاثنين",
+    hoursMainTime: "12:00 â€“ 23:00",
+    hoursWeekendTime: "11:00 â€“ 17:00",
+    hoursClosedTime: "مغلق",
+    whatsappLabel: "واتساب",
+    menuLabel: "القائمة",
+    directionsLabel: "الاتجاهات",
+    shareTitle: "تابعنا",
+    shareSub: "كن أول من يعرف القوائم الجديدة.",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

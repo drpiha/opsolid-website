@@ -116,7 +116,7 @@ interface TsCopy {
   liveBadge: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", TsCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", TsCopy> = {
   de: {
     saveContact: "Speichern",
     callNow: "Anrufen",
@@ -191,6 +191,114 @@ const COPY: Record<"de" | "en" | "tr", TsCopy> = {
     shipped: "Canlı",
     open: "Aç",
     liveBadge: "Canlı · 2026'dan beri",
+  },
+  es: {
+
+    saveContact: "Guardar contacto",
+    callNow: "Llamar",
+    whatsapp: "WhatsApp",
+    email: "Correo",
+    book: "Reservar una llamada",
+    building: "Construyendo actualmente",
+    shipping: "Enviando ahora",
+    about: "Visión",
+    contact: "Contacto",
+    stack: "Stack y enfoque",
+    social: "Redes",
+    walletLabel: "Añadir a la cartera",
+    buildCta: "Construyamos juntos",
+    buildHint: "Plazas piloto cada mes",
+    letsBuild: "Construyamos juntos",
+    traction: "Productos en vivo",
+    reachOut: "Contacta",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    poweredBy: "Desarrollado por",
+    shipped: "En vivo",
+    open: "Abierto",
+    liveBadge: "En vivo · desde 2026",
+  
+  },
+  it: {
+
+    saveContact: "Salva contatto",
+    callNow: "Chiama",
+    whatsapp: "WhatsApp",
+    email: "Email",
+    book: "Prenota una chiamata",
+    building: "In costruzione",
+    shipping: "Spedizioni in corso",
+    about: "Visione",
+    contact: "Contatto",
+    stack: "Stack e focus",
+    social: "Social",
+    walletLabel: "Aggiungi al wallet",
+    buildCta: "Costruiamo insieme",
+    buildHint: "Posti pilota ogni mese",
+    letsBuild: "Costruiamo insieme",
+    traction: "Prodotti live",
+    reachOut: "Contattaci",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    poweredBy: "Realizzato con",
+    shipped: "Live",
+    open: "Aperto",
+    liveBadge: "Live · dal 2026",
+  
+  },
+  fr: {
+
+    saveContact: "Enregistrer le contact",
+    callNow: "Appeler",
+    whatsapp: "WhatsApp",
+    email: "E-mail",
+    book: "Réserver un appel",
+    building: "En cours de construction",
+    shipping: "Expédition en cours",
+    about: "Vision",
+    contact: "Contact",
+    stack: "Stack et focus",
+    social: "Réseaux",
+    walletLabel: "Ajouter au portefeuille",
+    buildCta: "Construisons ensemble",
+    buildHint: "Places pilotes ouvertes chaque mois",
+    letsBuild: "Construisons ensemble",
+    traction: "Produits en direct",
+    reachOut: "Nous contacter",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    poweredBy: "Propulsé par",
+    shipped: "Live",
+    open: "Ouvert",
+    liveBadge: "Live · depuis 2026",
+  
+  },
+  ar: {
+
+    saveContact: "حفظ جهة الاتصال",
+    callNow: "اتصال",
+    whatsapp: "واتساب",
+    email: "البريد الإلكتروني",
+    book: "احجز مكالمة",
+    building: "قيد البناء",
+    shipping: "الشحن الآن",
+    about: "الرؤية",
+    contact: "اتصال",
+    stack: "المنظومة والتركيز",
+    social: "التواصل",
+    walletLabel: "إضافة إلى المحفظة",
+    buildCta: "لنبني معاً",
+    buildHint: "أماكن تجريبية متاحة شهرياً",
+    letsBuild: "لنبني معاً",
+    traction: "منتجات حية",
+    reachOut: "تواصل",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    poweredBy: "مشغل بواسطة",
+    shipped: "مباشر",
+    open: "مفتوح",
+    liveBadge: "مباشر · منذ 2026",
+  
   },
 };
 
@@ -1047,7 +1155,7 @@ function CTASection({
 }: {
   slug: string;
   sourceQs: string;
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   primary: string;
   accent: string;
 }) {

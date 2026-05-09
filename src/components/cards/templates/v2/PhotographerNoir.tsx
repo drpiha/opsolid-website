@@ -93,7 +93,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     est: "Etabliert 2018",
     manifestoLabel: "Manifest",
@@ -156,6 +156,98 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    est: "Establecido en 2018",
+    manifestoLabel: "Manifiesto",
+    aboutEyebrow: "Acerca de",
+    servicesEyebrow: "Servicio",
+    servicesH: "Cómo trabajo",
+    packagesEyebrow: "Paquetes",
+    packagesH: "Inversión",
+    ctaEyebrow: "Ver el portafolio",
+    ctaBtn: "Portafolio",
+    contactEyebrow: "Contacto",
+    callBtn: "Llamar",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Correo",
+    yearsLabel: "Años",
+    weddingsLabel: "Bodas",
+    countriesLabel: "Países",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    est: "Fondato nel 2018",
+    manifestoLabel: "Manifesto",
+    aboutEyebrow: "Chi siamo",
+    servicesEyebrow: "Servizio",
+    servicesH: "Come lavoro",
+    packagesEyebrow: "Pacchetti",
+    packagesH: "Investimento",
+    ctaEyebrow: "Vedi il portfolio",
+    ctaBtn: "Portfolio",
+    contactEyebrow: "Contatto",
+    callBtn: "Chiama",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Email",
+    yearsLabel: "Anni",
+    weddingsLabel: "Matrimoni",
+    countriesLabel: "Paesi",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    est: "Établi en 2018",
+    manifestoLabel: "Manifeste",
+    aboutEyebrow: "À propos",
+    servicesEyebrow: "Service",
+    servicesH: "Comment je travaille",
+    packagesEyebrow: "Forfaits",
+    packagesH: "Investissement",
+    ctaEyebrow: "Voir le portfolio",
+    ctaBtn: "Portfolio",
+    contactEyebrow: "Contact",
+    callBtn: "Appeler",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "E-mail",
+    yearsLabel: "Années",
+    weddingsLabel: "Mariages",
+    countriesLabel: "Pays",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    est: "تأسس في 2018",
+    manifestoLabel: "البيان",
+    aboutEyebrow: "حول",
+    servicesEyebrow: "خدمة",
+    servicesH: "كيف أعمل",
+    packagesEyebrow: "الباقات",
+    packagesH: "الاستثمار",
+    ctaEyebrow: "عرض المعرض",
+    ctaBtn: "المعرض",
+    contactEyebrow: "اتصال",
+    callBtn: "اتصال",
+    whatsappBtn: "واتساب",
+    emailBtn: "البريد الإلكتروني",
+    yearsLabel: "سنوات",
+    weddingsLabel: "الأعراس",
+    countriesLabel: "الدول",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

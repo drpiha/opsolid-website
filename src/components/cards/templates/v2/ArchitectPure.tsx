@@ -78,7 +78,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     taglineFallback: "Principal Architect",
     studioLabel: "Studio",
@@ -126,6 +126,78 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    taglineFallback: "Arquitecto principal",
+    studioLabel: "Estudio",
+    foundedLabel: "Fundado",
+    teamLabel: "Equipo",
+    yearsLabel: "Años",
+    projectsLabel: "Construido",
+    countriesLabel: "Países",
+    specsTitle: "Especialidades",
+    awardsTitle: "Premios",
+    contactTitle: "Contacto",
+    bookBtn: "Reservar cita",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    taglineFallback: "Architetto principale",
+    studioLabel: "Studio",
+    foundedLabel: "Fondata",
+    teamLabel: "Team",
+    yearsLabel: "Anni",
+    projectsLabel: "Costruito",
+    countriesLabel: "Paesi",
+    specsTitle: "Specialità",
+    awardsTitle: "Premi",
+    contactTitle: "Contatto",
+    bookBtn: "Prenota un appuntamento",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    taglineFallback: "Architecte principal",
+    studioLabel: "Studio",
+    foundedLabel: "Fondé",
+    teamLabel: "Équipe",
+    yearsLabel: "Années",
+    projectsLabel: "Construit",
+    countriesLabel: "Pays",
+    specsTitle: "Spécialités",
+    awardsTitle: "Récompenses",
+    contactTitle: "Contact",
+    bookBtn: "Prendre rendez-vous",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    taglineFallback: "كبير المهندسين المعماريين",
+    studioLabel: "استوديو",
+    foundedLabel: "تأسس",
+    teamLabel: "الفريق",
+    yearsLabel: "سنوات",
+    projectsLabel: "تم البناء",
+    countriesLabel: "الدول",
+    specsTitle: "التخصصات",
+    awardsTitle: "جوائز",
+    contactTitle: "اتصال",
+    bookBtn: "حجز موعد",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

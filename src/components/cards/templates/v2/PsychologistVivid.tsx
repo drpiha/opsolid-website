@@ -86,7 +86,7 @@ interface PsvCopy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", PsvCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsvCopy> = {
   de: {
     newClients: "Neue Klient:innen willkommen",
     bookFirst: "ErstgesprÃ¤ch anfragen",
@@ -140,6 +140,86 @@ const COPY: Record<"de" | "en" | "tr", PsvCopy> = {
     walletLabel: "CÃ¼zdana ekle",
     share: "PaylaÅŸ",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    newClients: "Bienvenidos nuevos clientes",
+    bookFirst: "Solicitar primera sesión",
+    bookHint: "Llamada introductoria gratuita",
+    call: "Teléfono",
+    email: "Correo",
+    ig: "Instagram",
+    packages: "Paquetes de sesiones",
+    popular: "Popular",
+    specialties: "Áreas de enfoque",
+    experience: "Años",
+    sessions: "Sesiones",
+    formats: "Formatos",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    share: "Compartir",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    newClients: "Benvenuti nuovi clienti",
+    bookFirst: "Richiedi la prima sessione",
+    bookHint: "Chiamata introduttiva gratuita",
+    call: "Telefono",
+    email: "Email",
+    ig: "Instagram",
+    packages: "Pacchetti sessioni",
+    popular: "Popolari",
+    specialties: "Aree di focus",
+    experience: "Anni",
+    sessions: "Sessioni",
+    formats: "Formati",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    share: "Condividi",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    newClients: "Nouveaux clients bienvenus",
+    bookFirst: "Demander la première séance",
+    bookHint: "Appel d'introduction gratuit",
+    call: "Téléphone",
+    email: "E-mail",
+    ig: "Instagram",
+    packages: "Forfaits de séances",
+    popular: "Populaires",
+    specialties: "Domaines de focus",
+    experience: "Années",
+    sessions: "Séances",
+    formats: "Formats",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    share: "Partager",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    newClients: "نرحب بالعملاء الجدد",
+    bookFirst: "اطلب الجلسة الأولى",
+    bookHint: "مكالمة تعريفية مجانية",
+    call: "هاتف",
+    email: "البريد الإلكتروني",
+    ig: "إنستغرام",
+    packages: "حزم الجلسات",
+    popular: "شائع",
+    specialties: "مجالات التركيز",
+    experience: "سنوات",
+    sessions: "الجلسات",
+    formats: "الصيغ",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    share: "مشاركة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

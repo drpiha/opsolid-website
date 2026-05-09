@@ -153,7 +153,7 @@ interface RsCopy {
   openToday: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", RsCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RsCopy> = {
   de: {
     reserve: "Reservieren",
     callNow: "Anrufen",
@@ -240,6 +240,130 @@ const COPY: Record<"de" | "en" | "tr", RsCopy> = {
     poweredBy: "Powered by",
     share: "Paylaş",
     openToday: "Bugün açığız",
+  },
+  es: {
+
+    reserve: "Reservar",
+    callNow: "Llamar",
+    whatsapp: "WhatsApp",
+    directions: "Cómo llegar",
+    email: "Correo",
+    todaysMenu: "Desde la cocina",
+    todaysMenuEyebrow: "En la carta",
+    fromTheKitchen: "Galería",
+    fromTheKitchenEyebrow: "Desde el comedor",
+    guests: "Nuestros huéspedes dicen",
+    guestsEyebrow: "Voces",
+    hours: "Horario de apertura",
+    hoursEyebrow: "Estamos abiertos",
+    contact: "Encuéntranos",
+    contactEyebrow: "Cómo contactarnos",
+    bookTable: "Reservar mesa",
+    social: "Seguir",
+    socialEyebrow: "Mantente en contacto",
+    walletLabel: "Añadir a la cartera",
+    brochureCta: "Carta completa (PDF)",
+    about: "Acerca de",
+    aboutEyebrow: "Detrás del mostrador",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    poweredBy: "Desarrollado por",
+    share: "Compartir",
+    openToday: "Abierto hoy",
+  
+  },
+  it: {
+
+    reserve: "Prenota",
+    callNow: "Chiama",
+    whatsapp: "WhatsApp",
+    directions: "Indicazioni",
+    email: "Email",
+    todaysMenu: "Dalla cucina",
+    todaysMenuEyebrow: "Nel menù",
+    fromTheKitchen: "Galleria",
+    fromTheKitchenEyebrow: "Dalla sala",
+    guests: "I nostri ospiti dicono",
+    guestsEyebrow: "Voci",
+    hours: "Orari di apertura",
+    hoursEyebrow: "Siamo aperti",
+    contact: "Dove siamo",
+    contactEyebrow: "Come raggiungerci",
+    bookTable: "Prenota un tavolo",
+    social: "Segui",
+    socialEyebrow: "Resta in contatto",
+    walletLabel: "Aggiungi al wallet",
+    brochureCta: "Menù completo (PDF)",
+    about: "Chi siamo",
+    aboutEyebrow: "Dietro il bancone",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    poweredBy: "Realizzato con",
+    share: "Condividi",
+    openToday: "Aperto oggi",
+  
+  },
+  fr: {
+
+    reserve: "Réserver",
+    callNow: "Appeler",
+    whatsapp: "WhatsApp",
+    directions: "Itinéraire",
+    email: "E-mail",
+    todaysMenu: "Depuis la cuisine",
+    todaysMenuEyebrow: "Au menu",
+    fromTheKitchen: "Galerie",
+    fromTheKitchenEyebrow: "Depuis la salle",
+    guests: "Nos hôtes témoignent",
+    guestsEyebrow: "Témoignages",
+    hours: "Horaires d'ouverture",
+    hoursEyebrow: "Nous sommes ouverts",
+    contact: "Nous trouver",
+    contactEyebrow: "Comment nous joindre",
+    bookTable: "Réserver une table",
+    social: "Suivre",
+    socialEyebrow: "Restez en contact",
+    walletLabel: "Ajouter au portefeuille",
+    brochureCta: "Menu complet (PDF)",
+    about: "À propos",
+    aboutEyebrow: "Derrière le comptoir",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    poweredBy: "Propulsé par",
+    share: "Partager",
+    openToday: "Ouvert aujourd'hui",
+  
+  },
+  ar: {
+
+    reserve: "احجز",
+    callNow: "اتصال",
+    whatsapp: "واتساب",
+    directions: "الاتجاهات",
+    email: "البريد الإلكتروني",
+    todaysMenu: "من المطبخ",
+    todaysMenuEyebrow: "على القائمة",
+    fromTheKitchen: "المعرض",
+    fromTheKitchenEyebrow: "من الصالة",
+    guests: "ماذا يقول الضيوف",
+    guestsEyebrow: "أصوات",
+    hours: "ساعات الافتتاح",
+    hoursEyebrow: "نحن مفتوحون",
+    contact: "اعثر علينا",
+    contactEyebrow: "كيف تصل إلينا",
+    bookTable: "احجز طاولة",
+    social: "متابعة",
+    socialEyebrow: "ابقَ على تواصل",
+    walletLabel: "إضافة إلى المحفظة",
+    brochureCta: "القائمة الكاملة (PDF)",
+    about: "حول",
+    aboutEyebrow: "خلف المنضدة",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    poweredBy: "مشغل بواسطة",
+    share: "مشاركة",
+    openToday: "مفتوح اليوم",
+  
   },
 };
 
@@ -1152,7 +1276,7 @@ function CTASection({
 }: {
   slug: string;
   sourceQs: string;
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   primary: string;
   accent: string;
 }) {

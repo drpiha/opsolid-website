@@ -96,7 +96,7 @@ interface ResCopy {
   share: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", ResCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ResCopy> = {
   de: {
     bannerEyebrow: "Mit Sorgfalt seit 2014",
     storyEyebrow: "Meine Geschichte",
@@ -159,6 +159,98 @@ const COPY: Record<"de" | "en" | "tr", ResCopy> = {
     impressum: "KÃ¼nye",
     privacy: "Gizlilik",
     share: "PaylaÅŸ",
+  },
+  es: {
+
+    bannerEyebrow: "Con cuidado desde 2014",
+    storyEyebrow: "Mi historia",
+    storyTitle: "Inmobiliaria de confianza",
+    servicesTitle: "Lo que hago",
+    contactTitle: "Hablemos",
+    contactCall: "Teléfono",
+    contactWa: "WhatsApp",
+    contactWaSub: "Enviar un mensaje",
+    contactEmail: "Correo",
+    contactWeb: "Web",
+    yearsLabel: "Años",
+    closedLabel: "Cerrado",
+    portfolioLabel: "Portfolio â‚¬",
+    saveContact: "Guardar en contactos",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    share: "Compartir",
+  
+  },
+  it: {
+
+    bannerEyebrow: "Con cura dal 2014",
+    storyEyebrow: "La mia storia",
+    storyTitle: "Agenzia di fiducia",
+    servicesTitle: "Cosa faccio",
+    contactTitle: "Parliamo",
+    contactCall: "Telefono",
+    contactWa: "WhatsApp",
+    contactWaSub: "Invia un messaggio",
+    contactEmail: "Email",
+    contactWeb: "Web",
+    yearsLabel: "Anni",
+    closedLabel: "Chiuso",
+    portfolioLabel: "Portfolio â‚¬",
+    saveContact: "Salva nei contatti",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    share: "Condividi",
+  
+  },
+  fr: {
+
+    bannerEyebrow: "Avec soin depuis 2014",
+    storyEyebrow: "Mon histoire",
+    storyTitle: "Agence de confiance",
+    servicesTitle: "Ce que je fais",
+    contactTitle: "Discutons",
+    contactCall: "Téléphone",
+    contactWa: "WhatsApp",
+    contactWaSub: "Envoyer un message",
+    contactEmail: "E-mail",
+    contactWeb: "Web",
+    yearsLabel: "Années",
+    closedLabel: "Fermé",
+    portfolioLabel: "Portfolio â‚¬",
+    saveContact: "Enregistrer dans les contacts",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    share: "Partager",
+  
+  },
+  ar: {
+
+    bannerEyebrow: "بعناية منذ 2014",
+    storyEyebrow: "قصتي",
+    storyTitle: "وساطة موثوقة",
+    servicesTitle: "ما أفعله",
+    contactTitle: "لنتحدث",
+    contactCall: "هاتف",
+    contactWa: "واتساب",
+    contactWaSub: "أرسل رسالة",
+    contactEmail: "البريد الإلكتروني",
+    contactWeb: "ويب",
+    yearsLabel: "سنوات",
+    closedLabel: "مغلق",
+    portfolioLabel: "Portfolio â‚¬",
+    saveContact: "حفظ في جهات الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    share: "مشاركة",
+  
   },
 };
 

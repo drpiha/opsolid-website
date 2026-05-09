@@ -78,7 +78,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     metaAvailable: "VerfÃ¼gbar 2026",
     metaCity: "Berlin Â· DE",
@@ -132,6 +132,86 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "KiÅŸiyi Kaydet",
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    metaAvailable: "Disponible 2026",
+    metaCity: "Berlin Â· DE",
+    philosophy: "Manifiesto",
+    portfolio: "Portafolio",
+    portfolioMore: "Ver más",
+    packages: "Paquetes",
+    contact: "Contacto",
+    ctaPrimary: "Reservar una sesión",
+    ctaSecondary: "WhatsApp",
+    ctaTertiary: "Portafolio",
+    ctaQuad: "Cómo llegar",
+    servicesLabel: "Paquetes",
+    reviewsLabel: "Reseñas",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    metaAvailable: "Disponibile 2026",
+    metaCity: "Berlin Â· DE",
+    philosophy: "Manifesto",
+    portfolio: "Portfolio",
+    portfolioMore: "Vedi altro",
+    packages: "Pacchetti",
+    contact: "Contatto",
+    ctaPrimary: "Prenota una sessione",
+    ctaSecondary: "WhatsApp",
+    ctaTertiary: "Portfolio",
+    ctaQuad: "Indicazioni",
+    servicesLabel: "Pacchetti",
+    reviewsLabel: "Recensioni",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    metaAvailable: "Disponible 2026",
+    metaCity: "Berlin Â· DE",
+    philosophy: "Manifeste",
+    portfolio: "Portfolio",
+    portfolioMore: "Voir plus",
+    packages: "Forfaits",
+    contact: "Contact",
+    ctaPrimary: "Réserver une séance",
+    ctaSecondary: "WhatsApp",
+    ctaTertiary: "Portfolio",
+    ctaQuad: "Itinéraire",
+    servicesLabel: "Forfaits",
+    reviewsLabel: "Avis",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    metaAvailable: "متاح 2026",
+    metaCity: "Berlin Â· DE",
+    philosophy: "البيان",
+    portfolio: "المعرض",
+    portfolioMore: "عرض المزيد",
+    packages: "الباقات",
+    contact: "اتصال",
+    ctaPrimary: "احجز جلسة",
+    ctaSecondary: "واتساب",
+    ctaTertiary: "المعرض",
+    ctaQuad: "الاتجاهات",
+    servicesLabel: "الباقات",
+    reviewsLabel: "التقييمات",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

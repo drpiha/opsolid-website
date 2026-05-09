@@ -83,7 +83,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     eyebrow: "INTERIOR ATELIER Â· BERLIN",
     tagline:
@@ -134,6 +134,82 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "KiÅŸiyi Kaydet",
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    eyebrow: "INTERIOR ATELIER Â· BERLIN",
+    tagline:
+      "Rooms that age slowly. Materials allowed to grow older. A studio for quiet, durable residential architecture.",
+    role: "Diseñador de interiores",
+    callBtn: "Llamar",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Correo",
+    featuredH: "Selección",
+    featuredCaption: "Mitte Penthouse Â· 2026",
+    servicesH: "Atelier",
+    contactH: "Contacto",
+    cta: "Solicitar una consulta",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    eyebrow: "INTERIOR ATELIER Â· BERLIN",
+    tagline:
+      "Rooms that age slowly. Materials allowed to grow older. A studio for quiet, durable residential architecture.",
+    role: "Interior Designer",
+    callBtn: "Chiama",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Email",
+    featuredH: "Selezionati",
+    featuredCaption: "Mitte Penthouse Â· 2026",
+    servicesH: "Atelier",
+    contactH: "Contatto",
+    cta: "Richiedi una consulenza",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    eyebrow: "INTERIOR ATELIER Â· BERLIN",
+    tagline:
+      "Rooms that age slowly. Materials allowed to grow older. A studio for quiet, durable residential architecture.",
+    role: "Designer d'intérieur",
+    callBtn: "Appeler",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "E-mail",
+    featuredH: "Sélection",
+    featuredCaption: "Mitte Penthouse Â· 2026",
+    servicesH: "Atelier",
+    contactH: "Contact",
+    cta: "Demander une consultation",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    eyebrow: "INTERIOR ATELIER Â· BERLIN",
+    tagline:
+      "Rooms that age slowly. Materials allowed to grow older. A studio for quiet, durable residential architecture.",
+    role: "مصمم داخلي",
+    callBtn: "اتصال",
+    whatsappBtn: "واتساب",
+    emailBtn: "البريد الإلكتروني",
+    featuredH: "مختار",
+    featuredCaption: "Mitte Penthouse Â· 2026",
+    servicesH: "أتيليه",
+    contactH: "اتصال",
+    cta: "اطلب استشارة",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

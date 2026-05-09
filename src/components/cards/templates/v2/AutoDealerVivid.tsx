@@ -100,7 +100,7 @@ interface Copy {
   contact: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     tag: "Premium Auto",
     tagline: "GeprÃ¼fte Premium-Gebrauchtwagen, mit echter Garantie und ehrlichem Preis.",
@@ -166,6 +166,102 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
     contact: "Ä°letiÅŸim",
+  },
+  es: {
+
+    tag: "Auto premium",
+    tagline: "Coches premium revisados, con garantía real y precio honesto.",
+    callBtn: "Llamar",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Correo",
+    featuredH: "Destacado",
+    featuredBadge: "Selección destacada",
+    yearLabel: "Año",
+    transLabel: "Trans.",
+    fuelLabel: "Combustible",
+    brandsH: "Marcas",
+    servicesH: "Servicios",
+    yearsLabel: "Años",
+    carsLabel: "Coches vendidos",
+    warrantyLabel: "Garantía",
+    cta: "Reservar una visita",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    contact: "Contacto",
+  
+  },
+  it: {
+
+    tag: "Auto premium",
+    tagline: "Auto premium usate ispezionate, con garanzia reale e prezzo onesto.",
+    callBtn: "Chiama",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Email",
+    featuredH: "In evidenza",
+    featuredBadge: "Top scelta",
+    yearLabel: "Anno",
+    transLabel: "Trasf.",
+    fuelLabel: "Carburante",
+    brandsH: "Brand",
+    servicesH: "Servizi",
+    yearsLabel: "Anni",
+    carsLabel: "Auto vendute",
+    warrantyLabel: "Garanzia",
+    cta: "Prenota una visita",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    contact: "Contatto",
+  
+  },
+  fr: {
+
+    tag: "Auto premium",
+    tagline: "Voitures premium d'occasion inspectées, avec garantie réelle et prix honnête.",
+    callBtn: "Appeler",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "E-mail",
+    featuredH: "À la une",
+    featuredBadge: "Coup de cœur",
+    yearLabel: "Année",
+    transLabel: "Transf.",
+    fuelLabel: "Carburant",
+    brandsH: "Marques",
+    servicesH: "Services",
+    yearsLabel: "Années",
+    carsLabel: "Voitures vendues",
+    warrantyLabel: "Garantie",
+    cta: "Réserver une visite",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    contact: "Contact",
+  
+  },
+  ar: {
+
+    tag: "سيارات فاخرة",
+    tagline: "سيارات فاخرة مستعملة بعد الفحص، مع ضمان حقيقي وسعر صادق.",
+    callBtn: "اتصال",
+    whatsappBtn: "واتساب",
+    emailBtn: "البريد الإلكتروني",
+    featuredH: "مميز",
+    featuredBadge: "الأفضل اختياراً",
+    yearLabel: "سنة",
+    transLabel: "تحول",
+    fuelLabel: "الوقود",
+    brandsH: "علامات تجارية",
+    servicesH: "الخدمات",
+    yearsLabel: "سنوات",
+    carsLabel: "السيارات المباعة",
+    warrantyLabel: "الضمان",
+    cta: "احجز معاينة",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    contact: "اتصال",
+  
   },
 };
 

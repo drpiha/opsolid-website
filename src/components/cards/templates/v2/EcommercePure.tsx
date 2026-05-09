@@ -88,7 +88,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     estTag: "EST. " + (new Date().getFullYear() - 5),
     taglineFallback: "D2C Brand",
@@ -139,6 +139,82 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "KiÅŸiyi Kaydet",
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    estTag: "EST. " + (new Date().getFullYear() - 5),
+    taglineFallback: "Marca D2C",
+    rolePill: "Atelier",
+    bioFallback: "Marca D2C moderna",
+    categoriesH: "Categorías",
+    orderH: "Información del pedido",
+    channelsH: "Canales",
+    orderRefH: "Pedido",
+    servicesLabel: "Productos",
+    reviewsLabel: "Reseñas",
+    bookBtn: "Iniciar pedido",
+    websiteCta: "Sitio web",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    estTag: "EST. " + (new Date().getFullYear() - 5),
+    taglineFallback: "Brand D2C",
+    rolePill: "Atelier",
+    bioFallback: "Brand D2C moderno",
+    categoriesH: "Categorie",
+    orderH: "Info ordine",
+    channelsH: "Canali",
+    orderRefH: "Ordine",
+    servicesLabel: "Prodotti",
+    reviewsLabel: "Recensioni",
+    bookBtn: "Inizia ordine",
+    websiteCta: "Sito web",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    estTag: "EST. " + (new Date().getFullYear() - 5),
+    taglineFallback: "Marque D2C",
+    rolePill: "Atelier",
+    bioFallback: "Marque D2C moderne",
+    categoriesH: "Catégories",
+    orderH: "Info commande",
+    channelsH: "Canaux",
+    orderRefH: "Commande",
+    servicesLabel: "Produits",
+    reviewsLabel: "Avis",
+    bookBtn: "Démarrer la commande",
+    websiteCta: "Site web",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    estTag: "تأسس " + (new Date().getFullYear() - 5),
+    taglineFallback: "علامة D2C",
+    rolePill: "أتيليه",
+    bioFallback: "علامة D2C عصرية",
+    categoriesH: "الفئات",
+    orderH: "معلومات الطلب",
+    channelsH: "القنوات",
+    orderRefH: "طلب",
+    servicesLabel: "المنتجات",
+    reviewsLabel: "التقييمات",
+    bookBtn: "ابدأ الطلب",
+    websiteCta: "الموقع",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

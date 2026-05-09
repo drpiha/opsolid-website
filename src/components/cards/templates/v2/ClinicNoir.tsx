@@ -84,7 +84,7 @@ interface Copy {
   webKey: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     metaLabel: "M.D. â€” Privatpraxis Â· Berlin",
     practiceEyebrow: "Praxisgebiete",
@@ -147,6 +147,98 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     phoneKey: "Telefon",
     emailKey: "E-posta",
     webKey: "Web",
+  },
+  es: {
+
+    metaLabel: "M.D. â€” Private Practice Â· Berlin",
+    practiceEyebrow: "Despacho",
+    practiceH: "Especialidades",
+    clinicEyebrow: "Clínica",
+    clinicH: "Sobre el despacho",
+    contactEyebrow: "Contacto",
+    contactH: "Reservas y contacto",
+    bookBtn: "Solicitar cita",
+    callBtn: "Llamar",
+    emailBtn: "Correo",
+    mapBtn: "Mapa",
+    whatsappBtn: "WhatsApp",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    addressKey: "Dirección",
+    phoneKey: "Teléfono",
+    emailKey: "Correo",
+    webKey: "Web",
+  
+  },
+  it: {
+
+    metaLabel: "M.D. â€” Private Practice Â· Berlin",
+    practiceEyebrow: "Studio",
+    practiceH: "Specialità",
+    clinicEyebrow: "Clinica",
+    clinicH: "Sullo studio",
+    contactEyebrow: "Contatto",
+    contactH: "Prenotazioni e contatti",
+    bookBtn: "Richiedi appuntamento",
+    callBtn: "Chiama",
+    emailBtn: "Email",
+    mapBtn: "Mappa",
+    whatsappBtn: "WhatsApp",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    addressKey: "Indirizzo",
+    phoneKey: "Telefono",
+    emailKey: "Email",
+    webKey: "Web",
+  
+  },
+  fr: {
+
+    metaLabel: "M.D. â€” Private Practice Â· Berlin",
+    practiceEyebrow: "Cabinet",
+    practiceH: "Spécialités",
+    clinicEyebrow: "Clinique",
+    clinicH: "À propos du cabinet",
+    contactEyebrow: "Contact",
+    contactH: "Réservations et contact",
+    bookBtn: "Demander un rendez-vous",
+    callBtn: "Appeler",
+    emailBtn: "E-mail",
+    mapBtn: "Carte",
+    whatsappBtn: "WhatsApp",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    addressKey: "Adresse",
+    phoneKey: "Téléphone",
+    emailKey: "E-mail",
+    webKey: "Web",
+  
+  },
+  ar: {
+
+    metaLabel: "M.D. â€” Private Practice Â· Berlin",
+    practiceEyebrow: "ممارسة",
+    practiceH: "التخصصات",
+    clinicEyebrow: "عيادة",
+    clinicH: "عن المكتب",
+    contactEyebrow: "اتصال",
+    contactH: "الحجوزات والاتصال",
+    bookBtn: "طلب موعد",
+    callBtn: "اتصال",
+    emailBtn: "البريد الإلكتروني",
+    mapBtn: "الخريطة",
+    whatsappBtn: "واتساب",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    addressKey: "العنوان",
+    phoneKey: "هاتف",
+    emailKey: "البريد الإلكتروني",
+    webKey: "ويب",
+  
   },
 };
 

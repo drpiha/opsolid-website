@@ -98,7 +98,7 @@ interface Copy {
   contact: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     callBtn: "Anrufen",
     whatsappBtn: "Nachricht",
@@ -161,6 +161,98 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
     contact: "İletişim",
+  },
+  es: {
+
+    callBtn: "Llamar",
+    whatsappBtn: "Mensaje",
+    emailBtn: "Correo",
+    featuredH: "Destacado",
+    featuredBadge: "Selección destacada",
+    yearLabel: "Año",
+    transLabel: "Trans.",
+    fuelLabel: "Combustible",
+    priceLabel: "Precio",
+    brandsH: "Marcas",
+    servicesH: "Servicios",
+    statsH: "En cifras",
+    carsLabel: "Coches vendidos",
+    warrantyLabel: "Garantía",
+    cta: "Reservar una visita",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    contact: "Contacto",
+  
+  },
+  it: {
+
+    callBtn: "Chiama",
+    whatsappBtn: "Messaggio",
+    emailBtn: "Email",
+    featuredH: "In evidenza",
+    featuredBadge: "Top scelta",
+    yearLabel: "Anno",
+    transLabel: "Trasf.",
+    fuelLabel: "Carburante",
+    priceLabel: "Prezzo",
+    brandsH: "Brand",
+    servicesH: "Servizi",
+    statsH: "In numeri",
+    carsLabel: "Auto vendute",
+    warrantyLabel: "Garanzia",
+    cta: "Prenota una visita",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    contact: "Contatto",
+  
+  },
+  fr: {
+
+    callBtn: "Appeler",
+    whatsappBtn: "Message",
+    emailBtn: "E-mail",
+    featuredH: "À la une",
+    featuredBadge: "Coup de cœur",
+    yearLabel: "Année",
+    transLabel: "Transf.",
+    fuelLabel: "Carburant",
+    priceLabel: "Prix",
+    brandsH: "Marques",
+    servicesH: "Services",
+    statsH: "En chiffres",
+    carsLabel: "Voitures vendues",
+    warrantyLabel: "Garantie",
+    cta: "Réserver une visite",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    contact: "Contact",
+  
+  },
+  ar: {
+
+    callBtn: "اتصال",
+    whatsappBtn: "رسالة",
+    emailBtn: "البريد الإلكتروني",
+    featuredH: "مميز",
+    featuredBadge: "الأفضل اختياراً",
+    yearLabel: "سنة",
+    transLabel: "تحول",
+    fuelLabel: "الوقود",
+    priceLabel: "السعر",
+    brandsH: "علامات تجارية",
+    servicesH: "الخدمات",
+    statsH: "بالأرقام",
+    carsLabel: "السيارات المباعة",
+    warrantyLabel: "الضمان",
+    cta: "احجز معاينة",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    contact: "اتصال",
+  
   },
 };
 

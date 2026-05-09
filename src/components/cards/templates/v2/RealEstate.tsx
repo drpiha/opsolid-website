@@ -103,7 +103,7 @@ interface ReCopy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", ReCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy> = {
   de: {
     saveContact: "Speichern",
     callNow: "Anrufen",
@@ -160,6 +160,90 @@ const COPY: Record<"de" | "en" | "tr", ReCopy> = {
     impressum: "Künye",
     privacy: "Gizlilik",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    saveContact: "Guardar contacto",
+    callNow: "Llamar",
+    whatsapp: "WhatsApp",
+    email: "Correo",
+    book: "Reservar",
+    featuredListings: "Anuncios destacados",
+    services: "Servicios",
+    aboutMe: "Acerca de",
+    contact: "Contacto",
+    voices: "Testimonios",
+    location: "Ubicación",
+    social: "Redes",
+    walletLabel: "Añadir a la cartera",
+    portfolioCta: "Ver portafolio",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    saveContact: "Salva contatto",
+    callNow: "Chiama",
+    whatsapp: "WhatsApp",
+    email: "Email",
+    book: "Prenota",
+    featuredListings: "Annunci in evidenza",
+    services: "Servizi",
+    aboutMe: "Chi siamo",
+    contact: "Contatto",
+    voices: "Testimonianze",
+    location: "Posizione",
+    social: "Social",
+    walletLabel: "Aggiungi al wallet",
+    portfolioCta: "Vedi portfolio",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    saveContact: "Enregistrer le contact",
+    callNow: "Appeler",
+    whatsapp: "WhatsApp",
+    email: "E-mail",
+    book: "Réserver",
+    featuredListings: "Annonces en vedette",
+    services: "Services",
+    aboutMe: "À propos",
+    contact: "Contact",
+    voices: "Témoignages",
+    location: "Lieu",
+    social: "Réseaux",
+    walletLabel: "Ajouter au portefeuille",
+    portfolioCta: "Voir le portfolio",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    saveContact: "حفظ جهة الاتصال",
+    callNow: "اتصال",
+    whatsapp: "واتساب",
+    email: "البريد الإلكتروني",
+    book: "احجز",
+    featuredListings: "عروض مميزة",
+    services: "الخدمات",
+    aboutMe: "حول",
+    contact: "اتصال",
+    voices: "شهادات",
+    location: "الموقع",
+    social: "التواصل",
+    walletLabel: "إضافة إلى المحفظة",
+    portfolioCta: "عرض المعرض",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 
@@ -894,7 +978,7 @@ function CTASection({
 }: {
   slug: string;
   sourceQs: string;
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   primary: string;
   accent: string;
 }) {

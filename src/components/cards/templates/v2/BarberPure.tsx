@@ -78,7 +78,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     eyebrow: "Premium Barbershop",
     taglineFallback: "Master Barber & Stylist",
@@ -123,6 +123,74 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "KiÅŸiyi Kaydet",
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    eyebrow: "Barbería premium",
+    taglineFallback: "Maestro barbero y estilista",
+    yearsLabel: "Años",
+    clientsLabel: "Clientes",
+    followersLabel: "Seguidores",
+    menuH: "Carta de servicios",
+    hoursH: "Horario",
+    contactH: "Contacto",
+    ctaH: "Reservar cita",
+    bookBtn: "Reservar cita",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    eyebrow: "Barbershop premium",
+    taglineFallback: "Master Barber e Stylist",
+    yearsLabel: "Anni",
+    clientsLabel: "Clienti",
+    followersLabel: "Follower",
+    menuH: "Menù dei servizi",
+    hoursH: "Orari",
+    contactH: "Contatto",
+    ctaH: "Prenota un appuntamento",
+    bookBtn: "Prenota un appuntamento",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    eyebrow: "Barbershop premium",
+    taglineFallback: "Maître barbier et styliste",
+    yearsLabel: "Années",
+    clientsLabel: "Clients",
+    followersLabel: "Abonnés",
+    menuH: "Carte des services",
+    hoursH: "Horaires",
+    contactH: "Contact",
+    ctaH: "Prendre rendez-vous",
+    bookBtn: "Prendre rendez-vous",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    eyebrow: "صالون حلاقة فاخر",
+    taglineFallback: "حلاق رئيسي ومصفف",
+    yearsLabel: "سنوات",
+    clientsLabel: "العملاء",
+    followersLabel: "متابعون",
+    menuH: "قائمة الخدمات",
+    hoursH: "ساعات العمل",
+    contactH: "اتصال",
+    ctaH: "حجز موعد",
+    bookBtn: "حجز موعد",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

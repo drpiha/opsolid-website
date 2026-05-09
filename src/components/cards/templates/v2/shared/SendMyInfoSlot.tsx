@@ -16,7 +16,7 @@ export interface SendMyInfoSlotProps {
   /** Outer wrapper classes — usually a `mt-x` to slot into the template flow. */
   className?: string;
   /** Owner's persisted locale (from CardOrder.locale). Defaults to "de". */
-  locale?: "de" | "en" | "tr";
+  locale?: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
 }
 
 export function SendMyInfoSlot({
@@ -26,7 +26,10 @@ export function SendMyInfoSlot({
   className,
   locale = "de",
 }: SendMyInfoSlotProps) {
-  const labels = contents[locale].card.send;
+  // The order-form `card.send` translations only ship for the legacy 3 locales
+  // today; for es/it/fr/ar we fall back to en until that namespace is widened.
+  const narrowed = (locale === "de" || locale === "en" || locale === "tr") ? locale : "en";
+  const labels = contents[narrowed].card.send;
   return (
     <div className={className}>
       <SendMyInfoButton

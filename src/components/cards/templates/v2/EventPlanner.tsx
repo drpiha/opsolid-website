@@ -105,7 +105,7 @@ interface Copy {
   contact: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     tag: "Wedding & Events",
     taglineLead: "Lass uns deinen",
@@ -165,6 +165,94 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
     contact: "İletişim",
+  },
+  es: {
+
+    tag: "Bodas y eventos",
+    taglineLead: "Diseñemos tu",
+    taglineAccent: "el día más hermoso",
+    taglineTail: "juntos.",
+    role: "Diseñador de eventos",
+    callBtn: "Llamar",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Correo",
+    servicesH: "Servicios",
+    servicesLabel: "Servicios",
+    reviewsLabel: "Reseñas",
+    clientsH: "Confían en nosotros",
+    testimonialH: "Voces",
+    cta: "Diseñemos tu evento",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    contact: "Contacto",
+  
+  },
+  it: {
+
+    tag: "Matrimoni ed eventi",
+    taglineLead: "Progettiamo il tuo",
+    taglineAccent: "il giorno più bello",
+    taglineTail: "insieme.",
+    role: "Event Designer",
+    callBtn: "Chiama",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Email",
+    servicesH: "Servizi",
+    servicesLabel: "Servizi",
+    reviewsLabel: "Recensioni",
+    clientsH: "Si fidano di noi",
+    testimonialH: "Voci",
+    cta: "Progettiamo il tuo evento",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    contact: "Contatto",
+  
+  },
+  fr: {
+
+    tag: "Mariages et événements",
+    taglineLead: "Concevons votre",
+    taglineAccent: "le plus beau jour",
+    taglineTail: "ensemble.",
+    role: "Designer d'événements",
+    callBtn: "Appeler",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "E-mail",
+    servicesH: "Services",
+    servicesLabel: "Services",
+    reviewsLabel: "Avis",
+    clientsH: "Ils nous font confiance",
+    testimonialH: "Témoignages",
+    cta: "Concevons votre événement",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    contact: "Contact",
+  
+  },
+  ar: {
+
+    tag: "أعراس وفعاليات",
+    taglineLead: "لنصمم",
+    taglineAccent: "أجمل يوم",
+    taglineTail: "معاً.",
+    role: "مصمم فعاليات",
+    callBtn: "اتصال",
+    whatsappBtn: "واتساب",
+    emailBtn: "البريد الإلكتروني",
+    servicesH: "الخدمات",
+    servicesLabel: "الخدمات",
+    reviewsLabel: "التقييمات",
+    clientsH: "يثق بنا",
+    testimonialH: "أصوات",
+    cta: "لنصمم فعاليتك",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    contact: "اتصال",
+  
   },
 };
 

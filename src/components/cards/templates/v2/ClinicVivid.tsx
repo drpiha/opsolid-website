@@ -75,7 +75,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     heroTag: "Allgemeinmedizin Â· Berlin",
     yearsLabel: "Jahre",
@@ -120,6 +120,74 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "KiÅŸiyi Kaydet",
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    heroTag: "Family medicine Â· Berlin",
+    yearsLabel: "Años",
+    patientsLabel: "Pacientes",
+    satisfactionLabel: "Satisfechos",
+    servicesH: "Servicios",
+    testimonialsH: "Testimonios",
+    contactH: "Contacto",
+    bookH: "Reserva online",
+    bookSub: "WhatsApp â€” fast reply, instant confirmation.",
+    bookBtn: "Solicitar cita",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    heroTag: "Family medicine Â· Berlin",
+    yearsLabel: "Anni",
+    patientsLabel: "Pazienti",
+    satisfactionLabel: "Soddisfatti",
+    servicesH: "Servizi",
+    testimonialsH: "Testimonianze",
+    contactH: "Contatto",
+    bookH: "Prenotazione online",
+    bookSub: "WhatsApp â€” fast reply, instant confirmation.",
+    bookBtn: "Richiedi appuntamento",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    heroTag: "Family medicine Â· Berlin",
+    yearsLabel: "Années",
+    patientsLabel: "Patients",
+    satisfactionLabel: "Satisfaits",
+    servicesH: "Services",
+    testimonialsH: "Témoignages",
+    contactH: "Contact",
+    bookH: "Réservation en ligne",
+    bookSub: "WhatsApp â€” fast reply, instant confirmation.",
+    bookBtn: "Demander un rendez-vous",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    heroTag: "Family medicine Â· Berlin",
+    yearsLabel: "سنوات",
+    patientsLabel: "المرضى",
+    satisfactionLabel: "راضون",
+    servicesH: "الخدمات",
+    testimonialsH: "شهادات",
+    contactH: "اتصال",
+    bookH: "حجز إلكتروني",
+    bookSub: "WhatsApp â€” fast reply, instant confirmation.",
+    bookBtn: "طلب موعد",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

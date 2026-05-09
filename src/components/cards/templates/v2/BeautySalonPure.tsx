@@ -70,7 +70,7 @@ interface BspCopy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", BspCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BspCopy> = {
   de: {
     premium: "Premium",
     studioLine: "EST. 2018",
@@ -124,6 +124,86 @@ const COPY: Record<"de" | "en" | "tr", BspCopy> = {
     reviewsLabel: "Yorum",
     share: "PaylaÅŸ",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    premium: "Premium",
+    studioLine: "EST. 2018",
+    contact: "Contacto",
+    contactSub: "Contacta",
+    menu: "Servicios",
+    menuSub: "La carta",
+    studioPhilosophy: "Filosofía del estudio",
+    studioPhilosophyQuote: "La belleza es la forma en que vives, no solo la forma en que luces.",
+    bookAppointment: "Reservar cita",
+    callStudio: "Llamar al estudio",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    servicesLabel: "Servicios",
+    reviewsLabel: "Reseñas",
+    share: "Compartir",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    premium: "Premium",
+    studioLine: "EST. 2018",
+    contact: "Contatto",
+    contactSub: "Contattaci",
+    menu: "Servizi",
+    menuSub: "Il menù",
+    studioPhilosophy: "Filosofia dello studio",
+    studioPhilosophyQuote: "La bellezza è il modo in cui vivi, non solo il modo in cui appari.",
+    bookAppointment: "Prenota un appuntamento",
+    callStudio: "Chiama lo studio",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    servicesLabel: "Servizi",
+    reviewsLabel: "Recensioni",
+    share: "Condividi",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    premium: "Premium",
+    studioLine: "EST. 2018",
+    contact: "Contact",
+    contactSub: "Nous contacter",
+    menu: "Services",
+    menuSub: "Le menu",
+    studioPhilosophy: "Philosophie du studio",
+    studioPhilosophyQuote: "La beauté est la façon dont vous vivez, pas seulement la façon dont vous paraissez.",
+    bookAppointment: "Prendre rendez-vous",
+    callStudio: "Appeler le studio",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    servicesLabel: "Services",
+    reviewsLabel: "Avis",
+    share: "Partager",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    premium: "مميز",
+    studioLine: "تأسس 2018",
+    contact: "اتصال",
+    contactSub: "تواصل",
+    menu: "الخدمات",
+    menuSub: "القائمة",
+    studioPhilosophy: "فلسفة الاستوديو",
+    studioPhilosophyQuote: "الجمال هو الطريقة التي تعيش بها، وليس فقط مظهرك.",
+    bookAppointment: "حجز موعد",
+    callStudio: "اتصل بالاستوديو",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    servicesLabel: "الخدمات",
+    reviewsLabel: "التقييمات",
+    share: "مشاركة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

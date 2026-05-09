@@ -94,7 +94,7 @@ interface StCopy {
   listen: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", StCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", StCopy> = {
   de: {
     saveContact: "Speichern",
     callNow: "Anrufen",
@@ -154,6 +154,94 @@ const COPY: Record<"de" | "en" | "tr", StCopy> = {
     privacy: "Gizlilik",
     poweredBy: "Powered by",
     listen: "Dinle",
+  },
+  es: {
+
+    saveContact: "Guardar contacto",
+    callNow: "Llamar",
+    whatsapp: "WhatsApp",
+    email: "Correo",
+    book: "Reserva",
+    releases: "Lanzamientos",
+    mixes: "Mezclas y sets",
+    about: "Acerca de",
+    contact: "Contacto",
+    residencies: "Residencias recientes",
+    social: "Redes",
+    walletLabel: "Añadir a la cartera",
+    bookingCta: "Solicitud de reserva",
+    bookingHint: "Para clubs, festivales y reservas privadas",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    poweredBy: "Desarrollado por",
+    listen: "Escuchar",
+  
+  },
+  it: {
+
+    saveContact: "Salva contatto",
+    callNow: "Chiama",
+    whatsapp: "WhatsApp",
+    email: "Email",
+    book: "Prenotazione",
+    releases: "Uscite",
+    mixes: "Mix e set",
+    about: "Chi siamo",
+    contact: "Contatto",
+    residencies: "Residenze recenti",
+    social: "Social",
+    walletLabel: "Aggiungi al wallet",
+    bookingCta: "Richiesta di prenotazione",
+    bookingHint: "Per club, festival e prenotazioni private",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    poweredBy: "Realizzato con",
+    listen: "Ascolta",
+  
+  },
+  fr: {
+
+    saveContact: "Enregistrer le contact",
+    callNow: "Appeler",
+    whatsapp: "WhatsApp",
+    email: "E-mail",
+    book: "Réservation",
+    releases: "Sorties",
+    mixes: "Mixes et sets",
+    about: "À propos",
+    contact: "Contact",
+    residencies: "Résidences récentes",
+    social: "Réseaux",
+    walletLabel: "Ajouter au portefeuille",
+    bookingCta: "Demande de réservation",
+    bookingHint: "Pour clubs, festivals et réservations privées",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    poweredBy: "Propulsé par",
+    listen: "Écouter",
+  
+  },
+  ar: {
+
+    saveContact: "حفظ جهة الاتصال",
+    callNow: "اتصال",
+    whatsapp: "واتساب",
+    email: "البريد الإلكتروني",
+    book: "الحجز",
+    releases: "الإصدارات",
+    mixes: "مكسات وعروض",
+    about: "حول",
+    contact: "اتصال",
+    residencies: "إقامات حديثة",
+    social: "التواصل",
+    walletLabel: "إضافة إلى المحفظة",
+    bookingCta: "استفسار الحجز",
+    bookingHint: "للنوادي والمهرجانات والحجوزات الخاصة",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    poweredBy: "مشغل بواسطة",
+    listen: "استمع",
+  
   },
 };
 
@@ -933,7 +1021,7 @@ function CTASection({
 }: {
   slug: string;
   sourceQs: string;
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   primary: string;
   accent: string;
 }) {

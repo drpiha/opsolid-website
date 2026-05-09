@@ -80,7 +80,7 @@ interface Copy {
   studioLabel: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     estPrefix: "Est.",
     taglineFallback: "Architekt",
@@ -131,6 +131,82 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
     studioLabel: "Stüdyo",
+  },
+  es: {
+
+    estPrefix: "Est.",
+    taglineFallback: "Arquitecto",
+    yearsLabel: "Años",
+    projectsLabel: "Proyectos",
+    countriesLabel: "Países",
+    awardsLabel: "Premios",
+    featuredTag: "Destacado",
+    specsEyebrow: "01 Especialidades",
+    philEyebrow: "02 Filosofía",
+    contactEyebrow: "03 Contacto",
+    bookBtn: "Reservar cita",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    studioLabel: "Estudio",
+  
+  },
+  it: {
+
+    estPrefix: "Est.",
+    taglineFallback: "Architetto",
+    yearsLabel: "Anni",
+    projectsLabel: "Progetti",
+    countriesLabel: "Paesi",
+    awardsLabel: "Premi",
+    featuredTag: "In evidenza",
+    specsEyebrow: "01 Specialità",
+    philEyebrow: "02 Filosofia",
+    contactEyebrow: "03 Contatto",
+    bookBtn: "Prenota un appuntamento",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    studioLabel: "Studio",
+  
+  },
+  fr: {
+
+    estPrefix: "Est.",
+    taglineFallback: "Architecte",
+    yearsLabel: "Années",
+    projectsLabel: "Projets",
+    countriesLabel: "Pays",
+    awardsLabel: "Récompenses",
+    featuredTag: "À la une",
+    specsEyebrow: "01 Spécialités",
+    philEyebrow: "02 Philosophie",
+    contactEyebrow: "03 Contact",
+    bookBtn: "Prendre rendez-vous",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    studioLabel: "Studio",
+  
+  },
+  ar: {
+
+    estPrefix: "تأسس",
+    taglineFallback: "مهندس معماري",
+    yearsLabel: "سنوات",
+    projectsLabel: "المشاريع",
+    countriesLabel: "الدول",
+    awardsLabel: "جوائز",
+    featuredTag: "مميز",
+    specsEyebrow: "01 التخصصات",
+    philEyebrow: "02 الفلسفة",
+    contactEyebrow: "03 الاتصال",
+    bookBtn: "حجز موعد",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    studioLabel: "استوديو",
+  
   },
 };
 

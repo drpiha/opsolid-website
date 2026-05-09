@@ -83,7 +83,7 @@ interface Copy {
   badgeHeadliner: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     liveBadge: "Live booking 2026",
     heroSub: "Festival DJ — House & Techno",
@@ -137,6 +137,86 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     badgeMain: "Main Stage",
     badgeResident: "Resident Night",
     badgeHeadliner: "Headliner",
+  },
+  es: {
+
+    liveBadge: "Reserva en directo 2026",
+    heroSub: "DJ de festival — House & Techno",
+    upcomingH: "Próximos sets",
+    listenH: "Escuchar",
+    bookH: "Reserva",
+    bookBtn: "Enviar solicitud de reserva",
+    scanLabel: "Atrápame en vivo",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    yearsLabel: "Años",
+    eventsLabel: "Eventos",
+    spotifyLabel: "Spotify",
+    badgeMain: "Escenario principal",
+    badgeResident: "Noche de residente",
+    badgeHeadliner: "Cabeza de cartel",
+  
+  },
+  it: {
+
+    liveBadge: "Prenotazione live 2026",
+    heroSub: "DJ da festival — House & Techno",
+    upcomingH: "Prossimi set",
+    listenH: "Ascolta",
+    bookH: "Prenotazione",
+    bookBtn: "Invia richiesta di prenotazione",
+    scanLabel: "Vedimi dal vivo",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    yearsLabel: "Anni",
+    eventsLabel: "Eventi",
+    spotifyLabel: "Spotify",
+    badgeMain: "Palco principale",
+    badgeResident: "Resident Night",
+    badgeHeadliner: "Headliner",
+  
+  },
+  fr: {
+
+    liveBadge: "Réservation live 2026",
+    heroSub: "DJ de festival — House & Techno",
+    upcomingH: "Sets à venir",
+    listenH: "Écouter",
+    bookH: "Réservation",
+    bookBtn: "Envoyer la demande de réservation",
+    scanLabel: "Attrapez-moi en live",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    yearsLabel: "Années",
+    eventsLabel: "Événements",
+    spotifyLabel: "Spotify",
+    badgeMain: "Scène principale",
+    badgeResident: "Soirée résidente",
+    badgeHeadliner: "Tête d'affiche",
+  
+  },
+  ar: {
+
+    liveBadge: "حجز مباشر 2026",
+    heroSub: "دي جي مهرجان — هاوس وتكنو",
+    upcomingH: "العروض القادمة",
+    listenH: "استمع",
+    bookH: "الحجز",
+    bookBtn: "إرسال طلب الحجز",
+    scanLabel: "شاهدني مباشراً",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    yearsLabel: "سنوات",
+    eventsLabel: "الفعاليات",
+    spotifyLabel: "سبوتيفاي",
+    badgeMain: "المسرح الرئيسي",
+    badgeResident: "ليلة المقيم",
+    badgeHeadliner: "نجم العرض",
+  
   },
 };
 

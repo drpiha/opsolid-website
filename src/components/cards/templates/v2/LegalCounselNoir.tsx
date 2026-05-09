@@ -92,7 +92,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     sinceLabel: "Seit 2005",
     practiceEyebrow: "Fachgebiete",
@@ -140,6 +140,78 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "KiÅŸiyi Kaydet",
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    sinceLabel: "Desde 2005",
+    practiceEyebrow: "Despacho",
+    practiceH: "Áreas de práctica",
+    contactEyebrow: "Contacto",
+    contactH: "Contacta",
+    callBtn: "Llamar",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Correo",
+    yearsLabel: "Años",
+    casesLabel: "Mandatos",
+    winRateLabel: "Tasa de éxito",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    sinceLabel: "Dal 2005",
+    practiceEyebrow: "Studio",
+    practiceH: "Aree di pratica",
+    contactEyebrow: "Contatto",
+    contactH: "Contattaci",
+    callBtn: "Chiama",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Email",
+    yearsLabel: "Anni",
+    casesLabel: "Mandati",
+    winRateLabel: "Tasso di successo",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    sinceLabel: "Depuis 2005",
+    practiceEyebrow: "Cabinet",
+    practiceH: "Domaines de pratique",
+    contactEyebrow: "Contact",
+    contactH: "Nous contacter",
+    callBtn: "Appeler",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "E-mail",
+    yearsLabel: "Années",
+    casesLabel: "Mandats",
+    winRateLabel: "Taux de réussite",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    sinceLabel: "منذ 2005",
+    practiceEyebrow: "ممارسة",
+    practiceH: "مجالات الممارسة",
+    contactEyebrow: "اتصال",
+    contactH: "تواصل",
+    callBtn: "اتصال",
+    whatsappBtn: "واتساب",
+    emailBtn: "البريد الإلكتروني",
+    yearsLabel: "سنوات",
+    casesLabel: "تكليفات",
+    winRateLabel: "معدل النجاح",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

@@ -103,7 +103,7 @@ interface RevCopy {
   share: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", RevCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RevCopy> = {
   de: {
     active: "Aktiv",
     yearsLabel: "Jahre",
@@ -163,6 +163,94 @@ const COPY: Record<"de" | "en" | "tr", RevCopy> = {
     impressum: "KÃ¼nye",
     privacy: "Gizlilik",
     share: "PaylaÅŸ",
+  },
+  es: {
+
+    active: "Activo",
+    yearsLabel: "Años",
+    closedLabel: "Cerrado",
+    portfolioLabel: "Portafolio",
+    servicesH: "Servicios",
+    servicesSub: "Lo que hago por ti",
+    bookConsult: "Consulta gratuita",
+    testimonial: "Voz del cliente",
+    contactH: "Ponte en contacto",
+    contactSub: "A un toque",
+    qrShare: "Compartir mi tarjeta",
+    qrSub: "Escanea el QR para acceso instantáneo",
+    saveContact: "Guardar en contactos",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    share: "Compartir",
+  
+  },
+  it: {
+
+    active: "Attivo",
+    yearsLabel: "Anni",
+    closedLabel: "Chiuso",
+    portfolioLabel: "Portfolio",
+    servicesH: "Servizi",
+    servicesSub: "Cosa faccio per te",
+    bookConsult: "Consulenza gratuita",
+    testimonial: "Voce del cliente",
+    contactH: "Mettiti in contatto",
+    contactSub: "A un tocco",
+    qrShare: "Condividi il mio biglietto",
+    qrSub: "Scansiona il QR per accesso immediato",
+    saveContact: "Salva nei contatti",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    share: "Condividi",
+  
+  },
+  fr: {
+
+    active: "Actif",
+    yearsLabel: "Années",
+    closedLabel: "Fermé",
+    portfolioLabel: "Portfolio",
+    servicesH: "Services",
+    servicesSub: "Ce que je fais pour vous",
+    bookConsult: "Consultation gratuite",
+    testimonial: "Voix du client",
+    contactH: "Prendre contact",
+    contactSub: "À un clic",
+    qrShare: "Partager ma carte",
+    qrSub: "Scannez le QR pour un accès immédiat",
+    saveContact: "Enregistrer dans les contacts",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    share: "Partager",
+  
+  },
+  ar: {
+
+    active: "نشط",
+    yearsLabel: "سنوات",
+    closedLabel: "مغلق",
+    portfolioLabel: "المعرض",
+    servicesH: "الخدمات",
+    servicesSub: "ما أفعله لك",
+    bookConsult: "استشارة مجانية",
+    testimonial: "صوت العميل",
+    contactH: "تواصل معنا",
+    contactSub: "بضغطة واحدة",
+    qrShare: "مشاركة بطاقتي",
+    qrSub: "امسح الرمز للوصول الفوري",
+    saveContact: "حفظ في جهات الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    share: "مشاركة",
+  
   },
 };
 

@@ -91,7 +91,7 @@ interface PhCopy {
   saveContact: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", PhCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PhCopy> = {
   de: {
     portfolio: "Portfolio",
     about: "Über mich",
@@ -148,6 +148,90 @@ const COPY: Record<"de" | "en" | "tr", PhCopy> = {
     share: "Paylaş",
     closeLightbox: "Kapat",
     saveContact: "Kişiyi Kaydet",
+  },
+  es: {
+
+    portfolio: "Portafolio",
+    about: "Acerca de",
+    contact: "Reserva",
+    social: "Seguir",
+    walletLabel: "Añadir a la cartera",
+    filterAll: "Todos",
+    filterEditorial: "Editorial",
+    filterPersonal: "Personal",
+    filterCommercial: "Comercial",
+    voices: "Voces",
+    reel: "Ver el reel",
+    poweredBy: "Desarrollado por",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    share: "Compartir",
+    closeLightbox: "Cerrar",
+    saveContact: "Guardar contacto",
+  
+  },
+  it: {
+
+    portfolio: "Portfolio",
+    about: "Chi siamo",
+    contact: "Prenotazione",
+    social: "Segui",
+    walletLabel: "Aggiungi al wallet",
+    filterAll: "Tutti",
+    filterEditorial: "Editoriale",
+    filterPersonal: "Personale",
+    filterCommercial: "Commerciale",
+    voices: "Voci",
+    reel: "Guarda il reel",
+    poweredBy: "Realizzato con",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    share: "Condividi",
+    closeLightbox: "Chiudi",
+    saveContact: "Salva contatto",
+  
+  },
+  fr: {
+
+    portfolio: "Portfolio",
+    about: "À propos",
+    contact: "Réservation",
+    social: "Suivre",
+    walletLabel: "Ajouter au portefeuille",
+    filterAll: "Tous",
+    filterEditorial: "Éditorial",
+    filterPersonal: "Personnel",
+    filterCommercial: "Commercial",
+    voices: "Témoignages",
+    reel: "Voir le reel",
+    poweredBy: "Propulsé par",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    share: "Partager",
+    closeLightbox: "Fermer",
+    saveContact: "Enregistrer le contact",
+  
+  },
+  ar: {
+
+    portfolio: "المعرض",
+    about: "حول",
+    contact: "الحجز",
+    social: "متابعة",
+    walletLabel: "إضافة إلى المحفظة",
+    filterAll: "الكل",
+    filterEditorial: "تحريري",
+    filterPersonal: "شخصي",
+    filterCommercial: "تجاري",
+    voices: "أصوات",
+    reel: "شاهد الريل",
+    poweredBy: "مشغل بواسطة",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    share: "مشاركة",
+    closeLightbox: "إغلاق",
+    saveContact: "حفظ جهة الاتصال",
+  
   },
 };
 
@@ -476,7 +560,7 @@ function Header({
   company?: string;
   accent: string;
   sourceLabel?: string;
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
 }) {
   return (
     <header
@@ -767,7 +851,7 @@ function CTASection({
 }: {
   slug: string;
   sourceQs: string;
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   primary: string;
   accent: string;
   saveContactLabel: string;

@@ -79,7 +79,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     taglineFallback: "Online Boutique",
     servicesLabel: "Produkte",
@@ -121,6 +121,70 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "KiÅŸiyi Kaydet",
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    taglineFallback: "Boutique en línea",
+    servicesLabel: "Productos",
+    reviewsLabel: "Reseñas",
+    collectionH: "Colección",
+    collectionSub: "Las piezas de esta temporada",
+    bookBtn: "Pedir ahora",
+    emailLabel: "Correo",
+    phoneLabel: "Teléfono",
+    qrLabel: "Explorar la colección",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    taglineFallback: "Boutique online",
+    servicesLabel: "Prodotti",
+    reviewsLabel: "Recensioni",
+    collectionH: "Collezione",
+    collectionSub: "I pezzi di questa stagione",
+    bookBtn: "Ordina ora",
+    emailLabel: "Email",
+    phoneLabel: "Telefono",
+    qrLabel: "Sfoglia la collezione",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    taglineFallback: "Boutique en ligne",
+    servicesLabel: "Produits",
+    reviewsLabel: "Avis",
+    collectionH: "Collection",
+    collectionSub: "Les pièces de cette saison",
+    bookBtn: "Commander",
+    emailLabel: "E-mail",
+    phoneLabel: "Téléphone",
+    qrLabel: "Explorer la collection",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    taglineFallback: "متجر إلكتروني",
+    servicesLabel: "المنتجات",
+    reviewsLabel: "التقييمات",
+    collectionH: "مجموعة",
+    collectionSub: "قطع هذا الموسم",
+    bookBtn: "اطلب الآن",
+    emailLabel: "البريد الإلكتروني",
+    phoneLabel: "هاتف",
+    qrLabel: "تصفح المجموعة",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

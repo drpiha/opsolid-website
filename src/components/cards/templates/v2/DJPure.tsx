@@ -83,7 +83,7 @@ interface Copy {
   scanLabel: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     meta1: "DJ // Producer",
     meta2: "EST. 2016",
@@ -140,6 +140,90 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
     scanLabel: "/ Scan",
+  },
+  es: {
+
+    meta1: "DJ // Productor",
+    meta2: "EST. 2016",
+    profileH: "Perfil",
+    yearsK: "Años",
+    eventsK: "Eventos",
+    listenersK: "Oyentes",
+    genresK: "Géneros",
+    bpmK: "Rango de BPM",
+    mixesH: "Últimas mezclas",
+    upcomingH: "Próximos sets",
+    platformsH: "Plataformas",
+    bookingH: "Reserva",
+    bookBtn: "Enviar solicitud de reserva",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    scanLabel: "/ Escanear",
+  
+  },
+  it: {
+
+    meta1: "DJ // Producer",
+    meta2: "EST. 2016",
+    profileH: "Profilo",
+    yearsK: "Anni",
+    eventsK: "Eventi",
+    listenersK: "Ascoltatori",
+    genresK: "Generi",
+    bpmK: "Range BPM",
+    mixesH: "Ultimi mix",
+    upcomingH: "Prossimi set",
+    platformsH: "Piattaforme",
+    bookingH: "Prenotazione",
+    bookBtn: "Invia richiesta di prenotazione",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    scanLabel: "/ Scansiona",
+  
+  },
+  fr: {
+
+    meta1: "DJ // Producteur",
+    meta2: "EST. 2016",
+    profileH: "Profil",
+    yearsK: "Années",
+    eventsK: "Événements",
+    listenersK: "Auditeurs",
+    genresK: "Genres",
+    bpmK: "Plage de BPM",
+    mixesH: "Derniers mixes",
+    upcomingH: "Sets à venir",
+    platformsH: "Plateformes",
+    bookingH: "Réservation",
+    bookBtn: "Envoyer la demande de réservation",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    scanLabel: "/ Scanner",
+  
+  },
+  ar: {
+
+    meta1: "دي جي // منتج",
+    meta2: "تأسس 2016",
+    profileH: "الملف الشخصي",
+    yearsK: "سنوات",
+    eventsK: "الفعاليات",
+    listenersK: "المستمعون",
+    genresK: "الأنواع",
+    bpmK: "نطاق BPM",
+    mixesH: "أحدث المكسات",
+    upcomingH: "العروض القادمة",
+    platformsH: "المنصات",
+    bookingH: "الحجز",
+    bookBtn: "إرسال طلب الحجز",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    scanLabel: "/ مسح",
+  
   },
 };
 

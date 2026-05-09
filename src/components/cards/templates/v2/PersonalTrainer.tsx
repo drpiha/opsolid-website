@@ -142,7 +142,7 @@ interface PtCopy {
   trainHard: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", PtCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PtCopy> = {
   de: {
     bookSession: "TERMIN BUCHEN",
     saveContact: "Kontakt speichern",
@@ -229,6 +229,130 @@ const COPY: Record<"de" | "en" | "tr", PtCopy> = {
     privacy: "Gizlilik",
     poweredBy: "Powered by",
     trainHard: "ÇOK ÇALIŞ · MÜTEVAZI KAL",
+  },
+  es: {
+
+    bookSession: "RESERVAR SESIÓN",
+    saveContact: "Guardar contacto",
+    whatsapp: "WhatsApp",
+    call: "Llamar",
+    email: "Correo",
+    tagline: "OBJETIVOS · FUERZA · DISCIPLINA",
+    trainingTiers: "Niveles de entrenamiento",
+    trainingTiersEyebrow: "Niveles",
+    philosophy: "Filosofía",
+    philosophyEyebrow: "Coach",
+    results: "Resultados",
+    resultsEyebrow: "Voces",
+    contact: "Contacto",
+    contactEyebrow: "Directo",
+    social: "Redes",
+    socialEyebrow: "Seguir",
+    walletLabel: "Añadir a la cartera",
+    yearsExp: "Años",
+    clients: "Clientes",
+    specialty: "Foco",
+    certified: "Certificado",
+    start: "Empezar",
+    watchReel: "Reel",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    poweredBy: "Desarrollado por",
+    trainHard: "ENTRENA DURO · SÉ HUMILDE",
+  
+  },
+  it: {
+
+    bookSession: "PRENOTA SESSIONE",
+    saveContact: "Salva contatto",
+    whatsapp: "WhatsApp",
+    call: "Chiama",
+    email: "Email",
+    tagline: "OBIETTIVI · FORZA · DISCIPLINA",
+    trainingTiers: "Livelli di allenamento",
+    trainingTiersEyebrow: "Livelli",
+    philosophy: "Filosofia",
+    philosophyEyebrow: "Coach",
+    results: "Risultati",
+    resultsEyebrow: "Voci",
+    contact: "Contatto",
+    contactEyebrow: "Diretto",
+    social: "Social",
+    socialEyebrow: "Segui",
+    walletLabel: "Aggiungi al wallet",
+    yearsExp: "Anni",
+    clients: "Clienti",
+    specialty: "Focus",
+    certified: "Certificato",
+    start: "Inizia",
+    watchReel: "Reel",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    poweredBy: "Realizzato con",
+    trainHard: "ALLENATI DURAMENTE · RIMANI UMILE",
+  
+  },
+  fr: {
+
+    bookSession: "RÉSERVER UNE SÉANCE",
+    saveContact: "Enregistrer le contact",
+    whatsapp: "WhatsApp",
+    call: "Appeler",
+    email: "E-mail",
+    tagline: "OBJECTIFS · FORCE · DISCIPLINE",
+    trainingTiers: "Niveaux d'entraînement",
+    trainingTiersEyebrow: "Niveaux",
+    philosophy: "Philosophie",
+    philosophyEyebrow: "Coach",
+    results: "Résultats",
+    resultsEyebrow: "Témoignages",
+    contact: "Contact",
+    contactEyebrow: "Direct",
+    social: "Réseaux",
+    socialEyebrow: "Suivre",
+    walletLabel: "Ajouter au portefeuille",
+    yearsExp: "Années",
+    clients: "Clients",
+    specialty: "Focus",
+    certified: "Certifié",
+    start: "Démarrer",
+    watchReel: "Reel",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    poweredBy: "Propulsé par",
+    trainHard: "ENTRAÎNE-TOI DUR · RESTE HUMBLE",
+  
+  },
+  ar: {
+
+    bookSession: "احجز جلسة",
+    saveContact: "حفظ جهة الاتصال",
+    whatsapp: "واتساب",
+    call: "اتصال",
+    email: "البريد الإلكتروني",
+    tagline: "أهداف · قوة · انضباط",
+    trainingTiers: "مستويات التدريب",
+    trainingTiersEyebrow: "المستويات",
+    philosophy: "الفلسفة",
+    philosophyEyebrow: "مدرب",
+    results: "النتائج",
+    resultsEyebrow: "أصوات",
+    contact: "اتصال",
+    contactEyebrow: "مباشر",
+    social: "التواصل",
+    socialEyebrow: "متابعة",
+    walletLabel: "إضافة إلى المحفظة",
+    yearsExp: "سنوات",
+    clients: "العملاء",
+    specialty: "التركيز",
+    certified: "معتمد",
+    start: "ابدأ",
+    watchReel: "ريل",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    poweredBy: "مشغل بواسطة",
+    trainHard: "تدرب بجد · ابقَ متواضعاً",
+  
   },
 };
 
@@ -1152,7 +1276,7 @@ function ContactSection({
   translations,
 }: {
   cardData: TemplateProps["cardData"];
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   accent: string;
   translations: PtCopy;
 }) {
@@ -1222,7 +1346,7 @@ function CTASection({
 }: {
   slug: string;
   sourceQs: string;
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   accent: string;
 }) {
   return (

@@ -75,7 +75,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     breathLine: "Breathe â€” Move â€” Be",
     certified: "RYT-500 Certified",
@@ -121,13 +121,81 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
   },
+  es: {
+
+    breathLine: "Breathe â€” Move â€” Be",
+    certified: "Certificado RYT-500",
+    callBtn: "Llamar",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Correo",
+    philosophy: "Filosofía",
+    weeklyProgram: "Horario semanal",
+    services: "Servicios",
+    contact: "Contacto",
+    bookCta: "Reservar una sesión",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    breathLine: "Breathe â€” Move â€” Be",
+    certified: "Certificato RYT-500",
+    callBtn: "Chiama",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Email",
+    philosophy: "Filosofia",
+    weeklyProgram: "Programma settimanale",
+    services: "Servizi",
+    contact: "Contatto",
+    bookCta: "Prenota una sessione",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    breathLine: "Breathe â€” Move â€” Be",
+    certified: "Certifié RYT-500",
+    callBtn: "Appeler",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "E-mail",
+    philosophy: "Philosophie",
+    weeklyProgram: "Programme hebdomadaire",
+    services: "Services",
+    contact: "Contact",
+    bookCta: "Réserver une séance",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    breathLine: "Breathe â€” Move â€” Be",
+    certified: "معتمد RYT-500",
+    callBtn: "اتصال",
+    whatsappBtn: "واتساب",
+    emailBtn: "البريد الإلكتروني",
+    philosophy: "الفلسفة",
+    weeklyProgram: "البرنامج الأسبوعي",
+    services: "الخدمات",
+    contact: "اتصال",
+    bookCta: "احجز جلسة",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
+  },
 };
 
 const SCHEDULE = [
-  { day: { de: "Montag", en: "Monday", tr: "Pazartesi" }, klass: "Hatha Yoga", time: "19:00" },
-  { day: { de: "Mittwoch", en: "Wednesday", tr: "Ã‡arÅŸamba" }, klass: "Vinyasa Flow", time: "18:30" },
-  { day: { de: "Freitag", en: "Friday", tr: "Cuma" }, klass: "Restorative", time: "20:00" },
-  { day: { de: "Samstag", en: "Saturday", tr: "Cumartesi" }, klass: "Morning Practice", time: "08:00" },
+  { day: { de: "Montag", en: "Monday", tr: "Pazartesi", es: "Lunes", it: "Lunedì", fr: "Lundi", ar: "الاثنين" }, klass: "Hatha Yoga", time: "19:00" },
+  { day: { de: "Mittwoch", en: "Wednesday", tr: "Ã‡arÅŸamba", es: "Miércoles", it: "Mercoledì", fr: "Mercredi", ar: "الأربعاء" }, klass: "Vinyasa Flow", time: "18:30" },
+  { day: { de: "Freitag", en: "Friday", tr: "Cuma", es: "Viernes", it: "Venerdì", fr: "Vendredi", ar: "الجمعة" }, klass: "Restorative", time: "20:00" },
+  { day: { de: "Samstag", en: "Saturday", tr: "Cumartesi", es: "Sábado", it: "Sabato", fr: "Samedi", ar: "السبت" }, klass: "Morning Practice", time: "08:00" },
 ];
 
 export function WellnessTeacherPure({

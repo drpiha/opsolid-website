@@ -101,7 +101,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     eyebrow: "Bauer & Partner â€” Sorgfalt seit 2005",
     storyH: "Meine Geschichte",
@@ -152,6 +152,82 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "KiÅŸiyi Kaydet",
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    eyebrow: "Bauer & Partner â€” Diligence since 2005",
+    storyH: "Mi historia",
+    storySignature: "â€” Dr. Klaus Bauer",
+    servicesH: "Lo que hago",
+    contactH: "Hablemos",
+    yearsLabel: "Años",
+    casesLabel: "Mandatos",
+    winRateLabel: "Tasa de éxito",
+    callBtn: "Teléfono",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Correo",
+    webBtn: "Sitio web",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    eyebrow: "Bauer & Partner â€” Diligence since 2005",
+    storyH: "La mia storia",
+    storySignature: "â€” Dr. Klaus Bauer",
+    servicesH: "Cosa faccio",
+    contactH: "Parliamo",
+    yearsLabel: "Anni",
+    casesLabel: "Mandati",
+    winRateLabel: "Tasso di successo",
+    callBtn: "Telefono",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Email",
+    webBtn: "Sito web",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    eyebrow: "Bauer & Partner â€” Diligence since 2005",
+    storyH: "Mon histoire",
+    storySignature: "â€” Dr. Klaus Bauer",
+    servicesH: "Ce que je fais",
+    contactH: "Discutons",
+    yearsLabel: "Années",
+    casesLabel: "Mandats",
+    winRateLabel: "Taux de réussite",
+    callBtn: "Téléphone",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "E-mail",
+    webBtn: "Site web",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    eyebrow: "Bauer & Partner â€” Diligence since 2005",
+    storyH: "قصتي",
+    storySignature: "â€” Dr. Klaus Bauer",
+    servicesH: "ما أفعله",
+    contactH: "لنتحدث",
+    yearsLabel: "سنوات",
+    casesLabel: "تكليفات",
+    winRateLabel: "معدل النجاح",
+    callBtn: "هاتف",
+    whatsappBtn: "واتساب",
+    emailBtn: "البريد الإلكتروني",
+    webBtn: "الموقع",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

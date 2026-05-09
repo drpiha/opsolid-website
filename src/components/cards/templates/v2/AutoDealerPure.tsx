@@ -86,7 +86,7 @@ interface Copy {
   credential: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     brandMark: "Premium Â· GeprÃ¼ft Â· Garantiert",
     callBtn: "Anrufen",
@@ -140,6 +140,86 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
     credential: "BMW Â· Mercedes Â· Audi Â· her araca 12 ay garanti",
+  },
+  es: {
+
+    brandMark: "Premium Â· Inspected Â· Warranted",
+    callBtn: "Llamar",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Correo",
+    portfolioH: "Inventario actual",
+    servicesH: "Servicios",
+    statsH: "De un vistazo",
+    yearsLabel: "Años",
+    carsLabel: "Coches vendidos",
+    warrantyLabel: "Garantía",
+    contactH: "Contacto",
+    cta: "Reservar una visita",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    credential: "BMW Â· Mercedes Â· Audi Â· 12-month warranty on every car",
+  
+  },
+  it: {
+
+    brandMark: "Premium Â· Inspected Â· Warranted",
+    callBtn: "Chiama",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Email",
+    portfolioH: "Inventario attuale",
+    servicesH: "Servizi",
+    statsH: "In sintesi",
+    yearsLabel: "Anni",
+    carsLabel: "Auto vendute",
+    warrantyLabel: "Garanzia",
+    contactH: "Contatto",
+    cta: "Prenota una visita",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    credential: "BMW Â· Mercedes Â· Audi Â· 12-month warranty on every car",
+  
+  },
+  fr: {
+
+    brandMark: "Premium Â· Inspected Â· Warranted",
+    callBtn: "Appeler",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "E-mail",
+    portfolioH: "Stock actuel",
+    servicesH: "Services",
+    statsH: "En un coup d'œil",
+    yearsLabel: "Années",
+    carsLabel: "Voitures vendues",
+    warrantyLabel: "Garantie",
+    contactH: "Contact",
+    cta: "Réserver une visite",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    credential: "BMW Â· Mercedes Â· Audi Â· 12-month warranty on every car",
+  
+  },
+  ar: {
+
+    brandMark: "Premium Â· Inspected Â· Warranted",
+    callBtn: "اتصال",
+    whatsappBtn: "واتساب",
+    emailBtn: "البريد الإلكتروني",
+    portfolioH: "المخزون الحالي",
+    servicesH: "الخدمات",
+    statsH: "نظرة سريعة",
+    yearsLabel: "سنوات",
+    carsLabel: "السيارات المباعة",
+    warrantyLabel: "الضمان",
+    contactH: "اتصال",
+    cta: "احجز معاينة",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    credential: "BMW Â· Mercedes Â· Audi Â· 12-month warranty on every car",
+  
   },
 };
 

@@ -81,7 +81,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     taglineFallback: "Architekt & Gründer",
     yearsLabel: "Jahre",
@@ -141,6 +141,94 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    taglineFallback: "Arquitecto y fundador",
+    yearsLabel: "Años",
+    projectsLabel: "Proyectos",
+    countriesLabel: "Países",
+    awardsLabel: "Premios",
+    servicesEyebrow: "— Servicios",
+    servicesH: "Especialidades",
+    ctaTitle: "Diseñemos tu próximo proyecto.",
+    ctaSub: "Llamada introductoria gratis — reserva tu hueco.",
+    ctaCall: "Llamar ahora",
+    ctaWhatsApp: "WhatsApp",
+    featuredEyebrow: "— Destacado",
+    featuredH: "Proyecto destacado",
+    featuredTag: "Destacado",
+    bookBtn: "Reservar cita",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    taglineFallback: "Architetto e fondatore",
+    yearsLabel: "Anni",
+    projectsLabel: "Progetti",
+    countriesLabel: "Paesi",
+    awardsLabel: "Premi",
+    servicesEyebrow: "— Servizi",
+    servicesH: "Specialità",
+    ctaTitle: "Progettiamo il tuo prossimo progetto.",
+    ctaSub: "Chiamata introduttiva gratuita — prenota ora.",
+    ctaCall: "Chiama ora",
+    ctaWhatsApp: "WhatsApp",
+    featuredEyebrow: "— In evidenza",
+    featuredH: "Progetto in evidenza",
+    featuredTag: "In evidenza",
+    bookBtn: "Prenota un appuntamento",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    taglineFallback: "Architecte et fondateur",
+    yearsLabel: "Années",
+    projectsLabel: "Projets",
+    countriesLabel: "Pays",
+    awardsLabel: "Récompenses",
+    servicesEyebrow: "— Services",
+    servicesH: "Spécialités",
+    ctaTitle: "Concevons votre prochain projet.",
+    ctaSub: "Appel d'introduction gratuit — réservez votre créneau.",
+    ctaCall: "Appeler maintenant",
+    ctaWhatsApp: "WhatsApp",
+    featuredEyebrow: "— À la une",
+    featuredH: "Projet en vedette",
+    featuredTag: "À la une",
+    bookBtn: "Prendre rendez-vous",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    taglineFallback: "مهندس معماري ومؤسس",
+    yearsLabel: "سنوات",
+    projectsLabel: "المشاريع",
+    countriesLabel: "الدول",
+    awardsLabel: "جوائز",
+    servicesEyebrow: "— الخدمات",
+    servicesH: "التخصصات",
+    ctaTitle: "لنصمم مشروعك القادم.",
+    ctaSub: "مكالمة تعريفية مجانية — احجز موعدك الآن.",
+    ctaCall: "اتصل الآن",
+    ctaWhatsApp: "واتساب",
+    featuredEyebrow: "— مميز",
+    featuredH: "مشروع مميز",
+    featuredTag: "مميز",
+    bookBtn: "حجز موعد",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

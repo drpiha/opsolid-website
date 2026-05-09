@@ -88,7 +88,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     taglineFallback: "Performance Coach",
     pulseLabel: "Neue Gruppe startet",
@@ -160,6 +160,110 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "KiÅŸiyi Kaydet",
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    taglineFallback: "Coach de rendimiento",
+    pulseLabel: "Nueva cohorte comenzando",
+    yearsLabel: "Años",
+    clientsLabel: "Clientes",
+    igLabel: "Instagram",
+    ytLabel: "YouTube",
+    programsEyebrow: "â€” Programs",
+    programsH: "Servicios y tarifas",
+    ctaTitle: "Iniciar el programa",
+    ctaSub: "La primera consulta es gratis. Da el primer paso hoy.",
+    ctaCall: "Llamar ahora",
+    ctaWa: "WhatsApp",
+    testiText:
+      "Can's program changed my life. Stronger in body and mind â€” a sustainable habit, not a crash plan.",
+    testiName: "Selin K.",
+    testiResult: "12 weeks Â· -14 kg",
+    contactEyebrow: "â€” Contact",
+    contactH: "Conectar",
+    bookBtn: "Empezar ahora",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    taglineFallback: "Performance Coach",
+    pulseLabel: "Nuovo gruppo in partenza",
+    yearsLabel: "Anni",
+    clientsLabel: "Clienti",
+    igLabel: "Instagram",
+    ytLabel: "YouTube",
+    programsEyebrow: "â€” Programs",
+    programsH: "Servizi e prezzi",
+    ctaTitle: "Avvia il programma",
+    ctaSub: "La prima consulenza è gratuita. Fai il primo passo oggi.",
+    ctaCall: "Chiama ora",
+    ctaWa: "WhatsApp",
+    testiText:
+      "Can's program changed my life. Stronger in body and mind â€” a sustainable habit, not a crash plan.",
+    testiName: "Selin K.",
+    testiResult: "12 weeks Â· -14 kg",
+    contactEyebrow: "â€” Contact",
+    contactH: "Connetti",
+    bookBtn: "Inizia ora",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    taglineFallback: "Coach de performance",
+    pulseLabel: "Nouveau groupe en démarrage",
+    yearsLabel: "Années",
+    clientsLabel: "Clients",
+    igLabel: "Instagram",
+    ytLabel: "YouTube",
+    programsEyebrow: "â€” Programs",
+    programsH: "Services et tarifs",
+    ctaTitle: "Démarrer le programme",
+    ctaSub: "La première consultation est gratuite. Faites le premier pas aujourd'hui.",
+    ctaCall: "Appeler maintenant",
+    ctaWa: "WhatsApp",
+    testiText:
+      "Can's program changed my life. Stronger in body and mind â€” a sustainable habit, not a crash plan.",
+    testiName: "Selin K.",
+    testiResult: "12 weeks Â· -14 kg",
+    contactEyebrow: "â€” Contact",
+    contactH: "Connecter",
+    bookBtn: "Démarrer maintenant",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    taglineFallback: "مدرب الأداء",
+    pulseLabel: "مجموعة جديدة تبدأ",
+    yearsLabel: "سنوات",
+    clientsLabel: "العملاء",
+    igLabel: "إنستغرام",
+    ytLabel: "يوتيوب",
+    programsEyebrow: "â€” Programs",
+    programsH: "الخدمات والأسعار",
+    ctaTitle: "ابدأ البرنامج",
+    ctaSub: "الاستشارة الأولى مجانية. اتخذ الخطوة الأولى اليوم.",
+    ctaCall: "اتصل الآن",
+    ctaWa: "واتساب",
+    testiText:
+      "Can's program changed my life. Stronger in body and mind â€” a sustainable habit, not a crash plan.",
+    testiName: "Selin K.",
+    testiResult: "12 weeks Â· -14 kg",
+    contactEyebrow: "â€” Contact",
+    contactH: "تواصل",
+    bookBtn: "ابدأ الآن",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

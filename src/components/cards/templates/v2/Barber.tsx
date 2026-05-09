@@ -93,7 +93,7 @@ interface BbCopy {
   est: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", BbCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy> = {
   de: {
     saveContact: "Speichern",
     callNow: "Anrufen",
@@ -153,6 +153,94 @@ const COPY: Record<"de" | "en" | "tr", BbCopy> = {
     privacy: "Gizlilik",
     poweredBy: "Powered by",
     est: "Kuruluş",
+  },
+  es: {
+
+    saveContact: "Guardar contacto",
+    callNow: "Llamar",
+    whatsapp: "WhatsApp",
+    email: "Correo",
+    book: "Reservar",
+    services: "Cortes y arreglo",
+    about: "El maestro",
+    contact: "Contacto",
+    voices: "Voces",
+    social: "Redes",
+    walletLabel: "Añadir a la cartera",
+    bookingCta: "Reservar silla",
+    bookingHint: "Lun–Sáb con cita",
+    hours: "Horario",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    poweredBy: "Desarrollado por",
+    est: "Establecido",
+  
+  },
+  it: {
+
+    saveContact: "Salva contatto",
+    callNow: "Chiama",
+    whatsapp: "WhatsApp",
+    email: "Email",
+    book: "Prenota",
+    services: "Tagli e cura",
+    about: "Il maestro",
+    contact: "Contatto",
+    voices: "Voci",
+    social: "Social",
+    walletLabel: "Aggiungi al wallet",
+    bookingCta: "Prenota una poltrona",
+    bookingHint: "Lun–Sab su appuntamento",
+    hours: "Orari",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    poweredBy: "Realizzato con",
+    est: "Fondato",
+  
+  },
+  fr: {
+
+    saveContact: "Enregistrer le contact",
+    callNow: "Appeler",
+    whatsapp: "WhatsApp",
+    email: "E-mail",
+    book: "Réserver",
+    services: "Coupes et soins",
+    about: "Le maître",
+    contact: "Contact",
+    voices: "Témoignages",
+    social: "Réseaux",
+    walletLabel: "Ajouter au portefeuille",
+    bookingCta: "Réserver un fauteuil",
+    bookingHint: "Lun–Sam sur rendez-vous",
+    hours: "Horaires",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    poweredBy: "Propulsé par",
+    est: "Établi",
+  
+  },
+  ar: {
+
+    saveContact: "حفظ جهة الاتصال",
+    callNow: "اتصال",
+    whatsapp: "واتساب",
+    email: "البريد الإلكتروني",
+    book: "احجز",
+    services: "قص وعناية",
+    about: "الأستاذ",
+    contact: "اتصال",
+    voices: "أصوات",
+    social: "التواصل",
+    walletLabel: "إضافة إلى المحفظة",
+    bookingCta: "احجز كرسياً",
+    bookingHint: "اثنين–سبت بموعد",
+    hours: "ساعات العمل",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    poweredBy: "مشغل بواسطة",
+    est: "تأسس",
+  
   },
 };
 
@@ -903,7 +991,7 @@ function CTASection({
 }: {
   slug: string;
   sourceQs: string;
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   primary: string;
   accent: string;
 }) {

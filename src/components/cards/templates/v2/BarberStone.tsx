@@ -81,7 +81,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     stamp: "Heritage Â· Handwerk Â· Tradition",
     prefix: "Klassische Herrenpflege",
@@ -129,6 +129,78 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "KiÅŸiyi Kaydet",
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    stamp: "Heritage Â· Craft Â· Tradition",
+    prefix: "Arreglo masculino clásico",
+    estPrefix: "Est.",
+    taglineFallback: "Maestro barbero y estilista",
+    philoLabel: "Filosofía del estudio",
+    philoSub: "Cada detalle merece su tiempo",
+    servicesH: "Lista de servicios",
+    servicesSub: "Siempre equilibrado, siempre meticuloso",
+    craftH: "Oficio",
+    craftSub: "En qué nos especializamos",
+    bookBtn: "Reservar cita",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    stamp: "Heritage Â· Craft Â· Tradition",
+    prefix: "Grooming maschile classico",
+    estPrefix: "Est.",
+    taglineFallback: "Master Barber e Stylist",
+    philoLabel: "Filosofia dell'atelier",
+    philoSub: "Ogni dettaglio merita il suo tempo",
+    servicesH: "Elenco servizi",
+    servicesSub: "Sempre equilibrato, sempre meticoloso",
+    craftH: "Artigianato",
+    craftSub: "In cosa siamo specializzati",
+    bookBtn: "Prenota un appuntamento",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    stamp: "Heritage Â· Craft Â· Tradition",
+    prefix: "Soin masculin classique",
+    estPrefix: "Est.",
+    taglineFallback: "Maître barbier et styliste",
+    philoLabel: "Philosophie de l'atelier",
+    philoSub: "Chaque détail mérite son temps",
+    servicesH: "Liste des services",
+    servicesSub: "Toujours équilibré, toujours méticuleux",
+    craftH: "Artisanat",
+    craftSub: "Notre spécialité",
+    bookBtn: "Prendre rendez-vous",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    stamp: "Heritage Â· Craft Â· Tradition",
+    prefix: "عناية الرجل الكلاسيكية",
+    estPrefix: "تأسس",
+    taglineFallback: "حلاق رئيسي ومصفف",
+    philoLabel: "فلسفة الأتيليه",
+    philoSub: "كل تفصيل يستحق وقته",
+    servicesH: "قائمة الخدمات",
+    servicesSub: "متوازن دائماً، دقيق دائماً",
+    craftH: "الحرفة",
+    craftSub: "ما نتخصص فيه",
+    bookBtn: "حجز موعد",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

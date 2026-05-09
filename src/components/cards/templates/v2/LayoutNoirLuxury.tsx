@@ -63,7 +63,7 @@ interface Copy {
   rightsReserved: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     taglineFallback: "Seit 2010",
     expertiseTitle: "Fachgebiete",
@@ -93,6 +93,54 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     shareLabel: "Kartı Paylaş",
     poweredBy: "Powered by",
     rightsReserved: "Tüm Hakları Saklıdır",
+  },
+  es: {
+
+    taglineFallback: "Desde 2010",
+    expertiseTitle: "Experiencia",
+    contactTitle: "Contacto",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    shareLabel: "Compartir tarjeta",
+    poweredBy: "Desarrollado por",
+    rightsReserved: "Todos los derechos reservados",
+  
+  },
+  it: {
+
+    taglineFallback: "Dal 2010",
+    expertiseTitle: "Competenze",
+    contactTitle: "Contatto",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    shareLabel: "Condividi biglietto",
+    poweredBy: "Realizzato con",
+    rightsReserved: "Tutti i diritti riservati",
+  
+  },
+  fr: {
+
+    taglineFallback: "Depuis 2010",
+    expertiseTitle: "Expertise",
+    contactTitle: "Contact",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    shareLabel: "Partager la carte",
+    poweredBy: "Propulsé par",
+    rightsReserved: "Tous droits réservés",
+  
+  },
+  ar: {
+
+    taglineFallback: "منذ 2010",
+    expertiseTitle: "الخبرة",
+    contactTitle: "اتصال",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    shareLabel: "مشاركة البطاقة",
+    poweredBy: "مشغل بواسطة",
+    rightsReserved: "جميع الحقوق محفوظة",
+  
   },
 };
 

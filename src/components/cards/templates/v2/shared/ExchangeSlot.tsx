@@ -15,7 +15,7 @@ import { ExchangeButton } from "@/components/cards/smart/ExchangeButton";
 export interface ExchangeSlotProps {
   slug: string;
   primary: string;
-  locale?: "de" | "en" | "tr";
+  locale?: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   className?: string;
 }
 

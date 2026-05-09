@@ -90,7 +90,7 @@ interface Copy {
   journey: Record<(typeof JOURNEY_KEYS)[number], { ttl: string; desc: string }>;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     taglineFallback: "Holistic Fitness Coach",
     atelierLabel: "Holistic Â· Berlin",
@@ -180,6 +180,134 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
       weekly: { ttl: "HaftalÄ±k Takip", desc: "Her hafta Ã¶lÃ§Ã¼m, zihin durumu ve enerji Ã¼zerine kÄ±sa check-in gÃ¶rÃ¼ÅŸmeleri." },
       habit: { ttl: "SÃ¼rdÃ¼rÃ¼lebilir AlÄ±ÅŸkanlÄ±k", desc: "KalÄ±cÄ± deÄŸiÅŸim iÃ§in zihinsel araÃ§lar ve yaÅŸam boyu sÃ¼recek rehberlik." },
     },
+  },
+  es: {
+
+    taglineFallback: "Coach de fitness holístico",
+    atelierLabel: "Holistic Â· Berlin",
+    philLabel: "Mi enfoque",
+    servicesH: "Gama de servicios",
+    servicesSub: "Coaching individual y en grupo reducido",
+    journeyH: "Viaje de transformación",
+    journeySub: "Paso a paso juntos",
+    contactH: "Conectemos",
+    ctaPrimary: "Llamada introductoria gratuita",
+    ctaSecondary: "WhatsApp",
+    yearsLabel: "Años",
+    transformationsLabel: "Transformaciones",
+    igLabel: "Instagram",
+    ytLabel: "YouTube",
+    testiText:
+      "What set Can apart was the focus on how the body felt, not just the numbers. 12 weeks reborn â€” physically and mentally.",
+    testiName: "Selin K.",
+    testiResult: "12 weeks Â· -14 kg, regained self-respect",
+    bookBtn: "Reservar cita",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    journey: {
+      intro: { ttl: "Free intro call", desc: "We understand your needs and goals in a 30-minute conversation." },
+      plan: { ttl: "Personal plan", desc: "Training + nutrition tailored to your lifestyle and metabolic profile." },
+      weekly: { ttl: "Weekly check-in", desc: "Measurement, energy and mindset update on short calls." },
+      habit: { ttl: "Sustainable habit", desc: "Mental tools and lifelong guidance for lasting change." },
+    },
+  
+  },
+  it: {
+
+    taglineFallback: "Coach fitness olistico",
+    atelierLabel: "Holistic Â· Berlin",
+    philLabel: "Il mio approccio",
+    servicesH: "Gamma di servizi",
+    servicesSub: "Coaching individuale e di piccolo gruppo",
+    journeyH: "Percorso di trasformazione",
+    journeySub: "Passo dopo passo insieme",
+    contactH: "Connettiamoci",
+    ctaPrimary: "Chiamata introduttiva gratuita",
+    ctaSecondary: "WhatsApp",
+    yearsLabel: "Anni",
+    transformationsLabel: "Trasformazioni",
+    igLabel: "Instagram",
+    ytLabel: "YouTube",
+    testiText:
+      "What set Can apart was the focus on how the body felt, not just the numbers. 12 weeks reborn â€” physically and mentally.",
+    testiName: "Selin K.",
+    testiResult: "12 weeks Â· -14 kg, regained self-respect",
+    bookBtn: "Prenota un appuntamento",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    journey: {
+      intro: { ttl: "Free intro call", desc: "We understand your needs and goals in a 30-minute conversation." },
+      plan: { ttl: "Personal plan", desc: "Training + nutrition tailored to your lifestyle and metabolic profile." },
+      weekly: { ttl: "Weekly check-in", desc: "Measurement, energy and mindset update on short calls." },
+      habit: { ttl: "Sustainable habit", desc: "Mental tools and lifelong guidance for lasting change." },
+    },
+  
+  },
+  fr: {
+
+    taglineFallback: "Coach fitness holistique",
+    atelierLabel: "Holistic Â· Berlin",
+    philLabel: "Mon approche",
+    servicesH: "Gamme de services",
+    servicesSub: "Coaching individuel et en petit groupe",
+    journeyH: "Parcours de transformation",
+    journeySub: "Étape par étape ensemble",
+    contactH: "Connectons-nous",
+    ctaPrimary: "Appel d'introduction gratuit",
+    ctaSecondary: "WhatsApp",
+    yearsLabel: "Années",
+    transformationsLabel: "Transformations",
+    igLabel: "Instagram",
+    ytLabel: "YouTube",
+    testiText:
+      "What set Can apart was the focus on how the body felt, not just the numbers. 12 weeks reborn â€” physically and mentally.",
+    testiName: "Selin K.",
+    testiResult: "12 weeks Â· -14 kg, regained self-respect",
+    bookBtn: "Prendre rendez-vous",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    journey: {
+      intro: { ttl: "Free intro call", desc: "We understand your needs and goals in a 30-minute conversation." },
+      plan: { ttl: "Personal plan", desc: "Training + nutrition tailored to your lifestyle and metabolic profile." },
+      weekly: { ttl: "Weekly check-in", desc: "Measurement, energy and mindset update on short calls." },
+      habit: { ttl: "Sustainable habit", desc: "Mental tools and lifelong guidance for lasting change." },
+    },
+  
+  },
+  ar: {
+
+    taglineFallback: "مدرب لياقة شامل",
+    atelierLabel: "Holistic Â· Berlin",
+    philLabel: "نهجي",
+    servicesH: "نطاق الخدمات",
+    servicesSub: "تدريب فردي ومجموعات صغيرة",
+    journeyH: "رحلة التحول",
+    journeySub: "خطوة بخطوة معاً",
+    contactH: "لنتواصل",
+    ctaPrimary: "مكالمة تعريفية مجانية",
+    ctaSecondary: "واتساب",
+    yearsLabel: "سنوات",
+    transformationsLabel: "التحولات",
+    igLabel: "إنستغرام",
+    ytLabel: "يوتيوب",
+    testiText:
+      "What set Can apart was the focus on how the body felt, not just the numbers. 12 weeks reborn â€” physically and mentally.",
+    testiName: "Selin K.",
+    testiResult: "12 weeks Â· -14 kg, regained self-respect",
+    bookBtn: "حجز موعد",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    journey: {
+      intro: { ttl: "Free intro call", desc: "We understand your needs and goals in a 30-minute conversation." },
+      plan: { ttl: "Personal plan", desc: "Training + nutrition tailored to your lifestyle and metabolic profile." },
+      weekly: { ttl: "Weekly check-in", desc: "Measurement, energy and mindset update on short calls." },
+      habit: { ttl: "Sustainable habit", desc: "Mental tools and lifelong guidance for lasting change." },
+    },
+  
   },
 };
 

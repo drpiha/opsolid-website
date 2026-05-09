@@ -81,7 +81,7 @@ interface Copy {
   credential: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     brandMark: "Wedding & Events Studio",
     callBtn: "Anrufen",
@@ -135,6 +135,86 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
     credential: "9 yÄ±l Â· 400+ etkinlik Â· 180 dÃ¼ÄŸÃ¼n",
+  },
+  es: {
+
+    brandMark: "Estudio de bodas y eventos",
+    callBtn: "Llamar",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Correo",
+    servicesH: "Servicios",
+    statsH: "De un vistazo",
+    yearsLabel: "Años",
+    eventsLabel: "Eventos",
+    weddingsLabel: "Bodas",
+    clientsH: "Confían en nosotros",
+    contactH: "Contacto",
+    cta: "Reservar una consulta",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    credential: "9 years Â· 400+ events Â· 180 weddings",
+  
+  },
+  it: {
+
+    brandMark: "Studio matrimoni ed eventi",
+    callBtn: "Chiama",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Email",
+    servicesH: "Servizi",
+    statsH: "In sintesi",
+    yearsLabel: "Anni",
+    eventsLabel: "Eventi",
+    weddingsLabel: "Matrimoni",
+    clientsH: "Si fidano di noi",
+    contactH: "Contatto",
+    cta: "Prenota una consulenza",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    credential: "9 years Â· 400+ events Â· 180 weddings",
+  
+  },
+  fr: {
+
+    brandMark: "Studio mariages et événements",
+    callBtn: "Appeler",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "E-mail",
+    servicesH: "Services",
+    statsH: "En un coup d'œil",
+    yearsLabel: "Années",
+    eventsLabel: "Événements",
+    weddingsLabel: "Mariages",
+    clientsH: "Ils nous font confiance",
+    contactH: "Contact",
+    cta: "Réserver une consultation",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    credential: "9 years Â· 400+ events Â· 180 weddings",
+  
+  },
+  ar: {
+
+    brandMark: "استوديو أعراس وفعاليات",
+    callBtn: "اتصال",
+    whatsappBtn: "واتساب",
+    emailBtn: "البريد الإلكتروني",
+    servicesH: "الخدمات",
+    statsH: "نظرة سريعة",
+    yearsLabel: "سنوات",
+    eventsLabel: "الفعاليات",
+    weddingsLabel: "الأعراس",
+    clientsH: "يثق بنا",
+    contactH: "اتصال",
+    cta: "احجز استشارة",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    credential: "9 years Â· 400+ events Â· 180 weddings",
+  
   },
 };
 

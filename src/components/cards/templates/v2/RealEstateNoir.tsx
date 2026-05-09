@@ -105,7 +105,7 @@ interface RenCopy {
   share: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", RenCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RenCopy> = {
   de: {
     since: "Seit",
     experience: "Jahre",
@@ -171,6 +171,102 @@ const COPY: Record<"de" | "en" | "tr", RenCopy> = {
     impressum: "KÃ¼nye",
     privacy: "Gizlilik",
     share: "PaylaÅŸ",
+  },
+  es: {
+
+    since: "Desde",
+    experience: "Años",
+    closed: "Cerrado",
+    portfolio: "Portafolio",
+    services: "Servicios",
+    servicesTitle: "Especializaciones",
+    voices: "Voces",
+    contact: "Contacto",
+    contactTitle: "Hablemos",
+    social: "Conectar",
+    saveContact: "Guardar en contactos",
+    callTile: "Llamar",
+    whatsappTile: "WhatsApp",
+    emailTile: "Correo",
+    webTile: "Sitio web",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    share: "Compartir",
+  
+  },
+  it: {
+
+    since: "Dal",
+    experience: "Anni",
+    closed: "Chiuso",
+    portfolio: "Portfolio",
+    services: "Servizi",
+    servicesTitle: "Specializzazioni",
+    voices: "Voci",
+    contact: "Contatto",
+    contactTitle: "Parliamo",
+    social: "Connetti",
+    saveContact: "Salva nei contatti",
+    callTile: "Chiama",
+    whatsappTile: "WhatsApp",
+    emailTile: "Email",
+    webTile: "Sito web",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    share: "Condividi",
+  
+  },
+  fr: {
+
+    since: "Depuis",
+    experience: "Années",
+    closed: "Fermé",
+    portfolio: "Portfolio",
+    services: "Services",
+    servicesTitle: "Spécialisations",
+    voices: "Témoignages",
+    contact: "Contact",
+    contactTitle: "Discutons",
+    social: "Connecter",
+    saveContact: "Enregistrer dans les contacts",
+    callTile: "Appeler",
+    whatsappTile: "WhatsApp",
+    emailTile: "E-mail",
+    webTile: "Site web",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    share: "Partager",
+  
+  },
+  ar: {
+
+    since: "منذ",
+    experience: "سنوات",
+    closed: "مغلق",
+    portfolio: "المعرض",
+    services: "الخدمات",
+    servicesTitle: "التخصصات",
+    voices: "أصوات",
+    contact: "اتصال",
+    contactTitle: "لنتحدث",
+    social: "تواصل",
+    saveContact: "حفظ في جهات الاتصال",
+    callTile: "اتصال",
+    whatsappTile: "واتساب",
+    emailTile: "البريد الإلكتروني",
+    webTile: "الموقع",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    share: "مشاركة",
+  
   },
 };
 

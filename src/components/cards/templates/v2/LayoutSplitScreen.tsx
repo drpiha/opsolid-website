@@ -71,7 +71,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     heroEyebrow: "Strategie Â· Innovation Â· Wachstum",
     servicesTitle: "Leistungen",
@@ -107,6 +107,62 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "KiÅŸiyi Kaydet",
     walletLabel: "CÃ¼zdana Ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    heroEyebrow: "Strategy Â· Innovation Â· Growth",
+    servicesTitle: "Servicios",
+    bioTitle: "Mi visión",
+    ctaCall: "Llamar",
+    ctaEmail: "Correo",
+    ctaWhatsApp: "WhatsApp",
+    contactTitle: "Datos de contacto",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    heroEyebrow: "Strategy Â· Innovation Â· Growth",
+    servicesTitle: "Servizi",
+    bioTitle: "La mia visione",
+    ctaCall: "Chiama",
+    ctaEmail: "Email",
+    ctaWhatsApp: "WhatsApp",
+    contactTitle: "Dettagli di contatto",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    heroEyebrow: "Strategy Â· Innovation Â· Growth",
+    servicesTitle: "Services",
+    bioTitle: "Ma vision",
+    ctaCall: "Appeler",
+    ctaEmail: "E-mail",
+    ctaWhatsApp: "WhatsApp",
+    contactTitle: "Coordonnées",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    heroEyebrow: "Strategy Â· Innovation Â· Growth",
+    servicesTitle: "الخدمات",
+    bioTitle: "رؤيتي",
+    ctaCall: "اتصال",
+    ctaEmail: "البريد الإلكتروني",
+    ctaWhatsApp: "واتساب",
+    contactTitle: "تفاصيل الاتصال",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

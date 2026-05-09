@@ -76,7 +76,7 @@ interface Copy {
   testimonialTitle: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     heroTag: "Strategie Â· Wachstum Â· Innovation",
     heroLine1Pre: "Wir gestalten",
@@ -133,6 +133,90 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     statRoas: "Ort. ROI",
     statReach: "YÄ±l",
     testimonialTitle: "GÃ¶rÃ¼ÅŸler",
+  },
+  es: {
+
+    heroTag: "Strategy Â· Growth Â· Innovation",
+    heroLine1Pre: "Creamos",
+    heroLine1Em: "audaz",
+    heroLine2: "estrategias de negocio.",
+    servicesTitlePre: "Lo que",
+    servicesTitleEm: "oferta",
+    packagesTitlePre: "Servicio",
+    packagesTitleEm: "paquetes",
+    ctaLabel: "Llamada estratégica gratuita",
+    qrTitle: "Mantengámonos en contacto",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    statClients: "Clientes",
+    statRoas: "ROI medio",
+    statReach: "Años",
+    testimonialTitle: "Lo que dicen los clientes",
+  
+  },
+  it: {
+
+    heroTag: "Strategy Â· Growth Â· Innovation",
+    heroLine1Pre: "Realizziamo",
+    heroLine1Em: "audace",
+    heroLine2: "strategie di business.",
+    servicesTitlePre: "Cosa",
+    servicesTitleEm: "offerta",
+    packagesTitlePre: "Servizio",
+    packagesTitleEm: "pacchetti",
+    ctaLabel: "Chiamata strategica gratuita",
+    qrTitle: "Restiamo in contatto",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    statClients: "Clienti",
+    statRoas: "ROI medio",
+    statReach: "Anni",
+    testimonialTitle: "Cosa dicono i clienti",
+  
+  },
+  fr: {
+
+    heroTag: "Strategy Â· Growth Â· Innovation",
+    heroLine1Pre: "Nous créons",
+    heroLine1Em: "audacieux",
+    heroLine2: "stratégies d'affaires.",
+    servicesTitlePre: "Ce que je",
+    servicesTitleEm: "offre",
+    packagesTitlePre: "Service",
+    packagesTitleEm: "forfaits",
+    ctaLabel: "Appel stratégique gratuit",
+    qrTitle: "Restons en contact",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    statClients: "Clients",
+    statRoas: "ROI moyen",
+    statReach: "Années",
+    testimonialTitle: "Ce que disent les clients",
+  
+  },
+  ar: {
+
+    heroTag: "Strategy Â· Growth Â· Innovation",
+    heroLine1Pre: "نصنع",
+    heroLine1Em: "جريء",
+    heroLine2: "استراتيجيات الأعمال.",
+    servicesTitlePre: "ما",
+    servicesTitleEm: "عرض",
+    packagesTitlePre: "خدمة",
+    packagesTitleEm: "حزم",
+    ctaLabel: "مكالمة استراتيجية مجانية",
+    qrTitle: "لنبقَ على تواصل",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    statClients: "العملاء",
+    statRoas: "متوسط العائد",
+    statReach: "سنوات",
+    testimonialTitle: "ماذا يقول العملاء",
+  
   },
 };
 

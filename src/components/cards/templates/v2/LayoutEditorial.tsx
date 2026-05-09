@@ -63,7 +63,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     issueLabel: "ISSUE 04",
     manifestoLabel: "Manifest Nr. 04",
@@ -114,6 +114,82 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana Ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    issueLabel: "EDICIÓN 04",
+    manifestoLabel: "Manifiesto n.º 04",
+    manifestoLine1Pre: "Una buena estrategia es",
+    manifestoLine1Em: "tranquilo",
+    manifestoLine2: "la mala estrategia grita.",
+    aboutLabel: "Acerca de",
+    skillsLabel: "Habilidades",
+    selectedTitle: "Trabajo seleccionado",
+    selectedSuffix: "N.º",
+    contactTitle: "Contacto.",
+    closingLine1: "Guardar,",
+    closingLine2: "mantente en contacto.",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    issueLabel: "NUMERO 04",
+    manifestoLabel: "Manifesto n. 04",
+    manifestoLine1Pre: "Una buona strategia è",
+    manifestoLine1Em: "tranquillo",
+    manifestoLine2: "la cattiva strategia urla.",
+    aboutLabel: "Chi siamo",
+    skillsLabel: "Competenze",
+    selectedTitle: "Lavori selezionati",
+    selectedSuffix: "N.",
+    contactTitle: "Contatto.",
+    closingLine1: "Salva,",
+    closingLine2: "resta in contatto.",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    issueLabel: "NUMÉRO 04",
+    manifestoLabel: "Manifeste nº 04",
+    manifestoLine1Pre: "Une bonne stratégie est",
+    manifestoLine1Em: "calme",
+    manifestoLine2: "la mauvaise stratégie crie.",
+    aboutLabel: "À propos",
+    skillsLabel: "Compétences",
+    selectedTitle: "Travaux sélectionnés",
+    selectedSuffix: "Nº",
+    contactTitle: "Contact.",
+    closingLine1: "Enregistrer,",
+    closingLine2: "restez en contact.",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    issueLabel: "العدد 04",
+    manifestoLabel: "بيان رقم 04",
+    manifestoLine1Pre: "الاستراتيجية الجيدة",
+    manifestoLine1Em: "هادئ",
+    manifestoLine2: "الاستراتيجية السيئة تصرخ.",
+    aboutLabel: "حول",
+    skillsLabel: "المهارات",
+    selectedTitle: "أعمال مختارة",
+    selectedSuffix: "رقم",
+    contactTitle: "اتصال.",
+    closingLine1: "حفظ،",
+    closingLine2: "ابقَ على تواصل.",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 

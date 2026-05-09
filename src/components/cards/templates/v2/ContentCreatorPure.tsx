@@ -98,7 +98,7 @@ interface CcpCopy {
   web: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", CcpCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcpCopy> = {
   de: {
     mediaKit: "Media Kit Â· 2026",
     totalReach: "120K+ Reichweite",
@@ -167,6 +167,106 @@ const COPY: Record<"de" | "en" | "tr", CcpCopy> = {
     dm: "DM",
     mail: "Mail",
     web: "Web",
+  },
+  es: {
+
+    mediaKit: "Media Kit Â· 2026",
+    totalReach: "120K+ alcance",
+    channels: "Canales",
+    contact: "Contacto",
+    about: "Perfil",
+    collab: "Colaboraciones",
+    collabBlurb:
+      "I work with brands whose values I share. Premium storytelling for lifestyle, travel and wellness brands.",
+    partner: "Solicitar ahora",
+    scheduleCall: "Enviar solicitud",
+    callMe: "Llamada directa",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    share: "Compartir",
+    poweredBy: "Desarrollado por",
+    startingFrom: "desde",
+    responseLabel: "Tiempo de respuesta",
+    categories: "Temas",
+    dm: "MD",
+    mail: "Correo",
+    web: "Web",
+  
+  },
+  it: {
+
+    mediaKit: "Media Kit Â· 2026",
+    totalReach: "120K+ copertura",
+    channels: "Canali",
+    contact: "Contatto",
+    about: "Profilo",
+    collab: "Collaborazioni",
+    collabBlurb:
+      "I work with brands whose values I share. Premium storytelling for lifestyle, travel and wellness brands.",
+    partner: "Richiedi ora",
+    scheduleCall: "Invia richiesta",
+    callMe: "Chiama direttamente",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    share: "Condividi",
+    poweredBy: "Realizzato con",
+    startingFrom: "da",
+    responseLabel: "Tempo di risposta",
+    categories: "Argomenti",
+    dm: "DM",
+    mail: "Posta",
+    web: "Web",
+  
+  },
+  fr: {
+
+    mediaKit: "Media Kit Â· 2026",
+    totalReach: "120K+ portée",
+    channels: "Canaux",
+    contact: "Contact",
+    about: "Profil",
+    collab: "Collaborations",
+    collabBlurb:
+      "I work with brands whose values I share. Premium storytelling for lifestyle, travel and wellness brands.",
+    partner: "Demander maintenant",
+    scheduleCall: "Envoyer la demande",
+    callMe: "Appeler directement",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    share: "Partager",
+    poweredBy: "Propulsé par",
+    startingFrom: "de",
+    responseLabel: "Temps de réponse",
+    categories: "Sujets",
+    dm: "DM",
+    mail: "Courrier",
+    web: "Web",
+  
+  },
+  ar: {
+
+    mediaKit: "Media Kit Â· 2026",
+    totalReach: "120 ألف+ وصول",
+    channels: "القنوات",
+    contact: "اتصال",
+    about: "الملف الشخصي",
+    collab: "تعاونات",
+    collabBlurb:
+      "I work with brands whose values I share. Premium storytelling for lifestyle, travel and wellness brands.",
+    partner: "اطلب الآن",
+    scheduleCall: "إرسال الطلب",
+    callMe: "اتصال مباشر",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    share: "مشاركة",
+    poweredBy: "مشغل بواسطة",
+    startingFrom: "من",
+    responseLabel: "وقت الاستجابة",
+    categories: "المواضيع",
+    dm: "رسالة خاصة",
+    mail: "بريد",
+    web: "ويب",
+  
   },
 };
 

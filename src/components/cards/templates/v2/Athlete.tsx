@@ -124,7 +124,7 @@ interface AthCopy {
   clients: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", AthCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AthCopy> = {
   de: {
     saveContact: "Speichern",
     callNow: "Anrufen",
@@ -208,6 +208,126 @@ const COPY: Record<"de" | "en" | "tr", AthCopy> = {
     certified: "Sertifikalı",
     yearsExp: "yıl",
     clients: "öğrenci",
+  },
+  es: {
+
+    saveContact: "Guardar contacto",
+    callNow: "Llamar",
+    whatsapp: "WhatsApp",
+    email: "Correo",
+    book: "Reservar",
+    programs: "Programas",
+    programsEyebrow: "Entrenamiento",
+    about: "Acerca de",
+    aboutEyebrow: "Coach",
+    reel: "Reel de entrenamiento",
+    reelEyebrow: "Movimiento",
+    voices: "Voces",
+    voicesEyebrow: "Resultados",
+    contact: "Contacto",
+    contactEyebrow: "Directo",
+    social: "Redes",
+    socialEyebrow: "Seguir",
+    walletLabel: "Añadir a la cartera",
+    startProgram: "Empezar",
+    watch: "Reproducir",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    poweredBy: "Desarrollado por",
+    certified: "Certificado",
+    yearsExp: "años",
+    clients: "clientes",
+  
+  },
+  it: {
+
+    saveContact: "Salva contatto",
+    callNow: "Chiama",
+    whatsapp: "WhatsApp",
+    email: "Email",
+    book: "Prenota",
+    programs: "Programmi",
+    programsEyebrow: "Allenamento",
+    about: "Chi siamo",
+    aboutEyebrow: "Coach",
+    reel: "Reel di allenamento",
+    reelEyebrow: "Movimento",
+    voices: "Voci",
+    voicesEyebrow: "Risultati",
+    contact: "Contatto",
+    contactEyebrow: "Diretto",
+    social: "Social",
+    socialEyebrow: "Segui",
+    walletLabel: "Aggiungi al wallet",
+    startProgram: "Inizia",
+    watch: "Riproduci",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    poweredBy: "Realizzato con",
+    certified: "Certificato",
+    yearsExp: "anni",
+    clients: "clienti",
+  
+  },
+  fr: {
+
+    saveContact: "Enregistrer le contact",
+    callNow: "Appeler",
+    whatsapp: "WhatsApp",
+    email: "E-mail",
+    book: "Réserver",
+    programs: "Programmes",
+    programsEyebrow: "Entraînement",
+    about: "À propos",
+    aboutEyebrow: "Coach",
+    reel: "Reel d'entraînement",
+    reelEyebrow: "Mouvement",
+    voices: "Témoignages",
+    voicesEyebrow: "Résultats",
+    contact: "Contact",
+    contactEyebrow: "Direct",
+    social: "Réseaux",
+    socialEyebrow: "Suivre",
+    walletLabel: "Ajouter au portefeuille",
+    startProgram: "Démarrer",
+    watch: "Lire",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    poweredBy: "Propulsé par",
+    certified: "Certifié",
+    yearsExp: "ans",
+    clients: "clients",
+  
+  },
+  ar: {
+
+    saveContact: "حفظ جهة الاتصال",
+    callNow: "اتصال",
+    whatsapp: "واتساب",
+    email: "البريد الإلكتروني",
+    book: "احجز",
+    programs: "البرامج",
+    programsEyebrow: "التدريب",
+    about: "حول",
+    aboutEyebrow: "مدرب",
+    reel: "ريل التدريب",
+    reelEyebrow: "حركة",
+    voices: "أصوات",
+    voicesEyebrow: "النتائج",
+    contact: "اتصال",
+    contactEyebrow: "مباشر",
+    social: "التواصل",
+    socialEyebrow: "متابعة",
+    walletLabel: "إضافة إلى المحفظة",
+    startProgram: "ابدأ",
+    watch: "تشغيل",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    poweredBy: "مشغل بواسطة",
+    certified: "معتمد",
+    yearsExp: "سنة",
+    clients: "عملاء",
+  
   },
 };
 
@@ -1068,7 +1188,7 @@ function ContactSection({
   translations,
 }: {
   cardData: TemplateProps["cardData"];
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   accent: string;
   translations: AthCopy;
 }) {
@@ -1138,7 +1258,7 @@ function CTASection({
 }: {
   slug: string;
   sourceQs: string;
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   accent: string;
 }) {
   return (

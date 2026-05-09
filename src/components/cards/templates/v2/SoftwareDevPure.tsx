@@ -77,7 +77,7 @@ interface SdpCopy {
   remote: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", SdpCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdpCopy> = {
   de: {
     available: "VerfÃ¼gbar",
     contact: "Kontakt",
@@ -131,6 +131,86 @@ const COPY: Record<"de" | "en" | "tr", SdpCopy> = {
     responseLabel: "YanÄ±t",
     developer: "GeliÅŸtirici",
     remote: "Remote Â· Berlin",
+  },
+  es: {
+
+    available: "Disponible",
+    contact: "Contacto",
+    about: "Perfil",
+    stack: "Stack",
+    services: "Servicios",
+    scheduleCall: "Programar una llamada",
+    callMe: "Llamada directa",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    share: "Compartir",
+    poweredBy: "Desarrollado por",
+    yearsLabel: "Años",
+    projectsLabel: "Proyectos",
+    responseLabel: "Respuesta",
+    developer: "Desarrollador",
+    remote: "Remote Â· Berlin",
+  
+  },
+  it: {
+
+    available: "Disponibile",
+    contact: "Contatto",
+    about: "Profilo",
+    stack: "Stack",
+    services: "Servizi",
+    scheduleCall: "Programma una chiamata",
+    callMe: "Chiama direttamente",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    share: "Condividi",
+    poweredBy: "Realizzato con",
+    yearsLabel: "Anni",
+    projectsLabel: "Progetti",
+    responseLabel: "Risposta",
+    developer: "Sviluppatore",
+    remote: "Remote Â· Berlin",
+  
+  },
+  fr: {
+
+    available: "Disponible",
+    contact: "Contact",
+    about: "Profil",
+    stack: "Stack",
+    services: "Services",
+    scheduleCall: "Programmer un appel",
+    callMe: "Appeler directement",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    share: "Partager",
+    poweredBy: "Propulsé par",
+    yearsLabel: "Années",
+    projectsLabel: "Projets",
+    responseLabel: "Réponse",
+    developer: "Développeur",
+    remote: "Remote Â· Berlin",
+  
+  },
+  ar: {
+
+    available: "متاح",
+    contact: "اتصال",
+    about: "الملف الشخصي",
+    stack: "المنظومة",
+    services: "الخدمات",
+    scheduleCall: "حدد موعد مكالمة",
+    callMe: "اتصال مباشر",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    share: "مشاركة",
+    poweredBy: "مشغل بواسطة",
+    yearsLabel: "سنوات",
+    projectsLabel: "المشاريع",
+    responseLabel: "الاستجابة",
+    developer: "مطور",
+    remote: "Remote Â· Berlin",
+  
   },
 };
 

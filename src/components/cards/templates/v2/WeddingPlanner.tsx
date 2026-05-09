@@ -123,7 +123,7 @@ interface WpCopy {
   ourPromise: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", WpCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", WpCopy> = {
   de: {
     saveContact: "Speichern",
     callNow: "Anrufen",
@@ -198,6 +198,114 @@ const COPY: Record<"de" | "en" | "tr", WpCopy> = {
     poweredBy: "Powered by",
     share: "Paylaş",
     ourPromise: "Sözümüz",
+  },
+  es: {
+
+    saveContact: "Guardar contacto",
+    callNow: "Llamar",
+    whatsapp: "WhatsApp",
+    email: "Correo",
+    book: "Reservar",
+    bookConsultation: "Reservar una consulta",
+    bookHint: "Una primera conversación — sin compromiso, a menudo con una copa de vino.",
+    about: "Acerca de",
+    services: "Nuestros servicios",
+    servicesEyebrow: "Atelier",
+    voices: "De nuestras parejas",
+    contact: "Ponte en contacto",
+    social: "Seguir",
+    followOnInstagram: "Sígueme en Instagram",
+    walletLabel: "Añadir a la cartera",
+    currentlyPlanning: "Planificando actualmente",
+    upcomingWeddings: "bodas esta temporada",
+    withLove: "Hecho con amor",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    poweredBy: "Desarrollado por",
+    share: "Compartir",
+    ourPromise: "Nuestra promesa",
+  
+  },
+  it: {
+
+    saveContact: "Salva contatto",
+    callNow: "Chiama",
+    whatsapp: "WhatsApp",
+    email: "Email",
+    book: "Prenota",
+    bookConsultation: "Prenota una consulenza",
+    bookHint: "Una prima conversazione — senza impegno, spesso davanti a un calice di vino.",
+    about: "Chi siamo",
+    services: "I nostri servizi",
+    servicesEyebrow: "Atelier",
+    voices: "Dalle nostre coppie",
+    contact: "Mettiti in contatto",
+    social: "Segui",
+    followOnInstagram: "Seguimi su Instagram",
+    walletLabel: "Aggiungi al wallet",
+    currentlyPlanning: "In pianificazione",
+    upcomingWeddings: "matrimoni questa stagione",
+    withLove: "Fatto con amore",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    poweredBy: "Realizzato con",
+    share: "Condividi",
+    ourPromise: "La nostra promessa",
+  
+  },
+  fr: {
+
+    saveContact: "Enregistrer le contact",
+    callNow: "Appeler",
+    whatsapp: "WhatsApp",
+    email: "E-mail",
+    book: "Réserver",
+    bookConsultation: "Réserver une consultation",
+    bookHint: "Une première conversation — sans engagement, souvent autour d'un verre de vin.",
+    about: "À propos",
+    services: "Nos services",
+    servicesEyebrow: "Atelier",
+    voices: "De nos couples",
+    contact: "Prendre contact",
+    social: "Suivre",
+    followOnInstagram: "Me suivre sur Instagram",
+    walletLabel: "Ajouter au portefeuille",
+    currentlyPlanning: "En cours de planification",
+    upcomingWeddings: "mariages cette saison",
+    withLove: "Fait avec amour",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    poweredBy: "Propulsé par",
+    share: "Partager",
+    ourPromise: "Notre promesse",
+  
+  },
+  ar: {
+
+    saveContact: "حفظ جهة الاتصال",
+    callNow: "اتصال",
+    whatsapp: "واتساب",
+    email: "البريد الإلكتروني",
+    book: "احجز",
+    bookConsultation: "احجز استشارة",
+    bookHint: "محادثة أولى — دون التزام، غالباً مع كأس من النبيذ.",
+    about: "حول",
+    services: "خدماتنا",
+    servicesEyebrow: "أتيليه",
+    voices: "من ثنائياتنا",
+    contact: "تواصل معنا",
+    social: "متابعة",
+    followOnInstagram: "تابعني على إنستغرام",
+    walletLabel: "إضافة إلى المحفظة",
+    currentlyPlanning: "قيد التخطيط",
+    upcomingWeddings: "أعراس هذا الموسم",
+    withLove: "صنع بحب",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    poweredBy: "مشغل بواسطة",
+    share: "مشاركة",
+    ourPromise: "وعدنا",
+  
   },
 };
 
@@ -1241,7 +1349,7 @@ function ContactSection({
   translations,
 }: {
   cardData: TemplateProps["cardData"];
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   primary: string;
   accent: string;
   translations: WpCopy;
@@ -1316,7 +1424,7 @@ function CTASection({
 }: {
   slug: string;
   sourceQs: string;
-  locale: "de" | "en" | "tr";
+  locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
   primary: string;
   accent: string;
 }) {

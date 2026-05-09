@@ -103,7 +103,7 @@ interface AcCopy {
   free: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", AcCopy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcCopy> = {
   de: {
     bookConsult: "Kostenloses Erstgespräch",
     consultTagline: "Verlässlich · Digital · Persönlich",
@@ -169,6 +169,102 @@ const COPY: Record<"de" | "en" | "tr", AcCopy> = {
     servicesLabel: "Hizmetler",
     reviewsLabel: "Yorum",
     free: "İlk Görüşme · Ücretsiz",
+  },
+  es: {
+
+    bookConsult: "Reservar una consulta gratuita",
+    consultTagline: "Confiable · Digital · Personal",
+    call: "Llamar",
+    whatsapp: "WhatsApp",
+    email: "Correo",
+    about: "Acerca de",
+    services: "Servicios",
+    contact: "Contacto",
+    social: "Seguir",
+    testimonial: "Reseña de cliente",
+    reliable: "Asesor fiscal · certificado IHK",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    impressum: "Aviso legal",
+    privacy: "Privacidad",
+    share: "Compartir",
+    servicesLabel: "Servicios",
+    reviewsLabel: "Reseñas",
+    free: "Primera charla · gratis",
+  
+  },
+  it: {
+
+    bookConsult: "Prenota una consulenza gratuita",
+    consultTagline: "Affidabile · Digitale · Personale",
+    call: "Chiama",
+    whatsapp: "WhatsApp",
+    email: "Email",
+    about: "Chi siamo",
+    services: "Servizi",
+    contact: "Contatto",
+    social: "Segui",
+    testimonial: "Recensione cliente",
+    reliable: "Consulente fiscale · certificato IHK",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    impressum: "Impressum",
+    privacy: "Privacy",
+    share: "Condividi",
+    servicesLabel: "Servizi",
+    reviewsLabel: "Recensioni",
+    free: "Primo colloquio · gratuito",
+  
+  },
+  fr: {
+
+    bookConsult: "Réserver une consultation gratuite",
+    consultTagline: "Fiable · Numérique · Personnel",
+    call: "Appeler",
+    whatsapp: "WhatsApp",
+    email: "E-mail",
+    about: "À propos",
+    services: "Services",
+    contact: "Contact",
+    social: "Suivre",
+    testimonial: "Avis client",
+    reliable: "Conseiller fiscal · certifié IHK",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    impressum: "Mentions légales",
+    privacy: "Confidentialité",
+    share: "Partager",
+    servicesLabel: "Services",
+    reviewsLabel: "Avis",
+    free: "Premier échange · gratuit",
+  
+  },
+  ar: {
+
+    bookConsult: "احجز استشارة مجانية",
+    consultTagline: "موثوق · رقمي · شخصي",
+    call: "اتصال",
+    whatsapp: "واتساب",
+    email: "البريد الإلكتروني",
+    about: "حول",
+    services: "الخدمات",
+    contact: "اتصال",
+    social: "متابعة",
+    testimonial: "تقييم العميل",
+    reliable: "مستشار ضريبي · معتمد IHK",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    impressum: "بيانات النشر",
+    privacy: "الخصوصية",
+    share: "مشاركة",
+    servicesLabel: "الخدمات",
+    reviewsLabel: "التقييمات",
+    free: "أول محادثة · مجانية",
+  
   },
 };
 

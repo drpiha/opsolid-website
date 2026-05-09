@@ -81,7 +81,7 @@ interface Copy {
   contact: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     eyebrow: "BLACK TIE GALA Â· BERLIN",
     tagline:
@@ -132,6 +132,82 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
     contact: "Ä°letiÅŸim",
+  },
+  es: {
+
+    eyebrow: "BLACK TIE GALA Â· BERLIN",
+    tagline:
+      "Discreet, deliberate, unforgettable. Weddings and private galas with the care of a curated salon.",
+    role: "Event Designer Â· Wedding Planner",
+    callBtn: "Llamar",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Correo",
+    servicesH: "Servicios",
+    testimonialH: "Voces",
+    ctaH: "Consulta",
+    cta: "Solicitar una consulta",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+    contact: "Contacto",
+  
+  },
+  it: {
+
+    eyebrow: "BLACK TIE GALA Â· BERLIN",
+    tagline:
+      "Discreet, deliberate, unforgettable. Weddings and private galas with the care of a curated salon.",
+    role: "Event Designer Â· Wedding Planner",
+    callBtn: "Chiama",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "Email",
+    servicesH: "Servizi",
+    testimonialH: "Voci",
+    ctaH: "Richiesta",
+    cta: "Richiedi una consulenza",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+    contact: "Contatto",
+  
+  },
+  fr: {
+
+    eyebrow: "BLACK TIE GALA Â· BERLIN",
+    tagline:
+      "Discreet, deliberate, unforgettable. Weddings and private galas with the care of a curated salon.",
+    role: "Event Designer Â· Wedding Planner",
+    callBtn: "Appeler",
+    whatsappBtn: "WhatsApp",
+    emailBtn: "E-mail",
+    servicesH: "Services",
+    testimonialH: "Témoignages",
+    ctaH: "Demande",
+    cta: "Demander une consultation",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+    contact: "Contact",
+  
+  },
+  ar: {
+
+    eyebrow: "BLACK TIE GALA Â· BERLIN",
+    tagline:
+      "Discreet, deliberate, unforgettable. Weddings and private galas with the care of a curated salon.",
+    role: "Event Designer Â· Wedding Planner",
+    callBtn: "اتصال",
+    whatsappBtn: "واتساب",
+    emailBtn: "البريد الإلكتروني",
+    servicesH: "الخدمات",
+    testimonialH: "أصوات",
+    ctaH: "استفسار",
+    cta: "اطلب استشارة",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+    contact: "اتصال",
+  
   },
 };
 

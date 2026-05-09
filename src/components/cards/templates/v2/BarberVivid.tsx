@@ -79,7 +79,7 @@ interface Copy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr", Copy> = {
+const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     tagPill: "Premium Barber",
     taglineFallback: "Master Barber & Stylist",
@@ -124,6 +124,74 @@ const COPY: Record<"de" | "en" | "tr", Copy> = {
     saveContact: "KiÅŸiyi Kaydet",
     walletLabel: "CÃ¼zdana ekle",
     poweredBy: "Powered by",
+  },
+  es: {
+
+    tagPill: "Barbería premium",
+    taglineFallback: "Maestro barbero y estilista",
+    yearsLabel: "Años",
+    clientsLabel: "Clientes",
+    followersLabel: "Seguidores",
+    servicesH: "Servicios",
+    ctaH: "Reserva instantánea",
+    ctaSub: "Reserva por WhatsApp en segundos",
+    contactH: "Contacto",
+    bookBtn: "Reservar ahora",
+    saveContact: "Guardar contacto",
+    walletLabel: "Añadir a la cartera",
+    poweredBy: "Desarrollado por",
+  
+  },
+  it: {
+
+    tagPill: "Barbiere premium",
+    taglineFallback: "Master Barber e Stylist",
+    yearsLabel: "Anni",
+    clientsLabel: "Clienti",
+    followersLabel: "Follower",
+    servicesH: "Servizi",
+    ctaH: "Prenotazione immediata",
+    ctaSub: "Prenota via WhatsApp in pochi secondi",
+    contactH: "Contatto",
+    bookBtn: "Prenota ora",
+    saveContact: "Salva contatto",
+    walletLabel: "Aggiungi al wallet",
+    poweredBy: "Realizzato con",
+  
+  },
+  fr: {
+
+    tagPill: "Barbier premium",
+    taglineFallback: "Maître barbier et styliste",
+    yearsLabel: "Années",
+    clientsLabel: "Clients",
+    followersLabel: "Abonnés",
+    servicesH: "Services",
+    ctaH: "Réservation instantanée",
+    ctaSub: "Réservez par WhatsApp en quelques secondes",
+    contactH: "Contact",
+    bookBtn: "Réserver maintenant",
+    saveContact: "Enregistrer le contact",
+    walletLabel: "Ajouter au portefeuille",
+    poweredBy: "Propulsé par",
+  
+  },
+  ar: {
+
+    tagPill: "حلاق فاخر",
+    taglineFallback: "حلاق رئيسي ومصفف",
+    yearsLabel: "سنوات",
+    clientsLabel: "العملاء",
+    followersLabel: "متابعون",
+    servicesH: "الخدمات",
+    ctaH: "حجز فوري",
+    ctaSub: "احجز عبر واتساب في ثوانٍ",
+    contactH: "اتصال",
+    bookBtn: "احجز الآن",
+    saveContact: "حفظ جهة الاتصال",
+    walletLabel: "إضافة إلى المحفظة",
+    poweredBy: "مشغل بواسطة",
+  
   },
 };
 
