@@ -139,3 +139,56 @@ export type CardPatchInput = {
 
 // POST /api/uploads → { path }
 export type UploadResponse = { path: string };
+
+// ---------------------------------------------------------------------------
+// M1 — Frictionless creation. Two server endpoints surface the same
+// pre-filled-fields shape; the wizard uses whichever path the user picked
+// (camera scan or URL paste) to jump straight to Step 5 (preview + publish).
+// ---------------------------------------------------------------------------
+export type DraftFields = {
+  name?: string | null;
+  title?: string | null;
+  company?: string | null;
+  email?: string | null;
+  phone?: string | null;
+  website?: string | null;
+  bio?: string | null;
+};
+
+export type DraftFromImageResponse = DraftFields & {
+  raw_ocr_text?: string;
+};
+
+export type DraftFromUrlResponse = DraftFields;
+
+// M1 — Form-builder-lite (Carrd amendment). The cardData.contactForm shape
+// the mobile edit form persists on save. ESP fields with secrets (apiKey)
+// only round-trip through the bearer-auth GET; the public viewer's read
+// path strips them server-side (see toPublicApiCard in card-mapping.ts).
+export type ContactFormFieldKey = 'name' | 'email' | 'message';
+
+export type ContactFormField = {
+  key: ContactFormFieldKey;
+  label: string;
+  required: boolean;
+};
+
+export type ContactFormConfig = {
+  enabled: boolean;
+  fields: ContactFormField[];
+  submitLabel: string;
+  esps?: {
+    mailchimp?: {
+      listId: string;
+      audienceId: string;
+      apiKey?: string;
+    };
+    mailerlite?: {
+      groupId: string;
+      apiKey?: string;
+    };
+    webhook?: {
+      url: string;
+    };
+  };
+};

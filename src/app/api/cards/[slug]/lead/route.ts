@@ -20,6 +20,7 @@ import { sendCustomerEmail } from "@/lib/email/send";
 import { normalizeLocale } from "@/lib/email/shell";
 import { dispatchWebhook } from "@/lib/webhook";
 import { sendLeadTelegram } from "@/lib/notifications";
+import { forwardLeadToEsp } from "@/lib/lead-esp";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -84,6 +85,11 @@ export async function POST(
       contactName: true,
       locale: true,
       editToken: true,
+      // M1 — Form-builder-lite. We read the contactForm config off cardData
+      // and (when enabled) forward the submission to the configured ESP /
+      // webhook in addition to the existing email + Telegram + dispatchWebhook
+      // paths. Reading at SELECT time keeps the route a single round-trip.
+      cardData: true,
     },
   });
   if (!order || order.status !== OrderStatus.PUBLISHED) {
@@ -161,6 +167,22 @@ export async function POST(
       event: source.event,
     },
     createdAt: lead.createdAt.toISOString(),
+  });
+
+  // M1 — Form-builder-lite ESP integration. When the owner has configured
+  // a Mailchimp / MailerLite / generic webhook on cardData.contactForm.esps,
+  // forward the submission. Fire-and-forget — visitor never blocks on a
+  // 3rd-party ESP latency spike, and a failed forward stays out of the
+  // visitor's response (logged for the owner's later debugging).
+  void forwardLeadToEsp(order.cardData, {
+    name: parsed.data.name,
+    email: parsed.data.email ?? null,
+    phone: parsed.data.phone ?? null,
+    company: parsed.data.company ?? null,
+    message: parsed.data.message ?? null,
+    interest: parsed.data.interest ?? null,
+    slug,
+    leadId: lead.id,
   });
 
   return NextResponse.json({ ok: true });

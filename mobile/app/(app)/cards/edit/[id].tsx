@@ -40,6 +40,8 @@ import {
   StatusBannerSection,
   FeedbackSection,
   EventsAttendingSection,
+  ContactFormSection,
+  DEFAULT_CONTACT_FORM,
   STATUS_BANNER_TONES,
   DEFAULT_PRIMARY_HEX,
   DEFAULT_ACCENT_HEX,
@@ -62,6 +64,7 @@ import type {
   FaqItem,
   StatusBannerState,
   StatusBannerTone,
+  ContactFormConfig,
 } from '../../../../src/components/cards/CardFormSections';
 
 function asString(v: unknown): string {
@@ -147,6 +150,43 @@ function asFaqs(v: unknown): FaqItem[] {
   }
   return out;
 }
+function asContactForm(v: unknown): ContactFormConfig {
+  if (!v || typeof v !== 'object') return DEFAULT_CONTACT_FORM;
+  const o = v as Record<string, unknown>;
+  // Validate every field row's `key` against the closed enum so a malformed
+  // server payload can't poison the editor's typed state.
+  const allowedKeys = new Set(['name', 'email', 'message']);
+  const fields: ContactFormConfig['fields'] = Array.isArray(o.fields)
+    ? (o.fields as unknown[]).flatMap((raw) => {
+        if (!raw || typeof raw !== 'object') return [];
+        const r = raw as Record<string, unknown>;
+        const key = typeof r.key === 'string' && allowedKeys.has(r.key)
+          ? (r.key as ContactFormConfig['fields'][number]['key'])
+          : null;
+        if (!key) return [];
+        return [
+          {
+            key,
+            label: typeof r.label === 'string' ? r.label : '',
+            required: r.required === true,
+          },
+        ];
+      })
+    : [];
+  return {
+    enabled: o.enabled === true,
+    fields: fields.length > 0 ? fields : DEFAULT_CONTACT_FORM.fields,
+    submitLabel:
+      typeof o.submitLabel === 'string' && o.submitLabel.trim().length > 0
+        ? o.submitLabel
+        : DEFAULT_CONTACT_FORM.submitLabel,
+    esps:
+      o.esps && typeof o.esps === 'object'
+        ? (o.esps as ContactFormConfig['esps'])
+        : undefined,
+  };
+}
+
 function asStatusBanner(v: unknown): StatusBannerState {
   if (!v || typeof v !== 'object') return DEFAULT_STATUS_BANNER;
   const o = v as Record<string, unknown>;
@@ -203,6 +243,9 @@ export default function CardEditScreen() {
   const [faqs, setFaqs] = useState<FaqItem[]>([]);
   const [statusBanner, setStatusBanner] = useState<StatusBannerState>(
     DEFAULT_STATUS_BANNER,
+  );
+  const [contactForm, setContactForm] = useState<ContactFormConfig>(
+    DEFAULT_CONTACT_FORM,
   );
   const [feedbackEnabled, setFeedbackEnabled] = useState<boolean>(false);
   // Sprint F2 — events the card is attending. Mirrors `attendingEventIds` from
@@ -287,6 +330,7 @@ export default function CardEditScreen() {
         setCustomButtons(asCustomButtons(cd.customButtons));
         setFaqs(asFaqs(cd.faqs));
         setStatusBanner(asStatusBanner(cd.statusBanner));
+        setContactForm(asContactForm(cd.contactForm));
         // feedbackEnabled lives on top-level CardOrder column (Phase 8.4),
         // exposed on owner GET /api/v1/cards/:id (CARD_API_SELECT).
         setFeedbackEnabled(c.feedbackEnabled === true);
@@ -367,6 +411,29 @@ export default function CardEditScreen() {
         text: statusBanner.text.trim(),
         tone: statusBanner.tone,
       };
+      // M1 — Form-builder-lite. Persist the contactForm config when the
+      // owner has either turned it on or made any non-default changes.
+      // Same round-trip pattern as statusBanner so toggling off propagates
+      // back to the public viewer.
+      if (contactForm.enabled || contactForm.fields !== DEFAULT_CONTACT_FORM.fields) {
+        // Drop any empty ESP sub-objects so we don't ship "{ esps: { mailchimp: { listId: '', ... } } }".
+        const esps = contactForm.esps
+          ? Object.fromEntries(
+              Object.entries(contactForm.esps).filter(([, v]) => {
+                if (!v || typeof v !== 'object') return false;
+                return Object.values(v).some(
+                  (val) => typeof val === 'string' && val.trim() !== '',
+                );
+              }),
+            )
+          : {};
+        cardData.contactForm = {
+          enabled: contactForm.enabled,
+          fields: contactForm.fields,
+          submitLabel: contactForm.submitLabel,
+          ...(Object.keys(esps).length > 0 ? { esps } : {}),
+        };
+      }
       Object.keys(cardData).forEach((k) => {
         if (cardData[k] === undefined) delete cardData[k];
       });
@@ -580,6 +647,7 @@ export default function CardEditScreen() {
             automaticallyAdjustKeyboardInsets
           >
             <StatusBannerSection theme={theme} value={statusBanner} onChange={setStatusBanner} />
+            <ContactFormSection theme={theme} value={contactForm} onChange={setContactForm} />
             <FeedbackSection theme={theme} value={feedbackEnabled} onChange={setFeedbackEnabled} />
             <EventsAttendingSection
               theme={theme}

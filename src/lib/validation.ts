@@ -441,6 +441,62 @@ export const CardDataSchema = z.object({
         .default("info"),
     })
     .optional(),
+  /** M1 — Form-builder-lite + ESP webhook integration (Carrd amendment).
+   *  Owner-defined override of the public-card "Bana Ulaş / Get in touch"
+   *  form. When `enabled === true` the public viewer renders these fields
+   *  instead of the hard-coded shape, and the lead route forwards to the
+   *  configured ESP / webhook in addition to its existing email + Telegram
+   *  paths. When undefined or `enabled === false` the legacy hard-coded
+   *  form + notification path is preserved (backward-compatible).
+   *
+   *  Field count capped at 5 (3 default rows + 2 owner-added max). ESP token
+   *  fields are stored on the card row — the server forwards them to the
+   *  ESP HTTP endpoint and never echoes them back on GET (see card-mapping). */
+  contactForm: z
+    .object({
+      enabled: z.boolean().default(false),
+      fields: z
+        .array(
+          z
+            .object({
+              key: z.enum(["name", "email", "message"]),
+              label: z.string().trim().min(1).max(60),
+              required: z.boolean().default(false),
+            })
+            .strict(),
+        )
+        .min(1)
+        .max(5),
+      submitLabel: z.string().trim().min(1).max(40),
+      esps: z
+        .object({
+          mailchimp: z
+            .object({
+              listId: z.string().trim().min(1).max(80),
+              audienceId: z.string().trim().min(1).max(80),
+              apiKey: z.string().trim().min(1).max(120).optional(),
+            })
+            .strict()
+            .optional(),
+          mailerlite: z
+            .object({
+              groupId: z.string().trim().min(1).max(80),
+              apiKey: z.string().trim().min(1).max(120).optional(),
+            })
+            .strict()
+            .optional(),
+          webhook: z
+            .object({
+              url: z.string().trim().url().max(500),
+            })
+            .strict()
+            .optional(),
+        })
+        .strict()
+        .optional(),
+    })
+    .strict()
+    .optional(),
 });
 export type CardData = z.infer<typeof CardDataSchema>;
 

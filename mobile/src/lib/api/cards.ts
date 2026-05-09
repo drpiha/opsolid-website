@@ -70,6 +70,37 @@ export async function updateCard(
 }
 
 /**
+ * M1 — POST /api/v1/cards/draft-from-image. Mobile sends a base64-encoded
+ * (already resized + compressed) image of a paper business card. Server
+ * forwards to Google Cloud Vision and parses the OCR output into structured
+ * fields. Returns 503 when GOOGLE_CLOUD_VISION_API_KEY is unset on the VPS;
+ * the wizard renders a "Coming soon" state in that case.
+ */
+export async function draftFromImage(
+  imageBase64: string,
+): Promise<import('./types').DraftFromImageResponse> {
+  return apiFetch<import('./types').DraftFromImageResponse>(
+    '/api/v1/cards/draft-from-image',
+    { method: 'POST', body: JSON.stringify({ imageBase64 }) },
+  );
+}
+
+/**
+ * M1 — POST /api/v1/cards/draft-from-url. Mobile sends a LinkedIn / personal
+ * site / company URL; server fetches (5s + 1MB cap) and pipes through Claude
+ * Haiku for structured extraction. Returns 503 when ANTHROPIC_API_KEY is
+ * unset on the VPS.
+ */
+export async function draftFromUrl(
+  url: string,
+): Promise<import('./types').DraftFromUrlResponse> {
+  return apiFetch<import('./types').DraftFromUrlResponse>(
+    '/api/v1/cards/draft-from-url',
+    { method: 'POST', body: JSON.stringify({ url }) },
+  );
+}
+
+/**
  * Upload a local image to /api/uploads and return the server path.
  * Uses raw fetch so FormData sets the multipart boundary correctly.
  */

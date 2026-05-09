@@ -130,11 +130,44 @@ export function toPublicApiCard(row: ApiCardRow): PublicApiCard {
     templateId: row.templateId,
     layoutKey: row.layoutKey,
     themeKey: row.themeKey,
-    cardData: row.cardData,
+    cardData: stripSensitiveFromCardData(row.cardData),
     brandPrimaryHex: row.brandPrimaryHex,
     brandAccentHex: row.brandAccentHex,
     photoPath: row.photoPath,
     logoPath: row.logoPath,
     publishedAt: row.publishedAt?.toISOString() ?? null,
+  };
+}
+
+/**
+ * Public callers must never receive ESP API keys / webhook tokens stored on
+ * `cardData.contactForm.esps.*`. Owners see those fields on the bearer-auth
+ * GET because they're the ones who configured them; everyone else gets a
+ * sanitized clone with the secrets dropped.
+ */
+function stripSensitiveFromCardData(cardData: unknown): unknown {
+  if (!cardData || typeof cardData !== "object") return cardData;
+  const cd = cardData as Record<string, unknown>;
+  const cf = cd.contactForm as Record<string, unknown> | undefined;
+  if (!cf || typeof cf !== "object") return cardData;
+  const esps = cf.esps as Record<string, unknown> | undefined;
+  if (!esps) return cardData;
+  // Build a sanitized esps object — keep the presence flags (so the public
+  // viewer can render the form) but never echo the apiKey / webhook URL.
+  const sanitizedEsps: Record<string, unknown> = {};
+  for (const provider of Object.keys(esps)) {
+    const v = esps[provider];
+    if (!v || typeof v !== "object") continue;
+    const cfg = v as Record<string, unknown>;
+    const safe: Record<string, unknown> = {};
+    for (const [k, val] of Object.entries(cfg)) {
+      if (k === "apiKey" || k === "url") continue;
+      safe[k] = val;
+    }
+    sanitizedEsps[provider] = safe;
+  }
+  return {
+    ...cd,
+    contactForm: { ...cf, esps: sanitizedEsps },
   };
 }

@@ -969,6 +969,14 @@ export default function PublicCardScreen() {
           visible={leadOpen}
           slug={card.slug}
           onClose={() => setLeadOpen(false)}
+          // M1 — When the owner enabled a custom contact form, the public
+          // viewer reads it from cardData. Public reads strip ESP secrets
+          // server-side (toPublicApiCard) — only field shapes ride the wire.
+          contactForm={
+            (card.cardData as Record<string, unknown> | null)?.contactForm as
+              | import('../../../src/lib/api/types').ContactFormConfig
+              | undefined
+          }
         />
       ) : null}
 

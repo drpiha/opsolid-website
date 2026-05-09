@@ -87,6 +87,38 @@ Two strategy docs were produced 2026-05-09 to plan Verso's path to category lead
 
 The plan's "Next-session resume" block names `mobile/assets/m1-implementation-plan.md` as the very first deliverable for the milestone-execution session — that file does NOT exist yet; it's the next thing to produce.
 
+### M1 — Frictionless creation [DONE — committed]
+
+Shipped (2026-05-09):
+
+- **Onboarding Step 0** in `mobile/app/(app)/onboarding/index.tsx` — three big tap-cards (Manuel / Kartvizit tara / URL'den oluştur) before the existing photo step. Manual hands off to the legacy 5-step flow; Scan + URL fast-forward to Step 5 (preview + publish) with the form pre-filled. Step 5 grows inline editors when origin is `scan`/`url` so the user can correct any pre-filled value before publishing without bouncing through Steps 1–4.
+- **`onboardingDraftStore`** gained `step: 0`, `origin`, `company`, `website`, `bio` fields. Guard flags (`skipped` / `everPublished`) untouched — the auto-redirect logic in `(app)/_layout.tsx` is unchanged.
+- **Server endpoints**:
+  - `POST /api/v1/cards/draft-from-image` — body `{ imageBase64 }`, calls Google Cloud Vision `documentTextDetection`, parses with regex/heuristics, returns `{ name?, title?, company?, email?, phone?, website?, raw_ocr_text }`. 503 `ocr_not_configured` when `GOOGLE_CLOUD_VISION_API_KEY` unset. Bearer-auth, 10/hr/user.
+  - `POST /api/v1/cards/draft-from-url` — body `{ url }`, server-side fetch (5 s timeout, 1 MB cap), strip HTML, send first 4000 chars to Claude Haiku, returns `{ name, title, company, email, phone, website, bio }`. 503 `ai_not_configured` when `ANTHROPIC_API_KEY` unset. Bearer-auth, 10/hr/user. No SDK dep — plain `fetch` against `/v1/messages` REST.
+- **Carrd amendment — Form-builder-lite**: new `cardData.contactForm` shape (`enabled`, `fields[1..5]`, `submitLabel`, `esps.{mailchimp,mailerlite,webhook}`). Server `validation.ts → CardDataSchema` accepts it as part of `cardData` so it round-trips through PATCH `/api/v1/cards/[id]`. Mobile `ContactFormSection` lives on the edit form's Gelişmiş tab. Public viewer's `LeadFormModal` reads the shape and renders custom fields when `enabled === true`.
+- **Lead-form ESP integration**: `src/app/api/cards/[slug]/lead/route.ts` now forwards each successful submission to the configured ESP / webhook in addition to the existing email + Telegram + dispatchWebhook paths. `src/lib/lead-esp.ts` wraps Mailchimp / MailerLite / generic webhook with 5 s timeouts and Promise.allSettled. Backward-compatible — cards with no `contactForm` keep the legacy notification path intact.
+- **Public-API security**: `toPublicApiCard` in `src/lib/api/v1/card-mapping.ts` now strips `cardData.contactForm.esps.*.apiKey` and `cardData.contactForm.esps.webhook.url` so visitors never see ESP secrets.
+- **i18n**: `crm.contactForm.*`, `onboarding.step0*`, `onboarding.step5HintReview`, scan/url error keys for en/de/tr.
+- **`.env.example`**: documented `GOOGLE_CLOUD_VISION_API_KEY` and `ANTHROPIC_API_KEY` (both optional — features degrade to 503 when unset).
+
+Decisions logged:
+
+- **Mobile camera path** uses `expo-image-picker.launchCameraAsync({ base64: true })` instead of adding `expo-camera` because the constraint forbade new mobile deps. The system camera UI provides framing guides; we don't render a custom rectangle overlay.
+- **`libphonenumber` not added** — not in repo deps and it's a heavy library; the OCR phone heuristic uses a tolerant regex (≥7 digit, ≤16 digit) which is fine for owner-side review.
+- **Anthropic SDK not added** — the `/v1/messages` REST call is one POST; pulling in a 1.5 MB SDK for a single endpoint is the wrong trade-off.
+
+Deploy steps for Hasan:
+
+1. **No DB migration needed** — `cardData` is already a JSON column; the new `contactForm` shape rides through the existing `CardDataSchema` zod check and the existing PATCH route accepts it without further server changes.
+2. **Set env vars on the VPS** (both optional — endpoints return 503 cleanly when missing):
+   ```
+   GOOGLE_CLOUD_VISION_API_KEY=<gcp-vision-api-key>
+   ANTHROPIC_API_KEY=<anthropic-console-key>
+   ```
+   Then `docker compose up -d --force-recreate opsolid` (env_file changes don't apply on `restart` — see `feedback_docker_env_file.md`).
+3. APK rebuild via the usual `gh workflow run` — Step 0 ships in the next build; manual flow keeps working without a new deploy.
+
 ### Carrd comparison plan — 2026-05-09
 
 3. **`mobile/assets/carrd-comparison-plan.md`** — research-scout audit of Carrd.co (one-page site builder, $9–$49/yr) vs Verso. Verso wins on mobile-first creation, NFC/QR/vCard share, smart-exchange, inbox messaging, Discover/Events network, 96 curated templates, EU-native hosting. Carrd wins on free-form composition, form builder + 18 ESP integrations, embed-anything, password protection, HTML export. **Adopt** 7 of 8 gaps into M1/M3/M5 (form-builder-lite + ESP webhooks → M1; curated embed whitelist + linktree template + gallery lightbox → M3; password protection + HTML export + Stripe tip-button + custom-domain wizard → M5). **Reject** free-form composition (kills the curation moat) and A/B variants (solo-dev tax). **No M7 needed** — splintering Form/Password/Embeds would compete with M3 and M5 for the same hours. Pricing: hold Verso Pro at **€7/mo / €60/yr** — same annual ballpark as Carrd Pro Plus but for a richer surface. External one-liner inside the file.

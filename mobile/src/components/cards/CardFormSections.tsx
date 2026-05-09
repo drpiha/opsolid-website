@@ -1080,6 +1080,381 @@ export type {
   FaqItem,
 } from './CardRepeaterSections';
 
+// ---------- ContactFormSection (M1 — Form-builder-lite, Carrd amendment) ----------
+// Owner-defined override of the public-card "Bana Ulaş" form. Toggle on/off,
+// 3-field default + "Add field" up to 5 fields total, per-ESP token field
+// (password input, masked). When `enabled === true` the public viewer reads
+// these field definitions instead of the hard-coded shape.
+//
+// Field key palette is intentionally tiny (name / email / message) — the v0
+// spec says "no drag-drop logic, no conditional fields" (carrd-comparison-plan
+// §4 row 2 — Adapt). The label per field is freely editable, the key is the
+// stable identifier the public viewer + lead route use to map values.
+
+import type { ContactFormConfig, ContactFormFieldKey } from '../../lib/api/types';
+export type { ContactFormConfig, ContactFormField, ContactFormFieldKey } from '../../lib/api/types';
+
+const CONTACT_FORM_FIELD_KEYS: readonly ContactFormFieldKey[] = [
+  'name',
+  'email',
+  'message',
+] as const;
+
+const CONTACT_FORM_MAX_FIELDS = 5;
+
+export const DEFAULT_CONTACT_FORM: ContactFormConfig = {
+  enabled: false,
+  fields: [
+    { key: 'name', label: 'Name', required: true },
+    { key: 'email', label: 'Email', required: true },
+    { key: 'message', label: 'Message', required: false },
+  ],
+  submitLabel: 'Send',
+  esps: undefined,
+};
+
+export function ContactFormSection({
+  theme,
+  value,
+  onChange,
+}: {
+  theme: ThemeTokens;
+  value: ContactFormConfig;
+  onChange: (next: ContactFormConfig) => void;
+}) {
+  const t = useTranslations(detectLocale()).crm.contactForm;
+  const disabled = !value.enabled;
+
+  function updateField(idx: number, patch: Partial<ContactFormConfig['fields'][number]>) {
+    const next = value.fields.map((f, i) => (i === idx ? { ...f, ...patch } : f));
+    onChange({ ...value, fields: next });
+  }
+
+  function removeField(idx: number) {
+    if (value.fields.length <= 1) return;
+    const next = value.fields.filter((_, i) => i !== idx);
+    onChange({ ...value, fields: next });
+  }
+
+  function addField() {
+    if (value.fields.length >= CONTACT_FORM_MAX_FIELDS) return;
+    // Pick the next key not already in the list; falls back to 'message'.
+    const used = new Set(value.fields.map((f) => f.key));
+    const free = CONTACT_FORM_FIELD_KEYS.find((k) => !used.has(k)) ?? 'message';
+    const next: ContactFormConfig['fields'][number] = {
+      key: free,
+      label: free.charAt(0).toUpperCase() + free.slice(1),
+      required: false,
+    };
+    onChange({ ...value, fields: [...value.fields, next] });
+  }
+
+  function patchEsp(provider: 'mailchimp' | 'mailerlite' | 'webhook', kv: Record<string, string>) {
+    const esps = { ...(value.esps ?? {}) };
+    if (provider === 'webhook') {
+      const url = kv.url ?? '';
+      esps.webhook = url ? { url } : undefined;
+    } else if (provider === 'mailchimp') {
+      const cur = esps.mailchimp ?? { listId: '', audienceId: '' };
+      const merged = { ...cur, ...kv };
+      // Drop the entire mailchimp config when both id fields are empty so we
+      // don't persist an empty record on the server.
+      if (!merged.listId && !merged.audienceId && !merged.apiKey) {
+        esps.mailchimp = undefined;
+      } else {
+        esps.mailchimp = merged;
+      }
+    } else {
+      const cur = esps.mailerlite ?? { groupId: '' };
+      const merged = { ...cur, ...kv };
+      if (!merged.groupId && !merged.apiKey) {
+        esps.mailerlite = undefined;
+      } else {
+        esps.mailerlite = merged;
+      }
+    }
+    onChange({ ...value, esps });
+  }
+
+  return (
+    <View style={styles.section}>
+      <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+        {t.section}
+      </Text>
+
+      <View style={[styles.switchRow, { borderColor: theme.line.DEFAULT }]}>
+        <Text style={[styles.switchLabel, { color: theme.ink[100] }]}>
+          {t.toggle}
+        </Text>
+        <Switch
+          value={value.enabled}
+          onValueChange={(v) => onChange({ ...value, enabled: v })}
+          trackColor={{ false: theme.bg[2], true: copper[500] }}
+          thumbColor="#FFFFFF"
+        />
+      </View>
+
+      <Text style={[styles.hint, { color: theme.ink[400] }]}>{t.hint}</Text>
+
+      {/* Submit label */}
+      <View style={[styles.fieldWrap, { opacity: disabled ? 0.5 : 1 }]}>
+        <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+          {t.submitLabel}
+        </Text>
+        <TextInput
+          style={[
+            styles.input,
+            {
+              color: theme.ink[100],
+              borderColor: theme.line.DEFAULT,
+              backgroundColor: theme.bg[1],
+            },
+          ]}
+          editable={!disabled}
+          value={value.submitLabel}
+          onChangeText={(v) => onChange({ ...value, submitLabel: v.slice(0, 40) })}
+          placeholder={t.submitLabelPlaceholder}
+          placeholderTextColor={theme.ink[500]}
+        />
+      </View>
+
+      {/* Field rows */}
+      <Text style={[styles.fieldLabel, { color: theme.ink[400], marginTop: 8 }]}>
+        {t.fieldsLabel}
+      </Text>
+      {value.fields.map((f, idx) => (
+        <View
+          key={`${f.key}-${idx}`}
+          style={[
+            styles.contactFieldRow,
+            { borderColor: theme.line.DEFAULT, opacity: disabled ? 0.5 : 1 },
+          ]}
+        >
+          <View style={{ flex: 1, gap: 6 }}>
+            <View style={styles.contactFieldKeyRow}>
+              {CONTACT_FORM_FIELD_KEYS.map((k) => {
+                const active = f.key === k;
+                return (
+                  <TouchableOpacity
+                    key={k}
+                    onPress={() => !disabled && updateField(idx, { key: k })}
+                    disabled={disabled}
+                    style={[
+                      styles.contactFieldKeyChip,
+                      {
+                        backgroundColor: active ? copper[500] : theme.bg[1],
+                        borderColor: active ? copper[500] : theme.line.DEFAULT,
+                      },
+                    ]}
+                    activeOpacity={0.85}
+                  >
+                    <Text
+                      style={[
+                        styles.contactFieldKeyText,
+                        { color: active ? '#FFFFFF' : theme.ink[200] },
+                      ]}
+                    >
+                      {t.fieldKeys[k]}
+                    </Text>
+                  </TouchableOpacity>
+                );
+              })}
+            </View>
+            <TextInput
+              style={[
+                styles.input,
+                {
+                  color: theme.ink[100],
+                  borderColor: theme.line.DEFAULT,
+                  backgroundColor: theme.bg[1],
+                },
+              ]}
+              value={f.label}
+              onChangeText={(v) => updateField(idx, { label: v.slice(0, 60) })}
+              placeholder={t.fieldLabelPlaceholder}
+              placeholderTextColor={theme.ink[500]}
+              editable={!disabled}
+            />
+            <View style={styles.contactFieldFooter}>
+              <View style={styles.contactFieldRequired}>
+                <Switch
+                  value={f.required}
+                  onValueChange={(v) => updateField(idx, { required: v })}
+                  trackColor={{ false: theme.bg[2], true: copper[500] }}
+                  thumbColor="#FFFFFF"
+                  disabled={disabled}
+                />
+                <Text style={[styles.hint, { color: theme.ink[400] }]}>
+                  {t.requiredLabel}
+                </Text>
+              </View>
+              {value.fields.length > 1 ? (
+                <TouchableOpacity
+                  onPress={() => !disabled && removeField(idx)}
+                  disabled={disabled}
+                  hitSlop={8}
+                >
+                  <Text style={[styles.contactFieldRemove, { color: theme.ink[400] }]}>
+                    {t.removeField}
+                  </Text>
+                </TouchableOpacity>
+              ) : null}
+            </View>
+          </View>
+        </View>
+      ))}
+
+      {value.fields.length < CONTACT_FORM_MAX_FIELDS ? (
+        <TouchableOpacity
+          onPress={() => !disabled && addField()}
+          disabled={disabled}
+          style={[
+            styles.contactAddBtn,
+            { borderColor: theme.line.DEFAULT, opacity: disabled ? 0.5 : 1 },
+          ]}
+        >
+          <Text style={[styles.contactAddBtnText, { color: copper[500] }]}>
+            {t.addField}
+          </Text>
+        </TouchableOpacity>
+      ) : null}
+
+      {/* ESP integrations */}
+      <Text
+        style={[styles.fieldLabel, { color: theme.ink[400], marginTop: 16 }]}
+      >
+        {t.espSection}
+      </Text>
+      <Text style={[styles.hint, { color: theme.ink[400] }]}>{t.espHint}</Text>
+
+      {/* Mailchimp */}
+      <View style={[styles.fieldWrap, { opacity: disabled ? 0.5 : 1 }]}>
+        <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+          Mailchimp
+        </Text>
+        <TextInput
+          style={[
+            styles.input,
+            {
+              color: theme.ink[100],
+              borderColor: theme.line.DEFAULT,
+              backgroundColor: theme.bg[1],
+            },
+          ]}
+          editable={!disabled}
+          value={value.esps?.mailchimp?.listId ?? ''}
+          onChangeText={(v) => patchEsp('mailchimp', { listId: v.trim() })}
+          placeholder={t.mailchimpListId}
+          placeholderTextColor={theme.ink[500]}
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
+        <TextInput
+          style={[
+            styles.input,
+            {
+              color: theme.ink[100],
+              borderColor: theme.line.DEFAULT,
+              backgroundColor: theme.bg[1],
+            },
+          ]}
+          editable={!disabled}
+          value={value.esps?.mailchimp?.audienceId ?? ''}
+          onChangeText={(v) => patchEsp('mailchimp', { audienceId: v.trim() })}
+          placeholder={t.mailchimpAudienceId}
+          placeholderTextColor={theme.ink[500]}
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
+        <TextInput
+          style={[
+            styles.input,
+            {
+              color: theme.ink[100],
+              borderColor: theme.line.DEFAULT,
+              backgroundColor: theme.bg[1],
+            },
+          ]}
+          editable={!disabled}
+          value={value.esps?.mailchimp?.apiKey ?? ''}
+          onChangeText={(v) => patchEsp('mailchimp', { apiKey: v.trim() })}
+          placeholder={t.mailchimpApiKey}
+          placeholderTextColor={theme.ink[500]}
+          autoCapitalize="none"
+          autoCorrect={false}
+          secureTextEntry
+        />
+      </View>
+
+      {/* MailerLite */}
+      <View style={[styles.fieldWrap, { opacity: disabled ? 0.5 : 1 }]}>
+        <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+          MailerLite
+        </Text>
+        <TextInput
+          style={[
+            styles.input,
+            {
+              color: theme.ink[100],
+              borderColor: theme.line.DEFAULT,
+              backgroundColor: theme.bg[1],
+            },
+          ]}
+          editable={!disabled}
+          value={value.esps?.mailerlite?.groupId ?? ''}
+          onChangeText={(v) => patchEsp('mailerlite', { groupId: v.trim() })}
+          placeholder={t.mailerliteGroupId}
+          placeholderTextColor={theme.ink[500]}
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
+        <TextInput
+          style={[
+            styles.input,
+            {
+              color: theme.ink[100],
+              borderColor: theme.line.DEFAULT,
+              backgroundColor: theme.bg[1],
+            },
+          ]}
+          editable={!disabled}
+          value={value.esps?.mailerlite?.apiKey ?? ''}
+          onChangeText={(v) => patchEsp('mailerlite', { apiKey: v.trim() })}
+          placeholder={t.mailerliteApiKey}
+          placeholderTextColor={theme.ink[500]}
+          autoCapitalize="none"
+          autoCorrect={false}
+          secureTextEntry
+        />
+      </View>
+
+      {/* Webhook */}
+      <View style={[styles.fieldWrap, { opacity: disabled ? 0.5 : 1 }]}>
+        <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+          {t.webhookLabel}
+        </Text>
+        <TextInput
+          style={[
+            styles.input,
+            {
+              color: theme.ink[100],
+              borderColor: theme.line.DEFAULT,
+              backgroundColor: theme.bg[1],
+            },
+          ]}
+          editable={!disabled}
+          value={value.esps?.webhook?.url ?? ''}
+          onChangeText={(v) => patchEsp('webhook', { url: v.trim() })}
+          placeholder={t.webhookPlaceholder}
+          placeholderTextColor={theme.ink[500]}
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
+      </View>
+    </View>
+  );
+}
+
 // ---------- helpers exposed to screens ----------
 /** Strip empty string keys from a record before saving. */
 export function stripEmpty<T extends Record<string, string>>(obj: T): Partial<T> {
@@ -1218,4 +1593,46 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     flexShrink: 1,
   },
+  // M1 — ContactFormSection rows
+  contactFieldRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 12,
+    paddingVertical: 12,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+    borderWidth: 1,
+  },
+  contactFieldKeyRow: {
+    flexDirection: 'row',
+    gap: 6,
+  },
+  contactFieldKeyChip: {
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 999,
+    borderWidth: 1,
+  },
+  contactFieldKeyText: { fontSize: 11, fontWeight: '600', textTransform: 'uppercase', letterSpacing: 0.4 },
+  contactFieldFooter: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 4,
+  },
+  contactFieldRequired: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  contactFieldRemove: { fontSize: 12, fontWeight: '500' },
+  contactAddBtn: {
+    paddingVertical: 10,
+    paddingHorizontal: 14,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderStyle: 'dashed',
+    alignItems: 'center',
+  },
+  contactAddBtnText: { fontSize: 13, fontWeight: '600' },
 });

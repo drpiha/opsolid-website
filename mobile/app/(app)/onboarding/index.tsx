@@ -34,7 +34,17 @@ import Animated, {
   interpolate,
   Extrapolation,
 } from 'react-native-reanimated';
-import { ChevronLeft, Camera, Check, Phone, Mail, MessageCircle } from 'lucide-react-native';
+import {
+  ChevronLeft,
+  Camera,
+  Check,
+  Phone,
+  Mail,
+  MessageCircle,
+  Settings,
+  ScanLine,
+  Link as LinkIcon,
+} from 'lucide-react-native';
 
 import { useTheme } from '../../../src/lib/theme/ThemeProvider';
 import { teal, copper } from '../../../src/lib/theme/tokens';
@@ -44,9 +54,19 @@ import { Button } from '../../../src/components/ui/Button';
 import {
   useOnboardingDraftStore,
   type OnboardingContactChip,
+  type OnboardingOrigin,
 } from '../../../src/store/onboardingDraftStore';
-import { createCard, updateCard, uploadPhoto } from '../../../src/lib/api/cards';
-import type { CardPatchInput } from '../../../src/lib/api/types';
+import {
+  createCard,
+  updateCard,
+  uploadPhoto,
+  draftFromImage,
+  draftFromUrl,
+} from '../../../src/lib/api/cards';
+import type {
+  CardPatchInput,
+  DraftFields,
+} from '../../../src/lib/api/types';
 
 const TEMPLATE_IDS: number[] = [1, 6, 14, 84];
 
@@ -63,6 +83,15 @@ export default function OnboardingScreen() {
   const [photoError, setPhotoError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [publishError, setPublishError] = useState<string | null>(null);
+
+  // M1 — Step 0 transient state. Held outside the persisted draft because
+  // these are short-lived UI states (the URL input, the in-progress upload
+  // spinner, the "OCR not available on this server" notice).
+  const [scanLoading, setScanLoading] = useState(false);
+  const [urlLoading, setUrlLoading] = useState(false);
+  const [urlValue, setUrlValue] = useState('');
+  const [urlMode, setUrlMode] = useState(false);
+  const [stepZeroError, setStepZeroError] = useState<string | null>(null);
 
   // Re-run the enter animation whenever step changes
   const stepAnim = useSharedValue(1);
@@ -85,17 +114,136 @@ export default function OnboardingScreen() {
     ],
   }));
 
-  function goStep(next: 1 | 2 | 3 | 4 | 5) {
+  function goStep(next: 0 | 1 | 2 | 3 | 4 | 5) {
     setDraft({ step: next });
   }
 
   function back() {
-    if (draft.step > 1) goStep((draft.step - 1) as 1 | 2 | 3 | 4 | 5);
+    if (urlMode) {
+      setUrlMode(false);
+      setStepZeroError(null);
+      return;
+    }
+    // From Step 5 we always send the user back to Step 0 so they can pick a
+    // different on-ramp without typing through 4 manual steps just to undo
+    // the OCR/URL pre-fill. Step 1 also returns to Step 0 (the new entry).
+    if (draft.step === 5 && (draft.origin === 'scan' || draft.origin === 'url')) {
+      setDraft({ step: 0, origin: null });
+      return;
+    }
+    if (draft.step > 0) goStep((draft.step - 1) as 0 | 1 | 2 | 3 | 4);
   }
 
   function skipWizard() {
     setDraft({ skipped: true });
     router.replace('/(app)/cards' as never);
+  }
+
+  // -------------- Step 0 — pick an on-ramp --------------
+
+  function pickManual() {
+    setStepZeroError(null);
+    setDraft({ origin: 'manual', step: 1 });
+  }
+
+  /**
+   * Apply DraftFields from OCR or URL extraction onto the persisted draft.
+   * Preserves the user's existing inputs when a field is missing in the
+   * upstream response, but also overwrites a previously-prefilled value
+   * if the user runs scan/url a second time (e.g. picked the wrong card).
+   */
+  function applyDraftFields(fields: DraftFields, origin: OnboardingOrigin) {
+    const patch: Parameters<typeof setDraft>[0] = { origin, step: 5 };
+    if (fields.name) patch.name = fields.name;
+    if (fields.title) patch.jobTitle = fields.title;
+    if (fields.company) patch.company = fields.company;
+    if (fields.bio) patch.bio = fields.bio;
+    if (fields.website) patch.website = fields.website;
+    // Map either email or phone into the contact chip — prefer email since
+    // it's the lower-friction follow-up channel.
+    if (fields.email) {
+      patch.contactChip = 'email';
+      patch.contactValue = fields.email;
+    } else if (fields.phone) {
+      patch.contactChip = 'phone';
+      patch.contactValue = fields.phone;
+    }
+    setDraft(patch);
+  }
+
+  async function pickScan() {
+    if (scanLoading) return;
+    setStepZeroError(null);
+    setScanLoading(true);
+    try {
+      const perm = await ImagePicker.requestCameraPermissionsAsync();
+      if (!perm.granted) {
+        setStepZeroError(t.scanPermissionDenied);
+        setScanLoading(false);
+        return;
+      }
+      // expo-image-picker's launchCameraAsync is the closest "open the
+      // system camera" affordance available without adding `expo-camera`
+      // (the constraint forbids new mobile deps). The system camera
+      // already provides framing guides; we don't render an overlay.
+      const result = await ImagePicker.launchCameraAsync({
+        mediaTypes: ['images'],
+        allowsEditing: true,
+        // 4:3 mirrors the natural aspect of a paper card (88×54mm). The
+        // user can still pinch-crop in the editor when their photo is
+        // off-axis; we let them.
+        aspect: [4, 3],
+        quality: 0.7,
+        base64: true,
+      });
+      if (result.canceled || !result.assets[0]?.base64) {
+        setScanLoading(false);
+        return;
+      }
+      const fields = await draftFromImage(result.assets[0].base64);
+      applyDraftFields(fields, 'scan');
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : '';
+      if (msg.includes('503') || msg.includes('ocr_not_configured')) {
+        setStepZeroError(t.scanComingSoon);
+      } else if (msg.includes('429')) {
+        setStepZeroError(t.scanRateLimit);
+      } else {
+        setStepZeroError(t.scanError);
+      }
+    } finally {
+      setScanLoading(false);
+    }
+  }
+
+  async function submitUrl() {
+    if (urlLoading) return;
+    const v = urlValue.trim();
+    if (v.length < 4) {
+      setStepZeroError(t.urlInvalid);
+      return;
+    }
+    setStepZeroError(null);
+    setUrlLoading(true);
+    try {
+      const fields = await draftFromUrl(v);
+      applyDraftFields(fields, 'url');
+      setUrlMode(false);
+      setUrlValue('');
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : '';
+      if (msg.includes('503') || msg.includes('ai_not_configured')) {
+        setStepZeroError(t.urlComingSoon);
+      } else if (msg.includes('429')) {
+        setStepZeroError(t.urlRateLimit);
+      } else if (msg.includes('502') || msg.includes('fetch_failed')) {
+        setStepZeroError(t.urlFetchFailed);
+      } else {
+        setStepZeroError(t.urlError);
+      }
+    } finally {
+      setUrlLoading(false);
+    }
   }
 
   // Step 1 — photo
@@ -136,6 +284,13 @@ export default function OnboardingScreen() {
         else if (draft.contactChip === 'phone') cardData.phone = cv;
         else cardData.whatsapp = cv;
       }
+      // M1 — extra fields the OCR / URL pre-fill may have populated. Always
+      // included when non-empty; the user could also have edited them on
+      // the Step 5 preview (we read the live draft state, not the upstream
+      // pre-fill, so any user edits win).
+      if (draft.company.trim()) cardData.company = draft.company.trim();
+      if (draft.website.trim()) cardData.website = draft.website.trim();
+      if (draft.bio.trim()) cardData.bio = draft.bio.trim();
 
       const created = await createCard({
         templateId: draft.templateId,
@@ -182,7 +337,10 @@ export default function OnboardingScreen() {
 
   // ---------- Render ----------
 
-  const showSkip = draft.step === 1 || draft.step === 3;
+  const showSkip = draft.step === 0 || draft.step === 1 || draft.step === 3;
+  // Progress bar — Step 0 renders 0/5 segments lit. After the user picks an
+  // on-ramp the existing 1/5–5/5 progression takes over.
+  const progressFilled = draft.step;
 
   return (
     <View style={[styles.root, { backgroundColor: theme.bg[0] }]}>
@@ -192,7 +350,7 @@ export default function OnboardingScreen() {
         <View style={styles.chrome}>
           <View style={styles.chromeRow}>
             <View style={styles.chromeLeft}>
-              {draft.step > 1 ? (
+              {draft.step > 0 || urlMode ? (
                 <TouchableOpacity onPress={back} hitSlop={12} style={styles.chromeBtn}>
                   <ChevronLeft size={22} color={theme.ink[200]} />
                 </TouchableOpacity>
@@ -208,7 +366,7 @@ export default function OnboardingScreen() {
                     styles.progressSeg,
                     {
                       backgroundColor:
-                        n <= draft.step ? teal[500] : theme.bg[3],
+                        n <= progressFilled ? teal[500] : theme.bg[3],
                     },
                   ]}
                 />
@@ -237,6 +395,26 @@ export default function OnboardingScreen() {
               contentContainerStyle={styles.scroll}
               keyboardShouldPersistTaps="handled"
             >
+              {draft.step === 0 ? (
+                <Step0Origin
+                  urlMode={urlMode}
+                  urlValue={urlValue}
+                  onUrlChange={setUrlValue}
+                  onUrlEnter={() => setUrlMode(true)}
+                  onUrlSubmit={() => void submitUrl()}
+                  scanLoading={scanLoading}
+                  urlLoading={urlLoading}
+                  onManual={pickManual}
+                  onScan={() => void pickScan()}
+                  errorMsg={stepZeroError}
+                  t={t}
+                  inkColor={theme.ink[100]}
+                  hintColor={theme.ink[400]}
+                  bgColor={theme.bg[1]}
+                  borderColor={theme.line.DEFAULT}
+                />
+              ) : null}
+
               {draft.step === 1 ? (
                 <Step1Photo
                   photoUri={draft.photoUri}
@@ -301,16 +479,41 @@ export default function OnboardingScreen() {
                     photoUri: draft.photoUri,
                     name: draft.name,
                     jobTitle: draft.jobTitle,
+                    company: draft.company,
+                    website: draft.website,
                     contactChip: draft.contactChip,
                     contactValue: draft.contactValue,
                     templateId: draft.templateId,
+                    origin: draft.origin,
                   }}
+                  // M1 — when the user landed on Step 5 via the OCR/URL fast-
+                  // path, expose inline editors for each pre-filled field.
+                  // The wizard atom is the single source of truth so each
+                  // setter just patches one key.
+                  onChangeName={(v) => setDraft({ name: v })}
+                  onChangeJobTitle={(v) => setDraft({ jobTitle: v })}
+                  onChangeCompany={(v) => setDraft({ company: v })}
+                  onChangeWebsite={(v) => setDraft({ website: v })}
+                  onChangeContact={(v) => setDraft({ contactValue: v })}
+                  onChangeContactChip={(c) =>
+                    setDraft({ contactChip: c, contactValue: '' })
+                  }
                   saving={saving}
                   publishError={publishError}
                   onPublish={() => void handlePublish()}
                   onEditDetails={() => {
-                    draft.reset();
-                    router.replace('/(app)/cards/create' as never);
+                    // Manual origin → keep legacy "reset and re-create" path
+                    // so the user lands on the dedicated cards/create screen
+                    // (richer field set than the wizard).
+                    if (draft.origin === 'manual' || draft.origin === null) {
+                      draft.reset();
+                      router.replace('/(app)/cards/create' as never);
+                      return;
+                    }
+                    // Scan / URL origin → step back into the manual wizard
+                    // starting at the photo step. The pre-filled fields stay
+                    // intact so the user can fine-tune typed inputs.
+                    setDraft({ step: 1 });
                   }}
                   t={t}
                   inkColor={theme.ink[100]}
@@ -327,8 +530,184 @@ export default function OnboardingScreen() {
   );
 }
 
-// ----------------------------------------------------------------- STEP 1
+// ----------------------------------------------------------------- STEP 0
 type T = ReturnType<typeof useTranslations>['onboarding'];
+
+/**
+ * M1 — Step 0: pick an on-ramp.
+ *
+ * Three big tap-cards (Manuel / Kartvizit tara / URL'den oluştur). Picking
+ * Scan or URL fires the corresponding API call inline; on success the
+ * wizard fast-forwards to Step 5 (preview + publish) with the form
+ * pre-filled. Manual hands off to the existing 5-step flow.
+ *
+ * The URL path has an in-screen "paste your URL" sub-mode so the user
+ * doesn't get bumped to a new screen — keeps the entry-point screen
+ * contained.
+ */
+function Step0Origin(props: {
+  urlMode: boolean;
+  urlValue: string;
+  onUrlChange: (v: string) => void;
+  onUrlEnter: () => void;
+  onUrlSubmit: () => void;
+  scanLoading: boolean;
+  urlLoading: boolean;
+  onManual: () => void;
+  onScan: () => void;
+  errorMsg: string | null;
+  t: T;
+  inkColor: string;
+  hintColor: string;
+  bgColor: string;
+  borderColor: string;
+}) {
+  if (props.urlMode) {
+    return (
+      <View style={styles.stepBody}>
+        <Text style={[styles.stepTitle, { color: props.inkColor }]}>
+          {props.t.step0UrlTitle}
+        </Text>
+        <Text style={[styles.stepHint, { color: props.hintColor }]}>
+          {props.t.step0UrlHint}
+        </Text>
+
+        <View style={{ alignSelf: 'stretch', marginTop: 24 }}>
+          <Input
+            autoFocus
+            value={props.urlValue}
+            onChangeText={props.onUrlChange}
+            placeholder={props.t.step0UrlPlaceholder}
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="url"
+            returnKeyType="go"
+            onSubmitEditing={() => props.onUrlSubmit()}
+          />
+        </View>
+
+        {props.errorMsg ? (
+          <Text style={[styles.photoErr, { color: '#B8514B' }]}>
+            {props.errorMsg}
+          </Text>
+        ) : null}
+
+        <Pressable
+          onPress={props.onUrlSubmit}
+          disabled={props.urlLoading || props.urlValue.trim().length < 4}
+          style={[
+            styles.publishBtn,
+            {
+              backgroundColor: teal[500],
+              opacity:
+                props.urlLoading || props.urlValue.trim().length < 4 ? 0.6 : 1,
+            },
+          ]}
+        >
+          {props.urlLoading ? (
+            <ActivityIndicator size="small" color="#FFFFFF" />
+          ) : (
+            <Text style={styles.publishBtnText}>{props.t.step0UrlSubmit}</Text>
+          )}
+        </Pressable>
+      </View>
+    );
+  }
+
+  // 3 big tap-cards. Each card is a row with an icon column + a stacked
+  // label / hint column. Cards visually mirror the BrandHeader minimal
+  // style — copper-on-teal accents stay reserved for the publish CTA.
+  type OnRamp = {
+    key: 'manual' | 'scan' | 'url';
+    icon: typeof Settings;
+    title: string;
+    hint: string;
+    onPress: () => void;
+    loading?: boolean;
+  };
+  const ramps: OnRamp[] = [
+    {
+      key: 'manual',
+      icon: Settings,
+      title: props.t.step0RampManualTitle,
+      hint: props.t.step0RampManualHint,
+      onPress: props.onManual,
+    },
+    {
+      key: 'scan',
+      icon: ScanLine,
+      title: props.t.step0RampScanTitle,
+      hint: props.t.step0RampScanHint,
+      onPress: props.onScan,
+      loading: props.scanLoading,
+    },
+    {
+      key: 'url',
+      icon: LinkIcon,
+      title: props.t.step0RampUrlTitle,
+      hint: props.t.step0RampUrlHint,
+      onPress: props.onUrlEnter,
+    },
+  ];
+
+  return (
+    <View style={styles.stepBody}>
+      <Text style={[styles.stepTitle, { color: props.inkColor }]}>
+        {props.t.step0Title}
+      </Text>
+      <Text style={[styles.stepHint, { color: props.hintColor }]}>
+        {props.t.step0Hint}
+      </Text>
+
+      <View style={{ alignSelf: 'stretch', marginTop: 32, gap: 12 }}>
+        {ramps.map((r) => {
+          const Icon = r.icon;
+          return (
+            <Pressable
+              key={r.key}
+              onPress={r.onPress}
+              disabled={r.loading}
+              style={[
+                styles.rampCard,
+                {
+                  backgroundColor: props.bgColor,
+                  borderColor: props.borderColor,
+                  opacity: r.loading ? 0.65 : 1,
+                },
+              ]}
+            >
+              <View
+                style={[styles.rampIconWrap, { backgroundColor: teal[50] }]}
+              >
+                {r.loading ? (
+                  <ActivityIndicator size="small" color={teal[500]} />
+                ) : (
+                  <Icon size={22} color={teal[600]} />
+                )}
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.rampTitle, { color: props.inkColor }]}>
+                  {r.title}
+                </Text>
+                <Text style={[styles.rampHint, { color: props.hintColor }]}>
+                  {r.hint}
+                </Text>
+              </View>
+            </Pressable>
+          );
+        })}
+      </View>
+
+      {props.errorMsg ? (
+        <Text style={[styles.photoErr, { color: '#B8514B' }]}>
+          {props.errorMsg}
+        </Text>
+      ) : null}
+    </View>
+  );
+}
+
+// ----------------------------------------------------------------- STEP 1
 
 function Step1Photo(props: {
   photoUri: string | null;
@@ -609,10 +988,19 @@ function Step5Preview(props: {
     photoUri: string | null;
     name: string;
     jobTitle: string;
+    company: string;
+    website: string;
     contactChip: OnboardingContactChip;
     contactValue: string;
     templateId: number;
+    origin: OnboardingOrigin | null;
   };
+  onChangeName: (v: string) => void;
+  onChangeJobTitle: (v: string) => void;
+  onChangeCompany: (v: string) => void;
+  onChangeWebsite: (v: string) => void;
+  onChangeContact: (v: string) => void;
+  onChangeContactChip: (c: OnboardingContactChip) => void;
   saving: boolean;
   publishError: string | null;
   onPublish: () => void;
@@ -628,13 +1016,27 @@ function Step5Preview(props: {
     String(draft.templateId) as '1' | '6' | '14' | '84'
   ];
 
+  // M1 — When the user landed here via OCR/URL, surface inline editors so
+  // they can correct the pre-fill without bouncing through Steps 1–4. Manual
+  // origin keeps the legacy read-only preview because the user already typed
+  // each value themselves.
+  const showInlineEditors = draft.origin === 'scan' || draft.origin === 'url';
+  const contactPlaceholder =
+    draft.contactChip === 'phone'
+      ? props.t.step3PlaceholderPhone
+      : draft.contactChip === 'email'
+        ? props.t.step3PlaceholderEmail
+        : props.t.step3PlaceholderWhatsApp;
+  const contactKeyboard =
+    draft.contactChip === 'email' ? 'email-address' : 'phone-pad';
+
   return (
     <View style={styles.stepBody}>
       <Text style={[styles.stepTitle, { color: props.inkColor }]}>
         {props.t.step5Title}
       </Text>
       <Text style={[styles.stepHint, { color: props.hintColor }]}>
-        {props.t.step5Hint}
+        {showInlineEditors ? props.t.step5HintReview : props.t.step5Hint}
       </Text>
 
       <View
@@ -671,6 +1073,11 @@ function Step5Preview(props: {
               {draft.jobTitle}
             </Text>
           ) : null}
+          {draft.company ? (
+            <Text style={[styles.previewTitle, { color: props.hintColor }]}>
+              {draft.company}
+            </Text>
+          ) : null}
           {draft.contactValue ? (
             <Text style={[styles.previewContact, { color: props.inkColor }]}>
               {draft.contactValue}
@@ -683,6 +1090,82 @@ function Step5Preview(props: {
           </View>
         </View>
       </View>
+
+      {showInlineEditors ? (
+        <View style={{ alignSelf: 'stretch', marginTop: 24, gap: 12 }}>
+          <Input
+            value={draft.name}
+            onChangeText={props.onChangeName}
+            placeholder={props.t.step2NamePlaceholder}
+            autoCapitalize="words"
+          />
+          <Input
+            value={draft.jobTitle}
+            onChangeText={props.onChangeJobTitle}
+            placeholder={props.t.step2TitlePlaceholder}
+            autoCapitalize="words"
+          />
+          <Input
+            value={draft.company}
+            onChangeText={props.onChangeCompany}
+            placeholder={props.t.step5CompanyPlaceholder}
+            autoCapitalize="words"
+          />
+          <View style={[styles.chipRow, { marginTop: 4 }]}>
+            {(
+              [
+                { key: 'phone' as const, label: props.t.step3ChipPhone, icon: Phone },
+                { key: 'email' as const, label: props.t.step3ChipEmail, icon: Mail },
+                {
+                  key: 'whatsapp' as const,
+                  label: props.t.step3ChipWhatsApp,
+                  icon: MessageCircle,
+                },
+              ]
+            ).map((c) => {
+              const active = draft.contactChip === c.key;
+              const Icon = c.icon;
+              return (
+                <Pressable
+                  key={c.key}
+                  onPress={() => props.onChangeContactChip(c.key)}
+                  style={[
+                    styles.chip,
+                    {
+                      backgroundColor: active ? teal[500] : props.bgColor,
+                      borderColor: active ? teal[500] : props.borderColor,
+                    },
+                  ]}
+                >
+                  <Icon size={16} color={active ? '#FFFFFF' : props.inkColor} />
+                  <Text
+                    style={[
+                      styles.chipLabel,
+                      { color: active ? '#FFFFFF' : props.inkColor },
+                    ]}
+                  >
+                    {c.label}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </View>
+          <Input
+            value={draft.contactValue}
+            onChangeText={props.onChangeContact}
+            placeholder={contactPlaceholder}
+            keyboardType={contactKeyboard}
+            autoCapitalize="none"
+          />
+          <Input
+            value={draft.website}
+            onChangeText={props.onChangeWebsite}
+            placeholder={props.t.step5WebsitePlaceholder}
+            keyboardType="url"
+            autoCapitalize="none"
+          />
+        </View>
+      ) : null}
 
       {props.publishError ? (
         <Text style={[styles.publishErr, { color: '#B8514B' }]}>
@@ -780,6 +1263,26 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingHorizontal: 24,
   },
+
+  // Step 0
+  rampCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 14,
+    paddingVertical: 16,
+    paddingHorizontal: 16,
+    borderRadius: 14,
+    borderWidth: 1,
+  },
+  rampIconWrap: {
+    width: 44,
+    height: 44,
+    borderRadius: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  rampTitle: { fontSize: 15, fontWeight: '600', marginBottom: 2 },
+  rampHint: { fontSize: 12, lineHeight: 16 },
 
   // Step 1
   photoCircle: {

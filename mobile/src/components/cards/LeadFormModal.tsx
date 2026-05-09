@@ -34,18 +34,33 @@ import { useTheme } from '../../lib/theme/ThemeProvider';
 import { copper } from '../../lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../lib/i18n/locale';
 import { submitLead } from '../../lib/api/crm';
+import type { ContactFormConfig } from '../../lib/api/types';
 
 type Props = {
   visible: boolean;
   slug: string;
   onClose: () => void;
+  /** M1 — Form-builder-lite. When set + `enabled === true`, the modal renders
+   *  the owner-defined fields/labels/required flags instead of the legacy
+   *  hard-coded shape. The submit endpoint is unchanged — server's lead route
+   *  validates each field independently and forwards to the configured ESP. */
+  contactForm?: ContactFormConfig | null;
 };
 
 const MESSAGE_MAX = 500;
 
-export function LeadFormModal({ visible, slug, onClose }: Props) {
+export function LeadFormModal({ visible, slug, onClose, contactForm }: Props) {
   const theme = useTheme();
   const t = useTranslations(detectLocale()).crm.lead;
+  // When the owner has enabled a custom contact form, drive the field set
+  // off their config; otherwise render the legacy hard-coded shape so existing
+  // cards keep working without any data migration. Each rendered field still
+  // maps to one of the server's accepted keys (name / email / message), so
+  // submitLead() continues to type-check.
+  const useCustom =
+    Boolean(contactForm?.enabled) &&
+    Array.isArray(contactForm?.fields) &&
+    (contactForm?.fields.length ?? 0) > 0;
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -83,15 +98,37 @@ export function LeadFormModal({ visible, slug, onClose }: Props) {
     return () => clearTimeout(id);
   }, [success, onClose]);
 
-  const canSubmit = name.trim().length > 0 && consent && !sending;
+  // Determine submit-readiness. Custom form: every required field must be
+  // non-empty + consent. Legacy: name + consent (existing behaviour).
+  const customRequiredOk = useCustom
+    ? (contactForm?.fields ?? []).every((f) => {
+        if (!f.required) return true;
+        if (f.key === 'name') return name.trim().length > 0;
+        if (f.key === 'email') return email.trim().length > 0;
+        if (f.key === 'message') return message.trim().length > 0;
+        return true;
+      })
+    : true;
+  const canSubmit =
+    (useCustom
+      ? customRequiredOk
+      : name.trim().length > 0) &&
+    consent &&
+    !sending;
 
   async function handleSubmit() {
     if (!canSubmit) return;
     setSending(true);
     setErrorMsg(null);
     try {
+      // Server's lead schema requires `name` non-empty. When the owner removed
+      // the name field from the custom form, fall back to the email's local-
+      // part so we never 400 the visitor for an owner choice they made later.
+      const fallbackName =
+        name.trim() ||
+        (email.trim() ? email.trim().split('@')[0] : 'Anonymous');
       await submitLead(slug, {
-        name: name.trim(),
+        name: useCustom ? fallbackName : name.trim(),
         email: email.trim() || undefined,
         phone: phone.trim() || undefined,
         company: company.trim() || undefined,
@@ -154,67 +191,121 @@ export function LeadFormModal({ visible, slug, onClose }: Props) {
                 keyboardDismissMode="interactive"
                 automaticallyAdjustKeyboardInsets
               >
-                <Field
-                  label={t.nameLabel}
-                  required
-                  value={name}
-                  onChange={setName}
-                  placeholder={t.namePlaceholder}
-                />
-                <Field
-                  label={t.emailLabel}
-                  value={email}
-                  onChange={setEmail}
-                  placeholder={t.emailPlaceholder}
-                  keyboardType="email-address"
-                />
-                <Field
-                  label={t.phoneLabel}
-                  value={phone}
-                  onChange={setPhone}
-                  placeholder={t.phonePlaceholder}
-                  keyboardType="phone-pad"
-                />
-                <Field
-                  label={t.companyLabel}
-                  value={company}
-                  onChange={setCompany}
-                  placeholder={t.companyPlaceholder}
-                />
-                <Field
-                  label={t.interestLabel}
-                  value={interest}
-                  onChange={setInterest}
-                  placeholder={t.interestPlaceholder}
-                />
+                {useCustom ? (
+                  // M1 — Owner-defined fields. We map each configured field
+                  // back onto our existing name/email/message state so the
+                  // submit handler stays stable. Phone / company / interest
+                  // never appear in the custom shape (intentional v0 scope).
+                  <>
+                    {(contactForm?.fields ?? []).map((f) => {
+                      if (f.key === 'message') {
+                        return (
+                          <View key="message" style={styles.fieldWrap}>
+                            <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+                              {f.label}{f.required ? ' *' : ''}
+                            </Text>
+                            <TextInput
+                              style={[
+                                styles.input,
+                                styles.multiline,
+                                {
+                                  color: theme.ink[100],
+                                  borderColor: theme.line.DEFAULT,
+                                  backgroundColor: theme.bg[2],
+                                },
+                              ]}
+                              value={message}
+                              onChangeText={(v) => setMessage(v.slice(0, MESSAGE_MAX))}
+                              placeholderTextColor={theme.ink[500]}
+                              multiline
+                              numberOfLines={4}
+                              maxLength={MESSAGE_MAX}
+                              textAlignVertical="top"
+                            />
+                            <Text style={[styles.charCounter, { color: theme.ink[400] }]}>
+                              {message.length}/{MESSAGE_MAX}
+                            </Text>
+                          </View>
+                        );
+                      }
+                      const isEmail = f.key === 'email';
+                      return (
+                        <Field
+                          key={f.key}
+                          label={f.label}
+                          required={f.required}
+                          value={isEmail ? email : name}
+                          onChange={isEmail ? setEmail : setName}
+                          keyboardType={isEmail ? 'email-address' : undefined}
+                        />
+                      );
+                    })}
+                  </>
+                ) : (
+                  <>
+                    <Field
+                      label={t.nameLabel}
+                      required
+                      value={name}
+                      onChange={setName}
+                      placeholder={t.namePlaceholder}
+                    />
+                    <Field
+                      label={t.emailLabel}
+                      value={email}
+                      onChange={setEmail}
+                      placeholder={t.emailPlaceholder}
+                      keyboardType="email-address"
+                    />
+                    <Field
+                      label={t.phoneLabel}
+                      value={phone}
+                      onChange={setPhone}
+                      placeholder={t.phonePlaceholder}
+                      keyboardType="phone-pad"
+                    />
+                    <Field
+                      label={t.companyLabel}
+                      value={company}
+                      onChange={setCompany}
+                      placeholder={t.companyPlaceholder}
+                    />
+                    <Field
+                      label={t.interestLabel}
+                      value={interest}
+                      onChange={setInterest}
+                      placeholder={t.interestPlaceholder}
+                    />
 
-                <View style={styles.fieldWrap}>
-                  <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
-                    {t.messageLabel}
-                  </Text>
-                  <TextInput
-                    style={[
-                      styles.input,
-                      styles.multiline,
-                      {
-                        color: theme.ink[100],
-                        borderColor: theme.line.DEFAULT,
-                        backgroundColor: theme.bg[2],
-                      },
-                    ]}
-                    value={message}
-                    onChangeText={(v) => setMessage(v.slice(0, MESSAGE_MAX))}
-                    placeholder={t.messagePlaceholder}
-                    placeholderTextColor={theme.ink[500]}
-                    multiline
-                    numberOfLines={4}
-                    maxLength={MESSAGE_MAX}
-                    textAlignVertical="top"
-                  />
-                  <Text style={[styles.charCounter, { color: theme.ink[400] }]}>
-                    {message.length}/{MESSAGE_MAX}
-                  </Text>
-                </View>
+                    <View style={styles.fieldWrap}>
+                      <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+                        {t.messageLabel}
+                      </Text>
+                      <TextInput
+                        style={[
+                          styles.input,
+                          styles.multiline,
+                          {
+                            color: theme.ink[100],
+                            borderColor: theme.line.DEFAULT,
+                            backgroundColor: theme.bg[2],
+                          },
+                        ]}
+                        value={message}
+                        onChangeText={(v) => setMessage(v.slice(0, MESSAGE_MAX))}
+                        placeholder={t.messagePlaceholder}
+                        placeholderTextColor={theme.ink[500]}
+                        multiline
+                        numberOfLines={4}
+                        maxLength={MESSAGE_MAX}
+                        textAlignVertical="top"
+                      />
+                      <Text style={[styles.charCounter, { color: theme.ink[400] }]}>
+                        {message.length}/{MESSAGE_MAX}
+                      </Text>
+                    </View>
+                  </>
+                )}
 
                 <Pressable
                   onPress={() => setConsent((c) => !c)}
@@ -255,7 +346,11 @@ export function LeadFormModal({ visible, slug, onClose }: Props) {
                     <ActivityIndicator size="small" color="#FFFFFF" />
                   ) : (
                     <Text style={styles.submitBtnText}>
-                      {sending ? t.sending : t.send}
+                      {sending
+                        ? t.sending
+                        : useCustom && contactForm?.submitLabel
+                          ? contactForm.submitLabel
+                          : t.send}
                     </Text>
                   )}
                 </Pressable>

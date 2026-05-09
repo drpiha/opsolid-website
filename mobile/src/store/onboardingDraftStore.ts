@@ -17,11 +17,25 @@ import * as SecureStore from 'expo-secure-store';
 
 export type OnboardingContactChip = 'phone' | 'email' | 'whatsapp';
 
+/**
+ * M1 — origin tracks which on-ramp the user picked on Step 0:
+ *   - 'manual'  → existing 5-step typed flow (default)
+ *   - 'scan'    → camera scan, OCR pre-fill, jumps to Step 5
+ *   - 'url'     → URL paste, AI scrape pre-fill, jumps to Step 5
+ *
+ * The wizard renders Step 0 only when origin === null (the user hasn't
+ * picked yet). Once they pick, the rest of the flow is driven by the
+ * existing per-step components — origin is informational from there on.
+ */
+export type OnboardingOrigin = 'manual' | 'scan' | 'url';
+
 const STORAGE_KEY_SKIPPED = 'verso.onboarding.skipped';
 const STORAGE_KEY_PUBLISHED = 'verso.onboarding.everPublished';
 
 export type OnboardingDraft = {
-  step: 1 | 2 | 3 | 4 | 5;
+  /** 0 = pick an on-ramp; 1–5 = the legacy wizard steps. */
+  step: 0 | 1 | 2 | 3 | 4 | 5;
+  origin: OnboardingOrigin | null;
   photoUri: string | null;
   photoMimeType: string;
   name: string;
@@ -29,6 +43,13 @@ export type OnboardingDraft = {
   contactChip: OnboardingContactChip;
   contactValue: string;
   templateId: number;
+  /** M1 — extra fields the OCR / URL scrape can pre-fill beyond the basic
+   *  3 (name/title/contact). Persisted on publish via cardData. Empty
+   *  string means "not pre-filled"; the user can still edit them on the
+   *  preview screen before publishing. */
+  company: string;
+  website: string;
+  bio: string;
   /** Once true, the wizard never auto-shows again (route guard). */
   skipped: boolean;
   /** Once true, the wizard never auto-shows again (survives card deletion). */
@@ -50,7 +71,8 @@ type OnboardingDraftStore = OnboardingDraft & {
 };
 
 const INITIAL_DRAFT: Omit<OnboardingDraft, 'skipped' | 'everPublished' | 'hydrated'> = {
-  step: 1,
+  step: 0,
+  origin: null,
   photoUri: null,
   photoMimeType: 'image/jpeg',
   name: '',
@@ -58,6 +80,9 @@ const INITIAL_DRAFT: Omit<OnboardingDraft, 'skipped' | 'everPublished' | 'hydrat
   contactChip: 'email',
   contactValue: '',
   templateId: 1,
+  company: '',
+  website: '',
+  bio: '',
 };
 
 export const useOnboardingDraftStore = create<OnboardingDraftStore>((set, get) => ({
