@@ -2,6 +2,60 @@
 
 Living log of mobile-app feature work. Updated per session, not auto-generated.
 
+## 🏁 Autonomous run complete — 2026-05-09
+
+The "Verso by OpSolid" mobile app is **feature-complete through M6 + all polish follow-ups**. The autonomous run shipped 16 commits today, ~30,000 lines of code + docs, on top of the existing Sprint F4 baseline.
+
+| What | Where |
+| --- | --- |
+| **All 6 milestones DONE** | M1=`905bea1`, M2=`5578326`, M3=`a54bbfa`, M4=`79c2884`, M5=`30ad150`, M6=`c2c4d92` |
+| **M6 polish DONE** | Email templates 7-locale `7a8254b`, errorSave + expo-haptics `5629ac5`, 96 templates × 4 locales `7943dd6` |
+| **Final APK** | `android-build-23` (commit `c2c4d92` — does NOT include the 3 polish commits since the build was triggered before them; one more `gh workflow run mobile-build.yml --ref main` produces an even-finaler APK including polish) |
+| **Strategic docs** | `mobile/assets/world-class-research.md`, `world-class-milestone-plan.md`, `carrd-comparison-plan.md` |
+
+### What Verso ships today (everything below is on `main` and in the next APK build)
+
+- **7 locales:** EN / DE / TR / ES / IT / FR / AR (with RTL) — across mobile UI, auth emails, and 96 card templates
+- **Frictionless creation:** OCR scan-a-paper-card + URL-to-AI-scrape onboarding wedge alongside the manual 5-step wizard
+- **Discover at scale:** pg_trgm full-text search, 24 sector tags + filter chips, people-you-may-know carousel
+- **Network growth:** 6-char referral codes per user, bidirectional save flow, share-event telemetry, public-viewer "Create your own" deep-link, 5 curated embed providers, Linktree-style template, gallery lightbox
+- **Real-time comms:** Expo Push notifications (messages + inbox requests + mutual-saves + event reminders), 5s polling foreground / 0 polling backgrounded, per-user notification prefs
+- **Premium tier €7/mo or €60/yr:** Stripe-managed, gates 5 cards / custom domain v1 / advanced analytics / password protection / HTML export / tip jar — all behind a paywall modal
+- **Form-builder-lite:** drag-3-fields-and-go contact form on every public card with Mailchimp / MailerLite / webhook integrations
+- **Settings:** Light/Dark/System theme + 7 native-name language picker + biometric + about + version + sharing-analytics + refer-a-friend
+- **Card UX:** animated 4-deep card-deck on My Cards, 3-tab edit form (Profil/Tasarım/Gelişmiş), template horizontal carousel + tap-to-preview, live preview FAB, brand-color split mini-card chip
+- **Verso brand:** Add-Contact icon (white person + dominant + on solid teal), turquoise Aegean palette, BrandHeader on every authenticated tab
+
+### What Hasan needs to do next
+
+1. **Reconnect the phone via ADB-WiFi** (see Step 1 of the older NEXT SESSION CHECKLIST below).
+2. **Trigger one more APK build** to fold in the three polish commits: `gh workflow run mobile-build.yml --ref main`.
+3. **Install** the latest `android-build-N` with `adb install -r`.
+4. **Apply migrations + seed events** on the VPS:
+   ```bash
+   ssh root@srv1150632.hstgr.cloud "docker exec opsolid-app npx prisma migrate deploy && docker exec opsolid-app npx tsx scripts/seed-events.ts"
+   ```
+5. **Set the new env vars** on `/opt/opsolid-website/.env`:
+   - `GOOGLE_CLOUD_VISION_API_KEY` (M1 OCR — Cloud Vision EU)
+   - `ANTHROPIC_API_KEY` (M1 URL scrape — Claude Haiku)
+   - `EXPO_ACCESS_TOKEN` (M4 push receipts — optional but recommended)
+   - `STRIPE_PRICE_PRO_MONTHLY` + `STRIPE_PRICE_PRO_YEARLY` (M5 paywall — create the prices in Stripe dashboard first)
+   - `STRIPE_WEBHOOK_SECRET` (M5 webhook signature — copy from the Stripe dashboard endpoint config)
+6. **Force-recreate the container** so env_file changes take effect: `docker compose up -d --force-recreate opsolid`.
+7. **Configure the Stripe webhook** at `https://opsolid.de/api/webhooks/stripe` (events: `customer.subscription.*`, `invoice.paid`, `invoice.payment_failed`).
+
+### Outstanding polish (none load-bearing)
+
+- Order-flow email templates (album-photo-pending / cancellation / card-live / confirmation / lead-notification / revision-ready) still ship in 3 locales (en/de/tr). The `TransactionalLocale` split in `src/lib/email/shell.ts` keeps that working — translating those is a copywriter pass, not a code task. Logged as TODO in commit `7a8254b`.
+- The 96-template ES/IT/FR/AR copy is machine-translated dictionary substitution. Native-reviewer polish optional.
+- Any future maker that adds a new locale needs to widen 3 places: `mobile/src/lib/i18n/locale.ts`, `src/lib/i18n.ts`, `src/lib/email/shell.ts`. The `TemplateLocale` is already keyed on the same `Locale` so new locales auto-broadcast to every template's `COPY.fallback` returning English.
+
+### Pickup prompt for any future session
+
+> "Verso is feature-complete through M6 + polish. Read `mobile/PROGRESS.md` top section for the 7-step deploy checklist. The 6-milestone history is in the commit log between `905bea1` and `7943dd6`. The strategic docs under `mobile/assets/world-class-*.md` and `carrd-comparison-plan.md` describe what was shipped vs deferred. Anything not in the polish backlog is intentional."
+
+---
+
 ## Status snapshot — 2026-05-09
 
 The "Verso by OpSolid" mobile app is feature-complete through **Sprint F4**. Current head of `main` is on top of `e46038d` (F4). Hasan is offline / the phone is on a different WiFi than the maintainer machine. The APK is built and on a GitHub Release; nothing else needs to be built. The next session is purely an install + migrate + seed run.
