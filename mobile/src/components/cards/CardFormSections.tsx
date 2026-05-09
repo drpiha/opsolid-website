@@ -1455,6 +1455,187 @@ export function ContactFormSection({
   );
 }
 
+// ---------- TagsSection (M2 — sector / topic tags) ----------
+// Owner picks up to 5 tags from a curated 24-sector menu, plus optionally a
+// custom kebab-case slug. Tags drive Discover chip-strip filtering and the
+// people-you-may-know sector-overlap score on the server. Slug is the stable
+// network identifier; display label is locale-aware.
+
+import { CURATED_TAG_SLUGS, MAX_TAGS_PER_CARD, normalizeTagSlug } from '../../lib/discover/tags';
+
+export function TagsSection({
+  theme,
+  selected,
+  onChange,
+}: {
+  theme: ThemeTokens;
+  selected: string[];
+  onChange: (next: string[]) => void;
+}) {
+  const tTags = useTranslations(detectLocale()).tags;
+  const [customDraft, setCustomDraft] = useState('');
+
+  const atCap = selected.length >= MAX_TAGS_PER_CARD;
+  const selectedSet = new Set(selected);
+
+  function toggle(tag: string) {
+    if (selectedSet.has(tag)) {
+      onChange(selected.filter((t) => t !== tag));
+    } else if (!atCap) {
+      onChange([...selected, tag]);
+    }
+  }
+
+  function addCustom() {
+    const normalized = normalizeTagSlug(customDraft);
+    if (!normalized) return;
+    if (selectedSet.has(normalized)) {
+      setCustomDraft('');
+      return;
+    }
+    if (atCap) return;
+    onChange([...selected, normalized]);
+    setCustomDraft('');
+  }
+
+  // Curated tags are split into the curated palette (chips) and any selected
+  // tag the user has previously added that's NOT in the curated set — those
+  // get rendered as "custom" pills above the curated palette so the user
+  // can still see + remove them.
+  const customSelections = selected.filter(
+    (t) => !(CURATED_TAG_SLUGS as readonly string[]).includes(t),
+  );
+
+  return (
+    <View style={styles.section}>
+      <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+        {tTags.section}
+      </Text>
+      <Text style={[styles.hint, { color: theme.ink[400] }]}>
+        {tTags.hint.replace('{n}', String(MAX_TAGS_PER_CARD))}
+      </Text>
+
+      {/* Custom selections — surface above the curated palette so the user
+          can see them in the same chip-row visual language. */}
+      {customSelections.length > 0 ? (
+        <View style={styles.tagWrap}>
+          {customSelections.map((tag) => (
+            <TouchableOpacity
+              key={tag}
+              onPress={() => toggle(tag)}
+              activeOpacity={0.85}
+              style={[
+                styles.tagChip,
+                styles.tagChipCustom,
+                {
+                  backgroundColor: copper[500],
+                  borderColor: copper[500],
+                },
+              ]}
+            >
+              <Check size={12} color="#FFFFFF" strokeWidth={2.5} />
+              <Text style={[styles.tagChipText, { color: '#FFFFFF' }]} numberOfLines={1}>
+                {tag}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      ) : null}
+
+      {/* Curated palette — 24 chips. Selected: copper-filled. */}
+      <View style={styles.tagWrap}>
+        {CURATED_TAG_SLUGS.map((tag) => {
+          const isSelected = selectedSet.has(tag);
+          const disabled = !isSelected && atCap;
+          const label = (tTags.labels as Record<string, string | undefined>)[tag] ?? tag;
+          return (
+            <TouchableOpacity
+              key={tag}
+              onPress={() => toggle(tag)}
+              disabled={disabled}
+              activeOpacity={0.85}
+              style={[
+                styles.tagChip,
+                {
+                  backgroundColor: isSelected ? copper[500] : theme.bg[1],
+                  borderColor: isSelected ? copper[500] : theme.line.DEFAULT,
+                  opacity: disabled ? 0.4 : 1,
+                },
+              ]}
+            >
+              {isSelected && <Check size={12} color="#FFFFFF" strokeWidth={2.5} />}
+              <Text
+                style={[
+                  styles.tagChipText,
+                  { color: isSelected ? '#FFFFFF' : theme.ink[200] },
+                ]}
+                numberOfLines={1}
+              >
+                {label}
+              </Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+
+      {/* Custom tag input. Disabled when at cap so the user knows they need
+          to remove one before adding a custom slug. */}
+      <View style={styles.tagCustomRow}>
+        <TextInput
+          style={[
+            styles.input,
+            {
+              flex: 1,
+              color: theme.ink[100],
+              borderColor: theme.line.DEFAULT,
+              backgroundColor: theme.bg[1],
+              opacity: atCap ? 0.5 : 1,
+            },
+          ]}
+          editable={!atCap}
+          value={customDraft}
+          onChangeText={(v) => setCustomDraft(v.slice(0, 24))}
+          placeholder={tTags.customPlaceholder}
+          placeholderTextColor={theme.ink[500]}
+          autoCapitalize="none"
+          autoCorrect={false}
+          onSubmitEditing={addCustom}
+          returnKeyType="done"
+        />
+        <TouchableOpacity
+          onPress={addCustom}
+          disabled={atCap || customDraft.trim().length === 0}
+          activeOpacity={0.85}
+          style={[
+            styles.tagAddBtn,
+            {
+              borderColor: theme.line.DEFAULT,
+              opacity: atCap || customDraft.trim().length === 0 ? 0.4 : 1,
+            },
+          ]}
+        >
+          <Text style={[styles.tagAddBtnText, { color: copper[500] }]}>
+            {tTags.add}
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
+
+/** Defensive read of tags from a stored cardData record. Drops non-strings. */
+export function asTags(v: unknown): string[] {
+  if (!Array.isArray(v)) return [];
+  const out: string[] = [];
+  for (const item of v) {
+    if (typeof item !== 'string') continue;
+    const norm = normalizeTagSlug(item);
+    if (norm) out.push(norm);
+  }
+  // Deduplicate while preserving order.
+  return Array.from(new Set(out)).slice(0, MAX_TAGS_PER_CARD);
+}
+
 // ---------- helpers exposed to screens ----------
 /** Strip empty string keys from a record before saving. */
 export function stripEmpty<T extends Record<string, string>>(obj: T): Partial<T> {
@@ -1635,4 +1816,42 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   contactAddBtnText: { fontSize: 13, fontWeight: '600' },
+  // M2 — TagsSection chips + custom input
+  tagWrap: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  tagChip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderRadius: 999,
+    borderWidth: 1,
+    maxWidth: '100%',
+  },
+  tagChipCustom: {
+    // Visually identical to selected curated chip; subclass exists in case
+    // we want to differentiate later (e.g. show a small "•" prefix).
+  },
+  tagChipText: {
+    fontSize: 13,
+    fontWeight: '500',
+    flexShrink: 1,
+  },
+  tagCustomRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  tagAddBtn: {
+    paddingVertical: 12,
+    paddingHorizontal: 14,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderStyle: 'dashed',
+  },
+  tagAddBtnText: { fontSize: 13, fontWeight: '600' },
 });

@@ -87,6 +87,39 @@ Two strategy docs were produced 2026-05-09 to plan Verso's path to category lead
 
 The plan's "Next-session resume" block names `mobile/assets/m1-implementation-plan.md` as the very first deliverable for the milestone-execution session — that file does NOT exist yet; it's the next thing to produce.
 
+### M2 — Discover at scale [DONE — committed]
+
+Shipped (2026-05-09):
+
+- **`pg_trgm` full-text search**. New migration `prisma/migrations/20260510000000_pg_trgm_search/migration.sql` enables the extension and creates 6 GIN trigram indexes on `card_data->>'<key>'` for `name`, `company`, `title`, `industry`, `city`, `bio`. Hand-written SQL because Prisma's `@@index` annotation doesn't support `gin_trgm_ops`. Plain `CREATE INDEX` (no CONCURRENTLY — Prisma migrations always run inside a transaction; lock window is acceptable at current scale).
+- **`GET /api/discover/cards`** rewritten. New `?q=` and `?tag=` params. The `q` path now uses `prisma.$queryRaw` with explicit `ILIKE` clauses across all six trigram-indexed JSONB accessors + `co.contact_name` so the planner picks up the GIN indexes (Prisma's `JsonFilter.string_contains` would fall back to a sequential scan). Cursor pagination preserved by resolving the cursor row's `(published_at, id)` and filtering `< (ts, id)`. The no-search path remains a plain `findMany` (covered by `idx_card_order_country` + the existing visibility composite).
+- **`?tag=` filter** uses Postgres JSONB containment: `card_data -> 'tags' @> '["design"]'::jsonb` (raw-SQL path) or Prisma `array_contains: [tag]` JsonFilter (no-search path). No new index — fits in <50ms at current size; revisit at 5k+ cards.
+- **`GET /api/v1/discover/suggestions`** — new auth-gated endpoint at `src/app/api/v1/discover/suggestions/route.ts`. Returns top 12 PUBLIC cards excluding the requester's own + already-saved. Scoring weights from spec: `0.3 * recency + 0.4 * mutual_saved + 0.2 * sector_overlap + 0.1 * same_city`. Recency decays linearly over 60 days. Mutual / sector overlap soft-cap at 5 to prevent power-saver dominance. In-memory `Map` cache, 60s TTL per user (revisit at 1k DAU). Cold-start guard: returns empty when the requester has zero signal (no saved cards, no city, no tags) so the mobile rail auto-hides on first install instead of showing a "newest cards" feed under a misleading label.
+- **Sector / topic tags**. Canonical 24-slug list in `src/lib/discover/tags.ts` (mirrored on mobile at `mobile/src/lib/discover/tags.ts`). New `cardData.tags: string[]` field validated by `CardDataSchema` (max 5, kebab-case, ≤24 chars). `normalizeTagSlug()` enforces shape on owner-side custom tags.
+- **Mobile `TagsSection`** in `mobile/src/components/cards/CardFormSections.tsx`. Chip multi-select from the curated 24-tag palette + custom-slug input. Selected chips are copper-filled with a Check icon; unselected are bg-1 outline. Wired into the edit screen's Gelişmiş tab between `ContactFormSection` and `FeedbackSection`. Saves to `cardData.tags`.
+- **Mobile Discover chip strip** above the search bar. Horizontal scrollable, "All" sentinel + 24 curated sectors. Active chip is teal-filled (`teal[500]`); inactive is `bg[2]` outline. Tap → debounce-free re-fetch with `?tag=<slug>`.
+- **Search debounce** trimmed from 400ms → **250ms** per spec. Search input wired to the new `q` param via `discoverCards({ q, tag })`.
+- **"X results for 'query'" header** above the results list, with a Clear button that wipes both `q` and the active tag chip. 3 message variants (q-only, tag-only, q+tag) localized in en/de/tr.
+- **"Tanıyabileceğin kişiler / People you may know / Vielleicht kennst du sie"** section on the Discover tab, between the events rail and the tag chip strip. Horizontal carousel of 12 ~120pt-wide tiles. Auto-hides when the suggestions endpoint returns 0 items (cold-start, auth failure, or 0-score across the candidate pool).
+- **i18n**. Added `discover.suggestionsTitle`, `discover.allTags`, `discover.resultsForQuery`, `discover.resultsForTag`, `discover.resultsForQueryAndTag`, `discover.clearSearch` plus a full `tags.*` block with `section`, `hint`, `customPlaceholder`, `add`, and 24 locale-aware `tags.labels.<slug>` strings for en/de/tr. Slugs stay English (network-stable); only the display label varies.
+
+Decisions logged:
+
+- **Suggestions scoring weights** ride the spec exactly (0.3 / 0.4 / 0.2 / 0.1). Mutual-saved is the heaviest signal because LinkedIn's PYMK demonstrates it's the strongest predictor of "actual" connection intent; recency is non-zero so brand-new cards still surface even when they have no graph signal yet.
+- **`pg_trgm` extension creation** requires `CREATE EXTENSION` privilege. Our prod uses the default Postgres superuser inside the Docker container — no DBA escalation needed. On managed Postgres providers (AWS RDS, Supabase, etc.) this would need a one-time `rds_superuser` grant, but our self-hosted topology sidesteps that.
+- **Chip strip on 0-card sectors**. Tapping a chip whose tag has zero matching cards lands on the existing empty-state copy ("Sonuç yok / No results / Keine Ergebnisse"). The chip itself is NOT hidden — keeping the full palette visible matters more than the friction of a momentary empty state, and the result count in the header (`0 results in Music`) is honest. We may add a "{slug}-empty" hint at M3 ("Be the first {sector} on Verso") but it's gold-plate for M2.
+- **No new third-party deps**. The full-text search is pure raw SQL; the suggestions scoring is pure JS. Mobile got two new local module files (`mobile/src/lib/discover/tags.ts` + section component) — no new package additions.
+
+Deploy steps for Hasan:
+
+1. **Apply the migration** on the VPS:
+   ```bash
+   docker exec opsolid-app npx prisma migrate deploy
+   ```
+   This runs `20260510000000_pg_trgm_search/migration.sql` — additive + idempotent (uses `IF NOT EXISTS`). Safe to apply with the app live; brief lock per `CREATE INDEX` (~ms at 16 rows). The `CREATE EXTENSION` call needs superuser on the connection string; our default container Postgres connection is already superuser, so no extra setup.
+2. **No env-var changes required**. Suggestions endpoint is auth-gated via the existing bearer-only middleware; no new secrets.
+3. APK rebuild via the usual `gh workflow run` — ships the chip strip, suggestions rail, and TagsSection on the next build. Owner cards saved before M2 will simply have `cardData.tags === undefined`; the chip-strip filter still works (those cards just don't match any sector tag).
+
 ### M1 — Frictionless creation [DONE — committed]
 
 Shipped (2026-05-09):

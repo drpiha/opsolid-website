@@ -441,6 +441,23 @@ export const CardDataSchema = z.object({
         .default("info"),
     })
     .optional(),
+  /** M2 — sector / topic tags. Curated kebab-case slugs (`tech`, `design`, …)
+   *  plus the owner's free-form custom tags. Capped at 5 / card and 24
+   *  characters / tag. Drives the Discover chip-strip filter and the people-
+   *  you-may-know sector-overlap score. The slug is the network-stable
+   *  identifier; display labels come from `tags.<slug>` in the locale files. */
+  tags: z
+    .array(
+      z
+        .string()
+        .trim()
+        .toLowerCase()
+        .min(1)
+        .max(24)
+        .regex(/^[a-z][a-z0-9-]{0,23}$/, "Ungültiger Tag — nur kleinbuchstaben, ziffern und bindestriche"),
+    )
+    .max(5)
+    .optional(),
   /** M1 — Form-builder-lite + ESP webhook integration (Carrd amendment).
    *  Owner-defined override of the public-card "Bana Ulaş / Get in touch"
    *  form. When `enabled === true` the public viewer renders these fields

@@ -41,6 +41,8 @@ import {
   FeedbackSection,
   EventsAttendingSection,
   ContactFormSection,
+  TagsSection,
+  asTags,
   DEFAULT_CONTACT_FORM,
   STATUS_BANNER_TONES,
   DEFAULT_PRIMARY_HEX,
@@ -248,6 +250,9 @@ export default function CardEditScreen() {
     DEFAULT_CONTACT_FORM,
   );
   const [feedbackEnabled, setFeedbackEnabled] = useState<boolean>(false);
+  // M2 — sector / topic tags. Capped at 5 in TagsSection. Persists into
+  // cardData.tags on save; round-trips through the existing PATCH.
+  const [tags, setTags] = useState<string[]>([]);
   // Sprint F2 — events the card is attending. Mirrors `attendingEventIds` from
   // the owner GET. Saved via a separate POST after the main PATCH (see
   // handleSave). Track the originally-loaded set so we only fire the events
@@ -331,6 +336,7 @@ export default function CardEditScreen() {
         setFaqs(asFaqs(cd.faqs));
         setStatusBanner(asStatusBanner(cd.statusBanner));
         setContactForm(asContactForm(cd.contactForm));
+        setTags(asTags(cd.tags));
         // feedbackEnabled lives on top-level CardOrder column (Phase 8.4),
         // exposed on owner GET /api/v1/cards/:id (CARD_API_SELECT).
         setFeedbackEnabled(c.feedbackEnabled === true);
@@ -411,6 +417,11 @@ export default function CardEditScreen() {
         text: statusBanner.text.trim(),
         tone: statusBanner.tone,
       };
+      // M2 — Sector / topic tags. Persist when non-empty; omit otherwise so
+      // a card without tags doesn't carry an empty array on the wire.
+      if (tags.length > 0) {
+        cardData.tags = tags;
+      }
       // M1 — Form-builder-lite. Persist the contactForm config when the
       // owner has either turned it on or made any non-default changes.
       // Same round-trip pattern as statusBanner so toggling off propagates
@@ -648,6 +659,7 @@ export default function CardEditScreen() {
           >
             <StatusBannerSection theme={theme} value={statusBanner} onChange={setStatusBanner} />
             <ContactFormSection theme={theme} value={contactForm} onChange={setContactForm} />
+            <TagsSection theme={theme} selected={tags} onChange={setTags} />
             <FeedbackSection theme={theme} value={feedbackEnabled} onChange={setFeedbackEnabled} />
             <EventsAttendingSection
               theme={theme}
