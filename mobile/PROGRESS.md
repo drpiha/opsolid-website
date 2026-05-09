@@ -4,38 +4,77 @@ Living log of mobile-app feature work. Updated per session, not auto-generated.
 
 ## Status snapshot — 2026-05-09
 
-The "Verso by OpSolid" mobile app is feature-complete through **Sprint F4**. The current head of `main` is commit `f750f1a` (this docs commit) on top of `e46038d` (F4).
+The "Verso by OpSolid" mobile app is feature-complete through **Sprint F4**. Current head of `main` is on top of `e46038d` (F4). Hasan is offline / the phone is on a different WiFi than the maintainer machine. The APK is built and on a GitHub Release; nothing else needs to be built. The next session is purely an install + migrate + seed run.
 
-**APK builds shipped today:**
-- `android-build-22` — commit `e46038d`, includes Sprint 7 + black-screen fix + F2 (Events) + F3 (Contacts) + F4 (Messaging). **This is the latest.** Tag mismatch note: GitHub Actions `run_number` increments monotonically per workflow trigger, so the release tag is `android-build-22` even though the file in this repo's history is the 23rd APK we've built.
+---
 
-**To install on Hasan's phone (when it reconnects via ADB-WiFi):**
+## ▶ NEXT SESSION CHECKLIST (do these in order)
 
-```
-gh release download android-build-22 --pattern "*.apk" --dir /tmp --clobber
-adb install -r /tmp/opsolid-android-0.1.0-b22.apk
-```
+If you are picking this up fresh — from the same machine Hasan was using, or a different machine — run through these. Each step is independent and idempotent. Read `mobile/CLAUDE.md` for repo conventions if anything in here is unclear.
 
-Stable keystore is in GitHub Secrets, so `-r` install preserves Google login. No uninstall needed.
+### Step 1 — Get the phone back on ADB-WiFi
 
-**Server-side migrations + seed (Hasan runs these from his terminal):**
+Phone: `de.opsolid.mobile`. Ask Hasan for the phone's current LAN IP (Settings → WiFi → tap the network → IP address). Then on the dev machine:
 
-```
-docker exec opsolid-app npx prisma migrate deploy
-docker exec opsolid-app npx tsx scripts/seed-events.ts
+```powershell
+$adb = "$env:LOCALAPPDATA\Android\Sdk\platform-tools\adb.exe"
+& $adb connect <PHONE_IP>:5555
+& $adb devices             # phone should show as "device" (not "offline")
 ```
 
-The first applies BOTH the `add_events` and `add_messages` migrations (they're additive, safe). The second populates the Events tab + Discover rail with 4 fictional fairs (DMEXCO / Bits & Pretzels / Webrazzi Zirvesi / IHM München) and links the seeded demo cards as attendees.
+If `adb connect` rejects with `unauthorized`, the phone needs a one-time USB connect to re-authorize the host's RSA key. Helper in `scripts/mobile-adb-wifi.ps1`.
 
-**What you'll see after install + migrate + seed:**
+### Step 2 — Install the latest APK (login preserved)
 
-- New Verso "Add Contact" icon on the launcher (white person silhouette + dominant white + on solid teal).
-- App opens to a teal loading view (no more black screen) → cards screen with the animated 4-deep card-deck and 64pt teal FAB.
-- 6th tab "Events" between Discover and Contacts; Discover gets an "Upcoming events" rail above search.
-- Inbox row taps open a thread chat with the other side. 15s polling, optimistic send, accept/decline pill on pending requests.
-- Empty Contacts state offers "Tanıdığım kişileri ekle" — one-tap seeds 5 demo cards as saved contacts.
+The latest release is **`android-build-22`** on `https://github.com/drpiha/opsolid-website/releases`. Tag mismatch note: GitHub Actions `run_number` drives the tag, so this is the 22nd workflow run, not the 22nd APK we've built — but it's the LATEST commit on `main` (`e46038d`, all sprints through F4).
+
+```powershell
+gh release download android-build-22 --pattern "*.apk" --dir $env:TEMP --clobber
+& $adb install -r "$env:TEMP\opsolid-android-0.1.0-b22.apk"
+```
+
+`-r` preserves Google login + biometric pref + secure-store tokens because the keystore is stable (GitHub Secrets `KEYSTORE_BASE64` + `KEYSTORE_PASSWORD`).
+
+### Step 3 — Apply server migrations + seed events
+
+The mobile app expects `Event`, `EventAttendee`, and `Message` tables that don't exist on prod yet. Two new migrations are committed but **not applied**. Run from anywhere with SSH access:
+
+```bash
+ssh root@srv1150632.hstgr.cloud "docker exec opsolid-app npx prisma migrate deploy"
+ssh root@srv1150632.hstgr.cloud "docker exec opsolid-app npx tsx scripts/seed-events.ts"
+```
+
+Both are additive + idempotent. Migration creates 3 tables (`events`, `event_attendees`, `messages`). Seed populates 4 fictional fairs (DMEXCO / Bits & Pretzels / Webrazzi Zirvesi / IHM München) and assigns the existing demo cards as attendees.
+
+If `seed-events.ts` is not in `/app/scripts/` inside the container, copy it first (the seed-public-cards pattern from earlier in this PROGRESS file applies):
+
+```bash
+ssh root@srv1150632.hstgr.cloud "docker exec -u 0 opsolid-app mkdir -p /app/scripts && docker cp /opt/opsolid-website/scripts/seed-events.ts opsolid-app:/app/scripts/seed-events.ts && docker exec opsolid-app npx tsx scripts/seed-events.ts"
+```
+
+### Step 4 — Smoke-test on phone
+
+After install + migrate + seed, expect:
+
+- New Verso "Add Contact" icon on the launcher (white person silhouette + dominant white `+` on solid teal).
+- App opens to a teal loading view (no more black screen) → cards screen with animated 4-deep card-deck + 64pt teal FAB.
+- 6th tab "Events" between Discover and Contacts. Discover has an "Upcoming events" rail above search.
+- Inbox row tap → thread chat (15s polling, optimistic send, accept/decline pill).
+- Empty Contacts state offers "Tanıdığım kişileri ekle" — one tap seeds 5 demo cards as saved contacts.
 - Settings: Light/System/Dark + EN/DE/TR + About panel + version info.
-- Edit form: 3-tab segmented control (Profil/Tasarım/Gelişmiş), template horizontal carousel, full-screen template preview, live preview FAB on Tasarım tab, brand color split mini-card chip, status banner section, feedback toggle, and (NEW) attending events chip multi-select on Gelişmiş.
+- Edit form: 3 tabs (Profil/Tasarım/Gelişmiş), template horizontal carousel, full-screen template preview, live preview FAB on Tasarım, brand color split mini-card chip, status banner, feedback toggle, attending events chip multi-select on Gelişmiş.
+
+### Step 5 — If anything is broken, file by sprint and ask in chat
+
+The contributing sprints are tagged in commit messages (`Sprint F2`, `Sprint F3`, `Sprint F4`, `Sprint 6`, `Sprint 7`). `git log --oneline e46038d~10..e46038d -- mobile/` shows every relevant change. The maker agent commit messages reference exact files and decisions.
+
+---
+
+## Polish backlog (lower priority, after smoke-test)
+
+- Save catch in `mobile/app/(app)/cards/edit/[id].tsx` line 377 still says `t.errorLoad` (could not load) on save errors. Add `cards.errorSave` i18n key and use it.
+- Migrate `CardDeckTile.handlePressIn` from RN core `Vibration.vibrate` to `expo-haptics` (one file).
+- Add a regression test for `_layout.tsx` that mounts with `useAuthStore` stubbed to never resolve, fast-forward 10s with `jest.useFakeTimers()`, assert the rendered tree is no longer the loading View. Prevents black-screen regressions.
 
 ## Done — installed via APK build #21 (commit `1c25bd2`)
 
