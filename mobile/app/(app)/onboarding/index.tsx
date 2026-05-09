@@ -57,6 +57,7 @@ import {
   type OnboardingDraft,
   type OnboardingOrigin,
 } from '../../../src/store/onboardingDraftStore';
+import { useFirstRunStore } from '../../../src/store/firstRunStore';
 import {
   createCard,
   updateCard,
@@ -385,6 +386,7 @@ export default function OnboardingScreen() {
         setDraft({ photoUri: keepPhoto, photoMimeType: keepMime });
       }
 
+      useFirstRunStore.getState().markPendingCelebration(true);
       router.replace(`/(app)/cards/${created.id}` as never);
     } catch (err) {
       const msg = err instanceof Error ? err.message : '';
