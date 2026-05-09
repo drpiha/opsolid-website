@@ -10,6 +10,8 @@ import { copper } from '../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
 import { useOnboardingDraftStore } from '../../src/store/onboardingDraftStore';
 import { usePendingReferralStore } from '../../src/store/pendingReferralStore';
+import { useFirstRunStore } from '../../src/store/firstRunStore';
+import { TourProvider } from '../../src/components/tour/TourContext';
 import { listCards } from '../../src/lib/api/cards';
 import { redeemReferral } from '../../src/lib/api/referrals';
 import { registerForPushAsync } from '../../src/lib/push/register';
@@ -39,6 +41,7 @@ export default function AppLayout() {
   const onboardingSkipped = useOnboardingDraftStore((s) => s.skipped);
   const onboardingEverPublished = useOnboardingDraftStore((s) => s.everPublished);
   const hydrateOnboarding = useOnboardingDraftStore((s) => s.hydrate);
+  const hydrateFirstRun = useFirstRunStore((s) => s.hydrate);
 
   // M3 — pending referral attribution. The pendingReferralStore is populated
   // by the deep-link handler (verso://onboarding?ref=…) before the user has
@@ -58,11 +61,13 @@ export default function AppLayout() {
     if (!pendingRefHydrated) {
       void hydratePendingRef();
     }
+    void hydrateFirstRun();
   }, [
     onboardingHydrated,
     hydrateOnboarding,
     pendingRefHydrated,
     hydratePendingRef,
+    hydrateFirstRun,
   ]);
 
   useEffect(() => {
@@ -150,6 +155,7 @@ export default function AppLayout() {
   if (!unlocked) return null;
 
   return (
+    <TourProvider>
     <Tabs
       screenOptions={{
         headerStyle: { backgroundColor: theme.bg[0] },
@@ -230,5 +236,6 @@ export default function AppLayout() {
         options={{ href: null, headerShown: false, title: '' }}
       />
     </Tabs>
+    </TourProvider>
   );
 }
