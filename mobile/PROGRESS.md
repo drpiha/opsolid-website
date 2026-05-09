@@ -76,6 +76,21 @@ The contributing sprints are tagged in commit messages (`Sprint F2`, `Sprint F3`
 - Migrate `CardDeckTile.handlePressIn` from RN core `Vibration.vibrate` to `expo-haptics` (one file).
 - Add a regression test for `_layout.tsx` that mounts with `useAuthStore` stubbed to never resolve, fast-forward 10s with `jest.useFakeTimers()`, assert the rendered tree is no longer the loading View. Prevents black-screen regressions.
 
+---
+
+## World-class roadmap (post-Sprint-F4)
+
+Two strategy docs were produced 2026-05-09 to plan Verso's path to category leader. Read them in this order:
+
+1. **`mobile/assets/world-class-research.md`** — market gap analysis. The headline finding: Verso is feature-rich but ranks middle-of-pack on the two axes leaders actually compete on — *capture-the-other-person* (HiHello/Popl OCR scanners) and *post-meeting CRM workflow* (Mobilo/Tapni/Wave). Includes a search-tech migration ladder (ILIKE → `pg_trgm` GIN now → `tsvector` at 5–50k cards → Meilisearch at 50k+) and a 5-feature backlog sequenced over ~5.5 single-dev weeks.
+2. **`mobile/assets/world-class-milestone-plan.md`** — six 2–3 week milestones the maintainer should ship in order: **M1** Frictionless creation (sub-30s OCR + AI scrape) → **M2** Discover at scale (pg_trgm FTS + people-you-may-know scoring) → **M3** Network growth loops (referrals + bidirectional save + share telemetry) → **M4** Real-time comms (Expo Push + 5s polling first, WebSocket if traffic warrants) → **M5** Premium tier (€7/mo, gates 5 cards + custom domain + advanced analytics) → **M6** ES/FR/IT/AR with RTL. Three explicit *do-NOT-ship* calls (no plastic NFC cards, no template marketplace, no enterprise SSO in 2026). Five open questions for Hasan to answer before M5.
+
+The plan's "Next-session resume" block names `mobile/assets/m1-implementation-plan.md` as the very first deliverable for the milestone-execution session — that file does NOT exist yet; it's the next thing to produce.
+
+### Pickup prompt for the next session
+
+> "Verso is feature-complete through Sprint F4. The strategic plan in `mobile/assets/world-class-milestone-plan.md` lists six milestones; M1 (Frictionless creation) is next. Read both world-class docs, answer the five open questions Hasan flagged in the plan (or note Hasan's answers in chat), then produce `mobile/assets/m1-implementation-plan.md` — a file-and-line implementation brief like the prior `edit-experience-brief.md`. After Hasan reviews M1, dispatch a maker agent."
+
 ## Done — installed via APK build #21 (commit `1c25bd2`)
 
 ### Sprint 0–4 — earlier session (build #13)
