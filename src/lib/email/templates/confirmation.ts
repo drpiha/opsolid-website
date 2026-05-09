@@ -4,7 +4,7 @@
 // =============================================================================
 
 import {
-  type Locale,
+  type TransactionalLocale as Locale,
   button,
   detailsTable,
   escapeHtml,

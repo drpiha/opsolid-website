@@ -6,7 +6,7 @@
 
 import QRCode from "qrcode";
 import {
-  type Locale,
+  type TransactionalLocale as Locale,
   button,
   escapeHtml,
   inlineLink,

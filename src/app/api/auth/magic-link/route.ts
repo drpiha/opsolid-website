@@ -34,7 +34,10 @@ const RATE_WINDOW_MS = 60 * 60 * 1000;
 
 const RequestSchema = z.object({
   email: z.string().trim().toLowerCase().email().max(254),
-  locale: z.enum(["de", "en", "tr"]).optional(),
+  // M6 follow-up: auth-email templates ship in all 7 locales (en/de/tr +
+  // es/it/fr/ar). The order-flow emails still only ship in en/de/tr — this
+  // route only feeds magic-link, so the wider list is safe.
+  locale: z.enum(["de", "en", "tr", "es", "it", "fr", "ar"]).optional(),
 });
 
 export async function POST(req: Request) {

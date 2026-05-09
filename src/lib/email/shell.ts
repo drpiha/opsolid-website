@@ -3,13 +3,66 @@
 // Plain-table layout, inline styles only, max-width 600px, single column.
 // OpSolid editorial palette:
 //   #15120F ink  |  #F4EFE6 paper  |  #E8A252 amber  |  #9CA3A0 steel
+//
+// Locale split (intentional, post-M6):
+//   - `Locale` (7 entries) is the *auth* + *brand* locale set used by the
+//     magic-link / welcome / password-reset templates. RTL is honoured for
+//     the `ar` member.
+//   - `TransactionalLocale` (3 entries) is the narrower set still used by
+//     the order-scoped emails (cancellation, confirmation, lead-notification,
+//     card-live, revision-ready, album-photo-pending). Those templates have
+//     deeply localised copy (currencies, formal address forms, dates) that
+//     is out of scope for the M6-followup translation pass; widening them
+//     would require a separate copywriter sprint.
+//
+//   The shell renderers accept the wider `Locale` so auth emails work in all
+//   seven; non-auth callers hand off `TransactionalLocale` which up-casts.
 // =============================================================================
 
-export type Locale = "en" | "de" | "tr";
+export type Locale = "en" | "de" | "tr" | "es" | "it" | "fr" | "ar";
 
-export function normalizeLocale(value?: string | null): Locale {
+/**
+ * Narrow subset for transactional / order-scoped emails that haven't been
+ * translated to the four new locales yet. Order-flow routes use this via
+ * `normalizeLocale()` so they always pick a copy table that exists.
+ */
+export type TransactionalLocale = "en" | "de" | "tr";
+
+const SUPPORTED: readonly Locale[] = [
+  "en",
+  "de",
+  "tr",
+  "es",
+  "it",
+  "fr",
+  "ar",
+] as const;
+
+const RTL_LOCALES: ReadonlySet<Locale> = new Set<Locale>(["ar"]);
+
+/**
+ * Narrow normaliser for the order-flow emails (cancellation, lead, etc).
+ * Anything outside `en|de|tr` falls back to `en` because those templates
+ * don't have copy for the wider set.
+ */
+export function normalizeLocale(value?: string | null): TransactionalLocale {
   if (value === "de" || value === "tr" || value === "en") return value;
   return "en";
+}
+
+/**
+ * Wide picker for the auth-shell locale. Accepts BCP-47 tags like `de-AT`
+ * or `pt-BR` — only the primary subtag matters. Anything outside the
+ * 7-locale matrix falls back to `en`.
+ */
+export function pickLocale(input?: string | null): Locale {
+  if (!input) return "en";
+  const lc = String(input).toLowerCase().split("-")[0];
+  return (SUPPORTED as readonly string[]).includes(lc) ? (lc as Locale) : "en";
+}
+
+export function isRtlLocale(locale: Locale): boolean {
+  return RTL_LOCALES.has(locale);
 }
 
 const COLORS = {
@@ -41,6 +94,30 @@ function footerCopy(locale: Locale): { line1: string; line2: string } {
       line2: "Abonelikten çıkmak için STOP yazarak yanıtlayın.",
     };
   }
+  if (locale === "es") {
+    return {
+      line1: "OpSolid · opsolid.de",
+      line2: "Para darse de baja, responda con STOP.",
+    };
+  }
+  if (locale === "it") {
+    return {
+      line1: "OpSolid · opsolid.de",
+      line2: "Per annullare l'iscrizione, rispondi con STOP.",
+    };
+  }
+  if (locale === "fr") {
+    return {
+      line1: "OpSolid · opsolid.de",
+      line2: "Pour vous désabonner, répondez par STOP.",
+    };
+  }
+  if (locale === "ar") {
+    return {
+      line1: "OpSolid · opsolid.de",
+      line2: "لإلغاء الاشتراك، الرجاء الرد بكلمة STOP.",
+    };
+  }
   return {
     line1: "OpSolid · opsolid.de",
     line2: "Unsubscribe by replying STOP.",
@@ -50,32 +127,40 @@ function footerCopy(locale: Locale): { line1: string; line2: string } {
 export function renderShellHtml(input: ShellInput): string {
   const { preheader, headline, bodyInnerHtml, locale } = input;
   const footer = footerCopy(locale);
+  const rtl = isRtlLocale(locale);
+  // RTL: set dir="rtl" on the root + flip body alignment to right. CTA
+  // buttons are wrapped in their own role=presentation tables that don't
+  // depend on text-align, so they stay visually centered for both directions.
+  const dirAttr = rtl ? ' dir="rtl"' : "";
+  const bodyDirStyle = rtl
+    ? "direction:rtl;text-align:right;"
+    : "direction:ltr;text-align:left;";
   return `<!doctype html>
-<html lang="${locale}">
+<html lang="${locale}"${dirAttr}>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${escapeHtml(headline)}</title>
 </head>
-<body style="margin:0;padding:0;background:${COLORS.paperWarm};font-family:Georgia,'Times New Roman',serif;color:${COLORS.ink};">
+<body style="margin:0;padding:0;background:${COLORS.paperWarm};font-family:Georgia,'Times New Roman',serif;color:${COLORS.ink};${bodyDirStyle}">
 <div style="display:none;max-height:0;overflow:hidden;opacity:0;color:transparent;">${escapeHtml(preheader)}</div>
 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:${COLORS.paperWarm};">
   <tr>
     <td align="center" style="padding:32px 16px;">
       <table role="presentation" width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px;width:100%;background:${COLORS.paper};border:1px solid ${COLORS.rule};">
         <tr>
-          <td style="padding:28px 32px 16px 32px;border-bottom:1px solid ${COLORS.rule};">
+          <td style="padding:28px 32px 16px 32px;border-bottom:1px solid ${COLORS.rule};${bodyDirStyle}">
             <div style="font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:${COLORS.steel};">OpSolid</div>
             <h1 style="margin:8px 0 0 0;font-family:Georgia,'Times New Roman',serif;font-size:26px;line-height:1.2;color:${COLORS.ink};font-weight:normal;">${escapeHtml(headline)}</h1>
           </td>
         </tr>
         <tr>
-          <td style="padding:24px 32px 32px 32px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:${COLORS.ink};">
+          <td style="padding:24px 32px 32px 32px;font-family:Georgia,'Times New Roman',serif;font-size:16px;line-height:1.55;color:${COLORS.ink};${bodyDirStyle}">
             ${bodyInnerHtml}
           </td>
         </tr>
         <tr>
-          <td style="padding:16px 32px 24px 32px;border-top:1px solid ${COLORS.rule};font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.08em;color:${COLORS.steel};">
+          <td style="padding:16px 32px 24px 32px;border-top:1px solid ${COLORS.rule};font-family:'Courier New',monospace;font-size:11px;letter-spacing:0.08em;color:${COLORS.steel};${bodyDirStyle}">
             <div>${escapeHtml(footer.line1)}</div>
             <div style="margin-top:4px;">${escapeHtml(footer.line2)}</div>
           </td>

@@ -30,7 +30,10 @@ const RATE_WINDOW_MS = 60 * 60 * 1000;
 
 const RequestSchema = z.object({
   email: z.string().trim().toLowerCase().email().max(254),
-  locale: z.enum(["de", "en", "tr"]).optional(),
+  // M6 follow-up: auth-email templates ship in all 7 locales (en/de/tr +
+  // es/it/fr/ar). Mobile clients now forward es|it|fr|ar directly instead of
+  // collapsing to "en" client-side.
+  locale: z.enum(["de", "en", "tr", "es", "it", "fr", "ar"]).optional(),
 });
 
 export function OPTIONS(req: Request) {

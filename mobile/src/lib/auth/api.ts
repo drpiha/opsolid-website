@@ -31,15 +31,12 @@ export async function requestMagicLink(
   email: string,
   locale: Locale,
 ): Promise<void> {
-  // Server's magic-link email templates only ship in en/de/tr today
-  // (see `src/lib/email/templates/copy.ts`). For es/it/fr/ar fall back to
-  // English email content while keeping the in-app UI in the chosen locale.
-  // M6 TODO — translate the magic-link email template into the new locales.
-  const supported: 'en' | 'de' | 'tr' =
-    locale === 'de' ? 'de' : locale === 'tr' ? 'tr' : 'en';
+  // Server now ships magic-link / welcome / password-reset emails in all 7
+  // locales (en/de/tr/es/it/fr/ar) — see `src/lib/email/templates/copy.ts`
+  // and `src/lib/email/shell.ts`. RTL is handled server-side for `ar`.
   await apiFetch('/api/v1/auth/magic-link', {
     method: 'POST',
-    body: JSON.stringify({ email, locale: supported }),
+    body: JSON.stringify({ email, locale }),
   });
 }
 
