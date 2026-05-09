@@ -89,6 +89,30 @@ The plan's "Next-session resume" block names `mobile/assets/m1-implementation-pl
 
 ### 🎉 World-class roadmap COMPLETE (2026-05-09)
 
+**FINAL APK:** `android-build-23` (commit `c2c4d92`). All six milestones + Verso brand + Sprint F4 + email i18n all in one APK. Phone is on a different WiFi than the dev machine right now — Hasan installs manually:
+
+```bash
+gh release download android-build-23 --pattern "*.apk" --dir $env:TEMP --clobber
+adb install -r "$env:TEMP\opsolid-android-0.1.0-b23.apk"
+```
+
+Server-side prerequisites (run all in a single SSH burst):
+```bash
+ssh root@srv1150632.hstgr.cloud
+docker exec opsolid-app npx prisma migrate deploy
+docker exec opsolid-app npx tsx scripts/seed-events.ts
+# then add to /opt/opsolid-website/.env:
+#   GOOGLE_CLOUD_VISION_API_KEY=…
+#   ANTHROPIC_API_KEY=…
+#   EXPO_ACCESS_TOKEN=…              (optional but recommended)
+#   STRIPE_PRICE_PRO_MONTHLY=price_…
+#   STRIPE_PRICE_PRO_YEARLY=price_…
+#   STRIPE_WEBHOOK_SECRET=whsec_…
+docker compose up -d --force-recreate opsolid
+```
+
+After that, configure the Stripe webhook endpoint at `https://opsolid.de/api/webhooks/stripe` (events: `customer.subscription.*`, `invoice.paid`, `invoice.payment_failed`). 
+
 All six milestones shipped in a single sprint cadence, head of `main`:
 
 | Milestone | Theme | Commit |
