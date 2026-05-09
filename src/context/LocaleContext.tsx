@@ -12,6 +12,7 @@ import {
   extractLocaleFromPath,
   stripLocaleFromPath,
   withLocale,
+  directionForLocale,
 } from "@/lib/i18n";
 
 interface LocaleContextValue {
@@ -46,10 +47,11 @@ export function LocaleProvider({
     return fromPath ?? (isLocale(initialLocale) ? initialLocale : DEFAULT_LOCALE);
   }, [pathname, initialLocale]);
 
-  // Keep <html lang> in sync on client navigations
+  // Keep <html lang> + dir in sync on client navigations
   useEffect(() => {
     if (typeof document !== "undefined") {
       document.documentElement.lang = locale;
+      document.documentElement.dir = directionForLocale(locale);
     }
   }, [locale]);
 

@@ -15,6 +15,10 @@ const OG_LOCALE: Record<Locale, string> = {
   en: "en_US",
   de: "de_DE",
   tr: "tr_TR",
+  es: "es_ES",
+  it: "it_IT",
+  fr: "fr_FR",
+  ar: "ar_AE",
 };
 
 export function generateMetadata({
@@ -34,6 +38,10 @@ export function generateMetadata({
         en: `${SITE_CONFIG.url}/en`,
         de: `${SITE_CONFIG.url}/de`,
         tr: `${SITE_CONFIG.url}/tr`,
+        es: `${SITE_CONFIG.url}/es`,
+        it: `${SITE_CONFIG.url}/it`,
+        fr: `${SITE_CONFIG.url}/fr`,
+        ar: `${SITE_CONFIG.url}/ar`,
         "x-default": `${SITE_CONFIG.url}/en`,
       },
     },

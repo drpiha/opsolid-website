@@ -51,6 +51,7 @@ import { copper, signal, teal } from '../../../src/lib/theme/tokens';
 import {
   useTranslations,
   detectLocale,
+  type Locale,
 } from '../../../src/lib/i18n/locale';
 import { API_BASE } from '../../../src/lib/api/client';
 import { useAuthStore } from '../../../src/lib/auth/store';
@@ -464,9 +465,22 @@ export default function InboxThreadScreen() {
  * Cached at the call site via useMemo so we don't re-instantiate two
  * Intl.DateTimeFormat instances on every render.
  */
-function makeStampFormatter(locale: 'en' | 'de' | 'tr') {
+function makeStampFormatter(locale: Locale) {
   // Mapping to the Intl-recognized BCP-47 codes the device supports.
-  const tag = locale === 'de' ? 'de-DE' : locale === 'tr' ? 'tr-TR' : 'en-GB';
+  const tag =
+    locale === 'de'
+      ? 'de-DE'
+      : locale === 'tr'
+        ? 'tr-TR'
+        : locale === 'es'
+          ? 'es-ES'
+          : locale === 'it'
+            ? 'it-IT'
+            : locale === 'fr'
+              ? 'fr-FR'
+              : locale === 'ar'
+                ? 'ar'
+                : 'en-GB';
   const time = new Intl.DateTimeFormat(tag, {
     hour: 'numeric',
     minute: '2-digit',

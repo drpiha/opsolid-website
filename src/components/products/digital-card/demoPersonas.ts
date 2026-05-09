@@ -38,4 +38,39 @@ export const demoPersonas: Record<Locale, DemoPersona> = {
     location: "Berlin · EU",
     slug: "alex",
   },
+  // M6 — additional locales reuse the existing personas for the demo card
+  // shown on the marketing site. A native-name pass per locale would be a
+  // marketing polish, not a launch blocker.
+  es: {
+    name: "Sofía García",
+    role: "Directora de Operaciones",
+    email: "sofia@ejemplo.es",
+    phone: "+34 91 555 · 1234",
+    location: "Madrid · ES",
+    slug: "sofia",
+  },
+  it: {
+    name: "Marco Bianchi",
+    role: "Responsabile Operazioni",
+    email: "marco@esempio.it",
+    phone: "+39 02 5555 · 1234",
+    location: "Milano · IT",
+    slug: "marco",
+  },
+  fr: {
+    name: "Camille Dubois",
+    role: "Directrice des opérations",
+    email: "camille@exemple.fr",
+    phone: "+33 1 5555 · 1234",
+    location: "Paris · FR",
+    slug: "camille",
+  },
+  ar: {
+    name: "ليلى الحسيني",
+    role: "مديرة العمليات",
+    email: "leila@mithal.ae",
+    phone: "+971 4 555 · 1234",
+    location: "دبي · AE",
+    slug: "leila",
+  },
 };

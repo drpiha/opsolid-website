@@ -30,6 +30,7 @@ import type { EmblaCarouselType } from "embla-carousel";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check, Eye, X } from "lucide-react";
 import { useLocale } from "@/context/LocaleContext";
+import type { Locale } from "@/lib/i18n";
 import {
   formatEuro,
   getTemplateById,
@@ -41,7 +42,10 @@ import {
   type PlannedSector,
   type PlannedTemplate,
 } from "@/components/cards/templates/v2/registry";
-import type { TemplateRegistryEntry } from "@/components/cards/templates/v2/types";
+import {
+  narrowTemplateLocale,
+  type TemplateRegistryEntry,
+} from "@/components/cards/templates/v2/types";
 import { getTemplateSample } from "@/config/card-template-samples";
 
 // -----------------------------------------------------------------------------
@@ -557,7 +561,7 @@ const CarouselSlide = React.memo(function CarouselSlide({
   isSelected: boolean;
   progress: number;
   inView: boolean;
-  locale: "de" | "en" | "tr";
+  locale: Locale;
   isPicked: boolean;
   selectLabel: string;
   selectedLabel: string;
@@ -731,7 +735,7 @@ function LiveTemplatePreview({
   locale,
 }: {
   slide: SlideModel;
-  locale: "de" | "en" | "tr";
+  locale: Locale;
 }) {
   const sample = getTemplateSample(slide.id);
   const Component = slide.registry?.Component;
@@ -774,7 +778,7 @@ function LiveTemplatePreview({
         <Component
           slug={sample.slug}
           cardData={sample.cardData}
-          locale={locale}
+          locale={narrowTemplateLocale(locale)}
           photoPath={sample.photoUrl ?? null}
           logoPath={sample.logoUrl ?? null}
           brandPrimaryHex={sample.brandPrimaryHex ?? null}
@@ -849,7 +853,7 @@ function DemoModal({
 }: {
   slide: SlideModel | null;
   open: boolean;
-  locale: "de" | "en" | "tr";
+  locale: Locale;
   chooseLabel: string;
   backLabel: string;
   comingSoonLabel: string;
@@ -942,7 +946,7 @@ function DemoLiveRender({
   locale,
 }: {
   slide: SlideModel;
-  locale: "de" | "en" | "tr";
+  locale: Locale;
 }) {
   const sample = getTemplateSample(slide.id);
   const Component = slide.registry?.Component;
@@ -951,7 +955,7 @@ function DemoLiveRender({
     <Component
       slug={sample.slug}
       cardData={sample.cardData}
-      locale={locale}
+      locale={narrowTemplateLocale(locale)}
       photoPath={sample.photoUrl ?? null}
       logoPath={sample.logoUrl ?? null}
       brandPrimaryHex={sample.brandPrimaryHex ?? null}
@@ -968,5 +972,9 @@ function DemoLiveRender({
 function currencyLocale(locale: string): string {
   if (locale === "de") return "de-DE";
   if (locale === "tr") return "tr-TR";
+  if (locale === "es") return "es-ES";
+  if (locale === "it") return "it-IT";
+  if (locale === "fr") return "fr-FR";
+  if (locale === "ar") return "ar";
   return "en-DE";
 }

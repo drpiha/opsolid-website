@@ -1,6 +1,7 @@
 import * as WebBrowser from 'expo-web-browser';
 import { apiFetch, setTokens, API_BASE } from '../api/client';
 import type { AuthLoginResponse, AuthMeResponse } from '../api/types';
+import type { Locale } from '../i18n/locale';
 
 // The login endpoint returns extra fields (name, locale, sessionExpiresAt) on
 // top of the base AuthMeResponse. We capture them here for forward-compat but
@@ -28,11 +29,17 @@ export async function login(email: string, password: string): Promise<AuthMeResp
 
 export async function requestMagicLink(
   email: string,
-  locale: 'en' | 'de' | 'tr',
+  locale: Locale,
 ): Promise<void> {
+  // Server's magic-link email templates only ship in en/de/tr today
+  // (see `src/lib/email/templates/copy.ts`). For es/it/fr/ar fall back to
+  // English email content while keeping the in-app UI in the chosen locale.
+  // M6 TODO — translate the magic-link email template into the new locales.
+  const supported: 'en' | 'de' | 'tr' =
+    locale === 'de' ? 'de' : locale === 'tr' ? 'tr' : 'en';
   await apiFetch('/api/v1/auth/magic-link', {
     method: 'POST',
-    body: JSON.stringify({ email, locale }),
+    body: JSON.stringify({ email, locale: supported }),
   });
 }
 

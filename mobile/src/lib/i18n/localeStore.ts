@@ -14,7 +14,15 @@ type LocaleStore = {
 };
 
 function isValidLocale(v: string | null): v is Locale {
-  return v === 'en' || v === 'de' || v === 'tr';
+  return (
+    v === 'en' ||
+    v === 'de' ||
+    v === 'tr' ||
+    v === 'es' ||
+    v === 'it' ||
+    v === 'fr' ||
+    v === 'ar'
+  );
 }
 
 export const useLocaleStore = create<LocaleStore>((set) => ({

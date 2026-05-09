@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import { Inter, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import { ConditionalAnalytics } from "@/components/shared/ConditionalAnalytics";
 import { SITE_CONFIG } from "@/lib/constants";
-import { isLocale, DEFAULT_LOCALE } from "@/lib/i18n";
+import { isLocale, DEFAULT_LOCALE, directionForLocale } from "@/lib/i18n";
 import { ConsentBanner } from "@/components/shared/ConsentBanner";
 import "./globals.css";
 
@@ -98,6 +98,7 @@ export default function RootLayout({
   const headerStore = headers();
   const localeHeader = headerStore.get("x-locale");
   const lang = isLocale(localeHeader) ? localeHeader : DEFAULT_LOCALE;
+  const dir = directionForLocale(lang);
 
   const fontClasses = [
     inter.variable,
@@ -111,6 +112,7 @@ export default function RootLayout({
   return (
     <html
       lang={lang}
+      dir={dir}
       className={fontClasses}
       data-theme="hybrid"
       suppressHydrationWarning

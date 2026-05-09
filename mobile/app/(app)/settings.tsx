@@ -49,6 +49,8 @@ import {
   detectOsLocale,
   type Locale,
 } from '../../src/lib/i18n/locale';
+import { applyRTLForLocale } from '../../src/lib/i18n/direction';
+import { Check } from 'lucide-react-native';
 import {
   useThemeStore,
   type AppThemeMode,
@@ -110,6 +112,24 @@ const RELEASES: { version: string; date: string; notes: string[] }[] = [
 
 type ThemeOption = { key: AppThemeMode; label: string };
 type LangOption = { key: Locale; label: string };
+
+/**
+ * Native-name labels for the locale picker. Each row shows the language as
+ * the speakers themselves write it — this is the universal pattern used by
+ * Telegram / Signal / iOS Settings, and side-steps any need to translate
+ * "Spanish" / "Italian" / etc into all 7 locales.
+ */
+const LOCALE_NATIVE_LABELS: Record<Locale, string> = {
+  en: 'English',
+  de: 'Deutsch',
+  tr: 'Türkçe',
+  es: 'Español',
+  it: 'Italiano',
+  fr: 'Français',
+  ar: 'العربية',
+};
+
+const LOCALE_PICKER_ORDER: Locale[] = ['en', 'de', 'tr', 'es', 'it', 'fr', 'ar'];
 
 export default function SettingsScreen() {
   const theme = useTheme();
@@ -247,17 +267,36 @@ export default function SettingsScreen() {
     { key: 'dark', label: t.themeDark },
   ];
 
-  const langOptions: LangOption[] = [
-    { key: 'en', label: t.languageEn },
-    { key: 'de', label: t.languageDe },
-    { key: 'tr', label: t.languageTr },
-  ];
+  const langOptions: LangOption[] = LOCALE_PICKER_ORDER.map((k) => ({
+    key: k,
+    label: LOCALE_NATIVE_LABELS[k],
+  }));
 
   const osLocale = detectOsLocale();
   const localeHint = t.languageOsHint.replace(
     '{locale}',
     osLocale.toUpperCase(),
   );
+
+  // Locale change handler — applies RTL for ar/ltr for others, and prompts a
+  // restart when direction changes (I18nManager.forceRTL only takes effect on
+  // the next process start). For locales that don't change direction (e.g.
+  // en → de), the override is set silently and the UI re-renders.
+  const handleLocaleChange = (next: Locale) => {
+    setLocaleOverride(next);
+    const { restartRequired } = applyRTLForLocale(next);
+    if (restartRequired) {
+      // Without `expo-updates` we ask the user to manually relaunch — the
+      // direction switch will then take effect for every flex-row layout.
+      Alert.alert(
+        next === 'ar' ? 'إعادة تشغيل مطلوبة' : 'Restart required',
+        next === 'ar'
+          ? 'يرجى إغلاق التطبيق وإعادة فتحه لتفعيل اتجاه الكتابة من اليمين إلى اليسار.'
+          : 'Please close and reopen Verso to apply the new text direction.',
+        [{ text: 'OK' }],
+      );
+    }
+  };
 
   const copyLine = async (label: string, value: string) => {
     // No native clipboard module in the deps — fall back to Share so the user
@@ -464,18 +503,23 @@ export default function SettingsScreen() {
         {/* ---------- LANGUAGE ---------- */}
         <SectionHeader theme={theme}>{t.language}</SectionHeader>
         <Card theme={theme}>
-          <SegmentedControl<Locale>
-            value={localeOverride ?? activeLocale}
+          <LocalePickerList
+            theme={theme}
             options={langOptions}
-            onChange={(k) => setLocaleOverride(k)}
-            inkColor={theme.ink[200]}
-            bgColor={theme.bg[1]}
-            borderColor={theme.line.DEFAULT}
+            value={localeOverride ?? activeLocale}
+            onChange={handleLocaleChange}
+          />
+          <View
+            style={{
+              height: StyleSheet.hairlineWidth,
+              backgroundColor: theme.line.DEFAULT,
+              marginVertical: 8,
+            }}
           />
           <TouchableOpacity
             onPress={() => setLocaleOverride(null as LocaleOverride)}
             activeOpacity={0.7}
-            style={{ marginTop: 12 }}
+            style={{ paddingVertical: 8 }}
           >
             <Text
               style={{
@@ -756,6 +800,59 @@ function InfoRow({
       <Text style={[styles.label, { color: theme.ink[400] }]}>{label}</Text>
       <Text style={[styles.value, { color: theme.ink[100] }]}>{value}</Text>
     </Pressable>
+  );
+}
+
+function LocalePickerList({
+  theme,
+  options,
+  value,
+  onChange,
+}: {
+  theme: ReturnType<typeof useTheme>;
+  options: { key: Locale; label: string }[];
+  value: Locale;
+  onChange: (k: Locale) => void;
+}) {
+  return (
+    <View>
+      {options.map((opt, idx) => {
+        const selected = opt.key === value;
+        const isLast = idx === options.length - 1;
+        // Right-align Arabic in its own row so the native script reads
+        // naturally; everything else stays start-aligned.
+        const isArabic = opt.key === 'ar';
+        return (
+          <TouchableOpacity
+            key={opt.key}
+            onPress={() => onChange(opt.key)}
+            activeOpacity={0.7}
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              paddingVertical: 12,
+              borderBottomWidth: isLast ? 0 : StyleSheet.hairlineWidth,
+              borderBottomColor: theme.line.DEFAULT,
+            }}
+          >
+            <Text
+              style={{
+                color: selected ? teal[500] : theme.ink[100],
+                fontSize: 15,
+                fontWeight: selected ? '600' : '500',
+                flex: 1,
+                writingDirection: isArabic ? 'rtl' : 'ltr',
+                textAlign: isArabic ? 'right' : 'left',
+              }}
+            >
+              {opt.label}
+            </Text>
+            {selected ? <Check size={18} color={teal[500]} strokeWidth={2.5} /> : null}
+          </TouchableOpacity>
+        );
+      })}
+    </View>
   );
 }
 

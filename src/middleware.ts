@@ -37,6 +37,10 @@ function detectLocale(req: NextRequest): Locale {
   for (const { tag } of preferred) {
     if (tag === "de") return "de";
     if (tag === "tr") return "tr";
+    if (tag === "es") return "es";
+    if (tag === "it") return "it";
+    if (tag === "fr") return "fr";
+    if (tag === "ar") return "ar";
     if (tag === "en") return "en";
   }
 

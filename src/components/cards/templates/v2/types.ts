@@ -19,6 +19,23 @@
 import type * as React from "react";
 import type { CardData } from "@/lib/validation";
 import type { SmartCardSource } from "@/components/cards/smart/SmartCardSource";
+import type { Locale } from "@/lib/i18n";
+
+/**
+ * The 96 v2 templates only ship copy tables for `en`/`de`/`tr` — for the
+ * M6 locales (es/it/fr/ar) we narrow to the closest covered locale.
+ * Spanish/Italian/French map to English (Latin script, professional
+ * register); Arabic also maps to English (the per-template copy is short
+ * enough that English is the safest fallback while a native-language pass
+ * is being commissioned).
+ */
+export function narrowTemplateLocale(
+  locale: Locale | undefined,
+): "de" | "en" | "tr" | undefined {
+  if (locale === "de" || locale === "en" || locale === "tr") return locale;
+  if (locale === undefined) return undefined;
+  return "en";
+}
 
 /**
  * Props every v2 template component must accept. Mirrors `SmartCardProps` so
@@ -28,7 +45,12 @@ import type { SmartCardSource } from "@/components/cards/smart/SmartCardSource";
 export interface TemplateProps {
   slug: string;
   cardData: CardData;
-  /** Card owner's locale — visitor-facing CTAs (Exchange, footer) localise on this. */
+  /**
+   * Card owner's locale — visitor-facing CTAs (Exchange, footer) localise on
+   * this. Narrowed to en/de/tr because the per-template copy tables only
+   * cover those three; for es/it/fr/ar the public-card surface falls back to
+   * English at the call site (see `narrowTemplateLocale()`).
+   */
   locale?: "de" | "en" | "tr";
   /** Storage path or full URL of the owner's profile photo. */
   photoPath?: string | null;

@@ -58,7 +58,10 @@ interface InstructionsCopy {
   signoff: string;
 }
 
-const COPY: Record<Locale, InstructionsCopy> = {
+// M6 — only en/de/tr have native templates here. The other locales fall
+// back to English via the helper below; admin email is not in the M6
+// translation polish surface.
+const COPY: Record<"en" | "de" | "tr", InstructionsCopy> = {
   en: {
     subject: "DNS setup for your card domain",
     greeting: (n) => `Hello ${n},`,
@@ -98,7 +101,8 @@ const COPY: Record<Locale, InstructionsCopy> = {
 };
 
 function pickCopy(localeRaw: string | null | undefined): InstructionsCopy {
-  return isLocale(localeRaw) ? COPY[localeRaw] : COPY.en;
+  if (localeRaw === "de" || localeRaw === "tr") return COPY[localeRaw];
+  return COPY.en;
 }
 
 function escapeHtml(s: string): string {

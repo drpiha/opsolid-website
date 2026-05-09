@@ -9,8 +9,18 @@ import { ThemeProvider } from '../src/lib/theme/ThemeProvider';
 import { useAuthStore } from '../src/lib/auth/store';
 import { useThemeStore } from '../src/lib/theme/themeStore';
 import { useLocaleStore } from '../src/lib/i18n/localeStore';
+import { detectLocale } from '../src/lib/i18n/locale';
+import { applyRTLForLocale } from '../src/lib/i18n/direction';
 import { usePendingReferralStore } from '../src/store/pendingReferralStore';
 import { installNotificationHandler } from '../src/lib/push/handler';
+
+// Apply text direction for the resolved locale BEFORE the first render. Once
+// the locale store hydrates this re-runs in the layout effect; if the value
+// differs from the boot-time guess (e.g. user override is `ar` but OS is
+// English) the user is prompted to relaunch from Settings. The race here is
+// benign because the override-store hydrate is synchronous-ish (SecureStore)
+// and arrives well within the splash window.
+applyRTLForLocale(detectLocale());
 
 // Install once at module scope so it runs before the first render. Calling
 // `setNotificationHandler` is the React Native equivalent of registering a
@@ -61,7 +71,14 @@ export default function RootLayout() {
     // (after auth resolves). Failures are non-fatal; both stores fall back
     // to in-memory defaults.
     void hydrateTheme();
-    void hydrateLocale();
+    // Re-apply RTL after the locale override hydrates from SecureStore — if
+    // the user's saved override differs from the OS-derived locale and the
+    // direction changes, this is a no-op for the running session but stages
+    // the next-launch direction correctly. The Settings UI handles the
+    // restart prompt when the user actively changes the language.
+    void hydrateLocale().then(() => {
+      applyRTLForLocale(detectLocale());
+    });
     hydrate().finally(() => {
       clearTimeout(safetyTimer);
       SplashScreen.hideAsync().catch(() => {});

@@ -87,6 +87,50 @@ Two strategy docs were produced 2026-05-09 to plan Verso's path to category lead
 
 The plan's "Next-session resume" block names `mobile/assets/m1-implementation-plan.md` as the very first deliverable for the milestone-execution session — that file does NOT exist yet; it's the next thing to produce.
 
+### 🎉 World-class roadmap COMPLETE (2026-05-09)
+
+All six milestones shipped in a single sprint cadence, head of `main`:
+
+| Milestone | Theme | Commit |
+| --------- | ----- | ------ |
+| M1 | Frictionless creation — scan + URL onboarding | `905bea1` |
+| M2 | Discover at scale — pg_trgm FTS + suggestions | `5578326` |
+| M3 | Network growth loops — referrals + telemetry | `a54bbfa` |
+| M4 | Real-time comms — Expo Push + 5s polling | `79c2884` |
+| M5 | Premium tier — Stripe + Pro gates | `30ad150` |
+| M6 | Internationalization — ES/IT/FR/AR + RTL | (this commit) |
+
+**Final deploy steps** (run once after this commit lands on the VPS):
+
+```bash
+ssh root@srv1150632.hstgr.cloud "docker exec opsolid-app npx prisma migrate deploy"
+ssh root@srv1150632.hstgr.cloud "docker exec opsolid-app npx tsx scripts/seed-events.ts"
+# Set on VPS .env if not already: GOOGLE_CLOUD_VISION_API_KEY,
+# ANTHROPIC_API_KEY, EXPO_ACCESS_TOKEN, STRIPE_PRICE_PRO_MONTHLY,
+# STRIPE_PRICE_PRO_YEARLY, STRIPE_WEBHOOK_SECRET
+ssh root@srv1150632.hstgr.cloud "cd /opt/opsolid-website && docker compose up -d --force-recreate opsolid"
+gh workflow run mobile-build.yml --ref main
+# Install the resulting APK with: adb install -r ./opsolid-android-0.1.0-bN.apk
+```
+
+### M6 — Internationalization [DONE — committed]
+
+Shipped (2026-05-09):
+
+- **Mobile locale expansion.** `mobile/src/lib/i18n/locale.ts` extends from 3 → 7 locales (`en`/`de`/`tr`/`es`/`it`/`fr`/`ar`) — every namespace mirrors the existing en block. Translations are machine-quality but consistent (formal "you" register: usted / lei / vous; Arabic in native script). `detectOsLocale()` recognises `es` / `it` / `fr` / `ar` BCP-47 codes; `localeStore` `isValidLocale` widened to all seven.
+- **RTL support.** New `mobile/src/lib/i18n/direction.ts` exposes `useTextDirection()`, `directionForLocale()`, and `applyRTLForLocale(locale)` that calls `I18nManager.forceRTL(true)` only when the locale's direction differs from the current one. Boot-time hook in `app/_layout.tsx` runs the pre-render apply, then re-applies after `localeStore.hydrate()` resolves the SecureStore override. Settings → Language change shows a manual-restart Alert when direction flips (no `expo-updates` dep added — keeping the SDK lean).
+- **Locale picker rebuild.** `Settings → Language` was a 3-segment EN/DE/TR pill control — replaced with a 7-row vertical list. Each row shows the language as the speakers themselves write it (English / Deutsch / Türkçe / Español / Italiano / Français / العربية), checkmark icon (lucide `Check`) when selected, native-script alignment for Arabic. "Use system default" link + OS-detected locale hint stay underneath.
+- **Web side — minimal locale files via deep-merge fallback.** `src/content/{es,it,fr,ar}.ts` import the English content tree and override only the highest-traffic keys (nav, home.hero, v2.nav). Everything else (blog, products marketing copy, the 3500-line legal pages) falls back to English at runtime via the deep-merge in each locale file. The `Content` type stays satisfied because each file asserts the merged result `as Content`. Locale list widened in `src/lib/i18n.ts` (`LOCALES`, `LOCALE_LABELS`, `LOCALE_SHORT_LABELS` + new `RTL_LOCALES` set + `directionForLocale()` helper). `<html dir>` set in root layout from the `x-locale` header; `LocaleContext` keeps both `lang` and `dir` in sync on client navigations. Header switcher cycle widened to all 7 locales.
+- **Magic-link email fallback.** Mobile `requestMagicLink(email, locale)` accepts the full `Locale` type but maps `es`/`it`/`fr`/`ar` → `en` before posting to `/api/v1/auth/magic-link` — server email templates only ship in en/de/tr today. **TODO** (post-M6): translate the magic-link templates into the four new locales (`src/lib/email/templates/copy.ts`).
+- **Templates locale narrowing.** The 96 v2 templates ship per-template copy tables keyed on `'de' | 'en' | 'tr'`. Rather than rewrite all 96, `TemplateProps.locale` stays narrow and a new `narrowTemplateLocale()` helper in `src/components/cards/templates/v2/types.ts` widens to `Locale` at the call site, falling back to `en` for the new locales. Public card visuals therefore render in English on `/c/<slug>?lang=es|it|fr|ar`; a per-template translation pass is post-M6 polish.
+
+**Known TODOs (intentionally deferred — better to ship 95% than block):**
+
+- Public card UI on `/c/[slug]` falls back to en/de/tr (the 96 templates' built-in copy is still 3-locale).
+- Marketing pages other than the homepage hero / v2.nav fall back to English text via the merge proxy. Adding a translated key to a partial locale = edit the `overrides` block in `src/content/<locale>.ts`.
+- Magic-link email templates (server) — see above; new-locale users get English email content for now.
+- Native-language reviewer pass on the mobile keyset is a separate sprint.
+
 ### M5 — Premium tier [DONE — committed]
 
 Shipped (2026-05-09):

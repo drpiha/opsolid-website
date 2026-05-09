@@ -14,17 +14,34 @@ import type { Locale } from "@/content";
  * Links mapped to the real Next.js routes; language switch wired to the
  * existing useLocale() context so EN · DE · TR actually cycle.
  */
-const NAV_ITEMS: Array<{ key: "home" | "voiceAgent" | "digitalCard" | "kutasia" | "journal" | "contact"; href: string; match: RegExp }> = [
+const NAV_ITEMS: Array<{ key: "home" | "products" | "pricing" | "journal" | "contact"; href: string; match: RegExp }> = [
   { key: "home", href: "/", match: /^\/(en|de|tr)?\/?$/ },
-  { key: "voiceAgent", href: "/products/voice-agent", match: /\/products\/voice-agent/ },
-  { key: "digitalCard", href: "/products/digital-card", match: /\/products\/digital-card/ },
-  { key: "kutasia", href: "/products/kutasia", match: /\/products\/kutasia/ },
+  { key: "products", href: "/products", match: /\/products($|\/)/ },
+  { key: "pricing", href: "/pricing", match: /\/pricing/ },
   { key: "journal", href: "/blog", match: /\/blog/ },
   { key: "contact", href: "/contact", match: /\/contact/ },
 ];
 
-const LOCALE_LABELS: Record<Locale, string> = { en: "EN", de: "DE", tr: "TR" };
-const LOCALE_CYCLE: Record<Locale, Locale> = { en: "de", de: "tr", tr: "en" };
+const LOCALE_LABELS: Record<Locale, string> = {
+  en: "EN",
+  de: "DE",
+  tr: "TR",
+  es: "ES",
+  it: "IT",
+  fr: "FR",
+  ar: "AR",
+};
+// M6: cycle through all 7 locales — keeps the single-button switcher working
+// while a richer dropdown is designed.
+const LOCALE_CYCLE: Record<Locale, Locale> = {
+  en: "de",
+  de: "tr",
+  tr: "es",
+  es: "it",
+  it: "fr",
+  fr: "ar",
+  ar: "en",
+};
 
 export function Header() {
   const pathname = usePathname();
