@@ -28,6 +28,7 @@ import { requireBearerUser } from "@/lib/api/v1/bearer-only";
 import { errorJson, readJsonBody } from "@/lib/api/v1/errors";
 import { applyCors, corsPreflight } from "@/lib/api/v1/cors";
 import { rateLimit } from "@/lib/api/v1/rate-limit";
+import { notify } from "@/lib/push";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -87,6 +88,12 @@ async function loadConnectionForUser(
   visitorCardId: string;
   other: OtherParty;
   pendingAction: PendingAction | null;
+  /**
+   * The OTHER side's user id, when the other card has an owner. Null for
+   * orphan cards (no User attached). Used by the POST handler to fire a
+   * push notification to the recipient.
+   */
+  otherUserId: string | null;
 } | null> {
   const conn = await prisma.cardConnection.findUnique({
     where: { id: connectionId },
@@ -178,6 +185,7 @@ async function loadConnectionForUser(
     visitorCardId: conn.visitorCardId,
     other,
     pendingAction,
+    otherUserId: otherCard.userId ?? null,
   };
 }
 
@@ -341,6 +349,27 @@ export async function POST(
         readAt: true,
       },
     });
+
+    // M4 — fire push to the OTHER side. Best-effort (notify never throws);
+    // the response below is independent of fan-out outcome. We use the
+    // sender's own name when available so the banner reads "Hasan: <body>".
+    if (conn.otherUserId && conn.otherUserId !== user.id) {
+      const senderName =
+        user.name?.trim() ||
+        user.email?.split("@")[0] ||
+        "Verso";
+      const preview =
+        parsed.data.body.length > 140
+          ? `${parsed.data.body.slice(0, 137)}…`
+          : parsed.data.body;
+      void notify({
+        userId: conn.otherUserId,
+        category: "messages",
+        title: senderName,
+        body: preview,
+        data: { url: `verso://inbox/${conn.id}`, kind: "message" },
+      });
+    }
 
     return applyCors(
       NextResponse.json(

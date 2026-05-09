@@ -29,7 +29,12 @@ import {
   Platform,
   Alert,
 } from 'react-native';
-import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
+import {
+  Stack,
+  useLocalSearchParams,
+  useRouter,
+  useFocusEffect,
+} from 'expo-router';
 import { Send } from 'lucide-react-native';
 import {
   listMessages,
@@ -50,7 +55,11 @@ import {
 import { API_BASE } from '../../../src/lib/api/client';
 import { useAuthStore } from '../../../src/lib/auth/store';
 
-const POLL_INTERVAL_MS = 15_000;
+// M4 — foreground polling drops to 5s while the screen is active; push
+// notifications cover the gap when the screen is unfocused or backgrounded.
+// `useFocusEffect` starts the interval on focus and clears on blur, so an
+// inbox thread parked behind another tab incurs zero polling cost.
+const FOREGROUND_POLL_INTERVAL_MS = 5_000;
 const MAX_BODY_LEN = 2000;
 
 export default function InboxThreadScreen() {
@@ -113,15 +122,17 @@ export default function InboxThreadScreen() {
     void fetchOnce('initial');
   }, [fetchOnce]);
 
-  // Polling — every 15s while mounted. The interval is cleared on unmount.
-  // We don't pause when the screen is unfocused because the cost is tiny
-  // and Android-tabs keep the screen in memory.
-  useEffect(() => {
-    const id = setInterval(() => {
-      void fetchOnce('silent');
-    }, POLL_INTERVAL_MS);
-    return () => clearInterval(id);
-  }, [fetchOnce]);
+  // M4 — Polling now uses `useFocusEffect`. While the screen is focused we
+  // tick at 5s; on blur we tear the interval down completely so a backgrounded
+  // tab incurs no network cost. Push notifications cover the unfocused gap.
+  useFocusEffect(
+    useCallback(() => {
+      const id = setInterval(() => {
+        void fetchOnce('silent');
+      }, FOREGROUND_POLL_INTERVAL_MS);
+      return () => clearInterval(id);
+    }, [fetchOnce]),
+  );
 
   // Auto-scroll to bottom when message count grows.
   useEffect(() => {

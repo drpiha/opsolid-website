@@ -20,6 +20,8 @@ import { BrandHeader } from '../../src/components/ui/BrandHeader';
 import { useAuthStore } from '../../src/lib/auth/store';
 import { getMyReferral, type ReferralMeResponse } from '../../src/lib/api/referrals';
 import { getShareSummary, type ShareSummary } from '../../src/lib/api/share-events';
+import { patchMe } from '../../src/lib/auth/api';
+import type { NotificationPrefs } from '../../src/lib/api/types';
 import {
   isBiometricEnabled,
   isBiometricAvailable,
@@ -123,6 +125,54 @@ export default function SettingsScreen() {
   // self-hide on error (the user just doesn't see the panel until next mount).
   const [referral, setReferral] = useState<ReferralMeResponse | null>(null);
   const [shareSummary, setShareSummary] = useState<ShareSummary | null>(null);
+  // M4 — notification preference toggles. Seeded from the auth-store user
+  // (the server-side default of "all on" is mirrored here as the fallback so
+  // the toggles render correctly even before /api/v1/auth/me has hydrated
+  // the prefs field).
+  const [prefs, setPrefs] = useState<NotificationPrefs>(() =>
+    user?.notificationPrefs ?? {
+      messages: true,
+      inboxRequests: true,
+      mutualSaves: true,
+      eventReminders: true,
+    },
+  );
+  // Track whether a PATCH is in-flight per category — prevents the toggle
+  // from optimistic-flipping twice while the network round-trip resolves.
+  const [savingPref, setSavingPref] = useState<keyof NotificationPrefs | null>(
+    null,
+  );
+
+  // If the auth store updates (e.g. user re-hydrates with a fresh server
+  // response), pull the prefs in. Done once-on-change — local optimistic
+  // changes are not stomped because the auth store only updates on login /
+  // hydrate / explicit setUser, not on every PATCH.
+  useEffect(() => {
+    if (user?.notificationPrefs) {
+      setPrefs(user.notificationPrefs);
+    }
+  }, [user?.notificationPrefs]);
+
+  const togglePref = async (key: keyof NotificationPrefs, next: boolean) => {
+    setSavingPref(key);
+    const prev = prefs;
+    setPrefs({ ...prev, [key]: next });
+    try {
+      const updated = await patchMe({ notificationPrefs: { [key]: next } });
+      // Trust the server response (handles concurrent toggles cleanly).
+      if (updated.notificationPrefs) {
+        setPrefs(updated.notificationPrefs);
+      }
+      // Mirror into auth store so other screens see the fresh prefs.
+      const setUser = useAuthStore.getState().setUser;
+      setUser({ ...(useAuthStore.getState().user ?? updated), ...updated });
+    } catch {
+      // Roll back on failure.
+      setPrefs(prev);
+    } finally {
+      setSavingPref(null);
+    }
+  };
 
   useEffect(() => {
     void Promise.all([isBiometricEnabled(), isBiometricAvailable()]).then(
@@ -436,10 +486,42 @@ export default function SettingsScreen() {
 
         {/* ---------- NOTIFICATIONS ---------- */}
         <SectionHeader theme={theme}>{t.notifications}</SectionHeader>
-        <Card theme={theme} disabled>
-          <Text style={[styles.value, { color: theme.ink[300] }]}>
-            {t.notificationsComingSoon}
-          </Text>
+        <Card theme={theme}>
+          <NotifToggleRow
+            theme={theme}
+            label={t.notifMessages}
+            body={t.notifMessagesBody}
+            value={prefs.messages}
+            saving={savingPref === 'messages'}
+            onChange={(v) => void togglePref('messages', v)}
+          />
+          <Divider theme={theme} />
+          <NotifToggleRow
+            theme={theme}
+            label={t.notifInboxRequests}
+            body={t.notifInboxRequestsBody}
+            value={prefs.inboxRequests}
+            saving={savingPref === 'inboxRequests'}
+            onChange={(v) => void togglePref('inboxRequests', v)}
+          />
+          <Divider theme={theme} />
+          <NotifToggleRow
+            theme={theme}
+            label={t.notifMutualSaves}
+            body={t.notifMutualSavesBody}
+            value={prefs.mutualSaves}
+            saving={savingPref === 'mutualSaves'}
+            onChange={(v) => void togglePref('mutualSaves', v)}
+          />
+          <Divider theme={theme} />
+          <NotifToggleRow
+            theme={theme}
+            label={t.notifEventReminders}
+            body={t.notifEventRemindersBody}
+            value={prefs.eventReminders}
+            saving={savingPref === 'eventReminders'}
+            onChange={(v) => void togglePref('eventReminders', v)}
+          />
         </Card>
 
         {/* ---------- PRIVACY & DATA ---------- */}
@@ -579,6 +661,45 @@ function Divider({ theme }: { theme: ReturnType<typeof useTheme> }) {
         marginVertical: 10,
       }}
     />
+  );
+}
+
+function NotifToggleRow({
+  theme,
+  label,
+  body,
+  value,
+  saving,
+  onChange,
+}: {
+  theme: ReturnType<typeof useTheme>;
+  label: string;
+  body: string;
+  value: boolean;
+  saving: boolean;
+  onChange: (next: boolean) => void;
+}) {
+  return (
+    <View style={styles.rowBetween}>
+      <View style={{ flex: 1, paddingRight: 12 }}>
+        <Text style={[styles.value, { color: theme.ink[100] }]}>{label}</Text>
+        <Text
+          style={[
+            styles.label,
+            { color: theme.ink[400], marginTop: 2, fontSize: 12 },
+          ]}
+        >
+          {body}
+        </Text>
+      </View>
+      <Switch
+        value={value}
+        onValueChange={onChange}
+        disabled={saving}
+        trackColor={{ false: theme.bg[2], true: copperHex }}
+        thumbColor={'#fff'}
+      />
+    </View>
   );
 }
 

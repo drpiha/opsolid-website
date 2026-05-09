@@ -87,6 +87,54 @@ Two strategy docs were produced 2026-05-09 to plan Verso's path to category lead
 
 The plan's "Next-session resume" block names `mobile/assets/m1-implementation-plan.md` as the very first deliverable for the milestone-execution session — that file does NOT exist yet; it's the next thing to produce.
 
+### M4 — Real-time comms [DONE — committed]
+
+Shipped (2026-05-09):
+
+- **Expo Push token registration**. New mobile dependency `expo-notifications ~0.32.0` added explicitly to `mobile/package.json` (SDK 54 doesn't include it transitively — verified via `node_modules` lookup). New module `mobile/src/lib/push/register.ts` requests OS permission, fetches the Expo push token via `getExpoPushTokenAsync({ projectId })`, mints a stable per-install `deviceId` (32-hex via `Math.random` in SecureStore — collision-resistance not required, it's a dedupe key) and POSTs to a new `POST /api/v1/push/register`. Server stores the row in a new Prisma model `PushDevice { id, userId, expoPushToken, platform, deviceId, lastSeenAt, createdAt }` with a unique constraint on `(userId, deviceId)` so re-registers from the same install update in place. Migration `20260512000000_add_push_devices/migration.sql` is hand-written, idempotent (`IF NOT EXISTS` everywhere). The `(app)/_layout.tsx` post-auth hook fires registration once per session in a `void` so the OS permission dialog never blocks any rendering branch — including the root layout's 10s safety timer that drives the black-screen fallback. A "stuck pending" permission state (rare; airplane-mode + suspend) is benign because we don't await the call. Stale tokens (`DeviceNotRegistered` from Expo's response) are reaped server-side in `src/lib/push.ts`.
+
+- **Push fan-out for inbox events**. New server library `src/lib/push.ts` — single `notify({ userId, category, title, body, data })` entry point used by both event hooks. Sends to `https://exp.host/--/api/v2/push/send` in batches of 100, attaches `Authorization: Bearer ${EXPO_ACCESS_TOKEN}` when the env var is set (improves rate limit + receipts; anonymous Expo Push still works for development), reads `User.notificationPrefs` and skips when the requester opted out of the relevant category. Hooked into `POST /api/v1/connections/[id]/messages` (recipient = the OTHER side of the connection; deep-link `verso://inbox/<connectionId>`) and `POST /api/cards/[slug]/actions` (recipient = the receiver card's owner; deep-link `verso://inbox`). Both fire as `void notify(...)` so the originating request is never blocked.
+
+- **Tap-to-deep-link**. Mobile root `_layout.tsx` registers `Notifications.addNotificationResponseReceivedListener` once at mount; tapping a banner reads `data.url` and routes via `Linking.openURL`. Lives at the root (not inside `(app)/_layout`) so cold-start taps that wake the app while the auth gate is still resolving are caught — Linking.openURL queues until the (app) routes mount.
+
+- **Notification preferences**. New `User.notificationPrefs` JSONB column (additive Prisma migration). Default shape `{ messages, inboxRequests, mutualSaves, eventReminders }` all `true`. `GET /api/v1/auth/me` now returns the merged shape (defaults applied for unset keys). New `PATCH /api/v1/auth/me` accepts a partial `notificationPrefs` object and merges into the existing JSON column — forward-compatible with future categories. Mobile Settings → "Notifications" replaces the F5 "Coming soon" placeholder with 4 toggle rows (copper-tinted RN `Switch`); each toggle PATCHes optimistically and rolls back on failure. Server `src/lib/push.ts` checks `notificationPrefs[category] !== false` before fan-out (treats `null`/missing as opted-in, matching the GET defaults).
+
+- **Faster polling for active threads**. The F4 inbox thread polls the messages endpoint every 5s (down from 15s) but **only while focused** — `useFocusEffect` starts the interval on mount/focus and tears it down on blur. A backgrounded thread incurs zero polling cost; push handles the unfocused gap. WebSocket support is intentionally not added (research call: 5s + push covers ~80% of perceived-latency at 5% of the ops cost; WebSocket is gold-plate for v1).
+
+- **EXPO_ACCESS_TOKEN env var**. Added to `.env.example` with documentation. Optional — when set, pushes carry `Authorization: Bearer ${token}` for higher rate limits + receipt support; when unset, anonymous Expo Push still works for development.
+
+- **i18n**. Added `settings.notifMessages*`, `notifInboxRequests*`, `notifMutualSaves*`, `notifEventReminders*`, `notifPermissionDenied` keys for en/de/tr.
+
+- **Auth response unwrap fix**. The mobile `useAuthStore.hydrate`, `fetchMe`, and `signInWithGoogle` were typing `apiFetch<AuthMeResponse>('/api/v1/auth/me')` against a server response that's actually `{ user: AuthMeResponse }`. The login + magic-link paths already destructured `res.user` correctly; hydrate did not, which meant the auth store held a wrongly-shaped object on cold-start sessions. Fixed all three paths to unwrap `.user` so the new push-registration hook (which reads `useAuthStore.user.id` indirectly via the bearer token) can rely on a consistent shape.
+
+Decisions logged:
+
+- **Expo Push over OneSignal/Pusher Beams.** Expo Push is free, requires no FCM/APNS setup beyond the Expo project, and is the path that aligns with the existing SDK 54 stack. The plan notes Hasan's open question on push provider (Q4); shipping Expo Push first matches the recommendation in the plan and keeps the surface area minimal. Migration to a third-party is a single-file swap inside `src/lib/push.ts` if rate limits become a problem.
+
+- **No WebSocket.** Per the milestone plan: 5s foreground polling + push gives WhatsApp-like perceived latency without a sticky-session deploy story. Revisit if Hasan's analytics show >100 simultaneous active threads.
+
+- **`expo-notifications` is the one new dep.** SDK 54 does NOT transitively include `expo-notifications` — verified by checking `mobile/node_modules`. The constraint in `mobile/CLAUDE.md` allows new deps when the spec explicitly approves them; this milestone's spec does. Listed as a documented exception in the commit message.
+
+- **deviceId is mobile-minted, not OS-derived.** A 32-hex SecureStore-persisted UUID gives privacy parity with how iOS apps normally track installs. We deliberately don't use `expo-application.applicationId` or `Device.osBuildId` because those leak across uninstall/reinstall.
+
+- **Foreground push handler set globally.** `setNotificationHandler` lives at module scope in `mobile/src/lib/push/handler.ts` and is called once before the first render. Without it, foreground pushes are silently dropped (RN default since SDK 50) — bad UX for the chat thread case where the user might be on the inbox list when a thread message arrives.
+
+- **`notificationPrefs` defaults treat missing keys as `true`.** Both client and server default-on. A fresh user gets all categories; opting-out is explicit and persists in JSON. Adding a future category is a one-line schema additive change.
+
+Deploy steps for Hasan:
+
+1. **Apply the migration** on the VPS:
+   ```bash
+   docker exec opsolid-app npx prisma migrate deploy
+   ```
+   Applies `20260512000000_add_push_devices/migration.sql` (creates `push_devices` + adds `users.notification_prefs` JSONB column). Additive + idempotent (`IF NOT EXISTS` everywhere).
+2. **(Optional) Set `EXPO_ACCESS_TOKEN`** on the VPS:
+   ```
+   EXPO_ACCESS_TOKEN=<expo-access-token>
+   ```
+   Then `docker compose up -d --force-recreate opsolid` (env_file changes don't apply on `restart` — see `feedback_docker_env_file.md`). Without this, Expo accepts anonymous push requests at a lower rate limit and skips delivery receipts; fine for development, recommended for any non-trivial DAU.
+3. APK rebuild via the usual `gh workflow run` — ships the push registration + Settings toggles + 5s foreground polling on the next build. Fresh installs see the OS permission prompt the first time the (app) layout mounts; existing installs see it on next cold-start since the `(app)/_layout.tsx` registration hook hasn't run before.
+
 ### M3 — Network growth loops [DONE — committed]
 
 Shipped (2026-05-09):

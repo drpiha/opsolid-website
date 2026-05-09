@@ -12,6 +12,7 @@ import { useOnboardingDraftStore } from '../../src/store/onboardingDraftStore';
 import { usePendingReferralStore } from '../../src/store/pendingReferralStore';
 import { listCards } from '../../src/lib/api/cards';
 import { redeemReferral } from '../../src/lib/api/referrals';
+import { registerForPushAsync } from '../../src/lib/push/register';
 import {
   CalendarDays,
   CreditCard,
@@ -80,6 +81,22 @@ export default function AppLayout() {
         void clearPendingRef(null);
       });
   }, [status, pendingRef, pendingRefHydrated, clearPendingRef]);
+
+  // M4 — push registration. Fires once per authenticated session. The call
+  // is fire-and-forget (`registerForPushAsync` swallows its own errors) so
+  // the OS permission prompt doesn't block any of the rendering branches
+  // below — most importantly, it doesn't interfere with the root layout's
+  // 10s safety timer that drives the black-screen fallback. If the user
+  // never resolves the permission dialog (rare; airplane-mode + suspend),
+  // the rest of the app proceeds with no push devices registered, which is
+  // the same as a fresh install where the user denies.
+  const pushFired = useRef(false);
+  useEffect(() => {
+    if (pushFired.current) return;
+    if (status !== 'authenticated') return;
+    pushFired.current = true;
+    void registerForPushAsync();
+  }, [status]);
 
   useEffect(() => {
     void isBiometricEnabled().then(async (enabled) => {

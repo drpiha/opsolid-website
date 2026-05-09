@@ -4,11 +4,18 @@ import { useEffect } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as Linking from 'expo-linking';
+import * as Notifications from 'expo-notifications';
 import { ThemeProvider } from '../src/lib/theme/ThemeProvider';
 import { useAuthStore } from '../src/lib/auth/store';
 import { useThemeStore } from '../src/lib/theme/themeStore';
 import { useLocaleStore } from '../src/lib/i18n/localeStore';
 import { usePendingReferralStore } from '../src/store/pendingReferralStore';
+import { installNotificationHandler } from '../src/lib/push/handler';
+
+// Install once at module scope so it runs before the first render. Calling
+// `setNotificationHandler` is the React Native equivalent of registering a
+// service worker — it must be set before any push arrives.
+installNotificationHandler();
 
 // M3 — extract a `ref` query param from any incoming deep-link URL (initial
 // or runtime) and stash it in the pending-referral store so the post-auth
@@ -74,9 +81,29 @@ export default function RootLayout() {
       if (ref) void setPendingRef(ref);
     });
 
+    // M4 — when the user taps a push, route via Linking to the deep-link in
+    // the notification's `data.url` field. The handler must live at the root
+    // (not inside (app)/_layout) so taps that wake the app from cold start
+    // are caught while the auth gate is still resolving — Linking.openURL
+    // resolves once the (app) routes are mounted, so this is safe.
+    const tapSub = Notifications.addNotificationResponseReceivedListener(
+      (response) => {
+        const data = response.notification.request.content.data as
+          | { url?: string }
+          | null;
+        const url = data?.url;
+        if (typeof url === 'string' && url.startsWith('verso://')) {
+          void Linking.openURL(url).catch(() => {
+            // Unknown deep link — drop it. The user already saw the banner.
+          });
+        }
+      },
+    );
+
     return () => {
       clearTimeout(safetyTimer);
       sub.remove();
+      tapSub.remove();
     };
   }, [hydrate, hydrateTheme, hydrateLocale]);
 

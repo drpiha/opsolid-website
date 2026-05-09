@@ -47,7 +47,32 @@ export async function verifyMagicLink(token: string): Promise<AuthMeResponse> {
 }
 
 export async function fetchMe(): Promise<AuthMeResponse> {
-  return apiFetch<AuthMeResponse>('/api/v1/auth/me');
+  // Server returns `{ user: {...} }`. Unwrap to match the contract.
+  const res = await apiFetch<{ user: AuthMeResponse }>('/api/v1/auth/me');
+  return res.user;
+}
+
+/**
+ * M4 — patch the current user's profile. Currently only `notificationPrefs`
+ * is accepted server-side; the route is forward-compatible with future fields.
+ * Returns the freshly-merged user shape.
+ */
+export async function patchMe(
+  patch: { notificationPrefs?: Partial<{
+    messages: boolean;
+    inboxRequests: boolean;
+    mutualSaves: boolean;
+    eventReminders: boolean;
+  }> },
+): Promise<AuthMeResponse> {
+  const res = await apiFetch<{ user: AuthMeResponse }>(
+    '/api/v1/auth/me',
+    {
+      method: 'PATCH',
+      body: JSON.stringify(patch),
+    },
+  );
+  return res.user;
 }
 
 /**
@@ -70,7 +95,8 @@ export async function signInWithGoogle(): Promise<AuthMeResponse | null> {
 
   await setTokens(at, rt);
 
-  // Fetch the user profile with the fresh access token
-  const user = await apiFetch<AuthMeResponse>('/api/v1/auth/me');
-  return user;
+  // Fetch the user profile with the fresh access token. Server returns
+  // `{ user: {...} }` — unwrap to match the rest of the auth contract.
+  const res = await apiFetch<{ user: AuthMeResponse }>('/api/v1/auth/me');
+  return res.user;
 }

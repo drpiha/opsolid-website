@@ -17,6 +17,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireUser, AuthError } from "@/lib/auth/require-user";
+import { notify } from "@/lib/push";
 import { z } from "zod";
 
 export const runtime = "nodejs";
@@ -68,7 +69,7 @@ export async function POST(
   // Verify receiver card exists and is published
   const receiverCard = await prisma.cardOrder.findUnique({
     where: { slug },
-    select: { id: true, status: true, userId: true },
+    select: { id: true, status: true, userId: true, contactName: true },
   });
   if (!receiverCard || receiverCard.status !== "PUBLISHED") {
     return NextResponse.json({ error: "not_found" }, { status: 404 });
@@ -77,7 +78,7 @@ export async function POST(
   // Verify sender card belongs to authenticated user and is published
   const senderCard = await prisma.cardOrder.findUnique({
     where: { slug: parsed.data.senderSlug },
-    select: { id: true, status: true, userId: true },
+    select: { id: true, status: true, userId: true, contactName: true },
   });
   if (
     !senderCard ||
@@ -117,6 +118,32 @@ export async function POST(
     },
     select: { id: true, type: true, status: true, createdAt: true },
   });
+
+  // M4 — push to the receiver. Only fire when the receiver card is owned by
+  // a User account (orphan cards from pre-account orders have no inbox to
+  // push into). Best-effort; notify() never throws.
+  if (receiverCard.userId && receiverCard.userId !== user.id) {
+    const senderName =
+      senderCard.contactName?.trim() ||
+      user.name?.trim() ||
+      user.email?.split("@")[0] ||
+      "Verso";
+    const typeLabel: Record<string, string> = {
+      request_contact: "wants to connect",
+      request_quote: "requested a quote",
+      request_meeting: "requested a meeting",
+      ask_collaboration: "proposed a collaboration",
+      send_card: "shared their card",
+    };
+    const verb = typeLabel[parsed.data.type] ?? "sent you a request";
+    void notify({
+      userId: receiverCard.userId,
+      category: "inboxRequests",
+      title: senderName,
+      body: parsed.data.message?.trim() || verb,
+      data: { url: "verso://inbox", kind: "inbox_action", actionId: action.id },
+    });
+  }
 
   return NextResponse.json(action, { status: 201 });
 }

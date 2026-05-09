@@ -48,6 +48,16 @@ model User {
   // B0.6 — RBAC role. Values: "USER" | "ADMIN". Default USER.
   // Set to ADMIN via scripts/seed-admin.ts; never auto-promoted.
   role            String    @default("USER")
+  /**
+   * M4 — per-user push notification preferences. JSONB for forward-compat
+   * with new categories. Default shape (when null or missing keys treated
+   * as `true`):
+   *   { messages: true, inboxRequests: true, mutualSaves: true,
+   *     eventReminders: true }
+   * Server-side push fan-out (`src/lib/push.ts`) reads this column and skips
+   * fan-out when the relevant category is explicitly `false`.
+   */
+  notificationPrefs Json? @map("notification_prefs")
   createdAt       DateTime  @default(now()) @map("created_at")
   updatedAt       DateTime  @updatedAt @map("updated_at")
 
@@ -70,6 +80,13 @@ model User {
    */
   referral             Referral?
   referralRedemptions  ReferralRedemption[] @relation("RefereeRedemptions")
+
+  /**
+   * M4 — registered push devices. One row per (user, deviceId); a re-register
+   * from the same install bumps `lastSeenAt` and (potentially) the token in
+   * place rather than creating a duplicate.
+   */
+  pushDevices PushDevice[]
 
   @@index([email])
   @@map("users")
@@ -824,6 +841,40 @@ model ShareEvent {
   @@index([sourceCardId, createdAt])
   @@index([createdAt])
   @@map("share_events")
+}
+
+// =============================================================================
+// M4 — Real-time comms
+//
+// PushDevice — one row per (user, deviceId). The mobile app posts here once
+// after auth with the Expo push token; subsequent app launches re-register and
+// the unique (userId, deviceId) constraint makes the call idempotent (the row
+// is updated in place to refresh `expoPushToken` + `lastSeenAt`).
+//
+// `expoPushToken` shape: `ExponentPushToken[xxxxxxxxxxxxxxxxxxxxxx]`.
+// `platform`: "ios" | "android".
+// `deviceId`: a stable per-install id minted by the mobile app. We deliberately
+// don't use the OS device id (privacy) — a UUID generated at first launch and
+// kept in SecureStore is enough to dedupe across re-registrations.
+//
+// When the Expo Push receipt comes back with `DeviceNotRegistered`, the server
+// hard-deletes the row so we don't keep retrying a stale token.
+// =============================================================================
+model PushDevice {
+  id            String   @id @default(cuid())
+  userId        String   @map("user_id")
+  expoPushToken String   @map("expo_push_token")
+  platform      String
+  deviceId      String   @map("device_id")
+  lastSeenAt    DateTime @default(now()) @map("last_seen_at")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, deviceId])
+  @@index([userId])
+  @@index([expoPushToken])
+  @@map("push_devices")
 }
 
 // =============================================================================

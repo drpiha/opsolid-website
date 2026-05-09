@@ -22,8 +22,13 @@ export const useAuthStore = create<AuthState>((set) => ({
         set({ status: 'unauthenticated', user: null });
         return;
       }
-      const user = await apiFetch<AuthMeResponse>('/api/v1/auth/me');
-      set({ status: 'authenticated', user });
+      // The server response is `{ user: {...} }`. M4 needs the unwrapped shape
+      // (push registration reads `user.id` for parity with the login() and
+      // verifyMagicLink() paths which already unwrap).
+      const res = await apiFetch<{ user: AuthMeResponse }>(
+        '/api/v1/auth/me',
+      );
+      set({ status: 'authenticated', user: res.user });
     } catch {
       await clearTokens();
       set({ status: 'unauthenticated', user: null });

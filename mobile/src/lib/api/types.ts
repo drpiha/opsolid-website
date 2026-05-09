@@ -16,6 +16,20 @@ export type AuthMeResponse = {
   email: string;
   role: 'USER' | 'ADMIN';
   emailVerifiedAt: string | null;
+  // M4 — push notification preferences. Server returns the merged shape with
+  // any unset key defaulted to true; mobile Settings reads from this and
+  // PATCHes deltas via /api/v1/auth/me.
+  notificationPrefs?: NotificationPrefs;
+  // Optional fields that may not appear on every response shape.
+  name?: string | null;
+  locale?: string;
+};
+
+export type NotificationPrefs = {
+  messages: boolean;
+  inboxRequests: boolean;
+  mutualSaves: boolean;
+  eventReminders: boolean;
 };
 
 // POST /api/v1/auth/magic-link  {email, locale}  → 202 no body

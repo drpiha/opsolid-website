@@ -362,6 +362,17 @@ export const t = {
       security: 'Security',
       notifications: 'Notifications',
       notificationsComingSoon: 'Push notifications — coming soon',
+      // M4 — toggle row labels for the four supported categories.
+      notifMessages: 'Direct messages',
+      notifMessagesBody: 'New chat in your inbox',
+      notifInboxRequests: 'Connection requests',
+      notifInboxRequestsBody: 'Someone wants to connect',
+      notifMutualSaves: 'Mutual saves',
+      notifMutualSavesBody: 'When someone you saved saves you back',
+      notifEventReminders: 'Event reminders',
+      notifEventRemindersBody: 'Upcoming events you said you would attend',
+      notifPermissionDenied:
+        'Push permission is off. Enable it in your device settings.',
       privacyData: 'Privacy & Data',
       exportData: 'Export my data',
       deleteAccount: 'Delete account',
@@ -886,6 +897,18 @@ export const t = {
       security: 'Sicherheit',
       notifications: 'Benachrichtigungen',
       notificationsComingSoon: 'Push-Benachrichtigungen — bald verfügbar',
+      notifMessages: 'Direktnachrichten',
+      notifMessagesBody: 'Neue Chats in deinem Posteingang',
+      notifInboxRequests: 'Verbindungsanfragen',
+      notifInboxRequestsBody: 'Jemand möchte sich mit dir verbinden',
+      notifMutualSaves: 'Gegenseitige Speicherungen',
+      notifMutualSavesBody:
+        'Wenn jemand, den du gespeichert hast, dich zurück speichert',
+      notifEventReminders: 'Veranstaltungs-Erinnerungen',
+      notifEventRemindersBody:
+        'Bevorstehende Events, an denen du teilnehmen möchtest',
+      notifPermissionDenied:
+        'Push-Zugriff ist aus. Aktiviere ihn in den Geräteeinstellungen.',
       privacyData: 'Datenschutz & Daten',
       exportData: 'Meine Daten exportieren',
       deleteAccount: 'Konto löschen',
@@ -1412,6 +1435,18 @@ export const t = {
       security: 'Güvenlik',
       notifications: 'Bildirimler',
       notificationsComingSoon: 'Push bildirimleri — yakında',
+      notifMessages: 'Mesajlar',
+      notifMessagesBody: 'Gelen kutundaki yeni sohbetler',
+      notifInboxRequests: 'Bağlantı istekleri',
+      notifInboxRequestsBody: 'Biri seninle bağlantı kurmak istiyor',
+      notifMutualSaves: 'Karşılıklı kayıtlar',
+      notifMutualSavesBody:
+        'Kaydettiğin biri seni kaydettiğinde',
+      notifEventReminders: 'Etkinlik hatırlatıcıları',
+      notifEventRemindersBody:
+        'Katılacağın yaklaşan etkinlikler',
+      notifPermissionDenied:
+        'Bildirim izni kapalı. Cihaz ayarlarından açabilirsin.',
       privacyData: 'Gizlilik ve Veri',
       exportData: 'Verilerimi indir',
       deleteAccount: 'Hesabımı sil',
