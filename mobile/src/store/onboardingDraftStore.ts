@@ -50,6 +50,20 @@ export type OnboardingDraft = {
   company: string;
   website: string;
   bio: string;
+  /** M7 Wave 2 — Google profile picture URL surfaced by /api/v1/auth/me.
+   *  Used as a placeholder avatar in the Step 0 "we found your details"
+   *  panel. Per-session only — never persisted to SecureStore so we always
+   *  re-read the freshest URL from the auth store on the next launch. */
+  prefillAvatarUrl: string | null;
+  /** M7 Wave 2 — preset pack selection. The 5 curated packs in
+   *  `lib/cards/presets.ts` each bundle a templateId, themeKey, and brand
+   *  color pair. Storing the key in the draft lets Step 4 highlight the
+   *  selected pack and lets the publish step optionally PATCH the brand
+   *  colors after createCard returns. Per-session — not persisted. */
+  themeKey: 'light' | 'dark';
+  brandPrimaryHex: string;
+  brandAccentHex: string;
+  presetKey: string | null;
   /** Once true, the wizard never auto-shows again (route guard). */
   skipped: boolean;
   /** Once true, the wizard never auto-shows again (survives card deletion). */
@@ -83,6 +97,11 @@ const INITIAL_DRAFT: Omit<OnboardingDraft, 'skipped' | 'everPublished' | 'hydrat
   company: '',
   website: '',
   bio: '',
+  prefillAvatarUrl: null,
+  themeKey: 'light',
+  brandPrimaryHex: '#1AA6B7',
+  brandAccentHex: '#0B1A1F',
+  presetKey: null,
 };
 
 export const useOnboardingDraftStore = create<OnboardingDraftStore>((set, get) => ({

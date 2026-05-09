@@ -28,6 +28,11 @@ export type AuthMeResponse = {
   // Optional fields that may not appear on every response shape.
   name?: string | null;
   locale?: string;
+  // M7 Wave 2 — Google profile picture URL captured at first OIDC sign-in.
+  // Used by the onboarding wizard to pre-fill the avatar without waiting for
+  // the user to upload a photo. Null when the user signed in via email/magic
+  // link or when Google did not return `picture` on the OIDC payload.
+  image?: string | null;
 };
 
 export type NotificationPrefs = {

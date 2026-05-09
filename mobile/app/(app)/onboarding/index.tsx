@@ -54,6 +54,7 @@ import { Button } from '../../../src/components/ui/Button';
 import {
   useOnboardingDraftStore,
   type OnboardingContactChip,
+  type OnboardingDraft,
   type OnboardingOrigin,
 } from '../../../src/store/onboardingDraftStore';
 import {
@@ -67,8 +68,11 @@ import type {
   CardPatchInput,
   DraftFields,
 } from '../../../src/lib/api/types';
-
-const TEMPLATE_IDS: number[] = [1, 6, 14, 84];
+import { useAuthStore } from '../../../src/lib/auth/store';
+import {
+  PRESET_PACKS,
+  type PresetPack,
+} from '../../../src/lib/cards/presets';
 
 export default function OnboardingScreen() {
   const router = useRouter();
@@ -92,6 +96,37 @@ export default function OnboardingScreen() {
   const [urlValue, setUrlValue] = useState('');
   const [urlMode, setUrlMode] = useState(false);
   const [stepZeroError, setStepZeroError] = useState<string | null>(null);
+
+  // M7 Wave 2 — when the user taps "Enter manually" on the prefill panel we
+  // hide the panel and reveal the standard 3-ramp picker for this session.
+  // Lives in component state (not the draft store) because it's a one-shot
+  // UI dismissal — re-entering the wizard later should re-offer the panel.
+  const [prefillDismissed, setPrefillDismissed] = useState(false);
+
+  // M7 Wave 2 — Google OAuth auto-fill. Runs ONCE on wizard mount: if the
+  // authenticated user has a name/email/picture and the draft is still
+  // empty (no OCR / URL pre-fill, no manual typing), seed those fields so
+  // the user lands on a "we found your details" panel instead of a blank
+  // origin picker. Empty deps are intentional — re-running this on every
+  // draft change would clobber user edits.
+  useEffect(() => {
+    const u = useAuthStore.getState().user;
+    if (!u) return;
+    if (draft.name?.trim()) return;
+
+    const patch: Partial<OnboardingDraft> = {};
+    if (u.name) patch.name = u.name.trim();
+    if (u.email && !draft.contactValue?.trim()) {
+      patch.contactChip = 'email';
+      patch.contactValue = u.email;
+    }
+    if (u.image) patch.prefillAvatarUrl = u.image;
+
+    if (Object.keys(patch).length > 0) {
+      setDraft(patch);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Re-run the enter animation whenever step changes
   const stepAnim = useSharedValue(1);
@@ -294,9 +329,33 @@ export default function OnboardingScreen() {
 
       const created = await createCard({
         templateId: draft.templateId,
+        // M7 Wave 2 — pass the preset's themeKey at create time. Brand
+        // colors are NOT in CardCreateInput (only `themeKey` is), so we
+        // PATCH them in a follow-up call below alongside the photo path.
+        themeKey: draft.themeKey,
         // Server accepts arbitrary cardData keys — cast through unknown.
         cardData: cardData as unknown as { name: string },
       });
+
+      // M7 Wave 2 — wire preset brand colors via PATCH. If the user picked
+      // a preset (presetKey set) we always send the colors so the dark/light
+      // pair matches what they previewed in Step 4. If the user skipped the
+      // preset picker (presetKey null) we don't override anything.
+      if (draft.presetKey) {
+        try {
+          await updateCard(created.id, {
+            brandPrimaryHex: draft.brandPrimaryHex,
+            brandAccentHex: draft.brandAccentHex,
+            // Cast through unknown — server PATCH accepts these top-level
+            // brand fields but the mobile CardPatchInput hasn't yet been
+            // widened (it omits brand color keys; mirrors comment in
+            // mobile/CLAUDE.md gotchas).
+          } as unknown as CardPatchInput);
+        } catch {
+          // Best-effort — don't block the publish flow. The card is live
+          // with default brand colors; user can re-pick on cards/edit.
+        }
+      }
 
       // Photo upload is best-effort: a network failure here doesn't block the
       // publish flow. The card is created without the photo and the draft
@@ -407,10 +466,29 @@ export default function OnboardingScreen() {
                   onManual={pickManual}
                   onScan={() => void pickScan()}
                   errorMsg={stepZeroError}
+                  // M7 Wave 2 — prefill panel surfaces when Google gave us a
+                  // name and the user hasn't dismissed it yet for this run.
+                  showPrefillPanel={
+                    !prefillDismissed &&
+                    !urlMode &&
+                    !!draft.name?.trim() &&
+                    (draft.origin === null || draft.origin === 'manual')
+                  }
+                  prefillName={draft.name}
+                  prefillEmail={
+                    draft.contactChip === 'email' ? draft.contactValue : ''
+                  }
+                  prefillAvatarUrl={draft.prefillAvatarUrl}
+                  onPrefillUseThese={() => {
+                    setDraft({ origin: 'manual', step: 4 });
+                  }}
+                  onPrefillEnterManually={() => setPrefillDismissed(true)}
                   t={t}
                   inkColor={theme.ink[100]}
+                  inkSecondary={theme.ink[300]}
                   hintColor={theme.ink[400]}
                   bgColor={theme.bg[1]}
+                  panelBgColor={theme.bg[2]}
                   borderColor={theme.line.DEFAULT}
                 />
               ) : null}
@@ -459,13 +537,21 @@ export default function OnboardingScreen() {
 
               {draft.step === 4 ? (
                 <Step4Style
-                  templateId={draft.templateId}
-                  onPick={(id) => {
-                    setDraft({ templateId: id });
-                    goStep(5);
+                  presetKey={draft.presetKey}
+                  onPick={(pack) => {
+                    setDraft({
+                      presetKey: pack.key,
+                      templateId: pack.templateId,
+                      themeKey: pack.themeKey,
+                      brandPrimaryHex: pack.brandPrimaryHex,
+                      brandAccentHex: pack.brandAccentHex,
+                    });
                   }}
+                  onContinue={() => goStep(5)}
                   t={t}
+                  presetT={useTranslations(locale).presets}
                   inkColor={theme.ink[100]}
+                  inkSecondary={theme.ink[300]}
                   hintColor={theme.ink[400]}
                   bgColor={theme.bg[1]}
                   borderColor={theme.line.DEFAULT}
@@ -556,10 +642,19 @@ function Step0Origin(props: {
   onManual: () => void;
   onScan: () => void;
   errorMsg: string | null;
+  // M7 Wave 2 — prefill panel
+  showPrefillPanel: boolean;
+  prefillName: string;
+  prefillEmail: string;
+  prefillAvatarUrl: string | null;
+  onPrefillUseThese: () => void;
+  onPrefillEnterManually: () => void;
   t: T;
   inkColor: string;
+  inkSecondary: string;
   hintColor: string;
   bgColor: string;
+  panelBgColor: string;
   borderColor: string;
 }) {
   if (props.urlMode) {
@@ -650,6 +745,11 @@ function Step0Origin(props: {
     },
   ];
 
+  // M7 Wave 2 — initials fallback when Google didn't return a `picture` URL.
+  // We capitalise first character of the auto-filled name; if for some reason
+  // that's empty too we render '?'.
+  const initial = props.prefillName.trim().charAt(0).toUpperCase() || '?';
+
   return (
     <View style={styles.stepBody}>
       <Text style={[styles.stepTitle, { color: props.inkColor }]}>
@@ -658,6 +758,80 @@ function Step0Origin(props: {
       <Text style={[styles.stepHint, { color: props.hintColor }]}>
         {props.t.step0Hint}
       </Text>
+
+      {props.showPrefillPanel ? (
+        <View
+          style={[
+            styles.prefillCard,
+            {
+              backgroundColor: props.panelBgColor,
+              borderColor: props.borderColor,
+            },
+          ]}
+        >
+          <Text style={[styles.prefillTitle, { color: props.inkColor }]}>
+            {props.t.step0PrefillTitle}
+          </Text>
+
+          <View style={styles.prefillRow}>
+            {props.prefillAvatarUrl ? (
+              <Image
+                source={{ uri: props.prefillAvatarUrl }}
+                style={styles.prefillAvatar}
+              />
+            ) : (
+              <View
+                style={[
+                  styles.prefillAvatar,
+                  styles.prefillAvatarFallback,
+                  { backgroundColor: teal[500] },
+                ]}
+              >
+                <Text style={styles.prefillAvatarInitial}>{initial}</Text>
+              </View>
+            )}
+            <View style={styles.prefillTextCol}>
+              <Text
+                style={[styles.prefillName, { color: props.inkColor }]}
+                numberOfLines={1}
+              >
+                {props.prefillName}
+              </Text>
+              {props.prefillEmail ? (
+                <Text
+                  style={[styles.prefillEmail, { color: props.inkSecondary }]}
+                  numberOfLines={1}
+                >
+                  {props.prefillEmail}
+                </Text>
+              ) : null}
+            </View>
+          </View>
+
+          <View style={styles.prefillBtnRow}>
+            <Pressable
+              onPress={props.onPrefillUseThese}
+              style={[
+                styles.prefillBtn,
+                styles.prefillBtnPrimary,
+                { backgroundColor: teal[600] },
+              ]}
+            >
+              <Text style={styles.prefillBtnPrimaryText}>
+                {props.t.step0PrefillUseThese}
+              </Text>
+            </Pressable>
+            <Pressable
+              onPress={props.onPrefillEnterManually}
+              style={[styles.prefillBtn, styles.prefillBtnGhost]}
+            >
+              <Text style={[styles.prefillBtnGhostText, { color: props.hintColor }]}>
+                {props.t.step0PrefillEnterManually}
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+      ) : null}
 
       <View style={{ alignSelf: 'stretch', marginTop: 32, gap: 12 }}>
         {ramps.map((r) => {
@@ -917,28 +1091,30 @@ function Step3Contact(props: {
 }
 
 // ----------------------------------------------------------------- STEP 4
+/**
+ * M7 Wave 2 — replaces the old 4-tile template picker with 5 curated preset
+ * packs. Each pack bundles a templateId, themeKey, and brand color pair
+ * (see `lib/cards/presets.ts`). Picking a pack updates several draft fields
+ * at once — but doesn't auto-advance, so the user can compare the swatch
+ * rows before committing with the bottom CTA.
+ *
+ * Layout: 2-column grid; with 5 items the last row has a single tile that
+ * we let center via `justifyContent: space-between` plus an empty spacer.
+ */
 function Step4Style(props: {
-  templateId: number;
-  onPick: (id: number) => void;
+  presetKey: string | null;
+  onPick: (pack: PresetPack) => void;
+  onContinue: () => void;
   t: T;
+  presetT: ReturnType<typeof useTranslations>['presets'];
   inkColor: string;
+  inkSecondary: string;
   hintColor: string;
   bgColor: string;
   borderColor: string;
   screenWidth: number;
 }) {
-  // 2-column grid, width = (screenWidth - 48) / 2, aspect 1.6
   const cardW = (props.screenWidth - 48 - 12) / 2;
-  const cardH = cardW / 1.6;
-  const tplNames = props.t.templateNames;
-  // Static template tints to give the chips visual variety even without
-  // a real preview render.
-  const tints: Record<number, [string, string]> = {
-    1: ['#1AA6B7', '#0F4F58'],
-    6: ['#C27940', '#7E4A24'],
-    14: ['#0B1A1F', '#454B56'],
-    84: ['#F4F1EC', '#1AA6B7'],
-  };
 
   return (
     <View style={styles.stepBody}>
@@ -946,31 +1122,65 @@ function Step4Style(props: {
         {props.t.step4Title}
       </Text>
 
-      <View style={[styles.tplGrid, { marginTop: 24 }]}>
-        {TEMPLATE_IDS.map((id) => {
-          const active = props.templateId === id;
-          const [bgA, bgB] = tints[id] ?? [teal[500], teal[700]];
+      <View style={[styles.presetGrid, { marginTop: 24 }]}>
+        {PRESET_PACKS.map((pack) => {
+          const active = props.presetKey === pack.key;
+          const labels = props.presetT[pack.key];
           return (
             <Pressable
-              key={id}
-              onPress={() => props.onPick(id)}
+              key={pack.key}
+              onPress={() => props.onPick(pack)}
               style={[
-                styles.tplCard,
+                styles.presetCard,
                 {
                   width: cardW,
-                  height: cardH,
-                  backgroundColor: bgA,
+                  backgroundColor: active ? teal[50] : props.bgColor,
                   borderColor: active ? teal[500] : props.borderColor,
                   borderWidth: active ? 2 : 1,
                 },
               ]}
             >
-              <View style={[styles.tplAccent, { backgroundColor: bgB }]} />
-              <Text style={styles.tplName}>
-                {tplNames[String(id) as '1' | '6' | '14' | '84']}
+              {/* Visual swatch row — three horizontal bands hinting at the
+                  preset's brand pair plus a neutral. Keeps the tile useful
+                  without rendering a full template preview. */}
+              <View style={styles.presetSwatchRow}>
+                <View
+                  style={[
+                    styles.presetSwatch,
+                    { backgroundColor: pack.brandPrimaryHex },
+                  ]}
+                />
+                <View
+                  style={[
+                    styles.presetSwatch,
+                    { backgroundColor: pack.brandAccentHex },
+                  ]}
+                />
+                <View
+                  style={[
+                    styles.presetSwatch,
+                    {
+                      backgroundColor:
+                        pack.themeKey === 'dark' ? '#454B56' : '#F4F1EC',
+                    },
+                  ]}
+                />
+              </View>
+
+              <Text style={[styles.presetLabel, { color: props.inkColor }]}>
+                {labels.label}
               </Text>
+              <Text
+                style={[styles.presetSubtitle, { color: props.inkSecondary }]}
+                numberOfLines={2}
+              >
+                {labels.subtitle}
+              </Text>
+
               {active ? (
-                <View style={[styles.tplCheck, { backgroundColor: teal[500] }]}>
+                <View
+                  style={[styles.presetCheck, { backgroundColor: teal[500] }]}
+                >
                   <Check size={14} color="#FFFFFF" strokeWidth={3} />
                 </View>
               ) : null}
@@ -978,6 +1188,18 @@ function Step4Style(props: {
           );
         })}
       </View>
+
+      <Button
+        label={props.t.step1Next}
+        onPress={props.onContinue}
+        disabled={!props.presetKey}
+        variant="primary"
+        style={{
+          marginTop: 24,
+          alignSelf: 'stretch',
+          backgroundColor: teal[500],
+        }}
+      />
     </View>
   );
 }
@@ -1319,45 +1541,120 @@ const styles = StyleSheet.create({
   },
   chipLabel: { fontSize: 14, fontWeight: '600' },
 
-  // Step 4
-  tplGrid: {
+  // Step 4 — preset packs (M7 Wave 2)
+  presetGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 12,
     alignSelf: 'stretch',
     justifyContent: 'space-between',
   },
-  tplCard: {
+  presetCard: {
+    minHeight: 140,
     borderRadius: 16,
-    padding: 16,
-    justifyContent: 'flex-end',
+    padding: 14,
+    justifyContent: 'flex-start',
     overflow: 'hidden',
     position: 'relative',
   },
-  tplAccent: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    height: 28,
+  presetSwatchRow: {
+    flexDirection: 'row',
+    gap: 4,
+    marginBottom: 12,
   },
-  tplName: {
-    color: '#FFFFFF',
-    fontSize: 14,
+  presetSwatch: {
+    flex: 1,
+    height: 16,
+    borderRadius: 4,
+  },
+  presetLabel: {
+    fontSize: 16,
     fontWeight: '700',
-    textShadowColor: 'rgba(0,0,0,0.45)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
+    marginBottom: 4,
   },
-  tplCheck: {
+  presetSubtitle: {
+    fontSize: 12,
+    lineHeight: 16,
+  },
+  presetCheck: {
     position: 'absolute',
     top: 8,
     right: 8,
-    width: 24,
-    height: 24,
+    width: 22,
+    height: 22,
+    borderRadius: 11,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  // Step 0 — Google prefill panel (M7 Wave 2)
+  prefillCard: {
+    alignSelf: 'stretch',
+    marginTop: 24,
+    marginBottom: 16,
+    padding: 16,
+    borderRadius: 16,
+    borderWidth: 1,
+  },
+  prefillTitle: {
+    fontSize: 14,
+    fontWeight: '600',
+    marginBottom: 12,
+  },
+  prefillRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+  },
+  prefillAvatar: {
+    width: 48,
+    height: 48,
+    borderRadius: 24,
+  },
+  prefillAvatarFallback: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  prefillAvatarInitial: {
+    color: '#FFFFFF',
+    fontSize: 20,
+    fontWeight: '700',
+  },
+  prefillTextCol: {
+    flex: 1,
+  },
+  prefillName: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 2,
+  },
+  prefillEmail: {
+    fontSize: 13,
+  },
+  prefillBtnRow: {
+    flexDirection: 'row',
+    gap: 8,
+    marginTop: 14,
+  },
+  prefillBtn: {
+    flex: 1,
+    paddingVertical: 12,
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  prefillBtnPrimary: {},
+  prefillBtnGhost: {
+    borderWidth: 0,
+  },
+  prefillBtnPrimaryText: {
+    color: '#FFFFFF',
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  prefillBtnGhostText: {
+    fontSize: 14,
+    fontWeight: '500',
   },
 
   // Step 5
