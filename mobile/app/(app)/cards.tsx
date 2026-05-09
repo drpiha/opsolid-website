@@ -1,21 +1,26 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import {
   View,
-  FlatList,
   ActivityIndicator,
-  RefreshControl,
   StyleSheet,
+  Text,
 } from 'react-native';
 import { Stack, useRouter, useFocusEffect } from 'expo-router';
-import { TouchableOpacity, Text } from 'react-native';
 import { ScreenContainer } from '../../src/components/ui/ScreenContainer';
+import { BrandHeader } from '../../src/components/ui/BrandHeader';
 import { Button } from '../../src/components/ui/Button';
-import { CardListItem } from '../../src/components/cards/CardListItem';
+import { CardDeck } from '../../src/components/cards/CardDeck';
+import { CardDeckList } from '../../src/components/cards/CardDeckList';
+import { CardDeckEmpty } from '../../src/components/cards/CardDeckEmpty';
+import { CardDeckFAB } from '../../src/components/cards/CardDeckFAB';
 import { listCards } from '../../src/lib/api/cards';
 import type { ApiCard } from '../../src/lib/api/types';
 import { useTheme } from '../../src/lib/theme/ThemeProvider';
-import { copper } from '../../src/lib/theme/tokens';
+import { teal } from '../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
+import { useOnboardingDraftStore } from '../../src/store/onboardingDraftStore';
+
+const LIST_THRESHOLD = 10;
 
 export default function CardsListScreen() {
   const router = useRouter();
@@ -24,66 +29,71 @@ export default function CardsListScreen() {
 
   const mounted = useRef(false);
   const [items, setItems] = useState<ApiCard[]>([]);
-  const [cursor, setCursor] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [refreshing, setRefreshing] = useState(false);
-  const [loadingMore, setLoadingMore] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const everPublished = useOnboardingDraftStore((s) => s.everPublished);
+
   const load = useCallback(
-    async (mode: 'initial' | 'refresh' | 'more') => {
+    async (mode: 'initial' | 'refresh') => {
       if (mode === 'initial') setLoading(true);
-      if (mode === 'refresh') setRefreshing(true);
-      if (mode === 'more') setLoadingMore(true);
       setError(null);
       try {
-        const c = mode === 'more' ? (cursor ?? undefined) : undefined;
-        const res = await listCards({ limit: 20, cursor: c });
-        setItems((prev) =>
-          mode === 'more' ? [...prev, ...res.items] : res.items,
-        );
-        setCursor(res.nextCursor);
+        // Pull a healthy first page — list view kicks in past 10 anyway.
+        const res = await listCards({ limit: 50 });
+        setItems(res.items);
       } catch {
         setError(t.errorLoad);
       } finally {
         setLoading(false);
-        setRefreshing(false);
-        setLoadingMore(false);
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [cursor],
+    [t.errorLoad],
   );
 
   useEffect(() => {
     void load('initial');
-    // Run once on mount — intentionally omitting `load` from deps
+    // Run once on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // Refresh when screen regains focus after create/edit — skip initial mount
   useFocusEffect(
     useCallback(() => {
-      if (!mounted.current) { mounted.current = true; return; }
+      if (!mounted.current) {
+        mounted.current = true;
+        return;
+      }
       void load('refresh');
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []),
   );
 
-  const renderEmpty = () => (
-    <View style={styles.empty}>
-      <Text style={[styles.emptyTitle, { color: theme.ink[100] }]}>
-        {t.empty}
-      </Text>
-      <Text style={[styles.emptyHint, { color: theme.ink[400] }]}>
-        {t.emptyHint}
-      </Text>
-    </View>
+  // Sort cards by updatedAt desc — most-recently edited card is top of deck.
+  const sorted = useMemo(
+    () =>
+      [...items].sort((a, b) => {
+        const aT = Date.parse(a.updatedAt) || 0;
+        const bT = Date.parse(b.updatedAt) || 0;
+        return bT - aT;
+      }),
+    [items],
   );
+
+  function goCreate() {
+    // Always start from the wizard if the user has never published. The
+    // wizard sets everPublished:true on success; once that's set the user
+    // is past the "calm onboarding" need and lands directly in the full
+    // create form.
+    if (!everPublished) {
+      router.push('/(app)/onboarding' as never);
+    } else {
+      router.push('/(app)/cards/create' as never);
+    }
+  }
 
   const renderError = () => (
     <View style={styles.empty}>
-      <Text style={[styles.emptyTitle, { color: '#B8514B' }]}>{error}</Text>
+      <Text style={[styles.errText, { color: '#B8514B' }]}>{error}</Text>
       <Button
         label={t.retry}
         onPress={() => void load('initial')}
@@ -93,66 +103,73 @@ export default function CardsListScreen() {
     </View>
   );
 
+  const isEmpty = !loading && !error && sorted.length === 0;
+  const isList = sorted.length >= LIST_THRESHOLD;
+
   return (
     <>
-      <Stack.Screen
-        options={{
-          title: t.title,
-          headerRight: () => (
-            <TouchableOpacity
-              onPress={() => router.push('/(app)/cards/create' as never)}
-              style={{ paddingHorizontal: 4 }}
-            >
-              <Text style={{ color: copper[500], fontSize: 24, lineHeight: 28 }}>+</Text>
-            </TouchableOpacity>
-          ),
-        }}
-      />
-      <ScreenContainer>
-        {loading ? (
-          <View style={styles.center}>
-            <ActivityIndicator size="large" color={copper[500]} />
-          </View>
-        ) : error && items.length === 0 ? (
-          renderError()
-        ) : (
-          <FlatList
-            data={items}
-            keyExtractor={(c) => c.id}
-            renderItem={({ item }) => <CardListItem card={item} />}
-            ListEmptyComponent={renderEmpty()}
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={() => void load('refresh')}
-                tintColor={copper[500]}
+      {/* The screen-header "+" is gone — FAB is the new entry point. */}
+      <Stack.Screen options={{ title: t.title }} />
+      <View style={[styles.root, { backgroundColor: theme.bg[0] }]}>
+        <ScreenContainer style={styles.zeroPad}>
+          <BrandHeader />
+          <View style={styles.body}>
+            {loading ? (
+              <View style={styles.center}>
+                <ActivityIndicator size="large" color={teal[500]} />
+              </View>
+            ) : error && sorted.length === 0 ? (
+              renderError()
+            ) : isEmpty ? (
+              <CardDeckEmpty
+                onPress={goCreate}
+                headline={
+                  detectLocale() === 'de'
+                    ? 'Erstellen Sie Ihre erste Karte'
+                    : detectLocale() === 'tr'
+                      ? 'İlk kartınızı oluşturun'
+                      : 'Create your first card'
+                }
+                subline={
+                  detectLocale() === 'de'
+                    ? 'Dauert nur 30 Sekunden'
+                    : detectLocale() === 'tr'
+                      ? '30 saniye sürer'
+                      : 'It takes 30 seconds'
+                }
               />
-            }
-            onEndReached={() => {
-              if (cursor && !loadingMore) void load('more');
-            }}
-            onEndReachedThreshold={0.4}
-            ListFooterComponent={
-              loadingMore ? (
-                <ActivityIndicator
-                  color={copper[500]}
-                  style={{ marginVertical: 16 }}
-                />
-              ) : null
-            }
-            contentContainerStyle={
-              items.length === 0
-                ? { flex: 1, justifyContent: 'center' }
-                : { paddingVertical: 8, paddingHorizontal: 16 }
-            }
-          />
+            ) : isList ? (
+              <CardDeckList cards={sorted} />
+            ) : (
+              <CardDeck cards={sorted} />
+            )}
+          </View>
+        </ScreenContainer>
+
+        {/* FAB stays mounted on every state (empty / deck / list). Pulses on
+            empty to draw attention to the primary CTA. Positioned at the
+            screen-root level (outside ScreenContainer) so its 24pt right
+            inset is measured from the screen edge, not the container padding. */}
+        {!loading && !error && (
+          <CardDeckFAB onPress={goCreate} pulse={sorted.length === 0} />
         )}
-      </ScreenContainer>
+      </View>
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  root: {
+    flex: 1,
+    position: 'relative',
+  },
+  zeroPad: {
+    padding: 0,
+  },
+  body: {
+    flex: 1,
+    position: 'relative',
+  },
   center: {
     flex: 1,
     justifyContent: 'center',
@@ -164,14 +181,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 24,
   },
-  emptyTitle: {
-    fontSize: 18,
-    fontWeight: '500',
-    marginBottom: 8,
-    textAlign: 'center',
-  },
-  emptyHint: {
-    fontSize: 14,
+  errText: {
+    fontSize: 16,
     textAlign: 'center',
   },
 });

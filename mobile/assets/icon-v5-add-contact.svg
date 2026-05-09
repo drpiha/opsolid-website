@@ -1,0 +1,23 @@
+<!--
+  Verso v5 — Add Contact
+  Apple's `person.crop.circle.badge.plus` register, scaled to brand-glyph size.
+  WHITE person silhouette (head + shoulders) sits left-of-center; LARGE WHITE
+  "+" lives upper-right of the silhouette, dominant (~32% of canvas width).
+  Reads instantly as "tap me to add a person/card."
+  At 48px the silhouette holds; the bold + arms stay legible.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <rect width="1024" height="1024" fill="#1AA6B7"/>
+
+  <!-- Person silhouette (left-center) -->
+  <!-- Head -->
+  <circle cx="340" cy="468" r="128" fill="#FFFFFF"/>
+  <!-- Shoulders / torso, tombstone shape -->
+  <path d="M 184 900 L 184 740 Q 184 612 340 612 Q 496 612 496 740 L 496 900 Z" fill="#FFFFFF"/>
+
+  <!-- Bold "+" upper-right, dominant. Arms 160px each from center, stroke 84. -->
+  <g stroke="#FFFFFF" stroke-width="84" stroke-linecap="round">
+    <line x1="520" y1="356" x2="840" y2="356"/>
+    <line x1="680" y1="196" x2="680" y2="516"/>
+  </g>
+</svg>

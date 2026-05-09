@@ -27,6 +27,7 @@ import { copper, signal } from '../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
 import { API_BASE } from '../../src/lib/api/client';
 import { Button } from '../../src/components/ui/Button';
+import { BrandHeader } from '../../src/components/ui/BrandHeader';
 
 type Filter = 'pending' | 'accepted' | 'all';
 
@@ -276,6 +277,7 @@ export default function InboxScreen() {
     <>
       <Stack.Screen options={{ title: t.title }} />
       <View style={[styles.root, { backgroundColor: theme.bg[0] }]}>
+        <BrandHeader />
         {/* Filter chips — only when there are items */}
         {items.length > 0 && !loading && !error ? (
           <View

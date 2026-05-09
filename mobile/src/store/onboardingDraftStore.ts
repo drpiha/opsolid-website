@@ -1,0 +1,112 @@
+// -----------------------------------------------------------------------
+// onboardingDraftStore — Zustand atom for the first-run wizard.
+//
+// Mirrors `templatePickerStore.ts` pattern (pure-zustand, no middleware) but
+// persists the two long-lived guard flags (`skipped`, `everPublished`) via
+// `expo-secure-store` so the route guard in app/(app)/_layout.tsx survives
+// app restarts and reinstalls.
+//
+// Transient draft fields (photoUri, name, jobTitle, contactValue, …) live in
+// memory only — there's no compelling reason to persist a half-finished
+// wizard across launches; if the user backgrounds and returns hours later,
+// starting fresh is more predictable than resuming a stale step.
+// -----------------------------------------------------------------------
+
+import { create } from 'zustand';
+import * as SecureStore from 'expo-secure-store';
+
+export type OnboardingContactChip = 'phone' | 'email' | 'whatsapp';
+
+const STORAGE_KEY_SKIPPED = 'verso.onboarding.skipped';
+const STORAGE_KEY_PUBLISHED = 'verso.onboarding.everPublished';
+
+export type OnboardingDraft = {
+  step: 1 | 2 | 3 | 4 | 5;
+  photoUri: string | null;
+  photoMimeType: string;
+  name: string;
+  jobTitle: string;
+  contactChip: OnboardingContactChip;
+  contactValue: string;
+  templateId: number;
+  /** Once true, the wizard never auto-shows again (route guard). */
+  skipped: boolean;
+  /** Once true, the wizard never auto-shows again (survives card deletion). */
+  everPublished: boolean;
+  hydrated: boolean;
+};
+
+type OnboardingDraftStore = OnboardingDraft & {
+  /** Patch any subset of draft fields. Persists `skipped`/`everPublished` to SecureStore. */
+  set: (patch: Partial<OnboardingDraft>) => void;
+  /** Hydrate `skipped` and `everPublished` from SecureStore. Idempotent. */
+  hydrate: () => Promise<void>;
+  /**
+   * Clear the in-memory draft (photo / name / contact / step) but preserve
+   * `skipped` and `everPublished` — those are guard flags, not draft state.
+   * Called after a successful publish.
+   */
+  reset: () => void;
+};
+
+const INITIAL_DRAFT: Omit<OnboardingDraft, 'skipped' | 'everPublished' | 'hydrated'> = {
+  step: 1,
+  photoUri: null,
+  photoMimeType: 'image/jpeg',
+  name: '',
+  jobTitle: '',
+  contactChip: 'email',
+  contactValue: '',
+  templateId: 1,
+};
+
+export const useOnboardingDraftStore = create<OnboardingDraftStore>((set, get) => ({
+  ...INITIAL_DRAFT,
+  skipped: false,
+  everPublished: false,
+  hydrated: false,
+
+  set: (patch) => {
+    set(patch);
+    // Persist only the long-lived guard flags. Transient draft state stays
+    // in memory. SecureStore writes are async/unbounded — fire and forget.
+    if ('skipped' in patch) {
+      const v = patch.skipped;
+      if (v) SecureStore.setItemAsync(STORAGE_KEY_SKIPPED, '1').catch(() => {});
+      else SecureStore.deleteItemAsync(STORAGE_KEY_SKIPPED).catch(() => {});
+    }
+    if ('everPublished' in patch) {
+      const v = patch.everPublished;
+      if (v) SecureStore.setItemAsync(STORAGE_KEY_PUBLISHED, '1').catch(() => {});
+      else SecureStore.deleteItemAsync(STORAGE_KEY_PUBLISHED).catch(() => {});
+    }
+  },
+
+  hydrate: async () => {
+    try {
+      const [skipped, published] = await Promise.all([
+        SecureStore.getItemAsync(STORAGE_KEY_SKIPPED),
+        SecureStore.getItemAsync(STORAGE_KEY_PUBLISHED),
+      ]);
+      set({
+        skipped: skipped === '1',
+        everPublished: published === '1',
+        hydrated: true,
+      });
+    } catch {
+      // SecureStore failure → treat as fresh state. The wizard will show; no
+      // worse than the first install. Don't surface the error.
+      set({ hydrated: true });
+    }
+  },
+
+  reset: () => {
+    const { skipped, everPublished, hydrated } = get();
+    set({
+      ...INITIAL_DRAFT,
+      skipped,
+      everPublished,
+      hydrated,
+    });
+  },
+}));

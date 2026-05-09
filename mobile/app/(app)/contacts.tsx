@@ -19,6 +19,7 @@ import { copper } from '../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
 import { API_BASE } from '../../src/lib/api/client';
 import { Button } from '../../src/components/ui/Button';
+import { BrandHeader } from '../../src/components/ui/BrandHeader';
 
 export default function ContactsScreen() {
   const router = useRouter();
@@ -140,6 +141,7 @@ export default function ContactsScreen() {
     <>
       <Stack.Screen options={{ title: t.title }} />
       <View style={[styles.root, { backgroundColor: theme.bg[0] }]}>
+        <BrandHeader />
         {loading ? (
           <View style={styles.center}>
             <ActivityIndicator size="large" color={copper[500]} />

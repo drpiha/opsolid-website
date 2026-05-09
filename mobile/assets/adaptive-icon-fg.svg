@@ -1,30 +1,17 @@
 <!--
-  Verso adaptive-icon foreground (Android 8+).
-  Same Compass v3c geometry but no background fill (transparent).
-  Android composes our `adaptiveIcon.backgroundColor: #F4F1EC` behind it.
+  Verso v5 adaptive-icon foreground (Android 8+).
+  Same Add Contact glyph but no background fill (transparent).
+  Android composes adaptiveIcon.backgroundColor: #1AA6B7 behind it.
   Glyph mass scaled to fit Android's 432×432 safe circle inside the 1024 canvas.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
-  <!-- North spike — turquoise, dominant. Scaled to safe circle ~r216 from center. -->
-  <path d="M 512 296 L 552 432 L 512 472 L 472 432 Z" fill="#1AA6B7"/>
+  <!-- Person silhouette (left-center, scaled into safe circle) -->
+  <circle cx="420" cy="478" r="76" fill="#FFFFFF"/>
+  <path d="M 328 692 L 328 596 Q 328 520 420 520 Q 512 520 512 596 L 512 692 Z" fill="#FFFFFF"/>
 
-  <!-- South spike — ink -->
-  <path d="M 512 728 L 552 592 L 512 552 L 472 592 Z" fill="#0E1416"/>
-
-  <!-- East spike — ink -->
-  <path d="M 728 512 L 592 552 L 552 512 L 592 472 Z" fill="#0E1416"/>
-
-  <!-- West spike — ink -->
-  <path d="M 296 512 L 432 552 L 472 512 L 432 472 Z" fill="#0E1416"/>
-
-  <!-- Inner hub diamond -->
-  <path d="M 512 472 L 552 512 L 512 552 L 472 512 Z" fill="#0F4F58"/>
-
-  <!-- Center pivot dot -->
-  <circle cx="512" cy="512" r="14" fill="#1AA6B7"/>
-
-  <!-- "+" affordance, scaled and pulled into safe circle. NE bisector. -->
-  <circle cx="650" cy="378" r="46" fill="#0E1416"/>
-  <line x1="626" y1="378" x2="674" y2="378" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round"/>
-  <line x1="650" y1="354" x2="650" y2="402" stroke="#FFFFFF" stroke-width="10" stroke-linecap="round"/>
+  <!-- Bold "+" upper-right of person, dominant within safe circle -->
+  <g stroke="#FFFFFF" stroke-width="48" stroke-linecap="round">
+    <line x1="528" y1="412" x2="704" y2="412"/>
+    <line x1="616" y1="324" x2="616" y2="500"/>
+  </g>
 </svg>

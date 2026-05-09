@@ -19,6 +19,7 @@ import { copper } from '../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
 import { API_BASE } from '../../src/lib/api/client';
 import { Button } from '../../src/components/ui/Button';
+import { BrandHeader } from '../../src/components/ui/BrandHeader';
 
 export default function DiscoverScreen() {
   const router = useRouter();
@@ -153,6 +154,7 @@ export default function DiscoverScreen() {
   return (
     <View style={[styles.root, { backgroundColor: theme.bg[0] }]}>
       <Stack.Screen options={{ title: t.title }} />
+      <BrandHeader />
 
       {/* Search bar */}
       <View

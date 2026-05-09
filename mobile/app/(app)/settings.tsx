@@ -16,6 +16,7 @@ import { Stack, useRouter } from 'expo-router';
 import Constants from 'expo-constants';
 import { ScreenContainer } from '../../src/components/ui/ScreenContainer';
 import { Button } from '../../src/components/ui/Button';
+import { BrandHeader } from '../../src/components/ui/BrandHeader';
 import { useAuthStore } from '../../src/lib/auth/store';
 import {
   isBiometricEnabled,
@@ -194,6 +195,7 @@ export default function SettingsScreen() {
     <>
       <Stack.Screen options={{ title: t.title }} />
       <ScreenContainer scrollable>
+        <BrandHeader />
         {/* ---------- ACCOUNT ---------- */}
         <SectionHeader theme={theme}>{t.account}</SectionHeader>
         <Card theme={theme}>
