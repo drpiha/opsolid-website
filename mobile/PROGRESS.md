@@ -2,6 +2,67 @@
 
 Living log of mobile-app feature work. Updated per session, not auto-generated.
 
+## 🎯 M7 — First-run hand-holding + social enrichment — 2026-05-09
+
+Added in response to Hasan's brief: "When someone gets lost — first time using the app — there should be hints showing where to do what. The app should also guide design-clueless users. At entry, name/email should auto-appear, ideally pulled from socials." 7 commits on top of `e5118c9`:
+
+| Commit | Scope |
+| --- | --- |
+| `7962042` | Backend: enrichment endpoint + auth/me image + Google OAuth captures `picture` on first sign-in |
+| `527a134` | Coaching infra: `firstRunStore` + `SpotlightOverlay` + `TourCallout` + `TourController` + `TourProvider` (custom Reanimated 4, no new deps) + `presets.ts` (5 packs) + i18n keys ×7 locales |
+| `612209a` | Onboarding: Google OAuth auto-fill panel in Step 0 + 5 preset packs in Step 4 (Banking/Creative/Wellness/Tech/Boutique) |
+| `2095685` | Cards tab: Tour A (3 steps) + card-detail celebration banner with Share/dismiss |
+| `0a388a7` | Edit screen: Tour B (3 steps) + SmartSuggestions panel (5 conditional rows) + "Use Google photo" one-tap + paste-URL enrichment in SocialsSection |
+| `88fe4c7` | Web: vCard 4.0 download endpoint + "Save to contacts" button on public card (`UserPlus` icon) |
+| `ddf8f07` | Wire markPendingCelebration in onboarding publish handler (closes the producer/consumer loop) |
+
+### What M7 ships
+
+- **Coaching marks (Tour A + Tour B):** Custom Spotlight + Tooltip on Reanimated 4 — no new deps. Tour A fires once on empty Cards tab (3 steps: empty deck → FAB → template style). Tour B fires once on first edit-screen open (3 steps: tabs → eye preview → save). Persisted in SecureStore so it survives app restarts. Skipped if user already has cards (re-install case via `everPublished` flag).
+- **Google OAuth auto-fill:** Backend `/api/v1/auth/me` now returns `image`. Onboarding Step 0 detects pre-filled name/email/avatar and shows a "We found your details — Use these / Enter manually" panel. "Use these" jumps directly to Step 4.
+- **5 curated preset packs:** Replaces raw template grid in Step 4. Banking & Finance / Creative & Studio / Wellness & Care / Tech & Product / Boutique & Retail — each bundles `templateId + themeKey + brandPrimaryHex + brandAccentHex`. Sector-aware suggestion via `suggestPresetForSector()`.
+- **SmartSuggestions panel:** Renders at the bottom of edit-screen Profil tab. 5 conditional rows: missing photo / empty bio / no services / no socials / no sector. Each dismissable (per-session, intentional). Disappears when condition met.
+- **"Use Google photo" one-tap:** On edit-screen avatar section, when `auth.user.image` exists and `photoPath` is null, a small pill stamps Google avatar URL into `photoPath` directly.
+- **Paste-URL enrichment in SocialsSection:** TextInput + "Fetch info" button. Calls `POST /api/v1/enrichment/from-url`. Routes by hostname:
+  - `github.com/{user}` → GitHub REST API (free, 5k req/hr with token)
+  - `youtube.com/*` / `youtu.be/*` → YouTube Data API v3 (free, 10k units/day)
+  - `linkedin.com/*` → returns `linkedin-self` (no public lookup possible — ToS+GDPR-defensible)
+  - default → OpenGraph scraping (`<meta og:*>`, `twitter:*`, `<title>`) with SSRF defense, 1MB cap
+  - **NOT shipped (intentional):** Proxycurl, Apify, Clearbit, RapidAPI scrapers — all ToS-violating or GDPR-indefensible for an EU controller. Twitter/X API skipped at $200/mo.
+- **vCard download (web):** `GET /api/v1/cards/{id}/vcard` returns RFC 6350 v4.0 with FN/N/ORG/TITLE/EMAIL/TEL/URL/NOTE/PHOTO (≤200KB embedded) + RFC §3.2 line folding + CRLF + `\;` escaping. Public card page has a "Save to contacts" button (UserPlus icon) — works on iOS Contacts, Android Contacts, Outlook, etc.
+- **Card-live celebration banner:** Fires once per first publish in card detail with Share2/X icons. Persisted (survives kill-mid-flow). Producer in onboarding publish handler, consumer in cards/[id].tsx.
+
+### What M7 deliberately did NOT ship
+
+- **LinkedIn people-finding:** Not viable. Official API removed people-search in 2018. Every third-party scraper violates LinkedIn ToS and lacks an Art.6 GDPR lawful basis for the data subject. Recommended alternatives: QR scan (already shipped), phone-Contacts hash matching (WhatsApp pattern, future M8), LinkedIn share-sheet to Verso for self-profile.
+- **Tours C / D / E** (Discover / Contacts / Sharing): firstRunStore reserves the IDs but no definitions written yet. Wire when needed — the infra is ready (~30 lines per tour).
+- **Spotify artist enrichment:** Tier 2 (Client Credentials, free, ~1h work). Pending.
+- **Apple Wallet / Google Wallet passes:** Still deferred. Marked in M6 polish backlog.
+- **Multi-language card content** (per-locale cardData): Not started. Card locale is set at create time only.
+- **Voice intro / audio bio field:** Schema gap. Pending future sprint.
+- **Real-time presence (Slack-style green dot):** Not in schema.
+- **Endorsements visitor-submission flow:** `testimonials` schema exists but UX is owner-curated only.
+- **Analytics dashboard for cards:** No view-counter aggregation surfaced.
+
+### M7 deploy additions
+
+On top of the existing 7-step deploy checklist below:
+
+- Apply Prisma migration: `docker exec opsolid-app npx prisma migrate deploy` (covers `User.image` column).
+- New optional env vars on VPS (both degrade gracefully if absent):
+  - `GITHUB_TOKEN` — fine-grained PAT with **zero scopes**, raises rate limit 60→5000 req/hr
+  - `YOUTUBE_API_KEY` — Google Cloud key restricted to YouTube Data API v3 + VPS outbound IP
+- Smoke test:
+  ```bash
+  TOKEN="<paste a fresh access token>"
+  curl -X POST https://opsolid.de/api/v1/enrichment/from-url \
+    -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
+    -d '{"url":"https://github.com/torvalds"}' | jq
+  ```
+  Expected: `200 { source: "github", displayName: "Linus Torvalds", followerCount: <large>, ... }`. SSRF: `http://169.254.169.254/` must return `400 invalid_url`.
+
+---
+
 ## 🏁 Autonomous run complete — 2026-05-09
 
 The "Verso by OpSolid" mobile app is **feature-complete through M6 + all polish follow-ups**. The autonomous run shipped 16 commits today, ~30,000 lines of code + docs, on top of the existing Sprint F4 baseline.
