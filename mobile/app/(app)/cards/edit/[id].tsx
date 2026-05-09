@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import {
   View,
   Text,
@@ -11,6 +11,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Modal,
+  type TextInput as RNTextInput,
 } from 'react-native';
 import { Stack, useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
@@ -27,6 +28,10 @@ import { useTemplatePickerStore } from '../../../../src/store/templatePickerStor
 import { useAuthStore } from '../../../../src/lib/auth/store';
 import { fetchMe } from '../../../../src/lib/auth/api';
 import { PaywallModal } from '../../../../src/components/billing/PaywallModal';
+import { useTour } from '../../../../src/components/tour/TourContext';
+import { useFirstRunStore } from '../../../../src/store/firstRunStore';
+import { SmartSuggestionsSection } from '../../../../src/components/cards/SmartSuggestionsSection';
+import type { EnrichmentResult } from '../../../../src/lib/api/enrichment';
 import {
   BasicFieldsSection,
   SocialsSection,
@@ -295,6 +300,34 @@ export default function CardEditScreen() {
 
   const [photoPath, setPhotoPath] = useState<string | null>(null);
 
+  // -----------------------------------------------------------------
+  // M7 Wave 2 — Tour B coaching marks. Refs anchor the spotlight to
+  // the tab strip, the eye/preview FAB, and the save button. The
+  // scrollRef lets the controller scroll the active tab so the target
+  // is on-screen before measuring (the save button lives in the
+  // header, the FAB in an absolute layer — both above the scroll
+  // root, so they don't strictly need scroll-to but the eye FAB sits
+  // on the Tasarim tab, which we switch to inline).
+  // -----------------------------------------------------------------
+  const editTabsRef = useRef<View>(null);
+  const eyeButtonRef = useRef<View>(null);
+  const saveButtonRef = useRef<View>(null);
+
+  // SmartSuggestions plumbing — we need to focus the bio TextInput,
+  // and scroll the Profil ScrollView to specific sub-sections.
+  const profilScrollRef = useRef<ScrollView>(null);
+  const photoSectionRef = useRef<View>(null);
+  const socialsSectionRef = useRef<View>(null);
+  const bioInputRef = useRef<RNTextInput>(null);
+
+  const { startTour } = useTour();
+  const seenTours = useFirstRunStore((s) => s.seenTours);
+
+  // SmartSuggestions — section y-offsets captured via onLayout so we can
+  // scroll the Profil ScrollView to the right anchor when a CTA fires.
+  const [photoSectionY, setPhotoSectionY] = useState(0);
+  const [socialsSectionY, setSocialsSectionY] = useState(0);
+
   function setBasic<K extends keyof BasicFieldsState>(k: K, v: BasicFieldsState[K]) {
     setBasics((s) => ({ ...s, [k]: v }));
   }
@@ -305,6 +338,78 @@ export default function CardEditScreen() {
     setDiscovery((s) => ({ ...s, [k]: v }));
   }
 
+  // -----------------------------------------------------------------
+  // SmartSuggestions handlers — each scrolls/focuses to the relevant
+  // form section. `onAddBio` reuses the photo anchor (BasicFields lives
+  // immediately below) and just nudges the user to that area; the bio
+  // field is the last input in the BasicFields list.
+  // -----------------------------------------------------------------
+  const handleSuggestPhoto = useCallback(() => {
+    setActiveTab('profil');
+    profilScrollRef.current?.scrollTo({ y: 0, animated: true });
+  }, []);
+
+  const handleSuggestBio = useCallback(() => {
+    setActiveTab('profil');
+    // Scroll roughly to the bottom of the BasicFields block — bio is the
+    // last entry and the section starts right after the photo wrap.
+    profilScrollRef.current?.scrollTo({
+      y: Math.max(photoSectionY + 80, 200),
+      animated: true,
+    });
+    // Best-effort focus; fires after the scroll has had a chance to land.
+    setTimeout(() => bioInputRef.current?.focus(), 350);
+  }, [photoSectionY]);
+
+  const handleSuggestServices = useCallback(() => {
+    setActiveTab('profil');
+    // Services lives below the Socials block on the Profil tab; scroll
+    // far enough to reveal it without overshooting on shorter cards.
+    profilScrollRef.current?.scrollTo({
+      y: socialsSectionY + 600,
+      animated: true,
+    });
+  }, [socialsSectionY]);
+
+  const handleSuggestSocial = useCallback(() => {
+    setActiveTab('profil');
+    profilScrollRef.current?.scrollTo({
+      y: Math.max(socialsSectionY - 20, 0),
+      animated: true,
+    });
+  }, [socialsSectionY]);
+
+  const handleSuggestSector = useCallback(() => {
+    // Tags + Discovery both live on the Advanced tab.
+    setActiveTab('gelismis');
+  }, []);
+
+  // -----------------------------------------------------------------
+  // Paste-URL enrichment apply — patches the form fields in place.
+  // GitHub / YouTube map directly to the matching social slot; OG and
+  // oEmbed offer displayName + bio without choosing a social slot
+  // (we don't know which one the URL belongs to).
+  // -----------------------------------------------------------------
+  const handleApplyEnrichment = useCallback(
+    (result: EnrichmentResult, url: string) => {
+      if (result.source === 'github') {
+        setSocials((s) => ({ ...s, github: url }));
+      } else if (result.source === 'youtube') {
+        setSocials((s) => ({ ...s, youtube: url }));
+      }
+      setBasics((b) => ({
+        ...b,
+        name: b.name.trim() === '' && result.displayName ? result.displayName : b.name,
+        bio: b.bio.trim() === '' && result.bio ? result.bio : b.bio,
+      }));
+      // If there's no card photo yet and the source returned an avatar, use it.
+      if (result.avatarUrl) {
+        setPhotoPath((cur) => (cur ? cur : (result.avatarUrl ?? null)));
+      }
+    },
+    [],
+  );
+
   // Read any picked template id pushed by the modal preview screen and apply
   // it on focus. `consume()` is one-shot — clears the atom so navigating away
   // and back doesn't re-apply the same id.
@@ -313,6 +418,64 @@ export default function CardEditScreen() {
       const picked = useTemplatePickerStore.getState().consume();
       if (picked != null) setTemplateId(picked);
     }, []),
+  );
+
+  // -----------------------------------------------------------------
+  // Tour B — first-time edit-screen coaching marks. Fires once after
+  // the card data has loaded (so the Profil tab has fully laid out
+  // and the tab strip is measurable). The 600ms delay lets the
+  // navigation animation settle before measureInWindow runs.
+  //
+  // Step 2's `action` switches to Tasarim and opens the live preview
+  // sheet — the eye-FAB only mounts on Tasarim, so we always switch
+  // tabs before measuring it.
+  // -----------------------------------------------------------------
+  useFocusEffect(
+    useCallback(() => {
+      if (!card) return;
+      if (seenTours['edit-screen']) return;
+
+      const timer = setTimeout(() => {
+        startTour({
+          tourId: 'edit-screen',
+          steps: [
+            {
+              key: 'B-1',
+              targetRef: editTabsRef,
+              title: tAll.tour.editScreenTitle1,
+              body: tAll.tour.editScreenBody1,
+              ctaLabel: tAll.tour.next,
+            },
+            {
+              key: 'B-2',
+              targetRef: eyeButtonRef,
+              title: tAll.tour.editScreenTitle2,
+              body: tAll.tour.editScreenBody2,
+              ctaLabel: tAll.tour.editScreenCta2,
+              action: async () => {
+                setActiveTab('tasarim');
+                // Wait one paint so the FAB mounts before the
+                // controller measures it on the next step.
+                await new Promise((r) => setTimeout(r, 100));
+                setPreviewVisible(true);
+              },
+            },
+            {
+              key: 'B-3',
+              targetRef: saveButtonRef,
+              title: tAll.tour.editScreenTitle3,
+              body: tAll.tour.editScreenBody3,
+              ctaLabel: tAll.tour.done,
+            },
+          ],
+        });
+      }, 600);
+
+      return () => clearTimeout(timer);
+      // We intentionally re-run only when `card` flips from null → loaded.
+      // The other deps are stable refs from outer scope.
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [card]),
   );
 
   useEffect(() => {
@@ -615,12 +778,14 @@ export default function CardEditScreen() {
           headerStyle: { backgroundColor: theme.bg[0] },
           headerTintColor: theme.ink[100],
           headerRight: () => (
-            <TouchableOpacity onPress={() => void handleSave()} disabled={saving} style={styles.saveBtn}>
-              {saving
-                ? <ActivityIndicator size="small" color={copper[500]} />
-                : <Text style={[styles.saveBtnText, { color: copper[500] }]}>{t.save}</Text>
-              }
-            </TouchableOpacity>
+            <View ref={saveButtonRef} collapsable={false}>
+              <TouchableOpacity onPress={() => void handleSave()} disabled={saving} style={styles.saveBtn}>
+                {saving
+                  ? <ActivityIndicator size="small" color={copper[500]} />
+                  : <Text style={[styles.saveBtnText, { color: copper[500] }]}>{t.save}</Text>
+                }
+              </TouchableOpacity>
+            </View>
           ),
         }}
       />
@@ -630,7 +795,11 @@ export default function CardEditScreen() {
         keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
       >
         {/* Tab bar — three pills, underline indicator on active. */}
-        <View style={[styles.tabBar, { backgroundColor: theme.bg[1], borderBottomColor: theme.line.DEFAULT }]}>
+        <View
+          ref={editTabsRef}
+          collapsable={false}
+          style={[styles.tabBar, { backgroundColor: theme.bg[1], borderBottomColor: theme.line.DEFAULT }]}
+        >
           {tabs.map((tab) => {
             const active = activeTab === tab.key;
             return (
@@ -659,6 +828,7 @@ export default function CardEditScreen() {
         {activeTab === 'profil' && (
           <ScrollView
             key="profil"
+            ref={profilScrollRef}
             style={{ backgroundColor: theme.bg[0] }}
             contentContainerStyle={styles.scroll}
             keyboardShouldPersistTaps="handled"
@@ -666,32 +836,105 @@ export default function CardEditScreen() {
             automaticallyAdjustKeyboardInsets
           >
             {/* Photo */}
-            <TouchableOpacity
-              onPress={() => void pickPhoto()}
-              disabled={uploadingPhoto}
-              style={[styles.photoWrap, { borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[1] }]}
+            <View
+              ref={photoSectionRef}
+              collapsable={false}
+              onLayout={(e) => setPhotoSectionY(e.nativeEvent.layout.y)}
             >
-              {uploadingPhoto ? (
-                <ActivityIndicator color={copper[500]} />
-              ) : photoUri ? (
-                <Image source={{ uri: photoUri }} style={styles.photo} />
-              ) : (
-                <Text style={[styles.photoPlaceholder, { color: theme.ink[400] }]}>
-                  {t.addPhoto}
-                </Text>
-              )}
-              {photoUri && !uploadingPhoto && (
-                <View style={styles.photoEditBadge}>
-                  <Text style={styles.photoEditBadgeText}>{t.changePhoto}</Text>
-                </View>
-              )}
-            </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => void pickPhoto()}
+                disabled={uploadingPhoto}
+                style={[styles.photoWrap, { borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[1] }]}
+              >
+                {uploadingPhoto ? (
+                  <ActivityIndicator color={copper[500]} />
+                ) : photoUri ? (
+                  <Image source={{ uri: photoUri }} style={styles.photo} />
+                ) : (
+                  <Text style={[styles.photoPlaceholder, { color: theme.ink[400] }]}>
+                    {t.addPhoto}
+                  </Text>
+                )}
+                {photoUri && !uploadingPhoto && (
+                  <View style={styles.photoEditBadge}>
+                    <Text style={styles.photoEditBadgeText}>{t.changePhoto}</Text>
+                  </View>
+                )}
+              </TouchableOpacity>
 
-            <BasicFieldsSection theme={theme} values={basics} onChange={setBasic} />
-            <SocialsSection theme={theme} values={socials} onChange={setSocial} />
+              {/* M7 Wave 2 — "Use Google photo" one-tap. The OIDC payload
+                  surfaces the user's Google avatar URL on `auth.user.image`.
+                  We accept it as an external URL directly (server validation
+                  permits any string up to 500 chars in `photoPath`). */}
+              {authUser?.image && !photoPath ? (
+                <TouchableOpacity
+                  onPress={() => setPhotoPath(authUser.image ?? null)}
+                  activeOpacity={0.85}
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'center',
+                    alignSelf: 'center',
+                    gap: 8,
+                    paddingHorizontal: 12,
+                    paddingVertical: 10,
+                    borderRadius: 8,
+                    backgroundColor: theme.bg[2],
+                    borderWidth: 1,
+                    borderColor: theme.line.DEFAULT,
+                    marginTop: 8,
+                  }}
+                >
+                  <Image
+                    source={{ uri: authUser.image }}
+                    style={{ width: 24, height: 24, borderRadius: 12 }}
+                  />
+                  <Text style={{ fontSize: 13, color: theme.ink[200] }}>
+                    {t.useGooglePhoto}
+                  </Text>
+                </TouchableOpacity>
+              ) : null}
+            </View>
+
+            <BasicFieldsSection
+              theme={theme}
+              values={basics}
+              onChange={setBasic}
+              bioInputRef={bioInputRef}
+            />
+            <View
+              ref={socialsSectionRef}
+              collapsable={false}
+              onLayout={(e) => setSocialsSectionY(e.nativeEvent.layout.y)}
+            >
+              <SocialsSection
+                theme={theme}
+                values={socials}
+                onChange={setSocial}
+                onApplyEnrichment={handleApplyEnrichment}
+              />
+            </View>
             <ServicesSection theme={theme} items={services} onChange={setServices} />
             <CustomButtonsSection theme={theme} items={customButtons} onChange={setCustomButtons} />
             <FaqsSection theme={theme} items={faqs} onChange={setFaqs} />
+
+            {card ? (
+              <SmartSuggestionsSection
+                theme={theme}
+                card={card}
+                hasPhoto={!!photoPath}
+                bio={basics.bio}
+                servicesCount={services.length}
+                socialsFilledCount={
+                  Object.values(socials).filter((v) => v.trim() !== '').length
+                }
+                tagsCount={tags.length}
+                onAddPhoto={handleSuggestPhoto}
+                onAddBio={handleSuggestBio}
+                onAddServices={handleSuggestServices}
+                onAddSocial={handleSuggestSocial}
+                onSetSector={handleSuggestSector}
+              />
+            ) : null}
           </ScrollView>
         )}
 
@@ -796,14 +1039,21 @@ export default function CardEditScreen() {
         {/* Live preview FAB — Tasarim tab only, hidden when card has no slug
             yet (cannot preview a card that hasn't been published once). */}
         {activeTab === 'tasarim' && previewUrl && (
-          <TouchableOpacity
-            style={[styles.previewFab, { backgroundColor: teal[500] }]}
-            onPress={() => setPreviewVisible(true)}
-            activeOpacity={0.85}
-            accessibilityLabel={t.preview}
+          <View
+            ref={eyeButtonRef}
+            collapsable={false}
+            style={styles.previewFabAnchor}
+            pointerEvents="box-none"
           >
-            <Eye size={22} color="#FFFFFF" strokeWidth={2.2} />
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.previewFab, { backgroundColor: teal[500] }]}
+              onPress={() => setPreviewVisible(true)}
+              activeOpacity={0.85}
+              accessibilityLabel={t.preview}
+            >
+              <Eye size={22} color="#FFFFFF" strokeWidth={2.2} />
+            </TouchableOpacity>
+          </View>
         )}
       </KeyboardAvoidingView>
 
@@ -905,11 +1155,17 @@ const styles = StyleSheet.create({
   photoEditBadgeText: { color: '#fff', fontSize: 10 },
   fieldLabel: { fontSize: 12, fontWeight: '500', textTransform: 'uppercase', letterSpacing: 0.4 },
   statusRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 12, borderTopWidth: 1, marginTop: 24 },
-  // Live preview FAB — Tasarim tab only.
-  previewFab: {
+  // Live preview FAB — Tasarim tab only. The wrapper view holds the absolute
+  // positioning so it has measurable bounds for Tour B's spotlight; the
+  // inner TouchableOpacity is purely visual + interactive.
+  previewFabAnchor: {
     position: 'absolute',
     right: 24,
     bottom: 24,
+    width: 56,
+    height: 56,
+  },
+  previewFab: {
     width: 56,
     height: 56,
     borderRadius: 28,

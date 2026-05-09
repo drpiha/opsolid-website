@@ -4,7 +4,7 @@
 // paddingHorizontal 14, paddingVertical 12, fontSize 15.
 // -----------------------------------------------------------------------
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type RefObject } from 'react';
 import {
   View,
   Text,
@@ -19,7 +19,7 @@ import {
 } from 'react-native';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react-native';
 import type { ThemeTokens } from '../../lib/theme/tokens';
-import { copper } from '../../lib/theme/tokens';
+import { copper, signal, teal } from '../../lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../lib/i18n/locale';
 import { listTemplates, type Template } from '../../lib/api/templates';
 import {
@@ -27,6 +27,10 @@ import {
   type EventListItem as EventsListItem,
 } from '../../lib/api/events';
 import { API_BASE } from '../../lib/api/client';
+import {
+  enrichFromUrl,
+  type EnrichmentResult,
+} from '../../lib/api/enrichment';
 
 // ---------- Field shape ----------
 export type BasicFieldsState = {
@@ -72,10 +76,14 @@ export function BasicFieldsSection({
   theme,
   values,
   onChange,
+  bioInputRef,
 }: {
   theme: ThemeTokens;
   values: BasicFieldsState;
   onChange: <K extends keyof BasicFieldsState>(k: K, v: BasicFieldsState[K]) => void;
+  /** M7 — edit screen passes a ref so the SmartSuggestions "Add bio" CTA
+   *  can focus this field directly. */
+  bioInputRef?: RefObject<TextInput | null>;
 }) {
   const t = useTranslations(detectLocale()).cards;
 
@@ -113,6 +121,7 @@ export function BasicFieldsSection({
       <View style={styles.fieldWrap}>
         <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>{t.fieldBio}</Text>
         <TextInput
+          ref={bioInputRef}
           style={[
             styles.input,
             styles.multiline,
@@ -136,17 +145,31 @@ export function BasicFieldsSection({
 }
 
 // ---------- SocialsSection ----------
+// M7 Wave 2 — when `onApplyEnrichment` is supplied, the section also renders
+// a paste-URL row at the top of the open panel that hits
+// /api/v1/enrichment/from-url and offers to apply the returned displayName /
+// bio / avatarUrl / social link to the editor's form state.
 export function SocialsSection({
   theme,
   values,
   onChange,
+  onApplyEnrichment,
 }: {
   theme: ThemeTokens;
   values: SocialsState;
   onChange: <K extends keyof SocialsState>(k: K, v: SocialsState[K]) => void;
+  /** Edit-screen hook. When omitted (e.g. on the create form), the
+   *  enrichment row stays hidden. */
+  onApplyEnrichment?: (result: EnrichmentResult, url: string) => void;
 }) {
   const t = useTranslations(detectLocale()).cards;
   const [open, setOpen] = useState(false);
+
+  // ---- Enrichment local state ----
+  const [enrichUrl, setEnrichUrl] = useState('');
+  const [enrichLoading, setEnrichLoading] = useState(false);
+  const [enrichResult, setEnrichResult] = useState<EnrichmentResult | null>(null);
+  const [enrichError, setEnrichError] = useState<string | null>(null);
 
   const fields: { key: keyof SocialsState; label: string; placeholder: string }[] = [
     { key: 'linkedin', label: 'LinkedIn', placeholder: 'linkedin.com/in/yourname' },
@@ -158,6 +181,34 @@ export function SocialsSection({
     { key: 'facebook', label: 'Facebook', placeholder: 'facebook.com/yourname' },
     { key: 'xing', label: 'Xing', placeholder: 'xing.com/profile/yourname' },
   ];
+
+  async function handleEnrich() {
+    const url = enrichUrl.trim();
+    if (!url) return;
+    setEnrichLoading(true);
+    setEnrichError(null);
+    setEnrichResult(null);
+    try {
+      const result = await enrichFromUrl(url);
+      if (result.source === 'linkedin-self') {
+        setEnrichError(t.linkedinNoLookup);
+        return;
+      }
+      setEnrichResult(result);
+    } catch {
+      setEnrichError(t.enrichFailed);
+    } finally {
+      setEnrichLoading(false);
+    }
+  }
+
+  function applyEnrichment() {
+    if (!enrichResult || !onApplyEnrichment) return;
+    onApplyEnrichment(enrichResult, enrichUrl.trim());
+    setEnrichResult(null);
+    setEnrichError(null);
+    setEnrichUrl('');
+  }
 
   return (
     <View style={styles.section}>
@@ -175,6 +226,124 @@ export function SocialsSection({
       </TouchableOpacity>
       {open && (
         <View style={styles.section}>
+          {/* M7 — Paste-URL enrichment row. Renders only when the parent
+              wired up a handler (so the create form, which is pre-published,
+              doesn't ship an unbacked button). */}
+          {onApplyEnrichment ? (
+            <View style={{ gap: 8 }}>
+              <View style={{ flexDirection: 'row', gap: 8, alignItems: 'stretch' }}>
+                <TextInput
+                  style={[
+                    styles.input,
+                    {
+                      flex: 1,
+                      color: theme.ink[100],
+                      borderColor: theme.line.DEFAULT,
+                      backgroundColor: theme.bg[1],
+                    },
+                  ]}
+                  value={enrichUrl}
+                  onChangeText={setEnrichUrl}
+                  placeholder={t.pasteSocialUrl}
+                  placeholderTextColor={theme.ink[500]}
+                  autoCapitalize="none"
+                  keyboardType="url"
+                  autoCorrect={false}
+                />
+                <TouchableOpacity
+                  onPress={() => void handleEnrich()}
+                  disabled={enrichLoading || !enrichUrl.trim()}
+                  activeOpacity={0.85}
+                  style={{
+                    paddingHorizontal: 14,
+                    justifyContent: 'center',
+                    borderRadius: 10,
+                    backgroundColor:
+                      enrichLoading || !enrichUrl.trim() ? theme.bg[2] : teal[500],
+                    minWidth: 96,
+                    alignItems: 'center',
+                  }}
+                >
+                  {enrichLoading ? (
+                    <ActivityIndicator color="#FFFFFF" />
+                  ) : (
+                    <Text
+                      style={{
+                        color:
+                          !enrichUrl.trim() ? theme.ink[400] : '#FFFFFF',
+                        fontSize: 13,
+                        fontWeight: '600',
+                      }}
+                    >
+                      {t.fetchInfo}
+                    </Text>
+                  )}
+                </TouchableOpacity>
+              </View>
+              {enrichResult ? (
+                <View
+                  style={{
+                    padding: 12,
+                    borderRadius: 10,
+                    borderWidth: 1,
+                    borderColor: theme.line.DEFAULT,
+                    backgroundColor: theme.bg[2],
+                    gap: 8,
+                  }}
+                >
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+                    {enrichResult.avatarUrl ? (
+                      <Image
+                        source={{ uri: enrichResult.avatarUrl }}
+                        style={{ width: 36, height: 36, borderRadius: 18 }}
+                      />
+                    ) : null}
+                    <View style={{ flex: 1 }}>
+                      <Text style={{ color: theme.ink[100], fontWeight: '600', fontSize: 14 }}>
+                        {t.enrichFoundLabel}: {enrichResult.displayName ?? '—'}
+                      </Text>
+                      <Text style={{ color: theme.ink[300], fontSize: 12 }}>
+                        {enrichResult.source}
+                        {typeof enrichResult.followerCount === 'number'
+                          ? ` · ${t.enrichFollowers.replace(
+                              '{count}',
+                              enrichResult.followerCount.toLocaleString(),
+                            )}`
+                          : ''}
+                      </Text>
+                    </View>
+                  </View>
+                  {enrichResult.bio ? (
+                    <Text
+                      style={{ color: theme.ink[200], fontSize: 13, lineHeight: 18 }}
+                      numberOfLines={4}
+                    >
+                      {enrichResult.bio}
+                    </Text>
+                  ) : null}
+                  <TouchableOpacity
+                    onPress={applyEnrichment}
+                    activeOpacity={0.85}
+                    style={{
+                      alignSelf: 'flex-start',
+                      paddingHorizontal: 14,
+                      paddingVertical: 8,
+                      borderRadius: 8,
+                      backgroundColor: teal[500],
+                    }}
+                  >
+                    <Text style={{ color: '#FFFFFF', fontSize: 13, fontWeight: '600' }}>
+                      {t.applyToCard}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              ) : null}
+              {enrichError ? (
+                <Text style={{ color: signal.err, fontSize: 12 }}>{enrichError}</Text>
+              ) : null}
+            </View>
+          ) : null}
+
           {fields.map((f) => (
             <View key={f.key} style={styles.fieldWrap}>
               <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>{f.label}</Text>
