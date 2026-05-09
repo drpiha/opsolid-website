@@ -11,8 +11,12 @@ import {
   StyleSheet,
 } from 'react-native';
 import { Stack, useRouter, useFocusEffect } from 'expo-router';
-import { Star } from 'lucide-react-native';
-import { listContacts, unsaveCard } from '../../src/lib/api/contacts';
+import { Star, UserPlus } from 'lucide-react-native';
+import {
+  listContacts,
+  unsaveCard,
+  seedSampleContacts,
+} from '../../src/lib/api/contacts';
 import type { SavedContact } from '../../src/lib/api/contacts';
 import { useTheme } from '../../src/lib/theme/ThemeProvider';
 import { copper } from '../../src/lib/theme/tokens';
@@ -20,16 +24,23 @@ import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
 import { API_BASE } from '../../src/lib/api/client';
 import { Button } from '../../src/components/ui/Button';
 import { BrandHeader } from '../../src/components/ui/BrandHeader';
+import { useAuthStore } from '../../src/lib/auth/store';
+import { useContactsRefreshStore } from '../../src/store/contactsRefreshStore';
 
 export default function ContactsScreen() {
   const router = useRouter();
   const theme = useTheme();
   const t = useTranslations(detectLocale()).contacts;
 
+  const isAuthenticated = useAuthStore((s) => !!s.user);
+  const dirty = useContactsRefreshStore((s) => s.dirty);
+  const clearDirty = useContactsRefreshStore((s) => s.clearDirty);
+
   const [items, setItems] = useState<SavedContact[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [seeding, setSeeding] = useState(false);
 
   const load = useCallback(async (mode: 'initial' | 'refresh') => {
     if (mode === 'initial') setLoading(true);
@@ -46,12 +57,40 @@ export default function ContactsScreen() {
     }
   }, [t.errorLoad]);
 
+  // Re-fetch on every focus. The dirty bit set by the public-card viewer is a
+  // belt-and-braces hint that we *must* refetch even if the screen had been
+  // left mounted; clearing the bit on focus keeps the store tidy regardless
+  // of whether dirty was true or false. See contactsRefreshStore.ts.
   useFocusEffect(
     useCallback(() => {
       void load('initial');
+      if (dirty) clearDirty();
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []),
+    }, [dirty]),
   );
+
+  async function handleSeedSamples() {
+    if (seeding) return;
+    setSeeding(true);
+    try {
+      const res = await seedSampleContacts();
+      // Refetch first so the list reflects the new rows immediately.
+      await load('refresh');
+      if (res.created > 0) {
+        Alert.alert('', t.seedSuccess.replace('{count}', String(res.created)));
+      } else if (res.alreadyHad > 0) {
+        Alert.alert('', t.seedAllAlready);
+      } else {
+        // Cards weren't published / not found — surface as a generic error so
+        // the user knows the action didn't add anything.
+        Alert.alert('', t.seedError);
+      }
+    } catch {
+      Alert.alert('', t.seedError);
+    } finally {
+      setSeeding(false);
+    }
+  }
 
   function confirmUnsave(contact: SavedContact) {
     Alert.alert('', t.unsaveConfirm, [
@@ -163,6 +202,26 @@ export default function ContactsScreen() {
             renderItem={renderItem}
             ListEmptyComponent={
               <View style={styles.center}>
+                {isAuthenticated ? (
+                  <Pressable
+                    onPress={() => void handleSeedSamples()}
+                    disabled={seeding}
+                    style={({ pressed }) => [
+                      styles.seedCta,
+                      { backgroundColor: copper[500] },
+                      pressed && styles.pressed,
+                      seeding && { opacity: 0.6 },
+                    ]}
+                    accessibilityRole="button"
+                  >
+                    {seeding ? (
+                      <ActivityIndicator size="small" color="#fff" />
+                    ) : (
+                      <UserPlus size={16} color="#fff" />
+                    )}
+                    <Text style={styles.seedCtaText}>{t.seedCta}</Text>
+                  </Pressable>
+                ) : null}
                 <Text style={[styles.emptyTitle, { color: theme.ink[100] }]}>{t.empty}</Text>
                 <Text style={[styles.emptyHint, { color: theme.ink[400] }]}>{t.emptyHint}</Text>
               </View>
@@ -196,6 +255,18 @@ const styles = StyleSheet.create({
   },
   emptyTitle: { fontSize: 17, fontWeight: '500', marginBottom: 6, textAlign: 'center' },
   emptyHint: { fontSize: 14, textAlign: 'center' },
+  seedCta: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+    paddingVertical: 14,
+    paddingHorizontal: 28,
+    borderRadius: 14,
+    marginBottom: 24,
+    minWidth: 240,
+  },
+  seedCtaText: { color: '#fff', fontSize: 15, fontWeight: '600' },
   row: {
     flexDirection: 'row',
     alignItems: 'center',

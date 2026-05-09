@@ -199,6 +199,10 @@ export const t = {
       unsave: 'Remove',
       unsaveConfirm: 'Remove from contacts?',
       cancel: 'Cancel',
+      seedCta: 'Add sample contacts',
+      seedSuccess: '{count} sample contacts added',
+      seedAllAlready: 'You already have those samples saved.',
+      seedError: 'Could not add sample contacts. Try again.',
     },
     inbox: {
       title: 'Inbox',
@@ -575,6 +579,10 @@ export const t = {
       unsave: 'Entfernen',
       unsaveConfirm: 'Aus Kontakten entfernen?',
       cancel: 'Abbrechen',
+      seedCta: 'Beispielkontakte hinzufügen',
+      seedSuccess: '{count} Beispielkontakte hinzugefügt',
+      seedAllAlready: 'Diese Beispiele haben Sie bereits gespeichert.',
+      seedError: 'Beispielkontakte konnten nicht hinzugefügt werden. Erneut versuchen.',
     },
     inbox: {
       title: 'Posteingang',
@@ -955,6 +963,10 @@ export const t = {
       unsave: 'Kaldır',
       unsaveConfirm: 'Kişilerden kaldırılsın mı?',
       cancel: 'İptal',
+      seedCta: 'Tanıdığım kişileri ekle',
+      seedSuccess: '{count} örnek eklendi',
+      seedAllAlready: 'Bu örnekler zaten kayıtlı.',
+      seedError: 'Örnek kişiler eklenemedi. Tekrar deneyin.',
     },
     inbox: {
       title: 'Gelen Kutusu',

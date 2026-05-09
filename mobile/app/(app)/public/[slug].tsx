@@ -47,6 +47,7 @@ import type { ThemeTokens } from '../../../src/lib/theme/tokens';
 import { copper } from '../../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../../src/lib/i18n/locale';
 import { useAuthStore } from '../../../src/lib/auth/store';
+import { useContactsRefreshStore } from '../../../src/store/contactsRefreshStore';
 import { API_BASE } from '../../../src/lib/api/client';
 import { Button } from '../../../src/components/ui/Button';
 import { QrCodeModal } from '../../../src/components/cards/QrCodeModal';
@@ -353,9 +354,13 @@ export default function PublicCardScreen() {
       if (saved) {
         await unsaveCard(slug);
         setSaved(false);
+        // Hint to the Contacts tab that its list is now stale. The tab also
+        // refetches on every focus, so this is belt-and-braces.
+        useContactsRefreshStore.getState().markDirty();
       } else {
         await saveCard(slug);
         setSaved(true);
+        useContactsRefreshStore.getState().markDirty();
         // Mirror to device Contacts so the user can find this person from
         // their phone's Contacts app — server save alone isn't enough for
         // people who reach out via the dialer or default messaging app.

@@ -58,3 +58,26 @@ export async function checkSaved(slug: string): Promise<{ saved: boolean }> {
     `/api/cards/${encodeURIComponent(slug)}/save`,
   );
 }
+
+export type SampleSeedResponse = {
+  created: number;
+  alreadyHad: number;
+  notFound: number;
+  slugsCreated: string[];
+  slugsAlreadyHad: string[];
+  slugsNotFound: string[];
+};
+
+/**
+ * One-shot seed of demo contacts for users with an empty Contacts tab. Posts
+ * to the bearer-gated v1 endpoint; defaults to 5 DACH/EU SME personas if no
+ * slugs are passed.
+ */
+export async function seedSampleContacts(
+  slugs?: string[],
+): Promise<SampleSeedResponse> {
+  return apiFetch<SampleSeedResponse>('/api/v1/contacts/sample-seed', {
+    method: 'POST',
+    body: JSON.stringify(slugs ? { slugs } : {}),
+  });
+}
