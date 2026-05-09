@@ -2,14 +2,40 @@
 
 Living log of mobile-app feature work. Updated per session, not auto-generated.
 
-## Status snapshot
+## Status snapshot — 2026-05-09
 
-The "Verso by OpSolid" mobile app is feature-complete through **Sprint F4**. The current head of `main` is commit `e46038d`. Pending APK builds: `#22` (commit `c20aa96`, F2 only) and `#23` (commit `e46038d`, F2+F3+F4). Hasan is the only human in the loop and asked the assistant to ship autonomously; **install build #23 when it lands** — `gh release download android-build-23 --pattern "*.apk" --dir /tmp --clobber && adb install -r /tmp/opsolid-android-0.1.0-b23.apk`.
+The "Verso by OpSolid" mobile app is feature-complete through **Sprint F4**. The current head of `main` is commit `f750f1a` (this docs commit) on top of `e46038d` (F4).
 
-After install, two server steps Hasan must run:
+**APK builds shipped today:**
+- `android-build-22` — commit `e46038d`, includes Sprint 7 + black-screen fix + F2 (Events) + F3 (Contacts) + F4 (Messaging). **This is the latest.** Tag mismatch note: GitHub Actions `run_number` increments monotonically per workflow trigger, so the release tag is `android-build-22` even though the file in this repo's history is the 23rd APK we've built.
 
-1. `docker exec opsolid-app npx prisma migrate deploy` — applies the events + messages migrations.
-2. `docker exec opsolid-app npx tsx scripts/seed-events.ts` — populates the Events tab + Discover rail.
+**To install on Hasan's phone (when it reconnects via ADB-WiFi):**
+
+```
+gh release download android-build-22 --pattern "*.apk" --dir /tmp --clobber
+adb install -r /tmp/opsolid-android-0.1.0-b22.apk
+```
+
+Stable keystore is in GitHub Secrets, so `-r` install preserves Google login. No uninstall needed.
+
+**Server-side migrations + seed (Hasan runs these from his terminal):**
+
+```
+docker exec opsolid-app npx prisma migrate deploy
+docker exec opsolid-app npx tsx scripts/seed-events.ts
+```
+
+The first applies BOTH the `add_events` and `add_messages` migrations (they're additive, safe). The second populates the Events tab + Discover rail with 4 fictional fairs (DMEXCO / Bits & Pretzels / Webrazzi Zirvesi / IHM München) and links the seeded demo cards as attendees.
+
+**What you'll see after install + migrate + seed:**
+
+- New Verso "Add Contact" icon on the launcher (white person silhouette + dominant white + on solid teal).
+- App opens to a teal loading view (no more black screen) → cards screen with the animated 4-deep card-deck and 64pt teal FAB.
+- 6th tab "Events" between Discover and Contacts; Discover gets an "Upcoming events" rail above search.
+- Inbox row taps open a thread chat with the other side. 15s polling, optimistic send, accept/decline pill on pending requests.
+- Empty Contacts state offers "Tanıdığım kişileri ekle" — one-tap seeds 5 demo cards as saved contacts.
+- Settings: Light/System/Dark + EN/DE/TR + About panel + version info.
+- Edit form: 3-tab segmented control (Profil/Tasarım/Gelişmiş), template horizontal carousel, full-screen template preview, live preview FAB on Tasarım tab, brand color split mini-card chip, status banner section, feedback toggle, and (NEW) attending events chip multi-select on Gelişmiş.
 
 ## Done — installed via APK build #21 (commit `1c25bd2`)
 
@@ -119,8 +145,7 @@ Deploy steps for Hasan:
 | android-build-19 | `cf914e4` | Verso v3c compass icon + Sprint D server live | installed -r |
 | android-build-20 | `96df346` | Sprint F5 + bug fixes + Sprint 6 edit overhaul | installed -r → BLACK SCREEN regression |
 | android-build-21 | `1c25bd2` | Sprint 7 (icon v5 + deck + onboarding + brand header) + black-screen fix | **installed -r** (phone Dozing during verify) |
-| android-build-22 | `c20aa96` | Sprint F2 — Events / Fairs feature | building |
-| android-build-23 | `e46038d` | Sprint F2 + F3 (Contacts seed) + F4 (Inbox messaging) | building (latest — install this when both finish) |
+| android-build-22 | `e46038d` | Sprint 7 + black-screen fix + F2 + F3 + F4 (everything through commit `e46038d`) | **built, awaiting install** (phone disconnected from ADB-WiFi) |
 
 ## Operating notes (read first when picking up work)
 
