@@ -1460,6 +1460,29 @@ export const cardTemplates: readonly CardTemplateDef[] = [
     isActive: true,
     sortOrder: 96,
   },
+  // ---------------------------------------------------------------------------
+  // M3 — Linktree (id 100). Carrd-comparison amendment: a "link in bio"
+  // creator template. Renders a vertical stack of full-width buttons (driven
+  // by `customButtons[]` in cardData) instead of the standard contact-info
+  // card surface. Falls back to SmartCard since no v2 component is wired —
+  // the layoutKey "accordion" hint flows through to the renderer / preview
+  // generator. Customers using this template typically populate avatar +
+  // name + bio + 6 buttons + socials.
+  // ---------------------------------------------------------------------------
+  {
+    id: 100,
+    slug: "linktree",
+    name: "Linktree",
+    sectorHint: "creator",
+    componentKey: "SmartCard",
+    themeKey: "editorial",
+    previewPath: "/images/templates/card-100.png",
+    oneTimeCents: 9900,
+    monthlyCents: 600,
+    yearlyCents: 4900,
+    isActive: true,
+    sortOrder: 100,
+  },
 ];
 
 export function getTemplateById(id: number): CardTemplateDef | undefined {

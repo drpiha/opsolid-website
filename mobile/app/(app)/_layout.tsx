@@ -9,7 +9,9 @@ import { useTheme } from '../../src/lib/theme/ThemeProvider';
 import { copper } from '../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
 import { useOnboardingDraftStore } from '../../src/store/onboardingDraftStore';
+import { usePendingReferralStore } from '../../src/store/pendingReferralStore';
 import { listCards } from '../../src/lib/api/cards';
+import { redeemReferral } from '../../src/lib/api/referrals';
 import {
   CalendarDays,
   CreditCard,
@@ -37,11 +39,47 @@ export default function AppLayout() {
   const onboardingEverPublished = useOnboardingDraftStore((s) => s.everPublished);
   const hydrateOnboarding = useOnboardingDraftStore((s) => s.hydrate);
 
+  // M3 — pending referral attribution. The pendingReferralStore is populated
+  // by the deep-link handler (verso://onboarding?ref=…) before the user has
+  // an authenticated session; once status flips to `authenticated`, fire one
+  // redeem call and clear. Idempotent on the server, so a duplicate call from
+  // a re-entrant mount is harmless.
+  const pendingRef = usePendingReferralStore((s) => s.ref);
+  const pendingRefHydrated = usePendingReferralStore((s) => s.hydrated);
+  const hydratePendingRef = usePendingReferralStore((s) => s.hydrate);
+  const clearPendingRef = usePendingReferralStore((s) => s.setRef);
+  const redeemFired = useRef(false);
+
   useEffect(() => {
     if (!onboardingHydrated) {
       void hydrateOnboarding();
     }
-  }, [onboardingHydrated, hydrateOnboarding]);
+    if (!pendingRefHydrated) {
+      void hydratePendingRef();
+    }
+  }, [
+    onboardingHydrated,
+    hydrateOnboarding,
+    pendingRefHydrated,
+    hydratePendingRef,
+  ]);
+
+  useEffect(() => {
+    if (redeemFired.current) return;
+    if (status !== 'authenticated') return;
+    if (!pendingRefHydrated) return;
+    if (!pendingRef) return;
+    redeemFired.current = true;
+    void redeemReferral(pendingRef)
+      .catch(() => {
+        // Don't surface — referral attribution is best-effort and never
+        // blocks the user. The server is idempotent so a future redeem from
+        // a different surface still works.
+      })
+      .finally(() => {
+        void clearPendingRef(null);
+      });
+  }, [status, pendingRef, pendingRefHydrated, clearPendingRef]);
 
   useEffect(() => {
     void isBiometricEnabled().then(async (enabled) => {

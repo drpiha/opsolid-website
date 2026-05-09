@@ -18,6 +18,8 @@ import { ScreenContainer } from '../../src/components/ui/ScreenContainer';
 import { Button } from '../../src/components/ui/Button';
 import { BrandHeader } from '../../src/components/ui/BrandHeader';
 import { useAuthStore } from '../../src/lib/auth/store';
+import { getMyReferral, type ReferralMeResponse } from '../../src/lib/api/referrals';
+import { getShareSummary, type ShareSummary } from '../../src/lib/api/share-events';
 import {
   isBiometricEnabled,
   isBiometricAvailable,
@@ -25,7 +27,9 @@ import {
   disableBiometric,
 } from '../../src/lib/auth/biometric';
 import { useTheme } from '../../src/lib/theme/ThemeProvider';
-import { teal } from '../../src/lib/theme/tokens';
+import { teal, copper } from '../../src/lib/theme/tokens';
+
+const copperHex = copper[500];
 import {
   useTranslations,
   detectLocale,
@@ -104,7 +108,10 @@ export default function SettingsScreen() {
   const setThemeMode = useThemeStore((s) => s.setMode);
 
   const activeLocale = detectLocale();
-  const t = useTranslations(activeLocale).settings;
+  const tAll = useTranslations(activeLocale);
+  const t = tAll.settings;
+  const tReferral = tAll.referral;
+  const tSharing = tAll.sharing;
   const router = useRouter();
   const user = useAuthStore((s) => s.user);
   const signOut = useAuthStore((s) => s.signOut);
@@ -112,6 +119,10 @@ export default function SettingsScreen() {
   const [bioEnabled, setBioEnabled] = useState(false);
   const [bioAvailable, setBioAvailable] = useState(false);
   const [whatsNewOpen, setWhatsNewOpen] = useState(false);
+  // M3 — referral + sharing analytics. Both are best-effort fetches that
+  // self-hide on error (the user just doesn't see the panel until next mount).
+  const [referral, setReferral] = useState<ReferralMeResponse | null>(null);
+  const [shareSummary, setShareSummary] = useState<ShareSummary | null>(null);
 
   useEffect(() => {
     void Promise.all([isBiometricEnabled(), isBiometricAvailable()]).then(
@@ -120,6 +131,13 @@ export default function SettingsScreen() {
         setBioAvailable(a);
       },
     );
+    // Fire both in parallel; failures suppressed (panels just don't render).
+    void getMyReferral()
+      .then((r) => setReferral(r))
+      .catch(() => setReferral(null));
+    void getShareSummary()
+      .then((s) => setShareSummary(s))
+      .catch(() => setShareSummary(null));
   }, []);
 
   const toggleBio = async (next: boolean) => {
@@ -237,6 +255,134 @@ export default function SettingsScreen() {
                 onValueChange={(v) => void toggleBio(v)}
                 trackColor={{ true: teal[500], false: theme.line.firm }}
               />
+            </Card>
+          </>
+        ) : null}
+
+        {/* ---------- M3 — REFER A FRIEND ---------- */}
+        {referral ? (
+          <>
+            <SectionHeader theme={theme}>{tReferral.title}</SectionHeader>
+            <Card theme={theme}>
+              <Text style={[styles.label, { color: theme.ink[400] }]}>
+                {tReferral.yourCode}
+              </Text>
+              <Text
+                style={[
+                  styles.value,
+                  { color: theme.ink[100], fontSize: 22, letterSpacing: 2, marginTop: 4 },
+                ]}
+              >
+                {referral.code}
+              </Text>
+              <Text
+                style={[styles.hint, { color: theme.ink[400], marginTop: 8 }]}
+              >
+                {tReferral.hint}
+              </Text>
+              <View style={[styles.rowBetween, { marginTop: 12 }]}>
+                <Text style={[styles.label, { color: theme.ink[400] }]}>
+                  {tReferral.redemptions}
+                </Text>
+                <Text style={[styles.value, { color: copperHex }]}>
+                  {referral.redemptions}
+                </Text>
+              </View>
+              <TouchableOpacity
+                onPress={() =>
+                  void Share.share({
+                    message: referral.deepLink,
+                    url: referral.deepLink,
+                  }).catch(() => {})
+                }
+                activeOpacity={0.85}
+                style={{
+                  marginTop: 14,
+                  borderRadius: 999,
+                  paddingVertical: 12,
+                  alignItems: 'center',
+                  backgroundColor: copperHex,
+                }}
+              >
+                <Text style={{ color: '#FFFFFF', fontWeight: '700' }}>
+                  {tReferral.shareLink}
+                </Text>
+              </TouchableOpacity>
+            </Card>
+          </>
+        ) : null}
+
+        {/* ---------- M3 — SHARING ANALYTICS ---------- */}
+        {shareSummary ? (
+          <>
+            <SectionHeader theme={theme}>{tSharing.title}</SectionHeader>
+            <Card theme={theme}>
+              <Text style={[styles.hint, { color: theme.ink[400] }]}>
+                {tSharing.hint}
+              </Text>
+              {shareSummary.total === 0 ? (
+                <Text
+                  style={[
+                    styles.value,
+                    { color: theme.ink[300], marginTop: 12 },
+                  ]}
+                >
+                  {tSharing.empty}
+                </Text>
+              ) : (
+                <>
+                  <View style={[styles.rowBetween, { marginTop: 10, marginBottom: 8 }]}>
+                    <Text style={[styles.label, { color: theme.ink[400] }]}>
+                      {tSharing.total}
+                    </Text>
+                    <Text style={[styles.value, { color: theme.ink[100] }]}>
+                      {shareSummary.total}
+                    </Text>
+                  </View>
+                  {(['qr', 'link', 'nfc', 'native_share'] as const).map((ch) => {
+                    const count = shareSummary.totals[ch] ?? 0;
+                    const pct =
+                      shareSummary.total > 0
+                        ? Math.round((count / shareSummary.total) * 100)
+                        : 0;
+                    return (
+                      <View key={ch} style={{ marginTop: 8 }}>
+                        <View
+                          style={[
+                            styles.rowBetween,
+                            { marginBottom: 4 },
+                          ]}
+                        >
+                          <Text style={[styles.label, { color: theme.ink[300] }]}>
+                            {tSharing.channels[ch]}
+                          </Text>
+                          <Text
+                            style={[styles.label, { color: theme.ink[200] }]}
+                          >
+                            {count}
+                          </Text>
+                        </View>
+                        <View
+                          style={{
+                            height: 6,
+                            borderRadius: 999,
+                            backgroundColor: theme.bg[2],
+                            overflow: 'hidden',
+                          }}
+                        >
+                          <View
+                            style={{
+                              height: 6,
+                              width: `${pct}%`,
+                              backgroundColor: copperHex,
+                            }}
+                          />
+                        </View>
+                      </View>
+                    );
+                  })}
+                </>
+              )}
             </Card>
           </>
         ) : null}

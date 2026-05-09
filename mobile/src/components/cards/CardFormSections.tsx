@@ -1623,6 +1623,184 @@ export function TagsSection({
   );
 }
 
+// ---------- EmbedsSection (M3 — Carrd amendment: curated embed whitelist) ----------
+// Owner pastes up to 3 video / audio / booking embeds; only the 5 whitelisted
+// hosts are accepted (youtube / vimeo / spotify / soundcloud / calendly). The
+// public viewer renders each entry as a tappable thumbnail (mobile) or a
+// sandboxed iframe (web) — never `<iframe srcdoc>` or arbitrary URLs (XSS risk).
+
+export type EmbedKind = 'youtube' | 'vimeo' | 'spotify' | 'soundcloud' | 'calendly';
+export type EmbedItem = { kind: EmbedKind; url: string };
+
+const EMBED_KINDS: readonly EmbedKind[] = [
+  'youtube',
+  'vimeo',
+  'spotify',
+  'soundcloud',
+  'calendly',
+];
+
+const MAX_EMBEDS = 3;
+
+// Host allowlist — the same set the server validates against. We re-validate
+// here so the form gives an immediate error instead of letting a save fail.
+const EMBED_HOSTS: Record<EmbedKind, RegExp> = {
+  youtube: /(?:^|\.)(youtube\.com|youtu\.be|youtube-nocookie\.com)$/i,
+  vimeo: /(?:^|\.)(vimeo\.com|player\.vimeo\.com)$/i,
+  spotify: /(?:^|\.)(spotify\.com|open\.spotify\.com)$/i,
+  soundcloud: /(?:^|\.)(soundcloud\.com|w\.soundcloud\.com)$/i,
+  calendly: /(?:^|\.)(calendly\.com)$/i,
+};
+
+function detectEmbedKind(url: string): EmbedKind | null {
+  try {
+    const host = new URL(url).hostname.toLowerCase();
+    for (const k of EMBED_KINDS) {
+      if (EMBED_HOSTS[k].test(host)) return k;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+export function asEmbeds(v: unknown): EmbedItem[] {
+  if (!Array.isArray(v)) return [];
+  const out: EmbedItem[] = [];
+  for (const raw of v) {
+    if (!raw || typeof raw !== 'object') continue;
+    const o = raw as Record<string, unknown>;
+    const kindRaw = typeof o.kind === 'string' ? o.kind : '';
+    const url = typeof o.url === 'string' ? o.url.trim() : '';
+    if (!url) continue;
+    if (!(EMBED_KINDS as readonly string[]).includes(kindRaw)) continue;
+    out.push({ kind: kindRaw as EmbedKind, url });
+    if (out.length >= MAX_EMBEDS) break;
+  }
+  return out;
+}
+
+export function EmbedsSection({
+  theme,
+  value,
+  onChange,
+}: {
+  theme: ThemeTokens;
+  value: EmbedItem[];
+  onChange: (next: EmbedItem[]) => void;
+}) {
+  const tEmb = useTranslations(detectLocale()).embeds;
+  const [draft, setDraft] = useState('');
+  const [draftError, setDraftError] = useState<string | null>(null);
+
+  const atCap = value.length >= MAX_EMBEDS;
+
+  function tryAdd() {
+    const trimmed = draft.trim();
+    if (!trimmed) return;
+    if (atCap) return;
+    const kind = detectEmbedKind(trimmed);
+    if (!kind) {
+      setDraftError(tEmb.invalidHost);
+      return;
+    }
+    onChange([...value, { kind, url: trimmed }]);
+    setDraft('');
+    setDraftError(null);
+  }
+
+  function remove(idx: number) {
+    onChange(value.filter((_, i) => i !== idx));
+  }
+
+  return (
+    <View style={styles.section}>
+      <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+        {tEmb.section}
+      </Text>
+      <Text style={[styles.hint, { color: theme.ink[400] }]}>
+        {tEmb.hint.replace('{n}', String(MAX_EMBEDS))}
+      </Text>
+
+      {value.map((em, i) => (
+        <View
+          key={`${em.kind}-${i}-${em.url}`}
+          style={[
+            styles.embedRow,
+            { backgroundColor: theme.bg[1], borderColor: theme.line.DEFAULT },
+          ]}
+        >
+          <View style={{ flex: 1 }}>
+            <Text style={[styles.embedRowKind, { color: copper[500] }]}>
+              {(tEmb.kinds as Record<string, string | undefined>)[em.kind] ??
+                em.kind}
+            </Text>
+            <Text
+              style={[styles.embedRowUrl, { color: theme.ink[200] }]}
+              numberOfLines={1}
+            >
+              {em.url}
+            </Text>
+          </View>
+          <TouchableOpacity onPress={() => remove(i)} hitSlop={8}>
+            <Text style={[styles.embedRemove, { color: theme.ink[400] }]}>
+              {tEmb.remove}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      ))}
+
+      {!atCap ? (
+        <View style={styles.tagCustomRow}>
+          <TextInput
+            style={[
+              styles.input,
+              {
+                flex: 1,
+                color: theme.ink[100],
+                borderColor: draftError ? '#B8514B' : theme.line.DEFAULT,
+                backgroundColor: theme.bg[1],
+              },
+            ]}
+            value={draft}
+            onChangeText={(v) => {
+              setDraft(v);
+              if (draftError) setDraftError(null);
+            }}
+            placeholder={tEmb.placeholder}
+            placeholderTextColor={theme.ink[500]}
+            autoCapitalize="none"
+            autoCorrect={false}
+            keyboardType="url"
+            onSubmitEditing={tryAdd}
+            returnKeyType="done"
+          />
+          <TouchableOpacity
+            onPress={tryAdd}
+            disabled={draft.trim().length === 0}
+            activeOpacity={0.85}
+            style={[
+              styles.tagAddBtn,
+              {
+                borderColor: theme.line.DEFAULT,
+                opacity: draft.trim().length === 0 ? 0.4 : 1,
+              },
+            ]}
+          >
+            <Text style={[styles.tagAddBtnText, { color: copper[500] }]}>
+              {tEmb.add}
+            </Text>
+          </TouchableOpacity>
+        </View>
+      ) : null}
+
+      {draftError ? (
+        <Text style={[styles.hint, { color: '#B8514B' }]}>{draftError}</Text>
+      ) : null}
+    </View>
+  );
+}
+
 /** Defensive read of tags from a stored cardData record. Drops non-strings. */
 export function asTags(v: unknown): string[] {
   if (!Array.isArray(v)) return [];
@@ -1854,4 +2032,17 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
   },
   tagAddBtnText: { fontSize: 13, fontWeight: '600' },
+  // M3 — embed row entry style
+  embedRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    paddingHorizontal: 14,
+    paddingVertical: 12,
+    borderRadius: 10,
+    borderWidth: 1,
+  },
+  embedRowKind: { fontSize: 11, fontWeight: '700', textTransform: 'uppercase', letterSpacing: 0.6 },
+  embedRowUrl: { fontSize: 13, marginTop: 2 },
+  embedRemove: { fontSize: 12, fontWeight: '600' },
 });

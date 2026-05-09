@@ -1,10 +1,17 @@
 "use client";
 
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useLocale } from "@/context/LocaleContext";
 import { isLocale } from "@/lib/i18n";
+
+// M3 — when the visitor lands here from a public-card "Create yours" CTA,
+// the URL carries `?ref=<slug-or-code>`. Persist it in a cookie so the
+// post-magic-link callback (which doesn't have URL state) can still find it
+// and credit the referrer once the new user has an authenticated session.
+const REF_COOKIE_NAME = "verso_ref";
+const REF_COOKIE_TTL_S = 60 * 60 * 24 * 7; // 7 days
 
 interface Props {
   locale: string;
@@ -16,6 +23,7 @@ const PASSWORD_MIN = 12;
 export function SignupClient({ locale }: Props) {
   const { t } = useLocale();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const safeLocale = isLocale(locale) ? locale : "en";
 
   const s = t.auth.signup;
@@ -29,6 +37,26 @@ export function SignupClient({ locale }: Props) {
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState<"magic" | "password" | null>(null);
+
+  // M3 — stash any inbound `?ref=` so the post-auth callback can attribute.
+  useEffect(() => {
+    const ref = searchParams.get("ref");
+    if (!ref) return;
+    // Length-clamp + character allowlist before persisting; the redeem route
+    // re-validates, but we want to keep junk out of the cookie jar entirely.
+    const cleaned = ref.slice(0, 80).replace(/[^A-Za-z0-9_-]/g, "");
+    if (!cleaned) return;
+    try {
+      document.cookie = [
+        `${REF_COOKIE_NAME}=${cleaned}`,
+        "Path=/",
+        `Max-Age=${REF_COOKIE_TTL_S}`,
+        "SameSite=Lax",
+      ].join("; ");
+    } catch {
+      /* ignore — we'll fall back to no-attribution if cookies are blocked */
+    }
+  }, [searchParams]);
 
   function validateEmail(value: string): boolean {
     if (!EMAIL_RE.test(value)) {

@@ -23,6 +23,7 @@ import { setRefreshCookie } from "@/lib/auth/cookies";
 import { hitWindow, clientIp } from "@/lib/auth/rate-limit";
 import { hashIp } from "@/lib/auth/ip-hash";
 import { captureAuthEvent } from "../../_helpers";
+import { redeemReferral } from "@/lib/referrals";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -75,9 +76,33 @@ export async function GET(req: Request) {
   // /api/auth/refresh after navigation, which uses the freshly-set cookie.
   await signAccessToken(user.id); // pre-warm jose key cache; JWT itself unused here.
 
+  // M3 — attribute referral if the cookie is set. Failures here must NEVER
+  // block the auth redirect; we fire-and-forget. The cookie is cleared on
+  // the response either way (success or no-op) to prevent stale state.
+  const refCookie = req.headers
+    .get("cookie")
+    ?.split("; ")
+    .find((c) => c.startsWith("verso_ref="))
+    ?.split("=")[1];
+  if (refCookie) {
+    try {
+      const ref = decodeURIComponent(refCookie);
+      void redeemReferral(ref, user.id).catch(() => {});
+    } catch {
+      /* malformed cookie — ignore */
+    }
+  }
+
   const res = NextResponse.redirect(`${SITE_URL}/dashboard/cards`, {
     status: 302,
   });
   setRefreshCookie(res, session.refreshToken);
+  // Clear the ref cookie regardless of redeem outcome.
+  if (refCookie) {
+    res.headers.append(
+      "Set-Cookie",
+      "verso_ref=; Path=/; Max-Age=0; SameSite=Lax",
+    );
+  }
   return res;
 }

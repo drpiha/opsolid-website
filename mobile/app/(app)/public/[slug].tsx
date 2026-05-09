@@ -10,8 +10,12 @@ import {
   Alert,
   Share,
   StyleSheet,
+  Modal,
+  FlatList,
+  Dimensions,
 } from 'react-native';
-import { Stack, useLocalSearchParams } from 'expo-router';
+import * as WebBrowser from 'expo-web-browser';
+import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import {
   Bookmark,
   BookmarkCheck,
@@ -34,6 +38,8 @@ import {
   Send,
   Star,
   MessageSquare,
+  X,
+  Plus,
 } from 'lucide-react-native';
 import { getPublicCard } from '../../../src/lib/api/discover';
 import { listCards } from '../../../src/lib/api/cards';
@@ -41,6 +47,7 @@ import { saveCard, unsaveCard, checkSaved } from '../../../src/lib/api/contacts'
 import { saveCardToDeviceContacts } from '../../../src/lib/contacts/native';
 import { sendCardExchange, getFeedbackAggregate } from '../../../src/lib/api/crm';
 import type { FeedbackAggregate } from '../../../src/lib/api/crm';
+import { logShareEvent, type ShareChannel } from '../../../src/lib/api/share-events';
 import type { ApiCard } from '../../../src/lib/api/types';
 import { useTheme } from '../../../src/lib/theme/ThemeProvider';
 import type { ThemeTokens } from '../../../src/lib/theme/tokens';
@@ -60,6 +67,9 @@ import {
 type ServiceItem = { title: string; description?: string; price?: string };
 type CustomButton = { label: string; url: string };
 type FaqItem = { question: string; answer: string };
+type GalleryItem = { src: string; alt?: string };
+type EmbedKind = 'youtube' | 'vimeo' | 'spotify' | 'soundcloud' | 'calendly';
+type EmbedItem = { kind: EmbedKind; url: string };
 type StatusBannerTone = 'info' | 'success' | 'warn' | 'announce';
 type StatusBanner = { enabled: boolean; text: string; tone: StatusBannerTone };
 type Socials = {
@@ -86,6 +96,86 @@ const SOCIAL_KEYS: (keyof Socials)[] = [
 
 function pickString(v: unknown): string | undefined {
   return typeof v === 'string' && v.length > 0 ? v : undefined;
+}
+
+function pickGallery(v: unknown): GalleryItem[] {
+  if (!Array.isArray(v)) return [];
+  const out: GalleryItem[] = [];
+  for (const raw of v) {
+    if (!raw || typeof raw !== 'object') continue;
+    const o = raw as Record<string, unknown>;
+    const src = pickString(o.src);
+    if (!src) continue;
+    out.push({ src, alt: pickString(o.alt) });
+    if (out.length >= 24) break;
+  }
+  return out;
+}
+
+const EMBED_KINDS: EmbedKind[] = [
+  'youtube',
+  'vimeo',
+  'spotify',
+  'soundcloud',
+  'calendly',
+];
+
+function pickEmbeds(v: unknown): EmbedItem[] {
+  if (!Array.isArray(v)) return [];
+  const out: EmbedItem[] = [];
+  for (const raw of v) {
+    if (!raw || typeof raw !== 'object') continue;
+    const o = raw as Record<string, unknown>;
+    const kindRaw = typeof o.kind === 'string' ? o.kind : '';
+    const url = pickString(o.url);
+    if (!url) continue;
+    if (!(EMBED_KINDS as string[]).includes(kindRaw)) continue;
+    out.push({ kind: kindRaw as EmbedKind, url });
+    if (out.length >= 3) break;
+  }
+  return out;
+}
+
+function embedThumbnail(item: EmbedItem): string | null {
+  // Cheap heuristic: derive a thumbnail URL from the canonical share URLs.
+  // Failing to match returns null and the renderer falls back to a flat tile.
+  try {
+    const u = new URL(item.url);
+    if (item.kind === 'youtube') {
+      // youtu.be/<id> or youtube.com/watch?v=<id> or shorts/<id>
+      let id: string | null = null;
+      if (u.hostname.includes('youtu.be')) {
+        id = u.pathname.replace(/^\//, '').split('/')[0] || null;
+      } else if (u.searchParams.has('v')) {
+        id = u.searchParams.get('v');
+      } else if (u.pathname.startsWith('/shorts/')) {
+        id = u.pathname.split('/shorts/')[1]?.split('/')[0] ?? null;
+      } else if (u.pathname.startsWith('/embed/')) {
+        id = u.pathname.split('/embed/')[1]?.split('/')[0] ?? null;
+      }
+      if (id) return `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+    }
+    // No thumbnail oracle for vimeo / spotify / soundcloud / calendly without
+    // an extra round-trip — we render the kind label instead.
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+function embedDisplayLabel(kind: EmbedKind): string {
+  switch (kind) {
+    case 'youtube':
+      return 'YouTube';
+    case 'vimeo':
+      return 'Vimeo';
+    case 'spotify':
+      return 'Spotify';
+    case 'soundcloud':
+      return 'SoundCloud';
+    case 'calendly':
+      return 'Calendly';
+  }
 }
 
 function pickServices(v: unknown): ServiceItem[] {
@@ -245,8 +335,12 @@ export default function PublicCardScreen() {
 
   const authUser = useAuthStore((s) => s.user);
   const isAuthenticated = !!authUser;
+  const router = useRouter();
 
   const [card, setCard] = useState<ApiCard | null>(null);
+  // M3 — gallery lightbox state. Index of the currently-displayed image, or
+  // null when the lightbox is closed.
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [saved, setSaved] = useState(false);
@@ -462,6 +556,9 @@ export default function PublicCardScreen() {
   const customButtons = pickButtons(data.customButtons);
   const faqs = pickFaqs(data.faqs);
   const statusBanner = pickStatusBanner(data.statusBanner);
+  // M3 — gallery + curated embeds (Carrd amendments).
+  const gallery = pickGallery(data.gallery);
+  const embeds = pickEmbeds(data.embeds);
 
   // Visiting your own card? Compare the viewing slug to the cached own
   // published-card slug. The exchange + feedback features are gated on this
@@ -492,9 +589,19 @@ export default function PublicCardScreen() {
         message: `${name} — ${url}`,
         url,
       });
+      // M3 — share telemetry. Fire-and-forget: never block the share gesture
+      // on a network failure or auth lapse.
+      fireShareEvent('native_share');
     } catch {
       // user cancelled — silent
     }
+  }
+
+  function fireShareEvent(channel: ShareChannel) {
+    if (!card?.id || !isAuthenticated) return;
+    void logShareEvent(card.id, channel).catch(() => {
+      // Telemetry must never surface — share gestures are the user's path.
+    });
   }
 
   function openMaps(addr: string) {
@@ -518,7 +625,10 @@ export default function PublicCardScreen() {
             <View style={styles.headerActions}>
               {card.slug ? (
                 <Pressable
-                  onPress={() => setQrOpen(true)}
+                  onPress={() => {
+                    fireShareEvent('qr');
+                    setQrOpen(true);
+                  }}
                   style={styles.headerBtn}
                   hitSlop={8}
                 >
@@ -655,7 +765,10 @@ export default function PublicCardScreen() {
         {/* Web link */}
         {card.slug && (
           <Pressable
-            onPress={() => void Linking.openURL(`https://opsolid.de/c/${card.slug}`)}
+            onPress={() => {
+              fireShareEvent('link');
+              void Linking.openURL(`https://opsolid.de/c/${card.slug}`);
+            }}
             style={[styles.webRow, { backgroundColor: theme.bg[1], borderColor: theme.line.DEFAULT }]}
           >
             <Globe size={16} color={theme.ink[400]} />
@@ -807,6 +920,95 @@ export default function PublicCardScreen() {
                 style={i > 0 ? { marginTop: 10 } : undefined}
               />
             ))}
+          </View>
+        ) : null}
+
+        {/* M3 — Curated embeds (Carrd amendment).
+            Mobile renders each embed as a tappable thumbnail / labeled tile;
+            tapping opens the source URL in expo-web-browser (no inline iframe
+            in RN). The web public viewer renders the same data as a sandboxed
+            iframe for the 5 whitelisted hosts. */}
+        {embeds.length > 0 ? (
+          <View style={styles.blockWrap}>
+            <Text style={[styles.blockHeading, { color: theme.ink[300] }]}>
+              {t.embeds}
+            </Text>
+            <View style={styles.embedsRow}>
+              {embeds.map((em, i) => {
+                const thumb = embedThumbnail(em);
+                return (
+                  <Pressable
+                    key={`${em.kind}-${i}-${em.url}`}
+                    onPress={() => {
+                      void WebBrowser.openBrowserAsync(em.url).catch(() => {
+                        void Linking.openURL(em.url);
+                      });
+                    }}
+                    style={[
+                      styles.embedTile,
+                      {
+                        backgroundColor: theme.bg[2],
+                        borderColor: theme.line.DEFAULT,
+                      },
+                    ]}
+                  >
+                    {thumb ? (
+                      <Image
+                        source={{ uri: thumb }}
+                        style={styles.embedThumb}
+                        resizeMode="cover"
+                      />
+                    ) : (
+                      <View style={styles.embedThumb}>
+                        <Play size={28} color={copper[500]} />
+                      </View>
+                    )}
+                    <Text
+                      style={[styles.embedLabel, { color: theme.ink[200] }]}
+                      numberOfLines={1}
+                    >
+                      {embedDisplayLabel(em.kind)}
+                    </Text>
+                  </Pressable>
+                );
+              })}
+            </View>
+          </View>
+        ) : null}
+
+        {/* M3 — Gallery with lightbox (Carrd amendment).
+            Tapping any thumbnail opens the swipeable full-screen lightbox. */}
+        {gallery.length > 0 ? (
+          <View style={styles.blockWrap}>
+            <Text style={[styles.blockHeading, { color: theme.ink[300] }]}>
+              {t.gallery}
+            </Text>
+            <View style={styles.galleryRow}>
+              {gallery.map((g, i) => {
+                const uri = g.src.startsWith('http')
+                  ? g.src
+                  : `${API_BASE}${g.src}`;
+                return (
+                  <Pressable
+                    key={`${g.src}-${i}`}
+                    onPress={() => setLightboxIndex(i)}
+                    style={[
+                      styles.galleryThumb,
+                      {
+                        backgroundColor: theme.bg[2],
+                        borderColor: theme.line.DEFAULT,
+                      },
+                    ]}
+                  >
+                    <Image
+                      source={{ uri }}
+                      style={styles.galleryThumbImg}
+                      resizeMode="cover"
+                    />
+                  </Pressable>
+                );
+              })}
+            </View>
           </View>
         ) : null}
 
@@ -996,8 +1198,95 @@ export default function PublicCardScreen() {
           onClose={() => setBreakdownOpen(false)}
         />
       ) : null}
+
+      {/* M3 — Gallery lightbox. Modal + horizontal FlatList for swipe paging.
+          Pinch-zoom is intentionally omitted (would require react-native-
+          gesture-handler + reanimated PinchGestureHandler) — basic full-screen
+          + swipe is sufficient for v1 per the spec. */}
+      {gallery.length > 0 ? (
+        <Modal
+          visible={lightboxIndex !== null}
+          transparent
+          animationType="fade"
+          onRequestClose={() => setLightboxIndex(null)}
+        >
+          <View style={styles.lightboxRoot}>
+            <Pressable
+              onPress={() => setLightboxIndex(null)}
+              style={styles.lightboxClose}
+              hitSlop={12}
+              accessibilityLabel="Close"
+            >
+              <X size={24} color="#FFFFFF" />
+            </Pressable>
+            {lightboxIndex !== null ? (
+              <FlatList
+                horizontal
+                pagingEnabled
+                data={gallery}
+                keyExtractor={(g, i) => `${g.src}-${i}`}
+                initialScrollIndex={lightboxIndex}
+                getItemLayout={(_, idx) => ({
+                  length: Dimensions.get('window').width,
+                  offset: Dimensions.get('window').width * idx,
+                  index: idx,
+                })}
+                renderItem={({ item }) => {
+                  const uri = item.src.startsWith('http')
+                    ? item.src
+                    : `${API_BASE}${item.src}`;
+                  return (
+                    <View style={styles.lightboxPage}>
+                      <Image
+                        source={{ uri }}
+                        style={styles.lightboxImage}
+                        resizeMode="contain"
+                      />
+                    </View>
+                  );
+                }}
+                showsHorizontalScrollIndicator={false}
+              />
+            ) : null}
+          </View>
+        </Modal>
+      ) : null}
+
+      {/* M3 — "Create your own card" floating CTA for unauthenticated visitors.
+          The mobile-app-deep-link route fires only when the user has the app;
+          we route to the in-app onboarding wizard with `ref=<slug>` baked in
+          so the redeem hook attributes the new signup back to this card's
+          owner once the user authenticates. */}
+      {!isAuthenticated && card.slug ? (
+        <Pressable
+          onPress={() => {
+            void usePendingReferralStoreSafe(card.slug);
+            router.replace('/(auth)/signup' as never);
+          }}
+          style={[
+            styles.floatingCta,
+            { backgroundColor: copper[500] },
+          ]}
+        >
+          <Plus size={16} color="#FFFFFF" />
+          <Text style={styles.floatingCtaText}>{t.createYours}</Text>
+        </Pressable>
+      ) : null}
     </View>
   );
+}
+
+// M3 — fire-and-forget helper used by the floating CTA. Safe to call from any
+// context; if SecureStore is wedged we just skip persistence and the redeem
+// will silently no-op on the post-auth side.
+async function usePendingReferralStoreSafe(slug: string | null): Promise<void> {
+  if (!slug) return;
+  try {
+    const mod = await import('../../../src/store/pendingReferralStore');
+    await mod.usePendingReferralStore.getState().setRef(slug);
+  } catch {
+    // ignore
+  }
 }
 
 const styles = StyleSheet.create({
@@ -1227,4 +1516,86 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   crmCtaText: { fontSize: 15, fontWeight: '600' },
+  // M3 — Embeds + gallery + lightbox + floating CTA
+  embedsRow: {
+    flexDirection: 'row',
+    gap: 10,
+    paddingHorizontal: 16,
+    flexWrap: 'wrap',
+  },
+  embedTile: {
+    width: 110,
+    borderRadius: 12,
+    borderWidth: StyleSheet.hairlineWidth,
+    overflow: 'hidden',
+    paddingBottom: 8,
+  },
+  embedThumb: {
+    width: '100%',
+    aspectRatio: 16 / 9,
+    backgroundColor: 'rgba(0,0,0,0.04)',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  embedLabel: {
+    fontSize: 12,
+    fontWeight: '600',
+    paddingHorizontal: 8,
+    paddingTop: 6,
+    textAlign: 'center',
+  },
+  galleryRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+    paddingHorizontal: 16,
+  },
+  galleryThumb: {
+    width: 90,
+    height: 90,
+    borderRadius: 10,
+    borderWidth: StyleSheet.hairlineWidth,
+    overflow: 'hidden',
+  },
+  galleryThumbImg: { width: '100%', height: '100%' },
+  lightboxRoot: { flex: 1, backgroundColor: 'rgba(0,0,0,0.95)' },
+  lightboxClose: {
+    position: 'absolute',
+    top: 50,
+    right: 16,
+    zIndex: 10,
+    padding: 8,
+  },
+  lightboxPage: {
+    width: Dimensions.get('window').width,
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  lightboxImage: {
+    width: Dimensions.get('window').width,
+    height: '80%',
+  },
+  floatingCta: {
+    position: 'absolute',
+    left: 16,
+    right: 16,
+    bottom: 24,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+    paddingVertical: 14,
+    borderRadius: 999,
+    shadowColor: '#000',
+    shadowOpacity: 0.18,
+    shadowRadius: 12,
+    shadowOffset: { width: 0, height: 4 },
+    elevation: 6,
+  },
+  floatingCtaText: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: '700',
+  },
 });

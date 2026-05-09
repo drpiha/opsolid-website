@@ -36,6 +36,8 @@ import { StatusBanner } from "@/components/cards/StatusBanner";
 import { LocaleSwitcher } from "@/components/cards/LocaleSwitcher";
 import { SaveCardButton } from "@/components/cards/SaveCardButton";
 import { FeedbackWidget } from "@/components/cards/FeedbackWidget";
+import { CreateYoursBanner } from "@/components/cards/CreateYoursBanner";
+import { EmbedsBlock } from "@/components/cards/EmbedsBlock";
 import { constantTimeEquals } from "@/lib/constantTime";
 import { contents } from "@/content";
 
@@ -411,6 +413,21 @@ export default async function CardPage({ params, searchParams }: PageProps) {
             accentHex={effectiveAccentHex ?? undefined}
             tone={isDarkTemplate ? "dark" : "light"}
           />
+          {/* M3 — Curated embeds (Carrd amendment). The block self-hides
+              when `cardData.embeds` is empty or every entry fails the host
+              re-validation done client-side. Heading is inlined per locale
+              (no current `card.embeds` key in src/content). */}
+          <EmbedsBlock
+            embeds={(parsed.data as Record<string, unknown>).embeds}
+            accentHex={effectiveAccentHex ?? undefined}
+            heading={
+              localeKey === "de"
+                ? "Eingebettet"
+                : localeKey === "tr"
+                  ? "Öne çıkan"
+                  : "Featured"
+            }
+          />
           {/* Phase 8.3 — save + locale row below card content */}
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             {/* Only show save button to non-owners — owners manage via dashboard */}
@@ -435,6 +452,14 @@ export default async function CardPage({ params, searchParams }: PageProps) {
           accentHex={effectiveAccentHex ?? undefined}
           locale={localeKey}
         />
+        {/* M3 — viral loop hook for unauthenticated visitors. Self-hides
+            for owners (handled by `isOwner` short-circuit) AND for visitors
+            who already have a Verso session (the component pings
+            /api/auth/me on mount). The CTA passes `?ref=<slug>` to the
+            signup flow so the new account attributes back as a referral. */}
+        {!isOwner && (
+          <CreateYoursBanner slug={slug} locale={localeKey} />
+        )}
       </main>
     </OwnerModeProvider>
   );

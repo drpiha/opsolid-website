@@ -42,6 +42,9 @@ import {
   EventsAttendingSection,
   ContactFormSection,
   TagsSection,
+  EmbedsSection,
+  asEmbeds,
+  type EmbedItem,
   asTags,
   DEFAULT_CONTACT_FORM,
   STATUS_BANNER_TONES,
@@ -253,6 +256,10 @@ export default function CardEditScreen() {
   // M2 — sector / topic tags. Capped at 5 in TagsSection. Persists into
   // cardData.tags on save; round-trips through the existing PATCH.
   const [tags, setTags] = useState<string[]>([]);
+  // M3 — curated embed whitelist (Carrd amendment). Up to 3 entries persisted
+  // to cardData.embeds. Public viewer renders these as tappable thumbnails on
+  // mobile and as sandboxed iframes on web.
+  const [embeds, setEmbeds] = useState<EmbedItem[]>([]);
   // Sprint F2 — events the card is attending. Mirrors `attendingEventIds` from
   // the owner GET. Saved via a separate POST after the main PATCH (see
   // handleSave). Track the originally-loaded set so we only fire the events
@@ -337,6 +344,7 @@ export default function CardEditScreen() {
         setStatusBanner(asStatusBanner(cd.statusBanner));
         setContactForm(asContactForm(cd.contactForm));
         setTags(asTags(cd.tags));
+        setEmbeds(asEmbeds(cd.embeds));
         // feedbackEnabled lives on top-level CardOrder column (Phase 8.4),
         // exposed on owner GET /api/v1/cards/:id (CARD_API_SELECT).
         setFeedbackEnabled(c.feedbackEnabled === true);
@@ -421,6 +429,10 @@ export default function CardEditScreen() {
       // a card without tags doesn't carry an empty array on the wire.
       if (tags.length > 0) {
         cardData.tags = tags;
+      }
+      // M3 — Curated embeds. Persist when non-empty.
+      if (embeds.length > 0) {
+        cardData.embeds = embeds;
       }
       // M1 — Form-builder-lite. Persist the contactForm config when the
       // owner has either turned it on or made any non-default changes.
@@ -660,6 +672,7 @@ export default function CardEditScreen() {
             <StatusBannerSection theme={theme} value={statusBanner} onChange={setStatusBanner} />
             <ContactFormSection theme={theme} value={contactForm} onChange={setContactForm} />
             <TagsSection theme={theme} selected={tags} onChange={setTags} />
+            <EmbedsSection theme={theme} value={embeds} onChange={setEmbeds} />
             <FeedbackSection theme={theme} value={feedbackEnabled} onChange={setFeedbackEnabled} />
             <EventsAttendingSection
               theme={theme}

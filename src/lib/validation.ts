@@ -458,6 +458,30 @@ export const CardDataSchema = z.object({
     )
     .max(5)
     .optional(),
+  /** M3 — Curated embed whitelist (Carrd amendment).
+   *  Up to 3 entries per card. `kind` enforces the host whitelist (youtube /
+   *  vimeo / spotify / soundcloud / calendly) and `url` is validated on save
+   *  to confirm the host matches the kind. Public viewer renders each entry
+   *  as a tappable thumbnail on mobile (opens in expo-web-browser) and a
+   *  sandboxed iframe on web (only the 5 whitelisted hosts ever resolve to
+   *  iframes — never `<iframe srcdoc>` or arbitrary URLs). */
+  embeds: z
+    .array(
+      z
+        .object({
+          kind: z.enum([
+            "youtube",
+            "vimeo",
+            "spotify",
+            "soundcloud",
+            "calendly",
+          ]),
+          url: z.string().trim().url().max(500),
+        })
+        .strict(),
+    )
+    .max(3)
+    .optional(),
   /** M1 — Form-builder-lite + ESP webhook integration (Carrd amendment).
    *  Owner-defined override of the public-card "Bana Ulaş / Get in touch"
    *  form. When `enabled === true` the public viewer renders these fields

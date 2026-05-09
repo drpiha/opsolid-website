@@ -3,10 +3,29 @@ import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import { ActivityIndicator, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import * as Linking from 'expo-linking';
 import { ThemeProvider } from '../src/lib/theme/ThemeProvider';
 import { useAuthStore } from '../src/lib/auth/store';
 import { useThemeStore } from '../src/lib/theme/themeStore';
 import { useLocaleStore } from '../src/lib/i18n/localeStore';
+import { usePendingReferralStore } from '../src/store/pendingReferralStore';
+
+// M3 — extract a `ref` query param from any incoming deep-link URL (initial
+// or runtime) and stash it in the pending-referral store so the post-auth
+// hook can call /redeem. Length-clamp + character allowlist before persisting.
+function extractRefParam(url: string): string | null {
+  try {
+    const queryIdx = url.indexOf('?');
+    if (queryIdx < 0) return null;
+    const params = new URLSearchParams(url.slice(queryIdx + 1));
+    const raw = params.get('ref');
+    if (!raw) return null;
+    const cleaned = raw.slice(0, 80).replace(/[^A-Za-z0-9_-]/g, '');
+    return cleaned || null;
+  } catch {
+    return null;
+  }
+}
 
 SplashScreen.preventAutoHideAsync();
 
@@ -40,7 +59,25 @@ export default function RootLayout() {
       clearTimeout(safetyTimer);
       SplashScreen.hideAsync().catch(() => {});
     });
-    return () => clearTimeout(safetyTimer);
+
+    // M3 — capture a `?ref=` deep-link param if the app was opened via one.
+    // The pending-referral store persists it across auth, and the (app)/_layout
+    // post-auth hook fires the redeem call.
+    const setPendingRef = usePendingReferralStore.getState().setRef;
+    void Linking.getInitialURL().then((initialUrl) => {
+      if (!initialUrl) return;
+      const ref = extractRefParam(initialUrl);
+      if (ref) void setPendingRef(ref);
+    });
+    const sub = Linking.addEventListener('url', ({ url }) => {
+      const ref = extractRefParam(url);
+      if (ref) void setPendingRef(ref);
+    });
+
+    return () => {
+      clearTimeout(safetyTimer);
+      sub.remove();
+    };
   }, [hydrate, hydrateTheme, hydrateLocale]);
 
   // Render a deterministic fallback while auth is resolving. Returning null

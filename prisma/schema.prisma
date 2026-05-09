@@ -63,6 +63,14 @@ model User {
    */
   messages        Message[]
 
+  /**
+   * M3 — referral mechanics. Each user has at most one Referral row (the
+   * code they hand out) and any number of ReferralRedemption rows that point
+   * at people they brought in.
+   */
+  referral             Referral?
+  referralRedemptions  ReferralRedemption[] @relation("RefereeRedemptions")
+
   @@index([email])
   @@map("users")
 }
@@ -297,6 +305,13 @@ model CardOrder {
    * Sprint F2 — events / fairs this card is attending.
    */
   attendingEvents EventAttendee[]
+
+  /**
+   * M3 — share telemetry. Every public-viewer share gesture (qr / link / nfc
+   * / native_share) inserts a row here. Owner reads aggregates from
+   * /api/v1/share-events/summary.
+   */
+  shareEvents ShareEvent[]
 
   @@index([status])
   @@index([contactPhone])
@@ -565,9 +580,20 @@ model SavedCard {
   tags        String[]  @default([])
   metWhere    String?   @map("met_where")
   followUpAt  DateTime? @map("follow_up_at")
-  // "new" | "contacted" | "customer" | "partner" | "archived"
+  // "new" | "contacted" | "customer" | "partner" | "archived" |
+  // "pending_mutual" — M3: a save mirrored from the *other* side of a save
+  // gesture; the receiving user sees this in their inbox as a "Mutual save
+  // request" entry and can confirm (status flips to "new") or ignore (the
+  // row is reaped by retention or stays inert; mutual==both rows confirmed).
   status      String    @default("new")
   starred     Boolean   @default(false)
+  /**
+   * M3 — when this row was created via a referral redemption (or as the
+   * mirror side of a bidirectional save), the originating user is recorded
+   * here. Null for plain user-initiated saves. Used by the inbox to surface
+   * "Mutual save request from {name}".
+   */
+  referredByUserId String? @map("referred_by_user_id")
   createdAt   DateTime  @default(now()) @map("created_at")
   updatedAt   DateTime  @updatedAt @map("updated_at")
 
@@ -576,6 +602,7 @@ model SavedCard {
 
   @@unique([userId, cardOrderId])
   @@index([userId])
+  @@index([status])
   @@map("saved_cards")
 }
 
@@ -725,6 +752,78 @@ model EventAttendee {
 
   @@unique([eventId, cardId])
   @@map("event_attendees")
+}
+
+// =============================================================================
+// M3 — Network growth loops
+//
+// Three concerns:
+//   1. Referrals: each user gets a unique 6-char code on first card publish.
+//      The code is shared as part of `?ref=<code>` deep-links and embedded in
+//      the magic-link signup flow. Redemption is idempotent on (referrer,
+//      referee).
+//   2. Bidirectional save (uses existing SavedCard model — see status:
+//      "pending_mutual"). No new model needed.
+//   3. Share telemetry: every public-viewer share gesture logs a ShareEvent
+//      row. Owner sees a per-channel bar chart for the last 30 days.
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// Referral — one row per user (the user's "personal code"). Lazily created on
+// first card publish or first GET /api/v1/referrals/me. The 6-char code is
+// alphanumeric and case-insensitive on lookup. `redemptions` is denormalised
+// for cheap reads — incremented in a transaction together with the
+// ReferralRedemption insert.
+// -----------------------------------------------------------------------------
+model Referral {
+  id              String   @id @default(cuid())
+  referrerUserId  String   @unique @map("referrer_user_id")
+  code            String   @unique
+  redemptions     Int      @default(0)
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  referrer    User                  @relation(fields: [referrerUserId], references: [id], onDelete: Cascade)
+  redemptionsList ReferralRedemption[]
+
+  @@map("referrals")
+}
+
+// -----------------------------------------------------------------------------
+// ReferralRedemption — one row per (referrer, referee) pair. Unique constraint
+// makes the redeem route idempotent: a second redemption attempt for the same
+// referee just no-ops.
+// -----------------------------------------------------------------------------
+model ReferralRedemption {
+  id            String   @id @default(cuid())
+  referralId    String   @map("referral_id")
+  refereeUserId String   @map("referee_user_id")
+  createdAt     DateTime @default(now()) @map("created_at")
+
+  referral Referral @relation(fields: [referralId], references: [id], onDelete: Cascade)
+  referee  User     @relation("RefereeRedemptions", fields: [refereeUserId], references: [id], onDelete: Cascade)
+
+  @@unique([referralId, refereeUserId])
+  @@index([refereeUserId])
+  @@map("referral_redemptions")
+}
+
+// -----------------------------------------------------------------------------
+// ShareEvent — fire-and-forget log of public-viewer share gestures.
+//   channel: "qr" | "link" | "nfc" | "native_share"
+// Owner reads aggregates from /api/v1/share-events/summary. No PII; the row is
+// just (sourceCardId, channel, createdAt) so it doesn't need PII redaction.
+// -----------------------------------------------------------------------------
+model ShareEvent {
+  id           String   @id @default(cuid())
+  sourceCardId String   @map("source_card_id")
+  channel      String
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  sourceCard CardOrder @relation(fields: [sourceCardId], references: [id], onDelete: Cascade)
+
+  @@index([sourceCardId, createdAt])
+  @@index([createdAt])
+  @@map("share_events")
 }
 
 // =============================================================================

@@ -36,6 +36,7 @@ import {
   magicLinkSubject,
 } from "@/lib/email/templates/magic-link";
 import { captureAuthEvent, errorResponse, readJson } from "../_helpers";
+import { redeemReferral } from "@/lib/referrals";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -173,6 +174,22 @@ export async function POST(req: Request) {
   );
   const accessToken = await signAccessToken(user.id);
 
+  // M3 — attribute referral if the cookie is set. Failures must NEVER block
+  // the signup response; fire-and-forget. Cookie cleared either way.
+  const refCookie = req.headers
+    .get("cookie")
+    ?.split("; ")
+    .find((c) => c.startsWith("verso_ref="))
+    ?.split("=")[1];
+  if (refCookie) {
+    try {
+      const ref = decodeURIComponent(refCookie);
+      void redeemReferral(ref, user.id).catch(() => {});
+    } catch {
+      /* malformed cookie — ignore */
+    }
+  }
+
   const res = NextResponse.json(
     {
       user: { id: user.id, email: user.email, name: user.name, locale: user.locale },
@@ -182,5 +199,11 @@ export async function POST(req: Request) {
     { status: 201 },
   );
   setRefreshCookie(res, session.refreshToken);
+  if (refCookie) {
+    res.headers.append(
+      "Set-Cookie",
+      "verso_ref=; Path=/; Max-Age=0; SameSite=Lax",
+    );
+  }
   return res;
 }

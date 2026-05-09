@@ -192,6 +192,41 @@ const realEstateSample: SampleData = {
   brandAccentHex: "#c8a951",
 };
 
+// id=100 — Linktree (M3, Carrd amendment). Persona: a creator with a single
+// avatar + bio + 6 outbound link buttons. Layout key is "accordion" so the
+// renderer / preview generator hints toward a vertical stack of full-width
+// buttons rather than the contact-info card surface.
+const linktreeCard: CardData = {
+  name: "Lina Park",
+  title: "Multidisciplinary creator",
+  position: "Photo · Music · Writing",
+  bio: "Berlin-based. Stories about people, machines, and the space between.",
+  email: "lina@park.studio",
+  website: "park.studio",
+  socials: {
+    instagram: "https://instagram.com/linapark",
+    youtube: "https://youtube.com/@linapark",
+    linkedin: "https://linkedin.com/in/linapark",
+  },
+  customButtons: [
+    { label: "Latest essay — On craft", href: "https://park.studio/craft", style: "primary" },
+    { label: "Photo book preorder", href: "https://park.studio/photobook", style: "secondary" },
+    { label: "Listen — new EP", href: "https://soundcloud.com/lina-park", style: "secondary" },
+    { label: "Newsletter (free)", href: "https://park.studio/newsletter", style: "secondary" },
+  ],
+};
+
+const linktreeSample: SampleData = {
+  templateId: 100,
+  slug: "demo-linktree",
+  cardData: linktreeCard,
+  photoUrl:
+    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=920&q=80&auto=format&fit=crop",
+  logoUrl: null,
+  brandPrimaryHex: "#0F0F0F",
+  brandAccentHex: "#C27940",
+};
+
 // =============================================================================
 // Master record — id → sample. Phase 7.4 agents append entries below.
 // =============================================================================
@@ -302,6 +337,8 @@ export const cardTemplateSamples: Record<number, SampleData> = {
   94: layoutVividBoldSample,
   95: layoutEditorialSample,
   96: layoutSplitScreenSample,
+  // M3 — Linktree-style "link in bio" template (Carrd amendment)
+  100: linktreeSample,
 };
 
 export function getTemplateSample(id: number): SampleData | undefined {
