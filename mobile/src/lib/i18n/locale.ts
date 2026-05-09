@@ -215,6 +215,7 @@ export const t = {
       all: 'All',
       accept: 'Accept',
       decline: 'Decline',
+      send: 'Send',
       aboutTitle: 'What goes here?',
       aboutBody:
         "When someone opens your public card and taps **Connect**, **Request meeting**, **Request quote**, or **Send their card**, that request lands here.\n\nYou'll be able to accept or decline each one. Accepted requests turn into Contacts.",
@@ -225,6 +226,17 @@ export const t = {
         send_card: 'sent their card',
         ask_collaboration: 'wants to collaborate',
         give_feedback: 'sent feedback',
+      },
+      thread: {
+        title: 'Conversation',
+        placeholder: 'Write a message…',
+        loading: 'Loading messages…',
+        errorSend: 'Could not send. Try again.',
+        you: 'You',
+      },
+      empty_thread: {
+        title: 'Say hello',
+        body: 'Send the first message to start the conversation.',
       },
     },
     publicCard: {
@@ -595,6 +607,7 @@ export const t = {
       all: 'Alle',
       accept: 'Annehmen',
       decline: 'Ablehnen',
+      send: 'Senden',
       aboutTitle: 'Was kommt hier rein?',
       aboutBody:
         'Wenn jemand Ihre Karte öffnet und **Vernetzen**, **Meeting anfragen**, **Angebot anfragen** oder **Karte senden** tippt, landet die Anfrage hier.\n\nSie können sie annehmen oder ablehnen. Angenommene Anfragen werden zu Kontakten.',
@@ -605,6 +618,17 @@ export const t = {
         send_card: 'hat ihre Karte gesendet',
         ask_collaboration: 'möchte zusammenarbeiten',
         give_feedback: 'hat Feedback gegeben',
+      },
+      thread: {
+        title: 'Unterhaltung',
+        placeholder: 'Nachricht schreiben…',
+        loading: 'Nachrichten werden geladen…',
+        errorSend: 'Konnte nicht gesendet werden. Erneut versuchen.',
+        you: 'Sie',
+      },
+      empty_thread: {
+        title: 'Sagen Sie hallo',
+        body: 'Senden Sie die erste Nachricht, um die Unterhaltung zu beginnen.',
       },
     },
     publicCard: {
@@ -979,6 +1003,7 @@ export const t = {
       all: 'Tümü',
       accept: 'Kabul et',
       decline: 'Reddet',
+      send: 'Gönder',
       aboutTitle: 'Burada neler olur?',
       aboutBody:
         "Birisi kartınızı açıp **Bağlan**, **Toplantı iste**, **Teklif iste** veya **Kartını gönder** dediğinde, istek burada görünür.\n\nBunları kabul edebilir veya reddedebilirsiniz. Kabul edilenler Kişiler'e geçer.",
@@ -989,6 +1014,17 @@ export const t = {
         send_card: 'kartını gönderdi',
         ask_collaboration: 'iş birliği yapmak istiyor',
         give_feedback: 'geri bildirim gönderdi',
+      },
+      thread: {
+        title: 'Sohbet',
+        placeholder: 'Mesaj yazın…',
+        loading: 'Mesajlar yükleniyor…',
+        errorSend: 'Gönderilemedi. Tekrar deneyin.',
+        you: 'Siz',
+      },
+      empty_thread: {
+        title: 'Selam verin',
+        body: 'Sohbeti başlatmak için ilk mesajı gönderin.',
       },
     },
     publicCard: {

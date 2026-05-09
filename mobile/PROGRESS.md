@@ -73,11 +73,19 @@ Deploy steps for Hasan:
   - **Quick win**: a "Save sample contacts" button at the top of the empty Contacts state, that one-shot saves 5 of the seeded demo cards into the user's contacts (purely for test/discovery).
   - **Real fix**: ensure the "Save card to contacts" button in the public viewer flips reliably and the Contacts tab refreshes on focus.
 
-### Sprint F4 — Inbox messaging thread
-- Add `Message` model on `CardConnection` (id, connectionId, senderUserId, body, sentAt, readAt).
-- Inbox row taps a `request_*` row → opens a thread view at `(app)/inbox/[connectionId].tsx`.
-- Server endpoints `GET /api/v1/connections/[id]/messages`, `POST /api/v1/connections/[id]/messages`.
-- Push notification optional — defer if Expo notifications setup is non-trivial.
+### Sprint F4 — Inbox messaging thread [DONE — committed]
+Shipped:
+- Prisma `Message` model on `CardConnection` (id, connectionId, senderUserId, body, sentAt, readAt) + inverse relations on `User` and `CardConnection`. Migration `20260509120000_add_messages` (hand-written, matches the events migration style).
+- Server endpoints `GET /api/v1/connections/[id]/messages` + `POST /api/v1/connections/[id]/messages` (bearer-auth, rate-limited, side-channel `readAt = now()` on read for the OTHER side's unread rows).
+- GET response also returns `other` (avatar/name/title/company of the OTHER side) + `pendingAction` (latest pending CardAction the requester is the receiver of) so the thread header is one round-trip.
+- `/api/account/inbox` enriched additively with `connectionId`, `lastMessage`, `unreadCount` per row. Connections are lazily upserted when the inbox encounters an action whose pair has no connection yet (existing rows untouched). Wire shape is purely additive — old clients keep working.
+- Mobile thread view at `(app)/inbox/[connectionId].tsx`: bubbles (teal mine / `bg[2]` theirs), KeyboardAvoidingView composer, optimistic send + refetch, 15s polling, accept/decline pill when a pending action exists. Inbox row tap → `/(app)/inbox/[connectionId]`. Renamed `inbox.tsx` → `inbox/index.tsx` so expo-router can host both list + detail under the same tab.
+- API client `mobile/src/lib/api/messages.ts` — `listMessages` + `sendMessage`.
+- Inbox row badge: `unreadCount` shown as a teal pill next to the status dot. Last-message preview replaces the action message when present.
+- i18n: `inbox.thread.*`, `inbox.send`, `inbox.empty_thread.*` keys for en/de/tr.
+
+Deploy steps for Hasan:
+1. `docker exec opsolid-app npx prisma migrate deploy` (applies `20260509120000_add_messages`).
 
 ### Sprint F-Polish (lower priority)
 - Save catch in `mobile/app/(app)/cards/edit/[id].tsx` line 377 still says `t.errorLoad` (could not load) on save errors. Add `cards.errorSave` i18n key and use it.

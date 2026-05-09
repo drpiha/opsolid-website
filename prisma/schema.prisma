@@ -57,6 +57,12 @@ model User {
   savedCards      SavedCard[]
   feedbackGiven   CardFeedback[]
 
+  /**
+   * Sprint F4 — chat messages this user has sent on a connection thread.
+   * Cascade-delete with the user account.
+   */
+  messages        Message[]
+
   @@index([email])
   @@map("users")
 }
@@ -480,11 +486,40 @@ model CardConnection {
    */
   albumPhotos CardAlbumPhoto[]
 
+  /**
+   * Sprint F4 — chat thread between the two parties of this connection.
+   */
+  messages    Message[]
+
   @@unique([ownerCardId, visitorCardId])
   @@index([ownerCardId, createdAt])
   // PII retention (Faz A8.3).
   @@index([createdAt])
   @@map("card_connections")
+}
+
+// =============================================================================
+// Sprint F4 — Message
+//
+// Lightweight chat thread on top of a CardConnection. Either side of the
+// connection (the owner card's user or the visitor card's user) can post; the
+// receiver flips read state when they fetch the thread. No attachments, no
+// edits, no deletes — keep the surface tiny so we can iterate. Push notifs
+// are deferred; the mobile thread polls every 15s while open.
+// =============================================================================
+model Message {
+  id              String          @id @default(cuid())
+  connectionId    String          @map("connection_id")
+  senderUserId    String          @map("sender_user_id")
+  body            String          @db.VarChar(2000)
+  sentAt          DateTime        @default(now()) @map("sent_at")
+  readAt          DateTime?       @map("read_at")
+  connection      CardConnection  @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+  sender          User            @relation(fields: [senderUserId], references: [id], onDelete: Cascade)
+
+  @@index([connectionId, sentAt])
+  @@index([senderUserId])
+  @@map("messages")
 }
 
 // -----------------------------------------------------------------------------

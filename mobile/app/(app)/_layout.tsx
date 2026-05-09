@@ -136,7 +136,7 @@ export default function AppLayout() {
         }}
       />
       <Tabs.Screen
-        name="inbox"
+        name="inbox/index"
         options={{
           title: t.inbox.title,
           tabBarIcon: ({ color, size }) => <Mail size={size} color={color} />,
@@ -164,6 +164,9 @@ export default function AppLayout() {
       <Tabs.Screen name="public/[slug]" options={{ href: null, title: '' }} />
       {/* Sprint F2 — event detail. Tab is `events/index`; deep route is hidden. */}
       <Tabs.Screen name="events/[slug]" options={{ href: null, title: '' }} />
+      {/* Sprint F4 — inbox thread. Tab is `inbox/index`; per-connection
+          thread route is hidden from the tab bar. */}
+      <Tabs.Screen name="inbox/[connectionId]" options={{ href: null, title: '' }} />
       {/* Sprint 7 — first-run wizard. Hidden from tab bar; reached via the
           0-card redirect in the effect above, or via the FAB on /cards
           when `everPublished` hasn't been set yet. */}

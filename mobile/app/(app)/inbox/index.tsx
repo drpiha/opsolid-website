@@ -20,14 +20,14 @@ import {
   Users,
   MessageSquare,
 } from 'lucide-react-native';
-import { listInbox, resolveAction } from '../../src/lib/api/inbox';
-import type { InboxItem, InboxActionStatus } from '../../src/lib/api/inbox';
-import { useTheme } from '../../src/lib/theme/ThemeProvider';
-import { copper, signal } from '../../src/lib/theme/tokens';
-import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
-import { API_BASE } from '../../src/lib/api/client';
-import { Button } from '../../src/components/ui/Button';
-import { BrandHeader } from '../../src/components/ui/BrandHeader';
+import { listInbox, resolveAction } from '../../../src/lib/api/inbox';
+import type { InboxItem, InboxActionStatus } from '../../../src/lib/api/inbox';
+import { useTheme } from '../../../src/lib/theme/ThemeProvider';
+import { copper, signal } from '../../../src/lib/theme/tokens';
+import { useTranslations, detectLocale } from '../../../src/lib/i18n/locale';
+import { API_BASE } from '../../../src/lib/api/client';
+import { Button } from '../../../src/components/ui/Button';
+import { BrandHeader } from '../../../src/components/ui/BrandHeader';
 
 type Filter = 'pending' | 'accepted' | 'all';
 
@@ -138,6 +138,26 @@ export default function InboxScreen() {
       : null;
     const isPending = item.status === 'pending';
 
+    // Sprint F4 — tap target. Prefer the chat thread when a connection exists
+    // (it does for every action where sender !== receiver, since the server
+    // upserts one). Fall back to the public card viewer when missing — keeps
+    // the row useful even on the edge case.
+    const onRowPress = () => {
+      if (item.connectionId) {
+        router.push(`/(app)/inbox/${item.connectionId}` as never);
+      } else if (item.sender.slug) {
+        router.push(`/(app)/public/${item.sender.slug}` as never);
+      }
+    };
+
+    // Last-message preview: show "you: …" when the requester sent it, or the
+    // sender name's first token otherwise. Falls back to the action's own
+    // message text, then the type label.
+    const last = item.lastMessage;
+    const previewLine = last
+      ? last.body
+      : item.message ?? null;
+
     return (
       <View
         style={[
@@ -145,12 +165,7 @@ export default function InboxScreen() {
           { backgroundColor: theme.bg[1], borderColor: theme.line.DEFAULT },
         ]}
       >
-        <Pressable
-          onPress={() => {
-            if (item.sender.slug) router.push(`/(app)/public/${item.sender.slug}` as never);
-          }}
-          style={styles.cardHeader}
-        >
+        <Pressable onPress={onRowPress} style={styles.cardHeader}>
           <View style={[styles.avatar, { backgroundColor: theme.bg[2] }]}>
             {photoUri ? (
               <Image source={{ uri: photoUri }} style={styles.avatarImg} />
@@ -179,12 +194,27 @@ export default function InboxScreen() {
             </Text>
           </View>
 
-          <View style={[styles.statusDot, { backgroundColor: statusColor(item.status) }]} />
+          <View style={styles.headerRight}>
+            {item.unreadCount > 0 ? (
+              <View style={[styles.unreadBadge, { backgroundColor: copper[500] }]}>
+                <Text style={styles.unreadBadgeText}>
+                  {item.unreadCount > 99 ? '99+' : String(item.unreadCount)}
+                </Text>
+              </View>
+            ) : null}
+            <View style={[styles.statusDot, { backgroundColor: statusColor(item.status) }]} />
+          </View>
         </Pressable>
 
-        {item.message ? (
-          <Text style={[styles.message, { color: theme.ink[300], borderTopColor: theme.line.DEFAULT }]}>
-            {item.message}
+        {previewLine ? (
+          <Text
+            style={[
+              styles.message,
+              { color: theme.ink[300], borderTopColor: theme.line.DEFAULT },
+            ]}
+            numberOfLines={2}
+          >
+            {previewLine}
           </Text>
         ) : null}
 
@@ -436,6 +466,25 @@ const styles = StyleSheet.create({
   senderName: { fontSize: 15, fontWeight: '500' },
   senderSub: { fontSize: 12 },
   typeLabel: { fontSize: 12, fontWeight: '500', marginTop: 2 },
+  headerRight: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    flexShrink: 0,
+  },
+  unreadBadge: {
+    minWidth: 20,
+    height: 20,
+    paddingHorizontal: 6,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  unreadBadgeText: {
+    color: '#fff',
+    fontSize: 11,
+    fontWeight: '700',
+  },
   statusDot: { width: 8, height: 8, borderRadius: 4, flexShrink: 0 },
   message: {
     fontSize: 13,

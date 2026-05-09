@@ -18,6 +18,16 @@ export type InboxSender = {
   photoPath: string | null;
 };
 
+/**
+ * Sprint F4 — last-message preview surfaced on the inbox row so the list can
+ * show "you: hi" or "Aylin: thanks!" without a separate request.
+ */
+export type InboxLastMessage = {
+  body: string;
+  sentAt: string;
+  senderUserId: string;
+};
+
 export type InboxItem = {
   id: string;
   type: InboxActionType;
@@ -27,6 +37,16 @@ export type InboxItem = {
   resolvedAt: string | null;
   sender: InboxSender;
   receiverSlug: string | null;
+  /**
+   * Sprint F4 — id of the CardConnection between sender and receiver. The
+   * server lazily upserts a connection when one is missing, so this is only
+   * null when sender === receiver (an edge case the inbox shouldn't surface).
+   */
+  connectionId: string | null;
+  /** Last message on the connection thread, or null when the thread is empty. */
+  lastMessage: InboxLastMessage | null;
+  /** Count of messages the requester hasn't read yet on that thread. */
+  unreadCount: number;
 };
 
 export type InboxResponse = { items: InboxItem[] };
