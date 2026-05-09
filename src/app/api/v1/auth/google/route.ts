@@ -34,6 +34,10 @@ interface GoogleTokenInfo {
   email: string;
   email_verified: string; // "true" | "false" as string
   name?: string;
+  // M7 — Google profile picture URL. We persist it on first sign-in so the
+  // mobile Settings/Card avatar isn't stuck at initials. May be absent when
+  // the user has no Google avatar set.
+  picture?: string;
   sub: string;
   exp: string;
 }
@@ -107,21 +111,35 @@ export async function POST(req: NextRequest) {
 
   const email = info.email.trim().toLowerCase();
 
+  // M7 — accept the OIDC `picture` claim if it parses as an https URL. We
+  // never persist arbitrary strings into the avatar column.
+  const picture = sanitizeHttpsUrl(info.picture);
+
   let user = await prisma.user.findUnique({ where: { email } });
   if (!user) {
     user = await prisma.user.create({
       data: {
         email,
         name: info.name ?? null,
+        image: picture,
         emailVerifiedAt: new Date(),
         locale: "de",
       },
     });
-  } else if (!user.emailVerifiedAt) {
-    await prisma.user.update({
-      where: { id: user.id },
-      data: { emailVerifiedAt: new Date() },
-    });
+  } else {
+    // Refresh email-verified flag and back-fill the avatar if we don't have
+    // one yet. We deliberately DON'T overwrite an existing custom avatar —
+    // the user may have uploaded their own; respecting their choice beats
+    // forcing the latest Google headshot on every login.
+    const patch: { emailVerifiedAt?: Date; image?: string } = {};
+    if (!user.emailVerifiedAt) patch.emailVerifiedAt = new Date();
+    if (!user.image && picture) patch.image = picture;
+    if (Object.keys(patch).length > 0) {
+      user = await prisma.user.update({
+        where: { id: user.id },
+        data: patch,
+      });
+    }
   }
 
   const session = await issueSession(
@@ -138,6 +156,9 @@ export async function POST(req: NextRequest) {
           id: user.id,
           email: user.email,
           name: user.name,
+          // M7 — avatar URL (may be null for non-Google sign-ups or when the
+          // OIDC picture claim was absent / non-https).
+          image: user.image,
           locale: user.locale,
           role: user.role,
           emailVerifiedAt: user.emailVerifiedAt?.toISOString() ?? null,
@@ -150,4 +171,23 @@ export async function POST(req: NextRequest) {
     ),
     req,
   );
+}
+
+/**
+ * Best-effort URL whitelist: only persist an `https://` URL with a public
+ * hostname. Returns null for anything else so we never write `javascript:` or
+ * an internal hostname into the avatar column. We don't need full SSRF defense
+ * here — the URL is just stored and later rendered by clients (which apply
+ * their own CSP / image proxying).
+ */
+function sanitizeHttpsUrl(input: string | undefined | null): string | null {
+  if (!input || typeof input !== "string") return null;
+  try {
+    const u = new URL(input);
+    if (u.protocol !== "https:") return null;
+    if (!u.hostname || u.hostname === "localhost") return null;
+    return u.toString();
+  } catch {
+    return null;
+  }
 }

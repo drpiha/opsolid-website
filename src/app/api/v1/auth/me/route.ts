@@ -47,6 +47,10 @@ function userBody(user: {
   id: string;
   email: string;
   name: string | null;
+  // M7 — avatar URL. Set on Google sign-in (OIDC picture claim), via social-
+  // profile enrichment, or by direct upload. Optional in the prop type so
+  // older callers (legacy code paths) compile without retro-fitting.
+  image?: string | null;
   locale: string;
   emailVerifiedAt: Date | null;
   notificationPrefs: unknown;
@@ -59,6 +63,8 @@ function userBody(user: {
       id: user.id,
       email: user.email,
       name: user.name,
+      // M7 — null when unset; mobile UI falls back to initials.
+      image: user.image ?? null,
       locale: user.locale,
       emailVerifiedAt: user.emailVerifiedAt?.toISOString() ?? null,
       // Default-on shape so the mobile Settings UI never has to special-case
@@ -149,6 +155,9 @@ export async function PATCH(req: Request) {
         id: true,
         email: true,
         name: true,
+        // M7 — avatar URL passed through to the response so the mobile
+        // Settings screen sees the same shape after PATCH as after GET.
+        image: true,
         locale: true,
         emailVerifiedAt: true,
         notificationPrefs: true,
