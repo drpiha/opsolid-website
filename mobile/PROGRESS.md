@@ -2,6 +2,15 @@
 
 Living log of mobile-app feature work. Updated per session, not auto-generated.
 
+## Status snapshot
+
+The "Verso by OpSolid" mobile app is feature-complete through **Sprint F4**. The current head of `main` is commit `e46038d`. Pending APK builds: `#22` (commit `c20aa96`, F2 only) and `#23` (commit `e46038d`, F2+F3+F4). Hasan is the only human in the loop and asked the assistant to ship autonomously; **install build #23 when it lands** — `gh release download android-build-23 --pattern "*.apk" --dir /tmp --clobber && adb install -r /tmp/opsolid-android-0.1.0-b23.apk`.
+
+After install, two server steps Hasan must run:
+
+1. `docker exec opsolid-app npx prisma migrate deploy` — applies the events + messages migrations.
+2. `docker exec opsolid-app npx tsx scripts/seed-events.ts` — populates the Events tab + Discover rail.
+
 ## Done — installed via APK build #21 (commit `1c25bd2`)
 
 ### Sprint 0–4 — earlier session (build #13)
@@ -68,10 +77,12 @@ Deploy steps for Hasan:
 1. `docker exec opsolid-app npx prisma migrate deploy` (applies `20260509000000_add_events`).
 2. `docker exec opsolid-app npx tsx scripts/seed-events.ts` (after seed-public-cards has run; resolves attendee slugs to ids).
 
-### Sprint F3 — Contacts seed + UX
-- Discover is now populated; Contacts is empty for Hasan's account because nothing has been "saved." Two paths:
-  - **Quick win**: a "Save sample contacts" button at the top of the empty Contacts state, that one-shot saves 5 of the seeded demo cards into the user's contacts (purely for test/discovery).
-  - **Real fix**: ensure the "Save card to contacts" button in the public viewer flips reliably and the Contacts tab refreshes on focus.
+### Sprint F3 — Contacts seed + UX [DONE — committed]
+Shipped (commit `ceff85e`):
+- Server endpoint `POST /api/v1/contacts/sample-seed` — bearer-gated, idempotent on `SavedCard` composite unique. Default seeds 5 slugs: `christine-mueller`, `markus-schmidt`, `aylin-yildiz`, `mehmet-aydin`, `tobias-bauer`.
+- Empty Contacts state now shows a teal `UserPlus` CTA — "Tanıdığım kişileri ekle" / "Add sample contacts" / "Beispielkontakte hinzufügen". Tap → seeds 5 cards → `Alert("{n} örnek eklendi")` → CTA disappears.
+- `mobile/src/store/contactsRefreshStore.ts` — Zustand `dirty: boolean` hint. `public/[slug].tsx` `toggleSave` calls `markDirty()` after save/unsave; Contacts tab uses `useFocusEffect` as primary refresh, dirty bit as belt-and-braces.
+- Saved-contact model is `SavedCard` (NOT `CardConnection`) — important for any future contacts work. `SavedCard { userId, cardOrderId, notes, tags, metWhere, followUpAt, status, starred }` is what `POST /api/cards/[slug]/save` already uses.
 
 ### Sprint F4 — Inbox messaging thread [DONE — committed]
 Shipped:
@@ -107,7 +118,9 @@ Deploy steps for Hasan:
 | android-build-18 | `d4165d2` | Sprint D CRM features | installed -r (had save shape bug) |
 | android-build-19 | `cf914e4` | Verso v3c compass icon + Sprint D server live | installed -r |
 | android-build-20 | `96df346` | Sprint F5 + bug fixes + Sprint 6 edit overhaul | installed -r → BLACK SCREEN regression |
-| android-build-21 | `1c25bd2` | Sprint 7 (icon v5 + deck + onboarding + brand header) + black-screen fix | **building / pending install** |
+| android-build-21 | `1c25bd2` | Sprint 7 (icon v5 + deck + onboarding + brand header) + black-screen fix | **installed -r** (phone Dozing during verify) |
+| android-build-22 | `c20aa96` | Sprint F2 — Events / Fairs feature | building |
+| android-build-23 | `e46038d` | Sprint F2 + F3 (Contacts seed) + F4 (Inbox messaging) | building (latest — install this when both finish) |
 
 ## Operating notes (read first when picking up work)
 
