@@ -66,8 +66,6 @@ const overrides: DeepPartial<Content> = {
       voiceAgent: "Agent vocal",
       digitalCard: "Verso",
       kutasia: "Kutasia",
-      products: "Produits",
-      pricing: "Tarifs",
       journal: "Blog",
       contact: "Contact",
       cta: "Réserver un appel",
