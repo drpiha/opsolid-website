@@ -959,18 +959,8 @@ export const content = {
       },
       {
         title: "4. Hosting",
-        subsections: [
-          {
-            title: "Marketing site (opsolid.de)",
-            content:
-              "The public marketing site is hosted on Vercel, Inc. (440 N Baxter St, Los Angeles, CA 90012, USA). Your IP address and usage data are processed by Vercel. Vercel is certified under the EU-US Data Privacy Framework (DPF), providing an adequacy basis for the transfer. AVV (Art. 28 GDPR) is in place via Vercel's Data Processing Addendum.",
-          },
-          {
-            title: "Verso application (planned)",
-            content:
-              "The Verso Digital Business Card application backend and database will run on a self-hosted Hostinger VPS (Hostinger International Ltd., Lithuania, EU). All Verso card content and customer data will remain on EU servers. AVV with Hostinger will be on file before any production data is processed.",
-          },
-        ],
+        content:
+          "The marketing site, the Verso Digital Business Card application backend, and the Postgres database all run on a single self-managed Hostinger VPS (Hostinger International Ltd., AS47583), physically located in Vilnius, Lithuania (EU). Server hostname: srv1150632.hstgr.cloud. All visitor traffic, card data, customer records and database backups remain on EU territory. The DPA (AVV under Art. 28 GDPR) with Hostinger is on file.",
       },
       {
         title: "5. Cookies & Analytics",
@@ -983,7 +973,7 @@ export const content = {
           {
             title: "Optional analytics",
             content:
-              "If you accept analytics in the cookie banner, anonymous page-view counts may be collected via Vercel Analytics. This collection happens without cookies and without personal identifiers and cannot identify individual visitors. If you reject, no analytics call is made.",
+              "If you accept analytics in the cookie banner, aggregated, anonymous page-view counts may be collected. The collection is cookieless, contains no personal identifiers, and cannot identify individual visitors. If you reject, no analytics call is made and no data leaves the Hostinger Vilnius server.",
           },
           {
             title: "No third-party tracking, ads, or social plugins",
@@ -1000,7 +990,7 @@ export const content = {
           {
             title: "Hosting & infrastructure",
             content:
-              "Vercel Inc. (US, DPF-certified) — marketing site hosting; Hostinger International Ltd. (LT, EU) — Verso application + Postgres database (planned).",
+              "Hostinger International Ltd. (Lithuania, EU) — single VPS in Vilnius hosting the marketing site, the Verso application and the Postgres database. No US hosting sub-processor.",
           },
           {
             title: "Email delivery",

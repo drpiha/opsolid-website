@@ -961,18 +961,8 @@ export const content: Content = {
       },
       {
         title: "4. Barındırma",
-        subsections: [
-          {
-            title: "Pazarlama sitesi (opsolid.de)",
-            content:
-              "Halka açık pazarlama sitesi Vercel, Inc. (440 N Baxter St, Los Angeles, CA 90012, ABD) üzerinde barındırılmaktadır. IP adresiniz ve kullanım verileriniz Vercel tarafından işlenir. Vercel, AB-ABD Veri Gizliliği Çerçevesi (DPF) kapsamında sertifikalıdır; bu, aktarım için yeterlilik dayanağı sağlar. AVV (GDPR m.28) Vercel'in Data Processing Addendum'u üzerinden yürürlüktedir.",
-          },
-          {
-            title: "Verso uygulaması (planlanan)",
-            content:
-              "Verso ürününün backend'i ve veritabanı kendi yönetimimizdeki Hostinger VPS (Hostinger International Ltd., Litvanya, AB) üzerinde çalışacaktır. Tüm Verso kart içeriği ve müşteri verisi AB sunucularında kalacaktır. Hostinger ile AVV, üretim verisi işlenmeden önce dosyalanmıştır.",
-          },
-        ],
+        content:
+          "Pazarlama sitesi, Verso ürününün backend'i ve Postgres veritabanı, tek bir kendi yönetimimizdeki Hostinger VPS (Hostinger International Ltd., AS47583) üzerinde çalışmaktadır. Sunucu fiziksel olarak Vilnius, Litvanya (AB) konumundadır. Sunucu hostname: srv1150632.hstgr.cloud. Tüm ziyaretçi trafiği, kart içerikleri, müşteri kayıtları ve veritabanı yedekleri AB toprağında kalır. Hostinger ile DPA (GDPR m.28 kapsamında AVV) dosyalanmıştır.",
       },
       {
         title: "5. Çerezler ve Analitik",
@@ -985,7 +975,7 @@ export const content: Content = {
           {
             title: "Opsiyonel analitik",
             content:
-              "Çerez bandında analitik onayı verirseniz, anonim sayfa görüntüleme sayıları Vercel Analytics üzerinden toplanabilir. Bu toplama çerezsiz ve kişisel tanımlayıcı olmadan yapılır; bireysel ziyaretçi tanımlayamaz. Reddetmeniz halinde hiçbir analitik çağrısı yapılmaz.",
+              "Çerez bandında analitik onayı verirseniz, toplulaştırılmış, anonim sayfa görüntüleme sayıları toplanabilir. Bu toplama çerezsiz ve kişisel tanımlayıcı olmadan yapılır; bireysel ziyaretçi tanımlayamaz. Reddetmeniz halinde hiçbir analitik çağrısı yapılmaz ve hiçbir veri Vilnius'taki Hostinger sunucusunu terk etmez.",
           },
           {
             title: "Üçüncü taraf izleme, reklam veya sosyal eklenti yok",
@@ -1002,7 +992,7 @@ export const content: Content = {
           {
             title: "Barındırma ve altyapı",
             content:
-              "Vercel Inc. (ABD, DPF sertifikalı) — pazarlama sitesi barındırma; Hostinger International Ltd. (LT, AB) — Verso uygulaması + Postgres veritabanı (planlanan).",
+              "Hostinger International Ltd. (Litvanya, AB) — pazarlama sitesi, Verso uygulaması ve Postgres veritabanını Vilnius'taki tek bir VPS üzerinde barındırır. ABD'de barındırma alt işleyicisi yoktur.",
           },
           {
             title: "E-posta gönderimi",

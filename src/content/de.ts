@@ -961,18 +961,8 @@ export const content: Content = {
       },
       {
         title: "4. Hosting",
-        subsections: [
-          {
-            title: "Marketing-Site (opsolid.de)",
-            content:
-              "Die öffentliche Marketing-Site wird bei Vercel, Inc. (440 N Baxter St, Los Angeles, CA 90012, USA) gehostet. Ihre IP-Adresse und Nutzungsdaten werden von Vercel verarbeitet. Vercel ist unter dem EU-US Data Privacy Framework (DPF) zertifiziert; daraus ergibt sich die Übermittlungsgrundlage. AVV (Art. 28 DSGVO) liegt über Vercels Data Processing Addendum vor.",
-          },
-          {
-            title: "Verso-Anwendung (geplant)",
-            content:
-              "Backend und Datenbank des Verso-Produkts werden auf einem selbst betriebenen Hostinger VPS (Hostinger International Ltd., Litauen, EU) laufen. Sämtliche Verso-Karteninhalte und Kundendaten verbleiben auf EU-Servern. AVV mit Hostinger liegt vor, bevor produktive Daten verarbeitet werden.",
-          },
-        ],
+        content:
+          "Die Marketing-Site, das Backend des Verso-Produkts und die Postgres-Datenbank laufen gemeinsam auf einem selbst verwalteten Hostinger VPS (Hostinger International Ltd., AS47583), physisch in Vilnius, Litauen (EU). Server-Hostname: srv1150632.hstgr.cloud. Sämtlicher Besucher-Traffic, Karteninhalte, Kundendatensätze und Datenbank-Backups verbleiben auf EU-Gebiet. Der AVV (Art. 28 DSGVO) mit Hostinger liegt vor.",
       },
       {
         title: "5. Cookies & Analyse",
@@ -985,7 +975,7 @@ export const content: Content = {
           {
             title: "Optionale Analyse",
             content:
-              "Falls Sie im Cookie-Banner Analyse zustimmen, werden anonyme Seitenaufrufzahlen über Vercel Analytics erfasst. Diese Erfassung erfolgt cookieless und ohne personenbezogene Kennungen; einzelne Besucherinnen und Besucher können damit nicht identifiziert werden. Bei Ablehnung wird kein Analyse-Aufruf ausgelöst.",
+              "Falls Sie im Cookie-Banner Analyse zustimmen, werden aggregierte, anonyme Seitenaufrufzahlen erfasst. Die Erfassung erfolgt cookieless, ohne personenbezogene Kennungen, und kann einzelne Besucherinnen und Besucher nicht identifizieren. Bei Ablehnung wird kein Analyse-Aufruf ausgelöst und es verlassen keine Daten den Hostinger-Server in Vilnius.",
           },
           {
             title: "Kein Drittanbieter-Tracking, keine Werbung, keine Social-Plugins",
@@ -1002,7 +992,7 @@ export const content: Content = {
           {
             title: "Hosting & Infrastruktur",
             content:
-              "Vercel Inc. (US, DPF-zertifiziert) — Hosting der Marketing-Site; Hostinger International Ltd. (LT, EU) — Verso-Anwendung + Postgres-Datenbank (geplant).",
+              "Hostinger International Ltd. (Litauen, EU) — ein einziger VPS in Vilnius hostet die Marketing-Site, die Verso-Anwendung und die Postgres-Datenbank. Kein US-Hosting-Auftragsverarbeiter.",
           },
           {
             title: "E-Mail-Zustellung",

@@ -30,35 +30,27 @@
 
 ### Acil — Önümüzdeki 14 Gün
 
-#### 1. Hostinger VPS'in fiziksel lokasyonunu doğrulayın
-- **Niye:** Privacy policy "AB içinde" diyor ama hangi AB ülkesi olduğu yazılı değil. KVKK yurtdışı aktarım analizi için kritik.
-- **Nasıl:** Hostinger control panel → VPS → Server Information; veya support ticket: "Please confirm in writing the physical data centre location of VPS at IP 72.62.0.111 (city + country) for our GDPR / KVKK records."
-- **Çıktı:** Email yanıtını PDF olarak `docs/legal/hostinger-dc-location.pdf` altına dosyalayın.
-- **Süre:** 1-2 gün.
-- **Maliyet:** 0 €.
-
-#### 2. Vercel DPA'yı indirip dosyalayın
-- **Niye:** opsolid.de Vercel'de barındırılıyor, AVV (Art. 28 DSGVO) zorunlu.
-- **Nasıl:** https://vercel.com/legal/dpa → "Download DPA" → PDF.
-- **Çıktı:** `docs/legal/dpa/vercel-dpa-2026-05.pdf`.
+#### 1. ✅ Hostinger VPS lokasyonu DOĞRULANDI
+- **Sonuç:** IP `72.62.0.111` → hostname `srv1150632.hstgr.cloud` → **Vilnius, Litvanya (AB)** — AS47583 Hostinger International Limited.
+- Hem opsolid.de hem kutasia.com **aynı VPS** üzerinde çalışıyor.
+- **Yine de yapılması gereken:** Hostinger panel'inden ekran görüntüsü alıp `docs/legal/dpa/hostinger-dc-location.png` olarak dosyalayın (denetimde delil için ipinfo.io çıktısı yetmez, sağlayıcı resmi kanal şart).
 - **Süre:** 5 dakika.
-- **Maliyet:** 0 €.
 
-#### 3. Hostinger DPA talep edin
+#### 2. Hostinger DPA talep edin
 - **Niye:** Verso uygulaması Hostinger VPS'te çalışacak, AVV zorunlu.
-- **Nasıl:** support@hostinger.com'a yazın: "We require a Data Processing Agreement (DPA / AVV under Art. 28 GDPR) covering our VPS service. Please send the signed template."
-- **Çıktı:** `docs/legal/dpa/hostinger-dpa-2026-XX.pdf`.
+- **Nasıl:** support@hostinger.com'a yazın: "We require a Data Processing Agreement (DPA / AVV under Art. 28 GDPR) covering our VPS service (srv1150632.hstgr.cloud, Vilnius). Please send the signed template."
+- **Çıktı:** `docs/legal/dpa/hostinger-dpa-2026-XX.pdf` (tek dosya hem OpSolid hem Kutasia için geçerli).
 - **Süre:** Yanıt 1-3 gün.
 - **Maliyet:** 0 €.
 
-#### 4. Stripe DPA'sı (Verso ödemeleri için)
+#### 3. Stripe DPA'sı (Verso ödemeleri için)
 - **Niye:** Stripe Checkout entegrasyonundan ÖNCE DPA imzalanmış olmalı.
 - **Nasıl:** https://stripe.com/legal/ssa → DPA bölümü, Stripe Services Agreement içine entegre. Ek olarak https://stripe.com/legal/data-processing dosyasını PDF olarak alın.
 - **Çıktı:** `docs/legal/dpa/stripe-dpa-2026-05.pdf`.
 - **Süre:** 10 dakika.
 - **Maliyet:** 0 €.
 
-#### 5. OpenAI / Anthropic DPA — sadece API kullanıyorsanız
+#### 4. OpenAI / Anthropic DPA — sadece API kullanıyorsanız
 - **Niye:** Eğer hâlâ ChatGPT Plus / Claude Pro ile ürün özellikleri test ediyorsanız, kullanıcı verisi aktarımı **hukuksuz**. Sadece API + paid hesap üzerinden gidin.
 - **Nasıl:**
   - OpenAI: https://openai.com/policies/data-processing-addendum → form doldur, e-imza
@@ -71,27 +63,27 @@
 
 ### Önemli — Önümüzdeki 30 Gün
 
-#### 6. Türk avukat ile ilk görüşme yapın
+#### 5. Türk avukat ile ilk görüşme yapın
 - **Niye:** Almanya'dan Türkiye'ye ürün satışında VERBİS, veri sorumlusu temsilcisi, KVKK standart sözleşmesi konularında uzman görüşü.
 - **Nasıl:** İstanbul'da KVKK uzmanı boutique hukuk büroları (örn. Esenyel Partners, Eralp Hukuk, Gün+Partners). LinkedIn'den 3-5 büroya tek mesaj atın: "Almanya yerleşik Einzelunternehmen olarak TR pazarına SaaS satıyorum. KVKK + yurtdışı aktarım + temsilci konularında 1 saat ücretli ilk görüşme istiyorum, paket teklifinizi rica ederim."
 - **Görüşmede sorulacak sorular:** [Ek A](#ek-a--türk-avukat-soru-listesi)
 - **Süre:** 1-2 hafta randevu için, 1 saat görüşme.
 - **Maliyet:** Tahmini 1.500-5.000 TL ilk görüşme; paket 50-150K TL.
 
-#### 7. Alman Fachanwalt für IT-Recht ile ilk görüşme
+#### 6. Alman Fachanwalt für IT-Recht ile ilk görüşme
 - **Niye:** Datenschutzerklärung + Impressum + AGB hukuki onay; UG/GmbH geçiş kararı; Withdrawal Button uyum (19.06.2026 deadline).
 - **Nasıl:** anwaltauskunft.de → "Fachanwalt für IT-Recht" filtresi + bölge. Boutique öneri: dury.de (Saarbrücken), spiegel-rechtsanwaelte.de (Köln), srd-rechtsanwaelte.de (Hannover). Tek mail: "Einzelunternehmen i.Gr. mit DSGVO-relevantem SaaS (B2C + B2B). Brauche Pauschalpreis für: (a) DSE/Impressum-Review, (b) AGB+Refund, (c) AVV-Inventar TIA, (d) Beratung UG/GmbH-Wechsel."
 - **Görüşmede sorulacak sorular:** [Ek B](#ek-b--alman-avukat-soru-listesi)
 - **Süre:** 1-2 hafta randevu, 1 saat görüşme.
 - **Maliyet:** Saatlik 200-600 EUR (taşra), 600-1.200 EUR (Berlin/München); paket 1.500-4.000 EUR.
 
-#### 8. Vergi danışmanı (Steuerberater) ile UG/GmbH kararı
+#### 7. Vergi danışmanı (Steuerberater) ile UG/GmbH kararı
 - **Niye:** Einzelunternehmen olarak GDPR cezalarına karşı kişisel mal varlığınız hedef. UG/GmbH limited liability sağlar. Aynı zamanda Kleinunternehmer §19 UStG vs OSS B2C dijital hizmet satışı kararı vergi danışmanı + avukatı birlikte gerektirir.
 - **Nasıl:** Bölgenizde IT/SaaS deneyimli Steuerberater. Datev üyesi tavsiye edilir. İlk soru: "Solo Founder mit ~XX TEUR Jahresumsatz, B2C dijital hizmet (DE+EU+TR pazarı): Einzelunternehmen-Risiko vs UG-Mehrkosten? Kleinunternehmer-Status mit OSS-Pflicht in Konflikt?"
 - **Süre:** 1-2 hafta randevu, 1 saat görüşme.
 - **Maliyet:** İlk görüşme 100-300 EUR; aylık retainer 100-400 EUR.
 
-#### 9. Veri envanteri (RoPA — Verzeichnis von Verarbeitungstätigkeiten)
+#### 8. Veri envanteri (RoPA — Verzeichnis von Verarbeitungstätigkeiten)
 - **Niye:** Art. 30 GDPR — küçük şirket istisnası DAR yorumlanıyor; düzenli işleme varsa zorunlu.
 - **Nasıl:** Notion / Google Sheet template. Her processing activity için:
   - Activity adı (örn. "İletişim formu", "Verso kart yayını", "Ödeme")
@@ -108,7 +100,7 @@
 - **Maliyet:** 0 €.
 - **Çıktı:** `docs/legal/RoPA-2026.xlsx` veya Notion sayfası.
 
-#### 10. Cookie consent server-side log
+#### 9. Cookie consent server-side log
 - **Niye:** localStorage tek başına ispat değeri zayıf. TDDDG § 25 dökümante edilebilir consent ister.
 - **Nasıl:** `/api/consent-log` endpoint'i ekleyin; ConsentBanner içinden POST atın. DB tablosu: `id, sessionId (anonim), choice (accept/reject), version, ts, ipHash`. (Bu opsiyonel — kod tarafı işi, isterseniz Claude'a yaptırabilirsiniz.)
 - **Süre:** 2-3 saat developer.
@@ -217,8 +209,7 @@ Bu tabloyu doldurarak `docs/legal/sub-processors.md` olarak bağımsız da tutab
 
 | Sağlayıcı | Hizmet | Lokasyon | DPA imzalı mı | DPF / SCC | Aktarım sebebi |
 |---|---|---|---|---|---|
-| Vercel Inc. | Marketing site hosting | US (DPF) | ☐ → İndir | DPF | Sözleşme ifası |
-| Hostinger International | Verso VPS + Postgres | LT (AB) | ☐ → Talep et | — | Sözleşme ifası |
+| Hostinger International | Tüm hosting (site + Verso + Postgres) | **Vilnius, LT (AB)** | ☐ → Talep et | — | Sözleşme ifası |
 | Stripe Payments Europe | Verso ödemeler | IE → US | ☐ → İndir | DPF + SCC | Sözleşme ifası |
 | OpenAI Ireland | AI özellikler (gerekirse) | IE → US | ☐ → İmzala | DPF + SCC | Sözleşme ifası |
 | Anthropic Ireland | AI özellikler (gerekirse) | IE → US | ☐ → İmzala | DPF + SCC | Sözleşme ifası |
