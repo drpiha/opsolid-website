@@ -27,7 +27,10 @@ import { fetchMe } from '../../src/lib/auth/api';
 
 const FREE_TIER_LIMIT = 1;
 
-const LIST_THRESHOLD = 10;
+// Deck visual works well for 1-4 cards (the four stacked layers fit naturally).
+// At 5+ cards the deck would need an overflow gesture to reveal hidden cards,
+// which is a discoverability tax — switch to a plain scrollable list instead.
+const LIST_THRESHOLD = 5;
 
 export default function CardsListScreen() {
   const router = useRouter();

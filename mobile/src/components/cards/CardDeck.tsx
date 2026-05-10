@@ -76,19 +76,15 @@ export function CardDeck({ cards }: Props) {
     }
   }, [dY0, dY1, dY2, dY3, dO0, dO1, dO2, dO3]);
 
-  // First 4 cards are the stacked-deck layers (with stagger animation +
-  // visible offset stack). Cards 5+ are "overflow" — invisible while the
-  // deck is collapsed, revealed in fanned mode at the bottom of the list
-  // so the user can reach every card without leaving the deck UI.
-  const stackedLayers = useMemo(() => cards.slice(0, MAX_LAYERS), [cards]);
-  const overflowLayers = useMemo(() => cards.slice(MAX_LAYERS), [cards]);
-  const overflowCount = overflowLayers.length;
+  // CardDeck is now only mounted when cards.length < 5 (LIST_THRESHOLD in
+  // app/(app)/cards.tsx). Above that, CardDeckList renders a plain vertical
+  // list — the deck metaphor stops scaling once you'd need an overflow
+  // gesture to reach hidden cards.
+  const visibleLayers = useMemo(() => cards.slice(0, MAX_LAYERS), [cards]);
 
-  // Container expands when fanned to fit ALL cards as a vertical list,
-  // not just the first MAX_LAYERS. With 4+ cards, the user couldn't
-  // previously reach cards 5+ — fanning only revealed the badge'd layer.
-  const collapsedContainerH = tileH + (Math.min(MAX_LAYERS, stackedLayers.length) - 1) * 10 + 40;
-  const fannedContainerH = cards.length * (tileH + FAN_GAP) + 16;
+  // Container expands when fanned to fit all visible layers as a vertical list.
+  const collapsedContainerH = tileH + (Math.min(MAX_LAYERS, visibleLayers.length) - 1) * 10 + 40;
+  const fannedContainerH = visibleLayers.length * (tileH + FAN_GAP) + 16;
 
   const containerHeight = useDerivedValue(() =>
     interpolate(
@@ -123,7 +119,7 @@ export function CardDeck({ cards }: Props) {
       showsVerticalScrollIndicator={false}
     >
       <Animated.View style={[styles.container, { width: tileW }, containerStyle]}>
-        {stackedLayers.map((card, i) => (
+        {visibleLayers.map((card, i) => (
           <DeckLayer
             key={card.id}
             index={i}
@@ -133,72 +129,13 @@ export function CardDeck({ cards }: Props) {
             fanned={fanned}
             mountTranslate={dYs[i]}
             mountOpacity={dOs[i]}
-            badge={
-              i === Math.min(MAX_LAYERS - 1, stackedLayers.length - 1) && overflowCount > 0
-                ? `+${overflowCount > 9 ? '9+' : overflowCount}`
-                : null
-            }
+            badge={null}
             onToggleFan={toggleFan}
-            hasMultiple={cards.length > 1}
-          />
-        ))}
-        {overflowLayers.map((card, i) => (
-          <OverflowLayer
-            key={card.id}
-            absoluteIndex={MAX_LAYERS + i}
-            card={card}
-            tileH={tileH}
-            isFanned={isFanned}
-            fanned={fanned}
+            hasMultiple={visibleLayers.length > 1}
           />
         ))}
       </Animated.View>
     </ScrollView>
-  );
-}
-
-type OverflowLayerProps = {
-  absoluteIndex: number;
-  card: ApiCard;
-  tileH: number;
-  isFanned: SharedValue<number>;
-  fanned: boolean;
-};
-
-/**
- * Overflow card (index >= MAX_LAYERS). Invisible / non-interactive while the
- * deck is collapsed (it lives below the visible stack so it can't compete
- * for taps). When fanned, slides into its row at the same fan-step as the
- * stacked layers so the fanned column is one continuous list.
- */
-function OverflowLayer({
-  absoluteIndex,
-  card,
-  tileH,
-  isFanned,
-  fanned,
-}: OverflowLayerProps) {
-  const fannedTranslateY = absoluteIndex * (tileH + FAN_GAP);
-
-  const animStyle = useAnimatedStyle(() => ({
-    transform: [
-      { translateY: fannedTranslateY },
-      { scale: interpolate(isFanned.value, [0, 1], [0.9, 1], Extrapolation.CLAMP) },
-    ],
-    opacity: interpolate(isFanned.value, [0, 1], [0, 1], Extrapolation.CLAMP),
-  }));
-
-  // Mirror of the animated value — stays non-interactive until the React
-  // state flips to fanned, so cold-collapsed presses never hit overflow tiles.
-  const layerPointerEvents: 'box-none' | 'none' = fanned ? 'box-none' : 'none';
-
-  return (
-    <Animated.View
-      style={[styles.layer, { zIndex: 0 }, animStyle]}
-      pointerEvents={layerPointerEvents}
-    >
-      <CardDeckTile card={card} showShadow={false} />
-    </Animated.View>
   );
 }
 
