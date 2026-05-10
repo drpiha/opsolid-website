@@ -13,6 +13,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 import { Badge } from "@/components/ui/Badge";
 import { useLocale } from "@/context/LocaleContext";
 import type { CardRow } from "@/app/[locale]/dashboard/cards/CardListClient";
@@ -165,11 +166,12 @@ export function CardListItem({ card, locale }: Props) {
       >
         {/* Thumbnail */}
         <div className="relative h-36 w-full overflow-hidden bg-bg-2">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={`/images/templates/card-${card.templateId}.png`}
             alt={`Template ${card.templateId} preview`}
-            className="h-full w-full object-cover"
+            fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
+            className="object-cover"
             onError={(e) => {
               // Fall back to copper placeholder on 404
               (e.currentTarget as HTMLImageElement).style.display = "none";
