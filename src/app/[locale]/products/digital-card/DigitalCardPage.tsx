@@ -7,6 +7,7 @@ import { Icon } from "@/components/shared/Icon";
 import { useLocale } from "@/context/LocaleContext";
 import { FoilCard } from "@/components/products/digital-card/FoilCard";
 import { FinalCTA } from "@/components/sections/FinalCTA";
+import { PricingTable } from "@/components/sections/PricingTable";
 import { OrderFormSection } from "./sections/OrderFormSection";
 import { TemplateGallery } from "./sections/TemplateGallery";
 
@@ -74,6 +75,12 @@ export function DigitalCardPage() {
           <FoilCard />
         </div>
       </section>
+
+      <PricingTable
+        productIds={["verso"]}
+        showProductHeading={false}
+        showProductLink={false}
+      />
 
       <TemplateGallery
         selectedId={selectedTemplateId}

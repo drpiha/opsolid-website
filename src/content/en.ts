@@ -911,6 +911,9 @@ export const content = {
         "USt-IdNr will be applied for upon Gewerbeanmeldung. As of December 2026, the new W-IdNr (Wirtschafts-Identifikationsnummer) will be added here.",
       responsibleContent:
         "Responsible for content according to § 18 Abs. 2 MStV (Medienstaatsvertrag, formerly § 55 RStV)",
+      disputeResolution: "Online Dispute Resolution",
+      disputeResolutionText:
+        "The European Commission provides a platform for online dispute resolution (ODR): https://ec.europa.eu/consumers/odr/. You can find our email address above. We are not willing or obliged to participate in dispute resolution proceedings before a consumer arbitration board.",
       liabilityContent: "Liability for Content",
       liabilityContentText:
         "As a service provider, we are responsible for our own content on these pages under general laws in accordance with § 7 Para. 1 DDG. According to §§ 8 to 10 DDG, however, we are not obligated to monitor transmitted or stored third-party information.",

@@ -913,6 +913,9 @@ export const content: Content = {
         "USt-IdNr Gewerbeanmeldung sonrası başvurulacaktır. Aralık 2026'dan itibaren burada ayrıca yeni W-IdNr (Wirtschafts-Identifikationsnummer) yer alacaktır.",
       responsibleContent:
         "§ 18 Abs. 2 MStV'ye göre içerikten sorumlu kişi (Medienstaatsvertrag, eski § 55 RStV)",
+      disputeResolution: "Çevrimiçi Uyuşmazlık Çözümü",
+      disputeResolutionText:
+        "Avrupa Komisyonu, çevrimiçi uyuşmazlık çözümü (ODR) için bir platform sunmaktadır: https://ec.europa.eu/consumers/odr/. E-posta adresimizi yukarıda bulabilirsiniz. Bir tüketici hakem heyeti önünde uyuşmazlık çözümü sürecine katılmaya istekli ve zorunlu değiliz.",
       liabilityContent: "İçerik Sorumluluğu",
       liabilityContentText:
         "Hizmet sağlayıcı olarak, bu sayfalardaki kendi içeriklerimizden genel yasalar çerçevesinde § 7 Abs. 1 DDG'ye göre sorumluyuz. Ancak §§ 8-10 DDG'ye göre, iletilen veya depolanan üçüncü taraf bilgilerini izlemekle yükümlü değiliz.",

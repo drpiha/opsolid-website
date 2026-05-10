@@ -1,0 +1,608 @@
+/* =======================================================
+   OpSolid pricing — tier table + hub
+   Premium, multi-layered pricing presentation.
+   Token-driven (copper/ink/bg/line) — works across themes.
+   ======================================================= */
+
+.os-pricing-table { padding: 56px 0; }
+
+.os-pricing-vat {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  color: var(--ink-400);
+  margin-top: 12px;
+  text-transform: uppercase;
+}
+
+.os-pricing-product { margin-top: 56px; }
+.os-pricing-product:first-of-type { margin-top: 24px; }
+
+.os-pricing-product-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding-bottom: 18px;
+  margin-bottom: 28px;
+  border-bottom: 1px dashed var(--line);
+}
+
+.os-pricing-product-name {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.4vw, 30px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink-100);
+  line-height: 1.1;
+  margin: 0 0 6px;
+}
+
+.os-pricing-product-tagline {
+  color: var(--ink-300);
+  font-size: 14px;
+  max-width: 60ch;
+  margin: 0;
+}
+
+.os-pricing-product-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--copper-300);
+  text-decoration: none;
+  white-space: nowrap;
+  text-transform: uppercase;
+  transition: color var(--dur-fast) var(--ease-snap);
+}
+.os-pricing-product-link:hover { color: var(--copper-200); }
+
+.os-pricing-tiers {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.os-pricing-tier {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg, 12px);
+  padding: 22px 22px 20px;
+  box-shadow: var(--depth-1);
+  transition: transform var(--dur-fast) var(--ease-snap),
+              box-shadow var(--dur-fast) var(--ease-snap),
+              border-color var(--dur-fast) var(--ease-snap);
+}
+.os-pricing-tier:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--depth-2);
+  border-color: var(--line-firm);
+}
+
+/* Highlighted tier (Professional) — copper rim, raised */
+.os-pricing-tier-hot {
+  border-color: rgba(194, 121, 64, 0.45);
+  background: linear-gradient(180deg, rgba(194,121,64,0.04), var(--bg-2) 32%);
+  box-shadow: var(--depth-2),
+              inset 0 1px 0 rgba(255, 240, 215, 0.12);
+}
+.os-pricing-tier-hot:hover {
+  border-color: rgba(194, 121, 64, 0.75);
+  box-shadow: var(--depth-3),
+              inset 0 1px 0 rgba(255, 240, 215, 0.16);
+}
+
+.os-pricing-tier-badge {
+  position: absolute;
+  top: -10px;
+  right: 16px;
+  display: inline-block;
+  padding: 4px 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--copper-50);
+  background: var(--copper-grad, #C27940);
+  border-radius: var(--r-pill);
+  box-shadow: var(--bloom-sm);
+}
+
+.os-pricing-tier-head {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.os-pricing-tier-for {
+  font-size: 12px;
+  color: var(--ink-400);
+  margin: 0;
+}
+.os-pricing-tier-for em {
+  font-style: italic;
+  color: var(--ink-200);
+}
+
+.os-pricing-tier-numbers {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 16px 0;
+}
+.os-pricing-tier-numbers > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.os-pricing-tier-numbers dt {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-400);
+  margin: 0;
+}
+.os-pricing-tier-numbers dd { margin: 0; text-align: right; }
+
+.os-pricing-tier-setup {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--ink-200);
+  letter-spacing: -0.01em;
+}
+
+.os-pricing-tier-monthly {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2vw, 24px);
+  font-weight: 600;
+  color: var(--ink-100);
+  letter-spacing: -0.02em;
+}
+.os-pricing-tier-hot .os-pricing-tier-monthly {
+  color: var(--copper-200);
+}
+
+.os-pricing-tier-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 6px;
+}
+
+.os-pricing-tier-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.os-pricing-tier-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--ink-200);
+  line-height: 1.5;
+}
+.os-pricing-tier-list svg {
+  flex-shrink: 0;
+  color: var(--copper-300);
+  margin-top: 3px;
+}
+
+.os-pricing-tier-overage {
+  font-size: 12px;
+  color: var(--ink-300);
+  padding-top: 8px;
+  margin: auto 0 0;
+  border-top: 1px dashed var(--line);
+}
+
+.os-pricing-tier-cta {
+  margin-top: 18px;
+}
+.os-pricing-tier-button {
+  width: 100%;
+  justify-content: center;
+}
+
+/* =======================================================
+   Pricing hub page chrome (hero + bundles + footnote)
+   ======================================================= */
+
+.os-pricing-hero {
+  padding: 120px 0 40px;
+  text-align: left;
+}
+.os-pricing-hero .wrap {
+  max-width: 880px;
+}
+.os-pricing-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.05;
+  color: var(--ink-100);
+  margin: 12px 0 18px;
+}
+.os-pricing-hero .editorial {
+  font-family: var(--font-editorial, "Instrument Serif", serif);
+  font-style: italic;
+  font-weight: 400;
+  color: var(--copper-200);
+}
+.os-pricing-hero .lead {
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink-200);
+  max-width: 60ch;
+  margin: 0 0 14px;
+}
+
+.os-pricing-bundles { padding: 56px 0; }
+.os-pricing-bundles .wrap { max-width: 960px; }
+.os-pricing-bundles h2 {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3vw, 36px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink-100);
+  margin: 8px 0 12px;
+}
+.os-pricing-bundles .lead {
+  color: var(--ink-300);
+  max-width: 60ch;
+  margin: 0 0 24px;
+}
+
+.os-pricing-bundle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+.os-pricing-bundle-card {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg, 12px);
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.os-pricing-bundle-rule {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-400);
+}
+.os-pricing-bundle-benefit {
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ink-100);
+  line-height: 1.35;
+}
+.os-pricing-bundle-note {
+  font-size: 12px;
+  color: var(--ink-400);
+  font-style: italic;
+}
+
+.os-pricing-footnote {
+  padding: 24px 0 64px;
+  font-size: 12px;
+  color: var(--ink-400);
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  border-top: 1px solid var(--line);
+  margin-top: 32px;
+}
+.os-pricing-footnote .wrap { max-width: 880px; }
+
+/* =======================================================
+   Responsive — stack tiers on tablet+below
+   ======================================================= */
+@media (max-width: 900px) {
+  .os-pricing-tiers {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .os-pricing-tier-hot {
+    /* Bring highlighted tier to the top of the stack on mobile */
+    order: -1;
+  }
+  .os-pricing-product { margin-top: 40px; }
+  .os-pricing-hero { padding-top: 100px; }
+}
+
+@media (max-width: 540px) {
+  .os-pricing-product-head { flex-direction: column; align-items: flex-start; }
+  .os-pricing-tier { padding: 20px 18px 18px; }
+  .os-pricing-bundle-grid { grid-template-columns: 1fr; }
+}
+
+/* =======================================================
+   Product stub — use cases · integrations · FAQ
+   Shared layout for the 6 product stub pages.
+   ======================================================= */
+
+.os-usecase-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+  margin-top: 24px;
+}
+.os-usecase {
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg, 12px);
+  padding: 22px 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: border-color var(--dur-fast) var(--ease-snap),
+              transform var(--dur-fast) var(--ease-snap);
+}
+.os-usecase:hover {
+  border-color: var(--line-firm);
+  transform: translateY(-2px);
+}
+.os-usecase-problem {
+  color: var(--ink-300);
+  font-size: 14px;
+  line-height: 1.55;
+  margin: 0;
+}
+.os-usecase-arrow {
+  color: var(--copper-300);
+  align-self: flex-start;
+  opacity: 0.7;
+}
+.os-usecase-outcome {
+  color: var(--ink-100);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .os-usecase-grid { grid-template-columns: 1fr; }
+}
+
+.os-integrations-section { padding: 56px 0; }
+.os-integration-strip {
+  list-style: none;
+  margin: 24px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.os-integration-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--ink-200);
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-pill);
+  transition: border-color var(--dur-fast) var(--ease-snap),
+              color var(--dur-fast) var(--ease-snap);
+}
+.os-integration-chip:hover {
+  border-color: var(--copper-300);
+  color: var(--ink-100);
+}
+
+.os-faq-wrap { max-width: 880px; }
+.os-faq-list {
+  list-style: none;
+  margin: 24px 0 0;
+  padding: 0;
+}
+.os-faq-item {
+  border-bottom: 1px solid var(--line);
+}
+.os-faq-item:last-child { border-bottom: 0; }
+.os-faq-q {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: clamp(15px, 1.6vw, 18px);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: var(--ink-100);
+  transition: color var(--dur-fast) var(--ease-snap);
+}
+.os-faq-q:hover { color: var(--copper-200); }
+.os-faq-toggle {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 18px;
+  color: var(--copper-300);
+  width: 24px;
+  text-align: center;
+}
+.os-faq-a {
+  color: var(--ink-300);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 18px;
+  max-width: 70ch;
+}
+.os-faq-item-open .os-faq-q { color: var(--copper-200); }
+
+/* =======================================================
+   Products hub — featured + grid
+   ======================================================= */
+
+.os-products-featured {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-top: 24px;
+}
+.os-product-feature {
+  position: relative;
+  background: linear-gradient(180deg, rgba(194,121,64,0.04), var(--bg-2) 32%);
+  border: 1px solid rgba(194, 121, 64, 0.35);
+  border-radius: var(--r-lg, 14px);
+  padding: 26px 26px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: var(--depth-2),
+              inset 0 1px 0 rgba(255, 240, 215, 0.10);
+  transition: transform var(--dur-fast) var(--ease-snap),
+              box-shadow var(--dur-fast) var(--ease-snap),
+              border-color var(--dur-fast) var(--ease-snap);
+}
+.os-product-feature:hover {
+  transform: translateY(-3px);
+  border-color: rgba(194, 121, 64, 0.65);
+  box-shadow: var(--depth-3),
+              inset 0 1px 0 rgba(255, 240, 215, 0.15);
+}
+
+.os-product-feature-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.os-product-feature-head h3 {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.2vw, 26px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink-100);
+  line-height: 1.15;
+  margin: 0;
+}
+
+.os-product-feature-tagline {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--copper-300);
+  margin: 0;
+}
+
+.os-product-feature-body {
+  color: var(--ink-200);
+  font-size: 15px;
+  line-height: 1.55;
+  margin: 0;
+}
+
+.os-product-feature-foot {
+  margin-top: auto;
+  padding-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--line);
+}
+.os-product-feature-price {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink-200);
+}
+
+.os-products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 14px;
+  margin-top: 24px;
+}
+.os-product-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px 22px 20px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg, 12px);
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--dur-fast) var(--ease-snap),
+              border-color var(--dur-fast) var(--ease-snap),
+              box-shadow var(--dur-fast) var(--ease-snap);
+}
+.os-product-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--copper-300);
+  box-shadow: var(--depth-2);
+}
+
+.os-product-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--ink-400);
+}
+.os-product-card:hover .os-product-card-head {
+  color: var(--copper-300);
+}
+.os-product-card h3 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--ink-100);
+  line-height: 1.25;
+  margin: 0;
+}
+.os-product-card-tagline {
+  color: var(--ink-300);
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+  flex: 1;
+}
+.os-product-card-price {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink-200);
+  padding-top: 8px;
+  border-top: 1px dashed var(--line);
+}
+
+@media (max-width: 760px) {
+  .os-products-featured { grid-template-columns: 1fr; }
+}

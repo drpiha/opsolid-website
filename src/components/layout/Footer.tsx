@@ -14,7 +14,6 @@ export function Footer() {
   const pathname = usePathname();
   const { t } = useLocale();
   const f = t.v2.footer;
-  const n = t.v2.nav;
   const year = new Date().getFullYear();
 
   // Mirror Header — hide on customer self-service surfaces.
@@ -47,30 +46,31 @@ export function Footer() {
               <div className="os-footer-col-h">{f.cols.productsHeading}</div>
               <ul>
                 <li>
-                  <Link href="/products/voice-agent">{n.voiceAgent}</Link>
+                  <Link href="/products/voice-agent">{f.cols.productsList.voiceAgent}</Link>
                 </li>
                 <li>
-                  <Link href="/products/digital-card">{n.digitalCard}</Link>
+                  <Link href="/products/digital-card">{f.cols.productsList.verso}</Link>
                 </li>
                 <li>
-                  <Link href="/products/kutasia">{n.kutasia}</Link>
-                </li>
-              </ul>
-            </div>
-            <div className="os-footer-col">
-              <div className="os-footer-col-h">{f.cols.servicesHeading}</div>
-              <ul>
-                <li>
-                  <Link href="/#capabilities">{f.cols.services.workflow}</Link>
+                  <Link href="/products/chatbot-agent">{f.cols.productsList.chatbot}</Link>
                 </li>
                 <li>
-                  <Link href="/#capabilities">{f.cols.services.integration}</Link>
+                  <Link href="/products/whatsapp-agent">{f.cols.productsList.whatsapp}</Link>
                 </li>
                 <li>
-                  <Link href="/#capabilities">{f.cols.services.internal}</Link>
+                  <Link href="/products/booking-agent">{f.cols.productsList.booking}</Link>
                 </li>
                 <li>
-                  <Link href="/#capabilities">{f.cols.services.ai}</Link>
+                  <Link href="/products/email-agent">{f.cols.productsList.email}</Link>
+                </li>
+                <li>
+                  <Link href="/products/lead-qualifier-agent">{f.cols.productsList.leadQualifier}</Link>
+                </li>
+                <li>
+                  <Link href="/products/custom-automation">{f.cols.productsList.customAutomation}</Link>
+                </li>
+                <li>
+                  <Link href="/products/kutasia">{f.cols.productsList.kutasia}</Link>
                 </li>
               </ul>
             </div>
@@ -78,10 +78,34 @@ export function Footer() {
               <div className="os-footer-col-h">{f.cols.studioHeading}</div>
               <ul>
                 <li>
+                  <Link href="/pricing">{f.cols.studio.pricing}</Link>
+                </li>
+                <li>
+                  <Link href="/about">{f.cols.studio.about}</Link>
+                </li>
+                <li>
                   <Link href="/blog">{f.cols.studio.journal}</Link>
                 </li>
                 <li>
                   <Link href="/contact">{f.cols.studio.contact}</Link>
+                </li>
+              </ul>
+            </div>
+            <div className="os-footer-col">
+              <div className="os-footer-col-h">{f.cols.reachHeading}</div>
+              <ul>
+                <li>
+                  <a href={`mailto:${f.cols.reach.email}`}>{f.cols.reach.email}</a>
+                </li>
+                <li>
+                  <a href={f.cols.reach.linkedinHref} target="_blank" rel="noopener noreferrer">
+                    {f.cols.reach.linkedinLabel}
+                  </a>
+                </li>
+                <li>
+                  <a href={f.cols.reach.githubHref} target="_blank" rel="noopener noreferrer">
+                    {f.cols.reach.githubLabel}
+                  </a>
                 </li>
               </ul>
             </div>

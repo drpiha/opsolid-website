@@ -33,9 +33,12 @@ export function PrivacyPage() {
 
               {section.isResponsible ? (
                 <p className="text-pretty">
-                  Hasan D&ouml;nmez<br />
-                  (Einzelunternehmen i.Gr.)<br />
-                  Germany<br />
+                  OpSolid<br />
+                  Hasan D&ouml;nmez (Inhaber, Einzelunternehmen)<br />
+                  {SITE_CONFIG.address.street}<br />
+                  {SITE_CONFIG.address.postalCode}{" "}
+                  {SITE_CONFIG.address.city}<br />
+                  {SITE_CONFIG.address.country}<br />
                   E-Mail:{" "}
                   <a
                     href={`mailto:${SITE_CONFIG.email}`}

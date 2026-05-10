@@ -12,8 +12,10 @@ export const SITE_CONFIG = {
   email: "info@opsolid.de",
   phone: "",
   address: {
-    city: "Germany",
-    country: "Germany",
+    street: "Stolte Ley 12",
+    postalCode: "59759",
+    city: "Arnsberg",
+    country: "Deutschland",
   },
 } as const;
 

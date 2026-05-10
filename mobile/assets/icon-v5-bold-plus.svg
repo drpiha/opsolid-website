@@ -1,0 +1,27 @@
+<!--
+  Verso v5 — Bold +
+  The boldest direction. A MASSIVE WHITE "+" fills the canvas (~70% of safe
+  zone), with a small WHITE avatar disc nestled in the lower-right of the
+  intersection. Reads "ADD" first, "person" as a secondary signal.
+  Very WhatsApp-FAB / Material Design FAB register: minimal, huge, action-
+  oriented. Holds at 48px because the + arms are wider than most icons' total
+  silhouette.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <rect width="1024" height="1024" fill="#1AA6B7"/>
+
+  <!-- Massive white "+" — arms reach 296px each from center (480, 480),
+       stroke 116. Center is pulled slightly upper-left to leave room for
+       the avatar disc lower-right. -->
+  <g stroke="#FFFFFF" stroke-width="116" stroke-linecap="round">
+    <line x1="184" y1="480" x2="776" y2="480"/>
+    <line x1="480" y1="184" x2="480" y2="776"/>
+  </g>
+
+  <!-- Small avatar disc, lower-right of the + intersection.
+       Reads as the "person" being added — secondary signal. -->
+  <circle cx="780" cy="780" r="92" fill="#FFFFFF"/>
+  <!-- Tiny inner head dot to confirm "person" reading at large scale (vanishes at 48px) -->
+  <circle cx="780" cy="760" r="22" fill="#1AA6B7"/>
+  <path d="M 736 820 Q 780 800 824 820 L 824 836 L 736 836 Z" fill="#1AA6B7"/>
+</svg>

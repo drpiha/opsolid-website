@@ -11,20 +11,14 @@
  */
 export const RETIRED_REDIRECTS: Record<string, string> = {
   // Top-level info pages → home
-  "/solutions": "/",
-  "/about": "/",
+  "/solutions": "/products",
   "/faq": "/contact",
   "/use-cases": "/blog",
 
-  // Products index → home
-  "/products": "/",
-
-  // Retired agent-family products → Voice Agent (closest flagship)
-  "/products/chatbot": "/products/voice-agent",
-  "/products/whatsapp-agent": "/products/voice-agent",
-  "/products/booking-agent": "/products/voice-agent",
-  "/products/email-agent": "/products/voice-agent",
-  "/products/lead-qualifier": "/products/voice-agent",
+  // Legacy aliases (without "-agent" suffix) → current dedicated pages.
+  // The "-agent" suffixed paths are real routes now and must NOT be retired.
+  "/products/chatbot": "/products/chatbot-agent",
+  "/products/lead-qualifier": "/products/lead-qualifier-agent",
   "/products/digital-reception": "/products/voice-agent",
 };
 

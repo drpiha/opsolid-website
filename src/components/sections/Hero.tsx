@@ -39,7 +39,7 @@ export function Hero() {
             <Link href="/contact" className="btn btn-primary btn-lg">
               {h.ctaPrimary} <Icon name="arrow" size={18} />
             </Link>
-            <Link href="#capabilities" className="btn btn-ghost btn-lg">
+            <Link href="/pricing" className="btn btn-ghost btn-lg">
               {h.ctaSecondary}
             </Link>
           </div>

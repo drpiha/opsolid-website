@@ -1,0 +1,39 @@
+<!--
+  Verso v5 — Card+
+  A WHITE name-card silhouette (rounded rect, 5:6 squarish portrait) centered
+  slightly LEFT, with 2 punched content rows + a small avatar disc inside.
+  A LARGE WHITE "+" sits to the right, partially overlapping the card edge —
+  the gesture of "add this card." 2-stop diagonal gradient gives Telegram-feel
+  depth without glassmorphism.
+  At 48px the card silhouette + dominant + read as a single composite shape.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <linearGradient id="v5-cardplus-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2DC1CC"/>
+      <stop offset="100%" stop-color="#1AA6B7"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#v5-cardplus-bg)"/>
+
+  <!-- White card body, slightly left-of-center to leave room for the + -->
+  <rect x="144" y="232" width="496" height="560" rx="44" fill="#FFFFFF"/>
+
+  <!-- Avatar disc — turquoise cut-through inside card -->
+  <circle cx="244" cy="356" r="56" fill="#1AA6B7"/>
+
+  <!-- Name + title rows — punched out as gradient (we approximate with the
+       average turquoise so it reads as a single hue) -->
+  <rect x="180" y="468" width="332" height="34" rx="17" fill="#1AA6B7"/>
+  <rect x="180" y="528" width="208" height="22" rx="11" fill="#1AA6B7"/>
+
+  <!-- Detail/contact rows -->
+  <rect x="180" y="600" width="304" height="18" rx="9" fill="#1AA6B7" fill-opacity="0.55"/>
+  <rect x="180" y="640" width="240" height="18" rx="9" fill="#1AA6B7" fill-opacity="0.55"/>
+
+  <!-- Bold "+" right-of-center, partially overlapping card right edge -->
+  <g stroke="#FFFFFF" stroke-width="92" stroke-linecap="round">
+    <line x1="580" y1="492" x2="900" y2="492"/>
+    <line x1="740" y1="332" x2="740" y2="652"/>
+  </g>
+</svg>

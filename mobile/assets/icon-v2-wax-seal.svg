@@ -1,0 +1,210 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+
+    <!-- ── WAX DISC LIGHT: radial gradient so wax catches light top-left ── -->
+    <radialGradient id="waxLight" cx="38%" cy="36%" r="60%">
+      <stop offset="0%"   stop-color="#3ECAD9" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#0D8A99" stop-opacity="1"/>
+    </radialGradient>
+
+    <!-- ── PAPER GRAIN on background ── -->
+    <filter id="paperGrain" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.70" numOctaves="4" seed="21" result="noise"/>
+      <feColorMatrix type="matrix"
+        values="0 0 0 0 0.96
+                0 0 0 0 0.94
+                0 0 0 0 0.92
+                0 0 0 0.022 0"
+        result="tintedNoise"/>
+      <feBlend in="SourceGraphic" in2="tintedNoise" mode="multiply"/>
+    </filter>
+
+    <!-- ── DEBOSS on V and ·R inside the seal ── -->
+    <filter id="sealDeboss" x="-12%" y="-12%" width="124%" height="124%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3.5" result="blurA"/>
+      <!-- Shadow: top-left of debossed area is darkest -->
+      <feOffset in="blurA" dx="-2" dy="-2" result="shadowOff"/>
+      <feComposite in="SourceAlpha" in2="shadowOff" operator="out" result="shadowMask"/>
+      <feFlood flood-color="#052E35" flood-opacity="0.6" result="shadowCol"/>
+      <feComposite in="shadowCol" in2="shadowMask" operator="in" result="shadow"/>
+      <!-- Highlight: bottom-right rim catches light -->
+      <feOffset in="blurA" dx="2" dy="2" result="hlOff"/>
+      <feComposite in="SourceAlpha" in2="hlOff" operator="out" result="hlMask"/>
+      <feFlood flood-color="#7AECF4" flood-opacity="0.5" result="hlCol"/>
+      <feComposite in="hlCol" in2="hlMask" operator="in" result="highlight"/>
+      <!-- Darkened fill for the impression body -->
+      <feFlood flood-color="#0A3D47" flood-opacity="1" result="body"/>
+      <feComposite in="body" in2="SourceAlpha" operator="in" result="bodyFill"/>
+      <feMerge>
+        <feMergeNode in="bodyFill"/>
+        <feMergeNode in="shadow"/>
+        <feMergeNode in="highlight"/>
+      </feMerge>
+    </filter>
+
+    <!-- Corner vignette -->
+    <radialGradient id="vig3" cx="50%" cy="50%" r="72%">
+      <stop offset="55%" stop-color="#F4F1EC" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#B8A88A" stop-opacity="0.06"/>
+    </radialGradient>
+
+    <!-- Wax surface grain / texture -->
+    <filter id="waxTexture" x="-2%" y="-2%" width="104%" height="104%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" seed="7" result="coarseNoise"/>
+      <feColorMatrix type="matrix"
+        values="0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0 0
+                0 0 0 0.04 0"
+        in="coarseNoise" result="subtleNoise"/>
+      <feBlend in="SourceGraphic" in2="subtleNoise" mode="multiply"/>
+    </filter>
+
+  </defs>
+
+  <!-- ── BACKGROUND: paper ── -->
+  <rect width="1024" height="1024" fill="#F4F1EC" filter="url(#paperGrain)"/>
+
+  <!--
+    ── WAX DISC ──
+    Diameter ≈ 720px, centered at (512, 512).
+    Irregular edge simulated by a hand-tuned closed polygon
+    approximating a circle with ~24 control points, each
+    perturbed 4–18px inward/outward from r=360 to break
+    the machine-perfect circle without looking broken.
+
+    Circle center: (512, 512), base radius: 360px.
+    Point angles every 15°, perturbed radii:
+    0°:  r=362  → (874, 512)
+    15°: r=355  → (855, 419) ... etc. (computed below)
+
+    Using: x = 512 + r·cos(θ), y = 512 - r·sin(θ) [SVG y-down]
+    θ=0  r=362: (874.0, 512.0)
+    θ=15 r=358: (512+358·cos15, 512-358·sin15) = (512+345.9, 512-92.6) = (857.9, 419.4)
+    θ=30 r=364: (512+315.3, 512-182.0) = (827.3, 330.0)
+    θ=45 r=356: (512+251.7, 512-251.7) = (763.7, 260.3)
+    θ=60 r=362: (512+181.0, 512-313.5) = (693.0, 198.5)
+    θ=75 r=358: (512+92.6, 512-345.9)  = (604.6, 166.1)
+    θ=90 r=360: (512,       512-360)   = (512.0, 152.0)
+    θ=105 r=355:(512-91.9, 512-343.0)  = (420.1, 169.0)
+    θ=120 r=362:(512-181.0,512-313.5)  = (331.0, 198.5)
+    θ=135 r=358:(512-253.2,512-253.2)  = (258.8, 258.8)
+    θ=150 r=364:(512-315.3,512-182.0)  = (196.7, 330.0)
+    θ=165 r=356:(512-344.1,512-92.2)   = (167.9, 419.8)
+    θ=180 r=361:(512-361,  512)        = (151.0, 512.0)
+    θ=195 r=358:(512-345.9,512+92.6)   = (166.1, 604.6)
+    θ=210 r=362:(512-313.5,512+181.0)  = (198.5, 693.0)
+    θ=225 r=355:(512-251.1,512+251.1)  = (260.9, 763.1)
+    θ=240 r=363:(512-181.5,512+314.0)  = (330.5, 826.0)
+    θ=255 r=358:(512-92.6, 512+345.9)  = (419.4, 857.9)
+    θ=270 r=360:(512,       512+360)   = (512.0, 872.0)
+    θ=285 r=356:(512+92.2, 512+344.1)  = (604.2, 856.1)
+    θ=300 r=362:(512+181.0,512+313.5)  = (693.0, 825.5)
+    θ=315 r=358:(512+253.2,512+253.2)  = (765.2, 765.2)
+    θ=330 r=363:(512+314.2,512+181.5)  = (826.2, 693.5)
+    θ=345 r=356:(512+344.1,512+92.2)   = (856.1, 604.2)
+  -->
+  <g filter="url(#waxTexture)">
+    <polygon
+      fill="url(#waxLight)"
+      points="
+        874.0,512.0
+        857.9,419.4
+        827.3,330.0
+        763.7,260.3
+        693.0,198.5
+        604.6,166.1
+        512.0,152.0
+        420.1,169.0
+        331.0,198.5
+        258.8,258.8
+        196.7,330.0
+        167.9,419.8
+        151.0,512.0
+        166.1,604.6
+        198.5,693.0
+        260.9,763.1
+        330.5,826.0
+        419.4,857.9
+        512.0,872.0
+        604.2,856.1
+        693.0,825.5
+        765.2,765.2
+        826.2,693.5
+        856.1,604.2
+      "
+    />
+  </g>
+
+  <!--
+    ── DEBOSSED V MONOGRAM inside the seal ──
+    Same proportional V as the colophon, scaled to fit within r≈210 of disc center.
+    Safe zone inside disc: roughly x[302..722], y[302..722].
+    Scaling: original glyph was x[192..832], y[112..876] on 1024 canvas.
+    Glyph width: 640, height: 764. We want it ~280px tall, ~235px wide.
+    Scale: 280/764 ≈ 0.366. Centered at (512,512).
+    Y center of original: (112+876)/2 = 494. Offset to 512 = +18.
+    X center of original: (192+832)/2 = 512. Offset = 0.
+
+    Transform: scale(0.366) with translate to center at (512,512):
+    New origin: translate(512 - 512*0.366, 512 - 494*0.366)
+              = translate(512 - 187.4, 512 - 180.8)
+              = translate(324.6, 331.2)
+
+    All coordinates: new = 324.6 + old_x * 0.366, 331.2 + old_y * 0.366
+    (I'll inline the transform instead.)
+  -->
+  <g transform="translate(324.6 331.2) scale(0.366)" filter="url(#sealDeboss)">
+
+    <!-- Left arm body -->
+    <polygon points="192,148 228,148 512,876 495,876" fill="#0F4F58"/>
+
+    <!-- Left arm top serif -->
+    <path d="M 155,120 Q 155,112 163,112 L 265,112 Q 273,112 273,120 L 273,148 L 228,148 L 192,148 L 155,148 Z" fill="#0F4F58"/>
+    <path d="M 155,148 Q 155,158 162,160 L 185,165 L 192,148 Z" fill="#0F4F58"/>
+    <path d="M 273,148 Q 273,158 266,160 L 242,165 L 228,148 Z" fill="#0F4F58"/>
+
+    <!-- Right arm body -->
+    <polygon points="718,148 832,148 529,876 512,876" fill="#0F4F58"/>
+
+    <!-- Right arm top serif -->
+    <path d="M 681,120 Q 681,112 689,112 L 869,112 Q 877,112 877,120 L 877,148 L 832,148 L 718,148 L 681,148 Z" fill="#0F4F58"/>
+    <path d="M 681,148 Q 681,158 688,160 L 712,165 L 718,148 Z" fill="#0F4F58"/>
+    <path d="M 877,148 Q 877,158 870,160 L 848,165 L 832,148 Z" fill="#0F4F58"/>
+
+    <!-- Vertex foot serifs -->
+    <path d="M 468,876 L 556,876 Q 556,890 550,890 L 474,890 Q 468,890 468,876 Z" fill="#0F4F58"/>
+
+  </g>
+
+  <!--
+    ── ·R MARK ── lower-right of the V, in deep teal, small
+    Positioned at approximately (598, 622) in canvas coords.
+    The dot (·) is a 7px circle, R is a simple serif path ~28px tall.
+    Both in #0F4F58, debossed via the same filter.
+  -->
+  <g filter="url(#sealDeboss)">
+    <!-- Raised dot -->
+    <circle cx="600" cy="625" r="7" fill="#0F4F58"/>
+
+    <!--
+      Letter R — built from rectangles/paths, ~28px tall, ~18px wide.
+      Stem: x[612..620], y[610..638]
+      Bowl top: arc from (620,610) to (630,610), curves right to (636,618) then back to (620,622)
+      Leg: from (620,622) diagonals to (638,638)
+    -->
+    <rect x="612" y="610" width="8" height="28" fill="#0F4F58"/>
+    <!-- Bowl of R -->
+    <path d="
+      M 620,610 L 630,610 Q 638,610 638,618 Q 638,626 630,626 L 620,626 Z
+    " fill="#0F4F58"/>
+    <!-- Leg of R (diagonal) -->
+    <path d="
+      M 620,622 L 628,622 L 638,638 L 630,638 Z
+    " fill="#0F4F58"/>
+  </g>
+
+  <!-- Faint vignette -->
+  <rect width="1024" height="1024" fill="url(#vig3)"/>
+
+</svg>

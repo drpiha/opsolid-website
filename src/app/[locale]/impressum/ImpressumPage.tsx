@@ -14,19 +14,18 @@ export function ImpressumPage() {
       body: (
         <>
           <p>
-            Hasan D&ouml;nmez
+            OpSolid
             <br />
-            (Einzelunternehmen i.Gr.)
+            Hasan D&ouml;nmez (Inhaber, Einzelunternehmen)
             <br />
-            Germany
+            {SITE_CONFIG.address.street}
+            <br />
+            {SITE_CONFIG.address.postalCode} {SITE_CONFIG.address.city}
+            <br />
+            {SITE_CONFIG.address.country}
           </p>
-          <p className="mt-3 text-ink/50 text-sm">{sec.address}</p>
         </>
       ),
-    },
-    {
-      heading: sec.representedBy,
-      body: <p>Hasan D&ouml;nmez</p>,
     },
     {
       heading: sec.contact,
@@ -39,8 +38,6 @@ export function ImpressumPage() {
           >
             {SITE_CONFIG.email}
           </a>
-          <br />
-          {sec.phone}
         </p>
       ),
     },
@@ -54,7 +51,18 @@ export function ImpressumPage() {
     },
     {
       heading: sec.responsibleContent,
-      body: <p>Hasan D&ouml;nmez</p>,
+      body: (
+        <p>
+          Hasan D&ouml;nmez
+          <br />
+          {SITE_CONFIG.address.street}, {SITE_CONFIG.address.postalCode}{" "}
+          {SITE_CONFIG.address.city}
+        </p>
+      ),
+    },
+    {
+      heading: sec.disputeResolution,
+      body: <p>{sec.disputeResolutionText}</p>,
     },
     {
       heading: sec.liabilityContent,

@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+
+    <!-- ── PAPER GRAIN (2–3% turbulence noise) ── -->
+    <filter id="grain" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.72" numOctaves="4" seed="8" result="noise"/>
+      <feColorMatrix type="saturate" values="0" in="noise" result="greyNoise"/>
+      <feBlend in="SourceGraphic" in2="greyNoise" mode="multiply" result="grained"/>
+      <feComposite in="grained" in2="SourceGraphic" operator="in"/>
+    </filter>
+
+    <!-- ── DEBOSS FILTER on the V letterform ──
+         Simulates a letterpress impression: the letter is pressed INTO the paper.
+         Effect: dark shadow on top-left of strokes, light highlight on bottom-right.
+
+         Steps:
+         1. Blur the alpha to get a soft edge map
+         2. Use Lighting (feSpecularLighting) to compute a highlight at ~135° angle
+         3. Composite the lit result over a darkened interior to fake the recess
+    -->
+    <filter id="deboss" x="-8%" y="-8%" width="116%" height="116%" color-interpolation-filters="sRGB">
+
+      <!-- Step 1: Generate a soft edge/depth map from the glyph alpha -->
+      <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blurAlpha"/>
+
+      <!-- Step 2: Offset for the shadow component (top-left = light comes from top-left, shadow bottom-right) -->
+      <!-- Shadow offset: simulate light from top-left → shadow falls bottom-right of deboss -->
+      <feOffset in="blurAlpha" dx="-3" dy="-3" result="shadowOffset"/>
+      <feComposite in="SourceAlpha" in2="shadowOffset" operator="out" result="shadowMask"/>
+      <feFlood flood-color="#0F4F58" flood-opacity="0.55" result="shadowColor"/>
+      <feComposite in="shadowColor" in2="shadowMask" operator="in" result="topShadow"/>
+
+      <!-- Step 3: Highlight rim — bottom-right of strokes catches light -->
+      <feOffset in="blurAlpha" dx="3" dy="3" result="highlightOffset"/>
+      <feComposite in="SourceAlpha" in2="highlightOffset" operator="out" result="highlightMask"/>
+      <feFlood flood-color="#E8F8FA" flood-opacity="0.70" result="highlightColor"/>
+      <feComposite in="highlightColor" in2="highlightMask" operator="in" result="bottomHighlight"/>
+
+      <!-- Step 4: Darkened fill for the recess interior (turquoise, slightly darker) -->
+      <feFlood flood-color="#1296A6" flood-opacity="1" result="recessFill"/>
+      <feComposite in="recessFill" in2="SourceAlpha" operator="in" result="recessBody"/>
+
+      <!-- Step 5: Layer: recessBody → topShadow → bottomHighlight -->
+      <feMerge>
+        <feMergeNode in="recessBody"/>
+        <feMergeNode in="topShadow"/>
+        <feMergeNode in="bottomHighlight"/>
+      </feMerge>
+    </filter>
+
+    <!-- ── GRAIN on paper background only ── -->
+    <filter id="paperGrain" x="0%" y="0%" width="100%" height="100%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.68" numOctaves="4" seed="14" result="noise"/>
+      <feColorMatrix type="matrix"
+        values="0 0 0 0 0.96
+                0 0 0 0 0.94
+                0 0 0 0 0.92
+                0 0 0 0.025 0"
+        result="tintedNoise"/>
+      <feBlend in="SourceGraphic" in2="tintedNoise" mode="multiply"/>
+    </filter>
+
+    <!-- Warm corner vignette -->
+    <radialGradient id="vig2" cx="50%" cy="50%" r="72%">
+      <stop offset="55%" stop-color="#F4F1EC" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#B8A88A" stop-opacity="0.06"/>
+    </radialGradient>
+
+  </defs>
+
+  <!-- ── BACKGROUND: paper with grain ── -->
+  <rect width="1024" height="1024" fill="#F4F1EC" filter="url(#paperGrain)"/>
+
+  <!--
+    THE V LETTERFORM — same geometry as Capital V Colophon but:
+    - Single turquoise fill (#1AA6B7) for entire glyph
+    - Deboss filter applied to simulate letterpress impression
+    - Slightly smaller/same safe zone (192px margin)
+  -->
+
+  <g filter="url(#deboss)">
+
+    <!-- Left arm body (thin) -->
+    <polygon
+      points="192,148 228,148 512,876 495,876"
+      fill="#1AA6B7"
+    />
+
+    <!-- Left arm top serif -->
+    <path d="
+      M 155,120 Q 155,112 163,112 L 265,112 Q 273,112 273,120
+      L 273,148 L 228,148 L 192,148 L 155,148 Z
+    " fill="#1AA6B7"/>
+    <path d="M 155,148 Q 155,158 162,160 L 185,165 L 192,148 Z" fill="#1AA6B7"/>
+    <path d="M 273,148 Q 273,158 266,160 L 242,165 L 228,148 Z" fill="#1AA6B7"/>
+
+    <!-- Right arm full body — single color for deboss (no split on engraved version) -->
+    <polygon
+      points="718,148 832,148 529,876 512,876"
+      fill="#1AA6B7"
+    />
+
+    <!-- Right arm top serif -->
+    <path d="
+      M 681,120 Q 681,112 689,112 L 869,112 Q 877,112 877,120
+      L 877,148 L 832,148 L 718,148 L 681,148 Z
+    " fill="#1AA6B7"/>
+    <path d="M 681,148 Q 681,158 688,160 L 712,165 L 718,148 Z" fill="#1AA6B7"/>
+    <path d="M 877,148 Q 877,158 870,160 L 848,165 L 832,148 Z" fill="#1AA6B7"/>
+
+    <!-- Vertex foot serifs -->
+    <path d="
+      M 468,876 L 556,876 Q 556,890 550,890
+      L 474,890 Q 468,890 468,876 Z
+    " fill="#1AA6B7"/>
+
+  </g>
+
+  <!-- Vignette overlay -->
+  <rect width="1024" height="1024" fill="url(#vig2)"/>
+
+</svg>

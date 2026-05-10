@@ -5,6 +5,7 @@ import { Icon } from "@/components/shared/Icon";
 import { useLocale } from "@/context/LocaleContext";
 import { VoiceVisualizer } from "@/components/products/voice-agent/VoiceVisualizer";
 import { FinalCTA } from "@/components/sections/FinalCTA";
+import { PricingTable } from "@/components/sections/PricingTable";
 
 /**
  * Voice Agent page — industrial-luxury v2 port of voice-agent.html.
@@ -69,6 +70,12 @@ export function VoiceAgentPage() {
           <VoiceVisualizer />
         </div>
       </section>
+
+      <PricingTable
+        productIds={["voice-agent"]}
+        showProductHeading={false}
+        showProductLink={false}
+      />
 
       <section className="os-section" id="flow" data-screen-label="Flow">
         <div className="wrap">

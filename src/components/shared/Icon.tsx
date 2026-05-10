@@ -10,7 +10,8 @@ type IconName =
   | "ship"
   | "shield"
   | "arrow"
-  | "book";
+  | "book"
+  | "check";
 
 export function Icon({
   name,
@@ -84,6 +85,11 @@ export function Icon({
       <g>
         <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2Z" />
         <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7Z" />
+      </g>
+    ),
+    check: (
+      <g>
+        <path d="M20 6 9 17l-5-5" />
       </g>
     ),
   };

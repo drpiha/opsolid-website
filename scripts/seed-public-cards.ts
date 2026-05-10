@@ -16,7 +16,14 @@
 // updated in place rather than duplicated.
 // =============================================================================
 
-import { prisma } from "../src/lib/prisma";
+// Import the generated client directly so the script runs from BOTH the local
+// dev tree (full src/) AND the production container (which only ships
+// src/generated/, not src/lib/). Without this, `docker exec npx tsx
+// scripts/seed-public-cards.ts` fails with `Cannot find module '../src/lib/prisma'`.
+import { PrismaClient } from "../src/generated/prisma";
+const prisma = new PrismaClient({
+  log: process.env.NODE_ENV === "development" ? ["warn", "error"] : ["error"],
+});
 
 // -----------------------------------------------------------------------------
 // Demo owner — CardOrder.userId is nullable in the schema (Faz 7.0a allows

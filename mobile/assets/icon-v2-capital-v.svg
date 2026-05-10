@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+
+  <!-- Background: warm paper -->
+  <rect width="1024" height="1024" fill="#F4F1EC"/>
+
+  <!--
+    DIDONE V — hand-tuned path geometry, no system font.
+
+    Canvas: 1024×1024. Safe zone: 192px margin, so glyph fits within x[192..832] y[152..872].
+
+    The V is defined by 6 control points at the outer and inner edges of each arm:
+
+    Left arm (THIN — 30px stroke at top, tapering to ~8px at vertex):
+      Outer-left top:  (192, 148)
+      Inner-left top:  (228, 148)
+      They converge at vertex: (512, 876)
+
+    Right arm (THICK — 108px stroke at top, tapering to ~8px at vertex):
+      Inner-right top: (718, 148)
+      Outer-right top: (832, 148)
+      They converge at vertex: (512, 876)
+
+    The right arm is split at y=512 (color boundary):
+      At y=512, arm width is proportional. Fraction = (512-148)/(876-148) = 364/728 = 0.5
+      Outer-right at y=512: x = 832 - (832-512)*0.5 = 832 - 160 = 672
+      Inner-right at y=512: x = 718 - (718-512)*0.5 = 718 - 103 = 615
+
+    Vertex with tiny foot serifs: a ~44px wide hairline flat at y=876 centered at x=512.
+
+    Top serifs: horizontal bars at y=148..120 with bracket curves.
+  -->
+
+  <!-- ═══ LEFT ARM — ink #0E1416 ═══ -->
+  <!--
+    Full closed polygon:
+    Top-left outer serif region → down thin arm → vertex → back up inner arm → serif return
+  -->
+  <polygon
+    points="
+      192,148
+      228,148
+      512,876
+      495,876
+    "
+    fill="#0E1416"
+  />
+
+  <!-- Left arm top serif — bracketed horizontal bar -->
+  <!-- Outer serif extends left; inner serif extends right; bar spans both, sits at y=120..148 -->
+  <path d="
+    M 155,120
+    Q 155,112 163,112
+    L 265,112
+    Q 273,112 273,120
+    L 273,148
+    L 228,148
+    L 192,148
+    L 155,148
+    Z
+  " fill="#0E1416"/>
+  <!-- Bracket curve on left serif — softens the outer bottom corner -->
+  <path d="
+    M 155,148
+    Q 155,158 162,160
+    L 185,165
+    L 192,148
+    Z
+  " fill="#0E1416"/>
+  <!-- Bracket curve on right side of left serif -->
+  <path d="
+    M 273,148
+    Q 273,158 266,160
+    L 242,165
+    L 228,148
+    Z
+  " fill="#0E1416"/>
+
+
+  <!-- ═══ RIGHT ARM TOP HALF — ink #0E1416 (y: 148 → 512) ═══ -->
+  <polygon
+    points="
+      718,148
+      832,148
+      672,512
+      615,512
+    "
+    fill="#0E1416"
+  />
+
+  <!-- ═══ RIGHT ARM BOTTOM HALF — turquoise #1AA6B7 (y: 512 → 876) ═══ -->
+  <polygon
+    points="
+      615,512
+      672,512
+      529,876
+      512,876
+    "
+    fill="#1AA6B7"
+  />
+
+  <!-- Right arm top serif — bracketed horizontal bar -->
+  <path d="
+    M 681,120
+    Q 681,112 689,112
+    L 869,112
+    Q 877,112 877,120
+    L 877,148
+    L 832,148
+    L 718,148
+    L 681,148
+    Z
+  " fill="#0E1416"/>
+  <!-- Bracket curve left side of right serif -->
+  <path d="
+    M 681,148
+    Q 681,158 688,160
+    L 712,165
+    L 718,148
+    Z
+  " fill="#0E1416"/>
+  <!-- Bracket curve right side of right serif -->
+  <path d="
+    M 877,148
+    Q 877,158 870,160
+    L 848,165
+    L 832,148
+    Z
+  " fill="#0E1416"/>
+
+
+  <!-- ═══ VERTEX — hairline foot serifs ═══ -->
+  <!--
+    At the point where left arm (vertex x≈503) and right arm (vertex x≈520) meet at y=876,
+    add a narrow horizontal serif bar spanning x[470..554], height 14px.
+    Left half in ink (under left arm), right half in turquoise (under right arm).
+  -->
+  <!-- Left foot serif (ink) -->
+  <path d="
+    M 468,876
+    L 512,876
+    L 512,890
+    Q 512,896 506,896
+    L 474,896
+    Q 468,896 468,890
+    Z
+  " fill="#0E1416"/>
+  <!-- Right foot serif (turquoise) -->
+  <path d="
+    M 512,876
+    L 556,876
+    Q 556,876 556,890
+    Q 556,896 550,896
+    L 518,896
+    Q 512,896 512,890
+    Z
+  " fill="#1AA6B7"/>
+
+
+  <!-- ═══ FAINT WARM CORNER VIGNETTE — max 6% opacity ═══ -->
+  <defs>
+    <radialGradient id="vig" cx="50%" cy="50%" r="72%">
+      <stop offset="55%" stop-color="#F4F1EC" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#B8A88A" stop-opacity="0.06"/>
+    </radialGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#vig)"/>
+
+</svg>

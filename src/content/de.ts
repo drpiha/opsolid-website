@@ -913,6 +913,9 @@ export const content: Content = {
         "USt-IdNr wird nach der Gewerbeanmeldung beantragt. Ab Dezember 2026 wird hier zusätzlich die neue W-IdNr (Wirtschafts-Identifikationsnummer) angegeben.",
       responsibleContent:
         "Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV (Medienstaatsvertrag, vormals § 55 RStV)",
+      disputeResolution: "Online-Streitbeilegung",
+      disputeResolutionText:
+        "Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit: https://ec.europa.eu/consumers/odr/. Unsere E-Mail-Adresse finden Sie oben. Wir sind nicht bereit und nicht verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.",
       liabilityContent: "Haftung für Inhalte",
       liabilityContentText:
         "Als Diensteanbieter sind wir gemäß § 7 Abs. 1 DDG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.",
