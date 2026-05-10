@@ -131,7 +131,8 @@ export function CardDeck({ cards }: Props) {
                 ? `+${overflowCount > 9 ? '9+' : overflowCount}`
                 : null
             }
-            onPressTop={toggleFan}
+            onToggleFan={toggleFan}
+            hasMultiple={visibleLayers.length > 1}
           />
         ))}
       </Animated.View>
@@ -148,7 +149,8 @@ type DeckLayerProps = {
   mountTranslate: SharedValue<number>;
   mountOpacity: SharedValue<number>;
   badge: string | null;
-  onPressTop: () => void;
+  onToggleFan: () => void;
+  hasMultiple: boolean;
 };
 
 /**
@@ -165,7 +167,8 @@ function DeckLayer({
   mountTranslate,
   mountOpacity,
   badge,
-  onPressTop,
+  onToggleFan,
+  hasMultiple,
 }: DeckLayerProps) {
   // Stacked-state offsets per the spec
   const stackedTranslateY = index * 10;
@@ -233,9 +236,14 @@ function DeckLayer({
         card={card}
         badge={badge}
         showShadow={index === 0}
-        // Top card toggles fan; non-top cards navigate when fanned, no-op
-        // when collapsed (visually buried — the top card is the touch target).
-        onPress={index === 0 ? onPressTop : undefined}
+        // Tap on any card → navigate to its detail. Long-press the top card
+        // toggles the deck fan/collapse (only meaningful when there are 2+
+        // cards underneath to reveal). Non-top cards inherit default
+        // navigation via undefined onPress; they're only reachable when the
+        // deck is fanned (pointer-events gating in the parent).
+        onLongPress={
+          index === 0 && hasMultiple ? onToggleFan : undefined
+        }
       />
     </Animated.View>
   );

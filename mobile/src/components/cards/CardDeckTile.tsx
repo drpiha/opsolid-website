@@ -41,6 +41,8 @@ type Props = {
   suppressNavigation?: boolean;
   /** Optional override called when this tile is tapped. Runs after press feedback. */
   onPress?: () => void;
+  /** Optional long-press handler — used by the deck to fan/collapse on hold. */
+  onLongPress?: () => void;
   /** Top-of-deck shadow boost (only the visually frontmost card uses this). */
   showShadow?: boolean;
 };
@@ -63,6 +65,7 @@ export function CardDeckTile({
   badge,
   suppressNavigation,
   onPress,
+  onLongPress,
   showShadow,
 }: Props) {
   const theme = useTheme();
@@ -119,6 +122,13 @@ export function CardDeckTile({
     router.push(`/(app)/cards/${card.id}` as never);
   }, [card.id, onPress, router, suppressNavigation]);
 
+  const handleLongPress = useCallback(() => {
+    if (!onLongPress) return;
+    // Slightly heavier haptic to differentiate from a regular tap.
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium).catch(() => {});
+    onLongPress();
+  }, [onLongPress]);
+
   // accentHex with 30% opacity for inner stroke
   const innerStroke = hexWithAlpha(accent, 0.3);
 
@@ -127,6 +137,8 @@ export function CardDeckTile({
       onPressIn={handlePressIn}
       onPressOut={handlePressOut}
       onPress={handlePress}
+      onLongPress={onLongPress ? handleLongPress : undefined}
+      delayLongPress={350}
       accessibilityRole="button"
       accessibilityLabel={`${name}, ${t.status[card.status]}`}
     >
