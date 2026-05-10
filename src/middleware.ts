@@ -265,7 +265,10 @@ export const config = {
   // /api/voice/* is listed explicitly so the VOICE_AGENT_ENABLED gate runs
   // at the edge even though other /api/* paths are excluded from locale logic.
   matcher: [
-    "/((?!api|_next|.*\\..*|sitemap\\.xml|robots\\.txt|c/|l/|admin|dev/).*)",
+    // Exclude opengraph-image / twitter-image (Next 14 file-based metadata
+    // routes that live at /opengraph-image and must not be locale-redirected;
+    // social crawlers fetch them by exact URL).
+    "/((?!api|_next|.*\\..*|sitemap\\.xml|robots\\.txt|opengraph-image|twitter-image|c/|l/|admin|dev/).*)",
     "/api/voice/:path*",
   ],
 };
