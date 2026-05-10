@@ -174,11 +174,62 @@ export async function GET(req: NextRequest) {
   const cookieClear = clearStateCookie();
 
   if (statePayload.mobile) {
-    // Deep-link: app's WebBrowser session intercepts the opsolid:// URL
+    // Deep-link via HTML page — NOT a 30x redirect.
+    //
+    // Chromium 89+ (Chrome, Brave, Edge, etc.) blocks server-issued redirects
+    // to non-http(s) schemes for anti-fingerprinting. A 307 with
+    // `Location: opsolid://...` shows "this page isn't working". A
+    // client-side `location.href = "opsolid://..."` from a same-origin HTML
+    // page is still allowed in CustomTabs.
     const deepLink =
       `opsolid://auth/google?rt=${encodeURIComponent(session.refreshToken)}` +
       `&at=${encodeURIComponent(accessToken)}`;
-    const res = NextResponse.redirect(deepLink);
+    const escapedForJs = deepLink.replace(/[\\'"<>&]/g, (ch) => {
+      switch (ch) {
+        case "\\": return "\\\\";
+        case "'": return "\\'";
+        case '"': return "\\\"";
+        case "<": return "\\u003c";
+        case ">": return "\\u003e";
+        case "&": return "\\u0026";
+        default: return ch;
+      }
+    });
+    const escapedForHref = deepLink
+      .replace(/&/g, "&amp;")
+      .replace(/"/g, "&quot;");
+    const html = `<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Verso</title>
+<style>
+body{margin:0;font-family:system-ui,sans-serif;background:#0f172a;color:#e2e8f0;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;text-align:center}
+.box{max-width:360px}
+h1{font-size:18px;font-weight:600;margin:0 0 12px}
+p{font-size:14px;color:#94a3b8;margin:0 0 24px;line-height:1.5}
+a{display:inline-block;background:#1AA6B7;color:#fff;text-decoration:none;padding:14px 24px;border-radius:10px;font-weight:600;font-size:15px}
+</style>
+</head>
+<body>
+<div class="box">
+<h1>Verso wird geöffnet …</h1>
+<p>Falls die App nicht automatisch öffnet, tippe auf den Knopf.</p>
+<a href="${escapedForHref}">App öffnen</a>
+</div>
+<script>
+// Trigger the deep-link immediately. CustomTabs follows client-side scheme
+// jumps even when 30x redirects to non-http schemes are blocked.
+window.location.href = '${escapedForJs}';
+</script>
+</body>
+</html>`;
+    const res = new NextResponse(html, {
+      status: 200,
+      headers: { "Content-Type": "text/html; charset=utf-8" },
+    });
     res.headers.append("Set-Cookie", cookieClear);
     return res;
   }
