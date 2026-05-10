@@ -25,6 +25,7 @@
     },
     "android": {
       "package": "de.opsolid.mobile",
+      "newArchEnabled": false,
       "softwareKeyboardLayoutMode": "resize",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
@@ -50,6 +51,11 @@
               "pathPrefix": "/api/auth/magic-link/verify"
             }
           ],
+          "category": ["BROWSABLE", "DEFAULT"]
+        },
+        {
+          "action": "VIEW",
+          "data": [{ "scheme": "opsolid" }],
           "category": ["BROWSABLE", "DEFAULT"]
         }
       ]

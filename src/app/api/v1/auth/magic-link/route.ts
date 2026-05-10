@@ -92,9 +92,32 @@ export async function POST(req: Request) {
       locale: localeForCopy,
     });
     const subject = magicLinkSubject(localeForCopy);
-    void sendEmail({ to: email, subject, html, text }).catch(() => {
-      /* logged in the email client; never surfaced */
-    });
+    // Don't await — keep the response fast and uniform (202) regardless of
+    // provider latency or failure. But surface every failure mode to container
+    // logs so the operator can see misconfigured SMTP/Resend env. sendEmail()
+    // returns { ok: false, error } on provider failure (no throw), and
+    // { ok: true, messageId: "console-dev" } when no provider is configured —
+    // both are silent in production unless we log them here.
+    void sendEmail({ to: email, subject, html, text })
+      .then((result) => {
+        if (!result.ok) {
+          console.error("[magic-link] sendEmail failed", {
+            to: email,
+            error: result.error,
+          });
+        } else if (result.messageId === "console-dev") {
+          console.error("[magic-link] no email provider configured", {
+            to: email,
+            hint: "set RESEND_API_KEY or SMTP_HOST/USER/PASS",
+          });
+        }
+      })
+      .catch((err) => {
+        console.error("[magic-link] sendEmail threw", {
+          to: email,
+          error: err instanceof Error ? err.message : String(err),
+        });
+      });
   } catch {
     /* swallow — same 202 either way */
   }

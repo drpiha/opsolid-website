@@ -266,7 +266,7 @@ export default function CardsListScreen() {
             empty to draw attention to the primary CTA. Positioned at the
             screen-root level (outside ScreenContainer) so its 24pt right
             inset is measured from the screen edge, not the container padding. */}
-        {!loading && !error && (
+        {!loading && (
           <CardDeckFAB
             ref={cardDeckFABRef}
             onPress={goCreate}

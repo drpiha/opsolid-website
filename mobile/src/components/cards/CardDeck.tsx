@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { View, StyleSheet, ScrollView } from 'react-native';
 import Animated, {
   useSharedValue,
@@ -43,6 +43,11 @@ export function CardDeck({ cards }: Props) {
   const { width: tileW, height: tileH } = useTileSize();
 
   const isFanned = useSharedValue(0);
+  // Plain React mirror of isFanned so we can drive native `pointerEvents`
+  // without animatedProps (RN dispatches Android touches in render-tree order,
+  // not visual zIndex — without this, taps on the visually-top card hit the
+  // last-rendered Pressable underneath).
+  const [fanned, setFanned] = useState(false);
 
   // Per-slot mount-stagger shared values. Reanimated requires hooks to be
   // declared at top level (no loops), so we manually unroll the 4 slots.
@@ -92,9 +97,13 @@ export function CardDeck({ cards }: Props) {
   }));
 
   function toggleFan() {
-    isFanned.value = withSpring(isFanned.value > 0.5 ? 0 : 1, {
-      damping: 18,
-      stiffness: 160,
+    setFanned((prev) => {
+      const next = !prev;
+      isFanned.value = withSpring(next ? 1 : 0, {
+        damping: 18,
+        stiffness: 160,
+      });
+      return next;
     });
   }
 
@@ -114,6 +123,7 @@ export function CardDeck({ cards }: Props) {
             card={card}
             tileH={tileH}
             isFanned={isFanned}
+            fanned={fanned}
             mountTranslate={dYs[i]}
             mountOpacity={dOs[i]}
             badge={
@@ -134,6 +144,7 @@ type DeckLayerProps = {
   card: ApiCard;
   tileH: number;
   isFanned: SharedValue<number>;
+  fanned: boolean;
   mountTranslate: SharedValue<number>;
   mountOpacity: SharedValue<number>;
   badge: string | null;
@@ -150,6 +161,7 @@ function DeckLayer({
   card,
   tileH,
   isFanned,
+  fanned,
   mountTranslate,
   mountOpacity,
   badge,
@@ -202,6 +214,12 @@ function DeckLayer({
     };
   });
 
+  // Stacked: only the top card is touchable (lower layers are visually buried
+  // and would otherwise steal taps via Android render-tree dispatch). Fanned:
+  // every layer is its own tap target.
+  const layerPointerEvents: 'box-none' | 'none' =
+    index === 0 || fanned ? 'box-none' : 'none';
+
   return (
     <Animated.View
       style={[
@@ -209,7 +227,7 @@ function DeckLayer({
         { zIndex: MAX_LAYERS - index },
         animStyle,
       ]}
-      pointerEvents="box-none"
+      pointerEvents={layerPointerEvents}
     >
       <CardDeckTile
         card={card}
