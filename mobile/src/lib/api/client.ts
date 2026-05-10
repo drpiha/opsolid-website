@@ -2,14 +2,21 @@ import * as SecureStore from 'expo-secure-store';
 
 export const API_BASE = process.env.EXPO_PUBLIC_API_BASE ?? 'https://opsolid.de';
 
-// Hard ceiling on every API request. Without this, a phone with no network /
+// Default ceiling on every API request. Without this, a phone with no network /
 // wrong DNS hangs SplashScreen forever during hydrate(), which the user reads
-// as "app doesn't open". 8s is enough for a slow 3G round-trip.
+// as "app doesn't open". 8s is enough for a slow 3G round-trip on a small
+// payload (token refresh, list calls). Heavy writes (PATCH a card with rich
+// cardData, photo upload) opt into a longer per-request timeout via the
+// `timeoutMs` option on apiFetch.
 const REQUEST_TIMEOUT_MS = 8000;
 
-function fetchWithTimeout(input: string, init: RequestInit): Promise<Response> {
+function fetchWithTimeout(
+  input: string,
+  init: RequestInit,
+  timeoutMs: number = REQUEST_TIMEOUT_MS,
+): Promise<Response> {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
   return fetch(input, { ...init, signal: controller.signal }).finally(() =>
     clearTimeout(timer),
   );
@@ -77,23 +84,35 @@ async function refreshAccessToken(): Promise<string> {
  * - Throws `Error('UNAUTHORIZED')` if refresh fails (caller should redirect to login).
  * - Throws `Error('API <status>: <body>')` for other non-ok responses.
  */
-export async function apiFetch<T>(path: string, init: RequestInit = {}): Promise<T> {
+export async function apiFetch<T>(
+  path: string,
+  init: RequestInit & { timeoutMs?: number } = {},
+): Promise<T> {
+  const { timeoutMs, ...rest } = init;
   const token = await getAccessToken();
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
-    ...((init.headers as Record<string, string>) ?? {}),
+    ...((rest.headers as Record<string, string>) ?? {}),
   };
 
   if (token) headers['Authorization'] = `Bearer ${token}`;
 
-  let res = await fetchWithTimeout(`${API_BASE}${path}`, { ...init, headers });
+  let res = await fetchWithTimeout(
+    `${API_BASE}${path}`,
+    { ...rest, headers },
+    timeoutMs,
+  );
 
   if (res.status === 401 && token) {
     try {
       const fresh = await refreshAccessToken();
       headers['Authorization'] = `Bearer ${fresh}`;
-      res = await fetchWithTimeout(`${API_BASE}${path}`, { ...init, headers });
+      res = await fetchWithTimeout(
+        `${API_BASE}${path}`,
+        { ...rest, headers },
+        timeoutMs,
+      );
     } catch {
       throw new Error('UNAUTHORIZED');
     }

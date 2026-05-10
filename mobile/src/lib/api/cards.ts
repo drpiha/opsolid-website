@@ -2,7 +2,7 @@
 // Cards API wrappers — all calls use apiFetch for Bearer + refresh rotation.
 // -----------------------------------------------------------------------
 
-import { apiFetch, API_BASE } from './client';
+import { apiFetch, API_BASE, getAccessToken } from './client';
 import type {
   ApiCard,
   CardListResponse,
@@ -57,6 +57,12 @@ export async function createCard(input: import('./types').CardCreateInput): Prom
 
 /**
  * PATCH /api/v1/cards/:id — update card fields.
+ *
+ * Heavy writes: cardData carries buttons/services/faqs/embeds/etc. and the
+ * server merges with the previous JSON, runs the Pro check, and updates the
+ * row in one transaction. The 8s default timeout in apiFetch is for cheap
+ * hydrate calls — give this 30s headroom so a slow 4G round-trip with a
+ * 30 KB payload doesn't AbortError into a generic "save failed" alert.
  */
 export async function updateCard(
   id: string,
@@ -64,7 +70,11 @@ export async function updateCard(
 ): Promise<ApiCard> {
   const res = await apiFetch<{ card: ApiCard }>(
     `/api/v1/cards/${encodeURIComponent(id)}`,
-    { method: 'PATCH', body: JSON.stringify(patch) },
+    {
+      method: 'PATCH',
+      body: JSON.stringify(patch),
+      timeoutMs: 30_000,
+    },
   );
   return res.card;
 }
@@ -102,7 +112,15 @@ export async function draftFromUrl(
 
 /**
  * Upload a local image to /api/uploads and return the server path.
- * Uses raw fetch so FormData sets the multipart boundary correctly.
+ *
+ * Uses raw fetch so FormData sets the multipart boundary correctly — apiFetch
+ * hardcodes Content-Type: application/json which would corrupt the boundary.
+ * The Bearer header is attached manually because /api/uploads/route.ts calls
+ * requireUser() and 401s without it. Single-shot, no refresh-on-401 retry —
+ * if a fresh login is needed the user will see the alert and re-tap.
+ *
+ * 30s timeout: a 3 MB JPEG over 4G is ~8-15s round-trip; 8s default is too
+ * tight and was the original "Upload failed" cause on real installed APKs.
  */
 export async function uploadPhoto(
   uri: string,
@@ -114,8 +132,27 @@ export async function uploadPhoto(
   form.append('file', { uri, name: `photo.${ext}`, type: mimeType } as unknown as Blob);
   form.append('kind', 'photo');
 
-  const res = await fetch(`${API_BASE}/api/uploads`, { method: 'POST', body: form });
-  if (!res.ok) throw new Error(`Upload failed: ${res.status}`);
-  const data = (await res.json()) as { path: string };
-  return data.path;
+  const token = await getAccessToken();
+  const headers: Record<string, string> = {};
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 30_000);
+  try {
+    const res = await fetch(`${API_BASE}/api/uploads`, {
+      method: 'POST',
+      body: form,
+      headers,
+      signal: controller.signal,
+    });
+    if (res.status === 401) throw new Error('UNAUTHORIZED');
+    if (!res.ok) {
+      const body = await res.text().catch(() => '');
+      throw new Error(`Upload failed: ${res.status} ${body}`);
+    }
+    const data = (await res.json()) as { path: string };
+    return data.path;
+  } finally {
+    clearTimeout(timer);
+  }
 }
