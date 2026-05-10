@@ -1,18 +1,28 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { getConsent, setConsent } from "@/lib/consent";
 import { useLocale } from "@/context/LocaleContext";
 
 export function ConsentBanner() {
   const { t, locale } = useLocale();
+  const pathname = usePathname();
   const [show, setShow] = useState(false);
 
-  useEffect(() => {
-    if (getConsent() === null) setShow(true);
-  }, []);
+  // Suppress on chrome-less render targets that are screenshot or
+  // embedded in mobile WebView previews. The banner has no UX value
+  // there and would otherwise bake into generated PNG previews.
+  const isPreviewRoute =
+    pathname?.startsWith("/dev/template-preview/") ||
+    pathname?.startsWith("/preview/template/");
 
-  if (!show) return null;
+  useEffect(() => {
+    if (isPreviewRoute) return;
+    if (getConsent() === null) setShow(true);
+  }, [isPreviewRoute]);
+
+  if (isPreviewRoute || !show) return null;
 
   const accept = () => {
     setConsent(true);
