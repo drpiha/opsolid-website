@@ -53,6 +53,14 @@ COPY --from=builder --chown=nextjs:nodejs /app/src/generated ./src/generated
 # in the runtime image → no `effect` module crash on boot).
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 
+# Ship operational scripts (seed-admin, seed-templates, etc.) so operators
+# can run them via `docker exec opsolid-app npx tsx scripts/<name>.ts`.
+# These are not on the request path; they're tools for granting admin,
+# seeding fixtures, anonymising PII, etc.
+COPY --from=builder --chown=nextjs:nodejs /app/scripts ./scripts
+COPY --from=builder --chown=nextjs:nodejs /app/tsconfig.json ./tsconfig.json
+COPY --from=builder --chown=nextjs:nodejs /app/src/lib ./src/lib
+
 USER nextjs
 EXPOSE 3000
 
