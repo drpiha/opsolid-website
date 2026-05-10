@@ -2,7 +2,7 @@
 // Cards API wrappers — all calls use apiFetch for Bearer + refresh rotation.
 // -----------------------------------------------------------------------
 
-import { apiFetch, API_BASE, getAccessToken } from './client';
+import { apiFetch, API_BASE, getAccessToken, refreshAccessToken } from './client';
 import type {
   ApiCard,
   CardListResponse,
@@ -91,7 +91,12 @@ export async function draftFromImage(
 ): Promise<import('./types').DraftFromImageResponse> {
   return apiFetch<import('./types').DraftFromImageResponse>(
     '/api/v1/cards/draft-from-image',
-    { method: 'POST', body: JSON.stringify({ imageBase64 }) },
+    {
+      method: 'POST',
+      body: JSON.stringify({ imageBase64 }),
+      // Multi-MB base64 + Google Vision call easily exceeds 8s on 4G.
+      timeoutMs: 30_000,
+    },
   );
 }
 
@@ -106,7 +111,12 @@ export async function draftFromUrl(
 ): Promise<import('./types').DraftFromUrlResponse> {
   return apiFetch<import('./types').DraftFromUrlResponse>(
     '/api/v1/cards/draft-from-url',
-    { method: 'POST', body: JSON.stringify({ url }) },
+    {
+      method: 'POST',
+      body: JSON.stringify({ url }),
+      // Server fetch (5s cap) + Claude Haiku extraction (3-8s) needs headroom.
+      timeoutMs: 30_000,
+    },
   );
 }
 
@@ -139,12 +149,32 @@ export async function uploadPhoto(
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 30_000);
   try {
-    const res = await fetch(`${API_BASE}/api/uploads`, {
+    let res = await fetch(`${API_BASE}/api/uploads`, {
       method: 'POST',
       body: form,
       headers,
       signal: controller.signal,
     });
+
+    // Single 401-retry mirrors apiFetch's behavior — without it, a user
+    // whose access token expired between login and tapping "pick photo"
+    // is locked out until app cold-restart (hydrate refreshes on launch).
+    // refreshAccessToken is single-flight so concurrent retries are safe.
+    if (res.status === 401 && token) {
+      try {
+        const fresh = await refreshAccessToken();
+        const retryHeaders = { Authorization: `Bearer ${fresh}` };
+        res = await fetch(`${API_BASE}/api/uploads`, {
+          method: 'POST',
+          body: form,
+          headers: retryHeaders,
+          signal: controller.signal,
+        });
+      } catch {
+        throw new Error('UNAUTHORIZED');
+      }
+    }
+
     if (res.status === 401) throw new Error('UNAUTHORIZED');
     if (!res.ok) {
       const body = await res.text().catch(() => '');

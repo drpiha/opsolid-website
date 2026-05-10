@@ -584,8 +584,14 @@ export default function CardEditScreen() {
     try {
       const path = await uploadPhoto(asset.uri, asset.mimeType ?? 'image/jpeg');
       setPhotoPath(path);
-    } catch {
-      Alert.alert('Upload failed', 'Could not upload photo. Try again.');
+    } catch (err) {
+      const isAuth = err instanceof Error && err.message === 'UNAUTHORIZED';
+      Alert.alert(
+        isAuth ? 'Session expired' : 'Upload failed',
+        isAuth
+          ? 'Please sign in again to upload photos.'
+          : 'Could not upload photo. Try again.',
+      );
     } finally {
       setUploadingPhoto(false);
     }

@@ -46,7 +46,7 @@ export async function clearTokens(): Promise<void> {
   await SecureStore.deleteItemAsync('opsolid.refreshToken');
 }
 
-async function refreshAccessToken(): Promise<string> {
+export async function refreshAccessToken(): Promise<string> {
   if (refreshing) return refreshing;
 
   refreshing = (async () => {
