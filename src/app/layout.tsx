@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import { Inter, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import { ConditionalAnalytics } from "@/components/shared/ConditionalAnalytics";
@@ -83,6 +83,16 @@ export const metadata: Metadata = {
     description: SITE_CONFIG.description,
   },
   robots: { index: true, follow: true },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FAFAF7" },
+    { media: "(prefers-color-scheme: dark)", color: "#0B0E13" },
+  ],
 };
 
 // Applied inline in <head> before hydration so the first paint already has
