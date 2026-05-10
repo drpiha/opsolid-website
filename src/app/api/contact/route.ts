@@ -46,17 +46,6 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Log submission (always works, even without SMTP)
-    console.log("--- New Contact Submission ---");
-    console.log(`Name: ${name}`);
-    console.log(`Email: ${email}`);
-    console.log(`Company: ${company || "N/A"}`);
-    if (source) console.log(`Source: ${source}`);
-    if (teamSize) console.log(`Team size: ${teamSize}`);
-    console.log(`Message: ${message}`);
-    console.log(`Time: ${new Date().toISOString()}`);
-    console.log("-----------------------------");
-
     // Send email if SMTP is configured. No personal-email fallback — if
     // CONTACT_TO_EMAIL is unset we log a warning and let the UX continue.
     const smtpHost = process.env.SMTP_HOST;
@@ -98,11 +87,14 @@ export async function POST(req: NextRequest) {
         text: bodyLines.join("\n"),
       });
 
-      console.log("Email sent successfully.");
     } else {
-      console.warn(
-        "[contact] CONTACT_TO_EMAIL or SMTP env missing — submission logged only"
-      );
+      // Dev-only fallback so the form still "works" without SMTP. In prod
+      // this branch never runs because SMTP is configured.
+      if (process.env.NODE_ENV !== "production") {
+        console.warn(
+          "[contact] CONTACT_TO_EMAIL or SMTP env missing — submission accepted but not delivered",
+        );
+      }
     }
 
     return NextResponse.json({ success: true });

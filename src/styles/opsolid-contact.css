@@ -37,7 +37,16 @@
   .ct-field .field { font-size: 15px; }
   .ct-field textarea.field { min-height: 130px; resize: vertical; font-family: inherit; line-height: 1.55; }
   .ct-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media (max-width: 560px) { .ct-row { grid-template-columns: 1fr; } }
+  /* Stack name/email side-by-side only on tablets+. Below 640px (Pixel 7,
+     iPhone 14, iPhone SE) inputs would be too narrow to type comfortably. */
+  @media (max-width: 640px) { .ct-row { grid-template-columns: 1fr; gap: 12px; } }
+  /* Smaller panel padding on phones — 44px x 44px wastes the limited
+     content area; 22px keeps the carved-panel look without crowding. */
+  @media (max-width: 640px) {
+    .ct-form-panel { padding: 28px 22px 24px; border-radius: var(--r-xl); }
+    .ct-form-header { margin-bottom: 20px; }
+    .ct-field { margin-bottom: 16px; }
+  }
 
   .ct-topics { display: flex; flex-wrap: wrap; gap: 8px; }
   .ct-topic {
