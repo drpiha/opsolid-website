@@ -10,11 +10,17 @@ import type { Locale } from "@/content";
 
 type NavKey = "home" | "products" | "journal" | "contact";
 
+type ProductChild = {
+  key: "voiceAgent" | "digitalCard" | "kutasia";
+  href: string;
+  match: RegExp;
+};
+
 type NavItem = {
   key: NavKey;
   href: string;
   match: RegExp;
-  children?: Array<{ key: "voiceAgent" | "digitalCard" | "kutasia"; href: string; match: RegExp }>;
+  children?: ProductChild[];
 };
 
 const NAV_ITEMS: NavItem[] = [
@@ -42,15 +48,9 @@ const LOCALE_LABELS: Record<Locale, string> = {
   fr: "FR",
   ar: "AR",
 };
-const LOCALE_CYCLE: Record<Locale, Locale> = {
-  en: "de",
-  de: "tr",
-  tr: "es",
-  es: "it",
-  it: "fr",
-  fr: "ar",
-  ar: "en",
-};
+const VISIBLE_LOCALES: Locale[] = ["en", "de", "tr", "es", "it", "fr", "ar"];
+
+const HISTORY_MARKER = "opsolid-mobile-menu";
 
 export function Header() {
   const pathname = usePathname();
@@ -60,15 +60,27 @@ export function Header() {
   const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
   const productsRef = useRef<HTMLDivElement>(null);
   const navLabels = t.v2.nav;
-  // Top-level "Products" parent label — t.v2.nav has no generic `products`,
-  // so we fall back to the root-level nav.products which exists in every locale.
   const productsLabel = t.nav.products;
 
-  // Close menus on route change
-  useEffect(() => {
+  const closeMobile = () => {
     setIsMobileOpen(false);
-    setIsProductsOpen(false);
     setIsMobileProductsOpen(false);
+  };
+
+  // Defer state updates so SPA navigation runs first, then the menu closes.
+  // Synchronous setState on link click would unmount the menu mid-navigation
+  // on some mobile browsers and the click would not register.
+  const handleLinkTap = () => {
+    if (typeof window !== "undefined") {
+      window.requestAnimationFrame(() => closeMobile());
+    } else {
+      closeMobile();
+    }
+  };
+
+  useEffect(() => {
+    closeMobile();
+    setIsProductsOpen(false);
   }, [pathname]);
 
   useEffect(() => {
@@ -79,7 +91,31 @@ export function Header() {
     };
   }, [isMobileOpen]);
 
-  // ESC closes mobile menu and desktop products dropdown
+  // Hardware/browser back button closes the open menu instead of leaving
+  // the site. We push a sentinel state when opening; popstate (back) closes.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (!isMobileOpen) return;
+
+    window.history.pushState({ [HISTORY_MARKER]: true }, "");
+    const onPop = () => {
+      setIsMobileOpen(false);
+      setIsMobileProductsOpen(false);
+    };
+    window.addEventListener("popstate", onPop);
+    return () => {
+      window.removeEventListener("popstate", onPop);
+      // If the menu is being closed by a button (not by back), unwind the
+      // history entry we pushed so the user's back stack stays clean.
+      if (typeof window !== "undefined") {
+        const state = window.history.state as { [HISTORY_MARKER]?: boolean } | null;
+        if (state && state[HISTORY_MARKER]) {
+          window.history.back();
+        }
+      }
+    };
+  }, [isMobileOpen]);
+
   useEffect(() => {
     if (!isMobileOpen && !isProductsOpen) return;
     const onKey = (e: KeyboardEvent) => {
@@ -92,7 +128,6 @@ export function Header() {
     return () => window.removeEventListener("keydown", onKey);
   }, [isMobileOpen, isProductsOpen]);
 
-  // Click-outside closes desktop Products dropdown
   useEffect(() => {
     if (!isProductsOpen) return;
     const onClick = (e: MouseEvent) => {
@@ -104,17 +139,21 @@ export function Header() {
     return () => window.removeEventListener("mousedown", onClick);
   }, [isProductsOpen]);
 
-  // Hide marketing chrome on customer self-service surfaces.
   if (pathname && /\/card\/edit\//.test(pathname)) return null;
 
   const productItems = NAV_ITEMS.find((n) => n.key === "products")!.children!;
 
+  const labelFor = (key: NavKey): string => {
+    if (key === "products") return productsLabel;
+    return navLabels[key as "home" | "journal" | "contact"];
+  };
+
   return (
     <header className="os-header safe-top" role="banner">
       <div className="os-header-inner">
-        <Link href="/" className="os-brand">
+        <Link href="/" className="os-brand" aria-label="OpSolid — home">
           <span className="os-brand-mark" aria-hidden="true" />
-          OpSolid
+          <span className="os-brand-text">OpSolid</span>
         </Link>
 
         <nav className="os-nav" aria-label="Primary">
@@ -187,23 +226,16 @@ export function Header() {
                 href={n.href}
                 className={cn("os-nav-link", active && "is-active")}
               >
-                {navLabels[n.key as "home" | "journal" | "contact"]}
+                {labelFor(n.key)}
               </Link>
             );
           })}
         </nav>
 
         <div className="os-header-right">
-          <ThemeToggle />
-          <button
-            className="os-lang-switch"
-            onClick={() => setLocale(LOCALE_CYCLE[locale])}
-            aria-label={`Switch language (current: ${LOCALE_LABELS[locale]})`}
-          >
-            <span style={{ color: "var(--copper-300)", fontWeight: 600 }}>
-              {LOCALE_LABELS[locale]}
-            </span>
-          </button>
+          <div className="hidden md:inline-flex">
+            <ThemeToggle />
+          </div>
           <Link
             href="/contact"
             className="btn btn-primary btn-sm hidden md:inline-flex"
@@ -213,7 +245,8 @@ export function Header() {
           </Link>
 
           <button
-            onClick={() => setIsMobileOpen(!isMobileOpen)}
+            type="button"
+            onClick={() => setIsMobileOpen((v) => !v)}
             className="os-mobile-toggle md:hidden"
             aria-label={isMobileOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMobileOpen}
@@ -239,38 +272,55 @@ export function Header() {
           role="dialog"
           aria-modal="true"
           aria-label="Mobile navigation"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setIsMobileOpen(false);
-          }}
         >
-          <div className="os-mobile-menu-inner">
+          <div className="os-mobile-menu-bar">
+            <span className="os-mobile-menu-title">
+              <span className="os-brand-mark" aria-hidden="true" />
+              OpSolid
+            </span>
+            <button
+              type="button"
+              className="os-mobile-close"
+              onClick={() => setIsMobileOpen(false)}
+              aria-label="Close menu"
+            >
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+              </svg>
+            </button>
+          </div>
+
+          <nav className="os-mobile-menu-inner" aria-label="Site">
             <ul className="os-mobile-list">
               {NAV_ITEMS.map((n) => {
                 const active = n.match.test(pathname || "");
 
                 if (n.key === "products") {
+                  const anyChildActive = productItems.some((p) => p.match.test(pathname || ""));
+                  const expanded = isMobileProductsOpen || anyChildActive;
                   return (
-                    <li key={n.key} className="os-mobile-item">
+                    <li key={n.key} className={cn("os-mobile-item", active && "is-active")}>
                       <button
                         type="button"
                         onClick={() => setIsMobileProductsOpen((v) => !v)}
-                        aria-expanded={isMobileProductsOpen}
+                        aria-expanded={expanded}
                         className={cn("os-mobile-link", active && "is-active")}
                       >
-                        <span>{productsLabel}</span>
+                        <span className="os-mobile-link-label">
+                          {active && <span className="os-mobile-active-dot" aria-hidden="true" />}
+                          {productsLabel}
+                        </span>
                         <span
                           aria-hidden="true"
+                          className="os-mobile-chevron"
                           style={{
-                            display: "inline-block",
-                            transition: "transform 200ms",
-                            transform: isMobileProductsOpen ? "rotate(180deg)" : "none",
-                            fontSize: "1rem",
+                            transform: expanded ? "rotate(180deg)" : "none",
                           }}
                         >
                           ▾
                         </span>
                       </button>
-                      {isMobileProductsOpen && (
+                      {expanded && (
                         <ul className="os-mobile-sublist">
                           {productItems.map((p) => {
                             const pActive = p.match.test(pathname || "");
@@ -278,10 +328,13 @@ export function Header() {
                               <li key={p.key}>
                                 <Link
                                   href={p.href}
-                                  onClick={() => setIsMobileOpen(false)}
+                                  onClick={handleLinkTap}
                                   className={cn("os-mobile-sublink", pActive && "is-active")}
                                 >
-                                  {navLabels[p.key]}
+                                  {pActive && (
+                                    <span className="os-mobile-active-dot" aria-hidden="true" />
+                                  )}
+                                  <span>{navLabels[p.key]}</span>
                                 </Link>
                               </li>
                             );
@@ -293,30 +346,53 @@ export function Header() {
                 }
 
                 return (
-                  <li key={n.key} className="os-mobile-item">
+                  <li key={n.key} className={cn("os-mobile-item", active && "is-active")}>
                     <Link
                       href={n.href}
-                      onClick={() => setIsMobileOpen(false)}
+                      onClick={handleLinkTap}
                       className={cn("os-mobile-link", active && "is-active")}
                     >
-                      {navLabels[n.key as "home" | "journal" | "contact"]}
+                      <span className="os-mobile-link-label">
+                        {active && <span className="os-mobile-active-dot" aria-hidden="true" />}
+                        {labelFor(n.key)}
+                      </span>
+                      <span aria-hidden="true" className="os-mobile-arrow">→</span>
                     </Link>
                   </li>
                 );
               })}
             </ul>
 
-            <div className="os-mobile-footer">
-              <ThemeToggle />
+            <div className="os-mobile-cta-wrap">
               <Link
                 href="/contact"
-                onClick={() => setIsMobileOpen(false)}
+                onClick={handleLinkTap}
                 className="btn btn-primary btn-lg os-mobile-cta"
               >
                 {navLabels.cta}
               </Link>
             </div>
-          </div>
+
+            <div className="os-mobile-footer">
+              <div className="os-mobile-locale-row" role="radiogroup" aria-label="Language">
+                {VISIBLE_LOCALES.map((l) => (
+                  <button
+                    key={l}
+                    type="button"
+                    role="radio"
+                    aria-checked={l === locale}
+                    onClick={() => setLocale(l)}
+                    className={cn("os-mobile-locale-chip", l === locale && "is-active")}
+                  >
+                    {LOCALE_LABELS[l]}
+                  </button>
+                ))}
+              </div>
+              <div className="os-mobile-theme-row">
+                <ThemeToggle />
+              </div>
+            </div>
+          </nav>
         </div>
       )}
     </header>
