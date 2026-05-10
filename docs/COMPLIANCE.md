@@ -30,6 +30,25 @@
 
 ### Acil — Önümüzdeki 14 Gün
 
+#### 0. ⚠️ KRİTİK — `info@opsolid.de` mailbox'ı henüz aktif değil
+- **Durum:** Privacy + Impressum + Verso lead form `info@opsolid.de` adresini gösteriyor ama mailbox kurulu değil — gönderilen mailler kayboluyor.
+- **Hukuki risk:** DDG § 5 zorunlu iletişim kanalı, GDPR Art. 13/14 + KVKK m.10 başvuru kanalı, Verso public profili için DSA notice-and-takedown yanıt süresi (7 gün) — hepsi çalışan bir email kanalı varsayar. **Almanya'da çalışmayan Impressum email'i Abmahnung sebebi olarak yargı pratiğinde sabittir.**
+- **Site canlıya çıkmadan ÖNCE çözülmeli** (en geç birkaç hafta).
+- **En kolay çözüm — Hostinger Email Forwarder (5 dakika, ücretsiz):**
+  1. https://hpanel.hostinger.com → giriş yap
+  2. Sol menü → **Emails** → **Email Forwarders**
+  3. **Create Forwarder** butonuna bas
+  4. Domain: `opsolid.de` seç
+  5. Forwarder Address: `info`
+  6. Destination: `drhasanhd@gmail.com` (veya tercih ettiğin gmail/dallmer adresi)
+  7. **Create** → DNS otomatik yapılandırılır (24 saatten az)
+  8. Test: telefonundan `info@opsolid.de` adresine bir mail at, gmail'ine düşmesini doğrula. Aynı gün gelmezse DNS propagation bekle.
+- **Alternatif — Tam mailbox (~$0.99/ay):** hPanel → Emails → **Email Accounts** → **Create Account** → `info@opsolid.de`. Avantaj: gönderim de mümkün, "info@opsolid.de" olarak cevap atabilirsin (forwarder'da reply-to gmail görünür).
+- **Bonus:** Aynı yerde `dpo@opsolid.de` (data protection) ve `legal@opsolid.de` (DSA notice-and-takedown) forwarderlarını da kur — privacy policy'de bu adresleri kullanmak daha sağlam.
+- **Çıktı:** Test mailinin ekran görüntüsü `docs/legal/email-active-proof.png`.
+- **Süre:** Tek seferde 5-15 dakika.
+- **Maliyet:** Forwarder 0 €; tam mailbox $0.99/ay.
+
 #### 1. ✅ Hostinger VPS lokasyonu DOĞRULANDI
 - **Sonuç:** IP `72.62.0.111` → hostname `srv1150632.hstgr.cloud` → **Vilnius, Litvanya (AB)** — AS47583 Hostinger International Limited.
 - Hem opsolid.de hem kutasia.com **aynı VPS** üzerinde çalışıyor.
