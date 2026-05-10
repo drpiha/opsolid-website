@@ -371,7 +371,7 @@ function PhotoTile({
           /* eslint-disable-next-line @next/next/no-img-element */
           <img
             src={photo.photoPath}
-            alt={photo.caption ?? ""}
+            alt={photo.caption ?? (photo.connectionName ? `Photo by ${photo.connectionName}` : "Album photo")}
             loading="lazy"
             className="h-52 w-full object-cover"
           />
@@ -389,7 +389,7 @@ function PhotoTile({
         /* eslint-disable-next-line @next/next/no-img-element */
         <img
           src={photo.photoPath}
-          alt={photo.caption ?? ""}
+          alt={photo.caption ?? (photo.connectionName ? `Photo by ${photo.connectionName}` : "Album photo")}
           loading="lazy"
           className="aspect-square w-full object-cover"
         />
@@ -539,7 +539,7 @@ function Lightbox({
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={photo.photoPath}
-                alt={photo.caption ?? ""}
+                alt={photo.caption ?? (photo.connectionName ? `Photo by ${photo.connectionName}` : "Album photo")}
                 className="max-h-[90vh] max-w-[95vw] rounded-xl object-contain shadow-2xl"
               />
               {(photo.caption || photo.connectionName) && (

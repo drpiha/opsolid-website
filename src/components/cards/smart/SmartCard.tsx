@@ -313,7 +313,7 @@ function SmartCardCover({
       {coverUrl ? (
         <Image
           src={coverUrl}
-          alt=""
+          alt="Card cover"
           fill
           priority
           unoptimized

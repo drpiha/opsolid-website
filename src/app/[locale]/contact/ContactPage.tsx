@@ -119,6 +119,7 @@ export function ContactPage() {
               <input
                 name="name"
                 required
+                autoComplete="name"
                 className="field"
                 placeholder={c.form.fields.name.placeholder}
               />
@@ -127,6 +128,7 @@ export function ContactPage() {
               <span>{c.form.fields.company.label}</span>
               <input
                 name="company"
+                autoComplete="organization"
                 className="field"
                 placeholder={c.form.fields.company.placeholder}
               />
@@ -139,6 +141,8 @@ export function ContactPage() {
                 name="email"
                 type="email"
                 required
+                autoComplete="email"
+                inputMode="email"
                 className="field"
                 placeholder={c.form.fields.email.placeholder}
               />
@@ -147,6 +151,9 @@ export function ContactPage() {
               <span>{c.form.fields.phone.label}</span>
               <input
                 name="phone"
+                type="tel"
+                autoComplete="tel"
+                inputMode="tel"
                 className="field"
                 placeholder={c.form.fields.phone.placeholder}
               />
@@ -181,27 +188,32 @@ export function ContactPage() {
               type="submit"
               className="btn btn-primary btn-lg"
               disabled={submitting}
+              aria-busy={submitting}
             >
               {submitting ? "…" : c.form.submitCta}{" "}
               <Icon name="arrow" size={18} />
             </button>
           </div>
-          {result === "ok" && (
-            <p
-              className="meta"
-              style={{ color: "var(--signal-ok, #7FB286)", marginTop: 12 }}
-            >
-              {c.form.success}
-            </p>
-          )}
-          {result === "error" && (
-            <p
-              className="meta"
-              style={{ color: "var(--signal-err, #B8514B)", marginTop: 12 }}
-            >
-              {c.form.error}
-            </p>
-          )}
+          {/* aria-live="polite" announces the submission outcome to screen
+              reader users without interrupting their current focus. */}
+          <div role="status" aria-live="polite" aria-atomic="true">
+            {result === "ok" && (
+              <p
+                className="meta"
+                style={{ color: "var(--signal-ok, #7FB286)", marginTop: 12 }}
+              >
+                {c.form.success}
+              </p>
+            )}
+            {result === "error" && (
+              <p
+                className="meta"
+                style={{ color: "var(--signal-err, #B8514B)", marginTop: 12 }}
+              >
+                {c.form.error}
+              </p>
+            )}
+          </div>
         </form>
       </div>
     </section>
