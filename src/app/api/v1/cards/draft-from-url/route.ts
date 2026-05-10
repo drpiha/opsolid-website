@@ -246,7 +246,7 @@ function concatChunks(chunks: Uint8Array[]): Uint8Array {
 function stripHtml(html: string): string {
   // Drop scripts, styles, noscript blocks entirely — they're either noise
   // or massive minified JS that would consume the LLM budget.
-  let s = html
+  const s = html
     .replace(/<script[\s\S]*?<\/script>/gi, " ")
     .replace(/<style[\s\S]*?<\/style>/gi, " ")
     .replace(/<noscript[\s\S]*?<\/noscript>/gi, " ");
