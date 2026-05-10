@@ -25,7 +25,6 @@
     },
     "android": {
       "package": "de.opsolid.mobile",
-      "newArchEnabled": false,
       "softwareKeyboardLayoutMode": "resize",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
