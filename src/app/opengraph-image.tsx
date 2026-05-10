@@ -55,8 +55,9 @@ export default async function OG() {
                 width: 36,
                 height: 36,
                 borderRadius: 6,
-                background:
-                  "radial-gradient(circle at 35% 30%, rgba(255,255,255,0.55), transparent 55%), #1A0E04",
+                backgroundColor: "#1A0E04",
+                backgroundImage:
+                  "radial-gradient(circle at 35% 30%, rgba(255,255,255,0.55), transparent 55%)",
                 border: "1px solid rgba(0,0,0,0.4)",
               }}
             />
