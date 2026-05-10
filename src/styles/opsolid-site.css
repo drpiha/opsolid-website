@@ -155,38 +155,74 @@ body { background: var(--bg-1); color: var(--ink-200); overflow-x: hidden; }
 }
 .os-mobile-toggle:active { background: rgba(255,255,255,0.04); }
 
-/* ---------- Mobile full-screen menu ---------- */
-.os-mobile-menu {
+/* ---------- Mobile side-drawer menu (Radix Dialog) ----------
+   The Dialog.Portal renders these at <body> level, so we don't fight
+   the header's stacking context. .os-mobile-overlay = backdrop scrim,
+   .os-mobile-menu = the panel itself sliding in from the right. */
+.os-mobile-overlay {
   position: fixed;
   inset: 0;
   z-index: 60;
-  height: 100dvh;
-  /* Always-dark backdrop so text contrast is predictable across themes */
-  background: linear-gradient(180deg, rgba(11,14,19,0.98) 0%, rgba(7,9,12,0.995) 100%);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-  animation: os-fade-in 180ms ease-out;
-  display: flex;
-  flex-direction: column;
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 }
-@keyframes os-fade-in {
-  from { opacity: 0; transform: translateY(-2px); }
-  to   { opacity: 1; transform: translateY(0); }
+.os-mobile-overlay[data-state="open"] {
+  animation: os-fade-in 200ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.os-mobile-overlay[data-state="closed"] {
+  animation: os-fade-out 160ms cubic-bezier(0.4, 0, 1, 1) forwards;
 }
 
-/* Top bar: brand + close. Sticky so a long menu still has the X reachable. */
-.os-mobile-menu-bar {
-  position: sticky;
+.os-mobile-menu {
+  position: fixed;
   top: 0;
-  z-index: 1;
+  right: 0;
+  bottom: 0;
+  z-index: 61;
+  width: min(88vw, 420px);
+  height: 100dvh;
+  /* Always-dark surface so text contrast is predictable across themes */
+  background: linear-gradient(180deg, rgba(11,14,19,0.985) 0%, rgba(7,9,12,1) 100%);
+  border-left: 1px solid rgba(255,255,255,0.06);
+  box-shadow: -24px 0 48px rgba(0,0,0,0.45);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden; /* inner area handles its own scroll */
+  outline: none;
+}
+.os-mobile-menu[data-state="open"] {
+  animation: os-slide-in-right 280ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.os-mobile-menu[data-state="closed"] {
+  animation: os-slide-out-right 220ms cubic-bezier(0.4, 0, 1, 1) forwards;
+}
+@keyframes os-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes os-fade-out {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+@keyframes os-slide-in-right {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+@keyframes os-slide-out-right {
+  from { transform: translateX(0); }
+  to   { transform: translateX(100%); }
+}
+
+/* Top bar: brand + close. Fixed at top of the panel; the inner area below
+   scrolls independently so the X is always reachable. */
+.os-mobile-menu-bar {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: max(0.875rem, env(safe-area-inset-top)) 1rem 0.875rem 1.25rem;
-  background: linear-gradient(180deg, rgba(11,14,19,0.95) 0%, rgba(11,14,19,0.0) 100%);
+  border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 .os-mobile-menu-title {
   display: inline-flex;
@@ -221,6 +257,9 @@ body { background: var(--bg-1); color: var(--ink-200); overflow-x: hidden; }
   display: flex;
   flex-direction: column;
   padding: 1rem 1.25rem max(1.5rem, env(safe-area-inset-bottom));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior: contain;
 }
 
 .os-mobile-list {

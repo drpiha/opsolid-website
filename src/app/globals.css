@@ -53,10 +53,6 @@
     color: #1A0E04;
   }
 
-  body.menu-open {
-    overflow: hidden;
-  }
-
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;

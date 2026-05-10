@@ -182,6 +182,9 @@ const config: Config = {
         "modal-out": "modal-out 0.18s cubic-bezier(0.4, 0, 1, 1) forwards",
         // Mobile bottom-sheet — translates from offscreen (100%) to rest. Phase 7.3.
         "slide-up":  "slide-up 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards",
+        // Mobile side drawer — used by the Radix Dialog mobile nav.
+        "slide-in-right":  "slide-in-right 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards",
+        "slide-out-right": "slide-out-right 0.22s cubic-bezier(0.4, 0, 1, 1) forwards",
         // Form chip pulse — fired once when the customer picks a new template
         // in the carousel (Phase 7.7).
         "form-focus-pulse": "form-focus-pulse 400ms ease-in-out 1",
@@ -214,6 +217,14 @@ const config: Config = {
         "slide-up": {
           from: { transform: "translateY(100%)" },
           to:   { transform: "translateY(0)" },
+        },
+        "slide-in-right": {
+          from: { transform: "translateX(100%)" },
+          to:   { transform: "translateX(0)" },
+        },
+        "slide-out-right": {
+          from: { transform: "translateX(0)" },
+          to:   { transform: "translateX(100%)" },
         },
         "form-focus-pulse": {
           "0%, 100%": { transform: "scale(1)" },
