@@ -137,7 +137,7 @@ export async function POST(
         endCallPhrases: input.endCallPhrases ?? [],
         dtmfHandoffDigit: input.dtmfHandoffDigit ?? null,
         ambientSoundEnabled: input.ambientSoundEnabled ?? false,
-        llmModel: input.llmModel ?? "gpt-5-mini",
+        llmModel: input.llmModel ?? "gpt-5.4-mini",
         providerOverrides: (input.providerOverrides ?? {}) as object,
       },
     });

@@ -118,7 +118,7 @@ export default function AgentForm({
       "",
     maxDurationSeconds: agent?.maxDurationSeconds ?? 600,
     status: (agent?.status as AgentFormValues["status"]) ?? "draft",
-    llmModel: agent?.llmModel ?? "gpt-5-mini",
+    llmModel: agent?.llmModel ?? "gpt-5.4-mini",
   });
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);

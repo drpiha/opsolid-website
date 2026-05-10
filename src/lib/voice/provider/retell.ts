@@ -150,7 +150,7 @@ export class RetellProvider implements VoiceProvider {
       // providerOverrides.response_engine.
       const llm = await this.client.llm.create({
         general_prompt: input.systemPrompt,
-        model: (input.llmModel ?? "gpt-5-mini") as never,
+        model: (input.llmModel ?? "gpt-5.4-mini") as never,
       });
 
       const overrides = input.providerOverrides as Record<string, unknown>;
