@@ -16,7 +16,23 @@
 const FREE_TIER_CARD_LIMIT = 1;
 const PRO_TIER_CARD_LIMIT = 5;
 
-export function isPro(user: { proSince: Date | null }): boolean {
+/**
+ * Resolve effective Pro status for a user.
+ *
+ * Two sources flip a user to Pro:
+ *  - proSince column (Stripe webhook + admin grant + promo redeem all write here)
+ *  - role === 'ADMIN' — operators always have Pro features so they can test/
+ *    support without a Stripe subscription. Admin status is granted manually
+ *    via scripts/seed-admin.ts and is not transient.
+ *
+ * Both reads are denormalised on the User row, so this stays a single column
+ * read inside the request transaction.
+ */
+export function isPro(user: {
+  proSince: Date | null;
+  role?: string | null;
+}): boolean {
+  if (user.role === "ADMIN") return true;
   return user.proSince !== null && user.proSince <= new Date();
 }
 
@@ -24,7 +40,10 @@ export function isPro(user: { proSince: Date | null }): boolean {
  * Cap on active (non-cancelled, non-soft-deleted) cards a user can have.
  * Read by the gate in `POST /api/v1/cards`.
  */
-export function cardLimitForUser(user: { proSince: Date | null }): number {
+export function cardLimitForUser(user: {
+  proSince: Date | null;
+  role?: string | null;
+}): number {
   return isPro(user) ? PRO_TIER_CARD_LIMIT : FREE_TIER_CARD_LIMIT;
 }
 

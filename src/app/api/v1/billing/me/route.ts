@@ -43,6 +43,7 @@ export async function GET(req: Request) {
       where: { id: user.id },
       select: {
         proSince: true,
+        role: true,
         stripeCustomerId: true,
         userSubscription: {
           select: {
@@ -58,7 +59,10 @@ export async function GET(req: Request) {
     return applyCors(
       NextResponse.json(
         {
-          isPro: isPro({ proSince: fresh?.proSince ?? null }),
+          isPro: isPro({
+            proSince: fresh?.proSince ?? null,
+            role: fresh?.role ?? null,
+          }),
           proSince: fresh?.proSince?.toISOString() ?? null,
           hasStripeCustomer: Boolean(fresh?.stripeCustomerId),
           subscription: fresh?.userSubscription

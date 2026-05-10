@@ -28,17 +28,31 @@ async function main() {
     return;
   }
 
-  if (user.role === "ADMIN") {
-    console.log(`User ${email} is already ADMIN. Nothing to do.`);
+  // Always set proSince alongside the role so isPro() resolves true even on
+  // code paths that don't read role yet (defence-in-depth — the role check is
+  // now the primary bypass, but historical data + audit reads still expect a
+  // proSince timestamp on Pro accounts).
+  const updates: { role?: "ADMIN"; proSince?: Date } = {};
+  if (user.role !== "ADMIN") updates.role = "ADMIN";
+  if (!user.proSince) updates.proSince = new Date();
+
+  if (Object.keys(updates).length === 0) {
+    console.log(`User ${email} is already ADMIN with proSince set. Nothing to do.`);
     return;
   }
 
   await prisma.user.update({
     where: { email },
-    data: { role: "ADMIN" },
+    data: updates,
   });
 
-  console.log(`Promoted ${email} to ADMIN.`);
+  const what = [
+    updates.role ? "promoted to ADMIN" : null,
+    updates.proSince ? "granted Pro access" : null,
+  ]
+    .filter(Boolean)
+    .join(" + ");
+  console.log(`${email}: ${what}.`);
 }
 
 main()

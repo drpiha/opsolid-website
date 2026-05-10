@@ -179,9 +179,12 @@ export async function PATCH(
       // accidental enable on a downgraded card doesn't render to visitors.
       const proCheck = await prisma.user.findUnique({
         where: { id: user.id },
-        select: { proSince: true },
+        select: { proSince: true, role: true },
       });
-      const userIsPro = isPro({ proSince: proCheck?.proSince ?? null });
+      const userIsPro = isPro({
+        proSince: proCheck?.proSince ?? null,
+        role: proCheck?.role ?? null,
+      });
       if (!userIsPro) {
         if (incoming.tipJar && typeof incoming.tipJar === "object") {
           // Strip stripePriceId (which only Pro users can configure) but keep

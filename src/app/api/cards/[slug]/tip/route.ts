@@ -47,7 +47,7 @@ export async function POST(
         cardData: true,
         status: true,
         userId: true,
-        user: { select: { proSince: true } },
+        user: { select: { proSince: true, role: true } },
       },
     });
     if (!order || order.status !== "PUBLISHED") {
@@ -59,7 +59,10 @@ export async function POST(
 
     // Owner must be Pro for the tip jar to function — defence in depth
     // around the edit form gate.
-    if (!order.user || !isPro({ proSince: order.user.proSince })) {
+    if (
+      !order.user ||
+      !isPro({ proSince: order.user.proSince, role: order.user.role })
+    ) {
       return NextResponse.json(
         { error: { code: "tip_unavailable", message: "Tipping not available." } },
         { status: 404 },
