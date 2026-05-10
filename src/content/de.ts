@@ -3316,6 +3316,7 @@ export const content: Content = {
         productsHeading: "Produkte",
         servicesHeading: "Leistungen",
         studioHeading: "Studio",
+        reachHeading: "Erreichbar",
         legalHeading: "Rechtliches",
         services: {
           workflow: "Workflow-Automatisierung",
@@ -3323,9 +3324,29 @@ export const content: Content = {
           internal: "Interne Tools",
           ai: "KI-gestützte Prozesse",
         },
+        productsList: {
+          voiceAgent: "Voice Agent",
+          verso: "Verso",
+          chatbot: "Chatbot Agent",
+          whatsapp: "WhatsApp Agent",
+          booking: "Booking Agent",
+          email: "Email Agent",
+          leadQualifier: "Lead Qualifier",
+          customAutomation: "Custom Automation",
+          kutasia: "Kutasia",
+        },
         studio: {
+          pricing: "Preise",
+          about: "Über uns",
           journal: "Journal",
           contact: "Kontakt",
+        },
+        reach: {
+          email: "hello@opsolid.de",
+          linkedinLabel: "LinkedIn",
+          linkedinHref: "https://www.linkedin.com/company/opsolid/",
+          githubLabel: "GitHub",
+          githubHref: "https://github.com/opsolid",
         },
         legal: {
           privacy: "Datenschutz",
@@ -3341,16 +3362,16 @@ export const content: Content = {
     home: {
       hero: {
         metaChip: "",
-        metaLabel: "",
+        metaLabel: "[ OPSOLID · 2026 ]",
         title: {
-          pre: "Operative Automatisierung, ",
-          italic: "zugeschnitten",
-          post: " auf den Betrieb, den Sie bereits führen",
+          pre: "Der Betrieb ist die stille Arbeit, die ein Unternehmen aufrecht hält. ",
+          italic: "Wir bauen die Systeme, die ihn am Laufen halten",
+          post: ".",
         },
         lead:
-          "OpSolid baut die Systeme, die im Hintergrund Ihres Betriebs leise laufen. Workflow-Automatisierung, Systemintegration, interne Tools und KI-gestützte Prozesse für mittelständische Teams — eingebettet in Ihren bestehenden Stack, statt ihn zu ersetzen.",
+          "OpSolid ist ein unabhängiges Automatisierungsstudio für deutsches Mid-Market-B2B. Voice-Agenten am Telefon, Chatbots auf der Website, die Integrationen zwischen Ihrem CRM, ERP und Kalender — entworfen, damit die besten Stunden Ihres Teams in die Arbeit gehen, die nur Menschen leisten können. Konfiguriert für Ihren Stack in Woche eins. EU-gehostet, GDPR-nativ, Quellcode gehört Ihnen.",
         ctaPrimary: "Discovery-Call buchen",
-        ctaSecondary: "Was wir bauen",
+        ctaSecondary: "Preise ansehen",
         stats: [],
       },
 
@@ -3841,6 +3862,268 @@ export const content: Content = {
             ],
           },
         ],
+      },
+    },
+
+    productsHub: {
+      meta: {
+        title: "Produkte — Voice, Verso, Chat, WhatsApp, Booking, Email, Lead, Custom, Kutasia | OpSolid",
+        description: "Neun Produkte aus einem Studio: KI-Agenten für Telefon, Chat, WhatsApp, E-Mail und Lead-Qualifizierung, Premium digitale Visitenkarten (Verso), Custom Workflow-Automatisierung und Kutasia für Hospitality. Jedes Produkt transparent bepreist und EU-gehostet.",
+      },
+      hero: {
+        eyebrow: "[ PRODUKTE · 2026 ]",
+        title: { pre: "Neun Produkte, ", italic: "ein Studio", post: "" },
+        lead: "Jedes Produkt auf dieser Seite wird vom selben Team gebaut und betrieben. Voice-, Chat- und WhatsApp-Agenten teilen sich eine Integrationsspine. Verso, unsere Premium-Visitenkarte, liefert in 48 Stunden. Custom Automation übernimmt die Workflows, die der Rest nicht erreicht. Kutasia ist die hospitality-fokussierte Anwendung von all dem. Wählen Sie die Oberfläche, wir kümmern uns um den Rest.",
+        primaryCta: "Preise ansehen",
+        secondaryCta: "Discovery-Call buchen",
+      },
+      featured: {
+        eyebrow: "[ FLAGGSCHIFFE ]",
+        heading: "Die zwei Produkte, für die man uns kennt",
+        items: [
+          { id: "voice-agent", name: "Voice AI Agent", tagline: "24/7 Telefonempfang auf Retell oder Vapi.", body: "Mehrsprachige Telefonbeantwortung, Kalender-Sync, Übergabe an Menschen, wenn das Skript endet. Live in Hamburger Taxi-Dispatches, bayerischen Hotels und B2B-Servicedesks deutschlandweit.", href: "/products/voice-agent", startingAt: "ab €299/Mon. + €1.500 Setup", badge: "Live" },
+          { id: "verso", name: "Verso by OpSolid", tagline: "Premium digitale Visitenkarte · NFC + QR + Custom Domain.", body: "Handgestaltete, deutsch gehostete digitale Profile, in 48 Stunden geliefert. 20+ Branchen-Templates. HubSpot-Integration. Ersetzt Papierkarten, ohne zu Linktree zu werden.", href: "/products/digital-card", startingAt: "ab €4/Nutzer/Mon. + €29 Setup", badge: "Live" },
+        ],
+      },
+      grid: {
+        eyebrow: "[ AGENTS & DIENSTE ]",
+        heading: "Sieben weitere, jeder klar in seinem Auftrag",
+        items: [
+          { id: "chatbot-agent", name: "Chatbot Agent", tagline: "Web-Chat, trainiert auf Ihrer Knowledge Base.", startingAt: "ab €149/Mon.", href: "/products/chatbot-agent", category: "AGENT" },
+          { id: "whatsapp-agent", name: "WhatsApp Agent", tagline: "WhatsApp Business automatisierte Antworten + Broadcast.", startingAt: "ab €199/Mon.", href: "/products/whatsapp-agent", category: "AGENT" },
+          { id: "booking-agent", name: "Booking Agent", tagline: "Multi-Channel Buchungen → Cal.com → Erinnerungen.", startingAt: "ab €99/Mon.", href: "/products/booking-agent", category: "AGENT" },
+          { id: "email-agent", name: "Email Agent", tagline: "Inbox-Triage, KI-Antwortentwürfe, Eskalation.", startingAt: "ab €39/Platz/Mon.", href: "/products/email-agent", category: "AGENT" },
+          { id: "lead-qualifier-agent", name: "Lead Qualifier Agent", tagline: "BANT-Scoring auf Formular-, Chat- und Voice-Intake.", startingAt: "ab €249/Mon.", href: "/products/lead-qualifier-agent", category: "AGENT" },
+          { id: "custom-automation", name: "Custom Automation", tagline: "Sprint-, Projekt- oder Retainer-Engineering.", startingAt: "ab €4.500 Sprint", href: "/products/custom-automation", category: "SERVICE" },
+          { id: "kutasia", name: "Kutasia", tagline: "Multi-Tenant SaaS für Hospitality-Betreiber.", startingAt: "ab €39/Platz/Mon.", href: "/products/kutasia", category: "BRANCHE" },
+        ],
+      },
+      bottomCta: {
+        eyebrow: "[ UNSICHER, WELCHES? ]",
+        heading: "Nennen Sie uns Ihren Engpass — wir zeigen das passende Produkt, oder gar keines",
+        lead: "Wenn ein 20-Minuten-Call entscheidet, dass wir nicht passen, sind das auch nützliche 20 Minuten. Wir haben Prospects mehr als einmal zu Cal.com, einem Zapier-Flow oder 'einfach einen Junior einstellen' geschickt.",
+        cta: "20 kostenlose Minuten buchen",
+      },
+    },
+
+    about: {
+      meta: {
+        title: "Über uns — OpSolid · Unabhängiges Automatisierungsstudio | Hamburg",
+        description: "OpSolid ist ein unabhängiges Automatisierungsstudio. Gegründet von Hasan Dönmez in Hamburg. Wir bauen operative Systeme für deutsches Mid-Market-B2B — Voice, Chat, Integrationen und Workflow-Automatisierung. EU-gehostet, Quellcode bei Ihnen.",
+      },
+      hero: {
+        eyebrow: "[ ÜBER UNS · 2026 ]",
+        title: { pre: "Ein unabhängiges Automatisierungsstudio, ", italic: "an Ergebnissen ausgerichtet", post: ", nicht an Plattformen" },
+        lead: "OpSolid wurde gegründet, um die operative Arbeit zu leisten, die Off-the-Shelf-SaaS nicht erreicht: die Integration zu bauen, die Ihr ERP mit Ihrem CRM verbindet, den Voice-Agenten zu konfigurieren, der Anrufe in der Sprache Ihrer Branche entgegennimmt, und den Workflow zu liefern, der 40 Stunden manuelle Datenerfassung in 40 Minuten Ausnahme-Review verwandelt. Deutsches Mid-Market-B2B, EU-gehostet, Quellcode gehört Ihnen.",
+        primaryCta: "Discovery-Call buchen",
+        secondaryCta: "Preise ansehen",
+      },
+      principles: {
+        eyebrow: "[ WIE WIR ARBEITEN ]",
+        heading: "Vier Prinzipien, ehrlich gehalten",
+        items: [
+          { n: "01", title: "Keine Schein-Metriken", body: "Wir veröffentlichen keine Kundenzahlen, gesparte Stunden oder Erfolgsraten, die wir nicht gemessen haben. Wenn wir die Zahlen haben, zeigen wir sie. Bis dahin bleiben die Case Studies spezifisch und der Rest der Seite still." },
+          { n: "02", title: "Quellcode bleibt bei Ihnen", body: "Jedes Engagement hinterlässt Ihnen Code, Schemas und Runbooks, die Sie zu einem anderen Anbieter mitnehmen können. Kein Vendor-Lock-in by Design — wir verdienen lieber das nächste Projekt, als Sie in diesem zu fangen." },
+          { n: "03", title: "Open-Source zuerst, SaaS wo es sich lohnt", body: "Cal.com, Postgres, Hetzner, Node — wir nutzen das Open-Source-Rückgrat, wo es funktioniert. Wir zahlen für SaaS (Twilio, Stripe, Meta WABA), wo es operativ Sinn ergibt, und machen die Kosten in Ihrer Rechnung transparent." },
+          { n: "04", title: "EU-gehostet, GDPR-nativ", body: "Nur Frankfurt. Keine US-Subprozessoren. AVV (Auftragsverarbeitungsvertrag) bei jedem Engagement, das Kundendaten berührt. Ihre Daten, Ihre Aufbewahrungsregeln, Ihr Recht auf Löschung." },
+        ],
+      },
+      founder: {
+        eyebrow: "[ GRÜNDER ]",
+        heading: "Hasan Dönmez",
+        body: [
+          "OpSolid wird von Hasan Dönmez geführt — Automation- und Systems-Engineer aus Hamburg. Hintergrund in operativer Software für KMU und Mid-Market: ein Jahrzehnt Erfahrung mit den Integrationen, Agents und Dashboards, die diese Seite jetzt als Produkte anbietet.",
+          "OpSolid begann als Solidra, hat sich rund um den Fokus operative Automatisierung umbenannt. Das Studio ist bewusst klein: senior Engineering-Arbeit direkt geliefert, nicht durch Schichten weitergereicht. Wenn Sie einen Call buchen, sprechen Sie mit der Person, die die Arbeit macht.",
+        ],
+        linkedinLabel: "Unternehmen auf LinkedIn",
+        linkedinHref: "https://www.linkedin.com/company/opsolid/",
+      },
+      contact: {
+        eyebrow: "[ GESPRÄCH STARTEN ]",
+        heading: "20 Minuten reichen, um zu sehen ob wir passen",
+        lead: "Kostenloser Discovery-Call: Erzählen Sie uns von einem operativen Schmerzpunkt. Wir sagen Ihnen, ob eines unserer Produkte passt, ob ein Custom-Automation-Sprint die bessere Antwort ist, oder ob Sie weitermachen sollten wie bisher.",
+        cta: "Auf Cal.com buchen",
+      },
+    },
+
+    productPages: {
+      labels: {
+        useCasesEyebrow: "[ ANWENDUNGSFÄLLE ]",
+        useCasesHeading: "Wo es seinen Wert beweist",
+        integrationsEyebrow: "[ INTEGRATIONEN ]",
+        integrationsHeading: "Verdrahtet mit dem Stack, den Sie bereits nutzen",
+        faqEyebrow: "[ FAQ ]",
+        faqHeading: "Häufige Fragen",
+      },
+      pages: {
+        chatbotAgent: {
+          meta: { title: "Chatbot Agent — Web-Chat, Knowledge Base, Lead-Capture | OpSolid", description: "Ein konfigurierter Chatbot-Agent für Ihre Site. Knowledge-Base-Ingestion, Lead-Capture und Übergabe an einen Menschen — verdrahtet mit HubSpot, Pipedrive oder Slack. EU-gehostet, GDPR-nativ." },
+          hero: {
+            metaChip: "CHATBOT AGENT",
+            metaLabel: "[ PRODUKT · 03 ]",
+            title: { pre: "Site-Besucher bekommen Antworten, ", italic: "Ihr Team qualifizierte Leads", post: "" },
+            lead: "Ein Web-Chat-Agent, trainiert auf Ihrer Knowledge Base. Beantwortet Produktfragen während der Geschäftszeiten, erfasst Kontaktdaten danach und übergibt das Gespräch an einen Menschen, wenn der Besucher es verlangt. In Woche eins für Ihre Site konfiguriert — kein Tool, das Ihr Team lernen muss.",
+            ctaPrimary: "20-Minuten-Setup-Call buchen",
+            ctaSecondary: "Preise ansehen",
+            features: [
+              { label: "DEPLOY", value: "Woche 1", sub: "Für Sie konfiguriert" },
+              { label: "ÜBERGABE", value: "Slack · E-Mail", sub: "Mensch übernimmt" },
+              { label: "HOSTING", value: "EU · Frankfurt", sub: "GDPR-nativ" },
+            ],
+          },
+          useCases: [
+            { industry: "B2B SaaS", problem: "Engineers verschwenden Stunden mit denselben Produktfragen im Chat-Widget.", outcome: "Chatbot beantwortet 70 % der Produktfragen aus den Docs; lässt 30 % für das Team." },
+            { industry: "E-Commerce", problem: "Kaufabbruch, weil Versand- und Rückgabefragen nach 18 Uhr unbeantwortet bleiben.", outcome: "24/7-Antworten reduzieren Abbrüche; komplexe Bestellungen eskalieren über Nacht per E-Mail." },
+            { industry: "Professionelle Dienstleistungen", problem: "Inbound-Leads landen im Kontaktformular und springen ab, wenn niemand schnell antwortet.", outcome: "Chatbot qualifiziert, bucht ein Discovery-Call auf Cal.com, legt den Lead in HubSpot ab." },
+          ],
+          integrations: ["HubSpot", "Pipedrive", "Cal.com", "Slack", "Notion", "Zendesk", "Custom Webhooks"],
+          faq: [
+            { q: "Wie lange dauert das Setup?", a: "Woche eins für Standard (1 Site, 50 KB-Dokumente). Zwei bis drei Wochen für Professional mit CRM-Sync. Wir planen einen 20-Minuten-Scoping-Call, prüfen Ihre Knowledge Base und liefern einen konfigurierten Agenten innerhalb von fünf Werktagen nach Kickoff." },
+            { q: "Was passiert, wenn der Chatbot nicht antworten kann?", a: "Drei Optionen: Erfassung einer E-Mail mit Antwort durch Ihr Team innerhalb des vereinbarten SLA (Standard), Live-Übergabe an Slack mit Konversationskontext (Professional) oder 24/7-Eskalation an Ihren eigenen Help Desk (Enterprise). Der Besucher trifft nie auf eine Sackgasse." },
+            { q: "Ist das nur ChatGPT in einer Box?", a: "Nein. Wir verwenden moderne LLMs als eine Komponente, gründen aber jede Antwort auf Ihrer indizierten Knowledge Base, prüfen jede Antwort und ermöglichen Ihrem Team, Antworten in einem Dashboard zu überprüfen und zu bearbeiten. Das Modell erfindet keine Fakten über Ihr Produkt." },
+            { q: "Wo werden die Daten gehostet?", a: "Hetzner / IONOS Frankfurt. Nur EU. Keine US-Subprozessoren. Konversationsverlauf gehört Ihnen, exportierbar als CSV oder API, auf Anfrage löschbar." },
+          ],
+        },
+        whatsappAgent: {
+          meta: { title: "WhatsApp Agent — Business API, automatisierte Antworten, Broadcast | OpSolid", description: "Ein konfigurierter WhatsApp-Business-Agent — automatisierte Antworten, Broadcast-Kampagnen, CRM-Sync und Übergabe an einen Menschen. Meta-WABA-Durchgriff, kein versteckter Aufschlag." },
+          hero: {
+            metaChip: "WHATSAPP AGENT",
+            metaLabel: "[ PRODUKT · 04 ]",
+            title: { pre: "WhatsApp antwortet, ", italic: "während Ihr Team schläft", post: "" },
+            lead: "Ein automatisierter Agent auf Ihrer WhatsApp-Business-Nummer. Templates, Broadcast-Kampagnen, Lead-Capture-Flows, Übergabe an Menschen, wenn das Skript endet. Meta-WABA-Konversationskosten werden transparent durchgereicht — kein versteckter Aufschlag in Ihrer Rechnung.",
+            ctaPrimary: "20-Minuten-Setup-Call buchen",
+            ctaSecondary: "Preise ansehen",
+            features: [
+              { label: "API", value: "Meta WABA", sub: "Offiziell, kein Gateway" },
+              { label: "DURCHGRIFF", value: "Transparent", sub: "Kein versteckter Aufschlag" },
+              { label: "TEAM", value: "Multi-User", sub: "Rollen & Routing" },
+            ],
+          },
+          useCases: [
+            { industry: "Lokaler Einzelhandel", problem: "Kunden fragen über Öffnungszeiten, Bestand und Rückgaben auf WhatsApp; Personal beantwortet den ganzen Tag dieselben fünf Fragen.", outcome: "Auto-Antwort übernimmt die FAQ; Personal kümmert sich um echten Verkauf, nicht um Status-Updates." },
+            { industry: "Hospitality", problem: "Buchungsanfragen kommen um 23 Uhr auf WhatsApp und konvertieren schlecht, weil die Rezeption erst um 9 Uhr antwortet.", outcome: "Agent bestätigt Verfügbarkeit, nimmt die Buchung an, sendet Zahlungslink — auch wenn die Rezeption geschlossen ist." },
+            { industry: "Grenzüberschreitende Dienste", problem: "Mehrsprachiger Support auf WhatsApp belastet die Teamkapazität; Team kommt mit DE/EN/TR-Nachfrage nicht hinterher.", outcome: "Agent antwortet in der Sprache des Besuchers, übergibt nur bei Bedarf an das richtige Teammitglied." },
+          ],
+          integrations: ["Meta WABA", "HubSpot", "Pipedrive", "Cal.com", "Stripe", "Twilio Fallback", "Custom Webhooks"],
+          faq: [
+            { q: "Brauche ich eine Meta-WABA-Nummer?", a: "Ja — Sie stellen eine Nummer bereit, die wir in Ihrem Auftrag bei Meta registrieren. Wenn Sie bereits eine WABA-Nummer haben, migrieren wir sie. Die Nummer bleibt Ihre; Sie können sie jederzeit mitnehmen." },
+            { q: "Wie funktionieren die Konversationskosten?", a: "Meta berechnet pro 24-Stunden-Konversationsfenster (~€0,05–0,15 in der EU je nach Kategorie). Bei Standard und Professional fügen wir einen kleinen Aufschlag pro Nachricht hinzu; bei Enterprise reichen wir Metas Preis ohne Aufschlag durch." },
+            { q: "Kann mein Team das Gespräch manuell übernehmen?", a: "Ja — jede Konversation hat einen 'Mensch übernimmt'-Button in unserem Dashboard, oder Sie routen zu einem Slack-Kanal mit vollem Kontext. Sobald ein Mensch übernimmt, schweigt der Agent, bis Sie den Chat als gelöst markieren." },
+            { q: "Ist Broadcast spam-sicher?", a: "Wir verwenden ausschließlich Metas vorab genehmigte Template-Nachrichten und respektieren Opt-out-Anfragen automatisch. Missbrauch führt zur Sperrung Ihrer Nummer durch Meta — wir konfigurieren konservative Defaults, die Ihre Nummer compliant halten." },
+          ],
+        },
+        bookingAgent: {
+          meta: { title: "Booking Agent — Web, Voice, WhatsApp Buchungen → Cal.com | OpSolid", description: "Multi-Channel-Buchungs-Agent. Web-Widget, Voice-Intake, WhatsApp-Bestätigungen, No-Show-Recovery — synchronisiert mit Cal.com oder Ihrem eigenen Kalender. EU-gehostet." },
+          hero: {
+            metaChip: "BOOKING AGENT",
+            metaLabel: "[ PRODUKT · 05 ]",
+            title: { pre: "Buchungen kommen über Web, Voice und WhatsApp — ", italic: "der Kalender bleibt sauber", post: "" },
+            lead: "Ein Buchungs-Agent, der Intake aus jedem Kanal nimmt, Verfügbarkeit gegen Ihren echten Kalender prüft, Erinnerungen sendet und No-Shows zurückgewinnt. Cal.com unter der Haube, unsere Intelligenz darüber — funktioniert für Solo-Praxen, Multi-Staff-Service-Betriebe und Multi-Standort-Operationen.",
+            ctaPrimary: "20-Minuten-Setup-Call buchen",
+            ctaSecondary: "Preise ansehen",
+            features: [
+              { label: "KANÄLE", value: "Web · Voice · WA", sub: "Alle in einen Kalender" },
+              { label: "KALENDER", value: "Cal.com", sub: "Open-Source-Kern" },
+              { label: "RECOVERY", value: "Auto", sub: "No-Show-Flow eingebaut" },
+            ],
+          },
+          useCases: [
+            { industry: "Salons / Friseure", problem: "Telefonbuchungen unterbrechen den Service; Kunden buchen doppelt oder erscheinen ohne Bescheid nicht.", outcome: "Voice und Web nehmen 80 % der Buchungen; SMS-Erinnerungen halbieren die No-Show-Rate." },
+            { industry: "Kliniken", problem: "Rezeption verbringt Stunden mit Bestätigungsanrufen und Umbuchungen.", outcome: "Erinnerungen + Auto-Rebook-Flow erledigen das meiste; Rezeption kümmert sich nur um Ausnahmen." },
+            { industry: "Multi-Staff-Agenturen", problem: "Round-Robin-Buchung über Teammitglieder versagt, wenn Kalender desynchronisiert sind.", outcome: "Echtzeit-Cal.com-Integration hält alle in einer Quelle der Wahrheit; Buchungen routen nach Skill oder Auslastung." },
+          ],
+          integrations: ["Cal.com", "Google Calendar", "Outlook", "Twilio", "Stripe (Anzahlung)", "HubSpot", "Slack-Benachrichtigungen"],
+          faq: [
+            { q: "Muss ich Cal.com verwenden?", a: "Cal.com ist der Default — Open-Source und auf Professional und Enterprise hosten wir es in Ihrer Infrastruktur. Wir können auch nativ mit Google Calendar, Outlook oder jedem CalDAV-Kalender verdrahten." },
+            { q: "Kann es Anzahlungen einziehen?", a: "Ja, auf Enterprise nehmen wir eine konfigurierbare Anzahlung beim Buchen via Stripe entgegen. Der Flow handhabt Rückerstattungen, Teil-Captures bei No-Show und SEPA für deutsche Kunden." },
+            { q: "Was ist mit Multi-Standort?", a: "Enterprise unterstützt unbegrenzte Standorte, jeder mit eigenen Kalendern, Geschäftszeiten und Routing-Regeln. Besucher wählen zuerst den Standort, dann das Teammitglied." },
+            { q: "Wie funktioniert No-Show-Recovery?", a: "Wenn eine Buchung verpasst wird, sendet der Agent eine Folgenachricht mit der Bitte, innerhalb von 48 Stunden umzubuchen. Wenn der Kunde umbucht, keine Gebühr. Wenn er nicht antwortet, können Sie Auto-Rebook-Angebote oder finale Erinnerungen konfigurieren." },
+          ],
+        },
+        emailAgent: {
+          meta: { title: "Email Agent — Inbox-Triage, Auto-Antwort, Eskalation | OpSolid", description: "Ein E-Mail-Automatisierungs-Agent für Shared Inboxes. KI-Triage, konfigurierbare Auto-Antwort, Eskalationsregeln, CRM-Logging. Front-Style UX ohne Front-Preise." },
+          hero: {
+            metaChip: "EMAIL AGENT",
+            metaLabel: "[ PRODUKT · 06 ]",
+            title: { pre: "Triage und Auto-Antwort im Postfach, ", italic: "ohne Ihr Team neu zu schulen", post: "" },
+            lead: "Ein E-Mail-Agent, der die Shared Inbox liest, Nachrichten klassifiziert, Antworten zur Prüfung entwirft, dringende Fälle an Slack oder einen Senior eskaliert und den Rest in Ihrem CRM protokolliert. Funktioniert mit Front, Help Scout oder einfachem Gmail / Outlook — Ihr Team wechselt nicht das Tool.",
+            ctaPrimary: "20-Minuten-Setup-Call buchen",
+            ctaSecondary: "Preise ansehen",
+            features: [
+              { label: "INBOX", value: "Gmail · Outlook · Front", sub: "Kein Tool-Wechsel" },
+              { label: "TRIAGE", value: "Kategorisiert", sub: "Auto-Tag + Priorität" },
+              { label: "ENTWÜRFE", value: "Prüfbar", sub: "Team genehmigt vor dem Senden" },
+            ],
+          },
+          useCases: [
+            { industry: "Service-Desk", problem: "Inbox von 200/Tag heißt, dringende Tickets liegen stundenlang neben Newsletter-Anmeldungen.", outcome: "Triage taggt 'dringend / standard / niedrig'; Team arbeitet zuerst die dringende Schlange ab, Agent entwirft Antworten für Standard." },
+            { industry: "Sales-Ops", problem: "Eingehende Produktfragen und Preisanfragen gehen in einer generischen info@-Inbox unter.", outcome: "Sales-relevante E-Mails routen zu HubSpot, Entwürfe gehen an den richtigen Rep, niedrigprior. Nachrichten erhalten eine höfliche Eingangsbestätigung." },
+            { industry: "Hospitality", problem: "Rezeptionsteam verbringt Vormittage mit Inbox-Aufräumen, bevor der Service beginnt.", outcome: "Agent bearbeitet Bestätigungen, FAQ-Antworten und Routing über Nacht — Rezeption prüft nur Ausnahmen." },
+          ],
+          integrations: ["Gmail / Workspace", "Outlook / Microsoft 365", "Front", "Help Scout", "HubSpot", "Pipedrive", "Slack"],
+          faq: [
+            { q: "Sendet es Antworten ohne meine Genehmigung?", a: "Standard sendet nur Entwürfe — Ihr Team prüft und klickt Senden. Professional fügt optionales Auto-Senden für freigegebene Antworttypen hinzu (z. B. Öffnungszeiten, einfache FAQs). Enterprise unterstützt vollautomatisches Senden mit Audit-Log und Rollback. Sie entscheiden, wo Sie auf dem Spektrum stehen wollen." },
+            { q: "Kann es unseren Antwortstil lernen?", a: "Ja — wir indizieren Ihre letzten 90 Tage gesendeter Mails, um Tonalität, Signatur und gängige Formulierungen zu lernen. Entwürfe lesen sich wie vom Team geschrieben, nicht wie ein generischer KI-Assistent." },
+            { q: "Was ist mit GDPR für E-Mail-Inhalt?", a: "E-Mail-Inhalt wird nur in der EU verarbeitet. Wir behalten Konversationsverlauf für die in Ihrer DPA angegebene Periode (Default 24 Monate). Ein-Klick-Export und -Löschung unterstützt." },
+            { q: "Funktioniert es neben Front?", a: "Ja — Email Agent verbindet sich via API mit Front und arbeitet innerhalb Ihrer bestehenden Front-Workflows. Gleiches gilt für Help Scout. Sie migrieren nicht; Sie ergänzen." },
+          ],
+        },
+        leadQualifierAgent: {
+          meta: { title: "Lead Qualifier Agent — Formular, Chat, Voice → BANT-Scoring | OpSolid", description: "Lead-Qualifizierungs-Agent, der Intake aus jedem Kanal nimmt, gegen Ihre ICP scort und qualifizierte Leads mit vollem Kontext an Ihr CRM pusht." },
+          hero: {
+            metaChip: "LEAD QUALIFIER AGENT",
+            metaLabel: "[ PRODUKT · 07 ]",
+            title: { pre: "Vertrieb spricht ", italic: "nur mit qualifizierten Leads", post: "" },
+            lead: "Ein Qualifizierungs-Agent, der auf Ihren Formularen, Web-Chat und eingehender Voice läuft. Stellt die richtigen Discovery-Fragen, scort gegen ICP- und BANT-Kriterien und routet nur die Qualifizierten an Ihr Sales-Team. Unqualifizierte Besucher bekommen einen höflichen nächsten Schritt — keinen verschwendeten SDR-Call.",
+            ctaPrimary: "20-Minuten-Setup-Call buchen",
+            ctaSecondary: "Preise ansehen",
+            features: [
+              { label: "INTAKE", value: "Form · Chat · Voice", sub: "Alles einheitlich gescort" },
+              { label: "SCORING", value: "BANT + ICP", sub: "Anpassbares Modell" },
+              { label: "ROUTING", value: "Pro Rep / Region", sub: "Round-Robin oder regelbasiert" },
+            ],
+          },
+          useCases: [
+            { industry: "B2B SaaS", problem: "Demo-Anfragen strömen herein; SDRs verbrennen Zeit mit Tire-Kickern, während echte Prospects warten.", outcome: "Agent qualifiziert zuerst; SDRs sehen nur ICP-Match-Leads mit bereits gesammeltem Intent-Signal." },
+            { industry: "Agenturen", problem: "Inbound-'Wie viel?'-Anfragen bleiben unbeantwortet, weil Preise vom Scope abhängen.", outcome: "Agent führt Scoping-Fragen durch, landet einen qualifizierten Intro-Call nur wenn Budget und Timeline passen." },
+            { industry: "Outbound-lastige Teams", problem: "Apollo- / Outreach-Antworten brauchen schnelle Triage, um Open Rates hoch zu halten.", outcome: "Agent liest Antworten, klassifiziert Intent, plant Follow-up nur bei positiven Signalen." },
+          ],
+          integrations: ["HubSpot", "Pipedrive", "Salesforce", "Apollo.io", "Outreach.io", "Slack", "Custom CRM via Webhook"],
+          faq: [
+            { q: "Wie ist 'qualifiziert' definiert?", a: "Wir definieren es gemeinsam mit Ihnen im Kickoff: ICP-Fit (Branche, Größe, Rolle), Intent-Signale (spezifische Fragen, Dringlichkeitsmarker) und BANT (Budget, Authority, Need, Timeline). Die Definition steht schriftlich in Ihrem Vertrag — Abrechnung pro qualifiziertem Lead kann nur Leads in Rechnung stellen, die passen." },
+            { q: "Kann ich das Scoring überschreiben?", a: "Ja. Sales-Team kann jeden Lead im Dashboard als 'fehlqualifiziert' markieren; das Modell adaptiert. Wir trainieren monatlich auf den Überschreibungen Ihres Teams — das Modell wird im Lauf der Zeit schärfer auf Ihre ICP." },
+            { q: "Was passiert mit unqualifizierten Leads?", a: "Sie bekommen einen höflichen nächsten Schritt: ein Content-Stück, eine Self-Service-Warteliste, einen Community-Link oder eine 'Wir sind nicht der richtige Fit, hier ist es'-Empfehlung. Niemals geghosted, niemals verschwendet." },
+            { q: "Funktioniert es auf meinem bestehenden Chat-Tool?", a: "Ja — Lead Qualifier verbindet sich mit Intercom, Drift, Ihrem Custom-Widget oder unserem Chatbot Agent. Der Qualifizierungs-Flow läuft als Schicht darüber, nicht als Ersatz." },
+          ],
+        },
+        customAutomation: {
+          meta: { title: "Custom Automation — Sprint, Projekt, Retainer | OpSolid", description: "Workflow-Automatisierungs-Builds für deutsches Mid-Market-B2B. Sprint, Projekt oder Retainer-Engagement — Ihr Quellcode, Ihre Daten, kein Vendor-Lock-in." },
+          hero: {
+            metaChip: "CUSTOM AUTOMATION",
+            metaLabel: "[ SERVICE · 08 ]",
+            title: { pre: "Workflows, die Standard-Tools ", italic: "nicht erreichen", post: "" },
+            lead: "Manchmal ist die Antwort kein SaaS — sondern ein Engineer, der die Integration baut, die Ihr ERP, Ihr Lager und Ihr CRM so verbindet, wie Ihr Geschäft läuft. Sprint für einen einzelnen Workflow, Projekt für eine Digital-Ops-Initiative oder ein Monatsretainer, der weiterliefert. Quellcode bleibt bei Ihnen.",
+            ctaPrimary: "30-Minuten-Scoping-Call buchen",
+            ctaSecondary: "Preise ansehen",
+            features: [
+              { label: "ENGAGEMENT", value: "Sprint · Projekt · Retainer", sub: "Scope passt zum Bedarf" },
+              { label: "EIGENTUM", value: "Quellcode bei Ihnen", sub: "Kein Lock-in" },
+              { label: "STACK", value: "Open-Source zuerst", sub: "Hetzner · Postgres · Node" },
+            ],
+          },
+          useCases: [
+            { industry: "Logistik", problem: "Lagerdaten exportieren als CSV, Finanz-ERP frisst EDI, manuelle Übersetzung verbraucht eine FTE pro Woche.", outcome: "Sprint baute einen Übersetzungsdienst; Finanzen erhält saubere EDI innerhalb von zwei Minuten nach Lager-Export." },
+            { industry: "Real Estate", problem: "Inbound-Leads verteilt auf Immoscout, Webformulare und WhatsApp; keine Single-Source-of-Truth.", outcome: "Projekt konsolidierte alle Kanäle in HubSpot mit Deduplizierung und Kontaktanreicherung." },
+            { industry: "Multi-Entity-Holding", problem: "Sechs Tochtergesellschaften, sechs Buchhaltungssysteme, monatliche Konsolidierung dauert eine Woche.", outcome: "Retainer liefert weiter Integrationen: Konsolidierung läuft jetzt nächtlich, am Morgen audit-bereit." },
+          ],
+          integrations: ["Postgres", "Node.js / TypeScript", "Python", "n8n", "Zapier (wenn sinnvoll)", "Hetzner", "Custom APIs"],
+          faq: [
+            { q: "Warum nicht einfach Zapier oder Make verwenden?", a: "Wir tun das — wenn sie passen. Zapier und Make sind großartig für einfache Connectors. Sie schmerzen ab einer gewissen Größe (Kosten, Debugging, Zuverlässigkeit) und können keine geschäftsspezifische Logik. Wir helfen Ihnen zu entscheiden, wo jedes Tool seinen Wert beweist, und bauen den Rest." },
+            { q: "Wie funktioniert Scoping?", a: "Kostenloser 30-Minuten-Discovery-Call. Wenn beide Seiten weitermachen wollen, führen wir einen bezahlten Scoping-Workshop durch (~€1.500, bei Vertragsabschluss von der Projektgebühr abgezogen), der eine schriftliche Spec und einen Festpreis liefert. Sie gehen in beiden Fällen mit der Spec." },
+            { q: "Was ist der Tagessatz?", a: "€1.200/Tag für senior Automation-Engineering, abgerechnet in Halbtages-Schritten. Darunter ist die Arbeit Junior-Niveau oder Sie werden auf Tooling überberechnet. Projektpreise schlagen meist Tagessätze für gut gescopete Arbeit — das ist der Standard-Sprint zu €4.500." },
+            { q: "Unterschreiben Sie AVVs?", a: "Ja — Standard-deutsche-B2B-AVV (Auftragsverarbeitungsvertrag) bei jedem Engagement, das Kundendaten berührt. NDA vor Scoping, wenn Sie vertraulichen Kontext teilen müssen." },
+          ],
+        },
       },
     },
 

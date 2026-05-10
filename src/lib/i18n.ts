@@ -1,6 +1,17 @@
 export const LOCALES = ["en", "de", "tr", "es", "it", "fr", "ar"] as const;
 export type Locale = (typeof LOCALES)[number];
 
+/**
+ * Locales considered "production-ready" for crawlers, hreflang, and sitemap.
+ * Only fully-translated locales should appear here — partial locales (es/it/
+ * fr/ar that fall back to English for most copy) are EXCLUDED to avoid
+ * duplicate-content penalties and low-quality content signals on Google.
+ *
+ * Promote a locale to PUBLIC_LOCALES only after the v2 namespace + product
+ * pages + impressum + privacy are translated and reviewed.
+ */
+export const PUBLIC_LOCALES: ReadonlyArray<Locale> = ["en", "de", "tr"] as const;
+
 export const DEFAULT_LOCALE: Locale = "en";
 
 export const LOCALE_LABELS: Record<Locale, string> = {

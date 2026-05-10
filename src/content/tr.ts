@@ -3317,6 +3317,7 @@ export const content: Content = {
         productsHeading: "Ürünler",
         servicesHeading: "Hizmetler",
         studioHeading: "Stüdyo",
+        reachHeading: "İletişim kanalları",
         legalHeading: "Hukuki",
         services: {
           workflow: "Workflow otomasyonu",
@@ -3324,9 +3325,29 @@ export const content: Content = {
           internal: "Dahili araçlar",
           ai: "Yapay zekâ destekli süreçler",
         },
+        productsList: {
+          voiceAgent: "Voice Agent",
+          verso: "Verso",
+          chatbot: "Chatbot Agent",
+          whatsapp: "WhatsApp Agent",
+          booking: "Booking Agent",
+          email: "Email Agent",
+          leadQualifier: "Lead Qualifier",
+          customAutomation: "Custom Automation",
+          kutasia: "Kutasia",
+        },
         studio: {
+          pricing: "Fiyatlandırma",
+          about: "Hakkımızda",
           journal: "Günlük",
           contact: "İletişim",
+        },
+        reach: {
+          email: "hello@opsolid.de",
+          linkedinLabel: "LinkedIn",
+          linkedinHref: "https://www.linkedin.com/company/opsolid/",
+          githubLabel: "GitHub",
+          githubHref: "https://github.com/opsolid",
         },
         legal: {
           privacy: "Gizlilik",
@@ -3342,16 +3363,16 @@ export const content: Content = {
     home: {
       hero: {
         metaChip: "",
-        metaLabel: "",
+        metaLabel: "[ OPSOLID · 2026 ]",
         title: {
-          pre: "İşletmenize ",
-          italic: "özel kurulan",
-          post: " operasyonel otomasyon",
+          pre: "Operasyon, bir işletmeyi ayakta tutan sessiz iştir. ",
+          italic: "Onu döndüren sistemleri biz kuruyoruz",
+          post: ".",
         },
         lead:
-          "OpSolid, operasyonunuzun arka planında sessizce çalışan sistemler kurar. Orta ölçekli ekipler için iş akışı otomasyonu, sistem entegrasyonu, dahili araçlar ve yapay zekâ destekli süreçler. Mevcut yığınınızı yeniden kurmadan, sürecinize doğrudan entegre olur.",
+          "OpSolid, Alman mid-market B2B için bağımsız bir otomasyon stüdyosudur. Telefonda voice ajanları, sitede chatbot'lar, CRM'iniz ile ERP'niz ve takviminiz arasındaki entegrasyonlar — ekibinizin en değerli saatlerini sadece insanların yapabileceği işlere ayırması için tasarlanmış. Stack'inize ilk haftada yapılandırılır. EU-hostlu, GDPR-uyumlu, kaynak kodu sizde.",
         ctaPrimary: "Tanışma görüşmesi planla",
-        ctaSecondary: "Neler inşa ediyoruz",
+        ctaSecondary: "Fiyatları gör",
         stats: [],
       },
 
@@ -3842,6 +3863,268 @@ export const content: Content = {
             ],
           },
         ],
+      },
+    },
+
+    productsHub: {
+      meta: {
+        title: "Ürünler — Voice, Verso, Chat, WhatsApp, Booking, Email, Lead, Custom, Kutasia | OpSolid",
+        description: "Tek stüdyodan dokuz ürün: telefon, chat, WhatsApp, e-posta ve lead qualification için yapay zekâ ajanları, premium dijital kartvizit (Verso), özel workflow otomasyonu ve hospitality için Kutasia. Her ürün şeffaf fiyatlı ve EU-hostlu.",
+      },
+      hero: {
+        eyebrow: "[ ÜRÜNLER · 2026 ]",
+        title: { pre: "Dokuz ürün, ", italic: "tek stüdyo", post: "" },
+        lead: "Bu sayfadaki her ürünü aynı ekip kuruyor ve işletiyor. Voice, chat ve WhatsApp ajanları aynı entegrasyon omurgasını paylaşır. Premium dijital kartvizitimiz Verso 48 saatte teslim edilir. Custom Automation, geri kalanın ulaşamadığı workflow'ları halleder. Kutasia, tüm bunların hospitality'ye uygulanmış halidir. Yüzeyi siz seçin, gerisini biz yaparız.",
+        primaryCta: "Fiyatları gör",
+        secondaryCta: "Tanışma görüşmesi planla",
+      },
+      featured: {
+        eyebrow: "[ AMİRAL GEMİLERİ ]",
+        heading: "Bizi hatırlatan iki ürün",
+        items: [
+          { id: "voice-agent", name: "Voice AI Agent", tagline: "Retell veya Vapi üzerinde 24/7 telefon resepsiyonu.", body: "Çok dilli telefon yanıtı, takvim senkronizasyonu, script bittiğinde insana devir. Hamburg taksi dispeçlerinde, Bavyera otellerinde ve Almanya çapında B2B service desk'lerinde canlı.", href: "/products/voice-agent", startingAt: "€1.500 setup + €299/ay'dan", badge: "Canlı" },
+          { id: "verso", name: "Verso by OpSolid", tagline: "Premium dijital kartvizit · NFC + QR + custom domain.", body: "Almanya'da hostlu, elle tasarlanmış dijital profiller 48 saatte teslim. 20+ sektör şablonu. HubSpot entegrasyonu. Linktree olmadan kağıt kartviziti değiştirir.", href: "/products/digital-card", startingAt: "€29 setup + €4/kullanıcı/ay'dan", badge: "Canlı" },
+        ],
+      },
+      grid: {
+        eyebrow: "[ AJANLAR & HİZMETLER ]",
+        heading: "Yedi tane daha, her biri ne yaptığında net",
+        items: [
+          { id: "chatbot-agent", name: "Chatbot Agent", tagline: "Knowledge base'inizle eğitilmiş web chat.", startingAt: "€149/ay'dan", href: "/products/chatbot-agent", category: "AJAN" },
+          { id: "whatsapp-agent", name: "WhatsApp Agent", tagline: "WhatsApp Business otomatik yanıt + broadcast.", startingAt: "€199/ay'dan", href: "/products/whatsapp-agent", category: "AJAN" },
+          { id: "booking-agent", name: "Booking Agent", tagline: "Multi-kanal randevu → Cal.com → hatırlatma.", startingAt: "€99/ay'dan", href: "/products/booking-agent", category: "AJAN" },
+          { id: "email-agent", name: "Email Agent", tagline: "Inbox triage, AI taslak yanıt, eskalasyon.", startingAt: "€39/koltuk/ay'dan", href: "/products/email-agent", category: "AJAN" },
+          { id: "lead-qualifier-agent", name: "Lead Qualifier Agent", tagline: "Form, chat ve voice intake'te BANT scoring.", startingAt: "€249/ay'dan", href: "/products/lead-qualifier-agent", category: "AJAN" },
+          { id: "custom-automation", name: "Custom Automation", tagline: "Sprint, proje veya retainer engineering.", startingAt: "€4.500 sprint'ten", href: "/products/custom-automation", category: "HİZMET" },
+          { id: "kutasia", name: "Kutasia", tagline: "Hospitality operatörleri için multi-tenant SaaS.", startingAt: "€39/koltuk/ay'dan", href: "/products/kutasia", category: "DİKEY" },
+        ],
+      },
+      bottomCta: {
+        eyebrow: "[ HANGİSİ EMİN DEĞİL MİSİNİZ? ]",
+        heading: "Darboğazınızı söyleyin — doğru ürünü gösterelim, ya da hiçbirini",
+        lead: "20 dakikalık görüşme bizim olmadığımıza karar verirse, o da faydalı 20 dakika. Birden fazla kez prospect'leri Cal.com'a, bir Zapier flow'una ya da 'bir junior işe al'a yönlendirdik.",
+        cta: "Ücretsiz 20 dakika rezerve et",
+      },
+    },
+
+    about: {
+      meta: {
+        title: "Hakkımızda — OpSolid · Bağımsız otomasyon stüdyosu | Hamburg",
+        description: "OpSolid bağımsız bir otomasyon stüdyosudur. Hamburg'da Hasan Dönmez tarafından kuruldu. Alman mid-market B2B için operasyonel sistemler kuruyoruz — voice, chat, entegrasyon ve workflow otomasyonu. EU-hostlu, kaynak kodu sizde.",
+      },
+      hero: {
+        eyebrow: "[ HAKKIMIZDA · 2026 ]",
+        title: { pre: "Bağımsız bir otomasyon stüdyosu, ", italic: "sonuç odaklı kurulmuş", post: ", platform odaklı değil" },
+        lead: "OpSolid, off-the-shelf SaaS'ın ulaşamadığı operasyonel işi yapmak için kuruldu: ERP'nizi CRM'inize bağlayan entegrasyonu inşa etmek, sektörünüzün dilinde gece çağrılarını alan voice ajanını yapılandırmak ve 40 saat manuel veri girişini 40 dakika istisna incelemesine çeviren workflow'u teslim etmek. Alman mid-market B2B, EU-hostlu, kaynak kodu sizde.",
+        primaryCta: "Tanışma görüşmesi planla",
+        secondaryCta: "Fiyatları gör",
+      },
+      principles: {
+        eyebrow: "[ NASIL ÇALIŞIYORUZ ]",
+        heading: "Dört prensip, dürüstçe tutulmuş",
+        items: [
+          { n: "01", title: "Sahte metrik yok", body: "Ölçmediğimiz müşteri sayılarını, kazanılan saatleri veya başarı oranlarını yayınlamıyoruz. Sayılar elimizde olduğunda göstereceğiz. O zamana kadar case study'ler spesifik kalır, sayfanın geri kalanı sessiz." },
+          { n: "02", title: "Kaynak kodu sizde kalır", body: "Her engagement size başka bir sağlayıcıya götürebileceğiniz kod, şema ve runbook bırakır. Tasarım gereği vendor lock-in yok — sizi bu projede tutmaktansa bir sonraki projeyi kazanmayı tercih ederiz." },
+          { n: "03", title: "Önce açık kaynak, hak edince SaaS", body: "Cal.com, Postgres, Hetzner, Node — açık kaynak omurgayı çalıştığı yerde kullanırız. Operasyonel olarak mantıklıysa SaaS için (Twilio, Stripe, Meta WABA) öderiz ve maliyetini faturanızda şeffaf yaparız." },
+          { n: "04", title: "EU-hostlu, GDPR-uyumlu", body: "Sadece Frankfurt. ABD subprocessor yok. Müşteri verisine dokunan her engagement'ta AVV (Auftragsverarbeitungsvertrag). Verileriniz, saklama kurallarınız, silme hakkınız." },
+        ],
+      },
+      founder: {
+        eyebrow: "[ KURUCU ]",
+        heading: "Hasan Dönmez",
+        body: [
+          "OpSolid, Hamburg'dan otomasyon ve systems engineer Hasan Dönmez tarafından kuruldu ve yürütülüyor. KOBİ ve mid-market için operasyonel yazılım geçmişi: bu sitenin şimdi ürün olarak sunduğu entegrasyon, ajan ve dashboard'ları inşa etmekle geçmiş bir on yıl.",
+          "OpSolid Solidra olarak başladı, operasyonel otomasyon odağı etrafında yeniden markalaştı. Stüdyo bilinçli olarak küçük: kıdemli engineering işi katmanlara delege edilmeden doğrudan teslim edilir. Bir call rezerve ederseniz, işi yapacak kişiyle konuşursunuz.",
+        ],
+        linkedinLabel: "LinkedIn'de şirket",
+        linkedinHref: "https://www.linkedin.com/company/opsolid/",
+      },
+      contact: {
+        eyebrow: "[ KONUŞMA BAŞLAT ]",
+        heading: "Uyumlu olup olmadığımızı görmek için 20 dakika yeterli",
+        lead: "Ücretsiz discovery görüşmesi: bize bir operasyonel acı noktasını anlatın. Ürünlerimizden birinin uyup uymadığını, Custom Automation sprint'inin daha iyi cevap olup olmadığını veya yaptığınıza devam etmeniz gerektiğini söyleriz.",
+        cta: "Cal.com'da rezerve et",
+      },
+    },
+
+    productPages: {
+      labels: {
+        useCasesEyebrow: "[ KULLANIM SENARYOLARI ]",
+        useCasesHeading: "Değerini nerede kanıtlıyor",
+        integrationsEyebrow: "[ ENTEGRASYONLAR ]",
+        integrationsHeading: "Mevcut stack'inize entegre",
+        faqEyebrow: "[ SSS ]",
+        faqHeading: "Sık sorulan sorular",
+      },
+      pages: {
+        chatbotAgent: {
+          meta: { title: "Chatbot Agent — Web chat, knowledge base, lead capture | OpSolid", description: "Siteniz için yapılandırılmış chatbot ajanı. Knowledge base ingestion, lead capture ve insana devir — HubSpot, Pipedrive veya Slack ile bağlı. EU-hostlu, GDPR-uyumlu." },
+          hero: {
+            metaChip: "CHATBOT AGENT",
+            metaLabel: "[ ÜRÜN · 03 ]",
+            title: { pre: "Site ziyaretçileri yanıt alır, ", italic: "ekibiniz nitelikli lead", post: "" },
+            lead: "Knowledge base'inizle eğitilmiş bir web-chat ajanı. Mesai saatlerinde ürün sorularını yanıtlar, mesai dışında iletişim bilgisi toplar ve ziyaretçi istediğinde konuşmayı insana devreder. İlk hafta sitenize göre yapılandırılır — ekibinize öğrenecek bir araç değildir.",
+            ctaPrimary: "20 dakikalık kurulum görüşmesi",
+            ctaSecondary: "Fiyatları gör",
+            features: [
+              { label: "DEPLOY", value: "Hafta 1", sub: "Sizin için yapılandırıldı" },
+              { label: "DEVİR", value: "Slack · E-mail", sub: "İnsan devralır" },
+              { label: "HOSTING", value: "EU · Frankfurt", sub: "GDPR-uyumlu" },
+            ],
+          },
+          useCases: [
+            { industry: "B2B SaaS", problem: "Mühendisler chat widget'ında aynı ürün sorularını cevaplamakla saatler harcıyor.", outcome: "Chatbot dokümanlardan %70 ürün sorusunu yanıtlar; %30'u ekibe kalır." },
+            { industry: "E-ticaret", problem: "Saat 18 sonrası kargo ve iade soruları yanıtsız kaldığı için sepet terk ediliyor.", outcome: "7/24 yanıtlar terk oranını düşürür; karmaşık siparişler gece e-posta ile eskale edilir." },
+            { industry: "Profesyonel hizmetler", problem: "Inbound lead'ler iletişim formuna düşüyor ve kimse hızlı cevap vermeyince zıplıyor.", outcome: "Chatbot niteler, Cal.com'da discovery call planlar, lead'i HubSpot'a düşürür." },
+          ],
+          integrations: ["HubSpot", "Pipedrive", "Cal.com", "Slack", "Notion", "Zendesk", "Custom webhook"],
+          faq: [
+            { q: "Kurulum ne kadar sürer?", a: "Standard için bir hafta (1 site, 50 KB doküman). CRM senkron'lu Professional için iki-üç hafta. 20 dakikalık scoping görüşmesi planlar, knowledge base'inizi inceler ve kickoff'tan sonra beş iş günü içinde yapılandırılmış ajanı teslim ederiz." },
+            { q: "Chatbot cevaplayamadığında ne olur?", a: "Üç seçenek: e-mail toplama + ekibinizin SLA dahilinde yanıtı (Standard), konuşma bağlamıyla Slack'e canlı devir (Professional) veya kendi help desk'inize 7/24 eskalasyon (Enterprise). Ziyaretçi asla çıkmaz sokağa girmez." },
+            { q: "Bu sadece kutuda ChatGPT mi?", a: "Hayır. Modern LLM'leri bir bileşen olarak kullanırız ama her cevabı indekslenmiş knowledge base'inize dayandırır, her yanıtı denetler ve ekibinizin dashboard'da yanıtları gözden geçirip düzenlemesini sağlarız. Model ürününüz hakkında bilgi uydurmaz." },
+            { q: "Veri nerede hostlanıyor?", a: "Hetzner / IONOS Frankfurt. Sadece EU. Sıfır ABD subprocessor. Konuşma geçmişi sizindir, CSV veya API olarak export edilebilir, talep üzerine silinir." },
+          ],
+        },
+        whatsappAgent: {
+          meta: { title: "WhatsApp Agent — Business API, otomatik yanıt, broadcast | OpSolid", description: "Yapılandırılmış WhatsApp Business ajanı — otomatik yanıt, broadcast kampanyası, CRM senkron ve insana devir. Meta WABA passthrough, gizli markup yok." },
+          hero: {
+            metaChip: "WHATSAPP AGENT",
+            metaLabel: "[ ÜRÜN · 04 ]",
+            title: { pre: "Ekibiniz uyurken ", italic: "WhatsApp yanıt verir", post: "" },
+            lead: "WhatsApp Business numaranızda otomatik bir ajan. Şablon, broadcast kampanyası, lead capture flow'u, script bittiğinde insana devir. Meta WABA konuşma maliyetleri şeffaf şekilde geçer — faturanızda gizli markup olmaz.",
+            ctaPrimary: "20 dakikalık kurulum görüşmesi",
+            ctaSecondary: "Fiyatları gör",
+            features: [
+              { label: "API", value: "Meta WABA", sub: "Resmi, gateway değil" },
+              { label: "PASSTHROUGH", value: "Şeffaf", sub: "Gizli markup yok" },
+              { label: "TAKIM", value: "Multi-user", sub: "Roller ve routing" },
+            ],
+          },
+          useCases: [
+            { industry: "Lokal perakende", problem: "Müşteriler WhatsApp'ta saat, stok ve iade sorar; personel gün boyu aynı beş soruyu cevaplar.", outcome: "Otomatik yanıt SSS'i halleder; personel gerçek satışa odaklanır, status update'lere değil." },
+            { industry: "Hospitality", problem: "Saat 23'te WhatsApp'a düşen booking sorgusu, ön büronun 09'da cevap vermesiyle kötü dönüşür.", outcome: "Ajan müsaitliği teyit eder, booking'i alır, ödeme linki gönderir — ön büro kapalıyken bile." },
+            { industry: "Sınır ötesi hizmetler", problem: "WhatsApp'ta çok dilli destek takım kapasitesini yer; takım DE/EN/TR talebine yetişemiyor.", outcome: "Ajan ziyaretçinin dilinde yanıtlar, sadece gerektiğinde doğru ekip üyesine devreder." },
+          ],
+          integrations: ["Meta WABA", "HubSpot", "Pipedrive", "Cal.com", "Stripe", "Twilio fallback", "Custom webhook"],
+          faq: [
+            { q: "Meta WABA numarasına ihtiyacım var mı?", a: "Evet — sizin adınıza Meta'da kaydedeceğimiz bir numara verirsiniz. Hâlihazırda WABA numaranız varsa migrate ederiz. Numara sizin kalır; ayrılırsanız her zaman taşıyabilirsiniz." },
+            { q: "Konuşma maliyetleri nasıl çalışıyor?", a: "Meta 24-saatlik konuşma penceresi başına ücret alır (kategoriye göre EU'da ~€0,05–0,15). Standard ve Professional'da küçük bir mesaj başına markup ekleriz; Enterprise'da Meta fiyatını markup'sız geçiririz." },
+            { q: "Takımım sohbeti manuel olarak devralabilir mi?", a: "Evet — her konuşmada dashboard'umuzda 'insan devralır' düğmesi var, ya da tam bağlamla bir Slack kanalına route edersiniz. İnsan devraldıktan sonra ajan, sohbeti çözüldü işaretleyene kadar sessiz kalır." },
+            { q: "Broadcast spam-güvenli mi?", a: "Sadece Meta'nın önceden onaylı template mesajlarını kullanır ve opt-out taleplerine otomatik uyar. Kötüye kullanım Meta'nın numaranızı banlamasına yol açar — biz numaranızı uyumlu tutan muhafazakar varsayılanlar yapılandırırız." },
+          ],
+        },
+        bookingAgent: {
+          meta: { title: "Booking Agent — Web, voice, WhatsApp randevu → Cal.com | OpSolid", description: "Multi-kanal booking ajanı. Web widget, voice intake, WhatsApp teyit, no-show recovery — Cal.com veya kendi takviminizle senkron. EU-hostlu." },
+          hero: {
+            metaChip: "BOOKING AGENT",
+            metaLabel: "[ ÜRÜN · 05 ]",
+            title: { pre: "Rezervasyon web, voice ve WhatsApp'tan gelir — ", italic: "takvim temiz kalır", post: "" },
+            lead: "Her kanaldan intake alan, gerçek takviminize karşı müsaitlik teyit eden, hatırlatma gönderen ve no-show'ları geri kazanan bir booking ajanı. Altta Cal.com, üstte bizim zekamız — solo pratisyenler, çok personelli servis işletmeleri ve multi-lokasyon operasyonları için çalışır.",
+            ctaPrimary: "20 dakikalık kurulum görüşmesi",
+            ctaSecondary: "Fiyatları gör",
+            features: [
+              { label: "KANALLAR", value: "Web · Voice · WA", sub: "Hepsi tek takvime" },
+              { label: "TAKVİM", value: "Cal.com", sub: "Açık kaynak çekirdek" },
+              { label: "RECOVERY", value: "Otomatik", sub: "No-show flow yerleşik" },
+            ],
+          },
+          useCases: [
+            { industry: "Salon / berber", problem: "Telefon booking'i servisi keser; müşteriler haber vermeden çift-bookluyor veya gelmiyor.", outcome: "Voice ve web booking'lerin %80'ini alır; SMS hatırlatma no-show oranını yarıya indirir." },
+            { industry: "Klinikler", problem: "Resepsiyon teyit araması ve yeniden booking'le saatler harcıyor.", outcome: "Hatırlatma + auto-rebook flow'u çoğunu halleder; resepsiyon sadece istisnalarla ilgilenir." },
+            { industry: "Multi-staff ajanslar", problem: "Takım üyeleri arasında round-robin booking, takvimler senk dışına çıktığında başarısız olur.", outcome: "Real-time Cal.com entegrasyonu herkesi tek doğruluk kaynağında tutar; booking'ler skill veya iş yüküne göre route olur." },
+          ],
+          integrations: ["Cal.com", "Google Calendar", "Outlook", "Twilio", "Stripe (depozito)", "HubSpot", "Slack bildirim"],
+          faq: [
+            { q: "Cal.com kullanmak zorunda mıyım?", a: "Cal.com varsayılan — açık kaynak ve Professional + Enterprise'da kendi altyapınızda hostluyoruz. Native Google Calendar, Outlook veya CalDAV'lı her takvime de bağlanabiliriz." },
+            { q: "Depozito alabiliyor mu?", a: "Evet, Enterprise'da Stripe ile booking anında yapılandırılabilir depozito alıyoruz. Flow iadeleri, no-show'da kısmi captures'ı ve Alman müşteriler için SEPA'yı yönetir." },
+            { q: "Multi-lokasyon ne durumda?", a: "Enterprise sınırsız lokasyon destekler, her biri kendi takvim setine, mesai saatine ve routing kuralına sahip. Ziyaretçiler önce lokasyonu, sonra personeli seçer." },
+            { q: "No-show recovery nasıl çalışır?", a: "Booking kaçırılırsa ajan 48 saat içinde yeniden booking için takip mesajı gönderir. Müşteri rebookluyorsa ücret yok. Yanıt vermezse auto-rebook teklifi veya nihai hatırlatma yapılandırabilirsiniz." },
+          ],
+        },
+        emailAgent: {
+          meta: { title: "Email Agent — Inbox triage, otomatik yanıt, eskalasyon | OpSolid", description: "Paylaşımlı inbox'lar için e-posta otomasyon ajanı. AI triage, yapılandırılabilir otomatik yanıt, eskalasyon kuralları, CRM logging. Front-style UX, Front fiyatı olmadan." },
+          hero: {
+            metaChip: "EMAIL AGENT",
+            metaLabel: "[ ÜRÜN · 06 ]",
+            title: { pre: "Inbox'ta triage ve otomatik yanıt, ", italic: "ekibinizi yeniden eğitmeden", post: "" },
+            lead: "Paylaşımlı inbox'ı okuyan, mesajları sınıflandıran, yanıt taslakları hazırlayan, acil olanları Slack veya bir kıdemliye eskale eden ve geri kalanı CRM'inize loglayan bir e-posta ajanı. Front, Help Scout veya düz Gmail / Outlook ile uyumlu — ekibiniz araç değiştirmez.",
+            ctaPrimary: "20 dakikalık kurulum görüşmesi",
+            ctaSecondary: "Fiyatları gör",
+            features: [
+              { label: "INBOX", value: "Gmail · Outlook · Front", sub: "Araç değişimi yok" },
+              { label: "TRIAGE", value: "Sınıflandırılmış", sub: "Auto-tag + öncelik" },
+              { label: "TASLAK", value: "Gözden geçirilebilir", sub: "Takım göndermeden onaylar" },
+            ],
+          },
+          useCases: [
+            { industry: "Servis masası", problem: "Günlük 200 inbox demek, acil ticket'ların newsletter abonelikleri yanında saatlerce beklemesi demek.", outcome: "Triage 'acil / standart / düşük' tagler; takım önce acil sırayı çalışır, ajan standart için taslak hazırlar." },
+            { industry: "Sales-ops", problem: "Inbound ürün sorusu ve fiyat talebi genel info@ inbox'ında kayboluyor.", outcome: "Sales-ilgili e-postalar HubSpot'a route olur, taslaklar doğru rep'e gider, düşük öncelikli mesajlar nazik teyit alır." },
+            { industry: "Hospitality", problem: "Resepsiyon takımı servis başlamadan önce inbox temizlemeyle sabahlar harcıyor.", outcome: "Ajan teyitleri, SSS yanıtlarını ve routing'i geceden halleder — resepsiyon sadece istisnaları kontrol eder." },
+          ],
+          integrations: ["Gmail / Workspace", "Outlook / Microsoft 365", "Front", "Help Scout", "HubSpot", "Pipedrive", "Slack"],
+          faq: [
+            { q: "Onayım olmadan yanıt gönderir mi?", a: "Standard sadece taslak gönderir — takımınız gözden geçirir ve gönder'e tıklar. Professional whitelist'lenmiş yanıt türleri için (örn. açılış saatleri, basit SSS) opsiyonel auto-send ekler. Enterprise audit log ve rollback ile tam auto-send destekler. Spektrumda nerede duracağınıza siz karar verirsiniz." },
+            { q: "Yanıt stilimizi öğrenebilir mi?", a: "Evet — son 90 günlük gönderilen mailinizi indeksleriz; ton, imza ve yaygın ifadeleri öğrenir. Taslaklar takım tarafından yazılmış gibi okunur, generik AI asistanı gibi değil." },
+            { q: "E-posta içeriği için GDPR ne durumda?", a: "E-posta içeriği sadece EU'da işlenir. Konuşma geçmişini DPA'nızda belirtilen süre boyunca tutarız (varsayılan 24 ay). Tek tıkla export ve silme desteklenir." },
+            { q: "Front ile birlikte çalışabilir mi?", a: "Evet — Email Agent API üzerinden Front'a bağlanır ve mevcut Front workflow'larınız içinde çalışır. Help Scout için aynı. Migrate etmezsiniz; tamamlarsınız." },
+          ],
+        },
+        leadQualifierAgent: {
+          meta: { title: "Lead Qualifier Agent — Form, chat, voice → BANT scoring | OpSolid", description: "Her kanaldan intake alan, ICP'nize karşı scor eden ve nitelikli lead'leri tam bağlamla CRM'inize push eden lead qualification ajanı." },
+          hero: {
+            metaChip: "LEAD QUALIFIER AGENT",
+            metaLabel: "[ ÜRÜN · 07 ]",
+            title: { pre: "Satış yalnızca ", italic: "nitelikli lead'lerle konuşur", post: "" },
+            lead: "Form, web chat ve inbound voice üzerinde çalışan bir qualification ajanı. Doğru discovery sorularını sorar, ICP ve BANT kriterlerine göre scor eder ve sadece nitelikli olanları sales takımınıza route eder. Niteliksiz ziyaretçiler nazik bir sonraki adım alır — boşa harcanmış SDR call'u değil.",
+            ctaPrimary: "20 dakikalık kurulum görüşmesi",
+            ctaSecondary: "Fiyatları gör",
+            features: [
+              { label: "INTAKE", value: "Form · Chat · Voice", sub: "Hepsi aynı şekilde scor" },
+              { label: "SCORING", value: "BANT + ICP", sub: "Özelleştirilebilir model" },
+              { label: "ROUTING", value: "Rep / bölge", sub: "Round-robin veya kural" },
+            ],
+          },
+          useCases: [
+            { industry: "B2B SaaS", problem: "Demo talepleri akın halinde gelir; SDR'lar tire-kicker'larla zaman yakar, gerçek prospect'ler bekler.", outcome: "Ajan önce niteler; SDR'lar sadece intent sinyali zaten toplanmış ICP-match lead'leri görür." },
+            { industry: "Ajanslar", problem: "Inbound 'ne kadar?' soruları yanıtsız kalır çünkü fiyat scope'a bağlı.", outcome: "Ajan scoping soruları yapar, sadece bütçe ve zaman çizelgesi mantıklıysa nitelikli intro call'u alır." },
+            { industry: "Outbound-ağırlıklı takımlar", problem: "Apollo / Outreach yanıtları open rate'i yüksek tutmak için hızlı triage gerektirir.", outcome: "Ajan yanıtları okur, niyeti sınıflandırır, sadece pozitif sinyallerde follow-up planlar." },
+          ],
+          integrations: ["HubSpot", "Pipedrive", "Salesforce", "Apollo.io", "Outreach.io", "Slack", "Webhook ile custom CRM"],
+          faq: [
+            { q: "'Nitelikli' nasıl tanımlanır?", a: "Kickoff'ta sizinle birlikte tanımlarız: ICP fit (sektör, boyut, rol), intent sinyali (spesifik soru, aciliyet işareti) ve BANT (bütçe, yetki, ihtiyaç, zaman çizelgesi). Tanım kontratınızda yazılı — qualified lead başına faturalandırma sadece eşleşenler için olur." },
+            { q: "Scoring'i geçersiz kılabilir miyim?", a: "Evet. Sales takımı dashboard'da herhangi bir lead'i 'yanlış nitelendirilmiş' işaretleyebilir; model adapte olur. Takımınızın geçersiz kılmaları üzerine aylık yeniden eğitim yaparız — model zamanla ICP'nize daha keskin olur." },
+            { q: "Niteliksiz lead'lere ne olur?", a: "Nazik bir sonraki adım alırlar: bir içerik parçası, self-service waitlist, community linki veya 'biz uygun değiliz, doğrusu bu' yönlendirmesi. Asla ghostlanmaz, asla boşa harcanmaz." },
+            { q: "Mevcut chat aracımda çalışır mı?", a: "Evet — Lead Qualifier Intercom, Drift, custom widget'inize veya bizim Chatbot Agent'imize bağlanır. Qualification flow'u üst katman olarak çalışır, ikame değil." },
+          ],
+        },
+        customAutomation: {
+          meta: { title: "Custom Automation — Sprint, proje, retainer | OpSolid", description: "Alman mid-market B2B için workflow otomasyon inşası. Sprint, proje veya retainer engagement — kaynak kodunuz, verileriniz, vendor lock-in yok." },
+          hero: {
+            metaChip: "CUSTOM AUTOMATION",
+            metaLabel: "[ HİZMET · 08 ]",
+            title: { pre: "Hazır araçların ", italic: "ulaşamadığı workflow'lar", post: "" },
+            lead: "Bazen cevap SaaS değil — ERP'nizi, deponuzu ve CRM'inizi işletmenizin çalıştığı şekilde bağlayan entegrasyonu inşa eden bir engineer. Tek workflow için sprint, dijital-ops girişimi için proje veya teslim etmeye devam eden aylık retainer. Kaynak kodu sizde kalır.",
+            ctaPrimary: "30 dakikalık scoping görüşmesi",
+            ctaSecondary: "Fiyatları gör",
+            features: [
+              { label: "ENGAGEMENT", value: "Sprint · Proje · Retainer", sub: "İhtiyaca göre scope" },
+              { label: "SAHİPLİK", value: "Kaynak kod sizde", sub: "Lock-in yok" },
+              { label: "STACK", value: "Açık kaynak öncelikli", sub: "Hetzner · Postgres · Node" },
+            ],
+          },
+          useCases: [
+            { industry: "Lojistik", problem: "Depo verisi CSV olarak çıkar, finans ERP EDI yer, manuel çeviri haftada bir FTE harcar.", outcome: "Sprint bir çevirici servisi inşa etti; finans depo export'undan sonra iki dakika içinde temiz EDI alır." },
+            { industry: "Real estate", problem: "Inbound lead'ler Immoscout, web form ve WhatsApp'a dağılmış; tek doğruluk kaynağı yok.", outcome: "Proje tüm kanalları HubSpot'ta deduplikasyon ve kontak zenginleştirme ile birleştirdi." },
+            { industry: "Multi-entity holding", problem: "Altı bağlı şirket, altı muhasebe sistemi, aylık konsolidasyon bir hafta sürüyor.", outcome: "Retainer entegrasyon teslim etmeye devam eder: konsolidasyon artık geceleri çalışır, sabah audit-hazır." },
+          ],
+          integrations: ["Postgres", "Node.js / TypeScript", "Python", "n8n", "Zapier (mantıklıysa)", "Hetzner", "Custom API"],
+          faq: [
+            { q: "Neden sadece Zapier veya Make kullanmıyorsunuz?", a: "Kullanıyoruz — uyduğunda. Zapier ve Make basit connector'lar için yeterli; ölçekte zorlanmaya başlarlar (maliyet, debugging, güvenilirlik) ve işletmeye özel mantığı taşıyamazlar. Hangi aracın yerini hak ettiğine birlikte karar veriyoruz, gerisini biz kuruyoruz." },
+            { q: "Scoping nasıl çalışır?", a: "Ücretsiz 30-dakikalık discovery görüşmesi. İki taraf da devam etmek isterse, ücretli bir scoping workshop'u (~€1.500, sözleşme imzalanırsa proje ücretinden düşülür) çalıştırırız; yazılı spec ve sabit fiyat çıkar. Her durumda spec sizinle gider." },
+            { q: "Günlük tarife nedir?", a: "Senior automation engineering için günlük €1.200, yarım gün artışlarıyla faturalandırılır. Bunun altı junior iş veya tooling'de fazla ödüyorsunuz demek. İyi scope'lanmış işte proje fiyatı genelde günlük tarifeyi yener — bu €4.500'lik Standard sprint'tir." },
+            { q: "AVV imzalıyor musunuz?", a: "Evet — müşteri verisine dokunan her engagement'ta standart Alman B2B AVV (Auftragsverarbeitungsvertrag). Gizli bağlam paylaşmanız gerekiyorsa scoping öncesi NDA." },
+          ],
+        },
       },
     },
 
