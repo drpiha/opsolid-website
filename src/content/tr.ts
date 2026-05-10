@@ -899,43 +899,44 @@ export const content: Content = {
   impressum: {
     title: "Yasal Bildirim",
     notice:
-      "Bu yasal bildirim, kuruluş aşamasındaki bir şirket içindir. Ticaret sicili kaydı yapıldığında bilgiler güncellenecektir.",
+      "Bu yasal bildirim, Almanya'da kuruluş aşamasındaki bir şahıs şirketi (Einzelunternehmen i.Gr.) içindir. Gewerbeanmeldung sonrası bilgiler güncellenecektir.",
     sections: {
-      according: "§ 5 TMG'ye göre",
+      according: "§ 5 DDG'ye göre (Dijital Hizmetler Yasası, eski § 5 TMG)",
       representedBy: "Temsil eden",
       contact: "İletişim",
       phone: "Telefon: Talep üzerine",
       register: "Ticaret Sicili",
       registerText:
-        "Şu anda ticaret sicili kaydı bulunmamaktadır. Şirket kuruluş aşamasındadır.",
-      vatId: "KDV Kimlik Numarası",
-      vatIdText: "Ticaret sicili kaydı yapıldığında başvurulacaktır.",
+        "Şu anda ticaret sicili kaydı bulunmamaktadır. Kuruluş aşamasındaki şahıs şirketi (Einzelunternehmen i.Gr.) için Handelsregister kaydı zorunlu değildir.",
+      vatId: "KDV Kimlik No / Wirtschafts-Identifikationsnummer (W-IdNr)",
+      vatIdText:
+        "USt-IdNr Gewerbeanmeldung sonrası başvurulacaktır. Aralık 2026'dan itibaren burada ayrıca yeni W-IdNr (Wirtschafts-Identifikationsnummer) yer alacaktır.",
       responsibleContent:
-        "§ 55 Abs. 2 RStV'ye göre içerikten sorumlu kişi",
+        "§ 18 Abs. 2 MStV'ye göre içerikten sorumlu kişi (Medienstaatsvertrag, eski § 55 RStV)",
       liabilityContent: "İçerik Sorumluluğu",
       liabilityContentText:
-        "Hizmet sağlayıcı olarak, bu sayfalardaki kendi içeriklerimizden genel yasalar çerçevesinde § 7 Abs. 1 TMG'ye göre sorumluyuz. Ancak §§ 8-10 TMG'ye göre, iletilen veya depolanan üçüncü taraf bilgilerini izlemekle yükümlü değiliz.",
+        "Hizmet sağlayıcı olarak, bu sayfalardaki kendi içeriklerimizden genel yasalar çerçevesinde § 7 Abs. 1 DDG'ye göre sorumluyuz. Ancak §§ 8-10 DDG'ye göre, iletilen veya depolanan üçüncü taraf bilgilerini izlemekle yükümlü değiliz.",
       liabilityLinks: "Bağlantı Sorumluluğu",
       liabilityLinksText:
         "Web sitemiz, içerikleri üzerinde hiçbir etkimiz olmayan harici üçüncü taraf web sitelerine bağlantılar içermektedir. Bağlantı verilen sayfaların içeriğinden her zaman ilgili sağlayıcı veya işletmeci sorumludur.",
-      address: "Tam adres, ticaret sicili kaydı yapıldığında eklenecektir.",
+      address: "Tam posta adresi, Gewerbeanmeldung sonrası eklenecektir.",
     },
   },
 
   privacy: {
     title: "Gizlilik Politikası",
-    subtitle: "Datenschutzerklärung",
+    subtitle: "Datenschutzerklärung · Privacy Policy",
     notice:
-      "Bu gizlilik politikası bir taslaktır. Ticaret sicili kaydı yapıldığında hukuki incelemeden geçmiş bir politikayla değiştirilecektir.",
-    lastUpdated: "Son güncelleme: Mart 2026",
+      "Bu, OpSolid pazarlama sitesi ve Verso (Dijital Kartvizit) ürünü için GDPR (AB) ve KVKK (Türkiye) çerçevesinde hazırlanmış bir aydınlatma metnidir. Gewerbeanmeldung sonrası avukat onaylı nihai metin bu bildirimin yerini alacaktır. Son inceleme: Hasan Dönmez.",
+    lastUpdated: "Son güncelleme: Mayıs 2026",
     sections: [
       {
         title: "1. Veri Koruma Özeti",
         content:
-          "Aşağıda, bu web sitesini ziyaret ettiğinizde kişisel verilerinize ne olduğuna dair genel bir bakış sunulmaktadır. Kişisel veri, sizi kişisel olarak tanımlayabilecek her türlü veridir.",
+          "Aşağıda, bu web sitesini ziyaret ettiğinizde veya Verso ürününü kullandığınızda kişisel verilerinize ne olduğuna dair genel bir bakış sunulmaktadır. Kişisel veri, sizi kişisel olarak tanımlayabilecek her türlü veridir. İki düzenleme paralel olarak uygulanır: AB Genel Veri Koruma Tüzüğü (GDPR / DSGVO) ve Türk Kişisel Verilerin Korunması Kanunu (KVKK, 6698 sayılı Kanun).",
       },
       {
-        title: "2. Sorumlu Taraf",
+        title: "2. Sorumlu Taraf / Veri Sorumlusu",
         isResponsible: "true",
       },
       {
@@ -944,64 +945,146 @@ export const content: Content = {
           {
             title: "İletişim Formu",
             content:
-              "İletişim formu aracılığıyla gönderilen veriler, talebin işlenmesi ve takibi amacıyla saklanır. Hukuki dayanak: Sözleşmeye ilişkin talepler için GDPR Madde 6(1)(b), meşru menfaat için GDPR Madde 6(1)(f) veya onay verilmişse GDPR Madde 6(1)(a).",
+              "İletişim formu aracılığıyla gönderilen veriler (ad, iş e-postası, şirket, mesaj, opsiyonel telefon) talebin işlenmesi ve takibi amacıyla saklanır. Hukuki dayanak: Sözleşmeye ilişkin talepler için GDPR Madde 6(1)(b), meşru menfaat için GDPR Madde 6(1)(f) veya açık rıza için GDPR Madde 6(1)(a). KVKK dayanağı: m.5(2)(c) (sözleşmenin ifası) veya m.5(1) açık rıza.",
           },
           {
             title: "Sunucu Günlük Dosyaları",
             content:
-              "Barındırma sağlayıcısı, tarayıcı türü, işletim sistemi, yönlendiren URL, ana bilgisayar adı ve istek zamanını otomatik olarak toplar. Bu veriler belirli kişilere atanamaz.",
+              "Barındırma sağlayıcısı, tarayıcı türü, işletim sistemi, yönlendiren URL, ana bilgisayar adı, IP adresi (mümkün olduğunda kısaltılmış) ve istek zamanını otomatik olarak toplar. Saklama: 14 gün güvenlik ve kötüye kullanım analizi için, ardından silinir. Hukuki dayanak: GDPR m.6(1)(f) (operasyonel güvenlikte meşru menfaat).",
+          },
+          {
+            title: "Çerez Onay Kaydı",
+            content:
+              "Çerez bandında bir tercih yaptığınızda (kabul / ret), seçiminizi zaman damgasıyla birlikte tarayıcınızın localStorage alanında saklarız. Bu onay kaydı için IP adresinizi iletmiyoruz. Tercihinizi alt menüdeki bağlantıyla istediğiniz zaman değiştirebilir veya geri alabilirsiniz. Hukuki dayanak: GDPR m.6(1)(c) (TDDDG § 25 uyarınca onayı belgeleme yasal yükümlülüğü).",
           },
         ],
       },
       {
         title: "4. Barındırma",
-        content:
-          "Bu web sitesi Vercel, Inc. (440 N Baxter St, Los Angeles, CA 90012, ABD) üzerinde barındırılmaktadır. Web sitemizi ziyaret ettiğinizde, IP adresiniz ve kullanım verileriniz Vercel tarafından işlenir. Daha fazla bilgi için Vercel'in gizlilik politikasına bakınız.",
+        subsections: [
+          {
+            title: "Pazarlama sitesi (opsolid.de)",
+            content:
+              "Halka açık pazarlama sitesi Vercel, Inc. (440 N Baxter St, Los Angeles, CA 90012, ABD) üzerinde barındırılmaktadır. IP adresiniz ve kullanım verileriniz Vercel tarafından işlenir. Vercel, AB-ABD Veri Gizliliği Çerçevesi (DPF) kapsamında sertifikalıdır; bu, aktarım için yeterlilik dayanağı sağlar. AVV (GDPR m.28) Vercel'in Data Processing Addendum'u üzerinden yürürlüktedir.",
+          },
+          {
+            title: "Verso uygulaması (planlanan)",
+            content:
+              "Verso ürününün backend'i ve veritabanı kendi yönetimimizdeki Hostinger VPS (Hostinger International Ltd., Litvanya, AB) üzerinde çalışacaktır. Tüm Verso kart içeriği ve müşteri verisi AB sunucularında kalacaktır. Hostinger ile AVV, üretim verisi işlenmeden önce dosyalanmıştır.",
+          },
+        ],
       },
       {
         title: "5. Çerezler ve Analitik",
         subsections: [
           {
-            title: "İzleme çerezi yok",
+            title: "Kesinlikle gerekli olanlar",
             content:
-              "Bu web sitesi izleme çerezleri kullanmaz. Seçtiğiniz dili hatırlamak için tarayıcınızın yerel depolama alanında bir dil tercihi saklanır.",
+              "Dil tercihi ve çerez onay durumu tarayıcınızın localStorage alanında saklanır. Bunlar sitenin çalışması için zorunludur ve TDDDG § 25(2) uyarınca onaya tabi değildir.",
           },
           {
-            title: "Vercel Analytics",
+            title: "Opsiyonel analitik",
             content:
-              "Bu web sitesinde Vercel Analytics kullanıyoruz; bu araç çerez kullanmadan ve kişisel tanımlayıcılar olmadan anonim sayfa görüntüleme sayılarını toplar. Bireysel ziyaretçileri tanımlayamaz.",
+              "Çerez bandında analitik onayı verirseniz, anonim sayfa görüntüleme sayıları Vercel Analytics üzerinden toplanabilir. Bu toplama çerezsiz ve kişisel tanımlayıcı olmadan yapılır; bireysel ziyaretçi tanımlayamaz. Reddetmeniz halinde hiçbir analitik çağrısı yapılmaz.",
+          },
+          {
+            title: "Üçüncü taraf izleme, reklam veya sosyal eklenti yok",
+            content:
+              "Reklam çerezi, üçüncü taraf izleme pikseli, sosyal ağ eklentisi veya parmak izi (fingerprint) yoktur. Yazı tipleri kendi sunucularımızda barındırılır (Google Fonts CDN çağrısı yok).",
           },
         ],
       },
       {
-        title: "6. Haklarınız",
+        title: "6. Alt İşleyiciler / Sub-Processors",
         content:
-          "Saklanan verileriniz hakkında bilgi alma, düzeltme veya silme talep etme, işlemeyi kısıtlama ve bir denetim makamına şikayette bulunma hakkınız bulunmaktadır. Onay verilmişse, istediğiniz zaman geri çekebilirsiniz.",
+          "Hizmeti sunmak için aşağıdaki alt işleyicileri kullanırız. Her biri için GDPR m.28 kapsamında AVV / DPA dosyalanmıştır. Güncel liste her zaman info@opsolid.de adresinden talep edilebilir.",
+        subsections: [
+          {
+            title: "Barındırma ve altyapı",
+            content:
+              "Vercel Inc. (ABD, DPF sertifikalı) — pazarlama sitesi barındırma; Hostinger International Ltd. (LT, AB) — Verso uygulaması + Postgres veritabanı (planlanan).",
+          },
+          {
+            title: "E-posta gönderimi",
+            content:
+              "İletişim formu bildirimleri için SMTP relay. Sağlayıcı detayları talep üzerine; değiştiğinde güncellenir.",
+          },
+          {
+            title: "Ödemeler (Verso, planlanan)",
+            content:
+              "Tek seferlik ve abonelik faturalandırması için Stripe Payments Europe Ltd. (İrlanda). Kart bilgileri Stripe tarafından tokenize edilir; OpSolid ham PAN'ı görmez. AVV Stripe Services Agreement üzerinden. Stripe ABD'ye uluslararası aktarım DPF + SCC kapsamında.",
+          },
+          {
+            title: "AI sağlayıcılar (kullanıldığında)",
+            content:
+              "OpenAI Ireland Ltd. ve Anthropic Ireland Ltd. üretim özellikleri için API üzerinden kullanılabilir. AVV ve SCC mevcut; kullanıcı içeriği model eğitimi için kullanılmaz (API tarafında opt-out aktif).",
+          },
+        ],
       },
       {
-        title: "7. Digital Business Card Ürünü",
+        title: "7. Uluslararası Veri Aktarımı",
+        content:
+          "Kişisel veriler Avrupa Ekonomik Alanı dışına aktarıldığında (örn. ABD'de Vercel, Stripe, OpenAI, Anthropic), aktarım (a) alıcı DPF sertifikalı ise AB-ABD Veri Gizliliği Çerçevesi yeterlilik kararına, ya da (b) Standart Sözleşme Hükümleri (SCC, AB 2021/914) ile dökümante edilmiş Transfer Etki Değerlendirmesine dayanır. Türkiye'de yerleşik veri sahipleri için ek olarak KVKK m.9 yurtdışı aktarım kuralları uygulanır: aktarımlar KVKK standart sözleşmesi (10.07.2024 Yönetmeliği) kapsamında yapılır ve gerektiğinde 5 iş günü içinde Kurum'a bildirilir.",
+      },
+      {
+        title: "8. Verso Dijital Kartvizit Ürünü",
         subsections: [
           {
             title: "Amaç ve hukuki dayanak",
             content:
-              "Digital Business Card lead formu aracılığıyla gönderdiğiniz iletişim bilgilerini (ad, iş e-postası, şirket, ekip büyüklüğü, mesaj, GDPR onayı) yalnızca talebinizi yanıtlamak amacıyla işleriz. Hukuki dayanak: GDPR Madde 6(1)(b) (talebiniz üzerine sözleşme öncesi tedbirler) ve GDPR Madde 6(1)(a) (açık rızanız).",
+              "Verso lead formu veya self-servis sipariş akışı üzerinden gönderdiğiniz verileri (ad, iş e-postası, şirket, ünvan, telefon (opsiyonel), mesaj, foto/logo upload, marka renkleri, sosyal linkler) hizmetin sunulması için işleriz. Hukuki dayanak: GDPR m.6(1)(b) (sözleşme ifası) ve GDPR m.6(1)(a) (kamuya yayın için açık rızanız).",
+          },
+          {
+            title: "Kartınızın kamuya yayınlanması",
+            content:
+              "Bir Verso kartını /c/{slug} altında yayınladığınızda, girdiğiniz bilgiler internette kamuya açık hale gelir. Bunun için yayın adımında ayrı, açık opt-in onayınız gereklidir. Kartı istediğiniz zaman hesabınızdan yayından kaldırabilir veya silebilirsiniz; bu durumda noindex header eklenir ve büyük arama motorlarından URL kaldırma talebi yapılır.",
+          },
+          {
+            title: "Üçüncü kişi içeriği",
+            content:
+              "Yüklediğiniz fotoğraf, logo veya diğer içeriklerin tüm haklarına sahip olduğunuzdan yalnız siz sorumlusunuz. Yükleyerek bu hakların sizde olduğunu beyan edersiniz. Notice-and-takedown talepleri info@opsolid.de adresine gönderilebilir; 7 gün içinde yanıtlarız.",
           },
           {
             title: "Barındırma",
             content:
-              "Kart verileri ve lead gönderimleri, Avrupa Birliği içinde, Frankfurt, Almanya'da bulunan sunucularda (Hetzner / IONOS) saklanır. ABD'de alt işleyici bulunmamaktadır.",
+              "Kart ve müşteri verileri Hostinger VPS (Litvanya, AB) üzerinde saklanır. Verso kart içerikleri için ABD alt işleyici yoktur; ödeme verileri yukarıda belirtilen ayrı sub-processor şartları altında Stripe tarafından işlenir.",
+          },
+          {
+            title: "14 günlük cayma hakkı (B2C)",
+            content:
+              "Verso'yu tüketici olarak (B2C, AB/AEA) sipariş ederseniz, § 355 BGB uyarınca 14 günlük cayma hakkına sahipsiniz. Dijital hizmetin 14 gün dolmadan başlaması için, derhal ifa talep ettiğinizi ve tam ifa halinde cayma hakkınızın sona ereceğini ayrı checkbox'larla onaylamanız gerekir. Onaylarınızı ispat amacıyla loglanır. 19 Haziran 2026'dan itibaren tek tıkla cayma butonu sunulur.",
           },
           {
             title: "Saklama süresi",
             content:
-              "Lead verileri 24 ay süreyle saklanır. Kullanılmayan Digital Business Card profilleri, hatırlatma e-postasının ardından 12 aylık hareketsizlik sonunda silinir.",
+              "Aktif Verso kartları: abonelik aktif olduğu sürece saklanır. İptal / inaktif: abonelik bitiminden 90 gün sonra silinir (60. günde hatırlatma e-postası). Lead form gönderimleri (satın alma yok): 24 ay. Faturalar: § 257 HGB / Vergi Usul Kanunu uyarınca 10 yıl saklanır (yasal yükümlülük).",
           },
           {
             title: "Silme hakkı",
             content:
-              "Digital Business Card profilinizi ve ilgili tüm verileri hesabınız içinden tek tıklamayla veya info@kutasia.com adresine e-posta göndererek silebilirsiniz. Silme işlemi 30 gün içinde tamamlanır.",
+              "Verso kartınızı ve ilgili tüm kişisel verileri hesabınız içinden tek tıklamayla veya info@opsolid.de adresine e-posta göndererek silebilirsiniz. Silme işlemi 30 gün içinde tamamlanır. Yıkıcı işlemler öncesi kimlik doğrulama (e-posta onayı + aktif ise 2FA) gereklidir.",
           },
         ],
+      },
+      {
+        title: "9. Haklarınız (GDPR)",
+        content:
+          "GDPR m.15-22 uyarınca: erişim (m.15), düzeltme (m.16), silme (m.17), kısıtlama (m.18), veri taşınabilirliği (m.20) ve işlemeye itiraz (m.21) hakkına sahipsiniz. Verdiğiniz onayı önceki işlemeyi etkilemeden istediğiniz zaman geri çekebilirsiniz. Haklarınızı kullanmak için: info@opsolid.de — bir ay içinde yanıtlarız (m.12(3)). Mutaden bulunduğunuz yer ya da iddia edilen ihlalin yerindeki denetim otoritesine de şikayette bulunabilirsiniz.",
+      },
+      {
+        title: "10. Haklarınız (KVKK Madde 11) — Türkiye'de yerleşik veri sahipleri için",
+        content:
+          "6698 sayılı KVKK m.11 uyarınca: kişisel verilerinizin işlenip işlenmediğini öğrenme, işlenmişse buna ilişkin bilgi talep etme, işleme amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme, yurt içi/yurt dışında aktarıldığı üçüncü kişileri bilme, eksik/yanlış işlenmişse düzeltilmesini isteme, KVKK m.7'deki şartlarda silinmesini/yok edilmesini isteme, otomatik sistemlerle yapılan analiz sonucu aleyhinize bir sonuç çıkmasına itiraz etme, kanuna aykırı işleme nedeniyle uğradığınız zararın giderilmesini talep etme. Başvuru: info@opsolid.de. KVKK 2026/347 ilke kararı uyarınca aydınlatma metni (bu sayfa) ile açık rıza beyanı ayrı belgelerdir; rıza onayı ürün akışında ayrıca alınır.",
+      },
+      {
+        title: "11. Veri İhlali Bildirimi",
+        content:
+          "Bir kişisel veri ihlali, hak ve özgürlükleriniz için risk doğurabilecekse, ihlali öğrendiğimiz andan itibaren 72 saat içinde yetkili denetim otoritesine bildiririz (GDPR m.33). Yüksek riskli ihlaller etkilenen kişilere de gecikmeksizin bildirilir (GDPR m.34). KVKK kapsamında ayrıca Kurum'a ve etkilenen kişilere mümkün olan en kısa sürede bildirim yaparız (KVKK Kurul kararları).",
+      },
+      {
+        title: "12. Bu Politikadaki Değişiklikler",
+        content:
+          "Yasal değişiklikleri veya işleme uygulamalarımızdaki değişiklikleri yansıtmak için bu politikayı güncelleyebiliriz. Önemli değişiklikler bu sayfada ve hesabınız varsa en az 30 gün önceden e-postayla duyurulur.",
       },
     ],
   },

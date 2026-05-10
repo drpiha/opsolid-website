@@ -899,43 +899,44 @@ export const content: Content = {
   impressum: {
     title: "Impressum",
     notice:
-      "Dieses Impressum gilt für ein Unternehmen in Gründung. Die Angaben werden nach der Gewerbeanmeldung aktualisiert.",
+      "Dieses Impressum gilt für ein Einzelunternehmen in Gründung (i.Gr.). Die Angaben werden nach der Gewerbeanmeldung aktualisiert.",
     sections: {
-      according: "Angaben gemäß § 5 TMG",
+      according: "Angaben gemäß § 5 DDG (Digitale-Dienste-Gesetz, vormals § 5 TMG)",
       representedBy: "Vertreten durch",
       contact: "Kontakt",
       phone: "Telefon: Auf Anfrage",
       register: "Handelsregister",
       registerText:
-        "Ein Handelsregistereintrag liegt derzeit nicht vor. Das Unternehmen befindet sich in Gründung.",
-      vatId: "Umsatzsteuer-ID",
-      vatIdText: "Wird nach der Gewerbeanmeldung beantragt.",
+        "Ein Handelsregistereintrag liegt derzeit nicht vor. Als Einzelunternehmen in Gründung ist kein HR-Eintrag erforderlich.",
+      vatId: "Umsatzsteuer-ID / Wirtschafts-Identifikationsnummer (W-IdNr)",
+      vatIdText:
+        "USt-IdNr wird nach der Gewerbeanmeldung beantragt. Ab Dezember 2026 wird hier zusätzlich die neue W-IdNr (Wirtschafts-Identifikationsnummer) angegeben.",
       responsibleContent:
-        "Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV",
+        "Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV (Medienstaatsvertrag, vormals § 55 RStV)",
       liabilityContent: "Haftung für Inhalte",
       liabilityContentText:
-        "Als Diensteanbieter sind wir gemäß § 7 Abs. 1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.",
+        "Als Diensteanbieter sind wir gemäß § 7 Abs. 1 DDG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 DDG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen.",
       liabilityLinks: "Haftung für Links",
       liabilityLinksText:
         "Unsere Website enthält Links zu externen Websites Dritter, auf deren Inhalte wir keinen Einfluss haben. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber verantwortlich.",
-      address: "Vollständige Adresse wird nach der Gewerbeanmeldung ergänzt.",
+      address: "Vollständige Postanschrift wird nach der Gewerbeanmeldung ergänzt.",
     },
   },
 
   privacy: {
     title: "Datenschutzerklärung",
-    subtitle: "Datenschutzerklärung",
+    subtitle: "Privacy Policy · Aydınlatma Metni",
     notice:
-      "Diese Datenschutzerklärung ist ein Entwurf. Sie wird nach der Gewerbeanmeldung durch eine rechtlich geprüfte Fassung ersetzt.",
-    lastUpdated: "Letzte Aktualisierung: März 2026",
+      "Diese selbst erstellte Datenschutzerklärung umfasst die DSGVO (EU) und KVKK (Türkei) für die OpSolid-Marketing-Site sowie das Verso-Produkt (Digital Business Card). Eine anwaltlich geprüfte Endfassung ersetzt diesen Hinweis nach der Gewerbeanmeldung. Letzter Stand: Hasan Dönmez.",
+    lastUpdated: "Letzte Aktualisierung: Mai 2026",
     sections: [
       {
         title: "1. Datenschutz auf einen Blick",
         content:
-          "Im Folgenden erhalten Sie einen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können.",
+          "Im Folgenden erhalten Sie einen Überblick darüber, was mit Ihren personenbezogenen Daten passiert, wenn Sie diese Website besuchen oder das Verso-Produkt nutzen. Personenbezogene Daten sind alle Daten, mit denen Sie persönlich identifiziert werden können. Es gelten parallel die EU-Datenschutz-Grundverordnung (DSGVO) und das türkische Datenschutzgesetz (KVKK, Gesetz Nr. 6698).",
       },
       {
-        title: "2. Verantwortliche Stelle",
+        title: "2. Verantwortliche Stelle / Veri Sorumlusu",
         isResponsible: "true",
       },
       {
@@ -944,64 +945,146 @@ export const content: Content = {
           {
             title: "Kontaktformular",
             content:
-              "Über das Kontaktformular übermittelte Daten werden zur Bearbeitung der Anfrage und für Rückfragen gespeichert. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO bei vertragsbezogenen Anfragen, Art. 6 Abs. 1 lit. f DSGVO bei berechtigtem Interesse oder Art. 6 Abs. 1 lit. a DSGVO bei erteilter Einwilligung.",
+              "Über das Kontaktformular übermittelte Daten (Name, geschäftliche E-Mail, Unternehmen, Nachricht, optional Telefon) werden zur Bearbeitung der Anfrage und für Rückfragen gespeichert. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO bei vertragsbezogenen Anfragen, Art. 6 Abs. 1 lit. f DSGVO bei berechtigtem Interesse oder Art. 6 Abs. 1 lit. a DSGVO bei erteilter Einwilligung. KVKK-Grundlage: Art. 5(2)(c) (Vertragserfüllung) bzw. Art. 5(1) açık rıza.",
           },
           {
             title: "Server-Log-Dateien",
             content:
-              "Der Hosting-Anbieter erfasst automatisch Browsertyp, Betriebssystem, Referrer-URL, Hostname und Zeitpunkt der Anfrage. Diese Daten können keiner bestimmten Person zugeordnet werden.",
+              "Der Hosting-Anbieter erfasst automatisch Browsertyp, Betriebssystem, Referrer-URL, Hostname, IP-Adresse (wo möglich gekürzt) und Zeitpunkt der Anfrage. Aufbewahrung: 14 Tage zur Sicherheits- und Missbrauchsanalyse, danach Löschung. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse am Betrieb).",
+          },
+          {
+            title: "Cookie-Einwilligungsprotokoll",
+            content:
+              "Wenn Sie im Cookie-Banner eine Auswahl treffen (Akzeptieren / Ablehnen), speichern wir die Auswahl mit Zeitstempel im localStorage Ihres Browsers. Wir übertragen für diesen Einwilligungsnachweis nicht Ihre IP. Sie können die Auswahl jederzeit über den Footer-Link ändern oder widerrufen. Rechtsgrundlage: Art. 6 Abs. 1 lit. c DSGVO (rechtliche Verpflichtung gemäß § 25 TDDDG, Einwilligung zu dokumentieren).",
           },
         ],
       },
       {
         title: "4. Hosting",
-        content:
-          "Diese Website wird bei Vercel, Inc. (440 N Baxter St, Los Angeles, CA 90012, USA) gehostet. Beim Besuch unserer Website werden Ihre IP-Adresse und Nutzungsdaten von Vercel verarbeitet. Weitere Informationen finden Sie in der Datenschutzerklärung von Vercel.",
+        subsections: [
+          {
+            title: "Marketing-Site (opsolid.de)",
+            content:
+              "Die öffentliche Marketing-Site wird bei Vercel, Inc. (440 N Baxter St, Los Angeles, CA 90012, USA) gehostet. Ihre IP-Adresse und Nutzungsdaten werden von Vercel verarbeitet. Vercel ist unter dem EU-US Data Privacy Framework (DPF) zertifiziert; daraus ergibt sich die Übermittlungsgrundlage. AVV (Art. 28 DSGVO) liegt über Vercels Data Processing Addendum vor.",
+          },
+          {
+            title: "Verso-Anwendung (geplant)",
+            content:
+              "Backend und Datenbank des Verso-Produkts werden auf einem selbst betriebenen Hostinger VPS (Hostinger International Ltd., Litauen, EU) laufen. Sämtliche Verso-Karteninhalte und Kundendaten verbleiben auf EU-Servern. AVV mit Hostinger liegt vor, bevor produktive Daten verarbeitet werden.",
+          },
+        ],
       },
       {
         title: "5. Cookies & Analyse",
         subsections: [
           {
-            title: "Keine Tracking-Cookies",
+            title: "Unbedingt erforderlich",
             content:
-              "Diese Website verwendet keine Tracking-Cookies. Eine Sprachpräferenz wird im lokalen Speicher Ihres Browsers gespeichert, um Ihre ausgewählte Sprache zu merken.",
+              "Sprachpräferenz und Cookie-Einwilligungsstatus werden im localStorage des Browsers gespeichert. Diese sind für den Betrieb erforderlich und einwilligungsfrei nach § 25 Abs. 2 TDDDG.",
           },
           {
-            title: "Vercel Analytics",
+            title: "Optionale Analyse",
             content:
-              "Wir nutzen auf dieser Website Vercel Analytics, das anonyme Seitenaufruf-Zählungen ohne Cookies und ohne personenbezogene Kennungen erfasst. Einzelne Besucherinnen und Besucher können damit nicht identifiziert werden.",
+              "Falls Sie im Cookie-Banner Analyse zustimmen, werden anonyme Seitenaufrufzahlen über Vercel Analytics erfasst. Diese Erfassung erfolgt cookieless und ohne personenbezogene Kennungen; einzelne Besucherinnen und Besucher können damit nicht identifiziert werden. Bei Ablehnung wird kein Analyse-Aufruf ausgelöst.",
+          },
+          {
+            title: "Kein Drittanbieter-Tracking, keine Werbung, keine Social-Plugins",
+            content:
+              "Keine Werbe-Cookies, keine Tracking-Pixel Dritter, keine Social-Network-Plugins, kein Fingerprinting. Schriftarten werden selbst gehostet (kein Google-Fonts-CDN-Aufruf).",
           },
         ],
       },
       {
-        title: "6. Ihre Rechte",
+        title: "6. Auftragsverarbeiter / Sub-Processors",
         content:
-          "Sie haben das Recht auf Auskunft über Ihre gespeicherten Daten, Berichtigung oder Löschung, Einschränkung der Verarbeitung sowie Beschwerde bei einer Aufsichtsbehörde. Wurde eine Einwilligung erteilt, können Sie diese jederzeit widerrufen.",
+          "Wir setzen die folgenden Auftragsverarbeiter ein, um den Dienst zu erbringen. AVV / DPA gemäß Art. 28 DSGVO liegen jeweils vor. Die jeweils aktuelle Liste kann unter info@opsolid.de angefordert werden.",
+        subsections: [
+          {
+            title: "Hosting & Infrastruktur",
+            content:
+              "Vercel Inc. (US, DPF-zertifiziert) — Hosting der Marketing-Site; Hostinger International Ltd. (LT, EU) — Verso-Anwendung + Postgres-Datenbank (geplant).",
+          },
+          {
+            title: "E-Mail-Zustellung",
+            content:
+              "SMTP-Relay für Kontaktformular-Benachrichtigungen. Anbieterdetails auf Anfrage; werden bei Wechsel aktualisiert.",
+          },
+          {
+            title: "Zahlungen (Verso, geplant)",
+            content:
+              "Stripe Payments Europe Ltd. (Irland) für Einmal- und Abo-Abrechnung. Kartendaten werden von Stripe tokenisiert; OpSolid sieht keine Klartext-PAN. AVV über das Stripe Services Agreement. Internationale Übermittlung an Stripe US auf Basis DPF + SCC.",
+          },
+          {
+            title: "KI-Anbieter (sofern eingesetzt)",
+            content:
+              "OpenAI Ireland Ltd. und Anthropic Ireland Ltd. können für Produktivfunktionen über API eingesetzt werden. AVV und SCC liegen vor; Nutzerinhalte werden nicht zum Modelltraining verwendet (API-seitiger Opt-out aktiv).",
+          },
+        ],
       },
       {
-        title: "7. Digital Business Card Produkt",
+        title: "7. Internationale Datenübermittlung",
+        content:
+          "Soweit personenbezogene Daten in Länder außerhalb des Europäischen Wirtschaftsraums übermittelt werden (z. B. an Vercel, Stripe, OpenAI, Anthropic in den USA), erfolgt dies (a) auf Grundlage des Angemessenheitsbeschlusses zum EU-US Data Privacy Framework, sofern der Empfänger DPF-zertifiziert ist, oder (b) auf Grundlage der Standardvertragsklauseln (SCC, EU 2021/914) mit dokumentiertem Transfer Impact Assessment. Für betroffene Personen mit Wohnsitz in der Türkei gelten zusätzlich KVKK Art. 9 zur Yurtdışı Aktarım: Übermittlungen erfolgen unter KVKK-Standardvertragsklauseln (Yönetmelik 10.07.2024) und werden, sofern vorgesehen, dem Kurum innerhalb von 5 Werktagen gemeldet.",
+      },
+      {
+        title: "8. Verso Digital Business Card Produkt",
         subsections: [
           {
             title: "Zweck & Rechtsgrundlage",
             content:
-              "Wir verarbeiten die Kontaktdaten, die Sie über das Digital Business Card Lead-Formular übermitteln (Name, geschäftliche E-Mail, Unternehmen, Teamgröße, Nachricht, DSGVO-Einwilligung), ausschließlich zur Beantwortung Ihrer Anfrage. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (vorvertragliche Maßnahmen auf Ihre Anfrage) und Art. 6 Abs. 1 lit. a DSGVO (Ihre ausdrückliche Einwilligung).",
+              "Wir verarbeiten die Daten, die Sie über das Verso-Lead-Formular oder den Self-Service-Bestellfluss übermitteln (Name, geschäftliche E-Mail, Unternehmen, Position, Telefon (optional), Nachricht, Foto/Logo-Upload, Markenfarben, Social-Links), zur Erbringung des Dienstes. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung) und Art. 6 Abs. 1 lit. a DSGVO (Ihre ausdrückliche Einwilligung in die öffentliche Veröffentlichung).",
+          },
+          {
+            title: "Öffentliche Veröffentlichung Ihrer Karte",
+            content:
+              "Wenn Sie eine Verso-Karte unter /c/{slug} veröffentlichen, werden die eingetragenen Informationen öffentlich im Internet zugänglich. Hierfür ist Ihre ausdrückliche, separate Opt-in-Auswahl im Veröffentlichungs-Schritt erforderlich. Sie können die Karte jederzeit aus Ihrem Konto entveröffentlichen oder löschen; wir setzen anschließend einen noindex-Header und veranlassen die URL-Entfernung bei den großen Suchmaschinen.",
+          },
+          {
+            title: "Drittinhalte",
+            content:
+              "Sie sind allein dafür verantwortlich, sämtliche Rechte an hochgeladenen Fotos, Logos und sonstigen Inhalten zu besitzen. Mit dem Upload bestätigen Sie das Vorliegen dieser Rechte. Notice-and-Takedown-Anfragen können an info@opsolid.de gerichtet werden; Antwortzeit innerhalb von 7 Tagen.",
           },
           {
             title: "Hosting",
             content:
-              "Kartendaten und Lead-Übermittlungen werden innerhalb der Europäischen Union auf Servern in Frankfurt am Main, Deutschland (Hetzner / IONOS) gespeichert. Keine US-Subauftragsverarbeiter.",
+              "Karten- und Kundendaten werden auf dem Hostinger VPS (Litauen, EU) gespeichert. Keine US-Subauftragsverarbeiter für Verso-Karteninhalte selbst; Zahlungsdaten werden von Stripe gemäß den oben genannten Sub-Processor-Bedingungen verarbeitet.",
+          },
+          {
+            title: "14-tägiges Widerrufsrecht (B2C)",
+            content:
+              "Wenn Sie Verso als Verbraucherin oder Verbraucher (B2C, EU/EWR) bestellen, haben Sie ein 14-tägiges Widerrufsrecht nach § 355 BGB. Damit der digitale Dienst vor Ablauf der 14 Tage beginnen kann, müssen Sie ausdrücklich die sofortige Ausführung verlangen und bestätigen, dass das Widerrufsrecht mit vollständiger Vertragserfüllung erlischt — beides über separate Checkboxen im Checkout. Wir protokollieren Ihre Bestätigungen zu Beweiszwecken. Ab dem 19. Juni 2026 steht ein One-Click-Widerrufsbutton zur Verfügung.",
           },
           {
             title: "Aufbewahrung",
             content:
-              "Lead-Daten werden 24 Monate aufbewahrt. Inaktive Digital Business Card Profile werden nach 12 Monaten Inaktivität und nach vorheriger Erinnerungs-E-Mail gelöscht.",
+              "Aktive Verso-Karten: Aufbewahrung während laufendem Abo. Gekündigt / inaktiv: Löschung 90 Tage nach Abo-Ende (Erinnerungsmail an Tag 60). Lead-Formular-Übermittlungen (ohne Kauf): 24 Monate. Rechnungen: 10 Jahre Aufbewahrung gemäß § 257 HGB / Vergi Usul Kanunu (gesetzliche Pflicht).",
           },
           {
             title: "Recht auf Löschung",
             content:
-              "Sie können Ihr Digital Business Card Profil und alle zugehörigen Daten mit einem Klick in Ihrem Konto oder per E-Mail an info@kutasia.com löschen. Die Löschung wird innerhalb von 30 Tagen wirksam.",
+              "Sie können Ihre Verso-Karte und alle zugehörigen personenbezogenen Daten mit einem Klick aus Ihrem Konto oder per E-Mail an info@opsolid.de löschen. Die Löschung wird innerhalb von 30 Tagen wirksam. Vor destruktiven Aktionen ist eine Identitätsprüfung (E-Mail-Bestätigung + 2FA, sofern aktiviert) erforderlich.",
           },
         ],
+      },
+      {
+        title: "9. Ihre Rechte (DSGVO)",
+        content:
+          "Nach Art. 15–22 DSGVO haben Sie das Recht auf Auskunft (Art. 15), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung (Art. 18), Datenübertragbarkeit (Art. 20) und auf Widerspruch gegen die Verarbeitung (Art. 21). Eine erteilte Einwilligung können Sie jederzeit ohne Auswirkung auf bisherige Verarbeitungen widerrufen. Zur Ausübung Ihrer Rechte: info@opsolid.de — wir antworten innerhalb eines Monats (Art. 12 Abs. 3). Sie können sich auch bei der Aufsichtsbehörde Ihres gewöhnlichen Aufenthaltsorts oder des Orts der mutmaßlichen Verletzung beschweren.",
+      },
+      {
+        title: "10. Ihre Rechte (KVKK Madde 11) — für betroffene Personen mit Wohnsitz in der Türkei",
+        content:
+          "Gemäß § 11 des türkischen KVKK (Gesetz Nr. 6698): Auskunft über die Verarbeitung, Auskunft über Verarbeitungszweck und zweckgemäße Nutzung, Information über Empfänger im In- und Ausland, Berichtigung unvollständiger oder unrichtiger Daten, Löschung oder Vernichtung gemäß § 7 KVKK, Mitteilung von Berichtigungen/Löschungen an Empfänger, Widerspruch gegen ausschließlich automatisierte Entscheidungen und Schadensersatz bei rechtswidriger Verarbeitung. Anfragen: info@opsolid.de. Gemäß KVKK-Grundsatzentscheidung 2026/347 sind die Aydınlatma Metni (diese Seite) und die açık rıza-Erklärung getrennte Dokumente; eine Einwilligung wird im Produktfluss gesondert eingeholt.",
+      },
+      {
+        title: "11. Datenpannenmeldung",
+        content:
+          "Falls eine Verletzung des Schutzes personenbezogener Daten voraussichtlich ein Risiko für Ihre Rechte und Freiheiten zur Folge hat, melden wir dies der zuständigen Aufsichtsbehörde innerhalb von 72 Stunden nach Bekanntwerden (Art. 33 DSGVO). Bei hohem Risiko benachrichtigen wir die betroffenen Personen unverzüglich (Art. 34 DSGVO). Nach KVKK informieren wir zusätzlich den Kurum und die betroffenen Personen in der kürzest möglichen Zeit (KVKK-Kurul-Beschlüsse).",
+      },
+      {
+        title: "12. Änderungen dieser Erklärung",
+        content:
+          "Wir können diese Erklärung anpassen, um Änderungen der Rechtslage oder unserer Verarbeitung Rechnung zu tragen. Wesentliche Änderungen werden auf dieser Seite und, sofern Sie ein Konto besitzen, mindestens 30 Tage im Voraus per E-Mail angekündigt.",
       },
     ],
   },

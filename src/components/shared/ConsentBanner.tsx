@@ -39,11 +39,18 @@ export function ConsentBanner() {
           {t.consent.privacyLink}
         </a>
       </p>
+      {/*
+        TDDDG § 25 + DSGVO equal-prominence requirement: reject and accept
+        must have visually equivalent weight. Both buttons are solid-filled
+        with the same height and padding; only the colour tone differs
+        (neutral vs primary). Do not regress to `btn-ghost` for reject —
+        German DPAs treat low-contrast reject buttons as a dark pattern.
+      */}
       <div className="mt-4 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
         <button
           onClick={reject}
           type="button"
-          className="btn-ghost min-h-[44px]"
+          className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-neutral-900 px-5 text-sm font-medium text-neutral-50 transition hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
         >
           {t.consent.reject}
         </button>

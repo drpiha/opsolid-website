@@ -9,7 +9,7 @@ export const SITE_CONFIG = {
   description:
     "OpSolid helps businesses replace manual, repetitive work with reliable automated systems — workflow automation, systems integration, internal tools, and AI-assisted processes.",
   url: "https://opsolid.de",
-  email: "info@kutasia.com",
+  email: "info@opsolid.de",
   phone: "",
   address: {
     city: "Germany",

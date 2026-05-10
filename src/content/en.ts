@@ -897,43 +897,44 @@ export const content = {
   impressum: {
     title: "Legal Notice",
     notice:
-      "This legal notice is for a company in formation. Details will be updated upon business registration.",
+      "This legal notice is for a sole proprietorship in formation (Einzelunternehmen i.Gr.). Details will be updated upon business registration.",
     sections: {
-      according: "According to § 5 TMG",
+      according: "According to § 5 DDG (Digital Services Act, formerly § 5 TMG)",
       representedBy: "Represented by",
       contact: "Contact",
       phone: "Phone: On request",
       register: "Trade Register",
       registerText:
-        "No trade register entry exists at this time. The company is in formation.",
-      vatId: "VAT ID",
-      vatIdText: "Will be applied for upon business registration.",
+        "No trade register entry exists at this time. As a sole proprietorship in formation, no Handelsregister entry is required.",
+      vatId: "VAT ID / Wirtschafts-Identifikationsnummer (W-IdNr)",
+      vatIdText:
+        "USt-IdNr will be applied for upon Gewerbeanmeldung. As of December 2026, the new W-IdNr (Wirtschafts-Identifikationsnummer) will be added here.",
       responsibleContent:
-        "Responsible for content according to § 55 Abs. 2 RStV",
+        "Responsible for content according to § 18 Abs. 2 MStV (Medienstaatsvertrag, formerly § 55 RStV)",
       liabilityContent: "Liability for Content",
       liabilityContentText:
-        "As a service provider, we are responsible for our own content on these pages under general laws in accordance with § 7 Para. 1 TMG. According to §§ 8 to 10 TMG, however, we are not obligated to monitor transmitted or stored third-party information.",
+        "As a service provider, we are responsible for our own content on these pages under general laws in accordance with § 7 Para. 1 DDG. According to §§ 8 to 10 DDG, however, we are not obligated to monitor transmitted or stored third-party information.",
       liabilityLinks: "Liability for Links",
       liabilityLinksText:
         "Our website contains links to external third-party websites over whose content we have no influence. The respective provider or operator is always responsible for the content of the linked pages.",
-      address: "Full address will be added upon business registration.",
+      address: "Full postal address will be added upon Gewerbeanmeldung.",
     },
   },
 
   privacy: {
     title: "Privacy Policy",
-    subtitle: "Datenschutzerklärung",
+    subtitle: "Datenschutzerklärung · Aydınlatma Metni",
     notice:
-      "This privacy policy is a template. It will be replaced with a legally reviewed policy upon business registration.",
-    lastUpdated: "Last updated: March 2026",
+      "This is a self-prepared privacy notice covering GDPR (EU) and KVKK (Türkiye) for the OpSolid marketing site and the Verso Digital Business Card product. A lawyer-reviewed final version will replace this notice after Gewerbeanmeldung. Last review by Hasan Dönmez.",
+    lastUpdated: "Last updated: May 2026",
     sections: [
       {
         title: "1. Data Protection at a Glance",
         content:
-          "The following provides an overview of what happens to your personal data when you visit this website. Personal data is any data that can personally identify you.",
+          "The following provides an overview of what happens to your personal data when you visit this website or use the Verso Digital Business Card product. Personal data is any data that can identify you. Two legal frameworks apply in parallel: the EU General Data Protection Regulation (GDPR / DSGVO) and the Turkish Personal Data Protection Law (KVKK, Law No. 6698).",
       },
       {
-        title: "2. Responsible Party",
+        title: "2. Responsible Party / Veri Sorumlusu",
         isResponsible: "true",
       },
       {
@@ -942,64 +943,146 @@ export const content = {
           {
             title: "Contact Form",
             content:
-              "Data submitted via the contact form is stored for processing the inquiry and follow-up. Legal basis: Art. 6(1)(b) GDPR for contract-related inquiries, Art. 6(1)(f) GDPR for legitimate interest, or Art. 6(1)(a) GDPR if consent was given.",
+              "Data submitted via the contact form (name, work email, company, message, optional phone) is stored for processing the inquiry and follow-up. Legal basis: Art. 6(1)(b) GDPR for contract-related inquiries, Art. 6(1)(f) GDPR for legitimate interest, or Art. 6(1)(a) GDPR if consent was given. KVKK basis: Art. 5(2)(c) (sözleşme ifası) or Art. 5(1) açık rıza.",
           },
           {
             title: "Server Log Files",
             content:
-              "The hosting provider automatically collects browser type, OS, referrer URL, hostname, and request time. This data cannot be assigned to specific individuals.",
+              "The hosting provider automatically collects browser type, OS, referrer URL, hostname, IP address (truncated where possible), and request time. Retention: 14 days for security/abuse analysis, then deleted. Legal basis: Art. 6(1)(f) GDPR (legitimate interest in operational security).",
+          },
+          {
+            title: "Cookie Consent Log",
+            content:
+              "When you make a cookie banner choice (accept / reject), we store the choice plus a timestamp in your browser's localStorage. We do not transmit your IP for this consent record. You can revoke or change the choice at any time via the page footer link. Legal basis: Art. 6(1)(c) GDPR (legal obligation under § 25 TDDDG to document consent).",
           },
         ],
       },
       {
         title: "4. Hosting",
-        content:
-          "This website is hosted on Vercel, Inc. (440 N Baxter St, Los Angeles, CA 90012, USA). When you visit our website, your IP address and usage data are processed by Vercel. For more information, see Vercel's privacy policy.",
+        subsections: [
+          {
+            title: "Marketing site (opsolid.de)",
+            content:
+              "The public marketing site is hosted on Vercel, Inc. (440 N Baxter St, Los Angeles, CA 90012, USA). Your IP address and usage data are processed by Vercel. Vercel is certified under the EU-US Data Privacy Framework (DPF), providing an adequacy basis for the transfer. AVV (Art. 28 GDPR) is in place via Vercel's Data Processing Addendum.",
+          },
+          {
+            title: "Verso application (planned)",
+            content:
+              "The Verso Digital Business Card application backend and database will run on a self-hosted Hostinger VPS (Hostinger International Ltd., Lithuania, EU). All Verso card content and customer data will remain on EU servers. AVV with Hostinger will be on file before any production data is processed.",
+          },
+        ],
       },
       {
         title: "5. Cookies & Analytics",
         subsections: [
           {
-            title: "No tracking cookies",
+            title: "Strictly necessary",
             content:
-              "This website does not use tracking cookies. A language preference is stored in your browser's local storage to remember your selected language.",
+              "Language preference and cookie consent state are stored in your browser's localStorage. These are strictly necessary for the site to function and do not require consent under § 25(2) TDDDG.",
           },
           {
-            title: "Vercel Analytics",
+            title: "Optional analytics",
             content:
-              "We use Vercel Analytics on this website, which captures anonymous page-view counts without cookies and without personal identifiers. It cannot identify individual visitors.",
+              "If you accept analytics in the cookie banner, anonymous page-view counts may be collected via Vercel Analytics. This collection happens without cookies and without personal identifiers and cannot identify individual visitors. If you reject, no analytics call is made.",
+          },
+          {
+            title: "No third-party tracking, ads, or social plugins",
+            content:
+              "No advertising cookies, no third-party tracking pixels, no social-network plugins, no fingerprinting. Fonts are self-hosted (no Google Fonts CDN call).",
           },
         ],
       },
       {
-        title: "6. Your Rights",
+        title: "6. Sub-Processors",
         content:
-          "You have the right to receive information about your stored data, request correction or deletion, restrict processing, and lodge a complaint with a supervisory authority. If consent was given, you can revoke it at any time.",
+          "We engage the following sub-processors to deliver the service. AVV / DPA agreements per Art. 28 GDPR are on file for each. The current list at any time can be requested via info@opsolid.de.",
+        subsections: [
+          {
+            title: "Hosting & infrastructure",
+            content:
+              "Vercel Inc. (US, DPF-certified) — marketing site hosting; Hostinger International Ltd. (LT, EU) — Verso application + Postgres database (planned).",
+          },
+          {
+            title: "Email delivery",
+            content:
+              "SMTP relay used for contact-form notifications. Provider details are listed on request and updated when changed.",
+          },
+          {
+            title: "Payments (Verso, planned)",
+            content:
+              "Stripe Payments Europe Ltd. (Ireland) for one-time and subscription billing. Card data is tokenised by Stripe; OpSolid never sees raw PAN. DPA in place via Stripe Services Agreement. International transfer to Stripe US under DPF + SCC.",
+          },
+          {
+            title: "AI providers (where used)",
+            content:
+              "OpenAI Ireland Ltd. and Anthropic Ireland Ltd. may be engaged via API for production features. DPAs and SCCs in place; user content is not used for model training (API-side opt-out enabled).",
+          },
+        ],
       },
       {
-        title: "7. Digital Business Card Product",
+        title: "7. International Data Transfers",
+        content:
+          "Where personal data is transferred outside the European Economic Area (e.g. to Vercel, Stripe, OpenAI, Anthropic in the United States), the transfer is based on (a) the EU-US Data Privacy Framework adequacy decision where the recipient is DPF-certified, or (b) Standard Contractual Clauses (SCC, EU 2021/914) with a documented Transfer Impact Assessment. For Türkiye-resident data subjects, KVKK Art. 9 yurtdışı aktarım rules apply: transfers are made under KVKK standard contractual clauses (Yönetmelik 10.07.2024) and notified to the Kurum within 5 business days where required.",
+      },
+      {
+        title: "8. Verso Digital Business Card Product",
         subsections: [
           {
             title: "Purpose & legal basis",
             content:
-              "We process the contact details you submit through the Digital Business Card lead form (name, work email, company, team size, message, GDPR consent) solely to respond to your inquiry. Legal basis: Art. 6(1)(b) GDPR (pre-contractual measures at your request) and Art. 6(1)(a) GDPR (your explicit consent).",
+              "We process the contact details you submit through the Verso lead form or self-service order flow (name, work email, company, role, phone (optional), message, photo/logo upload, brand colours, social links) to provide the Digital Business Card service. Legal basis: Art. 6(1)(b) GDPR (contract performance) and Art. 6(1)(a) GDPR (your explicit consent for public publication).",
+          },
+          {
+            title: "Public publication of your card",
+            content:
+              "When you publish a Verso card at /c/{slug}, the information you have entered becomes publicly accessible on the internet. This requires your explicit, separate opt-in checkbox at publish time. You can unpublish or delete the card at any time from your account; we will then add a noindex header and request URL removal from major search engines.",
+          },
+          {
+            title: "Third-party content",
+            content:
+              "You are solely responsible for ensuring you have all rights to any photo, logo, or other content you upload. By uploading you confirm you hold the necessary rights. Notice-and-takedown requests may be sent to info@opsolid.de; we respond within 7 days.",
           },
           {
             title: "Hosting",
             content:
-              "Card data and lead submissions are stored within the European Union on servers located in Frankfurt, Germany (Hetzner / IONOS). No US subprocessors.",
+              "Card data and customer records are stored on the Hostinger VPS (Lithuania, EU). No US sub-processors for Verso card content itself; payment data is processed by Stripe under separate sub-processor terms above.",
+          },
+          {
+            title: "14-day right of withdrawal (B2C)",
+            content:
+              "If you order Verso as a consumer (B2C, EU/EEA), you have a 14-day right of withdrawal under § 355 BGB. For digital services to start before the 14 days end, you must explicitly request immediate performance and acknowledge that the right of withdrawal lapses upon full performance — both via separate checkboxes at checkout. We log your acknowledgements for evidence. From 19 June 2026, a one-click withdrawal button is provided.",
           },
           {
             title: "Retention",
             content:
-              "Lead data is retained for 24 months. Inactive Digital Business Card profiles are deleted after 12 months of inactivity after a reminder email.",
+              "Active Verso cards: retained while the subscription is active. Cancelled / inactive: deleted 90 days after subscription end (a reminder email is sent at day 60). Lead form submissions (no purchase): 24 months. Invoices: retained 10 years per § 257 HGB / Vergi Usul Kanunu (legal obligation).",
           },
           {
             title: "Right to deletion",
             content:
-              "You may delete your Digital Business Card profile and all associated data with one click inside your account, or by emailing info@kutasia.com. Deletion is effective within 30 days.",
+              "You may delete your Verso card and all associated personal data with one click from your account, or by emailing info@opsolid.de. Deletion is effective within 30 days. Identity verification (email confirmation + 2FA where enabled) is required before destructive actions.",
           },
         ],
+      },
+      {
+        title: "9. Your Rights (GDPR)",
+        content:
+          "Under Articles 15–22 GDPR you have the right to: access (Art. 15), rectification (Art. 16), erasure (Art. 17), restriction (Art. 18), data portability (Art. 20), and to object to processing (Art. 21). You may withdraw any consent at any time without affecting prior processing. To exercise rights, email info@opsolid.de — we respond within one month (Art. 12(3)). You may also lodge a complaint with the supervisory authority of your habitual residence or place of the alleged infringement.",
+      },
+      {
+        title: "10. Your Rights (KVKK Madde 11) — for Türkiye-resident data subjects",
+        content:
+          "6698 sayılı KVKK m.11 uyarınca: kişisel verilerinizin işlenip işlenmediğini öğrenme, işlenmişse buna ilişkin bilgi talep etme, işleme amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme, yurt içi/yurt dışında aktarıldığı üçüncü kişileri bilme, eksik/yanlış işlenmişse düzeltilmesini isteme, KVKK m.7'deki şartlarda silinmesini/yok edilmesini isteme, otomatik sistemlerle yapılan analiz sonucu aleyhinize bir sonuç çıkmasına itiraz etme, kanuna aykırı işleme nedeniyle uğradığınız zararın giderilmesini talep etme. Başvuru: info@opsolid.de. KVKK 2026/347 ilke kararı uyarınca aydınlatma metni (bu sayfa) ile açık rıza beyanı ayrı belgelerdir; rıza onayı ürün akışında ayrıca alınır.",
+      },
+      {
+        title: "11. Data Breach Notification",
+        content:
+          "If a personal data breach is likely to result in a risk to your rights and freedoms, we notify the competent supervisory authority within 72 hours of becoming aware (Art. 33 GDPR). High-risk breaches are also communicated to affected individuals without undue delay (Art. 34 GDPR). Under KVKK we additionally notify the Kurum and affected persons in the shortest reasonable time (KVKK Kurul kararları).",
+      },
+      {
+        title: "12. Changes to this Policy",
+        content:
+          "We may update this policy to reflect changes in law or our processing. Material changes will be announced on this page and, where you have an account, by email at least 30 days in advance.",
       },
     ],
   },

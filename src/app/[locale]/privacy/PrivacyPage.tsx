@@ -44,21 +44,26 @@ export function PrivacyPage() {
                     {SITE_CONFIG.email}
                   </a>
                 </p>
-              ) : section.subsections ? (
-                <div className="space-y-5">
-                  {(section.subsections as Array<{ title: string; content: string }>).map(
-                    (sub, j) => (
-                      <div key={j}>
-                        <h3 className="text-sm font-semibold text-ink mb-2">
-                          {sub.title}
-                        </h3>
-                        <p className="text-pretty">{sub.content}</p>
-                      </div>
-                    )
-                  )}
-                </div>
               ) : (
-                <p className="text-pretty">{section.content as string}</p>
+                <>
+                  {section.content ? (
+                    <p className="text-pretty mb-5">{section.content as string}</p>
+                  ) : null}
+                  {section.subsections ? (
+                    <div className="space-y-5">
+                      {(section.subsections as Array<{ title: string; content: string }>).map(
+                        (sub, j) => (
+                          <div key={j}>
+                            <h3 className="text-sm font-semibold text-ink mb-2">
+                              {sub.title}
+                            </h3>
+                            <p className="text-pretty">{sub.content}</p>
+                          </div>
+                        )
+                      )}
+                    </div>
+                  ) : null}
+                </>
               )}
             </div>
           ))}
