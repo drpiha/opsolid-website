@@ -79,7 +79,20 @@ const nextConfig = {
     // (src/lib/qr/styled-server.ts, src/lib/qr/ai-art.ts).
     // jsqr is pure JS but lives next to canvas in our QR pipeline; keeping
     // them grouped here documents the dependency.
-    serverComponentsExternalPackages: ["@napi-rs/canvas", "jsqr"],
+    //
+    // nodemailer + resend + @sentry/nextjs are imported dynamically via
+    // `await import(...)` inside email/notifications/Sentry helpers. The
+    // Next.js standalone tracer does not follow dynamic specifiers, so
+    // without this list the runtime image is missing the modules entirely —
+    // every magic-link / notification email throws MODULE_NOT_FOUND that's
+    // swallowed by silent .catch handlers (root cause for "magic link gelmedi").
+    serverComponentsExternalPackages: [
+      "@napi-rs/canvas",
+      "jsqr",
+      "nodemailer",
+      "resend",
+      "@sentry/nextjs",
+    ],
   },
 };
 
