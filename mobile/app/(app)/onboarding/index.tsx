@@ -222,13 +222,12 @@ export default function OnboardingScreen() {
       // system camera" affordance available without adding `expo-camera`
       // (the constraint forbids new mobile deps). The system camera
       // already provides framing guides; we don't render an overlay.
+      // allowsEditing removed — expo-image-picker v17's CropImageContract
+      // crashes the app with IllegalArgumentException when the crop
+      // activity returns null (Android cancel paths). The OCR works on
+      // the raw camera capture; cropping was a nice-to-have, not required.
       const result = await ImagePicker.launchCameraAsync({
         mediaTypes: ['images'],
-        allowsEditing: true,
-        // 4:3 mirrors the natural aspect of a paper card (88×54mm). The
-        // user can still pinch-crop in the editor when their photo is
-        // off-axis; we let them.
-        aspect: [4, 3],
         quality: 0.7,
         base64: true,
       });

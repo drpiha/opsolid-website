@@ -256,7 +256,6 @@ export default function CardEditScreen() {
   // -----------------------------------------------------------------
   const [templatePickerOpen, setTemplatePickerOpen] = useState(false);
   const [templatePickerItems, setTemplatePickerItems] = useState<Template[] | null>(null);
-  const [templatePickerSector, setTemplatePickerSector] = useState<string>('all');
   const [templatePickerActiveIdx, setTemplatePickerActiveIdx] = useState(0);
   const templatePickerListRef = useRef<FlatList<Template>>(null);
   const templatePickerViewability = useRef({ itemVisiblePercentThreshold: 60 });
@@ -403,12 +402,11 @@ export default function CardEditScreen() {
     };
   }, [templatePickerOpen, templatePickerItems]);
 
-  // Filtered templates by sector.
+  // Show all templates — sector filter chip strip was removed per UX feedback.
   const templatePickerFiltered = useMemo(() => {
     if (!templatePickerItems) return [] as Template[];
-    if (!templatePickerSector || templatePickerSector === 'all') return templatePickerItems;
-    return templatePickerItems.filter((it) => (it.sectorHint ?? 'general') === templatePickerSector);
-  }, [templatePickerItems, templatePickerSector]);
+    return templatePickerItems;
+  }, [templatePickerItems]);
 
   // When the filtered list changes, find the currently selected template's
   // index and jump the carousel to it.
@@ -669,10 +667,13 @@ export default function CardEditScreen() {
     const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!perm.granted) return;
 
+    // allowsEditing: true triggers expo-image-picker v17's native CropImage
+    // contract, which throws `IllegalArgumentException: Required value was
+    // null` when the crop activity returns no result (Android cancel paths,
+    // certain OEM crop apps). FATAL crash, not a JS-catchable error. Skip
+    // the native crop. JS cropper / pinch-to-zoom can come later if needed.
     const result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ['images'],
-      allowsEditing: true,
-      aspect: [1, 1],
       quality: 0.85,
     });
     if (result.canceled || !result.assets[0]) return;
@@ -1318,45 +1319,7 @@ export default function CardEditScreen() {
             </TouchableOpacity>
           </View>
 
-          {/* Sector filter strip */}
-          {(() => {
-            const items = templatePickerItems ?? [];
-            const seen = new Set<string>();
-            const sectors: string[] = ['all'];
-            for (const it of items) {
-              const s = it.sectorHint ?? 'general';
-              if (!seen.has(s)) { seen.add(s); sectors.push(s); }
-            }
-            return sectors.length > 2 ? (
-              <ScrollView
-                horizontal
-                showsHorizontalScrollIndicator={false}
-                contentContainerStyle={styles.tplSectorStrip}
-                style={{ borderBottomWidth: 1, borderBottomColor: theme.line.DEFAULT }}
-              >
-                {sectors.map((s) => {
-                  const active = s === templatePickerSector;
-                  return (
-                    <TouchableOpacity
-                      key={s}
-                      onPress={() => setTemplatePickerSector(s)}
-                      style={[
-                        styles.tplSectorChip,
-                        {
-                          backgroundColor: active ? teal[500] : theme.bg[2],
-                          borderColor: active ? teal[500] : theme.line.DEFAULT,
-                        },
-                      ]}
-                    >
-                      <Text style={{ fontSize: 11, fontWeight: '600', color: active ? '#fff' : theme.ink[300] }}>
-                        {s === 'all' ? 'All' : s}
-                      </Text>
-                    </TouchableOpacity>
-                  );
-                })}
-              </ScrollView>
-            ) : null;
-          })()}
+          {/* Sector filter strip removed — user wants clean preview-only modal. */}
 
           {/* Carousel body */}
           <View style={{ flex: 1 }}>
@@ -1397,8 +1360,16 @@ export default function CardEditScreen() {
                         {previewUri ? (
                           <Image source={{ uri: previewUri }} style={styles.tplPickerImage} resizeMode="contain" />
                         ) : (
-                          <View style={styles.center}>
-                            <Text style={[styles.tplPickerEmptyText, { color: theme.ink[400] }]}>{item.name}</Text>
+                          <View style={[styles.center, styles.tplPickerNoPreview]}>
+                            <View style={[styles.tplPickerNoPreviewIcon, { borderColor: theme.line.DEFAULT }]}>
+                              <Text style={[styles.tplPickerNoPreviewGlyph, { color: theme.ink[300] }]}>◻</Text>
+                            </View>
+                            <Text style={[styles.tplPickerEmptyTitle, { color: theme.ink[200] }]}>
+                              {item.name}
+                            </Text>
+                            <Text style={[styles.tplPickerEmptyHint, { color: theme.ink[400] }]}>
+                              Tap Apply to see this template
+                            </Text>
                           </View>
                         )}
                       </View>
@@ -1571,18 +1542,6 @@ const styles = StyleSheet.create({
     width: 36, height: 36, borderRadius: 18,
     justifyContent: 'center', alignItems: 'center',
   },
-  tplSectorStrip: {
-    flexDirection: 'row',
-    gap: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-  },
-  tplSectorChip: {
-    paddingHorizontal: 12,
-    paddingVertical: 5,
-    borderRadius: 16,
-    borderWidth: 1,
-  },
   tplPickerPage: {
     flex: 1,
     justifyContent: 'center',
@@ -1600,6 +1559,31 @@ const styles = StyleSheet.create({
   },
   tplPickerImage: { width: '100%', height: '100%' },
   tplPickerEmptyText: { fontSize: 14, fontWeight: '600', textAlign: 'center' },
+  // Premium no-preview placeholder styles
+  tplPickerNoPreview: { gap: 12, paddingHorizontal: 32 },
+  tplPickerNoPreviewIcon: {
+    width: 64,
+    height: 64,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderStyle: 'dashed',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 4,
+  },
+  tplPickerNoPreviewGlyph: { fontSize: 28 },
+  tplPickerEmptyTitle: {
+    fontSize: 15,
+    fontWeight: '700',
+    textAlign: 'center',
+    letterSpacing: 0.2,
+  },
+  tplPickerEmptyHint: {
+    fontSize: 12,
+    fontWeight: '500',
+    textAlign: 'center',
+    lineHeight: 18,
+  },
   tplPageIndicator: {
     position: 'absolute',
     top: 12,
