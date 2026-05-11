@@ -157,6 +157,12 @@ export type CardPatchInput = {
   templateId?: number;
   layoutKey?: string;
   themeKey?: string;
+  /** Top-level column — server writes to CardOrder.brandPrimaryHex.
+   *  Must also be sent here (not only inside cardData) so the public
+   *  /c/[slug] renderer reads the correct value from order.brandPrimaryHex. */
+  brandPrimaryHex?: string;
+  /** Top-level column — server writes to CardOrder.brandAccentHex. */
+  brandAccentHex?: string;
   qrStyle?: QrStylePatch;
   feedbackEnabled?: boolean;
 };

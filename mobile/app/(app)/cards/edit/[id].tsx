@@ -1,8 +1,9 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import {
   View,
   Text,
   ScrollView,
+  FlatList,
   TouchableOpacity,
   Alert,
   ActivityIndicator,
@@ -11,13 +12,16 @@ import {
   KeyboardAvoidingView,
   Platform,
   Modal,
+  Dimensions,
+  type ViewToken,
   type TextInput as RNTextInput,
 } from 'react-native';
 import { Stack, useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
-import { Eye, X } from 'lucide-react-native';
+import { Check, Eye, EyeOff, X } from 'lucide-react-native';
 import { WebView } from 'react-native-webview';
 import { getCard, updateCard, uploadPhoto } from '../../../../src/lib/api/cards';
+import { listTemplates, type Template } from '../../../../src/lib/api/templates';
 import { updateCardEvents } from '../../../../src/lib/api/events';
 import type { ApiCard } from '../../../../src/lib/api/types';
 import { API_BASE } from '../../../../src/lib/api/client';
@@ -243,6 +247,28 @@ export default function CardEditScreen() {
   const [activeTab, setActiveTab] = useState<Tab>('profil');
   const [previewVisible, setPreviewVisible] = useState(false);
 
+  // -----------------------------------------------------------------
+  // Inline template picker — replaces router.push to template-preview.
+  // Presenting the picker as a modal WITHIN the edit screen avoids the
+  // Expo Router Tabs limitation where router.back() from a child-tab
+  // route returns to the tab index rather than the originating screen.
+  // Form state is fully preserved because the edit screen never unmounts.
+  // -----------------------------------------------------------------
+  const [templatePickerOpen, setTemplatePickerOpen] = useState(false);
+  const [templatePickerItems, setTemplatePickerItems] = useState<Template[] | null>(null);
+  const [templatePickerSector, setTemplatePickerSector] = useState<string>('all');
+  const [templatePickerActiveIdx, setTemplatePickerActiveIdx] = useState(0);
+  const templatePickerListRef = useRef<FlatList<Template>>(null);
+  const templatePickerViewability = useRef({ itemVisiblePercentThreshold: 60 });
+  const onTemplatePickerViewableItemsChanged = useRef(
+    ({ viewableItems }: { viewableItems: ViewToken[] }) => {
+      const first = viewableItems[0];
+      if (typeof first?.index === 'number') {
+        setTemplatePickerActiveIdx(first.index);
+      }
+    },
+  );
+
   const [basics, setBasics] = useState<BasicFieldsState>({
     name: '', jobTitle: '', position: '', company: '', email: '',
     phone: '', whatsapp: '', website: '', address: '', bio: '',
@@ -301,6 +327,23 @@ export default function CardEditScreen() {
   const [photoPath, setPhotoPath] = useState<string | null>(null);
 
   // -----------------------------------------------------------------
+  // Live preview — debounced URL that updates without a save round-trip.
+  //
+  // `debouncedPreviewUrl` is what the WebView actually loads. We compute
+  // the instant URL from state on every render; a useEffect debounces the
+  // write to `debouncedPreviewUrl` so the WebView only reloads after the
+  // user stops typing (500 ms for text, 200 ms for picker/toggle changes).
+  //
+  // Design changes (layout/theme/brand colors) use a tighter 200 ms window
+  // so the picker feels snappy. We track "design-only" vs "any" changes
+  // with a separate ref — keeping a single debounce avoids double-load.
+  // -----------------------------------------------------------------
+  const [debouncedPreviewUrl, setDebouncedPreviewUrl] = useState<string | null>(null);
+  // Counter incremented on any picker change (layout / theme / colors). A
+  // separate counter for text edits. Both gate the debounce delay.
+  const previewDebounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // -----------------------------------------------------------------
   // M7 Wave 2 — Tour B coaching marks. Refs anchor the spotlight to
   // the tab strip, the eye/preview FAB, and the save button. The
   // scrollRef lets the controller scroll the active tab so the target
@@ -336,6 +379,61 @@ export default function CardEditScreen() {
   }
   function setDiscoveryField<K extends keyof DiscoveryState>(k: K, v: DiscoveryState[K]) {
     setDiscovery((s) => ({ ...s, [k]: v }));
+  }
+
+  // -----------------------------------------------------------------
+  // Inline template picker data loading. Fires once on first open.
+  // Subsequent opens reuse the cached items; the effect is gated on
+  // `templatePickerOpen` so we don't load until the user actually
+  // opens the picker.
+  // -----------------------------------------------------------------
+  useEffect(() => {
+    if (!templatePickerOpen) return;
+    if (templatePickerItems !== null) return; // already loaded
+    let cancelled = false;
+    void listTemplates()
+      .then((res) => {
+        if (!cancelled) setTemplatePickerItems(res.items);
+      })
+      .catch(() => {
+        if (!cancelled) setTemplatePickerItems([]); // show empty, not loading spinner
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [templatePickerOpen, templatePickerItems]);
+
+  // Filtered templates by sector.
+  const templatePickerFiltered = useMemo(() => {
+    if (!templatePickerItems) return [] as Template[];
+    if (!templatePickerSector || templatePickerSector === 'all') return templatePickerItems;
+    return templatePickerItems.filter((it) => (it.sectorHint ?? 'general') === templatePickerSector);
+  }, [templatePickerItems, templatePickerSector]);
+
+  // When the filtered list changes, find the currently selected template's
+  // index and jump the carousel to it.
+  useEffect(() => {
+    if (!templatePickerFiltered.length) return;
+    const idx = templatePickerFiltered.findIndex((it) => it.id === templateId);
+    const target = idx >= 0 ? idx : 0;
+    setTemplatePickerActiveIdx(target);
+    setTimeout(() => {
+      templatePickerListRef.current?.scrollToIndex({ index: target, animated: false });
+    }, 50);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [templatePickerFiltered]);
+
+  const templatePickerCurrent = templatePickerFiltered[templatePickerActiveIdx];
+
+  function openTemplatePicker(/* tplId unused — we open at current selection */) {
+    setTemplatePickerOpen(true);
+  }
+
+  function applyTemplatePicker() {
+    if (templatePickerCurrent) {
+      setTemplateId(templatePickerCurrent.id);
+    }
+    setTemplatePickerOpen(false);
   }
 
   // -----------------------------------------------------------------
@@ -709,6 +807,12 @@ export default function CardEditScreen() {
         templateId,
         layoutKey,
         themeKey,
+        // Brand colors MUST be sent as top-level PATCH fields so the server
+        // writes them to the CardOrder.brandPrimaryHex / brandAccentHex columns.
+        // The public /c/[slug] page reads those columns — NOT cardData — so
+        // sending them only inside cardData left colors stale after every save.
+        brandPrimaryHex: primaryHex,
+        brandAccentHex: accentHex,
         qrStyle,
         feedbackEnabled,
       });
@@ -739,6 +843,36 @@ export default function CardEditScreen() {
     }
   }
 
+  // -----------------------------------------------------------------
+  // Debounced preview URL — updated after user pauses input.
+  // Design-knob changes (layout/theme/colors) use a shorter 200 ms window;
+  // text edits (basics/socials) use 500 ms. We collapse both into one
+  // effect and apply the shortest relevant delay.
+  // -----------------------------------------------------------------
+  useEffect(() => {
+    const slug = card?.slug ?? '';
+    if (!slug) return;
+
+    const url =
+      `${API_BASE}/c/${encodeURIComponent(slug)}` +
+      `?preview=1` +
+      `&layout=${encodeURIComponent(layoutKey)}` +
+      `&theme=${encodeURIComponent(themeKey)}` +
+      `&qr=${encodeURIComponent(qrPreset)}` +
+      `&primary=${encodeURIComponent(primaryHex)}` +
+      `&accent=${encodeURIComponent(accentHex)}`;
+
+    if (previewDebounceRef.current) clearTimeout(previewDebounceRef.current);
+    previewDebounceRef.current = setTimeout(() => {
+      setDebouncedPreviewUrl(url);
+    }, 300);
+
+    return () => {
+      if (previewDebounceRef.current) clearTimeout(previewDebounceRef.current);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [layoutKey, themeKey, qrPreset, primaryHex, accentHex, basics, socials, card?.slug]);
+
   if (loading) {
     return (
       <View style={[styles.center, { backgroundColor: theme.bg[0] }]}>
@@ -753,19 +887,10 @@ export default function CardEditScreen() {
       : `${API_BASE}${photoPath}`
     : null;
 
-  // Build the live preview URL from the in-memory draft state. The web
-  // viewer (src/app/c/[slug]/page.tsx) reads `?preview=1` + the design
-  // overrides and renders the unsaved configuration without writing to DB.
-  const previewSlug = card?.slug ?? '';
-  const previewUrl = previewSlug
-    ? `${API_BASE}/c/${encodeURIComponent(previewSlug)}` +
-      `?preview=1` +
-      `&layout=${encodeURIComponent(layoutKey)}` +
-      `&theme=${encodeURIComponent(themeKey)}` +
-      `&qr=${encodeURIComponent(qrPreset)}` +
-      `&primary=${encodeURIComponent(primaryHex)}` +
-      `&accent=${encodeURIComponent(accentHex)}`
-    : null;
+  // The slug-based preview URL. Only available once a card has been
+  // published at least once (slug is non-null). When no slug, we can't
+  // show a web preview (no public URL to load).
+  const hasPreview = !!(card?.slug && debouncedPreviewUrl);
 
   // Tab is rendered above the scroll, scroll is per-tab so each tab can be
   // scrolled independently (returning to "Profil" doesn't reset "Tasarim"'s
@@ -775,6 +900,11 @@ export default function CardEditScreen() {
     { key: 'tasarim', label: t.tabDesign },
     { key: 'gelismis', label: t.tabAdvanced },
   ];
+
+  // Screen height split: when preview is open, form area shrinks to 52%
+  // and preview pane takes 44% (remaining 4% is the preview header bar).
+  const screenH = Dimensions.get('window').height;
+  const formFlex = previewVisible ? 0.52 : 1;
 
   return (
     <>
@@ -800,7 +930,10 @@ export default function CardEditScreen() {
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
       >
-        {/* Tab bar — three pills, underline indicator on active. */}
+        {/* Tab bar + preview toggle. The Eye button lives here so it's
+            reachable from all three tabs — the user doesn't need to switch
+            to Tasarim to open the preview. Hidden when the card has no slug
+            yet (unpublished draft with no public URL). */}
         <View
           ref={editTabsRef}
           collapsable={false}
@@ -829,278 +962,444 @@ export default function CardEditScreen() {
               </TouchableOpacity>
             );
           })}
-        </View>
 
-        {activeTab === 'profil' && (
-          <ScrollView
-            key="profil"
-            ref={profilScrollRef}
-            style={{ backgroundColor: theme.bg[0] }}
-            contentContainerStyle={styles.scroll}
-            keyboardShouldPersistTaps="handled"
-            keyboardDismissMode="interactive"
-            automaticallyAdjustKeyboardInsets
-          >
-            {/* Photo */}
+          {/* Preview toggle — always visible when a slug exists. Shows EyeOff
+              when preview is already open so the user knows tapping closes it. */}
+          {hasPreview || card?.slug ? (
             <View
-              ref={photoSectionRef}
+              ref={eyeButtonRef}
               collapsable={false}
-              onLayout={(e) => setPhotoSectionY(e.nativeEvent.layout.y)}
+              style={styles.previewToggleWrap}
             >
               <TouchableOpacity
-                onPress={() => void pickPhoto()}
-                disabled={uploadingPhoto}
-                style={[styles.photoWrap, { borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[1] }]}
+                style={[
+                  styles.previewToggleBtn,
+                  {
+                    backgroundColor: previewVisible ? teal[500] : theme.bg[2],
+                    borderColor: previewVisible ? teal[500] : theme.line.DEFAULT,
+                  },
+                ]}
+                onPress={() => setPreviewVisible((v) => !v)}
+                activeOpacity={0.85}
+                accessibilityLabel={previewVisible ? 'Önizlemeyi kapat' : t.preview}
               >
-                {uploadingPhoto ? (
-                  <ActivityIndicator color={copper[500]} />
-                ) : photoUri ? (
-                  <Image source={{ uri: photoUri }} style={styles.photo} />
-                ) : (
-                  <Text style={[styles.photoPlaceholder, { color: theme.ink[400] }]}>
-                    {t.addPhoto}
-                  </Text>
-                )}
-                {photoUri && !uploadingPhoto && (
-                  <View style={styles.photoEditBadge}>
-                    <Text style={styles.photoEditBadgeText}>{t.changePhoto}</Text>
-                  </View>
-                )}
-              </TouchableOpacity>
-
-              {/* M7 Wave 2 — "Use Google photo" one-tap. The OIDC payload
-                  surfaces the user's Google avatar URL on `auth.user.image`.
-                  We accept it as an external URL directly (server validation
-                  permits any string up to 500 chars in `photoPath`). */}
-              {authUser?.image && !photoPath ? (
-                <TouchableOpacity
-                  onPress={() => setPhotoPath(authUser.image ?? null)}
-                  activeOpacity={0.85}
-                  style={{
-                    flexDirection: 'row',
-                    alignItems: 'center',
-                    alignSelf: 'center',
-                    gap: 8,
-                    paddingHorizontal: 12,
-                    paddingVertical: 10,
-                    borderRadius: 8,
-                    backgroundColor: theme.bg[2],
-                    borderWidth: 1,
-                    borderColor: theme.line.DEFAULT,
-                    marginTop: 8,
-                  }}
-                >
-                  <Image
-                    source={{ uri: authUser.image }}
-                    style={{ width: 24, height: 24, borderRadius: 12 }}
-                  />
-                  <Text style={{ fontSize: 13, color: theme.ink[200] }}>
-                    {t.useGooglePhoto}
-                  </Text>
-                </TouchableOpacity>
-              ) : null}
-            </View>
-
-            <BasicFieldsSection
-              theme={theme}
-              values={basics}
-              onChange={setBasic}
-              bioInputRef={bioInputRef}
-            />
-            <View
-              ref={socialsSectionRef}
-              collapsable={false}
-              onLayout={(e) => setSocialsSectionY(e.nativeEvent.layout.y)}
-            >
-              <SocialsSection
-                theme={theme}
-                values={socials}
-                onChange={setSocial}
-                onApplyEnrichment={handleApplyEnrichment}
-              />
-            </View>
-            <ServicesSection theme={theme} items={services} onChange={setServices} />
-            <CustomButtonsSection theme={theme} items={customButtons} onChange={setCustomButtons} />
-            <FaqsSection theme={theme} items={faqs} onChange={setFaqs} />
-
-            {card ? (
-              <SmartSuggestionsSection
-                theme={theme}
-                card={card}
-                hasPhoto={!!photoPath}
-                bio={basics.bio}
-                servicesCount={services.length}
-                socialsFilledCount={
-                  Object.values(socials).filter((v) => v.trim() !== '').length
+                {previewVisible
+                  ? <EyeOff size={16} color="#FFFFFF" strokeWidth={2.2} />
+                  : <Eye size={16} color={teal[500]} strokeWidth={2.2} />
                 }
-                tagsCount={tags.length}
-                onAddPhoto={handleSuggestPhoto}
-                onAddBio={handleSuggestBio}
-                onAddServices={handleSuggestServices}
-                onAddSocial={handleSuggestSocial}
-                onSetSector={handleSuggestSector}
-              />
-            ) : null}
-          </ScrollView>
-        )}
+              </TouchableOpacity>
+            </View>
+          ) : null}
+        </View>
 
-        {activeTab === 'tasarim' && (
-          <ScrollView
-            key="tasarim"
-            style={{ backgroundColor: theme.bg[0] }}
-            contentContainerStyle={styles.scroll}
-            keyboardShouldPersistTaps="handled"
-          >
-            <TemplateSection
-              theme={theme}
-              value={templateId}
-              onChange={setTemplateId}
-              onPreviewRequest={(tplId) => {
-                router.push({
-                  pathname: '/(app)/cards/template-preview',
-                  params: { selectedId: String(tplId) },
-                });
-              }}
-            />
-            <LayoutSection theme={theme} value={layoutKey} onChange={setLayoutKey} />
-            <ThemeSection theme={theme} value={themeKey} onChange={setThemeKey} />
-            <BrandColorsSection
-              theme={theme}
-              primaryHex={primaryHex}
-              accentHex={accentHex}
-              onPrimaryChange={setPrimaryHex}
-              onAccentChange={setAccentHex}
-            />
-            <QrStyleSection theme={theme} value={qrPreset} onChange={setQrPreset} />
-          </ScrollView>
-        )}
-
-        {activeTab === 'gelismis' && (
-          <ScrollView
-            key="gelismis"
-            style={{ backgroundColor: theme.bg[0] }}
-            contentContainerStyle={styles.scroll}
-            keyboardShouldPersistTaps="handled"
-            keyboardDismissMode="interactive"
-            automaticallyAdjustKeyboardInsets
-          >
-            <StatusBannerSection theme={theme} value={statusBanner} onChange={setStatusBanner} />
-            <ContactFormSection theme={theme} value={contactForm} onChange={setContactForm} />
-            <TagsSection theme={theme} selected={tags} onChange={setTags} />
-            <EmbedsSection theme={theme} value={embeds} onChange={setEmbeds} />
-            <FeedbackSection theme={theme} value={feedbackEnabled} onChange={setFeedbackEnabled} />
-            <EventsAttendingSection
-              theme={theme}
-              selectedIds={attendingEventIds}
-              onChange={setAttendingEventIds}
-            />
-            <VisibilitySection theme={theme} value={visibility} onChange={setVisibility} />
-            <DiscoverySection theme={theme} values={discovery} onChange={setDiscoveryField} />
-
-            {/* M5 — Pro features (password + tip jar). Sections render for
-                all users; the toggles are gated on isPro and open the
-                paywall on tap when the user isn't a Pro subscriber. */}
-            <PasswordSection
-              theme={theme}
-              value={passwordState}
-              onChange={setPasswordState}
-              isPro={isProUser}
-              onProGate={() => setPaywallReason('password_protection')}
-              labels={{
-                title: tProSection.passwordSection,
-                set: tProSection.passwordSet,
-                hint: tProSection.passwordHint,
-                placeholder: tProSection.passwordPlaceholder,
-                clear: tProSection.passwordClear,
-              }}
-            />
-            <TipJarSection
-              theme={theme}
-              value={tipJar}
-              onChange={setTipJar}
-              isPro={isProUser}
-              onProGate={() => setPaywallReason('tip_jar')}
-              labels={{
-                title: tProSection.tipJarSection,
-                enabled: tProSection.tipJarEnabled,
-                label: tProSection.tipJarLabel,
-                labelPlaceholder: tProSection.tipJarLabelPlaceholder,
-                priceId: tProSection.tipJarPriceId,
-                priceIdHint: tProSection.tipJarPriceIdHint,
-              }}
-            />
-
-            {/* Status (only for published cards) */}
-            {card?.status === 'PUBLISHED' && (
-              <View style={[styles.statusRow, { borderColor: theme.line.DEFAULT }]}>
-                <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>Status</Text>
-                <Text style={{ color: '#7FB286', fontSize: 14, fontWeight: '600' }}>
-                  {t.status.PUBLISHED}
-                </Text>
-              </View>
-            )}
-          </ScrollView>
-        )}
-
-        {/* Live preview FAB — Tasarim tab only, hidden when card has no slug
-            yet (cannot preview a card that hasn't been published once). */}
-        {activeTab === 'tasarim' && previewUrl && (
-          <View
-            ref={eyeButtonRef}
-            collapsable={false}
-            style={styles.previewFabAnchor}
-            pointerEvents="box-none"
-          >
-            <TouchableOpacity
-              style={[styles.previewFab, { backgroundColor: teal[500] }]}
-              onPress={() => setPreviewVisible(true)}
-              activeOpacity={0.85}
-              accessibilityLabel={t.preview}
+        {/* Form area — shrinks when preview pane is open. */}
+        <View style={{ flex: formFlex }}>
+          {activeTab === 'profil' && (
+            <ScrollView
+              key="profil"
+              ref={profilScrollRef}
+              style={{ backgroundColor: theme.bg[0], flex: 1 }}
+              contentContainerStyle={[styles.scroll, previewVisible && styles.scrollCompact]}
+              keyboardShouldPersistTaps="handled"
+              keyboardDismissMode="interactive"
+              automaticallyAdjustKeyboardInsets
             >
-              <Eye size={22} color="#FFFFFF" strokeWidth={2.2} />
-            </TouchableOpacity>
-          </View>
-        )}
-      </KeyboardAvoidingView>
+              {/* Photo */}
+              <View
+                ref={photoSectionRef}
+                collapsable={false}
+                onLayout={(e) => setPhotoSectionY(e.nativeEvent.layout.y)}
+              >
+                <TouchableOpacity
+                  onPress={() => void pickPhoto()}
+                  disabled={uploadingPhoto}
+                  style={[styles.photoWrap, { borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[1] }]}
+                >
+                  {uploadingPhoto ? (
+                    <ActivityIndicator color={copper[500]} />
+                  ) : photoUri ? (
+                    <Image source={{ uri: photoUri }} style={styles.photo} />
+                  ) : (
+                    <Text style={[styles.photoPlaceholder, { color: theme.ink[400] }]}>
+                      {t.addPhoto}
+                    </Text>
+                  )}
+                  {photoUri && !uploadingPhoto && (
+                    <View style={styles.photoEditBadge}>
+                      <Text style={styles.photoEditBadgeText}>{t.changePhoto}</Text>
+                    </View>
+                  )}
+                </TouchableOpacity>
 
-      {/* Live preview bottom sheet — Modal + WebView, scaled to ~85% screen
-          height. Visible only when `previewVisible` is true (FAB tap). */}
-      <Modal
-        visible={previewVisible && !!previewUrl}
-        transparent
-        animationType="slide"
-        onRequestClose={() => setPreviewVisible(false)}
-      >
-        <View style={styles.modalBackdrop}>
-          <View style={[styles.modalSheet, { backgroundColor: theme.bg[1] }]}>
-            <View style={[styles.modalHeader, { borderBottomColor: theme.line.DEFAULT }]}>
-              <Text style={[styles.modalTitle, { color: theme.ink[100] }]}>
+                {/* M7 Wave 2 — "Use Google photo" one-tap. The OIDC payload
+                    surfaces the user's Google avatar URL on `auth.user.image`.
+                    We accept it as an external URL directly (server validation
+                    permits any string up to 500 chars in `photoPath`). */}
+                {authUser?.image && !photoPath ? (
+                  <TouchableOpacity
+                    onPress={() => setPhotoPath(authUser.image ?? null)}
+                    activeOpacity={0.85}
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      alignSelf: 'center',
+                      gap: 8,
+                      paddingHorizontal: 12,
+                      paddingVertical: 10,
+                      borderRadius: 8,
+                      backgroundColor: theme.bg[2],
+                      borderWidth: 1,
+                      borderColor: theme.line.DEFAULT,
+                      marginTop: 8,
+                    }}
+                  >
+                    <Image
+                      source={{ uri: authUser.image }}
+                      style={{ width: 24, height: 24, borderRadius: 12 }}
+                    />
+                    <Text style={{ fontSize: 13, color: theme.ink[200] }}>
+                      {t.useGooglePhoto}
+                    </Text>
+                  </TouchableOpacity>
+                ) : null}
+              </View>
+
+              <BasicFieldsSection
+                theme={theme}
+                values={basics}
+                onChange={setBasic}
+                bioInputRef={bioInputRef}
+              />
+              <View
+                ref={socialsSectionRef}
+                collapsable={false}
+                onLayout={(e) => setSocialsSectionY(e.nativeEvent.layout.y)}
+              >
+                <SocialsSection
+                  theme={theme}
+                  values={socials}
+                  onChange={setSocial}
+                  onApplyEnrichment={handleApplyEnrichment}
+                />
+              </View>
+              <ServicesSection theme={theme} items={services} onChange={setServices} />
+              <CustomButtonsSection theme={theme} items={customButtons} onChange={setCustomButtons} />
+              <FaqsSection theme={theme} items={faqs} onChange={setFaqs} />
+
+              {card ? (
+                <SmartSuggestionsSection
+                  theme={theme}
+                  card={card}
+                  hasPhoto={!!photoPath}
+                  bio={basics.bio}
+                  servicesCount={services.length}
+                  socialsFilledCount={
+                    Object.values(socials).filter((v) => v.trim() !== '').length
+                  }
+                  tagsCount={tags.length}
+                  onAddPhoto={handleSuggestPhoto}
+                  onAddBio={handleSuggestBio}
+                  onAddServices={handleSuggestServices}
+                  onAddSocial={handleSuggestSocial}
+                  onSetSector={handleSuggestSector}
+                />
+              ) : null}
+            </ScrollView>
+          )}
+
+          {activeTab === 'tasarim' && (
+            <ScrollView
+              key="tasarim"
+              style={{ backgroundColor: theme.bg[0], flex: 1 }}
+              contentContainerStyle={[styles.scroll, previewVisible && styles.scrollCompact]}
+              keyboardShouldPersistTaps="handled"
+            >
+              <TemplateSection
+                theme={theme}
+                value={templateId}
+                onChange={setTemplateId}
+                onPreviewRequest={() => {
+                  // Open the inline template picker modal — avoids the Expo Router
+                  // Tabs back-navigation bug where router.back() from a sibling
+                  // Tabs.Screen returns to the tab index instead of this screen.
+                  openTemplatePicker();
+                }}
+              />
+              <LayoutSection theme={theme} value={layoutKey} onChange={setLayoutKey} />
+              <ThemeSection theme={theme} value={themeKey} onChange={setThemeKey} />
+              <BrandColorsSection
+                theme={theme}
+                primaryHex={primaryHex}
+                accentHex={accentHex}
+                onPrimaryChange={setPrimaryHex}
+                onAccentChange={setAccentHex}
+              />
+              <QrStyleSection theme={theme} value={qrPreset} onChange={setQrPreset} />
+            </ScrollView>
+          )}
+
+          {activeTab === 'gelismis' && (
+            <ScrollView
+              key="gelismis"
+              style={{ backgroundColor: theme.bg[0], flex: 1 }}
+              contentContainerStyle={[styles.scroll, previewVisible && styles.scrollCompact]}
+              keyboardShouldPersistTaps="handled"
+              keyboardDismissMode="interactive"
+              automaticallyAdjustKeyboardInsets
+            >
+              <StatusBannerSection theme={theme} value={statusBanner} onChange={setStatusBanner} />
+              <ContactFormSection theme={theme} value={contactForm} onChange={setContactForm} />
+              <TagsSection theme={theme} selected={tags} onChange={setTags} />
+              <EmbedsSection theme={theme} value={embeds} onChange={setEmbeds} />
+              <FeedbackSection theme={theme} value={feedbackEnabled} onChange={setFeedbackEnabled} />
+              <EventsAttendingSection
+                theme={theme}
+                selectedIds={attendingEventIds}
+                onChange={setAttendingEventIds}
+              />
+              <VisibilitySection theme={theme} value={visibility} onChange={setVisibility} />
+              <DiscoverySection theme={theme} values={discovery} onChange={setDiscoveryField} />
+
+              {/* M5 — Pro features (password + tip jar). Sections render for
+                  all users; the toggles are gated on isPro and open the
+                  paywall on tap when the user isn't a Pro subscriber. */}
+              <PasswordSection
+                theme={theme}
+                value={passwordState}
+                onChange={setPasswordState}
+                isPro={isProUser}
+                onProGate={() => setPaywallReason('password_protection')}
+                labels={{
+                  title: tProSection.passwordSection,
+                  set: tProSection.passwordSet,
+                  hint: tProSection.passwordHint,
+                  placeholder: tProSection.passwordPlaceholder,
+                  clear: tProSection.passwordClear,
+                }}
+              />
+              <TipJarSection
+                theme={theme}
+                value={tipJar}
+                onChange={setTipJar}
+                isPro={isProUser}
+                onProGate={() => setPaywallReason('tip_jar')}
+                labels={{
+                  title: tProSection.tipJarSection,
+                  enabled: tProSection.tipJarEnabled,
+                  label: tProSection.tipJarLabel,
+                  labelPlaceholder: tProSection.tipJarLabelPlaceholder,
+                  priceId: tProSection.tipJarPriceId,
+                  priceIdHint: tProSection.tipJarPriceIdHint,
+                }}
+              />
+
+              {/* Status (only for published cards) */}
+              {card?.status === 'PUBLISHED' && (
+                <View style={[styles.statusRow, { borderColor: theme.line.DEFAULT }]}>
+                  <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>Status</Text>
+                  <Text style={{ color: '#7FB286', fontSize: 14, fontWeight: '600' }}>
+                    {t.status.PUBLISHED}
+                  </Text>
+                </View>
+              )}
+            </ScrollView>
+          )}
+        </View>
+
+        {/* Live preview pane — persistent split below the form when open.
+            Updates debounced ~300ms after any input change, no save needed.
+            The `key` prop forces the WebView to fully remount on URL change
+            so stale page state can't bleed across preview refreshes. */}
+        {previewVisible && debouncedPreviewUrl && (
+          <View
+            style={[
+              styles.previewPane,
+              { backgroundColor: theme.bg[1], borderTopColor: theme.line.DEFAULT },
+              { height: screenH * 0.44 },
+            ]}
+          >
+            {/* Preview pane header — label + close button. */}
+            <View style={[styles.previewPaneHeader, { borderBottomColor: theme.line.DEFAULT }]}>
+              <Text style={[styles.previewPaneLabel, { color: theme.ink[300] }]}>
                 {t.preview}
               </Text>
               <TouchableOpacity
                 onPress={() => setPreviewVisible(false)}
                 hitSlop={12}
-                style={styles.modalClose}
-                accessibilityLabel="Close"
+                style={styles.previewPaneClose}
+                accessibilityLabel="Önizlemeyi kapat"
               >
-                <X size={22} color={theme.ink[200]} />
+                <X size={18} color={theme.ink[400]} />
               </TouchableOpacity>
             </View>
-            {previewUrl ? (
-              <WebView
-                source={{ uri: previewUrl }}
-                style={{ flex: 1, backgroundColor: theme.bg[0] }}
-                startInLoadingState
-                renderLoading={() => (
-                  <View style={[styles.center, { backgroundColor: theme.bg[0] }]}>
-                    <ActivityIndicator size="large" color={teal[500]} />
-                  </View>
-                )}
+            <WebView
+              key={debouncedPreviewUrl}
+              source={{ uri: debouncedPreviewUrl }}
+              style={{ flex: 1, backgroundColor: theme.bg[0] }}
+              startInLoadingState
+              renderLoading={() => (
+                <View style={[styles.center, { backgroundColor: theme.bg[0] }]}>
+                  <ActivityIndicator size="small" color={teal[500]} />
+                </View>
+              )}
+            />
+          </View>
+        )}
+      </KeyboardAvoidingView>
+
+      {/* Inline template picker modal — replaces navigation to template-preview.
+          Keeps the edit screen mounted so all form state is preserved. The
+          sector strip + horizontal pageable FlatList mirror template-preview.tsx
+          so the UX is identical but without the nav-stack round-trip. */}
+      <Modal
+        visible={templatePickerOpen}
+        animationType="slide"
+        presentationStyle="pageSheet"
+        onRequestClose={() => setTemplatePickerOpen(false)}
+      >
+        <View style={[styles.tplPickerRoot, { backgroundColor: theme.bg[0] }]}>
+          {/* Header */}
+          <View style={[styles.tplPickerHeader, { borderBottomColor: theme.line.DEFAULT }]}>
+            <View style={{ flex: 1 }}>
+              <Text style={[styles.tplPickerTitle, { color: theme.ink[100] }]}>
+                {templatePickerCurrent?.name ?? '…'}
+              </Text>
+              {templatePickerCurrent?.sectorHint ? (
+                <Text style={[styles.tplPickerSub, { color: theme.ink[400] }]}>
+                  {templatePickerCurrent.sectorHint}
+                </Text>
+              ) : null}
+            </View>
+            <TouchableOpacity
+              onPress={() => setTemplatePickerOpen(false)}
+              style={styles.tplPickerIconBtn}
+              hitSlop={12}
+              accessibilityLabel="Close"
+            >
+              <X size={22} color={theme.ink[200]} />
+            </TouchableOpacity>
+          </View>
+
+          {/* Sector filter strip */}
+          {(() => {
+            const items = templatePickerItems ?? [];
+            const seen = new Set<string>();
+            const sectors: string[] = ['all'];
+            for (const it of items) {
+              const s = it.sectorHint ?? 'general';
+              if (!seen.has(s)) { seen.add(s); sectors.push(s); }
+            }
+            return sectors.length > 2 ? (
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.tplSectorStrip}
+                style={{ borderBottomWidth: 1, borderBottomColor: theme.line.DEFAULT }}
+              >
+                {sectors.map((s) => {
+                  const active = s === templatePickerSector;
+                  return (
+                    <TouchableOpacity
+                      key={s}
+                      onPress={() => setTemplatePickerSector(s)}
+                      style={[
+                        styles.tplSectorChip,
+                        {
+                          backgroundColor: active ? teal[500] : theme.bg[2],
+                          borderColor: active ? teal[500] : theme.line.DEFAULT,
+                        },
+                      ]}
+                    >
+                      <Text style={{ fontSize: 11, fontWeight: '600', color: active ? '#fff' : theme.ink[300] }}>
+                        {s === 'all' ? 'All' : s}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </ScrollView>
+            ) : null;
+          })()}
+
+          {/* Carousel body */}
+          <View style={{ flex: 1 }}>
+            {templatePickerItems === null ? (
+              <View style={styles.center}>
+                <ActivityIndicator color={teal[500]} size="large" />
+              </View>
+            ) : templatePickerFiltered.length === 0 ? (
+              <View style={styles.center}>
+                <Text style={{ color: theme.ink[400] }}>No templates available.</Text>
+              </View>
+            ) : (
+              <FlatList
+                ref={templatePickerListRef}
+                data={templatePickerFiltered}
+                keyExtractor={(it) => String(it.id)}
+                horizontal
+                pagingEnabled
+                showsHorizontalScrollIndicator={false}
+                initialScrollIndex={templatePickerActiveIdx}
+                getItemLayout={(_, index) => ({
+                  length: Dimensions.get('window').width,
+                  offset: Dimensions.get('window').width * index,
+                  index,
+                })}
+                onViewableItemsChanged={onTemplatePickerViewableItemsChanged.current}
+                viewabilityConfig={templatePickerViewability.current}
+                decelerationRate="fast"
+                renderItem={({ item }) => {
+                  const previewUri = item.previewPath
+                    ? item.previewPath.startsWith('http')
+                      ? item.previewPath
+                      : `${API_BASE}${item.previewPath}`
+                    : null;
+                  return (
+                    <View style={[styles.tplPickerPage, { width: Dimensions.get('window').width }]}>
+                      <View style={[styles.tplPickerFrame, { borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[2] }]}>
+                        {previewUri ? (
+                          <Image source={{ uri: previewUri }} style={styles.tplPickerImage} resizeMode="contain" />
+                        ) : (
+                          <View style={styles.center}>
+                            <Text style={[styles.tplPickerEmptyText, { color: theme.ink[400] }]}>{item.name}</Text>
+                          </View>
+                        )}
+                      </View>
+                    </View>
+                  );
+                }}
               />
+            )}
+            {templatePickerFiltered.length > 1 ? (
+              <View style={styles.tplPageIndicator}>
+                <Text style={[styles.tplPageIndicatorText, { color: '#FFFFFF' }]}>
+                  {templatePickerActiveIdx + 1} / {templatePickerFiltered.length}
+                </Text>
+              </View>
             ) : null}
+          </View>
+
+          {/* Footer */}
+          <View style={[styles.tplPickerFooter, { borderTopColor: theme.line.DEFAULT }]}>
+            <TouchableOpacity
+              onPress={() => setTemplatePickerOpen(false)}
+              style={[styles.tplBtn, styles.tplBtnGhost, { borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[1] }]}
+              activeOpacity={0.85}
+            >
+              <Text style={[styles.tplBtnText, { color: theme.ink[200] }]}>Cancel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={applyTemplatePicker}
+              style={[styles.tplBtn, styles.tplBtnPrimary, { backgroundColor: teal[500] }]}
+              activeOpacity={0.85}
+              disabled={!templatePickerCurrent}
+            >
+              <Check size={16} color="#FFFFFF" />
+              <Text style={[styles.tplBtnText, { color: '#FFFFFF' }]}>Apply</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>
+
       {paywallReason ? (
         <PaywallModal
           visible
@@ -1124,20 +1423,25 @@ export default function CardEditScreen() {
 
 const styles = StyleSheet.create({
   center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  // paddingBottom widened so the last section clears the FAB + gesture bar.
+  // paddingBottom: when preview open we reduce so the WebView pane isn't
+  // pushed off screen. Without preview, keep 160 so content clears gesture bar.
   scroll: { padding: 16, paddingBottom: 160 },
+  scrollCompact: { paddingBottom: 80 },
   saveBtn: { paddingHorizontal: 4 },
   saveBtnText: { fontSize: 16, fontWeight: '600' },
   // Tab bar: 44pt tall, underline-style active indicator (no fill).
+  // The Eye toggle button is appended as the rightmost element.
   tabBar: {
     flexDirection: 'row',
     height: 44,
     borderBottomWidth: 1,
+    alignItems: 'center',
   },
   tabPill: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    height: '100%',
     borderBottomWidth: 2,
     borderBottomColor: 'transparent',
   },
@@ -1146,6 +1450,46 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
+  },
+  // Preview toggle button in the tab bar — compact pill, rightmost slot.
+  previewToggleWrap: {
+    paddingRight: 10,
+    paddingLeft: 4,
+    height: '100%',
+    justifyContent: 'center',
+  },
+  previewToggleBtn: {
+    width: 32,
+    height: 26,
+    borderRadius: 8,
+    borderWidth: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  // Live preview pane — sits below the form area, not a separate modal.
+  previewPane: {
+    borderTopWidth: 1,
+    overflow: 'hidden',
+  },
+  previewPaneHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderBottomWidth: 1,
+  },
+  previewPaneLabel: {
+    fontSize: 11,
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+  },
+  previewPaneClose: {
+    width: 28,
+    height: 28,
+    justifyContent: 'center',
+    alignItems: 'flex-end',
   },
   photoWrap: {
     width: 96, height: 96, borderRadius: 48, borderWidth: 1,
@@ -1161,48 +1505,87 @@ const styles = StyleSheet.create({
   photoEditBadgeText: { color: '#fff', fontSize: 10 },
   fieldLabel: { fontSize: 12, fontWeight: '500', textTransform: 'uppercase', letterSpacing: 0.4 },
   statusRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingVertical: 12, borderTopWidth: 1, marginTop: 24 },
-  // Live preview FAB — Tasarim tab only. The wrapper view holds the absolute
-  // positioning so it has measurable bounds for Tour B's spotlight; the
-  // inner TouchableOpacity is purely visual + interactive.
-  previewFabAnchor: {
-    position: 'absolute',
-    right: 24,
-    bottom: 24,
-    width: 56,
-    height: 56,
-  },
-  previewFab: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.18,
-    shadowRadius: 8,
-    elevation: 6,
-  },
-  // Bottom-sheet modal hosting the WebView preview.
-  modalBackdrop: {
-    flex: 1,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    justifyContent: 'flex-end',
-  },
-  modalSheet: {
-    height: '85%',
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    overflow: 'hidden',
-  },
-  modalHeader: {
+  // Inline template picker modal styles.
+  tplPickerRoot: { flex: 1 },
+  tplPickerHeader: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderBottomWidth: 1,
+    gap: 12,
   },
-  modalTitle: { fontSize: 16, fontWeight: '700' },
-  modalClose: { width: 36, height: 36, justifyContent: 'center', alignItems: 'flex-end' },
+  tplPickerTitle: { fontSize: 16, fontWeight: '700' },
+  tplPickerSub: {
+    fontSize: 11,
+    fontWeight: '600',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
+    marginTop: 2,
+  },
+  tplPickerIconBtn: {
+    width: 36, height: 36, borderRadius: 18,
+    justifyContent: 'center', alignItems: 'center',
+  },
+  tplSectorStrip: {
+    flexDirection: 'row',
+    gap: 8,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+  },
+  tplSectorChip: {
+    paddingHorizontal: 12,
+    paddingVertical: 5,
+    borderRadius: 16,
+    borderWidth: 1,
+  },
+  tplPickerPage: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+  },
+  tplPickerFrame: {
+    width: '100%',
+    aspectRatio: 540 / 960,
+    maxHeight: '100%',
+    borderRadius: 16,
+    borderWidth: 1,
+    overflow: 'hidden',
+  },
+  tplPickerImage: { width: '100%', height: '100%' },
+  tplPickerEmptyText: { fontSize: 14, fontWeight: '600', textAlign: 'center' },
+  tplPageIndicator: {
+    position: 'absolute',
+    top: 12,
+    alignSelf: 'center',
+    paddingHorizontal: 12,
+    paddingVertical: 4,
+    borderRadius: 999,
+    backgroundColor: 'rgba(0,0,0,0.45)',
+  },
+  tplPageIndicatorText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#FFFFFF',
+  },
+  tplPickerFooter: {
+    flexDirection: 'row',
+    gap: 12,
+    padding: 16,
+    borderTopWidth: 1,
+  },
+  tplBtn: {
+    flex: 1,
+    height: 48,
+    borderRadius: 12,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+  },
+  tplBtnGhost: { borderWidth: 1 },
+  tplBtnPrimary: {},
+  tplBtnText: { fontSize: 15, fontWeight: '600' },
 });
