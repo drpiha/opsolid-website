@@ -392,22 +392,35 @@ export default async function CardPage({ params, searchParams }: PageProps) {
   const overrideQr = isPreview ? previewParam("qr") : undefined;
   const overridePrimary = isPreview ? previewParam("primary") : undefined;
   const overrideAccent = isPreview ? previewParam("accent") : undefined;
+  // Text-field overrides — allow the mobile live-preview to reflect unsaved
+  // name/title/company/bio changes without a server round-trip. Only applied
+  // when ?preview=1 is set so the public render path is not affected.
+  const overrideName = isPreview ? previewParam("name") : undefined;
+  const overrideTitle = isPreview ? previewParam("title") : undefined;
+  const overrideCompany = isPreview ? previewParam("company") : undefined;
+  const overrideBio = isPreview ? previewParam("bio") : undefined;
 
   const effectivePrimaryHex = overridePrimary ?? order.brandPrimaryHex;
   const effectiveAccentHex = overrideAccent ?? order.brandAccentHex;
 
-  // Templates read `themeKey` off cardData. Mutate a shallow clone so the
-  // override flows through without disturbing the parsed schema (zod gave us
-  // a frozen object on success — copy the data we'll pass to the template).
-  const renderedCardData =
-    overrideTheme || overrideLayout
-      ? {
-          ...parsed.data,
-          ...(overrideTheme ? { themeKey: overrideTheme } : {}),
-          ...(overrideLayout ? { layoutKey: overrideLayout } : {}),
-        }
-      : parsed.data;
-  // Avoid an unused-var warning when both overrides are absent.
+  // Templates read themeKey/layoutKey/name/title/company/bio off cardData.
+  // Build a shallow override object so any combination of design + text
+  // overrides flows through without disturbing the parsed schema.
+  const hasAnyOverride =
+    overrideTheme || overrideLayout ||
+    overrideName || overrideTitle || overrideCompany || overrideBio;
+  const renderedCardData = hasAnyOverride
+    ? {
+        ...parsed.data,
+        ...(overrideTheme   ? { themeKey:  overrideTheme }   : {}),
+        ...(overrideLayout  ? { layoutKey: overrideLayout }  : {}),
+        ...(overrideName    ? { name:      overrideName }    : {}),
+        ...(overrideTitle   ? { title:     overrideTitle }   : {}),
+        ...(overrideCompany ? { company:   overrideCompany } : {}),
+        ...(overrideBio     ? { bio:       overrideBio }     : {}),
+      }
+    : parsed.data;
+  // Avoid an unused-var warning when qr override is absent.
   void overrideQr;
 
   const publicUrl = await publicCardUrl(slug);
@@ -528,11 +541,11 @@ export default async function CardPage({ params, searchParams }: PageProps) {
           locale={localeKey}
         />
         {/* M3 — viral loop hook for unauthenticated visitors. Self-hides
-            for owners (handled by `isOwner` short-circuit) AND for visitors
-            who already have a Verso session (the component pings
-            /api/auth/me on mount). The CTA passes `?ref=<slug>` to the
-            signup flow so the new account attributes back as a referral. */}
-        {!isOwner && (
+            for owners (handled by `isOwner` short-circuit), visitors who
+            already have a Verso session (the component pings /api/auth/me
+            on mount), AND the live-preview WebView (?preview=1) which has no
+            auth cookie and would otherwise overlay the preview pane. */}
+        {!isOwner && !isPreview && (
           <CreateYoursBanner slug={slug} locale={localeKey} />
         )}
       </main>

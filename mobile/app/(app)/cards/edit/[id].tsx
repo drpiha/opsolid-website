@@ -845,33 +845,55 @@ export default function CardEditScreen() {
 
   // -----------------------------------------------------------------
   // Debounced preview URL — updated after user pauses input.
-  // Design-knob changes (layout/theme/colors) use a shorter 200 ms window;
-  // text edits (basics/socials) use 500 ms. We collapse both into one
-  // effect and apply the shortest relevant delay.
+  //
+  // Design knobs (layout/theme/colors) trigger a 300ms debounce so
+  // picker changes feel snappy. Text fields (name/title/company/bio) use
+  // 500ms to avoid reloads on every keystroke.
+  //
+  // The server reads ?preview=1 overrides for design knobs AND for the 4
+  // highest-value text fields. Other fields (services, socials, faqs, …)
+  // reflect only after Save — the URL would become too long otherwise.
+  //
+  // We detect whether only text changed vs design changed by comparing
+  // a "design signature" ref so we can apply the right debounce delay.
   // -----------------------------------------------------------------
+  const prevDesignSig = useRef('');
   useEffect(() => {
     const slug = card?.slug ?? '';
     if (!slug) return;
 
-    const url =
-      `${API_BASE}/c/${encodeURIComponent(slug)}` +
-      `?preview=1` +
-      `&layout=${encodeURIComponent(layoutKey)}` +
-      `&theme=${encodeURIComponent(themeKey)}` +
-      `&qr=${encodeURIComponent(qrPreset)}` +
-      `&primary=${encodeURIComponent(primaryHex)}` +
-      `&accent=${encodeURIComponent(accentHex)}`;
+    const designSig = `${layoutKey}|${themeKey}|${qrPreset}|${primaryHex}|${accentHex}`;
+    const designChanged = designSig !== prevDesignSig.current;
+    prevDesignSig.current = designSig;
 
+    // Build the URL with both design + text overrides. Empty strings are
+    // omitted so the server uses the saved value as fallback.
+    const qs = new URLSearchParams();
+    qs.set('preview', '1');
+    qs.set('layout', layoutKey);
+    qs.set('theme', themeKey);
+    qs.set('qr', qrPreset);
+    qs.set('primary', primaryHex);
+    qs.set('accent', accentHex);
+    if (basics.name.trim())     qs.set('name',    basics.name.trim());
+    if (basics.jobTitle.trim()) qs.set('title',   basics.jobTitle.trim());
+    if (basics.company.trim())  qs.set('company', basics.company.trim());
+    if (basics.bio.trim())      qs.set('bio',     basics.bio.trim());
+
+    const url = `${API_BASE}/c/${encodeURIComponent(slug)}?${qs.toString()}`;
+
+    const delay = designChanged ? 300 : 500;
     if (previewDebounceRef.current) clearTimeout(previewDebounceRef.current);
     previewDebounceRef.current = setTimeout(() => {
       setDebouncedPreviewUrl(url);
-    }, 300);
+    }, delay);
 
     return () => {
       if (previewDebounceRef.current) clearTimeout(previewDebounceRef.current);
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [layoutKey, themeKey, qrPreset, primaryHex, accentHex, basics, socials, card?.slug]);
+  }, [layoutKey, themeKey, qrPreset, primaryHex, accentHex,
+      basics.name, basics.jobTitle, basics.company, basics.bio, card?.slug]);
 
   if (loading) {
     return (

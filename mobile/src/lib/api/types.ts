@@ -123,6 +123,12 @@ export type CardCreateInput = {
   desiredSlug?: string;
   layoutKey?: string;
   themeKey?: string;
+  /** Top-level column — server writes to CardOrder.brandPrimaryHex.
+   *  Must be sent here (not only inside cardData) so the public /c/[slug]
+   *  renderer reads the correct value from order.brandPrimaryHex. */
+  brandPrimaryHex?: string;
+  /** Top-level column — server writes to CardOrder.brandAccentHex. */
+  brandAccentHex?: string;
 };
 
 // QR style payload — matches the server QrStyleSchema (subset of fields used

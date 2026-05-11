@@ -1,8 +1,9 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
 import {
   View,
   Text,
   ScrollView,
+  FlatList,
   TouchableOpacity,
   Alert,
   ActivityIndicator,
@@ -10,14 +11,19 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  Modal,
+  Dimensions,
+  type ViewToken,
 } from 'react-native';
-import { Stack, useFocusEffect, useRouter } from 'expo-router';
+import { Stack, useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
+import { Check, X } from 'lucide-react-native';
 import { createCard, updateCard, uploadPhoto } from '../../../src/lib/api/cards';
+import { listTemplates, type Template } from '../../../src/lib/api/templates';
+import { API_BASE } from '../../../src/lib/api/client';
 import { useTheme } from '../../../src/lib/theme/ThemeProvider';
 import { copper, teal } from '../../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../../src/lib/i18n/locale';
-import { useTemplatePickerStore } from '../../../src/store/templatePickerStore';
 import {
   BasicFieldsSection,
   SocialsSection,
@@ -106,13 +112,52 @@ export default function CardCreateScreen() {
     setDiscovery((s) => ({ ...s, [k]: v }));
   }
 
-  // Apply any picked template id pushed by the modal preview screen.
-  useFocusEffect(
-    useCallback(() => {
-      const picked = useTemplatePickerStore.getState().consume();
-      if (picked != null) setTemplateId(picked);
-    }, []),
+  // -----------------------------------------------------------------
+  // Inline template picker — same pattern as edit/[id].tsx. The old
+  // router.push-to-template-preview approach had a Tabs back-navigation
+  // bug; using an inline Modal keeps the create screen mounted.
+  // -----------------------------------------------------------------
+  const [templatePickerOpen, setTemplatePickerOpen] = useState(false);
+  const [templatePickerItems, setTemplatePickerItems] = useState<Template[] | null>(null);
+  const [templatePickerSector, setTemplatePickerSector] = useState<string>('all');
+  const [templatePickerActiveIdx, setTemplatePickerActiveIdx] = useState(0);
+  const templatePickerListRef = useRef<FlatList<Template>>(null);
+  const templatePickerViewability = useRef({ itemVisiblePercentThreshold: 60 });
+  const onTemplatePickerViewableItemsChanged = useRef(
+    ({ viewableItems }: { viewableItems: ViewToken[] }) => {
+      const first = viewableItems[0];
+      if (typeof first?.index === 'number') setTemplatePickerActiveIdx(first.index);
+    },
   );
+
+  useEffect(() => {
+    if (!templatePickerOpen) return;
+    if (templatePickerItems !== null) return;
+    let cancelled = false;
+    void listTemplates()
+      .then((res) => { if (!cancelled) setTemplatePickerItems(res.items); })
+      .catch(() => { if (!cancelled) setTemplatePickerItems([]); });
+    return () => { cancelled = true; };
+  }, [templatePickerOpen, templatePickerItems]);
+
+  const templatePickerFiltered = useMemo(() => {
+    if (!templatePickerItems) return [] as Template[];
+    if (!templatePickerSector || templatePickerSector === 'all') return templatePickerItems;
+    return templatePickerItems.filter((it) => (it.sectorHint ?? 'general') === templatePickerSector);
+  }, [templatePickerItems, templatePickerSector]);
+
+  useEffect(() => {
+    if (!templatePickerFiltered.length) return;
+    const idx = templatePickerFiltered.findIndex((it) => it.id === templateId);
+    const target = idx >= 0 ? idx : 0;
+    setTemplatePickerActiveIdx(target);
+    setTimeout(() => {
+      templatePickerListRef.current?.scrollToIndex({ index: target, animated: false });
+    }, 50);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [templatePickerFiltered]);
+
+  const templatePickerCurrent = templatePickerFiltered[templatePickerActiveIdx];
 
   async function pickPhoto() {
     const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -190,6 +235,11 @@ export default function CardCreateScreen() {
         templateId,
         layoutKey,
         themeKey,
+        // Brand colors MUST be top-level POST fields — server writes them to
+        // CardOrder.brandPrimaryHex / brandAccentHex columns. The public viewer
+        // reads those columns, not cardData.brandPrimaryHex.
+        brandPrimaryHex: primaryHex,
+        brandAccentHex: accentHex,
         // The CardCreateInput type is intentionally narrow — server accepts
         // arbitrary keys, so cast through unknown.
         cardData: cardData as unknown as { name: string },
@@ -332,11 +382,10 @@ export default function CardCreateScreen() {
               theme={theme}
               value={templateId}
               onChange={setTemplateId}
-              onPreviewRequest={(tplId) => {
-                router.push({
-                  pathname: '/(app)/cards/template-preview',
-                  params: { selectedId: String(tplId) },
-                });
+              onPreviewRequest={() => {
+                // Open the inline picker modal — no router.push so the create
+                // screen stays mounted and form state is preserved.
+                setTemplatePickerOpen(true);
               }}
             />
             <LayoutSection theme={theme} value={layoutKey} onChange={setLayoutKey} />
@@ -369,6 +418,156 @@ export default function CardCreateScreen() {
           </ScrollView>
         )}
       </KeyboardAvoidingView>
+
+      {/* Inline template picker modal — mirrors edit/[id].tsx pattern. */}
+      <Modal
+        visible={templatePickerOpen}
+        animationType="slide"
+        presentationStyle="pageSheet"
+        onRequestClose={() => setTemplatePickerOpen(false)}
+      >
+        <View style={[styles.tplPickerRoot, { backgroundColor: theme.bg[0] }]}>
+          <View style={[styles.tplPickerHeader, { borderBottomColor: theme.line.DEFAULT }]}>
+            <View style={{ flex: 1 }}>
+              <Text style={[styles.tplPickerTitle, { color: theme.ink[100] }]}>
+                {templatePickerCurrent?.name ?? '…'}
+              </Text>
+              {templatePickerCurrent?.sectorHint ? (
+                <Text style={[styles.tplPickerSub, { color: theme.ink[400] }]}>
+                  {templatePickerCurrent.sectorHint}
+                </Text>
+              ) : null}
+            </View>
+            <TouchableOpacity
+              onPress={() => setTemplatePickerOpen(false)}
+              style={styles.tplPickerIconBtn}
+              hitSlop={12}
+              accessibilityLabel="Close"
+            >
+              <X size={22} color={theme.ink[200]} />
+            </TouchableOpacity>
+          </View>
+
+          {/* Sector filter strip */}
+          {(() => {
+            const items = templatePickerItems ?? [];
+            const seen = new Set<string>();
+            const sectors: string[] = ['all'];
+            for (const it of items) {
+              const s = it.sectorHint ?? 'general';
+              if (!seen.has(s)) { seen.add(s); sectors.push(s); }
+            }
+            return sectors.length > 2 ? (
+              <ScrollView
+                horizontal
+                showsHorizontalScrollIndicator={false}
+                contentContainerStyle={styles.tplSectorStrip}
+                style={{ borderBottomWidth: 1, borderBottomColor: theme.line.DEFAULT }}
+              >
+                {sectors.map((s) => {
+                  const active = s === templatePickerSector;
+                  return (
+                    <TouchableOpacity
+                      key={s}
+                      onPress={() => setTemplatePickerSector(s)}
+                      style={[
+                        styles.tplSectorChip,
+                        {
+                          backgroundColor: active ? teal[500] : theme.bg[2],
+                          borderColor: active ? teal[500] : theme.line.DEFAULT,
+                        },
+                      ]}
+                    >
+                      <Text style={{ fontSize: 11, fontWeight: '600', color: active ? '#fff' : theme.ink[300] }}>
+                        {s === 'all' ? 'All' : s}
+                      </Text>
+                    </TouchableOpacity>
+                  );
+                })}
+              </ScrollView>
+            ) : null;
+          })()}
+
+          <View style={{ flex: 1 }}>
+            {templatePickerItems === null ? (
+              <View style={styles.center}>
+                <ActivityIndicator color={teal[500]} size="large" />
+              </View>
+            ) : templatePickerFiltered.length === 0 ? (
+              <View style={styles.center}>
+                <Text style={{ color: theme.ink[400] }}>No templates available.</Text>
+              </View>
+            ) : (
+              <FlatList
+                ref={templatePickerListRef}
+                data={templatePickerFiltered}
+                keyExtractor={(it) => String(it.id)}
+                horizontal
+                pagingEnabled
+                showsHorizontalScrollIndicator={false}
+                initialScrollIndex={templatePickerActiveIdx}
+                getItemLayout={(_, index) => ({
+                  length: Dimensions.get('window').width,
+                  offset: Dimensions.get('window').width * index,
+                  index,
+                })}
+                onViewableItemsChanged={onTemplatePickerViewableItemsChanged.current}
+                viewabilityConfig={templatePickerViewability.current}
+                decelerationRate="fast"
+                renderItem={({ item }) => {
+                  const previewUri = item.previewPath
+                    ? item.previewPath.startsWith('http')
+                      ? item.previewPath
+                      : `${API_BASE}${item.previewPath}`
+                    : null;
+                  return (
+                    <View style={[styles.tplPickerPage, { width: Dimensions.get('window').width }]}>
+                      <View style={[styles.tplPickerFrame, { borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[2] }]}>
+                        {previewUri ? (
+                          <Image source={{ uri: previewUri }} style={styles.tplPickerImage} resizeMode="contain" />
+                        ) : (
+                          <View style={styles.center}>
+                            <Text style={[styles.tplPickerEmptyText, { color: theme.ink[400] }]}>{item.name}</Text>
+                          </View>
+                        )}
+                      </View>
+                    </View>
+                  );
+                }}
+              />
+            )}
+            {templatePickerFiltered.length > 1 ? (
+              <View style={styles.tplPageIndicator}>
+                <Text style={styles.tplPageIndicatorText}>
+                  {templatePickerActiveIdx + 1} / {templatePickerFiltered.length}
+                </Text>
+              </View>
+            ) : null}
+          </View>
+
+          <View style={[styles.tplPickerFooter, { borderTopColor: theme.line.DEFAULT }]}>
+            <TouchableOpacity
+              onPress={() => setTemplatePickerOpen(false)}
+              style={[styles.tplBtn, styles.tplBtnGhost, { borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[1] }]}
+              activeOpacity={0.85}
+            >
+              <Text style={[styles.tplBtnText, { color: theme.ink[200] }]}>Cancel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                if (templatePickerCurrent) setTemplateId(templatePickerCurrent.id);
+                setTemplatePickerOpen(false);
+              }}
+              style={[styles.tplBtn, styles.tplBtnPrimary, { backgroundColor: teal[500] }]}
+              activeOpacity={0.85}
+              disabled={!templatePickerCurrent}
+            >
+              <Check size={16} color="#FFFFFF" />
+              <Text style={[styles.tplBtnText, { color: '#FFFFFF' }]}>Apply</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </>
   );
 }
@@ -407,4 +606,46 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.5)', paddingVertical: 4, alignItems: 'center',
   },
   photoEditBadgeText: { color: '#fff', fontSize: 10 },
+  center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  // Inline template picker modal — mirrors edit/[id].tsx styles.
+  tplPickerRoot: { flex: 1 },
+  tplPickerHeader: {
+    flexDirection: 'row', alignItems: 'center',
+    paddingHorizontal: 16, paddingVertical: 12, borderBottomWidth: 1, gap: 12,
+  },
+  tplPickerTitle: { fontSize: 16, fontWeight: '700' },
+  tplPickerSub: {
+    fontSize: 11, fontWeight: '600', textTransform: 'uppercase',
+    letterSpacing: 0.5, marginTop: 2,
+  },
+  tplPickerIconBtn: {
+    width: 36, height: 36, borderRadius: 18,
+    justifyContent: 'center', alignItems: 'center',
+  },
+  tplSectorStrip: { flexDirection: 'row', gap: 8, paddingHorizontal: 12, paddingVertical: 8 },
+  tplSectorChip: { paddingHorizontal: 12, paddingVertical: 5, borderRadius: 16, borderWidth: 1 },
+  tplPickerPage: {
+    flex: 1, justifyContent: 'center', alignItems: 'center',
+    paddingHorizontal: 24, paddingVertical: 12,
+  },
+  tplPickerFrame: {
+    width: '100%', aspectRatio: 540 / 960, maxHeight: '100%',
+    borderRadius: 16, borderWidth: 1, overflow: 'hidden',
+  },
+  tplPickerImage: { width: '100%', height: '100%' },
+  tplPickerEmptyText: { fontSize: 14, fontWeight: '600', textAlign: 'center' },
+  tplPageIndicator: {
+    position: 'absolute', top: 12, alignSelf: 'center',
+    paddingHorizontal: 12, paddingVertical: 4, borderRadius: 999,
+    backgroundColor: 'rgba(0,0,0,0.45)',
+  },
+  tplPageIndicatorText: { fontSize: 12, fontWeight: '600', color: '#FFFFFF' },
+  tplPickerFooter: { flexDirection: 'row', gap: 12, padding: 16, borderTopWidth: 1 },
+  tplBtn: {
+    flex: 1, height: 48, borderRadius: 12,
+    flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8,
+  },
+  tplBtnGhost: { borderWidth: 1 },
+  tplBtnPrimary: {},
+  tplBtnText: { fontSize: 15, fontWeight: '600' },
 });
