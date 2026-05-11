@@ -129,8 +129,12 @@ export function CardDeckTile({
     onLongPress();
   }, [onLongPress]);
 
-  // accentHex with 30% opacity for inner stroke
-  const innerStroke = hexWithAlpha(accent, 0.3);
+  // Premium card aesthetic — hairline metallic border in the accent colour,
+  // brand-primary trim down the right edge, and large photo / typography that
+  // feel like an actual NFC business card rather than a notification chip.
+  const innerStroke = hexWithAlpha(accent, 0.35);
+  const photoWidth = Math.round(width * 0.42);
+  const initial = name.charAt(0).toUpperCase();
 
   return (
     <Pressable
@@ -155,55 +159,55 @@ export function CardDeckTile({
           surfaceStyle,
         ]}
       >
-        {/* Brand primary band — top 12% */}
+        {/* Left side: full-bleed photo. Falls back to a brand-primary block
+            with the user's initial in display weight when no photo is set. */}
         <View
           style={[
-            styles.band,
-            { height: Math.max(20, Math.round(height * 0.12)), backgroundColor: primary },
+            styles.photoCol,
+            { width: photoWidth, backgroundColor: photoUri ? theme.bg[2] : primary },
           ]}
         >
-          <View style={[styles.accentDot, { backgroundColor: accent }]} />
+          {photoUri ? (
+            <Image source={{ uri: photoUri }} style={styles.photoImg} />
+          ) : (
+            <Text style={styles.bigInitial} accessibilityElementsHidden>
+              {initial}
+            </Text>
+          )}
+          {/* Vertical brand stripe between photo and text — the "metallic
+              trim" that makes the card feel structural, not flat. */}
+          <View style={[styles.spineTrim, { backgroundColor: accent }]} />
         </View>
 
-        {/* Body */}
-        <View style={styles.body}>
-          <View style={[styles.avatar, { backgroundColor: theme.bg[2] }]}>
-            {photoUri ? (
-              <Image source={{ uri: photoUri }} style={styles.avatarImg} />
-            ) : (
-              <Text style={[styles.avatarInitial, { color: theme.ink[300] }]}>
-                {name.charAt(0).toUpperCase()}
-              </Text>
-            )}
-          </View>
-
-          <View style={styles.textBlock}>
+        {/* Right side: typography. Name big, title under in brand-primary
+            tone, slug + status pinned to the bottom edge. */}
+        <View style={styles.textCol}>
+          <View style={styles.textTop}>
             <Text
-              numberOfLines={1}
-              style={[styles.name, { color: theme.ink[100] }]}
+              numberOfLines={2}
+              adjustsFontSizeToFit
+              minimumFontScale={0.7}
+              style={[styles.nameLg, { color: theme.ink[100] }]}
             >
               {name}
             </Text>
             {title ? (
               <Text
-                numberOfLines={1}
-                style={[styles.title, { color: theme.ink[300] }]}
+                numberOfLines={2}
+                style={[styles.titleLg, { color: primary }]}
               >
                 {title}
               </Text>
             ) : null}
           </View>
 
-          {/* Bottom row: status dot left, slug right */}
           <View style={styles.footRow}>
-            <View style={styles.statusWrap}>
-              <View
-                style={[
-                  styles.statusDot,
-                  { backgroundColor: statusDotColor(card.status) },
-                ]}
-              />
-            </View>
+            <View
+              style={[
+                styles.statusDot,
+                { backgroundColor: statusDotColor(card.status) },
+              ]}
+            />
             {card.slug ? (
               <Text
                 numberOfLines={1}
@@ -241,99 +245,99 @@ function hexWithAlpha(hex: string, alpha: number): string {
 }
 
 const styles = StyleSheet.create({
+  // Deeper shadow + 1.5px metallic inner border gives the card real weight.
   surface: {
-    borderRadius: 16,
-    borderWidth: 0.5,
+    borderRadius: 18,
+    borderWidth: 1.5,
     overflow: 'hidden',
-    shadowOffset: { width: 0, height: 4 },
-    shadowRadius: 12,
-    elevation: 6,
+    flexDirection: 'row',
+    shadowOffset: { width: 0, height: 8 },
+    shadowRadius: 18,
+    elevation: 10,
   },
-  band: {
+  // Left photo column — full-bleed image + brand-primary fallback block.
+  photoCol: {
+    height: '100%',
+    position: 'relative',
+    overflow: 'hidden',
+  },
+  photoImg: {
     width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-    paddingHorizontal: 12,
+    height: '100%',
+    resizeMode: 'cover',
   },
-  accentDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
-  },
-  body: {
+  bigInitial: {
     flex: 1,
-    paddingHorizontal: 12,
-    paddingTop: 12,
-    paddingBottom: 10,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    fontSize: 88,
+    fontWeight: '800',
+    color: '#FFFFFF',
+    letterSpacing: -2,
+    paddingTop: 8,
   },
-  avatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    overflow: 'hidden',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  avatarImg: { width: 40, height: 40 },
-  avatarInitial: { fontSize: 16, fontWeight: '600' },
-  textBlock: {
-    marginTop: 6,
-    gap: 2,
-  },
-  name: {
-    fontSize: 16,
-    fontWeight: '600',
-    textShadowColor: 'rgba(0,0,0,0.08)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 1,
-  },
-  title: {
-    fontSize: 13,
-    fontWeight: '400',
-    textShadowColor: 'rgba(0,0,0,0.08)',
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 1,
-  },
-  footRow: {
+  // 3-px vertical accent line between photo and text — the "metallic trim".
+  spineTrim: {
     position: 'absolute',
-    left: 12,
-    right: 12,
-    bottom: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
+    top: 0,
+    right: 0,
+    bottom: 0,
+    width: 3,
+  },
+  // Right text column — name big, title under in brand-primary tone.
+  textCol: {
+    flex: 1,
+    paddingTop: 18,
+    paddingRight: 16,
+    paddingLeft: 16,
+    paddingBottom: 14,
     justifyContent: 'space-between',
   },
-  statusWrap: {
-    width: 12,
-    height: 12,
-    justifyContent: 'center',
-    alignItems: 'flex-start',
+  textTop: {
+    gap: 6,
+  },
+  nameLg: {
+    fontSize: 24,
+    fontWeight: '700',
+    letterSpacing: -0.4,
+    lineHeight: 28,
+  },
+  titleLg: {
+    fontSize: 15,
+    fontWeight: '500',
+    lineHeight: 19,
+    letterSpacing: 0.1,
+  },
+  footRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
   },
   statusDot: {
-    width: 6,
-    height: 6,
-    borderRadius: 3,
+    width: 7,
+    height: 7,
+    borderRadius: 4,
   },
   slug: {
     fontSize: 11,
-    fontWeight: '500',
-    flex: 0,
+    fontWeight: '600',
+    flex: 1,
+    letterSpacing: 0.2,
   },
   badge: {
     position: 'absolute',
     bottom: 10,
     right: 10,
-    minWidth: 24,
-    height: 20,
-    borderRadius: 10,
-    paddingHorizontal: 6,
+    minWidth: 26,
+    height: 22,
+    borderRadius: 11,
+    paddingHorizontal: 8,
     justifyContent: 'center',
     alignItems: 'center',
   },
   badgeText: {
     color: '#fff',
-    fontSize: 10,
+    fontSize: 11,
     fontWeight: '700',
   },
 });
