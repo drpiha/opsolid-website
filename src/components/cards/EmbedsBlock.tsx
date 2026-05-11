@@ -25,6 +25,43 @@ type EmbedKind =
   | "soundcloud"
   | "calendly";
 
+// ---------------------------------------------------------------------------
+// YouTube URL classifier helpers.
+//
+// `buildEmbedSrc` previously returned null for channel / playlist URLs
+// (e.g. youtube.com/@channel, /c/, /user/, /playlist?list=…), which caused
+// the iframe slot to be silently dropped. We now classify each YouTube URL
+// into one of three buckets:
+//   • "video"   — has a resolvable video ID → embed iframe (existing path)
+//   • "channel" — channel / user / handle / playlist URL → link-card
+//   • null      — unrecognised YouTube URL → skip
+// ---------------------------------------------------------------------------
+type YouTubeKind = "video" | "channel" | null;
+
+function classifyYouTubeUrl(u: URL): YouTubeKind {
+  const path = u.pathname;
+  // video shortener: youtu.be/<id>
+  if (u.hostname.includes("youtu.be")) return "video";
+  // ?v= watch URL
+  if (u.searchParams.has("v")) return "video";
+  // /shorts/<id>
+  if (path.startsWith("/shorts/")) return "video";
+  // /embed/<id>  (already an embed URL)
+  if (path.startsWith("/embed/")) return "video";
+  // Channel / handle / user / custom channel URLs
+  if (
+    path.startsWith("/@") ||
+    path.startsWith("/c/") ||
+    path.startsWith("/channel/") ||
+    path.startsWith("/user/")
+  ) {
+    return "channel";
+  }
+  // Playlist
+  if (u.searchParams.has("list")) return "channel";
+  return null;
+}
+
 interface EmbedItem {
   kind: EmbedKind;
   url: string;
@@ -72,12 +109,17 @@ function pickEmbeds(v: unknown): EmbedItem[] {
  * Map a (kind, url) pair to a canonical embed src. Returns null when the URL
  * shape doesn't resolve to a valid embed page (we don't render anything in
  * that case, instead of rendering an iframe to the home page of the host).
+ *
+ * For YouTube channel / playlist URLs this returns null intentionally —
+ * those are rendered as link-cards by the EmbedsBlock render loop instead.
  */
 function buildEmbedSrc(item: EmbedItem): string | null {
   try {
     const u = new URL(item.url);
     switch (item.kind) {
       case "youtube": {
+        const ytKind = classifyYouTubeUrl(u);
+        if (ytKind !== "video") return null; // channel → handled by link-card path
         let id: string | null = null;
         if (u.hostname.includes("youtu.be")) {
           id = u.pathname.replace(/^\//, "").split("/")[0] || null;
@@ -144,7 +186,64 @@ export function EmbedsBlock({ embeds, accentHex, heading }: Props): ReactElement
       <div className="flex flex-col gap-4">
         {items.map((it, i) => {
           const src = buildEmbedSrc(it);
+
+          // YouTube channel / playlist: no iframe available — render a styled
+          // link-card that opens the channel page in a new tab.
+          if (!src && it.kind === "youtube") {
+            let channelKind: YouTubeKind = null;
+            try {
+              channelKind = classifyYouTubeUrl(new URL(it.url));
+            } catch {
+              /* ignore malformed URL — already validated in pickEmbeds */
+            }
+            if (channelKind !== "channel") return null;
+
+            // Derive a readable label from the URL path.
+            let channelLabel = it.url;
+            try {
+              const u = new URL(it.url);
+              const seg = u.pathname.replace(/^\//, "").split("?")[0];
+              channelLabel = seg || u.hostname;
+            } catch {
+              /* keep full URL as fallback */
+            }
+
+            return (
+              <a
+                key={`${it.kind}-channel-${i}`}
+                href={it.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 overflow-hidden rounded-xl border border-line bg-bg-1 px-4 py-4 transition hover:border-line-firm hover:bg-bg-2"
+              >
+                {/* YouTube logo mark */}
+                <span
+                  aria-hidden
+                  className="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-[#FF0000]/10 text-[#FF0000]"
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="22"
+                    height="22"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="M23.495 6.205a3.007 3.007 0 0 0-2.088-2.088c-1.87-.501-9.396-.501-9.396-.501s-7.507-.01-9.396.501A3.007 3.007 0 0 0 .527 6.205a31.247 31.247 0 0 0-.522 5.805 31.247 31.247 0 0 0 .522 5.783 3.007 3.007 0 0 0 2.088 2.088c1.868.502 9.396.502 9.396.502s7.506 0 9.396-.502a3.007 3.007 0 0 0 2.088-2.088 31.247 31.247 0 0 0 .5-5.783 31.247 31.247 0 0 0-.5-5.805zM9.609 15.601V8.408l6.264 3.602z" />
+                  </svg>
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-sm font-semibold text-ink">
+                    {channelLabel}
+                  </span>
+                  <span className="block text-xs text-ink-400">YouTube-Kanal öffnen</span>
+                </span>
+                <span aria-hidden className="text-ink-400">→</span>
+              </a>
+            );
+          }
+
           if (!src) return null;
+
           // Keep aspect ratio sane: video embeds get 16/9, others taller.
           const aspect =
             it.kind === "youtube" || it.kind === "vimeo"

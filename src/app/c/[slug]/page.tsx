@@ -39,7 +39,12 @@ import { SaveToContactsButton } from "@/components/cards/SaveToContactsButton";
 import { FeedbackWidget } from "@/components/cards/FeedbackWidget";
 import { CreateYoursBanner } from "@/components/cards/CreateYoursBanner";
 import { EmbedsBlock } from "@/components/cards/EmbedsBlock";
+import { CustomButtonsBlock } from "@/components/cards/CustomButtonsBlock";
+import { TipJarBlock } from "@/components/cards/TipJarBlock";
+import { FaqBlock } from "@/components/cards/FaqBlock";
+import { ContactFormBlock } from "@/components/cards/ContactFormBlock";
 import { LockScreen } from "@/components/cards/LockScreen";
+import { isPro } from "@/lib/auth/pro";
 import { constantTimeEquals } from "@/lib/constantTime";
 import { contents } from "@/content";
 import { unlockCookieName } from "@/lib/cards/unlock-cookie";
@@ -55,6 +60,11 @@ interface PageProps {
 async function loadOrder(slug: string) {
   const order = await prisma.cardOrder.findUnique({
     where: { slug },
+    include: {
+      user: {
+        select: { proSince: true, role: true },
+      },
+    },
   });
   if (!order || order.status !== "PUBLISHED") return null;
   return order;
@@ -423,6 +433,12 @@ export default async function CardPage({ params, searchParams }: PageProps) {
   // Avoid an unused-var warning when qr override is absent.
   void overrideQr;
 
+  // TipJarBlock gate — computed server-side so the client component doesn't
+  // need to call /api/auth/me. The tip API route enforces Pro independently.
+  const ownerIsPro = order.user
+    ? isPro({ proSince: order.user.proSince, role: order.user.role })
+    : false;
+
   const publicUrl = await publicCardUrl(slug);
   const shareTitle = `${parsed.data.name}${parsed.data.company ? " · " + parsed.data.company : ""}`;
   const qrLabels = contents[localeKey].card.qr;
@@ -511,6 +527,44 @@ export default async function CardPage({ params, searchParams }: PageProps) {
                 : localeKey === "tr"
                   ? "Öne çıkan"
                   : "Featured"
+            }
+          />
+          {/* Wrapper-level blocks — render uniformly across ALL 96 templates.
+              Each reads cardData fields that individual templates may not
+              implement. The blocks self-hide when data is absent / disabled. */}
+          <CustomButtonsBlock
+            buttons={parsed.data.customButtons}
+            primaryHex={effectivePrimaryHex}
+            accentHex={effectiveAccentHex}
+          />
+          <TipJarBlock
+            slug={slug}
+            tipJar={parsed.data.tipJar}
+            ownerIsPro={ownerIsPro}
+            primaryHex={effectivePrimaryHex}
+          />
+          <FaqBlock
+            faqs={parsed.data.faqs}
+            accentHex={effectiveAccentHex}
+            heading={
+              localeKey === "de"
+                ? "Häufige Fragen"
+                : localeKey === "tr"
+                  ? "Sık Sorulan Sorular"
+                  : "FAQ"
+            }
+          />
+          <ContactFormBlock
+            slug={slug}
+            contactForm={parsed.data.contactForm}
+            primaryHex={effectivePrimaryHex}
+            accentHex={effectiveAccentHex}
+            heading={
+              localeKey === "de"
+                ? "Kontakt"
+                : localeKey === "tr"
+                  ? "İletişim"
+                  : "Get in touch"
             }
           />
           {/* Phase 8.3 — save + locale row below card content */}
