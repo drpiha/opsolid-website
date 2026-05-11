@@ -36,7 +36,7 @@ type EmbedKind =
 //   • "channel" — channel / user / handle / playlist URL → link-card
 //   • null      — unrecognised YouTube URL → skip
 // ---------------------------------------------------------------------------
-type YouTubeKind = "video" | "channel" | null;
+type YouTubeKind = "video" | "channel" | "playlist" | null;
 
 function classifyYouTubeUrl(u: URL): YouTubeKind {
   const path = u.pathname;
@@ -48,6 +48,8 @@ function classifyYouTubeUrl(u: URL): YouTubeKind {
   if (path.startsWith("/shorts/")) return "video";
   // /embed/<id>  (already an embed URL)
   if (path.startsWith("/embed/")) return "video";
+  // Playlist (page or share URL with ?list=)
+  if (path.startsWith("/playlist") || u.searchParams.has("list")) return "playlist";
   // Channel / handle / user / custom channel URLs
   if (
     path.startsWith("/@") ||
@@ -57,8 +59,6 @@ function classifyYouTubeUrl(u: URL): YouTubeKind {
   ) {
     return "channel";
   }
-  // Playlist
-  if (u.searchParams.has("list")) return "channel";
   return null;
 }
 
@@ -73,7 +73,15 @@ interface Props {
   accentHex?: string;
   /** Localised section heading. */
   heading?: string;
+  /** Locale (en/de/tr) for link-card labels. */
+  locale?: "en" | "de" | "tr";
 }
+
+const LINK_CARD_LABELS = {
+  en: { channel: "Open YouTube channel", playlist: "Open YouTube playlist" },
+  de: { channel: "YouTube-Kanal öffnen", playlist: "YouTube-Playlist öffnen" },
+  tr: { channel: "YouTube kanalını aç", playlist: "YouTube oynatma listesini aç" },
+} as const;
 
 const HOST_VALIDATORS: Record<EmbedKind, RegExp> = {
   youtube: /(?:^|\.)(youtube\.com|youtu\.be|youtube-nocookie\.com)$/i,
@@ -169,7 +177,8 @@ function buildEmbedSrc(item: EmbedItem): string | null {
   return null;
 }
 
-export function EmbedsBlock({ embeds, accentHex, heading }: Props): ReactElement | null {
+export function EmbedsBlock({ embeds, accentHex, heading, locale = "de" }: Props): ReactElement | null {
+  const labels = LINK_CARD_LABELS[locale];
   const items = pickEmbeds(embeds);
   if (items.length === 0) return null;
 
@@ -196,17 +205,29 @@ export function EmbedsBlock({ embeds, accentHex, heading }: Props): ReactElement
             } catch {
               /* ignore malformed URL — already validated in pickEmbeds */
             }
-            if (channelKind !== "channel") return null;
+            if (channelKind !== "channel" && channelKind !== "playlist") return null;
 
             // Derive a readable label from the URL path.
             let channelLabel = it.url;
             try {
               const u = new URL(it.url);
-              const seg = u.pathname.replace(/^\//, "").split("?")[0];
-              channelLabel = seg || u.hostname;
+              if (channelKind === "playlist") {
+                // Playlists carry the meaningful id in ?list=. The pathname
+                // is usually "/playlist" or "/watch" — neither makes a good
+                // human label, so prefer the list id slug.
+                const listId = u.searchParams.get("list") ?? "";
+                channelLabel = listId
+                  ? `${labels.playlist} · ${listId.slice(0, 16)}`
+                  : labels.playlist;
+              } else {
+                const seg = u.pathname.replace(/^\//, "").split("?")[0];
+                channelLabel = seg || u.hostname;
+              }
             } catch {
               /* keep full URL as fallback */
             }
+            const subline =
+              channelKind === "playlist" ? labels.playlist : labels.channel;
 
             return (
               <a
@@ -235,7 +256,7 @@ export function EmbedsBlock({ embeds, accentHex, heading }: Props): ReactElement
                   <span className="block truncate text-sm font-semibold text-ink">
                     {channelLabel}
                   </span>
-                  <span className="block text-xs text-ink-400">YouTube-Kanal öffnen</span>
+                  <span className="block text-xs text-ink-400">{subline}</span>
                 </span>
                 <span aria-hidden className="text-ink-400">→</span>
               </a>

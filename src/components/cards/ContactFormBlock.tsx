@@ -28,7 +28,39 @@ interface Props {
   heading?: string;
   /** Accent hex — used for the heading hairline. */
   accentHex?: string | null;
+  /** Locale (en/de/tr) for all user-facing copy in this form. */
+  locale?: "en" | "de" | "tr";
 }
+
+const COPY = {
+  en: {
+    consentMissing: "Please agree to data storage to send.",
+    requiredField: (label: string) => `"${label}" is required.`,
+    submitError: "Couldn't send — please try again.",
+    networkError: "Network error. Please try again.",
+    consentLabel: "I agree that my data may be stored and used to process my request.",
+    successTitle: "Thanks for your message!",
+    successBody: "I will get back to you as soon as possible.",
+  },
+  de: {
+    consentMissing: "Bitte stimme der Datenspeicherung zu.",
+    requiredField: (label: string) => `"${label}" ist ein Pflichtfeld.`,
+    submitError: "Fehler beim Senden. Bitte versuche es erneut.",
+    networkError: "Netzwerkfehler. Bitte versuche es erneut.",
+    consentLabel: "Ich stimme zu, dass meine Daten gespeichert und zur Bearbeitung meiner Anfrage verwendet werden.",
+    successTitle: "Danke für deine Nachricht!",
+    successBody: "Ich werde mich so bald wie möglich bei dir melden.",
+  },
+  tr: {
+    consentMissing: "Göndermek için verilerin saklanmasına izin ver.",
+    requiredField: (label: string) => `"${label}" zorunlu alan.`,
+    submitError: "Gönderilemedi — lütfen tekrar dene.",
+    networkError: "Ağ hatası. Lütfen tekrar dene.",
+    consentLabel: "Verilerimin saklanmasını ve talebimi işlemek için kullanılmasını kabul ediyorum.",
+    successTitle: "Mesajın için teşekkürler!",
+    successBody: "En kısa sürede sana dönüş yapacağım.",
+  },
+} as const;
 
 type FieldValues = Record<string, string>;
 type SubmitStatus = "idle" | "submitting" | "success" | "error";
@@ -45,6 +77,7 @@ export function ContactFormBlock({
   primaryHex,
   heading = "Kontakt",
   accentHex,
+  locale = "de",
 }: Props) {
   const [values, setValues] = useState<FieldValues>({});
   const [consent, setConsent] = useState(false);
@@ -53,6 +86,7 @@ export function ContactFormBlock({
 
   if (!contactForm?.enabled || !contactForm.fields?.length) return null;
 
+  const t = COPY[locale];
   const primary = primaryHex ?? "#C27940";
   const fields = contactForm.fields;
 
@@ -63,7 +97,7 @@ export function ContactFormBlock({
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!consent) {
-      setErrorMsg("Bitte stimme der Datenspeicherung zu.");
+      setErrorMsg(t.consentMissing);
       return;
     }
     setStatus("submitting");
@@ -73,7 +107,7 @@ export function ContactFormBlock({
     for (const field of fields) {
       const val = (values[field.key] ?? "").trim();
       if (field.required && !val) {
-        setErrorMsg(`"${field.label}" ist ein Pflichtfeld.`);
+        setErrorMsg(t.requiredField(field.label));
         setStatus("idle");
         return;
       }
@@ -90,7 +124,7 @@ export function ContactFormBlock({
       });
       if (!res.ok) {
         const json = (await res.json()) as { error?: string };
-        setErrorMsg(json.error ?? "Fehler beim Senden. Bitte versuche es erneut.");
+        setErrorMsg(json.error ?? t.submitError);
         setStatus("error");
         return;
       }
@@ -98,7 +132,7 @@ export function ContactFormBlock({
       setValues({});
       setConsent(false);
     } catch {
-      setErrorMsg("Netzwerkfehler. Bitte versuche es erneut.");
+      setErrorMsg(t.networkError);
       setStatus("error");
     }
   }
@@ -107,10 +141,8 @@ export function ContactFormBlock({
     return (
       <section className="mt-6">
         <div className="rounded-xl border border-line bg-bg-2 px-5 py-6 text-center">
-          <p className="text-sm font-semibold text-ink">Danke für deine Nachricht!</p>
-          <p className="mt-1 text-xs text-ink-300">
-            Ich werde mich so bald wie möglich bei dir melden.
-          </p>
+          <p className="text-sm font-semibold text-ink">{t.successTitle}</p>
+          <p className="mt-1 text-xs text-ink-300">{t.successBody}</p>
         </div>
       </section>
     );
@@ -203,10 +235,7 @@ export function ContactFormBlock({
             className="mt-0.5 h-4 w-4 shrink-0 rounded border-line accent-ink"
             required
           />
-          <span>
-            Ich stimme zu, dass meine Daten gespeichert und zur Bearbeitung meiner Anfrage
-            verwendet werden.
-          </span>
+          <span>{t.consentLabel}</span>
         </label>
 
         {errorMsg && (

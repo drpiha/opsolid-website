@@ -35,8 +35,16 @@ export function TipJarBlock({
   const [status, setStatus] = useState<"idle" | "loading" | "error">("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
-  // Guard: nothing to render unless explicitly enabled by a Pro owner.
+  // Guard: nothing to render unless explicitly enabled by a Pro owner AND
+  // the owner has wired up a Stripe price. Without a price the API would
+  // 503 `tip_unavailable` on click — better to hide the button entirely
+  // than show a CTA that errors.
   if (!tipJar?.enabled || !ownerIsPro) return null;
+  const stripePriceId =
+    typeof (tipJar as { stripePriceId?: unknown }).stripePriceId === "string"
+      ? ((tipJar as { stripePriceId?: string }).stripePriceId ?? "").trim()
+      : "";
+  if (!stripePriceId) return null;
 
   const label = tipJar.label?.trim() || "Support me";
   const primary = primaryHex ?? "#C27940";

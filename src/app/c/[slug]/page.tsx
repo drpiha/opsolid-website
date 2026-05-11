@@ -521,6 +521,7 @@ export default async function CardPage({ params, searchParams }: PageProps) {
           <EmbedsBlock
             embeds={(parsed.data as Record<string, unknown>).embeds}
             accentHex={effectiveAccentHex ?? undefined}
+            locale={localeKey}
             heading={
               localeKey === "de"
                 ? "Eingebettet"
@@ -559,6 +560,7 @@ export default async function CardPage({ params, searchParams }: PageProps) {
             contactForm={parsed.data.contactForm}
             primaryHex={effectivePrimaryHex}
             accentHex={effectiveAccentHex}
+            locale={localeKey}
             heading={
               localeKey === "de"
                 ? "Kontakt"
