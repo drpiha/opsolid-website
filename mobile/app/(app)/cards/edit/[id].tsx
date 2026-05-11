@@ -835,7 +835,11 @@ export default function CardEditScreen() {
         }
       }
 
-      Alert.alert('', t.saveSuccess, [{ text: 'OK', onPress: () => router.back() }]);
+      // Stay on the edit screen after save — user wants to keep iterating
+      // (tweak fields, glance at the live preview, save again) without
+      // bouncing back to the cards list each time. The toast confirms the
+      // save; an explicit "Done" tap or system back exits the screen.
+      Alert.alert('', t.saveSuccess);
     } catch {
       Alert.alert('', t.errorSave);
     } finally {
