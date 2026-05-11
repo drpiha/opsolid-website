@@ -10,6 +10,7 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  Pressable,
   Switch,
   StyleSheet,
   ScrollView,
@@ -369,6 +370,73 @@ export function SocialsSection({
 // accent and vice-versa). Both rows show a 100×60 split mini-card so the
 // user can see how the two read together — a single 36px swatch was too
 // small to telegraph contrast.
+
+// Curated 12-color brand-quality palette. Two groups: warm-cool primaries +
+// neutral-luxury accents. Chosen for professional digital business cards.
+const BRAND_SWATCHES: readonly string[] = [
+  '#C27940', // copper — OpSolid signature warm
+  '#1A6B7C', // deep teal — trust + clarity
+  '#1E3A5F', // navy indigo — corporate depth
+  '#2D6A4F', // forest — sustainable / nature
+  '#6B3FA0', // plum — creative / premium
+  '#B94A3D', // terracotta — bold / warmth
+  '#1F2937', // charcoal slate — versatile dark
+  '#5C4A3D', // espresso — refined warmth
+  '#B87F45', // mustard gold — confident energy
+  '#4A7C9C', // steel blue — reliable / tech
+  '#7D6E83', // muted lavender — soft premium
+  '#8C7B6B', // warm sand — neutral luxury
+] as const;
+
+// Determines whether text on top of a swatch should be white or black,
+// using the YIQ contrast formula.
+function swatchTextColor(hex: string): string {
+  const r = parseInt(hex.slice(1, 3), 16);
+  const g = parseInt(hex.slice(3, 5), 16);
+  const b = parseInt(hex.slice(5, 7), 16);
+  const yiq = (r * 299 + g * 587 + b * 114) / 1000;
+  return yiq >= 128 ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.9)';
+}
+
+function SwatchGrid({
+  theme,
+  current,
+  onSelect,
+  accessibilityPrefix,
+}: {
+  theme: ThemeTokens;
+  current: string;
+  onSelect: (hex: string) => void;
+  accessibilityPrefix: string;
+}) {
+  return (
+    <View style={styles.swatchGrid}>
+      {BRAND_SWATCHES.map((hex) => {
+        const isSelected = hex.toUpperCase() === current.toUpperCase();
+        return (
+          <Pressable
+            key={hex}
+            onPress={() => onSelect(hex)}
+            style={({ pressed }) => [
+              styles.swatchCell,
+              { backgroundColor: hex },
+              isSelected && styles.swatchCellSelected,
+              pressed && { opacity: 0.8 },
+            ]}
+            accessibilityRole="button"
+            accessibilityLabel={`${accessibilityPrefix} ${hex}`}
+            accessibilityState={{ selected: isSelected }}
+          >
+            {isSelected ? (
+              <Check size={14} color={swatchTextColor(hex)} strokeWidth={3} />
+            ) : null}
+          </Pressable>
+        );
+      })}
+    </View>
+  );
+}
+
 function HexRow({
   theme,
   label,
@@ -388,6 +456,12 @@ function HexRow({
 }) {
   const [draft, setDraft] = useState(value);
 
+  // Keep draft in sync when parent resets the value (e.g. swatch tap from
+  // the sibling row's pair preview).
+  useEffect(() => {
+    setDraft(value);
+  }, [value]);
+
   function handleBlur() {
     if (HEX_RE.test(draft)) {
       const normalized = draft.toUpperCase();
@@ -396,6 +470,12 @@ function HexRow({
     } else {
       setDraft(value);
     }
+  }
+
+  function handleSwatchSelect(hex: string) {
+    const normalized = hex.toUpperCase();
+    setDraft(normalized);
+    onValid(normalized);
   }
 
   // Show a valid color even while user is typing — only blurring with an
@@ -408,25 +488,35 @@ function HexRow({
   const rightFill = isPrimary ? pairedHex : liveColor;
 
   return (
-    <View style={styles.brandRow}>
-      <View style={[styles.miniCard, { borderColor: theme.line.DEFAULT }]}>
-        <View style={[styles.miniCardLeft, { backgroundColor: leftFill }]} />
-        <View style={[styles.miniCardRight, { backgroundColor: rightFill }]} />
+    <View style={styles.hexRowWrap}>
+      {/* Mini split-card preview — shows how primary + accent read together */}
+      <View style={styles.brandRow}>
+        <View style={[styles.miniCard, { borderColor: theme.line.DEFAULT }]}>
+          <View style={[styles.miniCardLeft, { backgroundColor: leftFill }]} />
+          <View style={[styles.miniCardRight, { backgroundColor: rightFill }]} />
+        </View>
+        <View style={[styles.fieldWrap, { flex: 1 }]}>
+          <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>{label}</Text>
+          <TextInput
+            style={[styles.input, { color: theme.ink[100], borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[1] }]}
+            value={draft}
+            onChangeText={setDraft}
+            onBlur={handleBlur}
+            placeholder="#XXXXXX"
+            placeholderTextColor={theme.ink[500]}
+            autoCapitalize="characters"
+            maxLength={7}
+            autoCorrect={false}
+          />
+        </View>
       </View>
-      <View style={[styles.fieldWrap, { flex: 1 }]}>
-        <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>{label}</Text>
-        <TextInput
-          style={[styles.input, { color: theme.ink[100], borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[1] }]}
-          value={draft}
-          onChangeText={setDraft}
-          onBlur={handleBlur}
-          placeholder="#XXXXXX"
-          placeholderTextColor={theme.ink[500]}
-          autoCapitalize="characters"
-          maxLength={7}
-          autoCorrect={false}
-        />
-      </View>
+      {/* Swatch palette */}
+      <SwatchGrid
+        theme={theme}
+        current={liveColor}
+        onSelect={handleSwatchSelect}
+        accessibilityPrefix={label}
+      />
     </View>
   );
 }
@@ -2220,6 +2310,7 @@ const styles = StyleSheet.create({
     paddingVertical: 4,
   },
   brandRow: { flexDirection: 'row', alignItems: 'flex-end', gap: 12 },
+  hexRowWrap: { gap: 10 },
   // Sprint 6 — split mini-card replaces the round 36×36 swatch. The new chip
   // is 100×60 and shows the *pair* (primary 60% / accent 40%) so the user
   // can read both at once while editing either hex code.
@@ -2234,6 +2325,33 @@ const styles = StyleSheet.create({
   },
   miniCardLeft: { flex: 3 }, // 60% — primaryHex
   miniCardRight: { flex: 2 }, // 40% — accentHex
+  // Swatch grid — 6 columns × 2 rows, each swatch 42pt, 4pt gap.
+  swatchGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+    paddingTop: 4,
+    paddingBottom: 4,
+  },
+  swatchCell: {
+    width: 42,
+    height: 42,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  swatchCellSelected: {
+    // Premium ring: use a thick border in a neutral tone.
+    // The Check icon inside makes colour irrelevant so we keep border white.
+    borderWidth: 3,
+    borderColor: '#FFFFFF',
+    // Subtle shadow lift so the selected swatch "pops"
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.35,
+    shadowRadius: 4,
+    elevation: 4,
+  },
   segmentRow: { flexDirection: 'row', gap: 8 },
   segmentPill: {
     flex: 1,
