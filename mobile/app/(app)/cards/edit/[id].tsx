@@ -1240,11 +1240,23 @@ export default function CardEditScreen() {
               { height: screenH * 0.44 },
             ]}
           >
-            {/* Preview pane header — label + close button. */}
+            {/* Preview pane header — label, scope caption, close button.
+                The caption sets honest expectations: only design knobs +
+                basics live-update in the WebView; services, FAQs, embeds,
+                photo etc. show their saved state until the user taps Save. */}
             <View style={[styles.previewPaneHeader, { borderBottomColor: theme.line.DEFAULT }]}>
-              <Text style={[styles.previewPaneLabel, { color: theme.ink[300] }]}>
-                {t.preview}
-              </Text>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.previewPaneLabel, { color: theme.ink[300] }]}>
+                  {t.preview}
+                </Text>
+                <Text style={[styles.previewPaneCaption, { color: theme.ink[400] }]}>
+                  {detectLocale() === 'tr'
+                    ? 'Tasarım + temel bilgiler · diğer bölümler kaydedince görünür'
+                    : detectLocale() === 'de'
+                      ? 'Design + Grunddaten · andere Bereiche erscheinen nach Speichern'
+                      : 'Design + basics · other sections appear once saved'}
+                </Text>
+              </View>
               <TouchableOpacity
                 onPress={() => setPreviewVisible(false)}
                 hitSlop={12}
@@ -1506,6 +1518,12 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     textTransform: 'uppercase',
     letterSpacing: 0.5,
+  },
+  previewPaneCaption: {
+    marginTop: 3,
+    fontSize: 10,
+    fontWeight: '500',
+    lineHeight: 12,
   },
   previewPaneClose: {
     width: 28,

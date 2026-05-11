@@ -527,19 +527,26 @@ export default async function CardPage({ params, searchParams }: PageProps) {
           {/* Phase 8.4 — feedback widget. Self-hides when enabled:false from API */}
           <FeedbackWidget slug={slug} locale={localeKey} />
         </div>
-        <QRFlipOverlay
-          slug={slug}
-          publicUrl={publicUrl}
-          shareTitle={shareTitle}
-          accentHex={effectiveAccentHex ?? undefined}
-          labels={qrLabels}
-        />
+        {/* Hide the bottom corner floaters in mobile live-preview mode —
+            they would otherwise cover the design area the user is actively
+            editing. Mirrors the CreateYoursBanner gate below. */}
+        {!isPreview && (
+          <QRFlipOverlay
+            slug={slug}
+            publicUrl={publicUrl}
+            shareTitle={shareTitle}
+            accentHex={effectiveAccentHex ?? undefined}
+            labels={qrLabels}
+          />
+        )}
         {/* Phase 5 — share drawer trigger (bottom-left, QR occupies bottom-right) */}
-        <ShareButton
-          slug={slug}
-          accentHex={effectiveAccentHex ?? undefined}
-          locale={localeKey}
-        />
+        {!isPreview && (
+          <ShareButton
+            slug={slug}
+            accentHex={effectiveAccentHex ?? undefined}
+            locale={localeKey}
+          />
+        )}
         {/* M3 — viral loop hook for unauthenticated visitors. Self-hides
             for owners (handled by `isOwner` short-circuit), visitors who
             already have a Verso session (the component pings /api/auth/me
