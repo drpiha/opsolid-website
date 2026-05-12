@@ -121,7 +121,7 @@ export default function CardDetailScreen() {
     return (
       <ScreenContainer>
         <View style={styles.center}>
-          <Text style={{ color: '#B8514B' }}>{error ?? t.errorLoad}</Text>
+          <Text style={{ color: theme.signalErr }}>{error ?? t.errorLoad}</Text>
           <Button
             label={t.retry}
             onPress={() => void load()}

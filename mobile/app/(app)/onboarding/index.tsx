@@ -47,7 +47,7 @@ import {
 } from 'lucide-react-native';
 
 import { useTheme } from '../../../src/lib/theme/ThemeProvider';
-import { teal, copper } from '../../../src/lib/theme/tokens';
+import { teal, copper, signal } from '../../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../../src/lib/i18n/locale';
 import { Input } from '../../../src/components/ui/Input';
 import { Button } from '../../../src/components/ui/Button';
@@ -683,7 +683,7 @@ function Step0Origin(props: {
         </View>
 
         {props.errorMsg ? (
-          <Text style={[styles.photoErr, { color: '#B8514B' }]}>
+          <Text style={[styles.photoErr, { color: signal.err }]}>
             {props.errorMsg}
           </Text>
         ) : null}
@@ -874,7 +874,7 @@ function Step0Origin(props: {
       </View>
 
       {props.errorMsg ? (
-        <Text style={[styles.photoErr, { color: '#B8514B' }]}>
+        <Text style={[styles.photoErr, { color: signal.err }]}>
           {props.errorMsg}
         </Text>
       ) : null}
@@ -919,7 +919,7 @@ function Step1Photo(props: {
       </Pressable>
 
       {props.photoError ? (
-        <Text style={[styles.photoErr, { color: '#B8514B' }]}>{props.photoError}</Text>
+        <Text style={[styles.photoErr, { color: signal.err }]}>{props.photoError}</Text>
       ) : null}
 
       <Button
@@ -1391,7 +1391,7 @@ function Step5Preview(props: {
       ) : null}
 
       {props.publishError ? (
-        <Text style={[styles.publishErr, { color: '#B8514B' }]}>
+        <Text style={[styles.publishErr, { color: signal.err }]}>
           {props.publishError}
         </Text>
       ) : null}

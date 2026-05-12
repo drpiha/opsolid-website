@@ -328,7 +328,7 @@ export function LeadFormModal({ visible, slug, onClose, contactForm }: Props) {
                 </Pressable>
 
                 {errorMsg ? (
-                  <Text style={styles.errorText}>{errorMsg}</Text>
+                  <Text style={[styles.errorText, { color: theme.signalErr }]}>{errorMsg}</Text>
                 ) : null}
 
                 <Pressable
@@ -475,7 +475,6 @@ const styles = StyleSheet.create({
   },
   consentText: { flex: 1, fontSize: 13, lineHeight: 18 },
   errorText: {
-    color: '#B8514B',
     fontSize: 13,
     textAlign: 'center',
     marginTop: -4,

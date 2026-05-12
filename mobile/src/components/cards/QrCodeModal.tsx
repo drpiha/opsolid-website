@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { useState } from 'react';
 import { useTheme } from '../../lib/theme/ThemeProvider';
-import { copper } from '../../lib/theme/tokens';
+import { copper, signal } from '../../lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../lib/i18n/locale';
 import { API_BASE } from '../../lib/api/client';
 
@@ -74,7 +74,7 @@ export function QrCodeModal({ visible, slug, onClose }: Props) {
               />
             ) : (
               <View style={styles.qrLoader}>
-                <Text style={{ color: '#B8514B' }}>—</Text>
+                <Text style={{ color: signal.err }}>—</Text>
               </View>
             )}
           </View>

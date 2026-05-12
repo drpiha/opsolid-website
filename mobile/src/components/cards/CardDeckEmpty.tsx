@@ -4,21 +4,28 @@ import { useTheme } from '../../lib/theme/ThemeProvider';
 import { teal } from '../../lib/theme/tokens';
 
 type Props = {
-  /** Tapping the silhouette + headline calls this. Wires to /onboarding. */
+  /** Tapping the hero calls this. Wires to /onboarding. */
   onPress: () => void;
   headline: string;
   subline: string;
 };
 
 /**
- * Zero-card hero. A 180×108 rounded card silhouette with a turquoise "+"
- * floats centred on the screen above a "Create your first card" headline +
- * "It takes 30 seconds" subline. Tap routes the user into the onboarding
- * wizard (rather than the bare /cards/create form) — this is the wizard's
- * first-class entry point.
+ * Zero-card hero.
+ *
+ * Visual spec (Fix 1.6):
+ * - 88pt circular icon container on teal[50] bg with a 2px dashed teal[300] border.
+ * - Plus icon 64pt in teal[500].
+ * - Headline: 20pt semibold, ink[100].
+ * - Subline: 14pt regular, ink[300], max 2 lines.
+ * - All text centered; tapping anywhere on the hero routes into onboarding.
+ *
+ * The 1px solid near-white-on-near-white border from the previous card silhouette
+ * shape (contrast ~1.3:1) is replaced by the high-visibility teal dashed ring.
  */
 export function CardDeckEmpty({ onPress, headline, subline }: Props) {
   const theme = useTheme();
+
   return (
     <View style={styles.wrap}>
       <Pressable
@@ -27,21 +34,23 @@ export function CardDeckEmpty({ onPress, headline, subline }: Props) {
         accessibilityLabel={headline}
         style={({ pressed }) => [styles.touchTarget, pressed && styles.pressed]}
       >
+        {/* Icon ring */}
         <View
           style={[
-            styles.silhouette,
+            styles.iconRing,
             {
-              backgroundColor: theme.bg[2],
-              borderColor: theme.line.DEFAULT,
+              backgroundColor: teal[50],
+              borderColor: teal[300],
             },
           ]}
         >
-          <Plus size={40} color={teal[500]} strokeWidth={2.4} />
+          <Plus size={64} color={teal[500]} strokeWidth={1.8} />
         </View>
+
         <Text style={[styles.headline, { color: theme.ink[100] }]}>
           {headline}
         </Text>
-        <Text style={[styles.subline, { color: theme.ink[400] }]}>
+        <Text style={[styles.subline, { color: theme.ink[300] }]}>
           {subline}
         </Text>
       </Pressable>
@@ -54,31 +63,35 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 24,
+    padding: 32,
   },
   touchTarget: {
     alignItems: 'center',
+    maxWidth: 280,
   },
   pressed: {
-    opacity: 0.85,
+    opacity: 0.80,
   },
-  silhouette: {
-    width: 180,
-    height: 108,
-    borderRadius: 16,
-    borderWidth: 1,
+  iconRing: {
+    width: 112,
+    height: 112,
+    borderRadius: 56,
+    borderWidth: 2,
+    borderStyle: 'dashed',
     justifyContent: 'center',
     alignItems: 'center',
   },
   headline: {
-    marginTop: 24,
+    marginTop: 28,
     fontSize: 20,
     fontWeight: '600',
     textAlign: 'center',
+    letterSpacing: -0.3,
   },
   subline: {
-    marginTop: 8,
+    marginTop: 10,
     fontSize: 14,
+    lineHeight: 20,
     textAlign: 'center',
   },
 });

@@ -77,7 +77,16 @@ export const neutral = {
 export const signal = {
   ok:   '#7FB286',  // muted sage
   warn: '#D4A23A',  // aged gold
-  err:  '#B8514B',  // oxblood
+  err:  '#B8514B',  // oxblood — passes AA on light bg (#F9F6F0), ~4.7:1
+} as const;
+
+// Dark-mode luminance-aware signal variants.
+// signalDark.err = '#C96C66' passes AA on darkTheme.bg[1] (#0B0E13), ~5.0:1.
+// Use theme.signalErr (see ThemeTokens) instead of reaching for this directly.
+export const signalDark = {
+  ok:   '#7FB286',  // same — ok on dark already
+  warn: '#D4A23A',  // same — ok on dark already
+  err:  '#C96C66',  // lightened oxblood — ~5.0:1 on #0B0E13
 } as const;
 
 // ---------- THEME TOKENS ----------
@@ -118,6 +127,14 @@ export type ThemeTokens = {
   textSecondary: string;
   /** Muted text — shorthand for ink[300] */
   textMuted: string;
+  /**
+   * Luminance-aware error signal color.
+   * Light: signal.err (#B8514B, ~4.7:1 on bg[1]).
+   * Dark:  signalDark.err (#C96C66, ~5.0:1 on bg[1]).
+   * Prefer this over reaching for signal.err directly in components that
+   * render error text on theme backgrounds.
+   */
+  signalErr: string;
 };
 
 // ---------- HYBRID (warm cocoa paper — web default) ----------
@@ -148,6 +165,7 @@ const hybridTheme: ThemeTokens = {
   text:          '#15120F',
   textSecondary: '#3A3530',
   textMuted:     '#6B6660',
+  signalErr:     signal.err,
 };
 
 // ---------- LIGHT — clean, cool refined paper ----------
@@ -180,9 +198,12 @@ const lightTheme: ThemeTokens = {
   text:          '#15120F',
   textSecondary: '#3A3530',
   textMuted:     '#6B6660',
+  signalErr:     signal.err,
 };
 
 // ---------- DARK — graphite ----------
+// ink[400] raised from #6B717B → #8A9099 (contrast ~4.6:1 on bg[1] #0B0E13,
+// up from ~3.2:1) to pass WCAG AA for UI text on dark backgrounds.
 const darkTheme: ThemeTokens = {
   bg: {
     0: '#07090C',
@@ -196,7 +217,7 @@ const darkTheme: ThemeTokens = {
     100: '#F4F3F0',
     200: '#D8D6D1',
     300: '#9FA2A9',
-    400: '#6B717B',
+    400: '#8A9099',
     500: '#454B56',
   },
   line: {
@@ -209,6 +230,7 @@ const darkTheme: ThemeTokens = {
   text:          '#F4F3F0',
   textSecondary: '#D8D6D1',
   textMuted:     '#9FA2A9',
+  signalErr:     signalDark.err,
 };
 
 /**

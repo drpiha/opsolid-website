@@ -1,7 +1,6 @@
 import { TextInput, View, Text, StyleSheet } from 'react-native';
 import type { TextInputProps } from 'react-native';
 import { useTheme } from '../../lib/theme/ThemeProvider';
-import { signal } from '../../lib/theme/tokens';
 
 type Props = TextInputProps & {
   label?: string;
@@ -21,7 +20,7 @@ export function Input({ label, error, style, ...props }: Props) {
         style={[
           styles.input,
           {
-            borderColor: error ? signal.err : theme.line.DEFAULT,
+            borderColor: error ? theme.signalErr : theme.line.DEFAULT,
             backgroundColor: theme.bg[1],
             color: theme.ink[100],
           },
@@ -31,7 +30,7 @@ export function Input({ label, error, style, ...props }: Props) {
         autoCapitalize={props.autoCapitalize ?? 'none'}
       />
       {error ? (
-        <Text style={[styles.error, { color: signal.err }]}>{error}</Text>
+        <Text style={[styles.error, { color: theme.signalErr }]}>{error}</Text>
       ) : null}
     </View>
   );

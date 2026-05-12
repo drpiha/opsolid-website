@@ -206,7 +206,7 @@ export default function CardsListScreen() {
 
   const renderError = () => (
     <View style={styles.empty}>
-      <Text style={[styles.errText, { color: '#B8514B' }]}>{error}</Text>
+      <Text style={[styles.errText, { color: theme.signalErr }]}>{error}</Text>
       <Button
         label={t.retry}
         onPress={() => void load('initial')}
@@ -241,20 +241,8 @@ export default function CardsListScreen() {
               >
                 <CardDeckEmpty
                   onPress={goCreate}
-                  headline={
-                    detectLocale() === 'de'
-                      ? 'Erstellen Sie Ihre erste Karte'
-                      : detectLocale() === 'tr'
-                        ? 'İlk kartınızı oluşturun'
-                        : 'Create your first card'
-                  }
-                  subline={
-                    detectLocale() === 'de'
-                      ? 'Dauert nur 30 Sekunden'
-                      : detectLocale() === 'tr'
-                        ? '30 saniye sürer'
-                        : 'It takes 30 seconds'
-                  }
+                  headline={t.emptyHeadline}
+                  subline={t.emptySubline}
                 />
               </View>
             ) : isList ? (

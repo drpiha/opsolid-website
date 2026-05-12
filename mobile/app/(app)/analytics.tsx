@@ -167,7 +167,7 @@ export default function AnalyticsScreen() {
             </Text>
           </View>
         ) : err ? (
-          <Text style={[styles.muted, { color: '#B8514B', padding: 24 }]}>
+          <Text style={[styles.muted, { color: theme.signalErr, padding: 24 }]}>
             {err}
           </Text>
         ) : data ? (

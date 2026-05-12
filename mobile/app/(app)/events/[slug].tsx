@@ -77,7 +77,7 @@ export default function EventDetailScreen() {
     return (
       <View style={[styles.center, { backgroundColor: theme.bg[0] }]}>
         <Stack.Screen options={{ title: '' }} />
-        <Text style={[styles.errorText, { color: '#B8514B' }]}>
+        <Text style={[styles.errorText, { color: theme.signalErr }]}>
           {error ?? t.errorLoad}
         </Text>
         <Button

@@ -261,7 +261,7 @@ export default function PublicCardScreen() {
       <View style={[styles.root, { backgroundColor: theme.bg[0] }]}>
         <Stack.Screen options={{ title: '' }} />
         <View style={styles.center}>
-          <Text style={[styles.errorText, { color: '#B8514B' }]}>{error ?? t.errorLoad}</Text>
+          <Text style={[styles.errorText, { color: theme.signalErr }]}>{error ?? t.errorLoad}</Text>
           <Button
             label={t.retry}
             onPress={() => slug && void loadCard(slug)}
@@ -359,7 +359,7 @@ export default function PublicCardScreen() {
         {/* WebView error state */}
         {webError && !webLoading ? (
           <View style={styles.webErrorOverlay}>
-            <Text style={[styles.errorText, { color: '#B8514B' }]}>
+            <Text style={[styles.errorText, { color: theme.signalErr }]}>
               {t.errorLoad}
             </Text>
             <Button

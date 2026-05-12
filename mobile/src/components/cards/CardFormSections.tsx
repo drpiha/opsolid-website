@@ -20,7 +20,7 @@ import {
 } from 'react-native';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react-native';
 import type { ThemeTokens } from '../../lib/theme/tokens';
-import { copper, signal, teal } from '../../lib/theme/tokens';
+import { copper, teal } from '../../lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../lib/i18n/locale';
 import { listTemplates, type Template } from '../../lib/api/templates';
 import {
@@ -340,7 +340,7 @@ export function SocialsSection({
                 </View>
               ) : null}
               {enrichError ? (
-                <Text style={{ color: signal.err, fontSize: 12 }}>{enrichError}</Text>
+                <Text style={{ color: theme.signalErr, fontSize: 12 }}>{enrichError}</Text>
               ) : null}
             </View>
           ) : null}
@@ -2017,7 +2017,7 @@ export function EmbedsSection({
               {
                 flex: 1,
                 color: theme.ink[100],
-                borderColor: draftError ? '#B8514B' : theme.line.DEFAULT,
+                borderColor: draftError ? theme.signalErr : theme.line.DEFAULT,
                 backgroundColor: theme.bg[1],
               },
             ]}
@@ -2054,7 +2054,7 @@ export function EmbedsSection({
       ) : null}
 
       {draftError ? (
-        <Text style={[styles.hint, { color: '#B8514B' }]}>{draftError}</Text>
+        <Text style={[styles.hint, { color: theme.signalErr }]}>{draftError}</Text>
       ) : null}
     </View>
   );
@@ -2134,7 +2134,7 @@ export function PasswordSection({
             onPress={() => onChange({ ...value, clear: true })}
             activeOpacity={0.7}
           >
-            <Text style={{ color: '#B8514B', fontSize: 13, fontWeight: '600' }}>
+            <Text style={{ color: theme.signalErr, fontSize: 13, fontWeight: '600' }}>
               {labels.clear}
             </Text>
           </TouchableOpacity>

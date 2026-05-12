@@ -126,7 +126,7 @@ export default function EventsListScreen() {
         </View>
       ) : error ? (
         <View style={styles.center}>
-          <Text style={[styles.emptyTitle, { color: '#B8514B' }]}>{error}</Text>
+          <Text style={[styles.emptyTitle, { color: theme.signalErr }]}>{error}</Text>
           <Button
             label={t.retry}
             onPress={() => void load('initial')}

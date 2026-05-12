@@ -11,7 +11,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { Stack, useRouter, useFocusEffect } from 'expo-router';
-import { Star, UserPlus } from 'lucide-react-native';
+import { Star, UserPlus, Users } from 'lucide-react-native';
 import {
   listContacts,
   unsaveCard,
@@ -19,7 +19,7 @@ import {
 } from '../../src/lib/api/contacts';
 import type { SavedContact } from '../../src/lib/api/contacts';
 import { useTheme } from '../../src/lib/theme/ThemeProvider';
-import { copper } from '../../src/lib/theme/tokens';
+import { copper, teal } from '../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
 import { API_BASE } from '../../src/lib/api/client';
 import { Button } from '../../src/components/ui/Button';
@@ -187,7 +187,7 @@ export default function ContactsScreen() {
           </View>
         ) : error ? (
           <View style={styles.center}>
-            <Text style={[styles.emptyTitle, { color: '#B8514B' }]}>{error}</Text>
+            <Text style={[styles.emptyTitle, { color: theme.signalErr }]}>{error}</Text>
             <Button
               label={t.retry}
               onPress={() => void load('initial')}
@@ -202,13 +202,31 @@ export default function ContactsScreen() {
             renderItem={renderItem}
             ListEmptyComponent={
               <View style={styles.center}>
+                {/* Hero illustration */}
+                <View
+                  style={[
+                    styles.heroIconRing,
+                    { backgroundColor: teal[50], borderColor: teal[200] },
+                  ]}
+                >
+                  <Users size={64} color={teal[500]} strokeWidth={1.5} />
+                </View>
+
+                <Text style={[styles.emptyHeadline, { color: theme.ink[100] }]}>
+                  {t.emptyHeadline}
+                </Text>
+                <Text style={[styles.emptySubline, { color: theme.ink[300] }]}>
+                  {t.emptySubline}
+                </Text>
+
+                {/* Seed CTA — only for authenticated users */}
                 {isAuthenticated ? (
                   <Pressable
                     onPress={() => void handleSeedSamples()}
                     disabled={seeding}
                     style={({ pressed }) => [
                       styles.seedCta,
-                      { backgroundColor: copper[500] },
+                      { backgroundColor: teal[500] },
                       pressed && styles.pressed,
                       seeding && { opacity: 0.6 },
                     ]}
@@ -222,8 +240,6 @@ export default function ContactsScreen() {
                     <Text style={styles.seedCtaText}>{t.seedCta}</Text>
                   </Pressable>
                 ) : null}
-                <Text style={[styles.emptyTitle, { color: theme.ink[100] }]}>{t.empty}</Text>
-                <Text style={[styles.emptyHint, { color: theme.ink[400] }]}>{t.emptyHint}</Text>
               </View>
             }
             refreshControl={
@@ -253,8 +269,32 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 24,
   },
+  heroIconRing: {
+    width: 112,
+    height: 112,
+    borderRadius: 56,
+    borderWidth: 2,
+    borderStyle: 'dashed',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 24,
+  },
+  emptyHeadline: {
+    fontSize: 20,
+    fontWeight: '600',
+    textAlign: 'center',
+    letterSpacing: -0.3,
+    marginBottom: 10,
+  },
+  emptySubline: {
+    fontSize: 14,
+    lineHeight: 20,
+    textAlign: 'center',
+    maxWidth: 280,
+    marginBottom: 28,
+  },
+  // Keep emptyTitle for error state reuse
   emptyTitle: { fontSize: 17, fontWeight: '500', marginBottom: 6, textAlign: 'center' },
-  emptyHint: { fontSize: 14, textAlign: 'center' },
   seedCta: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -263,7 +303,6 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 28,
     borderRadius: 14,
-    marginBottom: 24,
     minWidth: 240,
   },
   seedCtaText: { color: '#fff', fontSize: 15, fontWeight: '600' },

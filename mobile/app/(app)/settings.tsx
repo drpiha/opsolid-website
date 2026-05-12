@@ -1254,7 +1254,7 @@ function ProSection({
               }}
             />
             {domainErr ? (
-              <Text style={{ color: '#B8514B', fontSize: 12, marginBottom: 8 }}>
+              <Text style={{ color: theme.signalErr, fontSize: 12, marginBottom: 8 }}>
                 {domainErr}
               </Text>
             ) : null}

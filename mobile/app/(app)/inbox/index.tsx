@@ -13,6 +13,7 @@ import {
 import { Stack, useRouter, useFocusEffect } from 'expo-router';
 import {
   Mailbox,
+  Inbox as InboxIcon,
   UserPlus,
   FileText,
   Calendar,
@@ -23,7 +24,7 @@ import {
 import { listInbox, resolveAction } from '../../../src/lib/api/inbox';
 import type { InboxItem, InboxActionStatus } from '../../../src/lib/api/inbox';
 import { useTheme } from '../../../src/lib/theme/ThemeProvider';
-import { copper, signal } from '../../../src/lib/theme/tokens';
+import { copper, signal, teal } from '../../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../../src/lib/i18n/locale';
 import { API_BASE } from '../../../src/lib/api/client';
 import { Button } from '../../../src/components/ui/Button';
@@ -124,8 +125,8 @@ export default function InboxScreen() {
 
   function statusColor(status: string): string {
     if (status === 'accepted') return signal.ok;
-    if (status === 'declined') return '#B8514B';
-    if (status === 'archived') return '#6B717B';
+    if (status === 'declined') return theme.signalErr;
+    if (status === 'archived') return theme.ink[400];
     return copper[500]; // pending
   }
 
@@ -272,33 +273,23 @@ export default function InboxScreen() {
   }
 
   function renderEmptyExplainer() {
-    const paragraphs = t.aboutBody.split('\n\n');
     return (
       <View style={styles.emptyWrap}>
+        {/* Hero icon ring */}
         <View
           style={[
-            styles.aboutCard,
-            { backgroundColor: theme.bg[1], borderColor: theme.line.DEFAULT },
+            styles.heroIconRing,
+            { backgroundColor: teal[50], borderColor: teal[200] },
           ]}
         >
-          <View style={[styles.aboutIcon, { backgroundColor: theme.bg[2] }]}>
-            <Mailbox size={28} color={copper[500]} />
-          </View>
-          <Text style={[styles.aboutTitle, { color: theme.ink[100] }]}>
-            {t.aboutTitle}
-          </Text>
-          {paragraphs.map((p, i) => (
-            <Text
-              key={i}
-              style={[
-                styles.aboutBody,
-                { color: theme.ink[300], marginTop: i === 0 ? 0 : 12 },
-              ]}
-            >
-              {renderInline(p, theme.ink[300])}
-            </Text>
-          ))}
+          <InboxIcon size={64} color={teal[500]} strokeWidth={1.5} />
         </View>
+        <Text style={[styles.emptyHeadline, { color: theme.ink[100] }]}>
+          {t.emptyHeadline}
+        </Text>
+        <Text style={[styles.emptySubline, { color: theme.ink[300] }]}>
+          {t.emptySubline}
+        </Text>
       </View>
     );
   }
@@ -343,7 +334,7 @@ export default function InboxScreen() {
           </View>
         ) : error ? (
           <View style={styles.center}>
-            <Text style={[styles.errorTitle, { color: '#B8514B' }]}>{error}</Text>
+            <Text style={[styles.errorTitle, { color: theme.signalErr }]}>{error}</Text>
             <Button
               label={t.retry}
               onPress={() => void load('initial', filter)}
@@ -400,36 +391,32 @@ const styles = StyleSheet.create({
   },
   errorTitle: { fontSize: 17, fontWeight: '500', marginBottom: 6, textAlign: 'center' },
   emptyWrap: {
-    paddingHorizontal: 4,
+    paddingHorizontal: 24,
     paddingVertical: 8,
     alignItems: 'center',
   },
-  aboutCard: {
-    borderRadius: 14,
-    borderWidth: StyleSheet.hairlineWidth,
-    padding: 16,
-    alignItems: 'center',
-    maxWidth: 420,
-    width: '100%',
-  },
-  aboutIcon: {
-    width: 56,
-    height: 56,
-    borderRadius: 14,
+  heroIconRing: {
+    width: 112,
+    height: 112,
+    borderRadius: 56,
+    borderWidth: 2,
+    borderStyle: 'dashed',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 12,
+    marginBottom: 24,
   },
-  aboutTitle: {
-    fontSize: 17,
-    fontWeight: '700',
+  emptyHeadline: {
+    fontSize: 20,
+    fontWeight: '600',
     textAlign: 'center',
+    letterSpacing: -0.3,
     marginBottom: 10,
   },
-  aboutBody: {
+  emptySubline: {
     fontSize: 14,
     lineHeight: 20,
     textAlign: 'center',
+    maxWidth: 280,
   },
   card: {
     borderRadius: 14,

@@ -219,7 +219,7 @@ export default function InboxThreadScreen() {
     return (
       <View style={[styles.center, { backgroundColor: theme.bg[0] }]}>
         <Stack.Screen options={{ title: '' }} />
-        <Text style={[styles.errorText, { color: '#B8514B' }]}>{error}</Text>
+        <Text style={[styles.errorText, { color: theme.signalErr }]}>{error}</Text>
         <Pressable
           onPress={() => void fetchOnce('initial')}
           style={[styles.retryBtn, { backgroundColor: copper[500] }]}

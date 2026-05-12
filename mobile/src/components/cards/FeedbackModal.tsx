@@ -204,7 +204,7 @@ export function FeedbackModal({ visible, slug, onClose }: Props) {
                 </View>
 
                 {errorMsg ? (
-                  <Text style={styles.errorText}>{errorMsg}</Text>
+                  <Text style={[styles.errorText, { color: theme.signalErr }]}>{errorMsg}</Text>
                 ) : null}
 
                 <Pressable
@@ -399,7 +399,6 @@ const styles = StyleSheet.create({
   multiline: { minHeight: 80 },
   charCounter: { fontSize: 11, textAlign: 'right' },
   errorText: {
-    color: '#B8514B',
     fontSize: 13,
     textAlign: 'center',
     marginTop: -4,
