@@ -1,10 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
+import { CheckCircle } from 'lucide-react-native';
 import { ScreenContainer } from '../../src/components/ui/ScreenContainer';
 import { Button } from '../../src/components/ui/Button';
 import { useTheme } from '../../src/lib/theme/ThemeProvider';
-import { copper } from '../../src/lib/theme/tokens';
+import { teal, accentCredit } from '../../src/lib/theme/tokens';
 import { requestMagicLink } from '../../src/lib/auth/api';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
 
@@ -55,9 +56,15 @@ export default function MagicLinkSentScreen() {
   return (
     <ScreenContainer>
       <View style={styles.container}>
-        {/* Check icon placeholder — text-based to avoid asset dependency */}
-        <View style={[styles.iconCircle, { backgroundColor: theme.bg[2], borderColor: theme.line.DEFAULT }]}>
-          <Text style={[styles.iconChar, { color: copper[500] }]}>✓</Text>
+        {/* Verso brand lockup */}
+        <View style={styles.brandLockup}>
+          <Text style={[styles.versoWordmark, { color: teal[500] }]}>Verso</Text>
+          <Text style={[styles.byCredit, { color: accentCredit }]}>by OpSolid</Text>
+        </View>
+
+        {/* Check icon — lucide CheckCircle in teal */}
+        <View style={[styles.iconCircle, { backgroundColor: theme.bg[2], borderColor: teal[500] }]}>
+          <CheckCircle size={36} color={teal[500]} strokeWidth={1.5} />
         </View>
 
         <Text style={[styles.title, { color: theme.ink[100] }]}>
@@ -104,18 +111,32 @@ const styles = StyleSheet.create({
     gap: 20,
     paddingHorizontal: 8,
   },
+  brandLockup: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: 2,
+    marginBottom: 8,
+  },
+  versoWordmark: {
+    fontSize: 28,
+    fontWeight: '700',
+    letterSpacing: -0.5,
+    lineHeight: 32,
+  },
+  byCredit: {
+    fontSize: 11,
+    fontWeight: '500',
+    letterSpacing: 0.3,
+    opacity: 0.6,
+  },
   iconCircle: {
     width: 72,
     height: 72,
     borderRadius: 36,
-    borderWidth: 1,
+    borderWidth: 1.5,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 8,
-  },
-  iconChar: {
-    fontSize: 32,
-    fontWeight: '600',
   },
   title: {
     fontSize: 24,

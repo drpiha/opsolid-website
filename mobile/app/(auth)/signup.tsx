@@ -12,7 +12,7 @@ import { ScreenContainer } from '../../src/components/ui/ScreenContainer';
 import { Input } from '../../src/components/ui/Input';
 import { Button } from '../../src/components/ui/Button';
 import { useTheme } from '../../src/lib/theme/ThemeProvider';
-import { copper } from '../../src/lib/theme/tokens';
+import { copper, teal, accentCredit, signal } from '../../src/lib/theme/tokens';
 import { requestMagicLink } from '../../src/lib/auth/api';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
 
@@ -53,9 +53,14 @@ export default function SignupScreen() {
       >
         {/* Brand header */}
         <View style={styles.header}>
-          <Text style={[styles.wordmark, { color: copper[500] }]}>
-            OPSOLID
-          </Text>
+          <View style={styles.brandLockup}>
+            <Text style={[styles.versoWordmark, { color: teal[500] }]}>
+              Verso
+            </Text>
+            <Text style={[styles.byCredit, { color: accentCredit }]}>
+              by OpSolid
+            </Text>
+          </View>
           <Text style={[styles.welcome, { color: theme.ink[100] }]}>
             {strings.signupHeadline}
           </Text>
@@ -70,10 +75,10 @@ export default function SignupScreen() {
             <View
               style={[
                 styles.errorBanner,
-                { backgroundColor: theme.bg[2], borderColor: '#B8514B' },
+                { backgroundColor: theme.bg[2], borderColor: signal.err },
               ]}
             >
-              <Text style={styles.errorText}>{error}</Text>
+              <Text style={[styles.errorText, { color: signal.err }]}>{error}</Text>
             </View>
           ) : null}
 
@@ -130,10 +135,21 @@ const styles = StyleSheet.create({
     paddingBottom: 40,
     gap: 10,
   },
-  wordmark: {
+  brandLockup: {
+    flexDirection: 'column',
+    gap: 2,
+  },
+  versoWordmark: {
+    fontSize: 28,
+    fontWeight: '700',
+    letterSpacing: -0.5,
+    lineHeight: 32,
+  },
+  byCredit: {
     fontSize: 11,
-    fontWeight: '600',
-    letterSpacing: 4,
+    fontWeight: '500',
+    letterSpacing: 0.3,
+    opacity: 0.6,
   },
   welcome: {
     fontSize: 28,
@@ -155,7 +171,6 @@ const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 13,
-    color: '#B8514B',
   },
   ctaButton: {
     marginTop: 4,

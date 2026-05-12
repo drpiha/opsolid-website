@@ -6,6 +6,7 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as Linking from 'expo-linking';
 import * as Notifications from 'expo-notifications';
 import { ThemeProvider } from '../src/lib/theme/ThemeProvider';
+import { ToastProvider } from '../src/components/ui/Toast';
 import { useAuthStore } from '../src/lib/auth/store';
 import { useThemeStore } from '../src/lib/theme/themeStore';
 import { useLocaleStore } from '../src/lib/i18n/localeStore';
@@ -146,12 +147,14 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider>
-        <StatusBar style="auto" />
-        <Stack screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="index" />
-          <Stack.Screen name="(auth)" />
-          <Stack.Screen name="(app)" />
-        </Stack>
+        <ToastProvider>
+          <StatusBar style="auto" />
+          <Stack screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="index" />
+            <Stack.Screen name="(auth)" />
+            <Stack.Screen name="(app)" />
+          </Stack>
+        </ToastProvider>
       </ThemeProvider>
     </GestureHandlerRootView>
   );

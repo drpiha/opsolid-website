@@ -17,7 +17,9 @@ import {
   type TextInput as RNTextInput,
 } from 'react-native';
 import { Stack, useFocusEffect, useLocalSearchParams, useRouter } from 'expo-router';
+import * as Haptics from 'expo-haptics';
 import * as ImagePicker from 'expo-image-picker';
+import { useToast } from '../../../../src/components/ui/Toast';
 import { Check, Eye, EyeOff, X } from 'lucide-react-native';
 import { WebView } from 'react-native-webview';
 import { getCard, updateCard, uploadPhoto } from '../../../../src/lib/api/cards';
@@ -239,6 +241,7 @@ export default function CardEditScreen() {
   const authUser = useAuthStore((s) => s.user);
   const setAuthUser = useAuthStore((s) => s.setUser);
   const isProUser = Boolean(authUser?.isPro);
+  const { showToast } = useToast();
 
   const [card, setCard] = useState<ApiCard | null>(null);
   const [loading, setLoading] = useState(true);
@@ -840,9 +843,11 @@ export default function CardEditScreen() {
       // (tweak fields, glance at the live preview, save again) without
       // bouncing back to the cards list each time. The toast confirms the
       // save; an explicit "Done" tap or system back exits the screen.
-      Alert.alert('', t.saveSuccess);
+      void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+      showToast({ message: t.saveSuccess, variant: 'success' });
     } catch {
-      Alert.alert('', t.errorSave);
+      void Haptics.notificationAsync(Haptics.NotificationFeedbackType.Error);
+      showToast({ message: t.errorSave, variant: 'error' });
     } finally {
       setSaving(false);
     }
