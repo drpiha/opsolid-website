@@ -1,0 +1,13 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "de.opsolid.mobile",
+      "sha256_cert_fingerprints": [
+        "B4:55:DD:68:A3:BC:30:DF:6B:3C:7A:A9:65:99:F2:FC:D1:93:8B:E1:6A:4A:E7:0B:B4:93:20:7F:12:35:B6:B2",
+        "FA:C6:17:45:DC:09:03:78:6F:B9:ED:E6:2A:96:2B:39:9F:73:48:F0:BB:6F:89:9B:83:32:66:75:91:03:3B:9C"
+      ]
+    }
+  }
+]
