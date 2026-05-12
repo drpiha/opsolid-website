@@ -50,7 +50,7 @@ import {
   type Locale,
 } from '../../src/lib/i18n/locale';
 import { applyRTLForLocale } from '../../src/lib/i18n/direction';
-import { Check } from 'lucide-react-native';
+import { Check, KeyRound } from 'lucide-react-native';
 import {
   useThemeStore,
   type AppThemeMode,
@@ -597,6 +597,42 @@ export default function SettingsScreen() {
           }}
           router={router}
         />
+
+        {/* ---------- FIX 1.8 — CARDS ---------- */}
+        <SectionHeader theme={theme}>{t.cardsSection}</SectionHeader>
+        <Card theme={theme}>
+          <TouchableOpacity
+            onPress={() => router.push('/(app)/cards/claim' as never)}
+            activeOpacity={0.7}
+            style={styles.rowBetween}
+          >
+            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1 }}>
+              <View
+                style={{
+                  width: 36,
+                  height: 36,
+                  borderRadius: 10,
+                  backgroundColor: teal[50],
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                <KeyRound size={18} color={teal[600]} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.value, { color: theme.ink[100] }]}>
+                  {t.claimCard}
+                </Text>
+                <Text
+                  style={[styles.label, { color: theme.ink[400], marginTop: 2 }]}
+                >
+                  {t.claimCardBody}
+                </Text>
+              </View>
+            </View>
+            <Text style={{ color: theme.ink[400], fontSize: 18 }}>›</Text>
+          </TouchableOpacity>
+        </Card>
 
         {/* ---------- PRIVACY & DATA ---------- */}
         <SectionHeader theme={theme}>{t.privacyData}</SectionHeader>

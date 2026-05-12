@@ -22,6 +22,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   ActivityIndicator,
+  Modal,
   useWindowDimensions,
 } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
@@ -97,6 +98,10 @@ export default function OnboardingScreen() {
   const [urlValue, setUrlValue] = useState('');
   const [urlMode, setUrlMode] = useState(false);
   const [stepZeroError, setStepZeroError] = useState<string | null>(null);
+  // Fix 1.7 — camera rationale panel. Shown BEFORE requesting the native
+  // permission prompt so the user understands why Verso needs the camera
+  // without relying solely on the OS permission dialog copy.
+  const [showScanRationale, setShowScanRationale] = useState(false);
 
   // M7 Wave 2 — when the user taps "Enter manually" on the prefill panel we
   // hide the panel and reveal the standard 3-ramp picker for this session.
@@ -207,9 +212,17 @@ export default function OnboardingScreen() {
     setDraft(patch);
   }
 
-  async function pickScan() {
+  // Fix 1.7 — show the rationale panel before touching the native OS prompt.
+  // `pickScan` now just opens the panel; the actual camera work lives in
+  // `executeScan` which is called only after the user taps "Continue".
+  function pickScan() {
     if (scanLoading) return;
     setStepZeroError(null);
+    setShowScanRationale(true);
+  }
+
+  async function executeScan() {
+    setShowScanRationale(false);
     setScanLoading(true);
     try {
       const perm = await ImagePicker.requestCameraPermissionsAsync();
@@ -613,6 +626,65 @@ export default function OnboardingScreen() {
           </Animated.View>
         </KeyboardAvoidingView>
       </SafeAreaView>
+
+      {/* Fix 1.7 — camera rationale modal. Shown before the native OS
+          permission prompt so the user understands why Verso needs the
+          camera. Reusable pattern: same modal can be used in Step 1 for
+          the photo-library rationale by wiring a separate state flag. */}
+      <Modal
+        visible={showScanRationale}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setShowScanRationale(false)}
+      >
+        <Pressable
+          style={rationaleStyles.backdrop}
+          onPress={() => setShowScanRationale(false)}
+        >
+          <Pressable
+            style={[rationaleStyles.sheet, { backgroundColor: theme.bg[1] }]}
+            onPress={(e) => e.stopPropagation()}
+          >
+            <View
+              style={[rationaleStyles.iconWrap, { backgroundColor: teal[50] }]}
+            >
+              <ScanLine size={28} color={teal[600]} />
+            </View>
+            <Text
+              style={[rationaleStyles.rationaleTitle, { color: theme.ink[100] }]}
+            >
+              {t.scanRationaleTitle}
+            </Text>
+            <Text
+              style={[rationaleStyles.rationaleBody, { color: theme.ink[300] }]}
+            >
+              {t.scanRationaleBody}
+            </Text>
+            <Pressable
+              onPress={() => void executeScan()}
+              style={[
+                rationaleStyles.primaryBtn,
+                { backgroundColor: teal[500] },
+              ]}
+            >
+              <Text style={rationaleStyles.primaryBtnText}>{t.scanContinue}</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => {
+                setShowScanRationale(false);
+                pickManual();
+              }}
+              style={rationaleStyles.ghostBtn}
+            >
+              <Text
+                style={[rationaleStyles.ghostBtnText, { color: theme.ink[300] }]}
+              >
+                {t.scanSkip}
+              </Text>
+            </Pressable>
+          </Pressable>
+        </Pressable>
+      </Modal>
     </View>
   );
 }
@@ -1724,6 +1796,66 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   editBtnText: {
+    fontSize: 14,
+    fontWeight: '500',
+  },
+});
+
+// Fix 1.7 — separate StyleSheet for the camera rationale modal so it can be
+// copy-pasted to other screens (e.g. photo-library rationale in Step 1)
+// without pulling in the main wizard styles.
+const rationaleStyles = StyleSheet.create({
+  backdrop: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0,0.48)',
+    justifyContent: 'flex-end',
+  },
+  sheet: {
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    padding: 28,
+    paddingBottom: 40,
+    alignItems: 'center',
+  },
+  iconWrap: {
+    width: 56,
+    height: 56,
+    borderRadius: 16,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 16,
+  },
+  rationaleTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+    textAlign: 'center',
+    marginBottom: 10,
+  },
+  rationaleBody: {
+    fontSize: 14,
+    lineHeight: 20,
+    textAlign: 'center',
+    marginBottom: 24,
+    paddingHorizontal: 8,
+  },
+  primaryBtn: {
+    alignSelf: 'stretch',
+    paddingVertical: 16,
+    borderRadius: 14,
+    alignItems: 'center',
+    marginBottom: 10,
+  },
+  primaryBtnText: {
+    color: '#FFFFFF',
+    fontSize: 15,
+    fontWeight: '600',
+  },
+  ghostBtn: {
+    alignSelf: 'stretch',
+    paddingVertical: 12,
+    alignItems: 'center',
+  },
+  ghostBtnText: {
     fontSize: 14,
     fontWeight: '500',
   },

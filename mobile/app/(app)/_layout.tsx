@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Tabs, Redirect, useRouter } from 'expo-router';
+import * as Linking from 'expo-linking';
 import { useAuthStore } from '../../src/lib/auth/store';
 import {
   authenticateBiometric,
@@ -102,6 +103,49 @@ export default function AppLayout() {
     pushFired.current = true;
     void registerForPushAsync();
   }, [status]);
+
+  // Fix 1.8 — claim deep-link handler. Listens for
+  // opsolid://claim?token=X&orderId=Y both at cold-start and runtime.
+  // Navigates to the claim screen with pre-filled params. The handler
+  // runs inside (app)/_layout (not the root layout) so the router is
+  // mounted and auth is already resolved before navigation fires.
+  const claimHandled = useRef(false);
+  useEffect(() => {
+    if (status !== 'authenticated') return;
+
+    function handleClaimUrl(url: string | null) {
+      if (!url) return;
+      if (!/opsolid:\/\/claim($|\?)/i.test(url)) return;
+      const queryIdx = url.indexOf('?');
+      if (queryIdx < 0) return;
+      const params = new URLSearchParams(url.slice(queryIdx + 1));
+      const rawToken = params.get('token') ?? '';
+      const rawOrderId = params.get('orderId') ?? '';
+      if (!rawToken || !rawOrderId) return;
+      const safe = (s: string) =>
+        s.slice(0, 128).replace(/[^A-Za-z0-9_\-]/g, '');
+      const token = safe(rawToken);
+      const orderId = safe(rawOrderId);
+      if (!token || !orderId) return;
+      router.push(
+        `/(app)/cards/claim?token=${encodeURIComponent(token)}&orderId=${encodeURIComponent(orderId)}` as never,
+      );
+    }
+
+    // Cold-start: if the app was opened via opsolid://claim, the initial URL
+    // is available immediately after the auth gate resolves. Guard once per
+    // session — prevents double-navigation on re-renders.
+    if (!claimHandled.current) {
+      claimHandled.current = true;
+      void Linking.getInitialURL().then(handleClaimUrl);
+    }
+
+    // Runtime: user taps the link while the app is already open.
+    const sub = Linking.addEventListener('url', ({ url }) =>
+      handleClaimUrl(url),
+    );
+    return () => sub.remove();
+  }, [status, router]);
 
   useEffect(() => {
     void isBiometricEnabled().then(async (enabled) => {
@@ -215,6 +259,9 @@ export default function AppLayout() {
       <Tabs.Screen name="cards/[id]" options={{ href: null, title: t.cards.detailTitle }} />
       <Tabs.Screen name="cards/create" options={{ href: null, title: t.cards.createTitle }} />
       <Tabs.Screen name="cards/edit/[id]" options={{ href: null, title: t.cards.editTitle }} />
+      {/* Fix 1.8 — claim a card screen. Hidden from tab bar; reached via
+          Settings → "Claim a card" or the deep-link opsolid://claim. */}
+      <Tabs.Screen name="cards/claim" options={{ href: null, title: t.claimCard.title }} />
       {/* cards/template-preview removed — both edit and create now use an inline
           Modal for the template picker, which avoids the Tabs back-navigation
           bug where router.back() returned to the tab index. */}

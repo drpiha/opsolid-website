@@ -45,6 +45,32 @@ function extractRefParam(url: string): string | null {
   }
 }
 
+// Fix 1.8 — extract claim params from opsolid://claim?token=X&orderId=Y.
+// Returns null when the URL is not a claim link.
+function extractClaimParams(
+  url: string,
+): { token: string; orderId: string } | null {
+  try {
+    // Match both opsolid://claim and opsolid://claim? variants.
+    if (!/opsolid:\/\/claim($|\?)/i.test(url)) return null;
+    const queryIdx = url.indexOf('?');
+    if (queryIdx < 0) return null;
+    const params = new URLSearchParams(url.slice(queryIdx + 1));
+    const token = params.get('token') ?? '';
+    const orderId = params.get('orderId') ?? '';
+    if (!token || !orderId) return null;
+    // Allow-list: tokens and order IDs are alphanumeric + a small set of
+    // punctuation chars used by Prisma cuid2 / ULID formats. Anything
+    // outside that set is silently dropped to prevent injection into query
+    // strings. 128-char hard cap.
+    const safe = (s: string) =>
+      s.slice(0, 128).replace(/[^A-Za-z0-9_\-]/g, '');
+    return { token: safe(token), orderId: safe(orderId) };
+  } catch {
+    return null;
+  }
+}
+
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
