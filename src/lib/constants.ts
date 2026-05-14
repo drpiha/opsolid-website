@@ -40,7 +40,7 @@ export const FOOTER_LINKS = {
     { label: "Leistungen", href: "/leistungen" },
   ],
   studio: [
-    { label: "Über mich", href: "/about" },
+    { label: "Über mich", href: "/ueber-mich" },
     { label: "Wissen", href: "/blog" },
     { label: "Kontakt", href: "/contact" },
   ],

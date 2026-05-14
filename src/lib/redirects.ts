@@ -15,6 +15,9 @@ export const RETIRED_REDIRECTS: Record<string, string> = {
   "/faq": "/contact",
   "/use-cases": "/blog",
 
+  // Renamed bio page: /about → /ueber-mich (German-first positioning, 2026-05).
+  "/about": "/ueber-mich",
+
   // Legacy aliases (without "-agent" suffix) → current dedicated pages.
   // The "-agent" suffixed paths are real routes now and must NOT be retired.
   "/products/chatbot": "/products/chatbot-agent",

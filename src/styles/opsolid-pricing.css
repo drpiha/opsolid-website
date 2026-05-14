@@ -337,6 +337,8 @@
   .os-pricing-product-head { flex-direction: column; align-items: flex-start; }
   .os-pricing-tier { padding: 20px 18px 18px; }
   .os-pricing-bundle-grid { grid-template-columns: 1fr; }
+  .os-pricing-hero { padding-top: max(96px, calc(80px + env(safe-area-inset-top))); padding-bottom: 28px; }
+  .os-pricing-hero h1 { font-size: clamp(28px, 9vw, 40px); }
 }
 
 /* =======================================================
@@ -605,4 +607,10 @@
 
 @media (max-width: 760px) {
   .os-products-featured { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .os-product-feature { padding: 22px 20px 20px; }
+  .os-product-feature-foot { flex-direction: column; align-items: stretch; gap: 14px; }
+  .os-product-feature-foot .btn { width: 100%; justify-content: center; }
+  .os-product-feature-head h3 { font-size: clamp(18px, 5.4vw, 22px); }
 }

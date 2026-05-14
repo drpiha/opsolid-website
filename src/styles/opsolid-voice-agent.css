@@ -189,6 +189,10 @@
   box-shadow: var(--rim-top), var(--depth-2);
 }
 @media (max-width: 800px) { .va-flow { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 540px) {
+  .va-flow { grid-template-columns: 1fr; }
+  .va-step { padding: 24px 20px; }
+}
 .va-step {
   position: relative;
   padding: 28px 24px;
@@ -198,6 +202,10 @@
 @media (max-width: 800px) {
   .va-step:nth-child(2n) { border-right: 0; }
   .va-step:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+}
+@media (max-width: 540px) {
+  .va-step { border-right: 0 !important; border-bottom: 1px solid var(--line); }
+  .va-step:last-child { border-bottom: 0; }
 }
 .va-step-num {
   font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em;

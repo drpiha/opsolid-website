@@ -3304,6 +3304,16 @@ export const content: Content = {
       journal: "Wissen",
       contact: "Kontakt",
       cta: "Erstgespräch buchen",
+      servicesDropdown: {
+        "ki-beratung": { title: "KI-Beratung", sub: "Use Cases · Risiko · Roadmap" },
+        prozessautomatisierung: { title: "Prozessautomatisierung", sub: "Workflows · API · Automation" },
+        "microsoft-365-automatisierung": {
+          title: "Microsoft 365 Automatisierung",
+          sub: "Power Automate · M365 · SharePoint",
+        },
+        "interne-tools": { title: "Interne Tools", sub: "Dashboards · Tools · Integrationen" },
+        "ki-schulungen": { title: "KI-Schulungen & Richtlinien", sub: "Schulung · Richtlinien · DSGVO" },
+      },
     },
 
     footer: {
@@ -3840,6 +3850,587 @@ export const content: Content = {
       },
     },
 
+    leistungen: {
+      meta: {
+        title: "Leistungen — KI, Automatisierung & digitale Prozesse | OpSolid",
+        description:
+          "OpSolid Leistungen für mittelständische Unternehmen: KI-Beratung, Prozessautomatisierung, Microsoft 365 Automatisierung, interne Tools und KI-Schulungen. Praxisnah, messbar, datenschutzbewusst.",
+      },
+      hero: {
+        metaChip: "",
+        metaLabel: "[ LEISTUNGEN · 2026 ]",
+        title: {
+          pre: "Leistungen für KI, Automatisierung und ",
+          italic: "digitale Prozesse",
+          post: "",
+        },
+        lead:
+          "Fünf klar abgegrenzte Leistungsbereiche. Wir wählen das kleinste Engagement, das Ihr Problem löst, liefern es ab — und erweitern nur dort, wo es sich weiterhin rechnet. Keine Plattform-Rollouts, keine Discovery über mehrere Quartale.",
+        ctaPrimary: "Erstgespräch buchen",
+        ctaSecondary: "Mit dem AI Automation Check starten",
+      },
+      cards: {
+        eyebrow: "[ DAS BIETEN WIR ]",
+        headline: "Fünf praxisnahe Leistungsbereiche",
+        lead:
+          "Jeder Bereich hat eine eigene Seite mit Anwendungsfällen, Tools, Vorgehen und Preisrahmen. Die meisten Projekte starten mit einem AI & Automation Check — der günstigste Weg sicherzustellen, dass wir das Richtige automatisieren.",
+        items: [
+          {
+            slug: "ki-beratung",
+            icon: "bot",
+            title: "KI-Beratung",
+            body:
+              "Wir identifizieren KI-Use-Cases, die sich für Ihr Unternehmen wirklich lohnen — wägen Nutzen gegen Risiko ab und liefern eine realistische, entscheidungsreife Roadmap.",
+            tag: "USE CASES · RISIKO · ROADMAP",
+            linkLabel: "Mehr zu KI-Beratung",
+          },
+          {
+            slug: "prozessautomatisierung",
+            icon: "workflow",
+            title: "Prozessautomatisierung",
+            body:
+              "Wiederkehrende Aufgaben Ende-zu-Ende automatisieren. Angebote, Rechnungen, Reports, Dokumentenerstellung, E-Mail-Routing — auf den Tools, die Sie bereits bezahlen.",
+            tag: "WORKFLOWS · API · AUTOMATION",
+            linkLabel: "Mehr zu Prozessautomatisierung",
+          },
+          {
+            slug: "microsoft-365-automatisierung",
+            icon: "plug",
+            title: "Microsoft 365 Automatisierung",
+            body:
+              "Power Automate, Power Apps, Teams, SharePoint, Outlook — so verzahnt, dass Ihr tägliches Werkzeug die Arbeit übernimmt, statt sie nur zu unterstützen.",
+            tag: "POWER AUTOMATE · M365 · SHAREPOINT",
+            linkLabel: "Mehr zu Microsoft 365 Automatisierung",
+          },
+          {
+            slug: "interne-tools",
+            icon: "ship",
+            title: "Interne Tools",
+            body:
+              "Kleine, fokussierte interne Tools dort, wo SaaS nicht passt: Admin-Konsolen, Freigabe-Queues, Dashboards, Wissensdatenbanken — auf Ihrer bestehenden Infrastruktur.",
+            tag: "DASHBOARDS · TOOLS · INTEGRATIONEN",
+            linkLabel: "Mehr zu internen Tools",
+          },
+          {
+            slug: "ki-schulungen",
+            icon: "shield",
+            title: "KI-Schulungen & Richtlinien",
+            body:
+              "Teams lernen, KI sicher und produktiv zu nutzen. Schriftliche Richtlinien, rollenbasierte Playbooks, DSGVO-konformes Setup — keine Schatten-IT.",
+            tag: "SCHULUNG · RICHTLINIEN · DSGVO",
+            linkLabel: "Mehr zu KI-Schulungen",
+          },
+        ],
+      },
+      process: {
+        eyebrow: "[ SO ARBEITEN WIR ]",
+        headline: "So läuft ein Projekt ab",
+        lead:
+          "Gleiches Vorgehen in jedem Leistungsbereich: erst kartieren, eng scopen, eine Sache sauber liefern.",
+        steps: [
+          {
+            num: "01",
+            title: "Erstgespräch",
+            body:
+              "30–60 Minuten. Wir hören zu, wo das Team aktuell Zeit verliert und wie der Alltag wirklich aussieht.",
+          },
+          {
+            num: "02",
+            title: "Analyse & Vorschlag",
+            body:
+              "Wir schreiben die relevanten Workflows nieder, bewerten Automatisierungskandidaten und schlagen die kleinste lohnende Maßnahme zuerst vor.",
+          },
+          {
+            num: "03",
+            title: "Umsetzung",
+            body:
+              "Wir bauen es — allein oder mit Ihrem Team — und erweitern nur, wo es sich weiter trägt. Quellcode bleibt bei Ihnen.",
+          },
+        ],
+      },
+      faq: {
+        eyebrow: "[ FAQ ]",
+        headline: "Häufige Fragen zu unseren Leistungen",
+        items: [
+          {
+            q: "Müssen wir uns auf einen Leistungsbereich festlegen?",
+            a: "Nein. Die meisten Projekte überschneiden sich über zwei oder drei Bereiche — ein KI-Use-Case braucht meist Automatisierung drumherum, ein internes Tool braucht oft Schulung. Wir scopen, was wirklich Nutzen bringt, nicht was in einen Leistungskatalog passt.",
+          },
+          {
+            q: "Wie wird abgerechnet?",
+            a: "Entweder Festpreis pro Lieferung (AI Automation Check, Pilot-Workflow, Schulungstag) oder als kleiner monatlicher Retainer für laufende Iteration. Preis auf Anfrage — abhängig von Umfang und Teamgröße.",
+          },
+          {
+            q: "Können wir unsere bestehenden Tools weiter nutzen?",
+            a: "Ja. Microsoft 365, Google Workspace, Ihr CRM, Ihr ERP — wir nutzen, was Sie bereits bezahlen, überall dort, wo es den Workflow tragen kann.",
+          },
+          {
+            q: "Wo werden die Daten gehostet?",
+            a: "Standardmäßig nur EU — Frankfurt oder andere EU-Regionen. AVV (Auftragsverarbeitungsvertrag) wird vor jedem Projekt unterzeichnet, das Kundendaten berührt.",
+          },
+          {
+            q: "Bauen Sie von Grund auf oder nutzen Sie Plattformen?",
+            a: "Beides — wo Power Automate, Make oder n8n den Job erledigen können, nutzen wir sie. Wo nicht, bauen wir kleine Python-Services, Next.js-Tools oder maßgeschneiderte Integrationen.",
+          },
+        ],
+      },
+      finalCta: {
+        eyebrow: "[ ERSTER SCHRITT ]",
+        title: {
+          pre: "Unsicher, welche Leistung ",
+          italic: "am besten passt",
+          post: "?",
+        },
+        lead:
+          "Starten Sie mit dem AI & Automation Check oder einem kostenlosen Erstgespräch. Wir sagen Ihnen ehrlich, welcher Bereich bei Ihnen den größten Hebel hat — auch wenn es nicht der ist, den Sie gefragt haben.",
+        ctaPrimary: "AI Automation Check anfragen",
+        ctaSecondary: "Erstgespräch buchen",
+      },
+    },
+
+    services: {
+      shared: {
+        whatWeDoEyebrow: "[ DAS MACHEN WIR ]",
+        useCasesEyebrow: "[ ANWENDUNGSFÄLLE ]",
+        toolsEyebrow: "[ TOOLS & STACK ]",
+        processEyebrow: "[ SO LÄUFT ES ]",
+        faqEyebrow: "[ FAQ ]",
+        finalCtaEyebrow: "[ NÄCHSTER SCHRITT ]",
+        backToServices: "Alle Leistungen",
+      },
+      kiBeratung: {
+        slug: "ki-beratung",
+        meta: {
+          title: "KI-Beratung für Mittelstand — Use Cases, Risiko, Roadmap | OpSolid",
+          description:
+            "KI-Beratung für mittelständische Unternehmen in Deutschland. Wir identifizieren lohnende KI-Use-Cases, wägen Nutzen gegen Risiko ab und liefern eine entscheidungsreife Roadmap. Datenschutzbewusst.",
+        },
+        hero: {
+          metaChip: "KI-BERATUNG",
+          metaLabel: "[ LEISTUNG · 01 / 05 ]",
+          title: {
+            pre: "Welche KI lohnt sich für ",
+            italic: "Ihr Unternehmen",
+            post: " wirklich?",
+          },
+          lead:
+            "Aktuell wird in jede Abteilung KI verkauft — aber nur wenige Use Cases sind den Aufwand, die Kosten und das Risiko wert. Wir helfen Ihnen, den Unterschied zu erkennen, und liefern eine Roadmap, die Sie vor der Geschäftsführung wirklich verteidigen können.",
+          ctaPrimary: "Erstgespräch buchen",
+          ctaSecondary: "Mit dem AI Automation Check starten",
+        },
+        whatWeDo: {
+          headline: "So sieht KI-Beratung mit OpSolid aus",
+          bullets: [
+            "Drei bis fünf KI-Use-Cases identifizieren, die zu Ihrem Unternehmen passen — und die unpassenden klar ausschließen.",
+            "Jeden Use Case nach erwartetem Nutzen, Implementierungsaufwand und Betriebsrisiko bewerten.",
+            "Eine 6–12-monatige KI-Roadmap mit klaren Verantwortlichen, Kosten und Entscheidungspunkten schriftlich festhalten.",
+            "DSGVO-konformen KI-Einsatz aufsetzen: Modellwahl, Datenhoheit und kurze Unternehmensrichtlinie.",
+          ],
+        },
+        useCases: {
+          headline: "Was wir bereits beraten oder gescopet haben",
+          items: [
+            {
+              title: "Dokumenten- und Vertragsanalyse",
+              body: "Lange PDFs vorklassifizieren, Klauseln extrahieren, Fristen sichtbar machen — der Mensch prüft die Zusammenfassung, nicht das Dokument.",
+            },
+            {
+              title: "Interne Wissenssuche",
+              body: "Eigene Richtlinien, FAQs und SharePoint indexieren — Mitarbeitende bekommen Antworten aus Ihren Dokumenten, nicht aus dem öffentlichen ChatGPT.",
+            },
+            {
+              title: "Angebots- und Proposal-Entwürfe",
+              body: "Maßgeschneiderte Angebote aus Vorlage, CRM-Datensatz und kurzem Briefing entwerfen — der Vertrieb prüft, statt jedes Mal neu zu schreiben.",
+            },
+            {
+              title: "Support-Triage und Routing",
+              body: "Eingehende Anfragen nach Thema und Dringlichkeit klassifizieren, bevor sie einer menschlichen Queue zugewiesen werden.",
+            },
+          ],
+        },
+        tools: {
+          headline: "Modelle, Anbieter und Frameworks",
+          items: [
+            "OpenAI · GPT-4-Familie",
+            "Anthropic · Claude",
+            "Microsoft Copilot · Azure OpenAI",
+            "Mistral · Open-Source-Optionen",
+            "Retrieval-Augmented Generation (RAG)",
+            "Vektor-Datenbanken · pgvector · Qdrant",
+            "DSGVO-konformes EU-Hosting",
+          ],
+        },
+        process: {
+          headline: "So läuft eine KI-Beratung ab",
+          steps: [
+            { num: "01", title: "Discovery", body: "Kurzes Gespräch, um Team, Daten und Zielsetzung zu verstehen." },
+            { num: "02", title: "Use-Case-Bewertung", body: "Workshop und schriftliche Analyse: Welche KI-Use-Cases sind für Sie lohnend, welche nicht." },
+            { num: "03", title: "Roadmap & Richtlinie", body: "Entscheidungsreife 6–12-monatige Roadmap plus kurze schriftliche KI-Richtlinie für das Unternehmen." },
+          ],
+        },
+        faq: {
+          headline: "KI-Beratung — häufige Fragen",
+          items: [
+            { q: "Müssen wir bereits „KI-ready“ sein?", a: "Nein. Die meisten Kunden sind das nicht — genau deshalb braucht es diese Arbeit, bevor Geld für Tools ausgegeben wird." },
+            { q: "Verkaufen Sie KI-Tools?", a: "Nein. Wir sind unabhängig — wir empfehlen, was passt, einschließlich „nutzen Sie das, was Sie haben“ oder „machen Sie das noch nicht“." },
+            { q: "Lässt sich KI DSGVO-konform einsetzen?", a: "Ja, mit der richtigen Modellwahl, EU-Hosting und einer schriftlichen Richtlinie. Wir helfen, das von Anfang an aufzusetzen." },
+            { q: "Wie lange dauert eine Beratung?", a: "In der Regel zwei bis vier Wochen für Analyse und Roadmap. Implementierungszeiträume sind separat und vom Scope abhängig." },
+          ],
+        },
+        finalCta: {
+          title: { pre: "Finden Sie heraus, welche KI-Use-Cases ", italic: "sich für Sie lohnen", post: "." },
+          lead: "Ein Gespräch. Eine ehrliche Roadmap. Kein Plattform-Pitch.",
+          ctaPrimary: "Erstgespräch buchen",
+          ctaSecondary: "Mit dem AI Automation Check starten",
+        },
+      },
+      prozessautomatisierung: {
+        slug: "prozessautomatisierung",
+        meta: {
+          title: "Prozessautomatisierung für Mittelstand — Power Automate, Make, Python | OpSolid",
+          description:
+            "Manuelle Workflows automatisieren — Angebote, Rechnungen, Dokumentenerstellung, E-Mail-Routing, Datensynchronisation. Auf den Tools, die Sie bereits bezahlen. DSGVO-nativ.",
+        },
+        hero: {
+          metaChip: "PROZESSAUTOMATISIERUNG",
+          metaLabel: "[ LEISTUNG · 02 / 05 ]",
+          title: {
+            pre: "Manuelle Aufgaben, die ",
+            italic: "niemand mehr von Hand",
+            post: " machen sollte",
+          },
+          lead:
+            "Angebote, die einen halben Tag dauern. Reports, die jeden Montag neu gebaut werden. Daten, die zwischen Excel, CRM und E-Mail kopiert werden. Wir kartieren diese Workflows, automatisieren das, was sich lohnt — und lassen den Rest bei den Menschen.",
+          ctaPrimary: "Erstgespräch buchen",
+          ctaSecondary: "Mit dem AI Automation Check starten",
+        },
+        whatWeDo: {
+          headline: "So sieht Prozessautomatisierung mit OpSolid aus",
+          bullets: [
+            "Workflow Ende-zu-Ende kartieren — Übergaben, Tools, Daten, Ausnahmen — so klar, dass das Team es auditieren kann.",
+            "Identifizieren, welche Schritte sich zu automatisieren lohnen — und welche bewusst manuell bleiben sollten.",
+            "Automatisierung auf Power Automate, Make, n8n, Python oder eigenem Code bauen — was am besten passt.",
+            "Überwachung, Dokumentation und Übergabe, damit Ihr Team den Workflow danach selbst betreibt.",
+          ],
+        },
+        useCases: {
+          headline: "Workflows, die wir bereits automatisiert haben",
+          items: [
+            {
+              title: "Angebots- und Dokumentenerstellung",
+              body: "Vorlagen aus CRM-Daten gefüllt, im Workflow freigegeben und versendet — Angebote verlassen das Haus am selben Tag.",
+            },
+            {
+              title: "E-Mail-Klassifizierung und Routing",
+              body: "Eingehende Mails nach Thema getaggt und in den richtigen Posteingang oder Ticket-Queue gepusht — keine manuelle Triage mehr.",
+            },
+            {
+              title: "Reporting- und Excel-Automatisierung",
+              body: "Wiederkehrende Reports einmal gebaut und automatisch neu erstellt — KPIs sind fertig, wenn das Meeting startet.",
+            },
+            {
+              title: "CRM-/ERP-Datensynchronisation",
+              body: "Daten fließen einmal zwischen Systemen und gleichen sich selbst ab — keine Doppelerfassung.",
+            },
+          ],
+        },
+        tools: {
+          headline: "Tools, mit denen wir automatisieren",
+          items: [
+            "Microsoft Power Automate",
+            "Make (Integromat)",
+            "n8n · selbst gehostet",
+            "Zapier · wo es passt",
+            "Python · eigene Skripte",
+            "REST-APIs · Webhooks",
+            "PostgreSQL · Dateispeicher · Queues",
+          ],
+        },
+        process: {
+          headline: "So läuft ein Automatisierungs-Projekt ab",
+          steps: [
+            { num: "01", title: "Kartieren", body: "Workshop mit dem Team, das die Arbeit wirklich macht. Wir schreiben den Workflow nieder, wie er wirklich läuft." },
+            { num: "02", title: "Bauen", body: "Wir implementieren die erste Pilot-Automatisierung — meist innerhalb von zwei bis vier Wochen." },
+            { num: "03", title: "Betreiben", body: "Dokumentation, Übergabe und eine kurze Phase der Iteration, bevor Sie es übernehmen." },
+          ],
+        },
+        faq: {
+          headline: "Prozessautomatisierung — häufige Fragen",
+          items: [
+            { q: "Was ist ein typisches erstes Projekt?", a: "Ein einzelner Workflow mit großem Hebel — Angebotserstellung, E-Mail-Triage oder ein Wochenreport. Fester Scope, zwei bis vier Wochen." },
+            { q: "Müssen wir unsere Tools ersetzen?", a: "Nein. Wir automatisieren auf dem, was Sie haben — Microsoft 365, Google Workspace, Ihr CRM, Ihr ERP." },
+            { q: "Was, wenn sich der Prozess später ändert?", a: "Die meisten Automatisierungen sind so dokumentiert, dass Ihre eigene IT sie anpassen kann. Für größere Änderungen gibt es einen kleinen monatlichen Retainer." },
+            { q: "Ist es sicher, kritische Prozesse zu automatisieren?", a: "Ja — mit sauberem Logging, Fehlerbehandlung und manueller Rückfallebene. Wir designen für den Fehlerfall, nicht nur für den Idealpfad." },
+          ],
+        },
+        finalCta: {
+          title: { pre: "Wählen Sie den ersten Workflow, ", italic: "der sich lohnt", post: "." },
+          lead: "Wir kartieren ihn, bewerten ihn und sagen Ihnen ehrlich, ob er den Aufwand wert ist.",
+          ctaPrimary: "Erstgespräch buchen",
+          ctaSecondary: "Mit dem AI Automation Check starten",
+        },
+      },
+      microsoft365: {
+        slug: "microsoft-365-automatisierung",
+        meta: {
+          title: "Microsoft 365 Automatisierung — Power Automate, SharePoint, Teams | OpSolid",
+          description:
+            "Workflows in Microsoft 365 automatisieren: Power Automate Flows, SharePoint-Dokumentenbibliotheken, Teams-Freigaben, Outlook-Routing. EU-gehostet, datenschutzbewusst.",
+        },
+        hero: {
+          metaChip: "MICROSOFT 365 AUTOMATISIERUNG",
+          metaLabel: "[ LEISTUNG · 03 / 05 ]",
+          title: {
+            pre: "Microsoft 365 ist längst da — ",
+            italic: "jetzt soll es für Sie arbeiten",
+            post: "",
+          },
+          lead:
+            "Teams, SharePoint, Outlook und Power Automate sind bereits bezahlt. Mit dem richtigen Setup ersetzen sie die meisten Drittanbieter-Tools, die Sie sonst zusätzlich kaufen würden — weniger Abos, eine Identität, ein Audit-Trail.",
+          ctaPrimary: "Erstgespräch buchen",
+          ctaSecondary: "Mit dem AI Automation Check starten",
+        },
+        whatWeDo: {
+          headline: "So sieht Microsoft 365 Automatisierung mit OpSolid aus",
+          bullets: [
+            "Ihren aktuellen Microsoft-365-Tenant auditieren und Automatisierungspotenziale identifizieren, die das Team noch nicht nutzt.",
+            "Power Automate Flows für Freigaben, Dokumentenerstellung, E-Mail-Routing und Benachrichtigungen bauen.",
+            "SharePoint, Teams, Outlook und Excel so verbinden, dass Daten an einem Ort leben — nicht in sieben Kopien.",
+            "Microsoft 365 Copilot verantwortungsbewusst aufsetzen — mit rollenbasiertem Zugriff und klaren Richtlinien.",
+          ],
+        },
+        useCases: {
+          headline: "Microsoft-365-Workflows, die wir gebaut haben",
+          items: [
+            {
+              title: "Freigabe-Workflows in Teams",
+              body: "Urlaubsanträge, Reisekosten, Dokumentenfreigabe — in Teams freigegeben, in SharePoint protokolliert.",
+            },
+            {
+              title: "Dokumentenerstellung aus SharePoint-Listen",
+              body: "Angebote, Verträge und Reports aus einer SharePoint-Liste generiert — kein Copy-Paste aus Excel.",
+            },
+            {
+              title: "Outlook-E-Mail-Parsing und -Routing",
+              body: "Eingehende Bestellungen, Support-Anfragen oder Rechnungen automatisch geparst und ins richtige System gepusht.",
+            },
+            {
+              title: "Microsoft 365 Copilot Rollout",
+              body: "Richtlinien, rollenbasierter Zugriff und kurze Schulung, damit Copilot tatsächlich genutzt wird — und zwar sicher.",
+            },
+          ],
+        },
+        tools: {
+          headline: "Microsoft-Technologien, mit denen wir arbeiten",
+          items: [
+            "Microsoft Power Automate",
+            "Power Apps · Low-Code-Apps",
+            "SharePoint Online · Lists · Libraries",
+            "Microsoft Teams · Bots · Approvals",
+            "Outlook · Exchange",
+            "Microsoft Graph API",
+            "Microsoft 365 Copilot",
+            "Entra ID (Azure AD)",
+          ],
+        },
+        process: {
+          headline: "So läuft ein Microsoft-365-Projekt ab",
+          steps: [
+            { num: "01", title: "Tenant-Review", body: "Wir schauen uns Ihre aktuellen Lizenzen, Security-Setup und Tools an — und finden, was untergenutzt ist." },
+            { num: "02", title: "Erster Flow", body: "Wir bauen den ersten Power-Automate-Flow oder Teams-Workflow als Pilot — meist innerhalb von zwei Wochen." },
+            { num: "03", title: "Rollout", body: "Breiterer Rollout mit Dokumentation, Übergabe und optionaler Schulung für Ihre IT." },
+          ],
+        },
+        faq: {
+          headline: "Microsoft 365 Automatisierung — häufige Fragen",
+          items: [
+            { q: "Brauchen wir Power-Automate-Premium-Lizenzen?", a: "Manchmal — aber die meisten sinnvollen Flows funktionieren mit den Standard-Microsoft-365-Plänen. Wir sagen Ihnen ehrlich, wann Sie wirklich Premium brauchen." },
+            { q: "Lohnt sich Microsoft 365 Copilot?", a: "Für manche Teams ja, für andere nein. Wir helfen Ihnen zu entscheiden, bevor Sie die Lizenzen kaufen." },
+            { q: "Können Sie mit unserer IT-Abteilung zusammenarbeiten?", a: "Ja — die meisten Projekte laufen gemeinsam mit Ihrer IT oder einem Ihrer bestehenden Microsoft-Partner. Wir ergänzen, wir ersetzen nicht." },
+            { q: "Ist das DSGVO-konform?", a: "Microsoft 365 im EU-Tenant-Setup ist DSGVO-konform. Wir konfigurieren es korrekt und dokumentieren die Datenflüsse." },
+          ],
+        },
+        finalCta: {
+          title: { pre: "Holen Sie mehr aus Microsoft 365 heraus, ", italic: "ohne weitere Tools zu kaufen", post: "." },
+          lead: "Ein Gespräch. Wir sagen Ihnen, was sich in Ihrem aktuellen Tenant zu automatisieren lohnt — bevor Sie ein weiteres Abo abschließen.",
+          ctaPrimary: "Erstgespräch buchen",
+          ctaSecondary: "Mit dem AI Automation Check starten",
+        },
+      },
+      interneTools: {
+        slug: "interne-tools",
+        meta: {
+          title: "Interne Tools & Integrationen — Admin-Panels, Dashboards | OpSolid",
+          description:
+            "Kleine, fokussierte interne Tools für den Mittelstand: Admin-Konsolen, Freigabe-Queues, Dashboards, Wissensdatenbanken. Auf Systemen, die Sie bereits betreiben. EU-gehostet.",
+        },
+        hero: {
+          metaChip: "INTERNE TOOLS",
+          metaLabel: "[ LEISTUNG · 04 / 05 ]",
+          title: {
+            pre: "Wo SaaS nicht passt, ",
+            italic: "macht ein kleines Custom-Tool",
+            post: " den Job",
+          },
+          lead:
+            "Nicht jeder interne Job braucht eine 500-€-pro-Monat-Plattform. Manchmal löst ein kleines Custom-Admin-Panel, eine Freigabe-Queue oder ein Dashboard das Problem besser, günstiger und schneller — und bleibt Ihr Eigentum.",
+          ctaPrimary: "Erstgespräch buchen",
+          ctaSecondary: "Mit dem AI Automation Check starten",
+        },
+        whatWeDo: {
+          headline: "Was wir bauen",
+          bullets: [
+            "Interne Admin-Konsolen für Operations-Teams — klar, fokussiert, ohne Bloat.",
+            "Dashboards auf Basis Ihrer bestehenden Datenquellen — KPIs, Ausnahmen und Alerts in einer Ansicht.",
+            "Freigabe-Queues, interne Formulare, Eskalations-Flows, die zu Ihrem realen Prozess passen.",
+            "Interne Wissensdatenbanken — Suche über Ihre eigenen Dokumente, Richtlinien und FAQs.",
+          ],
+        },
+        useCases: {
+          headline: "Interne Tools, die wir gebaut haben",
+          items: [
+            {
+              title: "Operations-Admin-Konsole",
+              body: "Auftragsübersicht, Ausnahmen, Kundennotizen — ein Ort statt drei Tabs.",
+            },
+            {
+              title: "Internes KPI-Dashboard",
+              body: "Tages-, Wochen- und Monatszahlen aus CRM, ERP und Finanzsystem — ohne dass ein Analyst die Tabelle jede Woche neu baut.",
+            },
+            {
+              title: "Freigabe- und Eskalations-Queue",
+              body: "Angebote, Verträge oder Erstattungen in Queue, geroutet und mit Audit-Trail freigegeben.",
+            },
+            {
+              title: "Interne KI-Wissensdatenbank",
+              body: "Eigene Dokumente, Richtlinien und FAQs durchsuchen — Antworten bleiben in Ihrer Organisation.",
+            },
+          ],
+        },
+        tools: {
+          headline: "Tech-Stack",
+          items: [
+            "Next.js · React · TypeScript",
+            "Node.js · Python",
+            "PostgreSQL · Supabase",
+            "REST · GraphQL · Webhooks",
+            "Auth0 · Microsoft Entra ID · SSO",
+            "Hetzner · IONOS · Vercel · EU-Hosting",
+            "GitHub · CI/CD · Audit-Logs",
+          ],
+        },
+        process: {
+          headline: "So läuft ein Internes-Tool-Projekt ab",
+          steps: [
+            { num: "01", title: "Spezifikation", body: "Kurzer Workshop, um festzuhalten, was das Tool können muss — und was nicht." },
+            { num: "02", title: "Bauen", body: "Pilotversion in drei bis sechs Wochen. Echte Nutzer, echte Daten, schnelle Iteration." },
+            { num: "03", title: "Betreiben", body: "Übergabe mit Dokumentation, Quellcode und optionalem kleinen Retainer für laufende Iteration." },
+          ],
+        },
+        faq: {
+          headline: "Interne Tools — häufige Fragen",
+          items: [
+            { q: "Ist ein Custom-Tool wirklich günstiger als SaaS?", a: "Bei spezifischen, engen Problemen — oft ja. Besonders, wenn die SaaS-Adoption niedrig ist oder das Tool zu einem einzigartigen Prozess passen muss." },
+            { q: "Wem gehört der Code?", a: "Ihnen. Quellcode, Schemas und Runbooks gehören ab Tag eins Ihnen." },
+            { q: "Was, wenn wir es später ändern wollen?", a: "Können Sie — intern, mit einem anderen Anbieter oder mit uns. Kein Lock-in." },
+            { q: "Kann es in unsere bestehenden Systeme integrieren?", a: "Ja — das ist meist der ganze Punkt. CRM, ERP, Microsoft 365, Ihr Warenwirtschaftssystem." },
+          ],
+        },
+        finalCta: {
+          title: { pre: "Holen Sie sich ein Tool, ", italic: "das zu Ihrem Team passt", post: "." },
+          lead: "Ein Gespräch. Wir sagen Ihnen, ob ein internes Custom-Tool der richtige Schritt ist — oder ob eine konfigurierte SaaS reicht.",
+          ctaPrimary: "Erstgespräch buchen",
+          ctaSecondary: "Mit dem AI Automation Check starten",
+        },
+      },
+      kiSchulungen: {
+        slug: "ki-schulungen",
+        meta: {
+          title: "KI-Schulungen & Richtlinien für den Mittelstand — Sichere, produktive KI-Nutzung | OpSolid",
+          description:
+            "Praxisnahe KI-Schulungen für KMU-Teams: Wie KI sicher und produktiv im Arbeitsalltag genutzt wird. Schriftliche Richtlinien, rollenbasierte Playbooks, DSGVO-konformes Setup.",
+        },
+        hero: {
+          metaChip: "KI-SCHULUNGEN",
+          metaLabel: "[ LEISTUNG · 05 / 05 ]",
+          title: {
+            pre: "Ihr Team. ",
+            italic: "Sicherer und schneller",
+            post: " mit KI.",
+          },
+          lead:
+            "Die Hälfte Ihres Teams nutzt ChatGPT bereits in Schatten-IT. Ohne Richtlinien ist das ein Datenschutz- und ein Qualitätsproblem. Mit Richtlinien ist es ein Produktivitätsschub. Wir helfen, die Regeln aufzusetzen und die Menschen zu schulen.",
+          ctaPrimary: "Erstgespräch buchen",
+          ctaSecondary: "Mit dem AI Automation Check starten",
+        },
+        whatWeDo: {
+          headline: "Was eine KI-Schulung abdeckt",
+          bullets: [
+            "Praxisnahe KI-Workshops für Alltagsaufgaben — Entwürfe, Zusammenfassungen, Klassifizierung, Strukturierung.",
+            "Rollenbasierte Playbooks für Vertrieb, Support, Finance, HR — keine generischen „So sprichst du mit ChatGPT“-Folien.",
+            "Schriftliche KI-Richtlinien und Acceptable-Use-Policy für das Unternehmen — kurz, lesbar, durchsetzbar.",
+            "DSGVO-konformes KI-Setup: Modellwahl, Datenhoheit, Audit-Trail und was Mitarbeitende einfügen dürfen und was nicht.",
+          ],
+        },
+        useCases: {
+          headline: "Schulungsformate, die wir bereits durchgeführt haben",
+          items: [
+            {
+              title: "Unternehmensweiter KI-Primer",
+              body: "Halbtägige Sitzung für alle Mitarbeitenden: Was KI kann und was nicht, wo sie hilft, wo sie schadet.",
+            },
+            {
+              title: "Abteilungsspezifische Workshops",
+              body: "Vertrieb, Support, Finance, HR — jeweils mit rollenspezifischen Prompts und Beispiel-Workflows.",
+            },
+            {
+              title: "Leadership-Briefing",
+              body: "Fokussierte zweistündige Session für die Führungsebene — strategische Implikationen, nicht Prompt-Syntax.",
+            },
+            {
+              title: "KI-Richtlinien-Rollout",
+              body: "Schriftliche Policy, internes Q&A und kurzes E-Learning-Modul, damit die Regeln auch wirklich greifen.",
+            },
+          ],
+        },
+        tools: {
+          headline: "Tools und Plattformen, auf denen wir schulen",
+          items: [
+            "ChatGPT · GPT-4-Familie",
+            "Microsoft 365 Copilot",
+            "Claude · Anthropic",
+            "Google Gemini · Workspace",
+            "Notion AI · Slack AI",
+            "Interne RAG- / Chat-Assistenten",
+            "DSGVO-Best-Practice · Audit-Logging",
+          ],
+        },
+        process: {
+          headline: "So läuft eine Schulung ab",
+          steps: [
+            { num: "01", title: "Audit", body: "Kurze Interview-Runde: Wer nutzt schon KI, wie, und wo liegen die Risiken." },
+            { num: "02", title: "Anpassen", body: "Wir passen die Schulung an Ihre Branche, Ihre Tools und Ihre echten Use Cases an — keine Standardfolien." },
+            { num: "03", title: "Ausrollen", body: "Workshops, schriftliche Richtlinie, internes Q&A — und optionales Follow-up nach acht Wochen." },
+          ],
+        },
+        faq: {
+          headline: "KI-Schulungen — häufige Fragen",
+          items: [
+            { q: "Wie lange dauert eine typische Schulung?", a: "Ein halber Tag für einen unternehmensweiten Primer; ein bis zwei volle Tage für abteilungsspezifische Deep-Dives." },
+            { q: "Schulen Sie auf Deutsch?", a: "Ja — Deutsch und Englisch. Türkisch auf Anfrage." },
+            { q: "Was ist der Unterschied zu einem Online-Kurs?", a: "Wir schulen an Ihren echten Workflows, Tools und Daten — nicht an hypothetischen Beispielen. Menschen erinnern sich an das, was sie wirklich genutzt haben." },
+            { q: "Schreiben Sie auch die KI-Richtlinie?", a: "Ja — kurz, lesbar, durchsetzbar. Auf Ihre Branche und Tools zugeschnitten, kein 30-seitiges Rechtsdokument." },
+          ],
+        },
+        finalCta: {
+          title: { pre: "Helfen Sie Ihrem Team, KI ", italic: "sicher und produktiv", post: " zu nutzen." },
+          lead: "Ein Gespräch. Wir schlagen Ihnen ein Schulungsformat vor, das wirklich zu Ihrem Team passt — kein Standard-Webinar.",
+          ctaPrimary: "Erstgespräch buchen",
+          ctaSecondary: "Mit dem AI Automation Check starten",
+        },
+      },
+    },
+
     voiceAgent: {
       hero: {
         metaChip: "VOICE AGENT",
@@ -4231,41 +4822,65 @@ export const content: Content = {
 
     about: {
       meta: {
-        title: "Über uns — OpSolid · Unabhängiges Automatisierungsstudio | Hamburg",
-        description: "OpSolid ist ein unabhängiges Automatisierungsstudio. Gegründet von Hasan Dönmez in Hamburg. Wir bauen operative Systeme für deutsches Mid-Market-B2B — Voice, Chat, Integrationen und Workflow-Automatisierung. EU-gehostet, Quellcode bei Ihnen.",
+        title: "Über mich — Hasan Dönmez | OpSolid",
+        description:
+          "OpSolid wird von Hasan Dönmez geführt — praxisnahe KI- und Automatisierungsberatung für mittelständische Unternehmen in Deutschland. Hintergrund in IT-Projektmanagement, Digitalisierung und Prozessoptimierung.",
       },
       hero: {
-        eyebrow: "[ ÜBER UNS · 2026 ]",
-        title: { pre: "Ein unabhängiges Automatisierungsstudio, ", italic: "an Ergebnissen ausgerichtet", post: ", nicht an Plattformen" },
-        lead: "OpSolid wurde gegründet, um die operative Arbeit zu leisten, die Off-the-Shelf-SaaS nicht erreicht: die Integration zu bauen, die Ihr ERP mit Ihrem CRM verbindet, den Voice-Agenten zu konfigurieren, der Anrufe in der Sprache Ihrer Branche entgegennimmt, und den Workflow zu liefern, der 40 Stunden manuelle Datenerfassung in 40 Minuten Ausnahme-Review verwandelt. Deutsches Mid-Market-B2B, EU-gehostet, Quellcode gehört Ihnen.",
-        primaryCta: "Discovery-Call buchen",
-        secondaryCta: "Preise ansehen",
+        eyebrow: "[ ÜBER MICH · 2026 ]",
+        title: {
+          pre: "Praktische, anwendbare und ",
+          italic: "messbare",
+          post: " digitale Lösungen",
+        },
+        lead:
+          "OpSolid ist die unabhängige Beratungspraxis von Hasan Dönmez. Der Fokus liegt auf KI, Prozessautomatisierung und digitalen Workflows für mittelständische Unternehmen in Deutschland — auf Basis von jahrelanger praktischer Arbeit in IT-Projektmanagement, Digitalisierung und Prozessoptimierung.",
+        primaryCta: "Erstgespräch buchen",
+        secondaryCta: "Leistungen ansehen",
       },
       principles: {
-        eyebrow: "[ WIE WIR ARBEITEN ]",
+        eyebrow: "[ WIE ICH ARBEITE ]",
         heading: "Vier Prinzipien, ehrlich gehalten",
         items: [
-          { n: "01", title: "Keine Schein-Metriken", body: "Wir veröffentlichen keine Kundenzahlen, gesparte Stunden oder Erfolgsraten, die wir nicht gemessen haben. Wenn wir die Zahlen haben, zeigen wir sie. Bis dahin bleiben die Case Studies spezifisch und der Rest der Seite still." },
-          { n: "02", title: "Quellcode bleibt bei Ihnen", body: "Jedes Engagement hinterlässt Ihnen Code, Schemas und Runbooks, die Sie zu einem anderen Anbieter mitnehmen können. Kein Vendor-Lock-in by Design — wir verdienen lieber das nächste Projekt, als Sie in diesem zu fangen." },
-          { n: "03", title: "Open-Source zuerst, SaaS wo es sich lohnt", body: "Cal.com, Postgres, Hetzner, Node — wir nutzen das Open-Source-Rückgrat, wo es funktioniert. Wir zahlen für SaaS (Twilio, Stripe, Meta WABA), wo es operativ Sinn ergibt, und machen die Kosten in Ihrer Rechnung transparent." },
-          { n: "04", title: "EU-gehostet, GDPR-nativ", body: "Nur Frankfurt. Keine US-Subprozessoren. AVV (Auftragsverarbeitungsvertrag) bei jedem Engagement, das Kundendaten berührt. Ihre Daten, Ihre Aufbewahrungsregeln, Ihr Recht auf Löschung." },
+          {
+            n: "01",
+            title: "Praxis vor Strategie",
+            body: "Wir starten mit einem Workflow, der dem Team wirklich Zeit kostet — nicht mit einem Quartalsstrategie-Deck. Strategie folgt, sobald wir uns das Recht verdient haben, weiter zu planen.",
+          },
+          {
+            n: "02",
+            title: "Messbare Ergebnisse",
+            body: "Jedes Engagement startet mit einer Baseline (Zeit pro Aufgabe, Fehlerrate, Durchlaufzeit) und endet mit einer Zahl, mit der Sie etwas anfangen können. Kein Theater, kein Buzzword-Reporting.",
+          },
+          {
+            n: "03",
+            title: "Datenschutzbewusst by default",
+            body: "EU-Hosting, DSGVO-native Infrastruktur, AVV vor jedem Projekt, das Kundendaten berührt. Audit und Compliance können von Tag eins an mitlaufen.",
+          },
+          {
+            n: "04",
+            title: "Quellcode bleibt bei Ihnen",
+            body: "Jedes Engagement hinterlässt Ihnen Code, Schemas und Dokumentation, die Sie zu einem anderen Anbieter mitnehmen können. Kein Vendor-Lock-in by Design.",
+          },
         ],
       },
       founder: {
         eyebrow: "[ GRÜNDER ]",
         heading: "Hasan Dönmez",
         body: [
-          "OpSolid wird von Hasan Dönmez geführt — Automation- und Systems-Engineer aus Hamburg. Hintergrund in operativer Software für KMU und Mid-Market: ein Jahrzehnt Erfahrung mit den Integrationen, Agents und Dashboards, die diese Seite jetzt als Produkte anbietet.",
-          "OpSolid begann als Solidra, hat sich rund um den Fokus operative Automatisierung umbenannt. Das Studio ist bewusst klein: senior Engineering-Arbeit direkt geliefert, nicht durch Schichten weitergereicht. Wenn Sie einen Call buchen, sprechen Sie mit der Person, die die Arbeit macht.",
+          "Ich arbeite hauptberuflich als IT-Projektmanager und baue OpSolid nebenberuflich als unabhängige Beratungspraxis für KI und Automatisierung auf. Die Kombination ist Absicht: Tagsüber sehe ich, wie Digitalisierungsprojekte in mittelständischen Unternehmen wirklich laufen — mit ihren Zwängen, Politik, Altlasten und realen Teams — und genau diese Perspektive bringe ich in OpSolid-Projekte ein.",
+          "Hintergrund: praxisnahe Erfahrung in IT-Projektmanagement, Digitalisierung und Prozessoptimierung. Der Fokus liegt auf kleinen und mittelständischen Unternehmen in Deutschland — Firmen, die schneller gewachsen sind als ihre internen Systeme und einen messbaren nächsten Schritt brauchen, keinen Plattform-Pitch.",
+          "OpSolid ist bewusst Ein-Personen-Beratung: Wenn Sie einen Call buchen, sprechen Sie mit der Person, die die Arbeit macht. Keine Schichten, keine Junior-Übergaben, kein Handoff.",
         ],
-        linkedinLabel: "Unternehmen auf LinkedIn",
-        linkedinHref: "https://www.linkedin.com/company/opsolid/",
+        linkedinLabel: "Hasan auf LinkedIn",
+        linkedinHref: "https://www.linkedin.com/in/hasan-doenmez/",
       },
       contact: {
         eyebrow: "[ GESPRÄCH STARTEN ]",
         heading: "20 Minuten reichen, um zu sehen ob wir passen",
-        lead: "Kostenloser Discovery-Call: Erzählen Sie uns von einem operativen Schmerzpunkt. Wir sagen Ihnen, ob eines unserer Produkte passt, ob ein Custom-Automation-Sprint die bessere Antwort ist, oder ob Sie weitermachen sollten wie bisher.",
-        cta: "Auf Cal.com buchen",
+        lead:
+          "Kostenloses Erstgespräch: Erzählen Sie mir von einem operativen Schmerzpunkt. Ich sage Ihnen ehrlich, ob OpSolid passt, ob der AI & Automation Check der richtige erste Schritt ist, oder ob Sie weitermachen sollten wie bisher.",
+        cta: "Erstgespräch buchen",
       },
     },
 

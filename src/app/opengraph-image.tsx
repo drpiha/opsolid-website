@@ -5,6 +5,10 @@
 import { ImageResponse } from "next/og";
 
 export const runtime = "nodejs";
+// `@vercel/og` 0.7.x has a pre-render bug on Windows where `fileURLToPath(join(import.meta.url, "../noto-sans.ttf"))`
+// throws `TypeError: Invalid URL`, blocking the entire production build. Forcing dynamic
+// generation skips static export and renders the image on first request instead.
+export const dynamic = "force-dynamic";
 export const alt = "OpSolid — Practical Automation & AI Systems for Business Operations";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";

@@ -8,8 +8,17 @@ type PageDef = { path: string; changeFrequency: MetadataRoute.Sitemap[number]["c
 const STATIC_PAGES: PageDef[] = [
   // Consulting positioning — primary funnel
   { path: "", changeFrequency: "weekly", priority: 1 },
+  { path: "/leistungen", changeFrequency: "weekly", priority: 0.9 },
   { path: "/ai-automation-check", changeFrequency: "weekly", priority: 0.95 },
-  { path: "/about", changeFrequency: "monthly", priority: 0.7 },
+
+  // Sub-services (under /leistungen, but flat URLs)
+  { path: "/ki-beratung", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/prozessautomatisierung", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/microsoft-365-automatisierung", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/interne-tools", changeFrequency: "monthly", priority: 0.8 },
+  { path: "/ki-schulungen", changeFrequency: "monthly", priority: 0.8 },
+
+  { path: "/ueber-mich", changeFrequency: "monthly", priority: 0.7 },
   { path: "/contact", changeFrequency: "monthly", priority: 0.8 },
   { path: "/blog", changeFrequency: "weekly", priority: 0.7 },
 

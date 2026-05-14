@@ -11,17 +11,40 @@ import type { Locale } from "@/content";
 
 type NavKey = "home" | "services" | "automationCheck" | "journal" | "contact";
 
+type ServiceSlug =
+  | "ki-beratung"
+  | "prozessautomatisierung"
+  | "microsoft-365-automatisierung"
+  | "interne-tools"
+  | "ki-schulungen";
+
 type NavItem = {
   key: NavKey;
   href: string;
   match: RegExp;
+  /** When set, the desktop nav renders a hover dropdown of these sub-services. */
+  servicesDropdown?: ServiceSlug[];
 };
+
+const SERVICE_SLUGS: ServiceSlug[] = [
+  "ki-beratung",
+  "prozessautomatisierung",
+  "microsoft-365-automatisierung",
+  "interne-tools",
+  "ki-schulungen",
+];
 
 const NAV_ITEMS: NavItem[] = [
   { key: "home", href: "/", match: /^\/(en|de|tr|es|it|fr|ar)?\/?$/ },
-  // /leistungen full page is in a later milestone — for now jump to the
-  // homepage services anchor so the link never 404s.
-  { key: "services", href: "/#services", match: /\/leistungen/ },
+  // Hybrid: click goes to /leistungen overview; desktop hover opens a
+  // dropdown listing the 5 sub-services. Active-match also covers the
+  // sub-service routes so the link stays highlighted.
+  {
+    key: "services",
+    href: "/leistungen",
+    match: /\/(leistungen|ki-beratung|prozessautomatisierung|microsoft-365-automatisierung|interne-tools|ki-schulungen)/,
+    servicesDropdown: SERVICE_SLUGS,
+  },
   { key: "automationCheck", href: "/ai-automation-check", match: /\/ai-automation-check/ },
   { key: "journal", href: "/blog", match: /\/blog/ },
   { key: "contact", href: "/contact", match: /\/contact/ },
@@ -71,14 +94,44 @@ export function Header() {
         <nav className="os-nav" aria-label="Primary">
           {NAV_ITEMS.map((n) => {
             const active = n.match.test(pathname || "");
+            const dropdown = n.servicesDropdown;
+            if (!dropdown) {
+              return (
+                <Link
+                  key={n.key}
+                  href={n.href}
+                  className={cn("os-nav-link", active && "is-active")}
+                >
+                  {navLabels[n.key]}
+                </Link>
+              );
+            }
             return (
-              <Link
-                key={n.key}
-                href={n.href}
-                className={cn("os-nav-link", active && "is-active")}
-              >
-                {navLabels[n.key]}
-              </Link>
+              <span key={n.key} className="os-nav-has-dropdown">
+                <Link
+                  href={n.href}
+                  className={cn("os-nav-link", active && "is-active")}
+                  aria-haspopup="true"
+                >
+                  {navLabels[n.key]}
+                </Link>
+                <div className="os-nav-dropdown" role="menu" aria-label={navLabels[n.key]}>
+                  {dropdown.map((slug) => {
+                    const entry = navLabels.servicesDropdown[slug];
+                    return (
+                      <Link
+                        key={slug}
+                        href={`/${slug}`}
+                        role="menuitem"
+                        className="os-nav-dropdown-item"
+                      >
+                        <span className="os-nav-dropdown-item-title">{entry.title}</span>
+                        <span className="os-nav-dropdown-item-sub">{entry.sub}</span>
+                      </Link>
+                    );
+                  })}
+                </div>
+              </span>
             );
           })}
         </nav>

@@ -5,6 +5,12 @@ import { Icon } from "@/components/shared/Icon";
 import { useLocale } from "@/context/LocaleContext";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 
+/**
+ * About / Über mich page — Hasan Dönmez's consulting-positioned bio.
+ * Copy at `t.v2.about.*`. No employer reference (works as IT PM
+ * day-job alongside OpSolid). Photo placeholder uses a "HD" monogram
+ * until a real headshot is supplied.
+ */
 export function AboutPage() {
   const { t } = useLocale();
   const a = t.v2.about;
@@ -24,7 +30,7 @@ export function AboutPage() {
             <Link href="/contact" className="btn btn-primary btn-lg">
               {a.hero.primaryCta} <Icon name="arrow" size={18} />
             </Link>
-            <Link href="/pricing" className="btn btn-ghost btn-lg">
+            <Link href="/leistungen" className="btn btn-ghost btn-lg">
               {a.hero.secondaryCta}
             </Link>
           </div>
@@ -37,13 +43,13 @@ export function AboutPage() {
             <span className="meta meta-hot">{a.principles.eyebrow}</span>
             <h2>{a.principles.heading}</h2>
           </div>
-          <div className="os-process-steps">
+          <div className="os-services-grid">
             {a.principles.items.map((item, i) => (
-              <div key={i} className="os-process-step">
-                <div className="os-process-step-num">{item.n}</div>
+              <article key={i} className="os-service-card panel">
+                <span className="os-usecase-num meta">{item.n}</span>
                 <h3>{item.title}</h3>
                 <p>{item.body}</p>
-              </div>
+              </article>
             ))}
           </div>
         </div>
@@ -56,6 +62,9 @@ export function AboutPage() {
             <h2>{a.founder.heading}</h2>
           </div>
           <div className="os-founder-body">
+            <span className="os-about-founder-monogram" aria-hidden="true">
+              HD
+            </span>
             {a.founder.body.map((p, i) => (
               <p key={i}>{p}</p>
             ))}

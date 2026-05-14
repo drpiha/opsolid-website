@@ -3319,6 +3319,16 @@ export const content = {
       journal: "Insights",
       contact: "Contact",
       cta: "Book a call",
+      servicesDropdown: {
+        "ki-beratung": { title: "AI consulting", sub: "Use cases · risk · roadmap" },
+        prozessautomatisierung: { title: "Process automation", sub: "Workflows · API · automation" },
+        "microsoft-365-automatisierung": {
+          title: "Microsoft 365 automation",
+          sub: "Power Automate · M365 · SharePoint",
+        },
+        "interne-tools": { title: "Internal tools", sub: "Dashboards · tools · integrations" },
+        "ki-schulungen": { title: "AI training & guidelines", sub: "Training · guidelines · GDPR" },
+      },
     },
 
     footer: {
@@ -3339,7 +3349,7 @@ export const content = {
           training: "AI training & guidelines",
         },
         studio: {
-          about: "About",
+          about: "About me",
           journal: "Insights",
           contact: "Contact",
         },
@@ -3855,6 +3865,587 @@ export const content = {
       },
     },
 
+    leistungen: {
+      meta: {
+        title: "Services — AI, Automation & Digital Processes | OpSolid",
+        description:
+          "OpSolid services for SMEs: AI consulting, process automation, Microsoft 365 automation, internal tools, and AI training. Practical, measurable, GDPR-conscious.",
+      },
+      hero: {
+        metaChip: "",
+        metaLabel: "[ SERVICES · 2026 ]",
+        title: {
+          pre: "Services for AI, automation and ",
+          italic: "digital processes",
+          post: "",
+        },
+        lead:
+          "Five focused service areas. We pick the smallest engagement that solves the problem, ship it, and only extend where it keeps paying off — no platform rollouts, no multi-quarter discovery.",
+        ctaPrimary: "Book a discovery call",
+        ctaSecondary: "Start with the AI Automation Check",
+      },
+      cards: {
+        eyebrow: "[ WHAT WE OFFER ]",
+        headline: "Five practical service areas",
+        lead:
+          "Each area has its own page with use cases, tools, process and pricing. Most engagements start with an AI & Automation Check — the cheapest way to make sure we automate the right thing.",
+        items: [
+          {
+            slug: "ki-beratung",
+            icon: "bot",
+            title: "AI consulting",
+            body:
+              "Identify worthwhile AI use cases for your business. We weigh value against risk and produce a realistic, decision-ready roadmap.",
+            tag: "USE CASES · RISK · ROADMAP",
+            linkLabel: "More on AI consulting",
+          },
+          {
+            slug: "prozessautomatisierung",
+            icon: "workflow",
+            title: "Process automation",
+            body:
+              "Automate manual workflows end-to-end. Quotes, invoices, reports, document generation, email routing — built on the tools you already pay for.",
+            tag: "WORKFLOWS · API · AUTOMATION",
+            linkLabel: "More on process automation",
+          },
+          {
+            slug: "microsoft-365-automatisierung",
+            icon: "plug",
+            title: "Microsoft 365 automation",
+            body:
+              "Power Automate, Power Apps, Teams, SharePoint, Outlook — wired together so your daily tooling actually does the work for the team.",
+            tag: "POWER AUTOMATE · M365 · SHAREPOINT",
+            linkLabel: "More on Microsoft 365 automation",
+          },
+          {
+            slug: "interne-tools",
+            icon: "ship",
+            title: "Internal tools",
+            body:
+              "Small, focused internal tools where SaaS doesn't fit: admin consoles, approval queues, dashboards, knowledge bases — built on systems you already run.",
+            tag: "DASHBOARDS · TOOLS · INTEGRATIONS",
+            linkLabel: "More on internal tools",
+          },
+          {
+            slug: "ki-schulungen",
+            icon: "shield",
+            title: "AI training & guidelines",
+            body:
+              "Train teams to use AI safely and productively. Written guidelines, role-based playbooks, GDPR-compliant setup — no shadow IT.",
+            tag: "TRAINING · GUIDELINES · GDPR",
+            linkLabel: "More on AI training",
+          },
+        ],
+      },
+      process: {
+        eyebrow: "[ HOW WE WORK ]",
+        headline: "How an engagement runs",
+        lead:
+          "Same approach across every service area: map first, scope tightly, deliver one thing well.",
+        steps: [
+          {
+            num: "01",
+            title: "Discovery call",
+            body:
+              "30–60 minute conversation. We listen to where the team loses time and what the day-to-day actually looks like.",
+          },
+          {
+            num: "02",
+            title: "Analysis & proposal",
+            body:
+              "We write down the relevant workflows, score automation candidates, and propose the smallest thing worth building first.",
+          },
+          {
+            num: "03",
+            title: "Implementation",
+            body:
+              "We build it — alone or with your team — and only extend where it keeps paying off. Source code stays with you.",
+          },
+        ],
+      },
+      faq: {
+        eyebrow: "[ FAQ ]",
+        headline: "Common questions about our services",
+        items: [
+          {
+            q: "Do we have to choose one service area?",
+            a: "No. Most engagements span two or three areas — an AI use case usually needs automation around it, and a custom tool usually needs training. We scope what's actually useful, not what fits a service catalogue.",
+          },
+          {
+            q: "How do you charge?",
+            a: "Either fixed-price per delivery (AI Automation Check, pilot workflow, training day) or as a small monthly retainer for ongoing iteration. Price on request — depends on scope and team size.",
+          },
+          {
+            q: "Can we use our existing tools?",
+            a: "Yes. Microsoft 365, Google Workspace, your CRM, your ERP — we use what you already pay for wherever it can carry the workflow.",
+          },
+          {
+            q: "Where is the data hosted?",
+            a: "EU only, by default. Frankfurt or other EU regions. AVV (Auftragsverarbeitungsvertrag) signed before any engagement that touches customer data.",
+          },
+          {
+            q: "Do you build from scratch or use platforms?",
+            a: "Both — wherever Power Automate, Make or n8n can do the job, we use them. Where they can't, we build small Python services, Next.js tools or custom integrations.",
+          },
+        ],
+      },
+      finalCta: {
+        eyebrow: "[ FIRST STEP ]",
+        title: {
+          pre: "Not sure which service ",
+          italic: "fits best",
+          post: "?",
+        },
+        lead:
+          "Start with the AI & Automation Check or a free discovery call. We'll tell you honestly which area gives you the highest leverage — even if it's not the one you asked about.",
+        ctaPrimary: "Request the AI Automation Check",
+        ctaSecondary: "Book a discovery call",
+      },
+    },
+
+    services: {
+      shared: {
+        whatWeDoEyebrow: "[ WHAT WE DO ]",
+        useCasesEyebrow: "[ USE CASES ]",
+        toolsEyebrow: "[ TOOLS & STACK ]",
+        processEyebrow: "[ HOW IT RUNS ]",
+        faqEyebrow: "[ FAQ ]",
+        finalCtaEyebrow: "[ NEXT STEP ]",
+        backToServices: "All services",
+      },
+      kiBeratung: {
+        slug: "ki-beratung",
+        meta: {
+          title: "AI Consulting for SMEs — Use Cases, Risk, Roadmap | OpSolid",
+          description:
+            "AI consulting for mid-sized businesses in Germany. We identify worthwhile AI use cases, weigh value against risk, and produce a decision-ready roadmap. GDPR-conscious.",
+        },
+        hero: {
+          metaChip: "AI CONSULTING",
+          metaLabel: "[ SERVICE · 01 / 05 ]",
+          title: {
+            pre: "Which AI ",
+            italic: "actually pays off",
+            post: " for your business?",
+          },
+          lead:
+            "AI is being sold to every department right now — but only a few use cases are worth the effort, the cost and the risk. We help you tell the difference and produce a roadmap you can actually defend in front of leadership.",
+          ctaPrimary: "Book a discovery call",
+          ctaSecondary: "Start with the AI Automation Check",
+        },
+        whatWeDo: {
+          headline: "What AI consulting with OpSolid looks like",
+          bullets: [
+            "Identify three to five AI use cases that fit your business — and rule out the ones that don't.",
+            "Score each use case by expected value, implementation effort and operational risk.",
+            "Write down a 6–12-month AI roadmap with clear owners, costs and decision points.",
+            "Set up GDPR-compliant AI use with model choice, data residency and a short company guideline.",
+          ],
+        },
+        useCases: {
+          headline: "What we have advised or scoped",
+          items: [
+            {
+              title: "Document & contract analysis",
+              body: "Pre-classify long PDFs, extract clauses, surface deadlines — humans review the summary instead of the document.",
+            },
+            {
+              title: "Internal knowledge search",
+              body: "Index your own policies, FAQs and SharePoint — staff get answers from your documents, not from public ChatGPT.",
+            },
+            {
+              title: "Quote and proposal drafting",
+              body: "Draft tailored offers from a template, the CRM record and a short brief — sales reviews instead of writing from scratch.",
+            },
+            {
+              title: "Support triage and routing",
+              body: "Classify incoming requests by topic and urgency before they hit a human queue.",
+            },
+          ],
+        },
+        tools: {
+          headline: "Models, vendors and frameworks we work with",
+          items: [
+            "OpenAI · GPT-4 family",
+            "Anthropic · Claude",
+            "Microsoft Copilot · Azure OpenAI",
+            "Mistral · open-source options",
+            "Retrieval-augmented generation (RAG)",
+            "Vector databases · pgvector · Qdrant",
+            "GDPR-native EU hosting",
+          ],
+        },
+        process: {
+          headline: "How an AI consulting engagement runs",
+          steps: [
+            { num: "01", title: "Discovery", body: "Short call to understand your team, your data and what you're trying to achieve." },
+            { num: "02", title: "Use-case scoring", body: "Workshop and written analysis: which AI use cases are worth it for you, which are not." },
+            { num: "03", title: "Roadmap & guideline", body: "Decision-ready 6–12-month roadmap plus a short, written AI guideline for the company." },
+          ],
+        },
+        faq: {
+          headline: "AI consulting — common questions",
+          items: [
+            { q: "Do we have to be 'AI-ready'?", a: "No. Most clients are not — that's exactly why they need this work done before spending money on tools." },
+            { q: "Do you sell AI tools?", a: "No. We are independent — we recommend what fits, including 'use what you already have' or 'don't do this yet'." },
+            { q: "Can we use AI in a GDPR-compliant way?", a: "Yes, with the right model choice, EU hosting and a written guideline. We help you set this up." },
+            { q: "How long does a consulting engagement take?", a: "Typically two to four weeks for the analysis and roadmap. Implementation timelines are separate and scope-dependent." },
+          ],
+        },
+        finalCta: {
+          title: { pre: "Find out which AI use cases ", italic: "are worth it", post: " for you." },
+          lead: "One call. One honest roadmap. No platform pitch.",
+          ctaPrimary: "Book a discovery call",
+          ctaSecondary: "Start with the AI Automation Check",
+        },
+      },
+      prozessautomatisierung: {
+        slug: "prozessautomatisierung",
+        meta: {
+          title: "Process Automation for SMEs — Power Automate, Make, Python | OpSolid",
+          description:
+            "Automate manual workflows — quotes, invoices, document generation, email routing, data sync. Built on the tools you already pay for. GDPR-native.",
+        },
+        hero: {
+          metaChip: "PROCESS AUTOMATION",
+          metaLabel: "[ SERVICE · 02 / 05 ]",
+          title: {
+            pre: "Manual tasks that ",
+            italic: "no one should be doing",
+            post: " by hand anymore",
+          },
+          lead:
+            "Quotes that take half a day. Reports that get rebuilt every Monday. Data copied between Excel, CRM and email. We map these workflows, automate the parts worth automating, and leave the rest to people.",
+          ctaPrimary: "Book a discovery call",
+          ctaSecondary: "Start with the AI Automation Check",
+        },
+        whatWeDo: {
+          headline: "What process automation with OpSolid looks like",
+          bullets: [
+            "Map the end-to-end workflow — handoffs, tools, data, exceptions — clearly enough that the team can audit it.",
+            "Identify which steps are automation-worth and which should stay manual on purpose.",
+            "Build the automation on Power Automate, Make, n8n, Python or custom code — whichever fits.",
+            "Monitor, document and hand over so your team owns the workflow afterwards.",
+          ],
+        },
+        useCases: {
+          headline: "Workflows we have automated",
+          items: [
+            {
+              title: "Quote and document generation",
+              body: "Templates filled from CRM data, approved in a workflow, and sent — quotes leave the same day.",
+            },
+            {
+              title: "Email classification and routing",
+              body: "Inbound mail tagged by topic and pushed to the right inbox or ticket queue — no manual triage.",
+            },
+            {
+              title: "Reporting and Excel automation",
+              body: "Recurring reports built once and rebuilt automatically — KPIs ready when the meeting starts.",
+            },
+            {
+              title: "CRM / ERP data synchronisation",
+              body: "Data flows once between systems and reconciles itself — no double entry.",
+            },
+          ],
+        },
+        tools: {
+          headline: "Tools we automate with",
+          items: [
+            "Microsoft Power Automate",
+            "Make (Integromat)",
+            "n8n · self-hosted",
+            "Zapier · where it fits",
+            "Python · custom scripts",
+            "REST APIs · Webhooks",
+            "PostgreSQL · file storage · queues",
+          ],
+        },
+        process: {
+          headline: "How a process automation engagement runs",
+          steps: [
+            { num: "01", title: "Map", body: "Workshop with the team that actually does the work. We write down the workflow as it really runs." },
+            { num: "02", title: "Build", body: "We implement the first pilot automation — usually within two to four weeks." },
+            { num: "03", title: "Operate", body: "Documentation, handover, and a short period of iteration before you take it over." },
+          ],
+        },
+        faq: {
+          headline: "Process automation — common questions",
+          items: [
+            { q: "What's a typical first project?", a: "A single high-leverage workflow — quote generation, email triage, or a weekly report. Fixed scope, two to four weeks." },
+            { q: "Do we need to replace our tools?", a: "No. We automate on top of what you have — Microsoft 365, Google Workspace, your CRM, your ERP." },
+            { q: "What if the process changes later?", a: "Most automations are documented so your own IT team can adjust. For bigger changes, we offer a small monthly retainer." },
+            { q: "Is it safe to automate critical processes?", a: "Yes — with proper logging, error handling and a manual fallback. We design for the failure case, not just the happy path." },
+          ],
+        },
+        finalCta: {
+          title: { pre: "Pick the first workflow ", italic: "worth automating", post: "." },
+          lead: "We'll map it, score it and tell you honestly whether it's worth the effort.",
+          ctaPrimary: "Book a discovery call",
+          ctaSecondary: "Start with the AI Automation Check",
+        },
+      },
+      microsoft365: {
+        slug: "microsoft-365-automatisierung",
+        meta: {
+          title: "Microsoft 365 Automation — Power Automate, SharePoint, Teams | OpSolid",
+          description:
+            "Automate workflows inside Microsoft 365: Power Automate flows, SharePoint document libraries, Teams approvals, Outlook routing. EU-hosted, GDPR-conscious.",
+        },
+        hero: {
+          metaChip: "MICROSOFT 365 AUTOMATION",
+          metaLabel: "[ SERVICE · 03 / 05 ]",
+          title: {
+            pre: "Microsoft 365 already on every desk — ",
+            italic: "now make it work for you",
+            post: "",
+          },
+          lead:
+            "Teams, SharePoint, Outlook and Power Automate are already paid for. With the right setup they replace most third-party automation tools you'd otherwise buy on top — fewer subscriptions, one identity, one audit trail.",
+          ctaPrimary: "Book a discovery call",
+          ctaSecondary: "Start with the AI Automation Check",
+        },
+        whatWeDo: {
+          headline: "What Microsoft 365 automation with OpSolid looks like",
+          bullets: [
+            "Audit your current Microsoft 365 tenant and identify automation opportunities the team isn't using yet.",
+            "Build Power Automate flows for approvals, document generation, email routing and notifications.",
+            "Connect SharePoint, Teams, Outlook and Excel so data lives in one place — not in seven copies.",
+            "Set up Microsoft 365 Copilot responsibly with role-based access and clear guidelines.",
+          ],
+        },
+        useCases: {
+          headline: "Microsoft 365 workflows we have built",
+          items: [
+            {
+              title: "Approval workflows in Teams",
+              body: "Holiday requests, expense reports, document sign-off — approved in Teams, logged in SharePoint.",
+            },
+            {
+              title: "Document generation from SharePoint lists",
+              body: "Quotes, contracts and reports generated from a SharePoint list — no copy-paste from Excel.",
+            },
+            {
+              title: "Outlook email parsing and routing",
+              body: "Incoming orders, support requests or invoices parsed automatically and pushed into the right system.",
+            },
+            {
+              title: "Microsoft 365 Copilot rollout",
+              body: "Guidelines, role-based access and a short training so Copilot actually gets used — and used safely.",
+            },
+          ],
+        },
+        tools: {
+          headline: "Microsoft technologies we work with",
+          items: [
+            "Microsoft Power Automate",
+            "Power Apps · low-code apps",
+            "SharePoint Online · Lists · Libraries",
+            "Microsoft Teams · Bots · Approvals",
+            "Outlook · Exchange",
+            "Microsoft Graph API",
+            "Microsoft 365 Copilot",
+            "Entra ID (Azure AD)",
+          ],
+        },
+        process: {
+          headline: "How a Microsoft 365 engagement runs",
+          steps: [
+            { num: "01", title: "Tenant review", body: "We look at your current licences, security setup and tooling — and find what's underused." },
+            { num: "02", title: "First flow", body: "We build the first Power Automate flow or Teams workflow as a pilot — usually within two weeks." },
+            { num: "03", title: "Rollout", body: "Wider rollout with documentation, handover and optional training for your IT team." },
+          ],
+        },
+        faq: {
+          headline: "Microsoft 365 automation — common questions",
+          items: [
+            { q: "Do we need premium Power Automate licences?", a: "Sometimes — but most useful flows work on the standard Microsoft 365 plans. We tell you honestly when you actually need premium." },
+            { q: "Is Microsoft 365 Copilot worth it?", a: "For some teams yes, for others no. We help you decide before you buy the licences." },
+            { q: "Can you work with our IT department?", a: "Yes — most engagements involve your IT or one of your existing Microsoft partners. We complement, we don't replace." },
+            { q: "Is this GDPR-compliant?", a: "Microsoft 365 in the EU tenant configuration is GDPR-compliant. We set it up correctly and document the data flows." },
+          ],
+        },
+        finalCta: {
+          title: { pre: "Get more out of Microsoft 365 ", italic: "without buying more tools", post: "." },
+          lead: "One call. We'll tell you what's worth automating in your current tenant — before you add another subscription.",
+          ctaPrimary: "Book a discovery call",
+          ctaSecondary: "Start with the AI Automation Check",
+        },
+      },
+      interneTools: {
+        slug: "interne-tools",
+        meta: {
+          title: "Internal Tools & Integrations — Admin Panels, Dashboards | OpSolid",
+          description:
+            "Small, focused internal tools for SMEs: admin consoles, approval queues, dashboards, knowledge bases. Built on systems you already run. EU-hosted.",
+        },
+        hero: {
+          metaChip: "INTERNAL TOOLS",
+          metaLabel: "[ SERVICE · 04 / 05 ]",
+          title: {
+            pre: "Where SaaS doesn't fit, ",
+            italic: "a small custom tool",
+            post: " does",
+          },
+          lead:
+            "Not every internal job needs a €500/month platform. Sometimes a small custom admin panel, an approval queue or a dashboard solves the problem better, cheaper and faster — and stays your property.",
+          ctaPrimary: "Book a discovery call",
+          ctaSecondary: "Start with the AI Automation Check",
+        },
+        whatWeDo: {
+          headline: "What we build",
+          bullets: [
+            "Internal admin consoles for operations teams — clear, focused, no bloat.",
+            "Dashboards on top of your existing data sources — KPIs, exceptions and alerts in one view.",
+            "Approval queues, internal forms, escalation flows that fit your real process.",
+            "Internal knowledge bases — search your own documents, policies and FAQs.",
+          ],
+        },
+        useCases: {
+          headline: "Internal tools we have built",
+          items: [
+            {
+              title: "Operations admin console",
+              body: "Order overview, exception handling, customer notes — one place instead of three tabs.",
+            },
+            {
+              title: "Internal KPI dashboard",
+              body: "Daily, weekly and monthly numbers from your CRM, ERP and finance system — without an analyst rebuilding the spreadsheet every week.",
+            },
+            {
+              title: "Approval and escalation queue",
+              body: "Quotes, contracts or refunds queued, routed and approved with a clear audit trail.",
+            },
+            {
+              title: "Internal AI knowledge base",
+              body: "Search your own documents, policies and FAQs — answers stay inside your organisation.",
+            },
+          ],
+        },
+        tools: {
+          headline: "Tech stack",
+          items: [
+            "Next.js · React · TypeScript",
+            "Node.js · Python",
+            "PostgreSQL · Supabase",
+            "REST · GraphQL · Webhooks",
+            "Auth0 · Microsoft Entra ID · SSO",
+            "Hetzner · IONOS · Vercel · EU hosting",
+            "GitHub · CI/CD · audit logs",
+          ],
+        },
+        process: {
+          headline: "How an internal tool engagement runs",
+          steps: [
+            { num: "01", title: "Spec", body: "Short workshop to write down what the tool needs to do — and what it doesn't." },
+            { num: "02", title: "Build", body: "Pilot version in three to six weeks. Real users, real data, fast iteration." },
+            { num: "03", title: "Operate", body: "Handover with documentation, source code and a small retainer if you want ongoing iteration." },
+          ],
+        },
+        faq: {
+          headline: "Internal tools — common questions",
+          items: [
+            { q: "Is a custom tool really cheaper than SaaS?", a: "For specific, narrow problems — often yes. Especially when SaaS adoption is low or the tool needs to fit a unique process." },
+            { q: "Who owns the code?", a: "You do. Source code, schemas and runbooks are yours from day one." },
+            { q: "What if we want to change it later?", a: "You can — internally, with another provider, or with us. No lock-in." },
+            { q: "Can it integrate with our existing systems?", a: "Yes — that's usually the whole point. CRM, ERP, Microsoft 365, your warehouse system." },
+          ],
+        },
+        finalCta: {
+          title: { pre: "Get a tool that ", italic: "fits your team", post: "." },
+          lead: "One call. We'll tell you if a custom internal tool is the right move — or if a configured SaaS is enough.",
+          ctaPrimary: "Book a discovery call",
+          ctaSecondary: "Start with the AI Automation Check",
+        },
+      },
+      kiSchulungen: {
+        slug: "ki-schulungen",
+        meta: {
+          title: "AI Training & Guidelines for SMEs — Safe, Productive Use of AI | OpSolid",
+          description:
+            "Practical AI training for SME teams: how to use AI safely and productively in everyday work. Written guidelines, role-based playbooks, GDPR-compliant setup.",
+        },
+        hero: {
+          metaChip: "AI TRAINING",
+          metaLabel: "[ SERVICE · 05 / 05 ]",
+          title: {
+            pre: "Your team. ",
+            italic: "Safer and faster",
+            post: " with AI.",
+          },
+          lead:
+            "Half your team is already using ChatGPT in shadow IT. Without guidelines, that's a privacy problem and a quality problem. With them, it's a productivity boost. We help you set up the rules and train the people.",
+          ctaPrimary: "Book a discovery call",
+          ctaSecondary: "Start with the AI Automation Check",
+        },
+        whatWeDo: {
+          headline: "What an AI training engagement covers",
+          bullets: [
+            "Practical AI workshops for everyday tasks — drafting, summarising, classifying, structuring.",
+            "Role-based playbooks for sales, support, finance, HR — not generic 'how to talk to ChatGPT' decks.",
+            "Written AI guidelines and acceptable-use policy for the company — short, readable, enforceable.",
+            "GDPR-compliant AI setup: model choice, data residency, audit trail, and what employees may and may not paste in.",
+          ],
+        },
+        useCases: {
+          headline: "Training formats we have run",
+          items: [
+            {
+              title: "Company-wide AI primer",
+              body: "Half-day session for all staff: what AI can and can't do, where it helps, where it hurts.",
+            },
+            {
+              title: "Department-specific workshops",
+              body: "Sales, support, finance, HR — each with role-specific prompts and example workflows.",
+            },
+            {
+              title: "Leadership briefing",
+              body: "A focused two-hour session for the leadership team — strategic implications, not prompt syntax.",
+            },
+            {
+              title: "AI guideline rollout",
+              body: "Written policy, internal Q&A and a short e-learning module so the rules actually stick.",
+            },
+          ],
+        },
+        tools: {
+          headline: "Tools and platforms we train on",
+          items: [
+            "ChatGPT · GPT-4 family",
+            "Microsoft 365 Copilot",
+            "Claude · Anthropic",
+            "Google Gemini · Workspace",
+            "Notion AI · Slack AI",
+            "Internal RAG / chat assistants",
+            "GDPR best practice · audit logging",
+          ],
+        },
+        process: {
+          headline: "How a training engagement runs",
+          steps: [
+            { num: "01", title: "Audit", body: "Short interview round: who already uses AI, how, and where the risks sit." },
+            { num: "02", title: "Tailor", body: "We tailor the training to your industry, your tools and your real use cases — no off-the-shelf decks." },
+            { num: "03", title: "Roll out", body: "Workshops, written guideline, internal Q&A — and an optional follow-up after eight weeks." },
+          ],
+        },
+        faq: {
+          headline: "AI training — common questions",
+          items: [
+            { q: "How long is a typical training?", a: "Half a day for an all-staff primer; one or two full days for department-specific deep-dives." },
+            { q: "Do you train in German?", a: "Yes — German and English. Turkish on request." },
+            { q: "What's the difference vs. an online course?", a: "We train on your real workflows, your tools and your data — not on hypothetical examples. People remember what they actually used." },
+            { q: "Do you also write the AI guideline?", a: "Yes — short, readable, enforceable. Tailored to your industry and tooling, not a 30-page legal document." },
+          ],
+        },
+        finalCta: {
+          title: { pre: "Help your team use AI ", italic: "safely and productively", post: "." },
+          lead: "One call. We'll suggest a training format that actually fits your team — not a generic webinar.",
+          ctaPrimary: "Book a discovery call",
+          ctaSecondary: "Start with the AI Automation Check",
+        },
+      },
+    },
+
     voiceAgent: {
       hero: {
         metaChip: "VOICE AGENT",
@@ -4262,41 +4853,65 @@ export const content = {
 
     about: {
       meta: {
-        title: "About — OpSolid · Independent automation studio | Hamburg",
-        description: "OpSolid is an independent automation studio. Founded by Hasan Dönmez in Hamburg. We build operational systems for mid-market German B2B — voice, chat, integrations, and workflow automation. EU-hosted, source code yours.",
+        title: "About me — Hasan Dönmez | OpSolid",
+        description:
+          "OpSolid is run by Hasan Dönmez — practical AI and automation consulting for mid-sized businesses in Germany. Background in IT project management, digitalisation and process optimisation.",
       },
       hero: {
         eyebrow: "[ ABOUT · 2026 ]",
-        title: { pre: "An independent automation studio, ", italic: "built around outcomes", post: ", not platforms" },
-        lead: "OpSolid was founded to do the operational work that off-the-shelf SaaS can't reach: build the integration that connects your ERP to your CRM, configure the voice agent that takes overnight calls in your industry's language, and ship the workflow that turns 40 hours of manual data entry into 40 minutes of exception review. Mid-market German B2B, EU-hosted, source code yours.",
+        title: {
+          pre: "Practical, applicable and ",
+          italic: "measurable",
+          post: " digital solutions",
+        },
+        lead:
+          "OpSolid is the independent consulting practice of Hasan Dönmez. The focus is on AI, process automation and digital workflows for mid-sized businesses in Germany — built on years of hands-on IT project management, digitalisation and process work.",
         primaryCta: "Book a discovery call",
-        secondaryCta: "See pricing",
+        secondaryCta: "View services",
       },
       principles: {
-        eyebrow: "[ HOW WE WORK ]",
+        eyebrow: "[ HOW I WORK ]",
         heading: "Four principles, kept honest",
         items: [
-          { n: "01", title: "No fake metrics", body: "We don't publish customer counts, hours saved, or success rates we haven't measured. When we have the numbers, we'll show them. Until then, the case studies stay specific and the rest of the page stays quiet." },
-          { n: "02", title: "Source code stays with you", body: "Every engagement leaves you with code, schemas, and runbooks you can take to another provider. No vendor lock-in by design — we'd rather earn the next project than trap you in this one." },
-          { n: "03", title: "Open-source first, SaaS where it earns it", body: "Cal.com, Postgres, Hetzner, Node — we use the open-source backbone wherever it works. We pay for SaaS (Twilio, Stripe, Meta WABA) where it makes operational sense, and we make the cost transparent in your bill." },
-          { n: "04", title: "EU-hosted, GDPR-native", body: "Frankfurt only. No US subprocessors. AVV (Auftragsverarbeitungsvertrag) signed on every engagement that touches customer data. Your records, your retention rules, your right to delete." },
+          {
+            n: "01",
+            title: "Practical before strategic",
+            body: "We start with one workflow that actually loses your team time — not with a multi-quarter strategy deck. Strategy follows once we've earned the right to plan further.",
+          },
+          {
+            n: "02",
+            title: "Measurable outcomes",
+            body: "Every engagement starts with a baseline (time per task, error rate, cycle time) and ends with a number you can act on. No theatre, no buzzword reporting.",
+          },
+          {
+            n: "03",
+            title: "Privacy-conscious by default",
+            body: "EU hosting, GDPR-native infrastructure, AVV signed where customer data is involved. Audit and compliance can follow along from day one.",
+          },
+          {
+            n: "04",
+            title: "Source code stays with you",
+            body: "Every engagement leaves you with code, schemas and documentation you can take to another provider. No vendor lock-in by design.",
+          },
         ],
       },
       founder: {
         eyebrow: "[ FOUNDER ]",
         heading: "Hasan Dönmez",
         body: [
-          "OpSolid is founded and run by Hasan Dönmez — automation and systems engineer based in Hamburg. Background in operational software for SMB and mid-market: a decade of building the kinds of integrations, agents, and dashboards that this site now offers as products.",
-          "OpSolid started as Solidra, rebranded around the operational automation focus. The studio is intentionally small: senior engineering work delivered directly, not handed down through layers. If you book a call, you talk to the person who'll do the work.",
+          "I work as an IT project manager and am building OpSolid alongside that role as an independent consulting practice for AI and automation. The combination is intentional: by day I see how digitalisation projects actually run in mid-sized companies — with their constraints, politics, legacy systems and real teams — and that's exactly the perspective I bring into OpSolid engagements.",
+          "Background: hands-on experience in IT project management, digitalisation and process optimisation. The focus is small, mid-sized businesses in Germany — companies that have grown faster than their internal systems and need a measurable next step rather than a platform pitch.",
+          "OpSolid is intentionally one-person: when you book a call, you talk to the person who will do the work. No layers, no junior delivery, no handoff.",
         ],
-        linkedinLabel: "Company on LinkedIn",
-        linkedinHref: "https://www.linkedin.com/company/opsolid/",
+        linkedinLabel: "Hasan on LinkedIn",
+        linkedinHref: "https://www.linkedin.com/in/hasan-doenmez/",
       },
       contact: {
         eyebrow: "[ START A CONVERSATION ]",
         heading: "20 minutes is enough to see if we're a fit",
-        lead: "Free discovery call: walk us through one operational pain point. We'll tell you whether one of our products fits, whether a Custom Automation sprint is the better answer, or whether you should keep doing what you're doing.",
-        cta: "Book on Cal.com",
+        lead:
+          "Free discovery call: walk me through one operational pain point. I'll tell you honestly whether OpSolid is the right fit, whether the AI & Automation Check is the right first step, or whether you should keep doing what you're doing.",
+        cta: "Book a discovery call",
       },
     },
 

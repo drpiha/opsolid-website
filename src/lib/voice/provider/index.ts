@@ -1,4 +1,14 @@
 // Provider singleton selector — picks Retell, Vapi, or Mock based on env.
+//
+// DESIGN DECISION (2026-05-12): OpSolid commits to **Retell** as the production
+// voice provider. The VoiceProvider interface stays for the existing wiring +
+// MockProvider dev fallback, but new features should call Retell-specific code
+// directly when Vapi parity isn't useful. Vapi remains a skeleton; bringing it
+// to parity is a ~3-4 week effort and only justified if Retell pricing/SLA
+// changes materially. Migration-cost lock-in mitigation: own the transcript in
+// our DB (VoiceCall.transcriptJson + transcriptText), don't depend on Retell's
+// transcript retention. See plan: opsolid-voice-agent-customer-self-service.md
+// (B5).
 
 import type { VoiceProvider } from "./types";
 import { RetellProvider } from "./retell";

@@ -44,16 +44,16 @@ export function Footer() {
                   <Link href="/ai-automation-check">{f.cols.services.automationCheck}</Link>
                 </li>
                 <li>
-                  <Link href="/#services">{f.cols.services.consulting}</Link>
+                  <Link href="/ki-beratung">{f.cols.services.consulting}</Link>
                 </li>
                 <li>
-                  <Link href="/#services">{f.cols.services.automation}</Link>
+                  <Link href="/prozessautomatisierung">{f.cols.services.automation}</Link>
                 </li>
                 <li>
-                  <Link href="/#services">{f.cols.services.internalTools}</Link>
+                  <Link href="/interne-tools">{f.cols.services.internalTools}</Link>
                 </li>
                 <li>
-                  <Link href="/#services">{f.cols.services.training}</Link>
+                  <Link href="/ki-schulungen">{f.cols.services.training}</Link>
                 </li>
               </ul>
             </div>
@@ -61,7 +61,7 @@ export function Footer() {
               <div className="os-footer-col-h">{f.cols.studioHeading}</div>
               <ul>
                 <li>
-                  <Link href="/about">{f.cols.studio.about}</Link>
+                  <Link href="/ueber-mich">{f.cols.studio.about}</Link>
                 </li>
                 <li>
                   <Link href="/blog">{f.cols.studio.journal}</Link>

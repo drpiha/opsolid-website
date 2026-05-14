@@ -3305,6 +3305,16 @@ export const content: Content = {
       journal: "Bilgi",
       contact: "İletişim",
       cta: "Ücretsiz görüşme planla",
+      servicesDropdown: {
+        "ki-beratung": { title: "AI danışmanlığı", sub: "Use cases · risk · yol haritası" },
+        prozessautomatisierung: { title: "Süreç otomasyonu", sub: "Workflow · API · otomasyon" },
+        "microsoft-365-automatisierung": {
+          title: "Microsoft 365 otomasyonu",
+          sub: "Power Automate · M365 · SharePoint",
+        },
+        "interne-tools": { title: "İç araçlar", sub: "Dashboard · araç · entegrasyon" },
+        "ki-schulungen": { title: "AI eğitimleri & politikaları", sub: "Eğitim · politika · KVKK/DSGVO" },
+      },
     },
 
     footer: {
@@ -3841,6 +3851,587 @@ export const content: Content = {
       },
     },
 
+    leistungen: {
+      meta: {
+        title: "Hizmetler — AI, Otomasyon & Dijital Süreçler | OpSolid",
+        description:
+          "OpSolid hizmetleri KOBİ'lere yönelik: AI danışmanlığı, süreç otomasyonu, Microsoft 365 otomasyonu, iç araçlar ve AI eğitimleri. Uygulanabilir, ölçülebilir, veri koruması odaklı.",
+      },
+      hero: {
+        metaChip: "",
+        metaLabel: "[ HİZMETLER · 2026 ]",
+        title: {
+          pre: "AI, otomasyon ve ",
+          italic: "dijital süreçler",
+          post: " için hizmetler",
+        },
+        lead:
+          "Beş net çalışma alanı. Sorununuzu çözen en küçük işi seçer, teslim eder — ve sadece değerini koruduğu yerde genişletiriz. Platform rolloutları yok, çeyreklerce sürecek discovery yok.",
+        ctaPrimary: "Tanışma görüşmesi planla",
+        ctaSecondary: "AI Automation Check ile başla",
+      },
+      cards: {
+        eyebrow: "[ NE SUNUYORUZ ]",
+        headline: "Beş uygulanabilir hizmet alanı",
+        lead:
+          "Her alanın kendi sayfası var — anwendungsfälle, araçlar, süreç ve fiyat çerçevesi. Çoğu proje AI & Automation Check ile başlar — doğru şeyi otomatikleştirdiğimizden emin olmanın en ucuz yolu.",
+        items: [
+          {
+            slug: "ki-beratung",
+            icon: "bot",
+            title: "AI danışmanlığı",
+            body:
+              "Şirketiniz için gerçekten değerli AI kullanım senaryolarını belirliyoruz — faydayı riskle tartıp gerçekçi, karar verilebilir bir yol haritası teslim ediyoruz.",
+            tag: "USE CASES · RİSK · YOL HARİTASI",
+            linkLabel: "AI danışmanlığı detayları",
+          },
+          {
+            slug: "prozessautomatisierung",
+            icon: "workflow",
+            title: "Süreç otomasyonu",
+            body:
+              "Tekrarlayan manuel görevleri uçtan uca otomatikleştirin. Teklifler, faturalar, raporlar, doküman üretimi, e-posta yönlendirme — zaten ödediğiniz araçlar üzerinde.",
+            tag: "WORKFLOW · API · OTOMASYON",
+            linkLabel: "Süreç otomasyonu detayları",
+          },
+          {
+            slug: "microsoft-365-automatisierung",
+            icon: "plug",
+            title: "Microsoft 365 otomasyonu",
+            body:
+              "Power Automate, Power Apps, Teams, SharePoint, Outlook — günlük aracınızın işi yapmasını sağlayan şekilde bağlanmış.",
+            tag: "POWER AUTOMATE · M365 · SHAREPOINT",
+            linkLabel: "Microsoft 365 otomasyonu detayları",
+          },
+          {
+            slug: "interne-tools",
+            icon: "ship",
+            title: "İç araçlar",
+            body:
+              "SaaS'ın uymadığı yerlerde küçük, odaklı iç araçlar: admin konsolları, onay kuyrukları, dashboard'lar, bilgi tabanları — mevcut sisteminizin üzerinde.",
+            tag: "DASHBOARD · ARAÇLAR · ENTEGRASYON",
+            linkLabel: "İç araçlar detayları",
+          },
+          {
+            slug: "ki-schulungen",
+            icon: "shield",
+            title: "AI eğitimleri & politikaları",
+            body:
+              "Ekiplerinize AI'ı güvenli ve verimli kullanmayı öğretiyoruz. Yazılı yönergeler, role özel playbook'lar, KVKK/DSGVO-uyumlu kurulum — Shadow IT yok.",
+            tag: "EĞİTİM · POLİTİKA · KVKK/DSGVO",
+            linkLabel: "AI eğitimi detayları",
+          },
+        ],
+      },
+      process: {
+        eyebrow: "[ NASIL ÇALIŞIYORUZ ]",
+        headline: "Bir proje nasıl ilerler",
+        lead:
+          "Her hizmet alanında aynı yaklaşım: önce haritala, dar kapsamda planla, tek bir şeyi düzgün teslim et.",
+        steps: [
+          {
+            num: "01",
+            title: "Tanışma görüşmesi",
+            body:
+              "30–60 dakika. Ekibin nerede zaman kaybettiğini ve günlük işin gerçekte nasıl göründüğünü dinliyoruz.",
+          },
+          {
+            num: "02",
+            title: "Analiz & teklif",
+            body:
+              "İlgili iş akışlarını yazıya döker, otomasyon adaylarını puanlar, önce yapılmaya değer en küçük işi öneririz.",
+          },
+          {
+            num: "03",
+            title: "Uygulama",
+            body:
+              "İşi tek başına ya da ekibinizle yapıyoruz — ve sadece değerini koruduğu yerde genişletiyoruz. Kaynak kodu sizde kalır.",
+          },
+        ],
+      },
+      faq: {
+        eyebrow: "[ SSS ]",
+        headline: "Hizmetler hakkında sık sorulanlar",
+        items: [
+          {
+            q: "Tek bir hizmet alanı seçmek zorunda mıyız?",
+            a: "Hayır. Çoğu proje iki-üç alana yayılır — bir AI use case'i etrafında genelde otomasyon gerekir, custom bir tool genelde eğitim gerektirir. Hizmet kataloğuna uyanı değil, gerçekten işe yarayanı planlıyoruz.",
+          },
+          {
+            q: "Ücretlendirme nasıl?",
+            a: "Ya teslim başına sabit fiyat (AI Automation Check, pilot workflow, eğitim günü) ya da sürekli iyileştirme için küçük aylık retainer. Fiyat istek üzerine — kapsam ve ekip büyüklüğüne bağlı.",
+          },
+          {
+            q: "Mevcut araçlarımızı kullanmaya devam edebilir miyiz?",
+            a: "Evet. Microsoft 365, Google Workspace, CRM'iniz, ERP'niz — workflow'u taşıyabildiği her yerde zaten ödediğiniz şeyi kullanıyoruz.",
+          },
+          {
+            q: "Veriler nerede barındırılıyor?",
+            a: "Varsayılan olarak sadece AB — Frankfurt veya diğer AB bölgeleri. Müşteri verisine dokunan her projeden önce AVV (Auftragsverarbeitungsvertrag) imzalanır.",
+          },
+          {
+            q: "Sıfırdan mı geliştirirsiniz, yoksa platform mu kullanırsınız?",
+            a: "İkisi de — Power Automate, Make veya n8n işi görüyorsa onları kullanırız. Yapamıyorsa küçük Python servisleri, Next.js araçları veya custom entegrasyonlar inşa ederiz.",
+          },
+        ],
+      },
+      finalCta: {
+        eyebrow: "[ İLK ADIM ]",
+        title: {
+          pre: "Hangi hizmetin ",
+          italic: "size en uygun olduğundan",
+          post: " emin değil misiniz?",
+        },
+        lead:
+          "AI & Automation Check veya ücretsiz bir tanışma görüşmesi ile başlayın. Hangi alanın sizde en büyük kaldıraca sahip olduğunu — sorduğunuz alan olmasa bile — dürüstçe söyleriz.",
+        ctaPrimary: "AI Automation Check talep et",
+        ctaSecondary: "Tanışma görüşmesi planla",
+      },
+    },
+
+    services: {
+      shared: {
+        whatWeDoEyebrow: "[ NE YAPIYORUZ ]",
+        useCasesEyebrow: "[ KULLANIM SENARYOLARI ]",
+        toolsEyebrow: "[ ARAÇLAR & STACK ]",
+        processEyebrow: "[ NASIL İLERLİYOR ]",
+        faqEyebrow: "[ SSS ]",
+        finalCtaEyebrow: "[ SONRAKİ ADIM ]",
+        backToServices: "Tüm hizmetler",
+      },
+      kiBeratung: {
+        slug: "ki-beratung",
+        meta: {
+          title: "KOBİ'ler için AI Danışmanlığı — Use Cases, Risk, Yol Haritası | OpSolid",
+          description:
+            "Almanya'daki KOBİ'lere AI danışmanlığı. Değerli AI kullanım senaryolarını belirliyoruz, faydayı riskle tartıyoruz ve karar verilebilir bir yol haritası teslim ediyoruz. Veri koruması odaklı.",
+        },
+        hero: {
+          metaChip: "AI DANIŞMANLIĞI",
+          metaLabel: "[ HİZMET · 01 / 05 ]",
+          title: {
+            pre: "Hangi AI ",
+            italic: "şirketiniz için gerçekten değer üretir",
+            post: "?",
+          },
+          lead:
+            "Şu anda her departmana AI satılıyor — ama emeği, maliyeti ve riski hak eden use case'ler az. Farkı görmenize yardım eder, yönetime karşı gerçekten savunabileceğiniz bir yol haritası üretiriz.",
+          ctaPrimary: "Tanışma görüşmesi planla",
+          ctaSecondary: "AI Automation Check ile başla",
+        },
+        whatWeDo: {
+          headline: "OpSolid ile AI danışmanlığı nasıl görünür",
+          bullets: [
+            "Şirketinize uyan üç ila beş AI use case belirleriz — uymayanları net şekilde ekarte ederiz.",
+            "Her use case'i beklenen değer, uygulama eforu ve operasyonel risk açısından puanlarız.",
+            "Net sahipler, maliyetler ve karar noktalarıyla 6–12 aylık AI yol haritasını yazıya dökeriz.",
+            "DSGVO/KVKK uyumlu AI kullanımını kurarız: model seçimi, veri konumu ve kısa şirket politikası.",
+          ],
+        },
+        useCases: {
+          headline: "Daha önce danıştığımız veya planladığımız işler",
+          items: [
+            {
+              title: "Doküman ve sözleşme analizi",
+              body: "Uzun PDF'leri ön-sınıflandırma, maddeleri çıkarma, son tarihleri yüzeye çıkarma — insanlar dokümanı değil özeti inceler.",
+            },
+            {
+              title: "Şirket içi bilgi araması",
+              body: "Kendi politikalarınızı, SSS'lerinizi ve SharePoint'inizi indekslersiniz — personel cevapları kamu ChatGPT'sinden değil sizin dokümanlarınızdan alır.",
+            },
+            {
+              title: "Teklif ve proposal taslakları",
+              body: "Şablon, CRM kaydı ve kısa brief'ten özel teklifler taslakla — satış sıfırdan yazmak yerine inceler.",
+            },
+            {
+              title: "Destek triage ve yönlendirme",
+              body: "Gelen talepleri konu ve aciliyete göre sınıflandır — insan kuyruğuna düşmeden önce.",
+            },
+          ],
+        },
+        tools: {
+          headline: "Çalıştığımız modeller, sağlayıcılar ve framework'ler",
+          items: [
+            "OpenAI · GPT-4 ailesi",
+            "Anthropic · Claude",
+            "Microsoft Copilot · Azure OpenAI",
+            "Mistral · open-source seçenekler",
+            "Retrieval-Augmented Generation (RAG)",
+            "Vektör veritabanları · pgvector · Qdrant",
+            "DSGVO-uyumlu AB hosting",
+          ],
+        },
+        process: {
+          headline: "AI danışmanlığı projesi nasıl ilerler",
+          steps: [
+            { num: "01", title: "Keşif", body: "Ekip, veri ve hedefleri anlamak için kısa görüşme." },
+            { num: "02", title: "Use case puanlama", body: "Workshop ve yazılı analiz: hangi AI use case'leri sizin için değerli, hangileri değil." },
+            { num: "03", title: "Yol haritası & politika", body: "Karar verilebilir 6–12 aylık yol haritası ve kısa şirket içi yazılı AI politikası." },
+          ],
+        },
+        faq: {
+          headline: "AI danışmanlığı — sık sorulanlar",
+          items: [
+            { q: "„AI-ready“ olmamız gerekir mi?", a: "Hayır. Çoğu müşteri değil — zaten bu yüzden tool'lara para harcamadan önce bu işin yapılması gerekiyor." },
+            { q: "AI tool'u satıyor musunuz?", a: "Hayır. Bağımsızız — neyin uygun olduğunu, „elinizdekini kullanın“ veya „bunu henüz yapmayın“ dahil, öneririz." },
+            { q: "AI'ı DSGVO uyumlu kullanmak mümkün mü?", a: "Evet, doğru model seçimi, AB hosting ve yazılı politika ile. Başından itibaren bunu kurmanıza yardım ederiz." },
+            { q: "Bir danışmanlık projesi ne kadar sürer?", a: "Analiz ve yol haritası için tipik olarak iki-dört hafta. Uygulama süreleri ayrı ve kapsama bağlı." },
+          ],
+        },
+        finalCta: {
+          title: { pre: "Hangi AI use case'leri ", italic: "sizin için değerli olduğunu", post: " öğrenin." },
+          lead: "Bir görüşme. Bir dürüst yol haritası. Platform satışı yok.",
+          ctaPrimary: "Tanışma görüşmesi planla",
+          ctaSecondary: "AI Automation Check ile başla",
+        },
+      },
+      prozessautomatisierung: {
+        slug: "prozessautomatisierung",
+        meta: {
+          title: "KOBİ'ler için Süreç Otomasyonu — Power Automate, Make, Python | OpSolid",
+          description:
+            "Manuel workflow'ları otomatikleştirin — teklifler, faturalar, doküman üretimi, e-posta yönlendirme, veri senkronizasyonu. Zaten ödediğiniz araçlar üzerinde. DSGVO-native.",
+        },
+        hero: {
+          metaChip: "SÜREÇ OTOMASYONU",
+          metaLabel: "[ HİZMET · 02 / 05 ]",
+          title: {
+            pre: "Artık ",
+            italic: "kimsenin elle yapmaması gereken",
+            post: " manuel görevler",
+          },
+          lead:
+            "Yarım gün süren teklifler. Her pazartesi sıfırdan kurulan raporlar. Excel, CRM ve e-posta arasında kopyalanan veriler. Bu workflow'ları haritalandırırız, otomasyona değen kısımları otomatikleştiririz — geri kalanı insanlara bırakırız.",
+          ctaPrimary: "Tanışma görüşmesi planla",
+          ctaSecondary: "AI Automation Check ile başla",
+        },
+        whatWeDo: {
+          headline: "OpSolid ile süreç otomasyonu nasıl görünür",
+          bullets: [
+            "Workflow'u uçtan uca haritalandır — devirler, araçlar, veri, istisnalar — ekibin denetleyebileceği netlikte.",
+            "Hangi adımların otomasyona değdiğini ve hangilerinin bilinçli olarak manuel kalması gerektiğini belirle.",
+            "Otomasyonu Power Automate, Make, n8n, Python veya custom kodla — hangisi uyuyorsa — inşa et.",
+            "İzleme, dokümantasyon ve devir — workflow'u sonrasında ekibin sahiplenir.",
+          ],
+        },
+        useCases: {
+          headline: "Otomatikleştirdiğimiz workflow'lar",
+          items: [
+            {
+              title: "Teklif ve doküman üretimi",
+              body: "CRM verisinden doldurulmuş, workflow'da onaylanmış ve gönderilmiş şablonlar — teklifler aynı gün çıkar.",
+            },
+            {
+              title: "E-posta sınıflandırma ve yönlendirme",
+              body: "Gelen postalar konuya göre etiketlenir ve doğru inbox veya ticket kuyruğuna gönderilir — manuel triage yok.",
+            },
+            {
+              title: "Raporlama ve Excel otomasyonu",
+              body: "Tekrarlayan raporlar bir kez kurulur ve otomatik yeniden oluşturulur — KPI'lar toplantı başladığında hazır.",
+            },
+            {
+              title: "CRM / ERP veri senkronizasyonu",
+              body: "Veri sistemler arasında bir kez akar ve kendini eşler — çift giriş yok.",
+            },
+          ],
+        },
+        tools: {
+          headline: "Otomasyonda kullandığımız araçlar",
+          items: [
+            "Microsoft Power Automate",
+            "Make (Integromat)",
+            "n8n · self-hosted",
+            "Zapier · uyuyorsa",
+            "Python · custom script'ler",
+            "REST API'leri · Webhook'lar",
+            "PostgreSQL · dosya storage · queue'lar",
+          ],
+        },
+        process: {
+          headline: "Süreç otomasyonu projesi nasıl ilerler",
+          steps: [
+            { num: "01", title: "Haritala", body: "İşi gerçekten yapan ekiple workshop. Workflow'u gerçekte nasıl ilerlediğini yazıya dökeriz." },
+            { num: "02", title: "İnşa et", body: "İlk pilot otomasyonu uygularız — genelde iki-dört hafta içinde." },
+            { num: "03", title: "İşlet", body: "Dokümantasyon, devir ve siz devralmadan önce kısa bir iyileştirme süresi." },
+          ],
+        },
+        faq: {
+          headline: "Süreç otomasyonu — sık sorulanlar",
+          items: [
+            { q: "Tipik bir ilk proje nedir?", a: "Yüksek kaldıraçlı tek bir workflow — teklif üretimi, e-posta triage'ı veya haftalık rapor. Sabit kapsam, iki-dört hafta." },
+            { q: "Araçlarımızı değiştirmemiz gerekir mi?", a: "Hayır. Sahip olduğunuz şey üzerinde otomatikleştiririz — Microsoft 365, Google Workspace, CRM'iniz, ERP'niz." },
+            { q: "Süreç sonradan değişirse?", a: "Çoğu otomasyon, kendi IT ekibinizin uyarlayabileceği şekilde dokümanlanır. Daha büyük değişiklikler için küçük aylık retainer önerebiliriz." },
+            { q: "Kritik süreçleri otomatikleştirmek güvenli mi?", a: "Evet — düzgün logging, hata yönetimi ve manuel fallback ile. Sadece mutlu yolu değil, hata durumunu da tasarlarız." },
+          ],
+        },
+        finalCta: {
+          title: { pre: "Otomatikleştirmeye ", italic: "değen ilk workflow'u", post: " seçin." },
+          lead: "Haritalandırır, puanlar ve emeği hak edip etmediğini dürüstçe söyleriz.",
+          ctaPrimary: "Tanışma görüşmesi planla",
+          ctaSecondary: "AI Automation Check ile başla",
+        },
+      },
+      microsoft365: {
+        slug: "microsoft-365-automatisierung",
+        meta: {
+          title: "Microsoft 365 Otomasyonu — Power Automate, SharePoint, Teams | OpSolid",
+          description:
+            "Microsoft 365 içindeki workflow'ları otomatikleştirin: Power Automate flow'ları, SharePoint doküman kütüphaneleri, Teams onayları, Outlook yönlendirme. AB-hostlu, veri koruması odaklı.",
+        },
+        hero: {
+          metaChip: "MICROSOFT 365 OTOMASYONU",
+          metaLabel: "[ HİZMET · 03 / 05 ]",
+          title: {
+            pre: "Microsoft 365 zaten her masada — ",
+            italic: "şimdi sizin için çalışmasını sağlayın",
+            post: "",
+          },
+          lead:
+            "Teams, SharePoint, Outlook ve Power Automate zaten ödenmiş. Doğru kurulumla, üstüne satın alacağınız üçüncü taraf otomasyon araçlarının çoğunu da kapsar — daha az abonelik, tek bir kimlik, tek bir audit trail.",
+          ctaPrimary: "Tanışma görüşmesi planla",
+          ctaSecondary: "AI Automation Check ile başla",
+        },
+        whatWeDo: {
+          headline: "OpSolid ile Microsoft 365 otomasyonu nasıl görünür",
+          bullets: [
+            "Mevcut Microsoft 365 tenant'ınızı auditle ve ekibin henüz kullanmadığı otomasyon fırsatlarını belirle.",
+            "Onaylar, doküman üretimi, e-posta yönlendirme ve bildirimler için Power Automate flow'ları inşa et.",
+            "SharePoint, Teams, Outlook ve Excel'i bir araya getir — veriler yedi kopyada değil tek bir yerde yaşasın.",
+            "Microsoft 365 Copilot'u sorumlu şekilde kur — rol bazlı erişim ve net yönergelerle.",
+          ],
+        },
+        useCases: {
+          headline: "İnşa ettiğimiz Microsoft 365 workflow'ları",
+          items: [
+            {
+              title: "Teams'te onay workflow'ları",
+              body: "İzin talepleri, harcama raporları, doküman imzaları — Teams'te onaylanır, SharePoint'te loglanır.",
+            },
+            {
+              title: "SharePoint listelerinden doküman üretimi",
+              body: "SharePoint listesinden üretilen teklifler, sözleşmeler ve raporlar — Excel'den copy-paste yok.",
+            },
+            {
+              title: "Outlook e-posta parsing ve yönlendirme",
+              body: "Gelen siparişler, destek talepleri veya faturalar otomatik parse edilir ve doğru sisteme aktarılır.",
+            },
+            {
+              title: "Microsoft 365 Copilot rollout",
+              body: "Yönergeler, rol bazlı erişim ve kısa eğitim — Copilot gerçekten kullanılsın ve güvenle kullanılsın.",
+            },
+          ],
+        },
+        tools: {
+          headline: "Çalıştığımız Microsoft teknolojileri",
+          items: [
+            "Microsoft Power Automate",
+            "Power Apps · low-code app'ler",
+            "SharePoint Online · Listeler · Kütüphaneler",
+            "Microsoft Teams · Bot'lar · Approval'lar",
+            "Outlook · Exchange",
+            "Microsoft Graph API",
+            "Microsoft 365 Copilot",
+            "Entra ID (Azure AD)",
+          ],
+        },
+        process: {
+          headline: "Microsoft 365 projesi nasıl ilerler",
+          steps: [
+            { num: "01", title: "Tenant incelemesi", body: "Mevcut lisanslarınıza, security setup'ınıza ve araçlarınıza bakarız — yetersiz kullanılanı buluruz." },
+            { num: "02", title: "İlk flow", body: "Pilot olarak ilk Power Automate flow'unu veya Teams workflow'unu inşa ederiz — genelde iki hafta içinde." },
+            { num: "03", title: "Rollout", body: "Dokümantasyon, devir ve IT ekibiniz için opsiyonel eğitimle daha geniş rollout." },
+          ],
+        },
+        faq: {
+          headline: "Microsoft 365 otomasyonu — sık sorulanlar",
+          items: [
+            { q: "Power Automate Premium lisansı gerekir mi?", a: "Bazen — ama yararlı flow'ların çoğu standart Microsoft 365 planlarıyla çalışır. Premium'a ne zaman gerçekten ihtiyaç duyduğunuzu dürüstçe söyleriz." },
+            { q: "Microsoft 365 Copilot değer mi?", a: "Bazı ekipler için evet, bazıları için hayır. Lisansları satın almadan önce karar vermenize yardım ederiz." },
+            { q: "IT departmanımızla çalışabilir misiniz?", a: "Evet — projelerin çoğu IT'niz veya mevcut Microsoft partnerlerinizden biriyle yürütülür. Tamamlarız, yerine geçmeyiz." },
+            { q: "DSGVO uyumlu mu?", a: "AB tenant konfigürasyonundaki Microsoft 365 DSGVO uyumludur. Doğru kurar ve veri akışlarını dokümanlarız." },
+          ],
+        },
+        finalCta: {
+          title: { pre: "Microsoft 365'ten ", italic: "daha fazla tool satın almadan", post: " daha çok faydalanın." },
+          lead: "Bir görüşme. Mevcut tenant'ınızda neyi otomatikleştirmenin değerli olduğunu — bir abonelik daha eklemeden önce — söyleriz.",
+          ctaPrimary: "Tanışma görüşmesi planla",
+          ctaSecondary: "AI Automation Check ile başla",
+        },
+      },
+      interneTools: {
+        slug: "interne-tools",
+        meta: {
+          title: "İç Araçlar & Entegrasyonlar — Admin Panelleri, Dashboard'lar | OpSolid",
+          description:
+            "KOBİ'lere küçük, odaklı iç araçlar: admin konsolları, onay kuyrukları, dashboard'lar, bilgi tabanları. Mevcut sistemlerinizin üzerinde inşa edilmiş. AB-hostlu.",
+        },
+        hero: {
+          metaChip: "İÇ ARAÇLAR",
+          metaLabel: "[ HİZMET · 04 / 05 ]",
+          title: {
+            pre: "SaaS'ın uymadığı yerlerde ",
+            italic: "küçük bir custom tool",
+            post: " işi görür",
+          },
+          lead:
+            "Her iç iş €500/ay'lık platforma ihtiyaç duymaz. Bazen küçük bir custom admin panel, bir onay kuyruğu veya bir dashboard sorunu daha iyi, daha ucuz ve daha hızlı çözer — ve sizin mülkünüz olarak kalır.",
+          ctaPrimary: "Tanışma görüşmesi planla",
+          ctaSecondary: "AI Automation Check ile başla",
+        },
+        whatWeDo: {
+          headline: "Ne inşa ediyoruz",
+          bullets: [
+            "Operations ekipleri için iç admin konsolları — net, odaklı, şişkinlik yok.",
+            "Mevcut veri kaynaklarınızın üzerinde dashboard'lar — KPI'lar, istisnalar ve uyarılar tek görünümde.",
+            "Gerçek sürecinize uyan onay kuyrukları, iç formlar, eskalasyon flow'ları.",
+            "İç bilgi tabanları — kendi dokümanlarınız, politikalarınız ve SSS'lerinizde arama.",
+          ],
+        },
+        useCases: {
+          headline: "İnşa ettiğimiz iç araçlar",
+          items: [
+            {
+              title: "Operations admin konsolu",
+              body: "Sipariş özeti, istisna yönetimi, müşteri notları — üç sekme yerine tek bir yer.",
+            },
+            {
+              title: "İç KPI dashboard'u",
+              body: "CRM, ERP ve finans sisteminden günlük, haftalık ve aylık sayılar — bir analistin her hafta tabloyu yeniden kurmasına gerek kalmadan.",
+            },
+            {
+              title: "Onay ve eskalasyon kuyruğu",
+              body: "Teklifler, sözleşmeler veya iadeler kuyruklanır, yönlendirilir ve net audit trail ile onaylanır.",
+            },
+            {
+              title: "İç AI bilgi tabanı",
+              body: "Kendi dokümanlarınız, politikalarınız ve SSS'lerinizde arama — cevaplar organizasyonunuzun içinde kalır.",
+            },
+          ],
+        },
+        tools: {
+          headline: "Tech stack",
+          items: [
+            "Next.js · React · TypeScript",
+            "Node.js · Python",
+            "PostgreSQL · Supabase",
+            "REST · GraphQL · Webhook'lar",
+            "Auth0 · Microsoft Entra ID · SSO",
+            "Hetzner · IONOS · Vercel · AB hosting",
+            "GitHub · CI/CD · audit log'lar",
+          ],
+        },
+        process: {
+          headline: "İç araç projesi nasıl ilerler",
+          steps: [
+            { num: "01", title: "Spesifikasyon", body: "Tool'un ne yapması gerektiğini — ve yapmaması gerektiğini — kısa workshop ile yazıya döker." },
+            { num: "02", title: "İnşa et", body: "Üç-altı haftada pilot sürüm. Gerçek kullanıcılar, gerçek veri, hızlı iyileştirme." },
+            { num: "03", title: "İşlet", body: "Dokümantasyon, kaynak kodu ve süregelen iyileştirme isterseniz küçük retainer ile devir." },
+          ],
+        },
+        faq: {
+          headline: "İç araçlar — sık sorulanlar",
+          items: [
+            { q: "Custom tool gerçekten SaaS'tan daha mı ucuz?", a: "Spesifik, dar problemler için — genelde evet. Özellikle SaaS adoption düşükse veya tool tek tip bir sürece uymak zorundaysa." },
+            { q: "Kodu kim sahiplenir?", a: "Siz. Kaynak kodu, şemalar ve runbook'lar birinci günden itibaren sizindir." },
+            { q: "Sonradan değiştirmek istersek?", a: "Yapabilirsiniz — kendi içinizde, başka bir sağlayıcıyla veya bizimle. Lock-in yok." },
+            { q: "Mevcut sistemlerimizle entegre olur mu?", a: "Evet — genelde tüm mesele budur. CRM, ERP, Microsoft 365, depo sisteminiz." },
+          ],
+        },
+        finalCta: {
+          title: { pre: "Ekibinize ", italic: "uyan bir tool", post: " edinin." },
+          lead: "Bir görüşme. Custom iç bir tool'un doğru hamle olup olmadığını — veya konfigüre edilmiş bir SaaS'ın yeterli olup olmayacağını — söyleriz.",
+          ctaPrimary: "Tanışma görüşmesi planla",
+          ctaSecondary: "AI Automation Check ile başla",
+        },
+      },
+      kiSchulungen: {
+        slug: "ki-schulungen",
+        meta: {
+          title: "KOBİ'lere AI Eğitimleri & Politikaları — Güvenli, Verimli AI Kullanımı | OpSolid",
+          description:
+            "KOBİ ekipleri için pratik AI eğitimleri: AI'ın günlük işte nasıl güvenli ve verimli kullanılacağı. Yazılı yönergeler, role özel playbook'lar, DSGVO-uyumlu kurulum.",
+        },
+        hero: {
+          metaChip: "AI EĞİTİMLERİ",
+          metaLabel: "[ HİZMET · 05 / 05 ]",
+          title: {
+            pre: "Ekibiniz. AI ile ",
+            italic: "daha güvenli ve hızlı",
+            post: ".",
+          },
+          lead:
+            "Ekibinizin yarısı zaten Shadow IT'de ChatGPT kullanıyor. Yönerge yoksa bu bir veri koruması ve kalite sorunu. Varsa, bir verimlilik artışı. Kuralları kurmanıza ve insanları eğitmenize yardım ederiz.",
+          ctaPrimary: "Tanışma görüşmesi planla",
+          ctaSecondary: "AI Automation Check ile başla",
+        },
+        whatWeDo: {
+          headline: "Bir AI eğitimi neleri kapsar",
+          bullets: [
+            "Günlük görevler için pratik AI workshop'ları — taslak, özetleme, sınıflandırma, yapılandırma.",
+            "Satış, destek, finans, İK için role özel playbook'lar — „ChatGPT ile nasıl konuşulur“ tarzı jenerik sunumlar değil.",
+            "Şirket için yazılı AI politikaları ve acceptable-use policy — kısa, okunabilir, uygulanabilir.",
+            "DSGVO uyumlu AI kurulumu: model seçimi, veri konumu, audit trail ve çalışanların ne yapıştırabileceği / yapıştıramayacağı.",
+          ],
+        },
+        useCases: {
+          headline: "Daha önce yürüttüğümüz eğitim formatları",
+          items: [
+            {
+              title: "Şirket çapında AI temeli",
+              body: "Tüm personel için yarım günlük oturum: AI ne yapabilir, ne yapamaz; nerede yardım eder, nerede zarar verir.",
+            },
+            {
+              title: "Departmana özel workshop'lar",
+              body: "Satış, destek, finans, İK — her biri role özel prompt'lar ve örnek workflow'larla.",
+            },
+            {
+              title: "Liderlik briefing'i",
+              body: "Yönetim ekibi için odaklı iki saatlik oturum — prompt syntax'ı değil, stratejik etkiler.",
+            },
+            {
+              title: "AI politika rollout'u",
+              body: "Yazılı policy, iç Q&A ve kısa e-learning modülü — kurallar gerçekten yerleşsin diye.",
+            },
+          ],
+        },
+        tools: {
+          headline: "Eğittiğimiz araçlar ve platformlar",
+          items: [
+            "ChatGPT · GPT-4 ailesi",
+            "Microsoft 365 Copilot",
+            "Claude · Anthropic",
+            "Google Gemini · Workspace",
+            "Notion AI · Slack AI",
+            "İç RAG / chat asistanları",
+            "DSGVO best practice · audit logging",
+          ],
+        },
+        process: {
+          headline: "Bir eğitim projesi nasıl ilerler",
+          steps: [
+            { num: "01", title: "Audit", body: "Kısa görüşme turu: kim AI'ı zaten kullanıyor, nasıl, riskler nerede." },
+            { num: "02", title: "Uyarla", body: "Eğitimi sektörünüze, araçlarınıza ve gerçek use case'lerinize uyarlarız — hazır slayt yok." },
+            { num: "03", title: "Yay", body: "Workshop'lar, yazılı politika, iç Q&A — ve sekiz hafta sonra opsiyonel follow-up." },
+          ],
+        },
+        faq: {
+          headline: "AI eğitimleri — sık sorulanlar",
+          items: [
+            { q: "Tipik bir eğitim ne kadar sürer?", a: "Tüm personel için yarım gün; departmana özel deep-dive için bir-iki tam gün." },
+            { q: "Almanca eğitim veriyor musunuz?", a: "Evet — Almanca ve İngilizce. Türkçe talep üzerine." },
+            { q: "Bir online kurstan farkı ne?", a: "Hipotetik örneklerle değil, gerçek workflow'larınız, araçlarınız ve verilerinizle eğitiyoruz. İnsanlar gerçekten kullandıklarını hatırlar." },
+            { q: "AI politikasını da yazıyor musunuz?", a: "Evet — kısa, okunabilir, uygulanabilir. Sektörünüze ve araçlarınıza uyarlanmış, 30 sayfalık hukuki doküman değil." },
+          ],
+        },
+        finalCta: {
+          title: { pre: "Ekibinize AI'ı ", italic: "güvenli ve verimli", post: " kullanmasına yardım edin." },
+          lead: "Bir görüşme. Standart bir webinar değil, ekibinize gerçekten uyan bir eğitim formatı öneririz.",
+          ctaPrimary: "Tanışma görüşmesi planla",
+          ctaSecondary: "AI Automation Check ile başla",
+        },
+      },
+    },
+
     voiceAgent: {
       hero: {
         metaChip: "VOICE AGENT",
@@ -4232,41 +4823,65 @@ export const content: Content = {
 
     about: {
       meta: {
-        title: "Hakkımızda — OpSolid · Bağımsız otomasyon stüdyosu | Hamburg",
-        description: "OpSolid bağımsız bir otomasyon stüdyosudur. Hamburg'da Hasan Dönmez tarafından kuruldu. Alman mid-market B2B için operasyonel sistemler kuruyoruz — voice, chat, entegrasyon ve workflow otomasyonu. EU-hostlu, kaynak kodu sizde.",
+        title: "Hakkımda — Hasan Dönmez | OpSolid",
+        description:
+          "OpSolid Hasan Dönmez tarafından yürütülüyor — Almanya'daki KOBİ'lere yönelik pratik AI ve otomasyon danışmanlığı. IT proje yönetimi, dijitalleşme ve süreç optimizasyonunda geçmiş.",
       },
       hero: {
-        eyebrow: "[ HAKKIMIZDA · 2026 ]",
-        title: { pre: "Bağımsız bir otomasyon stüdyosu, ", italic: "sonuç odaklı kurulmuş", post: ", platform odaklı değil" },
-        lead: "OpSolid, off-the-shelf SaaS'ın ulaşamadığı operasyonel işi yapmak için kuruldu: ERP'nizi CRM'inize bağlayan entegrasyonu inşa etmek, sektörünüzün dilinde gece çağrılarını alan voice ajanını yapılandırmak ve 40 saat manuel veri girişini 40 dakika istisna incelemesine çeviren workflow'u teslim etmek. Alman mid-market B2B, EU-hostlu, kaynak kodu sizde.",
+        eyebrow: "[ HAKKIMDA · 2026 ]",
+        title: {
+          pre: "Pratik, uygulanabilir ve ",
+          italic: "ölçülebilir",
+          post: " dijital çözümler",
+        },
+        lead:
+          "OpSolid, Hasan Dönmez'in bağımsız danışmanlık pratiğidir. Odak: Almanya'daki KOBİ'lere yönelik AI, süreç otomasyonu ve dijital workflow'lar — yıllarca süren pratik IT proje yönetimi, dijitalleşme ve süreç optimizasyonu çalışmalarına dayanıyor.",
         primaryCta: "Tanışma görüşmesi planla",
-        secondaryCta: "Fiyatları gör",
+        secondaryCta: "Hizmetleri gör",
       },
       principles: {
-        eyebrow: "[ NASIL ÇALIŞIYORUZ ]",
+        eyebrow: "[ NASIL ÇALIŞIYORUM ]",
         heading: "Dört prensip, dürüstçe tutulmuş",
         items: [
-          { n: "01", title: "Sahte metrik yok", body: "Ölçmediğimiz müşteri sayılarını, kazanılan saatleri veya başarı oranlarını yayınlamıyoruz. Sayılar elimizde olduğunda göstereceğiz. O zamana kadar case study'ler spesifik kalır, sayfanın geri kalanı sessiz." },
-          { n: "02", title: "Kaynak kodu sizde kalır", body: "Her engagement size başka bir sağlayıcıya götürebileceğiniz kod, şema ve runbook bırakır. Tasarım gereği vendor lock-in yok — sizi bu projede tutmaktansa bir sonraki projeyi kazanmayı tercih ederiz." },
-          { n: "03", title: "Önce açık kaynak, hak edince SaaS", body: "Cal.com, Postgres, Hetzner, Node — açık kaynak omurgayı çalıştığı yerde kullanırız. Operasyonel olarak mantıklıysa SaaS için (Twilio, Stripe, Meta WABA) öderiz ve maliyetini faturanızda şeffaf yaparız." },
-          { n: "04", title: "EU-hostlu, GDPR-uyumlu", body: "Sadece Frankfurt. ABD subprocessor yok. Müşteri verisine dokunan her engagement'ta AVV (Auftragsverarbeitungsvertrag). Verileriniz, saklama kurallarınız, silme hakkınız." },
+          {
+            n: "01",
+            title: "Stratejiden önce pratik",
+            body: "Ekibe gerçekten zaman kaybettiren tek bir workflow ile başlarız — çeyreklik strateji sunumuyla değil. Strateji, daha ileri planlama hakkını kazandığımızda gelir.",
+          },
+          {
+            n: "02",
+            title: "Ölçülebilir sonuçlar",
+            body: "Her engagement bir baseline ile başlar (görev başına süre, hata oranı, döngü süresi) ve aksiyona dönüşebilir bir sayıyla biter. Tiyatro yok, buzzword raporu yok.",
+          },
+          {
+            n: "03",
+            title: "Veri koruması varsayılan",
+            body: "AB hosting, DSGVO-native altyapı, müşteri verisine dokunan projelerden önce AVV imzası. Audit ve compliance ilk günden itibaren takip edebilir.",
+          },
+          {
+            n: "04",
+            title: "Kaynak kodu sizde kalır",
+            body: "Her engagement size başka bir sağlayıcıya götürebileceğiniz kod, şema ve dokümantasyon bırakır. Tasarım gereği vendor lock-in yok.",
+          },
         ],
       },
       founder: {
         eyebrow: "[ KURUCU ]",
         heading: "Hasan Dönmez",
         body: [
-          "OpSolid, Hamburg'dan otomasyon ve systems engineer Hasan Dönmez tarafından kuruldu ve yürütülüyor. KOBİ ve mid-market için operasyonel yazılım geçmişi: bu sitenin şimdi ürün olarak sunduğu entegrasyon, ajan ve dashboard'ları inşa etmekle geçmiş bir on yıl.",
-          "OpSolid Solidra olarak başladı, operasyonel otomasyon odağı etrafında yeniden markalaştı. Stüdyo bilinçli olarak küçük: kıdemli engineering işi katmanlara delege edilmeden doğrudan teslim edilir. Bir call rezerve ederseniz, işi yapacak kişiyle konuşursunuz.",
+          "Tam zamanlı IT proje yöneticisi olarak çalışıyorum ve yan tarafta OpSolid'i AI ve otomasyon için bağımsız bir danışmanlık pratiği olarak kuruyorum. Bu kombinasyon bilinçli: gündüz, dijitalleşme projelerinin orta ölçekli şirketlerde gerçekte nasıl yürüdüğünü görüyorum — kısıtları, politikası, eski sistemleri ve gerçek ekipleriyle — ve bu perspektifi OpSolid projelerine taşıyorum.",
+          "Geçmiş: IT proje yönetimi, dijitalleşme ve süreç optimizasyonunda pratik deneyim. Odak: Almanya'daki küçük ve orta ölçekli işletmeler — iç sistemlerinden hızlı büyümüş ve platform pitch'i değil, ölçülebilir bir sonraki adım arayan şirketler.",
+          "OpSolid bilinçli olarak tek kişilik: bir görüşme rezerve ettiğinizde, işi yapacak kişiyle konuşuyorsunuz. Katman yok, junior teslimat yok, handoff yok.",
         ],
-        linkedinLabel: "LinkedIn'de şirket",
-        linkedinHref: "https://www.linkedin.com/company/opsolid/",
+        linkedinLabel: "LinkedIn'de Hasan",
+        linkedinHref: "https://www.linkedin.com/in/hasan-doenmez/",
       },
       contact: {
         eyebrow: "[ KONUŞMA BAŞLAT ]",
         heading: "Uyumlu olup olmadığımızı görmek için 20 dakika yeterli",
-        lead: "Ücretsiz discovery görüşmesi: bize bir operasyonel acı noktasını anlatın. Ürünlerimizden birinin uyup uymadığını, Custom Automation sprint'inin daha iyi cevap olup olmadığını veya yaptığınıza devam etmeniz gerektiğini söyleriz.",
-        cta: "Cal.com'da rezerve et",
+        lead:
+          "Ücretsiz tanışma görüşmesi: bana bir operasyonel acı noktasını anlatın. Size dürüstçe OpSolid'in uygun olup olmadığını, AI & Automation Check'in doğru ilk adım olup olmadığını ya da yaptığınıza devam etmeniz gerektiğini söylerim.",
+        cta: "Tanışma görüşmesi planla",
       },
     },
 

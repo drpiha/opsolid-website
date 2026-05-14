@@ -480,10 +480,264 @@
   line-height: 1.55;
 }
 
+/* ---------- /leistungen overview & service detail pages ----------------- */
+
+.os-leistungen-hero {
+  padding: clamp(4rem, 9vw, 7rem) 0 clamp(2rem, 5vw, 4rem);
+}
+
+.os-leistungen-hero h1 {
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  letter-spacing: -0.026em;
+  margin: 14px 0 18px;
+  max-width: 22ch;
+}
+
+.os-leistungen-hero .lead { max-width: 60ch; font-size: 1.05rem; }
+
+.os-services-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin-top: 40px;
+}
+
+.os-service-overview-card {
+  position: relative;
+  padding: 26px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: transform var(--dur-base, 280ms) var(--ease-snap, ease-out),
+              border-color var(--dur-base, 280ms) var(--ease-snap, ease-out);
+}
+
+.os-service-overview-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--line-firm);
+}
+
+.os-service-overview-card .os-service-link {
+  margin-top: auto;
+  padding-top: 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--copper-500);
+}
+
+.os-service-overview-card:hover .os-service-link { color: var(--copper-400); }
+
+/* Sub-service detail page */
+
+.os-service-hero {
+  padding: clamp(3.5rem, 8vw, 6.5rem) 0 clamp(2rem, 5vw, 4rem);
+}
+
+.os-service-hero h1 {
+  font-size: clamp(1.9rem, 4.8vw, 3.2rem);
+  letter-spacing: -0.026em;
+  margin: 14px 0 18px;
+  max-width: 22ch;
+}
+
+.os-service-hero .lead { max-width: 62ch; font-size: 1.05rem; }
+
+.os-service-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-400);
+  text-decoration: none;
+  margin-bottom: 18px;
+}
+.os-service-back-link:hover { color: var(--copper-500); }
+
+.os-service-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 32px 0 0;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  max-width: 72ch;
+}
+
+.os-service-bullets li {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 14px 18px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--ink-200);
+  font-size: 0.96rem;
+  line-height: 1.55;
+}
+
+.os-service-bullets li::before {
+  content: "→";
+  color: var(--copper-500);
+  flex: 0 0 16px;
+  font-family: var(--font-mono);
+  font-weight: 500;
+}
+
+.os-service-usecases {
+  list-style: none;
+  padding: 0;
+  margin: 36px 0 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+}
+
+.os-service-usecases > li {
+  padding: 22px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+}
+
+.os-service-usecases h3 {
+  font-size: 1rem;
+  margin: 0 0 6px;
+  color: var(--ink-100);
+  letter-spacing: -0.012em;
+}
+
+.os-service-usecases p {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--ink-300);
+  line-height: 1.55;
+}
+
+.os-tools-grid {
+  list-style: none;
+  padding: 0;
+  margin: 32px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.os-tools-grid li {
+  padding: 8px 14px;
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-200);
+}
+
+/* ---------- Über mich (about) refresh ----------------------------------- */
+
+.os-about-founder-monogram {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 88px;
+  height: 88px;
+  border-radius: 999px;
+  border: 1px solid var(--line-firm);
+  background: var(--bg-3);
+  font-family: var(--font-display, var(--font-mono));
+  font-size: 1.4rem;
+  letter-spacing: 0.02em;
+  color: var(--copper-500);
+  margin-bottom: 18px;
+}
+
+.os-founder-body { max-width: 66ch; }
+.os-founder-body p {
+  margin: 0 0 14px;
+  color: var(--ink-200);
+  line-height: 1.65;
+  font-size: 1.02rem;
+}
+
+/* ---------- Header dropdown (hybrid Leistungen nav) --------------------- */
+
+.os-nav-has-dropdown { position: relative; }
+
+.os-nav-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-4px);
+  margin-top: 4px;
+  min-width: 320px;
+  padding: 10px;
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 18px 38px rgba(0, 0, 0, 0.16);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 160ms ease, transform 160ms ease;
+  z-index: 60;
+}
+
+.os-nav-has-dropdown:hover > .os-nav-dropdown,
+.os-nav-has-dropdown:focus-within > .os-nav-dropdown {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.os-nav-dropdown-item {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--ink-100);
+  transition: background 160ms ease;
+}
+
+.os-nav-dropdown-item:hover,
+.os-nav-dropdown-item:focus-visible {
+  background: var(--bg-3);
+}
+
+.os-nav-dropdown-item-title {
+  display: block;
+  font-size: 0.94rem;
+  letter-spacing: -0.01em;
+}
+
+.os-nav-dropdown-item-sub {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--ink-400);
+}
+
+@media (max-width: 880px) {
+  .os-nav-dropdown { display: none; }
+}
+
 /* Smaller responsive tweaks. */
 @media (max-width: 720px) {
   .os-hero-benefits { gap: 10px; }
   .os-hero-benefit { padding: 6px 12px 6px 8px; font-size: 0.85rem; }
   .os-offer-card { padding: 28px 20px; }
   .os-offer-foot { flex-direction: column; align-items: flex-start; }
+  .os-services-overview-grid { gap: 14px; }
+  .os-service-bullets li { font-size: 0.92rem; }
 }
