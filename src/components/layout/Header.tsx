@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { usePathname } from "next/navigation";
@@ -9,33 +9,20 @@ import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { cn } from "@/lib/utils";
 import type { Locale } from "@/content";
 
-type NavKey = "home" | "products" | "journal" | "contact";
-
-type ProductChild = {
-  key: "voiceAgent" | "digitalCard" | "kutasia";
-  href: string;
-  match: RegExp;
-};
+type NavKey = "home" | "services" | "automationCheck" | "journal" | "contact";
 
 type NavItem = {
   key: NavKey;
   href: string;
   match: RegExp;
-  children?: ProductChild[];
 };
 
 const NAV_ITEMS: NavItem[] = [
   { key: "home", href: "/", match: /^\/(en|de|tr|es|it|fr|ar)?\/?$/ },
-  {
-    key: "products",
-    href: "/products/digital-card",
-    match: /\/products(\/|$)/,
-    children: [
-      { key: "voiceAgent", href: "/products/voice-agent", match: /\/products\/voice-agent/ },
-      { key: "digitalCard", href: "/products/digital-card", match: /\/products\/digital-card/ },
-      { key: "kutasia", href: "/products/kutasia", match: /\/products\/kutasia/ },
-    ],
-  },
+  // /leistungen full page is in a later milestone — for now jump to the
+  // homepage services anchor so the link never 404s.
+  { key: "services", href: "/#services", match: /\/leistungen/ },
+  { key: "automationCheck", href: "/ai-automation-check", match: /\/ai-automation-check/ },
   { key: "journal", href: "/blog", match: /\/blog/ },
   { key: "contact", href: "/contact", match: /\/contact/ },
 ];
@@ -49,29 +36,18 @@ const LOCALE_LABELS: Record<Locale, string> = {
   fr: "FR",
   ar: "AR",
 };
-const VISIBLE_LOCALES: Locale[] = ["en", "de", "tr", "es", "it", "fr", "ar"];
+const VISIBLE_LOCALES: Locale[] = ["de", "en", "tr"];
 
 export function Header() {
   const pathname = usePathname();
   const { locale, setLocale, t } = useLocale();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const [isProductsOpen, setIsProductsOpen] = useState(false);
-  const [isMobileProductsOpen, setIsMobileProductsOpen] = useState(false);
-  const productsRef = useRef<HTMLDivElement>(null);
   const navLabels = t.v2.nav;
-  const productsLabel = t.nav.products;
 
-  // Close mobile menu on route change.
   useEffect(() => {
     setIsMobileOpen(false);
-    setIsMobileProductsOpen(false);
-    setIsProductsOpen(false);
   }, [pathname]);
 
-  // Hardware/browser back button closes the mobile menu instead of leaving
-  // the site. Push a sentinel history entry on open; popstate (back) closes.
-  // Note: we do NOT call history.back() in cleanup — that previously undid
-  // SPA navigation when a link was tapped.
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (!isMobileOpen) return;
@@ -81,40 +57,11 @@ export function Header() {
     return () => window.removeEventListener("popstate", onPop);
   }, [isMobileOpen]);
 
-  // Desktop Products dropdown — close on click outside.
-  useEffect(() => {
-    if (!isProductsOpen) return;
-    const onClick = (e: MouseEvent) => {
-      if (productsRef.current && !productsRef.current.contains(e.target as Node)) {
-        setIsProductsOpen(false);
-      }
-    };
-    window.addEventListener("mousedown", onClick);
-    return () => window.removeEventListener("mousedown", onClick);
-  }, [isProductsOpen]);
-
-  // Desktop Products dropdown — close on Escape.
-  useEffect(() => {
-    if (!isProductsOpen) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setIsProductsOpen(false);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [isProductsOpen]);
-
   // Hide marketing chrome on customer self-service surfaces.
   if (pathname && /\/card\/edit\//.test(pathname)) return null;
 
-  const productItems = NAV_ITEMS.find((n) => n.key === "products")!.children!;
-
-  const labelFor = (key: NavKey): string => {
-    if (key === "products") return productsLabel;
-    return navLabels[key as "home" | "journal" | "contact"];
-  };
-
   return (
-    <header className="os-header safe-top" role="banner">
+    <header className="os-header" role="banner">
       <div className="os-header-inner">
         <Link href="/" className="os-brand" aria-label="OpSolid — home">
           <span className="os-brand-mark" aria-hidden="true" />
@@ -124,74 +71,13 @@ export function Header() {
         <nav className="os-nav" aria-label="Primary">
           {NAV_ITEMS.map((n) => {
             const active = n.match.test(pathname || "");
-
-            if (n.key === "products") {
-              return (
-                <div key={n.key} ref={productsRef} style={{ position: "relative" }}>
-                  <button
-                    type="button"
-                    onClick={() => setIsProductsOpen((v) => !v)}
-                    onMouseEnter={() => setIsProductsOpen(true)}
-                    aria-haspopup="menu"
-                    aria-expanded={isProductsOpen}
-                    className={cn("os-nav-link", active && "is-active")}
-                    style={{
-                      background: "transparent",
-                      border: 0,
-                      cursor: "pointer",
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: 4,
-                    }}
-                  >
-                    {productsLabel}
-                    <span aria-hidden="true" style={{ fontSize: 9, opacity: 0.7 }}>▾</span>
-                  </button>
-                  {isProductsOpen && (
-                    <div
-                      role="menu"
-                      onMouseLeave={() => setIsProductsOpen(false)}
-                      style={{
-                        position: "absolute",
-                        top: "calc(100% + 8px)",
-                        left: 0,
-                        minWidth: 180,
-                        padding: 6,
-                        borderRadius: 12,
-                        background: "var(--bg-2)",
-                        border: "1px solid var(--line)",
-                        boxShadow: "var(--depth-3)",
-                        zIndex: 51,
-                      }}
-                    >
-                      {productItems.map((p) => {
-                        const pActive = p.match.test(pathname || "");
-                        return (
-                          <Link
-                            key={p.key}
-                            href={p.href}
-                            role="menuitem"
-                            onClick={() => setIsProductsOpen(false)}
-                            className={cn("os-nav-link", pActive && "is-active")}
-                            style={{ display: "block", padding: "8px 12px" }}
-                          >
-                            {navLabels[p.key]}
-                          </Link>
-                        );
-                      })}
-                    </div>
-                  )}
-                </div>
-              );
-            }
-
             return (
               <Link
                 key={n.key}
                 href={n.href}
                 className={cn("os-nav-link", active && "is-active")}
               >
-                {labelFor(n.key)}
+                {navLabels[n.key]}
               </Link>
             );
           })}
@@ -250,58 +136,6 @@ export function Header() {
                   <ul className="os-mobile-list">
                     {NAV_ITEMS.map((n) => {
                       const active = n.match.test(pathname || "");
-
-                      if (n.key === "products") {
-                        const anyChildActive = productItems.some((p) =>
-                          p.match.test(pathname || ""),
-                        );
-                        const expanded = isMobileProductsOpen || anyChildActive;
-                        return (
-                          <li key={n.key} className={cn("os-mobile-item", active && "is-active")}>
-                            <button
-                              type="button"
-                              onClick={() => setIsMobileProductsOpen((v) => !v)}
-                              aria-expanded={expanded}
-                              className={cn("os-mobile-link", active && "is-active")}
-                            >
-                              <span className="os-mobile-link-label">
-                                {active && <span className="os-mobile-active-dot" aria-hidden="true" />}
-                                {productsLabel}
-                              </span>
-                              <span
-                                aria-hidden="true"
-                                className="os-mobile-chevron"
-                                style={{ transform: expanded ? "rotate(180deg)" : "none" }}
-                              >
-                                ▾
-                              </span>
-                            </button>
-                            {expanded && (
-                              <ul className="os-mobile-sublist">
-                                {productItems.map((p) => {
-                                  const pActive = p.match.test(pathname || "");
-                                  return (
-                                    <li key={p.key}>
-                                      <Dialog.Close asChild>
-                                        <Link
-                                          href={p.href}
-                                          className={cn("os-mobile-sublink", pActive && "is-active")}
-                                        >
-                                          {pActive && (
-                                            <span className="os-mobile-active-dot" aria-hidden="true" />
-                                          )}
-                                          <span>{navLabels[p.key]}</span>
-                                        </Link>
-                                      </Dialog.Close>
-                                    </li>
-                                  );
-                                })}
-                              </ul>
-                            )}
-                          </li>
-                        );
-                      }
-
                       return (
                         <li key={n.key} className={cn("os-mobile-item", active && "is-active")}>
                           <Dialog.Close asChild>
@@ -311,7 +145,7 @@ export function Header() {
                             >
                               <span className="os-mobile-link-label">
                                 {active && <span className="os-mobile-active-dot" aria-hidden="true" />}
-                                {labelFor(n.key)}
+                                {navLabels[n.key]}
                               </span>
                               <span aria-hidden="true" className="os-mobile-arrow">→</span>
                             </Link>

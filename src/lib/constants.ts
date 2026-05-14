@@ -5,9 +5,9 @@
 
 export const SITE_CONFIG = {
   name: "OpSolid",
-  tagline: "Practical Automation & AI Systems",
+  tagline: "KI- & Automatisierungsberatung für mittelständische Unternehmen",
   description:
-    "OpSolid helps businesses replace manual, repetitive work with reliable automated systems — workflow automation, systems integration, internal tools, and AI-assisted processes.",
+    "OpSolid unterstützt mittelständische Unternehmen in Deutschland und Europa bei KI-Beratung, Prozessautomatisierung und digitalen Workflows — praxisnah, messbar, datenschutzbewusst.",
   url: "https://opsolid.de",
   email: "info@opsolid.de",
   phone: "",
@@ -20,34 +20,32 @@ export const SITE_CONFIG = {
 } as const;
 
 /**
- * V2 design-system nav / footer link tables. Trimmed to the six surfaces in
- * the Claude Design mock (Home · Voice Agent · Digital Card · Kutasia ·
- * Journal · Contact) plus legal. The header/footer components read the
- * actual user-visible labels from `t.v2.nav` / `t.v2.footer.*` per locale;
- * the constants below are kept for any legacy import that still references
- * them (e.g. sitemap, meta).
+ * Consulting-positioned nav (Hasan, 2026-05). Old product surfaces (Voice
+ * Agent / Verso / Kutasia) stay reachable at /products/* but are removed
+ * from the header — the brand is repositioned as "AI & Automation
+ * Consulting for SMEs" and product pages will be folded into case studies
+ * later. Header/footer pull localized labels from `t.v2.nav` / `t.v2.footer`.
  */
 export const NAV_LINKS = [
   { label: "Home", href: "/" },
-  { label: "Voice Agent", href: "/products/voice-agent" },
-  { label: "Digital Card", href: "/products/digital-card" },
-  { label: "Kutasia", href: "/products/kutasia" },
-  { label: "Journal", href: "/blog" },
-  { label: "Contact", href: "/contact" },
+  { label: "Leistungen", href: "/leistungen" },
+  { label: "AI Automation Check", href: "/ai-automation-check" },
+  { label: "Wissen", href: "/blog" },
+  { label: "Kontakt", href: "/contact" },
 ] as const;
 
 export const FOOTER_LINKS = {
-  products: [
-    { label: "Voice Agent", href: "/products/voice-agent" },
-    { label: "Digital Card", href: "/products/digital-card" },
-    { label: "Kutasia", href: "/products/kutasia" },
+  services: [
+    { label: "AI Automation Check", href: "/ai-automation-check" },
+    { label: "Leistungen", href: "/leistungen" },
   ],
   studio: [
-    { label: "Journal", href: "/blog" },
-    { label: "Contact", href: "/contact" },
+    { label: "Über mich", href: "/about" },
+    { label: "Wissen", href: "/blog" },
+    { label: "Kontakt", href: "/contact" },
   ],
   legal: [
-    { label: "Privacy", href: "/privacy" },
-    { label: "Imprint", href: "/impressum" },
+    { label: "Datenschutz", href: "/privacy" },
+    { label: "Impressum", href: "/impressum" },
   ],
 } as const;

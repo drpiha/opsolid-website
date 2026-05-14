@@ -3300,54 +3300,39 @@ export const content: Content = {
   v2: {
     nav: {
       home: "Anasayfa",
-      voiceAgent: "Voice Agent",
-      digitalCard: "Verso",
-      kutasia: "Kutasia",
-      journal: "Günlük",
+      services: "Hizmetler",
+      automationCheck: "AI Automation Check",
+      journal: "Bilgi",
       contact: "İletişim",
-      cta: "Görüşme ayarla",
+      cta: "Ücretsiz görüşme planla",
     },
 
     footer: {
       tagline:
-        "Bağımsız otomasyon stüdyosu. Hamburg · Frankfurt. GDPR-native altyapı; kaynak kodu sizinle kalır.",
+        "Almanya ve Avrupa'daki KOBİ'ler için AI ve otomasyon danışmanlığı — uygulanabilir, ölçülebilir ve veri koruma odaklı.",
       chipLive: "",
-      chipLanguages: "EN · DE · TR",
+      chipLanguages: "DE · EN · TR",
       cols: {
-        productsHeading: "Ürünler",
         servicesHeading: "Hizmetler",
         studioHeading: "Stüdyo",
-        reachHeading: "İletişim kanalları",
+        reachHeading: "İletişim",
         legalHeading: "Hukuki",
         services: {
-          workflow: "Workflow otomasyonu",
-          integration: "Sistem entegrasyonu",
-          internal: "Dahili araçlar",
-          ai: "Yapay zekâ destekli süreçler",
-        },
-        productsList: {
-          voiceAgent: "Voice Agent",
-          verso: "Verso",
-          chatbot: "Chatbot Agent",
-          whatsapp: "WhatsApp Agent",
-          booking: "Booking Agent",
-          email: "Email Agent",
-          leadQualifier: "Lead Qualifier",
-          customAutomation: "Custom Automation",
-          kutasia: "Kutasia",
+          automationCheck: "AI Automation Check",
+          consulting: "AI danışmanlığı",
+          automation: "Süreç otomasyonu",
+          internalTools: "Dahili araçlar & entegrasyonlar",
+          training: "AI eğitimi & yönergeler",
         },
         studio: {
-          pricing: "Fiyatlandırma",
-          about: "Hakkımızda",
-          journal: "Günlük",
+          about: "Hakkımda",
+          journal: "Bilgi",
           contact: "İletişim",
         },
         reach: {
-          email: "hello@opsolid.de",
+          email: "info@opsolid.de",
           linkedinLabel: "LinkedIn",
           linkedinHref: "https://www.linkedin.com/company/opsolid/",
-          githubLabel: "GitHub",
-          githubHref: "https://github.com/opsolid",
         },
         legal: {
           privacy: "Gizlilik",
@@ -3355,7 +3340,7 @@ export const content: Content = {
         },
       },
       base: {
-        copyrightSuffix: "OpSolid UG · Hamburg, DE",
+        copyrightSuffix: "OpSolid · Arnsberg, DE",
         trustLine: "",
       },
     },
@@ -3363,17 +3348,234 @@ export const content: Content = {
     home: {
       hero: {
         metaChip: "",
-        metaLabel: "[ OPSOLID · 2026 ]",
+        metaLabel: "[ AI & OTOMASYON DANIŞMANLIĞI ]",
         title: {
-          pre: "Operasyon, bir işletmeyi ayakta tutan sessiz iştir. ",
-          italic: "Onu döndüren sistemleri biz kuruyoruz",
-          post: ".",
+          pre: "Daha verimli iş süreçleri için ",
+          italic: "AI",
+          post: " ve otomasyon.",
         },
         lead:
-          "OpSolid, Alman mid-market B2B için bağımsız bir otomasyon stüdyosudur. Telefonda voice ajanları, sitede chatbot'lar, CRM'iniz ile ERP'niz ve takviminiz arasındaki entegrasyonlar — ekibinizin en değerli saatlerini sadece insanların yapabileceği işlere ayırması için tasarlanmış. Stack'inize ilk haftada yapılandırılır. EU-hostlu, GDPR-uyumlu, kaynak kodu sizde.",
-        ctaPrimary: "Tanışma görüşmesi planla",
-        ctaSecondary: "Fiyatları gör",
+          "OpSolid; KOBİ'lere manuel görevleri, Excel süreçlerini, e-posta iş akışlarını ve dahili operasyonları AI, otomasyon ve modern araçlarla sadeleştirmede yardımcı olur.",
+        ctaPrimary: "Ücretsiz görüşme planla",
+        ctaSecondary: "AI & Automation Check'i incele",
         stats: [],
+        benefits: [
+          { icon: "workflow", label: "Daha az manuel iş" },
+          { icon: "bolt", label: "Daha hızlı süreçler" },
+          { icon: "shield", label: "Güvenli AI kullanımı" },
+        ],
+      },
+
+      problem: {
+        eyebrow: "[ MEVCUT DURUM ]",
+        headline: "Bu problemler tanıdık geliyor mu?",
+        lead:
+          "Çoğu KOBİ her hafta saatleri manuel devirlere, dağınık verilere ve araçlar arası kopyala-yapıştıra kaybediyor — ekibi yöneten değil, ekibi yönlendiren iş.",
+        items: [
+          {
+            title: "Tekrarlayan görevler her gün zaman yiyor",
+            body: "Teklifler, faturalar, durum güncellemeleri ve takip mailleri hâlâ elle yapılıyor.",
+          },
+          {
+            title: "Bilgi e-posta, Excel ve farklı araçlara dağılmış durumda",
+            body: "Aynı veri üç ayrı yere giriliyor; hiçbir şey otomatik mutabık kalmıyor.",
+          },
+          {
+            title: "Çalışanlar verileri sistemler arasında elle kopyalıyor",
+            body: "CRM, ERP, tablolar — yerleşik olması gereken köprüler ekibe yıkılmış durumda.",
+          },
+          {
+            title: "Teklif, rapor ve dokümanlar çok uzun sürüyor",
+            body: "Şablonlar var ama bir araya getirmek hâlâ el işi.",
+          },
+          {
+            title: "AI kullanılıyor — ama yapı ve veri koruma planı yok",
+            body: "Gölge IT'de ChatGPT: yönerge yok, audit yok, net sahip yok.",
+          },
+        ],
+      },
+
+      services: {
+        eyebrow: "[ OPSOLID NE YAPAR ]",
+        headline: "OpSolid ne yapar?",
+        lead:
+          "Dört odaklı alan. Her biri ölçülebilir bir sonuca bağlı — daha az manuel dokunuş, daha kısa döngü süreleri, daha güvenli AI kullanımı.",
+        cards: [
+          {
+            icon: "bot",
+            title: "AI danışmanlığı",
+            body:
+              "Anlamlı AI kullanım senaryolarını belirler, fayda/risk dengesini değerlendirir ve işletmeniz için gerçekçi bir yol haritası çıkarırız.",
+            tag: "USE CASES · RİSK · YOL HARİTASI",
+          },
+          {
+            icon: "workflow",
+            title: "Süreç otomasyonu",
+            body:
+              "Tekrarlayan görevleri Microsoft 365, Power Automate, Make, API'ler, Python ve özel iş akışları ile otomatikleştiririz.",
+            tag: "M365 · POWER AUTOMATE · APIS",
+          },
+          {
+            icon: "plug",
+            title: "Dahili araçlar & entegrasyonlar",
+            body:
+              "Mevcut sistemleri bağlar, medya kopukluklarını azaltır ve günlük operasyonlar için küçük dahili uygulamalar geliştiririz.",
+            tag: "ENTEGRASYON · DAHİLİ ARAÇ",
+          },
+          {
+            icon: "shield",
+            title: "AI eğitimi & yönergeler",
+            body:
+              "Ekipleri AI'ın güvenli ve verimli kullanımı için eğitir, günlük iş hayatına uygun basit yönergeler hazırlarız.",
+            tag: "EĞİTİM · YÖNERGE · KVKK/DSGVO",
+          },
+        ],
+      },
+
+      automationCheckCard: {
+        eyebrow: "[ GİRİŞ PAKETİ ]",
+        badge: "AI & AUTOMATION CHECK",
+        title: {
+          pre: "AI ve otomasyon için ",
+          italic: "ilk net adım",
+          post: "",
+        },
+        lead:
+          "60–90 dakika. En önemli manuel süreçlerinizi haritalar, beş somut otomasyon adayı belirler ve uygulanabilir bir 30 günlük plan teslim ederiz.",
+        bullets: [
+          "60–90 dakika analiz görüşmesi",
+          "Kritik manuel süreçlerin kayıt altına alınması",
+          "5 otomasyon fırsatının belirlenmesi",
+          "Eforu, faydası ve riski açısından değerlendirme",
+          "Somut 30 günlük uygulama planı",
+          "Opsiyonel: ilk pilot iş akışının uygulanması",
+        ],
+        priceNote: "Fiyat talep üzerine",
+        ctaPrimary: "AI & Automation Check talep et",
+        ctaSecondary: "Neleri içerdiğini gör",
+      },
+
+      useCases: {
+        eyebrow: "[ TİPİK KULLANIM SENARYOLARI ]",
+        headline: "Pratikte neleri otomatikleştiriyoruz",
+        lead:
+          "KOBİ'ler için kurguladığımız veya hayata geçirdiğimiz iş akışlarından kısa bir seçki. Daha az kopyala-yapıştır, daha az hata, daha hızlı çıktı.",
+        cards: [
+          {
+            title: "E-posta sınıflandırma & yönlendirme",
+            body: "Gelen e-postalar konuya göre etiketlenir ve doğru gelen kutusuna ya da ticket'a iletilir — manuel triyaj biter.",
+          },
+          {
+            title: "Teklif ve doküman üretimi",
+            body: "Şablonlar CRM verisinden doldurulup onaya gönderilir — teklifler aynı gün çıkar.",
+          },
+          {
+            title: "Excel & raporlama otomasyonu",
+            body: "Tekrarlayan raporlar bir kez kurulup otomatik üretilir — KPI'lar toplantıdan önce hazır olur.",
+          },
+          {
+            title: "CRM / ERP veri aktarımı",
+            body: "Veri sistemler arasında bir kez akar ve kendini mutabık kılar — çift girişe son.",
+          },
+          {
+            title: "Dokümanların otomatik özetlenmesi",
+            body: "Uzun PDF'ler, sözleşmeler ve toplantı notları, ekibin aksiyona dökeceği net bir özete dönüşür.",
+          },
+          {
+            title: "AI destekli dahili bilgi tabanı",
+            body: "Kendi dokümanlarınızda, politikalarınızda ve SSS'lerinizde arama — cevaplar şirket içinde kalır.",
+          },
+          {
+            title: "Toplantı notları & görev takibi",
+            body: "Görüşmeler transkribe edilir, kararlar çıkarılır, görevler sisteme aktarılır.",
+          },
+          {
+            title: "Destek & talep süreçleri",
+            body: "Birinci seviye sorular otomatik yanıtlanır — insanlar yalnızca gerekli vakalarla ilgilenir.",
+          },
+        ],
+      },
+
+      targetGroup: {
+        eyebrow: "[ KİMLERE UYGUN ]",
+        headline: "OpSolid kimler için uygun?",
+        lead:
+          "Dahili sistemlerinden hızlı büyümüş — ve platform vaadi yerine ölçülebilir bir sonraki adım arayan şirketlerle en verimli çalışıyoruz.",
+        items: [
+          "Orta ölçekli işletmeler (KOBİ · Mittelstand)",
+          "El sanatları ve üretim işletmeleri",
+          "Satış ve servis ekipleri",
+          "Excel, e-posta veya doküman yoğun süreçlere sahip şirketler",
+          "AI kullanmak isteyen — ama yapısal ve güvenli başlamak isteyen ekipler",
+        ],
+      },
+
+      trust: {
+        eyebrow: "[ NEDEN OPSOLID ]",
+        headline: "Neden OpSolid?",
+        lead:
+          "Uygulanabilir, ölçülebilir, veri koruma odaklı. Şişirilmiş platformlar yok, buzzword yok, AI uğruna AI yok.",
+        items: [
+          {
+            title: "Sahada IT ve proje yönetimi geçmişi",
+            body: "IT projeleri, dijitalleşme ve süreç optimizasyonunda gerçek şirketlerde yıllar — danışmanlık tiyatrosu değil.",
+          },
+          {
+            title: "Ölçülebilir süreç iyileştirmesine odak",
+            body: "Her iş bir baseline ile başlar, üzerine aksiyon alabileceğiniz bir sayı ile biter.",
+          },
+          {
+            title: "Gereksiz karmaşık sistemler yok",
+            body: "Sorunu gerçekten çözen en küçüğü kurar, karşılığını verdiği yerde genişletiriz.",
+          },
+          {
+            title: "Veri koruma odaklı uygulama",
+            body: "EU hosting, DSGVO/KVKK uyumlu altyapı, gölge IT yok — denetim ve uyum işin başından mümkün.",
+          },
+          {
+            title: "Teknik jargon yerine anlaşılır danışmanlık",
+            body: "Karar vericiler IT çevirmenine ihtiyaç duymadan önerileri takip edebilmeli.",
+          },
+          {
+            title: "Network üzerinden veya doğrudan uygulama",
+            body: "OpSolid ağı üzerinden veya doğrudan geliştirme ile — hangisi kapsama uygunsa.",
+          },
+        ],
+      },
+
+      faq: {
+        eyebrow: "[ SSS ]",
+        headline: "Sık sorulan sorular",
+        items: [
+          {
+            q: "OpSolid kimler için uygun?",
+            a: "Çok sayıda manuel veya Excel/e-posta odaklı süreci olan KOBİ'ler ve ekipler. Her şey zaten bir sistem hâlinde işliyorsa, muhtemelen en etkili seçim biz değiliz.",
+          },
+          {
+            q: "Hangi süreçler otomatikleştirilebilir?",
+            a: "Net girdi ve net çıktısı olan her tekrarlı iş — teklifler, doküman üretimi, raporlama, veri senkronizasyonu, e-posta yönlendirme, destek triyajı.",
+          },
+          {
+            q: "AI kullanımı KVKK/DSGVO uyumlu olabilir mi?",
+            a: "Evet — doğru model seçimi, AB veri rezidanslığı ve yazılı bir yönerge ile. Bunu en baştan birlikte kurarız.",
+          },
+          {
+            q: "Şirketimin zaten AI kullanıyor olması gerekiyor mu?",
+            a: "Hayır. Çoğu iş hiç AI olmadan başlar; sonuç yine de ölçülebilir bir iyileşme olur.",
+          },
+          {
+            q: "İlk Automation Check ne kadar sürer?",
+            a: "Görüşme için 60–90 dakika, yazılı 30 günlük plan için birkaç iş günü daha.",
+          },
+          {
+            q: "Microsoft 365 gibi mevcut araçlarımız kullanılmaya devam edebilir mi?",
+            a: "Evet — kurduğumuzun büyük kısmı zaten ödediğiniz araçların üzerine oturur.",
+          },
+          {
+            q: "OpSolid özel çözümler de geliştirir mi?",
+            a: "Evet — standart çözüm uymadığında dahili araçlar, özel iş akışları ve entegrasyonlar geliştiririz.",
+          },
+        ],
       },
 
       capabilities: {
@@ -3469,34 +3671,42 @@ export const content: Content = {
       },
 
       process: {
-        eyebrow: "[ 04 / 04 ] SÜREÇ",
-        headline: "Üç adım. Açık ve şeffaf bir süreç",
+        eyebrow: "[ İŞ BİRLİĞİ ]",
+        headline: "İşbirliği nasıl ilerler?",
         lead:
-          "Her iş aynı biçimi izler: mevcut süreci birlikte haritalarız, en kritik adımı önce devreye alırız ve karşılığını vermeye devam ettiği yerde genişletiriz. Otomasyon mantıklı olduğu yerde önerilir, olmadığı yerde önerilmez.",
+          "Dört kısa adım. Önce haritala, kapsamı dar tut, bir şeyi temiz teslim et, ve karşılığını verdiği yerde genişlet — platform rollout'u yok, çeyrek dönen discovery yok.",
         steps: [
           {
             num: "01",
-            title: "Operasyon keşfi",
+            title: "Erstgespräch / Ön görüşme",
             body:
-              "İşin bugün nasıl aktığına dair 90 dakikalık derinlemesine inceleme. Her manuel devir, her kırılgan entegrasyon ve sürecin bir sisteme değil bir kişiye bağlı kaldığı her nokta için yazılı bir harita çıkarırız.",
-            chipA: "1 oturum · 90 dk",
-            chipB: "Yazılı harita · PDF",
+              "Odaklı bir ilk görüşme. Ekibin nerede zaman kaybettiğini ve günün gerçekte nasıl geçtiğini dinleriz — slayt yok, satış konuşması yok.",
+            chipA: "30–60 dk",
+            chipB: "Yükümlülük yok",
           },
           {
             num: "02",
-            title: "Odaklı bir ilk teslim",
+            title: "Süreç analizi",
             body:
-              "Tek bir iş akışı, uçtan uca, üç haftada canlı. Ekibinizin kendi açıp inceleyebileceği araçlar üzerine kurulur. İlk ayda beklenen sonuç görülmezse iş orada biter.",
-            chipA: "3 hafta · sabit kapsam",
-            chipB: "Canlıya hazır",
-            chipBHot: true,
+              "En kritik iş akışlarını uçtan uca haritalarız — devirler, araçlar, veri, istisnalar — ve ekibin gözden geçirebileceği netlikte yazılı hale getiririz.",
+            chipA: "AI & Automation Check",
+            chipB: "Yazılı plan",
           },
           {
             num: "03",
-            title: "Sonuç verdikçe büyütün",
+            title: "Çözüm konsepti",
             body:
-              "Aylık veya üç aylık sürekli destek. Yeni yüzeyler yalnızca mevcutlar kararlıyken eklenir. Devir notları, kullanım kılavuzları ve kaynak kodun tamamı ilk günden size aittir; istediğiniz zaman, iki hafta içinde devralabilirsiniz.",
-            chipA: "Aylık sürekli destek",
+              "Kısa, somut bir öneri: önce neyi otomatikleştireceğiz, hangi araçlarla, beklenen efor ve ölçülebilir sonuç. Değmediği yerde de açıkça söyleyen.",
+            chipA: "Kapsam · efor · sonuç",
+            chipB: "Karara hazır",
+            chipBHot: true,
+          },
+          {
+            num: "04",
+            title: "Uygulama & optimizasyon",
+            body:
+              "Uygularız — tek başımıza veya ekibinizle — ve karşılığını veren yerde iterasyona devam ederiz. Devir notları ve kaynak kodu ilk günden sizindir.",
+            chipA: "Pilot → rollout",
             chipB: "Kaynak kodu sizinle",
           },
         ],
@@ -3505,16 +3715,129 @@ export const content: Content = {
       finalCta: {
         eyebrow: "[ KONUŞALIM ]",
         title: {
-          pre: "Otomasyonun ",
-          italic: "nerede karşılığını verdiğini",
-          post: " birlikte değerlendirelim",
+          pre: "Süreçlerinizi ",
+          italic: "daha verimli",
+          post: " hale getirmeye hazır mısınız?",
         },
         lead:
-          "30 dakika. Operasyon keşfi, açık bir değerlendirme ve yazılı bir plan. Görüşmeden sonra bir yükümlülük yok — otomasyon doğru çözüm değilse bunu da açıkça söyleriz.",
-        ctaPrimary: "Tanışma görüşmesi planla",
-        ctaSecondary: "Günlüğü oku",
+          "Şirketinizdeki hangi görevlerin AI ve otomasyonla sadeleştirilebileceğini birlikte değerlendirelim. Görüşmeden sonra bir yükümlülük yok — uygun değilse bunu da açıkça söyleriz.",
+        ctaPrimary: "Ücretsiz görüşme planla",
+        ctaSecondary: "Bilgi içeriklerini gör",
         trustLine:
-          "BUILT IN GERMANY · GDPR-NATIVE · KAYNAK KODU SİZİNLE · EN · DE · TR",
+          "BAĞIMSIZ · DSGVO/KVKK UYUMLU · MADE IN GERMANY · DE · EN · TR",
+      },
+    },
+
+    aiAutomationCheckPage: {
+      hero: {
+        metaChip: "AI & AUTOMATION CHECK",
+        metaLabel: "[ GİRİŞ PAKETİ · 60–90 DK ]",
+        title: {
+          pre: "Şirketinizdeki ",
+          italic: "gerçek",
+          post: " otomasyon potansiyelini bulun",
+        },
+        lead:
+          "Odaklı 60–90 dakika analiz görüşmesi ve eforu, faydası, riskine göre puanlanmış 5 somut otomasyon adayı içeren yazılı bir 30 günlük plan. Daha büyük projelerden önce, düşük riskli bir ilk adım olarak tasarlandı.",
+        ctaPrimary: "AI & Automation Check talep et",
+        ctaSecondary: "Genel görünüme dön",
+      },
+      problem: {
+        eyebrow: "[ NEDEN VAR ]",
+        headline: "Otomasyon projelerinin çoğu başlamadan başarısız olur",
+        lead:
+          "Teknoloji çalışmadığı için değil — yanlış süreç otomatikleştirildiği için ya da ekibin gerçekte ne yaptığı hiç yazılmadığı için. AI & Automation Check tam burada devreye girer.",
+        items: [
+          "Köklere değil, semptomlara otomasyon kurulur",
+          "AI araçları net kullanım senaryosu olmadan satın alınır",
+          "ROI ölçülemez çünkü bir baseline yoktur",
+          "Hangi adımların bilinçli olarak manuel kalması gerektiği belirsizdir",
+        ],
+      },
+      package: {
+        eyebrow: "[ NELER İÇERİR ]",
+        headline: "Check'te neler var?",
+        bullets: [
+          {
+            title: "60–90 dakika analiz görüşmesi",
+            body: "Yerinde veya uzaktan. İşin ekipten nasıl geçtiğini dinleriz — slayt yok.",
+          },
+          {
+            title: "Kritik manuel süreçlerin kayıt altına alınması",
+            body: "İlgili iş akışlarını ekibin gözden geçirebileceği şekilde yazılı hâle getiririz — tek kişinin kafasında değil.",
+          },
+          {
+            title: "5 somut otomasyon adayı",
+            body: "Gerçek süreçlerinizden seçilmiş — jenerik AI fikir listesi değil.",
+          },
+          {
+            title: "Efor, fayda ve riske göre puanlama",
+            body: "Her aday derecelendirilir; yönetim, kendisi tech-uzman olmak zorunda kalmadan öncelik belirleyebilir.",
+          },
+          {
+            title: "Net 30 günlük uygulama planı",
+            body: "Somut sonraki adımlar, araçlar, sorumlular ve beklenen sonuç.",
+          },
+          {
+            title: "Opsiyonel: pilot iş akışının uygulanması",
+            body: "Mantıklı olduğunda ilk otomasyonu doğrudan kurarız — sabit kapsam, sabit takvim.",
+          },
+        ],
+      },
+      audience: {
+        eyebrow: "[ KİMLER İÇİN ]",
+        headline: "Check kimler için uygun?",
+        items: [
+          "Ölçülebilir bir ilk adım isteyen orta ölçekli işletmeler",
+          "AI'ı gölge IT'de kullanan ve yapı arayan ekipler",
+          "Çok sayıda manuel devri olan operasyon sorumluları",
+          "Microsoft 365 / Power Automate / Make değerlendiren şirketler",
+          "Dışarıdan bir bakış isteyenler: \"Önce ne otomatikleştirmeliyiz?\"",
+        ],
+      },
+      deliverables: {
+        eyebrow: "[ NE TESLİM EDİLİR ]",
+        headline: "E-postanıza ne düşer?",
+        items: [
+          "Konuştuğumuz iş akışlarının yazılı süreç haritası",
+          "Puanlanmış 5 otomasyon fırsatı",
+          "Her fırsat için önerilen araçlar ve kabaca efor tahmini",
+          "Sorumluları içeren 30 günlük uygulama planı",
+          "Bilinçli olarak manuel kalması gerekenlere dair kısa bir not — ve nedeni",
+        ],
+      },
+      process: {
+        eyebrow: "[ NASIL İLERLER ]",
+        headline: "Check nasıl ilerler?",
+        steps: [
+          { num: "01", title: "Kickoff", body: "Hedeflerin ve scope'taki süreçlerin netleştirildiği kısa ön görüşme." },
+          { num: "02", title: "Analiz görüşmesi", body: "İşi gerçekten yapan kişilerle 60–90 dakika." },
+          { num: "03", title: "Yazılı plan", body: "Birkaç iş günü içinde yazılı 30 günlük planı alırsınız." },
+          { num: "04", title: "Birlikte gözden geçirme", body: "Kapsam, efor ve sonraki adımların netleştirildiği 30 dakika." },
+        ],
+      },
+      faq: {
+        eyebrow: "[ SSS ]",
+        headline: "Sık sorulan sorular",
+        items: [
+          { q: "AI & Automation Check'in fiyatı nedir?", a: "Fiyat talep üzerine — kapsam ve ekip büyüklüğüne bağlı. İlk kısa görüşmeden sonra sabit fiyat veririz." },
+          { q: "Gizlilik sözleşmesi imzalanıyor mu?", a: "Evet — analiz görüşmesinden önce standart NDA imzalanır." },
+          { q: "Sadece AI kullanan şirketler için mi?", a: "Hayır. Birçok iş hiç AI olmadan başlar." },
+          { q: "Mevcut araçlarımız kullanılmaya devam edebilir mi?", a: "Evet — Microsoft 365, Google Workspace, CRM veya ERP iş akışını taşıyabildiği yerde önce onları kullanırız." },
+          { q: "Check'ten sonra ne olur?", a: "Ya planı kendiniz uygularsınız, ya birlikte bir pilot uygularız, ya da iş orada biter. Lock-in yok." },
+        ],
+      },
+      finalCta: {
+        eyebrow: "[ SONRAKİ ADIM ]",
+        title: {
+          pre: "Şirketinizde ",
+          italic: "neyi otomatikleştirmenin gerçekten değerli olduğunu",
+          post: " keşfedin.",
+        },
+        lead:
+          "Bir görüşme. Bir yazılı plan. Sonrasında bir yükümlülük yok — değmeyecek bir projeyi başlatmak yerine, henüz zamanı değil demeyi tercih ederiz.",
+        ctaPrimary: "AI & Automation Check talep et",
+        ctaSecondary: "Önce tanışma görüşmesi planla",
       },
     },
 

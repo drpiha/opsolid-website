@@ -3314,54 +3314,39 @@ export const content = {
   v2: {
     nav: {
       home: "Home",
-      voiceAgent: "Voice Agent",
-      digitalCard: "Verso",
-      kutasia: "Kutasia",
-      journal: "Journal",
+      services: "Services",
+      automationCheck: "AI Automation Check",
+      journal: "Insights",
       contact: "Contact",
-      cta: "Book discovery",
+      cta: "Book a call",
     },
 
     footer: {
       tagline:
-        "Independent automation studio. Hamburg · Frankfurt. GDPR-native infrastructure; the source code stays with you.",
+        "AI & automation consulting for mid-market businesses in Germany and Europe — practical, measurable, privacy-conscious.",
       chipLive: "",
-      chipLanguages: "EN · DE · TR",
+      chipLanguages: "DE · EN · TR",
       cols: {
-        productsHeading: "Products",
         servicesHeading: "Services",
         studioHeading: "Studio",
         reachHeading: "Reach",
         legalHeading: "Legal",
         services: {
-          workflow: "Workflow automation",
-          integration: "Systems integration",
-          internal: "Internal tools",
-          ai: "AI-assisted processes",
-        },
-        productsList: {
-          voiceAgent: "Voice Agent",
-          verso: "Verso",
-          chatbot: "Chatbot Agent",
-          whatsapp: "WhatsApp Agent",
-          booking: "Booking Agent",
-          email: "Email Agent",
-          leadQualifier: "Lead Qualifier",
-          customAutomation: "Custom Automation",
-          kutasia: "Kutasia",
+          automationCheck: "AI Automation Check",
+          consulting: "AI consulting",
+          automation: "Process automation",
+          internalTools: "Internal tools & integrations",
+          training: "AI training & guidelines",
         },
         studio: {
-          pricing: "Pricing",
           about: "About",
-          journal: "Journal",
+          journal: "Insights",
           contact: "Contact",
         },
         reach: {
-          email: "hello@opsolid.de",
+          email: "info@opsolid.de",
           linkedinLabel: "LinkedIn",
           linkedinHref: "https://www.linkedin.com/company/opsolid/",
-          githubLabel: "GitHub",
-          githubHref: "https://github.com/opsolid",
         },
         legal: {
           privacy: "Privacy",
@@ -3369,7 +3354,7 @@ export const content = {
         },
       },
       base: {
-        copyrightSuffix: "OpSolid UG · Hamburg, DE",
+        copyrightSuffix: "OpSolid · Arnsberg, DE",
         trustLine: "",
       },
     },
@@ -3377,17 +3362,234 @@ export const content = {
     home: {
       hero: {
         metaChip: "",
-        metaLabel: "[ OPSOLID · 2026 ]",
+        metaLabel: "[ AI & AUTOMATION CONSULTING ]",
         title: {
-          pre: "Operations are the quiet work that keeps a business standing. ",
-          italic: "We build the systems that keep them running",
-          post: ".",
+          pre: "AI and automation for ",
+          italic: "more efficient",
+          post: " business processes.",
         },
         lead:
-          "OpSolid is an independent automation studio for mid-market German B2B. Voice agents on the phone, chatbots on the site, the integrations between your CRM, ERP, and calendar — designed so your team's best hours go to the work only humans can do. Configured for your stack in week one. EU-hosted, GDPR-native, source code yours.",
-        ctaPrimary: "Book a discovery call",
-        ctaSecondary: "See pricing",
+          "OpSolid helps small and mid-sized businesses simplify manual tasks, Excel processes, email workflows and internal operations with AI, automation and modern tools.",
+        ctaPrimary: "Book a free discovery call",
+        ctaSecondary: "See the AI & Automation Check",
         stats: [] as Array<{ value: string; label: string }>,
+        benefits: [
+          { icon: "workflow", label: "Less manual work" },
+          { icon: "bolt", label: "Faster processes" },
+          { icon: "shield", label: "Safer AI use" },
+        ],
+      },
+
+      problem: {
+        eyebrow: "[ THE STATUS QUO ]",
+        headline: "Do these problems sound familiar?",
+        lead:
+          "Most SMEs lose hours every week to manual handoffs, scattered data, and copy-paste between tools — work that runs the team rather than the team running it.",
+        items: [
+          {
+            title: "Repetitive tasks eat up time every day",
+            body: "Quotes, invoices, status updates and follow-ups still go out by hand.",
+          },
+          {
+            title: "Information lives in silos — email, Excel, separate tools",
+            body: "The same data is entered three times; nothing reconciles automatically.",
+          },
+          {
+            title: "People copy data between systems by hand",
+            body: "CRM, ERP, spreadsheets — bridges that should have been built in are left to the team.",
+          },
+          {
+            title: "Offers, reports and documents take too long",
+            body: "Templates exist but assembling them is still manual work.",
+          },
+          {
+            title: "AI is in use, but without structure or a privacy concept",
+            body: "ChatGPT in shadow IT — no guidelines, no audit trail, no clear ownership.",
+          },
+        ],
+      },
+
+      services: {
+        eyebrow: "[ WHAT OPSOLID DOES ]",
+        headline: "What OpSolid takes off your plate",
+        lead:
+          "Four focused areas. Each one tied to a measurable outcome — fewer manual touches, shorter cycle times, safer AI use.",
+        cards: [
+          {
+            icon: "bot",
+            title: "AI consulting",
+            body:
+              "We identify worthwhile AI use cases, weigh value against risk, and produce a realistic roadmap for your business.",
+            tag: "USE CASES · RISK · ROADMAP",
+          },
+          {
+            icon: "workflow",
+            title: "Process automation",
+            body:
+              "We automate recurring tasks with Microsoft 365, Power Automate, Make, APIs, Python and custom workflows.",
+            tag: "M365 · POWER AUTOMATE · APIS",
+          },
+          {
+            icon: "plug",
+            title: "Internal tools & integrations",
+            body:
+              "We connect existing systems, eliminate media breaks, and build small internal tools for everyday operations.",
+            tag: "INTEGRATIONS · INTERNAL TOOLS",
+          },
+          {
+            icon: "shield",
+            title: "AI training & guidelines",
+            body:
+              "We train teams to use AI safely and productively, and write simple guidelines that fit your everyday work.",
+            tag: "TRAINING · GUIDELINES · GDPR",
+          },
+        ],
+      },
+
+      automationCheckCard: {
+        eyebrow: "[ ENTRY ENGAGEMENT ]",
+        badge: "AI & AUTOMATION CHECK",
+        title: {
+          pre: "A clear ",
+          italic: "first step",
+          post: " for AI and automation",
+        },
+        lead:
+          "60–90 minutes. We map your most important manual processes, identify five concrete automation candidates and hand over a usable 30-day plan.",
+        bullets: [
+          "60–90 minute analysis call",
+          "Capture of your key manual processes",
+          "Identification of 5 automation opportunities",
+          "Assessment by effort, value and risk",
+          "Concrete 30-day implementation plan",
+          "Optional: implementation of a first pilot workflow",
+        ],
+        priceNote: "Price on request",
+        ctaPrimary: "Request the AI & Automation Check",
+        ctaSecondary: "See what's included",
+      },
+
+      useCases: {
+        eyebrow: "[ TYPICAL USE CASES ]",
+        headline: "What we automate, in practice",
+        lead:
+          "A short selection of the workflows we have built or scoped for SMEs. Less copy-paste, fewer mistakes, faster turnaround.",
+        cards: [
+          {
+            title: "Email classification & routing",
+            body: "Inbound mail tagged by topic and pushed to the right inbox or ticket — no more manual triage.",
+          },
+          {
+            title: "Quote and document generation",
+            body: "Templates filled from CRM data and sent for approval — quotes leave the same day.",
+          },
+          {
+            title: "Excel & reporting automation",
+            body: "Recurring reports built once and rebuilt automatically — KPIs ready when the meeting starts.",
+          },
+          {
+            title: "CRM / ERP data sync",
+            body: "Data flows once between systems and reconciles itself — no double entry.",
+          },
+          {
+            title: "Document summarisation",
+            body: "Long PDFs, contracts and meeting notes turned into a clear summary the team can act on.",
+          },
+          {
+            title: "Internal AI knowledge base",
+            body: "Search your own documents, policies and FAQs — answers stay inside your organisation.",
+          },
+          {
+            title: "Meeting notes & task tracking",
+            body: "Calls transcribed, decisions extracted, tasks pushed into your system.",
+          },
+          {
+            title: "Support & inbound request handling",
+            body: "First-level questions handled automatically — humans take the cases that need them.",
+          },
+        ],
+      },
+
+      targetGroup: {
+        eyebrow: "[ WHO IT'S FOR ]",
+        headline: "Who OpSolid is built for",
+        lead:
+          "We work best with companies that have grown faster than their internal systems — and want a measurable next step rather than a platform pitch.",
+        items: [
+          "Mid-sized businesses (SMEs · Mittelstand)",
+          "Trades and production companies",
+          "Sales and service teams",
+          "Companies with many Excel, email or document-heavy processes",
+          "Teams that want to use AI — but in a structured, safe way",
+        ],
+      },
+
+      trust: {
+        eyebrow: "[ WHY OPSOLID ]",
+        headline: "Why OpSolid",
+        lead:
+          "Practical, measurable, privacy-conscious. No oversized platforms, no buzzwords, no AI for its own sake.",
+        items: [
+          {
+            title: "Hands-on IT and project management background",
+            body: "Years of running IT projects, digitalisation and process work in real companies — not consultancy theatre.",
+          },
+          {
+            title: "Focus on measurable process improvement",
+            body: "Every engagement starts with a baseline and ends with a number you can act on.",
+          },
+          {
+            title: "No unnecessarily complex systems",
+            body: "We build the smallest thing that actually solves the problem — then extend if it keeps paying off.",
+          },
+          {
+            title: "Privacy-conscious by default",
+            body: "EU hosting, GDPR-native infrastructure, no shadow IT — set up so audit and compliance can follow along.",
+          },
+          {
+            title: "Plain language instead of tech-speak",
+            body: "Decision-makers shouldn't need an IT translator to follow the proposal.",
+          },
+          {
+            title: "Implementation through partners or directly",
+            body: "Delivered through the OpSolid network or built directly — whichever fits the scope.",
+          },
+        ],
+      },
+
+      faq: {
+        eyebrow: "[ FAQ ]",
+        headline: "Common questions",
+        items: [
+          {
+            q: "Who is OpSolid right for?",
+            a: "Mid-sized companies and teams with many manual or Excel/email-driven processes. If everything already runs as a system, we are probably not the highest-leverage choice.",
+          },
+          {
+            q: "Which processes can be automated?",
+            a: "Anything repetitive with a clear input and a clear output — quotes, document generation, reporting, data sync, email routing, support triage.",
+          },
+          {
+            q: "Can AI be used in a GDPR-compliant way?",
+            a: "Yes — with the right model choice, data residency and a written guideline. We help you set this up from the start.",
+          },
+          {
+            q: "Do we need to be using AI already?",
+            a: "No. Many engagements begin with no AI in use at all and the result is still a measurable improvement.",
+          },
+          {
+            q: "How long does a first Automation Check take?",
+            a: "60 to 90 minutes for the call itself, plus a few working days for the written 30-day plan.",
+          },
+          {
+            q: "Can we keep using our existing tools like Microsoft 365?",
+            a: "Yes — most of what we build sits on top of the tools you already pay for.",
+          },
+          {
+            q: "Do you also build custom solutions?",
+            a: "Yes — where off-the-shelf does not fit, we build internal tools, custom workflows and integrations.",
+          },
+        ],
       },
 
       capabilities: {
@@ -3483,34 +3685,42 @@ export const content = {
       },
 
       process: {
-        eyebrow: "[ 04 / 04 ] PROCESS",
-        headline: "Three steps. A clear, transparent process",
+        eyebrow: "[ HOW WE WORK ]",
+        headline: "How the engagement runs",
         lead:
-          "Every engagement follows the same shape: we map what exists, deliver the most critical step first, and extend only where it keeps paying off. Automation is recommended where it makes sense — and advised against where it doesn't.",
+          "Four short steps. Map first, scope tightly, deliver one thing well, and extend only where it keeps paying off — no platform rollouts, no multi-quarter discovery.",
         steps: [
           {
             num: "01",
-            title: "Operations walkthrough",
+            title: "Discovery call",
             body:
-              "A 90-minute deep-dive into how work moves today. We produce a written map of every manual handoff, every fragile integration, every place the business runs on someone's calendar rather than a system.",
-            chipA: "1 session · 90 min",
-            chipB: "Written map · PDF",
+              "A focused first conversation. We listen to where the team currently loses time and what the day-to-day actually looks like — no slide deck, no sales pitch.",
+            chipA: "30–60 min",
+            chipB: "No obligation",
           },
           {
             num: "02",
-            title: "A focused first delivery",
+            title: "Process analysis",
             body:
-              "One workflow, end-to-end, in production within three weeks. Built on tools your team can already open and inspect. If the expected result doesn't show up in the first month, the engagement stops there.",
-            chipA: "3 weeks · fixed scope",
-            chipB: "Production-ready",
-            chipBHot: true,
+              "We map the most relevant workflows end-to-end — handoffs, tools, data, exceptions — and write it down clearly enough that the team can audit it.",
+            chipA: "AI & Automation Check",
+            chipB: "Written plan",
           },
           {
             num: "03",
-            title: "Extend as it keeps delivering",
+            title: "Solution concept",
             body:
-              "Monthly or quarterly continuing support. New surfaces are added only when the existing ones are stable. Handover notes, runbooks and the full source are yours from day one — you can take it over yourself in two weeks, any time you choose.",
-            chipA: "Monthly support",
+              "A short, concrete proposal: what to automate first, with which tools, expected effort and the measurable outcome. Honest about what's not worth it.",
+            chipA: "Scope · effort · outcome",
+            chipB: "Decision-ready",
+            chipBHot: true,
+          },
+          {
+            num: "04",
+            title: "Implementation & optimisation",
+            body:
+              "We build it — alone or with your team — and keep iterating where it pays off. Handover notes and source belong to you from day one.",
+            chipA: "Pilot → rollout",
             chipB: "You own the code",
           },
         ],
@@ -3519,16 +3729,129 @@ export const content = {
       finalCta: {
         eyebrow: "[ LET'S TALK ]",
         title: {
-          pre: "Let's map ",
-          italic: "where automation pays off",
-          post: " in your operation",
+          pre: "Ready to make your processes ",
+          italic: "more efficient",
+          post: "?",
         },
         lead:
-          "30 minutes. An operations walkthrough, a clear assessment, and a written plan. No obligation after the call — if automation isn't the right tool here, we'll say so plainly.",
-        ctaPrimary: "Book a discovery call",
-        ctaSecondary: "Read the journal",
+          "Let's look together at which tasks in your company can be simplified with AI and automation. No obligation after the call — if it's not the right fit, we'll say so plainly.",
+        ctaPrimary: "Book a free discovery call",
+        ctaSecondary: "Read insights",
         trustLine:
-          "BUILT IN GERMANY · GDPR-NATIVE · YOUR CODE STAYS YOURS · EN · DE · TR",
+          "INDEPENDENT · GDPR-NATIVE · BUILT IN GERMANY · DE · EN · TR",
+      },
+    },
+
+    aiAutomationCheckPage: {
+      hero: {
+        metaChip: "AI & AUTOMATION CHECK",
+        metaLabel: "[ ENTRY ENGAGEMENT · 60–90 MIN ]",
+        title: {
+          pre: "Find the ",
+          italic: "real",
+          post: " automation potential in your business",
+        },
+        lead:
+          "A focused 60–90 minute analysis call, plus a written 30-day plan with five concrete automation candidates — scored by effort, value and risk. Designed as a low-risk first step before any larger project.",
+        ctaPrimary: "Request the AI & Automation Check",
+        ctaSecondary: "Back to overview",
+      },
+      problem: {
+        eyebrow: "[ WHY IT EXISTS ]",
+        headline: "Most automation projects fail before they start",
+        lead:
+          "Not because the technology doesn't work — but because the wrong process gets automated, or no one wrote down what the team actually does. The AI & Automation Check fixes that with a short, structured analysis.",
+        items: [
+          "Symptoms get automated instead of root causes",
+          "AI tools are bought without a clear use case",
+          "ROI is impossible to measure because there's no baseline",
+          "Teams can't tell what should stay manual on purpose",
+        ],
+      },
+      package: {
+        eyebrow: "[ WHAT YOU GET ]",
+        headline: "What's included",
+        bullets: [
+          {
+            title: "60–90 minute analysis call",
+            body: "On-site or remote. We listen to how work currently moves through the team — no slide deck.",
+          },
+          {
+            title: "Capture of your key manual processes",
+            body: "We write down the most relevant workflows so they're auditable by the team, not stuck in someone's head.",
+          },
+          {
+            title: "5 concrete automation candidates",
+            body: "Picked from your real processes — not a generic list of AI ideas.",
+          },
+          {
+            title: "Scored by effort, value and risk",
+            body: "Each candidate rated so leadership can prioritise without becoming the tech expert.",
+          },
+          {
+            title: "A clear 30-day implementation plan",
+            body: "Concrete next steps, tools, owners and the expected outcome.",
+          },
+          {
+            title: "Optional: pilot workflow implementation",
+            body: "If it makes sense, we build the first automation directly — fixed scope, fixed timeline.",
+          },
+        ],
+      },
+      audience: {
+        eyebrow: "[ WHO IT'S FOR ]",
+        headline: "Who the Check is right for",
+        items: [
+          "Mid-sized companies that want a measurable first step",
+          "Teams already using AI in shadow IT and want structure",
+          "Operations leads with too many manual handoffs",
+          "Companies evaluating Microsoft 365 / Power Automate / Make",
+          "Anyone who wants an outside read on \"what should we even automate first?\"",
+        ],
+      },
+      deliverables: {
+        eyebrow: "[ DELIVERABLES ]",
+        headline: "What lands in your inbox",
+        items: [
+          "Written process map of the workflows we discussed",
+          "5 scored automation opportunities",
+          "Recommended tools and rough effort estimate per opportunity",
+          "30-day implementation plan with owners",
+          "A short note on what should stay manual — and why",
+        ],
+      },
+      process: {
+        eyebrow: "[ HOW IT RUNS ]",
+        headline: "How the Check runs",
+        steps: [
+          { num: "01", title: "Kickoff", body: "Short prep call to align on goals and which processes are in scope." },
+          { num: "02", title: "Analysis call", body: "60–90 minutes with the people who actually do the work." },
+          { num: "03", title: "Written plan", body: "Within a few working days you receive the written 30-day plan." },
+          { num: "04", title: "Walk-through", body: "30-minute review call to clarify scope, effort and next steps." },
+        ],
+      },
+      faq: {
+        eyebrow: "[ FAQ ]",
+        headline: "Common questions",
+        items: [
+          { q: "What does the AI & Automation Check cost?", a: "Price on request — depends on scope and team size. We share a fixed price after the first short call." },
+          { q: "Do you sign a confidentiality agreement?", a: "Yes — a standard NDA is signed before the analysis call." },
+          { q: "Is this only for companies already using AI?", a: "No. Many engagements begin with no AI in use." },
+          { q: "Can we use our existing tools?", a: "Yes — wherever Microsoft 365, Google Workspace, your CRM or ERP can carry the workflow, we use them first." },
+          { q: "What happens after the Check?", a: "Either you implement the plan yourself, we implement a pilot together, or we stop there. No lock-in." },
+        ],
+      },
+      finalCta: {
+        eyebrow: "[ NEXT STEP ]",
+        title: {
+          pre: "Find out ",
+          italic: "what's worth automating",
+          post: " in your business.",
+        },
+        lead:
+          "One call. One written plan. No obligation after — we'd rather tell you it's not the right time than ship a project that doesn't pay off.",
+        ctaPrimary: "Request the AI & Automation Check",
+        ctaSecondary: "Book a discovery call instead",
       },
     },
 

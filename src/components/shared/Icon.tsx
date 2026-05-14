@@ -11,7 +11,9 @@ type IconName =
   | "shield"
   | "arrow"
   | "book"
-  | "check";
+  | "check"
+  | "bolt"
+  | "spark";
 
 export function Icon({
   name,
@@ -90,6 +92,23 @@ export function Icon({
     check: (
       <g>
         <path d="M20 6 9 17l-5-5" />
+      </g>
+    ),
+    bolt: (
+      <g>
+        <path d="M13 2 4 14h7l-1 8 9-12h-7l1-8Z" />
+      </g>
+    ),
+    spark: (
+      <g>
+        <path d="M12 3v3" />
+        <path d="M12 18v3" />
+        <path d="M3 12h3" />
+        <path d="M18 12h3" />
+        <path d="m5.6 5.6 2.1 2.1" />
+        <path d="m16.3 16.3 2.1 2.1" />
+        <path d="m5.6 18.4 2.1-2.1" />
+        <path d="m16.3 7.7 2.1-2.1" />
       </g>
     ),
   };

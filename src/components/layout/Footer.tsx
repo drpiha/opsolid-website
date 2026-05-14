@@ -5,10 +5,10 @@ import { usePathname } from "next/navigation";
 import { useLocale } from "@/context/LocaleContext";
 
 /**
- * Footer — industrial-luxury v2 port of SiteFooter mock, content driven
- * by `t.v2.footer.*`. Four columns (Products / Services / Studio / Legal)
- * + brand block with live FRA · DE chip, base line with copyright +
- * trust signals.
+ * Footer — consulting-positioning rewrite (2026-05). Old product columns
+ * (Voice Agent / Verso / Chatbot / WhatsApp / …) retired in favor of the
+ * four-column consulting shape: Services · Studio · Reach · Legal.
+ * Localized copy lives at `t.v2.footer.*`.
  */
 export function Footer() {
   const pathname = usePathname();
@@ -29,57 +29,37 @@ export function Footer() {
               OpSolid
             </Link>
             <p>{f.tagline}</p>
-            {(f.chipLive || f.chipLanguages) && (
+            {f.chipLanguages && (
               <div style={{ display: "flex", gap: 8, marginTop: 20 }}>
-                {f.chipLive && (
-                  <span className="chip">
-                    <span className="chip-dot chip-dot-live" /> {f.chipLive}
-                  </span>
-                )}
-                {f.chipLanguages && <span className="chip">{f.chipLanguages}</span>}
+                <span className="chip">{f.chipLanguages}</span>
               </div>
             )}
           </div>
 
           <div className="os-footer-cols">
             <div className="os-footer-col">
-              <div className="os-footer-col-h">{f.cols.productsHeading}</div>
+              <div className="os-footer-col-h">{f.cols.servicesHeading}</div>
               <ul>
                 <li>
-                  <Link href="/products/voice-agent">{f.cols.productsList.voiceAgent}</Link>
+                  <Link href="/ai-automation-check">{f.cols.services.automationCheck}</Link>
                 </li>
                 <li>
-                  <Link href="/products/digital-card">{f.cols.productsList.verso}</Link>
+                  <Link href="/#services">{f.cols.services.consulting}</Link>
                 </li>
                 <li>
-                  <Link href="/products/chatbot-agent">{f.cols.productsList.chatbot}</Link>
+                  <Link href="/#services">{f.cols.services.automation}</Link>
                 </li>
                 <li>
-                  <Link href="/products/whatsapp-agent">{f.cols.productsList.whatsapp}</Link>
+                  <Link href="/#services">{f.cols.services.internalTools}</Link>
                 </li>
                 <li>
-                  <Link href="/products/booking-agent">{f.cols.productsList.booking}</Link>
-                </li>
-                <li>
-                  <Link href="/products/email-agent">{f.cols.productsList.email}</Link>
-                </li>
-                <li>
-                  <Link href="/products/lead-qualifier-agent">{f.cols.productsList.leadQualifier}</Link>
-                </li>
-                <li>
-                  <Link href="/products/custom-automation">{f.cols.productsList.customAutomation}</Link>
-                </li>
-                <li>
-                  <Link href="/products/kutasia">{f.cols.productsList.kutasia}</Link>
+                  <Link href="/#services">{f.cols.services.training}</Link>
                 </li>
               </ul>
             </div>
             <div className="os-footer-col">
               <div className="os-footer-col-h">{f.cols.studioHeading}</div>
               <ul>
-                <li>
-                  <Link href="/pricing">{f.cols.studio.pricing}</Link>
-                </li>
                 <li>
                   <Link href="/about">{f.cols.studio.about}</Link>
                 </li>
@@ -100,11 +80,6 @@ export function Footer() {
                 <li>
                   <a href={f.cols.reach.linkedinHref} target="_blank" rel="noopener noreferrer">
                     {f.cols.reach.linkedinLabel}
-                  </a>
-                </li>
-                <li>
-                  <a href={f.cols.reach.githubHref} target="_blank" rel="noopener noreferrer">
-                    {f.cols.reach.githubLabel}
                   </a>
                 </li>
               </ul>

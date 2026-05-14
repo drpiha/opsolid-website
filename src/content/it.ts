@@ -63,9 +63,8 @@ const overrides: DeepPartial<Content> = {
   v2: {
     nav: {
       home: "Home",
-      voiceAgent: "Agente vocale",
-      digitalCard: "Verso",
-      kutasia: "Kutasia",
+      services: "Servizi",
+      automationCheck: "AI Automation Check",
       journal: "Blog",
       contact: "Contatto",
       cta: "Prenota call",

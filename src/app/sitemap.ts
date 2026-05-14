@@ -6,26 +6,19 @@ import { content as en } from "@/content/en";
 type PageDef = { path: string; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"]; priority: number };
 
 const STATIC_PAGES: PageDef[] = [
-  // Top-level
+  // Consulting positioning — primary funnel
   { path: "", changeFrequency: "weekly", priority: 1 },
-  { path: "/products", changeFrequency: "weekly", priority: 0.95 },
-  { path: "/pricing", changeFrequency: "weekly", priority: 0.95 },
+  { path: "/ai-automation-check", changeFrequency: "weekly", priority: 0.95 },
   { path: "/about", changeFrequency: "monthly", priority: 0.7 },
   { path: "/contact", changeFrequency: "monthly", priority: 0.8 },
   { path: "/blog", changeFrequency: "weekly", priority: 0.7 },
 
-  // Product pages — flagships
-  { path: "/products/voice-agent", changeFrequency: "monthly", priority: 0.9 },
-  { path: "/products/digital-card", changeFrequency: "monthly", priority: 0.9 },
-  { path: "/products/kutasia", changeFrequency: "monthly", priority: 0.85 },
-
-  // Product pages — agents & services
-  { path: "/products/chatbot-agent", changeFrequency: "monthly", priority: 0.85 },
-  { path: "/products/whatsapp-agent", changeFrequency: "monthly", priority: 0.85 },
-  { path: "/products/booking-agent", changeFrequency: "monthly", priority: 0.85 },
-  { path: "/products/email-agent", changeFrequency: "monthly", priority: 0.85 },
-  { path: "/products/lead-qualifier-agent", changeFrequency: "monthly", priority: 0.85 },
-  { path: "/products/custom-automation", changeFrequency: "monthly", priority: 0.85 },
+  // Legacy product pages — still reachable but de-prioritised in the
+  // consulting positioning. Kept in the sitemap so Google does not drop
+  // existing indexed URLs abruptly; will be folded into case studies later.
+  { path: "/products/voice-agent", changeFrequency: "monthly", priority: 0.55 },
+  { path: "/products/digital-card", changeFrequency: "monthly", priority: 0.55 },
+  { path: "/products/kutasia", changeFrequency: "monthly", priority: 0.5 },
 
   // Legal
   { path: "/impressum", changeFrequency: "yearly", priority: 0.3 },
@@ -37,7 +30,8 @@ const BLOG_SLUGS = en.blog.posts.map((p) => p.slug);
 function buildLanguageMap(path: string): Record<string, string> {
   const map: Record<string, string> = {};
   for (const loc of PUBLIC_LOCALES) map[loc] = `${SITE_CONFIG.url}/${loc}${path}`;
-  map["x-default"] = `${SITE_CONFIG.url}/en${path}`;
+  // x-default points at German — primary target market is DE-speaking SMEs.
+  map["x-default"] = `${SITE_CONFIG.url}/de${path}`;
   return map;
 }
 

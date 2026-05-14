@@ -3299,54 +3299,39 @@ export const content: Content = {
   v2: {
     nav: {
       home: "Start",
-      voiceAgent: "Voice Agent",
-      digitalCard: "Verso",
-      kutasia: "Kutasia",
-      journal: "Journal",
+      services: "Leistungen",
+      automationCheck: "AI Automation Check",
+      journal: "Wissen",
       contact: "Kontakt",
-      cta: "Gespräch buchen",
+      cta: "Erstgespräch buchen",
     },
 
     footer: {
       tagline:
-        "Unabhängiges Automatisierungsstudio. Hamburg · Frankfurt. GDPR-native Infrastruktur; der Quellcode bleibt bei Ihnen.",
+        "KI- und Automatisierungsberatung für mittelständische Unternehmen in Deutschland und Europa — praxisnah, messbar, datenschutzbewusst.",
       chipLive: "",
-      chipLanguages: "EN · DE · TR",
+      chipLanguages: "DE · EN · TR",
       cols: {
-        productsHeading: "Produkte",
         servicesHeading: "Leistungen",
         studioHeading: "Studio",
-        reachHeading: "Erreichbar",
+        reachHeading: "Kontakt",
         legalHeading: "Rechtliches",
         services: {
-          workflow: "Workflow-Automatisierung",
-          integration: "Systemintegration",
-          internal: "Interne Tools",
-          ai: "KI-gestützte Prozesse",
-        },
-        productsList: {
-          voiceAgent: "Voice Agent",
-          verso: "Verso",
-          chatbot: "Chatbot Agent",
-          whatsapp: "WhatsApp Agent",
-          booking: "Booking Agent",
-          email: "Email Agent",
-          leadQualifier: "Lead Qualifier",
-          customAutomation: "Custom Automation",
-          kutasia: "Kutasia",
+          automationCheck: "AI Automation Check",
+          consulting: "KI-Beratung",
+          automation: "Prozessautomatisierung",
+          internalTools: "Interne Tools & Integrationen",
+          training: "KI-Schulungen & Guidelines",
         },
         studio: {
-          pricing: "Preise",
-          about: "Über uns",
-          journal: "Journal",
+          about: "Über mich",
+          journal: "Wissen",
           contact: "Kontakt",
         },
         reach: {
-          email: "hello@opsolid.de",
+          email: "info@opsolid.de",
           linkedinLabel: "LinkedIn",
           linkedinHref: "https://www.linkedin.com/company/opsolid/",
-          githubLabel: "GitHub",
-          githubHref: "https://github.com/opsolid",
         },
         legal: {
           privacy: "Datenschutz",
@@ -3354,7 +3339,7 @@ export const content: Content = {
         },
       },
       base: {
-        copyrightSuffix: "OpSolid UG · Hamburg, DE",
+        copyrightSuffix: "OpSolid · Arnsberg, DE",
         trustLine: "",
       },
     },
@@ -3362,17 +3347,234 @@ export const content: Content = {
     home: {
       hero: {
         metaChip: "",
-        metaLabel: "[ OPSOLID · 2026 ]",
+        metaLabel: "[ KI- & AUTOMATISIERUNGSBERATUNG ]",
         title: {
-          pre: "Der Betrieb ist die stille Arbeit, die ein Unternehmen aufrecht hält. ",
-          italic: "Wir bauen die Systeme, die ihn am Laufen halten",
-          post: ".",
+          pre: "KI & Automatisierung für ",
+          italic: "effizientere",
+          post: " Geschäftsprozesse.",
         },
         lead:
-          "OpSolid ist ein unabhängiges Automatisierungsstudio für deutsches Mid-Market-B2B. Voice-Agenten am Telefon, Chatbots auf der Website, die Integrationen zwischen Ihrem CRM, ERP und Kalender — entworfen, damit die besten Stunden Ihres Teams in die Arbeit gehen, die nur Menschen leisten können. Konfiguriert für Ihren Stack in Woche eins. EU-gehostet, GDPR-nativ, Quellcode gehört Ihnen.",
-        ctaPrimary: "Discovery-Call buchen",
-        ctaSecondary: "Preise ansehen",
+          "OpSolid hilft kleinen und mittelständischen Unternehmen, manuelle Aufgaben, Excel-Prozesse, E-Mail-Abläufe und interne Workflows mit KI, Automatisierung und modernen Tools effizienter zu gestalten.",
+        ctaPrimary: "Kostenloses Erstgespräch buchen",
+        ctaSecondary: "AI & Automation Check ansehen",
         stats: [],
+        benefits: [
+          { icon: "workflow", label: "Weniger manuelle Arbeit" },
+          { icon: "bolt", label: "Schnellere Prozesse" },
+          { icon: "shield", label: "Sichere KI-Nutzung" },
+        ],
+      },
+
+      problem: {
+        eyebrow: "[ AUSGANGSLAGE ]",
+        headline: "Kommen Ihnen diese Probleme bekannt vor?",
+        lead:
+          "Die meisten Mittelständler verlieren jede Woche Stunden an manuelle Übergaben, verteilte Daten und Copy-&-Paste zwischen Tools — Arbeit, die das Team steuert, statt umgekehrt.",
+        items: [
+          {
+            title: "Wiederkehrende Aufgaben kosten täglich Zeit",
+            body: "Angebote, Rechnungen, Status-Updates und Nachfassen laufen weiterhin von Hand.",
+          },
+          {
+            title: "Informationen liegen verteilt in E-Mails, Excel-Dateien und Tools",
+            body: "Dieselben Daten werden dreimal erfasst; nichts gleicht sich automatisch ab.",
+          },
+          {
+            title: "Mitarbeitende kopieren Daten manuell zwischen Systemen",
+            body: "CRM, ERP, Tabellen — Brücken, die längst gebaut sein sollten, übernimmt das Team.",
+          },
+          {
+            title: "Angebote, Berichte oder Dokumente dauern zu lange",
+            body: "Vorlagen sind da, aber das Zusammensetzen bleibt Handarbeit.",
+          },
+          {
+            title: "KI wird genutzt — aber ohne Struktur oder Datenschutzkonzept",
+            body: "ChatGPT im Schatten-IT: keine Richtlinien, kein Audit-Trail, keine klare Verantwortung.",
+          },
+        ],
+      },
+
+      services: {
+        eyebrow: "[ WAS OPSOLID MACHT ]",
+        headline: "Was OpSolid für Sie übernimmt",
+        lead:
+          "Vier fokussierte Bereiche. Jeder mit einem messbaren Ergebnis — weniger manuelle Schritte, kürzere Durchlaufzeiten, sicherer KI-Einsatz.",
+        cards: [
+          {
+            icon: "bot",
+            title: "KI-Beratung",
+            body:
+              "Wir identifizieren sinnvolle KI-Anwendungsfälle, bewerten Nutzen und Risiken und entwickeln eine realistische Roadmap für Ihr Unternehmen.",
+            tag: "USE CASES · RISIKO · ROADMAP",
+          },
+          {
+            icon: "workflow",
+            title: "Prozessautomatisierung",
+            body:
+              "Wir automatisieren wiederkehrende Aufgaben mit Microsoft 365, Power Automate, Make, APIs, Python und individuellen Workflows.",
+            tag: "M365 · POWER AUTOMATE · APIS",
+          },
+          {
+            icon: "plug",
+            title: "Interne Tools & Integrationen",
+            body:
+              "Wir verbinden bestehende Systeme, reduzieren Medienbrüche und entwickeln kleine interne Anwendungen für Ihren Arbeitsalltag.",
+            tag: "INTEGRATIONEN · INTERNE TOOLS",
+          },
+          {
+            icon: "shield",
+            title: "KI-Schulungen & Guidelines",
+            body:
+              "Wir schulen Teams im sicheren, produktiven Umgang mit KI und entwickeln einfache Richtlinien für den Unternehmensalltag.",
+            tag: "SCHULUNG · GUIDELINES · DSGVO",
+          },
+        ],
+      },
+
+      automationCheckCard: {
+        eyebrow: "[ EINSTIEGS-PAKET ]",
+        badge: "AI & AUTOMATION CHECK",
+        title: {
+          pre: "Ein klarer ",
+          italic: "erster Schritt",
+          post: " für KI und Automatisierung",
+        },
+        lead:
+          "60–90 Minuten. Wir nehmen Ihre wichtigsten manuellen Prozesse auf, identifizieren fünf konkrete Automatisierungspotenziale und liefern einen umsetzbaren 30-Tage-Plan.",
+        bullets: [
+          "60–90 Minuten Analysegespräch",
+          "Aufnahme der wichtigsten manuellen Prozesse",
+          "Identifikation von 5 Automatisierungspotenzialen",
+          "Bewertung nach Aufwand, Nutzen und Risiko",
+          "Konkreter 30-Tage-Umsetzungsplan",
+          "Optional: Umsetzung eines ersten Pilot-Workflows",
+        ],
+        priceNote: "Preis auf Anfrage",
+        ctaPrimary: "AI & Automation Check anfragen",
+        ctaSecondary: "Was enthalten ist",
+      },
+
+      useCases: {
+        eyebrow: "[ TYPISCHE ANWENDUNGSFÄLLE ]",
+        headline: "Was wir in der Praxis automatisieren",
+        lead:
+          "Eine kurze Auswahl der Workflows, die wir für mittelständische Unternehmen gebaut oder bewertet haben. Weniger Kopieren, weniger Fehler, schnellere Bearbeitung.",
+        cards: [
+          {
+            title: "E-Mail-Klassifizierung & Weiterleitung",
+            body: "Eingehende Nachrichten werden thematisch markiert und an das richtige Postfach oder Ticket geroutet — keine manuelle Triage mehr.",
+          },
+          {
+            title: "Angebots- und Dokumentenerstellung",
+            body: "Vorlagen werden aus CRM-Daten gefüllt und zur Freigabe gegeben — Angebote gehen am selben Tag raus.",
+          },
+          {
+            title: "Excel- und Reporting-Automatisierung",
+            body: "Wiederkehrende Berichte einmal gebaut, automatisch wiederhergestellt — KPIs liegen vor der Besprechung vor.",
+          },
+          {
+            title: "CRM-/ERP-Datenübertragung",
+            body: "Daten fließen einmal zwischen Systemen und gleichen sich selbst ab — keine doppelte Erfassung.",
+          },
+          {
+            title: "Automatische Zusammenfassung von Dokumenten",
+            body: "Lange PDFs, Verträge und Meeting-Notizen werden zu einer klaren Übersicht, mit der das Team arbeiten kann.",
+          },
+          {
+            title: "Interne Wissensdatenbank mit KI",
+            body: "Suche in eigenen Dokumenten, Richtlinien und FAQs — Antworten bleiben innerhalb des Unternehmens.",
+          },
+          {
+            title: "Meeting-Notizen & Aufgabenverfolgung",
+            body: "Gespräche werden transkribiert, Entscheidungen extrahiert, Aufgaben ins System übernommen.",
+          },
+          {
+            title: "Support- und Anfrageprozesse",
+            body: "Standardanfragen werden automatisch beantwortet — Menschen übernehmen die Fälle, die es brauchen.",
+          },
+        ],
+      },
+
+      targetGroup: {
+        eyebrow: "[ FÜR WEN ]",
+        headline: "Für wen OpSolid geeignet ist",
+        lead:
+          "Wir arbeiten am besten mit Unternehmen, die schneller gewachsen sind als ihre internen Systeme — und die einen messbaren nächsten Schritt suchen statt einer Plattform-Vision.",
+        items: [
+          "Mittelständische Unternehmen",
+          "Handwerks- und Produktionsbetriebe",
+          "Vertriebs- und Serviceteams",
+          "Unternehmen mit vielen Excel-, E-Mail- oder Dokumentenprozessen",
+          "Firmen, die KI nutzen möchten — aber strukturiert und sicher starten wollen",
+        ],
+      },
+
+      trust: {
+        eyebrow: "[ WARUM OPSOLID ]",
+        headline: "Warum OpSolid",
+        lead:
+          "Praxisnah, messbar, datenschutzbewusst. Keine überdimensionierten Plattformen, keine Buzzwords, keine KI um ihrer selbst willen.",
+        items: [
+          {
+            title: "Praxisnaher IT- und Projektmanagement-Hintergrund",
+            body: "Erfahrung aus IT-Projektmanagement, Digitalisierung und Prozessoptimierung in echten Unternehmen — keine Beratungsfolien.",
+          },
+          {
+            title: "Fokus auf messbare Prozessverbesserung",
+            body: "Jedes Mandat beginnt mit einer Ausgangsmessung und endet mit einer Zahl, mit der Sie arbeiten können.",
+          },
+          {
+            title: "Keine unnötig komplexen Systeme",
+            body: "Wir bauen das Kleinste, das das Problem wirklich löst — und erweitern nur dort, wo es sich trägt.",
+          },
+          {
+            title: "Datenschutzbewusste Umsetzung",
+            body: "EU-Hosting, DSGVO-konforme Infrastruktur, keine Schatten-IT — so aufgesetzt, dass Audit und Compliance mitkommen.",
+          },
+          {
+            title: "Verständliche Beratung statt reiner Technik-Sprache",
+            body: "Entscheider sollen ohne IT-Übersetzer folgen können, was wir vorschlagen.",
+          },
+          {
+            title: "Umsetzung durch Netzwerk oder direkt",
+            body: "Lieferung über das OpSolid-Netzwerk oder direkte Entwicklung — je nachdem, was zum Umfang passt.",
+          },
+        ],
+      },
+
+      faq: {
+        eyebrow: "[ FAQ ]",
+        headline: "Häufige Fragen",
+        items: [
+          {
+            q: "Für welche Unternehmen ist OpSolid geeignet?",
+            a: "Mittelständische Unternehmen und Teams mit vielen manuellen oder Excel-/E-Mail-getriebenen Prozessen. Wenn alles ohnehin schon als System läuft, sind wir vermutlich nicht die wirkungsvollste Wahl.",
+          },
+          {
+            q: "Welche Prozesse können automatisiert werden?",
+            a: "Alles Wiederkehrende mit klarem Input und klarem Output — Angebote, Dokumentenerstellung, Reporting, Datenabgleich, E-Mail-Routing, Support-Triage.",
+          },
+          {
+            q: "Ist KI-Nutzung datenschutzkonform möglich?",
+            a: "Ja — mit der richtigen Modellauswahl, EU-Datenresidenz und einer schriftlichen Richtlinie. Wir richten das von Anfang an mit ein.",
+          },
+          {
+            q: "Muss mein Unternehmen bereits KI nutzen?",
+            a: "Nein. Viele Mandate starten ganz ohne KI im Einsatz — das Ergebnis ist trotzdem eine messbare Verbesserung.",
+          },
+          {
+            q: "Wie lange dauert ein erster Automation Check?",
+            a: "60 bis 90 Minuten für das Gespräch selbst, plus einige Arbeitstage für den schriftlichen 30-Tage-Plan.",
+          },
+          {
+            q: "Können bestehende Tools wie Microsoft 365 weiter genutzt werden?",
+            a: "Ja — der größte Teil dessen, was wir bauen, sitzt auf den Tools auf, die Sie ohnehin schon bezahlen.",
+          },
+          {
+            q: "Entwickelt OpSolid auch individuelle Lösungen?",
+            a: "Ja — wo Standard nicht passt, bauen wir interne Tools, eigene Workflows und Integrationen.",
+          },
+        ],
       },
 
       capabilities: {
@@ -3468,34 +3670,42 @@ export const content: Content = {
       },
 
       process: {
-        eyebrow: "[ 04 / 04 ] VORGEHEN",
-        headline: "Drei Schritte. Ein klar nachvollziehbarer Prozess",
+        eyebrow: "[ ZUSAMMENARBEIT ]",
+        headline: "So läuft die Zusammenarbeit ab",
         lead:
-          "Jedes Mandat folgt derselben Form: Wir kartieren den Bestand, liefern zuerst den entscheidenden Schritt und erweitern nur dort, wo es sich weiter trägt. Automatisierung wird empfohlen, wo sie sinnvoll ist — und davon abgeraten, wo nicht.",
+          "Vier kurze Schritte. Zuerst kartieren, eng schneiden, eine Sache sauber liefern und nur dort ausbauen, wo es sich trägt — keine Plattform-Rollouts, kein mehrquartaliges Discovery.",
         steps: [
           {
             num: "01",
-            title: "Operations-Walkthrough",
+            title: "Erstgespräch",
             body:
-              "Eine 90-minütige Tiefenanalyse, wie Arbeit heute fließt. Liefert eine schriftliche Karte jeder manuellen Übergabe, jeder fragilen Integration und jeder Stelle, an der das Geschäft am Kalender einer Person statt an einem System hängt.",
-            chipA: "1 Session · 90 Min.",
-            chipB: "Schriftliche Karte · PDF",
+              "Ein fokussiertes erstes Gespräch. Wir hören zu, wo das Team aktuell Zeit verliert und wie der Alltag wirklich aussieht — keine Folien, kein Vertriebs-Pitch.",
+            chipA: "30–60 Min.",
+            chipB: "Unverbindlich",
           },
           {
             num: "02",
-            title: "Eine fokussierte erste Lieferung",
+            title: "Prozessanalyse",
             body:
-              "Ein Workflow, End-to-End, in drei Wochen produktiv. Gebaut auf Tools, die Ihr Team selbst öffnen und prüfen kann. Wenn sich das erwartete Ergebnis im ersten Monat nicht zeigt, endet das Mandat dort.",
-            chipA: "3 Wochen · fixer Umfang",
-            chipB: "Produktionsreif",
-            chipBHot: true,
+              "Wir nehmen die wichtigsten Workflows End-to-End auf — Übergaben, Tools, Daten, Ausnahmen — und halten sie so klar fest, dass das Team mitprüfen kann.",
+            chipA: "AI & Automation Check",
+            chipB: "Schriftlicher Plan",
           },
           {
             num: "03",
-            title: "Ausbau, wo es sich weiter trägt",
+            title: "Lösungskonzept",
             body:
-              "Laufende Betreuung, monatlich oder quartalsweise. Neue Flächen nur, wenn die bestehenden stabil sind. Übergabe-Notizen, Runbooks und vollständiger Quellcode gehören Ihnen ab Tag eins — Sie können jederzeit innerhalb von zwei Wochen selbst übernehmen.",
-            chipA: "Monatliche Betreuung",
+              "Ein kurzes, konkretes Konzept: Was zuerst automatisiert wird, mit welchen Tools, erwarteter Aufwand und das messbare Ergebnis. Ehrlich auch dort, wo es sich nicht lohnt.",
+            chipA: "Umfang · Aufwand · Ergebnis",
+            chipB: "Entscheidungsreif",
+            chipBHot: true,
+          },
+          {
+            num: "04",
+            title: "Umsetzung & Optimierung",
+            body:
+              "Wir setzen um — allein oder mit Ihrem Team — und iterieren weiter, wo es sich rechnet. Übergabe-Notizen und Quellcode gehören Ihnen ab Tag eins.",
+            chipA: "Pilot → Rollout",
             chipB: "Quellcode gehört Ihnen",
           },
         ],
@@ -3504,16 +3714,129 @@ export const content: Content = {
       finalCta: {
         eyebrow: "[ KONTAKT ]",
         title: {
-          pre: "Klar herausarbeiten, ",
-          italic: "wo Automatisierung sich rechnet",
-          post: "",
+          pre: "Bereit, Ihre Prozesse ",
+          italic: "effizienter",
+          post: " zu machen?",
         },
         lead:
-          "30 Minuten. Ein Operations-Walkthrough, eine klare Einschätzung und ein schriftlicher Plan. Keine Verpflichtung nach dem Gespräch — wenn Automatisierung nicht das richtige Werkzeug ist, sagen wir das ebenso offen.",
-        ctaPrimary: "Discovery-Call buchen",
-        ctaSecondary: "Journal lesen",
+          "Lassen Sie uns gemeinsam prüfen, welche Aufgaben in Ihrem Unternehmen mit KI und Automatisierung vereinfacht werden können. Keine Verpflichtung nach dem Gespräch — wenn es nicht passt, sagen wir das auch offen.",
+        ctaPrimary: "Kostenloses Erstgespräch buchen",
+        ctaSecondary: "Wissen lesen",
         trustLine:
-          "BUILT IN GERMANY · GDPR-NATIVE · QUELLCODE BLEIBT BEI IHNEN · EN · DE · TR",
+          "UNABHÄNGIG · DSGVO-KONFORM · MADE IN GERMANY · DE · EN · TR",
+      },
+    },
+
+    aiAutomationCheckPage: {
+      hero: {
+        metaChip: "AI & AUTOMATION CHECK",
+        metaLabel: "[ EINSTIEGS-PAKET · 60–90 MIN ]",
+        title: {
+          pre: "Finden Sie das ",
+          italic: "echte",
+          post: " Automatisierungspotenzial in Ihrem Unternehmen",
+        },
+        lead:
+          "Ein fokussiertes 60–90 Minuten Analysegespräch und ein schriftlicher 30-Tage-Plan mit fünf konkreten Automatisierungskandidaten — bewertet nach Aufwand, Nutzen und Risiko. Gedacht als risikoarmer erster Schritt vor jedem größeren Projekt.",
+        ctaPrimary: "AI & Automation Check anfragen",
+        ctaSecondary: "Zurück zur Übersicht",
+      },
+      problem: {
+        eyebrow: "[ WARUM ES IHN GIBT ]",
+        headline: "Die meisten Automatisierungsprojekte scheitern, bevor sie beginnen",
+        lead:
+          "Nicht weil die Technik nicht funktioniert — sondern weil der falsche Prozess automatisiert wird, oder weil nie aufgeschrieben wurde, was das Team eigentlich tut. Der AI & Automation Check setzt genau hier an.",
+        items: [
+          "Symptome werden automatisiert statt der Ursachen",
+          "KI-Tools werden gekauft, ohne klaren Anwendungsfall",
+          "ROI ist nicht messbar, weil es keine Ausgangslage gibt",
+          "Es ist unklar, welche Schritte bewusst manuell bleiben sollen",
+        ],
+      },
+      package: {
+        eyebrow: "[ WAS ENTHALTEN IST ]",
+        headline: "Was im Check enthalten ist",
+        bullets: [
+          {
+            title: "60–90 Minuten Analysegespräch",
+            body: "Vor Ort oder remote. Wir hören zu, wie Arbeit aktuell durch das Team fließt — keine Folien.",
+          },
+          {
+            title: "Aufnahme der wichtigsten manuellen Prozesse",
+            body: "Wir schreiben die relevanten Workflows so auf, dass das Team mitprüfen kann — nicht im Kopf einer einzelnen Person.",
+          },
+          {
+            title: "5 konkrete Automatisierungspotenziale",
+            body: "Ausgewählt aus Ihren echten Prozessen — keine generische KI-Wunschliste.",
+          },
+          {
+            title: "Bewertung nach Aufwand, Nutzen und Risiko",
+            body: "Jedes Potenzial bewertet, damit die Leitung priorisieren kann, ohne selbst Tech-Expertise zu brauchen.",
+          },
+          {
+            title: "Klarer 30-Tage-Umsetzungsplan",
+            body: "Konkrete nächste Schritte, Tools, Verantwortliche und das erwartete Ergebnis.",
+          },
+          {
+            title: "Optional: Umsetzung eines Pilot-Workflows",
+            body: "Wo es sinnvoll ist, setzen wir die erste Automatisierung direkt um — fixer Umfang, fixer Zeitrahmen.",
+          },
+        ],
+      },
+      audience: {
+        eyebrow: "[ FÜR WEN ]",
+        headline: "Für wen der Check geeignet ist",
+        items: [
+          "Mittelständische Unternehmen, die einen messbaren ersten Schritt wollen",
+          "Teams, die KI bereits im Schatten-IT nutzen und Struktur suchen",
+          "Operations-Verantwortliche mit zu vielen manuellen Übergaben",
+          "Unternehmen, die Microsoft 365 / Power Automate / Make bewerten",
+          "Alle, die einen Außenblick wollen: „Was sollten wir überhaupt zuerst automatisieren?“",
+        ],
+      },
+      deliverables: {
+        eyebrow: "[ WAS SIE BEKOMMEN ]",
+        headline: "Was am Ende in Ihrem Postfach liegt",
+        items: [
+          "Schriftliche Prozesskarte der besprochenen Workflows",
+          "5 bewertete Automatisierungspotenziale",
+          "Empfohlene Tools und grobe Aufwandsschätzung je Potenzial",
+          "30-Tage-Umsetzungsplan mit Verantwortlichen",
+          "Eine kurze Notiz, was bewusst manuell bleiben sollte — und warum",
+        ],
+      },
+      process: {
+        eyebrow: "[ ABLAUF ]",
+        headline: "So läuft der Check ab",
+        steps: [
+          { num: "01", title: "Kickoff", body: "Kurzes Vorgespräch zur Abstimmung der Ziele und welcher Prozesse im Scope sind." },
+          { num: "02", title: "Analysegespräch", body: "60–90 Minuten mit den Menschen, die die Arbeit tatsächlich machen." },
+          { num: "03", title: "Schriftlicher Plan", body: "Innerhalb weniger Arbeitstage erhalten Sie den schriftlichen 30-Tage-Plan." },
+          { num: "04", title: "Durchsprache", body: "30 Minuten zur Klärung von Umfang, Aufwand und nächsten Schritten." },
+        ],
+      },
+      faq: {
+        eyebrow: "[ FAQ ]",
+        headline: "Häufige Fragen",
+        items: [
+          { q: "Was kostet der AI & Automation Check?", a: "Preis auf Anfrage — abhängig von Umfang und Teamgröße. Nach dem ersten Kurzgespräch geben wir einen fixen Preis." },
+          { q: "Wird eine Vertraulichkeitsvereinbarung geschlossen?", a: "Ja — eine Standard-NDA wird vor dem Analysegespräch unterzeichnet." },
+          { q: "Ist das nur für Unternehmen, die bereits KI einsetzen?", a: "Nein. Viele Mandate starten ganz ohne KI im Einsatz." },
+          { q: "Können wir unsere bestehenden Tools weiter nutzen?", a: "Ja — wo Microsoft 365, Google Workspace, Ihr CRM oder ERP den Workflow tragen, nutzen wir die zuerst." },
+          { q: "Was passiert nach dem Check?", a: "Entweder Sie setzen den Plan selbst um, wir setzen gemeinsam einen Pilot um, oder es endet dort. Kein Lock-in." },
+        ],
+      },
+      finalCta: {
+        eyebrow: "[ NÄCHSTER SCHRITT ]",
+        title: {
+          pre: "Finden Sie heraus, ",
+          italic: "was sich wirklich lohnt zu automatisieren",
+          post: ".",
+        },
+        lead:
+          "Ein Gespräch. Ein schriftlicher Plan. Keine Verpflichtung danach — wir sagen Ihnen lieber, dass es noch nicht der richtige Zeitpunkt ist, als ein Projekt zu starten, das sich nicht trägt.",
+        ctaPrimary: "AI & Automation Check anfragen",
+        ctaSecondary: "Lieber Erstgespräch buchen",
       },
     },
 

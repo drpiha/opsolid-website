@@ -5,11 +5,14 @@ import { KineticMechanism } from "@/components/sections/hero/KineticMechanism";
 import { Icon } from "@/components/shared/Icon";
 import { useLocale } from "@/context/LocaleContext";
 
+type BenefitIcon = "workflow" | "bolt" | "shield" | "spark" | "bot" | "plug";
+
 /**
- * Homepage hero — industrial-luxury port of the Claude Design v2 mock.
- * Copy driven by `t.v2.home.hero.*` so EN / DE / TR all render correctly.
- * Stats tiles are honest data only (Frankfurt hosting, supported languages,
- * pre-market pilot window) — no invented figures.
+ * Homepage hero — consulting-positioned rewrite (2026-05).
+ * Copy lives at `t.v2.home.hero.*`. The three benefit chips below the CTAs
+ * carry the "weniger manuelle Arbeit · schnellere Prozesse · sichere
+ * KI-Nutzung" promise; stats slot is reserved for honest figures we don't
+ * have yet (no fake numbers).
  */
 export function Hero() {
   const { t } = useLocale();
@@ -39,10 +42,24 @@ export function Hero() {
             <Link href="/contact" className="btn btn-primary btn-lg">
               {h.ctaPrimary} <Icon name="arrow" size={18} />
             </Link>
-            <Link href="/pricing" className="btn btn-ghost btn-lg">
+            <Link href="/ai-automation-check" className="btn btn-ghost btn-lg">
               {h.ctaSecondary}
             </Link>
           </div>
+
+          {h.benefits && h.benefits.length > 0 && (
+            <div className="os-hero-benefits" role="list">
+              {h.benefits.map((b, i) => (
+                <div key={i} role="listitem" className="os-hero-benefit">
+                  <span className="os-hero-benefit-icon" aria-hidden="true">
+                    <Icon name={b.icon as BenefitIcon} size={18} />
+                  </span>
+                  <span className="os-hero-benefit-label">{b.label}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
           {h.stats.length > 0 && (
             <div className="os-hero-stats">
               {h.stats.map((stat, i) => (
