@@ -27,7 +27,11 @@ const LocaleContext = createContext<LocaleContextValue>({
   t: contents[DEFAULT_LOCALE],
 });
 
-const COOKIE_NAME = "NEXT_LOCALE";
+// Keep in sync with src/middleware.ts. We versioned the cookie name when
+// the locale-detection policy changed (2026-05) so stale `NEXT_LOCALE=tr`
+// cookies from the previous logic stop overriding the new geo-based default.
+const COOKIE_NAME = "OPSOLID_LOCALE";
+const LEGACY_COOKIE_NAME = "NEXT_LOCALE";
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
 export function LocaleProvider({
@@ -60,6 +64,9 @@ export function LocaleProvider({
       if (!(LOCALES as readonly string[]).includes(next)) return;
       if (typeof document !== "undefined") {
         document.cookie = `${COOKIE_NAME}=${next}; path=/; max-age=${COOKIE_MAX_AGE}; samesite=lax`;
+        // Sweep the legacy cookie at the same time so it can't outvote the
+        // new one if the user immediately opens a fresh tab.
+        document.cookie = `${LEGACY_COOKIE_NAME}=; path=/; max-age=0; samesite=lax`;
       }
       const rest = stripLocaleFromPath(pathname || "/");
       router.push(withLocale(rest, next));

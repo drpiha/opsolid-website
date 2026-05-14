@@ -10,41 +10,80 @@ function voiceIsEnabled(): boolean {
   return t === "1" || t === "true" || t === "yes" || t === "on";
 }
 
-const COOKIE_NAME = "NEXT_LOCALE";
+// Versioned cookie name. The old "NEXT_LOCALE" cookie set by the previous
+// detection logic (which routed everyone with a Turkish browser tag to TR
+// regardless of country) is intentionally ignored — bumping the cookie name
+// is the cleanest way to invalidate every stale preference at once.
+const COOKIE_NAME = "OPSOLID_LOCALE";
+const LEGACY_COOKIE_NAME = "NEXT_LOCALE";
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
 
+// DACH country codes (Germany, Austria, Switzerland, Liechtenstein) — all
+// served the German marketing site. LI is included because it shares the
+// language and B2B fabric with the rest of DACH.
+const DE_COUNTRIES = new Set(["DE", "AT", "CH", "LI"]);
+
+/** Read the visitor's country code from whichever edge populated the request. */
+function readCountry(req: NextRequest): string | null {
+  // Vercel edge (when deployed on Vercel)
+  const vercel = req.headers.get("x-vercel-ip-country");
+  if (vercel) return vercel.toUpperCase();
+  // Cloudflare proxy (most common on opsolid.de VPS path)
+  const cf = req.headers.get("cf-ipcountry");
+  if (cf && cf !== "XX") return cf.toUpperCase();
+  // Generic / custom proxy headers (Traefik, nginx)
+  const generic =
+    req.headers.get("x-country-code") || req.headers.get("x-geo-country");
+  if (generic) return generic.toUpperCase();
+  return null;
+}
+
+/**
+ * Locale resolution policy (2026-05):
+ *   • Explicit user choice (cookie) always wins.
+ *   • If we know the country: TR → tr, DACH → de, everything else → en.
+ *     Notably, a US visitor with a Turkish browser locale still lands on EN —
+ *     country is authoritative once we have it.
+ *   • Without a country (local dev, some proxies), fall back to
+ *     Accept-Language but ONLY route mother-tongue DE/TR visitors. Every
+ *     other language tag resolves to EN.
+ */
 function detectLocale(req: NextRequest): Locale {
-  // 1. Cookie preference (explicit user choice wins)
+  // 1. Explicit user choice (our own versioned cookie)
   const cookieValue = req.cookies.get(COOKIE_NAME)?.value;
   if (isLocale(cookieValue)) return cookieValue;
 
-  // 2. Vercel geo header — production-only (free on Hobby tier)
-  const country = req.headers.get("x-vercel-ip-country")?.toUpperCase();
-  if (country === "DE" || country === "AT" || country === "CH") return "de";
-  if (country === "TR") return "tr";
-
-  // 3. Accept-Language header fallback (order by quality score)
-  const accept = req.headers.get("accept-language") || "";
-  const preferred = accept
-    .split(",")
-    .map((part) => {
-      const [tag, q = "q=1"] = part.trim().split(";");
-      const quality = parseFloat(q.replace("q=", "")) || 1;
-      return { tag: tag.toLowerCase().split("-")[0], quality };
-    })
-    .sort((a, b) => b.quality - a.quality);
-
-  for (const { tag } of preferred) {
-    if (tag === "de") return "de";
-    if (tag === "tr") return "tr";
-    if (tag === "es") return "es";
-    if (tag === "it") return "it";
-    if (tag === "fr") return "fr";
-    if (tag === "ar") return "ar";
-    if (tag === "en") return "en";
+  // 2. Geo header (authoritative — does NOT fall through to Accept-Language)
+  const country = readCountry(req);
+  if (country) {
+    if (country === "TR") return "tr";
+    if (DE_COUNTRIES.has(country)) return "de";
+    return "en";
   }
 
+  // 3. No country — Accept-Language, but only for DE/TR. Everything else EN.
+  const accept = req.headers.get("accept-language") || "";
+  const primary = accept
+    .split(",")[0]
+    ?.trim()
+    .split(";")[0]
+    ?.toLowerCase()
+    .split("-")[0];
+
+  if (primary === "tr") return "tr";
+  if (primary === "de") return "de";
+
   return DEFAULT_LOCALE;
+}
+
+/** Delete the legacy NEXT_LOCALE cookie so it can never override the new one. */
+function clearLegacyLocaleCookie(res: NextResponse) {
+  if (res.cookies.get(LEGACY_COOKIE_NAME)) return;
+  res.cookies.set(LEGACY_COOKIE_NAME, "", {
+    path: "/",
+    maxAge: 0,
+    sameSite: "lax",
+  });
 }
 
 // Subdomain routing for the Smart Card product:
@@ -215,6 +254,7 @@ export async function middleware(req: NextRequest) {
       maxAge: COOKIE_MAX_AGE,
       sameSite: "lax",
     });
+    clearLegacyLocaleCookie(response);
     return response;
   }
 
@@ -229,6 +269,7 @@ export async function middleware(req: NextRequest) {
       maxAge: COOKIE_MAX_AGE,
       sameSite: "lax",
     });
+    clearLegacyLocaleCookie(response);
     return response;
   }
 
@@ -247,6 +288,10 @@ export async function middleware(req: NextRequest) {
       sameSite: "lax",
     });
   }
+  // Always sweep the legacy cookie on every response — the user could have
+  // a stale NEXT_LOCALE=tr that was set under the old detection logic, and
+  // we want it gone on the very next page load.
+  clearLegacyLocaleCookie(response);
 
   return response;
 }
