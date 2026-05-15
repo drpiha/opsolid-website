@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { Icon } from "@/components/shared/Icon";
 import { useLocale } from "@/context/LocaleContext";
@@ -21,27 +22,42 @@ export function LeistungenPage() {
       {/* ----- Hero ----- */}
       <section className="os-leistungen-hero">
         <div className="wrap">
-          <div className="os-hero-meta">
-            {l.hero.metaChip && (
-              <span className="chip chip-hot">
-                <span className="chip-dot chip-dot-live" /> {l.hero.metaChip}
-              </span>
-            )}
-            {l.hero.metaLabel && <span className="meta">{l.hero.metaLabel}</span>}
-          </div>
-          <h1>
-            {l.hero.title.pre}
-            <span className="editorial">{l.hero.title.italic}</span>
-            {l.hero.title.post}
-          </h1>
-          <p className="lead">{l.hero.lead}</p>
-          <div className="os-aac-hero-ctas">
-            <Link href="/contact" className="btn btn-primary btn-lg">
-              {l.hero.ctaPrimary} <Icon name="arrow" size={18} />
-            </Link>
-            <Link href="/ai-automation-check" className="btn btn-ghost btn-lg">
-              {l.hero.ctaSecondary}
-            </Link>
+          <div className="os-hero-with-image">
+            <div>
+              <div className="os-hero-meta">
+                {l.hero.metaChip && (
+                  <span className="chip chip-hot">
+                    <span className="chip-dot chip-dot-live" /> {l.hero.metaChip}
+                  </span>
+                )}
+                {l.hero.metaLabel && <span className="meta">{l.hero.metaLabel}</span>}
+              </div>
+              <h1>
+                {l.hero.title.pre}
+                <span className="editorial">{l.hero.title.italic}</span>
+                {l.hero.title.post}
+              </h1>
+              <p className="lead">{l.hero.lead}</p>
+              <div className="os-aac-hero-ctas">
+                <Link href="/contact" className="btn btn-primary btn-lg">
+                  {l.hero.ctaPrimary} <Icon name="arrow" size={18} />
+                </Link>
+                <Link href="/ai-automation-check" className="btn btn-ghost btn-lg">
+                  {l.hero.ctaSecondary}
+                </Link>
+              </div>
+            </div>
+            <div className="os-hero-image-frame">
+              <Image
+                src="/images/sections/leistungen.jpg"
+                alt="Macro of a circuit board with warm metallic capacitors and a precision-soldered chip — the technical infrastructure underneath AI, automation and internal tools."
+                width={1200}
+                height={960}
+                priority
+                sizes="(max-width: 960px) 100vw, 50vw"
+              />
+              <span className="os-hero-image-tag">{l.hero.metaLabel}</span>
+            </div>
           </div>
         </div>
       </section>

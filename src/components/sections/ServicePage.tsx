@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { Icon } from "@/components/shared/Icon";
 import { useLocale } from "@/context/LocaleContext";
@@ -16,6 +17,35 @@ type ServiceKey =
 type ServiceContent = Content["v2"]["services"][ServiceKey];
 
 /**
+ * Per-service hero artwork. Hand-picked Unsplash photography that fits the
+ * "panel + grain + copper" brand formula — warm-toned, editorial, no
+ * clichéd glowing-AI-brain stock. The hero CSS tints each one with a copper
+ * radial so it sits inside the palette regardless of source.
+ */
+const HERO_IMAGE: Record<ServiceKey, { src: string; alt: string }> = {
+  kiBeratung: {
+    src: "/images/sections/ki-beratung.jpg",
+    alt: "Two people sketching diagrams on paper at a warm wooden desk with laptops open — collaborative AI use-case analysis.",
+  },
+  prozessautomatisierung: {
+    src: "/images/sections/prozessautomatisierung.jpg",
+    alt: "Engineers working over a technical blueprint with a precision-engineered part — process design and automation.",
+  },
+  microsoft365: {
+    src: "/images/sections/microsoft-365.jpg",
+    alt: "Hands typing on a laptop keyboard in warm daylight — everyday office work made faster with Microsoft 365 automation.",
+  },
+  interneTools: {
+    src: "/images/sections/interne-tools.jpg",
+    alt: "Engineer working with a complex hardware test rig and a laptop — building a small focused tool that fits.",
+  },
+  kiSchulungen: {
+    src: "/images/sections/ki-schulungen.jpg",
+    alt: "Open notebook with the word 'Notes' written in fountain pen, copper-coloured pen and reading glasses on a wooden desk — practical learning.",
+  },
+};
+
+/**
  * Shared template for a single service detail page.
  * Sections: Hero · What we do · Use cases · Tools · Process · FAQ · Final CTA.
  * Pulls the service-specific block from `t.v2.services[serviceKey]` and the
@@ -25,6 +55,7 @@ export function ServicePage({ serviceKey }: { serviceKey: ServiceKey }) {
   const { t } = useLocale();
   const shared = t.v2.services.shared;
   const s = t.v2.services[serviceKey] as ServiceContent;
+  const hero = HERO_IMAGE[serviceKey];
 
   return (
     <main>
@@ -34,27 +65,42 @@ export function ServicePage({ serviceKey }: { serviceKey: ServiceKey }) {
           <Link href="/leistungen" className="os-service-back-link">
             ← {shared.backToServices}
           </Link>
-          <div className="os-hero-meta">
-            {s.hero.metaChip && (
-              <span className="chip chip-hot">
-                <span className="chip-dot chip-dot-live" /> {s.hero.metaChip}
-              </span>
-            )}
-            {s.hero.metaLabel && <span className="meta">{s.hero.metaLabel}</span>}
-          </div>
-          <h1>
-            {s.hero.title.pre}
-            <span className="editorial">{s.hero.title.italic}</span>
-            {s.hero.title.post}
-          </h1>
-          <p className="lead">{s.hero.lead}</p>
-          <div className="os-aac-hero-ctas">
-            <Link href="/contact" className="btn btn-primary btn-lg">
-              {s.hero.ctaPrimary} <Icon name="arrow" size={18} />
-            </Link>
-            <Link href="/ai-automation-check" className="btn btn-ghost btn-lg">
-              {s.hero.ctaSecondary}
-            </Link>
+          <div className="os-hero-with-image">
+            <div>
+              <div className="os-hero-meta">
+                {s.hero.metaChip && (
+                  <span className="chip chip-hot">
+                    <span className="chip-dot chip-dot-live" /> {s.hero.metaChip}
+                  </span>
+                )}
+                {s.hero.metaLabel && <span className="meta">{s.hero.metaLabel}</span>}
+              </div>
+              <h1>
+                {s.hero.title.pre}
+                <span className="editorial">{s.hero.title.italic}</span>
+                {s.hero.title.post}
+              </h1>
+              <p className="lead">{s.hero.lead}</p>
+              <div className="os-aac-hero-ctas">
+                <Link href="/contact" className="btn btn-primary btn-lg">
+                  {s.hero.ctaPrimary} <Icon name="arrow" size={18} />
+                </Link>
+                <Link href="/ai-automation-check" className="btn btn-ghost btn-lg">
+                  {s.hero.ctaSecondary}
+                </Link>
+              </div>
+            </div>
+            <div className="os-hero-image-frame">
+              <Image
+                src={hero.src}
+                alt={hero.alt}
+                width={1200}
+                height={960}
+                priority
+                sizes="(max-width: 960px) 100vw, 50vw"
+              />
+              {s.hero.metaChip && <span className="os-hero-image-tag">{s.hero.metaChip}</span>}
+            </div>
           </div>
         </div>
       </section>
