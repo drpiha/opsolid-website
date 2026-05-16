@@ -140,7 +140,7 @@ export function LinksPanel({
         >
           <Field name="label" label="Label" placeholder="Hannover Messe 2026 — Stand B12" />
           <Field name="code" label="Code (optional)" placeholder="hsn-messe2026" mono />
-          <Field name="source" label="Source" placeholder="qr-main · nfc-card · instagram-bio" />
+          <Field name="source" label="Source" placeholder="qr-main · nfc-card · email-signature" />
           <Field name="campaign" label="Campaign" placeholder="Personal Profile" />
           <Field name="medium" label="Medium" placeholder="qr · nfc · email · print" />
           <Field name="eventName" label="Event" placeholder="Hannover Messe 2026" />

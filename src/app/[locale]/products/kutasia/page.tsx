@@ -2,13 +2,13 @@ import type { Metadata } from "next";
 import { KutasiaPage } from "./KutasiaPage";
 
 export const metadata: Metadata = {
-  title: "Kutasia — Multi-Sector Customer Platform",
+  title: "Kutasia — Unified AI Workspace for SMBs",
   description:
-    "Kutasia is OpSolid's multi-tenant SaaS platform for unified customer communication, sector-specific workflows, and AI-assisted analysis across 15+ industries.",
+    "Kutasia is OpSolid's unified AI workspace — WhatsApp, Telegram, Email and Voice in one inbox, with six demoable hero automations for SMBs across DACH and Turkey.",
   openGraph: {
     title: "Kutasia | OpSolid",
     description:
-      "Unify messaging, requests, bookings, and content in one AI-assisted workspace — tailored per sector.",
+      "WhatsApp, Telegram, Email and Voice in one AI-assisted workspace — built for SMBs that run on customer conversations.",
   },
 };
 
