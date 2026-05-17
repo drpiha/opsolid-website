@@ -22,6 +22,7 @@ import {
 import { toInboundMessage } from "@/lib/inbox/channels/telegram/adapter";
 import type { TelegramConfig } from "@/lib/inbox/channels/telegram/client";
 import { regenerateThreadAI } from "@/lib/inbox/ai/regenerate";
+import { runPlaybooksForTrigger } from "@/lib/inbox/playbooks/runner";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -94,6 +95,20 @@ export async function POST(
       await regenerateThreadAI(thread.id);
     } catch (err) {
       console.warn("[inbox/telegram/webhook] AI regen failed", err);
+    }
+
+    // Trigger any active playbooks bound to message.in.
+    if (message?.id) {
+      try {
+        await runPlaybooksForTrigger({
+          userId: resolved.userId,
+          trigger: "message.in",
+          threadId: thread.id,
+          messageId: message.id,
+        });
+      } catch (err) {
+        console.warn("[inbox/telegram/webhook] playbook run failed", err);
+      }
     }
 
     return NextResponse.json({

@@ -21,6 +21,7 @@ import {
   type PostmarkInbound,
 } from "@/lib/inbox/channels/email/adapter";
 import { regenerateThreadAI } from "@/lib/inbox/ai/regenerate";
+import { runPlaybooksForTrigger } from "@/lib/inbox/playbooks/runner";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -71,6 +72,19 @@ export async function POST(
       await regenerateThreadAI(thread.id);
     } catch (err) {
       console.warn("[inbox/email/webhook] AI regen failed", err);
+    }
+
+    if (message?.id) {
+      try {
+        await runPlaybooksForTrigger({
+          userId: channel.userId,
+          trigger: "message.in",
+          threadId: thread.id,
+          messageId: message.id,
+        });
+      } catch (err) {
+        console.warn("[inbox/email/webhook] playbook run failed", err);
+      }
     }
 
     return NextResponse.json({

@@ -25,6 +25,7 @@ import {
 } from "@/lib/inbox/channels/whatsapp/adapter";
 import type { WhatsAppConfig } from "@/lib/inbox/channels/whatsapp/client";
 import { regenerateThreadAI } from "@/lib/inbox/ai/regenerate";
+import { runPlaybooksForTrigger } from "@/lib/inbox/playbooks/runner";
 import type { MessageStatus } from "@/lib/inbox/types";
 
 export const runtime = "nodejs";
@@ -110,13 +111,20 @@ export async function POST(
 
     // Inbound messages → ingest + AI refresh.
     const touchedThreadIds = new Set<string>();
+    const ingestedPairs: Array<{ threadId: string; messageId: string }> = [];
     for (const payload of messages) {
-      const { thread } = await ingestInbound(
+      const ingested = await ingestInbound(
         channel.userId,
         { id: channel.id, type: "whatsapp" },
         payload,
       );
-      touchedThreadIds.add(thread.id);
+      touchedThreadIds.add(ingested.thread.id);
+      if (ingested.message) {
+        ingestedPairs.push({
+          threadId: ingested.thread.id,
+          messageId: ingested.message.id,
+        });
+      }
     }
 
     // Status callbacks (sent/delivered/read/failed) → update outbound rows.
@@ -147,6 +155,20 @@ export async function POST(
         await regenerateThreadAI(threadId);
       } catch (err) {
         console.warn("[inbox/whatsapp/webhook] AI regen failed", err);
+      }
+    }
+
+    // Playbooks on each ingested message.
+    for (const pair of ingestedPairs) {
+      try {
+        await runPlaybooksForTrigger({
+          userId: channel.userId,
+          trigger: "message.in",
+          threadId: pair.threadId,
+          messageId: pair.messageId,
+        });
+      } catch (err) {
+        console.warn("[inbox/whatsapp/webhook] playbook run failed", err);
       }
     }
 
