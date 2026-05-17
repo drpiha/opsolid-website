@@ -1,359 +1,993 @@
 "use client";
 
 // =============================================================================
-// InboxClient — Phase 8.5 Smart Action Inbox
+// InboxClient — Unified Inbox v2 (Kutasia Workspace pivot, Faz C)
 //
-// Fetches received actions from GET /api/account/inbox.
-// Supports accept / decline / archive via PATCH /api/account/inbox/[id].
+// Channel-agnostic 3-pane view backed by the new /api/inbox/* endpoints.
+// Left rail: channel filters; center: thread list; right: thread detail
+// with reply box + AI draft action.
+//
+// The previous Smart Action board (CardAction) lives on as the "card_action"
+// channel filter — actions will appear there once the CardAction backfill
+// ships (planned post-Faz C). Until then that filter shows an empty state.
 // =============================================================================
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useParams } from "next/navigation";
-import Image from "next/image";
 
 type Locale = "de" | "en" | "tr";
+type ChannelType =
+  | "whatsapp"
+  | "telegram"
+  | "email"
+  | "voice"
+  | "web"
+  | "card_action";
 
-type ActionType =
-  | "request_contact"
-  | "request_quote"
-  | "request_meeting"
-  | "send_card"
-  | "ask_collaboration"
-  | "give_feedback";
+type ThreadStatus = "open" | "snoozed" | "closed" | "archived";
+type StatusFilter = ThreadStatus | "all";
 
-type ActionStatus = "pending" | "accepted" | "declined" | "archived";
-
-interface Sender {
-  slug: string | null;
-  name: string | null;
-  title: string | null;
-  company: string | null;
-  photoPath: string | null;
-}
-
-interface InboxItem {
+interface ChannelSummary {
   id: string;
-  type: ActionType;
-  status: ActionStatus;
-  message: string | null;
-  createdAt: string;
-  resolvedAt: string | null;
-  sender: Sender;
-  receiverSlug: string | null;
+  type: ChannelType;
+  label: string | null;
+  status: string;
+  counts: { open: number; unread: number };
 }
 
-type FilterKey = "pending" | "accepted" | "all";
+interface ThreadListItem {
+  id: string;
+  channelType: ChannelType;
+  contactName: string | null;
+  contactHandle: string;
+  contactLocale: string | null;
+  subject: string | null;
+  status: ThreadStatus;
+  priority: number;
+  unreadCount: number;
+  tags: string[];
+  aiSummary: string | null;
+  aiSentiment: string | null;
+  aiIntent: string | null;
+  lastMessageAt: string;
+  lastMessage: {
+    id: string;
+    body: string | null;
+    direction: "in" | "out";
+    sentBy: string;
+    createdAt: string;
+  } | null;
+}
 
-const COPY: Record<
-  Locale,
-  {
-    title: string;
+interface ThreadMessage {
+  id: string;
+  direction: "in" | "out";
+  sentBy: string;
+  status: string;
+  body: string | null;
+  mediaUrls: string[];
+  voiceUrl: string | null;
+  voiceTranscript: string | null;
+  language: string | null;
+  createdAt: string;
+}
+
+interface ThreadSuggestion {
+  id: string;
+  type: string;
+  status: string;
+  content: string;
+  modelUsed: string | null;
+  createdAt: string;
+}
+
+interface ThreadDetail extends ThreadListItem {
+  channel: { id: string; type: string; label: string | null; status: string };
+  assignedTo: string | null;
+  messages: ThreadMessage[];
+  suggestions: ThreadSuggestion[];
+}
+
+// ---------------------------------------------------------------------------
+// i18n copy — kept inline so adding the inbox didn't require sprawling the
+// global content/*.ts files. Channel labels stay in English on purpose
+// (they're product names).
+// ---------------------------------------------------------------------------
+
+const COPY: Record<Locale, {
+  title: string;
+  subtitle: string;
+  rail: {
+    sectionChannels: string;
+    sectionFilters: string;
+    all: string;
+    open: string;
+    snoozed: string;
+    closed: string;
+    archived: string;
+    statusAll: string;
+    noChannels: string;
+    addChannelHint: string;
+  };
+  channels: Record<ChannelType | "all", string>;
+  list: {
     empty: string;
     emptyHint: string;
-    filterPending: string;
-    filterAccepted: string;
-    filterAll: string;
-    accept: string;
-    decline: string;
+    loading: string;
+    loadFailed: string;
+    youPrefix: string;
+    voiceNote: string;
+    attachment: string;
+  };
+  detail: {
+    placeholder: string;
+    aiSummary: string;
+    aiSentiment: string;
+    aiIntent: string;
+    aiNotYet: string;
+    suggestDraft: string;
+    regenDraft: string;
+    useDraft: string;
+    dismissDraft: string;
+    reply: string;
+    replyPlaceholder: string;
+    send: string;
+    sending: string;
+    sendFailed: string;
+    close: string;
+    reopen: string;
+    snooze: string;
     archive: string;
-    viewCard: string;
-    typeLabel: Record<ActionType, string>;
-    statusLabel: Record<ActionStatus, string>;
-  }
-> = {
+    priorityLabel: string;
+    youSent: string;
+    customerSent: string;
+    aiSent: string;
+  };
+  sentiment: { positive: string; neutral: string; negative: string; urgent: string };
+}> = {
   de: {
     title: "Posteingang",
-    empty: "Keine Anfragen",
-    emptyHint: "Eingehende Kontaktanfragen erscheinen hier.",
-    filterPending: "Offen",
-    filterAccepted: "Angenommen",
-    filterAll: "Alle",
-    accept: "Annehmen",
-    decline: "Ablehnen",
-    archive: "Archivieren",
-    viewCard: "Karte öffnen",
-    typeLabel: {
-      request_contact: "Kontaktanfrage",
-      request_quote: "Angebotsanfrage",
-      request_meeting: "Meeting-Anfrage",
-      send_card: "Kartenübermittlung",
-      ask_collaboration: "Kooperationsanfrage",
-      give_feedback: "Feedback",
-    },
-    statusLabel: {
-      pending: "Offen",
-      accepted: "Angenommen",
-      declined: "Abgelehnt",
+    subtitle: "Alle Kanäle in einer Ansicht",
+    rail: {
+      sectionChannels: "Kanäle",
+      sectionFilters: "Filter",
+      all: "Alle",
+      open: "Offen",
+      snoozed: "Wartend",
+      closed: "Geschlossen",
       archived: "Archiviert",
+      statusAll: "Alle Status",
+      noChannels: "Noch kein Kanal verbunden",
+      addChannelHint:
+        "Verbinden Sie WhatsApp, Telegram oder E-Mail unter Einstellungen → Kanäle.",
+    },
+    channels: {
+      all: "Alle Kanäle",
+      whatsapp: "WhatsApp",
+      telegram: "Telegram",
+      email: "E-Mail",
+      voice: "Voice",
+      web: "Web-Formular",
+      card_action: "Karten-Aktionen",
+    },
+    list: {
+      empty: "Keine Konversationen",
+      emptyHint: "Eingehende Nachrichten erscheinen hier.",
+      loading: "Lade …",
+      loadFailed: "Konnte nicht geladen werden.",
+      youPrefix: "Sie:",
+      voiceNote: "Sprachnachricht",
+      attachment: "Anhang",
+    },
+    detail: {
+      placeholder:
+        "Wählen Sie links eine Konversation aus, um Nachrichten zu sehen.",
+      aiSummary: "KI-Zusammenfassung",
+      aiSentiment: "Stimmung",
+      aiIntent: "Anliegen",
+      aiNotYet: "Noch keine Analyse — frische Konversation.",
+      suggestDraft: "KI-Entwurf erstellen",
+      regenDraft: "Erneut entwerfen",
+      useDraft: "Entwurf übernehmen",
+      dismissDraft: "Verwerfen",
+      reply: "Antwort",
+      replyPlaceholder: "Schreiben Sie Ihre Antwort …",
+      send: "Senden",
+      sending: "Sende …",
+      sendFailed: "Senden fehlgeschlagen.",
+      close: "Schließen",
+      reopen: "Wieder öffnen",
+      snooze: "1 Tag verschieben",
+      archive: "Archivieren",
+      priorityLabel: "Priorität",
+      youSent: "Sie",
+      customerSent: "Kunde",
+      aiSent: "KI",
+    },
+    sentiment: {
+      positive: "Positiv",
+      neutral: "Neutral",
+      negative: "Negativ",
+      urgent: "Dringend",
     },
   },
   en: {
     title: "Inbox",
-    empty: "No requests",
-    emptyHint: "Incoming contact requests will appear here.",
-    filterPending: "Pending",
-    filterAccepted: "Accepted",
-    filterAll: "All",
-    accept: "Accept",
-    decline: "Decline",
-    archive: "Archive",
-    viewCard: "View card",
-    typeLabel: {
-      request_contact: "Contact request",
-      request_quote: "Quote request",
-      request_meeting: "Meeting request",
-      send_card: "Card share",
-      ask_collaboration: "Collaboration request",
-      give_feedback: "Feedback",
-    },
-    statusLabel: {
-      pending: "Pending",
-      accepted: "Accepted",
-      declined: "Declined",
+    subtitle: "Every channel, one view",
+    rail: {
+      sectionChannels: "Channels",
+      sectionFilters: "Filters",
+      all: "All",
+      open: "Open",
+      snoozed: "Snoozed",
+      closed: "Closed",
       archived: "Archived",
+      statusAll: "All statuses",
+      noChannels: "No channel connected yet",
+      addChannelHint:
+        "Connect WhatsApp, Telegram or Email under Settings → Channels.",
+    },
+    channels: {
+      all: "All channels",
+      whatsapp: "WhatsApp",
+      telegram: "Telegram",
+      email: "Email",
+      voice: "Voice",
+      web: "Web form",
+      card_action: "Card actions",
+    },
+    list: {
+      empty: "No conversations",
+      emptyHint: "Inbound messages will appear here.",
+      loading: "Loading …",
+      loadFailed: "Could not load conversations.",
+      youPrefix: "You:",
+      voiceNote: "Voice note",
+      attachment: "Attachment",
+    },
+    detail: {
+      placeholder: "Pick a conversation on the left to see messages.",
+      aiSummary: "AI summary",
+      aiSentiment: "Sentiment",
+      aiIntent: "Intent",
+      aiNotYet: "No analysis yet — fresh conversation.",
+      suggestDraft: "Draft a reply with AI",
+      regenDraft: "Regenerate draft",
+      useDraft: "Use draft",
+      dismissDraft: "Dismiss",
+      reply: "Reply",
+      replyPlaceholder: "Type your reply …",
+      send: "Send",
+      sending: "Sending …",
+      sendFailed: "Could not send.",
+      close: "Close",
+      reopen: "Reopen",
+      snooze: "Snooze 1 day",
+      archive: "Archive",
+      priorityLabel: "Priority",
+      youSent: "You",
+      customerSent: "Customer",
+      aiSent: "AI",
+    },
+    sentiment: {
+      positive: "Positive",
+      neutral: "Neutral",
+      negative: "Negative",
+      urgent: "Urgent",
     },
   },
   tr: {
     title: "Gelen Kutusu",
-    empty: "Talep yok",
-    emptyHint: "Gelen iletişim talepleri burada görünür.",
-    filterPending: "Bekleyen",
-    filterAccepted: "Kabul Edildi",
-    filterAll: "Tümü",
-    accept: "Kabul et",
-    decline: "Reddet",
-    archive: "Arşivle",
-    viewCard: "Kartı aç",
-    typeLabel: {
-      request_contact: "İletişim talebi",
-      request_quote: "Teklif talebi",
-      request_meeting: "Toplantı talebi",
-      send_card: "Kart paylaşımı",
-      ask_collaboration: "İşbirliği talebi",
-      give_feedback: "Geri bildirim",
+    subtitle: "Her kanal, tek görünüm",
+    rail: {
+      sectionChannels: "Kanallar",
+      sectionFilters: "Filtreler",
+      all: "Tümü",
+      open: "Açık",
+      snoozed: "Ertelendi",
+      closed: "Kapandı",
+      archived: "Arşiv",
+      statusAll: "Tüm durumlar",
+      noChannels: "Henüz kanal yok",
+      addChannelHint:
+        "WhatsApp, Telegram veya E-postayı Ayarlar → Kanallar bölümünden bağlayın.",
     },
-    statusLabel: {
-      pending: "Bekliyor",
-      accepted: "Kabul edildi",
-      declined: "Reddedildi",
-      archived: "Arşivlendi",
+    channels: {
+      all: "Tüm kanallar",
+      whatsapp: "WhatsApp",
+      telegram: "Telegram",
+      email: "E-posta",
+      voice: "Voice",
+      web: "Web formu",
+      card_action: "Kart aksiyonları",
+    },
+    list: {
+      empty: "Konuşma yok",
+      emptyHint: "Gelen mesajlar burada görünür.",
+      loading: "Yükleniyor …",
+      loadFailed: "Yüklenemedi.",
+      youPrefix: "Siz:",
+      voiceNote: "Sesli not",
+      attachment: "Ek",
+    },
+    detail: {
+      placeholder: "Mesajları görmek için soldan bir konuşma seçin.",
+      aiSummary: "AI özet",
+      aiSentiment: "Sentiment",
+      aiIntent: "Niyet",
+      aiNotYet: "Henüz analiz yok — yeni konuşma.",
+      suggestDraft: "AI ile yanıt taslağı çiz",
+      regenDraft: "Yeniden çiz",
+      useDraft: "Taslağı kullan",
+      dismissDraft: "Vazgeç",
+      reply: "Yanıt",
+      replyPlaceholder: "Yanıtınızı yazın …",
+      send: "Gönder",
+      sending: "Gönderiliyor …",
+      sendFailed: "Gönderilemedi.",
+      close: "Kapat",
+      reopen: "Yeniden aç",
+      snooze: "1 gün ertele",
+      archive: "Arşivle",
+      priorityLabel: "Öncelik",
+      youSent: "Siz",
+      customerSent: "Müşteri",
+      aiSent: "AI",
+    },
+    sentiment: {
+      positive: "Pozitif",
+      neutral: "Nötr",
+      negative: "Negatif",
+      urgent: "Acil",
     },
   },
 };
 
-const STATUS_COLOR: Record<ActionStatus, string> = {
-  pending: "bg-signal-warn/10 text-signal-warn",
-  accepted: "bg-signal-ok/10 text-signal-ok",
-  declined: "bg-signal-err/10 text-signal-err",
-  archived: "bg-bg-3 text-ink-400",
+const CHANNEL_ORDER: (ChannelType | "all")[] = [
+  "all",
+  "whatsapp",
+  "telegram",
+  "email",
+  "voice",
+  "web",
+  "card_action",
+];
+
+const CHANNEL_ICON: Record<ChannelType | "all", string> = {
+  all: "•",
+  whatsapp: "WA",
+  telegram: "TG",
+  email: "@",
+  voice: "♪",
+  web: "↻",
+  card_action: "▢",
 };
+
+const SENTIMENT_TONE: Record<string, string> = {
+  positive: "bg-signal-ok/10 text-signal-ok",
+  neutral: "bg-bg-3 text-ink-400",
+  negative: "bg-signal-err/10 text-signal-err",
+  urgent: "bg-signal-err/15 text-signal-err font-semibold",
+};
+
+function formatRelative(iso: string, locale: Locale): string {
+  const date = new Date(iso);
+  const diffMs = Date.now() - date.getTime();
+  const min = Math.round(diffMs / 60000);
+  if (min < 1) return locale === "de" ? "gerade eben" : locale === "tr" ? "az önce" : "just now";
+  if (min < 60) return `${min}m`;
+  const hours = Math.round(min / 60);
+  if (hours < 24) return `${hours}h`;
+  const days = Math.round(hours / 24);
+  if (days < 7) return `${days}d`;
+  return date.toLocaleDateString(
+    locale === "de" ? "de-DE" : locale === "tr" ? "tr-TR" : "en-GB",
+    { day: "2-digit", month: "short" },
+  );
+}
+
+function preview(text: string | null, max = 80): string {
+  if (!text) return "";
+  const clean = text.replace(/\s+/g, " ").trim();
+  return clean.length > max ? `${clean.slice(0, max)}…` : clean;
+}
+
+// ---------------------------------------------------------------------------
+// Main
+// ---------------------------------------------------------------------------
 
 export function InboxClient() {
   const params = useParams();
-  const locale = (params?.locale as Locale | undefined) ?? "de";
+  const locale = ((params?.locale as Locale | undefined) ?? "de") as Locale;
   const copy = COPY[locale] ?? COPY.de;
 
-  const [items, setItems] = useState<InboxItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState<FilterKey>("pending");
-  const [updating, setUpdating] = useState<string | null>(null);
+  const [channels, setChannels] = useState<ChannelSummary[]>([]);
+  const [channelFilter, setChannelFilter] = useState<ChannelType | "all">("all");
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>("open");
+  const [threads, setThreads] = useState<ThreadListItem[]>([]);
+  const [activeThreadId, setActiveThreadId] = useState<string | null>(null);
+  const [detail, setDetail] = useState<ThreadDetail | null>(null);
+  const [loadingList, setLoadingList] = useState(true);
+  const [loadingDetail, setLoadingDetail] = useState(false);
+  const [listError, setListError] = useState<string | null>(null);
 
-  const load = useCallback(async (status: FilterKey) => {
-    setLoading(true);
+  const channelCounts = useMemo(() => {
+    const total = channels.reduce(
+      (acc, c) => ({
+        open: acc.open + c.counts.open,
+        unread: acc.unread + c.counts.unread,
+      }),
+      { open: 0, unread: 0 },
+    );
+    return { ...Object.fromEntries(channels.map((c) => [c.type, c.counts])), all: total } as Record<string, { open: number; unread: number }>;
+  }, [channels]);
+
+  const loadChannels = useCallback(async () => {
     try {
-      const res = await fetch(`/api/account/inbox?status=${status}`);
-      if (!res.ok) throw new Error("fetch failed");
-      const data = (await res.json()) as { items: InboxItem[] };
-      setItems(data.items);
+      const res = await fetch("/api/inbox/channels");
+      if (!res.ok) return;
+      const data = (await res.json()) as { channels: ChannelSummary[] };
+      setChannels(data.channels);
     } catch {
-      setItems([]);
+      // best-effort — rail still renders with All
+    }
+  }, []);
+
+  const loadThreads = useCallback(async () => {
+    setLoadingList(true);
+    setListError(null);
+    try {
+      const qs = new URLSearchParams({
+        status: statusFilter,
+        channelType: channelFilter,
+      });
+      const res = await fetch(`/api/inbox/threads?${qs.toString()}`);
+      if (!res.ok) throw new Error("load_failed");
+      const data = (await res.json()) as { threads: ThreadListItem[] };
+      setThreads(data.threads);
+    } catch {
+      setThreads([]);
+      setListError(copy.list.loadFailed);
     } finally {
-      setLoading(false);
+      setLoadingList(false);
+    }
+  }, [statusFilter, channelFilter, copy.list.loadFailed]);
+
+  const loadDetail = useCallback(async (threadId: string) => {
+    setLoadingDetail(true);
+    try {
+      const res = await fetch(`/api/inbox/threads/${threadId}`);
+      if (!res.ok) {
+        setDetail(null);
+        return;
+      }
+      const data = (await res.json()) as { thread: ThreadDetail };
+      setDetail(data.thread);
+      // Best-effort read-marker; we don't await UI on this.
+      void fetch(`/api/inbox/threads/${threadId}/read`, { method: "POST" });
+    } finally {
+      setLoadingDetail(false);
     }
   }, []);
 
   useEffect(() => {
-    void load(filter);
-  }, [filter, load]);
+    void loadChannels();
+  }, [loadChannels]);
 
-  async function handleAction(
-    id: string,
-    action: "accepted" | "declined" | "archived",
-  ) {
-    setUpdating(id);
+  useEffect(() => {
+    void loadThreads();
+  }, [loadThreads]);
+
+  useEffect(() => {
+    if (activeThreadId) void loadDetail(activeThreadId);
+    else setDetail(null);
+  }, [activeThreadId, loadDetail]);
+
+  // After a thread is patched (status / etc) or a reply is sent, refresh
+  // both list and current detail so the UI stays consistent.
+  const refreshAll = useCallback(async () => {
+    await loadThreads();
+    if (activeThreadId) await loadDetail(activeThreadId);
+    await loadChannels();
+  }, [loadThreads, loadDetail, loadChannels, activeThreadId]);
+
+  return (
+    <div className="grid h-[calc(100vh-120px)] min-h-[600px] grid-cols-[260px_360px_1fr] gap-4 px-6">
+      {/* ------------------- LEFT RAIL: channels + status -------------- */}
+      <aside className="flex flex-col gap-4 overflow-y-auto rounded-2xl border border-line bg-bg-1 p-4">
+        <div>
+          <p className="meta mono-label mb-3 text-ink-400">
+            {copy.rail.sectionChannels}
+          </p>
+          <ul className="space-y-1">
+            {CHANNEL_ORDER.map((c) => {
+              const isActive = channelFilter === c;
+              const counts =
+                c === "all"
+                  ? channelCounts.all
+                  : channelCounts[c] ?? { open: 0, unread: 0 };
+              return (
+                <li key={c}>
+                  <button
+                    onClick={() => setChannelFilter(c)}
+                    className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left text-sm transition ${
+                      isActive
+                        ? "bg-ink text-bg-0"
+                        : "text-ink hover:bg-bg-2"
+                    }`}
+                  >
+                    <span className="flex items-center gap-2">
+                      <span className="mono-label inline-flex h-6 w-7 items-center justify-center rounded bg-bg-3 text-[10px] text-ink-400">
+                        {CHANNEL_ICON[c]}
+                      </span>
+                      {copy.channels[c]}
+                    </span>
+                    {counts.open > 0 && (
+                      <span
+                        className={`mono-label text-[11px] ${
+                          isActive ? "text-bg-0" : "text-ink-400"
+                        }`}
+                      >
+                        {counts.unread > 0
+                          ? `${counts.unread}/${counts.open}`
+                          : counts.open}
+                      </span>
+                    )}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+
+        <div>
+          <p className="meta mono-label mb-3 text-ink-400">
+            {copy.rail.sectionFilters}
+          </p>
+          <div className="grid grid-cols-2 gap-1.5">
+            {(["open", "snoozed", "closed", "archived", "all"] as StatusFilter[]).map(
+              (s) => {
+                const label =
+                  s === "open"
+                    ? copy.rail.open
+                    : s === "snoozed"
+                      ? copy.rail.snoozed
+                      : s === "closed"
+                        ? copy.rail.closed
+                        : s === "archived"
+                          ? copy.rail.archived
+                          : copy.rail.statusAll;
+                const active = statusFilter === s;
+                return (
+                  <button
+                    key={s}
+                    onClick={() => setStatusFilter(s)}
+                    className={`chip text-xs ${
+                      active
+                        ? "bg-ink text-bg-0 border-ink"
+                        : "hover:bg-bg-2"
+                    }`}
+                  >
+                    {label}
+                  </button>
+                );
+              },
+            )}
+          </div>
+        </div>
+
+        {channels.length === 0 && (
+          <div className="mt-auto rounded-lg border border-line-soft bg-bg-2 p-3 text-xs text-ink-400">
+            <p className="font-medium text-ink">{copy.rail.noChannels}</p>
+            <p className="mt-1 leading-snug">{copy.rail.addChannelHint}</p>
+          </div>
+        )}
+      </aside>
+
+      {/* --------------------- CENTER: thread list --------------------- */}
+      <section className="flex flex-col overflow-hidden rounded-2xl border border-line bg-bg-1">
+        <header className="border-b border-line-soft px-4 py-3">
+          <h1 className="text-base font-semibold text-ink">{copy.title}</h1>
+          <p className="text-xs text-ink-400">{copy.subtitle}</p>
+        </header>
+        <div className="flex-1 overflow-y-auto">
+          {loadingList ? (
+            <p className="p-6 text-sm text-ink-400">{copy.list.loading}</p>
+          ) : listError ? (
+            <p className="p-6 text-sm text-signal-err">{listError}</p>
+          ) : threads.length === 0 ? (
+            <div className="p-6">
+              <p className="text-sm font-medium text-ink">{copy.list.empty}</p>
+              <p className="mt-1 text-xs text-ink-400">{copy.list.emptyHint}</p>
+            </div>
+          ) : (
+            <ul>
+              {threads.map((t) => (
+                <li key={t.id}>
+                  <button
+                    onClick={() => setActiveThreadId(t.id)}
+                    className={`block w-full border-b border-line-soft px-4 py-3 text-left transition ${
+                      activeThreadId === t.id
+                        ? "bg-bg-2"
+                        : "hover:bg-bg-2/60"
+                    }`}
+                  >
+                    <div className="flex items-baseline justify-between gap-2">
+                      <span className="flex items-center gap-2 truncate text-sm font-medium text-ink">
+                        {t.unreadCount > 0 && (
+                          <span className="h-2 w-2 shrink-0 rounded-full bg-copper" />
+                        )}
+                        <span className="mono-label rounded bg-bg-3 px-1.5 py-0.5 text-[10px] text-ink-400">
+                          {CHANNEL_ICON[t.channelType]}
+                        </span>
+                        <span className="truncate">
+                          {t.contactName ?? t.contactHandle}
+                        </span>
+                      </span>
+                      <span className="mono-label shrink-0 text-[10px] text-ink-400">
+                        {formatRelative(t.lastMessageAt, locale)}
+                      </span>
+                    </div>
+                    <p className="mt-1 truncate text-xs text-ink-400">
+                      {t.lastMessage?.direction === "out" && (
+                        <span className="mr-1 text-ink-300">
+                          {copy.list.youPrefix}
+                        </span>
+                      )}
+                      {preview(
+                        t.aiSummary ??
+                          t.lastMessage?.body ??
+                          (t.lastMessage?.body === null
+                            ? copy.list.voiceNote
+                            : ""),
+                      )}
+                    </p>
+                    {(t.aiSentiment || t.aiIntent) && (
+                      <div className="mt-1.5 flex flex-wrap gap-1">
+                        {t.aiSentiment && (
+                          <span
+                            className={`mono-label rounded px-1.5 py-0.5 text-[10px] ${
+                              SENTIMENT_TONE[t.aiSentiment] ?? SENTIMENT_TONE.neutral
+                            }`}
+                          >
+                            {copy.sentiment[
+                              t.aiSentiment as keyof typeof copy.sentiment
+                            ] ?? t.aiSentiment}
+                          </span>
+                        )}
+                        {t.aiIntent && t.aiIntent !== "other" && (
+                          <span className="mono-label rounded bg-bg-3 px-1.5 py-0.5 text-[10px] text-ink-400">
+                            {t.aiIntent}
+                          </span>
+                        )}
+                      </div>
+                    )}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </section>
+
+      {/* ----------------------- RIGHT: detail --------------------------- */}
+      <section className="flex flex-col overflow-hidden rounded-2xl border border-line bg-bg-1">
+        {!activeThreadId ? (
+          <div className="flex flex-1 items-center justify-center p-10 text-sm text-ink-400">
+            {copy.detail.placeholder}
+          </div>
+        ) : loadingDetail || !detail ? (
+          <div className="p-6 text-sm text-ink-400">{copy.list.loading}</div>
+        ) : (
+          <ThreadDetailPane
+            thread={detail}
+            copy={copy}
+            locale={locale}
+            onRefresh={refreshAll}
+          />
+        )}
+      </section>
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Detail pane (extracted to keep the main render tidy)
+// ---------------------------------------------------------------------------
+
+function ThreadDetailPane({
+  thread,
+  copy,
+  locale,
+  onRefresh,
+}: {
+  thread: ThreadDetail;
+  copy: (typeof COPY)["en"];
+  locale: Locale;
+  onRefresh: () => Promise<void>;
+}) {
+  const [replyText, setReplyText] = useState("");
+  const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState<string | null>(null);
+  const [drafting, setDrafting] = useState(false);
+  const [draft, setDraft] = useState<ThreadSuggestion | null>(
+    thread.suggestions.find((s) => s.type === "reply" && s.status === "pending") ??
+      null,
+  );
+  const [statusBusy, setStatusBusy] = useState<string | null>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setReplyText("");
+    setSendError(null);
+    setDraft(
+      thread.suggestions.find(
+        (s) => s.type === "reply" && s.status === "pending",
+      ) ?? null,
+    );
+  }, [thread.id, thread.suggestions]);
+
+  useEffect(() => {
+    scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
+  }, [thread.messages.length]);
+
+  async function patch(body: Record<string, unknown>) {
+    setStatusBusy("patch");
     try {
-      const res = await fetch(`/api/account/inbox/${id}`, {
+      await fetch(`/api/inbox/threads/${thread.id}`, {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ status: action }),
+        body: JSON.stringify(body),
       });
-      if (!res.ok) throw new Error("update failed");
-      setItems((prev) =>
-        prev.map((item) =>
-          item.id === id
-            ? { ...item, status: action, resolvedAt: new Date().toISOString() }
-            : item,
-        ),
-      );
+      await onRefresh();
     } finally {
-      setUpdating(null);
+      setStatusBusy(null);
     }
   }
 
-  const filters: { key: FilterKey; label: string }[] = [
-    { key: "pending", label: copy.filterPending },
-    { key: "accepted", label: copy.filterAccepted },
-    { key: "all", label: copy.filterAll },
-  ];
+  async function handleSend() {
+    if (!replyText.trim()) return;
+    setSending(true);
+    setSendError(null);
+    try {
+      const res = await fetch(`/api/inbox/threads/${thread.id}/messages`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ body: replyText.trim() }),
+      });
+      if (!res.ok) {
+        const json = (await res.json().catch(() => ({}))) as {
+          description?: string;
+        };
+        setSendError(json.description ?? copy.detail.sendFailed);
+        return;
+      }
+      setReplyText("");
+      setDraft(null);
+      await onRefresh();
+    } finally {
+      setSending(false);
+    }
+  }
+
+  async function handleDraft() {
+    setDrafting(true);
+    try {
+      const res = await fetch(`/api/inbox/threads/${thread.id}/ai/suggest`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({}),
+      });
+      if (!res.ok) return;
+      const json = (await res.json()) as { suggestion: ThreadSuggestion };
+      setDraft(json.suggestion);
+    } finally {
+      setDrafting(false);
+    }
+  }
+
+  function senderLabel(direction: "in" | "out", sentBy: string): string {
+    if (direction === "in") return copy.detail.customerSent;
+    if (sentBy.startsWith("ai_")) return copy.detail.aiSent;
+    return copy.detail.youSent;
+  }
+
+  function timestamp(iso: string): string {
+    return new Date(iso).toLocaleString(
+      locale === "de" ? "de-DE" : locale === "tr" ? "tr-TR" : "en-GB",
+      { day: "2-digit", month: "2-digit", hour: "2-digit", minute: "2-digit" },
+    );
+  }
 
   return (
-    <div className="max-w-2xl mx-auto py-8 px-4 space-y-6">
-      <h1 className="font-display text-2xl font-semibold text-ink tracking-tight">
-        {copy.title}
-      </h1>
+    <>
+      <header className="border-b border-line-soft px-4 py-3">
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <h2 className="truncate text-base font-semibold text-ink">
+              {thread.contactName ?? thread.contactHandle}
+            </h2>
+            <p className="truncate text-xs text-ink-400">
+              {thread.contactHandle} · {copy.channels[thread.channelType]}
+              {thread.subject ? ` · ${thread.subject}` : ""}
+            </p>
+          </div>
+          <div className="flex shrink-0 gap-1.5">
+            {thread.status === "open" ? (
+              <>
+                <button
+                  className="chip text-xs"
+                  disabled={!!statusBusy}
+                  onClick={() => {
+                    const snooze = new Date();
+                    snooze.setDate(snooze.getDate() + 1);
+                    void patch({
+                      status: "snoozed",
+                      snoozedUntil: snooze.toISOString(),
+                    });
+                  }}
+                >
+                  {copy.detail.snooze}
+                </button>
+                <button
+                  className="chip text-xs"
+                  disabled={!!statusBusy}
+                  onClick={() => patch({ status: "closed" })}
+                >
+                  {copy.detail.close}
+                </button>
+              </>
+            ) : (
+              <button
+                className="chip text-xs"
+                disabled={!!statusBusy}
+                onClick={() => patch({ status: "open", snoozedUntil: null })}
+              >
+                {copy.detail.reopen}
+              </button>
+            )}
+            <button
+              className="chip text-xs"
+              disabled={!!statusBusy}
+              onClick={() => patch({ status: "archived" })}
+            >
+              {copy.detail.archive}
+            </button>
+          </div>
+        </div>
+        {thread.aiSummary && (
+          <div className="mt-3 rounded-lg border border-line-soft bg-bg-2 p-3 text-xs">
+            <p className="mono-label mb-1 text-[10px] text-ink-400">
+              {copy.detail.aiSummary}
+            </p>
+            <p className="text-ink">{thread.aiSummary}</p>
+            <div className="mt-2 flex flex-wrap gap-2">
+              {thread.aiSentiment && (
+                <span
+                  className={`mono-label rounded px-1.5 py-0.5 text-[10px] ${
+                    SENTIMENT_TONE[thread.aiSentiment] ?? SENTIMENT_TONE.neutral
+                  }`}
+                >
+                  {copy.detail.aiSentiment}:{" "}
+                  {copy.sentiment[
+                    thread.aiSentiment as keyof typeof copy.sentiment
+                  ] ?? thread.aiSentiment}
+                </span>
+              )}
+              {thread.aiIntent && (
+                <span className="mono-label rounded bg-bg-3 px-1.5 py-0.5 text-[10px] text-ink-400">
+                  {copy.detail.aiIntent}: {thread.aiIntent}
+                </span>
+              )}
+            </div>
+          </div>
+        )}
+      </header>
 
-      {/* Filter chips */}
-      <div className="flex gap-2 flex-wrap">
-        {filters.map(({ key, label }) => (
-          <button
-            key={key}
-            onClick={() => setFilter(key)}
-            className={[
-              "px-3 py-1.5 rounded-full text-xs font-medium border transition-colors",
-              filter === key
-                ? "bg-copper-500 text-white border-copper-500"
-                : "bg-bg-1 text-ink-300 border-line hover:border-copper-500/40",
-            ].join(" ")}
+      <div
+        ref={scrollRef}
+        className="flex-1 space-y-3 overflow-y-auto px-4 py-4"
+      >
+        {thread.messages.map((m) => (
+          <div
+            key={m.id}
+            className={`flex ${m.direction === "out" ? "justify-end" : "justify-start"}`}
           >
-            {label}
-          </button>
+            <div
+              className={`max-w-[78%] rounded-2xl px-3.5 py-2.5 text-sm leading-snug shadow-sm ${
+                m.direction === "out"
+                  ? "bg-ink text-bg-0"
+                  : "bg-bg-2 text-ink"
+              }`}
+            >
+              <p className="mono-label mb-1 text-[10px] opacity-70">
+                {senderLabel(m.direction, m.sentBy)} · {timestamp(m.createdAt)}
+              </p>
+              {m.body && <p className="whitespace-pre-wrap">{m.body}</p>}
+              {m.voiceTranscript && (
+                <p className="mt-2 border-l-2 border-current/30 pl-2 italic opacity-80">
+                  {copy.list.voiceNote}: {m.voiceTranscript}
+                </p>
+              )}
+              {m.mediaUrls.length > 0 && (
+                <p className="mt-1 text-[10px] opacity-70">
+                  {copy.list.attachment} ({m.mediaUrls.length})
+                </p>
+              )}
+              {m.status === "failed" && (
+                <p className="mt-1 text-[10px] text-signal-err">
+                  {copy.detail.sendFailed}
+                </p>
+              )}
+            </div>
+          </div>
         ))}
       </div>
 
-      {/* List */}
-      {loading ? (
-        <div className="space-y-3">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="h-24 rounded-xl bg-bg-2 animate-pulse" />
-          ))}
-        </div>
-      ) : items.length === 0 ? (
-        <div className="py-16 text-center">
-          <p className="text-ink font-medium">{copy.empty}</p>
-          <p className="text-sm text-ink-400 mt-1">{copy.emptyHint}</p>
-        </div>
-      ) : (
-        <div className="space-y-3">
-          {items.map((item) => (
-            <div
-              key={item.id}
-              className="rounded-xl border border-line bg-bg-1 p-4 space-y-3"
-            >
-              <div className="flex items-start gap-3">
-                <div className="shrink-0 w-10 h-10 rounded-full bg-bg-3 overflow-hidden">
-                  {item.sender.photoPath ? (
-                    <Image
-                      src={item.sender.photoPath}
-                      alt=""
-                      width={40}
-                      height={40}
-                      className="object-cover w-full h-full"
-                    />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-sm font-semibold text-ink-300">
-                      {(item.sender.name ?? "?")[0]?.toUpperCase()}
-                    </div>
-                  )}
-                </div>
-
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="text-sm font-medium text-ink">
-                      {item.sender.name ?? item.sender.slug ?? "Unknown"}
-                    </span>
-                    {item.sender.title && (
-                      <span className="text-xs text-ink-400">
-                        {item.sender.title}
-                        {item.sender.company
-                          ? ` · ${item.sender.company}`
-                          : ""}
-                      </span>
-                    )}
-                  </div>
-                  <div className="flex items-center gap-2 mt-0.5">
-                    <span className="text-xs text-ink-500">
-                      {copy.typeLabel[item.type]}
-                    </span>
-                    <span
-                      className={`inline-flex items-center rounded-full px-1.5 py-0.5 text-[10px] font-semibold ${STATUS_COLOR[item.status]}`}
-                    >
-                      {copy.statusLabel[item.status]}
-                    </span>
-                  </div>
-                </div>
-
-                <span className="shrink-0 text-xs text-ink-500">
-                  {new Date(item.createdAt).toLocaleDateString(
-                    locale === "tr"
-                      ? "tr-TR"
-                      : locale === "de"
-                        ? "de-DE"
-                        : "en-US",
-                    { day: "numeric", month: "short" },
-                  )}
-                </span>
-              </div>
-
-              {item.message && (
-                <p className="text-sm text-ink-300 bg-bg-2 rounded-lg px-3 py-2 leading-relaxed">
-                  {item.message}
-                </p>
-              )}
-
-              <div className="flex items-center gap-2 pt-1">
-                {item.sender.slug && (
-                  <a
-                    href={`/c/${item.sender.slug}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-xs text-copper-500 hover:text-copper-400 transition-colors font-medium"
-                  >
-                    {copy.viewCard} →
-                  </a>
-                )}
-                <div className="flex-1" />
-                {item.status === "pending" && (
-                  <>
-                    <button
-                      onClick={() => void handleAction(item.id, "accepted")}
-                      disabled={updating === item.id}
-                      className="text-xs font-medium px-3 py-1.5 rounded-lg bg-signal-ok/10 text-signal-ok hover:bg-signal-ok/20 transition-colors disabled:opacity-50"
-                    >
-                      {copy.accept}
-                    </button>
-                    <button
-                      onClick={() => void handleAction(item.id, "declined")}
-                      disabled={updating === item.id}
-                      className="text-xs font-medium px-3 py-1.5 rounded-lg bg-signal-err/10 text-signal-err hover:bg-signal-err/20 transition-colors disabled:opacity-50"
-                    >
-                      {copy.decline}
-                    </button>
-                  </>
-                )}
-                {item.status !== "archived" && item.status !== "pending" && (
-                  <button
-                    onClick={() => void handleAction(item.id, "archived")}
-                    disabled={updating === item.id}
-                    className="text-xs font-medium px-3 py-1.5 rounded-lg bg-bg-3 text-ink-400 hover:text-ink-300 transition-colors disabled:opacity-50"
-                  >
-                    {copy.archive}
-                  </button>
-                )}
-              </div>
+      <footer className="border-t border-line-soft p-3">
+        {draft && (
+          <div className="mb-2 rounded-lg border border-copper/30 bg-copper/5 p-3 text-xs">
+            <p className="mono-label mb-1 text-[10px] text-copper">
+              AI · {draft.modelUsed ?? "draft"}
+            </p>
+            <p className="whitespace-pre-wrap text-ink">{draft.content}</p>
+            <div className="mt-2 flex gap-2">
+              <button
+                className="chip chip-hot text-xs"
+                onClick={() => {
+                  setReplyText(draft.content);
+                  setDraft(null);
+                }}
+              >
+                {copy.detail.useDraft}
+              </button>
+              <button
+                className="chip text-xs"
+                onClick={() => setDraft(null)}
+              >
+                {copy.detail.dismissDraft}
+              </button>
+              <button
+                className="chip text-xs"
+                disabled={drafting}
+                onClick={handleDraft}
+              >
+                {drafting ? "…" : copy.detail.regenDraft}
+              </button>
             </div>
-          ))}
+          </div>
+        )}
+        <div className="flex items-end gap-2">
+          <textarea
+            value={replyText}
+            onChange={(e) => setReplyText(e.target.value)}
+            placeholder={copy.detail.replyPlaceholder}
+            rows={2}
+            className="field flex-1 resize-y text-sm"
+          />
+          <div className="flex flex-col gap-1.5">
+            {!draft && (
+              <button
+                onClick={handleDraft}
+                disabled={drafting}
+                className="btn btn-ghost btn-sm whitespace-nowrap"
+              >
+                {drafting ? "…" : copy.detail.suggestDraft}
+              </button>
+            )}
+            <button
+              onClick={handleSend}
+              disabled={sending || !replyText.trim()}
+              className="btn btn-primary btn-sm"
+            >
+              {sending ? copy.detail.sending : copy.detail.send}
+            </button>
+          </div>
         </div>
-      )}
-    </div>
+        {sendError && (
+          <p className="mt-2 text-xs text-signal-err">{sendError}</p>
+        )}
+      </footer>
+    </>
   );
 }
