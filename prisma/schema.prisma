@@ -39,31 +39,31 @@ datasource db {
 // locale defaults to "de"; valid values mirror the i18n catalog: de | en | tr.
 // -----------------------------------------------------------------------------
 model User {
-  id              String    @id @default(cuid())
-  email           String    @unique
-  emailVerifiedAt DateTime? @map("email_verified_at")
-  passwordHash    String?   @map("password_hash")
-  name            String?
+  id                String    @id @default(cuid())
+  email             String    @unique
+  emailVerifiedAt   DateTime? @map("email_verified_at")
+  passwordHash      String?   @map("password_hash")
+  name              String?
   /**
    * M7 — avatar URL. Populated on Google sign-in from the OIDC `picture`
    * claim, on social-profile enrichment, or by the user uploading directly.
    * Never required; mobile UI falls back to initials when null.
    */
-  image           String?   @map("image")
-  locale          String    @default("de")
+  image             String?   @map("image")
+  locale            String    @default("de")
   // B0.6 — RBAC role. Values: "USER" | "ADMIN". Default USER.
   // Set to ADMIN via scripts/seed-admin.ts; never auto-promoted.
-  role            String    @default("USER")
+  role              String    @default("USER")
   /**
    * M4 — per-user push notification preferences. JSONB for forward-compat
    * with new categories. Default shape (when null or missing keys treated
    * as `true`):
-   *   { messages: true, inboxRequests: true, mutualSaves: true,
-   *     eventReminders: true }
+   * { messages: true, inboxRequests: true, mutualSaves: true,
+   * eventReminders: true }
    * Server-side push fan-out (`src/lib/push.ts`) reads this column and skips
    * fan-out when the relevant category is explicitly `false`.
    */
-  notificationPrefs Json? @map("notification_prefs")
+  notificationPrefs Json?     @map("notification_prefs")
 
   /**
    * M5 — Premium tier.
@@ -77,8 +77,8 @@ model User {
   proSince         DateTime? @map("pro_since")
   stripeCustomerId String?   @map("stripe_customer_id")
 
-  createdAt       DateTime  @default(now()) @map("created_at")
-  updatedAt       DateTime  @updatedAt @map("updated_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   sessions        Session[]
   magicLinkTokens MagicLinkToken[]
@@ -90,15 +90,15 @@ model User {
    * Sprint F4 — chat messages this user has sent on a connection thread.
    * Cascade-delete with the user account.
    */
-  messages        Message[]
+  messages Message[]
 
   /**
    * M3 — referral mechanics. Each user has at most one Referral row (the
    * code they hand out) and any number of ReferralRedemption rows that point
    * at people they brought in.
    */
-  referral             Referral?
-  referralRedemptions  ReferralRedemption[] @relation("RefereeRedemptions")
+  referral            Referral?
+  referralRedemptions ReferralRedemption[] @relation("RefereeRedemptions")
 
   /**
    * M4 — registered push devices. One row per (user, deviceId); a re-register
@@ -120,6 +120,16 @@ model User {
    * self-serve. Multiple requests per user allowed (resubmit / change domain).
    */
   domainRequests DomainRequest[]
+
+  /**
+   * Inbox v2 — channels (WhatsApp/Telegram/Email/Voice/Web/CardAction) the
+   * user has connected, threads opened across those channels, and saved
+   * playbooks. Cascade-deletes with the user; tokens/creds in channel.config
+   * are encrypted at-rest in the app layer.
+   */
+  inboxChannels  InboxChannel[]
+  inboxThreads   InboxThread[]
+  inboxPlaybooks InboxPlaybook[]
 
   @@index([email])
   @@map("users")
@@ -298,15 +308,15 @@ model CardOrder {
   // visibility: "public" = discoverable + directly accessible
   //             "unlisted" = accessible by direct link only, not in discovery
   //             "private" = only accessible by card owner (returns 404 to others)
-  visibility        String   @default("public") @map("visibility")
-  openToNetworking  Boolean  @default(false) @map("open_to_networking")
-  acceptingClients  Boolean  @default(false) @map("accepting_clients")
+  visibility       String   @default("public") @map("visibility")
+  openToNetworking Boolean  @default(false) @map("open_to_networking")
+  acceptingClients Boolean  @default(false) @map("accepting_clients")
   // Discovery metadata — populated from cardData during publish or user update
-  industry          String?  @map("industry")
-  city              String?  @map("city")
-  country           String?  @default("DE") @map("country")
-  languages         String[] @default([]) @map("languages")
-  feedbackEnabled   Boolean  @default(false) @map("feedback_enabled")
+  industry         String?  @map("industry")
+  city             String?  @map("city")
+  country          String?  @default("DE") @map("country")
+  languages        String[] @default([]) @map("languages")
+  feedbackEnabled  Boolean  @default(false) @map("feedback_enabled")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -403,12 +413,12 @@ model Subscription {
 // nfc tap, direct link, wallet pass). Geo fields populated from Vercel headers.
 // -----------------------------------------------------------------------------
 model CardView {
-  id        String   @id @default(cuid())
-  orderId   String   @map("order_id")
-  source    String? // qr | nfc | link | wallet
-  ua        String? // user-agent prefix (truncated for privacy)
-  country   String? // Vercel `x-vercel-ip-country`
-  city      String? // Vercel `x-vercel-ip-city`
+  id            String    @id @default(cuid())
+  orderId       String    @map("order_id")
+  source        String? // qr | nfc | link | wallet
+  ua            String? // user-agent prefix (truncated for privacy)
+  country       String? // Vercel `x-vercel-ip-country`
+  city          String? // Vercel `x-vercel-ip-city`
   referer       String?
   createdAt     DateTime  @default(now()) @map("created_at")
   piiRedactedAt DateTime? @map("pii_redacted_at")
@@ -447,8 +457,8 @@ model CardLead {
   priority        Int       @default(0) // 0=normal, 1=high, 2=urgent
   lastContactedAt DateTime? @map("last_contacted_at")
 
-  createdAt      DateTime  @default(now()) @map("created_at")
-  piiRedactedAt  DateTime? @map("pii_redacted_at")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  piiRedactedAt DateTime? @map("pii_redacted_at")
 
   order CardOrder @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
@@ -500,15 +510,15 @@ model CardLink {
 // detect duplicate clicks within a short window.
 // -----------------------------------------------------------------------------
 model ScanEvent {
-  id         String   @id @default(cuid())
-  orderId    String   @map("order_id")
-  linkId     String?  @map("link_id")
-  source     String?
-  campaign   String?
-  eventName  String?  @map("event_name")
-  referer    String?
-  userAgent  String?  @map("user_agent")
-  deviceType String?  @map("device_type") // mobile | tablet | desktop | bot
+  id            String    @id @default(cuid())
+  orderId       String    @map("order_id")
+  linkId        String?   @map("link_id")
+  source        String?
+  campaign      String?
+  eventName     String?   @map("event_name")
+  referer       String?
+  userAgent     String?   @map("user_agent")
+  deviceType    String?   @map("device_type") // mobile | tablet | desktop | bot
   ipHash        String?   @map("ip_hash")
   createdAt     DateTime  @default(now()) @map("created_at")
   piiRedactedAt DateTime? @map("pii_redacted_at")
@@ -560,7 +570,7 @@ model CardConnection {
   /**
    * Sprint F4 — chat thread between the two parties of this connection.
    */
-  messages    Message[]
+  messages Message[]
 
   @@unique([ownerCardId, visitorCardId])
   @@index([ownerCardId, createdAt])
@@ -579,14 +589,14 @@ model CardConnection {
 // are deferred; the mobile thread polls every 15s while open.
 // =============================================================================
 model Message {
-  id              String          @id @default(cuid())
-  connectionId    String          @map("connection_id")
-  senderUserId    String          @map("sender_user_id")
-  body            String          @db.VarChar(2000)
-  sentAt          DateTime        @default(now()) @map("sent_at")
-  readAt          DateTime?       @map("read_at")
-  connection      CardConnection  @relation(fields: [connectionId], references: [id], onDelete: Cascade)
-  sender          User            @relation(fields: [senderUserId], references: [id], onDelete: Cascade)
+  id           String         @id @default(cuid())
+  connectionId String         @map("connection_id")
+  senderUserId String         @map("sender_user_id")
+  body         String         @db.VarChar(2000)
+  sentAt       DateTime       @default(now()) @map("sent_at")
+  readAt       DateTime?      @map("read_at")
+  connection   CardConnection @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+  sender       User           @relation(fields: [senderUserId], references: [id], onDelete: Cascade)
 
   @@index([connectionId, sentAt])
   @@index([senderUserId])
@@ -629,29 +639,29 @@ model CardAlbumPhoto {
 // owner-private — never exposed to the card owner being saved.
 // =============================================================================
 model SavedCard {
-  id          String    @id @default(cuid())
-  userId      String    @map("user_id")
-  cardOrderId String    @map("card_order_id")
-  notes       String?
-  tags        String[]  @default([])
-  metWhere    String?   @map("met_where")
-  followUpAt  DateTime? @map("follow_up_at")
+  id               String    @id @default(cuid())
+  userId           String    @map("user_id")
+  cardOrderId      String    @map("card_order_id")
+  notes            String?
+  tags             String[]  @default([])
+  metWhere         String?   @map("met_where")
+  followUpAt       DateTime? @map("follow_up_at")
   // "new" | "contacted" | "customer" | "partner" | "archived" |
   // "pending_mutual" — M3: a save mirrored from the *other* side of a save
   // gesture; the receiving user sees this in their inbox as a "Mutual save
   // request" entry and can confirm (status flips to "new") or ignore (the
   // row is reaped by retention or stays inert; mutual==both rows confirmed).
-  status      String    @default("new")
-  starred     Boolean   @default(false)
+  status           String    @default("new")
+  starred          Boolean   @default(false)
   /**
    * M3 — when this row was created via a referral redemption (or as the
    * mirror side of a bidirectional save), the originating user is recorded
    * here. Null for plain user-initiated saves. Used by the inbox to surface
    * "Mutual save request from {name}".
    */
-  referredByUserId String? @map("referred_by_user_id")
-  createdAt   DateTime  @default(now()) @map("created_at")
-  updatedAt   DateTime  @updatedAt @map("updated_at")
+  referredByUserId String?   @map("referred_by_user_id")
+  createdAt        DateTime  @default(now()) @map("created_at")
+  updatedAt        DateTime  @updatedAt @map("updated_at")
 
   user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   cardOrder CardOrder @relation(fields: [cardOrderId], references: [id], onDelete: Cascade)
@@ -669,14 +679,14 @@ model SavedCard {
 // feedbackEnabled must be true on the card for submissions to be accepted.
 // =============================================================================
 model CardFeedback {
-  id          String    @id @default(cuid())
-  cardOrderId String    @map("card_order_id")
-  giverId     String    @map("giver_id")
+  id            String    @id @default(cuid())
+  cardOrderId   String    @map("card_order_id")
+  giverId       String    @map("giver_id")
   // ratings: { design: 1-5, readability: 1-5, photo: 1-5, cta: 1-5,
   //            mobile: 1-5, trust: 1-5, content: 1-5 }
-  ratings     Json      @map("ratings")
-  comment     String?   @db.VarChar(500) @map("comment")
-  createdAt   DateTime  @default(now()) @map("created_at")
+  ratings       Json      @map("ratings")
+  comment       String?   @map("comment") @db.VarChar(500)
+  createdAt     DateTime  @default(now()) @map("created_at")
   piiRedactedAt DateTime? @map("pii_redacted_at")
 
   cardOrder CardOrder @relation(fields: [cardOrderId], references: [id], onDelete: Cascade)
@@ -700,12 +710,12 @@ model CardAction {
   type           String    @map("type")
   // "pending" | "accepted" | "declined" | "archived"
   status         String    @default("pending") @map("status")
-  message        String?   @db.VarChar(1000) @map("message")
+  message        String?   @map("message") @db.VarChar(1000)
   createdAt      DateTime  @default(now()) @map("created_at")
   updatedAt      DateTime  @updatedAt @map("updated_at")
   resolvedAt     DateTime? @map("resolved_at")
 
-  senderCard   CardOrder @relation("ActionSender",   fields: [senderCardId],   references: [id], onDelete: Cascade)
+  senderCard   CardOrder @relation("ActionSender", fields: [senderCardId], references: [id], onDelete: Cascade)
   receiverCard CardOrder @relation("ActionReceiver", fields: [receiverCardId], references: [id], onDelete: Cascade)
 
   @@index([receiverCardId, status])
@@ -832,13 +842,13 @@ model EventAttendee {
 // ReferralRedemption insert.
 // -----------------------------------------------------------------------------
 model Referral {
-  id              String   @id @default(cuid())
-  referrerUserId  String   @unique @map("referrer_user_id")
-  code            String   @unique
-  redemptions     Int      @default(0)
-  createdAt       DateTime @default(now()) @map("created_at")
+  id             String   @id @default(cuid())
+  referrerUserId String   @unique @map("referrer_user_id")
+  code           String   @unique
+  redemptions    Int      @default(0)
+  createdAt      DateTime @default(now()) @map("created_at")
 
-  referrer    User                  @relation(fields: [referrerUserId], references: [id], onDelete: Cascade)
+  referrer        User                 @relation(fields: [referrerUserId], references: [id], onDelete: Cascade)
   redemptionsList ReferralRedemption[]
 
   @@map("referrals")
@@ -934,16 +944,16 @@ model PushDevice {
 // table read-only.
 // =============================================================================
 model UserSubscription {
-  id                   String   @id @default(cuid())
-  userId               String   @unique @map("user_id")
-  stripeCustomerId     String?  @map("stripe_customer_id")
-  stripeSubscriptionId String?  @unique @map("stripe_subscription_id")
+  id                   String    @id @default(cuid())
+  userId               String    @unique @map("user_id")
+  stripeCustomerId     String?   @map("stripe_customer_id")
+  stripeSubscriptionId String?   @unique @map("stripe_subscription_id")
   status               String
-  priceId              String?  @map("price_id")
+  priceId              String?   @map("price_id")
   currentPeriodEnd     DateTime? @map("current_period_end")
-  cancelAtPeriodEnd    Boolean  @default(false) @map("cancel_at_period_end")
-  createdAt            DateTime @default(now()) @map("created_at")
-  updatedAt            DateTime @updatedAt @map("updated_at")
+  cancelAtPeriodEnd    Boolean   @default(false) @map("cancel_at_period_end")
+  createdAt            DateTime  @default(now()) @map("created_at")
+  updatedAt            DateTime  @updatedAt @map("updated_at")
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -964,14 +974,14 @@ model UserSubscription {
 // status: "pending" | "provisioned" | "failed" | "cancelled"
 // =============================================================================
 model DomainRequest {
-  id          String   @id @default(cuid())
-  userId      String   @map("user_id")
-  cardOrderId String?  @map("card_order_id")
+  id          String    @id @default(cuid())
+  userId      String    @map("user_id")
+  cardOrderId String?   @map("card_order_id")
   domain      String
   notes       String?
-  status      String   @default("pending")
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  status      String    @default("pending")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
   resolvedAt  DateTime? @map("resolved_at")
 
   user      User       @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -1419,4 +1429,199 @@ model VoiceTestRun {
 
   @@index([tenantId, createdAt])
   @@map("voice_test_runs")
+}
+
+// =============================================================================
+// INBOX v2 (Kutasia Workspace pivot) — unified channel-agnostic messaging.
+//
+// Built so WhatsApp, Telegram, Email, Voice transcripts, web forms and the
+// existing DBC CardAction surface all collapse into one InboxThread + many
+// InboxMessage rows. AI suggestions (summary / sentiment / draft reply) live
+// in a sibling table so we can re-run them without rewriting the message log.
+//
+// Channel credentials in `InboxChannel.config` (BSP API keys, bot tokens,
+// IMAP creds) are encrypted at-rest using app-layer AES-256-GCM (see
+// src/lib/crypto.ts) — never plaintext.
+// =============================================================================
+
+// -----------------------------------------------------------------------------
+// InboxChannel — one connected source for a user.
+//   type:    "whatsapp" | "telegram" | "email" | "voice" | "web" | "card_action"
+//   status:  "active" | "paused" | "error"
+// externalId is the channel-native identifier we use to route inbound webhooks
+// to the right user (WhatsApp phone-number-id, Telegram bot username, IMAP
+// mailbox address, voice tenant id, etc.). Unique per (type, externalId).
+// -----------------------------------------------------------------------------
+model InboxChannel {
+  id          String    @id @default(cuid())
+  userId      String    @map("user_id")
+  type        String
+  label       String?
+  externalId  String?   @map("external_id")
+  config      Json?
+  status      String    @default("active")
+  lastErrorAt DateTime? @map("last_error_at")
+  lastError   String?   @map("last_error") @db.Text
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
+
+  user    User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  threads InboxThread[]
+
+  @@unique([type, externalId])
+  @@index([userId, type])
+  @@index([userId, status])
+  @@map("inbox_channels")
+}
+
+// -----------------------------------------------------------------------------
+// InboxThread — one logical conversation with a contact on a channel.
+//   status:        "open" | "snoozed" | "closed" | "archived"
+//   priority:      0 = normal, 1 = elevated, 2 = high, 3 = urgent
+//   channelType:   denormalised from channel.type for filter queries
+//   externalThreadId: channel-native conversation key (WA contact phone,
+//                  Telegram chat_id, email Message-ID root, CardAction id…)
+//
+// AI fields are cached so the inbox list can render without re-prompting.
+// They're refreshed by background jobs whenever message count changes.
+// -----------------------------------------------------------------------------
+model InboxThread {
+  id               String @id @default(cuid())
+  userId           String @map("user_id")
+  channelId        String @map("channel_id")
+  channelType      String @map("channel_type")
+  externalThreadId String @map("external_thread_id")
+
+  subject       String?
+  contactName   String? @map("contact_name")
+  contactHandle String  @map("contact_handle")
+  contactLocale String? @map("contact_locale")
+
+  status      String   @default("open")
+  priority    Int      @default(0)
+  unreadCount Int      @default(0) @map("unread_count")
+  assignedTo  String?  @map("assigned_to")
+  tags        String[] @default([])
+
+  aiSummary      String?   @map("ai_summary") @db.Text
+  aiSentiment    String?   @map("ai_sentiment")
+  aiIntent       String?   @map("ai_intent")
+  aiUpdatedAt    DateTime? @map("ai_updated_at")
+  aiMessageCount Int       @default(0) @map("ai_message_count")
+
+  lastMessageAt DateTime  @default(now()) @map("last_message_at")
+  snoozedUntil  DateTime? @map("snoozed_until")
+  closedAt      DateTime? @map("closed_at")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  channel     InboxChannel      @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  messages    InboxMessage[]
+  suggestions InboxSuggestion[]
+
+  @@unique([channelId, externalThreadId])
+  @@index([userId, status, lastMessageAt])
+  @@index([userId, channelType, status])
+  @@index([userId, priority, lastMessageAt])
+  @@map("inbox_threads")
+}
+
+// -----------------------------------------------------------------------------
+// InboxMessage — one message on a thread.
+//   direction: "in" | "out"
+//   sentBy:    "customer" | "user" | "ai_draft" | "ai_auto" | "system"
+//   status:    "pending" | "sent" | "delivered" | "read" | "failed"
+//   externalId: channel-native message id (used for de-dupe on webhook retries)
+//
+// mediaUrls is for image / file attachments; voiceUrl / voiceTranscript split
+// out so the unified-inbox UI can render audio + transcript without parsing
+// the generic mediaUrls array. language is auto-detected on inbound.
+// -----------------------------------------------------------------------------
+model InboxMessage {
+  id              String    @id @default(cuid())
+  threadId        String    @map("thread_id")
+  direction       String
+  sentBy          String    @map("sent_by")
+  status          String    @default("sent")
+  body            String?   @db.Text
+  mediaUrls       String[]  @default([]) @map("media_urls")
+  voiceUrl        String?   @map("voice_url")
+  voiceTranscript String?   @map("voice_transcript") @db.Text
+  language        String?
+  externalId      String?   @map("external_id")
+  errorMessage    String?   @map("error_message") @db.Text
+  createdAt       DateTime  @default(now()) @map("created_at")
+  deliveredAt     DateTime? @map("delivered_at")
+  readAt          DateTime? @map("read_at")
+
+  thread InboxThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+
+  @@unique([threadId, externalId])
+  @@index([threadId, createdAt])
+  @@index([direction, status])
+  @@map("inbox_messages")
+}
+
+// -----------------------------------------------------------------------------
+// InboxSuggestion — AI output bound to a thread (not a single message).
+//   type:    "reply" | "action" | "summary" | "translation"
+//   status:  "pending" | "accepted" | "rejected" | "stale"
+// `content` is the suggestion body; for type="action", JSON of {action, args}
+// can sit in `payload`. modelUsed records which LLM tier ran so we can
+// measure cost / quality regressions.
+// -----------------------------------------------------------------------------
+model InboxSuggestion {
+  id         String    @id @default(cuid())
+  threadId   String    @map("thread_id")
+  type       String
+  status     String    @default("pending")
+  content    String    @db.Text
+  payload    Json?
+  modelUsed  String?   @map("model_used")
+  tokensIn   Int?      @map("tokens_in")
+  tokensOut  Int?      @map("tokens_out")
+  acceptedAt DateTime? @map("accepted_at")
+  rejectedAt DateTime? @map("rejected_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+
+  thread InboxThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+
+  @@index([threadId, type, status])
+  @@map("inbox_suggestions")
+}
+
+// -----------------------------------------------------------------------------
+// InboxPlaybook — saved automation triggered by inbox events.
+// The 5 hero playbooks (VoiceNoteToTicket, MultilingualTriage,
+// NoShowRecovery, EmailToQuoteDraft, AppointmentConfirm) ship as templates
+// (kind="template") and a user can clone them into kind="custom" copies.
+//   triggerType: "message.in" | "thread.created" | "calendar.cancelled" |
+//                "schedule" | "manual"
+//   steps:       JSON array of {action, args} pairs interpreted by the
+//                playbook runner in src/lib/inbox/playbooks/runner.ts
+// -----------------------------------------------------------------------------
+model InboxPlaybook {
+  id            String    @id @default(cuid())
+  userId        String    @map("user_id")
+  kind          String    @default("custom")
+  templateSlug  String?   @map("template_slug")
+  name          String
+  description   String?   @db.Text
+  triggerType   String    @map("trigger_type")
+  triggerConfig Json?     @map("trigger_config")
+  steps         Json
+  active        Boolean   @default(false)
+  lastRunAt     DateTime? @map("last_run_at")
+  lastRunOk     Boolean?  @map("last_run_ok")
+  lastRunError  String?   @map("last_run_error") @db.Text
+  runCount      Int       @default(0) @map("run_count")
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, active])
+  @@index([userId, triggerType])
+  @@map("inbox_playbooks")
 }
