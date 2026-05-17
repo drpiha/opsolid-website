@@ -100,6 +100,12 @@ const COPY: Record<Locale, {
   rail: {
     sectionChannels: string;
     sectionFilters: string;
+    sectionDemo: string;
+    seedDemo: string;
+    seeding: string;
+    clearDemo: string;
+    clearing: string;
+    demoHint: string;
     all: string;
     open: string;
     snoozed: string;
@@ -151,6 +157,13 @@ const COPY: Record<Locale, {
     rail: {
       sectionChannels: "Kanäle",
       sectionFilters: "Filter",
+      sectionDemo: "Demo-Daten",
+      seedDemo: "Beispieldaten laden",
+      seeding: "Lade …",
+      clearDemo: "Beispieldaten löschen",
+      clearing: "Lösche …",
+      demoHint:
+        "Vier Kanäle (WhatsApp / Telegram / E-Mail / Voice) mit fairtauglichen Beispielkonversationen.",
       all: "Alle",
       open: "Offen",
       snoozed: "Wartend",
@@ -217,6 +230,13 @@ const COPY: Record<Locale, {
     rail: {
       sectionChannels: "Channels",
       sectionFilters: "Filters",
+      sectionDemo: "Demo data",
+      seedDemo: "Load sample data",
+      seeding: "Loading …",
+      clearDemo: "Clear sample data",
+      clearing: "Clearing …",
+      demoHint:
+        "Seeds four channels (WhatsApp / Telegram / Email / Voice) with fair-friendly sample conversations.",
       all: "All",
       open: "Open",
       snoozed: "Snoozed",
@@ -282,6 +302,13 @@ const COPY: Record<Locale, {
     rail: {
       sectionChannels: "Kanallar",
       sectionFilters: "Filtreler",
+      sectionDemo: "Demo verisi",
+      seedDemo: "Örnek veri yükle",
+      seeding: "Yükleniyor …",
+      clearDemo: "Örnek veriyi temizle",
+      clearing: "Temizleniyor …",
+      demoHint:
+        "WhatsApp / Telegram / E-posta / Voice — 4 kanal için fuara hazır örnek konuşmalar.",
       all: "Tümü",
       open: "Açık",
       snoozed: "Ertelendi",
@@ -410,6 +437,7 @@ export function InboxClient() {
   const [loadingList, setLoadingList] = useState(true);
   const [loadingDetail, setLoadingDetail] = useState(false);
   const [listError, setListError] = useState<string | null>(null);
+  const [demoBusy, setDemoBusy] = useState<"seed" | "clear" | null>(null);
 
   const channelCounts = useMemo(() => {
     const total = channels.reduce(
@@ -490,6 +518,31 @@ export function InboxClient() {
     if (activeThreadId) await loadDetail(activeThreadId);
     await loadChannels();
   }, [loadThreads, loadDetail, loadChannels, activeThreadId]);
+
+  async function handleSeedDemo() {
+    setDemoBusy("seed");
+    try {
+      await fetch("/api/inbox/demo/seed", { method: "POST" });
+      await refreshAll();
+    } finally {
+      setDemoBusy(null);
+    }
+  }
+
+  async function handleClearDemo() {
+    setDemoBusy("clear");
+    try {
+      await fetch("/api/inbox/demo/clear", { method: "POST" });
+      setActiveThreadId(null);
+      await refreshAll();
+    } finally {
+      setDemoBusy(null);
+    }
+  }
+
+  const hasDemoChannel = channels.some(
+    (c) => c.label?.startsWith("[DEMO]") ?? false,
+  );
 
   return (
     <div className="grid h-[calc(100vh-120px)] min-h-[600px] grid-cols-[260px_360px_1fr] gap-4 px-6">
@@ -577,11 +630,39 @@ export function InboxClient() {
         </div>
 
         {channels.length === 0 && (
-          <div className="mt-auto rounded-lg border border-line-soft bg-bg-2 p-3 text-xs text-ink-400">
+          <div className="rounded-lg border border-line-soft bg-bg-2 p-3 text-xs text-ink-400">
             <p className="font-medium text-ink">{copy.rail.noChannels}</p>
             <p className="mt-1 leading-snug">{copy.rail.addChannelHint}</p>
           </div>
         )}
+
+        <div className="mt-auto border-t border-line-soft pt-3">
+          <p className="meta mono-label mb-2 text-ink-400">
+            {copy.rail.sectionDemo}
+          </p>
+          <div className="space-y-1.5">
+            {!hasDemoChannel ? (
+              <button
+                onClick={handleSeedDemo}
+                disabled={demoBusy !== null}
+                className="btn btn-ghost btn-sm w-full text-xs"
+              >
+                {demoBusy === "seed" ? copy.rail.seeding : copy.rail.seedDemo}
+              </button>
+            ) : (
+              <button
+                onClick={handleClearDemo}
+                disabled={demoBusy !== null}
+                className="btn btn-ghost btn-sm w-full text-xs"
+              >
+                {demoBusy === "clear" ? copy.rail.clearing : copy.rail.clearDemo}
+              </button>
+            )}
+            <p className="text-[10px] leading-snug text-ink-400">
+              {copy.rail.demoHint}
+            </p>
+          </div>
+        </div>
       </aside>
 
       {/* --------------------- CENTER: thread list --------------------- */}
