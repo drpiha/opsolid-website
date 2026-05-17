@@ -30,7 +30,7 @@ import {
 } from 'react-native';
 import { Star, X, Check } from 'lucide-react-native';
 import { useTheme } from '../../lib/theme/ThemeProvider';
-import { copper } from '../../lib/theme/tokens';
+import { accent } from '../../lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../lib/i18n/locale';
 import {
   submitFeedback,
@@ -120,23 +120,23 @@ export function FeedbackModal({ visible, slug, onClose }: Props) {
           style={styles.kavRoot}
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         >
-          <View style={[styles.sheet, { backgroundColor: theme.bg[1] }]}>
+          <View style={[styles.sheet, { backgroundColor: theme.pageBg }]}>
             <View style={[styles.handleBar, { backgroundColor: theme.line.firm }]} />
             <View style={styles.headerRow}>
-              <Text style={[styles.title, { color: theme.ink[100] }]}>
+              <Text style={[styles.title, { color: theme.text }]}>
                 {t.title}
               </Text>
               <Pressable onPress={onClose} hitSlop={8} style={styles.closeBtn}>
-                <X size={20} color={theme.ink[300]} />
+                <X size={20} color={theme.textMuted} />
               </Pressable>
             </View>
 
             {success ? (
               <View style={styles.successWrap}>
-                <View style={[styles.successCheck, { backgroundColor: copper[500] }]}>
+                <View style={[styles.successCheck, { backgroundColor: accent }]}>
                   <Check size={28} color="#FFFFFF" />
                 </View>
-                <Text style={[styles.successText, { color: theme.ink[100] }]}>
+                <Text style={[styles.successText, { color: theme.text }]}>
                   {t.success}
                 </Text>
               </View>
@@ -150,7 +150,7 @@ export function FeedbackModal({ visible, slug, onClose }: Props) {
               >
                 {CATEGORIES.map((cat) => (
                   <View key={cat} style={styles.row}>
-                    <Text style={[styles.rowLabel, { color: theme.ink[200] }]}>
+                    <Text style={[styles.rowLabel, { color: theme.textSecondary }]}>
                       {t.categories[cat]}
                     </Text>
                     <View style={styles.starRow}>
@@ -165,8 +165,8 @@ export function FeedbackModal({ visible, slug, onClose }: Props) {
                           >
                             <Star
                               size={26}
-                              color={filled ? copper[500] : theme.ink[400]}
-                              fill={filled ? copper[500] : 'none'}
+                              color={filled ? accent : theme.textFaint}
+                              fill={filled ? accent : 'none'}
                             />
                           </Pressable>
                         );
@@ -176,7 +176,7 @@ export function FeedbackModal({ visible, slug, onClose }: Props) {
                 ))}
 
                 <View style={styles.fieldWrap}>
-                  <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+                  <Text style={[styles.fieldLabel, { color: theme.textFaint }]}>
                     {t.commentLabel}
                   </Text>
                   <TextInput
@@ -184,21 +184,21 @@ export function FeedbackModal({ visible, slug, onClose }: Props) {
                       styles.input,
                       styles.multiline,
                       {
-                        color: theme.ink[100],
+                        color: theme.text,
                         borderColor: theme.line.DEFAULT,
-                        backgroundColor: theme.bg[2],
+                        backgroundColor: theme.surfaceMuted,
                       },
                     ]}
                     value={comment}
                     onChangeText={(v) => setComment(v.slice(0, COMMENT_MAX))}
                     placeholder={t.commentPlaceholder}
-                    placeholderTextColor={theme.ink[500]}
+                    placeholderTextColor={theme.textFaint}
                     multiline
                     numberOfLines={3}
                     maxLength={COMMENT_MAX}
                     textAlignVertical="top"
                   />
-                  <Text style={[styles.charCounter, { color: theme.ink[400] }]}>
+                  <Text style={[styles.charCounter, { color: theme.textFaint }]}>
                     {comment.length}/{COMMENT_MAX}
                   </Text>
                 </View>
@@ -213,7 +213,7 @@ export function FeedbackModal({ visible, slug, onClose }: Props) {
                   style={[
                     styles.submitBtn,
                     {
-                      backgroundColor: copper[500],
+                      backgroundColor: accent,
                       opacity: submitting ? 0.7 : 1,
                     },
                   ]}
@@ -256,18 +256,18 @@ export function FeedbackBreakdownModal({
       onRequestClose={onClose}
     >
       <View style={styles.backdrop}>
-        <View style={[styles.sheet, { backgroundColor: theme.bg[1] }]}>
+        <View style={[styles.sheet, { backgroundColor: theme.pageBg }]}>
           <View style={[styles.handleBar, { backgroundColor: theme.line.firm }]} />
           <View style={styles.headerRow}>
-            <Text style={[styles.title, { color: theme.ink[100] }]}>
+            <Text style={[styles.title, { color: theme.text }]}>
               {t.breakdownTitle}
             </Text>
             <Pressable onPress={onClose} hitSlop={8} style={styles.closeBtn}>
-              <X size={20} color={theme.ink[300]} />
+              <X size={20} color={theme.textMuted} />
             </Pressable>
           </View>
 
-          <Text style={[styles.breakdownMeta, { color: theme.ink[300] }]}>
+          <Text style={[styles.breakdownMeta, { color: theme.textMuted }]}>
             {count === 1
               ? t.aggregateOne.replace('{rating}', String(avg(averages)))
               : t.aggregate
@@ -284,7 +284,7 @@ export function FeedbackBreakdownModal({
                   <Text
                     style={[
                       styles.breakdownLabel,
-                      { color: theme.ink[200] },
+                      { color: theme.textSecondary },
                     ]}
                   >
                     {t.categories[cat]}
@@ -292,7 +292,7 @@ export function FeedbackBreakdownModal({
                   <View
                     style={[
                       styles.breakdownTrack,
-                      { backgroundColor: theme.bg[2] },
+                      { backgroundColor: theme.surfaceMuted },
                     ]}
                   >
                     <View
@@ -300,7 +300,7 @@ export function FeedbackBreakdownModal({
                         styles.breakdownFill,
                         {
                           width: `${pct * 100}%`,
-                          backgroundColor: copper[500],
+                          backgroundColor: accent,
                         },
                       ]}
                     />
@@ -308,7 +308,7 @@ export function FeedbackBreakdownModal({
                   <Text
                     style={[
                       styles.breakdownValue,
-                      { color: theme.ink[100] },
+                      { color: theme.text },
                     ]}
                   >
                     {v.toFixed(1)}
@@ -322,7 +322,7 @@ export function FeedbackBreakdownModal({
             onPress={onClose}
             style={[
               styles.submitBtn,
-              { backgroundColor: copper[500], marginTop: 18 },
+              { backgroundColor: accent, marginTop: 18 },
             ]}
           >
             <Text style={styles.submitBtnText}>{t.close}</Text>

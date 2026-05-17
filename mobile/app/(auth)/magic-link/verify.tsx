@@ -7,6 +7,8 @@ import { useAuthStore } from '../../../src/lib/auth/store';
 import { verifyMagicLink } from '../../../src/lib/auth/api';
 import { useTranslations, detectLocale } from '../../../src/lib/i18n/locale';
 import { useTheme } from '../../../src/lib/theme/ThemeProvider';
+import { accent } from '../../../src/lib/theme/tokens';
+import { typography } from '../../../src/lib/theme/typography';
 
 export default function VerifyScreen() {
   const theme = useTheme();
@@ -36,7 +38,7 @@ export default function VerifyScreen() {
       <View style={styles.center}>
         {error ? (
           <>
-            <Text style={[styles.errorText, { color: theme.ink[100] }]}>
+            <Text style={[typography.body, styles.textAlign, { color: theme.text }]}>
               {error}
             </Text>
             <Button
@@ -48,8 +50,8 @@ export default function VerifyScreen() {
           </>
         ) : (
           <>
-            <ActivityIndicator size="large" color={theme.ink[300]} />
-            <Text style={[styles.verifyingText, { color: theme.ink[300] }]}>
+            <ActivityIndicator size="large" color={accent} />
+            <Text style={[typography.lead, { color: theme.textMuted }]}>
               {strings.verifying}
             </Text>
           </>
@@ -66,12 +68,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 16,
   },
-  errorText: {
-    fontSize: 16,
+  textAlign: {
     textAlign: 'center',
-  },
-  verifyingText: {
-    fontSize: 14,
   },
   backButton: {
     minWidth: 200,

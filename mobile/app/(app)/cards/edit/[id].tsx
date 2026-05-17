@@ -20,7 +20,7 @@ import { Stack, useFocusEffect, useLocalSearchParams, useRouter } from 'expo-rou
 import * as Haptics from 'expo-haptics';
 import * as ImagePicker from 'expo-image-picker';
 import { useToast } from '../../../../src/components/ui/Toast';
-import { Check, Eye, EyeOff, X } from 'lucide-react-native';
+import { Check, ChevronLeft, Eye, EyeOff, X } from 'lucide-react-native';
 import { WebView } from 'react-native-webview';
 import { getCard, updateCard, uploadPhoto } from '../../../../src/lib/api/cards';
 import { listTemplates, type Template } from '../../../../src/lib/api/templates';
@@ -28,8 +28,11 @@ import { updateCardEvents } from '../../../../src/lib/api/events';
 import type { ApiCard } from '../../../../src/lib/api/types';
 import { API_BASE } from '../../../../src/lib/api/client';
 import { useTheme } from '../../../../src/lib/theme/ThemeProvider';
-import { copper, teal } from '../../../../src/lib/theme/tokens';
+import { accent } from '../../../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../../../src/lib/i18n/locale';
+import { AppBar, AppBarIconButton } from '../../../../src/components/ui/AppBar';
+import { Button } from '../../../../src/components/ui/Button';
+import { Chip } from '../../../../src/components/ui/Chip';
 import { useTemplatePickerStore } from '../../../../src/store/templatePickerStore';
 import { useAuthStore } from '../../../../src/lib/auth/store';
 import { fetchMe } from '../../../../src/lib/auth/api';
@@ -908,7 +911,7 @@ export default function CardEditScreen() {
   if (loading) {
     return (
       <View style={[styles.center, { backgroundColor: theme.bg[0] }]}>
-        <ActivityIndicator size="large" color={copper[500]} />
+        <ActivityIndicator size="large" color={accent} />
       </View>
     );
   }
@@ -940,32 +943,38 @@ export default function CardEditScreen() {
 
   return (
     <>
-      <Stack.Screen
-        options={{
-          title: t.editTitle,
-          headerStyle: { backgroundColor: theme.bg[0] },
-          headerTintColor: theme.ink[100],
-          headerRight: () => (
-            <View ref={saveButtonRef} collapsable={false}>
-              <TouchableOpacity onPress={() => void handleSave()} disabled={saving} style={styles.saveBtn}>
-                {saving
-                  ? <ActivityIndicator size="small" color={copper[500]} />
-                  : <Text style={[styles.saveBtnText, { color: copper[500] }]}>{t.save}</Text>
-                }
-              </TouchableOpacity>
-            </View>
-          ),
-        }}
-      />
+      <Stack.Screen options={{ headerShown: false }} />
       <KeyboardAvoidingView
         style={{ flex: 1, backgroundColor: theme.bg[0] }}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+        keyboardVerticalOffset={0}
       >
-        {/* Tab bar + preview toggle. The Eye button lives here so it's
-            reachable from all three tabs — the user doesn't need to switch
-            to Tasarim to open the preview. Hidden when the card has no slug
-            yet (unpublished draft with no public URL). */}
+        {/* AppBar — Verso v2 chrome. Save in trailing slot; back in leading. */}
+        <AppBar
+          variant="default"
+          title={t.editTitle}
+          elevated
+          leading={
+            <AppBarIconButton ghost onPress={() => router.back()} accessibilityLabel="Geri">
+              <ChevronLeft size={22} color={theme.text} strokeWidth={2} />
+            </AppBarIconButton>
+          }
+          trailing={
+            <View ref={saveButtonRef} collapsable={false}>
+              <Button
+                label={t.save}
+                variant="accent"
+                size="sm"
+                fullWidth={false}
+                onPress={() => void handleSave()}
+                loading={saving}
+              />
+            </View>
+          }
+        />
+
+        {/* Tab chip row + preview toggle. The row is anchored to editTabsRef
+            for the tour coach marks. */}
         <View
           ref={editTabsRef}
           collapsable={false}
@@ -974,24 +983,13 @@ export default function CardEditScreen() {
           {tabs.map((tab) => {
             const active = activeTab === tab.key;
             return (
-              <TouchableOpacity
+              <Chip
                 key={tab.key}
+                label={tab.label}
+                variant={active ? 'accent' : 'default'}
                 onPress={() => setActiveTab(tab.key)}
-                style={[
-                  styles.tabPill,
-                  active && { borderBottomColor: teal[500] },
-                ]}
-                activeOpacity={0.85}
-              >
-                <Text
-                  style={[
-                    styles.tabText,
-                    { color: active ? teal[500] : theme.ink[400] },
-                  ]}
-                >
-                  {tab.label}
-                </Text>
-              </TouchableOpacity>
+                style={styles.tabChip}
+              />
             );
           })}
 
@@ -1007,8 +1005,8 @@ export default function CardEditScreen() {
                 style={[
                   styles.previewToggleBtn,
                   {
-                    backgroundColor: previewVisible ? teal[500] : theme.bg[2],
-                    borderColor: previewVisible ? teal[500] : theme.line.DEFAULT,
+                    backgroundColor: previewVisible ? accent : theme.bg[2],
+                    borderColor: previewVisible ? accent : theme.line.DEFAULT,
                   },
                 ]}
                 onPress={() => setPreviewVisible((v) => !v)}
@@ -1017,7 +1015,7 @@ export default function CardEditScreen() {
               >
                 {previewVisible
                   ? <EyeOff size={16} color="#FFFFFF" strokeWidth={2.2} />
-                  : <Eye size={16} color={teal[500]} strokeWidth={2.2} />
+                  : <Eye size={16} color={accent} strokeWidth={2.2} />
                 }
               </TouchableOpacity>
             </View>
@@ -1048,7 +1046,7 @@ export default function CardEditScreen() {
                   style={[styles.photoWrap, { borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[1] }]}
                 >
                   {uploadingPhoto ? (
-                    <ActivityIndicator color={copper[500]} />
+                    <ActivityIndicator color={accent} />
                   ) : photoUri ? (
                     <Image source={{ uri: photoUri }} style={styles.photo} />
                   ) : (
@@ -1089,7 +1087,7 @@ export default function CardEditScreen() {
                       source={{ uri: authUser.image }}
                       style={{ width: 24, height: 24, borderRadius: 12 }}
                     />
-                    <Text style={{ fontSize: 13, color: theme.ink[200] }}>
+                    <Text style={[{ color: theme.ink[200] }]}>
                       {t.useGooglePhoto}
                     </Text>
                   </TouchableOpacity>
@@ -1229,7 +1227,7 @@ export default function CardEditScreen() {
               {card?.status === 'PUBLISHED' && (
                 <View style={[styles.statusRow, { borderColor: theme.line.DEFAULT }]}>
                   <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>Status</Text>
-                  <Text style={{ color: '#7FB286', fontSize: 14, fontWeight: '600' }}>
+                  <Text style={{ color: '#7FB286', fontSize: 14, fontWeight: '600' as const }}>
                     {t.status.PUBLISHED}
                   </Text>
                 </View>
@@ -1283,7 +1281,7 @@ export default function CardEditScreen() {
               startInLoadingState
               renderLoading={() => (
                 <View style={[styles.center, { backgroundColor: theme.bg[0] }]}>
-                  <ActivityIndicator size="small" color={teal[500]} />
+                  <ActivityIndicator size="small" color={accent} />
                 </View>
               )}
             />
@@ -1330,7 +1328,7 @@ export default function CardEditScreen() {
           <View style={{ flex: 1 }}>
             {templatePickerItems === null ? (
               <View style={styles.center}>
-                <ActivityIndicator color={teal[500]} size="large" />
+                <ActivityIndicator color={accent} size="large" />
               </View>
             ) : templatePickerFiltered.length === 0 ? (
               <View style={styles.center}>
@@ -1403,7 +1401,7 @@ export default function CardEditScreen() {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={applyTemplatePicker}
-              style={[styles.tplBtn, styles.tplBtnPrimary, { backgroundColor: teal[500] }]}
+              style={[styles.tplBtn, styles.tplBtnPrimary, { backgroundColor: accent }]}
               activeOpacity={0.85}
               disabled={!templatePickerCurrent}
             >
@@ -1441,29 +1439,19 @@ const styles = StyleSheet.create({
   // pushed off screen. Without preview, keep 160 so content clears gesture bar.
   scroll: { padding: 16, paddingBottom: 160 },
   scrollCompact: { paddingBottom: 80 },
-  saveBtn: { paddingHorizontal: 4 },
-  saveBtnText: { fontSize: 16, fontWeight: '600' },
-  // Tab bar: 44pt tall, underline-style active indicator (no fill).
-  // The Eye toggle button is appended as the rightmost element.
+  // Tab bar: 48pt tall, Chip-row tab strip. The Eye toggle appended rightmost.
   tabBar: {
     flexDirection: 'row',
-    height: 44,
+    height: 48,
+    paddingHorizontal: 12,
+    gap: 8,
     borderBottomWidth: 1,
     alignItems: 'center',
   },
-  tabPill: {
+  // Individual tab chip — flex so chips fill available space evenly.
+  tabChip: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: '100%',
-    borderBottomWidth: 2,
-    borderBottomColor: 'transparent',
-  },
-  tabText: {
-    fontSize: 13,
-    fontWeight: '600',
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
+    alignSelf: 'center',
   },
   // Preview toggle button in the tab bar — compact pill, rightmost slot.
   previewToggleWrap: {

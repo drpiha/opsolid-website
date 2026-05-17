@@ -13,8 +13,9 @@
 // Caching: not cached at the route level — callers (CDN, RSC) may add their
 // own layer. The where clause is index-covered so cold reads are cheap.
 //
-// Rate limit: callers should implement their own CDN-level rate limiting.
-// This endpoint is intentionally stateless and lightweight.
+// Rate limit: 120/hour per client IP (in-memory bucket; matches the rest of
+// /api/v1/* limiters). CDN-level rate limiting can stack on top if needed
+// once we have multi-instance deploys.
 // =============================================================================
 
 import { NextRequest, NextResponse } from "next/server";
@@ -22,6 +23,7 @@ import { Prisma } from "@/generated/prisma";
 import { prisma } from "@/lib/prisma";
 import { OrderStatus } from "@/lib/validation";
 import { normalizeTagSlug } from "@/lib/discover/tags";
+import { hitWindow, clientIp } from "@/lib/auth/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -29,6 +31,18 @@ export const runtime = "nodejs";
 // accidentally returning unbounded result sets.
 const MAX_LIMIT = 50;
 const DEFAULT_LIMIT = 20;
+
+// Per-IP rate limit. Discover is unauthenticated; the bucket key has to be
+// IP-derived. 120/hour is comfortably above the mobile + web browse pattern
+// (a focused user spends maybe 30-50 requests in an hour scrolling rails)
+// while still tight enough to make scraping unattractive.
+const RATE_MAX = 120;
+const RATE_WINDOW_MS = 60 * 60 * 1000;
+
+// Hard cap on simultaneous tag filters in a single request. The pg_trgm GIN
+// index doesn't care about array size at this scale, but we cap to keep the
+// URL length bounded and ensure no caller can build a 100-element OR clause.
+const MAX_TAGS_PER_QUERY = 8;
 
 // Row shape returned by both the raw-SQL search path and the Prisma
 // findMany path. Kept to a single shape so the mapper can stay simple.
@@ -58,6 +72,11 @@ type DiscoverRow = {
 //   tag              — single sector tag (kebab-case, ≤24 chars). When set,
 //                      only cards whose `cardData.tags` array contains this
 //                      tag are returned (JSONB `?` operator).
+//   tags / tags[]    — multi-tag any-of filter. Accepts repeated params
+//                      (?tags=a&tags=b) or comma-separated (?tags=a,b).
+//                      Mixes freely with `tag`. Capped at 8 distinct tags
+//                      per request. A card matches if it carries ANY one
+//                      of the requested tags.
 //   industry         — exact match on industry field
 //   city             — case-insensitive contains match on city field (max 100 chars)
 //   country          — exact match on ISO 3166-1 alpha-2 country code (e.g. "DE")
@@ -67,12 +86,59 @@ type DiscoverRow = {
 //   cursor           — last card id from previous page (for cursor-based pagination)
 //   limit            — page size, 1–50 (default 20)
 export async function GET(req: NextRequest) {
+  // --- Per-IP rate limit ---
+  // The route is anonymous-allowed, so we have nothing better than IP. The
+  // 429 carries `Retry-After` so polite clients back off; abusive scrapers
+  // will be returned 429s for the remainder of the window.
+  const ip = clientIp(req);
+  const rateDecision = hitWindow(
+    `discover:cards::ip::${ip}`,
+    RATE_MAX,
+    RATE_WINDOW_MS,
+  );
+  if (!rateDecision.ok) {
+    return NextResponse.json(
+      { error: { code: "rate_limited", message: "Too many requests." } },
+      {
+        status: 429,
+        headers: {
+          "Retry-After": String(rateDecision.retryAfterSeconds ?? 60),
+        },
+      },
+    );
+  }
+
   const { searchParams } = new URL(req.url);
 
   // --- Input parsing & sanitization ---
   const q = searchParams.get("q")?.trim().slice(0, 100) ?? "";
-  const tagRaw = searchParams.get("tag")?.trim().slice(0, 24) ?? "";
-  const tag = tagRaw ? normalizeTagSlug(tagRaw) : null;
+  // Tag filtering: accept BOTH `tag=foo` (legacy singular, what the mobile
+  // client sends today) AND `tags=foo&tags=bar` / `tags=foo,bar` (array).
+  // Any-of semantics: a card matches if it carries ANY of the requested
+  // tags. We dedupe + normalize + cap so a malformed client can't build a
+  // ridiculously long predicate.
+  const rawTags: string[] = [];
+  const tagSingular = searchParams.get("tag")?.trim().slice(0, 24);
+  if (tagSingular) rawTags.push(tagSingular);
+  for (const raw of searchParams.getAll("tags")) {
+    for (const piece of raw.split(",")) {
+      const cleaned = piece.trim().slice(0, 24);
+      if (cleaned) rawTags.push(cleaned);
+    }
+  }
+  for (const raw of searchParams.getAll("tags[]")) {
+    for (const piece of raw.split(",")) {
+      const cleaned = piece.trim().slice(0, 24);
+      if (cleaned) rawTags.push(cleaned);
+    }
+  }
+  const filterTags = Array.from(
+    new Set(
+      rawTags
+        .map((t) => normalizeTagSlug(t))
+        .filter((t): t is string => t !== null),
+    ),
+  ).slice(0, MAX_TAGS_PER_QUERY);
   const industry = searchParams.get("industry")?.trim().slice(0, 100) || undefined;
   const city = searchParams.get("city")?.trim().slice(0, 100) || undefined;
   const country = searchParams.get("country")?.trim().slice(0, 10) || undefined;
@@ -115,7 +181,18 @@ export async function GET(req: NextRequest) {
       cursorPublishedAt = seen?.publishedAt ?? null;
     }
 
-    const tagJson = tag ? JSON.stringify([tag]) : null;
+    // Tag predicate. For backwards compat with single-tag callers and a
+    // single contains-all when ONE tag is passed, we use the `@>` operator
+    // (which keeps using the existing GIN index). For multi-tag (any-of)
+    // we use `?|`, the JSONB "any of these top-level keys / array elements
+    // exists" operator, paired with a text[] literal. Both operators hit
+    // the same GIN index on `card_data`.
+    const tagJson =
+      filterTags.length === 1 ? JSON.stringify([filterTags[0]]) : null;
+    const tagArrayLiteral =
+      filterTags.length > 1
+        ? `{${filterTags.map((t) => `"${t}"`).join(",")}}`
+        : null;
 
     cards = await prisma.$queryRaw<DiscoverRow[]>`
       SELECT
@@ -142,7 +219,13 @@ export async function GET(req: NextRequest) {
         AND ${openToNetworking !== undefined ? Prisma.sql`co.open_to_networking = ${openToNetworking}` : Prisma.sql`TRUE`}
         AND ${acceptingClients !== undefined ? Prisma.sql`co.accepting_clients = ${acceptingClients}` : Prisma.sql`TRUE`}
         AND ${city ? Prisma.sql`co.city ILIKE ${`%${escapeLike(city)}%`}` : Prisma.sql`TRUE`}
-        AND ${tagJson ? Prisma.sql`co.card_data -> 'tags' @> ${tagJson}::jsonb` : Prisma.sql`TRUE`}
+        AND ${
+          tagArrayLiteral
+            ? Prisma.sql`co.card_data -> 'tags' ?| ${tagArrayLiteral}::text[]`
+            : tagJson
+              ? Prisma.sql`co.card_data -> 'tags' @> ${tagJson}::jsonb`
+              : Prisma.sql`TRUE`
+        }
         AND (
           co.contact_name ILIKE ${like}
           OR (co.card_data->>'name')     ILIKE ${like}
@@ -167,11 +250,21 @@ export async function GET(req: NextRequest) {
     if (openToNetworking !== undefined) where.openToNetworking = openToNetworking;
     if (acceptingClients !== undefined) where.acceptingClients = acceptingClients;
     if (city) where.city = { contains: city, mode: "insensitive" };
-    if (tag) {
+    if (filterTags.length === 1) {
       where.cardData = {
         path: ["tags"],
-        array_contains: [tag],
+        array_contains: [filterTags[0]],
       } as Prisma.JsonFilter<"CardOrder">;
+    } else if (filterTags.length > 1) {
+      // Any-of: a card matches when its cardData.tags contains ANY of the
+      // requested filterTags. Prisma's JsonFilter only models contains-all,
+      // so we union N single-tag filters under an OR.
+      where.OR = filterTags.map((t) => ({
+        cardData: {
+          path: ["tags"],
+          array_contains: [t],
+        } as Prisma.JsonFilter<"CardOrder">,
+      }));
     }
 
     const rows = await prisma.cardOrder.findMany({

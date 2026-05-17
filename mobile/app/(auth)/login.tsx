@@ -12,7 +12,8 @@ import { ScreenContainer } from '../../src/components/ui/ScreenContainer';
 import { Input } from '../../src/components/ui/Input';
 import { Button } from '../../src/components/ui/Button';
 import { useTheme } from '../../src/lib/theme/ThemeProvider';
-import { copper, teal, accentCredit, signal } from '../../src/lib/theme/tokens';
+import { accent, accentCredit } from '../../src/lib/theme/tokens';
+import { typography } from '../../src/lib/theme/typography';
 import { login, requestMagicLink, signInWithGoogle } from '../../src/lib/auth/api';
 import { useAuthStore } from '../../src/lib/auth/store';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
@@ -106,17 +107,17 @@ export default function LoginScreen() {
         {/* Brand header */}
         <View style={styles.header}>
           <View style={styles.brandLockup}>
-            <Text style={[styles.versoWordmark, { color: teal[500] }]}>
+            <Text style={[typography.display2, { color: theme.text }]}>
               Verso
             </Text>
-            <Text style={[styles.byCredit, { color: accentCredit }]}>
+            <Text style={[typography.caption, styles.byCredit, { color: accentCredit }]}>
               by OpSolid
             </Text>
           </View>
-          <Text style={[styles.welcome, { color: theme.ink[100] }]}>
+          <Text style={[typography.display2, styles.welcomeSpacing, { color: theme.text }]}>
             {strings.welcome}
           </Text>
-          <Text style={[styles.tagline, { color: theme.ink[300] }]}>
+          <Text style={[typography.lead, { color: theme.textMuted }]}>
             {strings.tagline}
           </Text>
         </View>
@@ -127,10 +128,10 @@ export default function LoginScreen() {
             <View
               style={[
                 styles.errorBanner,
-                { backgroundColor: theme.bg[2], borderColor: signal.err },
+                { backgroundColor: theme.surfaceMuted, borderColor: theme.signalErr },
               ]}
             >
-              <Text style={[styles.errorText, { color: signal.err }]}>{error}</Text>
+              <Text style={[typography.bodySmall, { color: theme.signalErr }]}>{error}</Text>
             </View>
           ) : null}
 
@@ -165,6 +166,7 @@ export default function LoginScreen() {
               label={strings.magicLinkCta}
               onPress={handleMagicLink}
               loading={loading}
+              variant="accent"
               style={styles.ctaButton}
             />
           ) : (
@@ -172,6 +174,7 @@ export default function LoginScreen() {
               label={strings.loginCta}
               onPress={handlePasswordLogin}
               loading={loading}
+              variant="accent"
               style={styles.ctaButton}
             />
           )}
@@ -185,7 +188,7 @@ export default function LoginScreen() {
             style={styles.toggleRow}
             accessibilityRole="button"
           >
-            <Text style={[styles.toggleText, { color: copper[500] }]}>
+            <Text style={[typography.bodyMedium, { color: accent }]}>
               {mode === 'magic-link'
                 ? strings.passwordToggle
                 : strings.magicLinkBack}
@@ -194,11 +197,11 @@ export default function LoginScreen() {
 
           {/* Divider */}
           <View style={styles.dividerRow}>
-            <View style={[styles.dividerLine, { backgroundColor: theme.bg[3] }]} />
-            <Text style={[styles.dividerText, { color: theme.ink[400] }]}>
+            <View style={[styles.dividerLine, { backgroundColor: theme.line.DEFAULT }]} />
+            <Text style={[typography.sectionLabel, { color: theme.textFaint }]}>
               {strings.orDivider}
             </Text>
-            <View style={[styles.dividerLine, { backgroundColor: theme.bg[3] }]} />
+            <View style={[styles.dividerLine, { backgroundColor: theme.line.DEFAULT }]} />
           </View>
 
           {/* Google sign-in */}
@@ -212,14 +215,14 @@ export default function LoginScreen() {
 
         {/* Footer link */}
         <View style={styles.footer}>
-          <Text style={[styles.footerHint, { color: theme.ink[300] }]}>
+          <Text style={[typography.lead, { color: theme.textMuted }]}>
             {strings.signupHint}{' '}
           </Text>
           <TouchableOpacity
             onPress={() => router.push('/(auth)/signup')}
             accessibilityRole="link"
           >
-            <Text style={[styles.footerLink, { color: copper[500] }]}>
+            <Text style={[typography.bodyMedium, { color: accent }]}>
               {strings.signupCta}
             </Text>
           </TouchableOpacity>
@@ -243,27 +246,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     gap: 2,
   },
-  versoWordmark: {
-    fontSize: 28,
-    fontWeight: '700',
-    letterSpacing: -0.5,
-    lineHeight: 32,
-  },
   byCredit: {
-    fontSize: 11,
-    fontWeight: '500',
-    letterSpacing: 0.3,
     opacity: 0.6,
+    fontStyle: 'italic',
   },
-  welcome: {
-    fontSize: 28,
-    fontWeight: '700',
-    letterSpacing: -0.5,
+  welcomeSpacing: {
     marginTop: 8,
-  },
-  tagline: {
-    fontSize: 14,
-    lineHeight: 20,
   },
   form: {
     gap: 16,
@@ -273,19 +261,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 12,
   },
-  errorText: {
-    fontSize: 13,
-  },
   ctaButton: {
     marginTop: 4,
   },
   toggleRow: {
     alignItems: 'center',
     paddingVertical: 8,
-  },
-  toggleText: {
-    fontSize: 14,
-    fontWeight: '500',
   },
   dividerRow: {
     flexDirection: 'row',
@@ -296,23 +277,10 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 1,
   },
-  dividerText: {
-    fontSize: 12,
-    fontWeight: '500',
-    letterSpacing: 0.5,
-    textTransform: 'uppercase',
-  },
   footer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 24,
-  },
-  footerHint: {
-    fontSize: 14,
-  },
-  footerLink: {
-    fontSize: 14,
-    fontWeight: '600',
   },
 });

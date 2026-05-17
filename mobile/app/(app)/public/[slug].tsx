@@ -1,24 +1,28 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import {
   View,
   Text,
   ActivityIndicator,
-  Pressable,
   Alert,
   StyleSheet,
   Platform,
+  ScrollView,
+  Pressable,
+  Share,
 } from 'react-native';
-import WebView from 'react-native-webview';
-import type { WebViewNavigation } from 'react-native-webview';
 import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
 import {
-  UserPlus,
+  ChevronLeft,
+  Share2,
   QrCode,
-  Send,
   Star,
   MessageSquare,
   Bookmark,
   BookmarkCheck,
+  Mail,
+  Phone,
+  Globe,
+  MapPin,
 } from 'lucide-react-native';
 import { getPublicCard } from '../../../src/lib/api/discover';
 import { listCards } from '../../../src/lib/api/cards';
@@ -29,31 +33,26 @@ import type { FeedbackAggregate } from '../../../src/lib/api/crm';
 import { logShareEvent } from '../../../src/lib/api/share-events';
 import type { ApiCard } from '../../../src/lib/api/types';
 import { useTheme } from '../../../src/lib/theme/ThemeProvider';
-import { copper } from '../../../src/lib/theme/tokens';
+import { accent, accentCredit, accentSoft } from '../../../src/lib/theme/tokens';
+import { typography } from '../../../src/lib/theme/typography';
 import { useTranslations, detectLocale } from '../../../src/lib/i18n/locale';
 import { useAuthStore } from '../../../src/lib/auth/store';
 import { useContactsRefreshStore } from '../../../src/store/contactsRefreshStore';
 import { API_BASE } from '../../../src/lib/api/client';
 import { Button } from '../../../src/components/ui/Button';
+import { Card } from '../../../src/components/ui/Card';
+import { Chip } from '../../../src/components/ui/Chip';
+import { Avatar } from '../../../src/components/ui/Avatar';
+import { Row, RowGroup } from '../../../src/components/ui/Row';
+import { SectionLabel } from '../../../src/components/ui/SectionLabel';
+import { AppBar, AppBarIconButton } from '../../../src/components/ui/AppBar';
+import { ScreenContainer } from '../../../src/components/ui/ScreenContainer';
 import { QrCodeModal } from '../../../src/components/cards/QrCodeModal';
 import { LeadFormModal } from '../../../src/components/cards/LeadFormModal';
 import {
   FeedbackModal,
   FeedbackBreakdownModal,
 } from '../../../src/components/cards/FeedbackModal';
-
-// JS injected before content load — hides the "Create your own card" banner
-// and any bottom-floater CTAs that the web page renders for anonymous visitors.
-// The ?preview=1 param is the server-side gate; this is a belt-and-suspenders
-// client-side guard for anything rendered after hydration.
-const HIDE_WEB_CHROME_JS = `
-  (function() {
-    var style = document.createElement('style');
-    style.textContent = '[data-create-yours-banner]{display:none!important}[data-preview-hide]{display:none!important}';
-    document.head.appendChild(style);
-  })();
-  true;
-`;
 
 function pickString(v: unknown): string | undefined {
   return typeof v === 'string' && v.length > 0 ? v : undefined;
@@ -73,50 +72,42 @@ export default function PublicCardScreen() {
   const locale = detectLocale();
   const t = useTranslations(locale).publicCard;
   const tCrm = useTranslations(locale).crm;
+  const router = useRouter();
 
   const authUser = useAuthStore((s) => s.user);
   const isAuthenticated = !!authUser;
-  const router = useRouter();
 
-  // Card data — fetched for the native action row. The WebView handles the
-  // visual render independently; we need the ApiCard object for save-to-
-  // contacts, smart exchange, and to determine own-card state.
+  // Card data
   const [card, setCard] = useState<ApiCard | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // WebView load state — independent of the card data fetch.
-  const [webLoading, setWebLoading] = useState(true);
-  const [webError, setWebError] = useState(false);
-
-  // Save-to-server state (Bookmark toggle in header).
+  // Save-to-server state
   const [saved, setSaved] = useState(false);
   const [saving, setSaving] = useState(false);
 
-  // Save-to-contacts loading guard so the button shows a spinner on tap.
+  // Save-to-contacts loading guard
   const [contactSaving, setContactSaving] = useState(false);
 
-  // Modal open state.
+  // Modal open state
   const [qrOpen, setQrOpen] = useState(false);
   const [leadOpen, setLeadOpen] = useState(false);
   const [feedbackOpen, setFeedbackOpen] = useState(false);
   const [breakdownOpen, setBreakdownOpen] = useState(false);
 
-  // CRM data.
+  // CRM data
   const [feedbackAggregate, setFeedbackAggregate] = useState<FeedbackAggregate | null>(null);
   const [ownPublishedCard, setOwnPublishedCard] = useState<ApiCard | null>(null);
   const [exchanging, setExchanging] = useState(false);
 
-  const webViewRef = useRef<InstanceType<typeof WebView>>(null);
-
-  // Card data fetch.
+  // Card data fetch
   useEffect(() => {
     if (!slug) return;
     void loadCard(slug);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [slug]);
 
-  // Feedback aggregate prefetch.
+  // Feedback aggregate prefetch
   useEffect(() => {
     if (!slug) return;
     let cancelled = false;
@@ -126,7 +117,7 @@ export default function PublicCardScreen() {
     return () => { cancelled = true; };
   }, [slug]);
 
-  // Visitor's own published card — for smart exchange.
+  // Visitor's own published card — for smart exchange
   useEffect(() => {
     if (!isAuthenticated) { setOwnPublishedCard(null); return; }
     let cancelled = false;
@@ -186,7 +177,6 @@ export default function PublicCardScreen() {
     if (!card || contactSaving) return;
     setContactSaving(true);
     try {
-      // saveCardToDeviceContacts already requests permission internally.
       const result = await saveCardToDeviceContacts(card);
       if (result === 'saved') {
         Alert.alert('', t.contactsSaved);
@@ -195,9 +185,20 @@ export default function PublicCardScreen() {
       } else if (result === 'failed') {
         Alert.alert('', t.errorLoad);
       }
-      // 'unsupported' — silently skip (no Contacts API on this platform).
     } finally {
       setContactSaving(false);
+    }
+  }
+
+  async function handleShare() {
+    if (!slug) return;
+    if (card?.id && isAuthenticated) {
+      void logShareEvent(card.id, 'native_share').catch(() => {});
+    }
+    try {
+      await Share.share({ url: `${API_BASE}/c/${slug}` });
+    } catch {
+      // user cancelled or error
     }
   }
 
@@ -231,7 +232,7 @@ export default function PublicCardScreen() {
     );
   }
 
-  // Derived booleans — need card to be loaded.
+  // Derived booleans
   const isOwnCard = !!ownPublishedCard?.slug && ownPublishedCard.slug === card?.slug;
   const showSmartExchange = !!ownPublishedCard?.slug && !isOwnCard;
   const showFeedbackButton =
@@ -240,49 +241,269 @@ export default function PublicCardScreen() {
     feedbackAggregate && feedbackAggregate.count > 0
       ? aggregateMean(feedbackAggregate.averages)
       : null;
-  const cardName =
-    card ? (pickString((card.cardData as Record<string, unknown>)?.name) ?? slug ?? '') : '';
 
-  // Loading — card data not yet available.
+  // Derived card fields
+  const cardData = card ? (card.cardData as Record<string, unknown>) : null;
+  const cardName = pickString(cardData?.name) ?? '';
+  const cardTitle = pickString(cardData?.title) ?? '';
+  const cardCompany = pickString(cardData?.company) ?? '';
+  const cardBio = pickString(cardData?.bio) ?? '';
+  const cardEmail = pickString(cardData?.email) ?? '';
+  const cardPhone = pickString(cardData?.phone) ?? '';
+  const cardWebsite = pickString(cardData?.website) ?? '';
+  const cardCity = pickString(cardData?.city) ?? pickString(cardData?.location) ?? '';
+  const cardIndustry = pickString(cardData?.industry) ?? '';
+  const cardPhotoUrl = pickString(cardData?.photoUrl) ?? pickString(cardData?.avatarUrl) ?? '';
+  const roleDisplay = [cardTitle, cardCompany].filter(Boolean).join(' · ');
+
+  // Loading state
   if (loading) {
     return (
-      <View style={[styles.root, { backgroundColor: theme.bg[0] }]}>
-        <Stack.Screen options={{ title: '' }} />
+      <View style={[styles.root, { backgroundColor: theme.pageBg }]}>
+        <Stack.Screen options={{ headerShown: false }} />
+        <AppBar
+          variant="default"
+          title=""
+          leading={
+            <AppBarIconButton ghost onPress={() => router.back()} accessibilityLabel="Back">
+              <ChevronLeft size={20} color={theme.text} />
+            </AppBarIconButton>
+          }
+        />
         <View style={styles.center}>
-          <ActivityIndicator size="large" color={copper[500]} />
+          <ActivityIndicator size="large" color={accent} />
         </View>
       </View>
     );
   }
 
-  // Card fetch error.
+  // Error / 404 state
   if (error || !card) {
     return (
-      <View style={[styles.root, { backgroundColor: theme.bg[0] }]}>
-        <Stack.Screen options={{ title: '' }} />
+      <View style={[styles.root, { backgroundColor: theme.pageBg }]}>
+        <Stack.Screen options={{ headerShown: false }} />
+        <AppBar
+          variant="default"
+          title=""
+          leading={
+            <AppBarIconButton ghost onPress={() => router.back()} accessibilityLabel="Back">
+              <ChevronLeft size={20} color={theme.text} />
+            </AppBarIconButton>
+          }
+        />
         <View style={styles.center}>
-          <Text style={[styles.errorText, { color: theme.signalErr }]}>{error ?? t.errorLoad}</Text>
-          <Button
-            label={t.retry}
-            onPress={() => slug && void loadCard(slug)}
-            variant="secondary"
-            style={{ marginTop: 16 }}
-          />
+          <Card variant="flat" style={styles.notFoundCard}>
+            <Text style={[typography.title2, { color: theme.text, textAlign: 'center' }]}>
+              Card not found
+            </Text>
+            <Text
+              style={[
+                typography.body,
+                { color: theme.textMuted, textAlign: 'center', marginTop: 8 },
+              ]}
+            >
+              {error ?? t.errorLoad}
+            </Text>
+            <Button
+              label={t.retry}
+              onPress={() => slug && void loadCard(slug)}
+              variant="secondary"
+              style={{ marginTop: 20 }}
+            />
+          </Card>
         </View>
       </View>
     );
   }
 
-  // Card URL with preview flag so the web page suppresses its own CTAs.
-  const cardUrl = `${API_BASE}/c/${slug}?preview=1`;
-
   return (
-    <View style={[styles.root, { backgroundColor: theme.bg[0] }]}>
-      <Stack.Screen
-        options={{
-          title: cardName,
-          headerRight: () => (
-            <View style={styles.headerActions}>
+    <View style={[styles.root, { backgroundColor: theme.pageBg }]}>
+      <Stack.Screen options={{ headerShown: false }} />
+
+      {/* AppBar — minimal chrome */}
+      <AppBar
+        variant="default"
+        title=""
+        leading={
+          <AppBarIconButton ghost onPress={() => router.back()} accessibilityLabel="Back">
+            <ChevronLeft size={20} color={theme.text} />
+          </AppBarIconButton>
+        }
+        trailing={
+          <View style={styles.appBarTrailing}>
+            {card.slug ? (
+              <AppBarIconButton
+                ghost
+                onPress={() => {
+                  if (card?.id && isAuthenticated) {
+                    void logShareEvent(card.id, 'qr').catch(() => {});
+                  }
+                  setQrOpen(true);
+                }}
+                accessibilityLabel={t.qrTitle}
+              >
+                <QrCode size={20} color={theme.text} />
+              </AppBarIconButton>
+            ) : null}
+            <AppBarIconButton
+              ghost
+              onPress={() => void toggleSave()}
+              accessibilityLabel={saved ? 'Unsave' : 'Save'}
+            >
+              {saving ? (
+                <ActivityIndicator size="small" color={accent} />
+              ) : saved ? (
+                <BookmarkCheck size={20} color={accent} />
+              ) : (
+                <Bookmark size={20} color={theme.text} />
+              )}
+            </AppBarIconButton>
+            <AppBarIconButton
+              ghost
+              onPress={() => void handleShare()}
+              accessibilityLabel="Share"
+            >
+              <Share2 size={20} color={theme.text} />
+            </AppBarIconButton>
+          </View>
+        }
+      />
+
+      {/* Scrollable card content */}
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps="handled"
+      >
+        {/* Hero card */}
+        <Card variant="glow" padded={24} style={styles.heroCard}>
+          <View style={styles.heroRow}>
+            <Avatar
+              name={cardName || undefined}
+              imageUri={cardPhotoUrl || undefined}
+              size={80}
+              shape="circle"
+            />
+            {(cardIndustry || cardCity) ? (
+              <View style={styles.heroBadges}>
+                {cardIndustry ? (
+                  <Chip
+                    label={cardIndustry}
+                    variant="accent"
+                    leadingIcon={<Globe size={12} color={accent} />}
+                  />
+                ) : null}
+                {cardCity ? (
+                  <Chip
+                    label={cardCity}
+                    variant="default"
+                    leadingIcon={<MapPin size={12} color={theme.textMuted} />}
+                  />
+                ) : null}
+              </View>
+            ) : null}
+          </View>
+
+          <Text style={[typography.display2, { color: theme.text, marginTop: 16 }]}>
+            {cardName}
+          </Text>
+
+          {roleDisplay ? (
+            <Text style={[typography.lead, { color: theme.textSecondary, marginTop: 4 }]}>
+              {roleDisplay}
+            </Text>
+          ) : null}
+
+          {/* "by OpSolid" credit */}
+          <Text style={[typography.caption, styles.creditLine, { color: theme.textFaint }]}>
+            powered by{' '}
+            <Text style={{ color: accentCredit, fontStyle: 'italic' }}>Verso by OpSolid</Text>
+          </Text>
+        </Card>
+
+        {/* Bio */}
+        {cardBio ? (
+          <View style={styles.section}>
+            <SectionLabel style={styles.eyebrow}>ABOUT</SectionLabel>
+            <Text style={[typography.body, { color: theme.textSecondary }]}>
+              {cardBio}
+            </Text>
+          </View>
+        ) : null}
+
+        {/* Contact actions */}
+        <View style={styles.section}>
+          <Button
+            label={contactSaving ? '…' : t.saveToContacts}
+            onPress={() => void handleSaveToContacts()}
+            variant="accent"
+            disabled={contactSaving}
+            style={{ marginBottom: 8 }}
+          />
+          {showSmartExchange ? (
+            <Button
+              label={exchanging ? '…' : tCrm.exchange.cta}
+              onPress={() => void handleSmartExchange()}
+              variant="secondary"
+              disabled={exchanging}
+            />
+          ) : null}
+        </View>
+
+        {/* Contact methods */}
+        {(cardEmail || cardPhone || cardWebsite) ? (
+          <View style={styles.section}>
+            <SectionLabel style={styles.eyebrow}>CONTACT</SectionLabel>
+            <RowGroup>
+              {cardEmail ? (
+                <Row
+                  title={cardEmail}
+                  subtitle="Email"
+                  divider={false}
+                  leading={
+                    <View style={[styles.rowIcon, { backgroundColor: accentSoft }]}>
+                      <Mail size={15} color={accent} />
+                    </View>
+                  }
+                  chevron
+                />
+              ) : null}
+              {cardPhone ? (
+                <Row
+                  title={cardPhone}
+                  subtitle="Phone"
+                  divider={!!cardEmail}
+                  leading={
+                    <View style={[styles.rowIcon, { backgroundColor: accentSoft }]}>
+                      <Phone size={15} color={accent} />
+                    </View>
+                  }
+                  chevron
+                />
+              ) : null}
+              {cardWebsite ? (
+                <Row
+                  title={cardWebsite}
+                  subtitle="Website"
+                  divider={!!(cardEmail || cardPhone)}
+                  leading={
+                    <View style={[styles.rowIcon, { backgroundColor: accentSoft }]}>
+                      <Globe size={15} color={accent} />
+                    </View>
+                  }
+                  chevron
+                />
+              ) : null}
+            </RowGroup>
+          </View>
+        ) : null}
+
+        {/* QR / Feedback action row */}
+        {(card.slug || showFeedbackButton || !isOwnCard) ? (
+          <View style={styles.section}>
+            <SectionLabel style={styles.eyebrow}>ACTIONS</SectionLabel>
+            <View style={styles.actionRow}>
               {card.slug ? (
                 <Pressable
                   onPress={() => {
@@ -291,200 +512,60 @@ export default function PublicCardScreen() {
                     }
                     setQrOpen(true);
                   }}
-                  style={styles.headerBtn}
-                  hitSlop={8}
+                  style={styles.actionTile}
+                  accessibilityLabel={t.qrTitle}
                 >
-                  <QrCode size={22} color={copper[500]} />
+                  <View style={[styles.actionIconWrap, { backgroundColor: theme.surfaceMuted }]}>
+                    <QrCode size={20} color={theme.text} />
+                  </View>
+                  <Text style={[typography.caption, { color: theme.textMuted }]} numberOfLines={1}>
+                    {t.qrTitle}
+                  </Text>
                 </Pressable>
               ) : null}
-              <Pressable
-                onPress={() => void toggleSave()}
-                disabled={saving}
-                style={styles.headerBtn}
-                hitSlop={8}
-              >
-                {saving ? (
-                  <ActivityIndicator size="small" color={copper[500]} />
-                ) : saved ? (
-                  <BookmarkCheck size={22} color={copper[500]} />
-                ) : (
-                  <Bookmark size={22} color={copper[500]} />
-                )}
-              </Pressable>
+
+              {!isOwnCard ? (
+                <Pressable
+                  onPress={() => setLeadOpen(true)}
+                  style={styles.actionTile}
+                  accessibilityLabel={tCrm.lead.cta}
+                >
+                  <View style={[styles.actionIconWrap, { backgroundColor: theme.surfaceMuted }]}>
+                    <MessageSquare size={20} color={theme.text} />
+                  </View>
+                  <Text style={[typography.caption, { color: theme.textMuted }]} numberOfLines={1}>
+                    {tCrm.lead.cta}
+                  </Text>
+                </Pressable>
+              ) : null}
+
+              {showFeedbackButton ? (
+                <Pressable
+                  onPress={() => {
+                    if (aggregateAverage !== null && feedbackAggregate && feedbackAggregate.count > 0) {
+                      setBreakdownOpen(true);
+                    } else {
+                      setFeedbackOpen(true);
+                    }
+                  }}
+                  style={styles.actionTile}
+                  accessibilityLabel={tCrm.feedback.cta}
+                >
+                  <View style={[styles.actionIconWrap, { backgroundColor: theme.surfaceMuted }]}>
+                    <Star size={20} color={theme.text} />
+                  </View>
+                  <Text style={[typography.caption, { color: theme.textMuted }]} numberOfLines={1}>
+                    {tCrm.feedback.cta}
+                  </Text>
+                </Pressable>
+              ) : null}
             </View>
-          ),
-        }}
-      />
-
-      {/* WebView — authoritative web render (same as /c/[slug] in the browser) */}
-      <View style={styles.webViewContainer}>
-        <WebView
-          ref={webViewRef}
-          source={{ uri: cardUrl }}
-          style={styles.webView}
-          // Viewport meta is already set on the web page; scalesPageToFit
-          // would override it and shrink the layout on Android.
-          scalesPageToFit={false}
-          originWhitelist={['https://*']}
-          decelerationRate="normal"
-          bounces={false}
-          // Suppress the "Create your own card" banner and any floaters that
-          // the public page mounts post-hydration (belt-and-suspenders on top
-          // of ?preview=1 which the server uses to skip the banner server-side).
-          injectedJavaScriptBeforeContentLoaded={HIDE_WEB_CHROME_JS}
-          // Pull-to-refresh would be confusing inside the action sheet; off.
-          pullToRefreshEnabled={false}
-          // Hardware back should navigate the app stack, not the WebView
-          // history (the card page is single-page, so this is moot, but
-          // being explicit prevents edge-case back-stack issues).
-          onShouldStartLoadWithRequest={(req: WebViewNavigation) => {
-            // Allow the initial card load and same-origin requests only.
-            return req.url.startsWith(API_BASE) || req.url === cardUrl;
-          }}
-          onLoadStart={() => setWebLoading(true)}
-          onLoadEnd={() => setWebLoading(false)}
-          onError={() => {
-            setWebLoading(false);
-            setWebError(true);
-          }}
-        />
-
-        {/* Spinner overlay while WebView is loading */}
-        {webLoading ? (
-          <View style={styles.webLoadingOverlay}>
-            <ActivityIndicator size="large" color={copper[500]} />
           </View>
         ) : null}
 
-        {/* WebView error state */}
-        {webError && !webLoading ? (
-          <View style={styles.webErrorOverlay}>
-            <Text style={[styles.errorText, { color: theme.signalErr }]}>
-              {t.errorLoad}
-            </Text>
-            <Button
-              label={t.retry}
-              onPress={() => {
-                setWebError(false);
-                setWebLoading(true);
-                webViewRef.current?.reload();
-              }}
-              variant="secondary"
-              style={{ marginTop: 16 }}
-            />
-          </View>
-        ) : null}
-      </View>
-
-      {/* Native action row — app-exclusive primitives the web can't provide */}
-      <View
-        style={[
-          styles.actionBar,
-          {
-            backgroundColor: theme.bg[1],
-            borderTopColor: theme.line.DEFAULT,
-          },
-        ]}
-      >
-        {/* Save to device contacts (Fix 1.4) */}
-        <Pressable
-          onPress={() => void handleSaveToContacts()}
-          disabled={contactSaving}
-          style={styles.actionItem}
-          accessibilityLabel={t.saveToContacts}
-        >
-          {contactSaving ? (
-            <ActivityIndicator size="small" color="#0D9488" />
-          ) : (
-            <View style={[styles.actionIconWrap, { backgroundColor: 'rgba(13,148,136,0.12)' }]}>
-              <UserPlus size={20} color="#0D9488" />
-            </View>
-          )}
-          <Text style={[styles.actionLabel, { color: theme.ink[200] }]} numberOfLines={1}>
-            {t.saveToContacts}
-          </Text>
-        </Pressable>
-
-        {/* QR code */}
-        {card.slug ? (
-          <Pressable
-            onPress={() => {
-              if (card?.id && isAuthenticated) {
-                void logShareEvent(card.id, 'qr').catch(() => {});
-              }
-              setQrOpen(true);
-            }}
-            style={styles.actionItem}
-            accessibilityLabel={t.qrTitle}
-          >
-            <View style={[styles.actionIconWrap, { backgroundColor: theme.bg[2] }]}>
-              <QrCode size={20} color={copper[500]} />
-            </View>
-            <Text style={[styles.actionLabel, { color: theme.ink[200] }]} numberOfLines={1}>
-              {t.qrTitle}
-            </Text>
-          </Pressable>
-        ) : null}
-
-        {/* Send my info (Lead form) — open to all visitors */}
-        {!isOwnCard ? (
-          <Pressable
-            onPress={() => setLeadOpen(true)}
-            style={styles.actionItem}
-            accessibilityLabel={tCrm.lead.cta}
-          >
-            <View style={[styles.actionIconWrap, { backgroundColor: theme.bg[2] }]}>
-              <MessageSquare size={20} color={copper[500]} />
-            </View>
-            <Text style={[styles.actionLabel, { color: theme.ink[200] }]} numberOfLines={1}>
-              {tCrm.lead.cta}
-            </Text>
-          </Pressable>
-        ) : null}
-
-        {/* Smart Exchange — only when visitor has own published card */}
-        {showSmartExchange ? (
-          <Pressable
-            onPress={() => void handleSmartExchange()}
-            disabled={exchanging}
-            style={styles.actionItem}
-            accessibilityLabel={tCrm.exchange.cta}
-          >
-            {exchanging ? (
-              <ActivityIndicator size="small" color={copper[500]} />
-            ) : (
-              <View style={[styles.actionIconWrap, { backgroundColor: theme.bg[2] }]}>
-                <Send size={20} color={copper[500]} />
-              </View>
-            )}
-            <Text style={[styles.actionLabel, { color: theme.ink[200] }]} numberOfLines={1}>
-              {tCrm.exchange.cta}
-            </Text>
-          </Pressable>
-        ) : null}
-
-        {/* Feedback — logged-in, not own card, feedback enabled */}
-        {showFeedbackButton ? (
-          <Pressable
-            onPress={() => {
-              if (aggregateAverage !== null && feedbackAggregate && feedbackAggregate.count > 0) {
-                setBreakdownOpen(true);
-              } else {
-                setFeedbackOpen(true);
-              }
-            }}
-            style={styles.actionItem}
-            accessibilityLabel={tCrm.feedback.cta}
-          >
-            <View style={[styles.actionIconWrap, { backgroundColor: theme.bg[2] }]}>
-              <Star size={20} color={copper[500]} />
-            </View>
-            <Text style={[styles.actionLabel, { color: theme.ink[200] }]} numberOfLines={1}>
-              {tCrm.feedback.cta}
-            </Text>
-          </Pressable>
-        ) : null}
-      </View>
+        {/* Bottom spacer */}
+        <View style={styles.bottomSpacer} />
+      </ScrollView>
 
       {/* Modals */}
       {card.slug ? (
@@ -528,8 +609,7 @@ export default function PublicCardScreen() {
   );
 }
 
-// Fire-and-forget referral store helper — kept for parity, unused in WebView
-// mode but preserved in case the unauthenticated floating CTA is re-added.
+// Fire-and-forget referral store helper — kept for parity.
 async function _usePendingReferralStoreSafe(slug: string | null): Promise<void> {
   if (!slug) return;
   try {
@@ -541,67 +621,87 @@ async function _usePendingReferralStoreSafe(slug: string | null): Promise<void> 
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1 },
+  root: {
+    flex: 1,
+  },
   center: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24,
   },
-  errorText: { fontSize: 16, textAlign: 'center' },
-  headerActions: { flexDirection: 'row', alignItems: 'center', gap: 14 },
-  headerBtn: { paddingRight: 4 },
-
-  // WebView takes most of the screen (flex:5 ≈ 83% when action bar is flex:1).
-  webViewContainer: {
-    flex: 5,
-    position: 'relative',
+  notFoundCard: {
+    width: '100%',
+    maxWidth: 320,
+    alignItems: 'center',
   },
-  webView: {
+  scroll: {
     flex: 1,
   },
-  webLoadingOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'transparent',
+  scrollContent: {
+    padding: 18,
+    paddingBottom: Platform.OS === 'ios' ? 40 : 24,
   },
-  webErrorOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 24,
-  },
-
-  // Native action bar — fixed strip at the bottom.
-  actionBar: {
+  appBarTrailing: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-around',
-    paddingTop: 10,
-    paddingBottom: Platform.OS === 'ios' ? 24 : 14,
-    paddingHorizontal: 8,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    // flex: 1 gives it roughly 17% of the screen height when webViewContainer
-    // is flex:5. This is fine for a compact icon-label strip.
-    minHeight: 80,
+    gap: 4,
   },
-  actionItem: {
+
+  // Hero card
+  heroCard: {
+    marginBottom: 4,
+  },
+  heroRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
+  },
+  heroBadges: {
+    alignItems: 'flex-end',
+    gap: 6,
+  },
+  creditLine: {
+    marginTop: 16,
+  },
+
+  // Section layout
+  section: {
+    marginTop: 20,
+  },
+  eyebrow: {
+    marginBottom: 10,
+  },
+
+  // Contact row icon
+  rowIcon: {
+    width: 32,
+    height: 32,
+    borderRadius: 8,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  // Action tile strip
+  actionRow: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+  actionTile: {
     flex: 1,
     alignItems: 'center',
-    gap: 6,
-    paddingHorizontal: 4,
+    gap: 8,
+    paddingVertical: 12,
   },
   actionIconWrap: {
-    width: 40,
-    height: 40,
+    width: 44,
+    height: 44,
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  actionLabel: {
-    fontSize: 11,
-    fontWeight: '500',
-    textAlign: 'center',
+
+  bottomSpacer: {
+    height: 16,
   },
 });

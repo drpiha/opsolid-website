@@ -1,18 +1,12 @@
 // -----------------------------------------------------------------------
-// Sprint F4 — Inbox messaging thread view.
+// Inbox Thread / Connection Detail — Verso v2 refactor.
 //
-// Header:  the OTHER side's avatar + name + (optional) request type pill
-//          with accept / decline buttons when a pending action is attached
-//          to this connection and the requester is its receiver.
-// Body:    scrollable messages list. Sent messages right-aligned in teal
-//          bubbles, received messages left-aligned in bg[2] bubbles.
-//          Timestamp shows short time, plus weekday when not today.
-// Footer:  TextInput + send button inside a KeyboardAvoidingView.
+// M5: layout, stub UI, connection hero card, notes, tags, activity,
+//     message section (UI only — composer present).
+// M6: wire to /api/v1/connections/[id]/messages (GET + POST).
 //
-// Polling: refetches every 15s while mounted so the receiver sees new
-// inbound messages without push notifications (deferred). Cleanly stops
-// on unmount via clearInterval. Optimistic append on send → re-fetch on
-// settle so server-derived ids/timestamps replace the optimistic row.
+// Polling: 5s foreground interval via useFocusEffect. Stops on blur.
+// Optimistic: append on send → re-fetch on settle.
 // -----------------------------------------------------------------------
 
 import { useState, useEffect, useCallback, useRef, useMemo } from 'react';
@@ -20,22 +14,23 @@ import {
   View,
   Text,
   ScrollView,
+  FlatList,
   ActivityIndicator,
-  Pressable,
-  Image,
-  StyleSheet,
-  TextInput,
+  Alert,
   KeyboardAvoidingView,
   Platform,
-  Alert,
+  StyleSheet,
 } from 'react-native';
 import {
-  Stack,
   useLocalSearchParams,
   useRouter,
   useFocusEffect,
 } from 'expo-router';
-import { Send } from 'lucide-react-native';
+import {
+  ChevronLeft,
+  MoreVertical,
+  Plus,
+} from 'lucide-react-native';
 import {
   listMessages,
   sendMessage,
@@ -47,7 +42,8 @@ import type {
 } from '../../../src/lib/api/messages';
 import { resolveAction } from '../../../src/lib/api/inbox';
 import { useTheme } from '../../../src/lib/theme/ThemeProvider';
-import { copper, signal, teal } from '../../../src/lib/theme/tokens';
+import { accent } from '../../../src/lib/theme/tokens';
+import { typography } from '../../../src/lib/theme/typography';
 import {
   useTranslations,
   detectLocale,
@@ -55,11 +51,16 @@ import {
 } from '../../../src/lib/i18n/locale';
 import { API_BASE } from '../../../src/lib/api/client';
 import { useAuthStore } from '../../../src/lib/auth/store';
+import { AppBar, AppBarIconButton } from '../../../src/components/ui/AppBar';
+import { Avatar } from '../../../src/components/ui/Avatar';
+import { Button } from '../../../src/components/ui/Button';
+import { Card } from '../../../src/components/ui/Card';
+import { Chip } from '../../../src/components/ui/Chip';
+import { Input } from '../../../src/components/ui/Input';
+import { Row, RowGroup } from '../../../src/components/ui/Row';
+import { SectionLabel } from '../../../src/components/ui/SectionLabel';
+import { ScreenContainer } from '../../../src/components/ui/ScreenContainer';
 
-// M4 — foreground polling drops to 5s while the screen is active; push
-// notifications cover the gap when the screen is unfocused or backgrounded.
-// `useFocusEffect` starts the interval on focus and clears on blur, so an
-// inbox thread parked behind another tab incurs zero polling cost.
 const FOREGROUND_POLL_INTERVAL_MS = 5_000;
 const MAX_BODY_LEN = 2000;
 
@@ -77,14 +78,17 @@ export default function InboxThreadScreen() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [sending, setSending] = useState(false);
-  const [resolving, setResolving] = useState<'accepted' | 'declined' | null>(
-    null,
-  );
+  const [resolving, setResolving] = useState<'accepted' | 'declined' | null>(null);
   const [draft, setDraft] = useState('');
+  // Notes state (UI only — hook into updateNote API when wired)
+  const [note, setNote] = useState('');
+  const [noteDirty, setNoteDirty] = useState(false);
+  const [savingNote, setSavingNote] = useState(false);
+  // Tags state
+  const [tags, setTags] = useState<string[]>([]);
 
   const scrollRef = useRef<ScrollView>(null);
 
-  // Type-label map mirrors the inbox row labels.
   const typeLabel = useCallback(
     (type: string): string => {
       const map: Record<string, string> = {
@@ -123,9 +127,6 @@ export default function InboxThreadScreen() {
     void fetchOnce('initial');
   }, [fetchOnce]);
 
-  // M4 — Polling now uses `useFocusEffect`. While the screen is focused we
-  // tick at 5s; on blur we tear the interval down completely so a backgrounded
-  // tab incurs no network cost. Push notifications cover the unfocused gap.
   useFocusEffect(
     useCallback(() => {
       const id = setInterval(() => {
@@ -135,10 +136,8 @@ export default function InboxThreadScreen() {
     }, [fetchOnce]),
   );
 
-  // Auto-scroll to bottom when message count grows.
   useEffect(() => {
     if (messages.length === 0) return;
-    // Defer to next tick so the layout pass completes first.
     requestAnimationFrame(() => {
       scrollRef.current?.scrollToEnd({ animated: true });
     });
@@ -149,9 +148,6 @@ export default function InboxThreadScreen() {
     if (!trimmed || !connectionId || !me) return;
     if (trimmed.length > MAX_BODY_LEN) return;
 
-    // Optimistic append. Replace the row on settle from `fetchOnce`. The
-    // optimistic id is namespaced with `optimistic-` so a server message
-    // never collides.
     const optimisticId = `optimistic-${Date.now()}`;
     const optimisticRow: ChatMessage = {
       id: optimisticId,
@@ -166,10 +162,9 @@ export default function InboxThreadScreen() {
 
     try {
       await sendMessage(connectionId, trimmed);
-      // Refetch so we replace the optimistic row with the canonical one.
+      // M6: wire to /api/v1/connections/[id]/messages
       await fetchOnce('silent');
     } catch {
-      // Roll back the optimistic row, restore the draft.
       setMessages((prev) => prev.filter((m) => m.id !== optimisticId));
       setDraft(trimmed);
       Alert.alert('', t.thread.errorSend);
@@ -191,300 +186,354 @@ export default function InboxThreadScreen() {
     }
   }
 
-  const formatStamp = useMemo(
-    () => makeStampFormatter(locale),
-    [locale],
-  );
+  async function onSaveNote() {
+    if (!noteDirty) return;
+    setSavingNote(true);
+    // API call signature preserved — updateNote hook goes here when wired
+    try {
+      // await updateNote(connectionId, note);
+      setNoteDirty(false);
+    } catch {
+      Alert.alert('', t.errorLoad);
+    } finally {
+      setSavingNote(false);
+    }
+  }
+
+  const formatStamp = useMemo(() => makeStampFormatter(locale), [locale]);
 
   const otherName = other?.name ?? other?.slug ?? '—';
-  const otherSubtitle = [other?.title, other?.company]
-    .filter(Boolean)
-    .join(' · ');
-  const photoUri = other?.photoPath
+  const otherSubtitle = [other?.title, other?.company].filter(Boolean).join(' · ');
+  const resolvedPhotoUri = other?.photoPath
     ? other.photoPath.startsWith('http')
       ? other.photoPath
       : `${API_BASE}${other.photoPath}`
-    : null;
+    : undefined;
+
+  // Derive connection date from first message or now
+  const connectedDate = useMemo(() => {
+    if (messages.length > 0) {
+      return new Date(messages[0].sentAt).toLocaleDateString();
+    }
+    return new Date().toLocaleDateString();
+  }, [messages]);
+
+  // Derive chip variant from pending action status
+  function statusChipVariant(): 'success' | 'accent' | 'outline' {
+    if (!pending) return 'success';
+    if (pending.type === 'request_contact') return 'accent';
+    return 'outline';
+  }
+
+  function openOptions() {
+    Alert.alert('Options', 'Archive or mute — coming in M6');
+  }
 
   if (loading) {
     return (
-      <View style={[styles.center, { backgroundColor: theme.bg[0] }]}>
-        <Stack.Screen options={{ title: '' }} />
-        <ActivityIndicator size="large" color={copper[500]} />
-      </View>
+      <ScreenContainer padded={false} edges={['left', 'right', 'bottom']}>
+        <AppBar
+          variant="default"
+          title=""
+          leading={
+            <AppBarIconButton ghost onPress={() => router.back()} accessibilityLabel="Back">
+              <ChevronLeft size={20} color={theme.text} />
+            </AppBarIconButton>
+          }
+        />
+        <View style={styles.center}>
+          <ActivityIndicator size="large" color={accent} />
+        </View>
+      </ScreenContainer>
     );
   }
 
   if (error) {
     return (
-      <View style={[styles.center, { backgroundColor: theme.bg[0] }]}>
-        <Stack.Screen options={{ title: '' }} />
-        <Text style={[styles.errorText, { color: theme.signalErr }]}>{error}</Text>
-        <Pressable
-          onPress={() => void fetchOnce('initial')}
-          style={[styles.retryBtn, { backgroundColor: copper[500] }]}
-        >
-          <Text style={styles.retryBtnText}>{t.retry}</Text>
-        </Pressable>
-      </View>
+      <ScreenContainer padded={false} edges={['left', 'right', 'bottom']}>
+        <AppBar
+          variant="default"
+          title=""
+          leading={
+            <AppBarIconButton ghost onPress={() => router.back()} accessibilityLabel="Back">
+              <ChevronLeft size={20} color={theme.text} />
+            </AppBarIconButton>
+          }
+        />
+        <View style={styles.center}>
+          <Text style={[typography.body, { color: theme.signalErr, textAlign: 'center' }]}>
+            {error}
+          </Text>
+          <Button
+            label={t.retry}
+            onPress={() => void fetchOnce('initial')}
+            variant="secondary"
+            style={{ marginTop: 16 }}
+          />
+        </View>
+      </ScreenContainer>
     );
   }
 
   return (
     <KeyboardAvoidingView
-      style={[styles.root, { backgroundColor: theme.bg[0] }]}
+      style={[styles.root, { backgroundColor: theme.pageBg }]}
       behavior={Platform.OS === 'ios' ? 'padding' : undefined}
       keyboardVerticalOffset={Platform.OS === 'ios' ? 80 : 0}
     >
-      <Stack.Screen options={{ title: otherName, headerBackTitle: ' ' }} />
+      {/* Top chrome */}
+      <AppBar
+        variant="default"
+        title={otherName}
+        leading={
+          <AppBarIconButton ghost onPress={() => router.back()} accessibilityLabel="Back">
+            <ChevronLeft size={20} color={theme.text} />
+          </AppBarIconButton>
+        }
+        trailing={
+          <AppBarIconButton ghost onPress={openOptions} accessibilityLabel="Options">
+            <MoreVertical size={20} color={theme.text} />
+          </AppBarIconButton>
+        }
+      />
 
-      {/* Header */}
-      <View
-        style={[
-          styles.header,
-          {
-            backgroundColor: theme.bg[1],
-            borderBottomColor: theme.line.DEFAULT,
-          },
-        ]}
-      >
-        <Pressable
-          style={styles.headerLeft}
-          onPress={() => {
-            if (other?.slug) {
-              router.push(`/(app)/public/${other.slug}` as never);
-            }
-          }}
-        >
-          <View style={[styles.avatar, { backgroundColor: theme.bg[2] }]}>
-            {photoUri ? (
-              <Image source={{ uri: photoUri }} style={styles.avatarImg} />
-            ) : (
-              <Text
-                style={[styles.avatarInitial, { color: theme.ink[300] }]}
-              >
-                {otherName.charAt(0).toUpperCase()}
-              </Text>
-            )}
-          </View>
-          <View style={styles.headerBody}>
-            <Text
-              style={[styles.headerName, { color: theme.ink[100] }]}
-              numberOfLines={1}
-            >
-              {otherName}
-            </Text>
-            {otherSubtitle ? (
-              <Text
-                style={[styles.headerSub, { color: theme.ink[400] }]}
-                numberOfLines={1}
-              >
-                {otherSubtitle}
-              </Text>
-            ) : null}
-          </View>
-        </Pressable>
-
-        {/* Pending request pill — only when a pending CardAction is attached
-            and the user is its receiver. Resolving here closes the pill. */}
-        {pending ? (
-          <View style={styles.pendingRow}>
-            <View
-              style={[
-                styles.pendingPill,
-                {
-                  backgroundColor: theme.bg[2],
-                  borderColor: theme.line.DEFAULT,
-                },
-              ]}
-            >
-              <Text style={[styles.pendingType, { color: copper[600] }]}>
-                {typeLabel(pending.type)}
-              </Text>
-            </View>
-            <View style={styles.pendingActions}>
-              <Pressable
-                onPress={() => void onResolve('declined')}
-                disabled={resolving !== null}
-                style={[
-                  styles.actionBtn,
-                  styles.declineBtn,
-                  { borderColor: theme.line.DEFAULT },
-                ]}
-              >
-                {resolving === 'declined' ? (
-                  <ActivityIndicator size="small" color={theme.ink[400]} />
-                ) : (
-                  <Text
-                    style={[styles.actionBtnText, { color: theme.ink[300] }]}
-                  >
-                    {t.decline}
-                  </Text>
-                )}
-              </Pressable>
-              <Pressable
-                onPress={() => void onResolve('accepted')}
-                disabled={resolving !== null}
-                style={[styles.actionBtn, styles.acceptBtn]}
-              >
-                {resolving === 'accepted' ? (
-                  <ActivityIndicator size="small" color="#fff" />
-                ) : (
-                  <Text style={[styles.actionBtnText, { color: '#fff' }]}>
-                    {t.accept}
-                  </Text>
-                )}
-              </Pressable>
-            </View>
-          </View>
-        ) : null}
-      </View>
-
-      {/* Body — messages list */}
       <ScrollView
         ref={scrollRef}
         style={styles.scroll}
         contentContainerStyle={styles.scrollContent}
         keyboardDismissMode="on-drag"
+        showsVerticalScrollIndicator={false}
       >
-        {messages.length === 0 ? (
-          <View style={styles.emptyWrap}>
-            <Text style={[styles.emptyTitle, { color: theme.ink[100] }]}>
-              {t.empty_thread.title}
-            </Text>
-            <Text style={[styles.emptyBody, { color: theme.ink[300] }]}>
-              {t.empty_thread.body}
-            </Text>
+        {/* Connection hero card */}
+        <Card variant="elevated" style={styles.heroCard}>
+          <View style={styles.heroInner}>
+            <Avatar
+              name={otherName}
+              imageUri={resolvedPhotoUri}
+              size={64}
+              shape="circle"
+            />
+            <View style={styles.heroBody}>
+              <Text style={[typography.title1, { color: theme.text }]} numberOfLines={1}>
+                {otherName}
+              </Text>
+              {otherSubtitle ? (
+                <Text style={[typography.lead, { color: theme.textSecondary, marginTop: 4 }]} numberOfLines={2}>
+                  {otherSubtitle}
+                </Text>
+              ) : null}
+              {/* Connection source chip */}
+              {pending ? (
+                <View style={{ marginTop: 10 }}>
+                  <Chip
+                    label={typeLabel(pending.type)}
+                    variant={statusChipVariant()}
+                  />
+                </View>
+              ) : null}
+            </View>
           </View>
-        ) : (
-          messages.map((m, i) => {
-            const mine = me ? m.senderUserId === me.id : false;
-            const stamp = formatStamp(m.sentAt);
-            // Show the timestamp only when there's a meaningful gap (>15 min)
-            // from the previous message, OR on the very first message. Keeps
-            // the scroll lean when bursts come in.
-            const prev = i > 0 ? messages[i - 1] : null;
-            const showStamp =
-              !prev ||
-              new Date(m.sentAt).getTime() -
-                new Date(prev.sentAt).getTime() >
-                15 * 60 * 1000;
-            return (
-              <View key={m.id} style={styles.bubbleRow}>
-                {showStamp ? (
-                  <Text
-                    style={[styles.stamp, { color: theme.ink[400] }]}
-                  >
-                    {stamp}
+
+          {/* Status row */}
+          <View style={[styles.statusRow, { borderTopColor: theme.line.DEFAULT }]}>
+            {pending ? (
+              <>
+                <Chip label={typeLabel(pending.type)} variant="accent" />
+                <View style={styles.resolveActions}>
+                  <Button
+                    label={t.declineCta}
+                    size="sm"
+                    variant="ghost"
+                    fullWidth={false}
+                    disabled={resolving !== null}
+                    loading={resolving === 'declined'}
+                    onPress={() => void onResolve('declined')}
+                  />
+                  <Button
+                    label={t.acceptCta}
+                    size="sm"
+                    variant="accent"
+                    fullWidth={false}
+                    disabled={resolving !== null}
+                    loading={resolving === 'accepted'}
+                    onPress={() => void onResolve('accepted')}
+                  />
+                </View>
+              </>
+            ) : (
+              <Chip label="Connected" variant="success" dot="live" />
+            )}
+          </View>
+        </Card>
+
+        {/* Notes section */}
+        <View style={styles.section}>
+          <SectionLabel>{t.notesLabel}</SectionLabel>
+          <Input
+            placeholder="Add a note…"
+            multiline
+            numberOfLines={3}
+            value={note}
+            onChangeText={(v) => {
+              setNote(v);
+              setNoteDirty(true);
+            }}
+            style={styles.notesInput}
+            autoCapitalize="sentences"
+          />
+          {noteDirty ? (
+            <Button
+              label="Save note"
+              size="sm"
+              variant="secondary"
+              fullWidth={false}
+              loading={savingNote}
+              onPress={() => void onSaveNote()}
+              style={{ alignSelf: 'flex-end', marginTop: 6 }}
+            />
+          ) : null}
+        </View>
+
+        {/* Tags row — always shown; "+" chip lets users add the first tag. */}
+        <View style={styles.section}>
+          <View style={styles.tagsRow}>
+            {tags.map((tag) => (
+              <Chip key={tag} label={tag} variant="outline" />
+            ))}
+            <Chip
+              label="+"
+              variant="outline"
+              onPress={() => {
+                Alert.prompt?.('Add tag', '', (text) => {
+                  if (text && text.trim()) {
+                    setTags((prev) => [...prev, text.trim()]);
+                  }
+                });
+              }}
+              leadingIcon={<Plus size={12} color={theme.textSecondary} />}
+            />
+          </View>
+        </View>
+
+        {/* Activity timeline */}
+        <View style={styles.section}>
+          <SectionLabel>{t.activityLabel}</SectionLabel>
+          <RowGroup>
+            <Row
+              divider={false}
+              title={t.connectedOn.replace('{date}', connectedDate)}
+            />
+          </RowGroup>
+        </View>
+
+        {/* Messages section — M6 wires real GET/POST */}
+        <View style={styles.section}>
+          <SectionLabel>{t.messagesLabel}</SectionLabel>
+          {/* M6: wire to /api/v1/connections/[id]/messages */}
+          <Card variant="flat" padded={false} style={styles.messagesCard}>
+            {/* Message list */}
+            <FlatList
+              data={messages}
+              keyExtractor={(m) => m.id}
+              scrollEnabled={false}
+              contentContainerStyle={styles.messageList}
+              ListEmptyComponent={
+                <View style={styles.emptyThread}>
+                  <Text style={[typography.bodySmall, { color: theme.textMuted, textAlign: 'center' }]}>
+                    {t.empty_thread.title}
                   </Text>
-                ) : null}
-                <View
-                  style={[
-                    styles.bubble,
-                    mine
-                      ? [styles.bubbleMine, { backgroundColor: teal[500] }]
-                      : [
-                          styles.bubbleTheirs,
-                          { backgroundColor: theme.bg[2] },
-                        ],
-                  ]}
-                >
-                  <Text
-                    style={[
-                      styles.bubbleText,
-                      mine
-                        ? styles.bubbleTextMine
-                        : { color: theme.ink[100] },
-                    ]}
-                  >
-                    {m.body}
+                  <Text style={[typography.caption, { color: theme.textFaint, textAlign: 'center', marginTop: 4 }]}>
+                    {t.empty_thread.body}
                   </Text>
                 </View>
-              </View>
-            );
-          })
-        )}
-      </ScrollView>
+              }
+              renderItem={({ item: m, index: i }) => {
+                const mine = me ? m.senderUserId === me.id : false;
+                const stamp = formatStamp(m.sentAt);
+                const prev = i > 0 ? messages[i - 1] : null;
+                const showStamp =
+                  !prev ||
+                  new Date(m.sentAt).getTime() - new Date(prev.sentAt).getTime() > 15 * 60 * 1000;
+                return (
+                  <View key={m.id} style={styles.bubbleRow}>
+                    {showStamp ? (
+                      <Text style={[typography.caption, { color: theme.textFaint, textAlign: 'center', marginVertical: 4 }]}>
+                        {stamp}
+                      </Text>
+                    ) : null}
+                    <View
+                      style={[
+                        styles.bubble,
+                        mine
+                          ? [styles.bubbleMine, { backgroundColor: accent }]
+                          : [styles.bubbleTheirs, { backgroundColor: theme.surfaceMuted }],
+                      ]}
+                    >
+                      <Text
+                        style={[
+                          typography.body,
+                          mine ? { color: '#FFFFFF' } : { color: theme.text },
+                        ]}
+                      >
+                        {m.body}
+                      </Text>
+                    </View>
+                  </View>
+                );
+              }}
+            />
 
-      {/* Footer — composer */}
-      <View
-        style={[
-          styles.composer,
-          {
-            backgroundColor: theme.bg[1],
-            borderTopColor: theme.line.DEFAULT,
-          },
-        ]}
-      >
-        <TextInput
-          value={draft}
-          onChangeText={setDraft}
-          placeholder={t.thread.placeholder}
-          placeholderTextColor={theme.ink[400]}
-          multiline
-          maxLength={MAX_BODY_LEN}
-          style={[
-            styles.input,
-            {
-              color: theme.ink[100],
-              backgroundColor: theme.bg[0],
-              borderColor: theme.line.DEFAULT,
-            },
-          ]}
-        />
-        <Pressable
-          onPress={() => void onSend()}
-          disabled={sending || draft.trim().length === 0}
-          style={[
-            styles.sendBtn,
-            {
-              backgroundColor:
-                sending || draft.trim().length === 0
-                  ? theme.bg[2]
-                  : teal[500],
-            },
-          ]}
-        >
-          {sending ? (
-            <ActivityIndicator size="small" color="#fff" />
-          ) : (
-            <Send size={18} color="#fff" />
-          )}
-        </Pressable>
-      </View>
+            {/* Composer */}
+            <View style={[styles.composer, { borderTopColor: theme.line.DEFAULT }]}>
+              <Input
+                value={draft}
+                onChangeText={setDraft}
+                placeholder={t.messagePlaceholder}
+                multiline
+                maxLength={MAX_BODY_LEN}
+                style={styles.composerInput}
+                autoCapitalize="sentences"
+                containerStyle={styles.composerInputContainer}
+              />
+              <Button
+                label={t.sendCta}
+                size="sm"
+                variant="accent"
+                fullWidth={false}
+                disabled={sending || draft.trim().length === 0}
+                loading={sending}
+                onPress={() => void onSend()}
+              />
+            </View>
+          </Card>
+        </View>
+
+        <View style={{ height: 32 }} />
+      </ScrollView>
     </KeyboardAvoidingView>
   );
 }
 
-// ----------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 // Helpers
-// ----------------------------------------------------------------------------
+// ---------------------------------------------------------------------------
 
-/**
- * Build a per-locale "short time, plus weekday when not today" formatter.
- * Cached at the call site via useMemo so we don't re-instantiate two
- * Intl.DateTimeFormat instances on every render.
- */
 function makeStampFormatter(locale: Locale) {
-  // Mapping to the Intl-recognized BCP-47 codes the device supports.
   const tag =
     locale === 'de'
       ? 'de-DE'
       : locale === 'tr'
-        ? 'tr-TR'
-        : locale === 'es'
-          ? 'es-ES'
-          : locale === 'it'
-            ? 'it-IT'
-            : locale === 'fr'
-              ? 'fr-FR'
-              : locale === 'ar'
-                ? 'ar'
-                : 'en-GB';
-  const time = new Intl.DateTimeFormat(tag, {
-    hour: 'numeric',
-    minute: '2-digit',
-  });
+      ? 'tr-TR'
+      : locale === 'es'
+      ? 'es-ES'
+      : locale === 'it'
+      ? 'it-IT'
+      : locale === 'fr'
+      ? 'fr-FR'
+      : locale === 'ar'
+      ? 'ar'
+      : 'en-GB';
+  const time = new Intl.DateTimeFormat(tag, { hour: 'numeric', minute: '2-digit' });
   const dayTime = new Intl.DateTimeFormat(tag, {
     weekday: 'short',
     hour: 'numeric',
@@ -501,10 +550,6 @@ function makeStampFormatter(locale: Locale) {
   };
 }
 
-// Suppress unused-import warning when signal isn't referenced (kept around in
-// case the screen later surfaces accepted/declined visual states).
-void signal;
-
 const styles = StyleSheet.create({
   root: { flex: 1 },
   center: {
@@ -513,81 +558,75 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 24,
   },
-  errorText: { fontSize: 16, textAlign: 'center' },
-  retryBtn: {
-    marginTop: 16,
+  scroll: { flex: 1 },
+  scrollContent: {
     paddingHorizontal: 18,
-    paddingVertical: 10,
-    borderRadius: 12,
+    paddingTop: 8,
+    gap: 24,
   },
-  retryBtnText: { color: '#fff', fontWeight: '600' },
-
-  header: {
-    paddingHorizontal: 16,
-    paddingVertical: 10,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    gap: 10,
-  },
-  headerLeft: { flexDirection: 'row', alignItems: 'center', gap: 12 },
-  avatar: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
+  heroCard: {
+    gap: 0,
+    padding: 0,
     overflow: 'hidden',
   },
-  avatarImg: { width: '100%', height: '100%' },
-  avatarInitial: { fontSize: 17, fontWeight: '600' },
-  headerBody: { flex: 1 },
-  headerName: { fontSize: 16, fontWeight: '600' },
-  headerSub: { fontSize: 12, marginTop: 2 },
-
-  pendingRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  pendingPill: {
-    flex: 1,
-    paddingHorizontal: 10,
-    paddingVertical: 6,
-    borderRadius: 8,
-    borderWidth: StyleSheet.hairlineWidth,
+  heroInner: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 14,
+    padding: 16,
   },
-  pendingType: { fontSize: 12, fontWeight: '500' },
-  pendingActions: { flexDirection: 'row', gap: 6 },
-  actionBtn: {
+  heroBody: {
+    flex: 1,
+  },
+  statusRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    gap: 8,
+  },
+  resolveActions: {
+    flexDirection: 'row',
+    gap: 6,
+  },
+  section: {
+    gap: 10,
+  },
+  notesInput: {
+    minHeight: 80,
+    textAlignVertical: 'top',
+    paddingTop: 12,
+  },
+  tagsRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  messagesCard: {
+    overflow: 'hidden',
+  },
+  messageList: {
+    padding: 12,
+    gap: 4,
+    minHeight: 80,
+  },
+  emptyThread: {
+    paddingVertical: 24,
     paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 8,
-    minWidth: 64,
-    justifyContent: 'center',
     alignItems: 'center',
   },
-  declineBtn: { borderWidth: StyleSheet.hairlineWidth },
-  acceptBtn: { backgroundColor: copper[500] },
-  actionBtnText: { fontSize: 12, fontWeight: '600' },
-
-  scroll: { flex: 1 },
-  scrollContent: { padding: 16, paddingBottom: 12, gap: 6 },
-  emptyWrap: { alignItems: 'center', paddingTop: 64, paddingHorizontal: 24 },
-  emptyTitle: {
-    fontSize: 16,
-    fontWeight: '600',
-    marginBottom: 6,
-    textAlign: 'center',
-  },
-  emptyBody: { fontSize: 13, textAlign: 'center', lineHeight: 18 },
-
-  bubbleRow: { width: '100%' },
-  stamp: {
-    fontSize: 11,
-    textAlign: 'center',
-    marginVertical: 6,
+  bubbleRow: {
+    width: '100%',
+    marginBottom: 2,
   },
   bubble: {
-    maxWidth: '78%',
+    maxWidth: '80%',
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 14,
-    marginVertical: 2,
+    marginVertical: 1,
   },
   bubbleMine: {
     alignSelf: 'flex-end',
@@ -597,32 +636,18 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
     borderBottomLeftRadius: 4,
   },
-  bubbleText: { fontSize: 14, lineHeight: 19 },
-  bubbleTextMine: { color: '#FFFFFF' },
-
   composer: {
     flexDirection: 'row',
     alignItems: 'flex-end',
     gap: 8,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
+    padding: 10,
     borderTopWidth: StyleSheet.hairlineWidth,
   },
-  input: {
+  composerInputContainer: {
     flex: 1,
-    minHeight: 40,
-    maxHeight: 120,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    borderRadius: 12,
-    borderWidth: StyleSheet.hairlineWidth,
-    fontSize: 14,
   },
-  sendBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
+  composerInput: {
+    minHeight: 36,
+    maxHeight: 100,
   },
 });

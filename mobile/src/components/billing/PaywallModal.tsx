@@ -20,7 +20,7 @@ import {
 } from 'react-native';
 import * as WebBrowser from 'expo-web-browser';
 import { useTheme } from '../../lib/theme/ThemeProvider';
-import { copper, teal } from '../../lib/theme/tokens';
+import { accent } from '../../lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../lib/i18n/locale';
 import { startProCheckout } from '../../lib/api/billing';
 
@@ -102,20 +102,20 @@ export function PaywallModal({ visible, onClose, reason, onReturned }: Props) {
           style={[
             styles.sheet,
             {
-              backgroundColor: theme.bg[1],
+              backgroundColor: theme.pageBg,
               borderColor: theme.line.DEFAULT,
             },
           ]}
         >
           <ScrollView contentContainerStyle={styles.body} bounces={false}>
             <View style={styles.headerBlock}>
-              <View style={[styles.badge, { backgroundColor: copper[500] }]}>
+              <View style={[styles.badge, { backgroundColor: accent }]}>
                 <Text style={styles.badgeText}>{t.proBadge}</Text>
               </View>
-              <Text style={[styles.title, { color: theme.ink[100] }]}>
+              <Text style={[styles.title, { color: theme.text }]}>
                 {t.title}
               </Text>
-              <Text style={[styles.reason, { color: theme.ink[300] }]}>
+              <Text style={[styles.reason, { color: theme.textMuted }]}>
                 {reasonText[reason]}
               </Text>
             </View>
@@ -138,7 +138,7 @@ export function PaywallModal({ visible, onClose, reason, onReturned }: Props) {
                 onPress={() => void handleCheckout('monthly')}
                 busy={busy === 'monthly'}
                 disabled={busy !== null && busy !== 'monthly'}
-                accent={teal[500]}
+                accent={accent}
               />
               <PriceCard
                 theme={theme}
@@ -148,12 +148,12 @@ export function PaywallModal({ visible, onClose, reason, onReturned }: Props) {
                 onPress={() => void handleCheckout('yearly')}
                 busy={busy === 'yearly'}
                 disabled={busy !== null && busy !== 'yearly'}
-                accent={copper[500]}
+                accent={accent}
                 highlight
               />
             </View>
 
-            <Text style={[styles.legal, { color: theme.ink[400] }]}>
+            <Text style={[styles.legal, { color: theme.textFaint }]}>
               {t.legal}
             </Text>
 
@@ -163,7 +163,7 @@ export function PaywallModal({ visible, onClose, reason, onReturned }: Props) {
               style={styles.closeBtn}
               disabled={busy !== null}
             >
-              <Text style={{ color: theme.ink[300], fontSize: 14 }}>
+              <Text style={{ color: theme.textMuted, fontSize: 14 }}>
                 {t.notNow}
               </Text>
             </TouchableOpacity>
@@ -183,8 +183,8 @@ function FeatureRow({
 }) {
   return (
     <View style={styles.featRow}>
-      <Text style={[styles.featCheck, { color: copper[500] }]}>✓</Text>
-      <Text style={[styles.featText, { color: theme.ink[200] }]}>{text}</Text>
+      <Text style={[styles.featCheck, { color: accent }]}>✓</Text>
+      <Text style={[styles.featText, { color: theme.textSecondary }]}>{text}</Text>
     </View>
   );
 }
@@ -218,7 +218,7 @@ function PriceCard({
       style={[
         styles.priceCard,
         {
-          backgroundColor: highlight ? accent : theme.bg[2],
+          backgroundColor: highlight ? accent : theme.surfaceMuted,
           borderColor: highlight ? accent : theme.line.DEFAULT,
           opacity: disabled ? 0.5 : 1,
         },
@@ -227,7 +227,7 @@ function PriceCard({
       <Text
         style={[
           styles.priceTitle,
-          { color: highlight ? '#fff' : theme.ink[200] },
+          { color: highlight ? '#fff' : theme.textSecondary },
         ]}
       >
         {title}
@@ -235,7 +235,7 @@ function PriceCard({
       <Text
         style={[
           styles.priceAmount,
-          { color: highlight ? '#fff' : theme.ink[100] },
+          { color: highlight ? '#fff' : theme.text },
         ]}
       >
         {price}
@@ -243,7 +243,7 @@ function PriceCard({
       <Text
         style={[
           styles.priceMeta,
-          { color: highlight ? 'rgba(255,255,255,0.85)' : theme.ink[400] },
+          { color: highlight ? 'rgba(255,255,255,0.85)' : theme.textFaint },
         ]}
       >
         {meta}

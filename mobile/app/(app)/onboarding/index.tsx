@@ -48,7 +48,7 @@ import {
 } from 'lucide-react-native';
 
 import { useTheme } from '../../../src/lib/theme/ThemeProvider';
-import { teal, copper, signal } from '../../../src/lib/theme/tokens';
+import { accent, accentSoft, accentDark, accentCredit } from '../../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../../src/lib/i18n/locale';
 import { Input } from '../../../src/components/ui/Input';
 import { Button } from '../../../src/components/ui/Button';
@@ -416,7 +416,7 @@ export default function OnboardingScreen() {
   const progressFilled = draft.step;
 
   return (
-    <View style={[styles.root, { backgroundColor: theme.bg[0] }]}>
+    <View style={[styles.root, { backgroundColor: theme.pageBg }]}>
       <Stack.Screen options={{ headerShown: false }} />
       <SafeAreaView style={styles.safe} edges={['top', 'bottom']}>
         {/* Top chrome — progress bar + back/skip */}
@@ -425,7 +425,7 @@ export default function OnboardingScreen() {
             <View style={styles.chromeLeft}>
               {draft.step > 0 || urlMode ? (
                 <TouchableOpacity onPress={back} hitSlop={12} style={styles.chromeBtn}>
-                  <ChevronLeft size={22} color={theme.ink[200]} />
+                  <ChevronLeft size={22} color={theme.textSecondary} />
                 </TouchableOpacity>
               ) : (
                 <View style={styles.chromeBtn} />
@@ -439,7 +439,7 @@ export default function OnboardingScreen() {
                     styles.progressSeg,
                     {
                       backgroundColor:
-                        n <= progressFilled ? teal[500] : theme.bg[3],
+                        n <= progressFilled ? accent : theme.surface,
                     },
                   ]}
                 />
@@ -448,7 +448,7 @@ export default function OnboardingScreen() {
             <View style={styles.chromeRight}>
               {showSkip ? (
                 <TouchableOpacity onPress={skipWizard} hitSlop={8}>
-                  <Text style={[styles.skipLabel, { color: theme.ink[400] }]}>
+                  <Text style={[styles.skipLabel, { color: theme.textFaint }]}>
                     {t.skip}
                   </Text>
                 </TouchableOpacity>
@@ -498,11 +498,11 @@ export default function OnboardingScreen() {
                   }}
                   onPrefillEnterManually={() => setPrefillDismissed(true)}
                   t={t}
-                  inkColor={theme.ink[100]}
-                  inkSecondary={theme.ink[300]}
-                  hintColor={theme.ink[400]}
-                  bgColor={theme.bg[1]}
-                  panelBgColor={theme.bg[2]}
+                  inkColor={theme.text}
+                  inkSecondary={theme.textMuted}
+                  hintColor={theme.textFaint}
+                  bgColor={theme.pageBg}
+                  panelBgColor={theme.surfaceMuted}
                   borderColor={theme.line.DEFAULT}
                 />
               ) : null}
@@ -514,9 +514,9 @@ export default function OnboardingScreen() {
                   onPick={pickPhoto}
                   onNext={() => goStep(2)}
                   t={t}
-                  inkColor={theme.ink[100]}
-                  hintColor={theme.ink[400]}
-                  bgColor={theme.bg[1]}
+                  inkColor={theme.text}
+                  hintColor={theme.textFaint}
+                  bgColor={theme.pageBg}
                   borderColor={theme.line.DEFAULT}
                 />
               ) : null}
@@ -529,8 +529,8 @@ export default function OnboardingScreen() {
                   onChangeJobTitle={(v) => setDraft({ jobTitle: v })}
                   onNext={() => goStep(3)}
                   t={t}
-                  inkColor={theme.ink[100]}
-                  hintColor={theme.ink[400]}
+                  inkColor={theme.text}
+                  hintColor={theme.textFaint}
                 />
               ) : null}
 
@@ -542,9 +542,9 @@ export default function OnboardingScreen() {
                   onValue={(v) => setDraft({ contactValue: v })}
                   onNext={() => goStep(4)}
                   t={t}
-                  inkColor={theme.ink[100]}
-                  hintColor={theme.ink[400]}
-                  bgColor={theme.bg[1]}
+                  inkColor={theme.text}
+                  hintColor={theme.textFaint}
+                  bgColor={theme.pageBg}
                   borderColor={theme.line.DEFAULT}
                 />
               ) : null}
@@ -564,10 +564,10 @@ export default function OnboardingScreen() {
                   onContinue={() => goStep(5)}
                   t={t}
                   presetT={useTranslations(locale).presets}
-                  inkColor={theme.ink[100]}
-                  inkSecondary={theme.ink[300]}
-                  hintColor={theme.ink[400]}
-                  bgColor={theme.bg[1]}
+                  inkColor={theme.text}
+                  inkSecondary={theme.textMuted}
+                  hintColor={theme.textFaint}
+                  bgColor={theme.pageBg}
                   borderColor={theme.line.DEFAULT}
                   screenWidth={screenWidth}
                 />
@@ -616,9 +616,9 @@ export default function OnboardingScreen() {
                     setDraft({ step: 1 });
                   }}
                   t={t}
-                  inkColor={theme.ink[100]}
-                  hintColor={theme.ink[400]}
-                  bgColor={theme.bg[1]}
+                  inkColor={theme.text}
+                  hintColor={theme.textFaint}
+                  bgColor={theme.pageBg}
                   borderColor={theme.line.DEFAULT}
                 />
               ) : null}
@@ -642,21 +642,21 @@ export default function OnboardingScreen() {
           onPress={() => setShowScanRationale(false)}
         >
           <Pressable
-            style={[rationaleStyles.sheet, { backgroundColor: theme.bg[1] }]}
+            style={[rationaleStyles.sheet, { backgroundColor: theme.pageBg }]}
             onPress={(e) => e.stopPropagation()}
           >
             <View
-              style={[rationaleStyles.iconWrap, { backgroundColor: teal[50] }]}
+              style={[rationaleStyles.iconWrap, { backgroundColor: accentSoft }]}
             >
-              <ScanLine size={28} color={teal[600]} />
+              <ScanLine size={28} color={accentDark} />
             </View>
             <Text
-              style={[rationaleStyles.rationaleTitle, { color: theme.ink[100] }]}
+              style={[rationaleStyles.rationaleTitle, { color: theme.text }]}
             >
               {t.scanRationaleTitle}
             </Text>
             <Text
-              style={[rationaleStyles.rationaleBody, { color: theme.ink[300] }]}
+              style={[rationaleStyles.rationaleBody, { color: theme.textMuted }]}
             >
               {t.scanRationaleBody}
             </Text>
@@ -664,7 +664,7 @@ export default function OnboardingScreen() {
               onPress={() => void executeScan()}
               style={[
                 rationaleStyles.primaryBtn,
-                { backgroundColor: teal[500] },
+                { backgroundColor: accent },
               ]}
             >
               <Text style={rationaleStyles.primaryBtnText}>{t.scanContinue}</Text>
@@ -677,7 +677,7 @@ export default function OnboardingScreen() {
               style={rationaleStyles.ghostBtn}
             >
               <Text
-                style={[rationaleStyles.ghostBtnText, { color: theme.ink[300] }]}
+                style={[rationaleStyles.ghostBtnText, { color: theme.textMuted }]}
               >
                 {t.scanSkip}
               </Text>
@@ -730,6 +730,7 @@ function Step0Origin(props: {
   panelBgColor: string;
   borderColor: string;
 }) {
+  const theme = useTheme();
   if (props.urlMode) {
     return (
       <View style={styles.stepBody}>
@@ -755,7 +756,7 @@ function Step0Origin(props: {
         </View>
 
         {props.errorMsg ? (
-          <Text style={[styles.photoErr, { color: signal.err }]}>
+          <Text style={[styles.photoErr, { color: theme.signalErr }]}>
             {props.errorMsg}
           </Text>
         ) : null}
@@ -766,7 +767,7 @@ function Step0Origin(props: {
           style={[
             styles.publishBtn,
             {
-              backgroundColor: teal[500],
+              backgroundColor: accent,
               opacity:
                 props.urlLoading || props.urlValue.trim().length < 4 ? 0.6 : 1,
             },
@@ -857,7 +858,7 @@ function Step0Origin(props: {
                 style={[
                   styles.prefillAvatar,
                   styles.prefillAvatarFallback,
-                  { backgroundColor: teal[500] },
+                  { backgroundColor: accent },
                 ]}
               >
                 <Text style={styles.prefillAvatarInitial}>{initial}</Text>
@@ -887,7 +888,7 @@ function Step0Origin(props: {
               style={[
                 styles.prefillBtn,
                 styles.prefillBtnPrimary,
-                { backgroundColor: teal[600] },
+                { backgroundColor: accentDark },
               ]}
             >
               <Text style={styles.prefillBtnPrimaryText}>
@@ -924,12 +925,12 @@ function Step0Origin(props: {
               ]}
             >
               <View
-                style={[styles.rampIconWrap, { backgroundColor: teal[50] }]}
+                style={[styles.rampIconWrap, { backgroundColor: accentSoft }]}
               >
                 {r.loading ? (
-                  <ActivityIndicator size="small" color={teal[500]} />
+                  <ActivityIndicator size="small" color={accent} />
                 ) : (
-                  <Icon size={22} color={teal[600]} />
+                  <Icon size={22} color={accentDark} />
                 )}
               </View>
               <View style={{ flex: 1 }}>
@@ -946,7 +947,7 @@ function Step0Origin(props: {
       </View>
 
       {props.errorMsg ? (
-        <Text style={[styles.photoErr, { color: signal.err }]}>
+        <Text style={[styles.photoErr, { color: theme.signalErr }]}>
           {props.errorMsg}
         </Text>
       ) : null}
@@ -967,6 +968,7 @@ function Step1Photo(props: {
   bgColor: string;
   borderColor: string;
 }) {
+  const theme = useTheme();
   return (
     <View style={styles.stepBody}>
       <Text style={[styles.stepTitle, { color: props.inkColor }]}>
@@ -986,19 +988,19 @@ function Step1Photo(props: {
         {props.photoUri ? (
           <Image source={{ uri: props.photoUri }} style={styles.photoImg} />
         ) : (
-          <Camera size={36} color={teal[500]} />
+          <Camera size={36} color={accent} />
         )}
       </Pressable>
 
       {props.photoError ? (
-        <Text style={[styles.photoErr, { color: signal.err }]}>{props.photoError}</Text>
+        <Text style={[styles.photoErr, { color: theme.signalErr }]}>{props.photoError}</Text>
       ) : null}
 
       <Button
         label={props.t.step1Next}
         onPress={props.onNext}
         variant="primary"
-        style={{ marginTop: 32, alignSelf: 'stretch', backgroundColor: teal[500] }}
+        style={{ marginTop: 32, alignSelf: 'stretch', backgroundColor: accent }}
       />
       <Button
         label={props.t.step1Skip}
@@ -1057,7 +1059,7 @@ function Step2Identity(props: {
         style={{
           marginTop: 24,
           alignSelf: 'stretch',
-          backgroundColor: ready ? teal[500] : teal[500],
+          backgroundColor: accent,
         }}
       />
     </View>
@@ -1110,8 +1112,8 @@ function Step3Contact(props: {
               style={[
                 styles.chip,
                 {
-                  backgroundColor: active ? teal[500] : props.bgColor,
-                  borderColor: active ? teal[500] : props.borderColor,
+                  backgroundColor: active ? accent : props.bgColor,
+                  borderColor: active ? accent : props.borderColor,
                 },
               ]}
             >
@@ -1151,7 +1153,7 @@ function Step3Contact(props: {
         onPress={props.onNext}
         disabled={!ready}
         variant="primary"
-        style={{ marginTop: 24, alignSelf: 'stretch', backgroundColor: teal[500] }}
+        style={{ marginTop: 24, alignSelf: 'stretch', backgroundColor: accent }}
       />
       <Button
         label={props.t.step3Skip}
@@ -1207,8 +1209,8 @@ function Step4Style(props: {
                 styles.presetCard,
                 {
                   width: cardW,
-                  backgroundColor: active ? teal[50] : props.bgColor,
-                  borderColor: active ? teal[500] : props.borderColor,
+                  backgroundColor: active ? accentSoft : props.bgColor,
+                  borderColor: active ? accent : props.borderColor,
                   borderWidth: active ? 2 : 1,
                 },
               ]}
@@ -1252,7 +1254,7 @@ function Step4Style(props: {
 
               {active ? (
                 <View
-                  style={[styles.presetCheck, { backgroundColor: teal[500] }]}
+                  style={[styles.presetCheck, { backgroundColor: accent }]}
                 >
                   <Check size={14} color="#FFFFFF" strokeWidth={3} />
                 </View>
@@ -1270,7 +1272,7 @@ function Step4Style(props: {
         style={{
           marginTop: 24,
           alignSelf: 'stretch',
-          backgroundColor: teal[500],
+          backgroundColor: accent,
         }}
       />
     </View>
@@ -1306,6 +1308,7 @@ function Step5Preview(props: {
   bgColor: string;
   borderColor: string;
 }) {
+  const theme = useTheme();
   const { draft } = props;
   const tplName = props.t.templateNames[
     String(draft.templateId) as '1' | '6' | '14' | '84'
@@ -1342,7 +1345,7 @@ function Step5Preview(props: {
       >
         {/* Accent bar — copper for the credit lockup, teal would clash with
             the brand-primary in surrounding chrome. */}
-        <View style={[styles.previewAccent, { backgroundColor: copper[500] }]} />
+        <View style={[styles.previewAccent, { backgroundColor: accentCredit }]} />
 
         <View style={styles.previewBody}>
           <View
@@ -1378,8 +1381,8 @@ function Step5Preview(props: {
               {draft.contactValue}
             </Text>
           ) : null}
-          <View style={[styles.previewChip, { borderColor: teal[500] }]}>
-            <Text style={[styles.previewChipText, { color: teal[500] }]}>
+          <View style={[styles.previewChip, { borderColor: accent }]}>
+            <Text style={[styles.previewChipText, { color: accent }]}>
               {tplName}
             </Text>
           </View>
@@ -1427,8 +1430,8 @@ function Step5Preview(props: {
                   style={[
                     styles.chip,
                     {
-                      backgroundColor: active ? teal[500] : props.bgColor,
-                      borderColor: active ? teal[500] : props.borderColor,
+                      backgroundColor: active ? accent : props.bgColor,
+                      borderColor: active ? accent : props.borderColor,
                     },
                   ]}
                 >
@@ -1463,7 +1466,7 @@ function Step5Preview(props: {
       ) : null}
 
       {props.publishError ? (
-        <Text style={[styles.publishErr, { color: signal.err }]}>
+        <Text style={[styles.publishErr, { color: theme.signalErr }]}>
           {props.publishError}
         </Text>
       ) : null}
@@ -1474,7 +1477,7 @@ function Step5Preview(props: {
         style={[
           styles.publishBtn,
           {
-            backgroundColor: teal[500],
+            backgroundColor: accent,
             opacity: props.saving ? 0.6 : 1,
           },
         ]}

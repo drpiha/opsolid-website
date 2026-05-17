@@ -11,7 +11,6 @@ import {
   TextInput,
   TouchableOpacity,
   Pressable,
-  Switch,
   StyleSheet,
   ScrollView,
   ActivityIndicator,
@@ -20,7 +19,8 @@ import {
 } from 'react-native';
 import { Check, ChevronDown, ChevronUp } from 'lucide-react-native';
 import type { ThemeTokens } from '../../lib/theme/tokens';
-import { copper, teal } from '../../lib/theme/tokens';
+import { accent, accentSoft } from '../../lib/theme/tokens';
+import { Toggle } from '../ui/Toggle';
 import { useTranslations, detectLocale } from '../../lib/i18n/locale';
 import { listTemplates, type Template } from '../../lib/api/templates';
 import {
@@ -260,7 +260,7 @@ export function SocialsSection({
                     justifyContent: 'center',
                     borderRadius: 10,
                     backgroundColor:
-                      enrichLoading || !enrichUrl.trim() ? theme.bg[2] : teal[500],
+                      enrichLoading || !enrichUrl.trim() ? theme.bg[2] : accent,
                     minWidth: 96,
                     alignItems: 'center',
                   }}
@@ -330,7 +330,7 @@ export function SocialsSection({
                       paddingHorizontal: 14,
                       paddingVertical: 8,
                       borderRadius: 8,
-                      backgroundColor: teal[500],
+                      backgroundColor: accent,
                     }}
                   >
                     <Text style={{ color: '#FFFFFF', fontSize: 13, fontWeight: '600' }}>
@@ -591,8 +591,8 @@ export function VisibilitySection({
               style={[
                 styles.segmentPill,
                 {
-                  backgroundColor: selected ? copper[500] : theme.bg[1],
-                  borderColor: selected ? copper[500] : theme.line.DEFAULT,
+                  backgroundColor: selected ? accent : theme.bg[1],
+                  borderColor: selected ? accent : theme.line.DEFAULT,
                 },
               ]}
             >
@@ -631,21 +631,17 @@ export function DiscoverySection({
 
       <View style={[styles.switchRow, { borderColor: theme.line.DEFAULT }]}>
         <Text style={[styles.switchLabel, { color: theme.ink[100] }]}>{t.openToNetworking}</Text>
-        <Switch
+        <Toggle
           value={values.openToNetworking}
-          onValueChange={(v) => onChange('openToNetworking', v)}
-          trackColor={{ false: theme.bg[2], true: copper[500] }}
-          thumbColor="#FFFFFF"
+          onChange={(v) => onChange('openToNetworking', v)}
         />
       </View>
 
       <View style={[styles.switchRow, { borderColor: theme.line.DEFAULT }]}>
         <Text style={[styles.switchLabel, { color: theme.ink[100] }]}>{t.acceptingClients}</Text>
-        <Switch
+        <Toggle
           value={values.acceptingClients}
-          onValueChange={(v) => onChange('acceptingClients', v)}
-          trackColor={{ false: theme.bg[2], true: copper[500] }}
-          thumbColor="#FFFFFF"
+          onChange={(v) => onChange('acceptingClients', v)}
         />
       </View>
 
@@ -757,7 +753,7 @@ export function TemplateSection({
           {
             width: TEMPLATE_CELL_WIDTH,
             height: TEMPLATE_CELL_HEIGHT,
-            borderColor: selected ? copper[500] : theme.line.DEFAULT,
+            borderColor: selected ? accent : theme.line.DEFAULT,
             borderWidth: selected ? 2 : 1,
             backgroundColor: theme.bg[1],
           },
@@ -766,7 +762,7 @@ export function TemplateSection({
         <View
           style={{
             flex: 1,
-            backgroundColor: copper[50],
+            backgroundColor: accentSoft,
             justifyContent: 'center',
             alignItems: 'center',
           }}
@@ -780,13 +776,13 @@ export function TemplateSection({
           ) : (
             <Text
               numberOfLines={2}
-              style={[styles.templatePlaceholder, { color: copper[700] }]}
+              style={[styles.templatePlaceholder, { color: accent }]}
             >
               {item.name}
             </Text>
           )}
           {selected && (
-            <View style={[styles.templateCheck, { backgroundColor: copper[500] }]}>
+            <View style={[styles.templateCheck, { backgroundColor: accent }]}>
               <Check size={12} color="#FFFFFF" />
             </View>
           )}
@@ -823,8 +819,8 @@ export function TemplateSection({
                 style={[
                   styles.sectorChip,
                   {
-                    backgroundColor: selected ? copper[500] : theme.bg[1],
-                    borderColor: selected ? copper[500] : theme.line.DEFAULT,
+                    backgroundColor: selected ? accent : theme.bg[1],
+                    borderColor: selected ? accent : theme.line.DEFAULT,
                   },
                 ]}
               >
@@ -844,7 +840,7 @@ export function TemplateSection({
 
       {items === null && !error ? (
         <View style={styles.templateCarouselFallback}>
-          <ActivityIndicator size="small" color={copper[500]} />
+          <ActivityIndicator size="small" color={accent} />
         </View>
       ) : error ? (
         <View style={styles.templateCarouselFallback}>
@@ -911,8 +907,8 @@ export function LayoutSection({
               style={[
                 styles.sectorChip,
                 {
-                  backgroundColor: selected ? copper[500] : theme.bg[1],
-                  borderColor: selected ? copper[500] : theme.line.DEFAULT,
+                  backgroundColor: selected ? accent : theme.bg[1],
+                  borderColor: selected ? accent : theme.line.DEFAULT,
                 },
               ]}
             >
@@ -962,8 +958,8 @@ export function ThemeSection({
               style={[
                 styles.segmentPill,
                 {
-                  backgroundColor: selected ? copper[500] : theme.bg[1],
-                  borderColor: selected ? copper[500] : theme.line.DEFAULT,
+                  backgroundColor: selected ? accent : theme.bg[1],
+                  borderColor: selected ? accent : theme.line.DEFAULT,
                 },
               ]}
             >
@@ -1024,8 +1020,8 @@ export function QrStyleSection({
               style={[
                 styles.sectorChip,
                 {
-                  backgroundColor: selected ? copper[500] : theme.bg[1],
-                  borderColor: selected ? copper[500] : theme.line.DEFAULT,
+                  backgroundColor: selected ? accent : theme.bg[1],
+                  borderColor: selected ? accent : theme.line.DEFAULT,
                 },
               ]}
             >
@@ -1106,11 +1102,9 @@ export function StatusBannerSection({
         <Text style={[styles.switchLabel, { color: theme.ink[100] }]}>
           {t.toggle}
         </Text>
-        <Switch
+        <Toggle
           value={value.enabled}
-          onValueChange={(v) => onChange({ ...value, enabled: v })}
-          trackColor={{ false: theme.bg[2], true: copper[500] }}
-          thumbColor="#FFFFFF"
+          onChange={(v) => onChange({ ...value, enabled: v })}
         />
       </View>
 
@@ -1160,7 +1154,7 @@ export function StatusBannerSection({
                   styles.tonePill,
                   {
                     backgroundColor: tint,
-                    borderColor: selected ? copper[500] : theme.line.DEFAULT,
+                    borderColor: selected ? accent : theme.line.DEFAULT,
                     borderWidth: selected ? 2 : 1,
                     opacity: disabled ? 0.5 : 1,
                   },
@@ -1209,11 +1203,9 @@ export function FeedbackSection({
         <Text style={[styles.switchLabel, { color: theme.ink[100] }]}>
           {t.toggle}
         </Text>
-        <Switch
+        <Toggle
           value={value}
-          onValueChange={onChange}
-          trackColor={{ false: theme.bg[2], true: copper[500] }}
-          thumbColor="#FFFFFF"
+          onChange={onChange}
         />
       </View>
 
@@ -1278,7 +1270,7 @@ export function EventsAttendingSection({
 
       {loading ? (
         <View style={{ paddingVertical: 12, alignItems: 'flex-start' }}>
-          <ActivityIndicator size="small" color={copper[500]} />
+          <ActivityIndicator size="small" color={accent} />
         </View>
       ) : events.length === 0 ? (
         <Text style={[styles.hint, { color: theme.ink[500], fontStyle: 'italic' }]}>
@@ -1296,8 +1288,8 @@ export function EventsAttendingSection({
                 style={[
                   styles.eventChip,
                   {
-                    backgroundColor: selected ? copper[500] : theme.bg[1],
-                    borderColor: selected ? copper[500] : theme.line.DEFAULT,
+                    backgroundColor: selected ? accent : theme.bg[1],
+                    borderColor: selected ? accent : theme.line.DEFAULT,
                   },
                 ]}
               >
@@ -1445,11 +1437,9 @@ export function ContactFormSection({
         <Text style={[styles.switchLabel, { color: theme.ink[100] }]}>
           {t.toggle}
         </Text>
-        <Switch
+        <Toggle
           value={value.enabled}
-          onValueChange={(v) => onChange({ ...value, enabled: v })}
-          trackColor={{ false: theme.bg[2], true: copper[500] }}
-          thumbColor="#FFFFFF"
+          onChange={(v) => onChange({ ...value, enabled: v })}
         />
       </View>
 
@@ -1501,8 +1491,8 @@ export function ContactFormSection({
                     style={[
                       styles.contactFieldKeyChip,
                       {
-                        backgroundColor: active ? copper[500] : theme.bg[1],
-                        borderColor: active ? copper[500] : theme.line.DEFAULT,
+                        backgroundColor: active ? accent : theme.bg[1],
+                        borderColor: active ? accent : theme.line.DEFAULT,
                       },
                     ]}
                     activeOpacity={0.85}
@@ -1536,11 +1526,9 @@ export function ContactFormSection({
             />
             <View style={styles.contactFieldFooter}>
               <View style={styles.contactFieldRequired}>
-                <Switch
+                <Toggle
                   value={f.required}
-                  onValueChange={(v) => updateField(idx, { required: v })}
-                  trackColor={{ false: theme.bg[2], true: copper[500] }}
-                  thumbColor="#FFFFFF"
+                  onChange={(v) => !disabled && updateField(idx, { required: v })}
                   disabled={disabled}
                 />
                 <Text style={[styles.hint, { color: theme.ink[400] }]}>
@@ -1572,7 +1560,7 @@ export function ContactFormSection({
             { borderColor: theme.line.DEFAULT, opacity: disabled ? 0.5 : 1 },
           ]}
         >
-          <Text style={[styles.contactAddBtnText, { color: copper[500] }]}>
+          <Text style={[styles.contactAddBtnText, { color: accent }]}>
             {t.addField}
           </Text>
         </TouchableOpacity>
@@ -1787,8 +1775,8 @@ export function TagsSection({
                 styles.tagChip,
                 styles.tagChipCustom,
                 {
-                  backgroundColor: copper[500],
-                  borderColor: copper[500],
+                  backgroundColor: accent,
+                  borderColor: accent,
                 },
               ]}
             >
@@ -1801,7 +1789,7 @@ export function TagsSection({
         </View>
       ) : null}
 
-      {/* Curated palette — 24 chips. Selected: copper-filled. */}
+      {/* Curated palette — 24 chips. Selected: accent-filled. */}
       <View style={styles.tagWrap}>
         {CURATED_TAG_SLUGS.map((tag) => {
           const isSelected = selectedSet.has(tag);
@@ -1816,8 +1804,8 @@ export function TagsSection({
               style={[
                 styles.tagChip,
                 {
-                  backgroundColor: isSelected ? copper[500] : theme.bg[1],
-                  borderColor: isSelected ? copper[500] : theme.line.DEFAULT,
+                  backgroundColor: isSelected ? accent : theme.bg[1],
+                  borderColor: isSelected ? accent : theme.line.DEFAULT,
                   opacity: disabled ? 0.4 : 1,
                 },
               ]}
@@ -1873,7 +1861,7 @@ export function TagsSection({
             },
           ]}
         >
-          <Text style={[styles.tagAddBtnText, { color: copper[500] }]}>
+          <Text style={[styles.tagAddBtnText, { color: accent }]}>
             {tTags.add}
           </Text>
         </TouchableOpacity>
@@ -1990,7 +1978,7 @@ export function EmbedsSection({
           ]}
         >
           <View style={{ flex: 1 }}>
-            <Text style={[styles.embedRowKind, { color: copper[500] }]}>
+            <Text style={[styles.embedRowKind, { color: accent }]}>
               {(tEmb.kinds as Record<string, string | undefined>)[em.kind] ??
                 em.kind}
             </Text>
@@ -2046,7 +2034,7 @@ export function EmbedsSection({
               },
             ]}
           >
-            <Text style={[styles.tagAddBtnText, { color: copper[500] }]}>
+            <Text style={[styles.tagAddBtnText, { color: accent }]}>
               {tEmb.add}
             </Text>
           </TouchableOpacity>
@@ -2213,17 +2201,15 @@ export function TipJarSection({
         <Text style={{ color: theme.ink[200], fontSize: 14 }}>
           {labels.enabled}
         </Text>
-        <Switch
+        <Toggle
           value={value.enabled && isPro}
-          onValueChange={(v) => {
+          onChange={(v) => {
             if (!isPro) {
               onProGate();
               return;
             }
             onChange({ ...value, enabled: v });
           }}
-          trackColor={{ false: theme.bg[2], true: '#C27940' }}
-          thumbColor="#fff"
         />
       </View>
       {value.enabled && isPro ? (

@@ -18,7 +18,7 @@ import { Lightbulb, X as CloseIcon } from 'lucide-react-native';
 
 import type { ApiCard } from '../../lib/api/types';
 import type { ThemeTokens } from '../../lib/theme/tokens';
-import { teal } from '../../lib/theme/tokens';
+import { accent } from '../../lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../lib/i18n/locale';
 
 type Suggestion = {
@@ -132,7 +132,7 @@ export function SmartSuggestionsSection({
 
   return (
     <View style={styles.section}>
-      <Text style={[styles.sectionLabel, { color: theme.ink[400] }]}>
+      <Text style={[styles.sectionLabel, { color: theme.textFaint }]}>
         {t.title}
       </Text>
       <View style={{ gap: 8 }}>
@@ -142,16 +142,16 @@ export function SmartSuggestionsSection({
             style={[
               styles.row,
               {
-                backgroundColor: theme.bg[2],
+                backgroundColor: theme.surfaceMuted,
                 borderColor: theme.line.DEFAULT,
               },
             ]}
           >
             <View style={styles.iconWrap}>
-              <Lightbulb size={16} color={teal[500]} strokeWidth={2.2} />
+              <Lightbulb size={16} color={accent} strokeWidth={2.2} />
             </View>
             <Text
-              style={[styles.text, { color: theme.ink[200] }]}
+              style={[styles.text, { color: theme.textSecondary }]}
               numberOfLines={3}
             >
               {s.text}
@@ -159,7 +159,7 @@ export function SmartSuggestionsSection({
             <TouchableOpacity
               onPress={s.onPress}
               activeOpacity={0.85}
-              style={[styles.cta, { backgroundColor: teal[500] }]}
+              style={[styles.cta, { backgroundColor: accent }]}
               accessibilityLabel={s.ctaLabel}
             >
               <Text style={styles.ctaText}>{s.ctaLabel}</Text>
@@ -170,7 +170,7 @@ export function SmartSuggestionsSection({
               style={styles.dismiss}
               accessibilityLabel={t.dismiss}
             >
-              <CloseIcon size={16} color={theme.ink[400]} />
+              <CloseIcon size={16} color={theme.textFaint} />
             </TouchableOpacity>
           </View>
         ))}

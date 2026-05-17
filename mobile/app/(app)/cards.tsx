@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import { Stack, useRouter, useFocusEffect } from 'expo-router';
 import { ScreenContainer } from '../../src/components/ui/ScreenContainer';
-import { BrandHeader } from '../../src/components/ui/BrandHeader';
+import { AppBar } from '../../src/components/ui/AppBar';
 import { Button } from '../../src/components/ui/Button';
 import { CardDeck } from '../../src/components/cards/CardDeck';
 import { CardDeckList } from '../../src/components/cards/CardDeckList';
@@ -17,7 +17,8 @@ import { PaywallModal } from '../../src/components/billing/PaywallModal';
 import { listCards } from '../../src/lib/api/cards';
 import type { ApiCard } from '../../src/lib/api/types';
 import { useTheme } from '../../src/lib/theme/ThemeProvider';
-import { teal } from '../../src/lib/theme/tokens';
+import { accent } from '../../src/lib/theme/tokens';
+import { typography } from '../../src/lib/theme/typography';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
 import { useOnboardingDraftStore } from '../../src/store/onboardingDraftStore';
 import { useFirstRunStore } from '../../src/store/firstRunStore';
@@ -206,7 +207,7 @@ export default function CardsListScreen() {
 
   const renderError = () => (
     <View style={styles.empty}>
-      <Text style={[styles.errText, { color: theme.signalErr }]}>{error}</Text>
+      <Text style={[typography.body, { color: theme.signalErr, textAlign: 'center' }]}>{error}</Text>
       <Button
         label={t.retry}
         onPress={() => void load('initial')}
@@ -222,14 +223,22 @@ export default function CardsListScreen() {
   return (
     <>
       {/* The screen-header "+" is gone — FAB is the new entry point. */}
-      <Stack.Screen options={{ title: t.title }} />
-      <View style={[styles.root, { backgroundColor: theme.bg[0] }]}>
-        <ScreenContainer style={styles.zeroPad}>
-          <BrandHeader />
+      <Stack.Screen options={{ headerShown: false }} />
+      <View style={[styles.root, { backgroundColor: theme.pageBg }]}>
+        <ScreenContainer padded={false} scrollable={false}>
+          <AppBar
+            variant="large"
+            title={t.title}
+            subtitle={
+              sorted.length > 0
+                ? `${sorted.length} card${sorted.length === 1 ? '' : 's'}`
+                : undefined
+            }
+          />
           <View style={styles.body}>
             {loading ? (
               <View style={styles.center}>
-                <ActivityIndicator size="large" color={teal[500]} />
+                <ActivityIndicator size="large" color={accent} />
               </View>
             ) : error && sorted.length === 0 ? (
               renderError()
@@ -280,9 +289,6 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'relative',
   },
-  zeroPad: {
-    padding: 0,
-  },
   body: {
     flex: 1,
     position: 'relative',
@@ -297,10 +303,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24,
-  },
-  errText: {
-    fontSize: 16,
-    textAlign: 'center',
   },
   tourAnchorFlex: {
     flex: 1,

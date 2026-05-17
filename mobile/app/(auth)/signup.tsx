@@ -12,7 +12,8 @@ import { ScreenContainer } from '../../src/components/ui/ScreenContainer';
 import { Input } from '../../src/components/ui/Input';
 import { Button } from '../../src/components/ui/Button';
 import { useTheme } from '../../src/lib/theme/ThemeProvider';
-import { copper, teal, accentCredit, signal } from '../../src/lib/theme/tokens';
+import { accent, accentCredit } from '../../src/lib/theme/tokens';
+import { typography } from '../../src/lib/theme/typography';
 import { requestMagicLink } from '../../src/lib/auth/api';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
 
@@ -54,17 +55,17 @@ export default function SignupScreen() {
         {/* Brand header */}
         <View style={styles.header}>
           <View style={styles.brandLockup}>
-            <Text style={[styles.versoWordmark, { color: teal[500] }]}>
+            <Text style={[typography.display2, { color: theme.text }]}>
               Verso
             </Text>
-            <Text style={[styles.byCredit, { color: accentCredit }]}>
+            <Text style={[typography.caption, styles.byCredit, { color: accentCredit }]}>
               by OpSolid
             </Text>
           </View>
-          <Text style={[styles.welcome, { color: theme.ink[100] }]}>
+          <Text style={[typography.display2, styles.welcomeSpacing, { color: theme.text }]}>
             {strings.signupHeadline}
           </Text>
-          <Text style={[styles.tagline, { color: theme.ink[300] }]}>
+          <Text style={[typography.lead, { color: theme.textMuted }]}>
             {strings.tagline}
           </Text>
         </View>
@@ -75,10 +76,10 @@ export default function SignupScreen() {
             <View
               style={[
                 styles.errorBanner,
-                { backgroundColor: theme.bg[2], borderColor: signal.err },
+                { backgroundColor: theme.surfaceMuted, borderColor: theme.signalErr },
               ]}
             >
-              <Text style={[styles.errorText, { color: signal.err }]}>{error}</Text>
+              <Text style={[typography.bodySmall, { color: theme.signalErr }]}>{error}</Text>
             </View>
           ) : null}
 
@@ -98,24 +99,25 @@ export default function SignupScreen() {
             label={strings.signupCta}
             onPress={handleMagicLink}
             loading={loading}
+            variant="accent"
             style={styles.ctaButton}
           />
 
-          <Text style={[styles.note, { color: theme.ink[400] }]}>
+          <Text style={[typography.caption, styles.noteAlign, { color: theme.textFaint }]}>
             {strings.signupNote}
           </Text>
         </View>
 
         {/* Footer link */}
         <View style={styles.footer}>
-          <Text style={[styles.footerHint, { color: theme.ink[300] }]}>
+          <Text style={[typography.lead, { color: theme.textMuted }]}>
             {strings.loginHint}{' '}
           </Text>
           <TouchableOpacity
             onPress={() => router.push('/(auth)/login')}
             accessibilityRole="link"
           >
-            <Text style={[styles.footerLink, { color: copper[500] }]}>
+            <Text style={[typography.bodyMedium, { color: accent }]}>
               {strings.loginCta}
             </Text>
           </TouchableOpacity>
@@ -139,27 +141,12 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     gap: 2,
   },
-  versoWordmark: {
-    fontSize: 28,
-    fontWeight: '700',
-    letterSpacing: -0.5,
-    lineHeight: 32,
-  },
   byCredit: {
-    fontSize: 11,
-    fontWeight: '500',
-    letterSpacing: 0.3,
     opacity: 0.6,
+    fontStyle: 'italic',
   },
-  welcome: {
-    fontSize: 28,
-    fontWeight: '700',
-    letterSpacing: -0.5,
+  welcomeSpacing: {
     marginTop: 8,
-  },
-  tagline: {
-    fontSize: 14,
-    lineHeight: 20,
   },
   form: {
     gap: 16,
@@ -169,28 +156,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 12,
   },
-  errorText: {
-    fontSize: 13,
-  },
   ctaButton: {
     marginTop: 4,
   },
-  note: {
-    fontSize: 12,
+  noteAlign: {
     textAlign: 'center',
-    lineHeight: 18,
   },
   footer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 24,
-  },
-  footerHint: {
-    fontSize: 14,
-  },
-  footerLink: {
-    fontSize: 14,
-    fontWeight: '600',
   },
 });

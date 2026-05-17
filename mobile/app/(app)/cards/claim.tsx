@@ -32,7 +32,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { KeyRound } from 'lucide-react-native';
 
 import { useTheme } from '../../../src/lib/theme/ThemeProvider';
-import { teal, signal } from '../../../src/lib/theme/tokens';
+import { accent, accentSoft, accentDark } from '../../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../../src/lib/i18n/locale';
 import { useToast } from '../../../src/components/ui/Toast';
 import { apiFetch } from '../../../src/lib/api/client';
@@ -106,13 +106,13 @@ export default function ClaimCardScreen() {
   }
 
   return (
-    <View style={[styles.root, { backgroundColor: theme.bg[0] }]}>
+    <View style={[styles.root, { backgroundColor: theme.pageBg }]}>
       <Stack.Screen
         options={{
           title: t.title,
-          headerStyle: { backgroundColor: theme.bg[0] },
-          headerTitleStyle: { color: theme.ink[100] },
-          headerTintColor: teal[500],
+          headerStyle: { backgroundColor: theme.pageBg },
+          headerTitleStyle: { color: theme.text },
+          headerTintColor: accent,
           headerShown: true,
         }}
       />
@@ -127,11 +127,11 @@ export default function ClaimCardScreen() {
             keyboardShouldPersistTaps="handled"
           >
             {/* Icon header */}
-            <View style={[styles.iconWrap, { backgroundColor: teal[50] }]}>
-              <KeyRound size={28} color={teal[600]} />
+            <View style={[styles.iconWrap, { backgroundColor: accentSoft }]}>
+              <KeyRound size={28} color={accentDark} />
             </View>
 
-            <Text style={[styles.hint, { color: theme.ink[300] }]}>
+            <Text style={[styles.hint, { color: theme.textMuted }]}>
               {t.hint}
             </Text>
 
@@ -140,16 +140,16 @@ export default function ClaimCardScreen() {
               value={editLink}
               onChangeText={handleEditLinkChange}
               placeholder={t.editLinkPlaceholder}
-              placeholderTextColor={theme.ink[400]}
+              placeholderTextColor={theme.textFaint}
               autoCapitalize="none"
               autoCorrect={false}
               keyboardType="url"
               style={[
                 styles.input,
                 {
-                  color: theme.ink[100],
+                  color: theme.text,
                   borderColor: theme.line.DEFAULT,
-                  backgroundColor: theme.bg[1],
+                  backgroundColor: theme.pageBg,
                 },
               ]}
             />
@@ -159,7 +159,7 @@ export default function ClaimCardScreen() {
               <View
                 style={[styles.dividerLine, { backgroundColor: theme.line.DEFAULT }]}
               />
-              <Text style={[styles.dividerText, { color: theme.ink[400] }]}>
+              <Text style={[styles.dividerText, { color: theme.textFaint }]}>
                 {t.orDivider}
               </Text>
               <View
@@ -168,29 +168,29 @@ export default function ClaimCardScreen() {
             </View>
 
             {/* Order ID field */}
-            <Text style={[styles.label, { color: theme.ink[300] }]}>
+            <Text style={[styles.label, { color: theme.textMuted }]}>
               {t.orderIdLabel}
             </Text>
             <TextInput
               value={orderId}
               onChangeText={(v) => setOrderId(v)}
               placeholder={t.orderIdPlaceholder}
-              placeholderTextColor={theme.ink[400]}
+              placeholderTextColor={theme.textFaint}
               autoCapitalize="none"
               autoCorrect={false}
               style={[
                 styles.input,
                 {
-                  color: theme.ink[100],
+                  color: theme.text,
                   borderColor: theme.line.DEFAULT,
-                  backgroundColor: theme.bg[1],
+                  backgroundColor: theme.pageBg,
                 },
               ]}
             />
 
             {/* Edit token field */}
             <Text
-              style={[styles.label, { color: theme.ink[300], marginTop: 12 }]}
+              style={[styles.label, { color: theme.textMuted, marginTop: 12 }]}
             >
               {t.tokenLabel}
             </Text>
@@ -198,21 +198,21 @@ export default function ClaimCardScreen() {
               value={token}
               onChangeText={(v) => setToken(v)}
               placeholder={t.tokenPlaceholder}
-              placeholderTextColor={theme.ink[400]}
+              placeholderTextColor={theme.textFaint}
               autoCapitalize="none"
               autoCorrect={false}
               style={[
                 styles.input,
                 {
-                  color: theme.ink[100],
+                  color: theme.text,
                   borderColor: theme.line.DEFAULT,
-                  backgroundColor: theme.bg[1],
+                  backgroundColor: theme.pageBg,
                 },
               ]}
             />
 
             {error ? (
-              <Text style={[styles.errorText, { color: signal.err }]}>
+              <Text style={[styles.errorText, { color: theme.signalErr }]}>
                 {error}
               </Text>
             ) : null}
@@ -224,7 +224,7 @@ export default function ClaimCardScreen() {
               style={[
                 styles.claimBtn,
                 {
-                  backgroundColor: teal[500],
+                  backgroundColor: accent,
                   opacity: !canSubmit || claiming ? 0.55 : 1,
                 },
               ]}

@@ -2,7 +2,6 @@ import { useState, useEffect, useMemo } from 'react';
 import {
   View,
   Text,
-  Switch,
   StyleSheet,
   Alert,
   TouchableOpacity,
@@ -13,11 +12,18 @@ import {
   Share,
   ActivityIndicator,
 } from 'react-native';
+import { TextInput } from 'react-native';
 import { Stack, useRouter } from 'expo-router';
 import Constants from 'expo-constants';
 import { ScreenContainer } from '../../src/components/ui/ScreenContainer';
 import { Button } from '../../src/components/ui/Button';
-import { BrandHeader } from '../../src/components/ui/BrandHeader';
+import { AppBar } from '../../src/components/ui/AppBar';
+import { SectionLabel } from '../../src/components/ui/SectionLabel';
+import { Row, RowGroup } from '../../src/components/ui/Row';
+import { Toggle } from '../../src/components/ui/Toggle';
+import { Avatar } from '../../src/components/ui/Avatar';
+import { Chip } from '../../src/components/ui/Chip';
+import { useToast } from '../../src/components/ui/Toast';
 import { useAuthStore } from '../../src/lib/auth/store';
 import { getMyReferral, type ReferralMeResponse } from '../../src/lib/api/referrals';
 import { getShareSummary, type ShareSummary } from '../../src/lib/api/share-events';
@@ -31,7 +37,6 @@ import { listCards } from '../../src/lib/api/cards';
 import { getAccessToken, API_BASE } from '../../src/lib/api/client';
 import { PaywallModal } from '../../src/components/billing/PaywallModal';
 import * as WebBrowser from 'expo-web-browser';
-import { TextInput } from 'react-native';
 import type { NotificationPrefs } from '../../src/lib/api/types';
 import {
   isBiometricEnabled,
@@ -40,9 +45,8 @@ import {
   disableBiometric,
 } from '../../src/lib/auth/biometric';
 import { useTheme } from '../../src/lib/theme/ThemeProvider';
-import { teal, copper } from '../../src/lib/theme/tokens';
-
-const copperHex = copper[500];
+import { accent, accentScale } from '../../src/lib/theme/tokens';
+import { typography } from '../../src/lib/theme/typography';
 import {
   useTranslations,
   detectLocale,
@@ -50,7 +54,7 @@ import {
   type Locale,
 } from '../../src/lib/i18n/locale';
 import { applyRTLForLocale } from '../../src/lib/i18n/direction';
-import { Check, KeyRound } from 'lucide-react-native';
+import { Check, KeyRound, ChevronRight, Bell } from 'lucide-react-native';
 import {
   useThemeStore,
   type AppThemeMode,
@@ -133,8 +137,7 @@ const LOCALE_PICKER_ORDER: Locale[] = ['en', 'de', 'tr', 'es', 'it', 'fr', 'ar']
 
 export default function SettingsScreen() {
   const theme = useTheme();
-  // Subscribe to the locale store so the segment control re-renders
-  // immediately on selection. detectLocale() reads from the same store.
+  const { showToast } = useToast();
   const localeOverride = useLocaleStore((s) => s.override);
   const setLocaleOverride = useLocaleStore((s) => s.setOverride);
   const themeMode = useThemeStore((s) => s.mode);
@@ -152,14 +155,8 @@ export default function SettingsScreen() {
   const [bioEnabled, setBioEnabled] = useState(false);
   const [bioAvailable, setBioAvailable] = useState(false);
   const [whatsNewOpen, setWhatsNewOpen] = useState(false);
-  // M3 — referral + sharing analytics. Both are best-effort fetches that
-  // self-hide on error (the user just doesn't see the panel until next mount).
   const [referral, setReferral] = useState<ReferralMeResponse | null>(null);
   const [shareSummary, setShareSummary] = useState<ShareSummary | null>(null);
-  // M4 — notification preference toggles. Seeded from the auth-store user
-  // (the server-side default of "all on" is mirrored here as the fallback so
-  // the toggles render correctly even before /api/v1/auth/me has hydrated
-  // the prefs field).
   const [prefs, setPrefs] = useState<NotificationPrefs>(() =>
     user?.notificationPrefs ?? {
       messages: true,
@@ -168,16 +165,10 @@ export default function SettingsScreen() {
       eventReminders: true,
     },
   );
-  // Track whether a PATCH is in-flight per category — prevents the toggle
-  // from optimistic-flipping twice while the network round-trip resolves.
   const [savingPref, setSavingPref] = useState<keyof NotificationPrefs | null>(
     null,
   );
 
-  // If the auth store updates (e.g. user re-hydrates with a fresh server
-  // response), pull the prefs in. Done once-on-change — local optimistic
-  // changes are not stomped because the auth store only updates on login /
-  // hydrate / explicit setUser, not on every PATCH.
   useEffect(() => {
     if (user?.notificationPrefs) {
       setPrefs(user.notificationPrefs);
@@ -190,15 +181,12 @@ export default function SettingsScreen() {
     setPrefs({ ...prev, [key]: next });
     try {
       const updated = await patchMe({ notificationPrefs: { [key]: next } });
-      // Trust the server response (handles concurrent toggles cleanly).
       if (updated.notificationPrefs) {
         setPrefs(updated.notificationPrefs);
       }
-      // Mirror into auth store so other screens see the fresh prefs.
       const setUser = useAuthStore.getState().setUser;
       setUser({ ...(useAuthStore.getState().user ?? updated), ...updated });
     } catch {
-      // Roll back on failure.
       setPrefs(prev);
     } finally {
       setSavingPref(null);
@@ -212,7 +200,6 @@ export default function SettingsScreen() {
         setBioAvailable(a);
       },
     );
-    // Fire both in parallel; failures suppressed (panels just don't render).
     void getMyReferral()
       .then((r) => setReferral(r))
       .catch(() => setReferral(null));
@@ -278,16 +265,10 @@ export default function SettingsScreen() {
     osLocale.toUpperCase(),
   );
 
-  // Locale change handler — applies RTL for ar/ltr for others, and prompts a
-  // restart when direction changes (I18nManager.forceRTL only takes effect on
-  // the next process start). For locales that don't change direction (e.g.
-  // en → de), the override is set silently and the UI re-renders.
   const handleLocaleChange = (next: Locale) => {
     setLocaleOverride(next);
     const { restartRequired } = applyRTLForLocale(next);
     if (restartRequired) {
-      // Without `expo-updates` we ask the user to manually relaunch — the
-      // direction switch will then take effect for every flex-row layout.
       Alert.alert(
         next === 'ar' ? 'إعادة تشغيل مطلوبة' : 'Restart required',
         next === 'ar'
@@ -299,9 +280,6 @@ export default function SettingsScreen() {
   };
 
   const copyLine = async (label: string, value: string) => {
-    // No native clipboard module in the deps — fall back to Share so the user
-    // can paste into Messages / Notes manually. Keeps the brief's
-    // "copyable on long-press" intent without a new dependency.
     try {
       await Share.share({ message: `${label}: ${value}` });
     } catch {
@@ -309,396 +287,416 @@ export default function SettingsScreen() {
     }
   };
 
+  const displayName = (user as { name?: string } | null)?.name ?? undefined;
+  const avatarUri = (user as { avatarUrl?: string } | null)?.avatarUrl ?? undefined;
+
   return (
     <>
-      <Stack.Screen options={{ title: t.title }} />
-      <ScreenContainer scrollable>
-        <BrandHeader />
-        {/* ---------- ACCOUNT ---------- */}
-        <SectionHeader theme={theme}>{t.account}</SectionHeader>
-        <Card theme={theme}>
-          <Text style={[styles.label, { color: theme.ink[400] }]}>
-            {t.signedInAs}
-          </Text>
-          <Text style={[styles.value, { color: theme.ink[100] }]}>
-            {user?.email ?? '—'}
-          </Text>
-        </Card>
+      <Stack.Screen options={{ headerShown: false }} />
+      <ScreenContainer padded={false} scrollable>
+        {/* AppBar large */}
+        <AppBar variant="large" title={t.title} />
 
-        {/* Biometric — only if hardware available */}
-        {bioAvailable ? (
-          <>
-            <SectionHeader theme={theme}>{t.security}</SectionHeader>
-            <Card
+        <View style={styles.content}>
+          {/* ---------- PROFILE CARD ---------- */}
+          {(displayName || user?.email) ? (
+            <>
+              <SectionLabel style={styles.sectionLabel}>{t.account.toUpperCase()}</SectionLabel>
+              <Pressable
+                onPress={() => {
+                  // M6: feature-flag — wire to /api/v1/me/profile PATCH when backend is ready
+                  showToast({ message: t.editProfileSoon, variant: 'success' });
+                }}
+                style={({ pressed }) => [
+                  styles.profileCard,
+                  {
+                    backgroundColor: theme.surface,
+                    borderColor: theme.line.DEFAULT,
+                    opacity: pressed ? 0.92 : 1,
+                  },
+                ]}
+                accessibilityRole="button"
+                accessibilityLabel={t.editProfile}
+              >
+                <Avatar
+                  name={displayName ?? user?.email}
+                  imageUri={avatarUri}
+                  size={52}
+                />
+                <View style={styles.profileInfo}>
+                  {displayName ? (
+                    <Text style={[typography.title2, { color: theme.text }]} numberOfLines={1}>
+                      {displayName}
+                    </Text>
+                  ) : null}
+                  <Text
+                    style={[
+                      typography.bodySmall,
+                      { color: theme.textMuted, marginTop: displayName ? 2 : 0 },
+                    ]}
+                    numberOfLines={1}
+                  >
+                    {user?.email ?? '—'}
+                  </Text>
+                </View>
+                <ChevronRight size={18} color={theme.textFaint} />
+              </Pressable>
+            </>
+          ) : (
+            <>
+              <SectionLabel style={styles.sectionLabel}>{t.account.toUpperCase()}</SectionLabel>
+              <RowGroup style={styles.rowGroup}>
+                <Row
+                  title={t.signedInAs}
+                  subtitle={user?.email ?? '—'}
+                  divider={false}
+                />
+              </RowGroup>
+            </>
+          )}
+
+          {/* ---------- APPEARANCE ---------- */}
+          <SectionLabel style={styles.sectionLabel}>{t.appearance.toUpperCase()}</SectionLabel>
+          <View
+            style={[
+              styles.segmentCard,
+              {
+                backgroundColor: theme.surface,
+                borderColor: theme.line.DEFAULT,
+              },
+            ]}
+          >
+            <SegmentedControl
+              value={themeMode}
+              options={themeOptions}
+              onChange={(k) => setThemeMode(k)}
               theme={theme}
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-              }}
-            >
-              <View style={{ flex: 1, paddingRight: 12 }}>
-                <Text style={[styles.value, { color: theme.ink[100] }]}>
-                  {t.biometricUnlock}
-                </Text>
-                <Text
-                  style={[
-                    styles.label,
-                    { color: theme.ink[400], marginTop: 2 },
-                  ]}
-                >
-                  {t.biometricBody}
-                </Text>
-              </View>
-              <Switch
-                value={bioEnabled}
-                onValueChange={(v) => void toggleBio(v)}
-                trackColor={{ true: teal[500], false: theme.line.firm }}
-              />
-            </Card>
-          </>
-        ) : null}
+            />
+          </View>
 
-        {/* ---------- M3 — REFER A FRIEND ---------- */}
-        {referral ? (
-          <>
-            <SectionHeader theme={theme}>{tReferral.title}</SectionHeader>
-            <Card theme={theme}>
-              <Text style={[styles.label, { color: theme.ink[400] }]}>
-                {tReferral.yourCode}
-              </Text>
+          {/* ---------- LANGUAGE ---------- */}
+          <SectionLabel style={styles.sectionLabel}>{t.language.toUpperCase()}</SectionLabel>
+          <View
+            style={[
+              styles.card,
+              {
+                backgroundColor: theme.surface,
+                borderColor: theme.line.DEFAULT,
+              },
+            ]}
+          >
+            <LocalePickerList
+              theme={theme}
+              options={langOptions}
+              value={localeOverride ?? activeLocale}
+              onChange={handleLocaleChange}
+            />
+            <View
+              style={{
+                height: StyleSheet.hairlineWidth,
+                backgroundColor: theme.line.DEFAULT,
+                marginVertical: 8,
+              }}
+            />
+            <TouchableOpacity
+              onPress={() => setLocaleOverride(null as LocaleOverride)}
+              activeOpacity={0.7}
+              style={{ paddingVertical: 8 }}
+            >
               <Text
                 style={[
-                  styles.value,
-                  { color: theme.ink[100], fontSize: 22, letterSpacing: 2, marginTop: 4 },
+                  typography.bodySmall,
+                  {
+                    color: localeOverride === null ? accent : theme.textMuted,
+                    fontWeight: '500',
+                  },
                 ]}
               >
-                {referral.code}
+                {t.languageSystemDefault}
+                {localeOverride === null ? '  •' : ''}
               </Text>
-              <Text
-                style={[styles.hint, { color: theme.ink[400], marginTop: 8 }]}
-              >
-                {tReferral.hint}
-              </Text>
-              <View style={[styles.rowBetween, { marginTop: 12 }]}>
-                <Text style={[styles.label, { color: theme.ink[400] }]}>
-                  {tReferral.redemptions}
-                </Text>
-                <Text style={[styles.value, { color: copperHex }]}>
-                  {referral.redemptions}
-                </Text>
-              </View>
-              <TouchableOpacity
-                onPress={() =>
-                  void Share.share({
-                    message: referral.deepLink,
-                    url: referral.deepLink,
-                  }).catch(() => {})
-                }
-                activeOpacity={0.85}
-                style={{
-                  marginTop: 14,
-                  borderRadius: 999,
-                  paddingVertical: 12,
-                  alignItems: 'center',
-                  backgroundColor: copperHex,
-                }}
-              >
-                <Text style={{ color: '#FFFFFF', fontWeight: '700' }}>
-                  {tReferral.shareLink}
-                </Text>
-              </TouchableOpacity>
-            </Card>
-          </>
-        ) : null}
+            </TouchableOpacity>
+            <Text
+              style={[typography.caption, { color: theme.textFaint, marginTop: 4 }]}
+            >
+              {localeHint}
+            </Text>
+          </View>
 
-        {/* ---------- M3 — SHARING ANALYTICS ---------- */}
-        {shareSummary ? (
-          <>
-            <SectionHeader theme={theme}>{tSharing.title}</SectionHeader>
-            <Card theme={theme}>
-              <Text style={[styles.hint, { color: theme.ink[400] }]}>
-                {tSharing.hint}
-              </Text>
-              {shareSummary.total === 0 ? (
+          {/* ---------- NOTIFICATIONS ---------- */}
+          <SectionLabel style={styles.sectionLabel}>{t.notifications.toUpperCase()}</SectionLabel>
+          <RowGroup style={styles.rowGroup}>
+            <Row
+              title={t.notifications}
+              subtitle={t.notifMessages + ', ' + t.notifInboxRequests + '…'}
+              leading={<Bell size={18} color={accent} />}
+              trailing={<Chip label="Configure" variant="default" />}
+              onPress={() => router.push('/(app)/settings/notifications' as never)}
+              divider={false}
+            />
+          </RowGroup>
+
+          {/* ---------- SECURITY / PRIVACY ---------- */}
+          {bioAvailable ? (
+            <>
+              <SectionLabel style={styles.sectionLabel}>{t.security.toUpperCase()}</SectionLabel>
+              <RowGroup style={styles.rowGroup}>
+                <Row
+                  title={t.biometricUnlock}
+                  subtitle={t.biometricBody}
+                  trailing={
+                    <Toggle
+                      value={bioEnabled}
+                      onChange={(v) => void toggleBio(v)}
+                    />
+                  }
+                  divider={false}
+                />
+              </RowGroup>
+            </>
+          ) : null}
+
+          <SectionLabel style={styles.sectionLabel}>{t.privacyData.toUpperCase()}</SectionLabel>
+          <RowGroup style={styles.rowGroup}>
+            <Row
+              title={t.exportData}
+              trailing={
+                <Text style={[typography.caption, { color: theme.textFaint }]}>
+                  {t.comingSoon}
+                </Text>
+              }
+              divider={false}
+            />
+            <Row
+              title={t.deleteAccount}
+              trailing={
+                <Text style={[typography.caption, { color: theme.textFaint }]}>
+                  {t.comingSoon}
+                </Text>
+              }
+            />
+          </RowGroup>
+
+          {/* ---------- M3 — REFER A FRIEND ---------- */}
+          {referral ? (
+            <>
+              <SectionLabel style={styles.sectionLabel}>{tReferral.title.toUpperCase()}</SectionLabel>
+              <View
+                style={[
+                  styles.card,
+                  {
+                    backgroundColor: theme.surface,
+                    borderColor: theme.line.DEFAULT,
+                  },
+                ]}
+              >
+                <Text style={[typography.caption, { color: theme.textFaint }]}>
+                  {tReferral.yourCode}
+                </Text>
                 <Text
                   style={[
-                    styles.value,
-                    { color: theme.ink[300], marginTop: 12 },
+                    typography.display2,
+                    { color: theme.text, marginTop: 4, letterSpacing: 3 },
                   ]}
                 >
-                  {tSharing.empty}
+                  {referral.code}
                 </Text>
-              ) : (
-                <>
-                  <View style={[styles.rowBetween, { marginTop: 10, marginBottom: 8 }]}>
-                    <Text style={[styles.label, { color: theme.ink[400] }]}>
-                      {tSharing.total}
-                    </Text>
-                    <Text style={[styles.value, { color: theme.ink[100] }]}>
-                      {shareSummary.total}
-                    </Text>
-                  </View>
-                  {(['qr', 'link', 'nfc', 'native_share'] as const).map((ch) => {
-                    const count = shareSummary.totals[ch] ?? 0;
-                    const pct =
-                      shareSummary.total > 0
-                        ? Math.round((count / shareSummary.total) * 100)
-                        : 0;
-                    return (
-                      <View key={ch} style={{ marginTop: 8 }}>
-                        <View
-                          style={[
-                            styles.rowBetween,
-                            { marginBottom: 4 },
-                          ]}
-                        >
-                          <Text style={[styles.label, { color: theme.ink[300] }]}>
-                            {tSharing.channels[ch]}
-                          </Text>
-                          <Text
-                            style={[styles.label, { color: theme.ink[200] }]}
-                          >
-                            {count}
-                          </Text>
-                        </View>
-                        <View
-                          style={{
-                            height: 6,
-                            borderRadius: 999,
-                            backgroundColor: theme.bg[2],
-                            overflow: 'hidden',
-                          }}
-                        >
+                <Text
+                  style={[typography.bodySmall, { color: theme.textFaint, marginTop: 8 }]}
+                >
+                  {tReferral.hint}
+                </Text>
+                <View style={[styles.rowBetween, { marginTop: 12 }]}>
+                  <Text style={[typography.caption, { color: theme.textFaint }]}>
+                    {tReferral.redemptions}
+                  </Text>
+                  <Text style={[typography.bodyMedium, { color: accent }]}>
+                    {referral.redemptions}
+                  </Text>
+                </View>
+                <TouchableOpacity
+                  onPress={() =>
+                    void Share.share({
+                      message: referral.deepLink,
+                      url: referral.deepLink,
+                    }).catch(() => {})
+                  }
+                  activeOpacity={0.85}
+                  style={{
+                    marginTop: 14,
+                    borderRadius: 999,
+                    paddingVertical: 12,
+                    alignItems: 'center',
+                    backgroundColor: accent,
+                  }}
+                >
+                  <Text style={[typography.button, { color: '#FFFFFF' }]}>
+                    {tReferral.shareLink}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </>
+          ) : null}
+
+          {/* ---------- M3 — SHARING ANALYTICS ---------- */}
+          {shareSummary ? (
+            <>
+              <SectionLabel style={styles.sectionLabel}>{tSharing.title.toUpperCase()}</SectionLabel>
+              <View
+                style={[
+                  styles.card,
+                  {
+                    backgroundColor: theme.surface,
+                    borderColor: theme.line.DEFAULT,
+                  },
+                ]}
+              >
+                <Text style={[typography.bodySmall, { color: theme.textFaint }]}>
+                  {tSharing.hint}
+                </Text>
+                {shareSummary.total === 0 ? (
+                  <Text
+                    style={[typography.title3, { color: theme.textMuted, marginTop: 12 }]}
+                  >
+                    {tSharing.empty}
+                  </Text>
+                ) : (
+                  <>
+                    <View style={[styles.rowBetween, { marginTop: 10, marginBottom: 8 }]}>
+                      <Text style={[typography.caption, { color: theme.textFaint }]}>
+                        {tSharing.total}
+                      </Text>
+                      <Text style={[typography.title3, { color: theme.text }]}>
+                        {shareSummary.total}
+                      </Text>
+                    </View>
+                    {(['qr', 'link', 'nfc', 'native_share'] as const).map((ch) => {
+                      const count = shareSummary.totals[ch] ?? 0;
+                      const pct =
+                        shareSummary.total > 0
+                          ? Math.round((count / shareSummary.total) * 100)
+                          : 0;
+                      return (
+                        <View key={ch} style={{ marginTop: 8 }}>
+                          <View style={[styles.rowBetween, { marginBottom: 4 }]}>
+                            <Text style={[typography.caption, { color: theme.textMuted }]}>
+                              {tSharing.channels[ch]}
+                            </Text>
+                            <Text style={[typography.caption, { color: theme.textSecondary }]}>
+                              {count}
+                            </Text>
+                          </View>
                           <View
                             style={{
                               height: 6,
-                              width: `${pct}%`,
-                              backgroundColor: copperHex,
+                              borderRadius: 999,
+                              backgroundColor: theme.surfaceMuted,
+                              overflow: 'hidden',
                             }}
-                          />
+                          >
+                            <View
+                              style={{
+                                height: 6,
+                                width: `${pct}%`,
+                                backgroundColor: accent,
+                              }}
+                            />
+                          </View>
                         </View>
-                      </View>
-                    );
-                  })}
-                </>
-              )}
-            </Card>
-          </>
-        ) : null}
+                      );
+                    })}
+                  </>
+                )}
+              </View>
+            </>
+          ) : null}
 
-        {/* ---------- APPEARANCE ---------- */}
-        <SectionHeader theme={theme}>{t.appearance}</SectionHeader>
-        <Card theme={theme}>
-          <SegmentedControl
-            value={themeMode}
-            options={themeOptions}
-            onChange={(k) => setThemeMode(k)}
-            inkColor={theme.ink[200]}
-            bgColor={theme.bg[1]}
-            borderColor={theme.line.DEFAULT}
-          />
-        </Card>
-
-        {/* ---------- LANGUAGE ---------- */}
-        <SectionHeader theme={theme}>{t.language}</SectionHeader>
-        <Card theme={theme}>
-          <LocalePickerList
+          {/* ---------- M5 — PRO ---------- */}
+          <ProSection
             theme={theme}
-            options={langOptions}
-            value={localeOverride ?? activeLocale}
-            onChange={handleLocaleChange}
-          />
-          <View
-            style={{
-              height: StyleSheet.hairlineWidth,
-              backgroundColor: theme.line.DEFAULT,
-              marginVertical: 8,
+            isPro={Boolean(user?.isPro)}
+            locale={activeLocale}
+            tPro={tAll.pro}
+            tBilling={tAll.billing}
+            onUpgraded={async () => {
+              try {
+                const me = await fetchMe();
+                const setUser = useAuthStore.getState().setUser;
+                setUser(me);
+              } catch {
+                // ignore
+              }
             }}
+            router={router}
           />
-          <TouchableOpacity
-            onPress={() => setLocaleOverride(null as LocaleOverride)}
-            activeOpacity={0.7}
-            style={{ paddingVertical: 8 }}
-          >
-            <Text
-              style={{
-                color: localeOverride === null ? teal[500] : theme.ink[300],
-                fontSize: 13,
-                fontWeight: '500',
-              }}
-            >
-              {t.languageSystemDefault}
-              {localeOverride === null ? '  •' : ''}
-            </Text>
-          </TouchableOpacity>
-          <Text
-            style={[styles.hint, { color: theme.ink[400], marginTop: 6 }]}
-          >
-            {localeHint}
-          </Text>
-        </Card>
 
-        {/* ---------- NOTIFICATIONS ---------- */}
-        <SectionHeader theme={theme}>{t.notifications}</SectionHeader>
-        <Card theme={theme}>
-          <NotifToggleRow
-            theme={theme}
-            label={t.notifMessages}
-            body={t.notifMessagesBody}
-            value={prefs.messages}
-            saving={savingPref === 'messages'}
-            onChange={(v) => void togglePref('messages', v)}
-          />
-          <Divider theme={theme} />
-          <NotifToggleRow
-            theme={theme}
-            label={t.notifInboxRequests}
-            body={t.notifInboxRequestsBody}
-            value={prefs.inboxRequests}
-            saving={savingPref === 'inboxRequests'}
-            onChange={(v) => void togglePref('inboxRequests', v)}
-          />
-          <Divider theme={theme} />
-          <NotifToggleRow
-            theme={theme}
-            label={t.notifMutualSaves}
-            body={t.notifMutualSavesBody}
-            value={prefs.mutualSaves}
-            saving={savingPref === 'mutualSaves'}
-            onChange={(v) => void togglePref('mutualSaves', v)}
-          />
-          <Divider theme={theme} />
-          <NotifToggleRow
-            theme={theme}
-            label={t.notifEventReminders}
-            body={t.notifEventRemindersBody}
-            value={prefs.eventReminders}
-            saving={savingPref === 'eventReminders'}
-            onChange={(v) => void togglePref('eventReminders', v)}
-          />
-        </Card>
-
-        {/* ---------- M5 — PRO ---------- */}
-        <ProSection
-          theme={theme}
-          isPro={Boolean(user?.isPro)}
-          locale={activeLocale}
-          tPro={tAll.pro}
-          tBilling={tAll.billing}
-          onUpgraded={async () => {
-            try {
-              const me = await fetchMe();
-              const setUser = useAuthStore.getState().setUser;
-              setUser(me);
-            } catch {
-              // ignore
-            }
-          }}
-          router={router}
-        />
-
-        {/* ---------- FIX 1.8 — CARDS ---------- */}
-        <SectionHeader theme={theme}>{t.cardsSection}</SectionHeader>
-        <Card theme={theme}>
-          <TouchableOpacity
-            onPress={() => router.push('/(app)/cards/claim' as never)}
-            activeOpacity={0.7}
-            style={styles.rowBetween}
-          >
-            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, flex: 1 }}>
-              <View
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: 10,
-                  backgroundColor: teal[50],
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
-              >
-                <KeyRound size={18} color={teal[600]} />
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text style={[styles.value, { color: theme.ink[100] }]}>
-                  {t.claimCard}
-                </Text>
-                <Text
-                  style={[styles.label, { color: theme.ink[400], marginTop: 2 }]}
+          {/* ---------- CARDS ---------- */}
+          <SectionLabel style={styles.sectionLabel}>{t.cardsSection.toUpperCase()}</SectionLabel>
+          <RowGroup style={styles.rowGroup}>
+            <Row
+              title={t.claimCard}
+              subtitle={t.claimCardBody}
+              leading={
+                <View
+                  style={{
+                    width: 32,
+                    height: 32,
+                    borderRadius: 10,
+                    backgroundColor: accentScale[50],
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}
                 >
-                  {t.claimCardBody}
-                </Text>
-              </View>
-            </View>
-            <Text style={{ color: theme.ink[400], fontSize: 18 }}>›</Text>
-          </TouchableOpacity>
-        </Card>
+                  <KeyRound size={16} color={accent} />
+                </View>
+              }
+              chevron
+              onPress={() => router.push('/(app)/cards/claim' as never)}
+              divider={false}
+            />
+          </RowGroup>
 
-        {/* ---------- PRIVACY & DATA ---------- */}
-        <SectionHeader theme={theme}>{t.privacyData}</SectionHeader>
-        <Card theme={theme} disabled>
-          <View style={styles.rowBetween}>
-            <Text style={[styles.value, { color: theme.ink[300] }]}>
-              {t.exportData}
-            </Text>
-            <Text style={[styles.label, { color: theme.ink[400] }]}>
-              {t.comingSoon}
-            </Text>
-          </View>
-        </Card>
-        <Card theme={theme} disabled>
-          <View style={styles.rowBetween}>
-            <Text style={[styles.value, { color: theme.ink[300] }]}>
-              {t.deleteAccount}
-            </Text>
-            <Text style={[styles.label, { color: theme.ink[400] }]}>
-              {t.comingSoon}
-            </Text>
-          </View>
-        </Card>
-
-        {/* ---------- ABOUT ---------- */}
-        <SectionHeader theme={theme}>{t.about}</SectionHeader>
-        <Card theme={theme}>
-          <InfoRow
-            theme={theme}
-            label={t.version}
-            value={appVersion}
-            onLongPress={() => void copyLine(t.version, appVersion)}
-          />
-          <Divider theme={theme} />
-          <InfoRow
-            theme={theme}
-            label={t.buildNumber}
-            value={buildNumber}
-            onLongPress={() => void copyLine(t.buildNumber, buildNumber)}
-          />
-          <Divider theme={theme} />
-          <InfoRow
-            theme={theme}
-            label={t.platform}
-            value={platformString}
-            onLongPress={() => void copyLine(t.platform, platformString)}
-          />
-        </Card>
-        <TouchableOpacity
-          onPress={() => setWhatsNewOpen(true)}
-          activeOpacity={0.7}
-          style={{ marginTop: 4, paddingVertical: 10 }}
-        >
-          <Text
-            style={{ color: teal[500], fontSize: 14, fontWeight: '600' }}
+          {/* ---------- ABOUT ---------- */}
+          <SectionLabel style={styles.sectionLabel}>{t.about.toUpperCase()}</SectionLabel>
+          <RowGroup style={styles.rowGroup}>
+            <InfoRow
+              theme={theme}
+              label={t.version}
+              value={appVersion}
+              onLongPress={() => void copyLine(t.version, appVersion)}
+              divider={false}
+            />
+            <InfoRow
+              theme={theme}
+              label={t.buildNumber}
+              value={buildNumber}
+              onLongPress={() => void copyLine(t.buildNumber, buildNumber)}
+            />
+            <InfoRow
+              theme={theme}
+              label={t.platform}
+              value={platformString}
+              onLongPress={() => void copyLine(t.platform, platformString)}
+            />
+          </RowGroup>
+          <TouchableOpacity
+            onPress={() => setWhatsNewOpen(true)}
+            activeOpacity={0.7}
+            style={{ marginTop: 8, paddingVertical: 10 }}
           >
-            {t.whatsNew}  →
-          </Text>
-        </TouchableOpacity>
+            <Text style={[typography.button, { color: accent }]}>
+              {t.whatsNew}  →
+            </Text>
+          </TouchableOpacity>
 
-        <Button
-          label={t.signOut}
-          onPress={() => void handleSignOut()}
-          variant="ghost"
-          style={{ marginTop: 24 }}
-        />
+          {/* ---------- SIGN OUT ---------- */}
+          <Button
+            label={t.signOut}
+            onPress={() => void handleSignOut()}
+            variant="ghost"
+            style={{ marginTop: 24, marginBottom: 16 }}
+          />
+        </View>
       </ScreenContainer>
 
       <WhatsNewModal
@@ -715,126 +713,38 @@ export default function SettingsScreen() {
 // Subcomponents
 // -------------------------------------------------------------------------
 
-function SectionHeader({
-  theme,
-  children,
-}: {
-  theme: ReturnType<typeof useTheme>;
-  children: string;
-}) {
-  return (
-    <Text
-      style={[
-        styles.section,
-        { color: theme.ink[100], opacity: 0.55 },
-      ]}
-    >
-      {children}
-    </Text>
-  );
-}
-
-function Card({
-  theme,
-  children,
-  style,
-  disabled,
-}: {
-  theme: ReturnType<typeof useTheme>;
-  children: React.ReactNode;
-  style?: React.ComponentProps<typeof View>['style'];
-  disabled?: boolean;
-}) {
-  return (
-    <View
-      style={[
-        styles.card,
-        {
-          backgroundColor: theme.bg[1],
-          borderColor: theme.line.DEFAULT,
-          opacity: disabled ? 0.7 : 1,
-        },
-        style,
-      ]}
-    >
-      {children}
-    </View>
-  );
-}
-
-function Divider({ theme }: { theme: ReturnType<typeof useTheme> }) {
-  return (
-    <View
-      style={{
-        height: StyleSheet.hairlineWidth,
-        backgroundColor: theme.line.DEFAULT,
-        marginVertical: 10,
-      }}
-    />
-  );
-}
-
-function NotifToggleRow({
-  theme,
-  label,
-  body,
-  value,
-  saving,
-  onChange,
-}: {
-  theme: ReturnType<typeof useTheme>;
-  label: string;
-  body: string;
-  value: boolean;
-  saving: boolean;
-  onChange: (next: boolean) => void;
-}) {
-  return (
-    <View style={styles.rowBetween}>
-      <View style={{ flex: 1, paddingRight: 12 }}>
-        <Text style={[styles.value, { color: theme.ink[100] }]}>{label}</Text>
-        <Text
-          style={[
-            styles.label,
-            { color: theme.ink[400], marginTop: 2, fontSize: 12 },
-          ]}
-        >
-          {body}
-        </Text>
-      </View>
-      <Switch
-        value={value}
-        onValueChange={onChange}
-        disabled={saving}
-        trackColor={{ false: theme.bg[2], true: copperHex }}
-        thumbColor={'#fff'}
-      />
-    </View>
-  );
-}
-
 function InfoRow({
   theme,
   label,
   value,
   onLongPress,
+  divider = true,
 }: {
   theme: ReturnType<typeof useTheme>;
   label: string;
   value: string;
   onLongPress: () => void;
+  divider?: boolean;
 }) {
   return (
     <Pressable
       onLongPress={onLongPress}
       delayLongPress={400}
       style={({ pressed }) => [
-        styles.rowBetween,
+        styles.infoRow,
+        divider && {
+          borderTopWidth: StyleSheet.hairlineWidth,
+          borderTopColor: theme.line.DEFAULT,
+        },
         { opacity: pressed ? 0.6 : 1 },
       ]}
     >
-      <Text style={[styles.label, { color: theme.ink[400] }]}>{label}</Text>
-      <Text style={[styles.value, { color: theme.ink[100] }]}>{value}</Text>
+      <Text style={[typography.bodySmall, { color: theme.textFaint, flex: 1 }]}>
+        {label}
+      </Text>
+      <Text style={[typography.bodySmall, { color: theme.text, fontWeight: '500' }]}>
+        {value}
+      </Text>
     </Pressable>
   );
 }
@@ -855,8 +765,6 @@ function LocalePickerList({
       {options.map((opt, idx) => {
         const selected = opt.key === value;
         const isLast = idx === options.length - 1;
-        // Right-align Arabic in its own row so the native script reads
-        // naturally; everything else stays start-aligned.
         const isArabic = opt.key === 'ar';
         return (
           <TouchableOpacity
@@ -873,18 +781,20 @@ function LocalePickerList({
             }}
           >
             <Text
-              style={{
-                color: selected ? teal[500] : theme.ink[100],
-                fontSize: 15,
-                fontWeight: selected ? '600' : '500',
-                flex: 1,
-                writingDirection: isArabic ? 'rtl' : 'ltr',
-                textAlign: isArabic ? 'right' : 'left',
-              }}
+              style={[
+                typography.title3,
+                {
+                  color: selected ? accent : theme.text,
+                  fontWeight: selected ? '600' : '500',
+                  flex: 1,
+                  writingDirection: isArabic ? 'rtl' : 'ltr',
+                  textAlign: isArabic ? 'right' : 'left',
+                },
+              ]}
             >
               {opt.label}
             </Text>
-            {selected ? <Check size={18} color={teal[500]} strokeWidth={2.5} /> : null}
+            {selected ? <Check size={18} color={accent} strokeWidth={2.5} /> : null}
           </TouchableOpacity>
         );
       })}
@@ -896,16 +806,12 @@ function SegmentedControl<T extends string>({
   value,
   options,
   onChange,
-  inkColor,
-  bgColor,
-  borderColor,
+  theme,
 }: {
   value: T;
   options: { key: T; label: string }[];
   onChange: (k: T) => void;
-  inkColor: string;
-  bgColor: string;
-  borderColor: string;
+  theme: ReturnType<typeof useTheme>;
 }) {
   return (
     <View style={styles.segmentRow}>
@@ -919,15 +825,15 @@ function SegmentedControl<T extends string>({
             style={[
               styles.segmentPill,
               {
-                backgroundColor: selected ? teal[500] : bgColor,
-                borderColor: selected ? teal[500] : borderColor,
+                backgroundColor: selected ? accent : theme.surfaceMuted,
+                borderColor: selected ? accent : theme.line.firm,
               },
             ]}
           >
             <Text
               style={[
-                styles.segmentText,
-                { color: selected ? '#FFFFFF' : inkColor },
+                typography.buttonSmall,
+                { color: selected ? '#FFFFFF' : theme.textSecondary },
               ]}
             >
               {opt.label}
@@ -971,17 +877,11 @@ function WhatsNewModal({
             justifyContent: 'space-between',
           }}
         >
-          <Text
-            style={{
-              fontSize: 17,
-              fontWeight: '700',
-              color: theme.ink[100],
-            }}
-          >
+          <Text style={[typography.title2, { color: theme.text }]}>
             {title}
           </Text>
           <TouchableOpacity onPress={onClose} hitSlop={12}>
-            <Text style={{ color: teal[500], fontSize: 15, fontWeight: '600' }}>
+            <Text style={[typography.button, { color: accent }]}>
               {closeLabel}
             </Text>
           </TouchableOpacity>
@@ -992,25 +892,15 @@ function WhatsNewModal({
           {RELEASES.map((rel) => (
             <View key={rel.version} style={{ marginBottom: 24 }}>
               <Text
-                style={{
-                  fontSize: 11,
-                  fontWeight: '600',
-                  textTransform: 'uppercase',
-                  letterSpacing: 0.6,
-                  color: theme.ink[100],
-                  opacity: 0.55,
-                  marginBottom: 4,
-                }}
+                style={[
+                  typography.sectionLabel,
+                  { color: theme.textMuted, marginBottom: 4 },
+                ]}
               >
                 {rel.date}
               </Text>
               <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: '700',
-                  color: theme.ink[100],
-                  marginBottom: 8,
-                }}
+                style={[typography.title2, { color: theme.text, marginBottom: 8 }]}
               >
                 {rel.version}
               </Text>
@@ -1020,17 +910,12 @@ function WhatsNewModal({
                   style={{ flexDirection: 'row', marginBottom: 4 }}
                 >
                   <Text
-                    style={{ color: teal[500], width: 14, fontWeight: '700' }}
+                    style={[typography.body, { color: accent, width: 14, fontWeight: '700' }]}
                   >
                     •
                   </Text>
                   <Text
-                    style={{
-                      color: theme.ink[200],
-                      fontSize: 14,
-                      lineHeight: 20,
-                      flex: 1,
-                    }}
+                    style={[typography.body, { color: theme.textSecondary, flex: 1 }]}
                   >
                     {n}
                   </Text>
@@ -1073,7 +958,6 @@ function ProSection({
   const [domainBusy, setDomainBusy] = useState(false);
   const [domainErr, setDomainErr] = useState<string | null>(null);
 
-  // HTML export — small inline picker that lists cards on demand.
   const [exportPickerOpen, setExportPickerOpen] = useState(false);
   const [exportCards, setExportCards] = useState<
     { id: string; slug: string | null; name: string }[] | null
@@ -1086,7 +970,6 @@ function ProSection({
     } catch (e) {
       const msg = e instanceof Error ? e.message : '';
       if (msg.includes('no_subscription')) {
-        // Fall back to upgrade flow.
         setPaywallReason('card_limit');
       } else {
         Alert.alert(tBilling.errorTitle, tBilling.errorGeneric);
@@ -1160,8 +1043,6 @@ function ProSection({
         throw new Error(`HTTP ${res.status}`);
       }
       const html = await res.text();
-      // Dump to a data: URL — opens in the in-app browser, user can save
-      // via the browser's share sheet. Avoids pulling in expo-file-system.
       const dataUrl = `data:text/html;charset=utf-8,${encodeURIComponent(html)}`;
       await WebBrowser.openBrowserAsync(dataUrl);
     } catch {
@@ -1171,26 +1052,24 @@ function ProSection({
 
   return (
     <>
-      <SectionHeader theme={theme}>{tPro.sectionTitle}</SectionHeader>
-      <Card theme={theme}>
+      <SectionLabel style={styles.sectionLabel}>{tPro.sectionTitle.toUpperCase()}</SectionLabel>
+      <RowGroup style={styles.rowGroup}>
         {isPro ? (
           <ProRow
-            theme={theme}
             label={tPro.manageSubscription}
             body={tPro.manageBody}
             onPress={() => void handleManagePortal()}
+            divider={false}
           />
         ) : (
           <ProRow
-            theme={theme}
             label={tBilling.title}
             body={tBilling.priceMonthly + ' / ' + tBilling.priceYearly}
             onPress={() => setPaywallReason('card_limit')}
+            divider={false}
           />
         )}
-        <Divider theme={theme} />
         <ProRow
-          theme={theme}
           label={tPro.cardAnalytics}
           body={tPro.cardAnalyticsBody}
           onPress={() =>
@@ -1199,23 +1078,19 @@ function ProSection({
               : setPaywallReason('analytics')
           }
         />
-        <Divider theme={theme} />
         <ProRow
-          theme={theme}
           label={tPro.htmlExport}
           body={tPro.htmlExportBody}
           onPress={() => void openExportPicker()}
         />
-        <Divider theme={theme} />
         <ProRow
-          theme={theme}
           label={tPro.requestDomain}
           body={tPro.requestDomainBody}
           onPress={() =>
             isPro ? setDomainOpen(true) : setPaywallReason('custom_domain')
           }
         />
-      </Card>
+      </RowGroup>
 
       {/* Domain request modal */}
       <Modal
@@ -1233,7 +1108,7 @@ function ProSection({
         >
           <View
             style={{
-              backgroundColor: theme.bg[1],
+              backgroundColor: theme.surface,
               borderTopLeftRadius: 24,
               borderTopRightRadius: 24,
               padding: 24,
@@ -1241,12 +1116,7 @@ function ProSection({
             }}
           >
             <Text
-              style={{
-                fontSize: 18,
-                fontWeight: '700',
-                color: theme.ink[100],
-                marginBottom: 12,
-              }}
+              style={[typography.title1, { color: theme.text, marginBottom: 12 }]}
             >
               {tPro.requestDomainTitle}
             </Text>
@@ -1254,7 +1124,7 @@ function ProSection({
               value={domain}
               onChangeText={setDomain}
               placeholder={tPro.requestDomainPlaceholder}
-              placeholderTextColor={theme.ink[400]}
+              placeholderTextColor={theme.textFaint}
               autoCapitalize="none"
               autoCorrect={false}
               keyboardType="url"
@@ -1263,17 +1133,17 @@ function ProSection({
                 borderColor: theme.line.DEFAULT,
                 borderRadius: 8,
                 padding: 12,
-                fontSize: 14,
-                color: theme.ink[100],
-                backgroundColor: theme.bg[0],
+                color: theme.text,
+                backgroundColor: theme.pageBg,
                 marginBottom: 10,
+                ...typography.body,
               }}
             />
             <TextInput
               value={domainNotes}
               onChangeText={setDomainNotes}
               placeholder={tPro.requestDomainNotes}
-              placeholderTextColor={theme.ink[400]}
+              placeholderTextColor={theme.textFaint}
               multiline
               numberOfLines={3}
               style={{
@@ -1281,16 +1151,18 @@ function ProSection({
                 borderColor: theme.line.DEFAULT,
                 borderRadius: 8,
                 padding: 12,
-                fontSize: 14,
-                color: theme.ink[100],
-                backgroundColor: theme.bg[0],
+                color: theme.text,
+                backgroundColor: theme.pageBg,
                 marginBottom: 12,
                 minHeight: 70,
                 textAlignVertical: 'top',
+                ...typography.body,
               }}
             />
             {domainErr ? (
-              <Text style={{ color: theme.signalErr, fontSize: 12, marginBottom: 8 }}>
+              <Text
+                style={[typography.caption, { color: theme.signalErr, marginBottom: 8 }]}
+              >
                 {domainErr}
               </Text>
             ) : null}
@@ -1325,7 +1197,7 @@ function ProSection({
         >
           <View
             style={{
-              backgroundColor: theme.bg[1],
+              backgroundColor: theme.surface,
               borderTopLeftRadius: 24,
               borderTopRightRadius: 24,
               padding: 24,
@@ -1334,25 +1206,19 @@ function ProSection({
             }}
           >
             <Text
-              style={{
-                fontSize: 18,
-                fontWeight: '700',
-                color: theme.ink[100],
-                marginBottom: 12,
-              }}
+              style={[typography.title1, { color: theme.text, marginBottom: 12 }]}
             >
               {tPro.htmlExportPickCard}
             </Text>
             <ScrollView>
               {exportCards === null ? (
-                <ActivityIndicator color={teal[500]} style={{ padding: 20 }} />
+                <ActivityIndicator color={accent} style={{ padding: 20 }} />
               ) : exportCards.length === 0 ? (
                 <Text
-                  style={{
-                    color: theme.ink[400],
-                    padding: 16,
-                    textAlign: 'center',
-                  }}
+                  style={[
+                    typography.body,
+                    { color: theme.textFaint, padding: 16, textAlign: 'center' },
+                  ]}
                 >
                   —
                 </Text>
@@ -1368,22 +1234,12 @@ function ProSection({
                       borderBottomColor: theme.line.DEFAULT,
                     }}
                   >
-                    <Text
-                      style={{
-                        color: theme.ink[100],
-                        fontSize: 15,
-                        fontWeight: '500',
-                      }}
-                    >
+                    <Text style={[typography.title3, { color: theme.text }]}>
                       {c.name}
                     </Text>
                     {c.slug ? (
                       <Text
-                        style={{
-                          color: theme.ink[400],
-                          fontSize: 12,
-                          marginTop: 2,
-                        }}
+                        style={[typography.caption, { color: theme.textFaint, marginTop: 2 }]}
                       >
                         /c/{c.slug}
                       </Text>
@@ -1415,73 +1271,75 @@ function ProSection({
 }
 
 function ProRow({
-  theme,
   label,
   body,
   onPress,
+  divider = true,
 }: {
-  theme: ReturnType<typeof useTheme>;
   label: string;
   body: string;
   onPress: () => void;
+  divider?: boolean;
 }) {
   return (
-    <TouchableOpacity
+    <Row
+      title={label}
+      subtitle={body}
+      chevron
       onPress={onPress}
-      activeOpacity={0.7}
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingVertical: 4,
-      }}
-    >
-      <View style={{ flex: 1, paddingRight: 12 }}>
-        <Text style={[styles.value, { color: theme.ink[100] }]}>{label}</Text>
-        <Text
-          style={[
-            styles.label,
-            { color: theme.ink[400], marginTop: 2, fontSize: 12 },
-          ]}
-        >
-          {body}
-        </Text>
-      </View>
-      <Text style={{ color: theme.ink[400], fontSize: 18 }}>›</Text>
-    </TouchableOpacity>
+      divider={divider}
+    />
   );
 }
 
 const styles = StyleSheet.create({
-  section: {
-    fontSize: 11,
-    fontWeight: '600',
-    textTransform: 'uppercase',
-    letterSpacing: 0.6,
+  content: {
+    paddingHorizontal: 20,
+    paddingBottom: 48,
+  },
+  sectionLabel: {
+    marginTop: 24,
     marginBottom: 8,
-    marginTop: 18,
+  },
+  rowGroup: {
+    marginBottom: 4,
   },
   card: {
     padding: 16,
     borderRadius: 14,
     borderWidth: 1,
-    marginBottom: 8,
+    marginBottom: 4,
   },
-  label: {
-    fontSize: 12,
+  segmentCard: {
+    padding: 12,
+    borderRadius: 14,
+    borderWidth: 1,
+    marginBottom: 4,
   },
-  value: {
-    fontSize: 15,
-    fontWeight: '500',
+  profileCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 14,
+    padding: 16,
+    borderRadius: 14,
+    borderWidth: 1,
+    marginBottom: 4,
   },
-  hint: {
-    fontSize: 12,
-    lineHeight: 16,
+  profileInfo: {
+    flex: 1,
+    minWidth: 0,
   },
   rowBetween: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+  infoRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 16,
+    paddingVertical: 14,
   },
   segmentRow: { flexDirection: 'row', gap: 8 },
   segmentPill: {
@@ -1491,5 +1349,4 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     alignItems: 'center',
   },
-  segmentText: { fontSize: 14, fontWeight: '600' },
 });

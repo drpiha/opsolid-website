@@ -9,7 +9,7 @@ import Animated, {
   withSpring,
 } from 'react-native-reanimated';
 import { Plus } from 'lucide-react-native';
-import { teal } from '../../lib/theme/tokens';
+import { accent } from '../../lib/theme/tokens';
 
 type Props = {
   onPress: () => void;
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 32,
-    backgroundColor: teal[500],
+    backgroundColor: accent,
     justifyContent: 'center',
     alignItems: 'center',
     shadowColor: '#000',

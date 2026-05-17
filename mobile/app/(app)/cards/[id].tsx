@@ -4,22 +4,35 @@ import {
   Text,
   ScrollView,
   ActivityIndicator,
-  Linking,
   Alert,
-  Pressable,
-  Share,
-  StyleSheet,
   TouchableOpacity,
+  StyleSheet,
 } from 'react-native';
-import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { CheckCircle, QrCode, Share2, X } from 'lucide-react-native';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import {
+  ChevronLeft,
+  MoreVertical,
+  CheckCircle,
+  Share2,
+  X,
+  Eye,
+  Bookmark,
+  Users,
+} from 'lucide-react-native';
 import { ScreenContainer } from '../../../src/components/ui/ScreenContainer';
 import { Button } from '../../../src/components/ui/Button';
+import { Card } from '../../../src/components/ui/Card';
+import { Chip } from '../../../src/components/ui/Chip';
+import { Avatar } from '../../../src/components/ui/Avatar';
+import { Row, RowGroup } from '../../../src/components/ui/Row';
+import { SectionLabel } from '../../../src/components/ui/SectionLabel';
+import { AppBar, AppBarIconButton } from '../../../src/components/ui/AppBar';
 import { QrCodeModal } from '../../../src/components/cards/QrCodeModal';
 import { getCard, deleteCard } from '../../../src/lib/api/cards';
 import type { ApiCard } from '../../../src/lib/api/types';
 import { useTheme } from '../../../src/lib/theme/ThemeProvider';
-import { copper, teal } from '../../../src/lib/theme/tokens';
+import { accent, accentCredit } from '../../../src/lib/theme/tokens';
+import { typography } from '../../../src/lib/theme/typography';
 import { useTranslations, detectLocale } from '../../../src/lib/i18n/locale';
 import { useFirstRunStore } from '../../../src/store/firstRunStore';
 
@@ -38,11 +51,6 @@ export default function CardDetailScreen() {
   const [qrOpen, setQrOpen] = useState(false);
 
   // M7 Wave 2 — first-publish celebration banner.
-  // The onboarding publish handler sets `pendingCelebration` on
-  // firstRunStore right before navigating here. We snapshot it once on mount
-  // so a second-by-second re-render of the store doesn't blink the banner;
-  // dismissing it (via X, the share button, or simply navigating away)
-  // clears the persisted flag.
   const [showCelebration, setShowCelebration] = useState(() =>
     useFirstRunStore.getState().pendingCelebration,
   );
@@ -69,21 +77,6 @@ export default function CardDetailScreen() {
     void load();
   }, [load]);
 
-  const handleOpenWeb = () => {
-    if (!card?.slug) return;
-    void Linking.openURL(`https://opsolid.de/c/${card.slug}`);
-  };
-
-  const handleShare = useCallback(async () => {
-    if (!card?.slug) return;
-    const url = `https://opsolid.de/c/${card.slug}`;
-    try {
-      await Share.share({ message: url, url });
-    } catch {
-      // User cancelled or platform refused — non-fatal.
-    }
-  }, [card?.slug]);
-
   const handleDelete = () => {
     if (!card) return;
     const body = t.deleteConfirmBody.replace('{slug}', card.slug ?? card.id);
@@ -109,9 +102,9 @@ export default function CardDetailScreen() {
 
   if (loading) {
     return (
-      <ScreenContainer>
+      <ScreenContainer padded={false}>
         <View style={styles.center}>
-          <ActivityIndicator size="large" color={copper[500]} />
+          <ActivityIndicator size="large" color={accent} />
         </View>
       </ScreenContainer>
     );
@@ -119,7 +112,16 @@ export default function CardDetailScreen() {
 
   if (error || !card) {
     return (
-      <ScreenContainer>
+      <ScreenContainer padded={false}>
+        <AppBar
+          variant="default"
+          title=""
+          leading={
+            <AppBarIconButton ghost onPress={() => router.back()}>
+              <ChevronLeft size={20} color={theme.text} />
+            </AppBarIconButton>
+          }
+        />
         <View style={styles.center}>
           <Text style={{ color: theme.signalErr }}>{error ?? t.errorLoad}</Text>
           <Button
@@ -137,183 +139,224 @@ export default function CardDetailScreen() {
     (card.cardData?.name as string | undefined) ??
     card.slug ??
     card.id.slice(0, 8);
-  const title = (card.cardData?.title as string | undefined) ?? '';
+  const jobTitle = (card.cardData?.title as string | undefined) ?? '';
   const company = (card.cardData?.company as string | undefined) ?? '';
   const email = (card.cardData?.email as string | undefined) ?? '';
   const phone = (card.cardData?.phone as string | undefined) ?? '';
+  const website = (card.cardData?.website as string | undefined) ?? '';
+  const bio = (card.cardData?.bio as string | undefined) ?? '';
+  const industry = (card.cardData?.industry as string | undefined) ?? '';
+  const city = (card.cardData?.city as string | undefined) ?? '';
+  const photoPath = (card.cardData?.photoPath as string | undefined) ?? undefined;
 
-  const canShowQr = !!card.slug && card.status === 'PUBLISHED';
+  const roleSubtitle = [jobTitle, company].filter(Boolean).join(' · ');
+  const isPublished = card.status === 'PUBLISHED';
 
   return (
-    <>
-      <Stack.Screen
-        options={{
-          title: t.detailTitle,
-          headerBackTitle: t.title,
-          headerRight: canShowQr
-            ? () => (
-                <Pressable
-                  onPress={() => setQrOpen(true)}
-                  style={styles.headerBtn}
-                  hitSlop={8}
-                >
-                  <QrCode size={22} color={copper[500]} />
-                </Pressable>
-              )
-            : undefined,
-        }}
+    <ScreenContainer padded={false}>
+      {/* Top chrome */}
+      <AppBar
+        variant="default"
+        title=""
+        leading={
+          <AppBarIconButton ghost onPress={() => router.back()}>
+            <ChevronLeft size={20} color={theme.text} />
+          </AppBarIconButton>
+        }
+        trailing={
+          <AppBarIconButton ghost onPress={() => setQrOpen(true)}>
+            <MoreVertical size={20} color={theme.text} />
+          </AppBarIconButton>
+        }
       />
+
       <ScrollView
         contentContainerStyle={[
           styles.scroll,
-          { backgroundColor: theme.bg[0] },
+          { backgroundColor: theme.pageBg },
         ]}
+        showsVerticalScrollIndicator={false}
       >
-        {/* M7 Wave 2 — first-publish celebration. Renders once when the
-            onboarding publish handler set pendingCelebration on the store.
-            The share-icon button reuses the system share sheet (same URL the
-            "Open on the web" button uses). The X dismisses without sharing. */}
+        {/* M7 Wave 2 — first-publish celebration */}
         {showCelebration ? (
           <View
             style={[
               styles.celebration,
               {
-                backgroundColor: teal[500] + '20',
-                borderColor: teal[500],
+                backgroundColor: theme.accentSoft,
+                borderColor: accent + '40',
               },
             ]}
           >
-            <View style={styles.celebrationIcon}>
-              <CheckCircle size={24} color="#FFFFFF" />
+            <View style={[styles.celebrationIcon, { backgroundColor: accent }]}>
+              <CheckCircle size={22} color="#FFFFFF" />
             </View>
             <View style={styles.celebrationText}>
-              <Text style={[styles.celebrationTitle, { color: theme.ink[100] }]}>
+              <Text style={[typography.bodyMedium, { color: theme.text }]}>
                 {tCardLive.title}
               </Text>
-              <Text style={[styles.celebrationBody, { color: theme.ink[300] }]}>
+              <Text style={[typography.bodySmall, { color: theme.textMuted, marginTop: 2 }]}>
                 {tCardLive.body}
               </Text>
             </View>
             <TouchableOpacity
               onPress={() => {
-                void handleShare();
+                dismissCelebration();
+                router.push(`/(app)/cards/share/${card.id}` as never);
               }}
               style={styles.celebrationBtn}
               accessibilityLabel="Share"
             >
-              <Share2 size={20} color={teal[600]} />
+              <Share2 size={18} color={accent} />
             </TouchableOpacity>
             <TouchableOpacity
               onPress={dismissCelebration}
               style={styles.celebrationBtn}
               accessibilityLabel="Dismiss"
             >
-              <X size={18} color={theme.ink[400]} />
+              <X size={16} color={theme.textMuted} />
             </TouchableOpacity>
           </View>
         ) : null}
 
         {/* Hero card */}
-        <View
-          style={[
-            styles.hero,
-            { backgroundColor: theme.bg[1], borderColor: theme.line.DEFAULT },
-          ]}
-        >
-          <Text style={[styles.heroName, { color: theme.ink[100] }]}>
-            {contactName}
+        <Card variant="glow" padded={20} style={styles.heroCard}>
+          <View style={styles.heroTop}>
+            <Avatar
+              name={contactName}
+              imageUri={photoPath}
+              size={64}
+              shape="square"
+            />
+            <View style={styles.heroInfo}>
+              <Text style={[typography.display2, { color: theme.text }]}>
+                {contactName}
+              </Text>
+              {!!roleSubtitle && (
+                <Text style={[typography.lead, { color: theme.textSecondary, marginTop: 2 }]}>
+                  {roleSubtitle}
+                </Text>
+              )}
+            </View>
+          </View>
+
+          {/* Chips row */}
+          <View style={styles.chipsRow}>
+            {!!industry && (
+              <Chip label={industry} variant="accent" />
+            )}
+            {!!city && (
+              <Chip label={city} variant="default" />
+            )}
+            {isPublished && (
+              <Chip label="Live" variant="success" dot="live" />
+            )}
+          </View>
+
+          {/* by OpSolid credit */}
+          <Text style={[typography.caption, { color: accentCredit, fontStyle: 'italic', marginTop: 12 }]}>
+            by OpSolid
           </Text>
-          {!!title && (
-            <Text style={[styles.heroTitle, { color: theme.ink[300] }]}>
-              {title}
-            </Text>
-          )}
-          {!!company && (
-            <Text style={[styles.heroCompany, { color: theme.ink[400] }]}>
-              {company}
-            </Text>
-          )}
+        </Card>
+
+        {/* Quick stats */}
+        <View style={styles.statsRow}>
+          <Card variant="flat" padded={12} style={styles.statTile}>
+            <Eye size={16} color={theme.textMuted} />
+            <Text style={[typography.title1, { color: theme.text, marginTop: 6 }]}>—</Text>
+            <Text style={[typography.caption, { color: theme.textMuted, marginTop: 2 }]}>Views</Text>
+            <Text style={[typography.caption, { color: theme.textFaint }]}>last 30 days</Text>
+          </Card>
+          <Card variant="flat" padded={12} style={styles.statTile}>
+            <Bookmark size={16} color={theme.textMuted} />
+            <Text style={[typography.title1, { color: theme.text, marginTop: 6 }]}>—</Text>
+            <Text style={[typography.caption, { color: theme.textMuted, marginTop: 2 }]}>Saves</Text>
+          </Card>
+          <Card variant="flat" padded={12} style={styles.statTile}>
+            <Users size={16} color={theme.textMuted} />
+            <Text style={[typography.title1, { color: theme.text, marginTop: 6 }]}>—</Text>
+            <Text style={[typography.caption, { color: theme.textMuted, marginTop: 2 }]}>Connections</Text>
+          </Card>
         </View>
 
-        {/* Contact fields */}
-        {!!email && (
-          <View
-            style={[
-              styles.field,
-              { borderColor: theme.line.DEFAULT },
-            ]}
-          >
-            <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
-              Email
-            </Text>
-            <Text style={[styles.fieldValue, { color: theme.ink[100] }]}>
-              {email}
-            </Text>
-          </View>
-        )}
-        {!!phone && (
-          <View
-            style={[
-              styles.field,
-              { borderColor: theme.line.DEFAULT },
-            ]}
-          >
-            <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
-              Phone
-            </Text>
-            <Text style={[styles.fieldValue, { color: theme.ink[100] }]}>
-              {phone}
-            </Text>
-          </View>
-        )}
-        {card.slug ? (
-          <View
-            style={[
-              styles.field,
-              { borderColor: theme.line.DEFAULT },
-            ]}
-          >
-            <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
-              URL
-            </Text>
-            <Text style={[styles.fieldValue, { color: theme.ink[100] }]}>
-              opsolid.de/c/{card.slug}
-            </Text>
-          </View>
-        ) : null}
-
-        {/* Actions */}
+        {/* Primary actions */}
         <View style={styles.actions}>
+          <Button
+            label={t.share ?? 'Share card'}
+            onPress={() => router.push(`/(app)/cards/share/${card.id}` as never)}
+            variant="accent"
+          />
           <Button
             label={t.edit}
             onPress={() => router.push(`/(app)/cards/edit/${card.id}` as never)}
             variant="secondary"
-          />
-          {card.slug && card.status === 'PUBLISHED' ? (
-            <Button
-              label={t.openWeb}
-              onPress={handleOpenWeb}
-              variant="primary"
-              style={{ marginTop: 12 }}
-            />
-          ) : null}
-          <Button
-            label={t.delete}
-            onPress={handleDelete}
-            variant="ghost"
-            loading={deleting}
             style={{ marginTop: 12 }}
           />
         </View>
+
+        {/* About section */}
+        {!!bio && (
+          <View style={styles.section}>
+            <SectionLabel style={styles.sectionLabelSpacing}>ABOUT</SectionLabel>
+            <Text style={[typography.body, { color: theme.text }]}>{bio}</Text>
+          </View>
+        )}
+
+        {/* Contact section */}
+        {(!!email || !!phone || !!website || !!card.slug) && (
+          <View style={styles.section}>
+            <SectionLabel style={styles.sectionLabelSpacing}>CONTACT</SectionLabel>
+            <RowGroup>
+              {!!email && (
+                <Row
+                  title={email}
+                  subtitle="Email"
+                  divider={false}
+                />
+              )}
+              {!!phone && (
+                <Row
+                  title={phone}
+                  subtitle="Phone"
+                  divider={!!email}
+                />
+              )}
+              {!!website && (
+                <Row
+                  title={website}
+                  subtitle={tAll.publicCard.website}
+                  divider={!!(email || phone)}
+                />
+              )}
+              {!!card.slug && (
+                <Row
+                  title={`opsolid.de/c/${card.slug}`}
+                  subtitle="URL"
+                  divider={!!(email || phone || website)}
+                />
+              )}
+            </RowGroup>
+          </View>
+        )}
+
+        {/* Delete action */}
+        <Button
+          label={t.delete}
+          onPress={handleDelete}
+          variant="ghost"
+          loading={deleting}
+          style={styles.deleteBtn}
+        />
       </ScrollView>
-      {canShowQr && card.slug ? (
+
+      {card.slug ? (
         <QrCodeModal
           visible={qrOpen}
           slug={card.slug}
           onClose={() => setQrOpen(false)}
         />
       ) : null}
-    </>
+    </ScreenContainer>
   );
 }
 
@@ -322,79 +365,69 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 24,
   },
   scroll: {
     padding: 16,
     paddingBottom: 48,
-    gap: 12,
+    gap: 16,
   },
-  hero: {
-    padding: 20,
-    borderRadius: 16,
-    borderWidth: 1,
-    gap: 4,
-    marginBottom: 4,
+  heroCard: {
+    gap: 0,
   },
-  heroName: {
-    fontSize: 24,
-    fontWeight: '600',
+  heroTop: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 14,
+    marginBottom: 14,
   },
-  heroTitle: {
-    fontSize: 14,
+  heroInfo: {
+    flex: 1,
   },
-  heroCompany: {
-    fontSize: 13,
+  chipsRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
   },
-  field: {
-    padding: 14,
-    borderRadius: 12,
-    borderWidth: 1,
-    gap: 4,
+  statsRow: {
+    flexDirection: 'row',
+    gap: 10,
   },
-  fieldLabel: {
-    fontSize: 11,
-    fontWeight: '500',
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
-  },
-  fieldValue: {
-    fontSize: 15,
+  statTile: {
+    flex: 1,
+    alignItems: 'flex-start',
   },
   actions: {
-    marginTop: 16,
-    gap: 12,
+    gap: 0,
   },
-  headerBtn: {
-    paddingRight: 4,
+  section: {
+    gap: 0,
+  },
+  sectionLabelSpacing: {
+    marginBottom: 10,
+  },
+  deleteBtn: {
+    marginTop: 8,
   },
   celebration: {
     borderWidth: 1,
-    borderRadius: 12,
-    padding: 16,
+    borderRadius: 14,
+    padding: 14,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
+    gap: 10,
   },
   celebrationIcon: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: teal[500],
+    width: 38,
+    height: 38,
+    borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
   },
   celebrationText: {
     flex: 1,
   },
-  celebrationTitle: {
-    fontSize: 15,
-    fontWeight: '600',
-  },
-  celebrationBody: {
-    fontSize: 13,
-    marginTop: 2,
-  },
   celebrationBtn: {
-    padding: 8,
+    padding: 6,
   },
 });

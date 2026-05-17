@@ -7,7 +7,8 @@ import {
   isBiometricEnabled,
 } from '../../src/lib/auth/biometric';
 import { useTheme } from '../../src/lib/theme/ThemeProvider';
-import { copper } from '../../src/lib/theme/tokens';
+import { accent } from '../../src/lib/theme/tokens';
+import { BottomNav } from '../../src/components/ui/BottomNav';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
 import { useOnboardingDraftStore } from '../../src/store/onboardingDraftStore';
 import { usePendingReferralStore } from '../../src/store/pendingReferralStore';
@@ -17,6 +18,7 @@ import { listCards } from '../../src/lib/api/cards';
 import { redeemReferral } from '../../src/lib/api/referrals';
 import { registerForPushAsync } from '../../src/lib/push/register';
 import {
+  House,
   CalendarDays,
   CreditCard,
   Compass,
@@ -201,17 +203,22 @@ export default function AppLayout() {
   return (
     <TourProvider>
     <Tabs
+      tabBar={(props) => <BottomNav {...props} />}
       screenOptions={{
-        headerStyle: { backgroundColor: theme.bg[0] },
-        headerTitleStyle: { color: theme.ink[100] },
-        tabBarStyle: {
-          backgroundColor: theme.bg[1],
-          borderTopColor: theme.line.DEFAULT,
-        },
-        tabBarActiveTintColor: copper[500],
-        tabBarInactiveTintColor: theme.ink[400],
+        headerStyle: { backgroundColor: theme.pageBg },
+        headerTitleStyle: { color: theme.text },
+        tabBarActiveTintColor: accent,
+        tabBarInactiveTintColor: theme.textMuted,
       }}
     >
+      {/* Tab 1 — Home dashboard (new landing screen) */}
+      <Tabs.Screen
+        name="home"
+        options={{
+          title: t.home.title,
+          tabBarIcon: ({ color, size }) => <House size={size} color={color} />,
+        }}
+      />
       <Tabs.Screen
         name="cards"
         options={{
@@ -226,16 +233,22 @@ export default function AppLayout() {
           tabBarIcon: ({ color, size }) => <Compass size={size} color={color} />,
         }}
       />
+      {/* Events — hidden from tab bar (M5 will merge into Discover rail).
+          Still reachable via router.push('/(app)/events/index'). */}
       <Tabs.Screen
         name="events/index"
         options={{
+          href: null,
           title: t.events.title,
           tabBarIcon: ({ color, size }) => <CalendarDays size={size} color={color} />,
         }}
       />
+      {/* Contacts — hidden from tab bar (M5 will merge into Inbox).
+          Still reachable via router.push('/(app)/contacts'). */}
       <Tabs.Screen
         name="contacts"
         options={{
+          href: null,
           title: t.contacts.title,
           tabBarIcon: ({ color, size }) => <Users size={size} color={color} />,
         }}
@@ -259,6 +272,8 @@ export default function AppLayout() {
       <Tabs.Screen name="cards/[id]" options={{ href: null, title: t.cards.detailTitle }} />
       <Tabs.Screen name="cards/create" options={{ href: null, title: t.cards.createTitle }} />
       <Tabs.Screen name="cards/edit/[id]" options={{ href: null, title: t.cards.editTitle }} />
+      {/* Share Center — navigated from card detail or celebration banner. */}
+      <Tabs.Screen name="cards/share/[id]" options={{ href: null, title: '' }} />
       {/* Fix 1.8 — claim a card screen. Hidden from tab bar; reached via
           Settings → "Claim a card" or the deep-link opsolid://claim. */}
       <Tabs.Screen name="cards/claim" options={{ href: null, title: t.claimCard.title }} />
@@ -271,6 +286,8 @@ export default function AppLayout() {
       {/* Sprint F4 — inbox thread. Tab is `inbox/index`; per-connection
           thread route is hidden from the tab bar. */}
       <Tabs.Screen name="inbox/[connectionId]" options={{ href: null, title: '' }} />
+      {/* M6 — push notification preferences subpage. Reached from settings.tsx. */}
+      <Tabs.Screen name="settings/notifications" options={{ href: null, title: '' }} />
       {/* Sprint 7 — first-run wizard. Hidden from tab bar; reached via the
           0-card redirect in the effect above, or via the FAB on /cards
           when `everPublished` hasn't been set yet. */}
@@ -278,6 +295,12 @@ export default function AppLayout() {
         name="onboarding/index"
         options={{ href: null, headerShown: false, title: '' }}
       />
+      {/* Coming Soon stubs — Phase 6+/7 features. Hidden from tab bar;
+          reached via router.push from Settings or feature entry points. */}
+      <Tabs.Screen name="coming-soon/crm" options={{ href: null, title: '' }} />
+      <Tabs.Screen name="coming-soon/nfc-wallet" options={{ href: null, title: '' }} />
+      <Tabs.Screen name="coming-soon/workspace-admin" options={{ href: null, title: '' }} />
+      <Tabs.Screen name="coming-soon/domain-manager" options={{ href: null, title: '' }} />
     </Tabs>
     </TourProvider>
   );

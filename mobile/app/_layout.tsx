@@ -5,7 +5,21 @@ import { ActivityIndicator, View } from 'react-native';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import * as Linking from 'expo-linking';
 import * as Notifications from 'expo-notifications';
+import { useFonts } from 'expo-font';
+import {
+  Geist_400Regular,
+  Geist_500Medium,
+  Geist_600SemiBold,
+  Geist_700Bold,
+  Geist_800ExtraBold,
+} from '@expo-google-fonts/geist';
+import {
+  GeistMono_400Regular,
+  GeistMono_500Medium,
+  GeistMono_600SemiBold,
+} from '@expo-google-fonts/geist-mono';
 import { ThemeProvider } from '../src/lib/theme/ThemeProvider';
+import { markGeistLoaded } from '../src/lib/theme/typography';
 import { ToastProvider } from '../src/components/ui/Toast';
 import { useAuthStore } from '../src/lib/auth/store';
 import { useThemeStore } from '../src/lib/theme/themeStore';
@@ -78,6 +92,26 @@ export default function RootLayout() {
   const status = useAuthStore((s) => s.status);
   const hydrateTheme = useThemeStore((s) => s.hydrate);
   const hydrateLocale = useLocaleStore((s) => s.hydrate);
+
+  // Verso v2 — load Geist sans + mono. Failures fall back to system font;
+  // we mark `geistLoaded` true regardless so the splash never hangs on
+  // a font 404. The typography module's family names degrade gracefully.
+  const [fontsLoaded, fontError] = useFonts({
+    Geist_400Regular,
+    Geist_500Medium,
+    Geist_600SemiBold,
+    Geist_700Bold,
+    Geist_800ExtraBold,
+    GeistMono_400Regular,
+    GeistMono_500Medium,
+    GeistMono_600SemiBold,
+  });
+
+  useEffect(() => {
+    if (fontsLoaded || fontError) {
+      markGeistLoaded();
+    }
+  }, [fontsLoaded, fontError]);
 
   useEffect(() => {
     // Belt-and-suspenders: hide splash even if hydrate hangs longer than 10s.
@@ -160,12 +194,12 @@ export default function RootLayout() {
       <View
         style={{
           flex: 1,
-          backgroundColor: '#1AA6B7',
+          backgroundColor: '#FCFCFE',
           alignItems: 'center',
           justifyContent: 'center',
         }}
       >
-        <ActivityIndicator color="#fff" />
+        <ActivityIndicator color="#4B5DEC" />
       </View>
     );
   }

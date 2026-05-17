@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import { useState } from 'react';
 import { useTheme } from '../../lib/theme/ThemeProvider';
-import { copper, signal } from '../../lib/theme/tokens';
+import { accent } from '../../lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../lib/i18n/locale';
 import { API_BASE } from '../../lib/api/client';
 
@@ -52,14 +52,14 @@ export function QrCodeModal({ visible, slug, onClose }: Props) {
           style={[styles.card, { backgroundColor: '#fff' }]}
           onPress={(e) => e.stopPropagation()}
         >
-          <Text style={[styles.title, { color: theme.ink[100] }]}>
+          <Text style={[styles.title, { color: theme.text }]}>
             {t.qrTitle}
           </Text>
 
           <View style={styles.qrWrap}>
             {imgLoading && !imgError ? (
               <View style={styles.qrLoader}>
-                <ActivityIndicator size="large" color={copper[500]} />
+                <ActivityIndicator size="large" color={accent} />
               </View>
             ) : null}
             {!imgError ? (
@@ -74,18 +74,18 @@ export function QrCodeModal({ visible, slug, onClose }: Props) {
               />
             ) : (
               <View style={styles.qrLoader}>
-                <Text style={{ color: signal.err }}>—</Text>
+                <Text style={{ color: theme.signalErr }}>—</Text>
               </View>
             )}
           </View>
 
-          <Text style={[styles.url, { color: theme.ink[300] }]}>
+          <Text style={[styles.url, { color: theme.textMuted }]}>
             opsolid.de/c/{slug}
           </Text>
 
           <Pressable
             onPress={() => void handleShare()}
-            style={[styles.btnPrimary, { backgroundColor: copper[500] }]}
+            style={[styles.btnPrimary, { backgroundColor: accent }]}
           >
             <Text style={[styles.btnPrimaryText, { color: '#fff' }]}>
               {t.share}
@@ -93,7 +93,7 @@ export function QrCodeModal({ visible, slug, onClose }: Props) {
           </Pressable>
 
           <Pressable onPress={onClose} style={styles.btnGhost}>
-            <Text style={[styles.btnGhostText, { color: copper[500] }]}>
+            <Text style={[styles.btnGhostText, { color: accent }]}>
               {t.close}
             </Text>
           </Pressable>

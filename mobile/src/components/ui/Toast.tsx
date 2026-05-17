@@ -12,7 +12,7 @@
  *   - Slides up from bottom-center, fades in (250ms), holds 2 s, slides down
  *     + fades out (200ms). One toast at a time — a pending call cancels any
  *     in-flight animation and starts fresh.
- *   - Variants: 'success' (teal border + CheckCircle), 'error' (oxblood border + X).
+ *   - Variants: 'success' (accent border + CheckCircle), 'error' (signalErr border + X).
  *   - Rounded 16px, 14pt y / 20pt x padding, theme.bg[0] surface.
  *   - Text: 14pt, 500 weight, theme.ink[100].
  *   - Touch target ≥ 44pt satisfied by full-width pill + 14pt vertical padding.
@@ -39,7 +39,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { CheckCircle, X } from 'lucide-react-native';
 import { useTheme } from '../../lib/theme/ThemeProvider';
-import { teal, signal } from '../../lib/theme/tokens';
+import { accent } from '../../lib/theme/tokens';
 
 // ---------------------------------------------------------------------------
 // Types
@@ -137,13 +137,13 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   }));
 
   const borderColor =
-    current?.variant === 'success' ? teal[500] : signal.err;
+    current?.variant === 'success' ? accent : theme.signalErr;
   const Icon =
     current?.variant === 'success'
       ? CheckCircle
       : X;
   const iconColor =
-    current?.variant === 'success' ? teal[500] : signal.err;
+    current?.variant === 'success' ? accent : theme.signalErr;
 
   return (
     <ToastContext.Provider value={{ showToast }}>
@@ -156,7 +156,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
             style={[
               styles.pill,
               {
-                backgroundColor: theme.bg[0],
+                backgroundColor: theme.surface,
                 borderColor,
               },
               animatedStyle,
@@ -165,7 +165,7 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
             accessibilityRole="alert"
           >
             <Icon size={18} color={iconColor} strokeWidth={2} />
-            <Text style={[styles.message, { color: theme.ink[100] }]}>
+            <Text style={[styles.message, { color: theme.text }]}>
               {current?.message}
             </Text>
           </Animated.View>

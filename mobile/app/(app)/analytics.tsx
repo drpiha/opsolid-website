@@ -19,7 +19,7 @@ import {
 import { Stack, useRouter } from 'expo-router';
 import { ScreenContainer } from '../../src/components/ui/ScreenContainer';
 import { useTheme } from '../../src/lib/theme/ThemeProvider';
-import { teal, copper } from '../../src/lib/theme/tokens';
+import { accent } from '../../src/lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
 import { listCards } from '../../src/lib/api/cards';
 import { getCardAnalytics, type CardAnalytics } from '../../src/lib/api/billing';
@@ -107,17 +107,17 @@ export default function AnalyticsScreen() {
         {/* Card picker */}
         {cards === null ? (
           <View style={{ padding: 32, alignItems: 'center' }}>
-            <ActivityIndicator color={teal[500]} />
+            <ActivityIndicator color={accent} />
           </View>
         ) : cards.length === 0 ? (
           <View style={{ padding: 32, alignItems: 'center' }}>
-            <Text style={{ color: theme.ink[400], textAlign: 'center' }}>
+            <Text style={{ color: theme.textFaint, textAlign: 'center' }}>
               {t.analyticsEmpty}
             </Text>
           </View>
         ) : (
           <>
-            <Text style={[styles.label, { color: theme.ink[300] }]}>
+            <Text style={[styles.label, { color: theme.textMuted }]}>
               {t.analyticsPickCard}
             </Text>
             <ScrollView
@@ -137,14 +137,14 @@ export default function AnalyticsScreen() {
                     style={[
                       styles.chip,
                       {
-                        backgroundColor: active ? teal[500] : theme.bg[1],
-                        borderColor: active ? teal[500] : theme.line.DEFAULT,
+                        backgroundColor: active ? accent : theme.pageBg,
+                        borderColor: active ? accent : theme.line.DEFAULT,
                       },
                     ]}
                   >
                     <Text
                       style={{
-                        color: active ? '#fff' : theme.ink[200],
+                        color: active ? '#fff' : theme.textSecondary,
                         fontSize: 13,
                         fontWeight: '600',
                       }}
@@ -161,8 +161,8 @@ export default function AnalyticsScreen() {
         {/* Body */}
         {loading ? (
           <View style={{ padding: 32, alignItems: 'center' }}>
-            <ActivityIndicator color={teal[500]} />
-            <Text style={[styles.muted, { color: theme.ink[400] }]}>
+            <ActivityIndicator color={accent} />
+            <Text style={[styles.muted, { color: theme.textFaint }]}>
               {t.analyticsLoading}
             </Text>
           </View>
@@ -172,7 +172,7 @@ export default function AnalyticsScreen() {
           </Text>
         ) : data ? (
           <>
-            <Text style={[styles.window, { color: theme.ink[400] }]}>
+            <Text style={[styles.window, { color: theme.textFaint }]}>
               {t.analyticsWindow.replace('{days}', String(data.windowDays))}
             </Text>
             <View style={styles.statsGrid}>
@@ -180,44 +180,44 @@ export default function AnalyticsScreen() {
                 theme={theme}
                 label={t.analyticsViews}
                 value={data.totals.views}
-                accent={teal[500]}
+                accent={accent}
               />
               <Stat
                 theme={theme}
                 label={t.analyticsUnique}
                 value={data.totals.uniqueVisitors}
-                accent={teal[500]}
+                accent={accent}
               />
               <Stat
                 theme={theme}
                 label={t.analyticsLeads}
                 value={data.totals.leads}
-                accent={copper[500]}
+                accent={accent}
               />
               <Stat
                 theme={theme}
                 label={t.analyticsSaves}
                 value={data.totals.saves}
-                accent={copper[500]}
+                accent={accent}
               />
               <Stat
                 theme={theme}
                 label={t.analyticsMutual}
                 value={data.totals.mutualSaves}
-                accent={copper[500]}
+                accent={accent}
               />
               <Stat
                 theme={theme}
                 label={t.analyticsShares}
                 value={data.totals.shares}
-                accent={copper[500]}
+                accent={accent}
               />
             </View>
 
-            <Text style={[styles.section, { color: theme.ink[100] }]}>
+            <Text style={[styles.section, { color: theme.text }]}>
               {t.analyticsByChannel}
             </Text>
-            <View style={[styles.card, { backgroundColor: theme.bg[1], borderColor: theme.line.DEFAULT }]}>
+            <View style={[styles.card, { backgroundColor: theme.pageBg, borderColor: theme.line.DEFAULT }]}>
               {Object.entries(data.shareEventsByChannel).map(([channel, count]) => {
                 const max = Math.max(
                   1,
@@ -226,26 +226,26 @@ export default function AnalyticsScreen() {
                 const pct = Math.round((count / max) * 100);
                 return (
                   <View key={channel} style={styles.barRow}>
-                    <Text style={[styles.barLabel, { color: theme.ink[300] }]}>
+                    <Text style={[styles.barLabel, { color: theme.textMuted }]}>
                       {channel.replace('_', ' ')}
                     </Text>
                     <View
                       style={[
                         styles.barTrack,
-                        { backgroundColor: theme.bg[2] },
+                        { backgroundColor: theme.surfaceMuted },
                       ]}
                     >
                       <View
                         style={[
                           styles.barFill,
                           {
-                            backgroundColor: copper[500],
+                            backgroundColor: accent,
                             width: `${count === 0 ? 0 : Math.max(8, pct)}%`,
                           },
                         ]}
                       />
                     </View>
-                    <Text style={[styles.barValue, { color: theme.ink[200] }]}>
+                    <Text style={[styles.barValue, { color: theme.textSecondary }]}>
                       {count}
                     </Text>
                   </View>
@@ -254,7 +254,7 @@ export default function AnalyticsScreen() {
             </View>
           </>
         ) : (
-          <Text style={[styles.muted, { color: theme.ink[400], padding: 24 }]}>
+          <Text style={[styles.muted, { color: theme.textFaint, padding: 24 }]}>
             {t.analyticsEmpty}
           </Text>
         )}
@@ -291,11 +291,11 @@ function Stat({
     <View
       style={[
         styles.stat,
-        { backgroundColor: theme.bg[1], borderColor: theme.line.DEFAULT },
+        { backgroundColor: theme.pageBg, borderColor: theme.line.DEFAULT },
       ]}
     >
       <Text style={[styles.statValue, { color: accent }]}>{value}</Text>
-      <Text style={[styles.statLabel, { color: theme.ink[300] }]}>{label}</Text>
+      <Text style={[styles.statLabel, { color: theme.textMuted }]}>{label}</Text>
     </View>
   );
 }

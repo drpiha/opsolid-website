@@ -1,9 +1,8 @@
 // -----------------------------------------------------------------------
-// Sprint F2 — Event detail screen.
+// Verso v2 — Event detail screen.
 //
-// Header: full-bleed cover (or initials gradient), event name, date, venue.
-// Body:   description.
-// Below:  attendee grid (3-col) with photo+name+title; tap → /(app)/public/[slug].
+// AppBar default (back + share) + hero cover + metadata + about section +
+// ROI metrics card + attendance toggle fixed at bottom.
 // -----------------------------------------------------------------------
 
 import { useState, useEffect, useCallback } from 'react';
@@ -16,19 +15,45 @@ import {
   Image,
   StyleSheet,
   RefreshControl,
+  Share,
+  Platform,
 } from 'react-native';
-import { Stack, useLocalSearchParams, useRouter } from 'expo-router';
-import { MapPin, Calendar } from 'lucide-react-native';
+import { useLocalSearchParams, useRouter } from 'expo-router';
+import {
+  ChevronLeft,
+  Share2,
+  MapPin,
+  Calendar,
+  Users,
+  TrendingUp,
+} from 'lucide-react-native';
 import { getEvent } from '../../../src/lib/api/events';
 import type { EventDetail, EventDetailAttendee } from '../../../src/lib/api/events';
 import { useTheme } from '../../../src/lib/theme/ThemeProvider';
-import { copper } from '../../../src/lib/theme/tokens';
+import { accent } from '../../../src/lib/theme/tokens';
+import { typography } from '../../../src/lib/theme/typography';
 import { useTranslations, detectLocale } from '../../../src/lib/i18n/locale';
 import { API_BASE } from '../../../src/lib/api/client';
 import { Button } from '../../../src/components/ui/Button';
+import { Card } from '../../../src/components/ui/Card';
+import { Chip } from '../../../src/components/ui/Chip';
+import { AppBar, AppBarIconButton } from '../../../src/components/ui/AppBar';
+import { SectionLabel } from '../../../src/components/ui/SectionLabel';
+import { ScreenContainer } from '../../../src/components/ui/ScreenContainer';
 import { EventCover } from '../../../src/components/events/EventCover';
 import { formatEventLongDate } from '../../../src/lib/events/format';
 
+// ---------------------------------------------------------------------------
+// Helpers
+// ---------------------------------------------------------------------------
+function isLiveNow(startAt: string, endAt: string): boolean {
+  const now = Date.now();
+  return new Date(startAt).getTime() <= now && new Date(endAt).getTime() >= now;
+}
+
+// ---------------------------------------------------------------------------
+// Screen
+// ---------------------------------------------------------------------------
 export default function EventDetailScreen() {
   const { slug } = useLocalSearchParams<{ slug: string }>();
   const router = useRouter();
@@ -40,6 +65,10 @@ export default function EventDetailScreen() {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  // Attendance state — placeholder; real toggle needs cardId from auth store.
+  // The actual mutation (updateCardEvents) lives in the cards/edit screen.
+  // This toggle is display-only until the event-detail attendance API is wired.
+  const [attending, setAttending] = useState(false);
 
   const load = useCallback(
     async (mode: 'initial' | 'refresh') => {
@@ -64,29 +93,63 @@ export default function EventDetailScreen() {
     void load('initial');
   }, [load]);
 
+  async function handleShare() {
+    if (!data) return;
+    try {
+      await Share.share({
+        title: data.event.name,
+        message: data.event.name,
+      });
+    } catch {
+      // share cancelled — no-op
+    }
+  }
+
+  // -------------------------------------------------------------------------
+  // Loading / error states
+  // -------------------------------------------------------------------------
   if (loading) {
     return (
-      <View style={[styles.center, { backgroundColor: theme.bg[0] }]}>
-        <Stack.Screen options={{ title: '' }} />
-        <ActivityIndicator size="large" color={copper[500]} />
-      </View>
+      <ScreenContainer padded={false} edges={['bottom']}>
+        <AppBar
+          title=""
+          leading={
+            <AppBarIconButton onPress={() => router.back()} ghost accessibilityLabel="Back">
+              <ChevronLeft size={20} color={theme.text} />
+            </AppBarIconButton>
+          }
+        />
+        <View style={styles.center}>
+          <ActivityIndicator size="large" color={accent} />
+        </View>
+      </ScreenContainer>
     );
   }
 
   if (error || !data) {
     return (
-      <View style={[styles.center, { backgroundColor: theme.bg[0] }]}>
-        <Stack.Screen options={{ title: '' }} />
-        <Text style={[styles.errorText, { color: theme.signalErr }]}>
-          {error ?? t.errorLoad}
-        </Text>
-        <Button
-          label={t.retry}
-          onPress={() => void load('initial')}
-          variant="secondary"
-          style={{ marginTop: 16 }}
+      <ScreenContainer padded={false} edges={['bottom']}>
+        <AppBar
+          title=""
+          leading={
+            <AppBarIconButton onPress={() => router.back()} ghost accessibilityLabel="Back">
+              <ChevronLeft size={20} color={theme.text} />
+            </AppBarIconButton>
+          }
         />
-      </View>
+        <View style={styles.center}>
+          <Text style={[typography.body, { color: theme.signalErr, textAlign: 'center' }]}>
+            {error ?? t.errorLoad}
+          </Text>
+          <Button
+            label={t.retry}
+            onPress={() => void load('initial')}
+            variant="secondary"
+            fullWidth={false}
+            style={styles.retryBtn}
+          />
+        </View>
+      </ScreenContainer>
     );
   }
 
@@ -95,95 +158,197 @@ export default function EventDetailScreen() {
   const placeLine = [event.venue, event.city, event.country]
     .filter(Boolean)
     .join(', ');
+  const live = isLiveNow(event.startAt, event.endAt);
+
+  // Placeholder ROI numbers — the real CRM lead data is not yet returned by
+  // /api/v1/events/:slug. These show the card section skeleton until the
+  // backend enriches the response.
+  const roiLeads = 0;
+  const roiSaves = 0;
+  const hasRoiData = roiLeads > 0 || roiSaves > 0;
 
   return (
-    <ScrollView
-      style={[styles.root, { backgroundColor: theme.bg[0] }]}
-      contentContainerStyle={styles.scroll}
-      refreshControl={
-        <RefreshControl
-          refreshing={refreshing}
-          onRefresh={() => void load('refresh')}
-          tintColor={copper[500]}
-        />
-      }
-    >
-      <Stack.Screen options={{ title: event.name }} />
+    <ScreenContainer padded={false} edges={['bottom']}>
+      <AppBar
+        title={event.name}
+        leading={
+          <AppBarIconButton onPress={() => router.back()} ghost accessibilityLabel="Back">
+            <ChevronLeft size={20} color={theme.text} />
+          </AppBarIconButton>
+        }
+        trailing={
+          <AppBarIconButton onPress={handleShare} ghost accessibilityLabel="Share">
+            <Share2 size={20} color={theme.text} />
+          </AppBarIconButton>
+        }
+      />
 
-      {/* Cover header */}
-      <View style={styles.coverWrap}>
-        <EventCover
-          slug={event.slug}
-          name={event.name}
-          coverPath={event.coverPath}
-          width="100%"
-          height={200}
-          borderRadius={0}
-          initialsFontSize={64}
-        />
-      </View>
-
-      {/* Title block */}
-      <View style={styles.titleBlock}>
-        <Text style={[styles.title, { color: theme.ink[100] }]}>{event.name}</Text>
-
-        <View style={styles.metaRow}>
-          <Calendar size={14} color={theme.ink[400]} />
-          <Text style={[styles.metaText, { color: theme.ink[300] }]}>
-            {longDate}
-          </Text>
+      <ScrollView
+        style={styles.scroll}
+        contentContainerStyle={styles.scrollContent}
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => void load('refresh')}
+            tintColor={accent}
+          />
+        }
+      >
+        {/* Hero — full-width cover */}
+        <View style={styles.heroWrap}>
+          <EventCover
+            slug={event.slug}
+            name={event.name}
+            coverPath={event.coverPath}
+            width="100%"
+            height={220}
+            borderRadius={0}
+            initialsFontSize={64}
+          />
         </View>
 
-        {placeLine ? (
+        {/* Title block */}
+        <View style={styles.titleBlock}>
+          <Text style={[typography.display2, { color: theme.text }]}>
+            {event.name}
+          </Text>
+
           <View style={styles.metaRow}>
-            <MapPin size={14} color={theme.ink[400]} />
-            <Text style={[styles.metaText, { color: theme.ink[300] }]} numberOfLines={2}>
-              {placeLine}
+            <Calendar size={15} color={theme.textMuted} />
+            <Text style={[typography.lead, { color: theme.textSecondary, flex: 1 }]}>
+              {longDate}
+            </Text>
+          </View>
+
+          {placeLine ? (
+            <View style={styles.metaRow}>
+              <MapPin size={15} color={theme.textMuted} />
+              <Text
+                style={[typography.lead, { color: theme.textSecondary, flex: 1 }]}
+                numberOfLines={2}
+              >
+                {placeLine}
+              </Text>
+            </View>
+          ) : null}
+
+          {/* Status chip row */}
+          <View style={styles.chipRow}>
+            {live ? (
+              <Chip label="Live now" variant="success" dot="live" />
+            ) : null}
+            {attending ? (
+              <Chip label={t.attending} variant="accent" />
+            ) : null}
+          </View>
+        </View>
+
+        {/* About section */}
+        {event.description ? (
+          <View style={styles.section}>
+            <SectionLabel style={styles.sectionLabel}>{t.aboutLabel}</SectionLabel>
+            <Text style={[typography.body, { color: theme.textSecondary, marginTop: 8 }]}>
+              {event.description}
             </Text>
           </View>
         ) : null}
-      </View>
 
-      {/* Description */}
-      {event.description ? (
-        <Text style={[styles.description, { color: theme.ink[200] }]}>
-          {event.description}
-        </Text>
-      ) : null}
-
-      {/* Attendees */}
-      <View style={[styles.attendeesHeader, { borderTopColor: theme.line.DEFAULT }]}>
-        <Text style={[styles.attendeesTitle, { color: theme.ink[100] }]}>
-          {t.attendees}
-        </Text>
-        <Text style={[styles.attendeesCount, { color: theme.ink[400] }]}>
-          {attendees.length}
-        </Text>
-      </View>
-
-      {attendees.length === 0 ? (
-        <Text style={[styles.noAttendees, { color: theme.ink[400] }]}>
-          {t.noAttendees}
-        </Text>
-      ) : (
-        <View style={styles.grid}>
-          {attendees.map((a) => (
-            <AttendeeTile
-              key={a.slug}
-              attendee={a}
-              onPress={() => {
-                if (a.slug) {
-                  router.push(`/(app)/public/${a.slug}` as never);
-                }
-              }}
-            />
-          ))}
+        {/* ROI / metrics section */}
+        <View style={styles.section}>
+          <SectionLabel style={styles.sectionLabel}>{t.roiLabel}</SectionLabel>
+          <Card variant="flat" padded={16} style={styles.roiCard}>
+            {hasRoiData ? (
+              <View style={styles.chipRow}>
+                <Chip
+                  label={`${roiLeads} leads`}
+                  variant="accent"
+                  leadingIcon={<TrendingUp size={12} color={accent} />}
+                />
+                <Chip
+                  label={`${roiSaves} saves`}
+                  variant="accent"
+                  leadingIcon={<Users size={12} color={accent} />}
+                />
+              </View>
+            ) : (
+              <Text style={[typography.bodySmall, { color: theme.textFaint }]}>
+                Lead data will appear here once your card is linked to this event.
+              </Text>
+            )}
+          </Card>
         </View>
-      )}
-    </ScrollView>
+
+        {/* Attendees section */}
+        <View style={styles.section}>
+          <View style={styles.attendeesHeader}>
+            <SectionLabel>{t.attendees}</SectionLabel>
+            <Text style={[typography.caption, { color: theme.textFaint }]}>
+              {attendees.length}
+            </Text>
+          </View>
+
+          {attendees.length === 0 ? (
+            <Text
+              style={[typography.bodySmall, { color: theme.textFaint, marginTop: 8, fontStyle: 'italic' }]}
+            >
+              {t.noAttendees}
+            </Text>
+          ) : (
+            <View style={styles.grid}>
+              {attendees.map((a) => (
+                <AttendeeTile
+                  key={a.slug}
+                  attendee={a}
+                  onPress={() => {
+                    if (a.slug) {
+                      router.push(`/(app)/public/${a.slug}` as never);
+                    }
+                  }}
+                />
+              ))}
+            </View>
+          )}
+        </View>
+
+        {/* Bottom spacer so fixed button doesn't overlap content */}
+        <View style={styles.bottomSpacer} />
+      </ScrollView>
+
+      {/* Attendance toggle — fixed bottom CTA */}
+      <View
+        style={[
+          styles.bottomBar,
+          {
+            backgroundColor: theme.pageBg,
+            borderTopColor: theme.line.DEFAULT,
+          },
+        ]}
+      >
+        <Button
+          label={attending ? t.notAttending : t.attending}
+          variant={attending ? 'secondary' : 'accent'}
+          onPress={() => setAttending((prev) => !prev)}
+        />
+        {attending ? (
+          <Pressable
+            onPress={() => {}}
+            style={styles.viewAttendeesLink}
+            accessibilityRole="button"
+          >
+            <Text style={[typography.bodySmall, { color: accent }]}>
+              {t.viewAttendees}
+            </Text>
+          </Pressable>
+        ) : null}
+      </View>
+    </ScreenContainer>
   );
 }
 
+// ---------------------------------------------------------------------------
+// Attendee tile
+// ---------------------------------------------------------------------------
 function AttendeeTile({
   attendee,
   onPress,
@@ -208,30 +373,32 @@ function AttendeeTile({
       style={({ pressed }) => [
         styles.tile,
         {
-          backgroundColor: theme.bg[1],
+          backgroundColor: theme.surface,
           borderColor: theme.line.DEFAULT,
         },
         pressed && styles.pressed,
       ]}
+      accessibilityRole="button"
+      accessibilityLabel={name}
     >
-      <View style={[styles.avatar, { backgroundColor: theme.bg[2] }]}>
+      <View style={[styles.avatar, { backgroundColor: theme.surfaceMuted }]}>
         {photoUri ? (
           <Image source={{ uri: photoUri }} style={styles.avatarImg} />
         ) : (
-          <Text style={[styles.avatarInitial, { color: theme.ink[300] }]}>
+          <Text style={[typography.title2, { color: theme.textMuted }]}>
             {initial}
           </Text>
         )}
       </View>
       <Text
-        style={[styles.tileName, { color: theme.ink[100] }]}
+        style={[typography.fieldLabel, { color: theme.text, textAlign: 'center' }]}
         numberOfLines={1}
       >
         {name}
       </Text>
       {title ? (
         <Text
-          style={[styles.tileTitle, { color: theme.ink[400] }]}
+          style={[typography.caption, { color: theme.textFaint, textAlign: 'center' }]}
           numberOfLines={1}
         >
           {title}
@@ -241,93 +408,94 @@ function AttendeeTile({
   );
 }
 
+// ---------------------------------------------------------------------------
+// Styles
+// ---------------------------------------------------------------------------
 const styles = StyleSheet.create({
-  root: { flex: 1 },
-  scroll: { paddingBottom: 32 },
+  scroll: { flex: 1 },
+  scrollContent: { paddingBottom: 8 },
   center: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24,
   },
-  errorText: { fontSize: 16, textAlign: 'center' },
-  coverWrap: {
-    width: '100%',
-  },
+  retryBtn: { marginTop: 16 },
+  heroWrap: { width: '100%' },
   titleBlock: {
-    paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingHorizontal: 18,
+    paddingTop: 20,
     paddingBottom: 8,
-    gap: 6,
+    gap: 8,
   },
-  title: { fontSize: 24, fontWeight: '700', lineHeight: 28, letterSpacing: -0.4 },
-  metaRow: { flexDirection: 'row', alignItems: 'center', gap: 6 },
-  metaText: { fontSize: 13, flex: 1 },
-  description: {
-    fontSize: 15,
-    lineHeight: 22,
-    paddingHorizontal: 16,
-    paddingVertical: 12,
+  metaRow: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 8,
+  },
+  chipRow: {
+    flexDirection: 'row',
+    gap: 8,
+    flexWrap: 'wrap',
+    marginTop: 4,
+  },
+  section: {
+    paddingHorizontal: 18,
+    paddingTop: 20,
+    paddingBottom: 8,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    borderTopColor: 'transparent', // set via theme inline where needed
+    marginTop: 8,
+  },
+  sectionLabel: {
+    marginBottom: 2,
+  },
+  roiCard: {
+    marginTop: 10,
   },
   attendeesHeader: {
     flexDirection: 'row',
-    alignItems: 'baseline',
+    alignItems: 'center',
     gap: 8,
-    paddingHorizontal: 16,
-    paddingTop: 20,
-    paddingBottom: 12,
-    marginTop: 8,
-    borderTopWidth: StyleSheet.hairlineWidth,
-  },
-  attendeesTitle: { fontSize: 18, fontWeight: '600' },
-  attendeesCount: { fontSize: 14, fontWeight: '500' },
-  noAttendees: {
-    fontSize: 14,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    fontStyle: 'italic',
+    marginBottom: 4,
   },
   grid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    paddingHorizontal: 12,
     gap: 8,
+    marginTop: 10,
   },
-  // Three-column tile: (100% - 16 - 16) / 3 ≈ 33.33% minus the 8 gap spread.
-  // RN flexBasis with the ratio "31%" + gap=8 + paddingHorizontal:12 lands on
-  // a clean 3-up grid on iPhone 13/14 widths (390px) and Pixel widths (360-411).
   tile: {
-    width: '31.5%',
+    width: '31%',
     aspectRatio: 0.78,
     padding: 8,
-    borderRadius: 12,
+    borderRadius: 14,
     borderWidth: StyleSheet.hairlineWidth,
     alignItems: 'center',
     justifyContent: 'flex-start',
     gap: 4,
-    marginBottom: 8,
   },
   pressed: { opacity: 0.7 },
   avatar: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
+    width: 52,
+    height: 52,
+    borderRadius: 26,
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
     marginBottom: 4,
   },
   avatarImg: { width: '100%', height: '100%' },
-  avatarInitial: { fontSize: 22, fontWeight: '600' },
-  tileName: {
-    fontSize: 12,
-    fontWeight: '600',
-    textAlign: 'center',
-    lineHeight: 14,
+  bottomSpacer: { height: 100 },
+  bottomBar: {
+    paddingHorizontal: 18,
+    paddingTop: 12,
+    paddingBottom: Platform.OS === 'ios' ? 28 : 16,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    gap: 10,
   },
-  tileTitle: {
-    fontSize: 10,
-    textAlign: 'center',
-    lineHeight: 12,
+  viewAttendeesLink: {
+    alignItems: 'center',
+    paddingVertical: 4,
   },
 });

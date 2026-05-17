@@ -16,7 +16,7 @@ import * as Haptics from 'expo-haptics';
 import { useRouter } from 'expo-router';
 import type { ApiCard } from '../../lib/api/types';
 import { useTheme } from '../../lib/theme/ThemeProvider';
-import { teal, signal } from '../../lib/theme/tokens';
+import { accent, signal } from '../../lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../lib/i18n/locale';
 import { API_BASE } from '../../lib/api/client';
 
@@ -49,7 +49,7 @@ type Props = {
 
 function statusDotColor(status: ApiCard['status']): string {
   if (status === 'PUBLISHED') return signal.ok;
-  if (status === 'DRAFT') return teal[500];
+  if (status === 'DRAFT') return accent;
   return '#6B717B';
 }
 
@@ -89,8 +89,8 @@ export function CardDeckTile({
       : `${API_BASE}${card.photoPath}`
     : null;
 
-  const primary = card.brandPrimaryHex ?? teal[500];
-  const accent = card.brandAccentHex ?? teal[500];
+  const primary = card.brandPrimaryHex ?? accent;
+  const cardAccent = card.brandAccentHex ?? accent;
 
   const surfaceStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],
@@ -132,7 +132,7 @@ export function CardDeckTile({
   // Premium card aesthetic — hairline metallic border in the accent colour,
   // brand-primary trim down the right edge, and large photo / typography that
   // feel like an actual NFC business card rather than a notification chip.
-  const innerStroke = hexWithAlpha(accent, 0.35);
+  const innerStroke = hexWithAlpha(cardAccent, 0.35);
   const photoWidth = Math.round(width * 0.42);
   const initial = name.charAt(0).toUpperCase();
 
@@ -152,7 +152,7 @@ export function CardDeckTile({
           {
             width,
             height,
-            backgroundColor: theme.bg[1],
+            backgroundColor: theme.pageBg,
             borderColor: innerStroke,
             shadowColor: '#000',
           },
@@ -164,7 +164,7 @@ export function CardDeckTile({
         <View
           style={[
             styles.photoCol,
-            { width: photoWidth, backgroundColor: photoUri ? theme.bg[2] : primary },
+            { width: photoWidth, backgroundColor: photoUri ? theme.surfaceMuted : primary },
           ]}
         >
           {photoUri ? (
@@ -176,7 +176,7 @@ export function CardDeckTile({
           )}
           {/* Vertical brand stripe between photo and text — the "metallic
               trim" that makes the card feel structural, not flat. */}
-          <View style={[styles.spineTrim, { backgroundColor: accent }]} />
+          <View style={[styles.spineTrim, { backgroundColor: cardAccent }]} />
         </View>
 
         {/* Right side: typography. Name big, title under in brand-primary
@@ -187,7 +187,7 @@ export function CardDeckTile({
               numberOfLines={2}
               adjustsFontSizeToFit
               minimumFontScale={0.7}
-              style={[styles.nameLg, { color: theme.ink[100] }]}
+              style={[styles.nameLg, { color: theme.text }]}
             >
               {name}
             </Text>
@@ -211,7 +211,7 @@ export function CardDeckTile({
             {card.slug ? (
               <Text
                 numberOfLines={1}
-                style={[styles.slug, { color: theme.ink[400] }]}
+                style={[styles.slug, { color: theme.textFaint }]}
               >
                 /c/{card.slug}
               </Text>
@@ -221,7 +221,7 @@ export function CardDeckTile({
 
         {/* "+N" badge — only on bottom-most layer when deck length > 4 */}
         {badge ? (
-          <View style={[styles.badge, { backgroundColor: teal[500] }]}>
+          <View style={[styles.badge, { backgroundColor: accent }]}>
             <Text style={styles.badgeText}>{badge}</Text>
           </View>
         ) : null}

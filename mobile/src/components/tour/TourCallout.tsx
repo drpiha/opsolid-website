@@ -38,7 +38,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { useTheme } from '../../lib/theme/ThemeProvider';
-import { teal } from '../../lib/theme/tokens';
+import { accentDark } from '../../lib/theme/tokens';
 import type { TourStep } from '../../lib/tour/types';
 import type { TargetRect } from './SpotlightOverlay';
 
@@ -132,7 +132,7 @@ export function TourCallout({
         borderBottomWidth: ARROW_SIZE,
         borderLeftColor: 'transparent',
         borderRightColor: 'transparent',
-        borderBottomColor: theme.bg[3],
+        borderBottomColor: theme.surface,
         width: 0,
         height: 0,
       };
@@ -157,7 +157,7 @@ export function TourCallout({
         borderTopWidth: ARROW_SIZE,
         borderLeftColor: 'transparent',
         borderRightColor: 'transparent',
-        borderTopColor: theme.bg[3],
+        borderTopColor: theme.surface,
         width: 0,
         height: 0,
       };
@@ -206,14 +206,14 @@ export function TourCallout({
         containerStyle,
         animatedStyle,
         {
-          backgroundColor: theme.bg[3],
+          backgroundColor: theme.surface,
           shadowColor: '#000',
         },
       ]}
     >
       {arrowStyle ? <View style={arrowStyle} pointerEvents="none" /> : null}
-      <Text style={[styles.title, { color: theme.ink[100], textAlign }]}>{step.title}</Text>
-      <Text style={[styles.body, { color: theme.ink[300], textAlign }]}>{step.body}</Text>
+      <Text style={[styles.title, { color: theme.text, textAlign }]}>{step.title}</Text>
+      <Text style={[styles.body, { color: theme.textMuted, textAlign }]}>{step.body}</Text>
       <View style={[styles.row, { flexDirection: isRTL ? 'row-reverse' : 'row' }]}>
         {orderedButtons}
       </View>
@@ -268,14 +268,14 @@ function SecondaryButton({
       disabled={busy}
       style={({ pressed }) => [
         styles.btn,
-        { backgroundColor: theme.bg[2] },
+        { backgroundColor: theme.surfaceMuted },
         pressed && styles.btnPressed,
       ]}
     >
       {busy ? (
-        <ActivityIndicator color={theme.ink[100]} />
+        <ActivityIndicator color={theme.text} />
       ) : (
-        <Text style={[styles.btnSecondaryLabel, { color: theme.ink[100] }]}>{label}</Text>
+        <Text style={[styles.btnSecondaryLabel, { color: theme.text }]}>{label}</Text>
       )}
     </Pressable>
   );
@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
     flexShrink: 1,
   },
   btnPrimary: {
-    backgroundColor: teal[600],
+    backgroundColor: accentDark,
     flexGrow: 1,
   },
   btnPrimaryLabel: {

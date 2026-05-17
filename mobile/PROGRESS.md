@@ -2,6 +2,53 @@
 
 Living log of mobile-app feature work. Updated per session, not auto-generated.
 
+## 🎯 M8 — Verso v2 design migration — 2026-05-15/16
+
+Full mobile redesign to the new "Verso Mobil" interactive prototype design (`Project_Verso_Mobil/`). 7 milestones (M1-M7), 3 parallel maker-agents per milestone, 30+ files refactored, ~250 new i18n keys × 7 locales, 1 new backend route (`/api/v1/me/profile` PATCH), 1 extended route (`/api/discover/cards` tags any-of filter).
+
+### Palette shift
+
+- **Mobile only:** Verso Aegean turquoise (#1AA6B7) retired → OKLch blue-purple **#4B5DEC primary accent** + #8957DB violet accent2 + #EEF0FE accentSoft. Light-premium light theme (#FCFCFE pageBg) is canonical; dark theme follows same accent on cool ink canvas.
+- Copper `#C27940` survives ONLY as `accentCredit` for the "by OpSolid" italic credit lockup.
+- Web marketing site (`mayai-website/src/`) unchanged — still Aegean teal.
+- **Font:** Geist + Geist Mono via `@expo-google-fonts/geist` loaded at root layout. 18-style typography scale (`display1/2`, `title1/2/3`, `body`, `bodyMedium`, `lead`, `bodySmall`, `fieldLabel`, `caption`, `button`, `buttonSmall`, `chip`, `mono`, `sectionLabel`, `tabLabel`).
+
+### Primitives (new in `src/components/ui/`)
+
+`Card` (flat/elevated/glow), `Chip` (8 variants + dot + onPress), `Avatar` (circle/square + initials hash), `Toggle` (animated 46×28), `Row + RowGroup`, `AppBar + AppBarIconButton` (default 17px / large 30px h1), `SectionLabel` (mono uppercase), `BottomNav` (custom Tabs renderer, 5 visible tabs). Existing `Button`, `Input`, `ScreenContainer`, `BrandHeader` refactored.
+
+### Screen refactors
+
+| Milestone | Scope |
+| --- | --- |
+| M1 | Tokens + Geist + typography scale |
+| M2 | Primitives + AppBar + BottomNav shell (5 visible: home/cards/discover/inbox/settings; contacts/events hidden but routable) |
+| M3 | Auth × 4 + new `home.tsx` dashboard + `cards.tsx` deck + public/[slug].tsx (WebView → native primitives) |
+| M4 | `cards/edit/[id].tsx` (chip-tab bar), `cards/create.tsx` (3-tab form → 5-step wizard), `cards/[id].tsx` detail, new `cards/share/[id].tsx` Share Center, CardFormSections (7 Switch → Toggle), CardRepeaterSections |
+| M5 | `discover.tsx` (search + sector chips), `inbox/index.tsx` + `inbox/[connectionId].tsx` (thread UI stub for M6 messages wiring), `contacts.tsx`, `events/index.tsx` + `events/[slug].tsx` |
+| M6 | `settings.tsx` full sweep + new `settings/notifications.tsx` subpage; 4 new "Coming Soon" screens (CRM / NFC+Wallet / Workspace Admin / Domain Manager); backend: `/api/v1/me/profile` PATCH (NEW), `/api/discover/cards` tags any-of (extended), `push/register` + `connections/[id]/messages` verified |
+| M7 | Legacy cleanup sweep: Toast.tsx, onboarding/index.tsx, analytics.tsx, cards/claim.tsx, CardDeck* components, modal popups. Memory updates. Final APK build dispatch. |
+
+### APK builds
+
+- `android-build-30` — M1-M5 + nit fix (dispatched 2026-05-15T23:05 UTC, completed in 18m24s)
+- `android-build-31` — final M1-M7 production build (M7 polish complete trigger)
+
+### Agents used
+
+Hierarchical-mesh swarm (5-agent max), specialized strategy. Per-milestone pattern: 3 parallel `frontend-agent` + 1 `analyst` reviewer. Backend slice used `backend-dev`. Ruflo MCP `memory_store` for cross-milestone state, `hooks_route` for routing (overridden when keyword matcher misread UI work as security).
+
+### Known follow-ups (not blocking M8)
+
+1. Wire `settings.tsx` profile edit Toast → `/api/v1/me/profile` PATCH modal.
+2. Reconcile two notification-prefs models (`settings.tsx` parent vs `notifications.tsx` subpage local SecureStore).
+3. POST waitlist email from 4 coming-soon screens to real endpoint.
+4. Stand up Vitest harness in `mayai-website/` for /api/v1 routes.
+5. Add `User.phone` column to Prisma schema, then uncomment write path in `/api/v1/me/profile/route.ts`.
+6. i18n round for ~10 hardcoded English strings (`inbox/[connectionId].tsx` Save note / Connected / Add tag, `events/{slug,index}.tsx` "Live now", `contacts.tsx` search placeholder).
+7. `Alert.prompt` (iOS-only) in inbox tag-add — replace with Modal for cross-platform.
+8. `Clipboard` from `react-native` core in `share/[id].tsx` — migrate to `expo-clipboard` when convenient.
+
 ## 🎯 M7 — First-run hand-holding + social enrichment — 2026-05-09
 
 Added in response to Hasan's brief: "When someone gets lost — first time using the app — there should be hints showing where to do what. The app should also guide design-clueless users. At entry, name/email should auto-appear, ideally pulled from socials." 7 commits on top of `e5118c9`:

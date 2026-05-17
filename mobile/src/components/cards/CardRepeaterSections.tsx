@@ -17,7 +17,7 @@ import {
 } from 'react-native';
 import { Plus, Trash2 } from 'lucide-react-native';
 import type { ThemeTokens } from '../../lib/theme/tokens';
-import { copper } from '../../lib/theme/tokens';
+import { accent } from '../../lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../lib/i18n/locale';
 
 // ---------- ServicesSection ----------
@@ -126,11 +126,11 @@ export function ServicesSection({
       {items.length < SERVICES_MAX && (
         <TouchableOpacity
           onPress={add}
-          style={[styles.addBtn, { borderColor: copper[500] }]}
+          style={[styles.addBtn, { borderColor: accent }]}
           activeOpacity={0.8}
         >
-          <Plus size={16} color={copper[500]} />
-          <Text style={[styles.addBtnText, { color: copper[500] }]}>{t.addService}</Text>
+          <Plus size={16} color={accent} />
+          <Text style={[styles.addBtnText, { color: accent }]}>{t.addService}</Text>
         </TouchableOpacity>
       )}
     </View>
@@ -220,11 +220,11 @@ export function CustomButtonsSection({
       {items.length < BUTTONS_MAX && (
         <TouchableOpacity
           onPress={add}
-          style={[styles.addBtn, { borderColor: copper[500] }]}
+          style={[styles.addBtn, { borderColor: accent }]}
           activeOpacity={0.8}
         >
-          <Plus size={16} color={copper[500]} />
-          <Text style={[styles.addBtnText, { color: copper[500] }]}>{t.addButton}</Text>
+          <Plus size={16} color={accent} />
+          <Text style={[styles.addBtnText, { color: accent }]}>{t.addButton}</Text>
         </TouchableOpacity>
       )}
     </View>
@@ -318,11 +318,11 @@ export function FaqsSection({
       {items.length < FAQS_MAX && (
         <TouchableOpacity
           onPress={add}
-          style={[styles.addBtn, { borderColor: copper[500] }]}
+          style={[styles.addBtn, { borderColor: accent }]}
           activeOpacity={0.8}
         >
-          <Plus size={16} color={copper[500]} />
-          <Text style={[styles.addBtnText, { color: copper[500] }]}>{t.addFaq}</Text>
+          <Plus size={16} color={accent} />
+          <Text style={[styles.addBtnText, { color: accent }]}>{t.addFaq}</Text>
         </TouchableOpacity>
       )}
     </View>

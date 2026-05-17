@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import { Plus } from 'lucide-react-native';
 import { useTheme } from '../../lib/theme/ThemeProvider';
-import { teal, accentCredit } from '../../lib/theme/tokens';
+import { accent, accentCredit } from '../../lib/theme/tokens';
 
 /**
  * BrandHeader — small Verso wordmark + glyph chrome shown above each
@@ -22,7 +22,7 @@ export function BrandHeader() {
   const theme = useTheme();
   return (
     <View style={[styles.row, { backgroundColor: theme.bg[0] }]}>
-      <View style={[styles.disc, { backgroundColor: teal[500] }]}>
+      <View style={[styles.disc, { backgroundColor: accent }]}>
         <Plus size={14} color="#FFFFFF" strokeWidth={3} />
       </View>
       <View style={styles.textCol}>

@@ -31,7 +31,7 @@ import {
 } from 'react-native';
 import { Check, X } from 'lucide-react-native';
 import { useTheme } from '../../lib/theme/ThemeProvider';
-import { copper } from '../../lib/theme/tokens';
+import { accent } from '../../lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../lib/i18n/locale';
 import { submitLead } from '../../lib/api/crm';
 import type { ContactFormConfig } from '../../lib/api/types';
@@ -163,23 +163,23 @@ export function LeadFormModal({ visible, slug, onClose, contactForm }: Props) {
           behavior={Platform.OS === 'ios' ? 'padding' : undefined}
           keyboardVerticalOffset={Platform.OS === 'ios' ? 0 : 0}
         >
-          <View style={[styles.sheet, { backgroundColor: theme.bg[1] }]}>
+          <View style={[styles.sheet, { backgroundColor: theme.pageBg }]}>
             <View style={[styles.handleBar, { backgroundColor: theme.line.firm }]} />
             <View style={styles.headerRow}>
-              <Text style={[styles.title, { color: theme.ink[100] }]}>
+              <Text style={[styles.title, { color: theme.text }]}>
                 {t.title}
               </Text>
               <Pressable onPress={onClose} hitSlop={8} style={styles.closeBtn}>
-                <X size={20} color={theme.ink[300]} />
+                <X size={20} color={theme.textMuted} />
               </Pressable>
             </View>
 
             {success ? (
               <View style={styles.successWrap}>
-                <View style={[styles.successCheck, { backgroundColor: copper[500] }]}>
+                <View style={[styles.successCheck, { backgroundColor: accent }]}>
                   <Check size={28} color="#FFFFFF" />
                 </View>
-                <Text style={[styles.successText, { color: theme.ink[100] }]}>
+                <Text style={[styles.successText, { color: theme.text }]}>
                   {t.success}
                 </Text>
               </View>
@@ -201,7 +201,7 @@ export function LeadFormModal({ visible, slug, onClose, contactForm }: Props) {
                       if (f.key === 'message') {
                         return (
                           <View key="message" style={styles.fieldWrap}>
-                            <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+                            <Text style={[styles.fieldLabel, { color: theme.textFaint }]}>
                               {f.label}{f.required ? ' *' : ''}
                             </Text>
                             <TextInput
@@ -209,20 +209,20 @@ export function LeadFormModal({ visible, slug, onClose, contactForm }: Props) {
                                 styles.input,
                                 styles.multiline,
                                 {
-                                  color: theme.ink[100],
+                                  color: theme.text,
                                   borderColor: theme.line.DEFAULT,
-                                  backgroundColor: theme.bg[2],
+                                  backgroundColor: theme.surfaceMuted,
                                 },
                               ]}
                               value={message}
                               onChangeText={(v) => setMessage(v.slice(0, MESSAGE_MAX))}
-                              placeholderTextColor={theme.ink[500]}
+                              placeholderTextColor={theme.textFaint}
                               multiline
                               numberOfLines={4}
                               maxLength={MESSAGE_MAX}
                               textAlignVertical="top"
                             />
-                            <Text style={[styles.charCounter, { color: theme.ink[400] }]}>
+                            <Text style={[styles.charCounter, { color: theme.textFaint }]}>
                               {message.length}/{MESSAGE_MAX}
                             </Text>
                           </View>
@@ -278,7 +278,7 @@ export function LeadFormModal({ visible, slug, onClose, contactForm }: Props) {
                     />
 
                     <View style={styles.fieldWrap}>
-                      <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+                      <Text style={[styles.fieldLabel, { color: theme.textFaint }]}>
                         {t.messageLabel}
                       </Text>
                       <TextInput
@@ -286,21 +286,21 @@ export function LeadFormModal({ visible, slug, onClose, contactForm }: Props) {
                           styles.input,
                           styles.multiline,
                           {
-                            color: theme.ink[100],
+                            color: theme.text,
                             borderColor: theme.line.DEFAULT,
-                            backgroundColor: theme.bg[2],
+                            backgroundColor: theme.surfaceMuted,
                           },
                         ]}
                         value={message}
                         onChangeText={(v) => setMessage(v.slice(0, MESSAGE_MAX))}
                         placeholder={t.messagePlaceholder}
-                        placeholderTextColor={theme.ink[500]}
+                        placeholderTextColor={theme.textFaint}
                         multiline
                         numberOfLines={4}
                         maxLength={MESSAGE_MAX}
                         textAlignVertical="top"
                       />
-                      <Text style={[styles.charCounter, { color: theme.ink[400] }]}>
+                      <Text style={[styles.charCounter, { color: theme.textFaint }]}>
                         {message.length}/{MESSAGE_MAX}
                       </Text>
                     </View>
@@ -315,14 +315,14 @@ export function LeadFormModal({ visible, slug, onClose, contactForm }: Props) {
                     style={[
                       styles.checkbox,
                       {
-                        borderColor: consent ? copper[500] : theme.line.firm,
-                        backgroundColor: consent ? copper[500] : 'transparent',
+                        borderColor: consent ? accent : theme.line.firm,
+                        backgroundColor: consent ? accent : 'transparent',
                       },
                     ]}
                   >
                     {consent ? <Check size={14} color="#FFFFFF" /> : null}
                   </View>
-                  <Text style={[styles.consentText, { color: theme.ink[200] }]}>
+                  <Text style={[styles.consentText, { color: theme.textSecondary }]}>
                     {t.consent}
                   </Text>
                 </Pressable>
@@ -337,7 +337,7 @@ export function LeadFormModal({ visible, slug, onClose, contactForm }: Props) {
                   style={[
                     styles.submitBtn,
                     {
-                      backgroundColor: canSubmit ? copper[500] : theme.bg[2],
+                      backgroundColor: canSubmit ? accent : theme.surfaceMuted,
                       opacity: canSubmit ? 1 : 0.6,
                     },
                   ]}
@@ -383,22 +383,22 @@ function Field({
   const theme = useTheme();
   return (
     <View style={styles.fieldWrap}>
-      <Text style={[styles.fieldLabel, { color: theme.ink[400] }]}>
+      <Text style={[styles.fieldLabel, { color: theme.textFaint }]}>
         {label}{required ? ' *' : ''}
       </Text>
       <TextInput
         style={[
           styles.input,
           {
-            color: theme.ink[100],
+            color: theme.text,
             borderColor: theme.line.DEFAULT,
-            backgroundColor: theme.bg[2],
+            backgroundColor: theme.surfaceMuted,
           },
         ]}
         value={value}
         onChangeText={onChange}
         placeholder={placeholder}
-        placeholderTextColor={theme.ink[500]}
+        placeholderTextColor={theme.textFaint}
         keyboardType={keyboardType ?? 'default'}
         autoCapitalize={keyboardType ? 'none' : 'words'}
         autoCorrect={false}

@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#1AA6B7"
+      "backgroundColor": "#FCFCFE"
     },
     "ios": {
       "supportsTablet": true,
@@ -28,7 +28,7 @@
       "softwareKeyboardLayoutMode": "resize",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#1AA6B7"
+        "backgroundColor": "#FCFCFE"
       },
       "permissions": [
         "android.permission.CAMERA",
@@ -64,6 +64,7 @@
     },
     "plugins": [
       "expo-router",
+      "expo-font",
       "expo-secure-store",
       "expo-local-authentication",
       [

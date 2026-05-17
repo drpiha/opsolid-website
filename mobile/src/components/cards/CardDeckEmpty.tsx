@@ -1,7 +1,7 @@
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { Plus } from 'lucide-react-native';
 import { useTheme } from '../../lib/theme/ThemeProvider';
-import { teal } from '../../lib/theme/tokens';
+import { accent, accentSoft } from '../../lib/theme/tokens';
 
 type Props = {
   /** Tapping the hero calls this. Wires to /onboarding. */
@@ -39,18 +39,18 @@ export function CardDeckEmpty({ onPress, headline, subline }: Props) {
           style={[
             styles.iconRing,
             {
-              backgroundColor: teal[50],
-              borderColor: teal[300],
+              backgroundColor: accentSoft,
+              borderColor: accent,
             },
           ]}
         >
-          <Plus size={64} color={teal[500]} strokeWidth={1.8} />
+          <Plus size={64} color={accent} strokeWidth={1.8} />
         </View>
 
-        <Text style={[styles.headline, { color: theme.ink[100] }]}>
+        <Text style={[styles.headline, { color: theme.text }]}>
           {headline}
         </Text>
-        <Text style={[styles.subline, { color: theme.ink[300] }]}>
+        <Text style={[styles.subline, { color: theme.textMuted }]}>
           {subline}
         </Text>
       </Pressable>

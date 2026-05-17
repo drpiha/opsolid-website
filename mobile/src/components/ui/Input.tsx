@@ -1,36 +1,109 @@
+// Verso v2 Input — matches `.v-input` + `.v-field` semantics.
+// 48h, 12r, 14p, accent focus halo (4px @ 10% accent).
+// API kept compatible with existing callers (label + error optional).
+
+import { useState } from 'react';
 import { TextInput, View, Text, StyleSheet } from 'react-native';
-import type { TextInputProps } from 'react-native';
+import type { TextInputProps, ViewStyle } from 'react-native';
 import { useTheme } from '../../lib/theme/ThemeProvider';
+import { accent } from '../../lib/theme/tokens';
+import { typography } from '../../lib/theme/typography';
 
 type Props = TextInputProps & {
   label?: string;
   error?: string;
+  /** Optional prefix slot (e.g. for currency, country code). */
+  prefix?: string;
+  /** Optional suffix slot (e.g. unit, validation icon). */
+  suffix?: string;
+  containerStyle?: ViewStyle;
 };
 
-export function Input({ label, error, style, ...props }: Props) {
+export function Input({
+  label,
+  error,
+  prefix,
+  suffix,
+  style,
+  containerStyle,
+  onFocus,
+  onBlur,
+  ...props
+}: Props) {
   const theme = useTheme();
+  const [focused, setFocused] = useState(false);
+
+  const borderColor = error
+    ? theme.signalErr
+    : focused
+    ? accent
+    : theme.line.firm;
 
   return (
-    <View style={styles.wrapper}>
+    <View style={[styles.wrapper, containerStyle]}>
       {label ? (
-        <Text style={[styles.label, { color: theme.ink[300] }]}>{label}</Text>
+        <Text style={[typography.fieldLabel, { color: theme.textSecondary }]}>
+          {label}
+        </Text>
       ) : null}
-      <TextInput
-        {...props}
+      <View
         style={[
-          styles.input,
+          styles.inputWrap,
           {
-            borderColor: error ? theme.signalErr : theme.line.DEFAULT,
-            backgroundColor: theme.bg[1],
-            color: theme.ink[100],
+            borderColor,
+            backgroundColor: theme.surface,
           },
-          style,
+          focused && !error && styles.focusHalo,
+          focused && !error && { shadowColor: accent },
         ]}
-        placeholderTextColor={theme.ink[400]}
-        autoCapitalize={props.autoCapitalize ?? 'none'}
-      />
+      >
+        {prefix ? (
+          <Text
+            style={[
+              typography.mono,
+              styles.affix,
+              { color: theme.textMuted, backgroundColor: theme.surfaceMuted, borderColor: theme.line.DEFAULT },
+            ]}
+          >
+            {prefix}
+          </Text>
+        ) : null}
+        <TextInput
+          {...props}
+          onFocus={(e) => {
+            setFocused(true);
+            onFocus?.(e);
+          }}
+          onBlur={(e) => {
+            setFocused(false);
+            onBlur?.(e);
+          }}
+          style={[
+            styles.input,
+            typography.body,
+            { color: theme.text },
+            style,
+          ]}
+          placeholderTextColor={theme.textFaint}
+          autoCapitalize={props.autoCapitalize ?? 'none'}
+        />
+        {suffix ? (
+          <Text
+            style={[
+              typography.mono,
+              styles.affix,
+              styles.affixRight,
+              { color: theme.textMuted, backgroundColor: theme.surfaceMuted, borderColor: theme.line.DEFAULT },
+            ]}
+          >
+            {suffix}
+          </Text>
+        ) : null}
+      </View>
       {error ? (
-        <Text style={[styles.error, { color: theme.signalErr }]}>{error}</Text>
+        <Text style={[typography.caption, { color: theme.signalErr }]}>
+          {error}
+        </Text>
       ) : null}
     </View>
   );
@@ -40,19 +113,35 @@ const styles = StyleSheet.create({
   wrapper: {
     gap: 6,
   },
-  label: {
-    fontSize: 12,
-    fontWeight: '500',
-    letterSpacing: 0.3,
-  },
-  input: {
-    minHeight: 52,
-    paddingHorizontal: 16,
+  inputWrap: {
+    flexDirection: 'row',
+    alignItems: 'stretch',
+    height: 48,
     borderRadius: 12,
     borderWidth: 1,
-    fontSize: 15,
+    overflow: 'hidden',
   },
-  error: {
-    fontSize: 12,
+  input: {
+    flex: 1,
+    paddingHorizontal: 14,
+    height: '100%',
+  },
+  affix: {
+    paddingHorizontal: 12,
+    textAlignVertical: 'center',
+    lineHeight: 46,
+    borderRightWidth: 1,
+  },
+  affixRight: {
+    borderRightWidth: 0,
+    borderLeftWidth: 1,
+  },
+  focusHalo: {
+    // RN doesn't render box-shadow on Android natively; on iOS the shadow
+    // descriptor still produces a soft halo. For a parity look on Android,
+    // a transparent overlay View could be added — deferred to polish.
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 0 },
   },
 });

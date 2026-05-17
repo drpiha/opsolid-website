@@ -6,23 +6,28 @@ import {
   FlatList,
   ActivityIndicator,
   Pressable,
-  Image,
   RefreshControl,
   ScrollView,
   StyleSheet,
 } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import { Search, ChevronRight, Users as UsersIcon, X as XIcon } from 'lucide-react-native';
 import { discoverCards, getSuggestions } from '../../src/lib/api/discover';
 import type { DiscoverCard, SuggestionItem } from '../../src/lib/api/discover';
 import { listEvents } from '../../src/lib/api/events';
 import type { EventListItem } from '../../src/lib/api/events';
 import { useTheme } from '../../src/lib/theme/ThemeProvider';
-import { copper, teal } from '../../src/lib/theme/tokens';
+import { accent } from '../../src/lib/theme/tokens';
+import { typography } from '../../src/lib/theme/typography';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
 import { API_BASE } from '../../src/lib/api/client';
 import { Button } from '../../src/components/ui/Button';
-import { BrandHeader } from '../../src/components/ui/BrandHeader';
+import { Avatar } from '../../src/components/ui/Avatar';
+import { Chip } from '../../src/components/ui/Chip';
+import { Card } from '../../src/components/ui/Card';
+import { AppBar } from '../../src/components/ui/AppBar';
+import { SectionLabel } from '../../src/components/ui/SectionLabel';
+import { ScreenContainer } from '../../src/components/ui/ScreenContainer';
 import { EventCover } from '../../src/components/events/EventCover';
 import { formatEventDateRange } from '../../src/lib/events/format';
 import { CURATED_TAG_SLUGS } from '../../src/lib/discover/tags';
@@ -153,86 +158,82 @@ export default function DiscoverScreen() {
       ? item.photoPath.startsWith('http')
         ? item.photoPath
         : `${API_BASE}${item.photoPath}`
-      : null;
+      : undefined;
 
     return (
       <Pressable
         onPress={() => {
           if (item.slug) router.push(`/(app)/public/${item.slug}` as never);
         }}
-        style={({ pressed }) => [
-          styles.card,
-          { backgroundColor: theme.bg[1], borderColor: theme.line.DEFAULT },
-          pressed && styles.pressed,
-        ]}
+        style={({ pressed }) => [pressed && styles.pressed]}
       >
-        <View style={[styles.avatar, { backgroundColor: theme.bg[2] }]}>
-          {photoUri ? (
-            <Image source={{ uri: photoUri }} style={styles.avatarImg} />
-          ) : (
-            <Text style={[styles.avatarInitial, { color: theme.ink[300] }]}>
-              {displayName.charAt(0).toUpperCase()}
-            </Text>
-          )}
-        </View>
+        <Card variant="flat" padded={12} style={styles.cardItem}>
+          <Avatar
+            name={displayName}
+            imageUri={photoUri}
+            size={52}
+            shape="square"
+          />
 
-        <View style={styles.cardBody}>
-          <Text style={[styles.name, { color: theme.ink[100] }]} numberOfLines={1}>
-            {displayName}
-          </Text>
-          {(item.title || item.company) ? (
-            <Text style={[styles.sub, { color: theme.ink[400] }]} numberOfLines={1}>
-              {[item.title, item.company].filter(Boolean).join(' · ')}
+          <View style={styles.cardBody}>
+            <Text style={[typography.title3, { color: theme.text }]} numberOfLines={1}>
+              {displayName}
             </Text>
-          ) : null}
-          {item.city ? (
-            <Text style={[styles.location, { color: theme.ink[500] }]} numberOfLines={1}>
-              {item.city}{item.country ? `, ${item.country}` : ''}
-            </Text>
-          ) : null}
-        </View>
+            {(item.title || item.company) ? (
+              <Text
+                style={[typography.bodySmall, { color: theme.textSecondary }]}
+                numberOfLines={1}
+              >
+                {[item.title, item.company].filter(Boolean).join(' · ')}
+              </Text>
+            ) : null}
+            {item.city ? (
+              <Text
+                style={[typography.caption, { color: theme.textMuted }]}
+                numberOfLines={1}
+              >
+                {item.city}{item.country ? `, ${item.country}` : ''}
+              </Text>
+            ) : null}
+          </View>
 
-        <View style={styles.badges}>
-          {item.openToNetworking && (
-            <View style={[styles.badge, { backgroundColor: copper[50] }]}>
-              <Text style={[styles.badgeText, { color: copper[700] }]}>
-                {t.networking}
-              </Text>
-            </View>
-          )}
-          {item.acceptingClients && (
-            <View style={[styles.badge, { backgroundColor: '#EFF6FF' }]}>
-              <Text style={[styles.badgeText, { color: '#1D4ED8' }]}>
-                {t.clients}
-              </Text>
-            </View>
-          )}
-        </View>
+          <View style={styles.badges}>
+            {item.openToNetworking && (
+              <Chip
+                label={t.networking}
+                variant="success"
+              />
+            )}
+            {item.acceptingClients && (
+              <Chip
+                label={t.clients}
+                variant="accent"
+              />
+            )}
+          </View>
+        </Card>
       </Pressable>
     );
   }
 
   // Sprint F2 — horizontal events rail. Above the search field per spec.
   // Tile dimensions: 220×140 cover-on-top, 64px text block under. Total height
-  // ~204px including margins. 4 tiles visible side-by-side on standard widths;
-  // user scrolls horizontally for the rest. Tap → /(app)/events/[slug].
+  // ~204px including margins. Tap → /(app)/events/[slug].
   function renderEventsRail() {
     if (events.length === 0) return null;
     return (
       <View style={styles.railWrap}>
         <View style={styles.railHeader}>
-          <Text style={[styles.railTitle, { color: theme.ink[100] }]}>
-            {t.upcomingEvents}
-          </Text>
+          <SectionLabel>{t.upcomingEvents}</SectionLabel>
           <Pressable
             onPress={() => router.push('/(app)/events' as never)}
             hitSlop={8}
             style={styles.railSeeAll}
           >
-            <Text style={[styles.railSeeAllText, { color: teal[600] }]}>
+            <Text style={[typography.buttonSmall, { color: accent }]}>
               {t.seeAllEvents}
             </Text>
-            <ChevronRight size={14} color={teal[600]} />
+            <ChevronRight size={14} color={accent} />
           </Pressable>
         </View>
         <ScrollView
@@ -246,49 +247,44 @@ export default function DiscoverScreen() {
               <Pressable
                 key={ev.id}
                 onPress={() => router.push(`/(app)/events/${ev.slug}` as never)}
-                style={({ pressed }) => [
-                  styles.railTile,
-                  {
-                    backgroundColor: theme.bg[1],
-                    borderColor: theme.line.DEFAULT,
-                  },
-                  pressed && styles.pressed,
-                ]}
+                style={({ pressed }) => [pressed && styles.pressed]}
               >
-                <EventCover
-                  slug={ev.slug}
-                  name={ev.name}
-                  coverPath={ev.coverPath}
-                  width={200}
-                  height={108}
-                  borderRadius={10}
-                  initialsFontSize={42}
-                />
-                <View style={styles.railTileBody}>
-                  <Text
-                    style={[styles.railTileName, { color: theme.ink[100] }]}
-                    numberOfLines={1}
-                  >
-                    {ev.name}
-                  </Text>
-                  <Text
-                    style={[styles.railTileMeta, { color: theme.ink[400] }]}
-                    numberOfLines={1}
-                  >
-                    {ev.city} · {dateLine}
-                  </Text>
-                  <View style={styles.railTileFoot}>
-                    <UsersIcon size={11} color={teal[700]} />
-                    <Text style={[styles.railTileCount, { color: teal[700] }]}>
-                      {ev.attendeeCount === 1
-                        ? tEvents.attendeeCountOne
-                        : tEvents.attendeeCount.replace(
-                            '{count}',
-                            String(ev.attendeeCount),
-                          )}
+                <Card variant="elevated" padded={false} style={styles.railTile}>
+                  <EventCover
+                    slug={ev.slug}
+                    name={ev.name}
+                    coverPath={ev.coverPath}
+                    width={220}
+                    height={108}
+                    borderRadius={10}
+                    initialsFontSize={42}
+                  />
+                  <View style={styles.railTileBody}>
+                    <Text
+                      style={[typography.bodyMedium, { color: theme.text }]}
+                      numberOfLines={1}
+                    >
+                      {ev.name}
                     </Text>
+                    <Text
+                      style={[typography.caption, { color: theme.textSecondary }]}
+                      numberOfLines={1}
+                    >
+                      {ev.city} · {dateLine}
+                    </Text>
+                    <View style={styles.railTileFoot}>
+                      <UsersIcon size={11} color={accent} />
+                      <Text style={[typography.caption, { color: accent }]}>
+                        {ev.attendeeCount === 1
+                          ? tEvents.attendeeCountOne
+                          : tEvents.attendeeCount.replace(
+                              '{count}',
+                              String(ev.attendeeCount),
+                            )}
+                      </Text>
+                    </View>
                   </View>
-                </View>
+                </Card>
               </Pressable>
             );
           })}
@@ -298,17 +294,13 @@ export default function DiscoverScreen() {
   }
 
   // M2 — "People you may know" rail. Hidden when the suggestions endpoint
-  // returns 0 items (e.g. no saved contacts yet, or 0-score across the
-  // pool). Each tile is ~120pt wide and renders the same data as the main
-  // discover row but in a compact horizontal carousel.
+  // returns 0 items. Each tile is ~120pt wide, compact horizontal carousel.
   function renderSuggestionsRail() {
     if (suggestions.length === 0) return null;
     return (
       <View style={styles.railWrap}>
         <View style={styles.railHeader}>
-          <Text style={[styles.railTitle, { color: theme.ink[100] }]}>
-            {t.suggestionsTitle}
-          </Text>
+          <SectionLabel>{t.suggestionsTitle}</SectionLabel>
         </View>
         <ScrollView
           horizontal
@@ -320,7 +312,7 @@ export default function DiscoverScreen() {
               ? s.photoPath.startsWith('http')
                 ? s.photoPath
                 : `${API_BASE}${s.photoPath}`
-              : null;
+              : undefined;
             const sub = [s.title, s.company].filter(Boolean).join(' · ');
             return (
               <Pressable
@@ -328,46 +320,40 @@ export default function DiscoverScreen() {
                 onPress={() => {
                   if (s.slug) router.push(`/(app)/public/${s.slug}` as never);
                 }}
-                style={({ pressed }) => [
-                  styles.suggestionTile,
-                  {
-                    backgroundColor: theme.bg[1],
-                    borderColor: theme.line.DEFAULT,
-                  },
-                  pressed && styles.pressed,
-                ]}
+                style={({ pressed }) => [pressed && styles.pressed]}
               >
-                <View style={[styles.suggestionAvatar, { backgroundColor: theme.bg[2] }]}>
-                  {photoUri ? (
-                    <Image source={{ uri: photoUri }} style={styles.avatarImg} />
-                  ) : (
-                    <Text style={[styles.avatarInitial, { color: theme.ink[300] }]}>
-                      {s.name.charAt(0).toUpperCase()}
+                <Card variant="elevated" padded={false} style={styles.suggestionTile}>
+                  <View style={styles.suggestionInner}>
+                    <Avatar
+                      name={s.name}
+                      imageUri={photoUri}
+                      size={56}
+                      shape="circle"
+                    />
+                    <Text
+                      style={[typography.bodyMedium, { color: theme.text, textAlign: 'center' }]}
+                      numberOfLines={1}
+                    >
+                      {s.name}
                     </Text>
-                  )}
-                </View>
-                <Text
-                  style={[styles.suggestionName, { color: theme.ink[100] }]}
-                  numberOfLines={1}
-                >
-                  {s.name}
-                </Text>
-                {sub.length > 0 ? (
-                  <Text
-                    style={[styles.suggestionMeta, { color: theme.ink[400] }]}
-                    numberOfLines={1}
-                  >
-                    {sub}
-                  </Text>
-                ) : null}
-                {s.city ? (
-                  <Text
-                    style={[styles.suggestionMeta, { color: theme.ink[500] }]}
-                    numberOfLines={1}
-                  >
-                    {s.city}
-                  </Text>
-                ) : null}
+                    {sub.length > 0 ? (
+                      <Text
+                        style={[typography.caption, { color: theme.textSecondary, textAlign: 'center' }]}
+                        numberOfLines={1}
+                      >
+                        {sub}
+                      </Text>
+                    ) : null}
+                    {s.city ? (
+                      <Text
+                        style={[typography.caption, { color: theme.textMuted, textAlign: 'center' }]}
+                        numberOfLines={1}
+                      >
+                        {s.city}
+                      </Text>
+                    ) : null}
+                  </View>
+                </Card>
               </Pressable>
             );
           })}
@@ -377,8 +363,7 @@ export default function DiscoverScreen() {
   }
 
   // M2 — Tag chip strip. Sits above the search bar. The "all" sentinel is
-  // first, followed by the 24 curated sectors. Tapping a chip filters the
-  // feed by `cardData.tags @> ARRAY[chosen_tag]`. Selected: teal-filled.
+  // first, followed by the curated sectors. Tapping a chip filters the feed.
   function renderTagStrip() {
     const allChips: { key: string; label: string }[] = [
       { key: ALL_TAG, label: t.allTags },
@@ -398,28 +383,12 @@ export default function DiscoverScreen() {
           {allChips.map((chip) => {
             const isActive = activeTag === chip.key;
             return (
-              <Pressable
+              <Chip
                 key={chip.key}
+                label={chip.label}
+                variant={isActive ? 'accent' : 'default'}
                 onPress={() => handleTagSelect(chip.key)}
-                style={({ pressed }) => [
-                  styles.tagStripChip,
-                  {
-                    backgroundColor: isActive ? teal[500] : theme.bg[2],
-                    borderColor: isActive ? teal[500] : theme.line.DEFAULT,
-                  },
-                  pressed && { opacity: 0.85 },
-                ]}
-              >
-                <Text
-                  style={[
-                    styles.tagStripChipText,
-                    { color: isActive ? '#FFFFFF' : theme.ink[200] },
-                  ]}
-                  numberOfLines={1}
-                >
-                  {chip.label}
-                </Text>
-              </Pressable>
+              />
             );
           })}
         </ScrollView>
@@ -458,12 +427,15 @@ export default function DiscoverScreen() {
 
     return (
       <View style={styles.resultsHeader}>
-        <Text style={[styles.resultsHeaderText, { color: theme.ink[400] }]} numberOfLines={1}>
+        <Text
+          style={[typography.bodySmall, { color: theme.textMuted, flex: 1 }]}
+          numberOfLines={1}
+        >
           {label}
         </Text>
         <Pressable onPress={handleClear} hitSlop={8} style={styles.resultsClear}>
-          <XIcon size={12} color={teal[600]} />
-          <Text style={[styles.resultsClearText, { color: teal[600] }]}>
+          <XIcon size={12} color={accent} />
+          <Text style={[typography.buttonSmall, { color: accent }]}>
             {t.clearSearch}
           </Text>
         </Pressable>
@@ -471,10 +443,15 @@ export default function DiscoverScreen() {
     );
   }
 
+  const subtitle = t.subtitle ?? 'Find people, partners, peers';
+
   return (
-    <View style={[styles.root, { backgroundColor: theme.bg[0] }]}>
-      <Stack.Screen options={{ title: t.title }} />
-      <BrandHeader />
+    <ScreenContainer padded={false}>
+      <AppBar
+        variant="large"
+        title={t.title}
+        subtitle={subtitle}
+      />
 
       {/* Sprint F2 — events rail (above suggestions per spec ordering). */}
       {renderEventsRail()}
@@ -490,16 +467,16 @@ export default function DiscoverScreen() {
         style={[
           styles.searchRow,
           {
-            backgroundColor: theme.bg[1],
+            backgroundColor: theme.surface,
             borderBottomColor: theme.line.DEFAULT,
           },
         ]}
       >
-        <Search size={16} color={theme.ink[400]} style={styles.searchIcon} />
+        <Search size={16} color={theme.textFaint} style={styles.searchIcon} />
         <TextInput
-          style={[styles.searchInput, { color: theme.ink[100] }]}
+          style={[styles.searchInput, typography.body, { color: theme.text }]}
           placeholder={t.searchPlaceholder}
-          placeholderTextColor={theme.ink[500]}
+          placeholderTextColor={theme.textFaint}
           value={query}
           onChangeText={handleQueryChange}
           autoCapitalize="none"
@@ -514,11 +491,11 @@ export default function DiscoverScreen() {
 
       {loading ? (
         <View style={styles.center}>
-          <ActivityIndicator size="large" color={copper[500]} />
+          <ActivityIndicator size="large" color={accent} />
         </View>
       ) : error ? (
         <View style={styles.center}>
-          <Text style={[styles.emptyTitle, { color: theme.signalErr }]}>{error}</Text>
+          <Text style={[typography.title2, { color: theme.signalErr }]}>{error}</Text>
           <Button
             label={t.retry}
             onPress={() => void load('initial', committedQuery, committedTag)}
@@ -533,22 +510,33 @@ export default function DiscoverScreen() {
           renderItem={renderItem}
           ListEmptyComponent={
             <View style={styles.center}>
-              <Text style={[styles.emptyTitle, { color: theme.ink[100] }]}>{t.empty}</Text>
-              <Text style={[styles.emptyHint, { color: theme.ink[400] }]}>{t.emptyHint}</Text>
+              <Card variant="flat" style={styles.emptyCard}>
+                <Search size={32} color={theme.textFaint} />
+                <Text
+                  style={[typography.title2, { color: theme.text, marginTop: 12, textAlign: 'center' }]}
+                >
+                  {t.empty}
+                </Text>
+                <Text
+                  style={[typography.bodySmall, { color: theme.textMuted, marginTop: 6, textAlign: 'center' }]}
+                >
+                  {t.emptyHint}
+                </Text>
+              </Card>
             </View>
           }
           refreshControl={
             <RefreshControl
               refreshing={refreshing}
               onRefresh={handleRefresh}
-              tintColor={copper[500]}
+              tintColor={accent}
             />
           }
           onEndReached={handleEndReached}
           onEndReachedThreshold={0.4}
           ListFooterComponent={
             loadingMore ? (
-              <ActivityIndicator color={copper[500]} style={{ marginVertical: 16 }} />
+              <ActivityIndicator color={accent} style={{ marginVertical: 16 }} />
             ) : null
           }
           contentContainerStyle={
@@ -558,12 +546,11 @@ export default function DiscoverScreen() {
           }
         />
       )}
-    </View>
+    </ScreenContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  root: { flex: 1 },
   searchRow: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -575,7 +562,6 @@ const styles = StyleSheet.create({
   searchIcon: { flexShrink: 0 },
   searchInput: {
     flex: 1,
-    fontSize: 15,
     paddingVertical: 6,
   },
   center: {
@@ -584,48 +570,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 24,
   },
-  emptyTitle: {
-    fontSize: 17,
-    fontWeight: '500',
-    marginBottom: 6,
-    textAlign: 'center',
+  emptyCard: {
+    alignItems: 'center',
+    paddingVertical: 32,
+    paddingHorizontal: 24,
+    width: '100%',
   },
-  emptyHint: {
-    fontSize: 14,
-    textAlign: 'center',
-  },
-  card: {
+  // ---------- List card ----------
+  cardItem: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 12,
-    padding: 12,
-    borderRadius: 14,
-    borderWidth: StyleSheet.hairlineWidth,
     marginBottom: 8,
   },
   pressed: { opacity: 0.7 },
-  avatar: {
-    width: 52,
-    height: 52,
-    borderRadius: 14,
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'hidden',
-    flexShrink: 0,
-  },
-  avatarImg: { width: '100%', height: '100%' },
-  avatarInitial: { fontSize: 20, fontWeight: '600' },
   cardBody: { flex: 1, gap: 2 },
-  name: { fontSize: 15, fontWeight: '500' },
-  sub: { fontSize: 13 },
-  location: { fontSize: 12 },
   badges: { gap: 4, alignItems: 'flex-end' },
-  badge: {
-    paddingHorizontal: 6,
-    paddingVertical: 2,
-    borderRadius: 6,
-  },
-  badgeText: { fontSize: 10, fontWeight: '600' },
   // ---------- Events rail (Sprint F2) ----------
   railWrap: {
     paddingTop: 8,
@@ -638,18 +598,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginBottom: 8,
   },
-  railTitle: {
-    fontSize: 13,
-    fontWeight: '700',
-    textTransform: 'uppercase',
-    letterSpacing: 0.6,
-  },
   railSeeAll: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 2,
   },
-  railSeeAllText: { fontSize: 13, fontWeight: '600' },
   railScroll: {
     paddingHorizontal: 12,
     paddingBottom: 6,
@@ -657,24 +610,18 @@ const styles = StyleSheet.create({
   },
   railTile: {
     width: 220,
-    borderRadius: 12,
-    borderWidth: StyleSheet.hairlineWidth,
     overflow: 'hidden',
-    marginRight: 0,
   },
   railTileBody: {
     padding: 10,
     gap: 3,
   },
-  railTileName: { fontSize: 14, fontWeight: '600', lineHeight: 17 },
-  railTileMeta: { fontSize: 11 },
   railTileFoot: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 3,
     marginTop: 4,
   },
-  railTileCount: { fontSize: 11, fontWeight: '600' },
   // ---------- Suggestions rail (M2) ----------
   suggestionsScroll: {
     paddingHorizontal: 12,
@@ -683,30 +630,13 @@ const styles = StyleSheet.create({
   },
   suggestionTile: {
     width: 120,
-    borderRadius: 12,
-    borderWidth: StyleSheet.hairlineWidth,
+    overflow: 'hidden',
+  },
+  suggestionInner: {
     paddingVertical: 12,
     paddingHorizontal: 10,
     alignItems: 'center',
     gap: 4,
-  },
-  suggestionAvatar: {
-    width: 56,
-    height: 56,
-    borderRadius: 28,
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'hidden',
-    marginBottom: 4,
-  },
-  suggestionName: {
-    fontSize: 13,
-    fontWeight: '600',
-    textAlign: 'center',
-  },
-  suggestionMeta: {
-    fontSize: 11,
-    textAlign: 'center',
   },
   // ---------- Tag chip strip (M2) ----------
   tagStripWrap: {
@@ -717,16 +647,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     gap: 8,
   },
-  tagStripChip: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 999,
-    borderWidth: 1,
-  },
-  tagStripChipText: {
-    fontSize: 13,
-    fontWeight: '500',
-  },
   // ---------- Results header (M2) ----------
   resultsHeader: {
     flexDirection: 'row',
@@ -736,15 +656,9 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     gap: 12,
   },
-  resultsHeaderText: {
-    flex: 1,
-    fontSize: 13,
-    fontStyle: 'italic',
-  },
   resultsClear: {
     flexDirection: 'row',
     alignItems: 'center',
     gap: 4,
   },
-  resultsClearText: { fontSize: 13, fontWeight: '600' },
 });

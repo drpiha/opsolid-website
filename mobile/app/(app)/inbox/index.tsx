@@ -4,31 +4,36 @@ import {
   Text,
   FlatList,
   ActivityIndicator,
-  Pressable,
-  Image,
   RefreshControl,
   StyleSheet,
   Alert,
 } from 'react-native';
-import { Stack, useRouter, useFocusEffect } from 'expo-router';
+import { useRouter, useFocusEffect } from 'expo-router';
 import {
-  Mailbox,
-  Inbox as InboxIcon,
+  Mail,
   UserPlus,
   FileText,
   Calendar,
   Send,
   Users,
   MessageSquare,
+  Mailbox,
 } from 'lucide-react-native';
 import { listInbox, resolveAction } from '../../../src/lib/api/inbox';
 import type { InboxItem, InboxActionStatus } from '../../../src/lib/api/inbox';
 import { useTheme } from '../../../src/lib/theme/ThemeProvider';
-import { copper, signal, teal } from '../../../src/lib/theme/tokens';
+import { accent } from '../../../src/lib/theme/tokens';
+import { typography } from '../../../src/lib/theme/typography';
 import { useTranslations, detectLocale } from '../../../src/lib/i18n/locale';
 import { API_BASE } from '../../../src/lib/api/client';
 import { Button } from '../../../src/components/ui/Button';
-import { BrandHeader } from '../../../src/components/ui/BrandHeader';
+import { AppBar } from '../../../src/components/ui/AppBar';
+import { Avatar } from '../../../src/components/ui/Avatar';
+import { Chip } from '../../../src/components/ui/Chip';
+import { Row, RowGroup } from '../../../src/components/ui/Row';
+import { SectionLabel } from '../../../src/components/ui/SectionLabel';
+import { Card } from '../../../src/components/ui/Card';
+import { ScreenContainer } from '../../../src/components/ui/ScreenContainer';
 
 type Filter = 'pending' | 'accepted' | 'all';
 
@@ -37,7 +42,7 @@ export default function InboxScreen() {
   const theme = useTheme();
   const t = useTranslations(detectLocale()).inbox;
 
-  const [filter, setFilter] = useState<Filter>('pending');
+  const [filter] = useState<Filter>('all');
   const [items, setItems] = useState<InboxItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
@@ -70,12 +75,7 @@ export default function InboxScreen() {
     }, [filter]),
   );
 
-  function handleFilterChange(f: Filter) {
-    setFilter(f);
-    void load('initial', f);
-  }
-
-  async function handleResolve(id: string, status: 'accepted' | 'declined' | 'archived') {
+  async function handleResolve(id: string, status: 'accepted' | 'declined') {
     setResolving(id);
     try {
       await resolveAction(id, status);
@@ -89,18 +89,6 @@ export default function InboxScreen() {
     } finally {
       setResolving(null);
     }
-  }
-
-  function typeLabel(type: string): string {
-    const map: Record<string, string> = {
-      request_contact: t.types.request_contact,
-      request_quote: t.types.request_quote,
-      request_meeting: t.types.request_meeting,
-      send_card: t.types.send_card,
-      ask_collaboration: t.types.ask_collaboration,
-      give_feedback: t.types.give_feedback,
-    };
-    return map[type] ?? type;
   }
 
   function typeIcon(type: string, color: string) {
@@ -123,377 +111,298 @@ export default function InboxScreen() {
     }
   }
 
-  function statusColor(status: string): string {
-    if (status === 'accepted') return signal.ok;
-    if (status === 'declined') return theme.signalErr;
-    if (status === 'archived') return theme.ink[400];
-    return copper[500]; // pending
+  function typeLabel(type: string): string {
+    const map: Record<string, string> = {
+      request_contact: t.types.request_contact,
+      request_quote: t.types.request_quote,
+      request_meeting: t.types.request_meeting,
+      send_card: t.types.send_card,
+      ask_collaboration: t.types.ask_collaboration,
+      give_feedback: t.types.give_feedback,
+    };
+    return map[type] ?? type;
   }
 
-  function renderItem({ item }: { item: InboxItem }) {
-    const senderName = item.sender.name ?? item.sender.slug ?? '—';
-    const photoUri = item.sender.photoPath
-      ? item.sender.photoPath.startsWith('http')
-        ? item.sender.photoPath
-        : `${API_BASE}${item.sender.photoPath}`
-      : null;
-    const isPending = item.status === 'pending';
+  const pendingItems = items.filter((i) => i.status === 'pending');
+  const mutualItems = items.filter(
+    (i) => i.status === 'accepted' && i.connectionId,
+  );
+  // Event notifications are not yet wired; keep as empty section placeholder
+  const eventItems: InboxItem[] = [];
 
-    // Sprint F4 — tap target. Prefer the chat thread when a connection exists
-    // (it does for every action where sender !== receiver, since the server
-    // upserts one). Fall back to the public card viewer when missing — keeps
-    // the row useful even on the edge case.
-    const onRowPress = () => {
-      if (item.connectionId) {
-        router.push(`/(app)/inbox/${item.connectionId}` as never);
-      } else if (item.sender.slug) {
-        router.push(`/(app)/public/${item.sender.slug}` as never);
-      }
-    };
+  function photoUri(item: InboxItem): string | undefined {
+    const path = item.sender.photoPath;
+    if (!path) return undefined;
+    return path.startsWith('http') ? path : `${API_BASE}${path}`;
+  }
 
-    // Last-message preview: show "you: …" when the requester sent it, or the
-    // sender name's first token otherwise. Falls back to the action's own
-    // message text, then the type label.
-    const last = item.lastMessage;
-    const previewLine = last
-      ? last.body
-      : item.message ?? null;
+  function renderConnectionRequestRow(item: InboxItem) {
+    const name = item.sender.name ?? item.sender.slug ?? '—';
+    const isResolving = resolving === item.id;
 
     return (
-      <View
-        style={[
-          styles.card,
-          { backgroundColor: theme.bg[1], borderColor: theme.line.DEFAULT },
-        ]}
-      >
-        <Pressable onPress={onRowPress} style={styles.cardHeader}>
-          <View style={[styles.avatar, { backgroundColor: theme.bg[2] }]}>
-            {photoUri ? (
-              <Image source={{ uri: photoUri }} style={styles.avatarImg} />
-            ) : (
-              <Text style={[styles.avatarInitial, { color: theme.ink[300] }]}>
-                {senderName.charAt(0).toUpperCase()}
-              </Text>
-            )}
-          </View>
-
-          <View style={[styles.typeBadge, { backgroundColor: theme.bg[2] }]}>
-            {typeIcon(item.type, copper[600])}
-          </View>
-
-          <View style={styles.headerBody}>
-            <Text style={[styles.senderName, { color: theme.ink[100] }]} numberOfLines={1}>
-              {senderName}
-            </Text>
-            {(item.sender.title || item.sender.company) ? (
-              <Text style={[styles.senderSub, { color: theme.ink[400] }]} numberOfLines={1}>
-                {[item.sender.title, item.sender.company].filter(Boolean).join(' · ')}
-              </Text>
-            ) : null}
-            <Text style={[styles.typeLabel, { color: copper[600] }]}>
-              {typeLabel(item.type)}
-            </Text>
-          </View>
-
-          <View style={styles.headerRight}>
-            {item.unreadCount > 0 ? (
-              <View style={[styles.unreadBadge, { backgroundColor: copper[500] }]}>
-                <Text style={styles.unreadBadgeText}>
-                  {item.unreadCount > 99 ? '99+' : String(item.unreadCount)}
-                </Text>
-              </View>
-            ) : null}
-            <View style={[styles.statusDot, { backgroundColor: statusColor(item.status) }]} />
-          </View>
-        </Pressable>
-
-        {previewLine ? (
-          <Text
-            style={[
-              styles.message,
-              { color: theme.ink[300], borderTopColor: theme.line.DEFAULT },
-            ]}
-            numberOfLines={2}
-          >
-            {previewLine}
-          </Text>
-        ) : null}
-
-        {isPending && (
-          <View style={[styles.actions, { borderTopColor: theme.line.DEFAULT }]}>
-            <Pressable
+      <Row
+        key={item.id}
+        divider={pendingItems.indexOf(item) > 0}
+        title={name}
+        subtitle={`${typeLabel(item.type)} · ${formatRelativeTime(item.createdAt)}`}
+        leading={
+          <Avatar
+            name={name}
+            imageUri={photoUri(item)}
+            size={36}
+            shape="circle"
+          />
+        }
+        trailing={
+          <View style={styles.requestActions}>
+            <Button
+              label={t.declineCta}
+              size="sm"
+              variant="ghost"
+              fullWidth={false}
+              disabled={isResolving}
+              loading={isResolving && resolving === item.id}
               onPress={() => void handleResolve(item.id, 'declined')}
-              disabled={resolving === item.id}
-              style={[styles.actionBtn, styles.declineBtn, { borderColor: theme.line.DEFAULT }]}
-            >
-              {resolving === item.id ? (
-                <ActivityIndicator size="small" color={theme.ink[400]} />
-              ) : (
-                <Text style={[styles.actionBtnText, { color: theme.ink[300] }]}>{t.decline}</Text>
-              )}
-            </Pressable>
-            <Pressable
+            />
+            <Button
+              label={t.acceptCta}
+              size="sm"
+              variant="accent"
+              fullWidth={false}
+              disabled={isResolving}
+              loading={isResolving && resolving === item.id}
               onPress={() => void handleResolve(item.id, 'accepted')}
-              disabled={resolving === item.id}
-              style={[styles.actionBtn, styles.acceptBtn]}
-            >
-              {resolving === item.id ? (
-                <ActivityIndicator size="small" color="#fff" />
-              ) : (
-                <Text style={[styles.actionBtnText, { color: '#fff' }]}>{t.accept}</Text>
-              )}
-            </Pressable>
+            />
           </View>
-        )}
-      </View>
+        }
+        onPress={() => {
+          if (item.connectionId) {
+            router.push(`/(app)/inbox/${item.connectionId}` as never);
+          } else if (item.sender.slug) {
+            router.push(`/(app)/public/${item.sender.slug}` as never);
+          }
+        }}
+      />
     );
   }
 
-  const filters: { key: Filter; label: string }[] = [
-    { key: 'pending', label: t.pending },
-    { key: 'accepted', label: t.accepted },
-    { key: 'all', label: t.all },
-  ];
+  function renderMutualSaveRow(item: InboxItem) {
+    const name = item.sender.name ?? item.sender.slug ?? '—';
 
-  // Render markdown-lite: split by ** to bold inline. Keeps things tiny without
-  // pulling in a markdown lib.
-  function renderInline(line: string, baseColor: string) {
-    const parts = line.split('**');
-    return parts.map((part, i) => (
-      <Text
-        key={i}
-        style={{
-          color: baseColor,
-          fontWeight: i % 2 === 1 ? '600' : '400',
+    return (
+      <Row
+        key={item.id}
+        divider={mutualItems.indexOf(item) > 0}
+        title={name}
+        subtitle={t.types.send_card}
+        leading={
+          <Avatar
+            name={name}
+            imageUri={photoUri(item)}
+            size={36}
+            shape="circle"
+          />
+        }
+        trailing={
+          <Chip
+            label={t.viewCta}
+            variant="accent"
+            onPress={() => {
+              if (item.connectionId) {
+                router.push(`/(app)/inbox/${item.connectionId}` as never);
+              } else if (item.sender.slug) {
+                router.push(`/(app)/public/${item.sender.slug}` as never);
+              }
+            }}
+          />
+        }
+        onPress={() => {
+          if (item.connectionId) {
+            router.push(`/(app)/inbox/${item.connectionId}` as never);
+          } else if (item.sender.slug) {
+            router.push(`/(app)/public/${item.sender.slug}` as never);
+          }
         }}
-      >
-        {part}
-      </Text>
-    ));
+      />
+    );
   }
 
-  function renderEmptyExplainer() {
-    return (
-      <View style={styles.emptyWrap}>
-        {/* Hero icon ring */}
-        <View
-          style={[
-            styles.heroIconRing,
-            { backgroundColor: teal[50], borderColor: teal[200] },
-          ]}
-        >
-          <InboxIcon size={64} color={teal[500]} strokeWidth={1.5} />
+  function renderContent() {
+    if (loading) {
+      return (
+        <View style={styles.center}>
+          <ActivityIndicator size="large" color={accent} />
         </View>
-        <Text style={[styles.emptyHeadline, { color: theme.ink[100] }]}>
-          {t.emptyHeadline}
-        </Text>
-        <Text style={[styles.emptySubline, { color: theme.ink[300] }]}>
-          {t.emptySubline}
-        </Text>
-      </View>
+      );
+    }
+
+    if (error) {
+      return (
+        <View style={styles.center}>
+          <Text style={[typography.body, { color: theme.signalErr, textAlign: 'center' }]}>
+            {error}
+          </Text>
+          <Button
+            label={t.retry}
+            onPress={() => void load('initial', filter)}
+            variant="secondary"
+            style={{ marginTop: 16 }}
+          />
+        </View>
+      );
+    }
+
+    if (items.length === 0) {
+      return (
+        <View style={styles.emptyWrap}>
+          <Card variant="flat" style={styles.emptyCard}>
+            <View style={styles.emptyInner}>
+              <View style={[styles.emptyIconRing, { backgroundColor: theme.accentSoft }]}>
+                <Mail size={40} color={accent} strokeWidth={1.5} />
+              </View>
+              <Text style={[typography.title2, { color: theme.text, textAlign: 'center', marginTop: 16 }]}>
+                {t.emptyTitle}
+              </Text>
+              <Text style={[typography.bodySmall, { color: theme.textMuted, textAlign: 'center', marginTop: 6 }]}>
+                {t.emptyHintCard}
+              </Text>
+            </View>
+          </Card>
+        </View>
+      );
+    }
+
+    return (
+      <FlatList
+        data={[{ key: 'content' }]}
+        keyExtractor={(item) => item.key}
+        renderItem={() => (
+          <View style={styles.sections}>
+            {/* CONNECTION REQUESTS */}
+            {pendingItems.length > 0 ? (
+              <View style={styles.section}>
+                <SectionLabel style={styles.sectionLabelSpacing}>
+                  {t.connectionRequestsLabel}
+                </SectionLabel>
+                <RowGroup>
+                  {pendingItems.map(renderConnectionRequestRow)}
+                </RowGroup>
+              </View>
+            ) : null}
+
+            {/* MUTUAL SAVES */}
+            {mutualItems.length > 0 ? (
+              <View style={styles.section}>
+                <SectionLabel style={styles.sectionLabelSpacing}>
+                  {t.mutualSavesLabel}
+                </SectionLabel>
+                <RowGroup>
+                  {mutualItems.map(renderMutualSaveRow)}
+                </RowGroup>
+              </View>
+            ) : null}
+
+            {/* EVENT NOTIFICATIONS */}
+            <View style={styles.section}>
+              <SectionLabel style={styles.sectionLabelSpacing}>
+                {t.eventNotificationsLabel}
+              </SectionLabel>
+              {eventItems.length === 0 ? (
+                <RowGroup>
+                  <Row
+                    divider={false}
+                    title="No event activity"
+                    subtitle="Event invitations will appear here"
+                    leading={
+                      <Calendar size={20} color={theme.textFaint} />
+                    }
+                  />
+                </RowGroup>
+              ) : null}
+            </View>
+          </View>
+        )}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => void load('refresh', filter)}
+            tintColor={accent}
+          />
+        }
+        contentContainerStyle={styles.listContent}
+        showsVerticalScrollIndicator={false}
+      />
     );
   }
 
   return (
-    <>
-      <Stack.Screen options={{ title: t.title }} />
-      <View style={[styles.root, { backgroundColor: theme.bg[0] }]}>
-        <BrandHeader />
-        {/* Filter chips — only when there are items */}
-        {items.length > 0 && !loading && !error ? (
-          <View
-            style={[styles.filterRow, { borderBottomColor: theme.line.DEFAULT }]}
-          >
-            {filters.map((f) => (
-              <Pressable
-                key={f.key}
-                onPress={() => handleFilterChange(f.key)}
-                style={[
-                  styles.chip,
-                  filter === f.key
-                    ? { backgroundColor: copper[500] }
-                    : { backgroundColor: theme.bg[1], borderWidth: StyleSheet.hairlineWidth, borderColor: theme.line.DEFAULT },
-                ]}
-              >
-                <Text
-                  style={[
-                    styles.chipText,
-                    { color: filter === f.key ? '#fff' : theme.ink[300] },
-                  ]}
-                >
-                  {f.label}
-                </Text>
-              </Pressable>
-            ))}
-          </View>
-        ) : null}
-
-        {loading ? (
-          <View style={styles.center}>
-            <ActivityIndicator size="large" color={copper[500]} />
-          </View>
-        ) : error ? (
-          <View style={styles.center}>
-            <Text style={[styles.errorTitle, { color: theme.signalErr }]}>{error}</Text>
-            <Button
-              label={t.retry}
-              onPress={() => void load('initial', filter)}
-              variant="secondary"
-              style={{ marginTop: 16 }}
-            />
-          </View>
-        ) : (
-          <FlatList
-            data={items}
-            keyExtractor={(c) => c.id}
-            renderItem={renderItem}
-            ListEmptyComponent={renderEmptyExplainer()}
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={() => void load('refresh', filter)}
-                tintColor={copper[500]}
-              />
-            }
-            contentContainerStyle={
-              items.length === 0
-                ? { flexGrow: 1, justifyContent: 'center', paddingHorizontal: 16, paddingVertical: 16 }
-                : { paddingVertical: 8, paddingHorizontal: 16 }
-            }
-          />
-        )}
-      </View>
-    </>
+    <ScreenContainer padded={false} edges={['left', 'right', 'bottom']}>
+      <AppBar
+        variant="large"
+        title={t.title}
+        subtitle={t.subtitle}
+      />
+      {renderContent()}
+    </ScreenContainer>
   );
 }
 
+/** Minimal relative time without a dependency */
+function formatRelativeTime(iso: string | undefined | null): string {
+  if (!iso) return '';
+  const diff = Date.now() - new Date(iso).getTime();
+  const mins = Math.floor(diff / 60_000);
+  if (mins < 60) return `${mins}m ago`;
+  const hrs = Math.floor(mins / 60);
+  if (hrs < 24) return `${hrs}h ago`;
+  const days = Math.floor(hrs / 24);
+  return `${days}d ago`;
+}
+
 const styles = StyleSheet.create({
-  root: { flex: 1 },
-  filterRow: {
-    flexShrink: 0,
-    flexDirection: 'row',
-    gap: 8,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-  },
-  chip: {
-    paddingHorizontal: 12,
-    paddingVertical: 6,
-    borderRadius: 16,
-  },
-  chipText: { fontSize: 12, fontWeight: '500' },
   center: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     padding: 24,
   },
-  errorTitle: { fontSize: 17, fontWeight: '500', marginBottom: 6, textAlign: 'center' },
   emptyWrap: {
-    paddingHorizontal: 24,
-    paddingVertical: 8,
-    alignItems: 'center',
-  },
-  heroIconRing: {
-    width: 112,
-    height: 112,
-    borderRadius: 56,
-    borderWidth: 2,
-    borderStyle: 'dashed',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 24,
-  },
-  emptyHeadline: {
-    fontSize: 20,
-    fontWeight: '600',
-    textAlign: 'center',
-    letterSpacing: -0.3,
-    marginBottom: 10,
-  },
-  emptySubline: {
-    fontSize: 14,
-    lineHeight: 20,
-    textAlign: 'center',
-    maxWidth: 280,
-  },
-  card: {
-    borderRadius: 14,
-    borderWidth: StyleSheet.hairlineWidth,
-    marginBottom: 10,
-    overflow: 'hidden',
-  },
-  cardHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 10,
-    padding: 12,
-  },
-  avatar: {
-    width: 44,
-    height: 44,
-    borderRadius: 12,
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'hidden',
-    flexShrink: 0,
-  },
-  avatarImg: { width: '100%', height: '100%' },
-  avatarInitial: { fontSize: 17, fontWeight: '600' },
-  typeBadge: {
-    width: 32,
-    height: 32,
-    borderRadius: 8,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexShrink: 0,
-  },
-  headerBody: { flex: 1, gap: 2 },
-  senderName: { fontSize: 15, fontWeight: '500' },
-  senderSub: { fontSize: 12 },
-  typeLabel: { fontSize: 12, fontWeight: '500', marginTop: 2 },
-  headerRight: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    flexShrink: 0,
-  },
-  unreadBadge: {
-    minWidth: 20,
-    height: 20,
-    paddingHorizontal: 6,
-    borderRadius: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  unreadBadgeText: {
-    color: '#fff',
-    fontSize: 11,
-    fontWeight: '700',
-  },
-  statusDot: { width: 8, height: 8, borderRadius: 4, flexShrink: 0 },
-  message: {
-    fontSize: 13,
-    paddingHorizontal: 12,
-    paddingVertical: 10,
-    borderTopWidth: StyleSheet.hairlineWidth,
-    lineHeight: 18,
-  },
-  actions: {
-    flexDirection: 'row',
-    gap: 8,
-    padding: 10,
-    borderTopWidth: StyleSheet.hairlineWidth,
-  },
-  actionBtn: {
     flex: 1,
-    paddingVertical: 9,
-    borderRadius: 10,
+    justifyContent: 'center',
+    padding: 20,
+  },
+  emptyCard: {
+    alignItems: 'center',
+  },
+  emptyInner: {
+    alignItems: 'center',
+    paddingVertical: 24,
+  },
+  emptyIconRing: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  declineBtn: { borderWidth: StyleSheet.hairlineWidth },
-  acceptBtn: { backgroundColor: copper[500] },
-  actionBtnText: { fontSize: 13, fontWeight: '600' },
+  listContent: {
+    flexGrow: 1,
+    paddingBottom: 20,
+  },
+  sections: {
+    paddingHorizontal: 18,
+    paddingTop: 8,
+    gap: 24,
+  },
+  section: {
+    gap: 10,
+  },
+  sectionLabelSpacing: {
+    paddingHorizontal: 4,
+  },
+  requestActions: {
+    flexDirection: 'row',
+    gap: 6,
+  },
 });

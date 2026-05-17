@@ -1,14 +1,14 @@
 import { Pressable, View, Text, Image, StyleSheet } from 'react-native';
 import { useRouter } from 'expo-router';
 import { useTheme } from '../../lib/theme/ThemeProvider';
-import { copper, signal } from '../../lib/theme/tokens';
+import { accent, signal } from '../../lib/theme/tokens';
 import { useTranslations, detectLocale } from '../../lib/i18n/locale';
 import { API_BASE } from '../../lib/api/client';
 import type { ApiCard, CardStatus } from '../../lib/api/types';
 
 function statusColor(status: CardStatus): string {
   if (status === 'PUBLISHED') return signal.ok;
-  if (status === 'DRAFT') return copper[500];
+  if (status === 'DRAFT') return accent;
   return '#6B717B'; // ink[400] dark approximation — always muted
 }
 
@@ -34,7 +34,7 @@ export function CardListItem({ card }: { card: ApiCard }) {
       style={({ pressed }) => [
         styles.row,
         {
-          backgroundColor: theme.bg[1],
+          backgroundColor: theme.pageBg,
           borderColor: theme.line.DEFAULT,
         },
         pressed && styles.pressed,
@@ -42,11 +42,11 @@ export function CardListItem({ card }: { card: ApiCard }) {
       accessibilityRole="button"
       accessibilityLabel={`${contactName}, ${t.status[card.status]}`}
     >
-      <View style={[styles.thumb, { backgroundColor: theme.bg[2] }]}>
+      <View style={[styles.thumb, { backgroundColor: theme.surfaceMuted }]}>
         {photoUri ? (
           <Image source={{ uri: photoUri }} style={styles.thumbImage} />
         ) : (
-          <Text style={[styles.thumbInitial, { color: theme.ink[300] }]}>
+          <Text style={[styles.thumbInitial, { color: theme.textMuted }]}>
             {contactName.charAt(0).toUpperCase()}
           </Text>
         )}
@@ -54,14 +54,14 @@ export function CardListItem({ card }: { card: ApiCard }) {
 
       <View style={styles.body}>
         <Text
-          style={[styles.name, { color: theme.ink[100] }]}
+          style={[styles.name, { color: theme.text }]}
           numberOfLines={1}
         >
           {contactName}
         </Text>
         {card.slug ? (
           <Text
-            style={[styles.slug, { color: theme.ink[400] }]}
+            style={[styles.slug, { color: theme.textFaint }]}
             numberOfLines={1}
           >
             /c/{card.slug}
@@ -73,7 +73,7 @@ export function CardListItem({ card }: { card: ApiCard }) {
         <View
           style={[styles.statusDot, { backgroundColor: statusColor(card.status) }]}
         />
-        <Text style={[styles.statusLabel, { color: theme.ink[400] }]}>
+        <Text style={[styles.statusLabel, { color: theme.textFaint }]}>
           {t.status[card.status]}
         </Text>
       </View>

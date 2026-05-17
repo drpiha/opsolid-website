@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import {
   View,
   Text,
@@ -15,14 +15,15 @@ import {
   Dimensions,
   type ViewToken,
 } from 'react-native';
-import { Stack, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import * as ImagePicker from 'expo-image-picker';
-import { Check, X } from 'lucide-react-native';
+import { X } from 'lucide-react-native';
 import { createCard, updateCard, uploadPhoto } from '../../../src/lib/api/cards';
 import { listTemplates, type Template } from '../../../src/lib/api/templates';
 import { API_BASE } from '../../../src/lib/api/client';
 import { useTheme } from '../../../src/lib/theme/ThemeProvider';
-import { copper, teal } from '../../../src/lib/theme/tokens';
+import { accent } from '../../../src/lib/theme/tokens';
+import { typography } from '../../../src/lib/theme/typography';
 import { useTranslations, detectLocale } from '../../../src/lib/i18n/locale';
 import {
   BasicFieldsSection,
@@ -60,18 +61,25 @@ import type {
   FaqItem,
   StatusBannerState,
 } from '../../../src/components/cards/CardFormSections';
+import { AppBar, AppBarIconButton } from '../../../src/components/ui/AppBar';
+import { Button } from '../../../src/components/ui/Button';
+import { Avatar } from '../../../src/components/ui/Avatar';
+import { SectionLabel } from '../../../src/components/ui/SectionLabel';
+import { Chip } from '../../../src/components/ui/Chip';
+import { Input } from '../../../src/components/ui/Input';
 
-// Sprint 6 — three-tab segmented control mirrors edit/[id].tsx.
-type Tab = 'profil' | 'tasarim' | 'gelismis';
+const TOTAL_STEPS = 5;
 
 export default function CardCreateScreen() {
   const router = useRouter();
   const theme = useTheme();
-  const t = useTranslations(detectLocale()).cards;
+  const tFull = useTranslations(detectLocale());
+  const t = tFull.cards;
 
   const [saving, setSaving] = useState(false);
-  const [activeTab, setActiveTab] = useState<Tab>('profil');
+  const [currentStep, setCurrentStep] = useState(1);
 
+  // ─── Form state (unchanged from original) ─────────────────────────────────
   const [basics, setBasics] = useState<BasicFieldsState>({
     name: '', jobTitle: '', position: '', company: '', email: '',
     phone: '', whatsapp: '', website: '', address: '', bio: '',
@@ -112,11 +120,7 @@ export default function CardCreateScreen() {
     setDiscovery((s) => ({ ...s, [k]: v }));
   }
 
-  // -----------------------------------------------------------------
-  // Inline template picker — same pattern as edit/[id].tsx. The old
-  // router.push-to-template-preview approach had a Tabs back-navigation
-  // bug; using an inline Modal keeps the create screen mounted.
-  // -----------------------------------------------------------------
+  // ─── Inline template picker ────────────────────────────────────────────────
   const [templatePickerOpen, setTemplatePickerOpen] = useState(false);
   const [templatePickerItems, setTemplatePickerItems] = useState<Template[] | null>(null);
   const [templatePickerActiveIdx, setTemplatePickerActiveIdx] = useState(0);
@@ -158,6 +162,7 @@ export default function CardCreateScreen() {
 
   const templatePickerCurrent = templatePickerFiltered[templatePickerActiveIdx];
 
+  // ─── Photo picker ──────────────────────────────────────────────────────────
   async function pickPhoto() {
     const perm = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (!perm.granted) return;
@@ -177,6 +182,7 @@ export default function CardCreateScreen() {
     setPhotoMimeType(asset.mimeType ?? 'image/jpeg');
   }
 
+  // ─── Create ────────────────────────────────────────────────────────────────
   async function handleCreate() {
     if (!basics.name.trim()) {
       Alert.alert('', 'Name is required.');
@@ -280,185 +286,332 @@ export default function CardCreateScreen() {
     }
   }
 
-  const tabs: { key: Tab; label: string }[] = [
-    { key: 'profil', label: t.tabProfile },
-    { key: 'tasarim', label: t.tabDesign },
-    { key: 'gelismis', label: t.tabAdvanced },
+  // ─── Navigation ───────────────────────────────────────────────────────────
+  function goBack() {
+    if (currentStep > 1) {
+      setCurrentStep((s) => s - 1);
+    } else {
+      router.back();
+    }
+  }
+
+  function goNext() {
+    if (currentStep < TOTAL_STEPS) {
+      setCurrentStep((s) => s + 1);
+    } else {
+      void handleCreate();
+    }
+  }
+
+  // ─── Step label ───────────────────────────────────────────────────────────
+  const stepLabel = (t.stepLabel ?? 'Step {n} of {total}')
+    .replace('{n}', String(currentStep))
+    .replace('{total}', String(TOTAL_STEPS));
+
+  // ─── Step titles & hints ──────────────────────────────────────────────────
+  const stepMeta: { title: string; hint: string }[] = [
+    {
+      title: t.pickTemplate ?? 'Pick a template',
+      hint: t.sectionTemplate,
+    },
+    {
+      title: t.addPhoto,
+      hint: tFull.onboarding?.step1Hint ?? '',
+    },
+    {
+      title: tFull.onboarding?.step2Title ?? t.fieldName,
+      hint: tFull.onboarding?.step2NamePlaceholder ?? '',
+    },
+    {
+      title: tFull.onboarding?.step3Title ?? t.fieldPhone,
+      hint: tFull.onboarding?.step3Skip ?? '',
+    },
+    {
+      title: tFull.onboarding?.step5Title ?? t.save,
+      hint: tFull.onboarding?.step5Hint ?? '',
+    },
   ];
+
+  const meta = stepMeta[currentStep - 1] ?? stepMeta[0];
+
+  // ─── Progress fraction ────────────────────────────────────────────────────
+  const progressFraction = currentStep / TOTAL_STEPS;
+
+  const windowWidth = Dimensions.get('window').width;
 
   return (
     <>
-      <Stack.Screen
-        options={{
-          title: t.createTitle,
-          headerStyle: { backgroundColor: theme.bg[0] },
-          headerTintColor: theme.ink[100],
-          headerRight: () => (
-            <TouchableOpacity onPress={() => void handleCreate()} disabled={saving} style={styles.saveBtn}>
-              {saving
-                ? <ActivityIndicator size="small" color={copper[500]} />
-                : <Text style={[styles.saveBtnText, { color: copper[500] }]}>{t.save}</Text>
-              }
-            </TouchableOpacity>
-          ),
-        }}
+      {/* AppBar */}
+      <AppBar
+        variant="default"
+        title={t.createTitle}
+        leading={
+          <AppBarIconButton ghost onPress={goBack} accessibilityLabel={t.cancel}>
+            <X size={20} color={theme.text} />
+          </AppBarIconButton>
+        }
+        trailing={null}
       />
+
+      {/* Progress bar — 4px flat View, no primitive needed */}
+      <View style={[styles.progressTrack, { backgroundColor: theme.line.DEFAULT }]}>
+        <View
+          style={[
+            styles.progressFill,
+            { backgroundColor: accent, width: `${progressFraction * 100}%` },
+          ]}
+        />
+      </View>
+
       <KeyboardAvoidingView
-        style={{ flex: 1, backgroundColor: theme.bg[0] }}
+        style={{ flex: 1, backgroundColor: theme.pageBg }}
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : 0}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 88 : 0}
       >
-        {/* Tab bar */}
-        <View style={[styles.tabBar, { backgroundColor: theme.bg[1], borderBottomColor: theme.line.DEFAULT }]}>
-          {tabs.map((tab) => {
-            const active = activeTab === tab.key;
-            return (
-              <TouchableOpacity
-                key={tab.key}
-                onPress={() => setActiveTab(tab.key)}
-                style={[
-                  styles.tabPill,
-                  active && { borderBottomColor: teal[500] },
-                ]}
-                activeOpacity={0.85}
-              >
-                <Text
-                  style={[
-                    styles.tabText,
-                    { color: active ? teal[500] : theme.ink[400] },
-                  ]}
+        <ScrollView
+          style={{ flex: 1, backgroundColor: theme.pageBg }}
+          contentContainerStyle={styles.scroll}
+          keyboardShouldPersistTaps="handled"
+          keyboardDismissMode="interactive"
+          automaticallyAdjustKeyboardInsets
+        >
+          {/* Step eyebrow + headline */}
+          <SectionLabel style={styles.eyebrow}>{stepLabel}</SectionLabel>
+          <Text style={[typography.display2, styles.headline, { color: theme.text }]}>
+            {meta.title}
+          </Text>
+          {meta.hint ? (
+            <Text style={[typography.lead, styles.hint, { color: theme.textSecondary }]}>
+              {meta.hint}
+            </Text>
+          ) : null}
+
+          {/* ── Step 1: Template ─────────────────────────────────────────── */}
+          {currentStep === 1 && (
+            <View style={styles.stepBody}>
+              <TemplateSection
+                theme={theme}
+                value={templateId}
+                onChange={setTemplateId}
+                onPreviewRequest={() => {
+                  // Open the inline picker modal — no router.push so the create
+                  // screen stays mounted and form state is preserved.
+                  setTemplatePickerOpen(true);
+                }}
+              />
+              <LayoutSection theme={theme} value={layoutKey} onChange={setLayoutKey} />
+              <ThemeSection theme={theme} value={themeKey} onChange={setThemeKey} />
+            </View>
+          )}
+
+          {/* ── Step 2: Photo ─────────────────────────────────────────────── */}
+          {currentStep === 2 && (
+            <View style={styles.stepBody}>
+              <View style={styles.photoWrap}>
+                <Avatar
+                  name={basics.name || undefined}
+                  imageUri={photoUri ?? undefined}
+                  size={96}
+                  shape="circle"
+                />
+                {/* Edit badge overlapping the avatar */}
+                <TouchableOpacity
+                  onPress={() => void pickPhoto()}
+                  disabled={saving}
+                  style={[styles.photoEditBadge, { backgroundColor: accent }]}
+                  activeOpacity={0.85}
                 >
-                  {tab.label}
-                </Text>
-              </TouchableOpacity>
-            );
-          })}
-        </View>
+                  <Text style={[typography.caption, { color: '#FFFFFF' }]}>
+                    {photoUri ? t.changePhoto : t.addPhoto}
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          )}
 
-        {activeTab === 'profil' && (
-          <ScrollView
-            key="profil"
-            style={{ backgroundColor: theme.bg[0] }}
-            contentContainerStyle={styles.scroll}
-            keyboardShouldPersistTaps="handled"
-            keyboardDismissMode="interactive"
-            automaticallyAdjustKeyboardInsets
-          >
-            {/* Photo */}
-            <TouchableOpacity
-              onPress={() => void pickPhoto()}
+          {/* ── Step 3: Identity (name, title, company) ───────────────────── */}
+          {currentStep === 3 && (
+            <View style={styles.stepBody}>
+              <View style={styles.fieldGroup}>
+                <Input
+                  label={t.fieldName}
+                  value={basics.name}
+                  onChangeText={(v) => setBasic('name', v)}
+                  placeholder={t.namePlaceholder}
+                  autoCapitalize="words"
+                  returnKeyType="next"
+                />
+                <Input
+                  label={t.fieldJobTitle}
+                  value={basics.jobTitle}
+                  onChangeText={(v) => setBasic('jobTitle', v)}
+                  placeholder={t.titlePlaceholder}
+                  autoCapitalize="words"
+                  returnKeyType="next"
+                />
+                <Input
+                  label={t.fieldPosition}
+                  value={basics.position}
+                  onChangeText={(v) => setBasic('position', v)}
+                  placeholder={t.positionPlaceholder}
+                  autoCapitalize="words"
+                  returnKeyType="next"
+                />
+                <Input
+                  label={t.fieldCompany}
+                  value={basics.company}
+                  onChangeText={(v) => setBasic('company', v)}
+                  placeholder={t.companyPlaceholder}
+                  autoCapitalize="words"
+                  returnKeyType="next"
+                />
+                <Input
+                  label={t.fieldBio}
+                  value={basics.bio}
+                  onChangeText={(v) => setBasic('bio', v)}
+                  placeholder={t.bioPlaceholder}
+                  autoCapitalize="sentences"
+                  multiline
+                  returnKeyType="done"
+                />
+              </View>
+            </View>
+          )}
+
+          {/* ── Step 4: Contact info ──────────────────────────────────────── */}
+          {currentStep === 4 && (
+            <View style={styles.stepBody}>
+              <View style={styles.fieldGroup}>
+                <Input
+                  label={t.fieldEmail}
+                  value={basics.email}
+                  onChangeText={(v) => setBasic('email', v)}
+                  placeholder="name@example.com"
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  returnKeyType="next"
+                />
+                <Input
+                  label={t.fieldPhone}
+                  value={basics.phone}
+                  onChangeText={(v) => setBasic('phone', v)}
+                  placeholder="+49 …"
+                  keyboardType="phone-pad"
+                  returnKeyType="next"
+                />
+                <Input
+                  label={t.fieldWhatsapp}
+                  value={basics.whatsapp}
+                  onChangeText={(v) => setBasic('whatsapp', v)}
+                  placeholder="+49 …"
+                  keyboardType="phone-pad"
+                  returnKeyType="next"
+                />
+                <Input
+                  label={t.fieldWebsite}
+                  value={basics.website}
+                  onChangeText={(v) => setBasic('website', v)}
+                  placeholder={t.websitePlaceholder}
+                  keyboardType="url"
+                  autoCapitalize="none"
+                  returnKeyType="next"
+                />
+                <Input
+                  label={t.fieldAddress}
+                  value={basics.address}
+                  onChangeText={(v) => setBasic('address', v)}
+                  placeholder={t.addressPlaceholder}
+                  autoCapitalize="words"
+                  returnKeyType="done"
+                />
+              </View>
+            </View>
+          )}
+
+          {/* ── Step 5: Socials, brand, advanced ──────────────────────────── */}
+          {currentStep === 5 && (
+            <View style={styles.stepBody}>
+              <SocialsSection theme={theme} values={socials} onChange={setSocial} />
+              <BrandColorsSection
+                theme={theme}
+                primaryHex={primaryHex}
+                accentHex={accentHex}
+                onPrimaryChange={setPrimaryHex}
+                onAccentChange={setAccentHex}
+              />
+              <QrStyleSection theme={theme} value={qrPreset} onChange={setQrPreset} />
+              <ServicesSection theme={theme} items={services} onChange={setServices} />
+              <CustomButtonsSection theme={theme} items={customButtons} onChange={setCustomButtons} />
+              <FaqsSection theme={theme} items={faqs} onChange={setFaqs} />
+              <StatusBannerSection theme={theme} value={statusBanner} onChange={setStatusBanner} />
+              <FeedbackSection theme={theme} value={feedbackEnabled} onChange={setFeedbackEnabled} />
+              <VisibilitySection theme={theme} value={visibility} onChange={setVisibility} />
+              <DiscoverySection theme={theme} values={discovery} onChange={setDiscoveryField} />
+            </View>
+          )}
+        </ScrollView>
+
+        {/* Bottom action bar */}
+        <View
+          style={[
+            styles.actionBar,
+            { backgroundColor: theme.pageBg, borderTopColor: theme.line.DEFAULT },
+          ]}
+        >
+          {currentStep > 1 ? (
+            <Button
+              label={t.cancel}
+              variant="ghost"
+              onPress={goBack}
+              fullWidth={false}
+              style={styles.backBtn}
+            />
+          ) : (
+            <View style={styles.backBtn} />
+          )}
+          <View style={styles.nextBtnWrap}>
+            <Button
+              label={currentStep === TOTAL_STEPS ? t.save : (tFull.onboarding?.step1Next ?? 'Next')}
+              variant="accent"
+              onPress={goNext}
+              loading={saving && currentStep === TOTAL_STEPS}
               disabled={saving}
-              style={[styles.photoWrap, { borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[1] }]}
-            >
-              {photoUri ? (
-                <Image source={{ uri: photoUri }} style={styles.photo} />
-              ) : (
-                <Text style={[styles.photoPlaceholder, { color: theme.ink[400] }]}>
-                  {t.addPhoto}
-                </Text>
-              )}
-              {photoUri && (
-                <View style={styles.photoEditBadge}>
-                  <Text style={styles.photoEditBadgeText}>{t.changePhoto}</Text>
-                </View>
-              )}
-            </TouchableOpacity>
-
-            <BasicFieldsSection theme={theme} values={basics} onChange={setBasic} />
-            <SocialsSection theme={theme} values={socials} onChange={setSocial} />
-            <ServicesSection theme={theme} items={services} onChange={setServices} />
-            <CustomButtonsSection theme={theme} items={customButtons} onChange={setCustomButtons} />
-            <FaqsSection theme={theme} items={faqs} onChange={setFaqs} />
-          </ScrollView>
-        )}
-
-        {activeTab === 'tasarim' && (
-          <ScrollView
-            key="tasarim"
-            style={{ backgroundColor: theme.bg[0] }}
-            contentContainerStyle={styles.scroll}
-            keyboardShouldPersistTaps="handled"
-          >
-            <TemplateSection
-              theme={theme}
-              value={templateId}
-              onChange={setTemplateId}
-              onPreviewRequest={() => {
-                // Open the inline picker modal — no router.push so the create
-                // screen stays mounted and form state is preserved.
-                setTemplatePickerOpen(true);
-              }}
             />
-            <LayoutSection theme={theme} value={layoutKey} onChange={setLayoutKey} />
-            <ThemeSection theme={theme} value={themeKey} onChange={setThemeKey} />
-            <BrandColorsSection
-              theme={theme}
-              primaryHex={primaryHex}
-              accentHex={accentHex}
-              onPrimaryChange={setPrimaryHex}
-              onAccentChange={setAccentHex}
-            />
-            <QrStyleSection theme={theme} value={qrPreset} onChange={setQrPreset} />
-            {/* No live-preview FAB on create — there's no slug yet to preview. */}
-          </ScrollView>
-        )}
-
-        {activeTab === 'gelismis' && (
-          <ScrollView
-            key="gelismis"
-            style={{ backgroundColor: theme.bg[0] }}
-            contentContainerStyle={styles.scroll}
-            keyboardShouldPersistTaps="handled"
-            keyboardDismissMode="interactive"
-            automaticallyAdjustKeyboardInsets
-          >
-            <StatusBannerSection theme={theme} value={statusBanner} onChange={setStatusBanner} />
-            <FeedbackSection theme={theme} value={feedbackEnabled} onChange={setFeedbackEnabled} />
-            <VisibilitySection theme={theme} value={visibility} onChange={setVisibility} />
-            <DiscoverySection theme={theme} values={discovery} onChange={setDiscoveryField} />
-          </ScrollView>
-        )}
+          </View>
+        </View>
       </KeyboardAvoidingView>
 
-      {/* Inline template picker modal — mirrors edit/[id].tsx pattern. */}
+      {/* ── Inline template picker modal ────────────────────────────────────── */}
       <Modal
         visible={templatePickerOpen}
         animationType="slide"
         presentationStyle="pageSheet"
         onRequestClose={() => setTemplatePickerOpen(false)}
       >
-        <View style={[styles.tplPickerRoot, { backgroundColor: theme.bg[0] }]}>
-          <View style={[styles.tplPickerHeader, { borderBottomColor: theme.line.DEFAULT }]}>
-            <View style={{ flex: 1 }}>
-              <Text style={[styles.tplPickerTitle, { color: theme.ink[100] }]}>
-                {templatePickerCurrent?.name ?? '…'}
-              </Text>
-              {templatePickerCurrent?.sectorHint ? (
-                <Text style={[styles.tplPickerSub, { color: theme.ink[400] }]}>
-                  {templatePickerCurrent.sectorHint}
-                </Text>
-              ) : null}
-            </View>
-            <TouchableOpacity
-              onPress={() => setTemplatePickerOpen(false)}
-              style={styles.tplPickerIconBtn}
-              hitSlop={12}
-              accessibilityLabel="Close"
-            >
-              <X size={22} color={theme.ink[200]} />
-            </TouchableOpacity>
-          </View>
+        <View style={[styles.tplPickerRoot, { backgroundColor: theme.pageBg }]}>
+          {/* Modal AppBar */}
+          <AppBar
+            variant="default"
+            title={t.pickTemplate ?? 'Pick a template'}
+            leading={null}
+            trailing={
+              <AppBarIconButton ghost onPress={() => setTemplatePickerOpen(false)} accessibilityLabel="Close">
+                <X size={20} color={theme.text} />
+              </AppBarIconButton>
+            }
+          />
 
-          {/* Sector filter strip removed — user wants clean preview-only modal. */}
-
+          {/* Template carousel */}
           <View style={{ flex: 1 }}>
             {templatePickerItems === null ? (
               <View style={styles.center}>
-                <ActivityIndicator color={teal[500]} size="large" />
+                <ActivityIndicator color={accent} size="large" />
               </View>
             ) : templatePickerFiltered.length === 0 ? (
               <View style={styles.center}>
-                <Text style={{ color: theme.ink[400] }}>No templates available.</Text>
+                <Text style={[typography.body, { color: theme.textFaint }]}>
+                  {t.templatesEmpty}
+                </Text>
               </View>
             ) : (
               <FlatList
@@ -470,8 +623,8 @@ export default function CardCreateScreen() {
                 showsHorizontalScrollIndicator={false}
                 initialScrollIndex={templatePickerActiveIdx}
                 getItemLayout={(_, index) => ({
-                  length: Dimensions.get('window').width,
-                  offset: Dimensions.get('window').width * index,
+                  length: windowWidth,
+                  offset: windowWidth * index,
                   index,
                 })}
                 onViewableItemsChanged={onTemplatePickerViewableItemsChanged.current}
@@ -484,23 +637,59 @@ export default function CardCreateScreen() {
                       : `${API_BASE}${item.previewPath}`
                     : null;
                   return (
-                    <View style={[styles.tplPickerPage, { width: Dimensions.get('window').width }]}>
-                      <View style={[styles.tplPickerFrame, { borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[2] }]}>
+                    <View style={[styles.tplPickerPage, { width: windowWidth }]}>
+                      <View
+                        style={[
+                          styles.tplPickerFrame,
+                          { borderColor: theme.line.DEFAULT, backgroundColor: theme.surface },
+                        ]}
+                      >
                         {previewUri ? (
-                          <Image source={{ uri: previewUri }} style={styles.tplPickerImage} resizeMode="contain" />
+                          <Image
+                            source={{ uri: previewUri }}
+                            style={styles.tplPickerImage}
+                            resizeMode="contain"
+                          />
                         ) : (
                           <View style={[styles.center, styles.tplPickerNoPreview]}>
-                            <View style={[styles.tplPickerNoPreviewIcon, { borderColor: theme.line.DEFAULT }]}>
-                              <Text style={[styles.tplPickerNoPreviewGlyph, { color: theme.ink[300] }]}>◻</Text>
+                            <View
+                              style={[
+                                styles.tplPickerNoPreviewIcon,
+                                { borderColor: theme.line.DEFAULT },
+                              ]}
+                            >
+                              <Text
+                                style={[styles.tplPickerNoPreviewGlyph, { color: theme.textMuted }]}
+                              >
+                                ◻
+                              </Text>
                             </View>
-                            <Text style={[styles.tplPickerEmptyTitle, { color: theme.ink[200] }]}>
+                            <Text
+                              style={[typography.bodyMedium, { color: theme.textSecondary, textAlign: 'center' }]}
+                            >
                               {item.name}
                             </Text>
-                            <Text style={[styles.tplPickerEmptyHint, { color: theme.ink[400] }]}>
+                            <Text
+                              style={[typography.bodySmall, { color: theme.textMuted, textAlign: 'center', lineHeight: 18 }]}
+                            >
                               Tap Apply to see this template
                             </Text>
                           </View>
                         )}
+                      </View>
+                      {/* Template info below preview */}
+                      <View style={styles.tplInfoWrap}>
+                        <Text style={[typography.bodyMedium, { color: theme.text }]}>
+                          {item.name}
+                        </Text>
+                        {item.sectorHint ? (
+                          <Text style={[typography.bodySmall, { color: theme.textMuted }]}>
+                            {item.sectorHint}
+                          </Text>
+                        ) : null}
+                        {item.id === templateId ? (
+                          <Chip variant="accent" label="Selected" style={styles.selectedChip} />
+                        ) : null}
                       </View>
                     </View>
                   );
@@ -509,33 +698,36 @@ export default function CardCreateScreen() {
             )}
             {templatePickerFiltered.length > 1 ? (
               <View style={styles.tplPageIndicator}>
-                <Text style={styles.tplPageIndicatorText}>
-                  {templatePickerActiveIdx + 1} / {templatePickerFiltered.length}
-                </Text>
+                <Chip
+                  variant="solid"
+                  label={`${templatePickerActiveIdx + 1} / ${templatePickerFiltered.length}`}
+                />
               </View>
             ) : null}
           </View>
 
-          <View style={[styles.tplPickerFooter, { borderTopColor: theme.line.DEFAULT }]}>
-            <TouchableOpacity
-              onPress={() => setTemplatePickerOpen(false)}
-              style={[styles.tplBtn, styles.tplBtnGhost, { borderColor: theme.line.DEFAULT, backgroundColor: theme.bg[1] }]}
-              activeOpacity={0.85}
-            >
-              <Text style={[styles.tplBtnText, { color: theme.ink[200] }]}>Cancel</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
-                if (templatePickerCurrent) setTemplateId(templatePickerCurrent.id);
-                setTemplatePickerOpen(false);
-              }}
-              style={[styles.tplBtn, styles.tplBtnPrimary, { backgroundColor: teal[500] }]}
-              activeOpacity={0.85}
-              disabled={!templatePickerCurrent}
-            >
-              <Check size={16} color="#FFFFFF" />
-              <Text style={[styles.tplBtnText, { color: '#FFFFFF' }]}>Apply</Text>
-            </TouchableOpacity>
+          {/* Modal footer */}
+          <View
+            style={[styles.tplPickerFooter, { borderTopColor: theme.line.DEFAULT }]}
+          >
+            <View style={styles.tplCancelWrap}>
+              <Button
+                label={t.cancel}
+                variant="secondary"
+                onPress={() => setTemplatePickerOpen(false)}
+              />
+            </View>
+            <View style={styles.tplApplyWrap}>
+              <Button
+                label={t.applyToCard}
+                variant="accent"
+                onPress={() => {
+                  if (templatePickerCurrent) setTemplateId(templatePickerCurrent.id);
+                  setTemplatePickerOpen(false);
+                }}
+                disabled={!templatePickerCurrent}
+              />
+            </View>
           </View>
         </View>
       </Modal>
@@ -544,66 +736,75 @@ export default function CardCreateScreen() {
 }
 
 const styles = StyleSheet.create({
-  scroll: { padding: 16, paddingBottom: 160 },
-  saveBtn: { paddingHorizontal: 4 },
-  saveBtnText: { fontSize: 16, fontWeight: '600' },
-  tabBar: {
-    flexDirection: 'row',
-    height: 44,
-    borderBottomWidth: 1,
+  // Progress bar
+  progressTrack: {
+    height: 4,
+    width: '100%',
   },
-  tabPill: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderBottomWidth: 2,
-    borderBottomColor: 'transparent',
+  progressFill: {
+    height: 4,
   },
-  tabText: {
-    fontSize: 13,
-    fontWeight: '600',
-    textTransform: 'uppercase',
-    letterSpacing: 0.5,
-  },
+
+  // Step content
+  scroll: { padding: 20, paddingBottom: 24 },
+  eyebrow: { marginBottom: 8 },
+  headline: { marginBottom: 6 },
+  hint: { marginBottom: 20 },
+  stepBody: { gap: 0 },
+  fieldGroup: { gap: 12 },
+
+  // Photo step
   photoWrap: {
-    width: 96, height: 96, borderRadius: 48, borderWidth: 1,
-    alignSelf: 'center', justifyContent: 'center', alignItems: 'center',
-    overflow: 'hidden', marginBottom: 8,
+    alignSelf: 'center',
+    marginTop: 16,
+    marginBottom: 24,
   },
-  photo: { width: 96, height: 96, borderRadius: 48 },
-  photoPlaceholder: { fontSize: 12, textAlign: 'center', paddingHorizontal: 8 },
   photoEditBadge: {
-    position: 'absolute', bottom: 0, left: 0, right: 0,
-    backgroundColor: 'rgba(0,0,0,0.5)', paddingVertical: 4, alignItems: 'center',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    borderBottomLeftRadius: 48,
+    borderBottomRightRadius: 48,
+    paddingVertical: 5,
+    alignItems: 'center',
   },
-  photoEditBadgeText: { color: '#fff', fontSize: 10 },
-  center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  // Inline template picker modal — mirrors edit/[id].tsx styles.
+
+  // Bottom action bar
+  actionBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+    borderTopWidth: StyleSheet.hairlineWidth,
+    gap: 12,
+  },
+  backBtn: {
+    width: 80,
+  },
+  nextBtnWrap: {
+    flex: 1,
+  },
+
+  // Inline template picker modal
   tplPickerRoot: { flex: 1 },
-  tplPickerHeader: {
-    flexDirection: 'row', alignItems: 'center',
-    paddingHorizontal: 16, paddingVertical: 12, borderBottomWidth: 1, gap: 12,
-  },
-  tplPickerTitle: { fontSize: 16, fontWeight: '700' },
-  tplPickerSub: {
-    fontSize: 11, fontWeight: '600', textTransform: 'uppercase',
-    letterSpacing: 0.5, marginTop: 2,
-  },
-  tplPickerIconBtn: {
-    width: 36, height: 36, borderRadius: 18,
-    justifyContent: 'center', alignItems: 'center',
-  },
   tplPickerPage: {
-    flex: 1, justifyContent: 'center', alignItems: 'center',
-    paddingHorizontal: 24, paddingVertical: 12,
+    flex: 1,
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    gap: 12,
   },
   tplPickerFrame: {
-    width: '100%', aspectRatio: 540 / 960, maxHeight: '100%',
-    borderRadius: 16, borderWidth: 1, overflow: 'hidden',
+    flex: 1,
+    aspectRatio: 540 / 960,
+    maxHeight: '72%',
+    borderRadius: 16,
+    borderWidth: 1,
+    overflow: 'hidden',
+    alignSelf: 'center',
+    width: '100%',
   },
   tplPickerImage: { width: '100%', height: '100%' },
-  tplPickerEmptyText: { fontSize: 14, fontWeight: '600', textAlign: 'center' },
-  // Premium no-preview placeholder styles
   tplPickerNoPreview: { gap: 12, paddingHorizontal: 32 },
   tplPickerNoPreviewIcon: {
     width: 64,
@@ -616,30 +817,26 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   tplPickerNoPreviewGlyph: { fontSize: 28 },
-  tplPickerEmptyTitle: {
-    fontSize: 15,
-    fontWeight: '700',
-    textAlign: 'center',
-    letterSpacing: 0.2,
+  tplInfoWrap: {
+    gap: 4,
+    paddingHorizontal: 4,
   },
-  tplPickerEmptyHint: {
-    fontSize: 12,
-    fontWeight: '500',
-    textAlign: 'center',
-    lineHeight: 18,
+  selectedChip: {
+    marginTop: 4,
   },
   tplPageIndicator: {
-    position: 'absolute', top: 12, alignSelf: 'center',
-    paddingHorizontal: 12, paddingVertical: 4, borderRadius: 999,
-    backgroundColor: 'rgba(0,0,0,0.45)',
+    position: 'absolute',
+    top: 16,
+    alignSelf: 'center',
   },
-  tplPageIndicatorText: { fontSize: 12, fontWeight: '600', color: '#FFFFFF' },
-  tplPickerFooter: { flexDirection: 'row', gap: 12, padding: 16, borderTopWidth: 1 },
-  tplBtn: {
-    flex: 1, height: 48, borderRadius: 12,
-    flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8,
+  tplPickerFooter: {
+    flexDirection: 'row',
+    gap: 12,
+    paddingHorizontal: 20,
+    paddingVertical: 14,
+    borderTopWidth: StyleSheet.hairlineWidth,
   },
-  tplBtnGhost: { borderWidth: 1 },
-  tplBtnPrimary: {},
-  tplBtnText: { fontSize: 15, fontWeight: '600' },
+  tplCancelWrap: { flex: 1 },
+  tplApplyWrap: { flex: 1 },
+  center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
 });

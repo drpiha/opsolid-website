@@ -5,7 +5,8 @@ import { CheckCircle } from 'lucide-react-native';
 import { ScreenContainer } from '../../src/components/ui/ScreenContainer';
 import { Button } from '../../src/components/ui/Button';
 import { useTheme } from '../../src/lib/theme/ThemeProvider';
-import { teal, accentCredit } from '../../src/lib/theme/tokens';
+import { accent, accentCredit } from '../../src/lib/theme/tokens';
+import { typography } from '../../src/lib/theme/typography';
 import { requestMagicLink } from '../../src/lib/auth/api';
 import { useTranslations, detectLocale } from '../../src/lib/i18n/locale';
 
@@ -58,20 +59,20 @@ export default function MagicLinkSentScreen() {
       <View style={styles.container}>
         {/* Verso brand lockup */}
         <View style={styles.brandLockup}>
-          <Text style={[styles.versoWordmark, { color: teal[500] }]}>Verso</Text>
-          <Text style={[styles.byCredit, { color: accentCredit }]}>by OpSolid</Text>
+          <Text style={[typography.display2, { color: theme.text }]}>Verso</Text>
+          <Text style={[typography.caption, styles.byCredit, { color: accentCredit }]}>by OpSolid</Text>
         </View>
 
-        {/* Check icon — lucide CheckCircle in teal */}
-        <View style={[styles.iconCircle, { backgroundColor: theme.bg[2], borderColor: teal[500] }]}>
-          <CheckCircle size={36} color={teal[500]} strokeWidth={1.5} />
+        {/* Check icon — lucide CheckCircle in accent */}
+        <View style={[styles.iconCircle, { backgroundColor: theme.accentSoft, borderColor: accent }]}>
+          <CheckCircle size={36} color={accent} strokeWidth={1.5} />
         </View>
 
-        <Text style={[styles.title, { color: theme.ink[100] }]}>
+        <Text style={[typography.display2, styles.titleAlign, { color: theme.text }]}>
           {strings.magicLinkSent}
         </Text>
 
-        <Text style={[styles.body, { color: theme.ink[300] }]}>
+        <Text style={[typography.body, styles.bodyAlign, { color: theme.textMuted }]}>
           {bodyText}
         </Text>
 
@@ -93,7 +94,7 @@ export default function MagicLinkSentScreen() {
             style={styles.backRow}
             accessibilityRole="button"
           >
-            <Text style={[styles.backText, { color: theme.ink[300] }]}>
+            <Text style={[typography.bodyMedium, { color: accent }]}>
               {strings.backToSignIn}
             </Text>
           </TouchableOpacity>
@@ -117,17 +118,9 @@ const styles = StyleSheet.create({
     gap: 2,
     marginBottom: 8,
   },
-  versoWordmark: {
-    fontSize: 28,
-    fontWeight: '700',
-    letterSpacing: -0.5,
-    lineHeight: 32,
-  },
   byCredit: {
-    fontSize: 11,
-    fontWeight: '500',
-    letterSpacing: 0.3,
     opacity: 0.6,
+    fontStyle: 'italic',
   },
   iconCircle: {
     width: 72,
@@ -138,15 +131,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 8,
   },
-  title: {
-    fontSize: 24,
-    fontWeight: '700',
-    letterSpacing: -0.4,
+  titleAlign: {
     textAlign: 'center',
   },
-  body: {
-    fontSize: 15,
-    lineHeight: 22,
+  bodyAlign: {
     textAlign: 'center',
   },
   actions: {
@@ -157,8 +145,5 @@ const styles = StyleSheet.create({
   backRow: {
     alignItems: 'center',
     paddingVertical: 8,
-  },
-  backText: {
-    fontSize: 14,
   },
 });
