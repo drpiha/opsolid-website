@@ -24,6 +24,11 @@ import {
   sendEmail,
   emailConfigFromEnv,
 } from "./channels/email/client";
+import {
+  sendText as sendWhatsAppText,
+  WhatsAppApiError,
+  type WhatsAppConfig,
+} from "./channels/whatsapp/client";
 import type { MessageSentBy } from "./types";
 
 export async function dispatchOutbound(params: {
@@ -67,9 +72,20 @@ export async function dispatchOutbound(params: {
         await markOutboundSent(message.id, String(sent.message_id), "sent");
         return { messageId: message.id, status: "sent" };
       }
-      case "whatsapp":
-        // TODO(Faz D): 360dialog send.
-        throw new Error("whatsapp_dispatch_not_implemented");
+      case "whatsapp": {
+        const config = (thread.channel.config ?? {}) as Partial<WhatsAppConfig>;
+        if (!config.apiKey || !config.phoneNumberId) {
+          throw new Error("whatsapp_channel_not_configured");
+        }
+        const sent = await sendWhatsAppText(
+          config as WhatsAppConfig,
+          thread.contactHandle,
+          params.body,
+        );
+        const messageId = sent.messages[0]?.id ?? null;
+        await markOutboundSent(message.id, messageId, "sent");
+        return { messageId: message.id, status: "sent" };
+      }
       case "email": {
         const config = emailConfigFromEnv();
         if (!config) throw new Error("email_smtp_not_configured");
@@ -107,9 +123,11 @@ export async function dispatchOutbound(params: {
     const description =
       err instanceof TelegramApiError
         ? err.description
-        : err instanceof Error
-          ? err.message
-          : String(err);
+        : err instanceof WhatsAppApiError
+          ? err.detail
+          : err instanceof Error
+            ? err.message
+            : String(err);
     await markOutboundFailed(message.id, description);
     return { messageId: message.id, status: "failed" };
   }
