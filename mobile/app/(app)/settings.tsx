@@ -54,7 +54,16 @@ import {
   type Locale,
 } from '../../src/lib/i18n/locale';
 import { applyRTLForLocale } from '../../src/lib/i18n/direction';
-import { Check, KeyRound, ChevronRight, Bell } from 'lucide-react-native';
+import {
+  Check,
+  KeyRound,
+  ChevronRight,
+  Bell,
+  Workflow,
+  Smartphone,
+  Shield,
+  Globe,
+} from 'lucide-react-native';
 import {
   useThemeStore,
   type AppThemeMode,
@@ -147,6 +156,7 @@ export default function SettingsScreen() {
   const tAll = useTranslations(activeLocale);
   const t = tAll.settings;
   const tReferral = tAll.referral;
+  const tComingSoon = tAll.comingSoon;
   const tSharing = tAll.sharing;
   const router = useRouter();
   const user = useAuthStore((s) => s.user);
@@ -477,6 +487,50 @@ export default function SettingsScreen() {
             />
           </RowGroup>
 
+          {/* ---------- M8 — COMING SOON FEATURES (Phase 6+ / 7) ---------- */}
+          <SectionLabel style={styles.sectionLabel}>
+            {t.comingSoon.toUpperCase()}
+          </SectionLabel>
+          <RowGroup style={styles.rowGroup}>
+            <Row
+              title={tComingSoon.crm.title}
+              subtitle={tComingSoon.crm.phaseLabel}
+              leading={<Workflow size={18} color={accent} />}
+              chevron
+              divider={false}
+              onPress={() =>
+                router.push('/(app)/coming-soon/crm' as never)
+              }
+            />
+            <Row
+              title={tComingSoon.nfcWallet.title}
+              subtitle={tComingSoon.nfcWallet.phaseLabel}
+              leading={<Smartphone size={18} color={accent} />}
+              chevron
+              onPress={() =>
+                router.push('/(app)/coming-soon/nfc-wallet' as never)
+              }
+            />
+            <Row
+              title={tComingSoon.workspaceAdmin.title}
+              subtitle={tComingSoon.workspaceAdmin.phaseLabel}
+              leading={<Shield size={18} color={accent} />}
+              chevron
+              onPress={() =>
+                router.push('/(app)/coming-soon/workspace-admin' as never)
+              }
+            />
+            <Row
+              title={tComingSoon.domainManager.title}
+              subtitle={tComingSoon.domainManager.phaseLabel}
+              leading={<Globe size={18} color={accent} />}
+              chevron
+              onPress={() =>
+                router.push('/(app)/coming-soon/domain-manager' as never)
+              }
+            />
+          </RowGroup>
+
           {/* ---------- M3 — REFER A FRIEND ---------- */}
           {referral ? (
             <>
@@ -514,26 +568,17 @@ export default function SettingsScreen() {
                     {referral.redemptions}
                   </Text>
                 </View>
-                <TouchableOpacity
+                <Button
+                  label={tReferral.shareLink}
+                  variant="accent"
                   onPress={() =>
                     void Share.share({
                       message: referral.deepLink,
                       url: referral.deepLink,
                     }).catch(() => {})
                   }
-                  activeOpacity={0.85}
-                  style={{
-                    marginTop: 14,
-                    borderRadius: 999,
-                    paddingVertical: 12,
-                    alignItems: 'center',
-                    backgroundColor: accent,
-                  }}
-                >
-                  <Text style={[typography.button, { color: '#FFFFFF' }]}>
-                    {tReferral.shareLink}
-                  </Text>
-                </TouchableOpacity>
+                  style={{ marginTop: 14 }}
+                />
               </View>
             </>
           ) : null}

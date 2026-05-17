@@ -1,9 +1,11 @@
 // Verso v2 BottomNav — custom renderer for expo-router Tabs.
-// 5-item grid, glassmorphism background, 10px label, accent active tint.
+// 5-item allowlist (home/cards/discover/inbox/settings), accent active tint.
 // Wire via `<Tabs tabBar={(props) => <BottomNav {...props} />}>`.
 //
-// expo-blur is intentionally NOT a dependency yet — using a solid
-// near-white surface with top hairline. M7 polish swap to BlurView.
+// Earlier we tried filtering on `options.href !== null` — that was unreliable
+// because expo-router doesn't expose `href` as a runtime descriptor field,
+// so the filter became a no-op and the bar rendered all 7 routes squashed
+// into one strip. Switched to a deterministic allowlist on route names.
 
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
@@ -12,17 +14,25 @@ import { useTheme } from '../../lib/theme/ThemeProvider';
 import { accent } from '../../lib/theme/tokens';
 import { typography } from '../../lib/theme/typography';
 
+// Canonical 5 visible tabs. Order matters: this is the bottom-nav order.
+const VISIBLE_ROUTE_NAMES = [
+  'home',
+  'cards',
+  'discover',
+  'inbox/index',
+  'settings',
+] as const;
+
 export function BottomNav(props: BottomTabBarProps) {
   const { state, descriptors, navigation } = props;
   const theme = useTheme();
   const insets = useSafeAreaInsets();
 
-  // Only render tabs that have an `href` (visible in tab bar). Hidden routes
-  // declared via `href: null` should not appear here.
-  const visibleRoutes = state.routes.filter((route) => {
-    const { options } = descriptors[route.key];
-    return (options as { href?: unknown }).href !== null;
-  });
+  // Build the visible list by allowlist, preserving the order above. This is
+  // resilient to whatever order expo-router internally arranged state.routes.
+  const visibleRoutes = VISIBLE_ROUTE_NAMES
+    .map((name) => state.routes.find((r) => r.name === name))
+    .filter((r): r is (typeof state.routes)[number] => r !== undefined);
 
   return (
     <View
@@ -54,7 +64,6 @@ export function BottomNav(props: BottomTabBarProps) {
             canPreventDefault: true,
           });
           if (!isFocused && !event.defaultPrevented) {
-            // expo-router routes are typed by file name; navigate by name.
             navigation.navigate(route.name as never);
           }
         };
@@ -91,6 +100,7 @@ export function BottomNav(props: BottomTabBarProps) {
 
 const styles = StyleSheet.create({
   container: {
+    width: '100%',
     flexDirection: 'row',
     paddingTop: 8,
     paddingHorizontal: 12,
@@ -99,6 +109,7 @@ const styles = StyleSheet.create({
   tab: {
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
     gap: 4,
     paddingVertical: 6,
   },
