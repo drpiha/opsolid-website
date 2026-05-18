@@ -221,14 +221,10 @@ export function KiBeratungV2() {
           <h1 className="v2-kib-hero__question">{data.headline}</h1>
           <p className="v2-kib-hero__lead">{data.lead}</p>
           <div className="v2-kib-hero__cta-row">
-            <Link href="/contact" className="btn btn-primary btn-lg" data-cursor="link">
+            <Link href="/contact" className="v2-btn-primary" data-cursor="link">
               {data.ctaPrimary}
             </Link>
-            <Link
-              href="/leistungen"
-              className="v2-home-hero__cta-secondary"
-              data-cursor="link"
-            >
+            <Link href="/leistungen" className="v2-btn-ghost" data-cursor="link">
               {data.ctaSecondary}
             </Link>
           </div>

@@ -112,14 +112,10 @@ export function Microsoft365V2() {
           <h1 className="v2-ms-hero__headline">{data.headline}</h1>
           <p className="v2-ms-hero__lead">{data.lead}</p>
           <div className="v2-ms-hero__cta-row">
-            <Link href="/contact" className="btn btn-primary btn-lg" data-cursor="link">
+            <Link href="/contact" className="v2-btn-primary" data-cursor="link">
               {data.ctaPrimary}
             </Link>
-            <Link
-              href="/leistungen"
-              className="v2-home-hero__cta-secondary"
-              data-cursor="link"
-            >
+            <Link href="/leistungen" className="v2-btn-ghost" data-cursor="link">
               {data.ctaSecondary}
             </Link>
           </div>
@@ -137,8 +133,8 @@ export function Microsoft365V2() {
                 <path key={i} id={`ms-spoke-${i}`} d={spokePath(tilePos(ANGLES[i]))} />
               ))}
               <radialGradient id="ms-hub-glow" cx="50%" cy="50%" r="50%">
-                <stop offset="0%" stopColor="var(--accent-signal)" stopOpacity="0.45" />
-                <stop offset="100%" stopColor="var(--accent-signal)" stopOpacity="0" />
+                <stop offset="0%" stopColor="var(--v2-motion-trace)" stopOpacity="0.45" />
+                <stop offset="100%" stopColor="var(--v2-motion-trace)" stopOpacity="0" />
               </radialGradient>
             </defs>
 
@@ -182,7 +178,7 @@ export function Microsoft365V2() {
                       <mpath xlinkHref={`#ms-spoke-${i}`} />
                     </animateMotion>
                   </circle>
-                  <circle r="3.5" fill="var(--accent-signal)">
+                  <circle r="3.5" fill="var(--v2-motion-trace)">
                     <animateMotion dur={`${2.8 + i * 0.18}s`} repeatCount="indefinite" begin={`${i * 0.32}s`}>
                       <mpath xlinkHref={`#ms-spoke-${i}`} />
                     </animateMotion>

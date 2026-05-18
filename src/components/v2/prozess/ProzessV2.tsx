@@ -45,13 +45,13 @@ function BpmnMap() {
           <path d="M0,0 L8,4.5 L0,9 Z" fill="currentColor" />
         </marker>
         <radialGradient id="nodePulse" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="var(--accent-signal)" stopOpacity="0.5" />
-          <stop offset="100%" stopColor="var(--accent-signal)" stopOpacity="0" />
+          <stop offset="0%" stopColor="var(--v2-motion-trace)" stopOpacity="0.5" />
+          <stop offset="100%" stopColor="var(--v2-motion-trace)" stopOpacity="0" />
         </radialGradient>
         <radialGradient id="tokenGlow" cx="50%" cy="50%" r="50%">
-          <stop offset="0%" stopColor="var(--accent-signal)" stopOpacity="0.9" />
-          <stop offset="50%" stopColor="var(--accent-signal)" stopOpacity="0.35" />
-          <stop offset="100%" stopColor="var(--accent-signal)" stopOpacity="0" />
+          <stop offset="0%" stopColor="var(--v2-motion-trace)" stopOpacity="0.9" />
+          <stop offset="50%" stopColor="var(--v2-motion-trace)" stopOpacity="0.35" />
+          <stop offset="100%" stopColor="var(--v2-motion-trace)" stopOpacity="0" />
         </radialGradient>
       </defs>
 
@@ -117,7 +117,7 @@ function BpmnMap() {
                 <mpath xlinkHref={t.path} />
               </animateMotion>
             </circle>
-            <circle r="3.5" fill="var(--accent-signal)">
+            <circle r="3.5" fill="var(--v2-motion-trace)">
               <animateMotion dur={`${t.dur}s`} repeatCount="indefinite" begin={`${t.begin}s`}>
                 <mpath xlinkHref={t.path} />
               </animateMotion>
@@ -207,14 +207,10 @@ export function ProzessV2() {
         <h1 className="v2-prozess-hero__headline">{data.headline}</h1>
         <p className="v2-prozess-hero__lead">{data.lead}</p>
         <div className="v2-prozess-hero__cta-row">
-          <Link href="/contact" className="btn btn-primary btn-lg" data-cursor="link">
+          <Link href="/contact" className="v2-btn-primary" data-cursor="link">
             {data.ctaPrimary}
           </Link>
-          <Link
-            href="/leistungen"
-            className="v2-home-hero__cta-secondary"
-            data-cursor="link"
-          >
+          <Link href="/leistungen" className="v2-btn-ghost" data-cursor="link">
             {data.ctaSecondary}
           </Link>
         </div>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ServicePage } from "@/components/sections/ServicePage";
 import { ServiceJsonLd } from "@/components/seo/ServiceJsonLd";
 import { ProzessV2 } from "@/components/v2/prozess/ProzessV2";
+import { V2Shell } from "@/components/v2/V2Shell";
 import { isPreviewV2 } from "@/lib/preview";
 import { content as en } from "@/content/en";
 import { content as de } from "@/content/de";
@@ -56,10 +57,10 @@ export default function Page({
 }) {
   if (isPreviewV2(searchParams)) {
     return (
-      <>
+      <V2Shell>
         <ServiceJsonLd serviceKey="prozessautomatisierung" />
         <ProzessV2 />
-      </>
+      </V2Shell>
     );
   }
   return (

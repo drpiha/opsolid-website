@@ -460,6 +460,672 @@ html[data-preview="v2"] body {
 }
 
 /* --------------------------------------------------------------
+   M2 — Leistungen horizontal service rail.
+   Composition: 5 cards in a row spanning full viewport width;
+   GSAP ScrollTrigger pins the section and translates the track
+   horizontally as the user scrolls (desktop only). Mobile stacks
+   vertically; reduced-motion lets cards lay out as horizontal-scroll
+   row using browser-native overflow.
+   -------------------------------------------------------------- */
+.v2-rail {
+  position: relative;
+  padding: var(--v2-space-9) 0 var(--v2-space-9);
+  background: var(--v2-bg-base);
+  overflow: hidden;
+}
+.v2-rail__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--v2-space-3);
+  margin-bottom: var(--v2-space-7);
+  max-width: 720px;
+}
+.v2-rail__eyebrow {
+  font-family: var(--font-v2-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--v2-ink-3);
+}
+.v2-rail__headline {
+  font-family: var(--font-v2-display), sans-serif;
+  font-size: var(--v2-fs-h1);
+  line-height: 1.04;
+  letter-spacing: -0.028em;
+  font-weight: 700;
+  color: var(--v2-ink-1);
+  margin: 0;
+}
+.v2-rail__track-wrap {
+  position: relative;
+  margin-bottom: var(--v2-space-8);
+  /* Reset wrap horizontal padding so the rail can run edge-to-edge. */
+  padding-left: 0;
+  padding-right: 0;
+}
+.v2-rail__track {
+  display: flex;
+  gap: var(--v2-space-5);
+  padding-left: clamp(20px, 4vw, 56px);
+  padding-right: clamp(20px, 4vw, 56px);
+  /* Default: native horizontal overflow when JS isn't running the pin. */
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  will-change: transform;
+}
+.v2-rail__track::-webkit-scrollbar { display: none; }
+
+.v2-rail__card {
+  flex: 0 0 320px;
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--v2-space-3);
+  padding: var(--v2-space-6) var(--v2-space-5) var(--v2-space-5);
+  background: var(--v2-bg-raised);
+  border: 1px solid var(--v2-line-soft);
+  border-radius: var(--v2-radius-lg);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 240ms ease, transform 240ms ease,
+              box-shadow 240ms ease;
+}
+.v2-rail__card:hover {
+  border-color: var(--v2-accent-primary);
+  transform: translateY(-2px) scale(1.012);
+  box-shadow: var(--v2-shadow-card);
+}
+.v2-rail__card-index {
+  font-family: var(--font-v2-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--v2-accent-primary);
+}
+.v2-rail__card-icon {
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--v2-radius-md);
+  background: var(--v2-accent-soft);
+  color: var(--v2-accent-primary);
+}
+.v2-rail__card-label {
+  font-family: var(--font-v2-display), sans-serif;
+  font-size: 1.4rem;
+  line-height: 1.15;
+  letter-spacing: -0.014em;
+  font-weight: 700;
+  color: var(--v2-ink-1);
+  margin: 0;
+}
+.v2-rail__card-sub {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--v2-ink-2);
+  margin: 0;
+  flex: 1;
+}
+.v2-rail__card-arrow {
+  font-family: var(--font-v2-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--v2-accent-primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: var(--v2-space-2);
+}
+.v2-rail__card-arrow::after {
+  content: "→";
+  transition: transform 200ms ease;
+}
+.v2-rail__card:hover .v2-rail__card-arrow::after {
+  transform: translateX(3px);
+}
+
+.v2-rail__manifesto {
+  font-family: var(--font-v2-display), sans-serif;
+  font-size: var(--v2-fs-h3);
+  line-height: 1.4;
+  color: var(--v2-ink-2);
+  max-width: 65ch;
+  margin: 0;
+}
+
+@media (max-width: 899px) {
+  .v2-rail__track {
+    flex-direction: column;
+    overflow-x: hidden;
+    padding-left: clamp(20px, 4vw, 56px);
+    padding-right: clamp(20px, 4vw, 56px);
+    transform: none !important;
+  }
+  .v2-rail__card {
+    flex: 0 0 auto;
+    min-height: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-rail__card { transition: none; }
+  .v2-rail__card:hover { transform: none; }
+}
+
+/* --------------------------------------------------------------
+   M3 — KI-Beratung hero (Live Discovery Console).
+   Two-column asymmetric layout. Left: eyebrow + headline question +
+   lead + CTAs + animated counter. Right: terminal block with typing
+   animation + progress bar.
+   -------------------------------------------------------------- */
+.v2-kib-hero {
+  position: relative;
+  padding: var(--v2-space-9) 0 var(--v2-space-8);
+  background: var(--v2-bg-base);
+  overflow: hidden;
+  isolation: isolate;
+}
+.v2-kib-hero__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--v2-space-7);
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+@media (min-width: 960px) {
+  .v2-kib-hero__inner {
+    grid-template-columns: minmax(0, 0.42fr) minmax(0, 0.58fr);
+    gap: var(--v2-space-8);
+  }
+}
+.v2-kib-hero__left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--v2-space-5);
+}
+.v2-kib-hero__eyebrow {
+  font-family: var(--font-v2-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--v2-ink-3);
+}
+.v2-kib-hero__question {
+  font-family: var(--font-v2-display), sans-serif;
+  font-size: var(--v2-fs-display);
+  line-height: 1.04;
+  letter-spacing: -0.032em;
+  font-weight: 700;
+  color: var(--v2-ink-1);
+  margin: 0;
+}
+.v2-kib-hero__lead {
+  font-size: var(--v2-fs-lead);
+  color: var(--v2-ink-2);
+  max-width: 52ch;
+  margin: 0;
+}
+.v2-kib-hero__cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--v2-space-3);
+}
+
+/* Counter card */
+.v2-kib-counter {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: var(--v2-space-4) var(--v2-space-5);
+  background: var(--v2-bg-raised);
+  border: 1px solid var(--v2-line-soft);
+  border-radius: var(--v2-radius-md);
+  align-self: flex-start;
+  max-width: 320px;
+  margin-top: var(--v2-space-3);
+}
+.v2-kib-counter__value {
+  font-family: var(--font-v2-mono), ui-monospace, monospace;
+  font-size: 2.25rem;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  color: var(--v2-accent-primary);
+  line-height: 1;
+}
+.v2-kib-counter__label {
+  font-family: var(--font-v2-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--v2-ink-3);
+}
+
+/* Background log stream */
+.v2-kib-logstream {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  mask-image: linear-gradient(180deg,
+              transparent 0%,
+              rgba(0,0,0,0.4) 20%,
+              rgba(0,0,0,0.4) 80%,
+              transparent 100%);
+}
+.v2-kib-logstream__col {
+  position: absolute;
+  right: var(--v2-space-5);
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--font-v2-mono), ui-monospace, monospace;
+  font-size: 0.7rem;
+  line-height: 1.7;
+  color: var(--v2-ink-3);
+  opacity: 0.07;
+  animation: v2-logstream-scroll 60s linear infinite;
+  white-space: pre;
+}
+.v2-kib-logstream__line { display: block; }
+@keyframes v2-logstream-scroll {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-50%); }
+}
+
+/* Terminal panel */
+.v2-terminal {
+  background: #0F1A24;
+  border: 1px solid #1F2937;
+  border-radius: var(--v2-radius-lg);
+  overflow: hidden;
+  box-shadow: var(--v2-shadow-lift);
+  color: #E5E7EB;
+  font-family: var(--font-v2-mono), ui-monospace, monospace;
+}
+.v2-terminal__head {
+  display: flex;
+  align-items: center;
+  gap: var(--v2-space-3);
+  padding: 10px var(--v2-space-4);
+  background: #0B1320;
+  border-bottom: 1px solid #1F2937;
+}
+.v2-terminal__dots { display: inline-flex; gap: 6px; }
+.v2-terminal__dots i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #374151;
+  display: inline-block;
+}
+.v2-terminal__dots i:first-child { background: var(--v2-motion-trace); }
+.v2-terminal__title {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: #9CA3AF;
+  flex: 1;
+}
+.v2-terminal__live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--v2-motion-trace);
+}
+.v2-terminal__live-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--v2-motion-trace);
+  box-shadow: 0 0 8px var(--v2-motion-glow);
+  animation: v2-pulse 1.4s ease-in-out infinite;
+}
+@keyframes v2-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(0.85); }
+}
+.v2-terminal__body {
+  padding: var(--v2-space-4);
+  min-height: 280px;
+  font-size: 0.82rem;
+  line-height: 1.6;
+}
+.v2-terminal__prompt { color: var(--v2-motion-trace); margin-bottom: var(--v2-space-2); }
+.v2-terminal__output {
+  margin: 0;
+  white-space: pre-wrap;
+  color: #D1D5DB;
+}
+.v2-terminal__cursor {
+  display: inline-block;
+  width: 7px;
+  height: 14px;
+  background: var(--v2-motion-trace);
+  vertical-align: text-bottom;
+  margin-left: 2px;
+}
+.v2-terminal__cursor--blink { animation: v2-cursor-blink 1s steps(1) infinite; }
+@keyframes v2-cursor-blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+.v2-terminal__foot {
+  display: flex;
+  align-items: center;
+  gap: var(--v2-space-3);
+  padding: 10px var(--v2-space-4);
+  border-top: 1px solid #1F2937;
+  background: #0B1320;
+}
+.v2-terminal__progress {
+  flex: 1;
+  height: 4px;
+  background: #1F2937;
+  border-radius: 2px;
+  overflow: hidden;
+}
+.v2-terminal__progress-fill {
+  height: 100%;
+  background: var(--v2-motion-trace);
+  box-shadow: 0 0 8px var(--v2-motion-glow);
+  transition: width 60ms linear;
+}
+.v2-terminal__progress-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  color: #9CA3AF;
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-kib-logstream__col { animation: none; }
+  .v2-terminal__live-dot { animation: none; }
+  .v2-terminal__cursor--blink { animation: none; opacity: 1; }
+}
+
+/* --------------------------------------------------------------
+   M3 — Prozessautomatisierung hero (Live Process Map).
+   Full-bleed BPMN diagram backdrop, parallax depth layers.
+   -------------------------------------------------------------- */
+.v2-prozess-hero {
+  position: relative;
+  min-height: 90vh;
+  padding: var(--v2-space-9) 0;
+  background: var(--v2-bg-base);
+  overflow: hidden;
+  isolation: isolate;
+  --mx: 0;
+  --my: 0;
+}
+.v2-prozess-grid {
+  position: absolute;
+  inset: -8% -4% -8% -4%;
+  z-index: 0;
+  background-image:
+    radial-gradient(circle at 1px 1px, var(--v2-line-firm) 1px, transparent 1px);
+  background-size: 28px 28px;
+  opacity: 0.32;
+  transform: translate3d(calc(var(--mx) * -10px), calc(var(--my) * -10px), 0);
+  pointer-events: none;
+}
+.v2-prozess-map-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 clamp(20px, 4vw, 56px);
+  transform: translate3d(calc(var(--mx) * 14px), calc(var(--my) * 10px), 0);
+  pointer-events: none;
+}
+.v2-prozess-map {
+  width: 100%;
+  max-width: 1400px;
+  height: auto;
+  color: var(--v2-line-firm);
+  opacity: 0.75;
+}
+.v2-prozess-map__path,
+.v2-prozess-map__shape {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: v2-draw 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: var(--d, 0ms);
+}
+.v2-prozess-map__shape {
+  fill: var(--v2-bg-raised);
+}
+.v2-prozess-map__shape--active {
+  stroke: var(--v2-accent-primary);
+  stroke-width: 2;
+  fill: var(--v2-accent-soft);
+}
+@keyframes v2-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.v2-prozess-map__pulse {
+  animation: v2-node-pulse 2.4s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+@keyframes v2-node-pulse {
+  0%, 100% { opacity: 0.4; transform: scale(0.92); }
+  50%      { opacity: 0.85; transform: scale(1.05); }
+}
+
+.v2-prozess-spotlight {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(
+    480px 360px at calc(50% + var(--mx) * 40%) calc(50% + var(--my) * 40%),
+    var(--v2-motion-glow) 0%,
+    transparent 70%
+  );
+  mix-blend-mode: screen;
+  opacity: 0.6;
+}
+
+.v2-prozess-hero__inner {
+  position: relative;
+  z-index: 3;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 56px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--v2-space-5);
+  max-width: 720px;
+}
+.v2-prozess-hero__eyebrow {
+  font-family: var(--font-v2-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--v2-ink-3);
+}
+.v2-prozess-hero__headline {
+  font-family: var(--font-v2-display), sans-serif;
+  font-size: var(--v2-fs-display);
+  line-height: 1.04;
+  letter-spacing: -0.032em;
+  font-weight: 700;
+  color: var(--v2-ink-1);
+  margin: 0;
+  max-width: 18ch;
+}
+.v2-prozess-hero__lead {
+  font-size: var(--v2-fs-lead);
+  color: var(--v2-ink-2);
+  max-width: 52ch;
+  margin: 0;
+}
+.v2-prozess-hero__cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--v2-space-3);
+  margin-top: var(--v2-space-2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-prozess-grid,
+  .v2-prozess-map-wrap,
+  .v2-prozess-spotlight { transform: none !important; }
+  .v2-prozess-map__path,
+  .v2-prozess-map__shape {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .v2-prozess-map__pulse { animation: none; }
+  .v2-prozess-map__tokens { display: none; }
+}
+
+@media (max-width: 899px) {
+  .v2-prozess-map-wrap { display: none; }
+  .v2-prozess-grid { opacity: 0.18; }
+}
+
+/* --------------------------------------------------------------
+   M4 — Microsoft 365 hero (constellation hub).
+   Six service tiles on a circular orbit around a central Orchestrator
+   hub. Tokens flow inward along curved spokes.
+   -------------------------------------------------------------- */
+.v2-ms-hero {
+  position: relative;
+  padding: var(--v2-space-9) 0 var(--v2-space-8);
+  background: var(--v2-bg-base);
+  overflow: hidden;
+}
+.v2-ms-hero__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--v2-space-7);
+  align-items: center;
+}
+@media (min-width: 960px) {
+  .v2-ms-hero__inner {
+    grid-template-columns: minmax(0, 0.5fr) minmax(0, 0.5fr);
+    gap: var(--v2-space-8);
+  }
+}
+.v2-ms-hero__copy { display: flex; flex-direction: column; gap: var(--v2-space-5); }
+.v2-ms-hero__eyebrow {
+  font-family: var(--font-v2-mono), ui-monospace, monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--v2-ink-3);
+}
+.v2-ms-hero__headline {
+  font-family: var(--font-v2-display), sans-serif;
+  font-size: var(--v2-fs-display);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  font-weight: 700;
+  color: var(--v2-ink-1);
+  margin: 0;
+  max-width: 14ch;
+}
+.v2-ms-hero__lead {
+  font-size: var(--v2-fs-lead);
+  color: var(--v2-ink-2);
+  max-width: 52ch;
+  margin: 0;
+}
+.v2-ms-hero__cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--v2-space-3);
+}
+.v2-ms-hero__stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-width: 560px;
+  margin: 0 auto;
+}
+.v2-ms-constellation {
+  width: 100%;
+  height: 100%;
+}
+.v2-ms-spoke {
+  fill: none;
+  stroke: var(--v2-line-firm);
+  stroke-width: 1;
+  stroke-dasharray: 4 6;
+  opacity: 0.55;
+  transition: opacity 240ms ease, stroke 240ms ease, stroke-width 240ms ease;
+}
+.v2-ms-spoke--on {
+  stroke: var(--v2-motion-trace);
+  stroke-width: 1.5;
+  opacity: 1;
+}
+.v2-ms-hub__ring {
+  fill: var(--v2-bg-raised);
+  stroke: var(--v2-accent-primary);
+  stroke-width: 1.5;
+  cursor: pointer;
+  transition: stroke-width 200ms ease;
+}
+.v2-ms-hub__ring:hover { stroke-width: 2.5; }
+.v2-ms-hub__inner {
+  fill: var(--v2-accent-soft);
+  pointer-events: none;
+}
+.v2-ms-hub__label {
+  font-family: var(--font-v2-mono), ui-monospace, monospace;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  fill: var(--v2-accent-primary);
+  pointer-events: none;
+}
+.v2-ms-tile {
+  cursor: pointer;
+  transition: opacity 240ms ease, transform 240ms ease;
+}
+.v2-ms-tile__plate {
+  fill: var(--v2-bg-raised);
+  stroke: var(--v2-line-ghost);
+  stroke-width: 1;
+  transition: stroke 240ms ease, fill 240ms ease;
+}
+.v2-ms-tile--on .v2-ms-tile__plate {
+  stroke: var(--v2-accent-primary);
+  stroke-width: 1.5;
+  fill: var(--v2-accent-soft);
+}
+.v2-ms-tile--dim { opacity: 0.45; }
+.v2-ms-tile__icon {
+  color: var(--v2-ink-2);
+  transition: color 240ms ease;
+}
+.v2-ms-tile--on .v2-ms-tile__icon { color: var(--v2-accent-primary); }
+.v2-ms-tile__label {
+  font-family: var(--font-v2-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  fill: var(--v2-ink-2);
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-ms-tokens { display: none; }
+  .v2-ms-spoke, .v2-ms-tile { transition: none; }
+}
+
+/* --------------------------------------------------------------
    5. Section wrap — shared container width across v2 pages.
    -------------------------------------------------------------- */
 html[data-preview="v2"] .wrap {

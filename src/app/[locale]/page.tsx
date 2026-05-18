@@ -11,6 +11,7 @@ import { HomepageFaq } from "@/components/sections/FaqAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { HomeJsonLd } from "@/components/seo/HomeJsonLd";
 import { HomeV2 } from "@/components/v2/home/HomeV2";
+import { V2Shell } from "@/components/v2/V2Shell";
 import { isPreviewV2 } from "@/lib/preview";
 import { isLocale, DEFAULT_LOCALE } from "@/lib/i18n";
 
@@ -83,10 +84,10 @@ export default function HomePage({
 }) {
   if (isPreviewV2(searchParams)) {
     return (
-      <>
+      <V2Shell>
         <HomeJsonLd />
         <HomeV2 />
-      </>
+      </V2Shell>
     );
   }
   return (

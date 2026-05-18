@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { LeistungenPage } from "./LeistungenPage";
 import { LeistungenJsonLd } from "@/components/seo/LeistungenJsonLd";
 import { LeistungenV2 } from "@/components/v2/leistungen/LeistungenV2";
+import { V2Shell } from "@/components/v2/V2Shell";
 import { isPreviewV2 } from "@/lib/preview";
 import { content as en } from "@/content/en";
 import { content as de } from "@/content/de";
@@ -57,10 +58,10 @@ export default function Page({
 }) {
   if (isPreviewV2(searchParams)) {
     return (
-      <>
+      <V2Shell>
         <LeistungenJsonLd />
         <LeistungenV2 />
-      </>
+      </V2Shell>
     );
   }
   return (
