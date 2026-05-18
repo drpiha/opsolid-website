@@ -32,9 +32,13 @@ interface Channel {
 }
 
 interface AIProbe {
-  anthropic: { configured: boolean; status: string; detail?: string };
   openai: { configured: boolean; status: string; detail?: string };
-  summary: { summaryReady: boolean; voiceTranscriptReady: boolean; allGreen: boolean };
+  anthropic: { configured: boolean; status: string; detail?: string };
+  summary: {
+    allRequiredReady: boolean;
+    summaryReady: boolean;
+    voiceTranscriptReady: boolean;
+  };
 }
 
 const COPY: Record<Locale, {
@@ -653,18 +657,18 @@ function AIStatusBanner({
         <div className="flex flex-wrap items-center gap-2 text-xs">
           <span className="mono-label uppercase tracking-wider text-ink-400">AI</span>
           <span
-            className={`mono-label rounded px-2 py-0.5 text-[10px] ${statusColor(probe.anthropic.status)}`}
-          >
-            Anthropic: {statusLabel(probe.anthropic.status)}
-          </span>
-          <span
             className={`mono-label rounded px-2 py-0.5 text-[10px] ${statusColor(probe.openai.status)}`}
           >
-            OpenAI: {statusLabel(probe.openai.status)}
+            OpenAI: {statusLabel(probe.openai.status)} <span className="opacity-60">(required)</span>
           </span>
-          {probe.summary.allGreen && (
+          <span
+            className={`mono-label rounded px-2 py-0.5 text-[10px] ${statusColor(probe.anthropic.status)}`}
+          >
+            Anthropic: {statusLabel(probe.anthropic.status)} <span className="opacity-60">(optional)</span>
+          </span>
+          {probe.summary.allRequiredReady && (
             <span className="text-[11px] text-signal-ok">
-              All providers live · summary + draft + voice transcription active
+              AI live · summary + draft + voice transcription active
             </span>
           )}
         </div>
@@ -677,12 +681,12 @@ function AIStatusBanner({
           {probing ? "…" : "Re-check"}
         </button>
       </div>
-      {(probe.anthropic.detail || probe.openai.detail) && (
+      {(probe.openai.detail || probe.anthropic.detail) && (
         <ul className="mt-2 space-y-1 text-[11px] text-ink-400">
+          {probe.openai.detail && <li>OpenAI: {probe.openai.detail}</li>}
           {probe.anthropic.detail && (
             <li>Anthropic: {probe.anthropic.detail}</li>
           )}
-          {probe.openai.detail && <li>OpenAI: {probe.openai.detail}</li>}
         </ul>
       )}
     </section>

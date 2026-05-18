@@ -1,23 +1,26 @@
 // =============================================================================
-// Anthropic Claude helper for the inbox AI layer.
+// LLM helper for the inbox AI layer.
 //
-// Same posture as src/app/api/v1/cards/draft-from-url/route.ts — no SDK,
-// just a thin fetch wrapper. Two tiers:
-//   - "haiku"  (cheap, fast)   for summary / sentiment / intent at high volume
-//   - "sonnet" (mid, accurate) for reply drafting and structured extraction
+// Originally targeted Anthropic Claude (file name preserved to avoid churn
+// in callers); now backed by OpenAI Chat Completions because the operator's
+// Anthropic billing isn't active. Caller surface (`completeText`,
+// `completeJson`, `ClaudeError`, `ClaudeTier`) is unchanged — analyze.ts
+// and suggest-reply.ts didn't need touching.
 //
-// JSON-mode completion uses a strict prompt envelope: we tell Claude to
-// answer with exactly one JSON object matching a schema, and parse the first
-// {...} block from the response. Robust against trailing prose.
+// Two tiers, mapped to OpenAI models:
+//   - "haiku"  → gpt-4o-mini (cheap, fast — summary / sentiment / intent)
+//   - "sonnet" → gpt-4o      (mid, accurate — reply drafting)
+//
+// JSON mode uses OpenAI's native response_format=json_object, but we still
+// extract the first {...} block defensively so the parser tolerates either
+// pure-JSON or JSON-wrapped-in-prose outputs.
 // =============================================================================
 
-const ANTHROPIC_URL = "https://api.anthropic.com/v1/messages";
-const ANTHROPIC_VERSION = "2023-06-01";
+const OPENAI_CHAT_URL = "https://api.openai.com/v1/chat/completions";
 
-// Model identifiers — keep in sync with CLAUDE.md / global notes.
 const MODELS = {
-  haiku: "claude-haiku-4-5-20251001",
-  sonnet: "claude-sonnet-4-6",
+  haiku: "gpt-4o-mini",
+  sonnet: "gpt-4o",
 } as const;
 
 export type ClaudeTier = keyof typeof MODELS;
@@ -31,9 +34,17 @@ export class ClaudeError extends Error {
   }
 }
 
-interface AnthropicResponse {
-  content?: Array<{ type: string; text?: string }>;
-  usage?: { input_tokens?: number; output_tokens?: number };
+interface OpenAIChatResponse {
+  choices?: Array<{
+    message?: { role?: string; content?: string };
+    finish_reason?: string;
+  }>;
+  usage?: {
+    prompt_tokens?: number;
+    completion_tokens?: number;
+    total_tokens?: number;
+  };
+  error?: { message?: string; type?: string; code?: string };
 }
 
 export interface CompletionResult {
@@ -43,49 +54,66 @@ export interface CompletionResult {
   model: string;
 }
 
+interface CompleteOptions {
+  maxTokens?: number;
+  temperature?: number;
+  /** When true, request JSON object mode from OpenAI. */
+  jsonMode?: boolean;
+}
+
 async function complete(
   tier: ClaudeTier,
   systemPrompt: string,
   userPrompt: string,
-  opts: { maxTokens?: number; temperature?: number } = {},
+  opts: CompleteOptions = {},
 ): Promise<CompletionResult> {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) throw new ClaudeError("ai_not_configured", 503);
 
   const model = MODELS[tier];
-  const res = await fetch(ANTHROPIC_URL, {
+  const body: Record<string, unknown> = {
+    model,
+    messages: [
+      { role: "system", content: systemPrompt },
+      { role: "user", content: userPrompt },
+    ],
+    max_tokens: opts.maxTokens ?? 600,
+    temperature: opts.temperature ?? 0.2,
+  };
+  if (opts.jsonMode) {
+    body.response_format = { type: "json_object" };
+  }
+
+  const res = await fetch(OPENAI_CHAT_URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-api-key": apiKey,
-      "anthropic-version": ANTHROPIC_VERSION,
+      Authorization: `Bearer ${apiKey}`,
     },
-    body: JSON.stringify({
-      model,
-      max_tokens: opts.maxTokens ?? 600,
-      temperature: opts.temperature ?? 0.2,
-      system: systemPrompt,
-      messages: [{ role: "user", content: userPrompt }],
-    }),
+    body: JSON.stringify(body),
   });
 
   if (!res.ok) {
     const text = await res.text().catch(() => "");
     throw new ClaudeError(
-      `anthropic_${res.status}: ${text.slice(0, 200)}`,
+      `openai_${res.status}: ${text.slice(0, 240)}`,
       res.status,
     );
   }
 
-  const json = (await res.json()) as AnthropicResponse;
-  const text =
-    json.content?.map((b) => (b.type === "text" ? b.text ?? "" : "")).join("") ??
-    "";
+  const json = (await res.json()) as OpenAIChatResponse;
+  if (json.error) {
+    throw new ClaudeError(
+      `openai_error: ${json.error.message ?? "unknown"}`,
+      500,
+    );
+  }
+  const text = json.choices?.[0]?.message?.content ?? "";
 
   return {
     text: text.trim(),
-    tokensIn: json.usage?.input_tokens ?? 0,
-    tokensOut: json.usage?.output_tokens ?? 0,
+    tokensIn: json.usage?.prompt_tokens ?? 0,
+    tokensOut: json.usage?.completion_tokens ?? 0,
     model,
   };
 }
@@ -105,7 +133,13 @@ export async function completeJson<T = unknown>(
   userPrompt: string,
   opts: { maxTokens?: number; temperature?: number } = {},
 ): Promise<{ data: T; raw: CompletionResult }> {
-  const raw = await complete(tier, systemPrompt, userPrompt, opts);
+  // Strengthen the prompt: even with response_format=json_object, models
+  // occasionally wrap output in code fences when the system prompt mentions
+  // JSON examples. The defensive {...} extractor below handles both.
+  const raw = await complete(tier, systemPrompt, userPrompt, {
+    ...opts,
+    jsonMode: true,
+  });
   const match = raw.text.match(/\{[\s\S]*\}/);
   if (!match) {
     throw new ClaudeError("ai_no_json_in_response", 502);
