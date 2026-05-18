@@ -21,7 +21,7 @@ export function ProductsHubPage() {
           </h1>
           <p className="lead">{h.hero.lead}</p>
           <div className="os-hero-ctas" style={{ marginTop: 28 }}>
-            <Link href="/pricing" className="btn btn-primary btn-lg">
+            <Link href="/contact" className="btn btn-primary btn-lg">
               {h.hero.primaryCta} <Icon name="arrow" size={18} />
             </Link>
             <Link href="/contact" className="btn btn-ghost btn-lg">

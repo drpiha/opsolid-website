@@ -47,7 +47,7 @@ export function ProductStubPage({ pageId, pricingProductId }: Props) {
               <Link href="/contact" className="btn btn-primary btn-lg">
                 {page.hero.ctaPrimary} <Icon name="arrow" size={18} />
               </Link>
-              <Link href="/pricing" className="btn btn-ghost btn-lg">
+              <Link href="/contact" className="btn btn-ghost btn-lg">
                 {page.hero.ctaSecondary}
               </Link>
             </div>

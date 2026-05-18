@@ -4,6 +4,9 @@ import { ClientProviders } from "@/components/ClientProviders";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { AmbientBackdrop } from "@/components/visual/AmbientBackdrop";
+import { LenisProvider } from "@/components/motion/LenisProvider";
+import { CustomCursor } from "@/components/motion/CustomCursor";
+import { PageTransition } from "@/components/motion/PageTransition";
 import { SITE_CONFIG } from "@/lib/constants";
 import { LOCALES, type Locale, isLocale } from "@/lib/i18n";
 
@@ -59,10 +62,15 @@ export default function LocaleLayout({
 
   return (
     <ClientProviders initialLocale={params.locale}>
-      <AmbientBackdrop />
-      <Header />
-      <main className="flex-1 relative z-[1]">{children}</main>
-      <Footer />
+      <LenisProvider>
+        <CustomCursor />
+        <AmbientBackdrop />
+        <Header />
+        <main className="flex-1 relative z-[1]">
+          <PageTransition>{children}</PageTransition>
+        </main>
+        <Footer />
+      </LenisProvider>
     </ClientProviders>
   );
 }

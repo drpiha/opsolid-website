@@ -10,6 +10,8 @@ import { TrustBlock } from "@/components/sections/TrustBlock";
 import { HomepageFaq } from "@/components/sections/FaqAccordion";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { HomeJsonLd } from "@/components/seo/HomeJsonLd";
+import { HomeV2 } from "@/components/v2/home/HomeV2";
+import { isPreviewV2 } from "@/lib/preview";
 import { isLocale, DEFAULT_LOCALE } from "@/lib/i18n";
 
 const HOME_META: Record<string, { title: string; description: string }> = {
@@ -74,7 +76,19 @@ export function generateMetadata({ params }: { params: { locale?: string } }): M
  * but kept in the codebase — type-safe content keys stay populated so
  * unrelated pages that still import them continue to compile.
  */
-export default function HomePage() {
+export default function HomePage({
+  searchParams,
+}: {
+  searchParams?: Record<string, string | string[] | undefined>;
+}) {
+  if (isPreviewV2(searchParams)) {
+    return (
+      <>
+        <HomeJsonLd />
+        <HomeV2 />
+      </>
+    );
+  }
   return (
     <>
       <HomeJsonLd />

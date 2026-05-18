@@ -53,9 +53,10 @@ const config: Config = {
 
         // Semantic signals (sparing use only)
         signal: {
-          ok:   "#7FB286",
-          warn: "#D4A23A",
-          err:  "#B8514B",
+          ok:     "#7FB286",
+          warn:   "#D4A23A",
+          err:    "#B8514B",
+          accent: "var(--accent-signal)", // verdigris · M1 — bkz. docs/redesign-decisions.md
         },
 
         // Line tokens — theme-aware (ink-alpha on paper, white-alpha on dark).
@@ -95,6 +96,35 @@ const config: Config = {
           900: "#0B0E13",
           950: "#07090C",
         },
+
+        // V2 redesign tokens (Concrete Studio, locked 2026-05-18).
+        // Only paint inside [data-preview="v2"] scope. Source values:
+        // docs/research/decisions.md §1. Static hex (no theme switching).
+        "v2-bg": {
+          base:    "#F0EFED",
+          surface: "#E5E4E1",
+          raised:  "#FAFAF9",
+        },
+        "v2-ink": {
+          1: "#111827",
+          2: "#374151",
+          3: "#6B7280",
+        },
+        "v2-accent": {
+          DEFAULT: "#0F766E",
+          primary: "#0F766E",
+          hover:   "#0D5F58",
+          soft:    "#CCFBF1",
+        },
+        "v2-line": {
+          DEFAULT: "#D1D5DB",
+          ghost:   "#D1D5DB",
+          soft:    "#E5E7EB",
+          firm:    "#9CA3AF",
+        },
+        "v2-motion": {
+          trace: "#14B8A6",
+        },
       },
       fontFamily: {
         sans: [
@@ -118,6 +148,28 @@ const config: Config = {
         ],
         mono: [
           "var(--font-jetbrains-mono)",
+          "ui-monospace",
+          "SF Mono",
+          "Menlo",
+          "monospace",
+        ],
+        // V2 redesign families — Plus Jakarta Sans + Fira Code.
+        "v2-display": [
+          "var(--font-v2-display)",
+          "var(--font-v2-body)",
+          "system-ui",
+          "sans-serif",
+        ],
+        "v2-body": [
+          "var(--font-v2-body)",
+          "system-ui",
+          "-apple-system",
+          "Segoe UI",
+          "Roboto",
+          "sans-serif",
+        ],
+        "v2-mono": [
+          "var(--font-v2-mono)",
           "ui-monospace",
           "SF Mono",
           "Menlo",

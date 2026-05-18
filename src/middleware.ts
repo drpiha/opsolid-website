@@ -108,11 +108,23 @@ const KNOWN_HOSTS = new Set<string>([
   SHORTLINK_HOST,
   "opsolid.de",
   "www.opsolid.de",
-  "localhost",
-  "localhost:3000",
 ]);
 
 const STATIC_FILE_RE = /\.[a-z0-9]+$/i;
+
+/**
+ * Local dev hosts — any localhost or 127.0.0.1 on any port. Next picks an
+ * alternate port automatically when 3000 is in use, so hard-coding port
+ * numbers in KNOWN_HOSTS is a known cause of "Smart Card not configured"
+ * appearing on the dev marketing site.
+ */
+function isLocalDev(host: string): boolean {
+  if (!host) return false;
+  if (host === "localhost" || host.startsWith("localhost:")) return true;
+  if (host === "127.0.0.1" || host.startsWith("127.0.0.1:")) return true;
+  if (host === "0.0.0.0" || host.startsWith("0.0.0.0:")) return true;
+  return false;
+}
 
 export async function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
@@ -177,7 +189,7 @@ export async function middleware(req: NextRequest) {
   // -- Phase 6: custom-domain resolver --------------------------------------
   // Run BEFORE locale detection so customer hosts never get redirected
   // into /<locale>/… and never hit the retired-route table.
-  if (host && !KNOWN_HOSTS.has(host)) {
+  if (host && !isLocalDev(host) && !KNOWN_HOSTS.has(host)) {
     // Skip framework / static / API paths — these must hit Next directly so
     // /api/domain-resolve itself keeps working when called via fetch below.
     if (

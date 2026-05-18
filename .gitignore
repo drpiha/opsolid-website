@@ -66,3 +66,12 @@ mobile/android/
 pnpm-lock.yaml
 
 /public/uploads/
+
+# IDE workspace settings (per-user, not shared)
+.idea/
+
+# TypeScript scratch output
+tsc-out.txt
+
+# Design canvas handoff bundle (external HTML mocks, not source of truth)
+handoff/

@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { ServicePage } from "@/components/sections/ServicePage";
 import { ServiceJsonLd } from "@/components/seo/ServiceJsonLd";
+import { ProzessV2 } from "@/components/v2/prozess/ProzessV2";
+import { isPreviewV2 } from "@/lib/preview";
 import { content as en } from "@/content/en";
 import { content as de } from "@/content/de";
 import { content as tr } from "@/content/tr";
@@ -8,6 +10,7 @@ import { isLocale, DEFAULT_LOCALE } from "@/lib/i18n";
 
 type Params = { locale?: string };
 
+// V2 sections wired (M3.2)
 const SLUG = "prozessautomatisierung";
 
 const META_BY_LOCALE = {
@@ -46,7 +49,19 @@ export function generateMetadata({ params }: { params: Params }): Metadata {
   };
 }
 
-export default function Page() {
+export default function Page({
+  searchParams,
+}: {
+  searchParams?: Record<string, string | string[] | undefined>;
+}) {
+  if (isPreviewV2(searchParams)) {
+    return (
+      <>
+        <ServiceJsonLd serviceKey="prozessautomatisierung" />
+        <ProzessV2 />
+      </>
+    );
+  }
   return (
     <>
       <ServiceJsonLd serviceKey="prozessautomatisierung" />

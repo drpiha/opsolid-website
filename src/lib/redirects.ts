@@ -23,6 +23,10 @@ export const RETIRED_REDIRECTS: Record<string, string> = {
   "/products/chatbot": "/products/chatbot-agent",
   "/products/lead-qualifier": "/products/lead-qualifier-agent",
   "/products/digital-reception": "/products/voice-agent",
+
+  // Pricing removed from IA (2026-05-18 redesign Round 0 — we don't
+  // advertise prices on the marketing site). Inbound links 308 to contact.
+  "/pricing": "/contact",
 };
 
 /**

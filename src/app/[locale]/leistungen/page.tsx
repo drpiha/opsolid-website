@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { LeistungenPage } from "./LeistungenPage";
 import { LeistungenJsonLd } from "@/components/seo/LeistungenJsonLd";
+import { LeistungenV2 } from "@/components/v2/leistungen/LeistungenV2";
+import { isPreviewV2 } from "@/lib/preview";
 import { content as en } from "@/content/en";
 import { content as de } from "@/content/de";
 import { content as tr } from "@/content/tr";
@@ -48,7 +50,19 @@ export function generateMetadata({ params }: { params: Params }): Metadata {
   };
 }
 
-export default function Page() {
+export default function Page({
+  searchParams,
+}: {
+  searchParams?: Record<string, string | string[] | undefined>;
+}) {
+  if (isPreviewV2(searchParams)) {
+    return (
+      <>
+        <LeistungenJsonLd />
+        <LeistungenV2 />
+      </>
+    );
+  }
   return (
     <>
       <LeistungenJsonLd />

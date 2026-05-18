@@ -36,6 +36,20 @@
   --warn:      #D4A23A;   /* aged gold — warning */
   --err:       #B8514B;   /* oxblood — error (never primary) */
 
+  /* ---------- SIGNAL ACCENT (verdigris) — Round-0 decision ---------- */
+  /* Patina-of-copper read: "oxidized copper develops a patina that endures".
+     Used sparingly — CTA glow, active marginalia, hero data lines, edge of
+     node-graph packet. Copper stays the BRAND; verdigris is the SIGNAL.
+     Base values below = dark-theme baseline. Light + hybrid override per-theme. */
+  --accent-signal:        #5DAA9B;
+  --accent-signal-strong: #7BC4B5;
+  --accent-signal-soft:   rgba(93,170,155,0.14);
+  --accent-signal-line:   rgba(93,170,155,0.40);
+
+  --bloom-signal-sm: 0 0 12px rgba(93,170,155,0.45);
+  --bloom-signal-md: 0 0 28px rgba(93,170,155,0.35), 0 0 8px rgba(93,170,155,0.5);
+  --bloom-signal-lg: 0 0 60px rgba(93,170,155,0.28), 0 0 20px rgba(93,170,155,0.4);
+
   /* ---------- RADII ---------- */
   --r-sm:   4px;
   --r-md:   8px;
@@ -117,6 +131,16 @@
   --rim-top-strong: inset 0 1px 0 rgba(255,255,255,0.9);
   --rim-bottom: inset 0 -1px 0 rgba(21,18,15,0.06);
 
+  /* Verdigris on paper — kontrast için bir adım daha koyu. Aynı token
+     ismi, farklı değer; bileşen kodu değişmez. */
+  --accent-signal:        #3F8B7C;
+  --accent-signal-strong: #2D6B5F;
+  --accent-signal-soft:   rgba(63,139,124,0.10);
+  --accent-signal-line:   rgba(63,139,124,0.40);
+  --bloom-signal-sm: 0 0 8px rgba(63,139,124,0.30);
+  --bloom-signal-md: 0 0 18px rgba(63,139,124,0.22), 0 0 6px rgba(63,139,124,0.30);
+  --bloom-signal-lg: 0 0 36px rgba(63,139,124,0.18), 0 0 14px rgba(63,139,124,0.25);
+
   color-scheme: light;
 }
 
@@ -156,6 +180,14 @@
   --rim-top-strong: inset 0 1px 0 rgba(255,255,255,0.9);
   --rim-bottom: inset 0 -1px 0 rgba(21,18,15,0.06);
 
+  --accent-signal:        #3F8B7C;
+  --accent-signal-strong: #2D6B5F;
+  --accent-signal-soft:   rgba(63,139,124,0.10);
+  --accent-signal-line:   rgba(63,139,124,0.40);
+  --bloom-signal-sm: 0 0 8px rgba(63,139,124,0.30);
+  --bloom-signal-md: 0 0 18px rgba(63,139,124,0.22), 0 0 6px rgba(63,139,124,0.30);
+  --bloom-signal-lg: 0 0 36px rgba(63,139,124,0.18), 0 0 14px rgba(63,139,124,0.25);
+
   color-scheme: light;
 }
 
@@ -194,6 +226,16 @@
   --rim-top: inset 0 1px 0 rgba(255,255,255,0.08);
   --rim-top-strong: inset 0 1px 0 rgba(255,255,255,0.12);
   --rim-bottom: inset 0 -1px 0 rgba(0,0,0,0.4);
+
+  /* Verdigris on dark — base values. Yukarıdaki :root defaults ile aynı;
+     explicit yazıyoruz ki hybrid'den dark'a geçişte cascade net olsun. */
+  --accent-signal:        #5DAA9B;
+  --accent-signal-strong: #7BC4B5;
+  --accent-signal-soft:   rgba(93,170,155,0.14);
+  --accent-signal-line:   rgba(93,170,155,0.40);
+  --bloom-signal-sm: 0 0 12px rgba(93,170,155,0.45);
+  --bloom-signal-md: 0 0 28px rgba(93,170,155,0.35), 0 0 8px rgba(93,170,155,0.5);
+  --bloom-signal-lg: 0 0 60px rgba(93,170,155,0.28), 0 0 20px rgba(93,170,155,0.4);
 
   color-scheme: dark;
 }

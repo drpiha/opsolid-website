@@ -1390,3 +1390,51 @@ button.os-cap:focus-visible .os-cap-affordance,
   font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
   color: var(--ink-500);
 }
+
+/* ==============================================================
+   CUSTOM CURSOR (M1) — desktop + no-reduced-motion only.
+   Mounted by src/components/motion/CustomCursor.tsx; the component
+   adds `.os-has-cursor` to <html> while active so we can hide the
+   native cursor on hot zones without affecting touch users.
+   ============================================================== */
+.os-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.92);
+  mix-blend-mode: difference;
+  pointer-events: none;
+  z-index: 99999;
+  will-change: transform;
+  transform: translate3d(-100px, -100px, 0);
+  transition: width 200ms var(--ease-snap), height 200ms var(--ease-snap),
+              background 200ms var(--ease-snap), opacity 160ms linear;
+}
+.os-cursor--magnetic {
+  width: 40px;
+  height: 40px;
+  background: rgba(255, 255, 255, 1);
+}
+.os-cursor--hidden {
+  opacity: 0;
+}
+/* Hide the native cursor only on interactive surfaces; keep the I-beam
+   on text inputs so the user can still tell where their caret will land. */
+.os-has-cursor,
+.os-has-cursor a,
+.os-has-cursor button,
+.os-has-cursor [role="button"],
+.os-has-cursor [data-cursor="link"],
+.os-has-cursor .btn,
+.os-has-cursor .btn-primary,
+.os-has-cursor .btn-ghost {
+  cursor: none;
+}
+/* Belt + braces — if media conditions flip after mount, the cursor element
+   itself never paints. */
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .os-cursor { display: none !important; }
+}

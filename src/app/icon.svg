@@ -1,6 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <path d="M16 2L28.5 9.5V24.5L16 30L3.5 24.5V9.5L16 2Z" stroke="#2563eb" stroke-width="2.5" fill="none"/>
-  <path d="M16 8L23 12V22L16 26L9 22V12L16 8Z" stroke="#14b8a6" stroke-width="2" fill="none"/>
-  <path d="M9 12L16 16L23 12" stroke="#14b8a6" stroke-width="1.5" fill="none"/>
-  <path d="M16 16V26" stroke="#14b8a6" stroke-width="1.5" fill="none"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" role="img" aria-label="OpSolid">
+  <defs>
+    <linearGradient id="copper" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#E9B989"/>
+      <stop offset="42%" stop-color="#C27940"/>
+      <stop offset="100%" stop-color="#7E4A24"/>
+    </linearGradient>
+    <radialGradient id="hl" cx="35%" cy="30%" r="55%">
+      <stop offset="0%" stop-color="white" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect x="0" y="0" width="32" height="32" rx="8" fill="url(#copper)"/>
+  <rect x="0" y="0" width="32" height="0.4" fill="rgba(255,245,225,0.55)"/>
+  <rect x="0" y="31.6" width="32" height="0.4" fill="rgba(0,0,0,0.30)"/>
+  <g>
+    <rect x="8" y="8" width="16" height="16" rx="2.7" fill="#1A0E04" stroke="rgba(0,0,0,0.4)" stroke-width="0.25"/>
+    <rect x="8" y="8" width="16" height="16" rx="2.7" fill="url(#hl)"/>
+  </g>
 </svg>
