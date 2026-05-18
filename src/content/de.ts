@@ -4706,7 +4706,7 @@ export const content: Content = {
         },
         lead:
           "WhatsApp, Telegram, E-Mail und Telefonie vereint in einem KI-gestützten Workspace — gebaut für KMU im DACH-Raum und in der Türkei, deren Geschäft auf Kundengesprächen läuft. Vom Bäcker, der Lieferanten-Sprachnachrichten annimmt, bis zur Klinik, die ausgefallene Termine über die Warteliste nachfüllt.",
-        ctaPrimary: "Zugang anfragen",
+        ctaPrimary: "Workspace öffnen",
         ctaSecondary: "Automatisierungen sehen",
       },
       rooms: {

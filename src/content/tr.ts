@@ -4707,7 +4707,7 @@ export const content: Content = {
         },
         lead:
           "WhatsApp, Telegram, e-posta ve telefon görüşmelerini tek AI çalışma alanında birleştirir — DACH ve Türkiye'deki, işi müşteri görüşmelerine bağlı KOBİ'ler için tasarlandı. Tedarikçi sesli notunu alan fırıncıdan, randevu iptalini bekleme listesinden dolduran kliniğe kadar.",
-        ctaPrimary: "Erişim talep et",
+        ctaPrimary: "Çalışma alanını aç",
         ctaSecondary: "Otomasyonları gör",
       },
       rooms: {

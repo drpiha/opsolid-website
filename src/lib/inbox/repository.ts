@@ -95,6 +95,35 @@ export async function setChannelStatus(channelId: string, status: ChannelStatus)
   });
 }
 
+/**
+ * Ownership-scoped channel update — used by the Settings UI. Returns the
+ * Prisma updateMany count so the API can distinguish 404 vs 200.
+ */
+export async function updateChannelForUser(
+  userId: string,
+  channelId: string,
+  patch: { status?: ChannelStatus; label?: string | null },
+) {
+  return prisma.inboxChannel.updateMany({
+    where: { id: channelId, userId },
+    data: patch,
+  });
+}
+
+/**
+ * Cascade-deletes the channel and every thread / message / suggestion that
+ * hangs off it (FKs declare ON DELETE CASCADE). Scoped to user so a stolen
+ * channel id can't be used to wipe another tenant's inbox.
+ */
+export async function deleteChannelForUser(
+  userId: string,
+  channelId: string,
+) {
+  return prisma.inboxChannel.deleteMany({
+    where: { id: channelId, userId },
+  });
+}
+
 // ---------------------------------------------------------------------------
 // Threads
 // ---------------------------------------------------------------------------

@@ -4721,7 +4721,7 @@ export const content = {
         },
         lead:
           "Unified WhatsApp, Telegram, Email and Voice in one AI-assisted workspace — built for SMBs across Germany and Turkey whose business runs on customer conversations. From the bakery taking supplier voice notes to the clinic recovering no-shows from the waitlist.",
-        ctaPrimary: "Request access",
+        ctaPrimary: "Open workspace",
         ctaSecondary: "See the automations",
       },
       rooms: {

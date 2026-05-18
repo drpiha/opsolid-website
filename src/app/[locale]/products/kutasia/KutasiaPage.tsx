@@ -8,12 +8,12 @@ import { FinalCTA } from "@/components/sections/FinalCTA";
 
 /**
  * Kutasia page — industrial-luxury v2 port of kutasia.html.
- * Sections: kt-hero (with BreathingSilhouette) → kt-rooms (6 modules) →
- * FinalCTA.
+ * Sections: kt-hero (with BreathingSilhouette) → kt-rooms (6 hero
+ * automations) → FinalCTA.
  *
- * Kutasia is a separate hosted SaaS (kutasia.com). The "Request access"
- * CTA points at https://kutasia.com so the marketing page funnels out to
- * the actual product. The secondary CTA anchors to #rooms on this page.
+ * Post-pivot (Faz J): Kutasia is now part of OpSolid itself — the unified
+ * AI workspace under /dashboard/inbox. The primary CTA funnels into the
+ * dashboard (login-walled), the secondary anchors to #rooms.
  */
 export function KutasiaPage() {
   const { t } = useLocale();
@@ -37,12 +37,7 @@ export function KutasiaPage() {
             </h1>
             <p className="os-hero-lead">{k.hero.lead}</p>
             <div className="os-hero-ctas">
-              <Link
-                href="https://kutasia.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn btn-primary btn-lg"
-              >
+              <Link href="/dashboard/inbox" className="btn btn-primary btn-lg">
                 {k.hero.ctaPrimary} <Icon name="arrow" size={18} />
               </Link>
               <Link href="#rooms" className="btn btn-ghost btn-lg">
