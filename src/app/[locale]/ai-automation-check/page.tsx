@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { AIAutomationCheck } from "./AIAutomationCheck";
+import { AIAutomationCheckV2 } from "@/components/v2/ai-automation-check/AIAutomationCheckV2";
+import { V2Shell } from "@/components/v2/V2Shell";
 import { AacJsonLd } from "@/components/seo/AacJsonLd";
+import { isPreviewV2 } from "@/lib/preview";
 import { isLocale, DEFAULT_LOCALE } from "@/lib/i18n";
 
 type Params = { locale?: string };
@@ -54,7 +57,19 @@ export function generateMetadata({ params }: { params: Params }): Metadata {
   };
 }
 
-export default function Page() {
+export default function Page({
+  searchParams,
+}: {
+  searchParams?: Record<string, string | string[] | undefined>;
+}) {
+  if (isPreviewV2(searchParams)) {
+    return (
+      <V2Shell>
+        <AacJsonLd />
+        <AIAutomationCheckV2 />
+      </V2Shell>
+    );
+  }
   return (
     <>
       <AacJsonLd />

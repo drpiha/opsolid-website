@@ -178,7 +178,6 @@ export default function RootLayout({
       lang={lang}
       dir={dir}
       className={fontClasses}
-      data-theme={previewV2 ? "light" : "hybrid"}
       data-preview={previewV2 ? "v2" : undefined}
       suppressHydrationWarning
     >

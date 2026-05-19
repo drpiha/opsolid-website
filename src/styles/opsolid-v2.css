@@ -92,6 +92,135 @@ html[data-preview="v2"] body {
 }
 
 /* --------------------------------------------------------------
+   1.5 Dark variant — Charcoal + Teal. Activates when the global
+   ThemeToggle flips html[data-theme="dark"]. The v2 tokens shadow
+   their light counterparts so every v2 surface follows the toggle
+   without per-component dark code.
+   -------------------------------------------------------------- */
+html[data-preview="v2"][data-theme="dark"] {
+  /* Ground */
+  --v2-bg-base:        #0B1014;
+  --v2-bg-surface:     #11161D;
+  --v2-bg-raised:      #161C25;
+
+  /* Ink */
+  --v2-ink-1:          #F4F3F0;
+  --v2-ink-2:          #D8D6D1;
+  --v2-ink-3:          #9FA2A9;
+
+  /* Accent — bright teal reads on charcoal */
+  --v2-accent-primary: #14B8A6;
+  --v2-accent-hover:   #2DD4BF;
+  --v2-accent-soft:    rgba(20, 184, 166, 0.16);
+
+  /* Line */
+  --v2-line-ghost:     rgba(255, 255, 255, 0.05);
+  --v2-line-soft:      rgba(255, 255, 255, 0.10);
+  --v2-line-firm:      rgba(255, 255, 255, 0.22);
+
+  /* Motion — same teal palette holds */
+  --v2-motion-trace:   #2DD4BF;
+  --v2-motion-glow:    rgba(45, 212, 191, 0.42);
+
+  /* Shadows — black-based, deeper */
+  --v2-shadow-card:  0 1px 2px rgba(0, 0, 0, 0.45),
+                     0 8px 24px rgba(0, 0, 0, 0.35);
+  --v2-shadow-lift:  0 2px 4px rgba(0, 0, 0, 0.50),
+                     0 18px 48px rgba(0, 0, 0, 0.45);
+}
+
+html[data-preview="v2"][data-theme="dark"] body {
+  background-color: var(--v2-bg-base);
+  color: var(--v2-ink-1);
+}
+
+/* Override the Excel-mock "paper" hard-code so it reads on dark. */
+html[data-preview="v2"][data-theme="dark"] .v2-it-panel--before {
+  background-color: #1A2030;
+}
+html[data-preview="v2"][data-theme="dark"] .v2-it-excel {
+  background: #0F141C;
+  color: var(--v2-ink-2);
+  border-color: var(--v2-line-firm);
+}
+html[data-preview="v2"][data-theme="dark"] .v2-it-excel__head {
+  background: #1A2030;
+  border-bottom-color: var(--v2-line-firm);
+}
+html[data-preview="v2"][data-theme="dark"] .v2-it-excel__head > span,
+html[data-preview="v2"][data-theme="dark"] .v2-it-excel__row > span:first-child {
+  background: #1A2030;
+  color: var(--v2-ink-3);
+}
+html[data-preview="v2"][data-theme="dark"] .v2-it-tool__head {
+  background: linear-gradient(180deg, #1A2030 0%, #11161D 100%);
+}
+
+/* --------------------------------------------------------------
+   1.6 Header + Footer overrides — both components live in the v1
+   `os-*` CSS namespace and use v1 tokens (--bg-0, --ink-*). On a
+   v2 page the v2 scope must repaint them so they always match the
+   active surface, not drift away to a stale v1 palette.
+   -------------------------------------------------------------- */
+html[data-preview="v2"] .os-header {
+  background: rgba(250, 250, 249, 0.78);
+  border-bottom: 1px solid var(--v2-line-soft);
+}
+html[data-preview="v2"][data-theme="dark"] .os-header {
+  background: rgba(11, 16, 20, 0.82);
+}
+html[data-preview="v2"] .os-nav-link {
+  color: var(--v2-ink-2);
+}
+html[data-preview="v2"] .os-nav-link:hover,
+html[data-preview="v2"] .os-nav-link.is-active {
+  color: var(--v2-accent-primary);
+}
+html[data-preview="v2"] .os-brand-text { color: var(--v2-ink-1); }
+html[data-preview="v2"] .os-nav-dropdown {
+  background: var(--v2-bg-raised);
+  border-color: var(--v2-line-soft);
+}
+html[data-preview="v2"] .os-nav-dropdown-item-title { color: var(--v2-ink-1); }
+html[data-preview="v2"] .os-nav-dropdown-item-sub   { color: var(--v2-ink-3); }
+html[data-preview="v2"] .os-mobile-menu {
+  background: var(--v2-bg-base);
+  color: var(--v2-ink-1);
+}
+html[data-preview="v2"] .os-mobile-menu-bar,
+html[data-preview="v2"] .os-mobile-nav-link {
+  color: var(--v2-ink-1);
+}
+
+html[data-preview="v2"] .os-footer {
+  background: var(--v2-bg-surface);
+  border-top: 1px solid var(--v2-line-soft);
+}
+html[data-preview="v2"][data-theme="dark"] .os-footer {
+  background: var(--v2-bg-base);
+}
+html[data-preview="v2"] .os-footer-brand p,
+html[data-preview="v2"] .os-footer-col a {
+  color: var(--v2-ink-3);
+}
+html[data-preview="v2"] .os-footer-col a:hover {
+  color: var(--v2-accent-primary);
+}
+html[data-preview="v2"] .os-footer-col-h {
+  color: var(--v2-ink-3);
+}
+html[data-preview="v2"] .os-footer-base {
+  border-top-color: var(--v2-line-soft);
+  color: var(--v2-ink-3);
+}
+
+/* AmbientBackdrop (legacy bloom) — kill its v1 copper glow on v2 surfaces. */
+html[data-preview="v2"] .ambient-backdrop,
+html[data-preview="v2"] [class*="ambient-"] {
+  opacity: 0;
+}
+
+/* --------------------------------------------------------------
    2. Home — full-width split with quiet node-graph backdrop.
       Composition source: docs/redesign-prompt.md §2 Home entry.
    -------------------------------------------------------------- */
@@ -321,9 +450,9 @@ html[data-preview="v2"] body {
   height: 100%;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.7;
-  mask-image: radial-gradient(110% 90% at 50% 30%, black 55%, transparent 100%);
-  -webkit-mask-image: radial-gradient(110% 90% at 50% 30%, black 55%, transparent 100%);
+  opacity: 0.9;
+  mask-image: radial-gradient(140% 110% at 50% 30%, black 80%, transparent 100%);
+  -webkit-mask-image: radial-gradient(140% 110% at 50% 30%, black 80%, transparent 100%);
 }
 
 /* --------------------------------------------------------------
@@ -896,7 +1025,13 @@ html[data-preview="v2"] body {
 }
 .v2-prozess-map-wrap {
   position: absolute;
-  inset: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  /* Constrain the BPMN diagram to the right ~55 % of the hero so it
+     never crosses the headline column. The left edge fades into the
+     page background so it reads as backdrop, not foreground. */
+  left: clamp(420px, 45vw, 720px);
   z-index: 1;
   display: flex;
   align-items: center;
@@ -904,13 +1039,23 @@ html[data-preview="v2"] body {
   padding: 0 clamp(20px, 4vw, 56px);
   transform: translate3d(calc(var(--mx) * 14px), calc(var(--my) * 10px), 0);
   pointer-events: none;
+  mask-image: linear-gradient(to right,
+              transparent 0%,
+              rgba(0, 0, 0, 0.35) 18%,
+              black 40%,
+              black 100%);
+  -webkit-mask-image: linear-gradient(to right,
+              transparent 0%,
+              rgba(0, 0, 0, 0.35) 18%,
+              black 40%,
+              black 100%);
 }
 .v2-prozess-map {
   width: 100%;
-  max-width: 1400px;
+  max-width: 760px;
   height: auto;
   color: var(--v2-line-firm);
-  opacity: 0.75;
+  opacity: 0.55;
 }
 .v2-prozess-map__path,
 .v2-prozess-map__shape {
@@ -1009,7 +1154,7 @@ html[data-preview="v2"] body {
   .v2-prozess-map__tokens { display: none; }
 }
 
-@media (max-width: 899px) {
+@media (max-width: 1099px) {
   .v2-prozess-map-wrap { display: none; }
   .v2-prozess-grid { opacity: 0.18; }
 }
@@ -1906,4 +2051,406 @@ html[data-preview="v2"] .wrap {
   margin-right: auto;
   padding-left: clamp(20px, 4vw, 56px);
   padding-right: clamp(20px, 4vw, 56px);
+}
+
+/* ==============================================================
+   C1.4 — Service body sections (.v2-svc-*). Used by every service
+   page below its bespoke hero (Prozess, KI-Beratung, MS365, Interne
+   Tools, KI-Schulungen). Components live in
+   src/components/v2/services/ServiceSections.tsx.
+   ============================================================== */
+
+.v2-svc-section {
+  padding: clamp(72px, 11vh, 144px) 0;
+  background-color: var(--v2-bg-base);
+  position: relative;
+}
+.v2-svc-section + .v2-svc-section {
+  border-top: 1px solid var(--v2-line-soft);
+}
+.v2-svc-usecases,
+.v2-svc-process {
+  background-color: var(--v2-bg-surface);
+}
+
+/* Eyebrow + headline pair */
+.v2-svc-head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--v2-space-4);
+  margin-bottom: clamp(40px, 6vh, 72px);
+  max-width: 880px;
+}
+.v2-svc-head__eyebrow {
+  font-family: var(--font-v2-mono), ui-monospace, monospace;
+  font-size: var(--v2-fs-meta);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--v2-ink-3);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--v2-space-3);
+}
+.v2-svc-head__eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background-color: var(--v2-line-firm);
+}
+.v2-svc-head__headline {
+  font-family: var(--font-v2-display), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: var(--v2-fs-h2);
+  line-height: 1.08;
+  letter-spacing: -0.022em;
+  color: var(--v2-ink-1);
+  margin: 0;
+  max-width: 22ch;
+  text-wrap: balance;
+}
+
+/* -------- What we do — bullet list, two-column on desktop -------- */
+.v2-svc-bullets {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: clamp(16px, 2.5vw, 32px);
+  border-top: 1px solid var(--v2-line-soft);
+}
+.v2-svc-bullet {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: var(--v2-space-4);
+  align-items: flex-start;
+  padding: var(--v2-space-6) 0;
+  border-bottom: 1px solid var(--v2-line-soft);
+}
+.v2-svc-bullet__mark {
+  margin-top: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background-color: var(--v2-accent-primary);
+  box-shadow: 0 0 0 4px var(--v2-accent-soft);
+  flex-shrink: 0;
+}
+.v2-svc-bullet__text {
+  font-size: var(--v2-fs-lead);
+  line-height: 1.55;
+  color: var(--v2-ink-2);
+}
+
+/* -------- Use cases — numbered card grid -------- */
+.v2-svc-usecase-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: clamp(16px, 2.5vw, 32px);
+}
+.v2-svc-usecase {
+  display: flex;
+  flex-direction: column;
+  gap: var(--v2-space-3);
+  padding: var(--v2-space-6);
+  background: var(--v2-bg-raised);
+  border: 1px solid var(--v2-line-soft);
+  border-radius: var(--v2-radius-lg);
+  box-shadow: var(--v2-shadow-card);
+  transition: transform 280ms cubic-bezier(0.2, 0.7, 0.2, 1),
+              border-color 240ms ease,
+              box-shadow 280ms ease;
+}
+.v2-svc-usecase:hover {
+  transform: translateY(-2px);
+  border-color: var(--v2-line-firm);
+  box-shadow: var(--v2-shadow-lift);
+}
+.v2-svc-usecase__num {
+  font-family: var(--font-v2-mono), ui-monospace, monospace;
+  font-size: var(--v2-fs-meta);
+  letter-spacing: 0.16em;
+  color: var(--v2-accent-primary);
+}
+.v2-svc-usecase__title {
+  font-family: var(--font-v2-display), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: var(--v2-fs-h3);
+  line-height: 1.25;
+  letter-spacing: -0.015em;
+  color: var(--v2-ink-1);
+  margin: 0;
+}
+.v2-svc-usecase__body {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--v2-ink-2);
+  margin: 0;
+}
+
+/* -------- Process steps — vertical rail with progress -------- */
+.v2-svc-process-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(20px, 3vh, 40px);
+  position: relative;
+}
+.v2-svc-step {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "num title"
+    "num body";
+  column-gap: var(--v2-space-5);
+  row-gap: var(--v2-space-2);
+  position: relative;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 520ms cubic-bezier(0.2, 0.7, 0.2, 1),
+              transform 520ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: calc(var(--i, 0) * 110ms);
+}
+.v2-svc-step.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.v2-svc-step__num {
+  grid-area: num;
+  font-family: var(--font-v2-display), system-ui, sans-serif;
+  font-size: clamp(2rem, 4vw, 3.25rem);
+  font-weight: 600;
+  line-height: 1;
+  color: var(--v2-accent-primary);
+  letter-spacing: -0.02em;
+}
+.v2-svc-step__connector {
+  display: none;
+}
+.v2-svc-step__title {
+  grid-area: title;
+  font-family: var(--font-v2-display), system-ui, sans-serif;
+  font-weight: 600;
+  font-size: var(--v2-fs-h3);
+  line-height: 1.25;
+  color: var(--v2-ink-1);
+  margin: 0;
+}
+.v2-svc-step__body {
+  grid-area: body;
+  font-size: var(--v2-fs-lead);
+  line-height: 1.55;
+  color: var(--v2-ink-2);
+  margin: 0;
+  max-width: 60ch;
+}
+
+/* -------- Final CTA band -------- */
+.v2-svc-finalcta {
+  background-color: var(--v2-bg-surface);
+  border-top: 1px solid var(--v2-line-soft);
+  border-bottom: 1px solid var(--v2-line-soft);
+}
+.v2-svc-finalcta__inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--v2-space-5);
+  max-width: 880px;
+  margin: 0 auto;
+}
+.v2-svc-finalcta__eyebrow {
+  font-family: var(--font-v2-mono), ui-monospace, monospace;
+  font-size: var(--v2-fs-meta);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--v2-ink-3);
+}
+.v2-svc-finalcta__title {
+  font-family: var(--font-v2-display), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: var(--v2-fs-h1);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--v2-ink-1);
+  margin: 0;
+  max-width: 22ch;
+  text-wrap: balance;
+}
+.v2-svc-finalcta__title-em {
+  font-style: italic;
+  color: var(--v2-accent-primary);
+  font-weight: 600;
+}
+.v2-svc-finalcta__lead {
+  font-size: var(--v2-fs-lead);
+  line-height: 1.6;
+  color: var(--v2-ink-2);
+  margin: 0;
+  max-width: 60ch;
+}
+.v2-svc-finalcta__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--v2-space-4);
+  margin-top: var(--v2-space-3);
+}
+.v2-svc-finalcta .btn.btn-primary {
+  background-color: var(--v2-accent-primary);
+  color: #FFFFFF;
+  border: 1px solid var(--v2-accent-primary);
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-family: var(--font-v2-body), system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+.v2-svc-finalcta .btn.btn-primary:hover {
+  background-color: var(--v2-accent-hover);
+  border-color: var(--v2-accent-hover);
+}
+.v2-svc-finalcta .v2-home-hero__cta-secondary {
+  padding: 12px 22px;
+  border-radius: 999px;
+  border: 1px solid var(--v2-line-firm);
+  color: var(--v2-ink-1);
+  font-family: var(--font-v2-body), system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 0.9375rem;
+  text-decoration: none;
+  background: transparent;
+  transition: background-color 200ms ease, border-color 200ms ease;
+}
+.v2-svc-finalcta .v2-home-hero__cta-secondary:hover {
+  background-color: var(--v2-accent-soft);
+  border-color: var(--v2-accent-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .v2-svc-step {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .v2-svc-usecase { transition: none; }
+}
+
+/* Dark variants are picked up automatically because every token used
+   above (--v2-ink-*, --v2-bg-*, --v2-accent-*, --v2-line-*, --v2-shadow-*)
+   has a dark counterpart in the [data-theme="dark"] block. No further
+   per-class overrides needed except button hover contrast: */
+html[data-preview="v2"][data-theme="dark"] .v2-svc-finalcta .btn.btn-primary {
+  color: var(--v2-bg-base);
+}
+
+/* --------------------------------------------------------------
+   C1.5 AI Automation Check — editorial hero with diagonal traces.
+   -------------------------------------------------------------- */
+.v2-aac-hero {
+  position: relative;
+  padding: clamp(112px, 18vh, 224px) 0 clamp(80px, 12vh, 144px);
+  background-color: var(--v2-bg-base);
+  overflow: hidden;
+  isolation: isolate;
+}
+.v2-aac-hero__trace {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(115deg, transparent 49.6%, var(--v2-line-soft) 49.8%, var(--v2-line-soft) 50.2%, transparent 50.4%),
+    linear-gradient(115deg, transparent 34.6%, var(--v2-line-soft) 34.8%, var(--v2-line-soft) 35.2%, transparent 35.4%);
+  mask-image: radial-gradient(80% 60% at 50% 40%, black 0%, transparent 90%);
+  -webkit-mask-image: radial-gradient(80% 60% at 50% 40%, black 0%, transparent 90%);
+  opacity: 0.6;
+}
+.v2-aac-hero__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--v2-space-5);
+  max-width: 960px;
+}
+.v2-aac-hero__meta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--v2-space-4);
+  flex-wrap: wrap;
+}
+.v2-aac-hero__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border: 1px solid var(--v2-accent-primary);
+  background: var(--v2-accent-soft);
+  border-radius: 999px;
+  font-family: var(--font-v2-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--v2-accent-primary);
+}
+.v2-aac-hero__chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background-color: var(--v2-accent-primary);
+  box-shadow: 0 0 8px var(--v2-motion-glow);
+  animation: v2AacPulse 1.6s ease-in-out infinite;
+}
+@keyframes v2AacPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.4); opacity: 0.6; }
+}
+.v2-aac-hero__meta-label {
+  font-family: var(--font-v2-mono), ui-monospace, monospace;
+  font-size: var(--v2-fs-meta);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--v2-ink-3);
+}
+.v2-aac-hero__headline {
+  font-family: var(--font-v2-display), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: var(--v2-fs-display);
+  line-height: 1.02;
+  letter-spacing: -0.028em;
+  color: var(--v2-ink-1);
+  margin: 0;
+  max-width: 20ch;
+}
+.v2-aac-hero__headline-em {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--v2-accent-primary);
+  padding: 0 0.06em;
+}
+.v2-aac-hero__lead {
+  font-size: var(--v2-fs-lead);
+  line-height: 1.55;
+  color: var(--v2-ink-2);
+  margin: 0;
+  max-width: 62ch;
+}
+.v2-aac-hero__ctas {
+  display: flex;
+  gap: var(--v2-space-4);
+  flex-wrap: wrap;
+  margin-top: var(--v2-space-3);
+}
+@media (prefers-reduced-motion: reduce) {
+  .v2-aac-hero__chip-dot { animation: none; }
 }
