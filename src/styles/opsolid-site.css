@@ -430,6 +430,57 @@ body { background: var(--bg-1); color: var(--ink-200); overflow-x: hidden; }
   gap: 0.625rem;
 }
 
+/* Desktop locale switcher in the header right cluster. Same chip
+   geometry as the mobile row but uses the theme-aware ink/line tokens
+   so it reads on both v1 and v2 surfaces. */
+.os-desktop-locale {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px;
+  border-radius: 999px;
+  border: 1px solid var(--line, rgba(0,0,0,0.08));
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.os-desktop-locale-chip {
+  min-width: 34px;
+  padding: 5px 10px;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+  background: transparent;
+  border: 0;
+  border-radius: 999px;
+  color: var(--ink-300, #6B7280);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 180ms ease, background-color 180ms ease;
+}
+.os-desktop-locale-chip:hover {
+  color: var(--ink-100, #111827);
+}
+.os-desktop-locale-chip.is-active {
+  color: var(--ink-100, #111827);
+  background: rgba(15, 118, 110, 0.10);
+}
+html[data-preview="v2"] .os-desktop-locale {
+  border-color: var(--v2-line-soft);
+  background: rgba(250, 250, 249, 0.6);
+}
+html[data-preview="v2"] .os-desktop-locale-chip {
+  color: var(--v2-ink-3);
+}
+html[data-preview="v2"] .os-desktop-locale-chip:hover {
+  color: var(--v2-ink-1);
+}
+html[data-preview="v2"] .os-desktop-locale-chip.is-active {
+  color: var(--v2-accent-primary);
+  background: var(--v2-accent-soft);
+}
+
 /* =======================================================
    HERO + KINETIC MECHANISM
    ======================================================= */

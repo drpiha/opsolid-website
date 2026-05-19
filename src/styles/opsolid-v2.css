@@ -307,16 +307,36 @@ html[data-preview="v2"] body {
 }
 
 /* --------------------------------------------------------------
-   3. Node-graph backdrop — quiet, low-opacity canvas behind hero.
+   2.5 Galaxy backdrop — canvas starfield over the light concrete
+   ground. Mouse-reactive parallax. Sits at z=0; node-graph SVG at
+   z=1; hero copy at z=2. The canvas content itself is dark-ink
+   particles + teal traces (read on light bg); no dark "section"
+   container, the site stays light.
+   -------------------------------------------------------------- */
+.v2-galaxy {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.7;
+  mask-image: radial-gradient(110% 90% at 50% 30%, black 55%, transparent 100%);
+  -webkit-mask-image: radial-gradient(110% 90% at 50% 30%, black 55%, transparent 100%);
+}
+
+/* --------------------------------------------------------------
+   3. Node-graph backdrop — quiet, low-opacity SVG over the galaxy.
    -------------------------------------------------------------- */
 .v2-node-graph {
   position: absolute;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
   width: 100%;
   height: 100%;
   pointer-events: none;
-  opacity: 0.55;
+  opacity: 0.5;
 }
 .v2-home-hero::after {
   /* Bottom fade so the backdrop dissolves into the page surface and the

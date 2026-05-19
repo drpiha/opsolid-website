@@ -131,10 +131,10 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: "cover",
   themeColor: [
-    // Copper for the light-default register, verdigris signal accent for the
-    // dark theme (Round-0 decision — see docs/redesign-decisions.md).
-    { media: "(prefers-color-scheme: light)", color: "#C27940" },
-    { media: "(prefers-color-scheme: dark)", color: "#5DAA9B" },
+    // M9 v2 promotion: Concrete Studio teal replaces legacy copper as the
+    // primary accent across both light and dark UA chrome.
+    { media: "(prefers-color-scheme: light)", color: "#0F766E" },
+    { media: "(prefers-color-scheme: dark)", color: "#14B8A6" },
   ],
 };
 
@@ -164,14 +164,14 @@ export default function RootLayout({
     .filter(Boolean)
     .join(" ");
 
-  // V2 preview detection — middleware forwards the original pathname+search
-  // as `x-pathname` so the server layout can mark <html data-preview="v2">
-  // before first paint. Avoids hydration-time class flips and gives the v2
-  // CSS scope a stable selector to attach to.
-  const requestPath = headerStore.get("x-pathname") ?? "";
-  const previewV2 =
-    requestPath.includes("preview=v2") ||
-    requestPath.includes("preview%3Dv2");
+  // M9 promotion (2026-05-19): v2 is now the default. The legacy gated
+  // logic is kept commented for emergency rollback — flip back by
+  // restoring the requestPath check and removing the constant.
+  //   const requestPath = headerStore.get("x-pathname") ?? "";
+  //   const previewV2 =
+  //     requestPath.includes("preview=v2") ||
+  //     requestPath.includes("preview%3Dv2");
+  const previewV2 = true;
 
   return (
     <html

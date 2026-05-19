@@ -137,6 +137,27 @@ export function Header() {
         </nav>
 
         <div className="os-header-right">
+          <div
+            className="os-desktop-locale hidden md:inline-flex"
+            role="radiogroup"
+            aria-label="Language"
+          >
+            {VISIBLE_LOCALES.map((l) => (
+              <button
+                key={l}
+                type="button"
+                role="radio"
+                aria-checked={l === locale}
+                onClick={() => setLocale(l)}
+                className={cn(
+                  "os-desktop-locale-chip",
+                  l === locale && "is-active",
+                )}
+              >
+                {LOCALE_LABELS[l]}
+              </button>
+            ))}
+          </div>
           <div className="hidden md:inline-flex">
             <ThemeToggle />
           </div>

@@ -23,6 +23,7 @@ import { useLocale } from "@/context/LocaleContext";
 import { getV2Content } from "@/content/v2";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { NodeGraphBackdrop } from "./NodeGraphBackdrop";
+import { GalaxyBackdrop } from "./GalaxyBackdrop";
 import { PillarGrid } from "./PillarGrid";
 
 export function HomeV2() {
@@ -35,6 +36,7 @@ export function HomeV2() {
   return (
     <>
       <section className="v2-home-hero">
+        <GalaxyBackdrop />
         <NodeGraphBackdrop />
 
         <div className="wrap v2-home-hero__inner">

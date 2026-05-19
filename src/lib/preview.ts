@@ -17,10 +17,20 @@ type ReadonlySearchParams = Record<string, string | string[] | undefined>;
 export const PREVIEW_V2_QUERY = "preview";
 export const PREVIEW_V2_VALUE = "v2";
 
-export function isPreviewV2(searchParams: ReadonlySearchParams | undefined): boolean {
-  if (!searchParams) return false;
-  const raw = searchParams[PREVIEW_V2_QUERY];
-  if (!raw) return false;
-  if (Array.isArray(raw)) return raw.includes(PREVIEW_V2_VALUE);
-  return raw === PREVIEW_V2_VALUE;
+/**
+ * M9 promotion (2026-05-19): v2 is now the default. This helper always
+ * returns true — every page.tsx that checks it renders the V2 component.
+ * The legacy V1 code paths are kept in place for one milestone as an
+ * emergency rollback (flip back to the gated logic below); M10 will
+ * delete them and retire this helper.
+ *
+ * Original gated logic (kept below the early return for reference):
+ *   if (!searchParams) return false;
+ *   const raw = searchParams[PREVIEW_V2_QUERY];
+ *   if (!raw) return false;
+ *   if (Array.isArray(raw)) return raw.includes(PREVIEW_V2_VALUE);
+ *   return raw === PREVIEW_V2_VALUE;
+ */
+export function isPreviewV2(_searchParams: ReadonlySearchParams | undefined): boolean {
+  return true;
 }
