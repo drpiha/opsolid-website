@@ -30,6 +30,7 @@ import {
   V2FinalCta,
 } from "@/components/v2/services/ServiceSections";
 import { FaqAccordion } from "@/components/sections/FaqAccordion";
+import { ProzessParticles } from "./ProzessParticles";
 
 function BpmnMap() {
   return (
@@ -193,13 +194,12 @@ export function ProzessV2() {
       {/* Layer 0: dot-grid backdrop, deepest parallax. */}
       <div className="v2-prozess-grid" aria-hidden="true" />
 
-      {/* Layer 1: the BPMN diagram. */}
+      {/* Layer 1: the BPMN diagram (now static — animated tokens moved
+          to ProzessParticles canvas overlay). */}
       <div className="v2-prozess-map-wrap" aria-hidden="true">
         <BpmnMap />
+        <ProzessParticles parentRef={sectionRef} />
       </div>
-
-      {/* Layer 3: cursor-following verdigris spotlight (screen blend). */}
-      <div className="v2-prozess-spotlight" aria-hidden="true" />
 
       {/* Layer 4 (foreground content, anchored left) */}
       <div className="v2-prozess-hero__inner">

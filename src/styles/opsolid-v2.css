@@ -92,6 +92,81 @@ html[data-preview="v2"] body {
 }
 
 /* --------------------------------------------------------------
+   1.45 Hybrid (DEFAULT) — Twilight register. Neither pure day nor
+   pure night: deep blue-graphite ground with warm cream ink and a
+   bright teal accent. This is the default theme so the galaxy
+   backdrop always reads with starfield depth even before the user
+   touches the toggle. ThemeToggle still offers light + dark on
+   either side of this register.
+   -------------------------------------------------------------- */
+html[data-preview="v2"][data-theme="hybrid"] {
+  /* Ground — twilight ladder */
+  --v2-bg-base:        #131B26;
+  --v2-bg-surface:     #1B2532;
+  --v2-bg-raised:      #232E3D;
+
+  /* Ink — warm cream so it doesn't read clinical */
+  --v2-ink-1:          #ECE7DD;
+  --v2-ink-2:          #C9C3B8;
+  --v2-ink-3:          #8F8B82;
+
+  /* Accent — slightly cooler teal for warm-bg contrast */
+  --v2-accent-primary: #2DD4BF;
+  --v2-accent-hover:   #5EEAD4;
+  --v2-accent-soft:    rgba(45, 212, 191, 0.16);
+
+  /* Line */
+  --v2-line-ghost:     rgba(236, 231, 221, 0.06);
+  --v2-line-soft:      rgba(236, 231, 221, 0.12);
+  --v2-line-firm:      rgba(236, 231, 221, 0.24);
+
+  /* Motion */
+  --v2-motion-trace:   #5EEAD4;
+  --v2-motion-glow:    rgba(94, 234, 212, 0.42);
+
+  /* Shadows */
+  --v2-shadow-card:  0 1px 2px rgba(0, 0, 0, 0.5),
+                     0 8px 24px rgba(0, 0, 0, 0.38);
+  --v2-shadow-lift:  0 2px 4px rgba(0, 0, 0, 0.55),
+                     0 18px 48px rgba(0, 0, 0, 0.50);
+}
+
+html[data-preview="v2"][data-theme="hybrid"] body {
+  background-color: var(--v2-bg-base);
+  color: var(--v2-ink-1);
+}
+
+/* Excel mock contrast on twilight */
+html[data-preview="v2"][data-theme="hybrid"] .v2-it-panel--before {
+  background-color: #1F2A3A;
+}
+html[data-preview="v2"][data-theme="hybrid"] .v2-it-excel {
+  background: #1A2330;
+  color: var(--v2-ink-2);
+  border-color: var(--v2-line-firm);
+}
+html[data-preview="v2"][data-theme="hybrid"] .v2-it-excel__head {
+  background: #1F2A3A;
+  border-bottom-color: var(--v2-line-firm);
+}
+html[data-preview="v2"][data-theme="hybrid"] .v2-it-excel__head > span,
+html[data-preview="v2"][data-theme="hybrid"] .v2-it-excel__row > span:first-child {
+  background: #1F2A3A;
+  color: var(--v2-ink-3);
+}
+html[data-preview="v2"][data-theme="hybrid"] .v2-it-tool__head {
+  background: linear-gradient(180deg, #1F2A3A 0%, #1B2532 100%);
+}
+
+/* Header on twilight */
+html[data-preview="v2"][data-theme="hybrid"] .os-header {
+  background: rgba(27, 37, 50, 0.82);
+}
+html[data-preview="v2"][data-theme="hybrid"] .os-footer {
+  background: var(--v2-bg-surface);
+}
+
+/* --------------------------------------------------------------
    1.5 Dark variant — Charcoal + Teal. Activates when the global
    ThemeToggle flips html[data-theme="dark"]. The v2 tokens shadow
    their light counterparts so every v2 surface follows the toggle
@@ -450,9 +525,14 @@ html[data-preview="v2"] [class*="ambient-"] {
   height: 100%;
   z-index: 0;
   pointer-events: none;
-  opacity: 0.9;
-  mask-image: radial-gradient(140% 110% at 50% 30%, black 80%, transparent 100%);
-  -webkit-mask-image: radial-gradient(140% 110% at 50% 30%, black 80%, transparent 100%);
+  opacity: 1;
+  mask-image: radial-gradient(150% 120% at 50% 30%, black 90%, transparent 100%);
+  -webkit-mask-image: radial-gradient(150% 120% at 50% 30%, black 90%, transparent 100%);
+}
+/* On light theme particles are darker, so leaving opacity at 1 reads as
+   too dense. Trim slightly on light only. */
+html[data-preview="v2"][data-theme="light"] .v2-galaxy {
+  opacity: 0.78;
 }
 
 /* --------------------------------------------------------------
@@ -648,27 +728,25 @@ html[data-preview="v2"] [class*="ambient-"] {
 .v2-rail__track-wrap {
   position: relative;
   margin-bottom: var(--v2-space-8);
-  /* Reset wrap horizontal padding so the rail can run edge-to-edge. */
-  padding-left: 0;
-  padding-right: 0;
 }
 .v2-rail__track {
-  display: flex;
-  gap: var(--v2-space-5);
-  padding-left: clamp(20px, 4vw, 56px);
-  padding-right: clamp(20px, 4vw, 56px);
-  /* Default: native horizontal overflow when JS isn't running the pin. */
-  overflow-x: auto;
-  overflow-y: hidden;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-  will-change: transform;
+  display: grid;
+  gap: clamp(16px, 2vw, 24px);
+  grid-template-columns: 1fr;
 }
-.v2-rail__track::-webkit-scrollbar { display: none; }
+@media (min-width: 720px) {
+  .v2-rail__track { grid-template-columns: repeat(2, 1fr); }
+}
+@media (min-width: 1080px) {
+  .v2-rail__track { grid-template-columns: repeat(3, 1fr); }
+}
+@media (min-width: 1320px) {
+  .v2-rail__track { grid-template-columns: repeat(5, 1fr); }
+}
 
 .v2-rail__card {
-  flex: 0 0 320px;
-  min-height: 360px;
+  width: 100%;
+  min-height: 320px;
   display: flex;
   flex-direction: column;
   gap: var(--v2-space-3);
@@ -746,18 +824,11 @@ html[data-preview="v2"] [class*="ambient-"] {
   margin: 0;
 }
 
+/* Track is now a CSS grid (above) so the legacy column-stack rule is
+   no longer needed; keep transform reset for any leftover JS. */
 @media (max-width: 899px) {
-  .v2-rail__track {
-    flex-direction: column;
-    overflow-x: hidden;
-    padding-left: clamp(20px, 4vw, 56px);
-    padding-right: clamp(20px, 4vw, 56px);
-    transform: none !important;
-  }
-  .v2-rail__card {
-    flex: 0 0 auto;
-    min-height: auto;
-  }
+  .v2-rail__track { transform: none !important; }
+  .v2-rail__card { min-height: auto; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1009,8 +1080,13 @@ html[data-preview="v2"] [class*="ambient-"] {
   background: var(--v2-bg-base);
   overflow: hidden;
   isolation: isolate;
+  display: flex;
+  align-items: center;
   --mx: 0;
   --my: 0;
+}
+@media (max-width: 640px) {
+  .v2-prozess-hero { min-height: auto; padding: var(--v2-space-8) 0; }
 }
 .v2-prozess-grid {
   position: absolute;
@@ -1028,88 +1104,90 @@ html[data-preview="v2"] [class*="ambient-"] {
   top: 0;
   bottom: 0;
   right: 0;
-  /* Constrain the BPMN diagram to the right ~55 % of the hero so it
-     never crosses the headline column. The left edge fades into the
-     page background so it reads as backdrop, not foreground. */
-  left: clamp(420px, 45vw, 720px);
+  /* Pin the BPMN diagram to the right half of the hero. The left
+     edge fades to transparent over the headline column so the text
+     stays clean. Width clamps so the diagram itself can grow large. */
+  left: clamp(0px, 45vw, 720px);
   z-index: 1;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   padding: 0 clamp(20px, 4vw, 56px);
-  transform: translate3d(calc(var(--mx) * 14px), calc(var(--my) * 10px), 0);
   pointer-events: none;
   mask-image: linear-gradient(to right,
               transparent 0%,
-              rgba(0, 0, 0, 0.35) 18%,
-              black 40%,
+              rgba(0, 0, 0, 0.0) 8%,
+              rgba(0, 0, 0, 0.6) 22%,
+              black 38%,
               black 100%);
   -webkit-mask-image: linear-gradient(to right,
               transparent 0%,
-              rgba(0, 0, 0, 0.35) 18%,
-              black 40%,
+              rgba(0, 0, 0, 0.0) 8%,
+              rgba(0, 0, 0, 0.6) 22%,
+              black 38%,
               black 100%);
 }
 .v2-prozess-map {
   width: 100%;
-  max-width: 760px;
+  max-width: 920px;
   height: auto;
   color: var(--v2-line-firm);
   opacity: 0.55;
 }
 .v2-prozess-map__path,
 .v2-prozess-map__shape {
+  /* One-time draw on mount, then static (no pulse). */
   stroke-dasharray: 1000;
   stroke-dashoffset: 1000;
-  animation: v2-draw 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: v2-draw 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
   animation-delay: var(--d, 0ms);
 }
 .v2-prozess-map__shape {
   fill: var(--v2-bg-raised);
 }
 .v2-prozess-map__shape--active {
-  stroke: var(--v2-accent-primary);
-  stroke-width: 2;
-  fill: var(--v2-accent-soft);
+  /* Was a teal-tinted active card with a pulse — now the same outline
+     stroke as siblings, no motion. The flow energy lives in particles. */
+  stroke: currentColor;
+  stroke-width: 1.5;
+  fill: var(--v2-bg-raised);
 }
 @keyframes v2-draw {
   to { stroke-dashoffset: 0; }
 }
 
-.v2-prozess-map__pulse {
-  animation: v2-node-pulse 2.4s ease-in-out infinite;
-  transform-origin: center;
-  transform-box: fill-box;
-}
-@keyframes v2-node-pulse {
-  0%, 100% { opacity: 0.4; transform: scale(0.92); }
-  50%      { opacity: 0.85; transform: scale(1.05); }
+/* Static state — kill the legacy token + pulse layers; particles
+   live on a dedicated canvas overlay now. */
+.v2-prozess-map__pulses,
+.v2-prozess-map__tokens {
+  display: none;
 }
 
-.v2-prozess-spotlight {
+/* Canvas particle overlay aligned to the BPMN SVG. */
+.v2-prozess-particles {
   position: absolute;
   inset: 0;
-  z-index: 1;
+  width: 100%;
+  height: 100%;
   pointer-events: none;
-  background: radial-gradient(
-    480px 360px at calc(50% + var(--mx) * 40%) calc(50% + var(--my) * 40%),
-    var(--v2-motion-glow) 0%,
-    transparent 70%
-  );
-  mix-blend-mode: screen;
-  opacity: 0.6;
+  display: block;
 }
 
 .v2-prozess-hero__inner {
   position: relative;
   z-index: 3;
-  max-width: 1320px;
+  width: 100%;
   margin: 0 auto;
   padding: 0 clamp(20px, 4vw, 56px);
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: var(--v2-space-5);
-  max-width: 720px;
+  /* The wrap container caps width; inner children stay on the left. */
+  max-width: 1320px;
+}
+.v2-prozess-hero__inner > * {
+  max-width: 560px;
 }
 .v2-prozess-hero__eyebrow {
   font-family: var(--font-v2-mono), ui-monospace, monospace;
@@ -2051,6 +2129,295 @@ html[data-preview="v2"] .wrap {
   margin-right: auto;
   padding-left: clamp(20px, 4vw, 56px);
   padding-right: clamp(20px, 4vw, 56px);
+}
+
+/* ==============================================================
+   C2.2 — Mobile responsive fixes (audit punch list).
+   Targets viewports ≤640px primarily; some heroes also fix tablet
+   intermediate breaks.
+   ============================================================== */
+@media (max-width: 640px) {
+  /* Hero min-heights — let mobile screens pack tightly instead of
+     reserving 80-92vh of whitespace. */
+  .v2-home-hero,
+  .v2-prozess-hero,
+  .v2-schul-hero,
+  .v2-contact-hero,
+  .v2-kib-hero,
+  .v2-ms-hero,
+  .v2-aac-hero {
+    min-height: auto;
+  }
+  /* Galaxy still needs enough vertical room to feel like space. */
+  .v2-home-hero { padding: clamp(80px, 14vh, 112px) 0 var(--v2-space-7); }
+
+  /* Hero headlines: scale down so they always fit. */
+  .v2-home-hero__headline,
+  .v2-prozess-hero__headline,
+  .v2-svc-hero__headline,
+  .v2-aac-hero__headline {
+    font-size: clamp(2rem, 9vw, 3rem);
+    line-height: 1.05;
+  }
+  .v2-contact-hero__headline {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+  }
+
+  /* Wrap padding on narrow phones */
+  html[data-preview="v2"] .wrap {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+}
+
+/* HomeV2 hero split — stack on mobile, give the workflow card breathing room */
+@media (max-width: 900px) {
+  .v2-home-hero__inner {
+    grid-template-columns: 1fr !important;
+    gap: var(--v2-space-6);
+  }
+}
+
+/* BlogV2 — cap inner card column min-width so 375px viewports don't overflow */
+.v2-blog-grid__rest {
+  grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+}
+
+/* InterneTools Excel mock — collapse row-number column on phones */
+@media (max-width: 640px) {
+  .v2-it-excel__head,
+  .v2-it-excel__row {
+    grid-template-columns: 1fr 1.3fr 0.6fr;
+  }
+  .v2-it-excel__head > span:first-child,
+  .v2-it-excel__row > span:first-child {
+    display: none;
+  }
+  .v2-it-tool__row {
+    grid-template-columns: minmax(70px, 1fr) minmax(100px, 1.5fr) auto;
+    gap: 8px;
+  }
+  .v2-it-tool__qty { display: none; }
+}
+
+/* Microsoft 365 constellation stage — centre + cap width */
+.v2-ms-hero__stage {
+  margin: 0 auto;
+  max-width: min(560px, 92vw);
+}
+
+/* Prozess BPMN — mobile reset (audit critical) */
+@media (max-width: 1099px) {
+  .v2-prozess-map-wrap { display: none; }
+  .v2-prozess-hero__inner > * { max-width: 100%; }
+}
+
+/* Locale chip group can wrap on small headers */
+@media (max-width: 720px) {
+  .os-desktop-locale { display: none !important; }
+}
+
+/* ==============================================================
+   C2.3 — Home depth sections (Outcomes / Trust / Final CTA).
+   ============================================================== */
+.v2-home-outcomes {
+  padding: clamp(64px, 10vh, 128px) 0;
+  background-color: var(--v2-bg-base);
+  border-top: 1px solid var(--v2-line-soft);
+}
+.v2-home-outcomes__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--v2-space-3);
+  max-width: 720px;
+  margin-bottom: clamp(36px, 6vh, 64px);
+}
+.v2-home-outcomes__eyebrow {
+  font-family: var(--font-v2-mono), ui-monospace, monospace;
+  font-size: var(--v2-fs-meta);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--v2-ink-3);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--v2-space-3);
+}
+.v2-home-outcomes__eyebrow::before {
+  content: "";
+  width: 24px;
+  height: 1px;
+  background-color: var(--v2-line-firm);
+}
+.v2-home-outcomes__headline {
+  font-family: var(--font-v2-display), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: var(--v2-fs-h1);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--v2-ink-1);
+  margin: 0;
+  max-width: 20ch;
+}
+.v2-home-outcomes__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+}
+.v2-home-outcomes__card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--v2-space-3);
+  padding: var(--v2-space-7) var(--v2-space-6);
+  background: var(--v2-bg-raised);
+  border: 1px solid var(--v2-line-soft);
+  border-radius: var(--v2-radius-lg);
+  position: relative;
+  overflow: hidden;
+}
+.v2-home-outcomes__card::after {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 80px; height: 80px;
+  background: radial-gradient(circle at top right, var(--v2-accent-soft) 0%, transparent 70%);
+  pointer-events: none;
+}
+.v2-home-outcomes__card-sector {
+  font-family: var(--font-v2-mono), ui-monospace, monospace;
+  font-size: var(--v2-fs-meta);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--v2-ink-3);
+}
+.v2-home-outcomes__card-outcome {
+  font-family: var(--font-v2-display), system-ui, sans-serif;
+  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--v2-accent-primary);
+}
+.v2-home-outcomes__card-body {
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: var(--v2-ink-2);
+  margin: 0;
+}
+
+/* Trust strip */
+.v2-home-trust {
+  padding: clamp(48px, 8vh, 80px) 0;
+  background-color: var(--v2-bg-surface);
+  border-top: 1px solid var(--v2-line-soft);
+  border-bottom: 1px solid var(--v2-line-soft);
+}
+.v2-home-trust__inner {
+  display: flex;
+  flex-direction: column;
+  gap: var(--v2-space-4);
+  align-items: flex-start;
+}
+.v2-home-trust__eyebrow {
+  font-family: var(--font-v2-mono), ui-monospace, monospace;
+  font-size: var(--v2-fs-meta);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--v2-ink-3);
+}
+.v2-home-trust__line {
+  font-size: var(--v2-fs-lead);
+  line-height: 1.55;
+  color: var(--v2-ink-1);
+  margin: 0;
+  max-width: 72ch;
+}
+.v2-home-trust__chips {
+  list-style: none;
+  margin: var(--v2-space-3) 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.v2-home-trust__chips li {
+  padding: 5px 12px;
+  border: 1px solid var(--v2-line-firm);
+  border-radius: 999px;
+  font-family: var(--font-v2-mono), ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--v2-ink-2);
+  background: var(--v2-bg-raised);
+}
+
+/* Final CTA */
+.v2-home-final {
+  padding: clamp(80px, 14vh, 176px) 0;
+  background-color: var(--v2-bg-base);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.v2-home-final::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background:
+    radial-gradient(45% 60% at 50% 50%, var(--v2-accent-soft) 0%, transparent 70%);
+  pointer-events: none;
+}
+.v2-home-final__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--v2-space-5);
+  max-width: 880px;
+  margin: 0 auto;
+}
+.v2-home-final__eyebrow {
+  font-family: var(--font-v2-mono), ui-monospace, monospace;
+  font-size: var(--v2-fs-meta);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--v2-ink-3);
+}
+.v2-home-final__headline {
+  font-family: var(--font-v2-display), system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  line-height: 1.04;
+  letter-spacing: -0.028em;
+  color: var(--v2-ink-1);
+  margin: 0;
+  text-wrap: balance;
+  max-width: 22ch;
+}
+.v2-home-final__headline em {
+  font-style: italic;
+  font-weight: 600;
+  color: var(--v2-accent-primary);
+}
+.v2-home-final__lead {
+  font-size: var(--v2-fs-lead);
+  line-height: 1.6;
+  color: var(--v2-ink-2);
+  margin: 0;
+  max-width: 60ch;
+}
+.v2-home-final__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--v2-space-4);
+  margin-top: var(--v2-space-3);
 }
 
 /* ==============================================================

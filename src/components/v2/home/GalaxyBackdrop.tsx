@@ -24,34 +24,56 @@ type Star = {
 };
 type Palette = ReadonlyArray<readonly [number, number, number, number]>;
 
-const PARTICLE_COUNT = 700;
+const PARTICLE_COUNT = 1100;
 const FOCAL_LENGTH = 320;
-const TILT_MAX = 0.4;
-const TILT_EASE = 0.06;
+const TILT_MAX = 0.5;
+const TILT_EASE = 0.07;
 
-// Light register — graphite ink + faint teal traces on Concrete Studio.
+type ThemeKey = "light" | "hybrid" | "dark";
+
+// Light register — graphite + teal microdots on Concrete Studio. Higher
+// alphas than before so the field actually reads.
 const PALETTE_LIGHT: Palette = [
+  [17, 24, 39, 0.85],
   [17, 24, 39, 0.55],
-  [17, 24, 39, 0.32],
-  [17, 24, 39, 0.18],
-  [55, 65, 81, 0.42],
-  [15, 118, 110, 0.45],
-  [20, 184, 166, 0.5],
+  [17, 24, 39, 0.35],
+  [55, 65, 81, 0.65],
+  [15, 118, 110, 0.85],
+  [20, 184, 166, 0.9],
 ] as const;
 
-// Dark register — ice-white core + bright teal traces on charcoal.
+// Hybrid (twilight) register — bright cream + saturated teal on
+// deep blue-graphite. Galaxy reads as "actual space" here.
+const PALETTE_HYBRID: Palette = [
+  [255, 255, 255, 0.95],
+  [248, 250, 252, 0.7],
+  [226, 232, 240, 0.55],
+  [203, 213, 225, 0.4],
+  [94, 234, 212, 0.85],
+  [45, 212, 191, 0.95],
+] as const;
+
+// Dark register — ice-white + bright teal on near-black. Strongest.
 const PALETTE_DARK: Palette = [
-  [248, 250, 252, 0.85],
-  [248, 250, 252, 0.55],
-  [203, 213, 225, 0.45],
-  [148, 163, 184, 0.35],
-  [45, 212, 191, 0.7],
-  [94, 234, 212, 0.55],
+  [255, 255, 255, 1.0],
+  [248, 250, 252, 0.8],
+  [226, 232, 240, 0.65],
+  [148, 163, 184, 0.5],
+  [94, 234, 212, 0.95],
+  [45, 212, 191, 1.0],
 ] as const;
 
-function getInitialTheme(): "light" | "dark" {
-  if (typeof document === "undefined") return "light";
-  return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+function getInitialTheme(): ThemeKey {
+  if (typeof document === "undefined") return "hybrid";
+  const t = document.documentElement.dataset.theme;
+  if (t === "dark" || t === "light" || t === "hybrid") return t;
+  return "hybrid";
+}
+
+function paletteFor(theme: ThemeKey): Palette {
+  if (theme === "dark") return PALETTE_DARK;
+  if (theme === "light") return PALETTE_LIGHT;
+  return PALETTE_HYBRID;
 }
 
 function seedStars(width: number, height: number): Star[] {
@@ -86,8 +108,7 @@ export function GalaxyBackdrop() {
     let height = canvas.clientHeight;
     let dpr = Math.min(window.devicePixelRatio || 1, 2);
     let stars = seedStars(width, height);
-    let palette: Palette =
-      getInitialTheme() === "dark" ? PALETTE_DARK : PALETTE_LIGHT;
+    let palette: Palette = paletteFor(getInitialTheme());
     let raf = 0;
     let mouseX = 0;
     let mouseY = 0;
@@ -142,11 +163,23 @@ export function GalaxyBackdrop() {
         const a = color[3] * depthAlpha * tw;
         if (a < 0.015) continue;
 
-        const r = Math.max(0.6, 1.8 * depthAlpha);
+        const r = Math.max(0.8, 2.4 * depthAlpha);
         ctx.fillStyle = `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${a})`;
         ctx.beginPath();
         ctx.arc(px, py, r, 0, Math.PI * 2);
         ctx.fill();
+        // Bright stars get a soft halo so close-up particles read as
+        // luminous, not as flat circles.
+        if (a > 0.55 && r > 1.4) {
+          const haloR = r * 3.5;
+          const grad = ctx.createRadialGradient(px, py, 0, px, py, haloR);
+          grad.addColorStop(0, `rgba(${color[0]}, ${color[1]}, ${color[2]}, ${a * 0.35})`);
+          grad.addColorStop(1, `rgba(${color[0]}, ${color[1]}, ${color[2]}, 0)`);
+          ctx.fillStyle = grad;
+          ctx.beginPath();
+          ctx.arc(px, py, haloR, 0, Math.PI * 2);
+          ctx.fill();
+        }
       }
 
       raf = requestAnimationFrame(frame);
@@ -154,10 +187,7 @@ export function GalaxyBackdrop() {
 
     // Theme observer — swap palette on the fly when the user toggles theme.
     const themeObserver = new MutationObserver(() => {
-      palette =
-        document.documentElement.dataset.theme === "dark"
-          ? PALETTE_DARK
-          : PALETTE_LIGHT;
+      palette = paletteFor(getInitialTheme());
     });
     themeObserver.observe(document.documentElement, {
       attributes: true,

@@ -25,6 +25,7 @@ import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { NodeGraphBackdrop } from "./NodeGraphBackdrop";
 import { GalaxyBackdrop } from "./GalaxyBackdrop";
 import { PillarGrid } from "./PillarGrid";
+import { HomeOutcomes } from "./HomeOutcomes";
 
 export function HomeV2() {
   const { locale } = useLocale();
@@ -74,6 +75,7 @@ export function HomeV2() {
       </section>
 
       <PillarGrid />
+      <HomeOutcomes />
     </>
   );
 }

@@ -467,18 +467,30 @@ body { background: var(--bg-1); color: var(--ink-200); overflow-x: hidden; }
   background: rgba(15, 118, 110, 0.10);
 }
 html[data-preview="v2"] .os-desktop-locale {
-  border-color: var(--v2-line-soft);
-  background: rgba(250, 250, 249, 0.6);
+  border-color: var(--v2-line-firm);
+  background: rgba(255, 255, 255, 0.06);
 }
 html[data-preview="v2"] .os-desktop-locale-chip {
-  color: var(--v2-ink-3);
+  color: var(--v2-ink-2);
 }
 html[data-preview="v2"] .os-desktop-locale-chip:hover {
   color: var(--v2-ink-1);
 }
 html[data-preview="v2"] .os-desktop-locale-chip.is-active {
-  color: var(--v2-accent-primary);
+  color: var(--v2-ink-1);
   background: var(--v2-accent-soft);
+  box-shadow: 0 0 0 1px var(--v2-accent-primary) inset;
+}
+/* On light v2 surface the white-on-white background is invisible — override */
+html[data-preview="v2"][data-theme="light"] .os-desktop-locale {
+  background: rgba(250, 250, 249, 0.78);
+  border-color: var(--v2-line-soft);
+}
+html[data-preview="v2"][data-theme="light"] .os-desktop-locale-chip {
+  color: var(--v2-ink-3);
+}
+html[data-preview="v2"][data-theme="light"] .os-desktop-locale-chip.is-active {
+  color: var(--v2-accent-primary);
 }
 
 /* =======================================================

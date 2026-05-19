@@ -19,7 +19,6 @@
  *     that scrolls naturally if it overflows (browser default).
  */
 
-import { useEffect, useRef, useState } from "react";
 import { useLocale } from "@/context/LocaleContext";
 import { getV2Content } from "@/content/v2";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
@@ -31,12 +30,6 @@ import {
   GraduationCap,
   type LucideIcon,
 } from "lucide-react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 const SERVICE_ICONS: Record<string, LucideIcon> = {
   "ki-beratung": Brain,
@@ -59,62 +52,15 @@ export function LeistungenV2() {
   const data = c.leistungen;
   const services = data.services as unknown as ServiceCard[];
 
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [enableHorizontalScroll, setEnableHorizontalScroll] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-    if (window.matchMedia("(max-width: 899px)").matches) return;
-    setEnableHorizontalScroll(true);
-  }, []);
-
-  useEffect(() => {
-    if (!enableHorizontalScroll) return;
-    const section = sectionRef.current;
-    const track = trackRef.current;
-    if (!section || !track) return;
-
-    let trigger: ScrollTrigger | null = null;
-
-    // Wait one frame so layout settles before measuring.
-    const id = requestAnimationFrame(() => {
-      const distance = track.scrollWidth - window.innerWidth + 80;
-      if (distance <= 0) return; // rail fits — no pin needed
-
-      const tween = gsap.to(track, {
-        x: -distance,
-        ease: "none",
-      });
-
-      trigger = ScrollTrigger.create({
-        trigger: section,
-        start: "top top",
-        end: () => `+=${distance + 100}`,
-        pin: true,
-        scrub: 0.4,
-        anticipatePin: 1,
-        animation: tween,
-        invalidateOnRefresh: true,
-      });
-    });
-
-    return () => {
-      cancelAnimationFrame(id);
-      trigger?.kill();
-    };
-  }, [enableHorizontalScroll]);
-
   return (
-    <section ref={sectionRef} className="v2-rail">
+    <section className="v2-rail">
       <div className="wrap v2-rail__head">
         <span className="v2-rail__eyebrow">{data.eyebrow}</span>
         <h1 className="v2-rail__headline">{data.headline}</h1>
       </div>
 
       <div className="wrap v2-rail__track-wrap">
-        <div ref={trackRef} className="v2-rail__track">
+        <div className="v2-rail__track">
           {services.map((s) => {
             const Icon = SERVICE_ICONS[s.slug] ?? Workflow;
             return (
