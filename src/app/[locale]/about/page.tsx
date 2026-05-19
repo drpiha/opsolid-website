@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { content as en } from "@/content/en";
 import { AboutPage } from "./AboutPage";
+import { AboutV2 } from "@/components/v2/about/AboutV2";
+import { V2Shell } from "@/components/v2/V2Shell";
+import { isPreviewV2 } from "@/lib/preview";
 
 const meta = en.v2.about.meta;
 
@@ -28,6 +31,17 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Page() {
+export default function Page({
+  searchParams,
+}: {
+  searchParams?: Record<string, string | string[] | undefined>;
+}) {
+  if (isPreviewV2(searchParams)) {
+    return (
+      <V2Shell>
+        <AboutV2 />
+      </V2Shell>
+    );
+  }
   return <AboutPage />;
 }
