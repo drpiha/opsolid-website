@@ -474,22 +474,18 @@ html[data-preview="v2"] [class*="ambient-"] {
   height: 100%;
   background: transparent !important;
 }
-/* Hide the Spline "Built with Spline" watermark — the free runtime
-   injects it as an absolutely positioned anchor in the bottom-right.
-   Covered with both scoped and global selectors because Spline can
-   portal the watermark outside the canvas container. */
+/* Visually hide the Spline "Built with Spline" watermark inside the
+   scene container with visibility:hidden — leaves the React-managed
+   DOM node intact (so reconciliation does NOT throw #482) but the
+   pixels are invisible. The hard guarantee that nothing shows in
+   the bottom-right corner is the .v2-spline::after mask just above. */
 .v2-spline a[href*="spline.design"],
 .v2-spline #spline-watermark,
 .v2-spline [class*="spline-watermark"],
-.v2-spline [class*="watermark"],
-a[href*="spline.design"][href*="utm_source"],
-a[href*="spline.design"][target="_blank"] {
-  display: none !important;
+.v2-spline [class*="watermark"] {
   visibility: hidden !important;
   opacity: 0 !important;
   pointer-events: none !important;
-  width: 0 !important;
-  height: 0 !important;
 }
 
 /* Spline loading placeholder — keeps space + animates so the
