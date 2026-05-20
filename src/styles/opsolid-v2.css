@@ -436,7 +436,11 @@ html[data-preview="v2"] [class*="ambient-"] {
 }
 
 /* Spline 3D scene container — fills the right column. Transparent
-   so the robot floats on the page surface, no panel chrome. */
+   so the robot floats on the page surface, no panel chrome.
+   The bottom-right corner is masked by ::after to cover the
+   "Built with Spline" watermark which the free runtime injects
+   into the DOM (and which CSS-only `display: none` can't reliably
+   reach because Spline often guards it via Shadow DOM + JS). */
 .v2-spline {
   position: relative;
   width: 100%;
@@ -444,6 +448,21 @@ html[data-preview="v2"] [class*="ambient-"] {
   overflow: hidden;
   background: transparent;
   isolation: isolate;
+}
+.v2-spline::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 180px;
+  height: 56px;
+  background: var(--v2-bg-base);
+  /* Soft left-fade so the mask blends into the scene instead of
+     showing a hard rectangle on light surfaces. */
+  mask-image: linear-gradient(to left, black 70%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to left, black 70%, transparent 100%);
+  pointer-events: none;
+  z-index: 20;
 }
 .v2-spline > * {
   width: 100% !important;
