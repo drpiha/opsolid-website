@@ -53,10 +53,25 @@ export function SplineHero() {
       setEnabled(false);
       return;
     }
-    // Defer boot slightly so initial paint isn't blocked by Spline's
-    // runtime download.
-    const id = window.setTimeout(() => setEnabled(true), 80);
-    return () => window.clearTimeout(id);
+    setEnabled(true);
+  }, []);
+
+  // Strip the Spline "Built with Spline" watermark anchor whenever it
+  // appears in the DOM. The CSS selectors already hide it, but this
+  // belt-and-braces removal handles cases where Spline inlines the
+  // node with !important styles we cannot override from CSS alone.
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    const strip = () => {
+      const anchors = document.querySelectorAll(
+        'a[href*="spline.design"]',
+      );
+      anchors.forEach((a) => a.remove());
+    };
+    strip();
+    const obs = new MutationObserver(strip);
+    obs.observe(document.body, { childList: true, subtree: true });
+    return () => obs.disconnect();
   }, []);
 
   return (
