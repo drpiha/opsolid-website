@@ -50,7 +50,7 @@ export const v2: V2Mirror = {
         {
           slug: "ki-beratung",
           label: "AI danışmanlık",
-          sub: "AI'nın nerede gerçekten geri ödediğini, nerede sessizce bütçe yaktığını söyleriz",
+          sub: "AI'nın nerede geri ödediğini, nerede sessizce bütçe yaktığını söyleriz",
         },
         {
           slug: "ki-schulungen",
@@ -71,7 +71,7 @@ export const v2: V2Mirror = {
         index: "01",
         slug: "ki-beratung",
         label: "AI danışmanlık",
-        sub: "AI'nın gerçekten geri ödediği yer",
+        sub: "AI'nın geri ödediği yer",
       },
       {
         index: "02",
@@ -102,7 +102,7 @@ export const v2: V2Mirror = {
   kiBeratung: {
     eyebrow: "AI danışmanlık",
     headline: "AI'nız hangi süreçleri devralabilir?",
-    lead: "Operasyonunuza oturuyor, makine işi olması gereken işi buluyor ve AI'nın gerçekten geri ödediği yeri söylüyoruz — sunumda iyi durduğu yeri değil.",
+    lead: "Operasyonunuza oturuyor, makine işi olması gereken işi buluyor ve AI'nın geri ödediği yeri söylüyoruz — sunumda iyi durduğu yeri değil.",
     ctaPrimary: "Görüşelim",
     ctaSecondary: "Nasıl çalışıyoruz",
     terminal: {
@@ -128,18 +128,18 @@ export const v2: V2Mirror = {
     ctaSecondary: "Nasıl çalışıyoruz",
   },
   microsoft365: {
-    eyebrow: "Microsoft 365",
-    headline: "Microsoft 365'iniz tek bir sistem olarak çalışır",
-    lead: "Outlook, Teams, SharePoint, OneDrive, Forms, Planner — birbirine bağlanmış halde, böylece mesajlar, dosyalar ve onaylar uygulamalar arasında kaybolmaz.",
+    eyebrow: "Microsoft 365 entegrasyonu",
+    headline: "365'iniz nihayet diğer sistemlerinizle konuşuyor",
+    lead: "Microsoft 365 kurmuyoruz — mevcut 365'inizi CRM, ERP, yardım masası ve diğer araçlarınızla bağlıyoruz; mesajlar, dosyalar ve onaylar artık uygulamalar arasında kaybolmuyor.",
     ctaPrimary: "Görüşelim",
     ctaSecondary: "Nasıl çalışıyoruz",
     services: ["Outlook", "Teams", "SharePoint", "OneDrive", "Forms", "Planner"],
-    hubLabel: "Orkestratör",
+    hubLabel: "Entegrasyon Hub'ı",
   },
   interneTools: {
     eyebrow: "Dahili araçlar",
     headline: "Şirketinizin üzerinde döndüğü tabloyu kaldırın",
-    lead: "Herkesin paylaştığı, bozduğu, kopyaladığı Excel dosyasını — ekibinizin gerçekten açmak isteyeceği küçük, amaca özel bir araçla değiştiriyoruz.",
+    lead: "Herkesin paylaştığı, bozduğu, kopyaladığı Excel dosyasını — ekibinizin açmak isteyeceği küçük, amaca özel bir araçla değiştiriyoruz.",
     ctaPrimary: "Görüşelim",
     ctaSecondary: "Nasıl çalışıyoruz",
     beforeLabel: "Tablo kaosu",

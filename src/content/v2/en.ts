@@ -42,7 +42,7 @@ export const v2 = {
         {
           slug: "ki-beratung",
           label: "AI consulting",
-          sub: "We tell you where AI actually pays back and where it quietly burns budget",
+          sub: "We tell you where AI pays back and where it quietly burns budget",
         },
         {
           slug: "ki-schulungen",
@@ -63,7 +63,7 @@ export const v2 = {
         index: "01",
         slug: "ki-beratung",
         label: "AI strategy",
-        sub: "Where AI actually pays back",
+        sub: "Where AI pays back",
       },
       {
         index: "02",
@@ -94,7 +94,7 @@ export const v2 = {
   kiBeratung: {
     eyebrow: "AI consulting",
     headline: "What can your AI take over?",
-    lead: "We sit with your operation, identify the work that should be machine work, and tell you where AI actually pays back — not where it sounds good in a deck.",
+    lead: "We sit with your operation, identify the work that should be machine work, and tell you where AI pays back — not where it sounds good in a deck.",
     ctaPrimary: "Talk to us",
     ctaSecondary: "How we work",
     terminal: {
@@ -120,18 +120,18 @@ export const v2 = {
     ctaSecondary: "How we work",
   },
   microsoft365: {
-    eyebrow: "Microsoft 365",
-    headline: "Your Microsoft 365 working as one system",
-    lead: "Outlook, Teams, SharePoint, OneDrive, Forms, Planner — wired together so messages, files and approvals stop falling between the apps.",
+    eyebrow: "Microsoft 365 integration",
+    headline: "Your 365 finally talking to your other systems",
+    lead: "We don't install Microsoft 365 — we connect the one you already have to your CRM, ERP, helpdesk and the rest of the stack, so messages, files and approvals stop falling between apps.",
     ctaPrimary: "Talk to us",
     ctaSecondary: "How we work",
     services: ["Outlook", "Teams", "SharePoint", "OneDrive", "Forms", "Planner"],
-    hubLabel: "Orchestrator",
+    hubLabel: "Integration Hub",
   },
   interneTools: {
     eyebrow: "Internal tools",
     headline: "Replace the spreadsheet your business runs on",
-    lead: "The Excel file everyone shares, breaks and copies — we replace it with a small purpose-built app your team actually wants to open.",
+    lead: "The Excel file everyone shares, breaks and copies — we replace it with a small purpose-built app your team wants to open.",
     ctaPrimary: "Talk to us",
     ctaSecondary: "How we work",
     beforeLabel: "Spreadsheet chaos",

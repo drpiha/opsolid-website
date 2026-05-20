@@ -20,6 +20,13 @@ import { useState } from "react";
 import { useLocale } from "@/context/LocaleContext";
 import { getV2Content } from "@/content/v2";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
+import {
+  V2WhatWeDo,
+  V2UseCases,
+  V2Process,
+  V2FinalCta,
+} from "@/components/v2/services/ServiceSections";
+import { FaqAccordion } from "@/components/sections/FaqAccordion";
 
 // Service positions on a 600x600 viewBox, distributed evenly on a 240px
 // radius around center (300,300). Index 0 = top, clockwise.
@@ -94,17 +101,20 @@ const ICONS: Record<number, React.ReactNode> = {
 };
 
 export function Microsoft365V2() {
-  const { locale } = useLocale();
+  const { locale, t } = useLocale();
   const c = getV2Content(locale);
   const data = c.microsoft365 as typeof c.microsoft365;
   const services = data.services as readonly string[];
   const hubLabel = data.hubLabel as string;
+  const svc = t.v2.services.microsoft365;
+  const shared = t.v2.services.shared;
 
   // Which spoke is highlighted: a service index, or "hub" for all-on,
   // or null for default (all active at low intensity).
   const [active, setActive] = useState<number | "hub" | null>(null);
 
   return (
+    <main>
     <section className="v2-ms-hero">
       <div className="wrap v2-ms-hero__inner">
         <div className="v2-ms-hero__copy">
@@ -220,5 +230,39 @@ export function Microsoft365V2() {
         </div>
       </div>
     </section>
+
+    <V2WhatWeDo
+      eyebrow={shared.whatWeDoEyebrow}
+      headline={svc.whatWeDo.headline}
+      bullets={svc.whatWeDo.bullets}
+    />
+
+    <V2UseCases
+      eyebrow={shared.useCasesEyebrow}
+      headline={svc.useCases.headline}
+      items={svc.useCases.items}
+    />
+
+    <V2Process
+      eyebrow={shared.processEyebrow}
+      headline={svc.process.headline}
+      steps={svc.process.steps}
+    />
+
+    <FaqAccordion
+      eyebrow={shared.faqEyebrow}
+      headline={svc.faq.headline}
+      items={svc.faq.items}
+      id={`${svc.slug}-faq`}
+    />
+
+    <V2FinalCta
+      eyebrow={shared.finalCtaEyebrow}
+      title={svc.finalCta.title}
+      lead={svc.finalCta.lead}
+      ctaPrimary={svc.finalCta.ctaPrimary}
+      ctaSecondary={svc.finalCta.ctaSecondary}
+    />
+    </main>
   );
 }

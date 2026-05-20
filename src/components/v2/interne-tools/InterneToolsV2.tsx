@@ -18,11 +18,20 @@
 import { useLocale } from "@/context/LocaleContext";
 import { getV2Content } from "@/content/v2";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
+import {
+  V2WhatWeDo,
+  V2UseCases,
+  V2Process,
+  V2FinalCta,
+} from "@/components/v2/services/ServiceSections";
+import { FaqAccordion } from "@/components/sections/FaqAccordion";
 
 export function InterneToolsV2() {
-  const { locale } = useLocale();
+  const { locale, t } = useLocale();
   const c = getV2Content(locale);
   const data = c.interneTools;
+  const svc = t.v2.services.interneTools;
+  const shared = t.v2.services.shared;
 
   const rows = [
     { ord: "PO-1041", vendor: "Acme GmbH",  qty: 12, status: "open" },
@@ -33,6 +42,7 @@ export function InterneToolsV2() {
   ];
 
   return (
+    <main>
     <section className="v2-it-hero">
       <div className="wrap v2-it-hero__head">
         <span className="v2-it-hero__eyebrow">{data.eyebrow}</span>
@@ -95,5 +105,39 @@ export function InterneToolsV2() {
         </Link>
       </div>
     </section>
+
+    <V2WhatWeDo
+      eyebrow={shared.whatWeDoEyebrow}
+      headline={svc.whatWeDo.headline}
+      bullets={svc.whatWeDo.bullets}
+    />
+
+    <V2UseCases
+      eyebrow={shared.useCasesEyebrow}
+      headline={svc.useCases.headline}
+      items={svc.useCases.items}
+    />
+
+    <V2Process
+      eyebrow={shared.processEyebrow}
+      headline={svc.process.headline}
+      steps={svc.process.steps}
+    />
+
+    <FaqAccordion
+      eyebrow={shared.faqEyebrow}
+      headline={svc.faq.headline}
+      items={svc.faq.items}
+      id={`${svc.slug}-faq`}
+    />
+
+    <V2FinalCta
+      eyebrow={shared.finalCtaEyebrow}
+      title={svc.finalCta.title}
+      lead={svc.finalCta.lead}
+      ctaPrimary={svc.finalCta.ctaPrimary}
+      ctaSecondary={svc.finalCta.ctaSecondary}
+    />
+    </main>
   );
 }

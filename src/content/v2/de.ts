@@ -50,7 +50,7 @@ export const v2: V2Mirror = {
         {
           slug: "ki-beratung",
           label: "KI-Beratung",
-          sub: "Wir sagen Ihnen, wo KI sich tatsächlich rechnet und wo sie leise Budget verbrennt",
+          sub: "Wir sagen Ihnen, wo KI sich rechnet und wo sie leise Budget verbrennt",
         },
         {
           slug: "ki-schulungen",
@@ -71,7 +71,7 @@ export const v2: V2Mirror = {
         index: "01",
         slug: "ki-beratung",
         label: "KI-Beratung",
-        sub: "Wo KI sich tatsächlich rechnet",
+        sub: "Wo KI sich rechnet",
       },
       {
         index: "02",
@@ -102,7 +102,7 @@ export const v2: V2Mirror = {
   kiBeratung: {
     eyebrow: "KI-Beratung",
     headline: "Welche Prozesse kann Ihre KI übernehmen?",
-    lead: "Wir setzen uns mit Ihrer Operation hin, finden die Arbeit, die Maschinenarbeit sein sollte, und sagen Ihnen, wo KI sich tatsächlich rechnet — nicht, wo sie auf einer Folie gut klingt.",
+    lead: "Wir setzen uns mit Ihrer Operation hin, finden die Arbeit, die Maschinenarbeit sein sollte, und sagen Ihnen, wo KI sich rechnet — nicht, wo sie auf einer Folie gut klingt.",
     ctaPrimary: "Sprechen wir",
     ctaSecondary: "Wie wir arbeiten",
     terminal: {
@@ -122,23 +122,23 @@ export const v2: V2Mirror = {
   },
   prozess: {
     eyebrow: "Prozessautomatisierung",
-    headline: "Wir nehmen Ihnen die Arbeit ab, die niemand gerne macht",
+    headline: "Wir nehmen die Arbeit ab, die niemand gerne macht",
     lead: "Die Formulare, die Tabellen, das Copy-Paste, das 'hat schon jemand den Bericht geschickt?' — wir nehmen sie Ihrem Team ab und bringen sie auf Schienen.",
     ctaPrimary: "Sprechen wir",
     ctaSecondary: "Wie wir arbeiten",
   },
   microsoft365: {
-    eyebrow: "Microsoft 365",
-    headline: "Ihr Microsoft 365 arbeitet als ein System",
-    lead: "Outlook, Teams, SharePoint, OneDrive, Forms, Planner — so verbunden, dass Nachrichten, Dateien und Freigaben nicht mehr zwischen den Apps verloren gehen.",
+    eyebrow: "Microsoft 365 Integration",
+    headline: "Ihr 365 spricht endlich mit Ihren anderen Systemen",
+    lead: "Wir installieren kein Microsoft 365 — wir verbinden Ihr bestehendes 365 mit CRM, ERP, Helpdesk und dem Rest Ihrer Tools, damit Nachrichten, Dateien und Freigaben nicht mehr zwischen den Apps verloren gehen.",
     ctaPrimary: "Sprechen wir",
     ctaSecondary: "Wie wir arbeiten",
     services: ["Outlook", "Teams", "SharePoint", "OneDrive", "Forms", "Planner"],
-    hubLabel: "Orchestrierung",
+    hubLabel: "Integration Hub",
   },
   interneTools: {
     eyebrow: "Interne Tools",
-    headline: "Lösen Sie das Tabellenblatt ab, auf dem Ihr Betrieb läuft",
+    headline: "Das Tabellenblatt ablösen, auf dem Ihr Betrieb läuft",
     lead: "Die Excel-Datei, die alle teilen, kopieren und kaputtmachen — ersetzen wir durch ein kleines, zweckgebautes Werkzeug, das Ihr Team gerne öffnet.",
     ctaPrimary: "Sprechen wir",
     ctaSecondary: "Wie wir arbeiten",

@@ -19,6 +19,13 @@
 
 import { useLocale } from "@/context/LocaleContext";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
+import {
+  V2WhatWeDo,
+  V2UseCases,
+  V2Process,
+  V2FinalCta,
+} from "@/components/v2/services/ServiceSections";
+import { FaqAccordion } from "@/components/sections/FaqAccordion";
 
 const COPY = {
   de: {
@@ -45,12 +52,15 @@ const COPY = {
 } as const;
 
 export function KiSchulungenV2() {
-  const { locale } = useLocale();
+  const { locale, t } = useLocale();
   const lang: keyof typeof COPY =
     locale === "de" || locale === "en" || locale === "tr" ? locale : "en";
   const c = COPY[lang];
+  const svc = t.v2.services.kiSchulungen;
+  const shared = t.v2.services.shared;
 
   return (
+    <main>
     <section className="v2-schul-hero">
       {/* Photographic backdrop — uses CSS-only fallback gradient until the
           curated Pexels/Coverr image is committed to /public/training.jpg.
@@ -73,5 +83,39 @@ export function KiSchulungenV2() {
         </div>
       </div>
     </section>
+
+    <V2WhatWeDo
+      eyebrow={shared.whatWeDoEyebrow}
+      headline={svc.whatWeDo.headline}
+      bullets={svc.whatWeDo.bullets}
+    />
+
+    <V2UseCases
+      eyebrow={shared.useCasesEyebrow}
+      headline={svc.useCases.headline}
+      items={svc.useCases.items}
+    />
+
+    <V2Process
+      eyebrow={shared.processEyebrow}
+      headline={svc.process.headline}
+      steps={svc.process.steps}
+    />
+
+    <FaqAccordion
+      eyebrow={shared.faqEyebrow}
+      headline={svc.faq.headline}
+      items={svc.faq.items}
+      id={`${svc.slug}-faq`}
+    />
+
+    <V2FinalCta
+      eyebrow={shared.finalCtaEyebrow}
+      title={svc.finalCta.title}
+      lead={svc.finalCta.lead}
+      ctaPrimary={svc.finalCta.ctaPrimary}
+      ctaSecondary={svc.finalCta.ctaSecondary}
+    />
+    </main>
   );
 }
