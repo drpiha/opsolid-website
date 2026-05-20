@@ -3983,7 +3983,7 @@ export const content: Content = {
           post: " emin değil misiniz?",
         },
         lead:
-          "AI & Automation Check veya ücretsiz bir tanışma görüşmesi ile başlayın. Hangi alanın sizde en büyük kaldıraca sahip olduğunu — sorduğunuz alan olmasa bile — dürüstçe söyleriz.",
+          "AI & Automation Check veya ücretsiz bir tanışma görüşmesi ile başlayın. Hangi alanın sizde en büyük kaldıraca sahip olduğunu — sorduğunuz alan olmasa bile — söyleriz.",
         ctaPrimary: "AI Automation Check talep et",
         ctaSecondary: "Tanışma görüşmesi planla",
       },
@@ -4080,7 +4080,7 @@ export const content: Content = {
         },
         finalCta: {
           title: { pre: "Hangi AI use case'leri ", italic: "sizin için değerli olduğunu", post: " öğrenin." },
-          lead: "Bir görüşme. Bir dürüst yol haritası. Platform satışı yok.",
+          lead: "Bir görüşme. Yazılı bir yol haritası. Platform satışı yok.",
           ctaPrimary: "Tanışma görüşmesi planla",
           ctaSecondary: "AI Automation Check ile başla",
         },
@@ -4166,7 +4166,7 @@ export const content: Content = {
         },
         finalCta: {
           title: { pre: "Otomatikleştirmeye ", italic: "değen ilk workflow'u", post: " seçin." },
-          lead: "Haritalandırır, puanlar ve emeği hak edip etmediğini dürüstçe söyleriz.",
+          lead: "Haritalandırır, puanlar ve emeği hak edip etmediğini söyleriz.",
           ctaPrimary: "Tanışma görüşmesi planla",
           ctaSecondary: "AI Automation Check ile başla",
         },
@@ -4245,7 +4245,7 @@ export const content: Content = {
         faq: {
           headline: "Microsoft 365 otomasyonu — sık sorulanlar",
           items: [
-            { q: "Power Automate Premium lisansı gerekir mi?", a: "Bazen — ama yararlı flow'ların çoğu standart Microsoft 365 planlarıyla çalışır. Premium'a ne zaman gerçekten ihtiyaç duyduğunuzu dürüstçe söyleriz." },
+            { q: "Power Automate Premium lisansı gerekir mi?", a: "Bazen — ama yararlı flow'ların çoğu standart Microsoft 365 planlarıyla çalışır. Premium'un gerçekten ne zaman gerektiğini söyleriz." },
             { q: "Microsoft 365 Copilot değer mi?", a: "Bazı ekipler için evet, bazıları için hayır. Lisansları satın almadan önce karar vermenize yardım ederiz." },
             { q: "IT departmanımızla çalışabilir misiniz?", a: "Evet — projelerin çoğu IT'niz veya mevcut Microsoft partnerlerinizden biriyle yürütülür. Tamamlarız, yerine geçmeyiz." },
             { q: "DSGVO uyumlu mu?", a: "AB tenant konfigürasyonundaki Microsoft 365 DSGVO uyumludur. Doğru kurar ve veri akışlarını dokümanlarız." },
@@ -4841,7 +4841,7 @@ export const content: Content = {
       },
       principles: {
         eyebrow: "[ NASIL ÇALIŞIYORUM ]",
-        heading: "Dört prensip, dürüstçe tutulmuş",
+        heading: "Dört prensip, kısa tutulmuş",
         items: [
           {
             n: "01",
@@ -4880,7 +4880,7 @@ export const content: Content = {
         eyebrow: "[ KONUŞMA BAŞLAT ]",
         heading: "Uyumlu olup olmadığımızı görmek için 20 dakika yeterli",
         lead:
-          "Ücretsiz tanışma görüşmesi: bana bir operasyonel acı noktasını anlatın. Size dürüstçe OpSolid'in uygun olup olmadığını, AI & Automation Check'in doğru ilk adım olup olmadığını ya da yaptığınıza devam etmeniz gerektiğini söylerim.",
+          "Ücretsiz tanışma görüşmesi: bana bir operasyonel acı noktasını anlatın. OpSolid'in uygun olup olmadığını, AI & Automation Check'in doğru ilk adım olup olmadığını ya da yaptığınıza devam etmeniz gerektiğini söylerim.",
         cta: "Tanışma görüşmesi planla",
       },
     },

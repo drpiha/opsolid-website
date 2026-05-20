@@ -429,6 +429,84 @@ html[data-preview="v2"] [class*="ambient-"] {
   background: var(--v2-bg-raised);
 }
 
+/* Spline 3D scene container — fills the right column. */
+.v2-spline {
+  position: relative;
+  width: 100%;
+  height: clamp(360px, 56vh, 560px);
+  border-radius: var(--v2-radius-xl);
+  overflow: hidden;
+  background: linear-gradient(135deg,
+              rgba(20, 184, 166, 0.06) 0%,
+              rgba(15, 118, 110, 0.04) 100%);
+  isolation: isolate;
+}
+.v2-spline > * {
+  width: 100% !important;
+  height: 100% !important;
+}
+.v2-spline canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+html[data-preview="v2"][data-theme="dark"] .v2-spline,
+html[data-preview="v2"][data-theme="hybrid"] .v2-spline {
+  background: linear-gradient(135deg,
+              rgba(45, 212, 191, 0.10) 0%,
+              rgba(15, 118, 110, 0.06) 100%);
+}
+
+/* Spline loading placeholder — keeps space + animates so the
+   user isn't staring at an empty box. */
+.v2-spline-placeholder {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(60% 50% at 50% 50%,
+              var(--v2-accent-soft) 0%,
+              transparent 70%);
+}
+.v2-spline-placeholder__orb {
+  width: 88px;
+  height: 88px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 35%,
+              var(--v2-motion-trace) 0%,
+              var(--v2-accent-primary) 60%,
+              var(--v2-accent-hover) 100%);
+  box-shadow: 0 0 56px var(--v2-motion-glow);
+  animation: v2SplineOrb 3.6s ease-in-out infinite;
+}
+.v2-spline-placeholder__ring {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 999px;
+  border: 1px solid var(--v2-line-firm);
+  animation: v2SplineRing 4s ease-in-out infinite;
+}
+.v2-spline-placeholder__ring--lg {
+  width: 280px;
+  height: 280px;
+  animation-delay: 1.2s;
+}
+@keyframes v2SplineOrb {
+  0%, 100% { transform: scale(1) translateY(0); }
+  50%      { transform: scale(1.08) translateY(-6px); }
+}
+@keyframes v2SplineRing {
+  0%, 100% { transform: scale(0.95); opacity: 0.4; }
+  50%      { transform: scale(1.05); opacity: 0.8; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .v2-spline-placeholder__orb,
+  .v2-spline-placeholder__ring { animation: none; }
+}
+
 /* Right column — workflow card (placeholder UI mock; M2 swaps to real
    product screenshot or higher-fidelity SVG canvas). */
 .v2-home-hero__panel {
@@ -530,9 +608,10 @@ html[data-preview="v2"] [class*="ambient-"] {
   -webkit-mask-image: radial-gradient(150% 120% at 50% 30%, black 90%, transparent 100%);
 }
 /* On light theme particles are darker, so leaving opacity at 1 reads as
-   too dense. Trim slightly on light only. */
+   too dense. Trim slightly on light only, but keep it high enough to
+   actually read. */
 html[data-preview="v2"][data-theme="light"] .v2-galaxy {
-  opacity: 0.78;
+  opacity: 0.95;
 }
 
 /* --------------------------------------------------------------
@@ -545,7 +624,12 @@ html[data-preview="v2"][data-theme="light"] .v2-galaxy {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 0.6;
+}
+/* On light surface the node graph competes with the galaxy and the
+   headline copy — soften it so galaxy reads through. */
+html[data-preview="v2"][data-theme="light"] .v2-node-graph {
+  opacity: 0.35;
 }
 .v2-home-hero::after {
   /* Bottom fade so the backdrop dissolves into the page surface and the

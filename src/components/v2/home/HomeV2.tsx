@@ -26,6 +26,7 @@ import { NodeGraphBackdrop } from "./NodeGraphBackdrop";
 import { GalaxyBackdrop } from "./GalaxyBackdrop";
 import { PillarGrid } from "./PillarGrid";
 import { HomeOutcomes } from "./HomeOutcomes";
+import { SplineHero } from "./SplineHero";
 
 export function HomeV2() {
   const { locale } = useLocale();
@@ -70,7 +71,7 @@ export function HomeV2() {
             </ul>
           </div>
 
-          <WorkflowMock />
+          <SplineHero />
         </div>
       </section>
 
@@ -81,10 +82,11 @@ export function HomeV2() {
 }
 
 /**
- * WorkflowMock — small inline UI mock standing in for a real automation
- * canvas screenshot. Replaced in M2 by a curated Power Automate / Make
- * canvas grab once the screenshot is captured + processed (avif poster).
+ * WorkflowMock — legacy inline UI mock. Kept for one milestone as
+ * emergency fallback in case the Spline scene fails to load; not
+ * rendered on the live page (SplineHero owns the right column now).
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function WorkflowMock() {
   const rows: Array<{ index: string; label: string; detail: string; meta: string }> = [
     { index: "01", label: "Trigger", detail: "New invoice email arrives", meta: "outlook" },

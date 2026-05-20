@@ -3982,7 +3982,7 @@ export const content: Content = {
           post: "?",
         },
         lead:
-          "Starten Sie mit dem AI & Automation Check oder einem kostenlosen Erstgespräch. Wir sagen Ihnen ehrlich, welcher Bereich bei Ihnen den größten Hebel hat — auch wenn es nicht der ist, den Sie gefragt haben.",
+          "Starten Sie mit dem AI & Automation Check oder einem kostenlosen Erstgespräch. Wir sagen Ihnen, welcher Bereich bei Ihnen den größten Hebel hat — auch wenn es nicht der ist, den Sie gefragt haben.",
         ctaPrimary: "AI Automation Check anfragen",
         ctaSecondary: "Erstgespräch buchen",
       },
@@ -4079,7 +4079,7 @@ export const content: Content = {
         },
         finalCta: {
           title: { pre: "Finden Sie heraus, welche KI-Use-Cases ", italic: "sich für Sie lohnen", post: "." },
-          lead: "Ein Gespräch. Eine ehrliche Roadmap. Kein Plattform-Pitch.",
+          lead: "Ein Gespräch. Eine schriftliche Roadmap. Kein Plattform-Pitch.",
           ctaPrimary: "Erstgespräch buchen",
           ctaSecondary: "Mit dem AI Automation Check starten",
         },
@@ -4165,7 +4165,7 @@ export const content: Content = {
         },
         finalCta: {
           title: { pre: "Wählen Sie den ersten Workflow, ", italic: "der sich lohnt", post: "." },
-          lead: "Wir kartieren ihn, bewerten ihn und sagen Ihnen ehrlich, ob er den Aufwand wert ist.",
+          lead: "Wir kartieren ihn, bewerten ihn und sagen Ihnen, ob er den Aufwand wert ist.",
           ctaPrimary: "Erstgespräch buchen",
           ctaSecondary: "Mit dem AI Automation Check starten",
         },
@@ -4244,7 +4244,7 @@ export const content: Content = {
         faq: {
           headline: "Microsoft 365 Automatisierung — häufige Fragen",
           items: [
-            { q: "Brauchen wir Power-Automate-Premium-Lizenzen?", a: "Manchmal — aber die meisten sinnvollen Flows funktionieren mit den Standard-Microsoft-365-Plänen. Wir sagen Ihnen ehrlich, wann Sie wirklich Premium brauchen." },
+            { q: "Brauchen wir Power-Automate-Premium-Lizenzen?", a: "Manchmal — aber die meisten sinnvollen Flows funktionieren mit den Standard-Microsoft-365-Plänen. Wir sagen Ihnen, wann Premium tatsächlich nötig ist." },
             { q: "Lohnt sich Microsoft 365 Copilot?", a: "Für manche Teams ja, für andere nein. Wir helfen Ihnen zu entscheiden, bevor Sie die Lizenzen kaufen." },
             { q: "Können Sie mit unserer IT-Abteilung zusammenarbeiten?", a: "Ja — die meisten Projekte laufen gemeinsam mit Ihrer IT oder einem Ihrer bestehenden Microsoft-Partner. Wir ergänzen, wir ersetzen nicht." },
             { q: "Ist das DSGVO-konform?", a: "Microsoft 365 im EU-Tenant-Setup ist DSGVO-konform. Wir konfigurieren es korrekt und dokumentieren die Datenflüsse." },
@@ -4840,7 +4840,7 @@ export const content: Content = {
       },
       principles: {
         eyebrow: "[ WIE ICH ARBEITE ]",
-        heading: "Vier Prinzipien, ehrlich gehalten",
+        heading: "Vier Prinzipien, kurz gehalten",
         items: [
           {
             n: "01",
@@ -4879,7 +4879,7 @@ export const content: Content = {
         eyebrow: "[ GESPRÄCH STARTEN ]",
         heading: "20 Minuten reichen, um zu sehen ob wir passen",
         lead:
-          "Kostenloses Erstgespräch: Erzählen Sie mir von einem operativen Schmerzpunkt. Ich sage Ihnen ehrlich, ob OpSolid passt, ob der AI & Automation Check der richtige erste Schritt ist, oder ob Sie weitermachen sollten wie bisher.",
+          "Kostenloses Erstgespräch: Erzählen Sie mir von einem operativen Schmerzpunkt. Ich sage Ihnen, ob OpSolid passt, ob der AI & Automation Check der richtige erste Schritt ist, oder ob Sie weitermachen sollten wie bisher.",
         cta: "Erstgespräch buchen",
       },
     },

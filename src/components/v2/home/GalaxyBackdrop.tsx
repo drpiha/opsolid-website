@@ -31,15 +31,17 @@ const TILT_EASE = 0.07;
 
 type ThemeKey = "light" | "hybrid" | "dark";
 
-// Light register — graphite + teal microdots on Concrete Studio. Higher
-// alphas than before so the field actually reads.
+// Light register — graphite ink + saturated teal microdots on the
+// concrete ground. Pushed harder than before because particles on a
+// light surface have to fight the bright bg for attention.
 const PALETTE_LIGHT: Palette = [
-  [17, 24, 39, 0.85],
-  [17, 24, 39, 0.55],
-  [17, 24, 39, 0.35],
-  [55, 65, 81, 0.65],
-  [15, 118, 110, 0.85],
-  [20, 184, 166, 0.9],
+  [17, 24, 39, 1.0],
+  [17, 24, 39, 0.75],
+  [17, 24, 39, 0.5],
+  [55, 65, 81, 0.85],
+  [13, 95, 88, 1.0],
+  [15, 118, 110, 1.0],
+  [20, 184, 166, 1.0],
 ] as const;
 
 // Hybrid (twilight) register — bright cream + saturated teal on

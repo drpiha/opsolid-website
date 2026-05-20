@@ -3997,7 +3997,7 @@ export const content = {
           post: "?",
         },
         lead:
-          "Start with the AI & Automation Check or a free discovery call. We'll tell you honestly which area gives you the highest leverage — even if it's not the one you asked about.",
+          "Start with the AI & Automation Check or a free discovery call. We tell you which area gives the highest leverage — even if it's not the one you asked about.",
         ctaPrimary: "Request the AI Automation Check",
         ctaSecondary: "Book a discovery call",
       },
@@ -4094,7 +4094,7 @@ export const content = {
         },
         finalCta: {
           title: { pre: "Find out which AI use cases ", italic: "are worth it", post: " for you." },
-          lead: "One call. One honest roadmap. No platform pitch.",
+          lead: "One call. One written roadmap. No platform pitch.",
           ctaPrimary: "Book a discovery call",
           ctaSecondary: "Start with the AI Automation Check",
         },
@@ -4180,7 +4180,7 @@ export const content = {
         },
         finalCta: {
           title: { pre: "Pick the first workflow ", italic: "worth automating", post: "." },
-          lead: "We'll map it, score it and tell you honestly whether it's worth the effort.",
+          lead: "We map it, score it and tell you whether it's worth the effort.",
           ctaPrimary: "Book a discovery call",
           ctaSecondary: "Start with the AI Automation Check",
         },
@@ -4259,7 +4259,7 @@ export const content = {
         faq: {
           headline: "Microsoft 365 automation — common questions",
           items: [
-            { q: "Do we need premium Power Automate licences?", a: "Sometimes — but most useful flows work on the standard Microsoft 365 plans. We tell you honestly when you actually need premium." },
+            { q: "Do we need premium Power Automate licences?", a: "Sometimes — but most useful flows work on the standard Microsoft 365 plans. We tell you when premium is actually needed." },
             { q: "Is Microsoft 365 Copilot worth it?", a: "For some teams yes, for others no. We help you decide before you buy the licences." },
             { q: "Can you work with our IT department?", a: "Yes — most engagements involve your IT or one of your existing Microsoft partners. We complement, we don't replace." },
             { q: "Is this GDPR-compliant?", a: "Microsoft 365 in the EU tenant configuration is GDPR-compliant. We set it up correctly and document the data flows." },
@@ -4871,7 +4871,7 @@ export const content = {
       },
       principles: {
         eyebrow: "[ HOW I WORK ]",
-        heading: "Four principles, kept honest",
+        heading: "Four principles, kept short",
         items: [
           {
             n: "01",
@@ -4910,7 +4910,7 @@ export const content = {
         eyebrow: "[ START A CONVERSATION ]",
         heading: "20 minutes is enough to see if we're a fit",
         lead:
-          "Free discovery call: walk me through one operational pain point. I'll tell you honestly whether OpSolid is the right fit, whether the AI & Automation Check is the right first step, or whether you should keep doing what you're doing.",
+          "Free discovery call: walk me through one operational pain point. I'll tell you whether OpSolid is the right fit, whether the AI & Automation Check is the right first step, or whether you should keep doing what you're doing.",
         cta: "Book a discovery call",
       },
     },
