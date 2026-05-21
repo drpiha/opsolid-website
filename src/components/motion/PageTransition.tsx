@@ -1,63 +1,28 @@
 "use client";
 
 /**
- * PageTransition — View Transitions API when available, Framer Motion
- * AnimatePresence as fallback.
+ * PageTransition — passthrough wrapper.
  *
- * - Supported browsers (Chromium 111+): native view transitions; this
- *   component returns children as-is and the browser does the work.
- * - Fallback: opacity + small Y nudge, ≤320ms, `mech` easing.
- * - Reduced-motion: opacity-only crossfade, ≤180ms, linear easing. No
- *   transform.
+ * Earlier this component toggled between an `<AnimatePresence>`
+ * wrapper (for browsers without the View Transitions API) and a
+ * `<Fragment>` (for browsers with it), with the decision flipped
+ * from inside a useEffect. That state flip swapped the wrapper
+ * AFTER initial render, which caused React to unmount the original
+ * subtree and re-mount its children — including the Spline canvas
+ * on the home page. Spline's WebGL setup doesn't survive that
+ * round trip, and the page crashed with React error #482 ("Cannot
+ * remove a node that wasn't in this tree").
+ *
+ * Solution: always return children as-is. Browsers that support the
+ * View Transitions API still get native transitions when Next.js's
+ * `<Link viewTransition>` opt-in is wired. Browsers without the API
+ * navigate without a JS-driven transition, which is acceptable.
  */
 
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
-
-export function PageTransition({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-  const prefersReduced = useReducedMotion();
-  const [supportsViewTransitions, setSupportsViewTransitions] = useState(false);
-
-  useEffect(() => {
-    setSupportsViewTransitions(
-      typeof document !== "undefined" && "startViewTransition" in document
-    );
-  }, []);
-
-  // Native View Transitions handle the animation themselves once Next 14's
-  // <Link viewTransition> opt-in is wired (M2+). Skip the JS fallback to
-  // avoid double-animating.
-  if (supportsViewTransitions) return <>{children}</>;
-
-  if (prefersReduced) {
-    return (
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          key={pathname}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          transition={{ duration: 0.18, ease: "linear" }}
-        >
-          {children}
-        </motion.div>
-      </AnimatePresence>
-    );
-  }
-
-  return (
-    <AnimatePresence mode="wait" initial={false}>
-      <motion.div
-        key={pathname}
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: -4 }}
-        transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
-  );
+export function PageTransition({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return <>{children}</>;
 }

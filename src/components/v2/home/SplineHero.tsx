@@ -1,19 +1,18 @@
 "use client";
 
 /**
- * SplineHero — the 3D Spline scene that fills the right column of the
- * home hero. Direct import per operator direction.
+ * SplineHero — 3D robot scene in the home hero's right column.
  *
- * Watermark suppression: ONLY via the CSS `::after` mask on
- * `.v2-spline` (covers the bottom-right corner with the theme-bound
- * page bg). A previous version also DOM-removed watermark anchors
- * via MutationObserver, but Spline mounts its watermark INSIDE its
- * own React tree — removing the node from outside React broke
- * reconciliation with React error #482 ("Cannot remove a node that
- * wasn't in this tree"). The CSS-only mask is bulletproof and
- * doesn't fight React, so the JS strip was removed.
+ * Mount stability: Spline owns its own canvas + WebGL context + an
+ * internal watermark anchor inside its own React tree. If a parent
+ * wrapper changes structure between renders (the AnimatePresence ↔
+ * Fragment toggle in PageTransition used to do this), React unmounts
+ * Spline and the WebGL cleanup path trips on nodes Spline already
+ * removed — surfacing as Minified React error #482. PageTransition
+ * is now a pure passthrough, so Spline mounts exactly once.
  *
- * Scene: https://prod.spline.design/UcBFpVxcJM0n7jLy/scene.splinecode
+ * Watermark suppression is purely CSS — see `.v2-spline::after` in
+ * opsolid-v2.css. We never touch Spline-managed DOM from outside.
  */
 
 import Spline from "@splinetool/react-spline/next";
