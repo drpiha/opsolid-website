@@ -159,12 +159,17 @@ html[data-preview="v2"][data-theme="hybrid"] .v2-it-tool__head {
   background: linear-gradient(180deg, #2A3155 0%, #232847 100%);
 }
 
-/* Header on twilight — lift it well clear of bg-base so the seam
-   between the page and the header pill reads cleanly. */
-html[data-preview="v2"][data-theme="hybrid"] .os-header {
-  background: rgba(44, 51, 88, 0.92);
-  border-bottom: 1px solid var(--v2-line-firm);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
+/* Header on twilight — the visible "pill" is `.os-header-inner`, NOT
+   `.os-header` (the outer wrapper is transparent and only positions
+   the pill). The v1 stylesheet hard-codes the pill's background to a
+   warm cream on hybrid, which collides with v2's twilight indigo
+   page bg and renders nav text unreadable. We repaint the pill in v2
+   scope to a deep indigo that contrasts the cream ink. */
+html[data-preview="v2"][data-theme="hybrid"] .os-header-inner {
+  background: rgba(28, 33, 60, 0.88);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 28px rgba(8, 11, 26, 0.35),
+              inset 0 1px 0 rgba(255, 255, 255, 0.06);
 }
 html[data-preview="v2"][data-theme="hybrid"] .os-footer {
   background: var(--v2-bg-surface);
@@ -241,14 +246,23 @@ html[data-preview="v2"][data-theme="dark"] .v2-it-tool__head {
    v2 page the v2 scope must repaint them so they always match the
    active surface, not drift away to a stale v1 palette.
    -------------------------------------------------------------- */
-html[data-preview="v2"] .os-header {
-  background: rgba(250, 250, 249, 0.78);
-  border-bottom: 1px solid var(--v2-line-soft);
+/* The visible header surface is the inner pill, not the outer wrapper.
+   Repaint the pill per theme so it always contrasts the page bg. */
+html[data-preview="v2"] .os-header-inner {
+  background: rgba(250, 250, 249, 0.82);
+  border-color: rgba(15, 23, 42, 0.12);
 }
-html[data-preview="v2"][data-theme="dark"] .os-header {
-  background: rgba(22, 28, 37, 0.92);
-  border-bottom: 1px solid var(--v2-line-firm);
-  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.4);
+html[data-preview="v2"][data-theme="dark"] .os-header-inner {
+  background: rgba(17, 22, 29, 0.92);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45),
+              inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+/* The outer .os-header wrapper stays transparent (it only positions
+   the pill), so wipe any prior background we set on it. */
+html[data-preview="v2"] .os-header {
+  background: transparent;
+  border-bottom: none;
 }
 html[data-preview="v2"] .os-nav-link {
   color: var(--v2-ink-2);
@@ -454,13 +468,16 @@ html[data-preview="v2"] [class*="ambient-"] {
   position: absolute;
   right: 0;
   bottom: 0;
-  width: 180px;
-  height: 56px;
+  width: 220px;
+  height: 84px;
   background: var(--v2-bg-base);
-  /* Soft left-fade so the mask blends into the scene instead of
-     showing a hard rectangle on light surfaces. */
-  mask-image: linear-gradient(to left, black 70%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to left, black 70%, transparent 100%);
+  /* Soft fade on the inside edges so the mask blends with the
+     surrounding page bg instead of showing a hard rectangle. The
+     Spline scene background is set to transparent via setBackgroundColor
+     in the onLoad callback, so this patch sits flush against the
+     same page surface and reads as a single tone. */
+  mask-image: linear-gradient(to top left, black 60%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to top left, black 60%, transparent 100%);
   pointer-events: none;
   z-index: 20;
 }
