@@ -1202,112 +1202,144 @@ html[data-preview="v2"][data-theme="light"] .v2-node-graph {
 }
 
 /* --------------------------------------------------------------
-   M3 — Prozessautomatisierung hero (Live Process Map).
-   Full-bleed BPMN diagram backdrop, parallax depth layers.
+   M3 — Prozessautomatisierung hero (Image takeover).
+   Full-bleed factory photograph with a layered premium overlay
+   stack so the section reads as a magazine cover rather than a
+   stock wallpaper. Replaces the legacy BPMN / particle hero
+   (kept removed in M9.1 — 2026-05-21).
    -------------------------------------------------------------- */
 .v2-prozess-hero {
   position: relative;
-  min-height: 90vh;
-  padding: var(--v2-space-9) 0;
-  background: var(--v2-bg-base);
+  min-height: clamp(560px, 88vh, 880px);
+  padding: clamp(80px, 12vh, 160px) 0 clamp(96px, 14vh, 180px);
+  background: #0a0a0c;
   overflow: hidden;
   isolation: isolate;
   display: flex;
   align-items: center;
-  --mx: 0;
-  --my: 0;
+  color: #ffffff;
 }
 @media (max-width: 640px) {
-  .v2-prozess-hero { min-height: auto; padding: var(--v2-space-8) 0; }
-}
-.v2-prozess-grid {
-  position: absolute;
-  inset: -8% -4% -8% -4%;
-  z-index: 0;
-  background-image:
-    radial-gradient(circle at 1px 1px, var(--v2-line-firm) 1px, transparent 1px);
-  background-size: 28px 28px;
-  opacity: 0.32;
-  transform: translate3d(calc(var(--mx) * -10px), calc(var(--my) * -10px), 0);
-  pointer-events: none;
-}
-.v2-prozess-map-wrap {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  /* Pin the BPMN diagram to the right half of the hero. The left
-     edge fades to transparent over the headline column so the text
-     stays clean. Width clamps so the diagram itself can grow large. */
-  left: clamp(0px, 45vw, 720px);
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  padding: 0 clamp(20px, 4vw, 56px);
-  pointer-events: none;
-  mask-image: linear-gradient(to right,
-              transparent 0%,
-              rgba(0, 0, 0, 0.0) 8%,
-              rgba(0, 0, 0, 0.6) 22%,
-              black 38%,
-              black 100%);
-  -webkit-mask-image: linear-gradient(to right,
-              transparent 0%,
-              rgba(0, 0, 0, 0.0) 8%,
-              rgba(0, 0, 0, 0.6) 22%,
-              black 38%,
-              black 100%);
-}
-.v2-prozess-map {
-  width: 100%;
-  max-width: 920px;
-  height: auto;
-  color: var(--v2-line-firm);
-  opacity: 0.55;
-}
-.v2-prozess-map__path,
-.v2-prozess-map__shape {
-  /* One-time draw on mount, then static (no pulse). */
-  stroke-dasharray: 1000;
-  stroke-dashoffset: 1000;
-  animation: v2-draw 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  animation-delay: var(--d, 0ms);
-}
-.v2-prozess-map__shape {
-  fill: var(--v2-bg-raised);
-}
-.v2-prozess-map__shape--active {
-  /* Was a teal-tinted active card with a pulse — now the same outline
-     stroke as siblings, no motion. The flow energy lives in particles. */
-  stroke: currentColor;
-  stroke-width: 1.5;
-  fill: var(--v2-bg-raised);
-}
-@keyframes v2-draw {
-  to { stroke-dashoffset: 0; }
+  .v2-prozess-hero {
+    min-height: 520px;
+    padding: 96px 0 112px;
+  }
 }
 
-/* Static state — kill the legacy token + pulse layers; particles
-   live on a dedicated canvas overlay now. */
-.v2-prozess-map__pulses,
-.v2-prozess-map__tokens {
-  display: none;
-}
-
-/* Canvas particle overlay aligned to the BPMN SVG. */
-.v2-prozess-particles {
+/* Layer 1 — the photograph itself. Next/Image fills the section,
+   focal point biased slightly off-center so the left column carries
+   the text and the symmetry of the original frame stays intact. */
+.v2-prozess-hero__media {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
+  z-index: 0;
   pointer-events: none;
-  display: block;
+}
+.v2-prozess-hero__img {
+  object-fit: cover;
+  object-position: center 38%;
+  /* Subtle desaturate + cooler tilt keeps the photo from competing
+     with the copper accent and reads more "industrial luxury". */
+  filter: saturate(0.78) contrast(1.04) brightness(0.88);
 }
 
+/* Layer 2 — directional scrim. Heavy on the left so the headline
+   column holds maximum contrast; fades toward the right where the
+   photo can breathe. Also pulls the top slightly so the header
+   navigation stays legible against the photo. */
+.v2-prozess-hero__scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      100deg,
+      rgba(8, 10, 14, 0.92) 0%,
+      rgba(8, 10, 14, 0.78) 24%,
+      rgba(8, 10, 14, 0.42) 52%,
+      rgba(8, 10, 14, 0.18) 78%,
+      rgba(8, 10, 14, 0.10) 100%
+    ),
+    linear-gradient(
+      to bottom,
+      rgba(8, 10, 14, 0.55) 0%,
+      rgba(8, 10, 14, 0.10) 22%,
+      rgba(8, 10, 14, 0) 60%
+    );
+}
+
+/* Layer 3 — seam to the next section. Bleeds the active theme's
+   surface color into the bottom edge so the hero stitches cleanly
+   into V2WhatWeDo across light, hybrid, and dark. */
+.v2-prozess-hero__seam {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 28%;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    color-mix(in oklab, var(--v2-bg-base) 60%, transparent) 55%,
+    var(--v2-bg-base) 100%
+  );
+}
+
+/* Layer 4 — copper radial accent in the upper-left quadrant. Brand
+   warmth, low alpha — should feel like a light source, not a wash. */
+.v2-prozess-hero__copper {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: radial-gradient(
+    60% 55% at 12% 18%,
+    rgba(194, 121, 64, 0.18) 0%,
+    rgba(194, 121, 64, 0.08) 35%,
+    rgba(194, 121, 64, 0) 70%
+  );
+  mix-blend-mode: screen;
+}
+
+/* Layer 5 — grain. Inline SVG fractal noise scoped to the hero so
+   the texture rides the photograph (not the whole viewport like the
+   shared .grain utility). Mix-blend overlay keeps the noise reading
+   as film grain rather than a digital wash. */
+.v2-prozess-hero__grain {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='320'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='5'/><feColorMatrix values='0 0 0 0 0.95  0 0 0 0 0.92  0 0 0 0 0.86  0 0 0 0.9 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  background-size: 320px 320px;
+}
+
+/* Layer 6 — edge vignette. Soft inner shadow on bottom and right
+   edges anchors the composition and reduces the "open wallpaper"
+   feel that flat photos default to. */
+.v2-prozess-hero__vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  box-shadow:
+    inset 0 -120px 160px -60px rgba(0, 0, 0, 0.55),
+    inset -140px 0 180px -100px rgba(0, 0, 0, 0.45),
+    inset 0 80px 120px -80px rgba(0, 0, 0, 0.35);
+}
+
+/* Layer 7 — foreground content. Left-aligned column; max-width
+   keeps the lead paragraph readable on wide displays. Text is
+   locked to white across all themes (image takeover convention)
+   with a soft shadow for legibility on the lighter regions. */
 .v2-prozess-hero__inner {
   position: relative;
-  z-index: 3;
+  z-index: 4;
   width: 100%;
   margin: 0 auto;
   padding: 0 clamp(20px, 4vw, 56px);
@@ -1315,18 +1347,28 @@ html[data-preview="v2"][data-theme="light"] .v2-node-graph {
   flex-direction: column;
   align-items: flex-start;
   gap: var(--v2-space-5);
-  /* The wrap container caps width; inner children stay on the left. */
   max-width: 1320px;
 }
 .v2-prozess-hero__inner > * {
-  max-width: 560px;
+  max-width: 620px;
 }
 .v2-prozess-hero__eyebrow {
   font-family: var(--font-v2-mono), ui-monospace, monospace;
   font-size: 0.72rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--v2-ink-3);
+  color: #e8b894;
+  /* Hairline beside the eyebrow text — copper, brand-anchored. */
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.45);
+}
+.v2-prozess-hero__eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(232, 184, 148, 0.85));
 }
 .v2-prozess-hero__headline {
   font-family: var(--font-v2-display), sans-serif;
@@ -1334,15 +1376,17 @@ html[data-preview="v2"][data-theme="light"] .v2-node-graph {
   line-height: 1.04;
   letter-spacing: -0.032em;
   font-weight: 700;
-  color: var(--v2-ink-1);
+  color: #ffffff;
   margin: 0;
-  max-width: 18ch;
+  max-width: 20ch;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
 }
 .v2-prozess-hero__lead {
   font-size: var(--v2-fs-lead);
-  color: var(--v2-ink-2);
-  max-width: 52ch;
+  color: rgba(255, 255, 255, 0.86);
+  max-width: 56ch;
   margin: 0;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
 }
 .v2-prozess-hero__cta-row {
   display: flex;
@@ -1351,22 +1395,33 @@ html[data-preview="v2"][data-theme="light"] .v2-node-graph {
   margin-top: var(--v2-space-2);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .v2-prozess-grid,
-  .v2-prozess-map-wrap,
-  .v2-prozess-spotlight { transform: none !important; }
-  .v2-prozess-map__path,
-  .v2-prozess-map__shape {
-    animation: none;
-    stroke-dashoffset: 0;
-  }
-  .v2-prozess-map__pulse { animation: none; }
-  .v2-prozess-map__tokens { display: none; }
+/* Ghost CTA reads on top of a photograph regardless of the active
+   theme — needs a light hairline + light text. The base .v2-btn-ghost
+   is theme-tinted, so this modifier re-asserts the on-image palette. */
+.v2-btn-ghost--on-image {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.v2-btn-ghost--on-image:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.10);
 }
 
 @media (max-width: 1099px) {
-  .v2-prozess-map-wrap { display: none; }
-  .v2-prozess-grid { opacity: 0.18; }
+  .v2-prozess-hero__img { object-position: center center; }
+  .v2-prozess-hero__scrim {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(8, 10, 14, 0.55) 0%,
+        rgba(8, 10, 14, 0.65) 40%,
+        rgba(8, 10, 14, 0.85) 100%
+      );
+  }
 }
 
 /* --------------------------------------------------------------
@@ -2338,9 +2393,9 @@ html[data-preview="v2"] .wrap {
   max-width: min(560px, 92vw);
 }
 
-/* Prozess BPMN — mobile reset (audit critical) */
+/* Prozess hero — mobile inner column relaxes max-width so the
+   text breathes on phones. */
 @media (max-width: 1099px) {
-  .v2-prozess-map-wrap { display: none; }
   .v2-prozess-hero__inner > * { max-width: 100%; }
 }
 
