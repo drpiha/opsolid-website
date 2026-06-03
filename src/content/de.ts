@@ -1100,6 +1100,15 @@ export const content: Content = {
     },
     posts: [
       {
+        slug: "eu-ai-act-digital-omnibus-2026",
+        title: "KI-Gesetz-Reform: Was das EU Digital Omnibus für Ihr Unternehmen bedeutet",
+        excerpt:
+          "Erste Änderung des KI-Gesetzes: Fristen für Hochrisiko-KI um 16 Monate verlängert, KMU-Regeln vereinfacht, zwei neue Verbote eingeführt. Das ändert sich.",
+        category: "ai",
+        date: "2026-06-03",
+        readTime: "7",
+      },
+      {
         slug: "workflow-automation-fundamentals",
         title: "Workflow-Automatisierung: Was in der Praxis wirklich zählt",
         excerpt:

@@ -1100,6 +1100,15 @@ export const content: Content = {
     },
     posts: [
       {
+        slug: "eu-ai-act-digital-omnibus-2026",
+        title: "AB Yapay Zeka Yasasi'nda İlk Reform: Digital Omnibus İşletmeniz İçin Ne Anlama Geliyor",
+        excerpt:
+          "AB, Yapay Zeka Yasası'nda ilk değişikliği kabul etti: yüksek riskli son tarihleri 16 ay uzatıldı, KOBİ kuralları basitleştirildi, iki yeni yasak eklendi.",
+        category: "ai",
+        date: "2026-06-03",
+        readTime: "7",
+      },
+      {
         slug: "workflow-automation-fundamentals",
         title: "İş Akışı Otomasyonu: Uygulamada Gerçekten Ne Önemli",
         excerpt:
