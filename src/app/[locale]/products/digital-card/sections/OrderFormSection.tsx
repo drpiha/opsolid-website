@@ -44,6 +44,7 @@ import type {
 } from "@/lib/validation";
 import { PhotoEditor } from "@/components/cards/PhotoEditor";
 import { TYPOGRAPHY_PRESET_LIST } from "@/lib/typographyPresets";
+import { downscaleImage } from "@/lib/images/downscale";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
 import { CustomSectionsEditor } from "@/components/cards/order-form/CustomSectionsEditor";
 import {
@@ -131,6 +132,62 @@ const EMPTY_CARD: CardData = {
   designNotes: "",
 };
 
+// A fully-populated example card. The builder used to start from EMPTY_CARD,
+// which made the live preview look empty/incomplete on first load ("the full
+// card doesn't show in demo"). Seeding the form with a complete sample makes
+// the preview render a full card immediately; the user overwrites it with their
+// own data, or hits "Leeren" (StepCardContent) to start blank. Display-safe:
+// the required Contact step (real name/email/phone) is separate and still empty.
+const SAMPLE_CARD: CardData = {
+  name: "Alex Weber",
+  title: "Founder & Product Designer",
+  company: "Studio Nord",
+  phone: "+49 160 1234567",
+  email: "alex@studio-nord.de",
+  website: "https://studio-nord.de",
+  address: "Speicherstadt 4, 20457 Hamburg",
+  bio: "I help founders turn rough ideas into products people love — from first sketch to a shipped interface. Ten years across SaaS, fintech and e-commerce.",
+  whatsapp: "+49 160 1234567",
+  socials: {
+    linkedin: "https://www.linkedin.com/in/alexweber",
+    instagram: "https://instagram.com/studio.nord",
+    x: "",
+    tiktok: "",
+    youtube: "",
+    github: "",
+    facebook: "",
+  },
+  services: [
+    {
+      title: "Product & UX design",
+      description: "End-to-end design from research to a polished, shippable interface.",
+      priceLabel: "ab 1.500 €",
+    },
+    {
+      title: "Design sprint",
+      description: "One focused week from problem to a tested prototype.",
+      priceLabel: "ab 3.900 €",
+    },
+    {
+      title: "Design system",
+      description: "A reusable component library your team can build on.",
+      priceLabel: "auf Anfrage",
+    },
+  ],
+  faqs: [
+    { q: "How fast can we start?", a: "Usually within a week. Book a short call and we map the first sprint together." },
+    { q: "Do you work remotely?", a: "Yes — remote-first across the EU, on-site in Hamburg on request." },
+  ],
+  testimonials: [
+    {
+      author: "Lena Richter",
+      role: "Founder, Hello Mauve",
+      quote: "Alex turned a vague idea into a product our users immediately understood. Fast, sharp, no fluff.",
+    },
+  ],
+  designNotes: "",
+};
+
 // Phase 7.9 — small caption shown next to "Edit position" button
 function formatPositionLabel(pos: ImagePosition | undefined): string | undefined {
   if (!pos) return undefined;
@@ -156,7 +213,7 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
   );
 
   // ---- form state (preserved verbatim from previous version) -------------
-  const [cardData, setCardData] = useState<CardData>(EMPTY_CARD);
+  const [cardData, setCardData] = useState<CardData>(SAMPLE_CARD);
   const [contactName, setContactName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [contactPhone, setContactPhone] = useState("");
@@ -169,8 +226,10 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
   const [logoPath, setLogoPath] = useState<string | null>(null);
   const [photoUploading, setPhotoUploading] = useState(false);
   const [logoUploading, setLogoUploading] = useState(false);
+  // Freemium-first: default to the free instant-publish tier so the self-serve
+  // path is the path of least resistance. Paid tiers stay one click away.
   const [billingMode, setBillingMode] =
-    useState<keyof typeof BillingMode>("YEARLY");
+    useState<keyof typeof BillingMode>("FREE");
   // Phase 8 — customer-chosen slug (without forced random suffix). Empty
   // string lets the server fall back to `name-xxxx` auto-generation.
   const [desiredSlug, setDesiredSlug] = useState("");
@@ -301,8 +360,12 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
       setErrorMsg(L("uploadTooLarge", "Datei zu groß (max 5 MB)."));
       return null;
     }
+    // Shrink in the browser before upload (see lib/images/downscale).
+    const optimized = await downscaleImage(file, {
+      maxEdge: kind === "logo" ? 512 : 1600,
+    });
     const form = new FormData();
-    form.append("file", file);
+    form.append("file", optimized);
     form.append("kind", kind);
     const res = await fetch("/api/uploads", { method: "POST", body: form });
     if (!res.ok) {
@@ -456,8 +519,17 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
         checkoutUrl?: string;
         editUrl?: string;
         cardUrl?: string;
+        editToken?: string;
       };
-      // FREE tier: card is already published — go straight to the edit page.
+      // FREE tier: the card is already published. Land on the LIVE card in owner
+      // mode (?owner=<editToken>) so the user immediately sees their published
+      // card + the full share toolbar (QR, link, wallet, vCard) and a one-click
+      // Edit — the "your card is live, here's how to share it" moment. Falls
+      // back to the editor if the API didn't return a card URL.
+      if (json.cardUrl && json.editToken) {
+        window.location.href = `${json.cardUrl}?owner=${encodeURIComponent(json.editToken)}`;
+        return;
+      }
       if (json.editUrl) {
         window.location.href = json.editUrl;
         return;
@@ -718,6 +790,11 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
                   readPreview={readPreview}
                   onEditPhoto={() => setPhotoEditorOpen(true)}
                   onEditLogo={() => setLogoEditorOpen(true)}
+                  onClearCard={() => {
+                    setCardData(EMPTY_CARD);
+                    setPhotoPreviewUrl(null);
+                    setLogoPreviewUrl(null);
+                  }}
                 />
               </AccordionStep>
 
@@ -1420,6 +1497,7 @@ function StepCardContent({
   readPreview,
   onEditPhoto,
   onEditLogo,
+  onClearCard,
 }: {
   L: (k: string, f: string) => string;
   cardData: CardData;
@@ -1458,9 +1536,27 @@ function StepCardContent({
   readPreview: (file: File) => Promise<string>;
   onEditPhoto: () => void;
   onEditLogo: () => void;
+  onClearCard: () => void;
 }) {
   return (
     <>
+      {/* sample-content hint + clear-to-blank */}
+      <div className="-mt-1 flex items-center justify-between gap-3 rounded-xl border border-copper/30 bg-copper/[0.06] px-3 py-2">
+        <span className="text-[11px] leading-snug text-ink/60">
+          {L(
+            "sampleHint",
+            "Beispielinhalt zum Ausprobieren — mit Ihren eigenen Daten überschreiben.",
+          )}
+        </span>
+        <button
+          type="button"
+          onClick={onClearCard}
+          className="shrink-0 rounded-full border border-ink/15 bg-white px-3 py-1 text-[11px] font-semibold text-ink/70 transition-colors hover:border-ink/40 hover:text-ink"
+        >
+          {L("clearSample", "Leeren")}
+        </button>
+      </div>
+
       {/* copy-from-contact affordance */}
       {(contactName || contactEmail || contactPhone) && (
         <div className="-mt-1 flex justify-end">

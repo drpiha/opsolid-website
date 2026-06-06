@@ -55,6 +55,9 @@ export function Footer() {
                 <li>
                   <Link href="/ki-schulungen">{f.cols.services.training}</Link>
                 </li>
+                <li>
+                  <Link href="/products/digital-card">OpSo Smart</Link>
+                </li>
               </ul>
             </div>
             <div className="os-footer-col">

@@ -435,7 +435,7 @@ export async function sendLeadTelegram(info: LeadNotificationInfo): Promise<void
 
   const base = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://opsolid.de";
   const crmUrl = info.editToken
-    ? `${base}/de/card/edit/${info.orderId}?token=${info.editToken}`
+    ? `${base}/de/card/edit/${info.orderId}?t=${info.editToken}`
     : `${base}/admin/orders/${info.orderId}`;
 
   const lines = [

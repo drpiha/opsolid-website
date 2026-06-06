@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=1920, initial-scale=1" />
+<title>OpSolid - AI ve Surec Otomasyonu - Yayincilik icin</title>
+
+<link rel="preconnect" href="https://fonts.bunny.net" />
+<link href="https://fonts.bunny.net/css?family=inter:300,400,500,600,700&display=swap" rel="stylesheet" />
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css" />
+
+<style>
+  :root {
+    --ink-900: #0E1726;
+    --ink-800: #111827;
+    --ink-700: #1F2A3D;
+    --ink-600: #2C3A52;
+    --line:    #2A3A55;
+    --cream:   #F5F2EA;
+    --paper:   #FAF8F2;
+    --paper-2: #EFEBE0;
+    --slate:   #1F2937;
+    --slate-2: #4B5563;
+    --mute:    #8A93A3;
+    --copper:  #C77D3A;
+    --copper-2:#B16A2C;
+    --copper-soft: rgba(199,125,58,0.18);
+  }
+
+  html, body { background: var(--ink-900); }
+  .reveal { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-weight: 400; color: var(--cream); }
+  .reveal .slides { text-align: left; }
+  .reveal section { padding: 64px 96px; box-sizing: border-box; height: 100%; }
+
+  /* Typography */
+  .reveal h1, .reveal h2, .reveal h3 { font-family: 'Inter', sans-serif; letter-spacing: -0.015em; margin: 0; text-transform: none; }
+  .reveal h1 { font-size: 64px; font-weight: 600; line-height: 1.08; }
+  .reveal h2 { font-size: 44px; font-weight: 600; line-height: 1.12; }
+  .reveal h3 { font-size: 22px; font-weight: 500; line-height: 1.3; }
+  .reveal p  { font-size: 20px; line-height: 1.55; font-weight: 400; }
+  .reveal .small { font-size: 16px; color: var(--mute); }
+  .reveal .eyebrow { font-size: 13px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--copper); font-weight: 500; }
+
+  /* Slide backgrounds (variation per slide) */
+  .bg-dark-solid    { background: var(--ink-900); color: var(--cream); position: relative; overflow: hidden; }
+  .bg-cream-rail    { background: var(--paper); color: var(--slate); position: relative; overflow: hidden; }
+  .bg-graphite-grid { background: var(--ink-800); color: var(--cream); position: relative; overflow: hidden; }
+  .bg-radial-ink    { background: radial-gradient(ellipse at 30% 30%, var(--ink-700) 0%, var(--ink-900) 70%); color: var(--cream); position: relative; overflow: hidden; }
+  .bg-paper-linear  { background: linear-gradient(180deg, var(--paper-2) 0%, var(--paper) 60%, #ffffff 100%); color: var(--slate); position: relative; overflow: hidden; }
+  .bg-ink-blob      { background: var(--ink-900); color: var(--cream); position: relative; overflow: hidden; }
+  .bg-cream-topo    { background: var(--paper); color: var(--slate); position: relative; overflow: hidden; }
+  .bg-white-rule    { background: #ffffff; color: var(--slate); position: relative; overflow: hidden; }
+
+  /* Decorative layers (kept very subtle) */
+  .layer { position: absolute; inset: 0; pointer-events: none; }
+
+  .noise { background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.06 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>"); opacity: 0.6; }
+
+  .grid-pattern {
+    background-image:
+      linear-gradient(to right, rgba(199,125,58,0.05) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(199,125,58,0.05) 1px, transparent 1px);
+    background-size: 56px 56px;
+  }
+
+  .copper-rule-top    { position: absolute; top: 0; right: 0; width: 240px; height: 2px; background: var(--copper); }
+  .copper-rule-left   { position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--copper); }
+  .copper-rule-bottom { position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: var(--copper); }
+  .copper-rule-thin   { position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: rgba(199,125,58,0.5); }
+
+  .copper-blob {
+    position: absolute; right: -120px; bottom: -120px; width: 520px; height: 520px;
+    background: radial-gradient(circle, rgba(199,125,58,0.22) 0%, rgba(199,125,58,0) 65%);
+    filter: blur(2px);
+  }
+
+  .topo {
+    position: absolute; top: -40px; right: -60px; width: 560px; height: 360px; opacity: 0.5;
+  }
+
+  /* Brand mark */
+  .mark { display: inline-flex; align-items: center; gap: 12px; }
+  .mark-glyph { width: 28px; height: 28px; }
+  .mark-text { font-weight: 600; font-size: 18px; letter-spacing: 0.02em; }
+
+  .corner-mark { position: absolute; top: 36px; left: 96px; opacity: 0.85; }
+  .corner-mark-dark .mark-text { color: var(--cream); }
+  .corner-mark-light .mark-text { color: var(--slate); }
+
+  .page-number { position: absolute; bottom: 32px; right: 96px; font-size: 13px; color: var(--mute); letter-spacing: 0.08em; }
+
+  /* Layouts */
+  .stack > * + * { margin-top: 18px; }
+  .row { display: flex; gap: 28px; }
+  .row.gap-lg { gap: 40px; }
+  .center-col { display: flex; flex-direction: column; justify-content: center; height: 100%; }
+  .max-w-900 { max-width: 900px; }
+  .max-w-1100 { max-width: 1100px; }
+
+  /* Cover */
+  .cover-title { font-size: 72px; font-weight: 600; line-height: 1.05; letter-spacing: -0.02em; }
+  .cover-sub   { font-size: 22px; font-weight: 400; color: var(--mute); margin-top: 24px; max-width: 760px; }
+  .cover-meta  { position: absolute; bottom: 72px; left: 96px; right: 96px; display: flex; justify-content: space-between; align-items: flex-end; color: var(--cream); }
+  .cover-meta .who { font-size: 18px; font-weight: 500; }
+  .cover-meta .who .small { display: block; color: var(--mute); margin-top: 6px; font-weight: 400; }
+
+  /* About */
+  .credentials { display: flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: 1px solid rgba(31,41,55,0.18);
+    background: #fff;
+    border-radius: 999px;
+    padding: 10px 16px;
+    font-size: 14px; font-weight: 500; color: var(--slate);
+  }
+  .chip .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--copper); }
+
+  /* Pain list */
+  .pain-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 24px;
+    margin-top: 48px;
+  }
+  .pain-card {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 24px;
+    background: rgba(255,255,255,0.015);
+  }
+  .pain-card .icon { color: var(--copper); margin-bottom: 16px; }
+  .pain-card h3 { color: var(--cream); margin-bottom: 8px; }
+  .pain-card p  { color: var(--mute); font-size: 15px; line-height: 1.45; }
+
+  /* Cost cards */
+  .cost-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 40px; }
+  .cost-card {
+    border: 1px solid rgba(245,242,234,0.12);
+    border-radius: 10px;
+    padding: 36px 32px;
+    background: rgba(255,255,255,0.02);
+  }
+  .cost-figure { font-size: 56px; font-weight: 600; color: var(--copper); letter-spacing: -0.02em; line-height: 1; }
+  .cost-label  { font-size: 16px; color: var(--cream); margin-top: 16px; font-weight: 500; }
+  .cost-sub    { font-size: 14px; color: var(--mute); margin-top: 6px; }
+
+  /* Phases diagram */
+  .phases { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0; margin-top: 40px; align-items: stretch; }
+  .phase {
+    padding: 28px 28px 28px 36px;
+    background: #fff;
+    border: 1px solid rgba(31,41,55,0.10);
+    border-right: none;
+    position: relative;
+  }
+  .phase:last-child { border-right: 1px solid rgba(31,41,55,0.10); }
+  .phase-num { font-size: 13px; color: var(--copper); font-weight: 600; letter-spacing: 0.16em; }
+  .phase h3 { color: var(--slate); margin-top: 8px; font-size: 24px; }
+  .phase .dur { font-size: 14px; color: var(--slate-2); margin-top: 4px; }
+  .phase ul { margin-top: 14px; padding-left: 16px; }
+  .phase li { font-size: 15px; color: var(--slate-2); line-height: 1.5; margin-bottom: 4px; }
+  .phase-arrow { position: absolute; right: -12px; top: 50%; transform: translateY(-50%); width: 24px; height: 24px; background: #fff; border-top: 1px solid rgba(31,41,55,0.10); border-right: 1px solid rgba(31,41,55,0.10); rotate: 45deg; z-index: 2; }
+  .phases-footnote { margin-top: 28px; color: var(--slate-2); font-size: 16px; }
+
+  /* Solutions */
+  .sol-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-top: 40px; }
+  .sol-card {
+    border: 1px solid rgba(245,242,234,0.10);
+    border-radius: 10px;
+    padding: 32px;
+    background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  }
+  .sol-card .icon { color: var(--copper); margin-bottom: 18px; }
+  .sol-card h3 { color: var(--cream); font-size: 20px; }
+  .sol-card p  { color: var(--mute); font-size: 15px; line-height: 1.55; margin-top: 12px; }
+  .sol-card .spark { display: inline-block; margin-top: 16px; font-size: 13px; color: var(--copper); font-weight: 500; letter-spacing: 0.02em; }
+
+  /* Why */
+  .why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px 56px; margin-top: 40px; max-width: 1000px; }
+  .why-row { display: flex; gap: 18px; align-items: flex-start; }
+  .why-row .icon { color: var(--copper); flex-shrink: 0; margin-top: 2px; }
+  .why-row h3 { color: var(--slate); font-size: 20px; }
+  .why-row p  { color: var(--slate-2); font-size: 15px; margin-top: 4px; }
+  .why-footnote { margin-top: 48px; font-size: 15px; color: var(--slate-2); font-style: italic; max-width: 720px; }
+
+  /* Next step */
+  .next-hero { max-width: 980px; }
+  .next-eyebrow { color: var(--copper); }
+  .next-title { font-size: 56px; font-weight: 600; line-height: 1.08; letter-spacing: -0.02em; color: var(--slate); }
+  .next-deliverables { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 36px; margin-top: 36px; max-width: 880px; }
+  .next-deliv { display: flex; gap: 12px; align-items: flex-start; }
+  .next-deliv .tick { color: var(--copper); flex-shrink: 0; margin-top: 4px; }
+  .next-deliv p { color: var(--slate); font-size: 16px; }
+  .next-slots { margin-top: 44px; display: flex; gap: 20px; flex-wrap: wrap; }
+  .slot {
+    border: 1px solid rgba(31,41,55,0.18);
+    border-radius: 8px;
+    padding: 16px 24px;
+    font-size: 16px; font-weight: 500; color: var(--slate);
+    background: var(--paper);
+  }
+  .slot .small { display: block; color: var(--slate-2); font-weight: 400; margin-top: 4px; font-size: 13px; }
+  .next-cta { margin-top: 48px; font-size: 22px; font-weight: 500; color: var(--slate); }
+  .next-contact { position: absolute; bottom: 60px; left: 96px; right: 96px; display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: var(--slate-2); padding-top: 24px; border-top: 1px solid rgba(31,41,55,0.12); }
+  .next-contact a { color: var(--slate); text-decoration: none; font-weight: 500; }
+
+  /* Reveal overrides */
+  .reveal .controls { color: var(--copper); }
+  .reveal .progress { color: var(--copper); height: 2px; }
+  .reveal .slide-number { font-size: 12px; color: var(--mute); background: transparent; }
+
+  /* Print */
+  @media print {
+    html, body { background: #fff; }
+  }
+</style>
+</head>
+<body>
+
+<div class="reveal">
+  <div class="slides">
+
+    <!-- =========================== SLIDE 1: COVER =========================== -->
+    <section class="bg-dark-solid">
+      <div class="layer noise"></div>
+      <div class="copper-rule-top"></div>
+
+      <div class="corner-mark corner-mark-dark mark">
+        <svg class="mark-glyph" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" stroke="#C77D3A" stroke-width="1.6"/>
+          <path d="M9 19 A8 8 0 0 1 23 13" stroke="#C77D3A" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          <circle cx="11" cy="13" r="1.4" fill="#C77D3A"/>
+          <circle cx="21" cy="19" r="1.4" fill="#F5F2EA"/>
+        </svg>
+        <span class="mark-text">OpSolid</span>
+      </div>
+
+      <div class="center-col" style="padding-top: 80px;">
+        <div class="stack max-w-1100">
+          <div class="eyebrow">Discovery sunumu</div>
+          <h1 class="cover-title">AI ve Surec Otomasyonu<br/>Yayincilik icin</h1>
+          <p class="cover-sub">Sinav hazirlik yayinciligi operasyonunda; coklu kanal, icerik uretimi ve veri akisi icin sade, olculebilir otomasyon yaklasimi</p>
+        </div>
+      </div>
+
+      <div class="cover-meta">
+        <div class="who">
+          Hasan HD
+          <span class="small">IT Proje Muduru, Dallmer GmbH &nbsp;&middot;&nbsp; Kurucu, OpSolid</span>
+        </div>
+        <div class="small">opsolid.de &nbsp;&middot;&nbsp; 30 dk Discovery</div>
+      </div>
+
+      <aside class="notes">
+        Kapak. Burada 5-10 saniye dur. Kendini tanit, sunumun amacini soyle: "Operasyonunuza somut deger katacak yerleri birlikte gormek icin geldim." Yayinevi ismi gecirme.
+      </aside>
+    </section>
+
+
+    <!-- =========================== SLIDE 2: HASAN KIM =========================== -->
+    <section class="bg-cream-rail">
+      <div class="copper-rule-left"></div>
+
+      <div class="corner-mark corner-mark-light mark">
+        <svg class="mark-glyph" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" stroke="#C77D3A" stroke-width="1.6"/>
+          <path d="M9 19 A8 8 0 0 1 23 13" stroke="#C77D3A" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          <circle cx="11" cy="13" r="1.4" fill="#C77D3A"/>
+          <circle cx="21" cy="19" r="1.4" fill="#1F2937"/>
+        </svg>
+        <span class="mark-text">OpSolid</span>
+      </div>
+
+      <div class="center-col">
+        <div class="stack max-w-1100">
+          <div class="eyebrow">Hakkimda</div>
+          <h2>Almanya merkezli bir muhendis<br/>operasyon ve AI kesisiminde</h2>
+          <p style="max-width: 880px; color: var(--slate-2); font-size: 20px;">
+            10+ yildir Almanya'da kurumsal IT proje yonetimi yapiyorum. Su an Dallmer GmbH'de IT proje muduru olarak gorev aliyorum.
+            OpSolid catisi altinda da; orta olcekli isletmelerin tekrar eden operasyonlarini sessizce devralan otomasyon ve AI cozumleri tasarliyorum.
+            Anahtarim: hype degil, geri donusu olculebilir karar.
+          </p>
+          <div class="credentials">
+            <span class="chip"><span class="dot"></span>10+ yil kurumsal IT proje yonetimi</span>
+            <span class="chip"><span class="dot"></span>Almanya merkezli, AB veri rezidansi</span>
+            <span class="chip"><span class="dot"></span>GDPR ve KVKK uyumlu mimari</span>
+            <span class="chip"><span class="dot"></span>Surec tasarimi odakli, vendor lock yok</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-number">02 / 08</div>
+
+      <aside class="notes">
+        Kisa tut. "Almanya disiplini + Turkiye'yi anlayan bir kurucu" mesaji onemli. Kendini "yeni baslayan" gibi sunma; 10+ yil deneyim cumlesini net soyle.
+      </aside>
+    </section>
+
+
+    <!-- =========================== SLIDE 3: 5 ACI =========================== -->
+    <section class="bg-graphite-grid">
+      <div class="layer grid-pattern"></div>
+
+      <div class="corner-mark corner-mark-dark mark">
+        <svg class="mark-glyph" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" stroke="#C77D3A" stroke-width="1.6"/>
+          <path d="M9 19 A8 8 0 0 1 23 13" stroke="#C77D3A" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          <circle cx="11" cy="13" r="1.4" fill="#C77D3A"/>
+          <circle cx="21" cy="19" r="1.4" fill="#F5F2EA"/>
+        </svg>
+        <span class="mark-text">OpSolid</span>
+      </div>
+
+      <div class="stack" style="padding-top: 40px;">
+        <div class="eyebrow">Sektorde gozlemledigim 5 yapisal sorun</div>
+        <h2 style="max-width: 1100px;">Yayincilikta otomasyona en cok yatirim getiren bes alan</h2>
+
+        <div class="pain-grid">
+          <div class="pain-card">
+            <svg class="icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/><circle cx="7" cy="6" r="1.5" fill="currentColor"/><circle cx="14" cy="12" r="1.5" fill="currentColor"/><circle cx="9" cy="18" r="1.5" fill="currentColor"/></svg>
+            <h3>Coklu pazaryeri senkronu</h3>
+            <p>Stok, fiyat ve gorsel; her kanalda farkli zamanlarda yanlis goruluyor</p>
+          </div>
+          <div class="pain-card">
+            <svg class="icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 12l9 4 9-4"/><path d="M3 17l9 4 9-4"/></svg>
+            <h3>Soru havuzu etiketleme</h3>
+            <p>Konu, zorluk ve mufredat eslemesi hala elle yapiliyor</p>
+          </div>
+          <div class="pain-card">
+            <svg class="icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+            <h3>Icerik uretim hizi</h3>
+            <p>Sezona yetistirme baskisi; ayni isi her yil bastan kuruyor</p>
+          </div>
+          <div class="pain-card">
+            <svg class="icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20V10"/><path d="M9 20V4"/><path d="M15 20v-7"/><path d="M21 20V8"/></svg>
+            <h3>Ogrenci ve satis verisi</h3>
+            <p>Veri var ama karara donmuyor; sadece export ve Excel</p>
+          </div>
+          <div class="pain-card">
+            <svg class="icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12c2-4 6-6 9-6s7 2 9 6"/><path d="M3 12c2 4 6 6 9 6s7-2 9-6"/><circle cx="12" cy="12" r="2"/></svg>
+            <h3>Sezonsal stok ve iade</h3>
+            <p>Talep dalgasi ve iade akisi her donem ekibi yeniden zorluyor</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-number">03 / 08</div>
+
+      <aside class="notes">
+        Bu slaytta sus, dinle. Her bir maddeye 1-2 cumle dokun, ardindan sor: "Bunlardan hangisi sizde en cok zaman yiyor?" Cevabi sonraki slaytlara ilmek olarak kullan.
+      </aside>
+    </section>
+
+
+    <!-- =========================== SLIDE 4: MALIYET =========================== -->
+    <section class="bg-radial-ink">
+
+      <div class="corner-mark corner-mark-dark mark">
+        <svg class="mark-glyph" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" stroke="#C77D3A" stroke-width="1.6"/>
+          <path d="M9 19 A8 8 0 0 1 23 13" stroke="#C77D3A" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          <circle cx="11" cy="13" r="1.4" fill="#C77D3A"/>
+          <circle cx="21" cy="19" r="1.4" fill="#F5F2EA"/>
+        </svg>
+        <span class="mark-text">OpSolid</span>
+      </div>
+
+      <div class="stack" style="padding-top: 60px; max-width: 1200px;">
+        <div class="eyebrow">Bu sorunlarin gorunmeyen maliyeti</div>
+        <h2>Gizli yuk; tablolarda gorunmuyor ama her hafta odeniyor</h2>
+        <p class="small" style="max-width: 900px; margin-top: 8px;">
+          Asagidaki rakamlar sektor ortalamasi referans degerlerdir. Sizin operasyonunuzda gercek deger Discovery asamasinda birlikte cikarilir.
+        </p>
+
+        <div class="cost-grid">
+          <div class="cost-card">
+            <div class="cost-figure">~12-15 sa</div>
+            <div class="cost-label">Haftada manuel pazaryeri senkronu</div>
+            <div class="cost-sub">Stok, fiyat, gorsel guncelleme ve hata duzeltme dahil</div>
+          </div>
+          <div class="cost-card">
+            <div class="cost-figure">%8-12</div>
+            <div class="cost-label">Stok tutarsizligi kaynakli iptal</div>
+            <div class="cost-sub">Yanlis stok ya da gec guncelleme kaynakli kayip siparis</div>
+          </div>
+          <div class="cost-card">
+            <div class="cost-figure">4-6 hafta</div>
+            <div class="cost-label">Sezon basi gecikmeli icerik lansmani</div>
+            <div class="cost-sub">Elle hazirlik, duzelti turlari ve kanal yayini suresi toplami</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-number">04 / 08</div>
+
+      <aside class="notes">
+        Rakamlari yumusak ver: "Sektor ortalamasi" cumlesini mutlaka soyle, "sizde ne kadar oldugunu Discovery'de gorelim" diye baglayarak slayt 5'e gec.
+      </aside>
+    </section>
+
+
+    <!-- =========================== SLIDE 5: 3 FAZ =========================== -->
+    <section class="bg-paper-linear">
+      <div class="copper-rule-thin"></div>
+
+      <div class="corner-mark corner-mark-light mark">
+        <svg class="mark-glyph" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" stroke="#C77D3A" stroke-width="1.6"/>
+          <path d="M9 19 A8 8 0 0 1 23 13" stroke="#C77D3A" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          <circle cx="11" cy="13" r="1.4" fill="#C77D3A"/>
+          <circle cx="21" cy="19" r="1.4" fill="#1F2937"/>
+        </svg>
+        <span class="mark-text">OpSolid</span>
+      </div>
+
+      <div class="stack" style="padding-top: 24px;">
+        <div class="eyebrow">Calisma yontemi</div>
+        <h2 style="max-width: 1000px;">Uc fazli, kucuk adimlarla buyuyen bir yaklasim</h2>
+
+        <div class="phases">
+          <div class="phase">
+            <div class="phase-num">01 / DISCOVERY</div>
+            <h3>Surec haritasi ve ROI</h3>
+            <div class="dur">1 - 2 hafta</div>
+            <ul>
+              <li>Mevcut surecin uctan uca haritalanmasi</li>
+              <li>Otomasyon firsatlarinin onceliklendirilmesi</li>
+              <li>Tahmini ROI ve 90 gunluk yol haritasi</li>
+            </ul>
+            <div class="phase-arrow"></div>
+          </div>
+          <div class="phase">
+            <div class="phase-num">02 / PILOT</div>
+            <h3>Dar kapsam, olculen sonuc</h3>
+            <div class="dur">4 - 8 hafta</div>
+            <ul>
+              <li>Tek bir surec uzerinde uygulamali pilot</li>
+              <li>Once-sonra metrikleri</li>
+              <li>Ekip icinde bilgi transferi</li>
+            </ul>
+            <div class="phase-arrow"></div>
+          </div>
+          <div class="phase">
+            <div class="phase-num">03 / OLCEKLENDIRME</div>
+            <h3>Yatay yayilim</h3>
+            <div class="dur">3 - 6 ay</div>
+            <ul>
+              <li>Pilotta kanitlanan parcalarin diger sureclere tasinmasi</li>
+              <li>Izleme, alarm ve devamlilik</li>
+              <li>Operasyonun kendi yurumesi</li>
+            </ul>
+          </div>
+        </div>
+
+        <p class="phases-footnote">Vendor lock yok. Veriler ve sistemler sizin altyapinizda kalir; kontrol her zaman sizde.</p>
+      </div>
+
+      <div class="page-number" style="color: var(--slate-2);">05 / 08</div>
+
+      <aside class="notes">
+        Bu slayt ana mesaj. Faz numaralarini ve sureleri net soyle. "Once 1-2 haftalik Discovery'den baslayalim" cumlesini burada bir kez ek - 8. slaytta tekrar bag kuracaksin.
+      </aside>
+    </section>
+
+
+    <!-- =========================== SLIDE 6: 3 COZUM =========================== -->
+    <section class="bg-ink-blob">
+      <div class="copper-blob"></div>
+
+      <div class="corner-mark corner-mark-dark mark">
+        <svg class="mark-glyph" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" stroke="#C77D3A" stroke-width="1.6"/>
+          <path d="M9 19 A8 8 0 0 1 23 13" stroke="#C77D3A" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          <circle cx="11" cy="13" r="1.4" fill="#C77D3A"/>
+          <circle cx="21" cy="19" r="1.4" fill="#F5F2EA"/>
+        </svg>
+        <span class="mark-text">OpSolid</span>
+      </div>
+
+      <div class="stack" style="padding-top: 40px;">
+        <div class="eyebrow">Sektorunuze ozel uc somut cozum</div>
+        <h2 style="max-width: 1100px;">Yayincilikta hizla geri donen uc otomasyon hatti</h2>
+
+        <div class="sol-grid">
+          <div class="sol-card">
+            <svg class="icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="7" rx="1.2"/><rect x="14" y="4" width="7" height="7" rx="1.2"/><rect x="3" y="14" width="7" height="7" rx="1.2"/><rect x="14" y="14" width="7" height="7" rx="1.2"/><path d="M10 7.5h4M10 17.5h4M6.5 11v3M17.5 11v3"/></svg>
+            <h3>PIM ve coklu kanal senkron</h3>
+            <p>Tek dogru urun kaydi; Trendyol, Hepsiburada, Kitapyurdu, D&amp;R ve kendi siteye otomatik dagilim. Stok, fiyat ve gorsel orkestrasyonu tek noktadan yonetilir.</p>
+            <span class="spark">Webhook + kural motoru + audit log</span>
+          </div>
+          <div class="sol-card">
+            <svg class="icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h12l4 4v12H4z"/><path d="M16 4v4h4"/><path d="M8 12h8M8 16h6"/><circle cx="6.5" cy="9" r="1" fill="currentColor"/></svg>
+            <h3>AI soru meta-data ve benzerlik</h3>
+            <p>Konu, alt konu, zorluk ve mufredat eslemesi LLM destekli yapilir. Cikmis sorularda benzerlik tespiti ile mukerrer icerik ve bosluklar gorulebilir hale gelir.</p>
+            <span class="spark">Hibrit embedding + insan onayli iterasyon</span>
+          </div>
+          <div class="sol-card">
+            <svg class="icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="12" rx="1.5"/><path d="M17 10l4-2v8l-4-2z"/><path d="M7 10v4M10 9v6M13 11v2"/></svg>
+            <h3>Video cozum uretim hatti</h3>
+            <p>Yazili cozum taslagindan seslendirme, montaj ve kanal yayinina kadar olan adimlar otomasyon ile baglanir. Manuel adim sayisi yariya inebilir.</p>
+            <span class="spark">Sablon + TTS + render kuyrugu</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="page-number">06 / 08</div>
+
+      <aside class="notes">
+        Uc kart, uc cumle. Her birinde "Sizde nasil isliyor?" diye kisa not al. "Bunlar ornek; sizin operasyonunuzda hangisi en degerli, Discovery'de netlestirelim" diye kapat.
+      </aside>
+    </section>
+
+
+    <!-- =========================== SLIDE 7: NEDEN OPSOLID =========================== -->
+    <section class="bg-cream-topo">
+      <svg class="topo" viewBox="0 0 560 360" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <g stroke="#C77D3A" stroke-width="1" opacity="0.18" fill="none">
+          <path d="M0 60 Q140 20 280 60 T560 60"/>
+          <path d="M0 100 Q140 60 280 100 T560 100"/>
+          <path d="M0 140 Q140 100 280 140 T560 140"/>
+          <path d="M0 180 Q140 140 280 180 T560 180"/>
+          <path d="M0 220 Q140 180 280 220 T560 220"/>
+          <path d="M0 260 Q140 220 280 260 T560 260"/>
+          <path d="M0 300 Q140 260 280 300 T560 300"/>
+        </g>
+      </svg>
+
+      <div class="corner-mark corner-mark-light mark">
+        <svg class="mark-glyph" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" stroke="#C77D3A" stroke-width="1.6"/>
+          <path d="M9 19 A8 8 0 0 1 23 13" stroke="#C77D3A" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          <circle cx="11" cy="13" r="1.4" fill="#C77D3A"/>
+          <circle cx="21" cy="19" r="1.4" fill="#1F2937"/>
+        </svg>
+        <span class="mark-text">OpSolid</span>
+      </div>
+
+      <div class="stack" style="padding-top: 40px;">
+        <div class="eyebrow next-eyebrow">Neden bizimle</div>
+        <h2 style="max-width: 1000px;">Bizi farkli kilan dort sey</h2>
+
+        <div class="why-grid">
+          <div class="why-row">
+            <svg class="icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l7 3v6c0 5-3.5 9-7 11-3.5-2-7-6-7-11V5l7-3z"/></svg>
+            <div>
+              <h3>Almanya disiplini, Turkiye hizi</h3>
+              <p>AB standartlarinda dokumantasyon, Turk operasyonu temposunda teslimat</p>
+            </div>
+          </div>
+          <div class="why-row">
+            <svg class="icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 1 1 8 0v3"/></svg>
+            <div>
+              <h3>GDPR ve KVKK uyumlu mimari</h3>
+              <p>Veri rezidansi, log politikasi ve erisim kontrolu en bastan kurulur</p>
+            </div>
+          </div>
+          <div class="why-row">
+            <svg class="icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h6l2-4 4 8 2-4h4"/></svg>
+            <div>
+              <h3>Surec tasarimi odakli</h3>
+              <p>Once isi anliyoruz, sonra araci secriyoruz; arac satmak isimiz degil</p>
+            </div>
+          </div>
+          <div class="why-row">
+            <svg class="icon" width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg>
+            <div>
+              <h3>Vendor lock yok</h3>
+              <p>Kod, dokuman ve bilgi sizde; biz cikinca operasyon yurumeye devam eder</p>
+            </div>
+          </div>
+        </div>
+
+        <p class="why-footnote">AI'i abartmiyoruz; geri donusu olmayan yere koymuyoruz. Bazen en iyi cozum AI degil, dogru kurgulanmis bir surectir.</p>
+      </div>
+
+      <div class="page-number" style="color: var(--slate-2);">07 / 08</div>
+
+      <aside class="notes">
+        Bu slayti yavas oku. "Vendor lock yok" cumlesini vurgula; yayinevleri icin onemli endise. "Once isi anliyoruz" cumlesi guven ifadesi.
+      </aside>
+    </section>
+
+
+    <!-- =========================== SLIDE 8: SONRAKI ADIM =========================== -->
+    <section class="bg-white-rule">
+      <div class="copper-rule-bottom"></div>
+
+      <div class="corner-mark corner-mark-light mark">
+        <svg class="mark-glyph" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <circle cx="16" cy="16" r="14" stroke="#C77D3A" stroke-width="1.6"/>
+          <path d="M9 19 A8 8 0 0 1 23 13" stroke="#C77D3A" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+          <circle cx="11" cy="13" r="1.4" fill="#C77D3A"/>
+          <circle cx="21" cy="19" r="1.4" fill="#1F2937"/>
+        </svg>
+        <span class="mark-text">OpSolid</span>
+      </div>
+
+      <div class="center-col" style="padding-top: 40px;">
+        <div class="next-hero">
+          <div class="eyebrow next-eyebrow">Sonraki adim</div>
+          <h2 class="next-title">Yarim Gunluk Discovery Workshop</h2>
+          <p style="color: var(--slate-2); font-size: 20px; margin-top: 18px; max-width: 880px;">
+            Operasyonunuzu birlikte haritalandiriyoruz; otomasyon firsatlarini onceliklendiriyoruz. Cikti, somut ve sizin elinizde kaliyor.
+          </p>
+
+          <div class="next-deliverables">
+            <div class="next-deliv">
+              <svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+              <p>Uctan uca surec haritasi</p>
+            </div>
+            <div class="next-deliv">
+              <svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+              <p>Oncelikli 3 otomasyon firsati</p>
+            </div>
+            <div class="next-deliv">
+              <svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+              <p>Tahmini ROI ve geri odeme suresi</p>
+            </div>
+            <div class="next-deliv">
+              <svg class="tick" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 7"/></svg>
+              <p>90 gunluk yol haritasi</p>
+            </div>
+          </div>
+
+          <div class="next-slots">
+            <div class="slot">
+              [Tarih A]
+              <span class="small">Online, 09:30 - 13:00 CET</span>
+            </div>
+            <div class="slot">
+              [Tarih B]
+              <span class="small">Online, 14:00 - 17:30 CET</span>
+            </div>
+          </div>
+
+          <div class="next-cta">30 dakikadan kalkalim; bir sonraki adima gecelim</div>
+        </div>
+      </div>
+
+      <div class="next-contact">
+        <div>
+          <strong style="color: var(--slate);">Hasan HD</strong> &nbsp;&middot;&nbsp; Kurucu, OpSolid
+        </div>
+        <div>
+          <a href="https://opsolid.de">opsolid.de</a> &nbsp;&middot;&nbsp;
+          <a href="https://www.linkedin.com/in/hasanhd/">linkedin.com/in/hasanhd</a>
+        </div>
+      </div>
+
+      <aside class="notes">
+        Kapanis. Iki tarih opsiyonunu telaffuz et, "yarim gunluk bir adim", "bagimsiz dokuman cikiyor" diye netlestir. Sessiz kal, karari onlardan bekle.
+      </aside>
+    </section>
+
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/plugin/notes/notes.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1920,
+    height: 1080,
+    margin: 0,
+    minScale: 0.2,
+    maxScale: 2.0,
+    controls: true,
+    controlsTutorial: false,
+    progress: true,
+    slideNumber: 'c/t',
+    hash: true,
+    transition: 'fade',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    plugins: [ RevealNotes ]
+  });
+</script>
+
+</body>
+</html>

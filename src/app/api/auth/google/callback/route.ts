@@ -204,7 +204,7 @@ export async function GET(req: NextRequest) {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="referrer" content="no-referrer">
-<title>Verso</title>
+<title>OpSo Smart</title>
 <style>
 body{margin:0;font-family:system-ui,sans-serif;background:#0f172a;color:#e2e8f0;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;text-align:center}
 .box{max-width:360px}
@@ -215,7 +215,7 @@ a{display:inline-block;background:#1AA6B7;color:#fff;text-decoration:none;paddin
 </head>
 <body>
 <div class="box">
-<h1>Verso wird geöffnet …</h1>
+<h1>OpSo Smart wird geöffnet …</h1>
 <p>Falls die App nicht automatisch öffnet, tippe auf den Knopf.</p>
 <a href="${escapedForHref}">App öffnen</a>
 </div>

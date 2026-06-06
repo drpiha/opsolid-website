@@ -59,7 +59,7 @@ const overrides: DeepPartial<Content> = {
       primaryCtaLabel: "احجز مكالمة",
       secondaryCtaLabel: "اطلع على الخدمات",
       consultingNote:
-        "نطلق أيضاً منتجات مستقلة — Kutasia و Verso (البطاقة الرقمية) و Digital Reception.",
+        "نطلق أيضاً منتجات مستقلة — Kutasia و OpSo Smart (البطاقة الرقمية) و Digital Reception.",
     },
   },
   v2: {

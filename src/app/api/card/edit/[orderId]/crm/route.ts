@@ -77,10 +77,15 @@ export async function GET(
         },
       }),
       prisma.cardConnection.findMany({
-        where: { ownerCardId: order.id },
+        where: {
+          ownerCardId: order.id,
+          ...(statusFilter ? { status: statusFilter } : {}),
+          ...(tagFilter ? { tags: { has: tagFilter } } : {}),
+        },
         orderBy: { createdAt: "desc" },
-        skip: offset,
-        take: limit,
+        // Fetch without JS-level limit so search can filter first, then we slice.
+        // When no search is active, we still apply limit+offset here for efficiency.
+        ...(search ? {} : { skip: offset, take: limit }),
         select: {
           id: true,
           source: true,
@@ -101,12 +106,15 @@ export async function GET(
       }),
     ]);
 
-    const connectionsOut = connections.map((c) => {
+    const connectionsRaw = connections.map((c) => {
       const data = c.visitorCard.cardData as { name?: string; email?: string; phone?: string; company?: string } | null;
       return {
         id: c.id,
         visitorSlug: c.visitorCard.slug,
         visitorName: data?.name ?? c.visitorCard.slug,
+        visitorEmail: data?.email ?? null,
+        visitorPhone: data?.phone ?? null,
+        _visitorCompany: data?.company ?? null, // search-only, stripped before output
         source: c.source,
         eventName: c.eventName,
         note: c.note,
@@ -117,6 +125,24 @@ export async function GET(
         createdAt: c.createdAt,
       };
     });
+
+    // Apply JS-level search filter for connections (cardData JSON fields).
+    const filtered = search
+      ? (() => {
+          const q = search.toLowerCase();
+          return connectionsRaw
+            .filter((c) =>
+              (c.visitorName ?? "").toLowerCase().includes(q) ||
+              (c.visitorEmail ?? "").toLowerCase().includes(q) ||
+              (c._visitorCompany ?? "").toLowerCase().includes(q) ||
+              (c.note ?? "").toLowerCase().includes(q)
+            )
+            .slice(offset, offset + limit);
+        })()
+      : connectionsRaw;
+
+    // Strip the internal search helper before sending to client.
+    const connectionsOut = filtered.map(({ _visitorCompany: _unused, ...rest }) => rest);
 
     return NextResponse.json({ leads, connections: connectionsOut });
   } catch (err) {

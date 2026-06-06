@@ -10,7 +10,7 @@ export const SITE_CONFIG = {
     "OpSolid unterstützt mittelständische Unternehmen in Deutschland und Europa bei KI-Beratung, Prozessautomatisierung und digitalen Workflows — praxisnah, messbar, datenschutzbewusst.",
   url: "https://opsolid.de",
   email: "info@opsolid.de",
-  phone: "",
+  phone: "+49 176 31020654",
   address: {
     street: "Stolte Ley 12",
     postalCode: "59759",

@@ -57,7 +57,7 @@ const overrides: DeepPartial<Content> = {
       primaryCtaLabel: "Réserver un appel",
       secondaryCtaLabel: "Voir les services",
       consultingNote:
-        "Nous livrons aussi des produits autonomes — Kutasia, Verso (carte numérique), Digital Reception.",
+        "Nous livrons aussi des produits autonomes — Kutasia, OpSo Smart (carte numérique), Digital Reception.",
     },
   },
   v2: {

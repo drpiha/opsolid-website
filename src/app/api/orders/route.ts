@@ -126,7 +126,7 @@ export async function POST(req: NextRequest) {
   if (isFree) {
     const siteUrl = getSiteUrl();
     const cardUrl = `${siteUrl}/c/${freeSlug}`;
-    const editUrl = `/${data.locale}/card/edit/${order.id}?token=${editToken}`;
+    const editUrl = `/${data.locale}/card/edit/${order.id}?t=${editToken}`;
     return NextResponse.json({ orderId: order.id, editToken, cardUrl, editUrl });
   }
 

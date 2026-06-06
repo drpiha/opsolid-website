@@ -897,7 +897,7 @@ export const content = {
   impressum: {
     title: "Legal Notice",
     notice:
-      "This legal notice is for a sole proprietorship in formation (Einzelunternehmen i.Gr.). Details will be updated upon business registration.",
+      "OpSolid is the sole proprietorship (Einzelunternehmen) of Hasan Dönmez, based in Arnsberg, Germany.",
     sections: {
       according: "According to § 5 DDG (Digital Services Act, formerly § 5 TMG)",
       representedBy: "Represented by",
@@ -905,10 +905,10 @@ export const content = {
       phone: "Phone: On request",
       register: "Trade Register",
       registerText:
-        "No trade register entry exists at this time. As a sole proprietorship in formation, no Handelsregister entry is required.",
+        "OpSolid is a sole proprietorship (Einzelunternehmen) and is not entered in the commercial register (Handelsregister); no such entry is required for this legal form.",
       vatId: "VAT ID / Wirtschafts-Identifikationsnummer (W-IdNr)",
       vatIdText:
-        "USt-IdNr will be applied for upon Gewerbeanmeldung. As of December 2026, the new W-IdNr (Wirtschafts-Identifikationsnummer) will be added here.",
+        "VAT identification number according to § 27a German VAT Act (USt-IdNr.): DE462227107",
       responsibleContent:
         "Responsible for content according to § 18 Abs. 2 MStV (Medienstaatsvertrag, formerly § 55 RStV)",
       disputeResolution: "Online Dispute Resolution",
@@ -928,13 +928,13 @@ export const content = {
     title: "Privacy Policy",
     subtitle: "Datenschutzerklärung · Aydınlatma Metni",
     notice:
-      "This is a self-prepared privacy notice covering GDPR (EU) and KVKK (Türkiye) for the OpSolid marketing site and the Verso Digital Business Card product. A lawyer-reviewed final version will replace this notice after Gewerbeanmeldung. Last review by Hasan Dönmez.",
+      "This is a self-prepared privacy notice covering GDPR (EU) and KVKK (Türkiye) for the OpSolid marketing site and the OpSo Smart Digital Business Card product. A lawyer-reviewed final version will replace this notice after Gewerbeanmeldung. Last review by Hasan Dönmez.",
     lastUpdated: "Last updated: May 2026",
     sections: [
       {
         title: "1. Data Protection at a Glance",
         content:
-          "The following provides an overview of what happens to your personal data when you visit this website or use the Verso Digital Business Card product. Personal data is any data that can identify you. Two legal frameworks apply in parallel: the EU General Data Protection Regulation (GDPR / DSGVO) and the Turkish Personal Data Protection Law (KVKK, Law No. 6698).",
+          "The following provides an overview of what happens to your personal data when you visit this website or use the OpSo Smart Digital Business Card product. Personal data is any data that can identify you. Two legal frameworks apply in parallel: the EU General Data Protection Regulation (GDPR / DSGVO) and the Turkish Personal Data Protection Law (KVKK, Law No. 6698).",
       },
       {
         title: "2. Responsible Party / Veri Sorumlusu",
@@ -963,7 +963,7 @@ export const content = {
       {
         title: "4. Hosting",
         content:
-          "The marketing site, the Verso Digital Business Card application backend, and the Postgres database all run on a single self-managed Hostinger VPS (Hostinger International Ltd., AS47583), physically located in Vilnius, Lithuania (EU). Server hostname: srv1150632.hstgr.cloud. All visitor traffic, card data, customer records and database backups remain on EU territory. The DPA (AVV under Art. 28 GDPR) with Hostinger is on file.",
+          "The marketing site, the OpSo Smart Digital Business Card application backend, and the Postgres database all run on a single self-managed Hostinger VPS (Hostinger International Ltd., AS47583), physically located in Vilnius, Lithuania (EU). Server hostname: srv1150632.hstgr.cloud. All visitor traffic, card data, customer records and database backups remain on EU territory. The DPA (AVV under Art. 28 GDPR) with Hostinger is on file.",
       },
       {
         title: "5. Cookies & Analytics",
@@ -993,7 +993,7 @@ export const content = {
           {
             title: "Hosting & infrastructure",
             content:
-              "Hostinger International Ltd. (Lithuania, EU) — single VPS in Vilnius hosting the marketing site, the Verso application and the Postgres database. No US hosting sub-processor.",
+              "Hostinger International Ltd. (Lithuania, EU) — single VPS in Vilnius hosting the marketing site, the OpSo Smart application and the Postgres database. No US hosting sub-processor.",
           },
           {
             title: "Email delivery",
@@ -1001,7 +1001,7 @@ export const content = {
               "SMTP relay used for contact-form notifications. Provider details are listed on request and updated when changed.",
           },
           {
-            title: "Payments (Verso, planned)",
+            title: "Payments (OpSo Smart, planned)",
             content:
               "Stripe Payments Europe Ltd. (Ireland) for one-time and subscription billing. Card data is tokenised by Stripe; OpSolid never sees raw PAN. DPA in place via Stripe Services Agreement. International transfer to Stripe US under DPF + SCC.",
           },
@@ -1018,17 +1018,17 @@ export const content = {
           "Where personal data is transferred outside the European Economic Area (e.g. to Vercel, Stripe, OpenAI, Anthropic in the United States), the transfer is based on (a) the EU-US Data Privacy Framework adequacy decision where the recipient is DPF-certified, or (b) Standard Contractual Clauses (SCC, EU 2021/914) with a documented Transfer Impact Assessment. For Türkiye-resident data subjects, KVKK Art. 9 yurtdışı aktarım rules apply: transfers are made under KVKK standard contractual clauses (Yönetmelik 10.07.2024) and notified to the Kurum within 5 business days where required.",
       },
       {
-        title: "8. Verso Digital Business Card Product",
+        title: "8. OpSo Smart Digital Business Card Product",
         subsections: [
           {
             title: "Purpose & legal basis",
             content:
-              "We process the contact details you submit through the Verso lead form or self-service order flow (name, work email, company, role, phone (optional), message, photo/logo upload, brand colours, social links) to provide the Digital Business Card service. Legal basis: Art. 6(1)(b) GDPR (contract performance) and Art. 6(1)(a) GDPR (your explicit consent for public publication).",
+              "We process the contact details you submit through the OpSo Smart lead form or self-service order flow (name, work email, company, role, phone (optional), message, photo/logo upload, brand colours, social links) to provide the Digital Business Card service. Legal basis: Art. 6(1)(b) GDPR (contract performance) and Art. 6(1)(a) GDPR (your explicit consent for public publication).",
           },
           {
             title: "Public publication of your card",
             content:
-              "When you publish a Verso card at /c/{slug}, the information you have entered becomes publicly accessible on the internet. This requires your explicit, separate opt-in checkbox at publish time. You can unpublish or delete the card at any time from your account; we will then add a noindex header and request URL removal from major search engines.",
+              "When you publish a OpSo Smart card at /c/{slug}, the information you have entered becomes publicly accessible on the internet. This requires your explicit, separate opt-in checkbox at publish time. You can unpublish or delete the card at any time from your account; we will then add a noindex header and request URL removal from major search engines.",
           },
           {
             title: "Third-party content",
@@ -1038,22 +1038,22 @@ export const content = {
           {
             title: "Hosting",
             content:
-              "Card data and customer records are stored on the Hostinger VPS (Lithuania, EU). No US sub-processors for Verso card content itself; payment data is processed by Stripe under separate sub-processor terms above.",
+              "Card data and customer records are stored on the Hostinger VPS (Lithuania, EU). No US sub-processors for OpSo Smart card content itself; payment data is processed by Stripe under separate sub-processor terms above.",
           },
           {
             title: "14-day right of withdrawal (B2C)",
             content:
-              "If you order Verso as a consumer (B2C, EU/EEA), you have a 14-day right of withdrawal under § 355 BGB. For digital services to start before the 14 days end, you must explicitly request immediate performance and acknowledge that the right of withdrawal lapses upon full performance — both via separate checkboxes at checkout. We log your acknowledgements for evidence. From 19 June 2026, a one-click withdrawal button is provided.",
+              "If you order OpSo Smart as a consumer (B2C, EU/EEA), you have a 14-day right of withdrawal under § 355 BGB. For digital services to start before the 14 days end, you must explicitly request immediate performance and acknowledge that the right of withdrawal lapses upon full performance — both via separate checkboxes at checkout. We log your acknowledgements for evidence. From 19 June 2026, a one-click withdrawal button is provided.",
           },
           {
             title: "Retention",
             content:
-              "Active Verso cards: retained while the subscription is active. Cancelled / inactive: deleted 90 days after subscription end (a reminder email is sent at day 60). Lead form submissions (no purchase): 24 months. Invoices: retained 10 years per § 257 HGB / Vergi Usul Kanunu (legal obligation).",
+              "Active OpSo Smart cards: retained while the subscription is active. Cancelled / inactive: deleted 90 days after subscription end (a reminder email is sent at day 60). Lead form submissions (no purchase): 24 months. Invoices: retained 10 years per § 257 HGB / Vergi Usul Kanunu (legal obligation).",
           },
           {
             title: "Right to deletion",
             content:
-              "You may delete your Verso card and all associated personal data with one click from your account, or by emailing info@opsolid.de. Deletion is effective within 30 days. Identity verification (email confirmation + 2FA where enabled) is required before destructive actions.",
+              "You may delete your OpSo Smart card and all associated personal data with one click from your account, or by emailing info@opsolid.de. Deletion is effective within 30 days. Identity verification (email confirmation + 2FA where enabled) is required before destructive actions.",
           },
         ],
       },
@@ -1405,17 +1405,17 @@ export const content = {
 
     digitalCard: {
       hero: {
-        eyebrow: "[ VERSO BY OPSOLID ]   PREMIUM DIGITAL BUSINESS CARDS",
+        eyebrow: "[ OPSO SMART ]   YOUR DIGITAL BUSINESS CARD",
         title: [
-          "Verso.",
-          "Premium digital business cards,",
-          "delivered in 48 hours.",
+          "OpSo Smart.",
+          "Build your own digital business card -",
+          "free, live in seconds.",
         ],
         paragraph:
-          "Verso is a hand-designed one-page digital profile we build for you. Share it as a link or QR code. 20+ industry templates as starting points. German hosting, GDPR-native — no subscription traps.",
-        primaryCta: "Start my Verso",
+          "Pick a template, fill in your details, publish. Your card goes live in seconds at opsolid.de/c/your-name, free to start. Upgrade when you need a custom domain, NFC, or analytics. EU-hosted in Frankfurt, GDPR-native, no subscription traps.",
+        primaryCta: "Create my free card",
         secondaryCta: "See 20 live templates",
-        tags: "VERSO · LINK · QR CODE · CUSTOM DESIGN · 48H DELIVERY · GERMAN HOSTING",
+        tags: "OPSO SMART · LINK · QR CODE · vCARD · EU-HOSTED · FREE TO START",
         cardLabels: {
           name: "Alex Weber",
           role: "Product Designer",
@@ -1450,8 +1450,8 @@ export const content = {
           },
           {
             label: "DESIGN · 04",
-            title: "Hand-designed for you",
-            desc: "We customize the template with your info, colors, and photos. Delivered in 48–72 hours. Revisions included.",
+            title: "Design it yourself",
+            desc: "Live preview as you type. Pick a layout and theme, drop in your colors and photos, publish instantly. Prefer it done for you? White-glove is one tier up.",
             icon: "layout",
           },
           {
@@ -1462,7 +1462,7 @@ export const content = {
           },
           {
             label: "HOSTING · 06",
-            title: "Hosted in Germany",
+            title: "EU-hosted (Frankfurt)",
             desc: "Hetzner / IONOS Frankfurt. GDPR-native. Zero US subprocessors. One-click deletion, always.",
             icon: "hosting",
           },
@@ -1521,51 +1521,51 @@ export const content = {
         popularBadge: "MOST POPULAR",
         plans: [
           {
-            name: "Starter",
-            price: "€49",
-            cadence: "one-time · 1st year hosting included",
+            name: "Free",
+            price: "€0",
+            cadence: "Build it yourself, live in seconds.",
             popular: "",
             bullets: [
-              "1 industry template from our library",
+              "All templates, layouts, and themes",
               "Link + QR code (PNG + SVG)",
-              "2 revisions included",
-              "Email signature snippet",
-              "1 year hosting on opsolid.de/c/your-name",
-              "Hosting renewal: €9/year after year 1",
+              "Save-to-contacts (vCard)",
+              "Hosted on opsolid.de/c/your-name",
+              "Small \"Made with OpSo Smart\" badge",
+              "No login required",
             ],
-            cta: "Start my Starter",
+            cta: "Create my free card",
             href: "#lead",
           },
           {
-            name: "Professional",
+            name: "Premium",
             price: "€149",
             cadence: "one-time · €9/year hosting after year 1",
             popular: "true",
             bullets: [
-              "Any template + light customization",
-              "Custom slug (opsolid.de/c/your-brand)",
-              "5 revisions included",
-              "Analytics (views, link clicks)",
-              "Email signature + social-ready images",
-              "Multi-language (DE/EN/TR) optional",
+              "Everything in Free, badge removed",
+              "Custom slug or your own domain",
+              "NFC option",
+              "Analytics (views + clicks)",
+              "Video block + lead capture / CRM",
+              "Multiple cards",
             ],
-            cta: "Start Professional",
+            cta: "Go Premium",
             href: "#lead",
           },
           {
-            name: "Custom",
+            name: "White-glove",
             price: "From €299",
-            cadence: "quoted per project",
+            cadence: "quoted · we design it for you",
             popular: "",
             bullets: [
-              "Fully custom design (no template)",
-              "Your own domain (yourname.com)",
+              "We hand-design your card for you in 48h",
+              "Unlimited revisions",
               "Multi-language (DE/EN/TR)",
-              "Advanced analytics",
-              "Team roster (5+ cards priced per project)",
-              "CRM integration if needed",
+              "Team rollout",
+              "Everything in Premium",
+              "Priority support",
             ],
-            cta: "Request a quote",
+            cta: "Request white-glove",
             href: "#lead",
           },
         ],
@@ -1589,9 +1589,9 @@ export const content = {
           submit: "Send request",
           submitting: "Sending…",
           success:
-            "Thanks — we'll reply within one business day with a preview link.",
+            "Thanks - we'll reply within one business day with a preview link.",
           error:
-            "Something went wrong. Please email info@kutasia.com directly.",
+            "Something went wrong. Please email info@opsolid.de directly.",
         },
       },
       testimonials: {
@@ -1600,21 +1600,21 @@ export const content = {
         items: [
           {
             quote:
-              "We had the card in two days. The designer actually understood what a real estate agent needs on a profile page — I barely had to revise anything.",
+              "I built my card in ten minutes. Picked a template, typed in my details, hit publish, and the link was live. No back-and-forth, no waiting.",
             name: "Lena Richter",
             role: "Independent broker",
             company: "Berlin, DE",
           },
           {
             quote:
-              "The fact that the data stays in Germany closed the deal with our legal team. That alone was worth the price.",
+              "The fact that the data stays in the EU closed the deal with our legal team. That alone was worth the upgrade.",
             name: "Marco Weber",
             role: "COO",
             company: "Munich industrial group",
           },
           {
             quote:
-              "No monthly subscription. No 'enterprise tier' upsell. I paid once, got a card, got a QR, moved on. Exactly what I wanted.",
+              "No monthly subscription. No 'enterprise tier' upsell. I started free, paid once for the custom domain, moved on. Exactly what I wanted.",
             name: "Sarah Klein",
             role: "Independent consultant",
             company: "Berlin, DE",
@@ -1622,28 +1622,28 @@ export const content = {
         ],
       },
       howItWorks: {
-        label: "HOW WE DELIVER",
-        heading: "Four steps. Card live in 48 hours.",
+        label: "HOW IT WORKS",
+        heading: "Four steps. Live in seconds.",
         steps: [
           {
-            title: "01 · Order",
+            title: "01 · Pick a template",
             description:
-              "Fill the short form: your industry, basic info, preferred template. Pay the one-time fee.",
+              "Browse 20 industry templates and choose the one that fits. Pick a layout and theme to match.",
           },
           {
-            title: "02 · Design",
+            title: "02 · Fill your details",
             description:
-              "Within 48–72 hours we send you a preview link of your customized profile.",
+              "Add your name, role, links, photos, and colors. A live preview updates as you type.",
           },
           {
-            title: "03 · Revisions",
+            title: "03 · Publish in seconds",
             description:
-              "Tell us what to change. 2–5 rounds depending on your tier. No rush fees.",
+              "Hit publish and your card goes live at opsolid.de/c/your-name. No login, no waiting.",
           },
           {
-            title: "04 · Delivery",
+            title: "04 · Share your link",
             description:
-              "You receive: the live link, QR code (PNG + SVG), email signature snippet. Fully yours.",
+              "Share the link and QR code anywhere: email signatures, WhatsApp, Instagram, printed material.",
           },
         ],
       },
@@ -1654,22 +1654,22 @@ export const content = {
           {
             question: "How fast do I get my card?",
             answer:
-              "48–72 hours from the moment we have your info and payment. Rush delivery is possible in Professional and Custom tiers — ask us.",
+              "Instantly: build it yourself and publish in seconds. Prefer we design it for you? Choose white-glove (48h).",
           },
           {
             question: "Do you ship a physical NFC card?",
             answer:
-              "Not yet. We focus on digital-only: link + QR. A customer scans your QR or opens your link and sees your profile. No hardware needed. Physical NFC cards may come later as an add-on.",
+              "Available on Premium. The free card works as link + QR: a customer scans your QR or opens your link and sees your profile, no hardware needed. NFC is an option once you upgrade.",
           },
           {
             question: "Can I edit my card myself later?",
             answer:
-              "You send us the changes, we update within one business day. In Custom tier we can set up a simple editor for you. For Starter and Professional, edits are handled through us.",
+              "Yes, anytime - you own an edit link. Open it, change what you need, republish in seconds. No request, no waiting.",
           },
           {
             question: "Where is my data stored?",
             answer:
-              "Frankfurt, Germany — Hetzner / IONOS. Zero US subprocessors. A DPA is ready on request.",
+              "EU-hosted (Frankfurt) - Hetzner / IONOS. No US subprocessors. A DPA is ready on request.",
           },
           {
             question: "Can I cancel or delete my card?",
@@ -1679,26 +1679,26 @@ export const content = {
           {
             question: "I need 10+ cards for my team. How?",
             answer:
-              "Custom tier. We quote per project based on how much each card should share vs. stay unified. Email info@kutasia.com.",
+              "Premium supports multiple cards. For larger rollouts, choose white-glove and we handle the team setup. Email info@opsolid.de.",
           },
         ],
       },
       cta: {
         eyebrow: "READY?",
-        heading: "Your new card. Live in 48 hours.",
-        primaryCta: "Start my card",
+        heading: "Your card. Live in seconds.",
+        primaryCta: "Create my free card",
         secondaryCta: "Browse templates",
       },
       preview: {
         meta: {
           title: "Digital Business Card — Live Preview | OpSolid",
           description:
-            "Try all 5 designs on your phone. Swipe left or right. Pick the one you like and order — €29 one-time, €5/month, or €39/year.",
+            "Build your own digital business card. Preview it live on your phone, swipe between templates, and publish free in seconds.",
         },
         eyebrow: "LIVE PREVIEW",
-        title: "Try the designs on your phone",
+        title: "Build your card, preview it live",
         subtitle:
-          "5 designs. Swipe left or right. Order the one you like.",
+          "Swipe between templates. Preview live. Publish free in seconds.",
         hintSwipe: "Swipe",
         hintArrows: "Use arrow keys to move between designs",
         prev: "Previous design",
@@ -1832,6 +1832,13 @@ export const content = {
           shareLinkOpen: "Open in new tab",
           shareLinkNote:
             "The link contains all form data; the card is not published until you pay.",
+          // Video embed (YouTube / Vimeo)
+          videoSection: "Video (optional)",
+          videoHint:
+            "Paste a YouTube or Vimeo link — it plays right on your card.",
+          videoLabel: "Video link",
+          videoPlaceholder: "https://youtube.com/watch?v=…",
+          videoInvalid: "Only YouTube or Vimeo links are supported.",
           // Phase 7.9 — custom sections editor
           customSectionsSection: "Custom sections (optional)",
           customSectionsHint:
@@ -1988,9 +1995,9 @@ export const content = {
       },
       meta: {
         title:
-          "Digital Business Card — Hand-designed, German-hosted | OpSolid",
+          "OpSo Smart — Free digital business card, live in seconds | OpSolid",
         description:
-          "A hand-designed one-page digital business card with link and QR code. 20+ industry templates. 48-hour delivery. Hosted in Germany, GDPR-native.",
+          "Build your own digital business card for free and publish it in seconds — link, QR, vCard. EU-hosted (Frankfurt), GDPR-native. Premium adds custom domain, NFC and analytics.",
       },
     },
 
@@ -4532,8 +4539,8 @@ export const content = {
 
     digitalCard: {
       hero: {
-        metaChip: "VERSO",
-        metaLabel: "[ VERSO BY OPSOLID · 02 ]",
+        metaChip: "OPSO SMART",
+        metaLabel: "[ OPSO SMART · 02 ]",
         title: {
           pre: "A business card ",
           italic: "designed to be kept",
@@ -4796,13 +4803,13 @@ export const content = {
 
     productsHub: {
       meta: {
-        title: "Products — Voice, Verso, Chat, WhatsApp, Booking, Email, Lead, Custom, Kutasia | OpSolid",
-        description: "Nine products from one studio: AI agents for phone, chat, WhatsApp, email and lead qualification, premium digital business cards (Verso), custom workflow automation, and Kutasia — the unified AI workspace for DACH and TR SMBs. Every product transparent-priced and EU-hosted.",
+        title: "Products — Voice, OpSo Smart, Chat, WhatsApp, Booking, Email, Lead, Custom, Kutasia | OpSolid",
+        description: "Nine products from one studio: AI agents for phone, chat, WhatsApp, email and lead qualification, premium digital business cards (OpSo Smart), custom workflow automation, and Kutasia — the unified AI workspace for DACH and TR SMBs. Every product transparent-priced and EU-hosted.",
       },
       hero: {
         eyebrow: "[ PRODUCTS · 2026 ]",
         title: { pre: "Nine products, ", italic: "one studio", post: "" },
-        lead: "Every product on this page is built and run by the same team. Voice, chat, and WhatsApp agents share an integration spine. Verso, our premium digital business card, ships in 48 hours. Custom Automation handles the workflows the rest can't reach. Kutasia bundles the agents into one unified AI workspace for SMBs that run on customer conversations. Pick the surface, we'll handle the rest.",
+        lead: "Every product on this page is built and run by the same team. Voice, chat, and WhatsApp agents share an integration spine. OpSo Smart, our digital business card, is free to start and live in seconds. Custom Automation handles the workflows the rest can't reach. Kutasia bundles the agents into one unified AI workspace for SMBs that run on customer conversations. Pick the surface, we'll handle the rest.",
         primaryCta: "See pricing",
         secondaryCta: "Book a discovery call",
       },
@@ -4821,11 +4828,11 @@ export const content = {
           },
           {
             id: "verso",
-            name: "Verso by OpSolid",
-            tagline: "Premium digital business card · NFC + QR + custom domain.",
-            body: "Hand-designed, German-hosted digital profiles delivered in 48 hours. 20+ industry templates. Integrates with HubSpot. Replace paper cards without becoming Linktree.",
+            name: "OpSo Smart",
+            tagline: "Digital business card · free to start, live in seconds.",
+            body: "Build your own card free and publish in seconds. 20+ industry templates, link + QR, EU-hosted in Frankfurt. Premium adds a custom domain, NFC, and analytics; white-glove hand-design is optional. Replace paper cards without becoming Linktree.",
             href: "/products/digital-card",
-            startingAt: "from €4/user/mo + €29 setup",
+            startingAt: "Free to start",
             badge: "Live",
           },
         ],
@@ -5099,7 +5106,7 @@ export const content = {
     pricing: {
       meta: {
         title: "Pricing — Standard, Professional, Enterprise | OpSolid",
-        description: "Transparent EUR pricing for OpSolid's nine products: Voice Agent, Verso, Chatbot, WhatsApp, Booking, Email, Lead Qualifier, Custom Automation, and Kutasia.",
+        description: "Transparent EUR pricing for OpSolid's nine products: Voice Agent, OpSo Smart, Chatbot, WhatsApp, Booking, Email, Lead Qualifier, Custom Automation, and Kutasia.",
       },
       hero: {
         eyebrow: "[ PRICING · TRANSPARENT ]",
@@ -5167,35 +5174,35 @@ export const content = {
         },
         {
           id: "verso",
-          name: "Verso by OpSolid",
-          tagline: "Premium digital business cards — link, QR, NFC, German-hosted.",
+          name: "OpSo Smart",
+          tagline: "Build your own digital business card, free to start",
           href: "/products/digital-card",
           tiers: [
             {
-              name: "Standard",
-              setup: "€29 (NFC card)",
-              monthly: "€4/user/mo",
-              included: ["1 profile", "QR + NFC + link", "vCard export", "Basic analytics", "20+ industry templates"],
+              name: "Free",
+              setup: "€0",
+              monthly: "€0",
+              included: ["All templates, layouts & themes", "Link + QR code (PNG + SVG)", "Save-to-contacts (vCard)", "Hosted on opsolid.de/c/your-name", "Small 'Made with OpSo Smart' badge"],
               overage: "",
-              forWhom: "Solo / consultant / freelancer",
+              forWhom: "Solo, freelancer, consultant",
               isHighlighted: false,
             },
             {
-              name: "Professional",
-              setup: "€49/user (NFC + custom design)",
-              monthly: "€7/user/mo",
-              included: ["Custom domain", "Lead capture form", "CRM webhook (HubSpot, Pipedrive)", "Team branding kit", "Advanced analytics"],
+              name: "Premium",
+              setup: "€149 one-time",
+              monthly: "€9/year hosting after year 1",
+              included: ["Everything in Free, badge removed", "Custom slug or your own domain", "NFC option", "Analytics (views + clicks)", "Lead capture + CRM webhook"],
               overage: "",
-              forWhom: "5–50 person sales / agency teams",
+              forWhom: "Pros who want domain, NFC & analytics",
               isHighlighted: true,
             },
             {
-              name: "Enterprise",
-              setup: "€99/user (premium card + onboarding)",
-              monthly: "€5/user/mo (50+ seats)",
-              included: ["SSO / SAML", "AD / SCIM provisioning", "Audit log", "White-label", "DPA on request"],
+              name: "White-glove",
+              setup: "From €299",
+              monthly: "quoted",
+              included: ["We hand-design your card in 48h", "Unlimited revisions", "Multi-language (DE / EN / TR)", "Team rollout", "Priority support"],
               overage: "",
-              forWhom: "50+ seat orgs, regulated employers",
+              forWhom: "Want it done for you",
               isHighlighted: false,
             },
           ],
@@ -5454,7 +5461,7 @@ export const content = {
           { rule: "2 products", benefit: "−10% on combined recurring fees" },
           { rule: "3+ products", benefit: "−15% on combined recurring + 1 free tier upgrade for 3 months" },
           { rule: "Annual prepay", benefit: "−15% (any product, any tier)" },
-          { rule: "Verso teams (50+ seats) bundled with any agent", benefit: "Verso seat price drops to €4/user/mo" },
+          { rule: "OpSo Smart teams (50+ seats) bundled with any agent", benefit: "OpSo Smart seat price drops to €4/user/mo" },
           { rule: "Custom Automation retainer customers", benefit: "All SaaS products at −20%" },
         ],
         note: "Discounts apply to recurring fees only. Setup fees stay fixed. Annual prepay non-refundable; monthly tiers cancel with 30-day notice.",

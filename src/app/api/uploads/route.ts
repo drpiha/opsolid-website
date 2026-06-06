@@ -10,18 +10,35 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { putAsset, STORAGE_LIMITS } from "@/lib/storage";
-import { requireUser, AuthError } from "@/lib/auth/require-user";
+import { getOptionalUser } from "@/lib/auth/require-user";
+import { hitWindow, clientIp } from "@/lib/auth/rate-limit";
 
 export const runtime = "nodejs";
 
 const ALLOWED_KINDS = new Set(["photo", "logo", "gallery"]);
 
+// Anonymous-first: a visitor creates a free card with NO account, so the
+// card-builder form must be able to upload a photo/logo before any user or
+// editToken exists. We therefore allow unauthenticated uploads for these
+// image kinds, but cap them per-IP so the open endpoint can't be abused as
+// free file hosting. Logged-in members bypass the cap. Type + size limits
+// below still apply to everyone.
+const ANON_UPLOADS_PER_HOUR = 30;
+
 export async function POST(req: NextRequest) {
-  try {
-    await requireUser(req);
-  } catch (err) {
-    if (err instanceof AuthError) return err.toResponse();
-    throw err;
+  const user = await getOptionalUser(req);
+  if (!user) {
+    const rl = hitWindow(
+      `upload::${clientIp(req)}`,
+      ANON_UPLOADS_PER_HOUR,
+      60 * 60 * 1000,
+    );
+    if (!rl.ok) {
+      return NextResponse.json(
+        { error: "Too many uploads — please try again later." },
+        { status: 429, headers: { "Retry-After": String(rl.retryAfterSeconds ?? 60) } },
+      );
+    }
   }
 
   const form = await req.formData();

@@ -66,6 +66,12 @@ const nextConfig = {
       { source: "/gizlilik", destination: "/tr/privacy", permanent: true },
     ];
   },
+  async rewrites() {
+    return [
+      { source: "/sunum", destination: "/decks/musteri-sunumu/index.html" },
+      { source: "/sunum/", destination: "/decks/musteri-sunumu/index.html" },
+    ];
+  },
   images: {
     formats: ["image/avif", "image/webp"],
     remotePatterns: [

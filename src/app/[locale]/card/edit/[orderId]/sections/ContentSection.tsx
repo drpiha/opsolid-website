@@ -76,6 +76,38 @@ export default function ContentSection({
           />
         </fieldset>
 
+        {/* Video embed — YouTube / Vimeo URL, rendered by SmartCard */}
+        <fieldset className="space-y-2">
+          <legend className="text-heading-sm text-ink">
+            {form.videoSection ?? "Video"}
+          </legend>
+          {form.videoHint && (
+            <p className="-mt-1 text-xs text-ink/55">{form.videoHint}</p>
+          )}
+          <label className="block">
+            <span className="sr-only">{form.videoLabel ?? "Video link"}</span>
+            <input
+              type="url"
+              inputMode="url"
+              className="field w-full"
+              placeholder={form.videoPlaceholder ?? "https://youtube.com/watch?v=…"}
+              value={cardData.videoUrl ?? ""}
+              onChange={(e) =>
+                setCard("videoUrl", e.target.value.trim() || undefined)
+              }
+            />
+          </label>
+          {cardData.videoUrl &&
+            !/(?:youtube\.com|youtu\.be|youtube-nocookie\.com|vimeo\.com)/i.test(
+              cardData.videoUrl,
+            ) && (
+              <p className="text-xs text-signal-err">
+                {form.videoInvalid ??
+                  "Only YouTube or Vimeo links are supported."}
+              </p>
+            )}
+        </fieldset>
+
         {/* Phase 7.9 — Custom Sections */}
         <fieldset className="space-y-4">
           <legend className="text-heading-sm text-ink">

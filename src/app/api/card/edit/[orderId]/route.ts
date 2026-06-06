@@ -18,6 +18,7 @@ import { prisma } from "@/lib/prisma";
 import { CardDataSchema, OrderStatus } from "@/lib/validation";
 import { EditTokenError, requireEditToken } from "@/lib/auth/edit-token";
 import { validateManualSlug, isSlugAvailable } from "@/lib/slug";
+import { getTemplateById } from "@/config/card-templates";
 
 export const runtime = "nodejs";
 
@@ -29,6 +30,8 @@ const hexColor = z
 
 const PatchSchema = z.object({
   cardData: CardDataSchema,
+  /** Owner-switchable design template. Validated against the catalog below. */
+  templateId: z.number().int().positive().optional(),
   brandPrimaryHex: hexColor,
   brandAccentHex: hexColor,
   photoPath: z
@@ -91,6 +94,19 @@ export async function PATCH(
     }
     const data = parsed.data;
 
+    // Owner switched the design template. Guard against unknown ids so a bad
+    // value can't point the renderer at a non-existent template.
+    let nextTemplateId: number | null = null;
+    if (data.templateId !== undefined && data.templateId !== order.templateId) {
+      if (!getTemplateById(data.templateId)) {
+        return NextResponse.json(
+          { error: "template_invalid" },
+          { status: 400 },
+        );
+      }
+      nextTemplateId = data.templateId;
+    }
+
     // If the designer is still preparing the first render, nudge them to
     // pick up the new input. Appended rather than overwriting so they can
     // still see their own prior internal notes.
@@ -133,6 +149,7 @@ export async function PATCH(
       where: { id: order.id },
       data: {
         cardData: data.cardData,
+        ...(nextTemplateId !== null ? { templateId: nextTemplateId } : {}),
         brandPrimaryHex: data.brandPrimaryHex ?? null,
         brandAccentHex: data.brandAccentHex ?? null,
         photoPath: data.photoPath ?? null,

@@ -102,7 +102,7 @@ export function renderAlbumPhotoPending(
   const locale = normalizeLocale(input.ownerLocale);
   const copy = COPY[locale];
 
-  const editUrl = `${siteBase()}/${locale}/card/edit/${input.orderId}?token=${encodeURIComponent(input.editToken)}#album`;
+  const editUrl = `${siteBase()}/${locale}/card/edit/${input.orderId}?t=${encodeURIComponent(input.editToken)}#album`;
   const cardUrl = `${siteBase()}/c/${input.cardSlug}`;
 
   const uploader = input.uploaderName?.trim() || "—";

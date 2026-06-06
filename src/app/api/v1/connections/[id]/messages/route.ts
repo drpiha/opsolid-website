@@ -357,7 +357,7 @@ export async function POST(
       const senderName =
         user.name?.trim() ||
         user.email?.split("@")[0] ||
-        "Verso";
+        "OpSo Smart";
       const preview =
         parsed.data.body.length > 140
           ? `${parsed.data.body.slice(0, 137)}…`

@@ -36,7 +36,7 @@ cd /opt/opsolid-website
 tar -xzf /tmp/opsolid-deploy.tar.gz
 docker compose up -d --build opsolid
 rm -f /tmp/opsolid-deploy.tar.gz
-docker ps --filter "name=opsolid-app" --format "table {{.Names}}\t{{.Status}}"
+docker ps --filter "name=opsolid-app" --format "{{.Names}}: {{.Status}}" || true
 '@
 
 Write-Host "[4/4] Health check..." -ForegroundColor Cyan

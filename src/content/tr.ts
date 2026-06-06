@@ -899,7 +899,7 @@ export const content: Content = {
   impressum: {
     title: "Yasal Bildirim",
     notice:
-      "Bu yasal bildirim, Almanya'da kuruluş aşamasındaki bir şahıs şirketi (Einzelunternehmen i.Gr.) içindir. Gewerbeanmeldung sonrası bilgiler güncellenecektir.",
+      "OpSolid, Hasan Dönmez'e ait, Almanya Arnsberg merkezli bir şahıs şirketidir (Einzelunternehmen).",
     sections: {
       according: "§ 5 DDG'ye göre (Dijital Hizmetler Yasası, eski § 5 TMG)",
       representedBy: "Temsil eden",
@@ -907,10 +907,10 @@ export const content: Content = {
       phone: "Telefon: Talep üzerine",
       register: "Ticaret Sicili",
       registerText:
-        "Şu anda ticaret sicili kaydı bulunmamaktadır. Kuruluş aşamasındaki şahıs şirketi (Einzelunternehmen i.Gr.) için Handelsregister kaydı zorunlu değildir.",
+        "OpSolid bir şahıs şirketidir (Einzelunternehmen) ve ticaret siciline (Handelsregister) kayıtlı değildir; bu hukuki biçim için kayıt gerekmez.",
       vatId: "KDV Kimlik No / Wirtschafts-Identifikationsnummer (W-IdNr)",
       vatIdText:
-        "USt-IdNr Gewerbeanmeldung sonrası başvurulacaktır. Aralık 2026'dan itibaren burada ayrıca yeni W-IdNr (Wirtschafts-Identifikationsnummer) yer alacaktır.",
+        "Katma değer vergisi kimlik numarası (§ 27a UStG uyarınca USt-IdNr.): DE462227107",
       responsibleContent:
         "§ 18 Abs. 2 MStV'ye göre içerikten sorumlu kişi (Medienstaatsvertrag, eski § 55 RStV)",
       disputeResolution: "Çevrimiçi Uyuşmazlık Çözümü",
@@ -930,13 +930,13 @@ export const content: Content = {
     title: "Gizlilik Politikası",
     subtitle: "Datenschutzerklärung · Privacy Policy",
     notice:
-      "Bu, OpSolid pazarlama sitesi ve Verso (Dijital Kartvizit) ürünü için GDPR (AB) ve KVKK (Türkiye) çerçevesinde hazırlanmış bir aydınlatma metnidir. Gewerbeanmeldung sonrası avukat onaylı nihai metin bu bildirimin yerini alacaktır. Son inceleme: Hasan Dönmez.",
+      "Bu, OpSolid pazarlama sitesi ve OpSo Smart (Dijital Kartvizit) ürünü için GDPR (AB) ve KVKK (Türkiye) çerçevesinde hazırlanmış bir aydınlatma metnidir. Gewerbeanmeldung sonrası avukat onaylı nihai metin bu bildirimin yerini alacaktır. Son inceleme: Hasan Dönmez.",
     lastUpdated: "Son güncelleme: Mayıs 2026",
     sections: [
       {
         title: "1. Veri Koruma Özeti",
         content:
-          "Aşağıda, bu web sitesini ziyaret ettiğinizde veya Verso ürününü kullandığınızda kişisel verilerinize ne olduğuna dair genel bir bakış sunulmaktadır. Kişisel veri, sizi kişisel olarak tanımlayabilecek her türlü veridir. İki düzenleme paralel olarak uygulanır: AB Genel Veri Koruma Tüzüğü (GDPR / DSGVO) ve Türk Kişisel Verilerin Korunması Kanunu (KVKK, 6698 sayılı Kanun).",
+          "Aşağıda, bu web sitesini ziyaret ettiğinizde veya OpSo Smart ürününü kullandığınızda kişisel verilerinize ne olduğuna dair genel bir bakış sunulmaktadır. Kişisel veri, sizi kişisel olarak tanımlayabilecek her türlü veridir. İki düzenleme paralel olarak uygulanır: AB Genel Veri Koruma Tüzüğü (GDPR / DSGVO) ve Türk Kişisel Verilerin Korunması Kanunu (KVKK, 6698 sayılı Kanun).",
       },
       {
         title: "2. Sorumlu Taraf / Veri Sorumlusu",
@@ -965,7 +965,7 @@ export const content: Content = {
       {
         title: "4. Barındırma",
         content:
-          "Pazarlama sitesi, Verso ürününün backend'i ve Postgres veritabanı, tek bir kendi yönetimimizdeki Hostinger VPS (Hostinger International Ltd., AS47583) üzerinde çalışmaktadır. Sunucu fiziksel olarak Vilnius, Litvanya (AB) konumundadır. Sunucu hostname: srv1150632.hstgr.cloud. Tüm ziyaretçi trafiği, kart içerikleri, müşteri kayıtları ve veritabanı yedekleri AB toprağında kalır. Hostinger ile DPA (GDPR m.28 kapsamında AVV) dosyalanmıştır.",
+          "Pazarlama sitesi, OpSo Smart ürününün backend'i ve Postgres veritabanı, tek bir kendi yönetimimizdeki Hostinger VPS (Hostinger International Ltd., AS47583) üzerinde çalışmaktadır. Sunucu fiziksel olarak Vilnius, Litvanya (AB) konumundadır. Sunucu hostname: srv1150632.hstgr.cloud. Tüm ziyaretçi trafiği, kart içerikleri, müşteri kayıtları ve veritabanı yedekleri AB toprağında kalır. Hostinger ile DPA (GDPR m.28 kapsamında AVV) dosyalanmıştır.",
       },
       {
         title: "5. Çerezler ve Analitik",
@@ -995,7 +995,7 @@ export const content: Content = {
           {
             title: "Barındırma ve altyapı",
             content:
-              "Hostinger International Ltd. (Litvanya, AB) — pazarlama sitesi, Verso uygulaması ve Postgres veritabanını Vilnius'taki tek bir VPS üzerinde barındırır. ABD'de barındırma alt işleyicisi yoktur.",
+              "Hostinger International Ltd. (Litvanya, AB) — pazarlama sitesi, OpSo Smart uygulaması ve Postgres veritabanını Vilnius'taki tek bir VPS üzerinde barındırır. ABD'de barındırma alt işleyicisi yoktur.",
           },
           {
             title: "E-posta gönderimi",
@@ -1003,7 +1003,7 @@ export const content: Content = {
               "İletişim formu bildirimleri için SMTP relay. Sağlayıcı detayları talep üzerine; değiştiğinde güncellenir.",
           },
           {
-            title: "Ödemeler (Verso, planlanan)",
+            title: "Ödemeler (OpSo Smart, planlanan)",
             content:
               "Tek seferlik ve abonelik faturalandırması için Stripe Payments Europe Ltd. (İrlanda). Kart bilgileri Stripe tarafından tokenize edilir; OpSolid ham PAN'ı görmez. AVV Stripe Services Agreement üzerinden. Stripe ABD'ye uluslararası aktarım DPF + SCC kapsamında.",
           },
@@ -1020,17 +1020,17 @@ export const content: Content = {
           "Kişisel veriler Avrupa Ekonomik Alanı dışına aktarıldığında (örn. ABD'de Vercel, Stripe, OpenAI, Anthropic), aktarım (a) alıcı DPF sertifikalı ise AB-ABD Veri Gizliliği Çerçevesi yeterlilik kararına, ya da (b) Standart Sözleşme Hükümleri (SCC, AB 2021/914) ile dökümante edilmiş Transfer Etki Değerlendirmesine dayanır. Türkiye'de yerleşik veri sahipleri için ek olarak KVKK m.9 yurtdışı aktarım kuralları uygulanır: aktarımlar KVKK standart sözleşmesi (10.07.2024 Yönetmeliği) kapsamında yapılır ve gerektiğinde 5 iş günü içinde Kurum'a bildirilir.",
       },
       {
-        title: "8. Verso Dijital Kartvizit Ürünü",
+        title: "8. OpSo Smart Dijital Kartvizit Ürünü",
         subsections: [
           {
             title: "Amaç ve hukuki dayanak",
             content:
-              "Verso lead formu veya self-servis sipariş akışı üzerinden gönderdiğiniz verileri (ad, iş e-postası, şirket, ünvan, telefon (opsiyonel), mesaj, foto/logo upload, marka renkleri, sosyal linkler) hizmetin sunulması için işleriz. Hukuki dayanak: GDPR m.6(1)(b) (sözleşme ifası) ve GDPR m.6(1)(a) (kamuya yayın için açık rızanız).",
+              "OpSo Smart lead formu veya self-servis sipariş akışı üzerinden gönderdiğiniz verileri (ad, iş e-postası, şirket, ünvan, telefon (opsiyonel), mesaj, foto/logo upload, marka renkleri, sosyal linkler) hizmetin sunulması için işleriz. Hukuki dayanak: GDPR m.6(1)(b) (sözleşme ifası) ve GDPR m.6(1)(a) (kamuya yayın için açık rızanız).",
           },
           {
             title: "Kartınızın kamuya yayınlanması",
             content:
-              "Bir Verso kartını /c/{slug} altında yayınladığınızda, girdiğiniz bilgiler internette kamuya açık hale gelir. Bunun için yayın adımında ayrı, açık opt-in onayınız gereklidir. Kartı istediğiniz zaman hesabınızdan yayından kaldırabilir veya silebilirsiniz; bu durumda noindex header eklenir ve büyük arama motorlarından URL kaldırma talebi yapılır.",
+              "Bir OpSo Smart kartını /c/{slug} altında yayınladığınızda, girdiğiniz bilgiler internette kamuya açık hale gelir. Bunun için yayın adımında ayrı, açık opt-in onayınız gereklidir. Kartı istediğiniz zaman hesabınızdan yayından kaldırabilir veya silebilirsiniz; bu durumda noindex header eklenir ve büyük arama motorlarından URL kaldırma talebi yapılır.",
           },
           {
             title: "Üçüncü kişi içeriği",
@@ -1040,22 +1040,22 @@ export const content: Content = {
           {
             title: "Barındırma",
             content:
-              "Kart ve müşteri verileri Hostinger VPS (Litvanya, AB) üzerinde saklanır. Verso kart içerikleri için ABD alt işleyici yoktur; ödeme verileri yukarıda belirtilen ayrı sub-processor şartları altında Stripe tarafından işlenir.",
+              "Kart ve müşteri verileri Hostinger VPS (Litvanya, AB) üzerinde saklanır. OpSo Smart kart içerikleri için ABD alt işleyici yoktur; ödeme verileri yukarıda belirtilen ayrı sub-processor şartları altında Stripe tarafından işlenir.",
           },
           {
             title: "14 günlük cayma hakkı (B2C)",
             content:
-              "Verso'yu tüketici olarak (B2C, AB/AEA) sipariş ederseniz, § 355 BGB uyarınca 14 günlük cayma hakkına sahipsiniz. Dijital hizmetin 14 gün dolmadan başlaması için, derhal ifa talep ettiğinizi ve tam ifa halinde cayma hakkınızın sona ereceğini ayrı checkbox'larla onaylamanız gerekir. Onaylarınızı ispat amacıyla loglanır. 19 Haziran 2026'dan itibaren tek tıkla cayma butonu sunulur.",
+              "OpSo Smart'ı tüketici olarak (B2C, AB/AEA) sipariş ederseniz, § 355 BGB uyarınca 14 günlük cayma hakkına sahipsiniz. Dijital hizmetin 14 gün dolmadan başlaması için, derhal ifa talep ettiğinizi ve tam ifa halinde cayma hakkınızın sona ereceğini ayrı checkbox'larla onaylamanız gerekir. Onaylarınızı ispat amacıyla loglanır. 19 Haziran 2026'dan itibaren tek tıkla cayma butonu sunulur.",
           },
           {
             title: "Saklama süresi",
             content:
-              "Aktif Verso kartları: abonelik aktif olduğu sürece saklanır. İptal / inaktif: abonelik bitiminden 90 gün sonra silinir (60. günde hatırlatma e-postası). Lead form gönderimleri (satın alma yok): 24 ay. Faturalar: § 257 HGB / Vergi Usul Kanunu uyarınca 10 yıl saklanır (yasal yükümlülük).",
+              "Aktif OpSo Smart kartları: abonelik aktif olduğu sürece saklanır. İptal / inaktif: abonelik bitiminden 90 gün sonra silinir (60. günde hatırlatma e-postası). Lead form gönderimleri (satın alma yok): 24 ay. Faturalar: § 257 HGB / Vergi Usul Kanunu uyarınca 10 yıl saklanır (yasal yükümlülük).",
           },
           {
             title: "Silme hakkı",
             content:
-              "Verso kartınızı ve ilgili tüm kişisel verileri hesabınız içinden tek tıklamayla veya info@opsolid.de adresine e-posta göndererek silebilirsiniz. Silme işlemi 30 gün içinde tamamlanır. Yıkıcı işlemler öncesi kimlik doğrulama (e-posta onayı + aktif ise 2FA) gereklidir.",
+              "OpSo Smart kartınızı ve ilgili tüm kişisel verileri hesabınız içinden tek tıklamayla veya info@opsolid.de adresine e-posta göndererek silebilirsiniz. Silme işlemi 30 gün içinde tamamlanır. Yıkıcı işlemler öncesi kimlik doğrulama (e-posta onayı + aktif ise 2FA) gereklidir.",
           },
         ],
       },
@@ -1407,17 +1407,17 @@ export const content: Content = {
 
     digitalCard: {
       hero: {
-        eyebrow: "[ VERSO BY OPSOLID ]   PREMİUM DİJİTAL KARTVİZİT",
+        eyebrow: "[ OPSO SMART ]   DİJİTAL KARTVİZİTİNİZ",
         title: [
-          "Verso.",
-          "Premium dijital kartvizitler,",
-          "48 saatte teslim.",
+          "OpSo Smart.",
+          "Dijital kartvizitinizi kendiniz oluşturun -",
+          "ücretsiz, saniyeler içinde canlı.",
         ],
         paragraph:
-          "Verso, sizin için oluşturduğumuz tek sayfalık el yapımı bir dijital profildir. Link veya QR kod olarak paylaşın. Başlangıç noktası olarak 20+ sektör şablonu. Almanya'da barındırma, GDPR-yerli — abonelik tuzakları yok.",
-        primaryCta: "Verso başlat",
+          "Şablon seçin, bilgilerinizi girin, yayınlayın. Kartınız saniyeler içinde opsolid.de/c/adiniz adresinde canlı olur, başlangıç ücretsizdir. Özel alan adı, NFC veya analitik gerektiğinde yükseltin. Frankfurt'ta EU barındırma, GDPR-yerli, abonelik tuzağı yok.",
+        primaryCta: "Ücretsiz kartımı oluştur",
         secondaryCta: "20 canlı şablonu gör",
-        tags: "VERSO · LİNK · QR KOD · ÖZEL TASARIM · 48 SAAT TESLİMAT · ALMAN HOSTİNG",
+        tags: "OPSO SMART · LİNK · QR KOD · vCARD · EU BARINDIRMA · ÜCRETSİZ BAŞLA",
         cardLabels: {
           name: "Alex Weber",
           role: "Ürün Tasarımcısı",
@@ -1452,8 +1452,8 @@ export const content: Content = {
           },
           {
             label: "TASARIM · 04",
-            title: "Size özel el yapımı",
-            desc: "Şablonu bilgileriniz, renkleriniz ve fotoğraflarınızla uyarlarız. 48–72 saatte teslim. Revizyonlar dahil.",
+            title: "Kendiniz tasarlayın",
+            desc: "Yazdıkça canlı önizleme. Düzen ve tema seçin, renklerinizi ve fotoğraflarınızı ekleyin, anında yayınlayın. Sizin için yapılmasını mı istersiniz? White-glove bir üst pakette.",
             icon: "layout",
           },
           {
@@ -1464,7 +1464,7 @@ export const content: Content = {
           },
           {
             label: "HOSTİNG · 06",
-            title: "Almanya'da barındırılıyor",
+            title: "EU barındırma (Frankfurt)",
             desc: "Hetzner / IONOS Frankfurt. GDPR-yerli. ABD alt işleyen yok. Her zaman tek tıkla silme.",
             icon: "hosting",
           },
@@ -1523,51 +1523,51 @@ export const content: Content = {
         popularBadge: "EN POPÜLER",
         plans: [
           {
-            name: "Starter",
-            price: "€49",
-            cadence: "tek seferlik · 1. yıl hosting dahil",
+            name: "Free",
+            price: "€0",
+            cadence: "Kendiniz oluşturun, saniyeler içinde canlı.",
             popular: "",
             bullets: [
-              "Kütüphanemizden 1 sektör şablonu",
+              "Tüm şablonlar, düzenler ve temalar",
               "Link + QR kod (PNG + SVG)",
-              "2 revizyon dahil",
-              "E-posta imza snippet'i",
-              "opsolid.de/c/adiniz üzerinde 1 yıl hosting",
-              "Hosting yenileme: 1. yıldan sonra €9/yıl",
+              "Kişilere kaydet (vCard)",
+              "opsolid.de/c/adiniz üzerinde barındırma",
+              "Küçük „Made with OpSo Smart“ rozeti",
+              "Giriş gerekmez",
             ],
-            cta: "Starter'ı başlat",
+            cta: "Ücretsiz kartımı oluştur",
             href: "#lead",
           },
           {
-            name: "Professional",
+            name: "Premium",
             price: "€149",
             cadence: "tek seferlik · 1. yıldan sonra €9/yıl hosting",
             popular: "true",
             bullets: [
-              "Her şablon + hafif özelleştirme",
-              "Özel slug (opsolid.de/c/markaniz)",
-              "5 revizyon dahil",
-              "Analitik (görüntüleme, link tıklamaları)",
-              "E-posta imzası + sosyal medya görselleri",
-              "Çoklu dil (DE/EN/TR) opsiyonel",
+              "Free'deki her şey, rozet kaldırıldı",
+              "Özel slug veya kendi alan adınız",
+              "NFC seçeneği",
+              "Analitik (görüntüleme + tıklama)",
+              "Video bloğu + müşteri toplama / CRM",
+              "Birden fazla kart",
             ],
-            cta: "Professional'ı başlat",
+            cta: "Premium'a geç",
             href: "#lead",
           },
           {
-            name: "Custom",
+            name: "White-glove",
             price: "€299'dan başlayan",
-            cadence: "proje bazlı teklif",
+            cadence: "teklifli · sizin için tasarlarız",
             popular: "",
             bullets: [
-              "Tamamen özel tasarım (şablonsuz)",
-              "Kendi alan adınız (adiniz.com)",
+              "Kartınızı 48 saatte sizin için elle tasarlarız",
+              "Sınırsız revizyon",
               "Çoklu dil (DE/EN/TR)",
-              "Gelişmiş analitik",
-              "Ekip listesi (5+ kart proje bazlı fiyat)",
-              "Gerektiğinde CRM entegrasyonu",
+              "Ekip kurulumu",
+              "Premium'daki her şey",
+              "Öncelikli destek",
             ],
-            cta: "Teklif iste",
+            cta: "White-glove iste",
             href: "#lead",
           },
         ],
@@ -1591,9 +1591,9 @@ export const content: Content = {
           submit: "Talep gönder",
           submitting: "Gönderiliyor…",
           success:
-            "Teşekkürler — bir iş günü içinde önizleme linkiyle dönüş yapacağız.",
+            "Teşekkürler - bir iş günü içinde önizleme linkiyle dönüş yapacağız.",
           error:
-            "Bir sorun oluştu. Lütfen doğrudan info@kutasia.com adresine yazın.",
+            "Bir sorun oluştu. Lütfen doğrudan info@opsolid.de adresine yazın.",
         },
       },
       testimonials: {
@@ -1602,21 +1602,21 @@ export const content: Content = {
         items: [
           {
             quote:
-              "Kart iki günde hazırdı. Tasarımcı bir emlakçının profil sayfasında neye ihtiyacı olduğunu gerçekten anladı — neredeyse hiç revizyon istemedim.",
+              "Kartımı on dakikada oluşturdum. Şablon seçtim, bilgilerimi yazdım, yayınladım - ve link canlıya çıktı. Ne yazışma ne de bekleme.",
             name: "Lena Richter",
             role: "Bağımsız emlakçı",
             company: "Berlin, DE",
           },
           {
             quote:
-              "Verilerin Almanya'da kalması, hukuk ekibimizi ikna etti. Sırf bu bile fiyata değerdi.",
+              "Verilerin AB'de kalması, hukuk ekibimizi ikna etti. Sırf bu bile yükseltmeye değerdi.",
             name: "Marco Weber",
             role: "COO",
             company: "Münih sanayi grubu",
           },
           {
             quote:
-              "Aylık abonelik yok. „Enterprise paketi“ satışı yok. Bir kez ödedim, kartı aldım, QR'ı aldım, yoluma devam ettim. Tam da istediğim şey.",
+              "Aylık abonelik yok. „Enterprise paketi“ satışı yok. Ücretsiz başladım, özel alan adı için bir kez ödedim, yoluma devam ettim. Tam da istediğim şey.",
             name: "Sarah Klein",
             role: "Bağımsız danışman",
             company: "Berlin, DE",
@@ -1624,28 +1624,28 @@ export const content: Content = {
         ],
       },
       howItWorks: {
-        label: "NASIL TESLİM EDİYORUZ",
-        heading: "Dört adım. 48 saatte canlı kart.",
+        label: "NASIL ÇALIŞIR",
+        heading: "Dört adım. Saniyeler içinde canlı.",
         steps: [
           {
-            title: "01 · Sipariş",
+            title: "01 · Şablon seçin",
             description:
-              "Kısa formu doldurun: sektörünüz, temel bilgileriniz, tercih ettiğiniz şablon. Tek seferlik ücreti ödeyin.",
+              "20 sektör şablonuna göz atın ve size uygun olanı seçin. Eşleşecek düzen ve temayı belirleyin.",
           },
           {
-            title: "02 · Tasarım",
+            title: "02 · Bilgilerinizi girin",
             description:
-              "48–72 saat içinde özelleştirilmiş profilinizin önizleme linkini göndeririz.",
+              "Adınızı, rolünüzü, linklerinizi, fotoğraf ve renklerinizi ekleyin. Yazdıkça canlı önizleme güncellenir.",
           },
           {
-            title: "03 · Revizyonlar",
+            title: "03 · Saniyeler içinde yayınlayın",
             description:
-              "Nelerin değişmesini istediğinizi söyleyin. Paketinize bağlı olarak 2–5 tur. Acele ücreti yok.",
+              "Yayınlayın ve kartınız opsolid.de/c/adiniz adresinde canlı olsun. Giriş yok, bekleme yok.",
           },
           {
-            title: "04 · Teslimat",
+            title: "04 · Linkinizi paylaşın",
             description:
-              "Alırsınız: canlı link, QR kod (PNG + SVG), e-posta imza snippet'i. Tamamen sizindir.",
+              "Link ve QR kodu her yerde paylaşın: e-posta imzaları, WhatsApp, Instagram, basılı materyal.",
           },
         ],
       },
@@ -1656,22 +1656,22 @@ export const content: Content = {
           {
             question: "Kartımı ne kadar sürede alırım?",
             answer:
-              "Bilgilerinizi ve ödemenizi aldığımız andan itibaren 48–72 saat. Professional ve Custom paketlerde acele teslimat mümkün — bize sorun.",
+              "Anında: kendiniz oluşturup saniyeler içinde yayınlayın. Sizin için tasarlamamızı mı istersiniz? White-glove'u seçin (48 saat).",
           },
           {
             question: "Fiziksel NFC kart gönderiyor musunuz?",
             answer:
-              "Henüz hayır. Şu anda yalnızca dijital odaklıyız: link + QR. Müşteri QR'ınızı tarar veya linkinizi açar ve profilinizi görür. Donanım gerekmez. Fiziksel NFC kartlar ilerleyen dönemde bir ek olarak gelebilir.",
+              "Premium'da mevcut. Ücretsiz kart link + QR olarak çalışır: müşteri QR'ınızı tarar veya linkinizi açar ve profilinizi görür, donanım gerekmez. NFC, yükselttikten sonra bir seçenektir.",
           },
           {
             question: "Kartımı daha sonra kendim düzenleyebilir miyim?",
             answer:
-              "Değişiklikleri bize gönderirsiniz, bir iş günü içinde güncelleriz. Custom'da sizin için basit bir editör kurabiliriz. Starter ve Professional'da değişiklikler bizden yürütülür.",
+              "Evet, istediğiniz zaman - bir düzenleme linkine sahip olursunuz. Açın, değiştirin, saniyeler içinde yeniden yayınlayın. Talep yok, bekleme yok.",
           },
           {
             question: "Verilerim nerede saklanıyor?",
             answer:
-              "Frankfurt, Almanya — Hetzner / IONOS. ABD alt işleyen yok. Talep üzerine DPA hazır.",
+              "EU barındırma (Frankfurt) - Hetzner / IONOS. ABD alt işleyen yok. Talep üzerine DPA hazır.",
           },
           {
             question: "Kartımı iptal edebilir veya silebilir miyim?",
@@ -1681,26 +1681,26 @@ export const content: Content = {
           {
             question: "Ekibim için 10+ karta ihtiyacım var. Nasıl?",
             answer:
-              "Custom paket. Kartların ne kadar ortak paylaşacağına ve ne kadar özel kalacağına göre proje bazlı teklif veririz. info@kutasia.com adresine yazın.",
+              "Premium birden fazla kartı destekler. Daha büyük kurulumlar için white-glove'u seçin, ekip kurulumunu biz üstlenelim. info@opsolid.de adresine yazın.",
           },
         ],
       },
       cta: {
         eyebrow: "HAZIR MISIN?",
-        heading: "Yeni kartınız. 48 saatte canlı.",
-        primaryCta: "Kartımı başlat",
+        heading: "Kartınız. Saniyeler içinde canlı.",
+        primaryCta: "Ücretsiz kartımı oluştur",
         secondaryCta: "Şablonlara gözat",
       },
       preview: {
         meta: {
           title: "Dijital Kartvizit — Canlı Önizleme | OpSolid",
           description:
-            "5 tasarımı telefonunuzda deneyin. Sola sağa kaydırın. Beğendiğiniz tasarımı sipariş verin — €29 tek seferlik, €5/ay veya €39/yıl.",
+            "Dijital kartvizitinizi kendiniz oluşturun. Telefonunuzda canlı önizleyin, şablonlar arasında kaydırın ve saniyeler içinde ücretsiz yayınlayın.",
         },
         eyebrow: "CANLI ÖNİZLEME",
-        title: "Tasarımları telefonda deneyin",
+        title: "Kartınızı oluşturun, canlı önizleyin",
         subtitle:
-          "5 tasarım. Sağa sola kaydırın. Beğendiğinize sipariş verin.",
+          "Şablonlar arasında kaydırın. Canlı önizleyin. Saniyeler içinde ücretsiz yayınlayın.",
         hintSwipe: "Kaydırın",
         hintArrows: "Tasarımlar arasında ok tuşlarıyla geçin",
         prev: "Önceki tasarım",
@@ -1834,6 +1834,12 @@ export const content: Content = {
           shareLinkOpen: "Yeni sekmede aç",
           shareLinkNote:
             "Bağlantı tüm form bilgilerini içerir; ödeme yapana kadar kart yayında değildir.",
+          videoSection: "Video (opsiyonel)",
+          videoHint:
+            "YouTube veya Vimeo bağlantısı yapıştır — kartında doğrudan oynar.",
+          videoLabel: "Video bağlantısı",
+          videoPlaceholder: "https://youtube.com/watch?v=…",
+          videoInvalid: "Yalnızca YouTube veya Vimeo bağlantıları desteklenir.",
           customSectionsSection: "Özel bölümler (opsiyonel)",
           customSectionsHint:
             "En fazla 6 bölüm ekleyebilirsin — ödüller, diller, ne istersen.",
@@ -1987,9 +1993,9 @@ export const content: Content = {
       },
       meta: {
         title:
-          "Dijital Kartvizit — El yapımı tasarım, Almanya'da barındırma | OpSolid",
+          "OpSo Smart — Ücretsiz dijital kartvizit, saniyeler içinde canlı | OpSolid",
         description:
-          "Link ve QR kod içeren el yapımı tasarım, tek sayfalık dijital kartvizit. 20+ sektör şablonu. 48 saatte teslim. Almanya'da barındırılıyor, GDPR-yerli.",
+          "Dijital kartvizitinizi ücretsiz oluşturun ve saniyeler içinde yayınlayın — link, QR, vCard. EU barındırma (Frankfurt), GDPR-yerli. Premium; özel alan adı, NFC ve analitik ekler.",
       },
     },
 
@@ -3734,7 +3740,7 @@ export const content: Content = {
         ctaPrimary: "Ücretsiz görüşme planla",
         ctaSecondary: "Bilgi içeriklerini gör",
         trustLine:
-          "BAĞIMSIZ · DSGVO/KVKK UYUMLU · MADE IN GERMANY · DE · EN · TR",
+          "BAĞIMSIZ · DSGVO/KVKK UYUMLU · EU-HOSTED · DE · EN · TR",
       },
     },
 
@@ -4518,8 +4524,8 @@ export const content: Content = {
 
     digitalCard: {
       hero: {
-        metaChip: "VERSO",
-        metaLabel: "[ VERSO BY OPSOLID · 02 ]",
+        metaChip: "OPSO SMART",
+        metaLabel: "[ OPSO SMART · 02 ]",
         title: {
           pre: "Saklanmayı ",
           italic: "hak eden",
@@ -4782,13 +4788,13 @@ export const content: Content = {
 
     productsHub: {
       meta: {
-        title: "Ürünler — Voice, Verso, Chat, WhatsApp, Booking, Email, Lead, Custom, Kutasia | OpSolid",
-        description: "Tek stüdyodan dokuz ürün: telefon, chat, WhatsApp, e-posta ve lead qualification için yapay zekâ ajanları, premium dijital kartvizit (Verso), özel workflow otomasyonu ve Kutasia — DACH ve Türkiye'deki KOBİ'ler için unified AI çalışma alanı. Her ürün şeffaf fiyatlı ve EU-hostlu.",
+        title: "Ürünler — Voice, OpSo Smart, Chat, WhatsApp, Booking, Email, Lead, Custom, Kutasia | OpSolid",
+        description: "Tek stüdyodan dokuz ürün: telefon, chat, WhatsApp, e-posta ve lead qualification için yapay zekâ ajanları, premium dijital kartvizit (OpSo Smart), özel workflow otomasyonu ve Kutasia — DACH ve Türkiye'deki KOBİ'ler için unified AI çalışma alanı. Her ürün şeffaf fiyatlı ve EU-hostlu.",
       },
       hero: {
         eyebrow: "[ ÜRÜNLER · 2026 ]",
         title: { pre: "Dokuz ürün, ", italic: "tek stüdyo", post: "" },
-        lead: "Bu sayfadaki her ürünü aynı ekip kuruyor ve işletiyor. Voice, chat ve WhatsApp ajanları aynı entegrasyon omurgasını paylaşır. Premium dijital kartvizitimiz Verso 48 saatte teslim edilir. Custom Automation, geri kalanın ulaşamadığı workflow'ları halleder. Kutasia, ajanları tek bir unified AI çalışma alanında birleştirir — işi müşteri görüşmelerine bağlı KOBİ'ler için. Yüzeyi siz seçin, gerisini biz yaparız.",
+        lead: "Bu sayfadaki her ürünü aynı ekip kuruyor ve işletiyor. Voice, chat ve WhatsApp ajanları aynı entegrasyon omurgasını paylaşır. Dijital kartvizitimiz OpSo Smart, başlangıçta ücretsizdir ve saniyeler içinde canlı olur. Custom Automation, geri kalanın ulaşamadığı workflow'ları halleder. Kutasia, ajanları tek bir unified AI çalışma alanında birleştirir — işi müşteri görüşmelerine bağlı KOBİ'ler için. Yüzeyi siz seçin, gerisini biz yaparız.",
         primaryCta: "Fiyatları gör",
         secondaryCta: "Tanışma görüşmesi planla",
       },
@@ -4797,7 +4803,7 @@ export const content: Content = {
         heading: "Bizi hatırlatan iki ürün",
         items: [
           { id: "voice-agent", name: "Voice AI Agent", tagline: "Retell veya Vapi üzerinde 24/7 telefon resepsiyonu.", body: "Çok dilli telefon yanıtı, takvim senkronizasyonu, script bittiğinde insana devir. Hamburg taksi dispeçlerinde, Bavyera otellerinde ve Almanya çapında B2B service desk'lerinde canlı.", href: "/products/voice-agent", startingAt: "€1.500 setup + €299/ay'dan", badge: "Canlı" },
-          { id: "verso", name: "Verso by OpSolid", tagline: "Premium dijital kartvizit · NFC + QR + custom domain.", body: "Almanya'da hostlu, elle tasarlanmış dijital profiller 48 saatte teslim. 20+ sektör şablonu. HubSpot entegrasyonu. Linktree olmadan kağıt kartviziti değiştirir.", href: "/products/digital-card", startingAt: "€29 setup + €4/kullanıcı/ay'dan", badge: "Canlı" },
+          { id: "verso", name: "OpSo Smart", tagline: "Dijital kartvizit · başlangıçta ücretsiz, saniyeler içinde canlı.", body: "Kartınızı ücretsiz oluşturun ve saniyeler içinde yayınlayın. 20+ sektör şablonu, link + QR, Frankfurt'ta EU barındırma. Premium; özel alan adı, NFC ve analitik ekler; white-glove elle tasarım opsiyoneldir. Linktree olmadan kağıt kartviziti değiştirir.", href: "/products/digital-card", startingAt: "Başlangıçta ücretsiz", badge: "Canlı" },
         ],
       },
       grid: {
@@ -5069,7 +5075,7 @@ export const content: Content = {
     pricing: {
       meta: {
         title: "Fiyatlandırma — Standard, Professional, Enterprise | OpSolid",
-        description: "OpSolid'in dokuz ürünü için şeffaf EUR fiyatlandırma: Voice Agent, Verso, Chatbot, WhatsApp, Booking, Email, Lead Qualifier, Custom Automation ve Kutasia.",
+        description: "OpSolid'in dokuz ürünü için şeffaf EUR fiyatlandırma: Voice Agent, OpSo Smart, Chatbot, WhatsApp, Booking, Email, Lead Qualifier, Custom Automation ve Kutasia.",
       },
       hero: {
         eyebrow: "[ FİYATLANDIRMA · ŞEFFAF ]",
@@ -5137,35 +5143,35 @@ export const content: Content = {
         },
         {
           id: "verso",
-          name: "Verso by OpSolid",
-          tagline: "Premium dijital kartvizit — link, QR, NFC, Almanya'da hostlu.",
+          name: "OpSo Smart",
+          tagline: "Dijital kartvizitinizi kendiniz oluşturun, başlangıçta ücretsiz",
           href: "/products/digital-card",
           tiers: [
             {
-              name: "Standard",
-              setup: "€29 (NFC kart)",
-              monthly: "€4/kullanıcı/ay",
-              included: ["1 profil", "QR + NFC + link", "vCard export", "Temel analitik", "20+ sektör şablonu"],
+              name: "Free",
+              setup: "€0",
+              monthly: "€0",
+              included: ["Tüm şablonlar, düzenler & temalar", "Link + QR kod (PNG + SVG)", "Kişilere kaydet (vCard)", "opsolid.de/c/adiniz üzerinde barındırma", "Küçük 'Made with OpSo Smart' rozeti"],
               overage: "",
-              forWhom: "Solo / danışman / freelancer",
+              forWhom: "Solo, freelancer, danışman",
               isHighlighted: false,
             },
             {
-              name: "Professional",
-              setup: "€49/kullanıcı (NFC + custom tasarım)",
-              monthly: "€7/kullanıcı/ay",
-              included: ["Custom domain", "Lead toplama formu", "CRM webhook (HubSpot, Pipedrive)", "Takım branding kiti", "Gelişmiş analitik"],
+              name: "Premium",
+              setup: "€149 tek seferlik",
+              monthly: "1. yıldan sonra €9/yıl hosting",
+              included: ["Free'deki her şey, rozet kaldırıldı", "Özel slug veya kendi alan adınız", "NFC seçeneği", "Analitik (görüntüleme + tıklama)", "Lead toplama + CRM webhook"],
               overage: "",
-              forWhom: "5–50 kişilik satış / ajans takımları",
+              forWhom: "Alan adı, NFC & analitik isteyen profesyoneller",
               isHighlighted: true,
             },
             {
-              name: "Enterprise",
-              setup: "€99/kullanıcı (premium kart + onboarding)",
-              monthly: "€5/kullanıcı/ay (50+ koltuk)",
-              included: ["SSO / SAML", "AD / SCIM provisioning", "Audit log", "White-label", "DPA talep üzerine"],
+              name: "White-glove",
+              setup: "€299'dan başlayan",
+              monthly: "teklifli",
+              included: ["Kartınızı 48 saatte elle tasarlarız", "Sınırsız revizyon", "Çoklu dil (DE / EN / TR)", "Ekip kurulumu", "Öncelikli destek"],
               overage: "",
-              forWhom: "50+ koltuk, regüle işverenler",
+              forWhom: "Sizin için yapılmasını isteyenler",
               isHighlighted: false,
             },
           ],
@@ -5424,7 +5430,7 @@ export const content: Content = {
           { rule: "2 ürün", benefit: "Birleşik aylık ücretten −%10" },
           { rule: "3+ ürün", benefit: "Aylık ücretten −%15 + 3 ay ücretsiz tier yükseltmesi" },
           { rule: "Yıllık peşin ödeme", benefit: "−%15 (her ürün, her tier)" },
-          { rule: "Verso takımı (50+ koltuk) bir agent ile bundle", benefit: "Verso koltuk fiyatı €4/kullanıcı/ay'a düşer" },
+          { rule: "OpSo Smart takımı (50+ koltuk) bir agent ile bundle", benefit: "OpSo Smart koltuk fiyatı €4/kullanıcı/ay'a düşer" },
           { rule: "Custom Automation retainer müşterileri", benefit: "Tüm SaaS ürünlerinde −%20" },
         ],
         note: "İndirimler sadece aylık ücretlere uygulanır. Setup ücreti sabit kalır. Yıllık peşin ödeme iade edilemez; aylık tierlar 30 gün önceden iptal edilebilir.",

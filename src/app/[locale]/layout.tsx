@@ -7,7 +7,6 @@ import { AmbientBackdrop } from "@/components/visual/AmbientBackdrop";
 import { LenisProvider } from "@/components/motion/LenisProvider";
 import { CustomCursor } from "@/components/motion/CustomCursor";
 import { PageTransition } from "@/components/motion/PageTransition";
-import { SITE_CONFIG } from "@/lib/constants";
 import { LOCALES, type Locale, isLocale } from "@/lib/i18n";
 
 export function generateStaticParams() {
@@ -35,19 +34,10 @@ export function generateMetadata({
       locale: OG_LOCALE[locale],
       alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => OG_LOCALE[l]),
     },
-    alternates: {
-      canonical: `${SITE_CONFIG.url}/${locale}`,
-      languages: {
-        en: `${SITE_CONFIG.url}/en`,
-        de: `${SITE_CONFIG.url}/de`,
-        tr: `${SITE_CONFIG.url}/tr`,
-        es: `${SITE_CONFIG.url}/es`,
-        it: `${SITE_CONFIG.url}/it`,
-        fr: `${SITE_CONFIG.url}/fr`,
-        ar: `${SITE_CONFIG.url}/ar`,
-        "x-default": `${SITE_CONFIG.url}/en`,
-      },
-    },
+    // canonical/hreflang are deliberately NOT set in this layout: it wraps every
+    // /[locale] route, so a canonical here forces all sub-pages (blog posts,
+    // service pages) to canonicalize to the locale homepage and silently
+    // de-indexes them. Each page.tsx sets its own alternates instead.
   };
 }
 

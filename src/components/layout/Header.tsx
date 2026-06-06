@@ -19,9 +19,11 @@ type ServiceSlug =
   | "ki-schulungen";
 
 type NavItem = {
-  key: NavKey;
+  key: string;
   href: string;
   match: RegExp;
+  /** Explicit label for brand/product items that are not keys in t.v2.nav. */
+  label?: string;
   /** When set, the desktop nav renders a hover dropdown of these sub-services. */
   servicesDropdown?: ServiceSlug[];
 };
@@ -46,6 +48,12 @@ const NAV_ITEMS: NavItem[] = [
     servicesDropdown: SERVICE_SLUGS,
   },
   { key: "automationCheck", href: "/ai-automation-check", match: /\/ai-automation-check/ },
+  {
+    key: "opsoSmart",
+    href: "/products/digital-card",
+    match: /\/products\/digital-card/,
+    label: "OpSo Smart",
+  },
   { key: "journal", href: "/blog", match: /\/blog/ },
   { key: "contact", href: "/contact", match: /\/contact/ },
 ];
@@ -102,7 +110,7 @@ export function Header() {
                   href={n.href}
                   className={cn("os-nav-link", active && "is-active")}
                 >
-                  {navLabels[n.key]}
+                  {(n.label ?? navLabels[n.key as NavKey])}
                 </Link>
               );
             }
@@ -113,9 +121,9 @@ export function Header() {
                   className={cn("os-nav-link", active && "is-active")}
                   aria-haspopup="true"
                 >
-                  {navLabels[n.key]}
+                  {(n.label ?? navLabels[n.key as NavKey])}
                 </Link>
-                <div className="os-nav-dropdown" role="menu" aria-label={navLabels[n.key]}>
+                <div className="os-nav-dropdown" role="menu" aria-label={(n.label ?? navLabels[n.key as NavKey])}>
                   {dropdown.map((slug) => {
                     const entry = navLabels.servicesDropdown[slug];
                     return (
@@ -219,7 +227,7 @@ export function Header() {
                             >
                               <span className="os-mobile-link-label">
                                 {active && <span className="os-mobile-active-dot" aria-hidden="true" />}
-                                {navLabels[n.key]}
+                                {(n.label ?? navLabels[n.key as NavKey])}
                               </span>
                               <span aria-hidden="true" className="os-mobile-arrow">→</span>
                             </Link>

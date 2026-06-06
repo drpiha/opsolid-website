@@ -12,6 +12,7 @@
 // =============================================================================
 
 import Image from "next/image";
+import { useState, useEffect, useCallback } from "react";
 import {
   Phone,
   Mail,
@@ -23,6 +24,10 @@ import {
   Share2,
   FileDown,
   Shield,
+  Play,
+  X,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 import type { CardData } from "@/lib/validation";
 import type { SmartCardSource } from "./SmartCardSource";
@@ -695,29 +700,122 @@ function SmartCardGallery({
 }: {
   gallery: NonNullable<CardData["gallery"]>;
 }) {
+  // Resolve once so the thumbnail strip and the lightbox share the same list
+  // (and indices line up for prev/next).
+  const items = gallery
+    .map((g) => ({ src: resolveAssetUrl(g.src), alt: g.alt ?? "" }))
+    .filter((g): g is { src: string; alt: string } => Boolean(g.src));
+
+  const [open, setOpen] = useState<number | null>(null);
+
+  const close = useCallback(() => setOpen(null), []);
+  const next = useCallback(
+    () => setOpen((i) => (i === null ? i : (i + 1) % items.length)),
+    [items.length],
+  );
+  const prev = useCallback(
+    () =>
+      setOpen((i) =>
+        i === null ? i : (i - 1 + items.length) % items.length,
+      ),
+    [items.length],
+  );
+
+  // Keyboard control + scroll lock while the lightbox is open.
+  useEffect(() => {
+    if (open === null) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+      else if (e.key === "ArrowRight") next();
+      else if (e.key === "ArrowLeft") prev();
+    };
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [open, close, next, prev]);
+
+  if (items.length === 0) return null;
+
   return (
     <div className="border-t border-line px-6 py-5">
       <h2 className="mb-3 text-eyebrow uppercase text-ink-400">Galerie</h2>
       <div className="-mx-6 flex snap-x snap-mandatory gap-2 overflow-x-auto px-6 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {gallery.map((g, i) => {
-          const src = resolveAssetUrl(g.src);
-          if (!src) return null;
-          return (
-            <div
-              key={`${g.src}-${i}`}
-              className="relative aspect-square h-32 shrink-0 snap-start overflow-hidden rounded-2xl bg-bg-2"
-            >
-              <Image
-                src={src}
-                alt={g.alt ?? ""}
-                fill
-                unoptimized
-                className="object-cover"
-              />
-            </div>
-          );
-        })}
+        {items.map((g, i) => (
+          <button
+            key={`${g.src}-${i}`}
+            type="button"
+            onClick={() => setOpen(i)}
+            aria-label={g.alt || `Foto ${i + 1}`}
+            className="relative aspect-square h-32 shrink-0 snap-start overflow-hidden rounded-2xl bg-bg-2 outline-none transition-transform focus-visible:ring-2 focus-visible:ring-copper active:scale-[0.98]"
+          >
+            <Image
+              src={g.src}
+              alt={g.alt}
+              fill
+              unoptimized
+              sizes="128px"
+              className="object-cover"
+            />
+          </button>
+        ))}
       </div>
+
+      {open !== null && items[open] && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          onClick={close}
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/90 p-4 backdrop-blur-sm"
+        >
+          <button
+            type="button"
+            onClick={close}
+            aria-label="Schließen"
+            className="absolute right-4 top-4 grid h-10 w-10 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+          >
+            <X size={20} />
+          </button>
+
+          {items.length > 1 && (
+            <>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  prev();
+                }}
+                aria-label="Vorheriges"
+                className="absolute left-3 grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+              >
+                <ChevronLeft size={24} />
+              </button>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  next();
+                }}
+                aria-label="Nächstes"
+                className="absolute right-3 grid h-11 w-11 place-items-center rounded-full bg-white/10 text-white transition-colors hover:bg-white/20"
+              >
+                <ChevronRight size={24} />
+              </button>
+            </>
+          )}
+
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={items[open].src}
+            alt={items[open].alt}
+            onClick={(e) => e.stopPropagation()}
+            className="max-h-[88vh] max-w-[92vw] rounded-xl object-contain"
+          />
+        </div>
+      )}
     </div>
   );
 }
@@ -725,44 +823,87 @@ function SmartCardGallery({
 const YT_RE = /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/))([A-Za-z0-9_-]{6,16})/;
 const VIMEO_RE = /vimeo\.com\/(?:video\/)?(\d{5,12})/;
 
-function videoEmbedSrc(url: string): string | null {
+interface ParsedVideo {
+  provider: "youtube" | "vimeo";
+  id: string;
+  /** Poster image, or null when the provider needs an API call we skip. */
+  poster: string | null;
+}
+
+function parseVideo(url: string): ParsedVideo | null {
   const ytMatch = url.match(YT_RE);
   if (ytMatch) {
-    return `https://www.youtube-nocookie.com/embed/${ytMatch[1]}?rel=0`;
+    return {
+      provider: "youtube",
+      id: ytMatch[1],
+      poster: `https://i.ytimg.com/vi/${ytMatch[1]}/hqdefault.jpg`,
+    };
   }
   const vMatch = url.match(VIMEO_RE);
   if (vMatch) {
-    return `https://player.vimeo.com/video/${vMatch[1]}`;
+    return { provider: "vimeo", id: vMatch[1], poster: null };
   }
   return null;
 }
 
+function videoEmbedSrc(v: ParsedVideo): string {
+  // autoplay=1 is safe here: the iframe only mounts after a user click, so the
+  // browser treats it as a user-initiated play. Native player controls (pause,
+  // seek, replay) are on by default for both providers.
+  return v.provider === "youtube"
+    ? `https://www.youtube-nocookie.com/embed/${v.id}?rel=0&autoplay=1&playsinline=1`
+    : `https://player.vimeo.com/video/${v.id}?autoplay=1`;
+}
+
 function SmartCardVideo({ url }: { url: string }) {
-  const src = videoEmbedSrc(url);
-  if (!src) return null;
+  const video = parseVideo(url);
+  const [playing, setPlaying] = useState(false);
+  if (!video) return null;
+
   return (
     <div className="border-t border-line px-6 py-5">
       <h2 className="mb-3 text-eyebrow uppercase text-ink-400">Video</h2>
       <div className="overflow-hidden rounded-2xl border border-line bg-black">
         <div className="relative aspect-video w-full">
-          <iframe
-            src={src}
-            title="Embedded video"
-            loading="lazy"
-            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-            // Sandbox isolates the embedded YouTube/Vimeo frame from our origin.
-            // - allow-scripts: required for the player runtime.
-            // - allow-same-origin: required for the player postMessage
-            //   handshake (without it the player treats itself as null
-            //   origin and refuses to load).
-            // - allow-presentation: enables AirPlay / Cast surface.
-            // - allow-popups + allow-popups-to-escape-sandbox: lets the
-            //   "Watch on YouTube" link open without inheriting sandbox.
-            sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox"
-            referrerPolicy="no-referrer-when-downgrade"
-            className="absolute inset-0 h-full w-full"
-          />
+          {playing ? (
+            <iframe
+              src={videoEmbedSrc(video)}
+              title="Embedded video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+              // Sandbox isolates the embedded YouTube/Vimeo frame from our
+              // origin. allow-same-origin is required for the player's
+              // postMessage handshake; the rest enable controls / fullscreen /
+              // "watch on provider" without inheriting our sandbox.
+              sandbox="allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox"
+              referrerPolicy="no-referrer-when-downgrade"
+              className="absolute inset-0 h-full w-full"
+            />
+          ) : (
+            <button
+              type="button"
+              onClick={() => setPlaying(true)}
+              aria-label="Video abspielen"
+              className="group absolute inset-0 h-full w-full"
+            >
+              {video.poster ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={video.poster}
+                  alt=""
+                  loading="lazy"
+                  className="absolute inset-0 h-full w-full object-cover opacity-90 transition-opacity group-hover:opacity-100"
+                />
+              ) : (
+                <div className="absolute inset-0 bg-gradient-to-br from-neutral-800 to-black" />
+              )}
+              <span className="absolute inset-0 grid place-items-center">
+                <span className="grid h-16 w-16 place-items-center rounded-full bg-white/90 text-ink shadow-lg transition-transform group-hover:scale-105 group-active:scale-95">
+                  <Play size={26} className="ml-1 fill-current" />
+                </span>
+              </span>
+            </button>
+          )}
         </div>
       </div>
     </div>

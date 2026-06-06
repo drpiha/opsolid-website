@@ -1,0 +1,584 @@
+/* =========================================================================
+   OpSolid Müşteri Sunumu — Reveal.js theme (v3 — 10-slide, fixed-canvas)
+   Hedef: Reveal 1280×800 sabit canvas, hiçbir slayt overflow değil.
+   Her slayt: header (eyebrow) → body → footer (logo + Hasan Dönmez · email)
+   Moodlar: paper (kağıt), image (foto overlay), data (nötr gri)
+   ========================================================================= */
+
+:root {
+  /* Ink (paper mood metin) */
+  --ink-100: #1C1A16;
+  --ink-200: #3A352D;
+  --ink-300: #6B6458;
+  --ink-400: #8E867A;
+  --ink-500: #ACA59A;
+
+  /* Light surface (paper mood) */
+  --paper-0: #F5F0E6;
+  --paper-1: #ECE5D6;
+  --paper-2: #E0D7C4;
+  --paper-edge: rgba(40, 32, 22, 0.10);
+  --paper-edge-firm: rgba(40, 32, 22, 0.20);
+
+  /* Dark surface (image/data mood) */
+  --bg-0: #0E0F12;
+  --bg-1: #14161B;
+  --bg-2: #1B1E24;
+  --bg-3: #232730;
+
+  /* Image-mood reverse ink (light text over dark overlay) */
+  --r-ink-100: #F4F1EC;
+  --r-ink-200: #D7D2C8;
+  --r-ink-300: #A7A299;
+  --r-ink-400: #807B72;
+
+  /* Data mood */
+  --gray-1: #20232A;
+  --gray-2: #2A2E37;
+  --gray-line: rgba(244, 241, 236, 0.10);
+  --gray-line-firm: rgba(244, 241, 236, 0.18);
+
+  /* Copper accent (theme-independent) */
+  --copper-50:  #F7E9DA;
+  --copper-100: #EAC8A4;
+  --copper-300: #D89A65;
+  --copper:     #C27940;
+  --copper-700: #8E5224;
+  --copper-900: #5A3214;
+  --copper-grad: linear-gradient(135deg, #E9B989 0%, #C27940 50%, #7E4A24 100%);
+
+  --font-display: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body:    "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-serif:   "Instrument Serif", Georgia, "Times New Roman", serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+/* ---- Reveal canvas ---------------------------------------------------- */
+html, body, .reveal {
+  background: var(--bg-0);
+  color: var(--ink-100);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.reveal { font-size: 24px; letter-spacing: -0.005em; }
+
+/* Reveal slide = 1280x800 fixed. Every <section> = full-bleed canvas. */
+.reveal .slides section {
+  width: 1280px;
+  height: 800px;
+  padding: 0;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ---- Slide body: scrollable-but-clipped content area above footer ---- */
+.slide-body {
+  position: absolute;
+  inset: 0 0 64px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 56px 80px 16px 80px;
+  z-index: 1;
+}
+.slide-body.top { justify-content: flex-start; padding-top: 72px; }
+.slide-body.center { justify-content: center; }
+
+/* ---- Slide footer: ABSOLUTE pinned at 64px from bottom, every slide ---- */
+.slide-footer {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 64px;
+  padding: 0 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--paper-edge-firm);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--ink-300);
+  z-index: 3;
+  background: transparent;
+}
+.slide-footer .left,
+.slide-footer .right { display: inline-flex; align-items: center; gap: 10px; }
+.slide-footer .wordmark {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--ink-100);
+}
+.slide-footer .author {
+  font-family: var(--font-display);
+  font-weight: 500;
+  text-transform: none;
+  letter-spacing: -0.005em;
+  color: var(--ink-200);
+  font-size: 13px;
+}
+.slide-footer .email {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink-300);
+}
+.slide-footer .dot {
+  width: 4px; height: 4px; border-radius: 50%;
+  background: var(--copper);
+  margin: 0 8px;
+  display: inline-block;
+}
+.slide-footer .brand-logo {
+  height: 32px;
+  width: auto;
+  display: block;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* ---- MOOD: PAPER (kağıt zemin) --------------------------------------- */
+section[data-mood="paper"] {
+  background: linear-gradient(180deg, var(--paper-0) 0%, var(--paper-1) 100%);
+  color: var(--ink-100);
+}
+section[data-mood="paper"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.05;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='p'><feTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23p)'/></svg>");
+}
+section[data-mood="paper"] { position: relative; }
+section[data-mood="paper"] .slide-footer {
+  border-top-color: var(--paper-edge-firm);
+  color: var(--ink-300);
+}
+
+/* ---- MOOD: DATA (nötr gri) ------------------------------------------- */
+section[data-mood="data"] {
+  background: linear-gradient(180deg, var(--gray-2) 0%, var(--gray-1) 100%);
+  color: var(--r-ink-100);
+}
+section[data-mood="data"] h1,
+section[data-mood="data"] h2,
+section[data-mood="data"] h3,
+section[data-mood="data"] h4 { color: var(--r-ink-100); }
+section[data-mood="data"] p,
+section[data-mood="data"] li { color: var(--r-ink-200); }
+section[data-mood="data"] .lead { color: var(--r-ink-100); }
+section[data-mood="data"] .eyebrow { color: var(--copper-300); }
+section[data-mood="data"] .meta { color: var(--r-ink-300); }
+section[data-mood="data"] .slide-footer {
+  border-top-color: var(--gray-line-firm);
+  color: var(--r-ink-300);
+}
+section[data-mood="data"] .slide-footer .wordmark { color: var(--r-ink-100); }
+section[data-mood="data"] .slide-footer .author { color: var(--r-ink-100); }
+section[data-mood="data"] .slide-footer .email { color: var(--r-ink-200); }
+section[data-mood="data"] .slide-footer .dot { background: var(--copper-300); }
+
+/* ---- MOOD: IMAGE (foto arkaplan + koyu overlay) ---------------------- */
+section[data-mood="image"] {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(14,15,18,0.74) 0%, rgba(14,15,18,0.88) 100%),
+    var(--bg-image, linear-gradient(135deg, #2C1A0E 0%, #14161B 55%, #0E0F12 100%));
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: var(--r-ink-100);
+}
+section[data-mood="image"]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at 30% 75%, rgba(194,121,64,0.18) 0%, transparent 55%);
+  z-index: 0;
+}
+section[data-mood="image"] h1,
+section[data-mood="image"] h2,
+section[data-mood="image"] h3,
+section[data-mood="image"] h4 { color: var(--r-ink-100); }
+section[data-mood="image"] p,
+section[data-mood="image"] li { color: var(--r-ink-200); }
+section[data-mood="image"] .lead { color: var(--r-ink-100); }
+section[data-mood="image"] .eyebrow { color: var(--copper-300); }
+section[data-mood="image"] .meta { color: var(--r-ink-300); }
+section[data-mood="image"] .pull-quote { color: var(--r-ink-100); }
+section[data-mood="image"] .slide-footer {
+  border-top-color: rgba(244,241,236,0.18);
+  color: var(--r-ink-300);
+}
+section[data-mood="image"] .slide-footer .wordmark { color: var(--r-ink-100); }
+section[data-mood="image"] .slide-footer .author { color: var(--r-ink-100); }
+section[data-mood="image"] .slide-footer .email { color: var(--r-ink-200); }
+section[data-mood="image"] .slide-footer .dot { background: var(--copper-300); }
+
+/* ---- Typography ------------------------------------------------------ */
+/* Default heading color = paper ink (dark), since paper is the most common
+   mood. Image and data moods override with light text further down. */
+.reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+  font-family: var(--font-display);
+  text-transform: none;
+  line-height: 1.06;
+  margin: 0 0 0.5em 0;
+  font-weight: 500;
+  color: var(--ink-100);
+}
+.reveal h1 { font-size: 56px; font-weight: 400; letter-spacing: -0.038em; color: var(--ink-100); }
+.reveal h2 { font-size: 40px; letter-spacing: -0.028em; color: var(--ink-100); }
+.reveal h3 { font-size: 22px; letter-spacing: -0.018em; color: var(--ink-100); }
+.reveal h4 { font-size: 16px; color: var(--ink-200); font-weight: 500; }
+
+.reveal p, .reveal li { font-size: 16px; line-height: 1.55; color: var(--ink-200); }
+.reveal .lead { font-size: 21px; color: var(--ink-100); max-width: 36ch; line-height: 1.42; font-weight: 400; }
+.reveal .editorial { font-family: var(--font-serif); font-style: italic; color: var(--copper-700); font-weight: 400; letter-spacing: -0.005em; }
+.reveal .eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--copper-700);
+  margin-bottom: 18px;
+  display: inline-block;
+  font-weight: 500;
+}
+.reveal .meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-400);
+}
+.reveal a { color: var(--copper-700); text-decoration: none; border-bottom: 1px solid var(--copper); }
+.reveal a:hover { color: var(--copper); }
+section[data-mood="image"] .editorial,
+section[data-mood="data"] .editorial { color: var(--copper-100); }
+
+/* ---- Layout primitives ----------------------------------------------- */
+.wrap { width: 100%; max-width: 1120px; margin: 0 auto; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start; }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.grid-6 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.stack-sm > * + * { margin-top: 8px; }
+.stack-md > * + * { margin-top: 14px; }
+.stack-lg > * + * { margin-top: 22px; }
+
+/* ---- Card / panel ---------------------------------------------------- */
+.panel {
+  background: rgba(255, 252, 246, 0.6);
+  border: 1px solid var(--paper-edge);
+  border-radius: 12px;
+  padding: 18px 20px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.55);
+}
+.panel h3 { font-size: 17px; margin-bottom: 6px; color: var(--ink-100); }
+.panel p  { font-size: 14px; color: var(--ink-300); line-height: 1.5; margin: 0; }
+.panel .icon { width: 22px; height: 22px; color: var(--copper-700); margin-bottom: 10px; display: block; }
+
+section[data-mood="image"] .panel,
+section[data-mood="data"] .panel {
+  background: rgba(20, 22, 27, 0.72);
+  border: 1px solid var(--gray-line-firm);
+  backdrop-filter: blur(6px);
+  box-shadow: none;
+}
+section[data-mood="image"] .panel h3,
+section[data-mood="data"] .panel h3 { color: var(--r-ink-100); }
+section[data-mood="image"] .panel p,
+section[data-mood="data"] .panel p { color: var(--r-ink-200); }
+section[data-mood="image"] .panel .icon,
+section[data-mood="data"] .panel .icon { color: var(--copper-300); }
+
+/* ---- Chips ----------------------------------------------------------- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--copper-700);
+  background: rgba(194,121,64,0.10);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--copper-700);
+}
+section[data-mood="image"] .chip,
+section[data-mood="data"] .chip {
+  background: rgba(194,121,64,0.18);
+  color: var(--copper-100);
+  border-color: var(--copper-300);
+}
+
+/* ---- Process steps --------------------------------------------------- */
+.step { display: grid; grid-template-columns: 56px 1fr; gap: 16px; align-items: start; }
+.step .num {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--copper-700);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  border-right: 1px solid var(--paper-edge-firm);
+  padding-right: 12px;
+}
+.step h3 { margin-bottom: 4px; font-size: 18px; }
+.step p { color: var(--ink-300); font-size: 14px; margin: 0; }
+.step .together {
+  display: inline-block;
+  margin-top: 6px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--copper-700);
+}
+
+/* ---- Metric blocks --------------------------------------------------- */
+.metric {
+  padding: 18px 20px;
+  border: 1px solid var(--gray-line-firm);
+  border-radius: 12px;
+  background: linear-gradient(180deg, var(--gray-2) 0%, var(--gray-1) 100%);
+}
+.metric .big {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--copper-100);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.metric .label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--r-ink-300);
+  margin-top: 10px;
+  display: block;
+}
+.metric p { font-size: 14px; margin-top: 8px; color: var(--r-ink-200); line-height: 1.5; }
+
+/* ---- Pull quote ------------------------------------------------------ */
+.pull-quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 28px;
+  line-height: 1.28;
+  max-width: 28ch;
+  margin: 0;
+  letter-spacing: -0.012em;
+  color: var(--ink-100);
+}
+
+/* ---- Cover (slide 1) ------------------------------------------------- */
+.cover h1 {
+  font-size: 72px;
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  max-width: 16ch;
+  margin-bottom: 18px;
+}
+.cover h1 .editorial { display: block; font-size: 0.72em; }
+.cover .lead { font-size: 22px; max-width: 46ch; }
+.cover .author-block {
+  margin-top: 28px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--r-ink-200);
+}
+.cover .author-block strong {
+  font-family: var(--font-display);
+  text-transform: none;
+  letter-spacing: -0.01em;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--r-ink-100);
+  display: block;
+  margin-top: 2px;
+}
+
+/* ---- Sectors / case rows (slide 6) ----------------------------------- */
+.sector-card {
+  background: rgba(20, 22, 27, 0.72);
+  backdrop-filter: blur(6px);
+  border: 1px solid var(--gray-line);
+  border-left: 2px solid var(--copper-300);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+.sector-card .sec-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--copper-100);
+  margin-bottom: 6px;
+}
+.sector-card h4 {
+  font-family: var(--font-display);
+  font-size: 15px;
+  color: var(--r-ink-100);
+  margin: 0 0 6px 0;
+  letter-spacing: -0.01em;
+}
+.sector-card p { font-size: 13px; color: var(--r-ink-200); margin: 0; line-height: 1.45; }
+
+/* ---- Compare two-column (slide 9) ------------------------------------ */
+.compare-col h4 {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--copper-700);
+  margin-bottom: 10px;
+}
+.compare-col ul { list-style: none; padding: 0; margin: 0; }
+.compare-col li {
+  padding: 6px 0;
+  border-bottom: 1px dashed var(--paper-edge);
+  font-size: 14px;
+  color: var(--ink-200);
+  line-height: 1.45;
+}
+.compare-col li:last-child { border-bottom: none; }
+
+/* ---- CTA card (slide 10) --------------------------------------------- */
+.cta-card {
+  margin-top: 20px;
+  padding: 20px 24px;
+  border-radius: 14px;
+  border: 1px solid var(--copper-300);
+  background: linear-gradient(135deg, rgba(194,121,64,0.22) 0%, rgba(194,121,64,0.06) 60%, transparent 100%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 28px;
+}
+.cta-card h3 { margin: 0 0 4px 0; font-size: 18px; color: var(--r-ink-100); }
+.cta-card p  { margin: 0; color: var(--r-ink-200); font-size: 13px; }
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 10px;
+  background: var(--copper);
+  color: #1A1208 !important;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: -0.005em;
+  border: 1px solid var(--copper-700);
+  text-decoration: none !important;
+}
+.btn-primary:hover { background: var(--copper-300); }
+
+.contact-row { margin-top: 22px; display: flex; gap: 36px; flex-wrap: wrap; }
+.contact-row .label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--r-ink-300);
+  display: block;
+  margin-bottom: 4px;
+}
+.contact-row .val {
+  font-family: var(--font-display);
+  font-size: 16px;
+  color: var(--r-ink-100);
+  font-weight: 500;
+}
+
+/* ---- Tıkanıklık panel-grid (slide 2) --------------------------------- */
+.problem-card {
+  background: rgba(255, 252, 246, 0.55);
+  border: 1px solid var(--paper-edge);
+  border-radius: 10px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.problem-card .icon { width: 20px; height: 20px; color: var(--copper-700); }
+.problem-card h4 { font-size: 14px; margin: 0; color: var(--ink-100); font-weight: 600; letter-spacing: -0.01em; }
+.problem-card p { font-size: 12px; margin: 0; color: var(--ink-300); line-height: 1.5; }
+
+/* ---- Service grid (slide 5) ------------------------------------------ */
+.service-card {
+  background: rgba(255, 252, 246, 0.55);
+  border: 1px solid var(--paper-edge);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.service-card .icon { width: 22px; height: 22px; color: var(--copper-700); margin-bottom: 8px; }
+.service-card h4 { font-size: 15px; margin: 0 0 4px 0; color: var(--ink-100); font-weight: 600; letter-spacing: -0.01em; }
+.service-card p { font-size: 13px; color: var(--ink-300); margin: 0; line-height: 1.5; }
+
+/* ---- Handoff slide (slide 7) ---------------------------------------- */
+.handoff-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+.handoff-block h3 {
+  font-size: 19px;
+  color: var(--ink-100);
+  margin-bottom: 10px;
+}
+.handoff-block ul { list-style: none; padding: 0; margin: 0; }
+.handoff-block li {
+  font-size: 14px;
+  color: var(--ink-300);
+  padding: 5px 0 5px 14px;
+  position: relative;
+  line-height: 1.5;
+}
+.handoff-block li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 14px;
+  width: 6px;
+  height: 1px;
+  background: var(--copper-700);
+}
+
+/* ---- Reveal controls / progress ------------------------------------- */
+.reveal .progress { color: var(--copper); height: 3px; }
+.reveal .controls { color: var(--copper-300); }
+.reveal .slide-number {
+  background: transparent;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--ink-400);
+  right: 20px; bottom: 20px;
+}
+
+/* ---- Print / PDF ----------------------------------------------------- */
+@media print {
+  .reveal .slides section { page-break-after: always; }
+  section[data-mood="image"],
+  section[data-mood="paper"],
+  section[data-mood="data"] {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}

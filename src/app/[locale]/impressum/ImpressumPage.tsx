@@ -38,6 +38,22 @@ export function ImpressumPage() {
           >
             {SITE_CONFIG.email}
           </a>
+          <br />
+          Tel.:{" "}
+          <a
+            href="tel:+4917631020654"
+            className="text-brand underline underline-offset-4 decoration-brand/40 hover:decoration-brand"
+          >
+            +49 176 31020654
+          </a>
+          <br />
+          Tel. (TR):{" "}
+          <a
+            href="tel:+905335717885"
+            className="text-brand underline underline-offset-4 decoration-brand/40 hover:decoration-brand"
+          >
+            +90 533 571 78 85
+          </a>
         </p>
       ),
     },

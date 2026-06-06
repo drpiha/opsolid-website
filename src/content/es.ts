@@ -70,7 +70,7 @@ const overrides: DeepPartial<Content> = {
       primaryCtaLabel: "Reservar llamada",
       secondaryCtaLabel: "Ver servicios",
       consultingNote:
-        "También enviamos productos independientes — Kutasia, Verso (tarjeta digital), Digital Reception.",
+        "También enviamos productos independientes — Kutasia, OpSo Smart (tarjeta digital), Digital Reception.",
     },
   },
   v2: {

@@ -120,7 +120,7 @@ export async function POST(req: Request) {
       const maintainer =
         process.env.OPSOLID_MAINTAINER_EMAIL ?? process.env.SMTP_FROM ?? null;
       if (maintainer) {
-        const subject = `[Verso Pro] Custom domain request: ${parsed.data.domain}`;
+        const subject = `[OpSo Smart Pro] Custom domain request: ${parsed.data.domain}`;
         const body = [
           `User: ${user.email} (${user.id})`,
           `Domain: ${parsed.data.domain}`,

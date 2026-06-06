@@ -42,9 +42,11 @@ import type { CardData, ImagePosition } from "@/lib/validation";
 import { PhotoEditor } from "@/components/cards/PhotoEditor";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
 import { getTypographyPreset } from "@/lib/typographyPresets";
+import { downscaleImage } from "@/lib/images/downscale";
 import { getTemplateEntry } from "@/components/cards/templates/v2/registry";
 import { ShareDrawer } from "@/components/cards/ShareDrawer";
 import { StickySaveBar } from "./StickySaveBar";
+import TemplateSection from "./sections/TemplateSection";
 import PersonBrandSection from "./sections/PersonBrandSection";
 import ContentSection from "./sections/ContentSection";
 import ContactSection from "./sections/ContactSection";
@@ -87,6 +89,9 @@ export function CardEditClient(props: Props) {
   const form = t.products.digitalCard.order.form;
 
   const [cardData, setCardData] = useState<CardData>(props.cardData);
+  // Template is now switchable from the editor (previously locked after
+  // purchase). Persisted on save alongside cardData.
+  const [templateId, setTemplateId] = useState<number>(props.templateId);
   const [brandPrimaryHex, setBrandPrimaryHex] = useState(props.brandPrimaryHex ?? "");
   const [brandAccentHex, setBrandAccentHex] = useState(props.brandAccentHex ?? "");
   const [photoPath, setPhotoPath] = useState<string | null>(props.photoPath);
@@ -116,6 +121,7 @@ export function CardEditClient(props: Props) {
   // slug stored as empty-string when null to match editableSlug initialisation
   const initialFormRef = useRef({
     cardData: props.cardData,
+    templateId: props.templateId,
     photoPath: props.photoPath,
     logoPath: props.logoPath,
     brandPrimaryHex: props.brandPrimaryHex,
@@ -130,6 +136,7 @@ export function CardEditClient(props: Props) {
     return (
       JSON.stringify({
         cardData,
+        templateId,
         photoPath,
         logoPath,
         brandPrimaryHex,
@@ -141,6 +148,7 @@ export function CardEditClient(props: Props) {
       }) !==
       JSON.stringify({
         cardData: initialFormRef.current.cardData,
+        templateId: initialFormRef.current.templateId,
         photoPath: initialFormRef.current.photoPath,
         logoPath: initialFormRef.current.logoPath,
         brandPrimaryHex: initialFormRef.current.brandPrimaryHex,
@@ -151,12 +159,13 @@ export function CardEditClient(props: Props) {
         acceptingClients: initialFormRef.current.acceptingClients,
       })
     );
-  }, [cardData, photoPath, logoPath, brandPrimaryHex, brandAccentHex, editableSlug, visibility, openToNetworking, acceptingClients]);
+  }, [cardData, templateId, photoPath, logoPath, brandPrimaryHex, brandAccentHex, editableSlug, visibility, openToNetworking, acceptingClients]);
 
   // A4 — revert: restore all mutable state to the last-saved snapshot.
   const handleRevert = () => {
     const snap = initialFormRef.current;
     setCardData(snap.cardData);
+    setTemplateId(snap.templateId);
     setPhotoPath(snap.photoPath);
     setLogoPath(snap.logoPath);
     setBrandPrimaryHex(snap.brandPrimaryHex ?? "");
@@ -234,8 +243,13 @@ export function CardEditClient(props: Props) {
       setErrorMsg(form.uploadTooLarge);
       return null;
     }
+    // Shrink in the browser before upload — faster upload + fast public render
+    // (logos keep PNG transparency; photos become compact JPEGs).
+    const optimized = await downscaleImage(file, {
+      maxEdge: kind === "logo" ? 512 : 1600,
+    });
     const f = new FormData();
-    f.append("file", file);
+    f.append("file", optimized);
     f.append("kind", kind);
     const res = await fetch("/api/uploads", { method: "POST", body: f });
     if (!res.ok) {
@@ -287,6 +301,7 @@ export function CardEditClient(props: Props) {
 
     const payload = {
       cardData: normalized,
+      templateId,
       brandPrimaryHex: brandPrimaryHex || undefined,
       brandAccentHex: brandAccentHex || undefined,
       photoPath: photoPath || undefined,
@@ -342,6 +357,7 @@ export function CardEditClient(props: Props) {
       // Keep slug as "" when null to stay consistent with initialFormRef init.
       initialFormRef.current = {
         cardData: normalized,
+        templateId,
         photoPath: photoPath ?? null,
         logoPath: logoPath ?? null,
         brandPrimaryHex: brandPrimaryHex || null,
@@ -539,6 +555,13 @@ export function CardEditClient(props: Props) {
             {/* B7 — 4 collapsible sections, lifted to standalone components in
                 A8.2 (sections/*Section.tsx). State stays here in the
                 orchestrator; sections are controlled. */}
+            <TemplateSection
+              templateId={templateId}
+              setTemplateId={setTemplateId}
+              openSections={openSections}
+              toggleSection={toggleSection}
+            />
+
             <PersonBrandSection
               cardData={cardData}
               setCard={setCard}
@@ -642,7 +665,7 @@ export function CardEditClient(props: Props) {
               {form.previewLabel}
             </p>
             <EditPreview
-              templateId={props.templateId}
+              templateId={templateId}
               templateComponentKey={props.templateComponentKey}
               cardData={activeCardData}
               photoPath={photoPath}
@@ -1202,7 +1225,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
   // PATCH helpers — call backend endpoints added by the backend agent.
   const patchLead = async (
     leadId: string,
-    data: Partial<Pick<CrmLead, "ownerNotes" | "tags" | "status" | "priority">>
+    data: Partial<Pick<CrmLead, "ownerNotes" | "tags" | "status" | "priority" | "lastContactedAt">>
   ) => {
     setSavingId(leadId);
     try {
@@ -1225,7 +1248,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
 
   const patchConnection = async (
     connectionId: string,
-    data: Partial<Pick<CrmConnection, "note" | "tags" | "status" | "priority">>
+    data: Partial<Pick<CrmConnection, "note" | "tags" | "status" | "priority" | "lastContactedAt">>
   ) => {
     setSavingId(connectionId);
     try {
@@ -1517,7 +1540,24 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                               >
                                 {(l.priority ?? 0) > 0 ? "★" : "☆"}
                               </button>
+                              {/* Mark as contacted */}
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  void patchLead(l.id, { lastContactedAt: new Date().toISOString() })
+                                }
+                                className="inline-flex items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink/50 transition hover:border-green-400/50 hover:text-green-600 active:scale-95"
+                              >
+                                <Check size={11} />
+                                Als kontaktiert markieren
+                              </button>
                             </div>
+                            {/* Last contacted display */}
+                            {l.lastContactedAt && (
+                              <p className="text-[10px] text-ink/40">
+                                Kontaktiert: {new Date(l.lastContactedAt).toLocaleDateString()}
+                              </p>
+                            )}
 
                             {/* Owner notes */}
                             {expandedNotes.has(l.id) ? (
@@ -1733,7 +1773,24 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                               >
                                 {(c.priority ?? 0) > 0 ? "★" : "☆"}
                               </button>
+                              {/* Mark as contacted */}
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  void patchConnection(c.id, { lastContactedAt: new Date().toISOString() })
+                                }
+                                className="inline-flex items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink/50 transition hover:border-green-400/50 hover:text-green-600 active:scale-95"
+                              >
+                                <Check size={11} />
+                                Als kontaktiert markieren
+                              </button>
                             </div>
+                            {/* Last contacted display */}
+                            {c.lastContactedAt && (
+                              <p className="text-[10px] text-ink/40">
+                                Kontaktiert: {new Date(c.lastContactedAt).toLocaleDateString()}
+                              </p>
+                            )}
 
                             {/* Owner note */}
                             {expandedNotes.has(c.id) ? (

@@ -42,6 +42,7 @@ export async function GET(
           tags: true,
           status: true,
           priority: true,
+          lastContactedAt: true,
           createdAt: true,
         },
       }),
@@ -51,10 +52,12 @@ export async function GET(
         select: {
           id: true,
           source: true,
+          eventName: true,
           note: true,
           tags: true,
           status: true,
           priority: true,
+          lastContactedAt: true,
           createdAt: true,
           visitorCard: {
             select: {
@@ -85,6 +88,8 @@ export async function GET(
       "Priority",
       "Source",
       "CreatedAt",
+      "LastContactedAt",
+      "EventName",
     ];
 
     const rows: string[] = [headers.map(csvField).join(",")];
@@ -106,6 +111,8 @@ export async function GET(
           String(lead.priority),
           null, // source — not stored on leads
           lead.createdAt.toISOString(),
+          lead.lastContactedAt ? lead.lastContactedAt.toISOString() : null,
+          null, // eventName — not applicable to leads
         ])
       );
     }
@@ -134,6 +141,8 @@ export async function GET(
           String(conn.priority),
           conn.source ?? null,
           conn.createdAt.toISOString(),
+          conn.lastContactedAt ? conn.lastContactedAt.toISOString() : null,
+          conn.eventName ?? null,
         ])
       );
     }

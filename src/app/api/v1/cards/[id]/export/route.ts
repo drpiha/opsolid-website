@@ -237,7 +237,7 @@ function renderHtml(card: RenderInput, slug: string): string {
     }
   </article>
   <footer>
-    <p>Verso · <a href="https://opsolid.de/c/${escapeHtml(slug)}">opsolid.de/c/${escapeHtml(slug)}</a></p>
+    <p>OpSo Smart · <a href="https://opsolid.de/c/${escapeHtml(slug)}">opsolid.de/c/${escapeHtml(slug)}</a></p>
   </footer>
 </body>
 </html>`;

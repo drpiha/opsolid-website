@@ -127,7 +127,7 @@ export async function POST(
       senderCard.contactName?.trim() ||
       user.name?.trim() ||
       user.email?.split("@")[0] ||
-      "Verso";
+      "OpSo Smart";
     const typeLabel: Record<string, string> = {
       request_contact: "wants to connect",
       request_quote: "requested a quote",
