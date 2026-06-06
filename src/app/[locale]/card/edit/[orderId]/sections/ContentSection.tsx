@@ -12,6 +12,7 @@ import { useLocale } from "@/context/LocaleContext";
 import { CustomSectionsEditor } from "@/components/cards/order-form/CustomSectionsEditor";
 import { GalleryEditor } from "@/components/cards/order-form/GalleryEditor";
 import { ServicesEditor } from "@/components/cards/order-form/ServicesEditor";
+import { VideoUploader } from "@/components/cards/order-form/VideoUploader";
 import type { CardData } from "@/lib/validation";
 import type { HandleFileUpload, SectionToggle, SetCardFn } from "./types";
 
@@ -96,7 +97,7 @@ export default function ContentSection({
           />
         </fieldset>
 
-        {/* Video embed — YouTube / Vimeo URL, rendered by SmartCard */}
+        {/* Video — direct upload (short clip) + YouTube/Vimeo embed link */}
         <fieldset className="space-y-2">
           <legend className="text-heading-sm text-ink">
             {form.videoSection ?? "Video"}
@@ -104,6 +105,18 @@ export default function ContentSection({
           {form.videoHint && (
             <p className="-mt-1 text-xs text-ink-300">{form.videoHint}</p>
           )}
+
+          {/* Direct upload — short self-hosted clip */}
+          <VideoUploader
+            videoPath={cardData.videoPath}
+            onChange={(path) => setCard("videoPath", path)}
+            L={(k, fb) => (form as Record<string, string>)[k] ?? fb}
+          />
+
+          {/* Or a YouTube / Vimeo link (no length limit) */}
+          <p className="pt-1 text-[11px] uppercase tracking-wider text-ink-300">
+            {(form as Record<string, string>).videoOrLink ?? "veya YouTube / Vimeo bağlantısı"}
+          </p>
           <label className="block">
             <span className="sr-only">{form.videoLabel ?? "Video link"}</span>
             <input

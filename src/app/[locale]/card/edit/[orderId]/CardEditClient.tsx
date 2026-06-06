@@ -41,6 +41,7 @@ import { TemplateRenderer } from "@/components/cards/TemplateRenderer";
 import type { CardData, ImagePosition } from "@/lib/validation";
 import { PhotoEditor } from "@/components/cards/PhotoEditor";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
+import { VideoBlock } from "@/components/cards/templates/v2/shared/VideoBlock";
 import { getTypographyPreset } from "@/lib/typographyPresets";
 import { downscaleImage } from "@/lib/images/downscale";
 import { getTemplateEntry } from "@/components/cards/templates/v2/registry";
@@ -1939,6 +1940,12 @@ function EditPreview({
         sections={cardData.customSections}
         accentHex={brandAccentHex}
         tone={isDarkTemplate ? "dark" : "light"}
+      />
+      <VideoBlock
+        videoUrl={cardData.videoUrl}
+        videoPath={cardData.videoPath}
+        tone={isDarkTemplate ? "dark" : "light"}
+        suppressEmbed={!entry || entry.key === "athlete" || entry.key === "photographer"}
       />
     </div>
   );

@@ -15,7 +15,7 @@ import { hitWindow, clientIp } from "@/lib/auth/rate-limit";
 
 export const runtime = "nodejs";
 
-const ALLOWED_KINDS = new Set(["photo", "logo", "gallery"]);
+const ALLOWED_KINDS = new Set(["photo", "logo", "gallery", "video"]);
 
 // Anonymous-first: a visitor creates a free card with NO account, so the
 // card-builder form must be able to upload a photo/logo before any user or
@@ -48,30 +48,54 @@ export async function POST(req: NextRequest) {
   if (!(file instanceof File)) {
     return NextResponse.json({ error: "Missing file" }, { status: 400 });
   }
-  if (!STORAGE_LIMITS.allowedImage.has(file.type)) {
-    return NextResponse.json(
-      { error: "Unsupported file type" },
-      { status: 400 }
-    );
-  }
-  if (file.size > STORAGE_LIMITS.maxBytes) {
-    return NextResponse.json(
-      { error: `File too large (max ${STORAGE_LIMITS.maxBytesHuman})` },
-      { status: 413 }
-    );
-  }
   if (!ALLOWED_KINDS.has(kind)) {
     return NextResponse.json({ error: "Invalid kind" }, { status: 400 });
   }
 
-  const ext =
-    file.type === "image/png"
-      ? "png"
-      : file.type === "image/svg+xml"
-      ? "svg"
-      : file.type === "image/webp"
-      ? "webp"
-      : "jpg";
+  const isVideo = kind === "video";
+
+  // Type + size validation per lane (image vs video).
+  if (isVideo) {
+    if (!STORAGE_LIMITS.allowedVideo.has(file.type)) {
+      return NextResponse.json(
+        { error: "Unsupported video type (mp4 / webm / mov)" },
+        { status: 400 },
+      );
+    }
+    if (file.size > STORAGE_LIMITS.maxVideoBytes) {
+      return NextResponse.json(
+        { error: `Video too large (max ${STORAGE_LIMITS.maxVideoBytesHuman})` },
+        { status: 413 },
+      );
+    }
+  } else {
+    if (!STORAGE_LIMITS.allowedImage.has(file.type)) {
+      return NextResponse.json(
+        { error: "Unsupported file type" },
+        { status: 400 },
+      );
+    }
+    if (file.size > STORAGE_LIMITS.maxBytes) {
+      return NextResponse.json(
+        { error: `File too large (max ${STORAGE_LIMITS.maxBytesHuman})` },
+        { status: 413 },
+      );
+    }
+  }
+
+  const ext = isVideo
+    ? file.type === "video/webm"
+      ? "webm"
+      : file.type === "video/quicktime"
+      ? "mov"
+      : "mp4"
+    : file.type === "image/png"
+    ? "png"
+    : file.type === "image/svg+xml"
+    ? "svg"
+    : file.type === "image/webp"
+    ? "webp"
+    : "jpg";
 
   const body = Buffer.from(await file.arrayBuffer());
 
@@ -81,6 +105,7 @@ export async function POST(req: NextRequest) {
       ext,
       body,
       contentType: file.type,
+      maxBytes: isVideo ? STORAGE_LIMITS.maxVideoBytes : STORAGE_LIMITS.maxBytes,
     });
     // Backwards-compatible response shape — the OrderFormSection client still
     // reads `path`, and we want it to keep working without a coordinated

@@ -28,6 +28,7 @@ import { readSourceFromSearchParams } from "@/components/cards/smart/SmartCardSo
 import { getSiteUrl } from "@/lib/stripe";
 import { getTemplateEntry } from "@/components/cards/templates/v2/registry";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
+import { VideoBlock } from "@/components/cards/templates/v2/shared/VideoBlock";
 import { OwnerModeProvider } from "@/context/OwnerMode";
 import { QRFlipOverlay } from "@/components/cards/QRFlipOverlay";
 import { ShareButton } from "@/components/cards/ShareButton";
@@ -513,6 +514,18 @@ export default async function CardPage({ params, searchParams }: PageProps) {
             sections={parsed.data.customSections}
             accentHex={effectiveAccentHex ?? undefined}
             tone={isDarkTemplate ? "dark" : "light"}
+          />
+          {/* Universal video — self-hosted clip + YouTube/Vimeo embed. The embed
+              is suppressed for the few templates that render videoUrl natively
+              (SmartCard fallback, Athlete, Photographer) to avoid duplication. */}
+          <VideoBlock
+            videoUrl={parsed.data.videoUrl}
+            videoPath={(parsed.data as Record<string, unknown>).videoPath as string | undefined}
+            tone={isDarkTemplate ? "dark" : "light"}
+            heading={
+              localeKey === "de" ? "Video" : localeKey === "tr" ? "Video" : "Video"
+            }
+            suppressEmbed={!entry || entry.key === "athlete" || entry.key === "photographer"}
           />
           {/* M3 — Curated embeds (Carrd amendment). The block self-hides
               when `cardData.embeds` is empty or every entry fails the host

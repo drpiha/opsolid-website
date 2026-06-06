@@ -32,6 +32,9 @@ export interface PutAssetArgs {
   body: Buffer;
   /** Browser-supplied or sniffed MIME type. */
   contentType: string;
+  /** Optional per-call size ceiling. Defaults to the 5 MB image limit; video
+   *  uploads pass the larger STORAGE_LIMITS.maxVideoBytes. */
+  maxBytes?: number;
 }
 
 export interface PutAssetResult {
@@ -52,10 +55,21 @@ function detectDriver(): StorageDriver {
 }
 
 const MAX_BYTES = 5 * 1024 * 1024; // 5 MB per file (was 2 MB before premium upgrade)
+const MAX_VIDEO_BYTES = 30 * 1024 * 1024; // 30 MB for short self-hosted clips
 
 export const STORAGE_LIMITS = {
   maxBytes: MAX_BYTES,
   maxBytesHuman: "5 MB",
+  /** Self-hosted video cap. Kept modest on purpose — long/large files belong
+   *  on YouTube/Vimeo via videoUrl. Paired with a client-side duration limit. */
+  maxVideoBytes: MAX_VIDEO_BYTES,
+  maxVideoBytesHuman: "30 MB",
+  /** Accepted video MIME types for the kind="video" upload lane. */
+  allowedVideo: new Set([
+    "video/mp4",
+    "video/webm",
+    "video/quicktime",
+  ]),
   /**
    * Image MIME types accepted by user-facing upload endpoints (photo, logo,
    * gallery). SVG is intentionally absent — see Faz 6.7 / C1: SVG can carry
@@ -95,8 +109,9 @@ function safeExt(ext: string): string {
  * with a broken photo path that's hard to diagnose later.
  */
 export async function putAsset(args: PutAssetArgs): Promise<PutAssetResult> {
-  if (args.body.byteLength > MAX_BYTES) {
-    throw new Error(`File too large: ${args.body.byteLength} > ${MAX_BYTES}`);
+  const limit = args.maxBytes ?? MAX_BYTES;
+  if (args.body.byteLength > limit) {
+    throw new Error(`File too large: ${args.body.byteLength} > ${limit}`);
   }
 
   const kind = safeKindSegment(args.kind);

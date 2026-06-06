@@ -376,6 +376,11 @@ export const CardDataSchema = z.object({
   /** Optional embedded video — YouTube or Vimeo URL only. Rendered by the
    *  layout if `supportsVideo` and lazy-loaded (click-to-play poster). */
   videoUrl: videoUrl.optional(),
+  /** Optional self-hosted short video (mp4/webm) uploaded by the owner and
+   *  stored via the asset adapter. Rendered with native <video> controls.
+   *  Size + duration are capped client-side (see VideoUploader). Stored as the
+   *  asset path/URL returned by /api/uploads (kind="video"). */
+  videoPath: z.string().trim().max(500).optional(),
   socials: z
     .object({
       linkedin: url.optional(),

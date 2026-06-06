@@ -40,7 +40,14 @@ const MIME_BY_EXT: Record<string, string> = {
   webp: "image/webp",
   svg: "image/svg+xml",
   gif: "image/gif",
+  // Self-hosted short clips (kind="video" uploads).
+  mp4: "video/mp4",
+  webm: "video/webm",
+  mov: "video/quicktime",
+  ogg: "video/ogg",
 };
+
+const VIDEO_EXTS = new Set(["mp4", "webm", "mov", "ogg"]);
 
 function isSafeRelative(rel: string): boolean {
   // Reject NUL bytes and any literal segment that's just dots — covers
@@ -59,6 +66,7 @@ export async function GET(
   _req: NextRequest,
   { params }: { params: { path: string[] } }
 ) {
+  const req = _req;
   const segments = params.path ?? [];
   if (segments.length === 0) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
@@ -90,8 +98,49 @@ export async function GET(
 
   const ext = (segments[segments.length - 1].split(".").pop() ?? "").toLowerCase();
   const contentType = MIME_BY_EXT[ext] ?? "application/octet-stream";
+  const isVideo = VIDEO_EXTS.has(ext);
 
-  // Stream the file so we don't pull a 5 MB image into memory per request.
+  const baseHeaders: Record<string, string> = {
+    "Content-Type": contentType,
+    // Filenames already embed entropy → URL is the cache key. Long-lived
+    // cache is safe; if a customer re-uploads, they get a new URL.
+    "Cache-Control": "public, max-age=86400, immutable",
+    "X-Content-Type-Options": "nosniff",
+  };
+
+  // Video needs byte-range support so the <video> element can seek and so
+  // Safari plays at all (it requires a 206 response). Honour a Range header
+  // for video; everything else streams whole.
+  const rangeHeader = isVideo ? req.headers.get("range") : null;
+  if (rangeHeader) {
+    const match = /^bytes=(\d*)-(\d*)$/.exec(rangeHeader.trim());
+    if (match) {
+      const size = info.size;
+      let start = match[1] ? parseInt(match[1], 10) : 0;
+      let end = match[2] ? parseInt(match[2], 10) : size - 1;
+      if (Number.isNaN(start)) start = 0;
+      if (Number.isNaN(end) || end >= size) end = size - 1;
+      if (start > end || start >= size) {
+        return new NextResponse(null, {
+          status: 416,
+          headers: { "Content-Range": `bytes */${size}`, "Accept-Ranges": "bytes" },
+        });
+      }
+      const chunk = createReadStream(absPath, { start, end });
+      const chunkStream = Readable.toWeb(chunk) as ReadableStream<Uint8Array>;
+      return new NextResponse(chunkStream, {
+        status: 206,
+        headers: {
+          ...baseHeaders,
+          "Accept-Ranges": "bytes",
+          "Content-Range": `bytes ${start}-${end}/${size}`,
+          "Content-Length": (end - start + 1).toString(),
+        },
+      });
+    }
+  }
+
+  // Stream the whole file so we don't pull it into memory per request.
   const nodeStream = createReadStream(absPath);
   // Type cast: Next.js Response constructor accepts ReadableStream<Uint8Array>;
   // Node 18+'s Readable.toWeb() returns a Web ReadableStream.
@@ -100,13 +149,9 @@ export async function GET(
   return new NextResponse(webStream, {
     status: 200,
     headers: {
-      "Content-Type": contentType,
+      ...baseHeaders,
       "Content-Length": info.size.toString(),
-      // Filenames already embed entropy → URL is the cache key. Long-lived
-      // cache is safe; if a customer re-uploads a new photo, they get a
-      // new URL and the old one becomes orphaned (cleanup is a separate job).
-      "Cache-Control": "public, max-age=86400, immutable",
-      "X-Content-Type-Options": "nosniff",
+      ...(isVideo ? { "Accept-Ranges": "bytes" } : {}),
     },
   });
 }
