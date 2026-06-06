@@ -361,9 +361,7 @@ export function YogaStudio({
   // Treat services as the upcoming class schedule. If empty, sector preset
   // services are used as a fallback so the strip is never blank.
   const classes =
-    cardData.services && cardData.services.length > 0
-      ? cardData.services
-      : sector?.services;
+    cardData.services ?? sector?.services;
 
   const sourceQs = source ? encodeSource(source) : "";
   const sourceLabel = source ? describeSource(source) : undefined;

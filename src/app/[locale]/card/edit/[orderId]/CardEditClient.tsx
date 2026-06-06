@@ -294,6 +294,19 @@ export function CardEditClient(props: Props) {
       // optionals on the server.
       customSections: cardData.customSections,
       gallery: cardData.gallery,
+      // Services editor may leave blank rows; drop any without a title so the
+      // validator (title min 1) accepts the payload. Trim string fields and
+      // collapse empties to undefined. An explicit empty list stays [] so the
+      // template hides products instead of falling back to the sector preset.
+      services: cardData.services
+        ? (cardData.services
+            .map((s) => ({
+              title: s.title?.trim() ?? "",
+              description: s.description?.trim() || undefined,
+              priceLabel: s.priceLabel?.trim() || undefined,
+            }))
+            .filter((s) => s.title.length > 0) as CardData["services"])
+        : undefined,
       photoPosition: cardData.photoPosition,
       logoPosition: cardData.logoPosition,
       typographyPreset: cardData.typographyPreset,

@@ -11,6 +11,7 @@ import { ChevronDown } from "lucide-react";
 import { useLocale } from "@/context/LocaleContext";
 import { CustomSectionsEditor } from "@/components/cards/order-form/CustomSectionsEditor";
 import { GalleryEditor } from "@/components/cards/order-form/GalleryEditor";
+import { ServicesEditor } from "@/components/cards/order-form/ServicesEditor";
 import type { CardData } from "@/lib/validation";
 import type { HandleFileUpload, SectionToggle, SetCardFn } from "./types";
 
@@ -57,6 +58,25 @@ export default function ContentSection({
         />
       </button>
       <div hidden={!openSections.has("content")} className="space-y-4">
+
+        {/* Services / products — the list templates render (services, products,
+            "Atölyeden" items). Fully owner-editable; empty = hidden on card. */}
+        <fieldset className="space-y-2">
+          <legend className="text-heading-sm text-ink">
+            {(form as Record<string, string>).servicesSection ?? "Hizmetler · Ürünler"}
+          </legend>
+          {(form as Record<string, string>).servicesHint && (
+            <p className="-mt-1 text-xs text-ink/55">
+              {(form as Record<string, string>).servicesHint}
+            </p>
+          )}
+          <ServicesEditor
+            services={cardData.services}
+            sectorKey={cardData.sectorKey}
+            onServicesChange={(next) => setCard("services", next)}
+            L={(k, fb) => (form as Record<string, string>)[k] ?? fb}
+          />
+        </fieldset>
 
         {/* Gallery — up to 24 photos rendered on the public card */}
         <fieldset className="space-y-4">

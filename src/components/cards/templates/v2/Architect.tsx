@@ -261,9 +261,7 @@ export function Architect({
   const logoUrl = resolveAssetUrl(logoPath);
 
   const projects =
-    cardData.services && cardData.services.length > 0
-      ? cardData.services
-      : sector?.services;
+    cardData.services ?? sector?.services;
 
   const sourceQs = source ? encodeSource(source) : "";
   const sourceLabel = source ? describeSource(source) : undefined;

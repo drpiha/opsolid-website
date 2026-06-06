@@ -196,9 +196,7 @@ export function Atelier({
   const logoUrl = resolveAssetUrl(logoPath);
 
   const services =
-    cardData.services && cardData.services.length > 0
-      ? cardData.services.slice(0, 4)
-      : sector?.services?.slice(0, 4);
+    (cardData.services ?? sector?.services)?.slice(0, 4);
 
   const sourceQs = source ? encodeSource(source) : "";
   const sourceLabel = source ? describeSource(source) : undefined;

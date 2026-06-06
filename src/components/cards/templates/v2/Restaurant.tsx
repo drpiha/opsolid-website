@@ -396,9 +396,7 @@ export function Restaurant({
   const initials = getInitials(cardData.company ?? cardData.name);
 
   const services =
-    cardData.services && cardData.services.length > 0
-      ? cardData.services
-      : sector?.services;
+    cardData.services ?? sector?.services;
 
   const sourceQs = source ? encodeSource(source) : "";
   const sourceLabel = source ? describeSource(source) : undefined;
