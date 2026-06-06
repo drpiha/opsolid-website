@@ -1760,6 +1760,8 @@ export const content: Content = {
           title: "Ihre Daten, Ihr Design, Ihre Karte.",
           subtitle:
             "Füllen Sie das Formular aus — die Karte wird direkt nach der Zahlung unter opsolid.de/c/… veröffentlicht.",
+          howToCreate:
+            "Jeder kann eine Karte erstellen — ganz ohne Konto. Design wählen, Formular ausfüllen, in wenigen Minuten live. Sie erhalten einen privaten Link zum jederzeitigen Bearbeiten.",
           selectedTemplate: "Gewähltes Design",
           changeTemplate: "Ändern",
           contactSection: "Kontakt — so erreichen wir Sie",

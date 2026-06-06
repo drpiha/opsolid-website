@@ -1760,6 +1760,8 @@ export const content: Content = {
           title: "Bilgileriniz, tasarımınız, kartınız.",
           subtitle:
             "Formu doldurun — ödemeden hemen sonra kartınız opsolid.de/c/… adresinde canlıya alınır.",
+          howToCreate:
+            "Kartı herkes oluşturabilir — hesap gerekmez. Tasarımı seç, formu doldur; dakikalar içinde yayında olur. Dilediğin zaman düzenlemen için özel bir bağlantı alırsın.",
           selectedTemplate: "Seçili tasarım",
           changeTemplate: "Değiştir",
           contactSection: "İletişim — size nasıl ulaşırız",

@@ -1758,6 +1758,8 @@ export const content = {
           title: "Your details, your design, your card.",
           subtitle:
             "Fill out the form — your card goes live at opsolid.de/c/… immediately after payment.",
+          howToCreate:
+            "Anyone can create a card — no account needed. Pick a design, fill in the form, and it goes live in minutes. You get a private link to edit it anytime.",
           selectedTemplate: "Selected design",
           changeTemplate: "Change",
           contactSection: "Contact — how we reach you",

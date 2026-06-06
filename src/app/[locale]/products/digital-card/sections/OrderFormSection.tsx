@@ -658,6 +658,17 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
               "Füllen Sie das Formular aus — die Karte wird direkt nach der Zahlung unter opsolid.de/c/… veröffentlicht."
             )}
           </p>
+          {/* Short "who + how" note — anonymous-first: anyone can create a card
+              with no account, and gets a private edit link. */}
+          <p className="mt-4 flex max-w-xl items-start gap-2 rounded-xl border border-copper/25 bg-copper/5 px-4 py-3 text-sm text-ink/75">
+            <Check size={16} className="mt-0.5 shrink-0 text-copper" />
+            <span>
+              {L(
+                "howToCreate",
+                "Anyone can create a card — no account needed. Pick a design, fill in the form, and it goes live in minutes. You get a private link to edit it anytime."
+              )}
+            </span>
+          </p>
         </div>
 
         <form
