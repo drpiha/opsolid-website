@@ -94,7 +94,7 @@ export default function TemplateSection({
         <ChevronDown
           size={18}
           className={[
-            "text-ink/40 shrink-0 motion-safe:transition-transform motion-safe:duration-200",
+            "text-ink-300 shrink-0 motion-safe:transition-transform motion-safe:duration-200",
             openSections.has("template") ? "rotate-180" : "",
           ].join(" ")}
           aria-hidden="true"

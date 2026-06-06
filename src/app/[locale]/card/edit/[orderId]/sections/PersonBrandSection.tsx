@@ -79,7 +79,7 @@ export default function PersonBrandSection({
         <ChevronDown
           size={18}
           className={[
-            "text-ink/40 shrink-0 motion-safe:transition-transform motion-safe:duration-200",
+            "text-ink-300 shrink-0 motion-safe:transition-transform motion-safe:duration-200",
             openSections.has("person-brand") ? "rotate-180" : "",
           ].join(" ")}
           aria-hidden="true"
@@ -232,7 +232,7 @@ export default function PersonBrandSection({
                       setPhotoPath(null);
                       setCard("photoPosition", undefined);
                     }}
-                    className="text-[10.5px] text-ink/45 hover:text-ink"
+                    className="text-[10.5px] text-ink-300 hover:text-ink"
                   >
                     {form.uploadRemove ?? "Remove"}
                   </button>
@@ -281,7 +281,7 @@ export default function PersonBrandSection({
                       setLogoPath(null);
                       setCard("logoPosition", undefined);
                     }}
-                    className="text-[10.5px] text-ink/45 hover:text-ink"
+                    className="text-[10.5px] text-ink-300 hover:text-ink"
                   >
                     {form.uploadRemove ?? "Remove"}
                   </button>
@@ -318,7 +318,7 @@ function UploadTile({
       </div>
       <div className="min-w-0 flex-1">
         <p className="text-sm font-medium text-ink">{label}</p>
-        <p className="truncate text-xs text-ink/50">
+        <p className="truncate text-xs text-ink-300">
           {current ? current.split("/").pop() : "JPG · PNG · SVG · max 2 MB"}
         </p>
       </div>

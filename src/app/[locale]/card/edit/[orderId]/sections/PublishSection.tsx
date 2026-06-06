@@ -97,7 +97,7 @@ export default function PublishSection({
         <ChevronDown
           size={18}
           className={[
-            "text-ink/40 shrink-0 motion-safe:transition-transform motion-safe:duration-200",
+            "text-ink-300 shrink-0 motion-safe:transition-transform motion-safe:duration-200",
             openSections.has("publish") ? "rotate-180" : "",
           ].join(" ")}
           aria-hidden="true"
@@ -122,7 +122,7 @@ export default function PublishSection({
         {/* Status info block — save button moved to StickySaveBar (A4) */}
         <div className="flex items-center gap-4 rounded-2xl border border-neutral-200 bg-white p-5">
           <div>
-            <p className="text-eyebrow uppercase text-ink/50">
+            <p className="text-eyebrow uppercase text-ink-300">
               {edit.statusLabel}
             </p>
             <p className="text-heading-sm text-ink">{badgeInfo.label}</p>

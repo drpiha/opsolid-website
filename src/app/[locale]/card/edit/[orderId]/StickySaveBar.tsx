@@ -62,7 +62,7 @@ export function StickySaveBar({ isDirty, formState, onRevert }: StickySaveBarPro
                 ? "text-green-700"
                 : isDirty
                 ? "text-ink/80"
-                : "text-ink/40"
+                : "text-ink-300"
             }
           >
             {isSaved ? edit.savedSuccess : isDirty ? edit.unsavedChanges : edit.allSaved}

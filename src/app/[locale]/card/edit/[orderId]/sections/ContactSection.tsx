@@ -57,7 +57,7 @@ export default function ContactSection({
         <ChevronDown
           size={18}
           className={[
-            "text-ink/40 shrink-0 motion-safe:transition-transform motion-safe:duration-200",
+            "text-ink-300 shrink-0 motion-safe:transition-transform motion-safe:duration-200",
             openSections.has("contact") ? "rotate-180" : "",
           ].join(" ")}
           aria-hidden="true"
@@ -71,7 +71,7 @@ export default function ContactSection({
             {form.typographySection ?? "Tipografi"}
           </legend>
           {form.typographyHint && (
-            <p className="-mt-2 text-xs text-ink/55">
+            <p className="-mt-2 text-xs text-ink-300">
               {form.typographyHint}
             </p>
           )}
@@ -116,7 +116,7 @@ export default function ContactSection({
                   <span className="block text-xs font-semibold text-ink">
                     {formMap[labelKey] ?? preset.label}
                   </span>
-                  <span className="block text-[10.5px] leading-snug text-ink/55">
+                  <span className="block text-[10.5px] leading-snug text-ink-300">
                     {formMap[descKey] ?? preset.description}
                   </span>
                   {active && (

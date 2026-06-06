@@ -51,7 +51,7 @@ export default function ContentSection({
         <ChevronDown
           size={18}
           className={[
-            "text-ink/40 shrink-0 motion-safe:transition-transform motion-safe:duration-200",
+            "text-ink-300 shrink-0 motion-safe:transition-transform motion-safe:duration-200",
             openSections.has("content") ? "rotate-180" : "",
           ].join(" ")}
           aria-hidden="true"
@@ -66,7 +66,7 @@ export default function ContentSection({
             {(form as Record<string, string>).servicesSection ?? "Hizmetler · Ürünler"}
           </legend>
           {(form as Record<string, string>).servicesHint && (
-            <p className="-mt-1 text-xs text-ink/55">
+            <p className="-mt-1 text-xs text-ink-300">
               {(form as Record<string, string>).servicesHint}
             </p>
           )}
@@ -84,7 +84,7 @@ export default function ContentSection({
             {(form as Record<string, string>).gallerySection ?? "Galeri"}
           </legend>
           {(form as Record<string, string>).galleryHint && (
-            <p className="-mt-2 text-xs text-ink/55">
+            <p className="-mt-2 text-xs text-ink-300">
               {(form as Record<string, string>).galleryHint}
             </p>
           )}
@@ -102,7 +102,7 @@ export default function ContentSection({
             {form.videoSection ?? "Video"}
           </legend>
           {form.videoHint && (
-            <p className="-mt-1 text-xs text-ink/55">{form.videoHint}</p>
+            <p className="-mt-1 text-xs text-ink-300">{form.videoHint}</p>
           )}
           <label className="block">
             <span className="sr-only">{form.videoLabel ?? "Video link"}</span>
@@ -134,7 +134,7 @@ export default function ContentSection({
             {form.customSectionsSection ?? "Özel bölümler"}
           </legend>
           {form.customSectionsHint && (
-            <p className="-mt-2 text-xs text-ink/55">
+            <p className="-mt-2 text-xs text-ink-300">
               {form.customSectionsHint}
             </p>
           )}
