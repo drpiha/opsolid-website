@@ -514,6 +514,15 @@ export function CardEditClient(props: Props) {
         >
           {/* ================ LEFT ================ */}
           <div className="space-y-10">
+            {/* Design / template picker — kept at the very top so owners can
+                switch the look first and see it visually. */}
+            <TemplateSection
+              templateId={templateId}
+              setTemplateId={setTemplateId}
+              openSections={openSections}
+              toggleSection={toggleSection}
+            />
+
             {/* Phase 4 — Live banner: shown only when card is published */}
             {props.status === "PUBLISHED" && currentSlug && (
               <LiveBanner
@@ -564,16 +573,10 @@ export function CardEditClient(props: Props) {
               editToken={props.editToken}
             />
 
-            {/* B7 — 4 collapsible sections, lifted to standalone components in
+            {/* B7 — collapsible sections, lifted to standalone components in
                 A8.2 (sections/*Section.tsx). State stays here in the
-                orchestrator; sections are controlled. */}
-            <TemplateSection
-              templateId={templateId}
-              setTemplateId={setTemplateId}
-              openSections={openSections}
-              toggleSection={toggleSection}
-            />
-
+                orchestrator; sections are controlled. (TemplateSection is
+                rendered at the top of the column.) */}
             <PersonBrandSection
               cardData={cardData}
               setCard={setCard}

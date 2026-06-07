@@ -26,20 +26,17 @@ function resolveSrc(path: string): string {
 
 export function LogoBlock({ logoPath, tone = "light", suppress = false }: LogoBlockProps) {
   if (!logoPath || suppress) return null;
-  const isDark = tone === "dark";
+  void tone;
 
+  // Small, centered brand mark with generous whitespace — reads as a discreet
+  // "letterhead" above the card rather than a separate bar (no hard border).
   return (
-    <div
-      className={[
-        "flex items-center justify-center px-6 py-4",
-        isDark ? "border-b border-white/10" : "border-b border-line/70",
-      ].join(" ")}
-    >
+    <div className="flex items-center justify-center pb-3 pt-1">
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={resolveSrc(logoPath)}
         alt=""
-        className="max-h-12 w-auto max-w-[60%] object-contain"
+        className="max-h-9 w-auto max-w-[45%] object-contain opacity-95"
       />
     </div>
   );

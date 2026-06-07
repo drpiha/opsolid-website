@@ -1,16 +1,16 @@
 "use client";
 
 // =============================================================================
-// TemplateSection — lets the card owner switch the design template.
+// TemplateSection — visual template picker. Lets the card owner switch the
+// design by SEEING each template (thumbnail), not just reading a name.
 //
-// Previously the template was locked after purchase. Owners ended up stuck on
-// a design that did not fit their trade (e.g. a doctor on the artisan "Maker"
-// shop template, showing un-editable "Atölyeden" shop sections). This section
-// exposes the full v2 line-up grouped by sector so the owner can re-pick any
-// time; the live preview re-renders instantly and the choice persists on save.
+// Previously the template was locked, then a plain name dropdown. Owners
+// couldn't decide visually. This shows a thumbnail grid grouped by sector;
+// the live preview re-renders on pick and the choice persists on save.
+// Thumbnails: /images/templates/card-NN.png (NN = id, zero-padded to 2).
 // =============================================================================
 
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Check } from "lucide-react";
 import { useLocale } from "@/context/LocaleContext";
 import { plannedLineup, type PlannedSector } from "@/components/cards/templates/v2/registry";
 import type { SectionToggle } from "./types";
@@ -20,8 +20,6 @@ interface TemplateSectionProps extends SectionToggle {
   setTemplateId: (id: number) => void;
 }
 
-// Human-readable group labels per sector. Kept short; the template names
-// themselves carry the design intent.
 const SECTOR_LABELS: Record<PlannedSector, string> = {
   "real-estate": "Immobilien · Real Estate",
   lawyer: "Recht · Legal",
@@ -49,8 +47,8 @@ const SECTOR_LABELS: Record<PlannedSector, string> = {
   interior: "Interior",
 };
 
-// Preserve the sector order as it first appears in the planned line-up so the
-// most common trades (real-estate, clinic, restaurant…) surface near the top.
+const thumb = (id: number) => `/images/templates/card-${String(id).padStart(2, "0")}.png`;
+
 function groupBySector() {
   const order: PlannedSector[] = [];
   const bySector = new Map<PlannedSector, typeof plannedLineup[number][]>();
@@ -74,6 +72,7 @@ export default function TemplateSection({
   const edit = t.products.digitalCard.edit as Record<string, string>;
   const groups = groupBySector();
   const current = plannedLineup.find((tpl) => tpl.id === templateId);
+  const open = openSections.has("template");
 
   return (
     <section id="section-template">
@@ -81,56 +80,77 @@ export default function TemplateSection({
         type="button"
         onClick={() => toggleSection("template")}
         className="flex w-full items-center justify-between gap-3 mt-8 mb-3 text-left"
-        aria-expanded={openSections.has("template")}
-        aria-label={
-          openSections.has("template")
-            ? edit.collapseSection
-            : edit.expandSection
-        }
+        aria-expanded={open}
+        aria-label={open ? edit.collapseSection : edit.expandSection}
       >
-        <h2 className="font-serif text-lg text-ink">
-          {edit.sectionTemplate ?? "Tasarım · Şablon"}
-        </h2>
+        <div className="flex items-center gap-2 min-w-0">
+          <h2 className="font-serif text-lg text-ink">
+            {edit.sectionTemplate ?? "Tasarım · Şablon"}
+          </h2>
+          {current && (
+            <span className="truncate text-xs text-ink-200">· {current.name}</span>
+          )}
+        </div>
         <ChevronDown
           size={18}
           className={[
-            "text-ink-300 shrink-0 motion-safe:transition-transform motion-safe:duration-200",
-            openSections.has("template") ? "rotate-180" : "",
+            "text-ink-200 shrink-0 motion-safe:transition-transform motion-safe:duration-200",
+            open ? "rotate-180" : "",
           ].join(" ")}
           aria-hidden="true"
         />
       </button>
-      <div hidden={!openSections.has("template")} className="space-y-3">
-        <p className="text-xs text-ink-300">
+
+      <div hidden={!open} className="space-y-4">
+        <p className="text-xs text-ink-200">
           {edit.templateHint ??
-            "Kartının tasarımını dilediğin zaman değiştir — değişiklik anında önizlemede görünür, kaydedince yayına alınır."}
+            "Bir tasarıma dokun — önizleme anında değişir, kaydedince yayına alınır."}
         </p>
-        <label className="block">
-          <span className="sr-only">{edit.templateLabel ?? "Şablon"}</span>
-          <select
-            className="field w-full"
-            value={templateId}
-            onChange={(e) => setTemplateId(Number(e.target.value))}
-          >
-            {groups.map(({ sector, items }) => (
-              <optgroup key={sector} label={SECTOR_LABELS[sector] ?? sector}>
-                {items.map((tpl) => (
-                  <option key={tpl.id} value={tpl.id}>
-                    {tpl.name}
-                  </option>
-                ))}
-              </optgroup>
-            ))}
-          </select>
-        </label>
-        {current && (
-          <p className="text-xs text-ink-300">
-            {(edit.templateCurrent ?? "Seçili tasarım: {name}").replace(
-              "{name}",
-              current.name,
-            )}
-          </p>
-        )}
+
+        {groups.map(({ sector, items }) => (
+          <div key={sector} className="space-y-2">
+            <p className="mono-label text-[10px] uppercase tracking-wider text-ink-200">
+              {SECTOR_LABELS[sector] ?? sector}
+            </p>
+            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+              {items.map((tpl) => {
+                const selected = tpl.id === templateId;
+                return (
+                  <button
+                    key={tpl.id}
+                    type="button"
+                    onClick={() => setTemplateId(tpl.id)}
+                    aria-pressed={selected}
+                    className={[
+                      "group relative overflow-hidden rounded-xl border bg-bg-0 text-left transition-all",
+                      selected
+                        ? "border-copper ring-2 ring-copper/40"
+                        : "border-line hover:border-copper/50",
+                    ].join(" ")}
+                  >
+                    <div className="aspect-[3/4] w-full overflow-hidden bg-bg-1">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={thumb(tpl.id)}
+                        alt={tpl.name}
+                        loading="lazy"
+                        className="h-full w-full object-cover object-top transition-transform group-hover:scale-[1.03]"
+                      />
+                    </div>
+                    {selected && (
+                      <span className="absolute right-1.5 top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-copper text-white shadow">
+                        <Check size={12} strokeWidth={3} />
+                      </span>
+                    )}
+                    <p className="truncate px-2 py-1.5 text-[11px] font-medium text-ink">
+                      {tpl.name}
+                    </p>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        ))}
       </div>
     </section>
   );
