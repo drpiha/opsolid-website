@@ -115,12 +115,20 @@ export async function GET(
   // distribution channel (NFC card, Instagram bio, trade-fair signage…) can
   // own its own QR with per-source scan tracking.
   const codeParam = (searchParams.get("code") ?? "").trim();
-  const cardHost = process.env.NEXT_PUBLIC_CARD_HOST?.trim() || "card.opsolid.de";
+  // Only use a dedicated card host when it's explicitly configured AND known to
+  // host-rewrite to /c/<slug>. Otherwise encode the canonical web URL
+  // (opsolid.de/c/<slug>), which always resolves — the bare `card.opsolid.de`
+  // fallback used to 404 because that host serves the mobile app, not the
+  // web-card rewrite.
+  const cardHostEnv = process.env.NEXT_PUBLIC_CARD_HOST?.trim();
   const shortHost = process.env.NEXT_PUBLIC_SHORT_HOST?.trim() || "go.opsolid.de";
+  const canonicalCardUrl = `${siteUrl.replace(/\/$/, "")}/c/${params.slug}`;
   const data =
     codeParam && /^[a-z0-9-]{3,64}$/.test(codeParam)
       ? `https://${shortHost}/${codeParam}`
-      : `https://${cardHost}/${params.slug}`;
+      : cardHostEnv
+        ? `https://${cardHostEnv}/${params.slug}`
+        : canonicalCardUrl;
 
   try {
     const { bytes, contentType } = await renderQr({

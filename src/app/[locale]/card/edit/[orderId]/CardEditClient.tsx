@@ -53,9 +53,8 @@ import ContentSection from "./sections/ContentSection";
 import ContactSection from "./sections/ContactSection";
 import PublishSection from "./sections/PublishSection";
 import type { FormState } from "./sections/types";
-import { CardQualityWidget } from "@/components/dashboard/CardQualityWidget";
+import { CardStrengthPanel } from "@/components/dashboard/CardStrengthPanel";
 import { FeedbackPanel } from "@/components/dashboard/FeedbackPanel";
-import { CardCoachPanel } from "@/components/dashboard/CardCoachPanel";
 
 interface Props {
   orderId: string;
@@ -84,7 +83,10 @@ interface Props {
 }
 
 export function CardEditClient(props: Props) {
-  const { t } = useLocale();
+  const { t, locale } = useLocale();
+  // The coach/strength panel only ships de/en/tr copy; fall back to en.
+  const coachLocale: "de" | "en" | "tr" =
+    locale === "de" || locale === "tr" ? locale : "en";
   const edit = t.products.digitalCard.edit;
   const cancelCopy = t.products.digitalCard.cancel;
   const form = t.products.digitalCard.order.form;
@@ -179,7 +181,7 @@ export function CardEditClient(props: Props) {
 
   // B7 — expand/collapse sections. Only "person-brand" open by default.
   const [openSections, setOpenSections] = useState<Set<string>>(
-    () => new Set(["person-brand"])
+    () => new Set(["template", "person-brand"])
   );
   const toggleSection = (id: string) =>
     setOpenSections((prev) => {
@@ -417,7 +419,7 @@ export function CardEditClient(props: Props) {
           <h1 className="truncate font-serif text-xl text-ink">
             {cardData.name || edit.untitledCard}
           </h1>
-          <div className="mt-0.5 flex items-center gap-2 text-xs text-ink-300">
+          <div className="mt-0.5 flex items-center gap-2 text-xs text-ink-200">
             <span
               className={`inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-semibold ${badgeInfo.cls}`}
             >
@@ -460,17 +462,17 @@ export function CardEditClient(props: Props) {
         </div>
 
         <div className="mb-10 max-w-3xl">
-          <p className="text-eyebrow uppercase tracking-wider text-ink-300">
+          <p className="text-eyebrow uppercase tracking-wider text-ink-200">
             OpSolid · Digital Card
           </p>
           <p className="mt-2 text-body text-ink/60">{edit.subtitle}</p>
           {currentSlug && props.status === "PUBLISHED" && (
             <div className="mt-4 max-w-md space-y-1.5">
-              <label className="mono-label block text-[10px] uppercase tracking-[0.2em] text-ink-300">
+              <label className="mono-label block text-[10px] uppercase tracking-[0.2em] text-ink-200">
                 {edit.publicUrlLabel ?? "Kart adresi"}
               </label>
               <div className="flex items-stretch overflow-hidden rounded-2xl border border-ink/15 bg-white focus-within:border-copper">
-                <span className="flex items-center px-3 text-xs text-ink-300">
+                <span className="flex items-center px-3 text-xs text-ink-200">
                   opsolid.de/c/
                 </span>
                 <input
@@ -544,13 +546,12 @@ export function CardEditClient(props: Props) {
                 directly in the card-content section below, so a separate
                 read-only mirror is just visual noise. */}
 
-            {/* Phase 8.2 — Quality score widget: always visible, collapses to
-                a small ring gauge. Shows top-3 actionable suggestions with
-                one-tap navigation into the relevant accordion section. */}
-            <CardQualityWidget
+            {/* "Kartını güçlendir" — merged score + full tappable suggestion
+                list (replaces the old Profilstärke + Coach-Tipps widgets). */}
+            <CardStrengthPanel
               orderId={props.orderId}
               editToken={props.editToken}
-              locale="de"
+              locale={coachLocale}
               onNavigateToSection={handleNavigateToSection}
             />
 
@@ -558,14 +559,6 @@ export function CardEditClient(props: Props) {
             <FeedbackPanel
               orderId={props.orderId}
               editToken={props.editToken}
-            />
-
-            {/* Phase 8.6 — full coaching suggestion list with section navigation */}
-            <CardCoachPanel
-              orderId={props.orderId}
-              editToken={props.editToken}
-              locale="de"
-              onNavigateToSection={handleNavigateToSection}
             />
 
             {/* B7 — 4 collapsible sections, lifted to standalone components in
@@ -645,7 +638,7 @@ export function CardEditClient(props: Props) {
                   {edit.downloadOg}
                 </a>
               ) : (
-                <p className="mt-4 text-xs text-ink-300">{edit.shareNotReady}</p>
+                <p className="mt-4 text-xs text-ink-200">{edit.shareNotReady}</p>
               )}
             </div>
 
@@ -677,7 +670,7 @@ export function CardEditClient(props: Props) {
 
           {/* ================ RIGHT: preview ================ */}
           <div className="lg:sticky lg:top-20 lg:self-start">
-            <p className="text-eyebrow mb-4 uppercase text-ink-300">
+            <p className="text-eyebrow mb-4 uppercase text-ink-200">
               {form.previewLabel}
             </p>
             <EditPreview
@@ -689,7 +682,7 @@ export function CardEditClient(props: Props) {
               brandPrimaryHex={brandPrimaryHex || undefined}
               brandAccentHex={brandAccentHex || undefined}
             />
-            <p className="mt-4 text-xs text-ink-300">{form.previewHint}</p>
+            <p className="mt-4 text-xs text-ink-200">{form.previewHint}</p>
           </div>
 
           {/* A4 — StickySaveBar lives inside <form> so its type="submit" button
@@ -918,7 +911,7 @@ function CancelModal({
         className="w-full max-w-md rounded-3xl border border-neutral-200 bg-white p-6 shadow-xl"
         onClick={(e) => e.stopPropagation()}
       >
-        <p className="text-eyebrow uppercase tracking-wider text-ink-300">
+        <p className="text-eyebrow uppercase tracking-wider text-ink-200">
           {copy.modalEyebrow}
         </p>
         <h2 className="mt-2 font-display text-2xl text-ink">
@@ -1064,12 +1057,12 @@ function AnalyticsPanel({
 
       <div className="border-t border-neutral-100 px-5 py-4">
         {loading && (
-          <div className="flex items-center gap-2 text-sm text-ink-300">
+          <div className="flex items-center gap-2 text-sm text-ink-200">
             <Loader2 size={14} className="animate-spin" /> {edit.analyticsLoading}
           </div>
         )}
         {!loading && !data && (
-          <p className="text-sm text-ink-300">{edit.analyticsEmpty}</p>
+          <p className="text-sm text-ink-200">{edit.analyticsEmpty}</p>
         )}
         {!loading && data && (
           <>
@@ -1077,7 +1070,7 @@ function AnalyticsPanel({
               {stats.map((s) => (
                 <div key={s.label} className="rounded-xl bg-neutral-50 p-3 text-center">
                   <div className="text-2xl font-bold tabular-nums text-ink">{s.value}</div>
-                  <div className="mt-0.5 text-[10px] text-ink-300">{s.label}</div>
+                  <div className="mt-0.5 text-[10px] text-ink-200">{s.label}</div>
                 </div>
               ))}
             </div>
@@ -1095,7 +1088,7 @@ function AnalyticsPanel({
               </div>
             )}
             {data.total === 0 && (
-              <p className="mt-2 text-xs text-ink-300">
+              <p className="mt-2 text-xs text-ink-200">
                 Henüz görüntülenme yok. Kartını paylaştıkça burada görünecek.
               </p>
             )}
@@ -1174,7 +1167,7 @@ function StatusChip({ status }: { status: string }) {
   const { t } = useLocale();
   const e = t.products.digitalCard.edit;
   const map: Record<string, { bg: string; text: string; label: string }> = {
-    new:       { bg: "bg-neutral-100",  text: "text-ink-300",    label: e.leadStatusNew },
+    new:       { bg: "bg-neutral-100",  text: "text-ink-200",    label: e.leadStatusNew },
     contacted: { bg: "bg-blue-50",      text: "text-blue-600",  label: e.leadStatusContacted },
     qualified: { bg: "bg-green-50",     text: "text-green-600", label: e.leadStatusQualified },
     archived:  { bg: "bg-neutral-50",   text: "text-ink/50",    label: e.leadStatusArchived },
@@ -1308,19 +1301,19 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
               )}
             </div>
             {!open && (
-              <p className="mt-1 text-[11px] leading-relaxed text-ink-300">
+              <p className="mt-1 text-[11px] leading-relaxed text-ink-200">
                 {e.crmHeaderHint}
               </p>
             )}
           </div>
         </div>
-        {open ? <ChevronUp size={16} className="text-ink-300 shrink-0" /> : <ChevronDown size={16} className="text-ink-300 shrink-0" />}
+        {open ? <ChevronUp size={16} className="text-ink-200 shrink-0" /> : <ChevronDown size={16} className="text-ink-200 shrink-0" />}
       </button>
 
       {open && (
         <div className="border-t border-neutral-100">
           {/* Hint inside panel too — visible after opening */}
-          <p className="px-5 pt-3 text-[11px] leading-relaxed text-ink-300">
+          <p className="px-5 pt-3 text-[11px] leading-relaxed text-ink-200">
             {e.crmHeaderHint}
           </p>
 
@@ -1366,7 +1359,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                 type="button"
                 onClick={() => setTab(tabKey)}
                 className={`mr-4 pb-2 text-xs font-semibold uppercase tracking-wide transition ${
-                  tab === tabKey ? "border-b-2 border-copper text-copper" : "text-ink-300 hover:text-ink"
+                  tab === tabKey ? "border-b-2 border-copper text-copper" : "text-ink-200 hover:text-ink"
                 }`}
               >
                 {tabKey === "leads"
@@ -1378,7 +1371,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
 
           <div className="px-5 py-4">
             {loading && (
-              <div className="flex items-center gap-2 text-sm text-ink-300">
+              <div className="flex items-center gap-2 text-sm text-ink-200">
                 <Loader2 size={14} className="animate-spin" />
                 {e.crmLoading}
               </div>
@@ -1387,7 +1380,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
             {/* ── Leads tab ── */}
             {!loading && tab === "leads" && (
               leads?.length === 0 ? (
-                <p className="text-sm text-ink-300">{e.crmEmptyLeads}</p>
+                <p className="text-sm text-ink-200">{e.crmEmptyLeads}</p>
               ) : (
                 <ul className="divide-y divide-neutral-100 rounded-lg border border-neutral-100 bg-white">
                   {leads?.map((l) => {
@@ -1419,7 +1412,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                 <Loader2 size={11} className="animate-spin text-copper/60" />
                               )}
                             </div>
-                            <div className="mt-0.5 truncate text-[11px] text-ink-300">
+                            <div className="mt-0.5 truncate text-[11px] text-ink-200">
                               {[l.company, l.meetingContext, l.email]
                                 .filter(Boolean)
                                 .join(" · ") || "—"}
@@ -1428,14 +1421,14 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                           {/* Status chip */}
                           <span className="shrink-0">{statusChip(l.status ?? "new")}</span>
                           {/* Date */}
-                          <span className="shrink-0 hidden sm:block text-[10px] tabular-nums text-ink-300">
+                          <span className="shrink-0 hidden sm:block text-[10px] tabular-nums text-ink-200">
                             {new Date(l.createdAt).toLocaleDateString()}
                           </span>
                           {/* Chevron */}
                           {isExpanded ? (
-                            <ChevronUp size={14} className="shrink-0 text-ink-300" />
+                            <ChevronUp size={14} className="shrink-0 text-ink-200" />
                           ) : (
-                            <ChevronDown size={14} className="shrink-0 text-ink-300" />
+                            <ChevronDown size={14} className="shrink-0 text-ink-200" />
                           )}
                         </button>
 
@@ -1443,7 +1436,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                         {isExpanded && (
                           <div className="space-y-3 border-t border-neutral-100 bg-neutral-50/60 px-3 py-3 text-sm">
                             {/* Date (full) on mobile, hidden on desktop where row already shows it */}
-                            <div className="text-[11px] text-ink-300 sm:hidden">
+                            <div className="text-[11px] text-ink-200 sm:hidden">
                               {new Date(l.createdAt).toLocaleString()}
                             </div>
 
@@ -1454,7 +1447,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                               </p>
                             )}
                             {l.interest && (
-                              <p className="text-[11px] text-ink-300">
+                              <p className="text-[11px] text-ink-200">
                                 <span className="mono-label uppercase tracking-wide">
                                   Interesse
                                 </span>{" "}
@@ -1551,7 +1544,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                 className={`rounded-md border px-2 py-1 text-[11px] font-medium transition ${
                                   (l.priority ?? 0) > 0
                                     ? "border-red-200 bg-red-50 text-red-600 hover:bg-red-100"
-                                    : "border-neutral-200 bg-white text-ink-300 hover:border-copper/30 hover:text-copper"
+                                    : "border-neutral-200 bg-white text-ink-200 hover:border-copper/30 hover:text-copper"
                                 }`}
                               >
                                 {(l.priority ?? 0) > 0 ? "★" : "☆"}
@@ -1562,7 +1555,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                 onClick={() =>
                                   void patchLead(l.id, { lastContactedAt: new Date().toISOString() })
                                 }
-                                className="inline-flex items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink-300 transition hover:border-green-400/50 hover:text-green-600 active:scale-95"
+                                className="inline-flex items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink-200 transition hover:border-green-400/50 hover:text-green-600 active:scale-95"
                               >
                                 <Check size={11} />
                                 Als kontaktiert markieren
@@ -1570,7 +1563,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                             </div>
                             {/* Last contacted display */}
                             {l.lastContactedAt && (
-                              <p className="text-[10px] text-ink-300">
+                              <p className="text-[10px] text-ink-200">
                                 Kontaktiert: {new Date(l.lastContactedAt).toLocaleDateString()}
                               </p>
                             )}
@@ -1605,7 +1598,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                   return n;
                                 })
                               }
-                              className="text-[11px] text-ink-300 hover:text-copper"
+                              className="text-[11px] text-ink-200 hover:text-copper"
                             >
                               {expandedNotes.has(l.id)
                                 ? e.closeNote
@@ -1625,7 +1618,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
             {/* ── Connections tab ── */}
             {!loading && tab === "connections" && (
               connections?.length === 0 ? (
-                <p className="text-sm text-ink-300">{e.crmEmptyConnections}</p>
+                <p className="text-sm text-ink-200">{e.crmEmptyConnections}</p>
               ) : (
                 <ul className="divide-y divide-neutral-100 rounded-lg border border-neutral-100 bg-white">
                   {connections?.map((c) => {
@@ -1655,27 +1648,27 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                 <Loader2 size={11} className="animate-spin text-copper/60" />
                               )}
                             </div>
-                            <div className="mt-0.5 truncate text-[11px] text-ink-300">
+                            <div className="mt-0.5 truncate text-[11px] text-ink-200">
                               {[c.visitorSlug && `/c/${c.visitorSlug}`, c.source]
                                 .filter(Boolean)
                                 .join(" · ") || "—"}
                             </div>
                           </div>
                           <span className="shrink-0">{statusChip(c.status ?? "new")}</span>
-                          <span className="shrink-0 hidden sm:block text-[10px] tabular-nums text-ink-300">
+                          <span className="shrink-0 hidden sm:block text-[10px] tabular-nums text-ink-200">
                             {new Date(c.createdAt).toLocaleDateString()}
                           </span>
                           {isExpanded ? (
-                            <ChevronUp size={14} className="shrink-0 text-ink-300" />
+                            <ChevronUp size={14} className="shrink-0 text-ink-200" />
                           ) : (
-                            <ChevronDown size={14} className="shrink-0 text-ink-300" />
+                            <ChevronDown size={14} className="shrink-0 text-ink-200" />
                           )}
                         </button>
 
                         {/* Expanded panel */}
                         {isExpanded && (
                           <div className="space-y-3 border-t border-neutral-100 bg-neutral-50/60 px-3 py-3 text-sm">
-                            <div className="text-[11px] text-ink-300 sm:hidden">
+                            <div className="text-[11px] text-ink-200 sm:hidden">
                               {new Date(c.createdAt).toLocaleString()}
                             </div>
 
@@ -1690,7 +1683,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                               </a>
                             )}
                             {c.source && (
-                              <p className="text-[10px] uppercase tracking-wide text-ink-300">
+                              <p className="text-[10px] uppercase tracking-wide text-ink-200">
                                 Source · {c.source}
                               </p>
                             )}
@@ -1784,7 +1777,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                 className={`rounded-md border px-2 py-1 text-[11px] font-medium transition ${
                                   (c.priority ?? 0) > 0
                                     ? "border-red-200 bg-red-50 text-red-600 hover:bg-red-100"
-                                    : "border-neutral-200 bg-white text-ink-300 hover:border-copper/30 hover:text-copper"
+                                    : "border-neutral-200 bg-white text-ink-200 hover:border-copper/30 hover:text-copper"
                                 }`}
                               >
                                 {(c.priority ?? 0) > 0 ? "★" : "☆"}
@@ -1795,7 +1788,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                 onClick={() =>
                                   void patchConnection(c.id, { lastContactedAt: new Date().toISOString() })
                                 }
-                                className="inline-flex items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink-300 transition hover:border-green-400/50 hover:text-green-600 active:scale-95"
+                                className="inline-flex items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink-200 transition hover:border-green-400/50 hover:text-green-600 active:scale-95"
                               >
                                 <Check size={11} />
                                 Als kontaktiert markieren
@@ -1803,7 +1796,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                             </div>
                             {/* Last contacted display */}
                             {c.lastContactedAt && (
-                              <p className="text-[10px] text-ink-300">
+                              <p className="text-[10px] text-ink-200">
                                 Kontaktiert: {new Date(c.lastContactedAt).toLocaleDateString()}
                               </p>
                             )}
@@ -1838,7 +1831,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                   return n;
                                 })
                               }
-                              className="text-[11px] text-ink-300 hover:text-copper"
+                              className="text-[11px] text-ink-200 hover:text-copper"
                             >
                               {expandedNotes.has(c.id)
                                 ? e.closeNote
@@ -2053,15 +2046,15 @@ function AlbumPendingPanel({
             <span className="block text-[13px] font-semibold text-ink">
               {photos.length} yeni fotoğraf onay bekliyor
             </span>
-            <span className="block text-[11px] text-ink-300">
+            <span className="block text-[11px] text-ink-200">
               Albümde herkese görünmesi için onayla.
             </span>
           </span>
         </span>
         {expanded ? (
-          <ChevronUp size={16} className="text-ink-300" />
+          <ChevronUp size={16} className="text-ink-200" />
         ) : (
-          <ChevronDown size={16} className="text-ink-300" />
+          <ChevronDown size={16} className="text-ink-200" />
         )}
       </button>
 
@@ -2095,7 +2088,7 @@ function AlbumPendingPanel({
                       {p.caption}
                     </p>
                   )}
-                  <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-ink-300">
+                  <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-ink-200">
                     {new Date(p.createdAt).toLocaleDateString()}
                   </p>
                 </div>
