@@ -38,6 +38,7 @@ import {
 } from "lucide-react";
 
 import { encodeSource, describeSource } from "@/components/cards/smart/SmartCardSource";
+import { ServiceLink } from "./shared/ServiceLink";
 import { getSectorPreset } from "@/config/card-sectors";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
@@ -681,7 +682,7 @@ function ProductGrid({
   title,
   buyLabel,
 }: {
-  items: Array<{ title: string; description?: string; priceLabel?: string }>;
+  items: Array<{ title: string; description?: string; priceLabel?: string; href?: string }>;
   primary: string;
   accent: string;
   title: string;
@@ -708,8 +709,9 @@ function ProductGrid({
 
       <div className="grid grid-cols-2 gap-3">
         {items.map((item, i) => (
-          <article
+          <ServiceLink
             key={`${item.title}-${i}`}
+            href={item.href}
             className="group flex flex-col overflow-hidden rounded-2xl border bg-white transition-all hover:-translate-y-0.5"
             style={{
               borderColor: "rgba(120,80,60,0.10)",
@@ -776,7 +778,7 @@ function ProductGrid({
                 />
               </div>
             </div>
-          </article>
+          </ServiceLink>
         ))}
       </div>
     </section>

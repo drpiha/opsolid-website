@@ -225,6 +225,9 @@ const ServiceSchema = z
     description: z.string().trim().max(400).optional(),
     /** Optional explicit price label (rendered as-is). e.g. "ab 49 €" */
     priceLabel: z.string().trim().max(60).optional(),
+    /** Optional outbound link — makes the product/service card clickable (the
+     *  "Buy"/"Kaufen" affordance opens this). https:// auto-prepended. */
+    href: url.optional(),
   })
   .strict();
 export type CardService = z.infer<typeof ServiceSchema>;

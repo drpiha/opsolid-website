@@ -29,6 +29,7 @@ import { getSiteUrl } from "@/lib/stripe";
 import { getTemplateEntry } from "@/components/cards/templates/v2/registry";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
 import { VideoBlock } from "@/components/cards/templates/v2/shared/VideoBlock";
+import { LogoBlock, LOGO_NATIVE_KEYS } from "@/components/cards/templates/v2/shared/LogoBlock";
 import { OwnerModeProvider } from "@/context/OwnerMode";
 import { QRFlipOverlay } from "@/components/cards/QRFlipOverlay";
 import { ShareButton } from "@/components/cards/ShareButton";
@@ -498,6 +499,13 @@ export default async function CardPage({ params, searchParams }: PageProps) {
           data-card-tpl
           style={wrapperStyle}
         >
+          {/* Universal brand strip — shows the logo above any template that
+              doesn't render one natively (e.g. Maker). */}
+          <LogoBlock
+            logoPath={order.logoPath}
+            tone={isDarkTemplate ? "dark" : "light"}
+            suppress={!entry || LOGO_NATIVE_KEYS.has(entry.key)}
+          />
           <Template
             slug={slug}
             cardData={renderedCardData}

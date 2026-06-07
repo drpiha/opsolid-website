@@ -42,6 +42,7 @@ import type { CardData, ImagePosition } from "@/lib/validation";
 import { PhotoEditor } from "@/components/cards/PhotoEditor";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
 import { VideoBlock } from "@/components/cards/templates/v2/shared/VideoBlock";
+import { LogoBlock, LOGO_NATIVE_KEYS } from "@/components/cards/templates/v2/shared/LogoBlock";
 import { getTypographyPreset } from "@/lib/typographyPresets";
 import { downscaleImage } from "@/lib/images/downscale";
 import { getTemplateEntry } from "@/components/cards/templates/v2/registry";
@@ -307,6 +308,7 @@ export function CardEditClient(props: Props) {
               title: s.title?.trim() ?? "",
               description: s.description?.trim() || undefined,
               priceLabel: s.priceLabel?.trim() || undefined,
+              href: s.href?.trim() || undefined,
             }))
             .filter((s) => s.title.length > 0) as CardData["services"])
         : undefined,
@@ -1910,6 +1912,11 @@ function EditPreview({
 
   return (
     <div data-card-tpl style={wrapperStyle as React.CSSProperties}>
+      <LogoBlock
+        logoPath={logoPath}
+        tone={isDarkTemplate ? "dark" : "light"}
+        suppress={!entry || LOGO_NATIVE_KEYS.has(entry.key)}
+      />
       {Template ? (
         <Template
           slug="preview"

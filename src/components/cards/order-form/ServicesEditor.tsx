@@ -108,14 +108,25 @@ export function ServicesEditor({
             maxLength={400}
             onChange={(e) => setField(idx, "description", e.target.value)}
           />
-          <input
-            type="text"
-            className="field w-full sm:w-1/2"
-            placeholder={L("servicesPrice", "Fiyat etiketi (ör. 49 €) — opsiyonel")}
-            value={item.priceLabel ?? ""}
-            maxLength={60}
-            onChange={(e) => setField(idx, "priceLabel", e.target.value)}
-          />
+          <div className="flex flex-col gap-2 sm:flex-row">
+            <input
+              type="text"
+              className="field w-full sm:w-1/2"
+              placeholder={L("servicesPrice", "Fiyat etiketi (ör. 49 €) — opsiyonel")}
+              value={item.priceLabel ?? ""}
+              maxLength={60}
+              onChange={(e) => setField(idx, "priceLabel", e.target.value)}
+            />
+            <input
+              type="url"
+              inputMode="url"
+              className="field w-full sm:w-1/2"
+              placeholder={L("servicesLink", "Bağlantı (Satın al / detay) — opsiyonel")}
+              value={item.href ?? ""}
+              maxLength={500}
+              onChange={(e) => setField(idx, "href", e.target.value)}
+            />
+          </div>
         </div>
       ))}
 
