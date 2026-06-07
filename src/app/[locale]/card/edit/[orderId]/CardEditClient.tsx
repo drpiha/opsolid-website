@@ -35,6 +35,7 @@ import {
   MessageCircle,
   Search,
   Download,
+  UserPlus,
 } from "lucide-react";
 import { useLocale } from "@/context/LocaleContext";
 import { TemplateRenderer } from "@/components/cards/TemplateRenderer";
@@ -1210,6 +1211,36 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
   const [noteEdits, _setNoteEdits] = useState<Record<string, string>>({});
   void noteEdits; // reserved for future controlled note editing
 
+  // Manual "add contact" — owner adds someone met offline.
+  const EMPTY_ADD = { name: "", email: "", phone: "", company: "", message: "" };
+  const [addOpen, setAddOpen] = useState(false);
+  const [adding, setAdding] = useState(false);
+  const [addForm, setAddForm] = useState(EMPTY_ADD);
+
+  const addLead = async () => {
+    if (!addForm.name.trim() && !addForm.email.trim() && !addForm.phone.trim()) return;
+    setAdding(true);
+    try {
+      const res = await fetch(
+        `/api/card/edit/${orderId}/crm/lead?t=${encodeURIComponent(editToken)}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(addForm),
+        },
+      );
+      if (res.ok) {
+        const { lead } = (await res.json()) as { lead: CrmLead };
+        setLeads((prev) => [lead, ...(prev ?? [])]);
+        setAddForm(EMPTY_ADD);
+        setAddOpen(false);
+        setTab("leads");
+      }
+    } finally {
+      setAdding(false);
+    }
+  };
+
   const load = async (forceReload = false) => {
     if (leads !== null && !forceReload) return;
     setLoading(true);
@@ -1351,7 +1382,76 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
               <Download size={12} />
               CSV
             </a>
+            <button
+              type="button"
+              onClick={() => setAddOpen((v) => !v)}
+              className="inline-flex items-center gap-1 rounded-lg border border-copper/40 bg-copper/10 px-2.5 py-1.5 text-[11px] font-semibold text-copper transition hover:border-copper hover:bg-copper/20"
+            >
+              <UserPlus size={12} />
+              {(e as Record<string, string>).crmAddContact ?? "Kişi ekle"}
+            </button>
           </div>
+
+          {/* ── Manual add-contact form ── */}
+          {addOpen && (
+            <div className="space-y-2 border-b border-neutral-100 bg-bg-1/40 px-5 py-3">
+              <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                <input
+                  type="text"
+                  placeholder={(e as Record<string, string>).crmAddName ?? "İsim"}
+                  value={addForm.name}
+                  onChange={(ev) => setAddForm((f) => ({ ...f, name: ev.target.value }))}
+                  className="rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-xs text-ink placeholder-ink/45 focus:border-copper/50 focus:outline-none"
+                />
+                <input
+                  type="email"
+                  placeholder={(e as Record<string, string>).crmAddEmail ?? "E-posta"}
+                  value={addForm.email}
+                  onChange={(ev) => setAddForm((f) => ({ ...f, email: ev.target.value }))}
+                  className="rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-xs text-ink placeholder-ink/45 focus:border-copper/50 focus:outline-none"
+                />
+                <input
+                  type="tel"
+                  placeholder={(e as Record<string, string>).crmAddPhone ?? "Telefon"}
+                  value={addForm.phone}
+                  onChange={(ev) => setAddForm((f) => ({ ...f, phone: ev.target.value }))}
+                  className="rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-xs text-ink placeholder-ink/45 focus:border-copper/50 focus:outline-none"
+                />
+                <input
+                  type="text"
+                  placeholder={(e as Record<string, string>).crmAddCompany ?? "Şirket"}
+                  value={addForm.company}
+                  onChange={(ev) => setAddForm((f) => ({ ...f, company: ev.target.value }))}
+                  className="rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-xs text-ink placeholder-ink/45 focus:border-copper/50 focus:outline-none"
+                />
+              </div>
+              <input
+                type="text"
+                placeholder={(e as Record<string, string>).crmAddNote ?? "Not (opsiyonel)"}
+                value={addForm.message}
+                onChange={(ev) => setAddForm((f) => ({ ...f, message: ev.target.value }))}
+                className="w-full rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-xs text-ink placeholder-ink/45 focus:border-copper/50 focus:outline-none"
+              />
+              <div className="flex items-center justify-end gap-2 pt-0.5">
+                <button
+                  type="button"
+                  onClick={() => { setAddOpen(false); setAddForm(EMPTY_ADD); }}
+                  className="rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-[11px] font-medium text-ink/60 hover:text-ink"
+                >
+                  {(e as Record<string, string>).crmAddCancel ?? "İptal"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => void addLead()}
+                  disabled={adding || (!addForm.name.trim() && !addForm.email.trim() && !addForm.phone.trim())}
+                  className="inline-flex items-center gap-1 rounded-lg bg-neutral-900 px-3 py-1.5 text-[11px] font-semibold text-neutral-50 disabled:opacity-50"
+                >
+                  {adding && <Loader2 size={11} className="animate-spin" />}
+                  {(e as Record<string, string>).crmAddSave ?? "Ekle"}
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* ── Tabs ── */}
           <div className="flex border-b border-neutral-100 px-5 pt-2">
