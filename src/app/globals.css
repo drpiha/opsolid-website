@@ -79,7 +79,9 @@
    * at 1× scale so legacy cards render unchanged.
    * --------------------------------------------------------------------- */
   .tpl-photo {
-    object-fit: cover;
+    /* !important so the owner's "fit" choice overrides templates' hardcoded
+       Tailwind `object-cover` utility. Default stays cover. */
+    object-fit: var(--tpl-photo-fit, cover) !important;
     object-position: var(--tpl-photo-x, 50%) var(--tpl-photo-y, 50%);
     transform: scale(var(--tpl-photo-scale, 1));
     transform-origin: center;

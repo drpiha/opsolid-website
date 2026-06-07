@@ -277,6 +277,9 @@ export const ImagePositionSchema = z
     x: z.number().min(0).max(100),
     y: z.number().min(0).max(100),
     scale: z.number().min(0.5).max(3),
+    /** How the image fills its frame. "cover" crops to fill (default);
+     *  "contain" shows the whole image (letterboxed). */
+    fit: z.enum(["cover", "contain"]).optional(),
   })
   .strict();
 export type ImagePosition = z.infer<typeof ImagePositionSchema>;

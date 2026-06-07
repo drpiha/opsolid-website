@@ -41,6 +41,8 @@ interface Props {
     save: string;
     cancel: string;
     hint: string;
+    fitCover?: string;
+    fitContain?: string;
   };
 }
 
@@ -250,7 +252,7 @@ export function PhotoEditor({
                   draggable={false}
                   className="pointer-events-none h-full w-full"
                   style={{
-                    objectFit: "cover",
+                    objectFit: position.fit ?? "cover",
                     objectPosition: `${position.x}% ${position.y}%`,
                     transform: `scale(${position.scale})`,
                     transformOrigin: "center",
@@ -266,6 +268,32 @@ export function PhotoEditor({
             <p className="mt-3 text-center text-[11px] italic text-ink/50">
               {labels.hint}
             </p>
+
+            {/* Fit mode — only meaningful for photos (logos always contain). */}
+            {!isLogo && (
+              <div className="mt-4 flex items-center justify-center gap-1 rounded-full border border-ink/10 bg-bg-1/60 p-1">
+                {(["cover", "contain"] as const).map((mode) => {
+                  const active = (position.fit ?? "cover") === mode;
+                  return (
+                    <button
+                      key={mode}
+                      type="button"
+                      onClick={() => setPosition((p) => ({ ...p, fit: mode }))}
+                      className={[
+                        "flex-1 rounded-full px-3 py-1.5 text-xs font-semibold transition-colors",
+                        active
+                          ? "bg-neutral-900 text-neutral-50"
+                          : "text-ink/60 hover:text-ink",
+                      ].join(" ")}
+                    >
+                      {mode === "cover"
+                        ? labels.fitCover ?? "Kırp-doldur"
+                        : labels.fitContain ?? "Tümünü sığdır"}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
 
             {/* Zoom controls */}
             <div className="mt-5 flex items-center gap-3">

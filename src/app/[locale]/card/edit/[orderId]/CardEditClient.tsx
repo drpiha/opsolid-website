@@ -1888,6 +1888,7 @@ function EditPreview({
     "--tpl-photo-x": `${photoPos?.x ?? 50}%`,
     "--tpl-photo-y": `${photoPos?.y ?? 50}%`,
     "--tpl-photo-scale": String(photoPos?.scale ?? 1),
+    "--tpl-photo-fit": photoPos?.fit ?? "cover",
     "--tpl-logo-x": `${logoPos?.x ?? 50}%`,
     "--tpl-logo-y": `${logoPos?.y ?? 50}%`,
     "--tpl-logo-scale": String(logoPos?.scale ?? 1),
