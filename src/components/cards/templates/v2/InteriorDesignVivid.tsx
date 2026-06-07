@@ -1,9 +1,9 @@
 ﻿"use client";
 
 // =============================================================================
-// InteriorDesignVivid â€” v2 template (id=51, key="interior-design-vivid").
+// InteriorDesignVivid — v2 template (id=51, key="interior-design-vivid").
 //
-// Sector: Interior designer â€” VIVID variant. Mood: bold contemporary primary
+// Sector: Interior designer — VIVID variant. Mood: bold contemporary primary
 // (default electric blue) with white surfaces, large photo block, color
 // pops. Inspired by the vivid-architect / interior layouts.
 //
@@ -13,7 +13,7 @@
 //   - Profile strip floats over hero.
 //   - 3 quick action pills.
 //   - Featured project card: large photo with overlaid badge + caption.
-//   - Services grid: 2Ã—2 cards with icons in primary-tinted squircle.
+//   - Services grid: 2×2 cards with icons in primary-tinted squircle.
 //   - Process: timeline of 3 numbered nodes connected by accent rule.
 //   - CTA: gradient bold button.
 // =============================================================================
@@ -113,7 +113,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     yearsLabel: "Jahre",
     projectsLabel: "Projekte",
     awardsLabel: "Awards",
-    cta: "ErstgesprÃ¤ch buchen",
+    cta: "Erstgespräch buchen",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
@@ -145,21 +145,21 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     callBtn: "Ara",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-posta",
-    featuredH: "GÃ¼ncel Proje",
-    featuredBadge: "Ã–ne Ã‡Ä±kan",
+    featuredH: "Güncel Proje",
+    featuredBadge: "Öne Çıkan",
     servicesH: "Hizmetler",
-    processH: "SÃ¼reÃ§",
+    processH: "Süreç",
     step1: "Brief",
     step2: "Konsept",
     step3: "Uygulama",
-    yearsLabel: "YÄ±l",
+    yearsLabel: "Yıl",
     projectsLabel: "Proje",
-    awardsLabel: "Ã–dÃ¼l",
-    cta: "GÃ¶rÃ¼ÅŸme Talep Et",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    awardsLabel: "Ödül",
+    cta: "Görüşme Talep Et",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
-    contact: "Ä°letiÅŸim",
+    contact: "İletişim",
   },
   es: {
 
@@ -390,7 +390,7 @@ export function InteriorDesignVivid({
               {cardData.company || "Interior Studio"}
             </div>
             <div className="mt-0.5 text-[13px]" style={{ color: INK_SOFT }}>
-              {cardData.title || "Wohn Â· Office Â· Hotel"}
+              {cardData.title || "Wohn · Office · Hotel"}
             </div>
           </div>
         </section>
@@ -541,7 +541,7 @@ export function InteriorDesignVivid({
                         color: INK,
                       }}
                     >
-                      {String(i + 1).padStart(2, "0")} Â· {step}
+                      {String(i + 1).padStart(2, "0")} · {step}
                     </span>
                   </li>
                 );
@@ -618,7 +618,7 @@ export function InteriorDesignVivid({
             {(cardData.company || cardData.name).toUpperCase()}
           </div>
           <div className="mt-1.5 text-[10.5px]" style={{ color: "rgba(255,255,255,0.55)" }}>
-            Â© {year} Â· {t.poweredBy}{" "}
+            © {year} · {t.poweredBy}{" "}
             <a
               href="https://opsolid.de/products/digital-card"
               target="_blank"
@@ -720,7 +720,7 @@ function Pill({
 export const interiorDesignVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 51,
   key: "interior-design-vivid",
-  name: "Interior â€” Vivid",
+  name: "Interior — Vivid",
   industry: "Interior designer / studio",
   supports: {
     services: true,
@@ -741,14 +741,14 @@ export const interiorDesignVividEntry: Omit<TemplateRegistryEntry, "Component"> 
   sampleSlug: "demo-interior-design-vivid",
 };
 
-// photo: Unsplash, modern interior. Unsplash License â€” free, no attribution required.
+// photo: Unsplash, modern interior. Unsplash License — free, no attribution required.
 export const interiorDesignVividSample: SampleData = {
   templateId: 51,
   slug: "demo-interior-design-vivid",
   cardData: {
     name: "Elif Yaman",
     position: "Interior Designerin",
-    title: "Wohn Â· BÃ¼ro Â· Hotel",
+    title: "Wohn · Büro · Hotel",
     company: "Elif Design Studio",
     email: "elif@elifdesign.de",
     phone: "+49 173 778 9012",
@@ -756,15 +756,15 @@ export const interiorDesignVividSample: SampleData = {
     website: "elifdesign.de",
     address: "Mitte, Berlin",
     bio:
-      "Mutige, zeitgenÃ¶ssische Interiors mit einer klaren Materialhaltung. Wir entwerfen RÃ¤ume, die Haltung zeigen â€” ohne laut zu werden.",
+      "Mutige, zeitgenössische Interiors mit einer klaren Materialhaltung. Wir entwerfen Räume, die Haltung zeigen — ohne laut zu werden.",
     bookingUrl: "https://cal.com/elifdesign/intro",
     sectorKey: "architecture",
     services: [
-      { title: "Mitte Penthouse", description: "240 mÂ² Â· Marmor Â· Eiche Â· Bronze", priceLabel: "ab â‚¬18.000" },
-      { title: "Raumplanung", description: "Concept Â· Layout Â· Materialien" },
+      { title: "Mitte Penthouse", description: "240 m² · Marmor · Eiche · Bronze", priceLabel: "ab â‚¬18.000" },
+      { title: "Raumplanung", description: "Concept · Layout · Materialien" },
       { title: "Vollprojekt", description: "Konzept bis Umsetzung" },
       { title: "Online-Beratung", description: "Strategie pro Stunde" },
-      { title: "Hospitality Design", description: "Hotellerie & Boutique-CafÃ©s" },
+      { title: "Hospitality Design", description: "Hotellerie & Boutique-Cafés" },
     ],
     socials: {
       instagram: "https://instagram.com/elifdesign.interior",

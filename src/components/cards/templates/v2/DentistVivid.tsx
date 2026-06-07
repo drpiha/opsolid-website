@@ -1,9 +1,9 @@
 ﻿"use client";
 
 // =============================================================================
-// DentistVivid â€” v2 template (id=24, key="dentist-vivid").
+// DentistVivid — v2 template (id=24, key="dentist-vivid").
 //
-// Sector: dental clinic â€” VIVID variant. Mood: bold teal/cyan gradient,
+// Sector: dental clinic — VIVID variant. Mood: bold teal/cyan gradient,
 // energetic, modern. Inspired by kart_11_dis_hekimi_vivid.html.
 //
 // Locked design DNA (only colors respond to brand):
@@ -128,7 +128,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DnvCopy> = {
   },
   tr: {
     online: "Online Randevu",
-    bookCta: "AÄŸrÄ±sÄ±z Randevu Al",
+    bookCta: "Ağrısız Randevu Al",
     bookHint: "7/24 WhatsApp ile",
     call: "Telefon",
     email: "E-posta",
@@ -139,11 +139,11 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DnvCopy> = {
     testimonial: "Hasta Yorumu",
     servicesLabel: "Tedaviler",
     reviewsLabel: "Yorum",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
-    share: "PaylaÅŸ",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
+    share: "Paylaş",
     poweredBy: "Powered by",
-    populari: "PopÃ¼ler",
+    populari: "Popüler",
   },
   es: {
 
@@ -315,7 +315,7 @@ export function DentistVivid({
           {cardData.name}
         </h1>
         <div className="relative z-10 mt-2 text-[14px] font-medium opacity-90">
-          {cardData.position} {cardData.title && `Â· ${cardData.title}`}
+          {cardData.position} {cardData.title && `· ${cardData.title}`}
         </div>
       </header>
 
@@ -474,7 +474,7 @@ export function DentistVivid({
         </section>
       )}
 
-      {/* STATS â€” driven by real data */}
+      {/* STATS — driven by real data */}
       {(() => {
         const statsItems = [
           ...(services.length ? [{ n: String(services.length), l: t.servicesLabel }] : []),
@@ -568,7 +568,7 @@ export function DentistVivid({
               &ldquo;{testimonials[0].quote}&rdquo;
             </p>
             <div className="mt-3.5 text-[12px] font-semibold opacity-90">
-              â€” {testimonials[0].author}
+              — {testimonials[0].author}
               {testimonials[0].role && `, ${testimonials[0].role}`}
             </div>
           </article>
@@ -619,7 +619,7 @@ export function DentistVivid({
           {cardData.website || cardData.company}
         </div>
         <div className="mt-1 text-[11px]" style={{ color: INK_SOFT }}>
-          {cardData.company} Â· Â© {new Date().getFullYear()}
+          {cardData.company} · © {new Date().getFullYear()}
         </div>
         <div
           className="mt-3 inline-flex items-center gap-1.5 text-[11px]"
@@ -716,7 +716,7 @@ function VividStat({
 export const dentistVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 24,
   key: "dentist-vivid",
-  name: "Dentist â€” Vivid",
+  name: "Dentist — Vivid",
   industry: "Dental clinic / dentist (vivid gradient variant)",
   supports: {
     services: true,
@@ -738,33 +738,33 @@ export const dentistVividSample: SampleData = {
   templateId: 24,
   slug: "demo-dentist-vivid",
   cardData: {
-    name: "Dr. Burak YÄ±lmaz",
-    position: "DiÅŸ Hekimi Â· Implant UzmanÄ±",
+    name: "Dr. Burak Yılmaz",
+    position: "Diş Hekimi · Implant Uzmanı",
     title: "Estetik & Cerrahi",
-    company: "Estetik DiÅŸ KliniÄŸi",
+    company: "Estetik Diş Kliniği",
     phone: "+49 30 445 6789",
     whatsapp: "+49 170 445 6789",
     email: "burak@estetikdis.de",
     website: "estetikdis.de",
-    address: "KurfÃ¼rstendamm 45, 10707 Berlin",
-    bio: "Spezialist fÃ¼r Ã¤sthetische Zahnmedizin und Implantologie. Ãœber 12 Jahre Erfahrung â€” vereinbaren Sie Ihr kostenloses ErstgesprÃ¤ch.",
+    address: "Kurfürstendamm 45, 10707 Berlin",
+    bio: "Spezialist für ästhetische Zahnmedizin und Implantologie. Über 12 Jahre Erfahrung — vereinbaren Sie Ihr kostenloses Erstgespräch.",
     bookingUrl: "https://wa.me/491704456789?text=Termin",
     services: [
       { title: "Implant", description: "Tedavisi", priceLabel: "ab â‚¬1.200" },
       { title: "Zirkonyum", description: "Kaplama", priceLabel: "â‚¬680" },
       { title: "Beyazlatma", description: "Tek seansta", priceLabel: "â‚¬350" },
-      { title: "Invisalign", description: "Åžeffaf plak", priceLabel: "â‚¬3.900" },
+      { title: "Invisalign", description: "Şeffaf plak", priceLabel: "â‚¬3.900" },
     ],
     faqs: [
-      { q: "ITI Implant UzmanÄ±", a: "SertifikalÄ± uzman" },
-      { q: "Invisalign Provider", a: "Åžeffaf plak ortodonti" },
+      { q: "ITI Implant Uzmanı", a: "Sertifikalı uzman" },
+      { q: "Invisalign Provider", a: "Şeffaf plak ortodonti" },
       { q: "Smile Design Sert.", a: "Hollywood smile design" },
     ],
     testimonials: [
       {
         author: "Hande K.",
         role: "Memnun Hasta",
-        quote: "Dr. YÄ±lmaz sayesinde yÄ±llardÄ±r Ã§ekimserlik duyduÄŸum implant tedavisini yaptÄ±rdÄ±m. AÄŸrÄ±sÄ±z ve mÃ¼kemmel sonuÃ§.",
+        quote: "Dr. Yılmaz sayesinde yıllardır çekimserlik duyduğum implant tedavisini yaptırdım. Ağrısız ve mükemmel sonuç.",
       },
     ],
     socials: { instagram: "https://instagram.com/estetikdis.berlin" },

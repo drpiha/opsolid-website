@@ -1,9 +1,9 @@
 ﻿"use client";
 
 // =============================================================================
-// LayoutVividBold â€” v2 universal template (id=94, key="layout-vivid-bold").
+// LayoutVividBold — v2 universal template (id=94, key="layout-vivid-bold").
 //
-// Sector: ANY. Inspired by layouts/v13_vivid_bold.html â€” Poppins + bold gradient
+// Sector: ANY. Inspired by layouts/v13_vivid_bold.html — Poppins + bold gradient
 // hero, floating profile card with copper-ringed avatar, chip row of services,
 // 3-stat grid, 2x2 service tiles with coloured icon squares, gradient CTA,
 // gradient testimonial bubble, stacked social row, gradient QR strip.
@@ -51,7 +51,7 @@ function digitsOnly(value: string): string {
 
 function getInitials(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "Â·";
+  if (parts.length === 0) return "·";
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
@@ -78,10 +78,10 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    heroTag: "Strategie Â· Wachstum Â· Innovation",
+    heroTag: "Strategie · Wachstum · Innovation",
     heroLine1Pre: "Wir gestalten",
     heroLine1Em: "mutige",
-    heroLine2: "GeschÃ¤ftsstrategien.",
+    heroLine2: "Geschäftsstrategien.",
     servicesTitlePre: "Was ich",
     servicesTitleEm: "anbiete",
     packagesTitlePre: "Service",
@@ -92,12 +92,12 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     walletLabel: "In Wallet speichern",
     poweredBy: "Powered by",
     statClients: "Kunden",
-    statRoas: "Ã˜ ROI",
+    statRoas: "Ø ROI",
     statReach: "Jahre",
     testimonialTitle: "Stimmen",
   },
   en: {
-    heroTag: "Strategy Â· Growth Â· Innovation",
+    heroTag: "Strategy · Growth · Innovation",
     heroLine1Pre: "We craft",
     heroLine1Em: "bold",
     heroLine2: "business strategies.",
@@ -116,27 +116,27 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     testimonialTitle: "What clients say",
   },
   tr: {
-    heroTag: "Strateji Â· BÃ¼yÃ¼me Â· Ä°novasyon",
+    heroTag: "Strateji · Büyüme · İnovasyon",
     heroLine1Pre: "Cesur",
-    heroLine1Em: "iÅŸ",
-    heroLine2: "stratejileri tasarlÄ±yoruz.",
+    heroLine1Em: "iş",
+    heroLine2: "stratejileri tasarlıyoruz.",
     servicesTitlePre: "Benim",
-    servicesTitleEm: "sunduklarÄ±m",
+    servicesTitleEm: "sunduklarım",
     packagesTitlePre: "Hizmet",
     packagesTitleEm: "paketleri",
-    ctaLabel: "Ãœcretsiz Strateji GÃ¶rÃ¼ÅŸmesi",
-    qrTitle: "BaÄŸlantÄ±da kalalÄ±m",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana Ekle",
+    ctaLabel: "Ücretsiz Strateji Görüşmesi",
+    qrTitle: "Bağlantıda kalalım",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana Ekle",
     poweredBy: "Powered by",
-    statClients: "MÃ¼ÅŸteri",
+    statClients: "Müşteri",
     statRoas: "Ort. ROI",
-    statReach: "YÄ±l",
-    testimonialTitle: "GÃ¶rÃ¼ÅŸler",
+    statReach: "Yıl",
+    testimonialTitle: "Görüşler",
   },
   es: {
 
-    heroTag: "Strategy Â· Growth Â· Innovation",
+    heroTag: "Strategy · Growth · Innovation",
     heroLine1Pre: "Creamos",
     heroLine1Em: "audaz",
     heroLine2: "estrategias de negocio.",
@@ -157,7 +157,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   it: {
 
-    heroTag: "Strategy Â· Growth Â· Innovation",
+    heroTag: "Strategy · Growth · Innovation",
     heroLine1Pre: "Realizziamo",
     heroLine1Em: "audace",
     heroLine2: "strategie di business.",
@@ -178,7 +178,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   fr: {
 
-    heroTag: "Strategy Â· Growth Â· Innovation",
+    heroTag: "Strategy · Growth · Innovation",
     heroLine1Pre: "Nous créons",
     heroLine1Em: "audacieux",
     heroLine2: "stratégies d'affaires.",
@@ -199,7 +199,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   ar: {
 
-    heroTag: "Strategy Â· Growth Â· Innovation",
+    heroTag: "Strategy · Growth · Innovation",
     heroLine1Pre: "نصنع",
     heroLine1Em: "جريء",
     heroLine2: "استراتيجيات الأعمال.",
@@ -392,7 +392,7 @@ export function LayoutVividBold({
               >
                 {[cardData.company, cardData.address?.split(",").slice(-1)[0].trim()]
                   .filter(Boolean)
-                  .join(" Â· ")}
+                  .join(" · ")}
               </div>
             )}
           </div>
@@ -589,7 +589,7 @@ export function LayoutVividBold({
               lineHeight: 1,
             }}
           >
-            â€œ
+            “
           </span>
           <p
             className="relative"
@@ -730,7 +730,7 @@ export const layoutVividBoldEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 94,
   key: "layout-vivid-bold",
   name: "Vivid Bold",
-  industry: "Universal â€” any sector",
+  industry: "Universal — any sector",
   supports: {
     services: true,
     faqs: false,
@@ -750,12 +750,12 @@ export const layoutVividBoldEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-layout-vivid-bold",
 };
 
-// photo: Unsplash, https://unsplash.com/photos/photo-1560250097-0dc05888fffb â€” Free, no attribution required.
+// photo: Unsplash, https://unsplash.com/photos/photo-1560250097-0dc05888fffb — Free, no attribution required.
 export const layoutVividBoldSample: SampleData = {
   templateId: 94,
   slug: "demo-layout-vivid-bold",
   cardData: {
-    name: "Alex MÃ¼ller",
+    name: "Alex Müller",
     title: "Strategy & Innovation Consultant",
     position: "Strategy & Innovation Consultant",
     company: "AM Advisory",
@@ -763,7 +763,7 @@ export const layoutVividBoldSample: SampleData = {
     phone: "+49 30 556 7890",
     whatsapp: "+49 30 556 7890",
     website: "amadvisory.de",
-    address: "FriedrichstraÃŸe 76, 10117 Berlin",
+    address: "Friedrichstraße 76, 10117 Berlin",
     bio: "Unternehmensberater mit Fokus auf digitale Transformation und Strategieentwicklung. 15+ Jahre Erfahrung.",
     bookingUrl: "https://cal.com/amadvisory/intro",
     impressumUrl: "https://amadvisory.de/impressum",
@@ -774,7 +774,7 @@ export const layoutVividBoldSample: SampleData = {
       instagram: "https://instagram.com/alex.advisory",
     },
     services: [
-      { title: "Digital Transformation", description: "AylÄ±k yÃ¶netim", priceLabel: "â‚¬3.500/Tag" },
+      { title: "Digital Transformation", description: "Aylık yönetim", priceLabel: "â‚¬3.500/Tag" },
       { title: "Strategy Workshop", description: "Vorstand-Klausur", priceLabel: "â‚¬1.800/Tag" },
       { title: "Executive Coaching", description: "1:1 Sparring", priceLabel: "â‚¬400/h" },
       { title: "Strategic Audit", description: "6-Wochen-Audit", priceLabel: "ab â‚¬18.000" },

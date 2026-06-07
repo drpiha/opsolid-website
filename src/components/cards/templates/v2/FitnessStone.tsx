@@ -1,9 +1,9 @@
 ﻿"use client";
 
 // =============================================================================
-// FitnessStone â€” v2 template (id=91, key="fitness-stone").
+// FitnessStone — v2 template (id=91, key="fitness-stone").
 //
-// Sector: Fitness / personal training â€” STONE variant. Mood: outdoor / nature
+// Sector: Fitness / personal training — STONE variant. Mood: outdoor / nature
 // holistic coaching with sage-green warmth, Fraunces italic display + Nunito
 // body. Inspired by kart_10_fitness_stone.html.
 //
@@ -93,37 +93,37 @@ interface Copy {
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     taglineFallback: "Holistic Fitness Coach",
-    atelierLabel: "Holistic Â· Berlin",
+    atelierLabel: "Holistic · Berlin",
     philLabel: "Mein Ansatz",
     servicesH: "Service-Spektrum",
     servicesSub: "Einzel- und Gruppen-Coaching",
     journeyH: "Transformations-Reise",
-    journeySub: "Schritt fÃ¼r Schritt gemeinsam",
+    journeySub: "Schritt für Schritt gemeinsam",
     contactH: "Lass uns verbinden",
-    ctaPrimary: "Kostenloses GesprÃ¤ch",
+    ctaPrimary: "Kostenloses Gespräch",
     ctaSecondary: "WhatsApp",
     yearsLabel: "Jahre",
     transformationsLabel: "Transformationen",
     igLabel: "Instagram",
     ytLabel: "YouTube",
     testiText:
-      "Cans Unterschied: keine Zahlen-Obsession sondern GespÃ¼r fÃ¼r den KÃ¶rper. In 12 Wochen kÃ¶rperlich und mental neu geboren.",
+      "Cans Unterschied: keine Zahlen-Obsession sondern Gespür für den Körper. In 12 Wochen körperlich und mental neu geboren.",
     testiName: "Selin K.",
-    testiResult: "12 Wochen Â· -14 kg, neues SelbstwertgefÃ¼hl",
+    testiResult: "12 Wochen · -14 kg, neues Selbstwertgefühl",
     bookBtn: "Termin reservieren",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
     journey: {
-      intro: { ttl: "Kostenlose Erst-Beratung", desc: "Wir verstehen deine BedÃ¼rfnisse und Ziele in einem 30-Minuten-GesprÃ¤ch." },
-      plan: { ttl: "PersÃ¶nlicher Plan", desc: "Trainings- und ErnÃ¤hrungsplan, abgestimmt auf Lebensstil und Stoffwechsel." },
-      weekly: { ttl: "WÃ¶chentliches Check-in", desc: "Messung, Energie- und Stimmungs-Update â€” kurze Telefon-Sessions." },
-      habit: { ttl: "Nachhaltige Gewohnheit", desc: "Mentale Werkzeuge fÃ¼r lebenslange VerÃ¤nderung und Begleitung." },
+      intro: { ttl: "Kostenlose Erst-Beratung", desc: "Wir verstehen deine Bedürfnisse und Ziele in einem 30-Minuten-Gespräch." },
+      plan: { ttl: "Persönlicher Plan", desc: "Trainings- und Ernährungsplan, abgestimmt auf Lebensstil und Stoffwechsel." },
+      weekly: { ttl: "Wöchentliches Check-in", desc: "Messung, Energie- und Stimmungs-Update — kurze Telefon-Sessions." },
+      habit: { ttl: "Nachhaltige Gewohnheit", desc: "Mentale Werkzeuge für lebenslange Veränderung und Begleitung." },
     },
   },
   en: {
     taglineFallback: "Holistic Fitness Coach",
-    atelierLabel: "Holistic Â· Berlin",
+    atelierLabel: "Holistic · Berlin",
     philLabel: "My approach",
     servicesH: "Service Range",
     servicesSub: "1-1 and small-group coaching",
@@ -137,9 +137,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     igLabel: "Instagram",
     ytLabel: "YouTube",
     testiText:
-      "What set Can apart was the focus on how the body felt, not just the numbers. 12 weeks reborn â€” physically and mentally.",
+      "What set Can apart was the focus on how the body felt, not just the numbers. 12 weeks reborn — physically and mentally.",
     testiName: "Selin K.",
-    testiResult: "12 weeks Â· -14 kg, regained self-respect",
+    testiResult: "12 weeks · -14 kg, regained self-respect",
     bookBtn: "Book appointment",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
@@ -153,38 +153,38 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   tr: {
     taglineFallback: "Holistic Fitness Coach",
-    atelierLabel: "Holistic Â· Ä°stanbul",
-    philLabel: "YaklaÅŸÄ±mÄ±m",
+    atelierLabel: "Holistic · İstanbul",
+    philLabel: "Yaklaşımım",
     servicesH: "Hizmet Yelpazesi",
-    servicesSub: "Bireysel ve grup koÃ§luk programlarÄ±",
-    journeyH: "DÃ¶nÃ¼ÅŸÃ¼m SÃ¼reci",
-    journeySub: "AdÄ±m adÄ±m birlikte ilerliyoruz",
-    contactH: "BaÄŸlantÄ± KuralÄ±m",
-    ctaPrimary: "Ãœcretsiz GÃ¶rÃ¼ÅŸme",
+    servicesSub: "Bireysel ve grup koçluk programları",
+    journeyH: "Dönüşüm Süreci",
+    journeySub: "Adım adım birlikte ilerliyoruz",
+    contactH: "Bağlantı Kuralım",
+    ctaPrimary: "Ücretsiz Görüşme",
     ctaSecondary: "WhatsApp",
-    yearsLabel: "YÄ±l",
-    transformationsLabel: "DÃ¶nÃ¼ÅŸÃ¼m",
+    yearsLabel: "Yıl",
+    transformationsLabel: "Dönüşüm",
     igLabel: "Instagram",
     ytLabel: "YouTube",
     testiText:
-      "Can'Ä±n en bÃ¼yÃ¼k farkÄ± sayÄ±lara deÄŸil bedensel hisse odaklanmasÄ±ydÄ±. 12 haftada hem fiziksel hem zihinsel olarak yeniden doÄŸdum.",
+      "Can'ın en büyük farkı sayılara değil bedensel hisse odaklanmasıydı. 12 haftada hem fiziksel hem zihinsel olarak yeniden doğdum.",
     testiName: "Selin K.",
-    testiResult: "12 haftada -14 kg, kazanÄ±lmÄ±ÅŸ Ã¶z-saygÄ±",
+    testiResult: "12 haftada -14 kg, kazanılmış öz-saygı",
     bookBtn: "Randevu Al",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
     journey: {
-      intro: { ttl: "Ãœcretsiz KonsÃ¼ltasyon", desc: "Ä°htiyaÃ§larÄ±nÄ± ve hedeflerini birlikte anlÄ±yoruz. 30 dakikalÄ±k tanÄ±ÅŸma gÃ¶rÃ¼ÅŸmesi." },
-      plan: { ttl: "KiÅŸisel Plan", desc: "YaÅŸam tarzÄ±na ve metabolik profile gÃ¶re Ã¶zel antrenman + beslenme ÅŸablonu." },
-      weekly: { ttl: "HaftalÄ±k Takip", desc: "Her hafta Ã¶lÃ§Ã¼m, zihin durumu ve enerji Ã¼zerine kÄ±sa check-in gÃ¶rÃ¼ÅŸmeleri." },
-      habit: { ttl: "SÃ¼rdÃ¼rÃ¼lebilir AlÄ±ÅŸkanlÄ±k", desc: "KalÄ±cÄ± deÄŸiÅŸim iÃ§in zihinsel araÃ§lar ve yaÅŸam boyu sÃ¼recek rehberlik." },
+      intro: { ttl: "Ücretsiz Konsültasyon", desc: "İhtiyaçlarını ve hedeflerini birlikte anlıyoruz. 30 dakikalık tanışma görüşmesi." },
+      plan: { ttl: "Kişisel Plan", desc: "Yaşam tarzına ve metabolik profile göre özel antrenman + beslenme şablonu." },
+      weekly: { ttl: "Haftalık Takip", desc: "Her hafta ölçüm, zihin durumu ve enerji üzerine kısa check-in görüşmeleri." },
+      habit: { ttl: "Sürdürülebilir Alışkanlık", desc: "Kalıcı değişim için zihinsel araçlar ve yaşam boyu sürecek rehberlik." },
     },
   },
   es: {
 
     taglineFallback: "Coach de fitness holístico",
-    atelierLabel: "Holistic Â· Berlin",
+    atelierLabel: "Holistic · Berlin",
     philLabel: "Mi enfoque",
     servicesH: "Gama de servicios",
     servicesSub: "Coaching individual y en grupo reducido",
@@ -198,9 +198,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     igLabel: "Instagram",
     ytLabel: "YouTube",
     testiText:
-      "What set Can apart was the focus on how the body felt, not just the numbers. 12 weeks reborn â€” physically and mentally.",
+      "What set Can apart was the focus on how the body felt, not just the numbers. 12 weeks reborn — physically and mentally.",
     testiName: "Selin K.",
-    testiResult: "12 weeks Â· -14 kg, regained self-respect",
+    testiResult: "12 weeks · -14 kg, regained self-respect",
     bookBtn: "Reservar cita",
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
@@ -216,7 +216,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   it: {
 
     taglineFallback: "Coach fitness olistico",
-    atelierLabel: "Holistic Â· Berlin",
+    atelierLabel: "Holistic · Berlin",
     philLabel: "Il mio approccio",
     servicesH: "Gamma di servizi",
     servicesSub: "Coaching individuale e di piccolo gruppo",
@@ -230,9 +230,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     igLabel: "Instagram",
     ytLabel: "YouTube",
     testiText:
-      "What set Can apart was the focus on how the body felt, not just the numbers. 12 weeks reborn â€” physically and mentally.",
+      "What set Can apart was the focus on how the body felt, not just the numbers. 12 weeks reborn — physically and mentally.",
     testiName: "Selin K.",
-    testiResult: "12 weeks Â· -14 kg, regained self-respect",
+    testiResult: "12 weeks · -14 kg, regained self-respect",
     bookBtn: "Prenota un appuntamento",
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
@@ -248,7 +248,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   fr: {
 
     taglineFallback: "Coach fitness holistique",
-    atelierLabel: "Holistic Â· Berlin",
+    atelierLabel: "Holistic · Berlin",
     philLabel: "Mon approche",
     servicesH: "Gamme de services",
     servicesSub: "Coaching individuel et en petit groupe",
@@ -262,9 +262,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     igLabel: "Instagram",
     ytLabel: "YouTube",
     testiText:
-      "What set Can apart was the focus on how the body felt, not just the numbers. 12 weeks reborn â€” physically and mentally.",
+      "What set Can apart was the focus on how the body felt, not just the numbers. 12 weeks reborn — physically and mentally.",
     testiName: "Selin K.",
-    testiResult: "12 weeks Â· -14 kg, regained self-respect",
+    testiResult: "12 weeks · -14 kg, regained self-respect",
     bookBtn: "Prendre rendez-vous",
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
@@ -280,7 +280,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   ar: {
 
     taglineFallback: "مدرب لياقة شامل",
-    atelierLabel: "Holistic Â· Berlin",
+    atelierLabel: "Holistic · Berlin",
     philLabel: "نهجي",
     servicesH: "نطاق الخدمات",
     servicesSub: "تدريب فردي ومجموعات صغيرة",
@@ -294,9 +294,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     igLabel: "إنستغرام",
     ytLabel: "يوتيوب",
     testiText:
-      "What set Can apart was the focus on how the body felt, not just the numbers. 12 weeks reborn â€” physically and mentally.",
+      "What set Can apart was the focus on how the body felt, not just the numbers. 12 weeks reborn — physically and mentally.",
     testiName: "Selin K.",
-    testiResult: "12 weeks Â· -14 kg, regained self-respect",
+    testiResult: "12 weeks · -14 kg, regained self-respect",
     bookBtn: "حجز موعد",
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
@@ -947,7 +947,7 @@ export function FitnessStone({
             letterSpacing: "0.5px",
           }}
         >
-          &copy; {new Date().getFullYear()} â€” {t.atelierLabel}
+          &copy; {new Date().getFullYear()} — {t.atelierLabel}
         </div>
         <div
           className="mt-1"
@@ -1045,7 +1045,7 @@ function ServiceGlyph({ idx }: { idx: number }) {
 export const fitnessStoneEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 91,
   key: "fitness-stone",
-  name: "Fitness â€” Stone",
+  name: "Fitness — Stone",
   industry: "Fitness coach / outdoor holistic atelier",
   supports: {
     services: true,
@@ -1066,12 +1066,12 @@ export const fitnessStoneEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-fitness-stone",
 };
 
-// photo: Unsplash, https://unsplash.com/photos/8mqOw4DBBSg â€” Free, no attribution required.
+// photo: Unsplash, https://unsplash.com/photos/8mqOw4DBBSg — Free, no attribution required.
 export const fitnessStoneSample: SampleData = {
   templateId: 91,
   slug: "demo-fitness-stone",
   cardData: {
-    name: "Can Ã–ztÃ¼rk",
+    name: "Can Öztürk",
     position: "Holistic Fitness Coach",
     title: "Holistic Fitness Coach",
     company: "CanFit Berlin",
@@ -1080,7 +1080,7 @@ export const fitnessStoneSample: SampleData = {
     whatsapp: "+49 176 778 9012",
     website: "canfit.de",
     address: "Kastanienallee 24, 10435 Berlin",
-    bio: "SaÄŸlÄ±k sayÄ±lardan ibaret deÄŸildir. Beden, beslenme ve zihin birlikte iyileÅŸir. SÃ¼rdÃ¼rÃ¼lebilir alÄ±ÅŸkanlÄ±klar Ã¼zerine kurulu nazik ama kararlÄ± bir yolculuk.",
+    bio: "Sağlık sayılardan ibaret değildir. Beden, beslenme ve zihin birlikte iyileşir. Sürdürülebilir alışkanlıklar üzerine kurulu nazik ama kararlı bir yolculuk.",
     bookingUrl: "https://cal.com/canfit/intro",
     impressumUrl: "https://canfit.de/impressum",
     privacyUrl: "https://canfit.de/datenschutz",
@@ -1090,10 +1090,10 @@ export const fitnessStoneSample: SampleData = {
       youtube: "https://youtube.com/CanFit",
     },
     services: [
-      { title: "1-1 Online KoÃ§luk", description: "KiÅŸiye Ã¶zel, haftalÄ±k takip", priceLabel: "â‚¬199/ay" },
-      { title: "Grup KoÃ§luk", description: "Topluluk + online dersler", priceLabel: "â‚¬69/ay" },
-      { title: "Beslenme PlanÄ±", description: "KiÅŸiye Ã¶zel makro Ã§izelge", priceLabel: "â‚¬129" },
-      { title: "12 Hafta DÃ¶nÃ¼ÅŸÃ¼m", description: "Antrenman + beslenme + zihin", priceLabel: "â‚¬899" },
+      { title: "1-1 Online Koçluk", description: "Kişiye özel, haftalık takip", priceLabel: "â‚¬199/ay" },
+      { title: "Grup Koçluk", description: "Topluluk + online dersler", priceLabel: "â‚¬69/ay" },
+      { title: "Beslenme Planı", description: "Kişiye özel makro çizelge", priceLabel: "â‚¬129" },
+      { title: "12 Hafta Dönüşüm", description: "Antrenman + beslenme + zihin", priceLabel: "â‚¬899" },
     ],
   },
   photoUrl:

@@ -1,9 +1,9 @@
 ﻿"use client";
 
 // =============================================================================
-// ClinicVivid â€” v2 template (id=70, key="clinic-vivid").
+// ClinicVivid — v2 template (id=70, key="clinic-vivid").
 //
-// Sector: Doctor / Clinic â€” VIVID variant. Mood: modern health-tech, bold
+// Sector: Doctor / Clinic — VIVID variant. Mood: modern health-tech, bold
 // teal-to-turquoise gradient, rounded geometry, Poppins display.
 // Inspired by kart_05_doktor_vivid.html.
 //
@@ -12,10 +12,10 @@
 //   - Floating profile card overlapping hero with name/role/badges.
 //   - 3-up rounded stat tiles below profile.
 //   - Big online-CTA gradient block (book WhatsApp).
-//   - Specialty 2Ã—2 grid of soft-tinted icon tiles.
+//   - Specialty 2×2 grid of soft-tinted icon tiles.
 //   - Hours block with today highlight.
 //   - Testimonial card with gradient quote glyph.
-//   - 2Ã—2 contact grid with colored icon chips.
+//   - 2×2 contact grid with colored icon chips.
 //   - QR-style gradient block.
 // =============================================================================
 
@@ -77,7 +77,7 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    heroTag: "Allgemeinmedizin Â· Berlin",
+    heroTag: "Allgemeinmedizin · Berlin",
     yearsLabel: "Jahre",
     patientsLabel: "Patienten",
     satisfactionLabel: "Zufrieden",
@@ -85,14 +85,14 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     testimonialsH: "Stimmen",
     contactH: "Kontakt",
     bookH: "Online-Termin",
-    bookSub: "WhatsApp Â· schneller Antwort, sofortige BestÃ¤tigung.",
+    bookSub: "WhatsApp · schneller Antwort, sofortige Bestätigung.",
     bookBtn: "Termin anfragen",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
   },
   en: {
-    heroTag: "Family medicine Â· Berlin",
+    heroTag: "Family medicine · Berlin",
     yearsLabel: "Years",
     patientsLabel: "Patients",
     satisfactionLabel: "Satisfied",
@@ -100,30 +100,30 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     testimonialsH: "Testimonials",
     contactH: "Contact",
     bookH: "Online booking",
-    bookSub: "WhatsApp â€” fast reply, instant confirmation.",
+    bookSub: "WhatsApp — fast reply, instant confirmation.",
     bookBtn: "Request appointment",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
   },
   tr: {
-    heroTag: "Aile HekimliÄŸi Â· Berlin",
-    yearsLabel: "YÄ±l",
+    heroTag: "Aile Hekimliği · Berlin",
+    yearsLabel: "Yıl",
     patientsLabel: "Hasta",
     satisfactionLabel: "Memnun",
     servicesH: "Hizmetler",
     testimonialsH: "Hasta Sesi",
-    contactH: "Ä°letiÅŸim",
+    contactH: "İletişim",
     bookH: "Online Randevu",
-    bookSub: "WhatsApp Ã¼zerinden hÄ±zlÄ± randevu, anÄ±nda onay.",
+    bookSub: "WhatsApp üzerinden hızlı randevu, anında onay.",
     bookBtn: "Randevu Al",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
   },
   es: {
 
-    heroTag: "Family medicine Â· Berlin",
+    heroTag: "Family medicine · Berlin",
     yearsLabel: "Años",
     patientsLabel: "Pacientes",
     satisfactionLabel: "Satisfechos",
@@ -131,7 +131,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     testimonialsH: "Testimonios",
     contactH: "Contacto",
     bookH: "Reserva online",
-    bookSub: "WhatsApp â€” fast reply, instant confirmation.",
+    bookSub: "WhatsApp — fast reply, instant confirmation.",
     bookBtn: "Solicitar cita",
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
@@ -140,7 +140,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   it: {
 
-    heroTag: "Family medicine Â· Berlin",
+    heroTag: "Family medicine · Berlin",
     yearsLabel: "Anni",
     patientsLabel: "Pazienti",
     satisfactionLabel: "Soddisfatti",
@@ -148,7 +148,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     testimonialsH: "Testimonianze",
     contactH: "Contatto",
     bookH: "Prenotazione online",
-    bookSub: "WhatsApp â€” fast reply, instant confirmation.",
+    bookSub: "WhatsApp — fast reply, instant confirmation.",
     bookBtn: "Richiedi appuntamento",
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
@@ -157,7 +157,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   fr: {
 
-    heroTag: "Family medicine Â· Berlin",
+    heroTag: "Family medicine · Berlin",
     yearsLabel: "Années",
     patientsLabel: "Patients",
     satisfactionLabel: "Satisfaits",
@@ -165,7 +165,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     testimonialsH: "Témoignages",
     contactH: "Contact",
     bookH: "Réservation en ligne",
-    bookSub: "WhatsApp â€” fast reply, instant confirmation.",
+    bookSub: "WhatsApp — fast reply, instant confirmation.",
     bookBtn: "Demander un rendez-vous",
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
@@ -174,7 +174,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   ar: {
 
-    heroTag: "Family medicine Â· Berlin",
+    heroTag: "Family medicine · Berlin",
     yearsLabel: "سنوات",
     patientsLabel: "المرضى",
     satisfactionLabel: "راضون",
@@ -182,7 +182,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     testimonialsH: "شهادات",
     contactH: "اتصال",
     bookH: "حجز إلكتروني",
-    bookSub: "WhatsApp â€” fast reply, instant confirmation.",
+    bookSub: "WhatsApp — fast reply, instant confirmation.",
     bookBtn: "طلب موعد",
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
@@ -288,7 +288,7 @@ export function ClinicVivid({
             style={{ color: "#ffffff" }}
           >
             {cardData.company}
-            {cityFromAddress && ` Â· ${cityFromAddress}`}
+            {cityFromAddress && ` · ${cityFromAddress}`}
           </div>
         </div>
       </header>
@@ -526,7 +526,7 @@ export function ClinicVivid({
               color: "transparent",
             }}
           >
-            {"â€œ"}
+            {"“"}
           </span>
           <p
             className="mb-3 text-[14.5px] font-medium leading-[1.6]"
@@ -538,8 +538,8 @@ export function ClinicVivid({
             className="display text-[11.5px] font-bold uppercase"
             style={{ color: primary, letterSpacing: "0.5px" }}
           >
-            â€” {testimonial.author}
-            {testimonial.role ? ` Â· ${testimonial.role}` : ""}
+            — {testimonial.author}
+            {testimonial.role ? ` · ${testimonial.role}` : ""}
           </div>
         </div>
       )}
@@ -636,7 +636,7 @@ export function ClinicVivid({
         className="px-4 py-7 text-center text-[11px] font-medium"
         style={{ color: INK_SOFT }}
       >
-        Â© {new Date().getFullYear()} {cardData.company || cardData.name} Â· {t.poweredBy}{" "}
+        © {new Date().getFullYear()} {cardData.company || cardData.name} · {t.poweredBy}{" "}
         <a
           href="https://opsolid.de/products/digital-card"
           target="_blank"
@@ -768,7 +768,7 @@ function ContactTile({
 export const clinicVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 70,
   key: "clinic-vivid",
-  name: "Clinic â€” Vivid",
+  name: "Clinic — Vivid",
   industry: "Doctor / Health-tech clinic",
   supports: {
     services: true,
@@ -789,21 +789,21 @@ export const clinicVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-clinic-vivid",
 };
 
-// photo: Unsplash, doctor portrait. Unsplash License â€” free, no attribution required.
+// photo: Unsplash, doctor portrait. Unsplash License — free, no attribution required.
 export const clinicVividSample: SampleData = {
   templateId: 70,
   slug: "demo-clinic-vivid",
   cardData: {
-    name: "Dr. AyÅŸe Demir",
-    position: "FachÃ¤rztin",
-    title: "Allgemeinmedizin & PrÃ¤ventivmedizin",
+    name: "Dr. Ayşe Demir",
+    position: "Fachärztin",
+    title: "Allgemeinmedizin & Präventivmedizin",
     company: "Praxis am Ku'damm",
     email: "ayse@praxis-demir.de",
     phone: "+49 30 334 5678",
     whatsapp: "+49 170 334 5678",
     website: "praxis-demir.de",
-    address: "KurfÃ¼rstendamm 188, 10707 Berlin",
-    bio: "FachÃ¤rztin fÃ¼r Allgemeinmedizin & PrÃ¤ventivmedizin. Individuell, ganzheitlich, digital erreichbar.",
+    address: "Kurfürstendamm 188, 10707 Berlin",
+    bio: "Fachärztin für Allgemeinmedizin & Präventivmedizin. Individuell, ganzheitlich, digital erreichbar.",
     bookingUrl: "https://cal.com/praxis-demir/intro",
     brochureUrl: "https://praxis-demir.de/profil.pdf",
     impressumUrl: "https://praxis-demir.de/impressum",
@@ -824,7 +824,7 @@ export const clinicVividSample: SampleData = {
         author: "Mehmet K.",
         role: "Patient",
         quote:
-          "Sehr aufmerksam, nimmt sich Zeit und erklÃ¤rt alles verstÃ¤ndlich.",
+          "Sehr aufmerksam, nimmt sich Zeit und erklärt alles verständlich.",
       },
     ],
   },

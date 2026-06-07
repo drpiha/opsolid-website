@@ -1,19 +1,19 @@
 ﻿"use client";
 
 // =============================================================================
-// PhotographerPure â€” v2 template (id=65, key="photographer-pure").
+// PhotographerPure — v2 template (id=65, key="photographer-pure").
 //
-// Sector: Creator / Photographer â€” PURE variant. Mood: white gallery wall,
+// Sector: Creator / Photographer — PURE variant. Mood: white gallery wall,
 // minimal, work-forward. Inspired by kart_04_fotograf_pure.html.
 //
 // Design DNA:
-//   - Mega Bricolage type header â€” meta line + huge sans name with last
+//   - Mega Bricolage type header — meta line + huge sans name with last
 //     word in italic Garamond (muted gold).
-//   - Profile strip â€” small grayscale photo + name + role + stat row.
-//   - About â€” italic Garamond paragraph, signature dash.
-//   - Portfolio 2Ã—2 grid with grayscale â†’ color hover (4:5 aspect).
-//   - Packages list â€” hairline rows, right-aligned price.
-//   - Hours/availability table â€” dashed dividers.
+//   - Profile strip — small grayscale photo + name + role + stat row.
+//   - About — italic Garamond paragraph, signature dash.
+//   - Portfolio 2×2 grid with grayscale â†’ color hover (4:5 aspect).
+//   - Packages list — hairline rows, right-aligned price.
+//   - Hours/availability table — dashed dividers.
 //   - Contact table.
 //   - 2-column ghost CTA grid.
 // =============================================================================
@@ -80,8 +80,8 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    metaAvailable: "VerfÃ¼gbar 2026",
-    metaCity: "Berlin Â· DE",
+    metaAvailable: "Verfügbar 2026",
+    metaCity: "Berlin · DE",
     philosophy: "Manifest",
     portfolio: "Portfolio",
     portfolioMore: "Mehr ansehen",
@@ -99,7 +99,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   en: {
     metaAvailable: "Available 2026",
-    metaCity: "Berlin Â· DE",
+    metaCity: "Berlin · DE",
     philosophy: "Manifesto",
     portfolio: "Portfolio",
     portfolioMore: "View more",
@@ -116,27 +116,27 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    metaAvailable: "2026 MÃ¼sait",
-    metaCity: "Berlin Â· DE",
+    metaAvailable: "2026 Müsait",
+    metaCity: "Berlin · DE",
     philosophy: "Manifesto",
-    portfolio: "PortfÃ¶y",
+    portfolio: "Portföy",
     portfolioMore: "Daha fazla",
     packages: "Paketler",
-    contact: "Ä°letiÅŸim",
+    contact: "İletişim",
     ctaPrimary: "Randevu al",
     ctaSecondary: "WhatsApp",
-    ctaTertiary: "PortfÃ¶y",
+    ctaTertiary: "Portföy",
     ctaQuad: "Konum",
     servicesLabel: "Paketler",
     reviewsLabel: "Yorum",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
   },
   es: {
 
     metaAvailable: "Disponible 2026",
-    metaCity: "Berlin Â· DE",
+    metaCity: "Berlin · DE",
     philosophy: "Manifiesto",
     portfolio: "Portafolio",
     portfolioMore: "Ver más",
@@ -156,7 +156,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   it: {
 
     metaAvailable: "Disponibile 2026",
-    metaCity: "Berlin Â· DE",
+    metaCity: "Berlin · DE",
     philosophy: "Manifesto",
     portfolio: "Portfolio",
     portfolioMore: "Vedi altro",
@@ -176,7 +176,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   fr: {
 
     metaAvailable: "Disponible 2026",
-    metaCity: "Berlin Â· DE",
+    metaCity: "Berlin · DE",
     philosophy: "Manifeste",
     portfolio: "Portfolio",
     portfolioMore: "Voir plus",
@@ -196,7 +196,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   ar: {
 
     metaAvailable: "متاح 2026",
-    metaCity: "Berlin Â· DE",
+    metaCity: "Berlin · DE",
     philosophy: "البيان",
     portfolio: "المعرض",
     portfolioMore: "عرض المزيد",
@@ -294,7 +294,7 @@ export function PhotographerPure({
         </h1>
         {(cardData.position || cardData.title) && (
           <div className="serif-i mt-2.5 text-[18px]" style={{ color: INK_SOFT }}>
-            {[cardData.position, cardData.title].filter(Boolean).join(" â€” ")}
+            {[cardData.position, cardData.title].filter(Boolean).join(" — ")}
           </div>
         )}
       </header>
@@ -354,7 +354,7 @@ export function PhotographerPure({
                 <span>{services.length} {t.servicesLabel}</span>
               )}
               {services.length > 0 && testimonials.length > 0 && (
-                <span style={{ color: INK_SOFT }}>Â·</span>
+                <span style={{ color: INK_SOFT }}>·</span>
               )}
               {testimonials.length > 0 && (
                 <span>{testimonials.length} {t.reviewsLabel}</span>
@@ -372,17 +372,17 @@ export function PhotographerPure({
             className="serif-i mt-3 text-[19px] leading-[1.55]"
             style={{ color: INK }}
           >
-            {"â€œ"}
+            {"“"}
             {cardData.bio}
-            {"â€"}
+            {"”"}
           </p>
           <div className="serif-i mt-3 text-[14px]" style={{ color: INK_SOFT }}>
-            â€” {cardData.name}
+            — {cardData.name}
           </div>
         </section>
       )}
 
-      {/* PORTFOLIO 2Ã—2 */}
+      {/* PORTFOLIO 2×2 */}
       {photoUrl && (
         <section className="px-7 pb-9">
           <div className="mb-4 flex items-end justify-between">
@@ -597,7 +597,7 @@ export function PhotographerPure({
         style={{ borderTop: `1px solid ${HAIRLINE}`, color: INK_SOFT, letterSpacing: "1px" }}
       >
         <span>
-          {cardData.name} Â© {new Date().getFullYear()}
+          {cardData.name} © {new Date().getFullYear()}
         </span>
         <span>
           {t.poweredBy}{" "}
@@ -633,7 +633,7 @@ function PureLabel({ children }: { children: React.ReactNode }) {
 export const photographerPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 65,
   key: "photographer-pure",
-  name: "Photographer â€” Pure",
+  name: "Photographer — Pure",
   industry: "Photographer / Wedding & portrait",
   supports: {
     services: true,
@@ -660,14 +660,14 @@ export const photographerPureSample: SampleData = {
   cardData: {
     name: "Lena Schwarz",
     position: "Fotografin / Videografin",
-    title: "Berlin Â· Worldwide",
+    title: "Berlin · Worldwide",
     company: "Lena Schwarz Studio",
     email: "lena@lenaschwarz.de",
     phone: "+49 176 889 0123",
     whatsapp: "+49 176 889 0123",
     website: "lenaschwarz.de",
-    address: "MariannenstraÃŸe 7, 10999 Berlin",
-    bio: "Hochzeits- und PortrÃ¤tfotografin aus Berlin. NatÃ¼rliches Licht, echte Momente, zeitlose Bilder.",
+    address: "Mariannenstraße 7, 10999 Berlin",
+    bio: "Hochzeits- und Porträtfotografin aus Berlin. Natürliches Licht, echte Momente, zeitlose Bilder.",
     bookingUrl: "https://cal.com/lena-schwarz/intro",
     brochureUrl: "https://lenaschwarz.de/portfolio.pdf",
     impressumUrl: "https://lenaschwarz.de/impressum",
@@ -680,17 +680,17 @@ export const photographerPureSample: SampleData = {
     services: [
       {
         title: "Hochzeitsfotografie",
-        description: "ganzer tag Â· zwei fotografen",
+        description: "ganzer tag · zwei fotografen",
         priceLabel: "ab â‚¬2.800",
       },
       {
-        title: "PortrÃ¤tshooting",
-        description: "studio oder natÃ¼rliches licht",
+        title: "Porträtshooting",
+        description: "studio oder natürliches licht",
         priceLabel: "â‚¬350 / 2h",
       },
       {
         title: "Produktfotografie",
-        description: "kampagnen Â· lookbooks Â· e-commerce",
+        description: "kampagnen · lookbooks · e-commerce",
         priceLabel: "ab â‚¬480",
       },
     ],

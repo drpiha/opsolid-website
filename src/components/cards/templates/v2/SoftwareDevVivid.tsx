@@ -1,9 +1,9 @@
 ﻿"use client";
 
 // =============================================================================
-// SoftwareDevVivid â€” v2 template (id=36, key="software-dev-vivid").
+// SoftwareDevVivid — v2 template (id=36, key="software-dev-vivid").
 //
-// Sector: Software engineer â€” VIVID variant. Mood: bold purple/electric blue
+// Sector: Software engineer — VIVID variant. Mood: bold purple/electric blue
 // gradient hero, oversized Syne display name, mint-green availability accent,
 // floating white card overlap. Inspired by kart_15_yazilim_vivid.html.
 //
@@ -73,8 +73,8 @@ function digitsOnly(value: string): string {
 
 function getInitials(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "â€¢";
-  return (parts[0][0] ?? "â€¢").toUpperCase() + (parts[parts.length - 1]?.[0] ?? "").toUpperCase();
+  if (parts.length === 0) return "•";
+  return (parts[0][0] ?? "•").toUpperCase() + (parts[parts.length - 1]?.[0] ?? "").toUpperCase();
 }
 
 interface SdvCopy {
@@ -103,13 +103,13 @@ interface SdvCopy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdvCopy> = {
   de: {
-    available: "VerfÃ¼gbar fÃ¼r neue Projekte",
+    available: "Verfügbar für neue Projekte",
     hireMe: "Hire me",
     call: "Anrufen",
     whatsapp: "WhatsApp",
     email: "E-Mail",
-    scheduleCta: "Kostenloses Tech-GesprÃ¤ch",
-    ctaSub: "30 Min Â· Online Â· Unverbindlich",
+    scheduleCta: "Kostenloses Tech-Gespräch",
+    ctaSub: "30 Min · Online · Unverbindlich",
     stack: "Stack",
     services: "Services",
     contact: "Kontakt",
@@ -132,7 +132,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdvCopy> = {
     whatsapp: "WhatsApp",
     email: "Email",
     scheduleCta: "Free tech intro call",
-    ctaSub: "30 min Â· online Â· no commitment",
+    ctaSub: "30 min · online · no commitment",
     stack: "Stack",
     services: "Services",
     contact: "Contact",
@@ -149,27 +149,27 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdvCopy> = {
     tagline: "Web apps that scale. APIs that last.",
   },
   tr: {
-    available: "Yeni Projeler Ä°Ã§in MÃ¼sait",
-    hireMe: "Ä°ÅŸe Al",
+    available: "Yeni Projeler İçin Müsait",
+    hireMe: "İşe Al",
     call: "Ara",
     whatsapp: "WhatsApp",
     email: "E-posta",
-    scheduleCta: "Ãœcretsiz Teknoloji GÃ¶rÃ¼ÅŸmesi",
-    ctaSub: "30 dk Â· Online Â· BaÄŸlayÄ±cÄ± DeÄŸil",
+    scheduleCta: "Ücretsiz Teknoloji Görüşmesi",
+    ctaSub: "30 dk · Online · Bağlayıcı Değil",
     stack: "Stack",
     services: "Hizmetler",
-    contact: "Ä°letiÅŸim",
+    contact: "İletişim",
     social: "Sosyal",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
-    share: "PaylaÅŸ",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
+    share: "Paylaş",
     poweredBy: "Powered by",
-    yearsLabel: "YÄ±l",
+    yearsLabel: "Yıl",
     projectsLabel: "Proje",
-    clientsLabel: "MÃ¼ÅŸteri",
-    experience: "TecrÃ¼be",
-    experienceVal: "7+ YÄ±l",
-    tagline: "Ã–lÃ§eklenebilir web uygulamalarÄ±. SaÄŸlam API'ler.",
+    clientsLabel: "Müşteri",
+    experience: "Tecrübe",
+    experienceVal: "7+ Yıl",
+    tagline: "Ölçeklenebilir web uygulamaları. Sağlam API'ler.",
   },
   es: {
 
@@ -179,7 +179,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdvCopy> = {
     whatsapp: "WhatsApp",
     email: "Correo",
     scheduleCta: "Llamada técnica gratuita",
-    ctaSub: "30 min Â· online Â· no commitment",
+    ctaSub: "30 min · online · no commitment",
     stack: "Stack",
     services: "Servicios",
     contact: "Contacto",
@@ -204,7 +204,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdvCopy> = {
     whatsapp: "WhatsApp",
     email: "Email",
     scheduleCta: "Chiamata tecnica introduttiva gratuita",
-    ctaSub: "30 min Â· online Â· no commitment",
+    ctaSub: "30 min · online · no commitment",
     stack: "Stack",
     services: "Servizi",
     contact: "Contatto",
@@ -229,7 +229,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdvCopy> = {
     whatsapp: "WhatsApp",
     email: "E-mail",
     scheduleCta: "Appel technique d'introduction gratuit",
-    ctaSub: "30 min Â· online Â· no commitment",
+    ctaSub: "30 min · online · no commitment",
     stack: "Stack",
     services: "Services",
     contact: "Contact",
@@ -254,7 +254,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdvCopy> = {
     whatsapp: "واتساب",
     email: "البريد الإلكتروني",
     scheduleCta: "مكالمة تقنية تعريفية مجانية",
-    ctaSub: "30 min Â· online Â· no commitment",
+    ctaSub: "30 min · online · no commitment",
     stack: "المنظومة",
     services: "الخدمات",
     contact: "اتصال",
@@ -445,7 +445,7 @@ export function SoftwareDevVivid({
                 className="text-[12px] font-semibold uppercase"
                 style={{ color: primary, letterSpacing: "1.2px" }}
               >
-                {cardData.position?.split("Â·")[0]?.trim() || cardData.title || "Developer"}
+                {cardData.position?.split("·")[0]?.trim() || cardData.title || "Developer"}
               </div>
               <div
                 className="display text-[22px] font-bold leading-[1.15]"
@@ -455,7 +455,7 @@ export function SoftwareDevVivid({
               </div>
               <div className="mt-1 text-[12px]" style={{ color: INK_SOFT }}>
                 {t.experienceVal}
-                {cardData.address && ` Â· ${cardData.address.split(",").slice(-1)[0]?.trim()}`}
+                {cardData.address && ` · ${cardData.address.split(",").slice(-1)[0]?.trim()}`}
               </div>
             </div>
           </div>
@@ -536,7 +536,7 @@ export function SoftwareDevVivid({
         </div>
       </section>
 
-      {/* SERVICES â€” 2-col grid */}
+      {/* SERVICES — 2-col grid */}
       {services.length > 0 && (
         <section className="px-6 pt-7">
           <VividTitle primary={primary}>{t.services}</VividTitle>
@@ -674,7 +674,7 @@ export function SoftwareDevVivid({
           <span>{cardData.name}</span>
         </div>
         <div className="mt-2 text-[10.5px]" style={{ color: INK_SOFT }}>
-          Â© {year} Â· {t.poweredBy}{" "}
+          © {year} · {t.poweredBy}{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"
@@ -764,7 +764,7 @@ function VividAction({
 export const softwareDevVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 36,
   key: "software-dev-vivid",
-  name: "Software Dev â€” Vivid",
+  name: "Software Dev — Vivid",
   industry: "Software engineer / developer (vivid gradient variant)",
   supports: {
     services: true,
@@ -789,8 +789,8 @@ export const softwareDevVividSample: SampleData = {
   templateId: 36,
   slug: "demo-software-dev-vivid",
   cardData: {
-    name: "Ozan Ã‡elik",
-    position: "Full-Stack Â· Cloud Â· DX",
+    name: "Ozan Çelik",
+    position: "Full-Stack · Cloud · DX",
     title: "Senior Engineer",
     company: "Freelance",
     email: "ozan@ozancelik.dev",
@@ -802,9 +802,9 @@ export const softwareDevVividSample: SampleData = {
     bookingUrl: "https://cal.com/ozancelik/intro",
     sectorKey: "tech",
     services: [
-      { title: "Web App Development", description: "Next.js Â· React Â· TypeScript", priceLabel: "ab â‚¬4.800" },
-      { title: "API Integration", description: "REST Â· GraphQL Â· Stripe", priceLabel: "ab â‚¬1.200" },
-      { title: "Tech Consulting", description: "Architecture Â· code review", priceLabel: "â‚¬150/h" },
+      { title: "Web App Development", description: "Next.js · React · TypeScript", priceLabel: "ab â‚¬4.800" },
+      { title: "API Integration", description: "REST · GraphQL · Stripe", priceLabel: "ab â‚¬1.200" },
+      { title: "Tech Consulting", description: "Architecture · code review", priceLabel: "â‚¬150/h" },
     ],
     socials: {
       github: "https://github.com/ozancelik",

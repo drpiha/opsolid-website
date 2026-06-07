@@ -1,9 +1,9 @@
 ﻿"use client";
 
 // =============================================================================
-// ContentCreatorNoir â€” v2 template (id=38, key="content-creator-noir").
+// ContentCreatorNoir — v2 template (id=38, key="content-creator-noir").
 //
-// Sector: Influencer / content creator â€” NOIR variant. Mood: dark editorial
+// Sector: Influencer / content creator — NOIR variant. Mood: dark editorial
 // studio, REC-dot blink, Syne italic display, primary red highlight, gold
 // secondary, gradient spotlight follower count. Inspired by
 // kart_16_icerik_uretici_noir.html.
@@ -74,8 +74,8 @@ function digitsOnly(value: string): string {
 
 function getInitials(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "â€¢";
-  return (parts[0][0] ?? "â€¢").toUpperCase() + (parts[parts.length - 1]?.[0] ?? "").toUpperCase();
+  if (parts.length === 0) return "•";
+  return (parts[0][0] ?? "•").toUpperCase() + (parts[parts.length - 1]?.[0] ?? "").toUpperCase();
 }
 
 interface CcnCopy {
@@ -100,13 +100,13 @@ interface CcnCopy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcnCopy> = {
   de: {
-    studioLabel: "Tuna Â· Studio",
+    studioLabel: "Tuna · Studio",
     studioTagline: "Cinematic storytelling for ambitious brands.",
     totalReach: "Gesamtreichweite",
     contact: "Kontakt",
     collab: "Collab",
     platforms: "Plattformen",
-    about: "Ãœber",
+    about: "Über",
     bookingCta: "Booking-Anfrage",
     bookingSub: "Antwort innerhalb 24h",
     callMe: "Direkt anrufen",
@@ -116,10 +116,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcnCopy> = {
     poweredBy: "Powered by",
     followers: "Follower",
     niche: "Niche",
-    nicheValue: "Lifestyle Â· Travel Â· Premium",
+    nicheValue: "Lifestyle · Travel · Premium",
   },
   en: {
-    studioLabel: "Tuna Â· Studio",
+    studioLabel: "Tuna · Studio",
     studioTagline: "Cinematic storytelling for ambitious brands.",
     totalReach: "Total reach",
     contact: "Contact",
@@ -135,30 +135,30 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcnCopy> = {
     poweredBy: "Powered by",
     followers: "Followers",
     niche: "Niche",
-    nicheValue: "Lifestyle Â· Travel Â· Premium",
+    nicheValue: "Lifestyle · Travel · Premium",
   },
   tr: {
-    studioLabel: "Tuna Â· Studio",
-    studioTagline: "Ä°ddialÄ± markalar iÃ§in sinematik storytelling.",
-    totalReach: "Toplam EriÅŸim",
-    contact: "Ä°letiÅŸim",
-    collab: "Ä°ÅŸ BirliÄŸi",
+    studioLabel: "Tuna · Studio",
+    studioTagline: "İddialı markalar için sinematik storytelling.",
+    totalReach: "Toplam Erişim",
+    contact: "İletişim",
+    collab: "İş Birliği",
     platforms: "Platformlar",
-    about: "HakkÄ±mda",
+    about: "Hakkımda",
     bookingCta: "Booking Talebi",
-    bookingSub: "24 saat iÃ§inde yanÄ±t",
+    bookingSub: "24 saat içinde yanıt",
     callMe: "Direkt Ara",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
-    share: "PaylaÅŸ",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
+    share: "Paylaş",
     poweredBy: "Powered by",
-    followers: "TakipÃ§i",
+    followers: "Takipçi",
     niche: "Alan",
-    nicheValue: "Lifestyle Â· Travel Â· Premium",
+    nicheValue: "Lifestyle · Travel · Premium",
   },
   es: {
 
-    studioLabel: "Tuna Â· Studio",
+    studioLabel: "Tuna · Studio",
     studioTagline: "Narrativa cinematográfica para marcas ambiciosas.",
     totalReach: "Alcance total",
     contact: "Contacto",
@@ -174,12 +174,12 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcnCopy> = {
     poweredBy: "Desarrollado por",
     followers: "Seguidores",
     niche: "Nicho",
-    nicheValue: "Lifestyle Â· Travel Â· Premium",
+    nicheValue: "Lifestyle · Travel · Premium",
   
   },
   it: {
 
-    studioLabel: "Tuna Â· Studio",
+    studioLabel: "Tuna · Studio",
     studioTagline: "Narrazione cinematografica per brand ambiziosi.",
     totalReach: "Copertura totale",
     contact: "Contatto",
@@ -195,12 +195,12 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcnCopy> = {
     poweredBy: "Realizzato con",
     followers: "Follower",
     niche: "Nicchia",
-    nicheValue: "Lifestyle Â· Travel Â· Premium",
+    nicheValue: "Lifestyle · Travel · Premium",
   
   },
   fr: {
 
-    studioLabel: "Tuna Â· Studio",
+    studioLabel: "Tuna · Studio",
     studioTagline: "Narration cinématographique pour marques ambitieuses.",
     totalReach: "Portée totale",
     contact: "Contact",
@@ -216,12 +216,12 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcnCopy> = {
     poweredBy: "Propulsé par",
     followers: "Abonnés",
     niche: "Niche",
-    nicheValue: "Lifestyle Â· Travel Â· Premium",
+    nicheValue: "Lifestyle · Travel · Premium",
   
   },
   ar: {
 
-    studioLabel: "Tuna Â· Studio",
+    studioLabel: "Tuna · Studio",
     studioTagline: "سرد سينمائي للعلامات الطموحة.",
     totalReach: "الوصول الكلي",
     contact: "اتصال",
@@ -237,7 +237,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcnCopy> = {
     poweredBy: "مشغل بواسطة",
     followers: "متابعون",
     niche: "تخصص",
-    nicheValue: "Lifestyle Â· Travel Â· Premium",
+    nicheValue: "Lifestyle · Travel · Premium",
   
   },
 };
@@ -293,7 +293,7 @@ export function ContentCreatorNoir({
         }
       `}</style>
 
-      {/* HERO â€” studio panel */}
+      {/* HERO — studio panel */}
       <header
         className="relative overflow-hidden px-7 pb-9 pt-12"
         style={{
@@ -332,7 +332,7 @@ export function ContentCreatorNoir({
         </p>
       </header>
 
-      {/* SPOTLIGHT â€” gradient text follower count */}
+      {/* SPOTLIGHT — gradient text follower count */}
       <section className="px-7 pt-6">
         <div
           className="relative overflow-hidden rounded-3xl border px-6 py-7 text-center"
@@ -369,7 +369,7 @@ export function ContentCreatorNoir({
             className="mt-2 text-[12px] uppercase"
             style={{ color: INK_SOFT, letterSpacing: "1.5px" }}
           >
-            Instagram Â· TikTok Â· YouTube
+            Instagram · TikTok · YouTube
           </div>
         </div>
       </section>
@@ -405,7 +405,7 @@ export function ContentCreatorNoir({
             className="display text-[11px] font-medium uppercase"
             style={{ color: GOLD, letterSpacing: "2px" }}
           >
-            {cardData.position?.split("Â·")[0]?.trim() || "Content Creator"}
+            {cardData.position?.split("·")[0]?.trim() || "Content Creator"}
           </div>
           <div
             className="mt-1 text-[13px]"
@@ -583,7 +583,7 @@ export function ContentCreatorNoir({
           {cardData.name}
         </div>
         <div className="mt-2 text-[10.5px]" style={{ color: INK_SOFT }}>
-          Â© {year} Â· {t.poweredBy}{" "}
+          © {year} · {t.poweredBy}{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"
@@ -717,7 +717,7 @@ function NoirAction({
 export const contentCreatorNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 38,
   key: "content-creator-noir",
-  name: "Content Creator â€” Noir",
+  name: "Content Creator — Noir",
   industry: "Influencer / content creator (noir editorial variant)",
   supports: {
     services: true,
@@ -742,23 +742,23 @@ export const contentCreatorNoirSample: SampleData = {
   templateId: 38,
   slug: "demo-content-creator-noir",
   cardData: {
-    name: "Tuna YÄ±lmaz",
-    position: "Content Creator Â· Premium",
-    title: "Studio Â· 120K reach",
-    company: "Tuna YÄ±lmaz Media",
+    name: "Tuna Yılmaz",
+    position: "Content Creator · Premium",
+    title: "Studio · 120K reach",
+    company: "Tuna Yılmaz Media",
     email: "tuna@tunayilmaz.de",
     phone: "+49 178 556 7890",
     whatsapp: "+49 178 556 7890",
     website: "tunayilmaz.de",
     address: "Berlin",
-    bio: "Cinematic storytelling for ambitious brands. Lifestyle & Travel â€” premium production, brand-safe collaborations.",
+    bio: "Cinematic storytelling for ambitious brands. Lifestyle & Travel — premium production, brand-safe collaborations.",
     bookingUrl: "https://cal.com/tunayilmaz/booking",
     sectorKey: "creator",
     services: [
-      { title: "Instagram Reel", description: "Premium production Â· 60s", priceLabel: "â‚¬650" },
-      { title: "YouTube Integration", description: "60â€“90s in long-form", priceLabel: "â‚¬900" },
-      { title: "Story Series", description: "5-Story take-over Â· 24h", priceLabel: "â‚¬350" },
-      { title: "Long-Form Campaign", description: "Multi-platform Â· 4 weeks", priceLabel: "â‚¬2.800" },
+      { title: "Instagram Reel", description: "Premium production · 60s", priceLabel: "â‚¬650" },
+      { title: "YouTube Integration", description: "60–90s in long-form", priceLabel: "â‚¬900" },
+      { title: "Story Series", description: "5-Story take-over · 24h", priceLabel: "â‚¬350" },
+      { title: "Long-Form Campaign", description: "Multi-platform · 4 weeks", priceLabel: "â‚¬2.800" },
     ],
     socials: {
       instagram: "https://instagram.com/tunayilmaz",

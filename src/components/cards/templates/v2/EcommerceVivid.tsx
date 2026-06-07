@@ -1,9 +1,9 @@
 ﻿"use client";
 
 // =============================================================================
-// EcommerceVivid â€” v2 template (id=83, key="ecommerce-vivid").
+// EcommerceVivid — v2 template (id=83, key="ecommerce-vivid").
 //
-// Sector: E-commerce / Online boutique â€” VIVID variant. Mood: bold gradient
+// Sector: E-commerce / Online boutique — VIVID variant. Mood: bold gradient
 // hero, energetic D2C brand, Bebas Neue + Poppins. Inspired by
 // kart_08_eticaret_vivid.html.
 //
@@ -85,7 +85,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     servicesLabel: "Produkte",
     reviewsLabel: "Bewertungen",
     collectionH: "Kollektion",
-    collectionSub: "Sezonun parÂ­Ã§alarÄ±",
+    collectionSub: "Sezonun parçaları",
     bookBtn: "Sofort bestellen",
     emailLabel: "E-Mail",
     phoneLabel: "Telefon",
@@ -110,16 +110,16 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   tr: {
     taglineFallback: "Online Butik",
-    servicesLabel: "ÃœrÃ¼nler",
+    servicesLabel: "Ürünler",
     reviewsLabel: "Yorum",
     collectionH: "Koleksiyon",
-    collectionSub: "Sezonun parÃ§alarÄ±",
-    bookBtn: "Hemen SipariÅŸ Ver",
+    collectionSub: "Sezonun parçaları",
+    bookBtn: "Hemen Sipariş Ver",
     emailLabel: "E-posta",
     phoneLabel: "Telefon",
-    qrLabel: "Koleksiyona GÃ¶z At",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    qrLabel: "Koleksiyona Göz At",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
   },
   es: {
@@ -369,7 +369,7 @@ export function EcommerceVivid({
               }}
             >
               {cardData.title || cardData.position || t.taglineFallback}
-              {cityFromAddress ? ` Â· ${cityFromAddress}` : ""}
+              {cityFromAddress ? ` · ${cityFromAddress}` : ""}
             </div>
           </div>
         </div>
@@ -617,7 +617,7 @@ export function EcommerceVivid({
         className="px-5 py-6 text-center"
         style={{ fontSize: 11, color: MUTED, fontWeight: 500 }}
       >
-        Â© {new Date().getFullYear()} {cardData.company || cardData.name} Â·{" "}
+        © {new Date().getFullYear()} {cardData.company || cardData.name} ·{" "}
         {cardData.website || "shop"}
         <div className="mt-2" style={{ color: MUTED }}>
           {t.poweredBy}{" "}
@@ -642,7 +642,7 @@ export function EcommerceVivid({
 export const ecommerceVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 83,
   key: "ecommerce-vivid",
-  name: "E-commerce â€” Vivid",
+  name: "E-commerce — Vivid",
   industry: "E-commerce / Energetic D2C brand",
   supports: {
     services: true,
@@ -663,21 +663,21 @@ export const ecommerceVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-ecommerce-vivid",
 };
 
-// photo: Unsplash, https://unsplash.com/photos/eF7HN40WbAQ â€” Free, no attribution required.
+// photo: Unsplash, https://unsplash.com/photos/eF7HN40WbAQ — Free, no attribution required.
 export const ecommerceVividSample: SampleData = {
   templateId: 83,
   slug: "demo-ecommerce-vivid",
   cardData: {
     name: "Zeynep Kaya",
-    position: "GrÃ¼nderin & CEO",
-    title: "GrÃ¼nderin & CEO",
+    position: "Gründerin & CEO",
+    title: "Gründerin & CEO",
     company: "Pazar Shop",
     email: "zeynep@pazar-shop.de",
     phone: "+49 172 556 7891",
     whatsapp: "+49 172 556 7891",
     website: "pazar-shop.de",
-    address: "OranienstraÃŸe 30, 10999 Berlin",
-    bio: "Kuratierte Mode & Accessoires aus der TÃ¼rkei & Deutschland. Kostenloser Versand ab â‚¬50.",
+    address: "Oranienstraße 30, 10999 Berlin",
+    bio: "Kuratierte Mode & Accessoires aus der Türkei & Deutschland. Kostenloser Versand ab â‚¬50.",
     bookingUrl: "https://pazar-shop.de/shop",
     impressumUrl: "https://pazar-shop.de/impressum",
     privacyUrl: "https://pazar-shop.de/datenschutz",
@@ -688,7 +688,7 @@ export const ecommerceVividSample: SampleData = {
     },
     services: [
       { title: "Seidenschal", description: "Handbedruckt, Premium-Seide.", priceLabel: "â‚¬89" },
-      { title: "Handtasche", description: "Vollnarbenleder, handgenÃ¤ht.", priceLabel: "â‚¬145" },
+      { title: "Handtasche", description: "Vollnarbenleder, handgenäht.", priceLabel: "â‚¬145" },
       { title: "Schmuckset", description: "Versilbert, kuratiert.", priceLabel: "â‚¬65" },
     ],
   },

@@ -1,16 +1,16 @@
 ﻿"use client";
 
 // =============================================================================
-// FitnessVivid â€” v2 template (id=90, key="fitness-vivid").
+// FitnessVivid — v2 template (id=90, key="fitness-vivid").
 //
-// Sector: Fitness / personal training â€” VIVID variant. Mood: high-energy
+// Sector: Fitness / personal training — VIVID variant. Mood: high-energy
 // orange/red gradient hero, Poppins display, marketing-led "Apply now" coach.
 // Inspired by kart_10_fitness_vivid.html.
 //
 // Design DNA (different from Athlete.tsx id=10, FitnessNoir/Pure):
 //   - Redâ†’orangeâ†’yellow gradient hero with radial blobs and pulsing dot pill.
 //   - Float card with rounded photo + role meta + firm sub.
-//   - Stat tiles 2Ã—2 with coloured iconography (red / orange / yellow).
+//   - Stat tiles 2×2 with coloured iconography (red / orange / yellow).
 //   - Two-column rounded service cards with gradient top stripe + Poppins
 //     emoji icons + bold prices.
 //   - Red/orange gradient CTA panel with white solid + ghost ghost-white CTAs.
@@ -96,17 +96,17 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     clientsLabel: "Kunden",
     igLabel: "Instagram",
     ytLabel: "YouTube",
-    programsEyebrow: "â€” Programme",
+    programsEyebrow: "— Programme",
     programsH: "Leistungen & Preise",
     ctaTitle: "Programm starten",
     ctaSub: "Erste Beratung kostenlos. Heute den ersten Schritt machen.",
     ctaCall: "Anrufen",
     ctaWa: "WhatsApp",
     testiText:
-      "Cans Programm hat mein Leben verÃ¤ndert. KÃ¶rperlich und mental fÃ¼hle ich mich stÃ¤rker â€” eine nachhaltige Routine statt eines Crash-Plans.",
+      "Cans Programm hat mein Leben verändert. Körperlich und mental fühle ich mich stärker — eine nachhaltige Routine statt eines Crash-Plans.",
     testiName: "Selin K.",
-    testiResult: "12 Wochen Â· -14 kg",
-    contactEyebrow: "â€” Kontakt",
+    testiResult: "12 Wochen · -14 kg",
+    contactEyebrow: "— Kontakt",
     contactH: "Verbinde dich",
     bookBtn: "Programm starten",
     saveContact: "Kontakt speichern",
@@ -120,17 +120,17 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     clientsLabel: "Clients",
     igLabel: "Instagram",
     ytLabel: "YouTube",
-    programsEyebrow: "â€” Programs",
+    programsEyebrow: "— Programs",
     programsH: "Services & Pricing",
     ctaTitle: "Start the program",
     ctaSub: "First consult is free. Take the first step today.",
     ctaCall: "Call now",
     ctaWa: "WhatsApp",
     testiText:
-      "Can's program changed my life. Stronger in body and mind â€” a sustainable habit, not a crash plan.",
+      "Can's program changed my life. Stronger in body and mind — a sustainable habit, not a crash plan.",
     testiName: "Selin K.",
-    testiResult: "12 weeks Â· -14 kg",
-    contactEyebrow: "â€” Contact",
+    testiResult: "12 weeks · -14 kg",
+    contactEyebrow: "— Contact",
     contactH: "Connect",
     bookBtn: "Start now",
     saveContact: "Save contact",
@@ -139,26 +139,26 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   tr: {
     taglineFallback: "Performance Coach",
-    pulseLabel: "Yeni grup baÅŸlÄ±yor",
-    yearsLabel: "YÄ±l",
-    clientsLabel: "MÃ¼ÅŸteri",
+    pulseLabel: "Yeni grup başlıyor",
+    yearsLabel: "Yıl",
+    clientsLabel: "Müşteri",
     igLabel: "Instagram",
     ytLabel: "YouTube",
-    programsEyebrow: "â€” Programlar",
+    programsEyebrow: "— Programlar",
     programsH: "Hizmetler & Fiyatlar",
-    ctaTitle: "ProgramÄ± BaÅŸlat",
-    ctaSub: "Ä°lk konsÃ¼ltasyon Ã¼cretsiz. BugÃ¼n adÄ±m at.",
+    ctaTitle: "Programı Başlat",
+    ctaSub: "İlk konsültasyon ücretsiz. Bugün adım at.",
     ctaCall: "Hemen Ara",
     ctaWa: "WhatsApp",
     testiText:
-      "Can'Ä±n programÄ±yla hayatÄ±m deÄŸiÅŸti. Hem fiziksel hem zihinsel olarak Ã§ok daha gÃ¼Ã§lÃ¼ hissediyorum.",
+      "Can'ın programıyla hayatım değişti. Hem fiziksel hem zihinsel olarak çok daha güçlü hissediyorum.",
     testiName: "Selin K.",
     testiResult: "12 haftada -14 kg",
-    contactEyebrow: "â€” Ä°letiÅŸim",
-    contactH: "BaÄŸlantÄ± Kur",
-    bookBtn: "Programa BaÅŸla",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    contactEyebrow: "— İletişim",
+    contactH: "Bağlantı Kur",
+    bookBtn: "Programa Başla",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
   },
   es: {
@@ -169,17 +169,17 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     clientsLabel: "Clientes",
     igLabel: "Instagram",
     ytLabel: "YouTube",
-    programsEyebrow: "â€” Programs",
+    programsEyebrow: "— Programs",
     programsH: "Servicios y tarifas",
     ctaTitle: "Iniciar el programa",
     ctaSub: "La primera consulta es gratis. Da el primer paso hoy.",
     ctaCall: "Llamar ahora",
     ctaWa: "WhatsApp",
     testiText:
-      "Can's program changed my life. Stronger in body and mind â€” a sustainable habit, not a crash plan.",
+      "Can's program changed my life. Stronger in body and mind — a sustainable habit, not a crash plan.",
     testiName: "Selin K.",
-    testiResult: "12 weeks Â· -14 kg",
-    contactEyebrow: "â€” Contact",
+    testiResult: "12 weeks · -14 kg",
+    contactEyebrow: "— Contact",
     contactH: "Conectar",
     bookBtn: "Empezar ahora",
     saveContact: "Guardar contacto",
@@ -195,17 +195,17 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     clientsLabel: "Clienti",
     igLabel: "Instagram",
     ytLabel: "YouTube",
-    programsEyebrow: "â€” Programs",
+    programsEyebrow: "— Programs",
     programsH: "Servizi e prezzi",
     ctaTitle: "Avvia il programma",
     ctaSub: "La prima consulenza è gratuita. Fai il primo passo oggi.",
     ctaCall: "Chiama ora",
     ctaWa: "WhatsApp",
     testiText:
-      "Can's program changed my life. Stronger in body and mind â€” a sustainable habit, not a crash plan.",
+      "Can's program changed my life. Stronger in body and mind — a sustainable habit, not a crash plan.",
     testiName: "Selin K.",
-    testiResult: "12 weeks Â· -14 kg",
-    contactEyebrow: "â€” Contact",
+    testiResult: "12 weeks · -14 kg",
+    contactEyebrow: "— Contact",
     contactH: "Connetti",
     bookBtn: "Inizia ora",
     saveContact: "Salva contatto",
@@ -221,17 +221,17 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     clientsLabel: "Clients",
     igLabel: "Instagram",
     ytLabel: "YouTube",
-    programsEyebrow: "â€” Programs",
+    programsEyebrow: "— Programs",
     programsH: "Services et tarifs",
     ctaTitle: "Démarrer le programme",
     ctaSub: "La première consultation est gratuite. Faites le premier pas aujourd'hui.",
     ctaCall: "Appeler maintenant",
     ctaWa: "WhatsApp",
     testiText:
-      "Can's program changed my life. Stronger in body and mind â€” a sustainable habit, not a crash plan.",
+      "Can's program changed my life. Stronger in body and mind — a sustainable habit, not a crash plan.",
     testiName: "Selin K.",
-    testiResult: "12 weeks Â· -14 kg",
-    contactEyebrow: "â€” Contact",
+    testiResult: "12 weeks · -14 kg",
+    contactEyebrow: "— Contact",
     contactH: "Connecter",
     bookBtn: "Démarrer maintenant",
     saveContact: "Enregistrer le contact",
@@ -247,17 +247,17 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     clientsLabel: "العملاء",
     igLabel: "إنستغرام",
     ytLabel: "يوتيوب",
-    programsEyebrow: "â€” Programs",
+    programsEyebrow: "— Programs",
     programsH: "الخدمات والأسعار",
     ctaTitle: "ابدأ البرنامج",
     ctaSub: "الاستشارة الأولى مجانية. اتخذ الخطوة الأولى اليوم.",
     ctaCall: "اتصل الآن",
     ctaWa: "واتساب",
     testiText:
-      "Can's program changed my life. Stronger in body and mind â€” a sustainable habit, not a crash plan.",
+      "Can's program changed my life. Stronger in body and mind — a sustainable habit, not a crash plan.",
     testiName: "Selin K.",
-    testiResult: "12 weeks Â· -14 kg",
-    contactEyebrow: "â€” Contact",
+    testiResult: "12 weeks · -14 kg",
+    contactEyebrow: "— Contact",
     contactH: "تواصل",
     bookBtn: "ابدأ الآن",
     saveContact: "حفظ جهة الاتصال",
@@ -492,7 +492,7 @@ export function FitnessVivid({
               className="truncate"
               style={{ fontSize: 12, color: MUTE, marginTop: 2 }}
             >
-              8 {t.yearsLabel} Â· 600+ {t.clientsLabel.toLowerCase()}
+              8 {t.yearsLabel} · 600+ {t.clientsLabel.toLowerCase()}
             </div>
           </div>
         </div>
@@ -501,7 +501,7 @@ export function FitnessVivid({
       {/* STATS GRID 2x2 */}
       <section className="mx-6 mt-6 grid grid-cols-2 gap-2.5">
         {[
-          { num: `8 ${t.yearsLabel}`, lbl: locale === "de" ? "Erfahrung" : locale === "tr" ? "TecrÃ¼be" : "Experience", color: RED, glyph: "M22 12h-4l-3 9L9 3l-3 9H2" },
+          { num: `8 ${t.yearsLabel}`, lbl: locale === "de" ? "Erfahrung" : locale === "tr" ? "Tecrübe" : "Experience", color: RED, glyph: "M22 12h-4l-3 9L9 3l-3 9H2" },
           { num: "600+", lbl: t.clientsLabel, color: ORANGE, glyph: "M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2 M9 7m-4 0a4 4 0 1 1 8 0 a4 4 0 1 1 -8 0" },
           { num: "45K", lbl: t.igLabel, color: "#d97706", glyph: "M3 3h18v18H3z M12 16a4 4 0 1 1 0 -8 a4 4 0 0 1 0 8 z" },
           { num: "28K", lbl: t.ytLabel, color: RED, glyph: "M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.33z M9.75 15.02 15.5 11.75 9.75 8.48 z" },
@@ -870,7 +870,7 @@ export function FitnessVivid({
           className="mt-1"
           style={{ fontSize: 10, color: MUTE_2, letterSpacing: "0.5px" }}
         >
-          &copy; {new Date().getFullYear()} â€”{" "}
+          &copy; {new Date().getFullYear()} —{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"
@@ -1005,7 +1005,7 @@ function StatGlyph({ idx }: { idx: number }) {
 export const fitnessVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 90,
   key: "fitness-vivid",
-  name: "Fitness â€” Vivid",
+  name: "Fitness — Vivid",
   industry: "Fitness coach / high-energy gradient marketing",
   supports: {
     services: true,
@@ -1026,12 +1026,12 @@ export const fitnessVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-fitness-vivid",
 };
 
-// photo: Unsplash, https://unsplash.com/photos/8mqOw4DBBSg â€” Free, no attribution required.
+// photo: Unsplash, https://unsplash.com/photos/8mqOw4DBBSg — Free, no attribution required.
 export const fitnessVividSample: SampleData = {
   templateId: 90,
   slug: "demo-fitness-vivid",
   cardData: {
-    name: "Can Ã–ztÃ¼rk",
+    name: "Can Öztürk",
     position: "Performance Coach",
     title: "Personal Trainer & Fitness Coach",
     company: "CanFit Berlin",
@@ -1040,7 +1040,7 @@ export const fitnessVividSample: SampleData = {
     whatsapp: "+49 176 778 9012",
     website: "canfit.de",
     address: "Kastanienallee 24, 10435 Berlin",
-    bio: "Beslenme + antrenman + zihinsel gÃ¼Ã§. Senin dÃ¶nÃ¼ÅŸÃ¼mÃ¼n iÃ§in bilim temelli koÃ§luk.",
+    bio: "Beslenme + antrenman + zihinsel güç. Senin dönüşümün için bilim temelli koçluk.",
     bookingUrl: "https://cal.com/canfit/intro",
     impressumUrl: "https://canfit.de/impressum",
     privacyUrl: "https://canfit.de/datenschutz",
@@ -1050,10 +1050,10 @@ export const fitnessVividSample: SampleData = {
       youtube: "https://youtube.com/CanFit",
     },
     services: [
-      { title: "1-1 Online KoÃ§luk", description: "KiÅŸiye Ã¶zel program + haftalÄ±k takip", priceLabel: "â‚¬199/Monat" },
-      { title: "Grup KoÃ§luk", description: "Online grup dersleri + topluluk", priceLabel: "â‚¬69/Monat" },
-      { title: "Beslenme PlanÄ±", description: "Tek seferlik makro planlama", priceLabel: "â‚¬129/paket" },
-      { title: "12 Hafta DÃ¶nÃ¼ÅŸÃ¼m", description: "Antrenman + beslenme + takip", priceLabel: "â‚¬899/paket" },
+      { title: "1-1 Online Koçluk", description: "Kişiye özel program + haftalık takip", priceLabel: "â‚¬199/Monat" },
+      { title: "Grup Koçluk", description: "Online grup dersleri + topluluk", priceLabel: "â‚¬69/Monat" },
+      { title: "Beslenme Planı", description: "Tek seferlik makro planlama", priceLabel: "â‚¬129/paket" },
+      { title: "12 Hafta Dönüşüm", description: "Antrenman + beslenme + takip", priceLabel: "â‚¬899/paket" },
     ],
   },
   photoUrl:

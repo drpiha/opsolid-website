@@ -1,16 +1,16 @@
 ﻿"use client";
 
 // =============================================================================
-// ContentCreatorPure â€” v2 template (id=39, key="content-creator-pure").
+// ContentCreatorPure — v2 template (id=39, key="content-creator-pure").
 //
-// Sector: Influencer / content creator â€” PURE variant. Mood: editorial media-
+// Sector: Influencer / content creator — PURE variant. Mood: editorial media-
 // kit on white, DM Sans, large left-aligned name with brand-mark, hairline
 // stats table, clean collab card. Inspired by kart_16_icerik_uretici_pure.html.
 //
 // Locked design DNA (only colors respond to brand):
-//   - Header: brand-mark line ("MEDIA KIT â€” 2026"), large 28 px name beside
+//   - Header: brand-mark line ("MEDIA KIT — 2026"), large 28 px name beside
 //     64 px round avatar; channel-line callout shows total reach in primary.
-//   - Quick actions: 3-column equal grid (DM Â· Mail Â· Web), no rounding.
+//   - Quick actions: 3-column equal grid (DM · Mail · Web), no rounding.
 //   - Stats table: each platform a row with handle and big primary count
 //     right-aligned.
 //   - Categories chips.
@@ -100,14 +100,14 @@ interface CcpCopy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcpCopy> = {
   de: {
-    mediaKit: "Media Kit Â· 2026",
+    mediaKit: "Media Kit · 2026",
     totalReach: "120K+ Reichweite",
-    channels: "KanÃ¤le",
+    channels: "Kanäle",
     contact: "Kontakt",
     about: "Profil",
     collab: "Kooperationen",
     collabBlurb:
-      "Wir arbeiten mit Marken, deren Werte wir teilen. Premium-Storytelling fÃ¼r Lifestyle-, Travel- und Wellness-Brands.",
+      "Wir arbeiten mit Marken, deren Werte wir teilen. Premium-Storytelling für Lifestyle-, Travel- und Wellness-Brands.",
     partner: "Jetzt anfragen",
     scheduleCall: "Anfrage senden",
     callMe: "Direkt anrufen",
@@ -123,7 +123,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcpCopy> = {
     web: "Web",
   },
   en: {
-    mediaKit: "Media Kit Â· 2026",
+    mediaKit: "Media Kit · 2026",
     totalReach: "120K+ reach",
     channels: "Channels",
     contact: "Contact",
@@ -146,23 +146,23 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcpCopy> = {
     web: "Web",
   },
   tr: {
-    mediaKit: "Media Kit Â· 2026",
-    totalReach: "120K+ EriÅŸim",
+    mediaKit: "Media Kit · 2026",
+    totalReach: "120K+ Erişim",
     channels: "Kanallar",
-    contact: "Ä°letiÅŸim",
+    contact: "İletişim",
     about: "Profil",
-    collab: "Ä°ÅŸ Birlikleri",
+    collab: "İş Birlikleri",
     collabBlurb:
-      "DeÄŸerlerini paylaÅŸtÄ±ÄŸÄ±m markalarla Ã§alÄ±ÅŸÄ±yorum. Lifestyle, travel ve wellness markalarÄ± iÃ§in premium hikÃ¢ye anlatÄ±mÄ±.",
-    partner: "Åžimdi Sor",
-    scheduleCall: "Talep GÃ¶nder",
+      "Değerlerini paylaştığım markalarla çalışıyorum. Lifestyle, travel ve wellness markaları için premium hikâye anlatımı.",
+    partner: "Şimdi Sor",
+    scheduleCall: "Talep Gönder",
     callMe: "Direkt Ara",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
-    share: "PaylaÅŸ",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
+    share: "Paylaş",
     poweredBy: "Powered by",
-    startingFrom: "baÅŸlangÄ±Ã§",
-    responseLabel: "YanÄ±t SÃ¼resi",
+    startingFrom: "başlangıç",
+    responseLabel: "Yanıt Süresi",
     categories: "Konular",
     dm: "DM",
     mail: "Mail",
@@ -170,7 +170,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcpCopy> = {
   },
   es: {
 
-    mediaKit: "Media Kit Â· 2026",
+    mediaKit: "Media Kit · 2026",
     totalReach: "120K+ alcance",
     channels: "Canales",
     contact: "Contacto",
@@ -195,7 +195,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcpCopy> = {
   },
   it: {
 
-    mediaKit: "Media Kit Â· 2026",
+    mediaKit: "Media Kit · 2026",
     totalReach: "120K+ copertura",
     channels: "Canali",
     contact: "Contatto",
@@ -220,7 +220,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcpCopy> = {
   },
   fr: {
 
-    mediaKit: "Media Kit Â· 2026",
+    mediaKit: "Media Kit · 2026",
     totalReach: "120K+ portée",
     channels: "Canaux",
     contact: "Contact",
@@ -245,7 +245,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcpCopy> = {
   },
   ar: {
 
-    mediaKit: "Media Kit Â· 2026",
+    mediaKit: "Media Kit · 2026",
     totalReach: "120 ألف+ وصول",
     channels: "القنوات",
     contact: "اتصال",
@@ -367,11 +367,11 @@ export function ContentCreatorPure({
           <strong style={{ color: accent, fontWeight: 600 }}>
             {t.totalReach}
           </strong>
-          {" "}Â· Lifestyle Â· Travel Â· Premium Brands
+          {" "}· Lifestyle · Travel · Premium Brands
         </p>
       </header>
 
-      {/* QUICK ACTIONS â€” 3-up flat */}
+      {/* QUICK ACTIONS — 3-up flat */}
       <section
         className="grid grid-cols-3"
         style={{ borderBottom: `1px solid ${HAIRLINE}` }}
@@ -403,7 +403,7 @@ export function ContentCreatorPure({
         )}
       </section>
 
-      {/* CHANNELS â€” stats table */}
+      {/* CHANNELS — stats table */}
       <section
         className="px-8 py-12"
         style={{ borderBottom: `1px solid ${HAIRLINE}` }}
@@ -614,7 +614,7 @@ export function ContentCreatorPure({
         className="flex items-center justify-between px-8 py-7 text-[10px] font-medium uppercase"
         style={{ color: INK_DIM, letterSpacing: "1.5px" }}
       >
-        <span>Â© {year}</span>
+        <span>© {year}</span>
         <span>{cardData.company || cardData.name}</span>
       </footer>
       <div
@@ -717,7 +717,7 @@ function PureAction({
 export const contentCreatorPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 39,
   key: "content-creator-pure",
-  name: "Content Creator â€” Pure",
+  name: "Content Creator — Pure",
   industry: "Influencer / content creator (editorial pure variant)",
   supports: {
     services: true,
@@ -742,10 +742,10 @@ export const contentCreatorPureSample: SampleData = {
   templateId: 39,
   slug: "demo-content-creator-pure",
   cardData: {
-    name: "Tuna YÄ±lmaz",
+    name: "Tuna Yılmaz",
     position: "Content Creator",
     title: "Lifestyle & Travel",
-    company: "Tuna YÄ±lmaz Media",
+    company: "Tuna Yılmaz Media",
     email: "tuna@tunayilmaz.de",
     phone: "+49 178 556 7890",
     whatsapp: "+49 178 556 7890",

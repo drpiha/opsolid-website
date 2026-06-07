@@ -1,17 +1,17 @@
 ﻿"use client";
 
 // =============================================================================
-// EcommerceNoir â€” v2 template (id=81, key="ecommerce-noir").
+// EcommerceNoir — v2 template (id=81, key="ecommerce-noir").
 //
-// Sector: E-commerce / Online boutique â€” NOIR variant. Mood: dark luxury
+// Sector: E-commerce / Online boutique — NOIR variant. Mood: dark luxury
 // boutique, deep ink surface, champagne-gold trim, Playfair Display + Inter
 // light. Inspired by kart_08_eticaret_noir.html.
 //
 // Design DNA (different from default Ecommerce, EcommercePure/Vivid):
 //   - 80px circular monogram in gold-stroke ring with horizontal hairline ears.
 //   - Centred Playfair brand-h1 with mono-uppercase eyebrow + italic French
-//     "Maison fondÃ©eâ€¦" tag.
-//   - Profile band with 62px gold-ring avatar + Founderâ€”Curator role caps.
+//     "Maison fondée…" tag.
+//   - Profile band with 62px gold-ring avatar + Founder—Curator role caps.
 //   - Featured-piece card: 4:3 image with limited-edition gold badge over
 //     darkened gradient.
 //   - Collection 2x2 category grid with hover gold inner-frame and SVG icons.
@@ -64,8 +64,8 @@ function digitsOnly(value: string): string {
 
 function getInitials(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "â€¢";
-  if (parts.length === 1) return (parts[0][0] ?? "â€¢").toUpperCase();
+  if (parts.length === 0) return "•";
+  if (parts.length === 1) return (parts[0][0] ?? "•").toUpperCase();
   return (
     (parts[0][0] ?? "").toUpperCase() + (parts[parts.length - 1][0] ?? "").toUpperCase()
   );
@@ -93,16 +93,16 @@ interface Copy {
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     brandPre: "Premium Kollektion",
-    brandTag: "Maison fondÃ©e en 2021",
+    brandTag: "Maison fondée en 2021",
     taglineFallback: "Founder & Curator",
-    featuredEyebrow: "â€” Featured Piece â€”",
+    featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
     collectionH: "Kollektion",
     collectionSub: "Kuratierte Mode & Accessoires",
     servicesLabel: "Produkte",
     reviewsLabel: "Bewertungen",
     serviceH: "Le Service",
-    serviceSub: "â€” Unsere Leistungen â€”",
+    serviceSub: "— Unsere Leistungen —",
     bookBtn: "Bestellung aufgeben",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
@@ -111,16 +111,16 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   en: {
     brandPre: "Premium Collection",
-    brandTag: "Maison fondÃ©e en 2021",
+    brandTag: "Maison fondée en 2021",
     taglineFallback: "Founder & Curator",
-    featuredEyebrow: "â€” Featured Piece â€”",
+    featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
     collectionH: "Collection",
     collectionSub: "Curated fashion & accessories",
     servicesLabel: "Products",
     reviewsLabel: "Reviews",
     serviceH: "Le Service",
-    serviceSub: "â€” What we offer â€”",
+    serviceSub: "— What we offer —",
     bookBtn: "Place order",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
@@ -129,35 +129,35 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   tr: {
     brandPre: "Premium Koleksiyon",
-    brandTag: "Maison fondÃ©e en 2021",
+    brandTag: "Maison fondée en 2021",
     taglineFallback: "Founder & Curator",
-    featuredEyebrow: "â€” Featured Piece â€”",
+    featuredEyebrow: "— Featured Piece —",
     collectionPre: "SS26",
     collectionH: "Koleksiyon",
-    collectionSub: "KuratÃ¶rlÃ¼ moda ve aksesuar",
-    servicesLabel: "ÃœrÃ¼nler",
+    collectionSub: "Kuratörlü moda ve aksesuar",
+    servicesLabel: "Ürünler",
     reviewsLabel: "Yorum",
     serviceH: "Le Service",
-    serviceSub: "â€” Hizmetlerimiz â€”",
-    bookBtn: "SipariÅŸ Ver",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    serviceSub: "— Hizmetlerimiz —",
+    bookBtn: "Sipariş Ver",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
     qrLabel: "Scan to shop",
   },
   es: {
 
     brandPre: "Colección Premium",
-    brandTag: "Maison fondÃ©e en 2021",
+    brandTag: "Maison fondée en 2021",
     taglineFallback: "Fundador y curador",
-    featuredEyebrow: "â€” Featured Piece â€”",
+    featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
     collectionH: "Colección",
     collectionSub: "Moda y accesorios seleccionados",
     servicesLabel: "Productos",
     reviewsLabel: "Reseñas",
     serviceH: "El servicio",
-    serviceSub: "â€” What we offer â€”",
+    serviceSub: "— What we offer —",
     bookBtn: "Realizar pedido",
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
@@ -168,16 +168,16 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   it: {
 
     brandPre: "Collezione Premium",
-    brandTag: "Maison fondÃ©e en 2021",
+    brandTag: "Maison fondée en 2021",
     taglineFallback: "Fondatore e curatore",
-    featuredEyebrow: "â€” Featured Piece â€”",
+    featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
     collectionH: "Collezione",
     collectionSub: "Moda e accessori selezionati",
     servicesLabel: "Prodotti",
     reviewsLabel: "Recensioni",
     serviceH: "Il servizio",
-    serviceSub: "â€” What we offer â€”",
+    serviceSub: "— What we offer —",
     bookBtn: "Effettua ordine",
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
@@ -188,16 +188,16 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   fr: {
 
     brandPre: "Collection Premium",
-    brandTag: "Maison fondÃ©e en 2021",
+    brandTag: "Maison fondée en 2021",
     taglineFallback: "Fondateur et curateur",
-    featuredEyebrow: "â€” Featured Piece â€”",
+    featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
     collectionH: "Collection",
     collectionSub: "Mode et accessoires sélectionnés",
     servicesLabel: "Produits",
     reviewsLabel: "Avis",
     serviceH: "Le service",
-    serviceSub: "â€” What we offer â€”",
+    serviceSub: "— What we offer —",
     bookBtn: "Passer commande",
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
@@ -208,16 +208,16 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   ar: {
 
     brandPre: "المجموعة المميزة",
-    brandTag: "Maison fondÃ©e en 2021",
+    brandTag: "Maison fondée en 2021",
     taglineFallback: "مؤسس ومنسق",
-    featuredEyebrow: "â€” Featured Piece â€”",
+    featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
     collectionH: "مجموعة",
     collectionSub: "أزياء وإكسسوارات مختارة",
     servicesLabel: "المنتجات",
     reviewsLabel: "التقييمات",
     serviceH: "الخدمة",
-    serviceSub: "â€” What we offer â€”",
+    serviceSub: "— What we offer —",
     bookBtn: "إتمام الطلب",
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
@@ -556,7 +556,7 @@ export function EcommerceNoir({
         </>
       )}
 
-      {/* STATS â€” driven by real data */}
+      {/* STATS — driven by real data */}
       {(() => {
         const statsItems = [
           ...(allServices.length ? [{ num: String(allServices.length), label: t.servicesLabel }] : []),
@@ -622,10 +622,10 @@ export function EcommerceNoir({
           style={{ background: LINE, gap: 1 }}
         >
           <SvcRow k="Kargo" v="Free / Closed Box" v_gold />
-          <SvcRow k="Lieferung" v="2 â€” 4 Werktage" />
+          <SvcRow k="Lieferung" v="2 — 4 Werktage" />
           <SvcRow k="Geschenkverpackung" v="Inklusive" v_gold />
-          <SvcRow k="Custom" v="2 â€” 3 Wochen" />
-          <SvcRow k="Zahlung" v="Karte, BankÃ¼berweisung" />
+          <SvcRow k="Custom" v="2 — 3 Wochen" />
+          <SvcRow k="Zahlung" v="Karte, Banküberweisung" />
         </div>
       </section>
 
@@ -679,8 +679,8 @@ export function EcommerceNoir({
         className="serif italic px-6 py-6 text-center"
         style={{ fontSize: 13, color: MUTED, borderTop: `1px solid ${LINE}` }}
       >
-        Â© {new Date().getFullYear()} â€” {cardData.company || cardData.name} Maison
-        {cityFromAddress ? ` Â· ${cityFromAddress}` : ""}
+        © {new Date().getFullYear()} — {cardData.company || cardData.name} Maison
+        {cityFromAddress ? ` · ${cityFromAddress}` : ""}
         <div className="mt-2" style={{ color: DIM, fontStyle: "normal" }}>
           {t.poweredBy}{" "}
           <a
@@ -716,7 +716,7 @@ export function EcommerceNoir({
 export const ecommerceNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 81,
   key: "ecommerce-noir",
-  name: "E-commerce â€” Noir",
+  name: "E-commerce — Noir",
   industry: "E-commerce / Dark luxury boutique",
   supports: {
     services: true,
@@ -737,21 +737,21 @@ export const ecommerceNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-ecommerce-noir",
 };
 
-// photo: Unsplash, https://unsplash.com/photos/eF7HN40WbAQ â€” Free, no attribution required.
+// photo: Unsplash, https://unsplash.com/photos/eF7HN40WbAQ — Free, no attribution required.
 export const ecommerceNoirSample: SampleData = {
   templateId: 81,
   slug: "demo-ecommerce-noir",
   cardData: {
     name: "Zeynep Kaya",
-    position: "GrÃ¼nderin & CEO",
-    title: "GrÃ¼nderin & CEO",
+    position: "Gründerin & CEO",
+    title: "Gründerin & CEO",
     company: "Pazar Shop",
     email: "zeynep@pazar-shop.de",
     phone: "+49 172 556 7891",
     whatsapp: "+49 172 556 7891",
     website: "pazar-shop.de",
-    address: "OranienstraÃŸe 30, 10999 Berlin",
-    bio: "Kuratierte Mode & Accessoires aus der TÃ¼rkei & Deutschland. Kostenloser Versand ab â‚¬50.",
+    address: "Oranienstraße 30, 10999 Berlin",
+    bio: "Kuratierte Mode & Accessoires aus der Türkei & Deutschland. Kostenloser Versand ab â‚¬50.",
     bookingUrl: "https://pazar-shop.de/shop",
     impressumUrl: "https://pazar-shop.de/impressum",
     privacyUrl: "https://pazar-shop.de/datenschutz",
@@ -762,7 +762,7 @@ export const ecommerceNoirSample: SampleData = {
     },
     services: [
       { title: "Seidenschal", description: "Handbedruckt, Premium-Seide.", priceLabel: "â‚¬89" },
-      { title: "Handtasche", description: "Vollnarbenleder, handgenÃ¤ht.", priceLabel: "â‚¬145" },
+      { title: "Handtasche", description: "Vollnarbenleder, handgenäht.", priceLabel: "â‚¬145" },
       { title: "Schmuckset", description: "Versilbert, kuratiert.", priceLabel: "â‚¬65" },
     ],
   },

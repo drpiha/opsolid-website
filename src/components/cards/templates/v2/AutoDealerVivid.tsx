@@ -1,9 +1,9 @@
 ﻿"use client";
 
 // =============================================================================
-// AutoDealerVivid â€” v2 template (id=48, key="auto-dealer-vivid").
+// AutoDealerVivid — v2 template (id=48, key="auto-dealer-vivid").
 //
-// Sector: Premium pre-owned auto dealer â€” VIVID variant. Mood: bold red /
+// Sector: Premium pre-owned auto dealer — VIVID variant. Mood: bold red /
 // black, sporty and energetic. Inspired by kart_19_oto_galeri_vivid.html.
 //
 // Locked design DNA (only colors respond to brand):
@@ -103,7 +103,7 @@ interface Copy {
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     tag: "Premium Auto",
-    tagline: "GeprÃ¼fte Premium-Gebrauchtwagen, mit echter Garantie und ehrlichem Preis.",
+    tagline: "Geprüfte Premium-Gebrauchtwagen, mit echter Garantie und ehrlichem Preis.",
     callBtn: "Anrufen",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-Mail",
@@ -147,25 +147,25 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   tr: {
     tag: "Premium Auto",
-    tagline: "Kontrolden geÃ§miÅŸ premium ikinci el araÃ§lar â€” gerÃ§ek garanti, dÃ¼rÃ¼st fiyat.",
+    tagline: "Kontrolden geçmiş premium ikinci el araçlar — gerçek garanti, dürüst fiyat.",
     callBtn: "Ara",
     whatsappBtn: "WhatsApp",
     emailBtn: "Mail",
-    featuredH: "Ã–ne Ã‡Ä±kan",
+    featuredH: "Öne Çıkan",
     featuredBadge: "Top Pick",
-    yearLabel: "YÄ±l",
+    yearLabel: "Yıl",
     transLabel: "Vites",
-    fuelLabel: "YakÄ±t",
+    fuelLabel: "Yakıt",
     brandsH: "Markalar",
     servicesH: "Hizmetler",
-    yearsLabel: "YÄ±l",
-    carsLabel: "AraÃ§",
+    yearsLabel: "Yıl",
+    carsLabel: "Araç",
     warrantyLabel: "Garanti",
-    cta: "Test SÃ¼rÃ¼ÅŸÃ¼ Al",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    cta: "Test Sürüşü Al",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
-    contact: "Ä°letiÅŸim",
+    contact: "İletişim",
   },
   es: {
 
@@ -412,7 +412,7 @@ export function AutoDealerVivid({
               className="mt-1 text-[11px] uppercase"
               style={{ color: primary, letterSpacing: "1.5px" }}
             >
-              {cardData.position || "Founder Â· 15 yrs"}
+              {cardData.position || "Founder · 15 yrs"}
             </div>
           </div>
         </section>
@@ -504,7 +504,7 @@ export function AutoDealerVivid({
                     className="display text-[26px] font-bold"
                     style={{ color: primary }}
                   >
-                    {featured.priceLabel || "â€”"}
+                    {featured.priceLabel || "—"}
                   </span>
                 </div>
               </div>
@@ -647,7 +647,7 @@ export function AutoDealerVivid({
             className="mt-1.5 text-[10.5px]"
             style={{ color: "rgba(255,255,255,0.55)", letterSpacing: "1px" }}
           >
-            Â© {year} Â· {t.poweredBy}{" "}
+            © {year} · {t.poweredBy}{" "}
             <a
               href="https://opsolid.de/products/digital-card"
               target="_blank"
@@ -777,7 +777,7 @@ function CarSpec({
 export const autoDealerVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 48,
   key: "auto-dealer-vivid",
-  name: "Auto Dealer â€” Vivid",
+  name: "Auto Dealer — Vivid",
   industry: "Premium auto dealer / showroom",
   supports: {
     services: true,
@@ -799,13 +799,13 @@ export const autoDealerVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   nameRules: { transform: "uppercase" },
 };
 
-// photo: Unsplash, premium car. Unsplash License â€” free, no attribution required.
+// photo: Unsplash, premium car. Unsplash License — free, no attribution required.
 export const autoDealerVividSample: SampleData = {
   templateId: 48,
   slug: "demo-auto-dealer-vivid",
   cardData: {
-    name: "TarÄ±k Arslan",
-    position: "Otomotiv DanÄ±ÅŸmanÄ±",
+    name: "Tarık Arslan",
+    position: "Otomotiv Danışmanı",
     title: "Founder",
     company: "Arslan Automobile",
     email: "tarik@arslanautomobile.de",
@@ -813,13 +813,13 @@ export const autoDealerVividSample: SampleData = {
     whatsapp: "+49 170 882 3456",
     website: "arslanautomobile.de",
     address: "Charlottenburg, Berlin",
-    bio: "Premium Auto Dealership â€” geprÃ¼ft, garantiert, ehrlich verhandelt.",
+    bio: "Premium Auto Dealership — geprüft, garantiert, ehrlich verhandelt.",
     bookingUrl: "https://cal.com/arslanautomobile/intro",
     sectorKey: "retail",
     services: [
-      { title: "BMW M5 Competition", description: "2022 Â· 18.000 km Â· Carbon Black", priceLabel: "â‚¬89.500" },
-      { title: "Mercedes E220d", description: "2020 Â· 62.000 km Â· Silber", priceLabel: "â‚¬42.500" },
-      { title: "Audi A6 Avant", description: "2022 Â· 24.000 km Â· Grau", priceLabel: "â‚¬49.800" },
+      { title: "BMW M5 Competition", description: "2022 · 18.000 km · Carbon Black", priceLabel: "â‚¬89.500" },
+      { title: "Mercedes E220d", description: "2020 · 62.000 km · Silber", priceLabel: "â‚¬42.500" },
+      { title: "Audi A6 Avant", description: "2022 · 24.000 km · Grau", priceLabel: "â‚¬49.800" },
       { title: "Garantie 12 Monate", description: "Auf alle Premium-Modelle" },
       { title: "Inzahlungnahme", description: "Faire Bewertung in 24 h" },
       { title: "Finanzierung", description: "Ab 2,9 % effektiv" },

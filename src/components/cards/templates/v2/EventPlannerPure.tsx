@@ -1,9 +1,9 @@
 ﻿"use client";
 
 // =============================================================================
-// EventPlannerPure â€” v2 template (id=45, key="event-planner-pure").
+// EventPlannerPure — v2 template (id=45, key="event-planner-pure").
 //
-// Sector: Wedding & event planner â€” PURE variant. Mood: white minimal,
+// Sector: Wedding & event planner — PURE variant. Mood: white minimal,
 // modern weddings, editorial portfolio. Inspired by
 // kart_18_organizasyon_pure.html.
 //
@@ -94,11 +94,11 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     weddingsLabel: "Hochzeiten",
     clientsH: "Vertrauen mir",
     contactH: "Kontakt",
-    cta: "ErstgesprÃ¤ch buchen",
+    cta: "Erstgespräch buchen",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
-    credential: "9 Jahre Â· 400+ Events Â· 180 Hochzeiten",
+    credential: "9 Jahre · 400+ Events · 180 Hochzeiten",
   },
   en: {
     brandMark: "Wedding & Events Studio",
@@ -116,7 +116,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
-    credential: "9 years Â· 400+ events Â· 180 weddings",
+    credential: "9 years · 400+ events · 180 weddings",
   },
   tr: {
     brandMark: "Wedding & Events Studio",
@@ -124,17 +124,17 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     whatsappBtn: "WhatsApp",
     emailBtn: "E-posta",
     servicesH: "Hizmetler",
-    statsH: "Ã–zet",
-    yearsLabel: "YÄ±l",
+    statsH: "Özet",
+    yearsLabel: "Yıl",
     eventsLabel: "Etkinlik",
-    weddingsLabel: "DÃ¼ÄŸÃ¼n",
-    clientsH: "Ã‡alÄ±ÅŸtÄ±ÄŸÄ±m Markalar",
-    contactH: "Ä°letiÅŸim",
-    cta: "GÃ¶rÃ¼ÅŸme Talep Et",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    weddingsLabel: "Düğün",
+    clientsH: "Çalıştığım Markalar",
+    contactH: "İletişim",
+    cta: "Görüşme Talep Et",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
-    credential: "9 yÄ±l Â· 400+ etkinlik Â· 180 dÃ¼ÄŸÃ¼n",
+    credential: "9 yıl · 400+ etkinlik · 180 düğün",
   },
   es: {
 
@@ -153,7 +153,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
-    credential: "9 years Â· 400+ events Â· 180 weddings",
+    credential: "9 years · 400+ events · 180 weddings",
   
   },
   it: {
@@ -173,7 +173,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
-    credential: "9 years Â· 400+ events Â· 180 weddings",
+    credential: "9 years · 400+ events · 180 weddings",
   
   },
   fr: {
@@ -193,7 +193,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
-    credential: "9 years Â· 400+ events Â· 180 weddings",
+    credential: "9 years · 400+ events · 180 weddings",
   
   },
   ar: {
@@ -213,7 +213,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
-    credential: "9 years Â· 400+ events Â· 180 weddings",
+    credential: "9 years · 400+ events · 180 weddings",
   
   },
 };
@@ -303,7 +303,7 @@ export function EventPlannerPure({
           </div>
           <div className="mt-4 text-[13px]" style={{ color: INK }}>
             <strong style={{ color: primary, fontWeight: 700 }}>{cardData.company}</strong>
-            {" Â· "}
+            {" · "}
             {t.credential}
           </div>
         </header>
@@ -453,7 +453,7 @@ export function EventPlannerPure({
           className="px-8 py-7 text-center text-[11px]"
           style={{ color: INK_SOFT, letterSpacing: "1px" }}
         >
-          Â© {year} {cardData.company || cardData.name} Â· {t.poweredBy}{" "}
+          © {year} {cardData.company || cardData.name} · {t.poweredBy}{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"
@@ -561,7 +561,7 @@ function StatCell({
 export const eventPlannerPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 45,
   key: "event-planner-pure",
-  name: "Event Planner â€” Pure",
+  name: "Event Planner — Pure",
   industry: "Wedding & event planner",
   supports: {
     services: true,
@@ -582,12 +582,12 @@ export const eventPlannerPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-event-planner-pure",
 };
 
-// photo: Unsplash, wedding planner. Unsplash License â€” free, no attribution required.
+// photo: Unsplash, wedding planner. Unsplash License — free, no attribution required.
 export const eventPlannerPureSample: SampleData = {
   templateId: 45,
   slug: "demo-event-planner-pure",
   cardData: {
-    name: "Naz ErdoÄŸan",
+    name: "Naz Erdoğan",
     position: "Wedding & Event Planner",
     title: "Naz Events",
     company: "Naz Events",
@@ -595,15 +595,15 @@ export const eventPlannerPureSample: SampleData = {
     phone: "+49 172 667 8901",
     whatsapp: "+49 172 667 8901",
     website: "nazevents.de",
-    address: "Berlin Â· Europa",
-    bio: "Modern, kuratierte Hochzeiten und private Events â€” von der ersten Idee bis zum letzten Glas Champagner.",
+    address: "Berlin · Europa",
+    bio: "Modern, kuratierte Hochzeiten und private Events — von der ersten Idee bis zum letzten Glas Champagner.",
     bookingUrl: "https://cal.com/nazevents/intro",
     sectorKey: "events",
     services: [
-      { title: "Komplettpaket", description: "Konzept Â· Logistik Â· Koordination", priceLabel: "ab â‚¬4.800" },
+      { title: "Komplettpaket", description: "Konzept · Logistik · Koordination", priceLabel: "ab â‚¬4.800" },
       { title: "Tageskoordination", description: "Day-of mit komplettem Team", priceLabel: "ab â‚¬1.200" },
       { title: "Beratung", description: "Strategie & Sourcing", priceLabel: "â‚¬150 / h" },
-      { title: "Konzeptdesign", description: "Locations Â· Decor Â· AtmosphÃ¤re", priceLabel: "ab â‚¬900" },
+      { title: "Konzeptdesign", description: "Locations · Decor · Atmosphäre", priceLabel: "ab â‚¬900" },
       { title: "Foto & Video", description: "Premium-Team, kuratiert", priceLabel: "ab â‚¬1.800" },
     ],
     testimonials: [
@@ -611,7 +611,7 @@ export const eventPlannerPureSample: SampleData = {
         author: "Lena & Max K.",
         role: "Wedding 2025",
         quote:
-          "Das schÃ¶nste Event unseres Lebens â€” Naz hat jedes Detail perfekt umgesetzt.",
+          "Das schönste Event unseres Lebens — Naz hat jedes Detail perfekt umgesetzt.",
       },
     ],
     socials: {

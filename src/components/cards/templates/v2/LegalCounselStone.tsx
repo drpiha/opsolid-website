@@ -1,9 +1,9 @@
 ﻿"use client";
 
 // =============================================================================
-// LegalCounselStone â€” v2 template (id=59, key="legal-counsel-stone").
+// LegalCounselStone — v2 template (id=59, key="legal-counsel-stone").
 //
-// Sector: Lawyer / Rechtsanwalt â€” STONE variant. Mood: warm Mayfair-restraint
+// Sector: Lawyer / Rechtsanwalt — STONE variant. Mood: warm Mayfair-restraint
 // taupe / cream paper, Fraunces serif, sepia portrait, paper-warm tiles.
 // Inspired by kart_02_avukat_stone.html.
 //
@@ -103,9 +103,9 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    eyebrow: "Bauer & Partner â€” Sorgfalt seit 2005",
+    eyebrow: "Bauer & Partner — Sorgfalt seit 2005",
     storyH: "Meine Geschichte",
-    storySignature: "â€” Dr. Klaus Bauer",
+    storySignature: "— Dr. Klaus Bauer",
     servicesH: "Was ich tue",
     contactH: "Sprechen wir",
     yearsLabel: "Jahre",
@@ -120,9 +120,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   en: {
-    eyebrow: "Bauer & Partner â€” Diligence since 2005",
+    eyebrow: "Bauer & Partner — Diligence since 2005",
     storyH: "My story",
-    storySignature: "â€” Dr. Klaus Bauer",
+    storySignature: "— Dr. Klaus Bauer",
     servicesH: "What I do",
     contactH: "Let's talk",
     yearsLabel: "Years",
@@ -137,27 +137,27 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    eyebrow: "Bauer & Partner â€” 2005'ten beri Ã¶zen",
+    eyebrow: "Bauer & Partner — 2005'ten beri özen",
     storyH: "Hukuk Hikayem",
-    storySignature: "â€” Dr. Klaus Bauer",
+    storySignature: "— Dr. Klaus Bauer",
     servicesH: "Yapabildiklerim",
-    contactH: "KonuÅŸalÄ±m",
-    yearsLabel: "YÄ±l",
+    contactH: "Konuşalım",
+    yearsLabel: "Yıl",
     casesLabel: "Dava",
-    winRateLabel: "BaÅŸarÄ±",
+    winRateLabel: "Başarı",
     callBtn: "Telefon",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-posta",
     webBtn: "Web Sitesi",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
   },
   es: {
 
-    eyebrow: "Bauer & Partner â€” Diligence since 2005",
+    eyebrow: "Bauer & Partner — Diligence since 2005",
     storyH: "Mi historia",
-    storySignature: "â€” Dr. Klaus Bauer",
+    storySignature: "— Dr. Klaus Bauer",
     servicesH: "Lo que hago",
     contactH: "Hablemos",
     yearsLabel: "Años",
@@ -174,9 +174,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   it: {
 
-    eyebrow: "Bauer & Partner â€” Diligence since 2005",
+    eyebrow: "Bauer & Partner — Diligence since 2005",
     storyH: "La mia storia",
-    storySignature: "â€” Dr. Klaus Bauer",
+    storySignature: "— Dr. Klaus Bauer",
     servicesH: "Cosa faccio",
     contactH: "Parliamo",
     yearsLabel: "Anni",
@@ -193,9 +193,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   fr: {
 
-    eyebrow: "Bauer & Partner â€” Diligence since 2005",
+    eyebrow: "Bauer & Partner — Diligence since 2005",
     storyH: "Mon histoire",
-    storySignature: "â€” Dr. Klaus Bauer",
+    storySignature: "— Dr. Klaus Bauer",
     servicesH: "Ce que je fais",
     contactH: "Discutons",
     yearsLabel: "Années",
@@ -212,9 +212,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   ar: {
 
-    eyebrow: "Bauer & Partner â€” Diligence since 2005",
+    eyebrow: "Bauer & Partner — Diligence since 2005",
     storyH: "قصتي",
-    storySignature: "â€” Dr. Klaus Bauer",
+    storySignature: "— Dr. Klaus Bauer",
     servicesH: "ما أفعله",
     contactH: "لنتحدث",
     yearsLabel: "سنوات",
@@ -357,7 +357,7 @@ export function LegalCounselStone({
           className="relative mt-1.5 text-[13px] font-medium leading-[1.5]"
           style={{ color: TEXT_SOFT, letterSpacing: "0.3px" }}
         >
-          {[cardData.position, cardData.title].filter(Boolean).join(" Â· ") ||
+          {[cardData.position, cardData.title].filter(Boolean).join(" · ") ||
             "Senior Counsel"}
         </div>
       </header>
@@ -443,13 +443,13 @@ export function LegalCounselStone({
           className="serif text-[17px] italic leading-[1.5]"
           style={{ color: ACCENT, fontWeight: 500 }}
         >
-          {"â€œ"}
+          {"“"}
           {locale === "tr"
-            ? "Hukuki GÃ¼venceniz, BaÅŸarÄ±nÄ±zÄ±n Temeli."
+            ? "Hukuki Güvenceniz, Başarınızın Temeli."
             : locale === "de"
-              ? "Hukuki GÃ¼venceniz â€” die ruhige Hand am Verhandlungstisch."
-              : "Your legal certainty â€” quiet hand, decisive moves."}
-          {"â€"}
+              ? "Hukuki Güvenceniz — die ruhige Hand am Verhandlungstisch."
+              : "Your legal certainty — quiet hand, decisive moves."}
+          {"”"}
         </p>
       </div>
 
@@ -541,7 +541,7 @@ export function LegalCounselStone({
               opacity: 0.6,
             }}
           >
-            {"â€œ"}
+            {"“"}
           </span>
           <p
             className="serif relative mb-4 pl-5.5 text-[15px] italic leading-[1.65]"
@@ -562,7 +562,7 @@ export function LegalCounselStone({
               style={{ color: ACCENT }}
             >
               {testimonial.author}
-              {testimonial.role ? ` Â· ${testimonial.role}` : ""}
+              {testimonial.role ? ` · ${testimonial.role}` : ""}
             </span>
           </div>
         </div>
@@ -673,13 +673,13 @@ export function LegalCounselStone({
           style={{ color: ACCENT, fontWeight: 500 }}
         >
           {cardData.name}
-          {cardData.company ? ` Â· ${cardData.company}` : ""}
+          {cardData.company ? ` · ${cardData.company}` : ""}
         </div>
         <div
           className="mt-1 text-[11px]"
           style={{ color: TEXT_SOFT }}
         >
-          Â© {new Date().getFullYear()} Â· {t.poweredBy}{" "}
+          © {new Date().getFullYear()} · {t.poweredBy}{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"
@@ -823,7 +823,7 @@ function StonePill({
 export const legalCounselStoneEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 59,
   key: "legal-counsel-stone",
-  name: "Legal Counsel â€” Stone",
+  name: "Legal Counsel — Stone",
   industry: "Lawyer / Rechtsanwalt",
   supports: {
     services: true,
@@ -850,14 +850,14 @@ export const legalCounselStoneSample: SampleData = {
   cardData: {
     name: "Dr. Klaus Bauer",
     position: "Rechtsanwalt",
-    title: "Fachanwalt fÃ¼r Strafrecht",
+    title: "Fachanwalt für Strafrecht",
     company: "Bauer & Partner",
     email: "bauer@bauer-partner.de",
     phone: "+49 30 555 7890",
     whatsapp: "+49 170 555 7890",
     website: "bauer-partner.de",
     address: "Unter den Linden 21, 10117 Berlin",
-    bio: "Recht ist fÃ¼r mich kein Wettkampf, sondern Verantwortung. Vor zwanzig Jahren in Heidelberg promoviert, heute in Berlin zugelassen â€” und seit dem ersten Tag derselbe Grundsatz: kÃ¼rzeste Briefe, lÃ¤ngste Beziehungen, ruhige Hand am Verhandlungstisch.",
+    bio: "Recht ist für mich kein Wettkampf, sondern Verantwortung. Vor zwanzig Jahren in Heidelberg promoviert, heute in Berlin zugelassen — und seit dem ersten Tag derselbe Grundsatz: kürzeste Briefe, längste Beziehungen, ruhige Hand am Verhandlungstisch.",
     bookingUrl: "https://cal.com/bauer-partner/intro",
     brochureUrl: "https://bauer-partner.de/profil.pdf",
     impressumUrl: "https://bauer-partner.de/impressum",
@@ -870,13 +870,13 @@ export const legalCounselStoneSample: SampleData = {
     services: [
       { title: "Strafrecht", description: "Beratung im Ermittlungs- und Strafverfahren.", priceLabel: "â‚¬200 Erstberatung" },
       { title: "Familienrecht", description: "Scheidung, Sorgerecht, Unterhalt.", priceLabel: "ab â‚¬300/h" },
-      { title: "Arbeitsrecht", description: "KÃ¼ndigung, Aufhebung, VergÃ¼tung.", priceLabel: "Erfolgshonorar" },
+      { title: "Arbeitsrecht", description: "Kündigung, Aufhebung, Vergütung.", priceLabel: "Erfolgshonorar" },
     ],
     testimonials: [
       {
         author: "Mehmet T.",
         role: "Mandant",
-        quote: "Dr. Bauer hat ruhig, prÃ¤zise und mit unfehlbarem GespÃ¼r fÃ¼r den richtigen Moment verhandelt.",
+        quote: "Dr. Bauer hat ruhig, präzise und mit unfehlbarem Gespür für den richtigen Moment verhandelt.",
       },
     ],
   },

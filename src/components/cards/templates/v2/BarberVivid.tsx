@@ -1,9 +1,9 @@
 ﻿"use client";
 
 // =============================================================================
-// BarberVivid â€” v2 template (id=78, key="barber-vivid").
+// BarberVivid — v2 template (id=78, key="barber-vivid").
 //
-// Sector: Barber / Men's grooming â€” VIVID variant. Mood: bold red/black urban
+// Sector: Barber / Men's grooming — VIVID variant. Mood: bold red/black urban
 // barbershop, gradient hero + floating profile card + tile-based service grid.
 // Inspired by kart_07_berber_vivid.html.
 //
@@ -113,16 +113,16 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   tr: {
     tagPill: "Premium Berber",
     taglineFallback: "Master Berber & Stylist",
-    yearsLabel: "YÄ±l",
-    clientsLabel: "MÃ¼ÅŸteri",
-    followersLabel: "TakipÃ§i",
+    yearsLabel: "Yıl",
+    clientsLabel: "Müşteri",
+    followersLabel: "Takipçi",
     servicesH: "Hizmetler",
-    ctaH: "AnÄ±nda Randevu",
-    ctaSub: "WhatsApp ile saniyeler iÃ§inde rezervasyon",
-    contactH: "Ä°letiÅŸim",
+    ctaH: "Anında Randevu",
+    ctaSub: "WhatsApp ile saniyeler içinde rezervasyon",
+    contactH: "İletişim",
     bookBtn: "Randevu Al",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
   },
   es: {
@@ -284,7 +284,7 @@ export function BarberVivid({
             }}
           >
             {t.tagPill}
-            {cityFromAddress ? ` Â· ${cityFromAddress}` : ""}
+            {cityFromAddress ? ` · ${cityFromAddress}` : ""}
           </span>
           <div
             className="display"
@@ -565,7 +565,7 @@ export function BarberVivid({
               fontWeight: 800,
             }}
           >
-            â€œ
+            “
           </span>
           <p
             style={{
@@ -582,7 +582,7 @@ export function BarberVivid({
             className="display not-italic uppercase"
             style={{ fontSize: 11.5, fontWeight: 700, color: RED, letterSpacing: "0.5px" }}
           >
-            â€” {cardData.name}
+            — {cardData.name}
           </cite>
         </section>
       )}
@@ -652,8 +652,8 @@ export function BarberVivid({
         className="px-6 py-6 text-center"
         style={{ fontSize: 11, color: MUTED, fontWeight: 500 }}
       >
-        Â© {new Date().getFullYear()} {cardData.company || cardData.name}
-        {cityFromAddress && ` Â· ${cityFromAddress}`}
+        © {new Date().getFullYear()} {cardData.company || cardData.name}
+        {cityFromAddress && ` · ${cityFromAddress}`}
         <div className="mt-2" style={{ color: MUTED }}>
           {t.poweredBy}{" "}
           <a
@@ -704,7 +704,7 @@ function Pill({
 export const barberVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 78,
   key: "barber-vivid",
-  name: "Barber â€” Vivid",
+  name: "Barber — Vivid",
   industry: "Barber / Modern urban barbershop",
   supports: {
     services: true,
@@ -725,7 +725,7 @@ export const barberVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-barber-vivid",
 };
 
-// photo: Unsplash, https://unsplash.com/photos/jqe5lY4ROMQ â€” Free, no attribution required.
+// photo: Unsplash, https://unsplash.com/photos/jqe5lY4ROMQ — Free, no attribution required.
 export const barberVividSample: SampleData = {
   templateId: 78,
   slug: "demo-barber-vivid",
@@ -738,8 +738,8 @@ export const barberVividSample: SampleData = {
     phone: "+49 176 223 4568",
     whatsapp: "+49 176 223 4568",
     website: "tabarbershop.de",
-    address: "FriedrichstraÃŸe 88, 10117 Berlin",
-    bio: "Master Barber seit 15 Jahren. Klassischer Herrenschnitt, HeiÃŸrasur, Premium Fades. Termine online.",
+    address: "Friedrichstraße 88, 10117 Berlin",
+    bio: "Master Barber seit 15 Jahren. Klassischer Herrenschnitt, Heißrasur, Premium Fades. Termine online.",
     bookingUrl: "https://cal.com/tabarbershop/booking",
     impressumUrl: "https://tabarbershop.de/impressum",
     privacyUrl: "https://tabarbershop.de/datenschutz",
@@ -749,8 +749,8 @@ export const barberVividSample: SampleData = {
     },
     services: [
       { title: "Premium Haarschnitt", description: "Beratung, Schnitt, Styling.", priceLabel: "â‚¬35" },
-      { title: "HeiÃŸrasur", description: "Klassische Rasur mit heiÃŸem Tuch.", priceLabel: "â‚¬28" },
-      { title: "Kombination", description: "Schnitt + HeiÃŸrasur in einem Termin.", priceLabel: "â‚¬55" },
+      { title: "Heißrasur", description: "Klassische Rasur mit heißem Tuch.", priceLabel: "â‚¬28" },
+      { title: "Kombination", description: "Schnitt + Heißrasur in einem Termin.", priceLabel: "â‚¬55" },
     ],
   },
   photoUrl:

@@ -1,9 +1,9 @@
 ﻿"use client";
 
 // =============================================================================
-// BarberNoir â€” v2 template (id=76, key="barber-noir").
+// BarberNoir — v2 template (id=76, key="barber-noir").
 //
-// Sector: Barber / Men's grooming â€” NOIR variant. Mood: Mayfair luxury barber,
+// Sector: Barber / Men's grooming — NOIR variant. Mood: Mayfair luxury barber,
 // near-black surfaces, vintage gold + burgundy stripe ornaments, Bebas Neue
 // display + Cormorant Garamond italic. Inspired by kart_07_berber_noir.html.
 //
@@ -85,16 +85,16 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     yearsLabel: "jahre",
     clientsLabel: "kunden",
     followersLabel: "follower",
-    servicesEyebrow: "â€” MenÃ¼ â€”",
+    servicesEyebrow: "— Menü —",
     servicesH: "Leistungen",
     servicesSub: "Klassische & moderne Herrenpflege",
-    contactEyebrow: "â€” Kontakt â€”",
+    contactEyebrow: "— Kontakt —",
     contactH: "Termin & Kontakt",
     bookBtn: "Termin reservieren",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
-    hoursH: "Ã–ffnungszeiten",
+    hoursH: "Öffnungszeiten",
   },
   en: {
     estPrefix: "Est.",
@@ -102,10 +102,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     yearsLabel: "years",
     clientsLabel: "clients",
     followersLabel: "followers",
-    servicesEyebrow: "â€” Menu â€”",
+    servicesEyebrow: "— Menu —",
     servicesH: "Services",
     servicesSub: "Classic & modern grooming",
-    contactEyebrow: "â€” Contact â€”",
+    contactEyebrow: "— Contact —",
     contactH: "Book & Contact",
     bookBtn: "Book appointment",
     saveContact: "Save contact",
@@ -116,19 +116,19 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   tr: {
     estPrefix: "Est.",
     taglineFallback: "Master Berber & Stylist",
-    yearsLabel: "yÄ±l",
-    clientsLabel: "mÃ¼ÅŸteri",
-    followersLabel: "takipÃ§i",
-    servicesEyebrow: "â€” MenÃ¼ â€”",
+    yearsLabel: "yıl",
+    clientsLabel: "müşteri",
+    followersLabel: "takipçi",
+    servicesEyebrow: "— Menü —",
     servicesH: "Hizmetler",
-    servicesSub: "Klasik & modern erkek bakÄ±mÄ±",
-    contactEyebrow: "â€” Ä°letiÅŸim â€”",
-    contactH: "Randevu & Ä°letiÅŸim",
+    servicesSub: "Klasik & modern erkek bakımı",
+    contactEyebrow: "— İletişim —",
+    contactH: "Randevu & İletişim",
     bookBtn: "Randevu Al",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
-    hoursH: "Ã‡alÄ±ÅŸma Saatleri",
+    hoursH: "Çalışma Saatleri",
   },
   es: {
 
@@ -137,10 +137,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     yearsLabel: "años",
     clientsLabel: "clientes",
     followersLabel: "seguidores",
-    servicesEyebrow: "â€” Menu â€”",
+    servicesEyebrow: "— Menu —",
     servicesH: "Servicios",
     servicesSub: "Arreglo clásico y moderno",
-    contactEyebrow: "â€” Contact â€”",
+    contactEyebrow: "— Contact —",
     contactH: "Reservar y contactar",
     bookBtn: "Reservar cita",
     saveContact: "Guardar contacto",
@@ -156,10 +156,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     yearsLabel: "anni",
     clientsLabel: "clienti",
     followersLabel: "follower",
-    servicesEyebrow: "â€” Menu â€”",
+    servicesEyebrow: "— Menu —",
     servicesH: "Servizi",
     servicesSub: "Grooming classico e moderno",
-    contactEyebrow: "â€” Contact â€”",
+    contactEyebrow: "— Contact —",
     contactH: "Prenota e contatta",
     bookBtn: "Prenota un appuntamento",
     saveContact: "Salva contatto",
@@ -175,10 +175,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     yearsLabel: "ans",
     clientsLabel: "clients",
     followersLabel: "abonnés",
-    servicesEyebrow: "â€” Menu â€”",
+    servicesEyebrow: "— Menu —",
     servicesH: "Services",
     servicesSub: "Soins classiques et modernes",
-    contactEyebrow: "â€” Contact â€”",
+    contactEyebrow: "— Contact —",
     contactH: "Réserver et contacter",
     bookBtn: "Prendre rendez-vous",
     saveContact: "Enregistrer le contact",
@@ -194,10 +194,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     yearsLabel: "سنة",
     clientsLabel: "عملاء",
     followersLabel: "متابعون",
-    servicesEyebrow: "â€” Menu â€”",
+    servicesEyebrow: "— Menu —",
     servicesH: "الخدمات",
     servicesSub: "عناية كلاسيكية وحديثة",
-    contactEyebrow: "â€” Contact â€”",
+    contactEyebrow: "— Contact —",
     contactH: "احجز واتصل",
     bookBtn: "حجز موعد",
     saveContact: "حفظ جهة الاتصال",
@@ -282,9 +282,9 @@ export function BarberNoir({
             letterSpacing: "3px",
           }}
         >
-          {`â€” ${t.estPrefix} ${new Date().getFullYear() - 14}${
-            cityFromAddress ? ` Â· ${cityFromAddress}` : ""
-          } â€”`}
+          {`— ${t.estPrefix} ${new Date().getFullYear() - 14}${
+            cityFromAddress ? ` · ${cityFromAddress}` : ""
+          } —`}
           <span
             aria-hidden
             className="absolute left-1/2 bottom-0 -translate-x-1/2"
@@ -564,7 +564,7 @@ export function BarberNoir({
             className="serif italic mb-2"
             style={{ fontSize: 48, color: accent, lineHeight: 1 }}
           >
-            â€œ
+            “
           </div>
           <p
             className="serif italic"
@@ -586,7 +586,7 @@ export function BarberNoir({
               color: accent,
             }}
           >
-            â€” {cardData.name}
+            — {cardData.name}
           </cite>
         </section>
       )}
@@ -784,7 +784,7 @@ function SectHead({
 export const barberNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 76,
   key: "barber-noir",
-  name: "Barber â€” Noir",
+  name: "Barber — Noir",
   industry: "Barber / Mayfair luxury barbershop",
   supports: {
     services: true,
@@ -805,7 +805,7 @@ export const barberNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-barber-noir",
 };
 
-// photo: Unsplash, https://unsplash.com/photos/jqe5lY4ROMQ â€” Free, no attribution required.
+// photo: Unsplash, https://unsplash.com/photos/jqe5lY4ROMQ — Free, no attribution required.
 export const barberNoirSample: SampleData = {
   templateId: 76,
   slug: "demo-barber-noir",
@@ -818,8 +818,8 @@ export const barberNoirSample: SampleData = {
     phone: "+49 176 223 4568",
     whatsapp: "+49 176 223 4568",
     website: "tabarbershop.de",
-    address: "FriedrichstraÃŸe 88, 10117 Berlin",
-    bio: "Master Barber seit 15 Jahren. Klassischer Herrenschnitt, HeiÃŸrasur, Premium Fades. Termine online.",
+    address: "Friedrichstraße 88, 10117 Berlin",
+    bio: "Master Barber seit 15 Jahren. Klassischer Herrenschnitt, Heißrasur, Premium Fades. Termine online.",
     bookingUrl: "https://cal.com/tabarbershop/booking",
     impressumUrl: "https://tabarbershop.de/impressum",
     privacyUrl: "https://tabarbershop.de/datenschutz",
@@ -829,8 +829,8 @@ export const barberNoirSample: SampleData = {
     },
     services: [
       { title: "Premium Haarschnitt", description: "Beratung, Schnitt, Styling.", priceLabel: "â‚¬35" },
-      { title: "HeiÃŸrasur", description: "Klassische Rasur mit heiÃŸem Tuch.", priceLabel: "â‚¬28" },
-      { title: "Kombination", description: "Schnitt + HeiÃŸrasur in einem Termin.", priceLabel: "â‚¬55" },
+      { title: "Heißrasur", description: "Klassische Rasur mit heißem Tuch.", priceLabel: "â‚¬28" },
+      { title: "Kombination", description: "Schnitt + Heißrasur in einem Termin.", priceLabel: "â‚¬55" },
     ],
   },
   photoUrl:

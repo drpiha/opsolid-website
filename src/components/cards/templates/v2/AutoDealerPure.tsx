@@ -1,9 +1,9 @@
 ﻿"use client";
 
 // =============================================================================
-// AutoDealerPure â€” v2 template (id=47, key="auto-dealer-pure").
+// AutoDealerPure — v2 template (id=47, key="auto-dealer-pure").
 //
-// Sector: Premium pre-owned auto dealer â€” PURE variant. Mood: white minimal,
+// Sector: Premium pre-owned auto dealer — PURE variant. Mood: white minimal,
 // clean dealership portfolio, gold accents. Inspired by
 // kart_19_oto_galeri_pure.html.
 //
@@ -11,7 +11,7 @@
 //   - Header: gold caplabel + hairline rule, two-row name block (avatar +
 //     name 26 px + role 13 px). Credential sentence below.
 //   - 3-up icon action grid divided by hairlines.
-//   - Portfolio strip: horizontal scrollable cards (3 cars Ã— 200 px).
+//   - Portfolio strip: horizontal scrollable cards (3 cars × 200 px).
 //   - Stats: 3-up gold-soft cells.
 //   - Services list: numbered hairline rows.
 //   - Contact list + booking CTA.
@@ -88,7 +88,7 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    brandMark: "Premium Â· GeprÃ¼ft Â· Garantiert",
+    brandMark: "Premium · Geprüft · Garantiert",
     callBtn: "Anrufen",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-Mail",
@@ -103,10 +103,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
-    credential: "BMW Â· Mercedes Â· Audi Â· 12 Monate Garantie auf jedes Fahrzeug",
+    credential: "BMW · Mercedes · Audi · 12 Monate Garantie auf jedes Fahrzeug",
   },
   en: {
-    brandMark: "Premium Â· Inspected Â· Warranted",
+    brandMark: "Premium · Inspected · Warranted",
     callBtn: "Call",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
@@ -121,29 +121,29 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
-    credential: "BMW Â· Mercedes Â· Audi Â· 12-month warranty on every car",
+    credential: "BMW · Mercedes · Audi · 12-month warranty on every car",
   },
   tr: {
-    brandMark: "Premium Â· KontrollÃ¼ Â· Garantili",
+    brandMark: "Premium · Kontrollü · Garantili",
     callBtn: "Ara",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-posta",
-    portfolioH: "GÃ¼ncel AraÃ§lar",
+    portfolioH: "Güncel Araçlar",
     servicesH: "Hizmetler",
-    statsH: "Ã–zet",
-    yearsLabel: "YÄ±l",
-    carsLabel: "AraÃ§",
+    statsH: "Özet",
+    yearsLabel: "Yıl",
+    carsLabel: "Araç",
     warrantyLabel: "Garanti",
-    contactH: "Ä°letiÅŸim",
-    cta: "Test SÃ¼rÃ¼ÅŸÃ¼ Al",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    contactH: "İletişim",
+    cta: "Test Sürüşü Al",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
-    credential: "BMW Â· Mercedes Â· Audi Â· her araca 12 ay garanti",
+    credential: "BMW · Mercedes · Audi · her araca 12 ay garanti",
   },
   es: {
 
-    brandMark: "Premium Â· Inspected Â· Warranted",
+    brandMark: "Premium · Inspected · Warranted",
     callBtn: "Llamar",
     whatsappBtn: "WhatsApp",
     emailBtn: "Correo",
@@ -158,12 +158,12 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
-    credential: "BMW Â· Mercedes Â· Audi Â· 12-month warranty on every car",
+    credential: "BMW · Mercedes · Audi · 12-month warranty on every car",
   
   },
   it: {
 
-    brandMark: "Premium Â· Inspected Â· Warranted",
+    brandMark: "Premium · Inspected · Warranted",
     callBtn: "Chiama",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
@@ -178,12 +178,12 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
-    credential: "BMW Â· Mercedes Â· Audi Â· 12-month warranty on every car",
+    credential: "BMW · Mercedes · Audi · 12-month warranty on every car",
   
   },
   fr: {
 
-    brandMark: "Premium Â· Inspected Â· Warranted",
+    brandMark: "Premium · Inspected · Warranted",
     callBtn: "Appeler",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-mail",
@@ -198,12 +198,12 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
-    credential: "BMW Â· Mercedes Â· Audi Â· 12-month warranty on every car",
+    credential: "BMW · Mercedes · Audi · 12-month warranty on every car",
   
   },
   ar: {
 
-    brandMark: "Premium Â· Inspected Â· Warranted",
+    brandMark: "Premium · Inspected · Warranted",
     callBtn: "اتصال",
     whatsappBtn: "واتساب",
     emailBtn: "البريد الإلكتروني",
@@ -218,7 +218,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
-    credential: "BMW Â· Mercedes Â· Audi Â· 12-month warranty on every car",
+    credential: "BMW · Mercedes · Audi · 12-month warranty on every car",
   
   },
 };
@@ -309,7 +309,7 @@ export function AutoDealerPure({
           </div>
           <div className="mt-4 text-[13px]" style={{ color: INK }}>
             <strong style={{ color: accent, fontWeight: 700 }}>{cardData.company}</strong>
-            {" Â· "}
+            {" · "}
             {t.credential}
           </div>
         </header>
@@ -490,7 +490,7 @@ export function AutoDealerPure({
           className="px-8 py-7 text-center text-[11px]"
           style={{ color: INK_SOFT, letterSpacing: "1px" }}
         >
-          Â© {year} {cardData.company || cardData.name} Â· {t.poweredBy}{" "}
+          © {year} {cardData.company || cardData.name} · {t.poweredBy}{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"
@@ -590,7 +590,7 @@ function StatCell({
 export const autoDealerPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 47,
   key: "auto-dealer-pure",
-  name: "Auto Dealer â€” Pure",
+  name: "Auto Dealer — Pure",
   industry: "Premium auto dealer / showroom",
   supports: {
     services: true,
@@ -611,13 +611,13 @@ export const autoDealerPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-auto-dealer-pure",
 };
 
-// photo: Unsplash, premium car. Unsplash License â€” free, no attribution required.
+// photo: Unsplash, premium car. Unsplash License — free, no attribution required.
 export const autoDealerPureSample: SampleData = {
   templateId: 47,
   slug: "demo-auto-dealer-pure",
   cardData: {
-    name: "TarÄ±k Arslan",
-    position: "Otomotiv DanÄ±ÅŸmanÄ±",
+    name: "Tarık Arslan",
+    position: "Otomotiv Danışmanı",
     title: "Founder",
     company: "Arslan Automobile",
     email: "tarik@arslanautomobile.de",
@@ -625,13 +625,13 @@ export const autoDealerPureSample: SampleData = {
     whatsapp: "+49 170 882 3456",
     website: "arslanautomobile.de",
     address: "Charlottenburg, Berlin",
-    bio: "Spezialist fÃ¼r Premium-Gebrauchtwagen â€” geprÃ¼ft und mit Garantie.",
+    bio: "Spezialist für Premium-Gebrauchtwagen — geprüft und mit Garantie.",
     bookingUrl: "https://cal.com/arslanautomobile/intro",
     sectorKey: "retail",
     services: [
-      { title: "BMW 530i", description: "2021 Â· 48.000 km", priceLabel: "â‚¬38.900" },
-      { title: "Mercedes E220d", description: "2020 Â· 62.000 km", priceLabel: "â‚¬42.500" },
-      { title: "Audi A6 Avant", description: "2022 Â· 24.000 km", priceLabel: "â‚¬49.800" },
+      { title: "BMW 530i", description: "2021 · 48.000 km", priceLabel: "â‚¬38.900" },
+      { title: "Mercedes E220d", description: "2020 · 62.000 km", priceLabel: "â‚¬42.500" },
+      { title: "Audi A6 Avant", description: "2022 · 24.000 km", priceLabel: "â‚¬49.800" },
       { title: "Garantie", description: "12 Monate auf alle Fahrzeuge" },
       { title: "Inzahlungnahme", description: "Faire Bewertung in 24 h" },
       { title: "Finanzierung", description: "Ab 2,9 % effektiv" },

@@ -1,9 +1,9 @@
 ﻿"use client";
 
 // =============================================================================
-// DJPure â€” v2 template (id=73, key="dj-pure").
+// DJPure — v2 template (id=73, key="dj-pure").
 //
-// Sector: DJ / Music â€” PURE variant. Mood: clean editorial press-kit, white
+// Sector: DJ / Music — PURE variant. Mood: clean editorial press-kit, white
 // surface, DM Sans display + DM Mono captions, swiss grid sensibility.
 // Inspired by kart_06_dj_pure.html.
 //
@@ -12,7 +12,7 @@
 //   - Top meta row "DJ // Producer" + "EST. 2016".
 //   - Mega 72px DM Sans name with first/last on separate lines, purple "."
 //     accent dot.
-//   - 120Ã—120 grayscale square photo + bio block (left photo, right info).
+//   - 120×120 grayscale square photo + bio block (left photo, right info).
 //   - Numbered sections "/ 01" "/ 02" with hairline-bottom labels.
 //   - Profile detail table (years/events/listeners/genres/bpm).
 //   - Mix list with track number + duration (audio-focused detail).
@@ -126,18 +126,18 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     meta1: "DJ // Producer",
     meta2: "EST. 2016",
     profileH: "Profil",
-    yearsK: "YÄ±l",
+    yearsK: "Yıl",
     eventsK: "Etkinlik",
     listenersK: "Dinleyici",
-    genresK: "TÃ¼rler",
+    genresK: "Türler",
     bpmK: "BPM",
     mixesH: "Son Mikslerim",
-    upcomingH: "YaklaÅŸan Setler",
+    upcomingH: "Yaklaşan Setler",
     platformsH: "Platformlar",
     bookingH: "Booking",
-    bookBtn: "Booking Talebi GÃ¶nder",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    bookBtn: "Booking Talebi Gönder",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
     scanLabel: "/ Scan",
   },
@@ -311,7 +311,7 @@ export function DJPure({
             style={{ color: INK_2, letterSpacing: "2px" }}
           >
             {cardData.title || cardData.position || "Resident DJ"}
-            {cityFromAddress && ` â€” ${cityFromAddress}`}
+            {cityFromAddress && ` — ${cityFromAddress}`}
           </div>
         </section>
 
@@ -381,7 +381,7 @@ export function DJPure({
             <DetailRow k={t.eventsK} v="450+ played" />
             <DetailRow k={t.listenersK} v="85.000 monthly" />
             <DetailRow k={t.genresK} v="House, Techno, Afro, Melodic" />
-            <DetailRow k={t.bpmK} v="118 â€” 128" last />
+            <DetailRow k={t.bpmK} v="118 — 128" last />
           </div>
         </section>
 
@@ -437,7 +437,7 @@ export function DJPure({
           </>
         )}
 
-        {/* UPCOMING SETS â€” built from services dates */}
+        {/* UPCOMING SETS — built from services dates */}
         {services.length > 0 && (
           <>
             <section className="px-7 py-8">
@@ -593,7 +593,7 @@ export function DJPure({
             className="mono text-[10px] uppercase"
             style={{ color: INK_3, letterSpacing: "1.5px" }}
           >
-            Â© {new Date().getFullYear()}
+            © {new Date().getFullYear()}
           </span>
           <span
             className="text-[11px] font-semibold uppercase"
@@ -674,7 +674,7 @@ function DetailRow({ k, v, last }: { k: string; v: string; last?: boolean }) {
 export const djPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 73,
   key: "dj-pure",
-  name: "DJ â€” Pure",
+  name: "DJ — Pure",
   industry: "DJ / Press kit",
   supports: {
     services: true,
@@ -695,7 +695,7 @@ export const djPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-dj-pure",
 };
 
-// photo: Unsplash, DJ portrait. Unsplash License â€” free, no attribution required.
+// photo: Unsplash, DJ portrait. Unsplash License — free, no attribution required.
 export const djPureSample: SampleData = {
   templateId: 73,
   slug: "demo-dj-pure",
@@ -708,8 +708,8 @@ export const djPureSample: SampleData = {
     phone: "+49 178 445 1234",
     whatsapp: "+49 178 445 1234",
     website: "djkaya.de",
-    address: "KÃ¶penicker Str. 70, 10179 Berlin",
-    bio: "House, deep techno und afro house sÄ±nÄ±rÄ±nda ses tasarÄ±mÄ±. 10 yÄ±ldÄ±r kulÃ¼p, festival ve radyo session'larÄ±.",
+    address: "Köpenicker Str. 70, 10179 Berlin",
+    bio: "House, deep techno und afro house sınırında ses tasarımı. 10 yıldır kulüp, festival ve radyo session'ları.",
     bookingUrl: "https://cal.com/djkaya/booking",
     brochureUrl: "https://djkaya.de/presskit.pdf",
     impressumUrl: "https://djkaya.de/impressum",

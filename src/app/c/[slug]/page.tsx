@@ -26,7 +26,7 @@ import { SmartCard } from "@/components/cards/smart/SmartCard";
 import { WalletButtons } from "@/components/cards/smart/WalletButtons";
 import { readSourceFromSearchParams } from "@/components/cards/smart/SmartCardSource";
 import { getSiteUrl } from "@/lib/stripe";
-import { getTemplateEntry, LOGO_NATIVE_KEYS } from "@/components/cards/templates/v2/registry";
+import { getTemplateEntry, LOGO_NATIVE_KEYS, FAQ_NATIVE_KEYS } from "@/components/cards/templates/v2/registry";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
 import { VideoBlock } from "@/components/cards/templates/v2/shared/VideoBlock";
 import { LogoBlock } from "@/components/cards/templates/v2/shared/LogoBlock";
@@ -566,17 +566,21 @@ export default async function CardPage({ params, searchParams }: PageProps) {
             ownerIsPro={ownerIsPro}
             primaryHex={effectivePrimaryHex}
           />
-          <FaqBlock
-            faqs={parsed.data.faqs}
-            accentHex={effectiveAccentHex}
-            heading={
-              localeKey === "de"
-                ? "Häufige Fragen"
-                : localeKey === "tr"
-                  ? "Sık Sorulan Sorular"
-                  : "FAQ"
-            }
-          />
+          {/* Suppress the universal FAQ on templates that render faqs natively
+              (and on the SmartCard fallback) to avoid a double FAQ list. */}
+          {!(!entry || FAQ_NATIVE_KEYS.has(entry.key)) && (
+            <FaqBlock
+              faqs={parsed.data.faqs}
+              accentHex={effectiveAccentHex}
+              heading={
+                localeKey === "de"
+                  ? "Häufige Fragen"
+                  : localeKey === "tr"
+                    ? "Sık Sorulan Sorular"
+                    : "FAQ"
+              }
+            />
+          )}
           <ContactFormBlock
             slug={slug}
             contactForm={parsed.data.contactForm}

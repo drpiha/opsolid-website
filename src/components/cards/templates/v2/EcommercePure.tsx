@@ -1,16 +1,16 @@
 ﻿"use client";
 
 // =============================================================================
-// EcommercePure â€” v2 template (id=82, key="ecommerce-pure").
+// EcommercePure — v2 template (id=82, key="ecommerce-pure").
 //
-// Sector: E-commerce / Online boutique â€” PURE variant. Mood: white editorial
+// Sector: E-commerce / Online boutique — PURE variant. Mood: white editorial
 // product showcase, DM Sans + DM Mono. Inspired by kart_08_eticaret_pure.html.
 //
 // Design DNA (different from default Ecommerce, EcommerceNoir/Vivid):
 //   - Hero block with tiny ink "logo-mark" square + EST tag, then mega
 //     DM-Sans 64px name with tracked-tight kerning + accent dot.
 //   - Profile band: 96px square photo (no rounding) + role chip pill.
-//   - Categories list as numbered rows (01, 02, 03â€¦) with sub-mono labels and
+//   - Categories list as numbered rows (01, 02, 03…) with sub-mono labels and
 //     right arrow on hover-padding-shift.
 //   - 130px-wide order-info table with mono uppercase keys + body values.
 //   - 2x2 stat grid with extra-large DM Sans digits.
@@ -63,8 +63,8 @@ function digitsOnly(value: string): string {
 
 function getInitials(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "â€¢";
-  if (parts.length === 1) return (parts[0][0] ?? "â€¢").toUpperCase();
+  if (parts.length === 0) return "•";
+  if (parts.length === 1) return (parts[0][0] ?? "•").toUpperCase();
   return (
     (parts[0][0] ?? "").toUpperCase() + (parts[parts.length - 1][0] ?? "").toUpperCase()
   );
@@ -129,15 +129,15 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     rolePill: "Atelier",
     bioFallback: "Modern D2C marka",
     categoriesH: "Kategoriler",
-    orderH: "SipariÅŸ Bilgisi",
+    orderH: "Sipariş Bilgisi",
     channelsH: "Kanallar",
     orderRefH: "Order",
-    servicesLabel: "ÃœrÃ¼nler",
+    servicesLabel: "Ürünler",
     reviewsLabel: "Yorum",
-    bookBtn: "SipariÅŸe BaÅŸla",
+    bookBtn: "Siparişe Başla",
     websiteCta: "Website",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
   },
   es: {
@@ -489,14 +489,14 @@ export function EcommercePure({
         </div>
         <div className="flex flex-col">
           <OrderRow k="Versand" v="Free / over â‚¬50" v_accent />
-          <OrderRow k="Lieferung" v="2 â€” 4 Werktage" />
+          <OrderRow k="Lieferung" v="2 — 4 Werktage" />
           <OrderRow k="Geschenkverpackung" v="Inklusive" />
-          <OrderRow k="Zahlung" v="Karte, BankÃ¼berweisung" />
-          <OrderRow k="RÃ¼ckgabe" v="14 Tage" />
+          <OrderRow k="Zahlung" v="Karte, Banküberweisung" />
+          <OrderRow k="Rückgabe" v="14 Tage" />
         </div>
       </section>
 
-      {/* STATS â€” driven by real data */}
+      {/* STATS — driven by real data */}
       {(() => {
         const statsItems = [
           ...(allServices.length ? [{ num: String(allServices.length), label: t.servicesLabel }] : []),
@@ -661,7 +661,7 @@ export function EcommercePure({
           className="mono uppercase"
           style={{ fontSize: 10, color: MUTED, letterSpacing: "1.5px" }}
         >
-          Â© {new Date().getFullYear()}
+          © {new Date().getFullYear()}
         </span>
         <span
           className="uppercase"
@@ -726,7 +726,7 @@ export function EcommercePure({
 export const ecommercePureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 82,
   key: "ecommerce-pure",
-  name: "E-commerce â€” Pure",
+  name: "E-commerce — Pure",
   industry: "E-commerce / Editorial product showcase",
   supports: {
     services: true,
@@ -747,21 +747,21 @@ export const ecommercePureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-ecommerce-pure",
 };
 
-// photo: Unsplash, https://unsplash.com/photos/eF7HN40WbAQ â€” Free, no attribution required.
+// photo: Unsplash, https://unsplash.com/photos/eF7HN40WbAQ — Free, no attribution required.
 export const ecommercePureSample: SampleData = {
   templateId: 82,
   slug: "demo-ecommerce-pure",
   cardData: {
     name: "Zeynep Kaya",
-    position: "GrÃ¼nderin & CEO",
-    title: "GrÃ¼nderin & CEO",
+    position: "Gründerin & CEO",
+    title: "Gründerin & CEO",
     company: "Pazar Shop",
     email: "zeynep@pazar-shop.de",
     phone: "+49 172 556 7891",
     whatsapp: "+49 172 556 7891",
     website: "pazar-shop.de",
-    address: "OranienstraÃŸe 30, 10999 Berlin",
-    bio: "Kuratierte Mode & Accessoires aus der TÃ¼rkei & Deutschland. Kostenloser Versand ab â‚¬50.",
+    address: "Oranienstraße 30, 10999 Berlin",
+    bio: "Kuratierte Mode & Accessoires aus der Türkei & Deutschland. Kostenloser Versand ab â‚¬50.",
     bookingUrl: "https://pazar-shop.de/shop",
     impressumUrl: "https://pazar-shop.de/impressum",
     privacyUrl: "https://pazar-shop.de/datenschutz",
@@ -772,7 +772,7 @@ export const ecommercePureSample: SampleData = {
     },
     services: [
       { title: "Seidenschal", description: "Handbedruckt, Premium-Seide.", priceLabel: "â‚¬89" },
-      { title: "Handtasche", description: "Vollnarbenleder, handgenÃ¤ht.", priceLabel: "â‚¬145" },
+      { title: "Handtasche", description: "Vollnarbenleder, handgenäht.", priceLabel: "â‚¬145" },
       { title: "Schmuckset", description: "Versilbert, kuratiert.", priceLabel: "â‚¬65" },
     ],
   },

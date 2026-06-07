@@ -1,16 +1,16 @@
 ﻿"use client";
 
 // =============================================================================
-// PsychologistVivid â€” v2 template (id=27, key="psychologist-vivid").
+// PsychologistVivid — v2 template (id=27, key="psychologist-vivid").
 //
-// Sector: psychologist â€” VIVID variant. Mood: deep indigo/violet gradient,
+// Sector: psychologist — VIVID variant. Mood: deep indigo/violet gradient,
 // warm, modern. Inspired by kart_12_psikolog_vivid.html.
 //
 // Locked design DNA (only colors respond to brand):
 //   - Centered hero: indigo/violet gradient with decorative blob halos +
 //     pill ("New clients welcome") + bold sans name.
 //   - Floating circular avatar (-64 px) framed in white.
-//   - Big primary CTA right under (Request first session Â· free intro).
+//   - Big primary CTA right under (Request first session · free intro).
 //   - 3-up quick action row (Phone/Email/Instagram).
 //   - Session packages 3-up tiles: middle one featured (gradient-fill).
 //   - Specialty pills (round pills with single-letter accent dots).
@@ -89,7 +89,7 @@ interface PsvCopy {
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsvCopy> = {
   de: {
     newClients: "Neue Klient:innen willkommen",
-    bookFirst: "ErstgesprÃ¤ch anfragen",
+    bookFirst: "Erstgespräch anfragen",
     bookHint: "Kostenloses Kennenlernen",
     call: "Telefon",
     email: "E-Mail",
@@ -124,21 +124,21 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsvCopy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    newClients: "Yeni DanÄ±ÅŸanlara AÃ§Ä±ÄŸÄ±m",
-    bookFirst: "Ä°lk GÃ¶rÃ¼ÅŸme Talep Et",
-    bookHint: "Ãœcretsiz tanÄ±ÅŸma seansÄ±",
+    newClients: "Yeni Danışanlara Açığım",
+    bookFirst: "İlk Görüşme Talep Et",
+    bookHint: "Ücretsiz tanışma seansı",
     call: "Telefon",
     email: "E-posta",
     ig: "Instagram",
     packages: "Seans Paketleri",
-    popular: "PopÃ¼ler",
-    specialties: "Ã‡alÄ±ÅŸma AlanlarÄ±",
-    experience: "YÄ±l Deneyim",
+    popular: "Popüler",
+    specialties: "Çalışma Alanları",
+    experience: "Yıl Deneyim",
     sessions: "Seans",
     formats: "Format",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
-    share: "PaylaÅŸ",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
+    share: "Paylaş",
     poweredBy: "Powered by",
   },
   es: {
@@ -301,7 +301,7 @@ export function PsychologistVivid({
           {cardData.name}
         </h1>
         <div className="relative z-10 mt-2 text-[13.5px] font-normal opacity-90">
-          {cardData.position} {cardData.title && `Â· ${cardData.title}`}
+          {cardData.position} {cardData.title && `· ${cardData.title}`}
         </div>
       </header>
 
@@ -519,7 +519,7 @@ export function PsychologistVivid({
               &ldquo;{testimonials[0].quote}&rdquo;
             </p>
             <div className="mt-3.5 text-[12px] font-semibold opacity-90">
-              â€” {testimonials[0].author}
+              — {testimonials[0].author}
               {testimonials[0].role && `, ${testimonials[0].role}`}
             </div>
           </article>
@@ -570,7 +570,7 @@ export function PsychologistVivid({
           {cardData.website || cardData.company}
         </div>
         <div className="mt-1 text-[11px]" style={{ color: INK_SOFT }}>
-          {cardData.company} Â· Â© {new Date().getFullYear()}
+          {cardData.company} · © {new Date().getFullYear()}
         </div>
         <div
           className="mt-3 inline-flex items-center gap-1.5 text-[11px]"
@@ -664,7 +664,7 @@ function PsvStat({
 export const psychologistVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 27,
   key: "psychologist-vivid",
-  name: "Psychologist â€” Vivid",
+  name: "Psychologist — Vivid",
   industry: "Psychologist / therapist (vivid gradient variant)",
   supports: {
     services: true,
@@ -695,8 +695,8 @@ export const psychologistVividSample: SampleData = {
     email: "aylin@psycho-berlin.de",
     website: "psycho-berlin.de",
     address: "Rosenthaler Str. 40, 10178 Berlin",
-    bio: "Ein geschÃ¼tzter Raum, in dem wir gemeinsam an dem arbeiten, was Ihr Leben zum Leuchten bringt.",
-    bookingUrl: "https://wa.me/491702113456?text=ErstgesprÃ¤ch",
+    bio: "Ein geschützter Raum, in dem wir gemeinsam an dem arbeiten, was Ihr Leben zum Leuchten bringt.",
+    bookingUrl: "https://wa.me/491702113456?text=Erstgespräch",
     services: [
       { title: "Einzeltherapie", description: "60 min", priceLabel: "â‚¬120" },
       { title: "Paartherapie", description: "90 min", priceLabel: "â‚¬160" },
@@ -706,11 +706,11 @@ export const psychologistVividSample: SampleData = {
       { q: "Depression", a: "Kurzzeit-CBT" },
       { q: "Beziehungen", a: "Paar/Familie" },
       { q: "Trauma", a: "EMDR Level 2" },
-      { q: "PersÃ¶nlichkeit", a: "Langzeit" },
+      { q: "Persönlichkeit", a: "Langzeit" },
       { q: "Karriere", a: "Burnout" },
     ],
     testimonials: [
-      { author: "Anonim DanÄ±ÅŸan", quote: "Aylin HanÄ±m ile Ã§alÄ±ÅŸmak hayatÄ±mÄ± deÄŸiÅŸtirdi. GÃ¼venli ve destekleyici bir ortam sunuyor." },
+      { author: "Anonim Danışan", quote: "Aylin Hanım ile çalışmak hayatımı değiştirdi. Güvenli ve destekleyici bir ortam sunuyor." },
     ],
     socials: { instagram: "https://instagram.com/guvenlialan.psikoloji" },
     sectorKey: "clinic",

@@ -1,9 +1,9 @@
 ﻿"use client";
 
 // =============================================================================
-// LayoutSplitScreen â€” v2 universal template (id=96, key="layout-split-screen").
+// LayoutSplitScreen — v2 universal template (id=96, key="layout-split-screen").
 //
-// Sector: ANY. Inspired by layouts/v15_split_screen.html â€” dark hero panel with
+// Sector: ANY. Inspired by layouts/v15_split_screen.html — dark hero panel with
 // circular portrait, diagonal divider, floating amber pill badge, numbered
 // service list on the light bottom panel, accent bio block, primary/accent/
 // WhatsApp action buttons, dark contact card, framed QR-style closing.
@@ -53,7 +53,7 @@ function digitsOnly(value: string): string {
 
 function getInitials(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "Â·";
+  if (parts.length === 0) return "·";
   if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
@@ -73,7 +73,7 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    heroEyebrow: "Strategie Â· Innovation Â· Wachstum",
+    heroEyebrow: "Strategie · Innovation · Wachstum",
     servicesTitle: "Leistungen",
     bioTitle: "Meine Vision",
     ctaCall: "Anrufen",
@@ -85,7 +85,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   en: {
-    heroEyebrow: "Strategy Â· Innovation Â· Growth",
+    heroEyebrow: "Strategy · Innovation · Growth",
     servicesTitle: "Services",
     bioTitle: "My Vision",
     ctaCall: "Call",
@@ -97,20 +97,20 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    heroEyebrow: "Strateji Â· Ä°novasyon Â· BÃ¼yÃ¼me",
+    heroEyebrow: "Strateji · İnovasyon · Büyüme",
     servicesTitle: "Hizmetler",
     bioTitle: "Vizyonum",
     ctaCall: "Ara",
     ctaEmail: "E-posta",
     ctaWhatsApp: "WhatsApp",
-    contactTitle: "Ä°letiÅŸim Bilgileri",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana Ekle",
+    contactTitle: "İletişim Bilgileri",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana Ekle",
     poweredBy: "Powered by",
   },
   es: {
 
-    heroEyebrow: "Strategy Â· Innovation Â· Growth",
+    heroEyebrow: "Strategy · Innovation · Growth",
     servicesTitle: "Servicios",
     bioTitle: "Mi visión",
     ctaCall: "Llamar",
@@ -124,7 +124,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   it: {
 
-    heroEyebrow: "Strategy Â· Innovation Â· Growth",
+    heroEyebrow: "Strategy · Innovation · Growth",
     servicesTitle: "Servizi",
     bioTitle: "La mia visione",
     ctaCall: "Chiama",
@@ -138,7 +138,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   fr: {
 
-    heroEyebrow: "Strategy Â· Innovation Â· Growth",
+    heroEyebrow: "Strategy · Innovation · Growth",
     servicesTitle: "Services",
     bioTitle: "Ma vision",
     ctaCall: "Appeler",
@@ -152,7 +152,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   ar: {
 
-    heroEyebrow: "Strategy Â· Innovation Â· Growth",
+    heroEyebrow: "Strategy · Innovation · Growth",
     servicesTitle: "الخدمات",
     bioTitle: "رؤيتي",
     ctaCall: "اتصال",
@@ -292,7 +292,7 @@ export function LayoutSplitScreen({
         >
           {[cardData.title, cardData.address?.split(",").slice(-1)[0].trim()]
             .filter(Boolean)
-            .join(" Â· ")}
+            .join(" · ")}
         </div>
       </section>
 
@@ -345,7 +345,7 @@ export function LayoutSplitScreen({
           </div>
         )}
 
-        {/* SERVICES â€” numbered */}
+        {/* SERVICES — numbered */}
         {services.length > 0 && (
           <div className="mb-8">
             <h2
@@ -358,7 +358,7 @@ export function LayoutSplitScreen({
                 marginBottom: 16,
               }}
             >
-              â€” {t.servicesTitle} â€”
+              — {t.servicesTitle} —
             </h2>
             {services.map((svc, i, arr) => (
               <div
@@ -637,7 +637,7 @@ export function LayoutSplitScreen({
           borderTop: `1px solid ${HAIRLINE}`,
         }}
       >
-        Â© {new Date().getFullYear()} {cardData.name}
+        © {new Date().getFullYear()} {cardData.name}
         <div
           style={{ marginTop: 4, fontSize: 9, letterSpacing: "1.5px" }}
         >
@@ -664,7 +664,7 @@ export const layoutSplitScreenEntry: Omit<TemplateRegistryEntry, "Component"> = 
   id: 96,
   key: "layout-split-screen",
   name: "Split Screen",
-  industry: "Universal â€” any sector",
+  industry: "Universal — any sector",
   supports: {
     services: true,
     faqs: false,
@@ -684,12 +684,12 @@ export const layoutSplitScreenEntry: Omit<TemplateRegistryEntry, "Component"> = 
   sampleSlug: "demo-layout-split-screen",
 };
 
-// photo: Unsplash, https://unsplash.com/photos/photo-1560250097-0dc05888fffb â€” Free, no attribution required.
+// photo: Unsplash, https://unsplash.com/photos/photo-1560250097-0dc05888fffb — Free, no attribution required.
 export const layoutSplitScreenSample: SampleData = {
   templateId: 96,
   slug: "demo-layout-split-screen",
   cardData: {
-    name: "Alex MÃ¼ller",
+    name: "Alex Müller",
     title: "Strategy & Innovation Consultant",
     position: "Strategy & Innovation Consultant",
     company: "AM Advisory",
@@ -697,7 +697,7 @@ export const layoutSplitScreenSample: SampleData = {
     phone: "+49 30 556 7890",
     whatsapp: "+49 30 556 7890",
     website: "amadvisory.de",
-    address: "FriedrichstraÃŸe 76, 10117 Berlin",
+    address: "Friedrichstraße 76, 10117 Berlin",
     bio: "Unternehmensberater mit Fokus auf digitale Transformation und Strategieentwicklung. 15+ Jahre Erfahrung.",
     bookingUrl: "https://cal.com/amadvisory/intro",
     impressumUrl: "https://amadvisory.de/impressum",
@@ -709,9 +709,9 @@ export const layoutSplitScreenSample: SampleData = {
     },
     services: [
       { title: "Digital Transformation", description: "Begleitung bis zum Roll-out.", priceLabel: "â‚¬3.500/Tag" },
-      { title: "Strategy Workshop", description: "Klausur Â· 2 Tage", priceLabel: "â‚¬1.800/Tag" },
+      { title: "Strategy Workshop", description: "Klausur · 2 Tage", priceLabel: "â‚¬1.800/Tag" },
       { title: "Executive Coaching", description: "1:1 Sparring", priceLabel: "â‚¬400/h" },
-      { title: "Strategic Audit", description: "Diagnostik Â· 6 Wochen", priceLabel: "â‚¬18.000" },
+      { title: "Strategic Audit", description: "Diagnostik · 6 Wochen", priceLabel: "â‚¬18.000" },
     ],
     testimonials: [
       {

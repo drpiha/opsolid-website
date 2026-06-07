@@ -1,9 +1,9 @@
 ﻿"use client";
 
 // =============================================================================
-// RealEstateVivid â€” v2 template (id=54, key="real-estate-vivid").
+// RealEstateVivid — v2 template (id=54, key="real-estate-vivid").
 //
-// Sector: real estate / broker â€” VIVID variant. Mood: bold blue gradient hero,
+// Sector: real estate / broker — VIVID variant. Mood: bold blue gradient hero,
 // floating glass card, mega 2-color stats, vibrant social tile grid, modern
 // energetic. Inspired by kart_01_emlak_vivid.html.
 //
@@ -16,7 +16,7 @@
 //   - Services: 2-col rounded cards with rounded icon tiles (alt blue / amber).
 //   - Big CTA: gradient pill button.
 //   - Testimonial: dark gradient card with giant " mark.
-//   - Social-tile grid: 5-up colorful gradient tiles (Tel Â· WA Â· Mail Â· IG Â· Web).
+//   - Social-tile grid: 5-up colorful gradient tiles (Tel · WA · Mail · IG · Web).
 //   - QR-style gradient panel + outlined vCard CTA.
 // =============================================================================
 
@@ -78,8 +78,8 @@ function digitsOnly(value: string): string {
 
 function getInitials(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "â€¢";
-  return (parts[0][0] ?? "â€¢").toUpperCase() + (parts[parts.length - 1]?.[0] ?? "").toUpperCase();
+  if (parts.length === 0) return "•";
+  return (parts[0][0] ?? "•").toUpperCase() + (parts[parts.length - 1]?.[0] ?? "").toUpperCase();
 }
 
 interface RevCopy {
@@ -107,16 +107,16 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RevCopy> = {
   de: {
     active: "Aktiv",
     yearsLabel: "Jahre",
-    closedLabel: "AbschlÃ¼sse",
+    closedLabel: "Abschlüsse",
     portfolioLabel: "Portfolio",
     servicesH: "Leistungen",
-    servicesSub: "Was ich fÃ¼r Sie tue",
-    bookConsult: "Kostenfreies ErstgesprÃ¤ch",
+    servicesSub: "Was ich für Sie tue",
+    bookConsult: "Kostenfreies Erstgespräch",
     testimonial: "Mandantenstimme",
     contactH: "Kontakt",
-    contactSub: "Ein Klick genÃ¼gt",
+    contactSub: "Ein Klick genügt",
     qrShare: "Karte teilen",
-    qrSub: "QR scannen fÃ¼r Direktzugriff",
+    qrSub: "QR scannen für Direktzugriff",
     saveContact: "In Kontakte speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
@@ -146,23 +146,23 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RevCopy> = {
   },
   tr: {
     active: "Aktif",
-    yearsLabel: "YÄ±l",
-    closedLabel: "SatÄ±ÅŸ",
-    portfolioLabel: "PortfÃ¶y",
+    yearsLabel: "Yıl",
+    closedLabel: "Satış",
+    portfolioLabel: "Portföy",
     servicesH: "Hizmetler",
-    servicesSub: "Sizin iÃ§in yapabileceklerim",
-    bookConsult: "Ãœcretsiz DanÄ±ÅŸma Randevusu",
-    testimonial: "MÃ¼vekkil Yorumu",
-    contactH: "Bana UlaÅŸÄ±n",
-    contactSub: "Tek dokunuÅŸla iletiÅŸim",
-    qrShare: "Kartviziti PaylaÅŸ",
-    qrSub: "QR kod ile hÄ±zlÄ± eriÅŸim",
+    servicesSub: "Sizin için yapabileceklerim",
+    bookConsult: "Ücretsiz Danışma Randevusu",
+    testimonial: "Müvekkil Yorumu",
+    contactH: "Bana Ulaşın",
+    contactSub: "Tek dokunuşla iletişim",
+    qrShare: "Kartviziti Paylaş",
+    qrSub: "QR kod ile hızlı erişim",
     saveContact: "Rehbere kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
-    impressum: "KÃ¼nye",
+    impressum: "Künye",
     privacy: "Gizlilik",
-    share: "PaylaÅŸ",
+    share: "Paylaş",
   },
   es: {
 
@@ -369,7 +369,7 @@ export function RealEstateVivid({
             {cardData.name}
           </div>
           <div className="mt-1 text-[12.5px] font-medium" style={{ color: INK_MUTED, lineHeight: 1.4 }}>
-            {[cardData.position, cardData.title].filter(Boolean).join(" Â· ") || "Real Estate Advisor"}
+            {[cardData.position, cardData.title].filter(Boolean).join(" · ") || "Real Estate Advisor"}
           </div>
           <div
             className="display mt-2 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10.5px] font-bold"
@@ -380,7 +380,7 @@ export function RealEstateVivid({
             }}
           >
             <span aria-hidden className="block h-1.5 w-1.5 rounded-full" style={{ background: primary }} />
-            {t.active} Â· {region}
+            {t.active} · {region}
           </div>
         </div>
       </div>
@@ -679,14 +679,14 @@ export function RealEstateVivid({
         >
           {cardData.name}
           {cardData.company && (
-            <span style={{ color: INK_MUTED, fontWeight: 500 }}> Â· {cardData.company}</span>
+            <span style={{ color: INK_MUTED, fontWeight: 500 }}> · {cardData.company}</span>
           )}
         </div>
         <div
           className="mt-1 text-[11px]"
           style={{ color: INK_MUTED }}
         >
-          Â© {year} Â· {t.poweredBy}{" "}
+          © {year} · {t.poweredBy}{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"
@@ -785,7 +785,7 @@ function SocialTile({
 export const realEstateVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 54,
   key: "real-estate-vivid",
-  name: "Real Estate â€” Vivid",
+  name: "Real Estate — Vivid",
   industry: "Real estate agent / broker",
   supports: {
     services: true,
@@ -806,7 +806,7 @@ export const realEstateVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-real-estate-vivid",
 };
 
-// photo: Unsplash, by Christina Wocintechchat â€” Unsplash License, no attribution required.
+// photo: Unsplash, by Christina Wocintechchat — Unsplash License, no attribution required.
 export const realEstateVividSample: SampleData = {
   templateId: 54,
   slug: "demo-real-estate-vivid",
@@ -819,7 +819,7 @@ export const realEstateVividSample: SampleData = {
     phone: "+49 30 1234 5678",
     whatsapp: "+49 170 1234 567",
     website: "walker-stein.de",
-    address: "KurfÃ¼rstendamm 188, 10707 Berlin",
+    address: "Kurfürstendamm 188, 10707 Berlin",
     bio: "Twelve years pairing discerning clients with Berlin's most distinctive homes.",
     bookingUrl: "https://cal.com/walker-stein/intro",
     brochureUrl: "https://walker-stein.de/portfolio.pdf",
@@ -832,16 +832,16 @@ export const realEstateVividSample: SampleData = {
       youtube: "https://youtube.com/@walkerstein",
     },
     services: [
-      { title: "Charlottenburg Townhouse", description: "5 bed Â· 240 mÂ² Â· pre-war altbau", priceLabel: "â‚¬2.85M" },
-      { title: "Wannsee Waterfront", description: "Architect-built Â· private dock", priceLabel: "FOR SALE" },
-      { title: "Mitte Penthouse", description: "180 mÂ² Â· roof terrace", priceLabel: "â‚¬1.65M" },
+      { title: "Charlottenburg Townhouse", description: "5 bed · 240 m² · pre-war altbau", priceLabel: "â‚¬2.85M" },
+      { title: "Wannsee Waterfront", description: "Architect-built · private dock", priceLabel: "FOR SALE" },
+      { title: "Mitte Penthouse", description: "180 m² · roof terrace", priceLabel: "â‚¬1.65M" },
       { title: "Investment Advisory", description: "Strategic property investments" },
       { title: "Property Valuation", description: "Professional appraisal & market analysis" },
     ],
     testimonials: [
       {
         author: "Sebastian & Marie L.",
-        role: "Bought â€” Mitte penthouse",
+        role: "Bought — Mitte penthouse",
         quote: "Hannah understood us before we did. She turned eight months of dead-end viewings into a single home that felt inevitable.",
       },
     ],

@@ -1,21 +1,21 @@
 ﻿"use client";
 
 // =============================================================================
-// RestaurantVivid â€” v2 template (id=62, key="restaurant-vivid").
+// RestaurantVivid — v2 template (id=62, key="restaurant-vivid").
 //
-// Sector: Restaurant â€” VIVID variant. Mood: bold red/orange, appetite-driven
+// Sector: Restaurant — VIVID variant. Mood: bold red/orange, appetite-driven
 // energy, modern food-app feel. Inspired by kart_03_restoran_vivid.html.
 //
 // Design DNA:
 //   - Hero with redâ†’orange gradient (240 px), rounded corner blobs, status
-//     badge ("Open Â· Tue â€“ Sun") and city pin.
-//   - Floating card on top of hero â€” squircle photo + bold name + role +
+//     badge ("Open · Tue – Sun") and city pin.
+//   - Floating card on top of hero — squircle photo + bold name + role +
 //     chef line + 4 colourful chips (sector / city / price / award).
-//   - "Recommendations" section â€” 2-column rounded menu cards with leading
+//   - "Recommendations" section — 2-column rounded menu cards with leading
 //     letter tile, price chip and orange/red shadow.
 //   - Quote / review panel with oversized red quotation mark.
 //   - Big gradient CTA + 3-up mini CTA row (WhatsApp / Menu / Directions).
-//   - Hours card â€” dashed rows, red accent times.
+//   - Hours card — dashed rows, red accent times.
 //   - Social grid (4 columns, large icon tiles).
 //   - QR-style red gradient share panel.
 // =============================================================================
@@ -65,8 +65,8 @@ function digitsOnly(value: string): string {
 
 function getInitials(name: string): string {
   const parts = name.replace(/^(Chef|Sef)\s+/i, "").trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "Â·";
-  if (parts.length === 1) return (parts[0][0] ?? "Â·").toUpperCase();
+  if (parts.length === 0) return "·";
+  if (parts.length === 1) return (parts[0][0] ?? "·").toUpperCase();
   return (parts[0][0] ?? "").toUpperCase() + (parts[parts.length - 1][0] ?? "").toUpperCase();
 }
 
@@ -95,39 +95,39 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    badgeOpen: "GeÃ¶ffnet Â· 12:00 â€“ 23:00",
+    badgeOpen: "Geöffnet · 12:00 – 23:00",
     recsTitle: "Saisonale",
     recsTitleAccent: "Empfehlungen",
-    recsSub: "Handverlesene Zutaten, Signature-Teller des KÃ¼chenchefs.",
+    recsSub: "Handverlesene Zutaten, Signature-Teller des Küchenchefs.",
     ctaBig: "Tisch reservieren",
-    hoursTitle: "Ã–ffnungszeiten",
-    hoursMain: "Di â€“ Sa",
+    hoursTitle: "Öffnungszeiten",
+    hoursMain: "Di – Sa",
     hoursWeekend: "Sonntag",
     hoursClosed: "Montag",
-    hoursMainTime: "12:00 â€“ 23:00",
-    hoursWeekendTime: "11:00 â€“ 17:00",
+    hoursMainTime: "12:00 – 23:00",
+    hoursWeekendTime: "11:00 – 17:00",
     hoursClosedTime: "Geschlossen",
     whatsappLabel: "WhatsApp",
-    menuLabel: "MenÃ¼",
+    menuLabel: "Menü",
     directionsLabel: "Konum",
     shareTitle: "Folge uns",
-    shareSub: "Erfahre als Erstes von neuen MenÃ¼s.",
+    shareSub: "Erfahre als Erstes von neuen Menüs.",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
   },
   en: {
-    badgeOpen: "Open Â· 12:00 â€“ 23:00",
+    badgeOpen: "Open · 12:00 – 23:00",
     recsTitle: "Seasonal",
     recsTitleAccent: "Picks",
     recsSub: "Hand-picked ingredients, chef's signature plates.",
     ctaBig: "Reserve a table",
     hoursTitle: "Opening Hours",
-    hoursMain: "Tue â€“ Sat",
+    hoursMain: "Tue – Sat",
     hoursWeekend: "Sunday",
     hoursClosed: "Monday",
-    hoursMainTime: "12:00 â€“ 23:00",
-    hoursWeekendTime: "11:00 â€“ 17:00",
+    hoursMainTime: "12:00 – 23:00",
+    hoursWeekendTime: "11:00 – 17:00",
     hoursClosedTime: "Closed",
     whatsappLabel: "WhatsApp",
     menuLabel: "Menu",
@@ -139,40 +139,40 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    badgeOpen: "AÃ§Ä±k Â· 12:00 â€“ 23:00",
+    badgeOpen: "Açık · 12:00 – 23:00",
     recsTitle: "Sezonun",
-    recsTitleAccent: "Ã–nerileri",
-    recsSub: "El seÃ§imi taze malzeme, ÅŸef imzasÄ± tabaklar.",
+    recsTitleAccent: "Önerileri",
+    recsSub: "El seçimi taze malzeme, şef imzası tabaklar.",
     ctaBig: "Rezervasyon Yap",
-    hoursTitle: "Ã‡alÄ±ÅŸma Saatleri",
-    hoursMain: "SalÄ± â€“ Cumartesi",
+    hoursTitle: "Çalışma Saatleri",
+    hoursMain: "Salı – Cumartesi",
     hoursWeekend: "Pazar",
     hoursClosed: "Pazartesi",
-    hoursMainTime: "12:00 â€“ 23:00",
-    hoursWeekendTime: "11:00 â€“ 17:00",
-    hoursClosedTime: "KapalÄ±",
+    hoursMainTime: "12:00 – 23:00",
+    hoursWeekendTime: "11:00 – 17:00",
+    hoursClosedTime: "Kapalı",
     whatsappLabel: "WhatsApp",
-    menuLabel: "MenÃ¼",
+    menuLabel: "Menü",
     directionsLabel: "Konum",
     shareTitle: "Bizi Takip Et",
-    shareSub: "Yeni menÃ¼lerden ilk sen haberdar ol.",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    shareSub: "Yeni menülerden ilk sen haberdar ol.",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
   },
   es: {
 
-    badgeOpen: "Open Â· 12:00 â€“ 23:00",
+    badgeOpen: "Open · 12:00 – 23:00",
     recsTitle: "De temporada",
     recsTitleAccent: "Selección",
     recsSub: "Ingredientes seleccionados, platos firma del chef.",
     ctaBig: "Reservar mesa",
     hoursTitle: "Horario de apertura",
-    hoursMain: "Tue â€“ Sat",
+    hoursMain: "Tue – Sat",
     hoursWeekend: "Domingo",
     hoursClosed: "Lunes",
-    hoursMainTime: "12:00 â€“ 23:00",
-    hoursWeekendTime: "11:00 â€“ 17:00",
+    hoursMainTime: "12:00 – 23:00",
+    hoursWeekendTime: "11:00 – 17:00",
     hoursClosedTime: "Cerrado",
     whatsappLabel: "WhatsApp",
     menuLabel: "Carta",
@@ -186,17 +186,17 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   it: {
 
-    badgeOpen: "Open Â· 12:00 â€“ 23:00",
+    badgeOpen: "Open · 12:00 – 23:00",
     recsTitle: "Stagionale",
     recsTitleAccent: "Selezioni",
     recsSub: "Ingredienti selezionati, piatti firma dello chef.",
     ctaBig: "Prenota un tavolo",
     hoursTitle: "Orari di apertura",
-    hoursMain: "Tue â€“ Sat",
+    hoursMain: "Tue – Sat",
     hoursWeekend: "Domenica",
     hoursClosed: "Lunedì",
-    hoursMainTime: "12:00 â€“ 23:00",
-    hoursWeekendTime: "11:00 â€“ 17:00",
+    hoursMainTime: "12:00 – 23:00",
+    hoursWeekendTime: "11:00 – 17:00",
     hoursClosedTime: "Chiuso",
     whatsappLabel: "WhatsApp",
     menuLabel: "Menù",
@@ -210,17 +210,17 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   fr: {
 
-    badgeOpen: "Open Â· 12:00 â€“ 23:00",
+    badgeOpen: "Open · 12:00 – 23:00",
     recsTitle: "De saison",
     recsTitleAccent: "Sélections",
     recsSub: "Ingrédients sélectionnés, plats signature du chef.",
     ctaBig: "Réserver une table",
     hoursTitle: "Horaires d'ouverture",
-    hoursMain: "Tue â€“ Sat",
+    hoursMain: "Tue – Sat",
     hoursWeekend: "Dimanche",
     hoursClosed: "Lundi",
-    hoursMainTime: "12:00 â€“ 23:00",
-    hoursWeekendTime: "11:00 â€“ 17:00",
+    hoursMainTime: "12:00 – 23:00",
+    hoursWeekendTime: "11:00 – 17:00",
     hoursClosedTime: "Fermé",
     whatsappLabel: "WhatsApp",
     menuLabel: "Menu",
@@ -234,17 +234,17 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   ar: {
 
-    badgeOpen: "Open Â· 12:00 â€“ 23:00",
+    badgeOpen: "Open · 12:00 – 23:00",
     recsTitle: "موسمي",
     recsTitleAccent: "المختارات",
     recsSub: "مكونات منتقاة، أطباق توقيع الشيف.",
     ctaBig: "احجز طاولة",
     hoursTitle: "ساعات الافتتاح",
-    hoursMain: "Tue â€“ Sat",
+    hoursMain: "Tue – Sat",
     hoursWeekend: "الأحد",
     hoursClosed: "الاثنين",
-    hoursMainTime: "12:00 â€“ 23:00",
-    hoursWeekendTime: "11:00 â€“ 17:00",
+    hoursMainTime: "12:00 – 23:00",
+    hoursWeekendTime: "11:00 – 17:00",
     hoursClosedTime: "مغلق",
     whatsappLabel: "واتساب",
     menuLabel: "القائمة",
@@ -672,7 +672,7 @@ export function RestaurantVivid({
         className="px-6 py-5 text-center text-[12px] font-semibold"
         style={{ color: TEXT_SOFT }}
       >
-        {restaurantName} Â© {new Date().getFullYear()} Â· {city} Â·{" "}
+        {restaurantName} © {new Date().getFullYear()} · {city} ·{" "}
         <a
           href="https://opsolid.de/products/digital-card"
           target="_blank"
@@ -792,7 +792,7 @@ function SocialTile({
 export const restaurantVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 62,
   key: "restaurant-vivid",
-  name: "Restaurant â€” Vivid",
+  name: "Restaurant — Vivid",
   industry: "Restaurant / Casual dining",
   supports: {
     services: true,
@@ -818,15 +818,15 @@ export const restaurantVividSample: SampleData = {
   slug: "demo-restaurant-vivid",
   cardData: {
     name: "Marco Bianchi",
-    position: "KÃ¼chenchef & Inhaber",
-    title: "Italian Â· Trattoria",
+    position: "Küchenchef & Inhaber",
+    title: "Italian · Trattoria",
     company: "Trattoria Bianchi",
     email: "marco@trattoriabianchi.de",
     phone: "+49 30 776 5432",
     whatsapp: "+49 30 776 5432",
     website: "trattoriabianchi.de",
-    address: "SchÃ¶neberger Ufer 14, 10785 Berlin",
-    bio: "Authentische italienische KÃ¼che seit 2012. Saisonale Produkte, hausgemachte Pasta, warme AtmosphÃ¤re.",
+    address: "Schöneberger Ufer 14, 10785 Berlin",
+    bio: "Authentische italienische Küche seit 2012. Saisonale Produkte, hausgemachte Pasta, warme Atmosphäre.",
     bookingUrl: "https://cal.com/trattoria-bianchi/table",
     brochureUrl: "https://trattoriabianchi.de/menu.pdf",
     impressumUrl: "https://trattoriabianchi.de/impressum",
@@ -839,22 +839,22 @@ export const restaurantVividSample: SampleData = {
     services: [
       {
         title: "Pasta al Tartufo",
-        description: "trÃ¼ffel Â· parmigiano Â· tagliatelle",
+        description: "trüffel · parmigiano · tagliatelle",
         priceLabel: "â‚¬24",
       },
       {
         title: "Tagliata di Manzo",
-        description: "rinderfilet Â· rucola Â· balsamico",
+        description: "rinderfilet · rucola · balsamico",
         priceLabel: "â‚¬32",
       },
       {
-        title: "TiramisÃ¹",
-        description: "mascarpone Â· espresso Â· marsala",
+        title: "Tiramisù",
+        description: "mascarpone · espresso · marsala",
         priceLabel: "â‚¬9",
       },
       {
         title: "Vino della Casa",
-        description: "Chianti Classico Â· 0,75 L",
+        description: "Chianti Classico · 0,75 L",
         priceLabel: "â‚¬28",
       },
     ],

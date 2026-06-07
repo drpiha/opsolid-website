@@ -1,9 +1,9 @@
 ﻿"use client";
 
 // =============================================================================
-// EventPlannerNoir â€” v2 template (id=44, key="event-planner-noir").
+// EventPlannerNoir — v2 template (id=44, key="event-planner-noir").
 //
-// Sector: Wedding & event planner â€” NOIR variant. Mood: dark dramatic, gala,
+// Sector: Wedding & event planner — NOIR variant. Mood: dark dramatic, gala,
 // luxury weddings. Inspired by kart_18_organizasyon_noir.html.
 //
 // Locked design DNA (only colors respond to brand):
@@ -83,27 +83,27 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    eyebrow: "BLACK TIE GALA Â· BERLIN",
+    eyebrow: "BLACK TIE GALA · BERLIN",
     tagline:
       "Diskret, durchdacht, unvergesslich. Hochzeiten und private Galas mit der Sorgfalt eines kuratierten Salons.",
-    role: "Event Designer Â· Wedding Planner",
+    role: "Event Designer · Wedding Planner",
     callBtn: "Anrufen",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-Mail",
     servicesH: "Dienste",
     testimonialH: "Stimmen",
     ctaH: "Kontaktanfrage",
-    cta: "ErstgesprÃ¤ch anfragen",
+    cta: "Erstgespräch anfragen",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
     contact: "Kontakt",
   },
   en: {
-    eyebrow: "BLACK TIE GALA Â· BERLIN",
+    eyebrow: "BLACK TIE GALA · BERLIN",
     tagline:
       "Discreet, deliberate, unforgettable. Weddings and private galas with the care of a curated salon.",
-    role: "Event Designer Â· Wedding Planner",
+    role: "Event Designer · Wedding Planner",
     callBtn: "Call",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
@@ -117,28 +117,28 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     contact: "Contact",
   },
   tr: {
-    eyebrow: "BLACK TIE GALA Â· BERLIN",
+    eyebrow: "BLACK TIE GALA · BERLIN",
     tagline:
-      "Sessiz, Ã¶zenli, unutulmaz. DÃ¼ÄŸÃ¼nler ve Ã¶zel galalar â€” kÃ¼rate edilmiÅŸ bir salonun titizliÄŸiyle.",
-    role: "Etkinlik TasarÄ±mcÄ±sÄ± Â· Wedding Planner",
+      "Sessiz, özenli, unutulmaz. Düğünler ve özel galalar — kürate edilmiş bir salonun titizliğiyle.",
+    role: "Etkinlik Tasarımcısı · Wedding Planner",
     callBtn: "Ara",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-posta",
     servicesH: "Hizmetler",
     testimonialH: "Yorumlar",
-    ctaH: "Ä°letiÅŸim",
-    cta: "GÃ¶rÃ¼ÅŸme Talep Et",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    ctaH: "İletişim",
+    cta: "Görüşme Talep Et",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
-    contact: "Ä°letiÅŸim",
+    contact: "İletişim",
   },
   es: {
 
-    eyebrow: "BLACK TIE GALA Â· BERLIN",
+    eyebrow: "BLACK TIE GALA · BERLIN",
     tagline:
       "Discreet, deliberate, unforgettable. Weddings and private galas with the care of a curated salon.",
-    role: "Event Designer Â· Wedding Planner",
+    role: "Event Designer · Wedding Planner",
     callBtn: "Llamar",
     whatsappBtn: "WhatsApp",
     emailBtn: "Correo",
@@ -154,10 +154,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   it: {
 
-    eyebrow: "BLACK TIE GALA Â· BERLIN",
+    eyebrow: "BLACK TIE GALA · BERLIN",
     tagline:
       "Discreet, deliberate, unforgettable. Weddings and private galas with the care of a curated salon.",
-    role: "Event Designer Â· Wedding Planner",
+    role: "Event Designer · Wedding Planner",
     callBtn: "Chiama",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
@@ -173,10 +173,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   fr: {
 
-    eyebrow: "BLACK TIE GALA Â· BERLIN",
+    eyebrow: "BLACK TIE GALA · BERLIN",
     tagline:
       "Discreet, deliberate, unforgettable. Weddings and private galas with the care of a curated salon.",
-    role: "Event Designer Â· Wedding Planner",
+    role: "Event Designer · Wedding Planner",
     callBtn: "Appeler",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-mail",
@@ -192,10 +192,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   ar: {
 
-    eyebrow: "BLACK TIE GALA Â· BERLIN",
+    eyebrow: "BLACK TIE GALA · BERLIN",
     tagline:
       "Discreet, deliberate, unforgettable. Weddings and private galas with the care of a curated salon.",
-    role: "Event Designer Â· Wedding Planner",
+    role: "Event Designer · Wedding Planner",
     callBtn: "اتصال",
     whatsappBtn: "واتساب",
     emailBtn: "البريد الإلكتروني",
@@ -357,7 +357,7 @@ export function EventPlannerNoir({
           </div>
         </section>
 
-        {/* QUICK ACTIONS â€” minimal hairline strip */}
+        {/* QUICK ACTIONS — minimal hairline strip */}
         <section
           className="grid grid-cols-3 text-center"
           style={{ borderBottom: `1px solid ${HAIRLINE}` }}
@@ -439,14 +439,14 @@ export function EventPlannerNoir({
                 className="serif mt-4 text-[19px] leading-[1.5]"
                 style={{ color: TEXT }}
               >
-                â€œ{testimonials[0].quote}â€
+                “{testimonials[0].quote}”
               </p>
               <div
                 className="mt-5 text-[11px] uppercase"
                 style={{ color: TEXT_MUTED, letterSpacing: "2.5px" }}
               >
-                â€” {testimonials[0].author}
-                {testimonials[0].role ? ` Â· ${testimonials[0].role}` : ""}
+                — {testimonials[0].author}
+                {testimonials[0].role ? ` · ${testimonials[0].role}` : ""}
               </div>
             </div>
           </section>
@@ -530,7 +530,7 @@ export function EventPlannerNoir({
             className="mt-2 text-[10px] uppercase"
             style={{ color: TEXT_MUTED, letterSpacing: "2px" }}
           >
-            Â© {year} Â· {t.poweredBy}{" "}
+            © {year} · {t.poweredBy}{" "}
             <a
               href="https://opsolid.de/products/digital-card"
               target="_blank"
@@ -610,7 +610,7 @@ function NoirAction({
 export const eventPlannerNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 44,
   key: "event-planner-noir",
-  name: "Event Planner â€” Noir",
+  name: "Event Planner — Noir",
   industry: "Wedding & event planner",
   supports: {
     services: true,
@@ -631,20 +631,20 @@ export const eventPlannerNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-event-planner-noir",
 };
 
-// photo: Unsplash, wedding planner. Unsplash License â€” free, no attribution required.
+// photo: Unsplash, wedding planner. Unsplash License — free, no attribution required.
 export const eventPlannerNoirSample: SampleData = {
   templateId: 44,
   slug: "demo-event-planner-noir",
   cardData: {
-    name: "Naz ErdoÄŸan",
-    position: "Event Designer Â· Wedding Planner",
+    name: "Naz Erdoğan",
+    position: "Event Designer · Wedding Planner",
     title: "Naz Events Atelier",
     company: "Naz Events Atelier",
     email: "naz@nazevents.de",
     phone: "+49 172 667 8901",
     whatsapp: "+49 172 667 8901",
     website: "nazevents.de",
-    address: "Berlin Â· Europa",
+    address: "Berlin · Europa",
     bio:
       "Diskret, durchdacht, unvergesslich. Hochzeiten und private Galas mit der Sorgfalt eines kuratierten Salons.",
     bookingUrl: "https://cal.com/nazevents/intro",
@@ -660,9 +660,9 @@ export const eventPlannerNoirSample: SampleData = {
     testimonials: [
       {
         author: "Beatrice & Henri",
-        role: "Wedding 2025 Â· Lake Como",
+        role: "Wedding 2025 · Lake Como",
         quote:
-          "Eine Aufmerksamkeit fÃ¼rs Detail, die wir nirgends sonst gesehen haben â€” leise, unbemerkt, perfekt.",
+          "Eine Aufmerksamkeit fürs Detail, die wir nirgends sonst gesehen haben — leise, unbemerkt, perfekt.",
       },
     ],
     socials: {

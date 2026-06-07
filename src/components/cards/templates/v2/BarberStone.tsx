@@ -1,9 +1,9 @@
 ﻿"use client";
 
 // =============================================================================
-// BarberStone â€” v2 template (id=79, key="barber-stone").
+// BarberStone — v2 template (id=79, key="barber-stone").
 //
-// Sector: Barber / Men's grooming â€” STONE variant. Mood: heritage / nostalgic
+// Sector: Barber / Men's grooming — STONE variant. Mood: heritage / nostalgic
 // barbershop, warm cream + mahogany, Playfair Display + Nunito sans.
 // Inspired by kart_07_berber_stone.html.
 //
@@ -83,23 +83,23 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    stamp: "Heritage Â· Handwerk Â· Tradition",
+    stamp: "Heritage · Handwerk · Tradition",
     prefix: "Klassische Herrenpflege",
     estPrefix: "Est.",
     taglineFallback: "Master Barber & Stylist",
     philoLabel: "Atelier Philosophie",
     philoSub: "Jedes Detail verdient seine Zeit",
     servicesH: "Leistungsliste",
-    servicesSub: "Stets ausgewogen, stets sorgfÃ¤ltig",
+    servicesSub: "Stets ausgewogen, stets sorgfältig",
     craftH: "Handwerk",
-    craftSub: "Was im Atelier zÃ¤hlt",
+    craftSub: "Was im Atelier zählt",
     bookBtn: "Termin reservieren",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
   },
   en: {
-    stamp: "Heritage Â· Craft Â· Tradition",
+    stamp: "Heritage · Craft · Tradition",
     prefix: "Classic Men's Grooming",
     estPrefix: "Est.",
     taglineFallback: "Master Barber & Stylist",
@@ -115,24 +115,24 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    stamp: "Heritage Â· Zanaat Â· Gelenek",
-    prefix: "Klasik Erkek BakÄ±mÄ±",
+    stamp: "Heritage · Zanaat · Gelenek",
+    prefix: "Klasik Erkek Bakımı",
     estPrefix: "Est.",
     taglineFallback: "Master Berber & Stylist",
     philoLabel: "Atelye Felsefesi",
-    philoSub: "Her detay, hak ettiÄŸi Ã¶zeni ister",
+    philoSub: "Her detay, hak ettiği özeni ister",
     servicesH: "Hizmet Listesi",
-    servicesSub: "Her zaman dengeli, her zaman Ã¶zenli",
-    craftH: "ZanaatÄ±m",
-    craftSub: "Atelyenin uzmanlÄ±k alanlarÄ±",
+    servicesSub: "Her zaman dengeli, her zaman özenli",
+    craftH: "Zanaatım",
+    craftSub: "Atelyenin uzmanlık alanları",
     bookBtn: "Randevu Al",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
   },
   es: {
 
-    stamp: "Heritage Â· Craft Â· Tradition",
+    stamp: "Heritage · Craft · Tradition",
     prefix: "Arreglo masculino clásico",
     estPrefix: "Est.",
     taglineFallback: "Maestro barbero y estilista",
@@ -150,7 +150,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   it: {
 
-    stamp: "Heritage Â· Craft Â· Tradition",
+    stamp: "Heritage · Craft · Tradition",
     prefix: "Grooming maschile classico",
     estPrefix: "Est.",
     taglineFallback: "Master Barber e Stylist",
@@ -168,7 +168,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   fr: {
 
-    stamp: "Heritage Â· Craft Â· Tradition",
+    stamp: "Heritage · Craft · Tradition",
     prefix: "Soin masculin classique",
     estPrefix: "Est.",
     taglineFallback: "Maître barbier et styliste",
@@ -186,7 +186,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   ar: {
 
-    stamp: "Heritage Â· Craft Â· Tradition",
+    stamp: "Heritage · Craft · Tradition",
     prefix: "عناية الرجل الكلاسيكية",
     estPrefix: "تأسس",
     taglineFallback: "حلاق رئيسي ومصفف",
@@ -295,8 +295,8 @@ export function BarberStone({
           className="serif italic"
           style={{ fontSize: 13, color: GOLD_WARM, marginBottom: 24 }}
         >
-          â€” {t.estPrefix} {new Date().getFullYear() - 14}
-          {cityFromAddress ? ` Â· ${cityFromAddress}` : ""} â€”
+          — {t.estPrefix} {new Date().getFullYear() - 14}
+          {cityFromAddress ? ` · ${cityFromAddress}` : ""} —
         </div>
       </header>
 
@@ -573,7 +573,7 @@ export function BarberStone({
               fontWeight: 700,
             }}
           >
-            â€œ
+            “
           </span>
           <p
             className="serif italic relative"
@@ -596,7 +596,7 @@ export function BarberStone({
               color: MAHOG,
             }}
           >
-            â€” {cardData.name}
+            — {cardData.name}
           </cite>
         </div>
       )}
@@ -695,8 +695,8 @@ export function BarberStone({
         className="serif italic px-6 pt-5 pb-7 text-center"
         style={{ fontSize: 12, color: MAHOG_SOFT }}
       >
-        â€” {cardData.company || cardData.name} Â· {new Date().getFullYear()}
-        {cityFromAddress ? ` Â· ${cityFromAddress}` : ""} â€”
+        — {cardData.company || cardData.name} · {new Date().getFullYear()}
+        {cityFromAddress ? ` · ${cityFromAddress}` : ""} —
         <div className="mt-2" style={{ color: MUTED }}>
           {t.poweredBy}{" "}
           <a
@@ -720,7 +720,7 @@ export function BarberStone({
 export const barberStoneEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 79,
   key: "barber-stone",
-  name: "Barber â€” Stone",
+  name: "Barber — Stone",
   industry: "Barber / Heritage classic barbershop",
   supports: {
     services: true,
@@ -741,7 +741,7 @@ export const barberStoneEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-barber-stone",
 };
 
-// photo: Unsplash, https://unsplash.com/photos/jqe5lY4ROMQ â€” Free, no attribution required.
+// photo: Unsplash, https://unsplash.com/photos/jqe5lY4ROMQ — Free, no attribution required.
 export const barberStoneSample: SampleData = {
   templateId: 79,
   slug: "demo-barber-stone",
@@ -754,8 +754,8 @@ export const barberStoneSample: SampleData = {
     phone: "+49 176 223 4568",
     whatsapp: "+49 176 223 4568",
     website: "tabarbershop.de",
-    address: "FriedrichstraÃŸe 88, 10117 Berlin",
-    bio: "Master Barber seit 15 Jahren. Klassischer Herrenschnitt, HeiÃŸrasur, Premium Fades. Termine online.",
+    address: "Friedrichstraße 88, 10117 Berlin",
+    bio: "Master Barber seit 15 Jahren. Klassischer Herrenschnitt, Heißrasur, Premium Fades. Termine online.",
     bookingUrl: "https://cal.com/tabarbershop/booking",
     impressumUrl: "https://tabarbershop.de/impressum",
     privacyUrl: "https://tabarbershop.de/datenschutz",
@@ -765,8 +765,8 @@ export const barberStoneSample: SampleData = {
     },
     services: [
       { title: "Premium Haarschnitt", description: "Beratung, Schnitt, Styling.", priceLabel: "â‚¬35" },
-      { title: "HeiÃŸrasur", description: "Klassische Rasur mit heiÃŸem Tuch.", priceLabel: "â‚¬28" },
-      { title: "Kombination", description: "Schnitt + HeiÃŸrasur in einem Termin.", priceLabel: "â‚¬55" },
+      { title: "Heißrasur", description: "Klassische Rasur mit heißem Tuch.", priceLabel: "â‚¬28" },
+      { title: "Kombination", description: "Schnitt + Heißrasur in einem Termin.", priceLabel: "â‚¬55" },
     ],
   },
   photoUrl:

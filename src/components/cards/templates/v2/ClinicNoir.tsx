@@ -1,15 +1,15 @@
 ﻿"use client";
 
 // =============================================================================
-// ClinicNoir â€” v2 template (id=68, key="clinic-noir").
+// ClinicNoir — v2 template (id=68, key="clinic-noir").
 //
-// Sector: Doctor / Clinic â€” NOIR variant. Mood: dark midnight blue surface
-// with cool silver/teal accents â€” premium private practice (Privatpraxis).
+// Sector: Doctor / Clinic — NOIR variant. Mood: dark midnight blue surface
+// with cool silver/teal accents — premium private practice (Privatpraxis).
 // Inspired by kart_05_doktor_noir.html.
 //
 // Design DNA (different from default Clinic.tsx):
 //   - Pitch-dark midnight-blue surface with a sky-teal vertical pinstripe.
-//   - Compact eyebrow header (M.D. caps + clinic name) â€” no big photo card.
+//   - Compact eyebrow header (M.D. caps + clinic name) — no big photo card.
 //   - Profile block: 128px circular gold-teal gradient ring portrait.
 //   - Name in serif italic with teal "Dr." prefix; credential chips below.
 //   - Numbered (01..05) practice areas with teal left-rule cards.
@@ -86,11 +86,11 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    metaLabel: "M.D. â€” Privatpraxis Â· Berlin",
+    metaLabel: "M.D. — Privatpraxis · Berlin",
     practiceEyebrow: "Praxisgebiete",
     practiceH: "Schwerpunkte",
     clinicEyebrow: "Praxis",
-    clinicH: "Ãœber die Praxis",
+    clinicH: "Über die Praxis",
     contactEyebrow: "Kontakt",
     contactH: "Termin & Erreichbarkeit",
     bookBtn: "Termin anfragen",
@@ -107,7 +107,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     webKey: "Web",
   },
   en: {
-    metaLabel: "M.D. â€” Private Practice Â· Berlin",
+    metaLabel: "M.D. — Private Practice · Berlin",
     practiceEyebrow: "Practice",
     practiceH: "Specialties",
     clinicEyebrow: "Clinic",
@@ -128,20 +128,20 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     webKey: "Web",
   },
   tr: {
-    metaLabel: "M.D. â€” Ã–zel Muayenehane Â· Berlin",
-    practiceEyebrow: "UzmanlÄ±k",
-    practiceH: "Ã‡alÄ±ÅŸma AlanlarÄ±",
+    metaLabel: "M.D. — Özel Muayenehane · Berlin",
+    practiceEyebrow: "Uzmanlık",
+    practiceH: "Çalışma Alanları",
     clinicEyebrow: "Klinik",
-    clinicH: "Muayenehane HakkÄ±nda",
-    contactEyebrow: "Ä°letiÅŸim",
-    contactH: "Randevu & Ä°letiÅŸim",
+    clinicH: "Muayenehane Hakkında",
+    contactEyebrow: "İletişim",
+    contactH: "Randevu & İletişim",
     bookBtn: "Randevu Al",
     callBtn: "Ara",
     emailBtn: "E-posta",
     mapBtn: "Harita",
     whatsappBtn: "WhatsApp",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
     addressKey: "Adres",
     phoneKey: "Telefon",
@@ -150,7 +150,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   es: {
 
-    metaLabel: "M.D. â€” Private Practice Â· Berlin",
+    metaLabel: "M.D. — Private Practice · Berlin",
     practiceEyebrow: "Despacho",
     practiceH: "Especialidades",
     clinicEyebrow: "Clínica",
@@ -173,7 +173,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   it: {
 
-    metaLabel: "M.D. â€” Private Practice Â· Berlin",
+    metaLabel: "M.D. — Private Practice · Berlin",
     practiceEyebrow: "Studio",
     practiceH: "Specialità",
     clinicEyebrow: "Clinica",
@@ -196,7 +196,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   fr: {
 
-    metaLabel: "M.D. â€” Private Practice Â· Berlin",
+    metaLabel: "M.D. — Private Practice · Berlin",
     practiceEyebrow: "Cabinet",
     practiceH: "Spécialités",
     clinicEyebrow: "Clinique",
@@ -219,7 +219,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   ar: {
 
-    metaLabel: "M.D. â€” Private Practice Â· Berlin",
+    metaLabel: "M.D. — Private Practice · Berlin",
     practiceEyebrow: "ممارسة",
     practiceH: "التخصصات",
     clinicEyebrow: "عيادة",
@@ -298,7 +298,7 @@ export function ClinicNoir({
         .cnoir-card a { color: inherit; }
       `}</style>
 
-      {/* HEADER â€” eyebrow only */}
+      {/* HEADER — eyebrow only */}
       <header
         className="relative px-7 py-9"
         style={{
@@ -329,7 +329,7 @@ export function ClinicNoir({
         )}
       </header>
 
-      {/* PROFILE â€” circular gradient ring portrait */}
+      {/* PROFILE — circular gradient ring portrait */}
       <section
         className="px-7 py-9 text-center"
         style={{ background: SURFACE_2 }}
@@ -451,7 +451,7 @@ export function ClinicNoir({
         )}
       </section>
 
-      {/* PRACTICE AREAS â€” numbered list */}
+      {/* PRACTICE AREAS — numbered list */}
       {services.length > 0 && (
         <section
           className="px-7 pb-9 pt-7"
@@ -594,7 +594,7 @@ export function ClinicNoir({
             className="serif block leading-[0.5]"
             style={{ color: accent, opacity: 0.45, fontSize: "64px", marginBottom: 6 }}
           >
-            {"â€œ"}
+            {"“"}
           </span>
           <p
             className="serif mx-auto mb-5 max-w-[360px] text-[16.5px] italic leading-[1.65]"
@@ -609,7 +609,7 @@ export function ClinicNoir({
             <span aria-hidden className="block h-px w-5" style={{ background: GOLD, opacity: 0.6 }} />
             <span>
               {testimonial.author}
-              {testimonial.role ? ` Â· ${testimonial.role}` : ""}
+              {testimonial.role ? ` · ${testimonial.role}` : ""}
             </span>
             <span aria-hidden className="block h-px w-5" style={{ background: GOLD, opacity: 0.6 }} />
           </div>
@@ -741,7 +741,7 @@ export function ClinicNoir({
         <span style={{ color: GOLD }}>
           {cardData.company || cardData.name}
         </span>
-        {" Â· "}Â© {new Date().getFullYear()} Â· {t.poweredBy}{" "}
+        {" · "}© {new Date().getFullYear()} · {t.poweredBy}{" "}
         <a
           href="https://opsolid.de/products/digital-card"
           target="_blank"
@@ -866,7 +866,7 @@ function ClinicLine({
 export const clinicNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 68,
   key: "clinic-noir",
-  name: "Clinic â€” Noir",
+  name: "Clinic — Noir",
   industry: "Doctor / Private clinic",
   supports: {
     services: true,
@@ -887,21 +887,21 @@ export const clinicNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-clinic-noir",
 };
 
-// photo: Unsplash, doctor portrait. Unsplash License â€” free, no attribution required.
+// photo: Unsplash, doctor portrait. Unsplash License — free, no attribution required.
 export const clinicNoirSample: SampleData = {
   templateId: 68,
   slug: "demo-clinic-noir",
   cardData: {
-    name: "Dr. AyÅŸe Demir",
-    position: "FachÃ¤rztin",
-    title: "Allgemeinmedizin & PrÃ¤ventivmedizin",
+    name: "Dr. Ayşe Demir",
+    position: "Fachärztin",
+    title: "Allgemeinmedizin & Präventivmedizin",
     company: "Praxis am Ku'damm",
     email: "ayse@praxis-demir.de",
     phone: "+49 30 334 5678",
     whatsapp: "+49 170 334 5678",
     website: "praxis-demir.de",
-    address: "KurfÃ¼rstendamm 188, 10707 Berlin",
-    bio: "FachÃ¤rztin fÃ¼r Allgemeinmedizin & PrÃ¤ventivmedizin. Individuell, ganzheitlich, digital erreichbar.",
+    address: "Kurfürstendamm 188, 10707 Berlin",
+    bio: "Fachärztin für Allgemeinmedizin & Präventivmedizin. Individuell, ganzheitlich, digital erreichbar.",
     bookingUrl: "https://cal.com/praxis-demir/intro",
     brochureUrl: "https://praxis-demir.de/profil.pdf",
     impressumUrl: "https://praxis-demir.de/impressum",
@@ -914,12 +914,12 @@ export const clinicNoirSample: SampleData = {
     services: [
       {
         title: "Vorsorgeuntersuchung",
-        description: "Ganzheitlicher Check-up â€” Labor, EKG, Lifestyle-Beratung.",
+        description: "Ganzheitlicher Check-up — Labor, EKG, Lifestyle-Beratung.",
         priceLabel: "ab â‚¬80",
       },
       {
         title: "Reisemedizin",
-        description: "Impfungen, Beratung & Notfallset fÃ¼r individuelle Reisen.",
+        description: "Impfungen, Beratung & Notfallset für individuelle Reisen.",
         priceLabel: "â‚¬120",
       },
       {
@@ -931,9 +931,9 @@ export const clinicNoirSample: SampleData = {
     testimonials: [
       {
         author: "Mehmet K.",
-        role: "Patient â€” Vorsorge",
+        role: "Patient — Vorsorge",
         quote:
-          "Sehr aufmerksam, nimmt sich Zeit und erklÃ¤rt alles verstÃ¤ndlich. Genau die Praxis, die ich gesucht habe.",
+          "Sehr aufmerksam, nimmt sich Zeit und erklärt alles verständlich. Genau die Praxis, die ich gesucht habe.",
       },
     ],
   },

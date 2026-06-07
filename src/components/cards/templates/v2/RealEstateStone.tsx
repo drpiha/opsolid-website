@@ -1,9 +1,9 @@
 ﻿"use client";
 
 // =============================================================================
-// RealEstateStone â€” v2 template (id=55, key="real-estate-stone").
+// RealEstateStone — v2 template (id=55, key="real-estate-stone").
 //
-// Sector: real estate / broker â€” STONE variant. Mood: warm taupe paper banner,
+// Sector: real estate / broker — STONE variant. Mood: warm taupe paper banner,
 // Fraunces serif italic, sepia-tinted circular portrait, earthy greys & golds,
 // rounded warm panels. Inspired by kart_01_emlak_stone.html.
 //
@@ -70,8 +70,8 @@ function digitsOnly(value: string): string {
 
 function getInitials(name: string): string {
   const parts = name.trim().split(/\s+/).filter(Boolean);
-  if (parts.length === 0) return "â€¢";
-  return (parts[0][0] ?? "â€¢").toUpperCase() + (parts[parts.length - 1]?.[0] ?? "").toUpperCase();
+  if (parts.length === 0) return "•";
+  return (parts[0][0] ?? "•").toUpperCase() + (parts[parts.length - 1]?.[0] ?? "").toUpperCase();
 }
 
 interface ResCopy {
@@ -100,7 +100,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ResCopy> = {
   de: {
     bannerEyebrow: "Mit Sorgfalt seit 2014",
     storyEyebrow: "Meine Geschichte",
-    storyTitle: "BewÃ¤hrte Vermittlung",
+    storyTitle: "Bewährte Vermittlung",
     servicesTitle: "Was ich tue",
     contactTitle: "Lassen Sie uns reden",
     contactCall: "Telefon",
@@ -109,7 +109,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ResCopy> = {
     contactEmail: "E-Mail",
     contactWeb: "Web",
     yearsLabel: "Jahre",
-    closedLabel: "AbschlÃ¼sse",
+    closedLabel: "Abschlüsse",
     portfolioLabel: "Portfolio â‚¬",
     saveContact: "In Kontakte speichern",
     walletLabel: "Auf Smartphone speichern",
@@ -142,23 +142,23 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ResCopy> = {
   tr: {
     bannerEyebrow: "2014'ten beri sevgiyle",
     storyEyebrow: "Hikayem",
-    storyTitle: "GÃ¼venilir AracÄ±lÄ±k",
+    storyTitle: "Güvenilir Aracılık",
     servicesTitle: "Yapabildiklerim",
-    contactTitle: "Beraber KonuÅŸalÄ±m",
+    contactTitle: "Beraber Konuşalım",
     contactCall: "Telefon",
     contactWa: "WhatsApp",
-    contactWaSub: "Bana yazÄ±n",
+    contactWaSub: "Bana yazın",
     contactEmail: "E-posta",
     contactWeb: "Web",
-    yearsLabel: "YÄ±l",
-    closedLabel: "SatÄ±ÅŸ",
-    portfolioLabel: "PortfÃ¶y â‚º",
+    yearsLabel: "Yıl",
+    closedLabel: "Satış",
+    portfolioLabel: "Portföy â‚º",
     saveContact: "Rehbere Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
-    impressum: "KÃ¼nye",
+    impressum: "Künye",
     privacy: "Gizlilik",
-    share: "PaylaÅŸ",
+    share: "Paylaş",
   },
   es: {
 
@@ -329,7 +329,7 @@ export function RealEstateStone({
           className="serif relative mb-4 text-[13px] italic font-normal"
           style={{ color: primary, letterSpacing: "0.5px" }}
         >
-          {cardData.company || "Walker & Stein"} Â· {t.bannerEyebrow}
+          {cardData.company || "Walker & Stein"} · {t.bannerEyebrow}
         </div>
         <div
           className="relative mx-auto mb-5"
@@ -390,7 +390,7 @@ export function RealEstateStone({
           className="relative mt-2 text-[13px] font-medium"
           style={{ color: TEXT_MUTED, letterSpacing: "0.3px" }}
         >
-          {[cardData.position, region].filter(Boolean).join(" Â· ")}
+          {[cardData.position, region].filter(Boolean).join(" · ")}
         </div>
       </header>
 
@@ -427,7 +427,7 @@ export function RealEstateStone({
               className="serif mt-4 block text-[16px] italic font-medium"
               style={{ color: primary }}
             >
-              â€” {cardData.name}
+              — {cardData.name}
             </span>
           </p>
         </section>
@@ -537,7 +537,7 @@ export function RealEstateStone({
               style={{ color: primary }}
             >
               {reference.author}
-              {reference.role && <span style={{ color: TEXT_MUTED, fontWeight: 600 }}> Â· {reference.role}</span>}
+              {reference.role && <span style={{ color: TEXT_MUTED, fontWeight: 600 }}> · {reference.role}</span>}
             </span>
           </div>
         </div>
@@ -606,7 +606,7 @@ export function RealEstateStone({
           className="serif mb-4 text-[13px] italic"
           style={{ color: primary }}
         >
-          {cardData.address || `${cardData.company || "Walker & Stein"} Â· ${region}`}
+          {cardData.address || `${cardData.company || "Walker & Stein"} · ${region}`}
         </p>
         <a
           href={`/api/cards/${encodeURIComponent(slug)}/vcard`}
@@ -657,7 +657,7 @@ export function RealEstateStone({
           {cardData.name}
           {cardData.company && (
             <span style={{ color: TEXT_MUTED, fontStyle: "normal", fontWeight: 600 }}>
-              {" Â· "}
+              {" · "}
               {cardData.company}
             </span>
           )}
@@ -666,7 +666,7 @@ export function RealEstateStone({
           className="mt-1 text-[11px]"
           style={{ color: TEXT_MUTED }}
         >
-          Â© {year} Â· {t.poweredBy}{" "}
+          © {year} · {t.poweredBy}{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"
@@ -828,7 +828,7 @@ function PillBtn({
 export const realEstateStoneEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 55,
   key: "real-estate-stone",
-  name: "Real Estate â€” Stone",
+  name: "Real Estate — Stone",
   industry: "Real estate agent / broker",
   supports: {
     services: true,
@@ -849,7 +849,7 @@ export const realEstateStoneEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-real-estate-stone",
 };
 
-// photo: Unsplash, by Christina Wocintechchat â€” Unsplash License, no attribution required.
+// photo: Unsplash, by Christina Wocintechchat — Unsplash License, no attribution required.
 export const realEstateStoneSample: SampleData = {
   templateId: 55,
   slug: "demo-real-estate-stone",
@@ -862,7 +862,7 @@ export const realEstateStoneSample: SampleData = {
     phone: "+49 30 1234 5678",
     whatsapp: "+49 170 1234 567",
     website: "walker-stein.de",
-    address: "KurfÃ¼rstendamm 188, 10707 Berlin",
+    address: "Kurfürstendamm 188, 10707 Berlin",
     bio: "Selling a home means safeguarding a dream. Twelve years in Berlin's most thoughtful neighbourhoods has taught me to speak plainly, advise honestly, and keep my word. To me, a card is a promise.",
     bookingUrl: "https://cal.com/walker-stein/intro",
     brochureUrl: "https://walker-stein.de/portfolio.pdf",

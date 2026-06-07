@@ -1,21 +1,21 @@
 ﻿"use client";
 
 // =============================================================================
-// ClinicStone â€” v2 template (id=71, key="clinic-stone").
+// ClinicStone — v2 template (id=71, key="clinic-stone").
 //
-// Sector: Doctor / Clinic â€” STONE variant. Mood: warm grey/sage calming
+// Sector: Doctor / Clinic — STONE variant. Mood: warm grey/sage calming
 // wellness clinic, holistic, Playfair display + Nunito body.
 // Inspired by kart_05_doktor_stone.html.
 //
 // Design DNA (different from default Clinic.tsx):
 //   - Warm cream background, framed cards, holistic clinic aesthetic.
-//   - Header with stamp pill + "Holistik YaklaÅŸÄ±m" cap title + clinic name.
+//   - Header with stamp pill + "Holistik Yaklaşım" cap title + clinic name.
 //   - SVG wave divider transitioning into card surface.
 //   - Big circular gold-sage gradient ring portrait, sepia tone.
 //   - Italic Playfair name with sage accent, ornament glyph row.
-//   - Framed "YaklaÅŸÄ±mÄ±m" philosophy section with gold rule decoration.
+//   - Framed "Yaklaşımım" philosophy section with gold rule decoration.
 //   - Specialty list with circular sage icon chips.
-//   - Roman-numbered (IÂ·IIÂ·IIIÂ·IV) "SÃ¼reciniz" steps.
+//   - Roman-numbered (I·II·III·IV) "Süreciniz" steps.
 //   - Quote block on darker cream gradient.
 //   - Pill CTAs (sage filled + line variants).
 // =============================================================================
@@ -84,14 +84,14 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    stamp: "M.D. â€” FachÃ¤rztin Â· Est. 2014",
+    stamp: "M.D. — Fachärztin · Est. 2014",
     preH: "Ganzheitlicher Ansatz",
     approachH: "Mein Ansatz",
     approachSub: "Ganzheitliche Heilung",
     servicesH: "Leistungen",
     servicesSub: "Bereiche, in denen ich Sie begleite",
     stepsH: "Ihr Termin-Ablauf",
-    stepsSub: "Schritt fÃ¼r Schritt",
+    stepsSub: "Schritt für Schritt",
     contactH: "Kontakt",
     bookBtn: "Termin anfragen",
     emailBtn: "E-Mail",
@@ -102,7 +102,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     steps: [
       {
         h: "Erster Kontakt",
-        p: "Per WhatsApp oder Telefon â€” kurze Schilderung Ihrer Situation.",
+        p: "Per WhatsApp oder Telefon — kurze Schilderung Ihrer Situation.",
       },
       {
         h: "Termin & Vorbereitung",
@@ -114,12 +114,12 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
       },
       {
         h: "Begleitung",
-        p: "RegelmÃ¤ÃŸige Nachsorge und persÃ¶nliche Beratung im Verlauf.",
+        p: "Regelmäßige Nachsorge und persönliche Beratung im Verlauf.",
       },
     ],
   },
   en: {
-    stamp: "M.D. â€” Specialist Â· Est. 2014",
+    stamp: "M.D. — Specialist · Est. 2014",
     preH: "Holistic approach",
     approachH: "My approach",
     approachSub: "Whole-person healing",
@@ -135,38 +135,38 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
     steps: [
-      { h: "First contact", p: "Reach out by WhatsApp or phone â€” describe briefly." },
+      { h: "First contact", p: "Reach out by WhatsApp or phone — describe briefly." },
       { h: "Appointment", p: "We find a suitable time and send a reminder." },
       { h: "Consultation", p: "Thorough exam, plan tailored to you." },
       { h: "Follow-up", p: "Regular check-ins and personal guidance." },
     ],
   },
   tr: {
-    stamp: "M.D. â€” FachÃ¤rztin Â· Est. 2014",
-    preH: "BÃ¼tÃ¼nsel YaklaÅŸÄ±m",
-    approachH: "YaklaÅŸÄ±mÄ±m",
-    approachSub: "BÃ¼tÃ¼nsel iyileÅŸme felsefesi",
+    stamp: "M.D. — Fachärztin · Est. 2014",
+    preH: "Bütünsel Yaklaşım",
+    approachH: "Yaklaşımım",
+    approachSub: "Bütünsel iyileşme felsefesi",
     servicesH: "Hizmetler",
-    servicesSub: "Sizinle birlikte ilerlediÄŸim alanlar",
-    stepsH: "Randevu SÃ¼reciniz",
-    stepsSub: "AdÄ±m adÄ±m rehber",
-    contactH: "Ä°letiÅŸim",
+    servicesSub: "Sizinle birlikte ilerlediğim alanlar",
+    stepsH: "Randevu Süreciniz",
+    stepsSub: "Adım adım rehber",
+    contactH: "İletişim",
     bookBtn: "Randevu Al",
     emailBtn: "E-posta",
     mapBtn: "Konum",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
     steps: [
-      { h: "Ä°lk Ä°letiÅŸim", p: "WhatsApp veya telefonla durumunuzu kÄ±saca paylaÅŸÄ±n." },
-      { h: "Randevu PlanÄ±", p: "Uygun saat bulunur, hatÄ±rlatma gÃ¶nderilir." },
-      { h: "Muayene & Plan", p: "DetaylÄ± muayene sonrasÄ± kiÅŸiye Ã¶zel plan." },
-      { h: "Takip SÃ¼reci", p: "DÃ¼zenli takip ve bireysel danÄ±ÅŸmanlÄ±k." },
+      { h: "İlk İletişim", p: "WhatsApp veya telefonla durumunuzu kısaca paylaşın." },
+      { h: "Randevu Planı", p: "Uygun saat bulunur, hatırlatma gönderilir." },
+      { h: "Muayene & Plan", p: "Detaylı muayene sonrası kişiye özel plan." },
+      { h: "Takip Süreci", p: "Düzenli takip ve bireysel danışmanlık." },
     ],
   },
   es: {
 
-    stamp: "M.D. â€” Specialist Â· Est. 2014",
+    stamp: "M.D. — Specialist · Est. 2014",
     preH: "Enfoque holístico",
     approachH: "Mi enfoque",
     approachSub: "Sanación integral",
@@ -182,7 +182,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
     steps: [
-      { h: "First contact", p: "Reach out by WhatsApp or phone â€” describe briefly." },
+      { h: "First contact", p: "Reach out by WhatsApp or phone — describe briefly." },
       { h: "Appointment", p: "We find a suitable time and send a reminder." },
       { h: "Consultation", p: "Thorough exam, plan tailored to you." },
       { h: "Follow-up", p: "Regular check-ins and personal guidance." },
@@ -191,7 +191,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   it: {
 
-    stamp: "M.D. â€” Specialist Â· Est. 2014",
+    stamp: "M.D. — Specialist · Est. 2014",
     preH: "Approccio olistico",
     approachH: "Il mio approccio",
     approachSub: "Guarigione integrale",
@@ -207,7 +207,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
     steps: [
-      { h: "First contact", p: "Reach out by WhatsApp or phone â€” describe briefly." },
+      { h: "First contact", p: "Reach out by WhatsApp or phone — describe briefly." },
       { h: "Appointment", p: "We find a suitable time and send a reminder." },
       { h: "Consultation", p: "Thorough exam, plan tailored to you." },
       { h: "Follow-up", p: "Regular check-ins and personal guidance." },
@@ -216,7 +216,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   fr: {
 
-    stamp: "M.D. â€” Specialist Â· Est. 2014",
+    stamp: "M.D. — Specialist · Est. 2014",
     preH: "Approche holistique",
     approachH: "Mon approche",
     approachSub: "Guérison globale",
@@ -232,7 +232,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
     steps: [
-      { h: "First contact", p: "Reach out by WhatsApp or phone â€” describe briefly." },
+      { h: "First contact", p: "Reach out by WhatsApp or phone — describe briefly." },
       { h: "Appointment", p: "We find a suitable time and send a reminder." },
       { h: "Consultation", p: "Thorough exam, plan tailored to you." },
       { h: "Follow-up", p: "Regular check-ins and personal guidance." },
@@ -241,7 +241,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   ar: {
 
-    stamp: "M.D. â€” Specialist Â· Est. 2014",
+    stamp: "M.D. — Specialist · Est. 2014",
     preH: "نهج شامل",
     approachH: "نهجي",
     approachSub: "شفاء شامل",
@@ -257,7 +257,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
     steps: [
-      { h: "First contact", p: "Reach out by WhatsApp or phone â€” describe briefly." },
+      { h: "First contact", p: "Reach out by WhatsApp or phone — describe briefly." },
       { h: "Appointment", p: "We find a suitable time and send a reminder." },
       { h: "Consultation", p: "Thorough exam, plan tailored to you." },
       { h: "Follow-up", p: "Regular check-ins and personal guidance." },
@@ -660,7 +660,7 @@ export function ClinicStone({
               lineHeight: 1,
             }}
           >
-            {"â€œ"}
+            {"“"}
           </span>
           <p
             className="serif relative mb-3.5 text-[16px] italic leading-[1.7]"
@@ -672,8 +672,8 @@ export function ClinicStone({
             className="text-[11.5px] font-bold uppercase"
             style={{ color: SAGE_DARK, letterSpacing: "2px" }}
           >
-            â€” {testimonial.author}
-            {testimonial.role ? ` Â· ${testimonial.role}` : ""}
+            — {testimonial.author}
+            {testimonial.role ? ` · ${testimonial.role}` : ""}
           </div>
         </div>
       )}
@@ -751,7 +751,7 @@ export function ClinicStone({
             className="serif mb-4 text-center text-[16px] italic"
             style={{ color: accent }}
           >
-            â€” {t.contactH} â€”
+            — {t.contactH} —
           </h3>
           <ContactRows
             cardData={cardData}
@@ -807,7 +807,7 @@ export function ClinicStone({
           className="serif text-[12px] italic"
           style={{ color: INK_SOFT }}
         >
-          â€” {cardData.company || cardData.name} Â· {new Date().getFullYear()} Â·{" "}
+          — {cardData.company || cardData.name} · {new Date().getFullYear()} ·{" "}
           {t.poweredBy}{" "}
           <a
             href="https://opsolid.de/products/digital-card"
@@ -817,7 +817,7 @@ export function ClinicStone({
           >
             OpSolid
           </a>
-          {" "}â€”
+          {" "}—
         </div>
       </footer>
     </article>
@@ -831,7 +831,7 @@ export function ClinicStone({
 export const clinicStoneEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 71,
   key: "clinic-stone",
-  name: "Clinic â€” Stone",
+  name: "Clinic — Stone",
   industry: "Doctor / Holistic clinic",
   supports: {
     services: true,
@@ -852,21 +852,21 @@ export const clinicStoneEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-clinic-stone",
 };
 
-// photo: Unsplash, doctor portrait. Unsplash License â€” free, no attribution required.
+// photo: Unsplash, doctor portrait. Unsplash License — free, no attribution required.
 export const clinicStoneSample: SampleData = {
   templateId: 71,
   slug: "demo-clinic-stone",
   cardData: {
-    name: "Dr. AyÅŸe Demir",
-    position: "FachÃ¤rztin",
-    title: "Allgemeinmedizin & PrÃ¤ventivmedizin",
+    name: "Dr. Ayşe Demir",
+    position: "Fachärztin",
+    title: "Allgemeinmedizin & Präventivmedizin",
     company: "Praxis am Ku'damm",
     email: "ayse@praxis-demir.de",
     phone: "+49 30 334 5678",
     whatsapp: "+49 170 334 5678",
     website: "praxis-demir.de",
-    address: "KurfÃ¼rstendamm 188, 10707 Berlin",
-    bio: "FachÃ¤rztin fÃ¼r Allgemeinmedizin & PrÃ¤ventivmedizin. Individuell, ganzheitlich, digital erreichbar.",
+    address: "Kurfürstendamm 188, 10707 Berlin",
+    bio: "Fachärztin für Allgemeinmedizin & Präventivmedizin. Individuell, ganzheitlich, digital erreichbar.",
     bookingUrl: "https://cal.com/praxis-demir/intro",
     brochureUrl: "https://praxis-demir.de/profil.pdf",
     impressumUrl: "https://praxis-demir.de/impressum",
@@ -898,7 +898,7 @@ export const clinicStoneSample: SampleData = {
         author: "Mehmet K.",
         role: "Patient",
         quote:
-          "Sehr aufmerksam, nimmt sich Zeit und erklÃ¤rt alles verstÃ¤ndlich. Genau die Praxis, die ich gesucht habe.",
+          "Sehr aufmerksam, nimmt sich Zeit und erklärt alles verständlich. Genau die Praxis, die ich gesucht habe.",
       },
     ],
   },

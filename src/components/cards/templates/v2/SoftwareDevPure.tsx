@@ -1,9 +1,9 @@
 ﻿"use client";
 
 // =============================================================================
-// SoftwareDevPure â€” v2 template (id=35, key="software-dev-pure").
+// SoftwareDevPure — v2 template (id=35, key="software-dev-pure").
 //
-// Sector: Software engineer â€” PURE variant. Mood: editorial whitespace, blue
+// Sector: Software engineer — PURE variant. Mood: editorial whitespace, blue
 // accent, JetBrains Mono labels, light surface, oversized hero name. Inspired
 // by kart_15_yazilim_pure.html.
 //
@@ -79,7 +79,7 @@ interface SdpCopy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdpCopy> = {
   de: {
-    available: "VerfÃ¼gbar",
+    available: "Verfügbar",
     contact: "Kontakt",
     about: "Profil",
     stack: "Stack",
@@ -94,7 +94,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdpCopy> = {
     projectsLabel: "Projekte",
     responseLabel: "Antwort",
     developer: "Developer",
-    remote: "Remote Â· Berlin",
+    remote: "Remote · Berlin",
   },
   en: {
     available: "Available",
@@ -112,25 +112,25 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdpCopy> = {
     projectsLabel: "Projects",
     responseLabel: "Response",
     developer: "Developer",
-    remote: "Remote Â· Berlin",
+    remote: "Remote · Berlin",
   },
   tr: {
-    available: "MÃ¼sait",
-    contact: "Ä°letiÅŸim",
+    available: "Müsait",
+    contact: "İletişim",
     about: "Profil",
     stack: "Stack",
     services: "Hizmetler",
-    scheduleCall: "GÃ¶rÃ¼ÅŸme Planla",
+    scheduleCall: "Görüşme Planla",
     callMe: "Direkt Ara",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
-    share: "PaylaÅŸ",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
+    share: "Paylaş",
     poweredBy: "Powered by",
-    yearsLabel: "YÄ±l",
+    yearsLabel: "Yıl",
     projectsLabel: "Proje",
-    responseLabel: "YanÄ±t",
-    developer: "GeliÅŸtirici",
-    remote: "Remote Â· Berlin",
+    responseLabel: "Yanıt",
+    developer: "Geliştirici",
+    remote: "Remote · Berlin",
   },
   es: {
 
@@ -149,7 +149,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdpCopy> = {
     projectsLabel: "Proyectos",
     responseLabel: "Respuesta",
     developer: "Desarrollador",
-    remote: "Remote Â· Berlin",
+    remote: "Remote · Berlin",
   
   },
   it: {
@@ -169,7 +169,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdpCopy> = {
     projectsLabel: "Progetti",
     responseLabel: "Risposta",
     developer: "Sviluppatore",
-    remote: "Remote Â· Berlin",
+    remote: "Remote · Berlin",
   
   },
   fr: {
@@ -189,7 +189,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdpCopy> = {
     projectsLabel: "Projets",
     responseLabel: "Réponse",
     developer: "Développeur",
-    remote: "Remote Â· Berlin",
+    remote: "Remote · Berlin",
   
   },
   ar: {
@@ -209,7 +209,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdpCopy> = {
     projectsLabel: "المشاريع",
     responseLabel: "الاستجابة",
     developer: "مطور",
-    remote: "Remote Â· Berlin",
+    remote: "Remote · Berlin",
   
   },
 };
@@ -495,7 +495,7 @@ export function SoftwareDevPure({
         className="mono flex items-center justify-between px-8 py-7 text-[10px] uppercase"
         style={{ color: INK_DIM, letterSpacing: "1.5px" }}
       >
-        <span>Â© {year}</span>
+        <span>© {year}</span>
         <span>{handle}</span>
       </footer>
       <div
@@ -585,7 +585,7 @@ function PureStat({
 export const softwareDevPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 35,
   key: "software-dev-pure",
-  name: "Software Dev â€” Pure",
+  name: "Software Dev — Pure",
   industry: "Software engineer / developer (editorial pure variant)",
   supports: {
     services: true,
@@ -610,9 +610,9 @@ export const softwareDevPureSample: SampleData = {
   templateId: 35,
   slug: "demo-software-dev-pure",
   cardData: {
-    name: "Ozan Ã‡elik",
+    name: "Ozan Çelik",
     position: "Full-Stack Engineer",
-    title: "React Â· Node Â· AWS",
+    title: "React · Node · AWS",
     company: "Freelance",
     email: "ozan@ozancelik.dev",
     phone: "+49 176 334 5678",
@@ -622,9 +622,9 @@ export const softwareDevPureSample: SampleData = {
     bookingUrl: "https://cal.com/ozancelik/intro",
     sectorKey: "tech",
     services: [
-      { title: "Web App Development", description: "Next.js Â· React Â· TypeScript", priceLabel: "ab â‚¬4.800" },
-      { title: "API Integration", description: "REST Â· GraphQL Â· Stripe", priceLabel: "ab â‚¬1.200" },
-      { title: "Tech Consulting", description: "Architecture Â· code review", priceLabel: "â‚¬150/h" },
+      { title: "Web App Development", description: "Next.js · React · TypeScript", priceLabel: "ab â‚¬4.800" },
+      { title: "API Integration", description: "REST · GraphQL · Stripe", priceLabel: "ab â‚¬1.200" },
+      { title: "Tech Consulting", description: "Architecture · code review", priceLabel: "â‚¬150/h" },
     ],
     socials: {
       github: "https://github.com/ozancelik",

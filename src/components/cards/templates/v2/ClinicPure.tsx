@@ -1,19 +1,19 @@
 ﻿"use client";
 
 // =============================================================================
-// ClinicPure â€” v2 template (id=69, key="clinic-pure").
+// ClinicPure — v2 template (id=69, key="clinic-pure").
 //
-// Sector: Doctor / Clinic â€” PURE variant. Mood: ultra-minimal medical
+// Sector: Doctor / Clinic — PURE variant. Mood: ultra-minimal medical
 // precision; cream/white surface, generous whitespace, italic Source Serif
 // callouts, DM Sans body. Inspired by kart_05_doktor_pure.html.
 //
 // Design DNA (different from default Clinic.tsx):
 //   - White card on cream page background.
-//   - Top eyebrow (clinic Â· city) followed by mega 54px sans-light name with
+//   - Top eyebrow (clinic · city) followed by mega 54px sans-light name with
 //     italic-serif role. No big medallion.
-//   - Profile band: small 96Ã—96 grayscale square photo + clinic credentials.
+//   - Profile band: small 96×96 grayscale square photo + clinic credentials.
 //   - Italic-serif 17px bio paragraph.
-//   - Stats row (16y Â· 2.4K+ Â· 98%) hairline-bordered.
+//   - Stats row (16y · 2.4K+ · 98%) hairline-bordered.
 //   - Two-column education + specialties list with hairline dividers.
 //   - Hairline contact + hours table.
 //   - Stacked CTA grid (filled + line variants).
@@ -119,12 +119,12 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    yearsLabel: "YÄ±l",
+    yearsLabel: "Yıl",
     patientsLabel: "Hasta",
     satisfactionLabel: "Memnuniyet",
-    educationH: "EÄŸitim",
-    specialtiesH: "UzmanlÄ±k",
-    contactH: "Ä°letiÅŸim",
+    educationH: "Eğitim",
+    specialtiesH: "Uzmanlık",
+    contactH: "İletişim",
     servicesH: "Hizmetler",
     bookBtn: "Randevu Al",
     emailBtn: "E-posta",
@@ -133,8 +133,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     emailKey: "E-posta",
     webKey: "Web",
     addressKey: "Adres",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
   },
   es: {
@@ -289,7 +289,7 @@ export function ClinicPure({
         >
           <span>
             {cardData.company}
-            {cityFromAddress ? ` Â· ${cityFromAddress}` : ""}
+            {cityFromAddress ? ` · ${cityFromAddress}` : ""}
           </span>
           <span aria-hidden className="block h-px flex-1" style={{ background: HAIRLINE }} />
         </div>
@@ -364,7 +364,7 @@ export function ClinicPure({
                 className="mb-1.5 text-[11px] font-medium uppercase"
                 style={{ color: INK_SOFT, letterSpacing: "1.5px" }}
               >
-                {[cardData.title, cardData.position].filter(Boolean).join(" â€” ")}
+                {[cardData.title, cardData.position].filter(Boolean).join(" — ")}
               </div>
             )}
             {cardData.bio && (
@@ -396,7 +396,7 @@ export function ClinicPure({
             borderBottom: `1px solid ${HAIRLINE}`,
           }}
         >
-          <PureStat num="12" sup=" yÄ±l" label={t.yearsLabel} accent={accent} locale={locale} />
+          <PureStat num="12" sup=" yıl" label={t.yearsLabel} accent={accent} locale={locale} />
           <PureStat num="3.2K" sup="+" label={t.patientsLabel} accent={accent} locale={locale} />
           <PureStat num="98" sup="%" label={t.satisfactionLabel} accent={accent} locale={locale} />
         </div>
@@ -563,7 +563,7 @@ export function ClinicPure({
             className="serif text-[12px] italic"
             style={{ color: INK_SOFT }}
           >
-            Â© {new Date().getFullYear()} {cardData.company || cardData.name} Â· {t.poweredBy}{" "}
+            © {new Date().getFullYear()} {cardData.company || cardData.name} · {t.poweredBy}{" "}
             <a
               href="https://opsolid.de/products/digital-card"
               target="_blank"
@@ -624,7 +624,7 @@ function PureStat({
 export const clinicPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 69,
   key: "clinic-pure",
-  name: "Clinic â€” Pure",
+  name: "Clinic — Pure",
   industry: "Doctor / Private clinic",
   supports: {
     services: true,
@@ -645,21 +645,21 @@ export const clinicPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-clinic-pure",
 };
 
-// photo: Unsplash, doctor portrait. Unsplash License â€” free, no attribution required.
+// photo: Unsplash, doctor portrait. Unsplash License — free, no attribution required.
 export const clinicPureSample: SampleData = {
   templateId: 69,
   slug: "demo-clinic-pure",
   cardData: {
-    name: "Dr. AyÅŸe Demir",
-    position: "FachÃ¤rztin",
-    title: "Allgemeinmedizin & PrÃ¤ventivmedizin",
+    name: "Dr. Ayşe Demir",
+    position: "Fachärztin",
+    title: "Allgemeinmedizin & Präventivmedizin",
     company: "Praxis am Ku'damm",
     email: "ayse@praxis-demir.de",
     phone: "+49 30 334 5678",
     whatsapp: "+49 170 334 5678",
     website: "praxis-demir.de",
-    address: "KurfÃ¼rstendamm 188, 10707 Berlin",
-    bio: "FachÃ¤rztin fÃ¼r Allgemeinmedizin & PrÃ¤ventivmedizin. Individuell, ganzheitlich, digital erreichbar.",
+    address: "Kurfürstendamm 188, 10707 Berlin",
+    bio: "Fachärztin für Allgemeinmedizin & Präventivmedizin. Individuell, ganzheitlich, digital erreichbar.",
     bookingUrl: "https://cal.com/praxis-demir/intro",
     brochureUrl: "https://praxis-demir.de/profil.pdf",
     impressumUrl: "https://praxis-demir.de/impressum",
@@ -672,7 +672,7 @@ export const clinicPureSample: SampleData = {
     services: [
       {
         title: "Vorsorgeuntersuchung",
-        description: "Ganzheitlicher Check-up â€” Labor, EKG, Lifestyle.",
+        description: "Ganzheitlicher Check-up — Labor, EKG, Lifestyle.",
         priceLabel: "ab â‚¬80",
       },
       {

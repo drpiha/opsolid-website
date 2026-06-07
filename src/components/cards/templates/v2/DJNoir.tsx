@@ -1,9 +1,9 @@
 ﻿"use client";
 
 // =============================================================================
-// DJNoir â€” v2 template (id=72, key="dj-noir").
+// DJNoir — v2 template (id=72, key="dj-noir").
 //
-// Sector: DJ / Music â€” NOIR variant. Mood: pitch-black underground club,
+// Sector: DJ / Music — NOIR variant. Mood: pitch-black underground club,
 // neon purple/cyan accents, animated EQ bars, Syne display + Space Mono.
 // Inspired by kart_06_dj_noir.html.
 //
@@ -111,13 +111,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     yearsLabel: "Aktif",
     eventsLabel: "Etkinlik",
     listenersLabel: "Dinleyici",
-    genresH: "TÃ¼rler",
-    upcomingH: "YaklaÅŸan",
+    genresH: "Türler",
+    upcomingH: "Yaklaşan",
     bookingH: "Booking",
-    contactH: "Ä°letiÅŸim",
+    contactH: "İletişim",
     bookBtn: "Booking Talebi",
-    saveContact: "KiÅŸiyi Kaydet",
-    walletLabel: "CÃ¼zdana ekle",
+    saveContact: "Kişiyi Kaydet",
+    walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
   },
   es: {
@@ -632,8 +632,8 @@ export function DJNoir({
         style={{ color: TEXT_DIM, letterSpacing: "2px" }}
       >
         <span style={{ color: accent }}>{"// "}</span>
-        Â© {new Date().getFullYear()} {cardData.name.toUpperCase()}
-        {cityFromAddress && ` Â· ${cityFromAddress.toUpperCase()}`}
+        © {new Date().getFullYear()} {cardData.name.toUpperCase()}
+        {cityFromAddress && ` · ${cityFromAddress.toUpperCase()}`}
         <span style={{ color: accent }}>{" //"}</span>
         <div className="mt-2" style={{ color: TEXT_DIM }}>
           {t.poweredBy}{" "}
@@ -677,7 +677,7 @@ export function DJNoir({
 export const djNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   id: 72,
   key: "dj-noir",
-  name: "DJ â€” Noir",
+  name: "DJ — Noir",
   industry: "DJ / Underground club",
   supports: {
     services: true,
@@ -698,7 +698,7 @@ export const djNoirEntry: Omit<TemplateRegistryEntry, "Component"> = {
   sampleSlug: "demo-dj-noir",
 };
 
-// photo: Unsplash, DJ portrait. Unsplash License â€” free, no attribution required.
+// photo: Unsplash, DJ portrait. Unsplash License — free, no attribution required.
 export const djNoirSample: SampleData = {
   templateId: 72,
   slug: "demo-dj-noir",
@@ -711,7 +711,7 @@ export const djNoirSample: SampleData = {
     phone: "+49 178 445 1234",
     whatsapp: "+49 178 445 1234",
     website: "djkaya.de",
-    address: "KÃ¶penicker Str. 70, 10179 Berlin",
+    address: "Köpenicker Str. 70, 10179 Berlin",
     bio: "Techno & House DJ aus Berlin. Resident DJ im Tresor & Berghain Kantine. Booking: booking@djkaya.de",
     bookingUrl: "https://cal.com/djkaya/booking",
     brochureUrl: "https://djkaya.de/presskit.pdf",
