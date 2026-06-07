@@ -34,7 +34,7 @@ export default function ContentSection({
   const form = t.products.digitalCard.order.form;
 
   return (
-    <section>
+    <section id="section-content">
       <button
         type="button"
         onClick={() => toggleSection("content")}

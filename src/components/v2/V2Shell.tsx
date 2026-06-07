@@ -16,12 +16,10 @@
  */
 
 import { LenisProvider } from "@/components/motion/LenisProvider";
-import { CustomCursor } from "@/components/motion/CustomCursor";
 
 export function V2Shell({ children }: { children: React.ReactNode }) {
   return (
     <LenisProvider>
-      <CustomCursor />
       {children}
     </LenisProvider>
   );

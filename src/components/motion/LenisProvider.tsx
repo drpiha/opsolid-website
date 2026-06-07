@@ -11,6 +11,7 @@
  */
 
 import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Lenis from "lenis";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -20,10 +21,15 @@ if (typeof window !== "undefined") {
 }
 
 export function LenisProvider({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
   useEffect(() => {
     if (typeof window === "undefined") return;
     if (window.matchMedia("(pointer: coarse)").matches) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // The card editor is a long, form-heavy page where smooth-scroll inertia
+    // feels heavy and its scroll interception causes jump-to-top on edits.
+    // Use the browser's native scroll there.
+    if (pathname && /\/card\/edit\//.test(pathname)) return;
 
     const lenis = new Lenis({
       lerp: 0.1,
@@ -43,7 +49,7 @@ export function LenisProvider({ children }: { children: React.ReactNode }) {
       gsap.ticker.remove(onRaf);
       lenis.destroy();
     };
-  }, []);
+  }, [pathname]);
 
   return <>{children}</>;
 }

@@ -61,7 +61,7 @@ export default function PersonBrandSection({
   const form = t.products.digitalCard.order.form;
 
   return (
-    <section>
+    <section id="section-person-brand">
       <button
         type="button"
         onClick={() => toggleSection("person-brand")}

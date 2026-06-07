@@ -5,7 +5,6 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { AmbientBackdrop } from "@/components/visual/AmbientBackdrop";
 import { LenisProvider } from "@/components/motion/LenisProvider";
-import { CustomCursor } from "@/components/motion/CustomCursor";
 import { PageTransition } from "@/components/motion/PageTransition";
 import { LOCALES, type Locale, isLocale } from "@/lib/i18n";
 
@@ -53,7 +52,6 @@ export default function LocaleLayout({
   return (
     <ClientProviders initialLocale={params.locale}>
       <LenisProvider>
-        <CustomCursor />
         <AmbientBackdrop />
         <Header />
         <main className="flex-1 relative z-[1]">

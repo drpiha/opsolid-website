@@ -79,7 +79,7 @@ export default function PublishSection({
   ];
 
   return (
-    <section>
+    <section id="section-publish">
       <button
         type="button"
         onClick={() => toggleSection("publish")}

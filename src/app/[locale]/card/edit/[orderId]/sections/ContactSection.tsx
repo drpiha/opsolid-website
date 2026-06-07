@@ -39,7 +39,7 @@ export default function ContactSection({
   const form = t.products.digitalCard.order.form;
 
   return (
-    <section>
+    <section id="section-contact">
       <button
         type="button"
         onClick={() => toggleSection("contact")}

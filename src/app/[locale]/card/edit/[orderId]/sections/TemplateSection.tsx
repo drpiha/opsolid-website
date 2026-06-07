@@ -76,7 +76,7 @@ export default function TemplateSection({
   const current = plannedLineup.find((tpl) => tpl.id === templateId);
 
   return (
-    <section>
+    <section id="section-template">
       <button
         type="button"
         onClick={() => toggleSection("template")}
