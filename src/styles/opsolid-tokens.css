@@ -192,6 +192,37 @@
 }
 
 /* ==============================================================
+   CARD EDITOR — forced light surface
+   Editör kartları bg-white / neutral ile hardcoded açık tasarlandı; header,
+   sticky bar ve ink yazılar ise tema-değişkenli token kullanıyor. Global
+   [data-theme] koyu olduğunda bu token'lar ters dönüp okunamaz çakışmalar
+   yaratıyor. Bu sınıf editör alt-ağacına sarıldığında tüm tema-değişkenli
+   token'ları (değerler birebir light temadan) açık sabitler — kalıtımla
+   :root[data-theme] değerlerini ezer, böylece editör her temada tutarlı kalır.
+   ============================================================== */
+.editor-light {
+  --bg-0: #DCD7CC;
+  --bg-1: #FAFAF7;
+  --bg-2: #F4F3EE;
+  --bg-3: #FFFFFF;
+  --bg-4: #F8F7F2;
+  --bg-5: #ECEAE3;
+
+  --ink-100: #15120F;
+  --ink-200: #3A3530;
+  --ink-300: #6B6660;
+  --ink-400: #9A9591;
+  --ink-500: #BFB9B0;
+
+  --line-soft: rgba(21,18,15,0.04);
+  --line:      rgba(21,18,15,0.08);
+  --line-firm: rgba(21,18,15,0.14);
+  --line-hot:  rgba(194,121,64,0.40);
+
+  color-scheme: light;
+}
+
+/* ==============================================================
    DARK — graphite (original v2 system)
    ============================================================== */
 :root[data-theme="dark"] {

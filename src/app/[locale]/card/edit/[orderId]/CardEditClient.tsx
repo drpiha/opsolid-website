@@ -407,7 +407,9 @@ export function CardEditClient(props: Props) {
     path.startsWith("/") || path.startsWith("http") ? path : `/${path}`;
 
   return (
-    <>
+    // Editör daima açık yüzey — global [data-theme] koyu olsa bile chrome +
+    // ink yazılar açık kalsın (kartlar zaten bg-white/neutral hardcoded).
+    <div className="editor-light">
     {/* A6 — Sticky top header: card name + status + slug + view live */}
     <header className="sticky top-0 z-20 border-b border-line bg-bg-0/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-2xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
@@ -767,7 +769,7 @@ export function CardEditClient(props: Props) {
         />
       )}
     </main>
-    </>
+    </div>
   );
 }
 
@@ -1175,7 +1177,7 @@ function StatusChip({ status }: { status: string }) {
     new:       { bg: "bg-neutral-100",  text: "text-ink-300",    label: e.leadStatusNew },
     contacted: { bg: "bg-blue-50",      text: "text-blue-600",  label: e.leadStatusContacted },
     qualified: { bg: "bg-green-50",     text: "text-green-600", label: e.leadStatusQualified },
-    archived:  { bg: "bg-neutral-50",   text: "text-ink/30",    label: e.leadStatusArchived },
+    archived:  { bg: "bg-neutral-50",   text: "text-ink/50",    label: e.leadStatusArchived },
     accepted:  { bg: "bg-green-50",     text: "text-green-600", label: e.leadStatusQualified },
   };
   const s = map[status] ?? map.new;
@@ -1325,14 +1327,14 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
           {/* ── Search + filter bar ── */}
           <div className="flex flex-wrap items-center gap-2 px-5 pb-3 pt-3 border-b border-neutral-100">
             <div className="relative flex-1 min-w-[160px]">
-              <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-ink/30" />
+              <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-ink/50" />
               <input
                 type="text"
                 placeholder={e.crmSearchPlaceholder}
                 value={search}
                 onChange={(ev) => setSearch(ev.target.value)}
                 onKeyDown={(ev) => ev.key === "Enter" && void load(true)}
-                className="w-full rounded-lg border border-neutral-200 bg-white py-1.5 pl-8 pr-3 text-xs text-ink placeholder-ink/30 focus:border-copper/50 focus:outline-none"
+                className="w-full rounded-lg border border-neutral-200 bg-white py-1.5 pl-8 pr-3 text-xs text-ink placeholder-ink/50 focus:border-copper/50 focus:outline-none"
               />
             </div>
             <select
@@ -1585,7 +1587,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                     void patchLead(l.id, { ownerNotes: val });
                                   }
                                 }}
-                                className="w-full resize-none rounded-lg border border-neutral-200 bg-white p-2 text-xs text-ink/70 placeholder-ink/30 focus:border-copper/40 focus:outline-none"
+                                className="w-full resize-none rounded-lg border border-neutral-200 bg-white p-2 text-xs text-ink/70 placeholder-ink/50 focus:border-copper/40 focus:outline-none"
                                 rows={3}
                               />
                             ) : l.ownerNotes ? (
@@ -1818,7 +1820,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                     void patchConnection(c.id, { note: val });
                                   }
                                 }}
-                                className="w-full resize-none rounded-lg border border-neutral-200 bg-white p-2 text-xs text-ink/70 placeholder-ink/30 focus:border-copper/40 focus:outline-none"
+                                className="w-full resize-none rounded-lg border border-neutral-200 bg-white p-2 text-xs text-ink/70 placeholder-ink/50 focus:border-copper/40 focus:outline-none"
                                 rows={3}
                               />
                             ) : c.note ? (
