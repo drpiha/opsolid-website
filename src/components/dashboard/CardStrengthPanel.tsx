@@ -77,7 +77,7 @@ export function CardStrengthPanel({
     : "var(--signal-err)";
   const scoreColor =
     score >= 90 ? "text-signal-ok"
-    : score >= 70 ? "text-copper-500"
+    : score >= 70 ? "text-copper-700"
     : score >= 40 ? "text-signal-warn"
     : "text-signal-err";
   const lbl = T.label[locale];

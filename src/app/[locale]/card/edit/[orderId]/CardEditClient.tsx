@@ -401,11 +401,11 @@ export function CardEditClient(props: Props) {
   // A6 — status badge label map
   const statusBadgeMap: Record<string, { label: string; cls: string }> = {
     PUBLISHED: { label: "Live", cls: "bg-green-100 text-green-700" },
-    PENDING:   { label: "Ausstehend", cls: "bg-neutral-100 text-ink/60" },
-    DRAFT:     { label: "Entwurf", cls: "bg-neutral-100 text-ink/60" },
+    PENDING:   { label: "Ausstehend", cls: "bg-neutral-100 text-ink-200" },
+    DRAFT:     { label: "Entwurf", cls: "bg-neutral-100 text-ink-200" },
     CANCELLED: { label: "Storniert", cls: "bg-red-50 text-red-600" },
   };
-  const badgeInfo = statusBadgeMap[props.status] ?? { label: props.status, cls: "bg-neutral-100 text-ink/60" };
+  const badgeInfo = statusBadgeMap[props.status] ?? { label: props.status, cls: "bg-neutral-100 text-ink-200" };
 
   // B7 — helper: resolve photo/logo path to a valid src
   const resolveAsset = (path: string) =>
@@ -438,7 +438,7 @@ export function CardEditClient(props: Props) {
             href={publicUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="shrink-0 rounded-full border border-ink/15 bg-white px-3 py-1.5 text-xs font-semibold text-ink/70 transition-colors hover:border-ink/40 hover:text-ink"
+            className="shrink-0 rounded-full border border-ink/25 bg-white px-3 py-1.5 text-xs font-semibold text-ink-200 transition-colors hover:border-ink/40 hover:text-ink"
           >
             {edit.viewLive}
           </a>
@@ -468,13 +468,13 @@ export function CardEditClient(props: Props) {
           <p className="text-eyebrow uppercase tracking-wider text-ink-200">
             OpSolid · Digital Card
           </p>
-          <p className="mt-2 text-body text-ink/60">{edit.subtitle}</p>
+          <p className="mt-2 text-body text-ink-200">{edit.subtitle}</p>
           {currentSlug && props.status === "PUBLISHED" && (
             <div className="mt-4 max-w-md space-y-1.5">
               <label className="mono-label block text-[10px] uppercase tracking-[0.2em] text-ink-200">
                 {edit.publicUrlLabel ?? "Kart adresi"}
               </label>
-              <div className="flex items-stretch overflow-hidden rounded-2xl border border-ink/15 bg-white focus-within:border-copper">
+              <div className="flex items-stretch overflow-hidden rounded-2xl border border-ink/25 bg-white focus-within:border-copper">
                 <span className="flex items-center px-3 text-xs text-ink-200">
                   opsolid.de/c/
                 </span>
@@ -493,14 +493,14 @@ export function CardEditClient(props: Props) {
                   href={`/c/${currentSlug}?owner=${encodeURIComponent(props.editToken)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center border-l border-ink/15 px-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-ink/65 transition-colors hover:bg-bg-2 hover:text-ink"
+                  className="flex items-center border-l border-ink/15 px-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-200 transition-colors hover:bg-bg-2 hover:text-ink"
                   title={edit.viewAsOwner}
                 >
                   ↗
                 </a>
               </div>
               {editableSlug && editableSlug !== currentSlug && (
-                <p className="text-[11px] text-copper">
+                <p className="text-[11px] text-copper-700">
                   ⚠ {edit.slugRenameWarning}
                 </p>
               )}
@@ -630,7 +630,7 @@ export function CardEditClient(props: Props) {
             {/* Download OG image + cancel subscription */}
             <div className="rounded-2xl border border-neutral-200 bg-white p-5">
               <p className="text-heading-sm text-ink">{edit.shareHeading}</p>
-              <p className="mt-1 text-sm text-ink/60">{edit.shareBody}</p>
+              <p className="mt-1 text-sm text-ink-200">{edit.shareBody}</p>
               {props.slug && props.status === "PUBLISHED" ? (
                 <a
                   href={`/c/${props.slug}/wa.png`}
@@ -650,7 +650,7 @@ export function CardEditClient(props: Props) {
                 <p className="text-heading-sm text-ink">
                   {cancelCopy.heading}
                 </p>
-                <p className="mt-1 text-sm text-ink/60">{cancelCopy.body}</p>
+                <p className="mt-1 text-sm text-ink-200">{cancelCopy.body}</p>
                 {props.subscriptionCancelAt ? (
                   <p className="mt-3 text-sm text-ink">
                     {cancelCopy.alreadyScheduled.replace(
@@ -662,7 +662,7 @@ export function CardEditClient(props: Props) {
                   <button
                     type="button"
                     onClick={() => setCancelOpen(true)}
-                    className="mt-4 inline-flex btn-ghost text-sm text-brand"
+                    className="mt-4 inline-flex btn-ghost text-sm text-copper-700"
                   >
                     {cancelCopy.openCta}
                   </button>
@@ -810,7 +810,7 @@ function LiveBanner({
         href={cardUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex-1 min-w-[120px] text-copper-500 text-[13px] font-mono hover:underline truncate"
+        className="flex-1 min-w-[120px] text-copper-700 text-[13px] font-mono hover:underline truncate"
       >
         opsolid.de/c/{slug}
       </a>
@@ -923,7 +923,7 @@ function CancelModal({
 
         {state === "done" && result ? (
           <>
-            <p className="mt-4 text-sm text-ink/80">
+            <p className="mt-4 text-sm text-ink-200">
               {copy.doneBody.replace(
                 "{date}",
                 result.cancelAt
@@ -945,10 +945,10 @@ function CancelModal({
           </>
         ) : (
           <>
-            <p className="mt-4 text-sm text-ink/80">{explainer}</p>
+            <p className="mt-4 text-sm text-ink-200">{explainer}</p>
 
             {error && (
-              <div className="mt-4 flex items-start gap-2 rounded-2xl border border-brand/30 bg-brand/5 p-3 text-sm text-brand">
+              <div className="mt-4 flex items-start gap-2 rounded-2xl border border-brand/30 bg-brand/5 p-3 text-sm text-copper-700">
                 <AlertCircle size={14} className="mt-0.5 shrink-0" />
                 <span>{error}</span>
               </div>
@@ -1042,7 +1042,7 @@ function AnalyticsPanel({
       <div className="flex items-center justify-between px-5 py-4">
         <span className="text-sm font-semibold text-ink">Görüntülenme Analitiği</span>
         {data && (
-          <span className="text-[11px] font-semibold text-copper">{data.total} görüntülenme</span>
+          <span className="text-[11px] font-semibold text-copper-700">{data.total} görüntülenme</span>
         )}
       </div>
 
@@ -1051,7 +1051,7 @@ function AnalyticsPanel({
         <button
           type="button"
           onClick={onShare}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-copper-500/30 bg-copper-500/10 px-3 py-1.5 text-xs font-semibold text-copper-500 transition hover:bg-copper-500/20 active:scale-95"
+          className="inline-flex items-center gap-1.5 rounded-lg border border-copper-500/30 bg-copper-500/10 px-3 py-1.5 text-xs font-semibold text-copper-700 transition hover:bg-copper-500/20 active:scale-95"
         >
           <Share2 size={12} />
           Paylaş →
@@ -1082,10 +1082,10 @@ function AnalyticsPanel({
                 {sources.map((s) => (
                   <span
                     key={s.key}
-                    className="inline-flex items-center gap-1 rounded-full border border-neutral-100 bg-neutral-50 px-2.5 py-1 text-[11px] text-ink/70"
+                    className="inline-flex items-center gap-1 rounded-full border border-neutral-100 bg-neutral-50 px-2.5 py-1 text-[11px] text-ink-200"
                   >
                     <span className="font-medium">{s.key}</span>
-                    <span className="font-bold text-copper">{s.value}</span>
+                    <span className="font-bold text-copper-700">{s.value}</span>
                   </span>
                 ))}
               </div>
@@ -1157,7 +1157,7 @@ function TagInput({ onAdd }: { onAdd: (tag: string) => void }) {
         }
       }}
       placeholder="+ etiket"
-      className="w-16 rounded-full border border-dashed border-copper/30 bg-transparent px-2 py-0.5 text-[10px] text-copper/70 placeholder-copper/40 focus:border-copper/60 focus:outline-none"
+      className="w-16 rounded-full border border-dashed border-copper/30 bg-transparent px-2 py-0.5 text-[10px] text-copper-700 placeholder-copper/40 focus:border-copper/60 focus:outline-none"
     />
   );
 }
@@ -1173,7 +1173,7 @@ function StatusChip({ status }: { status: string }) {
     new:       { bg: "bg-neutral-100",  text: "text-ink-200",    label: e.leadStatusNew },
     contacted: { bg: "bg-blue-50",      text: "text-blue-600",  label: e.leadStatusContacted },
     qualified: { bg: "bg-green-50",     text: "text-green-600", label: e.leadStatusQualified },
-    archived:  { bg: "bg-neutral-50",   text: "text-ink/50",    label: e.leadStatusArchived },
+    archived:  { bg: "bg-neutral-50",   text: "text-ink-300",    label: e.leadStatusArchived },
     accepted:  { bg: "bg-green-50",     text: "text-green-600", label: e.leadStatusQualified },
   };
   const s = map[status] ?? map.new;
@@ -1328,7 +1328,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
             <div className="flex items-center gap-2">
               <span className="text-sm font-semibold text-ink">{e.crmHeaderTitle}</span>
               {total > 0 && (
-                <span className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-copper/15 px-1.5 text-[10px] font-semibold text-copper">
+                <span className="inline-flex h-5 min-w-[20px] items-center justify-center rounded-full bg-copper/15 px-1.5 text-[10px] font-semibold text-copper-700">
                   {total}
                 </span>
               )}
@@ -1353,7 +1353,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
           {/* ── Search + filter bar ── */}
           <div className="flex flex-wrap items-center gap-2 px-5 pb-3 pt-3 border-b border-neutral-100">
             <div className="relative flex-1 min-w-[160px]">
-              <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-ink/50" />
+              <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-ink-300" />
               <input
                 type="text"
                 placeholder={e.crmSearchPlaceholder}
@@ -1366,7 +1366,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
             <select
               value={statusFilter}
               onChange={(ev) => { setStatusFilter(ev.target.value); void load(true); }}
-              className="rounded-lg border border-neutral-200 bg-white px-2 py-1.5 text-xs text-ink/70 focus:border-copper/50 focus:outline-none"
+              className="rounded-lg border border-neutral-200 bg-white px-2 py-1.5 text-xs text-ink-200 focus:border-copper/50 focus:outline-none"
             >
               <option value="all">{e.crmFilterAll}</option>
               <option value="new">{e.leadStatusNew}</option>
@@ -1377,7 +1377,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
             <a
               href={`/api/card/edit/${orderId}/crm/export?t=${encodeURIComponent(editToken)}`}
               download
-              className="inline-flex items-center gap-1 rounded-lg border border-neutral-200 bg-white px-2.5 py-1.5 text-[11px] font-medium text-ink/60 transition hover:border-copper/40 hover:text-copper"
+              className="inline-flex items-center gap-1 rounded-lg border border-neutral-200 bg-white px-2.5 py-1.5 text-[11px] font-medium text-ink-200 transition hover:border-copper/40 hover:text-copper"
             >
               <Download size={12} />
               CSV
@@ -1385,7 +1385,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
             <button
               type="button"
               onClick={() => setAddOpen((v) => !v)}
-              className="inline-flex items-center gap-1 rounded-lg border border-copper/40 bg-copper/10 px-2.5 py-1.5 text-[11px] font-semibold text-copper transition hover:border-copper hover:bg-copper/20"
+              className="inline-flex items-center gap-1 rounded-lg border border-copper/40 bg-copper/10 px-2.5 py-1.5 text-[11px] font-semibold text-copper-700 transition hover:border-copper hover:bg-copper/20"
             >
               <UserPlus size={12} />
               {(e as Record<string, string>).crmAddContact ?? "Kişi ekle"}
@@ -1401,28 +1401,28 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                   placeholder={(e as Record<string, string>).crmAddName ?? "İsim"}
                   value={addForm.name}
                   onChange={(ev) => setAddForm((f) => ({ ...f, name: ev.target.value }))}
-                  className="rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-xs text-ink placeholder-ink/45 focus:border-copper/50 focus:outline-none"
+                  className="rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-xs text-ink placeholder-ink/55 focus:border-copper/50 focus:outline-none"
                 />
                 <input
                   type="email"
                   placeholder={(e as Record<string, string>).crmAddEmail ?? "E-posta"}
                   value={addForm.email}
                   onChange={(ev) => setAddForm((f) => ({ ...f, email: ev.target.value }))}
-                  className="rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-xs text-ink placeholder-ink/45 focus:border-copper/50 focus:outline-none"
+                  className="rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-xs text-ink placeholder-ink/55 focus:border-copper/50 focus:outline-none"
                 />
                 <input
                   type="tel"
                   placeholder={(e as Record<string, string>).crmAddPhone ?? "Telefon"}
                   value={addForm.phone}
                   onChange={(ev) => setAddForm((f) => ({ ...f, phone: ev.target.value }))}
-                  className="rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-xs text-ink placeholder-ink/45 focus:border-copper/50 focus:outline-none"
+                  className="rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-xs text-ink placeholder-ink/55 focus:border-copper/50 focus:outline-none"
                 />
                 <input
                   type="text"
                   placeholder={(e as Record<string, string>).crmAddCompany ?? "Şirket"}
                   value={addForm.company}
                   onChange={(ev) => setAddForm((f) => ({ ...f, company: ev.target.value }))}
-                  className="rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-xs text-ink placeholder-ink/45 focus:border-copper/50 focus:outline-none"
+                  className="rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-xs text-ink placeholder-ink/55 focus:border-copper/50 focus:outline-none"
                 />
               </div>
               <input
@@ -1430,13 +1430,13 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                 placeholder={(e as Record<string, string>).crmAddNote ?? "Not (opsiyonel)"}
                 value={addForm.message}
                 onChange={(ev) => setAddForm((f) => ({ ...f, message: ev.target.value }))}
-                className="w-full rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-xs text-ink placeholder-ink/45 focus:border-copper/50 focus:outline-none"
+                className="w-full rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-xs text-ink placeholder-ink/55 focus:border-copper/50 focus:outline-none"
               />
               <div className="flex items-center justify-end gap-2 pt-0.5">
                 <button
                   type="button"
                   onClick={() => { setAddOpen(false); setAddForm(EMPTY_ADD); }}
-                  className="rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-[11px] font-medium text-ink/60 hover:text-ink"
+                  className="rounded-lg border border-neutral-200 bg-white px-3 py-1.5 text-[11px] font-medium text-ink-200 hover:text-ink"
                 >
                   {(e as Record<string, string>).crmAddCancel ?? "İptal"}
                 </button>
@@ -1461,7 +1461,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                 type="button"
                 onClick={() => setTab(tabKey)}
                 className={`mr-4 pb-2 text-xs font-semibold uppercase tracking-wide transition ${
-                  tab === tabKey ? "border-b-2 border-copper text-copper" : "text-ink-200 hover:text-ink"
+                  tab === tabKey ? "border-b-2 border-copper text-copper-700" : "text-ink-200 hover:text-ink"
                 }`}
               >
                 {tabKey === "leads"
@@ -1511,7 +1511,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                 {l.name ?? "—"}
                               </span>
                               {savingId === l.id && (
-                                <Loader2 size={11} className="animate-spin text-copper/60" />
+                                <Loader2 size={11} className="animate-spin text-copper-700" />
                               )}
                             </div>
                             <div className="mt-0.5 truncate text-[11px] text-ink-200">
@@ -1544,7 +1544,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
 
                             {/* Message + interest */}
                             {l.message && (
-                              <p className="whitespace-pre-wrap text-xs text-ink/75">
+                              <p className="whitespace-pre-wrap text-xs text-ink-200">
                                 {l.message}
                               </p>
                             )}
@@ -1562,7 +1562,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                               {l.email && (
                                 <a
                                   href={`mailto:${l.email}`}
-                                  className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink/70 transition hover:border-copper/40 hover:text-copper active:scale-95"
+                                  className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink-200 transition hover:border-copper/40 hover:text-copper active:scale-95"
                                 >
                                   <Mail size={11} />
                                   {l.email}
@@ -1572,7 +1572,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                 <>
                                   <a
                                     href={`tel:${l.phone}`}
-                                    className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink/70 transition hover:border-copper/40 hover:text-copper active:scale-95"
+                                    className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink-200 transition hover:border-copper/40 hover:text-copper active:scale-95"
                                   >
                                     <Phone size={11} />
                                     {l.phone}
@@ -1581,7 +1581,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                     href={`https://wa.me/${l.phone.replace(/[^0-9]/g, "")}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink/70 transition hover:border-green-500/40 hover:text-green-600 active:scale-95"
+                                    className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink-200 transition hover:border-green-500/40 hover:text-green-600 active:scale-95"
                                   >
                                     <MessageCircle size={11} />
                                     WhatsApp
@@ -1595,7 +1595,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                               {(l.tags ?? []).map((tag) => (
                                 <span
                                   key={tag}
-                                  className="inline-flex items-center gap-1 rounded-full bg-copper/10 px-2 py-0.5 text-[10px] font-medium text-copper"
+                                  className="inline-flex items-center gap-1 rounded-full bg-copper/10 px-2 py-0.5 text-[10px] font-medium text-copper-700"
                                 >
                                   {tag}
                                   <button
@@ -1605,7 +1605,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                         tags: (l.tags ?? []).filter((t) => t !== tag),
                                       })
                                     }
-                                    className="text-copper/60 hover:text-copper leading-none"
+                                    className="text-copper-700 hover:text-copper leading-none"
                                   >
                                     ×
                                   </button>
@@ -1629,7 +1629,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                 onChange={(ev) =>
                                   void patchLead(l.id, { status: ev.target.value })
                                 }
-                                className="rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] text-ink/70 focus:border-copper/50 focus:outline-none"
+                                className="rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] text-ink-200 focus:border-copper/50 focus:outline-none"
                               >
                                 <option value="new">{e.leadStatusNew}</option>
                                 <option value="contacted">{e.leadStatusContacted}</option>
@@ -1682,11 +1682,11 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                     void patchLead(l.id, { ownerNotes: val });
                                   }
                                 }}
-                                className="w-full resize-none rounded-lg border border-neutral-200 bg-white p-2 text-xs text-ink/70 placeholder-ink/50 focus:border-copper/40 focus:outline-none"
+                                className="w-full resize-none rounded-lg border border-neutral-200 bg-white p-2 text-xs text-ink-200 placeholder-ink/50 focus:border-copper/40 focus:outline-none"
                                 rows={3}
                               />
                             ) : l.ownerNotes ? (
-                              <p className="rounded-lg border border-neutral-100 bg-white p-2 text-xs text-ink/65 whitespace-pre-wrap">
+                              <p className="rounded-lg border border-neutral-100 bg-white p-2 text-xs text-ink-200 whitespace-pre-wrap">
                                 {l.ownerNotes}
                               </p>
                             ) : null}
@@ -1747,7 +1747,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                 {c.visitorName}
                               </span>
                               {savingId === c.id && (
-                                <Loader2 size={11} className="animate-spin text-copper/60" />
+                                <Loader2 size={11} className="animate-spin text-copper-700" />
                               )}
                             </div>
                             <div className="mt-0.5 truncate text-[11px] text-ink-200">
@@ -1779,7 +1779,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                 href={`/c/${c.visitorSlug}`}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="block text-xs text-copper hover:underline"
+                                className="block text-xs text-copper-700 hover:underline"
                               >
                                 opsolid.de/c/{c.visitorSlug} ↗
                               </a>
@@ -1795,7 +1795,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                               {c.visitorEmail && (
                                 <a
                                   href={`mailto:${c.visitorEmail}`}
-                                  className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink/70 transition hover:border-copper/40 hover:text-copper active:scale-95"
+                                  className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink-200 transition hover:border-copper/40 hover:text-copper active:scale-95"
                                 >
                                   <Mail size={11} />
                                   {c.visitorEmail}
@@ -1805,7 +1805,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                 <>
                                   <a
                                     href={`tel:${c.visitorPhone}`}
-                                    className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink/70 transition hover:border-copper/40 hover:text-copper active:scale-95"
+                                    className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink-200 transition hover:border-copper/40 hover:text-copper active:scale-95"
                                   >
                                     <Phone size={11} />
                                     {c.visitorPhone}
@@ -1814,7 +1814,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                     href={`https://wa.me/${c.visitorPhone.replace(/[^0-9]/g, "")}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink/70 transition hover:border-green-500/40 hover:text-green-600 active:scale-95"
+                                    className="inline-flex min-h-[36px] items-center gap-1 rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] font-medium text-ink-200 transition hover:border-green-500/40 hover:text-green-600 active:scale-95"
                                   >
                                     <MessageCircle size={11} />
                                     WhatsApp
@@ -1828,7 +1828,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                               {(c.tags ?? []).map((tag) => (
                                 <span
                                   key={tag}
-                                  className="inline-flex items-center gap-1 rounded-full bg-copper/10 px-2 py-0.5 text-[10px] font-medium text-copper"
+                                  className="inline-flex items-center gap-1 rounded-full bg-copper/10 px-2 py-0.5 text-[10px] font-medium text-copper-700"
                                 >
                                   {tag}
                                   <button
@@ -1838,7 +1838,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                         tags: (c.tags ?? []).filter((t) => t !== tag),
                                       })
                                     }
-                                    className="text-copper/60 hover:text-copper leading-none"
+                                    className="text-copper-700 hover:text-copper leading-none"
                                   >
                                     ×
                                   </button>
@@ -1862,7 +1862,7 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                 onChange={(ev) =>
                                   void patchConnection(c.id, { status: ev.target.value })
                                 }
-                                className="rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] text-ink/70 focus:border-copper/50 focus:outline-none"
+                                className="rounded-md border border-neutral-200 bg-white px-2 py-1 text-[11px] text-ink-200 focus:border-copper/50 focus:outline-none"
                               >
                                 <option value="new">{e.leadStatusNew}</option>
                                 <option value="contacted">{e.leadStatusContacted}</option>
@@ -1915,11 +1915,11 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                     void patchConnection(c.id, { note: val });
                                   }
                                 }}
-                                className="w-full resize-none rounded-lg border border-neutral-200 bg-white p-2 text-xs text-ink/70 placeholder-ink/50 focus:border-copper/40 focus:outline-none"
+                                className="w-full resize-none rounded-lg border border-neutral-200 bg-white p-2 text-xs text-ink-200 placeholder-ink/50 focus:border-copper/40 focus:outline-none"
                                 rows={3}
                               />
                             ) : c.note ? (
-                              <p className="rounded-lg border border-neutral-100 bg-white p-2 text-xs text-ink/65 whitespace-pre-wrap">
+                              <p className="rounded-lg border border-neutral-100 bg-white p-2 text-xs text-ink-200 whitespace-pre-wrap">
                                 {c.note}
                               </p>
                             ) : null}
@@ -2192,7 +2192,7 @@ function AlbumPendingPanel({
                     </p>
                   )}
                   {p.caption && (
-                    <p className="line-clamp-2 text-[12px] leading-snug text-ink/65">
+                    <p className="line-clamp-2 text-[12px] leading-snug text-ink-200">
                       {p.caption}
                     </p>
                   )}
@@ -2219,7 +2219,7 @@ function AlbumPendingPanel({
                     onClick={() => decide(p.id, "REJECTED")}
                     disabled={busy}
                     aria-label="Reddet"
-                    className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-brand/30 bg-brand/10 text-brand transition hover:bg-brand/20 disabled:opacity-50"
+                    className="inline-flex h-8 w-8 items-center justify-center rounded-full border border-brand/30 bg-brand/10 text-copper-700 transition hover:bg-brand/20 disabled:opacity-50"
                   >
                     <X size={14} strokeWidth={2.5} />
                   </button>

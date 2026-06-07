@@ -47,7 +47,7 @@ export function StickySaveBar({ isDirty, formState, onRevert }: StickySaveBarPro
     >
       <div className="mx-auto flex max-w-2xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
         {/* Left: status label */}
-        <div className="flex items-center gap-2 text-sm text-ink/70">
+        <div className="flex items-center gap-2 text-sm text-ink-200">
           {isSaved ? (
             <CheckCircle2 size={15} className="text-green-600 shrink-0" />
           ) : isDirty ? (
@@ -61,8 +61,8 @@ export function StickySaveBar({ isDirty, formState, onRevert }: StickySaveBarPro
               isSaved
                 ? "text-green-700"
                 : isDirty
-                ? "text-ink/80"
-                : "text-ink-300"
+                ? "text-ink"
+                : "text-ink-200"
             }
           >
             {isSaved ? edit.savedSuccess : isDirty ? edit.unsavedChanges : edit.allSaved}
@@ -75,7 +75,7 @@ export function StickySaveBar({ isDirty, formState, onRevert }: StickySaveBarPro
             <button
               type="button"
               onClick={onRevert}
-              className="text-sm text-ink/60 underline-offset-2 hover:text-ink hover:underline"
+              className="text-sm text-ink-200 underline-offset-2 hover:text-ink hover:underline"
             >
               {edit.revert}
             </button>

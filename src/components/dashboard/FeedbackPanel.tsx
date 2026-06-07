@@ -119,7 +119,7 @@ export function FeedbackPanel({ orderId, editToken }: Props) {
                     style={{ width: `${(avg / 5) * 100}%` }}
                   />
                 </div>
-                <span className="text-xs text-copper-500 font-medium w-6 text-right">
+                <span className="text-xs text-copper-700 font-medium w-6 text-right">
                   {avg || "–"}
                 </span>
               </div>
@@ -141,7 +141,7 @@ export function FeedbackPanel({ orderId, editToken }: Props) {
 
       {/* Empty state when enabled but no reviews yet */}
       {data.feedbackEnabled && data.count === 0 && (
-        <p className="px-4 py-3 text-xs text-ink-400">
+        <p className="px-4 py-3 text-xs text-ink-300">
           Noch keine Bewertungen erhalten.
         </p>
       )}

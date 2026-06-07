@@ -208,7 +208,7 @@ export default function PersonBrandSection({
                   <button
                     type="button"
                     onClick={onOpenPhotoEditor}
-                    className="group relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-ink/15 bg-neutral-100"
+                    className="group relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-ink/25 bg-neutral-100"
                     aria-label={edit.adjustPhoto}
                     title={edit.adjustPhoto}
                   >
@@ -257,7 +257,7 @@ export default function PersonBrandSection({
                   <button
                     type="button"
                     onClick={onOpenLogoEditor}
-                    className="group relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-ink/15 bg-neutral-100"
+                    className="group relative h-16 w-16 shrink-0 overflow-hidden rounded-2xl border border-ink/25 bg-neutral-100"
                     aria-label={edit.adjustLogo}
                     title={edit.adjustLogo}
                   >
@@ -313,7 +313,7 @@ function UploadTile({
 }) {
   return (
     <label className="flex cursor-pointer items-center gap-4 rounded-2xl border border-dashed border-neutral-300 bg-white p-4 transition-colors hover:border-ink/40">
-      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-100 text-ink/60">
+      <div className="flex h-12 w-12 items-center justify-center rounded-full bg-neutral-100 text-ink-200">
         {uploading ? <Loader2 size={16} className="animate-spin" /> : <Upload size={16} />}
       </div>
       <div className="min-w-0 flex-1">

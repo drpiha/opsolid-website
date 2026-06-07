@@ -106,14 +106,14 @@ export default function PublishSection({
       <div hidden={!openSections.has("publish")} className="space-y-4">
 
         {errorMsg && (
-          <div className="flex items-start gap-3 rounded-2xl border border-brand/30 bg-brand/5 p-4 text-sm text-brand">
+          <div className="flex items-start gap-3 rounded-2xl border border-brand/30 bg-brand/5 p-4 text-sm text-copper-700">
             <AlertCircle size={16} className="mt-0.5 shrink-0" />
             <span>{errorMsg}</span>
           </div>
         )}
 
         {formState === "saved" && (
-          <div className="flex items-start gap-3 rounded-2xl border border-green-600/30 bg-green-600/5 p-4 text-sm text-green-700">
+          <div className="flex items-start gap-3 rounded-2xl border border-green-600/30 bg-green-600/5 p-4 text-sm text-green-800">
             <CheckCircle2 size={16} className="mt-0.5 shrink-0" />
             <span>{edit.savedSuccess}</span>
           </div>

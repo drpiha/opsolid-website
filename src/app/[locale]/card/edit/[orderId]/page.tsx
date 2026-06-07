@@ -125,7 +125,7 @@ function EditRejectedView({
   };
 
   return (
-    <main className="min-h-screen bg-neutral-50 px-4 py-16">
+    <main className="editor-light min-h-screen bg-neutral-50 px-4 py-16">
       <div className="mx-auto max-w-xl rounded-3xl border border-neutral-200 bg-white p-8">
         <p className="text-eyebrow uppercase tracking-wider text-ink-300">
           OpSolid · Digital Card
@@ -133,7 +133,7 @@ function EditRejectedView({
         <h1 className="mt-3 font-display text-3xl text-ink">
           {titleByReason[reason] ?? "Unable to load this edit link"}
         </h1>
-        <p className="mt-4 text-body text-ink/70">{bodyByReason[reason]}</p>
+        <p className="mt-4 text-body text-ink-200">{bodyByReason[reason]}</p>
         <p className="mt-6 text-sm text-ink-300">
           Need help?{" "}
           <a href="/contact" className="underline underline-offset-4">
