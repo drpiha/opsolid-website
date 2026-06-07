@@ -274,6 +274,24 @@ export function getTemplateEntry(
   return templateRegistry[id];
 }
 
+/**
+ * Registry `key`s of the templates that already render `logoPath` in their own
+ * markup (plus SmartCard, handled via `!entry`). The universal LogoBlock strip
+ * is suppressed for these to avoid a duplicate logo.
+ *
+ * Defined HERE (a server-safe module) rather than in LogoBlock.tsx, which is a
+ * "use client" module — importing a plain value from a client module into a
+ * Server Component yields a client-reference proxy, not the real Set, and
+ * `.has()` throws at render time.
+ */
+export const LOGO_NATIVE_KEYS = new Set<string>([
+  "architect", "atelier", "athlete", "barber", "beauty-salon", "clinic",
+  "dentist", "dentist-vivid", "developer", "editorial", "hotel",
+  "kitchen-atelier", "legal-counsel", "music-producer", "personal-trainer",
+  "real-estate", "restaurant", "studio", "tech-startup", "universal",
+  "wedding-planner", "yoga-studio",
+]);
+
 // =============================================================================
 // Planned line-up — what the Phase 7 carousel renders, regardless of which
 // per-template components have shipped yet. Lets the gallery show all 12

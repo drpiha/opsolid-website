@@ -19,16 +19,6 @@ interface LogoBlockProps {
   suppress?: boolean;
 }
 
-// Registry `key`s of the 22 templates that already render `logoPath` in their
-// own markup. Keep in sync if a template starts/stops rendering a logo.
-export const LOGO_NATIVE_KEYS = new Set<string>([
-  "architect", "atelier", "athlete", "barber", "beauty-salon", "clinic",
-  "dentist", "dentist-vivid", "developer", "editorial", "hotel",
-  "kitchen-atelier", "legal-counsel", "music-producer", "personal-trainer",
-  "real-estate", "restaurant", "studio", "tech-startup", "universal",
-  "wedding-planner", "yoga-studio",
-]);
-
 function resolveSrc(path: string): string {
   if (/^(https?:|blob:|data:)/.test(path) || path.startsWith("/")) return path;
   return `/${path}`;
