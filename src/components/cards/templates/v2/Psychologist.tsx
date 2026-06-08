@@ -38,6 +38,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#3d5a80";
@@ -444,8 +445,9 @@ export function Psychologist({
         <PsSection eyebrow={t.formatEyebrow} title={t.formatTitle} primary={primary}>
           <div className="grid grid-cols-3 gap-2.5">
             {services.slice(0, 3).map((s, i) => (
-              <div
+              <ServiceLink
                 key={`${s.title}-${i}`}
+                href={s.href}
                 className="rounded-[16px] p-4 text-center"
                 style={{ background: SURFACE_WARM, border: `1px solid ${HAIRLINE}` }}
               >
@@ -464,7 +466,7 @@ export function Psychologist({
                     {s.priceLabel}
                   </div>
                 )}
-              </div>
+              </ServiceLink>
             ))}
           </div>
         </PsSection>

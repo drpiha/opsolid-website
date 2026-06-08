@@ -41,6 +41,7 @@ import { getSectorPreset } from "@/config/card-sectors";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { TemplateProps, TemplateRegistryEntry, SampleData } from "./types";
@@ -783,7 +784,7 @@ function PriceList({
   accent,
   title,
 }: {
-  items: Array<{ title: string; description?: string; priceLabel?: string }>;
+  items: Array<{ title: string; description?: string; priceLabel?: string; href?: string | null }>;
   accent: string;
   title: string;
 }) {
@@ -815,8 +816,9 @@ function PriceList({
       >
         <ul className="divide-y divide-white/8">
           {items.map((item, i) => (
-            <li
+            <ServiceLink
               key={`${item.title}-${i}`}
+              href={item.href}
               className="grid grid-cols-[1fr_auto] gap-x-4 gap-y-1 px-4 py-3.5"
             >
               <h3
@@ -838,7 +840,7 @@ function PriceList({
                   {item.description}
                 </p>
               )}
-            </li>
+            </ServiceLink>
           ))}
         </ul>
       </div>

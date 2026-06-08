@@ -26,6 +26,7 @@ import Image from "next/image";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -421,8 +422,9 @@ export function BarberVivid({
             {services.map((svc, i) => {
               const featured = i === services.length - 1 && services.length > 2;
               return (
-                <div
+                <ServiceLink
                   key={`${svc.title}-${i}`}
+                  href={svc.href}
                   className="relative overflow-hidden rounded-2xl p-4"
                   style={{
                     background: featured ? heroGrad : SURFACE,
@@ -485,7 +487,7 @@ export function BarberVivid({
                       {svc.priceLabel}
                     </div>
                   )}
-                </div>
+                </ServiceLink>
               );
             })}
           </div>

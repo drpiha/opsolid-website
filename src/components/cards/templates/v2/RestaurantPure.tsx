@@ -27,6 +27,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#f9f7f2";
@@ -412,8 +413,9 @@ export function RestaurantPure({
           {/* dish list */}
           <div className="mt-5">
             {services.map((svc, i) => (
-              <div
+              <ServiceLink
                 key={`${svc.title}-${i}`}
+                href={svc.href}
                 className="grid items-baseline gap-3 py-3.5"
                 style={{
                   gridTemplateColumns: "1fr auto",
@@ -445,7 +447,7 @@ export function RestaurantPure({
                     {svc.priceLabel}
                   </div>
                 )}
-              </div>
+              </ServiceLink>
             ))}
           </div>
         </section>

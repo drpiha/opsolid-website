@@ -36,6 +36,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#0d1117";
@@ -480,8 +481,9 @@ export function SoftwareDev({
           <DevSectionTitle accent={accent}>{t.services}</DevSectionTitle>
           <div className="mt-4 space-y-2">
             {services.slice(0, 5).map((svc, i) => (
-              <div
+              <ServiceLink
                 key={`${svc.title}-${i}`}
+                href={svc.href}
                 className="rounded-lg p-4 transition-colors hover:bg-[#1c2128]"
                 style={{
                   background: PANEL,
@@ -512,7 +514,7 @@ export function SoftwareDev({
                     </span>
                   )}
                 </div>
-              </div>
+              </ServiceLink>
             ))}
           </div>
         </section>

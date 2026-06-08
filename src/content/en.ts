@@ -1854,6 +1854,27 @@ export const content = {
           customSectionRemove: "Remove",
           customSectionsCount: "{n} of 6",
           customSectionAddImage: "Add image (optional)",
+          // FAQ editor
+          faqSection: "FAQ (optional)",
+          faqHint:
+            "Add up to 12 frequently asked questions — they appear as an accordion on your card.",
+          faqQuestion: "Question",
+          faqAnswer: "Answer",
+          faqAdd: "Add question",
+          faqRemove: "Remove",
+          faqEmpty:
+            "No FAQ items yet. Add a question to get started.",
+          // Testimonials editor
+          testimonialsSection: "Testimonials (optional)",
+          testimonialsHint:
+            "Add up to 8 client quotes — shown on all templates that don't display them natively.",
+          testimonialAuthor: "Name (e.g. Maria K.)",
+          testimonialRole: "Role / company (optional)",
+          testimonialQuote: "Quote",
+          testimonialAdd: "Add testimonial",
+          testimonialRemove: "Remove",
+          testimonialsEmpty:
+            "No testimonials yet. Add your first client quote.",
           // Phase 7.9 — typography presets
           typographySection: "Typography (optional)",
           typographyHint:

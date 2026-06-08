@@ -25,6 +25,7 @@ import Image from "next/image";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -496,8 +497,9 @@ export function BarberStone({
             {services.map((svc, i) => {
               const featured = i === services.length - 1 && services.length > 2;
               return (
-                <div
+                <ServiceLink
                   key={`${svc.title}-${i}`}
+                  href={svc.href}
                   className="flex items-baseline gap-2.5"
                   style={{
                     padding: featured ? "14px 12px" : "12px 0",
@@ -545,7 +547,7 @@ export function BarberStone({
                       {svc.priceLabel}
                     </span>
                   )}
-                </div>
+                </ServiceLink>
               );
             })}
           </div>

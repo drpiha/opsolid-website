@@ -14,6 +14,7 @@ import Image from "next/image";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -315,8 +316,9 @@ export function LayoutNoirLuxury({
           </h2>
           <ol className="flex flex-col gap-3">
             {services.map((svc, i) => (
-              <li
+              <ServiceLink
                 key={`${svc.title}-${i}`}
+                href={svc.href}
                 className="flex gap-4 py-3.5 pl-4 pr-3"
                 style={{
                   borderLeft: `2px solid ${accent}`,
@@ -371,7 +373,7 @@ export function LayoutNoirLuxury({
                     </div>
                   )}
                 </div>
-              </li>
+              </ServiceLink>
             ))}
           </ol>
         </section>

@@ -29,6 +29,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#1a365d"; // deep ink-blue
@@ -420,8 +421,9 @@ export function RealEstatePure({
           <SectionH primary={primary}>{t.serviceRange}</SectionH>
           <div className="flex flex-col">
             {services.slice(0, 6).map((svc, i, arr) => (
-              <div
+              <ServiceLink
                 key={`${svc.title}-${i}`}
+                href={svc.href}
                 className="flex items-center gap-4 py-3.5"
                 style={{
                   borderBottom: i < arr.length - 1 ? `1px solid ${HAIRLINE_LIGHT}` : "none",
@@ -446,7 +448,7 @@ export function RealEstatePure({
                     {svc.priceLabel}
                   </span>
                 )}
-              </div>
+              </ServiceLink>
             ))}
           </div>
         </section>

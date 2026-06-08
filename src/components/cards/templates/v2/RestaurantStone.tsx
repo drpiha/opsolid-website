@@ -27,6 +27,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#8b7355";
@@ -488,8 +489,9 @@ export function RestaurantStone({
           </h3>
           <div className="flex flex-col gap-3">
             {services.map((svc, i) => (
-              <div
+              <ServiceLink
                 key={`${svc.title}-${i}`}
+                href={svc.href}
                 className="rounded-[14px] px-5 py-4"
                 style={{
                   background: SURFACE,
@@ -528,7 +530,7 @@ export function RestaurantStone({
                     </span>
                   )}
                 </div>
-              </div>
+              </ServiceLink>
             ))}
           </div>
         </section>

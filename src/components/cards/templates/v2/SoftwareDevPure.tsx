@@ -26,6 +26,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#1a56db";
@@ -375,8 +376,9 @@ export function SoftwareDevPure({
         <PureSection num="03" title={t.services}>
           <div>
             {services.map((s, i) => (
-              <div
+              <ServiceLink
                 key={`${s.title}-${i}`}
+                href={s.href}
                 className={`grid grid-cols-[36px_1fr_auto] items-baseline gap-4 py-3.5 ${i < services.length - 1 ? "border-b" : ""}`}
                 style={{ borderColor: HAIRLINE_SOFT }}
               >
@@ -407,7 +409,7 @@ export function SoftwareDevPure({
                     {s.priceLabel}
                   </span>
                 )}
-              </div>
+              </ServiceLink>
             ))}
           </div>
         </PureSection>

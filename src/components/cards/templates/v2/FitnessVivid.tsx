@@ -24,6 +24,7 @@ import Image from "next/image";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -571,8 +572,9 @@ export function FitnessVivid({
               ];
               const priceColor = i === 0 ? RED : i === 1 ? ORANGE : i === 2 ? "#d97706" : RED;
               return (
-                <div
+                <ServiceLink
                   key={`${svc.title}-${i}`}
+                  href={svc.href}
                   className="relative flex flex-col gap-2 overflow-hidden"
                   style={{
                     background: CARD,
@@ -629,7 +631,7 @@ export function FitnessVivid({
                       {svc.priceLabel}
                     </div>
                   )}
-                </div>
+                </ServiceLink>
               );
             })}
           </section>

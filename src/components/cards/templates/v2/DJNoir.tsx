@@ -26,6 +26,7 @@ import Image from "next/image";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -474,8 +475,9 @@ export function DJNoir({
               const date = new Date(today);
               date.setDate(today.getDate() + 7 * (i + 1));
               return (
-                <div
+                <ServiceLink
                   key={`${svc.title}-${i}`}
+                  href={svc.href}
                   className="flex gap-4 px-[18px] py-[18px]"
                   style={{
                     background: SURFACE_2,
@@ -527,7 +529,7 @@ export function DJNoir({
                       </div>
                     )}
                   </div>
-                </div>
+                </ServiceLink>
               );
             })}
           </div>

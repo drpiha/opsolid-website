@@ -131,12 +131,22 @@ export async function POST(req: NextRequest) {
   }
 
   // Paid tiers: create Stripe checkout session.
-  const priceId =
-    data.billingMode === "MONTHLY"
+  //
+  // The Stripe Price IDs stored in the catalog are TEST-mode objects. A
+  // test-mode price under a live key (or vice-versa) is rejected by Stripe
+  // ("No such price"), which would break exactly the ~19 priced templates the
+  // instant we switch to live keys. The `*Cents` fields are authoritative and
+  // present for every template, and inline price_data works in either mode, so
+  // we default to price_data and only consume stored price IDs when explicitly
+  // opted in (after a live `setup-stripe` run) via STRIPE_USE_PRICE_IDS=true.
+  const useStoredPriceIds = process.env.STRIPE_USE_PRICE_IDS === "true";
+  const priceId = useStoredPriceIds
+    ? data.billingMode === "MONTHLY"
       ? template.stripeMonthlyPriceId
       : data.billingMode === "YEARLY"
       ? template.stripeYearlyPriceId
-      : template.stripeOneTimePriceId;
+      : template.stripeOneTimePriceId
+    : null;
 
   try {
     const session = await createCheckoutSession({

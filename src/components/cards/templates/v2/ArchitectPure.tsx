@@ -24,6 +24,7 @@ import Image from "next/image";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -394,8 +395,9 @@ export function ArchitectPure({
             style={{ borderTop: `1px solid ${LINE}` }}
           >
             {services.map((svc, i) => (
-              <li
+              <ServiceLink
                 key={`${svc.title}-${i}`}
+                href={svc.href}
                 className="grid items-center gap-3.5 py-3"
                 style={{
                   borderBottom: `1px solid ${LINE_SOFT}`,
@@ -425,7 +427,7 @@ export function ArchitectPure({
                 >
                   {svc.priceLabel || `${10 + i * 4} ${locale === "de" ? "Projekte" : locale === "tr" ? "proje" : "projects"}`}
                 </span>
-              </li>
+              </ServiceLink>
             ))}
           </ul>
         </section>

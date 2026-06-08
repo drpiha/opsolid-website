@@ -32,6 +32,7 @@ import {
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -458,8 +459,9 @@ export function BeautySalon({
             {services.map((s, i) => {
               const featured = i === 0;
               return (
-                <article
+                <ServiceLink
                   key={`${s.title}-${i}`}
+                  href={s.href}
                   className="relative overflow-hidden rounded-[18px] p-4 transition-all hover:-translate-y-1"
                   style={
                     featured
@@ -512,7 +514,7 @@ export function BeautySalon({
                       {s.priceLabel}
                     </div>
                   )}
-                </article>
+                </ServiceLink>
               );
             })}
           </div>

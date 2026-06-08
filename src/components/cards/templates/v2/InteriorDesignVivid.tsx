@@ -34,6 +34,7 @@ import {
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -485,8 +486,9 @@ export function InteriorDesignVivid({
             <SectionTitle primary={primary}>{t.servicesH}</SectionTitle>
             <div className="mt-4 grid grid-cols-2 gap-3">
               {otherSvcs.map((svc, i) => (
-                <div
+                <ServiceLink
                   key={`${svc.title}-${i}`}
+                  href={svc.href}
                   className="rounded-2xl px-4 py-5 transition-all hover:-translate-y-0.5"
                   style={{ background: SURFACE, border: `1px solid ${HAIRLINE}` }}
                 >
@@ -507,7 +509,7 @@ export function InteriorDesignVivid({
                       {svc.description}
                     </div>
                   )}
-                </div>
+                </ServiceLink>
               ))}
             </div>
           </section>

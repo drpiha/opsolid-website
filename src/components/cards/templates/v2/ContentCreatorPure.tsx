@@ -33,6 +33,7 @@ import {
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -511,8 +512,9 @@ export function ContentCreatorPure({
             {/* Service list */}
             <div className="mt-4">
               {services.slice(0, 4).map((s, i, arr) => (
-                <div
+                <ServiceLink
                   key={`${s.title}-${i}`}
+                  href={s.href}
                   className="flex items-baseline justify-between py-2.5"
                   style={{
                     borderBottom: i < arr.length - 1 ? `1px dashed ${HAIRLINE}` : "none",
@@ -529,7 +531,7 @@ export function ContentCreatorPure({
                       {s.priceLabel}
                     </span>
                   )}
-                </div>
+                </ServiceLink>
               ))}
             </div>
           </div>

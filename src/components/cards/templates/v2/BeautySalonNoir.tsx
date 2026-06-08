@@ -27,6 +27,7 @@ import { ArrowRight, Shield } from "lucide-react";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -392,8 +393,9 @@ export function BeautySalonNoir({
         <BsnSection title={t.menu} subtitle={t.menuSub} accent={accent}>
           <div>
             {services.map((s, i) => (
-              <div
+              <ServiceLink
                 key={`${s.title}-${i}`}
+                href={s.href}
                 className={`grid grid-cols-[32px_1fr_auto] items-baseline gap-3.5 py-4 ${i < services.length - 1 ? "border-b" : ""}`}
                 style={{ borderColor: HAIRLINE }}
               >
@@ -419,7 +421,7 @@ export function BeautySalonNoir({
                     {s.priceLabel}
                   </span>
                 )}
-              </div>
+              </ServiceLink>
             ))}
           </div>
         </BsnSection>

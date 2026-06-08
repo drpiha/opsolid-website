@@ -28,6 +28,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#7c3aed";
@@ -427,8 +428,9 @@ export function PhotographerVivid({
       {services.length > 0 && (
         <section className="grid grid-cols-2 gap-2.5 px-6 pt-3">
           {services.map((svc, i) => (
-            <div
+            <ServiceLink
               key={`${svc.title}-${i}`}
+              href={svc.href}
               className="relative overflow-hidden rounded-[18px] px-4 py-4"
               style={{
                 background: SURFACE,
@@ -466,7 +468,7 @@ export function PhotographerVivid({
                   {svc.priceLabel}
                 </div>
               )}
-            </div>
+            </ServiceLink>
           ))}
         </section>
       )}

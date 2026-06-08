@@ -26,6 +26,7 @@ import Image from "next/image";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -467,8 +468,9 @@ export function ArchitectNoir({
           <SectEyebrow accent={accent} num={t.specsEyebrow.split(" ")[0]} text={t.specsEyebrow.split(" ").slice(1).join(" ")} />
           <ul className="mt-5 flex flex-col">
             {services.map((svc, i) => (
-              <li
+              <ServiceLink
                 key={`${svc.title}-${i}`}
+                href={svc.href}
                 className="flex items-center justify-between gap-4 py-3.5"
                 style={{
                   borderBottom:
@@ -490,7 +492,7 @@ export function ArchitectNoir({
                 >
                   {romans[i] ?? `${i + 1}.`}.
                 </span>
-              </li>
+              </ServiceLink>
             ))}
           </ul>
         </section>

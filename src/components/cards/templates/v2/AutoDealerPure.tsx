@@ -31,6 +31,7 @@ import {
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -397,8 +398,9 @@ export function AutoDealerPure({
             <SectionLabel>{t.servicesH}</SectionLabel>
             <div className="mt-5">
               {otherSvcs.slice(0, 6).map((svc, i, arr) => (
-                <div
+                <ServiceLink
                   key={`${svc.title}-${i}`}
+                  href={svc.href}
                   className="flex items-center gap-4 py-4"
                   style={{
                     borderBottom: i < arr.length - 1 ? `1px solid ${HAIRLINE}` : "none",
@@ -422,7 +424,7 @@ export function AutoDealerPure({
                     )}
                   </div>
                   <ChevronRight size={14} style={{ color: INK_SOFT }} strokeWidth={1.6} />
-                </div>
+                </ServiceLink>
               ))}
             </div>
           </section>

@@ -36,6 +36,7 @@ import {
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -542,8 +543,9 @@ export function AutoDealerVivid({
               style={{ background: SURFACE, border: `1px solid ${HAIRLINE}` }}
             >
               {otherSvcs.map((svc, i, arr) => (
-                <div
+                <ServiceLink
                   key={`${svc.title}-${i}`}
+                  href={svc.href}
                   className="flex items-center gap-3 px-5 py-4"
                   style={{
                     borderBottom: i < arr.length - 1 ? `1px solid ${HAIRLINE}` : "none",
@@ -569,7 +571,7 @@ export function AutoDealerVivid({
                     )}
                   </div>
                   <ChevronRight size={14} style={{ color: INK_SOFT }} strokeWidth={1.8} />
-                </div>
+                </ServiceLink>
               ))}
             </div>
           </section>

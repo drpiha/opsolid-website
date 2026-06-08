@@ -40,6 +40,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#5f7a6e"; // sage green
@@ -526,8 +527,9 @@ export function WellnessTeacher({
           </SectionHeading>
           <div className="mt-4 flex flex-col gap-3">
             {services.slice(0, 4).map((svc, i) => (
-              <div
+              <ServiceLink
                 key={`${svc.title}-${i}`}
+                href={svc.href}
                 className="flex items-center justify-between rounded-2xl px-5 py-4"
                 style={{
                   background: SURFACE,
@@ -553,7 +555,7 @@ export function WellnessTeacher({
                     {svc.priceLabel}
                   </div>
                 )}
-              </div>
+              </ServiceLink>
             ))}
           </div>
         </section>

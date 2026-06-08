@@ -26,6 +26,7 @@ import { Calendar, Mail, MessageCircle, Phone } from "lucide-react";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -466,8 +467,9 @@ export function ClinicNoir({
           </h2>
           <div className="flex flex-col gap-2.5">
             {services.map((svc, i) => (
-              <div
+              <ServiceLink
                 key={`${svc.title}-${i}`}
+                href={svc.href}
                 className="flex items-start px-4 py-3.5"
                 style={{
                   background: SURFACE_3,
@@ -506,7 +508,7 @@ export function ClinicNoir({
                     </div>
                   )}
                 </div>
-              </div>
+              </ServiceLink>
             ))}
           </div>
         </section>

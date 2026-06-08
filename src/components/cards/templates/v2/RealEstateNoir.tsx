@@ -39,6 +39,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#0d0d0d";
@@ -439,8 +440,9 @@ export function RealEstateNoir({
         <Section accent={accent} eyebrow={t.services} title={t.servicesTitle}>
           <div className="flex flex-col gap-2.5">
             {services.slice(0, 6).map((svc, i) => (
-              <div
+              <ServiceLink
                 key={`${svc.title}-${i}`}
+                href={svc.href}
                 className="flex items-stretch px-[18px] py-4"
                 style={{
                   background: PANEL,
@@ -469,7 +471,7 @@ export function RealEstateNoir({
                     </div>
                   )}
                 </div>
-              </div>
+              </ServiceLink>
             ))}
           </div>
         </Section>

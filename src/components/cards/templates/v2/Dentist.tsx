@@ -40,6 +40,7 @@ import { encodeSource, describeSource } from "@/components/cards/smart/SmartCard
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -496,8 +497,9 @@ export function Dentist({
             {services.slice(0, 6).map((svc, i) => {
               const fullWidth = services.length % 2 === 1 && i === services.length - 1;
               return (
-                <article
+                <ServiceLink
                   key={`${svc.title}-${i}`}
+                  href={svc.href}
                   className={`rounded-2xl p-4 transition-all ${fullWidth ? "col-span-2" : ""}`}
                   style={{
                     background: `linear-gradient(180deg, #ffffff 0%, ${accent} 280%)`,
@@ -524,7 +526,7 @@ export function Dentist({
                       )}
                     </p>
                   )}
-                </article>
+                </ServiceLink>
               );
             })}
           </div>

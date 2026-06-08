@@ -23,6 +23,7 @@ import { ArrowRight, Shield } from "lucide-react";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -351,8 +352,9 @@ export function DentistPure({
         <Section title={t.services} primary={primary}>
           <div>
             {services.map((s, i) => (
-              <div
+              <ServiceLink
                 key={`${s.title}-${i}`}
+                href={s.href}
                 className={`grid grid-cols-[32px_1fr_auto] items-center gap-4 py-3.5 ${i < services.length - 1 ? "border-b" : ""}`}
                 style={{ borderColor: HAIRLINE_SOFT }}
               >
@@ -367,7 +369,7 @@ export function DentistPure({
                     {s.priceLabel}
                   </span>
                 )}
-              </div>
+              </ServiceLink>
             ))}
           </div>
         </Section>

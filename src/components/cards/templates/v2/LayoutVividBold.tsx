@@ -14,6 +14,7 @@ import Image from "next/image";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -489,8 +490,9 @@ export function LayoutVividBold({
           </h2>
           <div className="grid grid-cols-2 gap-3">
             {services.slice(0, 4).map((svc, i) => (
-              <div
+              <ServiceLink
                 key={`tile-${i}`}
+                href={svc.href}
                 style={{
                   padding: "16px 14px",
                   borderRadius: 16,
@@ -540,7 +542,7 @@ export function LayoutVividBold({
                     {svc.description}
                   </div>
                 )}
-              </div>
+              </ServiceLink>
             ))}
           </div>
         </section>

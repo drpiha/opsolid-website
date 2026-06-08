@@ -28,6 +28,7 @@ import { ArrowUpRight, Mail, MessageCircle, Phone } from "lucide-react";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -392,8 +393,9 @@ export function EventPlannerNoir({
             <NoirSectionLabel accent={accent}>{t.servicesH}</NoirSectionLabel>
             <div className="mt-7">
               {services.slice(0, 6).map((svc, i, arr) => (
-                <div
+                <ServiceLink
                   key={`${svc.title}-${i}`}
+                  href={svc.href}
                   className="flex items-baseline justify-between py-4"
                   style={{
                     borderBottom: i < arr.length - 1 ? `1px solid ${HAIRLINE}` : "none",
@@ -408,7 +410,7 @@ export function EventPlannerNoir({
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                </div>
+                </ServiceLink>
               ))}
             </div>
           </section>

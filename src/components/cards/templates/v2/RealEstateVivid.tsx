@@ -41,6 +41,7 @@ import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#1a56db"; // bold electric blue
@@ -423,8 +424,9 @@ export function RealEstateVivid({
               const amber = i % 2 === 1;
               const full = arr.length === 5 && i === 4;
               return (
-                <div
+                <ServiceLink
                   key={`${svc.title}-${i}`}
+                  href={svc.href}
                   className={`rounded-2xl px-3.5 py-[18px] transition-all hover:-translate-y-0.5 ${full ? "col-span-2" : ""}`}
                   style={{
                     background: SURFACE,
@@ -465,7 +467,7 @@ export function RealEstateVivid({
                       {svc.priceLabel}
                     </div>
                   )}
-                </div>
+                </ServiceLink>
               );
             })}
           </div>

@@ -31,6 +31,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#0d0d0d";
@@ -470,8 +471,9 @@ export function PhotographerNoir({
           </h3>
           <div>
             {services.map((svc, i) => (
-              <div
+              <ServiceLink
                 key={`${svc.title}-${i}`}
+                href={svc.href}
                 className="grid items-baseline gap-4 py-4"
                 style={{
                   gridTemplateColumns: "28px 1fr",
@@ -501,7 +503,7 @@ export function PhotographerNoir({
                     </div>
                   )}
                 </div>
-              </div>
+              </ServiceLink>
             ))}
           </div>
         </section>

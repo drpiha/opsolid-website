@@ -35,6 +35,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#7c3aed";
@@ -394,8 +395,9 @@ export function PsychologistVivid({
             {services.slice(0, 3).map((s, i) => {
               const featured = i === 1;
               return (
-                <article
+                <ServiceLink
                   key={`${s.title}-${i}`}
+                  href={s.href}
                   className="relative rounded-[18px] p-4 text-center transition-all hover:-translate-y-1"
                   style={
                     featured
@@ -447,7 +449,7 @@ export function PsychologistVivid({
                       )}
                     </div>
                   )}
-                </article>
+                </ServiceLink>
               );
             })}
           </div>

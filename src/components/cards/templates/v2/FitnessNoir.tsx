@@ -26,6 +26,7 @@ import Image from "next/image";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -546,8 +547,9 @@ export function FitnessNoir({
             {services.map((svc, i) => {
               const tint = i % 2 === 0 ? accent : ORANGE;
               return (
-                <li
+                <ServiceLink
                   key={`${svc.title}-${i}`}
+                  href={svc.href}
                   className="flex items-center justify-between gap-4 px-5 py-4"
                   style={{
                     background: SURFACE,
@@ -588,7 +590,7 @@ export function FitnessNoir({
                       {svc.priceLabel}
                     </div>
                   )}
-                </li>
+                </ServiceLink>
               );
             })}
           </ul>

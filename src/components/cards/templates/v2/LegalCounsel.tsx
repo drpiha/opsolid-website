@@ -46,6 +46,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#0b1426";
@@ -655,11 +656,12 @@ function PracticeItem({
   accent,
 }: {
   index: number;
-  item: { title: string; description?: string; priceLabel?: string };
+  item: { title: string; description?: string; priceLabel?: string; href?: string | null };
   accent: string;
 }) {
   return (
-    <li
+    <ServiceLink
+      href={item.href}
       className="flex items-start gap-4 rounded-md border px-4 py-3.5 transition-colors hover:border-[color:var(--lc-blue)]"
       style={{
         background: "var(--lc-panel)",
@@ -696,7 +698,7 @@ function PracticeItem({
           </p>
         )}
       </div>
-    </li>
+    </ServiceLink>
   );
 }
 

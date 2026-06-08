@@ -25,6 +25,7 @@ import Image from "next/image";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -416,8 +417,9 @@ export function ClinicPure({
             </h3>
             <ul className="list-none">
               {services.map((svc, i) => (
-                <li
+                <ServiceLink
                   key={`${svc.title}-${i}`}
+                  href={svc.href}
                   className="py-2.5 text-[13px] leading-[1.6]"
                   style={{
                     color: INK,
@@ -444,7 +446,7 @@ export function ClinicPure({
                       {svc.description}
                     </div>
                   )}
-                </li>
+                </ServiceLink>
               ))}
             </ul>
           </div>

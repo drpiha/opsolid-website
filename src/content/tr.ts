@@ -1854,6 +1854,27 @@ export const content: Content = {
           customSectionRemove: "Kaldır",
           customSectionsCount: "{n} / 6",
           customSectionAddImage: "Resim ekle (opsiyonel)",
+          // FAQ editor
+          faqSection: "SSS (opsiyonel)",
+          faqHint:
+            "En fazla 12 sık sorulan soru — kartında akordiyon biçiminde görünür.",
+          faqQuestion: "Soru",
+          faqAnswer: "Cevap",
+          faqAdd: "Soru ekle",
+          faqRemove: "Kaldır",
+          faqEmpty:
+            "Henüz SSS yok. İlk soruyu ekle.",
+          // Testimonials editor
+          testimonialsSection: "Müşteri yorumları (opsiyonel)",
+          testimonialsHint:
+            "En fazla 8 müşteri alıntısı — yerleşik yorumları olmayan tüm şablonlarda gösterilir.",
+          testimonialAuthor: "Ad (ör. Ayşe K.)",
+          testimonialRole: "Unvan / şirket (opsiyonel)",
+          testimonialQuote: "Alıntı",
+          testimonialAdd: "Yorum ekle",
+          testimonialRemove: "Kaldır",
+          testimonialsEmpty:
+            "Henüz müşteri yorumu yok. İlk alıntını ekle.",
           typographySection: "Tipografi (opsiyonel)",
           typographyHint:
             "Şablonun fontlarını değiştirir. Şablon varsayılanı seçili kalırsa şablonun kendi fontları kullanılır.",

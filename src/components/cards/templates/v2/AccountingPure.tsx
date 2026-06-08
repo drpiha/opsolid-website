@@ -27,6 +27,7 @@ import { ArrowRight, Shield } from "lucide-react";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -396,8 +397,9 @@ export function AccountingPure({
         <PureSection num="02" title={t.services}>
           <div>
             {services.map((s, i) => (
-              <div
+              <ServiceLink
                 key={`${s.title}-${i}`}
+                href={s.href}
                 className={`grid grid-cols-[36px_1fr_auto] items-baseline gap-4 py-3.5 ${i < services.length - 1 ? "border-b" : ""}`}
                 style={{ borderColor: HAIRLINE_SOFT }}
               >
@@ -425,7 +427,7 @@ export function AccountingPure({
                     {s.priceLabel}
                   </span>
                 )}
-              </div>
+              </ServiceLink>
             ))}
           </div>
         </PureSection>

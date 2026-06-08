@@ -37,6 +37,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#7c3aed";
@@ -544,8 +545,9 @@ export function SoftwareDevVivid({
             {services.slice(0, 6).map((svc, i) => {
               const fullWidth = services.length % 2 === 1 && i === services.length - 1;
               return (
-                <article
+                <ServiceLink
                   key={`${svc.title}-${i}`}
+                  href={svc.href}
                   className={`rounded-2xl p-4 ${fullWidth ? "col-span-2" : ""}`}
                   style={{
                     background: SURFACE,
@@ -583,7 +585,7 @@ export function SoftwareDevVivid({
                       {svc.priceLabel}
                     </span>
                   )}
-                </article>
+                </ServiceLink>
               );
             })}
           </div>

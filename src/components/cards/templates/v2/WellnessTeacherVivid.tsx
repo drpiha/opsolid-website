@@ -39,6 +39,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#f97316"; // sunset orange
@@ -479,8 +480,9 @@ export function WellnessTeacherVivid({
           <SectionTitle primary={primary}>{t.services}</SectionTitle>
           <div className="mt-4 grid gap-2.5">
             {services.slice(0, 5).map((svc, i) => (
-              <div
+              <ServiceLink
                 key={`${svc.title}-${i}`}
+                href={svc.href}
                 className="flex items-center justify-between rounded-2xl px-5 py-4"
                 style={{
                   background: `linear-gradient(135deg, ${accent}26 0%, ${SURFACE} 100%)`,
@@ -505,7 +507,7 @@ export function WellnessTeacherVivid({
                     {svc.priceLabel}
                   </div>
                 )}
-              </div>
+              </ServiceLink>
             ))}
           </div>
         </section>

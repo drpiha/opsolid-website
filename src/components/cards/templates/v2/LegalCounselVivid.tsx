@@ -34,6 +34,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#1a2b9e";
@@ -382,8 +383,9 @@ export function LegalCounselVivid({
               const isAmber = i % 2 === 1;
               const fullWidth = i === 4 || (services.length === 5 && i === 4);
               return (
-                <div
+                <ServiceLink
                   key={`${svc.title}-${i}`}
+                  href={svc.href}
                   className={`rounded-[16px] px-3.5 py-4.5 transition-all hover:-translate-y-0.5 ${fullWidth ? "col-span-2" : ""}`}
                   style={{
                     background: SURFACE,
@@ -427,7 +429,7 @@ export function LegalCounselVivid({
                       {svc.priceLabel}
                     </div>
                   )}
-                </div>
+                </ServiceLink>
               );
             })}
           </div>

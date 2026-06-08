@@ -23,6 +23,7 @@ import Image from "next/image";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -508,8 +509,9 @@ export function ArchitectVivid({
             {services.map((svc, i) => {
               const tint = i % 2 === 0 ? ACCENT : ACCENT_2;
               return (
-                <div
+                <ServiceLink
                   key={`${svc.title}-${i}`}
+                  href={svc.href}
                   className="flex flex-col"
                   style={{
                     background: CARD,
@@ -564,7 +566,7 @@ export function ArchitectVivid({
                       {svc.priceLabel}
                     </div>
                   )}
-                </div>
+                </ServiceLink>
               );
             })}
           </section>

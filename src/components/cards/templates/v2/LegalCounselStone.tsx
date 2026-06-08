@@ -46,6 +46,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#3d4451";
@@ -471,8 +472,9 @@ export function LegalCounselStone({
             {services.map((svc, i) => {
               const Icon = SVC_ICONS[i % SVC_ICONS.length];
               return (
-                <div
+                <ServiceLink
                   key={`${svc.title}-${i}`}
+                  href={svc.href}
                   className="flex items-center gap-4 rounded-[14px] px-4.5 py-4 transition-transform hover:translate-x-1"
                   style={{
                     background: PAPER_WARM,
@@ -514,7 +516,7 @@ export function LegalCounselStone({
                       {svc.priceLabel}
                     </div>
                   )}
-                </div>
+                </ServiceLink>
               );
             })}
           </div>

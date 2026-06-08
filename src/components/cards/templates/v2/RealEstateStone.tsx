@@ -28,6 +28,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#6b5340"; // warm taupe primary
@@ -468,8 +469,9 @@ export function RealEstateStone({
           </h2>
           <div className="flex flex-col gap-3">
             {services.slice(0, 6).map((svc, i) => (
-              <div
+              <ServiceLink
                 key={`${svc.title}-${i}`}
+                href={svc.href}
                 className="flex items-center gap-4 rounded-[14px] px-[18px] py-4 transition-all hover:translate-x-1"
                 style={{
                   background: PAPER_WARM,
@@ -498,7 +500,7 @@ export function RealEstateStone({
                     </div>
                   )}
                 </div>
-              </div>
+              </ServiceLink>
             ))}
           </div>
         </section>

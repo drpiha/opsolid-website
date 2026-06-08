@@ -28,6 +28,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#3d5a80";
@@ -354,8 +355,9 @@ export function PsychologistPure({
         <PspSection title={t.prices}>
           <div>
             {services.map((s, i) => (
-              <div
+              <ServiceLink
                 key={`${s.title}-${i}`}
+                href={s.href}
                 className={`grid grid-cols-[1fr_auto] items-baseline py-3.5 ${i < services.length - 1 ? "border-b" : ""}`}
                 style={{ borderColor: HAIRLINE_SOFT }}
               >
@@ -374,7 +376,7 @@ export function PsychologistPure({
                     {s.priceLabel}
                   </div>
                 )}
-              </div>
+              </ServiceLink>
             ))}
           </div>
         </PspSection>

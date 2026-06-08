@@ -34,6 +34,7 @@ import {
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -436,8 +437,9 @@ export function DentistVivid({
           </h3>
           <div className="grid grid-cols-2 gap-3">
             {services.map((s, i) => (
-              <article
+              <ServiceLink
                 key={`${s.title}-${i}`}
+                href={s.href}
                 className="relative overflow-hidden rounded-[18px] p-4 transition-all hover:-translate-y-0.5"
                 style={{
                   background: `linear-gradient(135deg, ${PAGE} 0%, #f0fbfc 100%)`,
@@ -468,7 +470,7 @@ export function DentistVivid({
                     {s.priceLabel}
                   </div>
                 )}
-              </article>
+              </ServiceLink>
             ))}
           </div>
         </section>

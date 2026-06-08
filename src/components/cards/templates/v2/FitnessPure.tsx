@@ -25,6 +25,7 @@ import Image from "next/image";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -460,8 +461,9 @@ export function FitnessPure({
           <SectHead num="02" title={t.programsTitle} />
           <ul className="mt-3.5 flex flex-col gap-2.5">
             {services.map((svc, i) => (
-              <li
+              <ServiceLink
                 key={`${svc.title}-${i}`}
+                href={svc.href}
                 className="grid items-center gap-3.5"
                 style={{
                   background: CARD,
@@ -503,7 +505,7 @@ export function FitnessPure({
                     </span>
                   </div>
                 )}
-              </li>
+              </ServiceLink>
             ))}
           </ul>
         </section>

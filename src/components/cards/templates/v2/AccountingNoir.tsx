@@ -33,6 +33,7 @@ import {
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -518,8 +519,9 @@ export function AccountingNoir({
           <NoirEyebrow gold={gold}>{t.services}</NoirEyebrow>
           <div className="mt-4">
             {services.slice(0, 6).map((svc, i, arr) => (
-              <div
+              <ServiceLink
                 key={`${svc.title}-${i}`}
+                href={svc.href}
                 className="grid grid-cols-[28px_1fr_auto] items-baseline gap-3 py-3"
                 style={{
                   borderBottom: i < arr.length - 1 ? `1px solid ${HAIRLINE_SOFT}` : "none",
@@ -549,7 +551,7 @@ export function AccountingNoir({
                     {svc.priceLabel}
                   </span>
                 )}
-              </div>
+              </ServiceLink>
             ))}
           </div>
         </section>

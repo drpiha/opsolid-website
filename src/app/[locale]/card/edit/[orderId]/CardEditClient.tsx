@@ -300,6 +300,25 @@ export function CardEditClient(props: Props) {
       // optionals on the server.
       customSections: cardData.customSections,
       gallery: cardData.gallery,
+      // FAQ items — drop blank rows (q or a empty), pass explicit [] to hide.
+      faqs: cardData.faqs
+        ? (cardData.faqs
+            .map((f) => ({
+              q: f.q?.trim() ?? "",
+              a: f.a?.trim() ?? "",
+            }))
+            .filter((f) => f.q.length > 0 && f.a.length > 0) as CardData["faqs"])
+        : undefined,
+      // Testimonials — drop rows missing author or quote, pass explicit [] to hide.
+      testimonials: cardData.testimonials
+        ? (cardData.testimonials
+            .map((t) => ({
+              author: t.author?.trim() ?? "",
+              role: t.role?.trim() || undefined,
+              quote: t.quote?.trim() ?? "",
+            }))
+            .filter((t) => t.author.length > 0 && t.quote.length > 0) as CardData["testimonials"])
+        : undefined,
       // Services editor may leave blank rows; drop any without a title so the
       // validator (title min 1) accepts the payload. Trim string fields and
       // collapse empties to undefined. An explicit empty list stays [] so the

@@ -37,6 +37,7 @@ import { encodeSource, describeSource } from "@/components/cards/smart/SmartCard
 import { getSectorPreset } from "@/config/card-sectors";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { WalletDock } from "./shared/WalletDock";
 import type { TemplateProps } from "./types";
 
@@ -459,7 +460,7 @@ function SelectedWork({
   title,
   accent,
 }: {
-  items: Array<{ title: string; description?: string; priceLabel?: string }>;
+  items: Array<{ title: string; description?: string; priceLabel?: string; href?: string | null }>;
   title: string;
   accent: string;
 }) {
@@ -473,8 +474,9 @@ function SelectedWork({
       </h2>
       <div>
         {items.map((item, i) => (
-          <div
+          <ServiceLink
             key={`${item.title}-${i}`}
+            href={item.href}
             className="border-t py-4"
             style={{
               borderColor: HAIRLINE,
@@ -505,7 +507,7 @@ function SelectedWork({
                 {item.description}
               </p>
             )}
-          </div>
+          </ServiceLink>
         ))}
         {/* Closing hairline */}
         <div

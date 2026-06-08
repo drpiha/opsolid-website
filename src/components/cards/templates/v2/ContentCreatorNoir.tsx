@@ -35,6 +35,7 @@ import {
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -432,8 +433,9 @@ export function ContentCreatorNoir({
           <NoirSectionTitle gold={GOLD}>{t.collab}</NoirSectionTitle>
           <div className="mt-5">
             {services.slice(0, 5).map((svc, i, arr) => (
-              <div
+              <ServiceLink
                 key={`${svc.title}-${i}`}
+                href={svc.href}
                 className="flex items-baseline justify-between py-3.5"
                 style={{
                   borderBottom: i < arr.length - 1 ? `1px solid ${HAIRLINE}` : "none",
@@ -460,7 +462,7 @@ export function ContentCreatorNoir({
                     {svc.priceLabel}
                   </span>
                 )}
-              </div>
+              </ServiceLink>
             ))}
           </div>
         </section>

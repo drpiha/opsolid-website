@@ -53,6 +53,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 // -----------------------------------------------------------------------------
@@ -871,7 +872,7 @@ function ScheduleSection({
   onAccent,
   translations,
 }: {
-  items: Array<{ title: string; description?: string; priceLabel?: string }>;
+  items: Array<{ title: string; description?: string; priceLabel?: string; href?: string | null }>;
   primary: string;
   accent: string;
   onAccent: string;
@@ -886,8 +887,9 @@ function ScheduleSection({
     >
       <div className="grid gap-3">
         {items.map((item, i) => (
-          <article
+          <ServiceLink
             key={`${item.title}-${i}`}
+            href={item.href}
             className="group flex items-start gap-4 rounded-2xl bg-white p-4 transition-all hover:-translate-y-px"
             style={{
               border: `1px solid ${HAIRLINE}`,
@@ -931,7 +933,7 @@ function ScheduleSection({
               className="ml-1 mt-1 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               style={{ color: primary }}
             />
-          </article>
+          </ServiceLink>
         ))}
       </div>
     </Section>

@@ -42,6 +42,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { TemplateProps, TemplateRegistryEntry, SampleData } from "./types";
 
 // -----------------------------------------------------------------------------
@@ -902,7 +903,7 @@ function ProjectList({
   accent,
   title,
 }: {
-  items: Array<{ title: string; description?: string; priceLabel?: string }>;
+  items: Array<{ title: string; description?: string; priceLabel?: string; href?: string | null }>;
   primary: string;
   accent: string;
   title: string;
@@ -911,8 +912,9 @@ function ProjectList({
     <Section title={title} primary={primary}>
       <ul className="space-y-2">
         {items.slice(0, 5).map((item, i) => (
-          <li
+          <ServiceLink
             key={`${item.title}-${i}`}
+            href={item.href}
             className="group relative flex items-stretch gap-3 rounded-md border px-3.5 py-3 transition-all hover:-translate-y-px"
             style={{
               background: SURFACE_PANEL,
@@ -952,7 +954,7 @@ function ProjectList({
                 </span>
               )}
             </div>
-          </li>
+          </ServiceLink>
         ))}
       </ul>
     </Section>

@@ -31,6 +31,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#ffffff";
@@ -463,8 +464,9 @@ export function LegalCounselPure({
           </h2>
           <div className="mt-5 flex flex-col">
             {services.map((svc, i) => (
-              <div
+              <ServiceLink
                 key={`${svc.title}-${i}`}
+                href={svc.href}
                 className="flex items-center gap-4 py-3.5"
                 style={{
                   borderBottom: i === services.length - 1 ? "none" : `1px solid ${HAIRLINE_LIGHT}`,
@@ -496,7 +498,7 @@ export function LegalCounselPure({
                     {svc.priceLabel}
                   </div>
                 )}
-              </div>
+              </ServiceLink>
             ))}
           </div>
         </section>

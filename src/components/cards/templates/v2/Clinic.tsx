@@ -56,6 +56,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#0d9488";
@@ -823,13 +824,14 @@ function TreatmentCard({
   primary,
   index,
 }: {
-  item: { title: string; description?: string; priceLabel?: string };
+  item: { title: string; description?: string; priceLabel?: string; href?: string | null };
   primary: string;
   index: number;
 }) {
   void index;
   return (
-    <div
+    <ServiceLink
+      href={item.href}
       className="rounded-2xl border bg-white p-4 transition-all hover:-translate-y-px hover:bg-[var(--cl-teal-soft)]"
       style={{ borderColor: "var(--cl-border)" }}
     >
@@ -860,7 +862,7 @@ function TreatmentCard({
           {item.description}
         </p>
       )}
-    </div>
+    </ServiceLink>
   );
 }
 

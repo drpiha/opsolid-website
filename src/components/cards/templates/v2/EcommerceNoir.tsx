@@ -28,6 +28,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#0d0d0d";
@@ -518,8 +519,9 @@ export function EcommerceNoir({
           </div>
           <div className="grid grid-cols-2 gap-3 px-5 py-5">
             {remaining.map((svc, i) => (
-              <div
+              <ServiceLink
                 key={`${svc.title}-${i}`}
+                href={svc.href}
                 className="relative px-4 py-6 text-center"
                 style={{
                   background: SURFACE_2,
@@ -550,7 +552,7 @@ export function EcommerceNoir({
                     {svc.priceLabel}
                   </div>
                 )}
-              </div>
+              </ServiceLink>
             ))}
           </div>
         </>

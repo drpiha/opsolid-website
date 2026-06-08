@@ -53,6 +53,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { TemplateProps } from "./types";
 
 // -----------------------------------------------------------------------------
@@ -813,7 +814,7 @@ function FeaturedListings({
   primary,
   title,
 }: {
-  items: Array<{ title: string; description?: string; priceLabel?: string }>;
+  items: Array<{ title: string; description?: string; priceLabel?: string; href?: string | null }>;
   accent: string;
   primary: string;
   title: string;
@@ -837,9 +838,9 @@ function FeaturedListings({
         role="list"
       >
         {items.map((item, i) => (
-          <article
+          <ServiceLink
             key={`${item.title}-${i}`}
-            role="listitem"
+            href={item.href}
             className="relative w-[78%] shrink-0 snap-start overflow-hidden rounded-2xl bg-white shadow-[0_12px_28px_-18px_rgba(15,23,42,0.35),0_2px_8px_-4px_rgba(15,23,42,0.12)] ring-1 ring-black/5"
           >
             {/* Listing photo placeholder — gold-on-navy gradient with mock badge. */}
@@ -899,7 +900,7 @@ function FeaturedListings({
                 <ArrowUpRight size={12} strokeWidth={2.4} />
               </div>
             </div>
-          </article>
+          </ServiceLink>
         ))}
       </div>
     </section>

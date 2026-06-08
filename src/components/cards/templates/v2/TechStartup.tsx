@@ -42,6 +42,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { TemplateProps, TemplateRegistryEntry, SampleData } from "./types";
 
 // -----------------------------------------------------------------------------
@@ -996,7 +997,7 @@ function ProductGrid({
   accent,
   title,
 }: {
-  items: Array<{ title: string; description?: string; priceLabel?: string }>;
+  items: Array<{ title: string; description?: string; priceLabel?: string; href?: string | null }>;
   primary: string;
   accent: string;
   title: string;
@@ -1005,8 +1006,9 @@ function ProductGrid({
     <Section title={title} accent={accent}>
       <div className="grid grid-cols-1 gap-2.5">
         {items.slice(0, 4).map((item, i) => (
-          <article
+          <ServiceLink
             key={`${item.title}-${i}`}
+            href={item.href}
             className="group relative flex items-stretch gap-4 overflow-hidden rounded-xl border px-4 py-3.5 transition-all hover:-translate-y-px"
             style={{
               borderColor: "rgba(255,255,255,0.08)",
@@ -1056,7 +1058,7 @@ function ProductGrid({
                 className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
               />
             </div>
-          </article>
+          </ServiceLink>
         ))}
       </div>
     </Section>

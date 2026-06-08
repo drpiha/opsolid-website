@@ -14,6 +14,7 @@ import Image from "next/image";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -361,8 +362,9 @@ export function LayoutSplitScreen({
               — {t.servicesTitle} —
             </h2>
             {services.map((svc, i, arr) => (
-              <div
+              <ServiceLink
                 key={`svc-${i}`}
+                href={svc.href}
                 className="flex items-center gap-4 py-3.5"
                 style={{
                   borderBottom:
@@ -411,7 +413,7 @@ export function LayoutSplitScreen({
                     {svc.priceLabel}
                   </div>
                 )}
-              </div>
+              </ServiceLink>
             ))}
           </div>
         )}

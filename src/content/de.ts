@@ -1853,6 +1853,27 @@ export const content: Content = {
           customSectionRemove: "Entfernen",
           customSectionsCount: "{n} von 6",
           customSectionAddImage: "Bild hinzufügen (optional)",
+          // FAQ editor
+          faqSection: "FAQ (optional)",
+          faqHint:
+            "Bis zu 12 häufig gestellte Fragen — erscheinen als Akkordeon auf Ihrer Karte.",
+          faqQuestion: "Frage",
+          faqAnswer: "Antwort",
+          faqAdd: "Frage hinzufügen",
+          faqRemove: "Entfernen",
+          faqEmpty:
+            "Noch keine FAQ-Einträge. Fügen Sie eine Frage hinzu.",
+          // Testimonials editor
+          testimonialsSection: "Kundenstimmen (optional)",
+          testimonialsHint:
+            "Bis zu 8 Kundenzitate — werden auf allen Vorlagen angezeigt, die keine eigenen Stimmen enthalten.",
+          testimonialAuthor: "Name (z. B. Maria K.)",
+          testimonialRole: "Position / Unternehmen (optional)",
+          testimonialQuote: "Zitat",
+          testimonialAdd: "Kundenstimme hinzufügen",
+          testimonialRemove: "Entfernen",
+          testimonialsEmpty:
+            "Noch keine Kundenstimmen. Fügen Sie Ihr erstes Zitat hinzu.",
           typographySection: "Typografie (optional)",
           typographyHint:
             "Überschreiben Sie die Schriften der Vorlage. Standard belassen, um die Schriften der Vorlage zu verwenden.",

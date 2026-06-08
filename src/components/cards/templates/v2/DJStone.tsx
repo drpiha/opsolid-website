@@ -26,6 +26,7 @@ import Image from "next/image";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -484,8 +485,9 @@ export function DJStone({
             </p>
             <div className="mt-5 grid gap-3.5 text-left">
               {services.map((svc, i) => (
-                <div
+                <ServiceLink
                   key={`${svc.title}-${i}`}
+                  href={svc.href}
                   className="flex items-start gap-3.5 rounded-[14px] border p-[18px]"
                   style={{ background: SURFACE_2, borderColor: LINE }}
                 >
@@ -531,7 +533,7 @@ export function DJStone({
                       </div>
                     )}
                   </div>
-                </div>
+                </ServiceLink>
               ))}
             </div>
           </section>

@@ -29,6 +29,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#c0392b";
@@ -450,8 +451,9 @@ export function RestaurantVivid({
           {services.map((svc, i) => {
             const letter = svc.title.slice(0, 1).toUpperCase();
             return (
-              <div
+              <ServiceLink
                 key={`${svc.title}-${i}`}
+                href={svc.href}
                 className="relative overflow-hidden rounded-[18px] px-4 py-4"
                 style={{
                   background: SURFACE,
@@ -489,7 +491,7 @@ export function RestaurantVivid({
                     {svc.priceLabel}
                   </div>
                 )}
-              </div>
+              </ServiceLink>
             );
           })}
         </section>

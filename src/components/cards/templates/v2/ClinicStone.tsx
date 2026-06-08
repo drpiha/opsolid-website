@@ -27,6 +27,7 @@ import { Calendar, Heart, Stethoscope } from "lucide-react";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
+import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
@@ -518,8 +519,9 @@ export function ClinicStone({
             </p>
             <div className="grid gap-3">
               {services.map((svc, i) => (
-                <div
+                <ServiceLink
                   key={`${svc.title}-${i}`}
+                  href={svc.href}
                   className="flex items-center gap-3.5 px-4 py-3.5"
                   style={{
                     background: SURFACE_2,
@@ -567,7 +569,7 @@ export function ClinicStone({
                       {svc.priceLabel}
                     </div>
                   )}
-                </div>
+                </ServiceLink>
               ))}
             </div>
           </div>

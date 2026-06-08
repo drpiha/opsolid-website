@@ -10,8 +10,10 @@
 import { ChevronDown } from "lucide-react";
 import { useLocale } from "@/context/LocaleContext";
 import { CustomSectionsEditor } from "@/components/cards/order-form/CustomSectionsEditor";
+import { FaqEditor } from "@/components/cards/order-form/FaqEditor";
 import { GalleryEditor } from "@/components/cards/order-form/GalleryEditor";
 import { ServicesEditor } from "@/components/cards/order-form/ServicesEditor";
+import { TestimonialsEditor } from "@/components/cards/order-form/TestimonialsEditor";
 import { VideoUploader } from "@/components/cards/order-form/VideoUploader";
 import type { CardData } from "@/lib/validation";
 import type { HandleFileUpload, SectionToggle, SetCardFn } from "./types";
@@ -139,6 +141,40 @@ export default function ContentSection({
                   "Only YouTube or Vimeo links are supported."}
               </p>
             )}
+        </fieldset>
+
+        {/* FAQ — up to 12 Q&A items rendered as accordion */}
+        <fieldset className="space-y-2">
+          <legend className="text-heading-sm text-ink">
+            {(form as Record<string, string>).faqSection ?? "FAQ (optional)"}
+          </legend>
+          {(form as Record<string, string>).faqHint && (
+            <p className="-mt-1 text-xs text-ink-300">
+              {(form as Record<string, string>).faqHint}
+            </p>
+          )}
+          <FaqEditor
+            faqs={cardData.faqs}
+            onFaqsChange={(next) => setCard("faqs", next)}
+            L={(k, fb) => (form as Record<string, string>)[k] ?? fb}
+          />
+        </fieldset>
+
+        {/* Testimonials — up to 8 client quotes */}
+        <fieldset className="space-y-2">
+          <legend className="text-heading-sm text-ink">
+            {(form as Record<string, string>).testimonialsSection ?? "Testimonials (optional)"}
+          </legend>
+          {(form as Record<string, string>).testimonialsHint && (
+            <p className="-mt-1 text-xs text-ink-300">
+              {(form as Record<string, string>).testimonialsHint}
+            </p>
+          )}
+          <TestimonialsEditor
+            testimonials={cardData.testimonials}
+            onTestimonialsChange={(next) => setCard("testimonials", next)}
+            L={(k, fb) => (form as Record<string, string>)[k] ?? fb}
+          />
         </fieldset>
 
         {/* Phase 7.9 — Custom Sections */}
