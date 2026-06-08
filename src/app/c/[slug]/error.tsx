@@ -10,6 +10,7 @@
 
 import { useEffect } from "react";
 import Link from "next/link";
+import * as Sentry from "@sentry/nextjs";
 import { useLocale } from "@/context/LocaleContext";
 
 export default function CardError({
@@ -27,6 +28,11 @@ export default function CardError({
       message: error.message,
       digest: error.digest,
       stack: error.stack,
+    });
+    // Report so the digest the visitor sees maps to a real Sentry event.
+    Sentry.captureException(error, {
+      tags: { area: "card-render-boundary" },
+      extra: { digest: error.digest },
     });
   }, [error]);
 

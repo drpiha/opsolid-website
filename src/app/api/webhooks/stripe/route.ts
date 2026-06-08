@@ -7,12 +7,17 @@ import { OrderStatus } from "@/lib/validation";
 import { ensureUniqueSlug, isSlugAvailable } from "@/lib/slug";
 import { notifyOrderEvent } from "@/lib/notifications";
 import { sendCustomerEmail } from "@/lib/email/send";
-import { normalizeLocale } from "@/lib/email/shell";
+import { normalizeLocale, siteBase } from "@/lib/email/shell";
 import {
   renderConfirmationHtml,
   renderConfirmationText,
   confirmationSubject,
 } from "@/lib/email/templates/confirmation";
+import {
+  renderCardLiveHtml,
+  renderCardLiveText,
+  cardLiveSubject,
+} from "@/lib/email/templates/card-live";
 import {
   renderCancellationHtml,
   renderCancellationText,
@@ -79,6 +84,11 @@ export async function POST(req: NextRequest) {
         case "invoice.payment_failed": {
           const invoice = event.data.object as Stripe.Invoice;
           await applyInvoiceFailed(invoice);
+          break;
+        }
+        case "charge.refunded": {
+          const charge = event.data.object as Stripe.Charge;
+          await handleChargeRefunded(charge);
           break;
         }
         default:
@@ -242,39 +252,98 @@ async function handleCheckoutCompleted(session: Stripe.Checkout.Session) {
     event: order.conciergeAddon ? "awaiting_design" : "published",
   }).catch((e) => console.error("[stripe webhook] notification error:", e));
 
-  // Customer "designer working" email. Logs and swallows errors — the webhook
-  // must ack Stripe quickly regardless of SMTP outcomes.
+  // Customer email — branch by path so the promise matches reality:
+  //   • concierge add-on → "designer working / 48h" confirmation
+  //   • self-serve (default) → "your card is live" with the public + edit links
+  // Logs and swallows errors — the webhook must ack Stripe quickly regardless
+  // of SMTP outcomes.
   try {
     const locale = normalizeLocale(order.locale);
-    const template = getTemplateById(order.templateId);
-    const confirmInput = {
-      orderId: order.id,
-      orderNumber: order.orderNumber,
-      contactName: order.contactName,
-      templateName: template?.name ?? `Template #${order.templateId}`,
-      billingMode: order.billingMode,
-      amountCents: order.amountCents,
-      currency: order.currency,
-      editToken: order.editToken ?? "",
-    };
-    const result = await sendCustomerEmail({
-      to: order.contactEmail,
-      subject: confirmationSubject(confirmInput, locale),
-      html: renderConfirmationHtml(confirmInput, locale),
-      text: renderConfirmationText(confirmInput, locale),
-    });
+    const editToken = order.editToken ?? "";
+    let result;
+    if (order.conciergeAddon) {
+      const template = getTemplateById(order.templateId);
+      const confirmInput = {
+        orderId: order.id,
+        orderNumber: order.orderNumber,
+        contactName: order.contactName,
+        templateName: template?.name ?? `Template #${order.templateId}`,
+        billingMode: order.billingMode,
+        amountCents: order.amountCents,
+        currency: order.currency,
+        editToken,
+      };
+      result = await sendCustomerEmail({
+        to: order.contactEmail,
+        subject: confirmationSubject(confirmInput, locale),
+        html: renderConfirmationHtml(confirmInput, locale),
+        text: renderConfirmationText(confirmInput, locale),
+      });
+    } else {
+      const liveInput = {
+        orderId: order.id,
+        contactName: order.contactName,
+        cardUrl: `${siteBase()}/c/${publishedSlug}`,
+        editToken,
+        locale,
+      };
+      result = await sendCustomerEmail({
+        to: order.contactEmail,
+        subject: cardLiveSubject(locale),
+        html: renderCardLiveHtml(liveInput),
+        text: renderCardLiveText(liveInput),
+      });
+    }
     if (!result.skipped) {
       console.log(
-        `[stripe webhook] confirmation email sent to ${order.contactEmail} (${result.messageId ?? "no-id"})`
+        `[stripe webhook] ${order.conciergeAddon ? "confirmation" : "card-live"} email sent to ${order.contactEmail} (${result.messageId ?? "no-id"})`
       );
     }
   } catch (err) {
-    console.error("[stripe webhook] confirmation email failed:", err);
+    console.error("[stripe webhook] customer email failed:", err);
     Sentry.captureException(err, {
-      tags: { area: "customer-email", template: "confirmation" },
+      tags: { area: "customer-email", template: order.conciergeAddon ? "confirmation" : "card-live" },
       extra: { orderId: order.id, orderNumber: order.orderNumber },
     });
   }
+}
+
+/**
+ * charge.refunded — full or partial refund issued (usually from the Stripe
+ * Dashboard). Map the charge back to the order via the stored payment intent,
+ * mark it REFUNDED and flip visibility private. Because the public /c/[slug]
+ * loader only serves PUBLISHED orders, this also unpublishes the card.
+ */
+async function handleChargeRefunded(charge: Stripe.Charge) {
+  const pi =
+    typeof charge.payment_intent === "string"
+      ? charge.payment_intent
+      : charge.payment_intent?.id;
+  if (!pi) return;
+
+  const order = await prisma.cardOrder.findFirst({
+    where: { stripePaymentIntentId: pi },
+  });
+  if (!order) {
+    console.warn("[stripe webhook] refund for unknown payment_intent", pi);
+    return;
+  }
+  if (order.status === OrderStatus.REFUNDED) return; // idempotent
+
+  await prisma.cardOrder.update({
+    where: { id: order.id },
+    data: { status: OrderStatus.REFUNDED, visibility: "private" },
+  });
+  await prisma.orderStatusHistory.create({
+    data: {
+      orderId: order.id,
+      fromStatus: order.status,
+      toStatus: OrderStatus.REFUNDED,
+      actor: "system",
+      note: `Refund processed (charge ${charge.id}).`,
+    },
+  });
+  console.log(`[stripe webhook] order ${order.orderNumber} refunded → unpublished`);
 }
 
 async function handleSubscriptionUpdated(sub: Stripe.Subscription) {

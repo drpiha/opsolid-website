@@ -1,6 +1,20 @@
+import { cookies } from "next/headers";
+import { timingSafeEqual } from "node:crypto";
 import { prisma } from "@/lib/prisma";
 import { formatEuro } from "@/config/card-templates";
+import { getSessionUser, REFRESH_COOKIE_NAME } from "@/lib/auth/session";
 import { AdminOrdersTable } from "./AdminOrdersTable";
+
+// Constant-time token compare (avoids the timing side-channel the plain `!==`
+// had). Length mismatch short-circuits to false.
+function safeEqual(a: string, b: string): boolean {
+  if (a.length !== b.length) return false;
+  try {
+    return timingSafeEqual(Buffer.from(a), Buffer.from(b));
+  } catch {
+    return false;
+  }
+}
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -18,23 +32,23 @@ export default async function AdminOrdersPage({ searchParams }: PageProps) {
   const { token = "", tab = "callback" } = await searchParams;
   const expected = process.env.ADMIN_TOKEN;
 
-  if (!expected) {
+  // Primary gate: a logged-in member with role=ADMIN (no token in the URL).
+  // Fallback gate: the shared ADMIN_TOKEN (constant-time) for ops convenience.
+  const refresh = cookies().get(REFRESH_COOKIE_NAME)?.value;
+  const sessionUser = refresh ? await getSessionUser(refresh) : null;
+  const isSessionAdmin = sessionUser?.role === "ADMIN";
+  const tokenOk = Boolean(expected) && safeEqual(token, expected ?? "");
+
+  if (!isSessionAdmin && !tokenOk) {
     return (
       <main className="mx-auto max-w-xl px-4 py-24 text-center">
-        <h1 className="font-display text-display-sm text-ink">Not configured</h1>
+        <h1 className="font-display text-display-sm text-ink">Sign in required</h1>
         <p className="mt-4 text-ink/60">
-          Set <code>ADMIN_TOKEN</code> in <code>.env</code> to enable this page.
+          Sign in with an admin account, or open this page from a valid admin link.
         </p>
-      </main>
-    );
-  }
-  if (token !== expected) {
-    return (
-      <main className="mx-auto max-w-xl px-4 py-24 text-center">
-        <h1 className="font-display text-display-sm text-ink">401</h1>
-        <p className="mt-4 text-ink/60">
-          Append <code>?token=…</code> to the URL.
-        </p>
+        <a href="/login" className="mt-6 inline-block underline underline-offset-4">
+          Sign in
+        </a>
       </main>
     );
   }
