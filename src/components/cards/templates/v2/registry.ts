@@ -284,6 +284,10 @@ export function getTemplateEntry(
  * Server Component yields a client-reference proxy, not the real Set, and
  * `.has()` throws at render time.
  */
+export const GALLERY_NATIVE_KEYS = new Set<string>([
+  "editorial", "hotel", "kitchen-atelier", "maker", "restaurant", "photographer",
+]);
+
 export const FAQ_NATIVE_KEYS = new Set<string>([
   "clinic", "dentist", "dentist-pure", "dentist-vivid",
   "psychologist", "psychologist-pure", "psychologist-vivid",

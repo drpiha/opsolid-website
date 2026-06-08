@@ -44,9 +44,10 @@ import { PhotoEditor } from "@/components/cards/PhotoEditor";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
 import { VideoBlock } from "@/components/cards/templates/v2/shared/VideoBlock";
 import { LogoBlock } from "@/components/cards/templates/v2/shared/LogoBlock";
+import { GalleryBlock } from "@/components/cards/templates/v2/shared/GalleryBlock";
 import { getTypographyPreset } from "@/lib/typographyPresets";
 import { downscaleImage } from "@/lib/images/downscale";
-import { getTemplateEntry, LOGO_NATIVE_KEYS } from "@/components/cards/templates/v2/registry";
+import { getTemplateEntry, LOGO_NATIVE_KEYS, GALLERY_NATIVE_KEYS } from "@/components/cards/templates/v2/registry";
 import { ShareDrawer } from "@/components/cards/ShareDrawer";
 import { StickySaveBar } from "./StickySaveBar";
 import TemplateSection from "./sections/TemplateSection";
@@ -2053,6 +2054,9 @@ function EditPreview({
         tone={isDarkTemplate ? "dark" : "light"}
         suppressEmbed={!entry || entry.key === "athlete" || entry.key === "photographer"}
       />
+      {!(!entry || GALLERY_NATIVE_KEYS.has(entry.key)) && (
+        <GalleryBlock gallery={cardData.gallery} tone={isDarkTemplate ? "dark" : "light"} />
+      )}
     </div>
   );
 }

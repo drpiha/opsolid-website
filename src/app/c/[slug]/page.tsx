@@ -26,7 +26,8 @@ import { SmartCard } from "@/components/cards/smart/SmartCard";
 import { WalletButtons } from "@/components/cards/smart/WalletButtons";
 import { readSourceFromSearchParams } from "@/components/cards/smart/SmartCardSource";
 import { getSiteUrl } from "@/lib/stripe";
-import { getTemplateEntry, LOGO_NATIVE_KEYS, FAQ_NATIVE_KEYS } from "@/components/cards/templates/v2/registry";
+import { getTemplateEntry, LOGO_NATIVE_KEYS, FAQ_NATIVE_KEYS, GALLERY_NATIVE_KEYS } from "@/components/cards/templates/v2/registry";
+import { GalleryBlock } from "@/components/cards/templates/v2/shared/GalleryBlock";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
 import { VideoBlock } from "@/components/cards/templates/v2/shared/VideoBlock";
 import { LogoBlock } from "@/components/cards/templates/v2/shared/LogoBlock";
@@ -536,6 +537,17 @@ export default async function CardPage({ params, searchParams }: PageProps) {
             }
             suppressEmbed={!entry || entry.key === "athlete" || entry.key === "photographer"}
           />
+          {/* Universal gallery — shows uploaded photos on templates that don't
+              render a gallery natively (suppressed on the ~6 that do). */}
+          {!(!entry || GALLERY_NATIVE_KEYS.has(entry.key)) && (
+            <GalleryBlock
+              gallery={parsed.data.gallery}
+              tone={isDarkTemplate ? "dark" : "light"}
+              heading={
+                localeKey === "de" ? "Galerie" : localeKey === "tr" ? "Galeri" : "Gallery"
+              }
+            />
+          )}
           {/* M3 — Curated embeds (Carrd amendment). The block self-hides
               when `cardData.embeds` is empty or every entry fails the host
               re-validation done client-side. Heading is inlined per locale
