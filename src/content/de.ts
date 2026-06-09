@@ -1100,6 +1100,15 @@ export const content: Content = {
     },
     posts: [
       {
+        slug: "eu-ai-act-digital-omnibus-2026",
+        title: "EU AI Act Omnibus: Fristen verlängert, Mittelstand entlastet",
+        excerpt:
+          "EU AI Act Omnibus: Hochrisiko-Fristen 16 Monate verlängert, KMU-Erleichterungen auf 750-Mitarbeiter-Firmen ausgedehnt, neue Verbote ab Dezember 2026.",
+        category: "ai",
+        date: "2026-06-09",
+        readTime: "7",
+      },
+      {
         slug: "workflow-automation-fundamentals",
         title: "Workflow-Automatisierung: Was in der Praxis wirklich zählt",
         excerpt:

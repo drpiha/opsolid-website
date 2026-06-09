@@ -1098,6 +1098,15 @@ export const content = {
     },
     posts: [
       {
+        slug: "eu-ai-act-digital-omnibus-2026",
+        title: "EU AI Act Digital Omnibus: Compliance Deadlines Extended, SME Relief Expanded",
+        excerpt:
+          "EU's Digital Omnibus on AI extends high-risk deadlines 16 months, expands SME relief to 750-employee firms, and adds December 2026 prohibitions.",
+        category: "ai",
+        date: "2026-06-09",
+        readTime: "7",
+      },
+      {
         slug: "workflow-automation-fundamentals",
         title: "Workflow Automation Fundamentals: What Actually Matters",
         excerpt:

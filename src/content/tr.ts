@@ -1100,6 +1100,15 @@ export const content: Content = {
     },
     posts: [
       {
+        slug: "eu-ai-act-digital-omnibus-2026",
+        title: "AB YZ Yasası Omnibus: Uyum Süreleri Uzatıldı, KOBİ'ler Nefes Alıyor",
+        excerpt:
+          "YZ Yasası Omnibus yüksek riskli sistem sürelerini 16 ay uzatıyor, KOBİ kolaylıklarını genişletiyor ve Aralık 2026'dan yeni yasaklar getiriyor.",
+        category: "ai",
+        date: "2026-06-09",
+        readTime: "7",
+      },
+      {
         slug: "workflow-automation-fundamentals",
         title: "İş Akışı Otomasyonu: Uygulamada Gerçekten Ne Önemli",
         excerpt:
