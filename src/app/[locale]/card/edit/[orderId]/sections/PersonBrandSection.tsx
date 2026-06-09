@@ -65,7 +65,7 @@ export default function PersonBrandSection({
       <button
         type="button"
         onClick={() => toggleSection("person-brand")}
-        className="flex w-full items-center justify-between gap-3 mt-8 mb-3 text-left"
+        className="flex w-full items-center justify-between gap-3 mb-3 text-left"
         aria-expanded={openSections.has("person-brand")}
         aria-label={
           openSections.has("person-brand")
@@ -73,7 +73,7 @@ export default function PersonBrandSection({
             : edit.expandSection
         }
       >
-        <h2 className="font-serif text-lg text-ink">
+        <h2 className="text-sm font-semibold text-ink">
           {edit.sectionPersonBrand}
         </h2>
         <ChevronDown

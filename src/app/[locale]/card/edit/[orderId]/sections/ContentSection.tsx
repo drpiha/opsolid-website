@@ -40,7 +40,7 @@ export default function ContentSection({
       <button
         type="button"
         onClick={() => toggleSection("content")}
-        className="flex w-full items-center justify-between gap-3 mt-8 mb-3 text-left"
+        className="flex w-full items-center justify-between gap-3 mb-3 text-left"
         aria-expanded={openSections.has("content")}
         aria-label={
           openSections.has("content")
@@ -48,7 +48,7 @@ export default function ContentSection({
             : edit.expandSection
         }
       >
-        <h2 className="font-serif text-lg text-ink">
+        <h2 className="text-sm font-semibold text-ink">
           {edit.sectionContent}
         </h2>
         <ChevronDown

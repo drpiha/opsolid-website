@@ -10,6 +10,7 @@
 // Thumbnails: /images/templates/card-NN.png (NN = id, zero-padded to 2).
 // =============================================================================
 
+import { useState } from "react";
 import { ChevronDown, Check } from "lucide-react";
 import { useLocale } from "@/context/LocaleContext";
 import { plannedLineup, type PlannedSector } from "@/components/cards/templates/v2/registry";
@@ -49,7 +50,8 @@ const SECTOR_LABELS: Record<PlannedSector, string> = {
 
 const thumb = (id: number) => `/images/templates/card-${String(id).padStart(2, "0")}.png`;
 
-function groupBySector() {
+// Computed once at module scope — never recalculated on render.
+const TEMPLATE_GROUPS = (() => {
   const order: PlannedSector[] = [];
   const bySector = new Map<PlannedSector, typeof plannedLineup[number][]>();
   for (const tpl of plannedLineup) {
@@ -60,7 +62,7 @@ function groupBySector() {
     bySector.get(tpl.sector)!.push(tpl);
   }
   return order.map((sector) => ({ sector, items: bySector.get(sector)! }));
-}
+})();
 
 export default function TemplateSection({
   templateId,
@@ -70,21 +72,62 @@ export default function TemplateSection({
 }: TemplateSectionProps) {
   const { t } = useLocale();
   const edit = t.products.digitalCard.edit as Record<string, string>;
-  const groups = groupBySector();
-  const current = plannedLineup.find((tpl) => tpl.id === templateId);
   const open = openSections.has("template");
+
+  // Per-sector collapse state — default all closed; auto-expand active template's sector.
+  const [openGroups, setOpenGroups] = useState<Set<PlannedSector>>(() => new Set());
+
+  // Search query for filtering sectors/templates.
+  const [query, setQuery] = useState("");
+
+  const current = plannedLineup.find((tpl) => tpl.id === templateId);
+
+  const toggleGroup = (sector: PlannedSector) => {
+    setOpenGroups((prev) => {
+      const next = new Set(prev);
+      if (next.has(sector)) {
+        next.delete(sector);
+      } else {
+        next.add(sector);
+      }
+      return next;
+    });
+  };
+
+  // Determine which groups to show and which are forced-expanded by search/active template.
+  const normalizedQuery = query.trim().toLowerCase();
+  const isSearching = normalizedQuery.length >= 2;
+
+  const visibleGroups = TEMPLATE_GROUPS.filter(({ sector, items }) => {
+    if (!isSearching) return true;
+    const labelMatch = (SECTOR_LABELS[sector] ?? sector)
+      .toLowerCase()
+      .includes(normalizedQuery);
+    const itemMatch = items.some((t) =>
+      t.name.toLowerCase().includes(normalizedQuery)
+    );
+    return labelMatch || itemMatch;
+  });
+
+  const isSectorExpanded = (sector: PlannedSector, items: typeof plannedLineup) => {
+    // Always expand the sector containing the active template.
+    if (items.some((t) => t.id === templateId)) return true;
+    // Expand all matching sectors when searching.
+    if (isSearching) return true;
+    return openGroups.has(sector);
+  };
 
   return (
     <section id="section-template">
       <button
         type="button"
         onClick={() => toggleSection("template")}
-        className="flex w-full items-center justify-between gap-3 mt-8 mb-3 text-left"
+        className="flex w-full items-center justify-between gap-3 mb-3 text-left"
         aria-expanded={open}
         aria-label={open ? edit.collapseSection : edit.expandSection}
       >
         <div className="flex items-center gap-2 min-w-0">
-          <h2 className="font-serif text-lg text-ink">
+          <h2 className="text-sm font-semibold text-ink">
             {edit.sectionTemplate ?? "Tasarım · Şablon"}
           </h2>
           {current && (
@@ -107,50 +150,86 @@ export default function TemplateSection({
             "Bir tasarıma dokun — önizleme anında değişir, kaydedince yayına alınır."}
         </p>
 
-        {groups.map(({ sector, items }) => (
-          <div key={sector} className="space-y-2">
-            <p className="mono-label text-[10px] uppercase tracking-wider text-ink-200">
-              {SECTOR_LABELS[sector] ?? sector}
-            </p>
-            <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
-              {items.map((tpl) => {
-                const selected = tpl.id === templateId;
-                return (
-                  <button
-                    key={tpl.id}
-                    type="button"
-                    onClick={() => setTemplateId(tpl.id)}
-                    aria-pressed={selected}
-                    className={[
-                      "group relative overflow-hidden rounded-xl border bg-bg-0 text-left transition-all",
-                      selected
-                        ? "border-copper ring-2 ring-copper/40"
-                        : "border-line hover:border-copper/50",
-                    ].join(" ")}
-                  >
-                    <div className="aspect-[3/4] w-full overflow-hidden bg-bg-1">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={thumb(tpl.id)}
-                        alt={tpl.name}
-                        loading="lazy"
-                        className="h-full w-full object-cover object-top transition-transform group-hover:scale-[1.03]"
-                      />
-                    </div>
-                    {selected && (
-                      <span className="absolute right-1.5 top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-copper text-white shadow">
-                        <Check size={12} strokeWidth={3} />
-                      </span>
-                    )}
-                    <p className="truncate px-2 py-1.5 text-[11px] font-medium text-ink">
-                      {tpl.name}
-                    </p>
-                  </button>
-                );
-              })}
+        {/* Search input */}
+        <input
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder={edit.templateSearch ?? "Sektör veya şablon ara…"}
+          className="field mb-3 w-full text-sm"
+        />
+
+        {visibleGroups.map(({ sector, items }) => {
+          const expanded = isSectorExpanded(sector, items);
+          return (
+            <div key={sector}>
+              {/* Sector heading row — acts as collapse toggle */}
+              <button
+                type="button"
+                onClick={() => toggleGroup(sector)}
+                className="flex w-full items-center justify-between gap-2 py-1 text-left"
+                aria-expanded={expanded}
+              >
+                <p className="mono-label text-[10px] uppercase tracking-wider text-ink-200">
+                  {SECTOR_LABELS[sector] ?? sector}
+                  <span className="ml-1.5 text-[10px] text-ink-300 normal-case tracking-normal">
+                    ({items.length})
+                  </span>
+                </p>
+                <ChevronDown
+                  size={14}
+                  className={[
+                    "text-ink-300 shrink-0 motion-safe:transition-transform motion-safe:duration-150",
+                    expanded ? "rotate-180" : "",
+                  ].join(" ")}
+                  aria-hidden="true"
+                />
+              </button>
+
+              {/* Template grid — renders only when expanded */}
+              {expanded && (
+                <div className="mt-2 grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+                  {items.map((tpl) => {
+                    const selected = tpl.id === templateId;
+                    return (
+                      <button
+                        key={tpl.id}
+                        type="button"
+                        onClick={() => setTemplateId(tpl.id)}
+                        aria-pressed={selected}
+                        className={[
+                          "group relative overflow-hidden rounded-xl border bg-bg-0 text-left transition-all",
+                          selected
+                            ? "border-copper ring-2 ring-copper/40"
+                            : "border-line hover:border-copper/50 hover:shadow-md",
+                        ].join(" ")}
+                      >
+                        <div className="flex aspect-[16/10] w-full items-center justify-center bg-bg-2 p-2">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={thumb(tpl.id)}
+                            alt={tpl.name}
+                            loading="lazy"
+                            decoding="async"
+                            className="h-full w-full object-contain"
+                          />
+                        </div>
+                        {selected && (
+                          <span className="absolute right-1.5 top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-copper text-white shadow">
+                            <Check size={12} strokeWidth={3} />
+                          </span>
+                        )}
+                        <p className="truncate px-2 py-1.5 text-[11px] font-medium text-ink">
+                          {tpl.name}
+                        </p>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </section>
   );

@@ -24,6 +24,12 @@ interface PublishSectionProps extends SectionToggle {
   onOpenToNetworkingChange: (v: boolean) => void;
   acceptingClients: boolean;
   onAcceptingClientsChange: (v: boolean) => void;
+  /** Slug rename — moved here from the top-of-page block (Goal B2) */
+  currentSlug: string | null;
+  editableSlug: string;
+  onEditableSlugChange: (v: string) => void;
+  editToken: string;
+  cardStatus: string;
 }
 
 export default function PublishSection({
@@ -38,6 +44,11 @@ export default function PublishSection({
   onOpenToNetworkingChange,
   acceptingClients,
   onAcceptingClientsChange,
+  currentSlug,
+  editableSlug,
+  onEditableSlugChange,
+  editToken,
+  cardStatus,
 }: PublishSectionProps) {
   const { t, locale } = useLocale();
   const edit = t.products.digitalCard.edit;
@@ -83,7 +94,7 @@ export default function PublishSection({
       <button
         type="button"
         onClick={() => toggleSection("publish")}
-        className="flex w-full items-center justify-between gap-3 mt-8 mb-3 text-left"
+        className="flex w-full items-center justify-between gap-3 mb-3 text-left"
         aria-expanded={openSections.has("publish")}
         aria-label={
           openSections.has("publish")
@@ -91,7 +102,7 @@ export default function PublishSection({
             : edit.expandSection
         }
       >
-        <h2 className="font-serif text-lg text-ink">
+        <h2 className="text-sm font-semibold text-ink">
           {edit.sectionPublish}
         </h2>
         <ChevronDown
@@ -128,6 +139,43 @@ export default function PublishSection({
             <p className="text-heading-sm text-ink">{badgeInfo.label}</p>
           </div>
         </div>
+
+        {/* ── Slug rename — moved from top-of-page block (Goal B2) ── */}
+        {currentSlug && cardStatus === "PUBLISHED" && (
+          <div className="space-y-1.5">
+            <label className="mono-label block text-[10px] uppercase tracking-[0.2em] text-ink-200">
+              {edit.publicUrlLabel ?? "Kart adresi"}
+            </label>
+            <div className="flex items-stretch overflow-hidden rounded-2xl border border-ink/25 bg-white focus-within:border-copper">
+              <span className="flex items-center px-3 text-xs text-ink-200">
+                opsolid.de/c/
+              </span>
+              <input
+                type="text"
+                value={editableSlug}
+                onChange={(e) => onEditableSlugChange(e.target.value.toLowerCase().trim())}
+                spellCheck={false}
+                autoComplete="off"
+                maxLength={40}
+                className="flex-1 bg-transparent px-2 py-2 text-sm text-ink focus:outline-none"
+              />
+              <a
+                href={`/c/${currentSlug}?owner=${encodeURIComponent(editToken)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center border-l border-ink/15 px-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-200 transition-colors hover:bg-bg-2 hover:text-ink"
+                title={edit.viewAsOwner}
+              >
+                ↗
+              </a>
+            </div>
+            {editableSlug && editableSlug !== currentSlug && (
+              <p className="text-[11px] text-copper-700">
+                ⚠ {edit.slugRenameWarning}
+              </p>
+            )}
+          </div>
+        )}
 
         {/* ── Phase 8.1 — Visibility ── */}
         <fieldset className="flex flex-col gap-2">

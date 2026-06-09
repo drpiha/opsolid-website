@@ -20,7 +20,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import {
   Loader2,
   AlertCircle,
-  CheckCircle2,
   Check,
   Camera,
   ChevronDown,
@@ -420,10 +419,10 @@ export function CardEditClient(props: Props) {
 
   // A6 — status badge label map
   const statusBadgeMap: Record<string, { label: string; cls: string }> = {
-    PUBLISHED: { label: "Live", cls: "bg-green-100 text-green-700" },
-    PENDING:   { label: "Ausstehend", cls: "bg-neutral-100 text-ink-200" },
-    DRAFT:     { label: "Entwurf", cls: "bg-neutral-100 text-ink-200" },
-    CANCELLED: { label: "Storniert", cls: "bg-red-50 text-red-600" },
+    PUBLISHED: { label: "Live", cls: "bg-copper-500/10 text-copper-700 border border-copper-500/20" },
+    PENDING:   { label: "Ausstehend", cls: "bg-neutral-100 text-ink-300 border border-line" },
+    DRAFT:     { label: "Entwurf", cls: "bg-neutral-100 text-ink-300 border border-line" },
+    CANCELLED: { label: "Storniert", cls: "bg-neutral-100 text-ink-400 border border-line line-through" },
   };
   const badgeInfo = statusBadgeMap[props.status] ?? { label: props.status, cls: "bg-neutral-100 text-ink-200" };
 
@@ -466,74 +465,21 @@ export function CardEditClient(props: Props) {
       </div>
     </header>
 
-    <main className="min-h-screen bg-neutral-50 pb-28 pt-6 md:pt-10 overflow-x-hidden">
-      <div className="container-wide max-w-full">
-        <div
-          className="mb-6 flex items-start gap-3 rounded-2xl border px-4 py-3 text-sm"
-          style={{
-            background: "rgba(34,197,94,0.06)",
-            borderColor: "rgba(34,197,94,0.25)",
-            color: "#1a4d2e",
-          }}
-        >
-          <CheckCircle2
-            size={18}
-            className="mt-0.5 shrink-0"
-            style={{ color: "#16a34a" }}
-          />
-          <span>{t.card.owner.banner}</span>
-        </div>
-
-        <div className="mb-10 max-w-3xl">
-          <p className="text-eyebrow uppercase tracking-wider text-ink-200">
-            OpSolid · Digital Card
-          </p>
-          <p className="mt-2 text-body text-ink-200">{edit.subtitle}</p>
-          {currentSlug && props.status === "PUBLISHED" && (
-            <div className="mt-4 max-w-md space-y-1.5">
-              <label className="mono-label block text-[10px] uppercase tracking-[0.2em] text-ink-200">
-                {edit.publicUrlLabel ?? "Kart adresi"}
-              </label>
-              <div className="flex items-stretch overflow-hidden rounded-2xl border border-ink/25 bg-white focus-within:border-copper">
-                <span className="flex items-center px-3 text-xs text-ink-200">
-                  opsolid.de/c/
-                </span>
-                <input
-                  type="text"
-                  value={editableSlug}
-                  onChange={(e) =>
-                    setEditableSlug(e.target.value.toLowerCase().trim())
-                  }
-                  spellCheck={false}
-                  autoComplete="off"
-                  maxLength={40}
-                  className="flex-1 bg-transparent px-2 py-2 text-sm text-ink focus:outline-none"
-                />
-                <a
-                  href={`/c/${currentSlug}?owner=${encodeURIComponent(props.editToken)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center border-l border-ink/15 px-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-ink-200 transition-colors hover:bg-bg-2 hover:text-ink"
-                  title={edit.viewAsOwner}
-                >
-                  ↗
-                </a>
-              </div>
-              {editableSlug && editableSlug !== currentSlug && (
-                <p className="text-[11px] text-copper-700">
-                  ⚠ {edit.slugRenameWarning}
-                </p>
-              )}
-            </div>
-          )}
-        </div>
-
+    <main className="min-h-screen bg-neutral-50 overflow-x-hidden lg:h-[calc(100vh-5rem)] lg:min-h-0 lg:overflow-hidden">
+      <div className="max-w-full px-4 md:px-6 lg:px-8 lg:h-full">
         <form
           onSubmit={handleSubmit}
-          className="grid gap-10 lg:grid-cols-[1fr_minmax(320px,420px)]"
+          className="grid gap-10 pb-28 pt-6 md:pt-10 lg:grid-cols-[1fr_minmax(320px,420px)] lg:h-full lg:overflow-hidden lg:pt-0"
         >
           {/* ================ LEFT ================ */}
-          <div className="space-y-10">
+          <div className="space-y-10 lg:h-full lg:overflow-y-auto lg:pr-3 lg:pb-28 lg:pt-6">
+            {/* Non-published status hint — subdued chip (no inline colors) */}
+            {props.status !== "PUBLISHED" && (
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-neutral-100 px-3 py-1 text-xs text-ink-300">
+                {t.card.owner.banner}
+              </span>
+            )}
+
             {/* Design / template picker — kept at the very top so owners can
                 switch the look first and see it visually. */}
             <TemplateSection
@@ -559,19 +505,23 @@ export function CardEditClient(props: Props) {
               />
             )}
 
-            {/* Analytics + CRM panels — visible once card is published */}
-            {props.status === "PUBLISHED" && props.slug && (
-              <AnalyticsPanel
-                orderId={props.orderId}
-                editToken={props.editToken}
-                onShare={() => setShareOpen(true)}
-              />
-            )}
+            {/* Analytics + CRM panels — grouped as one "performance" unit (Goal B8).
+                `-space-y-px` collapses the gap so adjacent borders merge
+                into one hairline, reading as a single grouped card. */}
             {props.status === "PUBLISHED" && (
-              <LeadsPanel
-                orderId={props.orderId}
-                editToken={props.editToken}
-              />
+              <div className="-space-y-px overflow-hidden rounded-2xl">
+                {props.slug && (
+                  <AnalyticsPanel
+                    orderId={props.orderId}
+                    editToken={props.editToken}
+                    onShare={() => setShareOpen(true)}
+                  />
+                )}
+                <LeadsPanel
+                  orderId={props.orderId}
+                  editToken={props.editToken}
+                />
+              </div>
             )}
 
             {/* Contact-readonly block removed — the same fields are editable
@@ -648,12 +598,17 @@ export function CardEditClient(props: Props) {
               onOpenToNetworkingChange={setOpenToNetworking}
               acceptingClients={acceptingClients}
               onAcceptingClientsChange={setAcceptingClients}
+              currentSlug={currentSlug}
+              editableSlug={editableSlug}
+              onEditableSlugChange={setEditableSlug}
+              editToken={props.editToken}
+              cardStatus={props.status}
             />
 
-            {/* Download OG image + cancel subscription */}
+            {/* Download OG image */}
             <div className="rounded-2xl border border-neutral-200 bg-white p-5">
-              <p className="text-heading-sm text-ink">{edit.shareHeading}</p>
-              <p className="mt-1 text-sm text-ink-200">{edit.shareBody}</p>
+              <p className="text-[11px] uppercase tracking-wider text-ink-400 mb-2">{edit.shareHeading}</p>
+              <p className="text-sm text-ink-200">{edit.shareBody}</p>
               {props.slug && props.status === "PUBLISHED" ? (
                 <a
                   href={`/c/${props.slug}/wa.png`}
@@ -669,46 +624,51 @@ export function CardEditClient(props: Props) {
             </div>
 
             {props.hasSubscription && (
-              <div className="rounded-2xl border border-neutral-200 bg-white p-5">
-                <p className="text-heading-sm text-ink">
-                  {cancelCopy.heading}
-                </p>
-                <p className="mt-1 text-sm text-ink-200">{cancelCopy.body}</p>
-                {props.subscriptionCancelAt ? (
-                  <p className="mt-3 text-sm text-ink">
-                    {cancelCopy.alreadyScheduled.replace(
-                      "{date}",
-                      new Date(props.subscriptionCancelAt).toLocaleDateString()
-                    )}
+              <div className="mt-10 pt-6 border-t border-line-firm">
+                <p className="text-[11px] uppercase tracking-wider text-ink-400 mb-4">Abonelik</p>
+                <div className="rounded-2xl border border-neutral-200 bg-white p-5">
+                  <p className="text-heading-sm text-ink">
+                    {cancelCopy.heading}
                   </p>
-                ) : (
-                  <button
-                    type="button"
-                    onClick={() => setCancelOpen(true)}
-                    className="mt-4 inline-flex btn-ghost text-sm text-copper-700"
-                  >
-                    {cancelCopy.openCta}
-                  </button>
-                )}
+                  <p className="mt-1 text-sm text-ink-200">{cancelCopy.body}</p>
+                  {props.subscriptionCancelAt ? (
+                    <p className="mt-3 text-sm text-ink">
+                      {cancelCopy.alreadyScheduled.replace(
+                        "{date}",
+                        new Date(props.subscriptionCancelAt).toLocaleDateString()
+                      )}
+                    </p>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setCancelOpen(true)}
+                      className="mt-4 inline-flex btn-ghost text-sm text-copper-700"
+                    >
+                      {cancelCopy.openCta}
+                    </button>
+                  )}
+                </div>
               </div>
             )}
           </div>
 
           {/* ================ RIGHT: preview ================ */}
-          <div className="lg:sticky lg:top-20 lg:self-start">
-            <p className="text-eyebrow mb-4 uppercase text-ink-200">
+          <div className="lg:h-full lg:overflow-y-auto lg:pb-6 lg:pt-6">
+            <p className="text-eyebrow mb-2 uppercase text-ink-200">
               {form.previewLabel}
             </p>
-            <EditPreview
-              templateId={templateId}
-              templateComponentKey={props.templateComponentKey}
-              cardData={activeCardData}
-              photoPath={photoPath}
-              logoPath={logoPath}
-              brandPrimaryHex={brandPrimaryHex || undefined}
-              brandAccentHex={brandAccentHex || undefined}
-            />
-            <p className="mt-4 text-xs text-ink-200">{form.previewHint}</p>
+            <p className="mb-3 text-[11px] text-ink-300">{form.previewHint}</p>
+            <div className="rounded-2xl border border-line bg-bg-1 p-3">
+              <EditPreview
+                templateId={templateId}
+                templateComponentKey={props.templateComponentKey}
+                cardData={activeCardData}
+                photoPath={photoPath}
+                logoPath={logoPath}
+                brandPrimaryHex={brandPrimaryHex || undefined}
+                brandAccentHex={brandAccentHex || undefined}
+              />
+            </div>
           </div>
 
           {/* A4 — StickySaveBar lives inside <form> so its type="submit" button

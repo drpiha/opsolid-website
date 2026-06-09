@@ -43,7 +43,7 @@ export default function ContactSection({
       <button
         type="button"
         onClick={() => toggleSection("contact")}
-        className="flex w-full items-center justify-between gap-3 mt-8 mb-3 text-left"
+        className="flex w-full items-center justify-between gap-3 mb-3 text-left"
         aria-expanded={openSections.has("contact")}
         aria-label={
           openSections.has("contact")
@@ -51,7 +51,7 @@ export default function ContactSection({
             : edit.expandSection
         }
       >
-        <h2 className="font-serif text-lg text-ink">
+        <h2 className="text-sm font-semibold text-ink">
           {edit.sectionContact}
         </h2>
         <ChevronDown
