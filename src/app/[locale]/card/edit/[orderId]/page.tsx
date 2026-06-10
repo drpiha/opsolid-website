@@ -12,6 +12,7 @@ import { prisma } from "@/lib/prisma";
 import { CardDataSchema, OrderStatus } from "@/lib/validation";
 import { getTemplateById } from "@/config/card-templates";
 import { CardEditClient } from "./CardEditClient";
+import { ResendLinkButton } from "./ResendLinkButton";
 import { EditTokenError, requireEditToken } from "@/lib/auth/edit-token";
 
 export const runtime = "nodejs";
@@ -32,18 +33,35 @@ export default async function CardEditPage({ params, searchParams }: PageProps) 
   const { orderId } = params;
   const token = searchParams.t ?? "";
 
+  const buttonLocale = (["en", "de", "tr"].includes(params.locale)
+    ? params.locale
+    : "en") as "en" | "de" | "tr";
+
   let order;
   try {
     order = await requireEditToken(token, orderId);
   } catch (err) {
     if (err instanceof EditTokenError) {
-      return <EditRejectedView reason={err.code} />;
+      return (
+        <EditRejectedView
+          reason={err.code}
+          orderId={orderId}
+          locale={buttonLocale}
+        />
+      );
     }
     throw err;
   }
 
   if (NON_EDITABLE_STATUSES.has(order.status)) {
-    return <EditRejectedView reason="not_editable" status={order.status} />;
+    return (
+      <EditRejectedView
+        reason="not_editable"
+        status={order.status}
+        orderId={orderId}
+        locale={buttonLocale}
+      />
+    );
   }
 
   const template = getTemplateById(order.templateId);
@@ -62,6 +80,7 @@ export default async function CardEditPage({ params, searchParams }: PageProps) 
     <CardEditClient
       orderId={order.id}
       editToken={token}
+      version={order.updatedAt.toISOString()}
       status={order.status}
       templateComponentKey={template.componentKey}
       templateName={template.name}
@@ -100,9 +119,13 @@ export default async function CardEditPage({ params, searchParams }: PageProps) 
 function EditRejectedView({
   reason,
   status,
+  orderId,
+  locale,
 }: {
   reason: "missing_token" | "not_found" | "bad_token" | "not_editable";
   status?: string;
+  orderId: string;
+  locale: "en" | "de" | "tr";
 }) {
   const titleByReason: Record<string, string> = {
     missing_token: "Link incomplete",
@@ -134,6 +157,13 @@ function EditRejectedView({
           {titleByReason[reason] ?? "Unable to load this edit link"}
         </h1>
         <p className="mt-4 text-body text-ink-200">{bodyByReason[reason]}</p>
+        {/* Self-service recovery: emails the edit link to the order's stored
+            contact email. Only useful where a valid order might exist. */}
+        {(reason === "missing_token" ||
+          reason === "bad_token" ||
+          reason === "not_found") && (
+          <ResendLinkButton orderId={orderId} locale={locale} />
+        )}
         <p className="mt-6 text-sm text-ink-300">
           Need help?{" "}
           <a href="/contact" className="underline underline-offset-4">
