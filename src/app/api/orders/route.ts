@@ -6,6 +6,13 @@ import { getTemplateById } from "@/config/card-templates";
 import { createCheckoutSession } from "@/lib/stripe";
 import { validateManualSlug, isSlugAvailable, ensureUniqueSlug } from "@/lib/slug";
 import { getSiteUrl } from "@/lib/stripe";
+import { sendCustomerEmail } from "@/lib/email/send";
+import { normalizeLocale } from "@/lib/email/shell";
+import {
+  cardLiveSubject,
+  renderCardLiveHtml,
+  renderCardLiveText,
+} from "@/lib/email/templates/card-live";
 
 export const runtime = "nodejs";
 
@@ -127,6 +134,33 @@ export async function POST(req: NextRequest) {
     const siteUrl = getSiteUrl();
     const cardUrl = `${siteUrl}/c/${freeSlug}`;
     const editUrl = `/${data.locale}/card/edit/${order.id}?t=${editToken}`;
+    // Card-live email with the public + edit links. Without it the edit link
+    // only exists in this response — close the tab on a phone (the trade-fair
+    // case) and the card is unrecoverable. Fire-and-forget: the response must
+    // not wait on SMTP, and a mail failure must not fail the order.
+    const liveInput = {
+      orderId: order.id,
+      contactName: data.contactName,
+      cardUrl,
+      editToken,
+      locale: normalizeLocale(data.locale),
+    };
+    sendCustomerEmail({
+      to: data.contactEmail,
+      subject: cardLiveSubject(liveInput.locale),
+      html: renderCardLiveHtml(liveInput),
+      text: renderCardLiveText(liveInput),
+    })
+      .then((result) => {
+        if (!result.skipped) {
+          console.log(
+            `[orders] card-live email sent to ${data.contactEmail} (${result.messageId ?? "no-id"})`
+          );
+        }
+      })
+      .catch((err) => {
+        console.error("[orders] free-tier card-live email failed:", err);
+      });
     return NextResponse.json({ orderId: order.id, editToken, cardUrl, editUrl });
   }
 
