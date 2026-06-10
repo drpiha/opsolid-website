@@ -49,7 +49,7 @@ export function StickySaveBar({ isDirty, formState, onRevert }: StickySaveBarPro
         {/* Left: status label */}
         <div className="flex items-center gap-2 text-sm text-ink-200">
           {isSaved ? (
-            <CheckCircle2 size={15} className="text-green-600 shrink-0" />
+            <CheckCircle2 size={15} className="text-signal-ok shrink-0" />
           ) : isDirty ? (
             <span
               className="h-2 w-2 shrink-0 rounded-full bg-copper-500 motion-safe:animate-pulse"

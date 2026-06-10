@@ -204,7 +204,10 @@ export function PhotoEditor({
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
         <Dialog.Overlay className="fixed inset-0 z-[80] bg-neutral-950/70 backdrop-blur-sm data-[state=open]:animate-fade-in" />
-        <Dialog.Content className="fixed left-1/2 top-1/2 z-[80] w-[min(94vw,540px)] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-3xl border border-ink/10 bg-bg-0 shadow-[0_30px_80px_-20px_rgba(20,18,15,0.5)]">
+        {/* max-h + scroll: on short phone viewports (landscape, small devices)
+            the editor body must scroll — otherwise the action buttons fall
+            below the fold and the modal can't be confirmed. */}
+        <Dialog.Content className="fixed left-1/2 top-1/2 z-[80] max-h-[92dvh] w-[min(94vw,540px)] -translate-x-1/2 -translate-y-1/2 overflow-y-auto overscroll-contain rounded-3xl border border-ink/10 bg-bg-0 shadow-[0_30px_80px_-20px_rgba(20,18,15,0.5)]">
           <div className="flex items-start justify-between border-b border-ink/10 px-6 py-5">
             <div>
               <Dialog.Title className="font-serif text-heading-sm text-ink">
