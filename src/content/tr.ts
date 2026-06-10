@@ -3371,7 +3371,7 @@ export const content: Content = {
         reach: {
           email: "info@opsolid.de",
           linkedinLabel: "LinkedIn",
-          linkedinHref: "https://www.linkedin.com/company/opsolid/",
+          linkedinHref: "https://www.linkedin.com/in/hasan-doenmez/",
         },
         legal: {
           privacy: "Gizlilik",
