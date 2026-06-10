@@ -29,6 +29,9 @@ import {
   LOGO_NATIVE_KEYS,
   FAQ_NATIVE_KEYS,
   GALLERY_NATIVE_KEYS,
+  TESTIMONIALS_NATIVE_KEYS,
+  BROCHURE_NATIVE_KEYS,
+  BIO_NATIVE_KEYS,
 } from "@/components/cards/templates/v2/registry";
 import { LogoBlock } from "@/components/cards/templates/v2/shared/LogoBlock";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
@@ -39,16 +42,22 @@ import { CustomButtonsBlock } from "@/components/cards/CustomButtonsBlock";
 import { TipJarBlock } from "@/components/cards/TipJarBlock";
 import { FaqBlock } from "@/components/cards/FaqBlock";
 import { ContactFormBlock } from "@/components/cards/ContactFormBlock";
+import { TestimonialsBlock } from "@/components/cards/TestimonialsBlock";
+import { BrochureBlock } from "@/components/cards/BrochureBlock";
+import { AboutBlock } from "@/components/cards/AboutBlock";
 
 /** Templates that embed videoUrl natively — universal embed suppressed. */
 const VIDEO_EMBED_NATIVE = new Set<string>(["athlete", "photographer"]);
 
 type BlockLocale = "en" | "de" | "tr";
 
-const HEADINGS: Record<BlockLocale, { gallery: string; embeds: string; faq: string; contact: string }> = {
-  de: { gallery: "Galerie", embeds: "Eingebettet", faq: "Häufige Fragen", contact: "Kontakt" },
-  tr: { gallery: "Galeri", embeds: "Öne çıkan", faq: "Sık Sorulan Sorular", contact: "İletişim" },
-  en: { gallery: "Gallery", embeds: "Featured", faq: "FAQ", contact: "Get in touch" },
+const HEADINGS: Record<
+  BlockLocale,
+  { gallery: string; embeds: string; faq: string; contact: string; testimonials: string; brochure: string; about: string }
+> = {
+  de: { gallery: "Galerie", embeds: "Eingebettet", faq: "Häufige Fragen", contact: "Kontakt", testimonials: "Stimmen", brochure: "Broschüre", about: "Profil" },
+  tr: { gallery: "Galeri", embeds: "Öne çıkan", faq: "Sık Sorulan Sorular", contact: "İletişim", testimonials: "Yorumlar", brochure: "Broşür", about: "Profil" },
+  en: { gallery: "Gallery", embeds: "Featured", faq: "FAQ", contact: "Get in touch", testimonials: "Testimonials", brochure: "Brochure", about: "About" },
 };
 
 interface UniversalBlocksProps {
@@ -96,6 +105,10 @@ export function UniversalBlocks({
         suppress={suppressed(LOGO_NATIVE_KEYS)}
       />
       {children}
+      {/* Universal bio — 22 templates don't render cardData.bio natively. */}
+      {!suppressed(BIO_NATIVE_KEYS) && (
+        <AboutBlock bio={data.bio} accentHex={accentHex} heading={h.about} />
+      )}
       <CustomSectionsBlock
         sections={data.customSections}
         accentHex={accentHex ?? undefined}
@@ -113,6 +126,15 @@ export function UniversalBlocks({
       {!suppressed(GALLERY_NATIVE_KEYS) && (
         <GalleryBlock gallery={data.gallery} tone={tone} heading={h.gallery} />
       )}
+      {/* Universal testimonials — suppressed on the 44 templates that render
+          quote content natively (audit-derived Set; count-chips don't count). */}
+      {!suppressed(TESTIMONIALS_NATIVE_KEYS) && (
+        <TestimonialsBlock
+          testimonials={data.testimonials}
+          accentHex={accentHex}
+          heading={h.testimonials}
+        />
+      )}
       {isPublic && (
         <EmbedsBlock
           embeds={data.embeds}
@@ -126,6 +148,14 @@ export function UniversalBlocks({
         primaryHex={primaryHex}
         accentHex={accentHex}
       />
+      {/* Universal brochure link — 81 templates have no native affordance. */}
+      {!suppressed(BROCHURE_NATIVE_KEYS) && (
+        <BrochureBlock
+          brochureUrl={data.brochureUrl}
+          accentHex={accentHex}
+          label={h.brochure}
+        />
+      )}
       {isPublic && slug && (
         <TipJarBlock
           slug={slug}

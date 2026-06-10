@@ -302,6 +302,61 @@ export const LOGO_NATIVE_KEYS = new Set<string>([
   "wedding-planner", "yoga-studio",
 ]);
 
+// -----------------------------------------------------------------------------
+// Invariant enforced by `npm run audit:cards` (scripts/audit-template-coverage.ts):
+// every visual CardData field is either rendered natively by the template or
+// rendered by a universal wrapper block gated by one of these Sets. The three
+// Sets below are DERIVED FROM THE AUDIT — do not hand-edit; if a template
+// gains/loses a native section, re-run the audit and let it tell you the diff
+// (--check fails on any mismatch in either direction).
+// -----------------------------------------------------------------------------
+
+/** Templates that render testimonial CONTENT natively (quote text — a bare
+ *  review-count chip does not count; see audit content-vs-count rule). */
+export const TESTIMONIALS_NATIVE_KEYS = new Set<string>([
+  "accounting", "accounting-noir", "accounting-pure", "architect", "athlete",
+  "barber", "beauty-salon", "beauty-salon-pure", "clinic", "clinic-noir",
+  "clinic-stone", "clinic-vivid", "dentist", "dentist-pure", "dentist-vivid",
+  "dj-stone", "editorial", "event-planner", "event-planner-noir", "hotel",
+  "kitchen-atelier", "layout-noir-luxury", "layout-vivid-bold", "legal-counsel",
+  "legal-counsel-noir", "legal-counsel-pure", "legal-counsel-stone",
+  "legal-counsel-vivid", "maker", "music-producer", "personal-trainer",
+  "photographer", "psychologist", "psychologist-pure", "psychologist-vivid",
+  "real-estate", "real-estate-noir", "real-estate-pure", "real-estate-stone",
+  "real-estate-vivid", "restaurant", "studio", "wedding-planner", "yoga-studio",
+]);
+
+/** Templates that render `brochureUrl` natively. */
+export const BROCHURE_NATIVE_KEYS = new Set<string>([
+  "architect", "atelier", "editorial", "hotel", "kitchen-atelier",
+  "legal-counsel", "photographer-noir", "photographer-pure",
+  "photographer-stone", "photographer-vivid", "real-estate", "restaurant",
+  "restaurant-pure", "restaurant-stone", "restaurant-vivid",
+]);
+
+/** Templates that render `cardData.bio` natively. */
+export const BIO_NATIVE_KEYS = new Set<string>([
+  "accounting", "accounting-noir", "accounting-pure", "architect",
+  "architect-noir", "architect-pure", "architect-stone", "architect-vivid",
+  "atelier", "athlete", "barber", "barber-noir", "barber-pure", "barber-stone",
+  "barber-vivid", "clinic", "clinic-noir", "clinic-pure", "clinic-stone",
+  "content-creator", "content-creator-noir", "content-creator-pure",
+  "developer", "dj-noir", "dj-pure", "dj-stone", "ecommerce", "ecommerce-pure",
+  "editorial", "event-planner-noir", "fitness-noir", "fitness-pure",
+  "fitness-stone", "fitness-vivid", "hotel", "interior-design",
+  "interior-design-noir", "kitchen-atelier", "layout-editorial",
+  "layout-noir-luxury", "layout-pure-swiss", "layout-split-screen",
+  "legal-counsel", "legal-counsel-noir", "legal-counsel-pure",
+  "legal-counsel-stone", "maker", "music-producer", "personal-trainer",
+  "photographer", "photographer-noir", "photographer-pure",
+  "photographer-stone", "photographer-vivid", "psychologist", "real-estate",
+  "real-estate-noir", "real-estate-pure", "real-estate-stone", "restaurant",
+  "restaurant-noir", "restaurant-pure", "restaurant-stone", "restaurant-vivid",
+  "software-dev", "software-dev-pure", "studio", "tech-startup", "universal",
+  "wedding-planner", "wellness-teacher", "wellness-teacher-pure",
+  "wellness-teacher-vivid", "yoga-studio",
+]);
+
 // =============================================================================
 // Planned line-up — what the Phase 7 carousel renders, regardless of which
 // per-template components have shipped yet. Lets the gallery show all 12
