@@ -766,7 +766,7 @@ export const beautySalonEntry: Omit<TemplateRegistryEntry, "Component"> = {
   industry: "Beauty studio / lash artist / aesthetician",
   supports: {
     services: true,
-    faqs: true,
+    faqs: false,
     testimonials: true,
     gallery: false,
     video: false,

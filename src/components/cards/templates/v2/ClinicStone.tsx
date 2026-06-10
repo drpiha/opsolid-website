@@ -841,11 +841,11 @@ export const clinicStoneEntry: Omit<TemplateRegistryEntry, "Component"> = {
     testimonials: true,
     gallery: false,
     video: false,
-    brochure: true,
+    brochure: false,
     socials: true,
     themeSwitch: false,
     photo: true,
-    logo: true,
+    logo: false,
   },
   defaults: {
     brandPrimaryHex: "#4a5568",

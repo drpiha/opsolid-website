@@ -653,7 +653,7 @@ export const photographerStoneEntry: Omit<TemplateRegistryEntry, "Component"> = 
     socials: true,
     themeSwitch: false,
     photo: true,
-    logo: true,
+    logo: false,
   },
   defaults: {
     brandPrimaryHex: "#6b5744",

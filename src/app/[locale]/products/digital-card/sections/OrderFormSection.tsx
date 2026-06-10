@@ -1774,7 +1774,10 @@ function StepCardContent({
             previewUrl={logoPreviewUrl}
             uploading={logoUploading}
             uploadError={logoUploadError}
-            disabled={!supports.logo}
+            /* Logo is wrapper-guaranteed: templates without a native logo get
+               the universal LogoBlock strip above the card, so the upload is
+               always meaningful — never disable it. */
+            disabled={false}
             disabledReason={L(
               "templateNoLogo",
               "Dieses Design verwendet kein Logo."

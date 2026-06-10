@@ -965,7 +965,7 @@ export const legalCounselEntry: TemplateRegistryEntry = {
   Component: LegalCounsel,
   supports: {
     services: true,
-    faqs: true,
+    faqs: false,
     testimonials: true,
     gallery: false,
     video: false,

@@ -1152,7 +1152,7 @@ export const studioEntry: TemplateRegistryEntry = {
     faqs: false,
     testimonials: true, // repurposed as residencies
     gallery: false,
-    video: true,
+    video: false,
     brochure: false,
     socials: true,
     themeSwitch: false,

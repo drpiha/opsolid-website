@@ -634,11 +634,11 @@ export const clinicPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
     testimonials: false,
     gallery: false,
     video: false,
-    brochure: true,
+    brochure: false,
     socials: true,
     themeSwitch: false,
     photo: true,
-    logo: true,
+    logo: false,
   },
   defaults: {
     brandPrimaryHex: "#f8fffe",

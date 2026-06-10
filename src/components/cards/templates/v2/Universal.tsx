@@ -37,6 +37,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { SocialRow } from "./shared/SocialRow";
+import { ServiceLink } from "./shared/ServiceLink";
 import type { TemplateProps } from "./types";
 
 // -----------------------------------------------------------------------------
@@ -73,6 +74,7 @@ interface ContactDef {
 
 interface UniCopy {
   contact: string;
+  services: string;
   about: string;
   cta: string;
   elsewhere: string;
@@ -81,18 +83,21 @@ interface UniCopy {
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", UniCopy> = {
   de: {
     contact: "Kontakt",
+    services: "Leistungen",
     about: "Über mich",
     cta: "Jetzt Kontakt aufnehmen",
     elsewhere: "Weitere Kanäle",
   },
   en: {
     contact: "Get in touch",
+    services: "Services",
     about: "About",
     cta: "Contact me",
     elsewhere: "Elsewhere",
   },
   tr: {
     contact: "İletişim",
+    services: "Hizmetler",
     about: "Hakkımda",
     cta: "Bana ulaşın",
     elsewhere: "Diğer kanallar",
@@ -100,6 +105,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", UniCopy> = {
   es: {
 
     contact: "Ponte en contacto",
+    services: "Servicios",
     about: "Acerca de",
     cta: "Contáctame",
     elsewhere: "En otros lugares",
@@ -108,6 +114,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", UniCopy> = {
   it: {
 
     contact: "Mettiti in contatto",
+    services: "Servizi",
     about: "Chi siamo",
     cta: "Contattami",
     elsewhere: "Altrove",
@@ -116,6 +123,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", UniCopy> = {
   fr: {
 
     contact: "Prendre contact",
+    services: "Services",
     about: "À propos",
     cta: "Me contacter",
     elsewhere: "Ailleurs",
@@ -124,6 +132,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", UniCopy> = {
   ar: {
 
     contact: "تواصل معنا",
+    services: "الخدمات",
     about: "حول",
     cta: "اتصل بي",
     elsewhere: "في أماكن أخرى",
@@ -341,6 +350,55 @@ export function Universal({
       )}
 
       {/* ============================================================
+          Services — compact rows; rendered only when the owner listed any.
+          ============================================================ */}
+      {cardData.services && cardData.services.length > 0 && (
+        <section className="px-7 pt-7">
+          <p
+            className="text-[10.5px] font-semibold uppercase tracking-[0.22em] text-[#8a8a8a]"
+            style={{
+              fontFamily:
+                "var(--font-jetbrains-mono), ui-monospace, monospace",
+            }}
+          >
+            {copy.services}
+          </p>
+          <ul className="mt-3 grid gap-2">
+            {cardData.services.slice(0, 8).map((svc, i) => (
+              <li key={`${svc.title}-${i}`}>
+                <ServiceLink
+                  href={svc.href}
+                  className="flex items-baseline justify-between gap-3 rounded-xl border border-black/5 bg-[#fafafa] px-4 py-3"
+                  style={{
+                    fontFamily: "var(--font-inter), system-ui, sans-serif",
+                  }}
+                >
+                  <span className="min-w-0">
+                    <span className="block text-[13.5px] font-medium text-[#1a1a1a]">
+                      {svc.title}
+                    </span>
+                    {svc.description && (
+                      <span className="mt-0.5 block text-[12px] leading-relaxed text-[#6a6a6a]">
+                        {svc.description}
+                      </span>
+                    )}
+                  </span>
+                  {svc.priceLabel && (
+                    <span
+                      className="shrink-0 text-[12px] font-semibold"
+                      style={{ color: accent }}
+                    >
+                      {svc.priceLabel}
+                    </span>
+                  )}
+                </ServiceLink>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
+      {/* ============================================================
           Contact grid — only the channels the customer filled out.
           ============================================================ */}
       {contactRows.length > 0 && (
@@ -442,7 +500,7 @@ export const universalEntry: TemplateRegistryEntry = {
   industry: "Any profession · sector-agnostic",
   Component: Universal,
   supports: {
-    services: false,
+    services: true,
     faqs: false,
     testimonials: false,
     gallery: false,

@@ -849,7 +849,7 @@ export const atelierEntry: TemplateRegistryEntry = {
   supports: {
     services: true,
     faqs: false,
-    testimonials: true,
+    testimonials: false,
     gallery: false,
     video: false,
     brochure: true,

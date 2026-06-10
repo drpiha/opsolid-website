@@ -45,6 +45,7 @@ import {
 
 import { encodeSource, describeSource } from "@/components/cards/smart/SmartCardSource";
 import { ContactRows } from "./shared/ContactRows";
+import { ServiceLink } from "./shared/ServiceLink";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
@@ -73,6 +74,7 @@ function getInitials(name: string): string {
 
 interface PhCopy {
   portfolio: string;
+  services: string;
   about: string;
   contact: string;
   social: string;
@@ -94,6 +96,7 @@ interface PhCopy {
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PhCopy> = {
   de: {
     portfolio: "Portfolio",
+    services: "Pakete",
     about: "Über mich",
     contact: "Buchung",
     social: "Folgen",
@@ -113,6 +116,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PhCopy> = {
   },
   en: {
     portfolio: "Portfolio",
+    services: "Packages",
     about: "About",
     contact: "Booking",
     social: "Follow",
@@ -132,6 +136,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PhCopy> = {
   },
   tr: {
     portfolio: "Portföy",
+    services: "Paketler",
     about: "Hakkımda",
     contact: "Çekim Talebi",
     social: "Takip et",
@@ -152,6 +157,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PhCopy> = {
   es: {
 
     portfolio: "Portafolio",
+    services: "Paquetes",
     about: "Acerca de",
     contact: "Reserva",
     social: "Seguir",
@@ -173,6 +179,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PhCopy> = {
   it: {
 
     portfolio: "Portfolio",
+    services: "Pacchetti",
     about: "Chi siamo",
     contact: "Prenotazione",
     social: "Segui",
@@ -194,6 +201,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PhCopy> = {
   fr: {
 
     portfolio: "Portfolio",
+    services: "Formules",
     about: "À propos",
     contact: "Réservation",
     social: "Suivre",
@@ -215,6 +223,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PhCopy> = {
   ar: {
 
     portfolio: "المعرض",
+    services: "الباقات",
     about: "حول",
     contact: "الحجز",
     social: "متابعة",
@@ -384,6 +393,47 @@ export function Photographer({
           style={{ background: "var(--ph-line)" }}
         />
       </section>
+
+      {cardData.services && cardData.services.length > 0 && (
+        <>
+          <SectionEyebrow label={t.services} accent={accent} />
+          <section className="px-6 pb-7 pt-3">
+            {cardData.services.slice(0, 6).map((svc, i) => (
+              <ServiceLink
+                key={`${svc.title}-${i}`}
+                href={svc.href}
+                className="flex items-baseline justify-between gap-4 border-b py-3.5"
+                style={{ borderColor: "var(--ph-line)" }}
+              >
+                <span className="min-w-0">
+                  <span
+                    className="block text-[14px] font-medium"
+                    style={{ color: "#fafafa" }}
+                  >
+                    {svc.title}
+                  </span>
+                  {svc.description && (
+                    <span
+                      className="mt-0.5 block text-[12px] leading-relaxed"
+                      style={{ color: "var(--ph-text-60)" }}
+                    >
+                      {svc.description}
+                    </span>
+                  )}
+                </span>
+                {svc.priceLabel && (
+                  <span
+                    className="ph-mono shrink-0 text-[12px]"
+                    style={{ color: accent }}
+                  >
+                    {svc.priceLabel}
+                  </span>
+                )}
+              </ServiceLink>
+            ))}
+          </section>
+        </>
+      )}
 
       {cardData.testimonials && cardData.testimonials.length > 0 && (
         <>
@@ -984,7 +1034,7 @@ export const photographerEntry: TemplateRegistryEntry = {
   industry: "Fine-art / commercial photographer",
   Component: Photographer,
   supports: {
-    services: false,
+    services: true,
     faqs: false,
     testimonials: true,
     gallery: true,

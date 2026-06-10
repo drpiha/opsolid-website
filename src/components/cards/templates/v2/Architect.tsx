@@ -1124,7 +1124,7 @@ export const architectEntry: TemplateRegistryEntry = {
     services: true, // selected projects
     faqs: false,
     testimonials: true,
-    gallery: true,
+    gallery: false,
     video: false,
     brochure: true,
     socials: true,

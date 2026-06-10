@@ -1407,7 +1407,7 @@ export const athleteEntry: TemplateRegistryEntry = {
   Component: Athlete,
   supports: {
     services: true,
-    faqs: true,
+    faqs: false,
     testimonials: true,
     gallery: false,
     video: true,

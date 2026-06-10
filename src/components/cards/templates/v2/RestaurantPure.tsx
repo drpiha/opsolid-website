@@ -629,7 +629,7 @@ export const restaurantPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
     socials: true,
     themeSwitch: false,
     photo: true,
-    logo: true,
+    logo: false,
   },
   defaults: {
     brandPrimaryHex: "#f9f7f2",

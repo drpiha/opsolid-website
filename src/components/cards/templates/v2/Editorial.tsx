@@ -1384,7 +1384,7 @@ export const editorialEntry: TemplateRegistryEntry = {
   Component: Editorial,
   supports: {
     services: true,
-    faqs: true,
+    faqs: false,
     testimonials: true,
     gallery: true,
     video: false,

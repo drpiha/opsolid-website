@@ -568,7 +568,7 @@ export const eventPlannerPureEntry: Omit<TemplateRegistryEntry, "Component"> = {
   supports: {
     services: true,
     faqs: false,
-    testimonials: true,
+    testimonials: false,
     gallery: false,
     video: false,
     brochure: false,

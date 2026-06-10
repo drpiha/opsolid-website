@@ -806,7 +806,7 @@ export const restaurantVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
     socials: true,
     themeSwitch: false,
     photo: true,
-    logo: true,
+    logo: false,
   },
   defaults: {
     brandPrimaryHex: "#c0392b",

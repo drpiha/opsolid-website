@@ -558,14 +558,14 @@ export const layoutPureSwissEntry: Omit<TemplateRegistryEntry, "Component"> = {
   supports: {
     services: true,
     faqs: false,
-    testimonials: true,
+    testimonials: false,
     gallery: false,
     video: false,
     brochure: false,
     socials: true,
     themeSwitch: false,
     photo: true,
-    logo: true,
+    logo: false,
   },
   defaults: {
     brandPrimaryHex: LOCKED_PRIMARY,

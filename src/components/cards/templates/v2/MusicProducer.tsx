@@ -1333,7 +1333,7 @@ export const musicProducerEntry: TemplateRegistryEntry = {
     faqs: false,
     testimonials: true, // repurposed as upcoming shows
     gallery: false,
-    video: true,
+    video: false,
     brochure: false,
     socials: true,
     themeSwitch: false,
