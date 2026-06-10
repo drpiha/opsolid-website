@@ -8,7 +8,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 npm run dev          # Start dev server (frontend + API routes) at localhost:3000
 npm run build        # Production build — also runs TypeScript type checking and ESLint
 npm run lint         # ESLint only
+npm run audit:cards  # Template×CardData coverage gate — fails on any silently-dropped field
+npm run predeploy    # audit:cards + build — run before every deploy
 ```
+
+Card-template invariant: every visual CardData field must render natively in a
+template OR via UniversalBlocks (src/components/cards/UniversalBlocks.tsx),
+gated by the audit-derived `*_NATIVE_KEYS` Sets in templates/v2/registry.ts.
+`npm run audit:cards` enforces this — never hand-edit those Sets without
+re-running it.
 
 No separate backend process — Next.js API routes (`src/app/api/`) run within the same server.
 
