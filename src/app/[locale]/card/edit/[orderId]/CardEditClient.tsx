@@ -40,13 +40,10 @@ import { useLocale } from "@/context/LocaleContext";
 import { TemplateRenderer } from "@/components/cards/TemplateRenderer";
 import type { CardData, ImagePosition } from "@/lib/validation";
 import { PhotoEditor } from "@/components/cards/PhotoEditor";
-import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
-import { VideoBlock } from "@/components/cards/templates/v2/shared/VideoBlock";
-import { LogoBlock } from "@/components/cards/templates/v2/shared/LogoBlock";
-import { GalleryBlock } from "@/components/cards/templates/v2/shared/GalleryBlock";
+import { UniversalBlocks } from "@/components/cards/UniversalBlocks";
 import { getTypographyPreset } from "@/lib/typographyPresets";
 import { downscaleImage } from "@/lib/images/downscale";
-import { getTemplateEntry, LOGO_NATIVE_KEYS, GALLERY_NATIVE_KEYS } from "@/components/cards/templates/v2/registry";
+import { getTemplateEntry } from "@/components/cards/templates/v2/registry";
 import { ShareDrawer } from "@/components/cards/ShareDrawer";
 import { StickySaveBar } from "./StickySaveBar";
 import TemplateSection from "./sections/TemplateSection";
@@ -1996,46 +1993,41 @@ function EditPreview({
 
   return (
     <div data-card-tpl style={wrapperStyle as React.CSSProperties}>
-      <LogoBlock
+      {/* Shared wrapper-block stack — same component the public page renders,
+          in display-only "preview" mode (no TipJar/ContactForm/Embeds). Keeps
+          the editor preview from drifting away from the live card. */}
+      <UniversalBlocks
+        mode="preview"
+        data={cardData}
+        entryKey={entry?.key ?? null}
         logoPath={logoPath}
         tone={isDarkTemplate ? "dark" : "light"}
-        suppress={!entry || LOGO_NATIVE_KEYS.has(entry.key)}
-      />
-      {Template ? (
-        <Template
-          slug="preview"
-          cardData={cardData}
-          photoPath={photoPath}
-          logoPath={logoPath}
-          brandPrimaryHex={brandPrimaryHex ?? null}
-          brandAccentHex={brandAccentHex ?? null}
-          siteUrl={siteUrl}
-          locale="de"
-        />
-      ) : (
-        <TemplateRenderer
-          componentKey={templateComponentKey}
-          cardData={cardData}
-          photoPath={photoPath}
-          logoPath={logoPath}
-          brandPrimaryHex={brandPrimaryHex}
-          brandAccentHex={brandAccentHex}
-        />
-      )}
-      <CustomSectionsBlock
-        sections={cardData.customSections}
-        accentHex={brandAccentHex}
-        tone={isDarkTemplate ? "dark" : "light"}
-      />
-      <VideoBlock
-        videoUrl={cardData.videoUrl}
-        videoPath={cardData.videoPath}
-        tone={isDarkTemplate ? "dark" : "light"}
-        suppressEmbed={!entry || entry.key === "athlete" || entry.key === "photographer"}
-      />
-      {!(!entry || GALLERY_NATIVE_KEYS.has(entry.key)) && (
-        <GalleryBlock gallery={cardData.gallery} tone={isDarkTemplate ? "dark" : "light"} />
-      )}
+        primaryHex={brandPrimaryHex ?? null}
+        accentHex={brandAccentHex ?? null}
+        locale="de"
+      >
+        {Template ? (
+          <Template
+            slug="preview"
+            cardData={cardData}
+            photoPath={photoPath}
+            logoPath={logoPath}
+            brandPrimaryHex={brandPrimaryHex ?? null}
+            brandAccentHex={brandAccentHex ?? null}
+            siteUrl={siteUrl}
+            locale="de"
+          />
+        ) : (
+          <TemplateRenderer
+            componentKey={templateComponentKey}
+            cardData={cardData}
+            photoPath={photoPath}
+            logoPath={logoPath}
+            brandPrimaryHex={brandPrimaryHex}
+            brandAccentHex={brandAccentHex}
+          />
+        )}
+      </UniversalBlocks>
     </div>
   );
 }

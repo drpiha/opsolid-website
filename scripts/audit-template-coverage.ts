@@ -452,10 +452,10 @@ for (const f of fs.readdirSync(V2_DIR).sort()) {
     continue;
   }
   const native = new Map(analysis.fields);
-  for (const tag of analysis.wholePassShared) {
+  for (const tag of Array.from(analysis.wholePassShared)) {
     const profile = sharedProfiles.get(tag);
     if (!profile) continue;
-    for (const [field, lines] of profile) {
+    for (const [field, lines] of Array.from(profile.entries())) {
       if (!native.has(field)) native.set(field, lines.map(() => -1)); // -1 = via shared
     }
   }
@@ -513,7 +513,7 @@ for (const [field, setName] of Object.entries(FIELD_TO_SET)) {
   for (const k of nativeKeys) {
     if (!set.has(k)) errors.push(`${k}: renders '${field}' natively but missing from ${setName} → DOUBLE RENDER`);
   }
-  for (const k of set) {
+  for (const k of Array.from(set)) {
     if (!nativeKeys.includes(k)) errors.push(`${k}: in ${setName} but no native '${field}' render → SILENT DROP`);
   }
 }
@@ -529,7 +529,7 @@ for (const r of results) {
     }
   }
 }
-for (const [field, keys] of dropMatrix) {
+for (const [field, keys] of Array.from(dropMatrix.entries())) {
   errors.push(`SILENT DROP '${field}' (${keys.length} templates, no native render + no wrapper): ${keys.join(", ")}`);
 }
 
@@ -551,8 +551,8 @@ if (mode === "json") {
     key: r.key,
     supports: r.supports,
     logoNative: r.logoNative,
-    contentFields: [...r.content].sort(),
-    fields: Object.fromEntries([...r.native.entries()].map(([f, lines]) => [f, lines])),
+    contentFields: Array.from(r.content).sort(),
+    fields: Object.fromEntries(Array.from(r.native.entries()).map(([f, lines]) => [f, lines])),
   }));
   console.log(JSON.stringify({ templates: out, errors, warnings }, null, 2));
 } else {

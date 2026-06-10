@@ -26,11 +26,8 @@ import { SmartCard } from "@/components/cards/smart/SmartCard";
 import { WalletButtons } from "@/components/cards/smart/WalletButtons";
 import { readSourceFromSearchParams } from "@/components/cards/smart/SmartCardSource";
 import { getSiteUrl } from "@/lib/stripe";
-import { getTemplateEntry, LOGO_NATIVE_KEYS, FAQ_NATIVE_KEYS, GALLERY_NATIVE_KEYS } from "@/components/cards/templates/v2/registry";
-import { GalleryBlock } from "@/components/cards/templates/v2/shared/GalleryBlock";
-import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
-import { VideoBlock } from "@/components/cards/templates/v2/shared/VideoBlock";
-import { LogoBlock } from "@/components/cards/templates/v2/shared/LogoBlock";
+import { getTemplateEntry } from "@/components/cards/templates/v2/registry";
+import { UniversalBlocks } from "@/components/cards/UniversalBlocks";
 import { OwnerModeProvider } from "@/context/OwnerMode";
 import { QRFlipOverlay } from "@/components/cards/QRFlipOverlay";
 import { ShareButton } from "@/components/cards/ShareButton";
@@ -41,11 +38,6 @@ import { SaveCardButton } from "@/components/cards/SaveCardButton";
 import { SaveToContactsButton } from "@/components/cards/SaveToContactsButton";
 import { FeedbackWidget } from "@/components/cards/FeedbackWidget";
 import { CreateYoursBanner } from "@/components/cards/CreateYoursBanner";
-import { EmbedsBlock } from "@/components/cards/EmbedsBlock";
-import { CustomButtonsBlock } from "@/components/cards/CustomButtonsBlock";
-import { TipJarBlock } from "@/components/cards/TipJarBlock";
-import { FaqBlock } from "@/components/cards/FaqBlock";
-import { ContactFormBlock } from "@/components/cards/ContactFormBlock";
 import { LockScreen } from "@/components/cards/LockScreen";
 import { isPro } from "@/lib/auth/pro";
 import { constantTimeEquals } from "@/lib/constantTime";
@@ -501,112 +493,35 @@ export default async function CardPage({ params, searchParams }: PageProps) {
           data-card-tpl
           style={wrapperStyle}
         >
-          {/* Universal brand strip — shows the logo above any template that
-              doesn't render one natively (e.g. Maker). */}
-          <LogoBlock
+          {/* Universal wrapper-block stack — shared with the editor preview
+              (single source of truth in UniversalBlocks.tsx). Blocks self-hide
+              when data is absent; per-template suppression via the
+              *_NATIVE_KEYS Sets in registry.ts. */}
+          <UniversalBlocks
+            mode="public"
+            data={parsed.data}
+            entryKey={entry?.key ?? null}
             logoPath={order.logoPath}
             tone={isDarkTemplate ? "dark" : "light"}
-            suppress={!entry || LOGO_NATIVE_KEYS.has(entry.key)}
-          />
-          <Template
-            slug={slug}
-            cardData={renderedCardData}
-            photoPath={order.photoPath}
-            logoPath={order.logoPath}
-            brandPrimaryHex={effectivePrimaryHex}
-            brandAccentHex={effectiveAccentHex}
-            source={source}
-            siteUrl={siteUrl}
-            locale={localeKey}
-            walletSlot={<WalletButtons slug={slug} />}
-          />
-          <CustomSectionsBlock
-            sections={parsed.data.customSections}
-            accentHex={effectiveAccentHex ?? undefined}
-            tone={isDarkTemplate ? "dark" : "light"}
-          />
-          {/* Universal video — self-hosted clip + YouTube/Vimeo embed. The embed
-              is suppressed for the few templates that render videoUrl natively
-              (SmartCard fallback, Athlete, Photographer) to avoid duplication. */}
-          <VideoBlock
-            videoUrl={parsed.data.videoUrl}
-            videoPath={(parsed.data as Record<string, unknown>).videoPath as string | undefined}
-            tone={isDarkTemplate ? "dark" : "light"}
-            heading={
-              localeKey === "de" ? "Video" : localeKey === "tr" ? "Video" : "Video"
-            }
-            suppressEmbed={!entry || entry.key === "athlete" || entry.key === "photographer"}
-          />
-          {/* Universal gallery — shows uploaded photos on templates that don't
-              render a gallery natively (suppressed on the ~6 that do). */}
-          {!(!entry || GALLERY_NATIVE_KEYS.has(entry.key)) && (
-            <GalleryBlock
-              gallery={parsed.data.gallery}
-              tone={isDarkTemplate ? "dark" : "light"}
-              heading={
-                localeKey === "de" ? "Galerie" : localeKey === "tr" ? "Galeri" : "Gallery"
-              }
-            />
-          )}
-          {/* M3 — Curated embeds (Carrd amendment). The block self-hides
-              when `cardData.embeds` is empty or every entry fails the host
-              re-validation done client-side. Heading is inlined per locale
-              (no current `card.embeds` key in src/content). */}
-          <EmbedsBlock
-            embeds={(parsed.data as Record<string, unknown>).embeds}
-            accentHex={effectiveAccentHex ?? undefined}
-            locale={localeKey}
-            heading={
-              localeKey === "de"
-                ? "Eingebettet"
-                : localeKey === "tr"
-                  ? "Öne çıkan"
-                  : "Featured"
-            }
-          />
-          {/* Wrapper-level blocks — render uniformly across ALL 96 templates.
-              Each reads cardData fields that individual templates may not
-              implement. The blocks self-hide when data is absent / disabled. */}
-          <CustomButtonsBlock
-            buttons={parsed.data.customButtons}
             primaryHex={effectivePrimaryHex}
             accentHex={effectiveAccentHex}
-          />
-          <TipJarBlock
+            locale={localeKey}
             slug={slug}
-            tipJar={parsed.data.tipJar}
             ownerIsPro={ownerIsPro}
-            primaryHex={effectivePrimaryHex}
-          />
-          {/* Suppress the universal FAQ on templates that render faqs natively
-              (and on the SmartCard fallback) to avoid a double FAQ list. */}
-          {!(!entry || FAQ_NATIVE_KEYS.has(entry.key)) && (
-            <FaqBlock
-              faqs={parsed.data.faqs}
-              accentHex={effectiveAccentHex}
-              heading={
-                localeKey === "de"
-                  ? "Häufige Fragen"
-                  : localeKey === "tr"
-                    ? "Sık Sorulan Sorular"
-                    : "FAQ"
-              }
+          >
+            <Template
+              slug={slug}
+              cardData={renderedCardData}
+              photoPath={order.photoPath}
+              logoPath={order.logoPath}
+              brandPrimaryHex={effectivePrimaryHex}
+              brandAccentHex={effectiveAccentHex}
+              source={source}
+              siteUrl={siteUrl}
+              locale={localeKey}
+              walletSlot={<WalletButtons slug={slug} />}
             />
-          )}
-          <ContactFormBlock
-            slug={slug}
-            contactForm={parsed.data.contactForm}
-            primaryHex={effectivePrimaryHex}
-            accentHex={effectiveAccentHex}
-            locale={localeKey}
-            heading={
-              localeKey === "de"
-                ? "Kontakt"
-                : localeKey === "tr"
-                  ? "İletişim"
-                  : "Get in touch"
-            }
-          />
+          </UniversalBlocks>
           {/* Phase 8.3 — save + locale row below card content */}
           <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
             {/* Only show save button to non-owners — owners manage via dashboard */}
