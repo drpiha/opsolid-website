@@ -76,6 +76,12 @@ export async function createCheckoutSession(
     cancel_url: cancelUrl,
     customer_email: args.customerEmail,
     locale: args.locale,
+    // Gifting/fair channel: promotion codes minted in the Stripe dashboard
+    // (e.g. single-use 100%-off FUAR2026-XXXX). A 100%-off code in payment
+    // mode completes with zero total and no card entry; the webhook tolerates
+    // the null payment_intent. For subscriptions Stripe still collects a
+    // payment method on a zero first invoice — prefer ONE_TIME for gifts.
+    allow_promotion_codes: true,
     metadata: {
       orderId: args.orderId,
       billingMode: args.billingMode,
