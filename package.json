@@ -10,7 +10,9 @@
     "gen:template-previews": "tsx scripts/generate-template-previews.ts",
     "generate-thumbnails": "tsx scripts/generate-template-previews.ts",
     "create-sample-order": "tsx scripts/create-sample-order.ts",
-    "test:lead": "tsx scripts/test-lead-email.ts"
+    "test:lead": "tsx scripts/test-lead-email.ts",
+    "audit:cards": "tsx scripts/audit-template-coverage.ts --check",
+    "predeploy": "npm run audit:cards && npm run build"
   },
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",

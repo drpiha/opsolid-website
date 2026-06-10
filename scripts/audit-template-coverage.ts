@@ -1,0 +1,469 @@
+// =============================================================================
+// Template ↔ CardData coverage audit.
+//
+// Invariant this script enforces: every visual CardData field is either
+//   (a) rendered NATIVELY by the template component, or
+//   (b) rendered by a universal wrapper block (UniversalBlocks stack) that is
+//       suppressed per-template via a `*_NATIVE_KEYS` Set in registry.ts.
+// A field that is neither (a) nor (b) is a SILENT DROP: the owner can type
+// data that never appears on their card. That class of bug caused the
+// 2026-06 TestimonialsBlock revert — this script exists so it can't recur.
+//
+// Pure static analysis via the TypeScript compiler API. Never imports app
+// modules (registry.ts pulls all 96 templates + next/* — fragile under tsx).
+// Per template file the `export const *Entry` / `*Sample` subtrees are
+// EXCLUDED from field-reference analysis (sample cardData would otherwise
+// count as render evidence); `supports` + `key` are read from the entry.
+// Whole-object passes to ./shared/* components (<ContactRows cardData={…}>)
+// union that shared component's own field accesses (depth 1 — shared files
+// are leaves).
+//
+// Usage:
+//   npx tsx scripts/audit-template-coverage.ts          # human report
+//   npx tsx scripts/audit-template-coverage.ts --json   # machine-readable
+//   npx tsx scripts/audit-template-coverage.ts --check  # CI gate, exit 1 on
+//                                                       # Set inconsistencies
+//                                                       # or silent drops
+// =============================================================================
+
+import * as fs from "fs";
+import * as path from "path";
+import * as ts from "typescript";
+
+const V2_DIR = path.join(__dirname, "..", "src", "components", "cards", "templates", "v2");
+const SHARED_DIR = path.join(V2_DIR, "shared");
+const REGISTRY = path.join(V2_DIR, "registry.ts");
+
+// Visual CardData fields an owner can populate (mirror of CardDataSchema in
+// src/lib/validation.ts — update together).
+const VISUAL_FIELDS = [
+  "name", "title", "position", "company", "email", "phone", "whatsapp",
+  "website", "address", "bio", "coverImage", "bookingUrl", "brochureUrl",
+  "impressumUrl", "privacyUrl", "videoUrl", "videoPath", "socials", "services",
+  "gallery", "faqs", "testimonials", "customButtons", "customSections",
+  "statusMessage", "statusBanner", "tags", "embeds", "contactForm", "tipJar",
+] as const;
+type VisualField = (typeof VISUAL_FIELDS)[number];
+
+// Fields guaranteed visible by the UniversalBlocks stack rendered around
+// <Template/> in /c/[slug]/page.tsx AND the editor preview — mirror of
+// src/components/cards/UniversalBlocks.tsx; update together.
+const WRAPPER_COVERED = new Set<string>([
+  "customSections", "videoUrl", "videoPath", "gallery", "faqs", "embeds",
+  "customButtons", "tipJar", "contactForm",
+  "testimonials", // TestimonialsBlock (gated by TESTIMONIALS_NATIVE_KEYS)
+  "brochureUrl",  // BrochureBlock (gated by BROCHURE_NATIVE_KEYS)
+  "bio",          // AboutBlock (gated by BIO_NATIVE_KEYS)
+  // statusBanner/statusMessage render at page level outside the template.
+  "statusBanner", "statusMessage",
+]);
+
+// Fields rendered by effectively every template via shared primitives
+// (ContactRows / SocialRow / header) — silent-drop reporting skips these and
+// instead surfaces them in the per-template matrix only.
+const BASELINE_FIELDS = new Set<string>([
+  "name", "title", "position", "company", "email", "phone", "whatsapp",
+  "website", "address", "socials", "bookingUrl", "impressumUrl", "privacyUrl",
+  "coverImage", "tags",
+]);
+
+// field → registry Set that suppresses its universal block.
+const FIELD_TO_SET: Record<string, string> = {
+  gallery: "GALLERY_NATIVE_KEYS",
+  faqs: "FAQ_NATIVE_KEYS",
+  logoPath: "LOGO_NATIVE_KEYS",
+  testimonials: "TESTIMONIALS_NATIVE_KEYS",
+  brochureUrl: "BROCHURE_NATIVE_KEYS",
+  bio: "BIO_NATIVE_KEYS",
+};
+
+// supports flag → field(s) that count as "renders it natively".
+const SUPPORTS_TO_FIELDS: Record<string, string[]> = {
+  services: ["services"],
+  faqs: ["faqs"],
+  testimonials: ["testimonials"],
+  gallery: ["gallery"],
+  video: ["videoUrl", "videoPath"],
+  brochure: ["brochureUrl"],
+  socials: ["socials"],
+  logo: ["logoPath"],
+};
+
+interface FileAnalysis {
+  /** field → first few line numbers where referenced */
+  fields: Map<string, number[]>;
+  /** ./shared/X tag names the file passes whole cardData into */
+  wholePassShared: Set<string>;
+  /** identifier usages of the logoPath prop (outside types/bindings) */
+  logoPathLines: number[];
+}
+
+interface EntryInfo {
+  key: string;
+  supports: Record<string, boolean>;
+}
+
+function parse(file: string): ts.SourceFile {
+  return ts.createSourceFile(file, fs.readFileSync(file, "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TSX);
+}
+
+/** True for top-level declarations to exclude from render-evidence analysis. */
+function isExcludedDecl(node: ts.Node): boolean {
+  if (!ts.isVariableStatement(node)) return false;
+  for (const d of node.declarationList.declarations) {
+    const name = ts.isIdentifier(d.name) ? d.name.text : "";
+    const typeText = d.type?.getText() ?? "";
+    if (/Entry$|Sample$/.test(name)) return true;
+    if (/TemplateRegistryEntry|SampleData/.test(typeText)) return true;
+  }
+  return false;
+}
+
+function lineOf(sf: ts.SourceFile, node: ts.Node): number {
+  return sf.getLineAndCharacterOfPosition(node.getStart()).line + 1;
+}
+
+/** Collect cardData field references + whole-object passes + logoPath usage. */
+function analyzeFile(sf: ts.SourceFile): FileAnalysis {
+  const fields = new Map<string, number[]>();
+  const wholePassShared = new Set<string>();
+  const logoPathLines: number[] = [];
+  const aliases = new Set<string>(["cardData"]);
+  // map JSX tag name → it's a ./shared import
+  const sharedTags = new Set<string>();
+
+  for (const st of sf.statements) {
+    if (ts.isImportDeclaration(st) && ts.isStringLiteral(st.moduleSpecifier)) {
+      if (st.moduleSpecifier.text.startsWith("./shared/")) {
+        const named = st.importClause?.namedBindings;
+        if (named && ts.isNamedImports(named)) {
+          for (const el of named.elements) sharedTags.add(el.name.text);
+        }
+      }
+    }
+  }
+
+  const record = (field: string, line: number) => {
+    if (!fields.has(field)) fields.set(field, []);
+    const arr = fields.get(field)!;
+    if (arr.length < 5) arr.push(line);
+  };
+
+  const isCardDataExpr = (expr: ts.Expression): boolean => {
+    if (ts.isIdentifier(expr)) return aliases.has(expr.text);
+    if (ts.isPropertyAccessExpression(expr)) return expr.name.text === "cardData";
+    if (ts.isNonNullExpression(expr) || ts.isParenthesizedExpression(expr)) {
+      return isCardDataExpr(expr.expression);
+    }
+    return false;
+  };
+
+  // Pass 1: collect simple aliases (`const d = cardData`).
+  const collectAliases = (node: ts.Node) => {
+    if (ts.isVariableDeclaration(node) && node.initializer && ts.isIdentifier(node.name)) {
+      if (ts.isIdentifier(node.initializer) && node.initializer.text === "cardData") {
+        aliases.add(node.name.text);
+      }
+    }
+    ts.forEachChild(node, collectAliases);
+  };
+
+  const visit = (node: ts.Node) => {
+    if (ts.isTypeNode(node)) return; // skip type positions entirely
+
+    // cardData.<field> / alias.<field> / *.cardData.<field>
+    if (ts.isPropertyAccessExpression(node) && isCardDataExpr(node.expression)) {
+      record(node.name.text, lineOf(sf, node));
+    }
+    // cardData["field"]
+    if (
+      ts.isElementAccessExpression(node) &&
+      isCardDataExpr(node.expression) &&
+      ts.isStringLiteral(node.argumentExpression)
+    ) {
+      record(node.argumentExpression.text, lineOf(sf, node));
+    }
+    // const { testimonials, bio: b } = cardData
+    if (
+      ts.isVariableDeclaration(node) &&
+      node.initializer &&
+      isCardDataExpr(node.initializer) &&
+      ts.isObjectBindingPattern(node.name)
+    ) {
+      for (const el of node.name.elements) {
+        const field = el.propertyName
+          ? ts.isIdentifier(el.propertyName) ? el.propertyName.text : null
+          : ts.isIdentifier(el.name) ? el.name.text : null;
+        if (field) record(field, lineOf(sf, el));
+      }
+    }
+    // <SharedTag cardData={cardData} …> or <SharedTag {...cardData}>
+    if (ts.isJsxAttribute(node) && node.name.getText() === "cardData") {
+      const init = node.initializer;
+      const passes =
+        init && ts.isJsxExpression(init) && init.expression && isCardDataExpr(init.expression);
+      if (passes) {
+        const attrs = node.parent;
+        const opening = attrs.parent;
+        if (ts.isJsxOpeningElement(opening) || ts.isJsxSelfClosingElement(opening)) {
+          const tag = opening.tagName.getText();
+          if (sharedTags.has(tag)) wholePassShared.add(tag);
+        }
+      }
+    }
+    if (ts.isJsxSpreadAttribute(node) && isCardDataExpr(node.expression)) {
+      const opening = node.parent.parent;
+      if (ts.isJsxOpeningElement(opening) || ts.isJsxSelfClosingElement(opening)) {
+        const tag = opening.tagName.getText();
+        if (sharedTags.has(tag)) wholePassShared.add(tag);
+      }
+    }
+    // logoPath prop usage (identifier reference outside bindings/types/attr names)
+    if (
+      ts.isIdentifier(node) &&
+      node.text === "logoPath" &&
+      !ts.isBindingElement(node.parent) &&
+      !ts.isPropertySignature(node.parent) &&
+      !ts.isParameter(node.parent) &&
+      !(ts.isPropertyAssignment(node.parent) && node.parent.name === node) &&
+      !(ts.isJsxAttribute(node.parent) && node.parent.name === node) &&
+      !(ts.isPropertyAccessExpression(node.parent) && node.parent.name === node)
+    ) {
+      if (logoPathLines.length < 5) logoPathLines.push(lineOf(sf, node));
+    }
+
+    ts.forEachChild(node, visit);
+  };
+
+  for (const st of sf.statements) {
+    if (isExcludedDecl(st)) continue;
+    collectAliases(st);
+  }
+  for (const st of sf.statements) {
+    if (isExcludedDecl(st)) continue;
+    visit(st);
+  }
+  return { fields, wholePassShared, logoPathLines };
+}
+
+/** Extract { key, supports } from an object literal that looks like an entry. */
+function entryFromObject(obj: ts.ObjectLiteralExpression): EntryInfo | null {
+  let key: string | null = null;
+  const supports: Record<string, boolean> = {};
+  for (const prop of obj.properties) {
+    if (!ts.isPropertyAssignment(prop)) continue;
+    const name = prop.name.getText().replace(/['"]/g, "");
+    if (name === "key" && ts.isStringLiteral(prop.initializer)) key = prop.initializer.text;
+    if (name === "supports" && ts.isObjectLiteralExpression(prop.initializer)) {
+      for (const sp of prop.initializer.properties) {
+        if (ts.isPropertyAssignment(sp)) {
+          supports[sp.name.getText()] = sp.initializer.kind === ts.SyntaxKind.TrueKeyword;
+        }
+      }
+    }
+  }
+  return key ? { key, supports } : null;
+}
+
+function extractEntry(sf: ts.SourceFile): EntryInfo | null {
+  for (const st of sf.statements) {
+    if (!ts.isVariableStatement(st)) continue;
+    for (const d of st.declarationList.declarations) {
+      const name = ts.isIdentifier(d.name) ? d.name.text : "";
+      if (!/Entry$/.test(name)) continue;
+      if (d.initializer && ts.isObjectLiteralExpression(d.initializer)) {
+        return entryFromObject(d.initializer);
+      }
+    }
+  }
+  return null;
+}
+
+/** Parse registry.ts: NATIVE_KEYS sets + inline entries (RealEstate id=1). */
+function parseRegistry(): { sets: Map<string, Set<string>>; inlineEntries: EntryInfo[] } {
+  const sf = parse(REGISTRY);
+  const sets = new Map<string, Set<string>>();
+  const inlineEntries: EntryInfo[] = [];
+  const walk = (node: ts.Node) => {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && /_NATIVE_KEYS$/.test(node.name.text)) {
+      const init = node.initializer;
+      if (init && ts.isNewExpression(init) && init.arguments?.[0] && ts.isArrayLiteralExpression(init.arguments[0])) {
+        const members = new Set<string>();
+        for (const el of init.arguments[0].elements) {
+          if (ts.isStringLiteral(el)) members.add(el.text);
+        }
+        sets.set(node.name.text, members);
+      }
+    }
+    if (
+      ts.isVariableDeclaration(node) &&
+      ts.isIdentifier(node.name) &&
+      node.name.text === "templateRegistry" &&
+      node.initializer &&
+      ts.isObjectLiteralExpression(node.initializer)
+    ) {
+      for (const prop of node.initializer.properties) {
+        if (ts.isPropertyAssignment(prop) && ts.isObjectLiteralExpression(prop.initializer)) {
+          const entry = entryFromObject(prop.initializer);
+          if (entry) inlineEntries.push(entry); // only fully-inline entries (spread entries yield no key)
+        }
+      }
+    }
+    ts.forEachChild(node, walk);
+  };
+  walk(sf);
+  return { sets, inlineEntries };
+}
+
+// ---------------------------------------------------------------------------
+// Main
+// ---------------------------------------------------------------------------
+
+const mode = process.argv.includes("--json") ? "json" : process.argv.includes("--check") ? "check" : "report";
+
+// 1. Shared component field profiles (leaves — no recursion needed).
+const sharedProfiles = new Map<string, Map<string, number[]>>();
+for (const f of fs.readdirSync(SHARED_DIR)) {
+  if (!f.endsWith(".tsx")) continue;
+  const a = analyzeFile(parse(path.join(SHARED_DIR, f)));
+  sharedProfiles.set(path.basename(f, ".tsx"), a.fields);
+}
+
+// 2. Registry sets + inline entries.
+const { sets, inlineEntries } = parseRegistry();
+
+// 3. Per-template analysis.
+interface TemplateResult {
+  file: string;
+  key: string;
+  supports: Record<string, boolean>;
+  native: Map<string, number[]>; // field → evidence lines (incl. shared unions)
+  logoNative: boolean;
+}
+const results: TemplateResult[] = [];
+
+for (const f of fs.readdirSync(V2_DIR).sort()) {
+  if (!f.endsWith(".tsx")) continue;
+  const full = path.join(V2_DIR, f);
+  const sf = parse(full);
+  const analysis = analyzeFile(sf);
+  let entry = extractEntry(sf);
+  if (!entry) {
+    // RealEstate's entry lives inline in registry.ts.
+    entry = inlineEntries.length === 1 && f === "RealEstate.tsx" ? inlineEntries[0] : entry;
+  }
+  if (!entry) {
+    console.error(`WARN no entry found for ${f} — skipped`);
+    continue;
+  }
+  const native = new Map(analysis.fields);
+  for (const tag of analysis.wholePassShared) {
+    const profile = sharedProfiles.get(tag);
+    if (!profile) continue;
+    for (const [field, lines] of profile) {
+      if (!native.has(field)) native.set(field, lines.map(() => -1)); // -1 = via shared
+    }
+  }
+  results.push({
+    file: f,
+    key: entry.key,
+    supports: entry.supports,
+    native,
+    logoNative: analysis.logoPathLines.length > 0,
+  });
+}
+
+// 4. Fixture assertions — if these fail the analyzer itself is broken.
+const fixture = (cond: boolean, msg: string) => {
+  if (!cond) {
+    console.error(`FIXTURE FAILED: ${msg} — analyzer is broken, aborting.`);
+    process.exit(2);
+  }
+};
+const byKey = new Map(results.map((r) => [r.key, r]));
+fixture(results.length >= 90, `expected ~96 templates, found ${results.length}`);
+fixture(!!byKey.get("beauty-salon")?.native.has("testimonials"), "beauty-salon must render testimonials natively");
+fixture(byKey.get("maker")?.logoNative === false, "maker must NOT consume logoPath");
+fixture(!!byKey.get("accounting")?.native.has("address"), "accounting must inherit address via ContactRows whole-pass");
+
+// 5. Reports.
+const errors: string[] = [];
+const warnings: string[] = [];
+
+for (const [field, setName] of Object.entries(FIELD_TO_SET)) {
+  const set = sets.get(setName);
+  const nativeKeys = results
+    .filter((r) => (field === "logoPath" ? r.logoNative : r.native.has(field)))
+    .map((r) => r.key)
+    .sort();
+  if (!set) {
+    warnings.push(
+      `${setName} not defined in registry.ts yet (universal block pending). ` +
+        `Native renderers (${nativeKeys.length}): ${nativeKeys.join(", ")}`,
+    );
+    continue;
+  }
+  for (const k of nativeKeys) {
+    if (!set.has(k)) errors.push(`${k}: renders '${field}' natively but missing from ${setName} → DOUBLE RENDER`);
+  }
+  for (const k of set) {
+    if (!nativeKeys.includes(k)) errors.push(`${k}: in ${setName} but no native '${field}' render → SILENT DROP`);
+  }
+}
+
+// Silent drops: visual, owner-editable fields with no native render and no wrapper.
+const dropMatrix = new Map<string, string[]>();
+for (const r of results) {
+  for (const field of VISUAL_FIELDS) {
+    if (WRAPPER_COVERED.has(field) || BASELINE_FIELDS.has(field)) continue;
+    if (!r.native.has(field)) {
+      if (!dropMatrix.has(field)) dropMatrix.set(field, []);
+      dropMatrix.get(field)!.push(r.key);
+    }
+  }
+}
+for (const [field, keys] of dropMatrix) {
+  errors.push(`SILENT DROP '${field}' (${keys.length} templates, no native render + no wrapper): ${keys.join(", ")}`);
+}
+
+// supports manifest drift (warning-level — drives order-form input visibility only).
+for (const r of results) {
+  for (const [flag, fields] of Object.entries(SUPPORTS_TO_FIELDS)) {
+    const declared = r.supports[flag];
+    if (declared === undefined) continue;
+    const actual = flag === "logo" ? r.logoNative : fields.some((f) => r.native.has(f));
+    if (declared !== actual) {
+      warnings.push(`supports drift ${r.key}: supports.${flag}=${declared} but native render=${actual}`);
+    }
+  }
+}
+
+if (mode === "json") {
+  const out = results.map((r) => ({
+    file: r.file,
+    key: r.key,
+    supports: r.supports,
+    logoNative: r.logoNative,
+    fields: Object.fromEntries([...r.native.entries()].map(([f, lines]) => [f, lines])),
+  }));
+  console.log(JSON.stringify({ templates: out, errors, warnings }, null, 2));
+} else {
+  console.log(`Analyzed ${results.length} templates, ${sharedProfiles.size} shared components.\n`);
+  for (const [field, setName] of Object.entries(FIELD_TO_SET)) {
+    const count = results.filter((r) => (field === "logoPath" ? r.logoNative : r.native.has(field))).length;
+    console.log(`${field.padEnd(14)} native in ${String(count).padStart(2)}/${results.length}  (gate: ${setName}${sets.has(setName) ? `, ${sets.get(setName)!.size} keys` : " — MISSING"})`);
+  }
+  console.log("");
+  if (warnings.length) {
+    console.log(`--- WARNINGS (${warnings.length}) ---`);
+    for (const w of warnings) console.log("  ~ " + w);
+  }
+  if (errors.length) {
+    console.log(`--- ERRORS (${errors.length}) ---`);
+    for (const e of errors) console.log("  ✗ " + e);
+  } else {
+    console.log("No errors — every visual field is natively rendered or wrapper-covered, Sets consistent.");
+  }
+}
+
+if (mode === "check" && errors.length) process.exit(1);
