@@ -92,11 +92,21 @@ const SUPPORTS_TO_FIELDS: Record<string, string[]> = {
 interface FileAnalysis {
   /** field → first few line numbers where referenced */
   fields: Map<string, number[]>;
+  /** list fields with CONTENT evidence (not just `.length` count chips) */
+  contentFields: Set<string>;
   /** ./shared/X tag names the file passes whole cardData into */
   wholePassShared: Set<string>;
   /** identifier usages of the logoPath prop (outside types/bindings) */
   logoPathLines: number[];
 }
+
+// List fields where a bare `.length` read (review-count chip) is NOT display:
+// Set membership requires the CONTENT to render (quote text, service rows…).
+// Discovered 2026-06-10: 9 templates read testimonials only for a count badge
+// (restaurant-noir/pure/stone, ecommerce-noir/pure/vivid, beauty-salon-noir,
+// content-creator, photographer-pure) — suppressing the universal block there
+// would silently drop the owner's quotes.
+const LIST_FIELDS = new Set(["testimonials", "services", "gallery", "faqs"]);
 
 interface EntryInfo {
   key: string;
@@ -126,9 +136,12 @@ function lineOf(sf: ts.SourceFile, node: ts.Node): number {
 /** Collect cardData field references + whole-object passes + logoPath usage. */
 function analyzeFile(sf: ts.SourceFile): FileAnalysis {
   const fields = new Map<string, number[]>();
+  const contentFields = new Set<string>();
   const wholePassShared = new Set<string>();
   const logoPathLines: number[] = [];
   const aliases = new Set<string>(["cardData"]);
+  // alias variable name → list field it was initialized from
+  const listAliases = new Map<string, string>();
   // map JSX tag name → it's a ./shared import
   const sharedTags = new Set<string>();
 
@@ -147,6 +160,50 @@ function analyzeFile(sf: ts.SourceFile): FileAnalysis {
     if (!fields.has(field)) fields.set(field, []);
     const arr = fields.get(field)!;
     if (arr.length < 5) arr.push(line);
+  };
+
+  /**
+   * Given the expression node that IS the field value, walk up through
+   * `?? []` / parens / `as` wrappers and classify the consumer:
+   * "content" (element access, .map/.slice, JSX pass, call argument),
+   * "neutral" (guards, `.length` count chips), or an alias assignment.
+   */
+  const classifyValueUse = (node: ts.Node): "content" | "neutral" | { alias: string } => {
+    let cur: ts.Node = node;
+    let parent = cur.parent;
+    while (
+      parent &&
+      ((ts.isBinaryExpression(parent) &&
+        (parent.operatorToken.kind === ts.SyntaxKind.QuestionQuestionToken ||
+          parent.operatorToken.kind === ts.SyntaxKind.BarBarToken) &&
+        parent.left === cur) ||
+        ts.isParenthesizedExpression(parent) ||
+        ts.isNonNullExpression(parent) ||
+        ts.isAsExpression(parent))
+    ) {
+      cur = parent;
+      parent = cur.parent;
+    }
+    if (!parent) return "neutral";
+    if (ts.isPropertyAccessExpression(parent) && parent.expression === cur) {
+      return parent.name.text === "length" ? "neutral" : "content";
+    }
+    if (ts.isElementAccessExpression(parent) && parent.expression === cur) return "content";
+    if (ts.isVariableDeclaration(parent) && ts.isIdentifier(parent.name)) {
+      return { alias: parent.name.text };
+    }
+    if (ts.isJsxExpression(parent) || ts.isJsxSpreadAttribute(parent)) return "content";
+    if (ts.isCallExpression(parent) && parent.arguments.includes(cur as ts.Expression)) return "content";
+    if (ts.isSpreadElement(parent) || ts.isArrayLiteralExpression(parent)) return "content";
+    if (ts.isPropertyAssignment(parent) && parent.initializer === cur) return "content";
+    return "neutral"; // guards: `x && …`, ternary conditions, if(x), !x
+  };
+
+  const classifyListUse = (field: string, node: ts.Node) => {
+    if (!LIST_FIELDS.has(field)) return;
+    const use = classifyValueUse(node);
+    if (use === "content") contentFields.add(field);
+    else if (typeof use === "object") listAliases.set(use.alias, field);
   };
 
   const isCardDataExpr = (expr: ts.Expression): boolean => {
@@ -174,6 +231,7 @@ function analyzeFile(sf: ts.SourceFile): FileAnalysis {
     // cardData.<field> / alias.<field> / *.cardData.<field>
     if (ts.isPropertyAccessExpression(node) && isCardDataExpr(node.expression)) {
       record(node.name.text, lineOf(sf, node));
+      classifyListUse(node.name.text, node);
     }
     // cardData["field"]
     if (
@@ -182,6 +240,7 @@ function analyzeFile(sf: ts.SourceFile): FileAnalysis {
       ts.isStringLiteral(node.argumentExpression)
     ) {
       record(node.argumentExpression.text, lineOf(sf, node));
+      classifyListUse(node.argumentExpression.text, node);
     }
     // const { testimonials, bio: b } = cardData
     if (
@@ -194,7 +253,13 @@ function analyzeFile(sf: ts.SourceFile): FileAnalysis {
         const field = el.propertyName
           ? ts.isIdentifier(el.propertyName) ? el.propertyName.text : null
           : ts.isIdentifier(el.name) ? el.name.text : null;
-        if (field) record(field, lineOf(sf, el));
+        if (field) {
+          record(field, lineOf(sf, el));
+          // the binding name becomes a list alias (e.g. `const {faqs} = cardData`)
+          if (LIST_FIELDS.has(field) && ts.isIdentifier(el.name)) {
+            listAliases.set(el.name.text, field);
+          }
+        }
       }
     }
     // <SharedTag cardData={cardData} …> or <SharedTag {...cardData}>
@@ -235,6 +300,27 @@ function analyzeFile(sf: ts.SourceFile): FileAnalysis {
     ts.forEachChild(node, visit);
   };
 
+  // Pass B — alias usages: `const reviews = cardData.testimonials ?? []` then
+  // `reviews[0].quote` (content) vs `reviews.length` (count chip, neutral).
+  const visitAliasUses = (node: ts.Node) => {
+    if (ts.isTypeNode(node)) return;
+    if (
+      ts.isIdentifier(node) &&
+      listAliases.has(node.text) &&
+      !ts.isBindingElement(node.parent) &&
+      !(ts.isVariableDeclaration(node.parent) && node.parent.name === node) &&
+      !(ts.isPropertyAccessExpression(node.parent) && node.parent.name === node) &&
+      !(ts.isJsxAttribute(node.parent) && node.parent.name === node) &&
+      !(ts.isPropertyAssignment(node.parent) && node.parent.name === node)
+    ) {
+      const use = classifyValueUse(node);
+      if (use === "content") contentFields.add(listAliases.get(node.text)!);
+      // re-alias chain: `const services = allServices` — propagate the field
+      else if (typeof use === "object") listAliases.set(use.alias, listAliases.get(node.text)!);
+    }
+    ts.forEachChild(node, visitAliasUses);
+  };
+
   for (const st of sf.statements) {
     if (isExcludedDecl(st)) continue;
     collectAliases(st);
@@ -243,7 +329,11 @@ function analyzeFile(sf: ts.SourceFile): FileAnalysis {
     if (isExcludedDecl(st)) continue;
     visit(st);
   }
-  return { fields, wholePassShared, logoPathLines };
+  for (const st of sf.statements) {
+    if (isExcludedDecl(st)) continue;
+    visitAliasUses(st);
+  }
+  return { fields, contentFields, wholePassShared, logoPathLines };
 }
 
 /** Extract { key, supports } from an object literal that looks like an entry. */
@@ -338,9 +428,14 @@ interface TemplateResult {
   key: string;
   supports: Record<string, boolean>;
   native: Map<string, number[]>; // field → evidence lines (incl. shared unions)
+  content: Set<string>; // list fields whose CONTENT renders (not just counts)
   logoNative: boolean;
 }
 const results: TemplateResult[] = [];
+
+/** "Renders natively" for gate purposes: list fields require content evidence. */
+const isNative = (r: TemplateResult, field: string): boolean =>
+  field === "logoPath" ? r.logoNative : LIST_FIELDS.has(field) ? r.content.has(field) : r.native.has(field);
 
 for (const f of fs.readdirSync(V2_DIR).sort()) {
   if (!f.endsWith(".tsx")) continue;
@@ -369,6 +464,7 @@ for (const f of fs.readdirSync(V2_DIR).sort()) {
     key: entry.key,
     supports: entry.supports,
     native,
+    content: analysis.contentFields,
     logoNative: analysis.logoPathLines.length > 0,
   });
 }
@@ -382,9 +478,20 @@ const fixture = (cond: boolean, msg: string) => {
 };
 const byKey = new Map(results.map((r) => [r.key, r]));
 fixture(results.length >= 90, `expected ~96 templates, found ${results.length}`);
-fixture(!!byKey.get("beauty-salon")?.native.has("testimonials"), "beauty-salon must render testimonials natively");
+fixture(!!byKey.get("beauty-salon")?.content.has("testimonials"), "beauty-salon must render testimonials CONTENT natively");
 fixture(byKey.get("maker")?.logoNative === false, "maker must NOT consume logoPath");
 fixture(!!byKey.get("accounting")?.native.has("address"), "accounting must inherit address via ContactRows whole-pass");
+// Count-chip-only templates: testimonials referenced but content never shown —
+// these must NOT count as native (they'd silently drop the owner's quotes).
+fixture(
+  !!byKey.get("restaurant-pure")?.native.has("testimonials") &&
+    !byKey.get("restaurant-pure")?.content.has("testimonials"),
+  "restaurant-pure must classify testimonials as count-only (referenced, not content)",
+);
+fixture(
+  !!byKey.get("legal-counsel-pure")?.content.has("testimonials"),
+  "legal-counsel-pure must classify testimonials as content (quote+author render)",
+);
 
 // 5. Reports.
 const errors: string[] = [];
@@ -393,7 +500,7 @@ const warnings: string[] = [];
 for (const [field, setName] of Object.entries(FIELD_TO_SET)) {
   const set = sets.get(setName);
   const nativeKeys = results
-    .filter((r) => (field === "logoPath" ? r.logoNative : r.native.has(field)))
+    .filter((r) => isNative(r, field))
     .map((r) => r.key)
     .sort();
   if (!set) {
@@ -416,7 +523,7 @@ const dropMatrix = new Map<string, string[]>();
 for (const r of results) {
   for (const field of VISUAL_FIELDS) {
     if (WRAPPER_COVERED.has(field) || BASELINE_FIELDS.has(field)) continue;
-    if (!r.native.has(field)) {
+    if (!isNative(r, field)) {
       if (!dropMatrix.has(field)) dropMatrix.set(field, []);
       dropMatrix.get(field)!.push(r.key);
     }
@@ -431,7 +538,7 @@ for (const r of results) {
   for (const [flag, fields] of Object.entries(SUPPORTS_TO_FIELDS)) {
     const declared = r.supports[flag];
     if (declared === undefined) continue;
-    const actual = flag === "logo" ? r.logoNative : fields.some((f) => r.native.has(f));
+    const actual = fields.some((f) => isNative(r, flag === "logo" ? "logoPath" : f));
     if (declared !== actual) {
       warnings.push(`supports drift ${r.key}: supports.${flag}=${declared} but native render=${actual}`);
     }
@@ -444,13 +551,14 @@ if (mode === "json") {
     key: r.key,
     supports: r.supports,
     logoNative: r.logoNative,
+    contentFields: [...r.content].sort(),
     fields: Object.fromEntries([...r.native.entries()].map(([f, lines]) => [f, lines])),
   }));
   console.log(JSON.stringify({ templates: out, errors, warnings }, null, 2));
 } else {
   console.log(`Analyzed ${results.length} templates, ${sharedProfiles.size} shared components.\n`);
   for (const [field, setName] of Object.entries(FIELD_TO_SET)) {
-    const count = results.filter((r) => (field === "logoPath" ? r.logoNative : r.native.has(field))).length;
+    const count = results.filter((r) => isNative(r, field)).length;
     console.log(`${field.padEnd(14)} native in ${String(count).padStart(2)}/${results.length}  (gate: ${setName}${sets.has(setName) ? `, ${sets.get(setName)!.size} keys` : " — MISSING"})`);
   }
   console.log("");
