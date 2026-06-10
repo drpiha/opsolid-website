@@ -58,6 +58,9 @@ import { FeedbackPanel } from "@/components/dashboard/FeedbackPanel";
 interface Props {
   orderId: string;
   editToken: string;
+  /** order.updatedAt ISO string at page load — optimistic-concurrency token.
+   *  Sent as expectedVersion on save; rebased from each save response. */
+  version: string;
   status: string;
   templateComponentKey: string;
   templateName: string;
@@ -118,6 +121,9 @@ export function CardEditClient(props: Props) {
   const [acceptingClients, setAcceptingClients] = useState(props.acceptingClients);
 
   // A4 — dirty state tracking. Stores the form snapshot at mount (or last
+  // Optimistic-concurrency token — rebased after every successful save.
+  const versionRef = useRef(props.version);
+
   // successful save). JSON comparison is sufficient here because CardData
   // contains no Date / function / circular values.
   // slug stored as empty-string when null to match editableSlug initialisation
@@ -353,6 +359,9 @@ export function CardEditClient(props: Props) {
       visibility,
       openToNetworking,
       acceptingClients,
+      // Two-tab guard — server rejects with 409 version_conflict when another
+      // tab saved since this one loaded/last saved.
+      expectedVersion: versionRef.current,
     };
 
     try {
@@ -366,7 +375,14 @@ export function CardEditClient(props: Props) {
       );
       if (!res.ok) {
         const body = (await res.json().catch(() => ({}))) as { error?: string };
-        if (body.error === "slug_taken") {
+        if (body.error === "version_conflict") {
+          // Non-destructive: the form state stays intact so nothing typed is
+          // lost — the owner decides whether to reload or re-save after
+          // checking the other tab.
+          setErrorMsg(
+            "Bu kart başka bir sekmede ya da cihazda güncellendi. Buradaki değişikliklerin korunuyor — diğer sekmeyi kontrol edip sayfayı yeniledikten sonra tekrar kaydet."
+          );
+        } else if (body.error === "slug_taken") {
           setErrorMsg("Bu kart adresi alınmış. Başka bir adres seç.");
         } else if (body.error === "slug_invalid") {
           setErrorMsg("Geçersiz kart adresi formatı.");
@@ -383,7 +399,10 @@ export function CardEditClient(props: Props) {
       const ok = (await res.json().catch(() => ({}))) as {
         ok?: boolean;
         slug?: string | null;
+        version?: string;
       };
+      // Rebase the concurrency token so the next save doesn't self-conflict.
+      if (ok.version) versionRef.current = ok.version;
       if (ok.slug && ok.slug !== currentSlug) {
         setCurrentSlug(ok.slug);
         setEditableSlug(ok.slug);

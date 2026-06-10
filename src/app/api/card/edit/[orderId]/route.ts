@@ -56,6 +56,11 @@ const PatchSchema = z.object({
   visibility: z.enum(["public", "unlisted", "private"]).optional(),
   openToNetworking: z.boolean().optional(),
   acceptingClients: z.boolean().optional(),
+  /** Optimistic concurrency — the order.updatedAt ISO string the client
+   *  loaded. When provided and stale (another tab saved since), the PATCH
+   *  is rejected with 409 version_conflict instead of last-write-wins.
+   *  Optional so older clients and admin tooling keep working unchanged. */
+  expectedVersion: z.string().datetime().optional(),
 });
 
 const NON_EDITABLE_STATUSES = new Set<string>([
@@ -145,7 +150,20 @@ export async function PATCH(
       oldSlugForHistory = order.slug;
     }
 
-    await prisma.cardOrder.update({
+    // Two-tab guard: reject saves based on a stale snapshot. Comparison is
+    // ISO-string equality on updatedAt — cheap, and good enough for a single
+    // editor session (no merge semantics intended).
+    if (
+      data.expectedVersion &&
+      order.updatedAt.toISOString() !== data.expectedVersion
+    ) {
+      return NextResponse.json(
+        { error: "version_conflict", currentVersion: order.updatedAt.toISOString() },
+        { status: 409 }
+      );
+    }
+
+    const updated = await prisma.cardOrder.update({
       where: { id: order.id },
       data: {
         cardData: data.cardData,
@@ -183,7 +201,12 @@ export async function PATCH(
       },
     });
 
-    return NextResponse.json({ ok: true, slug: nextSlug ?? order.slug });
+    return NextResponse.json({
+      ok: true,
+      slug: nextSlug ?? order.slug,
+      // Fresh version for the client to rebase its next expectedVersion on.
+      version: updated.updatedAt.toISOString(),
+    });
   } catch (err) {
     if (err instanceof EditTokenError) {
       return NextResponse.json({ error: err.code }, { status: err.status });
