@@ -62,7 +62,12 @@ export async function GET(req: NextRequest) {
   }
 
   // Decode state
-  let statePayload: { nonce: string; next: string; mobile: boolean };
+  let statePayload: {
+    nonce: string;
+    next: string;
+    mobile: boolean;
+    locale?: string;
+  };
   try {
     statePayload = JSON.parse(
       Buffer.from(stateRaw, "base64url").toString(),
@@ -70,11 +75,14 @@ export async function GET(req: NextRequest) {
   } catch {
     return errorRedirect("de", "oauth_invalid");
   }
+  const stateLocale = ["de", "en", "tr"].includes(statePayload.locale ?? "")
+    ? (statePayload.locale as string)
+    : "de";
 
   // CSRF check: state.nonce must match the cookie nonce
   const cookieNonce = req.cookies.get(STATE_COOKIE)?.value;
   if (!cookieNonce || cookieNonce !== statePayload.nonce) {
-    return errorRedirect("de", "oauth_state_mismatch");
+    return errorRedirect(stateLocale, "oauth_state_mismatch");
   }
 
   const clientId = process.env.GOOGLE_CLIENT_ID;
@@ -84,7 +92,7 @@ export async function GET(req: NextRequest) {
     process.env.GOOGLE_REDIRECT_URI ?? `${origin}/api/auth/google/callback`;
 
   if (!clientId || !clientSecret) {
-    return errorRedirect("de", "oauth_not_configured");
+    return errorRedirect(stateLocale, "oauth_not_configured");
   }
 
   // Exchange code for tokens
@@ -103,16 +111,16 @@ export async function GET(req: NextRequest) {
     });
     if (!tokenRes.ok) {
       console.error("[google/callback] token exchange failed:", await tokenRes.text());
-      return errorRedirect("de", "oauth_exchange_failed");
+      return errorRedirect(stateLocale, "oauth_exchange_failed");
     }
     const tokenData = (await tokenRes.json()) as { id_token?: string };
     if (!tokenData.id_token) {
-      return errorRedirect("de", "oauth_no_id_token");
+      return errorRedirect(stateLocale, "oauth_no_id_token");
     }
     idToken = tokenData.id_token;
   } catch (err) {
     console.error("[google/callback] fetch error:", err);
-    return errorRedirect("de", "oauth_network_error");
+    return errorRedirect(stateLocale, "oauth_network_error");
   }
 
   // Verify id_token via Google's tokeninfo endpoint — cryptographic signature
@@ -124,7 +132,7 @@ export async function GET(req: NextRequest) {
       `https://oauth2.googleapis.com/tokeninfo?id_token=${encodeURIComponent(idToken)}`,
     );
     if (!verifyRes.ok) {
-      return errorRedirect("de", "oauth_token_invalid");
+      return errorRedirect(stateLocale, "oauth_token_invalid");
     }
     const claims = (await verifyRes.json()) as {
       email?: string;
@@ -139,7 +147,7 @@ export async function GET(req: NextRequest) {
     name = claims.name ?? null;
   } catch (err) {
     console.error("[google/callback] token verify error:", err);
-    return errorRedirect("de", "oauth_token_decode");
+    return errorRedirect(stateLocale, "oauth_token_decode");
   }
 
   // Find or create user by email
@@ -234,12 +242,16 @@ window.location.href = '${escapedForJs}';
     return res;
   }
 
-  // Web: set cookie, redirect to dashboard
-  const next = statePayload.next.startsWith("/")
+  // Web: set cookie, redirect to dashboard.
+  // Hardening: collapse any leading slash runs in `next` and trim a trailing
+  // slash off `origin` — either one would produce a `//`-prefixed path that
+  // matches no Next route and lands the user on a bare 404 right after a
+  // successful Google sign-in.
+  const nextRaw = statePayload.next.startsWith("/")
     ? statePayload.next
     : "/dashboard/cards";
-  const locale = "de"; // TODO: detect from user.locale
-  const redirectTarget = `${origin}/${locale}${next}`;
+  const next = `/${nextRaw.replace(/^\/+/, "")}`;
+  const redirectTarget = `${origin.replace(/\/+$/, "")}/${stateLocale}${next}`;
 
   const res = NextResponse.redirect(redirectTarget);
   res.headers.append("Set-Cookie", cookieClear);

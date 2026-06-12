@@ -213,7 +213,7 @@ export function LoginClient({ locale }: Props) {
       </div>
 
       <a
-        href={`/api/auth/google?next=${encodeURIComponent(next.replace(`/${safeLocale}`, ""))}&mobile=0`}
+        href={`/api/auth/google?next=${encodeURIComponent(next.replace(`/${safeLocale}`, ""))}&mobile=0&locale=${safeLocale}`}
         className="btn btn-ghost mt-4 w-full flex items-center justify-center gap-2.5 border border-line hover:border-copper-500/40"
       >
         <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden>

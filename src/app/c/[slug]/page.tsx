@@ -18,7 +18,7 @@ import { existsSync } from "node:fs";
 import { join } from "node:path";
 import type * as React from "react";
 import { notFound, permanentRedirect } from "next/navigation";
-import { headers } from "next/headers";
+import { cookies, headers } from "next/headers";
 import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
 import { CardDataSchema } from "@/lib/validation";
@@ -447,8 +447,16 @@ export default async function CardPage({ params, searchParams }: PageProps) {
   // against `order.editToken`; mismatched values silently fall through to the
   // public render path.
   const ownerTokenRaw = sp.owner;
-  const ownerToken =
+  const ownerTokenFromUrl =
     typeof ownerTokenRaw === "string" ? ownerTokenRaw : ownerTokenRaw?.[0];
+  // Persistent owner mode: OwnerSessionKeeper stores the validated token in
+  // a per-card httpOnly cookie when the owner first arrives with `?owner=`,
+  // so refreshes and return visits keep the owner toolbar without the token
+  // ever living in a shareable URL.
+  const ownerTokenFromCookie = (await cookies()).get(
+    `card_owner_${order.id}`,
+  )?.value;
+  const ownerToken = ownerTokenFromUrl || ownerTokenFromCookie;
   const isOwner = Boolean(
     ownerToken &&
       order.editToken &&
@@ -462,7 +470,7 @@ export default async function CardPage({ params, searchParams }: PageProps) {
   return (
     <OwnerModeProvider isOwner={isOwner}>
       <main className="flex min-h-[100dvh] flex-col bg-bg-0 px-4 py-6 pb-24 sm:py-10">
-        {isOwner && <StripOwnerParam />}
+        {isOwner && <StripOwnerParam orderId={order.id} />}
         {isOwner && (
           <OwnerWelcome
             cardKey={order.id}
