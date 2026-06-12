@@ -116,6 +116,9 @@ interface Props {
   selectedTemplateId: number | null;
   // Reserved for future template-change affordances inside the form.
   onTemplateChange: (id: number) => void;
+  /** Resolved server-side from CARD_PRICING_MODE. Under "all_free" the paid
+   *  billing tiles are not rendered and the form can only submit FREE. */
+  pricingMode?: import("@/lib/billing/plan").CardPricingMode;
 }
 
 const EMPTY_CARD: CardData = {
@@ -200,7 +203,11 @@ function formatPositionLabel(pos: ImagePosition | undefined): string | undefined
 // Section component
 // =============================================================================
 
-export function OrderFormSection({ selectedTemplateId }: Props) {
+export function OrderFormSection({
+  selectedTemplateId,
+  pricingMode = "freemium",
+}: Props) {
+  const paymentsEnabled = pricingMode !== "all_free";
   const { locale, t } = useLocale();
   const order = t.products.digitalCard.order ?? {};
   // Stable identity prevents downstream useMemos (summaries, etc.) from
@@ -847,6 +854,7 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
               >
                 <StepBilling
                   L={L}
+                  paymentsEnabled={paymentsEnabled}
                   selectedTemplate={selectedTemplate}
                   billingMode={billingMode}
                   setBillingMode={setBillingMode}
@@ -2082,6 +2090,7 @@ function StepBranding({
 
 function StepBilling({
   L,
+  paymentsEnabled,
   selectedTemplate,
   billingMode,
   setBillingMode,
@@ -2093,6 +2102,7 @@ function StepBilling({
   contactName,
 }: {
   L: (k: string, f: string) => string;
+  paymentsEnabled: boolean;
   selectedTemplate: import("@/config/card-templates").CardTemplateDef;
   billingMode: keyof typeof BillingMode;
   setBillingMode: (m: keyof typeof BillingMode) => void;
@@ -2120,57 +2130,61 @@ function StepBilling({
         />
       </SubFieldset>
 
-      <SubFieldset label={L("billingSection", "Zahlungsmodell")}>
-        <div className="grid gap-3 md:grid-cols-3">
-          {/* FREE tier — always shown first, instant publish, no payment */}
-          <BillingTile
-            active={billingMode === "FREE"}
-            onClick={() => setBillingMode("FREE")}
-            label={L("billingFree", "Kostenlos")}
-            badge={L("billingFreeNew", "Neu")}
-            priceLabel={L("billingFreePrice", "€0 — sofort live")}
-            footer={L(
-              "billingFreeFooter",
-              "Kein Kreditkarte. Direkt starten."
-            )}
-          />
-          {selectedTemplate.monthlyCents ? (
+      {/* all_free mode: the only tier is FREE — skip the picker entirely so
+          the step reads as a confirmation, not a (single-choice) decision. */}
+      {paymentsEnabled && (
+        <SubFieldset label={L("billingSection", "Zahlungsmodell")}>
+          <div className="grid gap-3 md:grid-cols-3">
+            {/* FREE tier — always shown first, instant publish, no payment */}
             <BillingTile
-              active={billingMode === "MONTHLY"}
-              onClick={() => setBillingMode("MONTHLY")}
-              label={L("billingMonthly", "Monatlich")}
-              priceLabel={`${formatEuro(selectedTemplate.monthlyCents)}/Mon.`}
+              active={billingMode === "FREE"}
+              onClick={() => setBillingMode("FREE")}
+              label={L("billingFree", "Kostenlos")}
+              badge={L("billingFreeNew", "Neu")}
+              priceLabel={L("billingFreePrice", "€0 — sofort live")}
               footer={L(
-                "monthlyFooter",
-                "Niedrige Einstiegshürde. Jederzeit kündbar."
+                "billingFreeFooter",
+                "Kein Kreditkarte. Direkt starten."
               )}
             />
-          ) : null}
-          {selectedTemplate.yearlyCents ? (
+            {selectedTemplate.monthlyCents ? (
+              <BillingTile
+                active={billingMode === "MONTHLY"}
+                onClick={() => setBillingMode("MONTHLY")}
+                label={L("billingMonthly", "Monatlich")}
+                priceLabel={`${formatEuro(selectedTemplate.monthlyCents)}/Mon.`}
+                footer={L(
+                  "monthlyFooter",
+                  "Niedrige Einstiegshürde. Jederzeit kündbar."
+                )}
+              />
+            ) : null}
+            {selectedTemplate.yearlyCents ? (
+              <BillingTile
+                active={billingMode === "YEARLY"}
+                onClick={() => setBillingMode("YEARLY")}
+                label={L("billingYearly", "Jährlich")}
+                badge={L("billingBestValue", "Beste Wahl")}
+                priceLabel={`${formatEuro(selectedTemplate.yearlyCents)}/Jahr`}
+                footer={L(
+                  "yearlyFooter",
+                  "~35 % Ersparnis vs. monatlich. Revisionen inkl."
+                )}
+              />
+            ) : null}
             <BillingTile
-              active={billingMode === "YEARLY"}
-              onClick={() => setBillingMode("YEARLY")}
-              label={L("billingYearly", "Jährlich")}
-              badge={L("billingBestValue", "Beste Wahl")}
-              priceLabel={`${formatEuro(selectedTemplate.yearlyCents)}/Jahr`}
+              active={billingMode === "ONE_TIME"}
+              onClick={() => setBillingMode("ONE_TIME")}
+              label={L("billingOneTime", "Einmalzahlung")}
+              priceLabel={formatEuro(selectedTemplate.oneTimeCents)}
               footer={L(
-                "yearlyFooter",
-                "~35 % Ersparnis vs. monatlich. Revisionen inkl."
+                "oneTimeFooter",
+                "Lebenslang gehostet. Keine Verlängerung."
               )}
             />
-          ) : null}
-          <BillingTile
-            active={billingMode === "ONE_TIME"}
-            onClick={() => setBillingMode("ONE_TIME")}
-            label={L("billingOneTime", "Einmalzahlung")}
-            priceLabel={formatEuro(selectedTemplate.oneTimeCents)}
-            footer={L(
-              "oneTimeFooter",
-              "Lebenslang gehostet. Keine Verlängerung."
-            )}
-          />
-        </div>
-      </SubFieldset>
+          </div>
+        </SubFieldset>
+      )}
 
       {errorMsg && (
         <div className="flex items-start gap-3 rounded-2xl border border-brand/30 bg-brand/5 p-4 text-sm text-brand">

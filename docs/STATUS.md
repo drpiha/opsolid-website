@@ -1,8 +1,48 @@
 # OpSolid Website — Live Status
 
-**Son güncelleme:** 2026-04-23 (üçüncü oturum — new-machine pull + smoke test)
-**Aktif dal:** `main` (feat/complete-dbc artık merge edilmiş, main 3 commit önde)
+**Son güncelleme:** 2026-06-12 (kart ürünleştirme oturumu — pricing mode + owner self-serve)
+**Aktif dal:** `claude/digital-business-card-app-334cev`
 **Kanonik canlı panel.** Her oturum başında okunur, sonunda güncellenir.
+
+---
+
+## 2026-06-12 oturum — Dijital kart "tam profesyonel" paketi
+
+Rakip analizi (Blinq / HiHello / Popl / Uniqode / Wave / Lemontaps) + kod denetimi
+sonrası eksik katman kapatıldı: **konfigürasyonla ücretsiz mod + sahip self-serve yönetimi**.
+
+**Tamamlanan**
+- ✅ `CARD_PRICING_MODE` env anahtarı (`src/lib/billing/plan.ts`): `freemium` (varsayılan)
+  veya `all_free`. `all_free`'de sipariş formunda ücretli seçenekler ve fiyat tablosu
+  gizlenir, `/api/orders` ücretli istekleri FREE'ye çevirir — **Stripe hiç çağrılmaz**,
+  ödeme adımı tamamen atlanır. Tek env değişikliği + restart ile mod değişir.
+- ✅ Temel analitik artık **ücretsiz** (2026 pazar standardı): `/api/v1/cards/[id]/analytics`
+  402 kapısı varsayılan kapalı; `CARD_ANALYTICS_PRO_ONLY=true` ile geri açılır.
+- ✅ **Sahip yönetim sayfası** `/:locale/card/manage/:orderId?t=<editToken>` — hesap
+  gerektirmez (edit-token), 3 panel: 30 günlük istatistik (görüntülenme/lead/kaydetme/
+  paylaşım/link taraması), **kısa link yönetimi** (oluştur/kapat/kopyala/link-bazlı QR
+  indir, kart başına 20 link limiti, owner linklerinde destinationUrl yok — open-redirect
+  koruması), **lead inbox** (new/contacted/qualified/archived durum akışı).
+- ✅ Yeni owner API'ları: `/api/card/manage/[orderId]/links` (GET/POST/PATCH, rate-limit
+  30/saat) ve `/api/card/manage/[orderId]/leads` (GET/PATCH). Edit-token gate, updateMany
+  ile order-scope (başka kartın linki/lead'i çevrilemez).
+- ✅ OwnerToolbar'a "İstatistik ve linkler" butonu; kart editörü başlığına manage linki;
+  card-live e-postasına manage bölümü (3 dil).
+- ✅ i18n: `card.manage` + `card.owner.manageLabel` EN/DE/TR (yapı birebir aynı).
+- ✅ `.env.example` güncellendi (`CARD_PRICING_MODE`, `CARD_ANALYTICS_PRO_ONLY`,
+  `NEXT_PUBLIC_SHORT_HOST`).
+- ✅ `npm run build` + `npm run audit:cards` yeşil.
+
+**Ücretsiz kullanıcı maliyeti (araştırma sonucu)**
+Kart sayfaları statik-yakını + küçük DB satırları; 1.000–2.000 ücretsiz kullanıcıda
+toplam hosting yükü ~$25–100/ay (maliyet DB değil bant genişliği). Freemium bu ölçekte
+finansal olarak güvenli. AB farklılaştırıcısı: Lemontaps dışında EU-veri-yerleşimi
+vurgulayan rakip yok — "GDPR-native, Almanya hosting, DE/EN/TR" konumu güçlü.
+
+**Sonraki adımlar (öneri)**
+- Dashboard (hesaplı kullanıcı) tarafına aynı link/lead panellerinin taşınması
+- E-posta imza üreteci + Wallet pass'in free tier'da öne çıkarılması (ShareDrawer'da var)
+- Referral UI + custom domain self-serve
 
 ---
 

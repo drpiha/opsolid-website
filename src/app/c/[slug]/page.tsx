@@ -455,6 +455,7 @@ export default async function CardPage({ params, searchParams }: PageProps) {
   const ownerLabels = contents[localeKey].card.owner;
   const langSwitcherLabel = contents[localeKey].card.languageSwitcher;
   const editHref = `/${localeKey}/card/edit/${order.id}?t=${order.editToken ?? ""}`;
+  const manageHref = `/${localeKey}/card/manage/${order.id}?t=${order.editToken ?? ""}`;
 
   return (
     <OwnerModeProvider isOwner={isOwner}>
@@ -462,12 +463,14 @@ export default async function CardPage({ params, searchParams }: PageProps) {
         {isOwner && (
           <OwnerToolbar
             editHref={editHref}
+            manageHref={manageHref}
             publicUrl={publicUrl}
             shareTitle={shareTitle}
             labels={{
               publicBannerLabel: ownerLabels.publicBannerLabel,
               editLabel: ownerLabels.editLabel,
               shareLabel: ownerLabels.shareLabel,
+              manageLabel: ownerLabels.manageLabel,
             }}
           />
         )}

@@ -10,6 +10,7 @@ import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PricingTable } from "@/components/sections/PricingTable";
 import { OrderFormSection } from "./sections/OrderFormSection";
 import { TemplateGallery } from "./sections/TemplateGallery";
+import type { CardPricingMode } from "@/lib/billing/plan";
 
 /**
  * Digital Card page — industrial-luxury v2 port of digital-card.html.
@@ -22,7 +23,11 @@ import { TemplateGallery } from "./sections/TemplateGallery";
  * OrderFormSection so Stripe checkout logic is untouched; the surrounding
  * chrome uses v2 tokens.
  */
-export function DigitalCardPage() {
+export function DigitalCardPage({
+  pricingMode = "freemium",
+}: {
+  pricingMode?: CardPricingMode;
+}) {
   const { t } = useLocale();
   const d = t.v2.digitalCard;
   const search = useSearchParams();
@@ -76,11 +81,14 @@ export function DigitalCardPage() {
         </div>
       </section>
 
-      <PricingTable
-        productIds={["verso"]}
-        showProductHeading={false}
-        showProductLink={false}
-      />
+      {/* all_free mode: there is nothing to price — hide the plan table. */}
+      {pricingMode !== "all_free" && (
+        <PricingTable
+          productIds={["verso"]}
+          showProductHeading={false}
+          showProductLink={false}
+        />
+      )}
 
       <TemplateGallery
         selectedId={selectedTemplateId}
@@ -113,6 +121,7 @@ export function DigitalCardPage() {
           <OrderFormSection
             selectedTemplateId={selectedTemplateId}
             onTemplateChange={setSelectedTemplateId}
+            pricingMode={pricingMode}
           />
         </div>
       </section>

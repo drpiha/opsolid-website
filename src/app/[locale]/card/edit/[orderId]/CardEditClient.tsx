@@ -468,16 +468,26 @@ export function CardEditClient(props: Props) {
             )}
           </div>
         </div>
-        {publicUrl && (
-          <a
-            href={publicUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="shrink-0 rounded-full border border-ink/25 bg-white px-3 py-1.5 text-xs font-semibold text-ink-200 transition-colors hover:border-ink/40 hover:text-ink"
-          >
-            {edit.viewLive}
-          </a>
-        )}
+        <div className="flex shrink-0 items-center gap-2">
+          {currentSlug && (
+            <a
+              href={`/${locale}/card/manage/${props.orderId}?t=${encodeURIComponent(props.editToken)}`}
+              className="rounded-full border border-ink/25 bg-white px-3 py-1.5 text-xs font-semibold text-ink-200 transition-colors hover:border-ink/40 hover:text-ink"
+            >
+              {t.card.owner.manageLabel}
+            </a>
+          )}
+          {publicUrl && (
+            <a
+              href={publicUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full border border-ink/25 bg-white px-3 py-1.5 text-xs font-semibold text-ink-200 transition-colors hover:border-ink/40 hover:text-ink"
+            >
+              {edit.viewLive}
+            </a>
+          )}
+        </div>
       </div>
     </header>
 

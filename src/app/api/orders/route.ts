@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { OrderPayloadSchema, OrderStatus } from "@/lib/validation";
 import { getTemplateById } from "@/config/card-templates";
+import { cardPaymentsEnabled } from "@/lib/billing/plan";
 import { createCheckoutSession } from "@/lib/stripe";
 import { validateManualSlug, isSlugAvailable, ensureUniqueSlug } from "@/lib/slug";
 import { getSiteUrl } from "@/lib/stripe";
@@ -32,6 +33,13 @@ export async function POST(req: NextRequest) {
     );
   }
   const data = parsed.data;
+
+  // all_free mode: no order may reach Stripe, even one submitted from a stale
+  // form that still offered paid tiers. Coercing (rather than rejecting) errs
+  // in the customer's favor — under all_free every feature is free anyway.
+  if (!cardPaymentsEnabled() && data.billingMode !== "FREE") {
+    data.billingMode = "FREE";
+  }
 
   const template = getTemplateById(data.templateId);
   if (!template || !template.isActive) {
