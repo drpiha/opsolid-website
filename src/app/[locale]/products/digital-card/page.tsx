@@ -21,7 +21,9 @@ export const metadata: Metadata = {
 };
 
 export default function Page() {
-  // Resolved server-side so the client form never reads env directly; under
-  // all_free the paid billing tiles disappear and checkout is never offered.
+  // Pricing mode resolved server-side so the client form never reads env
+  // directly; under all_free the paid billing tiles disappear and checkout
+  // is never offered. The optional ?event=<slug> fair param is handled
+  // client-side (like ?template=) so this page stays statically prerendered.
   return <DigitalCardPage pricingMode={getCardPricingMode()} />;
 }

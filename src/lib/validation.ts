@@ -644,6 +644,17 @@ export const OrderPayloadSchema = z.object({
       "Sadece küçük harf, rakam ve tire (-) — başta/sonda tire olmaz",
     )
     .optional(),
+
+  /** Fair flow — when the order page was opened via ?event=<slug>, the form
+   *  passes the slug through so the new card is attached to that event's
+   *  attendee directory. Unknown/inactive slugs are silently ignored server-
+   *  side — joining a directory must never block card creation. */
+  eventSlug: z
+    .string()
+    .trim()
+    .toLowerCase()
+    .regex(/^[a-z0-9-]{3,80}$/)
+    .optional(),
 });
 export type OrderPayload = z.infer<typeof OrderPayloadSchema>;
 

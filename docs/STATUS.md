@@ -44,6 +44,39 @@ vurgulayan rakip yok — "GDPR-native, Almanya hosting, DE/EN/TR" konumu güçl�
 - E-posta imza üreteci + Wallet pass'in free tier'da öne çıkarılması (ShareDrawer'da var)
 - Referral UI + custom domain self-serve
 
+### Aynı oturum, 2. tur — Fuar akışı + güven düzeltmeleri
+
+**Tamamlanan**
+- ✅ **Fuar katılımcı rehberi (web)**: `/:locale/events/:slug` — etkinlik başlığı +
+  "kartını oluştur" CTA (`?event=<slug>` deep-link) + alfabetik katılımcı grid'i.
+  Sadece `PUBLISHED` + `visibility="public"` kartlar listelenir. SEO metadata var.
+- ✅ **Sipariş formu fuar entegrasyonu**: `?event=<slug>` ile açılınca form üstünde
+  etkinlik banner'ı + "katılımcı rehberinde görün" onay kutusu (varsayılan açık).
+  `OrderPayloadSchema.eventSlug` → `/api/orders` kartı `EventAttendee`'ye bağlar
+  (best-effort, sipariş asla bloklanmaz). Sayfa SSG kaldı — event istemci tarafında
+  mevcut public `/api/v1/events/[slug]` API'sinden çözülür.
+- ✅ **Düzenleme/paylaşım linki karışıklığı bitti**:
+  - `StripOwnerParam` — kart oluşturduktan sonra adres çubuğundaki `?owner=<editToken>`
+    history.replaceState ile temizlenir → tarayıcıdan "adresi paylaş" artık token
+    sızdıramaz (gerçek bir güvenlik açığıydı).
+  - Manage sayfasında "iki linkin" paneli: 🌐 halka açık link (paylaş) vs 🔒 özel
+    yönetim/düzenleme linkleri (asla paylaşma) — üç dilde net açıklama.
+- ✅ **Taslak otomatik kaydı (veri kaybı yok)**: sipariş formu metin state'i 800ms
+  debounce ile localStorage'a yazılır (`opsolid-card-order-draft-v1`), sayfa
+  yenilenince/sekme ölünce geri yüklenir ("taslağın geri yüklendi" bildirimi +
+  "Baştan başla"). Başarılı gönderimde temizlenir; 7 günden eski taslak yok sayılır.
+- ✅ **Mobil uygulama yakında** rozeti: sipariş sayfası, etkinlik sayfası, manage
+  sayfası (3 dil, `card.mobileAppSoon`).
+- ✅ Card-live e-postasına katılımcı rehberi bölümü (kart bir etkinliğe katıldıysa
+  rehber linki e-postada da var, tıklanabilir).
+- ✅ Build + audit:cards yeşil.
+
+**Operatör notu — fuar hazırlığı**
+1. Etkinliği oluştur: `scripts/seed-events.ts` örneğindeki gibi bir `Event` satırı
+   (slug örn. `fuar-2026`). Admin UI yok — script/SQL ile.
+2. Davet linki: `https://opsolid.de/tr/products/digital-card?event=fuar-2026`
+3. Rehber linki: `https://opsolid.de/tr/events/fuar-2026`
+
 ---
 
 ## 2026-04-23 üçüncü oturum — new-machine pull + smoke test

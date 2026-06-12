@@ -1762,6 +1762,11 @@ export const content: Content = {
             "Füllen Sie das Formular aus — die Karte wird direkt nach der Zahlung unter opsolid.de/c/… veröffentlicht.",
           howToCreate:
             "Jeder kann eine Karte erstellen — ganz ohne Konto. Design wählen, Formular ausfüllen, in wenigen Minuten live. Sie erhalten einen privaten Link zum jederzeitigen Bearbeiten.",
+          eventJoinLabel:
+            "Meine Karte im Teilnehmerverzeichnis anzeigen, damit andere Teilnehmer mich finden.",
+          draftRestored:
+            "Ihr letzter Entwurf wurde wiederhergestellt — machen Sie dort weiter, wo Sie aufgehört haben.",
+          draftDiscard: "Neu beginnen",
           selectedTemplate: "Gewähltes Design",
           changeTemplate: "Ändern",
           contactSection: "Kontakt — so erreichen wir Sie",
@@ -5603,7 +5608,27 @@ export const content: Content = {
       leadStatusArchived: "Archiviert",
       notPublished:
         "Diese Karte ist noch nicht veröffentlicht — Links und Statistiken werden aktiv, sobald sie live ist.",
+      publicLinkLabel: "Ihr öffentlicher Kartenlink — diesen teilen",
+      publicLinkHint:
+        "Jeder mit diesem Link sieht Ihre Karte. Für Chats, E-Mail-Signaturen, QR-Codes.",
+      privateLinkLabel: "Ihre privaten Links — nur für Sie",
+      privateLinkHint:
+        "Diese Verwaltungsseite und Ihre Bearbeitungsseite sind privat: Wer ihre Links hat, kann Ihre Karte ändern. Sie stehen in Ihrer Karten-E-Mail — niemals weitergeben.",
     },
+    eventDirectory: {
+      eyebrow: "Teilnehmerverzeichnis",
+      ctaTitle: "Auch dabei? Erstellen Sie Ihre Karte.",
+      ctaBody:
+        "Kostenlos, ohne Konto — Ihre Karte ist in Minuten live und Sie erscheinen in dieser Liste.",
+      ctaButton: "Karte erstellen",
+      participantsHeading: "Teilnehmer",
+      participantsHint:
+        "Karten, deren Inhaber sich öffentlich listen lassen. Antippen, um den Kontakt anzusehen und zu speichern.",
+      emptyState:
+        "Noch keine Teilnehmer gelistet — seien Sie der Erste: Karte erstellen und ins Verzeichnis eintragen.",
+    },
+    mobileAppSoon:
+      "Mobile App kommt bald — Karte unterwegs erstellen und verwalten. Heute funktioniert alles im Browser.",
     languageSwitcher: "Sprache",
   },
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { Icon } from "@/components/shared/Icon";
@@ -23,6 +23,20 @@ import type { CardPricingMode } from "@/lib/billing/plan";
  * OrderFormSection so Stripe checkout logic is untouched; the surrounding
  * chrome uses v2 tokens.
  */
+/** Serializable event payload resolved by the server component when the page
+ *  is opened via `?event=<slug>` (fair / trade-show invite links). */
+export interface OrderEventInfo {
+  slug: string;
+  name: string;
+  city: string;
+  country: string | null;
+  venue: string | null;
+  startAt: string;
+  endAt: string;
+}
+
+const EVENT_SLUG_RE = /^[a-z0-9-]{3,80}$/;
+
 export function DigitalCardPage({
   pricingMode = "freemium",
 }: {
@@ -41,6 +55,32 @@ export function DigitalCardPage({
   const [selectedTemplateId, setSelectedTemplateId] = useState<number | null>(
     initialTemplateId,
   );
+
+  // Fair flow — `?event=<slug>` resolves the event client-side (this page is
+  // statically prerendered, so server searchParams aren't available). Bad or
+  // expired slugs silently degrade to the plain order page.
+  const eventSlugRaw = search?.get("event")?.trim().toLowerCase() ?? null;
+  const eventSlug =
+    eventSlugRaw && EVENT_SLUG_RE.test(eventSlugRaw) ? eventSlugRaw : null;
+  const [event, setEvent] = useState<OrderEventInfo | null>(null);
+  useEffect(() => {
+    if (!eventSlug) {
+      setEvent(null);
+      return;
+    }
+    let cancelled = false;
+    fetch(`/api/v1/events/${encodeURIComponent(eventSlug)}`)
+      .then((res) => (res.ok ? res.json() : null))
+      .then((json: { event?: OrderEventInfo } | null) => {
+        if (!cancelled && json?.event?.slug) setEvent(json.event);
+      })
+      .catch(() => {
+        /* directory is a bonus — never block ordering */
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [eventSlug]);
 
   return (
     <>
@@ -118,10 +158,15 @@ export function DigitalCardPage({
 
       <section className="os-section" id="order" data-screen-label="Order">
         <div className="wrap">
+          <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-line bg-bg-2 px-4 py-2 text-sm text-ink-200">
+            <span aria-hidden>📱</span>
+            {t.card.mobileAppSoon}
+          </p>
           <OrderFormSection
             selectedTemplateId={selectedTemplateId}
             onTemplateChange={setSelectedTemplateId}
             pricingMode={pricingMode}
+            event={event}
           />
         </div>
       </section>

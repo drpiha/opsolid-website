@@ -1760,6 +1760,11 @@ export const content = {
             "Fill out the form — your card goes live at opsolid.de/c/… immediately after payment.",
           howToCreate:
             "Anyone can create a card — no account needed. Pick a design, fill in the form, and it goes live in minutes. You get a private link to edit it anytime.",
+          eventJoinLabel:
+            "List my card in the participant directory so other attendees can find me.",
+          draftRestored:
+            "Your previous draft was restored — continue where you left off.",
+          draftDiscard: "Start over",
           selectedTemplate: "Selected design",
           changeTemplate: "Change",
           contactSection: "Contact — how we reach you",
@@ -5629,7 +5634,27 @@ export const content = {
       leadStatusArchived: "Archived",
       notPublished:
         "This card is not published yet — links and stats activate once it goes live.",
+      publicLinkLabel: "Your public card link — share this one",
+      publicLinkHint:
+        "Anyone with this link sees your card. Put it in chats, email signatures, QR codes.",
+      privateLinkLabel: "Your private links — keep them to yourself",
+      privateLinkHint:
+        "This management page and your edit page are private: anyone with their links can change your card. They're in your card email — never share them.",
     },
+    eventDirectory: {
+      eyebrow: "Event directory",
+      ctaTitle: "Going too? Create your card.",
+      ctaBody:
+        "Free, no account needed — your card is live in minutes and you appear in this list.",
+      ctaButton: "Create my card",
+      participantsHeading: "Participants",
+      participantsHint:
+        "Cards whose owners chose to be listed publicly. Tap one to view and save the contact.",
+      emptyState:
+        "No participants listed yet — be the first: create your card and join the directory.",
+    },
+    mobileAppSoon:
+      "Mobile app coming soon — create and manage your card on the go. Everything works in the browser today.",
     languageSwitcher: "Language",
   },
 

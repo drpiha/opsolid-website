@@ -1762,6 +1762,11 @@ export const content: Content = {
             "Formu doldurun — ödemeden hemen sonra kartınız opsolid.de/c/… adresinde canlıya alınır.",
           howToCreate:
             "Kartı herkes oluşturabilir — hesap gerekmez. Tasarımı seç, formu doldur; dakikalar içinde yayında olur. Dilediğin zaman düzenlemen için özel bir bağlantı alırsın.",
+          eventJoinLabel:
+            "Kartım katılımcı rehberinde görünsün — diğer katılımcılar beni bulabilsin.",
+          draftRestored:
+            "Önceki taslağın geri yüklendi — kaldığın yerden devam edebilirsin.",
+          draftDiscard: "Baştan başla",
           selectedTemplate: "Seçili tasarım",
           changeTemplate: "Değiştir",
           contactSection: "İletişim — size nasıl ulaşırız",
@@ -5601,7 +5606,27 @@ export const content: Content = {
       leadStatusArchived: "Arşivlendi",
       notPublished:
         "Bu kart henüz yayınlanmadı — linkler ve istatistikler kart yayına girince aktifleşir.",
+      publicLinkLabel: "Halka açık kart linkin — paylaşacağın link bu",
+      publicLinkHint:
+        "Bu linke sahip herkes kartını görür. Sohbetlere, e-posta imzana, QR kodlara koy.",
+      privateLinkLabel: "Özel linklerin — sadece sende kalsın",
+      privateLinkHint:
+        "Bu yönetim sayfası ve düzenleme sayfan özeldir: linklerine sahip olan herkes kartını değiştirebilir. Kart e-postanda duruyorlar — asla paylaşma.",
     },
+    eventDirectory: {
+      eyebrow: "Katılımcı rehberi",
+      ctaTitle: "Sen de mi katılıyorsun? Kartını oluştur.",
+      ctaBody:
+        "Ücretsiz, hesap gerekmez — kartın dakikalar içinde yayında olur ve bu listede görünürsün.",
+      ctaButton: "Kartımı oluştur",
+      participantsHeading: "Katılımcılar",
+      participantsHint:
+        "Sahipleri herkese açık listelenmeyi seçen kartlar. Birine dokunarak kişiyi görüntüle ve rehberine kaydet.",
+      emptyState:
+        "Henüz listelenen katılımcı yok — ilk sen ol: kartını oluştur ve rehbere katıl.",
+    },
+    mobileAppSoon:
+      "Mobil uygulama yakında — kartını yolda da oluştur ve yönet. Bugün her şey tarayıcıda çalışıyor.",
     languageSwitcher: "Dil",
   },
 

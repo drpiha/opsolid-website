@@ -32,6 +32,7 @@ import { OwnerModeProvider } from "@/context/OwnerMode";
 import { QRFlipOverlay } from "@/components/cards/QRFlipOverlay";
 import { ShareButton } from "@/components/cards/ShareButton";
 import { OwnerToolbar } from "@/components/cards/OwnerToolbar";
+import { StripOwnerParam } from "@/components/cards/StripOwnerParam";
 import { StatusBanner } from "@/components/cards/StatusBanner";
 import { LocaleSwitcher } from "@/components/cards/LocaleSwitcher";
 import { SaveCardButton } from "@/components/cards/SaveCardButton";
@@ -460,6 +461,7 @@ export default async function CardPage({ params, searchParams }: PageProps) {
   return (
     <OwnerModeProvider isOwner={isOwner}>
       <main className="flex min-h-[100dvh] flex-col bg-bg-0 px-4 py-6 pb-24 sm:py-10">
+        {isOwner && <StripOwnerParam />}
         {isOwner && (
           <OwnerToolbar
             editHref={editHref}

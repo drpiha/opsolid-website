@@ -115,9 +115,6 @@ export function CardManageClient(props: Props) {
             >
               <Pencil size={14} /> {m.editCard}
             </a>
-            {props.publicUrl && (
-              <CopyChip value={props.publicUrl} copiedLabel={m.copiedLabel} />
-            )}
           </div>
         </header>
 
@@ -125,6 +122,25 @@ export function CardManageClient(props: Props) {
           <div className="rounded-2xl border border-copper/40 bg-copper/10 p-4 text-sm text-ink">
             {m.notPublished}
           </div>
+        )}
+
+        {/* ---- the two links, never confused again ------------------------ */}
+        {props.publicUrl && (
+          <section className="rounded-3xl border border-neutral-200 bg-white p-6">
+            <div className="flex flex-col gap-2">
+              <p className="text-sm font-semibold text-ink">
+                🌐 {m.publicLinkLabel}
+              </p>
+              <p className="text-xs text-ink-300">{m.publicLinkHint}</p>
+              <CopyChip value={props.publicUrl} copiedLabel={m.copiedLabel} />
+            </div>
+            <div className="mt-5 flex flex-col gap-2 border-t border-neutral-200 pt-5">
+              <p className="text-sm font-semibold text-ink">
+                🔒 {m.privateLinkLabel}
+              </p>
+              <p className="text-xs text-ink-300">{m.privateLinkHint}</p>
+            </div>
+          </section>
         )}
 
         {/* ---- stats ----------------------------------------------------- */}
@@ -222,6 +238,11 @@ export function CardManageClient(props: Props) {
             ))}
           </div>
         </section>
+
+        <p className="inline-flex items-center gap-2 self-center rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm text-ink-300">
+          <span aria-hidden>📱</span>
+          {t.card.mobileAppSoon}
+        </p>
       </div>
     </main>
   );
