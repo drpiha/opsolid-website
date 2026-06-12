@@ -17,11 +17,10 @@
 import { NextResponse } from "next/server";
 import { createHash } from "node:crypto";
 import { prisma } from "@/lib/prisma";
+import { publicCardUrlFor } from "@/lib/card-host";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
-
-const CARD_HOST = process.env.NEXT_PUBLIC_CARD_HOST?.trim() || "card.opsolid.de";
 
 /** sha256(ip) — opaque, not reversible, lets us count uniques without
  *  storing addresses. Phase 6 will add a rotating server salt + retention TTL. */
@@ -82,13 +81,13 @@ export async function GET(
     })
     .catch(() => {});
 
-  // Build destination URL. Custom destinationUrl wins; otherwise we go to the
-  // canonical card host. Source/campaign/event are appended so the landing
-  // page knows where the visitor came from (and can flow through to the
-  // vCard download / lead form).
+  // Build destination URL. Custom destinationUrl wins; otherwise the card's
+  // public URL (publicCardUrlFor — canonical opsolid.de/c/<slug> unless a
+  // verified NEXT_PUBLIC_CARD_HOST is configured). Source/campaign/event are
+  // appended so the landing page knows where the visitor came from (and can
+  // flow through to the vCard download / lead form).
   const destination =
-    link.destinationUrl?.trim() ||
-    `https://${CARD_HOST}/${link.order.slug}`;
+    link.destinationUrl?.trim() || publicCardUrlFor(link.order.slug);
 
   const url = new URL(destination);
   if (link.source) url.searchParams.set("src", link.source);

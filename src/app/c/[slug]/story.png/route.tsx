@@ -21,6 +21,7 @@ import { CardDataSchema } from "@/lib/validation";
 import { absoluteAssetUrl } from "@/lib/storage";
 import { getSiteUrl } from "@/lib/stripe";
 import { renderQr } from "@/lib/qr/styled-server";
+import { publicCardDisplayFor, publicCardUrlFor } from "@/lib/card-host";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -66,10 +67,10 @@ export async function GET(
     ? absoluteAssetUrl(order.photoPath, siteUrl)
     : null;
 
-  const cardHost =
-    process.env.NEXT_PUBLIC_CARD_HOST?.trim() || "card.opsolid.de";
-  const displayHost = cardHost.replace(/^https?:\/\//, "");
-  const cardUrl = `https://${displayHost}/${params.slug}`;
+  // Canonical opsolid.de/c/<slug> unless a verified NEXT_PUBLIC_CARD_HOST is
+  // set — see src/lib/card-host.ts for why the bare subdomain fallback broke.
+  const cardUrl = publicCardUrlFor(params.slug);
+  const cardDisplay = publicCardDisplayFor(params.slug);
 
   // QR embedded as data URL — same approach as og.png so the image is
   // self-contained. Plain dark-on-white for maximum scanner compatibility.
@@ -289,7 +290,7 @@ export async function GET(
                 opacity: 0.95,
               }}
             >
-              {displayHost}/{params.slug}
+              {cardDisplay}
             </div>
             <div
               style={{
