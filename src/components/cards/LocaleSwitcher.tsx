@@ -34,7 +34,11 @@ export function LocaleSwitcher({ current, ariaLabel }: Props) {
     <div
       role="group"
       aria-label={ariaLabel ?? "Language"}
-      className="inline-flex items-center gap-0.5 rounded-full border border-ink/15 bg-white/70 p-0.5 text-[11px] font-mono uppercase tracking-wider backdrop-blur-sm"
+      // Theme-INDEPENDENT neutral tokens on purpose: this chip floats over
+      // arbitrary card backdrops (cream, near-black, brand colors). The old
+      // theme-aware `text-ink` could resolve to near-white on light card
+      // pages — DE/EN were unreadable next to the active pill.
+      className="inline-flex items-center gap-0.5 rounded-full border border-neutral-300 bg-white/95 p-0.5 text-[11px] font-mono uppercase tracking-wider shadow-sm backdrop-blur-sm"
     >
       {LANGS.map(({ code, label }) => (
         <button
@@ -47,8 +51,8 @@ export function LocaleSwitcher({ current, ariaLabel }: Props) {
             // px-3 py-2 gives each button ~48px wide on average across 3 codes.
             "min-w-[44px] rounded-full px-3 py-2 transition-colors",
             code === current
-              ? "bg-ink text-bg-0 shadow-sm"
-              : "text-ink/55 hover:text-ink",
+              ? "bg-neutral-900 text-neutral-50 shadow-sm"
+              : "text-neutral-500 hover:text-neutral-900",
           ].join(" ")}
         >
           {label}

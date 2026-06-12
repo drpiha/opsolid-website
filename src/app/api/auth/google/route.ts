@@ -35,12 +35,19 @@ export async function GET(req: NextRequest) {
   const url = new URL(req.url);
   const next = url.searchParams.get("next") ?? "/dashboard/cards";
   const mobile = url.searchParams.get("mobile") === "1";
+  // The visitor's UI locale rides through the state so the post-login
+  // redirect and any error pages come back in their language instead of
+  // the previously hardcoded "de".
+  const localeParam = url.searchParams.get("locale");
+  const locale = ["de", "en", "tr"].includes(localeParam ?? "")
+    ? (localeParam as string)
+    : "de";
 
   // nonce → stored in cookie for CSRF check on callback
   // state → round-trips through Google (opaque to them)
   const nonce = randomBytes(16).toString("base64url");
   const state = Buffer.from(
-    JSON.stringify({ nonce, next, mobile }),
+    JSON.stringify({ nonce, next, mobile, locale }),
   ).toString("base64url");
 
   const params = new URLSearchParams({
