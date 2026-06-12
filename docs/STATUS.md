@@ -93,6 +93,18 @@ vurgulayan rakip yok — "GDPR-native, Almanya hosting, DE/EN/TR" konumu güçl�
 - ✅ Build + audit:cards yeşil. Uçtan uca test: FREE sipariş API ile kart oluşturuldu,
   owner görünümü + karşılama + üç paylaşım görseli doğrulandı.
 
+### Aynı oturum, 4. tur — Admin etkinlik yönetimi (eksik halka kapandı)
+
+- ✅ `/admin/events` sayfası (ADMIN_TOKEN veya admin oturumu): form ile etkinlik
+  oluştur — **slug otomatik üretilir** (örn. "Hannover Messe 2026" →
+  `hannover-messe-2026`), kopyala butonlu iki dağıtım linki hazır gelir
+  (davet linki + rehber linki), aktif/pasif anahtarı.
+- ✅ `/api/admin/events` (GET/POST/PATCH). Uçtan uca test edildi: admin'den
+  etkinlik oluştur → davet slug'ı ile FREE kart → katılımcı rehber sayfasında
+  listelendi. Build + audit yeşil.
+- Operatör artık script/SQL'e mecbur değil; `docs/STATUS.md` 2. turdaki
+  "operatör notu" adım 1 bu sayfayla değişti.
+
 **Operatör notu — fuar hazırlığı**
 1. Etkinliği oluştur: `scripts/seed-events.ts` örneğindeki gibi bir `Event` satırı
    (slug örn. `fuar-2026`). Admin UI yok — script/SQL ile.
