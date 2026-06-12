@@ -21,6 +21,7 @@ import { OrderStatus } from "@/lib/validation";
 import { renderQr } from "@/lib/qr/styled-server";
 import { absoluteAssetUrl } from "@/lib/storage";
 import { getSiteUrl } from "@/lib/stripe";
+import { publicCardUrlFor } from "@/lib/card-host";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -115,20 +116,15 @@ export async function GET(
   // distribution channel (NFC card, Instagram bio, trade-fair signage…) can
   // own its own QR with per-source scan tracking.
   const codeParam = (searchParams.get("code") ?? "").trim();
-  // Only use a dedicated card host when it's explicitly configured AND known to
-  // host-rewrite to /c/<slug>. Otherwise encode the canonical web URL
-  // (opsolid.de/c/<slug>), which always resolves — the bare `card.opsolid.de`
-  // fallback used to 404 because that host serves the mobile app, not the
-  // web-card rewrite.
-  const cardHostEnv = process.env.NEXT_PUBLIC_CARD_HOST?.trim();
+  // Card URL resolution lives in src/lib/card-host.ts: canonical
+  // opsolid.de/c/<slug> unless NEXT_PUBLIC_CARD_HOST is set AND explicitly
+  // verified via CARD_HOST_VERIFIED=true — the bare `card.opsolid.de`
+  // value used to 404 because that host routes to the separate Verso app.
   const shortHost = process.env.NEXT_PUBLIC_SHORT_HOST?.trim() || "go.opsolid.de";
-  const canonicalCardUrl = `${siteUrl.replace(/\/$/, "")}/c/${params.slug}`;
   const data =
     codeParam && /^[a-z0-9-]{3,64}$/.test(codeParam)
       ? `https://${shortHost}/${codeParam}`
-      : cardHostEnv
-        ? `https://${cardHostEnv}/${params.slug}`
-        : canonicalCardUrl;
+      : publicCardUrlFor(params.slug);
 
   try {
     const { bytes, contentType } = await renderQr({
