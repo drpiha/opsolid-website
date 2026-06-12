@@ -23,6 +23,9 @@ export interface CardLiveInput {
   cardUrl: string;
   editToken: string;
   locale: Locale;
+  /** Fair flow — public participant-directory URL when the card joined an
+   *  event at creation time. Omitted/null → section not rendered. */
+  eventUrl?: string | null;
 }
 
 interface Copy {
@@ -36,6 +39,10 @@ interface Copy {
   editHeading: string;
   editBody: string;
   editCta: string;
+  manageHeading: string;
+  manageBody: string;
+  eventHeading: string;
+  eventBody: string;
   replyLine: string;
   signoff: string;
 }
@@ -54,6 +61,12 @@ const COPY: Record<Locale, Copy> = {
     editBody:
       "Save the link below — it gives you full control over your card, contacts you receive and analytics. Bookmark it, no password needed.",
     editCta: "Edit my card",
+    manageHeading: "Stats, share links & leads",
+    manageBody:
+      "See who viewed your card, create a tracked short link per channel (QR, signature, social bio), and manage the contacts you receive:",
+    eventHeading: "Participant directory",
+    eventBody:
+      "Your card is listed in the event's participant directory — see who else is attending:",
     replyLine:
       "Reply to this email if you need any help — a real person will read it.",
     signoff: "— The OpSolid team",
@@ -72,6 +85,12 @@ const COPY: Record<Locale, Copy> = {
     editBody:
       "Speichern Sie den unten stehenden Link — er gibt Ihnen volle Kontrolle über Ihre Karte, Ihre Kontakte und Statistiken. Lesezeichen genügt, kein Passwort.",
     editCta: "Karte bearbeiten",
+    manageHeading: "Statistiken, Teilen-Links & Leads",
+    manageBody:
+      "Sehen Sie, wer Ihre Karte angesehen hat, erstellen Sie pro Kanal einen messbaren Kurzlink (QR, Signatur, Social-Bio) und verwalten Sie Ihre eingegangenen Kontakte:",
+    eventHeading: "Teilnehmerverzeichnis",
+    eventBody:
+      "Ihre Karte ist im Teilnehmerverzeichnis der Veranstaltung gelistet — sehen Sie, wer noch dabei ist:",
     replyLine:
       "Antworten Sie einfach auf diese E-Mail, falls Sie Hilfe brauchen — ein echter Mensch liest mit.",
     signoff: "— Ihr OpSolid Team",
@@ -90,6 +109,12 @@ const COPY: Record<Locale, Copy> = {
     editBody:
       "Aşağıdaki linki kaydedin — kartınız, gelen bağlantılarınız ve istatistikleriniz üzerinde tam kontrol verir. Yer imine eklemeniz yeterli, şifre yok.",
     editCta: "Kartımı düzenle",
+    manageHeading: "İstatistikler, paylaşım linkleri ve lead'ler",
+    manageBody:
+      "Kartınıza kimlerin baktığını görün, her kanal için ölçülebilir bir kısa link (QR, imza, sosyal medya bio) oluşturun ve gelen kişileri yönetin:",
+    eventHeading: "Katılımcı rehberi",
+    eventBody:
+      "Kartınız etkinliğin katılımcı rehberinde listelendi — başka kimlerin katıldığını görün:",
     replyLine:
       "Yardıma ihtiyacınız olursa bu e-postayı yanıtlamanız yeterli — gerçek bir insan okuyor.",
     signoff: "— OpSolid ekibi",
@@ -108,6 +133,10 @@ function editLink(input: CardLiveInput): string {
   return `${siteBase()}/${input.locale}/card/edit/${input.orderId}?t=${encodeURIComponent(input.editToken)}`;
 }
 
+function manageLink(input: CardLiveInput): string {
+  return `${siteBase()}/${input.locale}/card/manage/${input.orderId}?t=${encodeURIComponent(input.editToken)}`;
+}
+
 export function renderCardLiveHtml(input: CardLiveInput): string {
   const copy = pick(input.locale);
   const link = editLink(input);
@@ -124,6 +153,14 @@ export function renderCardLiveHtml(input: CardLiveInput): string {
     paragraph(
       `<span style="color:#9CA3A0;">${inlineLink(link, link)}</span>`
     ) +
+    `<h2 style="margin:24px 0 8px 0;font-family:Georgia,'Times New Roman',serif;font-size:18px;font-weight:normal;">${escapeHtml(copy.manageHeading)}</h2>` +
+    paragraph(escapeHtml(copy.manageBody)) +
+    paragraph(inlineLink(manageLink(input), manageLink(input))) +
+    (input.eventUrl
+      ? `<h2 style="margin:24px 0 8px 0;font-family:Georgia,'Times New Roman',serif;font-size:18px;font-weight:normal;">${escapeHtml(copy.eventHeading)}</h2>` +
+        paragraph(escapeHtml(copy.eventBody)) +
+        paragraph(inlineLink(input.eventUrl, input.eventUrl))
+      : "") +
     paragraph(`<em>${escapeHtml(copy.replyLine)}</em>`) +
     paragraph(escapeHtml(copy.signoff));
 
@@ -152,6 +189,13 @@ export function renderCardLiveText(input: CardLiveInput): string {
     copy.editBody,
     link,
     "",
+    copy.manageHeading.toUpperCase(),
+    copy.manageBody,
+    manageLink(input),
+    "",
+    ...(input.eventUrl
+      ? [copy.eventHeading.toUpperCase(), copy.eventBody, input.eventUrl, ""]
+      : []),
     copy.replyLine,
     "",
     copy.signoff,

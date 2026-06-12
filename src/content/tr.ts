@@ -1762,6 +1762,11 @@ export const content: Content = {
             "Formu doldurun — ödemeden hemen sonra kartınız opsolid.de/c/… adresinde canlıya alınır.",
           howToCreate:
             "Kartı herkes oluşturabilir — hesap gerekmez. Tasarımı seç, formu doldur; dakikalar içinde yayında olur. Dilediğin zaman düzenlemen için özel bir bağlantı alırsın.",
+          eventJoinLabel:
+            "Kartım katılımcı rehberinde görünsün — diğer katılımcılar beni bulabilsin.",
+          draftRestored:
+            "Önceki taslağın geri yüklendi — kaldığın yerden devam edebilirsin.",
+          draftDiscard: "Baştan başla",
           selectedTemplate: "Seçili tasarım",
           changeTemplate: "Değiştir",
           contactSection: "İletişim — size nasıl ulaşırız",
@@ -5535,6 +5540,9 @@ export const content: Content = {
       copyLink: "Linki kopyala",
       copied: "Kopyalandı!",
       whatsapp: "WhatsApp'ta paylaş",
+      whatsappHint: "Linkinle birlikte büyük bir kart görseli gönderir",
+      storyDownload: "Kart görseli (9:16)",
+      storyHint: "WhatsApp durumu ve Instagram story için",
       vcardVisitor: "Kişiyi kaydet",
       vcardOwner: "vCard'ım (.vcf)",
       vcardOwnerHint: "İlet — karşı taraf seni rehberine kaydeder",
@@ -5555,6 +5563,112 @@ export const content: Content = {
       editLabel: "Düzenle",
       previewLabel: "Önizleme modu",
       shareLabel: "Linki paylaş",
+      manageLabel: "İstatistik ve linkler",
+    },
+    manage: {
+      title: "Kart yönetimi",
+      subtitle:
+        "Kartın için istatistikler, paylaşım linkleri ve lead'ler — hepsi tek yerde.",
+      backToCard: "Kartı görüntüle",
+      editCard: "Kartı düzenle",
+      statsHeading: "Son 30 gün",
+      statViews: "Görüntülenme",
+      statLeads: "Lead",
+      statSaves: "Kaydedilme",
+      statShares: "Paylaşım",
+      statScans: "Link taraması",
+      linksHeading: "Paylaşım linkleri",
+      linksHint:
+        "Her kanal için ayrı bir kısa link oluştur — baskıdaki QR, e-posta imzası, Instagram bio — hangi kanalın ziyaretçi getirdiğini gör.",
+      linkLabelPlaceholder: "Etiket (örn. Fuar QR)",
+      linkCodePlaceholder: "Özel kod (isteğe bağlı)",
+      linkSourcePlaceholder: "Kaynak (örn. instagram)",
+      linkCampaignPlaceholder: "Kampanya (isteğe bağlı)",
+      createLink: "Link oluştur",
+      creating: "Oluşturuluyor…",
+      linkLimitReached: "Bu kart için link limitine ulaşıldı.",
+      codeUnavailable: "Bu kod alınmış veya geçersiz — başka bir kod dene.",
+      linkCreateFailed: "Link oluşturulamadı. Lütfen tekrar dene.",
+      scansLabel: "tarama",
+      activeLabel: "Aktif",
+      inactiveLabel: "Kapalı",
+      copyLabel: "Kopyala",
+      copiedLabel: "Kopyalandı",
+      qrLabel: "QR",
+      disableLabel: "Kapat",
+      enableLabel: "Aç",
+      noLinksYet:
+        "Henüz paylaşım linki yok. Kart URL'in her zaman çalışır — kısa linkler kanal bazlı takip ekler.",
+      leadsHeading: "Lead'ler",
+      leadsHint: "Kartın üzerinden iletişim bilgisini paylaşan kişiler.",
+      noLeadsYet:
+        "Henüz lead yok. Biri kartında “Bilgilerimi gönder”i kullandığında burada görünür.",
+      leadStatusNew: "Yeni",
+      leadStatusContacted: "İletişime geçildi",
+      leadStatusQualified: "Nitelikli",
+      leadStatusArchived: "Arşivlendi",
+      notPublished:
+        "Bu kart henüz yayınlanmadı — linkler ve istatistikler kart yayına girince aktifleşir.",
+      publicLinkLabel: "Halka açık kart linkin — paylaşacağın link bu",
+      publicLinkHint:
+        "Bu linke sahip herkes kartını görür. Sohbetlere, e-posta imzana, QR kodlara koy.",
+      privateLinkLabel: "Özel linklerin — sadece sende kalsın",
+      privateLinkHint:
+        "Bu yönetim sayfası ve düzenleme sayfan özeldir: linklerine sahip olan herkes kartını değiştirebilir. Kart e-postanda duruyorlar — asla paylaşma.",
+    },
+    eventDirectory: {
+      eyebrow: "Katılımcı rehberi",
+      ctaTitle: "Sen de mi katılıyorsun? Kartını oluştur.",
+      ctaBody:
+        "Ücretsiz, hesap gerekmez — kartın dakikalar içinde yayında olur ve bu listede görünürsün.",
+      ctaButton: "Kartımı oluştur",
+      participantsHeading: "Katılımcılar",
+      participantsHint:
+        "Sahipleri herkese açık listelenmeyi seçen kartlar. Birine dokunarak kişiyi görüntüle ve rehberine kaydet.",
+      emptyState:
+        "Henüz listelenen katılımcı yok — ilk sen ol: kartını oluştur ve rehbere katıl.",
+      searchPlaceholder: "İsim, şirket veya unvana göre ara…",
+      noResults: "Aramanla eşleşen katılımcı yok.",
+    },
+    mobileAppSoon:
+      "Mobil uygulama yakında — kartını yolda da oluştur ve yönet. Bugün her şey tarayıcıda çalışıyor.",
+    quickCreate: {
+      title: "60 saniyede kartın hazır",
+      subtitle:
+        "Beş alan, tek buton — dijital kartvizitin anında yayında. Ücretsiz, hesap gerekmez.",
+      nameLabel: "Ad soyad",
+      titleLabel: "Unvan",
+      companyLabel: "Şirket",
+      phoneLabel: "Telefon",
+      emailLabel: "E-posta",
+      emailHint:
+        "Özel düzenleme ve yönetim linklerin bu adrese gider — kontrol etmeyi unutma.",
+      photoLabel: "Fotoğraf ekle (isteğe bağlı)",
+      photoChange: "Fotoğrafı değiştir",
+      photoHint: "JPG, PNG veya WebP",
+      photoError:
+        "Fotoğraf yüklenemedi — daha sonra düzenleyiciden ekleyebilirsin.",
+      submit: "Kartımı oluştur — ücretsiz",
+      submitting: "Oluşturuluyor…",
+      errorRequired: "Ad, telefon ve e-posta zorunlu.",
+      errorGeneric: "Bir şeyler ters gitti. Lütfen tekrar dene.",
+      designHint:
+        "Temiz bir varsayılan tasarım uygulanır — tasarımı ve detayları istediğin zaman değiştirebilirsin.",
+      fullFormLink: "Tüm seçenekler için detaylı formu kullan",
+    },
+    ownerWelcome: {
+      title: "Kartın yayında!",
+      step1Title: "Paylaş",
+      step1Body:
+        "Paylaş butonunu kullan — halka açık linkini, QR'ını veya WhatsApp'ta büyük kart görselini gönderir.",
+      step2Title: "E-postanı kontrol et",
+      step2Body:
+        "Özel düzenleme ve yönetim linklerin orada. Kimseyle paylaşma — kartının kontrolü onlarda.",
+      step3Title: "Etkisini izle",
+      step3Body:
+        "Görüntülenmeler, gelen kişiler ve kanal bazlı kısa linkler yönetim sayfanda.",
+      manageCta: "İstatistik ve linkler",
+      dismiss: "Anladım",
     },
     languageSwitcher: "Dil",
   },

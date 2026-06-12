@@ -32,6 +32,8 @@ import { OwnerModeProvider } from "@/context/OwnerMode";
 import { QRFlipOverlay } from "@/components/cards/QRFlipOverlay";
 import { ShareButton } from "@/components/cards/ShareButton";
 import { OwnerToolbar } from "@/components/cards/OwnerToolbar";
+import { OwnerWelcome } from "@/components/cards/OwnerWelcome";
+import { StripOwnerParam } from "@/components/cards/StripOwnerParam";
 import { StatusBanner } from "@/components/cards/StatusBanner";
 import { LocaleSwitcher } from "@/components/cards/LocaleSwitcher";
 import { SaveCardButton } from "@/components/cards/SaveCardButton";
@@ -455,19 +457,30 @@ export default async function CardPage({ params, searchParams }: PageProps) {
   const ownerLabels = contents[localeKey].card.owner;
   const langSwitcherLabel = contents[localeKey].card.languageSwitcher;
   const editHref = `/${localeKey}/card/edit/${order.id}?t=${order.editToken ?? ""}`;
+  const manageHref = `/${localeKey}/card/manage/${order.id}?t=${order.editToken ?? ""}`;
 
   return (
     <OwnerModeProvider isOwner={isOwner}>
       <main className="flex min-h-[100dvh] flex-col bg-bg-0 px-4 py-6 pb-24 sm:py-10">
+        {isOwner && <StripOwnerParam />}
+        {isOwner && (
+          <OwnerWelcome
+            cardKey={order.id}
+            manageHref={manageHref}
+            labels={contents[localeKey].card.ownerWelcome}
+          />
+        )}
         {isOwner && (
           <OwnerToolbar
             editHref={editHref}
+            manageHref={manageHref}
             publicUrl={publicUrl}
             shareTitle={shareTitle}
             labels={{
               publicBannerLabel: ownerLabels.publicBannerLabel,
               editLabel: ownerLabels.editLabel,
               shareLabel: ownerLabels.shareLabel,
+              manageLabel: ownerLabels.manageLabel,
             }}
           />
         )}

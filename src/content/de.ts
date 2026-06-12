@@ -1762,6 +1762,11 @@ export const content: Content = {
             "Füllen Sie das Formular aus — die Karte wird direkt nach der Zahlung unter opsolid.de/c/… veröffentlicht.",
           howToCreate:
             "Jeder kann eine Karte erstellen — ganz ohne Konto. Design wählen, Formular ausfüllen, in wenigen Minuten live. Sie erhalten einen privaten Link zum jederzeitigen Bearbeiten.",
+          eventJoinLabel:
+            "Meine Karte im Teilnehmerverzeichnis anzeigen, damit andere Teilnehmer mich finden.",
+          draftRestored:
+            "Ihr letzter Entwurf wurde wiederhergestellt — machen Sie dort weiter, wo Sie aufgehört haben.",
+          draftDiscard: "Neu beginnen",
           selectedTemplate: "Gewähltes Design",
           changeTemplate: "Ändern",
           contactSection: "Kontakt — so erreichen wir Sie",
@@ -5534,6 +5539,9 @@ export const content: Content = {
       copyLink: "Link kopieren",
       copied: "Kopiert!",
       whatsapp: "Über WhatsApp teilen",
+      whatsappHint: "Sendet ein großes Kartenbild zusammen mit Ihrem Link",
+      storyDownload: "Kartenbild (9:16)",
+      storyHint: "Für WhatsApp-Status & Instagram-Stories",
       vcardVisitor: "Kontakt speichern",
       vcardOwner: "Meine vCard (.vcf)",
       vcardOwnerHint: "Weiterleiten — andere speichern dich in ihren Kontakten",
@@ -5554,6 +5562,115 @@ export const content: Content = {
       editLabel: "Bearbeiten",
       previewLabel: "Vorschau-Modus",
       shareLabel: "Link teilen",
+      manageLabel: "Statistiken & Links",
+    },
+    manage: {
+      title: "Kartenverwaltung",
+      subtitle:
+        "Statistiken, Teilen-Links und Leads für deine Karte — alles an einem Ort.",
+      backToCard: "Karte ansehen",
+      editCard: "Karte bearbeiten",
+      statsHeading: "Letzte 30 Tage",
+      statViews: "Aufrufe",
+      statLeads: "Leads",
+      statSaves: "Gespeichert",
+      statShares: "Geteilt",
+      statScans: "Link-Scans",
+      linksHeading: "Teilen-Links",
+      linksHint:
+        "Erstelle pro Kanal einen eigenen Kurzlink — QR auf Drucksachen, E-Mail-Signatur, Instagram-Bio — und sieh, welcher Kanal Besucher bringt.",
+      linkLabelPlaceholder: "Bezeichnung (z. B. Messe-QR)",
+      linkCodePlaceholder: "Wunsch-Code (optional)",
+      linkSourcePlaceholder: "Quelle (z. B. instagram)",
+      linkCampaignPlaceholder: "Kampagne (optional)",
+      createLink: "Link erstellen",
+      creating: "Wird erstellt …",
+      linkLimitReached: "Link-Limit für diese Karte erreicht.",
+      codeUnavailable:
+        "Dieser Code ist vergeben oder ungültig — bitte einen anderen wählen.",
+      linkCreateFailed:
+        "Der Link konnte nicht erstellt werden. Bitte erneut versuchen.",
+      scansLabel: "Scans",
+      activeLabel: "Aktiv",
+      inactiveLabel: "Aus",
+      copyLabel: "Kopieren",
+      copiedLabel: "Kopiert",
+      qrLabel: "QR",
+      disableLabel: "Deaktivieren",
+      enableLabel: "Aktivieren",
+      noLinksYet:
+        "Noch keine Teilen-Links. Deine Karten-URL funktioniert immer — Kurzlinks ergänzen das Tracking pro Kanal.",
+      leadsHeading: "Leads",
+      leadsHint:
+        "Personen, die ihre Kontaktdaten über deine Karte geteilt haben.",
+      noLeadsYet:
+        "Noch keine Leads. Sie erscheinen hier, sobald jemand „Meine Daten senden“ auf deiner Karte nutzt.",
+      leadStatusNew: "Neu",
+      leadStatusContacted: "Kontaktiert",
+      leadStatusQualified: "Qualifiziert",
+      leadStatusArchived: "Archiviert",
+      notPublished:
+        "Diese Karte ist noch nicht veröffentlicht — Links und Statistiken werden aktiv, sobald sie live ist.",
+      publicLinkLabel: "Ihr öffentlicher Kartenlink — diesen teilen",
+      publicLinkHint:
+        "Jeder mit diesem Link sieht Ihre Karte. Für Chats, E-Mail-Signaturen, QR-Codes.",
+      privateLinkLabel: "Ihre privaten Links — nur für Sie",
+      privateLinkHint:
+        "Diese Verwaltungsseite und Ihre Bearbeitungsseite sind privat: Wer ihre Links hat, kann Ihre Karte ändern. Sie stehen in Ihrer Karten-E-Mail — niemals weitergeben.",
+    },
+    eventDirectory: {
+      eyebrow: "Teilnehmerverzeichnis",
+      ctaTitle: "Auch dabei? Erstellen Sie Ihre Karte.",
+      ctaBody:
+        "Kostenlos, ohne Konto — Ihre Karte ist in Minuten live und Sie erscheinen in dieser Liste.",
+      ctaButton: "Karte erstellen",
+      participantsHeading: "Teilnehmer",
+      participantsHint:
+        "Karten, deren Inhaber sich öffentlich listen lassen. Antippen, um den Kontakt anzusehen und zu speichern.",
+      emptyState:
+        "Noch keine Teilnehmer gelistet — seien Sie der Erste: Karte erstellen und ins Verzeichnis eintragen.",
+      searchPlaceholder: "Nach Name, Firma oder Rolle suchen …",
+      noResults: "Keine Teilnehmer passen zu Ihrer Suche.",
+    },
+    mobileAppSoon:
+      "Mobile App kommt bald — Karte unterwegs erstellen und verwalten. Heute funktioniert alles im Browser.",
+    quickCreate: {
+      title: "Ihre Karte in 60 Sekunden",
+      subtitle:
+        "Fünf Felder, ein Button — Ihre digitale Visitenkarte ist sofort live. Kostenlos, ohne Konto.",
+      nameLabel: "Vollständiger Name",
+      titleLabel: "Position",
+      companyLabel: "Unternehmen",
+      phoneLabel: "Telefon",
+      emailLabel: "E-Mail",
+      emailHint:
+        "Ihre privaten Bearbeitungs- und Verwaltungslinks gehen an diese Adresse — bitte prüfen.",
+      photoLabel: "Foto hinzufügen (optional)",
+      photoChange: "Foto ändern",
+      photoHint: "JPG, PNG oder WebP",
+      photoError:
+        "Foto-Upload fehlgeschlagen — Sie können es später im Editor hinzufügen.",
+      submit: "Karte erstellen — kostenlos",
+      submitting: "Wird erstellt …",
+      errorRequired: "Name, Telefon und E-Mail sind erforderlich.",
+      errorGeneric: "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
+      designHint:
+        "Ein cleanes Standard-Design wird angewendet — Design und Details können Sie jederzeit ändern.",
+      fullFormLink: "Alle Optionen? Zum ausführlichen Formular",
+    },
+    ownerWelcome: {
+      title: "Ihre Karte ist live!",
+      step1Title: "Teilen",
+      step1Body:
+        "Nutzen Sie den Teilen-Button — er verschickt Ihren öffentlichen Link, den QR-Code oder ein großes Kartenbild per WhatsApp.",
+      step2Title: "E-Mail prüfen",
+      step2Body:
+        "Dort liegen Ihre privaten Bearbeitungs- und Verwaltungslinks. Nicht weitergeben — sie kontrollieren Ihre Karte.",
+      step3Title: "Wirkung verfolgen",
+      step3Body:
+        "Aufrufe, eingehende Kontakte und Kanal-Kurzlinks finden Sie auf Ihrer Verwaltungsseite.",
+      manageCta: "Statistiken & Links",
+      dismiss: "Verstanden",
     },
     languageSwitcher: "Sprache",
   },

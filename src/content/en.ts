@@ -1760,6 +1760,11 @@ export const content = {
             "Fill out the form — your card goes live at opsolid.de/c/… immediately after payment.",
           howToCreate:
             "Anyone can create a card — no account needed. Pick a design, fill in the form, and it goes live in minutes. You get a private link to edit it anytime.",
+          eventJoinLabel:
+            "List my card in the participant directory so other attendees can find me.",
+          draftRestored:
+            "Your previous draft was restored — continue where you left off.",
+          draftDiscard: "Start over",
           selectedTemplate: "Selected design",
           changeTemplate: "Change",
           contactSection: "Contact — how we reach you",
@@ -5564,6 +5569,9 @@ export const content = {
       copyLink: "Copy link",
       copied: "Copied!",
       whatsapp: "Share on WhatsApp",
+      whatsappHint: "Sends a large card image together with your link",
+      storyDownload: "Card image (9:16)",
+      storyHint: "For WhatsApp status & Instagram stories",
       vcardVisitor: "Save contact",
       vcardOwner: "My vCard (.vcf)",
       vcardOwnerHint: "Forward — saves you to their contacts",
@@ -5583,6 +5591,111 @@ export const content = {
       editLabel: "Edit",
       previewLabel: "Preview mode",
       shareLabel: "Share link",
+      manageLabel: "Stats & links",
+    },
+    manage: {
+      title: "Card management",
+      subtitle:
+        "Stats, share links, and leads for your card — everything in one place.",
+      backToCard: "View card",
+      editCard: "Edit card",
+      statsHeading: "Last 30 days",
+      statViews: "Views",
+      statLeads: "Leads",
+      statSaves: "Saves",
+      statShares: "Shares",
+      statScans: "Link scans",
+      linksHeading: "Share links",
+      linksHint:
+        "Create a separate short link per channel — QR on print, email signature, Instagram bio — and see which one brings visitors.",
+      linkLabelPlaceholder: "Label (e.g. Trade fair QR)",
+      linkCodePlaceholder: "Custom code (optional)",
+      linkSourcePlaceholder: "Source (e.g. instagram)",
+      linkCampaignPlaceholder: "Campaign (optional)",
+      createLink: "Create link",
+      creating: "Creating…",
+      linkLimitReached: "Link limit reached for this card.",
+      codeUnavailable: "That code is taken or invalid — try another one.",
+      linkCreateFailed: "Could not create the link. Please try again.",
+      scansLabel: "scans",
+      activeLabel: "Active",
+      inactiveLabel: "Off",
+      copyLabel: "Copy",
+      copiedLabel: "Copied",
+      qrLabel: "QR",
+      disableLabel: "Turn off",
+      enableLabel: "Turn on",
+      noLinksYet:
+        "No share links yet. Your card URL always works — short links add per-channel tracking.",
+      leadsHeading: "Leads",
+      leadsHint: "People who shared their contact details through your card.",
+      noLeadsYet:
+        "No leads yet. They appear here when someone uses “Send my info” on your card.",
+      leadStatusNew: "New",
+      leadStatusContacted: "Contacted",
+      leadStatusQualified: "Qualified",
+      leadStatusArchived: "Archived",
+      notPublished:
+        "This card is not published yet — links and stats activate once it goes live.",
+      publicLinkLabel: "Your public card link — share this one",
+      publicLinkHint:
+        "Anyone with this link sees your card. Put it in chats, email signatures, QR codes.",
+      privateLinkLabel: "Your private links — keep them to yourself",
+      privateLinkHint:
+        "This management page and your edit page are private: anyone with their links can change your card. They're in your card email — never share them.",
+    },
+    eventDirectory: {
+      eyebrow: "Event directory",
+      ctaTitle: "Going too? Create your card.",
+      ctaBody:
+        "Free, no account needed — your card is live in minutes and you appear in this list.",
+      ctaButton: "Create my card",
+      participantsHeading: "Participants",
+      participantsHint:
+        "Cards whose owners chose to be listed publicly. Tap one to view and save the contact.",
+      emptyState:
+        "No participants listed yet — be the first: create your card and join the directory.",
+      searchPlaceholder: "Search by name, company or role…",
+      noResults: "No participants match your search.",
+    },
+    mobileAppSoon:
+      "Mobile app coming soon — create and manage your card on the go. Everything works in the browser today.",
+    quickCreate: {
+      title: "Your card in 60 seconds",
+      subtitle:
+        "Five fields, one button — your digital business card goes live instantly. Free, no account needed.",
+      nameLabel: "Full name",
+      titleLabel: "Job title",
+      companyLabel: "Company",
+      phoneLabel: "Phone",
+      emailLabel: "Email",
+      emailHint:
+        "Your private edit and management links are sent here — double-check it.",
+      photoLabel: "Add a photo (optional)",
+      photoChange: "Change photo",
+      photoHint: "JPG, PNG or WebP",
+      photoError: "Photo upload failed — you can add it later in the editor.",
+      submit: "Create my card — free",
+      submitting: "Creating…",
+      errorRequired: "Name, phone and email are required.",
+      errorGeneric: "Something went wrong. Please try again.",
+      designHint:
+        "A clean default design is applied — you can change the design and add more details anytime.",
+      fullFormLink: "Want every option? Use the detailed form",
+    },
+    ownerWelcome: {
+      title: "Your card is live!",
+      step1Title: "Share it",
+      step1Body:
+        "Use the Share button — it sends your public link, QR, or a big card image on WhatsApp.",
+      step2Title: "Check your email",
+      step2Body:
+        "Your private edit and management links are there. Keep them to yourself — they control your card.",
+      step3Title: "Watch it work",
+      step3Body:
+        "Views, contacts you receive, and per-channel share links live on your management page.",
+      manageCta: "Stats & links",
+      dismiss: "Got it",
     },
     languageSwitcher: "Language",
   },

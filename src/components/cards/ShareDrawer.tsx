@@ -20,6 +20,8 @@ import {
   Download,
   Share2,
   ExternalLink,
+  Loader2,
+  ImageDown,
 } from "lucide-react";
 import { useLocale } from "@/context/LocaleContext";
 
@@ -38,10 +40,56 @@ export function ShareDrawer({ slug, open, onClose, context = "visitor" }: ShareD
   const s = t.card.share;
   const cardUrl = `${SITE}/c/${slug}`;
   const qrPng = `/api/qr/${encodeURIComponent(slug)}?format=png`;
+  const storyPng = `/c/${encodeURIComponent(slug)}/story.png`;
   const emailSignatureHtml = `<a href="${cardUrl}">${cardUrl}</a>`;
 
   const [linkCopied, setLinkCopied] = React.useState(false);
   const [sigCopied, setSigCopied] = React.useState(false);
+  const [waBusy, setWaBusy] = React.useState(false);
+
+  // WhatsApp share — image-first. Instead of handing WhatsApp a bare URL
+  // (preview at the platform's mercy), fetch the 9:16 story card and share
+  // it as a FILE next to the link via the Web Share API. Recipients see a
+  // full-screen business card with photo + company, not a grey link row.
+  // Falls back to the classic wa.me text link when file-sharing isn't
+  // available (desktop browsers, older WebViews) or anything fails.
+  const shareWhatsApp = React.useCallback(async () => {
+    const fallback = () =>
+      window.open(
+        `https://wa.me/?text=${encodeURIComponent(cardUrl)}`,
+        "_blank",
+        "noopener,noreferrer",
+      );
+    setWaBusy(true);
+    try {
+      const nav = navigator as Navigator & {
+        canShare?: (data?: ShareData) => boolean;
+      };
+      if (typeof nav.share !== "function" || typeof nav.canShare !== "function") {
+        fallback();
+        return;
+      }
+      const res = await fetch(storyPng);
+      if (!res.ok) {
+        fallback();
+        return;
+      }
+      const blob = await res.blob();
+      const file = new File([blob], `card-${slug}.png`, { type: "image/png" });
+      if (!nav.canShare({ files: [file] })) {
+        fallback();
+        return;
+      }
+      await nav.share({ files: [file], text: cardUrl });
+    } catch (err) {
+      // AbortError = user closed the share sheet — not a failure.
+      if (!(err instanceof DOMException && err.name === "AbortError")) {
+        fallback();
+      }
+    } finally {
+      setWaBusy(false);
+    }
+  }, [cardUrl, slug, storyPng]);
 
   const copyLink = React.useCallback(async () => {
     try {
@@ -133,17 +181,39 @@ export function ShareDrawer({ slug, open, onClose, context = "visitor" }: ShareD
               </span>
             </button>
 
-            <a
-              href={`https://wa.me/?text=${encodeURIComponent(cardUrl)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={rowBase}
+            <button
+              type="button"
+              onClick={shareWhatsApp}
+              disabled={waBusy}
+              className={rowBase + " disabled:opacity-60"}
             >
-              <Share2 size={16} className="shrink-0 text-green-600" />
-              <span className="flex-1 text-sm font-medium text-ink">
-                {s.whatsapp}
+              {waBusy ? (
+                <Loader2 size={16} className="shrink-0 animate-spin text-green-600" />
+              ) : (
+                <Share2 size={16} className="shrink-0 text-green-600" />
+              )}
+              <span className="flex-1 min-w-0 text-left">
+                <span className="block truncate text-sm font-medium text-ink">
+                  {s.whatsapp}
+                </span>
+                <span className="block truncate text-[11px] text-ink-400">
+                  {s.whatsappHint}
+                </span>
               </span>
               <ExternalLink size={14} className="shrink-0 text-ink-400" />
+            </button>
+
+            <a href={storyPng} download={`card-${slug}.png`} className={rowBase}>
+              <ImageDown size={16} className="shrink-0 text-ink-300" />
+              <span className="flex-1 min-w-0">
+                <span className="block truncate text-sm font-medium text-ink">
+                  {s.storyDownload}
+                </span>
+                <span className="block truncate text-[11px] text-ink-400">
+                  {s.storyHint}
+                </span>
+              </span>
+              <span className="shrink-0 text-[11px] font-mono text-ink-400">9:16</span>
             </a>
 
             <a href={`/api/cards/${slug}/vcard`} download className={rowBase}>

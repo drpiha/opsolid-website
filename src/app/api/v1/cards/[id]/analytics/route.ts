@@ -1,10 +1,10 @@
 // =============================================================================
-// GET /api/v1/cards/[id]/analytics — Pro-only 30-day analytics for a single
-// card.
+// GET /api/v1/cards/[id]/analytics — 30-day analytics for a single card.
 //
 // Auth: bearer-only. Authorization: card.userId === user.id (owner only).
-// Pro-gated: returns 402 `pro_required` for free-tier users — the upgrade
-// CTA in the mobile UI catches this and opens the paywall.
+// Gate: free by default; CARD_ANALYTICS_PRO_ONLY=true re-arms the 402
+// `pro_required` response for free-tier users — the upgrade CTA in the
+// mobile UI catches this and opens the paywall.
 //
 // Aggregates over CardView, CardLead, SavedCard, ShareEvent. The numbers are
 // owner-private CRM data; we never expose them on the public viewer.
@@ -19,6 +19,7 @@ import { errorJson } from "@/lib/api/v1/errors";
 import { applyCors, corsPreflight } from "@/lib/api/v1/cors";
 import { rateLimit } from "@/lib/api/v1/rate-limit";
 import { isPro } from "@/lib/auth/pro";
+import { analyticsRequiresPro } from "@/lib/billing/plan";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -40,7 +41,10 @@ export async function GET(
   try {
     const user = await requireBearerUser(req);
 
-    if (!isPro(user)) {
+    // Basic owner analytics is free by default (market table-stakes). The
+    // 402 gate only arms when the operator sets CARD_ANALYTICS_PRO_ONLY=true,
+    // and never under CARD_PRICING_MODE=all_free.
+    if (analyticsRequiresPro() && !isPro(user)) {
       return applyCors(
         errorJson("pro_required", "Pro subscription required.", 402),
         req,

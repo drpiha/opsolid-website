@@ -1,8 +1,129 @@
 # OpSolid Website — Live Status
 
-**Son güncelleme:** 2026-04-23 (üçüncü oturum — new-machine pull + smoke test)
-**Aktif dal:** `main` (feat/complete-dbc artık merge edilmiş, main 3 commit önde)
+**Son güncelleme:** 2026-06-12 (kart ürünleştirme oturumu — pricing mode + owner self-serve)
+**Aktif dal:** `claude/digital-business-card-app-334cev`
 **Kanonik canlı panel.** Her oturum başında okunur, sonunda güncellenir.
+
+---
+
+## 2026-06-12 oturum — Dijital kart "tam profesyonel" paketi
+
+Rakip analizi (Blinq / HiHello / Popl / Uniqode / Wave / Lemontaps) + kod denetimi
+sonrası eksik katman kapatıldı: **konfigürasyonla ücretsiz mod + sahip self-serve yönetimi**.
+
+**Tamamlanan**
+- ✅ `CARD_PRICING_MODE` env anahtarı (`src/lib/billing/plan.ts`): `freemium` (varsayılan)
+  veya `all_free`. `all_free`'de sipariş formunda ücretli seçenekler ve fiyat tablosu
+  gizlenir, `/api/orders` ücretli istekleri FREE'ye çevirir — **Stripe hiç çağrılmaz**,
+  ödeme adımı tamamen atlanır. Tek env değişikliği + restart ile mod değişir.
+- ✅ Temel analitik artık **ücretsiz** (2026 pazar standardı): `/api/v1/cards/[id]/analytics`
+  402 kapısı varsayılan kapalı; `CARD_ANALYTICS_PRO_ONLY=true` ile geri açılır.
+- ✅ **Sahip yönetim sayfası** `/:locale/card/manage/:orderId?t=<editToken>` — hesap
+  gerektirmez (edit-token), 3 panel: 30 günlük istatistik (görüntülenme/lead/kaydetme/
+  paylaşım/link taraması), **kısa link yönetimi** (oluştur/kapat/kopyala/link-bazlı QR
+  indir, kart başına 20 link limiti, owner linklerinde destinationUrl yok — open-redirect
+  koruması), **lead inbox** (new/contacted/qualified/archived durum akışı).
+- ✅ Yeni owner API'ları: `/api/card/manage/[orderId]/links` (GET/POST/PATCH, rate-limit
+  30/saat) ve `/api/card/manage/[orderId]/leads` (GET/PATCH). Edit-token gate, updateMany
+  ile order-scope (başka kartın linki/lead'i çevrilemez).
+- ✅ OwnerToolbar'a "İstatistik ve linkler" butonu; kart editörü başlığına manage linki;
+  card-live e-postasına manage bölümü (3 dil).
+- ✅ i18n: `card.manage` + `card.owner.manageLabel` EN/DE/TR (yapı birebir aynı).
+- ✅ `.env.example` güncellendi (`CARD_PRICING_MODE`, `CARD_ANALYTICS_PRO_ONLY`,
+  `NEXT_PUBLIC_SHORT_HOST`).
+- ✅ `npm run build` + `npm run audit:cards` yeşil.
+
+**Ücretsiz kullanıcı maliyeti (araştırma sonucu)**
+Kart sayfaları statik-yakını + küçük DB satırları; 1.000–2.000 ücretsiz kullanıcıda
+toplam hosting yükü ~$25–100/ay (maliyet DB değil bant genişliği). Freemium bu ölçekte
+finansal olarak güvenli. AB farklılaştırıcısı: Lemontaps dışında EU-veri-yerleşimi
+vurgulayan rakip yok — "GDPR-native, Almanya hosting, DE/EN/TR" konumu güçlü.
+
+**Sonraki adımlar (öneri)**
+- Dashboard (hesaplı kullanıcı) tarafına aynı link/lead panellerinin taşınması
+- E-posta imza üreteci + Wallet pass'in free tier'da öne çıkarılması (ShareDrawer'da var)
+- Referral UI + custom domain self-serve
+
+### Aynı oturum, 2. tur — Fuar akışı + güven düzeltmeleri
+
+**Tamamlanan**
+- ✅ **Fuar katılımcı rehberi (web)**: `/:locale/events/:slug` — etkinlik başlığı +
+  "kartını oluştur" CTA (`?event=<slug>` deep-link) + alfabetik katılımcı grid'i.
+  Sadece `PUBLISHED` + `visibility="public"` kartlar listelenir. SEO metadata var.
+- ✅ **Sipariş formu fuar entegrasyonu**: `?event=<slug>` ile açılınca form üstünde
+  etkinlik banner'ı + "katılımcı rehberinde görün" onay kutusu (varsayılan açık).
+  `OrderPayloadSchema.eventSlug` → `/api/orders` kartı `EventAttendee`'ye bağlar
+  (best-effort, sipariş asla bloklanmaz). Sayfa SSG kaldı — event istemci tarafında
+  mevcut public `/api/v1/events/[slug]` API'sinden çözülür.
+- ✅ **Düzenleme/paylaşım linki karışıklığı bitti**:
+  - `StripOwnerParam` — kart oluşturduktan sonra adres çubuğundaki `?owner=<editToken>`
+    history.replaceState ile temizlenir → tarayıcıdan "adresi paylaş" artık token
+    sızdıramaz (gerçek bir güvenlik açığıydı).
+  - Manage sayfasında "iki linkin" paneli: 🌐 halka açık link (paylaş) vs 🔒 özel
+    yönetim/düzenleme linkleri (asla paylaşma) — üç dilde net açıklama.
+- ✅ **Taslak otomatik kaydı (veri kaybı yok)**: sipariş formu metin state'i 800ms
+  debounce ile localStorage'a yazılır (`opsolid-card-order-draft-v1`), sayfa
+  yenilenince/sekme ölünce geri yüklenir ("taslağın geri yüklendi" bildirimi +
+  "Baştan başla"). Başarılı gönderimde temizlenir; 7 günden eski taslak yok sayılır.
+- ✅ **Mobil uygulama yakında** rozeti: sipariş sayfası, etkinlik sayfası, manage
+  sayfası (3 dil, `card.mobileAppSoon`).
+- ✅ Card-live e-postasına katılımcı rehberi bölümü (kart bir etkinliğe katıldıysa
+  rehber linki e-postada da var, tıklanabilir).
+- ✅ Build + audit:cards yeşil.
+
+### Aynı oturum, 3. tur — Paylaşım görselleri + onboarding (gerçek render testli)
+
+**Tamamlanan**
+- ✅ **9:16 kart görseli** `/c/[slug]/story.png` (1080×1920): foto/baş harf + isim +
+  unvan + şirket + web sitesi + QR (data-URL gömülü, self-contained) + kart URL'i.
+  Lokal Postgres + dev server ile gerçek render testi yapıldı (fotoğraflı ve
+  fotoğrafsız) — iki durumda da temiz çıktı.
+- ✅ **WhatsApp paylaşımı artık görsel-öncelikli**: ShareDrawer'daki WhatsApp butonu
+  story.png'yi indirip Web Share API ile DOSYA olarak paylaşır (linkle birlikte) —
+  alıcı düz link değil, tam ekran kartvizit görür. Dosya paylaşımı desteklenmeyen
+  ortamda (masaüstü) otomatik `wa.me` fallback. Kullanıcı paylaşımı iptal ederse
+  (AbortError) fallback tetiklenmez.
+- ✅ ShareDrawer'a "Kart görseli (9:16) indir" satırı — WhatsApp durumu / Instagram
+  story kullanımı için.
+- ✅ **Sahip karşılama turu** (`OwnerWelcome`): kart yayına girince ilk ziyarette
+  3 adım — "Paylaş", "E-postandaki özel linkleri sakla", "İstatistiklerini izle" +
+  yönetim sayfası CTA'sı. Kart başına bir kez (localStorage), kapatılabilir.
+- ✅ Link önizleme (og:image) zinciri değişmedi: wa.png 4:5 → og.png 1200×630 →
+  şablon thumb; cache-busting `?v=updatedAt` zaten vardı.
+- ✅ Build + audit:cards yeşil. Uçtan uca test: FREE sipariş API ile kart oluşturuldu,
+  owner görünümü + karşılama + üç paylaşım görseli doğrulandı.
+
+### Aynı oturum, 4. tur — Admin etkinlik yönetimi (eksik halka kapandı)
+
+- ✅ `/admin/events` sayfası (ADMIN_TOKEN veya admin oturumu): form ile etkinlik
+  oluştur — **slug otomatik üretilir** (örn. "Hannover Messe 2026" →
+  `hannover-messe-2026`), kopyala butonlu iki dağıtım linki hazır gelir
+  (davet linki + rehber linki), aktif/pasif anahtarı.
+- ✅ `/api/admin/events` (GET/POST/PATCH). Uçtan uca test edildi: admin'den
+  etkinlik oluştur → davet slug'ı ile FREE kart → katılımcı rehber sayfasında
+  listelendi. Build + audit yeşil.
+- Operatör artık script/SQL'e mecbur değil; `docs/STATUS.md` 2. turdaki
+  "operatör notu" adım 1 bu sayfayla değişti.
+
+### Aynı oturum, 5. tur — 60 saniyelik hızlı oluşturma + rehber araması
+
+- ✅ **`/:locale/card/new` hızlı oluşturma sayfası**: 5 alan (ad*, unvan, şirket,
+  telefon*, e-posta*) + isteğe bağlı fotoğraf (downscale + /api/uploads) → tek
+  butonla anında yayın. Temiz varsayılan şablon (id 4); tasarım sonradan
+  editörden değiştirilir. `?event=` banner + rehber opt-in'i destekler; detaylı
+  forma link verir. Fuar davet linkinin yeni hedefi bu sayfa.
+- ✅ Rehber sayfasına **arama** (isim/şirket/unvan, 5+ katılımcıda görünür,
+  locale-aware lowercase) + "sonuç yok" durumu.
+- ✅ Admin events davet linki ve rehber CTA'sı artık `/card/new`'e işaret ediyor.
+- ✅ "Claim" akışı kontrol edildi — **zaten mevcutmuş** (`/api/account/cards/[id]/claim`
+  + dashboard claimable banner'ı); önceki "eksikler" listemdeki bu madde geçersiz.
+- ✅ Uçtan uca test (lokal Postgres): minimal POST → kart yayında → rehberde
+  listelendi. Build + audit yeşil.
+
+**Operatör notu — fuar hazırlığı (güncel)**
+1. Etkinliği oluştur: `opsolid.de/admin/events?token=ADMIN_TOKEN` → form → slug otomatik.
+2. Davet linki (sayfadan kopyala): `https://opsolid.de/tr/card/new?event=<slug>`
+3. Rehber linki: `https://opsolid.de/tr/events/<slug>`
 
 ---
 

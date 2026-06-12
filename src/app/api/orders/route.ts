@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { OrderPayloadSchema, OrderStatus } from "@/lib/validation";
 import { getTemplateById } from "@/config/card-templates";
+import { cardPaymentsEnabled } from "@/lib/billing/plan";
 import { createCheckoutSession } from "@/lib/stripe";
 import { validateManualSlug, isSlugAvailable, ensureUniqueSlug } from "@/lib/slug";
 import { getSiteUrl } from "@/lib/stripe";
@@ -32,6 +33,13 @@ export async function POST(req: NextRequest) {
     );
   }
   const data = parsed.data;
+
+  // all_free mode: no order may reach Stripe, even one submitted from a stale
+  // form that still offered paid tiers. Coercing (rather than rejecting) errs
+  // in the customer's favor — under all_free every feature is free anyway.
+  if (!cardPaymentsEnabled() && data.billingMode !== "FREE") {
+    data.billingMode = "FREE";
+  }
 
   const template = getTemplateById(data.templateId);
   if (!template || !template.isActive) {
@@ -129,6 +137,28 @@ export async function POST(req: NextRequest) {
     },
   });
 
+  // Fair flow — attach the card to the event's attendee directory. Best-
+  // effort: an unknown/inactive event or a race on the unique constraint must
+  // never fail the order itself. The public roster only lists PUBLISHED
+  // cards, so paid orders surface there after publish.
+  let attachedEventSlug: string | null = null;
+  if (data.eventSlug) {
+    try {
+      const event = await prisma.event.findUnique({
+        where: { slug: data.eventSlug },
+        select: { id: true, slug: true, isActive: true, endAt: true },
+      });
+      if (event && event.isActive && event.endAt > new Date()) {
+        await prisma.eventAttendee.create({
+          data: { eventId: event.id, cardId: order.id },
+        });
+        attachedEventSlug = event.slug;
+      }
+    } catch (err) {
+      console.error("[orders] event attach failed (non-fatal):", err);
+    }
+  }
+
   // FREE: return card URL + edit link, no Stripe.
   if (isFree) {
     const siteUrl = getSiteUrl();
@@ -144,6 +174,9 @@ export async function POST(req: NextRequest) {
       cardUrl,
       editToken,
       locale: normalizeLocale(data.locale),
+      eventUrl: attachedEventSlug
+        ? `${siteUrl}/${data.locale}/events/${attachedEventSlug}`
+        : null,
     };
     sendCustomerEmail({
       to: data.contactEmail,

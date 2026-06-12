@@ -10,21 +10,26 @@
 // =============================================================================
 
 import * as React from "react";
-import { Pencil, Share2, Check } from "lucide-react";
+import { Pencil, Share2, Check, BarChart3 } from "lucide-react";
 
 interface Props {
   editHref: string;
+  /** Owner management page (stats, share links, leads). Optional so existing
+   *  render paths without a manage link keep working unchanged. */
+  manageHref?: string;
   publicUrl: string;
   shareTitle: string;
   labels: {
     publicBannerLabel: string;
     editLabel: string;
     shareLabel: string;
+    manageLabel?: string;
   };
 }
 
 export function OwnerToolbar({
   editHref,
+  manageHref,
   publicUrl,
   shareTitle,
   labels,
@@ -63,6 +68,15 @@ export function OwnerToolbar({
         <Pencil size={11} strokeWidth={2.4} />
         {labels.editLabel}
       </a>
+      {manageHref && labels.manageLabel && (
+        <a
+          href={manageHref}
+          className="inline-flex items-center gap-1 rounded-full px-2 py-1 font-semibold text-emerald-800 transition-colors hover:bg-emerald-100"
+        >
+          <BarChart3 size={11} strokeWidth={2.4} />
+          {labels.manageLabel}
+        </a>
+      )}
       <button
         type="button"
         onClick={onShare}

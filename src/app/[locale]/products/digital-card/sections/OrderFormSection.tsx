@@ -116,7 +116,17 @@ interface Props {
   selectedTemplateId: number | null;
   // Reserved for future template-change affordances inside the form.
   onTemplateChange: (id: number) => void;
+  /** Resolved server-side from CARD_PRICING_MODE. Under "all_free" the paid
+   *  billing tiles are not rendered and the form can only submit FREE. */
+  pricingMode?: import("@/lib/billing/plan").CardPricingMode;
+  /** Fair flow — present when the page was opened via ?event=<slug>. Shows
+   *  the event banner + directory opt-in; the slug rides along in the order
+   *  payload so the new card joins the attendee directory. */
+  event?: import("../DigitalCardPage").OrderEventInfo | null;
 }
+
+// localStorage key for the order-form draft (see "draft autosave" below).
+const ORDER_DRAFT_KEY = "opsolid-card-order-draft-v1";
 
 const EMPTY_CARD: CardData = {
   name: "",
@@ -200,7 +210,12 @@ function formatPositionLabel(pos: ImagePosition | undefined): string | undefined
 // Section component
 // =============================================================================
 
-export function OrderFormSection({ selectedTemplateId }: Props) {
+export function OrderFormSection({
+  selectedTemplateId,
+  pricingMode = "freemium",
+  event = null,
+}: Props) {
+  const paymentsEnabled = pricingMode !== "all_free";
   const { locale, t } = useLocale();
   const order = t.products.digitalCard.order ?? {};
   // Stable identity prevents downstream useMemos (summaries, etc.) from
@@ -236,6 +251,11 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
   const [formState, setFormState] = useState<FormState>("idle");
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({});
+  // Fair flow — listed in the event's public attendee directory. Checked by
+  // default: the invite link exists precisely so participants find each other;
+  // unchecking keeps the card out of the roster (the card itself stays as
+  // visible as its own visibility setting).
+  const [joinDirectory, setJoinDirectory] = useState(true);
 
   // Phase 7.7 — auto-reset colors when the user switches templates, unless
   // they've already customised them.
@@ -263,6 +283,122 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
   const [previewLocale, setPreviewLocale] = useState<"de" | "en" | "tr">(
     ["de", "en", "tr"].includes(locale) ? (locale as "de" | "en" | "tr") : "de"
   );
+
+  // ---- draft autosave ------------------------------------------------------
+  // The fair case: the form is filled on a phone, the browser gets killed by
+  // a call / tab discard, and twenty minutes of typing is gone. Persist the
+  // text state (never the binary uploads — photoPath/logoPath are already
+  // server paths) to localStorage, debounced, and restore it on mount.
+  // Cleared on successful submit. Drafts older than 7 days are ignored.
+  const [draftRestored, setDraftRestored] = useState(false);
+  const draftReady = useRef(false);
+  const initialDraftJson = useRef<string | null>(null);
+
+  const draftSnapshot = useMemo(
+    () =>
+      JSON.stringify({
+        cardData,
+        contactName,
+        contactEmail,
+        contactPhone,
+        desiredSlug,
+        brandPrimaryHex,
+        brandAccentHex,
+        themeKey: themeKey ?? null,
+        layoutKey: layoutKey ?? null,
+        photoPath,
+        logoPath,
+      }),
+    [
+      cardData,
+      contactName,
+      contactEmail,
+      contactPhone,
+      desiredSlug,
+      brandPrimaryHex,
+      brandAccentHex,
+      themeKey,
+      layoutKey,
+      photoPath,
+      logoPath,
+    ],
+  );
+
+  useEffect(() => {
+    // Restore once, before any save can run.
+    try {
+      initialDraftJson.current = draftSnapshot;
+      const raw = window.localStorage.getItem(ORDER_DRAFT_KEY);
+      if (raw) {
+        const parsed = JSON.parse(raw) as {
+          savedAt?: number;
+          state?: Record<string, unknown>;
+        };
+        const fresh =
+          typeof parsed.savedAt === "number" &&
+          Date.now() - parsed.savedAt < 7 * 24 * 60 * 60 * 1000;
+        if (fresh && parsed.state && typeof parsed.state === "object") {
+          const s = parsed.state as {
+            cardData?: CardData;
+            contactName?: string;
+            contactEmail?: string;
+            contactPhone?: string;
+            desiredSlug?: string;
+            brandPrimaryHex?: string;
+            brandAccentHex?: string;
+            themeKey?: CardThemeKey | null;
+            layoutKey?: string | null;
+            photoPath?: string | null;
+            logoPath?: string | null;
+          };
+          if (s.cardData && typeof s.cardData.name === "string") {
+            setCardData(s.cardData);
+          }
+          if (s.contactName) setContactName(s.contactName);
+          if (s.contactEmail) setContactEmail(s.contactEmail);
+          if (s.contactPhone) setContactPhone(s.contactPhone);
+          if (s.desiredSlug) setDesiredSlug(s.desiredSlug);
+          if (s.brandPrimaryHex) setBrandPrimaryHex(s.brandPrimaryHex);
+          if (s.brandAccentHex) setBrandAccentHex(s.brandAccentHex);
+          if (s.themeKey) setThemeKey(s.themeKey);
+          if (s.layoutKey) setLayoutKey(s.layoutKey);
+          if (s.photoPath) setPhotoPath(s.photoPath);
+          if (s.logoPath) setLogoPath(s.logoPath);
+          setDraftRestored(true);
+        }
+      }
+    } catch {
+      /* corrupt draft — start clean */
+    }
+    draftReady.current = true;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    if (!draftReady.current) return;
+    // Don't persist the untouched sample card — a draft only exists once the
+    // visitor actually typed something.
+    if (draftSnapshot === initialDraftJson.current) return;
+    const timer = setTimeout(() => {
+      try {
+        window.localStorage.setItem(
+          ORDER_DRAFT_KEY,
+          JSON.stringify({ savedAt: Date.now(), state: JSON.parse(draftSnapshot) }),
+        );
+      } catch {
+        /* storage full / private mode — autosave is best-effort */
+      }
+    }, 800);
+    return () => clearTimeout(timer);
+  }, [draftSnapshot]);
+
+  const clearDraft = useCallback(() => {
+    try {
+      window.localStorage.removeItem(ORDER_DRAFT_KEY);
+    } catch {
+      /* ignore */
+    }
+  }, []);
 
   // Clear a single field's error the moment the user edits it — keeps the
   // form feeling responsive instead of waiting for the next submit.
@@ -458,6 +594,7 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
       themeKey: themeKey || undefined,
       layoutKey: layoutKey || undefined,
       desiredSlug: desiredSlug.trim() ? desiredSlug.trim() : undefined,
+      eventSlug: event && joinDirectory ? event.slug : undefined,
     };
 
     const parsed = OrderPayloadSchema.safeParse(payload);
@@ -527,10 +664,12 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
       // Edit — the "your card is live, here's how to share it" moment. Falls
       // back to the editor if the API didn't return a card URL.
       if (json.cardUrl && json.editToken) {
+        clearDraft();
         window.location.href = `${json.cardUrl}?owner=${encodeURIComponent(json.editToken)}`;
         return;
       }
       if (json.editUrl) {
+        clearDraft();
         window.location.href = json.editUrl;
         return;
       }
@@ -669,6 +808,54 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
               )}
             </span>
           </p>
+
+          {/* Fair flow — invite-link banner + directory opt-in */}
+          {event && (
+            <div className="mt-4 max-w-xl rounded-xl border border-copper/35 bg-copper/10 px-4 py-3">
+              <p className="text-sm font-semibold text-ink">
+                🎪 {event.name}
+                <span className="font-normal text-ink/60">
+                  {" "}
+                  · {event.city}
+                  {event.venue ? ` · ${event.venue}` : ""}
+                </span>
+              </p>
+              <label className="mt-2 flex cursor-pointer items-start gap-2 text-sm text-ink/75">
+                <input
+                  type="checkbox"
+                  checked={joinDirectory}
+                  onChange={(e) => setJoinDirectory(e.target.checked)}
+                  className="mt-0.5 h-4 w-4 shrink-0 accent-copper"
+                />
+                <span>{L(
+                  "eventJoinLabel",
+                  "List my card in the participant directory so other attendees can find me."
+                )}</span>
+              </label>
+            </div>
+          )}
+
+          {/* Draft autosave — restored-session notice */}
+          {draftRestored && (
+            <p className="mt-4 flex max-w-xl items-center justify-between gap-3 rounded-xl border border-neutral-300 bg-white px-4 py-2.5 text-sm text-ink/75">
+              <span>
+                {L(
+                  "draftRestored",
+                  "Your previous draft was restored — continue where you left off."
+                )}
+              </span>
+              <button
+                type="button"
+                onClick={() => {
+                  clearDraft();
+                  window.location.reload();
+                }}
+                className="shrink-0 rounded-full border border-neutral-300 px-3 py-1 text-xs font-medium text-ink/70 hover:border-neutral-400"
+              >
+                {L("draftDiscard", "Start over")}
+              </button>
+            </p>
+          )}
         </div>
 
         <form
@@ -847,6 +1034,7 @@ export function OrderFormSection({ selectedTemplateId }: Props) {
               >
                 <StepBilling
                   L={L}
+                  paymentsEnabled={paymentsEnabled}
                   selectedTemplate={selectedTemplate}
                   billingMode={billingMode}
                   setBillingMode={setBillingMode}
@@ -2082,6 +2270,7 @@ function StepBranding({
 
 function StepBilling({
   L,
+  paymentsEnabled,
   selectedTemplate,
   billingMode,
   setBillingMode,
@@ -2093,6 +2282,7 @@ function StepBilling({
   contactName,
 }: {
   L: (k: string, f: string) => string;
+  paymentsEnabled: boolean;
   selectedTemplate: import("@/config/card-templates").CardTemplateDef;
   billingMode: keyof typeof BillingMode;
   setBillingMode: (m: keyof typeof BillingMode) => void;
@@ -2120,57 +2310,61 @@ function StepBilling({
         />
       </SubFieldset>
 
-      <SubFieldset label={L("billingSection", "Zahlungsmodell")}>
-        <div className="grid gap-3 md:grid-cols-3">
-          {/* FREE tier — always shown first, instant publish, no payment */}
-          <BillingTile
-            active={billingMode === "FREE"}
-            onClick={() => setBillingMode("FREE")}
-            label={L("billingFree", "Kostenlos")}
-            badge={L("billingFreeNew", "Neu")}
-            priceLabel={L("billingFreePrice", "€0 — sofort live")}
-            footer={L(
-              "billingFreeFooter",
-              "Kein Kreditkarte. Direkt starten."
-            )}
-          />
-          {selectedTemplate.monthlyCents ? (
+      {/* all_free mode: the only tier is FREE — skip the picker entirely so
+          the step reads as a confirmation, not a (single-choice) decision. */}
+      {paymentsEnabled && (
+        <SubFieldset label={L("billingSection", "Zahlungsmodell")}>
+          <div className="grid gap-3 md:grid-cols-3">
+            {/* FREE tier — always shown first, instant publish, no payment */}
             <BillingTile
-              active={billingMode === "MONTHLY"}
-              onClick={() => setBillingMode("MONTHLY")}
-              label={L("billingMonthly", "Monatlich")}
-              priceLabel={`${formatEuro(selectedTemplate.monthlyCents)}/Mon.`}
+              active={billingMode === "FREE"}
+              onClick={() => setBillingMode("FREE")}
+              label={L("billingFree", "Kostenlos")}
+              badge={L("billingFreeNew", "Neu")}
+              priceLabel={L("billingFreePrice", "€0 — sofort live")}
               footer={L(
-                "monthlyFooter",
-                "Niedrige Einstiegshürde. Jederzeit kündbar."
+                "billingFreeFooter",
+                "Kein Kreditkarte. Direkt starten."
               )}
             />
-          ) : null}
-          {selectedTemplate.yearlyCents ? (
+            {selectedTemplate.monthlyCents ? (
+              <BillingTile
+                active={billingMode === "MONTHLY"}
+                onClick={() => setBillingMode("MONTHLY")}
+                label={L("billingMonthly", "Monatlich")}
+                priceLabel={`${formatEuro(selectedTemplate.monthlyCents)}/Mon.`}
+                footer={L(
+                  "monthlyFooter",
+                  "Niedrige Einstiegshürde. Jederzeit kündbar."
+                )}
+              />
+            ) : null}
+            {selectedTemplate.yearlyCents ? (
+              <BillingTile
+                active={billingMode === "YEARLY"}
+                onClick={() => setBillingMode("YEARLY")}
+                label={L("billingYearly", "Jährlich")}
+                badge={L("billingBestValue", "Beste Wahl")}
+                priceLabel={`${formatEuro(selectedTemplate.yearlyCents)}/Jahr`}
+                footer={L(
+                  "yearlyFooter",
+                  "~35 % Ersparnis vs. monatlich. Revisionen inkl."
+                )}
+              />
+            ) : null}
             <BillingTile
-              active={billingMode === "YEARLY"}
-              onClick={() => setBillingMode("YEARLY")}
-              label={L("billingYearly", "Jährlich")}
-              badge={L("billingBestValue", "Beste Wahl")}
-              priceLabel={`${formatEuro(selectedTemplate.yearlyCents)}/Jahr`}
+              active={billingMode === "ONE_TIME"}
+              onClick={() => setBillingMode("ONE_TIME")}
+              label={L("billingOneTime", "Einmalzahlung")}
+              priceLabel={formatEuro(selectedTemplate.oneTimeCents)}
               footer={L(
-                "yearlyFooter",
-                "~35 % Ersparnis vs. monatlich. Revisionen inkl."
+                "oneTimeFooter",
+                "Lebenslang gehostet. Keine Verlängerung."
               )}
             />
-          ) : null}
-          <BillingTile
-            active={billingMode === "ONE_TIME"}
-            onClick={() => setBillingMode("ONE_TIME")}
-            label={L("billingOneTime", "Einmalzahlung")}
-            priceLabel={formatEuro(selectedTemplate.oneTimeCents)}
-            footer={L(
-              "oneTimeFooter",
-              "Lebenslang gehostet. Keine Verlängerung."
-            )}
-          />
-        </div>
-      </SubFieldset>
+          </div>
+        </SubFieldset>
+      )}
 
       {errorMsg && (
         <div className="flex items-start gap-3 rounded-2xl border border-brand/30 bg-brand/5 p-4 text-sm text-brand">
