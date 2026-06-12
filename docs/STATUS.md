@@ -71,6 +71,28 @@ vurgulayan rakip yok — "GDPR-native, Almanya hosting, DE/EN/TR" konumu güçl�
   rehber linki e-postada da var, tıklanabilir).
 - ✅ Build + audit:cards yeşil.
 
+### Aynı oturum, 3. tur — Paylaşım görselleri + onboarding (gerçek render testli)
+
+**Tamamlanan**
+- ✅ **9:16 kart görseli** `/c/[slug]/story.png` (1080×1920): foto/baş harf + isim +
+  unvan + şirket + web sitesi + QR (data-URL gömülü, self-contained) + kart URL'i.
+  Lokal Postgres + dev server ile gerçek render testi yapıldı (fotoğraflı ve
+  fotoğrafsız) — iki durumda da temiz çıktı.
+- ✅ **WhatsApp paylaşımı artık görsel-öncelikli**: ShareDrawer'daki WhatsApp butonu
+  story.png'yi indirip Web Share API ile DOSYA olarak paylaşır (linkle birlikte) —
+  alıcı düz link değil, tam ekran kartvizit görür. Dosya paylaşımı desteklenmeyen
+  ortamda (masaüstü) otomatik `wa.me` fallback. Kullanıcı paylaşımı iptal ederse
+  (AbortError) fallback tetiklenmez.
+- ✅ ShareDrawer'a "Kart görseli (9:16) indir" satırı — WhatsApp durumu / Instagram
+  story kullanımı için.
+- ✅ **Sahip karşılama turu** (`OwnerWelcome`): kart yayına girince ilk ziyarette
+  3 adım — "Paylaş", "E-postandaki özel linkleri sakla", "İstatistiklerini izle" +
+  yönetim sayfası CTA'sı. Kart başına bir kez (localStorage), kapatılabilir.
+- ✅ Link önizleme (og:image) zinciri değişmedi: wa.png 4:5 → og.png 1200×630 →
+  şablon thumb; cache-busting `?v=updatedAt` zaten vardı.
+- ✅ Build + audit:cards yeşil. Uçtan uca test: FREE sipariş API ile kart oluşturuldu,
+  owner görünümü + karşılama + üç paylaşım görseli doğrulandı.
+
 **Operatör notu — fuar hazırlığı**
 1. Etkinliği oluştur: `scripts/seed-events.ts` örneğindeki gibi bir `Event` satırı
    (slug örn. `fuar-2026`). Admin UI yok — script/SQL ile.

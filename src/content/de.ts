@@ -5539,6 +5539,9 @@ export const content: Content = {
       copyLink: "Link kopieren",
       copied: "Kopiert!",
       whatsapp: "Über WhatsApp teilen",
+      whatsappHint: "Sendet ein großes Kartenbild zusammen mit Ihrem Link",
+      storyDownload: "Kartenbild (9:16)",
+      storyHint: "Für WhatsApp-Status & Instagram-Stories",
       vcardVisitor: "Kontakt speichern",
       vcardOwner: "Meine vCard (.vcf)",
       vcardOwnerHint: "Weiterleiten — andere speichern dich in ihren Kontakten",
@@ -5629,6 +5632,20 @@ export const content: Content = {
     },
     mobileAppSoon:
       "Mobile App kommt bald — Karte unterwegs erstellen und verwalten. Heute funktioniert alles im Browser.",
+    ownerWelcome: {
+      title: "Ihre Karte ist live!",
+      step1Title: "Teilen",
+      step1Body:
+        "Nutzen Sie den Teilen-Button — er verschickt Ihren öffentlichen Link, den QR-Code oder ein großes Kartenbild per WhatsApp.",
+      step2Title: "E-Mail prüfen",
+      step2Body:
+        "Dort liegen Ihre privaten Bearbeitungs- und Verwaltungslinks. Nicht weitergeben — sie kontrollieren Ihre Karte.",
+      step3Title: "Wirkung verfolgen",
+      step3Body:
+        "Aufrufe, eingehende Kontakte und Kanal-Kurzlinks finden Sie auf Ihrer Verwaltungsseite.",
+      manageCta: "Statistiken & Links",
+      dismiss: "Verstanden",
+    },
     languageSwitcher: "Sprache",
   },
 

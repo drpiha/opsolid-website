@@ -5569,6 +5569,9 @@ export const content = {
       copyLink: "Copy link",
       copied: "Copied!",
       whatsapp: "Share on WhatsApp",
+      whatsappHint: "Sends a large card image together with your link",
+      storyDownload: "Card image (9:16)",
+      storyHint: "For WhatsApp status & Instagram stories",
       vcardVisitor: "Save contact",
       vcardOwner: "My vCard (.vcf)",
       vcardOwnerHint: "Forward — saves you to their contacts",
@@ -5655,6 +5658,20 @@ export const content = {
     },
     mobileAppSoon:
       "Mobile app coming soon — create and manage your card on the go. Everything works in the browser today.",
+    ownerWelcome: {
+      title: "Your card is live!",
+      step1Title: "Share it",
+      step1Body:
+        "Use the Share button — it sends your public link, QR, or a big card image on WhatsApp.",
+      step2Title: "Check your email",
+      step2Body:
+        "Your private edit and management links are there. Keep them to yourself — they control your card.",
+      step3Title: "Watch it work",
+      step3Body:
+        "Views, contacts you receive, and per-channel share links live on your management page.",
+      manageCta: "Stats & links",
+      dismiss: "Got it",
+    },
     languageSwitcher: "Language",
   },
 

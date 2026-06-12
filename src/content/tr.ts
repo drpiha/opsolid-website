@@ -5540,6 +5540,9 @@ export const content: Content = {
       copyLink: "Linki kopyala",
       copied: "Kopyalandı!",
       whatsapp: "WhatsApp'ta paylaş",
+      whatsappHint: "Linkinle birlikte büyük bir kart görseli gönderir",
+      storyDownload: "Kart görseli (9:16)",
+      storyHint: "WhatsApp durumu ve Instagram story için",
       vcardVisitor: "Kişiyi kaydet",
       vcardOwner: "vCard'ım (.vcf)",
       vcardOwnerHint: "İlet — karşı taraf seni rehberine kaydeder",
@@ -5627,6 +5630,20 @@ export const content: Content = {
     },
     mobileAppSoon:
       "Mobil uygulama yakında — kartını yolda da oluştur ve yönet. Bugün her şey tarayıcıda çalışıyor.",
+    ownerWelcome: {
+      title: "Kartın yayında!",
+      step1Title: "Paylaş",
+      step1Body:
+        "Paylaş butonunu kullan — halka açık linkini, QR'ını veya WhatsApp'ta büyük kart görselini gönderir.",
+      step2Title: "E-postanı kontrol et",
+      step2Body:
+        "Özel düzenleme ve yönetim linklerin orada. Kimseyle paylaşma — kartının kontrolü onlarda.",
+      step3Title: "Etkisini izle",
+      step3Body:
+        "Görüntülenmeler, gelen kişiler ve kanal bazlı kısa linkler yönetim sayfanda.",
+      manageCta: "İstatistik ve linkler",
+      dismiss: "Anladım",
+    },
     languageSwitcher: "Dil",
   },
 
