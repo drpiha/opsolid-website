@@ -24,6 +24,7 @@ import { CardDataSchema } from "@/lib/validation";
 import { renderQr } from "@/lib/qr/styled-server";
 import { absoluteAssetUrl } from "@/lib/storage";
 import { getSiteUrl } from "@/lib/stripe";
+import { publicCardUrlFor } from "@/lib/card-host";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -73,11 +74,11 @@ export async function GET(
   const accent = order.brandAccentHex ?? FALLBACK_ACCENT;
 
   const siteUrl = getSiteUrl();
-  // Canonical share URL points at the prettier `card.opsolid.de` host.
-  // We still honour an explicit override via NEXT_PUBLIC_CARD_HOST so a
-  // custom domain ("card.kunde.de") can supply its own canonical.
-  const cardHost = process.env.NEXT_PUBLIC_CARD_HOST?.trim() || "card.opsolid.de";
-  const publicUrl = `https://${cardHost}/${params.slug}`;
+  // Share URL: canonical opsolid.de/c/<slug> unless a VERIFIED card host is
+  // configured via NEXT_PUBLIC_CARD_HOST (see src/lib/card-host.ts — the old
+  // bare `card.opsolid.de` fallback 404'd because that host serves the
+  // separate Verso app, which broke every QR rendered into this image).
+  const publicUrl = publicCardUrlFor(params.slug);
   // Internal QR target — used as the data payload for the QR code itself.
   const qrTarget = publicUrl;
 

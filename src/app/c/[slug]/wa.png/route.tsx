@@ -16,6 +16,7 @@ import { prisma } from "@/lib/prisma";
 import { CardDataSchema } from "@/lib/validation";
 import { absoluteAssetUrl } from "@/lib/storage";
 import { getSiteUrl } from "@/lib/stripe";
+import { publicCardUrlFor } from "@/lib/card-host";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -55,9 +56,10 @@ export async function GET(
     ? absoluteAssetUrl(order.photoPath, siteUrl)
     : null;
 
-  const cardHost =
-    process.env.NEXT_PUBLIC_CARD_HOST?.trim() || "card.opsolid.de";
-  const displayHost = cardHost.replace(/^https?:\/\//, "");
+  // Footer shows the host of the card's REAL public URL (canonical
+  // opsolid.de unless a verified NEXT_PUBLIC_CARD_HOST is configured) so the
+  // preview never advertises an address that doesn't resolve.
+  const displayHost = new URL(publicCardUrlFor(params.slug)).host;
 
   return new ImageResponse(
     (
