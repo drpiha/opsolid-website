@@ -185,7 +185,9 @@ function EventCard({
   siteUrl: string;
   onToggle: () => void;
 }) {
-  const inviteUrl = `${siteUrl}/tr/products/digital-card?event=${ev.slug}`;
+  // Quick-create is the invite landing page — five fields, instant publish.
+  // The detailed order form stays reachable from a link on that page.
+  const inviteUrl = `${siteUrl}/tr/card/new?event=${ev.slug}`;
   const directoryUrl = `${siteUrl}/tr/events/${ev.slug}`;
   const dates = `${ev.startAt.slice(0, 10)} → ${ev.endAt.slice(0, 10)}`;
 

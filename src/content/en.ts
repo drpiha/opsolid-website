@@ -5655,9 +5655,34 @@ export const content = {
         "Cards whose owners chose to be listed publicly. Tap one to view and save the contact.",
       emptyState:
         "No participants listed yet — be the first: create your card and join the directory.",
+      searchPlaceholder: "Search by name, company or role…",
+      noResults: "No participants match your search.",
     },
     mobileAppSoon:
       "Mobile app coming soon — create and manage your card on the go. Everything works in the browser today.",
+    quickCreate: {
+      title: "Your card in 60 seconds",
+      subtitle:
+        "Five fields, one button — your digital business card goes live instantly. Free, no account needed.",
+      nameLabel: "Full name",
+      titleLabel: "Job title",
+      companyLabel: "Company",
+      phoneLabel: "Phone",
+      emailLabel: "Email",
+      emailHint:
+        "Your private edit and management links are sent here — double-check it.",
+      photoLabel: "Add a photo (optional)",
+      photoChange: "Change photo",
+      photoHint: "JPG, PNG or WebP",
+      photoError: "Photo upload failed — you can add it later in the editor.",
+      submit: "Create my card — free",
+      submitting: "Creating…",
+      errorRequired: "Name, phone and email are required.",
+      errorGeneric: "Something went wrong. Please try again.",
+      designHint:
+        "A clean default design is applied — you can change the design and add more details anytime.",
+      fullFormLink: "Want every option? Use the detailed form",
+    },
     ownerWelcome: {
       title: "Your card is live!",
       step1Title: "Share it",

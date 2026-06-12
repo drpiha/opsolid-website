@@ -9,7 +9,7 @@
 // =============================================================================
 
 import * as React from "react";
-import { CalendarDays, MapPin, UserPlus } from "lucide-react";
+import { CalendarDays, MapPin, Search, UserPlus } from "lucide-react";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { useLocale } from "@/context/LocaleContext";
 
@@ -51,6 +51,20 @@ function resolveAsset(path: string): string {
 export function EventDirectoryPage({ event, attendees }: Props) {
   const { t, locale } = useLocale();
   const d = t.card.eventDirectory;
+
+  // Client-side participant search — name, title or company, accent-relaxed
+  // via locale-aware lowercasing. Only shown once the list is long enough
+  // for scanning to hurt.
+  const [query, setQuery] = React.useState("");
+  const normalized = query.trim().toLocaleLowerCase(locale);
+  const filtered = normalized
+    ? attendees.filter((a) =>
+        [a.name, a.title ?? "", a.company ?? ""]
+          .join(" ")
+          .toLocaleLowerCase(locale)
+          .includes(normalized),
+      )
+    : attendees;
 
   const start = new Date(event.startAt);
   const end = new Date(event.endAt);
@@ -96,7 +110,7 @@ export function EventDirectoryPage({ event, attendees }: Props) {
             <p className="mt-1 text-sm text-ink-200">{d.ctaBody}</p>
           </div>
           <Link
-            href={`/products/digital-card?event=${encodeURIComponent(event.slug)}`}
+            href={`/card/new?event=${encodeURIComponent(event.slug)}`}
             className="inline-flex shrink-0 items-center gap-2 rounded-full bg-copper px-6 py-3 text-sm font-semibold text-ink transition-transform hover:scale-[1.02] active:scale-[0.98]"
           >
             <UserPlus size={15} />
@@ -118,13 +132,33 @@ export function EventDirectoryPage({ event, attendees }: Props) {
         </h2>
         <p className="mt-1 text-sm text-ink-300">{d.participantsHint}</p>
 
+        {attendees.length > 5 && (
+          <div className="relative mt-5">
+            <Search
+              size={15}
+              className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-ink-400"
+            />
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={d.searchPlaceholder}
+              className="w-full rounded-full border border-line bg-bg-1 py-2.5 pl-10 pr-4 text-sm text-ink placeholder:text-ink-400 focus:border-copper focus:outline-none"
+            />
+          </div>
+        )}
+
         {attendees.length === 0 ? (
           <p className="mt-6 rounded-2xl border border-dashed border-line p-6 text-sm text-ink-300">
             {d.emptyState}
           </p>
+        ) : filtered.length === 0 ? (
+          <p className="mt-6 rounded-2xl border border-dashed border-line p-6 text-sm text-ink-300">
+            {d.noResults}
+          </p>
         ) : (
           <div className="mt-6 grid gap-3 sm:grid-cols-2">
-            {attendees.map((a) => (
+            {filtered.map((a) => (
               <a
                 key={a.slug}
                 href={`/c/${a.slug}`}

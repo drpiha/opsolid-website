@@ -5627,9 +5627,35 @@ export const content: Content = {
         "Sahipleri herkese açık listelenmeyi seçen kartlar. Birine dokunarak kişiyi görüntüle ve rehberine kaydet.",
       emptyState:
         "Henüz listelenen katılımcı yok — ilk sen ol: kartını oluştur ve rehbere katıl.",
+      searchPlaceholder: "İsim, şirket veya unvana göre ara…",
+      noResults: "Aramanla eşleşen katılımcı yok.",
     },
     mobileAppSoon:
       "Mobil uygulama yakında — kartını yolda da oluştur ve yönet. Bugün her şey tarayıcıda çalışıyor.",
+    quickCreate: {
+      title: "60 saniyede kartın hazır",
+      subtitle:
+        "Beş alan, tek buton — dijital kartvizitin anında yayında. Ücretsiz, hesap gerekmez.",
+      nameLabel: "Ad soyad",
+      titleLabel: "Unvan",
+      companyLabel: "Şirket",
+      phoneLabel: "Telefon",
+      emailLabel: "E-posta",
+      emailHint:
+        "Özel düzenleme ve yönetim linklerin bu adrese gider — kontrol etmeyi unutma.",
+      photoLabel: "Fotoğraf ekle (isteğe bağlı)",
+      photoChange: "Fotoğrafı değiştir",
+      photoHint: "JPG, PNG veya WebP",
+      photoError:
+        "Fotoğraf yüklenemedi — daha sonra düzenleyiciden ekleyebilirsin.",
+      submit: "Kartımı oluştur — ücretsiz",
+      submitting: "Oluşturuluyor…",
+      errorRequired: "Ad, telefon ve e-posta zorunlu.",
+      errorGeneric: "Bir şeyler ters gitti. Lütfen tekrar dene.",
+      designHint:
+        "Temiz bir varsayılan tasarım uygulanır — tasarımı ve detayları istediğin zaman değiştirebilirsin.",
+      fullFormLink: "Tüm seçenekler için detaylı formu kullan",
+    },
     ownerWelcome: {
       title: "Kartın yayında!",
       step1Title: "Paylaş",

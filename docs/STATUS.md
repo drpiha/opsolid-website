@@ -105,11 +105,25 @@ vurgulayan rakip yok — "GDPR-native, Almanya hosting, DE/EN/TR" konumu güçl�
 - Operatör artık script/SQL'e mecbur değil; `docs/STATUS.md` 2. turdaki
   "operatör notu" adım 1 bu sayfayla değişti.
 
-**Operatör notu — fuar hazırlığı**
-1. Etkinliği oluştur: `scripts/seed-events.ts` örneğindeki gibi bir `Event` satırı
-   (slug örn. `fuar-2026`). Admin UI yok — script/SQL ile.
-2. Davet linki: `https://opsolid.de/tr/products/digital-card?event=fuar-2026`
-3. Rehber linki: `https://opsolid.de/tr/events/fuar-2026`
+### Aynı oturum, 5. tur — 60 saniyelik hızlı oluşturma + rehber araması
+
+- ✅ **`/:locale/card/new` hızlı oluşturma sayfası**: 5 alan (ad*, unvan, şirket,
+  telefon*, e-posta*) + isteğe bağlı fotoğraf (downscale + /api/uploads) → tek
+  butonla anında yayın. Temiz varsayılan şablon (id 4); tasarım sonradan
+  editörden değiştirilir. `?event=` banner + rehber opt-in'i destekler; detaylı
+  forma link verir. Fuar davet linkinin yeni hedefi bu sayfa.
+- ✅ Rehber sayfasına **arama** (isim/şirket/unvan, 5+ katılımcıda görünür,
+  locale-aware lowercase) + "sonuç yok" durumu.
+- ✅ Admin events davet linki ve rehber CTA'sı artık `/card/new`'e işaret ediyor.
+- ✅ "Claim" akışı kontrol edildi — **zaten mevcutmuş** (`/api/account/cards/[id]/claim`
+  + dashboard claimable banner'ı); önceki "eksikler" listemdeki bu madde geçersiz.
+- ✅ Uçtan uca test (lokal Postgres): minimal POST → kart yayında → rehberde
+  listelendi. Build + audit yeşil.
+
+**Operatör notu — fuar hazırlığı (güncel)**
+1. Etkinliği oluştur: `opsolid.de/admin/events?token=ADMIN_TOKEN` → form → slug otomatik.
+2. Davet linki (sayfadan kopyala): `https://opsolid.de/tr/card/new?event=<slug>`
+3. Rehber linki: `https://opsolid.de/tr/events/<slug>`
 
 ---
 

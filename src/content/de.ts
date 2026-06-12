@@ -5629,9 +5629,35 @@ export const content: Content = {
         "Karten, deren Inhaber sich öffentlich listen lassen. Antippen, um den Kontakt anzusehen und zu speichern.",
       emptyState:
         "Noch keine Teilnehmer gelistet — seien Sie der Erste: Karte erstellen und ins Verzeichnis eintragen.",
+      searchPlaceholder: "Nach Name, Firma oder Rolle suchen …",
+      noResults: "Keine Teilnehmer passen zu Ihrer Suche.",
     },
     mobileAppSoon:
       "Mobile App kommt bald — Karte unterwegs erstellen und verwalten. Heute funktioniert alles im Browser.",
+    quickCreate: {
+      title: "Ihre Karte in 60 Sekunden",
+      subtitle:
+        "Fünf Felder, ein Button — Ihre digitale Visitenkarte ist sofort live. Kostenlos, ohne Konto.",
+      nameLabel: "Vollständiger Name",
+      titleLabel: "Position",
+      companyLabel: "Unternehmen",
+      phoneLabel: "Telefon",
+      emailLabel: "E-Mail",
+      emailHint:
+        "Ihre privaten Bearbeitungs- und Verwaltungslinks gehen an diese Adresse — bitte prüfen.",
+      photoLabel: "Foto hinzufügen (optional)",
+      photoChange: "Foto ändern",
+      photoHint: "JPG, PNG oder WebP",
+      photoError:
+        "Foto-Upload fehlgeschlagen — Sie können es später im Editor hinzufügen.",
+      submit: "Karte erstellen — kostenlos",
+      submitting: "Wird erstellt …",
+      errorRequired: "Name, Telefon und E-Mail sind erforderlich.",
+      errorGeneric: "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
+      designHint:
+        "Ein cleanes Standard-Design wird angewendet — Design und Details können Sie jederzeit ändern.",
+      fullFormLink: "Alle Optionen? Zum ausführlichen Formular",
+    },
     ownerWelcome: {
       title: "Ihre Karte ist live!",
       step1Title: "Teilen",
