@@ -17,6 +17,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveLocation, resolveTagline } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#000000";
@@ -165,6 +166,9 @@ export function LayoutPureSwiss({
   const nameParts = cardData.name.trim().split(/\s+/);
   const firstName = nameParts[0] ?? cardData.name;
   const surname = nameParts.slice(1).join(" ");
+  const tagline = resolveTagline(cardData);
+  const locationLabel = resolveLocation(cardData);
+  const heroMeta = [tagline, locationLabel].filter(Boolean).join(" · ");
 
   return (
     <article
@@ -208,18 +212,19 @@ export function LayoutPureSwiss({
               </span>
             )}
           </h1>
-          <div
-            className="uppercase"
-            style={{
-              fontSize: 11,
-              fontWeight: 500,
-              letterSpacing: "2px",
-              color: accent,
-            }}
-          >
-            {cardData.position || cardData.title || "Consultant"}
-            {cardData.address ? ` · ${cardData.address.split(",").slice(-1)[0].trim()}` : ""}
-          </div>
+          {heroMeta && (
+            <div
+              className="uppercase"
+              style={{
+                fontSize: 11,
+                fontWeight: 500,
+                letterSpacing: "2px",
+                color: accent,
+              }}
+            >
+              {heroMeta}
+            </div>
+          )}
         </div>
         {photoUrl && (
           <div
@@ -296,7 +301,7 @@ export function LayoutPureSwiss({
             {t.metaLocationLabel}
           </span>
           <span style={{ fontSize: 13, fontWeight: 500, lineHeight: 1.3 }}>
-            {cardData.address?.split(",").slice(-1)[0].trim() || "—"}
+            {locationLabel || "—"}
           </span>
         </div>
       </section>

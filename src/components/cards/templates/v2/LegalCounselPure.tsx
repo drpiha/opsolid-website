@@ -10,13 +10,11 @@
 // Design DNA:
 //   - Header: portrait card-photo (92×110) on left + eyebrow + huge sans
 //     name + italic Lora title on right.
-//   - Hairline divider above and below a 3-cell meta-row (admit year, bar,
-//     languages).
+//   - Hairline divider above and below a location meta-row.
 //   - About section: italic Lora paragraph, no quote glyph.
-//   - Slogan strip: hairline-bordered italic line.
+//   - Slogan strip: hairline-bordered italic line (owner bio lead).
 //   - Spec list: hairline rows with short colored leading rule.
-//   - Stats grid 2×2 with hairline borders.
-//   - Education / Membership 2-column block (signature noir-pure detail).
+//   - Stats row: owner-entered stats (resolveStats) with hairline borders.
 //   - Reference block.
 //   - Contact table: hairline rows with right-aligned values.
 //   - Footer row with QR placeholder + vCard ghost button.
@@ -32,6 +30,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveLocation, resolveStats, resolveTagline } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#ffffff";
@@ -72,19 +71,9 @@ interface Copy {
   reference: string;
   contact: string;
   contactH: string;
-  education: string;
-  educationLabel: string;
-  membershipLabel: string;
   callBtn: string;
   whatsappBtn: string;
   emailBtn: string;
-  metaActive: string;
-  metaBar: string;
-  metaLanguages: string;
-  yearsLabel: string;
-  casesLabel: string;
-  winRateLabel: string;
-  langsLabel: string;
   saveContact: string;
   walletLabel: string;
   poweredBy: string;
@@ -98,19 +87,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     reference: "Referenz",
     contact: "Kontakt",
     contactH: "Kontakt aufnehmen",
-    education: "Ausbildung & Zulassung",
-    educationLabel: "Ausbildung",
-    membershipLabel: "Zulassung",
     callBtn: "Anrufen",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-Mail",
-    metaActive: "Aktiv",
-    metaBar: "Kammer",
-    metaLanguages: "Sprachen",
-    yearsLabel: "Jahre Erfahrung",
-    casesLabel: "Mandate",
-    winRateLabel: "Erfolgsquote",
-    langsLabel: "Sprachen",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
@@ -122,19 +101,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     reference: "Reference",
     contact: "Contact",
     contactH: "Reach out",
-    education: "Education & Bar",
-    educationLabel: "Education",
-    membershipLabel: "Bar admission",
     callBtn: "Call",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
-    metaActive: "Active",
-    metaBar: "Bar",
-    metaLanguages: "Languages",
-    yearsLabel: "Years",
-    casesLabel: "Mandates",
-    winRateLabel: "Win rate",
-    langsLabel: "Languages",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
@@ -146,19 +115,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     reference: "Referans",
     contact: "İletişim",
     contactH: "Bize Ulaşın",
-    education: "Eğitim & Üyelik",
-    educationLabel: "Eğitim",
-    membershipLabel: "Üyelik",
     callBtn: "Ara",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-posta",
-    metaActive: "Aktif",
-    metaBar: "Baro",
-    metaLanguages: "Dil",
-    yearsLabel: "Yıl Tecrübe",
-    casesLabel: "Tamamlanan Dava",
-    winRateLabel: "Başarı Oranı",
-    langsLabel: "Dil",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
@@ -171,23 +130,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     reference: "Referencia",
     contact: "Contacto",
     contactH: "Contacta",
-    education: "Formación y colegio",
-    educationLabel: "Formación",
-    membershipLabel: "Colegiación",
     callBtn: "Llamar",
     whatsappBtn: "WhatsApp",
     emailBtn: "Correo",
-    metaActive: "Activo",
-    metaBar: "Colegio",
-    metaLanguages: "Idiomas",
-    yearsLabel: "Años",
-    casesLabel: "Mandatos",
-    winRateLabel: "Tasa de éxito",
-    langsLabel: "Idiomas",
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
-  
+
   },
   it: {
 
@@ -197,23 +146,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     reference: "Referenza",
     contact: "Contatto",
     contactH: "Contattaci",
-    education: "Formazione e Albo",
-    educationLabel: "Formazione",
-    membershipLabel: "Iscrizione all'Albo",
     callBtn: "Chiama",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
-    metaActive: "Attivo",
-    metaBar: "Albo",
-    metaLanguages: "Lingue",
-    yearsLabel: "Anni",
-    casesLabel: "Mandati",
-    winRateLabel: "Tasso di successo",
-    langsLabel: "Lingue",
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
-  
+
   },
   fr: {
 
@@ -223,23 +162,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     reference: "Référence",
     contact: "Contact",
     contactH: "Nous contacter",
-    education: "Formation et Barreau",
-    educationLabel: "Formation",
-    membershipLabel: "Inscription au Barreau",
     callBtn: "Appeler",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-mail",
-    metaActive: "Actif",
-    metaBar: "Barreau",
-    metaLanguages: "Langues",
-    yearsLabel: "Années",
-    casesLabel: "Mandats",
-    winRateLabel: "Taux de réussite",
-    langsLabel: "Langues",
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
-  
+
   },
   ar: {
 
@@ -249,23 +178,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     reference: "مرجع",
     contact: "اتصال",
     contactH: "تواصل",
-    education: "التعليم والمحاماة",
-    educationLabel: "التعليم",
-    membershipLabel: "قيد بنقابة المحامين",
     callBtn: "اتصال",
     whatsappBtn: "واتساب",
     emailBtn: "البريد الإلكتروني",
-    metaActive: "نشط",
-    metaBar: "نقابة المحامين",
-    metaLanguages: "اللغات",
-    yearsLabel: "سنوات",
-    casesLabel: "تكليفات",
-    winRateLabel: "معدل النجاح",
-    langsLabel: "اللغات",
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
-  
+
   },
 };
 
@@ -296,7 +215,10 @@ export function LegalCounselPure({
   const nameFirst = nameParts.slice(0, -1).join(" ") || cardData.name;
   const nameLast = nameParts.length > 1 ? nameParts[nameParts.length - 1] : "";
 
-  const city = cardData.address?.split(",").slice(-2)[0]?.trim() || "Berlin";
+  const city = resolveLocation(cardData);
+  const stats = resolveStats(cardData.stats);
+  const tagline = resolveTagline(cardData);
+  const bioLead = cardData.bio?.split(/[.!?]/)[0]?.trim() || null;
 
   return (
     <article
@@ -348,12 +270,14 @@ export function LegalCounselPure({
           </div>
         )}
         <div className="min-w-0 flex-1">
-          <div
-            className="mb-2.5 text-[10px] font-medium uppercase"
-            style={{ color: ACCENT_2, letterSpacing: "2.5px" }}
-          >
-            {cardData.company || "Bar Admitted"}
-          </div>
+          {cardData.company && (
+            <div
+              className="mb-2.5 text-[10px] font-medium uppercase"
+              style={{ color: ACCENT_2, letterSpacing: "2.5px" }}
+            >
+              {cardData.company}
+            </div>
+          )}
           <h1
             className="mb-3.5 text-[42px] font-medium leading-[0.95]"
             style={{ color: accent, letterSpacing: "-2px" }}
@@ -366,35 +290,33 @@ export function LegalCounselPure({
               </>
             )}
           </h1>
-          <div
-            className="serif-i text-[13px] leading-[1.5]"
-            style={{ color: INK_SOFT }}
-          >
-            {[cardData.position, cardData.title].filter(Boolean).join(" — ") ||
-              "Senior Counsel"}
-          </div>
+          {tagline && (
+            <div
+              className="serif-i text-[13px] leading-[1.5]"
+              style={{ color: INK_SOFT }}
+            >
+              {tagline}
+            </div>
+          )}
         </div>
       </header>
 
       <div aria-hidden className="mx-8 h-px" style={{ background: HAIRLINE }} />
 
-      {/* META ROW */}
-      <div
-        className="flex justify-between px-8 py-4 text-[11px] font-medium"
-        style={{ color: INK_SOFT, letterSpacing: "0.5px" }}
-      >
-        <span>
-          <strong style={{ color: INK, fontWeight: 600 }}>2005</strong> {t.metaActive}
-        </span>
-        <span>
-          <strong style={{ color: INK, fontWeight: 600 }}>{city}</strong> {t.metaBar}
-        </span>
-        <span>
-          <strong style={{ color: INK, fontWeight: 600 }}>DE/EN</strong> {t.metaLanguages}
-        </span>
-      </div>
-
-      <div aria-hidden className="mx-8 h-px" style={{ background: HAIRLINE }} />
+      {/* META ROW — real location only; no invented bar-admission claim. */}
+      {city && (
+        <>
+          <div
+            className="flex justify-between px-8 py-4 text-[11px] font-medium"
+            style={{ color: INK_SOFT, letterSpacing: "0.5px" }}
+          >
+            <span>
+              <strong style={{ color: INK, fontWeight: 600 }}>{city}</strong>
+            </span>
+          </div>
+          <div aria-hidden className="mx-8 h-px" style={{ background: HAIRLINE }} />
+        </>
+      )}
 
       {/* QUICK ACTIONS */}
       <section className="grid grid-cols-3 gap-2 px-8 pt-5">
@@ -433,24 +355,25 @@ export function LegalCounselPure({
         </section>
       )}
 
-      {/* SLOGAN */}
-      <div
-        className="px-8 py-7 text-center"
-        style={{
-          borderTop: `1px solid ${HAIRLINE}`,
-          borderBottom: `1px solid ${HAIRLINE}`,
-        }}
-      >
-        <p
-          className="serif-i text-[16px] leading-[1.5]"
-          style={{ color: accent }}
+      {/* SLOGAN — owner bio lead only; no invented slogan. */}
+      {bioLead && (
+        <div
+          className="px-8 py-7 text-center"
+          style={{
+            borderTop: `1px solid ${HAIRLINE}`,
+            borderBottom: `1px solid ${HAIRLINE}`,
+          }}
         >
-          {"“"}
-          {cardData.bio?.split(/[.!?]/)[0]?.trim() ||
-            "Hukuki Güvenceniz, Başarınızın Temeli"}
-          {"”"}
-        </p>
-      </div>
+          <p
+            className="serif-i text-[16px] leading-[1.5]"
+            style={{ color: accent }}
+          >
+            {"“"}
+            {bioLead}
+            {"”"}
+          </p>
+        </div>
+      )}
 
       {/* SPECIALIZATIONS */}
       {services.length > 0 && (
@@ -504,72 +427,26 @@ export function LegalCounselPure({
         </section>
       )}
 
-      {/* STATS GRID 2x2 */}
-      <div
-        className="mt-8 grid grid-cols-2"
-        style={{ borderTop: `1px solid ${HAIRLINE}` }}
-      >
-        <PureStat num="20" label={t.yearsLabel} accent={accent} divider="r" />
-        <PureStat num="800+" label={t.casesLabel} accent={accent} />
-        <PureStat
-          num="94%"
-          label={t.winRateLabel}
-          accent={accent}
-          divider="rt"
-        />
-        <PureStat num="3" label={`${t.langsLabel} · DE/EN/TR`} accent={accent} divider="t" />
-      </div>
-
-      {/* EDUCATION 2-COL */}
-      <section className="px-8 pt-8">
-        <PureLabel>{t.education}</PureLabel>
-        <div className="mt-3 grid grid-cols-2 gap-5">
-          <div>
-            <h4
-              className="mb-2.5 text-[11px] font-semibold uppercase"
-              style={{ color: INK_SOFT, letterSpacing: "2px" }}
-            >
-              {t.educationLabel}
-            </h4>
-            <ul className="m-0 list-none p-0 text-[12.5px]">
-              <li className="py-1.5 leading-snug" style={{ color: INK, fontWeight: 500 }}>
-                Humboldt-Universität
-                <span className="block text-[10.5px] font-normal" style={{ color: INK_SOFT }}>
-                  Jura, 2003
-                </span>
-              </li>
-              <li className="py-1.5 leading-snug" style={{ color: INK, fontWeight: 500 }}>
-                Heidelberg LL.M.
-                <span className="block text-[10.5px] font-normal" style={{ color: INK_SOFT }}>
-                  Strafrecht, 2005
-                </span>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h4
-              className="mb-2.5 text-[11px] font-semibold uppercase"
-              style={{ color: INK_SOFT, letterSpacing: "2px" }}
-            >
-              {t.membershipLabel}
-            </h4>
-            <ul className="m-0 list-none p-0 text-[12.5px]">
-              <li className="py-1.5 leading-snug" style={{ color: INK, fontWeight: 500 }}>
-                Rechtsanwaltskammer Berlin
-                <span className="block text-[10.5px] font-normal" style={{ color: INK_SOFT }}>
-                  Reg. 38421
-                </span>
-              </li>
-              <li className="py-1.5 leading-snug" style={{ color: INK, fontWeight: 500 }}>
-                DAV
-                <span className="block text-[10.5px] font-normal" style={{ color: INK_SOFT }}>
-                  2008—
-                </span>
-              </li>
-            </ul>
-          </div>
+      {/* STATS — owner-entered numbers only (resolveStats). */}
+      {stats && (
+        <div
+          className="mt-8 grid"
+          style={{
+            borderTop: `1px solid ${HAIRLINE}`,
+            gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
+          }}
+        >
+          {stats.map((s, i) => (
+            <PureStat
+              key={s.label}
+              num={s.value}
+              label={s.label}
+              accent={accent}
+              divider={i < stats.length - 1 ? "r" : undefined}
+            />
+          ))}
         </div>
-      </section>
+      )}
 
       {/* TESTIMONIAL */}
       {testimonial && (
@@ -806,8 +683,8 @@ export const legalCounselPureSample: SampleData = {
       xing: "https://xing.com/profile/Klaus_Bauer",
     },
     services: [
-      { title: "Strafrecht", description: "Beratung und Vertretung im Strafverfahren.", priceLabel: "â‚¬200 Erstberatung" },
-      { title: "Familienrecht", description: "Scheidung, Sorgerecht, Unterhalt.", priceLabel: "ab â‚¬300/h" },
+      { title: "Strafrecht", description: "Beratung und Vertretung im Strafverfahren.", priceLabel: "€200 Erstberatung" },
+      { title: "Familienrecht", description: "Scheidung, Sorgerecht, Unterhalt.", priceLabel: "ab €300/h" },
       { title: "Arbeitsrecht", description: "Kündigung, Aufhebung, Vergütung.", priceLabel: "Erfolgshonorar" },
     ],
     testimonials: [
@@ -816,6 +693,12 @@ export const legalCounselPureSample: SampleData = {
         role: "Mandant",
         quote: "Dr. Bauer hat ruhig, präzise und mit unfehlbarem Gespür für den richtigen Moment verhandelt.",
       },
+    ],
+    stats: [
+      { value: "20", label: "Jahre Erfahrung" },
+      { value: "800+", label: "Mandate" },
+      { value: "94%", label: "Erfolgsquote" },
+      { value: "3", label: "Sprachen" },
     ],
   },
   photoUrl:

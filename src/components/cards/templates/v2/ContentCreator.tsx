@@ -32,8 +32,6 @@ import {
   Phone,
   Shield,
   Sparkles,
-  Star,
-  Users,
 } from "lucide-react";
 
 import { ContactRows } from "./shared/ContactRows";
@@ -42,6 +40,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#f97316";
@@ -89,7 +88,6 @@ function platformHandleFromUrl(url: string | undefined, fallback: string): strin
 
 interface CcCopy {
   live: string;
-  followers: string;
   collab: string;
   callDm: string;
   email: string;
@@ -103,15 +101,12 @@ interface CcCopy {
   share: string;
   poweredBy: string;
   partnerCta: string;
-  totalReach: string;
   niche: string;
-  nicheValue: string;
 }
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcCopy> = {
   de: {
     live: "On Air",
-    followers: "Follower",
     collab: "DM",
     callDm: "DM senden",
     email: "Booking",
@@ -125,13 +120,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcCopy> = {
     share: "Teilen",
     poweredBy: "Powered by",
     partnerCta: "Lass uns zusammenarbeiten",
-    totalReach: "Gesamtreichweite",
     niche: "Niche",
-    nicheValue: "Lifestyle · Travel",
   },
   en: {
     live: "On Air",
-    followers: "Followers",
     collab: "DM",
     callDm: "Send DM",
     email: "Booking",
@@ -145,13 +137,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcCopy> = {
     share: "Share",
     poweredBy: "Powered by",
     partnerCta: "Let's collab",
-    totalReach: "Total reach",
     niche: "Niche",
-    nicheValue: "Lifestyle · Travel",
   },
   tr: {
     live: "Yayında",
-    followers: "Takipçi",
     collab: "DM",
     callDm: "DM Gönder",
     email: "Booking",
@@ -165,14 +154,11 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcCopy> = {
     share: "Paylaş",
     poweredBy: "Powered by",
     partnerCta: "Hadi Birlikte Çalışalım",
-    totalReach: "Toplam Erişim",
     niche: "Alan",
-    nicheValue: "Lifestyle · Travel",
   },
   es: {
 
     live: "En el aire",
-    followers: "Seguidores",
     collab: "MD",
     callDm: "Enviar MD",
     email: "Reserva",
@@ -186,15 +172,12 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcCopy> = {
     share: "Compartir",
     poweredBy: "Desarrollado por",
     partnerCta: "Colaboremos",
-    totalReach: "Alcance total",
     niche: "Nicho",
-    nicheValue: "Estilo de vida · Viajes",
   
   },
   it: {
 
     live: "In onda",
-    followers: "Follower",
     collab: "DM",
     callDm: "Invia DM",
     email: "Prenotazione",
@@ -208,15 +191,12 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcCopy> = {
     share: "Condividi",
     poweredBy: "Realizzato con",
     partnerCta: "Collaboriamo",
-    totalReach: "Copertura totale",
     niche: "Nicchia",
-    nicheValue: "Lifestyle · Viaggi",
   
   },
   fr: {
 
     live: "À l'antenne",
-    followers: "Abonnés",
     collab: "DM",
     callDm: "Envoyer un DM",
     email: "Réservation",
@@ -230,15 +210,12 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcCopy> = {
     share: "Partager",
     poweredBy: "Propulsé par",
     partnerCta: "Collaborons",
-    totalReach: "Portée totale",
     niche: "Niche",
-    nicheValue: "Lifestyle · Voyage",
   
   },
   ar: {
 
     live: "على الهواء",
-    followers: "متابعون",
     collab: "رسالة خاصة",
     callDm: "أرسل رسالة خاصة",
     email: "الحجز",
@@ -252,9 +229,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcCopy> = {
     share: "مشاركة",
     poweredBy: "مشغل بواسطة",
     partnerCta: "لنتعاون",
-    totalReach: "الوصول الكلي",
     niche: "تخصص",
-    nicheValue: "أسلوب حياة · سفر",
   
   },
 };
@@ -282,11 +257,16 @@ export function ContentCreator({
     : "";
 
   const services = cardData.services ?? [];
-  const testimonials = cardData.testimonials ?? [];
+  const stats = resolveStats(cardData.stats);
+  const tags = cardData.tags ?? [];
+  const roleLabel = cardData.position?.split("·")[0]?.trim() || null;
 
-  const igHandle = platformHandleFromUrl(cardData.socials?.instagram, "@creator");
-  const tikHandle = platformHandleFromUrl(cardData.socials?.tiktok, "@creator");
-  const ytHandle = platformHandleFromUrl(cardData.socials?.youtube, "@creator");
+  // Real socials only — no invented platforms or follower counts.
+  const platforms = [
+    { label: "Instagram", href: cardData.socials?.instagram, color: primary },
+    { label: "TikTok", href: cardData.socials?.tiktok, color: DARK },
+    { label: "YouTube", href: cardData.socials?.youtube, color: "#ff0000" },
+  ].filter((p) => Boolean(p.href));
 
   const year = new Date().getFullYear();
 
@@ -365,37 +345,45 @@ export function ContentCreator({
           >
             {cardData.name}
           </h1>
-          <div
-            className="mt-1.5 text-[14px] font-medium"
-            style={{ color: "rgba(255,255,255,0.82)" }}
-          >
-            {cardData.company || cardData.title || "Content Creator"}
-          </div>
+          {(cardData.company || cardData.title) && (
+            <div
+              className="mt-1.5 text-[14px] font-medium"
+              style={{ color: "rgba(255,255,255,0.82)" }}
+            >
+              {cardData.company || cardData.title}
+            </div>
+          )}
 
-          {/* Mega follower count */}
-          <div className="mt-7 flex items-baseline gap-3">
-            <div
-              className="text-[52px] font-extrabold leading-none tracking-[-2px]"
-              style={{ color: accent }}
-            >
-              120K
-            </div>
-            <div
-              className="text-[12px] font-medium uppercase"
-              style={{ color: "rgba(255,255,255,0.78)", letterSpacing: "1.5px" }}
-            >
-              {t.followers}
-            </div>
-          </div>
-          <div
-            className="mt-1.5 text-[12.5px]"
-            style={{ color: "rgba(255,255,255,0.7)" }}
-          >
-            {t.totalReach} · 3.5M{" "}
-            <span style={{ color: accent, fontWeight: 600 }}>
-              monthly views
-            </span>
-          </div>
+          {/* Mega stat — owner-entered numbers only (resolveStats). */}
+          {stats && (
+            <>
+              <div className="mt-7 flex items-baseline gap-3">
+                <div
+                  className="text-[52px] font-extrabold leading-none tracking-[-2px]"
+                  style={{ color: accent }}
+                >
+                  {stats[0].value}
+                </div>
+                <div
+                  className="text-[12px] font-medium uppercase"
+                  style={{ color: "rgba(255,255,255,0.78)", letterSpacing: "1.5px" }}
+                >
+                  {stats[0].label}
+                </div>
+              </div>
+              {stats.length > 1 && (
+                <div
+                  className="mt-1.5 text-[12.5px]"
+                  style={{ color: "rgba(255,255,255,0.7)" }}
+                >
+                  {stats
+                    .slice(1)
+                    .map((s) => `${s.value} ${s.label}`)
+                    .join(" · ")}
+                </div>
+              )}
+            </>
+          )}
         </div>
       </header>
 
@@ -424,23 +412,29 @@ export function ContentCreator({
             )}
           </div>
         </div>
-        <div
-          className="min-w-0 flex-1 rounded-2xl px-4 py-3"
-          style={{
-            background: SURFACE,
-            boxShadow: "0 6px 20px rgba(0,0,0,0.08)",
-          }}
-        >
+        {(roleLabel || tags.length > 0) && (
           <div
-            className="text-[12px] font-semibold uppercase"
-            style={{ color: primary, letterSpacing: "0.6px" }}
+            className="min-w-0 flex-1 rounded-2xl px-4 py-3"
+            style={{
+              background: SURFACE,
+              boxShadow: "0 6px 20px rgba(0,0,0,0.08)",
+            }}
           >
-            {cardData.position?.split("·")[0]?.trim() || "Content Creator"}
+            {roleLabel && (
+              <div
+                className="text-[12px] font-semibold uppercase"
+                style={{ color: primary, letterSpacing: "0.6px" }}
+              >
+                {roleLabel}
+              </div>
+            )}
+            {tags.length > 0 && (
+              <div className="mt-0.5 text-[13px]" style={{ color: INK_SOFT }}>
+                {tags.join(" · ")}
+              </div>
+            )}
           </div>
-          <div className="mt-0.5 text-[13px]" style={{ color: INK_SOFT }}>
-            {t.nicheValue}
-          </div>
-        </div>
+        )}
       </section>
 
       {/* QUICK CONTACT */}
@@ -473,33 +467,28 @@ export function ContentCreator({
         )}
       </section>
 
-      {/* PLATFORMS GRID */}
-      <section className="px-7 pt-2">
-        <CcSectionTitle primary={primary}>{t.platforms}</CcSectionTitle>
-        <div className="mt-4 grid grid-cols-3 gap-2.5">
-          <PlatformCard
-            label="Instagram"
-            handle={igHandle}
-            count="120K"
-            color={primary}
-            href={cardData.socials?.instagram}
-          />
-          <PlatformCard
-            label="TikTok"
-            handle={tikHandle}
-            count="85K"
-            color={DARK}
-            href={cardData.socials?.tiktok}
-          />
-          <PlatformCard
-            label="YouTube"
-            handle={ytHandle}
-            count="22K"
-            color="#ff0000"
-            href={cardData.socials?.youtube}
-          />
-        </div>
-      </section>
+      {/* PLATFORMS GRID — real socials only; no invented follower counts. */}
+      {platforms.length > 0 && (
+        <section className="px-7 pt-2">
+          <CcSectionTitle primary={primary}>{t.platforms}</CcSectionTitle>
+          <div
+            className="mt-4 grid gap-2.5"
+            style={{
+              gridTemplateColumns: `repeat(${platforms.length}, minmax(0, 1fr))`,
+            }}
+          >
+            {platforms.map((p) => (
+              <PlatformCard
+                key={p.label}
+                label={p.label}
+                handle={platformHandleFromUrl(p.href, "")}
+                color={p.color}
+                href={p.href}
+              />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* BIO */}
       {cardData.bio && (
@@ -567,33 +556,6 @@ export function ContentCreator({
           </div>
         </section>
       )}
-
-      {/* REACH / REVIEWS STRIP */}
-      <section className="px-7 pt-7">
-        <div
-          className="flex items-center justify-between rounded-2xl px-4 py-3.5"
-          style={{ background: PAGE, border: `1px solid ${HAIRLINE}` }}
-        >
-          <div className="flex items-center gap-2">
-            <Users size={16} style={{ color: primary }} />
-            <span className="text-[12.5px] font-semibold" style={{ color: INK }}>
-              {t.totalReach}
-            </span>
-          </div>
-          {testimonials.length > 0 && (
-            <div className="flex items-center gap-1.5">
-              <div className="flex" style={{ color: accent }}>
-                {[0, 1, 2, 3, 4].map((i) => (
-                  <Star key={i} size={13} fill="currentColor" strokeWidth={0} />
-                ))}
-              </div>
-              <span className="text-[11.5px] font-bold" style={{ color: INK }}>
-                {testimonials.length}
-              </span>
-            </div>
-          )}
-        </div>
-      </section>
 
       {/* CTA */}
       <section className="px-7 pt-7">
@@ -676,13 +638,15 @@ export function ContentCreator({
             OpSolid
           </a>
         </div>
-        <div
-          className="mt-2 inline-flex items-center gap-1.5 text-[10.5px]"
-          style={{ color: INK_SOFT }}
-        >
-          <Shield size={11} strokeWidth={1.6} />
-          {t.niche}: {t.nicheValue}
-        </div>
+        {tags.length > 0 && (
+          <div
+            className="mt-2 inline-flex items-center gap-1.5 text-[10.5px]"
+            style={{ color: INK_SOFT }}
+          >
+            <Shield size={11} strokeWidth={1.6} />
+            {t.niche}: {tags.join(" · ")}
+          </div>
+        )}
       </footer>
     </article>
   );
@@ -747,13 +711,11 @@ function CcAction({
 function PlatformCard({
   label,
   handle,
-  count,
   color,
   href,
 }: {
   label: string;
   handle: string;
-  count: string;
   color: string;
   href?: string;
 }) {
@@ -762,15 +724,14 @@ function PlatformCard({
       <div className="text-[10.5px] font-semibold uppercase" style={{ color: INK_SOFT, letterSpacing: "1.2px" }}>
         {label}
       </div>
-      <div
-        className="display mt-2 text-[20px] font-extrabold leading-none"
-        style={{ color: color }}
-      >
-        {count}
-      </div>
-      <div className="mt-1 truncate text-[10.5px]" style={{ color: INK_SOFT }}>
-        {handle}
-      </div>
+      {handle && (
+        <div
+          className="display mt-2 truncate text-[14px] font-extrabold leading-none"
+          style={{ color: color }}
+        >
+          {handle}
+        </div>
+      )}
     </>
   );
   const className =
@@ -851,6 +812,11 @@ export const contentCreatorSample: SampleData = {
       youtube: "https://youtube.com/@tunayilmaz",
       x: "https://x.com/tunayilmaz",
     },
+    stats: [
+      { value: "120K", label: "Follower" },
+      { value: "3.5M", label: "Monthly Views" },
+    ],
+    tags: ["Lifestyle", "Travel"],
   },
   photoUrl:
     "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=920&q=80&auto=format&fit=crop",

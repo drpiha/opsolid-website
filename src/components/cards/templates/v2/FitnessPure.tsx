@@ -28,6 +28,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats, resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#ffffff";
@@ -42,13 +43,6 @@ const MUTE = "#4b5e58";
 const MUTE_2 = "#8a9b94";
 const LINE = "#d8e6e0";
 const LINE_SOFT = "#e6efe9";
-
-const CERTS = [
-  { badge: "ACE", title: "Certified Personal Trainer", org: "American Council on Exercise", year: "2017" },
-  { badge: "PN", title: "Precision Nutrition L1 + L2", org: "Beslenme Koçluğu", year: "2019" },
-  { badge: "CPR", title: "CPR / AED & First Aid", org: "Red Cross", year: "2023" },
-  { badge: "FRC", title: "Functional Range Conditioning", org: "Mobility Specialist", year: "2021" },
-];
 
 function readableTextOn(hex: string | null | undefined): string {
   if (!hex) return "#1a1a1a";
@@ -72,18 +66,9 @@ function digitsOnly(value: string): string {
 }
 
 interface Copy {
-  taglineFallback: string;
   studioLabel: string;
-  practiceLabel: string;
-  languageLabel: string;
-  practiceValue: string;
-  languageValue: string;
-  certsTitle: string;
   programsTitle: string;
   contactTitle: string;
-  transformationsLabel: string;
-  yearsLabel: string;
-  followersLabel: string;
   bookBtn: string;
   saveContact: string;
   walletLabel: string;
@@ -92,73 +77,36 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    taglineFallback: "Performance Coach",
     studioLabel: "Studio",
-    practiceLabel: "Praxis",
-    languageLabel: "Sprache",
-    practiceValue: "Online + Vor Ort",
-    languageValue: "Deutsch / English",
-    certsTitle: "Zertifikate",
     programsTitle: "Programme",
     contactTitle: "Kontakt",
-    transformationsLabel: "Transformationen",
-    yearsLabel: "Jahre",
-    followersLabel: "Follower",
     bookBtn: "Termin reservieren",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
   },
   en: {
-    taglineFallback: "Performance Coach",
     studioLabel: "Studio",
-    practiceLabel: "Practice",
-    languageLabel: "Languages",
-    practiceValue: "Online + In-Person",
-    languageValue: "English / Deutsch",
-    certsTitle: "Certifications",
     programsTitle: "Programs",
     contactTitle: "Contact",
-    transformationsLabel: "Transformations",
-    yearsLabel: "Years",
-    followersLabel: "Followers",
     bookBtn: "Book appointment",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
   },
   tr: {
-    taglineFallback: "Performance Coach",
     studioLabel: "Stüdyo",
-    practiceLabel: "Pratik",
-    languageLabel: "Dil",
-    practiceValue: "Online + Yüz yüze",
-    languageValue: "Türkçe / English",
-    certsTitle: "Sertifikalar",
     programsTitle: "Program Türleri",
     contactTitle: "İletişim",
-    transformationsLabel: "Dönüşüm",
-    yearsLabel: "Yıl",
-    followersLabel: "Takipçi",
     bookBtn: "Randevu Al",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
   },
   es: {
-
-    taglineFallback: "Coach de rendimiento",
     studioLabel: "Estudio",
-    practiceLabel: "Despacho",
-    languageLabel: "Idiomas",
-    practiceValue: "Online y presencial",
-    languageValue: "Inglés / Alemán",
-    certsTitle: "Certificaciones",
     programsTitle: "Programas",
     contactTitle: "Contacto",
-    transformationsLabel: "Transformaciones",
-    yearsLabel: "Años",
-    followersLabel: "Seguidores",
     bookBtn: "Reservar cita",
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
@@ -166,19 +114,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   
   },
   it: {
-
-    taglineFallback: "Performance Coach",
     studioLabel: "Studio",
-    practiceLabel: "Studio",
-    languageLabel: "Lingue",
-    practiceValue: "Online e in presenza",
-    languageValue: "Inglese / Tedesco",
-    certsTitle: "Certificazioni",
     programsTitle: "Programmi",
     contactTitle: "Contatto",
-    transformationsLabel: "Trasformazioni",
-    yearsLabel: "Anni",
-    followersLabel: "Follower",
     bookBtn: "Prenota un appuntamento",
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
@@ -186,19 +124,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   
   },
   fr: {
-
-    taglineFallback: "Coach de performance",
     studioLabel: "Studio",
-    practiceLabel: "Cabinet",
-    languageLabel: "Langues",
-    practiceValue: "En ligne et en personne",
-    languageValue: "Anglais / Allemand",
-    certsTitle: "Certifications",
     programsTitle: "Programmes",
     contactTitle: "Contact",
-    transformationsLabel: "Transformations",
-    yearsLabel: "Années",
-    followersLabel: "Abonnés",
     bookBtn: "Prendre rendez-vous",
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
@@ -206,19 +134,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   
   },
   ar: {
-
-    taglineFallback: "مدرب الأداء",
     studioLabel: "استوديو",
-    practiceLabel: "ممارسة",
-    languageLabel: "اللغات",
-    practiceValue: "عبر الإنترنت وحضوري",
-    languageValue: "إنجليزية / ألمانية",
-    certsTitle: "الشهادات",
     programsTitle: "البرامج",
     contactTitle: "اتصال",
-    transformationsLabel: "التحولات",
-    yearsLabel: "سنوات",
-    followersLabel: "متابعون",
     bookBtn: "حجز موعد",
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
@@ -249,8 +167,8 @@ export function FitnessPure({
     : "";
 
   const services = (cardData.services ?? []).slice(0, 5);
-  const cityFromAddress = cardData.address?.split(",").slice(-1)[0]?.trim();
-  const startYear = new Date().getFullYear() - 8;
+  const locationLabel = resolveLocation(cardData);
+  const stats = resolveStats(cardData.stats);
   const nameParts = cardData.name.trim().split(/\s+/);
   const nameFirst = nameParts[0] ?? cardData.name;
   const nameLast = nameParts.slice(1).join(" ");
@@ -293,7 +211,7 @@ export function FitnessPure({
           className="mono uppercase"
           style={{ fontSize: 10, letterSpacing: "2px", color: MUTE }}
         >
-          EVIDENCE-BASED · &apos;{String(startYear).slice(-2)}
+          EVIDENCE-BASED
         </div>
       </header>
 
@@ -307,18 +225,20 @@ export function FitnessPure({
         }}
       >
         <div className="pt-1 min-w-0">
-          <div
-            className="mono mb-3.5 flex items-center gap-2.5 uppercase"
-            style={{
-              fontSize: 10,
-              letterSpacing: "2.5px",
-              color: GREEN,
-              fontWeight: 500,
-            }}
-          >
-            <span aria-hidden style={{ width: 24, height: 2, background: GOLD }} />
-            {cardData.position || t.taglineFallback}
-          </div>
+          {cardData.position && (
+            <div
+              className="mono mb-3.5 flex items-center gap-2.5 uppercase"
+              style={{
+                fontSize: 10,
+                letterSpacing: "2.5px",
+                color: GREEN,
+                fontWeight: 500,
+              }}
+            >
+              <span aria-hidden style={{ width: 24, height: 2, background: GOLD }} />
+              {cardData.position}
+            </div>
+          )}
           <h1
             style={{
               fontSize: "clamp(40px, 12vw, 50px)",
@@ -368,12 +288,12 @@ export function FitnessPure({
         )}
       </section>
 
-      {/* META TABLE */}
+      {/* META TABLE — location only (real data); fabricated practice/language
+          rows removed in the 2026-06 purge. */}
+      {locationLabel && (
       <div className="bg-transparent" style={{ background: CARD }}>
         {[
-          { k: t.studioLabel, v: cityFromAddress || cardData.address?.split(",")[0]?.trim() || "Berlin" },
-          { k: t.practiceLabel, v: t.practiceValue },
-          { k: t.languageLabel, v: t.languageValue },
+          { k: t.studioLabel, v: locationLabel },
         ].map((m, i, arr) => (
           <div
             key={m.k}
@@ -400,57 +320,8 @@ export function FitnessPure({
           </div>
         ))}
       </div>
+      )}
 
-      {/* CERTIFICATIONS */}
-      <section className="px-7 pb-8 pt-9">
-        <SectHead num="01" title={t.certsTitle} />
-        <ul className="mt-4" style={{ borderTop: `1px solid ${LINE}` }}>
-          {CERTS.map((c, i) => (
-            <li
-              key={c.badge}
-              className="grid items-center gap-3.5 py-3.5"
-              style={{
-                borderBottom: `1px solid ${LINE_SOFT}`,
-                gridTemplateColumns: "60px 1fr auto",
-                fontSize: 13,
-                color: INK,
-              }}
-            >
-              <span
-                className="mono text-center uppercase"
-                style={{
-                  fontSize: 10,
-                  fontWeight: 600,
-                  color: i % 2 === 0 ? "#fff" : INK,
-                  background: i % 2 === 0 ? GREEN : GOLD,
-                  padding: "5px 10px",
-                  borderRadius: 4,
-                  letterSpacing: "1.2px",
-                }}
-              >
-                {c.badge}
-              </span>
-              <div>
-                <div style={{ color: INK, fontWeight: 500 }}>{c.title}</div>
-                <div style={{ fontSize: 11, color: MUTE, marginTop: 2 }}>
-                  {c.org}
-                </div>
-              </div>
-              <span
-                className="mono"
-                style={{
-                  fontSize: 11,
-                  color: GREEN,
-                  letterSpacing: "1px",
-                  fontWeight: 500,
-                }}
-              >
-                {c.year}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </section>
 
       {/* PROGRAMS */}
       {services.length > 0 && (
@@ -511,21 +382,19 @@ export function FitnessPure({
         </section>
       )}
 
-      {/* STATS */}
+      {/* STATS — owner-entered numbers only (resolveStats). */}
+      {stats && (
       <section
-        className="grid grid-cols-3 px-7 py-8"
+        className="grid px-7 py-8"
         style={{
           background: CARD,
           borderTop: `1px solid ${LINE}`,
           borderBottom: `1px solid ${LINE}`,
+          gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
         }}
       >
-        {[
-          { num: "600", sub: "+", lbl: t.transformationsLabel },
-          { num: "8", sub: "yr", lbl: t.yearsLabel },
-          { num: "73", sub: "K", lbl: t.followersLabel },
-        ].map((s, i, arr) => (
-          <div key={i} className="relative py-1">
+        {stats.map((s, i, arr) => (
+          <div key={s.label} className="relative py-1">
             <div
               style={{
                 fontSize: 38,
@@ -535,18 +404,7 @@ export function FitnessPure({
                 lineHeight: 1,
               }}
             >
-              {s.num}
-              <sub
-                className="mono"
-                style={{
-                  fontSize: 14,
-                  color: GREEN,
-                  fontWeight: 400,
-                  marginLeft: 1,
-                }}
-              >
-                {s.sub}
-              </sub>
+              {s.value}
             </div>
             <div
               className="mono mt-2 uppercase"
@@ -556,7 +414,7 @@ export function FitnessPure({
                 color: MUTE,
               }}
             >
-              {s.lbl}
+              {s.label}
             </div>
             {i < arr.length - 1 && (
               <span
@@ -574,6 +432,7 @@ export function FitnessPure({
           </div>
         ))}
       </section>
+      )}
 
       {/* CONTACT */}
       <section className="px-7 pb-8 pt-9">
@@ -781,6 +640,11 @@ export const fitnessPureSample: SampleData = {
     impressumUrl: "https://canfit.de/impressum",
     privacyUrl: "https://canfit.de/datenschutz",
     sectorKey: "fitness",
+    stats: [
+      { value: "600+", label: "Transformationen" },
+      { value: "8", label: "Jahre" },
+      { value: "73K", label: "Follower" },
+    ],
     socials: {
       instagram: "https://instagram.com/canfit.berlin",
       youtube: "https://youtube.com/CanFit",

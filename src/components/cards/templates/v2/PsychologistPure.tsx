@@ -29,6 +29,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#3d5a80";
@@ -56,14 +57,10 @@ interface PspCopy {
   prices: string;
   education: string;
   approach: string;
-  sessionMode: string;
   bookSession: string;
   callMe: string;
   saveContact: string;
   walletLabel: string;
-  experience: string;
-  sessions: string;
-  formats: string;
   share: string;
   poweredBy: string;
 }
@@ -75,14 +72,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PspCopy> = {
     prices: "Honorare",
     education: "Ausbildung",
     approach: "Ansatz",
-    sessionMode: "Online + Praxis",
     bookSession: "Sitzung anfragen",
     callMe: "Telefonisch",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
-    experience: "Jahre",
-    sessions: "Sitzungen",
-    formats: "Formate",
     share: "Teilen",
     poweredBy: "Powered by",
   },
@@ -92,14 +85,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PspCopy> = {
     prices: "Session fees",
     education: "Training",
     approach: "Approach",
-    sessionMode: "Online + In-person",
     bookSession: "Request a session",
     callMe: "Call me",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
-    experience: "Years",
-    sessions: "Sessions",
-    formats: "Formats",
     share: "Share",
     poweredBy: "Powered by",
   },
@@ -109,14 +98,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PspCopy> = {
     prices: "Seans Ücretleri",
     education: "Eğitim & Sertifika",
     approach: "Yaklaşım",
-    sessionMode: "Online + Yüz Yüze",
     bookSession: "Seans Randevusu Talep Et",
     callMe: "Telefonla Ara",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
-    experience: "Yıl Deneyim",
-    sessions: "Seans",
-    formats: "Format",
     share: "Paylaş",
     poweredBy: "Powered by",
   },
@@ -127,14 +112,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PspCopy> = {
     prices: "Tarifas de sesión",
     education: "Entrenamiento",
     approach: "Enfoque",
-    sessionMode: "Online y presencial",
     bookSession: "Solicitar una sesión",
     callMe: "Llámame",
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
-    experience: "Años",
-    sessions: "Sesiones",
-    formats: "Formatos",
     share: "Compartir",
     poweredBy: "Desarrollado por",
   
@@ -146,14 +127,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PspCopy> = {
     prices: "Tariffe sessione",
     education: "Allenamento",
     approach: "Approccio",
-    sessionMode: "Online e in presenza",
     bookSession: "Richiedi una sessione",
     callMe: "Chiamami",
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
-    experience: "Anni",
-    sessions: "Sessioni",
-    formats: "Formati",
     share: "Condividi",
     poweredBy: "Realizzato con",
   
@@ -165,14 +142,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PspCopy> = {
     prices: "Tarifs des séances",
     education: "Entraînement",
     approach: "Approche",
-    sessionMode: "En ligne et en personne",
     bookSession: "Demander une séance",
     callMe: "Appelle-moi",
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
-    experience: "Années",
-    sessions: "Séances",
-    formats: "Formats",
     share: "Partager",
     poweredBy: "Propulsé par",
   
@@ -184,14 +157,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PspCopy> = {
     prices: "رسوم الجلسة",
     education: "التدريب",
     approach: "النهج",
-    sessionMode: "عبر الإنترنت وحضوري",
     bookSession: "اطلب جلسة",
     callMe: "اتصل بي",
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
-    experience: "سنوات",
-    sessions: "الجلسات",
-    formats: "الصيغ",
     share: "مشاركة",
     poweredBy: "مشغل بواسطة",
   
@@ -221,6 +190,8 @@ export function PsychologistPure({
 
   const specialties = faqs.slice(0, 5);
   const credentials = faqs.slice(5, 8);
+  const stats = resolveStats(cardData.stats);
+  const tags = cardData.tags ?? [];
 
   const nameParts = cardData.name.trim().split(/\s+/);
   const firstName = nameParts.slice(0, -1).join(" ") || cardData.name;
@@ -259,9 +230,11 @@ export function PsychologistPure({
             </>
           )}
         </h1>
-        <div className="mt-2.5 text-[13.5px]" style={{ color: INK_SOFT }}>
-          {cardData.position} {cardData.title && `· ${cardData.title}`}
-        </div>
+        {(cardData.position || cardData.title) && (
+          <div className="mt-2.5 text-[13.5px]" style={{ color: INK_SOFT }}>
+            {[cardData.position, cardData.title].filter(Boolean).join(" · ")}
+          </div>
+        )}
       </header>
 
       {/* AVATAR ROW */}
@@ -281,21 +254,16 @@ export function PsychologistPure({
             </span>
           )}
         </div>
-        <div className="flex-1">
-          <div className="text-[10px] font-semibold uppercase tracking-[1.5px]" style={{ color: INK_SOFT }}>
-            {t.approach}
+        {tags.length > 0 && (
+          <div className="flex-1">
+            <div className="text-[10px] font-semibold uppercase tracking-[1.5px]" style={{ color: INK_SOFT }}>
+              {t.approach}
+            </div>
+            <div className="mt-0.5 text-[14px] font-medium" style={{ color: INK }}>
+              {tags.join(" · ")}
+            </div>
           </div>
-          <div className="mt-0.5 text-[14px] font-medium" style={{ color: INK }}>
-            CBT · EMDR
-          </div>
-        </div>
-        <div
-          className="flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[1.4px]"
-          style={{ color: primary }}
-        >
-          <span className="block h-1 w-1 rounded-full" style={{ background: primary }} />
-          {t.sessionMode}
-        </div>
+        )}
       </div>
 
       {/* CONTACT */}
@@ -303,15 +271,21 @@ export function PsychologistPure({
         <ContactRows cardData={cardData} locale={locale} variant="hairline" accentHex={primary} />
       </PspSection>
 
-      {/* STATS */}
-      <div
-        className="grid grid-cols-3"
-        style={{ borderTop: `1px solid ${HAIRLINE}`, borderBottom: `1px solid ${HAIRLINE}` }}
-      >
-        <PspStat n="9" l={t.experience} />
-        <PspStat n="800+" l={t.sessions} />
-        <PspStat n="2" l={t.formats} last />
-      </div>
+      {/* STATS — owner-entered numbers only (resolveStats). */}
+      {stats && (
+        <div
+          className="grid"
+          style={{
+            borderTop: `1px solid ${HAIRLINE}`,
+            borderBottom: `1px solid ${HAIRLINE}`,
+            gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
+          }}
+        >
+          {stats.map((s, i, arr) => (
+            <PspStat key={s.label} n={s.value} l={s.label} last={i === arr.length - 1} />
+          ))}
+        </div>
+      )}
 
       {/* SPECIALTIES */}
       {specialties.length > 0 && (
@@ -417,7 +391,7 @@ export function PsychologistPure({
             style={{ color: INK_SOFT }}
           >
             <span>— {testimonials[0].author}</span>
-            <span style={{ color: primary }}>â˜…â˜…â˜…â˜…â˜…</span>
+            <span style={{ color: primary }}>★★★★★</span>
           </div>
         </div>
       )}
@@ -566,10 +540,16 @@ export const psychologistPureSample: SampleData = {
     website: "psycho-berlin.de",
     address: "Rosenthaler Str. 40, 10178 Berlin",
     bio: "Ein Raum, in dem Sie ohne Bewertung gehört werden — und wir gemeinsam einen Weg finden, der zu Ihrem Leben passt.",
+    tags: ["CBT", "EMDR"],
+    stats: [
+      { value: "9", label: "Jahre" },
+      { value: "800+", label: "Sitzungen" },
+      { value: "2", label: "Formate" },
+    ],
     services: [
-      { title: "Einzeltherapie", description: "60 Minuten · Praxis", priceLabel: "â‚¬120" },
-      { title: "Paartherapie", description: "90 Minuten · Praxis", priceLabel: "â‚¬160" },
-      { title: "Online-Beratung", description: "50 Minuten · Video", priceLabel: "â‚¬90" },
+      { title: "Einzeltherapie", description: "60 Minuten · Praxis", priceLabel: "€120" },
+      { title: "Paartherapie", description: "90 Minuten · Praxis", priceLabel: "€160" },
+      { title: "Online-Beratung", description: "50 Minuten · Video", priceLabel: "€90" },
     ],
     faqs: [
       { q: "Depression & Angst", a: "CBT-basierte Kurzzeittherapie" },

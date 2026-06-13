@@ -8,11 +8,11 @@
 // Inspired by kart_07_berber_vivid.html.
 //
 // Design DNA (different from Barber.tsx id=7, BarberNoir/Pure/Stone):
-//   - 200 px gradient hero (deep navy â†’ midnight) with circle ornaments + tag
+//   - 200 px gradient hero (deep navy → midnight) with circle ornaments + tag
 //     pill + shop name.
 //   - Floating profile card (-90 mt) with 88 px gradient ring avatar + role +
 //     badge pill row.
-//   - 3-tile quick stats (rounded white cards with redâ†’orange gradient digits).
+//   - 3-tile quick stats (rounded white cards with red→orange gradient digits).
 //   - Service grid 2-col with featured row spanning both columns + dark hero
 //     gradient background.
 //   - Big gradient CTA card with arrow + WhatsApp tagline.
@@ -66,7 +66,6 @@ function digitsOnly(value: string): string {
 
 interface Copy {
   tagPill: string;
-  taglineFallback: string;
   yearsLabel: string;
   clientsLabel: string;
   followersLabel: string;
@@ -83,7 +82,6 @@ interface Copy {
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     tagPill: "Premium Barber",
-    taglineFallback: "Master Barber & Stylist",
     yearsLabel: "Jahre",
     clientsLabel: "Kunden",
     followersLabel: "Follower",
@@ -98,7 +96,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   en: {
     tagPill: "Premium Barber",
-    taglineFallback: "Master Barber & Stylist",
     yearsLabel: "Years",
     clientsLabel: "Clients",
     followersLabel: "Followers",
@@ -113,7 +110,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   tr: {
     tagPill: "Premium Berber",
-    taglineFallback: "Master Berber & Stylist",
     yearsLabel: "Yıl",
     clientsLabel: "Müşteri",
     followersLabel: "Takipçi",
@@ -129,7 +125,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   es: {
 
     tagPill: "Barbería premium",
-    taglineFallback: "Maestro barbero y estilista",
     yearsLabel: "Años",
     clientsLabel: "Clientes",
     followersLabel: "Seguidores",
@@ -146,7 +141,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   it: {
 
     tagPill: "Barbiere premium",
-    taglineFallback: "Master Barber e Stylist",
     yearsLabel: "Anni",
     clientsLabel: "Clienti",
     followersLabel: "Follower",
@@ -163,7 +157,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   fr: {
 
     tagPill: "Barbier premium",
-    taglineFallback: "Maître barbier et styliste",
     yearsLabel: "Années",
     clientsLabel: "Clients",
     followersLabel: "Abonnés",
@@ -180,7 +173,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   ar: {
 
     tagPill: "حلاق فاخر",
-    taglineFallback: "حلاق رئيسي ومصفف",
     yearsLabel: "سنوات",
     clientsLabel: "العملاء",
     followersLabel: "متابعون",
@@ -350,7 +342,7 @@ export function BarberVivid({
           <div
             style={{ fontSize: 12.5, color: RED, fontWeight: 600, marginBottom: 8 }}
           >
-            {cardData.title || cardData.position || t.taglineFallback}
+            {cardData.title || cardData.position}
           </div>
           <div className="flex flex-wrap gap-1.5">
             <Pill text="15 Years" color={RED} bg={`${RED}1a`} />
@@ -536,7 +528,7 @@ export function BarberVivid({
           >
             {t.bookBtn}
             <span aria-hidden style={{ fontSize: 16 }}>
-              â†’
+              →
             </span>
           </a>
         </section>
@@ -750,9 +742,9 @@ export const barberVividSample: SampleData = {
       instagram: "https://instagram.com/ta.barbershop",
     },
     services: [
-      { title: "Premium Haarschnitt", description: "Beratung, Schnitt, Styling.", priceLabel: "â‚¬35" },
-      { title: "Heißrasur", description: "Klassische Rasur mit heißem Tuch.", priceLabel: "â‚¬28" },
-      { title: "Kombination", description: "Schnitt + Heißrasur in einem Termin.", priceLabel: "â‚¬55" },
+      { title: "Premium Haarschnitt", description: "Beratung, Schnitt, Styling.", priceLabel: "€35" },
+      { title: "Heißrasur", description: "Klassische Rasur mit heißem Tuch.", priceLabel: "€28" },
+      { title: "Kombination", description: "Schnitt + Heißrasur in einem Termin.", priceLabel: "€55" },
     ],
   },
   photoUrl:

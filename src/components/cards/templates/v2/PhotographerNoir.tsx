@@ -32,6 +32,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveStats, resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#0d0d0d";
@@ -73,7 +74,6 @@ function getInitial(name: string): string {
 const ROMAN = ["I", "II", "III", "IV", "V", "VI"];
 
 interface Copy {
-  est: string;
   manifestoLabel: string;
   aboutEyebrow: string;
   servicesEyebrow: string;
@@ -86,9 +86,6 @@ interface Copy {
   callBtn: string;
   whatsappBtn: string;
   emailBtn: string;
-  yearsLabel: string;
-  weddingsLabel: string;
-  countriesLabel: string;
   saveContact: string;
   walletLabel: string;
   poweredBy: string;
@@ -96,7 +93,6 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    est: "Etabliert 2018",
     manifestoLabel: "Manifest",
     aboutEyebrow: "Über mich",
     servicesEyebrow: "Leistungsspektrum",
@@ -109,15 +105,11 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     callBtn: "Anrufen",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-Mail",
-    yearsLabel: "Jahre",
-    weddingsLabel: "Hochzeiten",
-    countriesLabel: "Länder",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
   },
   en: {
-    est: "Established 2018",
     manifestoLabel: "Manifesto",
     aboutEyebrow: "About",
     servicesEyebrow: "Service",
@@ -130,15 +122,11 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     callBtn: "Call",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
-    yearsLabel: "Years",
-    weddingsLabel: "Weddings",
-    countriesLabel: "Countries",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
   },
   tr: {
-    est: "Kuruluş 2018",
     manifestoLabel: "Manifesto",
     aboutEyebrow: "Hakkımda",
     servicesEyebrow: "Hizmet Alanları",
@@ -151,16 +139,12 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     callBtn: "Ara",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-posta",
-    yearsLabel: "Yıl",
-    weddingsLabel: "Düğün",
-    countriesLabel: "Ülke",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
   },
   es: {
 
-    est: "Establecido en 2018",
     manifestoLabel: "Manifiesto",
     aboutEyebrow: "Acerca de",
     servicesEyebrow: "Servicio",
@@ -173,9 +157,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     callBtn: "Llamar",
     whatsappBtn: "WhatsApp",
     emailBtn: "Correo",
-    yearsLabel: "Años",
-    weddingsLabel: "Bodas",
-    countriesLabel: "Países",
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
@@ -183,7 +164,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   it: {
 
-    est: "Fondato nel 2018",
     manifestoLabel: "Manifesto",
     aboutEyebrow: "Chi siamo",
     servicesEyebrow: "Servizio",
@@ -196,9 +176,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     callBtn: "Chiama",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
-    yearsLabel: "Anni",
-    weddingsLabel: "Matrimoni",
-    countriesLabel: "Paesi",
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
@@ -206,7 +183,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   fr: {
 
-    est: "Établi en 2018",
     manifestoLabel: "Manifeste",
     aboutEyebrow: "À propos",
     servicesEyebrow: "Service",
@@ -219,9 +195,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     callBtn: "Appeler",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-mail",
-    yearsLabel: "Années",
-    weddingsLabel: "Mariages",
-    countriesLabel: "Pays",
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
@@ -229,7 +202,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   ar: {
 
-    est: "تأسس في 2018",
     manifestoLabel: "البيان",
     aboutEyebrow: "حول",
     servicesEyebrow: "خدمة",
@@ -242,9 +214,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     callBtn: "اتصال",
     whatsappBtn: "واتساب",
     emailBtn: "البريد الإلكتروني",
-    yearsLabel: "سنوات",
-    weddingsLabel: "الأعراس",
-    countriesLabel: "الدول",
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
@@ -276,7 +245,8 @@ export function PhotographerNoir({
 
   const services = (cardData.services ?? []).slice(0, 5);
   const tagline = cardData.title || cardData.position || "";
-  const city = cardData.address?.split(",").slice(-2)[0]?.trim() || "Berlin";
+  const city = resolveLocation(cardData);
+  const stats = resolveStats(cardData.stats);
 
   return (
     <article
@@ -306,14 +276,7 @@ export function PhotographerNoir({
           className="absolute left-1/2 top-7 block h-px w-7 -translate-x-1/2"
           style={{ background: accent, opacity: 0.6 }}
         />
-        <div
-          className="mb-5 mt-2 text-[9.5px] font-medium uppercase"
-          style={{ color: accent, letterSpacing: "4px" }}
-        >
-          {t.est}
-        </div>
-
-        <div className="relative mx-auto mb-5 h-16 w-16">
+        <div className="relative mx-auto mb-5 mt-6 h-16 w-16">
           <span
             aria-hidden
             className="absolute -inset-1.5 block rounded-full"
@@ -350,12 +313,14 @@ export function PhotographerNoir({
             {tagline}
           </div>
         )}
-        <div
-          className="mt-4 text-[10px] font-medium uppercase"
-          style={{ color: "rgba(224,224,224,0.55)", letterSpacing: "3px" }}
-        >
-          {city} · Worldwide
-        </div>
+        {city && (
+          <div
+            className="mt-4 text-[10px] font-medium uppercase"
+            style={{ color: "rgba(224,224,224,0.55)", letterSpacing: "3px" }}
+          >
+            {city}
+          </div>
+        )}
       </header>
 
       {/* HERO with inner frame */}
@@ -435,18 +400,27 @@ export function PhotographerNoir({
         </section>
       )}
 
-      {/* STATS */}
-      <div
-        className="grid grid-cols-3 py-7"
-        style={{
-          background: SURFACE_2,
-          borderBottom: `1px solid ${HAIRLINE}`,
-        }}
-      >
-        <NoirStat num="7" label={t.yearsLabel} accent={accent} />
-        <NoirStat num="280+" label={t.weddingsLabel} accent={accent} divider />
-        <NoirStat num="15" label={t.countriesLabel} accent={accent} divider />
-      </div>
+      {/* STATS — owner-entered numbers only (resolveStats). */}
+      {stats && (
+        <div
+          className="grid py-7"
+          style={{
+            background: SURFACE_2,
+            borderBottom: `1px solid ${HAIRLINE}`,
+            gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
+          }}
+        >
+          {stats.map((s, i) => (
+            <NoirStat
+              key={s.label}
+              num={s.value}
+              label={s.label}
+              accent={accent}
+              divider={i > 0}
+            />
+          ))}
+        </div>
+      )}
 
       {/* SERVICES — Roman list */}
       {services.length > 0 && (
@@ -736,7 +710,7 @@ export function PhotographerNoir({
           className="text-[9.5px]"
           style={{ color: TEXT_MUTED, letterSpacing: "2px", textTransform: "uppercase" }}
         >
-          {city} · MMXVIII · {t.poweredBy}{" "}
+          {city ? `${city} · ` : ""}{t.poweredBy}{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"
@@ -888,6 +862,11 @@ export const photographerNoirSample: SampleData = {
         description: "kampagnen · lookbooks · e-commerce",
         priceLabel: "ab €480",
       },
+    ],
+    stats: [
+      { value: "7", label: "Jahre" },
+      { value: "280+", label: "Hochzeiten" },
+      { value: "15", label: "Länder" },
     ],
   },
   photoUrl:

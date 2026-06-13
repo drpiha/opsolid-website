@@ -7,7 +7,7 @@
 // energetic, modern. Inspired by kart_11_dis_hekimi_vivid.html.
 //
 // Locked design DNA (only colors respond to brand):
-//   - Hero band with primaryâ†’accent diagonal gradient + decorative blob halos.
+//   - Hero band with primary→accent diagonal gradient + decorative blob halos.
 //   - Floating "card" (-64 px overlap) with portrait + rating badge.
 //   - Big primary-gradient CTA at the top, then 3-up quick action row.
 //   - Services as 2-col gradient-filled chips (no list of plain text).
@@ -564,7 +564,7 @@ export function DentistVivid({
               &ldquo;
             </span>
             <div className="mb-3 text-[14px]" style={{ color: "#fbbf24", letterSpacing: "2px" }}>
-              â˜…â˜…â˜…â˜…â˜…
+              ★★★★★
             </div>
             <p className="text-[14px] font-medium leading-[1.6]">
               &ldquo;{testimonials[0].quote}&rdquo;
@@ -752,10 +752,10 @@ export const dentistVividSample: SampleData = {
     bio: "Spezialist für ästhetische Zahnmedizin und Implantologie. Über 12 Jahre Erfahrung — vereinbaren Sie Ihr kostenloses Erstgespräch.",
     bookingUrl: "https://wa.me/491704456789?text=Termin",
     services: [
-      { title: "Implant", description: "Tedavisi", priceLabel: "ab â‚¬1.200" },
-      { title: "Zirkonyum", description: "Kaplama", priceLabel: "â‚¬680" },
-      { title: "Beyazlatma", description: "Tek seansta", priceLabel: "â‚¬350" },
-      { title: "Invisalign", description: "Şeffaf plak", priceLabel: "â‚¬3.900" },
+      { title: "Implant", description: "Tedavisi", priceLabel: "ab €1.200" },
+      { title: "Zirkonyum", description: "Kaplama", priceLabel: "€680" },
+      { title: "Beyazlatma", description: "Tek seansta", priceLabel: "€350" },
+      { title: "Invisalign", description: "Şeffaf plak", priceLabel: "€3.900" },
     ],
     faqs: [
       { q: "ITI Implant Uzmanı", a: "Sertifikalı uzman" },

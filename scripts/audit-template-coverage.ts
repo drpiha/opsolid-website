@@ -42,6 +42,7 @@ const VISUAL_FIELDS = [
   "impressumUrl", "privacyUrl", "videoUrl", "videoPath", "socials", "services",
   "gallery", "faqs", "testimonials", "customButtons", "customSections",
   "statusMessage", "statusBanner", "tags", "embeds", "contactForm", "tipJar",
+  "stats",
 ] as const;
 type VisualField = (typeof VISUAL_FIELDS)[number];
 
@@ -54,6 +55,7 @@ const WRAPPER_COVERED = new Set<string>([
   "testimonials", // TestimonialsBlock (gated by TESTIMONIALS_NATIVE_KEYS)
   "brochureUrl",  // BrochureBlock (gated by BROCHURE_NATIVE_KEYS)
   "bio",          // AboutBlock (gated by BIO_NATIVE_KEYS)
+  "stats",        // StatsBlock (gated by STATS_NATIVE_KEYS)
   // statusBanner/statusMessage render at page level outside the template.
   "statusBanner", "statusMessage",
 ]);
@@ -65,6 +67,9 @@ const BASELINE_FIELDS = new Set<string>([
   "name", "title", "position", "company", "email", "phone", "whatsapp",
   "website", "address", "socials", "bookingUrl", "impressumUrl", "privacyUrl",
   "coverImage", "tags",
+  // tagline/location render through resolveTagline/resolveLocation on the
+  // templates that have a slot for them; no universal block, no silent-drop.
+  "tagline", "location",
 ]);
 
 // field → registry Set that suppresses its universal block.
@@ -75,6 +80,7 @@ const FIELD_TO_SET: Record<string, string> = {
   testimonials: "TESTIMONIALS_NATIVE_KEYS",
   brochureUrl: "BROCHURE_NATIVE_KEYS",
   bio: "BIO_NATIVE_KEYS",
+  stats: "STATS_NATIVE_KEYS",
 };
 
 // supports flag → field(s) that count as "renders it natively".
@@ -106,7 +112,7 @@ interface FileAnalysis {
 // (restaurant-noir/pure/stone, ecommerce-noir/pure/vivid, beauty-salon-noir,
 // content-creator, photographer-pure) — suppressing the universal block there
 // would silently drop the owner's quotes.
-const LIST_FIELDS = new Set(["testimonials", "services", "gallery", "faqs"]);
+const LIST_FIELDS = new Set(["testimonials", "services", "gallery", "faqs", "stats"]);
 
 interface EntryInfo {
   key: string;
@@ -496,6 +502,114 @@ fixture(
 // 5. Reports.
 const errors: string[] = [];
 const warnings: string[] = [];
+
+// -----------------------------------------------------------------------------
+// 5a. Fabricated-content rules (2026-06 purge — keep it purged).
+// Real customer cards must never render invented persona data. Three rules,
+// all scoped to RENDER code: SampleData/Entry declarations (isExcludedDecl)
+// are skipped — rich personas are allowed in samples.
+// -----------------------------------------------------------------------------
+
+/** Literal fallbacks that are pure punctuation/separators/glyphs are fine
+ *  (e.g. avatar-initial "?" when no name parts exist). */
+const FALLBACK_ALLOWLIST = new Set(["", "—", "·", "•", "-", "–", " ", "/", "?"]);
+
+/** Persona strings that must never appear in render code. */
+const BANNED_STRINGS = [
+  "Walker & Stein", "Beispielinhalt", "12 Personen", "MMXVIII", "MMXII",
+  "Bib Gourmand",
+];
+
+/** Mojibake sequences — mirror of MOJIBAKE_MAP in fix-template-mojibake.ts
+ *  (not imported: that script writes files at module load). Update together. */
+const MOJIBAKE_SEQS = ["â‚¬", "â‚º", "â˜…", "â†’", "â˜˜", "âœ¦", "âœ¿", "â‹", "âœ‰", "â˜Ž", "âš¡"];
+
+function containsCardDataAccess(node: ts.Node): boolean {
+  if (
+    ts.isPropertyAccessExpression(node) &&
+    ts.isIdentifier(node.expression) &&
+    node.expression.text === "cardData"
+  ) {
+    return true;
+  }
+  let found = false;
+  node.forEachChild((c) => {
+    if (!found && containsCardDataAccess(c)) found = true;
+  });
+  return found;
+}
+
+for (const f of fs.readdirSync(V2_DIR).sort()) {
+  if (!f.endsWith(".tsx")) continue;
+  const full = path.join(V2_DIR, f);
+  const sf = parse(full);
+
+  const scan = (node: ts.Node) => {
+    // Rule A — `cardData.x || "literal"` / `?? "literal"` fallbacks.
+    if (
+      ts.isBinaryExpression(node) &&
+      (node.operatorToken.kind === ts.SyntaxKind.BarBarToken ||
+        node.operatorToken.kind === ts.SyntaxKind.QuestionQuestionToken) &&
+      ts.isStringLiteral(node.right) &&
+      !FALLBACK_ALLOWLIST.has(node.right.text) &&
+      containsCardDataAccess(node.left)
+    ) {
+      errors.push(
+        `${f}:${lineOf(sf, node)}: literal fallback for cardData field ` +
+          `("${node.right.text}") — render real data or nothing`,
+      );
+    }
+    // Rule A2 — `cardData.x || t.somethingFallback`: a persona claim parked in
+    // the copy table so it dodges the string-literal rule. Same sin.
+    if (
+      ts.isBinaryExpression(node) &&
+      (node.operatorToken.kind === ts.SyntaxKind.BarBarToken ||
+        node.operatorToken.kind === ts.SyntaxKind.QuestionQuestionToken) &&
+      ts.isPropertyAccessExpression(node.right) &&
+      /[Ff]allback$/.test(node.right.name.text) &&
+      containsCardDataAccess(node.left)
+    ) {
+      errors.push(
+        `${f}:${lineOf(sf, node)}: copy-table fallback for cardData field ` +
+          `(${node.right.getText()}) — render real data or nothing`,
+      );
+    }
+    // Rule B2 — fabricated "since" years: getFullYear() ± N in render code.
+    if (
+      ts.isBinaryExpression(node) &&
+      (node.operatorToken.kind === ts.SyntaxKind.MinusToken ||
+        node.operatorToken.kind === ts.SyntaxKind.PlusToken) &&
+      node.left.getText().endsWith("getFullYear()") &&
+      ts.isNumericLiteral(node.right)
+    ) {
+      errors.push(
+        `${f}:${lineOf(sf, node)}: fabricated year (getFullYear() ${node.operatorToken.getText()} ${node.right.text})`,
+      );
+    }
+    // Rule B1 — banned persona strings in render code.
+    if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) {
+      for (const banned of BANNED_STRINGS) {
+        if (node.text.includes(banned)) {
+          errors.push(`${f}:${lineOf(sf, node)}: banned persona string "${banned}"`);
+        }
+      }
+    }
+    ts.forEachChild(node, scan);
+  };
+
+  for (const st of sf.statements) {
+    if (isExcludedDecl(st)) continue;
+    scan(st);
+  }
+
+  // Rule C — mojibake anywhere in the file (samples included: previews render them).
+  const raw = fs.readFileSync(full, "utf8");
+  for (const seq of MOJIBAKE_SEQS) {
+    if (raw.includes(seq)) {
+      errors.push(`${f}: mojibake sequence ${JSON.stringify(seq)} — run scripts/fix-template-mojibake.ts`);
+    }
+  }
+}
 
 for (const [field, setName] of Object.entries(FIELD_TO_SET)) {
   const set = sets.get(setName);

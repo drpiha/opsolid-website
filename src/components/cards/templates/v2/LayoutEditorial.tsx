@@ -18,6 +18,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveLocation, resolveTagline } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#111111";
@@ -49,9 +50,6 @@ function resolveAssetUrl(path: string | null | undefined): string | null {
 interface Copy {
   issueLabel: string;
   manifestoLabel: string;
-  manifestoLine1Pre: string;
-  manifestoLine1Em: string;
-  manifestoLine2: string;
   aboutLabel: string;
   skillsLabel: string;
   selectedTitle: string;
@@ -68,9 +66,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     issueLabel: "ISSUE 04",
     manifestoLabel: "Manifest Nr. 04",
-    manifestoLine1Pre: "Gute Strategie ist",
-    manifestoLine1Em: "leise",
-    manifestoLine2: "schlechte Strategie schreit.",
     aboutLabel: "Über",
     skillsLabel: "Kompetenzen",
     selectedTitle: "Ausgewählte Projekte",
@@ -85,9 +80,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   en: {
     issueLabel: "ISSUE 04",
     manifestoLabel: "Manifesto No. 04",
-    manifestoLine1Pre: "Good strategy is",
-    manifestoLine1Em: "quiet",
-    manifestoLine2: "bad strategy shouts.",
     aboutLabel: "About",
     skillsLabel: "Skills",
     selectedTitle: "Selected Work",
@@ -102,9 +94,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   tr: {
     issueLabel: "ISSUE 04",
     manifestoLabel: "Manifesto No. 04",
-    manifestoLine1Pre: "İyi strateji",
-    manifestoLine1Em: "sessizdir",
-    manifestoLine2: "kötü strateji bağırır.",
     aboutLabel: "Hakkında",
     skillsLabel: "Yetkinlikler",
     selectedTitle: "Seçili Projeler",
@@ -120,9 +109,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
 
     issueLabel: "EDICIÓN 04",
     manifestoLabel: "Manifiesto n.º 04",
-    manifestoLine1Pre: "Una buena estrategia es",
-    manifestoLine1Em: "tranquilo",
-    manifestoLine2: "la mala estrategia grita.",
     aboutLabel: "Acerca de",
     skillsLabel: "Habilidades",
     selectedTitle: "Trabajo seleccionado",
@@ -139,9 +125,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
 
     issueLabel: "NUMERO 04",
     manifestoLabel: "Manifesto n. 04",
-    manifestoLine1Pre: "Una buona strategia è",
-    manifestoLine1Em: "tranquillo",
-    manifestoLine2: "la cattiva strategia urla.",
     aboutLabel: "Chi siamo",
     skillsLabel: "Competenze",
     selectedTitle: "Lavori selezionati",
@@ -158,9 +141,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
 
     issueLabel: "NUMÉRO 04",
     manifestoLabel: "Manifeste nº 04",
-    manifestoLine1Pre: "Une bonne stratégie est",
-    manifestoLine1Em: "calme",
-    manifestoLine2: "la mauvaise stratégie crie.",
     aboutLabel: "À propos",
     skillsLabel: "Compétences",
     selectedTitle: "Travaux sélectionnés",
@@ -177,9 +157,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
 
     issueLabel: "العدد 04",
     manifestoLabel: "بيان رقم 04",
-    manifestoLine1Pre: "الاستراتيجية الجيدة",
-    manifestoLine1Em: "هادئ",
-    manifestoLine2: "الاستراتيجية السيئة تصرخ.",
     aboutLabel: "حول",
     skillsLabel: "المهارات",
     selectedTitle: "أعمال مختارة",
@@ -214,10 +191,13 @@ export function LayoutEditorial({
   const nameParts = cardData.name.trim().split(/\s+/);
   const firstName = nameParts[0] ?? cardData.name;
   const surname = nameParts.slice(1).join(" ");
-  const currentYear = new Date().getFullYear() % 100;
-  const yearStamps = services.map((_, i) =>
-    String(currentYear - i).padStart(2, "0"),
-  );
+  const tagline = resolveTagline(cardData);
+  const locationLabel = resolveLocation(cardData);
+  const footerMid = locationLabel || cardData.company || null;
+  const aboutText =
+    cardData.bio ||
+    [cardData.title, cardData.company].filter(Boolean).join(" · ") ||
+    null;
 
   return (
     <article
@@ -267,18 +247,20 @@ export function LayoutEditorial({
           </span>
         </div>
         <div className="flex flex-col justify-center px-7 py-9">
-          <div
-            className="uppercase"
-            style={{
-              fontSize: 10,
-              letterSpacing: "3px",
-              color: accent,
-              fontWeight: 600,
-              marginBottom: 12,
-            }}
-          >
-            {cardData.position || cardData.title || "Consultant"}
-          </div>
+          {tagline && (
+            <div
+              className="uppercase"
+              style={{
+                fontSize: 10,
+                letterSpacing: "3px",
+                color: accent,
+                fontWeight: 600,
+                marginBottom: 12,
+              }}
+            >
+              {tagline}
+            </div>
+          )}
           <h1
             className="display"
             style={{
@@ -319,48 +301,39 @@ export function LayoutEditorial({
         </div>
       )}
 
-      {/* MANIFESTO QUOTE */}
-      <section
-        className="px-8 pb-11 pt-12 text-center"
-        style={{ borderBottom: `1px solid ${HAIRLINE}` }}
-      >
-        <div
-          className="uppercase"
-          style={{
-            fontSize: 10,
-            letterSpacing: "3px",
-            color: accent,
-            fontWeight: 600,
-            marginBottom: 18,
-          }}
+      {/* MANIFESTO QUOTE — owner bio only; no invented manifesto copy. */}
+      {cardData.bio && (
+        <section
+          className="px-8 pb-11 pt-12 text-center"
+          style={{ borderBottom: `1px solid ${HAIRLINE}` }}
         >
-          {t.manifestoLabel}
-        </div>
-        <p
-          className="display"
-          style={{
-            fontStyle: "italic",
-            fontWeight: 400,
-            fontSize: "clamp(24px, 7.5vw, 30px)",
-            lineHeight: 1.2,
-            color: INK,
-            letterSpacing: "-0.5px",
-          }}
-        >
-          {cardData.bio
-            ? cardData.bio
-            : (
-              <>
-                {t.manifestoLine1Pre}{" "}
-                <em style={{ fontStyle: "normal", color: accent }}>
-                  {t.manifestoLine1Em}
-                </em>
-                ; <br />
-                {t.manifestoLine2}
-              </>
-            )}
-        </p>
-      </section>
+          <div
+            className="uppercase"
+            style={{
+              fontSize: 10,
+              letterSpacing: "3px",
+              color: accent,
+              fontWeight: 600,
+              marginBottom: 18,
+            }}
+          >
+            {t.manifestoLabel}
+          </div>
+          <p
+            className="display"
+            style={{
+              fontStyle: "italic",
+              fontWeight: 400,
+              fontSize: "clamp(24px, 7.5vw, 30px)",
+              lineHeight: 1.2,
+              color: INK,
+              letterSpacing: "-0.5px",
+            }}
+          >
+            {cardData.bio}
+          </p>
+        </section>
+      )}
 
       {/* TWO COLS — about / skills */}
       <section
@@ -386,18 +359,19 @@ export function LayoutEditorial({
           >
             {t.aboutLabel}
           </h3>
-          <p
-            className="display"
-            style={{
-              fontSize: 14,
-              lineHeight: 1.55,
-              color: INK,
-              fontWeight: 400,
-            }}
-          >
-            {cardData.bio ||
-              `${cardData.title || "Consultant"}${cardData.company ? ` · ${cardData.company}` : ""}.`}
-          </p>
+          {aboutText && (
+            <p
+              className="display"
+              style={{
+                fontSize: 14,
+                lineHeight: 1.55,
+                color: INK,
+                fontWeight: 400,
+              }}
+            >
+              {aboutText}
+            </p>
+          )}
         </div>
         <div className="px-6 py-8">
           <h3
@@ -505,7 +479,7 @@ export function LayoutEditorial({
                     fontWeight: 400,
                   }}
                 >
-                  &lsquo;{yearStamps[i]}
+                  {String(i + 1).padStart(2, "0")}
                 </div>
                 <div className="min-w-0">
                   <div
@@ -720,8 +694,12 @@ export function LayoutEditorial({
         }}
       >
         {cardData.name} <span style={{ color: accent }}>·</span>{" "}
-        {cardData.address?.split(",").slice(-1)[0].trim() || cardData.company || ""}{" "}
-        <span style={{ color: accent }}>·</span> {new Date().getFullYear()}
+        {footerMid && (
+          <>
+            {footerMid} <span style={{ color: accent }}>·</span>{" "}
+          </>
+        )}
+        {new Date().getFullYear()}
         <div style={{ marginTop: 6, fontSize: 9, letterSpacing: "1.5px" }}>
           {t.poweredBy}{" "}
           <a

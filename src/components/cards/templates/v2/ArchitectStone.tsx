@@ -27,6 +27,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats, resolveTagline, resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#4a4a42";
@@ -65,20 +66,13 @@ function digitsOnly(value: string): string {
 }
 
 interface Copy {
-  taglineFallback: string;
-  atelierLabel: string;
   philLabel: string;
   servicesH: string;
-  servicesSub: string;
   featuredH: string;
   testiCite: string;
   contactH: string;
   ctaPrimary: string;
   ctaSecondary: string;
-  yearsLabel: string;
-  projectsLabel: string;
-  countriesLabel: string;
-  awardsLabel: string;
   bookBtn: string;
   saveContact: string;
   walletLabel: string;
@@ -87,60 +81,39 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    taglineFallback: "Atelier-Architekt",
-    atelierLabel: "Atelier · Berlin",
     philLabel: "Philosophie",
     servicesH: "Hizmet Alanlarım",
-    servicesSub: "Tasarım, restorasyon ve sürdürülebilirlik",
     featuredH: "Öne Çıkan Çalışma",
     testiCite: "Bauherrin",
     contactH: "İletişim",
     ctaPrimary: "Anrufen",
     ctaSecondary: "WhatsApp",
-    yearsLabel: "Jahre",
-    projectsLabel: "Projekte",
-    countriesLabel: "Länder",
-    awardsLabel: "Preise",
     bookBtn: "Termin reservieren",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
   },
   en: {
-    taglineFallback: "Atelier Architect",
-    atelierLabel: "Atelier · Berlin",
     philLabel: "Philosophy",
     servicesH: "Service Suite",
-    servicesSub: "Design, restoration & sustainability",
     featuredH: "Featured Work",
     testiCite: "Project owner",
     contactH: "Contact",
     ctaPrimary: "Call",
     ctaSecondary: "WhatsApp",
-    yearsLabel: "Years",
-    projectsLabel: "Projects",
-    countriesLabel: "Countries",
-    awardsLabel: "Awards",
     bookBtn: "Book appointment",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
   },
   tr: {
-    taglineFallback: "Atelye Mimarı",
-    atelierLabel: "Atelier · İstanbul",
     philLabel: "Felsefem",
     servicesH: "Hizmet Alanlarım",
-    servicesSub: "Tasarım, restorasyon ve sürdürülebilirlik",
     featuredH: "Öne Çıkan Çalışma",
     testiCite: "Proje sahibi",
     contactH: "İletişim Kuralım",
     ctaPrimary: "Ara",
     ctaSecondary: "WhatsApp",
-    yearsLabel: "Yıl",
-    projectsLabel: "Proje",
-    countriesLabel: "Ülke",
-    awardsLabel: "Ödül",
     bookBtn: "Randevu Al",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
@@ -148,20 +121,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   es: {
 
-    taglineFallback: "Arquitecto del estudio",
-    atelierLabel: "Atelier · Berlín",
     philLabel: "Filosofía",
     servicesH: "Suite de servicios",
-    servicesSub: "Diseño, restauración y sostenibilidad",
     featuredH: "Trabajo destacado",
     testiCite: "Propietario del proyecto",
     contactH: "Contacto",
     ctaPrimary: "Llamar",
     ctaSecondary: "WhatsApp",
-    yearsLabel: "Años",
-    projectsLabel: "Proyectos",
-    countriesLabel: "Países",
-    awardsLabel: "Premios",
     bookBtn: "Reservar cita",
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
@@ -170,20 +136,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   it: {
 
-    taglineFallback: "Architetto dell'atelier",
-    atelierLabel: "Atelier · Berlino",
     philLabel: "Filosofia",
     servicesH: "Suite dei servizi",
-    servicesSub: "Design, restauro e sostenibilità",
     featuredH: "Lavori in evidenza",
     testiCite: "Titolare del progetto",
     contactH: "Contatto",
     ctaPrimary: "Chiama",
     ctaSecondary: "WhatsApp",
-    yearsLabel: "Anni",
-    projectsLabel: "Progetti",
-    countriesLabel: "Paesi",
-    awardsLabel: "Premi",
     bookBtn: "Prenota un appuntamento",
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
@@ -192,20 +151,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   fr: {
 
-    taglineFallback: "Architecte d'atelier",
-    atelierLabel: "Atelier · Berlin",
     philLabel: "Philosophie",
     servicesH: "Suite de services",
-    servicesSub: "Design, restauration et durabilité",
     featuredH: "Travaux en vedette",
     testiCite: "Propriétaire du projet",
     contactH: "Contact",
     ctaPrimary: "Appeler",
     ctaSecondary: "WhatsApp",
-    yearsLabel: "Années",
-    projectsLabel: "Projets",
-    countriesLabel: "Pays",
-    awardsLabel: "Récompenses",
     bookBtn: "Prendre rendez-vous",
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
@@ -214,20 +166,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   ar: {
 
-    taglineFallback: "مهندس الأتيليه",
-    atelierLabel: "أتيليه · برلين",
     philLabel: "الفلسفة",
     servicesH: "حزمة الخدمات",
-    servicesSub: "تصميم وترميم واستدامة",
     featuredH: "أعمال مميزة",
     testiCite: "صاحب المشروع",
     contactH: "اتصال",
     ctaPrimary: "اتصال",
     ctaSecondary: "واتساب",
-    yearsLabel: "سنوات",
-    projectsLabel: "المشاريع",
-    countriesLabel: "الدول",
-    awardsLabel: "جوائز",
     bookBtn: "حجز موعد",
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
@@ -264,7 +209,9 @@ export function ArchitectStone({
     : undefined;
 
   const services = (cardData.services ?? []).slice(0, 5);
-  const cityFromAddress = cardData.address?.split(",").slice(-1)[0]?.trim();
+  const stats = resolveStats(cardData.stats);
+  const tagline = resolveTagline(cardData);
+  const locationLabel = resolveLocation(cardData);
   const nameParts = cardData.name.trim().split(/\s+/);
   const nameFirst = nameParts[0] ?? cardData.name;
   const nameLast = nameParts.slice(1).join(" ");
@@ -320,16 +267,18 @@ export function ArchitectStone({
           >
             {cardData.company || cardData.name}
           </div>
-          <div
-            className="serif uppercase"
-            style={{
-              fontSize: 13,
-              letterSpacing: "4px",
-              color: WARM_SOFT,
-            }}
-          >
-            {t.atelierLabel}
-          </div>
+          {locationLabel && (
+            <div
+              className="serif uppercase"
+              style={{
+                fontSize: 13,
+                letterSpacing: "4px",
+                color: WARM_SOFT,
+              }}
+            >
+              {locationLabel}
+            </div>
+          )}
           <div
             aria-hidden
             className="relative mx-auto mt-3.5"
@@ -446,17 +395,19 @@ export function ArchitectStone({
             {nameLast}
           </em>
         </h1>
-        <div
-          className="mt-2 uppercase"
-          style={{
-            fontSize: 12,
-            letterSpacing: "2.5px",
-            color: WARM_SOFT,
-            fontWeight: 600,
-          }}
-        >
-          {cardData.position || t.taglineFallback}
-        </div>
+        {tagline && (
+          <div
+            className="mt-2 uppercase"
+            style={{
+              fontSize: 12,
+              letterSpacing: "2.5px",
+              color: WARM_SOFT,
+              fontWeight: 600,
+            }}
+          >
+            {tagline}
+          </div>
+        )}
       </section>
 
       {/* PHILOSOPHY */}
@@ -497,7 +448,6 @@ export function ArchitectStone({
               />
             }
             h={t.servicesH}
-            sub={t.servicesSub}
           />
           <section className="flex flex-col gap-3.5 px-6 pb-2">
             {services.map((svc, i) => (
@@ -641,7 +591,7 @@ export function ArchitectStone({
                 >
                   {featuredService.title}
                 </div>
-                {cityFromAddress && (
+                {locationLabel && (
                   <div
                     className="mt-1 uppercase"
                     style={{
@@ -650,7 +600,7 @@ export function ArchitectStone({
                       color: "rgba(255,255,255,0.85)",
                     }}
                   >
-                    {cityFromAddress} · {new Date().getFullYear()}
+                    {locationLabel}
                   </div>
                 )}
               </div>
@@ -672,39 +622,39 @@ export function ArchitectStone({
         </>
       )}
 
-      {/* STATS */}
-      <section className="grid grid-cols-4 gap-1.5 px-7 py-8 text-center">
-        {[
-          { num: "14", label: t.yearsLabel },
-          { num: "85+", label: t.projectsLabel },
-          { num: "8", label: t.countriesLabel },
-          { num: "4", label: t.awardsLabel },
-        ].map((s, i) => (
-          <div key={i}>
-            <div
-              className="serif italic"
-              style={{
-                fontSize: 30,
-                color: WARM,
-                lineHeight: 1,
-              }}
-            >
-              {s.num}
+      {/* STATS — owner-entered numbers only (resolveStats). */}
+      {stats && (
+        <section
+          className="grid gap-1.5 px-7 py-8 text-center"
+          style={{ gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))` }}
+        >
+          {stats.map((s) => (
+            <div key={s.label}>
+              <div
+                className="serif italic"
+                style={{
+                  fontSize: 30,
+                  color: WARM,
+                  lineHeight: 1,
+                }}
+              >
+                {s.value}
+              </div>
+              <div
+                className="mt-1.5 uppercase"
+                style={{
+                  fontSize: 10,
+                  letterSpacing: "1.5px",
+                  color: MUTE,
+                  fontWeight: 600,
+                }}
+              >
+                {s.label}
+              </div>
             </div>
-            <div
-              className="mt-1.5 uppercase"
-              style={{
-                fontSize: 10,
-                letterSpacing: "1.5px",
-                color: MUTE,
-                fontWeight: 600,
-              }}
-            >
-              {s.label}
-            </div>
-          </div>
-        ))}
-      </section>
+          ))}
+        </section>
+      )}
 
       {/* CONTACT */}
       <SectionHead
@@ -831,7 +781,7 @@ export function ArchitectStone({
             letterSpacing: "0.5px",
           }}
         >
-          &copy; {new Date().getFullYear()} — {t.atelierLabel}
+          &copy; {new Date().getFullYear()}
         </div>
         <div
           className="mt-1"
@@ -978,6 +928,12 @@ export const architectStoneSample: SampleData = {
       { title: "Innenarchitektur", description: "Karakter dolu kurumsal mekanlar.", priceLabel: "ab €3.500" },
       { title: "Sustainable Design", description: "Düşük karbonlu yerel malzeme." },
       { title: "Urban Renewal & Interiors", description: "Tarihi dokuyu koruyan müdahaleler." },
+    ],
+    stats: [
+      { value: "14", label: "Jahre" },
+      { value: "85+", label: "Projekte" },
+      { value: "8", label: "Länder" },
+      { value: "4", label: "Preise" },
     ],
   },
   photoUrl:

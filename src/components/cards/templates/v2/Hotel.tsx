@@ -441,7 +441,7 @@ export function Hotel({
         photoUrl={photoUrl}
         logoUrl={logoUrl}
         initials={initials}
-        company={cardData.company}
+        company={cardData.company || cardData.name}
         primary={primary}
         accent={accent}
         onAccent={onAccent}
@@ -451,7 +451,7 @@ export function Hotel({
 
       <NameStrip
         name={cardData.name}
-        company={cardData.company}
+        company={cardData.company || cardData.name}
         subtitle={subtitle}
         primary={primary}
         accent={accent}
@@ -629,7 +629,7 @@ export function Hotel({
       <Footer
         siteUrl={siteUrl}
         slug={slug}
-        company={cardData.company}
+        company={cardData.company || cardData.name}
         initials={initials}
         impressumUrl={cardData.impressumUrl}
         privacyUrl={cardData.privacyUrl}
@@ -769,7 +769,7 @@ function Hero({
             className="ho-display mt-3 text-[34px] font-medium leading-[1.05]"
             style={{ color: primary }}
           >
-            {company ?? "Maison"}
+            {company}
           </h1>
         </div>
 

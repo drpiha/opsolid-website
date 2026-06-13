@@ -9,14 +9,13 @@
 //
 // Design DNA:
 //   - WARM BANNER: cream gradient with subtle radial glow + faint noise
-//     overlay; italic eyebrow line, round photo frame with copper inner
-//     ring, Fraunces serif name with italic last word in copper accent,
-//     small thin sans title.
+//     overlay; italic eyebrow line (owner firm/location), round photo frame
+//     with copper inner ring, Fraunces serif name with italic last word in
+//     copper accent, small thin sans title.
 //   - WAVE divider (SVG, single curve).
-//   - 3 STONE STAT TILES: cream cards, Fraunces serif numerals, copper top
-//     bar.
+//   - STONE STAT TILES: owner-entered stats (resolveStats), cream cards,
+//     Fraunces serif numerals, copper top bar.
 //   - STORY section: italic Fraunces paragraph, copper signature line.
-//   - SLOGAN strip: cream tile with small horizontal copper rules left/right.
 //   - SVC LIST: cream pill rows with rounded copper-tinted icon cell.
 //   - TESTIMONIAL: deeper cream gradient with oversized italic quote glyph
 //     and 5-star copper rating.
@@ -354,13 +353,14 @@ export function LegalCounselStone({
             </em>
           )}
         </h1>
-        <div
-          className="relative mt-1.5 text-[13px] font-medium leading-[1.5]"
-          style={{ color: TEXT_SOFT, letterSpacing: "0.3px" }}
-        >
-          {[cardData.position, cardData.title].filter(Boolean).join(" · ") ||
-            "Senior Counsel"}
-        </div>
+        {(cardData.position || cardData.title) && (
+          <div
+            className="relative mt-1.5 text-[13px] font-medium leading-[1.5]"
+            style={{ color: TEXT_SOFT, letterSpacing: "0.3px" }}
+          >
+            {[cardData.position, cardData.title].filter(Boolean).join(" · ")}
+          </div>
+        )}
       </header>
 
       {/* WAVE DIVIDER */}
@@ -557,7 +557,7 @@ export function LegalCounselStone({
               className="text-[13px]"
               style={{ color: ACCENT_3, letterSpacing: "2px" }}
             >
-              {"â˜…â˜…â˜…â˜…â˜…"}
+              {"★★★★★"}
             </span>
             <span
               className="text-[13px] font-bold"
@@ -870,8 +870,8 @@ export const legalCounselStoneSample: SampleData = {
       xing: "https://xing.com/profile/Klaus_Bauer",
     },
     services: [
-      { title: "Strafrecht", description: "Beratung im Ermittlungs- und Strafverfahren.", priceLabel: "â‚¬200 Erstberatung" },
-      { title: "Familienrecht", description: "Scheidung, Sorgerecht, Unterhalt.", priceLabel: "ab â‚¬300/h" },
+      { title: "Strafrecht", description: "Beratung im Ermittlungs- und Strafverfahren.", priceLabel: "€200 Erstberatung" },
+      { title: "Familienrecht", description: "Scheidung, Sorgerecht, Unterhalt.", priceLabel: "ab €300/h" },
       { title: "Arbeitsrecht", description: "Kündigung, Aufhebung, Vergütung.", priceLabel: "Erfolgshonorar" },
     ],
     testimonials: [

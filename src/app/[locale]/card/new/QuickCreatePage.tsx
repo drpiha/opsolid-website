@@ -19,6 +19,10 @@ import * as React from "react";
 import { useSearchParams } from "next/navigation";
 import { Camera, Loader2, Sparkles } from "lucide-react";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
+import {
+  CardLanguageSelector,
+  type CardLocale,
+} from "@/components/cards/order-form/CardLanguageSelector";
 import { useLocale } from "@/context/LocaleContext";
 import { downscaleImage } from "@/lib/images/downscale";
 
@@ -67,6 +71,11 @@ export function QuickCreatePage() {
   const [company, setCompany] = React.useState("");
   const [phone, setPhone] = React.useState("");
   const [email, setEmail] = React.useState("");
+  // Explicit card language — defaults to the page locale but is the owner's
+  // visible choice (was previously taken silently from the URL).
+  const [cardLocale, setCardLocale] = React.useState<CardLocale>(
+    (["de", "en", "tr"].includes(locale) ? locale : "de") as CardLocale,
+  );
 
   const [photoPath, setPhotoPath] = React.useState<string | null>(null);
   const [photoPreview, setPhotoPreview] = React.useState<string | null>(null);
@@ -117,7 +126,7 @@ export function QuickCreatePage() {
         body: JSON.stringify({
           templateId: DEFAULT_TEMPLATE_ID,
           billingMode: "FREE",
-          locale: ["de", "en", "tr"].includes(locale) ? locale : "de",
+          locale: cardLocale,
           contactName: name.trim(),
           contactEmail: email.trim(),
           contactPhone: phone.trim(),
@@ -232,6 +241,15 @@ export function QuickCreatePage() {
             <input className={inputCls} value={email} onChange={(e) => setEmail(e.target.value)} placeholder={`${q.emailLabel} *`} maxLength={200} inputMode="email" autoComplete="email" />
             <p className="mt-1.5 px-1 text-xs text-neutral-400">{q.emailHint}</p>
           </div>
+
+          <CardLanguageSelector
+            value={cardLocale}
+            onChange={setCardLocale}
+            compact
+            L={(k, fb) =>
+              ((t.products.digitalCard.order.form ?? {}) as Record<string, string>)[k] ?? fb
+            }
+          />
 
           {error && <p className="text-sm text-signal-err">{error}</p>}
 

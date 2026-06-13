@@ -75,7 +75,6 @@ function getInitials(name: string): string {
 }
 
 interface Copy {
-  taglineFallback: string;
   productsH: string;
   orderInfoH: string;
   orderInfoLine1: string;
@@ -91,7 +90,6 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    taglineFallback: "Online Boutique",
     productsH: "Unsere Produkte",
     orderInfoH: "Bestellinformation",
     orderInfoLine1: "Kostenloser Versand ab €50",
@@ -105,7 +103,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   en: {
-    taglineFallback: "Online Boutique",
     productsH: "Our Products",
     orderInfoH: "Order Info",
     orderInfoLine1: "Free shipping over €50",
@@ -119,7 +116,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    taglineFallback: "Online Butik",
     productsH: "Ürünlerimiz",
     orderInfoH: "Sipariş Bilgisi",
     orderInfoLine1: "€50 üzeri ücretsiz kargo",
@@ -133,8 +129,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   es: {
-
-    taglineFallback: "Boutique en línea",
     productsH: "Nuestros productos",
     orderInfoH: "Información del pedido",
     orderInfoLine1: "Envío gratis a partir de 50 €",
@@ -149,8 +143,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   
   },
   it: {
-
-    taglineFallback: "Boutique online",
     productsH: "I nostri prodotti",
     orderInfoH: "Info ordine",
     orderInfoLine1: "Spedizione gratuita oltre i 50 €",
@@ -165,8 +157,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   
   },
   fr: {
-
-    taglineFallback: "Boutique en ligne",
     productsH: "Nos produits",
     orderInfoH: "Info commande",
     orderInfoLine1: "Livraison gratuite dès 50 €",
@@ -181,8 +171,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   
   },
   ar: {
-
-    taglineFallback: "متجر إلكتروني",
     productsH: "منتجاتنا",
     orderInfoH: "معلومات الطلب",
     orderInfoLine1: "شحن مجاني للطلبات فوق 50 €",
@@ -296,7 +284,7 @@ export function Ecommerce({
           {cardData.company || cardData.name}
         </h1>
         <p style={{ fontSize: 14, color: MUTED, marginTop: 4, fontWeight: 500 }}>
-          {cardData.title || cardData.position || t.taglineFallback}
+          {cardData.title || cardData.position}
         </p>
         <span
           aria-hidden
@@ -354,7 +342,7 @@ export function Ecommerce({
             {cardData.name}
           </h2>
           <p style={{ fontSize: 12.5, color: MUTED, marginTop: 1 }}>
-            {cardData.title || cardData.position || t.taglineFallback}
+            {cardData.title || cardData.position}
           </p>
           {cardData.bio && (
             <div

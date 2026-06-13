@@ -48,6 +48,12 @@ import { downscaleImage } from "@/lib/images/downscale";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
 import { CustomSectionsEditor } from "@/components/cards/order-form/CustomSectionsEditor";
 import {
+  CardLanguageSelector,
+  type CardLocale,
+} from "@/components/cards/order-form/CardLanguageSelector";
+import { ProfileExtrasFields } from "@/components/cards/order-form/ProfileExtrasFields";
+import { StatsEditor } from "@/components/cards/order-form/StatsEditor";
+import {
   CARD_THEME_LIST,
   type CardThemeKey,
   type CardThemePreset,
@@ -148,55 +154,118 @@ const EMPTY_CARD: CardData = {
 // the preview render a full card immediately; the user overwrites it with their
 // own data, or hits "Leeren" (StepCardContent) to start blank. Display-safe:
 // the required Contact step (real name/email/phone) is separate and still empty.
-const SAMPLE_CARD: CardData = {
-  name: "Alex Weber",
-  title: "Founder & Product Designer",
-  company: "Studio Nord",
-  phone: "+49 160 1234567",
-  email: "alex@studio-nord.de",
-  website: "https://studio-nord.de",
-  address: "Speicherstadt 4, 20457 Hamburg",
-  bio: "I help founders turn rough ideas into products people love — from first sketch to a shipped interface. Ten years across SaaS, fintech and e-commerce.",
-  whatsapp: "+49 160 1234567",
-  socials: {
-    linkedin: "https://www.linkedin.com/in/alexweber",
-    instagram: "https://instagram.com/studio.nord",
-    x: "",
-    tiktok: "",
-    youtube: "",
-    github: "",
-    facebook: "",
-  },
-  services: [
-    {
-      title: "Product & UX design",
-      description: "End-to-end design from research to a polished, shippable interface.",
-      priceLabel: "ab 1.500 €",
+function getSampleCard(locale: string): CardData {
+  if (locale === "tr") {
+    return {
+      name: "Elif Aydın",
+      title: "Kurucu & Ürün Tasarımcısı",
+      company: "Atölye Ege",
+      tagline: "Fikirden rafa: sevilen ürünler",
+      phone: "+90 532 123 45 67",
+      email: "elif@atolyeege.com",
+      website: "https://atolyeege.com",
+      address: "Alsancak, 35220 İzmir",
+      bio: "Kurucuların ham fikirlerini kullanıcıların sevdiği ürünlere dönüştürüyorum — ilk eskizden yayına. SaaS, fintech ve e-ticarette on yıl.",
+      whatsapp: "+90 532 123 45 67",
+      socials: {
+        linkedin: "https://www.linkedin.com/in/elifaydin",
+        instagram: "https://instagram.com/atolye.ege",
+        x: "", tiktok: "", youtube: "", github: "", facebook: "",
+      },
+      services: [
+        { title: "Ürün & UX tasarımı", description: "Araştırmadan yayına uçtan uca tasarım.", priceLabel: "₺45.000'den" },
+        { title: "Tasarım sprinti", description: "Problemden test edilmiş prototipe bir hafta.", priceLabel: "₺120.000'den" },
+        { title: "Tasarım sistemi", description: "Ekibinizin üzerine inşa edeceği bileşen kütüphanesi.", priceLabel: "Teklif alın" },
+      ],
+      stats: [
+        { value: "10+", label: "Yıl deneyim" },
+        { value: "60+", label: "Proje" },
+        { value: "%98", label: "Memnuniyet" },
+      ],
+      faqs: [
+        { q: "Ne kadar hızlı başlayabiliriz?", a: "Genelde bir hafta içinde. Kısa bir görüşme ayarlayalım, ilk sprinti birlikte planlayalım." },
+        { q: "Uzaktan çalışıyor musunuz?", a: "Evet — tüm Türkiye ve AB'de remote-first; istek üzerine İzmir'de yüz yüze." },
+      ],
+      testimonials: [
+        { author: "Deniz Kaya", role: "Kurucu, Hello Mauve", quote: "Elif belirsiz bir fikri kullanıcıların anında anladığı bir ürüne dönüştürdü. Hızlı, net, lafı dolandırmadan." },
+      ],
+      designNotes: "",
+    };
+  }
+  if (locale === "en") {
+    return {
+      name: "Alex Weber",
+      title: "Founder & Product Designer",
+      company: "Studio Nord",
+      tagline: "From rough idea to shipped product",
+      phone: "+49 160 1234567",
+      email: "alex@studio-nord.de",
+      website: "https://studio-nord.de",
+      address: "Speicherstadt 4, 20457 Hamburg",
+      bio: "I help founders turn rough ideas into products people love — from first sketch to a shipped interface. Ten years across SaaS, fintech and e-commerce.",
+      whatsapp: "+49 160 1234567",
+      socials: {
+        linkedin: "https://www.linkedin.com/in/alexweber",
+        instagram: "https://instagram.com/studio.nord",
+        x: "", tiktok: "", youtube: "", github: "", facebook: "",
+      },
+      services: [
+        { title: "Product & UX design", description: "End-to-end design from research to a polished, shippable interface.", priceLabel: "from €1,500" },
+        { title: "Design sprint", description: "One focused week from problem to a tested prototype.", priceLabel: "from €3,900" },
+        { title: "Design system", description: "A reusable component library your team can build on.", priceLabel: "on request" },
+      ],
+      stats: [
+        { value: "10+", label: "Years" },
+        { value: "60+", label: "Projects" },
+        { value: "98%", label: "Satisfaction" },
+      ],
+      faqs: [
+        { q: "How fast can we start?", a: "Usually within a week. Book a short call and we map the first sprint together." },
+        { q: "Do you work remotely?", a: "Yes — remote-first across the EU, on-site in Hamburg on request." },
+      ],
+      testimonials: [
+        { author: "Lena Richter", role: "Founder, Hello Mauve", quote: "Alex turned a vague idea into a product our users immediately understood. Fast, sharp, no fluff." },
+      ],
+      designNotes: "",
+    };
+  }
+  // de (default)
+  return {
+    name: "Alex Weber",
+    title: "Gründer & Produktdesigner",
+    company: "Studio Nord",
+    tagline: "Von der Skizze zum fertigen Produkt",
+    phone: "+49 160 1234567",
+    email: "alex@studio-nord.de",
+    website: "https://studio-nord.de",
+    address: "Speicherstadt 4, 20457 Hamburg",
+    bio: "Ich helfe Gründern, grobe Ideen in Produkte zu verwandeln, die Menschen lieben — von der ersten Skizze bis zum fertigen Interface. Zehn Jahre in SaaS, Fintech und E-Commerce.",
+    whatsapp: "+49 160 1234567",
+    socials: {
+      linkedin: "https://www.linkedin.com/in/alexweber",
+      instagram: "https://instagram.com/studio.nord",
+      x: "", tiktok: "", youtube: "", github: "", facebook: "",
     },
-    {
-      title: "Design sprint",
-      description: "One focused week from problem to a tested prototype.",
-      priceLabel: "ab 3.900 €",
-    },
-    {
-      title: "Design system",
-      description: "A reusable component library your team can build on.",
-      priceLabel: "auf Anfrage",
-    },
-  ],
-  faqs: [
-    { q: "How fast can we start?", a: "Usually within a week. Book a short call and we map the first sprint together." },
-    { q: "Do you work remotely?", a: "Yes — remote-first across the EU, on-site in Hamburg on request." },
-  ],
-  testimonials: [
-    {
-      author: "Lena Richter",
-      role: "Founder, Hello Mauve",
-      quote: "Alex turned a vague idea into a product our users immediately understood. Fast, sharp, no fluff.",
-    },
-  ],
-  designNotes: "",
-};
+    services: [
+      { title: "Produkt- & UX-Design", description: "End-to-End-Design von der Recherche bis zum fertigen Interface.", priceLabel: "ab 1.500 €" },
+      { title: "Design-Sprint", description: "Eine fokussierte Woche vom Problem zum getesteten Prototyp.", priceLabel: "ab 3.900 €" },
+      { title: "Design-System", description: "Eine wiederverwendbare Komponentenbibliothek für Ihr Team.", priceLabel: "auf Anfrage" },
+    ],
+    stats: [
+      { value: "10+", label: "Jahre" },
+      { value: "60+", label: "Projekte" },
+      { value: "98%", label: "Zufriedenheit" },
+    ],
+    faqs: [
+      { q: "Wie schnell können wir starten?", a: "Meist innerhalb einer Woche. Buchen Sie ein kurzes Gespräch — wir planen den ersten Sprint gemeinsam." },
+      { q: "Arbeiten Sie remote?", a: "Ja — remote-first in der ganzen EU, vor Ort in Hamburg auf Anfrage." },
+    ],
+    testimonials: [
+      { author: "Lena Richter", role: "Gründerin, Hello Mauve", quote: "Alex hat aus einer vagen Idee ein Produkt gemacht, das unsere Nutzer sofort verstanden haben. Schnell, präzise, ohne Schnörkel." },
+    ],
+    designNotes: "",
+  };
+}
 
 // Phase 7.9 — small caption shown next to "Edit position" button
 function formatPositionLabel(pos: ImagePosition | undefined): string | undefined {
@@ -228,7 +297,7 @@ export function OrderFormSection({
   );
 
   // ---- form state (preserved verbatim from previous version) -------------
-  const [cardData, setCardData] = useState<CardData>(SAMPLE_CARD);
+  const [cardData, setCardData] = useState<CardData>(() => getSampleCard(locale));
   const [contactName, setContactName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [contactPhone, setContactPhone] = useState("");
@@ -282,6 +351,11 @@ export function OrderFormSection({
   const [fullPreviewOpen, setFullPreviewOpen] = useState(false);
   const [previewLocale, setPreviewLocale] = useState<"de" | "en" | "tr">(
     ["de", "en", "tr"].includes(locale) ? (locale as "de" | "en" | "tr") : "de"
+  );
+  // Explicit card language — the language /c/[slug] renders in. Defaults to
+  // the page locale but is now a visible choice (was silently inherited).
+  const [cardLocale, setCardLocale] = useState<CardLocale>(
+    (["de", "en", "tr"].includes(locale) ? locale : "de") as CardLocale,
   );
 
   // ---- draft autosave ------------------------------------------------------
@@ -578,10 +652,7 @@ export function OrderFormSection({
     const payload = {
       templateId: selectedTemplate.id,
       billingMode,
-      locale: (["de", "en", "tr"].includes(locale) ? locale : "de") as
-        | "de"
-        | "en"
-        | "tr",
+      locale: cardLocale,
       contactName,
       contactEmail,
       contactPhone,
@@ -956,6 +1027,18 @@ export function OrderFormSection({
                 onNext={() => goToStep("branding")}
                 nextLabel={L("step2Next", "Weiter zum Branding")}
               >
+                {/* Card language — explicit, drives the public card chrome.
+                    Changing it also flips the live preview locale. */}
+                <div className="mb-4">
+                  <CardLanguageSelector
+                    value={cardLocale}
+                    onChange={(next) => {
+                      setCardLocale(next);
+                      setPreviewLocale(next);
+                    }}
+                    L={L}
+                  />
+                </div>
                 <StepCardContent
                   L={L}
                   cardData={cardData}
@@ -1744,7 +1827,7 @@ function StepCardContent({
         <span className="text-[11px] leading-snug text-ink/60">
           {L(
             "sampleHint",
-            "Beispielinhalt zum Ausprobieren — mit Ihren eigenen Daten überschreiben.",
+            "Sample content to explore — replace it with your own details.",
           )}
         </span>
         <button
@@ -1752,7 +1835,7 @@ function StepCardContent({
           onClick={onClearCard}
           className="shrink-0 rounded-full border border-ink/15 bg-white px-3 py-1 text-[11px] font-semibold text-ink/70 transition-colors hover:border-ink/40 hover:text-ink"
         >
-          {L("clearSample", "Leeren")}
+          {L("clearSample", "Clear")}
         </button>
       </div>
 
@@ -1897,6 +1980,29 @@ function StepCardContent({
         >
           {cardData.bio?.length ?? 0} / 200
         </p>
+      </div>
+
+      {/* Tagline + location chip — owner-controlled profile extras (2026-06
+          purge of hardcoded template personas). */}
+      <ProfileExtrasFields cardData={cardData} setField={setCard} L={L} />
+
+      {/* Stats — the proof-point numbers templates render as stat strips.
+          Empty = no stat block on the card. */}
+      <div className="space-y-2">
+        <p className="text-heading-sm text-ink">
+          {L("statsSection", "Stats")}
+        </p>
+        <p className="-mt-1 text-xs text-ink-300">
+          {L(
+            "statsHint",
+            "Real numbers shown as a stat strip on many designs (e.g. 12 — Years).",
+          )}
+        </p>
+        <StatsEditor
+          stats={cardData.stats}
+          onStatsChange={(next) => setCard("stats", next)}
+          L={L}
+        />
       </div>
 
       {/* Uploads — Phase 7.8: always show BOTH photo + logo so the user can

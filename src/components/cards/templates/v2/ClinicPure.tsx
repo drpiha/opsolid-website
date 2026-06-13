@@ -675,17 +675,17 @@ export const clinicPureSample: SampleData = {
       {
         title: "Vorsorgeuntersuchung",
         description: "Ganzheitlicher Check-up — Labor, EKG, Lifestyle.",
-        priceLabel: "ab â‚¬80",
+        priceLabel: "ab €80",
       },
       {
         title: "Reisemedizin",
         description: "Impfungen, Beratung & Notfallset.",
-        priceLabel: "â‚¬120",
+        priceLabel: "€120",
       },
       {
         title: "Online-Konsultation",
         description: "Videosprechstunde, Rezept-Service.",
-        priceLabel: "â‚¬60",
+        priceLabel: "€60",
       },
     ],
   },

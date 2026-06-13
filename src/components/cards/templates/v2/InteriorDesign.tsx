@@ -39,6 +39,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveLocation, resolveTagline } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#7c6450"; // walnut/taupe
@@ -301,6 +302,8 @@ export function InteriorDesign({
   const services = cardData.services ?? [];
   const featured = services.find((s) => s.priceLabel) ?? services[0];
   const otherSvcs = services.filter((s) => s !== featured);
+  const tagline = resolveTagline(cardData);
+  const locationLabel = resolveLocation(cardData);
   const year = new Date().getFullYear();
 
   return (
@@ -404,9 +407,11 @@ export function InteriorDesign({
             <div className="serif text-[20px]" style={{ color: primary }}>
               {cardData.name}
             </div>
-            <div className="mt-0.5 text-[12px]" style={{ color: INK_SOFT, letterSpacing: "0.5px" }}>
-              {cardData.position || "Interior Designer"}
-            </div>
+            {tagline && (
+              <div className="mt-0.5 text-[12px]" style={{ color: INK_SOFT, letterSpacing: "0.5px" }}>
+                {tagline}
+              </div>
+            )}
           </div>
         </section>
 
@@ -681,13 +686,15 @@ export function InteriorDesign({
               OpSolid
             </a>
           </div>
-          <div
-            className="mt-2 inline-flex items-center gap-1.5 text-[10.5px]"
-            style={{ color: INK_SOFT }}
-          >
-            <Sparkles size={11} strokeWidth={1.6} />
-            {cardData.address || "Berlin"}
-          </div>
+          {locationLabel && (
+            <div
+              className="mt-2 inline-flex items-center gap-1.5 text-[10.5px]"
+              style={{ color: INK_SOFT }}
+            >
+              <Sparkles size={11} strokeWidth={1.6} />
+              {locationLabel}
+            </div>
+          )}
         </footer>
       </div>
     </article>

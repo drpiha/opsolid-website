@@ -442,7 +442,7 @@ export function ClinicStone({
           style={{ color: GOLD, fontSize: 14 }}
         >
           <span aria-hidden style={{ width: 40, height: 1, background: GOLD, opacity: 0.4 }} />
-          <span aria-hidden>â‹</span>
+          <span aria-hidden>❋</span>
           <span aria-hidden style={{ width: 40, height: 1, background: GOLD, opacity: 0.4 }} />
         </div>
       </section>
@@ -882,17 +882,17 @@ export const clinicStoneSample: SampleData = {
       {
         title: "Vorsorgeuntersuchung",
         description: "Ganzheitlicher Check-up.",
-        priceLabel: "ab â‚¬80",
+        priceLabel: "ab €80",
       },
       {
         title: "Reisemedizin",
         description: "Impfungen & Notfallset.",
-        priceLabel: "â‚¬120",
+        priceLabel: "€120",
       },
       {
         title: "Online-Konsultation",
         description: "Videosprechstunde, Rezept-Service.",
-        priceLabel: "â‚¬60",
+        priceLabel: "€60",
       },
     ],
     testimonials: [

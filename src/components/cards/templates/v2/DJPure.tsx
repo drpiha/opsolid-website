@@ -306,13 +306,15 @@ export function DJPure({
             )}
             <span style={{ color: accent === "#1a1a1a" ? PURPLE : accent }}>.</span>
           </h1>
-          <div
-            className="mono mt-6 text-[11px] uppercase"
-            style={{ color: INK_2, letterSpacing: "2px" }}
-          >
-            {cardData.title || cardData.position || "Resident DJ"}
-            {cityFromAddress && ` — ${cityFromAddress}`}
-          </div>
+          {(cardData.title || cardData.position || cityFromAddress) && (
+            <div
+              className="mono mt-6 text-[11px] uppercase"
+              style={{ color: INK_2, letterSpacing: "2px" }}
+            >
+              {cardData.title || cardData.position}
+              {cityFromAddress && ` — ${cityFromAddress}`}
+            </div>
+          )}
         </section>
 
         <div style={{ height: 1, background: INK }} />
@@ -479,7 +481,7 @@ export function DJPure({
                         className="mono text-[14px]"
                         style={{ color: accent === "#1a1a1a" ? PURPLE : accent }}
                       >
-                        â†’
+                        →
                       </div>
                     </div>
                   );

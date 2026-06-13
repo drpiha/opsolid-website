@@ -666,12 +666,12 @@ export const beautySalonNoirSample: SampleData = {
     address: "Friedrichstr. 67, 10117 Berlin",
     bio: "7 yıl deneyim · 5.000+ memnun müşteri.",
     services: [
-      { title: "Microblading", description: "Kalıcı kaş tasarımı", priceLabel: "â‚¬280" },
-      { title: "Eyeliner", description: "Kalıcı makyaj", priceLabel: "â‚¬220" },
-      { title: "Lash Lift & Tint", description: "Kirpik bakımı", priceLabel: "â‚¬65" },
-      { title: "Hidrafacial", description: "Cilt protokolu", priceLabel: "â‚¬85" },
+      { title: "Microblading", description: "Kalıcı kaş tasarımı", priceLabel: "€280" },
+      { title: "Eyeliner", description: "Kalıcı makyaj", priceLabel: "€220" },
+      { title: "Lash Lift & Tint", description: "Kirpik bakımı", priceLabel: "€65" },
+      { title: "Hidrafacial", description: "Cilt protokolu", priceLabel: "€85" },
       { title: "Lazer Epilasyon", description: "Diode paketleri", priceLabel: "Paket" },
-      { title: "Kaş Laminasyonu", description: "Brow lift", priceLabel: "â‚¬55" },
+      { title: "Kaş Laminasyonu", description: "Brow lift", priceLabel: "€55" },
     ],
     testimonials: [
       { author: "Selin K.", quote: "Microblading sonucu inanılmaz doğal duruyor." },

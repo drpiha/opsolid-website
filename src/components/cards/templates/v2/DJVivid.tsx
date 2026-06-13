@@ -26,6 +26,7 @@ import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats, resolveTagline, resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#eab308";
@@ -66,7 +67,6 @@ function digitsOnly(value: string): string {
 
 interface Copy {
   liveBadge: string;
-  heroSub: string;
   upcomingH: string;
   listenH: string;
   bookH: string;
@@ -75,9 +75,6 @@ interface Copy {
   saveContact: string;
   walletLabel: string;
   poweredBy: string;
-  yearsLabel: string;
-  eventsLabel: string;
-  spotifyLabel: string;
   badgeMain: string;
   badgeResident: string;
   badgeHeadliner: string;
@@ -86,7 +83,6 @@ interface Copy {
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     liveBadge: "Live booking 2026",
-    heroSub: "Festival DJ — House & Techno",
     upcomingH: "Kommende Sets",
     listenH: "Hör mich",
     bookH: "Booking",
@@ -95,16 +91,12 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
-    yearsLabel: "Jahre",
-    eventsLabel: "Events",
-    spotifyLabel: "Spotify",
     badgeMain: "Main Stage",
     badgeResident: "Resident Night",
     badgeHeadliner: "Headliner",
   },
   en: {
     liveBadge: "Live booking 2026",
-    heroSub: "Festival DJ — House & Techno",
     upcomingH: "Upcoming sets",
     listenH: "Listen",
     bookH: "Booking",
@@ -113,16 +105,12 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
-    yearsLabel: "Years",
-    eventsLabel: "Events",
-    spotifyLabel: "Spotify",
     badgeMain: "Main Stage",
     badgeResident: "Resident Night",
     badgeHeadliner: "Headliner",
   },
   tr: {
     liveBadge: "Canlı Booking 2026",
-    heroSub: "Festival DJ — House & Techno",
     upcomingH: "Yaklaşan Setler",
     listenH: "Beni Dinle",
     bookH: "Booking",
@@ -131,9 +119,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
-    yearsLabel: "Yıl",
-    eventsLabel: "Event",
-    spotifyLabel: "Spotify",
     badgeMain: "Main Stage",
     badgeResident: "Resident Night",
     badgeHeadliner: "Headliner",
@@ -141,7 +126,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   es: {
 
     liveBadge: "Reserva en directo 2026",
-    heroSub: "DJ de festival — House & Techno",
     upcomingH: "Próximos sets",
     listenH: "Escuchar",
     bookH: "Reserva",
@@ -150,9 +134,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
-    yearsLabel: "Años",
-    eventsLabel: "Eventos",
-    spotifyLabel: "Spotify",
     badgeMain: "Escenario principal",
     badgeResident: "Noche de residente",
     badgeHeadliner: "Cabeza de cartel",
@@ -161,7 +142,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   it: {
 
     liveBadge: "Prenotazione live 2026",
-    heroSub: "DJ da festival — House & Techno",
     upcomingH: "Prossimi set",
     listenH: "Ascolta",
     bookH: "Prenotazione",
@@ -170,9 +150,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
-    yearsLabel: "Anni",
-    eventsLabel: "Eventi",
-    spotifyLabel: "Spotify",
     badgeMain: "Palco principale",
     badgeResident: "Resident Night",
     badgeHeadliner: "Headliner",
@@ -181,7 +158,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   fr: {
 
     liveBadge: "Réservation live 2026",
-    heroSub: "DJ de festival — House & Techno",
     upcomingH: "Sets à venir",
     listenH: "Écouter",
     bookH: "Réservation",
@@ -190,9 +166,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
-    yearsLabel: "Années",
-    eventsLabel: "Événements",
-    spotifyLabel: "Spotify",
     badgeMain: "Scène principale",
     badgeResident: "Soirée résidente",
     badgeHeadliner: "Tête d'affiche",
@@ -201,7 +174,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   ar: {
 
     liveBadge: "حجز مباشر 2026",
-    heroSub: "دي جي مهرجان — هاوس وتكنو",
     upcomingH: "العروض القادمة",
     listenH: "استمع",
     bookH: "الحجز",
@@ -210,9 +182,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
-    yearsLabel: "سنوات",
-    eventsLabel: "الفعاليات",
-    spotifyLabel: "سبوتيفاي",
     badgeMain: "المسرح الرئيسي",
     badgeResident: "ليلة المقيم",
     badgeHeadliner: "نجم العرض",
@@ -227,12 +196,6 @@ interface UpcomingEvent {
   city: string;
   badge: string;
 }
-
-const UPCOMING_FALLBACK: UpcomingEvent[] = [
-  { d: "15", m: "JUN", venue: "Watergate", city: "Kreuzberg, DE · 23:00", badge: "Main" },
-  { d: "22", m: "JUN", venue: "Tresor", city: "Mitte, DE · 00:00", badge: "Resident" },
-  { d: "29", m: "JUN", venue: "Berghain Kantine", city: "Friedrichshain · 22:00", badge: "Headliner" },
-];
 
 export function DJVivid({
   slug,
@@ -256,7 +219,9 @@ export function DJVivid({
     : "";
 
   const services = (cardData.services ?? []).slice(0, 3);
-  const cityFromAddress = cardData.address?.split(",").slice(-1)[0]?.trim() || "Berlin";
+  const cityFromAddress = resolveLocation(cardData);
+  const stats = resolveStats(cardData.stats);
+  const tagline = resolveTagline(cardData);
 
   const upcoming: UpcomingEvent[] =
     services.length > 0
@@ -268,11 +233,12 @@ export function DJVivid({
           badge:
             i === 0 ? t.badgeMain : i === 1 ? t.badgeResident : t.badgeHeadliner,
         }))
-      : UPCOMING_FALLBACK;
+      : [];
 
   const stageName =
     cardData.name.toUpperCase().replace(/^DJ\s+/, "DJ ") || cardData.name;
-  const genres = ["House", "Deep Techno", "Afro House", "Melodic"];
+  // Genre chips come from the owner's tags — no invented genres.
+  const genres = cardData.tags ?? [];
 
   return (
     <article
@@ -349,7 +315,7 @@ export function DJVivid({
             className="relative mt-3 text-[13px] font-medium uppercase"
             style={{ color: "rgba(255,255,255,0.85)", letterSpacing: "2px" }}
           >
-            {cardData.title || cardData.position || t.heroSub} · {cityFromAddress}
+            {[tagline, cityFromAddress].filter(Boolean).join(" · ")}
           </div>
         </section>
 
@@ -391,7 +357,7 @@ export function DJVivid({
                 className="mt-1 text-[12px] font-semibold uppercase"
                 style={{ color: PURPLE, letterSpacing: "1px" }}
               >
-                {cityFromAddress}, {cardData.position || "DJ"}
+                {[cityFromAddress, cardData.position].filter(Boolean).join(", ")}
               </div>
             </div>
           </div>
@@ -413,17 +379,23 @@ export function DJVivid({
             ))}
           </div>
 
-          <div
-            className="grid grid-cols-3 gap-2 pt-4"
-            style={{ borderTop: `1px solid ${LINE}` }}
-          >
-            <VividStat n="10" l={t.yearsLabel} />
-            <VividStat n="450+" l={t.eventsLabel} />
-            <VividStat n="85K" l={t.spotifyLabel} />
-          </div>
+          {stats && (
+            <div
+              className="grid gap-2 pt-4"
+              style={{
+                borderTop: `1px solid ${LINE}`,
+                gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
+              }}
+            >
+              {stats.map((s) => (
+                <VividStat key={s.label} n={s.value} l={s.label} />
+              ))}
+            </div>
+          )}
         </div>
 
-        {/* UPCOMING */}
+        {/* UPCOMING — owner's sets (services); no invented venues. */}
+        {upcoming.length > 0 && (
         <section className="px-5 pt-8">
           <SectTitle text={t.upcomingH} />
           <div className="grid gap-3.5">
@@ -487,6 +459,7 @@ export function DJVivid({
             ))}
           </div>
         </section>
+        )}
 
         {/* LISTEN — branded social tiles */}
         {cardData.socials && (
@@ -648,12 +621,14 @@ export function DJVivid({
           >
             {t.scanLabel}
           </div>
-          <div
-            className="display mt-3 text-[26px]"
-            style={{ letterSpacing: "1.5px" }}
-          >
-            {cityFromAddress.toUpperCase()}
-          </div>
+          {cityFromAddress && (
+            <div
+              className="display mt-3 text-[26px]"
+              style={{ letterSpacing: "1.5px" }}
+            >
+              {cityFromAddress.toUpperCase()}
+            </div>
+          )}
         </section>
 
         {/* FOOTER */}
@@ -792,6 +767,12 @@ export const djVividSample: SampleData = {
         priceLabel: "Headliner",
       },
     ],
+    stats: [
+      { value: "10", label: "Jahre" },
+      { value: "450+", label: "Events" },
+      { value: "85K", label: "Spotify" },
+    ],
+    tags: ["house", "techno", "afro-house", "melodic"],
   },
   photoUrl:
     "https://images.unsplash.com/photo-1571266028243-d220c6a35c92?w=920&q=80&auto=format&fit=crop",

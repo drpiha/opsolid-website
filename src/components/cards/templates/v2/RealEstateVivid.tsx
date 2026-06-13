@@ -42,6 +42,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveStats, resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#1a56db"; // bold electric blue
@@ -85,9 +86,6 @@ function getInitials(name: string): string {
 
 interface RevCopy {
   active: string;
-  yearsLabel: string;
-  closedLabel: string;
-  portfolioLabel: string;
   servicesH: string;
   servicesSub: string;
   bookConsult: string;
@@ -107,9 +105,6 @@ interface RevCopy {
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RevCopy> = {
   de: {
     active: "Aktiv",
-    yearsLabel: "Jahre",
-    closedLabel: "Abschlüsse",
-    portfolioLabel: "Portfolio",
     servicesH: "Leistungen",
     servicesSub: "Was ich für Sie tue",
     bookConsult: "Kostenfreies Erstgespräch",
@@ -127,9 +122,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RevCopy> = {
   },
   en: {
     active: "Active",
-    yearsLabel: "Years",
-    closedLabel: "Closed",
-    portfolioLabel: "Portfolio",
     servicesH: "Services",
     servicesSub: "What I do for you",
     bookConsult: "Free consultation",
@@ -147,9 +139,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RevCopy> = {
   },
   tr: {
     active: "Aktif",
-    yearsLabel: "Yıl",
-    closedLabel: "Satış",
-    portfolioLabel: "Portföy",
     servicesH: "Hizmetler",
     servicesSub: "Sizin için yapabileceklerim",
     bookConsult: "Ücretsiz Danışma Randevusu",
@@ -168,9 +157,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RevCopy> = {
   es: {
 
     active: "Activo",
-    yearsLabel: "Años",
-    closedLabel: "Cerrado",
-    portfolioLabel: "Portafolio",
     servicesH: "Servicios",
     servicesSub: "Lo que hago por ti",
     bookConsult: "Consulta gratuita",
@@ -190,9 +176,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RevCopy> = {
   it: {
 
     active: "Attivo",
-    yearsLabel: "Anni",
-    closedLabel: "Chiuso",
-    portfolioLabel: "Portfolio",
     servicesH: "Servizi",
     servicesSub: "Cosa faccio per te",
     bookConsult: "Consulenza gratuita",
@@ -212,9 +195,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RevCopy> = {
   fr: {
 
     active: "Actif",
-    yearsLabel: "Années",
-    closedLabel: "Fermé",
-    portfolioLabel: "Portfolio",
     servicesH: "Services",
     servicesSub: "Ce que je fais pour vous",
     bookConsult: "Consultation gratuite",
@@ -234,9 +214,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RevCopy> = {
   ar: {
 
     active: "نشط",
-    yearsLabel: "سنوات",
-    closedLabel: "مغلق",
-    portfolioLabel: "المعرض",
     servicesH: "الخدمات",
     servicesSub: "ما أفعله لك",
     bookConsult: "استشارة مجانية",
@@ -281,7 +258,8 @@ export function RealEstateVivid({
   const testimonials = cardData.testimonials ?? [];
   const reference = testimonials[0];
 
-  const region = cardData.address?.split(",").slice(-1)[0]?.trim() || "Berlin";
+  const stats = resolveStats(cardData.stats);
+  const locationLabel = resolveLocation(cardData);
 
   const year = new Date().getFullYear();
 
@@ -331,7 +309,7 @@ export function RealEstateVivid({
             className="block h-2 w-2 rounded-full"
             style={{ background: accent, boxShadow: `0 0 12px ${accent}`, animation: "rev-pulse 2s ease-in-out infinite" }}
           />
-          {cardData.company || "Walker & Stein"}
+          {cardData.company || cardData.name}
         </div>
       </header>
 
@@ -369,9 +347,11 @@ export function RealEstateVivid({
           >
             {cardData.name}
           </div>
-          <div className="mt-1 text-[12.5px] font-medium" style={{ color: INK_MUTED, lineHeight: 1.4 }}>
-            {[cardData.position, cardData.title].filter(Boolean).join(" · ") || "Real Estate Advisor"}
-          </div>
+          {(cardData.position || cardData.title) && (
+            <div className="mt-1 text-[12.5px] font-medium" style={{ color: INK_MUTED, lineHeight: 1.4 }}>
+              {[cardData.position, cardData.title].filter(Boolean).join(" · ")}
+            </div>
+          )}
           <div
             className="display mt-2 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10.5px] font-bold"
             style={{
@@ -381,28 +361,31 @@ export function RealEstateVivid({
             }}
           >
             <span aria-hidden className="block h-1.5 w-1.5 rounded-full" style={{ background: primary }} />
-            {t.active} · {region}
+            {locationLabel ? `${t.active} · ${locationLabel}` : t.active}
           </div>
         </div>
       </div>
 
-      {/* QUICK STATS */}
-      <div
-        className="mx-6 mt-7 grid grid-cols-3 overflow-hidden rounded-[18px] px-2 py-[18px]"
-        style={{
-          background: `linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)`,
-          position: "relative",
-        }}
-      >
-        <span
-          aria-hidden
-          className="pointer-events-none absolute right-0 top-0 h-20 w-20 rounded-full"
-          style={{ background: `${ACCENT_AMBER_DARK}1f`, transform: "translate(30px, -30px)" }}
-        />
-        <QStat num="12+" label={t.yearsLabel} />
-        <QStat num="180+" label={t.closedLabel} divider />
-        <QStat num="â‚¬2.4B" label={t.portfolioLabel} divider />
-      </div>
+      {/* QUICK STATS — owner-entered numbers only (resolveStats). */}
+      {stats && (
+        <div
+          className="mx-6 mt-7 grid overflow-hidden rounded-[18px] px-2 py-[18px]"
+          style={{
+            background: `linear-gradient(135deg, #fef3c7 0%, #fde68a 100%)`,
+            position: "relative",
+            gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
+          }}
+        >
+          <span
+            aria-hidden
+            className="pointer-events-none absolute right-0 top-0 h-20 w-20 rounded-full"
+            style={{ background: `${ACCENT_AMBER_DARK}1f`, transform: "translate(30px, -30px)" }}
+          />
+          {stats.map((s, i) => (
+            <QStat key={s.label} num={s.value} label={s.label} divider={i > 0} />
+          ))}
+        </div>
+      )}
 
       {/* SERVICES */}
       {services.length > 0 && (
@@ -834,9 +817,9 @@ export const realEstateVividSample: SampleData = {
       youtube: "https://youtube.com/@walkerstein",
     },
     services: [
-      { title: "Charlottenburg Townhouse", description: "5 bed · 240 m² · pre-war altbau", priceLabel: "â‚¬2.85M" },
+      { title: "Charlottenburg Townhouse", description: "5 bed · 240 m² · pre-war altbau", priceLabel: "€2.85M" },
       { title: "Wannsee Waterfront", description: "Architect-built · private dock", priceLabel: "FOR SALE" },
-      { title: "Mitte Penthouse", description: "180 m² · roof terrace", priceLabel: "â‚¬1.65M" },
+      { title: "Mitte Penthouse", description: "180 m² · roof terrace", priceLabel: "€1.65M" },
       { title: "Investment Advisory", description: "Strategic property investments" },
       { title: "Property Valuation", description: "Professional appraisal & market analysis" },
     ],
@@ -846,6 +829,11 @@ export const realEstateVividSample: SampleData = {
         role: "Bought — Mitte penthouse",
         quote: "Hannah understood us before we did. She turned eight months of dead-end viewings into a single home that felt inevitable.",
       },
+    ],
+    stats: [
+      { value: "12+", label: "Jahre" },
+      { value: "180+", label: "Verkäufe" },
+      { value: "€2.4B", label: "Portfolio" },
     ],
   },
   photoUrl:

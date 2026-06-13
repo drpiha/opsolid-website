@@ -36,6 +36,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#7c3aed";
@@ -78,9 +79,6 @@ interface PsvCopy {
   packages: string;
   popular: string;
   specialties: string;
-  experience: string;
-  sessions: string;
-  formats: string;
   saveContact: string;
   walletLabel: string;
   share: string;
@@ -98,9 +96,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsvCopy> = {
     packages: "Sitzungspakete",
     popular: "Beliebt",
     specialties: "Schwerpunkte",
-    experience: "Jahre",
-    sessions: "Sitzungen",
-    formats: "Formate",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     share: "Teilen",
@@ -116,9 +111,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsvCopy> = {
     packages: "Session packages",
     popular: "Popular",
     specialties: "Focus areas",
-    experience: "Years",
-    sessions: "Sessions",
-    formats: "Formats",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     share: "Share",
@@ -134,9 +126,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsvCopy> = {
     packages: "Seans Paketleri",
     popular: "Popüler",
     specialties: "Çalışma Alanları",
-    experience: "Yıl Deneyim",
-    sessions: "Seans",
-    formats: "Format",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     share: "Paylaş",
@@ -153,9 +142,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsvCopy> = {
     packages: "Paquetes de sesiones",
     popular: "Popular",
     specialties: "Áreas de enfoque",
-    experience: "Años",
-    sessions: "Sesiones",
-    formats: "Formatos",
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
     share: "Compartir",
@@ -173,9 +159,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsvCopy> = {
     packages: "Pacchetti sessioni",
     popular: "Popolari",
     specialties: "Aree di focus",
-    experience: "Anni",
-    sessions: "Sessioni",
-    formats: "Formati",
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
     share: "Condividi",
@@ -193,9 +176,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsvCopy> = {
     packages: "Forfaits de séances",
     popular: "Populaires",
     specialties: "Domaines de focus",
-    experience: "Années",
-    sessions: "Séances",
-    formats: "Formats",
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
     share: "Partager",
@@ -213,9 +193,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsvCopy> = {
     packages: "حزم الجلسات",
     popular: "شائع",
     specialties: "مجالات التركيز",
-    experience: "سنوات",
-    sessions: "الجلسات",
-    formats: "الصيغ",
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
     share: "مشاركة",
@@ -248,6 +225,7 @@ export function PsychologistVivid({
   const faqs = cardData.faqs ?? [];
   const testimonials = cardData.testimonials ?? [];
   const specialties = faqs.slice(0, 5);
+  const stats = resolveStats(cardData.stats);
 
   const heroGrad = `linear-gradient(135deg, ${primary}cc 0%, ${primary} 50%, ${accent} 100%)`;
 
@@ -301,9 +279,11 @@ export function PsychologistVivid({
         <h1 className="relative z-10 text-[28px] font-bold leading-[1.15] tracking-[-0.6px]">
           {cardData.name}
         </h1>
-        <div className="relative z-10 mt-2 text-[13.5px] font-normal opacity-90">
-          {cardData.position} {cardData.title && `· ${cardData.title}`}
-        </div>
+        {(cardData.position || cardData.title) && (
+          <div className="relative z-10 mt-2 text-[13.5px] font-normal opacity-90">
+            {[cardData.position, cardData.title].filter(Boolean).join(" · ")}
+          </div>
+        )}
       </header>
 
       {/* AVATAR */}
@@ -489,17 +469,26 @@ export function PsychologistVivid({
         </section>
       )}
 
-      {/* STATS */}
-      <section
-        className="mx-[22px] grid grid-cols-3 gap-2 rounded-[22px] p-6 text-white"
-        style={{
-          background: "linear-gradient(135deg, #1a1825 0%, #2d2638 100%)",
-        }}
-      >
-        <PsvStat n="9" l={t.experience} accent={accent} last />
-        <PsvStat n="800+" l={t.sessions} accent={accent} />
-        <PsvStat n="2" l={t.formats} accent={accent} last />
-      </section>
+      {/* STATS — owner-entered numbers only (resolveStats). */}
+      {stats && (
+        <section
+          className="mx-[22px] grid gap-2 rounded-[22px] p-6 text-white"
+          style={{
+            background: "linear-gradient(135deg, #1a1825 0%, #2d2638 100%)",
+            gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
+          }}
+        >
+          {stats.map((s, i, arr) => (
+            <PsvStat
+              key={s.label}
+              n={s.value}
+              l={s.label}
+              accent={accent}
+              last={i === arr.length - 1}
+            />
+          ))}
+        </section>
+      )}
 
       {/* TESTIMONIAL */}
       {testimonials.length > 0 && (
@@ -515,7 +504,7 @@ export function PsychologistVivid({
               &ldquo;
             </span>
             <div className="mb-3 text-[14px]" style={{ color: "#fbbf24", letterSpacing: "2px" }}>
-              â˜…â˜…â˜…â˜…â˜…
+              ★★★★★
             </div>
             <p className="text-[14.5px] font-medium leading-[1.6]">
               &ldquo;{testimonials[0].quote}&rdquo;
@@ -699,10 +688,15 @@ export const psychologistVividSample: SampleData = {
     address: "Rosenthaler Str. 40, 10178 Berlin",
     bio: "Ein geschützter Raum, in dem wir gemeinsam an dem arbeiten, was Ihr Leben zum Leuchten bringt.",
     bookingUrl: "https://wa.me/491702113456?text=Erstgespräch",
+    stats: [
+      { value: "9", label: "Jahre" },
+      { value: "800+", label: "Sitzungen" },
+      { value: "2", label: "Formate" },
+    ],
     services: [
-      { title: "Einzeltherapie", description: "60 min", priceLabel: "â‚¬120" },
-      { title: "Paartherapie", description: "90 min", priceLabel: "â‚¬160" },
-      { title: "Online", description: "50 min", priceLabel: "â‚¬90" },
+      { title: "Einzeltherapie", description: "60 min", priceLabel: "€120" },
+      { title: "Paartherapie", description: "90 min", priceLabel: "€160" },
+      { title: "Online", description: "50 min", priceLabel: "€90" },
     ],
     faqs: [
       { q: "Depression", a: "Kurzzeit-CBT" },

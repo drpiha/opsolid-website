@@ -27,6 +27,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#1a56db";
@@ -234,6 +235,7 @@ export function SoftwareDevPure({
   const waDigits = cardData.whatsapp
     ? digitsOnly(cardData.whatsapp).replace(/^\+/, "")
     : "";
+  const stats = resolveStats(cardData.stats);
 
   // Split first vs last word for the giant typography
   const nameParts = cardData.name.trim().split(/\s+/);
@@ -244,7 +246,7 @@ export function SoftwareDevPure({
   const handle =
     cardData.website?.replace(/^https?:\/\//, "").replace(/\/$/, "") ||
     cardData.email?.split("@")[0] ||
-    "developer";
+    cardData.name.toLowerCase().replace(/[^a-z0-9]+/g, "");
 
   const services = cardData.services ?? [];
   const year = new Date().getFullYear();
@@ -298,9 +300,11 @@ export function SoftwareDevPure({
             </>
           )}
         </h1>
-        <div className="mt-3 text-[14px]" style={{ color: INK_SOFT }}>
-          {cardData.position || cardData.title || "Full-Stack Engineer"}
-        </div>
+        {(cardData.position || cardData.title) && (
+          <div className="mt-3 text-[14px]" style={{ color: INK_SOFT }}>
+            {cardData.position || cardData.title}
+          </div>
+        )}
         <div className="mono mt-2 text-[12.5px] font-medium" style={{ color: accent }}>
           @{handle}
         </div>
@@ -415,18 +419,26 @@ export function SoftwareDevPure({
         </PureSection>
       )}
 
-      {/* STATS 3-up */}
-      <div
-        className="grid grid-cols-3"
-        style={{
-          borderTop: `1px solid ${HAIRLINE}`,
-          borderBottom: `1px solid ${HAIRLINE}`,
-        }}
-      >
-        <PureStat n="7+" l={t.yearsLabel} />
-        <PureStat n="60+" l={t.projectsLabel} />
-        <PureStat n="< 24h" l={t.responseLabel} last />
-      </div>
+      {/* STATS — owner-entered numbers only (resolveStats). */}
+      {stats && (
+        <div
+          className="grid"
+          style={{
+            borderTop: `1px solid ${HAIRLINE}`,
+            borderBottom: `1px solid ${HAIRLINE}`,
+            gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
+          }}
+        >
+          {stats.map((s, i) => (
+            <PureStat
+              key={s.label}
+              n={s.value}
+              l={s.label}
+              last={i === stats.length - 1}
+            />
+          ))}
+        </div>
+      )}
 
       {/* CONTACT */}
       <PureSection num="04" title={t.contact}>
@@ -624,9 +636,14 @@ export const softwareDevPureSample: SampleData = {
     bookingUrl: "https://cal.com/ozancelik/intro",
     sectorKey: "tech",
     services: [
-      { title: "Web App Development", description: "Next.js · React · TypeScript", priceLabel: "ab â‚¬4.800" },
-      { title: "API Integration", description: "REST · GraphQL · Stripe", priceLabel: "ab â‚¬1.200" },
-      { title: "Tech Consulting", description: "Architecture · code review", priceLabel: "â‚¬150/h" },
+      { title: "Web App Development", description: "Next.js · React · TypeScript", priceLabel: "ab €4.800" },
+      { title: "API Integration", description: "REST · GraphQL · Stripe", priceLabel: "ab €1.200" },
+      { title: "Tech Consulting", description: "Architecture · code review", priceLabel: "€150/h" },
+    ],
+    stats: [
+      { value: "7+", label: "Jahre" },
+      { value: "60+", label: "Projekte" },
+      { value: "< 24h", label: "Antwort" },
     ],
     socials: {
       github: "https://github.com/ozancelik",

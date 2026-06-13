@@ -271,7 +271,7 @@ export function LegalCounsel({
       <Header
         logoUrl={logoUrl}
         initials={initials}
-        company={cardData.company}
+        company={cardData.company || cardData.name}
         firmType={cardData.title}
         accent={accent}
       />
@@ -279,7 +279,7 @@ export function LegalCounsel({
       <ProfileBlock
         name={cardData.name}
         titleParts={titleParts}
-        company={cardData.company}
+        company={cardData.company || cardData.name}
         accent={accent}
         sectorBadge={sector?.name}
         sourceLabel={sourceLabel}
@@ -415,7 +415,7 @@ export function LegalCounsel({
         privacyUrl={cardData.privacyUrl}
         accent={accent}
         translations={t}
-        company={cardData.company}
+        company={cardData.company || cardData.name}
       />
     </article>
   );
@@ -484,14 +484,16 @@ function Header({
           className="lc-serif truncate text-[15.5px] font-semibold leading-tight"
           style={{ color: accent }}
         >
-          {company ?? "Counsel"}
+          {company}
         </div>
-        <div
-          className="lc-mono mt-1 text-[9.5px] font-medium"
-          style={{ color: "var(--lc-text-mid)" }}
-        >
-          {firmType ?? "Rechtsanwälte"}
-        </div>
+        {firmType && (
+          <div
+            className="lc-mono mt-1 text-[9.5px] font-medium"
+            style={{ color: "var(--lc-text-mid)" }}
+          >
+            {firmType}
+          </div>
+        )}
       </div>
 
       {/* Right-rail signal: a thin gold rule. */}
@@ -857,7 +859,7 @@ function Footer({
         className="lc-serif mb-1 text-[12px] font-semibold"
         style={{ color: accent }}
       >
-        {company ?? "Counsel"}
+        {company}
       </div>
       <p
         className="lc-mono mb-4 text-[9px]"

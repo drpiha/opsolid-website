@@ -35,6 +35,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#c08b7c"; // dusty rose
@@ -68,13 +69,9 @@ function digitsOnly(value: string): string {
 }
 
 interface BsCopy {
-  certified: string;
-  premium: string;
   bookCta: string;
   servicesTitle: string;
-  servicesSub: string;
   beforeAfter: string;
-  beforeAfterDesc: string;
   beforeAfterCta: string;
   servicesLabel: string;
   reviewsLabel: string;
@@ -87,13 +84,9 @@ interface BsCopy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsCopy> = {
   de: {
-    certified: "Zertifiziert",
-    premium: "Premium",
     bookCta: "Termin sichern",
     servicesTitle: "Services",
-    servicesSub: "Premium Beauty & Permanent Makeup",
     beforeAfter: "Vorher / Nachher",
-    beforeAfterDesc: "5.000+ zufriedene Kund:innen — sehen Sie die Ergebnisse",
     beforeAfterCta: "Auf Instagram ansehen",
     servicesLabel: "Leistungen",
     reviewsLabel: "Bewertungen",
@@ -104,13 +97,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsCopy> = {
     studio: "Beauty Studio",
   },
   en: {
-    certified: "Certified",
-    premium: "Premium",
     bookCta: "Book now",
     servicesTitle: "Services",
-    servicesSub: "Premium beauty & permanent makeup",
     beforeAfter: "Before / After",
-    beforeAfterDesc: "5,000+ happy clients — see the transformations",
     beforeAfterCta: "View on Instagram",
     servicesLabel: "Services",
     reviewsLabel: "Reviews",
@@ -121,13 +110,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsCopy> = {
     studio: "Beauty Studio",
   },
   tr: {
-    certified: "Sertifikalı",
-    premium: "Premium",
     bookCta: "Hemen Randevu Al",
     servicesTitle: "Hizmetler",
-    servicesSub: "Premium güzellik & kalıcı makyaj",
     beforeAfter: "Önce / Sonra",
-    beforeAfterDesc: "5.000+ memnun müşteriden öncesi / sonrası fotoğraflar",
     beforeAfterCta: "Instagram'da gör",
     servicesLabel: "Hizmetler",
     reviewsLabel: "Yorum",
@@ -139,13 +124,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsCopy> = {
   },
   es: {
 
-    certified: "Certificado",
-    premium: "Premium",
     bookCta: "Reservar ahora",
     servicesTitle: "Servicios",
-    servicesSub: "Belleza premium y maquillaje permanente",
     beforeAfter: "Antes / Después",
-    beforeAfterDesc: "5.000+ clientes felices — mira las transformaciones",
     beforeAfterCta: "Ver en Instagram",
     servicesLabel: "Servicios",
     reviewsLabel: "Reseñas",
@@ -158,13 +139,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsCopy> = {
   },
   it: {
 
-    certified: "Certificato",
-    premium: "Premium",
     bookCta: "Prenota ora",
     servicesTitle: "Servizi",
-    servicesSub: "Bellezza premium e trucco permanente",
     beforeAfter: "Prima / Dopo",
-    beforeAfterDesc: "5.000+ clienti felici — guarda le trasformazioni",
     beforeAfterCta: "Vedi su Instagram",
     servicesLabel: "Servizi",
     reviewsLabel: "Recensioni",
@@ -177,13 +154,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsCopy> = {
   },
   fr: {
 
-    certified: "Certifié",
-    premium: "Premium",
     bookCta: "Réserver maintenant",
     servicesTitle: "Services",
-    servicesSub: "Beauté premium et maquillage permanent",
     beforeAfter: "Avant / Après",
-    beforeAfterDesc: "5 000+ clients heureux — voyez les transformations",
     beforeAfterCta: "Voir sur Instagram",
     servicesLabel: "Services",
     reviewsLabel: "Avis",
@@ -196,13 +169,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsCopy> = {
   },
   ar: {
 
-    certified: "معتمد",
-    premium: "مميز",
     bookCta: "احجز الآن",
     servicesTitle: "الخدمات",
-    servicesSub: "تجميل فاخر ومكياج دائم",
     beforeAfter: "قبل / بعد",
-    beforeAfterDesc: "5,000+ عميل سعيد — شاهد التحولات",
     beforeAfterCta: "عرض على إنستغرام",
     servicesLabel: "الخدمات",
     reviewsLabel: "التقييمات",
@@ -238,6 +207,8 @@ export function BeautySalon({
 
   const services = cardData.services ?? [];
   const testimonials = cardData.testimonials ?? [];
+  const stats = resolveStats(cardData.stats);
+  const tags = (cardData.tags ?? []).slice(0, 2);
 
   const heroGrad = `linear-gradient(135deg, ${primary}cc 0%, ${primary} 50%, ${accent} 100%)`;
 
@@ -292,7 +263,7 @@ export function BeautySalon({
           {cardData.name}
         </h1>
         <div className="relative z-10 mt-3 text-[13px] font-semibold leading-[1.5] opacity-90">
-          {cardData.position} {cardData.title && `· ${cardData.title}`}
+          {[cardData.position, cardData.title].filter(Boolean).join(" · ")}
         </div>
       </header>
 
@@ -330,9 +301,9 @@ export function BeautySalon({
                 <MapPin size={14} strokeWidth={2.4} />
                 {cardData.address.split(",").slice(-2)[0]?.trim() || cardData.address}
               </span>
-              {cardData.socials?.instagram && (
+              {cardData.socials?.instagram && cardData.company && (
                 <span className="inline-flex items-center gap-1.5 text-[12px] font-bold">
-                  <SocialIg /> {cardData.company?.split(" ")[0] || "IG"}
+                  <SocialIg /> {cardData.company.split(" ")[0]}
                 </span>
               )}
             </div>
@@ -379,20 +350,23 @@ export function BeautySalon({
               {cardData.position || cardData.title}
             </div>
           )}
-          <div className="mt-2 flex gap-1.5">
-            <span
-              className="rounded-full px-2.5 py-0.5 text-[10.5px] font-extrabold uppercase tracking-[0.4px] text-white"
-              style={{ background: primary }}
-            >
-              {t.certified}
-            </span>
-            <span
-              className="rounded-full px-2.5 py-0.5 text-[10.5px] font-extrabold uppercase tracking-[0.4px]"
-              style={{ background: GOLD, color: INK }}
-            >
-              {t.premium}
-            </span>
-          </div>
+          {tags.length > 0 && (
+            <div className="mt-2 flex gap-1.5">
+              {tags.map((tag, i) => (
+                <span
+                  key={tag}
+                  className="rounded-full px-2.5 py-0.5 text-[10.5px] font-extrabold uppercase tracking-[0.4px]"
+                  style={
+                    i % 2 === 0
+                      ? { background: primary, color: "#fff" }
+                      : { background: GOLD, color: INK }
+                  }
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -449,11 +423,8 @@ export function BeautySalon({
       {/* SERVICES */}
       {services.length > 0 && (
         <section className="px-[22px] py-7">
-          <div className="text-[18px] font-black tracking-[-0.3px]" style={{ color: INK }}>
+          <div className="mb-5 text-[18px] font-black tracking-[-0.3px]" style={{ color: INK }}>
             {t.servicesTitle}
-          </div>
-          <div className="mt-1 mb-5 text-[12px] font-semibold" style={{ color: INK_SOFT }}>
-            {t.servicesSub}
           </div>
           <div className="grid grid-cols-2 gap-3">
             {services.map((s, i) => {
@@ -537,9 +508,6 @@ export function BeautySalon({
             </div>
             <div className="min-w-0 flex-1">
               <div className="text-[16px] font-black">{t.beforeAfter}</div>
-              <div className="mt-0.5 text-[12px] font-semibold opacity-85">
-                {t.beforeAfterDesc}
-              </div>
               <a
                 href={cardData.socials.instagram}
                 target="_blank"
@@ -554,12 +522,14 @@ export function BeautySalon({
         </section>
       )}
 
-      {/* STATS — driven by real data */}
+      {/* STATS — owner-entered numbers first (resolveStats), else real counts */}
       {(() => {
-        const statsItems = [
-          ...(services.length ? [{ n: String(services.length), l: t.servicesLabel }] : []),
-          ...(testimonials.length ? [{ n: String(testimonials.length), l: t.reviewsLabel }] : []),
-        ];
+        const statsItems = stats
+          ? stats.map((s) => ({ n: s.value, l: s.label }))
+          : [
+              ...(services.length ? [{ n: String(services.length), l: t.servicesLabel }] : []),
+              ...(testimonials.length ? [{ n: String(testimonials.length), l: t.reviewsLabel }] : []),
+            ];
         if (statsItems.length === 0) return null;
         return (
           <section
@@ -645,7 +615,7 @@ export function BeautySalon({
           {cardData.company || cardData.name}
         </div>
         <div className="mt-1 text-[11px] font-semibold opacity-85">
-          {cardData.website} · © {new Date().getFullYear()}
+          {[cardData.website, `© ${new Date().getFullYear()}`].filter(Boolean).join(" · ")}
         </div>
         <div
           className="mt-3 inline-flex items-center gap-1.5 text-[11px] opacity-90"
@@ -795,6 +765,12 @@ export const beautySalonSample: SampleData = {
     website: "beautybybuse.de",
     address: "Friedrichstr. 67, 10117 Berlin",
     bio: "7 yıl deneyim · 5.000+ memnun müşteri. Premium güzellik & kalıcı makyaj.",
+    tags: ["Sertifikalı", "Premium"],
+    stats: [
+      { value: "5.000+", label: "Müşteri" },
+      { value: "7", label: "Yıl" },
+      { value: "4.9★", label: "Puan" },
+    ],
     services: [
       { title: "Microblading", description: "Kalıcı kaş", priceLabel: "€280" },
       { title: "Lash Lift & Tint", description: "Kirpik bakımı", priceLabel: "€65" },

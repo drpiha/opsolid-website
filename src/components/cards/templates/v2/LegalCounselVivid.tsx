@@ -272,7 +272,7 @@ export function LegalCounselVivid({
               boxShadow: `0 0 12px ${ACCENT}`,
             }}
           />
-          {cardData.company || "Legal Counsel"}
+          {cardData.company || cardData.name}
         </div>
       </section>
 
@@ -321,13 +321,14 @@ export function LegalCounselVivid({
           >
             {cardData.name}
           </div>
-          <div
-            className="mb-2 truncate text-[12px] font-medium leading-snug"
-            style={{ color: TEXT_SOFT }}
-          >
-            {[cardData.position, cardData.title].filter(Boolean).join(" · ") ||
-              "Senior Counsel"}
-          </div>
+          {(cardData.position || cardData.title) && (
+            <div
+              className="mb-2 truncate text-[12px] font-medium leading-snug"
+              style={{ color: TEXT_SOFT }}
+            >
+              {[cardData.position, cardData.title].filter(Boolean).join(" · ")}
+            </div>
+          )}
           <span
             className="display inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10.5px] font-bold"
             style={{
@@ -765,8 +766,8 @@ export const legalCounselVividSample: SampleData = {
       xing: "https://xing.com/profile/Klaus_Bauer",
     },
     services: [
-      { title: "Strafrecht", description: "Verteidigung im Ermittlungsverfahren.", priceLabel: "â‚¬200 Erstberatung" },
-      { title: "Familienrecht", description: "Scheidung & Sorgerecht.", priceLabel: "ab â‚¬300/h" },
+      { title: "Strafrecht", description: "Verteidigung im Ermittlungsverfahren.", priceLabel: "€200 Erstberatung" },
+      { title: "Familienrecht", description: "Scheidung & Sorgerecht.", priceLabel: "ab €300/h" },
       { title: "Arbeitsrecht", description: "Kündigungsschutz & Aufhebung.", priceLabel: "Erfolgshonorar" },
       { title: "M&A", description: "Vertragsgestaltung & Due Diligence." },
       { title: "Compliance", description: "BaFin / HinSchG, Investigations & Whistleblower-Frameworks." },

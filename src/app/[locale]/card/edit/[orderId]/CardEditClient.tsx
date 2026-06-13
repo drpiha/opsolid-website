@@ -82,6 +82,9 @@ interface Props {
   visibility: "public" | "unlisted" | "private";
   openToNetworking: boolean;
   acceptingClients: boolean;
+  /** The card's display language (CardOrder.locale) — drives the public
+   *  card chrome and the editor preview; owner-changeable in PublishSection. */
+  cardLocale: "de" | "en" | "tr";
 }
 
 export function CardEditClient(props: Props) {
@@ -94,6 +97,10 @@ export function CardEditClient(props: Props) {
   const form = t.products.digitalCard.order.form;
 
   const [cardData, setCardData] = useState<CardData>(props.cardData);
+  // The card's own display language — independent of the page UI locale.
+  const [cardLocale, setCardLocale] = useState<"de" | "en" | "tr">(
+    props.cardLocale,
+  );
   // Template is now switchable from the editor (previously locked after
   // purchase). Persisted on save alongside cardData.
   const [templateId, setTemplateId] = useState<number>(props.templateId);
@@ -359,6 +366,8 @@ export function CardEditClient(props: Props) {
       visibility,
       openToNetworking,
       acceptingClients,
+      // Card display language — persisted to CardOrder.locale.
+      locale: cardLocale,
       // Two-tab guard — server rejects with 409 version_conflict when another
       // tab saved since this one loaded/last saved.
       expectedVersion: versionRef.current,
@@ -629,6 +638,8 @@ export function CardEditClient(props: Props) {
               onEditableSlugChange={setEditableSlug}
               editToken={props.editToken}
               cardStatus={props.status}
+              cardLocale={cardLocale}
+              onCardLocaleChange={setCardLocale}
             />
 
             {/* Download OG image */}
@@ -693,6 +704,7 @@ export function CardEditClient(props: Props) {
                 logoPath={logoPath}
                 brandPrimaryHex={brandPrimaryHex || undefined}
                 brandAccentHex={brandAccentHex || undefined}
+                cardLocale={cardLocale}
               />
             </div>
           </div>
@@ -1978,6 +1990,7 @@ function EditPreview({
   logoPath,
   brandPrimaryHex,
   brandAccentHex,
+  cardLocale = "de",
 }: {
   templateId: number;
   templateComponentKey: string;
@@ -1986,6 +1999,9 @@ function EditPreview({
   logoPath: string | null;
   brandPrimaryHex?: string;
   brandAccentHex?: string;
+  /** Card display language — preview must match the live card, which renders
+   *  with order.locale (was hardcoded "de" before 2026-06). */
+  cardLocale?: "de" | "en" | "tr";
 }) {
   const entry = getTemplateEntry(templateId);
   const Template = entry?.Component;
@@ -2033,7 +2049,7 @@ function EditPreview({
         tone={isDarkTemplate ? "dark" : "light"}
         primaryHex={brandPrimaryHex ?? null}
         accentHex={brandAccentHex ?? null}
-        locale="de"
+        locale={cardLocale}
       >
         {Template ? (
           <Template
@@ -2044,7 +2060,7 @@ function EditPreview({
             brandPrimaryHex={brandPrimaryHex ?? null}
             brandAccentHex={brandAccentHex ?? null}
             siteUrl={siteUrl}
-            locale="de"
+            locale={cardLocale}
           />
         ) : (
           <TemplateRenderer

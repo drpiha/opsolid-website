@@ -11,10 +11,10 @@
 //   - Warm cream gradient header with stamped pill eyebrow + tracked uppercase
 //     subtitle + Playfair shop name + italic est. line.
 //   - SVG wave divider into card surface.
-//   - 140 px circular mahoganyâ†’gold-warm avatar with sepia photo.
+//   - 140 px circular mahogany→gold-warm avatar with sepia photo.
 //   - Centred Playfair name with italic accent + ornament rule.
 //   - Cards on rounded panels with mahogany borders and warm shadows.
-//   - Vintage double-bordered price list with â˜˜ ornament caps.
+//   - Vintage double-bordered price list with ☘ ornament caps.
 //   - Quote block on linen gradient with oversized faded quote-mark.
 //   - Pill-shaped mahogany primary CTA and cream-line ghost row.
 // =============================================================================
@@ -68,8 +68,6 @@ function digitsOnly(value: string): string {
 interface Copy {
   stamp: string;
   prefix: string;
-  estPrefix: string;
-  taglineFallback: string;
   philoLabel: string;
   philoSub: string;
   servicesH: string;
@@ -86,8 +84,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     stamp: "Heritage · Handwerk · Tradition",
     prefix: "Klassische Herrenpflege",
-    estPrefix: "Est.",
-    taglineFallback: "Master Barber & Stylist",
     philoLabel: "Atelier Philosophie",
     philoSub: "Jedes Detail verdient seine Zeit",
     servicesH: "Leistungsliste",
@@ -102,8 +98,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   en: {
     stamp: "Heritage · Craft · Tradition",
     prefix: "Classic Men's Grooming",
-    estPrefix: "Est.",
-    taglineFallback: "Master Barber & Stylist",
     philoLabel: "Atelier Philosophy",
     philoSub: "Every detail deserves its time",
     servicesH: "Service List",
@@ -118,8 +112,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   tr: {
     stamp: "Heritage · Zanaat · Gelenek",
     prefix: "Klasik Erkek Bakımı",
-    estPrefix: "Est.",
-    taglineFallback: "Master Berber & Stylist",
     philoLabel: "Atelye Felsefesi",
     philoSub: "Her detay, hak ettiği özeni ister",
     servicesH: "Hizmet Listesi",
@@ -135,8 +127,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
 
     stamp: "Heritage · Craft · Tradition",
     prefix: "Arreglo masculino clásico",
-    estPrefix: "Est.",
-    taglineFallback: "Maestro barbero y estilista",
     philoLabel: "Filosofía del estudio",
     philoSub: "Cada detalle merece su tiempo",
     servicesH: "Lista de servicios",
@@ -153,8 +143,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
 
     stamp: "Heritage · Craft · Tradition",
     prefix: "Grooming maschile classico",
-    estPrefix: "Est.",
-    taglineFallback: "Master Barber e Stylist",
     philoLabel: "Filosofia dell'atelier",
     philoSub: "Ogni dettaglio merita il suo tempo",
     servicesH: "Elenco servizi",
@@ -171,8 +159,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
 
     stamp: "Heritage · Craft · Tradition",
     prefix: "Soin masculin classique",
-    estPrefix: "Est.",
-    taglineFallback: "Maître barbier et styliste",
     philoLabel: "Philosophie de l'atelier",
     philoSub: "Chaque détail mérite son temps",
     servicesH: "Liste des services",
@@ -189,8 +175,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
 
     stamp: "Heritage · Craft · Tradition",
     prefix: "عناية الرجل الكلاسيكية",
-    estPrefix: "تأسس",
-    taglineFallback: "حلاق رئيسي ومصفف",
     philoLabel: "فلسفة الأتيليه",
     philoSub: "كل تفصيل يستحق وقته",
     servicesH: "قائمة الخدمات",
@@ -292,13 +276,14 @@ export function BarberStone({
         >
           {cardData.company || cardData.name}
         </div>
-        <div
-          className="serif italic"
-          style={{ fontSize: 13, color: GOLD_WARM, marginBottom: 24 }}
-        >
-          — {t.estPrefix} {new Date().getFullYear() - 14}
-          {cityFromAddress ? ` · ${cityFromAddress}` : ""} —
-        </div>
+        {cityFromAddress && (
+          <div
+            className="serif italic"
+            style={{ fontSize: 13, color: GOLD_WARM, marginBottom: 24 }}
+          >
+            — {cityFromAddress} —
+          </div>
+        )}
       </header>
 
       {/* WAVE */}
@@ -382,7 +367,7 @@ export function BarberStone({
             marginBottom: 14,
           }}
         >
-          {cardData.title || cardData.position || t.taglineFallback}
+          {cardData.title || cardData.position}
         </p>
         <div
           aria-hidden
@@ -390,7 +375,7 @@ export function BarberStone({
           style={{ color: GOLD_WARM, fontSize: 14 }}
         >
           <span style={{ width: 40, height: 1, background: GOLD_WARM, opacity: 0.4 }} />
-          âœ¿
+          ✿
           <span style={{ width: 40, height: 1, background: GOLD_WARM, opacity: 0.4 }} />
         </div>
       </section>
@@ -477,7 +462,7 @@ export function BarberStone({
                 fontSize: 16,
               }}
             >
-              â˜˜
+              ☘
             </span>
             <span
               aria-hidden
@@ -492,7 +477,7 @@ export function BarberStone({
                 fontSize: 16,
               }}
             >
-              â˜˜
+              ☘
             </span>
             {services.map((svc, i) => {
               const featured = i === services.length - 1 && services.length > 2;
@@ -766,9 +751,9 @@ export const barberStoneSample: SampleData = {
       instagram: "https://instagram.com/ta.barbershop",
     },
     services: [
-      { title: "Premium Haarschnitt", description: "Beratung, Schnitt, Styling.", priceLabel: "â‚¬35" },
-      { title: "Heißrasur", description: "Klassische Rasur mit heißem Tuch.", priceLabel: "â‚¬28" },
-      { title: "Kombination", description: "Schnitt + Heißrasur in einem Termin.", priceLabel: "â‚¬55" },
+      { title: "Premium Haarschnitt", description: "Beratung, Schnitt, Styling.", priceLabel: "€35" },
+      { title: "Heißrasur", description: "Klassische Rasur mit heißem Tuch.", priceLabel: "€28" },
+      { title: "Kombination", description: "Schnitt + Heißrasur in einem Termin.", priceLabel: "€55" },
     ],
   },
   photoUrl:

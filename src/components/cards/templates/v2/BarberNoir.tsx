@@ -27,6 +27,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats, resolveTagline } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#0d0d0d";
@@ -62,11 +63,6 @@ function digitsOnly(value: string): string {
 }
 
 interface Copy {
-  estPrefix: string;
-  taglineFallback: string;
-  yearsLabel: string;
-  clientsLabel: string;
-  followersLabel: string;
   servicesEyebrow: string;
   servicesH: string;
   servicesSub: string;
@@ -81,11 +77,6 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    estPrefix: "Est.",
-    taglineFallback: "Master Barber & Stylist",
-    yearsLabel: "jahre",
-    clientsLabel: "kunden",
-    followersLabel: "follower",
     servicesEyebrow: "— Menü —",
     servicesH: "Leistungen",
     servicesSub: "Klassische & moderne Herrenpflege",
@@ -98,11 +89,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     hoursH: "Öffnungszeiten",
   },
   en: {
-    estPrefix: "Est.",
-    taglineFallback: "Master Barber & Stylist",
-    yearsLabel: "years",
-    clientsLabel: "clients",
-    followersLabel: "followers",
     servicesEyebrow: "— Menu —",
     servicesH: "Services",
     servicesSub: "Classic & modern grooming",
@@ -115,11 +101,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     hoursH: "Hours",
   },
   tr: {
-    estPrefix: "Est.",
-    taglineFallback: "Master Berber & Stylist",
-    yearsLabel: "yıl",
-    clientsLabel: "müşteri",
-    followersLabel: "takipçi",
     servicesEyebrow: "— Menü —",
     servicesH: "Hizmetler",
     servicesSub: "Klasik & modern erkek bakımı",
@@ -133,11 +114,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   es: {
 
-    estPrefix: "Est.",
-    taglineFallback: "Maestro barbero y estilista",
-    yearsLabel: "años",
-    clientsLabel: "clientes",
-    followersLabel: "seguidores",
     servicesEyebrow: "— Menu —",
     servicesH: "Servicios",
     servicesSub: "Arreglo clásico y moderno",
@@ -152,11 +128,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   it: {
 
-    estPrefix: "Est.",
-    taglineFallback: "Master Barber e Stylist",
-    yearsLabel: "anni",
-    clientsLabel: "clienti",
-    followersLabel: "follower",
     servicesEyebrow: "— Menu —",
     servicesH: "Servizi",
     servicesSub: "Grooming classico e moderno",
@@ -171,11 +142,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   fr: {
 
-    estPrefix: "Est.",
-    taglineFallback: "Maître barbier et styliste",
-    yearsLabel: "ans",
-    clientsLabel: "clients",
-    followersLabel: "abonnés",
     servicesEyebrow: "— Menu —",
     servicesH: "Services",
     servicesSub: "Soins classiques et modernes",
@@ -190,11 +156,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   ar: {
 
-    estPrefix: "تأسس",
-    taglineFallback: "حلاق رئيسي ومصفف",
-    yearsLabel: "سنة",
-    clientsLabel: "عملاء",
-    followersLabel: "متابعون",
     servicesEyebrow: "— Menu —",
     servicesH: "الخدمات",
     servicesSub: "عناية كلاسيكية وحديثة",
@@ -231,6 +192,8 @@ export function BarberNoir({
 
   const services = (cardData.services ?? []).slice(0, 5);
   const cityFromAddress = cardData.address?.split(",").slice(-1)[0]?.trim();
+  const stats = resolveStats(cardData.stats);
+  const tagline = resolveTagline(cardData);
   const nameParts = cardData.name.trim().split(/\s+/);
   const nameFirst = nameParts[0] ?? cardData.name;
   const nameLast = nameParts.slice(1).join(" ");
@@ -275,23 +238,23 @@ export function BarberNoir({
         className="px-7 pt-12 pb-9 text-center"
         style={{ background: SURFACE_2, borderBottom: `1px solid ${LINE_SOFT}` }}
       >
-        <div
-          className="serif relative mb-3.5 inline-block pb-2.5 italic"
-          style={{
-            color: accent,
-            fontSize: 13,
-            letterSpacing: "3px",
-          }}
-        >
-          {`— ${t.estPrefix} ${new Date().getFullYear() - 14}${
-            cityFromAddress ? ` · ${cityFromAddress}` : ""
-          } —`}
-          <span
-            aria-hidden
-            className="absolute left-1/2 bottom-0 -translate-x-1/2"
-            style={{ width: 36, height: 1, background: accent }}
-          />
-        </div>
+        {cityFromAddress && (
+          <div
+            className="serif relative mb-3.5 inline-block pb-2.5 italic"
+            style={{
+              color: accent,
+              fontSize: 13,
+              letterSpacing: "3px",
+            }}
+          >
+            {`— ${cityFromAddress} —`}
+            <span
+              aria-hidden
+              className="absolute left-1/2 bottom-0 -translate-x-1/2"
+              style={{ width: 36, height: 1, background: accent }}
+            />
+          </div>
+        )}
         <h1
           className="display"
           style={{
@@ -313,23 +276,25 @@ export function BarberNoir({
             </span>
           )}
         </h1>
-        <div
-          className="serif italic"
-          style={{
-            fontSize: 15,
-            color: TEXT_SOFT,
-            marginTop: 14,
-            letterSpacing: "0.5px",
-          }}
-        >
-          {cardData.title || cardData.position || t.taglineFallback}
-        </div>
+        {tagline && (
+          <div
+            className="serif italic"
+            style={{
+              fontSize: 15,
+              color: TEXT_SOFT,
+              marginTop: 14,
+              letterSpacing: "0.5px",
+            }}
+          >
+            {tagline}
+          </div>
+        )}
         <div
           aria-hidden
           className="mt-4"
           style={{ color: accent, fontSize: 14, letterSpacing: "8px" }}
         >
-          âœ¦ âœ¦ âœ¦
+          ✦ ✦ ✦
         </div>
       </header>
 
@@ -381,12 +346,14 @@ export function BarberNoir({
           )}
         </div>
         <div className="min-w-0">
-          <div
-            className="serif italic mb-1"
-            style={{ fontSize: 13, color: accent, letterSpacing: "1px" }}
-          >
-            {cardData.position || t.taglineFallback}
-          </div>
+          {cardData.position && (
+            <div
+              className="serif italic mb-1"
+              style={{ fontSize: 13, color: accent, letterSpacing: "1px" }}
+            >
+              {cardData.position}
+            </div>
+          )}
           <div
             className="display truncate mb-1.5"
             style={{
@@ -414,36 +381,40 @@ export function BarberNoir({
         </div>
       </section>
 
-      {/* STATS */}
-      <div
-        className="grid grid-cols-3 px-7 pt-9 pb-9"
-        style={{ borderBottom: `1px solid ${LINE_SOFT}` }}
-      >
-        {[
-          { num: "15", label: t.yearsLabel },
-          { num: "5K+", label: t.clientsLabel },
-          { num: "32K", label: t.followersLabel },
-        ].map((s, i) => (
-          <div
-            key={i}
-            className="px-2 text-center"
-            style={{ borderRight: i < 2 ? `1px solid ${LINE_SOFT}` : "none" }}
-          >
+      {/* STATS — owner-entered numbers only (resolveStats). */}
+      {stats && (
+        <div
+          className="grid px-7 pt-9 pb-9"
+          style={{
+            borderBottom: `1px solid ${LINE_SOFT}`,
+            gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
+          }}
+        >
+          {stats.map((s, i) => (
             <div
-              className="display"
-              style={{ fontSize: 42, color: accent, lineHeight: 1, letterSpacing: "1px" }}
+              key={s.label}
+              className="px-2 text-center"
+              style={{
+                borderRight:
+                  i < stats.length - 1 ? `1px solid ${LINE_SOFT}` : "none",
+              }}
             >
-              {s.num}
+              <div
+                className="display"
+                style={{ fontSize: 42, color: accent, lineHeight: 1, letterSpacing: "1px" }}
+              >
+                {s.value}
+              </div>
+              <div
+                className="serif italic mt-1.5 lowercase"
+                style={{ fontSize: 11, color: TEXT_SOFT, letterSpacing: "1.5px" }}
+              >
+                {s.label}
+              </div>
             </div>
-            <div
-              className="serif italic mt-1.5 lowercase"
-              style={{ fontSize: 11, color: TEXT_SOFT, letterSpacing: "1.5px" }}
-            >
-              {s.label}
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* BIO */}
       {cardData.bio && (
@@ -695,12 +666,12 @@ export function BarberNoir({
         style={{ fontSize: 13, color: TEXT_SOFT, letterSpacing: "0.5px" }}
       >
         {cardData.company || cardData.name}{" "}
-        <span style={{ color: accent, margin: "0 8px" }}>âœ¦</span>{" "}
+        <span style={{ color: accent, margin: "0 8px" }}>✦</span>{" "}
         {new Date().getFullYear()}
         {cityFromAddress && (
           <>
             {" "}
-            <span style={{ color: accent, margin: "0 8px" }}>âœ¦</span> {cityFromAddress}
+            <span style={{ color: accent, margin: "0 8px" }}>✦</span> {cityFromAddress}
           </>
         )}
         <div className="mt-2" style={{ color: TEXT_DIM }}>
@@ -830,9 +801,14 @@ export const barberNoirSample: SampleData = {
       instagram: "https://instagram.com/ta.barbershop",
     },
     services: [
-      { title: "Premium Haarschnitt", description: "Beratung, Schnitt, Styling.", priceLabel: "â‚¬35" },
-      { title: "Heißrasur", description: "Klassische Rasur mit heißem Tuch.", priceLabel: "â‚¬28" },
-      { title: "Kombination", description: "Schnitt + Heißrasur in einem Termin.", priceLabel: "â‚¬55" },
+      { title: "Premium Haarschnitt", description: "Beratung, Schnitt, Styling.", priceLabel: "€35" },
+      { title: "Heißrasur", description: "Klassische Rasur mit heißem Tuch.", priceLabel: "€28" },
+      { title: "Kombination", description: "Schnitt + Heißrasur in einem Termin.", priceLabel: "€55" },
+    ],
+    stats: [
+      { value: "15", label: "Jahre" },
+      { value: "5K+", label: "Kunden" },
+      { value: "32K", label: "Follower" },
     ],
   },
   photoUrl:

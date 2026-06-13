@@ -29,6 +29,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveStats, resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#6b5744";
@@ -65,7 +66,6 @@ function digitsOnly(value: string): string {
 }
 
 interface Copy {
-  est: string;
   storyLabel: string;
   storyH: string;
   storySig: string;
@@ -74,9 +74,6 @@ interface Copy {
   ctaPrimary: string;
   ctaSecondary: string;
   ctaTertiary: string;
-  statYears: string;
-  statShoots: string;
-  statCountries: string;
   saveContact: string;
   walletLabel: string;
   poweredBy: string;
@@ -84,7 +81,6 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    est: "Etabliert 2018",
     storyLabel: "Manifest",
     storyH: "Echte Momente, ehrlich erzählt",
     storySig: "— mit Liebe gemacht",
@@ -93,15 +89,11 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     ctaPrimary: "Termin buchen",
     ctaSecondary: "Portfolio",
     ctaTertiary: "Anfahrt",
-    statYears: "Jahre",
-    statShoots: "Shootings",
-    statCountries: "Länder",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
   },
   en: {
-    est: "Established 2018",
     storyLabel: "Manifesto",
     storyH: "Real moments, honestly told",
     storySig: "— made with love",
@@ -110,15 +102,11 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     ctaPrimary: "Book a session",
     ctaSecondary: "Portfolio",
     ctaTertiary: "Directions",
-    statYears: "Years",
-    statShoots: "Shoots",
-    statCountries: "Countries",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
   },
   tr: {
-    est: "Kuruluş 2018",
     storyLabel: "Manifesto",
     storyH: "Gerçek anlar, dürüst anlatılır",
     storySig: "— sevgiyle hazırlandı",
@@ -127,16 +115,12 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     ctaPrimary: "Randevu al",
     ctaSecondary: "Portföy",
     ctaTertiary: "Konum",
-    statYears: "Yıl",
-    statShoots: "Çekim",
-    statCountries: "Ülke",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
   },
   es: {
 
-    est: "Establecido en 2018",
     storyLabel: "Manifiesto",
     storyH: "Momentos reales, contados con honestidad",
     storySig: "— hecho con amor",
@@ -145,9 +129,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     ctaPrimary: "Reservar una sesión",
     ctaSecondary: "Portafolio",
     ctaTertiary: "Cómo llegar",
-    statYears: "Años",
-    statShoots: "Sesiones",
-    statCountries: "Países",
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
@@ -155,7 +136,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   it: {
 
-    est: "Fondato nel 2018",
     storyLabel: "Manifesto",
     storyH: "Momenti reali, raccontati con onestà",
     storySig: "— fatto con amore",
@@ -164,9 +144,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     ctaPrimary: "Prenota una sessione",
     ctaSecondary: "Portfolio",
     ctaTertiary: "Indicazioni",
-    statYears: "Anni",
-    statShoots: "Servizi fotografici",
-    statCountries: "Paesi",
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
@@ -174,7 +151,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   fr: {
 
-    est: "Établi en 2018",
     storyLabel: "Manifeste",
     storyH: "Des moments réels, racontés avec honnêteté",
     storySig: "— fait avec amour",
@@ -183,9 +159,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     ctaPrimary: "Réserver une séance",
     ctaSecondary: "Portfolio",
     ctaTertiary: "Itinéraire",
-    statYears: "Années",
-    statShoots: "Séances photo",
-    statCountries: "Pays",
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
@@ -193,7 +166,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   ar: {
 
-    est: "تأسس في 2018",
     storyLabel: "البيان",
     storyH: "لحظات حقيقية، رويت بصدق",
     storySig: "— صنع بحب",
@@ -202,9 +174,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     ctaPrimary: "احجز جلسة",
     ctaSecondary: "المعرض",
     ctaTertiary: "الاتجاهات",
-    statYears: "سنوات",
-    statShoots: "تصوير",
-    statCountries: "الدول",
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
@@ -231,7 +200,8 @@ export function PhotographerStone({
   const phoneDigits = cardData.phone ? digitsOnly(cardData.phone) : "";
   const services = (cardData.services ?? []).slice(0, 4);
   const tagline = cardData.title || cardData.position || "";
-  const city = cardData.address?.split(",").slice(-2)[0]?.trim() || "Berlin";
+  const city = resolveLocation(cardData);
+  const stats = resolveStats(cardData.stats);
 
   const nameParts = cardData.name.trim().split(/\s+/);
   const nameLead = nameParts.slice(0, -1).join(" ") || cardData.name;
@@ -262,12 +232,6 @@ export function PhotographerStone({
           background: `linear-gradient(180deg, #e3dccb 0%, ${PAGE} 100%)`,
         }}
       >
-        <div
-          className="serif mb-2.5 text-[13px] italic"
-          style={{ color: ACCENT_2, letterSpacing: "1px" }}
-        >
-          {t.est}
-        </div>
         <h1
           className="serif text-[36px] leading-[1.05]"
           style={{ color: ACCENT_DEEP, letterSpacing: "-0.5px", fontWeight: 600 }}
@@ -403,12 +367,17 @@ export function PhotographerStone({
         </section>
       )}
 
-      {/* STATS */}
-      <div className="grid grid-cols-3 gap-2 px-6 pb-7">
-        <StoneStat num="7" label={t.statYears} />
-        <StoneStat num="280+" label={t.statShoots} />
-        <StoneStat num="15" label={t.statCountries} />
-      </div>
+      {/* STATS — owner-entered numbers only (resolveStats). */}
+      {stats && (
+        <div
+          className="grid gap-2 px-6 pb-7"
+          style={{ gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))` }}
+        >
+          {stats.map((s) => (
+            <StoneStat key={s.label} num={s.value} label={s.label} />
+          ))}
+        </div>
+      )}
 
       {/* SERVICES */}
       {services.length > 0 && (
@@ -591,7 +560,7 @@ export function PhotographerStone({
           className="mt-1 text-[10.5px] font-semibold"
           style={{ color: TEXT_SOFT, letterSpacing: "1px" }}
         >
-          {city} · MMXVIII · {t.poweredBy}{" "}
+          {city ? `${city} · ` : ""}{t.poweredBy}{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"
@@ -701,6 +670,11 @@ export const photographerStoneSample: SampleData = {
         description: "Kampagnen, Lookbooks, E-Commerce.",
         priceLabel: "ab €480",
       },
+    ],
+    stats: [
+      { value: "7", label: "Jahre" },
+      { value: "280+", label: "Shootings" },
+      { value: "15", label: "Länder" },
     ],
   },
   photoUrl:

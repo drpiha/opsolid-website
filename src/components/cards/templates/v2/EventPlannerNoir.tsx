@@ -9,7 +9,7 @@
 // Locked design DNA (only colors respond to brand):
 //   - Hero is a centered "gala invitation": tiny letter-spaced GOLD eyebrow
 //     between two hairlines, the persona name in oversized italic Cormorant
-//     with a subtle text-gradient (textâ†’gold), a vertical 32 px gold rule,
+//     with a subtle text-gradient (text→gold), a vertical 32 px gold rule,
 //     then a serif-italic tagline (max-width 320 px, centered).
 //   - Profile is a horizontal two-row: thin-bordered avatar with gold ring
 //     + italic name + small gold caps role.

@@ -387,12 +387,14 @@ export function DJStone({
           >
             {cardData.name}
           </h2>
-          <p
-            className="serif mt-1.5 text-[15px] italic"
-            style={{ color: ACCENT }}
-          >
-            {cardData.position || cardData.title || "DJ & Producer"}
-          </p>
+          {(cardData.position || cardData.title) && (
+            <p
+              className="serif mt-1.5 text-[15px] italic"
+              style={{ color: ACCENT }}
+            >
+              {cardData.position || cardData.title}
+            </p>
+          )}
           {cardData.bio && (
             <p
               className="mt-4 text-[13.5px] font-medium"

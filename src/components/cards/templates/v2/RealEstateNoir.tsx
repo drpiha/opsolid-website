@@ -40,6 +40,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveStats, resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#0d0d0d";
@@ -84,10 +85,6 @@ function getInitials(name: string): string {
 const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X"];
 
 interface RenCopy {
-  since: string;
-  experience: string;
-  closed: string;
-  portfolio: string;
   services: string;
   servicesTitle: string;
   voices: string;
@@ -108,10 +105,6 @@ interface RenCopy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RenCopy> = {
   de: {
-    since: "Seit",
-    experience: "Jahre",
-    closed: "Abschlüsse",
-    portfolio: "Portfolio",
     services: "Leistungen",
     servicesTitle: "Spezialgebiete",
     voices: "Empfehlungen",
@@ -130,10 +123,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RenCopy> = {
     share: "Teilen",
   },
   en: {
-    since: "Since",
-    experience: "Years",
-    closed: "Closed",
-    portfolio: "Portfolio",
     services: "Services",
     servicesTitle: "Specialisations",
     voices: "Voices",
@@ -152,10 +141,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RenCopy> = {
     share: "Share",
   },
   tr: {
-    since: "Sektörde",
-    experience: "Yıl",
-    closed: "Satış",
-    portfolio: "Portföy",
     services: "Hizmetler",
     servicesTitle: "Uzmanlık Alanlarım",
     voices: "Referanslar",
@@ -174,11 +159,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RenCopy> = {
     share: "Paylaş",
   },
   es: {
-
-    since: "Desde",
-    experience: "Años",
-    closed: "Cerrado",
-    portfolio: "Portafolio",
     services: "Servicios",
     servicesTitle: "Especializaciones",
     voices: "Voces",
@@ -198,11 +178,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RenCopy> = {
   
   },
   it: {
-
-    since: "Dal",
-    experience: "Anni",
-    closed: "Chiuso",
-    portfolio: "Portfolio",
     services: "Servizi",
     servicesTitle: "Specializzazioni",
     voices: "Voci",
@@ -222,11 +197,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RenCopy> = {
   
   },
   fr: {
-
-    since: "Depuis",
-    experience: "Années",
-    closed: "Fermé",
-    portfolio: "Portfolio",
     services: "Services",
     servicesTitle: "Spécialisations",
     voices: "Témoignages",
@@ -246,11 +216,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RenCopy> = {
   
   },
   ar: {
-
-    since: "منذ",
-    experience: "سنوات",
-    closed: "مغلق",
-    portfolio: "المعرض",
     services: "الخدمات",
     servicesTitle: "التخصصات",
     voices: "أصوات",
@@ -300,10 +265,11 @@ export function RealEstateNoir({
 
   const services = cardData.services ?? [];
   const testimonials = cardData.testimonials ?? [];
+  const stats = resolveStats(cardData.stats);
   const featuredQuote = testimonials[0];
 
   const year = new Date().getFullYear();
-  const sinceYear = year - 12;
+  const locationLabel = resolveLocation(cardData);
 
   return (
     <article
@@ -371,19 +337,23 @@ export function RealEstateNoir({
           </div>
 
           <div className="min-w-0 flex-1">
-            <div
-              className="mb-1 inline-flex items-center gap-2 text-[10px] font-medium uppercase"
-              style={{ color: accent, letterSpacing: "3px" }}
-            >
-              <span aria-hidden style={{ display: "inline-block", width: 18, height: 1, background: accent }} />
-              {t.since} {sinceYear}
-            </div>
-            <div
-              className="text-[11px] font-normal"
-              style={{ color: TEXT_DIMMED, letterSpacing: "0.8px" }}
-            >
-              {(cardData.company || "BERLIN").toUpperCase()}
-            </div>
+            {locationLabel && (
+              <div
+                className="mb-1 inline-flex items-center gap-2 text-[10px] font-medium uppercase"
+                style={{ color: accent, letterSpacing: "3px" }}
+              >
+                <span aria-hidden style={{ display: "inline-block", width: 18, height: 1, background: accent }} />
+                {locationLabel}
+              </div>
+            )}
+            {cardData.company && (
+              <div
+                className="text-[11px] font-normal"
+                style={{ color: TEXT_DIMMED, letterSpacing: "0.8px" }}
+              >
+                {cardData.company.toUpperCase()}
+              </div>
+            )}
           </div>
         </div>
 
@@ -422,18 +392,27 @@ export function RealEstateNoir({
         }}
       />
 
-      {/* STATS BAR */}
-      <div
-        className="grid grid-cols-3 py-7"
-        style={{
-          background: PANEL_2,
-          borderBottom: `1px solid ${accent}26`,
-        }}
-      >
-        <StatCell num="12" sup="+" label={t.experience} accent={accent} />
-        <StatCell num="180" sup="+" label={t.closed} accent={accent} divider />
-        <StatCell num="â‚¬2.4" sup="B" label={t.portfolio} accent={accent} divider />
-      </div>
+      {/* STATS BAR — owner-entered numbers only (resolveStats). */}
+      {stats && (
+        <div
+          className="grid py-7"
+          style={{
+            background: PANEL_2,
+            borderBottom: `1px solid ${accent}26`,
+            gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
+          }}
+        >
+          {stats.map((s, i) => (
+            <StatCell
+              key={s.label}
+              num={s.value}
+              label={s.label}
+              accent={accent}
+              divider={i > 0}
+            />
+          ))}
+        </div>
+      )}
 
       {/* SERVICES — Roman numerals */}
       {services.length > 0 && (
@@ -854,9 +833,9 @@ export const realEstateNoirSample: SampleData = {
       instagram: "https://instagram.com/walker.stein.berlin",
     },
     services: [
-      { title: "Charlottenburg Townhouse", priceLabel: "â‚¬2.85M" },
+      { title: "Charlottenburg Townhouse", priceLabel: "€2.85M" },
       { title: "Wannsee Waterfront Build", priceLabel: "FOR SALE" },
-      { title: "Mitte Penthouse", priceLabel: "â‚¬1.65M" },
+      { title: "Mitte Penthouse", priceLabel: "€1.65M" },
     ],
     testimonials: [
       {
@@ -865,6 +844,11 @@ export const realEstateNoirSample: SampleData = {
         quote:
           "Hannah understood us before we did. Eight months of dead-end viewings became a single home that felt inevitable.",
       },
+    ],
+    stats: [
+      { value: "12+", label: "Jahre" },
+      { value: "180+", label: "Abschlüsse" },
+      { value: "€2.4B", label: "Portfolio" },
     ],
   },
   photoUrl:

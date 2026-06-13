@@ -683,17 +683,19 @@ function Hero({
 
       {/* Hero text */}
       <div className="absolute inset-x-0 bottom-0 z-10 px-6 pb-10 pt-12">
-        <span
-          className="pt-mono mb-3 inline-flex items-center gap-1.5 rounded-sm px-2 py-1 text-[9.5px]"
-          style={{
-            background: `${accent}1F`,
-            color: accent,
-            boxShadow: `inset 0 0 0 1px ${accent}66`,
-          }}
-        >
-          <Flame size={10} strokeWidth={2.6} />
-          {company || "PERSONAL TRAINER"}
-        </span>
+        {company && (
+          <span
+            className="pt-mono mb-3 inline-flex items-center gap-1.5 rounded-sm px-2 py-1 text-[9.5px]"
+            style={{
+              background: `${accent}1F`,
+              color: accent,
+              boxShadow: `inset 0 0 0 1px ${accent}66`,
+            }}
+          >
+            <Flame size={10} strokeWidth={2.6} />
+            {company}
+          </span>
+        )}
 
         <h1 className="pt-display text-white">
           <span

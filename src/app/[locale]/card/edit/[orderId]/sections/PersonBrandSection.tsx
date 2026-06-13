@@ -10,6 +10,7 @@
 
 import { ChevronDown, Loader2, Pencil, Upload } from "lucide-react";
 import { Input, Textarea } from "@/components/ui/Input";
+import { ProfileExtrasFields } from "@/components/cards/order-form/ProfileExtrasFields";
 import { useLocale } from "@/context/LocaleContext";
 import type { CardData } from "@/lib/validation";
 import type {
@@ -142,6 +143,13 @@ export default function PersonBrandSection({
             value={cardData.bio ?? ""}
             onChange={(e) => setCard("bio", e.target.value)}
             rows={3}
+          />
+          {/* Tagline + location chip — owner-controlled (2026-06 purge of
+              hardcoded template personas). */}
+          <ProfileExtrasFields
+            cardData={cardData}
+            setField={setCard}
+            L={(k, fb) => (form as Record<string, string>)[k] ?? fb}
           />
         </fieldset>
 

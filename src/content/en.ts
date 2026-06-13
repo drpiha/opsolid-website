@@ -1775,6 +1775,33 @@ export const content = {
           callMeBackHint:
             "We'll get back to you within one business day to confirm details.",
           cardSection: "Your card content",
+          sampleHint: "Sample content to explore — replace it with your own details.",
+          clearSample: "Clear",
+          cardLanguageLabel: "Card language",
+          cardLanguageHint:
+            "The language your card's visitors will see. You can change it later in the editor.",
+          statsSection: "Stats",
+          statsHint:
+            "Real numbers shown as a stat strip on many designs (e.g. 12 — Years).",
+          statsEmpty:
+            "No stats yet. Add real numbers you're proud of (e.g. 12 — Years of experience). Cards without stats simply don't show this section.",
+          statsValue: "12+",
+          statsLabel: "Years of experience",
+          statsAdd: "Add stat",
+          statsRemove: "Remove",
+          taglineLabel: "Tagline",
+          taglinePlaceholder: "A short claim line (optional)",
+          taglineHint:
+            "Shown under your name on some designs. Empty = your role/title is used instead.",
+          locationLabel: "Location on card",
+          locationAuto: "From address",
+          locationCustom: "Custom",
+          locationHidden: "Hidden",
+          locationAutoHint: "Derived from your address:",
+          locationAutoEmpty:
+            "No address yet — no location will be shown until you add one.",
+          locationPlaceholder: "Remote · Berlin",
+          locationHiddenHint: "No location chip will appear on your card.",
           copyFromContact: "Use info from above",
           cardName: "First and last name",
           cardTitle: "Title / role",

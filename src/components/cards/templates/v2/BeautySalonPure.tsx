@@ -28,6 +28,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#be185d";
@@ -232,7 +233,7 @@ export function BeautySalonPure({
   const firstName = nameParts.slice(0, -1).join(" ") || cardData.name;
   const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : "";
 
-  const city = cardData.address?.split(",").slice(-2)[0]?.trim() || "Berlin";
+  const city = resolveLocation(cardData);
 
   return (
     <article
@@ -259,7 +260,7 @@ export function BeautySalonPure({
           className="mb-3 text-[9.5px] font-semibold uppercase tracking-[3px]"
           style={{ color: primary }}
         >
-          {cardData.company} · {city}
+          {[cardData.company, city].filter(Boolean).join(" · ")}
         </div>
         <h1
           className="bsp-editorial text-[56px] font-light leading-[0.95] tracking-[-1.5px]"
@@ -317,7 +318,7 @@ export function BeautySalonPure({
         {testimonials.length > 0 && (
           <div className="text-right">
             <div className="text-[12px] tracking-[1px]" style={{ color: GOLD }}>
-              â˜…â˜…â˜…â˜…â˜…
+              ★★★★★
             </div>
             <div
               className="mt-0.5 text-[10.5px] font-semibold tracking-[0.5px]"
@@ -636,12 +637,12 @@ export const beautySalonPureSample: SampleData = {
     address: "Friedrichstr. 67, 10117 Berlin",
     bio: "Premium beauty studio. 7 yıl deneyim · 5.000+ memnun müşteri.",
     services: [
-      { title: "Microblading", description: "Kalıcı kaş tasarımı", priceLabel: "â‚¬280" },
-      { title: "Eyeliner", description: "Kalıcı makyaj", priceLabel: "â‚¬220" },
-      { title: "Lash Lift & Tint", description: "Volume / classic", priceLabel: "â‚¬65" },
-      { title: "Hidrafacial", description: "Cilt protokolu", priceLabel: "â‚¬85" },
+      { title: "Microblading", description: "Kalıcı kaş tasarımı", priceLabel: "€280" },
+      { title: "Eyeliner", description: "Kalıcı makyaj", priceLabel: "€220" },
+      { title: "Lash Lift & Tint", description: "Volume / classic", priceLabel: "€65" },
+      { title: "Hidrafacial", description: "Cilt protokolu", priceLabel: "€85" },
       { title: "Lazer Epilasyon", description: "Diode paketleri", priceLabel: "Paket" },
-      { title: "Kaş Laminasyonu", description: "Brow lift", priceLabel: "â‚¬55" },
+      { title: "Kaş Laminasyonu", description: "Brow lift", priceLabel: "€55" },
     ],
     testimonials: [
       { author: "Selin K.", quote: "Microblading sonucu inanılmaz doğal duruyor. Buse'nin elinden çıkmış her ayrıntı kusursuz." },

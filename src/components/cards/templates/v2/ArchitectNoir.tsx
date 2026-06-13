@@ -29,6 +29,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats, resolveTagline, resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#0d0d0d";
@@ -64,12 +65,6 @@ function digitsOnly(value: string): string {
 }
 
 interface Copy {
-  estPrefix: string;
-  taglineFallback: string;
-  yearsLabel: string;
-  projectsLabel: string;
-  countriesLabel: string;
-  awardsLabel: string;
   featuredTag: string;
   specsEyebrow: string;
   philEyebrow: string;
@@ -83,12 +78,6 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    estPrefix: "Est.",
-    taglineFallback: "Architekt",
-    yearsLabel: "Jahre",
-    projectsLabel: "Projekte",
-    countriesLabel: "Länder",
-    awardsLabel: "Preise",
     featuredTag: "Featured",
     specsEyebrow: "01 Spezialgebiete",
     philEyebrow: "02 Philosophie",
@@ -100,12 +89,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     studioLabel: "Studio",
   },
   en: {
-    estPrefix: "Est.",
-    taglineFallback: "Architect",
-    yearsLabel: "Years",
-    projectsLabel: "Projects",
-    countriesLabel: "Countries",
-    awardsLabel: "Awards",
     featuredTag: "Featured",
     specsEyebrow: "01 Specialties",
     philEyebrow: "02 Philosophy",
@@ -117,12 +100,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     studioLabel: "Studio",
   },
   tr: {
-    estPrefix: "Est.",
-    taglineFallback: "Mimar",
-    yearsLabel: "Yıl",
-    projectsLabel: "Proje",
-    countriesLabel: "Ülke",
-    awardsLabel: "Ödül",
     featuredTag: "Featured",
     specsEyebrow: "01 Uzmanlık",
     philEyebrow: "02 Felsefe",
@@ -135,12 +112,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   es: {
 
-    estPrefix: "Est.",
-    taglineFallback: "Arquitecto",
-    yearsLabel: "Años",
-    projectsLabel: "Proyectos",
-    countriesLabel: "Países",
-    awardsLabel: "Premios",
     featuredTag: "Destacado",
     specsEyebrow: "01 Especialidades",
     philEyebrow: "02 Filosofía",
@@ -154,12 +125,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   it: {
 
-    estPrefix: "Est.",
-    taglineFallback: "Architetto",
-    yearsLabel: "Anni",
-    projectsLabel: "Progetti",
-    countriesLabel: "Paesi",
-    awardsLabel: "Premi",
     featuredTag: "In evidenza",
     specsEyebrow: "01 Specialità",
     philEyebrow: "02 Filosofia",
@@ -173,12 +138,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   fr: {
 
-    estPrefix: "Est.",
-    taglineFallback: "Architecte",
-    yearsLabel: "Années",
-    projectsLabel: "Projets",
-    countriesLabel: "Pays",
-    awardsLabel: "Récompenses",
     featuredTag: "À la une",
     specsEyebrow: "01 Spécialités",
     philEyebrow: "02 Philosophie",
@@ -192,12 +151,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   ar: {
 
-    estPrefix: "تأسس",
-    taglineFallback: "مهندس معماري",
-    yearsLabel: "سنوات",
-    projectsLabel: "المشاريع",
-    countriesLabel: "الدول",
-    awardsLabel: "جوائز",
     featuredTag: "مميز",
     specsEyebrow: "01 التخصصات",
     philEyebrow: "02 الفلسفة",
@@ -232,11 +185,13 @@ export function ArchitectNoir({
     : "";
 
   const services = (cardData.services ?? []).slice(0, 5);
-  const cityFromAddress = cardData.address?.split(",").slice(-1)[0]?.trim();
+  const stats = resolveStats(cardData.stats);
+  const tagline = resolveTagline(cardData);
+  const locationLabel = resolveLocation(cardData);
+  const tags = (cardData.tags ?? []).slice(0, 3);
   const nameParts = cardData.name.trim().split(/\s+/);
   const nameFirst = nameParts[0] ?? cardData.name;
   const nameLast = nameParts.slice(1).join(" ");
-  const startYear = new Date().getFullYear() - 14;
 
   const featuredService = services[0];
   const heroImage = photoUrl;
@@ -315,17 +270,18 @@ export function ArchitectNoir({
             >
               {cardData.company || cardData.name}
             </div>
-            <div
-              className="mt-1"
-              style={{
-                fontSize: 10,
-                letterSpacing: "2px",
-                color: accent,
-              }}
-            >
-              {t.estPrefix.toUpperCase()} {startYear}
-              {cityFromAddress ? ` — ${cityFromAddress.toUpperCase()}` : ""}
-            </div>
+            {locationLabel && (
+              <div
+                className="mt-1"
+                style={{
+                  fontSize: 10,
+                  letterSpacing: "2px",
+                  color: accent,
+                }}
+              >
+                {locationLabel.toUpperCase()}
+              </div>
+            )}
           </div>
         </div>
       </header>
@@ -335,21 +291,23 @@ export function ArchitectNoir({
         className="relative px-7 pb-6 pt-12"
         style={{ background: SURFACE }}
       >
-        <div
-          className="mb-3.5 flex items-center gap-3 uppercase"
-          style={{
-            fontSize: 10,
-            letterSpacing: "4px",
-            color: accent,
-            fontWeight: 600,
-          }}
-        >
-          <span
-            aria-hidden
-            style={{ width: 32, height: 1, background: accent }}
-          />
-          {cardData.position || cardData.title || t.taglineFallback}
-        </div>
+        {tagline && (
+          <div
+            className="mb-3.5 flex items-center gap-3 uppercase"
+            style={{
+              fontSize: 10,
+              letterSpacing: "4px",
+              color: accent,
+              fontWeight: 600,
+            }}
+          >
+            <span
+              aria-hidden
+              style={{ width: 32, height: 1, background: accent }}
+            />
+            {tagline}
+          </div>
+        )}
         <h1
           style={{
             fontFamily: "'Space Grotesk', sans-serif",
@@ -374,19 +332,20 @@ export function ArchitectNoir({
             </span>
           )}
         </h1>
-        <div
-          className="mt-5 flex items-center justify-between uppercase"
-          style={{
-            fontSize: 11,
-            letterSpacing: "2.5px",
-            color: TEXT_SOFT,
-            paddingTop: 14,
-            borderTop: `1px solid ${LINE}`,
-          }}
-        >
-          <span>Architecture / Interior</span>
-          <span style={{ color: accent }}>14 {t.yearsLabel.toLowerCase()}</span>
-        </div>
+        {tags.length > 0 && (
+          <div
+            className="mt-5 flex items-center justify-between uppercase"
+            style={{
+              fontSize: 11,
+              letterSpacing: "2.5px",
+              color: TEXT_SOFT,
+              paddingTop: 14,
+              borderTop: `1px solid ${LINE}`,
+            }}
+          >
+            <span>{tags.join(" / ")}</span>
+          </div>
+        )}
       </section>
 
       {/* FEATURED FRAME */}
@@ -437,18 +396,12 @@ export function ArchitectNoir({
             >
               {featuredService?.title || cardData.bio?.slice(0, 60) || cardData.name}
             </div>
-            {cityFromAddress && (
+            {locationLabel && (
               <div
                 className="text-right uppercase"
                 style={{ fontSize: 10, letterSpacing: "2px", color: TEXT_SOFT }}
               >
-                {cityFromAddress}
-                <strong
-                  className="block mt-1"
-                  style={{ color: accent, fontWeight: 600 }}
-                >
-                  {new Date().getFullYear()}
-                </strong>
+                {locationLabel}
               </div>
             )}
           </div>
@@ -498,62 +451,50 @@ export function ArchitectNoir({
         </section>
       )}
 
-      {/* STATS */}
-      <section
-        className="grid grid-cols-4 px-7 py-8"
-        style={{ background: SURFACE }}
-      >
-        {[
-          { num: "14", label: t.yearsLabel },
-          { num: "85", sup: "+", label: t.projectsLabel },
-          { num: "8", label: t.countriesLabel },
-          { num: "4", label: t.awardsLabel },
-        ].map((s, i, arr) => (
-          <div
-            key={i}
-            className="relative px-1 py-2 text-center"
-            style={{
-              borderRight:
-                i < arr.length - 1 ? `1px solid ${LINE}` : "none",
-            }}
-          >
+      {/* STATS — owner-entered numbers only (resolveStats). */}
+      {stats && (
+        <section
+          className="grid px-7 py-8"
+          style={{
+            background: SURFACE,
+            gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
+          }}
+        >
+          {stats.map((s, i, arr) => (
             <div
-              className="serif italic"
+              key={s.label}
+              className="relative px-1 py-2 text-center"
               style={{
-                fontWeight: 300,
-                fontSize: 36,
-                color: accent,
-                lineHeight: 1,
+                borderRight:
+                  i < arr.length - 1 ? `1px solid ${LINE}` : "none",
               }}
             >
-              {s.num}
-              {s.sup && (
-                <sup
-                  style={{
-                    fontSize: 16,
-                    color: TEXT_SOFT,
-                    marginLeft: 2,
-                    top: "-0.7em",
-                  }}
-                >
-                  {s.sup}
-                </sup>
-              )}
+              <div
+                className="serif italic"
+                style={{
+                  fontWeight: 300,
+                  fontSize: 36,
+                  color: accent,
+                  lineHeight: 1,
+                }}
+              >
+                {s.value}
+              </div>
+              <div
+                className="mt-2 uppercase"
+                style={{
+                  fontSize: 9,
+                  letterSpacing: "2px",
+                  color: TEXT_SOFT,
+                  fontWeight: 500,
+                }}
+              >
+                {s.label}
+              </div>
             </div>
-            <div
-              className="mt-2 uppercase"
-              style={{
-                fontSize: 9,
-                letterSpacing: "2px",
-                color: TEXT_SOFT,
-                fontWeight: 500,
-              }}
-            >
-              {s.label}
-            </div>
-          </div>
-        ))}
-      </section>
+          ))}
+        </section>
+      )}
 
       {/* PHILOSOPHY */}
       {cardData.bio && (
@@ -818,6 +759,13 @@ export const architectNoirSample: SampleData = {
       { title: "Beratung", description: "Strategische Bauberatung pro Stunde.", priceLabel: "€200/h" },
       { title: "Sustainable Design", description: "LEED- und DGNB-orientierte Konzepte." },
       { title: "Urban Renewal", description: "Quartiersbezogene Stadtentwicklung." },
+    ],
+    tags: ["Architecture", "Interior"],
+    stats: [
+      { value: "14", label: "Jahre" },
+      { value: "85+", label: "Projekte" },
+      { value: "8", label: "Länder" },
+      { value: "4", label: "Preise" },
     ],
   },
   photoUrl:

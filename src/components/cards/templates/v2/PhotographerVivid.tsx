@@ -3,17 +3,17 @@
 // =============================================================================
 // PhotographerVivid — v2 template (id=66, key="photographer-vivid").
 //
-// Sector: Creator / Photographer — VIVID variant. Mood: bold purpleâ†’indigo
+// Sector: Creator / Photographer — VIVID variant. Mood: bold purple→indigo
 // gradient, energetic social-media photographer, modern app feel.
 // Inspired by kart_04_fotograf_vivid.html.
 //
 // Design DNA:
-//   - Hero (220 px) with deep navy â†’ indigo â†’ violet gradient and
+//   - Hero (220 px) with deep navy → indigo → violet gradient and
 //     amber blob accents, status badge ("Available 2026") + city tag.
 //   - Floating card — squircle photo + bold name + role + chips row.
 //   - 3-up stat tiles (rounded card shadows).
 //   - Service / package cards in a 2-col grid with numbered tiles.
-//   - Big violetâ†’amber CTA + 3-up mini links.
+//   - Big violet→amber CTA + 3-up mini links.
 //   - Quote / review card on indigo gradient with amber quote glyph.
 //   - Social grid 4-up.
 //   - Gradient share / QR panel.
@@ -29,6 +29,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#7c3aed";
@@ -267,9 +268,12 @@ export function PhotographerVivid({
 
   const services = (cardData.services ?? []).slice(0, 4);
   const tagline = cardData.title || cardData.position || "";
-  const city = cardData.address?.split(",").slice(-2)[0]?.trim() || "Berlin";
+  const city = resolveLocation(cardData);
 
-  const chips = ["Photographer", city, "Wedding", "Portrait"];
+  // Chips: real profile data only (position, city, owner tags).
+  const chips = [cardData.position, city, ...(cardData.tags ?? [])]
+    .filter((c): c is string => Boolean(c))
+    .slice(0, 4);
 
   return (
     <article
@@ -319,10 +323,12 @@ export function PhotographerVivid({
             />
             {t.badge}
           </span>
-          <span className="flex items-center gap-1">
-            <MapPin size={11} strokeWidth={2.4} />
-            {city}
-          </span>
+          {city && (
+            <span className="flex items-center gap-1">
+              <MapPin size={11} strokeWidth={2.4} />
+              {city}
+            </span>
+          )}
         </div>
       </section>
 
@@ -659,7 +665,7 @@ export function PhotographerVivid({
         className="px-6 py-5 text-center text-[12px] font-semibold"
         style={{ color: TEXT_SOFT }}
       >
-        {cardData.name} © {new Date().getFullYear()} · {city} ·{" "}
+        {cardData.name} © {new Date().getFullYear()} · {city ? `${city} · ` : ""}{" "}
         <a
           href="https://opsolid.de/products/digital-card"
           target="_blank"
@@ -822,22 +828,22 @@ export const photographerVividSample: SampleData = {
       {
         title: "Hochzeit",
         description: "ganzer tag · zwei fotografen",
-        priceLabel: "ab â‚¬2.800",
+        priceLabel: "ab €2.800",
       },
       {
         title: "Porträt",
         description: "studio oder natürliches licht",
-        priceLabel: "â‚¬350 / 2h",
+        priceLabel: "€350 / 2h",
       },
       {
         title: "Produkt",
         description: "kampagnen · lookbooks",
-        priceLabel: "ab â‚¬480",
+        priceLabel: "ab €480",
       },
       {
         title: "Branding",
         description: "personal · creator content",
-        priceLabel: "ab â‚¬680",
+        priceLabel: "ab €680",
       },
     ],
   },

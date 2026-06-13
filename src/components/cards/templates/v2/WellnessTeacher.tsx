@@ -41,6 +41,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#5f7a6e"; // sage green
@@ -321,6 +322,7 @@ export function WellnessTeacher({
     : "";
 
   const services = cardData.services ?? [];
+  const stats = resolveStats(cardData.stats);
   const year = new Date().getFullYear();
 
   return (
@@ -383,13 +385,15 @@ export function WellnessTeacher({
             </span>{" "}
             {t.mantraTail}
           </h1>
-          <span
-            className="mt-1 text-[11px] font-semibold uppercase"
-            style={{ color: "rgba(255,255,255,0.85)", letterSpacing: "2px" }}
-          >
-            {cardData.company || cardData.position || "Yoga & Wellness"}
-            {cardData.address ? ` · ${cardData.address.split(",")[0]?.trim()}` : ""}
-          </span>
+          {(cardData.company || cardData.position || cardData.address) && (
+            <span
+              className="mt-1 text-[11px] font-semibold uppercase"
+              style={{ color: "rgba(255,255,255,0.85)", letterSpacing: "2px" }}
+            >
+              {cardData.company || cardData.position}
+              {cardData.address ? ` · ${cardData.address.split(",")[0]?.trim()}` : ""}
+            </span>
+          )}
         </div>
       </header>
 
@@ -452,12 +456,14 @@ export function WellnessTeacher({
         >
           {cardData.name}
         </h2>
-        <div
-          className="mt-1.5 text-[12px] font-semibold uppercase"
-          style={{ color: primary, letterSpacing: "2px" }}
-        >
-          {t.certified}
-        </div>
+        {cardData.position && (
+          <div
+            className="mt-1.5 text-[12px] font-semibold uppercase"
+            style={{ color: primary, letterSpacing: "2px" }}
+          >
+            {cardData.position}
+          </div>
+        )}
         {cardData.company && (
           <div className="mt-1 text-[14px]" style={{ color: INK_SOFT }}>
             {cardData.company}
@@ -582,56 +588,19 @@ export function WellnessTeacher({
         </div>
       </section>
 
-      {/* RETREAT BANNER */}
-      <section className="px-7 pt-7">
-        <div
-          className="relative overflow-hidden rounded-[22px] px-6 py-9 text-center"
-          style={{
-            background: `linear-gradient(135deg, ${primary} 0%, ${accent} 100%)`,
-            color: "#fff",
-          }}
+      {/* STATS — owner-entered numbers only (resolveStats). */}
+      {stats && (
+        <section
+          className="mt-7 px-7 py-8"
+          style={{ background: PAGE_WARM }}
         >
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full"
-            style={{ background: `radial-gradient(circle, ${accent}66, transparent 70%)` }}
-          />
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -bottom-12 -left-12 h-40 w-40 rounded-full"
-            style={{
-              background: "radial-gradient(circle, rgba(255,255,255,0.12), transparent 70%)",
-            }}
-          />
-          <div
-            className="relative text-[11px] font-bold uppercase"
-            style={{ color: accent, letterSpacing: "3px" }}
-          >
-            {t.retreatLabel}
+          <div className="flex justify-around text-center">
+            {stats.map((s) => (
+              <Stat key={s.label} num={s.value} label={s.label} primary={primary} />
+            ))}
           </div>
-          <h3 className="serif relative mt-2 whitespace-pre-line text-[24px] leading-[1.2]">
-            {t.retreatTitle}
-          </h3>
-          <p
-            className="relative mt-3 text-[13px]"
-            style={{ color: "rgba(255,255,255,0.86)" }}
-          >
-            {t.retreatDesc}
-          </p>
-        </div>
-      </section>
-
-      {/* STATS */}
-      <section
-        className="mt-7 px-7 py-8"
-        style={{ background: PAGE_WARM }}
-      >
-        <div className="flex justify-around text-center">
-          <Stat num="6" label={t.yearsLabel} primary={primary} />
-          <Stat num="350+" label={t.studentsLabel} primary={primary} />
-          <Stat num="18K" label={t.communityLabel} primary={primary} />
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* CTA */}
       <section className="px-7 pt-7">
@@ -716,7 +685,7 @@ export function WellnessTeacher({
         </div>
         <div className="mt-2 inline-flex items-center gap-1.5 text-[10.5px]" style={{ color: "rgba(255,255,255,0.65)" }}>
           <Sparkles size={11} strokeWidth={1.6} />
-          {cardData.address?.split(",").slice(-1)[0]?.trim() || "Berlin"}
+          {cardData.address?.split(",").slice(-1)[0]?.trim()}
         </div>
       </footer>
     </article>
@@ -856,6 +825,11 @@ export const wellnessTeacherSample: SampleData = {
       { title: "Monatskurs", description: "4×/Woche · kleine Gruppen", priceLabel: "€160" },
       { title: "Retreat", description: "3 Tage · Vollpension am Meer", priceLabel: "€480" },
       { title: "Online-Session", description: "30 min · live Zoom", priceLabel: "€35" },
+    ],
+    stats: [
+      { value: "6", label: "Jahre" },
+      { value: "350+", label: "Schüler:innen" },
+      { value: "18K", label: "Community" },
     ],
     socials: {
       instagram: "https://instagram.com/serayoga",

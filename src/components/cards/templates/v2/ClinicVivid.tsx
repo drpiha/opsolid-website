@@ -816,10 +816,10 @@ export const clinicVividSample: SampleData = {
       instagram: "https://instagram.com/praxis.demir",
     },
     services: [
-      { title: "Vorsorge", description: "Check-up & Labor", priceLabel: "ab â‚¬80" },
-      { title: "Reisemedizin", description: "Impfung & Beratung", priceLabel: "â‚¬120" },
-      { title: "Online", description: "Videosprechstunde", priceLabel: "â‚¬60" },
-      { title: "Hausbesuch", description: "Premium-Service", priceLabel: "â‚¬180" },
+      { title: "Vorsorge", description: "Check-up & Labor", priceLabel: "ab €80" },
+      { title: "Reisemedizin", description: "Impfung & Beratung", priceLabel: "€120" },
+      { title: "Online", description: "Videosprechstunde", priceLabel: "€60" },
+      { title: "Hausbesuch", description: "Premium-Service", priceLabel: "€180" },
     ],
     testimonials: [
       {

@@ -26,6 +26,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats, resolveTagline, resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#ffffff";
@@ -71,16 +72,9 @@ function getInitials(name: string): string {
 }
 
 interface Copy {
-  estTag: string;
-  taglineFallback: string;
-  rolePill: string;
-  bioFallback: string;
   categoriesH: string;
-  orderH: string;
   channelsH: string;
   orderRefH: string;
-  servicesLabel: string;
-  reviewsLabel: string;
   bookBtn: string;
   websiteCta: string;
   saveContact: string;
@@ -90,16 +84,9 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    estTag: "EST. " + (new Date().getFullYear() - 5),
-    taglineFallback: "D2C Brand",
-    rolePill: "Atelier",
-    bioFallback: "Modern D2C Brand",
     categoriesH: "Kategorien",
-    orderH: "Order Info",
     channelsH: "Channels",
     orderRefH: "Order",
-    servicesLabel: "Produkte",
-    reviewsLabel: "Bewertungen",
     bookBtn: "Bestellung starten",
     websiteCta: "Website",
     saveContact: "Kontakt speichern",
@@ -107,16 +94,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   en: {
-    estTag: "EST. " + (new Date().getFullYear() - 5),
-    taglineFallback: "D2C Brand",
-    rolePill: "Atelier",
-    bioFallback: "Modern D2C Brand",
     categoriesH: "Categories",
-    orderH: "Order Info",
     channelsH: "Channels",
     orderRefH: "Order",
-    servicesLabel: "Products",
-    reviewsLabel: "Reviews",
     bookBtn: "Start order",
     websiteCta: "Website",
     saveContact: "Save contact",
@@ -124,16 +104,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    estTag: "EST. " + (new Date().getFullYear() - 5),
-    taglineFallback: "D2C Brand",
-    rolePill: "Atelier",
-    bioFallback: "Modern D2C marka",
     categoriesH: "Kategoriler",
-    orderH: "Sipariş Bilgisi",
     channelsH: "Kanallar",
     orderRefH: "Order",
-    servicesLabel: "Ürünler",
-    reviewsLabel: "Yorum",
     bookBtn: "Siparişe Başla",
     websiteCta: "Website",
     saveContact: "Kişiyi Kaydet",
@@ -142,16 +115,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   es: {
 
-    estTag: "EST. " + (new Date().getFullYear() - 5),
-    taglineFallback: "Marca D2C",
-    rolePill: "Atelier",
-    bioFallback: "Marca D2C moderna",
     categoriesH: "Categorías",
-    orderH: "Información del pedido",
     channelsH: "Canales",
     orderRefH: "Pedido",
-    servicesLabel: "Productos",
-    reviewsLabel: "Reseñas",
     bookBtn: "Iniciar pedido",
     websiteCta: "Sitio web",
     saveContact: "Guardar contacto",
@@ -161,16 +127,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   it: {
 
-    estTag: "EST. " + (new Date().getFullYear() - 5),
-    taglineFallback: "Brand D2C",
-    rolePill: "Atelier",
-    bioFallback: "Brand D2C moderno",
     categoriesH: "Categorie",
-    orderH: "Info ordine",
     channelsH: "Canali",
     orderRefH: "Ordine",
-    servicesLabel: "Prodotti",
-    reviewsLabel: "Recensioni",
     bookBtn: "Inizia ordine",
     websiteCta: "Sito web",
     saveContact: "Salva contatto",
@@ -180,16 +139,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   fr: {
 
-    estTag: "EST. " + (new Date().getFullYear() - 5),
-    taglineFallback: "Marque D2C",
-    rolePill: "Atelier",
-    bioFallback: "Marque D2C moderne",
     categoriesH: "Catégories",
-    orderH: "Info commande",
     channelsH: "Canaux",
     orderRefH: "Commande",
-    servicesLabel: "Produits",
-    reviewsLabel: "Avis",
     bookBtn: "Démarrer la commande",
     websiteCta: "Site web",
     saveContact: "Enregistrer le contact",
@@ -199,16 +151,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   ar: {
 
-    estTag: "تأسس " + (new Date().getFullYear() - 5),
-    taglineFallback: "علامة D2C",
-    rolePill: "أتيليه",
-    bioFallback: "علامة D2C عصرية",
     categoriesH: "الفئات",
-    orderH: "معلومات الطلب",
     channelsH: "القنوات",
     orderRefH: "طلب",
-    servicesLabel: "المنتجات",
-    reviewsLabel: "التقييمات",
     bookBtn: "ابدأ الطلب",
     websiteCta: "الموقع",
     saveContact: "حفظ جهة الاتصال",
@@ -238,11 +183,11 @@ export function EcommercePure({
     ? digitsOnly(cardData.whatsapp).replace(/^\+/, "")
     : "";
 
-  const allServices = cardData.services ?? [];
-  const services = allServices.slice(0, 5);
-  const testimonials = cardData.testimonials ?? [];
+  const services = (cardData.services ?? []).slice(0, 5);
+  const stats = resolveStats(cardData.stats);
+  const tagline = resolveTagline(cardData);
+  const locationLabel = resolveLocation(cardData);
   const monogram = getInitials(cardData.company || cardData.name);
-  const cityFromAddress = cardData.address?.split(",").slice(-1)[0]?.trim();
   const nameParts = (cardData.company || cardData.name).trim().split(/\s+/);
   const nameFirst = nameParts[0] ?? cardData.name;
   const nameLast = nameParts.slice(1).join(" ");
@@ -282,13 +227,14 @@ export function EcommercePure({
           >
             {monogram}
           </div>
-          <span
-            className="mono uppercase"
-            style={{ fontSize: 10, color: MUTED, letterSpacing: "1.5px" }}
-          >
-            {t.estTag}
-            {cityFromAddress ? ` / ${cityFromAddress}` : ""}
-          </span>
+          {locationLabel && (
+            <span
+              className="mono uppercase"
+              style={{ fontSize: 10, color: MUTED, letterSpacing: "1.5px" }}
+            >
+              {locationLabel}
+            </span>
+          )}
         </div>
         <h1
           style={{
@@ -322,12 +268,14 @@ export function EcommercePure({
             {cardData.bio}
           </p>
         )}
-        <div
-          className="mono uppercase"
-          style={{ fontSize: 11, letterSpacing: "2px", color: MUTED, marginTop: 20 }}
-        >
-          {cardData.position || cardData.title || t.taglineFallback}
-        </div>
+        {tagline && (
+          <div
+            className="mono uppercase"
+            style={{ fontSize: 11, letterSpacing: "2px", color: MUTED, marginTop: 20 }}
+          >
+            {tagline}
+          </div>
+        )}
       </section>
 
       <div style={{ height: 1, background: INK }} />
@@ -359,26 +307,14 @@ export function EcommercePure({
           >
             {cardData.name}
           </h2>
-          <div
-            className="mono uppercase"
-            style={{ fontSize: 10, color: MUTED, letterSpacing: "1.5px", marginTop: 4 }}
-          >
-            {cardData.position || cardData.title || t.taglineFallback}
-          </div>
-          <span
-            className="mono"
-            style={{
-              fontSize: 10,
-              color: INK,
-              marginTop: 8,
-              display: "inline-block",
-              padding: "3px 8px",
-              background: PAGE,
-              border: `1px solid ${LINE_2}`,
-            }}
-          >
-            5y / {t.rolePill}
-          </span>
+          {tagline && (
+            <div
+              className="mono uppercase"
+              style={{ fontSize: 10, color: MUTED, letterSpacing: "1.5px", marginTop: 4 }}
+            >
+              {tagline}
+            </div>
+          )}
         </div>
       </section>
 
@@ -458,7 +394,7 @@ export function EcommercePure({
                   className="mono"
                   style={{ fontSize: 14, color: ACCENT_2 }}
                 >
-                  â†’
+                  →
                 </span>
               </a>
             ))}
@@ -468,71 +404,36 @@ export function EcommercePure({
 
       <div style={{ height: 1, background: LINE }} />
 
-      {/* ORDER INFO */}
-      <section className="px-7 py-9">
+      {/* STATS — owner-entered numbers only (resolveStats). */}
+      {stats && (
         <div
-          className="mb-5 flex items-baseline justify-between border-b pb-3.5"
-          style={{ borderColor: LINE }}
+          className="grid grid-cols-2"
+          style={{ borderTop: `1px solid ${LINE}`, borderBottom: `1px solid ${LINE}` }}
         >
-          <span
-            className="uppercase"
-            style={{ fontSize: 13, fontWeight: 600, letterSpacing: "0.5px", color: INK }}
-          >
-            {t.orderH}
-          </span>
-          <span
-            className="mono"
-            style={{ fontSize: 10, color: MUTED, letterSpacing: "1.5px" }}
-          >
-            / 02
-          </span>
-        </div>
-        <div className="flex flex-col">
-          <OrderRow k="Versand" v="Free / over â‚¬50" v_accent />
-          <OrderRow k="Lieferung" v="2 — 4 Werktage" />
-          <OrderRow k="Geschenkverpackung" v="Inklusive" />
-          <OrderRow k="Zahlung" v="Karte, Banküberweisung" />
-          <OrderRow k="Rückgabe" v="14 Tage" />
-        </div>
-      </section>
-
-      {/* STATS — driven by real data */}
-      {(() => {
-        const statsItems = [
-          ...(allServices.length ? [{ num: String(allServices.length), label: t.servicesLabel }] : []),
-          ...(testimonials.length ? [{ num: String(testimonials.length), label: t.reviewsLabel }] : []),
-        ];
-        if (statsItems.length === 0) return null;
-        return (
-          <div
-            className="grid grid-cols-2"
-            style={{ borderTop: `1px solid ${LINE}`, borderBottom: `1px solid ${LINE}` }}
-          >
-            {statsItems.map((s, i) => (
+          {stats.map((s, i) => (
+            <div
+              key={s.label}
+              className="px-7 py-6"
+              style={{
+                borderRight: i % 2 === 0 ? `1px solid ${LINE}` : "none",
+                borderTop: i >= 2 ? `1px solid ${LINE}` : "none",
+              }}
+            >
               <div
-                key={s.label}
-                className="px-7 py-6"
-                style={{
-                  borderRight: i % 2 === 0 ? `1px solid ${LINE}` : "none",
-                  borderTop: i >= 2 ? `1px solid ${LINE}` : "none",
-                }}
+                style={{ fontWeight: 600, fontSize: 28, letterSpacing: "-1px", color: INK }}
               >
-                <div
-                  style={{ fontWeight: 600, fontSize: 28, letterSpacing: "-1px", color: INK }}
-                >
-                  {s.num}
-                </div>
-                <div
-                  className="mono uppercase"
-                  style={{ fontSize: 10, color: MUTED, letterSpacing: "1.5px", marginTop: 4 }}
-                >
-                  {s.label}
-                </div>
+                {s.value}
               </div>
-            ))}
-          </div>
-        );
-      })()}
+              <div
+                className="mono uppercase"
+                style={{ fontSize: 10, color: MUTED, letterSpacing: "1.5px", marginTop: 4 }}
+              >
+                {s.label}
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* CHANNELS / CONTACT */}
       <section className="px-7 py-9">
@@ -550,7 +451,7 @@ export function EcommercePure({
             className="mono"
             style={{ fontSize: 10, color: MUTED, letterSpacing: "1.5px" }}
           >
-            / 03
+            / 02
           </span>
         </div>
         <ContactRows
@@ -584,7 +485,7 @@ export function EcommercePure({
             className="mono"
             style={{ fontSize: 10, color: MUTED, letterSpacing: "1.5px" }}
           >
-            / 04
+            / 03
           </span>
         </div>
         {(cardData.bookingUrl || waDigits) && (
@@ -688,35 +589,6 @@ export function EcommercePure({
       </div>
     </article>
   );
-
-  function OrderRow({ k, v, v_accent }: { k: string; v: string; v_accent?: boolean }) {
-    return (
-      <div
-        className="grid items-baseline gap-4 py-3"
-        style={{
-          gridTemplateColumns: "130px 1fr",
-          borderBottom: `1px solid ${LINE}`,
-          fontSize: 13,
-        }}
-      >
-        <span
-          className="mono uppercase"
-          style={{ fontSize: 10, color: MUTED, letterSpacing: "1.5px", paddingTop: 2 }}
-        >
-          {k}
-        </span>
-        <span
-          style={{
-            fontWeight: 500,
-            color: v_accent ? ACCENT_2 : INK,
-            fontSize: 14,
-          }}
-        >
-          {v}
-        </span>
-      </div>
-    );
-  }
 }
 
 // =============================================================================
@@ -761,7 +633,7 @@ export const ecommercePureSample: SampleData = {
     whatsapp: "+49 172 556 7891",
     website: "pazar-shop.de",
     address: "Oranienstraße 30, 10999 Berlin",
-    bio: "Kuratierte Mode & Accessoires aus der Türkei & Deutschland. Kostenloser Versand ab â‚¬50.",
+    bio: "Kuratierte Mode & Accessoires aus der Türkei & Deutschland. Kostenloser Versand ab €50.",
     bookingUrl: "https://pazar-shop.de/shop",
     impressumUrl: "https://pazar-shop.de/impressum",
     privacyUrl: "https://pazar-shop.de/datenschutz",
@@ -771,9 +643,15 @@ export const ecommercePureSample: SampleData = {
       tiktok: "https://tiktok.com/@pazarshop",
     },
     services: [
-      { title: "Seidenschal", description: "Handbedruckt, Premium-Seide.", priceLabel: "â‚¬89" },
-      { title: "Handtasche", description: "Vollnarbenleder, handgenäht.", priceLabel: "â‚¬145" },
-      { title: "Schmuckset", description: "Versilbert, kuratiert.", priceLabel: "â‚¬65" },
+      { title: "Seidenschal", description: "Handbedruckt, Premium-Seide.", priceLabel: "€89" },
+      { title: "Handtasche", description: "Vollnarbenleder, handgenäht.", priceLabel: "€145" },
+      { title: "Schmuckset", description: "Versilbert, kuratiert.", priceLabel: "€65" },
+    ],
+    stats: [
+      { value: "2.400+", label: "Bestellungen" },
+      { value: "4,9★", label: "Bewertung" },
+      { value: "5", label: "Jahre" },
+      { value: "48h", label: "Versand" },
     ],
   },
   photoUrl:

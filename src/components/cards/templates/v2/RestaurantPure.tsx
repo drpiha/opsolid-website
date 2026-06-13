@@ -28,6 +28,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#f9f7f2";
@@ -226,7 +227,7 @@ export function RestaurantPure({
   const testimonials = cardData.testimonials ?? [];
   const restaurantName = cardData.company || cardData.name;
   const tagline = cardData.title || cardData.position || "";
-  const city = cardData.address?.split(",").slice(-2)[0]?.trim() || "Berlin";
+  const city = resolveLocation(cardData);
 
   // Display name split — first word(s) plain, last word italic / mustard
   const nameParts = restaurantName.trim().split(/\s+/);
@@ -264,7 +265,7 @@ export function RestaurantPure({
             />
             {t.metaOpen}
           </span>
-          <span>{city}</span>
+          {city && <span>{city}</span>}
         </div>
         <h1
           className="text-[60px] leading-[0.92]"
@@ -582,7 +583,7 @@ export function RestaurantPure({
           {restaurantName} © {new Date().getFullYear()}
         </span>
         <span>
-          {city} ·{" "}
+          {city ? `${city} · ` : ""}{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"
@@ -665,17 +666,17 @@ export const restaurantPureSample: SampleData = {
       {
         title: "Pasta al Tartufo",
         description: "tagliatelle frische · trüffel · parmigiano",
-        priceLabel: "â‚¬24",
+        priceLabel: "€24",
       },
       {
         title: "Tagliata di Manzo",
         description: "rinderfilet · rucola · balsamico",
-        priceLabel: "â‚¬32",
+        priceLabel: "€32",
       },
       {
         title: "Tiramisù",
         description: "mascarpone · espresso · marsala",
-        priceLabel: "â‚¬9",
+        priceLabel: "€9",
       },
     ],
   },

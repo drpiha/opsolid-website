@@ -30,6 +30,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats, resolveTagline, resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#1a2b4a";
@@ -65,7 +66,6 @@ interface AcpCopy {
   contact: string;
   about: string;
   services: string;
-  highlights: string;
   testimonial: string;
   bookConsult: string;
   callOffice: string;
@@ -74,10 +74,8 @@ interface AcpCopy {
   share: string;
   poweredBy: string;
   reviewsLabel: string;
-  responseLabel: string;
   online: string;
   practitioner: string;
-  practitionerValue: string;
 }
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcpCopy> = {
@@ -85,7 +83,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcpCopy> = {
     contact: "Kontakt",
     about: "Profil",
     services: "Leistungen",
-    highlights: "Highlights",
     testimonial: "Mandantenstimme",
     bookConsult: "Erstgespräch buchen",
     callOffice: "Kanzlei anrufen",
@@ -94,16 +91,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcpCopy> = {
     share: "Teilen",
     poweredBy: "Powered by",
     reviewsLabel: "Bewertungen",
-    responseLabel: "Antwort",
     online: "Online",
     practitioner: "Kanzlei",
-    practitionerValue: "Geschäftsführer",
   },
   en: {
     contact: "Contact",
     about: "Profile",
     services: "Services",
-    highlights: "Highlights",
     testimonial: "Client review",
     bookConsult: "Book consultation",
     callOffice: "Call the office",
@@ -112,16 +106,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcpCopy> = {
     share: "Share",
     poweredBy: "Powered by",
     reviewsLabel: "Reviews",
-    responseLabel: "Response",
     online: "Online",
     practitioner: "Practice",
-    practitionerValue: "Managing partner",
   },
   tr: {
     contact: "İletişim",
     about: "Profil",
     services: "Hizmetler",
-    highlights: "Öne Çıkanlar",
     testimonial: "Müvekkil Yorumu",
     bookConsult: "Görüşme Talep Et",
     callOffice: "Ofisi Ara",
@@ -130,17 +121,14 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcpCopy> = {
     share: "Paylaş",
     poweredBy: "Powered by",
     reviewsLabel: "Yorum",
-    responseLabel: "Yanıt",
     online: "Online",
     practitioner: "Ofis",
-    practitionerValue: "Yönetici Ortak",
   },
   es: {
 
     contact: "Contacto",
     about: "Perfil",
     services: "Servicios",
-    highlights: "Destacados",
     testimonial: "Reseña de cliente",
     bookConsult: "Reservar consulta",
     callOffice: "Llamar a la oficina",
@@ -149,10 +137,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcpCopy> = {
     share: "Compartir",
     poweredBy: "Desarrollado por",
     reviewsLabel: "Reseñas",
-    responseLabel: "Respuesta",
     online: "En línea",
     practitioner: "Despacho",
-    practitionerValue: "Socio gestor",
   
   },
   it: {
@@ -160,7 +146,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcpCopy> = {
     contact: "Contatto",
     about: "Profilo",
     services: "Servizi",
-    highlights: "In evidenza",
     testimonial: "Recensione cliente",
     bookConsult: "Prenota consulenza",
     callOffice: "Chiama l'ufficio",
@@ -169,10 +154,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcpCopy> = {
     share: "Condividi",
     poweredBy: "Realizzato con",
     reviewsLabel: "Recensioni",
-    responseLabel: "Risposta",
     online: "Online",
     practitioner: "Studio",
-    practitionerValue: "Socio amministratore",
   
   },
   fr: {
@@ -180,7 +163,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcpCopy> = {
     contact: "Contact",
     about: "Profil",
     services: "Services",
-    highlights: "Points forts",
     testimonial: "Avis client",
     bookConsult: "Réserver une consultation",
     callOffice: "Appeler le bureau",
@@ -189,10 +171,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcpCopy> = {
     share: "Partager",
     poweredBy: "Propulsé par",
     reviewsLabel: "Avis",
-    responseLabel: "Réponse",
     online: "En ligne",
     practitioner: "Cabinet",
-    practitionerValue: "Associé gérant",
   
   },
   ar: {
@@ -200,7 +180,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcpCopy> = {
     contact: "اتصال",
     about: "الملف الشخصي",
     services: "الخدمات",
-    highlights: "الأبرز",
     testimonial: "تقييم العميل",
     bookConsult: "احجز استشارة",
     callOffice: "اتصل بالمكتب",
@@ -209,10 +188,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcpCopy> = {
     share: "مشاركة",
     poweredBy: "مشغل بواسطة",
     reviewsLabel: "التقييمات",
-    responseLabel: "الاستجابة",
     online: "عبر الإنترنت",
     practitioner: "ممارسة",
-    practitionerValue: "الشريك الإداري",
   
   },
 };
@@ -246,7 +223,9 @@ export function AccountingPure({
   const testimonials = cardData.testimonials ?? [];
 
   const year = new Date().getFullYear();
-  const cityFromAddress = cardData.address?.split(",").slice(-1)[0]?.trim() || "DE / BERLIN";
+  const stats = resolveStats(cardData.stats);
+  const tagline = resolveTagline(cardData);
+  const locationLabel = resolveLocation(cardData);
 
   return (
     <article
@@ -269,14 +248,15 @@ export function AccountingPure({
         className="px-9 pb-8 pt-12"
         style={{ borderBottom: `1px solid ${HAIRLINE}` }}
       >
-        <div
-          className="mb-7 flex items-center gap-3 text-[10.5px] font-medium uppercase"
-          style={{ color: INK_DIM, letterSpacing: "1.6px" }}
-        >
-          <span>{cityFromAddress}</span>
-          <span aria-hidden className="block h-px flex-1" style={{ background: HAIRLINE }} />
-          <span>EST. {year - 12}</span>
-        </div>
+        {locationLabel && (
+          <div
+            className="mb-7 flex items-center gap-3 text-[10.5px] font-medium uppercase"
+            style={{ color: INK_DIM, letterSpacing: "1.6px" }}
+          >
+            <span>{locationLabel}</span>
+            <span aria-hidden className="block h-px flex-1" style={{ background: HAIRLINE }} />
+          </div>
+        )}
         <h1
           className="serif text-[36px] leading-[1.05] tracking-[-1.2px]"
           style={{ color: INK, fontWeight: 300 }}
@@ -334,9 +314,11 @@ export function AccountingPure({
           >
             {t.practitioner}
           </div>
-          <div className="mt-0.5 text-[14px] font-medium" style={{ color: INK }}>
-            {t.practitionerValue}
-          </div>
+          {tagline && (
+            <div className="mt-0.5 text-[14px] font-medium" style={{ color: INK }}>
+              {tagline}
+            </div>
+          )}
         </div>
         <div
           className="flex items-center gap-1.5 rounded px-2 py-1 text-[10px] font-semibold uppercase"
@@ -359,38 +341,6 @@ export function AccountingPure({
           </p>
         </PureSection>
       )}
-
-      {/* HIGHLIGHTS GRID 2-up */}
-      <div
-        className="grid grid-cols-2 px-9"
-        style={{ borderBottom: `1px solid ${HAIRLINE}` }}
-      >
-        <div
-          className="py-7 pr-7"
-          style={{ borderRight: `1px solid ${HAIRLINE}` }}
-        >
-          <div
-            className="text-[10px] font-semibold uppercase"
-            style={{ color: INK_DIM, letterSpacing: "1.5px" }}
-          >
-            DATEV
-          </div>
-          <div className="mt-2 text-[14px] font-medium" style={{ color: INK }}>
-            {locale === "tr" ? "Sertifikalı kullanım" : locale === "de" ? "Zertifizierte Nutzung" : "Certified usage"}
-          </div>
-        </div>
-        <div className="py-7 pl-7">
-          <div
-            className="text-[10px] font-semibold uppercase"
-            style={{ color: INK_DIM, letterSpacing: "1.5px" }}
-          >
-            {t.responseLabel}
-          </div>
-          <div className="mt-2 text-[14px] font-medium" style={{ color: INK }}>
-            &lt; 24h
-          </div>
-        </div>
-      </div>
 
       {/* SERVICES — numbered list */}
       {services.length > 0 && (
@@ -433,12 +383,14 @@ export function AccountingPure({
         </PureSection>
       )}
 
-      {/* STATS — driven by real data */}
+      {/* STATS — owner-entered numbers first (resolveStats), else real counts */}
       {(() => {
-        const statsItems = [
-          ...(services.length ? [{ n: String(services.length), l: t.services }] : []),
-          ...(testimonials.length ? [{ n: String(testimonials.length), l: t.reviewsLabel }] : []),
-        ];
+        const statsItems = stats
+          ? stats.map((s) => ({ n: s.value, l: s.label }))
+          : [
+              ...(services.length ? [{ n: String(services.length), l: t.services }] : []),
+              ...(testimonials.length ? [{ n: String(testimonials.length), l: t.reviewsLabel }] : []),
+            ];
         if (statsItems.length === 0) return null;
         return (
           <div
@@ -682,6 +634,12 @@ export const accountingPureSample: SampleData = {
       { title: "Buchhaltung monatlich", description: "DATEV · digital", priceLabel: "ab €180" },
       { title: "Lohnbuchhaltung", description: "Monatliche Abrechnung", priceLabel: "ab €120" },
       { title: "Jahresabschluss", description: "Bilanz · GuV", priceLabel: "ab €1.200" },
+    ],
+    stats: [
+      { value: "200+", label: "Mandanten" },
+      { value: "12", label: "Jahre" },
+      { value: "<24h", label: "Antwort" },
+      { value: "DATEV", label: "Zertifiziert" },
     ],
     testimonials: [
       {

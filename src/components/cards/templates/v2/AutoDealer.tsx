@@ -26,13 +26,9 @@ import Image from "next/image";
 import {
   ArrowUpRight,
   ChevronRight,
-  Cog,
-  Fuel,
-  Gauge,
   Mail,
   MessageCircle,
   Phone,
-  Shield,
   Wrench,
 } from "lucide-react";
 
@@ -42,6 +38,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats, resolveTagline, resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#1c1c1e"; // charcoal
@@ -83,15 +80,10 @@ interface Copy {
   emailBtn: string;
   featuredH: string;
   featuredBadge: string;
-  yearLabel: string;
-  transLabel: string;
-  fuelLabel: string;
   priceLabel: string;
   brandsH: string;
   servicesH: string;
   statsH: string;
-  carsLabel: string;
-  warrantyLabel: string;
   cta: string;
   saveContact: string;
   walletLabel: string;
@@ -106,15 +98,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     emailBtn: "E-Mail",
     featuredH: "Bestseller",
     featuredBadge: "Top-Pick",
-    yearLabel: "Baujahr",
-    transLabel: "Getriebe",
-    fuelLabel: "Kraftstoff",
     priceLabel: "Preis",
     brandsH: "Marken",
     servicesH: "Services",
     statsH: "In Zahlen",
-    carsLabel: "Fahrzeuge",
-    warrantyLabel: "Garantie",
     cta: "Termin vereinbaren",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
@@ -127,15 +114,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     emailBtn: "Email",
     featuredH: "Featured",
     featuredBadge: "Top Pick",
-    yearLabel: "Year",
-    transLabel: "Trans.",
-    fuelLabel: "Fuel",
     priceLabel: "Price",
     brandsH: "Brands",
     servicesH: "Services",
     statsH: "By the numbers",
-    carsLabel: "Cars sold",
-    warrantyLabel: "Warranty",
     cta: "Book a viewing",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
@@ -148,15 +130,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     emailBtn: "Mail",
     featuredH: "Öne Çıkan",
     featuredBadge: "Top Pick",
-    yearLabel: "Yıl",
-    transLabel: "Vites",
-    fuelLabel: "Yakıt",
     priceLabel: "Fiyat",
     brandsH: "Markalar",
     servicesH: "Hizmetler",
     statsH: "Rakamlarla",
-    carsLabel: "Araç",
-    warrantyLabel: "Garanti",
     cta: "Test Sürüşü Al",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
@@ -170,15 +147,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     emailBtn: "Correo",
     featuredH: "Destacado",
     featuredBadge: "Selección destacada",
-    yearLabel: "Año",
-    transLabel: "Trans.",
-    fuelLabel: "Combustible",
     priceLabel: "Precio",
     brandsH: "Marcas",
     servicesH: "Servicios",
     statsH: "En cifras",
-    carsLabel: "Coches vendidos",
-    warrantyLabel: "Garantía",
     cta: "Reservar una visita",
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
@@ -193,15 +165,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     emailBtn: "Email",
     featuredH: "In evidenza",
     featuredBadge: "Top scelta",
-    yearLabel: "Anno",
-    transLabel: "Trasf.",
-    fuelLabel: "Carburante",
     priceLabel: "Prezzo",
     brandsH: "Brand",
     servicesH: "Servizi",
     statsH: "In numeri",
-    carsLabel: "Auto vendute",
-    warrantyLabel: "Garanzia",
     cta: "Prenota una visita",
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
@@ -216,15 +183,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     emailBtn: "E-mail",
     featuredH: "À la une",
     featuredBadge: "Coup de cœur",
-    yearLabel: "Année",
-    transLabel: "Transf.",
-    fuelLabel: "Carburant",
     priceLabel: "Prix",
     brandsH: "Marques",
     servicesH: "Services",
     statsH: "En chiffres",
-    carsLabel: "Voitures vendues",
-    warrantyLabel: "Garantie",
     cta: "Réserver une visite",
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
@@ -239,15 +201,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     emailBtn: "البريد الإلكتروني",
     featuredH: "مميز",
     featuredBadge: "الأفضل اختياراً",
-    yearLabel: "سنة",
-    transLabel: "تحول",
-    fuelLabel: "الوقود",
     priceLabel: "السعر",
     brandsH: "علامات تجارية",
     servicesH: "الخدمات",
     statsH: "بالأرقام",
-    carsLabel: "السيارات المباعة",
-    warrantyLabel: "الضمان",
     cta: "احجز معاينة",
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
@@ -256,14 +213,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   
   },
 };
-
-const BRANDS = ["BMW", "Mercedes", "Audi", "Porsche", "VW", "Volvo"];
-
-const SERVICES_FALLBACK: { Icon: typeof Wrench; label: string }[] = [
-  { Icon: Shield, label: "Garantie 12 Mo." },
-  { Icon: Wrench, label: "Inspektion" },
-  { Icon: Cog, label: "Finanzierung" },
-];
 
 export function AutoDealer({
   slug,
@@ -286,9 +235,14 @@ export function AutoDealer({
     ? digitsOnly(cardData.whatsapp).replace(/^\+/, "")
     : "";
 
-  const allServices = cardData.services ?? [];
-  const services = allServices;
+  const services = cardData.services ?? [];
   const featured = services[0];
+  const stats = resolveStats(cardData.stats);
+  const tagline = resolveTagline(cardData);
+  const locationLabel = resolveLocation(cardData);
+  const heroSub = [tagline, locationLabel].filter(Boolean).join(" — ");
+  // Brand mosaic comes from the owner's tags — no invented brand list.
+  const brandTags = (cardData.tags ?? []).slice(0, 6);
   const year = new Date().getFullYear();
 
   return (
@@ -342,22 +296,25 @@ export function AutoDealer({
               background: `linear-gradient(180deg, rgba(8,8,8,0.3) 0%, rgba(8,8,8,0.6) 60%, ${SURFACE} 100%)`,
             }}
           >
-            <span
-              className="display inline-block text-[11px] font-bold uppercase"
-              style={{ color: accent, letterSpacing: "5px" }}
-            >
-              {cardData.company || "Premium Auto"}
-            </span>
+            {cardData.company && (
+              <span
+                className="display inline-block text-[11px] font-bold uppercase"
+                style={{ color: accent, letterSpacing: "5px" }}
+              >
+                {cardData.company}
+              </span>
+            )}
             <h1
               className="display mt-2 text-[32px] font-bold uppercase leading-none"
               style={{ letterSpacing: "1px" }}
             >
               {cardData.name}
             </h1>
-            <div className="mt-2.5 text-[12px]" style={{ color: TEXT_SOFT }}>
-              {cardData.position || "Premium Auto Dealership"}
-              {cardData.address ? ` — ${cardData.address.split(",").slice(-1)[0]?.trim()}` : ""}
-            </div>
+            {heroSub && (
+              <div className="mt-2.5 text-[12px]" style={{ color: TEXT_SOFT }}>
+                {heroSub}
+              </div>
+            )}
           </div>
         </header>
 
@@ -460,109 +417,110 @@ export function AutoDealer({
                     {featured.description}
                   </div>
                 )}
-                <div
-                  className="mt-5 grid grid-cols-3 gap-3 py-4"
-                  style={{
-                    borderTop: `1px solid ${HAIRLINE}`,
-                    borderBottom: `1px solid ${HAIRLINE}`,
-                  }}
-                >
-                  <CarSpec Icon={Gauge} label={t.yearLabel} value="2021" />
-                  <CarSpec Icon={Cog} label={t.transLabel} value="Auto" />
-                  <CarSpec Icon={Fuel} label={t.fuelLabel} value="Diesel" />
-                </div>
-                <div className="mt-5 flex items-baseline justify-between">
-                  <span
-                    className="text-[10px] uppercase"
-                    style={{ color: TEXT_MUTED, letterSpacing: "2px" }}
+                {featured.priceLabel && (
+                  <div
+                    className="mt-5 flex items-baseline justify-between pt-4"
+                    style={{ borderTop: `1px solid ${HAIRLINE}` }}
                   >
-                    {t.priceLabel}
-                  </span>
-                  <span
-                    className="display text-[24px] font-bold"
-                    style={{ color: accent }}
-                  >
-                    {featured.priceLabel || "—"}
-                  </span>
-                </div>
+                    <span
+                      className="text-[10px] uppercase"
+                      style={{ color: TEXT_MUTED, letterSpacing: "2px" }}
+                    >
+                      {t.priceLabel}
+                    </span>
+                    <span
+                      className="display text-[24px] font-bold"
+                      style={{ color: accent }}
+                    >
+                      {featured.priceLabel}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           </section>
         )}
 
-        {/* BRANDS GRID */}
-        <section className="px-7 pb-2">
-          <SectionLabel accent={accent}>{t.brandsH}</SectionLabel>
-          <div
-            className="mt-6 grid grid-cols-3"
-            style={{
-              borderTop: `1px solid ${HAIRLINE}`,
-              borderLeft: `1px solid ${HAIRLINE}`,
-            }}
-          >
-            {BRANDS.map((b) => (
-              <div
-                key={b}
-                className="display py-5 text-center text-[13px] font-bold uppercase transition-colors hover:bg-[--hover]"
-                style={{
-                  color: TEXT_SOFT,
-                  borderRight: `1px solid ${HAIRLINE}`,
-                  borderBottom: `1px solid ${HAIRLINE}`,
-                  letterSpacing: "2px",
-                  ["--hover" as string]: `${accent}1a`,
-                }}
-              >
-                {b}
-              </div>
-            ))}
-          </div>
-        </section>
+        {/* BRANDS GRID — owner tags only; hidden when the owner set none. */}
+        {brandTags.length > 0 && (
+          <section className="px-7 pb-2">
+            <SectionLabel accent={accent}>{t.brandsH}</SectionLabel>
+            <div
+              className="mt-6 grid grid-cols-3"
+              style={{
+                borderTop: `1px solid ${HAIRLINE}`,
+                borderLeft: `1px solid ${HAIRLINE}`,
+              }}
+            >
+              {brandTags.map((b) => (
+                <div
+                  key={b}
+                  className="display py-5 text-center text-[13px] font-bold uppercase transition-colors hover:bg-[--hover]"
+                  style={{
+                    color: TEXT_SOFT,
+                    borderRight: `1px solid ${HAIRLINE}`,
+                    borderBottom: `1px solid ${HAIRLINE}`,
+                    letterSpacing: "2px",
+                    ["--hover" as string]: `${accent}1a`,
+                  }}
+                >
+                  {b}
+                </div>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* SERVICES */}
-        <section className="px-7 pt-10">
-          <SectionLabel accent={accent}>{t.servicesH}</SectionLabel>
-          <div className="mt-5">
-            {(services.length > 1 ? services.slice(1, 6) : SERVICES_FALLBACK.map((s) => ({
-              title: s.label,
-              description: undefined as string | undefined,
-              priceLabel: undefined as string | undefined,
-            }))).map((svc, i, arr) => (
-              <ServiceLink
-                key={`${svc.title}-${i}`}
-                href={'href' in svc ? (svc as { href?: string | null }).href : undefined}
-                className="flex items-center justify-between py-4"
-                style={{
-                  borderBottom: i < arr.length - 1 ? `1px solid ${HAIRLINE}` : "none",
-                }}
-              >
-                <div className="flex items-center gap-3">
-                  <Wrench size={16} style={{ color: accent }} strokeWidth={1.6} />
-                  <span
-                    className="display text-[14px] font-medium"
-                    style={{ color: TEXT, letterSpacing: "0.5px" }}
-                  >
-                    {svc.title}
-                  </span>
-                </div>
-                <ChevronRight size={14} style={{ color: TEXT_MUTED }} strokeWidth={1.6} />
-              </ServiceLink>
-            ))}
-          </div>
-        </section>
+        {services.length > 1 && (
+          <section className="px-7 pt-10">
+            <SectionLabel accent={accent}>{t.servicesH}</SectionLabel>
+            <div className="mt-5">
+              {services.slice(1, 6).map((svc, i, arr) => (
+                <ServiceLink
+                  key={`${svc.title}-${i}`}
+                  href={svc.href}
+                  className="flex items-center justify-between py-4"
+                  style={{
+                    borderBottom: i < arr.length - 1 ? `1px solid ${HAIRLINE}` : "none",
+                  }}
+                >
+                  <div className="flex items-center gap-3">
+                    <Wrench size={16} style={{ color: accent }} strokeWidth={1.6} />
+                    <span
+                      className="display text-[14px] font-medium"
+                      style={{ color: TEXT, letterSpacing: "0.5px" }}
+                    >
+                      {svc.title}
+                    </span>
+                  </div>
+                  <ChevronRight size={14} style={{ color: TEXT_MUTED }} strokeWidth={1.6} />
+                </ServiceLink>
+              ))}
+            </div>
+          </section>
+        )}
 
-        {/* STATS */}
-        {allServices.length > 0 && (
+        {/* STATS — owner-entered numbers only (resolveStats). */}
+        {stats && (
           <section
             className="mt-10 grid"
             style={{
               background: SURFACE_3,
               borderTop: `1px solid ${HAIRLINE}`,
               borderBottom: `1px solid ${HAIRLINE}`,
-              gridTemplateColumns: "1fr 1fr",
+              gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
             }}
           >
-            <StatCell num={String(allServices.length)} label={t.carsLabel} accent={accent} right />
-            <StatCell num="12mo" label={t.warrantyLabel} accent={accent} />
+            {stats.map((s, i) => (
+              <StatCell
+                key={s.label}
+                num={s.value}
+                label={s.label}
+                accent={accent}
+                right={i < stats.length - 1}
+              />
+            ))}
           </section>
         )}
 
@@ -715,34 +673,6 @@ function QuickAction({
   );
 }
 
-function CarSpec({
-  Icon,
-  label,
-  value,
-}: {
-  Icon: typeof Gauge;
-  label: string;
-  value: string;
-}) {
-  return (
-    <div className="text-center">
-      <Icon size={14} strokeWidth={1.6} style={{ color: TEXT_MUTED, margin: "0 auto" }} />
-      <div
-        className="mt-1.5 text-[9px] uppercase"
-        style={{ color: TEXT_MUTED, letterSpacing: "1.5px" }}
-      >
-        {label}
-      </div>
-      <div
-        className="display mt-1 text-[14px] font-semibold"
-        style={{ color: TEXT }}
-      >
-        {value}
-      </div>
-    </div>
-  );
-}
-
 function StatCell({
   num,
   label,
@@ -833,6 +763,12 @@ export const autoDealerSample: SampleData = {
       instagram: "https://instagram.com/arslanautomobile",
       facebook: "https://facebook.com/arslanautomobile",
     },
+    stats: [
+      { value: "15", label: "Jahre" },
+      { value: "800+", label: "Fahrzeuge" },
+      { value: "12 Mo.", label: "Garantie" },
+    ],
+    tags: ["bmw", "mercedes", "audi", "porsche", "volvo"],
   },
   photoUrl:
     "https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=920&q=80&auto=format&fit=crop",

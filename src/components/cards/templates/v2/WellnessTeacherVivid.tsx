@@ -10,7 +10,7 @@
 // default and the white pure variant.
 //
 // Locked design DNA (only colors respond to brand):
-//   - Hero: tall gradient panel (primaryâ†’deep) with rounded radial glows,
+//   - Hero: tall gradient panel (primary→deep) with rounded radial glows,
 //     a "tag" pill, big bold name, role line and a mantra paragraph.
 //   - Profile strip floats over hero (-36 px) with avatar + white card chip.
 //   - 3 quick-action pills (Call · WhatsApp · Email).
@@ -407,15 +407,14 @@ export function WellnessTeacherVivid({
             boxShadow: "0 8px 28px rgba(249,115,22,0.18)",
           }}
         >
-          <div
-            className="text-[12px] font-semibold uppercase"
-            style={{ color: primary, letterSpacing: "0.8px" }}
-          >
-            {cardData.position?.split("·")[0]?.trim() || "Yoga Teacher"}
-          </div>
-          <div className="mt-0.5 text-[13px]" style={{ color: INK_SOFT }}>
-            6 {t.yearsLabel} · 350+ {t.studentsLabel}
-          </div>
+          {cardData.position?.split("·")[0]?.trim() && (
+            <div
+              className="text-[12px] font-semibold uppercase"
+              style={{ color: primary, letterSpacing: "0.8px" }}
+            >
+              {cardData.position.split("·")[0]?.trim()}
+            </div>
+          )}
         </div>
       </section>
 
@@ -765,9 +764,9 @@ export const wellnessTeacherVividSample: SampleData = {
     bookingUrl: "https://cal.com/serayoga/intro",
     sectorKey: "fitness",
     services: [
-      { title: "Einzelstunde", description: "60 min · 1:1, individuell", priceLabel: "â‚¬80" },
-      { title: "Monatskurs", description: "4×/Woche, kleine Gruppe", priceLabel: "â‚¬160" },
-      { title: "Retreat", description: "3 Tage · Vollpension", priceLabel: "â‚¬480" },
+      { title: "Einzelstunde", description: "60 min · 1:1, individuell", priceLabel: "€80" },
+      { title: "Monatskurs", description: "4×/Woche, kleine Gruppe", priceLabel: "€160" },
+      { title: "Retreat", description: "3 Tage · Vollpension", priceLabel: "€480" },
     ],
     socials: {
       instagram: "https://instagram.com/serayoga",

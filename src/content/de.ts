@@ -1777,6 +1777,33 @@ export const content: Content = {
           callMeBackHint:
             "Wir melden uns innerhalb eines Werktags, um Details zu klären.",
           cardSection: "Inhalt Ihrer Karte",
+          sampleHint: "Beispielinhalt zum Ausprobieren — mit Ihren eigenen Daten überschreiben.",
+          clearSample: "Leeren",
+          cardLanguageLabel: "Kartensprache",
+          cardLanguageHint:
+            "Die Sprache, die Besucher Ihrer Karte sehen. Später im Editor änderbar.",
+          statsSection: "Kennzahlen",
+          statsHint:
+            "Echte Zahlen, die viele Designs als Kennzahlen-Leiste zeigen (z. B. 12 — Jahre).",
+          statsEmpty:
+            "Noch keine Kennzahlen. Fügen Sie echte Zahlen hinzu (z. B. 12 — Jahre Erfahrung). Ohne Kennzahlen zeigt die Karte diesen Bereich einfach nicht.",
+          statsValue: "12+",
+          statsLabel: "Jahre Erfahrung",
+          statsAdd: "Kennzahl hinzufügen",
+          statsRemove: "Entfernen",
+          taglineLabel: "Slogan",
+          taglinePlaceholder: "Eine kurze Aussage (optional)",
+          taglineHint:
+            "Erscheint bei manchen Designs unter Ihrem Namen. Leer = Ihre Rolle/Ihr Titel wird verwendet.",
+          locationLabel: "Standort auf der Karte",
+          locationAuto: "Aus Adresse",
+          locationCustom: "Eigener Text",
+          locationHidden: "Ausblenden",
+          locationAutoHint: "Aus Ihrer Adresse abgeleitet:",
+          locationAutoEmpty:
+            "Noch keine Adresse — es wird kein Standort angezeigt, bis Sie eine hinzufügen.",
+          locationPlaceholder: "Remote · Berlin",
+          locationHiddenHint: "Auf Ihrer Karte erscheint kein Standort-Chip.",
           copyFromContact: "Von oben übernehmen",
           cardName: "Vor- und Nachname",
           cardTitle: "Titel / Rolle",

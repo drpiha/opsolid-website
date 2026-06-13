@@ -54,7 +54,6 @@ function getInitials(name: string): string {
 }
 
 interface Copy {
-  taglineFallback: string;
   expertiseTitle: string;
   contactTitle: string;
   saveContact: string;
@@ -66,7 +65,6 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    taglineFallback: "Seit 2010",
     expertiseTitle: "Fachgebiete",
     contactTitle: "Kontakt",
     saveContact: "Kontakt speichern",
@@ -76,7 +74,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     rightsReserved: "Alle Rechte vorbehalten",
   },
   en: {
-    taglineFallback: "Since 2010",
     expertiseTitle: "Expertise",
     contactTitle: "Contact",
     saveContact: "Save contact",
@@ -86,7 +83,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     rightsReserved: "All rights reserved",
   },
   tr: {
-    taglineFallback: "2010'dan Beri",
     expertiseTitle: "Uzmanlık Alanları",
     contactTitle: "İletişim",
     saveContact: "Kişiyi Kaydet",
@@ -96,8 +92,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     rightsReserved: "Tüm Hakları Saklıdır",
   },
   es: {
-
-    taglineFallback: "Desde 2010",
     expertiseTitle: "Experiencia",
     contactTitle: "Contacto",
     saveContact: "Guardar contacto",
@@ -108,8 +102,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   
   },
   it: {
-
-    taglineFallback: "Dal 2010",
     expertiseTitle: "Competenze",
     contactTitle: "Contatto",
     saveContact: "Salva contatto",
@@ -120,8 +112,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   
   },
   fr: {
-
-    taglineFallback: "Depuis 2010",
     expertiseTitle: "Expertise",
     contactTitle: "Contact",
     saveContact: "Enregistrer le contact",
@@ -132,8 +122,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   
   },
   ar: {
-
-    taglineFallback: "منذ 2010",
     expertiseTitle: "الخبرة",
     contactTitle: "اتصال",
     saveContact: "حفظ جهة الاتصال",
@@ -167,7 +155,7 @@ export function LayoutNoirLuxury({
   const subtitleBits: string[] = [];
   if (cardData.title) subtitleBits.push(cardData.title);
   if (cardData.company) subtitleBits.push(cardData.company);
-  const tagline = cardData.position || subtitleBits.join(" · ") || t.taglineFallback;
+  const tagline = cardData.position || subtitleBits.join(" · ");
 
   return (
     <article

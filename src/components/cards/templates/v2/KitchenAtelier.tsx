@@ -294,7 +294,7 @@ export function KitchenAtelier({
 
       <Hero
         photoUrl={photoUrl}
-        company={cardData.company}
+        company={cardData.company || cardData.name}
         primary={primary}
         accent={accent}
         sourceLabel={sourceLabel}
@@ -311,7 +311,7 @@ export function KitchenAtelier({
       <ChefStrip
         name={cardData.name}
         titleParts={titleParts}
-        company={cardData.company}
+        company={cardData.company || cardData.name}
         accent={accent}
         primary={primary}
       />
@@ -521,7 +521,7 @@ export function KitchenAtelier({
       <Footer
         siteUrl={siteUrl}
         slug={slug}
-        company={cardData.company}
+        company={cardData.company || cardData.name}
         impressumUrl={cardData.impressumUrl}
         privacyUrl={cardData.privacyUrl}
         accent={accent}
@@ -625,7 +625,7 @@ function Hero({
               letterSpacing: "0.005em",
             }}
           >
-            {company ?? "Atelier"}
+            {company}
           </h1>
         </div>
 
@@ -1107,7 +1107,7 @@ function Footer({
           className="ka-display text-[14px] font-bold"
           style={{ color: CREAM }}
         >
-          {company ?? "Atelier"}
+          {company}
         </div>
         <div className="ka-italic mt-0.5 text-[11.5px] opacity-75">
           © {new Date().getFullYear()} · with care

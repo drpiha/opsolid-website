@@ -7,7 +7,7 @@
 // energy, modern food-app feel. Inspired by kart_03_restoran_vivid.html.
 //
 // Design DNA:
-//   - Hero with redâ†’orange gradient (240 px), rounded corner blobs, status
+//   - Hero with red→orange gradient (240 px), rounded corner blobs, status
 //     badge ("Open · Tue – Sun") and city pin.
 //   - Floating card on top of hero — squircle photo + bold name + role +
 //     chef line + 4 colourful chips (sector / city / price / award).
@@ -30,6 +30,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#c0392b";
@@ -290,14 +291,12 @@ export function RestaurantVivid({
   const services = (cardData.services ?? []).slice(0, 4);
   const restaurantName = cardData.company || cardData.name;
   const tagline = cardData.title || cardData.position || "";
-  const city = cardData.address?.split(",").slice(-2)[0]?.trim() || "Berlin";
+  const city = resolveLocation(cardData);
 
-  const chips = [
-    "Restaurant",
-    city,
-    "$$$",
-    "Bib Gourmand",
-  ];
+  // Chips: real profile data only (city + owner tags) — no invented awards.
+  const chips = [city, ...(cardData.tags ?? [])]
+    .filter((c): c is string => Boolean(c))
+    .slice(0, 4);
 
   return (
     <article
@@ -344,10 +343,12 @@ export function RestaurantVivid({
             />
             {t.badgeOpen}
           </span>
-          <span className="flex items-center gap-1">
-            <MapPin size={11} strokeWidth={2.4} />
-            {city}
-          </span>
+          {city && (
+            <span className="flex items-center gap-1">
+              <MapPin size={11} strokeWidth={2.4} />
+              {city}
+            </span>
+          )}
         </div>
       </section>
 
@@ -531,7 +532,7 @@ export function RestaurantVivid({
               <strong style={{ color: primary, fontWeight: 800 }}>{cardData.name}</strong>
             </span>
             <span style={{ color: ACCENT_2, fontSize: 14, letterSpacing: "1px" }}>
-              â˜…â˜…â˜…â˜…â˜…
+              ★★★★★
             </span>
           </div>
         </div>
@@ -674,7 +675,7 @@ export function RestaurantVivid({
         className="px-6 py-5 text-center text-[12px] font-semibold"
         style={{ color: TEXT_SOFT }}
       >
-        {restaurantName} © {new Date().getFullYear()} · {city} ·{" "}
+        {restaurantName} © {new Date().getFullYear()} · {city ? `${city} · ` : ""}{" "}
         <a
           href="https://opsolid.de/products/digital-card"
           target="_blank"
@@ -842,22 +843,22 @@ export const restaurantVividSample: SampleData = {
       {
         title: "Pasta al Tartufo",
         description: "trüffel · parmigiano · tagliatelle",
-        priceLabel: "â‚¬24",
+        priceLabel: "€24",
       },
       {
         title: "Tagliata di Manzo",
         description: "rinderfilet · rucola · balsamico",
-        priceLabel: "â‚¬32",
+        priceLabel: "€32",
       },
       {
         title: "Tiramisù",
         description: "mascarpone · espresso · marsala",
-        priceLabel: "â‚¬9",
+        priceLabel: "€9",
       },
       {
         title: "Vino della Casa",
         description: "Chianti Classico · 0,75 L",
-        priceLabel: "â‚¬28",
+        priceLabel: "€28",
       },
     ],
   },

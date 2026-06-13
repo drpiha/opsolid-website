@@ -28,6 +28,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#8b7355";
@@ -282,7 +283,7 @@ export function RestaurantStone({
   const testimonials = cardData.testimonials ?? [];
   const restaurantName = cardData.company || cardData.name;
   const tagline = cardData.title || cardData.position || "";
-  const city = cardData.address?.split(",").slice(-2)[0]?.trim() || "Berlin";
+  const city = resolveLocation(cardData);
 
   const nameParts = restaurantName.trim().split(/\s+/);
   const nameLead = nameParts.slice(0, -1).join(" ") || restaurantName;
@@ -660,7 +661,7 @@ export function RestaurantStone({
           className="mt-1 text-[10.5px] font-semibold"
           style={{ color: TEXT_SOFT, letterSpacing: "1px" }}
         >
-          {city} · MMXII · {t.poweredBy}{" "}
+          {city ? `${city} · ` : ""}{t.poweredBy}{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"

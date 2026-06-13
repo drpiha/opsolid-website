@@ -8,7 +8,7 @@
 // Inspired by kart_10_fitness_vivid.html.
 //
 // Design DNA (different from Athlete.tsx id=10, FitnessNoir/Pure):
-//   - Redâ†’orangeâ†’yellow gradient hero with radial blobs and pulsing dot pill.
+//   - Red→orange→yellow gradient hero with radial blobs and pulsing dot pill.
 //   - Float card with rounded photo + role meta + firm sub.
 //   - Stat tiles 2×2 with coloured iconography (red / orange / yellow).
 //   - Two-column rounded service cards with gradient top stripe + Poppins
@@ -66,7 +66,6 @@ function digitsOnly(value: string): string {
 }
 
 interface Copy {
-  taglineFallback: string;
   pulseLabel: string;
   yearsLabel: string;
   clientsLabel: string;
@@ -91,7 +90,6 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    taglineFallback: "Performance Coach",
     pulseLabel: "Neue Gruppe startet",
     yearsLabel: "Jahre",
     clientsLabel: "Kunden",
@@ -115,7 +113,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   en: {
-    taglineFallback: "Performance Coach",
     pulseLabel: "New cohort starting",
     yearsLabel: "Years",
     clientsLabel: "Clients",
@@ -139,7 +136,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    taglineFallback: "Performance Coach",
     pulseLabel: "Yeni grup başlıyor",
     yearsLabel: "Yıl",
     clientsLabel: "Müşteri",
@@ -163,8 +159,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   es: {
-
-    taglineFallback: "Coach de rendimiento",
     pulseLabel: "Nueva cohorte comenzando",
     yearsLabel: "Años",
     clientsLabel: "Clientes",
@@ -189,8 +183,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   
   },
   it: {
-
-    taglineFallback: "Performance Coach",
     pulseLabel: "Nuovo gruppo in partenza",
     yearsLabel: "Anni",
     clientsLabel: "Clienti",
@@ -215,8 +207,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   
   },
   fr: {
-
-    taglineFallback: "Coach de performance",
     pulseLabel: "Nouveau groupe en démarrage",
     yearsLabel: "Années",
     clientsLabel: "Clients",
@@ -241,8 +231,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   
   },
   ar: {
-
-    taglineFallback: "مدرب الأداء",
     pulseLabel: "مجموعة جديدة تبدأ",
     yearsLabel: "سنوات",
     clientsLabel: "العملاء",
@@ -268,7 +256,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
 };
 
-const SVC_EMOJI = ["\u{1F525}", "\u{1F465}", "\u{1F957}", "\u{1F4AA}", "âš¡"];
+const SVC_EMOJI = ["\u{1F525}", "\u{1F465}", "\u{1F957}", "\u{1F4AA}", "⚡"];
 
 export function FitnessVivid({
   slug,
@@ -367,7 +355,7 @@ export function FitnessVivid({
               aria-hidden
               style={{ width: 28, height: 2, background: YELLOW }}
             />
-            {cardData.company || t.taglineFallback}
+            {cardData.company}
           </div>
           <h1
             style={{
@@ -481,7 +469,7 @@ export function FitnessVivid({
                 marginBottom: 4,
               }}
             >
-              {cardData.position || t.taglineFallback}
+              {cardData.position}
             </div>
             <div
               className="truncate"
@@ -1052,10 +1040,10 @@ export const fitnessVividSample: SampleData = {
       youtube: "https://youtube.com/CanFit",
     },
     services: [
-      { title: "1-1 Online Koçluk", description: "Kişiye özel program + haftalık takip", priceLabel: "â‚¬199/Monat" },
-      { title: "Grup Koçluk", description: "Online grup dersleri + topluluk", priceLabel: "â‚¬69/Monat" },
-      { title: "Beslenme Planı", description: "Tek seferlik makro planlama", priceLabel: "â‚¬129/paket" },
-      { title: "12 Hafta Dönüşüm", description: "Antrenman + beslenme + takip", priceLabel: "â‚¬899/paket" },
+      { title: "1-1 Online Koçluk", description: "Kişiye özel program + haftalık takip", priceLabel: "€199/Monat" },
+      { title: "Grup Koçluk", description: "Online grup dersleri + topluluk", priceLabel: "€69/Monat" },
+      { title: "Beslenme Planı", description: "Tek seferlik makro planlama", priceLabel: "€129/paket" },
+      { title: "12 Hafta Dönüşüm", description: "Antrenman + beslenme + takip", priceLabel: "€899/paket" },
     ],
   },
   photoUrl:

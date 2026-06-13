@@ -36,6 +36,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#1e293b";
@@ -68,12 +69,6 @@ function resolveAssetUrl(path: string | null | undefined): string | null {
 
 function digitsOnly(value: string): string {
   return value.replace(/[^+0-9]/g, "");
-}
-
-function platformHandleFromUrl(url: string | undefined, fallback: string): string {
-  if (!url) return fallback;
-  const m = url.replace(/\/$/, "").split("/").pop();
-  return m && m.startsWith("@") ? m : m ? `@${m}` : fallback;
 }
 
 interface CcpCopy {
@@ -271,8 +266,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcpCopy> = {
   },
 };
 
-const CATEGORIES = ["Lifestyle", "Travel", "Wellness", "Fashion", "Food", "Premium"];
-
 export function ContentCreatorPure({
   slug,
   cardData,
@@ -293,14 +286,13 @@ export function ContentCreatorPure({
     : "";
 
   const services = cardData.services ?? [];
-  const igHandle = platformHandleFromUrl(cardData.socials?.instagram, "@creator");
-  const tikHandle = platformHandleFromUrl(cardData.socials?.tiktok, "@creator");
-  const ytHandle = platformHandleFromUrl(cardData.socials?.youtube, "@creator");
+  const stats = resolveStats(cardData.stats);
+  // Topic chips come from the owner's tags — no invented categories.
+  const tags = cardData.tags ?? [];
 
   const year = new Date().getFullYear();
 
-  const minPriceLabel =
-    services.find((s) => s.priceLabel)?.priceLabel || "â‚¬450";
+  const minPriceLabel = services.find((s) => s.priceLabel)?.priceLabel ?? null;
 
   return (
     <article
@@ -359,17 +351,13 @@ export function ContentCreatorPure({
             >
               {cardData.name}
             </h1>
-            <p className="mt-1 text-[13px]" style={{ color: INK_SOFT }}>
-              {cardData.position || cardData.title || "Content Creator"}
-            </p>
+            {(cardData.position || cardData.title) && (
+              <p className="mt-1 text-[13px]" style={{ color: INK_SOFT }}>
+                {cardData.position || cardData.title}
+              </p>
+            )}
           </div>
         </div>
-        <p className="mt-4 text-[13px]" style={{ color: INK_2 }}>
-          <strong style={{ color: accent, fontWeight: 600 }}>
-            {t.totalReach}
-          </strong>
-          {" "}· Lifestyle · Travel · Premium Brands
-        </p>
       </header>
 
       {/* QUICK ACTIONS — 3-up flat */}
@@ -404,23 +392,31 @@ export function ContentCreatorPure({
         )}
       </section>
 
-      {/* CHANNELS — stats table */}
-      <section
-        className="px-8 py-12"
-        style={{ borderBottom: `1px solid ${HAIRLINE}` }}
-      >
-        <div
-          className="mb-5 text-[11px] font-medium uppercase"
-          style={{ color: INK_SOFT, letterSpacing: "2px" }}
+      {/* CHANNELS — owner-entered stats only (resolveStats). */}
+      {stats && (
+        <section
+          className="px-8 py-12"
+          style={{ borderBottom: `1px solid ${HAIRLINE}` }}
         >
-          {t.channels}
-        </div>
-        <div>
-          <StatsRow label="Instagram" handle={igHandle} count="120K" accent={accent} />
-          <StatsRow label="TikTok" handle={tikHandle} count="85K" accent={accent} />
-          <StatsRow label="YouTube" handle={ytHandle} count="22K" accent={accent} last />
-        </div>
-      </section>
+          <div
+            className="mb-5 text-[11px] font-medium uppercase"
+            style={{ color: INK_SOFT, letterSpacing: "2px" }}
+          >
+            {t.channels}
+          </div>
+          <div>
+            {stats.map((s, i) => (
+              <StatsRow
+                key={s.label}
+                label={s.label}
+                count={s.value}
+                accent={accent}
+                last={i === stats.length - 1}
+              />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* ABOUT */}
       {cardData.bio && (
@@ -440,29 +436,31 @@ export function ContentCreatorPure({
         </section>
       )}
 
-      {/* CATEGORIES */}
-      <section
-        className="px-8 py-10"
-        style={{ borderBottom: `1px solid ${HAIRLINE}` }}
-      >
-        <div
-          className="mb-5 text-[11px] font-medium uppercase"
-          style={{ color: INK_SOFT, letterSpacing: "2px" }}
+      {/* CATEGORIES — owner's tags only; no invented topics. */}
+      {tags.length > 0 && (
+        <section
+          className="px-8 py-10"
+          style={{ borderBottom: `1px solid ${HAIRLINE}` }}
         >
-          {t.categories}
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {CATEGORIES.map((c) => (
-            <span
-              key={c}
-              className="rounded-full px-3.5 py-2 text-[12px] font-medium"
-              style={{ background: HAIRLINE_SOFT, color: INK_2 }}
-            >
-              {c}
-            </span>
-          ))}
-        </div>
-      </section>
+          <div
+            className="mb-5 text-[11px] font-medium uppercase"
+            style={{ color: INK_SOFT, letterSpacing: "2px" }}
+          >
+            {t.categories}
+          </div>
+          <div className="flex flex-wrap gap-2">
+            {tags.map((c) => (
+              <span
+                key={c}
+                className="rounded-full px-3.5 py-2 text-[12px] font-medium"
+                style={{ background: HAIRLINE_SOFT, color: INK_2 }}
+              >
+                {c}
+              </span>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* COLLAB CARD */}
       {services.length > 0 && (
@@ -647,7 +645,7 @@ function StatsRow({
   last,
 }: {
   label: string;
-  handle: string;
+  handle?: string;
   count: string;
   accent: string;
   last?: boolean;
@@ -661,9 +659,11 @@ function StatsRow({
         <span className="text-[14px] font-semibold" style={{ color: INK }}>
           {label}
         </span>
-        <span className="ml-2 text-[11px]" style={{ color: INK_SOFT }}>
-          {handle}
-        </span>
+        {handle && (
+          <span className="ml-2 text-[11px]" style={{ color: INK_SOFT }}>
+            {handle}
+          </span>
+        )}
       </div>
       <span
         className="text-[22px] font-bold tabular-nums tracking-[-0.5px]"
@@ -757,10 +757,10 @@ export const contentCreatorPureSample: SampleData = {
     bookingUrl: "https://cal.com/tunayilmaz/booking",
     sectorKey: "creator",
     services: [
-      { title: "Instagram Post", priceLabel: "â‚¬450" },
-      { title: "TikTok Video", priceLabel: "â‚¬380" },
-      { title: "YouTube Integration", priceLabel: "â‚¬800" },
-      { title: "Story Series", priceLabel: "â‚¬250" },
+      { title: "Instagram Post", priceLabel: "€450" },
+      { title: "TikTok Video", priceLabel: "€380" },
+      { title: "YouTube Integration", priceLabel: "€800" },
+      { title: "Story Series", priceLabel: "€250" },
     ],
     socials: {
       instagram: "https://instagram.com/tunayilmaz",

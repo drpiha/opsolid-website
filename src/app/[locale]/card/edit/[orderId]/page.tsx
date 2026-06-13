@@ -107,6 +107,12 @@ export default async function CardEditPage({ params, searchParams }: PageProps) 
       }
       openToNetworking={(order as { openToNetworking?: boolean }).openToNetworking ?? false}
       acceptingClients={(order as { acceptingClients?: boolean }).acceptingClients ?? false}
+      cardLocale={
+        (["de", "en", "tr"].includes(order.locale) ? order.locale : "de") as
+          | "de"
+          | "en"
+          | "tr"
+      }
     />
   );
 }

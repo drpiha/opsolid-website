@@ -32,6 +32,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#0d0d0d";
@@ -294,7 +295,7 @@ export function RestaurantNoir({
   const testimonials = cardData.testimonials ?? [];
   const restaurantName = cardData.company || cardData.name;
   const tagline = cardData.title || cardData.position || "";
-  const city = cardData.address?.split(",").slice(-2)[0]?.trim() || "Berlin";
+  const city = resolveLocation(cardData);
 
   return (
     <article
@@ -372,12 +373,14 @@ export function RestaurantNoir({
             {tagline}
           </div>
         )}
-        <div
-          className="mt-4 text-[10px] font-medium uppercase"
-          style={{ color: "rgba(200,169,81,0.55)", letterSpacing: "3px" }}
-        >
-          {city}
-        </div>
+        {city && (
+          <div
+            className="mt-4 text-[10px] font-medium uppercase"
+            style={{ color: "rgba(200,169,81,0.55)", letterSpacing: "3px" }}
+          >
+            {city}
+          </div>
+        )}
       </header>
 
       {/* HERO PHOTO with gold inner frame */}
@@ -720,7 +723,7 @@ export function RestaurantNoir({
           className="text-[9.5px]"
           style={{ color: TEXT_MUTED, letterSpacing: "2px", textTransform: "uppercase" }}
         >
-          {city} · MMXII · {t.poweredBy}{" "}
+          {city ? `${city} · ` : ""}{t.poweredBy}{" "}
           <a
             href="https://opsolid.de/products/digital-card"
             target="_blank"

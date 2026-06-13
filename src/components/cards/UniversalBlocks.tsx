@@ -32,7 +32,9 @@ import {
   TESTIMONIALS_NATIVE_KEYS,
   BROCHURE_NATIVE_KEYS,
   BIO_NATIVE_KEYS,
+  STATS_NATIVE_KEYS,
 } from "@/components/cards/templates/v2/registry";
+import { StatsBlock } from "@/components/cards/templates/v2/shared/StatsBlock";
 import { LogoBlock } from "@/components/cards/templates/v2/shared/LogoBlock";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
 import { VideoBlock } from "@/components/cards/templates/v2/shared/VideoBlock";
@@ -108,6 +110,11 @@ export function UniversalBlocks({
       {/* Universal bio — 22 templates don't render cardData.bio natively. */}
       {!suppressed(BIO_NATIVE_KEYS) && (
         <AboutBlock bio={data.bio} accentHex={accentHex} heading={h.about} />
+      )}
+      {/* Universal proof stats — owner-entered numbers only; templates with a
+          bespoke stat section (STATS_NATIVE_KEYS) render them natively. */}
+      {!suppressed(STATS_NATIVE_KEYS) && (
+        <StatsBlock stats={data.stats} tone={tone} accentHex={accentHex} />
       )}
       <CustomSectionsBlock
         sections={data.customSections}

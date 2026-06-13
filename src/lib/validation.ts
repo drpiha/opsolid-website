@@ -257,6 +257,16 @@ const TestimonialSchema = z
   .strict();
 export type CardTestimonial = z.infer<typeof TestimonialSchema>;
 
+// Owner-editable proof stat ("180+" / "Verkaufte Objekte"). Replaces the
+// hardcoded per-template stat blocks — a card with no stats renders none.
+const CardStatSchema = z
+  .object({
+    value: z.string().trim().min(1).max(16),
+    label: z.string().trim().min(1).max(48),
+  })
+  .strict();
+export type CardStat = z.infer<typeof CardStatSchema>;
+
 // Custom CTA buttons rendered above the contact rows. `style` selects the
 // visual treatment (primary = filled brand, secondary = outline, ghost = text).
 const CustomButtonSchema = z
@@ -369,6 +379,17 @@ export const CardDataSchema = z.object({
   website: url.optional(),
   address: z.string().trim().max(500).optional(),
   bio: z.string().trim().max(600).optional(),
+  /** Up to 4 owner-editable proof stats ("12" / "Jahre Erfahrung"). Absent ⇒
+   *  templates render no stat block — never hardcoded persona numbers. */
+  stats: z.array(CardStatSchema).max(4).optional(),
+  /** Short claim line ("Immobilien mit Weitblick"). Templates fall back to
+   *  position/title via resolveTagline — never to invented copy. */
+  tagline: z.string().trim().max(80).optional(),
+  /** Explicit location chip text ("Remote · Berlin"). Overrides the city
+   *  segment templates derive from `address`. */
+  location: z.string().trim().max(64).optional(),
+  /** True ⇒ never render a location chip, even when address is set. */
+  hideLocation: z.boolean().optional(),
   /** Cover/hero image rendered behind the avatar. Storage path or full URL. */
   coverImage: z.string().trim().max(500).optional(),
   /** Cal.com / Calendly / generic booking URL. Drives the "Randevu Al" CTA. */

@@ -13,7 +13,7 @@
 //   - Centred 116px circular photo on cream halo with italic Fraunces name.
 //   - Italic philosophy block referencing body / nutrition / mind.
 //   - Stacked rounded service cards with green-gradient icon tile + price col.
-//   - Numbered journey timeline (4 steps) with greenâ†’gold rule.
+//   - Numbered journey timeline (4 steps) with green→gold rule.
 //   - Linen-gradient testimonial with avatar + result line.
 //   - Pill-rounded contact rows + filled/outlined CTA pair.
 // =============================================================================
@@ -67,7 +67,6 @@ function digitsOnly(value: string): string {
 }
 
 interface Copy {
-  taglineFallback: string;
   atelierLabel: string;
   philLabel: string;
   servicesH: string;
@@ -93,7 +92,6 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    taglineFallback: "Holistic Fitness Coach",
     atelierLabel: "Holistic · Berlin",
     philLabel: "Mein Ansatz",
     servicesH: "Service-Spektrum",
@@ -123,7 +121,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     },
   },
   en: {
-    taglineFallback: "Holistic Fitness Coach",
     atelierLabel: "Holistic · Berlin",
     philLabel: "My approach",
     servicesH: "Service Range",
@@ -153,7 +150,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     },
   },
   tr: {
-    taglineFallback: "Holistic Fitness Coach",
     atelierLabel: "Holistic · İstanbul",
     philLabel: "Yaklaşımım",
     servicesH: "Hizmet Yelpazesi",
@@ -183,8 +179,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     },
   },
   es: {
-
-    taglineFallback: "Coach de fitness holístico",
     atelierLabel: "Holistic · Berlin",
     philLabel: "Mi enfoque",
     servicesH: "Gama de servicios",
@@ -215,8 +209,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   
   },
   it: {
-
-    taglineFallback: "Coach fitness olistico",
     atelierLabel: "Holistic · Berlin",
     philLabel: "Il mio approccio",
     servicesH: "Gamma di servizi",
@@ -247,8 +239,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   
   },
   fr: {
-
-    taglineFallback: "Coach fitness holistique",
     atelierLabel: "Holistic · Berlin",
     philLabel: "Mon approche",
     servicesH: "Gamme de services",
@@ -279,8 +269,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   
   },
   ar: {
-
-    taglineFallback: "مدرب لياقة شامل",
     atelierLabel: "Holistic · Berlin",
     philLabel: "نهجي",
     servicesH: "نطاق الخدمات",
@@ -527,7 +515,7 @@ export function FitnessStone({
             fontWeight: 600,
           }}
         >
-          {cardData.position || t.taglineFallback}
+          {cardData.position}
         </div>
       </section>
 
@@ -1092,10 +1080,10 @@ export const fitnessStoneSample: SampleData = {
       youtube: "https://youtube.com/CanFit",
     },
     services: [
-      { title: "1-1 Online Koçluk", description: "Kişiye özel, haftalık takip", priceLabel: "â‚¬199/ay" },
-      { title: "Grup Koçluk", description: "Topluluk + online dersler", priceLabel: "â‚¬69/ay" },
-      { title: "Beslenme Planı", description: "Kişiye özel makro çizelge", priceLabel: "â‚¬129" },
-      { title: "12 Hafta Dönüşüm", description: "Antrenman + beslenme + zihin", priceLabel: "â‚¬899" },
+      { title: "1-1 Online Koçluk", description: "Kişiye özel, haftalık takip", priceLabel: "€199/ay" },
+      { title: "Grup Koçluk", description: "Topluluk + online dersler", priceLabel: "€69/ay" },
+      { title: "Beslenme Planı", description: "Kişiye özel makro çizelge", priceLabel: "€129" },
+      { title: "12 Hafta Dönüşüm", description: "Antrenman + beslenme + zihin", priceLabel: "€899" },
     ],
   },
   photoUrl:

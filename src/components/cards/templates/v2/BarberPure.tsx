@@ -29,6 +29,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats, resolveTagline } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#f5f0e8";
@@ -65,10 +66,6 @@ function digitsOnly(value: string): string {
 
 interface Copy {
   eyebrow: string;
-  taglineFallback: string;
-  yearsLabel: string;
-  clientsLabel: string;
-  followersLabel: string;
   menuH: string;
   hoursH: string;
   contactH: string;
@@ -82,10 +79,6 @@ interface Copy {
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     eyebrow: "Premium Barbershop",
-    taglineFallback: "Master Barber & Stylist",
-    yearsLabel: "Jahre",
-    clientsLabel: "Kunden",
-    followersLabel: "Follower",
     menuH: "Service Menü",
     hoursH: "Öffnungszeiten",
     contactH: "Kontakt",
@@ -97,10 +90,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   en: {
     eyebrow: "Premium Barbershop",
-    taglineFallback: "Master Barber & Stylist",
-    yearsLabel: "Years",
-    clientsLabel: "Clients",
-    followersLabel: "Followers",
     menuH: "Service Menu",
     hoursH: "Hours",
     contactH: "Contact",
@@ -112,10 +101,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   tr: {
     eyebrow: "Premium Berber",
-    taglineFallback: "Master Berber & Stylist",
-    yearsLabel: "Yıl",
-    clientsLabel: "Müşteri",
-    followersLabel: "Takipçi",
     menuH: "Hizmet Menüsü",
     hoursH: "Çalışma Saatleri",
     contactH: "İletişim",
@@ -128,10 +113,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   es: {
 
     eyebrow: "Barbería premium",
-    taglineFallback: "Maestro barbero y estilista",
-    yearsLabel: "Años",
-    clientsLabel: "Clientes",
-    followersLabel: "Seguidores",
     menuH: "Carta de servicios",
     hoursH: "Horario",
     contactH: "Contacto",
@@ -145,10 +126,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   it: {
 
     eyebrow: "Barbershop premium",
-    taglineFallback: "Master Barber e Stylist",
-    yearsLabel: "Anni",
-    clientsLabel: "Clienti",
-    followersLabel: "Follower",
     menuH: "Menù dei servizi",
     hoursH: "Orari",
     contactH: "Contatto",
@@ -162,10 +139,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   fr: {
 
     eyebrow: "Barbershop premium",
-    taglineFallback: "Maître barbier et styliste",
-    yearsLabel: "Années",
-    clientsLabel: "Clients",
-    followersLabel: "Abonnés",
     menuH: "Carte des services",
     hoursH: "Horaires",
     contactH: "Contact",
@@ -179,10 +152,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   ar: {
 
     eyebrow: "صالون حلاقة فاخر",
-    taglineFallback: "حلاق رئيسي ومصفف",
-    yearsLabel: "سنوات",
-    clientsLabel: "العملاء",
-    followersLabel: "متابعون",
     menuH: "قائمة الخدمات",
     hoursH: "ساعات العمل",
     contactH: "اتصال",
@@ -217,6 +186,8 @@ export function BarberPure({
 
   const services = (cardData.services ?? []).slice(0, 5);
   const cityFromAddress = cardData.address?.split(",").slice(-1)[0]?.trim();
+  const stats = resolveStats(cardData.stats);
+  const tagline = resolveTagline(cardData);
   const nameParts = cardData.name.trim().split(/\s+/);
   const nameFirst = nameParts[0] ?? cardData.name;
   const nameLast = nameParts.slice(1).join(" ");
@@ -275,12 +246,14 @@ export function BarberPure({
             </>
           )}
         </h1>
-        <p
-          className="serif italic"
-          style={{ fontSize: 18, color: MUTED, marginBottom: 32 }}
-        >
-          {cardData.title || cardData.position || t.taglineFallback}
-        </p>
+        {tagline && (
+          <p
+            className="serif italic"
+            style={{ fontSize: 18, color: MUTED, marginBottom: 32 }}
+          >
+            {tagline}
+          </p>
+        )}
 
         {/* PROFILE BAND */}
         <div
@@ -312,12 +285,14 @@ export function BarberPure({
             )}
           </div>
           <div className="min-w-0">
-            <div
-              className="uppercase mb-1.5"
-              style={{ fontSize: 11, fontWeight: 500, letterSpacing: "1.5px", color: MUTED }}
-            >
-              {cardData.position || cardData.title || t.taglineFallback}
-            </div>
+            {(cardData.position || cardData.title) && (
+              <div
+                className="uppercase mb-1.5"
+                style={{ fontSize: 11, fontWeight: 500, letterSpacing: "1.5px", color: MUTED }}
+              >
+                {cardData.position || cardData.title}
+              </div>
+            )}
             <div
               className="serif italic"
               style={{ fontSize: 14, color: INK, lineHeight: 1.5 }}
@@ -337,39 +312,40 @@ export function BarberPure({
           </p>
         )}
 
-        {/* STATS */}
-        <div
-          className="mb-9 grid grid-cols-3 gap-3 py-5"
-          style={{ borderTop: `1px solid ${LINE}`, borderBottom: `1px solid ${LINE}` }}
-        >
-          {[
-            { num: "15", label: t.yearsLabel, suffix: "" },
-            { num: "5K", label: t.clientsLabel, suffix: "+" },
-            { num: "32", label: t.followersLabel, suffix: "K" },
-          ].map((s, i) => (
-            <div key={i} className="text-center">
-              <div
-                style={{
-                  fontWeight: 300,
-                  fontSize: 32,
-                  letterSpacing: "-1px",
-                  color: INK,
-                  lineHeight: 1,
-                  marginBottom: 6,
-                }}
-              >
-                {s.num}
-                <span style={{ fontSize: 14, color: MUTED }}>{s.suffix}</span>
+        {/* STATS — owner-entered numbers only (resolveStats). */}
+        {stats && (
+          <div
+            className="mb-9 grid gap-3 py-5"
+            style={{
+              borderTop: `1px solid ${LINE}`,
+              borderBottom: `1px solid ${LINE}`,
+              gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
+            }}
+          >
+            {stats.map((s) => (
+              <div key={s.label} className="text-center">
+                <div
+                  style={{
+                    fontWeight: 300,
+                    fontSize: 32,
+                    letterSpacing: "-1px",
+                    color: INK,
+                    lineHeight: 1,
+                    marginBottom: 6,
+                  }}
+                >
+                  {s.value}
+                </div>
+                <div
+                  className="uppercase"
+                  style={{ fontSize: 10, fontWeight: 500, letterSpacing: "1.5px", color: MUTED }}
+                >
+                  {s.label}
+                </div>
               </div>
-              <div
-                className="uppercase"
-                style={{ fontSize: 10, fontWeight: 500, letterSpacing: "1.5px", color: MUTED }}
-              >
-                {s.label}
-              </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
 
         {/* MENU */}
         {services.length > 0 && (
@@ -612,9 +588,9 @@ export const barberPureSample: SampleData = {
       instagram: "https://instagram.com/ta.barbershop",
     },
     services: [
-      { title: "Premium Haarschnitt", description: "Beratung, Schnitt, Styling.", priceLabel: "â‚¬35" },
-      { title: "Heißrasur", description: "Klassische Rasur mit heißem Tuch.", priceLabel: "â‚¬28" },
-      { title: "Kombination", description: "Schnitt + Heißrasur in einem Termin.", priceLabel: "â‚¬55" },
+      { title: "Premium Haarschnitt", description: "Beratung, Schnitt, Styling.", priceLabel: "€35" },
+      { title: "Heißrasur", description: "Klassische Rasur mit heißem Tuch.", priceLabel: "€28" },
+      { title: "Kombination", description: "Schnitt + Heißrasur in einem Termin.", priceLabel: "€55" },
     ],
   },
   photoUrl:

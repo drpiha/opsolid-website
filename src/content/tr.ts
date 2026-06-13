@@ -1777,6 +1777,33 @@ export const content: Content = {
           callMeBackHint:
             "1 iş günü içinde detayları netleştirmek için size dönüş yapacağız.",
           cardSection: "Kart içeriğiniz",
+          sampleHint: "Denemek için örnek içerik — kendi bilgilerinizle değiştirin.",
+          clearSample: "Örneği temizle",
+          cardLanguageLabel: "Kart dili",
+          cardLanguageHint:
+            "Kartınızı ziyaret edenlerin göreceği dil. Daha sonra editörden değiştirebilirsiniz.",
+          statsSection: "İstatistikler",
+          statsHint:
+            "Birçok tasarımda istatistik şeridi olarak görünen gerçek rakamlar (ör. 12 — Yıl).",
+          statsEmpty:
+            "Henüz istatistik yok. Gurur duyduğunuz gerçek rakamları ekleyin (ör. 12 — Yıl deneyim). İstatistik girilmezse kartta bu bölüm hiç görünmez.",
+          statsValue: "12+",
+          statsLabel: "Yıl deneyim",
+          statsAdd: "İstatistik ekle",
+          statsRemove: "Sil",
+          taglineLabel: "Slogan",
+          taglinePlaceholder: "Kısa bir tanıtım cümlesi (opsiyonel)",
+          taglineHint:
+            "Bazı tasarımlarda adınızın altında görünür. Boşsa unvanınız/pozisyonunuz kullanılır.",
+          locationLabel: "Karttaki konum",
+          locationAuto: "Adresten",
+          locationCustom: "Özel metin",
+          locationHidden: "Gizle",
+          locationAutoHint: "Adresinizden türetildi:",
+          locationAutoEmpty:
+            "Henüz adres yok — adres ekleyene kadar konum gösterilmez.",
+          locationPlaceholder: "Remote · İstanbul",
+          locationHiddenHint: "Kartınızda konum etiketi görünmez.",
           copyFromContact: "Yukarıdaki bilgileri kullan",
           cardName: "Ad ve soyad",
           cardTitle: "Ünvan / rol",

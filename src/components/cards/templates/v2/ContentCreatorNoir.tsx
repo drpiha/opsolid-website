@@ -38,6 +38,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#0f172a";
@@ -80,9 +81,6 @@ function getInitials(name: string): string {
 }
 
 interface CcnCopy {
-  studioLabel: string;
-  studioTagline: string;
-  totalReach: string;
   contact: string;
   collab: string;
   platforms: string;
@@ -96,14 +94,10 @@ interface CcnCopy {
   poweredBy: string;
   followers: string;
   niche: string;
-  nicheValue: string;
 }
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcnCopy> = {
   de: {
-    studioLabel: "Tuna · Studio",
-    studioTagline: "Cinematic storytelling for ambitious brands.",
-    totalReach: "Gesamtreichweite",
     contact: "Kontakt",
     collab: "Collab",
     platforms: "Plattformen",
@@ -117,12 +111,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcnCopy> = {
     poweredBy: "Powered by",
     followers: "Follower",
     niche: "Niche",
-    nicheValue: "Lifestyle · Travel · Premium",
   },
   en: {
-    studioLabel: "Tuna · Studio",
-    studioTagline: "Cinematic storytelling for ambitious brands.",
-    totalReach: "Total reach",
     contact: "Contact",
     collab: "Collab",
     platforms: "Platforms",
@@ -136,12 +126,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcnCopy> = {
     poweredBy: "Powered by",
     followers: "Followers",
     niche: "Niche",
-    nicheValue: "Lifestyle · Travel · Premium",
   },
   tr: {
-    studioLabel: "Tuna · Studio",
-    studioTagline: "İddialı markalar için sinematik storytelling.",
-    totalReach: "Toplam Erişim",
     contact: "İletişim",
     collab: "İş Birliği",
     platforms: "Platformlar",
@@ -155,13 +141,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcnCopy> = {
     poweredBy: "Powered by",
     followers: "Takipçi",
     niche: "Alan",
-    nicheValue: "Lifestyle · Travel · Premium",
   },
   es: {
 
-    studioLabel: "Tuna · Studio",
-    studioTagline: "Narrativa cinematográfica para marcas ambiciosas.",
-    totalReach: "Alcance total",
     contact: "Contacto",
     collab: "Colaboración",
     platforms: "Plataformas",
@@ -175,14 +157,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcnCopy> = {
     poweredBy: "Desarrollado por",
     followers: "Seguidores",
     niche: "Nicho",
-    nicheValue: "Lifestyle · Travel · Premium",
   
   },
   it: {
 
-    studioLabel: "Tuna · Studio",
-    studioTagline: "Narrazione cinematografica per brand ambiziosi.",
-    totalReach: "Copertura totale",
     contact: "Contatto",
     collab: "Collab",
     platforms: "Piattaforme",
@@ -196,14 +174,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcnCopy> = {
     poweredBy: "Realizzato con",
     followers: "Follower",
     niche: "Nicchia",
-    nicheValue: "Lifestyle · Travel · Premium",
   
   },
   fr: {
 
-    studioLabel: "Tuna · Studio",
-    studioTagline: "Narration cinématographique pour marques ambitieuses.",
-    totalReach: "Portée totale",
     contact: "Contact",
     collab: "Collab",
     platforms: "Plateformes",
@@ -217,14 +191,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcnCopy> = {
     poweredBy: "Propulsé par",
     followers: "Abonnés",
     niche: "Niche",
-    nicheValue: "Lifestyle · Travel · Premium",
   
   },
   ar: {
 
-    studioLabel: "Tuna · Studio",
-    studioTagline: "سرد سينمائي للعلامات الطموحة.",
-    totalReach: "الوصول الكلي",
     contact: "اتصال",
     collab: "تعاون",
     platforms: "المنصات",
@@ -238,7 +208,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", CcnCopy> = {
     poweredBy: "مشغل بواسطة",
     followers: "متابعون",
     niche: "تخصص",
-    nicheValue: "Lifestyle · Travel · Premium",
   
   },
 };
@@ -264,6 +233,16 @@ export function ContentCreatorNoir({
     : "";
 
   const services = cardData.services ?? [];
+  const stats = resolveStats(cardData.stats);
+  const tags = cardData.tags ?? [];
+  const roleLabel = cardData.position?.split("·")[0]?.trim() || null;
+
+  // Real socials only — no invented platforms or follower counts.
+  const platforms = [
+    { label: "Instagram", href: cardData.socials?.instagram, accent },
+    { label: "TikTok", href: cardData.socials?.tiktok, accent: GOLD },
+    { label: "YouTube", href: cardData.socials?.youtube, accent: RED },
+  ].filter((p) => Boolean(p.href));
 
   const nameParts = cardData.name.trim().split(/\s+/);
   const firstName = nameParts.slice(0, -1).join(" ") || cardData.name;
@@ -316,7 +295,7 @@ export function ContentCreatorNoir({
           className="display mb-5 inline-block text-[11px] font-medium uppercase"
           style={{ color: GOLD, letterSpacing: "4px" }}
         >
-          {t.studioLabel}
+          {cardData.company || cardData.name}
         </div>
         <h1
           className="display text-[36px] font-bold leading-[1.1] tracking-[-1px]"
@@ -325,55 +304,64 @@ export function ContentCreatorNoir({
           {firstName}{" "}
           <span style={{ color: accent, fontWeight: 800 }}>{lastName || ""}</span>
         </h1>
-        <p
-          className="display mt-3.5 text-[14px] italic leading-[1.6]"
-          style={{ color: INK_LITE, fontWeight: 300 }}
-        >
-          {cardData.bio || t.studioTagline}
-        </p>
+        {cardData.bio && (
+          <p
+            className="display mt-3.5 text-[14px] italic leading-[1.6]"
+            style={{ color: INK_LITE, fontWeight: 300 }}
+          >
+            {cardData.bio}
+          </p>
+        )}
       </header>
 
-      {/* SPOTLIGHT — gradient text follower count */}
-      <section className="px-7 pt-6">
-        <div
-          className="relative overflow-hidden rounded-3xl border px-6 py-7 text-center"
-          style={{
-            background: `linear-gradient(135deg, ${CARD_2} 0%, #0d0d0d 100%)`,
-            borderColor: HAIRLINE_FIRM,
-          }}
-        >
+      {/* SPOTLIGHT — owner-entered stats only (resolveStats). */}
+      {stats && (
+        <section className="px-7 pt-6">
           <div
-            aria-hidden
-            className="absolute inset-x-0 top-0 h-px"
+            className="relative overflow-hidden rounded-3xl border px-6 py-7 text-center"
             style={{
-              background: `linear-gradient(90deg, transparent, ${GOLD}, transparent)`,
-            }}
-          />
-          <div
-            className="text-[10px] font-medium uppercase"
-            style={{ color: GOLD, letterSpacing: "3px" }}
-          >
-            {t.totalReach}
-          </div>
-          <div
-            className="display mt-3.5 text-[60px] font-extrabold leading-none tracking-[-2px]"
-            style={{
-              backgroundImage: `linear-gradient(135deg, #fff 0%, ${GOLD} 100%)`,
-              WebkitBackgroundClip: "text",
-              backgroundClip: "text",
-              color: "transparent",
+              background: `linear-gradient(135deg, ${CARD_2} 0%, #0d0d0d 100%)`,
+              borderColor: HAIRLINE_FIRM,
             }}
           >
-            120K
+            <div
+              aria-hidden
+              className="absolute inset-x-0 top-0 h-px"
+              style={{
+                background: `linear-gradient(90deg, transparent, ${GOLD}, transparent)`,
+              }}
+            />
+            <div
+              className="text-[10px] font-medium uppercase"
+              style={{ color: GOLD, letterSpacing: "3px" }}
+            >
+              {stats[0].label}
+            </div>
+            <div
+              className="display mt-3.5 text-[60px] font-extrabold leading-none tracking-[-2px]"
+              style={{
+                backgroundImage: `linear-gradient(135deg, #fff 0%, ${GOLD} 100%)`,
+                WebkitBackgroundClip: "text",
+                backgroundClip: "text",
+                color: "transparent",
+              }}
+            >
+              {stats[0].value}
+            </div>
+            {stats.length > 1 && (
+              <div
+                className="mt-2 text-[12px] uppercase"
+                style={{ color: INK_SOFT, letterSpacing: "1.5px" }}
+              >
+                {stats
+                  .slice(1)
+                  .map((s) => `${s.value} ${s.label}`)
+                  .join(" · ")}
+              </div>
+            )}
           </div>
-          <div
-            className="mt-2 text-[12px] uppercase"
-            style={{ color: INK_SOFT, letterSpacing: "1.5px" }}
-          >
-            Instagram · TikTok · YouTube
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* PROFILE ROW */}
       <section className="flex items-center gap-4 px-7 pt-7">
@@ -402,30 +390,41 @@ export function ContentCreatorNoir({
           </div>
         </div>
         <div className="min-w-0 flex-1">
-          <div
-            className="display text-[11px] font-medium uppercase"
-            style={{ color: GOLD, letterSpacing: "2px" }}
-          >
-            {cardData.position?.split("·")[0]?.trim() || "Content Creator"}
-          </div>
-          <div
-            className="mt-1 text-[13px]"
-            style={{ color: INK_LITE }}
-          >
-            {t.nicheValue}
-          </div>
+          {roleLabel && (
+            <div
+              className="display text-[11px] font-medium uppercase"
+              style={{ color: GOLD, letterSpacing: "2px" }}
+            >
+              {roleLabel}
+            </div>
+          )}
+          {tags.length > 0 && (
+            <div
+              className="mt-1 text-[13px]"
+              style={{ color: INK_LITE }}
+            >
+              {tags.join(" · ")}
+            </div>
+          )}
         </div>
       </section>
 
-      {/* PLATFORMS GRID */}
-      <section className="px-7 pt-9">
-        <NoirSectionTitle gold={GOLD}>{t.platforms}</NoirSectionTitle>
-        <div className="mt-5 grid grid-cols-3 gap-3">
-          <NoirPlatform label="Instagram" count="120K" accent={accent} href={cardData.socials?.instagram} />
-          <NoirPlatform label="TikTok" count="85K" accent={GOLD} href={cardData.socials?.tiktok} />
-          <NoirPlatform label="YouTube" count="22K" accent={RED} href={cardData.socials?.youtube} />
-        </div>
-      </section>
+      {/* PLATFORMS GRID — real socials only; no invented follower counts. */}
+      {platforms.length > 0 && (
+        <section className="px-7 pt-9">
+          <NoirSectionTitle gold={GOLD}>{t.platforms}</NoirSectionTitle>
+          <div
+            className="mt-5 grid gap-3"
+            style={{
+              gridTemplateColumns: `repeat(${platforms.length}, minmax(0, 1fr))`,
+            }}
+          >
+            {platforms.map((p) => (
+              <NoirPlatform key={p.label} label={p.label} accent={p.accent} href={p.href} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* COLLAB packages */}
       {services.length > 0 && (
@@ -596,13 +595,15 @@ export function ContentCreatorNoir({
             OpSolid
           </a>
         </div>
-        <div
-          className="mt-2 inline-flex items-center gap-1.5 text-[10.5px]"
-          style={{ color: INK_SOFT }}
-        >
-          <Shield size={11} strokeWidth={1.6} />
-          <span>{t.niche}: {t.nicheValue}</span>
-        </div>
+        {tags.length > 0 && (
+          <div
+            className="mt-2 inline-flex items-center gap-1.5 text-[10.5px]"
+            style={{ color: INK_SOFT }}
+          >
+            <Shield size={11} strokeWidth={1.6} />
+            <span>{t.niche}: {tags.join(" · ")}</span>
+          </div>
+        )}
       </footer>
     </article>
   );
@@ -629,28 +630,20 @@ function NoirSectionTitle({
 
 function NoirPlatform({
   label,
-  count,
   accent,
   href,
 }: {
   label: string;
-  count: string;
   accent: string;
   href?: string;
 }) {
   const inner = (
     <>
       <div
-        className="display text-[10px] font-medium uppercase"
-        style={{ color: INK_SOFT, letterSpacing: "1.5px" }}
-      >
-        {label}
-      </div>
-      <div
-        className="display mt-2 text-[20px] font-extrabold leading-none"
+        className="display text-[14px] font-bold"
         style={{ color: "#fff" }}
       >
-        {count}
+        {label}
       </div>
       <div
         className="mt-2 inline-block h-0.5 w-6 rounded-full"
@@ -757,16 +750,22 @@ export const contentCreatorNoirSample: SampleData = {
     bookingUrl: "https://cal.com/tunayilmaz/booking",
     sectorKey: "creator",
     services: [
-      { title: "Instagram Reel", description: "Premium production · 60s", priceLabel: "â‚¬650" },
-      { title: "YouTube Integration", description: "60–90s in long-form", priceLabel: "â‚¬900" },
-      { title: "Story Series", description: "5-Story take-over · 24h", priceLabel: "â‚¬350" },
-      { title: "Long-Form Campaign", description: "Multi-platform · 4 weeks", priceLabel: "â‚¬2.800" },
+      { title: "Instagram Reel", description: "Premium production · 60s", priceLabel: "€650" },
+      { title: "YouTube Integration", description: "60–90s in long-form", priceLabel: "€900" },
+      { title: "Story Series", description: "5-Story take-over · 24h", priceLabel: "€350" },
+      { title: "Long-Form Campaign", description: "Multi-platform · 4 weeks", priceLabel: "€2.800" },
     ],
     socials: {
       instagram: "https://instagram.com/tunayilmaz",
       tiktok: "https://tiktok.com/@tunayilmaz",
       youtube: "https://youtube.com/@tunayilmaz",
     },
+    stats: [
+      { value: "120K", label: "Total Reach" },
+      { value: "85K", label: "TikTok" },
+      { value: "22K", label: "YouTube" },
+    ],
+    tags: ["Lifestyle", "Travel", "Premium"],
   },
   photoUrl:
     "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=920&q=80&auto=format&fit=crop",

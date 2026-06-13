@@ -9,11 +9,10 @@
 //
 // Design DNA (different from default LegalCounsel.tsx):
 //   - No giant photo. Compact 64 px circular avatar with gold ring.
-//   - Header: "SINCE YEAR" cap label + firm tag, big two-line italic-serif
+//   - Header: gold location cap label + firm tag, big two-line italic-serif
 //     name with gold last word, small uppercase title strip.
 //   - Centered gold rule between header and stats bar.
-//   - Stats bar: 3 cells (Years · Cases · Win-rate) with gold serif numerals
-//     + copper superscripts.
+//   - Stats bar: owner-entered stats (resolveStats) with gold serif numerals.
 //   - Practice areas: numbered list (I·II·III·IV·V) with gold left-rule cards.
 //   - Pull quote on a darker panel with oversized gold quote glyph.
 //   - Italic-serif slogan / firm motto strip.
@@ -31,6 +30,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveLocation, resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#1a1a1a";
@@ -77,7 +77,6 @@ function getInitials(name: string): string {
 }
 
 interface Copy {
-  sinceLabel: string;
   practiceEyebrow: string;
   practiceH: string;
   contactEyebrow: string;
@@ -85,9 +84,6 @@ interface Copy {
   callBtn: string;
   whatsappBtn: string;
   emailBtn: string;
-  yearsLabel: string;
-  casesLabel: string;
-  winRateLabel: string;
   saveContact: string;
   walletLabel: string;
   poweredBy: string;
@@ -95,7 +91,6 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    sinceLabel: "Seit 2005",
     practiceEyebrow: "Fachgebiete",
     practiceH: "Praxisgebiete",
     contactEyebrow: "Kontakt",
@@ -103,15 +98,11 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     callBtn: "Anrufen",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-Mail",
-    yearsLabel: "Jahre",
-    casesLabel: "Mandate",
-    winRateLabel: "Erfolg",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
   },
   en: {
-    sinceLabel: "Since 2005",
     practiceEyebrow: "Practice",
     practiceH: "Areas of practice",
     contactEyebrow: "Contact",
@@ -119,15 +110,11 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     callBtn: "Call",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
-    yearsLabel: "Years",
-    casesLabel: "Mandates",
-    winRateLabel: "Win rate",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
   },
   tr: {
-    sinceLabel: "2005'ten beri",
     practiceEyebrow: "Uzmanlık",
     practiceH: "Uzmanlık Alanları",
     contactEyebrow: "İletişim",
@@ -135,16 +122,12 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     callBtn: "Ara",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-posta",
-    yearsLabel: "Yıl",
-    casesLabel: "Dava",
-    winRateLabel: "Başarı",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
   },
   es: {
 
-    sinceLabel: "Desde 2005",
     practiceEyebrow: "Despacho",
     practiceH: "Áreas de práctica",
     contactEyebrow: "Contacto",
@@ -152,17 +135,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     callBtn: "Llamar",
     whatsappBtn: "WhatsApp",
     emailBtn: "Correo",
-    yearsLabel: "Años",
-    casesLabel: "Mandatos",
-    winRateLabel: "Tasa de éxito",
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
-  
+
   },
   it: {
 
-    sinceLabel: "Dal 2005",
     practiceEyebrow: "Studio",
     practiceH: "Aree di pratica",
     contactEyebrow: "Contatto",
@@ -170,17 +149,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     callBtn: "Chiama",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
-    yearsLabel: "Anni",
-    casesLabel: "Mandati",
-    winRateLabel: "Tasso di successo",
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
-  
+
   },
   fr: {
 
-    sinceLabel: "Depuis 2005",
     practiceEyebrow: "Cabinet",
     practiceH: "Domaines de pratique",
     contactEyebrow: "Contact",
@@ -188,17 +163,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     callBtn: "Appeler",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-mail",
-    yearsLabel: "Années",
-    casesLabel: "Mandats",
-    winRateLabel: "Taux de réussite",
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
-  
+
   },
   ar: {
 
-    sinceLabel: "منذ 2005",
     practiceEyebrow: "ممارسة",
     practiceH: "مجالات الممارسة",
     contactEyebrow: "اتصال",
@@ -206,13 +177,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     callBtn: "اتصال",
     whatsappBtn: "واتساب",
     emailBtn: "البريد الإلكتروني",
-    yearsLabel: "سنوات",
-    casesLabel: "تكليفات",
-    winRateLabel: "معدل النجاح",
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
-  
+
   },
 };
 
@@ -243,6 +211,8 @@ export function LegalCounselNoir({
 
   const services = (cardData.services ?? []).slice(0, 5);
   const testimonial = cardData.testimonials?.[0];
+  const stats = resolveStats(cardData.stats);
+  const locationLabel = resolveLocation(cardData);
 
   const nameParts = cardData.name.trim().split(/\s+/);
   const nameFirst = nameParts.slice(0, -1).join(" ") || cardData.name;
@@ -309,22 +279,21 @@ export function LegalCounselNoir({
             </div>
           )}
           <div className="min-w-0 flex-1">
-            <div
-              className="mb-1.5 flex items-center gap-2 text-[10px] font-medium uppercase"
-              style={{ color: accent, letterSpacing: "3px" }}
-            >
-              <span aria-hidden className="block h-px w-[18px]" style={{ background: accent }} />
-              {t.sinceLabel}
-            </div>
+            {locationLabel && (
+              <div
+                className="mb-1.5 flex items-center gap-2 text-[10px] font-medium uppercase"
+                style={{ color: accent, letterSpacing: "3px" }}
+              >
+                <span aria-hidden className="block h-px w-[18px]" style={{ background: accent }} />
+                {locationLabel}
+              </div>
+            )}
             {cardData.company && (
               <div
                 className="truncate text-[11px] uppercase"
                 style={{ color: TEXT_MUTED, letterSpacing: "0.8px" }}
               >
                 {cardData.company}
-                {cardData.address?.split(",").slice(-1)[0]?.trim()
-                  ? ` · ${cardData.address.split(",").slice(-1)[0]?.trim()}`
-                  : ""}
               </div>
             )}
           </div>
@@ -363,18 +332,27 @@ export function LegalCounselNoir({
         }}
       />
 
-      {/* STATS BAR */}
-      <div
-        className="grid grid-cols-3 py-7"
-        style={{
-          background: SURFACE_3,
-          borderBottom: `1px solid ${HAIRLINE}`,
-        }}
-      >
-        <NoirStat num="20" sup="+" label={t.yearsLabel} accent={accent} />
-        <NoirStat num="800" sup="+" label={t.casesLabel} accent={accent} divider />
-        <NoirStat num="94" sup="%" label={t.winRateLabel} accent={accent} divider />
-      </div>
+      {/* STATS BAR — owner-entered numbers only (resolveStats). */}
+      {stats && (
+        <div
+          className="grid py-7"
+          style={{
+            background: SURFACE_3,
+            borderBottom: `1px solid ${HAIRLINE}`,
+            gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
+          }}
+        >
+          {stats.map((s, i) => (
+            <NoirStat
+              key={s.label}
+              num={s.value}
+              label={s.label}
+              accent={accent}
+              divider={i > 0}
+            />
+          ))}
+        </div>
+      )}
 
       {/* QUICK ACTIONS */}
       <section className="grid grid-cols-3 gap-2.5 px-7 py-6">
@@ -741,12 +719,12 @@ export const legalCounselNoirSample: SampleData = {
       {
         title: "Strafrecht",
         description: "Beratung und Vertretung in Ermittlungs- und Strafverfahren.",
-        priceLabel: "Erstberatung â‚¬200",
+        priceLabel: "Erstberatung €200",
       },
       {
         title: "Familienrecht",
         description: "Scheidung, Sorgerecht, Unterhalt — diskret und lösungsorientiert.",
-        priceLabel: "ab â‚¬300/h",
+        priceLabel: "ab €300/h",
       },
       {
         title: "Arbeitsrecht",
@@ -760,6 +738,11 @@ export const legalCounselNoirSample: SampleData = {
         role: "Mandant — Strafverfahren",
         quote: "Dr. Bauer hat ruhig, präzise und mit unfehlbarem Gespür für den richtigen Moment verhandelt.",
       },
+    ],
+    stats: [
+      { value: "20+", label: "Jahre" },
+      { value: "800+", label: "Mandate" },
+      { value: "94%", label: "Erfolg" },
     ],
   },
   photoUrl:

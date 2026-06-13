@@ -26,6 +26,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats, resolveTagline, resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#1e3a8a";
@@ -62,11 +63,6 @@ function digitsOnly(value: string): string {
 }
 
 interface Copy {
-  taglineFallback: string;
-  yearsLabel: string;
-  projectsLabel: string;
-  countriesLabel: string;
-  awardsLabel: string;
   servicesEyebrow: string;
   servicesH: string;
   ctaTitle: string;
@@ -84,11 +80,6 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    taglineFallback: "Architekt & Gründer",
-    yearsLabel: "Jahre",
-    projectsLabel: "Projekte",
-    countriesLabel: "Länder",
-    awardsLabel: "Preise",
     servicesEyebrow: "— Leistungen",
     servicesH: "Spezialgebiete",
     ctaTitle: "Lassen Sie uns Ihr Projekt gestalten.",
@@ -104,11 +95,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   en: {
-    taglineFallback: "Architect & Founder",
-    yearsLabel: "Years",
-    projectsLabel: "Projects",
-    countriesLabel: "Countries",
-    awardsLabel: "Awards",
     servicesEyebrow: "— Services",
     servicesH: "Specialties",
     ctaTitle: "Let's design your next project.",
@@ -124,11 +110,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    taglineFallback: "Mimar & Kurucu",
-    yearsLabel: "Yıl",
-    projectsLabel: "Proje",
-    countriesLabel: "Ülke",
-    awardsLabel: "Ödül",
     servicesEyebrow: "— Hizmetler",
     servicesH: "Uzmanlık Alanları",
     ctaTitle: "Projenizi birlikte tasarlayalım.",
@@ -145,11 +126,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   es: {
 
-    taglineFallback: "Arquitecto y fundador",
-    yearsLabel: "Años",
-    projectsLabel: "Proyectos",
-    countriesLabel: "Países",
-    awardsLabel: "Premios",
     servicesEyebrow: "— Servicios",
     servicesH: "Especialidades",
     ctaTitle: "Diseñemos tu próximo proyecto.",
@@ -167,11 +143,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   it: {
 
-    taglineFallback: "Architetto e fondatore",
-    yearsLabel: "Anni",
-    projectsLabel: "Progetti",
-    countriesLabel: "Paesi",
-    awardsLabel: "Premi",
     servicesEyebrow: "— Servizi",
     servicesH: "Specialità",
     ctaTitle: "Progettiamo il tuo prossimo progetto.",
@@ -189,11 +160,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   fr: {
 
-    taglineFallback: "Architecte et fondateur",
-    yearsLabel: "Années",
-    projectsLabel: "Projets",
-    countriesLabel: "Pays",
-    awardsLabel: "Récompenses",
     servicesEyebrow: "— Services",
     servicesH: "Spécialités",
     ctaTitle: "Concevons votre prochain projet.",
@@ -211,11 +177,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   ar: {
 
-    taglineFallback: "مهندس معماري ومؤسس",
-    yearsLabel: "سنوات",
-    projectsLabel: "المشاريع",
-    countriesLabel: "الدول",
-    awardsLabel: "جوائز",
     servicesEyebrow: "— الخدمات",
     servicesH: "التخصصات",
     ctaTitle: "لنصمم مشروعك القادم.",
@@ -261,7 +222,9 @@ export function ArchitectVivid({
     : undefined;
 
   const services = (cardData.services ?? []).slice(0, 5);
-  const cityFromAddress = cardData.address?.split(",").slice(-1)[0]?.trim();
+  const stats = resolveStats(cardData.stats);
+  const tagline = resolveTagline(cardData);
+  const locationLabel = resolveLocation(cardData);
   const nameParts = cardData.name.trim().split(/\s+/);
   const nameFirst = nameParts[0] ?? cardData.name;
   const nameLast = nameParts.slice(1).join(" ");
@@ -319,21 +282,23 @@ export function ArchitectVivid({
           }}
         />
         <div className="relative z-[2]">
-          <div
-            className="mb-4 flex items-center gap-2.5 uppercase"
-            style={{
-              fontSize: 11,
-              letterSpacing: "3px",
-              color: "rgba(255,255,255,0.6)",
-              fontWeight: 600,
-            }}
-          >
-            <span
-              aria-hidden
-              style={{ width: 28, height: 2, background: ACCENT_2 }}
-            />
-            {cardData.company || t.taglineFallback}
-          </div>
+          {cardData.company && (
+            <div
+              className="mb-4 flex items-center gap-2.5 uppercase"
+              style={{
+                fontSize: 11,
+                letterSpacing: "3px",
+                color: "rgba(255,255,255,0.6)",
+                fontWeight: 600,
+              }}
+            >
+              <span
+                aria-hidden
+                style={{ width: 28, height: 2, background: ACCENT_2 }}
+              />
+              {cardData.company}
+            </div>
+          )}
           <h1
             className="display"
             style={{
@@ -408,18 +373,20 @@ export function ArchitectVivid({
             </div>
           )}
           <div className="min-w-0">
-            <div
-              className="uppercase"
-              style={{
-                fontSize: 11,
-                letterSpacing: "2px",
-                color: ACCENT,
-                fontWeight: 700,
-                marginBottom: 4,
-              }}
-            >
-              {cardData.position || t.taglineFallback}
-            </div>
+            {tagline && (
+              <div
+                className="uppercase"
+                style={{
+                  fontSize: 11,
+                  letterSpacing: "2px",
+                  color: ACCENT,
+                  fontWeight: 700,
+                  marginBottom: 4,
+                }}
+              >
+                {tagline}
+              </div>
+            )}
             <div
               className="display truncate"
               style={{ fontSize: 18, fontWeight: 700, color: INK }}
@@ -430,70 +397,67 @@ export function ArchitectVivid({
               className="truncate"
               style={{ fontSize: 12, color: MUTE, marginTop: 2 }}
             >
-              {cardData.company}
-              {cityFromAddress ? ` · ${cityFromAddress}` : ""}
+              {[cardData.company, locationLabel].filter(Boolean).join(" · ")}
             </div>
           </div>
         </div>
       </section>
 
-      {/* STATS */}
-      <section
-        className="mx-6 mt-7 grid grid-cols-4 px-2 py-5"
-        style={{
-          background: CARD,
-          borderRadius: 20,
-          boxShadow: "0 4px 14px rgba(15,23,42,0.05)",
-        }}
-      >
-        {[
-          { num: "14", label: t.yearsLabel, color: ACCENT },
-          { num: "85+", label: t.projectsLabel, color: ACCENT_2 },
-          { num: "8", label: t.countriesLabel, color: ACCENT },
-          { num: "4", label: t.awardsLabel, color: ACCENT_2 },
-        ].map((s, i, arr) => (
-          <div
-            key={i}
-            className="relative px-1 text-center"
-          >
+      {/* STATS — owner-entered numbers only (resolveStats). */}
+      {stats && (
+        <section
+          className="mx-6 mt-7 grid px-2 py-5"
+          style={{
+            background: CARD,
+            borderRadius: 20,
+            boxShadow: "0 4px 14px rgba(15,23,42,0.05)",
+            gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
+          }}
+        >
+          {stats.map((s, i, arr) => (
             <div
-              className="display"
-              style={{
-                fontSize: 24,
-                fontWeight: 800,
-                color: s.color,
-                lineHeight: 1,
-              }}
+              key={s.label}
+              className="relative px-1 text-center"
             >
-              {s.num}
-            </div>
-            <div
-              className="mt-1.5 uppercase"
-              style={{
-                fontSize: 10,
-                letterSpacing: "1.2px",
-                color: MUTE,
-                fontWeight: 600,
-              }}
-            >
-              {s.label}
-            </div>
-            {i < arr.length - 1 && (
-              <span
-                aria-hidden
-                className="absolute"
+              <div
+                className="display"
                 style={{
-                  right: 0,
-                  top: "14%",
-                  width: 1,
-                  height: "72%",
-                  background: LINE,
+                  fontSize: 24,
+                  fontWeight: 800,
+                  color: i % 2 === 0 ? ACCENT : ACCENT_2,
+                  lineHeight: 1,
                 }}
-              />
-            )}
-          </div>
-        ))}
-      </section>
+              >
+                {s.value}
+              </div>
+              <div
+                className="mt-1.5 uppercase"
+                style={{
+                  fontSize: 10,
+                  letterSpacing: "1.2px",
+                  color: MUTE,
+                  fontWeight: 600,
+                }}
+              >
+                {s.label}
+              </div>
+              {i < arr.length - 1 && (
+                <span
+                  aria-hidden
+                  className="absolute"
+                  style={{
+                    right: 0,
+                    top: "14%",
+                    width: 1,
+                    height: "72%",
+                    background: LINE,
+                  }}
+                />
+              )}
+            </div>
+          ))}
+        </section>
+      )}
 
       {/* SERVICES */}
       {services.length > 0 && (
@@ -714,40 +678,34 @@ export function ArchitectVivid({
               >
                 {featuredService.title}
               </div>
-              <div
-                className="mt-3.5 grid grid-cols-3 gap-3 pt-3.5"
-                style={{ borderTop: `1px solid ${LINE}` }}
-              >
-                {[
-                  { k: locale === "de" ? "Standort" : locale === "tr" ? "Konum" : "Location", v: cityFromAddress || "Berlin" },
-                  { k: locale === "de" ? "Jahr" : locale === "tr" ? "Yıl" : "Year", v: String(new Date().getFullYear()) },
-                  { k: locale === "de" ? "Typ" : locale === "tr" ? "Tip" : "Type", v: t.featuredTag },
-                ].map((m) => (
-                  <div key={m.k}>
-                    <div
-                      className="uppercase"
-                      style={{
-                        fontSize: 9,
-                        letterSpacing: "1.2px",
-                        color: MUTE,
-                        fontWeight: 600,
-                      }}
-                    >
-                      {m.k}
-                    </div>
-                    <div
-                      style={{
-                        fontSize: 13,
-                        fontWeight: 700,
-                        color: INK,
-                        marginTop: 2,
-                      }}
-                    >
-                      {m.v}
-                    </div>
+              {locationLabel && (
+                <div
+                  className="mt-3.5 pt-3.5"
+                  style={{ borderTop: `1px solid ${LINE}` }}
+                >
+                  <div
+                    className="uppercase"
+                    style={{
+                      fontSize: 9,
+                      letterSpacing: "1.2px",
+                      color: MUTE,
+                      fontWeight: 600,
+                    }}
+                  >
+                    {locale === "de" ? "Standort" : locale === "tr" ? "Konum" : "Location"}
                   </div>
-                ))}
-              </div>
+                  <div
+                    style={{
+                      fontSize: 13,
+                      fontWeight: 700,
+                      color: INK,
+                      marginTop: 2,
+                    }}
+                  >
+                    {locationLabel}
+                  </div>
+                </div>
+              )}
             </div>
           </section>
         </>
@@ -959,6 +917,12 @@ export const architectVividSample: SampleData = {
       { title: "Beratung", description: "Strategische Bauberatung.", priceLabel: "€200/h" },
       { title: "Sustainable Design", description: "DGNB-orientierte Konzepte." },
       { title: "Urban Renewal", description: "Quartiers-Regenerierung." },
+    ],
+    stats: [
+      { value: "14", label: "Jahre" },
+      { value: "85+", label: "Projekte" },
+      { value: "8", label: "Länder" },
+      { value: "4", label: "Preise" },
     ],
   },
   photoUrl:

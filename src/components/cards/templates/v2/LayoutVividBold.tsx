@@ -17,6 +17,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats, resolveTagline } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#7c3aed";
@@ -58,10 +59,6 @@ function getInitials(name: string): string {
 }
 
 interface Copy {
-  heroTag: string;
-  heroLine1Pre: string;
-  heroLine1Em: string;
-  heroLine2: string;
   servicesTitlePre: string;
   servicesTitleEm: string;
   packagesTitlePre: string;
@@ -71,18 +68,11 @@ interface Copy {
   saveContact: string;
   walletLabel: string;
   poweredBy: string;
-  statClients: string;
-  statRoas: string;
-  statReach: string;
   testimonialTitle: string;
 }
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    heroTag: "Strategie · Wachstum · Innovation",
-    heroLine1Pre: "Wir gestalten",
-    heroLine1Em: "mutige",
-    heroLine2: "Geschäftsstrategien.",
     servicesTitlePre: "Was ich",
     servicesTitleEm: "anbiete",
     packagesTitlePre: "Service",
@@ -92,16 +82,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "Kontakt speichern",
     walletLabel: "In Wallet speichern",
     poweredBy: "Powered by",
-    statClients: "Kunden",
-    statRoas: "Ø ROI",
-    statReach: "Jahre",
     testimonialTitle: "Stimmen",
   },
   en: {
-    heroTag: "Strategy · Growth · Innovation",
-    heroLine1Pre: "We craft",
-    heroLine1Em: "bold",
-    heroLine2: "business strategies.",
     servicesTitlePre: "What I",
     servicesTitleEm: "offer",
     packagesTitlePre: "Service",
@@ -111,16 +94,9 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
-    statClients: "Clients",
-    statRoas: "Avg ROI",
-    statReach: "Years",
     testimonialTitle: "What clients say",
   },
   tr: {
-    heroTag: "Strateji · Büyüme · İnovasyon",
-    heroLine1Pre: "Cesur",
-    heroLine1Em: "iş",
-    heroLine2: "stratejileri tasarlıyoruz.",
     servicesTitlePre: "Benim",
     servicesTitleEm: "sunduklarım",
     packagesTitlePre: "Hizmet",
@@ -130,17 +106,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana Ekle",
     poweredBy: "Powered by",
-    statClients: "Müşteri",
-    statRoas: "Ort. ROI",
-    statReach: "Yıl",
     testimonialTitle: "Görüşler",
   },
   es: {
 
-    heroTag: "Strategy · Growth · Innovation",
-    heroLine1Pre: "Creamos",
-    heroLine1Em: "audaz",
-    heroLine2: "estrategias de negocio.",
     servicesTitlePre: "Lo que",
     servicesTitleEm: "oferta",
     packagesTitlePre: "Servicio",
@@ -150,18 +119,11 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
-    statClients: "Clientes",
-    statRoas: "ROI medio",
-    statReach: "Años",
     testimonialTitle: "Lo que dicen los clientes",
-  
+
   },
   it: {
 
-    heroTag: "Strategy · Growth · Innovation",
-    heroLine1Pre: "Realizziamo",
-    heroLine1Em: "audace",
-    heroLine2: "strategie di business.",
     servicesTitlePre: "Cosa",
     servicesTitleEm: "offerta",
     packagesTitlePre: "Servizio",
@@ -171,18 +133,11 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
-    statClients: "Clienti",
-    statRoas: "ROI medio",
-    statReach: "Anni",
     testimonialTitle: "Cosa dicono i clienti",
-  
+
   },
   fr: {
 
-    heroTag: "Strategy · Growth · Innovation",
-    heroLine1Pre: "Nous créons",
-    heroLine1Em: "audacieux",
-    heroLine2: "stratégies d'affaires.",
     servicesTitlePre: "Ce que je",
     servicesTitleEm: "offre",
     packagesTitlePre: "Service",
@@ -192,18 +147,11 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
-    statClients: "Clients",
-    statRoas: "ROI moyen",
-    statReach: "Années",
     testimonialTitle: "Ce que disent les clients",
-  
+
   },
   ar: {
 
-    heroTag: "Strategy · Growth · Innovation",
-    heroLine1Pre: "نصنع",
-    heroLine1Em: "جريء",
-    heroLine2: "استراتيجيات الأعمال.",
     servicesTitlePre: "ما",
     servicesTitleEm: "عرض",
     packagesTitlePre: "خدمة",
@@ -213,11 +161,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
-    statClients: "العملاء",
-    statRoas: "متوسط العائد",
-    statReach: "سنوات",
     testimonialTitle: "ماذا يقول العملاء",
-  
+
   },
 };
 
@@ -240,6 +185,9 @@ export function LayoutVividBold({
   const services = (cardData.services ?? []).slice(0, 4);
   const testimonial = cardData.testimonials?.[0];
   const initials = getInitials(cardData.name);
+  const stats = resolveStats(cardData.stats);
+  const tagline = resolveTagline(cardData);
+  const statColors = [primary, accent, ACCENT2, "#db2777"];
   const tileColors = [primary, accent, ACCENT2, "#db2777"];
   const chipColors: { bg: string; fg: string }[] = [
     { bg: "#ede9fe", fg: primary },
@@ -282,34 +230,33 @@ export function LayoutVividBold({
           }}
         />
         <div className="relative z-[1]">
-          <div
-            className="uppercase"
-            style={{
-              fontSize: 11,
-              letterSpacing: "2px",
-              color: "rgba(255,255,255,0.85)",
-              fontWeight: 600,
-            }}
-          >
-            {cardData.position || t.heroTag}
-          </div>
-          <h1
-            className="mt-2"
-            style={{
-              fontSize: "clamp(26px, 8vw, 32px)",
-              fontWeight: 800,
-              lineHeight: 1.1,
-              letterSpacing: "-1px",
-              color: "#fff",
-            }}
-          >
-            {t.heroLine1Pre}{" "}
-            <em style={{ fontStyle: "normal", color: "#fde68a" }}>
-              {t.heroLine1Em}
-            </em>
-            <br />
-            {t.heroLine2}
-          </h1>
+          {cardData.company && (
+            <div
+              className="uppercase"
+              style={{
+                fontSize: 11,
+                letterSpacing: "2px",
+                color: "rgba(255,255,255,0.85)",
+                fontWeight: 600,
+              }}
+            >
+              {cardData.company}
+            </div>
+          )}
+          {tagline && (
+            <h1
+              className="mt-2"
+              style={{
+                fontSize: "clamp(26px, 8vw, 32px)",
+                fontWeight: 800,
+                lineHeight: 1.1,
+                letterSpacing: "-1px",
+                color: "#fff",
+              }}
+            >
+              {tagline}
+            </h1>
+          )}
         </div>
       </section>
 
@@ -439,40 +386,43 @@ export function LayoutVividBold({
         </section>
       )}
 
-      {/* STATS */}
-      <section className="grid grid-cols-3 gap-3 px-6 pb-1.5 pt-6">
-        {[
-          { num: "120+", label: t.statClients, color: primary },
-          { num: "8x", label: t.statRoas, color: accent },
-          { num: "15+", label: t.statReach, color: ACCENT2 },
-        ].map((s, i) => (
-          <div
-            key={i}
-            className="text-center"
-            style={{
-              background: SURFACE,
-              border: `1px solid ${BORDER}`,
-              borderRadius: 16,
-              padding: "18px 12px",
-            }}
-          >
+      {/* STATS — owner-entered numbers only (resolveStats). */}
+      {stats && (
+        <section
+          className="grid gap-3 px-6 pb-1.5 pt-6"
+          style={{
+            gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
+          }}
+        >
+          {stats.map((s, i) => (
             <div
+              key={s.label}
+              className="text-center"
               style={{
-                fontSize: 28,
-                fontWeight: 800,
-                lineHeight: 1,
-                marginBottom: 6,
-                color: s.color,
+                background: SURFACE,
+                border: `1px solid ${BORDER}`,
+                borderRadius: 16,
+                padding: "18px 12px",
               }}
             >
-              {s.num}
+              <div
+                style={{
+                  fontSize: 28,
+                  fontWeight: 800,
+                  lineHeight: 1,
+                  marginBottom: 6,
+                  color: statColors[i % statColors.length],
+                }}
+              >
+                {s.value}
+              </div>
+              <div style={{ fontSize: 11, color: MUTED, fontWeight: 500 }}>
+                {s.label}
+              </div>
             </div>
-            <div style={{ fontSize: 11, color: MUTED, fontWeight: 500 }}>
-              {s.label}
-            </div>
-          </div>
-        ))}
-      </section>
+          ))}
+        </section>
+      )}
 
       {/* SERVICE TILES */}
       {services.length > 0 && (
@@ -565,7 +515,7 @@ export function LayoutVividBold({
           }}
         >
           {t.ctaLabel}
-          <span aria-hidden style={{ marginLeft: 8 }}>â†’</span>
+          <span aria-hidden style={{ marginLeft: 8 }}>→</span>
         </a>
       </section>
 
@@ -776,10 +726,10 @@ export const layoutVividBoldSample: SampleData = {
       instagram: "https://instagram.com/alex.advisory",
     },
     services: [
-      { title: "Digital Transformation", description: "Aylık yönetim", priceLabel: "â‚¬3.500/Tag" },
-      { title: "Strategy Workshop", description: "Vorstand-Klausur", priceLabel: "â‚¬1.800/Tag" },
-      { title: "Executive Coaching", description: "1:1 Sparring", priceLabel: "â‚¬400/h" },
-      { title: "Strategic Audit", description: "6-Wochen-Audit", priceLabel: "ab â‚¬18.000" },
+      { title: "Digital Transformation", description: "Aylık yönetim", priceLabel: "€3.500/Tag" },
+      { title: "Strategy Workshop", description: "Vorstand-Klausur", priceLabel: "€1.800/Tag" },
+      { title: "Executive Coaching", description: "1:1 Sparring", priceLabel: "€400/h" },
+      { title: "Strategic Audit", description: "6-Wochen-Audit", priceLabel: "ab €18.000" },
     ],
     testimonials: [
       {
@@ -787,6 +737,11 @@ export const layoutVividBoldSample: SampleData = {
         role: "Klient",
         quote: "Alex hat unser Unternehmen in 6 Monaten komplett transformiert.",
       },
+    ],
+    stats: [
+      { value: "120+", label: "Kunden" },
+      { value: "8x", label: "Ø ROI" },
+      { value: "15+", label: "Jahre" },
     ],
   },
   photoUrl:

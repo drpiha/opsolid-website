@@ -456,7 +456,7 @@ export function Restaurant({
 
       <Hero
         photoUrl={photoUrl}
-        company={cardData.company}
+        company={cardData.company || cardData.name}
         primary={primary}
         accent={accent}
         onPrimary={onPrimary}
@@ -472,7 +472,7 @@ export function Restaurant({
 
       <NameStrip
         name={cardData.name}
-        company={cardData.company}
+        company={cardData.company || cardData.name}
         subtitle={subtitle}
         primary={primary}
         accent={accent}
@@ -698,7 +698,7 @@ export function Restaurant({
       <Footer
         siteUrl={siteUrl}
         slug={slug}
-        company={cardData.company}
+        company={cardData.company || cardData.name}
         impressumUrl={cardData.impressumUrl}
         privacyUrl={cardData.privacyUrl}
         primary={primary}
@@ -800,7 +800,7 @@ function Hero({
             className="rs-display mt-1.5 text-[34px] font-bold leading-[1.05] text-white"
             style={{ textShadow: "0 2px 14px rgba(0,0,0,0.5)" }}
           >
-            {company ?? "Trattoria"}
+            {company}
           </h1>
         </div>
 
@@ -1369,7 +1369,7 @@ function Footer({
           className="rs-display text-[14px] font-bold"
           style={{ color: onPrimary }}
         >
-          {company ?? "Trattoria"}
+          {company}
         </div>
         <div
           className="rs-italic mt-0.5 text-[11.5px]"

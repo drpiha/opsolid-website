@@ -10,6 +10,7 @@
 // =============================================================================
 
 import { AlertCircle, CheckCircle2, ChevronDown } from "lucide-react";
+import { CardLanguageSelector } from "@/components/cards/order-form/CardLanguageSelector";
 import { useLocale } from "@/context/LocaleContext";
 import type { FormState, SectionToggle } from "./types";
 
@@ -30,6 +31,9 @@ interface PublishSectionProps extends SectionToggle {
   onEditableSlugChange: (v: string) => void;
   editToken: string;
   cardStatus: string;
+  /** Card display language — what visitors of /c/[slug] see. */
+  cardLocale: "de" | "en" | "tr";
+  onCardLocaleChange: (v: "de" | "en" | "tr") => void;
 }
 
 export default function PublishSection({
@@ -49,6 +53,8 @@ export default function PublishSection({
   onEditableSlugChange,
   editToken,
   cardStatus,
+  cardLocale,
+  onCardLocaleChange,
 }: PublishSectionProps) {
   const { t, locale } = useLocale();
   const edit = t.products.digitalCard.edit;
@@ -139,6 +145,16 @@ export default function PublishSection({
             <p className="text-heading-sm text-ink">{badgeInfo.label}</p>
           </div>
         </div>
+
+        {/* Card display language — explicit, owner-controlled. Saved with the
+            next save; visitors can still override per-view via ?lang=. */}
+        <CardLanguageSelector
+          value={cardLocale}
+          onChange={onCardLocaleChange}
+          L={(k, fb) =>
+            ((t.products.digitalCard.order.form ?? {}) as Record<string, string>)[k] ?? fb
+          }
+        />
 
         {/* ── Slug rename — moved from top-of-page block (Goal B2) ── */}
         {currentSlug && cardStatus === "PUBLISHED" && (

@@ -917,17 +917,17 @@ export const clinicNoirSample: SampleData = {
       {
         title: "Vorsorgeuntersuchung",
         description: "Ganzheitlicher Check-up — Labor, EKG, Lifestyle-Beratung.",
-        priceLabel: "ab â‚¬80",
+        priceLabel: "ab €80",
       },
       {
         title: "Reisemedizin",
         description: "Impfungen, Beratung & Notfallset für individuelle Reisen.",
-        priceLabel: "â‚¬120",
+        priceLabel: "€120",
       },
       {
         title: "Online-Konsultation",
         description: "Videosprechstunde, Rezept-Service, sichere Plattform.",
-        priceLabel: "â‚¬60",
+        priceLabel: "€60",
       },
     ],
     testimonials: [

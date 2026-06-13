@@ -27,6 +27,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats, resolveTagline, resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#ffffff";
@@ -63,15 +64,8 @@ function digitsOnly(value: string): string {
 }
 
 interface Copy {
-  taglineFallback: string;
   studioLabel: string;
-  foundedLabel: string;
-  teamLabel: string;
-  yearsLabel: string;
-  projectsLabel: string;
-  countriesLabel: string;
   specsTitle: string;
-  awardsTitle: string;
   contactTitle: string;
   bookBtn: string;
   saveContact: string;
@@ -81,15 +75,8 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    taglineFallback: "Principal Architect",
     studioLabel: "Studio",
-    foundedLabel: "Gegründet",
-    teamLabel: "Team",
-    yearsLabel: "Jahre",
-    projectsLabel: "Realisiert",
-    countriesLabel: "Länder",
     specsTitle: "Spezialgebiete",
-    awardsTitle: "Auszeichnungen",
     contactTitle: "Kontakt",
     bookBtn: "Termin reservieren",
     saveContact: "Kontakt speichern",
@@ -97,15 +84,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   en: {
-    taglineFallback: "Principal Architect",
     studioLabel: "Studio",
-    foundedLabel: "Founded",
-    teamLabel: "Team",
-    yearsLabel: "Years",
-    projectsLabel: "Built",
-    countriesLabel: "Countries",
     specsTitle: "Specialties",
-    awardsTitle: "Awards",
     contactTitle: "Contact",
     bookBtn: "Book appointment",
     saveContact: "Save contact",
@@ -113,15 +93,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    taglineFallback: "Kurucu Mimar",
     studioLabel: "Stüdyo",
-    foundedLabel: "Kuruluş",
-    teamLabel: "Ekip",
-    yearsLabel: "Yıl",
-    projectsLabel: "Tamamlanan",
-    countriesLabel: "Ülke",
     specsTitle: "Uzmanlık Alanları",
-    awardsTitle: "Ödüller",
     contactTitle: "İletişim",
     bookBtn: "Randevu Al",
     saveContact: "Kişiyi Kaydet",
@@ -129,16 +102,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   es: {
-
-    taglineFallback: "Arquitecto principal",
     studioLabel: "Estudio",
-    foundedLabel: "Fundado",
-    teamLabel: "Equipo",
-    yearsLabel: "Años",
-    projectsLabel: "Construido",
-    countriesLabel: "Países",
     specsTitle: "Especialidades",
-    awardsTitle: "Premios",
     contactTitle: "Contacto",
     bookBtn: "Reservar cita",
     saveContact: "Guardar contacto",
@@ -147,16 +112,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   
   },
   it: {
-
-    taglineFallback: "Architetto principale",
     studioLabel: "Studio",
-    foundedLabel: "Fondata",
-    teamLabel: "Team",
-    yearsLabel: "Anni",
-    projectsLabel: "Costruito",
-    countriesLabel: "Paesi",
     specsTitle: "Specialità",
-    awardsTitle: "Premi",
     contactTitle: "Contatto",
     bookBtn: "Prenota un appuntamento",
     saveContact: "Salva contatto",
@@ -165,16 +122,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   
   },
   fr: {
-
-    taglineFallback: "Architecte principal",
     studioLabel: "Studio",
-    foundedLabel: "Fondé",
-    teamLabel: "Équipe",
-    yearsLabel: "Années",
-    projectsLabel: "Construit",
-    countriesLabel: "Pays",
     specsTitle: "Spécialités",
-    awardsTitle: "Récompenses",
     contactTitle: "Contact",
     bookBtn: "Prendre rendez-vous",
     saveContact: "Enregistrer le contact",
@@ -183,16 +132,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   
   },
   ar: {
-
-    taglineFallback: "كبير المهندسين المعماريين",
     studioLabel: "استوديو",
-    foundedLabel: "تأسس",
-    teamLabel: "الفريق",
-    yearsLabel: "سنوات",
-    projectsLabel: "تم البناء",
-    countriesLabel: "الدول",
     specsTitle: "التخصصات",
-    awardsTitle: "جوائز",
     contactTitle: "اتصال",
     bookBtn: "حجز موعد",
     saveContact: "حفظ جهة الاتصال",
@@ -201,13 +142,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   
   },
 };
-
-const AWARDS = [
-  { year: "2023", title: "Architizer A+ Award", org: "Lüks Konut Kategorisi" },
-  { year: "2021", title: "Sustainable Design Prize", org: "Architektur Akademie" },
-  { year: "2019", title: "European Property Awards", org: "Best Office Architecture" },
-  { year: "2017", title: "BDA Award Berlin", org: "Urban Renewal" },
-];
 
 export function ArchitectPure({
   slug,
@@ -231,8 +165,13 @@ export function ArchitectPure({
     : "";
 
   const services = (cardData.services ?? []).slice(0, 5);
-  const cityFromAddress = cardData.address?.split(",").slice(-1)[0]?.trim();
-  const startYear = new Date().getFullYear() - 14;
+  const stats = resolveStats(cardData.stats);
+  const tagline = resolveTagline(cardData);
+  const locationLabel = resolveLocation(cardData);
+  // Meta row: location only (real data) — stats render in the stat strip.
+  const metaRows = locationLabel
+    ? [{ k: t.studioLabel, v: locationLabel }]
+    : [];
   const nameParts = cardData.name.trim().split(/\s+/);
   const nameFirst = nameParts[0] ?? cardData.name;
   const nameLast = nameParts.slice(1).join(" ");
@@ -272,16 +211,18 @@ export function ArchitectPure({
         >
           {cardData.company || cardData.name}
         </div>
-        <div
-          className="mono uppercase"
-          style={{
-            fontSize: 10,
-            letterSpacing: "2px",
-            color: MUTE,
-          }}
-        >
-          N 52.5200 / E 13.4050
-        </div>
+        {locationLabel && (
+          <div
+            className="mono uppercase"
+            style={{
+              fontSize: 10,
+              letterSpacing: "2px",
+              color: MUTE,
+            }}
+          >
+            {locationLabel}
+          </div>
+        )}
       </header>
 
       {/* PROFILE */}
@@ -293,17 +234,19 @@ export function ArchitectPure({
         }}
       >
         <div className="pt-1 min-w-0">
-          <div
-            className="mono mb-3.5 uppercase"
-            style={{
-              fontSize: 10,
-              letterSpacing: "2.5px",
-              color: WARM,
-              fontWeight: 500,
-            }}
-          >
-            {cardData.position || t.taglineFallback}
-          </div>
+          {tagline && (
+            <div
+              className="mono mb-3.5 uppercase"
+              style={{
+                fontSize: 10,
+                letterSpacing: "2.5px",
+                color: WARM,
+                fontWeight: 500,
+              }}
+            >
+              {tagline}
+            </div>
+          )}
           <h1
             style={{
               fontSize: "clamp(40px, 12vw, 50px)",
@@ -353,13 +296,11 @@ export function ArchitectPure({
         )}
       </section>
 
-      {/* META TABLE */}
+      {/* META TABLE — location + owner stats only (resolveStats); no
+          fabricated founding year / team size. */}
+      {metaRows.length > 0 && (
       <div className="bg-transparent">
-        {[
-          { k: t.studioLabel, v: cityFromAddress || cardData.address?.split(",")[0]?.trim() || "Berlin" },
-          { k: t.foundedLabel, v: String(startYear) },
-          { k: t.teamLabel, v: "12 Personen" },
-        ].map((m, i, arr) => (
+        {metaRows.map((m, i, arr) => (
           <div
             key={m.k}
             className="grid items-baseline gap-4 px-7 py-3.5"
@@ -385,6 +326,7 @@ export function ArchitectPure({
           </div>
         ))}
       </div>
+      )}
 
       {/* SPECIALTIES */}
       {services.length > 0 && (
@@ -417,124 +359,75 @@ export function ArchitectPure({
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <span>{svc.title}</span>
-                <span
-                  className="mono"
-                  style={{
-                    fontSize: 11,
-                    color: WARM,
-                    letterSpacing: "1px",
-                  }}
-                >
-                  {svc.priceLabel || `${10 + i * 4} ${locale === "de" ? "Projekte" : locale === "tr" ? "proje" : "projects"}`}
-                </span>
+                {svc.priceLabel && (
+                  <span
+                    className="mono"
+                    style={{
+                      fontSize: 11,
+                      color: WARM,
+                      letterSpacing: "1px",
+                    }}
+                  >
+                    {svc.priceLabel}
+                  </span>
+                )}
               </ServiceLink>
             ))}
           </ul>
         </section>
       )}
 
-      {/* AWARDS */}
-      <section className="px-7 pb-8">
-        <SectHead num="02" title={t.awardsTitle} />
-        <ul
-          className="mt-4 flex flex-col gap-2.5 pt-3.5"
-          style={{ borderTop: `1px solid ${LINE}` }}
+
+      {/* STATS — owner-entered numbers only (resolveStats). */}
+      {stats && (
+        <section
+          className="grid gap-0 px-7 py-8"
+          style={{
+            borderTop: `1px solid ${LINE}`,
+            borderBottom: `1px solid ${LINE}`,
+            gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
+          }}
         >
-          {AWARDS.map((a) => (
-            <li
-              key={a.year + a.title}
-              className="grid items-baseline gap-3.5"
-              style={{
-                gridTemplateColumns: "56px 1fr",
-                fontSize: 12,
-              }}
-            >
-              <span
-                className="mono"
+          {stats.map((s, i, arr) => (
+            <div key={s.label} className="relative py-1">
+              <div
                 style={{
+                  fontSize: 38,
                   fontWeight: 500,
-                  color: WARM,
-                  letterSpacing: "0.5px",
+                  color: INK,
+                  letterSpacing: "-1.5px",
+                  lineHeight: 1,
                 }}
               >
-                {a.year}
-              </span>
-              <div>
-                <div style={{ color: INK, fontWeight: 500 }}>{a.title}</div>
-                <div style={{ color: MUTE }}>{a.org}</div>
+                {s.value}
               </div>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* STATS */}
-      <section
-        className="grid grid-cols-3 gap-0 px-7 py-8"
-        style={{
-          borderTop: `1px solid ${LINE}`,
-          borderBottom: `1px solid ${LINE}`,
-        }}
-      >
-        {[
-          { num: "85", sub: "+", lbl: t.projectsLabel },
-          { num: "14", sub: "yr", lbl: t.yearsLabel },
-          { num: "8", sub: "", lbl: t.countriesLabel },
-        ].map((s, i, arr) => (
-          <div
-            key={i}
-            className="relative py-1"
-          >
-            <div
-              style={{
-                fontSize: 38,
-                fontWeight: 500,
-                color: INK,
-                letterSpacing: "-1.5px",
-                lineHeight: 1,
-              }}
-            >
-              {s.num}
-              {s.sub && (
-                <sub
-                  className="mono"
+              <div
+                className="mono mt-2 uppercase"
+                style={{
+                  fontSize: 10,
+                  letterSpacing: "1.8px",
+                  color: MUTE,
+                }}
+              >
+                {s.label}
+              </div>
+              {i < arr.length - 1 && (
+                <span
+                  aria-hidden
+                  className="absolute"
                   style={{
-                    fontSize: 14,
-                    color: WARM,
-                    fontWeight: 400,
-                    marginLeft: 1,
+                    right: 16,
+                    top: "12%",
+                    width: 1,
+                    height: "76%",
+                    background: LINE,
                   }}
-                >
-                  {s.sub}
-                </sub>
+                />
               )}
             </div>
-            <div
-              className="mono mt-2 uppercase"
-              style={{
-                fontSize: 10,
-                letterSpacing: "1.8px",
-                color: MUTE,
-              }}
-            >
-              {s.lbl}
-            </div>
-            {i < arr.length - 1 && (
-              <span
-                aria-hidden
-                className="absolute"
-                style={{
-                  right: 16,
-                  top: "12%",
-                  width: 1,
-                  height: "76%",
-                  background: LINE,
-                }}
-              />
-            )}
-          </div>
-        ))}
-      </section>
+          ))}
+        </section>
+      )}
 
       {/* CONTACT */}
       <section className="px-7 pb-8 pt-9">
@@ -747,6 +640,11 @@ export const architectPureSample: SampleData = {
       { title: "Beratung", description: "Strategische Bauberatung.", priceLabel: "€200/h" },
       { title: "Sustainable Design", description: "DGNB-orientierte Konzepte." },
       { title: "Urban Renewal", description: "Stadtentwicklung & Quartier." },
+    ],
+    stats: [
+      { value: "85+", label: "Realisiert" },
+      { value: "14", label: "Jahre" },
+      { value: "8", label: "Länder" },
     ],
   },
   photoUrl:

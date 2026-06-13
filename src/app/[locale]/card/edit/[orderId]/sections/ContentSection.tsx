@@ -13,6 +13,7 @@ import { CustomSectionsEditor } from "@/components/cards/order-form/CustomSectio
 import { FaqEditor } from "@/components/cards/order-form/FaqEditor";
 import { GalleryEditor } from "@/components/cards/order-form/GalleryEditor";
 import { ServicesEditor } from "@/components/cards/order-form/ServicesEditor";
+import { StatsEditor } from "@/components/cards/order-form/StatsEditor";
 import { TestimonialsEditor } from "@/components/cards/order-form/TestimonialsEditor";
 import { VideoUploader } from "@/components/cards/order-form/VideoUploader";
 import type { CardData } from "@/lib/validation";
@@ -77,6 +78,24 @@ export default function ContentSection({
             services={cardData.services}
             sectorKey={cardData.sectorKey}
             onServicesChange={(next) => setCard("services", next)}
+            L={(k, fb) => (form as Record<string, string>)[k] ?? fb}
+          />
+        </fieldset>
+
+        {/* Stats — owner's proof-point numbers (replaces the old hardcoded
+            template stats). Empty = no stat block on the card. */}
+        <fieldset className="space-y-2">
+          <legend className="text-heading-sm text-ink">
+            {(form as Record<string, string>).statsSection ?? "Stats"}
+          </legend>
+          {(form as Record<string, string>).statsHint && (
+            <p className="-mt-1 text-xs text-ink-300">
+              {(form as Record<string, string>).statsHint}
+            </p>
+          )}
+          <StatsEditor
+            stats={cardData.stats}
+            onStatsChange={(next) => setCard("stats", next)}
             L={(k, fb) => (form as Record<string, string>)[k] ?? fb}
           />
         </fieldset>

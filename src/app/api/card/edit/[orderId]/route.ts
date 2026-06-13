@@ -56,6 +56,9 @@ const PatchSchema = z.object({
   visibility: z.enum(["public", "unlisted", "private"]).optional(),
   openToNetworking: z.boolean().optional(),
   acceptingClients: z.boolean().optional(),
+  /** Card display language — what /c/[slug] renders (visitor ?lang= still
+   *  overrides per view). Owner-changeable from the editor. */
+  locale: z.enum(["de", "en", "tr"]).optional(),
   /** Optimistic concurrency — the order.updatedAt ISO string the client
    *  loaded. When provided and stale (another tab saved since), the PATCH
    *  is rejected with 409 version_conflict instead of last-write-wins.
@@ -177,6 +180,8 @@ export async function PATCH(
         ...(data.visibility !== undefined ? { visibility: data.visibility } : {}),
         ...(data.openToNetworking !== undefined ? { openToNetworking: data.openToNetworking } : {}),
         ...(data.acceptingClients !== undefined ? { acceptingClients: data.acceptingClients } : {}),
+        // Card display language when provided (explicit owner choice).
+        ...(data.locale !== undefined ? { locale: data.locale } : {}),
         ...(nextSlug
           ? {
               slug: nextSlug,

@@ -334,6 +334,24 @@ export const BROCHURE_NATIVE_KEYS = new Set<string>([
   "restaurant-pure", "restaurant-stone", "restaurant-vivid",
 ]);
 
+/** Templates that render `cardData.stats` natively with bespoke styling
+ *  (via resolveStats — render nothing when the owner entered no stats).
+ *  All other templates get the universal StatsBlock. */
+export const STATS_NATIVE_KEYS = new Set<string>([
+  "software-dev", "software-dev-pure", "software-dev-vivid",
+  "real-estate-noir", "real-estate-pure", "real-estate-stone",
+  "real-estate-vivid", "architect-pure", "architect-noir", "architect-stone",
+  "architect-vivid", "dj-vivid",
+  "accounting-pure", "auto-dealer", "auto-dealer-pure", "auto-dealer-vivid",
+  "barber-noir", "barber-pure", "beauty-salon", "content-creator",
+  "content-creator-noir", "content-creator-pure", "ecommerce-pure",
+  "ecommerce-vivid", "event-planner", "event-planner-pure", "fitness-noir",
+  "fitness-pure", "interior-design-vivid", "layout-vivid-bold",
+  "legal-counsel-noir", "legal-counsel-pure", "photographer-noir",
+  "photographer-stone", "psychologist", "psychologist-pure",
+  "psychologist-vivid", "wellness-teacher",
+]);
+
 /** Templates that render `cardData.bio` natively. */
 export const BIO_NATIVE_KEYS = new Set<string>([
   "accounting", "accounting-noir", "accounting-pure", "architect",

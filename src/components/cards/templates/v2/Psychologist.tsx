@@ -39,6 +39,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveStats, resolveTagline } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#3d5a80";
@@ -71,7 +72,6 @@ function digitsOnly(value: string): string {
 }
 
 interface PsCopy {
-  practice: string;
   call: string;
   email: string;
   whatsapp: string;
@@ -81,20 +81,15 @@ interface PsCopy {
   formatTitle: string;
   educationEyebrow: string;
   educationTitle: string;
-  experience: string;
-  sessions: string;
-  formats: string;
   bookFirstSession: string;
   walletLabel: string;
   saveContact: string;
   share: string;
   poweredBy: string;
-  voiceTagline: string;
 }
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsCopy> = {
   de: {
-    practice: "Online · Praxis",
     call: "Telefon",
     email: "E-Mail",
     whatsapp: "WhatsApp",
@@ -104,18 +99,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsCopy> = {
     formatTitle: "Wählen Sie, was zu Ihnen passt",
     educationEyebrow: "Ausbildung",
     educationTitle: "Akademischer Werdegang",
-    experience: "Jahre",
-    sessions: "Sitzungen",
-    formats: "Formate",
     bookFirstSession: "Erstgespräch anfragen",
     walletLabel: "Auf Smartphone speichern",
     saveContact: "Kontakt speichern",
     share: "Teilen",
     poweredBy: "Powered by",
-    voiceTagline: "Mit Ihnen zu sein, um Sie zu verstehen.",
   },
   en: {
-    practice: "Online · In-person",
     call: "Call",
     email: "Email",
     whatsapp: "WhatsApp",
@@ -125,18 +115,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsCopy> = {
     formatTitle: "Choose what fits you",
     educationEyebrow: "Training",
     educationTitle: "My academic path",
-    experience: "Years",
-    sessions: "Sessions",
-    formats: "Formats",
     bookFirstSession: "Request first session",
     walletLabel: "Add to wallet",
     saveContact: "Save contact",
     share: "Share",
     poweredBy: "Powered by",
-    voiceTagline: "To be with you, to understand you.",
   },
   tr: {
-    practice: "Online · Yüz Yüze",
     call: "Telefon",
     email: "E-posta",
     whatsapp: "WhatsApp",
@@ -146,19 +131,14 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsCopy> = {
     formatTitle: "Size uygun olanı seçin",
     educationEyebrow: "Eğitim & Sertifika",
     educationTitle: "Akademik yolculuğum",
-    experience: "Yıl",
-    sessions: "Seans",
-    formats: "Format",
     bookFirstSession: "İlk Görüşme Talep Et",
     walletLabel: "Cüzdana ekle",
     saveContact: "Kişiyi Kaydet",
     share: "Paylaş",
     poweredBy: "Powered by",
-    voiceTagline: "Sizinle olmak, sizi anlamak için.",
   },
   es: {
 
-    practice: "Online · presencial",
     call: "Llamar",
     email: "Correo",
     whatsapp: "WhatsApp",
@@ -168,20 +148,15 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsCopy> = {
     formatTitle: "Elige lo que te conviene",
     educationEyebrow: "Entrenamiento",
     educationTitle: "Mi trayectoria académica",
-    experience: "Años",
-    sessions: "Sesiones",
-    formats: "Formatos",
     bookFirstSession: "Solicitar primera sesión",
     walletLabel: "Añadir a la cartera",
     saveContact: "Guardar contacto",
     share: "Compartir",
     poweredBy: "Desarrollado por",
-    voiceTagline: "Estar contigo, comprenderte.",
-  
+
   },
   it: {
 
-    practice: "Online · in presenza",
     call: "Chiama",
     email: "Email",
     whatsapp: "WhatsApp",
@@ -191,20 +166,15 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsCopy> = {
     formatTitle: "Scegli ciò che fa per te",
     educationEyebrow: "Allenamento",
     educationTitle: "Il mio percorso accademico",
-    experience: "Anni",
-    sessions: "Sessioni",
-    formats: "Formati",
     bookFirstSession: "Richiedi la prima sessione",
     walletLabel: "Aggiungi al wallet",
     saveContact: "Salva contatto",
     share: "Condividi",
     poweredBy: "Realizzato con",
-    voiceTagline: "Esserci con te, capirti.",
-  
+
   },
   fr: {
 
-    practice: "En ligne · en personne",
     call: "Appeler",
     email: "E-mail",
     whatsapp: "WhatsApp",
@@ -214,20 +184,15 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsCopy> = {
     formatTitle: "Choisissez ce qui vous convient",
     educationEyebrow: "Entraînement",
     educationTitle: "Mon parcours académique",
-    experience: "Années",
-    sessions: "Séances",
-    formats: "Formats",
     bookFirstSession: "Demander la première séance",
     walletLabel: "Ajouter au portefeuille",
     saveContact: "Enregistrer le contact",
     share: "Partager",
     poweredBy: "Propulsé par",
-    voiceTagline: "Être avec vous, vous comprendre.",
-  
+
   },
   ar: {
 
-    practice: "عبر الإنترنت · حضوري",
     call: "اتصال",
     email: "البريد الإلكتروني",
     whatsapp: "واتساب",
@@ -237,16 +202,12 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsCopy> = {
     formatTitle: "اختر ما يناسبك",
     educationEyebrow: "التدريب",
     educationTitle: "مسيرتي الأكاديمية",
-    experience: "سنوات",
-    sessions: "الجلسات",
-    formats: "الصيغ",
     bookFirstSession: "اطلب الجلسة الأولى",
     walletLabel: "إضافة إلى المحفظة",
     saveContact: "حفظ جهة الاتصال",
     share: "مشاركة",
     poweredBy: "مشغل بواسطة",
-    voiceTagline: "أن أكون معك، أن أفهمك.",
-  
+
   },
 };
 
@@ -273,6 +234,8 @@ export function Psychologist({
   const services = cardData.services ?? [];
   const faqs = cardData.faqs ?? [];
   const testimonials = cardData.testimonials ?? [];
+  const stats = resolveStats(cardData.stats);
+  const tagline = resolveTagline(cardData);
 
   // Specialties = first 5 faqs treated as focus areas; education = remainder.
   const specialties = faqs.slice(0, 5);
@@ -328,9 +291,11 @@ export function Psychologist({
           >
             {cardData.company}
           </div>
-          <div className="ps-editorial text-[24px] leading-[1.3]">
-            &ldquo;{t.voiceTagline}&rdquo;
-          </div>
+          {tagline && (
+            <div className="ps-editorial text-[24px] leading-[1.3]">
+              &ldquo;{tagline}&rdquo;
+            </div>
+          )}
         </div>
       </header>
 
@@ -363,15 +328,11 @@ export function Psychologist({
         <h1 className="text-[22px] font-bold leading-tight tracking-[-0.3px]" style={{ color: INK }}>
           {cardData.name}
         </h1>
-        <div className="mt-1 text-[13px]" style={{ color: INK_SOFT }}>
-          {cardData.position} {cardData.title && `· ${cardData.title}`}
-        </div>
-        <span
-          className="mt-2.5 inline-block rounded-full px-4 py-1 text-[11px] font-bold uppercase tracking-[0.6px]"
-          style={{ background: `${accent}40`, color: primary }}
-        >
-          {t.practice}
-        </span>
+        {(cardData.position || cardData.title) && (
+          <div className="mt-1 text-[13px]" style={{ color: INK_SOFT }}>
+            {[cardData.position, cardData.title].filter(Boolean).join(" · ")}
+          </div>
+        )}
       </section>
 
       {/* WELCOME */}
@@ -472,15 +433,28 @@ export function Psychologist({
         </PsSection>
       )}
 
-      {/* STATS */}
-      <section
-        className="grid grid-cols-3 gap-3 px-6 py-7 text-center"
-        style={{ background: primary, color: onPrimary }}
-      >
-        <PsStat n="9" l={t.experience} accent={accent} onPrimary={onPrimary} />
-        <PsStat n="800+" l={t.sessions} accent={accent} onPrimary={onPrimary} last />
-        <PsStat n="2" l={t.formats} accent={accent} onPrimary={onPrimary} last />
-      </section>
+      {/* STATS — owner-entered numbers only (resolveStats). */}
+      {stats && (
+        <section
+          className="grid gap-3 px-6 py-7 text-center"
+          style={{
+            background: primary,
+            color: onPrimary,
+            gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
+          }}
+        >
+          {stats.map((s, i, arr) => (
+            <PsStat
+              key={s.label}
+              n={s.value}
+              l={s.label}
+              accent={accent}
+              onPrimary={onPrimary}
+              last={i === arr.length - 1}
+            />
+          ))}
+        </section>
+      )}
 
       {/* EDUCATION */}
       {education.length > 0 && (
@@ -745,10 +719,16 @@ export const psychologistSample: SampleData = {
     website: "psycho-berlin.de",
     address: "Rosenthaler Str. 40, 10178 Berlin",
     bio: "Ich biete einen Raum, in dem Sie ohne Bewertung gehört werden — und in dem wir gemeinsam einen Weg finden, der zu Ihrem Leben passt.",
+    tagline: "Mit Ihnen zu sein, um Sie zu verstehen.",
     services: [
       { title: "Einzeltherapie", description: "60 min", priceLabel: "€120" },
       { title: "Paartherapie", description: "90 min", priceLabel: "€160" },
       { title: "Online-Beratung", description: "50 min", priceLabel: "€90" },
+    ],
+    stats: [
+      { value: "9", label: "Jahre" },
+      { value: "800+", label: "Sitzungen" },
+      { value: "2", label: "Formate" },
     ],
     faqs: [
       { q: "Depression & Anxiety", a: "Kognitive Verhaltenstherapie zur Behandlung von Stimmungs- und Angststörungen." },

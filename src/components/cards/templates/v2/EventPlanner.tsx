@@ -45,6 +45,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats, resolveTagline, resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#1a2b4a"; // navy
@@ -90,12 +91,10 @@ interface Copy {
   taglineLead: string;
   taglineAccent: string;
   taglineTail: string;
-  role: string;
   callBtn: string;
   whatsappBtn: string;
   emailBtn: string;
   servicesH: string;
-  servicesLabel: string;
   reviewsLabel: string;
   clientsH: string;
   testimonialH: string;
@@ -112,12 +111,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     taglineLead: "Lass uns deinen",
     taglineAccent: "schönsten Tag",
     taglineTail: "gemeinsam gestalten.",
-    role: "Event-Designerin",
     callBtn: "Anrufen",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-Mail",
     servicesH: "Leistungen",
-    servicesLabel: "Leistungen",
     reviewsLabel: "Bewertungen",
     clientsH: "Vertrauen mir",
     testimonialH: "Stimmen",
@@ -132,12 +129,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     taglineLead: "Let's design your",
     taglineAccent: "most beautiful day",
     taglineTail: "together.",
-    role: "Event Designer",
     callBtn: "Call",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
     servicesH: "Services",
-    servicesLabel: "Services",
     reviewsLabel: "Reviews",
     clientsH: "Trusted by",
     testimonialH: "Voices",
@@ -152,12 +147,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     taglineLead: "Hayalinizdeki",
     taglineAccent: "günü",
     taglineTail: "birlikte tasarlayalım.",
-    role: "Etkinlik Tasarımcısı",
     callBtn: "Ara",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-posta",
     servicesH: "Hizmetler",
-    servicesLabel: "Hizmetler",
     reviewsLabel: "Yorum",
     clientsH: "Çalıştığım Markalar",
     testimonialH: "Yorumlar",
@@ -173,12 +166,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     taglineLead: "Diseñemos tu",
     taglineAccent: "el día más hermoso",
     taglineTail: "juntos.",
-    role: "Diseñador de eventos",
     callBtn: "Llamar",
     whatsappBtn: "WhatsApp",
     emailBtn: "Correo",
     servicesH: "Servicios",
-    servicesLabel: "Servicios",
     reviewsLabel: "Reseñas",
     clientsH: "Confían en nosotros",
     testimonialH: "Voces",
@@ -195,12 +186,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     taglineLead: "Progettiamo il tuo",
     taglineAccent: "il giorno più bello",
     taglineTail: "insieme.",
-    role: "Event Designer",
     callBtn: "Chiama",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
     servicesH: "Servizi",
-    servicesLabel: "Servizi",
     reviewsLabel: "Recensioni",
     clientsH: "Si fidano di noi",
     testimonialH: "Voci",
@@ -217,12 +206,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     taglineLead: "Concevons votre",
     taglineAccent: "le plus beau jour",
     taglineTail: "ensemble.",
-    role: "Designer d'événements",
     callBtn: "Appeler",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-mail",
     servicesH: "Services",
-    servicesLabel: "Services",
     reviewsLabel: "Avis",
     clientsH: "Ils nous font confiance",
     testimonialH: "Témoignages",
@@ -239,12 +226,10 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     taglineLead: "لنصمم",
     taglineAccent: "أجمل يوم",
     taglineTail: "معاً.",
-    role: "مصمم فعاليات",
     callBtn: "اتصال",
     whatsappBtn: "واتساب",
     emailBtn: "البريد الإلكتروني",
     servicesH: "الخدمات",
-    servicesLabel: "الخدمات",
     reviewsLabel: "التقييمات",
     clientsH: "يثق بنا",
     testimonialH: "أصوات",
@@ -264,15 +249,6 @@ const SERVICE_ICONS: { Icon: typeof Heart; key: string }[] = [
   { Icon: GraduationCap, key: "graduation" },
   { Icon: Sparkles, key: "concept" },
   { Icon: Camera, key: "photo" },
-];
-
-const CLIENT_TAGS = [
-  "Mandarin Oriental",
-  "Soho House",
-  "Four Seasons",
-  "Fashion Week BLN",
-  "Mercedes-Benz",
-  "Ritz-Carlton",
 ];
 
 export function EventPlanner({
@@ -300,6 +276,10 @@ export function EventPlanner({
 
   const services = cardData.services ?? [];
   const testimonials = cardData.testimonials ?? [];
+  const tags = cardData.tags ?? [];
+  const stats = resolveStats(cardData.stats);
+  const tagline = resolveTagline(cardData);
+  const locationLabel = resolveLocation(cardData);
   const year = new Date().getFullYear();
 
   return (
@@ -363,13 +343,14 @@ export function EventPlanner({
             <br />
             {t.taglineTail}
           </h1>
-          <div
-            className="mt-5 text-[12px] font-extrabold uppercase"
-            style={{ color: "rgba(255,255,255,0.85)", letterSpacing: "4px" }}
-          >
-            {(cardData.company || "Events").toUpperCase()}
-            {cardData.address ? ` · ${cardData.address.split(",").pop()?.trim()}` : ""}
-          </div>
+          {(cardData.company || locationLabel) && (
+            <div
+              className="mt-5 text-[12px] font-extrabold uppercase"
+              style={{ color: "rgba(255,255,255,0.85)", letterSpacing: "4px" }}
+            >
+              {[cardData.company, locationLabel].filter(Boolean).join(" · ")}
+            </div>
+          )}
         </div>
       </header>
 
@@ -404,12 +385,14 @@ export function EventPlanner({
           <div className="text-[17px] font-extrabold tracking-[-0.3px]" style={{ color: primary }}>
             {cardData.name}
           </div>
-          <div
-            className="mt-0.5 text-[12px] font-semibold"
-            style={{ color: shade(primary, 50), letterSpacing: "0.5px" }}
-          >
-            {cardData.position || t.role}
-          </div>
+          {tagline && (
+            <div
+              className="mt-0.5 text-[12px] font-semibold"
+              style={{ color: shade(primary, 50), letterSpacing: "0.5px" }}
+            >
+              {tagline}
+            </div>
+          )}
           {testimonials.length > 0 && (
             <div className="mt-1 flex items-center gap-1.5 text-[12px]" style={{ color: accent }}>
               {[0, 1, 2, 3, 4].map((i) => (
@@ -444,102 +427,95 @@ export function EventPlanner({
       </section>
 
       {/* SERVICES */}
-      <section className="px-7 pt-7">
-        <SectionTitle primary={primary} accent={accent}>
-          {t.servicesH}
-        </SectionTitle>
-        <div className="mt-4 grid grid-cols-2 gap-3">
-          {(services.length > 0 ? services.slice(0, 6) : SERVICE_ICONS.map((s) => ({
-            title: s.key,
-            description: "",
-            priceLabel: undefined as string | undefined,
-          }))).map((svc, i) => {
-            const { Icon } = SERVICE_ICONS[i % SERVICE_ICONS.length];
-            return (
-              <ServiceLink
-                key={`${svc.title}-${i}`}
-                href={'href' in svc ? (svc as { href?: string | null }).href : undefined}
-                className="relative overflow-hidden rounded-[18px] px-4 py-5 transition-all hover:-translate-y-0.5"
+      {services.length > 0 && (
+        <section className="px-7 pt-7">
+          <SectionTitle primary={primary} accent={accent}>
+            {t.servicesH}
+          </SectionTitle>
+          <div className="mt-4 grid grid-cols-2 gap-3">
+            {services.slice(0, 6).map((svc, i) => {
+              const { Icon } = SERVICE_ICONS[i % SERVICE_ICONS.length];
+              return (
+                <ServiceLink
+                  key={`${svc.title}-${i}`}
+                  href={svc.href}
+                  className="relative overflow-hidden rounded-[18px] px-4 py-5 transition-all hover:-translate-y-0.5"
+                  style={{
+                    background: `linear-gradient(135deg, ${SURFACE} 0%, ${PAGE} 100%)`,
+                    border: `1px solid ${HAIRLINE}`,
+                  }}
+                >
+                  <Icon size={26} strokeWidth={1.6} style={{ color: primary }} />
+                  <div className="mt-2.5 text-[14px] font-bold" style={{ color: INK }}>
+                    {svc.title}
+                  </div>
+                  {svc.description && (
+                    <div className="mt-1 text-[11.5px] leading-[1.5]" style={{ color: INK_SOFT }}>
+                      {svc.description}
+                    </div>
+                  )}
+                  {svc.priceLabel && (
+                    <div
+                      className="mt-2 inline-block rounded-full px-2 py-0.5 text-[11px] font-bold"
+                      style={{ background: `${accent}26`, color: shade(primary, 30) }}
+                    >
+                      {svc.priceLabel}
+                    </div>
+                  )}
+                </ServiceLink>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
+      {/* STATS BANNER — owner-entered numbers only (resolveStats). */}
+      {stats && (
+        <section className="px-7 pt-7">
+          <div
+            className="relative overflow-hidden rounded-[22px] px-6 py-7"
+            style={{
+              background: `linear-gradient(135deg, ${primaryDeep} 0%, ${primary} 100%)`,
+              color: "#fff",
+            }}
+          >
+            <div
+              aria-hidden
+              className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full"
+              style={{ background: `radial-gradient(circle, ${accent}66, transparent 70%)` }}
+            />
+            <div className="relative flex justify-around text-center">
+              {stats.map((s) => (
+                <Stat key={s.label} num={s.value} label={s.label} accent={accent} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* CLIENT TAGS — owner-entered tags only */}
+      {tags.length > 0 && (
+        <section className="px-7 pt-7">
+          <SectionTitle primary={primary} accent={accent}>
+            {t.clientsH}
+          </SectionTitle>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {tags.map((c) => (
+              <span
+                key={c}
+                className="rounded-full px-3.5 py-2 text-[12px] font-bold"
                 style={{
-                  background: `linear-gradient(135deg, ${SURFACE} 0%, ${PAGE} 100%)`,
-                  border: `1px solid ${HAIRLINE}`,
+                  background: GOLD_SOFT,
+                  border: `1px solid ${accent}66`,
+                  color: INK,
                 }}
               >
-                <Icon size={26} strokeWidth={1.6} style={{ color: primary }} />
-                <div className="mt-2.5 text-[14px] font-bold" style={{ color: INK }}>
-                  {svc.title}
-                </div>
-                {svc.description && (
-                  <div className="mt-1 text-[11.5px] leading-[1.5]" style={{ color: INK_SOFT }}>
-                    {svc.description}
-                  </div>
-                )}
-                {svc.priceLabel && (
-                  <div
-                    className="mt-2 inline-block rounded-full px-2 py-0.5 text-[11px] font-bold"
-                    style={{ background: `${accent}26`, color: shade(primary, 30) }}
-                  >
-                    {svc.priceLabel}
-                  </div>
-                )}
-              </ServiceLink>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* STATS BANNER — driven by real data */}
-      {(() => {
-        const statsItems = [
-          ...(services.length ? [{ num: String(services.length), label: t.servicesLabel }] : []),
-          ...(testimonials.length ? [{ num: String(testimonials.length), label: t.reviewsLabel }] : []),
-        ];
-        if (statsItems.length === 0) return null;
-        return (
-          <section className="px-7 pt-7">
-            <div
-              className="relative overflow-hidden rounded-[22px] px-6 py-7"
-              style={{
-                background: `linear-gradient(135deg, ${primaryDeep} 0%, ${primary} 100%)`,
-                color: "#fff",
-              }}
-            >
-              <div
-                aria-hidden
-                className="pointer-events-none absolute -right-10 -top-10 h-36 w-36 rounded-full"
-                style={{ background: `radial-gradient(circle, ${accent}66, transparent 70%)` }}
-              />
-              <div className="relative flex justify-around text-center">
-                {statsItems.map((s) => (
-                  <Stat key={s.label} num={s.num} label={s.label} accent={accent} />
-                ))}
-              </div>
-            </div>
-          </section>
-        );
-      })()}
-
-      {/* CLIENT TAGS */}
-      <section className="px-7 pt-7">
-        <SectionTitle primary={primary} accent={accent}>
-          {t.clientsH}
-        </SectionTitle>
-        <div className="mt-4 flex flex-wrap gap-2">
-          {CLIENT_TAGS.map((c) => (
-            <span
-              key={c}
-              className="rounded-full px-3.5 py-2 text-[12px] font-bold"
-              style={{
-                background: GOLD_SOFT,
-                border: `1px solid ${accent}66`,
-                color: INK,
-              }}
-            >
-              {c}
-            </span>
-          ))}
-        </div>
-      </section>
+                {c}
+              </span>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* TESTIMONIAL */}
       {testimonials.length > 0 && (
@@ -657,12 +633,14 @@ export function EventPlanner({
             OpSolid
           </a>
         </div>
-        <div
-          className="mt-1.5 inline-flex items-center gap-1 text-[10.5px]"
-          style={{ color: "rgba(255,255,255,0.5)" }}
-        >
-          <Award size={10} strokeWidth={1.8} /> {cardData.address || ""}
-        </div>
+        {cardData.address && (
+          <div
+            className="mt-1.5 inline-flex items-center gap-1 text-[10.5px]"
+            style={{ color: "rgba(255,255,255,0.5)" }}
+          >
+            <Award size={10} strokeWidth={1.8} /> {cardData.address}
+          </div>
+        )}
       </footer>
     </article>
   );
@@ -802,6 +780,19 @@ export const eventPlannerSample: SampleData = {
       instagram: "https://instagram.com/naz.events",
       facebook: "https://facebook.com/nazevents",
     },
+    stats: [
+      { value: "180+", label: "Hochzeiten" },
+      { value: "400+", label: "Events" },
+      { value: "9", label: "Jahre" },
+    ],
+    tags: [
+      "Mandarin Oriental",
+      "Soho House",
+      "Four Seasons",
+      "Fashion Week BLN",
+      "Mercedes-Benz",
+      "Ritz-Carlton",
+    ],
   },
   photoUrl:
     "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=920&q=80&auto=format&fit=crop",

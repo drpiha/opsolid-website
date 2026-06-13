@@ -30,6 +30,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#2d3748"; // soft charcoal-navy
@@ -70,16 +71,12 @@ interface Copy {
   emailBtn: string;
   servicesH: string;
   statsH: string;
-  yearsLabel: string;
-  eventsLabel: string;
-  weddingsLabel: string;
   clientsH: string;
   contactH: string;
   cta: string;
   saveContact: string;
   walletLabel: string;
   poweredBy: string;
-  credential: string;
 }
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
@@ -90,16 +87,12 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     emailBtn: "E-Mail",
     servicesH: "Leistungen",
     statsH: "Auf einen Blick",
-    yearsLabel: "Jahre",
-    eventsLabel: "Events",
-    weddingsLabel: "Hochzeiten",
     clientsH: "Vertrauen mir",
     contactH: "Kontakt",
     cta: "Erstgespräch buchen",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
-    credential: "9 Jahre · 400+ Events · 180 Hochzeiten",
   },
   en: {
     brandMark: "Wedding & Events Studio",
@@ -108,16 +101,12 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     emailBtn: "Email",
     servicesH: "Services",
     statsH: "At a glance",
-    yearsLabel: "Years",
-    eventsLabel: "Events",
-    weddingsLabel: "Weddings",
     clientsH: "Trusted by",
     contactH: "Contact",
     cta: "Book a consultation",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
-    credential: "9 years · 400+ events · 180 weddings",
   },
   tr: {
     brandMark: "Wedding & Events Studio",
@@ -126,16 +115,12 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     emailBtn: "E-posta",
     servicesH: "Hizmetler",
     statsH: "Özet",
-    yearsLabel: "Yıl",
-    eventsLabel: "Etkinlik",
-    weddingsLabel: "Düğün",
     clientsH: "Çalıştığım Markalar",
     contactH: "İletişim",
     cta: "Görüşme Talep Et",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
-    credential: "9 yıl · 400+ etkinlik · 180 düğün",
   },
   es: {
 
@@ -145,17 +130,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     emailBtn: "Correo",
     servicesH: "Servicios",
     statsH: "De un vistazo",
-    yearsLabel: "Años",
-    eventsLabel: "Eventos",
-    weddingsLabel: "Bodas",
     clientsH: "Confían en nosotros",
     contactH: "Contacto",
     cta: "Reservar una consulta",
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
-    credential: "9 years · 400+ events · 180 weddings",
-  
+
   },
   it: {
 
@@ -165,17 +146,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     emailBtn: "Email",
     servicesH: "Servizi",
     statsH: "In sintesi",
-    yearsLabel: "Anni",
-    eventsLabel: "Eventi",
-    weddingsLabel: "Matrimoni",
     clientsH: "Si fidano di noi",
     contactH: "Contatto",
     cta: "Prenota una consulenza",
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
-    credential: "9 years · 400+ events · 180 weddings",
-  
+
   },
   fr: {
 
@@ -185,17 +162,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     emailBtn: "E-mail",
     servicesH: "Services",
     statsH: "En un coup d'œil",
-    yearsLabel: "Années",
-    eventsLabel: "Événements",
-    weddingsLabel: "Mariages",
     clientsH: "Ils nous font confiance",
     contactH: "Contact",
     cta: "Réserver une consultation",
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
-    credential: "9 years · 400+ events · 180 weddings",
-  
+
   },
   ar: {
 
@@ -205,21 +178,15 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     emailBtn: "البريد الإلكتروني",
     servicesH: "الخدمات",
     statsH: "نظرة سريعة",
-    yearsLabel: "سنوات",
-    eventsLabel: "الفعاليات",
-    weddingsLabel: "الأعراس",
     clientsH: "يثق بنا",
     contactH: "اتصال",
     cta: "احجز استشارة",
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
-    credential: "9 years · 400+ events · 180 weddings",
-  
+
   },
 };
-
-const CLIENT_TAGS = ["Mandarin Oriental", "Soho House", "Four Seasons", "Vakko", "Mercedes-Benz"];
 
 export function EventPlannerPure({
   slug,
@@ -243,6 +210,8 @@ export function EventPlannerPure({
     : "";
 
   const services = cardData.services ?? [];
+  const tags = cardData.tags ?? [];
+  const stats = resolveStats(cardData.stats);
   const year = new Date().getFullYear();
 
   return (
@@ -302,11 +271,11 @@ export function EventPlannerPure({
               </div>
             </div>
           </div>
-          <div className="mt-4 text-[13px]" style={{ color: INK }}>
-            <strong style={{ color: primary, fontWeight: 700 }}>{cardData.company}</strong>
-            {" · "}
-            {t.credential}
-          </div>
+          {cardData.company && (
+            <div className="mt-4 text-[13px]" style={{ color: INK }}>
+              <strong style={{ color: primary, fontWeight: 700 }}>{cardData.company}</strong>
+            </div>
+          )}
         </header>
 
         {/* ACTIONS */}
@@ -373,35 +342,42 @@ export function EventPlannerPure({
           </section>
         )}
 
-        {/* STATS */}
-        <section className="px-8 py-11" style={{ borderBottom: `1px solid ${HAIRLINE}` }}>
-          <SectionLabel primary={primary}>{t.statsH}</SectionLabel>
-          <div className="mt-5 grid grid-cols-3 gap-3">
-            <StatCell num="9" label={t.yearsLabel} primary={primary} />
-            <StatCell num="400+" label={t.eventsLabel} primary={primary} />
-            <StatCell num="180" label={t.weddingsLabel} primary={primary} />
-          </div>
-        </section>
+        {/* STATS — owner-entered numbers only (resolveStats). */}
+        {stats && (
+          <section className="px-8 py-11" style={{ borderBottom: `1px solid ${HAIRLINE}` }}>
+            <SectionLabel primary={primary}>{t.statsH}</SectionLabel>
+            <div
+              className="mt-5 grid gap-3"
+              style={{ gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))` }}
+            >
+              {stats.map((s) => (
+                <StatCell key={s.label} num={s.value} label={s.label} primary={primary} />
+              ))}
+            </div>
+          </section>
+        )}
 
-        {/* CLIENT TAGS */}
-        <section className="px-8 py-11" style={{ borderBottom: `1px solid ${HAIRLINE}` }}>
-          <SectionLabel primary={primary}>{t.clientsH}</SectionLabel>
-          <div className="mt-5 flex flex-wrap gap-2">
-            {CLIENT_TAGS.map((c) => (
-              <span
-                key={c}
-                className="rounded-full px-3.5 py-2 text-[12px] font-medium"
-                style={{
-                  background: SURFACE,
-                  border: `1px solid ${HAIRLINE_2}`,
-                  color: INK,
-                }}
-              >
-                {c}
-              </span>
-            ))}
-          </div>
-        </section>
+        {/* CLIENT TAGS — owner-entered tags only */}
+        {tags.length > 0 && (
+          <section className="px-8 py-11" style={{ borderBottom: `1px solid ${HAIRLINE}` }}>
+            <SectionLabel primary={primary}>{t.clientsH}</SectionLabel>
+            <div className="mt-5 flex flex-wrap gap-2">
+              {tags.map((c) => (
+                <span
+                  key={c}
+                  className="rounded-full px-3.5 py-2 text-[12px] font-medium"
+                  style={{
+                    background: SURFACE,
+                    border: `1px solid ${HAIRLINE_2}`,
+                    color: INK,
+                  }}
+                >
+                  {c}
+                </span>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* CONTACT */}
         <section className="px-8 py-11" style={{ borderBottom: `1px solid ${HAIRLINE}` }}>
@@ -602,11 +578,11 @@ export const eventPlannerPureSample: SampleData = {
     bookingUrl: "https://cal.com/nazevents/intro",
     sectorKey: "events",
     services: [
-      { title: "Komplettpaket", description: "Konzept · Logistik · Koordination", priceLabel: "ab â‚¬4.800" },
-      { title: "Tageskoordination", description: "Day-of mit komplettem Team", priceLabel: "ab â‚¬1.200" },
-      { title: "Beratung", description: "Strategie & Sourcing", priceLabel: "â‚¬150 / h" },
-      { title: "Konzeptdesign", description: "Locations · Decor · Atmosphäre", priceLabel: "ab â‚¬900" },
-      { title: "Foto & Video", description: "Premium-Team, kuratiert", priceLabel: "ab â‚¬1.800" },
+      { title: "Komplettpaket", description: "Konzept · Logistik · Koordination", priceLabel: "ab €4.800" },
+      { title: "Tageskoordination", description: "Day-of mit komplettem Team", priceLabel: "ab €1.200" },
+      { title: "Beratung", description: "Strategie & Sourcing", priceLabel: "€150 / h" },
+      { title: "Konzeptdesign", description: "Locations · Decor · Atmosphäre", priceLabel: "ab €900" },
+      { title: "Foto & Video", description: "Premium-Team, kuratiert", priceLabel: "ab €1.800" },
     ],
     testimonials: [
       {
@@ -620,6 +596,12 @@ export const eventPlannerPureSample: SampleData = {
       instagram: "https://instagram.com/naz.events",
       linkedin: "https://linkedin.com/in/nazerdogan",
     },
+    stats: [
+      { value: "9", label: "Jahre" },
+      { value: "400+", label: "Events" },
+      { value: "180", label: "Hochzeiten" },
+    ],
+    tags: ["Mandarin Oriental", "Soho House", "Four Seasons", "Vakko", "Mercedes-Benz"],
   },
   photoUrl:
     "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=920&q=80&auto=format&fit=crop",

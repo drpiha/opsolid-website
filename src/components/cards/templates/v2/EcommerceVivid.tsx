@@ -8,7 +8,7 @@
 // kart_08_eticaret_vivid.html.
 //
 // Design DNA (different from default Ecommerce, EcommerceNoir/Pure):
-//   - 3-stop violetâ†’pinkâ†’peach gradient hero with rating pill + Bebas mega
+//   - 3-stop violet→pink→peach gradient hero with rating pill + Bebas mega
 //     lockup + tracked uppercase tagline.
 //   - Floating profile card (-72 mt) with 72px gold-ring avatar + accent role
 //     + 2x2 mini-stat tile grid.
@@ -29,6 +29,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats, resolveTagline, resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#7c3aed";
@@ -65,8 +66,6 @@ function digitsOnly(value: string): string {
 }
 
 interface Copy {
-  taglineFallback: string;
-  servicesLabel: string;
   reviewsLabel: string;
   collectionH: string;
   collectionSub: string;
@@ -81,8 +80,6 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    taglineFallback: "Online Boutique",
-    servicesLabel: "Produkte",
     reviewsLabel: "Bewertungen",
     collectionH: "Kollektion",
     collectionSub: "Sezonun parçaları",
@@ -95,8 +92,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   en: {
-    taglineFallback: "Online Boutique",
-    servicesLabel: "Products",
     reviewsLabel: "Reviews",
     collectionH: "Collection",
     collectionSub: "This season's pieces",
@@ -109,8 +104,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    taglineFallback: "Online Butik",
-    servicesLabel: "Ürünler",
     reviewsLabel: "Yorum",
     collectionH: "Koleksiyon",
     collectionSub: "Sezonun parçaları",
@@ -124,8 +117,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   es: {
 
-    taglineFallback: "Boutique en línea",
-    servicesLabel: "Productos",
     reviewsLabel: "Reseñas",
     collectionH: "Colección",
     collectionSub: "Las piezas de esta temporada",
@@ -140,8 +131,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   it: {
 
-    taglineFallback: "Boutique online",
-    servicesLabel: "Prodotti",
     reviewsLabel: "Recensioni",
     collectionH: "Collezione",
     collectionSub: "I pezzi di questa stagione",
@@ -156,8 +145,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   fr: {
 
-    taglineFallback: "Boutique en ligne",
-    servicesLabel: "Produits",
     reviewsLabel: "Avis",
     collectionH: "Collection",
     collectionSub: "Les pièces de cette saison",
@@ -172,8 +159,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   ar: {
 
-    taglineFallback: "متجر إلكتروني",
-    servicesLabel: "المنتجات",
     reviewsLabel: "التقييمات",
     collectionH: "مجموعة",
     collectionSub: "قطع هذا الموسم",
@@ -208,10 +193,11 @@ export function EcommerceVivid({
     ? digitsOnly(cardData.whatsapp).replace(/^\+/, "")
     : "";
 
-  const allServices = cardData.services ?? [];
-  const services = allServices.slice(0, 5);
+  const services = (cardData.services ?? []).slice(0, 5);
   const testimonials = cardData.testimonials ?? [];
-  const cityFromAddress = cardData.address?.split(",").slice(-1)[0]?.trim();
+  const stats = resolveStats(cardData.stats);
+  const tagline = resolveTagline(cardData);
+  const locationLabel = resolveLocation(cardData);
   const nameParts = (cardData.company || cardData.name).trim().split(/\s+/);
   const nameFirst = nameParts[0] ?? cardData.name;
   const nameLast = nameParts.slice(1).join(" ");
@@ -273,7 +259,7 @@ export function EcommerceVivid({
               boxShadow: "0 4px 16px rgba(0,0,0,0.08)",
             }}
           >
-            <span style={{ color: ACCENT_RED, fontSize: 14 }}>â˜…</span>
+            <span style={{ color: ACCENT_RED, fontSize: 14 }}>★</span>
             {testimonials.length} {t.reviewsLabel}
           </span>
         )}
@@ -298,17 +284,19 @@ export function EcommerceVivid({
             </span>
           )}
         </h1>
-        <div
-          className="relative uppercase"
-          style={{
-            fontSize: 13,
-            color: "rgba(255,255,255,0.95)",
-            fontWeight: 600,
-            letterSpacing: "1px",
-          }}
-        >
-          {cardData.title || cardData.position || t.taglineFallback}
-        </div>
+        {tagline && (
+          <div
+            className="relative uppercase"
+            style={{
+              fontSize: 13,
+              color: "rgba(255,255,255,0.95)",
+              fontWeight: 600,
+              letterSpacing: "1px",
+            }}
+          >
+            {tagline}
+          </div>
+        )}
       </section>
 
       {/* FLOATING PROFILE CARD */}
@@ -360,61 +348,56 @@ export function EcommerceVivid({
             >
               {cardData.name}
             </h2>
-            <div
-              style={{
-                fontSize: 12,
-                color: ACCENT_RED,
-                fontWeight: 600,
-                letterSpacing: "0.3px",
-              }}
-            >
-              {cardData.title || cardData.position || t.taglineFallback}
-              {cityFromAddress ? ` · ${cityFromAddress}` : ""}
-            </div>
+            {(tagline || locationLabel) && (
+              <div
+                style={{
+                  fontSize: 12,
+                  color: ACCENT_RED,
+                  fontWeight: 600,
+                  letterSpacing: "0.3px",
+                }}
+              >
+                {[tagline, locationLabel].filter(Boolean).join(" · ")}
+              </div>
+            )}
           </div>
         </div>
-        {(() => {
-          const statsItems = [
-            ...(allServices.length ? [{ num: String(allServices.length), label: t.servicesLabel }] : []),
-            ...(testimonials.length ? [{ num: String(testimonials.length), label: t.reviewsLabel }] : []),
-          ];
-          if (statsItems.length === 0) return null;
-          return (
-            <div className="mt-4 grid grid-cols-2 gap-2">
-              {statsItems.map((s) => (
+        {/* STATS — owner-entered numbers only (resolveStats). */}
+        {stats && (
+          <div className="mt-4 grid grid-cols-2 gap-2">
+            {stats.map((s) => (
+              <div
+                key={s.label}
+                className="rounded-2xl px-3.5 py-3.5 text-center"
+                style={{ background: "linear-gradient(135deg, #fff5f5, #fffbeb)" }}
+              >
                 <div
-                  key={s.label}
-                  className="rounded-2xl px-3.5 py-3.5 text-center"
-                  style={{ background: "linear-gradient(135deg, #fff5f5, #fffbeb)" }}
+                  className="display"
+                  style={{
+                    fontSize: 26,
+                    letterSpacing: "1px",
+                    color: ACCENT_RED,
+                    lineHeight: 1,
+                  }}
                 >
-                  <div
-                    className="display"
-                    style={{
-                      fontSize: 26,
-                      letterSpacing: "1px",
-                      color: ACCENT_RED,
-                      lineHeight: 1,
-                    }}
-                  >
-                    {s.num}
-                  </div>
-                  <div
-                    className="uppercase"
-                    style={{
-                      fontSize: 10,
-                      color: TEXT_2,
-                      fontWeight: 600,
-                      letterSpacing: "0.5px",
-                      marginTop: 5,
-                    }}
-                  >
-                    {s.label}
-                  </div>
+                  {s.value}
                 </div>
-              ))}
-            </div>
-          );
-        })()}
+                <div
+                  className="uppercase"
+                  style={{
+                    fontSize: 10,
+                    color: TEXT_2,
+                    fontWeight: 600,
+                    letterSpacing: "0.5px",
+                    marginTop: 5,
+                  }}
+                >
+                  {s.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </section>
 
       {/* COLLECTION */}
@@ -526,7 +509,7 @@ export function EcommerceVivid({
           >
             {t.bookBtn}
             <span aria-hidden style={{ fontSize: 18 }}>
-              â†’
+              →
             </span>
           </a>
           <div className="mt-2.5 grid grid-cols-2 gap-2.5">
@@ -542,7 +525,7 @@ export function EcommerceVivid({
                   fontWeight: 600,
                 }}
               >
-                âœ‰ {t.emailLabel}
+                ✉ {t.emailLabel}
               </a>
             )}
             {cardData.phone && (
@@ -557,7 +540,7 @@ export function EcommerceVivid({
                   fontWeight: 600,
                 }}
               >
-                â˜Ž {t.phoneLabel}
+                ☎ {t.phoneLabel}
               </a>
             )}
           </div>
@@ -617,8 +600,10 @@ export function EcommerceVivid({
         className="px-5 py-6 text-center"
         style={{ fontSize: 11, color: MUTED, fontWeight: 500 }}
       >
-        © {new Date().getFullYear()} {cardData.company || cardData.name} ·{" "}
-        {cardData.website || "shop"}
+        © {new Date().getFullYear()}{" "}
+        {[cardData.company || cardData.name, cardData.website]
+          .filter(Boolean)
+          .join(" · ")}
         <div className="mt-2" style={{ color: MUTED }}>
           {t.poweredBy}{" "}
           <a
@@ -677,7 +662,7 @@ export const ecommerceVividSample: SampleData = {
     whatsapp: "+49 172 556 7891",
     website: "pazar-shop.de",
     address: "Oranienstraße 30, 10999 Berlin",
-    bio: "Kuratierte Mode & Accessoires aus der Türkei & Deutschland. Kostenloser Versand ab â‚¬50.",
+    bio: "Kuratierte Mode & Accessoires aus der Türkei & Deutschland. Kostenloser Versand ab €50.",
     bookingUrl: "https://pazar-shop.de/shop",
     impressumUrl: "https://pazar-shop.de/impressum",
     privacyUrl: "https://pazar-shop.de/datenschutz",
@@ -687,9 +672,15 @@ export const ecommerceVividSample: SampleData = {
       tiktok: "https://tiktok.com/@pazarshop",
     },
     services: [
-      { title: "Seidenschal", description: "Handbedruckt, Premium-Seide.", priceLabel: "â‚¬89" },
-      { title: "Handtasche", description: "Vollnarbenleder, handgenäht.", priceLabel: "â‚¬145" },
-      { title: "Schmuckset", description: "Versilbert, kuratiert.", priceLabel: "â‚¬65" },
+      { title: "Seidenschal", description: "Handbedruckt, Premium-Seide.", priceLabel: "€89" },
+      { title: "Handtasche", description: "Vollnarbenleder, handgenäht.", priceLabel: "€145" },
+      { title: "Schmuckset", description: "Versilbert, kuratiert.", priceLabel: "€65" },
+    ],
+    stats: [
+      { value: "2.400+", label: "Bestellungen" },
+      { value: "4,9★", label: "Bewertung" },
+      { value: "5", label: "Jahre" },
+      { value: "48h", label: "Versand" },
     ],
   },
   photoUrl:

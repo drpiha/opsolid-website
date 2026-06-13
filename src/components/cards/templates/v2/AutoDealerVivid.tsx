@@ -7,7 +7,7 @@
 // black, sporty and energetic. Inspired by kart_19_oto_galeri_vivid.html.
 //
 // Locked design DNA (only colors respond to brand):
-//   - Hero: gradient (blackâ†’primaryâ†’deep) with radial glow + bottom hairline,
+//   - Hero: gradient (black→primary→deep) with radial glow + bottom hairline,
 //     pill tag, oversized uppercase Rajdhani name, tagline, and a horizontal
 //     hero-stats row (3 numbers).
 //   - Profile strip floats over hero (-36 px) with avatar + white card chip.
@@ -23,9 +23,6 @@ import Image from "next/image";
 import {
   ArrowUpRight,
   ChevronRight,
-  Cog,
-  Fuel,
-  Gauge,
   Mail,
   MessageCircle,
   Phone,
@@ -39,6 +36,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats, resolveTagline } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#dc2626"; // bold red
@@ -80,20 +78,13 @@ function digitsOnly(value: string): string {
 
 interface Copy {
   tag: string;
-  tagline: string;
   callBtn: string;
   whatsappBtn: string;
   emailBtn: string;
   featuredH: string;
   featuredBadge: string;
-  yearLabel: string;
-  transLabel: string;
-  fuelLabel: string;
   brandsH: string;
   servicesH: string;
-  yearsLabel: string;
-  carsLabel: string;
-  warrantyLabel: string;
   cta: string;
   saveContact: string;
   walletLabel: string;
@@ -104,20 +95,13 @@ interface Copy {
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     tag: "Premium Auto",
-    tagline: "Geprüfte Premium-Gebrauchtwagen, mit echter Garantie und ehrlichem Preis.",
     callBtn: "Anrufen",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-Mail",
     featuredH: "Bestseller",
     featuredBadge: "Top-Pick",
-    yearLabel: "Baujahr",
-    transLabel: "Getriebe",
-    fuelLabel: "Kraftstoff",
     brandsH: "Marken",
     servicesH: "Services",
-    yearsLabel: "Jahre",
-    carsLabel: "Fahrzeuge",
-    warrantyLabel: "Garantie",
     cta: "Termin vereinbaren",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
@@ -126,20 +110,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   en: {
     tag: "Premium Auto",
-    tagline: "Inspected pre-owned premium cars, with real warranty and an honest price.",
     callBtn: "Call",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
     featuredH: "Featured",
     featuredBadge: "Top Pick",
-    yearLabel: "Year",
-    transLabel: "Trans.",
-    fuelLabel: "Fuel",
     brandsH: "Brands",
     servicesH: "Services",
-    yearsLabel: "Years",
-    carsLabel: "Cars sold",
-    warrantyLabel: "Warranty",
     cta: "Book a viewing",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
@@ -148,20 +125,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   tr: {
     tag: "Premium Auto",
-    tagline: "Kontrolden geçmiş premium ikinci el araçlar — gerçek garanti, dürüst fiyat.",
     callBtn: "Ara",
     whatsappBtn: "WhatsApp",
     emailBtn: "Mail",
     featuredH: "Öne Çıkan",
     featuredBadge: "Top Pick",
-    yearLabel: "Yıl",
-    transLabel: "Vites",
-    fuelLabel: "Yakıt",
     brandsH: "Markalar",
     servicesH: "Hizmetler",
-    yearsLabel: "Yıl",
-    carsLabel: "Araç",
-    warrantyLabel: "Garanti",
     cta: "Test Sürüşü Al",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
@@ -171,20 +141,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   es: {
 
     tag: "Auto premium",
-    tagline: "Coches premium revisados, con garantía real y precio honesto.",
     callBtn: "Llamar",
     whatsappBtn: "WhatsApp",
     emailBtn: "Correo",
     featuredH: "Destacado",
     featuredBadge: "Selección destacada",
-    yearLabel: "Año",
-    transLabel: "Trans.",
-    fuelLabel: "Combustible",
     brandsH: "Marcas",
     servicesH: "Servicios",
-    yearsLabel: "Años",
-    carsLabel: "Coches vendidos",
-    warrantyLabel: "Garantía",
     cta: "Reservar una visita",
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
@@ -195,20 +158,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   it: {
 
     tag: "Auto premium",
-    tagline: "Auto premium usate ispezionate, con garanzia reale e prezzo onesto.",
     callBtn: "Chiama",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
     featuredH: "In evidenza",
     featuredBadge: "Top scelta",
-    yearLabel: "Anno",
-    transLabel: "Trasf.",
-    fuelLabel: "Carburante",
     brandsH: "Brand",
     servicesH: "Servizi",
-    yearsLabel: "Anni",
-    carsLabel: "Auto vendute",
-    warrantyLabel: "Garanzia",
     cta: "Prenota una visita",
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
@@ -219,20 +175,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   fr: {
 
     tag: "Auto premium",
-    tagline: "Voitures premium d'occasion inspectées, avec garantie réelle et prix honnête.",
     callBtn: "Appeler",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-mail",
     featuredH: "À la une",
     featuredBadge: "Coup de cœur",
-    yearLabel: "Année",
-    transLabel: "Transf.",
-    fuelLabel: "Carburant",
     brandsH: "Marques",
     servicesH: "Services",
-    yearsLabel: "Années",
-    carsLabel: "Voitures vendues",
-    warrantyLabel: "Garantie",
     cta: "Réserver une visite",
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
@@ -243,20 +192,13 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   ar: {
 
     tag: "سيارات فاخرة",
-    tagline: "سيارات فاخرة مستعملة بعد الفحص، مع ضمان حقيقي وسعر صادق.",
     callBtn: "اتصال",
     whatsappBtn: "واتساب",
     emailBtn: "البريد الإلكتروني",
     featuredH: "مميز",
     featuredBadge: "الأفضل اختياراً",
-    yearLabel: "سنة",
-    transLabel: "تحول",
-    fuelLabel: "الوقود",
     brandsH: "علامات تجارية",
     servicesH: "الخدمات",
-    yearsLabel: "سنوات",
-    carsLabel: "السيارات المباعة",
-    warrantyLabel: "الضمان",
     cta: "احجز معاينة",
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
@@ -265,8 +207,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   
   },
 };
-
-const BRANDS = ["BMW", "Mercedes", "Audi", "Porsche", "VW", "Volvo"];
 
 export function AutoDealerVivid({
   slug,
@@ -293,6 +233,10 @@ export function AutoDealerVivid({
   const services = cardData.services ?? [];
   const featured = services.find((s) => s.priceLabel) ?? services[0];
   const otherSvcs = services.filter((s) => s !== featured && !s.priceLabel).slice(0, 4);
+  const stats = resolveStats(cardData.stats);
+  const tagline = resolveTagline(cardData);
+  // Brand chips come from the owner's tags — no invented brand list.
+  const brandTags = (cardData.tags ?? []).slice(0, 6);
   const year = new Date().getFullYear();
 
   return (
@@ -361,17 +305,26 @@ export function AutoDealerVivid({
             >
               {cardData.name}
             </h1>
-            <div
-              className="mt-2 text-[13px]"
-              style={{ color: "rgba(255,255,255,0.78)" }}
-            >
-              {cardData.position || cardData.company || t.tagline}
-            </div>
-            <div className="mt-7 flex gap-6">
-              <HeroStat num="15" label={t.yearsLabel} accent={primary === LOCKED_PRIMARY ? "#fca5a5" : primary} />
-              <HeroStat num="800+" label={t.carsLabel} accent={primary === LOCKED_PRIMARY ? "#fca5a5" : primary} />
-              <HeroStat num="12mo" label={t.warrantyLabel} accent={primary === LOCKED_PRIMARY ? "#fca5a5" : primary} />
-            </div>
+            {(tagline || cardData.company) && (
+              <div
+                className="mt-2 text-[13px]"
+                style={{ color: "rgba(255,255,255,0.78)" }}
+              >
+                {tagline || cardData.company}
+              </div>
+            )}
+            {stats && (
+              <div className="mt-7 flex gap-6">
+                {stats.map((s) => (
+                  <HeroStat
+                    key={s.label}
+                    num={s.value}
+                    label={s.label}
+                    accent={primary === LOCKED_PRIMARY ? "#fca5a5" : primary}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </header>
 
@@ -409,12 +362,14 @@ export function AutoDealerVivid({
             >
               {cardData.name}
             </div>
-            <div
-              className="mt-1 text-[11px] uppercase"
-              style={{ color: primary, letterSpacing: "1.5px" }}
-            >
-              {cardData.position || "Founder · 15 yrs"}
-            </div>
+            {cardData.position && (
+              <div
+                className="mt-1 text-[11px] uppercase"
+                style={{ color: primary, letterSpacing: "1.5px" }}
+              >
+                {cardData.position}
+              </div>
+            )}
           </div>
         </section>
 
@@ -483,56 +438,52 @@ export function AutoDealerVivid({
                     {featured.description}
                   </div>
                 )}
-                <div
-                  className="mt-5 grid grid-cols-3 gap-3 py-4"
-                  style={{
-                    borderTop: `1px solid ${HAIRLINE}`,
-                    borderBottom: `1px solid ${HAIRLINE}`,
-                  }}
-                >
-                  <CarSpec Icon={Gauge} label={t.yearLabel} value="2021" />
-                  <CarSpec Icon={Cog} label={t.transLabel} value="Auto" />
-                  <CarSpec Icon={Fuel} label={t.fuelLabel} value="Diesel" />
-                </div>
-                <div className="mt-5 flex items-baseline justify-between">
-                  <span
-                    className="text-[10px] uppercase"
-                    style={{ color: INK_SOFT, letterSpacing: "2px" }}
+                {featured.priceLabel && (
+                  <div
+                    className="mt-5 flex items-baseline justify-between pt-4"
+                    style={{ borderTop: `1px solid ${HAIRLINE}` }}
                   >
-                    Price
-                  </span>
-                  <span
-                    className="display text-[26px] font-bold"
-                    style={{ color: primary }}
-                  >
-                    {featured.priceLabel || "—"}
-                  </span>
-                </div>
+                    <span
+                      className="text-[10px] uppercase"
+                      style={{ color: INK_SOFT, letterSpacing: "2px" }}
+                    >
+                      Price
+                    </span>
+                    <span
+                      className="display text-[26px] font-bold"
+                      style={{ color: primary }}
+                    >
+                      {featured.priceLabel}
+                    </span>
+                  </div>
+                )}
               </div>
             </div>
           </section>
         )}
 
-        {/* BRAND CHIPS */}
-        <section className="px-7 pt-7">
-          <SectionTitle primary={primary}>{t.brandsH}</SectionTitle>
-          <div className="mt-4 grid grid-cols-3 gap-2">
-            {BRANDS.map((b) => (
-              <span
-                key={b}
-                className="display rounded-full px-3 py-2 text-center text-[12px] font-bold uppercase"
-                style={{
-                  background: SURFACE,
-                  border: `1px solid ${HAIRLINE}`,
-                  color: INK,
-                  letterSpacing: "1.5px",
-                }}
-              >
-                {b}
-              </span>
-            ))}
-          </div>
-        </section>
+        {/* BRAND CHIPS — owner tags only; hidden when the owner set none. */}
+        {brandTags.length > 0 && (
+          <section className="px-7 pt-7">
+            <SectionTitle primary={primary}>{t.brandsH}</SectionTitle>
+            <div className="mt-4 grid grid-cols-3 gap-2">
+              {brandTags.map((b) => (
+                <span
+                  key={b}
+                  className="display rounded-full px-3 py-2 text-center text-[12px] font-bold uppercase"
+                  style={{
+                    background: SURFACE,
+                    border: `1px solid ${HAIRLINE}`,
+                    color: INK,
+                    letterSpacing: "1.5px",
+                  }}
+                >
+                  {b}
+                </span>
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* SERVICES */}
         {otherSvcs.length > 0 && (
@@ -744,34 +695,6 @@ function Pill({
   );
 }
 
-function CarSpec({
-  Icon,
-  label,
-  value,
-}: {
-  Icon: typeof Gauge;
-  label: string;
-  value: string;
-}) {
-  return (
-    <div className="text-center">
-      <Icon size={14} strokeWidth={1.8} style={{ color: INK_SOFT, margin: "0 auto" }} />
-      <div
-        className="mt-1.5 text-[9px] uppercase"
-        style={{ color: INK_SOFT, letterSpacing: "1.5px" }}
-      >
-        {label}
-      </div>
-      <div
-        className="display mt-1 text-[14px] font-bold"
-        style={{ color: INK }}
-      >
-        {value}
-      </div>
-    </div>
-  );
-}
-
 // =============================================================================
 // Registry & sample
 // =============================================================================
@@ -819,9 +742,9 @@ export const autoDealerVividSample: SampleData = {
     bookingUrl: "https://cal.com/arslanautomobile/intro",
     sectorKey: "retail",
     services: [
-      { title: "BMW M5 Competition", description: "2022 · 18.000 km · Carbon Black", priceLabel: "â‚¬89.500" },
-      { title: "Mercedes E220d", description: "2020 · 62.000 km · Silber", priceLabel: "â‚¬42.500" },
-      { title: "Audi A6 Avant", description: "2022 · 24.000 km · Grau", priceLabel: "â‚¬49.800" },
+      { title: "BMW M5 Competition", description: "2022 · 18.000 km · Carbon Black", priceLabel: "€89.500" },
+      { title: "Mercedes E220d", description: "2020 · 62.000 km · Silber", priceLabel: "€42.500" },
+      { title: "Audi A6 Avant", description: "2022 · 24.000 km · Grau", priceLabel: "€49.800" },
       { title: "Garantie 12 Monate", description: "Auf alle Premium-Modelle" },
       { title: "Inzahlungnahme", description: "Faire Bewertung in 24 h" },
       { title: "Finanzierung", description: "Ab 2,9 % effektiv" },
@@ -830,6 +753,12 @@ export const autoDealerVividSample: SampleData = {
       instagram: "https://instagram.com/arslanautomobile",
       tiktok: "https://tiktok.com/@arslanautomobile",
     },
+    stats: [
+      { value: "15", label: "Jahre" },
+      { value: "800+", label: "Fahrzeuge" },
+      { value: "12 Mo.", label: "Garantie" },
+    ],
+    tags: ["bmw", "mercedes", "audi", "porsche", "volvo"],
   },
   photoUrl:
     "https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=920&q=80&auto=format&fit=crop",

@@ -8,7 +8,7 @@
 // floating white card overlap. Inspired by kart_15_yazilim_vivid.html.
 //
 // Locked design DNA (only colors respond to brand):
-//   - Hero: darkâ†’purpleâ†’primary diagonal gradient with mint and purple radial
+//   - Hero: dark→purple→primary diagonal gradient with mint and purple radial
 //     blob halos; Syne 42 px display name with mint accent on lastname; mono
 //     handle below; tagline.
 //   - Floating card (-80 px overlap) with avatar, gradient border ring, role,
@@ -28,7 +28,6 @@ import {
   MessageCircle,
   Phone,
   Rocket,
-  Shield,
   Sparkles,
 } from "lucide-react";
 
@@ -38,6 +37,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveStats, resolveTagline, resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#7c3aed";
@@ -297,6 +297,9 @@ export function SoftwareDevVivid({
   const waDigits = cardData.whatsapp
     ? digitsOnly(cardData.whatsapp).replace(/^\+/, "")
     : "";
+  const stats = resolveStats(cardData.stats);
+  const tagline = resolveTagline(cardData);
+  const locationLabel = resolveLocation(cardData);
 
   const services = cardData.services ?? [];
 
@@ -308,7 +311,7 @@ export function SoftwareDevVivid({
   const handle =
     cardData.website?.replace(/^https?:\/\//, "").replace(/\/$/, "") ||
     cardData.email?.split("@")[0] ||
-    "developer";
+    cardData.name.toLowerCase().replace(/[^a-z0-9]+/g, "");
 
   const year = new Date().getFullYear();
 
@@ -397,12 +400,14 @@ export function SoftwareDevVivid({
           >
             @{handle}
           </div>
-          <p
-            className="mt-4 max-w-[320px] text-[15px] font-medium leading-[1.6]"
-            style={{ color: "rgba(255,255,255,0.85)" }}
-          >
-            {t.tagline}
-          </p>
+          {tagline && (
+            <p
+              className="mt-4 max-w-[320px] text-[15px] font-medium leading-[1.6]"
+              style={{ color: "rgba(255,255,255,0.85)" }}
+            >
+              {tagline}
+            </p>
+          )}
         </div>
       </header>
 
@@ -442,48 +447,53 @@ export function SoftwareDevVivid({
               </div>
             </div>
             <div className="min-w-0 flex-1">
-              <div
-                className="text-[12px] font-semibold uppercase"
-                style={{ color: primary, letterSpacing: "1.2px" }}
-              >
-                {cardData.position?.split("·")[0]?.trim() || cardData.title || "Developer"}
-              </div>
+              {(cardData.position || cardData.title) && (
+                <div
+                  className="text-[12px] font-semibold uppercase"
+                  style={{ color: primary, letterSpacing: "1.2px" }}
+                >
+                  {cardData.position?.split("·")[0]?.trim() || cardData.title}
+                </div>
+              )}
               <div
                 className="display text-[22px] font-bold leading-[1.15]"
                 style={{ color: DARK }}
               >
                 {cardData.name}
               </div>
-              <div className="mt-1 text-[12px]" style={{ color: INK_SOFT }}>
-                {t.experienceVal}
-                {cardData.address && ` · ${cardData.address.split(",").slice(-1)[0]?.trim()}`}
-              </div>
+              {locationLabel && (
+                <div className="mt-1 text-[12px]" style={{ color: INK_SOFT }}>
+                  {locationLabel}
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Quick stats */}
-          <div
-            className="mt-5 grid grid-cols-3 gap-2 border-t pt-5"
-            style={{ borderColor: HAIRLINE, borderStyle: "dashed" }}
-          >
-            {[
-              { n: "7+", l: t.yearsLabel },
-              { n: "60+", l: t.projectsLabel },
-              { n: "30+", l: t.clientsLabel },
-            ].map((q) => (
-              <div key={q.l} className="text-center">
-                <div className="display text-[22px] font-extrabold leading-none" style={{ color: primary }}>
-                  {q.n}
+          {/* Quick stats — owner-entered numbers only (resolveStats). */}
+          {stats && (
+            <div
+              className="mt-5 grid gap-2 border-t pt-5"
+              style={{
+                borderColor: HAIRLINE,
+                borderStyle: "dashed",
+                gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
+              }}
+            >
+              {stats.map((q) => (
+                <div key={q.label} className="text-center">
+                  <div className="display text-[22px] font-extrabold leading-none" style={{ color: primary }}>
+                    {q.value}
+                  </div>
+                  <div
+                    className="mt-1 text-[10px] font-semibold uppercase"
+                    style={{ color: INK_SOFT, letterSpacing: "1px" }}
+                  >
+                    {q.label}
+                  </div>
                 </div>
-                <div
-                  className="mt-1 text-[10px] font-semibold uppercase"
-                  style={{ color: INK_SOFT, letterSpacing: "1px" }}
-                >
-                  {q.l}
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
@@ -687,13 +697,6 @@ export function SoftwareDevVivid({
             OpSolid
           </a>
         </div>
-        <div
-          className="mt-2 inline-flex items-center gap-1.5 text-[10.5px]"
-          style={{ color: INK_SOFT }}
-        >
-          <Shield size={10.5} strokeWidth={1.6} />
-          <span>{t.experience}: {t.experienceVal}</span>
-        </div>
       </footer>
     </article>
   );
@@ -804,9 +807,15 @@ export const softwareDevVividSample: SampleData = {
     bookingUrl: "https://cal.com/ozancelik/intro",
     sectorKey: "tech",
     services: [
-      { title: "Web App Development", description: "Next.js · React · TypeScript", priceLabel: "ab â‚¬4.800" },
-      { title: "API Integration", description: "REST · GraphQL · Stripe", priceLabel: "ab â‚¬1.200" },
-      { title: "Tech Consulting", description: "Architecture · code review", priceLabel: "â‚¬150/h" },
+      { title: "Web App Development", description: "Next.js · React · TypeScript", priceLabel: "ab €4.800" },
+      { title: "API Integration", description: "REST · GraphQL · Stripe", priceLabel: "ab €1.200" },
+      { title: "Tech Consulting", description: "Architecture · code review", priceLabel: "€150/h" },
+    ],
+    tagline: "Web-Apps, die skalieren. APIs, die halten.",
+    stats: [
+      { value: "7+", label: "Jahre" },
+      { value: "60+", label: "Projekte" },
+      { value: "30+", label: "Kunden" },
     ],
     socials: {
       github: "https://github.com/ozancelik",

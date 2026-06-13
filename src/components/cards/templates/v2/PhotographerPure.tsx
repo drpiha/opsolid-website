@@ -11,7 +11,7 @@
 //     word in italic Garamond (muted gold).
 //   - Profile strip — small grayscale photo + name + role + stat row.
 //   - About — italic Garamond paragraph, signature dash.
-//   - Portfolio 2×2 grid with grayscale â†’ color hover (4:5 aspect).
+//   - Portfolio 2×2 grid with grayscale → color hover (4:5 aspect).
 //   - Packages list — hairline rows, right-aligned price.
 //   - Hours/availability table — dashed dividers.
 //   - Contact table.
@@ -683,17 +683,17 @@ export const photographerPureSample: SampleData = {
       {
         title: "Hochzeitsfotografie",
         description: "ganzer tag · zwei fotografen",
-        priceLabel: "ab â‚¬2.800",
+        priceLabel: "ab €2.800",
       },
       {
         title: "Porträtshooting",
         description: "studio oder natürliches licht",
-        priceLabel: "â‚¬350 / 2h",
+        priceLabel: "€350 / 2h",
       },
       {
         title: "Produktfotografie",
         description: "kampagnen · lookbooks · e-commerce",
-        priceLabel: "ab â‚¬480",
+        priceLabel: "ab €480",
       },
     ],
   },

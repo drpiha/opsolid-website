@@ -13,7 +13,7 @@
 //   - Numbered services list with right-aligned discipline tag (no icons).
 //   - Stats grid (4 cells) framed by hairlines only.
 //   - Testimonial: large pulled quote, 17 px serif, star row inline.
-//   - CTA pair: solid ink button â†’ ghost outline button.
+//   - CTA pair: solid ink button → ghost outline button.
 // =============================================================================
 
 import * as React from "react";
@@ -248,14 +248,15 @@ export function DentistPure({
 
       {/* HEADER */}
       <header className="px-9 pb-7 pt-12" style={{ borderBottom: `1px solid ${HAIRLINE}` }}>
-        <div
-          className="mb-7 flex items-center gap-3 text-[10.5px] font-medium uppercase tracking-[1.6px]"
-          style={{ color: INK_SOFT }}
-        >
-          <span>{cardData.address?.split(",").slice(-1)[0]?.trim() || "DE / BERLIN"}</span>
-          <span aria-hidden className="block h-px flex-1" style={{ background: HAIRLINE }} />
-          <span>EST. {year - 12}</span>
-        </div>
+        {cardData.address?.split(",").slice(-1)[0]?.trim() && (
+          <div
+            className="mb-7 flex items-center gap-3 text-[10.5px] font-medium uppercase tracking-[1.6px]"
+            style={{ color: INK_SOFT }}
+          >
+            <span>{cardData.address.split(",").slice(-1)[0]?.trim()}</span>
+            <span aria-hidden className="block h-px flex-1" style={{ background: HAIRLINE }} />
+          </div>
+        )}
         <h1 className="text-[30px] font-medium leading-[1.1] tracking-[-1px]" style={{ color: INK }}>
           {firstName}
           {lastName && (
@@ -413,7 +414,7 @@ export function DentistPure({
             style={{ color: INK_SOFT }}
           >
             <span>— {testimonials[0].author}</span>
-            <span style={{ color: primary, letterSpacing: "1px" }}>â˜…â˜…â˜…â˜…â˜…</span>
+            <span style={{ color: primary, letterSpacing: "1px" }}>★★★★★</span>
           </div>
         </div>
       )}

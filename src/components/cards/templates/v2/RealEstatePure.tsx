@@ -30,6 +30,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveStats, resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#1a365d"; // deep ink-blue
@@ -76,16 +77,7 @@ interface RepCopy {
   impressum: string;
   privacy: string;
   share: string;
-  yearsLabel: string;
-  closedLabel: string;
-  portfolioLabel: string;
-  satisfactionLabel: string;
-  metaActive: string;
-  metaActiveValue: string;
   metaRegion: string;
-  metaRegionValue: string;
-  metaLic: string;
-  metaLicValue: string;
 }
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RepCopy> = {
@@ -102,16 +94,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RepCopy> = {
     impressum: "Impressum",
     privacy: "Datenschutz",
     share: "Teilen",
-    yearsLabel: "Jahre Erfahrung",
-    closedLabel: "Abschlüsse",
-    portfolioLabel: "Portfolio Volumen",
-    satisfactionLabel: "Zufriedenheit",
-    metaActive: "Aktiv",
-    metaActiveValue: "2014",
     metaRegion: "Region",
-    metaRegionValue: "Berlin",
-    metaLic: "Lizenziert",
-    metaLicValue: "DE",
   },
   en: {
     about: "About",
@@ -126,16 +109,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RepCopy> = {
     impressum: "Imprint",
     privacy: "Privacy",
     share: "Share",
-    yearsLabel: "Years",
-    closedLabel: "Closed deals",
-    portfolioLabel: "Portfolio volume",
-    satisfactionLabel: "Satisfaction",
-    metaActive: "Active",
-    metaActiveValue: "2014",
     metaRegion: "Region",
-    metaRegionValue: "Berlin",
-    metaLic: "Licensed",
-    metaLicValue: "DE",
   },
   tr: {
     about: "Hakkımda",
@@ -150,16 +124,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RepCopy> = {
     impressum: "Künye",
     privacy: "Gizlilik",
     share: "Paylaş",
-    yearsLabel: "Yıl Deneyim",
-    closedLabel: "Tamamlanan Satış",
-    portfolioLabel: "Portföy Hacmi",
-    satisfactionLabel: "Memnuniyet",
-    metaActive: "Aktif",
-    metaActiveValue: "2014",
     metaRegion: "Bölge",
-    metaRegionValue: "Berlin",
-    metaLic: "Lisanslı",
-    metaLicValue: "DE",
   },
   es: {
 
@@ -175,16 +140,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RepCopy> = {
     impressum: "Aviso legal",
     privacy: "Privacidad",
     share: "Compartir",
-    yearsLabel: "Años",
-    closedLabel: "Operaciones cerradas",
-    portfolioLabel: "Volumen del portafolio",
-    satisfactionLabel: "Satisfacción",
-    metaActive: "Activo",
-    metaActiveValue: "2014",
     metaRegion: "Región",
-    metaRegionValue: "Berlín",
-    metaLic: "Licenciado",
-    metaLicValue: "DE",
   
   },
   it: {
@@ -201,16 +157,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RepCopy> = {
     impressum: "Impressum",
     privacy: "Privacy",
     share: "Condividi",
-    yearsLabel: "Anni",
-    closedLabel: "Operazioni concluse",
-    portfolioLabel: "Volume del portfolio",
-    satisfactionLabel: "Soddisfazione",
-    metaActive: "Attivo",
-    metaActiveValue: "2014",
     metaRegion: "Regione",
-    metaRegionValue: "Berlino",
-    metaLic: "Abilitato",
-    metaLicValue: "DE",
   
   },
   fr: {
@@ -227,16 +174,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RepCopy> = {
     impressum: "Mentions légales",
     privacy: "Confidentialité",
     share: "Partager",
-    yearsLabel: "Années",
-    closedLabel: "Affaires conclues",
-    portfolioLabel: "Volume du portfolio",
-    satisfactionLabel: "Satisfaction",
-    metaActive: "Actif",
-    metaActiveValue: "2014",
     metaRegion: "Région",
-    metaRegionValue: "Berlin",
-    metaLic: "Habilité",
-    metaLicValue: "DE",
   
   },
   ar: {
@@ -253,16 +191,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RepCopy> = {
     impressum: "بيانات النشر",
     privacy: "الخصوصية",
     share: "مشاركة",
-    yearsLabel: "سنوات",
-    closedLabel: "الصفقات المنجزة",
-    portfolioLabel: "حجم المعرض",
-    satisfactionLabel: "الرضا",
-    metaActive: "نشط",
-    metaActiveValue: "2014",
     metaRegion: "المنطقة",
-    metaRegionValue: "برلين",
-    metaLic: "مرخص",
-    metaLicValue: "ألمانيا",
   
   },
 };
@@ -291,6 +220,8 @@ export function RealEstatePure({
   const services = cardData.services ?? [];
   const testimonials = cardData.testimonials ?? [];
   const reference = testimonials[0];
+  const stats = resolveStats(cardData.stats);
+  const locationLabel = resolveLocation(cardData);
 
   const year = new Date().getFullYear();
 
@@ -341,12 +272,14 @@ export function RealEstatePure({
           />
         )}
         <div className="min-w-0 flex-1">
-          <div
-            className="mb-2.5 text-[10px] font-medium uppercase"
-            style={{ color: accent, letterSpacing: "2.5px" }}
-          >
-            {cardData.company || "Walker & Stein"}
-          </div>
+          {cardData.company && (
+            <div
+              className="mb-2.5 text-[10px] font-medium uppercase"
+              style={{ color: accent, letterSpacing: "2.5px" }}
+            >
+              {cardData.company}
+            </div>
+          )}
           <h1
             className="text-[40px] font-medium leading-[0.95]"
             style={{ color: primary, letterSpacing: "-2px" }}
@@ -370,23 +303,22 @@ export function RealEstatePure({
 
       <div aria-hidden className="mx-8 h-px" style={{ background: HAIRLINE }} />
 
-      {/* META ROW */}
-      <div
-        className="flex justify-between px-8 py-4 text-[11px] font-medium"
-        style={{ color: INK_MUTED, letterSpacing: "0.5px" }}
-      >
-        <span>
-          <strong style={{ color: INK, fontWeight: 600 }}>{t.metaActiveValue}</strong> {t.metaActive}
-        </span>
-        <span>
-          <strong style={{ color: INK, fontWeight: 600 }}>{t.metaRegionValue}</strong> {t.metaRegion}
-        </span>
-        <span>
-          <strong style={{ color: INK, fontWeight: 600 }}>{t.metaLicValue}</strong> {t.metaLic}
-        </span>
-      </div>
-
-      <div aria-hidden className="mx-8 h-px" style={{ background: HAIRLINE }} />
+      {/* META ROW — only real profile data (location); fabricated
+          active/region/license values were removed in the 2026-06 purge. */}
+      {locationLabel && (
+        <>
+          <div
+            className="flex justify-between px-8 py-4 text-[11px] font-medium"
+            style={{ color: INK_MUTED, letterSpacing: "0.5px" }}
+          >
+            <span>
+              <strong style={{ color: INK, fontWeight: 600 }}>{locationLabel}</strong>{" "}
+              {t.metaRegion}
+            </span>
+          </div>
+          <div aria-hidden className="mx-8 h-px" style={{ background: HAIRLINE }} />
+        </>
+      )}
 
       {/* ABOUT */}
       {cardData.bio && (
@@ -401,18 +333,20 @@ export function RealEstatePure({
         </section>
       )}
 
-      {/* SLOGAN STRIP */}
-      <div
-        className="px-8 py-7 text-center"
-        style={{ borderTop: `1px solid ${HAIRLINE}`, borderBottom: `1px solid ${HAIRLINE}` }}
-      >
-        <p
-          className="serif-italic text-[16px]"
-          style={{ color: primary, lineHeight: 1.5 }}
+      {/* SLOGAN STRIP — owner title only; hidden when empty. */}
+      {cardData.title && (
+        <div
+          className="px-8 py-7 text-center"
+          style={{ borderTop: `1px solid ${HAIRLINE}`, borderBottom: `1px solid ${HAIRLINE}` }}
         >
-          &ldquo;{cardData.title || "Bringing every brief to its right address."}&rdquo;
-        </p>
-      </div>
+          <p
+            className="serif-italic text-[16px]"
+            style={{ color: primary, lineHeight: 1.5 }}
+          >
+            &ldquo;{cardData.title}&rdquo;
+          </p>
+        </div>
+      )}
 
       {/* SPECIALISATION LIST */}
       {services.length > 0 && (
@@ -454,16 +388,24 @@ export function RealEstatePure({
         </section>
       )}
 
-      {/* STATS GRID 2×2 */}
-      <div
-        className="grid grid-cols-2"
-        style={{ borderTop: `1px solid ${HAIRLINE}` }}
-      >
-        <StatCell num="12" label={t.yearsLabel} primary={primary} divRight />
-        <StatCell num="180+" label={t.closedLabel} primary={primary} />
-        <StatCell num="â‚¬2.4B" label={t.portfolioLabel} primary={primary} divRight last />
-        <StatCell num="98%" label={t.satisfactionLabel} primary={primary} last />
-      </div>
+      {/* STATS GRID — owner-entered numbers only (resolveStats). */}
+      {stats && (
+        <div
+          className="grid grid-cols-2"
+          style={{ borderTop: `1px solid ${HAIRLINE}` }}
+        >
+          {stats.map((s, i) => (
+            <StatCell
+              key={s.label}
+              num={s.value}
+              label={s.label}
+              primary={primary}
+              divRight={i % 2 === 0 && i < stats.length - 1}
+              last={i >= stats.length - 2}
+            />
+          ))}
+        </div>
+      )}
 
       {/* TESTIMONIAL */}
       {reference && (
@@ -722,9 +664,9 @@ export const realEstatePureSample: SampleData = {
       instagram: "https://instagram.com/walker.stein.berlin",
     },
     services: [
-      { title: "Charlottenburg Townhouse", priceLabel: "â‚¬2.85M" },
+      { title: "Charlottenburg Townhouse", priceLabel: "€2.85M" },
       { title: "Wannsee Waterfront Build", priceLabel: "FOR SALE" },
-      { title: "Mitte Penthouse", priceLabel: "â‚¬1.65M" },
+      { title: "Mitte Penthouse", priceLabel: "€1.65M" },
       { title: "Investment Advisory", priceLabel: "—" },
       { title: "Property Valuation", priceLabel: "—" },
     ],
@@ -734,6 +676,12 @@ export const realEstatePureSample: SampleData = {
         role: "Mitte penthouse",
         quote: "Hannah understood us before we did. Eight months of dead-end viewings became a single home that felt inevitable.",
       },
+    ],
+    stats: [
+      { value: "12", label: "Jahre Erfahrung" },
+      { value: "180+", label: "Abschlüsse" },
+      { value: "€2.4B", label: "Portfolio Volumen" },
+      { value: "98%", label: "Zufriedenheit" },
     ],
   },
   photoUrl:

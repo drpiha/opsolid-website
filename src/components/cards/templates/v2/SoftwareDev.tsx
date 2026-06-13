@@ -37,6 +37,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#0d1117";
@@ -282,12 +283,13 @@ export function SoftwareDev({
     : "";
 
   const services = cardData.services ?? [];
+  const stats = resolveStats(cardData.stats);
 
   // Derive a handle from email or website
   const handle =
     cardData.website?.replace(/^https?:\/\//, "").replace(/\/$/, "") ||
     cardData.email?.split("@")[0] ||
-    "developer";
+    cardData.name.toLowerCase().replace(/[^a-z0-9]+/g, "");
   const usernameForPath =
     cardData.email?.split("@")[0] ||
     cardData.name.toLowerCase().split(/\s+/).join("");
@@ -520,41 +522,46 @@ export function SoftwareDev({
         </section>
       )}
 
-      {/* GITHUB STATS STRIP */}
-      <section
-        className="px-6 py-7"
-        style={{ borderBottom: `1px solid ${HAIRLINE}` }}
-      >
-        <div
-          className="grid grid-cols-3 overflow-hidden rounded-lg"
-          style={{ background: PANEL, border: `1px solid ${HAIRLINE_SOFT}` }}
+      {/* STATS STRIP — owner-entered numbers only (resolveStats). */}
+      {stats && (
+        <section
+          className="px-6 py-7"
+          style={{ borderBottom: `1px solid ${HAIRLINE}` }}
         >
-          {[
-            { n: "7+", l: t.yearsLabel },
-            { n: "60+", l: t.projectsLabel },
-            { n: "1.2K", l: t.starsLabel },
-          ].map((stat, i) => (
-            <div
-              key={stat.l}
-              className="px-3 py-5 text-center"
-              style={{ borderRight: i < 2 ? `1px solid ${HAIRLINE_SOFT}` : "none" }}
-            >
+          <div
+            className="grid overflow-hidden rounded-lg"
+            style={{
+              background: PANEL,
+              border: `1px solid ${HAIRLINE_SOFT}`,
+              gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
+            }}
+          >
+            {stats.map((stat, i) => (
               <div
-                className="mono text-[22px] font-semibold leading-none"
-                style={{ color: accent }}
+                key={stat.label}
+                className="px-3 py-5 text-center"
+                style={{
+                  borderRight:
+                    i < stats.length - 1 ? `1px solid ${HAIRLINE_SOFT}` : "none",
+                }}
               >
-                {stat.n}
+                <div
+                  className="mono text-[22px] font-semibold leading-none"
+                  style={{ color: accent }}
+                >
+                  {stat.value}
+                </div>
+                <div
+                  className="mono mt-1.5 text-[10px] uppercase"
+                  style={{ color: INK_SOFT, letterSpacing: "1.5px" }}
+                >
+                  {stat.label}
+                </div>
               </div>
-              <div
-                className="mono mt-1.5 text-[10px] uppercase"
-                style={{ color: INK_SOFT, letterSpacing: "1.5px" }}
-              >
-                {stat.l}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* CTA */}
       <section
@@ -754,6 +761,11 @@ export const softwareDevSample: SampleData = {
       { title: "Web App Development", description: "Next.js · React · TypeScript", priceLabel: "ab €4.800" },
       { title: "API Integration", description: "REST · GraphQL · Stripe · Webhooks", priceLabel: "ab €1.200" },
       { title: "Tech Consulting", description: "Architecture · code review · DevOps", priceLabel: "€150/h" },
+    ],
+    stats: [
+      { value: "7+", label: "Jahre" },
+      { value: "60+", label: "Projekte" },
+      { value: "1.2K", label: "GitHub ★" },
     ],
     socials: {
       github: "https://github.com/ozancelik",

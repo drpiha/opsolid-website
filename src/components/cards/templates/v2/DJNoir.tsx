@@ -10,7 +10,7 @@
 // Design DNA (different from default Studio.tsx and MusicProducer.tsx):
 //   - Pitch-black with neon-purple/pink radial glows.
 //   - REC // Live Set hero meta with blinking dot.
-//   - Mega Syne clamp(56-84px) name with second word in purpleâ†’pink gradient.
+//   - Mega Syne clamp(56-84px) name with second word in purple→pink gradient.
 //   - 18-bar animated SVG EQ frequency display below hero.
 //   - Compact profile row (84px gradient ring avatar + Resident//Producer cap).
 //   - 3-cell stat divider strip (years/events/listeners).
@@ -383,12 +383,14 @@ export function DJNoir({
           >
             {cardData.name}
           </h2>
-          <p
-            className="text-[11px] uppercase"
-            style={{ color: accent, letterSpacing: "2px" }}
-          >
-            {cardData.title || cardData.position || "Resident // Producer"}
-          </p>
+          {(cardData.title || cardData.position) && (
+            <p
+              className="text-[11px] uppercase"
+              style={{ color: accent, letterSpacing: "2px" }}
+            >
+              {cardData.title || cardData.position}
+            </p>
+          )}
         </div>
       </section>
 
@@ -729,17 +731,17 @@ export const djNoirSample: SampleData = {
       {
         title: "Club Night",
         description: "2-4h Set, full sound check.",
-        priceLabel: "ab â‚¬800",
+        priceLabel: "ab €800",
       },
       {
         title: "Festival Set",
         description: "60-120min main stage with rider.",
-        priceLabel: "ab â‚¬2.400",
+        priceLabel: "ab €2.400",
       },
       {
         title: "Private Event",
         description: "All-night set, custom playlist.",
-        priceLabel: "ab â‚¬1.200",
+        priceLabel: "ab €1.200",
       },
     ],
   },

@@ -29,6 +29,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveStats, resolveTagline, resolveLocation } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#6b5340"; // warm taupe primary
@@ -76,7 +77,6 @@ function getInitials(name: string): string {
 }
 
 interface ResCopy {
-  bannerEyebrow: string;
   storyEyebrow: string;
   storyTitle: string;
   servicesTitle: string;
@@ -86,9 +86,6 @@ interface ResCopy {
   contactWaSub: string;
   contactEmail: string;
   contactWeb: string;
-  yearsLabel: string;
-  closedLabel: string;
-  portfolioLabel: string;
   saveContact: string;
   walletLabel: string;
   poweredBy: string;
@@ -99,7 +96,6 @@ interface ResCopy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ResCopy> = {
   de: {
-    bannerEyebrow: "Mit Sorgfalt seit 2014",
     storyEyebrow: "Meine Geschichte",
     storyTitle: "Bewährte Vermittlung",
     servicesTitle: "Was ich tue",
@@ -109,9 +105,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ResCopy> = {
     contactWaSub: "Schreiben Sie mir",
     contactEmail: "E-Mail",
     contactWeb: "Web",
-    yearsLabel: "Jahre",
-    closedLabel: "Abschlüsse",
-    portfolioLabel: "Portfolio â‚¬",
     saveContact: "In Kontakte speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
@@ -120,7 +113,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ResCopy> = {
     share: "Teilen",
   },
   en: {
-    bannerEyebrow: "With care since 2014",
     storyEyebrow: "My story",
     storyTitle: "Trusted brokerage",
     servicesTitle: "What I do",
@@ -130,9 +122,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ResCopy> = {
     contactWaSub: "Send a message",
     contactEmail: "Email",
     contactWeb: "Web",
-    yearsLabel: "Years",
-    closedLabel: "Closed",
-    portfolioLabel: "Portfolio â‚¬",
     saveContact: "Save to contacts",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
@@ -141,7 +130,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ResCopy> = {
     share: "Share",
   },
   tr: {
-    bannerEyebrow: "2014'ten beri sevgiyle",
     storyEyebrow: "Hikayem",
     storyTitle: "Güvenilir Aracılık",
     servicesTitle: "Yapabildiklerim",
@@ -151,9 +139,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ResCopy> = {
     contactWaSub: "Bana yazın",
     contactEmail: "E-posta",
     contactWeb: "Web",
-    yearsLabel: "Yıl",
-    closedLabel: "Satış",
-    portfolioLabel: "Portföy â‚º",
     saveContact: "Rehbere Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
@@ -162,8 +147,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ResCopy> = {
     share: "Paylaş",
   },
   es: {
-
-    bannerEyebrow: "Con cuidado desde 2014",
     storyEyebrow: "Mi historia",
     storyTitle: "Inmobiliaria de confianza",
     servicesTitle: "Lo que hago",
@@ -173,9 +156,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ResCopy> = {
     contactWaSub: "Enviar un mensaje",
     contactEmail: "Correo",
     contactWeb: "Web",
-    yearsLabel: "Años",
-    closedLabel: "Cerrado",
-    portfolioLabel: "Portfolio â‚¬",
     saveContact: "Guardar en contactos",
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
@@ -185,8 +165,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ResCopy> = {
   
   },
   it: {
-
-    bannerEyebrow: "Con cura dal 2014",
     storyEyebrow: "La mia storia",
     storyTitle: "Agenzia di fiducia",
     servicesTitle: "Cosa faccio",
@@ -196,9 +174,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ResCopy> = {
     contactWaSub: "Invia un messaggio",
     contactEmail: "Email",
     contactWeb: "Web",
-    yearsLabel: "Anni",
-    closedLabel: "Chiuso",
-    portfolioLabel: "Portfolio â‚¬",
     saveContact: "Salva nei contatti",
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
@@ -208,8 +183,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ResCopy> = {
   
   },
   fr: {
-
-    bannerEyebrow: "Avec soin depuis 2014",
     storyEyebrow: "Mon histoire",
     storyTitle: "Agence de confiance",
     servicesTitle: "Ce que je fais",
@@ -219,9 +192,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ResCopy> = {
     contactWaSub: "Envoyer un message",
     contactEmail: "E-mail",
     contactWeb: "Web",
-    yearsLabel: "Années",
-    closedLabel: "Fermé",
-    portfolioLabel: "Portfolio â‚¬",
     saveContact: "Enregistrer dans les contacts",
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
@@ -231,8 +201,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ResCopy> = {
   
   },
   ar: {
-
-    bannerEyebrow: "بعناية منذ 2014",
     storyEyebrow: "قصتي",
     storyTitle: "وساطة موثوقة",
     servicesTitle: "ما أفعله",
@@ -242,9 +210,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ResCopy> = {
     contactWaSub: "أرسل رسالة",
     contactEmail: "البريد الإلكتروني",
     contactWeb: "ويب",
-    yearsLabel: "سنوات",
-    closedLabel: "مغلق",
-    portfolioLabel: "Portfolio â‚¬",
     saveContact: "حفظ في جهات الاتصال",
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
@@ -285,7 +250,13 @@ export function RealEstateStone({
   const firstName = nameParts.slice(0, -1).join(" ") || cardData.name;
   const lastName = nameParts.length > 1 ? nameParts[nameParts.length - 1] : "";
 
-  const region = cardData.address?.split(",").slice(-1)[0]?.trim() || "Berlin";
+  const stats = resolveStats(cardData.stats);
+  const tagline = resolveTagline(cardData);
+  const locationLabel = resolveLocation(cardData);
+  const bannerLine = [cardData.company, tagline].filter(Boolean).join(" · ");
+  const footerLine =
+    cardData.address ||
+    [cardData.company, locationLabel].filter(Boolean).join(" · ");
   const year = new Date().getFullYear();
 
   return (
@@ -326,12 +297,14 @@ export function RealEstateStone({
             mixBlendMode: "multiply",
           }}
         />
-        <div
-          className="serif relative mb-4 text-[13px] italic font-normal"
-          style={{ color: primary, letterSpacing: "0.5px" }}
-        >
-          {cardData.company || "Walker & Stein"} · {t.bannerEyebrow}
-        </div>
+        {bannerLine && (
+          <div
+            className="serif relative mb-4 text-[13px] italic font-normal"
+            style={{ color: primary, letterSpacing: "0.5px" }}
+          >
+            {bannerLine}
+          </div>
+        )}
         <div
           className="relative mx-auto mb-5"
           style={{
@@ -391,7 +364,7 @@ export function RealEstateStone({
           className="relative mt-2 text-[13px] font-medium"
           style={{ color: TEXT_MUTED, letterSpacing: "0.3px" }}
         >
-          {[cardData.position, region].filter(Boolean).join(" · ")}
+          {[cardData.position, locationLabel].filter(Boolean).join(" · ")}
         </div>
       </header>
 
@@ -405,12 +378,20 @@ export function RealEstateStone({
         </svg>
       </div>
 
-      {/* STATS ROW */}
-      <div className="flex gap-3 px-7 pb-8">
-        <StatTile num="12" label={t.yearsLabel} primary={primary} accent={accent} />
-        <StatTile num="180+" label={t.closedLabel} primary={primary} accent={accent} />
-        <StatTile num="2.4B" label={t.portfolioLabel} primary={primary} accent={accent} />
-      </div>
+      {/* STATS ROW — owner-entered numbers only (resolveStats). */}
+      {stats && (
+        <div className="flex gap-3 px-7 pb-8">
+          {stats.map((s) => (
+            <StatTile
+              key={s.label}
+              num={s.value}
+              label={s.label}
+              primary={primary}
+              accent={accent}
+            />
+          ))}
+        </div>
+      )}
 
       {/* STORY */}
       {cardData.bio && (
@@ -434,31 +415,33 @@ export function RealEstateStone({
         </section>
       )}
 
-      {/* SLOGAN */}
-      <div
-        className="relative mx-7 rounded-[14px] px-6 py-7 text-center"
-        style={{
-          background: PAPER_WARM,
-          border: `1px solid ${BORDER_SOFT}`,
-        }}
-      >
-        <span
-          aria-hidden
-          className="absolute top-1/2 -translate-y-1/2 block h-px"
-          style={{ left: -8, width: 26, background: accent }}
-        />
-        <span
-          aria-hidden
-          className="absolute top-1/2 -translate-y-1/2 block h-px"
-          style={{ right: -8, width: 26, background: accent }}
-        />
-        <p
-          className="serif text-[17px] italic font-medium leading-[1.5]"
-          style={{ color: primary }}
+      {/* SLOGAN — owner title only; hidden when empty. */}
+      {cardData.title && (
+        <div
+          className="relative mx-7 rounded-[14px] px-6 py-7 text-center"
+          style={{
+            background: PAPER_WARM,
+            border: `1px solid ${BORDER_SOFT}`,
+          }}
         >
-          &ldquo;{cardData.title || "Bringing every brief to its right address."}&rdquo;
-        </p>
-      </div>
+          <span
+            aria-hidden
+            className="absolute top-1/2 -translate-y-1/2 block h-px"
+            style={{ left: -8, width: 26, background: accent }}
+          />
+          <span
+            aria-hidden
+            className="absolute top-1/2 -translate-y-1/2 block h-px"
+            style={{ right: -8, width: 26, background: accent }}
+          />
+          <p
+            className="serif text-[17px] italic font-medium leading-[1.5]"
+            style={{ color: primary }}
+          >
+            &ldquo;{cardData.title}&rdquo;
+          </p>
+        </div>
+      )}
 
       {/* SERVICES */}
       {services.length > 0 && (
@@ -604,12 +587,14 @@ export function RealEstateStone({
           borderTop: `1px solid ${BORDER_SOFT}`,
         }}
       >
-        <p
-          className="serif mb-4 text-[13px] italic"
-          style={{ color: primary }}
-        >
-          {cardData.address || `${cardData.company || "Walker & Stein"} · ${region}`}
-        </p>
+        {footerLine && (
+          <p
+            className="serif mb-4 text-[13px] italic"
+            style={{ color: primary }}
+          >
+            {footerLine}
+          </p>
+        )}
         <a
           href={`/api/cards/${encodeURIComponent(slug)}/vcard`}
           download
@@ -876,9 +861,9 @@ export const realEstateStoneSample: SampleData = {
       instagram: "https://instagram.com/walker.stein.berlin",
     },
     services: [
-      { title: "Charlottenburg Townhouse", priceLabel: "â‚¬2.85M" },
+      { title: "Charlottenburg Townhouse", priceLabel: "€2.85M" },
       { title: "Wannsee Waterfront Build", priceLabel: "FOR SALE" },
-      { title: "Mitte Penthouse", priceLabel: "â‚¬1.65M" },
+      { title: "Mitte Penthouse", priceLabel: "€1.65M" },
       { title: "Investment Advisory" },
       { title: "Property Valuation" },
     ],
@@ -888,6 +873,12 @@ export const realEstateStoneSample: SampleData = {
         role: "Mitte penthouse",
         quote: "Hannah understood us before we did. Eight months of dead-end viewings became a single home that felt inevitable.",
       },
+    ],
+    tagline: "Mit Sorgfalt seit 2014",
+    stats: [
+      { value: "12", label: "Jahre Erfahrung" },
+      { value: "180+", label: "Abschlüsse" },
+      { value: "€2.4B", label: "Portfolio" },
     ],
   },
   photoUrl:

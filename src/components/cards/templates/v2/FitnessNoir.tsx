@@ -29,6 +29,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats, resolveTagline } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#0d0d0d";
@@ -66,12 +67,8 @@ function digitsOnly(value: string): string {
 }
 
 interface Copy {
-  taglineFallback: string;
   ctaLine1: string;
   ctaLine2: string;
-  experienceLabel: string;
-  clientsLabel: string;
-  conversionLabel: string;
   programsTag: string;
   programsH: string;
   resultsTag: string;
@@ -92,12 +89,8 @@ interface Copy {
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    taglineFallback: "Personal Coach",
     ctaLine1: "Get",
     ctaLine2: "Results",
-    experienceLabel: "Erfahrung",
-    clientsLabel: "Kunden",
-    conversionLabel: "Erfolg",
     programsTag: "— 01 / Programme",
     programsH: "Leistungen",
     resultsTag: "— 02 / Ergebnisse",
@@ -116,12 +109,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   en: {
-    taglineFallback: "Personal Coach",
     ctaLine1: "Get",
     ctaLine2: "Results",
-    experienceLabel: "Years",
-    clientsLabel: "Clients",
-    conversionLabel: "Success",
     programsTag: "— 01 / Programs",
     programsH: "Services",
     resultsTag: "— 02 / Results",
@@ -140,12 +129,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     poweredBy: "Powered by",
   },
   tr: {
-    taglineFallback: "Personal Coach",
     ctaLine1: "Get",
     ctaLine2: "Results",
-    experienceLabel: "Tecrübe",
-    clientsLabel: "Müşteri",
-    conversionLabel: "Dönüşüm",
     programsTag: "— 01 / Programlar",
     programsH: "Hizmetler",
     resultsTag: "— 02 / Sonuçlar",
@@ -165,12 +150,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   es: {
 
-    taglineFallback: "Coach personal",
     ctaLine1: "Obtener",
     ctaLine2: "Resultados",
-    experienceLabel: "Años",
-    clientsLabel: "Clientes",
-    conversionLabel: "Éxito",
     programsTag: "— 01 / Programas",
     programsH: "Servicios",
     resultsTag: "— 02 / Resultados",
@@ -191,12 +172,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   it: {
 
-    taglineFallback: "Personal Coach",
     ctaLine1: "Ottieni",
     ctaLine2: "Risultati",
-    experienceLabel: "Anni",
-    clientsLabel: "Clienti",
-    conversionLabel: "Successo",
     programsTag: "— 01 / Programmi",
     programsH: "Servizi",
     resultsTag: "— 02 / Risultati",
@@ -217,12 +194,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   fr: {
 
-    taglineFallback: "Coach personnel",
     ctaLine1: "Obtenir",
     ctaLine2: "Résultats",
-    experienceLabel: "Années",
-    clientsLabel: "Clients",
-    conversionLabel: "Succès",
     programsTag: "— 01 / Programmes",
     programsH: "Services",
     resultsTag: "— 02 / Résultats",
@@ -243,12 +216,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   },
   ar: {
 
-    taglineFallback: "مدرب شخصي",
     ctaLine1: "احصل",
     ctaLine2: "النتائج",
-    experienceLabel: "سنوات",
-    clientsLabel: "العملاء",
-    conversionLabel: "النجاح",
     programsTag: "— 01 / البرامج",
     programsH: "الخدمات",
     resultsTag: "— 02 / النتائج",
@@ -296,6 +265,8 @@ export function FitnessNoir({
     : undefined;
 
   const services = (cardData.services ?? []).slice(0, 5);
+  const stats = resolveStats(cardData.stats);
+  const tagline = resolveTagline(cardData);
   const nameParts = cardData.name.trim().split(/\s+/);
   const nameFirst = nameParts[0] ?? cardData.name;
   const nameLast = nameParts.slice(1).join(" ");
@@ -338,22 +309,24 @@ export function FitnessNoir({
           }}
         />
         <div className="relative z-[2]">
-          <div
-            className="display flex items-center gap-3 uppercase"
-            style={{
-              fontSize: 12,
-              letterSpacing: "6px",
-              color: accent,
-              fontWeight: 600,
-              marginBottom: 18,
-            }}
-          >
-            <span
-              aria-hidden
-              style={{ width: 32, height: 2, background: accent }}
-            />
-            {cardData.position || t.taglineFallback}
-          </div>
+          {tagline && (
+            <div
+              className="display flex items-center gap-3 uppercase"
+              style={{
+                fontSize: 12,
+                letterSpacing: "6px",
+                color: accent,
+                fontWeight: 600,
+                marginBottom: 18,
+              }}
+            >
+              <span
+                aria-hidden
+                style={{ width: 32, height: 2, background: accent }}
+              />
+              {tagline}
+            </div>
+          )}
           <h1
             className="display uppercase"
             style={{
@@ -426,69 +399,60 @@ export function FitnessNoir({
         </div>
       </section>
 
-      {/* STATS */}
-      <section
-        className="grid grid-cols-3 px-7 py-8"
-        style={{ background: SURFACE }}
-      >
-        {[
-          { num: "8", unit: "YR", label: t.experienceLabel, alt: false },
-          { num: "600", unit: "+", label: t.clientsLabel, alt: true },
-          { num: "94", unit: "%", label: t.conversionLabel, alt: false },
-        ].map((s, i, arr) => (
-          <div
-            key={i}
-            className="relative px-1.5 py-1 text-center"
-          >
+      {/* STATS — owner-entered numbers only (resolveStats). */}
+      {stats && (
+        <section
+          className="grid px-7 py-8"
+          style={{
+            background: SURFACE,
+            gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))`,
+          }}
+        >
+          {stats.map((s, i, arr) => (
             <div
-              className="display"
-              style={{
-                fontSize: 44,
-                fontWeight: 700,
-                color: s.alt ? ORANGE : "#fff",
-                lineHeight: 1,
-                letterSpacing: "-1px",
-              }}
+              key={s.label}
+              className="relative px-1.5 py-1 text-center"
             >
-              {s.num}
-              <span
+              <div
+                className="display"
                 style={{
-                  fontSize: 18,
-                  color: accent,
-                  fontWeight: 500,
-                  marginLeft: 2,
+                  fontSize: 44,
+                  fontWeight: 700,
+                  color: i % 2 === 1 ? ORANGE : "#fff",
+                  lineHeight: 1,
+                  letterSpacing: "-1px",
                 }}
               >
-                {s.unit}
-              </span>
-            </div>
-            <div
-              className="display mt-2 uppercase"
-              style={{
-                fontSize: 10,
-                letterSpacing: "2px",
-                color: TEXT_VDIM,
-                fontWeight: 500,
-              }}
-            >
-              {s.label}
-            </div>
-            {i < arr.length - 1 && (
-              <span
-                aria-hidden
-                className="absolute"
+                {s.value}
+              </div>
+              <div
+                className="display mt-2 uppercase"
                 style={{
-                  right: 0,
-                  top: "14%",
-                  width: 1,
-                  height: "72%",
-                  background: LINE,
+                  fontSize: 10,
+                  letterSpacing: "2px",
+                  color: TEXT_VDIM,
+                  fontWeight: 500,
                 }}
-              />
-            )}
-          </div>
-        ))}
-      </section>
+              >
+                {s.label}
+              </div>
+              {i < arr.length - 1 && (
+                <span
+                  aria-hidden
+                  className="absolute"
+                  style={{
+                    right: 0,
+                    top: "14%",
+                    width: 1,
+                    height: "72%",
+                    background: LINE,
+                  }}
+                />
+              )}
+            </div>
+          ))}
+        </section>
+      )}
 
       {/* FULL PHOTO */}
       {photoUrl && (
@@ -961,6 +925,11 @@ export const fitnessNoirSample: SampleData = {
       { title: "Ernährungscoaching", description: "Makros, Habit-Loops, Nachhaltigkeit.", priceLabel: "€45/h" },
       { title: "Online-Coaching", description: "Programm + wöchentliches Check-in.", priceLabel: "€199/Monat" },
       { title: "12-Wochen Transformation", description: "Training + Ernährung + Mindset.", priceLabel: "€899" },
+    ],
+    stats: [
+      { value: "8 YR", label: "Erfahrung" },
+      { value: "600+", label: "Kunden" },
+      { value: "94%", label: "Erfolg" },
     ],
   },
   photoUrl:

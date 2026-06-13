@@ -8,7 +8,7 @@
 // pops. Inspired by the vivid-architect / interior layouts.
 //
 // Locked design DNA (only colors respond to brand):
-//   - Hero: gradient panel (deepâ†’primaryâ†’accent) with bold tag pill,
+//   - Hero: gradient panel (deep→primary→accent) with bold tag pill,
 //     uppercase chunky name, role line, and 3 hero stats.
 //   - Profile strip floats over hero.
 //   - 3 quick action pills.
@@ -37,6 +37,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats, resolveTagline } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#2563eb"; // bold blue
@@ -88,9 +89,6 @@ interface Copy {
   step1: string;
   step2: string;
   step3: string;
-  yearsLabel: string;
-  projectsLabel: string;
-  awardsLabel: string;
   cta: string;
   saveContact: string;
   walletLabel: string;
@@ -111,9 +109,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     step1: "Brief",
     step2: "Konzept",
     step3: "Umsetzung",
-    yearsLabel: "Jahre",
-    projectsLabel: "Projekte",
-    awardsLabel: "Awards",
     cta: "Erstgespräch buchen",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
@@ -132,9 +127,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     step1: "Brief",
     step2: "Concept",
     step3: "Build",
-    yearsLabel: "Years",
-    projectsLabel: "Projects",
-    awardsLabel: "Awards",
     cta: "Book a consultation",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
@@ -153,9 +145,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     step1: "Brief",
     step2: "Konsept",
     step3: "Uygulama",
-    yearsLabel: "Yıl",
-    projectsLabel: "Proje",
-    awardsLabel: "Ödül",
     cta: "Görüşme Talep Et",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
@@ -175,9 +164,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     step1: "Resumen",
     step2: "Concepto",
     step3: "Construir",
-    yearsLabel: "Años",
-    projectsLabel: "Proyectos",
-    awardsLabel: "Premios",
     cta: "Reservar una consulta",
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
@@ -198,9 +184,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     step1: "Brief",
     step2: "Concept",
     step3: "Costruire",
-    yearsLabel: "Anni",
-    projectsLabel: "Progetti",
-    awardsLabel: "Premi",
     cta: "Prenota una consulenza",
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
@@ -221,9 +204,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     step1: "Brief",
     step2: "Concept",
     step3: "Construire",
-    yearsLabel: "Années",
-    projectsLabel: "Projets",
-    awardsLabel: "Récompenses",
     cta: "Réserver une consultation",
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
@@ -244,9 +224,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     step1: "موجز",
     step2: "المفهوم",
     step3: "بناء",
-    yearsLabel: "سنوات",
-    projectsLabel: "المشاريع",
-    awardsLabel: "جوائز",
     cta: "احجز استشارة",
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
@@ -283,6 +260,8 @@ export function InteriorDesignVivid({
   const services = cardData.services ?? [];
   const featured = services.find((s) => s.priceLabel) ?? services[0];
   const otherSvcs = services.filter((s) => s !== featured).slice(0, 4);
+  const stats = resolveStats(cardData.stats);
+  const tagline = resolveTagline(cardData);
   const year = new Date().getFullYear();
 
   return (
@@ -345,17 +324,22 @@ export function InteriorDesignVivid({
             >
               {cardData.name}
             </h1>
-            <div
-              className="mt-2.5 text-[14px] font-medium"
-              style={{ color: "rgba(255,255,255,0.88)" }}
-            >
-              {cardData.position || "Interior Designer"}
-            </div>
-            <div className="mt-7 flex gap-6">
-              <HeroStat num="11" label={t.yearsLabel} accent={accent} />
-              <HeroStat num="48" label={t.projectsLabel} accent={accent} />
-              <HeroStat num="6" label={t.awardsLabel} accent={accent} />
-            </div>
+            {tagline && (
+              <div
+                className="mt-2.5 text-[14px] font-medium"
+                style={{ color: "rgba(255,255,255,0.88)" }}
+              >
+                {tagline}
+              </div>
+            )}
+            {/* HERO STATS — owner-entered numbers only (resolveStats). */}
+            {stats && (
+              <div className="mt-7 flex gap-6">
+                {stats.map((s) => (
+                  <HeroStat key={s.label} num={s.value} label={s.label} accent={accent} />
+                ))}
+              </div>
+            )}
           </div>
         </header>
 
@@ -388,11 +372,13 @@ export function InteriorDesignVivid({
               className="text-[12px] font-semibold uppercase"
               style={{ color: primary, letterSpacing: "0.8px" }}
             >
-              {cardData.company || "Interior Studio"}
+              {cardData.company || cardData.name}
             </div>
-            <div className="mt-0.5 text-[13px]" style={{ color: INK_SOFT }}>
-              {cardData.title || "Wohn · Office · Hotel"}
-            </div>
+            {cardData.title && (
+              <div className="mt-0.5 text-[13px]" style={{ color: INK_SOFT }}>
+                {cardData.title}
+              </div>
+            )}
           </div>
         </section>
 
@@ -762,7 +748,7 @@ export const interiorDesignVividSample: SampleData = {
     bookingUrl: "https://cal.com/elifdesign/intro",
     sectorKey: "architecture",
     services: [
-      { title: "Mitte Penthouse", description: "240 m² · Marmor · Eiche · Bronze", priceLabel: "ab â‚¬18.000" },
+      { title: "Mitte Penthouse", description: "240 m² · Marmor · Eiche · Bronze", priceLabel: "ab €18.000" },
       { title: "Raumplanung", description: "Concept · Layout · Materialien" },
       { title: "Vollprojekt", description: "Konzept bis Umsetzung" },
       { title: "Online-Beratung", description: "Strategie pro Stunde" },
@@ -772,6 +758,11 @@ export const interiorDesignVividSample: SampleData = {
       instagram: "https://instagram.com/elifdesign.interior",
       linkedin: "https://linkedin.com/in/elifyaman",
     },
+    stats: [
+      { value: "11", label: "Jahre" },
+      { value: "48", label: "Projekte" },
+      { value: "6", label: "Awards" },
+    ],
   },
   photoUrl:
     "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=920&q=80&auto=format&fit=crop",

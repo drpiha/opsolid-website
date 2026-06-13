@@ -34,6 +34,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveStats, resolveTagline } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#374151"; // soft graphite
@@ -76,15 +77,11 @@ interface Copy {
   portfolioH: string;
   servicesH: string;
   statsH: string;
-  yearsLabel: string;
-  carsLabel: string;
-  warrantyLabel: string;
   contactH: string;
   cta: string;
   saveContact: string;
   walletLabel: string;
   poweredBy: string;
-  credential: string;
 }
 
 const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
@@ -96,15 +93,11 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     portfolioH: "Aktuelle Fahrzeuge",
     servicesH: "Services",
     statsH: "Auf einen Blick",
-    yearsLabel: "Jahre",
-    carsLabel: "Fahrzeuge",
-    warrantyLabel: "Garantie",
     contactH: "Kontakt",
     cta: "Termin vereinbaren",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
-    credential: "BMW · Mercedes · Audi · 12 Monate Garantie auf jedes Fahrzeug",
   },
   en: {
     brandMark: "Premium · Inspected · Warranted",
@@ -114,15 +107,11 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     portfolioH: "Current inventory",
     servicesH: "Services",
     statsH: "At a glance",
-    yearsLabel: "Years",
-    carsLabel: "Cars sold",
-    warrantyLabel: "Warranty",
     contactH: "Contact",
     cta: "Book a viewing",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
-    credential: "BMW · Mercedes · Audi · 12-month warranty on every car",
   },
   tr: {
     brandMark: "Premium · Kontrollü · Garantili",
@@ -132,15 +121,11 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     portfolioH: "Güncel Araçlar",
     servicesH: "Hizmetler",
     statsH: "Özet",
-    yearsLabel: "Yıl",
-    carsLabel: "Araç",
-    warrantyLabel: "Garanti",
     contactH: "İletişim",
     cta: "Test Sürüşü Al",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
-    credential: "BMW · Mercedes · Audi · her araca 12 ay garanti",
   },
   es: {
 
@@ -151,16 +136,11 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     portfolioH: "Inventario actual",
     servicesH: "Servicios",
     statsH: "De un vistazo",
-    yearsLabel: "Años",
-    carsLabel: "Coches vendidos",
-    warrantyLabel: "Garantía",
     contactH: "Contacto",
     cta: "Reservar una visita",
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
-    poweredBy: "Desarrollado por",
-    credential: "BMW · Mercedes · Audi · 12-month warranty on every car",
-  
+    poweredBy: "Desarrollado por",  
   },
   it: {
 
@@ -171,16 +151,11 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     portfolioH: "Inventario attuale",
     servicesH: "Servizi",
     statsH: "In sintesi",
-    yearsLabel: "Anni",
-    carsLabel: "Auto vendute",
-    warrantyLabel: "Garanzia",
     contactH: "Contatto",
     cta: "Prenota una visita",
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
-    poweredBy: "Realizzato con",
-    credential: "BMW · Mercedes · Audi · 12-month warranty on every car",
-  
+    poweredBy: "Realizzato con",  
   },
   fr: {
 
@@ -191,16 +166,11 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     portfolioH: "Stock actuel",
     servicesH: "Services",
     statsH: "En un coup d'œil",
-    yearsLabel: "Années",
-    carsLabel: "Voitures vendues",
-    warrantyLabel: "Garantie",
     contactH: "Contact",
     cta: "Réserver une visite",
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
-    poweredBy: "Propulsé par",
-    credential: "BMW · Mercedes · Audi · 12-month warranty on every car",
-  
+    poweredBy: "Propulsé par",  
   },
   ar: {
 
@@ -211,16 +181,11 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
     portfolioH: "المخزون الحالي",
     servicesH: "الخدمات",
     statsH: "نظرة سريعة",
-    yearsLabel: "سنوات",
-    carsLabel: "السيارات المباعة",
-    warrantyLabel: "الضمان",
     contactH: "اتصال",
     cta: "احجز معاينة",
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
-    poweredBy: "مشغل بواسطة",
-    credential: "BMW · Mercedes · Audi · 12-month warranty on every car",
-  
+    poweredBy: "مشغل بواسطة",  
   },
 };
 
@@ -248,6 +213,8 @@ export function AutoDealerPure({
   const services = cardData.services ?? [];
   const cars = services.filter((s) => s.priceLabel).slice(0, 3);
   const otherSvcs = services.filter((s) => !s.priceLabel);
+  const stats = resolveStats(cardData.stats);
+  const tagline = resolveTagline(cardData);
   const year = new Date().getFullYear();
 
   return (
@@ -303,16 +270,18 @@ export function AutoDealerPure({
               <div className="text-[26px] font-bold leading-[1.15] tracking-[-0.6px]">
                 {cardData.name}
               </div>
-              <div className="mt-1 text-[13px]" style={{ color: INK_SOFT }}>
-                {cardData.position || "Premium Auto Dealer"}
-              </div>
+              {tagline && (
+                <div className="mt-1 text-[13px]" style={{ color: INK_SOFT }}>
+                  {tagline}
+                </div>
+              )}
             </div>
           </div>
-          <div className="mt-4 text-[13px]" style={{ color: INK }}>
-            <strong style={{ color: accent, fontWeight: 700 }}>{cardData.company}</strong>
-            {" · "}
-            {t.credential}
-          </div>
+          {cardData.company && (
+            <div className="mt-4 text-[13px]" style={{ color: INK }}>
+              <strong style={{ color: accent, fontWeight: 700 }}>{cardData.company}</strong>
+            </div>
+          )}
         </header>
 
         {/* ACTIONS */}
@@ -430,15 +399,20 @@ export function AutoDealerPure({
           </section>
         )}
 
-        {/* STATS */}
-        <section className="px-8 py-11" style={{ borderBottom: `1px solid ${HAIRLINE}` }}>
-          <SectionLabel>{t.statsH}</SectionLabel>
-          <div className="mt-5 grid grid-cols-3 gap-3">
-            <StatCell num="15" label={t.yearsLabel} primary={primary} />
-            <StatCell num="800+" label={t.carsLabel} primary={primary} />
-            <StatCell num="12mo" label={t.warrantyLabel} primary={primary} />
-          </div>
-        </section>
+        {/* STATS — owner-entered numbers only (resolveStats). */}
+        {stats && (
+          <section className="px-8 py-11" style={{ borderBottom: `1px solid ${HAIRLINE}` }}>
+            <SectionLabel>{t.statsH}</SectionLabel>
+            <div
+              className="mt-5 grid gap-3"
+              style={{ gridTemplateColumns: `repeat(${stats.length}, minmax(0, 1fr))` }}
+            >
+              {stats.map((s) => (
+                <StatCell key={s.label} num={s.value} label={s.label} primary={primary} />
+              ))}
+            </div>
+          </section>
+        )}
 
         {/* CONTACT */}
         <section className="px-8 py-11" style={{ borderBottom: `1px solid ${HAIRLINE}` }}>
@@ -631,9 +605,9 @@ export const autoDealerPureSample: SampleData = {
     bookingUrl: "https://cal.com/arslanautomobile/intro",
     sectorKey: "retail",
     services: [
-      { title: "BMW 530i", description: "2021 · 48.000 km", priceLabel: "â‚¬38.900" },
-      { title: "Mercedes E220d", description: "2020 · 62.000 km", priceLabel: "â‚¬42.500" },
-      { title: "Audi A6 Avant", description: "2022 · 24.000 km", priceLabel: "â‚¬49.800" },
+      { title: "BMW 530i", description: "2021 · 48.000 km", priceLabel: "€38.900" },
+      { title: "Mercedes E220d", description: "2020 · 62.000 km", priceLabel: "€42.500" },
+      { title: "Audi A6 Avant", description: "2022 · 24.000 km", priceLabel: "€49.800" },
       { title: "Garantie", description: "12 Monate auf alle Fahrzeuge" },
       { title: "Inzahlungnahme", description: "Faire Bewertung in 24 h" },
       { title: "Finanzierung", description: "Ab 2,9 % effektiv" },
@@ -642,6 +616,11 @@ export const autoDealerPureSample: SampleData = {
       instagram: "https://instagram.com/arslanautomobile",
       facebook: "https://facebook.com/arslanautomobile",
     },
+    stats: [
+      { value: "15", label: "Jahre" },
+      { value: "800+", label: "Fahrzeuge" },
+      { value: "12 Mo.", label: "Garantie" },
+    ],
   },
   photoUrl:
     "https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=920&q=80&auto=format&fit=crop",

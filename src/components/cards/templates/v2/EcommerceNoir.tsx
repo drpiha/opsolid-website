@@ -75,7 +75,6 @@ function getInitials(name: string): string {
 interface Copy {
   brandPre: string;
   brandTag: string;
-  taglineFallback: string;
   featuredEyebrow: string;
   collectionPre: string;
   collectionH: string;
@@ -95,7 +94,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     brandPre: "Premium Kollektion",
     brandTag: "Maison fondée en 2021",
-    taglineFallback: "Founder & Curator",
     featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
     collectionH: "Kollektion",
@@ -113,7 +111,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   en: {
     brandPre: "Premium Collection",
     brandTag: "Maison fondée en 2021",
-    taglineFallback: "Founder & Curator",
     featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
     collectionH: "Collection",
@@ -131,7 +128,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   tr: {
     brandPre: "Premium Koleksiyon",
     brandTag: "Maison fondée en 2021",
-    taglineFallback: "Founder & Curator",
     featuredEyebrow: "— Featured Piece —",
     collectionPre: "SS26",
     collectionH: "Koleksiyon",
@@ -150,7 +146,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
 
     brandPre: "Colección Premium",
     brandTag: "Maison fondée en 2021",
-    taglineFallback: "Fundador y curador",
     featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
     collectionH: "Colección",
@@ -170,7 +165,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
 
     brandPre: "Collezione Premium",
     brandTag: "Maison fondée en 2021",
-    taglineFallback: "Fondatore e curatore",
     featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
     collectionH: "Collezione",
@@ -190,7 +184,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
 
     brandPre: "Collection Premium",
     brandTag: "Maison fondée en 2021",
-    taglineFallback: "Fondateur et curateur",
     featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
     collectionH: "Collection",
@@ -210,7 +203,6 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
 
     brandPre: "المجموعة المميزة",
     brandTag: "Maison fondée en 2021",
-    taglineFallback: "مؤسس ومنسق",
     featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
     collectionH: "مجموعة",
@@ -382,7 +374,7 @@ export function EcommerceNoir({
             className="uppercase"
             style={{ fontSize: 11, color: accent, letterSpacing: "2px", marginTop: 3 }}
           >
-            {cardData.title || cardData.position || t.taglineFallback}
+            {cardData.title || cardData.position}
           </p>
         </div>
       </section>
@@ -753,7 +745,7 @@ export const ecommerceNoirSample: SampleData = {
     whatsapp: "+49 172 556 7891",
     website: "pazar-shop.de",
     address: "Oranienstraße 30, 10999 Berlin",
-    bio: "Kuratierte Mode & Accessoires aus der Türkei & Deutschland. Kostenloser Versand ab â‚¬50.",
+    bio: "Kuratierte Mode & Accessoires aus der Türkei & Deutschland. Kostenloser Versand ab €50.",
     bookingUrl: "https://pazar-shop.de/shop",
     impressumUrl: "https://pazar-shop.de/impressum",
     privacyUrl: "https://pazar-shop.de/datenschutz",
@@ -763,9 +755,9 @@ export const ecommerceNoirSample: SampleData = {
       tiktok: "https://tiktok.com/@pazarshop",
     },
     services: [
-      { title: "Seidenschal", description: "Handbedruckt, Premium-Seide.", priceLabel: "â‚¬89" },
-      { title: "Handtasche", description: "Vollnarbenleder, handgenäht.", priceLabel: "â‚¬145" },
-      { title: "Schmuckset", description: "Versilbert, kuratiert.", priceLabel: "â‚¬65" },
+      { title: "Seidenschal", description: "Handbedruckt, Premium-Seide.", priceLabel: "€89" },
+      { title: "Handtasche", description: "Vollnarbenleder, handgenäht.", priceLabel: "€145" },
+      { title: "Schmuckset", description: "Versilbert, kuratiert.", priceLabel: "€65" },
     ],
   },
   photoUrl:

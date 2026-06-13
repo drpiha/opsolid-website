@@ -593,10 +593,10 @@ export const wellnessTeacherPureSample: SampleData = {
     bookingUrl: "https://cal.com/serayoga/intro",
     sectorKey: "fitness",
     services: [
-      { title: "Einzelstunde", description: "60 min · 1:1, individuell", priceLabel: "â‚¬80" },
-      { title: "Monatskurs", description: "4×/Woche · kleine Gruppe", priceLabel: "â‚¬160" },
-      { title: "Retreat", description: "3 Tage · Vollpension", priceLabel: "â‚¬480" },
-      { title: "Online-Session", description: "30 min · live", priceLabel: "â‚¬35" },
+      { title: "Einzelstunde", description: "60 min · 1:1, individuell", priceLabel: "€80" },
+      { title: "Monatskurs", description: "4×/Woche · kleine Gruppe", priceLabel: "€160" },
+      { title: "Retreat", description: "3 Tage · Vollpension", priceLabel: "€480" },
+      { title: "Online-Session", description: "30 min · live", priceLabel: "€35" },
     ],
     socials: {
       instagram: "https://instagram.com/serayoga",

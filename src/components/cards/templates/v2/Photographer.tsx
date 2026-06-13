@@ -347,7 +347,7 @@ export function Photographer({
         photoUrl={photoUrl}
         initials={initials}
         name={cardData.name}
-        company={cardData.company}
+        company={cardData.company || cardData.name}
         accent={accent}
         sourceLabel={sourceLabel}
         locale={locale}
@@ -653,12 +653,14 @@ function Header({
         >
           {name}
         </h1>
-        <p
-          className="ph-eyebrow mt-1"
-          style={{ color: accent }}
-        >
-          · {company ?? "photography"}
-        </p>
+        {company && (
+          <p
+            className="ph-eyebrow mt-1"
+            style={{ color: accent }}
+          >
+            · {company}
+          </p>
+        )}
       </div>
 
       {/* Locale pill. */}

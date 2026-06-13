@@ -710,10 +710,10 @@ export const layoutSplitScreenSample: SampleData = {
       instagram: "https://instagram.com/alex.advisory",
     },
     services: [
-      { title: "Digital Transformation", description: "Begleitung bis zum Roll-out.", priceLabel: "â‚¬3.500/Tag" },
-      { title: "Strategy Workshop", description: "Klausur · 2 Tage", priceLabel: "â‚¬1.800/Tag" },
-      { title: "Executive Coaching", description: "1:1 Sparring", priceLabel: "â‚¬400/h" },
-      { title: "Strategic Audit", description: "Diagnostik · 6 Wochen", priceLabel: "â‚¬18.000" },
+      { title: "Digital Transformation", description: "Begleitung bis zum Roll-out.", priceLabel: "€3.500/Tag" },
+      { title: "Strategy Workshop", description: "Klausur · 2 Tage", priceLabel: "€1.800/Tag" },
+      { title: "Executive Coaching", description: "1:1 Sparring", priceLabel: "€400/h" },
+      { title: "Strategic Audit", description: "Diagnostik · 6 Wochen", priceLabel: "€18.000" },
     ],
     testimonials: [
       {
