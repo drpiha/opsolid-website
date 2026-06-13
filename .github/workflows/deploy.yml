@@ -16,8 +16,31 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  # Quality gate — runs on a GitHub-hosted runner BEFORE the VPS is touched.
+  # audit:cards is the fabricated-data guard (static AST analysis, no env/DB):
+  # a commit that reintroduces hardcoded persona stats, || "Berlin"-style
+  # fallbacks, fabricated years or mojibake fails here and the deploy job
+  # below never runs — the live container is never swapped.
+  verify:
+    name: Verify (audit:cards gate)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Card template fabricated-data audit
+        run: npm run audit:cards
+
   deploy:
     name: Build and ship to /opt/opsolid-website
+    needs: verify
     runs-on: [self-hosted, linux, vps]
     timeout-minutes: 20
     steps:
