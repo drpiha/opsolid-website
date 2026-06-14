@@ -18,10 +18,12 @@
 // Implementation notes:
 //  * 5-second fetch timeout + 1 MB response cap stop a malicious URL from
 //    blocking the route's worker thread.
-//  * We never follow the response to a private/loopback host. The Node 20+
-//    `fetch` resolver handles redirects internally; we set `redirect: "follow"`
-//    explicitly and rely on the timeout + size cap as the SSRF perimeter.
-//    For the threat model (low — bearer-auth + 10/hr) this is sufficient.
+//  * SSRF perimeter: before connecting we DNS-resolve the target host and
+//    refuse any name/literal that lands in a private, loopback, link-local
+//    (incl. 169.254.169.254 cloud-metadata) or special range — see
+//    `src/lib/net/ssrf.ts`, shared with the enrichment route. Redirects still
+//    use `redirect: "follow"`; the bearer-auth + 10/hr budget bounds the
+//    residual redirect-to-private risk.
 //  * No SDK dependency: we call Anthropic's `/v1/messages` REST endpoint
 //    directly with `fetch`. Adding `@anthropic-ai/sdk` would be 1.5 MB of
 //    extra runtime for one POST call — not worth it.
@@ -34,6 +36,7 @@ import { requireBearerUser } from "@/lib/api/v1/bearer-only";
 import { errorJson, readJsonBody } from "@/lib/api/v1/errors";
 import { applyCors, corsPreflight } from "@/lib/api/v1/cors";
 import { rateLimit } from "@/lib/api/v1/rate-limit";
+import { checkPublicHost } from "@/lib/net/ssrf";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -184,6 +187,13 @@ function normalizeUrl(input: string): string | null {
  * regex strip is good enough for the LLM context we then feed to Haiku.
  */
 async function fetchAndStrip(url: string): Promise<string> {
+  // SSRF perimeter: reject hosts that resolve to private/special ranges
+  // (cloud-metadata, loopback, RFC-1918, link-local) before we connect.
+  const blocked = await checkPublicHost(new URL(url).hostname);
+  if (blocked) {
+    throw new Error(blocked);
+  }
+
   const res = await fetch(url, {
     method: "GET",
     redirect: "follow",
