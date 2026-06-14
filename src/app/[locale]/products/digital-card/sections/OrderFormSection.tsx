@@ -1141,7 +1141,7 @@ export function OrderFormSection({
               ===================================================== */}
           <aside
             aria-label="Live preview"
-            className="hidden lg:block lg:self-start lg:sticky lg:top-24"
+            className="hidden lg:block lg:self-start lg:sticky lg:top-24 lg:max-h-[calc(100dvh-7rem)] lg:overflow-y-auto lg:overscroll-contain lg:pr-1"
           >
             <div className="mb-3 flex items-center justify-between gap-2.5">
               <div className="flex items-center gap-2.5">
@@ -1310,8 +1310,9 @@ export function OrderFormSection({
               </div>
             </div>
 
-            {/* Body — large scrollable preview */}
-            <div className="flex-1 overflow-y-auto bg-gradient-to-b from-bg-1 to-bg-0 p-6">
+            {/* Body — large scrollable preview. overscroll-contain stops the
+                wheel from chaining to the page behind the modal. */}
+            <div className="flex-1 overflow-y-auto overscroll-contain bg-gradient-to-b from-bg-1 to-bg-0 p-6">
               <div className="mx-auto max-w-md overflow-hidden rounded-[2rem] border border-ink/10 bg-white shadow-[0_30px_80px_-30px_rgba(20,18,15,0.4)]">
                 {previewNode}
               </div>
