@@ -96,6 +96,7 @@ interface BbCopy {
   /** Eyebrow under the shop name in the header. Editable per card. */
   aboutSub: string;
   shareLabel: string;
+  estYear: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy> = {
@@ -120,6 +121,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy
     est: "Gegründet",
     aboutSub: "Meisterbarbier & Grooming Atelier",
     shareLabel: "Share",
+    estYear: "· MMXXVI",
   },
   en: {
     saveContact: "Save contact",
@@ -142,6 +144,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy
     est: "Established",
     aboutSub: "Master Barber & Grooming Atelier",
     shareLabel: "Share",
+    estYear: "· MMXXVI",
   },
   tr: {
     saveContact: "Rehbere kaydet",
@@ -164,6 +167,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy
     est: "Kuruluş",
     aboutSub: "Usta Berber & Bakım Atölyesi",
     shareLabel: "Share",
+    estYear: "· MMXXVI",
   },
   es: {
 
@@ -187,6 +191,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy
     est: "Establecido",
     aboutSub: "Barbero maestro y atelier de grooming",
     shareLabel: "Share",
+    estYear: "· MMXXVI",
 
   },
   it: {
@@ -210,6 +215,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy
     poweredBy: "Realizzato con",
     est: "Fondato",
     aboutSub: "Maestro barbiere & atelier grooming",
+    shareLabel: "Share",
+    estYear: "· MMXXVI",
 
   },
   fr: {
@@ -233,6 +240,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy
     poweredBy: "Propulsé par",
     est: "Établi",
     aboutSub: "Maître barbier & atelier de soins",
+    shareLabel: "Share",
+    estYear: "· MMXXVI",
 
   },
   ar: {
@@ -256,6 +265,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy
     poweredBy: "مشغل بواسطة",
     est: "تأسس",
     aboutSub: "حلاق محترف وأتيليه عناية",
+    shareLabel: "Share",
+    estYear: "· MMXXVI",
 
   },
 };
@@ -522,7 +533,7 @@ function Header({
             className="bb-mono block text-[8.5px] font-semibold"
             style={{ color: accent, opacity: 0.85, letterSpacing: "0.42em" }}
           >
-            {translations.est} · MMXXVI
+            {translations.est} {translations.estYear}
           </span>
           <h1
             className="bb-display mt-1.5 text-[1.5rem] font-bold leading-tight"
@@ -1054,7 +1065,7 @@ function Footer({
       />
 
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[10.5px]">
-        <FooterShare siteUrl={siteUrl} slug={slug} shareLabel={t.shareLabel} />
+        <FooterShare siteUrl={siteUrl} slug={slug} shareLabel={translations.shareLabel} />
         {impressumUrl && (
           <a
             href={impressumUrl}

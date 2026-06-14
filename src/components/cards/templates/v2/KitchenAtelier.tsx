@@ -364,6 +364,7 @@ export function KitchenAtelier({
         company={cardData.company || cardData.name}
         accent={accent}
         primary={primary}
+        eyebrow={t.chefEyebrow}
       />
 
       <QuickActions
@@ -750,12 +751,14 @@ function ChefStrip({
   company,
   accent,
   primary,
+  eyebrow,
 }: {
   name: string;
   titleParts: string[];
   company?: string;
   accent: string;
   primary: string;
+  eyebrow: string;
 }) {
   void company;
   return (
@@ -764,7 +767,7 @@ function ChefStrip({
         className="ka-eyebrow text-[11.5px]"
         style={{ color: accent }}
       >
-        à la carte di…
+        {eyebrow}
       </div>
       <h2
         className="ka-display mt-1 text-[24px] font-bold leading-tight"
@@ -795,7 +798,6 @@ function QuickActions({
   accent: string;
   translations: KaCopy;
 }) {
-  void translations;
   const phoneDigits = cardData.phone?.replace(/[^+0-9]/g, "");
   const waDigits = cardData.whatsapp?.replace(/[^+0-9]/g, "").replace(/^\+/, "");
 
@@ -811,7 +813,7 @@ function QuickActions({
           }}
         >
           <Flame size={14} strokeWidth={2} />
-          Reservation
+          {translations.reservationCta}
         </a>
       )}
       {waDigits && (
@@ -825,7 +827,7 @@ function QuickActions({
             boxShadow: `0 8px 18px -8px ${accent}AA`,
           }}
         >
-          WhatsApp
+          {translations.whatsappLabel}
         </a>
       )}
       {cardData.address && (
@@ -840,7 +842,7 @@ function QuickActions({
           }}
         >
           <MapPin size={14} strokeWidth={2} />
-          Find us
+          {translations.findUsLabel}
         </a>
       )}
     </div>

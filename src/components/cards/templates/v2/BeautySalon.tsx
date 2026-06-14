@@ -81,6 +81,7 @@ interface BsCopy {
   share: string;
   poweredBy: string;
   studio: string;
+  contactHeading: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsCopy> = {
@@ -96,6 +97,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsCopy
     share: "Teilen",
     poweredBy: "Powered by",
     studio: "Beauty Studio",
+    contactHeading: "Kontakt",
   },
   en: {
     bookCta: "Book now",
@@ -109,6 +111,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsCopy
     share: "Share",
     poweredBy: "Powered by",
     studio: "Beauty Studio",
+    contactHeading: "Kontakt",
   },
   tr: {
     bookCta: "Hemen Randevu Al",
@@ -122,6 +125,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsCopy
     share: "Paylaş",
     poweredBy: "Powered by",
     studio: "Beauty Studio",
+    contactHeading: "Kontakt",
   },
   es: {
 
@@ -136,7 +140,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsCopy
     share: "Compartir",
     poweredBy: "Desarrollado por",
     studio: "Estudio de belleza",
-  
+    contactHeading: "Kontakt",
+
   },
   it: {
 
@@ -151,7 +156,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsCopy
     share: "Condividi",
     poweredBy: "Realizzato con",
     studio: "Studio di bellezza",
-  
+    contactHeading: "Kontakt",
+
   },
   fr: {
 
@@ -166,7 +172,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsCopy
     share: "Partager",
     poweredBy: "Propulsé par",
     studio: "Studio de beauté",
-  
+    contactHeading: "Kontakt",
+
   },
   ar: {
 
@@ -181,7 +188,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsCopy
     share: "مشاركة",
     poweredBy: "مشغل بواسطة",
     studio: "استوديو تجميل",
-  
+    contactHeading: "Kontakt",
+
   },
 };
 
@@ -575,7 +583,7 @@ export function BeautySalon({
       {/* CONTACT */}
       <section className="px-[22px] pb-7">
         <h3 className="mb-4 text-[16px] font-black" style={{ color: INK }}>
-          Kontakt
+          {t.contactHeading}
         </h3>
         <ContactRows cardData={cardData} locale={locale} variant="hairline" accentHex={primary} />
       </section>

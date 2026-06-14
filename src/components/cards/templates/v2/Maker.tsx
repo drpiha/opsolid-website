@@ -100,6 +100,7 @@ interface MkCopy {
   privacy: string;
   poweredBy: string;
   handmade: string;
+  shareLabel: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", MkCopy> = {
@@ -124,6 +125,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", MkCopy
     privacy: "Datenschutz",
     poweredBy: "Powered by",
     handmade: "Handgefertigt · Kleinserie",
+    shareLabel: "Share",
   },
   en: {
     saveContact: "Save contact",
@@ -146,6 +148,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", MkCopy
     privacy: "Privacy",
     poweredBy: "Powered by",
     handmade: "Handmade · small batch",
+    shareLabel: "Share",
   },
   tr: {
     saveContact: "Rehbere kaydet",
@@ -168,6 +171,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", MkCopy
     privacy: "Gizlilik",
     poweredBy: "Powered by",
     handmade: "El yapımı · küçük seri",
+    shareLabel: "Share",
   },
   es: {
 
@@ -191,7 +195,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", MkCopy
     privacy: "Privacidad",
     poweredBy: "Desarrollado por",
     handmade: "Hecho a mano · pequeña producción",
-  
+    shareLabel: "Share",
+
   },
   it: {
 
@@ -215,7 +220,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", MkCopy
     privacy: "Privacy",
     poweredBy: "Realizzato con",
     handmade: "Fatto a mano · piccola produzione",
-  
+    shareLabel: "Share",
+
   },
   fr: {
 
@@ -239,7 +245,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", MkCopy
     privacy: "Confidentialité",
     poweredBy: "Propulsé par",
     handmade: "Fait main · petite production",
-  
+    shareLabel: "Share",
+
   },
   ar: {
 
@@ -263,7 +270,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", MkCopy
     privacy: "الخصوصية",
     poweredBy: "مشغل بواسطة",
     handmade: "يدوي · إنتاج محدود",
-  
+    shareLabel: "Share",
+
   },
 };
 
@@ -1141,7 +1149,7 @@ function Footer({
       />
 
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[10.5px]">
-        <FooterShare siteUrl={siteUrl} slug={slug} />
+        <FooterShare siteUrl={siteUrl} slug={slug} shareLabel={translations.shareLabel} />
         {impressumUrl && (
           <a
             href={impressumUrl}
@@ -1189,7 +1197,7 @@ function Footer({
   );
 }
 
-function FooterShare({ siteUrl, slug }: { siteUrl: string; slug: string }) {
+function FooterShare({ siteUrl, slug, shareLabel }: { siteUrl: string; slug: string; shareLabel: string }) {
   const url = `${siteUrl}/c/${slug}`;
   return (
     <button
@@ -1210,7 +1218,7 @@ function FooterShare({ siteUrl, slug }: { siteUrl: string; slug: string }) {
       className="hover:text-[color:var(--mk-ink,#3d2c2c)]"
       style={{ color: INK_SOFT }}
     >
-      Share
+      {shareLabel}
     </button>
   );
 }

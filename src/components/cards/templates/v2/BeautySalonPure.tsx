@@ -71,6 +71,7 @@ interface BspCopy {
   reviewsLabel: string;
   share: string;
   poweredBy: string;
+  studioLabel: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BspCopy> = {
@@ -91,6 +92,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BspCop
     reviewsLabel: "Bewertungen",
     share: "Teilen",
     poweredBy: "Powered by",
+    studioLabel: "Studio",
   },
   en: {
     premium: "Premium",
@@ -109,6 +111,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BspCop
     reviewsLabel: "Reviews",
     share: "Share",
     poweredBy: "Powered by",
+    studioLabel: "Studio",
   },
   tr: {
     premium: "Premium",
@@ -127,6 +130,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BspCop
     reviewsLabel: "Yorum",
     share: "Paylaş",
     poweredBy: "Powered by",
+    studioLabel: "Studio",
   },
   es: {
 
@@ -146,7 +150,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BspCop
     reviewsLabel: "Reseñas",
     share: "Compartir",
     poweredBy: "Desarrollado por",
-  
+    studioLabel: "Studio",
+
   },
   it: {
 
@@ -166,7 +171,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BspCop
     reviewsLabel: "Recensioni",
     share: "Condividi",
     poweredBy: "Realizzato con",
-  
+    studioLabel: "Studio",
+
   },
   fr: {
 
@@ -186,7 +192,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BspCop
     reviewsLabel: "Avis",
     share: "Partager",
     poweredBy: "Propulsé par",
-  
+    studioLabel: "Studio",
+
   },
   ar: {
 
@@ -206,7 +213,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BspCop
     reviewsLabel: "التقييمات",
     share: "مشاركة",
     poweredBy: "مشغل بواسطة",
-  
+    studioLabel: "Studio",
+
   },
 };
 
@@ -310,7 +318,7 @@ export function BeautySalonPure({
             className="text-[9.5px] font-semibold uppercase tracking-[1.5px]"
             style={{ color: INK_SOFT }}
           >
-            Studio
+            {t.studioLabel}
           </div>
           <div className="bsp-editorial mt-0.5 text-[18px] italic" style={{ color: INK }}>
             {cardData.company}

@@ -767,7 +767,7 @@ function Footer({
         className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[10.5px]"
         style={{ color: TEXT_LIGHT }}
       >
-        <FooterShare siteUrl={siteUrl} slug={slug} shareLabel={t.shareLabel} />
+        <FooterShare siteUrl={siteUrl} slug={slug} shareLabel={translations.shareLabel} />
         {impressumUrl && (
           <>
             <span>·</span>

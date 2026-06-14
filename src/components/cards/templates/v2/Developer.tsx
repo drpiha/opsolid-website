@@ -106,6 +106,7 @@ interface DvCopy {
   poweredBy: string;
   shellPrompt: string;
   available: string;
+  shareLabel: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DvCopy> = {
@@ -130,6 +131,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DvCopy
     poweredBy: "powered by",
     shellPrompt: "~",
     available: "available",
+    shareLabel: "Share",
   },
   en: {
     saveContact: "Save contact",
@@ -152,6 +154,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DvCopy
     poweredBy: "powered by",
     shellPrompt: "~",
     available: "available",
+    shareLabel: "Share",
   },
   tr: {
     saveContact: "Rehbere kaydet",
@@ -174,6 +177,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DvCopy
     poweredBy: "powered by",
     shellPrompt: "~",
     available: "available",
+    shareLabel: "Share",
   },
   es: {
 
@@ -197,7 +201,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DvCopy
     poweredBy: "desarrollado por",
     shellPrompt: "~",
     available: "disponible",
-  
+    shareLabel: "Share",
+
   },
   it: {
 
@@ -221,7 +226,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DvCopy
     poweredBy: "realizzato con",
     shellPrompt: "~",
     available: "disponibile",
-  
+    shareLabel: "Share",
+
   },
   fr: {
 
@@ -245,7 +251,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DvCopy
     poweredBy: "propulsé par",
     shellPrompt: "~",
     available: "disponible",
-  
+    shareLabel: "Share",
+
   },
   ar: {
 
@@ -269,7 +276,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DvCopy
     poweredBy: "مشغل بواسطة",
     shellPrompt: "~",
     available: "متاح",
-  
+    shareLabel: "Share",
+
   },
 };
 
@@ -1095,7 +1103,7 @@ function Footer({
       }}
     >
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[10.5px]">
-        <FooterShare siteUrl={siteUrl} slug={slug} />
+        <FooterShare siteUrl={siteUrl} slug={slug} shareLabel={translations.shareLabel} />
         {impressumUrl && (
           <a
             href={impressumUrl}
@@ -1152,7 +1160,7 @@ function Footer({
   );
 }
 
-function FooterShare({ siteUrl, slug }: { siteUrl: string; slug: string }) {
+function FooterShare({ siteUrl, slug, shareLabel }: { siteUrl: string; slug: string; shareLabel: string }) {
   const url = `${siteUrl}/c/${slug}`;
   return (
     <button
@@ -1172,7 +1180,7 @@ function FooterShare({ siteUrl, slug }: { siteUrl: string; slug: string }) {
       }}
       className="hover:text-white"
     >
-      Share
+      {shareLabel}
     </button>
   );
 }

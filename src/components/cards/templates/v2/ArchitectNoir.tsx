@@ -75,6 +75,7 @@ interface Copy {
   walletLabel: string;
   poweredBy: string;
   studioLabel: string;
+  copyright: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
@@ -88,6 +89,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
     studioLabel: "Studio",
+    copyright: "All Rights Reserved &copy;",
   },
   en: {
     featuredTag: "Featured",
@@ -99,6 +101,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
     studioLabel: "Studio",
+    copyright: "All Rights Reserved &copy;",
   },
   tr: {
     featuredTag: "Featured",
@@ -110,6 +113,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
     studioLabel: "Stüdyo",
+    copyright: "All Rights Reserved &copy;",
   },
   es: {
 
@@ -122,7 +126,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
     studioLabel: "Estudio",
-  
+    copyright: "All Rights Reserved &copy;",
+
   },
   it: {
 
@@ -135,7 +140,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
     studioLabel: "Studio",
-  
+    copyright: "All Rights Reserved &copy;",
+
   },
   fr: {
 
@@ -148,7 +154,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
     studioLabel: "Studio",
-  
+    copyright: "All Rights Reserved &copy;",
+
   },
   ar: {
 
@@ -161,7 +168,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
     studioLabel: "استوديو",
-  
+    copyright: "All Rights Reserved &copy;",
+
   },
 };
 
@@ -656,7 +664,7 @@ export function ArchitectNoir({
             color: TEXT_DIM,
           }}
         >
-          All Rights Reserved &copy; {new Date().getFullYear()}
+          {t.copyright} {new Date().getFullYear()}
         </div>
         <div
           className="mt-2 uppercase"

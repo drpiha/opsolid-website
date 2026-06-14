@@ -89,6 +89,7 @@ interface Copy {
   walletLabel: string;
   poweredBy: string;
   qrLabel: string;
+  limitedLabel: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
@@ -108,6 +109,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
     qrLabel: "Scan to shop",
+    limitedLabel: "Limited / 12",
   },
   en: {
     brandPre: "Premium Collection",
@@ -125,6 +127,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
     qrLabel: "Scan to shop",
+    limitedLabel: "Limited / 12",
   },
   tr: {
     brandPre: "Premium Koleksiyon",
@@ -142,6 +145,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
     qrLabel: "Scan to shop",
+    limitedLabel: "Limited / 12",
   },
   es: {
 
@@ -160,7 +164,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
     qrLabel: "Escanear para comprar",
-  
+    limitedLabel: "Limited / 12",
+
   },
   it: {
 
@@ -179,7 +184,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
     qrLabel: "Scansiona per acquistare",
-  
+    limitedLabel: "Limited / 12",
+
   },
   fr: {
 
@@ -198,7 +204,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
     qrLabel: "Scanner pour acheter",
-  
+    limitedLabel: "Limited / 12",
+
   },
   ar: {
 
@@ -217,7 +224,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
     qrLabel: "امسح للتسوق",
-  
+    limitedLabel: "Limited / 12",
+
   },
 };
 
@@ -435,7 +443,7 @@ export function EcommerceNoir({
                   color: accent,
                 }}
               >
-                Limited / 12
+                {t.limitedLabel}
               </span>
             </div>
             <div className="px-6 py-6">

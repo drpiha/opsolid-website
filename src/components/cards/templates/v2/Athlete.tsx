@@ -1338,7 +1338,7 @@ function Footer({
         }}
       />
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[10.5px] text-[#737373]">
-        <FooterShare siteUrl={siteUrl} slug={slug} shareLabel={t.shareLabel} />
+        <FooterShare siteUrl={siteUrl} slug={slug} shareLabel={translations.shareLabel} />
         {impressumUrl && (
           <a
             href={impressumUrl}

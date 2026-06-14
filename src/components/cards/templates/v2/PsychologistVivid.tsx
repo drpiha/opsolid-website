@@ -84,6 +84,7 @@ interface PsvCopy {
   walletLabel: string;
   share: string;
   poweredBy: string;
+  contactHeading: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsvCopy> = {
@@ -101,6 +102,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsvCop
     walletLabel: "Auf Smartphone speichern",
     share: "Teilen",
     poweredBy: "Powered by",
+    contactHeading: "Kontakt",
   },
   en: {
     newClients: "New clients welcome",
@@ -116,6 +118,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsvCop
     walletLabel: "Add to wallet",
     share: "Share",
     poweredBy: "Powered by",
+    contactHeading: "Kontakt",
   },
   tr: {
     newClients: "Yeni Danışanlara Açığım",
@@ -131,6 +134,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsvCop
     walletLabel: "Cüzdana ekle",
     share: "Paylaş",
     poweredBy: "Powered by",
+    contactHeading: "Kontakt",
   },
   es: {
 
@@ -147,7 +151,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsvCop
     walletLabel: "Añadir a la cartera",
     share: "Compartir",
     poweredBy: "Desarrollado por",
-  
+    contactHeading: "Kontakt",
+
   },
   it: {
 
@@ -164,7 +169,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsvCop
     walletLabel: "Aggiungi al wallet",
     share: "Condividi",
     poweredBy: "Realizzato con",
-  
+    contactHeading: "Kontakt",
+
   },
   fr: {
 
@@ -181,7 +187,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsvCop
     walletLabel: "Ajouter au portefeuille",
     share: "Partager",
     poweredBy: "Propulsé par",
-  
+    contactHeading: "Kontakt",
+
   },
   ar: {
 
@@ -198,7 +205,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PsvCop
     walletLabel: "إضافة إلى المحفظة",
     share: "مشاركة",
     poweredBy: "مشغل بواسطة",
-  
+    contactHeading: "Kontakt",
+
   },
 };
 
@@ -521,7 +529,7 @@ export function PsychologistVivid({
       {/* CONTACT */}
       <section className="px-[22px] py-7">
         <h3 className="mb-4 text-[16px] font-bold" style={{ color: INK }}>
-          Kontakt
+          {t.contactHeading}
         </h3>
         <ContactRows cardData={cardData} locale={locale} variant="hairline" accentHex={primary} />
       </section>

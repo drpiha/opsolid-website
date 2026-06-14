@@ -93,6 +93,7 @@ interface StCopy {
   privacy: string;
   poweredBy: string;
   listen: string;
+  shareLabel: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", StCopy> = {
@@ -115,6 +116,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", StCopy
     privacy: "Datenschutz",
     poweredBy: "Powered by",
     listen: "Anhören",
+    shareLabel: "Share",
   },
   en: {
     saveContact: "Save contact",
@@ -135,6 +137,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", StCopy
     privacy: "Privacy",
     poweredBy: "Powered by",
     listen: "Listen",
+    shareLabel: "Share",
   },
   tr: {
     saveContact: "Rehbere kaydet",
@@ -155,6 +158,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", StCopy
     privacy: "Gizlilik",
     poweredBy: "Powered by",
     listen: "Dinle",
+    shareLabel: "Share",
   },
   es: {
 
@@ -176,7 +180,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", StCopy
     privacy: "Privacidad",
     poweredBy: "Desarrollado por",
     listen: "Escuchar",
-  
+    shareLabel: "Share",
+
   },
   it: {
 
@@ -198,7 +203,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", StCopy
     privacy: "Privacy",
     poweredBy: "Realizzato con",
     listen: "Ascolta",
-  
+    shareLabel: "Share",
+
   },
   fr: {
 
@@ -220,7 +226,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", StCopy
     privacy: "Confidentialité",
     poweredBy: "Propulsé par",
     listen: "Écouter",
-  
+    shareLabel: "Share",
+
   },
   ar: {
 
@@ -242,7 +249,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", StCopy
     privacy: "الخصوصية",
     poweredBy: "مشغل بواسطة",
     listen: "استمع",
-  
+    shareLabel: "Share",
+
   },
 };
 
@@ -1065,7 +1073,7 @@ function Footer({
       />
 
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[10.5px]">
-        <FooterShare siteUrl={siteUrl} slug={slug} />
+        <FooterShare siteUrl={siteUrl} slug={slug} shareLabel={translations.shareLabel} />
         {impressumUrl && (
           <a
             href={impressumUrl}
@@ -1111,7 +1119,7 @@ function Footer({
   );
 }
 
-function FooterShare({ siteUrl, slug }: { siteUrl: string; slug: string }) {
+function FooterShare({ siteUrl, slug, shareLabel }: { siteUrl: string; slug: string; shareLabel: string }) {
   const url = `${siteUrl}/c/${slug}`;
   return (
     <button
@@ -1131,7 +1139,7 @@ function FooterShare({ siteUrl, slug }: { siteUrl: string; slug: string }) {
       }}
       className="hover:text-white"
     >
-      Share
+      {shareLabel}
     </button>
   );
 }
