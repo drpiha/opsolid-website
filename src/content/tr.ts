@@ -4861,9 +4861,9 @@ export const content: Content = {
       },
       featured: {
         eyebrow: "[ AMİRAL GEMİLERİ ]",
-        heading: "Bizi hatırlatan iki ürün",
+        heading: "İki amiral gemisi ürün",
         items: [
-          { id: "voice-agent", name: "Voice AI Agent", tagline: "Retell veya Vapi üzerinde 24/7 telefon resepsiyonu.", body: "Çok dilli telefon yanıtı, takvim senkronizasyonu, script bittiğinde insana devir. Hamburg taksi dispeçlerinde, Bavyera otellerinde ve Almanya çapında B2B service desk'lerinde canlı.", href: "/products/voice-agent", startingAt: "€1.500 setup + €299/ay'dan", badge: "Canlı" },
+          { id: "voice-agent", name: "Voice AI Agent", tagline: "Retell veya Vapi üzerinde 24/7 telefon resepsiyonu.", body: "Çok dilli telefon yanıtı, takvim senkronizasyonu, script bittiğinde insana devir — Retell veya Vapi üzerine kurulu, çağrı akışlarınıza göre yapılandırılır.", href: "/products/voice-agent", startingAt: "€1.500 setup + €299/ay'dan", badge: "Canlı" },
           { id: "verso", name: "OpSo Smart", tagline: "Dijital kartvizit · başlangıçta ücretsiz, saniyeler içinde canlı.", body: "Kartınızı ücretsiz oluşturun ve saniyeler içinde yayınlayın. 20+ sektör şablonu, link + QR, Frankfurt'ta EU barındırma. Premium; özel alan adı, NFC ve analitik ekler; white-glove elle tasarım opsiyoneldir. Linktree olmadan kağıt kartviziti değiştirir.", href: "/products/digital-card", startingAt: "Başlangıçta ücretsiz", badge: "Canlı" },
         ],
       },

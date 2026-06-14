@@ -4876,13 +4876,13 @@ export const content = {
       },
       featured: {
         eyebrow: "[ FLAGSHIPS ]",
-        heading: "The two products people remember us for",
+        heading: "The two flagship products",
         items: [
           {
             id: "voice-agent",
             name: "Voice AI Agent",
             tagline: "24/7 phone receptionist on Retell or Vapi.",
-            body: "Multilingual phone answering, calendar sync, hand-off to humans when the script runs out. Live in Hamburg taxi dispatches, Bavarian hotels, and B2B service desks across DE.",
+            body: "Multilingual phone answering, calendar sync, hand-off to a human when the script runs out — built on Retell or Vapi and configured to your call flows.",
             href: "/products/voice-agent",
             startingAt: "from €299/mo + €1,500 setup",
             badge: "Live",

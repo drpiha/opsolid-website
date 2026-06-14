@@ -4860,9 +4860,9 @@ export const content: Content = {
       },
       featured: {
         eyebrow: "[ FLAGGSCHIFFE ]",
-        heading: "Die zwei Produkte, für die man uns kennt",
+        heading: "Die zwei Flaggschiff-Produkte",
         items: [
-          { id: "voice-agent", name: "Voice AI Agent", tagline: "24/7 Telefonempfang auf Retell oder Vapi.", body: "Mehrsprachige Telefonbeantwortung, Kalender-Sync, Übergabe an Menschen, wenn das Skript endet. Live in Hamburger Taxi-Dispatches, bayerischen Hotels und B2B-Servicedesks deutschlandweit.", href: "/products/voice-agent", startingAt: "ab €299/Mon. + €1.500 Setup", badge: "Live" },
+          { id: "voice-agent", name: "Voice AI Agent", tagline: "24/7 Telefonempfang auf Retell oder Vapi.", body: "Mehrsprachige Telefonbeantwortung, Kalender-Sync, Übergabe an einen Menschen, wenn das Skript endet — auf Retell oder Vapi gebaut und auf Ihre Anrufabläufe konfiguriert.", href: "/products/voice-agent", startingAt: "ab €299/Mon. + €1.500 Setup", badge: "Live" },
           { id: "verso", name: "OpSo Smart", tagline: "Digitale Visitenkarte · kostenlos zum Start, in Sekunden live.", body: "Erstellen Sie Ihre Karte kostenlos und veröffentlichen Sie in Sekunden. 20+ Branchen-Templates, Link + QR, EU-Hosting in Frankfurt. Premium ergänzt eigene Domain, NFC und Analysen; White-Glove-Handgestaltung ist optional. Ersetzt Papierkarten, ohne zu Linktree zu werden.", href: "/products/digital-card", startingAt: "Kostenlos zum Start", badge: "Live" },
         ],
       },
