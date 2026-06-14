@@ -111,7 +111,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
     motto: "Train. Push. Repeat.",
-    copyright: "All Rights Reserved &copy;",
+    copyright: "All Rights Reserved ©",
   },
   en: {
     ctaLine1: "Get",
@@ -133,7 +133,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
     motto: "Train. Push. Repeat.",
-    copyright: "All Rights Reserved &copy;",
+    copyright: "All Rights Reserved ©",
   },
   tr: {
     ctaLine1: "Get",
@@ -155,7 +155,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
     motto: "Train. Push. Repeat.",
-    copyright: "All Rights Reserved &copy;",
+    copyright: "All Rights Reserved ©",
   },
   es: {
 
@@ -178,7 +178,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
     motto: "Train. Push. Repeat.",
-    copyright: "All Rights Reserved &copy;",
+    copyright: "All Rights Reserved ©",
 
   },
   it: {
@@ -202,7 +202,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
     motto: "Train. Push. Repeat.",
-    copyright: "All Rights Reserved &copy;",
+    copyright: "All Rights Reserved ©",
 
   },
   fr: {
@@ -226,7 +226,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
     motto: "Train. Push. Repeat.",
-    copyright: "All Rights Reserved &copy;",
+    copyright: "All Rights Reserved ©",
 
   },
   ar: {
@@ -250,7 +250,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
     motto: "Train. Push. Repeat.",
-    copyright: "All Rights Reserved &copy;",
+    copyright: "All Rights Reserved ©",
 
   },
 };

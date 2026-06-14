@@ -89,7 +89,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
     studioLabel: "Studio",
-    copyright: "All Rights Reserved &copy;",
+    copyright: "All Rights Reserved ©",
   },
   en: {
     featuredTag: "Featured",
@@ -101,7 +101,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
     studioLabel: "Studio",
-    copyright: "All Rights Reserved &copy;",
+    copyright: "All Rights Reserved ©",
   },
   tr: {
     featuredTag: "Featured",
@@ -113,7 +113,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
     studioLabel: "Stüdyo",
-    copyright: "All Rights Reserved &copy;",
+    copyright: "All Rights Reserved ©",
   },
   es: {
 
@@ -126,7 +126,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
     studioLabel: "Estudio",
-    copyright: "All Rights Reserved &copy;",
+    copyright: "All Rights Reserved ©",
 
   },
   it: {
@@ -140,7 +140,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
     studioLabel: "Studio",
-    copyright: "All Rights Reserved &copy;",
+    copyright: "All Rights Reserved ©",
 
   },
   fr: {
@@ -154,7 +154,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
     studioLabel: "Studio",
-    copyright: "All Rights Reserved &copy;",
+    copyright: "All Rights Reserved ©",
 
   },
   ar: {
@@ -168,7 +168,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
     studioLabel: "استوديو",
-    copyright: "All Rights Reserved &copy;",
+    copyright: "All Rights Reserved ©",
 
   },
 };

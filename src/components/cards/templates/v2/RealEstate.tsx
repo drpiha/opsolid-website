@@ -87,6 +87,7 @@ function getInitials(name: string): string {
 
 interface ReCopy {
   saveContact: string;
+  shareLabel: string;
   callNow: string;
   whatsapp: string;
   email: string;
@@ -109,6 +110,7 @@ interface ReCopy {
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy> = {
   de: {
     saveContact: "Speichern",
+    shareLabel: "Teilen",
     callNow: "Anrufen",
     whatsapp: "WhatsApp",
     email: "E-Mail",
@@ -129,6 +131,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy
   },
   en: {
     saveContact: "Save contact",
+    shareLabel: "Teilen",
     callNow: "Call",
     whatsapp: "WhatsApp",
     email: "Email",
@@ -149,6 +152,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy
   },
   tr: {
     saveContact: "Rehbere kaydet",
+    shareLabel: "Teilen",
     callNow: "Ara",
     whatsapp: "WhatsApp",
     email: "E-posta",
@@ -170,6 +174,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy
   es: {
 
     saveContact: "Guardar contacto",
+    shareLabel: "Teilen",
     callNow: "Llamar",
     whatsapp: "WhatsApp",
     email: "Correo",
@@ -192,6 +197,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy
   it: {
 
     saveContact: "Salva contatto",
+    shareLabel: "Teilen",
     callNow: "Chiama",
     whatsapp: "WhatsApp",
     email: "Email",
@@ -214,6 +220,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy
   fr: {
 
     saveContact: "Enregistrer le contact",
+    shareLabel: "Teilen",
     callNow: "Appeler",
     whatsapp: "WhatsApp",
     email: "E-mail",
@@ -236,6 +243,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy
   ar: {
 
     saveContact: "حفظ جهة الاتصال",
+    shareLabel: "Teilen",
     callNow: "اتصال",
     whatsapp: "واتساب",
     email: "البريد الإلكتروني",
@@ -1167,7 +1175,7 @@ function Footer({
       />
 
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[10.5px] text-white/65">
-        <FooterShare siteUrl={siteUrl} slug={slug} />
+        <FooterShare siteUrl={siteUrl} slug={slug} shareLabel={translations.shareLabel} />
         {impressumUrl && (
           <a
             href={impressumUrl}
@@ -1214,7 +1222,7 @@ function Footer({
   );
 }
 
-function FooterShare({ siteUrl, slug }: { siteUrl: string; slug: string }) {
+function FooterShare({ siteUrl, slug, shareLabel }: { siteUrl: string; slug: string; shareLabel: string }) {
   const url = `${siteUrl}/c/${slug}`;
   return (
     <button
@@ -1234,7 +1242,7 @@ function FooterShare({ siteUrl, slug }: { siteUrl: string; slug: string }) {
       }}
       className="hover:text-white"
     >
-      Teilen
+      {shareLabel}
     </button>
   );
 }
