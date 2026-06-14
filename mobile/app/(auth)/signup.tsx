@@ -56,7 +56,7 @@ export default function SignupScreen() {
         <View style={styles.header}>
           <View style={styles.brandLockup}>
             <Text style={[typography.display2, { color: theme.text }]}>
-              Verso
+              OpSo Smart
             </Text>
             <Text style={[typography.caption, styles.byCredit, { color: accentCredit }]}>
               by OpSolid

@@ -30,8 +30,25 @@ export function generateMetadata({
   const locale = isLocale(params.locale) ? params.locale : "en";
   return {
     openGraph: {
+      siteName: "OpSolid",
+      type: "website",
       locale: OG_LOCALE[locale],
       alternateLocale: LOCALES.filter((l) => l !== locale).map((l) => OG_LOCALE[l]),
+      // Default share image for /[locale] pages that don't define their own
+      // openGraph (legal, dashboard, …). Pages that DO set openGraph replace
+      // this whole block, so those carry the image via pageMetadata() instead.
+      images: [
+        {
+          url: "/opengraph-image",
+          width: 1200,
+          height: 630,
+          alt: "OpSolid — Practical Automation & AI Systems for Business Operations",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      images: ["/opengraph-image"],
     },
     // canonical/hreflang are deliberately NOT set in this layout: it wraps every
     // /[locale] route, so a canonical here forces all sub-pages (blog posts,

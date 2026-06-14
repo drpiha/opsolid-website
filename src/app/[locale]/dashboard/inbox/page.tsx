@@ -12,7 +12,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Posteingang | OpSolid",
+  title: "Posteingang",
   robots: { index: false, follow: false },
 };
 

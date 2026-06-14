@@ -22,7 +22,41 @@ No separate backend process — Next.js API routes (`src/app/api/`) run within t
 
 ## Architecture
 
-**OpSolid** is a B2B company website built with Next.js 14 App Router, TypeScript, and Tailwind CSS. Brand: "OpSolid" (practical automation & AI systems for business operations, Germany-based). Positioning: independent automation practice — no fake metrics, no "we" team language, no employer references, no inflated claims.
+**OpSolid** is a B2B company website built with Next.js 14 App Router, TypeScript, and Tailwind CSS. Brand: "OpSolid" (practical automation & AI systems for business operations, Germany-based). Positioning: an independent AI & automation **consultancy**, founded by Hasan Dönmez. Voice is **neutral and professional, first-person plural ("we")**. Keep the founder's real identity and background on the About page (E-E-A-T / GEO credibility), but **do not imply a one-person / solo operation** — the "intentionally one-person", "alongside my day job", "no junior delivery" framing is retired. Still: no fake metrics, no invented client logos or case studies, no employer references, no inflated claims.
+
+### Two products in this repo
+
+This repo hosts **two products** that share one Next.js app + Postgres database:
+
+1. **OpSolid** — the B2B consulting marketing site (public, no login). Routes:
+   `/`, `/leistungen` + service pages, `/ai-automation-check`, `/blog`,
+   `/contact`, `/ueber-mich`, legal.
+2. **OpSo Smart** — the digital business-card product (the account side).
+   Surfaces: `/products/digital-card` (marketing), `/card/*` (create/edit),
+   `/c/[slug]` (public card), `/dashboard/*` (owner area), and the Expo app
+   under `mobile/` (also branded **OpSo Smart**).
+
+**Accounts belong to OpSo Smart, not the consulting site.** Auth backend:
+`/api/auth/*` (web — `opsolid_refresh` httpOnly cookie) and `/api/v1/auth/*`
+(mobile — Bearer JWT). Both back the same `User` table, so **web and mobile
+share one account.** Login methods: email/password, magic-link, and Google
+OAuth (set `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET` — see `.env.example`).
+
+Login entry points live in the header / mobile menu / footer (`AccountMenu` in
+`src/components/layout/Header.tsx`, driven by `src/context/AuthContext.tsx` →
+`GET /api/auth/me`). Logged-out → "Log in" (`/login`); logged-in → avatar →
+"My cards" (`/dashboard/cards`). Cards created anonymously via `/card/new`
+(`userId=null`) are auto-claimed by email match on the dashboard
+(`POST /api/account/cards/[id]/claim`).
+
+**Hidden for now:** the dashboard's heavier "card-network / CRM" features —
+**Inbox, Channels, Playbooks** — are intentionally removed from the dashboard
+nav (`DashboardChrome.tsx`). The routes/code still exist; only the nav links are
+hidden, to keep the account focused on cards. Re-enable by restoring the links.
+
+Naming: the card product is **OpSo Smart** everywhere user-facing (web + mobile).
+The legacy codename **"Verso"** still appears in mobile *internal* identifiers
+(theme-token comments, asset filenames) — those are not user-facing.
 
 ### Localization System
 

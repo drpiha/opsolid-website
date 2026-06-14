@@ -4,7 +4,6 @@ import { useState } from "react";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { Icon } from "@/components/shared/Icon";
 import { useLocale } from "@/context/LocaleContext";
-import { PricingTable } from "@/components/sections/PricingTable";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 
 type ProductPageId =
@@ -20,7 +19,7 @@ type Props = {
   pricingProductId: string;
 };
 
-export function ProductStubPage({ pageId, pricingProductId }: Props) {
+export function ProductStubPage({ pageId }: Props) {
   const { t } = useLocale();
   const labels = t.v2.productPages.labels;
   const page = t.v2.productPages.pages[pageId];
@@ -63,12 +62,6 @@ export function ProductStubPage({ pageId, pricingProductId }: Props) {
           </div>
         </div>
       </section>
-
-      <PricingTable
-        productIds={[pricingProductId]}
-        showProductHeading={false}
-        showProductLink={false}
-      />
 
       <section className="os-section" data-screen-label="Use cases">
         <div className="wrap">

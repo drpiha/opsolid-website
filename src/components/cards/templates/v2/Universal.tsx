@@ -203,7 +203,11 @@ export function Universal({
       : "#contact";
 
   const subtitleBits: string[] = [];
-  if (cardData.title) subtitleBits.push(cardData.title);
+  // `title` and `position` are independent editable fields; fall back to
+  // `position` so a card that only set the latter (e.g. from the mobile editor)
+  // still shows a role instead of silently dropping it.
+  const role = cardData.title || cardData.position;
+  if (role) subtitleBits.push(role);
   if (cardData.company) subtitleBits.push(cardData.company);
   const subtitle = subtitleBits.join(" · ");
 

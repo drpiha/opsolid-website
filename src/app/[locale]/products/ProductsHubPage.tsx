@@ -49,9 +49,6 @@ export function ProductsHubPage() {
                 <p className="os-product-feature-tagline">{item.tagline}</p>
                 <p className="os-product-feature-body">{item.body}</p>
                 <div className="os-product-feature-foot">
-                  <span className="os-product-feature-price">
-                    {item.startingAt}
-                  </span>
                   <Link
                     href={item.href}
                     className="btn btn-primary btn-sm"
@@ -84,7 +81,6 @@ export function ProductsHubPage() {
                 </div>
                 <h3>{item.name}</h3>
                 <p className="os-product-card-tagline">{item.tagline}</p>
-                <span className="os-product-card-price">{item.startingAt}</span>
               </Link>
             ))}
           </div>

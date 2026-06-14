@@ -8,12 +8,15 @@
 // =============================================================================
 
 import { notFound } from "next/navigation";
+import { cookies } from "next/headers";
 import { prisma } from "@/lib/prisma";
 import { CardDataSchema, OrderStatus } from "@/lib/validation";
 import { getTemplateById } from "@/config/card-templates";
 import { CardEditClient } from "./CardEditClient";
 import { ResendLinkButton } from "./ResendLinkButton";
-import { EditTokenError, requireEditToken } from "@/lib/auth/edit-token";
+import { EditTokenError } from "@/lib/auth/edit-token";
+import { resolveCardEditAccess } from "@/lib/auth/card-access";
+import { REFRESH_COOKIE_NAME } from "@/lib/auth/session";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -37,9 +40,16 @@ export default async function CardEditPage({ params, searchParams }: PageProps) 
     ? params.locale
     : "en") as "en" | "de" | "tr";
 
+  // Access is granted by EITHER a valid edit token (?t=, email-link flow) OR an
+  // authenticated account session that owns the card (dashboard flow), so a
+  // logged-in owner can edit without the email token.
+  const cookieStore = await cookies();
+  const refreshToken = cookieStore.get(REFRESH_COOKIE_NAME)?.value ?? null;
+
   let order;
   try {
-    order = await requireEditToken(token, orderId);
+    const access = await resolveCardEditAccess({ orderId, token, refreshToken });
+    order = access.order;
   } catch (err) {
     if (err instanceof EditTokenError) {
       return (
@@ -52,6 +62,12 @@ export default async function CardEditPage({ params, searchParams }: PageProps) 
     }
     throw err;
   }
+
+  // The client authenticates its save + sidebar calls with the order's own
+  // edit token. In the email-link flow `token` already equals it; in the
+  // account flow we hand the owner their own token so every ?t= endpoint keeps
+  // working unchanged.
+  const effectiveToken = order.editToken ?? token;
 
   if (NON_EDITABLE_STATUSES.has(order.status)) {
     return (
@@ -79,7 +95,7 @@ export default async function CardEditPage({ params, searchParams }: PageProps) 
   return (
     <CardEditClient
       orderId={order.id}
-      editToken={token}
+      editToken={effectiveToken}
       version={order.updatedAt.toISOString()}
       status={order.status}
       templateComponentKey={template.componentKey}

@@ -17,16 +17,18 @@ import { prisma } from "@/lib/prisma";
 import { CardDataSchema, OrderStatus } from "@/lib/validation";
 import { buildApplePass } from "@/lib/wallet/apple";
 import { WalletNotConfiguredError } from "@/lib/wallet/config";
-import { getSiteUrl } from "@/lib/stripe";
+import { publicCardUrlFor } from "@/lib/card-host";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 /**
- * Resolve the QR target URL. Order of preference:
+ * Resolve the QR target URL baked into the (durable, on-device) wallet pass.
  *   1. Verified custom domain → `https://<domain>/`
- *   2. Configured `card.opsolid.de` short host (NEXT_PUBLIC_CARD_HOST)
- *   3. Fall back to `${siteUrl}/c/<slug>`
+ *   2. Otherwise defer to `publicCardUrlFor` — which only emits the pretty
+ *      NEXT_PUBLIC_CARD_HOST subdomain when CARD_HOST_VERIFIED=true, else the
+ *      always-resolving `${siteUrl}/c/<slug>`. Never encode an unverified host
+ *      into a pass: a stale value would 404 forever on the saved pass.
  */
 function resolveCardUrl(args: {
   slug: string;
@@ -36,11 +38,7 @@ function resolveCardUrl(args: {
   if (args.customDomain && args.customDomainVerified) {
     return `https://${args.customDomain}/`;
   }
-  const cardHost = process.env.NEXT_PUBLIC_CARD_HOST;
-  if (cardHost) {
-    return `https://${cardHost.replace(/^https?:\/\//, "").replace(/\/$/, "")}/${encodeURIComponent(args.slug)}`;
-  }
-  return `${getSiteUrl().replace(/\/$/, "")}/c/${encodeURIComponent(args.slug)}`;
+  return publicCardUrlFor(args.slug);
 }
 
 export async function GET(

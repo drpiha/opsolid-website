@@ -1,19 +1,27 @@
 import type { Metadata } from "next";
+import { isLocale, DEFAULT_LOCALE } from "@/lib/i18n";
+import { pageMetadata } from "@/lib/seo/alternates";
 import { BlogPage } from "./BlogPage";
 import { BlogV2 } from "@/components/v2/blog/BlogV2";
 import { V2Shell } from "@/components/v2/V2Shell";
 import { isPreviewV2 } from "@/lib/preview";
 
-export const metadata: Metadata = {
-  title: "Blog",
-  description:
-    "Insights on workflow automation, systems integration, AI, and operational efficiency from OpSolid.",
-  openGraph: {
-    title: "Blog | OpSolid",
+export function generateMetadata({
+  params,
+}: {
+  params: { locale: string };
+}): Metadata {
+  const locale = isLocale(params.locale) ? params.locale : DEFAULT_LOCALE;
+  return pageMetadata({
+    locale,
+    path: "/blog",
+    title: "Blog",
     description:
+      "Insights on workflow automation, systems integration, AI, and operational efficiency from OpSolid.",
+    ogDescription:
       "Practical articles about workflow automation, integration strategies, and operational efficiency.",
-  },
-};
+  });
+}
 
 export default function Page({
   searchParams,

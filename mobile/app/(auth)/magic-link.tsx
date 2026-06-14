@@ -59,7 +59,7 @@ export default function MagicLinkSentScreen() {
       <View style={styles.container}>
         {/* Verso brand lockup */}
         <View style={styles.brandLockup}>
-          <Text style={[typography.display2, { color: theme.text }]}>Verso</Text>
+          <Text style={[typography.display2, { color: theme.text }]}>OpSo Smart</Text>
           <Text style={[typography.caption, styles.byCredit, { color: accentCredit }]}>by OpSolid</Text>
         </View>
 

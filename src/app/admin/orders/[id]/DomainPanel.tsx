@@ -160,7 +160,7 @@ export function DomainPanel({
       <div className="mb-3 flex items-baseline justify-between gap-3">
         <div className="flex items-baseline gap-2">
           <h2 className="text-heading-sm text-ink">Custom domain</h2>
-          <span className="rounded-full bg-amber/20 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-ink/80">
+          <span className="rounded-full bg-signal-warn/20 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-ink/80">
             Beta
           </span>
         </div>
@@ -169,7 +169,7 @@ export function DomainPanel({
         )}
       </div>
 
-      <p className="mb-4 rounded-xl border border-amber/40 bg-amber/10 px-3 py-2 text-xs text-ink/80">
+      <p className="mb-4 rounded-xl border border-signal-warn/40 bg-signal-warn/10 px-3 py-2 text-xs text-ink/80">
         Beta — DNS routing pending. Production traffic for third-party hosts is
         not yet live; the resolver works in dev only until the Traefik catch-all
         router is deployed.

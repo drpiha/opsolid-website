@@ -124,7 +124,7 @@ export default async function OG() {
           }}
         >
           <div style={{ display: "flex" }}>
-            Hamburg · Frankfurt · GDPR-native
+            Automation & AI · GDPR-native · Germany
           </div>
           <div style={{ display: "flex", color: "#C27940", fontWeight: 500 }}>
             opsolid.de

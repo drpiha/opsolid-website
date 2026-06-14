@@ -1693,7 +1693,7 @@ export const content: Content = {
       },
       preview: {
         meta: {
-          title: "Dijital Kartvizit — Canlı Önizleme | OpSolid",
+          title: "Dijital Kartvizit — Canlı Önizleme",
           description:
             "Dijital kartvizitinizi kendiniz oluşturun. Telefonunuzda canlı önizleyin, şablonlar arasında kaydırın ve saniyeler içinde ücretsiz yayınlayın.",
         },
@@ -2048,7 +2048,7 @@ export const content: Content = {
       },
       meta: {
         title:
-          "OpSo Smart — Ücretsiz dijital kartvizit, saniyeler içinde canlı | OpSolid",
+          "OpSo Smart — Ücretsiz dijital kartvizit, saniyeler içinde canlı",
         description:
           "Dijital kartvizitinizi ücretsiz oluşturun ve saniyeler içinde yayınlayın — link, QR, vCard. EU barındırma (Frankfurt), GDPR-yerli. Premium; özel alan adı, NFC ve analitik ekler.",
       },
@@ -3207,7 +3207,7 @@ export const content: Content = {
         secondaryCta: "Bizimle konuşun",
       },
       meta: {
-        title: "Dijital Resepsiyon — Otel, Klinik ve Kuaförler için AI Ön Büro | OpSolid",
+        title: "Dijital Resepsiyon — Otel, Klinik ve Kuaförler için AI Ön Büro",
         description:
           "Hizmet işletmeleri için bağımsız AI resepsiyon. Web formları, e-posta triyajı, opsiyonel ses ajanı. GDPR-yerli, Almanya'da barındırılır. Instagram Business doğrulaması gerektirmez.",
       },
@@ -3366,6 +3366,12 @@ export const content: Content = {
       journal: "Bilgi",
       contact: "İletişim",
       cta: "Ücretsiz görüşme planla",
+      account: {
+        login: "Giriş",
+        myCards: "Kartlarım",
+        logout: "Çıkış",
+        menuLabel: "Hesap",
+      },
       servicesDropdown: {
         "ki-beratung": { title: "AI danışmanlığı", sub: "Use cases · risk · yol haritası" },
         prozessautomatisierung: { title: "Süreç otomasyonu", sub: "Workflow · API · otomasyon" },
@@ -3396,7 +3402,7 @@ export const content: Content = {
           training: "AI eğitimi & yönergeler",
         },
         studio: {
-          about: "Hakkımda",
+          about: "Hakkımızda",
           journal: "Bilgi",
           contact: "İletişim",
         },
@@ -3914,7 +3920,7 @@ export const content: Content = {
 
     leistungen: {
       meta: {
-        title: "Hizmetler — AI, Otomasyon & Dijital Süreçler | OpSolid",
+        title: "Hizmetler — AI, Otomasyon & Dijital Süreçler",
         description:
           "OpSolid hizmetleri KOBİ'lere yönelik: AI danışmanlığı, süreç otomasyonu, Microsoft 365 otomasyonu, iç araçlar ve AI eğitimleri. Uygulanabilir, ölçülebilir, veri koruması odaklı.",
       },
@@ -4063,7 +4069,7 @@ export const content: Content = {
       kiBeratung: {
         slug: "ki-beratung",
         meta: {
-          title: "KOBİ'ler için AI Danışmanlığı — Use Cases, Risk, Yol Haritası | OpSolid",
+          title: "KOBİ'ler için AI Danışmanlığı — Use Cases, Risk, Yol Haritası",
           description:
             "Almanya'daki KOBİ'lere AI danışmanlığı. Değerli AI kullanım senaryolarını belirliyoruz, faydayı riskle tartıyoruz ve karar verilebilir bir yol haritası teslim ediyoruz. Veri koruması odaklı.",
         },
@@ -4149,7 +4155,7 @@ export const content: Content = {
       prozessautomatisierung: {
         slug: "prozessautomatisierung",
         meta: {
-          title: "KOBİ'ler için Süreç Otomasyonu — Power Automate, Make, Python | OpSolid",
+          title: "KOBİ'ler için Süreç Otomasyonu — Power Automate, Make, Python",
           description:
             "Manuel workflow'ları otomatikleştirin — teklifler, faturalar, doküman üretimi, e-posta yönlendirme, veri senkronizasyonu. Zaten ödediğiniz araçlar üzerinde. DSGVO-native.",
         },
@@ -4235,7 +4241,7 @@ export const content: Content = {
       microsoft365: {
         slug: "microsoft-365-automatisierung",
         meta: {
-          title: "Microsoft 365 Otomasyonu — Power Automate, SharePoint, Teams | OpSolid",
+          title: "Microsoft 365 Otomasyonu — Power Automate, SharePoint, Teams",
           description:
             "Microsoft 365 içindeki workflow'ları otomatikleştirin: Power Automate flow'ları, SharePoint doküman kütüphaneleri, Teams onayları, Outlook yönlendirme. AB-hostlu, veri koruması odaklı.",
         },
@@ -4322,7 +4328,7 @@ export const content: Content = {
       interneTools: {
         slug: "interne-tools",
         meta: {
-          title: "İç Araçlar & Entegrasyonlar — Admin Panelleri, Dashboard'lar | OpSolid",
+          title: "İç Araçlar & Entegrasyonlar — Admin Panelleri, Dashboard'lar",
           description:
             "KOBİ'lere küçük, odaklı iç araçlar: admin konsolları, onay kuyrukları, dashboard'lar, bilgi tabanları. Mevcut sistemlerinizin üzerinde inşa edilmiş. AB-hostlu.",
         },
@@ -4408,7 +4414,7 @@ export const content: Content = {
       kiSchulungen: {
         slug: "ki-schulungen",
         meta: {
-          title: "KOBİ'lere AI Eğitimleri & Politikaları — Güvenli, Verimli AI Kullanımı | OpSolid",
+          title: "KOBİ'lere AI Eğitimleri & Politikaları — Güvenli, Verimli AI Kullanımı",
           description:
             "KOBİ ekipleri için pratik AI eğitimleri: AI'ın günlük işte nasıl güvenli ve verimli kullanılacağı. Yazılı yönergeler, role özel playbook'lar, DSGVO-uyumlu kurulum.",
         },
@@ -4743,6 +4749,13 @@ export const content: Content = {
         placeholder: "sen@firma.de",
         cta: "Abone ol",
         legal: "Yazı başına bir e-posta. Tek tıkla abonelikten çık.",
+        success: "✓ Teşekkürler — yeni bir yazı çıkınca haber vereceğiz.",
+        error: "Gönderilemedi. Lütfen daha sonra tekrar deneyin.",
+      },
+      labels: {
+        featured: "ÖNE ÇIKAN",
+        note: "NOT",
+        minutesSuffix: "DK",
       },
     },
 
@@ -4843,7 +4856,7 @@ export const content: Content = {
 
     productsHub: {
       meta: {
-        title: "Ürünler — Voice, OpSo Smart, Chat, WhatsApp, Booking, Email, Lead, Custom, Kutasia | OpSolid",
+        title: "Ürünler — Voice, OpSo Smart, Chat, WhatsApp, Booking, Email, Lead, Custom, Kutasia",
         description: "Tek stüdyodan dokuz ürün: telefon, chat, WhatsApp, e-posta ve lead qualification için yapay zekâ ajanları, premium dijital kartvizit (OpSo Smart), özel workflow otomasyonu ve Kutasia — DACH ve Türkiye'deki KOBİ'ler için unified AI çalışma alanı. Her ürün şeffaf fiyatlı ve EU-hostlu.",
       },
       hero: {
@@ -4855,9 +4868,9 @@ export const content: Content = {
       },
       featured: {
         eyebrow: "[ AMİRAL GEMİLERİ ]",
-        heading: "Bizi hatırlatan iki ürün",
+        heading: "İki amiral gemisi ürün",
         items: [
-          { id: "voice-agent", name: "Voice AI Agent", tagline: "Retell veya Vapi üzerinde 24/7 telefon resepsiyonu.", body: "Çok dilli telefon yanıtı, takvim senkronizasyonu, script bittiğinde insana devir. Hamburg taksi dispeçlerinde, Bavyera otellerinde ve Almanya çapında B2B service desk'lerinde canlı.", href: "/products/voice-agent", startingAt: "€1.500 setup + €299/ay'dan", badge: "Canlı" },
+          { id: "voice-agent", name: "Voice AI Agent", tagline: "Retell veya Vapi üzerinde 24/7 telefon resepsiyonu.", body: "Çok dilli telefon yanıtı, takvim senkronizasyonu, script bittiğinde insana devir — Retell veya Vapi üzerine kurulu, çağrı akışlarınıza göre yapılandırılır.", href: "/products/voice-agent", startingAt: "€1.500 setup + €299/ay'dan", badge: "Canlı" },
           { id: "verso", name: "OpSo Smart", tagline: "Dijital kartvizit · başlangıçta ücretsiz, saniyeler içinde canlı.", body: "Kartınızı ücretsiz oluşturun ve saniyeler içinde yayınlayın. 20+ sektör şablonu, link + QR, Frankfurt'ta EU barındırma. Premium; özel alan adı, NFC ve analitik ekler; white-glove elle tasarım opsiyoneldir. Linktree olmadan kağıt kartviziti değiştirir.", href: "/products/digital-card", startingAt: "Başlangıçta ücretsiz", badge: "Canlı" },
         ],
       },
@@ -4884,24 +4897,24 @@ export const content: Content = {
 
     about: {
       meta: {
-        title: "Hakkımda — Hasan Dönmez | OpSolid",
+        title: "OpSolid Hakkında — Hasan Dönmez",
         description:
-          "OpSolid Hasan Dönmez tarafından yürütülüyor — Almanya'daki KOBİ'lere yönelik pratik AI ve otomasyon danışmanlığı. IT proje yönetimi, dijitalleşme ve süreç optimizasyonunda geçmiş.",
+          "OpSolid, Almanya'daki KOBİ'lere yönelik bağımsız bir AI ve otomasyon danışmanlığıdır; Hasan Dönmez tarafından kuruldu — yıllarca süren IT proje yönetimi, dijitalleşme ve süreç optimizasyonuna dayanıyor.",
       },
       hero: {
-        eyebrow: "[ HAKKIMDA · 2026 ]",
+        eyebrow: "[ OPSOLID HAKKINDA · 2026 ]",
         title: {
           pre: "Pratik, uygulanabilir ve ",
           italic: "ölçülebilir",
           post: " dijital çözümler",
         },
         lead:
-          "OpSolid, Hasan Dönmez'in bağımsız danışmanlık pratiğidir. Odak: Almanya'daki KOBİ'lere yönelik AI, süreç otomasyonu ve dijital workflow'lar — yıllarca süren pratik IT proje yönetimi, dijitalleşme ve süreç optimizasyonu çalışmalarına dayanıyor.",
+          "OpSolid, Hasan Dönmez tarafından kurulan bağımsız bir AI ve otomasyon danışmanlığıdır. Odak: Almanya'daki KOBİ'lere yönelik AI, süreç otomasyonu ve dijital workflow'lar — yıllarca süren pratik IT proje yönetimi, dijitalleşme ve süreç optimizasyonu çalışmalarına dayanıyor.",
         primaryCta: "Tanışma görüşmesi planla",
         secondaryCta: "Hizmetleri gör",
       },
       principles: {
-        eyebrow: "[ NASIL ÇALIŞIYORUM ]",
+        eyebrow: "[ NASIL ÇALIŞIYORUZ ]",
         heading: "Dört prensip, kısa tutulmuş",
         items: [
           {
@@ -4930,9 +4943,9 @@ export const content: Content = {
         eyebrow: "[ KURUCU ]",
         heading: "Hasan Dönmez",
         body: [
-          "Tam zamanlı IT proje yöneticisi olarak çalışıyorum ve yan tarafta OpSolid'i AI ve otomasyon için bağımsız bir danışmanlık pratiği olarak kuruyorum. Bu kombinasyon bilinçli: gündüz, dijitalleşme projelerinin orta ölçekli şirketlerde gerçekte nasıl yürüdüğünü görüyorum — kısıtları, politikası, eski sistemleri ve gerçek ekipleriyle — ve bu perspektifi OpSolid projelerine taşıyorum.",
+          "OpSolid, IT proje yönetimi ve dijitalleşme alanında orta ölçekli şirketlerde edindiği pratik deneyimi getiren Hasan Dönmez tarafından yürütülüyor. Bu perspektif bilinçli: dijitalleşmenin gerçek organizasyonlarda nasıl yürüdüğünü — kısıtları, politikası, eski sistemleri ve ekipleriyle — bilmek, OpSolid projelerini tam da bu şekilde biçimlendiriyor.",
           "Geçmiş: IT proje yönetimi, dijitalleşme ve süreç optimizasyonunda pratik deneyim. Odak: Almanya'daki küçük ve orta ölçekli işletmeler — iç sistemlerinden hızlı büyümüş ve platform pitch'i değil, ölçülebilir bir sonraki adım arayan şirketler.",
-          "OpSolid bilinçli olarak tek kişilik: bir görüşme rezerve ettiğinizde, işi yapacak kişiyle konuşuyorsunuz. Katman yok, junior teslimat yok, handoff yok.",
+          "Projeler pratik ve kıdemli yürür: projenizi hayata geçiren kişilerle doğrudan çalışırsınız — net sahiplik, katman yok, junior teslimat yok.",
         ],
         linkedinLabel: "LinkedIn'de Hasan",
         linkedinHref: "https://www.linkedin.com/in/hasan-doenmez/",
@@ -4941,7 +4954,7 @@ export const content: Content = {
         eyebrow: "[ KONUŞMA BAŞLAT ]",
         heading: "Uyumlu olup olmadığımızı görmek için 20 dakika yeterli",
         lead:
-          "Ücretsiz tanışma görüşmesi: bana bir operasyonel acı noktasını anlatın. OpSolid'in uygun olup olmadığını, AI & Automation Check'in doğru ilk adım olup olmadığını ya da yaptığınıza devam etmeniz gerektiğini söylerim.",
+          "Ücretsiz tanışma görüşmesi: bize bir operasyonel acı noktasını anlatın. OpSolid'in uygun olup olmadığını, AI & Automation Check'in doğru ilk adım olup olmadığını ya da yaptığınıza devam etmeniz gerektiğini söyleriz.",
         cta: "Tanışma görüşmesi planla",
       },
     },
@@ -4957,7 +4970,7 @@ export const content: Content = {
       },
       pages: {
         chatbotAgent: {
-          meta: { title: "Chatbot Agent — Web chat, knowledge base, lead capture | OpSolid", description: "Siteniz için yapılandırılmış chatbot ajanı. Knowledge base ingestion, lead capture ve insana devir — HubSpot, Pipedrive veya Slack ile bağlı. EU-hostlu, GDPR-uyumlu." },
+          meta: { title: "Chatbot Agent — Web chat, knowledge base, lead capture", description: "Siteniz için yapılandırılmış chatbot ajanı. Knowledge base ingestion, lead capture ve insana devir — HubSpot, Pipedrive veya Slack ile bağlı. EU-hostlu, GDPR-uyumlu." },
           hero: {
             metaChip: "CHATBOT AGENT",
             metaLabel: "[ ÜRÜN · 03 ]",
@@ -4985,7 +4998,7 @@ export const content: Content = {
           ],
         },
         whatsappAgent: {
-          meta: { title: "WhatsApp Agent — Business API, otomatik yanıt, broadcast | OpSolid", description: "Yapılandırılmış WhatsApp Business ajanı — otomatik yanıt, broadcast kampanyası, CRM senkron ve insana devir. Meta WABA passthrough, gizli markup yok." },
+          meta: { title: "WhatsApp Agent — Business API, otomatik yanıt, broadcast", description: "Yapılandırılmış WhatsApp Business ajanı — otomatik yanıt, broadcast kampanyası, CRM senkron ve insana devir. Meta WABA passthrough, gizli markup yok." },
           hero: {
             metaChip: "WHATSAPP AGENT",
             metaLabel: "[ ÜRÜN · 04 ]",
@@ -5013,7 +5026,7 @@ export const content: Content = {
           ],
         },
         bookingAgent: {
-          meta: { title: "Booking Agent — Web, voice, WhatsApp randevu → Cal.com | OpSolid", description: "Multi-kanal booking ajanı. Web widget, voice intake, WhatsApp teyit, no-show recovery — Cal.com veya kendi takviminizle senkron. EU-hostlu." },
+          meta: { title: "Booking Agent — Web, voice, WhatsApp randevu → Cal.com", description: "Multi-kanal booking ajanı. Web widget, voice intake, WhatsApp teyit, no-show recovery — Cal.com veya kendi takviminizle senkron. EU-hostlu." },
           hero: {
             metaChip: "BOOKING AGENT",
             metaLabel: "[ ÜRÜN · 05 ]",
@@ -5041,7 +5054,7 @@ export const content: Content = {
           ],
         },
         emailAgent: {
-          meta: { title: "Email Agent — Inbox triage, otomatik yanıt, eskalasyon | OpSolid", description: "Paylaşımlı inbox'lar için e-posta otomasyon ajanı. AI triage, yapılandırılabilir otomatik yanıt, eskalasyon kuralları, CRM logging. Front-style UX, Front fiyatı olmadan." },
+          meta: { title: "Email Agent — Inbox triage, otomatik yanıt, eskalasyon", description: "Paylaşımlı inbox'lar için e-posta otomasyon ajanı. AI triage, yapılandırılabilir otomatik yanıt, eskalasyon kuralları, CRM logging. Front-style UX, Front fiyatı olmadan." },
           hero: {
             metaChip: "EMAIL AGENT",
             metaLabel: "[ ÜRÜN · 06 ]",
@@ -5069,7 +5082,7 @@ export const content: Content = {
           ],
         },
         leadQualifierAgent: {
-          meta: { title: "Lead Qualifier Agent — Form, chat, voice → BANT scoring | OpSolid", description: "Her kanaldan intake alan, ICP'nize karşı scor eden ve nitelikli lead'leri tam bağlamla CRM'inize push eden lead qualification ajanı." },
+          meta: { title: "Lead Qualifier Agent — Form, chat, voice → BANT scoring", description: "Her kanaldan intake alan, ICP'nize karşı scor eden ve nitelikli lead'leri tam bağlamla CRM'inize push eden lead qualification ajanı." },
           hero: {
             metaChip: "LEAD QUALIFIER AGENT",
             metaLabel: "[ ÜRÜN · 07 ]",
@@ -5097,7 +5110,7 @@ export const content: Content = {
           ],
         },
         customAutomation: {
-          meta: { title: "Custom Automation — Sprint, proje, retainer | OpSolid", description: "Alman mid-market B2B için workflow otomasyon inşası. Sprint, proje veya retainer engagement — kaynak kodunuz, verileriniz, vendor lock-in yok." },
+          meta: { title: "Custom Automation — Sprint, proje, retainer", description: "Alman mid-market B2B için workflow otomasyon inşası. Sprint, proje veya retainer engagement — kaynak kodunuz, verileriniz, vendor lock-in yok." },
           hero: {
             metaChip: "CUSTOM AUTOMATION",
             metaLabel: "[ HİZMET · 08 ]",
@@ -5119,8 +5132,8 @@ export const content: Content = {
           integrations: ["Postgres", "Node.js / TypeScript", "Python", "n8n", "Zapier (mantıklıysa)", "Hetzner", "Custom API"],
           faq: [
             { q: "Neden sadece Zapier veya Make kullanmıyorsunuz?", a: "Kullanıyoruz — uyduğunda. Zapier ve Make basit connector'lar için yeterli; ölçekte zorlanmaya başlarlar (maliyet, debugging, güvenilirlik) ve işletmeye özel mantığı taşıyamazlar. Hangi aracın yerini hak ettiğine birlikte karar veriyoruz, gerisini biz kuruyoruz." },
-            { q: "Scoping nasıl çalışır?", a: "Ücretsiz 30-dakikalık discovery görüşmesi. İki taraf da devam etmek isterse, ücretli bir scoping workshop'u (~€1.500, sözleşme imzalanırsa proje ücretinden düşülür) çalıştırırız; yazılı spec ve sabit fiyat çıkar. Her durumda spec sizinle gider." },
-            { q: "Günlük tarife nedir?", a: "Senior automation engineering için günlük €1.200, yarım gün artışlarıyla faturalandırılır. Bunun altı junior iş veya tooling'de fazla ödüyorsunuz demek. İyi scope'lanmış işte proje fiyatı genelde günlük tarifeyi yener — bu €4.500'lik Standard sprint'tir." },
+            { q: "Scoping nasıl çalışır?", a: "Ücretsiz 30-dakikalık discovery görüşmesi. İki taraf da devam etmek isterse, ücretli bir scoping workshop'u çalıştırırız — ücreti, sözleşme imzalanırsa proje bedelinden düşülür; yazılı spec ve sabit fiyat çıkar. Her durumda spec sizinle gider." },
+            { q: "İşi nasıl fiyatlandırıyorsunuz?", a: "Çoğu iş, yazılı ve sabit kapsamlı bir spec üzerinden proje bazında fiyatlandırılır — saat başına değil — böylece rakamı başlamadan önce bilirsiniz. Süregelen işler için günlük tarife ve aylık retainer seçenekleri mevcuttur. Teklif, scoping workshop'undan sonra verilir." },
             { q: "AVV imzalıyor musunuz?", a: "Evet — müşteri verisine dokunan her engagement'ta standart Alman B2B AVV (Auftragsverarbeitungsvertrag). Gizli bağlam paylaşmanız gerekiyorsa scoping öncesi NDA." },
           ],
         },
@@ -5129,7 +5142,7 @@ export const content: Content = {
 
     pricing: {
       meta: {
-        title: "Fiyatlandırma — Standard, Professional, Enterprise | OpSolid",
+        title: "Fiyatlandırma — Standard, Professional, Enterprise",
         description: "OpSolid'in dokuz ürünü için şeffaf EUR fiyatlandırma: Voice Agent, OpSo Smart, Chatbot, WhatsApp, Booking, Email, Lead Qualifier, Custom Automation ve Kutasia.",
       },
       hero: {

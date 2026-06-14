@@ -17,11 +17,15 @@ import { prisma } from "@/lib/prisma";
 import { CardDataSchema, OrderStatus } from "@/lib/validation";
 import { buildGoogleWalletJwt } from "@/lib/wallet/google";
 import { WalletNotConfiguredError } from "@/lib/wallet/config";
-import { getSiteUrl } from "@/lib/stripe";
+import { publicCardUrlFor } from "@/lib/card-host";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+// Resolve the QR target baked into the (durable) wallet pass. Verified custom
+// domain wins; otherwise defer to publicCardUrlFor, which only emits the pretty
+// NEXT_PUBLIC_CARD_HOST subdomain when CARD_HOST_VERIFIED=true and never bakes
+// an unverified (potentially dead) host into a saved pass.
 function resolveCardUrl(args: {
   slug: string;
   customDomain: string | null;
@@ -30,11 +34,7 @@ function resolveCardUrl(args: {
   if (args.customDomain && args.customDomainVerified) {
     return `https://${args.customDomain}/`;
   }
-  const cardHost = process.env.NEXT_PUBLIC_CARD_HOST;
-  if (cardHost) {
-    return `https://${cardHost.replace(/^https?:\/\//, "").replace(/\/$/, "")}/${encodeURIComponent(args.slug)}`;
-  }
-  return `${getSiteUrl().replace(/\/$/, "")}/c/${encodeURIComponent(args.slug)}`;
+  return publicCardUrlFor(args.slug);
 }
 
 export async function GET(

@@ -29,7 +29,7 @@ export default function CustomDomainMissPage() {
           This domain is not yet configured for an OpSolid Smart Card.
         </p>
 
-        <div className="mt-10 rounded-3xl border border-neutral-200 bg-white p-6 text-left">
+        <div className="mt-10 rounded-3xl border border-line bg-bg-2 p-6 text-left">
           <p className="text-sm text-ink/80">
             <strong className="text-ink">DE:</strong> Wenn Sie der Inhaber dieser Domain
             sind, prüfen Sie bitte Ihren CNAME-Eintrag und die DNS-Verifizierung

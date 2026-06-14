@@ -155,7 +155,7 @@ export default function AppLayout() {
         setUnlocked(true);
         return;
       }
-      const ok = await authenticateBiometric('Unlock Verso');
+      const ok = await authenticateBiometric('Unlock OpSo Smart');
       setUnlocked(ok);
     });
   }, []);

@@ -80,14 +80,15 @@ export function BlogPage() {
             >
               <div className="jn-feature-body">
                 <span className="meta meta-hot">
-                  FEATURED · {(feature.category ?? "NOTE").toUpperCase()}
+                  {b.labels.featured} ·{" "}
+                  {(feature.category ?? b.labels.note).toUpperCase()}
                 </span>
                 <div className="jn-feature-h" style={{ marginTop: 14 }}>
                   {feature.title}
                 </div>
                 <p className="jn-feature-lede">{feature.excerpt}</p>
                 <div className="jn-feature-meta">
-                  {feature.date} · {feature.readTime} MIN
+                  {feature.date} · {feature.readTime} {b.labels.minutesSuffix}
                 </div>
               </div>
               <div className="jn-feature-art">
@@ -159,8 +160,8 @@ export function BlogPage() {
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
                   <div className="jn-post-meta">
-                    <span>{(p.category ?? "NOTE").toUpperCase()}</span>
-                    <span>{p.readTime} MIN</span>
+                    <span>{(p.category ?? b.labels.note).toUpperCase()}</span>
+                    <span>{p.readTime} {b.labels.minutesSuffix}</span>
                   </div>
                   <div className="jn-post-h">{p.title}</div>
                   <div className="jn-post-s">{p.excerpt}</div>
@@ -219,7 +220,7 @@ export function BlogPage() {
                   className="meta"
                   style={{ color: "var(--copper-200)", width: "100%" }}
                 >
-                  ✓ {b.series.cta} — thanks.
+                  {b.series.success}
                 </span>
               )}
               {result === "error" && (
@@ -227,7 +228,7 @@ export function BlogPage() {
                   className="meta"
                   style={{ color: "var(--signal-err, #B8514B)", width: "100%" }}
                 >
-                  Something didn&rsquo;t send. Try again later.
+                  {b.series.error}
                 </span>
               )}
             </form>

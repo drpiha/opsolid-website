@@ -14,20 +14,21 @@ import { HomeV2 } from "@/components/v2/home/HomeV2";
 import { V2Shell } from "@/components/v2/V2Shell";
 import { isPreviewV2 } from "@/lib/preview";
 import { isLocale, DEFAULT_LOCALE } from "@/lib/i18n";
+import { pageMetadata } from "@/lib/seo/alternates";
 
 const HOME_META: Record<string, { title: string; description: string }> = {
   de: {
-    title: "KI & Automatisierung für Unternehmen | OpSolid",
+    title: "KI & Automatisierung für Unternehmen",
     description:
       "OpSolid unterstützt mittelständische Unternehmen bei KI-Beratung, Prozessautomatisierung und digitalen Workflows. Jetzt kostenloses Erstgespräch anfragen.",
   },
   en: {
-    title: "AI & Automation Consulting for SMEs | OpSolid",
+    title: "AI & Automation Consulting for SMEs",
     description:
       "OpSolid helps small and mid-sized businesses simplify manual tasks, Excel processes and internal workflows with AI and automation. Book a free discovery call.",
   },
   tr: {
-    title: "KOBİ'ler için AI & Otomasyon Danışmanlığı | OpSolid",
+    title: "KOBİ'ler için AI & Otomasyon Danışmanlığı",
     description:
       "OpSolid, KOBİ'lere manuel görevleri, Excel süreçlerini ve dahili iş akışlarını AI ve otomasyonla sadeleştirmede yardımcı olur. Ücretsiz görüşme planlayın.",
   },
@@ -36,27 +37,12 @@ const HOME_META: Record<string, { title: string; description: string }> = {
 export function generateMetadata({ params }: { params: { locale?: string } }): Metadata {
   const locale = isLocale(params?.locale) ? params!.locale! : DEFAULT_LOCALE;
   const m = HOME_META[locale] ?? HOME_META.de;
-  const canonical = `https://opsolid.de/${locale}`;
-  return {
+  return pageMetadata({
+    locale,
+    path: "",
     title: m.title,
     description: m.description,
-    alternates: {
-      canonical,
-      languages: {
-        de: "https://opsolid.de/de",
-        en: "https://opsolid.de/en",
-        tr: "https://opsolid.de/tr",
-        "x-default": "https://opsolid.de/de",
-      },
-    },
-    openGraph: {
-      title: m.title,
-      description: m.description,
-      url: canonical,
-      type: "website",
-      locale,
-    },
-  };
+  });
 }
 
 /**

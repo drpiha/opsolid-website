@@ -26,7 +26,7 @@ export function BrandHeader() {
         <Plus size={14} color="#FFFFFF" strokeWidth={3} />
       </View>
       <View style={styles.textCol}>
-        <Text style={[styles.wordmark, { color: theme.ink[100] }]}>Verso</Text>
+        <Text style={[styles.wordmark, { color: theme.ink[100] }]}>OpSo Smart</Text>
         <Text style={[styles.credit, { color: accentCredit }]}>by OpSolid</Text>
       </View>
     </View>
