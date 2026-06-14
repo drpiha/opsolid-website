@@ -1879,7 +1879,7 @@ export const content: Content = {
           // Editable section labels
           labelsSection: "Abschnittstitel (optional)",
           labelsHint:
-            'Benennen Sie jede Überschrift auf Ihrer Karte um — z.B. "Leistungen" → "Menü". Leer lassen, um die Vorlagen-Vorgabe zu behalten.',
+            'Benennen Sie die Abschnitts-TITEL auf Ihrer Karte um (z.B. "Leistungen" → "Menü"). Den Inhalt selbst geben Sie in den Abschnitten oben ein — ein leerer Abschnitt (und sein Titel) erscheint nicht auf der Karte. Leer lassen behält die Vorgabe.',
           customSectionAdd: "Abschnitt hinzufügen",
           customSectionTitle: "Titel",
           customSectionTitlePh: "z.B. Sprachen, Auszeichnungen, Presse",
