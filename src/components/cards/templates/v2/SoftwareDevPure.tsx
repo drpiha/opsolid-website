@@ -28,6 +28,7 @@ import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
 import { resolveStats } from "./shared/profileExtras";
+import { resolveLabels } from "./shared/resolveLabels";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#1a56db";
@@ -79,7 +80,7 @@ interface SdpCopy {
   remote: string;
 }
 
-const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdpCopy> = {
+export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdpCopy> = {
   de: {
     available: "Verfügbar",
     contact: "Kontakt",
@@ -226,7 +227,7 @@ export function SoftwareDevPure({
   brandPrimaryHex,
   walletSlot,
 }: TemplateProps) {
-  const t = COPY[locale] ?? COPY.de;
+  const t = resolveLabels(COPY[locale] ?? COPY.de, cardData.labels);
   const accent = brandPrimaryHex || LOCKED_PRIMARY;
 
   const photoUrl = resolveAssetUrl(photoPath);

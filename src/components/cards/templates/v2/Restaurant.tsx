@@ -56,6 +56,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveLabels } from "./shared/resolveLabels";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 // -----------------------------------------------------------------------------
@@ -153,7 +154,7 @@ interface RsCopy {
   openToday: string;
 }
 
-const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RsCopy> = {
+export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RsCopy> = {
   de: {
     reserve: "Reservieren",
     callNow: "Anrufen",
@@ -383,7 +384,7 @@ export function Restaurant({
   siteUrl,
   walletSlot,
 }: TemplateProps) {
-  const t = COPY[locale] ?? COPY.de;
+  const t = resolveLabels(COPY[locale] ?? COPY.de, cardData.labels);
 
   const sector = getSectorPreset(cardData.sectorKey);
   const primary = brandPrimaryHex || LOCKED_PRIMARY;

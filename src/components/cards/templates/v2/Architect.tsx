@@ -44,6 +44,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveLabels } from "./shared/resolveLabels";
 import type { TemplateProps, TemplateRegistryEntry, SampleData } from "./types";
 
 // -----------------------------------------------------------------------------
@@ -89,7 +90,7 @@ interface ArCopy {
   philosophy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ArCopy> = {
+export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ArCopy> = {
   de: {
     saveContact: "Speichern",
     callNow: "Anrufen",
@@ -252,7 +253,7 @@ export function Architect({
   walletSlot,
 }: TemplateProps) {
   // Architect is photo-less by design — `photoPath` intentionally not consumed.
-  const t = COPY[locale] ?? COPY.de;
+  const t = resolveLabels(COPY[locale] ?? COPY.de, cardData.labels);
 
   const sector = getSectorPreset(cardData.sectorKey);
   const primary = brandPrimaryHex || LOCKED_PRIMARY;

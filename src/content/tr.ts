@@ -1877,6 +1877,10 @@ export const content: Content = {
           customSectionsSection: "Özel bölümler (opsiyonel)",
           customSectionsHint:
             "En fazla 6 bölüm ekleyebilirsin — ödüller, diller, ne istersen.",
+          // Düzenlenebilir bölüm başlıkları
+          labelsSection: "Bölüm başlıkları (opsiyonel)",
+          labelsHint:
+            'Kartınızdaki herhangi bir başlığı yeniden adlandırın — örn. "Hizmetler" → "Menü". Şablon varsayılanını korumak için boş bırakın.',
           customSectionAdd: "Bölüm ekle",
           customSectionTitle: "Başlık",
           customSectionTitlePh: "Örn. Diller, Ödüller, Basın",

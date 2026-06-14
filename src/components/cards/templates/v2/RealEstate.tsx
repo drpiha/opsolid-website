@@ -54,6 +54,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveLabels } from "./shared/resolveLabels";
 import type { TemplateProps } from "./types";
 
 // -----------------------------------------------------------------------------
@@ -104,7 +105,7 @@ interface ReCopy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy> = {
+export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy> = {
   de: {
     saveContact: "Speichern",
     callNow: "Anrufen",
@@ -260,7 +261,7 @@ export function RealEstate({
   siteUrl,
   walletSlot,
 }: TemplateProps) {
-  const t = COPY[locale] ?? COPY.de;
+  const t = resolveLabels(COPY[locale] ?? COPY.de, cardData.labels);
 
   const sector = getSectorPreset(cardData.sectorKey);
   const primary = brandPrimaryHex || LOCKED_PRIMARY;

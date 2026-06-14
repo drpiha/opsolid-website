@@ -125,6 +125,8 @@ import { layoutPureSwissEntry, LayoutPureSwiss } from "./LayoutPureSwiss";
 import { layoutVividBoldEntry, LayoutVividBold } from "./LayoutVividBold";
 import { layoutEditorialEntry, LayoutEditorial } from "./LayoutEditorial";
 import { layoutSplitScreenEntry, LayoutSplitScreen } from "./LayoutSplitScreen";
+// Blank, data-driven template (id 97)
+import { blankCanvasEntry, BlankCanvas } from "./BlankCanvas";
 import type { TemplateRegistryEntry } from "./types";
 
 export const templateRegistry: Record<number, TemplateRegistryEntry> = {
@@ -261,6 +263,8 @@ export const templateRegistry: Record<number, TemplateRegistryEntry> = {
   94: { ...layoutVividBoldEntry, Component: LayoutVividBold },
   95: { ...layoutEditorialEntry, Component: LayoutEditorial },
   96: { ...layoutSplitScreenEntry, Component: LayoutSplitScreen },
+  // Blank, data-driven template — all sections flow from user input.
+  97: { ...blankCanvasEntry, Component: BlankCanvas },
 };
 
 /**
@@ -526,4 +530,6 @@ export const plannedLineup: readonly PlannedTemplate[] = [
   { id: 94, key: "layout-vivid-bold", name: "Vivid Bold", sector: "consultant" },
   { id: 95, key: "layout-editorial", name: "Editorial", sector: "consultant" },
   { id: 96, key: "layout-split-screen", name: "Split Screen", sector: "consultant" },
+  // Blank, data-driven template
+  { id: 97, key: "blank-canvas", name: "Blank Canvas", sector: "consultant" },
 ];

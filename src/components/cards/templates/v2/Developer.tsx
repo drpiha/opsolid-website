@@ -43,6 +43,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveLabels } from "./shared/resolveLabels";
 import type { TemplateProps, TemplateRegistryEntry, SampleData } from "./types";
 
 // -----------------------------------------------------------------------------
@@ -107,7 +108,7 @@ interface DvCopy {
   available: string;
 }
 
-const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DvCopy> = {
+export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DvCopy> = {
   de: {
     saveContact: "Kontakt sichern",
     callNow: "Anrufen",
@@ -284,7 +285,7 @@ export function Developer({
   walletSlot,
 }: TemplateProps) {
   // Developer is photo-less by design — `photoPath` intentionally not consumed.
-  const t = COPY[locale] ?? COPY.de;
+  const t = resolveLabels(COPY[locale] ?? COPY.de, cardData.labels);
 
   const sector = getSectorPreset(cardData.sectorKey);
   const primary = brandPrimaryHex || DEFAULT_PRIMARY;

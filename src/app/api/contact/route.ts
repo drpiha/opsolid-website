@@ -1,4 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import { sendEmail } from "@/lib/email/client";
+import { escapeHtml } from "@/lib/email/shell";
+
+export const runtime = "nodejs";
 
 /**
  * Contact form POST endpoint.
@@ -46,26 +50,12 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Send email if SMTP is configured. No personal-email fallback — if
+    // Deliver via the shared provider chain (Brevo > Resend > SMTP > console)
+    // with the visitor's address as Reply-To. No personal-email fallback — if
     // CONTACT_TO_EMAIL is unset we log a warning and let the UX continue.
-    const smtpHost = process.env.SMTP_HOST;
-    const smtpUser = process.env.SMTP_USER;
-    const smtpPass = process.env.SMTP_PASS;
     const contactTo = process.env.CONTACT_TO_EMAIL;
 
-    if (smtpHost && smtpUser && smtpPass && contactTo) {
-      const nodemailer = await import("nodemailer");
-
-      const transporter = nodemailer.default.createTransport({
-        host: smtpHost,
-        port: Number(process.env.SMTP_PORT) || 587,
-        secure: (process.env.SMTP_PORT || "587") === "465",
-        auth: {
-          user: smtpUser,
-          pass: smtpPass,
-        },
-      });
-
+    if (contactTo) {
       const subject = `New inquiry from ${name}${
         company ? ` (${company})` : ""
       }${source ? ` · source=${source}` : ""}`;
@@ -79,20 +69,30 @@ export async function POST(req: NextRequest) {
       if (teamSize) bodyLines.push(`Team size: ${teamSize}`);
       bodyLines.push(``, `Message:`, message, ``, `---`, `Sent from opsolid.de contact form`, `Time: ${new Date().toISOString()}`);
 
-      await transporter.sendMail({
-        from: `"OpSolid Website" <${smtpUser}>`,
+      const html = bodyLines
+        .map((line) =>
+          line === ""
+            ? "<br/>"
+            : `<p style="margin:0 0 4px 0;">${escapeHtml(line)}</p>`,
+        )
+        .join("");
+
+      const result = await sendEmail({
         to: contactTo,
+        from: process.env.CONTACT_FROM_EMAIL || undefined,
         replyTo: email,
         subject,
+        html,
         text: bodyLines.join("\n"),
       });
-
+      if (!result.ok) {
+        console.error("[contact] delivery failed:", result.error);
+      }
     } else {
-      // Dev-only fallback so the form still "works" without SMTP. In prod
-      // this branch never runs because SMTP is configured.
+      // Dev-only fallback so the form still "works" without a destination.
       if (process.env.NODE_ENV !== "production") {
         console.warn(
-          "[contact] CONTACT_TO_EMAIL or SMTP env missing — submission accepted but not delivered",
+          "[contact] CONTACT_TO_EMAIL missing — submission accepted but not delivered",
         );
       }
     }
