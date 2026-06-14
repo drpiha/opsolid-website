@@ -14,6 +14,7 @@ import { HomeV2 } from "@/components/v2/home/HomeV2";
 import { V2Shell } from "@/components/v2/V2Shell";
 import { isPreviewV2 } from "@/lib/preview";
 import { isLocale, DEFAULT_LOCALE } from "@/lib/i18n";
+import { pageMetadata } from "@/lib/seo/alternates";
 
 const HOME_META: Record<string, { title: string; description: string }> = {
   de: {
@@ -36,27 +37,12 @@ const HOME_META: Record<string, { title: string; description: string }> = {
 export function generateMetadata({ params }: { params: { locale?: string } }): Metadata {
   const locale = isLocale(params?.locale) ? params!.locale! : DEFAULT_LOCALE;
   const m = HOME_META[locale] ?? HOME_META.de;
-  const canonical = `https://opsolid.de/${locale}`;
-  return {
+  return pageMetadata({
+    locale,
+    path: "",
     title: m.title,
     description: m.description,
-    alternates: {
-      canonical,
-      languages: {
-        de: "https://opsolid.de/de",
-        en: "https://opsolid.de/en",
-        tr: "https://opsolid.de/tr",
-        "x-default": "https://opsolid.de/de",
-      },
-    },
-    openGraph: {
-      title: m.title,
-      description: m.description,
-      url: canonical,
-      type: "website",
-      locale,
-    },
-  };
+  });
 }
 
 /**

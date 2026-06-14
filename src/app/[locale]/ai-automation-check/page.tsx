@@ -5,6 +5,7 @@ import { V2Shell } from "@/components/v2/V2Shell";
 import { AacJsonLd } from "@/components/seo/AacJsonLd";
 import { isPreviewV2 } from "@/lib/preview";
 import { isLocale, DEFAULT_LOCALE } from "@/lib/i18n";
+import { pageMetadata } from "@/lib/seo/alternates";
 
 type Params = { locale?: string };
 
@@ -29,32 +30,12 @@ const META: Record<string, { title: string; description: string }> = {
 export function generateMetadata({ params }: { params: Params }): Metadata {
   const locale = isLocale(params?.locale) ? params!.locale! : DEFAULT_LOCALE;
   const m = META[locale] ?? META.de;
-  const canonical = `https://opsolid.de/${locale}/ai-automation-check`;
-  return {
+  return pageMetadata({
+    locale,
+    path: "/ai-automation-check",
     title: m.title,
     description: m.description,
-    alternates: {
-      canonical,
-      languages: {
-        de: "https://opsolid.de/de/ai-automation-check",
-        en: "https://opsolid.de/en/ai-automation-check",
-        tr: "https://opsolid.de/tr/ai-automation-check",
-        "x-default": "https://opsolid.de/de/ai-automation-check",
-      },
-    },
-    openGraph: {
-      title: m.title,
-      description: m.description,
-      url: canonical,
-      type: "website",
-      locale,
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: m.title,
-      description: m.description,
-    },
-  };
+  });
 }
 
 export default function Page({
