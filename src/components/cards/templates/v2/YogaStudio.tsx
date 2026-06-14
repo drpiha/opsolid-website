@@ -121,6 +121,8 @@ interface YoCopy {
   share: string;
   breathe: string;
   studio: string;
+  mindfulBadge: string;
+  certifiedBadge: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", YoCopy> = {
@@ -152,6 +154,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", YoCopy
     share: "Teilen",
     breathe: "Atme · Bewege dich · Sei",
     studio: "Studio",
+    mindfulBadge: "Mindful",
+    certifiedBadge: "Certified",
   },
   en: {
     schedule: "Upcoming classes",
@@ -181,6 +185,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", YoCopy
     share: "Share",
     breathe: "Breathe · Move · Be",
     studio: "Studio",
+    mindfulBadge: "Mindful",
+    certifiedBadge: "Certified",
   },
   tr: {
     schedule: "Yaklaşan Dersler",
@@ -210,6 +216,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", YoCopy
     share: "Paylaş",
     breathe: "Nefes Al · Hareket Et · Ol",
     studio: "Stüdyo",
+    mindfulBadge: "Mindful",
+    certifiedBadge: "Certified",
   },
   es: {
 
@@ -240,7 +248,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", YoCopy
     share: "Compartir",
     breathe: "Respira · Muévete · Sé",
     studio: "Estudio",
-  
+    mindfulBadge: "Mindful",
+    certifiedBadge: "Certified",
+
   },
   it: {
 
@@ -271,7 +281,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", YoCopy
     share: "Condividi",
     breathe: "Respira · Muoviti · Sii",
     studio: "Studio",
-  
+    mindfulBadge: "Mindful",
+    certifiedBadge: "Certified",
+
   },
   fr: {
 
@@ -302,7 +314,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", YoCopy
     share: "Partager",
     breathe: "Respire · Bouge · Sois",
     studio: "Studio",
-  
+    mindfulBadge: "Mindful",
+    certifiedBadge: "Certified",
+
   },
   ar: {
 
@@ -333,7 +347,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", YoCopy
     share: "مشاركة",
     breathe: "تنفس · تحرك · كن",
     studio: "استوديو",
-  
+    mindfulBadge: "Mindful",
+    certifiedBadge: "Certified",
+
   },
 };
 
@@ -433,6 +449,8 @@ export function YogaStudio({
         name={cardData.name}
         title={cardData.position || cardData.title}
         primary={primary}
+        mindfulBadge={t.mindfulBadge}
+        certifiedBadge={t.certifiedBadge}
       />
 
       {cardData.bookingUrl && (
@@ -711,10 +729,14 @@ function NameBlock({
   name,
   title,
   primary,
+  mindfulBadge,
+  certifiedBadge,
 }: {
   name: string;
   title?: string;
   primary: string;
+  mindfulBadge: string;
+  certifiedBadge: string;
 }) {
   return (
     <section
@@ -749,7 +771,7 @@ function NameBlock({
           }}
         >
           <Leaf size={10} strokeWidth={2.2} />
-          Mindful
+          {mindfulBadge}
         </span>
         <span
           aria-hidden
@@ -764,7 +786,7 @@ function NameBlock({
           }}
         >
           <Sparkles size={10} strokeWidth={2.2} />
-          Certified
+          {certifiedBadge}
         </span>
       </div>
     </section>

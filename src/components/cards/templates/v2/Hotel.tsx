@@ -128,11 +128,13 @@ interface HoCopy {
   saveContact: string;
   web: string;
   address: string;
+  maisonEyebrow: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", HoCopy> = {
   de: {
     bookStay: "Aufenthalt buchen",
+    maisonEyebrow: "Maison & Direction",
     callConcierge: "Concierge anrufen",
     whatsapp: "WhatsApp",
     email: "E-Mail",
@@ -163,6 +165,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", HoCopy
   },
   en: {
     bookStay: "Book your stay",
+    maisonEyebrow: "Maison & Direction",
     callConcierge: "Call concierge",
     whatsapp: "WhatsApp",
     email: "Email",
@@ -193,6 +196,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", HoCopy
   },
   tr: {
     bookStay: "Konaklama planla",
+    maisonEyebrow: "Maison & Direction",
     callConcierge: "Concierge'i ara",
     whatsapp: "WhatsApp",
     email: "E-posta",
@@ -224,6 +228,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", HoCopy
   es: {
 
     bookStay: "Reserva tu estancia",
+    maisonEyebrow: "Maison & Direction",
     callConcierge: "Llamar al conserje",
     whatsapp: "WhatsApp",
     email: "Correo",
@@ -256,6 +261,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", HoCopy
   it: {
 
     bookStay: "Prenota il tuo soggiorno",
+    maisonEyebrow: "Maison & Direction",
     callConcierge: "Chiama il concierge",
     whatsapp: "WhatsApp",
     email: "Email",
@@ -288,6 +294,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", HoCopy
   fr: {
 
     bookStay: "Réservez votre séjour",
+    maisonEyebrow: "Maison & Direction",
     callConcierge: "Appeler la conciergerie",
     whatsapp: "WhatsApp",
     email: "E-mail",
@@ -320,6 +327,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", HoCopy
   ar: {
 
     bookStay: "احجز إقامتك",
+    maisonEyebrow: "Maison & Direction",
     callConcierge: "اتصل بخدمة الكونسيرج",
     whatsapp: "واتساب",
     email: "البريد الإلكتروني",
@@ -816,14 +824,13 @@ function NameStrip({
   translations: HoCopy;
 }) {
   void company;
-  void translations;
   return (
     <section className="px-7 pb-1 pt-7 text-center">
       <div
         className="ho-eyebrow mb-2"
         style={{ color: accent }}
       >
-        Maison & Direction
+        {translations.maisonEyebrow}
       </div>
       <h2
         className="ho-display text-[26px] font-medium leading-tight"

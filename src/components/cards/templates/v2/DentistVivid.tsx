@@ -87,6 +87,7 @@ interface DnvCopy {
   share: string;
   poweredBy: string;
   populari: string;
+  contactHeading: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DnvCopy> = {
@@ -108,6 +109,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DnvCop
     share: "Teilen",
     poweredBy: "Powered by",
     populari: "Beliebt",
+    contactHeading: "Kontakt",
   },
   en: {
     online: "Online booking",
@@ -127,6 +129,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DnvCop
     share: "Share",
     poweredBy: "Powered by",
     populari: "Popular",
+    contactHeading: "Kontakt",
   },
   tr: {
     online: "Online Randevu",
@@ -146,6 +149,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DnvCop
     share: "Paylaş",
     poweredBy: "Powered by",
     populari: "Popüler",
+    contactHeading: "Kontakt",
   },
   es: {
 
@@ -166,7 +170,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DnvCop
     share: "Compartir",
     poweredBy: "Desarrollado por",
     populari: "Popular",
-  
+    contactHeading: "Kontakt",
+
   },
   it: {
 
@@ -187,7 +192,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DnvCop
     share: "Condividi",
     poweredBy: "Realizzato con",
     populari: "Popolari",
-  
+    contactHeading: "Kontakt",
+
   },
   fr: {
 
@@ -208,7 +214,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DnvCop
     share: "Partager",
     poweredBy: "Propulsé par",
     populari: "Populaires",
-  
+    contactHeading: "Kontakt",
+
   },
   ar: {
 
@@ -229,7 +236,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", DnvCop
     share: "مشاركة",
     poweredBy: "مشغل بواسطة",
     populari: "شائع",
-  
+    contactHeading: "Kontakt",
+
   },
 };
 
@@ -581,7 +589,7 @@ export function DentistVivid({
       {/* CONTACT */}
       <section className="px-[22px] py-7">
         <h3 className="mb-4 text-[16px] font-bold" style={{ color: INK }}>
-          Kontakt
+          {t.contactHeading}
         </h3>
         <ContactRows cardData={cardData} locale={locale} variant="hairline" accentHex={primary} />
       </section>

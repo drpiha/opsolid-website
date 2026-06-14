@@ -74,6 +74,8 @@ interface Copy {
   saveContact: string;
   walletLabel: string;
   poweredBy: string;
+  evidenceLabel: string;
+  copyrightSuffix: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
@@ -85,6 +87,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
+    evidenceLabel: "EVIDENCE-BASED",
+    copyrightSuffix: "— Evidence-based",
   },
   en: {
     studioLabel: "Studio",
@@ -94,6 +98,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
+    evidenceLabel: "EVIDENCE-BASED",
+    copyrightSuffix: "— Evidence-based",
   },
   tr: {
     studioLabel: "Stüdyo",
@@ -103,6 +109,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
+    evidenceLabel: "EVIDENCE-BASED",
+    copyrightSuffix: "— Evidence-based",
   },
   es: {
     studioLabel: "Estudio",
@@ -112,7 +120,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
-  
+    evidenceLabel: "EVIDENCE-BASED",
+    copyrightSuffix: "— Evidence-based",
+
   },
   it: {
     studioLabel: "Studio",
@@ -122,7 +132,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
-  
+    evidenceLabel: "EVIDENCE-BASED",
+    copyrightSuffix: "— Evidence-based",
+
   },
   fr: {
     studioLabel: "Studio",
@@ -132,7 +144,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
-  
+    evidenceLabel: "EVIDENCE-BASED",
+    copyrightSuffix: "— Evidence-based",
+
   },
   ar: {
     studioLabel: "استوديو",
@@ -142,7 +156,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
-  
+    evidenceLabel: "EVIDENCE-BASED",
+    copyrightSuffix: "— Evidence-based",
+
   },
 };
 
@@ -212,7 +228,7 @@ export function FitnessPure({
           className="mono uppercase"
           style={{ fontSize: 10, letterSpacing: "2px", color: MUTE }}
         >
-          EVIDENCE-BASED
+          {t.evidenceLabel}
         </div>
       </header>
 
@@ -540,7 +556,7 @@ export function FitnessPure({
             color: MUTE_2,
           }}
         >
-          &copy; {new Date().getFullYear()} — Evidence-based
+          &copy; {new Date().getFullYear()} {t.copyrightSuffix}
         </div>
       </footer>
       <div

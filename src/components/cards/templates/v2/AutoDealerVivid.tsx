@@ -91,6 +91,7 @@ interface Copy {
   walletLabel: string;
   poweredBy: string;
   contact: string;
+  priceLabel2: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
@@ -108,6 +109,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
     contact: "Kontakt",
+    priceLabel2: "Price",
   },
   en: {
     tag: "Premium Auto",
@@ -123,6 +125,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
     contact: "Contact",
+    priceLabel2: "Price",
   },
   tr: {
     tag: "Premium Auto",
@@ -138,6 +141,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
     contact: "İletişim",
+    priceLabel2: "Price",
   },
   es: {
 
@@ -154,7 +158,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
     contact: "Contacto",
-  
+    priceLabel2: "Price",
+
   },
   it: {
 
@@ -171,7 +176,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
     contact: "Contatto",
-  
+    priceLabel2: "Price",
+
   },
   fr: {
 
@@ -188,7 +194,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
     contact: "Contact",
-  
+    priceLabel2: "Price",
+
   },
   ar: {
 
@@ -205,7 +212,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
     contact: "اتصال",
-  
+    priceLabel2: "Price",
+
   },
 };
 
@@ -448,7 +456,7 @@ export function AutoDealerVivid({
                       className="text-[10px] uppercase"
                       style={{ color: INK_SOFT, letterSpacing: "2px" }}
                     >
-                      Price
+                      {t.priceLabel2}
                     </span>
                     <span
                       className="display text-[26px] font-bold"

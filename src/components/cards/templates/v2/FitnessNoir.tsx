@@ -86,6 +86,8 @@ interface Copy {
   saveContact: string;
   walletLabel: string;
   poweredBy: string;
+  motto: string;
+  copyright: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
@@ -108,6 +110,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
+    motto: "Train. Push. Repeat.",
+    copyright: "All Rights Reserved ©",
   },
   en: {
     ctaLine1: "Get",
@@ -128,6 +132,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
+    motto: "Train. Push. Repeat.",
+    copyright: "All Rights Reserved ©",
   },
   tr: {
     ctaLine1: "Get",
@@ -148,6 +154,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
+    motto: "Train. Push. Repeat.",
+    copyright: "All Rights Reserved ©",
   },
   es: {
 
@@ -169,7 +177,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
-  
+    motto: "Train. Push. Repeat.",
+    copyright: "All Rights Reserved ©",
+
   },
   it: {
 
@@ -191,7 +201,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
-  
+    motto: "Train. Push. Repeat.",
+    copyright: "All Rights Reserved ©",
+
   },
   fr: {
 
@@ -213,7 +225,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
-  
+    motto: "Train. Push. Repeat.",
+    copyright: "All Rights Reserved ©",
+
   },
   ar: {
 
@@ -235,7 +249,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
-  
+    motto: "Train. Push. Repeat.",
+    copyright: "All Rights Reserved ©",
+
   },
 };
 
@@ -499,7 +515,7 @@ export function FitnessNoir({
                 marginRight: 12,
               }}
             />
-            Train. Push. Repeat.
+            {t.motto}
           </div>
         </div>
       )}
@@ -810,7 +826,7 @@ export function FitnessNoir({
             letterSpacing: "2px",
           }}
         >
-          All Rights Reserved &copy; {new Date().getFullYear()}
+          {t.copyright} {new Date().getFullYear()}
         </div>
         <div
           className="mt-1 uppercase"

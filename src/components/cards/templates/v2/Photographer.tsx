@@ -92,6 +92,7 @@ interface PhCopy {
   share: string;
   closeLightbox: string;
   saveContact: string;
+  copyrightNote: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PhCopy> = {
@@ -114,6 +115,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PhCopy
     share: "Teilen",
     closeLightbox: "Schließen",
     saveContact: "Kontakt speichern",
+    copyrightNote: "· ALL RIGHTS RESERVED",
   },
   en: {
     portfolio: "Portfolio",
@@ -134,6 +136,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PhCopy
     share: "Share",
     closeLightbox: "Close",
     saveContact: "Save contact",
+    copyrightNote: "· ALL RIGHTS RESERVED",
   },
   tr: {
     portfolio: "Portföy",
@@ -154,6 +157,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PhCopy
     share: "Paylaş",
     closeLightbox: "Kapat",
     saveContact: "Kişiyi Kaydet",
+    copyrightNote: "· ALL RIGHTS RESERVED",
   },
   es: {
 
@@ -175,7 +179,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PhCopy
     share: "Compartir",
     closeLightbox: "Cerrar",
     saveContact: "Guardar contacto",
-  
+    copyrightNote: "· ALL RIGHTS RESERVED",
+
   },
   it: {
 
@@ -197,7 +202,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PhCopy
     share: "Condividi",
     closeLightbox: "Chiudi",
     saveContact: "Salva contatto",
-  
+    copyrightNote: "· ALL RIGHTS RESERVED",
+
   },
   fr: {
 
@@ -219,7 +225,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PhCopy
     share: "Partager",
     closeLightbox: "Fermer",
     saveContact: "Enregistrer le contact",
-  
+    copyrightNote: "· ALL RIGHTS RESERVED",
+
   },
   ar: {
 
@@ -241,7 +248,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PhCopy
     share: "مشاركة",
     closeLightbox: "إغلاق",
     saveContact: "حفظ جهة الاتصال",
-  
+    copyrightNote: "· ALL RIGHTS RESERVED",
+
   },
 };
 
@@ -987,7 +995,7 @@ function Footer({
         className="ph-eyebrow mt-3"
         style={{ color: "var(--ph-text-30)" }}
       >
-        © {new Date().getFullYear()} · ALL RIGHTS RESERVED
+        © {new Date().getFullYear()} {translations.copyrightNote}
       </div>
     </footer>
   );

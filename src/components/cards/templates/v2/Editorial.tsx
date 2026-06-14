@@ -112,6 +112,7 @@ interface EdCopy {
   impressum: string;
   privacy: string;
   poweredBy: string;
+  shareLabel: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", EdCopy> = {
@@ -135,6 +136,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", EdCopy
     impressum: "Impressum",
     privacy: "Datenschutz",
     poweredBy: "Powered by",
+    shareLabel: "Share",
   },
   en: {
     saveContact: "Save contact",
@@ -156,6 +158,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", EdCopy
     impressum: "Imprint",
     privacy: "Privacy",
     poweredBy: "Powered by",
+    shareLabel: "Share",
   },
   tr: {
     saveContact: "Rehbere kaydet",
@@ -177,6 +180,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", EdCopy
     impressum: "Künye",
     privacy: "Gizlilik",
     poweredBy: "Powered by",
+    shareLabel: "Share",
   },
   es: {
 
@@ -199,7 +203,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", EdCopy
     impressum: "Aviso legal",
     privacy: "Privacidad",
     poweredBy: "Desarrollado por",
-  
+    shareLabel: "Share",
+
   },
   it: {
 
@@ -222,7 +227,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", EdCopy
     impressum: "Impressum",
     privacy: "Privacy",
     poweredBy: "Realizzato con",
-  
+    shareLabel: "Share",
+
   },
   fr: {
 
@@ -245,7 +251,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", EdCopy
     impressum: "Mentions légales",
     privacy: "Confidentialité",
     poweredBy: "Propulsé par",
-  
+    shareLabel: "Share",
+
   },
   ar: {
 
@@ -268,7 +275,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", EdCopy
     impressum: "بيانات النشر",
     privacy: "الخصوصية",
     poweredBy: "مشغل بواسطة",
-  
+    shareLabel: "Share",
+
   },
 };
 
@@ -1288,7 +1296,7 @@ function Footer({
         className="flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[10.5px]"
         style={{ color: TEXT_LIGHT }}
       >
-        <FooterShare siteUrl={siteUrl} slug={slug} />
+        <FooterShare siteUrl={siteUrl} slug={slug} shareLabel={translations.shareLabel} />
         {impressumUrl && (
           <>
             <span>·</span>
@@ -1345,7 +1353,7 @@ function Footer({
   );
 }
 
-function FooterShare({ siteUrl, slug }: { siteUrl: string; slug: string }) {
+function FooterShare({ siteUrl, slug, shareLabel }: { siteUrl: string; slug: string; shareLabel: string }) {
   const url = `${siteUrl}/c/${slug}`;
   return (
     <button
@@ -1366,7 +1374,7 @@ function FooterShare({ siteUrl, slug }: { siteUrl: string; slug: string }) {
       className="transition-colors"
       style={{ color: TEXT_LIGHT }}
     >
-      Share
+      {shareLabel}
     </button>
   );
 }

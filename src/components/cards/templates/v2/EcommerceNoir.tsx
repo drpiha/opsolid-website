@@ -89,11 +89,14 @@ interface Copy {
   walletLabel: string;
   poweredBy: string;
   qrLabel: string;
+  limitedLabel: string;
+  maisonLabel: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     brandPre: "Premium Kollektion",
+    maisonLabel: "Maison",
     brandTag: "Maison fondée en 2021",
     featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
@@ -108,9 +111,11 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
     qrLabel: "Scan to shop",
+    limitedLabel: "Limited / 12",
   },
   en: {
     brandPre: "Premium Collection",
+    maisonLabel: "Maison",
     brandTag: "Maison fondée en 2021",
     featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
@@ -125,9 +130,11 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
     qrLabel: "Scan to shop",
+    limitedLabel: "Limited / 12",
   },
   tr: {
     brandPre: "Premium Koleksiyon",
+    maisonLabel: "Maison",
     brandTag: "Maison fondée en 2021",
     featuredEyebrow: "— Featured Piece —",
     collectionPre: "SS26",
@@ -142,10 +149,12 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
     qrLabel: "Scan to shop",
+    limitedLabel: "Limited / 12",
   },
   es: {
 
     brandPre: "Colección Premium",
+    maisonLabel: "Maison",
     brandTag: "Maison fondée en 2021",
     featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
@@ -160,11 +169,13 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
     qrLabel: "Escanear para comprar",
-  
+    limitedLabel: "Limited / 12",
+
   },
   it: {
 
     brandPre: "Collezione Premium",
+    maisonLabel: "Maison",
     brandTag: "Maison fondée en 2021",
     featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
@@ -179,11 +190,13 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
     qrLabel: "Scansiona per acquistare",
-  
+    limitedLabel: "Limited / 12",
+
   },
   fr: {
 
     brandPre: "Collection Premium",
+    maisonLabel: "Maison",
     brandTag: "Maison fondée en 2021",
     featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
@@ -198,11 +211,13 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
     qrLabel: "Scanner pour acheter",
-  
+    limitedLabel: "Limited / 12",
+
   },
   ar: {
 
     brandPre: "المجموعة المميزة",
+    maisonLabel: "Maison",
     brandTag: "Maison fondée en 2021",
     featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
@@ -217,7 +232,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
     qrLabel: "امسح للتسوق",
-  
+    limitedLabel: "Limited / 12",
+
   },
 };
 
@@ -435,7 +451,7 @@ export function EcommerceNoir({
                   color: accent,
                 }}
               >
-                Limited / 12
+                {t.limitedLabel}
               </span>
             </div>
             <div className="px-6 py-6">
@@ -674,7 +690,7 @@ export function EcommerceNoir({
         className="serif italic px-6 py-6 text-center"
         style={{ fontSize: 13, color: MUTED, borderTop: `1px solid ${LINE}` }}
       >
-        © {new Date().getFullYear()} — {cardData.company || cardData.name} Maison
+        © {new Date().getFullYear()} — {cardData.company || cardData.name} {t.maisonLabel}
         {cityFromAddress ? ` · ${cityFromAddress}` : ""}
         <div className="mt-2" style={{ color: DIM, fontStyle: "normal" }}>
           {t.poweredBy}{" "}

@@ -97,6 +97,13 @@ interface KaCopy {
   privacy: string;
   poweredBy: string;
   share: string;
+  pairingNote: string;
+  heroTagline: string;
+  chefEyebrow: string;
+  reservationCta: string;
+  whatsappLabel: string;
+  findUsLabel: string;
+  copyrightNote: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy> = {
@@ -114,6 +121,13 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy
     privacy: "Datenschutz",
     poweredBy: "Powered by",
     share: "Teilen",
+    pairingNote: "Wine pairing on request — kitchen closes at 22:30",
+    heroTagline: "Cucina · Stagione · Memoria",
+    chefEyebrow: "à la carte di…",
+    reservationCta: "Reservation",
+    whatsappLabel: "WhatsApp",
+    findUsLabel: "Find us",
+    copyrightNote: "· with care",
   },
   en: {
     tastingMenu: "Tonight's Tasting",
@@ -129,6 +143,13 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy
     privacy: "Privacy",
     poweredBy: "Powered by",
     share: "Share",
+    pairingNote: "Wine pairing on request — kitchen closes at 22:30",
+    heroTagline: "Cucina · Stagione · Memoria",
+    chefEyebrow: "à la carte di…",
+    reservationCta: "Reservation",
+    whatsappLabel: "WhatsApp",
+    findUsLabel: "Find us",
+    copyrightNote: "· with care",
   },
   tr: {
     tastingMenu: "Bu Akşam",
@@ -144,6 +165,13 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy
     privacy: "Gizlilik",
     poweredBy: "Powered by",
     share: "Paylaş",
+    pairingNote: "Wine pairing on request — kitchen closes at 22:30",
+    heroTagline: "Cucina · Stagione · Memoria",
+    chefEyebrow: "à la carte di…",
+    reservationCta: "Reservation",
+    whatsappLabel: "WhatsApp",
+    findUsLabel: "Find us",
+    copyrightNote: "· with care",
   },
   es: {
 
@@ -160,7 +188,14 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy
     privacy: "Privacidad",
     poweredBy: "Desarrollado por",
     share: "Compartir",
-  
+    pairingNote: "Wine pairing on request — kitchen closes at 22:30",
+    heroTagline: "Cucina · Stagione · Memoria",
+    chefEyebrow: "à la carte di…",
+    reservationCta: "Reservation",
+    whatsappLabel: "WhatsApp",
+    findUsLabel: "Find us",
+    copyrightNote: "· with care",
+
   },
   it: {
 
@@ -177,7 +212,14 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy
     privacy: "Privacy",
     poweredBy: "Realizzato con",
     share: "Condividi",
-  
+    pairingNote: "Wine pairing on request — kitchen closes at 22:30",
+    heroTagline: "Cucina · Stagione · Memoria",
+    chefEyebrow: "à la carte di…",
+    reservationCta: "Reservation",
+    whatsappLabel: "WhatsApp",
+    findUsLabel: "Find us",
+    copyrightNote: "· with care",
+
   },
   fr: {
 
@@ -194,7 +236,14 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy
     privacy: "Confidentialité",
     poweredBy: "Propulsé par",
     share: "Partager",
-  
+    pairingNote: "Wine pairing on request — kitchen closes at 22:30",
+    heroTagline: "Cucina · Stagione · Memoria",
+    chefEyebrow: "à la carte di…",
+    reservationCta: "Reservation",
+    whatsappLabel: "WhatsApp",
+    findUsLabel: "Find us",
+    copyrightNote: "· with care",
+
   },
   ar: {
 
@@ -211,7 +260,14 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy
     privacy: "الخصوصية",
     poweredBy: "مشغل بواسطة",
     share: "مشاركة",
-  
+    pairingNote: "Wine pairing on request — kitchen closes at 22:30",
+    heroTagline: "Cucina · Stagione · Memoria",
+    chefEyebrow: "à la carte di…",
+    reservationCta: "Reservation",
+    whatsappLabel: "WhatsApp",
+    findUsLabel: "Find us",
+    copyrightNote: "· with care",
+
   },
 };
 
@@ -299,6 +355,7 @@ export function KitchenAtelier({
         primary={primary}
         accent={accent}
         sourceLabel={sourceLabel}
+        tagline={t.heroTagline}
       />
 
       {/* Wax-stamp seal — overlaps hero / cream strip. */}
@@ -315,6 +372,7 @@ export function KitchenAtelier({
         company={cardData.company || cardData.name}
         accent={accent}
         primary={primary}
+        eyebrow={t.chefEyebrow}
       />
 
       <QuickActions
@@ -368,7 +426,7 @@ export function KitchenAtelier({
               className="ka-italic text-[12.5px]"
               style={{ color: "var(--ka-text-mid)" }}
             >
-              Wine pairing on request — kitchen closes at 22:30
+              {t.pairingNote}
             </span>
           </div>
         </Section>
@@ -543,12 +601,14 @@ function Hero({
   primary,
   accent,
   sourceLabel,
+  tagline,
 }: {
   photoUrl: string | null;
   company?: string;
   primary: string;
   accent: string;
   sourceLabel?: string;
+  tagline: string;
 }) {
   return (
     <header className="relative">
@@ -617,7 +677,7 @@ function Hero({
               textShadow: "0 2px 8px rgba(0,0,0,0.5)",
             }}
           >
-            Cucina · Stagione · Memoria
+            {tagline}
           </div>
           <h1
             className="ka-display mt-2 text-[36px] font-bold leading-[1.05] text-white"
@@ -699,12 +759,14 @@ function ChefStrip({
   company,
   accent,
   primary,
+  eyebrow,
 }: {
   name: string;
   titleParts: string[];
   company?: string;
   accent: string;
   primary: string;
+  eyebrow: string;
 }) {
   void company;
   return (
@@ -713,7 +775,7 @@ function ChefStrip({
         className="ka-eyebrow text-[11.5px]"
         style={{ color: accent }}
       >
-        à la carte di…
+        {eyebrow}
       </div>
       <h2
         className="ka-display mt-1 text-[24px] font-bold leading-tight"
@@ -744,7 +806,6 @@ function QuickActions({
   accent: string;
   translations: KaCopy;
 }) {
-  void translations;
   const phoneDigits = cardData.phone?.replace(/[^+0-9]/g, "");
   const waDigits = cardData.whatsapp?.replace(/[^+0-9]/g, "").replace(/^\+/, "");
 
@@ -760,7 +821,7 @@ function QuickActions({
           }}
         >
           <Flame size={14} strokeWidth={2} />
-          Reservation
+          {translations.reservationCta}
         </a>
       )}
       {waDigits && (
@@ -774,7 +835,7 @@ function QuickActions({
             boxShadow: `0 8px 18px -8px ${accent}AA`,
           }}
         >
-          WhatsApp
+          {translations.whatsappLabel}
         </a>
       )}
       {cardData.address && (
@@ -789,7 +850,7 @@ function QuickActions({
           }}
         >
           <MapPin size={14} strokeWidth={2} />
-          Find us
+          {translations.findUsLabel}
         </a>
       )}
     </div>
@@ -1111,7 +1172,7 @@ function Footer({
           {company}
         </div>
         <div className="ka-italic mt-0.5 text-[11.5px] opacity-75">
-          © {new Date().getFullYear()} · with care
+          © {new Date().getFullYear()} {translations.copyrightNote}
         </div>
       </div>
 

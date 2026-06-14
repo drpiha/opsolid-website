@@ -123,6 +123,7 @@ interface AthCopy {
   certified: string;
   yearsExp: string;
   clients: string;
+  shareLabel: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AthCopy> = {
@@ -153,6 +154,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AthCop
     certified: "Zertifiziert",
     yearsExp: "Jahre",
     clients: "Klienten",
+    shareLabel: "Share",
   },
   en: {
     saveContact: "Save contact",
@@ -181,6 +183,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AthCop
     certified: "Certified",
     yearsExp: "yrs",
     clients: "clients",
+    shareLabel: "Share",
   },
   tr: {
     saveContact: "Kaydet",
@@ -209,6 +212,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AthCop
     certified: "Sertifikalı",
     yearsExp: "yıl",
     clients: "öğrenci",
+    shareLabel: "Share",
   },
   es: {
 
@@ -238,7 +242,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AthCop
     certified: "Certificado",
     yearsExp: "años",
     clients: "clientes",
-  
+    shareLabel: "Share",
+
   },
   it: {
 
@@ -268,7 +273,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AthCop
     certified: "Certificato",
     yearsExp: "anni",
     clients: "clienti",
-  
+    shareLabel: "Share",
+
   },
   fr: {
 
@@ -298,7 +304,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AthCop
     certified: "Certifié",
     yearsExp: "ans",
     clients: "clients",
-  
+    shareLabel: "Share",
+
   },
   ar: {
 
@@ -328,7 +335,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AthCop
     certified: "معتمد",
     yearsExp: "سنة",
     clients: "عملاء",
-  
+    shareLabel: "Share",
+
   },
 };
 
@@ -1330,7 +1338,7 @@ function Footer({
         }}
       />
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[10.5px] text-[#737373]">
-        <FooterShare siteUrl={siteUrl} slug={slug} />
+        <FooterShare siteUrl={siteUrl} slug={slug} shareLabel={translations.shareLabel} />
         {impressumUrl && (
           <a
             href={impressumUrl}
@@ -1369,7 +1377,7 @@ function Footer({
   );
 }
 
-function FooterShare({ siteUrl, slug }: { siteUrl: string; slug: string }) {
+function FooterShare({ siteUrl, slug, shareLabel }: { siteUrl: string; slug: string; shareLabel: string }) {
   const url = `${siteUrl}/c/${slug}`;
   return (
     <button
@@ -1389,7 +1397,7 @@ function FooterShare({ siteUrl, slug }: { siteUrl: string; slug: string }) {
       }}
       className="transition-colors hover:text-white"
     >
-      Share
+      {shareLabel}
     </button>
   );
 }

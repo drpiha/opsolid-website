@@ -14,6 +14,7 @@
     "test:cards": "tsx scripts/test-card-features.ts",
     "test:email": "tsx scripts/send-test-email.ts",
     "audit:cards": "tsx scripts/audit-template-coverage.ts --check",
+    "scan:literals": "tsx scripts/scan-hardcoded-literals.ts",
     "predeploy": "npm run audit:cards && npm run build"
   },
   "dependencies": {

@@ -152,6 +152,9 @@ interface RsCopy {
   poweredBy: string;
   share: string;
   openToday: string;
+  heroTagline: string;
+  casaEyebrow: string;
+  copyrightNote: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RsCopy> = {
@@ -183,6 +186,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RsCopy
     poweredBy: "Powered by",
     share: "Teilen",
     openToday: "Heute geöffnet",
+    heroTagline: "Cucina · Calore · Casa",
+    casaEyebrow: "— Casa di —",
+    copyrightNote: "· with care",
   },
   en: {
     reserve: "Reserve",
@@ -212,6 +218,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RsCopy
     poweredBy: "Powered by",
     share: "Share",
     openToday: "Open today",
+    heroTagline: "Cucina · Calore · Casa",
+    casaEyebrow: "— Casa di —",
+    copyrightNote: "· with care",
   },
   tr: {
     reserve: "Rezervasyon",
@@ -241,6 +250,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RsCopy
     poweredBy: "Powered by",
     share: "Paylaş",
     openToday: "Bugün açığız",
+    heroTagline: "Cucina · Calore · Casa",
+    casaEyebrow: "— Casa di —",
+    copyrightNote: "· with care",
   },
   es: {
 
@@ -271,7 +283,10 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RsCopy
     poweredBy: "Desarrollado por",
     share: "Compartir",
     openToday: "Abierto hoy",
-  
+    heroTagline: "Cucina · Calore · Casa",
+    casaEyebrow: "— Casa di —",
+    copyrightNote: "· with care",
+
   },
   it: {
 
@@ -302,7 +317,10 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RsCopy
     poweredBy: "Realizzato con",
     share: "Condividi",
     openToday: "Aperto oggi",
-  
+    heroTagline: "Cucina · Calore · Casa",
+    casaEyebrow: "— Casa di —",
+    copyrightNote: "· with care",
+
   },
   fr: {
 
@@ -333,7 +351,10 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RsCopy
     poweredBy: "Propulsé par",
     share: "Partager",
     openToday: "Ouvert aujourd'hui",
-  
+    heroTagline: "Cucina · Calore · Casa",
+    casaEyebrow: "— Casa di —",
+    copyrightNote: "· with care",
+
   },
   ar: {
 
@@ -364,7 +385,10 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RsCopy
     poweredBy: "مشغل بواسطة",
     share: "مشاركة",
     openToday: "مفتوح اليوم",
-  
+    heroTagline: "Cucina · Calore · Casa",
+    casaEyebrow: "— Casa di —",
+    copyrightNote: "· with care",
+
   },
 };
 
@@ -462,6 +486,7 @@ export function Restaurant({
         accent={accent}
         onPrimary={onPrimary}
         sourceLabel={sourceLabel}
+        tagline={t.heroTagline}
       />
 
       <SealOverlay
@@ -477,6 +502,7 @@ export function Restaurant({
         subtitle={subtitle}
         primary={primary}
         accent={accent}
+        eyebrow={t.casaEyebrow}
       />
 
       <SpecialBar
@@ -722,6 +748,7 @@ function Hero({
   accent,
   onPrimary,
   sourceLabel,
+  tagline,
 }: {
   photoUrl: string | null;
   company?: string;
@@ -729,6 +756,7 @@ function Hero({
   accent: string;
   onPrimary: string;
   sourceLabel?: string;
+  tagline: string;
 }) {
   void onPrimary;
   return (
@@ -795,7 +823,7 @@ function Hero({
               textShadow: "0 2px 8px rgba(0,0,0,0.5)",
             }}
           >
-            Cucina · Calore · Casa
+            {tagline}
           </div>
           <h1
             className="rs-display mt-1.5 text-[34px] font-bold leading-[1.05] text-white"
@@ -869,12 +897,14 @@ function NameStrip({
   subtitle,
   primary,
   accent,
+  eyebrow,
 }: {
   name: string;
   company?: string;
   subtitle: string;
   primary: string;
   accent: string;
+  eyebrow: string;
 }) {
   void company;
   return (
@@ -883,7 +913,7 @@ function NameStrip({
         className="rs-eyebrow text-[11.5px]"
         style={{ color: accent }}
       >
-        — Casa di —
+        {eyebrow}
       </div>
       <h2
         className="rs-display mt-1 text-[24px] font-bold leading-tight"
@@ -1376,7 +1406,7 @@ function Footer({
           className="rs-italic mt-0.5 text-[11.5px]"
           style={{ color: onPrimary, opacity: 0.75 }}
         >
-          © {new Date().getFullYear()} · with care
+          © {new Date().getFullYear()} {translations.copyrightNote}
         </div>
       </div>
 

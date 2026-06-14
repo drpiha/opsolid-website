@@ -45,7 +45,7 @@ import type {
 import { PhotoEditor } from "@/components/cards/PhotoEditor";
 import { TYPOGRAPHY_PRESET_LIST } from "@/lib/typographyPresets";
 import { downscaleImage } from "@/lib/images/downscale";
-import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
+import { UniversalBlocks } from "@/components/cards/UniversalBlocks";
 import { CustomSectionsEditor } from "@/components/cards/order-form/CustomSectionsEditor";
 import { SectionLabelsEditor } from "@/components/cards/order-form/SectionLabelsEditor";
 import type { BlockLocale } from "@/components/cards/templates/v2/shared/universalHeadings";
@@ -3121,21 +3121,34 @@ function LivePreview({
 
   return (
     <div data-card-tpl style={wrapperStyle}>
-      <Template
-        slug={slug}
-        cardData={cardData}
-        photoPath={photoPath}
+      {/* Mirror the public card exactly: wrap the template in the universal
+          block stack so logo, bio, stats, gallery, FAQ, testimonials,
+          brochure, custom sections, buttons & video render live in the
+          preview too (preview mode skips iframes / tip-jar / contact form).
+          Without this the preview dropped every wrapper-rendered field —
+          most visibly on the blank template, which delegates nearly
+          everything to these blocks. */}
+      <UniversalBlocks
+        mode="preview"
+        data={cardData}
+        entryKey={entry?.key ?? null}
         logoPath={logoPath}
-        brandPrimaryHex={brandPrimaryHex}
-        brandAccentHex={brandAccentHex}
-        siteUrl={siteUrl}
-        locale={locale}
-      />
-      <CustomSectionsBlock
-        sections={cardData.customSections}
-        accentHex={brandAccentHex}
         tone={isDarkTemplate ? "dark" : "light"}
-      />
+        primaryHex={brandPrimaryHex}
+        accentHex={brandAccentHex}
+        locale={locale}
+      >
+        <Template
+          slug={slug}
+          cardData={cardData}
+          photoPath={photoPath}
+          logoPath={logoPath}
+          brandPrimaryHex={brandPrimaryHex}
+          brandAccentHex={brandAccentHex}
+          siteUrl={siteUrl}
+          locale={locale}
+        />
+      </UniversalBlocks>
     </div>
   );
 }

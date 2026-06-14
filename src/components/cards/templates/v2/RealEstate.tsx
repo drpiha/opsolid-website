@@ -87,6 +87,7 @@ function getInitials(name: string): string {
 
 interface ReCopy {
   saveContact: string;
+  shareLabel: string;
   callNow: string;
   whatsapp: string;
   email: string;
@@ -103,11 +104,13 @@ interface ReCopy {
   impressum: string;
   privacy: string;
   poweredBy: string;
+  detailLabel: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy> = {
   de: {
     saveContact: "Speichern",
+    shareLabel: "Teilen",
     callNow: "Anrufen",
     whatsapp: "WhatsApp",
     email: "E-Mail",
@@ -124,9 +127,11 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy
     impressum: "Impressum",
     privacy: "Datenschutz",
     poweredBy: "Powered by",
+    detailLabel: "Detay",
   },
   en: {
     saveContact: "Save contact",
+    shareLabel: "Teilen",
     callNow: "Call",
     whatsapp: "WhatsApp",
     email: "Email",
@@ -143,9 +148,11 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy
     impressum: "Imprint",
     privacy: "Privacy",
     poweredBy: "Powered by",
+    detailLabel: "Detay",
   },
   tr: {
     saveContact: "Rehbere kaydet",
+    shareLabel: "Teilen",
     callNow: "Ara",
     whatsapp: "WhatsApp",
     email: "E-posta",
@@ -162,10 +169,12 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy
     impressum: "Künye",
     privacy: "Gizlilik",
     poweredBy: "Powered by",
+    detailLabel: "Detay",
   },
   es: {
 
     saveContact: "Guardar contacto",
+    shareLabel: "Teilen",
     callNow: "Llamar",
     whatsapp: "WhatsApp",
     email: "Correo",
@@ -182,11 +191,13 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy
     impressum: "Aviso legal",
     privacy: "Privacidad",
     poweredBy: "Desarrollado por",
-  
+    detailLabel: "Detay",
+
   },
   it: {
 
     saveContact: "Salva contatto",
+    shareLabel: "Teilen",
     callNow: "Chiama",
     whatsapp: "WhatsApp",
     email: "Email",
@@ -203,11 +214,13 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy
     impressum: "Impressum",
     privacy: "Privacy",
     poweredBy: "Realizzato con",
-  
+    detailLabel: "Detay",
+
   },
   fr: {
 
     saveContact: "Enregistrer le contact",
+    shareLabel: "Teilen",
     callNow: "Appeler",
     whatsapp: "WhatsApp",
     email: "E-mail",
@@ -224,11 +237,13 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy
     impressum: "Mentions légales",
     privacy: "Confidentialité",
     poweredBy: "Propulsé par",
-  
+    detailLabel: "Detay",
+
   },
   ar: {
 
     saveContact: "حفظ جهة الاتصال",
+    shareLabel: "Teilen",
     callNow: "اتصال",
     whatsapp: "واتساب",
     email: "البريد الإلكتروني",
@@ -245,7 +260,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy
     impressum: "بيانات النشر",
     privacy: "الخصوصية",
     poweredBy: "مشغل بواسطة",
-  
+    detailLabel: "Detay",
+
   },
 };
 
@@ -364,7 +380,7 @@ export function RealEstate({
       />
 
       {featuredItems.length > 0 && (
-        <FeaturedListings items={featuredItems} accent={accent} primary={primary} title={t.featuredListings} />
+        <FeaturedListings items={featuredItems} accent={accent} primary={primary} title={t.featuredListings} detailLabel={t.detailLabel} />
       )}
 
       {cardData.bio && (
@@ -814,11 +830,13 @@ function FeaturedListings({
   accent,
   primary,
   title,
+  detailLabel,
 }: {
   items: Array<{ title: string; description?: string; priceLabel?: string; href?: string | null }>;
   accent: string;
   primary: string;
   title: string;
+  detailLabel: string;
 }) {
   return (
     <section className="relative px-6 py-7">
@@ -897,7 +915,7 @@ function FeaturedListings({
                 className="mt-2 flex items-center gap-1.5 text-[11.5px] font-semibold"
                 style={{ color: accent }}
               >
-                <span>Detay</span>
+                <span>{detailLabel}</span>
                 <ArrowUpRight size={12} strokeWidth={2.4} />
               </div>
             </div>
@@ -1157,7 +1175,7 @@ function Footer({
       />
 
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[10.5px] text-white/65">
-        <FooterShare siteUrl={siteUrl} slug={slug} />
+        <FooterShare siteUrl={siteUrl} slug={slug} shareLabel={translations.shareLabel} />
         {impressumUrl && (
           <a
             href={impressumUrl}
@@ -1204,7 +1222,7 @@ function Footer({
   );
 }
 
-function FooterShare({ siteUrl, slug }: { siteUrl: string; slug: string }) {
+function FooterShare({ siteUrl, slug, shareLabel }: { siteUrl: string; slug: string; shareLabel: string }) {
   const url = `${siteUrl}/c/${slug}`;
   return (
     <button
@@ -1224,7 +1242,7 @@ function FooterShare({ siteUrl, slug }: { siteUrl: string; slug: string }) {
       }}
       className="hover:text-white"
     >
-      Teilen
+      {shareLabel}
     </button>
   );
 }

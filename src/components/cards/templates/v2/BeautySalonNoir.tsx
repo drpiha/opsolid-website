@@ -81,6 +81,7 @@ interface BsnCopy {
   studio: string;
   share: string;
   poweredBy: string;
+  estYear: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsnCopy> = {
@@ -101,6 +102,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsnCop
     studio: "Studio",
     share: "Teilen",
     poweredBy: "Powered by",
+    estYear: "© MMXXVI",
   },
   en: {
     premiumBeautyBar: "Premium Beauty Bar",
@@ -119,6 +121,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsnCop
     studio: "Studio",
     share: "Share",
     poweredBy: "Powered by",
+    estYear: "© MMXXVI",
   },
   tr: {
     premiumBeautyBar: "Premium Beauty Bar",
@@ -137,6 +140,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsnCop
     studio: "Studio",
     share: "Paylaş",
     poweredBy: "Powered by",
+    estYear: "© MMXXVI",
   },
   es: {
 
@@ -156,7 +160,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsnCop
     studio: "Estudio",
     share: "Compartir",
     poweredBy: "Desarrollado por",
-  
+    estYear: "© MMXXVI",
+
   },
   it: {
 
@@ -176,7 +181,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsnCop
     studio: "Studio",
     share: "Condividi",
     poweredBy: "Realizzato con",
-  
+    estYear: "© MMXXVI",
+
   },
   fr: {
 
@@ -196,7 +202,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsnCop
     studio: "Studio",
     share: "Partager",
     poweredBy: "Propulsé par",
-  
+    estYear: "© MMXXVI",
+
   },
   ar: {
 
@@ -216,7 +223,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BsnCop
     studio: "استوديو",
     share: "مشاركة",
     poweredBy: "مشغل بواسطة",
-  
+    estYear: "© MMXXVI",
+
   },
 };
 
@@ -540,7 +548,7 @@ export function BeautySalonNoir({
         className="relative z-10 flex items-center justify-between px-8 py-7 text-[9.5px] font-bold uppercase tracking-[2px]"
         style={{ color: INK_SOFT }}
       >
-        <span style={{ color: primary }}>© MMXXVI</span>
+        <span style={{ color: primary }}>{t.estYear}</span>
         <span>{cardData.company}</span>
       </footer>
       <div

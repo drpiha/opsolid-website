@@ -95,6 +95,9 @@ interface ClCopy {
   impressum: string;
   privacy: string;
   share: string;
+  verifiedLabel: string;
+  gdprLabel: string;
+  copyrightNote: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ClCopy> = {
@@ -116,6 +119,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ClCopy
     impressum: "Impressum",
     privacy: "Datenschutz",
     share: "Teilen",
+    verifiedLabel: "Verified",
+    gdprLabel: "GDPR",
+    copyrightNote: "· ALL RIGHTS RESERVED",
   },
   en: {
     bookAppt: "Book",
@@ -135,6 +141,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ClCopy
     impressum: "Imprint",
     privacy: "Privacy",
     share: "Share",
+    verifiedLabel: "Verified",
+    gdprLabel: "GDPR",
+    copyrightNote: "· ALL RIGHTS RESERVED",
   },
   tr: {
     bookAppt: "Randevu",
@@ -154,6 +163,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ClCopy
     impressum: "Künye",
     privacy: "Gizlilik",
     share: "Paylaş",
+    verifiedLabel: "Verified",
+    gdprLabel: "GDPR",
+    copyrightNote: "· ALL RIGHTS RESERVED",
   },
   es: {
 
@@ -174,7 +186,10 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ClCopy
     impressum: "Aviso legal",
     privacy: "Privacidad",
     share: "Compartir",
-  
+    verifiedLabel: "Verified",
+    gdprLabel: "GDPR",
+    copyrightNote: "· ALL RIGHTS RESERVED",
+
   },
   it: {
 
@@ -195,7 +210,10 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ClCopy
     impressum: "Impressum",
     privacy: "Privacy",
     share: "Condividi",
-  
+    verifiedLabel: "Verified",
+    gdprLabel: "GDPR",
+    copyrightNote: "· ALL RIGHTS RESERVED",
+
   },
   fr: {
 
@@ -216,7 +234,10 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ClCopy
     impressum: "Mentions légales",
     privacy: "Confidentialité",
     share: "Partager",
-  
+    verifiedLabel: "Verified",
+    gdprLabel: "GDPR",
+    copyrightNote: "· ALL RIGHTS RESERVED",
+
   },
   ar: {
 
@@ -237,7 +258,10 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ClCopy
     impressum: "بيانات النشر",
     privacy: "الخصوصية",
     share: "مشاركة",
-  
+    verifiedLabel: "Verified",
+    gdprLabel: "GDPR",
+    copyrightNote: "· ALL RIGHTS RESERVED",
+
   },
 };
 
@@ -323,6 +347,8 @@ export function Clinic({
         speciality={cardData.position ?? cardData.title}
         clinicName={cardData.company}
         primary={primary}
+        verifiedLabel={t.verifiedLabel}
+        gdprLabel={t.gdprLabel}
       />
 
       {cardData.bookingUrl && (
@@ -607,11 +633,15 @@ function ProfileBlock({
   speciality,
   clinicName,
   primary,
+  verifiedLabel,
+  gdprLabel,
 }: {
   name: string;
   speciality?: string;
   clinicName?: string;
   primary: string;
+  verifiedLabel: string;
+  gdprLabel: string;
 }) {
   void clinicName;
   return (
@@ -648,7 +678,7 @@ function ProfileBlock({
           }}
         >
           <Shield size={10} strokeWidth={2.5} />
-          Verified
+          {verifiedLabel}
         </span>
         <span
           aria-hidden
@@ -663,7 +693,7 @@ function ProfileBlock({
           }}
         >
           <Sparkles size={10} strokeWidth={2.5} />
-          GDPR
+          {gdprLabel}
         </span>
       </div>
     </section>
@@ -1084,7 +1114,7 @@ function Footer({
         className="text-[11px] font-semibold uppercase tracking-[0.14em]"
         style={{ color: "var(--cl-text-dim)" }}
       >
-        © {new Date().getFullYear()} · ALL RIGHTS RESERVED
+        © {new Date().getFullYear()} {translations.copyrightNote}
       </p>
       <div
         className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[11px]"

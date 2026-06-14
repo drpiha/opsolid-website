@@ -141,6 +141,7 @@ interface PtCopy {
   privacy: string;
   poweredBy: string;
   trainHard: string;
+  shareLabel: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PtCopy> = {
@@ -172,6 +173,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PtCopy
     privacy: "Datenschutz",
     poweredBy: "Powered by",
     trainHard: "TRAIN HARD · STAY HUMBLE",
+    shareLabel: "Share",
   },
   en: {
     bookSession: "BOOK SESSION",
@@ -201,6 +203,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PtCopy
     privacy: "Privacy",
     poweredBy: "Powered by",
     trainHard: "TRAIN HARD · STAY HUMBLE",
+    shareLabel: "Share",
   },
   tr: {
     bookSession: "SEANS AL",
@@ -230,6 +233,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PtCopy
     privacy: "Gizlilik",
     poweredBy: "Powered by",
     trainHard: "ÇOK ÇALIŞ · MÜTEVAZI KAL",
+    shareLabel: "Share",
   },
   es: {
 
@@ -260,7 +264,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PtCopy
     privacy: "Privacidad",
     poweredBy: "Desarrollado por",
     trainHard: "ENTRENA DURO · SÉ HUMILDE",
-  
+    shareLabel: "Share",
+
   },
   it: {
 
@@ -291,7 +296,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PtCopy
     privacy: "Privacy",
     poweredBy: "Realizzato con",
     trainHard: "ALLENATI DURAMENTE · RIMANI UMILE",
-  
+    shareLabel: "Share",
+
   },
   fr: {
 
@@ -322,7 +328,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PtCopy
     privacy: "Confidentialité",
     poweredBy: "Propulsé par",
     trainHard: "ENTRAÎNE-TOI DUR · RESTE HUMBLE",
-  
+    shareLabel: "Share",
+
   },
   ar: {
 
@@ -353,7 +360,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PtCopy
     privacy: "الخصوصية",
     poweredBy: "مشغل بواسطة",
     trainHard: "تدرب بجد · ابقَ متواضعاً",
-  
+    shareLabel: "Share",
+
   },
 };
 
@@ -1431,7 +1439,7 @@ function Footer({
       </p>
 
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[10.5px] text-[#737373]">
-        <FooterShare siteUrl={siteUrl} slug={slug} />
+        <FooterShare siteUrl={siteUrl} slug={slug} shareLabel={translations.shareLabel} />
         {impressumUrl && (
           <a
             href={impressumUrl}
@@ -1470,7 +1478,7 @@ function Footer({
   );
 }
 
-function FooterShare({ siteUrl, slug }: { siteUrl: string; slug: string }) {
+function FooterShare({ siteUrl, slug, shareLabel }: { siteUrl: string; slug: string; shareLabel: string }) {
   const url = `${siteUrl}/c/${slug}`;
   return (
     <button
@@ -1490,7 +1498,7 @@ function FooterShare({ siteUrl, slug }: { siteUrl: string; slug: string }) {
       }}
       className="transition-colors hover:text-white"
     >
-      Share
+      {shareLabel}
     </button>
   );
 }

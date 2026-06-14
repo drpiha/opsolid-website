@@ -57,6 +57,7 @@ interface Copy {
   saveContact: string;
   walletLabel: string;
   poweredBy: string;
+  profileLabel: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
@@ -70,6 +71,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Kontakt speichern",
     walletLabel: "In Wallet speichern",
     poweredBy: "Powered by",
+    profileLabel: "Profil",
   },
   en: {
     metaRoleLabel: "Role",
@@ -81,6 +83,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
+    profileLabel: "Profil",
   },
   tr: {
     metaRoleLabel: "Ünvan",
@@ -92,6 +95,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana Ekle",
     poweredBy: "Powered by",
+    profileLabel: "Profil",
   },
   es: {
 
@@ -104,7 +108,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
-  
+    profileLabel: "Profil",
+
   },
   it: {
 
@@ -117,7 +122,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
-  
+    profileLabel: "Profil",
+
   },
   fr: {
 
@@ -130,7 +136,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
-  
+    profileLabel: "Profil",
+
   },
   ar: {
 
@@ -143,7 +150,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
-  
+    profileLabel: "Profil",
+
   },
 };
 
@@ -411,7 +419,7 @@ export function LayoutPureSwiss({
                 borderBottom: `1px solid ${HAIRLINE}`,
               }}
             >
-              Profil
+              {t.profileLabel}
             </div>
             <div
               style={{
