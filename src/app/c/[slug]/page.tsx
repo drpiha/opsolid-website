@@ -42,6 +42,7 @@ import { FeedbackWidget } from "@/components/cards/FeedbackWidget";
 import { CreateYoursBanner } from "@/components/cards/CreateYoursBanner";
 import { LockScreen } from "@/components/cards/LockScreen";
 import { isPro } from "@/lib/auth/pro";
+import { getSessionUser, REFRESH_COOKIE_NAME } from "@/lib/auth/session";
 import { constantTimeEquals } from "@/lib/constantTime";
 import { contents } from "@/content";
 import { unlockCookieName } from "@/lib/cards/unlock-cookie";
@@ -457,11 +458,23 @@ export default async function CardPage({ params, searchParams }: PageProps) {
     `card_owner_${order.id}`,
   )?.value;
   const ownerToken = ownerTokenFromUrl || ownerTokenFromCookie;
-  const isOwner = Boolean(
+  // Owner via the per-order edit token (URL `?owner=` or the persisted cookie)...
+  const isTokenOwner = Boolean(
     ownerToken &&
       order.editToken &&
       constantTimeEquals(ownerToken, order.editToken),
   );
+  // ...or via an authenticated account that owns this card (dashboard flow), so
+  // a logged-in owner sees owner mode on their own card without the token.
+  let isSessionOwner = false;
+  if (order.userId) {
+    const refreshToken = (await cookies()).get(REFRESH_COOKIE_NAME)?.value ?? null;
+    if (refreshToken) {
+      const sessionUser = await getSessionUser(refreshToken);
+      isSessionOwner = Boolean(sessionUser && sessionUser.id === order.userId);
+    }
+  }
+  const isOwner = isTokenOwner || isSessionOwner;
   const ownerLabels = contents[localeKey].card.owner;
   const langSwitcherLabel = contents[localeKey].card.languageSwitcher;
   const editHref = `/${localeKey}/card/edit/${order.id}?t=${order.editToken ?? ""}`;
