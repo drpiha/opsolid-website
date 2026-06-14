@@ -22,20 +22,27 @@ interface StickySaveBarProps {
   isDirty: boolean;
   formState: FormState;
   onRevert: () => void;
+  /** When the last save failed, the reason — shown right at the Save button so
+   *  the owner sees WHY it didn't save (was previously only visible inside the
+   *  collapsible Publish section). */
+  errorMsg?: string | null;
 }
 
-export function StickySaveBar({ isDirty, formState, onRevert }: StickySaveBarProps) {
+export function StickySaveBar({ isDirty, formState, onRevert, errorMsg }: StickySaveBarProps) {
   const { t } = useLocale();
   const edit = t.products.digitalCard.edit;
 
   const isSaving = formState === "saving";
   const isSaved = formState === "saved";
+  const isError = formState === "error";
 
   return (
     <div
       className={[
         "fixed inset-x-0 bottom-0 z-30 border-t transition-colors duration-300",
-        isDirty
+        isError
+          ? "border-signal-err/50 bg-red-50/95 backdrop-blur-md"
+          : isDirty
           ? "border-copper-300/60 bg-copper-50/95 backdrop-blur-md"
           : "border-line bg-bg-0/90 backdrop-blur-md",
       ].join(" ")}
@@ -43,12 +50,14 @@ export function StickySaveBar({ isDirty, formState, onRevert }: StickySaveBarPro
       data-dirty={isDirty}
       role="status"
       aria-live="polite"
-      aria-label={isDirty ? edit.unsavedChanges : edit.allSaved}
+      aria-label={isError ? (errorMsg ?? edit.savedError) : isDirty ? edit.unsavedChanges : edit.allSaved}
     >
       <div className="mx-auto flex max-w-2xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
-        {/* Left: status label */}
-        <div className="flex items-center gap-2 text-sm text-ink-200">
-          {isSaved ? (
+        {/* Left: status label (or the failure reason) */}
+        <div className="flex min-w-0 items-center gap-2 text-sm text-ink-200">
+          {isError ? (
+            <span className="text-signal-err shrink-0" aria-hidden="true">⚠</span>
+          ) : isSaved ? (
             <CheckCircle2 size={15} className="text-signal-ok shrink-0" />
           ) : isDirty ? (
             <span
@@ -58,14 +67,22 @@ export function StickySaveBar({ isDirty, formState, onRevert }: StickySaveBarPro
           ) : null}
           <span
             className={
-              isSaved
+              isError
+                ? "text-signal-err line-clamp-2 sm:line-clamp-1"
+                : isSaved
                 ? "text-green-700"
                 : isDirty
                 ? "text-ink"
                 : "text-ink-200"
             }
           >
-            {isSaved ? edit.savedSuccess : isDirty ? edit.unsavedChanges : edit.allSaved}
+            {isError
+              ? errorMsg ?? edit.savedError
+              : isSaved
+              ? edit.savedSuccess
+              : isDirty
+              ? edit.unsavedChanges
+              : edit.allSaved}
           </span>
         </div>
 
