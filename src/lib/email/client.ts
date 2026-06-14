@@ -62,6 +62,23 @@ function resolveFrom(override?: string): string {
 }
 
 // ---------------------------------------------------------------------------
+// Parse a from value that may be a bare email ("info@opsolid.de") OR a
+// display form ("OpSolid <info@opsolid.de>" / '"OpSolid" <info@opsolid.de>').
+// Avoids double-wrapping (the SMTP/Brevo "from" used to become
+// `"OpSolid" <OpSolid <info@opsolid.de>>` when CONTACT_FROM_EMAIL carried a
+// display name).
+// ---------------------------------------------------------------------------
+
+function parseFromAddress(from: string): { email: string; name?: string } {
+  const m = from.match(/^\s*"?([^"<]*?)"?\s*<([^>]+)>\s*$/);
+  if (m && m[2]) {
+    const name = m[1].trim();
+    return { email: m[2].trim(), name: name || undefined };
+  }
+  return { email: from.trim() };
+}
+
+// ---------------------------------------------------------------------------
 // Sentry capture helper (optional — silently skipped when Sentry not present)
 // ---------------------------------------------------------------------------
 
@@ -108,10 +125,12 @@ async function sendViaBrevo(
   from: string
 ): Promise<SendEmailResult> {
   const apiKey = process.env.BREVO_API_KEY!;
-  const senderName = process.env.BREVO_SENDER_NAME || "OpSolid";
+  const sender = parseFromAddress(from);
+  const senderName =
+    sender.name || process.env.BREVO_SENDER_NAME || "OpSolid";
 
   const body: Record<string, unknown> = {
-    sender: { email: from, name: senderName },
+    sender: { email: sender.email, name: senderName },
     to: [{ email: input.to }],
     subject: input.subject,
     htmlContent: input.html,
@@ -244,9 +263,13 @@ async function sendViaSmtp(
     auth: { user: smtpUser, pass: smtpPass },
   });
 
+  // Already a display form ("Name <email>")? Use as-is; otherwise wrap the
+  // bare address so the inbox shows a friendly sender.
+  const fromHeader = from.includes("<") ? from : `"OpSolid" <${from}>`;
+
   try {
     const info = await transporter.sendMail({
-      from: `"OpSolid" <${from}>`,
+      from: fromHeader,
       to: input.to,
       replyTo: input.replyTo,
       subject: input.subject,

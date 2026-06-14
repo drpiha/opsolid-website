@@ -191,6 +191,20 @@ async function emailTests() {
     "sendEmail: Brevo plumbs replyTo");
   ok(m.calls[0].headers["api-key"] === "brevo-key", "sendEmail: Brevo api-key header set");
 
+  // Brevo splits a display-form from ("Name <email>") into sender.email + name
+  // instead of double-wrapping it.
+  clearProviders();
+  process.env.BREVO_API_KEY = "brevo-key";
+  m = mockFetch();
+  await sendEmail({ ...baseInput, from: "OpSolid <info@opsolid.de>" });
+  {
+    const sender = m.calls[0].body.sender as { email: string; name: string };
+    ok(
+      sender.email === "info@opsolid.de" && sender.name === "OpSolid",
+      "sendEmail: Brevo splits display-form from into sender.email + name",
+    );
+  }
+
   // Resend when only Resend
   clearProviders();
   process.env.RESEND_API_KEY = "resend-key";
