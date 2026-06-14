@@ -71,6 +71,7 @@ interface BspCopy {
   reviewsLabel: string;
   share: string;
   poweredBy: string;
+  estYear: string;
   studioLabel: string;
 }
 
@@ -92,6 +93,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BspCop
     reviewsLabel: "Bewertungen",
     share: "Teilen",
     poweredBy: "Powered by",
+    estYear: "© MMXXVI",
     studioLabel: "Studio",
   },
   en: {
@@ -111,6 +113,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BspCop
     reviewsLabel: "Reviews",
     share: "Share",
     poweredBy: "Powered by",
+    estYear: "© MMXXVI",
     studioLabel: "Studio",
   },
   tr: {
@@ -130,6 +133,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BspCop
     reviewsLabel: "Yorum",
     share: "Paylaş",
     poweredBy: "Powered by",
+    estYear: "© MMXXVI",
     studioLabel: "Studio",
   },
   es: {
@@ -150,6 +154,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BspCop
     reviewsLabel: "Reseñas",
     share: "Compartir",
     poweredBy: "Desarrollado por",
+    estYear: "© MMXXVI",
     studioLabel: "Studio",
 
   },
@@ -171,6 +176,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BspCop
     reviewsLabel: "Recensioni",
     share: "Condividi",
     poweredBy: "Realizzato con",
+    estYear: "© MMXXVI",
     studioLabel: "Studio",
 
   },
@@ -192,6 +198,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BspCop
     reviewsLabel: "Avis",
     share: "Partager",
     poweredBy: "Propulsé par",
+    estYear: "© MMXXVI",
     studioLabel: "Studio",
 
   },
@@ -213,6 +220,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BspCop
     reviewsLabel: "التقييمات",
     share: "مشاركة",
     poweredBy: "مشغل بواسطة",
+    estYear: "© MMXXVI",
     studioLabel: "Studio",
 
   },
@@ -526,7 +534,7 @@ export function BeautySalonPure({
         className="flex items-center justify-between px-10 py-7 text-[9.5px] font-semibold uppercase tracking-[1.8px]"
         style={{ color: INK_SOFT }}
       >
-        <span>© MMXXVI</span>
+        <span>{t.estYear}</span>
         <span>{cardData.company}</span>
       </footer>
       <div

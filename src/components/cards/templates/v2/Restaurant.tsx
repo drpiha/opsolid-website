@@ -154,6 +154,7 @@ interface RsCopy {
   openToday: string;
   heroTagline: string;
   casaEyebrow: string;
+  copyrightNote: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RsCopy> = {
@@ -187,6 +188,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RsCopy
     openToday: "Heute geöffnet",
     heroTagline: "Cucina · Calore · Casa",
     casaEyebrow: "— Casa di —",
+    copyrightNote: "· with care",
   },
   en: {
     reserve: "Reserve",
@@ -218,6 +220,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RsCopy
     openToday: "Open today",
     heroTagline: "Cucina · Calore · Casa",
     casaEyebrow: "— Casa di —",
+    copyrightNote: "· with care",
   },
   tr: {
     reserve: "Rezervasyon",
@@ -249,6 +252,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RsCopy
     openToday: "Bugün açığız",
     heroTagline: "Cucina · Calore · Casa",
     casaEyebrow: "— Casa di —",
+    copyrightNote: "· with care",
   },
   es: {
 
@@ -281,6 +285,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RsCopy
     openToday: "Abierto hoy",
     heroTagline: "Cucina · Calore · Casa",
     casaEyebrow: "— Casa di —",
+    copyrightNote: "· with care",
 
   },
   it: {
@@ -314,6 +319,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RsCopy
     openToday: "Aperto oggi",
     heroTagline: "Cucina · Calore · Casa",
     casaEyebrow: "— Casa di —",
+    copyrightNote: "· with care",
 
   },
   fr: {

@@ -202,6 +202,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", LcCopy
     poweredBy: "مشغل بواسطة",
     share: "مشاركة",
     profileTagline: "Counsel · Strategy · Discretion",
+    copyrightNote: "· All rights reserved",
 
   },
 };
@@ -884,7 +885,7 @@ function Footer({
         className="lc-mono mb-4 text-[9px]"
         style={{ color: "var(--lc-text-dim)" }}
       >
-        © {new Date().getFullYear()} · All rights reserved
+        © {new Date().getFullYear()} {translations.copyrightNote}
       </p>
 
       <div
