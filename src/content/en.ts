@@ -5163,8 +5163,8 @@ export const content = {
           integrations: ["Postgres", "Node.js / TypeScript", "Python", "n8n", "Zapier (when it makes sense)", "Hetzner", "Custom APIs"],
           faq: [
             { q: "Why not just use Zapier or Make?", a: "We do — when they fit. Zapier and Make are great for simple connectors. They start to hurt at scale (cost, debugging, reliability) and they can't handle business-specific logic. We help you decide where each tool earns its keep, then build the rest." },
-            { q: "How does scoping work?", a: "Free 30-minute discovery call. If we both want to proceed, we run a paid scoping workshop (~€1,500, deducted from project fee if you sign) that produces a written spec and a fixed price. You walk away with the spec either way." },
-            { q: "What's the day rate?", a: "€1,200/day for senior automation engineering, billed in half-day increments. Below this, the work is junior labor or you're getting overcharged on tooling. Project pricing usually beats day rates for well-scoped work — that's the Standard sprint at €4,500." },
+            { q: "How does scoping work?", a: "Free 30-minute discovery call. If we both want to proceed, we run a paid scoping workshop — its fee is credited toward the project if you sign — that produces a written spec and a fixed price. You walk away with the spec either way." },
+            { q: "How do you price the work?", a: "Most engagements are priced per project from a written, fixed-scope spec — not by the hour — so you know the number before we start. Day-rate and monthly retainer options are available for ongoing work. We quote after the scoping workshop." },
             { q: "Do you sign DPAs?", a: "Yes — standard German B2B AVV (Auftragsverarbeitungsvertrag) on every engagement that touches customer data. NDA before scoping if you need to share confidential context." },
           ],
         },

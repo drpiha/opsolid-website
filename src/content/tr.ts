@@ -5132,8 +5132,8 @@ export const content: Content = {
           integrations: ["Postgres", "Node.js / TypeScript", "Python", "n8n", "Zapier (mantıklıysa)", "Hetzner", "Custom API"],
           faq: [
             { q: "Neden sadece Zapier veya Make kullanmıyorsunuz?", a: "Kullanıyoruz — uyduğunda. Zapier ve Make basit connector'lar için yeterli; ölçekte zorlanmaya başlarlar (maliyet, debugging, güvenilirlik) ve işletmeye özel mantığı taşıyamazlar. Hangi aracın yerini hak ettiğine birlikte karar veriyoruz, gerisini biz kuruyoruz." },
-            { q: "Scoping nasıl çalışır?", a: "Ücretsiz 30-dakikalık discovery görüşmesi. İki taraf da devam etmek isterse, ücretli bir scoping workshop'u (~€1.500, sözleşme imzalanırsa proje ücretinden düşülür) çalıştırırız; yazılı spec ve sabit fiyat çıkar. Her durumda spec sizinle gider." },
-            { q: "Günlük tarife nedir?", a: "Senior automation engineering için günlük €1.200, yarım gün artışlarıyla faturalandırılır. Bunun altı junior iş veya tooling'de fazla ödüyorsunuz demek. İyi scope'lanmış işte proje fiyatı genelde günlük tarifeyi yener — bu €4.500'lik Standard sprint'tir." },
+            { q: "Scoping nasıl çalışır?", a: "Ücretsiz 30-dakikalık discovery görüşmesi. İki taraf da devam etmek isterse, ücretli bir scoping workshop'u çalıştırırız — ücreti, sözleşme imzalanırsa proje bedelinden düşülür; yazılı spec ve sabit fiyat çıkar. Her durumda spec sizinle gider." },
+            { q: "İşi nasıl fiyatlandırıyorsunuz?", a: "Çoğu iş, yazılı ve sabit kapsamlı bir spec üzerinden proje bazında fiyatlandırılır — saat başına değil — böylece rakamı başlamadan önce bilirsiniz. Süregelen işler için günlük tarife ve aylık retainer seçenekleri mevcuttur. Teklif, scoping workshop'undan sonra verilir." },
             { q: "AVV imzalıyor musunuz?", a: "Evet — müşteri verisine dokunan her engagement'ta standart Alman B2B AVV (Auftragsverarbeitungsvertrag). Gizli bağlam paylaşmanız gerekiyorsa scoping öncesi NDA." },
           ],
         },

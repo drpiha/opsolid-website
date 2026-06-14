@@ -5131,8 +5131,8 @@ export const content: Content = {
           integrations: ["Postgres", "Node.js / TypeScript", "Python", "n8n", "Zapier (wenn sinnvoll)", "Hetzner", "Custom APIs"],
           faq: [
             { q: "Warum nicht einfach Zapier oder Make verwenden?", a: "Wir tun das — wenn sie passen. Zapier und Make sind großartig für einfache Connectors. Sie schmerzen ab einer gewissen Größe (Kosten, Debugging, Zuverlässigkeit) und können keine geschäftsspezifische Logik. Wir helfen Ihnen zu entscheiden, wo jedes Tool seinen Wert beweist, und bauen den Rest." },
-            { q: "Wie funktioniert Scoping?", a: "Kostenloser 30-Minuten-Discovery-Call. Wenn beide Seiten weitermachen wollen, führen wir einen bezahlten Scoping-Workshop durch (~€1.500, bei Vertragsabschluss von der Projektgebühr abgezogen), der eine schriftliche Spec und einen Festpreis liefert. Sie gehen in beiden Fällen mit der Spec." },
-            { q: "Was ist der Tagessatz?", a: "€1.200/Tag für senior Automation-Engineering, abgerechnet in Halbtages-Schritten. Darunter ist die Arbeit Junior-Niveau oder Sie werden auf Tooling überberechnet. Projektpreise schlagen meist Tagessätze für gut gescopete Arbeit — das ist der Standard-Sprint zu €4.500." },
+            { q: "Wie funktioniert Scoping?", a: "Kostenloser 30-Minuten-Discovery-Call. Wenn beide Seiten weitermachen wollen, führen wir einen bezahlten Scoping-Workshop durch — die Gebühr wird bei Vertragsabschluss auf das Projekt angerechnet —, der eine schriftliche Spec und einen Festpreis liefert. Sie gehen in beiden Fällen mit der Spec." },
+            { q: "Wie kalkulieren Sie die Arbeit?", a: "Die meisten Projekte werden pauschal auf Basis einer schriftlichen, fest umrissenen Spec berechnet — nicht nach Stunden —, sodass Sie die Zahl vor dem Start kennen. Für laufende Arbeit gibt es Tagessatz- und monatliche Retainer-Optionen. Das Angebot folgt nach dem Scoping-Workshop." },
             { q: "Unterschreiben Sie AVVs?", a: "Ja — Standard-deutsche-B2B-AVV (Auftragsverarbeitungsvertrag) bei jedem Engagement, das Kundendaten berührt. NDA vor Scoping, wenn Sie vertraulichen Kontext teilen müssen." },
           ],
         },
