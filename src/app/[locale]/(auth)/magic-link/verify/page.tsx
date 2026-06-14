@@ -3,7 +3,7 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Verifying… | OpSolid",
+  title: "Verifying…",
   robots: { index: false },
 };
 

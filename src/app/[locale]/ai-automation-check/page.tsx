@@ -10,17 +10,17 @@ type Params = { locale?: string };
 
 const META: Record<string, { title: string; description: string }> = {
   de: {
-    title: "AI & Automation Check für Unternehmen | OpSolid",
+    title: "AI & Automation Check für Unternehmen",
     description:
       "Identifizieren Sie konkrete Automatisierungspotenziale in Ihrem Unternehmen. OpSolid analysiert Prozesse und liefert einen umsetzbaren 30-Tage-Plan.",
   },
   en: {
-    title: "AI & Automation Check for Businesses | OpSolid",
+    title: "AI & Automation Check for Businesses",
     description:
       "Identify concrete automation opportunities in your business. OpSolid maps processes and delivers an actionable 30-day plan.",
   },
   tr: {
-    title: "İşletmeniz için AI & Automation Check | OpSolid",
+    title: "İşletmeniz için AI & Automation Check",
     description:
       "Şirketinizdeki somut otomasyon fırsatlarını belirleyin. OpSolid süreçleri analiz eder ve uygulanabilir bir 30 günlük plan teslim eder.",
   },

@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     openGraph: {
-      title: `${post.title} | OpSolid`,
+      title: `${post.title}`,
       description: post.excerpt,
       type: "article",
       url: canonical,

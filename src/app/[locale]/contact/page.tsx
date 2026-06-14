@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description:
     "Get in touch with OpSolid. Book a free consultation to discuss how automation and operational systems can improve your business processes.",
   openGraph: {
-    title: "Contact | OpSolid",
+    title: "Contact",
     description:
       "Book a free consultation to discuss how automation and operational systems can improve your business.",
   },

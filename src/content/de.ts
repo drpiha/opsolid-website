@@ -1693,7 +1693,7 @@ export const content: Content = {
       },
       preview: {
         meta: {
-          title: "Digitale Visitenkarte — Live-Vorschau | OpSolid",
+          title: "Digitale Visitenkarte — Live-Vorschau",
           description:
             "Erstellen Sie Ihre digitale Visitenkarte selbst. Live-Vorschau auf dem Handy, zwischen Vorlagen wischen und kostenlos in Sekunden veröffentlichen.",
         },
@@ -2047,7 +2047,7 @@ export const content: Content = {
       },
       meta: {
         title:
-          "OpSo Smart — Kostenlose digitale Visitenkarte, in Sekunden live | OpSolid",
+          "OpSo Smart — Kostenlose digitale Visitenkarte, in Sekunden live",
         description:
           "Erstellen Sie Ihre digitale Visitenkarte kostenlos und veröffentlichen Sie sie in Sekunden — Link, QR, vCard. EU-Hosting (Frankfurt), DSGVO-nativ. Premium ergänzt eigene Domain, NFC und Analysen.",
       },
@@ -3206,7 +3206,7 @@ export const content: Content = {
         secondaryCta: "Mit uns sprechen",
       },
       meta: {
-        title: "Digitale Rezeption — KI-Empfang für Hotels, Kliniken & Salons | OpSolid",
+        title: "Digitale Rezeption — KI-Empfang für Hotels, Kliniken & Salons",
         description:
           "Eigenständiger KI-Empfang für Service-Betriebe. Webformulare, E-Mail-Triage, optionaler Voice-Agent. DSGVO-nativ, in Deutschland gehostet. Ohne Instagram-Business-Verifizierung.",
       },
@@ -3919,7 +3919,7 @@ export const content: Content = {
 
     leistungen: {
       meta: {
-        title: "Leistungen — KI, Automatisierung & digitale Prozesse | OpSolid",
+        title: "Leistungen — KI, Automatisierung & digitale Prozesse",
         description:
           "OpSolid Leistungen für mittelständische Unternehmen: KI-Beratung, Prozessautomatisierung, Microsoft 365 Automatisierung, interne Tools und KI-Schulungen. Praxisnah, messbar, datenschutzbewusst.",
       },
@@ -4068,7 +4068,7 @@ export const content: Content = {
       kiBeratung: {
         slug: "ki-beratung",
         meta: {
-          title: "KI-Beratung für Mittelstand — Use Cases, Risiko, Roadmap | OpSolid",
+          title: "KI-Beratung für Mittelstand — Use Cases, Risiko, Roadmap",
           description:
             "KI-Beratung für mittelständische Unternehmen in Deutschland. Wir identifizieren lohnende KI-Use-Cases, wägen Nutzen gegen Risiko ab und liefern eine entscheidungsreife Roadmap. Datenschutzbewusst.",
         },
@@ -4154,7 +4154,7 @@ export const content: Content = {
       prozessautomatisierung: {
         slug: "prozessautomatisierung",
         meta: {
-          title: "Prozessautomatisierung für Mittelstand — Power Automate, Make, Python | OpSolid",
+          title: "Prozessautomatisierung für Mittelstand — Power Automate, Make, Python",
           description:
             "Manuelle Workflows automatisieren — Angebote, Rechnungen, Dokumentenerstellung, E-Mail-Routing, Datensynchronisation. Auf den Tools, die Sie bereits bezahlen. DSGVO-nativ.",
         },
@@ -4240,7 +4240,7 @@ export const content: Content = {
       microsoft365: {
         slug: "microsoft-365-automatisierung",
         meta: {
-          title: "Microsoft 365 Automatisierung — Power Automate, SharePoint, Teams | OpSolid",
+          title: "Microsoft 365 Automatisierung — Power Automate, SharePoint, Teams",
           description:
             "Workflows in Microsoft 365 automatisieren: Power Automate Flows, SharePoint-Dokumentenbibliotheken, Teams-Freigaben, Outlook-Routing. EU-gehostet, datenschutzbewusst.",
         },
@@ -4327,7 +4327,7 @@ export const content: Content = {
       interneTools: {
         slug: "interne-tools",
         meta: {
-          title: "Interne Tools & Integrationen — Admin-Panels, Dashboards | OpSolid",
+          title: "Interne Tools & Integrationen — Admin-Panels, Dashboards",
           description:
             "Kleine, fokussierte interne Tools für den Mittelstand: Admin-Konsolen, Freigabe-Queues, Dashboards, Wissensdatenbanken. Auf Systemen, die Sie bereits betreiben. EU-gehostet.",
         },
@@ -4413,7 +4413,7 @@ export const content: Content = {
       kiSchulungen: {
         slug: "ki-schulungen",
         meta: {
-          title: "KI-Schulungen & Richtlinien für den Mittelstand — Sichere, produktive KI-Nutzung | OpSolid",
+          title: "KI-Schulungen & Richtlinien für den Mittelstand — Sichere, produktive KI-Nutzung",
           description:
             "Praxisnahe KI-Schulungen für KMU-Teams: Wie KI sicher und produktiv im Arbeitsalltag genutzt wird. Schriftliche Richtlinien, rollenbasierte Playbooks, DSGVO-konformes Setup.",
         },
@@ -4848,7 +4848,7 @@ export const content: Content = {
 
     productsHub: {
       meta: {
-        title: "Produkte — Voice, OpSo Smart, Chat, WhatsApp, Booking, Email, Lead, Custom, Kutasia | OpSolid",
+        title: "Produkte — Voice, OpSo Smart, Chat, WhatsApp, Booking, Email, Lead, Custom, Kutasia",
         description: "Neun Produkte aus einem Studio: KI-Agenten für Telefon, Chat, WhatsApp, E-Mail und Lead-Qualifizierung, Premium digitale Visitenkarten (OpSo Smart), Custom Workflow-Automatisierung und Kutasia — der unified KI-Workspace für KMU in DACH und der Türkei. Jedes Produkt transparent bepreist und EU-gehostet.",
       },
       hero: {
@@ -4889,7 +4889,7 @@ export const content: Content = {
 
     about: {
       meta: {
-        title: "Über mich — Hasan Dönmez | OpSolid",
+        title: "Über mich — Hasan Dönmez",
         description:
           "OpSolid wird von Hasan Dönmez geführt — praxisnahe KI- und Automatisierungsberatung für mittelständische Unternehmen in Deutschland. Hintergrund in IT-Projektmanagement, Digitalisierung und Prozessoptimierung.",
       },
@@ -4962,7 +4962,7 @@ export const content: Content = {
       },
       pages: {
         chatbotAgent: {
-          meta: { title: "Chatbot Agent — Web-Chat, Knowledge Base, Lead-Capture | OpSolid", description: "Ein konfigurierter Chatbot-Agent für Ihre Site. Knowledge-Base-Ingestion, Lead-Capture und Übergabe an einen Menschen — verdrahtet mit HubSpot, Pipedrive oder Slack. EU-gehostet, GDPR-nativ." },
+          meta: { title: "Chatbot Agent — Web-Chat, Knowledge Base, Lead-Capture", description: "Ein konfigurierter Chatbot-Agent für Ihre Site. Knowledge-Base-Ingestion, Lead-Capture und Übergabe an einen Menschen — verdrahtet mit HubSpot, Pipedrive oder Slack. EU-gehostet, GDPR-nativ." },
           hero: {
             metaChip: "CHATBOT AGENT",
             metaLabel: "[ PRODUKT · 03 ]",
@@ -4990,7 +4990,7 @@ export const content: Content = {
           ],
         },
         whatsappAgent: {
-          meta: { title: "WhatsApp Agent — Business API, automatisierte Antworten, Broadcast | OpSolid", description: "Ein konfigurierter WhatsApp-Business-Agent — automatisierte Antworten, Broadcast-Kampagnen, CRM-Sync und Übergabe an einen Menschen. Meta-WABA-Durchgriff, kein versteckter Aufschlag." },
+          meta: { title: "WhatsApp Agent — Business API, automatisierte Antworten, Broadcast", description: "Ein konfigurierter WhatsApp-Business-Agent — automatisierte Antworten, Broadcast-Kampagnen, CRM-Sync und Übergabe an einen Menschen. Meta-WABA-Durchgriff, kein versteckter Aufschlag." },
           hero: {
             metaChip: "WHATSAPP AGENT",
             metaLabel: "[ PRODUKT · 04 ]",
@@ -5018,7 +5018,7 @@ export const content: Content = {
           ],
         },
         bookingAgent: {
-          meta: { title: "Booking Agent — Web, Voice, WhatsApp Buchungen → Cal.com | OpSolid", description: "Multi-Channel-Buchungs-Agent. Web-Widget, Voice-Intake, WhatsApp-Bestätigungen, No-Show-Recovery — synchronisiert mit Cal.com oder Ihrem eigenen Kalender. EU-gehostet." },
+          meta: { title: "Booking Agent — Web, Voice, WhatsApp Buchungen → Cal.com", description: "Multi-Channel-Buchungs-Agent. Web-Widget, Voice-Intake, WhatsApp-Bestätigungen, No-Show-Recovery — synchronisiert mit Cal.com oder Ihrem eigenen Kalender. EU-gehostet." },
           hero: {
             metaChip: "BOOKING AGENT",
             metaLabel: "[ PRODUKT · 05 ]",
@@ -5046,7 +5046,7 @@ export const content: Content = {
           ],
         },
         emailAgent: {
-          meta: { title: "Email Agent — Inbox-Triage, Auto-Antwort, Eskalation | OpSolid", description: "Ein E-Mail-Automatisierungs-Agent für Shared Inboxes. KI-Triage, konfigurierbare Auto-Antwort, Eskalationsregeln, CRM-Logging. Front-Style UX ohne Front-Preise." },
+          meta: { title: "Email Agent — Inbox-Triage, Auto-Antwort, Eskalation", description: "Ein E-Mail-Automatisierungs-Agent für Shared Inboxes. KI-Triage, konfigurierbare Auto-Antwort, Eskalationsregeln, CRM-Logging. Front-Style UX ohne Front-Preise." },
           hero: {
             metaChip: "EMAIL AGENT",
             metaLabel: "[ PRODUKT · 06 ]",
@@ -5074,7 +5074,7 @@ export const content: Content = {
           ],
         },
         leadQualifierAgent: {
-          meta: { title: "Lead Qualifier Agent — Formular, Chat, Voice → BANT-Scoring | OpSolid", description: "Lead-Qualifizierungs-Agent, der Intake aus jedem Kanal nimmt, gegen Ihre ICP scort und qualifizierte Leads mit vollem Kontext an Ihr CRM pusht." },
+          meta: { title: "Lead Qualifier Agent — Formular, Chat, Voice → BANT-Scoring", description: "Lead-Qualifizierungs-Agent, der Intake aus jedem Kanal nimmt, gegen Ihre ICP scort und qualifizierte Leads mit vollem Kontext an Ihr CRM pusht." },
           hero: {
             metaChip: "LEAD QUALIFIER AGENT",
             metaLabel: "[ PRODUKT · 07 ]",
@@ -5102,7 +5102,7 @@ export const content: Content = {
           ],
         },
         customAutomation: {
-          meta: { title: "Custom Automation — Sprint, Projekt, Retainer | OpSolid", description: "Workflow-Automatisierungs-Builds für deutsches Mid-Market-B2B. Sprint, Projekt oder Retainer-Engagement — Ihr Quellcode, Ihre Daten, kein Vendor-Lock-in." },
+          meta: { title: "Custom Automation — Sprint, Projekt, Retainer", description: "Workflow-Automatisierungs-Builds für deutsches Mid-Market-B2B. Sprint, Projekt oder Retainer-Engagement — Ihr Quellcode, Ihre Daten, kein Vendor-Lock-in." },
           hero: {
             metaChip: "CUSTOM AUTOMATION",
             metaLabel: "[ SERVICE · 08 ]",
@@ -5134,7 +5134,7 @@ export const content: Content = {
 
     pricing: {
       meta: {
-        title: "Preise — Standard, Professional, Enterprise | OpSolid",
+        title: "Preise — Standard, Professional, Enterprise",
         description: "Transparente EUR-Preise für die neun Produkte von OpSolid: Voice Agent, OpSo Smart, Chatbot, WhatsApp, Booking, Email, Lead Qualifier, Custom Automation und Kutasia.",
       },
       hero: {

@@ -1691,7 +1691,7 @@ export const content = {
       },
       preview: {
         meta: {
-          title: "Digital Business Card — Live Preview | OpSolid",
+          title: "Digital Business Card — Live Preview",
           description:
             "Build your own digital business card. Preview it live on your phone, swipe between templates, and publish free in seconds.",
         },
@@ -2050,7 +2050,7 @@ export const content = {
       },
       meta: {
         title:
-          "OpSo Smart — Free digital business card, live in seconds | OpSolid",
+          "OpSo Smart — Free digital business card, live in seconds",
         description:
           "Build your own digital business card for free and publish it in seconds — link, QR, vCard. EU-hosted (Frankfurt), GDPR-native. Premium adds custom domain, NFC and analytics.",
       },
@@ -3209,7 +3209,7 @@ export const content = {
         secondaryCta: "Talk to us",
       },
       meta: {
-        title: "Digital Reception — AI Front Desk for Hotels, Clinics & Salons | OpSolid",
+        title: "Digital Reception — AI Front Desk for Hotels, Clinics & Salons",
         description:
           "A standalone AI front desk for service businesses. Web forms, email triage, optional voice agent. GDPR-native, hosted in Germany. No Instagram Business verification required.",
       },
@@ -3935,7 +3935,7 @@ export const content = {
 
     leistungen: {
       meta: {
-        title: "Services — AI, Automation & Digital Processes | OpSolid",
+        title: "Services — AI, Automation & Digital Processes",
         description:
           "OpSolid services for SMEs: AI consulting, process automation, Microsoft 365 automation, internal tools, and AI training. Practical, measurable, GDPR-conscious.",
       },
@@ -4084,7 +4084,7 @@ export const content = {
       kiBeratung: {
         slug: "ki-beratung",
         meta: {
-          title: "AI Consulting for SMEs — Use Cases, Risk, Roadmap | OpSolid",
+          title: "AI Consulting for SMEs — Use Cases, Risk, Roadmap",
           description:
             "AI consulting for mid-sized businesses in Germany. We identify worthwhile AI use cases, weigh value against risk, and produce a decision-ready roadmap. GDPR-conscious.",
         },
@@ -4170,7 +4170,7 @@ export const content = {
       prozessautomatisierung: {
         slug: "prozessautomatisierung",
         meta: {
-          title: "Process Automation for SMEs — Power Automate, Make, Python | OpSolid",
+          title: "Process Automation for SMEs — Power Automate, Make, Python",
           description:
             "Automate manual workflows — quotes, invoices, document generation, email routing, data sync. Built on the tools you already pay for. GDPR-native.",
         },
@@ -4256,7 +4256,7 @@ export const content = {
       microsoft365: {
         slug: "microsoft-365-automatisierung",
         meta: {
-          title: "Microsoft 365 Automation — Power Automate, SharePoint, Teams | OpSolid",
+          title: "Microsoft 365 Automation — Power Automate, SharePoint, Teams",
           description:
             "Automate workflows inside Microsoft 365: Power Automate flows, SharePoint document libraries, Teams approvals, Outlook routing. EU-hosted, GDPR-conscious.",
         },
@@ -4343,7 +4343,7 @@ export const content = {
       interneTools: {
         slug: "interne-tools",
         meta: {
-          title: "Internal Tools & Integrations — Admin Panels, Dashboards | OpSolid",
+          title: "Internal Tools & Integrations — Admin Panels, Dashboards",
           description:
             "Small, focused internal tools for SMEs: admin consoles, approval queues, dashboards, knowledge bases. Built on systems you already run. EU-hosted.",
         },
@@ -4429,7 +4429,7 @@ export const content = {
       kiSchulungen: {
         slug: "ki-schulungen",
         meta: {
-          title: "AI Training & Guidelines for SMEs — Safe, Productive Use of AI | OpSolid",
+          title: "AI Training & Guidelines for SMEs — Safe, Productive Use of AI",
           description:
             "Practical AI training for SME teams: how to use AI safely and productively in everyday work. Written guidelines, role-based playbooks, GDPR-compliant setup.",
         },
@@ -4864,7 +4864,7 @@ export const content = {
 
     productsHub: {
       meta: {
-        title: "Products — Voice, OpSo Smart, Chat, WhatsApp, Booking, Email, Lead, Custom, Kutasia | OpSolid",
+        title: "Products — Voice, OpSo Smart, Chat, WhatsApp, Booking, Email, Lead, Custom, Kutasia",
         description: "Nine products from one studio: AI agents for phone, chat, WhatsApp, email and lead qualification, premium digital business cards (OpSo Smart), custom workflow automation, and Kutasia — the unified AI workspace for DACH and TR SMBs. Every product transparent-priced and EU-hosted.",
       },
       hero: {
@@ -4921,7 +4921,7 @@ export const content = {
 
     about: {
       meta: {
-        title: "About me — Hasan Dönmez | OpSolid",
+        title: "About me — Hasan Dönmez",
         description:
           "OpSolid is run by Hasan Dönmez — practical AI and automation consulting for mid-sized businesses in Germany. Background in IT project management, digitalisation and process optimisation.",
       },
@@ -4994,7 +4994,7 @@ export const content = {
       },
       pages: {
         chatbotAgent: {
-          meta: { title: "Chatbot Agent — Web chat, knowledge base, lead capture | OpSolid", description: "A configured chatbot agent for your site. Knowledge base ingestion, lead capture, and human hand-off — wired into HubSpot, Pipedrive, or Slack. EU-hosted, GDPR-native." },
+          meta: { title: "Chatbot Agent — Web chat, knowledge base, lead capture", description: "A configured chatbot agent for your site. Knowledge base ingestion, lead capture, and human hand-off — wired into HubSpot, Pipedrive, or Slack. EU-hosted, GDPR-native." },
           hero: {
             metaChip: "CHATBOT AGENT",
             metaLabel: "[ PRODUCT · 03 ]",
@@ -5022,7 +5022,7 @@ export const content = {
           ],
         },
         whatsappAgent: {
-          meta: { title: "WhatsApp Agent — Business API, automated replies, broadcast | OpSolid", description: "A configured WhatsApp Business agent — automated replies, broadcast campaigns, CRM sync, and human hand-off. Meta WABA passthrough, no hidden markup." },
+          meta: { title: "WhatsApp Agent — Business API, automated replies, broadcast", description: "A configured WhatsApp Business agent — automated replies, broadcast campaigns, CRM sync, and human hand-off. Meta WABA passthrough, no hidden markup." },
           hero: {
             metaChip: "WHATSAPP AGENT",
             metaLabel: "[ PRODUCT · 04 ]",
@@ -5050,7 +5050,7 @@ export const content = {
           ],
         },
         bookingAgent: {
-          meta: { title: "Booking Agent — Web, voice, WhatsApp bookings → Cal.com | OpSolid", description: "Multi-channel booking agent. Web widget, voice intake, WhatsApp confirmations, no-show recovery — synced to Cal.com or your own calendar. EU-hosted." },
+          meta: { title: "Booking Agent — Web, voice, WhatsApp bookings → Cal.com", description: "Multi-channel booking agent. Web widget, voice intake, WhatsApp confirmations, no-show recovery — synced to Cal.com or your own calendar. EU-hosted." },
           hero: {
             metaChip: "BOOKING AGENT",
             metaLabel: "[ PRODUCT · 05 ]",
@@ -5078,7 +5078,7 @@ export const content = {
           ],
         },
         emailAgent: {
-          meta: { title: "Email Agent — Inbox triage, auto-reply, escalation | OpSolid", description: "An email automation agent for shared inboxes. AI triage, configurable auto-reply, escalation rules, CRM logging. Front-style UX without Front pricing." },
+          meta: { title: "Email Agent — Inbox triage, auto-reply, escalation", description: "An email automation agent for shared inboxes. AI triage, configurable auto-reply, escalation rules, CRM logging. Front-style UX without Front pricing." },
           hero: {
             metaChip: "EMAIL AGENT",
             metaLabel: "[ PRODUCT · 06 ]",
@@ -5106,7 +5106,7 @@ export const content = {
           ],
         },
         leadQualifierAgent: {
-          meta: { title: "Lead Qualifier Agent — Form, chat, voice intake → BANT scoring | OpSolid", description: "Lead qualification agent that takes intake from any channel, scores against your ICP, and pushes qualified leads to your CRM with full context." },
+          meta: { title: "Lead Qualifier Agent — Form, chat, voice intake → BANT scoring", description: "Lead qualification agent that takes intake from any channel, scores against your ICP, and pushes qualified leads to your CRM with full context." },
           hero: {
             metaChip: "LEAD QUALIFIER AGENT",
             metaLabel: "[ PRODUCT · 07 ]",
@@ -5134,7 +5134,7 @@ export const content = {
           ],
         },
         customAutomation: {
-          meta: { title: "Custom Automation — Sprint, project, retainer | OpSolid", description: "Workflow automation builds for mid-market German B2B. Sprint, project, or retainer engagement — your source code, your data, no vendor lock-in." },
+          meta: { title: "Custom Automation — Sprint, project, retainer", description: "Workflow automation builds for mid-market German B2B. Sprint, project, or retainer engagement — your source code, your data, no vendor lock-in." },
           hero: {
             metaChip: "CUSTOM AUTOMATION",
             metaLabel: "[ SERVICE · 08 ]",
@@ -5166,7 +5166,7 @@ export const content = {
 
     pricing: {
       meta: {
-        title: "Pricing — Standard, Professional, Enterprise | OpSolid",
+        title: "Pricing — Standard, Professional, Enterprise",
         description: "Transparent EUR pricing for OpSolid's nine products: Voice Agent, OpSo Smart, Chatbot, WhatsApp, Booking, Email, Lead Qualifier, Custom Automation, and Kutasia.",
       },
       hero: {

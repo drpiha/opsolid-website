@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { SignupClient } from "./SignupClient";
 
 export const metadata: Metadata = {
-  title: "Create Account | OpSolid",
+  title: "Create Account",
   description: "Create your free OpSolid account and get a digital business card.",
   robots: { index: false },
 };

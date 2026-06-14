@@ -17,17 +17,17 @@ import { isLocale, DEFAULT_LOCALE } from "@/lib/i18n";
 
 const HOME_META: Record<string, { title: string; description: string }> = {
   de: {
-    title: "KI & Automatisierung für Unternehmen | OpSolid",
+    title: "KI & Automatisierung für Unternehmen",
     description:
       "OpSolid unterstützt mittelständische Unternehmen bei KI-Beratung, Prozessautomatisierung und digitalen Workflows. Jetzt kostenloses Erstgespräch anfragen.",
   },
   en: {
-    title: "AI & Automation Consulting for SMEs | OpSolid",
+    title: "AI & Automation Consulting for SMEs",
     description:
       "OpSolid helps small and mid-sized businesses simplify manual tasks, Excel processes and internal workflows with AI and automation. Book a free discovery call.",
   },
   tr: {
-    title: "KOBİ'ler için AI & Otomasyon Danışmanlığı | OpSolid",
+    title: "KOBİ'ler için AI & Otomasyon Danışmanlığı",
     description:
       "OpSolid, KOBİ'lere manuel görevleri, Excel süreçlerini ve dahili iş akışlarını AI ve otomasyonla sadeleştirmede yardımcı olur. Ücretsiz görüşme planlayın.",
   },

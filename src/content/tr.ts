@@ -1693,7 +1693,7 @@ export const content: Content = {
       },
       preview: {
         meta: {
-          title: "Dijital Kartvizit — Canlı Önizleme | OpSolid",
+          title: "Dijital Kartvizit — Canlı Önizleme",
           description:
             "Dijital kartvizitinizi kendiniz oluşturun. Telefonunuzda canlı önizleyin, şablonlar arasında kaydırın ve saniyeler içinde ücretsiz yayınlayın.",
         },
@@ -2048,7 +2048,7 @@ export const content: Content = {
       },
       meta: {
         title:
-          "OpSo Smart — Ücretsiz dijital kartvizit, saniyeler içinde canlı | OpSolid",
+          "OpSo Smart — Ücretsiz dijital kartvizit, saniyeler içinde canlı",
         description:
           "Dijital kartvizitinizi ücretsiz oluşturun ve saniyeler içinde yayınlayın — link, QR, vCard. EU barındırma (Frankfurt), GDPR-yerli. Premium; özel alan adı, NFC ve analitik ekler.",
       },
@@ -3207,7 +3207,7 @@ export const content: Content = {
         secondaryCta: "Bizimle konuşun",
       },
       meta: {
-        title: "Dijital Resepsiyon — Otel, Klinik ve Kuaförler için AI Ön Büro | OpSolid",
+        title: "Dijital Resepsiyon — Otel, Klinik ve Kuaförler için AI Ön Büro",
         description:
           "Hizmet işletmeleri için bağımsız AI resepsiyon. Web formları, e-posta triyajı, opsiyonel ses ajanı. GDPR-yerli, Almanya'da barındırılır. Instagram Business doğrulaması gerektirmez.",
       },
@@ -3920,7 +3920,7 @@ export const content: Content = {
 
     leistungen: {
       meta: {
-        title: "Hizmetler — AI, Otomasyon & Dijital Süreçler | OpSolid",
+        title: "Hizmetler — AI, Otomasyon & Dijital Süreçler",
         description:
           "OpSolid hizmetleri KOBİ'lere yönelik: AI danışmanlığı, süreç otomasyonu, Microsoft 365 otomasyonu, iç araçlar ve AI eğitimleri. Uygulanabilir, ölçülebilir, veri koruması odaklı.",
       },
@@ -4069,7 +4069,7 @@ export const content: Content = {
       kiBeratung: {
         slug: "ki-beratung",
         meta: {
-          title: "KOBİ'ler için AI Danışmanlığı — Use Cases, Risk, Yol Haritası | OpSolid",
+          title: "KOBİ'ler için AI Danışmanlığı — Use Cases, Risk, Yol Haritası",
           description:
             "Almanya'daki KOBİ'lere AI danışmanlığı. Değerli AI kullanım senaryolarını belirliyoruz, faydayı riskle tartıyoruz ve karar verilebilir bir yol haritası teslim ediyoruz. Veri koruması odaklı.",
         },
@@ -4155,7 +4155,7 @@ export const content: Content = {
       prozessautomatisierung: {
         slug: "prozessautomatisierung",
         meta: {
-          title: "KOBİ'ler için Süreç Otomasyonu — Power Automate, Make, Python | OpSolid",
+          title: "KOBİ'ler için Süreç Otomasyonu — Power Automate, Make, Python",
           description:
             "Manuel workflow'ları otomatikleştirin — teklifler, faturalar, doküman üretimi, e-posta yönlendirme, veri senkronizasyonu. Zaten ödediğiniz araçlar üzerinde. DSGVO-native.",
         },
@@ -4241,7 +4241,7 @@ export const content: Content = {
       microsoft365: {
         slug: "microsoft-365-automatisierung",
         meta: {
-          title: "Microsoft 365 Otomasyonu — Power Automate, SharePoint, Teams | OpSolid",
+          title: "Microsoft 365 Otomasyonu — Power Automate, SharePoint, Teams",
           description:
             "Microsoft 365 içindeki workflow'ları otomatikleştirin: Power Automate flow'ları, SharePoint doküman kütüphaneleri, Teams onayları, Outlook yönlendirme. AB-hostlu, veri koruması odaklı.",
         },
@@ -4328,7 +4328,7 @@ export const content: Content = {
       interneTools: {
         slug: "interne-tools",
         meta: {
-          title: "İç Araçlar & Entegrasyonlar — Admin Panelleri, Dashboard'lar | OpSolid",
+          title: "İç Araçlar & Entegrasyonlar — Admin Panelleri, Dashboard'lar",
           description:
             "KOBİ'lere küçük, odaklı iç araçlar: admin konsolları, onay kuyrukları, dashboard'lar, bilgi tabanları. Mevcut sistemlerinizin üzerinde inşa edilmiş. AB-hostlu.",
         },
@@ -4414,7 +4414,7 @@ export const content: Content = {
       kiSchulungen: {
         slug: "ki-schulungen",
         meta: {
-          title: "KOBİ'lere AI Eğitimleri & Politikaları — Güvenli, Verimli AI Kullanımı | OpSolid",
+          title: "KOBİ'lere AI Eğitimleri & Politikaları — Güvenli, Verimli AI Kullanımı",
           description:
             "KOBİ ekipleri için pratik AI eğitimleri: AI'ın günlük işte nasıl güvenli ve verimli kullanılacağı. Yazılı yönergeler, role özel playbook'lar, DSGVO-uyumlu kurulum.",
         },
@@ -4849,7 +4849,7 @@ export const content: Content = {
 
     productsHub: {
       meta: {
-        title: "Ürünler — Voice, OpSo Smart, Chat, WhatsApp, Booking, Email, Lead, Custom, Kutasia | OpSolid",
+        title: "Ürünler — Voice, OpSo Smart, Chat, WhatsApp, Booking, Email, Lead, Custom, Kutasia",
         description: "Tek stüdyodan dokuz ürün: telefon, chat, WhatsApp, e-posta ve lead qualification için yapay zekâ ajanları, premium dijital kartvizit (OpSo Smart), özel workflow otomasyonu ve Kutasia — DACH ve Türkiye'deki KOBİ'ler için unified AI çalışma alanı. Her ürün şeffaf fiyatlı ve EU-hostlu.",
       },
       hero: {
@@ -4890,7 +4890,7 @@ export const content: Content = {
 
     about: {
       meta: {
-        title: "Hakkımda — Hasan Dönmez | OpSolid",
+        title: "Hakkımda — Hasan Dönmez",
         description:
           "OpSolid Hasan Dönmez tarafından yürütülüyor — Almanya'daki KOBİ'lere yönelik pratik AI ve otomasyon danışmanlığı. IT proje yönetimi, dijitalleşme ve süreç optimizasyonunda geçmiş.",
       },
@@ -4963,7 +4963,7 @@ export const content: Content = {
       },
       pages: {
         chatbotAgent: {
-          meta: { title: "Chatbot Agent — Web chat, knowledge base, lead capture | OpSolid", description: "Siteniz için yapılandırılmış chatbot ajanı. Knowledge base ingestion, lead capture ve insana devir — HubSpot, Pipedrive veya Slack ile bağlı. EU-hostlu, GDPR-uyumlu." },
+          meta: { title: "Chatbot Agent — Web chat, knowledge base, lead capture", description: "Siteniz için yapılandırılmış chatbot ajanı. Knowledge base ingestion, lead capture ve insana devir — HubSpot, Pipedrive veya Slack ile bağlı. EU-hostlu, GDPR-uyumlu." },
           hero: {
             metaChip: "CHATBOT AGENT",
             metaLabel: "[ ÜRÜN · 03 ]",
@@ -4991,7 +4991,7 @@ export const content: Content = {
           ],
         },
         whatsappAgent: {
-          meta: { title: "WhatsApp Agent — Business API, otomatik yanıt, broadcast | OpSolid", description: "Yapılandırılmış WhatsApp Business ajanı — otomatik yanıt, broadcast kampanyası, CRM senkron ve insana devir. Meta WABA passthrough, gizli markup yok." },
+          meta: { title: "WhatsApp Agent — Business API, otomatik yanıt, broadcast", description: "Yapılandırılmış WhatsApp Business ajanı — otomatik yanıt, broadcast kampanyası, CRM senkron ve insana devir. Meta WABA passthrough, gizli markup yok." },
           hero: {
             metaChip: "WHATSAPP AGENT",
             metaLabel: "[ ÜRÜN · 04 ]",
@@ -5019,7 +5019,7 @@ export const content: Content = {
           ],
         },
         bookingAgent: {
-          meta: { title: "Booking Agent — Web, voice, WhatsApp randevu → Cal.com | OpSolid", description: "Multi-kanal booking ajanı. Web widget, voice intake, WhatsApp teyit, no-show recovery — Cal.com veya kendi takviminizle senkron. EU-hostlu." },
+          meta: { title: "Booking Agent — Web, voice, WhatsApp randevu → Cal.com", description: "Multi-kanal booking ajanı. Web widget, voice intake, WhatsApp teyit, no-show recovery — Cal.com veya kendi takviminizle senkron. EU-hostlu." },
           hero: {
             metaChip: "BOOKING AGENT",
             metaLabel: "[ ÜRÜN · 05 ]",
@@ -5047,7 +5047,7 @@ export const content: Content = {
           ],
         },
         emailAgent: {
-          meta: { title: "Email Agent — Inbox triage, otomatik yanıt, eskalasyon | OpSolid", description: "Paylaşımlı inbox'lar için e-posta otomasyon ajanı. AI triage, yapılandırılabilir otomatik yanıt, eskalasyon kuralları, CRM logging. Front-style UX, Front fiyatı olmadan." },
+          meta: { title: "Email Agent — Inbox triage, otomatik yanıt, eskalasyon", description: "Paylaşımlı inbox'lar için e-posta otomasyon ajanı. AI triage, yapılandırılabilir otomatik yanıt, eskalasyon kuralları, CRM logging. Front-style UX, Front fiyatı olmadan." },
           hero: {
             metaChip: "EMAIL AGENT",
             metaLabel: "[ ÜRÜN · 06 ]",
@@ -5075,7 +5075,7 @@ export const content: Content = {
           ],
         },
         leadQualifierAgent: {
-          meta: { title: "Lead Qualifier Agent — Form, chat, voice → BANT scoring | OpSolid", description: "Her kanaldan intake alan, ICP'nize karşı scor eden ve nitelikli lead'leri tam bağlamla CRM'inize push eden lead qualification ajanı." },
+          meta: { title: "Lead Qualifier Agent — Form, chat, voice → BANT scoring", description: "Her kanaldan intake alan, ICP'nize karşı scor eden ve nitelikli lead'leri tam bağlamla CRM'inize push eden lead qualification ajanı." },
           hero: {
             metaChip: "LEAD QUALIFIER AGENT",
             metaLabel: "[ ÜRÜN · 07 ]",
@@ -5103,7 +5103,7 @@ export const content: Content = {
           ],
         },
         customAutomation: {
-          meta: { title: "Custom Automation — Sprint, proje, retainer | OpSolid", description: "Alman mid-market B2B için workflow otomasyon inşası. Sprint, proje veya retainer engagement — kaynak kodunuz, verileriniz, vendor lock-in yok." },
+          meta: { title: "Custom Automation — Sprint, proje, retainer", description: "Alman mid-market B2B için workflow otomasyon inşası. Sprint, proje veya retainer engagement — kaynak kodunuz, verileriniz, vendor lock-in yok." },
           hero: {
             metaChip: "CUSTOM AUTOMATION",
             metaLabel: "[ HİZMET · 08 ]",
@@ -5135,7 +5135,7 @@ export const content: Content = {
 
     pricing: {
       meta: {
-        title: "Fiyatlandırma — Standard, Professional, Enterprise | OpSolid",
+        title: "Fiyatlandırma — Standard, Professional, Enterprise",
         description: "OpSolid'in dokuz ürünü için şeffaf EUR fiyatlandırma: Voice Agent, OpSo Smart, Chatbot, WhatsApp, Booking, Email, Lead Qualifier, Custom Automation ve Kutasia.",
       },
       hero: {

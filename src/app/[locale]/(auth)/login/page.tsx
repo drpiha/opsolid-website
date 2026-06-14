@@ -5,7 +5,7 @@ import { getSessionUser, REFRESH_COOKIE_NAME } from "@/lib/auth/session";
 import { LoginClient } from "./LoginClient";
 
 export const metadata: Metadata = {
-  title: "Sign In | OpSolid",
+  title: "Sign In",
   description: "Sign in to your OpSolid account to manage your digital business cards.",
   robots: { index: false },
 };
