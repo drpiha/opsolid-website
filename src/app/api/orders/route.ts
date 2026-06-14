@@ -185,7 +185,15 @@ export async function POST(req: NextRequest) {
       text: renderCardLiveText(liveInput),
     })
       .then((result) => {
-        if (!result.skipped) {
+        if (result.skipped) {
+          // Not delivered (send failed). The edit link is already in the API
+          // response and the resend-link route is the recovery path, so log
+          // loudly rather than swallow — a silent miss is how trade-fair cards
+          // become unrecoverable.
+          console.error(
+            `[orders] card-live email NOT delivered to ${data.contactEmail}: ${result.reason ?? "unknown error"}`
+          );
+        } else {
           console.log(
             `[orders] card-live email sent to ${data.contactEmail} (${result.messageId ?? "no-id"})`
           );

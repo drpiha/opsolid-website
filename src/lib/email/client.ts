@@ -2,9 +2,10 @@
 // EMAIL CLIENT — provider abstraction for auth + transactional emails.
 //
 // Provider precedence (evaluated at call time, not module load):
-//   1. Resend    — RESEND_API_KEY is set
-//   2. SMTP      — SMTP_HOST + SMTP_USER + SMTP_PASS are set
-//   3. Console   — dev fallback; logs full payload, returns ok: true
+//   1. Brevo     — BREVO_API_KEY is set (EU/GDPR sending, matches positioning)
+//   2. Resend    — RESEND_API_KEY is set
+//   3. SMTP      — SMTP_HOST + SMTP_USER + SMTP_PASS are set
+//   4. Console   — dev fallback; logs full payload, returns ok: true
 //
 // Usage:
 //   import { sendEmail } from "@/lib/email/client";
@@ -29,6 +30,9 @@ export interface SendEmailInput {
   html: string;
   /** Plain-text fallback */
   text: string;
+  /** Reply-To address — lead/contact forms set the visitor's email here so a
+   *  reply from the inbox goes straight back to them. */
+  replyTo?: string;
   /** Extra SMTP/Resend headers (e.g. Message-ID, List-Unsubscribe) */
   headers?: Record<string, string>;
 }
@@ -45,6 +49,9 @@ export interface SendEmailResult {
 
 function resolveFrom(override?: string): string {
   if (override) return override;
+  // Brevo path
+  const brevoFrom = process.env.BREVO_FROM_EMAIL;
+  if (brevoFrom) return brevoFrom;
   // Resend path
   const resendFrom = process.env.RESEND_FROM_EMAIL;
   if (resendFrom) return resendFrom;
@@ -71,6 +78,56 @@ async function captureToSentry(err: unknown, context: Record<string, unknown>): 
 }
 
 // ---------------------------------------------------------------------------
+// Provider: Brevo (EU/GDPR — POST https://api.brevo.com/v3/smtp/email)
+// Raw fetch, no SDK. Returns Brevo's messageId on success.
+// ---------------------------------------------------------------------------
+
+async function sendViaBrevo(
+  input: SendEmailInput,
+  from: string
+): Promise<SendEmailResult> {
+  const apiKey = process.env.BREVO_API_KEY!;
+  const senderName = process.env.BREVO_SENDER_NAME || "OpSolid";
+
+  const body: Record<string, unknown> = {
+    sender: { email: from, name: senderName },
+    to: [{ email: input.to }],
+    subject: input.subject,
+    htmlContent: input.html,
+    textContent: input.text,
+  };
+  if (input.replyTo) body.replyTo = { email: input.replyTo };
+  if (input.headers && Object.keys(input.headers).length > 0) {
+    body.headers = input.headers;
+  }
+
+  const res = await fetch("https://api.brevo.com/v3/smtp/email", {
+    method: "POST",
+    headers: {
+      "api-key": apiKey,
+      "Content-Type": "application/json",
+      accept: "application/json",
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok) {
+    const raw = await res.text().catch(() => "(no body)");
+    const errMsg = `Brevo HTTP ${res.status}: ${raw}`;
+    await captureToSentry(new Error(errMsg), {
+      provider: "brevo",
+      to: input.to,
+      subject: input.subject,
+    });
+    console.error("[email:brevo] send failed", errMsg);
+    return { ok: false, error: errMsg };
+  }
+
+  const data = (await res.json().catch(() => ({}))) as { messageId?: string };
+  return { ok: true, messageId: data.messageId };
+}
+
+// ---------------------------------------------------------------------------
 // Provider: Resend
 // ---------------------------------------------------------------------------
 
@@ -87,6 +144,7 @@ async function sendViaResend(
     html: input.html,
     text: input.text,
   };
+  if (input.replyTo) body.reply_to = input.replyTo;
   if (input.headers && Object.keys(input.headers).length > 0) {
     body.headers = input.headers;
   }
@@ -140,6 +198,7 @@ async function sendViaSmtp(
     const info = await transporter.sendMail({
       from: `"OpSolid" <${from}>`,
       to: input.to,
+      replyTo: input.replyTo,
       subject: input.subject,
       html: input.html,
       text: input.text,
@@ -190,12 +249,17 @@ export async function sendEmail(
 ): Promise<SendEmailResult> {
   const from = resolveFrom(input.from);
 
-  // 1. Resend
+  // 1. Brevo (EU/GDPR — the connected real provider when BREVO_API_KEY is set)
+  if (process.env.BREVO_API_KEY) {
+    return sendViaBrevo(input, from);
+  }
+
+  // 2. Resend
   if (process.env.RESEND_API_KEY) {
     return sendViaResend(input, from);
   }
 
-  // 2. SMTP
+  // 3. SMTP
   if (
     process.env.SMTP_HOST &&
     process.env.SMTP_USER &&
@@ -204,6 +268,6 @@ export async function sendEmail(
     return sendViaSmtp(input, from);
   }
 
-  // 3. Console fallback
+  // 4. Console fallback
   return sendViaConsole(input, from);
 }
