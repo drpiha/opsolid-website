@@ -168,40 +168,49 @@ export async function POST(req: NextRequest) {
     // only exists in this response — close the tab on a phone (the trade-fair
     // case) and the card is unrecoverable. Fire-and-forget: the response must
     // not wait on SMTP, and a mail failure must not fail the order.
-    const liveInput = {
-      orderId: order.id,
-      contactName: data.contactName,
-      cardUrl,
-      editToken,
-      locale: normalizeLocale(data.locale),
-      eventUrl: attachedEventSlug
-        ? `${siteUrl}/${data.locale}/events/${attachedEventSlug}`
-        : null,
-    };
-    sendCustomerEmail({
-      to: data.contactEmail,
-      subject: cardLiveSubject(liveInput.locale),
-      html: renderCardLiveHtml(liveInput),
-      text: renderCardLiveText(liveInput),
-    })
-      .then((result) => {
-        if (result.skipped) {
-          // Not delivered (send failed). The edit link is already in the API
-          // response and the resend-link route is the recovery path, so log
-          // loudly rather than swallow — a silent miss is how trade-fair cards
-          // become unrecoverable.
-          console.error(
-            `[orders] card-live email NOT delivered to ${data.contactEmail}: ${result.reason ?? "unknown error"}`
-          );
-        } else {
-          console.log(
-            `[orders] card-live email sent to ${data.contactEmail} (${result.messageId ?? "no-id"})`
-          );
-        }
+    //
+    // Wrapped in try/catch because the template render (cardLiveSubject /
+    // renderCardLiveHtml / renderCardLiveText) runs SYNCHRONOUSLY here — a
+    // throw would 500 the response even though the order was already created,
+    // which looks to the customer like "card creation failed". Email is never
+    // worth failing a created card over.
+    try {
+      const liveInput = {
+        orderId: order.id,
+        contactName: data.contactName,
+        cardUrl,
+        editToken,
+        locale: normalizeLocale(data.locale),
+        eventUrl: attachedEventSlug
+          ? `${siteUrl}/${data.locale}/events/${attachedEventSlug}`
+          : null,
+      };
+      void sendCustomerEmail({
+        to: data.contactEmail,
+        subject: cardLiveSubject(liveInput.locale),
+        html: renderCardLiveHtml(liveInput),
+        text: renderCardLiveText(liveInput),
       })
-      .catch((err) => {
-        console.error("[orders] free-tier card-live email failed:", err);
-      });
+        .then((result) => {
+          if (result.skipped) {
+            // Not delivered (send failed). The edit link is already in the API
+            // response and the resend-link route is the recovery path, so log
+            // loudly rather than swallow.
+            console.error(
+              `[orders] card-live email NOT delivered to ${data.contactEmail}: ${result.reason ?? "unknown error"}`
+            );
+          } else {
+            console.log(
+              `[orders] card-live email sent to ${data.contactEmail} (${result.messageId ?? "no-id"})`
+            );
+          }
+        })
+        .catch((err) => {
+          console.error("[orders] free-tier card-live email failed:", err);
+        });
+    } catch (err) {
+      console.error("[orders] card-live email dispatch threw (non-fatal):", err);
+    }
     return NextResponse.json({ orderId: order.id, editToken, cardUrl, editUrl });
   }
 

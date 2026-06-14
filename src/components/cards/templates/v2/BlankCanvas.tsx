@@ -131,6 +131,16 @@ export function BlankCanvas({
               {subtitle}
             </p>
           )}
+          {/* Slogan / tagline — no universal block renders it, so the blank
+              template surfaces it natively under the name. */}
+          {cardData.tagline && (
+            <p
+              className="mt-2 text-[13.5px] font-medium italic leading-snug"
+              style={{ color: accent }}
+            >
+              {cardData.tagline}
+            </p>
+          )}
         </div>
       </header>
 
