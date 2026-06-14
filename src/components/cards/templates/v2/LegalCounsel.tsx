@@ -88,6 +88,7 @@ interface LcCopy {
   poweredBy: string;
   share: string;
   profileTagline: string;
+  copyrightNote: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", LcCopy> = {
@@ -104,6 +105,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", LcCopy
     poweredBy: "Powered by",
     share: "Teilen",
     profileTagline: "Counsel · Strategy · Discretion",
+    copyrightNote: "· All rights reserved",
   },
   en: {
     practiceAreas: "Practice Areas",
@@ -118,6 +120,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", LcCopy
     poweredBy: "Powered by",
     share: "Share",
     profileTagline: "Counsel · Strategy · Discretion",
+    copyrightNote: "· All rights reserved",
   },
   tr: {
     practiceAreas: "Uzmanlık Alanları",
@@ -132,6 +135,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", LcCopy
     poweredBy: "Powered by",
     share: "Paylaş",
     profileTagline: "Counsel · Strategy · Discretion",
+    copyrightNote: "· All rights reserved",
   },
   es: {
 
@@ -147,6 +151,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", LcCopy
     poweredBy: "Desarrollado por",
     share: "Compartir",
     profileTagline: "Counsel · Strategy · Discretion",
+    copyrightNote: "· All rights reserved",
 
   },
   it: {
@@ -163,6 +168,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", LcCopy
     poweredBy: "Realizzato con",
     share: "Condividi",
     profileTagline: "Counsel · Strategy · Discretion",
+    copyrightNote: "· All rights reserved",
 
   },
   fr: {
@@ -179,6 +185,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", LcCopy
     poweredBy: "Propulsé par",
     share: "Partager",
     profileTagline: "Counsel · Strategy · Discretion",
+    copyrightNote: "· All rights reserved",
 
   },
   ar: {

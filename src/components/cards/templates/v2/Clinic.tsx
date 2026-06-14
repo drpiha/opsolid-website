@@ -260,6 +260,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ClCopy
     share: "مشاركة",
     verifiedLabel: "Verified",
     gdprLabel: "GDPR",
+    copyrightNote: "· ALL RIGHTS RESERVED",
 
   },
 };
@@ -1113,7 +1114,7 @@ function Footer({
         className="text-[11px] font-semibold uppercase tracking-[0.14em]"
         style={{ color: "var(--cl-text-dim)" }}
       >
-        © {new Date().getFullYear()} · ALL RIGHTS RESERVED
+        © {new Date().getFullYear()} {translations.copyrightNote}
       </p>
       <div
         className="mt-3 flex flex-wrap items-center justify-center gap-x-3 gap-y-1.5 text-[11px]"

@@ -202,7 +202,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PhCopy
     share: "Condividi",
     closeLightbox: "Chiudi",
     saveContact: "Salva contatto",
-  
+    copyrightNote: "· ALL RIGHTS RESERVED",
+
   },
   fr: {
 
@@ -224,7 +225,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PhCopy
     share: "Partager",
     closeLightbox: "Fermer",
     saveContact: "Enregistrer le contact",
-  
+    copyrightNote: "· ALL RIGHTS RESERVED",
+
   },
   ar: {
 
@@ -246,7 +248,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", PhCopy
     share: "مشاركة",
     closeLightbox: "إغلاق",
     saveContact: "حفظ جهة الاتصال",
-  
+    copyrightNote: "· ALL RIGHTS RESERVED",
+
   },
 };
 
@@ -992,7 +995,7 @@ function Footer({
         className="ph-eyebrow mt-3"
         style={{ color: "var(--ph-text-30)" }}
       >
-        © {new Date().getFullYear()} · ALL RIGHTS RESERVED
+        © {new Date().getFullYear()} {translations.copyrightNote}
       </div>
     </footer>
   );
