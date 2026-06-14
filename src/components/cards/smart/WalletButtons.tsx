@@ -58,7 +58,7 @@ export function WalletButtons({ slug }: WalletButtonsProps) {
           download
           className={[
             "group inline-flex items-center gap-2 rounded-full",
-            "bg-ink/95 px-4 py-2 text-xs font-semibold tracking-wide text-paper-cool",
+            "bg-ink/95 px-4 py-2 text-xs font-semibold tracking-wide text-neutral-50",
             "ring-1 ring-inset ring-white/10 shadow-[0_1px_0_rgba(255,255,255,0.08)_inset,0_8px_24px_-12px_rgba(0,0,0,0.45)]",
             "transition hover:bg-ink hover:ring-white/15 active:scale-[0.98]",
           ].join(" ")}

@@ -9,7 +9,7 @@ export default function NotFound() {
   const s = t.notFound;
 
   return (
-    <section className="relative flex flex-col items-center justify-center min-h-[80svh] pt-32 pb-20 px-6 bg-white">
+    <section className="relative flex flex-col items-center justify-center min-h-[80svh] pt-32 pb-20 px-6 bg-bg-1">
       <div className="text-center max-w-xl mx-auto">
         <span
           className="block text-brand font-black text-[clamp(8rem,24vw,20rem)] leading-[0.85] tracking-[-0.06em]"

@@ -231,7 +231,7 @@ function ConnectionRow({
 function StatusBadge({ status }: { status: ConnectionStatus }) {
   const className =
     status === "new"
-      ? "bg-amber/30 text-ink"
+      ? "bg-signal-warn/30 text-ink"
       : status === "accepted"
         ? "bg-brand/15 text-brand"
         : "bg-neutral-200 text-ink/60";

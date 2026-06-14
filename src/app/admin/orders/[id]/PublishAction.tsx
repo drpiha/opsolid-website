@@ -43,7 +43,7 @@ export function PublishAction({
   const disabled = busy || pending;
 
   return (
-    <section className="mt-6 rounded-3xl border border-amber/40 bg-amber/10 p-6">
+    <section className="mt-6 rounded-3xl border border-signal-warn/40 bg-signal-warn/10 p-6">
       <h2 className="text-heading-sm text-ink">
         Ready for design review
       </h2>

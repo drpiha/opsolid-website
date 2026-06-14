@@ -95,7 +95,7 @@ export function ImpressumPage() {
       {/* Hero */}
       <section
         aria-labelledby="impressum-title"
-        className="relative pt-32 md:pt-40 pb-10 md:pb-14 bg-white"
+        className="relative pt-32 md:pt-40 pb-10 md:pb-14 bg-bg-1"
       >
         <div className="container-narrow">
           <span className="eyebrow uppercase text-brand mb-4 block">Legal</span>
@@ -109,7 +109,7 @@ export function ImpressumPage() {
       </section>
 
       {/* Notice + body */}
-      <section className="py-12 md:py-20 bg-white">
+      <section className="py-12 md:py-20 bg-bg-1">
         <div className="container-narrow">
           <div className="pop-card p-5 mb-12 text-sm text-ink/80 flex items-start gap-3">
             <span className="eyebrow uppercase text-brand shrink-0 pt-0.5">

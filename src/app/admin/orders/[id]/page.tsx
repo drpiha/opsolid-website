@@ -75,7 +75,7 @@ export default async function OrderDetailPage({ params, searchParams }: PageProp
               order.status === "PUBLISHED"
                 ? "bg-brand/10 text-brand"
                 : order.status === "AWAITING_DESIGN"
-                ? "bg-amber/20 text-ink"
+                ? "bg-signal-warn/20 text-ink"
                 : order.status === "PENDING_PAYMENT"
                 ? "bg-neutral-200 text-ink/70"
                 : "bg-ink/10 text-ink"

@@ -8,7 +8,7 @@ export function PrivacyPage() {
   const s = t.privacy;
 
   return (
-    <section className="pt-32 pb-20 md:pt-40 md:pb-28 bg-white">
+    <section className="pt-32 pb-20 md:pt-40 md:pb-28 bg-bg-1">
       <div className="container-narrow">
         <div className="mb-10 pop-card p-5 text-sm text-ink/80 text-pretty">
           <span className="eyebrow uppercase text-brand block mb-2">Notice</span>
