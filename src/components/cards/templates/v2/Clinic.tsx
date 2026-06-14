@@ -165,6 +165,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ClCopy
     share: "Paylaş",
     verifiedLabel: "Verified",
     gdprLabel: "GDPR",
+    copyrightNote: "· ALL RIGHTS RESERVED",
   },
   es: {
 
@@ -187,6 +188,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ClCopy
     share: "Compartir",
     verifiedLabel: "Verified",
     gdprLabel: "GDPR",
+    copyrightNote: "· ALL RIGHTS RESERVED",
 
   },
   it: {
@@ -210,6 +212,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ClCopy
     share: "Condividi",
     verifiedLabel: "Verified",
     gdprLabel: "GDPR",
+    copyrightNote: "· ALL RIGHTS RESERVED",
 
   },
   fr: {
@@ -233,6 +236,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ClCopy
     share: "Partager",
     verifiedLabel: "Verified",
     gdprLabel: "GDPR",
+    copyrightNote: "· ALL RIGHTS RESERVED",
 
   },
   ar: {

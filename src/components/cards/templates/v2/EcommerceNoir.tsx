@@ -690,7 +690,7 @@ export function EcommerceNoir({
         className="serif italic px-6 py-6 text-center"
         style={{ fontSize: 13, color: MUTED, borderTop: `1px solid ${LINE}` }}
       >
-        © {new Date().getFullYear()} — {cardData.company || cardData.name} Maison
+        © {new Date().getFullYear()} — {cardData.company || cardData.name} {t.maisonLabel}
         {cityFromAddress ? ` · ${cityFromAddress}` : ""}
         <div className="mt-2" style={{ color: DIM, fontStyle: "normal" }}>
           {t.poweredBy}{" "}
