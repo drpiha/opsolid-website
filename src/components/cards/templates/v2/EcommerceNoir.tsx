@@ -90,11 +90,13 @@ interface Copy {
   poweredBy: string;
   qrLabel: string;
   limitedLabel: string;
+  maisonLabel: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     brandPre: "Premium Kollektion",
+    maisonLabel: "Maison",
     brandTag: "Maison fondée en 2021",
     featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
@@ -113,6 +115,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   en: {
     brandPre: "Premium Collection",
+    maisonLabel: "Maison",
     brandTag: "Maison fondée en 2021",
     featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
@@ -131,6 +134,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   tr: {
     brandPre: "Premium Koleksiyon",
+    maisonLabel: "Maison",
     brandTag: "Maison fondée en 2021",
     featuredEyebrow: "— Featured Piece —",
     collectionPre: "SS26",
@@ -150,6 +154,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   es: {
 
     brandPre: "Colección Premium",
+    maisonLabel: "Maison",
     brandTag: "Maison fondée en 2021",
     featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
@@ -170,6 +175,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   it: {
 
     brandPre: "Collezione Premium",
+    maisonLabel: "Maison",
     brandTag: "Maison fondée en 2021",
     featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
@@ -190,6 +196,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   fr: {
 
     brandPre: "Collection Premium",
+    maisonLabel: "Maison",
     brandTag: "Maison fondée en 2021",
     featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",
@@ -210,6 +217,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   ar: {
 
     brandPre: "المجموعة المميزة",
+    maisonLabel: "Maison",
     brandTag: "Maison fondée en 2021",
     featuredEyebrow: "— Featured Piece —",
     collectionPre: "FW26",

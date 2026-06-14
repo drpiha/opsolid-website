@@ -97,6 +97,7 @@ interface ClCopy {
   share: string;
   verifiedLabel: string;
   gdprLabel: string;
+  copyrightNote: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ClCopy> = {
@@ -120,6 +121,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ClCopy
     share: "Teilen",
     verifiedLabel: "Verified",
     gdprLabel: "GDPR",
+    copyrightNote: "· ALL RIGHTS RESERVED",
   },
   en: {
     bookAppt: "Book",
@@ -141,6 +143,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ClCopy
     share: "Share",
     verifiedLabel: "Verified",
     gdprLabel: "GDPR",
+    copyrightNote: "· ALL RIGHTS RESERVED",
   },
   tr: {
     bookAppt: "Randevu",
