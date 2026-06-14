@@ -4764,6 +4764,13 @@ export const content = {
         placeholder: "you@company.de",
         cta: "Subscribe",
         legal: "One email per post. Unsubscribe in one click.",
+        success: "✓ Thanks — we'll let you know when a new piece lands.",
+        error: "Something didn't send. Try again later.",
+      },
+      labels: {
+        featured: "FEATURED",
+        note: "NOTE",
+        minutesSuffix: "MIN",
       },
     },
 

@@ -4749,6 +4749,13 @@ export const content: Content = {
         placeholder: "sen@firma.de",
         cta: "Abone ol",
         legal: "Yazı başına bir e-posta. Tek tıkla abonelikten çık.",
+        success: "✓ Teşekkürler — yeni bir yazı çıkınca haber vereceğiz.",
+        error: "Gönderilemedi. Lütfen daha sonra tekrar deneyin.",
+      },
+      labels: {
+        featured: "ÖNE ÇIKAN",
+        note: "NOT",
+        minutesSuffix: "DK",
       },
     },
 

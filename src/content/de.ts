@@ -4748,6 +4748,13 @@ export const content: Content = {
         placeholder: "sie@firma.de",
         cta: "Abonnieren",
         legal: "Eine E-Mail pro Artikel. Abmeldung mit einem Klick.",
+        success: "✓ Danke — wir melden uns, sobald ein neuer Beitrag erscheint.",
+        error: "Senden fehlgeschlagen. Bitte später erneut versuchen.",
+      },
+      labels: {
+        featured: "EMPFOHLEN",
+        note: "NOTIZ",
+        minutesSuffix: "MIN",
       },
     },
 
