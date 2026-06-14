@@ -12,6 +12,7 @@
     "create-sample-order": "tsx scripts/create-sample-order.ts",
     "test:lead": "tsx scripts/test-lead-email.ts",
     "test:cards": "tsx scripts/test-card-features.ts",
+    "test:email": "tsx scripts/send-test-email.ts",
     "audit:cards": "tsx scripts/audit-template-coverage.ts --check",
     "predeploy": "npm run audit:cards && npm run build"
   },

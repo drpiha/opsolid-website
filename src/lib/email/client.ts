@@ -78,6 +78,27 @@ async function captureToSentry(err: unknown, context: Record<string, unknown>): 
 }
 
 // ---------------------------------------------------------------------------
+// fetch with a hard timeout — a hung provider must not wedge the request
+// (the orders route fires card-live mail fire-and-forget, but the contact +
+// resend-link routes await the send).
+// ---------------------------------------------------------------------------
+
+const EMAIL_HTTP_TIMEOUT_MS = 10_000;
+
+async function fetchWithTimeout(
+  url: string,
+  init: RequestInit
+): Promise<Response> {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), EMAIL_HTTP_TIMEOUT_MS);
+  try {
+    return await fetch(url, { ...init, signal: controller.signal });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Provider: Brevo (EU/GDPR — POST https://api.brevo.com/v3/smtp/email)
 // Raw fetch, no SDK. Returns Brevo's messageId on success.
 // ---------------------------------------------------------------------------
@@ -101,30 +122,48 @@ async function sendViaBrevo(
     body.headers = input.headers;
   }
 
-  const res = await fetch("https://api.brevo.com/v3/smtp/email", {
-    method: "POST",
-    headers: {
-      "api-key": apiKey,
-      "Content-Type": "application/json",
-      accept: "application/json",
-    },
-    body: JSON.stringify(body),
-  });
+  try {
+    const res = await fetchWithTimeout("https://api.brevo.com/v3/smtp/email", {
+      method: "POST",
+      headers: {
+        "api-key": apiKey,
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      body: JSON.stringify(body),
+    });
 
-  if (!res.ok) {
-    const raw = await res.text().catch(() => "(no body)");
-    const errMsg = `Brevo HTTP ${res.status}: ${raw}`;
-    await captureToSentry(new Error(errMsg), {
+    if (!res.ok) {
+      const raw = await res.text().catch(() => "(no body)");
+      // 400/401 almost always means a bad key or an unverified sender —
+      // the #1 Brevo setup gotcha, so spell it out in the log.
+      const hint =
+        res.status === 400 || res.status === 401
+          ? " — verify BREVO_API_KEY and that the sender (BREVO_FROM_EMAIL) is a verified Brevo sender/domain"
+          : "";
+      const errMsg = `Brevo HTTP ${res.status}: ${raw}${hint}`;
+      await captureToSentry(new Error(errMsg), {
+        provider: "brevo",
+        to: input.to,
+        subject: input.subject,
+      });
+      console.error("[email:brevo] send failed", errMsg);
+      return { ok: false, error: errMsg };
+    }
+
+    const data = (await res.json().catch(() => ({}))) as { messageId?: string };
+    return { ok: true, messageId: data.messageId };
+  } catch (err) {
+    // Timeout (abort) or network error — never throw out of the provider.
+    const errMsg = err instanceof Error ? err.message : String(err);
+    await captureToSentry(err, {
       provider: "brevo",
       to: input.to,
       subject: input.subject,
     });
-    console.error("[email:brevo] send failed", errMsg);
+    console.error("[email:brevo] send error", errMsg);
     return { ok: false, error: errMsg };
   }
-
-  const data = (await res.json().catch(() => ({}))) as { messageId?: string };
-  return { ok: true, messageId: data.messageId };
 }
 
 // ---------------------------------------------------------------------------
@@ -149,29 +188,40 @@ async function sendViaResend(
     body.headers = input.headers;
   }
 
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(body),
-  });
+  try {
+    const res = await fetchWithTimeout("https://api.resend.com/emails", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
 
-  if (!res.ok) {
-    const raw = await res.text().catch(() => "(no body)");
-    const errMsg = `Resend HTTP ${res.status}: ${raw}`;
-    await captureToSentry(new Error(errMsg), {
+    if (!res.ok) {
+      const raw = await res.text().catch(() => "(no body)");
+      const errMsg = `Resend HTTP ${res.status}: ${raw}`;
+      await captureToSentry(new Error(errMsg), {
+        provider: "resend",
+        to: input.to,
+        subject: input.subject,
+      });
+      console.error("[email:resend] send failed", errMsg);
+      return { ok: false, error: errMsg };
+    }
+
+    const data = (await res.json().catch(() => ({}))) as { id?: string };
+    return { ok: true, messageId: data.id };
+  } catch (err) {
+    const errMsg = err instanceof Error ? err.message : String(err);
+    await captureToSentry(err, {
       provider: "resend",
       to: input.to,
       subject: input.subject,
     });
-    console.error("[email:resend] send failed", errMsg);
+    console.error("[email:resend] send error", errMsg);
     return { ok: false, error: errMsg };
   }
-
-  const data = (await res.json()) as { id?: string };
-  return { ok: true, messageId: data.id };
 }
 
 // ---------------------------------------------------------------------------
