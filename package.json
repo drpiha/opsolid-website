@@ -11,6 +11,7 @@
     "generate-thumbnails": "tsx scripts/generate-template-previews.ts",
     "create-sample-order": "tsx scripts/create-sample-order.ts",
     "test:lead": "tsx scripts/test-lead-email.ts",
+    "test:cards": "tsx scripts/test-card-features.ts",
     "audit:cards": "tsx scripts/audit-template-coverage.ts --check",
     "predeploy": "npm run audit:cards && npm run build"
   },
