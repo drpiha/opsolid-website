@@ -22,7 +22,7 @@ No separate backend process — Next.js API routes (`src/app/api/`) run within t
 
 ## Architecture
 
-**OpSolid** is a B2B company website built with Next.js 14 App Router, TypeScript, and Tailwind CSS. Brand: "OpSolid" (practical automation & AI systems for business operations, Germany-based). Positioning: independent automation practice — no fake metrics, no "we" team language, no employer references, no inflated claims.
+**OpSolid** is a B2B company website built with Next.js 14 App Router, TypeScript, and Tailwind CSS. Brand: "OpSolid" (practical automation & AI systems for business operations, Germany-based). Positioning: an independent AI & automation **consultancy**, founded by Hasan Dönmez. Voice is **neutral and professional, first-person plural ("we")**. Keep the founder's real identity and background on the About page (E-E-A-T / GEO credibility), but **do not imply a one-person / solo operation** — the "intentionally one-person", "alongside my day job", "no junior delivery" framing is retired. Still: no fake metrics, no invented client logos or case studies, no employer references, no inflated claims.
 
 ### Two products in this repo
 

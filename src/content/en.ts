@@ -3417,7 +3417,7 @@ export const content = {
           training: "AI training & guidelines",
         },
         studio: {
-          about: "About me",
+          about: "About",
           journal: "Insights",
           contact: "Contact",
         },
@@ -4928,9 +4928,9 @@ export const content = {
 
     about: {
       meta: {
-        title: "About me — Hasan Dönmez",
+        title: "About OpSolid — Hasan Dönmez",
         description:
-          "OpSolid is run by Hasan Dönmez — practical AI and automation consulting for mid-sized businesses in Germany. Background in IT project management, digitalisation and process optimisation.",
+          "OpSolid is an independent AI and automation consultancy for mid-sized businesses in Germany, founded by Hasan Dönmez — built on years of IT project management, digitalisation and process optimisation.",
       },
       hero: {
         eyebrow: "[ ABOUT · 2026 ]",
@@ -4940,12 +4940,12 @@ export const content = {
           post: " digital solutions",
         },
         lead:
-          "OpSolid is the independent consulting practice of Hasan Dönmez. The focus is on AI, process automation and digital workflows for mid-sized businesses in Germany — built on years of hands-on IT project management, digitalisation and process work.",
+          "OpSolid is an independent AI and automation consultancy founded by Hasan Dönmez. The focus is AI, process automation and digital workflows for mid-sized businesses in Germany — built on years of hands-on IT project management, digitalisation and process work.",
         primaryCta: "Book a discovery call",
         secondaryCta: "View services",
       },
       principles: {
-        eyebrow: "[ HOW I WORK ]",
+        eyebrow: "[ HOW WE WORK ]",
         heading: "Four principles, kept short",
         items: [
           {
@@ -4974,9 +4974,9 @@ export const content = {
         eyebrow: "[ FOUNDER ]",
         heading: "Hasan Dönmez",
         body: [
-          "I work as an IT project manager and am building OpSolid alongside that role as an independent consulting practice for AI and automation. The combination is intentional: by day I see how digitalisation projects actually run in mid-sized companies — with their constraints, politics, legacy systems and real teams — and that's exactly the perspective I bring into OpSolid engagements.",
-          "Background: hands-on experience in IT project management, digitalisation and process optimisation. The focus is small, mid-sized businesses in Germany — companies that have grown faster than their internal systems and need a measurable next step rather than a platform pitch.",
-          "OpSolid is intentionally one-person: when you book a call, you talk to the person who will do the work. No layers, no junior delivery, no handoff.",
+          "OpSolid is led by Hasan Dönmez, who brings hands-on experience in IT project management and digitalisation inside mid-sized companies. The perspective is deliberate: knowing how transformation actually runs in real organisations — with their constraints, politics, legacy systems and teams — is exactly what shapes OpSolid engagements.",
+          "Background: hands-on experience in IT project management, digitalisation and process optimisation. The focus is small and mid-sized businesses in Germany — companies that have grown faster than their internal systems and need a measurable next step rather than a platform pitch.",
+          "Engagements stay hands-on and senior: you work directly with the people delivering your project — clear ownership, no layers, no junior hand-off.",
         ],
         linkedinLabel: "Hasan on LinkedIn",
         linkedinHref: "https://www.linkedin.com/in/hasan-doenmez/",
@@ -4985,7 +4985,7 @@ export const content = {
         eyebrow: "[ START A CONVERSATION ]",
         heading: "20 minutes is enough to see if we're a fit",
         lead:
-          "Free discovery call: walk me through one operational pain point. I'll tell you whether OpSolid is the right fit, whether the AI & Automation Check is the right first step, or whether you should keep doing what you're doing.",
+          "Free discovery call: walk us through one operational pain point. We'll tell you whether OpSolid is the right fit, whether the AI & Automation Check is the right first step, or whether you should keep doing what you're doing.",
         cta: "Book a discovery call",
       },
     },

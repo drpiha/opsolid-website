@@ -3401,7 +3401,7 @@ export const content: Content = {
           training: "KI-Schulungen & Guidelines",
         },
         studio: {
-          about: "Über mich",
+          about: "Über uns",
           journal: "Wissen",
           contact: "Kontakt",
         },
@@ -4896,24 +4896,24 @@ export const content: Content = {
 
     about: {
       meta: {
-        title: "Über mich — Hasan Dönmez",
+        title: "Über OpSolid — Hasan Dönmez",
         description:
-          "OpSolid wird von Hasan Dönmez geführt — praxisnahe KI- und Automatisierungsberatung für mittelständische Unternehmen in Deutschland. Hintergrund in IT-Projektmanagement, Digitalisierung und Prozessoptimierung.",
+          "OpSolid ist eine unabhängige KI- und Automatisierungsberatung für mittelständische Unternehmen in Deutschland, gegründet von Hasan Dönmez — auf Basis von jahrelangem IT-Projektmanagement, Digitalisierung und Prozessoptimierung.",
       },
       hero: {
-        eyebrow: "[ ÜBER MICH · 2026 ]",
+        eyebrow: "[ ÜBER OPSOLID · 2026 ]",
         title: {
           pre: "Praktische, anwendbare und ",
           italic: "messbare",
           post: " digitale Lösungen",
         },
         lead:
-          "OpSolid ist die unabhängige Beratungspraxis von Hasan Dönmez. Der Fokus liegt auf KI, Prozessautomatisierung und digitalen Workflows für mittelständische Unternehmen in Deutschland — auf Basis von jahrelanger praktischer Arbeit in IT-Projektmanagement, Digitalisierung und Prozessoptimierung.",
+          "OpSolid ist eine unabhängige KI- und Automatisierungsberatung, gegründet von Hasan Dönmez. Der Fokus liegt auf KI, Prozessautomatisierung und digitalen Workflows für mittelständische Unternehmen in Deutschland — auf Basis von jahrelanger praktischer Arbeit in IT-Projektmanagement, Digitalisierung und Prozessoptimierung.",
         primaryCta: "Erstgespräch buchen",
         secondaryCta: "Leistungen ansehen",
       },
       principles: {
-        eyebrow: "[ WIE ICH ARBEITE ]",
+        eyebrow: "[ WIE WIR ARBEITEN ]",
         heading: "Vier Prinzipien, kurz gehalten",
         items: [
           {
@@ -4942,9 +4942,9 @@ export const content: Content = {
         eyebrow: "[ GRÜNDER ]",
         heading: "Hasan Dönmez",
         body: [
-          "Ich arbeite hauptberuflich als IT-Projektmanager und baue OpSolid nebenberuflich als unabhängige Beratungspraxis für KI und Automatisierung auf. Die Kombination ist Absicht: Tagsüber sehe ich, wie Digitalisierungsprojekte in mittelständischen Unternehmen wirklich laufen — mit ihren Zwängen, Politik, Altlasten und realen Teams — und genau diese Perspektive bringe ich in OpSolid-Projekte ein.",
+          "OpSolid wird von Hasan Dönmez geführt, der praktische Erfahrung aus IT-Projektmanagement und Digitalisierung in mittelständischen Unternehmen mitbringt. Diese Perspektive ist Absicht: zu wissen, wie Transformation in realen Organisationen tatsächlich läuft — mit ihren Zwängen, Politik, Altlasten und Teams — prägt genau die OpSolid-Projekte.",
           "Hintergrund: praxisnahe Erfahrung in IT-Projektmanagement, Digitalisierung und Prozessoptimierung. Der Fokus liegt auf kleinen und mittelständischen Unternehmen in Deutschland — Firmen, die schneller gewachsen sind als ihre internen Systeme und einen messbaren nächsten Schritt brauchen, keinen Plattform-Pitch.",
-          "OpSolid ist bewusst Ein-Personen-Beratung: Wenn Sie einen Call buchen, sprechen Sie mit der Person, die die Arbeit macht. Keine Schichten, keine Junior-Übergaben, kein Handoff.",
+          "Projekte bleiben praxisnah und senior: Sie arbeiten direkt mit den Menschen, die Ihr Projekt umsetzen — klare Verantwortung, keine Schichten, keine Junior-Übergaben.",
         ],
         linkedinLabel: "Hasan auf LinkedIn",
         linkedinHref: "https://www.linkedin.com/in/hasan-doenmez/",
@@ -4953,7 +4953,7 @@ export const content: Content = {
         eyebrow: "[ GESPRÄCH STARTEN ]",
         heading: "20 Minuten reichen, um zu sehen ob wir passen",
         lead:
-          "Kostenloses Erstgespräch: Erzählen Sie mir von einem operativen Schmerzpunkt. Ich sage Ihnen, ob OpSolid passt, ob der AI & Automation Check der richtige erste Schritt ist, oder ob Sie weitermachen sollten wie bisher.",
+          "Kostenloses Erstgespräch: Erzählen Sie uns von einem operativen Schmerzpunkt. Wir sagen Ihnen, ob OpSolid passt, ob der AI & Automation Check der richtige erste Schritt ist, oder ob Sie weitermachen sollten wie bisher.",
         cta: "Erstgespräch buchen",
       },
     },

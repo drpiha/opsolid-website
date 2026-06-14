@@ -3402,7 +3402,7 @@ export const content: Content = {
           training: "AI eğitimi & yönergeler",
         },
         studio: {
-          about: "Hakkımda",
+          about: "Hakkımızda",
           journal: "Bilgi",
           contact: "İletişim",
         },
@@ -4897,24 +4897,24 @@ export const content: Content = {
 
     about: {
       meta: {
-        title: "Hakkımda — Hasan Dönmez",
+        title: "OpSolid Hakkında — Hasan Dönmez",
         description:
-          "OpSolid Hasan Dönmez tarafından yürütülüyor — Almanya'daki KOBİ'lere yönelik pratik AI ve otomasyon danışmanlığı. IT proje yönetimi, dijitalleşme ve süreç optimizasyonunda geçmiş.",
+          "OpSolid, Almanya'daki KOBİ'lere yönelik bağımsız bir AI ve otomasyon danışmanlığıdır; Hasan Dönmez tarafından kuruldu — yıllarca süren IT proje yönetimi, dijitalleşme ve süreç optimizasyonuna dayanıyor.",
       },
       hero: {
-        eyebrow: "[ HAKKIMDA · 2026 ]",
+        eyebrow: "[ OPSOLID HAKKINDA · 2026 ]",
         title: {
           pre: "Pratik, uygulanabilir ve ",
           italic: "ölçülebilir",
           post: " dijital çözümler",
         },
         lead:
-          "OpSolid, Hasan Dönmez'in bağımsız danışmanlık pratiğidir. Odak: Almanya'daki KOBİ'lere yönelik AI, süreç otomasyonu ve dijital workflow'lar — yıllarca süren pratik IT proje yönetimi, dijitalleşme ve süreç optimizasyonu çalışmalarına dayanıyor.",
+          "OpSolid, Hasan Dönmez tarafından kurulan bağımsız bir AI ve otomasyon danışmanlığıdır. Odak: Almanya'daki KOBİ'lere yönelik AI, süreç otomasyonu ve dijital workflow'lar — yıllarca süren pratik IT proje yönetimi, dijitalleşme ve süreç optimizasyonu çalışmalarına dayanıyor.",
         primaryCta: "Tanışma görüşmesi planla",
         secondaryCta: "Hizmetleri gör",
       },
       principles: {
-        eyebrow: "[ NASIL ÇALIŞIYORUM ]",
+        eyebrow: "[ NASIL ÇALIŞIYORUZ ]",
         heading: "Dört prensip, kısa tutulmuş",
         items: [
           {
@@ -4943,9 +4943,9 @@ export const content: Content = {
         eyebrow: "[ KURUCU ]",
         heading: "Hasan Dönmez",
         body: [
-          "Tam zamanlı IT proje yöneticisi olarak çalışıyorum ve yan tarafta OpSolid'i AI ve otomasyon için bağımsız bir danışmanlık pratiği olarak kuruyorum. Bu kombinasyon bilinçli: gündüz, dijitalleşme projelerinin orta ölçekli şirketlerde gerçekte nasıl yürüdüğünü görüyorum — kısıtları, politikası, eski sistemleri ve gerçek ekipleriyle — ve bu perspektifi OpSolid projelerine taşıyorum.",
+          "OpSolid, IT proje yönetimi ve dijitalleşme alanında orta ölçekli şirketlerde edindiği pratik deneyimi getiren Hasan Dönmez tarafından yürütülüyor. Bu perspektif bilinçli: dijitalleşmenin gerçek organizasyonlarda nasıl yürüdüğünü — kısıtları, politikası, eski sistemleri ve ekipleriyle — bilmek, OpSolid projelerini tam da bu şekilde biçimlendiriyor.",
           "Geçmiş: IT proje yönetimi, dijitalleşme ve süreç optimizasyonunda pratik deneyim. Odak: Almanya'daki küçük ve orta ölçekli işletmeler — iç sistemlerinden hızlı büyümüş ve platform pitch'i değil, ölçülebilir bir sonraki adım arayan şirketler.",
-          "OpSolid bilinçli olarak tek kişilik: bir görüşme rezerve ettiğinizde, işi yapacak kişiyle konuşuyorsunuz. Katman yok, junior teslimat yok, handoff yok.",
+          "Projeler pratik ve kıdemli yürür: projenizi hayata geçiren kişilerle doğrudan çalışırsınız — net sahiplik, katman yok, junior teslimat yok.",
         ],
         linkedinLabel: "LinkedIn'de Hasan",
         linkedinHref: "https://www.linkedin.com/in/hasan-doenmez/",
@@ -4954,7 +4954,7 @@ export const content: Content = {
         eyebrow: "[ KONUŞMA BAŞLAT ]",
         heading: "Uyumlu olup olmadığımızı görmek için 20 dakika yeterli",
         lead:
-          "Ücretsiz tanışma görüşmesi: bana bir operasyonel acı noktasını anlatın. OpSolid'in uygun olup olmadığını, AI & Automation Check'in doğru ilk adım olup olmadığını ya da yaptığınıza devam etmeniz gerektiğini söylerim.",
+          "Ücretsiz tanışma görüşmesi: bize bir operasyonel acı noktasını anlatın. OpSolid'in uygun olup olmadığını, AI & Automation Check'in doğru ilk adım olup olmadığını ya da yaptığınıza devam etmeniz gerektiğini söyleriz.",
         cta: "Tanışma görüşmesi planla",
       },
     },
