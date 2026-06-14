@@ -3,6 +3,7 @@
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { usePathname } from "next/navigation";
 import { useLocale } from "@/context/LocaleContext";
+import { useAuth } from "@/context/AuthContext";
 
 /**
  * Footer — consulting-positioning rewrite (2026-05). Old product columns
@@ -13,11 +14,14 @@ import { useLocale } from "@/context/LocaleContext";
 export function Footer() {
   const pathname = usePathname();
   const { t } = useLocale();
+  const auth = useAuth();
   const f = t.v2.footer;
+  const account = t.v2.nav.account;
   const year = new Date().getFullYear();
 
-  // Mirror Header — hide on customer self-service surfaces.
-  if (pathname && /\/card\/edit\//.test(pathname)) return null;
+  // Mirror Header — hide on customer self-service surfaces (card editor +
+  // the OpSo Smart dashboard, which has its own chrome).
+  if (pathname && /\/(card\/edit|dashboard)(\/|$)/.test(pathname)) return null;
 
   return (
     <footer className="os-footer">
@@ -71,6 +75,13 @@ export function Footer() {
                 </li>
                 <li>
                   <Link href="/contact">{f.cols.studio.contact}</Link>
+                </li>
+                <li>
+                  {auth.status === "authed" ? (
+                    <Link href="/dashboard/cards">{account.myCards}</Link>
+                  ) : (
+                    <Link href="/login">{account.login}</Link>
+                  )}
                 </li>
               </ul>
             </div>

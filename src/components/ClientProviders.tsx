@@ -2,6 +2,7 @@
 
 import { LocaleProvider } from "@/context/LocaleContext";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { AuthProvider } from "@/context/AuthContext";
 import type { Locale } from "@/lib/i18n";
 
 export function ClientProviders({
@@ -13,7 +14,9 @@ export function ClientProviders({
 }) {
   return (
     <ThemeProvider>
-      <LocaleProvider initialLocale={initialLocale}>{children}</LocaleProvider>
+      <LocaleProvider initialLocale={initialLocale}>
+        <AuthProvider>{children}</AuthProvider>
+      </LocaleProvider>
     </ThemeProvider>
   );
 }

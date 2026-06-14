@@ -3366,6 +3366,12 @@ export const content: Content = {
       journal: "Bilgi",
       contact: "İletişim",
       cta: "Ücretsiz görüşme planla",
+      account: {
+        login: "Giriş",
+        myCards: "Kartlarım",
+        logout: "Çıkış",
+        menuLabel: "Hesap",
+      },
       servicesDropdown: {
         "ki-beratung": { title: "AI danışmanlığı", sub: "Use cases · risk · yol haritası" },
         prozessautomatisierung: { title: "Süreç otomasyonu", sub: "Workflow · API · otomasyon" },

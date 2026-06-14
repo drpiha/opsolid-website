@@ -67,6 +67,15 @@ export function DashboardChrome({ userEmail, locale }: Props) {
           >
             {SITE_CONFIG.name}
           </a>
+          {/* Heavy features (Inbox / Playbooks / Channels) are intentionally
+              hidden from the nav for now — routes still exist if visited
+              directly. Keep the account experience focused on cards. */}
+          <a
+            href={`/${locale}/dashboard/cards`}
+            className="hidden sm:inline-flex items-center text-xs font-medium text-ink-400 transition-colors hover:text-ink"
+          >
+            {locale === "de" ? "Karten" : locale === "tr" ? "Kartlarım" : "Cards"}
+          </a>
           <a
             href={`/${locale}/discover`}
             className="hidden sm:inline-flex items-center text-xs font-medium text-ink-400 transition-colors hover:text-ink"
@@ -78,24 +87,6 @@ export function DashboardChrome({ userEmail, locale }: Props) {
             className="hidden sm:inline-flex items-center text-xs font-medium text-ink-400 transition-colors hover:text-ink"
           >
             {locale === "de" ? "Kontakte" : locale === "tr" ? "Kişiler" : "Contacts"}
-          </a>
-          <a
-            href={`/${locale}/dashboard/inbox`}
-            className="hidden sm:inline-flex items-center text-xs font-medium text-ink-400 transition-colors hover:text-ink"
-          >
-            {locale === "de" ? "Posteingang" : locale === "tr" ? "Gelen Kutusu" : "Inbox"}
-          </a>
-          <a
-            href={`/${locale}/dashboard/playbooks`}
-            className="hidden md:inline-flex items-center text-xs font-medium text-ink-400 transition-colors hover:text-ink"
-          >
-            Playbooks
-          </a>
-          <a
-            href={`/${locale}/dashboard/channels`}
-            className="hidden md:inline-flex items-center text-xs font-medium text-ink-400 transition-colors hover:text-ink"
-          >
-            {locale === "de" ? "Kanäle" : locale === "tr" ? "Kanallar" : "Channels"}
           </a>
         </div>
 
@@ -183,32 +174,18 @@ export function DashboardChrome({ userEmail, locale }: Props) {
                 </div>
 
                 <a
+                  href={`/${locale}/dashboard/cards`}
+                  onClick={() => setMenuOpen(false)}
+                  className="flex w-full items-center gap-2 px-4 py-2.5 text-sm text-ink-400 transition-colors hover:bg-bg-2 hover:text-ink"
+                >
+                  {locale === "de" ? "Karten" : locale === "tr" ? "Kartlarım" : "Cards"}
+                </a>
+                <a
                   href={`/${locale}/dashboard/contacts`}
                   onClick={() => setMenuOpen(false)}
                   className="flex w-full items-center gap-2 px-4 py-2.5 text-sm text-ink-400 transition-colors hover:bg-bg-2 hover:text-ink"
                 >
                   {locale === "de" ? "Kontakte" : locale === "tr" ? "Kişiler" : "Contacts"}
-                </a>
-                <a
-                  href={`/${locale}/dashboard/inbox`}
-                  onClick={() => setMenuOpen(false)}
-                  className="flex w-full items-center gap-2 px-4 py-2.5 text-sm text-ink-400 transition-colors hover:bg-bg-2 hover:text-ink"
-                >
-                  {locale === "de" ? "Posteingang" : locale === "tr" ? "Gelen Kutusu" : "Inbox"}
-                </a>
-                <a
-                  href={`/${locale}/dashboard/playbooks`}
-                  onClick={() => setMenuOpen(false)}
-                  className="flex w-full items-center gap-2 px-4 py-2.5 text-sm text-ink-400 transition-colors hover:bg-bg-2 hover:text-ink"
-                >
-                  Playbooks
-                </a>
-                <a
-                  href={`/${locale}/dashboard/channels`}
-                  onClick={() => setMenuOpen(false)}
-                  className="flex w-full items-center gap-2 px-4 py-2.5 text-sm text-ink-400 transition-colors hover:bg-bg-2 hover:text-ink"
-                >
-                  {locale === "de" ? "Kanäle" : locale === "tr" ? "Kanallar" : "Channels"}
                 </a>
                 <button
                   type="button"

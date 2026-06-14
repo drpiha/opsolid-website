@@ -1,10 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { usePathname } from "next/navigation";
 import { useLocale } from "@/context/LocaleContext";
+import { useAuth } from "@/context/AuthContext";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { cn } from "@/lib/utils";
 import type { Locale } from "@/content";
@@ -72,6 +73,7 @@ const VISIBLE_LOCALES: Locale[] = ["de", "en", "tr"];
 export function Header() {
   const pathname = usePathname();
   const { locale, setLocale, t } = useLocale();
+  const auth = useAuth();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const navLabels = t.v2.nav;
 
@@ -88,8 +90,9 @@ export function Header() {
     return () => window.removeEventListener("popstate", onPop);
   }, [isMobileOpen]);
 
-  // Hide marketing chrome on customer self-service surfaces.
-  if (pathname && /\/card\/edit\//.test(pathname)) return null;
+  // Hide marketing chrome on customer self-service surfaces — the card editor
+  // and the OpSo Smart dashboard (which has its own DashboardChrome topbar).
+  if (pathname && /\/(card\/edit|dashboard)(\/|$)/.test(pathname)) return null;
 
   return (
     <header className="os-header" role="banner">
@@ -169,6 +172,9 @@ export function Header() {
           <div className="hidden md:inline-flex">
             <ThemeToggle />
           </div>
+          <div className="hidden md:inline-flex">
+            <AccountMenu />
+          </div>
           <Link
             href="/contact"
             className="btn btn-primary btn-sm hidden md:inline-flex"
@@ -235,6 +241,30 @@ export function Header() {
                         </li>
                       );
                     })}
+
+                    {auth.status === "authed" ? (
+                      <li className="os-mobile-item">
+                        <Dialog.Close asChild>
+                          <Link href="/dashboard/cards" className="os-mobile-link">
+                            <span className="os-mobile-link-label">
+                              {navLabels.account.myCards}
+                            </span>
+                            <span aria-hidden="true" className="os-mobile-arrow">→</span>
+                          </Link>
+                        </Dialog.Close>
+                      </li>
+                    ) : auth.status === "guest" ? (
+                      <li className="os-mobile-item">
+                        <Dialog.Close asChild>
+                          <Link href="/login" className="os-mobile-link">
+                            <span className="os-mobile-link-label">
+                              {navLabels.account.login}
+                            </span>
+                            <span aria-hidden="true" className="os-mobile-arrow">→</span>
+                          </Link>
+                        </Dialog.Close>
+                      </li>
+                    ) : null}
                   </ul>
 
                   <div className="os-mobile-cta-wrap">
@@ -270,6 +300,15 @@ export function Header() {
                     <div className="os-mobile-theme-row">
                       <ThemeToggle />
                     </div>
+                    {auth.status === "authed" && (
+                      <button
+                        type="button"
+                        onClick={() => void auth.logout()}
+                        className="mt-3 text-sm font-medium text-ink-400 transition-colors hover:text-copper-500"
+                      >
+                        {navLabels.account.logout}
+                      </button>
+                    )}
                   </div>
                 </nav>
               </Dialog.Content>
@@ -278,5 +317,83 @@ export function Header() {
         </div>
       </div>
     </header>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// AccountMenu — desktop login / account control in the header right cluster.
+//   • loading → reserved space (no layout shift)
+//   • guest   → "Log in" link → /login
+//   • authed  → avatar dropdown → My cards (/dashboard/cards) · Sign out
+// ---------------------------------------------------------------------------
+function AccountMenu() {
+  const { t } = useLocale();
+  const a = t.v2.nav.account;
+  const { status, user, logout } = useAuth();
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  // Reserve avatar-sized space while resolving to avoid header layout shift.
+  if (status === "loading") {
+    return <span aria-hidden="true" className="inline-block h-8 w-8" />;
+  }
+
+  if (status === "guest" || !user) {
+    return (
+      <Link href="/login" className="os-nav-link">
+        {a.login}
+      </Link>
+    );
+  }
+
+  const initial = (user.name?.trim() || user.email).charAt(0).toUpperCase();
+
+  return (
+    <div ref={ref} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        aria-haspopup="menu"
+        aria-expanded={open}
+        aria-label={a.menuLabel}
+        className="flex h-8 w-8 items-center justify-center rounded-full bg-copper-500/15 text-sm font-semibold text-copper-600 transition-colors hover:bg-copper-500/25"
+      >
+        {initial}
+      </button>
+      {open && (
+        <div
+          role="menu"
+          className="absolute right-0 top-10 z-50 w-44 rounded-xl border border-line bg-bg-1 py-1 shadow-lifted"
+        >
+          <Link
+            href="/dashboard/cards"
+            role="menuitem"
+            onClick={() => setOpen(false)}
+            className="flex w-full items-center gap-2 px-4 py-2.5 text-sm text-ink transition-colors hover:bg-bg-2"
+          >
+            {a.myCards}
+          </Link>
+          <button
+            type="button"
+            role="menuitem"
+            onClick={() => {
+              setOpen(false);
+              void logout();
+            }}
+            className="flex w-full items-center gap-2 px-4 py-2.5 text-sm text-ink-300 transition-colors hover:bg-bg-2 hover:text-copper-500"
+          >
+            {a.logout}
+          </button>
+        </div>
+      )}
+    </div>
   );
 }

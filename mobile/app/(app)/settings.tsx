@@ -283,7 +283,7 @@ export default function SettingsScreen() {
         next === 'ar' ? 'إعادة تشغيل مطلوبة' : 'Restart required',
         next === 'ar'
           ? 'يرجى إغلاق التطبيق وإعادة فتحه لتفعيل اتجاه الكتابة من اليمين إلى اليسار.'
-          : 'Please close and reopen Verso to apply the new text direction.',
+          : 'Please close and reopen OpSo Smart to apply the new text direction.',
         [{ text: 'OK' }],
       );
     }

@@ -418,7 +418,7 @@ export default function PublicCardScreen() {
           {/* "by OpSolid" credit */}
           <Text style={[typography.caption, styles.creditLine, { color: theme.textFaint }]}>
             powered by{' '}
-            <Text style={{ color: accentCredit, fontStyle: 'italic' }}>Verso by OpSolid</Text>
+            <Text style={{ color: accentCredit, fontStyle: 'italic' }}>OpSo Smart</Text>
           </Text>
         </Card>
 

@@ -3381,6 +3381,12 @@ export const content = {
       journal: "Insights",
       contact: "Contact",
       cta: "Book a call",
+      account: {
+        login: "Log in",
+        myCards: "My cards",
+        logout: "Sign out",
+        menuLabel: "Account",
+      },
       servicesDropdown: {
         "ki-beratung": { title: "AI consulting", sub: "Use cases · risk · roadmap" },
         prozessautomatisierung: { title: "Process automation", sub: "Workflows · API · automation" },

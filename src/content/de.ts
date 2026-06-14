@@ -3365,6 +3365,12 @@ export const content: Content = {
       journal: "Wissen",
       contact: "Kontakt",
       cta: "Erstgespräch buchen",
+      account: {
+        login: "Anmelden",
+        myCards: "Meine Karten",
+        logout: "Abmelden",
+        menuLabel: "Konto",
+      },
       servicesDropdown: {
         "ki-beratung": { title: "KI-Beratung", sub: "Use Cases · Risiko · Roadmap" },
         prozessautomatisierung: { title: "Prozessautomatisierung", sub: "Workflows · API · Automation" },

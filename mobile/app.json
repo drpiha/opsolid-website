@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Verso",
+    "name": "OpSo Smart",
     "slug": "opsolid-mobile",
     "version": "0.1.0",
     "orientation": "portrait",
@@ -17,10 +17,10 @@
       "bundleIdentifier": "de.opsolid.mobile",
       "associatedDomains": ["applinks:opsolid.de"],
       "infoPlist": {
-        "NSCameraUsageDescription": "Verso needs camera access to take a profile photo.",
-        "NSPhotoLibraryUsageDescription": "Verso needs photo library access to set a profile photo.",
-        "NSFaceIDUsageDescription": "Verso uses Face ID to protect your account.",
-        "NSContactsUsageDescription": "Verso saves cards to your Contacts so you can find them later."
+        "NSCameraUsageDescription": "OpSo Smart needs camera access to take a profile photo.",
+        "NSPhotoLibraryUsageDescription": "OpSo Smart needs photo library access to set a profile photo.",
+        "NSFaceIDUsageDescription": "OpSo Smart uses Face ID to protect your account.",
+        "NSContactsUsageDescription": "OpSo Smart saves cards to your Contacts so you can find them later."
       }
     },
     "android": {
@@ -70,14 +70,14 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "Verso needs photo library access to set a profile photo.",
-          "cameraPermission": "Verso needs camera access to take a profile photo."
+          "photosPermission": "OpSo Smart needs photo library access to set a profile photo.",
+          "cameraPermission": "OpSo Smart needs camera access to take a profile photo."
         }
       ],
       [
         "expo-contacts",
         {
-          "contactsPermission": "Verso saves cards to your Contacts so you can find them later."
+          "contactsPermission": "OpSo Smart saves cards to your Contacts so you can find them later."
         }
       ]
     ],
