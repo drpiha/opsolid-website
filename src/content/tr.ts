@@ -1880,7 +1880,7 @@ export const content: Content = {
           // Düzenlenebilir bölüm başlıkları
           labelsSection: "Bölüm başlıkları (opsiyonel)",
           labelsHint:
-            'Kartınızdaki herhangi bir başlığı yeniden adlandırın — örn. "Hizmetler" → "Menü". Şablon varsayılanını korumak için boş bırakın.',
+            'Bunlar kartınızdaki bölüm BAŞLIKLARINI yeniden adlandırır (örn. "Hizmetler" → "Menü"). İçeriği yukarıdaki bölümlerden girersiniz — boş bıraktığınız bir bölüm (ve başlığı) kartta görünmez. Boş bırakırsanız varsayılan kalır.',
           customSectionAdd: "Bölüm ekle",
           customSectionTitle: "Başlık",
           customSectionTitlePh: "Örn. Diller, Ödüller, Basın",
