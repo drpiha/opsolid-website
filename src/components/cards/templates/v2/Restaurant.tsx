@@ -353,6 +353,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RsCopy
     openToday: "Ouvert aujourd'hui",
     heroTagline: "Cucina · Calore · Casa",
     casaEyebrow: "— Casa di —",
+    copyrightNote: "· with care",
 
   },
   ar: {
@@ -386,6 +387,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RsCopy
     openToday: "مفتوح اليوم",
     heroTagline: "Cucina · Calore · Casa",
     casaEyebrow: "— Casa di —",
+    copyrightNote: "· with care",
 
   },
 };
@@ -1404,7 +1406,7 @@ function Footer({
           className="rs-italic mt-0.5 text-[11.5px]"
           style={{ color: onPrimary, opacity: 0.75 }}
         >
-          © {new Date().getFullYear()} · with care
+          © {new Date().getFullYear()} {translations.copyrightNote}
         </div>
       </div>
 

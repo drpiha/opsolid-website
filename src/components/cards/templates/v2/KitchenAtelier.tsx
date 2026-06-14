@@ -103,6 +103,7 @@ interface KaCopy {
   reservationCta: string;
   whatsappLabel: string;
   findUsLabel: string;
+  copyrightNote: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy> = {
@@ -126,6 +127,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy
     reservationCta: "Reservation",
     whatsappLabel: "WhatsApp",
     findUsLabel: "Find us",
+    copyrightNote: "· with care",
   },
   en: {
     tastingMenu: "Tonight's Tasting",
@@ -147,6 +149,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy
     reservationCta: "Reservation",
     whatsappLabel: "WhatsApp",
     findUsLabel: "Find us",
+    copyrightNote: "· with care",
   },
   tr: {
     tastingMenu: "Bu Akşam",
@@ -168,6 +171,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy
     reservationCta: "Reservation",
     whatsappLabel: "WhatsApp",
     findUsLabel: "Find us",
+    copyrightNote: "· with care",
   },
   es: {
 
@@ -190,6 +194,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy
     reservationCta: "Reservation",
     whatsappLabel: "WhatsApp",
     findUsLabel: "Find us",
+    copyrightNote: "· with care",
 
   },
   it: {
@@ -213,6 +218,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy
     reservationCta: "Reservation",
     whatsappLabel: "WhatsApp",
     findUsLabel: "Find us",
+    copyrightNote: "· with care",
 
   },
   fr: {
@@ -236,6 +242,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy
     reservationCta: "Reservation",
     whatsappLabel: "WhatsApp",
     findUsLabel: "Find us",
+    copyrightNote: "· with care",
 
   },
   ar: {
@@ -259,6 +266,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy
     reservationCta: "Reservation",
     whatsappLabel: "WhatsApp",
     findUsLabel: "Find us",
+    copyrightNote: "· with care",
 
   },
 };
@@ -1164,7 +1172,7 @@ function Footer({
           {company}
         </div>
         <div className="ka-italic mt-0.5 text-[11.5px] opacity-75">
-          © {new Date().getFullYear()} · with care
+          © {new Date().getFullYear()} {translations.copyrightNote}
         </div>
       </div>
 
