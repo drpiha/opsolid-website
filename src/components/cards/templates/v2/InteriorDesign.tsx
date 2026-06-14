@@ -40,6 +40,7 @@ import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { resolveLocation, resolveTagline } from "./shared/profileExtras";
+import { resolveLabels } from "./shared/resolveLabels";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#7c6450"; // walnut/taupe
@@ -97,7 +98,7 @@ interface Copy {
   contact: string;
 }
 
-const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
+export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     issueMark: "Issue Nº 04 · Wohnen",
     headlineLead: "Räume",
@@ -287,7 +288,7 @@ export function InteriorDesign({
   brandAccentHex,
   walletSlot,
 }: TemplateProps) {
-  const t = COPY[locale] ?? COPY.de;
+  const t = resolveLabels(COPY[locale] ?? COPY.de, cardData.labels);
   const primary = brandPrimaryHex || LOCKED_PRIMARY;
   const accent = brandAccentHex || LOCKED_ACCENT;
   const onPrimary = readableTextOn(primary);

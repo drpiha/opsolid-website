@@ -450,6 +450,20 @@ export const CardDataSchema = z.object({
   customSections: z.array(CustomSectionSchema).max(6).optional(),
   /** Phase 7.9 — typography preset; overrides template fonts when non-default. */
   typographyPreset: typographyPreset.optional(),
+  /** Editable section-label overrides keyed by the template's COPY key
+   *  ("services", "voices", "contact", …). Absent / empty ⇒ the template's
+   *  localized COPY default is used (see shared/resolveLabels.ts). Keys are
+   *  identifier-shaped and values short, so a card can't smuggle markup or
+   *  unbounded copy through this map. Capped at 40 keys / card. */
+  labels: z
+    .record(
+      z.string().regex(/^[a-zA-Z][a-zA-Z0-9_]{0,40}$/),
+      z.string().trim().max(80),
+    )
+    .refine((o) => Object.keys(o).length <= 40, {
+      message: "Zu viele Label-Überschreibungen (max. 40).",
+    })
+    .optional(),
   /** Faz 6.6 — owner-curated banner above the public card (seasonal greetings,
    *  out-of-office, "currently accepting clients"). Empty `text` means no banner.
    *

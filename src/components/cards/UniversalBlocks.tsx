@@ -34,6 +34,7 @@ import {
   BIO_NATIVE_KEYS,
   STATS_NATIVE_KEYS,
 } from "@/components/cards/templates/v2/registry";
+import { resolveLabels } from "@/components/cards/templates/v2/shared/resolveLabels";
 import { StatsBlock } from "@/components/cards/templates/v2/shared/StatsBlock";
 import { LogoBlock } from "@/components/cards/templates/v2/shared/LogoBlock";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
@@ -95,7 +96,10 @@ export function UniversalBlocks({
   children,
 }: UniversalBlocksProps) {
   const suppressed = (set: Set<string>) => !entryKey || set.has(entryKey);
-  const h = HEADINGS[locale] ?? HEADINGS.en;
+  // Owner label overrides win over the per-locale defaults for the wrapper-
+  // block headings the visitor sees most on cross-sector / blank cards
+  // (gallery, faq, contact, testimonials, brochure, about, embeds).
+  const h = resolveLabels(HEADINGS[locale] ?? HEADINGS.en, data.labels);
   const isPublic = mode === "public";
 
   return (

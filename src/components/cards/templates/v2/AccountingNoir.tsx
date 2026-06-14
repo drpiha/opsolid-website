@@ -36,6 +36,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveLabels } from "./shared/resolveLabels";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#1a2b4a";
@@ -101,7 +102,7 @@ interface AcnCopy {
   reviewsLabel: string;
 }
 
-const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCopy> = {
+export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCopy> = {
   de: {
     estLine: "Steuerberater · Berlin",
     steuerberatung: "Steuerberatung",
@@ -297,7 +298,7 @@ export function AccountingNoir({
   siteUrl,
   walletSlot,
 }: TemplateProps) {
-  const t = COPY[locale] ?? COPY.de;
+  const t = resolveLabels(COPY[locale] ?? COPY.de, cardData.labels);
   void brandPrimaryHex;
   const accent = brandAccentHex || LOCKED_ACCENT;
   // Use accent for the gold throughout (palette intent of NOIR)

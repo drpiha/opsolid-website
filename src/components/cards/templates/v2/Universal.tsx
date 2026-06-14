@@ -38,6 +38,7 @@ import {
 } from "lucide-react";
 import { SocialRow } from "./shared/SocialRow";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveLabels } from "./shared/resolveLabels";
 import type { TemplateProps } from "./types";
 
 // -----------------------------------------------------------------------------
@@ -80,7 +81,7 @@ interface UniCopy {
   elsewhere: string;
 }
 
-const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", UniCopy> = {
+export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", UniCopy> = {
   de: {
     contact: "Kontakt",
     services: "Leistungen",
@@ -150,7 +151,7 @@ export function Universal({
 }: TemplateProps) {
   const primary = brandPrimaryHex || LOCKED_PRIMARY;
   const accent = brandAccentHex || LOCKED_ACCENT;
-  const copy = COPY[locale] ?? COPY.de;
+  const copy = resolveLabels(COPY[locale] ?? COPY.de, cardData.labels);
 
   const photoUrl = resolveAssetUrl(photoPath);
   const logoUrl = resolveAssetUrl(logoPath);

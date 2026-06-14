@@ -31,6 +31,7 @@ import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
 import { resolveStats, resolveLocation } from "./shared/profileExtras";
+import { resolveLabels } from "./shared/resolveLabels";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#1a365d"; // deep ink-blue
@@ -80,7 +81,7 @@ interface RepCopy {
   metaRegion: string;
 }
 
-const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RepCopy> = {
+export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RepCopy> = {
   de: {
     about: "Über mich",
     specialisation: "Spezialgebiete",
@@ -205,7 +206,7 @@ export function RealEstatePure({
   brandAccentHex,
   walletSlot,
 }: TemplateProps) {
-  const t = COPY[locale] ?? COPY.de;
+  const t = resolveLabels(COPY[locale] ?? COPY.de, cardData.labels);
   const primary = brandPrimaryHex || LOCKED_PRIMARY;
   const accent = brandAccentHex || LOCKED_ACCENT;
   const onPrimary = readableTextOn(primary);

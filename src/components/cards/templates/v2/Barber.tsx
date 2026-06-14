@@ -44,6 +44,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveLabels } from "./shared/resolveLabels";
 import type { TemplateProps, TemplateRegistryEntry, SampleData } from "./types";
 
 // -----------------------------------------------------------------------------
@@ -92,9 +93,11 @@ interface BbCopy {
   privacy: string;
   poweredBy: string;
   est: string;
+  /** Eyebrow under the shop name in the header. Editable per card. */
+  aboutSub: string;
 }
 
-const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy> = {
+export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy> = {
   de: {
     saveContact: "Speichern",
     callNow: "Anrufen",
@@ -114,6 +117,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy> = {
     privacy: "Datenschutz",
     poweredBy: "Powered by",
     est: "Gegründet",
+    aboutSub: "Meisterbarbier & Grooming Atelier",
   },
   en: {
     saveContact: "Save contact",
@@ -134,6 +138,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy> = {
     privacy: "Privacy",
     poweredBy: "Powered by",
     est: "Established",
+    aboutSub: "Master Barber & Grooming Atelier",
   },
   tr: {
     saveContact: "Rehbere kaydet",
@@ -154,6 +159,7 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy> = {
     privacy: "Gizlilik",
     poweredBy: "Powered by",
     est: "Kuruluş",
+    aboutSub: "Usta Berber & Bakım Atölyesi",
   },
   es: {
 
@@ -175,7 +181,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy> = {
     privacy: "Privacidad",
     poweredBy: "Desarrollado por",
     est: "Establecido",
-  
+    aboutSub: "Barbero maestro y atelier de grooming",
+
   },
   it: {
 
@@ -197,7 +204,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy> = {
     privacy: "Privacy",
     poweredBy: "Realizzato con",
     est: "Fondato",
-  
+    aboutSub: "Maestro barbiere & atelier grooming",
+
   },
   fr: {
 
@@ -219,7 +227,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy> = {
     privacy: "Confidentialité",
     poweredBy: "Propulsé par",
     est: "Établi",
-  
+    aboutSub: "Maître barbier & atelier de soins",
+
   },
   ar: {
 
@@ -241,7 +250,8 @@ const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy> = {
     privacy: "الخصوصية",
     poweredBy: "مشغل بواسطة",
     est: "تأسس",
-  
+    aboutSub: "حلاق محترف وأتيليه عناية",
+
   },
 };
 
@@ -257,7 +267,7 @@ export function Barber({
   siteUrl,
   walletSlot,
 }: TemplateProps) {
-  const t = COPY[locale] ?? COPY.de;
+  const t = resolveLabels(COPY[locale] ?? COPY.de, cardData.labels);
 
   const sector = getSectorPreset(cardData.sectorKey);
   const primary = brandPrimaryHex || LOCKED_PRIMARY;
@@ -519,7 +529,7 @@ function Header({
             className="bb-mono mt-1.5 text-[9px] text-[#f5f5f0]/55"
             style={{ letterSpacing: "0.36em" }}
           >
-            Master Barber & Grooming Atelier
+            {translations.aboutSub}
           </p>
         </div>
 

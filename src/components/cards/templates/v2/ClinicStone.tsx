@@ -30,6 +30,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveLabels } from "./shared/resolveLabels";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#4a5568";
@@ -83,7 +84,7 @@ interface Copy {
   steps: { h: string; p: string }[];
 }
 
-const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
+export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     stamp: "M.D. — Fachärztin · Est. 2014",
     preH: "Ganzheitlicher Ansatz",
@@ -278,7 +279,7 @@ export function ClinicStone({
   brandAccentHex,
   walletSlot,
 }: TemplateProps) {
-  const t = COPY[locale] ?? COPY.de;
+  const t = resolveLabels(COPY[locale] ?? COPY.de, cardData.labels);
   const primary = brandPrimaryHex || LOCKED_PRIMARY;
   const accent = brandAccentHex || LOCKED_ACCENT;
   void primary;

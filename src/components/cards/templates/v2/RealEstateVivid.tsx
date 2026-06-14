@@ -43,6 +43,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
 import { resolveStats, resolveLocation } from "./shared/profileExtras";
+import { resolveLabels } from "./shared/resolveLabels";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#1a56db"; // bold electric blue
@@ -102,7 +103,7 @@ interface RevCopy {
   share: string;
 }
 
-const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RevCopy> = {
+export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", RevCopy> = {
   de: {
     active: "Aktiv",
     servicesH: "Leistungen",
@@ -241,7 +242,7 @@ export function RealEstateVivid({
   brandAccentHex,
   walletSlot,
 }: TemplateProps) {
-  const t = COPY[locale] ?? COPY.de;
+  const t = resolveLabels(COPY[locale] ?? COPY.de, cardData.labels);
   const primary = brandPrimaryHex || LOCKED_PRIMARY;
   const accent = brandAccentHex || LOCKED_ACCENT;
   void readableTextOn;

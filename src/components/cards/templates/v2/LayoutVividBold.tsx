@@ -18,6 +18,7 @@ import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { resolveStats, resolveTagline } from "./shared/profileExtras";
+import { resolveLabels } from "./shared/resolveLabels";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#7c3aed";
@@ -71,7 +72,7 @@ interface Copy {
   testimonialTitle: string;
 }
 
-const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
+export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     servicesTitlePre: "Was ich",
     servicesTitleEm: "anbiete",
@@ -175,7 +176,7 @@ export function LayoutVividBold({
   brandAccentHex,
   walletSlot,
 }: TemplateProps) {
-  const t = COPY[locale] ?? COPY.de;
+  const t = resolveLabels(COPY[locale] ?? COPY.de, cardData.labels);
   const primary = brandPrimaryHex || LOCKED_PRIMARY;
   const accent = brandAccentHex || LOCKED_ACCENT;
   const heroGrad = `linear-gradient(135deg, ${primary} 0%, #2563eb 50%, ${ACCENT2} 100%)`;

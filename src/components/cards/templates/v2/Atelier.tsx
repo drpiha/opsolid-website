@@ -39,6 +39,7 @@ import { ExchangeSlot } from "./shared/ExchangeSlot";
 import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveLabels } from "./shared/resolveLabels";
 import type { TemplateProps } from "./types";
 
 // -----------------------------------------------------------------------------
@@ -76,7 +77,7 @@ interface AtCopy {
   poweredBy: string;
 }
 
-const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AtCopy> = {
+export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AtCopy> = {
   de: {
     selectedWork: "Ausgewählte Arbeiten",
     contact: "Kontakt",
@@ -187,7 +188,7 @@ export function Atelier({
   siteUrl,
   walletSlot,
 }: TemplateProps) {
-  const t = COPY[locale] ?? COPY.de;
+  const t = resolveLabels(COPY[locale] ?? COPY.de, cardData.labels);
 
   const sector = getSectorPreset(cardData.sectorKey);
   const primary = brandPrimaryHex || LOCKED_PRIMARY;
