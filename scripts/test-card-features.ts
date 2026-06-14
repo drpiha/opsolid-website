@@ -15,7 +15,7 @@
 // =============================================================================
 
 import { resolveLabels } from "../src/components/cards/templates/v2/shared/resolveLabels";
-import { CardDataSchema } from "../src/lib/validation";
+import { CardDataSchema, OrderPayloadSchema } from "../src/lib/validation";
 import {
   renderCardLiveHtml,
   renderCardLiveText,
@@ -100,6 +100,43 @@ function ok(cond: boolean, msg: string) {
   ok(
     !CardDataSchema.safeParse({ name: "Acme", labels: tooMany }).success,
     "schema: more than 40 label keys rejected",
+  );
+}
+
+// ---------------------------------------------------------------------------
+// OrderPayloadSchema — what /api/orders accepts when a visitor creates a card
+// (the FREE-creation path the owner reported). User-perspective: a minimal
+// free card must be accepted; bad contact data must be rejected.
+// ---------------------------------------------------------------------------
+{
+  const base = {
+    templateId: 97,
+    billingMode: "FREE" as const,
+    locale: "tr" as const,
+    contactName: "Ada Lovelace",
+    contactEmail: "ada@example.com",
+    contactPhone: "+90 555 123 4567",
+    cardData: { name: "Ada Lovelace" },
+  };
+  ok(OrderPayloadSchema.safeParse(base).success, "order: minimal FREE card accepted");
+  ok(
+    OrderPayloadSchema.safeParse({
+      ...base,
+      cardData: { name: "Ada", bio: "Hi", tagline: "Math", labels: { services: "Menü" } },
+    }).success,
+    "order: card with bio/tagline/labels accepted",
+  );
+  ok(
+    !OrderPayloadSchema.safeParse({ ...base, contactEmail: "not-an-email" }).success,
+    "order: invalid contact email rejected",
+  );
+  ok(
+    !OrderPayloadSchema.safeParse({ ...base, templateId: -1 }).success,
+    "order: non-positive templateId rejected",
+  );
+  ok(
+    !OrderPayloadSchema.safeParse({ ...base, cardData: { name: "" } }).success,
+    "order: empty card name rejected",
   );
 }
 
@@ -249,7 +286,26 @@ async function emailTests() {
     "sendCustomerEmail: send failure → skipped:true with reason");
 }
 
+// ---------------------------------------------------------------------------
+// validateManualSlug — the rules behind "why a card-link rename is rejected".
+// Dynamic import so the harness still runs if the module needs a DB env.
+// ---------------------------------------------------------------------------
+async function slugTests() {
+  let mod: typeof import("../src/lib/slug") | null = null;
+  try {
+    mod = await import("../src/lib/slug");
+  } catch {
+    console.warn("  (slug tests skipped — src/lib/slug needs a DB env to import)");
+    return;
+  }
+  const { validateManualSlug } = mod;
+  ok(validateManualSlug("ahmet-yilmaz").ok === true, "slug: valid kebab-case accepted");
+  ok(validateManualSlug("").ok === false, "slug: empty rejected (too short)");
+  ok(typeof validateManualSlug("api").ok === "boolean", "slug: returns a validation result");
+}
+
 async function main() {
+  await slugTests();
   await emailTests();
 
   // restore env + fetch

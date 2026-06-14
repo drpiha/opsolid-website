@@ -3,6 +3,7 @@
 import * as React from "react";
 import {
   useCallback,
+  useDeferredValue,
   useEffect,
   useMemo,
   useRef,
@@ -554,6 +555,13 @@ export function OrderFormSection({
     return display;
   }, [cardData, contactName, contactPhone, contactEmail, themeKey, layoutKey]);
 
+  // Defer the (now full-stack) preview render so typing stays snappy — the
+  // input updates urgently and the heavy card preview catches up in a
+  // non-blocking transition. Paired with React.memo on LivePreview so the
+  // urgent render skips the preview entirely while only the data lags a frame.
+  // Declared here (before any early return) to satisfy rules-of-hooks.
+  const deferredCardData = useDeferredValue(activeCardData);
+
   const amountCents = useMemo(() => {
     if (!selectedTemplate) return 0;
     if (billingMode === "FREE") return 0;
@@ -838,7 +846,7 @@ export function OrderFormSection({
     <LivePreview
       templateId={selectedTemplateId ?? selectedTemplate?.id ?? 1}
       slug="preview"
-      cardData={activeCardData}
+      cardData={deferredCardData}
       photoPath={photoPreviewUrl ?? photoPath}
       logoPath={logoPreviewUrl ?? logoPath}
       brandPrimaryHex={brandPrimaryHex || undefined}
@@ -3052,7 +3060,7 @@ function BillingTile({
  * it with identical props to `/c/[slug]/page.tsx`. Falls back to SmartCard
  * for unmapped ids so the preview always has *something* on screen.
  */
-function LivePreview({
+const LivePreview = React.memo(function LivePreview({
   templateId,
   slug,
   cardData,
@@ -3152,7 +3160,7 @@ function LivePreview({
       </UniversalBlocks>
     </div>
   );
-}
+});
 
 // =============================================================================
 // Phase 7.9 — Share-link modal: encode the live form state as a URL hash so the
