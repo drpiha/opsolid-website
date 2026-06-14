@@ -608,6 +608,8 @@ export function CardEditClient(props: Props) {
               handleFileUpload={handleFileUpload}
               openSections={openSections}
               toggleSection={toggleSection}
+              templateKey={getTemplateEntry(templateId)?.key ?? null}
+              cardLocale={cardLocale}
             />
 
             <ContactSection

@@ -1877,6 +1877,10 @@ export const content = {
           customSectionsSection: "Custom sections (optional)",
           customSectionsHint:
             "Add up to 6 sections — awards, languages, anything you want.",
+          // Editable section labels
+          labelsSection: "Section labels (optional)",
+          labelsHint:
+            'Rename any heading on your card — e.g. "Services" → "Menu". Leave a field blank to keep the template default.',
           customSectionAdd: "Add section",
           customSectionTitle: "Title",
           customSectionTitlePh: "e.g. Languages, Awards, Press",

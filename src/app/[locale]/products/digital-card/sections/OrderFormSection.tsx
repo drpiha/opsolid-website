@@ -47,6 +47,8 @@ import { TYPOGRAPHY_PRESET_LIST } from "@/lib/typographyPresets";
 import { downscaleImage } from "@/lib/images/downscale";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
 import { CustomSectionsEditor } from "@/components/cards/order-form/CustomSectionsEditor";
+import { SectionLabelsEditor } from "@/components/cards/order-form/SectionLabelsEditor";
+import type { BlockLocale } from "@/components/cards/templates/v2/shared/universalHeadings";
 import {
   CardLanguageSelector,
   type CardLocale,
@@ -1076,6 +1078,8 @@ export function OrderFormSection({
                     setPhotoPreviewUrl(null);
                     setLogoPreviewUrl(null);
                   }}
+                  templateKey={v2Entry?.key ?? null}
+                  cardLocale={cardLocale}
                 />
               </AccordionStep>
 
@@ -1780,6 +1784,8 @@ function StepCardContent({
   onEditPhoto,
   onEditLogo,
   onClearCard,
+  templateKey,
+  cardLocale,
 }: {
   L: (k: string, f: string) => string;
   cardData: CardData;
@@ -1819,6 +1825,8 @@ function StepCardContent({
   onEditPhoto: () => void;
   onEditLogo: () => void;
   onClearCard: () => void;
+  templateKey: string | null;
+  cardLocale: BlockLocale;
 }) {
   return (
     <>
@@ -2171,6 +2179,22 @@ function StepCardContent({
           setCard={setCard}
           L={L}
           handleFileUpload={handleFileUpload}
+        />
+      </SubFieldset>
+
+      {/* Editable section labels — rename any heading the template renders. */}
+      <SubFieldset
+        label={L("labelsSection", "Section labels (optional)")}
+        hint={L(
+          "labelsHint",
+          "Rename any heading on your card. Leave blank to keep the template default.",
+        )}
+      >
+        <SectionLabelsEditor
+          templateKey={templateKey}
+          locale={cardLocale}
+          labels={cardData.labels}
+          onChange={(next) => setCard("labels", next)}
         />
       </SubFieldset>
     </>

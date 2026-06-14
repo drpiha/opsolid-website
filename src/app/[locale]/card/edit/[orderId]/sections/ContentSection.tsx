@@ -16,6 +16,8 @@ import { ServicesEditor } from "@/components/cards/order-form/ServicesEditor";
 import { StatsEditor } from "@/components/cards/order-form/StatsEditor";
 import { TestimonialsEditor } from "@/components/cards/order-form/TestimonialsEditor";
 import { VideoUploader } from "@/components/cards/order-form/VideoUploader";
+import { SectionLabelsEditor } from "@/components/cards/order-form/SectionLabelsEditor";
+import type { BlockLocale } from "@/components/cards/templates/v2/shared/universalHeadings";
 import type { CardData } from "@/lib/validation";
 import type { HandleFileUpload, SectionToggle, SetCardFn } from "./types";
 
@@ -23,6 +25,10 @@ interface ContentSectionProps extends SectionToggle {
   cardData: CardData;
   setCard: SetCardFn;
   handleFileUpload: HandleFileUpload;
+  /** Registry key of the selected template — drives editable label keys. */
+  templateKey: string | null;
+  /** Card display language — drives the label defaults shown as placeholders. */
+  cardLocale: BlockLocale;
 }
 
 export default function ContentSection({
@@ -31,6 +37,8 @@ export default function ContentSection({
   handleFileUpload,
   openSections,
   toggleSection,
+  templateKey,
+  cardLocale,
 }: ContentSectionProps) {
   const { t } = useLocale();
   const edit = t.products.digitalCard.edit;
@@ -211,6 +219,23 @@ export default function ContentSection({
             setCard={setCard}
             L={(k, fb) => (form as Record<string, string>)[k] ?? fb}
             handleFileUpload={handleFileUpload}
+          />
+        </fieldset>
+
+        {/* Editable section labels — rename any heading the template renders. */}
+        <fieldset className="space-y-2">
+          <legend className="text-heading-sm text-ink">
+            {(form as Record<string, string>).labelsSection ?? "Section labels (optional)"}
+          </legend>
+          <p className="-mt-1 text-xs text-ink-300">
+            {(form as Record<string, string>).labelsHint ??
+              'Rename any heading on your card. Leave blank to keep the template default.'}
+          </p>
+          <SectionLabelsEditor
+            templateKey={templateKey}
+            locale={cardLocale}
+            labels={cardData.labels}
+            onChange={(next) => setCard("labels", next)}
           />
         </fieldset>
 

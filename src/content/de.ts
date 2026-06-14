@@ -1876,6 +1876,10 @@ export const content: Content = {
           customSectionsSection: "Eigene Abschnitte (optional)",
           customSectionsHint:
             "Bis zu 6 Abschnitte — Auszeichnungen, Sprachen, alles was Sie wollen.",
+          // Editable section labels
+          labelsSection: "Abschnittstitel (optional)",
+          labelsHint:
+            'Benennen Sie jede Überschrift auf Ihrer Karte um — z.B. "Leistungen" → "Menü". Leer lassen, um die Vorlagen-Vorgabe zu behalten.',
           customSectionAdd: "Abschnitt hinzufügen",
           customSectionTitle: "Titel",
           customSectionTitlePh: "z.B. Sprachen, Auszeichnungen, Presse",

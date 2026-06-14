@@ -35,6 +35,10 @@ import {
   STATS_NATIVE_KEYS,
 } from "@/components/cards/templates/v2/registry";
 import { resolveLabels } from "@/components/cards/templates/v2/shared/resolveLabels";
+import {
+  UNIVERSAL_HEADINGS,
+  type BlockLocale,
+} from "@/components/cards/templates/v2/shared/universalHeadings";
 import { StatsBlock } from "@/components/cards/templates/v2/shared/StatsBlock";
 import { LogoBlock } from "@/components/cards/templates/v2/shared/LogoBlock";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
@@ -52,16 +56,7 @@ import { AboutBlock } from "@/components/cards/AboutBlock";
 /** Templates that embed videoUrl natively — universal embed suppressed. */
 const VIDEO_EMBED_NATIVE = new Set<string>(["athlete", "photographer"]);
 
-type BlockLocale = "en" | "de" | "tr";
-
-const HEADINGS: Record<
-  BlockLocale,
-  { gallery: string; embeds: string; faq: string; contact: string; testimonials: string; brochure: string; about: string }
-> = {
-  de: { gallery: "Galerie", embeds: "Eingebettet", faq: "Häufige Fragen", contact: "Kontakt", testimonials: "Stimmen", brochure: "Broschüre", about: "Profil" },
-  tr: { gallery: "Galeri", embeds: "Öne çıkan", faq: "Sık Sorulan Sorular", contact: "İletişim", testimonials: "Yorumlar", brochure: "Broşür", about: "Profil" },
-  en: { gallery: "Gallery", embeds: "Featured", faq: "FAQ", contact: "Get in touch", testimonials: "Testimonials", brochure: "Brochure", about: "About" },
-};
+const HEADINGS = UNIVERSAL_HEADINGS;
 
 interface UniversalBlocksProps {
   mode: "public" | "preview";
