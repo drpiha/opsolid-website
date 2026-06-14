@@ -95,6 +95,7 @@ interface BbCopy {
   est: string;
   /** Eyebrow under the shop name in the header. Editable per card. */
   aboutSub: string;
+  shareLabel: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy> = {
@@ -118,6 +119,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy
     poweredBy: "Powered by",
     est: "Gegründet",
     aboutSub: "Meisterbarbier & Grooming Atelier",
+    shareLabel: "Share",
   },
   en: {
     saveContact: "Save contact",
@@ -139,6 +141,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy
     poweredBy: "Powered by",
     est: "Established",
     aboutSub: "Master Barber & Grooming Atelier",
+    shareLabel: "Share",
   },
   tr: {
     saveContact: "Rehbere kaydet",
@@ -160,6 +163,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy
     poweredBy: "Powered by",
     est: "Kuruluş",
     aboutSub: "Usta Berber & Bakım Atölyesi",
+    shareLabel: "Share",
   },
   es: {
 
@@ -182,6 +186,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", BbCopy
     poweredBy: "Desarrollado por",
     est: "Establecido",
     aboutSub: "Barbero maestro y atelier de grooming",
+    shareLabel: "Share",
 
   },
   it: {
@@ -1049,7 +1054,7 @@ function Footer({
       />
 
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[10.5px]">
-        <FooterShare siteUrl={siteUrl} slug={slug} />
+        <FooterShare siteUrl={siteUrl} slug={slug} shareLabel={t.shareLabel} />
         {impressumUrl && (
           <a
             href={impressumUrl}
@@ -1096,7 +1101,7 @@ function Footer({
   );
 }
 
-function FooterShare({ siteUrl, slug }: { siteUrl: string; slug: string }) {
+function FooterShare({ siteUrl, slug, shareLabel }: { siteUrl: string; slug: string; shareLabel: string }) {
   const url = `${siteUrl}/c/${slug}`;
   return (
     <button
@@ -1116,7 +1121,7 @@ function FooterShare({ siteUrl, slug }: { siteUrl: string; slug: string }) {
       }}
       className="hover:text-[#f5f5f0]"
     >
-      Share
+      {shareLabel}
     </button>
   );
 }

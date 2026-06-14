@@ -75,6 +75,9 @@ interface Copy {
   saveContact: string;
   walletLabel: string;
   poweredBy: string;
+  credentialMd: string;
+  credentialPhd: string;
+  credentialExp: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
@@ -92,6 +95,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
+    credentialMd: "M.D.",
+    credentialPhd: "PhD",
+    credentialExp: "12y+",
   },
   en: {
     heroTag: "Family medicine · Berlin",
@@ -107,6 +113,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
+    credentialMd: "M.D.",
+    credentialPhd: "PhD",
+    credentialExp: "12y+",
   },
   tr: {
     heroTag: "Aile Hekimliği · Berlin",
@@ -122,6 +131,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
+    credentialMd: "M.D.",
+    credentialPhd: "PhD",
+    credentialExp: "12y+",
   },
   es: {
 
@@ -138,7 +150,10 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
-  
+    credentialMd: "M.D.",
+    credentialPhd: "PhD",
+    credentialExp: "12y+",
+
   },
   it: {
 
@@ -155,7 +170,10 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
-  
+    credentialMd: "M.D.",
+    credentialPhd: "PhD",
+    credentialExp: "12y+",
+
   },
   fr: {
 
@@ -172,7 +190,10 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
-  
+    credentialMd: "M.D.",
+    credentialPhd: "PhD",
+    credentialExp: "12y+",
+
   },
   ar: {
 
@@ -189,7 +210,10 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
-  
+    credentialMd: "M.D.",
+    credentialPhd: "PhD",
+    credentialExp: "12y+",
+
   },
 };
 
@@ -359,9 +383,9 @@ export function ClinicVivid({
               </div>
             )}
             <div className="flex flex-wrap gap-1.5">
-              <Badge primary={primary} green={GREEN}>M.D.</Badge>
-              <Badge primary={primary} green={GREEN} variant="green">PhD</Badge>
-              <Badge primary={primary} green={GREEN}>12y+</Badge>
+              <Badge primary={primary} green={GREEN}>{t.credentialMd}</Badge>
+              <Badge primary={primary} green={GREEN} variant="green">{t.credentialPhd}</Badge>
+              <Badge primary={primary} green={GREEN}>{t.credentialExp}</Badge>
             </div>
           </div>
         </div>

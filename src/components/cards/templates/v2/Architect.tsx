@@ -88,6 +88,7 @@ interface ArCopy {
   privacy: string;
   poweredBy: string;
   philosophy: string;
+  shareLabel: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ArCopy> = {
@@ -110,6 +111,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ArCopy
     privacy: "Datenschutz",
     poweredBy: "Powered by",
     philosophy: "Haltung",
+    shareLabel: "Share",
   },
   en: {
     saveContact: "Save contact",
@@ -130,6 +132,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ArCopy
     privacy: "Privacy",
     poweredBy: "Powered by",
     philosophy: "Approach",
+    shareLabel: "Share",
   },
   tr: {
     saveContact: "Rehbere kaydet",
@@ -150,6 +153,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ArCopy
     privacy: "Gizlilik",
     poweredBy: "Powered by",
     philosophy: "Yaklaşım",
+    shareLabel: "Share",
   },
   es: {
 
@@ -171,6 +175,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ArCopy
     privacy: "Privacidad",
     poweredBy: "Desarrollado por",
     philosophy: "Enfoque",
+    shareLabel: "Share",
   
   },
   it: {
@@ -193,6 +198,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ArCopy
     privacy: "Privacy",
     poweredBy: "Realizzato con",
     philosophy: "Approccio",
+    shareLabel: "Share",
   
   },
   fr: {
@@ -215,6 +221,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ArCopy
     privacy: "Confidentialité",
     poweredBy: "Propulsé par",
     philosophy: "Approche",
+    shareLabel: "Share",
   
   },
   ar: {
@@ -237,6 +244,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ArCopy
     privacy: "الخصوصية",
     poweredBy: "مشغل بواسطة",
     philosophy: "النهج",
+    shareLabel: "Share",
   
   },
 };
@@ -1036,7 +1044,7 @@ function Footer({
       }}
     >
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[10.5px]">
-        <FooterShare siteUrl={siteUrl} slug={slug} />
+        <FooterShare siteUrl={siteUrl} slug={slug} shareLabel={translations.shareLabel} />
         {impressumUrl && (
           <a
             href={impressumUrl}
@@ -1085,7 +1093,7 @@ function Footer({
   );
 }
 
-function FooterShare({ siteUrl, slug }: { siteUrl: string; slug: string }) {
+function FooterShare({ siteUrl, slug, shareLabel }: { siteUrl: string; slug: string; shareLabel: string }) {
   const url = `${siteUrl}/c/${slug}`;
   return (
     <button
@@ -1106,7 +1114,7 @@ function FooterShare({ siteUrl, slug }: { siteUrl: string; slug: string }) {
       className="hover:text-[var(--ar-primary)]"
       style={{ color: INK_MUTED }}
     >
-      Share
+      {shareLabel}
     </button>
   );
 }

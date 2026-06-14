@@ -103,6 +103,7 @@ interface ReCopy {
   impressum: string;
   privacy: string;
   poweredBy: string;
+  detailLabel: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy> = {
@@ -124,6 +125,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy
     impressum: "Impressum",
     privacy: "Datenschutz",
     poweredBy: "Powered by",
+    detailLabel: "Detay",
   },
   en: {
     saveContact: "Save contact",
@@ -143,6 +145,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy
     impressum: "Imprint",
     privacy: "Privacy",
     poweredBy: "Powered by",
+    detailLabel: "Detay",
   },
   tr: {
     saveContact: "Rehbere kaydet",
@@ -162,6 +165,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy
     impressum: "Künye",
     privacy: "Gizlilik",
     poweredBy: "Powered by",
+    detailLabel: "Detay",
   },
   es: {
 
@@ -182,7 +186,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy
     impressum: "Aviso legal",
     privacy: "Privacidad",
     poweredBy: "Desarrollado por",
-  
+    detailLabel: "Detay",
+
   },
   it: {
 
@@ -203,7 +208,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy
     impressum: "Impressum",
     privacy: "Privacy",
     poweredBy: "Realizzato con",
-  
+    detailLabel: "Detay",
+
   },
   fr: {
 
@@ -224,7 +230,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy
     impressum: "Mentions légales",
     privacy: "Confidentialité",
     poweredBy: "Propulsé par",
-  
+    detailLabel: "Detay",
+
   },
   ar: {
 
@@ -245,7 +252,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", ReCopy
     impressum: "بيانات النشر",
     privacy: "الخصوصية",
     poweredBy: "مشغل بواسطة",
-  
+    detailLabel: "Detay",
+
   },
 };
 
@@ -364,7 +372,7 @@ export function RealEstate({
       />
 
       {featuredItems.length > 0 && (
-        <FeaturedListings items={featuredItems} accent={accent} primary={primary} title={t.featuredListings} />
+        <FeaturedListings items={featuredItems} accent={accent} primary={primary} title={t.featuredListings} detailLabel={t.detailLabel} />
       )}
 
       {cardData.bio && (
@@ -814,11 +822,13 @@ function FeaturedListings({
   accent,
   primary,
   title,
+  detailLabel,
 }: {
   items: Array<{ title: string; description?: string; priceLabel?: string; href?: string | null }>;
   accent: string;
   primary: string;
   title: string;
+  detailLabel: string;
 }) {
   return (
     <section className="relative px-6 py-7">
@@ -897,7 +907,7 @@ function FeaturedListings({
                 className="mt-2 flex items-center gap-1.5 text-[11.5px] font-semibold"
                 style={{ color: accent }}
               >
-                <span>Detay</span>
+                <span>{detailLabel}</span>
                 <ArrowUpRight size={12} strokeWidth={2.4} />
               </div>
             </div>

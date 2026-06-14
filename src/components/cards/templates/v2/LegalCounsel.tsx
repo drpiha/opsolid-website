@@ -87,6 +87,7 @@ interface LcCopy {
   privacy: string;
   poweredBy: string;
   share: string;
+  profileTagline: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", LcCopy> = {
@@ -102,6 +103,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", LcCopy
     privacy: "Datenschutz",
     poweredBy: "Powered by",
     share: "Teilen",
+    profileTagline: "Counsel · Strategy · Discretion",
   },
   en: {
     practiceAreas: "Practice Areas",
@@ -115,6 +117,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", LcCopy
     privacy: "Privacy",
     poweredBy: "Powered by",
     share: "Share",
+    profileTagline: "Counsel · Strategy · Discretion",
   },
   tr: {
     practiceAreas: "Uzmanlık Alanları",
@@ -128,6 +131,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", LcCopy
     privacy: "Gizlilik",
     poweredBy: "Powered by",
     share: "Paylaş",
+    profileTagline: "Counsel · Strategy · Discretion",
   },
   es: {
 
@@ -142,7 +146,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", LcCopy
     privacy: "Privacidad",
     poweredBy: "Desarrollado por",
     share: "Compartir",
-  
+    profileTagline: "Counsel · Strategy · Discretion",
+
   },
   it: {
 
@@ -157,7 +162,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", LcCopy
     privacy: "Privacy",
     poweredBy: "Realizzato con",
     share: "Condividi",
-  
+    profileTagline: "Counsel · Strategy · Discretion",
+
   },
   fr: {
 
@@ -172,7 +178,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", LcCopy
     privacy: "Confidentialité",
     poweredBy: "Propulsé par",
     share: "Partager",
-  
+    profileTagline: "Counsel · Strategy · Discretion",
+
   },
   ar: {
 
@@ -187,7 +194,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", LcCopy
     privacy: "الخصوصية",
     poweredBy: "مشغل بواسطة",
     share: "مشاركة",
-  
+    profileTagline: "Counsel · Strategy · Discretion",
+
   },
 };
 
@@ -284,6 +292,7 @@ export function LegalCounsel({
         accent={accent}
         sectorBadge={sector?.name}
         sourceLabel={sourceLabel}
+        tagline={t.profileTagline}
       />
 
       {cardData.bio && (
@@ -516,6 +525,7 @@ function ProfileBlock({
   accent,
   sectorBadge,
   sourceLabel,
+  tagline,
 }: {
   name: string;
   titleParts: string[];
@@ -523,6 +533,7 @@ function ProfileBlock({
   accent: string;
   sectorBadge?: string;
   sourceLabel?: string;
+  tagline: string;
 }) {
   return (
     <section
@@ -595,7 +606,7 @@ function ProfileBlock({
           className="lc-mono text-[9px] font-semibold"
           style={{ color: "var(--lc-text-dim)" }}
         >
-          Counsel · Strategy · Discretion
+          {tagline}
         </span>
         <span
           aria-hidden

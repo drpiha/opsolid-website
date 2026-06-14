@@ -97,6 +97,12 @@ interface KaCopy {
   privacy: string;
   poweredBy: string;
   share: string;
+  pairingNote: string;
+  heroTagline: string;
+  chefEyebrow: string;
+  reservationCta: string;
+  whatsappLabel: string;
+  findUsLabel: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy> = {
@@ -114,6 +120,12 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy
     privacy: "Datenschutz",
     poweredBy: "Powered by",
     share: "Teilen",
+    pairingNote: "Wine pairing on request — kitchen closes at 22:30",
+    heroTagline: "Cucina · Stagione · Memoria",
+    chefEyebrow: "à la carte di…",
+    reservationCta: "Reservation",
+    whatsappLabel: "WhatsApp",
+    findUsLabel: "Find us",
   },
   en: {
     tastingMenu: "Tonight's Tasting",
@@ -129,6 +141,12 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy
     privacy: "Privacy",
     poweredBy: "Powered by",
     share: "Share",
+    pairingNote: "Wine pairing on request — kitchen closes at 22:30",
+    heroTagline: "Cucina · Stagione · Memoria",
+    chefEyebrow: "à la carte di…",
+    reservationCta: "Reservation",
+    whatsappLabel: "WhatsApp",
+    findUsLabel: "Find us",
   },
   tr: {
     tastingMenu: "Bu Akşam",
@@ -144,6 +162,12 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy
     privacy: "Gizlilik",
     poweredBy: "Powered by",
     share: "Paylaş",
+    pairingNote: "Wine pairing on request — kitchen closes at 22:30",
+    heroTagline: "Cucina · Stagione · Memoria",
+    chefEyebrow: "à la carte di…",
+    reservationCta: "Reservation",
+    whatsappLabel: "WhatsApp",
+    findUsLabel: "Find us",
   },
   es: {
 
@@ -160,7 +184,13 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy
     privacy: "Privacidad",
     poweredBy: "Desarrollado por",
     share: "Compartir",
-  
+    pairingNote: "Wine pairing on request — kitchen closes at 22:30",
+    heroTagline: "Cucina · Stagione · Memoria",
+    chefEyebrow: "à la carte di…",
+    reservationCta: "Reservation",
+    whatsappLabel: "WhatsApp",
+    findUsLabel: "Find us",
+
   },
   it: {
 
@@ -177,7 +207,13 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy
     privacy: "Privacy",
     poweredBy: "Realizzato con",
     share: "Condividi",
-  
+    pairingNote: "Wine pairing on request — kitchen closes at 22:30",
+    heroTagline: "Cucina · Stagione · Memoria",
+    chefEyebrow: "à la carte di…",
+    reservationCta: "Reservation",
+    whatsappLabel: "WhatsApp",
+    findUsLabel: "Find us",
+
   },
   fr: {
 
@@ -194,7 +230,13 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy
     privacy: "Confidentialité",
     poweredBy: "Propulsé par",
     share: "Partager",
-  
+    pairingNote: "Wine pairing on request — kitchen closes at 22:30",
+    heroTagline: "Cucina · Stagione · Memoria",
+    chefEyebrow: "à la carte di…",
+    reservationCta: "Reservation",
+    whatsappLabel: "WhatsApp",
+    findUsLabel: "Find us",
+
   },
   ar: {
 
@@ -211,7 +253,13 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", KaCopy
     privacy: "الخصوصية",
     poweredBy: "مشغل بواسطة",
     share: "مشاركة",
-  
+    pairingNote: "Wine pairing on request — kitchen closes at 22:30",
+    heroTagline: "Cucina · Stagione · Memoria",
+    chefEyebrow: "à la carte di…",
+    reservationCta: "Reservation",
+    whatsappLabel: "WhatsApp",
+    findUsLabel: "Find us",
+
   },
 };
 
@@ -299,6 +347,7 @@ export function KitchenAtelier({
         primary={primary}
         accent={accent}
         sourceLabel={sourceLabel}
+        tagline={t.heroTagline}
       />
 
       {/* Wax-stamp seal — overlaps hero / cream strip. */}
@@ -368,7 +417,7 @@ export function KitchenAtelier({
               className="ka-italic text-[12.5px]"
               style={{ color: "var(--ka-text-mid)" }}
             >
-              Wine pairing on request — kitchen closes at 22:30
+              {t.pairingNote}
             </span>
           </div>
         </Section>
@@ -543,12 +592,14 @@ function Hero({
   primary,
   accent,
   sourceLabel,
+  tagline,
 }: {
   photoUrl: string | null;
   company?: string;
   primary: string;
   accent: string;
   sourceLabel?: string;
+  tagline: string;
 }) {
   return (
     <header className="relative">
@@ -617,7 +668,7 @@ function Hero({
               textShadow: "0 2px 8px rgba(0,0,0,0.5)",
             }}
           >
-            Cucina · Stagione · Memoria
+            {tagline}
           </div>
           <h1
             className="ka-display mt-2 text-[36px] font-bold leading-[1.05] text-white"

@@ -75,6 +75,7 @@ interface AtCopy {
   impressum: string;
   privacy: string;
   poweredBy: string;
+  shareLabel: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AtCopy> = {
@@ -88,6 +89,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AtCopy
     impressum: "Impressum",
     privacy: "Datenschutz",
     poweredBy: "Powered by",
+    shareLabel: "Share",
   },
   en: {
     selectedWork: "Selected work",
@@ -99,6 +101,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AtCopy
     impressum: "Imprint",
     privacy: "Privacy",
     poweredBy: "Powered by",
+    shareLabel: "Share",
   },
   tr: {
     selectedWork: "Seçilmiş çalışmalar",
@@ -110,6 +113,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AtCopy
     impressum: "Künye",
     privacy: "Gizlilik",
     poweredBy: "Powered by",
+    shareLabel: "Share",
   },
   es: {
 
@@ -122,7 +126,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AtCopy
     impressum: "Aviso legal",
     privacy: "Privacidad",
     poweredBy: "Desarrollado por",
-  
+    shareLabel: "Share",
+
   },
   it: {
 
@@ -135,7 +140,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AtCopy
     impressum: "Impressum",
     privacy: "Privacy",
     poweredBy: "Realizzato con",
-  
+    shareLabel: "Share",
+
   },
   fr: {
 
@@ -148,7 +154,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AtCopy
     impressum: "Mentions légales",
     privacy: "Confidentialité",
     poweredBy: "Propulsé par",
-  
+    shareLabel: "Share",
+
   },
   ar: {
 
@@ -161,7 +168,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AtCopy
     impressum: "بيانات النشر",
     privacy: "الخصوصية",
     poweredBy: "مشغل بواسطة",
-  
+    shareLabel: "Share",
+
   },
 };
 
@@ -759,7 +767,7 @@ function Footer({
         className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[10.5px]"
         style={{ color: TEXT_LIGHT }}
       >
-        <FooterShare siteUrl={siteUrl} slug={slug} />
+        <FooterShare siteUrl={siteUrl} slug={slug} shareLabel={t.shareLabel} />
         {impressumUrl && (
           <>
             <span>·</span>
@@ -809,7 +817,7 @@ function Footer({
   );
 }
 
-function FooterShare({ siteUrl, slug }: { siteUrl: string; slug: string }) {
+function FooterShare({ siteUrl, slug, shareLabel }: { siteUrl: string; slug: string; shareLabel: string }) {
   const url = `${siteUrl}/c/${slug}`;
   return (
     <button
@@ -830,7 +838,7 @@ function FooterShare({ siteUrl, slug }: { siteUrl: string; slug: string }) {
       className="at-link"
       style={{ color: TEXT_LIGHT }}
     >
-      Share
+      {shareLabel}
     </button>
   );
 }

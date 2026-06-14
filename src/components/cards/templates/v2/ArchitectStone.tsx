@@ -70,6 +70,7 @@ interface Copy {
   philLabel: string;
   servicesH: string;
   featuredH: string;
+  featuredLabel: string;
   testiCite: string;
   contactH: string;
   ctaPrimary: string;
@@ -85,6 +86,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     philLabel: "Philosophie",
     servicesH: "Hizmet Alanlarım",
     featuredH: "Öne Çıkan Çalışma",
+    featuredLabel: "Featured",
     testiCite: "Bauherrin",
     contactH: "İletişim",
     ctaPrimary: "Anrufen",
@@ -98,6 +100,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     philLabel: "Philosophy",
     servicesH: "Service Suite",
     featuredH: "Featured Work",
+    featuredLabel: "Featured",
     testiCite: "Project owner",
     contactH: "Contact",
     ctaPrimary: "Call",
@@ -111,6 +114,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     philLabel: "Felsefem",
     servicesH: "Hizmet Alanlarım",
     featuredH: "Öne Çıkan Çalışma",
+    featuredLabel: "Featured",
     testiCite: "Proje sahibi",
     contactH: "İletişim Kuralım",
     ctaPrimary: "Ara",
@@ -125,6 +129,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     philLabel: "Filosofía",
     servicesH: "Suite de servicios",
     featuredH: "Trabajo destacado",
+    featuredLabel: "Featured",
     testiCite: "Propietario del proyecto",
     contactH: "Contacto",
     ctaPrimary: "Llamar",
@@ -140,6 +145,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     philLabel: "Filosofia",
     servicesH: "Suite dei servizi",
     featuredH: "Lavori in evidenza",
+    featuredLabel: "Featured",
     testiCite: "Titolare del progetto",
     contactH: "Contatto",
     ctaPrimary: "Chiama",
@@ -155,6 +161,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     philLabel: "Philosophie",
     servicesH: "Suite de services",
     featuredH: "Travaux en vedette",
+    featuredLabel: "Featured",
     testiCite: "Propriétaire du projet",
     contactH: "Contact",
     ctaPrimary: "Appeler",
@@ -170,6 +177,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     philLabel: "الفلسفة",
     servicesH: "حزمة الخدمات",
     featuredH: "أعمال مميزة",
+    featuredLabel: "Featured",
     testiCite: "صاحب المشروع",
     contactH: "اتصال",
     ctaPrimary: "اتصال",
@@ -567,7 +575,7 @@ export function ArchitectStone({
                   borderRadius: 30,
                 }}
               >
-                Featured
+                {t.featuredLabel}
               </span>
               <span
                 aria-hidden
