@@ -26,7 +26,16 @@ import { NodeGraphBackdrop } from "./NodeGraphBackdrop";
 import { GalaxyBackdrop } from "./GalaxyBackdrop";
 import { PillarGrid } from "./PillarGrid";
 import { HomeOutcomes } from "./HomeOutcomes";
-import { SplineHero } from "./SplineHero";
+import dynamic from "next/dynamic";
+
+// Lazy-load the 3D hero — its @splinetool runtime is ~1 MB. Keeping it out of the
+// initial bundle and mounting it client-side after hydration trims initial JS and
+// improves LCP; the placeholder preserves the column box to avoid layout shift.
+// (The scene is decorative + aria-hidden, so deferring it has no SEO cost.)
+const SplineHero = dynamic(
+  () => import("./SplineHero").then((m) => m.SplineHero),
+  { ssr: false, loading: () => <div className="v2-spline" aria-hidden="true" /> },
+);
 
 export function HomeV2() {
   const { locale } = useLocale();
