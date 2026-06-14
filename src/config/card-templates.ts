@@ -1460,6 +1460,22 @@ export const cardTemplates: readonly CardTemplateDef[] = [
     isActive: true,
     sortOrder: 96,
   },
+  // Blank, data-driven template — every section flows from owner input; the
+  // v2 BlankCanvas component is resolved via the registry (componentKey stays
+  // "SmartCard" like the other v2 entries).
+  {
+    id: 97,
+    slug: "blank-canvas",
+    name: "Blank Canvas",
+    sectorHint: "general",
+    componentKey: "SmartCard",
+    previewPath: "/images/templates/card-97.png",
+    oneTimeCents: 9900,
+    monthlyCents: 600,
+    yearlyCents: 4900,
+    isActive: true,
+    sortOrder: 97,
+  },
   // ---------------------------------------------------------------------------
   // M3 — Linktree (id 100). Carrd-comparison amendment: a "link in bio"
   // creator template. Renders a vertical stack of full-width buttons (driven

@@ -120,6 +120,7 @@ import { layoutPureSwissSample } from "@/components/cards/templates/v2/LayoutPur
 import { layoutVividBoldSample } from "@/components/cards/templates/v2/LayoutVividBold";
 import { layoutEditorialSample } from "@/components/cards/templates/v2/LayoutEditorial";
 import { layoutSplitScreenSample } from "@/components/cards/templates/v2/LayoutSplitScreen";
+import { blankCanvasSample } from "@/components/cards/templates/v2/BlankCanvas";
 
 // id=1 — RealEstate. Persona: Hannah Walker, senior listing agent in Berlin.
 // photo: Unsplash, by Christina Wocintechchat
@@ -337,6 +338,8 @@ export const cardTemplateSamples: Record<number, SampleData> = {
   94: layoutVividBoldSample,
   95: layoutEditorialSample,
   96: layoutSplitScreenSample,
+  // Blank, data-driven template
+  97: blankCanvasSample,
   // M3 — Linktree-style "link in bio" template (Carrd amendment)
   100: linktreeSample,
 };
