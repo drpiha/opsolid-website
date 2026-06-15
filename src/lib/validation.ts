@@ -632,9 +632,12 @@ export const OrderPayloadSchema = z.object({
   ]),
   locale: z.enum(["de", "en", "tr"]).default("de"),
 
-  contactName: z.string().trim().min(1).max(120),
+  // Self-serve free card: only the delivery email is required (it carries the
+  // live + private edit link). Name falls back to the card's own name and phone
+  // is optional, so the create flow never blocks on a hidden required field.
+  contactName: z.string().trim().max(120).optional(),
   contactEmail: z.string().email().max(200),
-  contactPhone: phone,
+  contactPhone: phone.optional(),
   callMeBack: z.boolean().default(false),
 
   cardData: CardDataSchema,
