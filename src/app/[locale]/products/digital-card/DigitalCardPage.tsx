@@ -133,6 +133,7 @@ export function DigitalCardPage({
       <TemplateGallery
         selectedId={selectedTemplateId}
         onSelect={setSelectedTemplateId}
+        paymentsEnabled={pricingMode !== "all_free"}
       />
 
       <section className="os-section" data-screen-label="How">

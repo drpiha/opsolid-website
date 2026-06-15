@@ -105,9 +105,12 @@ function buildSlides(): SlideModel[] {
 export function TemplateGallery({
   selectedId,
   onSelect,
+  paymentsEnabled = true,
 }: {
   selectedId: number | null;
   onSelect: (id: number) => void;
+  /** Under all_free there are no prices to show on the template cards. */
+  paymentsEnabled?: boolean;
 }) {
   const { t, locale } = useLocale();
   const order = t.products.digitalCard.order ?? {};
@@ -322,6 +325,7 @@ export function TemplateGallery({
                     demoLabel={L("demoCta", "Demo")}
                     fromLabel={L("fromPrice", "from")}
                     monthlyShort={L("monthlyShort", "/mo")}
+                    showPrice={paymentsEnabled}
                     comingSoonLabel={L("comingSoon", "Coming soon")}
                     comingSoonHint={L("comingSoonHint", "On the way.")}
                     sectorLabel={L(
@@ -546,6 +550,7 @@ const CarouselSlide = React.memo(function CarouselSlide({
   demoLabel,
   fromLabel,
   monthlyShort,
+  showPrice,
   comingSoonLabel,
   comingSoonHint,
   sectorLabel,
@@ -568,6 +573,7 @@ const CarouselSlide = React.memo(function CarouselSlide({
   demoLabel: string;
   fromLabel: string;
   monthlyShort: string;
+  showPrice: boolean;
   comingSoonLabel: string;
   comingSoonHint: string;
   sectorLabel: string;
@@ -593,11 +599,14 @@ const CarouselSlide = React.memo(function CarouselSlide({
 
   const monthly = slide.catalog?.monthlyCents;
   const oneTime = slide.catalog?.oneTimeCents;
-  const priceLine = monthly
-    ? `${formatEuro(monthly, currencyLocale(locale))}${monthlyShort}`
-    : oneTime
-      ? `${fromLabel} ${formatEuro(oneTime, currencyLocale(locale))}`
-      : "";
+  // Under all_free there is no price to advertise on the card.
+  const priceLine = !showPrice
+    ? ""
+    : monthly
+      ? `${formatEuro(monthly, currencyLocale(locale))}${monthlyShort}`
+      : oneTime
+        ? `${fromLabel} ${formatEuro(oneTime, currencyLocale(locale))}`
+        : "";
 
   return (
     <div

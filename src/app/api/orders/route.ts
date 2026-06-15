@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { OrderPayloadSchema, OrderStatus } from "@/lib/validation";
 import { getTemplateById } from "@/config/card-templates";
-import { cardPaymentsEnabled } from "@/lib/billing/plan";
+import { resolveCardEntitlement, EntitlementError } from "@/lib/billing/plan";
 import { createCheckoutSession } from "@/lib/stripe";
 import { validateManualSlug, isSlugAvailable, ensureUniqueSlug } from "@/lib/slug";
 import { getSiteUrl } from "@/lib/stripe";
@@ -34,36 +34,34 @@ export async function POST(req: NextRequest) {
   }
   const data = parsed.data;
 
-  // all_free mode: no order may reach Stripe, even one submitted from a stale
-  // form that still offered paid tiers. Coercing (rather than rejecting) errs
-  // in the customer's favor — under all_free every feature is free anyway.
-  if (!cardPaymentsEnabled() && data.billingMode !== "FREE") {
-    data.billingMode = "FREE";
-  }
-
   const template = getTemplateById(data.templateId);
   if (!template || !template.isActive) {
     return NextResponse.json({ error: "Unknown template" }, { status: 404 });
   }
 
-  // FREE tier bypasses Stripe entirely — amount is always 0.
-  const isFree = data.billingMode === "FREE";
-
-  // Resolve the amount server-side (never trust the client).
-  const amountCents = isFree
-    ? 0
-    : data.billingMode === "MONTHLY"
-    ? template.monthlyCents
-    : data.billingMode === "YEARLY"
-    ? template.yearlyCents
-    : template.oneTimeCents;
-
-  if (!isFree && data.billingMode !== "ONE_TIME" && !amountCents) {
-    return NextResponse.json(
-      { error: `This template does not offer a ${data.billingMode.toLowerCase()} plan.` },
-      { status: 400 }
-    );
+  // Resolve price through the single entitlement seam (never trust the client).
+  // Under all_free this always returns FREE/0 — no order can reach Stripe, even
+  // one submitted from a stale form that still offered paid tiers. Paid tiers
+  // price from the template; future per-person / group / event grants resolve
+  // in this same call.
+  let entitlement;
+  try {
+    entitlement = resolveCardEntitlement({
+      billingMode: data.billingMode,
+      template,
+      contactEmail: data.contactEmail,
+      eventSlug: data.eventSlug,
+    });
+  } catch (err) {
+    if (err instanceof EntitlementError) {
+      return NextResponse.json({ error: err.message }, { status: 400 });
+    }
+    throw err;
   }
+  // The resolved billing mode is authoritative (all_free coerces paid -> FREE).
+  data.billingMode = entitlement.billingMode;
+  const isFree = entitlement.isFree;
+  const amountCents = entitlement.amountCents;
 
   // Validate optional customer-chosen slug before creating the order.
   // Re-validated in the publish flow for paid tiers; for FREE we set it now.
@@ -112,7 +110,7 @@ export async function POST(req: NextRequest) {
         : undefined,
       qrStyle: data.qrStyle ? (data.qrStyle as unknown as object) : undefined,
       billingMode: data.billingMode,
-      amountCents: amountCents ?? 0,
+      amountCents,
       currency: "EUR",
       locale: data.locale,
       // FREE goes straight to PUBLISHED; paid starts at PENDING_PAYMENT.
@@ -235,7 +233,7 @@ export async function POST(req: NextRequest) {
   try {
     const session = await createCheckoutSession({
       orderId: order.id,
-      amountCents: amountCents!,
+      amountCents,
       currency: "EUR",
       templateName: template.name,
       // FREE never reaches this branch — cast is safe.

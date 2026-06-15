@@ -1826,7 +1826,7 @@ export const content: Content = {
           accentColor: "Vurgu rengi",
           designNotes: "Özel istekler (isteğe bağlı)",
           designNotesPh:
-            "Yazı tipi, logo düzenlemeleri, düzen tercihleri — her siparişi yayınlamadan önce inceliyoruz.",
+            "Bilmemiz gereken özel bir şey: yazı tipi, logo düzenlemeleri, düzen tercihleri.",
           resetColors: "Şablon renklerini sıfırla",
           uploadWrongType: "Desteklenmeyen format. JPG, PNG veya WebP kullanın.",
           dragHere: "Buraya sürükleyin veya tıklayın",
@@ -1844,7 +1844,7 @@ export const content: Content = {
           previewClose: "Önizlemeyi kapat",
           previewOpenInNewTab: "Yeni sekmede aç",
           previewLanguage: "Kart dili",
-          previewNoPaymentNote: "Sadece önizleme — ödeme gerekmez",
+          previewNoPaymentNote: "Sadece önizleme",
           // Phase 7.9
           editPosition: "Pozisyonu düzenle",
           photoEditorTitle: "Profil fotoğrafı pozisyonu",
@@ -1861,13 +1861,13 @@ export const content: Content = {
           shareLink: "Önizleme linki",
           shareLinkTitle: "Önizleme linkini paylaş",
           shareLinkSubtitle:
-            "Kartını ödeme yapmadan başkalarına gönder. Bağlantıdaki veriler okunabilir.",
+            "Kartını yayınlamadan önce başkalarına gönder. Linke sahip olan herkes okuyabilir.",
           shareLinkUrl: "Link",
           shareLinkCopy: "Kopyala",
           shareLinkCopied: "Kopyalandı ✓",
           shareLinkOpen: "Yeni sekmede aç",
           shareLinkNote:
-            "Bağlantı tüm form bilgilerini içerir; ödeme yapana kadar kart yayında değildir.",
+            "Bağlantı tüm form bilgilerini içerir; kart siz oluşturana kadar yayında değildir.",
           videoSection: "Video (opsiyonel)",
           videoHint:
             "YouTube veya Vimeo bağlantısı yapıştır — kartında doğrudan oynar.",
@@ -1954,6 +1954,20 @@ export const content: Content = {
           step3Next: "Ödemeye geç",
           step4Title: "Ödeme",
           step4Summary: "Planınızı seçin",
+          // Self-serve free flow (shown when payments are off). The card is
+          // created & published, not ordered/paid for.
+          step4TitleCreate: "Oluştur & yayınla",
+          step4SummaryCreate: "Adresini kontrol et ve yayına al",
+          step3NextCreate: "Yayınlamaya devam et",
+          slugSection: "Kart adresi",
+          slugHint:
+            "Kartının adresi. Boş bırakırsan ad-soyaddan otomatik üretilir.",
+          createExplainerTitle: "Tıklayınca ne olur",
+          createExplainerBody:
+            "Kartın anında yayınlanır ve linkiyle erişilebilir. Sana linki ve özel bir düzenleme linkini e-posta ile göndeririz. Tamamen ücretsiz, kredi kartı yok.",
+          createSubmitLabel: "Ücretsiz yayınla",
+          createSubmitHint: "Kredi kartı yok. Kartın anında yayına girer.",
+          createSubmit: "Kartımı ücretsiz oluştur",
           stepIndicator: "Adım {current} / {total}",
           stepEmpty: "Lütfen doldurun",
           previewLabelMobile: "Önizleme",
