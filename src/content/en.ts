@@ -1824,7 +1824,7 @@ export const content = {
           accentColor: "Accent color",
           designNotes: "Special requests (optional)",
           designNotesPh:
-            "Anything specific you want us to know — fonts, logo tweaks, layout preferences. We review every order before publishing.",
+            "Anything specific we should know: fonts, logo tweaks, layout preferences.",
           resetColors: "Reset to template defaults",
           uploadWrongType: "Unsupported format. Use JPG, PNG, or WebP.",
           dragHere: "Drag here or click to upload",
@@ -1842,7 +1842,7 @@ export const content = {
           previewClose: "Close preview",
           previewOpenInNewTab: "Open in new tab",
           previewLanguage: "Card language",
-          previewNoPaymentNote: "Preview only — no payment required",
+          previewNoPaymentNote: "Preview only",
           // Phase 7.9 — photo position editor
           editPosition: "Edit position",
           photoEditorTitle: "Profile photo position",
@@ -1859,13 +1859,13 @@ export const content = {
           shareLink: "Preview link",
           shareLinkTitle: "Share preview link",
           shareLinkSubtitle:
-            "Send your card to others before paying. Anyone with the link can read it.",
+            "Send your card to others before you publish. Anyone with the link can read it.",
           shareLinkUrl: "Link",
           shareLinkCopy: "Copy",
           shareLinkCopied: "Copied ✓",
           shareLinkOpen: "Open in new tab",
           shareLinkNote:
-            "The link contains all form data; the card is not published until you pay.",
+            "The link contains all form data; the card is not published until you create it.",
           // Video embed (YouTube / Vimeo)
           videoSection: "Video (optional)",
           videoHint:
@@ -1955,6 +1955,20 @@ export const content = {
           step3Next: "Continue to billing",
           step4Title: "Billing",
           step4Summary: "Choose your plan",
+          // Self-serve free flow (shown when payments are off). The card is
+          // created & published, not ordered/paid for.
+          step4TitleCreate: "Create & publish",
+          step4SummaryCreate: "Check your address and go live",
+          step3NextCreate: "Continue to publish",
+          slugSection: "Card address",
+          slugHint:
+            "Your card URL. Leave empty to auto-generate it from your name.",
+          createExplainerTitle: "What happens when you click",
+          createExplainerBody:
+            "Your card is published instantly and reachable at its link. We email you the link plus a private edit link. Free, no credit card.",
+          createSubmitLabel: "Publish for free",
+          createSubmitHint: "No credit card. Your card goes live instantly.",
+          createSubmit: "Create my card for free",
           stepIndicator: "Step {current} of {total}",
           stepEmpty: "Add your details",
           previewLabelMobile: "Preview",

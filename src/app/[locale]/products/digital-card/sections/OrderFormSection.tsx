@@ -726,19 +726,26 @@ export function OrderFormSection({
         return;
       }
       const json = (await res.json()) as {
+        orderId?: string;
         checkoutUrl?: string;
         editUrl?: string;
         cardUrl?: string;
         editToken?: string;
       };
-      // FREE tier: the card is already published. Land on the LIVE card in owner
-      // mode (?owner=<editToken>) so the user immediately sees their published
-      // card + the full share toolbar (QR, link, wallet, vCard) and a one-click
-      // Edit — the "your card is live, here's how to share it" moment. Falls
-      // back to the editor if the API didn't return a card URL.
-      if (json.cardUrl && json.editToken) {
+      // FREE tier: the card is already published. Land on the confirmation page
+      // first — it spells out "your card is live, we emailed you the link + a
+      // private edit link, here's how to open it" before the user dives into
+      // the live card. The edit token is passed (and validated server-side on
+      // that page) so it can show the owner/edit affordances. Falls back to the
+      // editor if the API didn't return an order id. A paid order also carries
+      // an orderId but with a checkoutUrl — that must go to Stripe, not here, so
+      // gate on the absence of checkoutUrl (always true under all_free).
+      if (json.orderId && !json.checkoutUrl) {
         clearDraft();
-        window.location.href = `${json.cardUrl}?owner=${encodeURIComponent(json.editToken)}`;
+        const tokenQuery = json.editToken
+          ? `?t=${encodeURIComponent(json.editToken)}`
+          : "";
+        window.location.href = `/${locale}/products/digital-card/thanks/${json.orderId}${tokenQuery}`;
         return;
       }
       if (json.editUrl) {
@@ -797,7 +804,13 @@ export function OrderFormSection({
           ? bits.join(" · ")
           : L("step3Summary", "Farben, Stil, Designnotizen");
       })(),
-      billing: `${billingMap[billingMode]} · ${formatEuro(amountCents)}`,
+      // Under all_free the "billing" step is really "create & publish": show
+      // the chosen card address (or a prompt), never a price.
+      billing: paymentsEnabled
+        ? `${billingMap[billingMode]} · ${formatEuro(amountCents)}`
+        : desiredSlug.trim()
+          ? `/c/${desiredSlug.trim()}`
+          : L("step4SummaryCreate", "Adresse prüfen und live schalten"),
     };
   }, [
     L,
@@ -813,6 +826,8 @@ export function OrderFormSection({
     amountCents,
     colorsCustomised,
     v2Entry,
+    paymentsEnabled,
+    desiredSlug,
   ]);
 
   // ---- next-step navigation ---------------------------------------------
@@ -975,7 +990,7 @@ export function OrderFormSection({
             <StepIndicator
               steps={STEP_ORDER.map((id) => ({
                 id,
-                label: stepLabel(id, L),
+                label: stepLabel(id, L, paymentsEnabled),
                 done: isStepComplete(id, {
                   contactName,
                   contactEmail,
@@ -1091,7 +1106,11 @@ export function OrderFormSection({
                 open={openStep === "branding"}
                 onToggle={(next) => setOpenStep(next ? "branding" : openStep)}
                 onNext={() => goToStep("billing")}
-                nextLabel={L("step3Next", "Weiter zur Zahlung")}
+                nextLabel={
+                  paymentsEnabled
+                    ? L("step3Next", "Weiter zur Zahlung")
+                    : L("step3NextCreate", "Weiter zum Veröffentlichen")
+                }
               >
                 <StepBranding
                   L={L}
@@ -1113,7 +1132,11 @@ export function OrderFormSection({
               <AccordionStep
                 id="billing"
                 stepNumber={4}
-                title={L("step4Title", "Zahlung")}
+                title={
+                  paymentsEnabled
+                    ? L("step4Title", "Zahlung")
+                    : L("step4TitleCreate", "Erstellen & veröffentlichen")
+                }
                 summary={summaries.billing}
                 open={openStep === "billing"}
                 onToggle={(next) => setOpenStep(next ? "billing" : openStep)}
@@ -1404,7 +1427,11 @@ export function OrderFormSection({
 // Step labels + completion checks
 // =============================================================================
 
-function stepLabel(id: StepId, L: (k: string, f: string) => string): string {
+function stepLabel(
+  id: StepId,
+  L: (k: string, f: string) => string,
+  paymentsEnabled: boolean,
+): string {
   switch (id) {
     case "contact":
       return L("step1Title", "Kontakt");
@@ -1413,7 +1440,9 @@ function stepLabel(id: StepId, L: (k: string, f: string) => string): string {
     case "branding":
       return L("step3Title", "Branding");
     case "billing":
-      return L("step4Title", "Zahlung");
+      return paymentsEnabled
+        ? L("step4Title", "Zahlung")
+        : L("step4TitleCreate", "Erstellen & veröffentlichen");
   }
 }
 
@@ -2441,6 +2470,22 @@ function StepBilling({
         />
       </SubFieldset>
 
+      {/* all_free mode: spell out exactly what the Create button does, so the
+          user understands what is published, where, and that an email follows. */}
+      {!paymentsEnabled && (
+        <div className="rounded-2xl border border-copper/30 bg-copper/8 p-4">
+          <p className="mono-label text-[10px] uppercase tracking-[0.2em] text-ink/50">
+            {L("createExplainerTitle", "Was beim Klick passiert")}
+          </p>
+          <p className="mt-1 text-sm text-ink/70">
+            {L(
+              "createExplainerBody",
+              "Deine Karte wird sofort veröffentlicht und ist unter ihrem Link erreichbar. Wir senden dir den Link und einen privaten Bearbeitungs-Link per E-Mail. Kostenlos, keine Kreditkarte.",
+            )}
+          </p>
+        </div>
+      )}
+
       {/* all_free mode: the only tier is FREE — skip the picker entirely so
           the step reads as a confirmation, not a (single-choice) decision. */}
       {paymentsEnabled && (
@@ -2509,10 +2554,10 @@ function StepBilling({
         <div className="flex flex-col items-stretch justify-between gap-4 rounded-2xl border border-copper/30 bg-copper/8 p-5 sm:flex-row sm:items-center">
           <div>
             <p className="mono-label text-[10px] uppercase tracking-[0.2em] text-ink/50">
-              {L("freeTierLabel", "Kostenlos starten")}
+              {L("createSubmitLabel", "Kostenlos veröffentlichen")}
             </p>
             <p className="mt-1 text-sm text-ink/70">
-              {L("freeTierHint", "Kein Kreditkarte erforderlich. Karte wird sofort veröffentlicht.")}
+              {L("createSubmitHint", "Keine Kreditkarte. Deine Karte geht sofort live.")}
             </p>
           </div>
           <button
@@ -2526,7 +2571,7 @@ function StepBilling({
             <span>
               {formState === "submitting"
                 ? L("submitting", "Wird verarbeitet …")
-                : L("freeTierSubmit", "Karte kostenlos erstellen →")}
+                : L("createSubmit", "Karte kostenlos erstellen")}
             </span>
           </button>
         </div>

@@ -1826,7 +1826,7 @@ export const content: Content = {
           accentColor: "Akzentfarbe",
           designNotes: "Besondere Wünsche (optional)",
           designNotesPh:
-            "Schriftart, Logo-Anpassungen, Layout-Wünsche — wir lesen jeden Auftrag vor Veröffentlichung durch.",
+            "Etwas Bestimmtes, das wir wissen sollten: Schriftart, Logo-Anpassungen, Layout-Wünsche.",
           resetColors: "Vorlagenfarben wiederherstellen",
           uploadWrongType: "Format nicht unterstützt. Bitte JPG, PNG oder WebP.",
           dragHere: "Hierher ziehen oder klicken",
@@ -1844,7 +1844,7 @@ export const content: Content = {
           previewClose: "Vorschau schließen",
           previewOpenInNewTab: "In neuem Tab öffnen",
           previewLanguage: "Kartensprache",
-          previewNoPaymentNote: "Nur Vorschau — keine Zahlung nötig",
+          previewNoPaymentNote: "Nur Vorschau",
           // Phase 7.9
           editPosition: "Position bearbeiten",
           photoEditorTitle: "Profilfoto-Position",
@@ -1860,13 +1860,13 @@ export const content: Content = {
           shareLink: "Vorschau-Link",
           shareLinkTitle: "Vorschau-Link teilen",
           shareLinkSubtitle:
-            "Senden Sie Ihre Karte vor dem Bezahlen. Jeder mit dem Link kann sie lesen.",
+            "Senden Sie Ihre Karte vor der Veröffentlichung. Jeder mit dem Link kann sie lesen.",
           shareLinkUrl: "Link",
           shareLinkCopy: "Kopieren",
           shareLinkCopied: "Kopiert ✓",
           shareLinkOpen: "In neuem Tab öffnen",
           shareLinkNote:
-            "Der Link enthält alle Formulardaten; die Karte wird erst nach Zahlung veröffentlicht.",
+            "Der Link enthält alle Formulardaten; die Karte wird erst veröffentlicht, wenn Sie sie erstellen.",
           videoSection: "Video (optional)",
           videoHint:
             "YouTube- oder Vimeo-Link einfügen — er läuft direkt auf Ihrer Karte.",
@@ -1953,6 +1953,20 @@ export const content: Content = {
           step3Next: "Weiter zur Zahlung",
           step4Title: "Zahlung",
           step4Summary: "Wählen Sie Ihren Plan",
+          // Self-serve free flow (shown when payments are off). The card is
+          // created & published, not ordered/paid for.
+          step4TitleCreate: "Erstellen & veröffentlichen",
+          step4SummaryCreate: "Adresse prüfen und live schalten",
+          step3NextCreate: "Weiter zum Veröffentlichen",
+          slugSection: "Kartenadresse",
+          slugHint:
+            "Die URL deiner Karte. Leer lassen für automatische Erzeugung aus dem Namen.",
+          createExplainerTitle: "Was beim Klick passiert",
+          createExplainerBody:
+            "Deine Karte wird sofort veröffentlicht und ist unter ihrem Link erreichbar. Wir senden dir den Link und einen privaten Bearbeitungs-Link per E-Mail. Kostenlos, keine Kreditkarte.",
+          createSubmitLabel: "Kostenlos veröffentlichen",
+          createSubmitHint: "Keine Kreditkarte. Deine Karte geht sofort live.",
+          createSubmit: "Karte kostenlos erstellen",
           stepIndicator: "Schritt {current} von {total}",
           stepEmpty: "Bitte ausfüllen",
           previewLabelMobile: "Vorschau",
