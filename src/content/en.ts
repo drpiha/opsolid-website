@@ -5727,8 +5727,12 @@ export const content = {
       submitting: "Creating…",
       errorRequired: "Name, phone and email are required.",
       errorGeneric: "Something went wrong. Please try again.",
+      designSectionLabel: "Design",
+      designClassic: "Classic",
+      designModern: "Modern",
+      designVisual: "Visual",
       designHint:
-        "A clean default design is applied — you can change the design and add more details anytime.",
+        "Pick a starter look — you can switch designs and add more details anytime.",
       fullFormLink: "Want every option? Use the detailed form",
     },
     ownerWelcome: {

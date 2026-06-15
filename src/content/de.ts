@@ -5702,8 +5702,12 @@ export const content: Content = {
       submitting: "Wird erstellt …",
       errorRequired: "Name, Telefon und E-Mail sind erforderlich.",
       errorGeneric: "Etwas ist schiefgelaufen. Bitte erneut versuchen.",
+      designSectionLabel: "Design",
+      designClassic: "Klassisch",
+      designModern: "Modern",
+      designVisual: "Visuell",
       designHint:
-        "Ein cleanes Standard-Design wird angewendet — Design und Details können Sie jederzeit ändern.",
+        "Wählen Sie einen Startlook — Design und Details können Sie jederzeit ändern.",
       fullFormLink: "Alle Optionen? Zum ausführlichen Formular",
     },
     ownerWelcome: {

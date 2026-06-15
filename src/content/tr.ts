@@ -5700,8 +5700,12 @@ export const content: Content = {
       submitting: "Oluşturuluyor…",
       errorRequired: "Ad, telefon ve e-posta zorunlu.",
       errorGeneric: "Bir şeyler ters gitti. Lütfen tekrar dene.",
+      designSectionLabel: "Tasarım",
+      designClassic: "Klasik",
+      designModern: "Modern",
+      designVisual: "Görsel",
       designHint:
-        "Temiz bir varsayılan tasarım uygulanır — tasarımı ve detayları istediğin zaman değiştirebilirsin.",
+        "Bir başlangıç görünümü seç — tasarımı ve detayları istediğin zaman değiştirebilirsin.",
       fullFormLink: "Tüm seçenekler için detaylı formu kullan",
     },
     ownerWelcome: {

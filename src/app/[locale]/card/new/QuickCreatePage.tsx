@@ -26,9 +26,14 @@ import {
 import { useLocale } from "@/context/LocaleContext";
 import { downscaleImage } from "@/lib/images/downscale";
 
-// Clean, sector-neutral default design. The owner can switch templates any
-// time in the editor — quick create optimizes for "live now", not "perfect".
-const DEFAULT_TEMPLATE_ID = 4;
+// Three clean, sector-neutral starter designs (universal layouts, ids 92-94).
+// Quick create optimizes for "live now" — the owner can switch to any of the
+// 90+ designs later in the editor.
+const STARTER_DESIGNS = [
+  { id: 93, labelKey: "designClassic" }, // Pure Swiss
+  { id: 92, labelKey: "designModern" }, // Noir Luxury
+  { id: 94, labelKey: "designVisual" }, // Vivid Bold
+] as const;
 
 const EVENT_SLUG_RE = /^[a-z0-9-]{3,80}$/;
 
@@ -75,6 +80,10 @@ export function QuickCreatePage() {
   // visible choice (was previously taken silently from the URL).
   const [cardLocale, setCardLocale] = React.useState<CardLocale>(
     (["de", "en", "tr"].includes(locale) ? locale : "de") as CardLocale,
+  );
+  // Starter design — defaults to the first generic layout; switchable later.
+  const [templateId, setTemplateId] = React.useState<number>(
+    STARTER_DESIGNS[0].id,
   );
 
   const [photoPath, setPhotoPath] = React.useState<string | null>(null);
@@ -124,7 +133,7 @@ export function QuickCreatePage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          templateId: DEFAULT_TEMPLATE_ID,
+          templateId,
           billingMode: "FREE",
           locale: cardLocale,
           contactName: name.trim(),
@@ -232,6 +241,42 @@ export function QuickCreatePage() {
               e.target.value = "";
             }}
           />
+
+          {/* Starter design — three clean, generic layouts. The owner can
+              switch to any of the 90+ designs later in the editor. */}
+          <div>
+            <p className="mb-1.5 px-1 text-sm font-medium text-neutral-700">
+              {q.designSectionLabel}
+            </p>
+            <div className="grid grid-cols-3 gap-2">
+              {STARTER_DESIGNS.map((d) => {
+                const selected = templateId === d.id;
+                return (
+                  <button
+                    key={d.id}
+                    type="button"
+                    onClick={() => setTemplateId(d.id)}
+                    aria-pressed={selected}
+                    className={`flex flex-col items-center gap-1.5 rounded-2xl border p-2 transition-colors ${
+                      selected
+                        ? "border-copper ring-2 ring-copper/40"
+                        : "border-neutral-300 hover:border-copper/50"
+                    }`}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={`/images/templates/card-${d.id}.png`}
+                      alt=""
+                      className="aspect-[3/5] w-full rounded-xl bg-neutral-100 object-cover"
+                    />
+                    <span className="text-xs font-medium text-neutral-700">
+                      {q[d.labelKey]}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
 
           <input className={inputCls} value={name} onChange={(e) => setName(e.target.value)} placeholder={`${q.nameLabel} *`} maxLength={120} autoComplete="name" />
           <input className={inputCls} value={title} onChange={(e) => setTitle(e.target.value)} placeholder={q.titleLabel} maxLength={120} autoComplete="organization-title" />

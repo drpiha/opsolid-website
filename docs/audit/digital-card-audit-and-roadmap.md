@@ -155,8 +155,11 @@ positioning competitor (German, DSGVO) — beat them on speed-to-first-card and 
 - Mirror sample photos to `public/images/samples/` (drop the remote Unsplash dependency).
 - Add an assertion in `scripts/audit-template-coverage.ts`: every `templateRegistry` entry has a
   matching sample (guards the silent "Coming soon" trap).
-- **Feature ~3 generic designs** in the create flow; collapse the other 94 under "Browse all
-  designs" (kept in `registry.ts`, not deleted). _Pending founder pick of the 3 — see §12._
+- **Feature ~3 generic designs** in the create flow — **DONE**: the fast `/card/new` flow now
+  shows a 3-up starter picker mapped to the sector-neutral universal layouts —
+  **Classic = 93 (Pure Swiss), Modern = 92 (Noir Luxury), Visual = 94 (Vivid Bold)** — defaulting
+  to Classic. The other 94 stay in `registry.ts` (not deleted), reachable via the full form's
+  "Browse all designs".
 
 ## 9. Roadmap (7 / 30 / 60 / 90)
 
@@ -183,8 +186,12 @@ reference cards; onboarding email sequence.
   create-card; removed "after payment" copy.
 - **PR3a (template safety):** gallery error boundary.
 
-**Next (needs founder decision, §12):** PR3b — repoint primary "Create your card" CTA to
-`/card/new`; feature the 3 generic designs.
+- **PR3b (designs):** the fast `/card/new` flow now offers a 3-up starter design picker
+  (Classic/Modern/Visual → ids 93/92/94), defaulting to Classic — replaces the silent single
+  default. Verified `build` green.
+
+**Still open (founder decision, §12):** repoint the primary "Create your card" / "Start free"
+marketing CTAs to `/card/new`, and the OPSO SMART (NFC) hero positioning.
 
 ## 11. Files changed in this engagement
 
@@ -205,6 +212,10 @@ reference cards; onboarding email sequence.
 **PR3a**
 - `src/components/cards/TemplateErrorBoundary.tsx` (new)
 - `src/app/[locale]/products/digital-card/sections/TemplateGallery.tsx`
+
+**PR3b**
+- `src/app/[locale]/card/new/QuickCreatePage.tsx` (3-design starter picker)
+- `src/content/en.ts`, `src/content/de.ts`, `src/content/tr.ts` (design labels)
 
 ## 12. Open questions for the founder
 
