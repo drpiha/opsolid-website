@@ -93,9 +93,11 @@ export async function POST(req: NextRequest) {
   const order = await prisma.cardOrder.create({
     data: {
       templateId: template.id,
-      contactName: data.contactName,
+      // Name/phone are optional in the self-serve flow; fall back to the card's
+      // own name and an empty phone so the (non-null) columns stay satisfied.
+      contactName: data.contactName ?? data.cardData.name,
       contactEmail: data.contactEmail,
-      contactPhone: data.contactPhone,
+      contactPhone: data.contactPhone ?? "",
       callMeBack: data.callMeBack,
       cardData: data.cardData,
       brandPrimaryHex: data.brandPrimaryHex,
@@ -175,7 +177,7 @@ export async function POST(req: NextRequest) {
     try {
       const liveInput = {
         orderId: order.id,
-        contactName: data.contactName,
+        contactName: data.contactName ?? data.cardData.name,
         cardUrl,
         editToken,
         locale: normalizeLocale(data.locale),

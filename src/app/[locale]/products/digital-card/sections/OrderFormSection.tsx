@@ -14,7 +14,6 @@ import {
   Loader2,
   AlertCircle,
   Check,
-  ChevronDown,
   ArrowRight,
   X,
   Eye,
@@ -92,7 +91,7 @@ function extractFieldErrors(issues: z.ZodIssue[]): Record<string, string> {
 // submit-error scroll handler so we can auto-open the right step before
 // scrolling to the offending input.
 function stepForFieldPath(path: string): StepId {
-  if (path.startsWith("contact") || path === "callMeBack") return "contact";
+  if (path === "contactEmail" || path === "contactName") return "card";
   if (path.startsWith("cardData.")) return "card";
   if (path.startsWith("brand") || path === "themeKey" || path === "layoutKey")
     return "branding";
@@ -101,9 +100,9 @@ function stepForFieldPath(path: string): StepId {
 }
 
 type FormState = "idle" | "submitting" | "error";
-type StepId = "contact" | "card" | "branding" | "billing";
+type StepId = "card" | "branding" | "billing";
 
-const STEP_ORDER: StepId[] = ["contact", "card", "branding", "billing"];
+const STEP_ORDER: StepId[] = ["card", "branding", "billing"];
 
 // Default supports object — covers templates not yet in the v2 registry so
 // we still render every input group when the customer picks an id 2..20.
@@ -303,7 +302,9 @@ export function OrderFormSection({
   const [contactName, setContactName] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [contactPhone, setContactPhone] = useState("");
-  const [callMeBack, setCallMeBack] = useState(false);
+  // "Call me back" was a Contact-step input; the field is gone but the payload
+  // still carries the flag (always false now).
+  const callMeBack = false;
   const [brandPrimaryHex, setBrandPrimaryHex] = useState("");
   const [brandAccentHex, setBrandAccentHex] = useState("");
   const [themeKey, setThemeKey] = useState<CardThemeKey | undefined>(undefined);
@@ -342,7 +343,10 @@ export function OrderFormSection({
   const [logoUploadError, setLogoUploadError] = useState<string | null>(null);
 
   // ---- accordion state ---------------------------------------------------
-  const [openStep, setOpenStep] = useState<StepId>("contact");
+  const [openStep, setOpenStep] = useState<StepId>("card");
+  // Drives the per-step enter transition (fade + small rise). Toggled off then
+  // on whenever the active step changes so the keyed wrapper re-animates.
+  const [stepMounted, setStepMounted] = useState(true);
   const [previewOpen, setPreviewOpen] = useState(false);
   // Phase 7.9 — photo / logo position editor modal
   const [photoEditorOpen, setPhotoEditorOpen] = useState(false);
@@ -517,9 +521,9 @@ export function OrderFormSection({
     if (selectedTemplateId == null) return;
     setPulseKey((k) => k + 1);
     // Only bounce back to step 1 on the *first* template pick — once the
-    // customer has moved past contact, respect where they are.
+    // customer has moved past the card step, respect where they are.
     if (!hasSelectedBeforeRef.current) {
-      setOpenStep("contact");
+      setOpenStep("card");
       hasSelectedBeforeRef.current = true;
     }
     if (!colorsCustomised) {
@@ -531,6 +535,15 @@ export function OrderFormSection({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTemplateId]);
+
+  // Per-step enter transition (fade + small rise). Whenever the active step
+  // changes we toggle `stepMounted` off then back on, so the keyed wrapper
+  // re-runs its CSS transition. CSS-only — no framer-motion.
+  useEffect(() => {
+    setStepMounted(false);
+    const raf = requestAnimationFrame(() => setStepMounted(true));
+    return () => cancelAnimationFrame(raf);
+  }, [openStep]);
 
   const activeCardData: CardData = useMemo(() => {
     const display: CardData = {
@@ -655,9 +668,12 @@ export function OrderFormSection({
       templateId: selectedTemplate.id,
       billingMode,
       locale: cardLocale,
-      contactName,
+      // contactName / contactPhone are no longer user-entered (the form only
+      // asks for email). Send undefined when empty so the server falls back to
+      // the card's own name. callMeBack stays false.
+      contactName: contactName.trim() || undefined,
       contactEmail,
-      contactPhone,
+      contactPhone: contactPhone.trim() || undefined,
       callMeBack,
       cardData: normalizedCard,
       brandPrimaryHex: brandPrimaryHex || undefined,
@@ -674,11 +690,13 @@ export function OrderFormSection({
     if (!parsed.success) {
       const errs = extractFieldErrors(parsed.error.issues);
       setFieldErrors(errs);
+      // Never let a failed submit be silent — surface a top-level message too.
+      setErrorMsg(L("invalidInput", "Bitte prüfen Sie die markierten Felder."));
       setFormState("idle");
       const firstKey = Object.keys(errs)[0];
       if (firstKey) {
         // Auto-open the step that owns the offending field before scrolling,
-        // otherwise the input would be hidden inside a collapsed accordion.
+        // otherwise the input would be hidden in another (inactive) step.
         const targetStep = stepForFieldPath(firstKey);
         setOpenStep(targetStep);
         // Defer scrollIntoView one tick so the accordion expansion animation
@@ -768,7 +786,6 @@ export function OrderFormSection({
   // ---- step summaries ----------------------------------------------------
   const summaries: Record<StepId, string> = useMemo(() => {
     const empty = L("stepEmpty", "Bitte ausfüllen");
-    const contactBits = [contactName, contactEmail, contactPhone].filter(Boolean);
     const cardBits = [cardData.name, cardData.title, cardData.company].filter(
       Boolean
     );
@@ -781,8 +798,6 @@ export function OrderFormSection({
     };
 
     return {
-      contact:
-        contactBits.length > 0 ? contactBits.slice(0, 2).join(" · ") : empty,
       card: cardBits.length > 0 ? cardBits.slice(0, 2).join(" · ") : empty,
       branding: (() => {
         // Phase 7.7 — when the customer hasn't customised colors, the swatch
@@ -814,9 +829,6 @@ export function OrderFormSection({
     };
   }, [
     L,
-    contactName,
-    contactEmail,
-    contactPhone,
     cardData.name,
     cardData.title,
     cardData.company,
@@ -840,6 +852,44 @@ export function OrderFormSection({
       const el = document.getElementById(`step-${id}`);
       el?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 80);
+  };
+
+  // Back — no validation, just step to the previous step.
+  const goToPrevStep = () => {
+    const prev = STEP_ORDER[Math.max(0, stepIndex - 1)];
+    if (prev !== openStep) goToStep(prev);
+  };
+
+  // Next — gate the current step before advancing. THE BUG FIX: previously the
+  // whole-payload Zod validation only ran on final submit and failed silently
+  // on the hidden-required contact fields. Now each step validates its own
+  // required inputs and the create button can never be reached with an invalid
+  // (or empty) email / card name.
+  const handleNext = (id: StepId) => {
+    const errs = validateStep(id, { contactEmail, cardData });
+    if (Object.keys(errs).length > 0) {
+      setFieldErrors((prev) => ({ ...prev, ...errs }));
+      setErrorMsg(L("invalidInput", "Bitte prüfen Sie die markierten Felder."));
+      const firstKey = Object.keys(errs)[0];
+      setTimeout(() => {
+        const el = document.getElementById(
+          `field-${firstKey.replace(".", "-")}`,
+        );
+        el?.scrollIntoView({ behavior: "smooth", block: "center" });
+        setTimeout(() => el?.focus({ preventScroll: true }), 250);
+      }, 60);
+      return;
+    }
+    // Clear any now-resolved errors for this step's fields and advance.
+    setFieldErrors((prev) => {
+      const next = { ...prev };
+      delete next.contactEmail;
+      delete next["cardData.name"];
+      return next;
+    });
+    setErrorMsg(null);
+    const nextStep = STEP_ORDER[Math.min(STEP_ORDER.length - 1, stepIndex + 1)];
+    goToStep(nextStep);
   };
 
   if (!selectedTemplate) return null;
@@ -1007,155 +1057,169 @@ export function OrderFormSection({
               activeIndex={stepIndex}
             />
 
-            {/* accordion */}
-            <div className="overflow-hidden rounded-3xl border border-neutral-200/80 bg-white/95 shadow-[0_1px_0_0_rgba(0,0,0,0.02),0_24px_60px_-30px_rgba(20,18,15,0.18)]">
-              <AccordionStep
-                id="contact"
-                stepNumber={1}
-                title={L("step1Title", "Kontakt")}
-                summary={summaries.contact}
-                open={openStep === "contact"}
-                onToggle={(next) => setOpenStep(next ? "contact" : openStep)}
-                onNext={() => goToStep("card")}
-                nextLabel={L("step1Next", "Weiter zum Karteninhalt")}
+            {/* top-level error banner — always visible regardless of which
+                step is active, so a gate/submit failure is never silent. */}
+            {errorMsg && (
+              <div
+                role="alert"
+                className="flex items-start gap-3 rounded-2xl border border-copper/40 bg-copper/8 p-4 text-sm text-ink"
               >
-                <StepContact
-                  L={L}
-                  contactName={contactName}
-                  setContactName={setContactName}
-                  contactEmail={contactEmail}
-                  setContactEmail={setContactEmail}
-                  contactPhone={contactPhone}
-                  setContactPhone={setContactPhone}
-                  callMeBack={callMeBack}
-                  setCallMeBack={setCallMeBack}
-                  fieldErrors={fieldErrors}
-                  clearFieldError={clearFieldError}
-                />
-              </AccordionStep>
+                <AlertCircle size={16} className="mt-0.5 shrink-0 text-copper" />
+                <span>{errorMsg}</span>
+              </div>
+            )}
 
-              <AccordionStep
-                id="card"
-                stepNumber={2}
-                title={L("step2Title", "Karteninhalt")}
-                summary={summaries.card}
-                open={openStep === "card"}
-                onToggle={(next) => setOpenStep(next ? "card" : openStep)}
-                onNext={() => goToStep("branding")}
-                nextLabel={L("step2Next", "Weiter zum Branding")}
+            {/* wizard — one step at a time inside a single panel */}
+            <div
+              id={`step-${openStep}`}
+              className="rounded-3xl border border-neutral-200/80 bg-white/95 p-5 shadow-[0_1px_0_0_rgba(0,0,0,0.02),0_24px_60px_-30px_rgba(20,18,15,0.18)] md:p-7"
+            >
+              {/* active step title */}
+              <h3 className="mb-5 font-serif text-heading-sm leading-tight text-ink">
+                {stepLabel(openStep, L, paymentsEnabled)}
+              </h3>
+
+              {/* keyed wrapper drives a subtle fade + rise on each step change */}
+              <div
+                key={openStep}
+                className={[
+                  "transition-[opacity,transform] duration-base ease-snap",
+                  stepMounted
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-2",
+                ].join(" ")}
               >
-                {/* Card language — explicit, drives the public card chrome.
-                    Changing it also flips the live preview locale. */}
-                <div className="mb-4">
-                  <CardLanguageSelector
-                    value={cardLocale}
-                    onChange={(next) => {
-                      setCardLocale(next);
-                      setPreviewLocale(next);
-                    }}
-                    L={L}
-                  />
+                <div className="space-y-6">
+                  {openStep === "card" && (
+                    <>
+                      {/* Card language — explicit, drives the public card chrome.
+                          Changing it also flips the live preview locale. */}
+                      <div>
+                        <CardLanguageSelector
+                          value={cardLocale}
+                          onChange={(next) => {
+                            setCardLocale(next);
+                            setPreviewLocale(next);
+                          }}
+                          L={L}
+                        />
+                      </div>
+                      <StepCardContent
+                        L={L}
+                        cardData={cardData}
+                        setCard={setCard}
+                        setSocial={setSocial}
+                        contactName={contactName}
+                        contactEmail={contactEmail}
+                        setContactEmail={setContactEmail}
+                        contactPhone={contactPhone}
+                        fieldErrors={fieldErrors}
+                        clearFieldError={clearFieldError}
+                        nameRules={v2Entry?.nameRules}
+                        photoPath={photoPath}
+                        setPhotoPath={setPhotoPath}
+                        logoPath={logoPath}
+                        setLogoPath={setLogoPath}
+                        photoUploading={photoUploading}
+                        setPhotoUploading={setPhotoUploading}
+                        logoUploading={logoUploading}
+                        setLogoUploading={setLogoUploading}
+                        handleFileUpload={handleFileUpload}
+                        supports={supports}
+                        photoPreviewUrl={photoPreviewUrl}
+                        setPhotoPreviewUrl={setPhotoPreviewUrl}
+                        logoPreviewUrl={logoPreviewUrl}
+                        setLogoPreviewUrl={setLogoPreviewUrl}
+                        photoUploadError={photoUploadError}
+                        setPhotoUploadError={setPhotoUploadError}
+                        logoUploadError={logoUploadError}
+                        setLogoUploadError={setLogoUploadError}
+                        readPreview={readPreview}
+                        onEditPhoto={() => setPhotoEditorOpen(true)}
+                        onEditLogo={() => setLogoEditorOpen(true)}
+                        onClearCard={() => {
+                          setCardData(EMPTY_CARD);
+                          setPhotoPreviewUrl(null);
+                          setLogoPreviewUrl(null);
+                        }}
+                        templateKey={v2Entry?.key ?? null}
+                        cardLocale={cardLocale}
+                      />
+                    </>
+                  )}
+
+                  {openStep === "branding" && (
+                    <StepBranding
+                      L={L}
+                      brandPrimaryHex={brandPrimaryHex}
+                      setBrandPrimaryHex={setBrandPrimaryHex}
+                      brandAccentHex={brandAccentHex}
+                      setBrandAccentHex={setBrandAccentHex}
+                      themeKey={themeKey}
+                      applyPreset={applyPreset}
+                      cardData={cardData}
+                      setCard={setCard}
+                      supports={supports}
+                      templateDefaults={v2Entry?.defaults}
+                      onColorsCustomised={() => setColorsCustomised(true)}
+                      onColorsReset={() => setColorsCustomised(false)}
+                    />
+                  )}
+
+                  {openStep === "billing" && (
+                    <StepBilling
+                      L={L}
+                      paymentsEnabled={paymentsEnabled}
+                      selectedTemplate={selectedTemplate}
+                      billingMode={billingMode}
+                      setBillingMode={setBillingMode}
+                      amountCents={amountCents}
+                      formState={formState}
+                      desiredSlug={desiredSlug}
+                      setDesiredSlug={setDesiredSlug}
+                      contactName={contactName}
+                      summaries={summaries}
+                      goToStep={goToStep}
+                    />
+                  )}
                 </div>
-                <StepCardContent
-                  L={L}
-                  cardData={cardData}
-                  setCard={setCard}
-                  setSocial={setSocial}
-                  contactName={contactName}
-                  contactEmail={contactEmail}
-                  contactPhone={contactPhone}
-                  fieldErrors={fieldErrors}
-                  clearFieldError={clearFieldError}
-                  nameRules={v2Entry?.nameRules}
-                  photoPath={photoPath}
-                  setPhotoPath={setPhotoPath}
-                  logoPath={logoPath}
-                  setLogoPath={setLogoPath}
-                  photoUploading={photoUploading}
-                  setPhotoUploading={setPhotoUploading}
-                  logoUploading={logoUploading}
-                  setLogoUploading={setLogoUploading}
-                  handleFileUpload={handleFileUpload}
-                  supports={supports}
-                  photoPreviewUrl={photoPreviewUrl}
-                  setPhotoPreviewUrl={setPhotoPreviewUrl}
-                  logoPreviewUrl={logoPreviewUrl}
-                  setLogoPreviewUrl={setLogoPreviewUrl}
-                  photoUploadError={photoUploadError}
-                  setPhotoUploadError={setPhotoUploadError}
-                  logoUploadError={logoUploadError}
-                  setLogoUploadError={setLogoUploadError}
-                  readPreview={readPreview}
-                  onEditPhoto={() => setPhotoEditorOpen(true)}
-                  onEditLogo={() => setLogoEditorOpen(true)}
-                  onClearCard={() => {
-                    setCardData(EMPTY_CARD);
-                    setPhotoPreviewUrl(null);
-                    setLogoPreviewUrl(null);
-                  }}
-                  templateKey={v2Entry?.key ?? null}
-                  cardLocale={cardLocale}
-                />
-              </AccordionStep>
+              </div>
 
-              <AccordionStep
-                id="branding"
-                stepNumber={3}
-                title={L("step3Title", "Branding")}
-                summary={summaries.branding}
-                open={openStep === "branding"}
-                onToggle={(next) => setOpenStep(next ? "branding" : openStep)}
-                onNext={() => goToStep("billing")}
-                nextLabel={
-                  paymentsEnabled
-                    ? L("step3Next", "Weiter zur Zahlung")
-                    : L("step3NextCreate", "Weiter zum Veröffentlichen")
-                }
-              >
-                <StepBranding
-                  L={L}
-                  brandPrimaryHex={brandPrimaryHex}
-                  setBrandPrimaryHex={setBrandPrimaryHex}
-                  brandAccentHex={brandAccentHex}
-                  setBrandAccentHex={setBrandAccentHex}
-                  themeKey={themeKey}
-                  applyPreset={applyPreset}
-                  cardData={cardData}
-                  setCard={setCard}
-                  supports={supports}
-                  templateDefaults={v2Entry?.defaults}
-                  onColorsCustomised={() => setColorsCustomised(true)}
-                  onColorsReset={() => setColorsCustomised(false)}
-                />
-              </AccordionStep>
+              {/* shared Back / Next footer */}
+              <div className="mt-7 flex items-center justify-between gap-3 border-t border-ink/10 pt-5">
+                {stepIndex > 0 ? (
+                  <button
+                    type="button"
+                    onClick={goToPrevStep}
+                    className="btn-ghost inline-flex items-center gap-2 rounded-full border border-ink/15 bg-white px-5 py-2.5 text-sm font-semibold text-ink/70 transition-colors hover:border-ink/40 hover:text-ink"
+                  >
+                    {L("stepBack", "Zurück")}
+                  </button>
+                ) : (
+                  <span />
+                )}
 
-              <AccordionStep
-                id="billing"
-                stepNumber={4}
-                title={
-                  paymentsEnabled
-                    ? L("step4Title", "Zahlung")
-                    : L("step4TitleCreate", "Erstellen & veröffentlichen")
-                }
-                summary={summaries.billing}
-                open={openStep === "billing"}
-                onToggle={(next) => setOpenStep(next ? "billing" : openStep)}
-                isLast
-              >
-                <StepBilling
-                  L={L}
-                  paymentsEnabled={paymentsEnabled}
-                  selectedTemplate={selectedTemplate}
-                  billingMode={billingMode}
-                  setBillingMode={setBillingMode}
-                  amountCents={amountCents}
-                  formState={formState}
-                  errorMsg={errorMsg}
-                  desiredSlug={desiredSlug}
-                  setDesiredSlug={setDesiredSlug}
-                  contactName={contactName}
-                />
-              </AccordionStep>
+                {openStep !== "billing" && (
+                  <button
+                    type="button"
+                    onClick={() => handleNext(openStep)}
+                    className="group/next inline-flex items-center gap-2 rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-neutral-50 shadow-[0_4px_12px_-4px_rgba(20,18,15,0.4)] transition-transform hover:scale-[1.015] active:scale-[0.98]"
+                  >
+                    <span>
+                      {openStep === "card"
+                        ? L("step2Next", "Weiter zum Branding")
+                        : paymentsEnabled
+                          ? L("step3Next", "Weiter zur Zahlung")
+                          : L("step3NextCreate", "Weiter zum Veröffentlichen")}
+                    </span>
+                    <ArrowRight
+                      size={14}
+                      aria-hidden
+                      className="transition-transform group-hover/next:translate-x-0.5"
+                    />
+                  </button>
+                )}
+              </div>
             </div>
           </div>
 
@@ -1433,8 +1497,6 @@ function stepLabel(
   paymentsEnabled: boolean,
 ): string {
   switch (id) {
-    case "contact":
-      return L("step1Title", "Kontakt");
     case "card":
       return L("step2Title", "Karteninhalt");
     case "branding":
@@ -1459,18 +1521,39 @@ function isStepComplete(
   }
 ): boolean {
   switch (id) {
-    case "contact":
-      return Boolean(
-        state.contactName && state.contactEmail && state.contactPhone
-      );
     case "card":
-      return Boolean(state.cardData.name);
+      // Card content now also owns the required contact email.
+      return Boolean(state.cardData.name && state.contactEmail.trim());
     case "branding":
       // Optional step — considered "touched" rather than required.
       return Boolean(state.brandPrimaryHex || state.themeKey);
     case "billing":
       return Boolean(state.billingMode);
   }
+}
+
+// Per-step gate. Returns a map of fieldPath -> message for any field the
+// step requires that isn't valid yet. Used by the wizard's Next button so a
+// step can't be skipped past its required inputs (the bug: whole-payload
+// validation only ran on final submit, silently failing on hidden fields).
+function validateStep(
+  id: StepId,
+  state: { contactEmail: string; cardData: CardData },
+): Record<string, string> {
+  const errs: Record<string, string> = {};
+  if (id === "card") {
+    const emailCheck = OrderPayloadSchema.shape.contactEmail.safeParse(
+      state.contactEmail,
+    );
+    if (!emailCheck.success) {
+      errs.contactEmail = "Bitte gültige E-Mail eingeben";
+    }
+    if (!state.cardData.name || !state.cardData.name.trim()) {
+      errs["cardData.name"] = "Name auf der Karte ist erforderlich";
+    }
+  }
+  // branding / billing have no hard gate.
+  return errs;
 }
 
 // =============================================================================
@@ -1546,239 +1629,7 @@ function StepIndicator({
 }
 
 // =============================================================================
-// Accordion primitive — custom (Radix Accordion not in deps).
-// =============================================================================
-
-function AccordionStep({
-  id,
-  stepNumber,
-  title,
-  summary,
-  open,
-  onToggle,
-  children,
-  onNext,
-  nextLabel,
-  isLast,
-}: {
-  id: StepId;
-  stepNumber: number;
-  title: string;
-  summary: string;
-  open: boolean;
-  onToggle: (next: boolean) => void;
-  children: ReactNode;
-  onNext?: () => void;
-  nextLabel?: string;
-  isLast?: boolean;
-}) {
-  const contentRef = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState<number | "auto">(open ? "auto" : 0);
-
-  // Smoothly transition height between 0 and content height. Using a fixed
-  // pixel measurement keeps the open/close animation snappy without CSS hacks.
-  useEffect(() => {
-    const el = contentRef.current;
-    if (!el) return;
-    if (open) {
-      const h = el.scrollHeight;
-      setHeight(h);
-      // After the transition completes, set to "auto" so internal layout
-      // changes (validation messages, image previews) don't get clipped.
-      const t = setTimeout(() => setHeight("auto"), 320);
-      return () => clearTimeout(t);
-    }
-    // Snap to current height first, then animate to 0 — required because
-    // CSS transitions don't run from `auto`.
-    const current = el.scrollHeight;
-    setHeight(current);
-    requestAnimationFrame(() => setHeight(0));
-  }, [open]);
-
-  return (
-    <section
-      id={`step-${id}`}
-      className={`group/step relative ${!isLast ? "border-b border-neutral-200/70" : ""}`}
-    >
-      <button
-        type="button"
-        onClick={() => onToggle(!open)}
-        aria-expanded={open}
-        aria-controls={`step-content-${id}`}
-        className={`flex w-full items-center gap-4 px-5 py-5 text-left transition-colors md:px-7 md:py-6 ${
-          open ? "bg-bg-1/60" : "hover:bg-bg-1/40"
-        }`}
-      >
-        <span
-          className={`grid h-9 w-9 shrink-0 place-items-center rounded-full text-sm font-semibold transition-colors ${
-            open
-              ? "bg-neutral-900 text-neutral-50"
-              : "border border-ink/15 bg-white text-ink/70"
-          }`}
-        >
-          {stepNumber}
-        </span>
-        <div className="min-w-0 flex-1">
-          <h3 className="font-serif text-heading-sm leading-tight text-ink">
-            {title}
-          </h3>
-          {!open && (
-            <p className="mt-1 truncate text-sm text-ink/55">{summary}</p>
-          )}
-        </div>
-        <ChevronDown
-          size={18}
-          aria-hidden
-          className={`shrink-0 text-ink/50 transition-transform duration-200 ${
-            open ? "rotate-180" : ""
-          }`}
-        />
-      </button>
-
-      <div
-        id={`step-content-${id}`}
-        role="region"
-        aria-labelledby={`step-${id}`}
-        style={{
-          height: typeof height === "number" ? `${height}px` : "auto",
-          transition: "height 280ms cubic-bezier(0.32, 0.72, 0, 1)",
-          overflow: "hidden",
-        }}
-      >
-        <div ref={contentRef} className="px-5 pb-7 md:px-7">
-          <div className="space-y-6">{children}</div>
-          {onNext && (
-            <div className="mt-7 flex justify-end border-t border-ink/10 pt-5">
-              <button
-                type="button"
-                onClick={onNext}
-                className="group/next inline-flex items-center gap-2 rounded-full bg-neutral-900 px-5 py-2.5 text-sm font-semibold text-neutral-50 shadow-[0_4px_12px_-4px_rgba(20,18,15,0.4)] transition-transform hover:scale-[1.015] active:scale-[0.98]"
-              >
-                <span>{nextLabel}</span>
-                <ArrowRight
-                  size={14}
-                  aria-hidden
-                  className="transition-transform group-hover/next:translate-x-0.5"
-                />
-              </button>
-            </div>
-          )}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// =============================================================================
-// STEP 1 — Contact
-// =============================================================================
-
-function StepContact({
-  L,
-  contactName,
-  setContactName,
-  contactEmail,
-  setContactEmail,
-  contactPhone,
-  setContactPhone,
-  callMeBack,
-  setCallMeBack,
-  fieldErrors,
-  clearFieldError,
-}: {
-  L: (k: string, f: string) => string;
-  contactName: string;
-  setContactName: (v: string) => void;
-  contactEmail: string;
-  setContactEmail: (v: string) => void;
-  contactPhone: string;
-  setContactPhone: (v: string) => void;
-  callMeBack: boolean;
-  setCallMeBack: (v: boolean) => void;
-  fieldErrors: Record<string, string>;
-  clearFieldError: (key: string) => void;
-}) {
-  return (
-    <>
-      <div className="grid gap-4 md:grid-cols-2">
-        <Input
-          id="field-contactName"
-          label={L("contactName", "Ihr Name") + " *"}
-          required
-          value={contactName}
-          onChange={(e) => {
-            setContactName(e.target.value);
-            clearFieldError("contactName");
-          }}
-          error={fieldErrors.contactName}
-          placeholder="Anna Fischer"
-          autoComplete="name"
-        />
-        <Input
-          id="field-contactEmail"
-          type="email"
-          label={L("contactEmail", "E-Mail") + " *"}
-          required
-          value={contactEmail}
-          onChange={(e) => {
-            setContactEmail(e.target.value);
-            clearFieldError("contactEmail");
-          }}
-          error={fieldErrors.contactEmail}
-          placeholder="anna@studio-nord.de"
-          autoComplete="email"
-        />
-      </div>
-      <Input
-        id="field-contactPhone"
-        type="tel"
-        label={L("contactPhone", "Telefon") + " *"}
-        required
-        value={contactPhone}
-        onChange={(e) => {
-          setContactPhone(e.target.value);
-          clearFieldError("contactPhone");
-        }}
-        error={fieldErrors.contactPhone}
-        placeholder="+49 160 1234567"
-        autoComplete="tel"
-      />
-      <label className="group flex cursor-pointer items-start gap-3 rounded-2xl border border-neutral-200/80 bg-white p-4 transition-colors hover:border-ink/30">
-        <span className="relative mt-0.5 flex h-5 w-5 shrink-0">
-          <input
-            type="checkbox"
-            className="peer absolute inset-0 cursor-pointer opacity-0"
-            checked={callMeBack}
-            onChange={(e) => setCallMeBack(e.target.checked)}
-          />
-          <span
-            className={`absolute inset-0 grid place-items-center rounded-md border transition-colors ${
-              callMeBack
-                ? "border-copper bg-copper text-ink"
-                : "border-ink/25 bg-white"
-            }`}
-          >
-            {callMeBack && <Check size={12} strokeWidth={3} />}
-          </span>
-        </span>
-        <span className="text-sm text-ink">
-          <strong className="block font-semibold">
-            {L("callMeBack", "Rufen Sie mich an")}
-          </strong>
-          <span className="mt-0.5 block text-ink/60">
-            {L(
-              "callMeBackHint",
-              "Wir melden uns innerhalb eines Werktags, um Details zu klären."
-            )}
-          </span>
-        </span>
-      </label>
-    </>
-  );
-}
-
-// =============================================================================
-// STEP 2 — Card content (cardData + uploads + socials)
+// STEP 1 — Card content (cardData + required email + uploads + socials)
 // =============================================================================
 
 function StepCardContent({
@@ -1788,6 +1639,7 @@ function StepCardContent({
   setSocial,
   contactName,
   contactEmail,
+  setContactEmail,
   contactPhone,
   fieldErrors,
   clearFieldError,
@@ -1826,6 +1678,7 @@ function StepCardContent({
   ) => void;
   contactName: string;
   contactEmail: string;
+  setContactEmail: (v: string) => void;
   contactPhone: string;
   fieldErrors: Record<string, string>;
   clearFieldError: (key: string) => void;
@@ -1860,6 +1713,23 @@ function StepCardContent({
 }) {
   return (
     <>
+      {/* Required contact email — the only required contact field. We send the
+          card link + private edit link here. (Was a separate Contact step.) */}
+      <Input
+        id="field-contactEmail"
+        type="email"
+        label={L("contactEmailInline", "Your email (we send your card link here)") + " *"}
+        required
+        value={contactEmail}
+        onChange={(e) => {
+          setContactEmail(e.target.value);
+          clearFieldError("contactEmail");
+        }}
+        error={fieldErrors.contactEmail}
+        placeholder="anna@studio-nord.de"
+        autoComplete="email"
+      />
+
       {/* sample-content hint + clear-to-blank */}
       <div className="-mt-1 flex items-center justify-between gap-3 rounded-xl border border-copper/30 bg-copper/[0.06] px-3 py-2">
         <span className="text-[11px] leading-snug text-ink/60">
@@ -2436,10 +2306,11 @@ function StepBilling({
   setBillingMode,
   amountCents,
   formState,
-  errorMsg,
   desiredSlug,
   setDesiredSlug,
   contactName,
+  summaries,
+  goToStep,
 }: {
   L: (k: string, f: string) => string;
   paymentsEnabled: boolean;
@@ -2448,13 +2319,37 @@ function StepBilling({
   setBillingMode: (m: keyof typeof BillingMode) => void;
   amountCents: number;
   formState: FormState;
-  errorMsg: string | null;
   desiredSlug: string;
   setDesiredSlug: (v: string) => void;
   contactName: string;
+  summaries: Record<StepId, string>;
+  goToStep: (id: StepId) => void;
 }) {
   return (
     <>
+      {/* compact read-only review of the earlier steps, each with an edit link */}
+      <div className="space-y-2 rounded-2xl border border-line-soft bg-bg-1/50 p-4">
+        {(["card", "branding"] as const).map((id) => (
+          <div key={id} className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <span className="mono-label text-[9px] uppercase tracking-[0.18em] text-ink/45">
+                {id === "card"
+                  ? L("step2Title", "Karteninhalt")
+                  : L("step3Title", "Branding")}
+              </span>
+              <p className="truncate text-sm text-ink/75">{summaries[id]}</p>
+            </div>
+            <button
+              type="button"
+              onClick={() => goToStep(id)}
+              className="chip shrink-0 rounded-full border border-ink/15 bg-white px-3 py-1 text-[11px] font-semibold text-ink/70 transition-colors hover:border-copper hover:text-ink"
+            >
+              {L("reviewEdit", "Bearbeiten")}
+            </button>
+          </div>
+        ))}
+      </div>
+
       <SubFieldset
         label={L("slugSection", "Kart adresi")}
         hint={L(
@@ -2540,13 +2435,6 @@ function StepBilling({
             />
           </div>
         </SubFieldset>
-      )}
-
-      {errorMsg && (
-        <div className="flex items-start gap-3 rounded-2xl border border-brand/30 bg-brand/5 p-4 text-sm text-brand">
-          <AlertCircle size={16} className="mt-0.5 shrink-0" />
-          <span>{errorMsg}</span>
-        </div>
       )}
 
       {/* total + submit */}
