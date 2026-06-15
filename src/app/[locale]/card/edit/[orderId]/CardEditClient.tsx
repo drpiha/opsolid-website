@@ -717,6 +717,7 @@ export function CardEditClient(props: Props) {
             isDirty={isDirty}
             formState={formState}
             onRevert={handleRevert}
+            errorMsg={errorMsg}
           />
         </form>
       </div>
