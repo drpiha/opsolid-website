@@ -12,11 +12,9 @@ export const stripe = new Stripe(secretKey ?? "sk_test_placeholder_for_build", {
 });
 
 export function getSiteUrl(): string {
-  return (
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    process.env.VERCEL_URL?.replace(/^/, "https://") ??
-    "http://localhost:3000"
-  );
+  // Self-hosted on the Hostinger VPS: NEXT_PUBLIC_SITE_URL (= https://opsolid.de)
+  // is set in the container env. Localhost is the dev fallback.
+  return process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 }
 
 export interface CreateCheckoutSessionArgs {

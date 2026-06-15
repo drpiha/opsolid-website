@@ -15,9 +15,6 @@ Premium B2B website for OpSolid, an operational systems and automation company.
 
 ## Getting Started
 
-## PUSH to VERCEL :
-cd C:\Users\drhas\Documents\Coding\Project_Website\mayai-website; git add -A; git commit -m "update"; git push
-
 ```bash
 # Install dependencies
 npm install
@@ -99,14 +96,14 @@ Eger domain de degisiyorsa, ek olarak:
 - `src/lib/constants.ts` → `url` ve `email` alanlarini guncelle
 - `.env.example` → `CONTACT_TO_EMAIL` degerini guncelle
 - `Ctrl + Shift + H` ile `opsolid.de` → `yenisite.de` degistir
-- Vercel dashboard → Settings → Domains → yeni domain ekle
-- DNS kayitlarini yeni domain icin ayarla
+- VPS'te `.env` → `NEXT_PUBLIC_SITE_URL` degerini yeni domaine guncelle
+- DNS kayitlarini yeni domaini Hostinger VPS'e (Traefik) yonlendirecek sekilde ayarla
 
 ### Adim 4: Build ve Deploy
 ```bash
 npm run build    # Hata olmadigini dogrula
 git add -A && git commit -m "Rename brand to YeniIsim"
-git push         # Vercel otomatik deploy eder
+git push         # main'e merge sonrasi VPS'e otomatik deploy olur
 ```
 
 **Toplam sure: ~5 dakika.**
@@ -160,7 +157,8 @@ Ziyaretci "Gorusme Planlayin" tiklar
 
 ### Environment Variables
 
-Vercel dashboard → Settings → Environment Variables:
+Set these in the `.env` file on the Hostinger VPS (read by the `opsolid`
+container via docker-compose). See `deploy/hostinger/README.md`:
 
 | Key | Aciklama | Ornek |
 |-----|----------|-------|
@@ -205,19 +203,27 @@ To add a new language: duplicate `en.ts`, translate values, add to `src/content/
 
 The Impressum and Privacy Policy pages are **placeholder templates**. They must be replaced with legally reviewed content before production use.
 
-## Deployment (Vercel)
+## Deployment (Hostinger VPS)
 
-1. Push to GitHub
-2. Import at [vercel.com/new](https://vercel.com/new)
-3. Vercel auto-detects Next.js
-4. Add environment variables (see table above)
-5. Add custom domain: Settings → Domains → `opsolid.de`
-6. Configure DNS at IONOS:
-   - A Record: `@` → `76.76.21.21`
-   - CNAME: `www` → `cname.vercel-dns.com`
-7. Deploy
+The site is **self-hosted on a Hostinger VPS** (Docker Compose + Traefik +
+PostgreSQL). It is **not** deployed to Vercel.
 
-The site generates as fully static pages (SSG) for maximum performance.
+Deployment is automatic: every push/merge to `main` triggers
+`.github/workflows/deploy.yml`, which runs the `audit:cards` gate, rsyncs the
+source to `/opt/opsolid-website`, applies idempotent DB migrations
+(`deploy/hostinger/db-bootstrap.sh`), rebuilds the container
+(`docker compose up -d --build opsolid`), and health-checks
+`https://opsolid.de/api/health`.
+
+```bash
+git add -A && git commit -m "…"
+git push                       # PR -> merge to main -> VPS auto-deploy
+```
+
+- **First-time setup + manual runbook:** `deploy/hostinger/README.md`
+- **Env vars:** `.env` on the VPS (see the table above and `.env.example`)
+- **DNS:** point `opsolid.de` / `www` / `card` / `go` A records at the VPS IP
+  (Traefik terminates TLS via ACME). No Vercel DNS records.
 
 ## Design Decisions
 
