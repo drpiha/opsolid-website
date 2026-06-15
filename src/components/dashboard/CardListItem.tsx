@@ -63,7 +63,14 @@ export function CardListItem({ card, locale }: Props) {
 
   const displayName = resolveCardName(card);
   const publicUrl = card.slug ? `${window?.location?.origin ?? ""}/c/${card.slug}` : null;
-  const editHref = `/${locale}/card/edit/${card.id}`;
+  // The edit page is gated by the per-order edit token (?t=). Owned cards carry
+  // their token from the dashboard query, so pass it through — otherwise the
+  // editor rejects the visit with "Link incomplete". If a token is somehow
+  // missing, fall back to the tokenless URL, which lands on the resend-link
+  // recovery screen rather than a dead end.
+  const editHref = card.editToken
+    ? `/${locale}/card/edit/${card.id}?t=${encodeURIComponent(card.editToken)}`
+    : `/${locale}/card/edit/${card.id}`;
   const isDeleted =
     card.status === "CANCELLED" || card.status === "REFUNDED";
 

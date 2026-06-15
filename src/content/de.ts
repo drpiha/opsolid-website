@@ -1705,7 +1705,7 @@ export const content: Content = {
         hintArrows: "Mit den Pfeiltasten durch die Designs blättern",
         prev: "Vorheriges Design",
         next: "Nächstes Design",
-        orderCta: "Dieses Design bestellen",
+        orderCta: "Dieses Design verwenden",
         secondaryCta: "Alle Designs ansehen",
         counter: "{{current}} / {{total}}",
         priceYearly: "/Jahr",
@@ -1756,10 +1756,10 @@ export const content: Content = {
           monthlyShort: "/Mo.",
         },
         form: {
-          eyebrow: "BESTELLUNG",
+          eyebrow: "KARTE ERSTELLEN",
           title: "Ihre Daten, Ihr Design, Ihre Karte.",
           subtitle:
-            "Füllen Sie das Formular aus — die Karte wird direkt nach der Zahlung unter opsolid.de/c/… veröffentlicht.",
+            "Füllen Sie das Formular aus — die Karte wird direkt nach dem Veröffentlichen unter opsolid.de/c/… live.",
           howToCreate:
             "Jeder kann eine Karte erstellen — ganz ohne Konto. Design wählen, Formular ausfüllen, in wenigen Minuten live. Sie erhalten einen privaten Link zum jederzeitigen Bearbeiten.",
           eventJoinLabel:

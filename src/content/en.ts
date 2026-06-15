@@ -1703,7 +1703,7 @@ export const content = {
         hintArrows: "Use arrow keys to move between designs",
         prev: "Previous design",
         next: "Next design",
-        orderCta: "Order this design",
+        orderCta: "Use this design",
         secondaryCta: "See all designs",
         counter: "{{current}} / {{total}}",
         priceYearly: "/yr",
@@ -1754,10 +1754,10 @@ export const content = {
           monthlyShort: "/mo",
         },
         form: {
-          eyebrow: "ORDER",
+          eyebrow: "CREATE YOUR CARD",
           title: "Your details, your design, your card.",
           subtitle:
-            "Fill out the form — your card goes live at opsolid.de/c/… immediately after payment.",
+            "Fill out the form — your card goes live at opsolid.de/c/… as soon as you publish.",
           howToCreate:
             "Anyone can create a card — no account needed. Pick a design, fill in the form, and it goes live in minutes. You get a private link to edit it anytime.",
           eventJoinLabel:

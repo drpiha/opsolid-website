@@ -66,44 +66,17 @@ export default async function MagicLinkVerifyPage({
     return <ErrorUI locale={locale} copy={copy} />;
   }
 
-  // Build the absolute URL for the API route so we can call it server-side
-  const siteUrl = (
-    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"
-  ).replace(/\/+$/, "");
-
-  let apiRedirectTarget: string | null = null;
-  let verifyOk = false;
-
-  try {
-    const res = await fetch(
-      `${siteUrl}/api/auth/magic-link/verify?token=${encodeURIComponent(token)}`,
-      {
-        redirect: "manual", // Don't follow — we need to inspect the Location header
-        cache: "no-store",
-      },
-    );
-
-    if (res.status === 302 || res.status === 301) {
-      const location = res.headers.get("location");
-      if (location && !location.includes("error=")) {
-        apiRedirectTarget = location;
-        verifyOk = true;
-      }
-    }
-    // 200 without redirect = unexpected; treat as error
-  } catch {
-    // Network error — show error UI
-  }
-
-  if (verifyOk && apiRedirectTarget) {
-    // Note: cookies set by the API won't transfer this way because we're doing
-    // a server-to-server fetch. The API route already handles its own redirect
-    // with the cookie set. For the page-level verify flow, redirect the browser
-    // directly to the API endpoint so the cookie flows through normally.
-    redirect(`/api/auth/magic-link/verify?token=${encodeURIComponent(token)}`);
-  }
-
-  return <ErrorUI locale={locale} copy={copy} />;
+  // Pass-through: send the browser straight to the verify API. The API route
+  // consumes the single-use token exactly once, sets the refresh cookie on its
+  // own 302 response, and redirects on to the dashboard (or to /login?error=…
+  // when the token is already used or expired).
+  //
+  // We must NOT fetch the API server-side here: a server-to-server fetch would
+  // consume the single-use token before the browser's own request arrives,
+  // marking it used and making the browser's follow-up redirect fail with
+  // invalid_or_expired_link — i.e. every magic-link login would break. This
+  // page is now a thin redirect only.
+  redirect(`/api/auth/magic-link/verify?token=${encodeURIComponent(token)}`);
 }
 
 // ---------------------------------------------------------------------------

@@ -282,7 +282,7 @@ function formatPositionLabel(pos: ImagePosition | undefined): string | undefined
 
 export function OrderFormSection({
   selectedTemplateId,
-  pricingMode = "freemium",
+  pricingMode = "all_free",
   event = null,
 }: Props) {
   const paymentsEnabled = pricingMode !== "all_free";
@@ -924,7 +924,7 @@ export function OrderFormSection({
         {/* ---- header ------------------------------------------------- */}
         <div className="mb-10 max-w-2xl md:mb-14">
           <p className="mono-label uppercase tracking-[0.2em] text-ink/55">
-            {L("eyebrow", "BESTELLUNG")}
+            {L("eyebrow", "KARTE ERSTELLEN")}
           </p>
           <h2 className="mt-3 font-serif text-display-sm leading-[1.05] text-ink">
             {L("title", "Ihre Daten, Ihr Design, Ihre Karte.")}

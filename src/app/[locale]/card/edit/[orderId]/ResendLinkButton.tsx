@@ -19,23 +19,23 @@ const COPY: Record<"en" | "de" | "tr", { idle: string; sending: string; sent: st
   en: {
     idle: "Email me the edit link",
     sending: "Sending…",
-    sent: "If this order exists, the edit link is on its way to the email used at purchase.",
+    sent: "If this card exists, the edit link is on its way to the email on file.",
     rateLimited: "Too many attempts — please try again later.",
-    hint: "We send it to the email address stored on the order — nowhere else.",
+    hint: "We send it to the email address stored on the card — nowhere else.",
   },
   de: {
     idle: "Edit-Link per E-Mail senden",
     sending: "Wird gesendet…",
-    sent: "Falls diese Bestellung existiert, ist der Edit-Link auf dem Weg an die hinterlegte E-Mail-Adresse.",
+    sent: "Falls diese Karte existiert, ist der Edit-Link auf dem Weg an die hinterlegte E-Mail-Adresse.",
     rateLimited: "Zu viele Versuche — bitte später erneut versuchen.",
-    hint: "Wir senden ihn ausschließlich an die in der Bestellung hinterlegte E-Mail-Adresse.",
+    hint: "Wir senden ihn ausschließlich an die für die Karte hinterlegte E-Mail-Adresse.",
   },
   tr: {
     idle: "Düzenleme linkini e-postama gönder",
     sending: "Gönderiliyor…",
-    sent: "Bu sipariş mevcutsa, düzenleme linki kayıtlı e-posta adresine gönderildi.",
+    sent: "Bu kart mevcutsa, düzenleme linki kayıtlı e-posta adresine gönderildi.",
     rateLimited: "Çok fazla deneme — lütfen daha sonra tekrar deneyin.",
-    hint: "Yalnızca siparişte kayıtlı e-posta adresine gönderilir.",
+    hint: "Yalnızca kartta kayıtlı e-posta adresine gönderilir.",
   },
 };
 

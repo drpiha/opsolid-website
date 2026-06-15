@@ -1705,7 +1705,7 @@ export const content: Content = {
         hintArrows: "Tasarımlar arasında ok tuşlarıyla geçin",
         prev: "Önceki tasarım",
         next: "Sonraki tasarım",
-        orderCta: "Bu tasarımı sipariş et",
+        orderCta: "Bu tasarımı kullan",
         secondaryCta: "Tüm tasarımları gör",
         counter: "{{current}} / {{total}}",
         priceYearly: "/yıl",
@@ -1756,10 +1756,10 @@ export const content: Content = {
           monthlyShort: "/ay",
         },
         form: {
-          eyebrow: "SİPARİŞ",
+          eyebrow: "KART OLUŞTUR",
           title: "Bilgileriniz, tasarımınız, kartınız.",
           subtitle:
-            "Formu doldurun — ödemeden hemen sonra kartınız opsolid.de/c/… adresinde canlıya alınır.",
+            "Formu doldurun — yayınlar yayınlamaz kartınız opsolid.de/c/… adresinde canlıya alınır.",
           howToCreate:
             "Kartı herkes oluşturabilir — hesap gerekmez. Tasarımı seç, formu doldur; dakikalar içinde yayında olur. Dilediğin zaman düzenlemen için özel bir bağlantı alırsın.",
           eventJoinLabel:

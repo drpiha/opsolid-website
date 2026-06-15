@@ -38,7 +38,7 @@ export interface OrderEventInfo {
 const EVENT_SLUG_RE = /^[a-z0-9-]{3,80}$/;
 
 export function DigitalCardPage({
-  pricingMode = "freemium",
+  pricingMode = "all_free",
 }: {
   pricingMode?: CardPricingMode;
 }) {

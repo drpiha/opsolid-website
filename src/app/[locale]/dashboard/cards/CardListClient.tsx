@@ -27,6 +27,7 @@ export interface CardRow {
   contactName: string;
   status: string;
   cardData: unknown;
+  editToken: string | null;
   createdAt: string;
   _count: { views: number };
 }

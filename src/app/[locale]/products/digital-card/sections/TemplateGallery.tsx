@@ -47,6 +47,7 @@ import {
   type TemplateRegistryEntry,
 } from "@/components/cards/templates/v2/types";
 import { getTemplateSample } from "@/config/card-template-samples";
+import { TemplateErrorBoundary } from "@/components/cards/TemplateErrorBoundary";
 
 // -----------------------------------------------------------------------------
 // Sector filter — derived from the planned lineup so adding a 13th template
@@ -644,7 +645,17 @@ const CarouselSlide = React.memo(function CarouselSlide({
         >
           <div className="relative aspect-[460/820] w-full overflow-hidden">
             {hasComponent && hasSample && inView ? (
-              <LiveTemplatePreview slide={slide} locale={locale} />
+              <TemplateErrorBoundary
+                fallback={
+                  <PlaceholderSkeleton
+                    title={slide.registry?.name ?? slide.planned.name}
+                    subtitle={comingSoonHint}
+                    badge={comingSoonLabel}
+                  />
+                }
+              >
+                <LiveTemplatePreview slide={slide} locale={locale} />
+              </TemplateErrorBoundary>
             ) : hasComponent && inView ? (
               <PlaceholderSkeleton
                 title={slide.registry?.name ?? slide.planned.name}

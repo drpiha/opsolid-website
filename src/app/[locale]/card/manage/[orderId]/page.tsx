@@ -144,15 +144,15 @@ function ManageRejectedView({
   const copy: Record<string, { title: string; body: string }> = {
     en: {
       title: "This management link is not valid",
-      body: "The link is incomplete, expired, or the order does not exist. Open the link from your OpSolid card email, or use the edit link to recover access.",
+      body: "The link is incomplete, expired, or the card does not exist. Open the link from your OpSolid card email, or use the edit link to recover access.",
     },
     de: {
       title: "Dieser Verwaltungslink ist ungültig",
-      body: "Der Link ist unvollständig, abgelaufen oder die Bestellung existiert nicht. Öffnen Sie den Link aus Ihrer OpSolid-Karten-E-Mail oder nutzen Sie den Bearbeitungslink, um den Zugang wiederherzustellen.",
+      body: "Der Link ist unvollständig, abgelaufen oder die Karte existiert nicht. Öffnen Sie den Link aus Ihrer OpSolid-Karten-E-Mail oder nutzen Sie den Bearbeitungslink, um den Zugang wiederherzustellen.",
     },
     tr: {
       title: "Bu yönetim bağlantısı geçersiz",
-      body: "Bağlantı eksik, süresi dolmuş veya sipariş bulunamadı. OpSolid kart e-postanızdaki bağlantıyı açın veya erişimi kurtarmak için düzenleme bağlantısını kullanın.",
+      body: "Bağlantı eksik, süresi dolmuş veya kart bulunamadı. OpSolid kart e-postanızdaki bağlantıyı açın veya erişimi kurtarmak için düzenleme bağlantısını kullanın.",
     },
   };
   void reason;

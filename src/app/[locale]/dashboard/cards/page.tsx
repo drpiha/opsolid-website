@@ -47,6 +47,7 @@ export default async function DashboardCardsPage({ params }: Props) {
         contactName: true,
         status: true,
         cardData: true,
+        editToken: true,
         createdAt: true,
         _count: { select: { views: true } },
       },
