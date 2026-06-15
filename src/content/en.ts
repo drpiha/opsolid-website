@@ -4623,24 +4623,24 @@ export const content = {
           post: "",
         },
         lead:
-          "Tap-to-share NFC with a QR fallback. Ships as a machined metal card or a phone-wallet pass. Contact details, calendar link, and portfolio update centrally — no new print run every time someone changes roles.",
-        ctaPrimary: "Order a sample",
-        ctaSecondary: "Browse templates",
+          "Create a mobile-friendly digital business card in a minute. Share it by link, QR code, WhatsApp, or email — your recipients need no app. Update your contact details, booking link, and portfolio anytime, no reprint.",
+        ctaPrimary: "Create for free",
+        ctaSecondary: "See designs",
         features: [
           {
             label: "FORMAT",
-            value: "Digital Card",
-            sub: "NFC · QR · Link",
+            value: "Digital card",
+            sub: "Link · QR · WhatsApp",
           },
           {
-            label: "PROTOCOL",
-            value: "NFC + QR",
-            sub: "NDEF · vCard",
+            label: "RECIPIENT",
+            value: "No app",
+            sub: "Opens in browser",
           },
           {
-            label: "PHYSICAL",
-            value: "Brass · Matte",
-            sub: "→ Coming soon",
+            label: "PRICE",
+            value: "Free",
+            sub: "Edit anytime",
           },
         ],
       },
@@ -4682,27 +4682,27 @@ export const content = {
       },
       howItWorks: {
         eyebrow: "[ HOW IT WORKS ]",
-        headline: "Three layers. One tap",
+        headline: "Create. Share. Update",
         lead:
-          "Hardware ships once. Everything on the other side of the tap updates in your dashboard, not at the printer.",
+          "No hardware, no app. Your card lives at a link you update anytime from your dashboard.",
         steps: [
           {
             num: "01",
-            title: "Tap or scan",
+            title: "Create in a minute",
             body:
-              "NFC triggers on any phone within 4cm. QR fallback on the back for older devices and print collateral.",
+              "Pick a design, fill in a few fields, publish free — no account needed.",
           },
           {
             num: "02",
-            title: "Land on your portal",
+            title: "Share anywhere",
             body:
-              "A single hosted page — vCard download, calendar booking, portfolio links, and whatever else the sector needs.",
+              "By link, QR code, WhatsApp, or email. Recipients open it in the browser — no app.",
           },
           {
             num: "03",
-            title: "Edit centrally",
+            title: "Edit anytime",
             body:
-              "New role, new number, new availability — change once, propagates to every card out in the world.",
+              "New role, new number, new photo — change once, instantly live.",
           },
         ],
       },

@@ -4608,24 +4608,24 @@ export const content: Content = {
           post: " bir kartvizit",
         },
         lead:
-          "NFC ile dokunarak paylaşım, QR yedeği. İşlenmiş metal kart ya da telefon cüzdan geçişi olarak gönderilir. İletişim bilgileri, takvim bağlantısı ve portföy tek merkezden güncellenir — biri rol değiştirdiğinde yeni baskıya gerek kalmaz.",
-        ctaPrimary: "Örnek sipariş et",
-        ctaSecondary: "Şablonlara göz at",
+          "Bir dakikada mobil uyumlu bir dijital kartvizit oluşturun. Bağlantı, QR kod, WhatsApp veya e-posta ile paylaşın — karşı tarafın uygulamaya ihtiyacı yok. İletişim bilgilerinizi, randevu bağlantınızı ve portföyünüzü istediğiniz zaman tek merkezden güncelleyin, yeniden baskı yok.",
+        ctaPrimary: "Ücretsiz oluştur",
+        ctaSecondary: "Tasarımları gör",
         features: [
           {
             label: "FORMAT",
-            value: "Dijital Kart",
-            sub: "NFC · QR · Link",
+            value: "Dijital kart",
+            sub: "Link · QR · WhatsApp",
           },
           {
-            label: "PROTOCOL",
-            value: "NFC + QR",
-            sub: "NDEF · vCard",
+            label: "ALICI",
+            value: "Uygulama yok",
+            sub: "Tarayıcıda açılır",
           },
           {
-            label: "PHYSICAL",
-            value: "Pirinç · Mat",
-            sub: "→ Yakında",
+            label: "FİYAT",
+            value: "Ücretsiz",
+            sub: "İstediğin zaman düzenle",
           },
         ],
       },
@@ -4667,27 +4667,27 @@ export const content: Content = {
       },
       howItWorks: {
         eyebrow: "[ NASIL ÇALIŞIR ]",
-        headline: "Üç katman. Tek dokunuş",
+        headline: "Oluştur. Paylaş. Güncelle",
         lead:
-          "Donanım bir kez gönderilir. Dokunuşun ardındaki her şey, baskıda değil sizin panelinizde güncellenir.",
+          "Donanım yok, uygulama yok. Kartınız, panelinizden istediğiniz zaman güncellediğiniz bir bağlantıda yaşar.",
         steps: [
           {
             num: "01",
-            title: "Dokun veya tara",
+            title: "Bir dakikada oluştur",
             body:
-              "NFC, 4 cm mesafedeki her telefonda tetiklenir. Eski cihazlar ve basılı materyaller için arkada QR yedeği.",
+              "Tasarım seç, birkaç alan doldur, ücretsiz yayınla — hesap gerekmez.",
           },
           {
             num: "02",
-            title: "Kendi portalınıza git",
+            title: "Her yerde paylaş",
             body:
-              "Tek bir barındırılan sayfa — vCard indirme, takvim rezervasyonu, portföy bağlantıları ve sektörün ihtiyacı olan her şey.",
+              "Bağlantı, QR kod, WhatsApp veya e-posta ile. Karşı taraf tarayıcıda açar — uygulama yok.",
           },
           {
             num: "03",
-            title: "Merkezi düzenle",
+            title: "İstediğin zaman düzenle",
             body:
-              "Yeni rol, yeni numara, yeni müsaitlik — bir kez değiştir, dışarıdaki her karta yansır.",
+              "Yeni unvan, yeni numara, yeni foto — bir kez değiştir, anında canlı.",
           },
         ],
       },

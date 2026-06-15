@@ -100,7 +100,7 @@ export function DigitalCardPage({
             </h1>
             <p className="os-hero-lead">{d.hero.lead}</p>
             <div className="os-hero-ctas">
-              <Link href="#order" className="btn btn-primary btn-lg">
+              <Link href="/card/new" className="btn btn-primary btn-lg">
                 {d.hero.ctaPrimary} <Icon name="arrow" size={18} />
               </Link>
               <Link href="#templates" className="btn btn-ghost btn-lg">

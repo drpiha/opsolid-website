@@ -4607,24 +4607,24 @@ export const content: Content = {
           post: "",
         },
         lead:
-          "Tap-to-share NFC mit QR-Fallback. Als gefräste Metallkarte oder Wallet-Pass. Kontaktdaten, Kalenderlink und Portfolio werden zentral aktualisiert — ohne neue Druckauflage, wenn jemand die Rolle wechselt.",
-        ctaPrimary: "Muster bestellen",
-        ctaSecondary: "Templates ansehen",
+          "Erstellen Sie in einer Minute eine mobilfreundliche digitale Visitenkarte. Teilen Sie sie per Link, QR-Code, WhatsApp oder E-Mail — Ihre Empfänger brauchen keine App. Kontaktdaten, Terminlink und Portfolio aktualisieren Sie jederzeit zentral, ganz ohne Neudruck.",
+        ctaPrimary: "Kostenlos erstellen",
+        ctaSecondary: "Designs ansehen",
         features: [
           {
             label: "FORMAT",
             value: "Digitale Karte",
-            sub: "NFC · QR · Link",
+            sub: "Link · QR · WhatsApp",
           },
           {
-            label: "PROTOCOL",
-            value: "NFC + QR",
-            sub: "NDEF · vCard",
+            label: "EMPFÄNGER",
+            value: "Keine App",
+            sub: "Öffnet im Browser",
           },
           {
-            label: "PHYSICAL",
-            value: "Brass · Matt",
-            sub: "→ Demnächst",
+            label: "PREIS",
+            value: "Kostenlos",
+            sub: "Jederzeit bearbeitbar",
           },
         ],
       },
@@ -4666,27 +4666,27 @@ export const content: Content = {
       },
       howItWorks: {
         eyebrow: "[ FUNKTIONSWEISE ]",
-        headline: "Drei Schichten. Ein Tippen",
+        headline: "Erstellen. Teilen. Aktualisieren",
         lead:
-          "Die Hardware wird einmal versandt. Alles hinter dem Tippen wird in Ihrem Dashboard aktualisiert — nicht beim Drucker.",
+          "Keine Hardware, keine App. Ihre Karte lebt unter einem Link, den Sie jederzeit in Ihrem Dashboard aktualisieren.",
         steps: [
           {
             num: "01",
-            title: "Tippen oder scannen",
+            title: "In einer Minute erstellen",
             body:
-              "NFC löst auf jedem Handy innerhalb von 4 cm aus. QR-Fallback auf der Rückseite für ältere Geräte und Druckmaterial.",
+              "Design wählen, ein paar Felder ausfüllen, kostenlos veröffentlichen — ganz ohne Konto.",
           },
           {
             num: "02",
-            title: "Landen Sie auf Ihrem Portal",
+            title: "Überall teilen",
             body:
-              "Eine einzige gehostete Seite — vCard-Download, Terminbuchung, Portfolio-Links und alles andere, was die Branche braucht.",
+              "Per Link, QR-Code, WhatsApp oder E-Mail. Ihre Empfänger öffnen die Karte im Browser — keine App nötig.",
           },
           {
             num: "03",
-            title: "Zentral bearbeiten",
+            title: "Jederzeit bearbeiten",
             body:
-              "Neue Rolle, neue Nummer, neue Verfügbarkeit — einmal ändern, wirkt auf jede Karte da draußen.",
+              "Neue Rolle, neue Nummer, neues Foto — einmal ändern, sofort auf Ihrer Live-Karte.",
           },
         ],
       },
