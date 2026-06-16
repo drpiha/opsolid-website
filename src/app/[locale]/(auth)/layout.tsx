@@ -42,7 +42,7 @@ export default function AuthLayout({
                 },
                 {
                   label: "Built for real business use",
-                  detail: "NFC-ready, QR share, vCard export, and analytics.",
+                  detail: "Link & QR share, vCard export, and analytics.",
                 },
               ].map((item) => (
                 <li key={item.label} className="flex gap-3 items-start">

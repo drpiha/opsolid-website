@@ -191,7 +191,7 @@ export function FoilCard() {
                 <path d="M12 6a6 6 0 0 1 0 12" />
                 <path d="M12 10a2 2 0 0 1 0 4" />
               </svg>
-              <span>NFC</span>
+              <span>QR</span>
             </div>
           </div>
           <div className="fc-person">
@@ -213,7 +213,7 @@ export function FoilCard() {
             </div>
           </div>
           <div className="fc-glare" aria-hidden="true" />
-          <div className="fc-hint">TAP TO SHARE · HOVER TO FLIP</div>
+          <div className="fc-hint">SCAN TO SHARE · HOVER TO FLIP</div>
         </div>
 
         {/* BACK */}
@@ -226,7 +226,7 @@ export function FoilCard() {
             </div>
           </div>
           <div className="fc-back-copy">
-            <div className="fc-back-title">Scan or tap</div>
+            <div className="fc-back-title">Scan to open</div>
             <div className="fc-back-sub">vCard · calendar · portfolio</div>
             <div className="fc-back-url">{`opsolid.de/c/${persona.slug}`}</div>
           </div>

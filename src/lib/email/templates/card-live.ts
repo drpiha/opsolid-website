@@ -56,7 +56,7 @@ const COPY: Record<Locale, Copy> = {
     lead:
       "Your digital business card is published and ready to share. Here is everything you need.",
     cardUrlHeading: "Your public link",
-    cardUrlBody: "Share this URL anywhere — chat, email signature, NFC, QR.",
+    cardUrlBody: "Share this URL anywhere — chat, email signature, QR, WhatsApp.",
     editHeading: "Edit anytime",
     editBody:
       "Save the link below — it gives you full control over your card, contacts you receive and analytics. Bookmark it, no password needed.",
@@ -80,7 +80,7 @@ const COPY: Record<Locale, Copy> = {
       "Ihre digitale Visitenkarte ist veröffentlicht und einsatzbereit. Hier ist alles, was Sie brauchen.",
     cardUrlHeading: "Ihre öffentliche Adresse",
     cardUrlBody:
-      "Diese URL können Sie überall teilen — Chat, E-Mail-Signatur, NFC, QR.",
+      "Diese URL können Sie überall teilen — Chat, E-Mail-Signatur, QR, WhatsApp.",
     editHeading: "Jederzeit anpassen",
     editBody:
       "Speichern Sie den unten stehenden Link — er gibt Ihnen volle Kontrolle über Ihre Karte, Ihre Kontakte und Statistiken. Lesezeichen genügt, kein Passwort.",
@@ -104,7 +104,7 @@ const COPY: Record<Locale, Copy> = {
       "Dijital kartvizitiniz yayında ve paylaşıma hazır. İhtiyacınız olan her şey aşağıda.",
     cardUrlHeading: "Halka açık adresiniz",
     cardUrlBody:
-      "Bu adresi her yerde paylaşabilirsiniz — sohbet, e-posta imzası, NFC, QR.",
+      "Bu adresi her yerde paylaşabilirsiniz — sohbet, e-posta imzası, QR, WhatsApp.",
     editHeading: "Dilediğiniz zaman düzenleyin",
     editBody:
       "Aşağıdaki linki kaydedin — kartınız, gelen bağlantılarınız ve istatistikleriniz üzerinde tam kontrol verir. Yer imine eklemeniz yeterli, şifre yok.",
