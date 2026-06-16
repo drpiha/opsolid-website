@@ -345,6 +345,164 @@ const shortArticles: Record<string, Record<string, string>> = {
 <h2>GDPR Uyumluluğu</h2>
 <p>Sohbet verilerini saklamak için uygun onay aldığınızdan ve BSP'nizin verileri AB düzenlemelerine uygun şekilde işlediğinden emin olun.</p>`,
   },
+
+  "eu-ai-act-omnibus-2026-compliance-changes": {
+    en: `<figure><img src="/blog/eu-ai-act-omnibus-2026-compliance-changes.jpg" alt="European Parliament plenary session on digital and green policy reforms" style="width:100%;height:auto;border-radius:8px" /><figcaption style="font-size:0.8rem;opacity:0.7">Photo: European Parliament (CC BY 4.0) via Openverse</figcaption></figure>
+
+<p>On May 7, 2026, the EU reached a political agreement on the Digital Omnibus package, which includes targeted amendments to the AI Act. The most significant change: the primary compliance deadline for high-risk AI systems has been extended from August 2, 2026 to December 2, 2027 - a 16-month extension that gives businesses substantially more time to prepare. A Scientific Panel of 60 independent experts was simultaneously appointed by the European Commission to support enforcement, covering general-purpose AI models, systemic risk classification, and cross-border market surveillance.</p>
+
+<h2>What the EU AI Act Omnibus Changes</h2>
+<p>The Omnibus is not a replacement for the original AI Act. It is a targeted amendment package that extends specific deadlines, simplifies certain compliance requirements, and resolves regulatory overlaps that were creating friction - particularly for smaller enterprises and industrial manufacturers. The fundamental architecture of the Act remains unchanged: prohibited AI systems stay banned; high-risk AI still requires documentation, human oversight, and conformity assessments; and transparency obligations apply to generative AI systems. What changed is the timing and the administrative burden.</p>
+
+<h2>Key Deadline Extensions</h2>
+<p>The following compliance timelines were revised by the Omnibus agreement:</p>
+<ul>
+<li><strong>High-risk AI systems (Annex III):</strong> Deadline extended from August 2, 2026 to December 2, 2027. This covers AI used in hiring, credit assessment, employee evaluation, access to education, and law enforcement applications.</li>
+<li><strong>High-risk AI in regulated products (Annex I):</strong> Deadline extended from August 2, 2027 to August 2, 2028. This applies to AI integrated into medical devices, vehicles, and other products governed by sector-specific EU regulations.</li>
+<li><strong>Synthetic content transparency:</strong> The obligation to label AI-generated images, audio, and video has been extended from August 2, 2026 to December 2, 2026. Companies deploying generative AI tools have a four-month grace period.</li>
+<li><strong>National AI regulatory sandboxes:</strong> Member states must establish testing environments by August 2027, one year later than the original August 2026 target.</li>
+</ul>
+
+<h2>Expanded Relief for Mid-Sized Companies</h2>
+<p>One of the most practically significant changes for the German Mittelstand is the expansion of the SME compliance track. Under the original AI Act, simplified documentation, reduced fines, regulatory sandbox access, and standardized templates were reserved for companies meeting the standard EU SME definition. The Omnibus extends these benefits to "Small Mid-Cap" enterprises - businesses with up to 750 employees and annual revenue up to 150 million euros.</p>
+<p>This threshold change brings a substantial share of the German Mittelstand into the lighter compliance track. Qualifying businesses can expect reduced post-market monitoring requirements, access to EU-level regulatory sandbox testing, standardized documentation templates, and lower fine thresholds in enforcement proceedings.</p>
+
+<h2>Industrial Machinery Carveout</h2>
+<p>A significant change for manufacturing businesses: AI systems integrated into products already regulated under the EU Machinery Regulation no longer need to comply with the full Chapter III obligations of the AI Act. Sector-specific machinery rules now take precedence. For German industrial mid-market companies with AI in production environments governed by existing machinery standards, this removes a layer of duplicate compliance work.</p>
+
+<h2>What Still Takes Effect in 2026</h2>
+<p>Not everything moved. Two categories of obligations remain on the original schedule and are already partially in force:</p>
+<ul>
+<li><strong>AI literacy (Article 4):</strong> In force since February 2, 2025. Organizations must ensure that staff working with AI systems have adequate knowledge and competency. This is already enforceable and should be documented.</li>
+<li><strong>Prohibited AI systems (Article 5):</strong> Bans on social scoring, manipulative AI, and mass biometric surveillance remain fully in effect. Two new prohibitions take effect December 2, 2026: AI systems generating non-consensual intimate imagery and AI-generated child sexual abuse material are explicitly banned.</li>
+</ul>
+
+<h2>Practical Steps for Businesses</h2>
+<p>The extended deadline is not a reason to wait. Enforcement risk is real, and organizations that build their compliance infrastructure now will be better positioned when December 2027 arrives. Here is where to start:</p>
+<ul>
+<li><strong>Complete an AI inventory:</strong> Audit all AI systems in use across the organization - including AI embedded in vendor software, CRM tools, HR platforms, and cloud services. Many businesses are deploying high-risk AI without recognizing the regulatory classification.</li>
+<li><strong>Risk-classify each system:</strong> The Omnibus simplified some classification rules, but the core framework is unchanged. Misclassification remains the primary enforcement risk.</li>
+<li><strong>Review vendor agreements:</strong> Article 25 now requires AI system providers to share technical documentation, failure modes, and testing access with deployers through written contracts. Review existing agreements against this requirement.</li>
+<li><strong>Document AI literacy measures:</strong> Article 4 is already enforceable. Keep records showing that staff working with AI systems have received appropriate training.</li>
+</ul>
+
+<h2>The Bigger Picture</h2>
+<p>For most German businesses, the Omnibus brings welcome breathing room. The 16-month extension on high-risk AI compliance gives procurement, IT, and legal teams time to build a proper framework rather than rushing a surface-level response to the original August deadline. The machinery carveout and expanded SME track remove friction for two large segments of the DACH economy.</p>
+<p>What the Omnibus does not change is the direction of travel. AI governance is becoming a structured compliance domain - comparable in scope and seriousness to GDPR - and businesses that invest in a systematic approach now will have a structural advantage over those that defer the work until enforcement pressure arrives.</p>
+<p>For businesses deploying AI in operations - whether for process automation, document handling, or customer communication - building clear audit trails, documenting system purposes and data flows, and establishing human oversight are practical foundations of compliance that pay off well before any regulatory deadline.</p>
+
+<h2>Sources</h2>
+<ul>
+<li><a href="https://www.globalpolicywatch.com/2026/06/eu-ai-act-update-timeline-relief-targeted-simplification-and-new-prohibitions-2/">Global Policy Watch: EU AI Act Update - Timeline Relief, Targeted Simplification, and New Prohibitions (June 2, 2026)</a></li>
+<li><a href="https://www.lw.com/en/insights/ai-act-update-eu-resolves-to-change-rules-and-extend-deadlines">Latham &amp; Watkins: AI Act Update - EU Resolves to Change Rules and Extend Deadlines (May 13, 2026)</a></li>
+<li><a href="https://pandectes.io/blog/how-the-eu-digital-omnibus-impacts-ai-governance-in-2026/">Pandectes: How the EU Digital Omnibus Impacts AI Governance in 2026</a></li>
+<li><a href="https://www.sage.com/de-de/blog/eu-ai-act-2026-fuer-den-mittelstand-fristen-pflichten-und-compliance/">Sage: EU AI Act 2026 fuer den Mittelstand</a></li>
+</ul>`,
+
+    de: `<figure><img src="/blog/eu-ai-act-omnibus-2026-compliance-changes.jpg" alt="Plenarsitzung des Europäischen Parlaments zu digitalen und Klimareformen" style="width:100%;height:auto;border-radius:8px" /><figcaption style="font-size:0.8rem;opacity:0.7">Foto: European Parliament (CC BY 4.0) via Openverse</figcaption></figure>
+
+<p>Am 7. Mai 2026 hat die EU eine politische Einigung über das Digital-Omnibus-Paket erzielt, das gezielte Änderungen am KI-Gesetz enthält. Die wichtigste Neuerung: Die Hauptfrist für die Compliance bei Hochrisiko-KI-Systemen wurde vom 2. August 2026 auf den 2. Dezember 2027 verschoben - Unternehmen erhalten damit 16 zusätzliche Monate zur Vorbereitung. Gleichzeitig hat die Europäische Kommission ein Wissenschaftliches Gremium aus 60 unabhängigen Experten eingesetzt, das die Durchsetzung des KI-Gesetzes unterstützen soll - mit Mandat für allgemeine KI-Modelle, Risikoklassifizierung und grenzüberschreitende Marktüberwachung.</p>
+
+<h2>Was der Omnibus am KI-Gesetz ändert</h2>
+<p>Der Omnibus ersetzt das KI-Gesetz nicht. Es handelt sich um ein gezieltes Änderungspaket, das bestimmte Fristen verlängert, einzelne Anforderungen vereinfacht und regulatorische Überschneidungen beseitigt - insbesondere für kleinere Unternehmen und Industriehersteller. Die grundlegende Struktur des Gesetzes bleibt bestehen: Verbotene KI-Systeme bleiben verboten; Hochrisiko-KI erfordert weiterhin Dokumentation, menschliche Aufsicht und Konformitätsbewertungen; Transparenzpflichten gelten für generative KI-Systeme. Was sich geändert hat, sind der Zeitplan und der Verwaltungsaufwand.</p>
+
+<h2>Die wichtigsten Fristverlängerungen</h2>
+<p>Folgende Compliance-Fristen wurden durch den Omnibus angepasst:</p>
+<ul>
+<li><strong>Hochrisiko-KI-Systeme (Anhang III):</strong> Frist verschoben vom 2. August 2026 auf den 2. Dezember 2027. Dies betrifft KI-Systeme im Personalwesen, bei der Kreditvergabe, der Mitarbeiterbewertung, im Bildungsbereich und bei Strafverfolgungsbehörden.</li>
+<li><strong>Hochrisiko-KI in regulierten Produkten (Anhang I):</strong> Frist verlängert vom 2. August 2027 auf den 2. August 2028. Dies gilt für KI, die in Medizinprodukte, Fahrzeuge und andere bereits sektoral regulierte EU-Produkte eingebettet ist.</li>
+<li><strong>Transparenz bei synthetischen Inhalten:</strong> Die Pflicht zur Kennzeichnung von KI-generierten Bildern, Audio- und Videoinhalten wurde vom 2. August 2026 auf den 2. Dezember 2026 verlängert. Unternehmen, die generative KI einsetzen, erhalten eine viermonatige Übergangsfrist.</li>
+<li><strong>Nationale KI-Regulierungs-Sandboxen:</strong> Mitgliedstaaten müssen Testumgebungen bis August 2027 einrichten - ein Jahr später als ursprünglich für August 2026 geplant.</li>
+</ul>
+
+<h2>Erweiterte Entlastungen für den Mittelstand</h2>
+<p>Eine der praktisch bedeutsamsten Änderungen für den deutschen Mittelstand ist die Ausweitung der KMU-Compliance-Spur. Bisher waren vereinfachte Dokumentation, reduzierte Bußgelder, Zugang zu Regulierungs-Sandboxen und standardisierte Vorlagen Unternehmen vorbehalten, die die Standard-KMU-Definition der EU erfüllten. Der Omnibus erweitert diese Vorteile auf sogenannte "Small Mid-Cap"-Unternehmen - Betriebe mit bis zu 750 Mitarbeitern und einem Jahresumsatz von bis zu 150 Millionen Euro.</p>
+<p>Durch diese Schwellenwertanhebung fällt ein erheblicher Teil des deutschen Mittelstands in die erleichterte Compliance-Spur. Anspruchsberechtigte Unternehmen können mit verringerten Anforderungen an die Marktüberwachung nach der Markteinführung rechnen, mit Zugang zu Regulierungs-Sandboxen auf EU-Ebene, standardisierten Dokumentationsvorlagen und niedrigeren Bußgeldobergrenzen im Durchsetzungsfall.</p>
+
+<h2>Ausnahme für Industriemaschinen</h2>
+<p>Eine wichtige Änderung für produzierende Unternehmen: KI-Systeme, die in Produkte integriert sind, die bereits unter der EU-Maschinenverordnung reguliert werden, müssen nicht mehr die vollständigen Anforderungen aus Kapitel III des KI-Gesetzes erfüllen. Sektorspezifische Maschinenvorschriften haben Vorrang. Für deutsche Industrieunternehmen des Mittelstands, die KI in Produktionsumgebungen einsetzen, entfällt damit eine Schicht doppelter Compliance-Arbeit.</p>
+
+<h2>Was 2026 noch gilt</h2>
+<p>Nicht alles wurde verschoben. Zwei Kategorien von Verpflichtungen bleiben im ursprünglichen Zeitplan und sind bereits teilweise in Kraft:</p>
+<ul>
+<li><strong>KI-Kompetenz (Artikel 4):</strong> Seit dem 2. Februar 2025 in Kraft. Unternehmen müssen sicherstellen, dass Mitarbeiter, die KI-Systeme einsetzen, über angemessene Kenntnisse und Kompetenzen verfügen. Dies ist bereits durchsetzbar und sollte dokumentiert werden.</li>
+<li><strong>Verbotene KI-Systeme (Artikel 5):</strong> Verbote für Social Scoring, manipulative KI und massenhafte biometrische Überwachung bleiben vollständig in Kraft. Zwei neue Verbote treten zum 2. Dezember 2026 in Kraft: KI-Systeme, die nicht einvernehmliche intime Bilder erzeugen, sowie KI-generiertes Missbrauchsmaterial gegen Kinder sind ausdrücklich verboten.</li>
+</ul>
+
+<h2>Praktische Schritte für Unternehmen</h2>
+<p>Die verlängerte Frist ist kein Grund, die Hände in den Schoß zu legen. Das Durchsetzungsrisiko ist real, und Unternehmen, die jetzt mit dem Aufbau ihrer Compliance-Infrastruktur beginnen, sind besser aufgestellt, wenn der Dezember 2027 kommt. Ein strukturierter Einstieg:</p>
+<ul>
+<li><strong>KI-Inventar erstellen:</strong> Erfassen Sie alle KI-Systeme im Einsatz - einschließlich in Anbietersoftware, CRM-Tools, HR-Plattformen und Cloud-Diensten eingebettete KI. Viele Unternehmen setzen Hochrisiko-KI ein, ohne die regulatorische Einstufung zu kennen.</li>
+<li><strong>Risikoeinstufung vornehmen:</strong> Der Omnibus hat einige Klassifizierungsregeln vereinfacht, aber das Grundgerüst ist unverändert. Falsche Risikoklassifizierung ist das primäre Durchsetzungsrisiko.</li>
+<li><strong>Anbieterverträge prüfen:</strong> Artikel 25 verpflichtet KI-Systemanbieter nun, technische Dokumentation, Fehlermodi und Testzugang in schriftlichen Verträgen an Nutzer weiterzugeben. Bestehende Vereinbarungen sollten auf diese Anforderung geprüft werden.</li>
+<li><strong>KI-Kompetenzmaßnahmen dokumentieren:</strong> Artikel 4 ist bereits durchsetzbar. Halten Sie fest, dass Mitarbeiter, die KI-Systeme verwenden, angemessene Schulungen erhalten haben.</li>
+</ul>
+
+<h2>Das Gesamtbild</h2>
+<p>Für die meisten deutschen Unternehmen bringt der Omnibus willkommenen Spielraum. Die 16-monatige Verlängerung bei Hochrisiko-KI gibt Einkauf, IT und Rechtsabteilung Zeit, ein belastbares Framework aufzubauen, statt eine oberflächliche Reaktion auf den ursprünglichen August-Termin zu überstürzen. Der Maschinenausschluss und die erweiterte KMU-Spur entlasten zwei große Segmente der DACH-Wirtschaft.</p>
+<p>Was der Omnibus nicht ändert, ist die Richtung: KI-Governance entwickelt sich zu einem strukturierten Compliance-Bereich - vergleichbar in Reichweite und Bedeutung mit der DSGVO. Unternehmen, die jetzt systematisch vorgehen, gewinnen einen strukturellen Vorteil gegenüber denen, die die Arbeit aufschieben, bis der Durchsetzungsdruck kommt.</p>
+<p>Für Unternehmen, die KI im Betrieb einsetzen - bei der Prozessautomatisierung, Dokumentenverarbeitung oder Kundenkommunikation - sind klare Protokollierung, dokumentierte Systemzwecke und menschliche Aufsicht praktische Compliance-Grundlagen, die sich weit vor jeder regulatorischen Frist auszahlen.</p>
+
+<h2>Quellen</h2>
+<ul>
+<li><a href="https://www.globalpolicywatch.com/2026/06/eu-ai-act-update-timeline-relief-targeted-simplification-and-new-prohibitions-2/">Global Policy Watch: EU AI Act Update - Fristverlängerung, gezielte Vereinfachung und neue Verbote (2. Juni 2026)</a></li>
+<li><a href="https://www.lw.com/en/insights/ai-act-update-eu-resolves-to-change-rules-and-extend-deadlines">Latham &amp; Watkins: AI Act Update - EU Resolves to Change Rules and Extend Deadlines (13. Mai 2026)</a></li>
+<li><a href="https://pandectes.io/blog/how-the-eu-digital-omnibus-impacts-ai-governance-in-2026/">Pandectes: How the EU Digital Omnibus Impacts AI Governance in 2026</a></li>
+<li><a href="https://www.sage.com/de-de/blog/eu-ai-act-2026-fuer-den-mittelstand-fristen-pflichten-und-compliance/">Sage: EU AI Act 2026 fuer den Mittelstand</a></li>
+</ul>`,
+
+    tr: `<figure><img src="/blog/eu-ai-act-omnibus-2026-compliance-changes.jpg" alt="Avrupa Parlamentosu genel kurulu dijital ve yeşil reformlar oturumunda" style="width:100%;height:auto;border-radius:8px" /><figcaption style="font-size:0.8rem;opacity:0.7">Fotoğraf: European Parliament (CC BY 4.0) via Openverse</figcaption></figure>
+
+<p>7 Mayıs 2026'da AB, Yapay Zeka Yasası'nda hedefli değişiklikler içeren Dijital Omnibus paketi üzerinde siyasi bir uzlaşıya vardı. En önemli sonuç: yüksek riskli yapay zeka sistemleri için ana uyum son tarihi 2 Ağustos 2026'dan 2 Aralık 2027'ye ertelendi - işletmelere 16 ay ek hazırlık süresi tanındı. Aynı zamanda Avrupa Komisyonu, genel amaçlı yapay zeka modelleri, sistemik risk sınıflandırması ve sınır ötesi pazar gözetimi alanlarında Yapay Zeka Yasası'nın uygulanmasını desteklemek üzere 60 bağımsız uzmandan oluşan bir Bilimsel Panel atadı.</p>
+
+<h2>Omnibus Yapay Zeka Yasası'nda Neleri Değiştiriyor</h2>
+<p>Omnibus, Yapay Zeka Yasası'nın yerini almıyor. Belirli son tarihleri uzatan, bazı uyum gerekliliklerini sadeleştiren ve özellikle küçük işletmeler ile sanayi üreticileri için sürtüşme yaratan düzenleyici örtüşmeleri gideren hedefli bir değişiklik paketidir. Yasanın temel mimarisi değişmedi: yasaklı yapay zeka sistemleri yasaklı kalmaya devam ediyor; yüksek riskli yapay zeka hala belgeleme, insan denetimi ve uygunluk değerlendirmesi gerektiriyor; üretken yapay zeka sistemleri için şeffaflık yükümlülükleri geçerliliğini koruyor. Değişen, zamanlama ve idari yüktür.</p>
+
+<h2>Temel Son Tarih Uzatmaları</h2>
+<p>Omnibus anlaşmasıyla şu uyum zaman çizelgeleri revize edildi:</p>
+<ul>
+<li><strong>Yüksek riskli yapay zeka sistemleri (Ek III):</strong> Son tarih 2 Ağustos 2026'dan 2 Aralık 2027'ye uzatıldı. Bu; işe alım, kredi değerlendirmesi, çalışan performans değerlendirmesi, eğitime erişim ve kolluk uygulamalarında kullanılan yapay zeka sistemlerini kapsıyor.</li>
+<li><strong>Düzenlemeye tabi ürünlerdeki yüksek riskli yapay zeka (Ek I):</strong> Son tarih 2 Ağustos 2027'den 2 Ağustos 2028'e uzatıldı. Bu; tıbbi cihazlar, taşıtlar ve diğer sektör özel AB düzenlemelerine tabi ürünlere entegre edilmiş yapay zekayı kapsıyor.</li>
+<li><strong>Sentetik içerik şeffaflığı:</strong> Yapay zeka tarafından üretilen görüntü, ses ve videonun etiketlenmesi yükümlülüğü 2 Ağustos 2026'dan 2 Aralık 2026'ya uzatıldı. Üretken yapay zeka araçları kullanan şirketler dört aylık bir geçiş süresine sahip.</li>
+<li><strong>Ulusal yapay zeka düzenleyici kum havuzları:</strong> Üye devletler test ortamlarını, özgün Ağustos 2026 hedefinden bir yıl geç, Ağustos 2027'ye kadar kurmak zorunda.</li>
+</ul>
+
+<h2>Orta Ölçekli İşletmeler İçin Genişletilmiş Kolaylıklar</h2>
+<p>Alman Mittelstand için en pratik açıdan önemli değişikliklerden biri, KOBİ uyum çizgisinin genişletilmesidir. Orijinal Yapay Zeka Yasası'nda, basitleştirilmiş belgeleme, düşürülmüş para cezaları, düzenleyici kum havuzuna erişim ve standart şablonlar yalnızca AB'nin standart KOBİ tanımını karşılayan şirketlere tanınıyordu. Omnibus, bu avantajları "Küçük Orta Ölçekli Şirket" olarak nitelendirilen, en fazla 750 çalışana ve yıllık 150 milyon Euro gelire sahip işletmelere de genişletti.</p>
+<p>Bu eşik değişikliği, Alman Mittelstand'ın önemli bir bölümünü hafifletilmiş uyum çizgisine dahil ediyor. Uygun şirketler; azaltılmış piyasa sonrası izleme gereklilikleri, AB düzeyinde düzenleyici kum havuzu testlerine erişim, standart belgeleme şablonları ve uygulamada daha düşük para cezası eşikleri bekleyebilir.</p>
+
+<h2>Endüstriyel Makine İstisnası</h2>
+<p>İmalat sektörü için önemli bir değişiklik: AB Makine Yönetmeliği kapsamında zaten düzenlenen ürünlere entegre edilmiş yapay zeka sistemleri artık Yapay Zeka Yasası'nın III. Bölümündeki tam yükümlülüklere tabi olmak zorunda değil. Sektöre özgü makine kuralları öncelikli. Mevcut makine standartları kapsamındaki üretim ortamlarında yapay zeka kullanan Alman orta ölçekli sanayi şirketleri için bu, mükerrer uyum çalışmasının bir katmanını ortadan kaldırıyor.</p>
+
+<h2>2026'da Yürürlükte Kalan Yükümlülükler</h2>
+<p>Her şey ertelenmedi. İki kategori yükümlülük, orijinal takvimde kalmaya devam ediyor ve zaten kısmen yürürlükte:</p>
+<ul>
+<li><strong>Yapay zeka okuryazarlığı (Madde 4):</strong> 2 Şubat 2025'ten bu yana yürürlükte. Kuruluşlar, yapay zeka sistemleriyle çalışan personelin yeterli bilgi ve yetkinliğe sahip olmasını sağlamak zorunda. Bu madde zaten uygulanabilir durumdadır ve belgelenmelidir.</li>
+<li><strong>Yasaklı yapay zeka sistemleri (Madde 5):</strong> Sosyal puanlama, manipülatif yapay zeka ve kitlesel biyometrik gözetim yasakları tam olarak geçerliliğini koruyor. 2 Aralık 2026'dan itibaren iki yeni yasak devreye giriyor: rıza olmadan oluşturulan müstehcen görüntü üretimi ve yapay zeka tarafından üretilen çocuk istismarı materyali açıkça yasaklanıyor.</li>
+</ul>
+
+<h2>İşletmeler İçin Pratik Adımlar</h2>
+<p>Uzayan son tarih beklemek için bir neden değil. Uygulama riski gerçek; uyum altyapısını şimdi inşa eden kuruluşlar Aralık 2027'de çok daha iyi konumda olacak. İşte başlangıç noktaları:</p>
+<ul>
+<li><strong>Yapay zeka envanteri oluşturun:</strong> Tedarikçi yazılımlarına, CRM araçlarına, İK platformlarına ve bulut hizmetlerine gömülü yapay zeka dahil, kuruluş genelinde kullanılan tüm yapay zeka sistemlerini denetleyin. Pek çok işletme, düzenleyici sınıflandırmayı fark etmeden yüksek riskli yapay zeka kullanıyor.</li>
+<li><strong>Risk sınıflandırması yapın:</strong> Omnibus bazı sınıflandırma kurallarını sadeleştirdi, ancak temel çerçeve değişmedi. Yanlış sınıflandırma, birincil uygulama riskidir.</li>
+<li><strong>Tedarikçi sözleşmelerini gözden geçirin:</strong> Madde 25, yapay zeka sistemi sağlayıcılarının teknik belgeleri, hata modlarını ve test erişimini yazılı sözleşmelerle kullanıcı işletmelere sunmasını zorunlu kılıyor. Mevcut tedarikçi anlaşmaları bu gereklilik çerçevesinde incelenmeli.</li>
+<li><strong>Yapay zeka yetkinlik önlemlerini belgeleyin:</strong> Madde 4 zaten uygulanabilir durumda. Yapay zeka sistemleriyle çalışan personelin uygun eğitim aldığını gösteren kayıtlar tutun.</li>
+</ul>
+
+<h2>Genel Tablo</h2>
+<p>Çoğu Alman işletmesi için Omnibus memnuniyetle karşılanan bir nefes alma alanı sağlıyor. Yüksek riskli yapay zeka uyumundaki 16 aylık uzatma; satın alma, BT ve hukuk ekiplerine, Ağustos 2026 orijinal tarihine yüzeysel bir yanıt yetiştirmek yerine sağlam bir çerçeve kuracak zaman kazandırıyor. Makine istisnası ve genişletilmiş KOBİ çizgisi, DACH ekonomisinin iki büyük kesimindeki sürtüşmeyi ortadan kaldırıyor.</p>
+<p>Omnibus'un değiştirmediği şey ise yönelimdir. Yapay zeka yönetişimi, GDPR ile karşılaştırılabilir kapsam ve ciddiyetle yapılandırılmış bir uyum alanına dönüşüyor. Sistematik bir yaklaşıma şimdi yatırım yapanlar, işi uygulama baskısı gelene kadar erteleyenler karşısında yapısal bir avantaj kazanacak.</p>
+<p>Operasyonlarında yapay zeka kullanan işletmeler için - süreç otomasyonu, belge işleme veya müşteri iletişiminde - net denetim kayıtları oluşturmak, sistem amaçlarını belgelemek ve insan denetimini sağlamak, herhangi bir düzenleyici son tarihten çok önce karşılık veren pratik uyum temelleridir.</p>
+
+<h2>Kaynaklar</h2>
+<ul>
+<li><a href="https://www.globalpolicywatch.com/2026/06/eu-ai-act-update-timeline-relief-targeted-simplification-and-new-prohibitions-2/">Global Policy Watch: AB Yapay Zeka Yasası Güncellemesi - Son Tarih Rahatlamas, Hedefli Sadeleştirme ve Yeni Yasaklar (2 Haziran 2026)</a></li>
+<li><a href="https://www.lw.com/en/insights/ai-act-update-eu-resolves-to-change-rules-and-extend-deadlines">Latham &amp; Watkins: AI Act Update - EU Resolves to Change Rules and Extend Deadlines (13 Mayıs 2026)</a></li>
+<li><a href="https://pandectes.io/blog/how-the-eu-digital-omnibus-impacts-ai-governance-in-2026/">Pandectes: How the EU Digital Omnibus Impacts AI Governance in 2026</a></li>
+<li><a href="https://www.sage.com/de-de/blog/eu-ai-act-2026-fuer-den-mittelstand-fristen-pflichten-und-compliance/">Sage: EU AI Act 2026 Mittelstand Icin</a></li>
+</ul>`,
+  },
 };
 
 // Merge all articles

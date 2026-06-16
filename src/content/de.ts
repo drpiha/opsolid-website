@@ -1100,6 +1100,15 @@ export const content: Content = {
     },
     posts: [
       {
+        slug: "eu-ai-act-omnibus-2026-compliance-changes",
+        title: "EU-KI-Gesetz Omnibus: Was sich geändert hat und was Unternehmen jetzt tun müssen",
+        excerpt:
+          "Das EU-KI-Gesetz-Omnibus verschiebt die Hochrisiko-Frist auf Dezember 2027 und erweitert KMU-Entlastungen. Was geändert wurde und was Unternehmen jetzt angehen müssen.",
+        category: "ai",
+        date: "2026-06-16",
+        readTime: "7",
+      },
+      {
         slug: "workflow-automation-fundamentals",
         title: "Workflow-Automatisierung: Was in der Praxis wirklich zählt",
         excerpt:
