@@ -10,7 +10,7 @@
 // =============================================================================
 
 import * as React from "react";
-import { BarChart3, Mail, Share2, X } from "lucide-react";
+import { BarChart3, LogIn, Mail, Share2, X } from "lucide-react";
 
 interface Labels {
   title: string;
@@ -21,6 +21,8 @@ interface Labels {
   step3Title: string;
   step3Body: string;
   manageCta: string;
+  loginCta: string;
+  loginBody: string;
   dismiss: string;
 }
 
@@ -28,10 +30,13 @@ interface Props {
   /** Per-card storage key suffix so a second card shows the tour again. */
   cardKey: string;
   manageHref: string;
+  /** When set (unclaimed card), invites the owner to log in and own the card
+   *  on their account so it's manageable from any device without the token. */
+  loginHref?: string;
   labels: Labels;
 }
 
-export function OwnerWelcome({ cardKey, manageHref, labels }: Props) {
+export function OwnerWelcome({ cardKey, manageHref, loginHref, labels }: Props) {
   const storageKey = `opsolid-owner-welcome-${cardKey}`;
   const [open, setOpen] = React.useState(false);
 
@@ -120,6 +125,23 @@ export function OwnerWelcome({ cardKey, manageHref, labels }: Props) {
             {labels.dismiss}
           </button>
         </div>
+        {loginHref && (
+          <a
+            href={loginHref}
+            onClick={dismiss}
+            className="mt-3 flex items-start gap-2 rounded-2xl border border-copper-500/25 bg-copper-500/[0.06] px-3 py-2.5 text-left hover:border-copper-500/45"
+          >
+            <LogIn size={15} className="mt-0.5 shrink-0 text-copper-600" />
+            <span className="min-w-0">
+              <span className="block text-sm font-medium text-neutral-900">
+                {labels.loginCta}
+              </span>
+              <span className="block text-xs leading-relaxed text-neutral-500">
+                {labels.loginBody}
+              </span>
+            </span>
+          </a>
+        )}
       </div>
     </div>
   );

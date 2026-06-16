@@ -10,7 +10,8 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { EditTokenError, requireEditToken } from "@/lib/auth/edit-token";
+import { EditTokenError, requireCardEditAccess } from "@/lib/auth/edit-token";
+import { getOptionalUser } from "@/lib/auth/require-user";
 import { calculateQualityScore } from "@/lib/card-quality";
 
 export const runtime = "nodejs";
@@ -21,7 +22,8 @@ export async function GET(
   { params }: { params: { orderId: string } }
 ) {
   try {
-    const order = await requireEditToken(req, params.orderId);
+    const user = await getOptionalUser(req);
+    const order = await requireCardEditAccess(req, params.orderId, user);
 
     const data = await prisma.cardOrder.findUnique({
       where: { id: order.id },

@@ -7,13 +7,15 @@
 // to auto-open the cancel modal.
 // =============================================================================
 
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { CardDataSchema, OrderStatus } from "@/lib/validation";
 import { getTemplateById } from "@/config/card-templates";
 import { CardEditClient } from "./CardEditClient";
 import { ResendLinkButton } from "./ResendLinkButton";
-import { EditTokenError, requireEditToken } from "@/lib/auth/edit-token";
+import { EditTokenError, requireCardEditAccess } from "@/lib/auth/edit-token";
+import { getSessionUser, REFRESH_COOKIE_NAME } from "@/lib/auth/session";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -37,9 +39,14 @@ export default async function CardEditPage({ params, searchParams }: PageProps) 
     ? params.locale
     : "en") as "en" | "de" | "tr";
 
+  // Logged-in owners can edit a claimed card with no `?t=` in the URL (the
+  // dashboard / cross-device path); anonymous owners still use the email token.
+  const refreshToken = (await cookies()).get(REFRESH_COOKIE_NAME)?.value;
+  const sessionUser = refreshToken ? await getSessionUser(refreshToken) : null;
+
   let order;
   try {
-    order = await requireEditToken(token, orderId);
+    order = await requireCardEditAccess(token, orderId, sessionUser);
   } catch (err) {
     if (err instanceof EditTokenError) {
       return (
@@ -79,7 +86,7 @@ export default async function CardEditPage({ params, searchParams }: PageProps) 
   return (
     <CardEditClient
       orderId={order.id}
-      editToken={token}
+      editToken={order.editToken ?? token}
       version={order.updatedAt.toISOString()}
       status={order.status}
       templateComponentKey={template.componentKey}

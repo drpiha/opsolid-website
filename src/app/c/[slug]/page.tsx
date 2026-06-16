@@ -466,6 +466,14 @@ export default async function CardPage({ params, searchParams }: PageProps) {
   const langSwitcherLabel = contents[localeKey].card.languageSwitcher;
   const editHref = `/${localeKey}/card/edit/${order.id}?t=${order.editToken ?? ""}`;
   const manageHref = `/${localeKey}/card/manage/${order.id}?t=${order.editToken ?? ""}`;
+  // Unclaimed card → nudge the fresh owner to log in and own it on their
+  // account so they can manage from any device without the token. Prefills the
+  // email so signing in is one tap. Claimed cards already have an account.
+  const ownerLoginHref = order.userId
+    ? undefined
+    : `/${localeKey}/login?email=${encodeURIComponent(
+        order.contactEmail,
+      )}&next=${encodeURIComponent(`/${localeKey}/dashboard/cards`)}`;
 
   return (
     <OwnerModeProvider isOwner={isOwner}>
@@ -475,6 +483,7 @@ export default async function CardPage({ params, searchParams }: PageProps) {
           <OwnerWelcome
             cardKey={order.id}
             manageHref={manageHref}
+            loginHref={ownerLoginHref}
             labels={contents[localeKey].card.ownerWelcome}
           />
         )}

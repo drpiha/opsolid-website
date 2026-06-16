@@ -16,7 +16,8 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { CardDataSchema, OrderStatus } from "@/lib/validation";
-import { EditTokenError, requireEditToken } from "@/lib/auth/edit-token";
+import { EditTokenError, requireCardEditAccess } from "@/lib/auth/edit-token";
+import { getOptionalUser } from "@/lib/auth/require-user";
 import { validateManualSlug, isSlugAvailable } from "@/lib/slug";
 import { getTemplateById } from "@/config/card-templates";
 import { getSiteUrl } from "@/lib/stripe";
@@ -84,7 +85,8 @@ export async function PATCH(
   { params }: { params: { orderId: string } }
 ) {
   try {
-    const order = await requireEditToken(req, params.orderId);
+    const user = await getOptionalUser(req);
+    const order = await requireCardEditAccess(req, params.orderId, user);
 
     if (NON_EDITABLE_STATUSES.has(order.status)) {
       return NextResponse.json(

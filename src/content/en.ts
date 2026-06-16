@@ -5763,6 +5763,9 @@ export const content = {
       step3Body:
         "Views, contacts you receive, and per-channel share links live on your management page.",
       manageCta: "Stats & links",
+      loginCta: "Log in to manage all your cards",
+      loginBody:
+        "Sign in with this email to manage every card from any device.",
       dismiss: "Got it",
     },
     languageSwitcher: "Language",

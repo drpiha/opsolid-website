@@ -5736,6 +5736,9 @@ export const content: Content = {
       step3Body:
         "Görüntülenmeler, gelen kişiler ve kanal bazlı kısa linkler yönetim sayfanda.",
       manageCta: "İstatistik ve linkler",
+      loginCta: "Giriş yap, tüm kartlarını yönet",
+      loginBody:
+        "Bu e-postayla giriş yaparsan tüm kartlarını her cihazdan yönetebilirsin.",
       dismiss: "Anladım",
     },
     languageSwitcher: "Dil",

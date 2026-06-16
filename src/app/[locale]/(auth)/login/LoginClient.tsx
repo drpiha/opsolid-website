@@ -22,7 +22,7 @@ export function LoginClient({ locale }: Props) {
   const s = t.auth.login;
   const errs = t.auth.errors;
 
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(searchParams.get("email") ?? "");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);

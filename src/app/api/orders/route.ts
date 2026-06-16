@@ -8,6 +8,7 @@ import { createCheckoutSession } from "@/lib/stripe";
 import { validateManualSlug, isSlugAvailable, ensureUniqueSlug } from "@/lib/slug";
 import { getSiteUrl } from "@/lib/stripe";
 import { sendCustomerEmail } from "@/lib/email/send";
+import { getOptionalUser } from "@/lib/auth/require-user";
 import { normalizeLocale } from "@/lib/email/shell";
 import {
   cardLiveSubject,
@@ -90,9 +91,22 @@ export async function POST(req: NextRequest) {
 
   const editToken = crypto.randomUUID();
 
+  // If the creator is already logged in, bind the card to their account now so
+  // it shows up under "Kartlarım" and is editable via session (no token in the
+  // URL) from any device. Anonymous fair-flow creators stay userId=null and
+  // claim the card later by logging in with the same email. Best-effort: a
+  // session-lookup hiccup must never fail card creation.
+  let ownerUserId: string | null = null;
+  try {
+    ownerUserId = (await getOptionalUser(req))?.id ?? null;
+  } catch {
+    ownerUserId = null;
+  }
+
   const order = await prisma.cardOrder.create({
     data: {
       templateId: template.id,
+      ...(ownerUserId ? { userId: ownerUserId } : {}),
       // Name/phone are optional in the self-serve flow; fall back to the card's
       // own name and an empty phone so the (non-null) columns stay satisfied.
       contactName: data.contactName ?? data.cardData.name,

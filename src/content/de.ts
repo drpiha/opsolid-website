@@ -5738,6 +5738,9 @@ export const content: Content = {
       step3Body:
         "Aufrufe, eingehende Kontakte und Kanal-Kurzlinks finden Sie auf Ihrer Verwaltungsseite.",
       manageCta: "Statistiken & Links",
+      loginCta: "Anmelden und alle Karten verwalten",
+      loginBody:
+        "Melden Sie sich mit dieser E-Mail an, um alle Karten von jedem Gerät aus zu verwalten.",
       dismiss: "Verstanden",
     },
     languageSwitcher: "Sprache",
