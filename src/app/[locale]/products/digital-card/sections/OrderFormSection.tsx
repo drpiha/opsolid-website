@@ -1271,7 +1271,7 @@ export function OrderFormSection({
             >
               <div className="absolute -inset-3 rounded-[2rem] bg-gradient-to-br from-copper/25 via-transparent to-copper-300/15 blur-2xl opacity-60 transition-opacity group-hover:opacity-90" />
               <div className="relative overflow-hidden rounded-[2rem] border border-ink/10 bg-white shadow-[0_1px_0_0_rgba(0,0,0,0.04),0_30px_80px_-30px_rgba(20,18,15,0.4)] transition-transform group-hover:-translate-y-0.5">
-                <div className="pointer-events-none">{previewNode}</div>
+                <div className="relative">{previewNode}<div className="absolute inset-0" aria-hidden /></div>
                 {/* hover hint overlay */}
                 <div className="pointer-events-none absolute inset-0 flex items-end justify-center bg-gradient-to-t from-ink/40 via-transparent to-transparent opacity-0 transition-opacity group-hover:opacity-100">
                   <span className="mb-4 inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[11px] font-semibold text-ink shadow-md">
@@ -1331,8 +1331,8 @@ export function OrderFormSection({
               className="overflow-y-auto p-4"
               style={{ maxHeight: "calc(92vh - 4rem)" }}
             >
-              <div className="pointer-events-none mx-auto max-w-md overflow-hidden rounded-3xl border border-ink/10 bg-white shadow-[0_30px_80px_-30px_rgba(20,18,15,0.3)]">
-                {previewNode}
+              <div className="relative mx-auto max-w-md overflow-hidden rounded-3xl border border-ink/10 bg-white shadow-[0_30px_80px_-30px_rgba(20,18,15,0.3)]">
+                {previewNode}<div className="absolute inset-0" aria-hidden />
               </div>
               <p className="mt-3 text-center text-xs italic text-ink/50">
                 {L("previewLiveHint", "Aktualisiert sich beim Tippen")}

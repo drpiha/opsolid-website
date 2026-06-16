@@ -145,6 +145,7 @@ export function CardEditClient(props: Props) {
     visibility: props.visibility,
     openToNetworking: props.openToNetworking,
     acceptingClients: props.acceptingClients,
+    cardLocale: props.cardLocale,
   });
 
   const isDirty = useMemo(() => {
@@ -160,6 +161,7 @@ export function CardEditClient(props: Props) {
         visibility,
         openToNetworking,
         acceptingClients,
+        cardLocale,
       }) !==
       JSON.stringify({
         cardData: initialFormRef.current.cardData,
@@ -172,9 +174,10 @@ export function CardEditClient(props: Props) {
         visibility: initialFormRef.current.visibility,
         openToNetworking: initialFormRef.current.openToNetworking,
         acceptingClients: initialFormRef.current.acceptingClients,
+        cardLocale: initialFormRef.current.cardLocale,
       })
     );
-  }, [cardData, templateId, photoPath, logoPath, brandPrimaryHex, brandAccentHex, editableSlug, visibility, openToNetworking, acceptingClients]);
+  }, [cardData, templateId, photoPath, logoPath, brandPrimaryHex, brandAccentHex, editableSlug, visibility, openToNetworking, acceptingClients, cardLocale]);
 
   // A4 — revert: restore all mutable state to the last-saved snapshot.
   const handleRevert = () => {
@@ -189,6 +192,7 @@ export function CardEditClient(props: Props) {
     setVisibility(snap.visibility);
     setOpenToNetworking(snap.openToNetworking);
     setAcceptingClients(snap.acceptingClients);
+    setCardLocale(snap.cardLocale);
   };
 
   // B7 — expand/collapse sections. Only "person-brand" open by default.
@@ -430,6 +434,7 @@ export function CardEditClient(props: Props) {
         visibility,
         openToNetworking,
         acceptingClients,
+        cardLocale,
       };
       setFormState("saved");
       setTimeout(() => setFormState("idle"), 1500);

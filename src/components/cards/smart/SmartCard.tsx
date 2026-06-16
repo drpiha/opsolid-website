@@ -590,6 +590,13 @@ function SmartCardContactRows({ cardData }: { cardData: CardData }) {
             href={row.href}
             target={row.href.startsWith("http") ? "_blank" : undefined}
             rel={row.href.startsWith("http") ? "noopener noreferrer" : undefined}
+            onClick={row.href.includes("google.com/maps") ? (e) => {
+              if (typeof navigator !== "undefined" && /iPad|iPhone|iPod/.test(navigator.userAgent)) {
+                e.preventDefault();
+                const q = e.currentTarget.href.split("query=")[1];
+                window.open(`https://maps.apple.com/?q=${q}`, "_blank", "noopener,noreferrer");
+              }
+            } : undefined}
             className="flex items-center gap-4 rounded-2xl border border-line bg-bg-2 px-4 py-3 transition hover:border-line-firm hover:bg-bg-3"
           >
             <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-bg-3 text-ink-200">

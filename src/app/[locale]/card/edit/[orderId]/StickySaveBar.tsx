@@ -59,9 +59,9 @@ export function StickySaveBar({ isDirty, formState, onRevert }: StickySaveBarPro
           <span
             className={
               isSaved
-                ? "text-green-700"
+                ? "text-signal-ok"
                 : isDirty
-                ? "text-ink"
+                ? "text-ink font-medium"
                 : "text-ink-200"
             }
           >
@@ -83,7 +83,7 @@ export function StickySaveBar({ isDirty, formState, onRevert }: StickySaveBarPro
           <button
             type="submit"
             disabled={(!isDirty && formState !== "saved") || isSaving}
-            className="btn-primary min-h-[48px] min-w-[140px] inline-flex items-center justify-center gap-2"
+            className="inline-flex min-h-[48px] min-w-[150px] items-center justify-center gap-2 rounded-full bg-neutral-900 px-6 text-sm font-semibold text-neutral-50 shadow-sm transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:opacity-40"
           >
             {isSaving && <Loader2 size={15} className="motion-safe:animate-spin" />}
             <span>{isSaving ? edit.saving : edit.save}</span>

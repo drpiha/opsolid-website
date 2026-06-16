@@ -236,6 +236,16 @@ export function ContactRows({
   );
 }
 
+/** Rewrites the href to Apple Maps on iOS at click-time. SSR-safe: navigator is
+ *  not accessed at render; only inside the event handler. */
+function handleAddressClick(e: React.MouseEvent<HTMLAnchorElement>) {
+  if (typeof navigator !== "undefined" && /iPad|iPhone|iPod/.test(navigator.userAgent)) {
+    e.preventDefault();
+    const query = e.currentTarget.href.split("query=")[1];
+    window.open(`https://maps.apple.com/?q=${query}`, "_blank", "noopener,noreferrer");
+  }
+}
+
 function ContactRowDefault({
   row,
   variant,
@@ -252,6 +262,9 @@ function ContactRowDefault({
   const { Icon } = row;
   const target = row.external
     ? { target: "_blank", rel: "noopener noreferrer" as const }
+    : {};
+  const addressProps = row.channel === "address"
+    ? { onClick: handleAddressClick }
     : {};
 
   // Phase 7.8 — tone-aware base text/border colors so dark-canvas templates
@@ -273,6 +286,7 @@ function ContactRowDefault({
       <a
         href={row.href}
         {...target}
+        {...addressProps}
         className={`flex items-center justify-between gap-4 border-b ${hairlineBorder} py-3 transition-colors hover:text-[var(--card-primary)] ${className ?? ""}`}
       >
         <span className="flex items-center gap-3">
@@ -299,6 +313,7 @@ function ContactRowDefault({
       <a
         href={row.href}
         {...target}
+        {...addressProps}
         className={`flex items-center gap-3 rounded-lg px-3 py-2.5 transition-colors ${compactHover} ${className ?? ""}`}
       >
         <span
@@ -324,6 +339,7 @@ function ContactRowDefault({
     <a
       href={row.href}
       {...target}
+      {...addressProps}
       className={`group flex items-center gap-4 rounded-2xl border ${tileBorder} ${tileBg} px-4 py-3 transition-all hover:-translate-y-px ${tileHoverBorder} ${tileHoverBg} ${className ?? ""}`}
     >
       <span

@@ -74,8 +74,11 @@ export default function TemplateSection({
   const edit = t.products.digitalCard.edit as Record<string, string>;
   const open = openSections.has("template");
 
-  // Per-sector collapse state — default all closed; auto-expand active template's sector.
-  const [openGroups, setOpenGroups] = useState<Set<PlannedSector>>(() => new Set());
+  // Per-sector collapse state — default to the active template's sector open.
+  const [openGroups, setOpenGroups] = useState<Set<PlannedSector>>(() => {
+    const a = plannedLineup.find((tpl) => tpl.id === templateId);
+    return a ? new Set<PlannedSector>([a.sector]) : new Set<PlannedSector>();
+  });
 
   // Search query for filtering sectors/templates.
   const [query, setQuery] = useState("");
@@ -109,10 +112,7 @@ export default function TemplateSection({
     return labelMatch || itemMatch;
   });
 
-  const isSectorExpanded = (sector: PlannedSector, items: typeof plannedLineup) => {
-    // Always expand the sector containing the active template.
-    if (items.some((t) => t.id === templateId)) return true;
-    // Expand all matching sectors when searching.
+  const isSectorExpanded = (sector: PlannedSector) => {
     if (isSearching) return true;
     return openGroups.has(sector);
   };
@@ -160,7 +160,7 @@ export default function TemplateSection({
         />
 
         {visibleGroups.map(({ sector, items }) => {
-          const expanded = isSectorExpanded(sector, items);
+          const expanded = isSectorExpanded(sector);
           return (
             <div key={sector}>
               {/* Sector heading row — acts as collapse toggle */}
