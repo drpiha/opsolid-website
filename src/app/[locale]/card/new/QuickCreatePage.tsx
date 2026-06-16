@@ -17,7 +17,7 @@
 
 import * as React from "react";
 import { useSearchParams } from "next/navigation";
-import { Camera, Loader2, Sparkles } from "lucide-react";
+import { Camera, ChevronDown, ChevronUp, ImageIcon, Loader2, Sparkles } from "lucide-react";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import {
   CardLanguageSelector,
@@ -71,6 +71,14 @@ export function QuickCreatePage() {
     };
   }, [eventSlug]);
 
+  // Template pre-selection from ?template= query param (arriving from gallery).
+  const templateFromUrl = React.useMemo(() => {
+    const raw = search?.get("template");
+    if (!raw) return null;
+    const parsed = parseInt(raw, 10);
+    return Number.isFinite(parsed) && parsed > 0 ? parsed : null;
+  }, [search]);
+
   const [name, setName] = React.useState("");
   const [title, setTitle] = React.useState("");
   const [company, setCompany] = React.useState("");
@@ -81,18 +89,43 @@ export function QuickCreatePage() {
   const [cardLocale, setCardLocale] = React.useState<CardLocale>(
     (["de", "en", "tr"].includes(locale) ? locale : "de") as CardLocale,
   );
-  // Starter design — defaults to the first generic layout; switchable later.
+  // Starter design — initialized from ?template= if valid, else first generic layout.
   const [templateId, setTemplateId] = React.useState<number>(
-    STARTER_DESIGNS[0].id,
+    templateFromUrl ?? STARTER_DESIGNS[0].id,
   );
 
+  // Photo upload state.
   const [photoPath, setPhotoPath] = React.useState<string | null>(null);
   const [photoPreview, setPhotoPreview] = React.useState<string | null>(null);
   const [photoUploading, setPhotoUploading] = React.useState(false);
+  const fileInput = React.useRef<HTMLInputElement>(null);
+
+  // Logo upload state.
+  const [logoPath, setLogoPath] = React.useState<string | null>(null);
+  const [logoPreview, setLogoPreview] = React.useState<string | null>(null);
+  const [logoUploading, setLogoUploading] = React.useState(false);
+  const logoInput = React.useRef<HTMLInputElement>(null);
+
+  // Social media state.
+  const [socials, setSocials] = React.useState({
+    linkedin: "",
+    instagram: "",
+    x: "",
+    youtube: "",
+    facebook: "",
+    tiktok: "",
+  });
+
+  // Collapsible "more details" state.
+  const [moreOpen, setMoreOpen] = React.useState(false);
+  const [whatsapp, setWhatsapp] = React.useState("");
+  const [website, setWebsite] = React.useState("");
+  const [address, setAddress] = React.useState("");
+  const [bio, setBio] = React.useState("");
+  const [videoUrl, setVideoUrl] = React.useState("");
 
   const [busy, setBusy] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
-  const fileInput = React.useRef<HTMLInputElement>(null);
 
   const onPhoto = async (file: File) => {
     setPhotoUploading(true);
@@ -120,6 +153,31 @@ export function QuickCreatePage() {
     }
   };
 
+  const onLogo = async (file: File) => {
+    setLogoUploading(true);
+    setError(null);
+    try {
+      setLogoPreview(URL.createObjectURL(file));
+      const small = await downscaleImage(file);
+      const form = new FormData();
+      form.append("file", small);
+      form.append("kind", "logo");
+      const res = await fetch("/api/uploads", { method: "POST", body: form });
+      const json = (await res.json()) as { path?: string; error?: string };
+      if (!res.ok || !json.path) {
+        setLogoPreview(null);
+        setError(q.photoError);
+        return;
+      }
+      setLogoPath(json.path);
+    } catch {
+      setLogoPreview(null);
+      setError(q.photoError);
+    } finally {
+      setLogoUploading(false);
+    }
+  };
+
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim() || !email.trim() || !phone.trim()) {
@@ -129,6 +187,11 @@ export function QuickCreatePage() {
     setBusy(true);
     setError(null);
     try {
+      // Build socials object — only include non-empty keys.
+      const socialsObj = Object.fromEntries(
+        Object.entries(socials).filter(([, v]) => v.trim() !== ""),
+      ) as Record<string, string>;
+
       const res = await fetch("/api/orders", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -146,8 +209,15 @@ export function QuickCreatePage() {
             company: company.trim() || undefined,
             phone: phone.trim(),
             email: email.trim(),
+            ...(website.trim() ? { website: website.trim() } : {}),
+            ...(whatsapp.trim() ? { whatsapp: whatsapp.trim() } : {}),
+            ...(address.trim() ? { address: address.trim() } : {}),
+            ...(bio.trim() ? { bio: bio.trim() } : {}),
+            ...(videoUrl.trim() ? { videoUrl: videoUrl.trim() } : {}),
+            ...(Object.keys(socialsObj).length > 0 ? { socials: socialsObj } : {}),
           },
           photoPath: photoPath ?? undefined,
+          logoPath: logoPath ?? undefined,
           eventSlug: event && joinDirectory ? event.slug : undefined,
         }),
       });
@@ -201,7 +271,7 @@ export function QuickCreatePage() {
         )}
 
         <form onSubmit={submit} className="mt-6 flex flex-col gap-3">
-          {/* photo */}
+          {/* Photo upload */}
           <button
             type="button"
             onClick={() => fileInput.current?.click()}
@@ -238,6 +308,47 @@ export function QuickCreatePage() {
             onChange={(e) => {
               const f = e.target.files?.[0];
               if (f) void onPhoto(f);
+              e.target.value = "";
+            }}
+          />
+
+          {/* Logo upload */}
+          <button
+            type="button"
+            onClick={() => logoInput.current?.click()}
+            className="flex items-center gap-4 rounded-2xl border border-dashed border-neutral-300 bg-white p-4 text-left hover:border-copper/60"
+          >
+            {logoPreview ? (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={logoPreview}
+                alt=""
+                className="h-16 w-16 shrink-0 rounded-2xl object-contain bg-white"
+              />
+            ) : (
+              <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-neutral-100">
+                {logoUploading ? (
+                  <Loader2 size={20} className="animate-spin text-neutral-400" />
+                ) : (
+                  <ImageIcon size={20} className="text-neutral-400" />
+                )}
+              </span>
+            )}
+            <span className="min-w-0">
+              <span className="block text-sm font-medium text-neutral-900">
+                {logoPreview ? q.logoChange : q.logoLabel}
+              </span>
+              <span className="block text-xs text-neutral-400">{q.logoHint}</span>
+            </span>
+          </button>
+          <input
+            ref={logoInput}
+            type="file"
+            accept="image/jpeg,image/png,image/webp"
+            className="hidden"
+            onChange={(e) => {
+              const f = e.target.files?.[0];
+              if (f) void onLogo(f);
               e.target.value = "";
             }}
           />
@@ -297,6 +408,131 @@ export function QuickCreatePage() {
             <p className="mt-1.5 px-1 text-xs text-neutral-400">{q.emailHint}</p>
           </div>
 
+          {/* Social media block — always visible */}
+          <div className="flex flex-col gap-2">
+            <p className="px-1 text-sm font-medium text-neutral-500">
+              {q.socialSectionLabel}
+            </p>
+            <input
+              className={inputCls}
+              value={socials.linkedin}
+              onChange={(e) => setSocials((s) => ({ ...s, linkedin: e.target.value }))}
+              placeholder={q.linkedinLabel}
+              maxLength={300}
+              inputMode="url"
+              autoComplete="off"
+            />
+            <input
+              className={inputCls}
+              value={socials.instagram}
+              onChange={(e) => setSocials((s) => ({ ...s, instagram: e.target.value }))}
+              placeholder={q.instagramLabel}
+              maxLength={300}
+              inputMode="url"
+              autoComplete="off"
+            />
+            <input
+              className={inputCls}
+              value={socials.x}
+              onChange={(e) => setSocials((s) => ({ ...s, x: e.target.value }))}
+              placeholder={q.xLabel}
+              maxLength={300}
+              inputMode="url"
+              autoComplete="off"
+            />
+            <input
+              className={inputCls}
+              value={socials.youtube}
+              onChange={(e) => setSocials((s) => ({ ...s, youtube: e.target.value }))}
+              placeholder={q.youtubeLabel}
+              maxLength={300}
+              inputMode="url"
+              autoComplete="off"
+            />
+            <input
+              className={inputCls}
+              value={socials.facebook}
+              onChange={(e) => setSocials((s) => ({ ...s, facebook: e.target.value }))}
+              placeholder={q.facebookLabel}
+              maxLength={300}
+              inputMode="url"
+              autoComplete="off"
+            />
+            <input
+              className={inputCls}
+              value={socials.tiktok}
+              onChange={(e) => setSocials((s) => ({ ...s, tiktok: e.target.value }))}
+              placeholder={q.tiktokLabel}
+              maxLength={300}
+              inputMode="url"
+              autoComplete="off"
+            />
+          </div>
+
+          {/* Collapsible "more details" section */}
+          <div className="rounded-2xl border border-neutral-200 bg-white">
+            <button
+              type="button"
+              onClick={() => setMoreOpen((o) => !o)}
+              className="flex w-full items-center justify-between px-4 py-3 text-sm font-medium text-neutral-700"
+              aria-expanded={moreOpen}
+            >
+              <span>{q.moreToggle}</span>
+              {moreOpen ? (
+                <ChevronUp size={16} className="text-neutral-400" />
+              ) : (
+                <ChevronDown size={16} className="text-neutral-400" />
+              )}
+            </button>
+            {moreOpen && (
+              <div className="flex flex-col gap-2 border-t border-neutral-100 px-3 pb-3 pt-2">
+                <input
+                  className={inputCls}
+                  value={whatsapp}
+                  onChange={(e) => setWhatsapp(e.target.value)}
+                  placeholder={q.whatsappLabel}
+                  maxLength={40}
+                  inputMode="tel"
+                  autoComplete="tel"
+                />
+                <input
+                  className={inputCls}
+                  value={website}
+                  onChange={(e) => setWebsite(e.target.value)}
+                  placeholder={q.websiteLabel}
+                  maxLength={300}
+                  inputMode="url"
+                  autoComplete="url"
+                />
+                <input
+                  className={inputCls}
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  placeholder={q.addressLabel}
+                  maxLength={300}
+                  autoComplete="street-address"
+                />
+                <textarea
+                  className={`${inputCls} resize-none`}
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  placeholder={q.bioLabel}
+                  rows={3}
+                  maxLength={600}
+                />
+                <input
+                  className={inputCls}
+                  value={videoUrl}
+                  onChange={(e) => setVideoUrl(e.target.value)}
+                  placeholder={q.videoLabel}
+                  maxLength={300}
+                  inputMode="url"
+                  autoComplete="off"
+                />
+              </div>
+            )}
+          </div>
+
           <CardLanguageSelector
             value={cardLocale}
             onChange={setCardLocale}
@@ -310,7 +546,7 @@ export function QuickCreatePage() {
 
           <button
             type="submit"
-            disabled={busy || photoUploading}
+            disabled={busy || photoUploading || logoUploading}
             className="mt-1 inline-flex items-center justify-center gap-2 rounded-full bg-copper px-6 py-3.5 text-base font-semibold text-white shadow-[0_8px_24px_-8px_rgba(194,121,64,0.55)] transition-transform hover:scale-[1.01] active:scale-[0.99] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {busy ? (

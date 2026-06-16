@@ -29,6 +29,7 @@ import useEmblaCarousel from "embla-carousel-react";
 import type { EmblaCarouselType } from "embla-carousel";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowLeft, ArrowRight, Check, Eye, X } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useLocale } from "@/context/LocaleContext";
 import type { Locale } from "@/lib/i18n";
 import {
@@ -123,6 +124,7 @@ export function TemplateGallery({
   paymentsEnabled?: boolean;
 }) {
   const { t, locale } = useLocale();
+  const router = useRouter();
   const order = t.products.digitalCard.order ?? {};
   const labels = (order.gallery ?? {}) as Record<string, string>;
   const L = (key: string, fallback: string) => labels[key] || fallback;
@@ -243,26 +245,14 @@ export function TemplateGallery({
   const handleSelect = (id: number) => {
     onSelect(id);
     setSelectionMode(false);
-    // Phase 7.7 — once the customer picks a template, drop them into the
-    // order form so they don't have to hunt for the next step.
-    setTimeout(() => {
-      document
-        .getElementById("order")
-        ?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 80);
+    router.push(`/${locale}/card/new?template=${id}`);
   };
 
   const handleChooseFromDemo = (id: number) => {
     onSelect(id);
     setDemoOpenId(null);
     setSelectionMode(false);
-    // Defer scroll so the modal close animation isn't fighting the scroll.
-    requestAnimationFrame(() => {
-      const target = document.getElementById("order");
-      if (target) {
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-    });
+    router.push(`/${locale}/card/new?template=${id}`);
   };
 
   return (

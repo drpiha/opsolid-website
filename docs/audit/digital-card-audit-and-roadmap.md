@@ -204,6 +204,21 @@ reference cards; onboarding email sequence.
 the new MVP." **Still open (§12):** session-ownership on the edit route (drop token-in-URL, 30-day);
 optional em-dash → hyphen sweep in card copy.
 
+### Create/Edit unification (founder-directed, 2026-06-16)
+Problem: three divergent surfaces — fast `/card/new`, heavy `OrderFormSection` (~3,228 lines, reached
+by picking a template), heavy `CardEditClient` (~2,381 lines). Target: **one simple, progressive
+builder for create AND edit** (essentials open: photo, logo, name, title, company, phone, email,
+social; collapsible "Daha fazla": WhatsApp, video, gallery, website, address, bio; advanced:
+services, colours, slug, visibility). Approach: **phased + reuse existing field components.**
+- **Faz 1 (DONE):** gallery "select design" now navigates to `/card/new?template=X` (not the heavy
+  form); `/card/new` gained logo upload, an always-visible social block, and a collapsible "Daha
+  fazla" (WhatsApp/website/address/bio/video URL). Both create entry points are now the same simple
+  flow.
+- **Faz 2 (next):** make the editor open in the same simple progressive view (essentials + collapse),
+  add gallery-photo + self-hosted video upload, move AI/analytics/CRM behind "Gelişmiş"/the manage
+  page.
+- **Faz 3:** retire `OrderFormSection`.
+
 ## 11. Files changed in this engagement
 
 **PR1**
