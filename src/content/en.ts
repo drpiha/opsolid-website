@@ -469,7 +469,7 @@ export const content = {
           priceCadence: "ready to use · priced per product",
           bullets: [
             "Kutasia — multi-sector customer platform",
-            "Digital Business Card — link, QR, optional NFC",
+            "Digital Business Card — link, QR, WhatsApp, no app",
             "Digital Reception — AI front desk for service businesses",
             "Every product ready to use out of the box",
           ],
@@ -524,7 +524,7 @@ export const content = {
       eyebrow: "TEMPLATES",
       heading: "10 industry templates ready to ship",
       paragraph:
-        "Real estate, clinic, restaurant, DJ, barber, e-commerce, architect, fitness — 10 tap-to-share cards tailored per sector. Click to preview live.",
+        "Real estate, clinic, restaurant, DJ, barber, e-commerce, architect, fitness — 10 share-by-link cards tailored per sector. Click to preview live.",
       ctaLabel: "See all templates",
       ctaHref: "/products/digital-card",
     },
@@ -1286,16 +1286,16 @@ export const content = {
     items: [
       {
         name: "Digital Business Card",
-        tagline: "Link · QR code · optional NFC",
+        tagline: "Link · QR code · WhatsApp · no app",
         description:
-          "A hosted-in-Germany digital business card. Share your profile as a link, QR code, or optional NFC card. Industry templates for real estate, salons, clinics, restaurants, photographers and more — all GDPR-native.",
+          "A hosted-in-Germany digital business card. Share your profile as a link, QR code, WhatsApp message, or email - the receiver needs no app, and you can edit it anytime. Industry templates for real estate, salons, clinics, restaurants, photographers and more — all GDPR-native.",
         status: "Live",
         href: "/products/digital-card",
         externalUrl: "",
         icon: "idCard",
-        startingPrice: "€39 one-time · free tier available",
+        startingPrice: "Free",
         category: "Customer-facing",
-        stack: "Next.js · Hetzner · Apple Wallet · HubSpot",
+        stack: "Next.js · Hetzner · vCard · HubSpot",
       },
       {
         name: "Voice AI Agent",
@@ -1412,10 +1412,10 @@ export const content = {
           "free, live in seconds.",
         ],
         paragraph:
-          "Pick a template, fill in your details, publish. Your card goes live in seconds at opsolid.de/c/your-name, free to start. Upgrade when you need a custom domain, NFC, or analytics. EU-hosted in Frankfurt, GDPR-native, no subscription traps.",
+          "Pick a template, fill in your details, publish. Your card goes live in seconds at opsolid.de/c/your-name, free. Share it by link, QR code, WhatsApp, or email - the receiver needs no app, and you can edit it anytime. EU-hosted in Frankfurt, GDPR-native.",
         primaryCta: "Create my free card",
         secondaryCta: "See 20 live templates",
-        tags: "OPSO SMART · LINK · QR CODE · vCARD · EU-HOSTED · FREE TO START",
+        tags: "OPSO SMART · LINK · QR CODE · WHATSAPP · vCARD · NO APP · FREE",
         cardLabels: {
           name: "Alex Weber",
           role: "Product Designer",
@@ -1544,7 +1544,7 @@ export const content = {
             bullets: [
               "Everything in Free, badge removed",
               "Custom slug or your own domain",
-              "NFC option",
+              "WhatsApp share button",
               "Analytics (views + clicks)",
               "Video block + lead capture / CRM",
               "Multiple cards",
@@ -1607,7 +1607,7 @@ export const content = {
           },
           {
             quote:
-              "The fact that the data stays in the EU closed the deal with our legal team. That alone was worth the upgrade.",
+              "The fact that the data stays in the EU closed the deal with our legal team. That alone sold it for us.",
             name: "Marco Weber",
             role: "COO",
             company: "Munich industrial group",
@@ -1657,9 +1657,9 @@ export const content = {
               "Instantly: build it yourself and publish in seconds. Prefer we design it for you? Choose white-glove (48h).",
           },
           {
-            question: "Do you ship a physical NFC card?",
+            question: "Does the receiver need an app?",
             answer:
-              "Available on Premium. The free card works as link + QR: a customer scans your QR or opens your link and sees your profile, no hardware needed. NFC is an option once you upgrade.",
+              "No. The card opens in any browser from your link or QR code - nothing to install. Share it by link, QR, WhatsApp, or email, and the receiver just taps and sees your profile.",
           },
           {
             question: "Can I edit my card myself later?",
@@ -1679,7 +1679,7 @@ export const content = {
           {
             question: "I need 10+ cards for my team. How?",
             answer:
-              "Premium supports multiple cards. For larger rollouts, choose white-glove and we handle the team setup. Email info@opsolid.de.",
+              "Every card is free, so build one per person. For a larger rollout you'd rather not set up yourself, email info@opsolid.de and we'll help.",
           },
         ],
       },
@@ -2073,7 +2073,7 @@ export const content = {
         title:
           "OpSo Smart — Free digital business card, live in seconds | OpSolid",
         description:
-          "Build your own digital business card for free and publish it in seconds — link, QR, vCard. EU-hosted (Frankfurt), GDPR-native. Premium adds custom domain, NFC and analytics.",
+          "Build your own digital business card for free and publish it in seconds — link, QR, WhatsApp, email. No app for the receiver, editable anytime. EU-hosted (Frankfurt), GDPR-native.",
       },
     },
 
@@ -4880,12 +4880,12 @@ export const content = {
     productsHub: {
       meta: {
         title: "Products — Voice, OpSo Smart, Chat, WhatsApp, Booking, Email, Lead, Custom, Kutasia | OpSolid",
-        description: "Nine products from one studio: AI agents for phone, chat, WhatsApp, email and lead qualification, premium digital business cards (OpSo Smart), custom workflow automation, and Kutasia — the unified AI workspace for DACH and TR SMBs. Every product transparent-priced and EU-hosted.",
+        description: "Nine products from one studio: AI agents for phone, chat, WhatsApp, email and lead qualification, free digital business cards (OpSo Smart), custom workflow automation, and Kutasia — the unified AI workspace for DACH and TR SMBs. Every product transparent-priced and EU-hosted.",
       },
       hero: {
         eyebrow: "[ PRODUCTS · 2026 ]",
         title: { pre: "Nine products, ", italic: "one studio", post: "" },
-        lead: "Every product on this page is built and run by the same team. Voice, chat, and WhatsApp agents share an integration spine. OpSo Smart, our digital business card, is free to start and live in seconds. Custom Automation handles the workflows the rest can't reach. Kutasia bundles the agents into one unified AI workspace for SMBs that run on customer conversations. Pick the surface, we'll handle the rest.",
+        lead: "Every product on this page is built and run by the same team. Voice, chat, and WhatsApp agents share an integration spine. OpSo Smart, our digital business card, is free and live in seconds. Custom Automation handles the workflows the rest can't reach. Kutasia bundles the agents into one unified AI workspace for SMBs that run on customer conversations. Pick the surface, we'll handle the rest.",
         primaryCta: "See pricing",
         secondaryCta: "Book a discovery call",
       },
@@ -4905,10 +4905,10 @@ export const content = {
           {
             id: "verso",
             name: "OpSo Smart",
-            tagline: "Digital business card · free to start, live in seconds.",
-            body: "Build your own card free and publish in seconds. 20+ industry templates, link + QR, EU-hosted in Frankfurt. Premium adds a custom domain, NFC, and analytics; white-glove hand-design is optional. Replace paper cards without becoming Linktree.",
+            tagline: "Digital business card · free, live in seconds.",
+            body: "Build your own card free and publish in seconds. 20+ industry templates, share by link, QR, WhatsApp or email - no app for the receiver, editable anytime. EU-hosted in Frankfurt. Replace paper cards without becoming Linktree.",
             href: "/products/digital-card",
-            startingAt: "Free to start",
+            startingAt: "Free",
             badge: "Live",
           },
         ],
@@ -5251,7 +5251,7 @@ export const content = {
         {
           id: "verso",
           name: "OpSo Smart",
-          tagline: "Build your own digital business card, free to start",
+          tagline: "Build your own digital business card, free",
           href: "/products/digital-card",
           tiers: [
             {
@@ -5267,9 +5267,9 @@ export const content = {
               name: "Premium",
               setup: "€149 one-time",
               monthly: "€9/year hosting after year 1",
-              included: ["Everything in Free, badge removed", "Custom slug or your own domain", "NFC option", "Analytics (views + clicks)", "Lead capture + CRM webhook"],
+              included: ["Everything in Free, badge removed", "Custom slug or your own domain", "WhatsApp share button", "Analytics (views + clicks)", "Lead capture + CRM webhook"],
               overage: "",
-              forWhom: "Pros who want domain, NFC & analytics",
+              forWhom: "Pros who want a domain & analytics",
               isHighlighted: true,
             },
             {

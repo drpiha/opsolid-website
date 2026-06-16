@@ -189,9 +189,20 @@ reference cards; onboarding email sequence.
 - **PR3b (designs):** the fast `/card/new` flow now offers a 3-up starter design picker
   (Classic/Modern/Visual → ids 93/92/94), defaulting to Classic — replaces the silent single
   default. Verified `build` green.
+- **PR4 (MVP hero):** rewrote the OPSO SMART product-page hero + how-it-works across de/en/tr to
+  the free MVP (no metal card, no NFC, no Wallet, no hardware); repointed the primary CTA from the
+  in-page order form (`#order`) to the fast `/card/new` flow.
+- **PR5 (copy scrub):** removed every NFC / metal / Wallet / tap-to-share and every
+  premium / upgrade / "free-to-start" mention across de/en/tr — homepage chips, card landing
+  tagline+body, the "physical NFC card?" FAQ (reframed to "does the recipient need an app?"), meta
+  descriptions, products overview, and pricing-tier feature strings. Verified `tsc --noEmit` (the
+  locale-parity gate) green. Note: the €149/€299 card tiers exist only as data and are **not
+  rendered** under all-free (the only render site is the gated digital-card page; the voice page
+  pulls voice tiers only).
 
-**Still open (founder decision, §12):** repoint the primary "Create your card" / "Start free"
-marketing CTAs to `/card/new`, and the OPSO SMART (NFC) hero positioning.
+**Resolved this session:** OPSO SMART hero positioning — founder confirmed "no metal card, move to
+the new MVP." **Still open (§12):** session-ownership on the edit route (drop token-in-URL, 30-day);
+optional em-dash → hyphen sweep in card copy.
 
 ## 11. Files changed in this engagement
 
@@ -216,6 +227,14 @@ marketing CTAs to `/card/new`, and the OPSO SMART (NFC) hero positioning.
 **PR3b**
 - `src/app/[locale]/card/new/QuickCreatePage.tsx` (3-design starter picker)
 - `src/content/en.ts`, `src/content/de.ts`, `src/content/tr.ts` (design labels)
+
+**PR4**
+- `src/content/{en,de,tr}.ts` (`v2.digitalCard.hero` + `howItWorks` → MVP)
+- `src/app/[locale]/products/digital-card/DigitalCardPage.tsx` (hero CTA → `/card/new`)
+
+**PR5**
+- `src/content/{en,de,tr}.ts` (NFC/metal/Wallet/premium/"free-to-start" scrub across homepage,
+  card landing, FAQ, meta, products overview, pricing-tier strings)
 
 ## 12. Open questions for the founder
 

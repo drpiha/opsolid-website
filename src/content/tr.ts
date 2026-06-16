@@ -471,7 +471,7 @@ export const content: Content = {
           priceCadence: "kullanıma hazır · ürün başına fiyat",
           bullets: [
             "Kutasia — çok sektörlü müşteri platformu",
-            "Dijital Kartvizit — link, QR, opsiyonel NFC",
+            "Dijital Kartvizit — link, QR, WhatsApp, uygulama yok",
             "Dijital Resepsiyon — hizmet işletmeleri için AI resepsiyon",
             "Tüm ürünler doğrudan kullanıma hazır",
           ],
@@ -526,7 +526,7 @@ export const content: Content = {
       eyebrow: "ŞABLONLAR",
       heading: "Hazır 10 sektör şablonu",
       paragraph:
-        "Emlakçı, klinik, restoran, DJ, kuaför, e-ticaret, mimar, fitness — her sektöre özel 10 tap-to-share kart. Canlı önizleme için tıklayın.",
+        "Emlakçı, klinik, restoran, DJ, kuaför, e-ticaret, mimar, fitness — her sektöre özel, linkle paylaşılan 10 kart. Canlı önizleme için tıklayın.",
       ctaLabel: "Tüm şablonları gör",
       ctaHref: "/products/digital-card",
     },
@@ -1288,16 +1288,16 @@ export const content: Content = {
     items: [
       {
         name: "Dijital Kartvizit",
-        tagline: "Link · QR kod · opsiyonel NFC",
+        tagline: "Link · QR kod · WhatsApp · uygulama yok",
         description:
-          "Almanya'da barındırılan bir dijital kartvizit. Profilinizi link, QR kod veya opsiyonel NFC kart olarak paylaşın. Emlakçı, kuaför, klinik, restoran, fotoğrafçı gibi meslekler için sektör şablonları — hepsi GDPR-yerli.",
+          "Almanya'da barındırılan bir dijital kartvizit. Profilinizi link, QR kod, WhatsApp veya e-posta ile paylaşın - alıcının uygulamaya ihtiyacı yok ve kartı istediğiniz zaman düzenlersiniz. Emlakçı, kuaför, klinik, restoran, fotoğrafçı gibi meslekler için sektör şablonları — hepsi GDPR-yerli.",
         status: "Canlı",
         href: "/products/digital-card",
         externalUrl: "",
         icon: "idCard",
-        startingPrice: "€39 tek seferlik · ücretsiz katman mevcut",
+        startingPrice: "Ücretsiz",
         category: "Müşteriye yönelik",
-        stack: "Next.js · Hetzner · Apple Wallet · HubSpot",
+        stack: "Next.js · Hetzner · vCard · HubSpot",
       },
       {
         name: "Ses AI Ajanı",
@@ -1414,10 +1414,10 @@ export const content: Content = {
           "ücretsiz, saniyeler içinde canlı.",
         ],
         paragraph:
-          "Şablon seçin, bilgilerinizi girin, yayınlayın. Kartınız saniyeler içinde opsolid.de/c/adiniz adresinde canlı olur, başlangıç ücretsizdir. Özel alan adı, NFC veya analitik gerektiğinde yükseltin. Frankfurt'ta EU barındırma, GDPR-yerli, abonelik tuzağı yok.",
+          "Şablon seçin, bilgilerinizi girin, yayınlayın. Kartınız saniyeler içinde opsolid.de/c/adiniz adresinde canlı olur, ücretsizdir. Link, QR kod, WhatsApp veya e-posta ile paylaşın - alıcının uygulamaya ihtiyacı yok ve kartı istediğiniz zaman düzenlersiniz. Frankfurt'ta EU barındırma, GDPR-yerli.",
         primaryCta: "Ücretsiz kartımı oluştur",
         secondaryCta: "20 canlı şablonu gör",
-        tags: "OPSO SMART · LİNK · QR KOD · vCARD · EU BARINDIRMA · ÜCRETSİZ BAŞLA",
+        tags: "OPSO SMART · LİNK · QR KOD · WHATSAPP · vCARD · UYGULAMA YOK · ÜCRETSİZ",
         cardLabels: {
           name: "Alex Weber",
           role: "Ürün Tasarımcısı",
@@ -1546,7 +1546,7 @@ export const content: Content = {
             bullets: [
               "Free'deki her şey, rozet kaldırıldı",
               "Özel slug veya kendi alan adınız",
-              "NFC seçeneği",
+              "WhatsApp paylaşım butonu",
               "Analitik (görüntüleme + tıklama)",
               "Video bloğu + müşteri toplama / CRM",
               "Birden fazla kart",
@@ -1609,7 +1609,7 @@ export const content: Content = {
           },
           {
             quote:
-              "Verilerin AB'de kalması, hukuk ekibimizi ikna etti. Sırf bu bile yükseltmeye değerdi.",
+              "Verilerin AB'de kalması, hukuk ekibimizi ikna etti. Sırf bu bile bizim için belirleyici oldu.",
             name: "Marco Weber",
             role: "COO",
             company: "Münih sanayi grubu",
@@ -1659,9 +1659,9 @@ export const content: Content = {
               "Anında: kendiniz oluşturup saniyeler içinde yayınlayın. Sizin için tasarlamamızı mı istersiniz? White-glove'u seçin (48 saat).",
           },
           {
-            question: "Fiziksel NFC kart gönderiyor musunuz?",
+            question: "Alıcının bir uygulamaya ihtiyacı var mı?",
             answer:
-              "Premium'da mevcut. Ücretsiz kart link + QR olarak çalışır: müşteri QR'ınızı tarar veya linkinizi açar ve profilinizi görür, donanım gerekmez. NFC, yükselttikten sonra bir seçenektir.",
+              "Hayır. Kart link veya QR kod ile herhangi bir tarayıcıda açılır - kurulacak bir şey yok. Link, QR, WhatsApp veya e-posta ile paylaşın, alıcı tek dokunuşla profilinizi görür.",
           },
           {
             question: "Kartımı daha sonra kendim düzenleyebilir miyim?",
@@ -1681,7 +1681,7 @@ export const content: Content = {
           {
             question: "Ekibim için 10+ karta ihtiyacım var. Nasıl?",
             answer:
-              "Premium birden fazla kartı destekler. Daha büyük kurulumlar için white-glove'u seçin, ekip kurulumunu biz üstlenelim. info@opsolid.de adresine yazın.",
+              "Her kart ücretsiz, kişi başına bir tane oluşturun. Kendiniz kurmak istemediğiniz daha büyük bir kurulum için info@opsolid.de adresine yazın, yardımcı oluruz.",
           },
         ],
       },
@@ -2071,7 +2071,7 @@ export const content: Content = {
         title:
           "OpSo Smart — Ücretsiz dijital kartvizit, saniyeler içinde canlı | OpSolid",
         description:
-          "Dijital kartvizitinizi ücretsiz oluşturun ve saniyeler içinde yayınlayın — link, QR, vCard. EU barındırma (Frankfurt), GDPR-yerli. Premium; özel alan adı, NFC ve analitik ekler.",
+          "Dijital kartvizitinizi ücretsiz oluşturun ve saniyeler içinde yayınlayın — link, QR, WhatsApp, e-posta. Alıcıya uygulama gerekmez, istediğiniz zaman düzenlenir. EU barındırma (Frankfurt), GDPR-yerli.",
       },
     },
 
@@ -4865,12 +4865,12 @@ export const content: Content = {
     productsHub: {
       meta: {
         title: "Ürünler — Voice, OpSo Smart, Chat, WhatsApp, Booking, Email, Lead, Custom, Kutasia | OpSolid",
-        description: "Tek stüdyodan dokuz ürün: telefon, chat, WhatsApp, e-posta ve lead qualification için yapay zekâ ajanları, premium dijital kartvizit (OpSo Smart), özel workflow otomasyonu ve Kutasia — DACH ve Türkiye'deki KOBİ'ler için unified AI çalışma alanı. Her ürün şeffaf fiyatlı ve EU-hostlu.",
+        description: "Tek stüdyodan dokuz ürün: telefon, chat, WhatsApp, e-posta ve lead qualification için yapay zekâ ajanları, ücretsiz dijital kartvizit (OpSo Smart), özel workflow otomasyonu ve Kutasia — DACH ve Türkiye'deki KOBİ'ler için unified AI çalışma alanı. Her ürün şeffaf fiyatlı ve EU-hostlu.",
       },
       hero: {
         eyebrow: "[ ÜRÜNLER · 2026 ]",
         title: { pre: "Dokuz ürün, ", italic: "tek stüdyo", post: "" },
-        lead: "Bu sayfadaki her ürünü aynı ekip kuruyor ve işletiyor. Voice, chat ve WhatsApp ajanları aynı entegrasyon omurgasını paylaşır. Dijital kartvizitimiz OpSo Smart, başlangıçta ücretsizdir ve saniyeler içinde canlı olur. Custom Automation, geri kalanın ulaşamadığı workflow'ları halleder. Kutasia, ajanları tek bir unified AI çalışma alanında birleştirir — işi müşteri görüşmelerine bağlı KOBİ'ler için. Yüzeyi siz seçin, gerisini biz yaparız.",
+        lead: "Bu sayfadaki her ürünü aynı ekip kuruyor ve işletiyor. Voice, chat ve WhatsApp ajanları aynı entegrasyon omurgasını paylaşır. Dijital kartvizitimiz OpSo Smart, ücretsizdir ve saniyeler içinde canlı olur. Custom Automation, geri kalanın ulaşamadığı workflow'ları halleder. Kutasia, ajanları tek bir unified AI çalışma alanında birleştirir — işi müşteri görüşmelerine bağlı KOBİ'ler için. Yüzeyi siz seçin, gerisini biz yaparız.",
         primaryCta: "Fiyatları gör",
         secondaryCta: "Tanışma görüşmesi planla",
       },
@@ -4879,7 +4879,7 @@ export const content: Content = {
         heading: "Bizi hatırlatan iki ürün",
         items: [
           { id: "voice-agent", name: "Voice AI Agent", tagline: "Retell veya Vapi üzerinde 24/7 telefon resepsiyonu.", body: "Çok dilli telefon yanıtı, takvim senkronizasyonu, script bittiğinde insana devir. Hamburg taksi dispeçlerinde, Bavyera otellerinde ve Almanya çapında B2B service desk'lerinde canlı.", href: "/products/voice-agent", startingAt: "€1.500 setup + €299/ay'dan", badge: "Canlı" },
-          { id: "verso", name: "OpSo Smart", tagline: "Dijital kartvizit · başlangıçta ücretsiz, saniyeler içinde canlı.", body: "Kartınızı ücretsiz oluşturun ve saniyeler içinde yayınlayın. 20+ sektör şablonu, link + QR, Frankfurt'ta EU barındırma. Premium; özel alan adı, NFC ve analitik ekler; white-glove elle tasarım opsiyoneldir. Linktree olmadan kağıt kartviziti değiştirir.", href: "/products/digital-card", startingAt: "Başlangıçta ücretsiz", badge: "Canlı" },
+          { id: "verso", name: "OpSo Smart", tagline: "Dijital kartvizit · ücretsiz, saniyeler içinde canlı.", body: "Kartınızı ücretsiz oluşturun ve saniyeler içinde yayınlayın. 20+ sektör şablonu, link, QR, WhatsApp veya e-posta ile paylaşın - alıcıya uygulama gerekmez, istediğiniz zaman düzenlenir. Frankfurt'ta EU barındırma. Linktree olmadan kağıt kartviziti değiştirir.", href: "/products/digital-card", startingAt: "Ücretsiz", badge: "Canlı" },
         ],
       },
       grid: {
@@ -5220,7 +5220,7 @@ export const content: Content = {
         {
           id: "verso",
           name: "OpSo Smart",
-          tagline: "Dijital kartvizitinizi kendiniz oluşturun, başlangıçta ücretsiz",
+          tagline: "Dijital kartvizitinizi kendiniz oluşturun, ücretsiz",
           href: "/products/digital-card",
           tiers: [
             {
@@ -5236,9 +5236,9 @@ export const content: Content = {
               name: "Premium",
               setup: "€149 tek seferlik",
               monthly: "1. yıldan sonra €9/yıl hosting",
-              included: ["Free'deki her şey, rozet kaldırıldı", "Özel slug veya kendi alan adınız", "NFC seçeneği", "Analitik (görüntüleme + tıklama)", "Lead toplama + CRM webhook"],
+              included: ["Free'deki her şey, rozet kaldırıldı", "Özel slug veya kendi alan adınız", "WhatsApp paylaşım butonu", "Analitik (görüntüleme + tıklama)", "Lead toplama + CRM webhook"],
               overage: "",
-              forWhom: "Alan adı, NFC & analitik isteyen profesyoneller",
+              forWhom: "Alan adı & analitik isteyen profesyoneller",
               isHighlighted: true,
             },
             {

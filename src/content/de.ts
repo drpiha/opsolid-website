@@ -471,7 +471,7 @@ export const content: Content = {
           priceCadence: "direkt einsatzbereit · Preis pro Produkt",
           bullets: [
             "Kutasia — Multi-Branchen-Kundenplattform",
-            "Digital Business Card — Link, QR, optional NFC",
+            "Digital Business Card — Link, QR, WhatsApp, keine App",
             "Digital Reception — KI-Empfang für Service-Betriebe",
             "Jedes Produkt direkt einsatzbereit",
           ],
@@ -526,7 +526,7 @@ export const content: Content = {
       eyebrow: "VORLAGEN",
       heading: "10 Branchenvorlagen, sofort einsatzbereit",
       paragraph:
-        "Immobilien, Klinik, Restaurant, DJ, Barber, E-Commerce, Architekt, Fitness — 10 Tap-to-Share-Karten, pro Branche zugeschnitten. Zum Live-Vorschau klicken.",
+        "Immobilien, Klinik, Restaurant, DJ, Barber, E-Commerce, Architekt, Fitness — 10 Karten per Link teilbar, pro Branche zugeschnitten. Zum Live-Vorschau klicken.",
       ctaLabel: "Alle Vorlagen ansehen",
       ctaHref: "/products/digital-card",
     },
@@ -1288,16 +1288,16 @@ export const content: Content = {
     items: [
       {
         name: "Digitale Visitenkarte",
-        tagline: "Link · QR-Code · optionales NFC",
+        tagline: "Link · QR-Code · WhatsApp · keine App",
         description:
-          "Eine in Deutschland gehostete digitale Visitenkarte. Teilen Sie Ihr Profil per Link, QR-Code oder optionaler NFC-Karte. Branchenvorlagen für Immobilien, Salons, Kliniken, Restaurants, Fotografen und mehr — alle DSGVO-nativ.",
+          "Eine in Deutschland gehostete digitale Visitenkarte. Teilen Sie Ihr Profil per Link, QR-Code, WhatsApp oder E-Mail - der Empfänger braucht keine App, und Sie bearbeiten sie jederzeit. Branchenvorlagen für Immobilien, Salons, Kliniken, Restaurants, Fotografen und mehr — alle DSGVO-nativ.",
         status: "Live",
         href: "/products/digital-card",
         externalUrl: "",
         icon: "idCard",
-        startingPrice: "€39 einmalig · kostenlose Stufe verfügbar",
+        startingPrice: "Kostenlos",
         category: "Kundenkontakt",
-        stack: "Next.js · Hetzner · Apple Wallet · HubSpot",
+        stack: "Next.js · Hetzner · vCard · HubSpot",
       },
       {
         name: "Voice-KI-Agent",
@@ -1414,10 +1414,10 @@ export const content: Content = {
           "kostenlos, in Sekunden live.",
         ],
         paragraph:
-          "Vorlage wählen, Daten eintragen, veröffentlichen. Ihre Karte geht in Sekunden live unter opsolid.de/c/ihr-name, kostenlos zum Start. Upgrade, wenn Sie eigene Domain, NFC oder Analysen brauchen. EU-Hosting in Frankfurt, DSGVO-nativ, keine Abo-Fallen.",
+          "Vorlage wählen, Daten eintragen, veröffentlichen. Ihre Karte geht in Sekunden live unter opsolid.de/c/ihr-name, kostenlos. Teilen Sie sie per Link, QR-Code, WhatsApp oder E-Mail - der Empfänger braucht keine App, und Sie bearbeiten sie jederzeit. EU-Hosting in Frankfurt, DSGVO-nativ.",
         primaryCta: "Kostenlose Karte erstellen",
         secondaryCta: "20 Live-Vorlagen ansehen",
-        tags: "OPSO SMART · LINK · QR-CODE · vCARD · EU-HOSTING · KOSTENLOS STARTEN",
+        tags: "OPSO SMART · LINK · QR-CODE · WHATSAPP · vCARD · KEINE APP · KOSTENLOS",
         cardLabels: {
           name: "Alex Weber",
           role: "Produktdesigner",
@@ -1546,7 +1546,7 @@ export const content: Content = {
             bullets: [
               "Alles aus Free, Badge entfernt",
               "Eigener Slug oder eigene Domain",
-              "NFC-Option",
+              "WhatsApp-Teilen-Button",
               "Analysen (Aufrufe + Klicks)",
               "Video-Block + Lead-Erfassung / CRM",
               "Mehrere Karten",
@@ -1609,7 +1609,7 @@ export const content: Content = {
           },
           {
             quote:
-              "Dass die Daten in der EU bleiben, hat unser Legal-Team überzeugt. Allein das war das Upgrade wert.",
+              "Dass die Daten in der EU bleiben, hat unser Legal-Team überzeugt. Allein das hat den Ausschlag gegeben.",
             name: "Marco Weber",
             role: "COO",
             company: "Industrieunternehmen aus München",
@@ -1659,9 +1659,9 @@ export const content: Content = {
               "Sofort: selbst erstellen und in Sekunden veröffentlichen. Lieber von uns gestaltet? Wählen Sie White-Glove (48 Std.).",
           },
           {
-            question: "Versenden Sie eine physische NFC-Karte?",
+            question: "Braucht der Empfänger eine App?",
             answer:
-              "Verfügbar mit Premium. Die kostenlose Karte funktioniert als Link + QR: Der Kunde scannt Ihren QR-Code oder öffnet Ihren Link und sieht Ihr Profil, ohne Hardware. NFC ist eine Option nach dem Upgrade.",
+              "Nein. Die Karte öffnet sich in jedem Browser über Link oder QR-Code - nichts zu installieren. Teilen Sie sie per Link, QR, WhatsApp oder E-Mail, der Empfänger tippt einmal und sieht Ihr Profil.",
           },
           {
             question: "Kann ich meine Karte später selbst bearbeiten?",
@@ -1681,7 +1681,7 @@ export const content: Content = {
           {
             question: "Ich brauche 10+ Karten für mein Team. Wie?",
             answer:
-              "Premium unterstützt mehrere Karten. Für größere Rollouts wählen Sie White-Glove, dann übernehmen wir das Team-Setup. Schreiben Sie an info@opsolid.de.",
+              "Jede Karte ist kostenlos, also erstellen Sie eine pro Person. Für einen größeren Rollout, den Sie nicht selbst aufsetzen möchten, schreiben Sie an info@opsolid.de, wir helfen.",
           },
         ],
       },
@@ -2070,7 +2070,7 @@ export const content: Content = {
         title:
           "OpSo Smart — Kostenlose digitale Visitenkarte, in Sekunden live | OpSolid",
         description:
-          "Erstellen Sie Ihre digitale Visitenkarte kostenlos und veröffentlichen Sie sie in Sekunden — Link, QR, vCard. EU-Hosting (Frankfurt), DSGVO-nativ. Premium ergänzt eigene Domain, NFC und Analysen.",
+          "Erstellen Sie Ihre digitale Visitenkarte kostenlos und veröffentlichen Sie sie in Sekunden — Link, QR, WhatsApp, E-Mail. Keine App für den Empfänger, jederzeit bearbeitbar. EU-Hosting (Frankfurt), DSGVO-nativ.",
       },
     },
 
@@ -4864,12 +4864,12 @@ export const content: Content = {
     productsHub: {
       meta: {
         title: "Produkte — Voice, OpSo Smart, Chat, WhatsApp, Booking, Email, Lead, Custom, Kutasia | OpSolid",
-        description: "Neun Produkte aus einem Studio: KI-Agenten für Telefon, Chat, WhatsApp, E-Mail und Lead-Qualifizierung, Premium digitale Visitenkarten (OpSo Smart), Custom Workflow-Automatisierung und Kutasia — der unified KI-Workspace für KMU in DACH und der Türkei. Jedes Produkt transparent bepreist und EU-gehostet.",
+        description: "Neun Produkte aus einem Studio: KI-Agenten für Telefon, Chat, WhatsApp, E-Mail und Lead-Qualifizierung, kostenlose digitale Visitenkarten (OpSo Smart), Custom Workflow-Automatisierung und Kutasia — der unified KI-Workspace für KMU in DACH und der Türkei. Jedes Produkt transparent bepreist und EU-gehostet.",
       },
       hero: {
         eyebrow: "[ PRODUKTE · 2026 ]",
         title: { pre: "Neun Produkte, ", italic: "ein Studio", post: "" },
-        lead: "Jedes Produkt auf dieser Seite wird vom selben Team gebaut und betrieben. Voice-, Chat- und WhatsApp-Agenten teilen sich eine Integrationsspine. OpSo Smart, unsere digitale Visitenkarte, ist kostenlos zum Start und in Sekunden live. Custom Automation übernimmt die Workflows, die der Rest nicht erreicht. Kutasia bündelt die Agenten in einem unified KI-Workspace für KMU, deren Geschäft auf Kundengesprächen läuft. Wählen Sie die Oberfläche, wir kümmern uns um den Rest.",
+        lead: "Jedes Produkt auf dieser Seite wird vom selben Team gebaut und betrieben. Voice-, Chat- und WhatsApp-Agenten teilen sich eine Integrationsspine. OpSo Smart, unsere digitale Visitenkarte, ist kostenlos und in Sekunden live. Custom Automation übernimmt die Workflows, die der Rest nicht erreicht. Kutasia bündelt die Agenten in einem unified KI-Workspace für KMU, deren Geschäft auf Kundengesprächen läuft. Wählen Sie die Oberfläche, wir kümmern uns um den Rest.",
         primaryCta: "Preise ansehen",
         secondaryCta: "Discovery-Call buchen",
       },
@@ -4878,7 +4878,7 @@ export const content: Content = {
         heading: "Die zwei Produkte, für die man uns kennt",
         items: [
           { id: "voice-agent", name: "Voice AI Agent", tagline: "24/7 Telefonempfang auf Retell oder Vapi.", body: "Mehrsprachige Telefonbeantwortung, Kalender-Sync, Übergabe an Menschen, wenn das Skript endet. Live in Hamburger Taxi-Dispatches, bayerischen Hotels und B2B-Servicedesks deutschlandweit.", href: "/products/voice-agent", startingAt: "ab €299/Mon. + €1.500 Setup", badge: "Live" },
-          { id: "verso", name: "OpSo Smart", tagline: "Digitale Visitenkarte · kostenlos zum Start, in Sekunden live.", body: "Erstellen Sie Ihre Karte kostenlos und veröffentlichen Sie in Sekunden. 20+ Branchen-Templates, Link + QR, EU-Hosting in Frankfurt. Premium ergänzt eigene Domain, NFC und Analysen; White-Glove-Handgestaltung ist optional. Ersetzt Papierkarten, ohne zu Linktree zu werden.", href: "/products/digital-card", startingAt: "Kostenlos zum Start", badge: "Live" },
+          { id: "verso", name: "OpSo Smart", tagline: "Digitale Visitenkarte · kostenlos, in Sekunden live.", body: "Erstellen Sie Ihre Karte kostenlos und veröffentlichen Sie in Sekunden. 20+ Branchen-Templates, teilbar per Link, QR, WhatsApp oder E-Mail - keine App für den Empfänger, jederzeit bearbeitbar. EU-Hosting in Frankfurt. Ersetzt Papierkarten, ohne zu Linktree zu werden.", href: "/products/digital-card", startingAt: "Kostenlos", badge: "Live" },
         ],
       },
       grid: {
@@ -5219,7 +5219,7 @@ export const content: Content = {
         {
           id: "verso",
           name: "OpSo Smart",
-          tagline: "Erstellen Sie Ihre digitale Visitenkarte selbst, kostenlos zum Start",
+          tagline: "Erstellen Sie Ihre digitale Visitenkarte selbst, kostenlos",
           href: "/products/digital-card",
           tiers: [
             {
@@ -5235,9 +5235,9 @@ export const content: Content = {
               name: "Premium",
               setup: "€149 einmalig",
               monthly: "€9/Jahr Hosting ab Jahr 2",
-              included: ["Alles aus Free, Badge entfernt", "Eigener Slug oder eigene Domain", "NFC-Option", "Analysen (Aufrufe + Klicks)", "Lead-Erfassung + CRM-Webhook"],
+              included: ["Alles aus Free, Badge entfernt", "Eigener Slug oder eigene Domain", "WhatsApp-Teilen-Button", "Analysen (Aufrufe + Klicks)", "Lead-Erfassung + CRM-Webhook"],
               overage: "",
-              forWhom: "Profis, die Domain, NFC & Analysen wollen",
+              forWhom: "Profis, die Domain & Analysen wollen",
               isHighlighted: true,
             },
             {
