@@ -4,13 +4,11 @@ import { useTheme, THEMES, type Theme } from "@/context/ThemeContext";
 
 const LABELS: Record<Theme, string> = {
   light: "☼",   // ☼
-  hybrid: "◐",  // ◐
   dark: "☾",    // ☾
 };
 
 const TITLES: Record<Theme, string> = {
   light: "Light",
-  hybrid: "Hybrid",
   dark: "Dark",
 };
 

@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 /**
- * OpSolid v2 — industrial-luxury tri-theme (light / hybrid / dark).
+ * OpSolid v2 — industrial-luxury bi-theme (light / dark).
  * Canonical tokens live in src/styles/opsolid-tokens.css (CSS variables,
  * swapped by [data-theme]). Tailwind maps those vars so `bg-bg-1`,
  * `text-ink-200`, `border-line-firm` etc. follow the active theme.

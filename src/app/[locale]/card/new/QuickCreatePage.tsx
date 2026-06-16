@@ -263,12 +263,22 @@ export function QuickCreatePage() {
                         : "border-neutral-300 hover:border-copper/50"
                     }`}
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={`/images/templates/card-${d.id}.png`}
-                      alt=""
-                      className="aspect-[3/5] w-full rounded-xl bg-neutral-100 object-cover"
-                    />
+                    <span className="relative block aspect-[3/5] w-full overflow-hidden rounded-xl bg-neutral-100">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={`/images/templates/card-${d.id}.png`}
+                        alt={q[d.labelKey]}
+                        loading="lazy"
+                        className="absolute inset-0 h-full w-full object-cover"
+                        onError={(e) => {
+                          (e.currentTarget as HTMLImageElement).style.display = "none";
+                        }}
+                      />
+                      {/* Fallback shown behind the image if the thumbnail 404s. */}
+                      <span className="pointer-events-none absolute inset-0 flex items-center justify-center px-2 text-center text-xs font-medium text-neutral-400">
+                        {q[d.labelKey]}
+                      </span>
+                    </span>
                     <span className="text-xs font-medium text-neutral-700">
                       {q[d.labelKey]}
                     </span>

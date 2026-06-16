@@ -251,18 +251,19 @@ export function CardEditClient(props: Props) {
     file: File,
     kind: "photo" | "logo"
   ): Promise<string | null> => {
-    // Match the storage adapter's hard cap (5 MB) — modern phone cameras shoot
-    // 3–5 MB JPEGs, so the previous 2 MB client gate silently rejected every
-    // camera upload. Server still validates via STORAGE_LIMITS.maxBytes.
-    if (file.size > 5 * 1024 * 1024) {
-      setErrorMsg(form.uploadTooLarge);
-      return null;
-    }
-    // Shrink in the browser before upload — faster upload + fast public render
-    // (logos keep PNG transparency; photos become compact JPEGs).
+    // Shrink in the browser BEFORE any size gate — a 6–12 MB phone photo should
+    // be auto-downscaled, never rejected. downscaleImage never throws (it falls
+    // back to the original File on any error). Logos keep PNG transparency;
+    // photos become compact JPEGs.
     const optimized = await downscaleImage(file, {
       maxEdge: kind === "logo" ? 512 : 1600,
     });
+    // Only reject if even the shrunk result is over the server cap — rare (a
+    // 1600px JPEG is typically ~200–400 KB), but guards pathological inputs.
+    if (optimized.size > 5 * 1024 * 1024) {
+      setErrorMsg(form.uploadTooLarge);
+      return null;
+    }
     const f = new FormData();
     f.append("file", optimized);
     f.append("kind", kind);

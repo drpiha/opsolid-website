@@ -142,7 +142,6 @@
     box-shadow: var(--rim-top);
   }
   :root[data-theme="light"] .trust-pill,
-  :root[data-theme="hybrid"] .trust-pill,
   :root:not([data-theme="dark"]) .trust-pill {
     background: rgba(21,18,15,0.03);
   }

@@ -90,13 +90,22 @@ interface SlideModel {
   catalog?: CardTemplateDef;
 }
 
+// The product page showcases only a few generic starter designs; the full
+// 90+ sector lineup stays available via the create flow's detailed form. Keep
+// these ids in sync with the /card/new starter picker (universal layouts).
+const GENERIC_TEMPLATE_IDS = [93, 92, 94, 95]; // Pure Swiss · Noir Luxury · Vivid Bold · Editorial
+
 function buildSlides(): SlideModel[] {
-  return plannedLineup.map((p) => ({
-    id: p.id,
-    planned: p,
-    registry: templateRegistry[p.id],
-    catalog: getTemplateById(p.id),
-  }));
+  const rank = new Map(GENERIC_TEMPLATE_IDS.map((id, i) => [id, i] as const));
+  return plannedLineup
+    .filter((p) => rank.has(p.id))
+    .sort((a, b) => (rank.get(a.id) ?? 0) - (rank.get(b.id) ?? 0))
+    .map((p) => ({
+      id: p.id,
+      planned: p,
+      registry: templateRegistry[p.id],
+      catalog: getTemplateById(p.id),
+    }));
 }
 
 // -----------------------------------------------------------------------------
@@ -283,16 +292,19 @@ export function TemplateGallery({
           </div>
         )}
 
-        {/* Sector filter pills — refined: rounded-full, hairline borders, mono-label uppercase. */}
-        <SectorPills
-          slides={allSlides}
-          active={sectorFilter}
-          onChange={setSectorFilter}
-          allLabel={L("sectorAll", "All")}
-          labelFor={(sec) =>
-            L(SECTOR_TRANSLATION_KEY[sec], sec.replace(/^[a-z]/, (c) => c.toUpperCase()))
-          }
-        />
+        {/* Sector filter pills — only meaningful with the full lineup. Hidden
+            when the page shows the curated generic starter set. */}
+        {allSlides.length > 6 && (
+          <SectorPills
+            slides={allSlides}
+            active={sectorFilter}
+            onChange={setSectorFilter}
+            allLabel={L("sectorAll", "All")}
+            labelFor={(sec) =>
+              L(SECTOR_TRANSLATION_KEY[sec], sec.replace(/^[a-z]/, (c) => c.toUpperCase()))
+            }
+          />
+        )}
 
         {/* Carousel viewport */}
         <div

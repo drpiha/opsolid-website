@@ -24,10 +24,9 @@
 
 /* Theme-specific overall opacity */
 :root[data-theme="light"]  .ambient-backdrop[data-ready="1"] .ambient-svg { opacity: 0.55; }
-:root[data-theme="hybrid"] .ambient-backdrop[data-ready="1"] .ambient-svg { opacity: 0.65; }
 :root[data-theme="dark"]   .ambient-backdrop[data-ready="1"] .ambient-svg { opacity: 0.85; }
-/* Default (no [data-theme]) fallback — treat as hybrid */
-:root:not([data-theme])    .ambient-backdrop[data-ready="1"] .ambient-svg { opacity: 0.65; }
+/* Default (no [data-theme]) fallback — treat as light */
+:root:not([data-theme])    .ambient-backdrop[data-ready="1"] .ambient-svg { opacity: 0.55; }
 
 .ambient-backdrop[data-ready="0"] .ambient-svg { opacity: 0 !important; }
 
@@ -68,9 +67,8 @@
 @media (max-width: 767px) {
   .amb-blob { animation: none !important; }
   :root[data-theme="light"]  .ambient-backdrop[data-ready="1"] .ambient-svg { opacity: 0.40; }
-  :root[data-theme="hybrid"] .ambient-backdrop[data-ready="1"] .ambient-svg { opacity: 0.50; }
   :root[data-theme="dark"]   .ambient-backdrop[data-ready="1"] .ambient-svg { opacity: 0.65; }
-  :root:not([data-theme])    .ambient-backdrop[data-ready="1"] .ambient-svg { opacity: 0.50; }
+  :root:not([data-theme])    .ambient-backdrop[data-ready="1"] .ambient-svg { opacity: 0.40; }
 }
 
 /* Accessibility: honor reduced-motion. */

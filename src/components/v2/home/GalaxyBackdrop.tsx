@@ -29,7 +29,7 @@ const FOCAL_LENGTH = 320;
 const TILT_MAX = 0.5;
 const TILT_EASE = 0.07;
 
-type ThemeKey = "light" | "hybrid" | "dark";
+type ThemeKey = "light" | "dark";
 
 // Light register — graphite ink + saturated teal microdots on the
 // concrete ground. Pushed harder than before because particles on a
@@ -44,17 +44,6 @@ const PALETTE_LIGHT: Palette = [
   [20, 184, 166, 1.0],
 ] as const;
 
-// Hybrid (twilight) register — bright cream + saturated teal on
-// deep blue-graphite. Galaxy reads as "actual space" here.
-const PALETTE_HYBRID: Palette = [
-  [255, 255, 255, 0.95],
-  [248, 250, 252, 0.7],
-  [226, 232, 240, 0.55],
-  [203, 213, 225, 0.4],
-  [94, 234, 212, 0.85],
-  [45, 212, 191, 0.95],
-] as const;
-
 // Dark register — ice-white + bright teal on near-black. Strongest.
 const PALETTE_DARK: Palette = [
   [255, 255, 255, 1.0],
@@ -66,16 +55,15 @@ const PALETTE_DARK: Palette = [
 ] as const;
 
 function getInitialTheme(): ThemeKey {
-  if (typeof document === "undefined") return "hybrid";
+  if (typeof document === "undefined") return "light";
   const t = document.documentElement.dataset.theme;
-  if (t === "dark" || t === "light" || t === "hybrid") return t;
-  return "hybrid";
+  if (t === "dark" || t === "light") return t;
+  return "light";
 }
 
 function paletteFor(theme: ThemeKey): Palette {
   if (theme === "dark") return PALETTE_DARK;
-  if (theme === "light") return PALETTE_LIGHT;
-  return PALETTE_HYBRID;
+  return PALETTE_LIGHT;
 }
 
 function seedStars(width: number, height: number): Star[] {

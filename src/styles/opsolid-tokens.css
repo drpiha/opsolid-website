@@ -93,10 +93,10 @@
 }
 
 /* ==============================================================
-   HYBRID (default) — warm cocoa paper page, ivory cards, ink text
+   LIGHT (default) — warm cocoa paper page, ivory cards, ink text
    ============================================================== */
 :root,
-:root[data-theme="hybrid"] {
+:root[data-theme="light"] {
   --bg-0: #E8DECC;
   --bg-1: #F4EFE6;        /* PAGE */
   --bg-2: #FAF6EF;
@@ -144,52 +144,6 @@
   color-scheme: light;
 }
 
-/* ==============================================================
-   LIGHT — clean, cool refined paper
-   ============================================================== */
-:root[data-theme="light"] {
-  --bg-0: #DCD7CC;
-  --bg-1: #FAFAF7;        /* PAGE — neutral paper */
-  --bg-2: #F4F3EE;
-  --bg-3: #FFFFFF;
-  --bg-4: #F8F7F2;
-  --bg-5: #ECEAE3;
-
-  --ink-100: #15120F;
-  --ink-200: #3A3530;
-  --ink-300: #6B6660;
-  --ink-400: #9A9591;
-  --ink-500: #BFB9B0;
-
-  --line-soft: rgba(21,18,15,0.04);
-  --line:      rgba(21,18,15,0.08);
-  --line-firm: rgba(21,18,15,0.14);
-  --line-hot:  rgba(194,121,64,0.40);
-
-  --bloom-sm: 0 0 8px rgba(194,121,64,0.30);
-  --bloom-md: 0 0 18px rgba(194,121,64,0.22), 0 0 6px rgba(194,121,64,0.30);
-  --bloom-lg: 0 0 36px rgba(194,121,64,0.18), 0 0 14px rgba(194,121,64,0.25);
-
-  --depth-1: 0 1px 1px rgba(21,18,15,0.05), 0 1px 2px rgba(21,18,15,0.03);
-  --depth-2: 0 2px 4px rgba(21,18,15,0.06), 0 6px 12px rgba(21,18,15,0.05);
-  --depth-3: 0 6px 14px rgba(21,18,15,0.08), 0 20px 40px rgba(21,18,15,0.06);
-  --depth-4: 0 12px 28px rgba(21,18,15,0.10), 0 40px 80px rgba(21,18,15,0.08);
-  --depth-5: 0 24px 48px rgba(21,18,15,0.12), 0 80px 120px rgba(21,18,15,0.10);
-
-  --rim-top: inset 0 1px 0 rgba(255,255,255,0.7);
-  --rim-top-strong: inset 0 1px 0 rgba(255,255,255,0.9);
-  --rim-bottom: inset 0 -1px 0 rgba(21,18,15,0.06);
-
-  --accent-signal:        #3F8B7C;
-  --accent-signal-strong: #2D6B5F;
-  --accent-signal-soft:   rgba(63,139,124,0.10);
-  --accent-signal-line:   rgba(63,139,124,0.40);
-  --bloom-signal-sm: 0 0 8px rgba(63,139,124,0.30);
-  --bloom-signal-md: 0 0 18px rgba(63,139,124,0.22), 0 0 6px rgba(63,139,124,0.30);
-  --bloom-signal-lg: 0 0 36px rgba(63,139,124,0.18), 0 0 14px rgba(63,139,124,0.25);
-
-  color-scheme: light;
-}
 
 /* ==============================================================
    CARD EDITOR — forced light surface
@@ -302,7 +256,6 @@ body {
 }
 /* Grain lighter on bright themes — paper texture, not TV static */
 :root[data-theme="light"] .grain::before,
-:root[data-theme="hybrid"] .grain::before,
 :root:not([data-theme="dark"]) .grain::before {
   opacity: 0.035;
   mix-blend-mode: multiply;
@@ -357,7 +310,6 @@ h4, .h4 {
 }
 /* Soften the drop-shadow on light themes so letters don't look sooty */
 :root[data-theme="light"] .metallic-copper,
-:root[data-theme="hybrid"] .metallic-copper,
 :root:not([data-theme="dark"]) .metallic-copper {
   filter: drop-shadow(0 1px 0 rgba(21,18,15,0.15));
 }
@@ -375,7 +327,6 @@ h4, .h4 {
   filter: drop-shadow(0 1px 0 rgba(0,0,0,0.5));
 }
 :root[data-theme="light"] .metallic-brass,
-:root[data-theme="hybrid"] .metallic-brass,
 :root:not([data-theme="dark"]) .metallic-brass {
   filter: drop-shadow(0 1px 0 rgba(21,18,15,0.18));
 }
@@ -408,7 +359,6 @@ p { margin: 0; color: var(--ink-200); }
 .meta-hot { color: var(--copper-300); }
 /* Copper-200 is too pale on paper — drop one step darker on light themes */
 :root[data-theme="light"] .meta-hot,
-:root[data-theme="hybrid"] .meta-hot,
 :root:not([data-theme="dark"]) .meta-hot {
   color: var(--copper-600);
 }
@@ -492,12 +442,10 @@ p { margin: 0; color: var(--ink-200); }
 }
 /* On light themes the ghost variant needs an ink-tinted tint, not white alpha */
 :root[data-theme="light"] .btn-ghost,
-:root[data-theme="hybrid"] .btn-ghost,
 :root:not([data-theme="dark"]) .btn-ghost {
   background: rgba(21,18,15,0.03);
 }
 :root[data-theme="light"] .btn-ghost:hover,
-:root[data-theme="hybrid"] .btn-ghost:hover,
 :root:not([data-theme="dark"]) .btn-ghost:hover {
   background: rgba(21,18,15,0.06);
 }
@@ -521,7 +469,6 @@ p { margin: 0; color: var(--ink-200); }
   box-shadow: var(--rim-top);
 }
 :root[data-theme="light"] .chip,
-:root[data-theme="hybrid"] .chip,
 :root:not([data-theme="dark"]) .chip {
   background: rgba(21,18,15,0.03);
 }
@@ -531,7 +478,6 @@ p { margin: 0; color: var(--ink-200); }
   background: rgba(194,121,64,0.07);
 }
 :root[data-theme="light"] .chip-hot,
-:root[data-theme="hybrid"] .chip-hot,
 :root:not([data-theme="dark"]) .chip-hot {
   color: var(--copper-700);
   background: rgba(194,121,64,0.10);
@@ -563,7 +509,6 @@ p { margin: 0; color: var(--ink-200); }
               box-shadow var(--dur-fast) var(--ease-snap);
 }
 :root[data-theme="light"] .field,
-:root[data-theme="hybrid"] .field,
 :root:not([data-theme="dark"]) .field {
   background: #FFFFFF;
   box-shadow: inset 0 1px 0 rgba(21,18,15,0.04);
@@ -573,7 +518,6 @@ p { margin: 0; color: var(--ink-200); }
   box-shadow: inset 0 1px 0 rgba(0,0,0,0.25), 0 0 0 3px rgba(194,121,64,0.2);
 }
 :root[data-theme="light"] .field:focus,
-:root[data-theme="hybrid"] .field:focus,
 :root:not([data-theme="dark"]) .field:focus {
   box-shadow: inset 0 1px 0 rgba(21,18,15,0.04), 0 0 0 3px rgba(194,121,64,0.2);
 }

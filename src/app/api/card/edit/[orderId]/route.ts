@@ -19,6 +19,13 @@ import { CardDataSchema, OrderStatus } from "@/lib/validation";
 import { EditTokenError, requireEditToken } from "@/lib/auth/edit-token";
 import { validateManualSlug, isSlugAvailable } from "@/lib/slug";
 import { getTemplateById } from "@/config/card-templates";
+import { getSiteUrl } from "@/lib/stripe";
+import { sendCustomerEmail } from "@/lib/email/send";
+import { normalizeLocale } from "@/lib/email/shell";
+import {
+  renderCardLiveHtml,
+  renderCardLiveText,
+} from "@/lib/email/templates/card-live";
 
 export const runtime = "nodejs";
 
@@ -205,6 +212,41 @@ export async function PATCH(
           : (designerHint ?? "Customer edited card content"),
       },
     });
+
+    // Notify the owner that their card was updated — fire-and-forget, mirrors
+    // the create flow. Reuses the card-live template (public + edit links) with
+    // an "updated" subject. Wrapped so a render/SMTP failure can never fail an
+    // already-persisted save.
+    try {
+      const updatedSlug = nextSlug ?? order.slug;
+      if (order.contactEmail && updatedSlug && order.editToken) {
+        const loc = normalizeLocale(order.locale);
+        const updatedSubject =
+          loc === "de"
+            ? "Ihre Karte wurde aktualisiert"
+            : loc === "tr"
+              ? "Kartınız güncellendi"
+              : "Your card was updated";
+        const liveInput = {
+          orderId: order.id,
+          contactName: order.contactName || data.cardData.name || "",
+          cardUrl: `${getSiteUrl()}/c/${updatedSlug}`,
+          editToken: order.editToken,
+          locale: loc,
+          eventUrl: null,
+        };
+        void sendCustomerEmail({
+          to: order.contactEmail,
+          subject: updatedSubject,
+          html: renderCardLiveHtml(liveInput),
+          text: renderCardLiveText(liveInput),
+        }).catch((err) =>
+          console.error("[card/edit] update email failed:", err),
+        );
+      }
+    } catch (err) {
+      console.error("[card/edit] update email dispatch threw (non-fatal):", err);
+    }
 
     return NextResponse.json({
       ok: true,

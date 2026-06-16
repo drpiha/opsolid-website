@@ -25,11 +25,8 @@ body { background: var(--bg-1); color: var(--ink-200); overflow-x: hidden; }
   box-shadow: var(--rim-top), var(--depth-3);
 }
 /* Paper themes — warm translucent header chrome instead of graphite glass */
-:root[data-theme="hybrid"] .os-header-inner,
+:root[data-theme="light"] .os-header-inner,
 :root:not([data-theme="dark"]):not([data-theme="light"]) .os-header-inner {
-  background: rgba(244,239,230,0.78);
-}
-:root[data-theme="light"] .os-header-inner {
   background: rgba(250,250,247,0.82);
 }
 .os-brand {
@@ -64,18 +61,15 @@ body { background: var(--bg-1); color: var(--ink-200); overflow-x: hidden; }
    Hover stays on rgba(0,0,0,...) instead of white film so it darkens (not
    lightens) the cream pill. Active stays copper but the deeper 700 shade
    reads better on cream. */
-:root[data-theme="hybrid"] .os-nav-link,
 :root[data-theme="light"] .os-nav-link,
 :root:not([data-theme="dark"]) .os-nav-link {
   color: var(--ink-200);
 }
-:root[data-theme="hybrid"] .os-nav-link:hover,
 :root[data-theme="light"] .os-nav-link:hover,
 :root:not([data-theme="dark"]) .os-nav-link:hover {
   color: var(--ink-100);
   background: rgba(21,18,15,0.05);
 }
-:root[data-theme="hybrid"] .os-nav-link.is-active,
 :root[data-theme="light"] .os-nav-link.is-active,
 :root:not([data-theme="dark"]) .os-nav-link.is-active {
   color: var(--copper-700);
@@ -90,13 +84,11 @@ body { background: var(--bg-1); color: var(--ink-200); overflow-x: hidden; }
   color: var(--ink-300); cursor: pointer;
 }
 .os-lang-switch:hover { color: var(--ink-100); border-color: var(--line-firm); }
-:root[data-theme="hybrid"] .os-lang-switch,
 :root[data-theme="light"] .os-lang-switch,
 :root:not([data-theme="dark"]) .os-lang-switch {
   color: var(--ink-200);
   border-color: var(--line-firm);
 }
-:root[data-theme="hybrid"] .os-lang-switch:hover,
 :root[data-theme="light"] .os-lang-switch:hover,
 :root:not([data-theme="dark"]) .os-lang-switch:hover {
   color: var(--ink-100);
@@ -113,7 +105,6 @@ body { background: var(--bg-1); color: var(--ink-200); overflow-x: hidden; }
   background: rgba(255,255,255,0.04);
   border: 1px solid var(--line);
 }
-:root[data-theme="hybrid"] .os-theme-switch,
 :root[data-theme="light"] .os-theme-switch,
 :root:not([data-theme="dark"]) .os-theme-switch {
   background: rgba(21,18,15,0.035);
@@ -142,17 +133,14 @@ body { background: var(--bg-1); color: var(--ink-200); overflow-x: hidden; }
   background: rgba(194,121,64,0.12);
   box-shadow: inset 0 0 0 1px rgba(194,121,64,0.20);
 }
-:root[data-theme="hybrid"] .os-theme-switch button,
 :root[data-theme="light"] .os-theme-switch button,
 :root:not([data-theme="dark"]) .os-theme-switch button {
   color: var(--ink-200);
 }
-:root[data-theme="hybrid"] .os-theme-switch button:hover,
 :root[data-theme="light"] .os-theme-switch button:hover,
 :root:not([data-theme="dark"]) .os-theme-switch button:hover {
   color: var(--ink-100);
 }
-:root[data-theme="hybrid"] .os-theme-switch button.is-active,
 :root[data-theme="light"] .os-theme-switch button.is-active,
 :root:not([data-theme="dark"]) .os-theme-switch button.is-active {
   color: var(--copper-700);
@@ -514,23 +502,19 @@ body { background: var(--bg-1); color: var(--ink-200); overflow-x: hidden; }
    --ink-300 chip text washes out. Repaint the container border + active
    tint to copper and bump chip text to --ink-200 so DE/EN/TR stays legible
    on the cream/light pill. */
-:root[data-theme="hybrid"] .os-desktop-locale,
 :root[data-theme="light"] .os-desktop-locale,
 :root:not([data-theme="dark"]) .os-desktop-locale {
   background: rgba(21,18,15,0.04);
   border-color: var(--line-firm);
 }
-:root[data-theme="hybrid"] .os-desktop-locale-chip,
 :root[data-theme="light"] .os-desktop-locale-chip,
 :root:not([data-theme="dark"]) .os-desktop-locale-chip {
   color: var(--ink-200);
 }
-:root[data-theme="hybrid"] .os-desktop-locale-chip:hover,
 :root[data-theme="light"] .os-desktop-locale-chip:hover,
 :root:not([data-theme="dark"]) .os-desktop-locale-chip:hover {
   color: var(--ink-100);
 }
-:root[data-theme="hybrid"] .os-desktop-locale-chip.is-active,
 :root[data-theme="light"] .os-desktop-locale-chip.is-active,
 :root:not([data-theme="dark"]) .os-desktop-locale-chip.is-active {
   color: var(--copper-700);
@@ -1366,14 +1350,12 @@ button.os-cap:focus-visible .os-cap-affordance,
   }
 }
 
-/* Light / hybrid: softer surfaces, deeper copper for glyph + arrow */
-[data-theme="light"]  .os-process-card-glyph,
-[data-theme="hybrid"] .os-process-card-glyph {
+/* Light: softer surfaces, deeper copper for glyph + arrow */
+[data-theme="light"]  .os-process-card-glyph {
   background: var(--bg-2);
   color: var(--copper-600);
 }
-[data-theme="light"]  .os-process-rail-arrow,
-[data-theme="hybrid"] .os-process-rail-arrow {
+[data-theme="light"]  .os-process-rail-arrow {
   color: var(--copper-600);
 }
 

@@ -75,7 +75,14 @@ export function PhotoEditor({
   // Mouse-wheel zoom — natural on desktop, ignored on touch (pinch-to-zoom
   // would conflict with the pan gesture).
   const onWheel = useCallback((e: React.WheelEvent<HTMLDivElement>) => {
-    e.preventDefault();
+    // React may attach wheel as a passive listener, where preventDefault()
+    // throws "Unable to preventDefault inside passive event listener" — guard
+    // it so zooming never raises an error.
+    try {
+      e.preventDefault();
+    } catch {
+      /* passive listener — safe to ignore */
+    }
     const delta = e.deltaY > 0 ? -0.1 : 0.1;
     setPosition((p) => ({
       ...p,

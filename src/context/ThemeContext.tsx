@@ -9,9 +9,9 @@ import {
   useState,
 } from "react";
 
-export type Theme = "light" | "hybrid" | "dark";
-export const THEMES: readonly Theme[] = ["light", "hybrid", "dark"] as const;
-export const DEFAULT_THEME: Theme = "hybrid";
+export type Theme = "light" | "dark";
+export const THEMES: readonly Theme[] = ["light", "dark"] as const;
+export const DEFAULT_THEME: Theme = "light";
 export const THEME_STORAGE_KEY = "opsolid-theme";
 
 interface ThemeContextValue {

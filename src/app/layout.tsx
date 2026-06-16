@@ -140,8 +140,8 @@ export const viewport: Viewport = {
 
 // Applied inline in <head> before hydration so the first paint already has
 // the correct palette — avoids flash-of-wrong-theme. Mirrors
-// src/context/ThemeContext.tsx (DEFAULT_THEME = "hybrid", key = "opsolid-theme").
-const NO_FLASH_THEME_SCRIPT = `(function(){try{var t=localStorage.getItem('opsolid-theme');if(t!=='light'&&t!=='hybrid'&&t!=='dark'){t='hybrid';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','hybrid');}})();`;
+// src/context/ThemeContext.tsx (DEFAULT_THEME = "light", key = "opsolid-theme").
+const NO_FLASH_THEME_SCRIPT = `(function(){try{var t=localStorage.getItem('opsolid-theme');if(t==='hybrid'){t='light';localStorage.setItem('opsolid-theme','light');}if(t!=='light'&&t!=='dark'){t='light';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();`;
 
 export default function RootLayout({
   children,
