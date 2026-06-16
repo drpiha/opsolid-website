@@ -52,7 +52,7 @@ import ContentSection from "./sections/ContentSection";
 import ContactSection from "./sections/ContactSection";
 import PublishSection from "./sections/PublishSection";
 import type { FormState } from "./sections/types";
-import { CardStrengthPanel } from "@/components/dashboard/CardStrengthPanel";
+import { CardCompletenessBar } from "@/components/cards/edit/CardCompletenessBar";
 import { FeedbackPanel } from "@/components/dashboard/FeedbackPanel";
 
 interface Props {
@@ -87,11 +87,21 @@ interface Props {
   cardLocale: "de" | "en" | "tr";
 }
 
+// Small labelled separator that introduces each progressive-disclosure tier
+// (Temel / Daha fazla / Gelişmiş).
+function TierHeading({ label }: { label: string }) {
+  return (
+    <div className="flex items-center gap-3 pt-2">
+      <span className="mono-label text-[10px] uppercase tracking-wider text-ink-300">
+        {label}
+      </span>
+      <span className="h-px flex-1 bg-line" />
+    </div>
+  );
+}
+
 export function CardEditClient(props: Props) {
   const { t, locale } = useLocale();
-  // The coach/strength panel only ships de/en/tr copy; fall back to en.
-  const coachLocale: "de" | "en" | "tr" =
-    locale === "de" || locale === "tr" ? locale : "en";
   const edit = t.products.digitalCard.edit;
   const cancelCopy = t.products.digitalCard.cancel;
   const form = t.products.digitalCard.order.form;
@@ -126,6 +136,9 @@ export function CardEditClient(props: Props) {
   const [visibility, setVisibility] = useState<"public" | "unlisted" | "private">(props.visibility);
   const [openToNetworking, setOpenToNetworking] = useState(props.openToNetworking);
   const [acceptingClients, setAcceptingClients] = useState(props.acceptingClients);
+  // WS-2 — transient "you uploaded, now Save to publish" cue, shown after a
+  // photo/logo upload until the next save or revert.
+  const [showUploadCue, setShowUploadCue] = useState(false);
 
   // A4 — dirty state tracking. Stores the form snapshot at mount (or last
   // Optimistic-concurrency token — rebased after every successful save.
@@ -193,6 +206,7 @@ export function CardEditClient(props: Props) {
     setOpenToNetworking(snap.openToNetworking);
     setAcceptingClients(snap.acceptingClients);
     setCardLocale(snap.cardLocale);
+    setShowUploadCue(false);
   };
 
   // B7 — expand/collapse sections. Only "person-brand" open by default.
@@ -285,6 +299,7 @@ export function CardEditClient(props: Props) {
       return null;
     }
     const j = (await res.json()) as { path?: string };
+    if (j.path) setShowUploadCue(true);
     return j.path ?? null;
   };
 
@@ -437,6 +452,7 @@ export function CardEditClient(props: Props) {
         cardLocale,
       };
       setFormState("saved");
+      setShowUploadCue(false);
       setTimeout(() => setFormState("idle"), 1500);
     } catch {
       setErrorMsg(edit.savedError);
@@ -513,7 +529,23 @@ export function CardEditClient(props: Props) {
           className="grid gap-10 pb-28 pt-6 md:pt-10 lg:grid-cols-[1fr_minmax(320px,420px)] lg:h-full lg:overflow-hidden lg:pt-0"
         >
           {/* ================ LEFT ================ */}
-          <div className="space-y-10 lg:h-full lg:overflow-y-auto lg:pr-3 lg:pb-28 lg:pt-6">
+          <div className="space-y-8 lg:h-full lg:overflow-y-auto lg:pr-3 lg:pb-28 lg:pt-6">
+            {/* WS-3 — compact, live completeness bar pinned to the top. */}
+            <CardCompletenessBar
+              cardData={cardData}
+              photoPath={photoPath}
+              logoPath={logoPath}
+              onNavigate={handleNavigateToSection}
+            />
+
+            {/* WS-2 — "you uploaded, now Save to publish" cue. */}
+            {showUploadCue && isDirty && (
+              <div className="flex items-center gap-2 rounded-2xl border border-copper-500/30 bg-copper-500/[0.06] px-4 py-2.5 text-sm text-ink">
+                <Check size={15} className="shrink-0 text-copper-600" />
+                <span>{edit.uploadCue}</span>
+              </div>
+            )}
+
             {/* Non-published status hint — subdued chip (no inline colors) */}
             {props.status !== "PUBLISHED" && (
               <span className="inline-flex items-center gap-1.5 rounded-full border border-line bg-neutral-100 px-3 py-1 text-xs text-ink-300">
@@ -538,51 +570,8 @@ export function CardEditClient(props: Props) {
               />
             )}
 
-            {/* Album pending approvals — visitor uploads awaiting owner action */}
-            {props.slug && props.status === "PUBLISHED" && (
-              <AlbumPendingPanel
-                slug={props.slug}
-                editToken={props.editToken}
-              />
-            )}
-
-            {/* Analytics + CRM panels — grouped as one "performance" unit (Goal B8).
-                `-space-y-px` collapses the gap so adjacent borders merge
-                into one hairline, reading as a single grouped card. */}
-            {props.status === "PUBLISHED" && (
-              <div className="-space-y-px overflow-hidden rounded-2xl">
-                {props.slug && (
-                  <AnalyticsPanel
-                    orderId={props.orderId}
-                    editToken={props.editToken}
-                    onShare={() => setShareOpen(true)}
-                  />
-                )}
-                <LeadsPanel
-                  orderId={props.orderId}
-                  editToken={props.editToken}
-                />
-              </div>
-            )}
-
-            {/* Contact-readonly block removed — the same fields are editable
-                directly in the card-content section below, so a separate
-                read-only mirror is just visual noise. */}
-
-            {/* "Kartını güçlendir" — merged score + full tappable suggestion
-                list (replaces the old Profilstärke + Coach-Tipps widgets). */}
-            <CardStrengthPanel
-              orderId={props.orderId}
-              editToken={props.editToken}
-              locale={coachLocale}
-              onNavigateToSection={handleNavigateToSection}
-            />
-
-            {/* Phase 8.4 — feedback collection toggle + aggregate view */}
-            <FeedbackPanel
-              orderId={props.orderId}
-              editToken={props.editToken}
-            />
+            {/* Temel — the essentials, open by default (parity with create). */}
+            <TierHeading label={edit.tierBasic} />
 
             {/* B7 — collapsible sections, lifted to standalone components in
                 A8.2 (sections/*Section.tsx). State stays here in the
@@ -608,6 +597,9 @@ export function CardEditClient(props: Props) {
               toggleSection={toggleSection}
             />
 
+            {/* Daha fazla — content + branding, collapsed by default. */}
+            <TierHeading label={edit.tierMore} />
+
             <ContentSection
               cardData={cardData}
               setCard={setCard}
@@ -628,6 +620,9 @@ export function CardEditClient(props: Props) {
               openSections={openSections}
               toggleSection={toggleSection}
             />
+
+            {/* Gelişmiş — publishing, visibility, language, performance. */}
+            <TierHeading label={edit.tierAdvanced} />
 
             <PublishSection
               errorMsg={errorMsg}
@@ -667,6 +662,60 @@ export function CardEditClient(props: Props) {
                 <p className="mt-4 text-xs text-ink-200">{edit.shareNotReady}</p>
               )}
             </div>
+
+            {/* Performans & CRM — moved out of the primary edit flow into a
+                collapsed group (the full home is the Manage page, linked in the
+                header). Published cards only. */}
+            {props.status === "PUBLISHED" && (
+              <section id="section-performance">
+                <button
+                  type="button"
+                  onClick={() => toggleSection("performance")}
+                  className="flex w-full items-center justify-between gap-3 text-left"
+                  aria-expanded={openSections.has("performance")}
+                >
+                  <h2 className="text-sm font-semibold text-ink">
+                    {edit.performanceTitle}
+                  </h2>
+                  <ChevronDown
+                    size={18}
+                    className={[
+                      "text-ink-200 shrink-0 motion-safe:transition-transform motion-safe:duration-200",
+                      openSections.has("performance") ? "rotate-180" : "",
+                    ].join(" ")}
+                    aria-hidden="true"
+                  />
+                </button>
+                <div
+                  hidden={!openSections.has("performance")}
+                  className="mt-3 space-y-6"
+                >
+                  {props.slug && (
+                    <AlbumPendingPanel
+                      slug={props.slug}
+                      editToken={props.editToken}
+                    />
+                  )}
+                  <div className="-space-y-px overflow-hidden rounded-2xl">
+                    {props.slug && (
+                      <AnalyticsPanel
+                        orderId={props.orderId}
+                        editToken={props.editToken}
+                        onShare={() => setShareOpen(true)}
+                      />
+                    )}
+                    <LeadsPanel
+                      orderId={props.orderId}
+                      editToken={props.editToken}
+                    />
+                  </div>
+                  <FeedbackPanel
+                    orderId={props.orderId}
+                    editToken={props.editToken}
+                  />
+                </div>
+              </section>
+            )}
 
             {props.hasSubscription && (
               <div className="mt-10 pt-6 border-t border-line-firm">

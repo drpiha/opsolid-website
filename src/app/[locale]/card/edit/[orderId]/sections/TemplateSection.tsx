@@ -21,6 +21,15 @@ interface TemplateSectionProps extends SectionToggle {
   setTemplateId: (id: number) => void;
 }
 
+// Same three clean, sector-neutral starter designs the /card/new flow shows
+// (ids 92-94). Surfaced first so the editor reads as simply as create; the
+// full 90+ catalog is one tap away behind "All designs".
+const STARTER_DESIGNS = [
+  { id: 93, labelKey: "designClassic" }, // Pure Swiss
+  { id: 92, labelKey: "designModern" }, // Noir Luxury
+  { id: 94, labelKey: "designVisual" }, // Vivid Bold
+] as const;
+
 const SECTOR_LABELS: Record<PlannedSector, string> = {
   "real-estate": "Immobilien · Real Estate",
   lawyer: "Recht · Legal",
@@ -72,7 +81,14 @@ export default function TemplateSection({
 }: TemplateSectionProps) {
   const { t } = useLocale();
   const edit = t.products.digitalCard.edit as Record<string, string>;
+  const q = t.card.quickCreate;
   const open = openSections.has("template");
+
+  // Full catalog (the 90+ sector accordion) stays collapsed behind "All
+  // designs" so the default editor view shows only the 3 starter designs.
+  const [showAll, setShowAll] = useState(
+    () => !STARTER_DESIGNS.some((d) => d.id === templateId),
+  );
 
   // Per-sector collapse state — default to the active template's sector open.
   const [openGroups, setOpenGroups] = useState<Set<PlannedSector>>(() => {
@@ -150,16 +166,85 @@ export default function TemplateSection({
             "Bir tasarıma dokun — önizleme anında değişir, kaydedince yayına alınır."}
         </p>
 
-        {/* Search input */}
-        <input
-          type="search"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder={edit.templateSearch ?? "Sektör veya şablon ara…"}
-          className="field mb-3 w-full text-sm"
-        />
+        {/* Starter designs — the three generic layouts, shown first so the
+            editor's design step matches /card/new. */}
+        <div className="grid grid-cols-3 gap-2.5">
+          {STARTER_DESIGNS.map((d) => {
+            const selected = d.id === templateId;
+            const label = q[d.labelKey];
+            return (
+              <button
+                key={d.id}
+                type="button"
+                onClick={() => setTemplateId(d.id)}
+                aria-pressed={selected}
+                className={[
+                  "flex flex-col items-center gap-1.5 rounded-2xl border p-2 transition-colors",
+                  selected
+                    ? "border-copper ring-2 ring-copper/40"
+                    : "border-line hover:border-copper/50",
+                ].join(" ")}
+              >
+                <span className="relative block aspect-[3/5] w-full overflow-hidden rounded-xl bg-bg-2">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={thumb(d.id)}
+                    alt={label}
+                    loading="lazy"
+                    className="absolute inset-0 h-full w-full object-cover"
+                    onError={(e) => {
+                      (e.currentTarget as HTMLImageElement).style.display = "none";
+                    }}
+                  />
+                  <span className="pointer-events-none absolute inset-0 flex items-center justify-center px-2 text-center text-[11px] font-medium text-ink-300">
+                    {label}
+                  </span>
+                  {selected && (
+                    <span className="absolute right-1.5 top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-copper text-white shadow">
+                      <Check size={12} strokeWidth={3} />
+                    </span>
+                  )}
+                </span>
+                <span className="text-[11px] font-medium text-ink">{label}</span>
+              </button>
+            );
+          })}
+        </div>
 
-        {visibleGroups.map(({ sector, items }) => {
+        {/* All designs — reveals the full sector catalog (was the default). */}
+        <button
+          type="button"
+          onClick={() => setShowAll((v) => !v)}
+          className="flex w-full items-center justify-between rounded-xl border border-line bg-bg-0 px-3 py-2 text-sm font-medium text-ink-200 hover:border-copper/40"
+          aria-expanded={showAll}
+        >
+          <span>{edit.allDesigns ?? "Tüm tasarımlar"}</span>
+          <ChevronDown
+            size={16}
+            className={[
+              "text-ink-300 motion-safe:transition-transform motion-safe:duration-150",
+              showAll ? "rotate-180" : "",
+            ].join(" ")}
+            aria-hidden="true"
+          />
+        </button>
+
+        {showAll && (
+          <div className="space-y-4">
+            <p className="text-xs text-ink-300">
+              {edit.allDesignsHint ?? "Tüm tasarımları sektöre göre incele."}
+            </p>
+
+            {/* Search input */}
+            <input
+              type="search"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder={edit.templateSearch ?? "Sektör veya şablon ara…"}
+              className="field mb-1 w-full text-sm"
+            />
+
+            {visibleGroups.map(({ sector, items }) => {
           const expanded = isSectorExpanded(sector);
           return (
             <div key={sector}>
@@ -229,7 +314,9 @@ export default function TemplateSection({
               )}
             </div>
           );
-        })}
+            })}
+          </div>
+        )}
       </div>
     </section>
   );
