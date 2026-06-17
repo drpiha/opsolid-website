@@ -12,5 +12,9 @@ export default function LoginPage({
 }: {
   params: { locale: string };
 }) {
-  return <LoginClient locale={params.locale} />;
+  // Only surface the Google button when OAuth is actually configured on the
+  // server — otherwise it leads to a 503 "OAuth not configured". Magic-link /
+  // password stay available regardless.
+  const googleEnabled = !!process.env.GOOGLE_CLIENT_ID;
+  return <LoginClient locale={params.locale} googleEnabled={googleEnabled} />;
 }

@@ -19,7 +19,7 @@ import { NextResponse } from "next/server";
 import { consumeMagicLink } from "@/lib/auth/magic-link";
 import { issueSession } from "@/lib/auth/session";
 import { signAccessToken } from "@/lib/auth/jwt";
-import { setRefreshCookie } from "@/lib/auth/cookies";
+import { setRefreshCookie, clearRefreshCookie } from "@/lib/auth/cookies";
 import { hitWindow, clientIp } from "@/lib/auth/rate-limit";
 import { hashIp } from "@/lib/auth/ip-hash";
 import { captureAuthEvent } from "../../_helpers";
@@ -38,10 +38,16 @@ const RATE_MAX = 30;
 const RATE_WINDOW_MS = 60 * 60 * 1000;
 
 function loginErrorRedirect(): NextResponse {
-  return NextResponse.redirect(
+  const res = NextResponse.redirect(
     `${SITE_URL}/login?error=invalid_or_expired_link`,
     { status: 302 },
   );
+  // A failed / expired / already-consumed link must not leave a stale session
+  // cookie behind — a lingering opsolid_refresh is what made login "work in
+  // incognito but not in a normal tab". Clear it so the next attempt is clean.
+  clearRefreshCookie(res);
+  res.headers.set("Cache-Control", "no-store, max-age=0");
+  return res;
 }
 
 export async function GET(req: Request) {
@@ -97,6 +103,8 @@ export async function GET(req: Request) {
     status: 302,
   });
   setRefreshCookie(res, session.refreshToken);
+  // Don't let any intermediary cache this one-time verify response.
+  res.headers.set("Cache-Control", "no-store, max-age=0");
   // Clear the ref cookie regardless of redeem outcome.
   if (refCookie) {
     res.headers.append(

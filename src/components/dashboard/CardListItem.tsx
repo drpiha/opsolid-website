@@ -73,6 +73,12 @@ export function CardListItem({ card, locale }: Props) {
     : `/${locale}/card/edit/${card.id}`;
   const isDeleted =
     card.status === "CANCELLED" || card.status === "REFUNDED";
+  // Show the card's OWN render (real name/photo/company via the OG image) for
+  // published cards; fall back to the generic template thumbnail otherwise.
+  const previewSrc =
+    card.slug && card.status === "PUBLISHED"
+      ? `/c/${card.slug}/og.png`
+      : `/images/templates/card-${card.templateId}.png`;
 
   // Close action menu on outside click
   useEffect(() => {
@@ -174,11 +180,12 @@ export function CardListItem({ card, locale }: Props) {
         {/* Thumbnail */}
         <div className="relative h-36 w-full overflow-hidden bg-bg-2">
           <Image
-            src={`/images/templates/card-${card.templateId}.png`}
-            alt={`Template ${card.templateId} preview`}
+            src={previewSrc}
+            alt={displayName}
             fill
+            unoptimized
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 320px"
-            className="object-cover"
+            className="object-cover object-top"
             onError={(e) => {
               // Fall back to copper placeholder on 404
               (e.currentTarget as HTMLImageElement).style.display = "none";
@@ -234,18 +241,6 @@ export function CardListItem({ card, locale }: Props) {
                   role="menu"
                   className="absolute right-0 top-8 z-10 w-44 rounded-xl border border-line bg-bg-1 py-1 shadow-lifted"
                 >
-                  {/* Edit */}
-                  <Link
-                    href={editHref}
-                    role="menuitem"
-                    className="flex items-center gap-2 px-3.5 py-2.5 text-sm text-ink transition-colors hover:bg-bg-2"
-                    onClick={() => setMenuOpen(false)}
-                    aria-label={`${d.cardItem.editCta} ${displayName}`}
-                  >
-                    <PencilIcon />
-                    {d.cardItem.editCta}
-                  </Link>
-
                   {/* Share */}
                   {publicUrl && (
                     <button
@@ -288,6 +283,17 @@ export function CardListItem({ card, locale }: Props) {
               {d.cardItem.viewCountLabel}: {card._count.views}
             </span>
           </div>
+
+          {/* Primary action — visible Edit button (no longer buried in the menu) */}
+          {!isDeleted && (
+            <Link
+              href={editHref}
+              aria-label={`${d.cardItem.editCta} ${displayName}`}
+              className="mt-2 inline-flex w-full items-center justify-center rounded-full bg-copper-500 px-4 py-2 text-sm font-semibold text-white transition-colors hover:bg-copper-600"
+            >
+              {d.cardItem.editCta}
+            </Link>
+          )}
         </div>
       </div>
 
@@ -353,20 +359,6 @@ function DotsIcon() {
       aria-hidden="true"
     >
       <path d="M10 3a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 8.5a1.5 1.5 0 110 3 1.5 1.5 0 010-3zM10 14a1.5 1.5 0 110 3 1.5 1.5 0 010-3z" />
-    </svg>
-  );
-}
-
-function PencilIcon() {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className="h-4 w-4 text-ink-400"
-      aria-hidden="true"
-    >
-      <path d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z" />
     </svg>
   );
 }

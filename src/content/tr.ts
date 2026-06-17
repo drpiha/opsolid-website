@@ -2030,6 +2030,7 @@ export const content: Content = {
         expandSection: "Bölümü aç",
         collapseSection: "Bölümü kapat",
         // WS-2 / WS-3 — sadeleştirilmiş editör
+        backToCards: "Kartlarım",
         tierBasic: "Temel",
         tierMore: "Daha fazla",
         tierAdvanced: "Gelişmiş",
@@ -3407,6 +3408,7 @@ export const content: Content = {
       journal: "Bilgi",
       contact: "İletişim",
       cta: "Ücretsiz görüşme planla",
+      account: "Kartlarım",
       servicesDropdown: {
         "ki-beratung": { title: "AI danışmanlığı", sub: "Use cases · risk · yol haritası" },
         prozessautomatisierung: { title: "Süreç otomasyonu", sub: "Workflow · API · otomasyon" },

@@ -8,6 +8,7 @@
 // thumbnails. Visual markup matches CardEditClient pre-split byte-for-byte.
 // =============================================================================
 
+import { useState } from "react";
 import { ChevronDown, Loader2, Pencil, Upload } from "lucide-react";
 import { Input, Textarea } from "@/components/ui/Input";
 import { ProfileExtrasFields } from "@/components/cards/order-form/ProfileExtrasFields";
@@ -60,6 +61,9 @@ export default function PersonBrandSection({
   const { t } = useLocale();
   const edit = t.products.digitalCard.edit;
   const form = t.products.digitalCard.order.form;
+  // Parity with /card/new: secondary contact fields live behind a "Daha fazla"
+  // reveal so the always-open essentials match the create flow one-for-one.
+  const [moreOpen, setMoreOpen] = useState(false);
 
   return (
     <section id="section-person-brand">
@@ -93,6 +97,7 @@ export default function PersonBrandSection({
           <legend className="text-heading-sm text-ink">
             {form.cardSection}
           </legend>
+          {/* Temel — matches /card/new: name / title / company / email / phone. */}
           <div className="grid gap-4 md:grid-cols-2">
             <Input
               label={form.cardName}
@@ -110,11 +115,6 @@ export default function PersonBrandSection({
               onChange={(e) => setCard("company", e.target.value)}
             />
             <Input
-              label={form.cardWebsite}
-              value={cardData.website ?? ""}
-              onChange={(e) => setCard("website", e.target.value)}
-            />
-            <Input
               type="email"
               label={form.cardEmail}
               value={cardData.email ?? ""}
@@ -126,31 +126,60 @@ export default function PersonBrandSection({
               value={cardData.phone ?? ""}
               onChange={(e) => setCard("phone", e.target.value)}
             />
-            <Input
-              type="tel"
-              label={form.cardWhatsapp}
-              value={cardData.whatsapp ?? ""}
-              onChange={(e) => setCard("whatsapp", e.target.value)}
-            />
-            <Input
-              label={form.cardAddress}
-              value={cardData.address ?? ""}
-              onChange={(e) => setCard("address", e.target.value)}
-            />
           </div>
-          <Textarea
-            label={form.cardBio}
-            value={cardData.bio ?? ""}
-            onChange={(e) => setCard("bio", e.target.value)}
-            rows={3}
-          />
-          {/* Tagline + location chip — owner-controlled (2026-06 purge of
-              hardcoded template personas). */}
-          <ProfileExtrasFields
-            cardData={cardData}
-            setField={setCard}
-            L={(k, fb) => (form as Record<string, string>)[k] ?? fb}
-          />
+
+          {/* Daha fazla — secondary contact fields, collapsed (create parity). */}
+          <button
+            type="button"
+            onClick={() => setMoreOpen((o) => !o)}
+            className="flex w-full items-center justify-between rounded-xl border border-line bg-bg-0 px-3 py-2 text-sm font-medium text-ink-200 hover:border-copper/40"
+            aria-expanded={moreOpen}
+          >
+            <span>{edit.tierMore}</span>
+            <ChevronDown
+              size={16}
+              className={[
+                "text-ink-300 motion-safe:transition-transform motion-safe:duration-150",
+                moreOpen ? "rotate-180" : "",
+              ].join(" ")}
+              aria-hidden="true"
+            />
+          </button>
+          {moreOpen && (
+            <div className="space-y-4">
+              <div className="grid gap-4 md:grid-cols-2">
+                <Input
+                  label={form.cardWebsite}
+                  value={cardData.website ?? ""}
+                  onChange={(e) => setCard("website", e.target.value)}
+                />
+                <Input
+                  type="tel"
+                  label={form.cardWhatsapp}
+                  value={cardData.whatsapp ?? ""}
+                  onChange={(e) => setCard("whatsapp", e.target.value)}
+                />
+                <Input
+                  label={form.cardAddress}
+                  value={cardData.address ?? ""}
+                  onChange={(e) => setCard("address", e.target.value)}
+                />
+              </div>
+              <Textarea
+                label={form.cardBio}
+                value={cardData.bio ?? ""}
+                onChange={(e) => setCard("bio", e.target.value)}
+                rows={3}
+              />
+              {/* Tagline + location chip — owner-controlled (2026-06 purge of
+                  hardcoded template personas). */}
+              <ProfileExtrasFields
+                cardData={cardData}
+                setField={setCard}
+                L={(k, fb) => (form as Record<string, string>)[k] ?? fb}
+              />
+            </div>
+          )}
         </fieldset>
 
         {/* Socials */}

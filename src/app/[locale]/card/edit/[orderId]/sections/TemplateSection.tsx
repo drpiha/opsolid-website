@@ -273,7 +273,7 @@ export default function TemplateSection({
 
               {/* Template grid — renders only when expanded */}
               {expanded && (
-                <div className="mt-2 grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+                <div className="mt-2 grid grid-cols-3 gap-2 sm:grid-cols-4">
                   {items.map((tpl) => {
                     const selected = tpl.id === templateId;
                     return (
@@ -282,29 +282,30 @@ export default function TemplateSection({
                         type="button"
                         onClick={() => setTemplateId(tpl.id)}
                         aria-pressed={selected}
+                        title={tpl.name}
                         className={[
-                          "group relative overflow-hidden rounded-xl border bg-bg-0 text-left transition-all",
+                          "group relative overflow-hidden rounded-lg border bg-bg-0 text-left transition-all",
                           selected
                             ? "border-copper ring-2 ring-copper/40"
                             : "border-line hover:border-copper/50 hover:shadow-md",
                         ].join(" ")}
                       >
-                        <div className="flex aspect-[16/10] w-full items-center justify-center bg-bg-2 p-2">
+                        <div className="relative aspect-[3/4] w-full overflow-hidden bg-bg-2">
                           {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={thumb(tpl.id)}
                             alt={tpl.name}
                             loading="lazy"
                             decoding="async"
-                            className="h-full w-full object-contain"
+                            className="absolute inset-0 h-full w-full object-cover object-top"
                           />
                         </div>
                         {selected && (
-                          <span className="absolute right-1.5 top-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-copper text-white shadow">
-                            <Check size={12} strokeWidth={3} />
+                          <span className="absolute right-1 top-1 flex h-5 w-5 items-center justify-center rounded-full bg-copper text-white shadow">
+                            <Check size={11} strokeWidth={3} />
                           </span>
                         )}
-                        <p className="truncate px-2 py-1.5 text-[11px] font-medium text-ink">
+                        <p className="truncate px-1.5 py-1 text-[10px] font-medium text-ink">
                           {tpl.name}
                         </p>
                       </button>

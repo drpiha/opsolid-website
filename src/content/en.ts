@@ -2050,6 +2050,7 @@ export const content = {
         expandSection: "Expand section",
         collapseSection: "Collapse section",
         // WS-2 / WS-3 — simplified progressive editor
+        backToCards: "My cards",
         tierBasic: "Basics",
         tierMore: "More details",
         tierAdvanced: "Advanced",
@@ -3422,6 +3423,7 @@ export const content = {
       journal: "Insights",
       contact: "Contact",
       cta: "Book a call",
+      account: "My cards",
       servicesDropdown: {
         "ki-beratung": { title: "AI consulting", sub: "Use cases · risk · roadmap" },
         prozessautomatisierung: { title: "Process automation", sub: "Workflows · API · automation" },

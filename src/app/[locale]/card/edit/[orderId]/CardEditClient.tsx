@@ -22,6 +22,7 @@ import {
   AlertCircle,
   Check,
   Camera,
+  ArrowLeft,
   ChevronDown,
   ChevronUp,
   X,
@@ -483,8 +484,15 @@ export function CardEditClient(props: Props) {
     <div className="editor-light">
     {/* A6 — Sticky top header: card name + status + slug + view live */}
     <header className="sticky top-0 z-20 border-b border-line bg-bg-0/90 backdrop-blur-md">
-      <div className="mx-auto flex max-w-2xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
         <div className="min-w-0 flex-1">
+          <a
+            href={`/${locale}/dashboard/cards`}
+            className="mb-0.5 inline-flex items-center gap-1 text-[11px] font-medium text-ink-300 transition-colors hover:text-ink"
+          >
+            <ArrowLeft size={13} aria-hidden="true" />
+            {edit.backToCards}
+          </a>
           <h1 className="truncate font-serif text-xl text-ink">
             {cardData.name || edit.untitledCard}
           </h1>
@@ -522,14 +530,14 @@ export function CardEditClient(props: Props) {
       </div>
     </header>
 
-    <main className="min-h-screen bg-neutral-50 overflow-x-hidden lg:h-[calc(100vh-5rem)] lg:min-h-0 lg:overflow-hidden">
-      <div className="max-w-full px-4 md:px-6 lg:px-8 lg:h-full">
+    <main className="min-h-screen bg-neutral-50 overflow-x-hidden">
+      <div className="mx-auto max-w-6xl px-4 md:px-6 lg:px-8">
         <form
           onSubmit={handleSubmit}
-          className="grid gap-10 pb-28 pt-6 md:pt-10 lg:grid-cols-[1fr_minmax(320px,420px)] lg:h-full lg:overflow-hidden lg:pt-0"
+          className="grid items-start gap-8 pb-28 pt-6 md:pt-10 lg:grid-cols-[1fr_minmax(300px,380px)]"
         >
           {/* ================ LEFT ================ */}
-          <div className="space-y-8 lg:h-full lg:overflow-y-auto lg:pr-3 lg:pb-28 lg:pt-6">
+          <div className="min-w-0 space-y-8">
             {/* WS-3 — compact, live completeness bar pinned to the top. */}
             <CardCompletenessBar
               cardData={cardData}
@@ -746,8 +754,8 @@ export function CardEditClient(props: Props) {
             )}
           </div>
 
-          {/* ================ RIGHT: preview ================ */}
-          <div className="lg:h-full lg:overflow-y-auto lg:pb-6 lg:pt-6">
+          {/* ================ RIGHT: preview (sticky, single page scroll) ====== */}
+          <div className="lg:sticky lg:top-20 lg:self-start lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto lg:pb-6">
             <p className="text-eyebrow mb-2 uppercase text-ink-200">
               {form.previewLabel}
             </p>

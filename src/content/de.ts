@@ -2030,6 +2030,7 @@ export const content: Content = {
         expandSection: "Bereich öffnen",
         collapseSection: "Bereich schließen",
         // WS-2 / WS-3 — vereinfachter Editor
+        backToCards: "Meine Karten",
         tierBasic: "Basis",
         tierMore: "Mehr Details",
         tierAdvanced: "Erweitert",
@@ -3406,6 +3407,7 @@ export const content: Content = {
       journal: "Wissen",
       contact: "Kontakt",
       cta: "Erstgespräch buchen",
+      account: "Meine Karten",
       servicesDropdown: {
         "ki-beratung": { title: "KI-Beratung", sub: "Use Cases · Risiko · Roadmap" },
         prozessautomatisierung: { title: "Prozessautomatisierung", sub: "Workflows · API · Automation" },

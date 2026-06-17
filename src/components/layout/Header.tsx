@@ -170,6 +170,12 @@ export function Header() {
             <ThemeToggle />
           </div>
           <Link
+            href="/dashboard/cards"
+            className="os-nav-link hidden md:inline-flex"
+          >
+            {navLabels.account}
+          </Link>
+          <Link
             href="/contact"
             className="btn btn-primary btn-sm hidden md:inline-flex"
             style={{ padding: "7px 14px" }}
@@ -235,6 +241,16 @@ export function Header() {
                         </li>
                       );
                     })}
+                    <li className="os-mobile-item">
+                      <Dialog.Close asChild>
+                        <Link href="/dashboard/cards" className="os-mobile-link">
+                          <span className="os-mobile-link-label">
+                            {navLabels.account}
+                          </span>
+                          <span aria-hidden="true" className="os-mobile-arrow">→</span>
+                        </Link>
+                      </Dialog.Close>
+                    </li>
                   </ul>
 
                   <div className="os-mobile-cta-wrap">
