@@ -55,7 +55,7 @@ function detectDriver(): StorageDriver {
 }
 
 const MAX_BYTES = 5 * 1024 * 1024; // 5 MB per file (was 2 MB before premium upgrade)
-const MAX_VIDEO_BYTES = 30 * 1024 * 1024; // 30 MB for short self-hosted clips
+const MAX_VIDEO_BYTES = 60 * 1024 * 1024; // 60 MB — enough for a ~60s self-hosted clip
 
 export const STORAGE_LIMITS = {
   maxBytes: MAX_BYTES,
@@ -63,7 +63,7 @@ export const STORAGE_LIMITS = {
   /** Self-hosted video cap. Kept modest on purpose — long/large files belong
    *  on YouTube/Vimeo via videoUrl. Paired with a client-side duration limit. */
   maxVideoBytes: MAX_VIDEO_BYTES,
-  maxVideoBytesHuman: "30 MB",
+  maxVideoBytesHuman: "60 MB",
   /** Accepted video MIME types for the kind="video" upload lane. */
   allowedVideo: new Set([
     "video/mp4",
