@@ -846,6 +846,7 @@ export function CardEditClient(props: Props) {
         <ShareDrawer
           slug={currentSlug}
           context="owner"
+          v={Date.parse(props.version) || undefined}
           open={shareOpen}
           onClose={() => setShareOpen(false)}
         />

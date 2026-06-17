@@ -31,14 +31,22 @@ export interface ShareDrawerProps {
   onClose: () => void;
   /** "owner" on the edit page, "visitor" on the public card page. */
   context?: "owner" | "visitor";
+  /** Card version stamp (order.updatedAt epoch). Appended to the shared URL as
+   *  `?v=…` so WhatsApp/Facebook treat each card revision as a fresh URL and
+   *  re-crawl the Open Graph preview instead of serving a stale (often empty)
+   *  cached result. The page's canonical/og:url stays clean — only the link we
+   *  hand out for sharing carries the stamp. */
+  v?: string | number;
 }
 
 const SITE = "https://opsolid.de";
 
-export function ShareDrawer({ slug, open, onClose, context = "visitor" }: ShareDrawerProps) {
+export function ShareDrawer({ slug, open, onClose, context = "visitor", v }: ShareDrawerProps) {
   const { t } = useLocale();
   const s = t.card.share;
-  const cardUrl = `${SITE}/c/${slug}`;
+  const versionQuery =
+    v != null && String(v).length > 0 ? `?v=${encodeURIComponent(String(v))}` : "";
+  const cardUrl = `${SITE}/c/${slug}${versionQuery}`;
   const qrPng = `/api/qr/${encodeURIComponent(slug)}?format=png`;
   const storyPng = `/c/${encodeURIComponent(slug)}/story.png`;
   const emailSignatureHtml = `<a href="${cardUrl}">${cardUrl}</a>`;

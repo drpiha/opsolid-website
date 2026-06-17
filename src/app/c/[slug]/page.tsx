@@ -584,6 +584,7 @@ export default async function CardPage({ params, searchParams }: PageProps) {
             slug={slug}
             accentHex={effectiveAccentHex ?? undefined}
             locale={localeKey}
+            v={order.updatedAt.getTime()}
           />
         )}
         {/* M3 — viral loop hook for unauthenticated visitors. Self-hides
