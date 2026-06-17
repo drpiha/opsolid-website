@@ -17,6 +17,9 @@ interface ShareButtonProps {
   slug: string;
   accentHex?: string;
   locale?: "de" | "en" | "tr";
+  /** Card version stamp (order.updatedAt epoch) forwarded to ShareDrawer so the
+   *  shared link busts WhatsApp/Facebook's stale OG-preview cache. */
+  v?: string | number;
 }
 
 const SHARE_ARIA_LABELS: Record<"de" | "en" | "tr", string> = {
@@ -29,6 +32,7 @@ export function ShareButton({
   slug,
   accentHex = "#C27940",
   locale = "de",
+  v,
 }: ShareButtonProps) {
   const [open, setOpen] = React.useState(false);
   const ariaLabel = SHARE_ARIA_LABELS[locale];
@@ -45,7 +49,7 @@ export function ShareButton({
         <Share2 size={24} strokeWidth={2.1} />
       </button>
 
-      <ShareDrawer slug={slug} open={open} onClose={() => setOpen(false)} />
+      <ShareDrawer slug={slug} v={v} open={open} onClose={() => setOpen(false)} />
     </>
   );
 }
