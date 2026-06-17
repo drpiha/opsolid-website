@@ -14,8 +14,8 @@
 import * as React from "react";
 import { Film, X, Loader2 } from "lucide-react";
 
-const MAX_DURATION_SEC = 30;
-const MAX_SIZE_MB = 30;
+const MAX_DURATION_SEC = 60;
+const MAX_SIZE_MB = 60;
 const ACCEPT = ["video/mp4", "video/webm", "video/quicktime"];
 
 interface Props {
