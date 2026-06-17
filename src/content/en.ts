@@ -1098,6 +1098,15 @@ export const content = {
     },
     posts: [
       {
+        slug: "eu-ai-act-digital-omnibus-2026",
+        title: "EU AI Act Gets Its First Overhaul: What the Digital Omnibus Means for Your Business",
+        excerpt:
+          "The EU's first AI Act amendments extend high-risk deadlines by 16 months, simplify rules for SMEs, and add new content prohibitions. Here's what changed.",
+        category: "ai",
+        date: "2026-06-03",
+        readTime: "7",
+      },
+      {
         slug: "workflow-automation-fundamentals",
         title: "Workflow Automation Fundamentals: What Actually Matters",
         excerpt:
