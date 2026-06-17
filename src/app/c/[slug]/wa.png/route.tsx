@@ -1,11 +1,19 @@
 // =============================================================================
 // WhatsApp-optimized OG image — GET /c/[slug]/wa.png
 //
-// Phase 8 redesign: 1080×1350 portrait (4:5). The portrait aspect renders
-// big in WhatsApp's link preview because the platform shrinks square images
-// aggressively but allocates more vertical space to taller posts. We drop
-// the QR (link previews exist to make the link feel personal — the QR has
-// its own surface in-app) and let the profile photo + name dominate.
+// 720×900 portrait (4:5). The portrait aspect renders big in WhatsApp's link
+// preview because the platform shrinks square images aggressively but
+// allocates more vertical space to taller posts. We drop the QR (link
+// previews exist to make the link feel personal — the QR has its own surface
+// in-app) and let the profile photo + name dominate.
+//
+// IMPORTANT — file size: WhatsApp silently DROPS preview images larger than
+// ~300 KB (and caches that failure), leaving only a bare link. next/og emits
+// PNG with no quality control, and a photographic avatar pushes a 1080×1350
+// canvas to ~434 KB — over the limit. We therefore render at 720×900, which
+// keeps the same composition but lands the PNG comfortably under ~250 KB.
+// Do NOT bump these dimensions back up without converting the output to JPEG
+// (would require adding `sharp`); a larger PNG breaks WhatsApp previews.
 //
 // Composition: large circular avatar at top, big serif name below, optional
 // title/company, accent hairline near the bottom, small domain footer.
@@ -22,8 +30,8 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const revalidate = 60;
 
-const WIDTH = 1080;
-const HEIGHT = 1350;
+const WIDTH = 720;
+const HEIGHT = 900;
 const FALLBACK_PRIMARY = "#15120F";
 const FALLBACK_ACCENT = "#E8A252";
 
@@ -74,7 +82,7 @@ export async function GET(
           background: primary,
           color: "#FFFFFF",
           fontFamily: SANS_STACK,
-          padding: "80px 60px 60px",
+          padding: "54px 40px 40px",
           boxSizing: "border-box",
           position: "relative",
         }}
@@ -94,43 +102,43 @@ export async function GET(
             flexDirection: "column",
             alignItems: "center",
             zIndex: 1,
-            marginTop: 40,
+            marginTop: 28,
           }}
         >
           {photoUrl ? (
             <div
               style={{
-                width: 480,
-                height: 480,
-                borderRadius: 240,
+                width: 320,
+                height: 320,
+                borderRadius: 160,
                 overflow: "hidden",
-                border: `8px solid ${accent}`,
+                border: `6px solid ${accent}`,
                 display: "flex",
-                boxShadow: "0 30px 80px rgba(0,0,0,0.45)",
+                boxShadow: "0 20px 54px rgba(0,0,0,0.45)",
               }}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={photoUrl}
                 alt=""
-                width={480}
-                height={480}
+                width={320}
+                height={320}
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
               />
             </div>
           ) : (
             <div
               style={{
-                width: 480,
-                height: 480,
-                borderRadius: 240,
+                width: 320,
+                height: 320,
+                borderRadius: 160,
                 background: `${accent}33`,
-                border: `8px solid ${accent}`,
+                border: `6px solid ${accent}`,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
                 fontFamily: FONT_STACK,
-                fontSize: 200,
+                fontSize: 134,
                 color: accent,
               }}
             >
@@ -146,18 +154,18 @@ export async function GET(
             alignItems: "center",
             zIndex: 1,
             textAlign: "center",
-            paddingLeft: 40,
-            paddingRight: 40,
+            paddingLeft: 28,
+            paddingRight: 28,
           }}
         >
           <div
             style={{
-              fontSize: 120,
+              fontSize: 80,
               lineHeight: 1.02,
               fontFamily: FONT_STACK,
               display: "flex",
               textAlign: "center",
-              maxWidth: 960,
+              maxWidth: 640,
             }}
           >
             {name}
@@ -165,8 +173,8 @@ export async function GET(
           {title ? (
             <div
               style={{
-                fontSize: 40,
-                marginTop: 20,
+                fontSize: 28,
+                marginTop: 14,
                 opacity: 0.9,
                 display: "flex",
                 fontFamily: SANS_STACK,
@@ -180,8 +188,8 @@ export async function GET(
           {company ? (
             <div
               style={{
-                fontSize: 32,
-                marginTop: 10,
+                fontSize: 22,
+                marginTop: 8,
                 opacity: 0.65,
                 display: "flex",
                 fontFamily: SANS_STACK,
@@ -204,7 +212,7 @@ export async function GET(
         >
           <div
             style={{
-              fontSize: 22,
+              fontSize: 16,
               opacity: 0.5,
               letterSpacing: "0.16em",
               textTransform: "uppercase",
