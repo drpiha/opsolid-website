@@ -18,6 +18,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import {
   CalendarCheck,
@@ -471,7 +472,7 @@ export function DentistVivid({
                 </div>
                 {s.description && (
                   <div className="relative z-10 mt-0.5 text-[11px]" style={{ color: INK_SOFT }}>
-                    {s.description}
+                    {linkify(s.description)}
                   </div>
                 )}
                 {s.priceLabel && (

@@ -18,6 +18,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 
 import { ContactRows } from "./shared/ContactRows";
@@ -515,7 +516,7 @@ export function ArchitectVivid({
                         lineHeight: 1.45,
                       }}
                     >
-                      {svc.description}
+                      {linkify(svc.description)}
                     </div>
                   )}
                   {svc.priceLabel && (

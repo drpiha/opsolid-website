@@ -21,6 +21,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import { Mail, MessageCircle, Phone } from "lucide-react";
 
@@ -418,7 +419,7 @@ export function LegalCounselNoir({
                   </div>
                   {svc.description && (
                     <div className="mt-1 text-[12px]" style={{ color: TEXT_MUTED }}>
-                      {svc.description}
+                      {linkify(svc.description)}
                     </div>
                   )}
                   {svc.priceLabel && (

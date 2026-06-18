@@ -19,6 +19,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import { Globe, Mail, MessageCircle, Phone } from "lucide-react";
 
@@ -405,7 +406,7 @@ export function WellnessTeacherPure({
                     </div>
                     {svc.description && (
                       <div className="mt-0.5 text-[11px]" style={{ color: INK_SOFT }}>
-                        {svc.description}
+                        {linkify(svc.description)}
                       </div>
                     )}
                   </div>

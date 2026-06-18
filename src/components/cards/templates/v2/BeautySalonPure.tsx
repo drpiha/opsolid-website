@@ -19,6 +19,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import { ArrowRight, Shield } from "lucide-react";
 
@@ -402,7 +403,7 @@ export function BeautySalonPure({
                         fontFamily: "'DM Sans', system-ui, sans-serif",
                       }}
                     >
-                      {s.description}
+                      {linkify(s.description)}
                     </small>
                   )}
                 </span>

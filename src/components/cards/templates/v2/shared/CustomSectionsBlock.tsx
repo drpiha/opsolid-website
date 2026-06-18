@@ -15,6 +15,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import {
@@ -122,7 +123,7 @@ export function CustomSectionsBlock({
                   "var(--tpl-font-body, var(--card-body-font, inherit))",
               }}
             >
-              {section.body}
+              {linkify(section.body)}
             </p>
           </article>
         );

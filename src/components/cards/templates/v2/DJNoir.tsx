@@ -21,6 +21,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 
 import { ContactRows } from "./shared/ContactRows";
@@ -520,7 +521,7 @@ export function DJNoir({
                         className="text-[11px]"
                         style={{ color: TEXT_SOFT, letterSpacing: "0.5px" }}
                       >
-                        {svc.description}
+                        {linkify(svc.description)}
                       </div>
                     )}
                     {svc.priceLabel && (

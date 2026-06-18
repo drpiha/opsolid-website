@@ -20,6 +20,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import { ArrowUpRight, Calendar, Download, MapPin, MessageCircle, Phone, Star } from "lucide-react";
 
@@ -464,7 +465,7 @@ export function PhotographerVivid({
                   className="mt-1 text-[11.5px] font-medium leading-snug"
                   style={{ color: TEXT_SOFT }}
                 >
-                  {svc.description}
+                  {linkify(svc.description)}
                 </p>
               )}
               {svc.priceLabel && (

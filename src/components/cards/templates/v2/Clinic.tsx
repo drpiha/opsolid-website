@@ -33,6 +33,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import {
   ArrowUpRight,
@@ -1053,7 +1054,7 @@ function FaqList({
                 className="px-4 pb-4 text-[13px] leading-relaxed"
                 style={{ color: "var(--cl-text-mid)" }}
               >
-                {f.a}
+                {linkify(f.a)}
               </div>
             )}
           </div>

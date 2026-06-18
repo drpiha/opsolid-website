@@ -19,6 +19,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import {
   Eye,
@@ -483,7 +484,7 @@ export function BeautySalon({
                       className="relative z-10 mt-0.5 text-[11px]"
                       style={{ color: featured ? onPrimary : INK_SOFT, opacity: featured ? 0.9 : 1 }}
                     >
-                      {s.description}
+                      {linkify(s.description)}
                     </div>
                   )}
                   {s.priceLabel && (

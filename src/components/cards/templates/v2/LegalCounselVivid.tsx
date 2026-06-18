@@ -20,6 +20,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import {
   ArrowUpRight,
@@ -420,7 +421,7 @@ export function LegalCounselVivid({
                       className="text-[11.5px] leading-snug"
                       style={{ color: TEXT_SOFT }}
                     >
-                      {svc.description}
+                      {linkify(svc.description)}
                     </div>
                   )}
                   {svc.priceLabel && (

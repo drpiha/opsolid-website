@@ -23,6 +23,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import {
   ArrowUpRight,
@@ -537,7 +538,7 @@ export function ContentCreator({
                   </div>
                   {svc.description && (
                     <div className="mt-0.5 text-[11.5px]" style={{ color: INK_SOFT }}>
-                      {svc.description}
+                      {linkify(svc.description)}
                     </div>
                   )}
                 </div>

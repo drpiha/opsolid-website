@@ -10,6 +10,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
@@ -375,7 +376,7 @@ export function LayoutPureSwiss({
                         lineHeight: 1.5,
                       }}
                     >
-                      {svc.description}
+                      {linkify(svc.description)}
                     </span>
                   )}
                 </span>

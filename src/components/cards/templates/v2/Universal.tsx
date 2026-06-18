@@ -29,6 +29,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import {
   Mail,
   Phone,
@@ -380,7 +381,7 @@ export function Universal({
                     </span>
                     {svc.description && (
                       <span className="mt-0.5 block text-[12px] leading-relaxed text-[#6a6a6a]">
-                        {svc.description}
+                        {linkify(svc.description)}
                       </span>
                     )}
                   </span>

@@ -21,6 +21,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import { ArrowRight, Shield } from "lucide-react";
 
@@ -418,7 +419,7 @@ export function BeautySalonNoir({
                       className="mt-1 block text-[10.5px] font-normal not-italic tracking-[0.6px]"
                       style={{ color: INK_SOFT, fontFamily: "'Syne', system-ui, sans-serif" }}
                     >
-                      {s.description}
+                      {linkify(s.description)}
                     </small>
                   )}
                 </span>

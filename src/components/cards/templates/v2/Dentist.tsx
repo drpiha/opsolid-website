@@ -21,6 +21,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import {
   Calendar,
@@ -518,7 +519,7 @@ export function Dentist({
                   </h3>
                   {(svc.description || svc.priceLabel) && (
                     <p className="mt-1 text-[11.5px] leading-snug" style={{ color: INK_SOFT }}>
-                      {svc.description}
+                      {linkify(svc.description)}
                       {svc.description && svc.priceLabel ? " · " : ""}
                       {svc.priceLabel && (
                         <span style={{ color: TEAL_DARK, fontWeight: 700 }}>

@@ -28,6 +28,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import {
   ArrowUpRight,
@@ -1121,7 +1122,7 @@ function FaqSection({
                   className="px-5 pb-4 text-[13px] leading-relaxed"
                   style={{ color: INK_SOFT }}
                 >
-                  {f.a}
+                  {linkify(f.a)}
                 </div>
               )}
             </div>

@@ -19,6 +19,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import { Download } from "lucide-react";
 
@@ -454,7 +455,7 @@ export function PhotographerPure({
                       className="serif-i mt-0.5 text-[13px]"
                       style={{ color: INK_SOFT }}
                     >
-                      {svc.description}
+                      {linkify(svc.description)}
                     </div>
                   )}
                 </div>

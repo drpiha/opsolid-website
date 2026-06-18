@@ -21,6 +21,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import { ContactRows } from "./shared/ContactRows";
 import { SocialRow } from "./shared/SocialRow";
@@ -160,7 +161,7 @@ export function BlankCanvas({
                     </span>
                     {svc.description && (
                       <span className="mt-0.5 block text-[12px] leading-relaxed text-[#6a6a6a]">
-                        {svc.description}
+                        {linkify(svc.description)}
                       </span>
                     )}
                   </span>

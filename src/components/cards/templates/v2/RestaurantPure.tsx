@@ -20,6 +20,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 
 import { ContactRows } from "./shared/ContactRows";
@@ -437,7 +438,7 @@ export function RestaurantPure({
                       className="serif-i mt-0.5 text-[13px]"
                       style={{ color: INK_SOFT }}
                     >
-                      {svc.description}
+                      {linkify(svc.description)}
                     </div>
                   )}
                 </div>

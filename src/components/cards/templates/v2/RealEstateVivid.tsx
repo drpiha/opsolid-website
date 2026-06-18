@@ -21,6 +21,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import {
   ArrowUpRight,
@@ -437,7 +438,7 @@ export function RealEstateVivid({
                       className="mt-1 text-[11.5px] leading-[1.4]"
                       style={{ color: INK_MUTED }}
                     >
-                      {svc.description}
+                      {linkify(svc.description)}
                     </div>
                   )}
                   {svc.priceLabel && (

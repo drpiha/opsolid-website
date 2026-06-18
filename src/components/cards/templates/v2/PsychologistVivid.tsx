@@ -19,6 +19,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import {
   CalendarCheck,
@@ -433,7 +434,7 @@ export function PsychologistVivid({
                           className="block text-[9.5px] font-medium opacity-85"
                           style={{ color: featured ? onPrimary : INK_SOFT }}
                         >
-                          {s.description}
+                          {linkify(s.description)}
                         </small>
                       )}
                     </div>
