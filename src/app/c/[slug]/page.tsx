@@ -30,7 +30,6 @@ import { getTemplateEntry } from "@/components/cards/templates/v2/registry";
 import { UniversalBlocks } from "@/components/cards/UniversalBlocks";
 import { OwnerModeProvider } from "@/context/OwnerMode";
 import { QRFlipOverlay } from "@/components/cards/QRFlipOverlay";
-import { ShareButton } from "@/components/cards/ShareButton";
 import { OwnerToolbar } from "@/components/cards/OwnerToolbar";
 import { OwnerWelcome } from "@/components/cards/OwnerWelcome";
 import { StripOwnerParam } from "@/components/cards/StripOwnerParam";
@@ -567,27 +566,17 @@ export default async function CardPage({ params, searchParams }: PageProps) {
           {/* Phase 8.4 — feedback widget. Self-hides when enabled:false from API */}
           <FeedbackWidget slug={slug} locale={localeKey} />
         </div>
-        {/* Share / QR are the OWNER's distribution tools (how they hand the
-            card out) — a visitor viewing someone else's card has no reason to
-            re-share or QR it, so these are owner-gated. Visitors get the
-            "Save to contacts" action + the "create your own" CTA instead.
-            Also hidden in mobile live-preview mode (?preview=1). */}
-        {isOwner && !isPreview && (
+        {/* Bottom-right QR — kept for everyone: a recipient can scan it to open
+            or save the card on another device, and the QR dialog itself offers
+            copy-link / share / download. The separate bottom-left share FAB was
+            removed (redundant). Hidden only in mobile live-preview (?preview=1). */}
+        {!isPreview && (
           <QRFlipOverlay
             slug={slug}
             publicUrl={publicUrl}
             shareTitle={shareTitle}
             accentHex={effectiveAccentHex ?? undefined}
             labels={qrLabels}
-          />
-        )}
-        {/* Phase 5 — share drawer trigger (bottom-left, QR occupies bottom-right) */}
-        {isOwner && !isPreview && (
-          <ShareButton
-            slug={slug}
-            accentHex={effectiveAccentHex ?? undefined}
-            locale={localeKey}
-            v={order.updatedAt.getTime()}
           />
         )}
         {/* M3 — viral loop hook for unauthenticated visitors. Self-hides
