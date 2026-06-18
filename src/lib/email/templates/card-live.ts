@@ -39,8 +39,6 @@ interface Copy {
   editHeading: string;
   editBody: string;
   editCta: string;
-  manageHeading: string;
-  manageBody: string;
   eventHeading: string;
   eventBody: string;
   replyLine: string;
@@ -61,9 +59,6 @@ const COPY: Record<Locale, Copy> = {
     editBody:
       "Save the link below — it gives you full control over your card, contacts you receive and analytics. Bookmark it, no password needed.",
     editCta: "Edit my card",
-    manageHeading: "Stats, share links & leads",
-    manageBody:
-      "See who viewed your card, create a tracked short link per channel (QR, signature, social bio), and manage the contacts you receive:",
     eventHeading: "Participant directory",
     eventBody:
       "Your card is listed in the event's participant directory — see who else is attending:",
@@ -85,9 +80,6 @@ const COPY: Record<Locale, Copy> = {
     editBody:
       "Speichern Sie den unten stehenden Link — er gibt Ihnen volle Kontrolle über Ihre Karte, Ihre Kontakte und Statistiken. Lesezeichen genügt, kein Passwort.",
     editCta: "Karte bearbeiten",
-    manageHeading: "Statistiken, Teilen-Links & Leads",
-    manageBody:
-      "Sehen Sie, wer Ihre Karte angesehen hat, erstellen Sie pro Kanal einen messbaren Kurzlink (QR, Signatur, Social-Bio) und verwalten Sie Ihre eingegangenen Kontakte:",
     eventHeading: "Teilnehmerverzeichnis",
     eventBody:
       "Ihre Karte ist im Teilnehmerverzeichnis der Veranstaltung gelistet — sehen Sie, wer noch dabei ist:",
@@ -109,9 +101,6 @@ const COPY: Record<Locale, Copy> = {
     editBody:
       "Aşağıdaki linki kaydedin — kartınız, gelen bağlantılarınız ve istatistikleriniz üzerinde tam kontrol verir. Yer imine eklemeniz yeterli, şifre yok.",
     editCta: "Kartımı düzenle",
-    manageHeading: "İstatistikler, paylaşım linkleri ve lead'ler",
-    manageBody:
-      "Kartınıza kimlerin baktığını görün, her kanal için ölçülebilir bir kısa link (QR, imza, sosyal medya bio) oluşturun ve gelen kişileri yönetin:",
     eventHeading: "Katılımcı rehberi",
     eventBody:
       "Kartınız etkinliğin katılımcı rehberinde listelendi — başka kimlerin katıldığını görün:",
@@ -133,10 +122,6 @@ function editLink(input: CardLiveInput): string {
   return `${siteBase()}/${input.locale}/card/edit/${input.orderId}?t=${encodeURIComponent(input.editToken)}`;
 }
 
-function manageLink(input: CardLiveInput): string {
-  return `${siteBase()}/${input.locale}/card/manage/${input.orderId}?t=${encodeURIComponent(input.editToken)}`;
-}
-
 export function renderCardLiveHtml(input: CardLiveInput): string {
   const copy = pick(input.locale);
   const link = editLink(input);
@@ -150,12 +135,6 @@ export function renderCardLiveHtml(input: CardLiveInput): string {
     `<h2 style="margin:24px 0 8px 0;font-family:Georgia,'Times New Roman',serif;font-size:18px;font-weight:normal;">${escapeHtml(copy.editHeading)}</h2>` +
     paragraph(escapeHtml(copy.editBody)) +
     button(link, copy.editCta) +
-    paragraph(
-      `<span style="color:#9CA3A0;">${inlineLink(link, link)}</span>`
-    ) +
-    `<h2 style="margin:24px 0 8px 0;font-family:Georgia,'Times New Roman',serif;font-size:18px;font-weight:normal;">${escapeHtml(copy.manageHeading)}</h2>` +
-    paragraph(escapeHtml(copy.manageBody)) +
-    paragraph(inlineLink(manageLink(input), manageLink(input))) +
     (input.eventUrl
       ? `<h2 style="margin:24px 0 8px 0;font-family:Georgia,'Times New Roman',serif;font-size:18px;font-weight:normal;">${escapeHtml(copy.eventHeading)}</h2>` +
         paragraph(escapeHtml(copy.eventBody)) +
@@ -188,10 +167,6 @@ export function renderCardLiveText(input: CardLiveInput): string {
     copy.editHeading.toUpperCase(),
     copy.editBody,
     link,
-    "",
-    copy.manageHeading.toUpperCase(),
-    copy.manageBody,
-    manageLink(input),
     "",
     ...(input.eventUrl
       ? [copy.eventHeading.toUpperCase(), copy.eventBody, input.eventUrl, ""]

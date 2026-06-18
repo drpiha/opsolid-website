@@ -139,8 +139,9 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
   // Build the OG image array. Order matters: most social platforms pick
   // the first image they can fetch successfully.
-  //   1. Personalized wa.png 1080×1350 4:5 — tall hero with the card's
-  //      actual photo + name, what users actually want to see in chats.
+  //   1. Personalized wa.png 720×900 4:5 — tall hero with the card's actual
+  //      photo + name, what users actually want to see in chats. Kept under
+  //      ~250 KB so WhatsApp doesn't silently drop it (its ~300 KB cap).
   //   2. Personalized og.png 1200×630 — wide card for Twitter/LinkedIn.
   //   3. Per-template static thumbnail — last-resort fallback if the
   //      dynamic routes are slow or rate-limited; not picked first
@@ -156,8 +157,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const ogImages: NonNullable<NonNullable<Metadata["openGraph"]>["images"]> = [
     {
       url: `/c/${slug}/wa.png?v=${v}`,
-      width: 1080,
-      height: 1350,
+      width: 720,
+      height: 900,
       alt: altText,
     },
     {

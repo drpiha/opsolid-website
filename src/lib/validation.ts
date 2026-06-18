@@ -408,6 +408,10 @@ export const CardDataSchema = z.object({
    *  Size + duration are capped client-side (see VideoUploader). Stored as the
    *  asset path/URL returned by /api/uploads (kind="video"). */
   videoPath: z.string().trim().max(500).optional(),
+  /** Vertical placement of the video block on the card. Layout-only modifier
+   *  (not a content field): "top" renders it as a hero above the template body,
+   *  "bottom" at the end of the stack, "default" keeps the standard position. */
+  videoPlacement: z.enum(["top", "default", "bottom"]).optional(),
   socials: z
     .object({
       linkedin: url.optional(),

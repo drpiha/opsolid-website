@@ -1873,6 +1873,10 @@ export const content: Content = {
           videoLabel: "Video-Link",
           videoPlaceholder: "https://youtube.com/watch?v=…",
           videoInvalid: "Nur YouTube- oder Vimeo-Links werden unterstützt.",
+          videoPlacementLabel: "Videoposition",
+          videoPlacementTop: "Oben",
+          videoPlacementDefault: "Standard",
+          videoPlacementBottom: "Unten",
           customSectionsSection: "Eigene Abschnitte (optional)",
           customSectionsHint:
             "Bis zu 6 Abschnitte — Auszeichnungen, Sprachen, alles was Sie wollen.",

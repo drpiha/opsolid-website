@@ -1874,6 +1874,10 @@ export const content: Content = {
           videoLabel: "Video bağlantısı",
           videoPlaceholder: "https://youtube.com/watch?v=…",
           videoInvalid: "Yalnızca YouTube veya Vimeo bağlantıları desteklenir.",
+          videoPlacementLabel: "Video konumu",
+          videoPlacementTop: "Üst",
+          videoPlacementDefault: "Varsayılan",
+          videoPlacementBottom: "Alt",
           customSectionsSection: "Özel bölümler (opsiyonel)",
           customSectionsHint:
             "En fazla 6 bölüm ekleyebilirsin — ödüller, diller, ne istersen.",
