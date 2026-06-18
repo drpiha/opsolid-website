@@ -10,6 +10,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
@@ -345,7 +346,7 @@ export function LayoutNoirLuxury({
                         lineHeight: 1.55,
                       }}
                     >
-                      {svc.description}
+                      {linkify(svc.description)}
                     </div>
                   )}
                   {svc.priceLabel && (

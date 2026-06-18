@@ -20,6 +20,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 
 import { ContactRows } from "./shared/ContactRows";
@@ -375,7 +376,7 @@ export function FitnessPure({
                       className="mt-0.5"
                       style={{ fontSize: 12, color: MUTE }}
                     >
-                      {svc.description}
+                      {linkify(svc.description)}
                     </div>
                   )}
                 </div>

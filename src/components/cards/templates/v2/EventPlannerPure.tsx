@@ -21,6 +21,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import { Globe, Mail, MessageCircle, Phone } from "lucide-react";
 
@@ -328,7 +329,7 @@ export function EventPlannerPure({
                     </div>
                     {svc.description && (
                       <div className="mt-0.5 text-[12px]" style={{ color: INK_SOFT }}>
-                        {svc.description}
+                        {linkify(svc.description)}
                       </div>
                     )}
                   </div>

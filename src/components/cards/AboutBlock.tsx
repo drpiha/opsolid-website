@@ -10,6 +10,7 @@
 // =============================================================================
 
 import type { ReactElement } from "react";
+import { linkify } from "@/lib/linkify";
 
 interface Props {
   bio?: string | null;
@@ -39,7 +40,7 @@ export function AboutBlock({
         {heading}
       </h2>
       <p className="rounded-xl border border-line bg-bg-2 px-4 py-3.5 text-sm leading-relaxed text-ink whitespace-pre-line">
-        {bio}
+        {linkify(bio)}
       </p>
     </section>
   );

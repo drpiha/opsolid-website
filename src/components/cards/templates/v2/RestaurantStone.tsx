@@ -19,6 +19,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import { ArrowUpRight, Calendar } from "lucide-react";
 
@@ -514,7 +515,7 @@ export function RestaurantStone({
                         className="mt-1 text-[13px] leading-snug"
                         style={{ color: TEXT_SOFT, fontWeight: 500 }}
                       >
-                        {svc.description}
+                        {linkify(svc.description)}
                       </p>
                     )}
                   </div>

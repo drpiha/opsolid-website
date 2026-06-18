@@ -29,6 +29,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import * as Dialog from "@radix-ui/react-dialog";
 import {
@@ -426,7 +427,7 @@ export function Photographer({
                       className="mt-0.5 block text-[12px] leading-relaxed"
                       style={{ color: "var(--ph-text-60)" }}
                     >
-                      {svc.description}
+                      {linkify(svc.description)}
                     </span>
                   )}
                 </span>

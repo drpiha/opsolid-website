@@ -21,6 +21,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 
 import { ContactRows } from "./shared/ContactRows";
@@ -524,7 +525,7 @@ export function DJStone({
                         className="mt-1 text-[12.5px]"
                         style={{ color: INK_2, lineHeight: 1.5 }}
                       >
-                        {svc.description}
+                        {linkify(svc.description)}
                       </p>
                     )}
                     {svc.priceLabel && (

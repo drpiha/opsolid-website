@@ -20,6 +20,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import {
   ArrowUpRight,
@@ -585,7 +586,7 @@ export function SoftwareDevVivid({
                       className="mt-1 text-[11.5px] leading-snug"
                       style={{ color: INK_SOFT }}
                     >
-                      {svc.description}
+                      {linkify(svc.description)}
                     </p>
                   )}
                   {svc.priceLabel && (

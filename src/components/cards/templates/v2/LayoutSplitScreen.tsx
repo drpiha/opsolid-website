@@ -10,6 +10,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import { ContactRows } from "./shared/ContactRows";
 import { ExchangeSlot } from "./shared/ExchangeSlot";
@@ -398,7 +399,7 @@ export function LayoutSplitScreen({
                   </div>
                   {svc.description && (
                     <div style={{ fontSize: 12, color: TEXT_MUTED }}>
-                      {svc.description}
+                      {linkify(svc.description)}
                     </div>
                   )}
                 </div>

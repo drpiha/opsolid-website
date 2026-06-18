@@ -23,6 +23,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import { Mail, MessageCircle, Phone } from "lucide-react";
 
@@ -512,7 +513,7 @@ export function RestaurantNoir({
                       className="serif mt-1 text-[12.5px] italic"
                       style={{ color: TEXT_MUTED, fontWeight: 400 }}
                     >
-                      {svc.description}
+                      {linkify(svc.description)}
                     </div>
                   )}
                 </div>

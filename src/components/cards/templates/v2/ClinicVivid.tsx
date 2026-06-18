@@ -20,6 +20,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import { Calendar, Heart, Mail, MapPin, MessageCircle, Phone, Stethoscope } from "lucide-react";
 
@@ -465,7 +466,7 @@ export function ClinicVivid({
                       className="text-[11px] leading-tight"
                       style={{ color: INK_SOFT }}
                     >
-                      {svc.description}
+                      {linkify(svc.description)}
                     </div>
                   )}
                   {svc.priceLabel && (

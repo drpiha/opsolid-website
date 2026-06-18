@@ -12,6 +12,7 @@
 // =============================================================================
 
 import Image from "next/image";
+import { linkify } from "@/lib/linkify";
 import { useState, useEffect, useCallback } from "react";
 import {
   Phone,
@@ -216,7 +217,7 @@ export function SmartCard({
           )}
           {cardData.bio && (
             <p className="mt-4 text-body-sm leading-relaxed text-ink-200">
-              {cardData.bio}
+              {linkify(cardData.bio)}
             </p>
           )}
         </div>
@@ -692,7 +693,7 @@ function SmartCardServices({
             </div>
             {s.description && (
               <p className="mt-1.5 text-xs leading-relaxed text-ink-300">
-                {s.description}
+                {linkify(s.description)}
               </p>
             )}
           </li>
@@ -942,7 +943,7 @@ function SmartCardFaq({
                 </span>
               </summary>
               <div className="border-t border-line px-4 py-3 text-xs leading-relaxed text-ink-300">
-                {f.a}
+                {linkify(f.a)}
               </div>
             </details>
           </li>

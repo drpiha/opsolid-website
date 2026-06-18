@@ -21,6 +21,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import { Calendar, Heart, Stethoscope } from "lucide-react";
 
@@ -558,7 +559,7 @@ export function ClinicStone({
                         className="mt-0.5 text-[12px]"
                         style={{ color: INK_SOFT }}
                       >
-                        {svc.description}
+                        {linkify(svc.description)}
                       </div>
                     )}
                   </div>

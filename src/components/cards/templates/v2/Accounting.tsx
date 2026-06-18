@@ -22,6 +22,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 import {
   ArrowRight,
@@ -535,7 +536,7 @@ export function Accounting({
                       className="mt-0.5 text-[11.5px]"
                       style={{ color: INK_SOFT, letterSpacing: "0.2px" }}
                     >
-                      {svc.description}
+                      {linkify(svc.description)}
                       {svc.description && svc.priceLabel ? " · " : ""}
                       {svc.priceLabel && (
                         <span style={{ color: primary, fontWeight: 700 }}>

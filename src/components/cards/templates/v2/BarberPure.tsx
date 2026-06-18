@@ -21,6 +21,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 
 import { ContactRows } from "./shared/ContactRows";
@@ -400,7 +401,7 @@ export function BarberPure({
                         className="serif italic mt-0.5"
                         style={{ fontSize: 12, color: MUTED }}
                       >
-                        {svc.description}
+                        {linkify(svc.description)}
                       </div>
                     )}
                   </div>

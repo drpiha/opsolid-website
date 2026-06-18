@@ -21,6 +21,7 @@
 // =============================================================================
 
 import * as React from "react";
+import { linkify } from "@/lib/linkify";
 import Image from "next/image";
 
 import { ContactRows } from "./shared/ContactRows";
@@ -554,7 +555,7 @@ export function FitnessNoir({
                         className="mt-1"
                         style={{ fontSize: 12, color: TEXT_VDIM }}
                       >
-                        {svc.description}
+                        {linkify(svc.description)}
                       </div>
                     )}
                   </div>
