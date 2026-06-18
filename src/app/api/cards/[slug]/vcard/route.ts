@@ -103,7 +103,15 @@ export async function GET(
   const isAndroid = /android/i.test(ua);
   const disposition = isAndroid ? "attachment" : "inline";
 
-  return new NextResponse(vcard, {
+  // Encoding fix: iOS Contacts ignores the HTTP `charset` when importing a
+  // .vcf and falls back to Mac Roman, turning UTF-8 Turkish letters into
+  // mojibake (ö → "√∂"). A leading UTF-8 BOM forces iOS to decode as UTF-8.
+  // We add it only for the non-Android (iOS/desktop, vCard 4.0) path — some
+  // strict older Android 3.0 parsers choke on a BOM before BEGIN:VCARD.
+  const bom = isAndroid ? "" : "\uFEFF";
+  const body = Buffer.from(bom + vcard, "utf-8");
+
+  return new NextResponse(body, {
     status: 200,
     headers: {
       // B2 — text/vcard (RFC 6350 registered MIME) is required for iOS Safari

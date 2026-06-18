@@ -150,7 +150,11 @@ export async function GET(
     revIso: order.updatedAt.toISOString(),
   });
 
-  return new NextResponse(vcard, {
+  // Leading UTF-8 BOM so iOS Contacts decodes the .vcf as UTF-8 instead of
+  // falling back to Mac Roman (which mangles Turkish letters: ö → "√∂").
+  const body = Buffer.from("\uFEFF" + vcard, "utf-8");
+
+  return new NextResponse(body, {
     status: 200,
     headers: {
       "Content-Type": "text/vcard; charset=utf-8",
