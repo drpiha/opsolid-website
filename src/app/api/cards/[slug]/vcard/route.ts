@@ -91,6 +91,7 @@ export async function GET(
     photoBytes,
     cardPageUrl,
     sourceLabel,
+    locale: order.locale,
   });
 
   // B2 — iOS Safari opens a native contact sheet when Content-Disposition is
