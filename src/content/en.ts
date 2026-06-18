@@ -1098,6 +1098,15 @@ export const content = {
     },
     posts: [
       {
+        slug: "eu-ai-act-omnibus-2026-compliance-changes",
+        title: "EU AI Act Omnibus: What Changed and What Businesses Must Do Now",
+        excerpt:
+          "The EU AI Act Omnibus extended the key high-risk AI deadline to December 2027 and expanded relief for smaller companies. What changed and what to act on now.",
+        category: "ai",
+        date: "2026-06-16",
+        readTime: "7",
+      },
+      {
         slug: "workflow-automation-fundamentals",
         title: "Workflow Automation Fundamentals: What Actually Matters",
         excerpt:

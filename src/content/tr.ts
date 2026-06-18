@@ -1100,6 +1100,15 @@ export const content: Content = {
     },
     posts: [
       {
+        slug: "eu-ai-act-omnibus-2026-compliance-changes",
+        title: "AB Yapay Zeka Yasası Omnibus: Neler Değişti ve İşletmeler Şimdi Ne Yapmalı",
+        excerpt:
+          "AB Yapay Zeka Yasası Omnibus, yüksek riskli yapay zeka uyum son tarihini Aralık 2027'ye taşıdı ve KOBİ kolaylıklarını genişletti. Ne değişti ve işletmeler ne yapmalı.",
+        category: "ai",
+        date: "2026-06-16",
+        readTime: "7",
+      },
+      {
         slug: "workflow-automation-fundamentals",
         title: "İş Akışı Otomasyonu: Uygulamada Gerçekten Ne Önemli",
         excerpt:
