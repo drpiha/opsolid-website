@@ -24,6 +24,8 @@ export interface BuildVCardArgs {
   /** Optional human-readable source label appended to NOTE so the saved
    *  contact remembers where it came from (e.g. "Hannover Messe — Hall B12"). */
   sourceLabel?: string;
+  /** Card locale (de|en|tr) — used to localize the card-link X-ABLabel. */
+  locale?: string;
 }
 
 const CRLF = "\r\n"; // RFC 6350 mandates CRLF line endings.
@@ -76,6 +78,17 @@ function digitsOnly(phone: string): string {
   return phone.replace(/[^+0-9]/g, "");
 }
 
+/** Localized X-ABLabel for the card-page URL so Apple Contacts shows a distinct
+ *  "Digital Card" row instead of a second "homepage". */
+const CARD_URL_LABEL: Record<string, string> = {
+  de: "Digitale Karte",
+  en: "Digital Card",
+  tr: "Dijital Kart",
+};
+function cardUrlLabel(locale: string | undefined): string {
+  return CARD_URL_LABEL[locale ?? "en"] ?? CARD_URL_LABEL.en;
+}
+
 // =============================================================================
 // vCard 4.0 (RFC 6350) — default, iOS + modern Android
 // =============================================================================
@@ -83,8 +96,10 @@ function digitsOnly(phone: string): string {
 // Exported under both names — buildVCard is the legacy alias kept for backward
 // compatibility with existing callers; buildVCard4 is the canonical export.
 export function buildVCard(args: BuildVCardArgs): string {
-  const { cardData, photoUrl, photoBytes, cardPageUrl, sourceLabel } = args;
+  const { cardData, photoUrl, photoBytes, cardPageUrl, sourceLabel, locale } = args;
   const lines: string[] = [];
+  // Apple item-grouping counter (itemN.URL + itemN.X-ABLabel) for custom labels.
+  let item = 1;
 
   lines.push("BEGIN:VCARD");
   lines.push("VERSION:4.0");
@@ -102,12 +117,14 @@ export function buildVCard(args: BuildVCardArgs): string {
     lines.push(`TEL;TYPE=cell,voice:${digitsOnly(cardData.phone)}`);
   }
   if (cardData.whatsapp) {
-    // No standard TYPE for WhatsApp — emit a plain TEL plus an X-SOCIALPROFILE
-    // pointer so a future "Open in WhatsApp" tap target works in some clients.
-    lines.push(`TEL;TYPE=cell,text:${digitsOnly(cardData.whatsapp)}`);
-    lines.push(
-      `X-SOCIALPROFILE;TYPE=whatsapp:https://wa.me/${digitsOnly(cardData.whatsapp).replace(/^\+/, "")}`
-    );
+    // WhatsApp as a labeled wa.me link (item-grouped) — gives Contacts a
+    // tappable "WhatsApp" row (opens the WhatsApp app) WITHOUT writing the
+    // number a second time as a phone entry. So when WhatsApp == phone the
+    // contact shows one phone number plus a distinct WhatsApp action.
+    const wa = digitsOnly(cardData.whatsapp).replace(/^\+/, "");
+    const n = item++;
+    lines.push(`item${n}.URL:https://wa.me/${wa}`);
+    lines.push(`item${n}.X-ABLabel:WhatsApp`);
   }
   if (cardData.email) lines.push(`EMAIL;TYPE=internet:${esc(cardData.email)}`);
   if (cardData.website) lines.push(`URL:${esc(cardData.website)}`);
@@ -127,7 +144,14 @@ export function buildVCard(args: BuildVCardArgs): string {
     lines.push(`NOTE:${esc(noteParts.join("\n"))}`);
   }
 
-  lines.push(`URL;TYPE=card:${esc(cardPageUrl)}`);
+  // Card page link with a localized label ("Dijital Kart" / "Digital Card")
+  // via Apple item-grouping, so it isn't shown as a second "homepage" next to
+  // the website URL.
+  {
+    const n = item++;
+    lines.push(`item${n}.URL:${esc(cardPageUrl)}`);
+    lines.push(`item${n}.X-ABLabel:${esc(cardUrlLabel(locale))}`);
+  }
 
   // Social profiles — X-SOCIALPROFILE is widely understood by macOS/iOS Contacts
   // and is harmless to other clients.
@@ -183,11 +207,14 @@ export function buildVCard3(args: BuildVCardArgs): string {
 
   lines.push("BEGIN:VCARD");
   lines.push("VERSION:3.0");
-  lines.push(`FN:${esc(cardData.name)}`);
-  lines.push(`N:${structuredName(cardData.name)}`);
+  // CHARSET=UTF-8 on every text property: vCard 3.0 has no default charset, so
+  // without this older Android / strict parsers decode non-ASCII (ş, ı, ö, ü)
+  // as Latin-1 and mangle Turkish/German names.
+  lines.push(`FN;CHARSET=UTF-8:${esc(cardData.name)}`);
+  lines.push(`N;CHARSET=UTF-8:${structuredName(cardData.name)}`);
 
-  if (cardData.company) lines.push(`ORG:${esc(cardData.company)}`);
-  if (cardData.title) lines.push(`TITLE:${esc(cardData.title)}`);
+  if (cardData.company) lines.push(`ORG;CHARSET=UTF-8:${esc(cardData.company)}`);
+  if (cardData.title) lines.push(`TITLE;CHARSET=UTF-8:${esc(cardData.title)}`);
 
   if (cardData.phone) {
     // 3.0: TYPE values must be uppercase; avoid comma-joining multiple TYPEs —
@@ -195,7 +222,8 @@ export function buildVCard3(args: BuildVCardArgs): string {
     lines.push(`TEL;TYPE=CELL;TYPE=VOICE:${digitsOnly(cardData.phone)}`);
   }
   if (cardData.whatsapp) {
-    lines.push(`TEL;TYPE=CELL;TYPE=MSG:${digitsOnly(cardData.whatsapp)}`);
+    // WhatsApp pointer only — no second TEL line, so the number is never shown
+    // twice when WhatsApp == phone.
     lines.push(
       `X-SOCIALPROFILE;TYPE=whatsapp:https://wa.me/${digitsOnly(cardData.whatsapp).replace(/^\+/, "")}`
     );
@@ -204,14 +232,14 @@ export function buildVCard3(args: BuildVCardArgs): string {
   if (cardData.website) lines.push(`URL:${esc(cardData.website)}`);
 
   if (cardData.address) {
-    lines.push(`ADR;TYPE=WORK:;;${esc(cardData.address)};;;;`);
+    lines.push(`ADR;TYPE=WORK;CHARSET=UTF-8:;;${esc(cardData.address)};;;;`);
   }
 
   const noteParts: string[] = [];
   if (cardData.bio) noteParts.push(cardData.bio);
   if (sourceLabel) noteParts.push(`Source: ${sourceLabel}`);
   if (noteParts.length > 0) {
-    lines.push(`NOTE:${esc(noteParts.join("\n"))}`);
+    lines.push(`NOTE;CHARSET=UTF-8:${esc(noteParts.join("\n"))}`);
   }
 
   lines.push(`URL;TYPE=CARD:${esc(cardPageUrl)}`);
