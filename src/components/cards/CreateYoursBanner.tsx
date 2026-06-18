@@ -45,7 +45,7 @@ const LABELS: Record<
     dismiss: "Dismiss",
   },
   tr: {
-    tagline: "Beğendin mi? Kendi kartını oluştur.",
+    tagline: "Beğendiniz mi? Siz de oluşturun.",
     cta: "Kart oluştur",
     dismiss: "Kapat",
   },
@@ -101,10 +101,9 @@ export function CreateYoursBanner({ slug, locale = "de" }: Props) {
     }
   }
 
-  // Locale-prefixed signup route — the (auth) group lives under [locale].
-  // The shared SignupClient stashes the `ref` param so the post-auth handler
-  // can call /api/v1/referrals/redeem on the user's behalf.
-  const signupHref = `/${locale}/signup?ref=${encodeURIComponent(slug)}`;
+  // Take the visitor straight to the card-creation screen (the 60-second free
+  // quick-create flow). `?ref=<slug>` is preserved for referral attribution.
+  const createHref = `/${locale}/card/new?ref=${encodeURIComponent(slug)}`;
 
   return (
     <div
@@ -120,7 +119,7 @@ export function CreateYoursBanner({ slug, locale = "de" }: Props) {
           {labels.tagline}
         </p>
         <a
-          href={signupHref}
+          href={createHref}
           className="inline-flex items-center justify-center rounded-full bg-copper-500 px-4 py-2 text-xs font-semibold text-white transition hover:bg-copper-600"
         >
           {labels.cta}
