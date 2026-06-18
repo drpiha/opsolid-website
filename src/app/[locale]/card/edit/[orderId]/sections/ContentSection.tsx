@@ -168,6 +168,54 @@ export default function ContentSection({
                   "Only YouTube or Vimeo links are supported."}
               </p>
             )}
+
+          {/* Vertical placement — only relevant once a video is set. */}
+          {(cardData.videoPath || cardData.videoUrl) && (
+            <div className="pt-1 space-y-1.5">
+              <p className="text-[11px] uppercase tracking-wider text-ink-300">
+                {(form as Record<string, string>).videoPlacementLabel ??
+                  "Video konumu"}
+              </p>
+              <div className="flex gap-1.5" role="radiogroup">
+                {(["top", "default", "bottom"] as const).map((value) => {
+                  const active = (cardData.videoPlacement ?? "default") === value;
+                  const labelKey =
+                    value === "top"
+                      ? "videoPlacementTop"
+                      : value === "bottom"
+                        ? "videoPlacementBottom"
+                        : "videoPlacementDefault";
+                  const fallback =
+                    value === "top"
+                      ? "Üst"
+                      : value === "bottom"
+                        ? "Alt"
+                        : "Varsayılan";
+                  return (
+                    <button
+                      key={value}
+                      type="button"
+                      role="radio"
+                      aria-checked={active}
+                      onClick={() =>
+                        setCard(
+                          "videoPlacement",
+                          value === "default" ? undefined : value,
+                        )
+                      }
+                      className={`flex-1 rounded-md border px-3 py-1.5 text-xs transition-colors ${
+                        active
+                          ? "border-copper bg-copper/10 text-ink"
+                          : "border-line text-ink-300 hover:border-line-firm"
+                      }`}
+                    >
+                      {(form as Record<string, string>)[labelKey] ?? fallback}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </fieldset>
 
         {/* FAQ — up to 12 Q&A items rendered as accordion */}

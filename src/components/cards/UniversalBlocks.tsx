@@ -97,6 +97,21 @@ export function UniversalBlocks({
   const h = resolveLabels(HEADINGS[locale] ?? HEADINGS.en, data.labels);
   const isPublic = mode === "public";
 
+  // Universal video — self-hosted clip + YouTube/Vimeo embed; the embed is
+  // suppressed where templates render videoUrl natively. The owner picks where
+  // the block sits via cardData.videoPlacement (top / default / bottom); it is
+  // rendered exactly once at the chosen position.
+  const placement = data.videoPlacement ?? "default";
+  const videoBlock = (
+    <VideoBlock
+      videoUrl={data.videoUrl}
+      videoPath={data.videoPath}
+      tone={tone}
+      heading="Video"
+      suppressEmbed={suppressed(VIDEO_EMBED_NATIVE)}
+    />
+  );
+
   return (
     <>
       {/* Universal brand strip — logo above any template without a native one. */}
@@ -105,6 +120,7 @@ export function UniversalBlocks({
         tone={tone}
         suppress={suppressed(LOGO_NATIVE_KEYS)}
       />
+      {placement === "top" && videoBlock}
       {children}
       {/* Universal bio — 22 templates don't render cardData.bio natively. */}
       {!suppressed(BIO_NATIVE_KEYS) && (
@@ -120,15 +136,7 @@ export function UniversalBlocks({
         accentHex={accentHex ?? undefined}
         tone={tone}
       />
-      {/* Universal video — self-hosted clip + YouTube/Vimeo embed; the embed is
-          suppressed where templates render videoUrl natively. */}
-      <VideoBlock
-        videoUrl={data.videoUrl}
-        videoPath={data.videoPath}
-        tone={tone}
-        heading="Video"
-        suppressEmbed={suppressed(VIDEO_EMBED_NATIVE)}
-      />
+      {placement === "default" && videoBlock}
       {!suppressed(GALLERY_NATIVE_KEYS) && (
         <GalleryBlock gallery={data.gallery} tone={tone} heading={h.gallery} />
       )}
@@ -183,6 +191,7 @@ export function UniversalBlocks({
           heading={h.contact}
         />
       )}
+      {placement === "bottom" && videoBlock}
     </>
   );
 }

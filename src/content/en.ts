@@ -1873,6 +1873,10 @@ export const content = {
           videoLabel: "Video link",
           videoPlaceholder: "https://youtube.com/watch?v=…",
           videoInvalid: "Only YouTube or Vimeo links are supported.",
+          videoPlacementLabel: "Video position",
+          videoPlacementTop: "Top",
+          videoPlacementDefault: "Default",
+          videoPlacementBottom: "Bottom",
           // Phase 7.9 — custom sections editor
           customSectionsSection: "Custom sections (optional)",
           customSectionsHint:
