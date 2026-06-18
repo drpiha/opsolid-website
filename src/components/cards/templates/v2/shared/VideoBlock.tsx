@@ -72,7 +72,33 @@ export function VideoBlock({
   suppressEmbed = false,
 }: VideoBlockProps) {
   const [playing, setPlaying] = React.useState(false);
+  const videoRef = React.useRef<HTMLVideoElement>(null);
+  const hasAutoPlayed = React.useRef(false);
   const embed = !suppressEmbed && videoUrl ? parseVideo(videoUrl) : null;
+
+  // Self-hosted clip: autoplay ONCE when it first scrolls into view (muted, as
+  // required by browser autoplay policy), then on end rewind to the first frame
+  // and stop. No looping; the visitor can replay (with sound) via the native
+  // controls. Using IntersectionObserver means a hero (top) video plays the
+  // moment the card opens, and a lower one plays once when scrolled to.
+  React.useEffect(() => {
+    const el = videoRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && !hasAutoPlayed.current) {
+            hasAutoPlayed.current = true;
+            el.muted = true;
+            void el.play().catch(() => {});
+          }
+        }
+      },
+      { threshold: 0.5 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   if (!videoPath && !embed) return null;
 
@@ -98,10 +124,17 @@ export function VideoBlock({
       {videoPath && (
         <div className="overflow-hidden rounded-2xl border border-line bg-black">
           <video
+            ref={videoRef}
             src={resolveSrc(videoPath)}
             controls
+            muted
             playsInline
             preload="metadata"
+            onEnded={(e) => {
+              // Rewind to the first frame and stop (no loop).
+              e.currentTarget.currentTime = 0;
+              e.currentTarget.pause();
+            }}
             className="aspect-video w-full bg-black"
           />
         </div>
