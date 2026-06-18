@@ -115,6 +115,10 @@ export function CardEditClient(props: Props) {
   // Template is now switchable from the editor (previously locked after
   // purchase). Persisted on save alongside cardData.
   const [templateId, setTemplateId] = useState<number>(props.templateId);
+  // Card version stamp (updatedAt ISO) used for OG-cache-busting in share URLs.
+  // Kept in state so the share drawer reflects the latest save within the same
+  // session; versionRef below still carries the same value for concurrency.
+  const [version, setVersion] = useState<string>(props.version);
   const [brandPrimaryHex, setBrandPrimaryHex] = useState(props.brandPrimaryHex ?? "");
   const [brandAccentHex, setBrandAccentHex] = useState(props.brandAccentHex ?? "");
   const [photoPath, setPhotoPath] = useState<string | null>(props.photoPath);
@@ -431,8 +435,13 @@ export function CardEditClient(props: Props) {
         slug?: string | null;
         version?: string;
       };
-      // Rebase the concurrency token so the next save doesn't self-conflict.
-      if (ok.version) versionRef.current = ok.version;
+      // Rebase the concurrency token so the next save doesn't self-conflict, and
+      // refresh the stateful version so the share drawer's cache-busting stamp
+      // points at the just-saved revision (not the page-load value).
+      if (ok.version) {
+        versionRef.current = ok.version;
+        setVersion(ok.version);
+      }
       if (ok.slug && ok.slug !== currentSlug) {
         setCurrentSlug(ok.slug);
         setEditableSlug(ok.slug);
@@ -846,7 +855,7 @@ export function CardEditClient(props: Props) {
         <ShareDrawer
           slug={currentSlug}
           context="owner"
-          v={Date.parse(props.version) || undefined}
+          v={Date.parse(version) || undefined}
           open={shareOpen}
           onClose={() => setShareOpen(false)}
         />
