@@ -567,10 +567,12 @@ export default async function CardPage({ params, searchParams }: PageProps) {
           {/* Phase 8.4 — feedback widget. Self-hides when enabled:false from API */}
           <FeedbackWidget slug={slug} locale={localeKey} />
         </div>
-        {/* Hide the bottom corner floaters in mobile live-preview mode —
-            they would otherwise cover the design area the user is actively
-            editing. Mirrors the CreateYoursBanner gate below. */}
-        {!isPreview && (
+        {/* Share / QR are the OWNER's distribution tools (how they hand the
+            card out) — a visitor viewing someone else's card has no reason to
+            re-share or QR it, so these are owner-gated. Visitors get the
+            "Save to contacts" action + the "create your own" CTA instead.
+            Also hidden in mobile live-preview mode (?preview=1). */}
+        {isOwner && !isPreview && (
           <QRFlipOverlay
             slug={slug}
             publicUrl={publicUrl}
@@ -580,7 +582,7 @@ export default async function CardPage({ params, searchParams }: PageProps) {
           />
         )}
         {/* Phase 5 — share drawer trigger (bottom-left, QR occupies bottom-right) */}
-        {!isPreview && (
+        {isOwner && !isPreview && (
           <ShareButton
             slug={slug}
             accentHex={effectiveAccentHex ?? undefined}
