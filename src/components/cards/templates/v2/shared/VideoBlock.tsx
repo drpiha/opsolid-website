@@ -76,11 +76,12 @@ export function VideoBlock({
   const hasAutoPlayed = React.useRef(false);
   const embed = !suppressEmbed && videoUrl ? parseVideo(videoUrl) : null;
 
-  // Self-hosted clip: autoplay ONCE when it first scrolls into view (muted, as
-  // required by browser autoplay policy), then on end rewind to the first frame
-  // and stop. No looping; the visitor can replay (with sound) via the native
-  // controls. Using IntersectionObserver means a hero (top) video plays the
-  // moment the card opens, and a lower one plays once when scrolled to.
+  // Self-hosted clip: autoplay ONCE when it first scrolls into view, then on
+  // end rewind to the first frame and stop (no looping). We try to play WITH
+  // sound by default; browsers block unmuted autoplay before a user gesture, so
+  // on rejection we fall back to muted autoplay (still plays once) — the visitor
+  // can unmute/replay via the native controls. Hero (top) videos play the moment
+  // the card opens; lower ones play once when scrolled to.
   React.useEffect(() => {
     const el = videoRef.current;
     if (!el) return;
@@ -89,8 +90,12 @@ export function VideoBlock({
         for (const entry of entries) {
           if (entry.isIntersecting && !hasAutoPlayed.current) {
             hasAutoPlayed.current = true;
-            el.muted = true;
-            void el.play().catch(() => {});
+            el.muted = false;
+            el.play().catch(() => {
+              // Unmuted autoplay blocked → retry muted so it still plays once.
+              el.muted = true;
+              void el.play().catch(() => {});
+            });
           }
         }
       },
@@ -127,7 +132,6 @@ export function VideoBlock({
             ref={videoRef}
             src={resolveSrc(videoPath)}
             controls
-            muted
             playsInline
             preload="metadata"
             onEnded={(e) => {
