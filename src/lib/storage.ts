@@ -64,6 +64,11 @@ export const STORAGE_LIMITS = {
    *  on YouTube/Vimeo via videoUrl. Paired with a client-side duration limit. */
   maxVideoBytes: MAX_VIDEO_BYTES,
   maxVideoBytesHuman: "100 MB",
+  /** Self-hosted video duration cap (seconds). Enforced server-side in the
+   *  upload route via a dependency-free container-header parser, and mirrored
+   *  client-side by VideoUploader's MAX_DURATION_SEC (which cannot import this
+   *  node-only module). Keep the two values in sync. */
+  maxVideoDurationSec: 60,
   /** Accepted video MIME types for the kind="video" upload lane. */
   allowedVideo: new Set([
     "video/mp4",

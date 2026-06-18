@@ -10,6 +10,7 @@
 
 import { NextRequest, NextResponse } from "next/server";
 import { putAsset, STORAGE_LIMITS } from "@/lib/storage";
+import { readVideoDurationSeconds } from "@/lib/video-duration";
 import { getOptionalUser } from "@/lib/auth/require-user";
 import { hitWindow, clientIp } from "@/lib/auth/rate-limit";
 
@@ -98,6 +99,20 @@ export async function POST(req: NextRequest) {
     : "jpg";
 
   const body = Buffer.from(await file.arrayBuffer());
+
+  // Server-side duration backstop. The client (VideoUploader) blocks >60s, but a
+  // direct multipart POST bypasses it, so re-check here from the container header.
+  // A null reading means "couldn't parse" — let the byte-size cap be the backstop
+  // rather than reject a possibly-valid clip.
+  if (isVideo) {
+    const dur = readVideoDurationSeconds(body, file.type);
+    if (dur != null && dur > STORAGE_LIMITS.maxVideoDurationSec + 0.5) {
+      return NextResponse.json(
+        { error: `Video too long (max ${STORAGE_LIMITS.maxVideoDurationSec}s)` },
+        { status: 400 },
+      );
+    }
+  }
 
   try {
     const { url } = await putAsset({
