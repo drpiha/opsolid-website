@@ -96,12 +96,15 @@ export function buildVCard(args: BuildVCardArgs): string {
 
   if (cardData.phone) {
     // CELL is the most universal type label and what Contacts apps rank first.
-    lines.push(`TEL;TYPE=cell,voice;VALUE=uri:tel:${digitsOnly(cardData.phone)}`);
+    // Plain TEL value (not the tel: URI form) — iOS Contacts mis-parses
+    // `VALUE=uri:tel:` and shows the literal label "VALUE" with a "tel+90…"
+    // value, so we emit the bare number which every client renders correctly.
+    lines.push(`TEL;TYPE=cell,voice:${digitsOnly(cardData.phone)}`);
   }
   if (cardData.whatsapp) {
     // No standard TYPE for WhatsApp — emit a plain TEL plus an X-SOCIALPROFILE
     // pointer so a future "Open in WhatsApp" tap target works in some clients.
-    lines.push(`TEL;TYPE=cell,text;VALUE=uri:tel:${digitsOnly(cardData.whatsapp)}`);
+    lines.push(`TEL;TYPE=cell,text:${digitsOnly(cardData.whatsapp)}`);
     lines.push(
       `X-SOCIALPROFILE;TYPE=whatsapp:https://wa.me/${digitsOnly(cardData.whatsapp).replace(/^\+/, "")}`
     );
