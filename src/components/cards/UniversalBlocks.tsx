@@ -108,6 +108,7 @@ export function UniversalBlocks({
       videoPath={data.videoPath}
       tone={tone}
       heading="Video"
+      locale={locale}
       suppressEmbed={suppressed(VIDEO_EMBED_NATIVE)}
     />
   );

@@ -16,7 +16,7 @@
 // =============================================================================
 
 import * as React from "react";
-import { Play } from "lucide-react";
+import { Play, Volume2 } from "lucide-react";
 
 interface VideoBlockProps {
   videoUrl?: string | null;
@@ -24,10 +24,18 @@ interface VideoBlockProps {
   accentHex?: string | null;
   tone?: "light" | "dark";
   heading?: string;
+  /** Card locale — only used for the "tap for sound" badge label. */
+  locale?: "de" | "en" | "tr";
   /** When true, the YouTube/Vimeo embed is left to the template (which renders
    *  it natively) and only the self-hosted clip is shown here. */
   suppressEmbed?: boolean;
 }
+
+const SOUND_LABEL: Record<"de" | "en" | "tr", string> = {
+  de: "Ton aktivieren",
+  en: "Tap for sound",
+  tr: "Ses aç",
+};
 
 const YT_RE =
   /(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/))([A-Za-z0-9_-]{6,16})/;
@@ -69,9 +77,13 @@ export function VideoBlock({
   videoPath,
   tone = "light",
   heading = "Video",
+  locale = "en",
   suppressEmbed = false,
 }: VideoBlockProps) {
   const [playing, setPlaying] = React.useState(false);
+  // Tracks whether the self-hosted clip is currently muted, so we can show a
+  // "tap for sound" badge. Starts true (autoplay generally lands muted).
+  const [muted, setMuted] = React.useState(true);
   const videoRef = React.useRef<HTMLVideoElement>(null);
   const hasAutoPlayed = React.useRef(false);
   const embed = !suppressEmbed && videoUrl ? parseVideo(videoUrl) : null;
@@ -91,11 +103,15 @@ export function VideoBlock({
           if (entry.isIntersecting && !hasAutoPlayed.current) {
             hasAutoPlayed.current = true;
             el.muted = false;
-            el.play().catch(() => {
-              // Unmuted autoplay blocked → retry muted so it still plays once.
-              el.muted = true;
-              void el.play().catch(() => {});
-            });
+            el.play()
+              .then(() => setMuted(false)) // sound-on autoplay allowed
+              .catch(() => {
+                // Unmuted autoplay blocked → play muted (still plays once) and
+                // surface the "tap for sound" badge.
+                el.muted = true;
+                setMuted(true);
+                void el.play().catch(() => {});
+              });
           }
         }
       },
@@ -127,13 +143,14 @@ export function VideoBlock({
 
       {/* Self-hosted clip first — native controls. */}
       {videoPath && (
-        <div className="overflow-hidden rounded-2xl border border-line bg-black">
+        <div className="relative overflow-hidden rounded-2xl border border-line bg-black">
           <video
             ref={videoRef}
             src={resolveSrc(videoPath)}
             controls
             playsInline
             preload="metadata"
+            onVolumeChange={(e) => setMuted(e.currentTarget.muted)}
             onEnded={(e) => {
               // Rewind to the first frame and stop (no loop).
               e.currentTarget.currentTime = 0;
@@ -141,6 +158,28 @@ export function VideoBlock({
             }}
             className="aspect-video w-full bg-black"
           />
+          {/* "Tap for sound" badge — only while muted. Autoplay-with-sound is
+              blocked by browsers before a user gesture, so the clip starts muted;
+              one tap unmutes and replays from the start (a real user gesture, so
+              it works everywhere). Hidden once sound is on. */}
+          {muted && (
+            <button
+              type="button"
+              onClick={() => {
+                const el = videoRef.current;
+                if (!el) return;
+                el.muted = false;
+                el.currentTime = 0;
+                void el.play().catch(() => {});
+                setMuted(false);
+              }}
+              className="absolute right-2 top-2 z-10 inline-flex items-center gap-1.5 rounded-full bg-black/70 px-3 py-1.5 text-xs font-medium text-white backdrop-blur-sm transition hover:bg-black/85"
+              aria-label={SOUND_LABEL[locale]}
+            >
+              <Volume2 size={14} />
+              <span>{SOUND_LABEL[locale]}</span>
+            </button>
+          )}
         </div>
       )}
 
