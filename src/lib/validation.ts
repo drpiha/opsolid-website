@@ -636,6 +636,10 @@ export const CardDataSchema = z.object({
       linkUrl: url.optional(),
       linkLabel: z.string().trim().max(48).optional(),
       updatedAt: z.string().trim().max(40).optional(),
+      /** Where the panel sits on the card. "belowPhoto" (default) uses the
+       *  template's native under-hero slot where available (else falls back to
+       *  the top); "top" sits above the whole card; "bottom" after it. */
+      placement: z.enum(["top", "belowPhoto", "bottom"]).optional(),
     })
     .strict()
     .optional(),

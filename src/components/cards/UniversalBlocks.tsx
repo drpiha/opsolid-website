@@ -33,6 +33,7 @@ import {
   BROCHURE_NATIVE_KEYS,
   BIO_NATIVE_KEYS,
   STATS_NATIVE_KEYS,
+  SPOTLIGHT_NATIVE_KEYS,
 } from "@/components/cards/templates/v2/registry";
 import { resolveLabels } from "@/components/cards/templates/v2/shared/resolveLabels";
 import {
@@ -114,6 +115,25 @@ export function UniversalBlocks({
     />
   );
 
+  // Spotlight placement — owner picks where the "Şu an / Now" panel sits.
+  // "belowPhoto" defers to the template's native under-hero slot where one
+  // exists (SPOTLIGHT_NATIVE_KEYS render it themselves); on templates without
+  // a native slot it falls back to "top". "top"/"bottom" always route here.
+  const spotPlace = data.spotlight?.placement ?? "belowPhoto";
+  const spotNative = entryKey ? SPOTLIGHT_NATIVE_KEYS.has(entryKey) : false;
+  const spotlightBlock = (
+    <SpotlightBlock
+      spotlight={data.spotlight}
+      heading={h.spotlight}
+      accentHex={accentHex}
+      primaryHex={primaryHex}
+      tone={tone}
+      locale={locale}
+    />
+  );
+  const spotlightAtTop = spotPlace === "top" || (spotPlace === "belowPhoto" && !spotNative);
+  const spotlightAtBottom = spotPlace === "bottom";
+
   return (
     <>
       {/* Universal brand strip — logo above any template without a native one. */}
@@ -123,19 +143,13 @@ export function UniversalBlocks({
         suppress={suppressed(LOGO_NATIVE_KEYS)}
       />
       {placement === "top" && videoBlock}
+      {/* "Şu an / Now" spotlight at the top (above the card) — chosen via
+          spotlight.placement, or the belowPhoto fallback on templates without a
+          native slot. */}
+      {spotlightAtTop && spotlightBlock}
       {children}
-      {/* Universal "Şu an / Now" spotlight — a general, prominent area for a
-          momentary update (paragraph + link). Rendered first in the after-stack
-          so it sits high, right below the template's identity / profile block,
-          on every template. Self-hides unless enabled with a body or a link. */}
-      <SpotlightBlock
-        spotlight={data.spotlight}
-        heading={h.spotlight}
-        accentHex={accentHex}
-        primaryHex={primaryHex}
-        tone={tone}
-        locale={locale}
-      />
+      {/* …or pinned to the bottom, after the whole card. */}
+      {spotlightAtBottom && spotlightBlock}
       {/* Universal bio — 22 templates don't render cardData.bio natively. */}
       {!suppressed(BIO_NATIVE_KEYS) && (
         <AboutBlock bio={data.bio} accentHex={accentHex} heading={h.about} />

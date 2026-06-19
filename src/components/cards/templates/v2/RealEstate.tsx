@@ -55,6 +55,8 @@ import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
 import { resolveLabels } from "./shared/resolveLabels";
+import { SpotlightBlock } from "./shared/SpotlightBlock";
+import { UNIVERSAL_HEADINGS, type BlockLocale } from "./shared/universalHeadings";
 import type { TemplateProps } from "./types";
 
 // -----------------------------------------------------------------------------
@@ -287,6 +289,18 @@ export function RealEstate({
   const logoUrl = resolveAssetUrl(logoPath);
   const initials = getInitials(cardData.name);
 
+  // "Şu an / Now" spotlight — this template owns the native "below the photo"
+  // slot (SPOTLIGHT_NATIVE_KEYS). It is the default here; only yield to
+  // UniversalBlocks when the owner explicitly chose "top" or "bottom".
+  const spotPlacement = cardData.spotlight?.placement;
+  const spotBelowPhoto = spotPlacement !== "top" && spotPlacement !== "bottom";
+  const spotLocale: BlockLocale =
+    locale === "en" ? "en" : locale === "tr" ? "tr" : "de";
+  const spotHeading = resolveLabels(
+    UNIVERSAL_HEADINGS[spotLocale],
+    cardData.labels,
+  ).spotlight;
+
   // Sector preset fills empty service / FAQ blocks, same pattern as SmartCard.
   const services =
     cardData.services ?? sector?.services;
@@ -366,6 +380,17 @@ export function RealEstate({
         address={cardData.address}
         translations={t}
       />
+
+      {spotBelowPhoto && (
+        <SpotlightBlock
+          spotlight={cardData.spotlight}
+          heading={spotHeading}
+          accentHex={accent}
+          primaryHex={primary}
+          tone="light"
+          locale={spotLocale}
+        />
+      )}
 
       <QuickActionStrip
         slug={slug}

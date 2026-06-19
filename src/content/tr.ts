@@ -1791,6 +1791,10 @@ export const content: Content = {
           spotlightLinkUrl: "Bağlantı (isteğe bağlı)",
           spotlightLinkLabel: "Buton metni (isteğe bağlı)",
           spotlightLinkLabelPlaceholder: "Daha fazla",
+          spotlightPlacement: "Karttaki konum",
+          spotlightPlaceBelowPhoto: "Fotoğrafın altında (önerilen)",
+          spotlightPlaceTop: "Kartın üstünde",
+          spotlightPlaceBottom: "Kartın altında",
           statsSection: "İstatistikler",
           statsHint:
             "Birçok tasarımda istatistik şeridi olarak görünen gerçek rakamlar (ör. 12 — Yıl).",

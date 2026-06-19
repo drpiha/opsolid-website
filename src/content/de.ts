@@ -1791,6 +1791,10 @@ export const content: Content = {
           spotlightLinkUrl: "Link (optional)",
           spotlightLinkLabel: "Button-Text (optional)",
           spotlightLinkLabelPlaceholder: "Mehr erfahren",
+          spotlightPlacement: "Position auf der Karte",
+          spotlightPlaceBelowPhoto: "Unter dem Foto (empfohlen)",
+          spotlightPlaceTop: "Oben auf der Karte",
+          spotlightPlaceBottom: "Unten auf der Karte",
           statsSection: "Kennzahlen",
           statsHint:
             "Echte Zahlen, die viele Designs als Kennzahlen-Leiste zeigen (z. B. 12 — Jahre).",
