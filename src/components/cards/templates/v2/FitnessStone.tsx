@@ -29,6 +29,7 @@ import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { resolveLabels } from "./shared/resolveLabels";
+import { resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#5c5040";
@@ -78,13 +79,6 @@ interface Copy {
   contactH: string;
   ctaPrimary: string;
   ctaSecondary: string;
-  yearsLabel: string;
-  transformationsLabel: string;
-  igLabel: string;
-  ytLabel: string;
-  testiText: string;
-  testiName: string;
-  testiResult: string;
   bookBtn: string;
   saveContact: string;
   walletLabel: string;
@@ -103,14 +97,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contactH: "Lass uns verbinden",
     ctaPrimary: "Kostenloses Gespräch",
     ctaSecondary: "WhatsApp",
-    yearsLabel: "Jahre",
-    transformationsLabel: "Transformationen",
-    igLabel: "Instagram",
-    ytLabel: "YouTube",
-    testiText:
-      "Cans Unterschied: keine Zahlen-Obsession sondern Gespür für den Körper. In 12 Wochen körperlich und mental neu geboren.",
-    testiName: "Selin K.",
-    testiResult: "12 Wochen · -14 kg, neues Selbstwertgefühl",
     bookBtn: "Termin reservieren",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
@@ -132,14 +118,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contactH: "Let's connect",
     ctaPrimary: "Free intro call",
     ctaSecondary: "WhatsApp",
-    yearsLabel: "Years",
-    transformationsLabel: "Transformations",
-    igLabel: "Instagram",
-    ytLabel: "YouTube",
-    testiText:
-      "What set Can apart was the focus on how the body felt, not just the numbers. 12 weeks reborn — physically and mentally.",
-    testiName: "Selin K.",
-    testiResult: "12 weeks · -14 kg, regained self-respect",
     bookBtn: "Book appointment",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
@@ -161,14 +139,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contactH: "Bağlantı Kuralım",
     ctaPrimary: "Ücretsiz Görüşme",
     ctaSecondary: "WhatsApp",
-    yearsLabel: "Yıl",
-    transformationsLabel: "Dönüşüm",
-    igLabel: "Instagram",
-    ytLabel: "YouTube",
-    testiText:
-      "Can'ın en büyük farkı sayılara değil bedensel hisse odaklanmasıydı. 12 haftada hem fiziksel hem zihinsel olarak yeniden doğdum.",
-    testiName: "Selin K.",
-    testiResult: "12 haftada -14 kg, kazanılmış öz-saygı",
     bookBtn: "Randevu Al",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
@@ -190,14 +160,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contactH: "Conectemos",
     ctaPrimary: "Llamada introductoria gratuita",
     ctaSecondary: "WhatsApp",
-    yearsLabel: "Años",
-    transformationsLabel: "Transformaciones",
-    igLabel: "Instagram",
-    ytLabel: "YouTube",
-    testiText:
-      "What set Can apart was the focus on how the body felt, not just the numbers. 12 weeks reborn — physically and mentally.",
-    testiName: "Selin K.",
-    testiResult: "12 weeks · -14 kg, regained self-respect",
     bookBtn: "Reservar cita",
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
@@ -220,14 +182,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contactH: "Connettiamoci",
     ctaPrimary: "Chiamata introduttiva gratuita",
     ctaSecondary: "WhatsApp",
-    yearsLabel: "Anni",
-    transformationsLabel: "Trasformazioni",
-    igLabel: "Instagram",
-    ytLabel: "YouTube",
-    testiText:
-      "What set Can apart was the focus on how the body felt, not just the numbers. 12 weeks reborn — physically and mentally.",
-    testiName: "Selin K.",
-    testiResult: "12 weeks · -14 kg, regained self-respect",
     bookBtn: "Prenota un appuntamento",
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
@@ -250,14 +204,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contactH: "Connectons-nous",
     ctaPrimary: "Appel d'introduction gratuit",
     ctaSecondary: "WhatsApp",
-    yearsLabel: "Années",
-    transformationsLabel: "Transformations",
-    igLabel: "Instagram",
-    ytLabel: "YouTube",
-    testiText:
-      "What set Can apart was the focus on how the body felt, not just the numbers. 12 weeks reborn — physically and mentally.",
-    testiName: "Selin K.",
-    testiResult: "12 weeks · -14 kg, regained self-respect",
     bookBtn: "Prendre rendez-vous",
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
@@ -280,14 +226,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contactH: "لنتواصل",
     ctaPrimary: "مكالمة تعريفية مجانية",
     ctaSecondary: "واتساب",
-    yearsLabel: "سنوات",
-    transformationsLabel: "التحولات",
-    igLabel: "إنستغرام",
-    ytLabel: "يوتيوب",
-    testiText:
-      "What set Can apart was the focus on how the body felt, not just the numbers. 12 weeks reborn — physically and mentally.",
-    testiName: "Selin K.",
-    testiResult: "12 weeks · -14 kg, regained self-respect",
     bookBtn: "حجز موعد",
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
@@ -330,6 +268,7 @@ export function FitnessStone({
     : undefined;
 
   const services = (cardData.services ?? []).slice(0, 5);
+  const stats = resolveStats(cardData.stats);
   const nameParts = cardData.name.trim().split(/\s+/);
   const nameFirst = nameParts[0] ?? cardData.name;
   const nameLast = nameParts.slice(1).join(" ");
@@ -712,7 +651,8 @@ export function FitnessStone({
         </ul>
       </section>
 
-      {/* TESTIMONIAL */}
+      {/* TESTIMONIAL — owner-entered (cardData.testimonials); absent ⇒ nothing */}
+      {cardData.testimonials?.[0] && (
       <section
         className="relative mx-6 mt-7 px-5 py-7 text-center"
         style={{
@@ -743,7 +683,7 @@ export function FitnessStone({
             color: INK,
           }}
         >
-          {t.testiText}
+          {cardData.testimonials[0].quote}
         </p>
         <div className="mt-4 flex items-center justify-center gap-3">
           <div
@@ -757,7 +697,7 @@ export function FitnessStone({
               border: `2px solid ${SURFACE}`,
             }}
           >
-            {t.testiName[0]}
+            {cardData.testimonials[0].author[0]}
           </div>
           <div className="text-left">
             <div
@@ -768,51 +708,58 @@ export function FitnessStone({
                 letterSpacing: "0.5px",
               }}
             >
-              {t.testiName}
+              {cardData.testimonials[0].author}
             </div>
+            {cardData.testimonials[0].role && (
             <div
               className="mt-0.5"
               style={{ fontSize: 11, color: MUTE }}
             >
-              {t.testiResult}
+              {cardData.testimonials[0].role}
             </div>
+            )}
           </div>
         </div>
       </section>
+      )}
 
-      {/* STATS */}
-      <section className="grid grid-cols-4 gap-1.5 px-7 py-8 text-center">
-        {[
-          { num: "8", label: t.yearsLabel },
-          { num: "600+", label: t.transformationsLabel },
-          { num: "45K", label: t.igLabel },
-          { num: "28K", label: t.ytLabel },
-        ].map((s, i) => (
-          <div key={i}>
-            <div
-              className="serif italic"
-              style={{
-                fontSize: 30,
-                color: GREEN,
-                lineHeight: 1,
-              }}
-            >
-              {s.num}
+      {/* STATS — owner-entered proof numbers (resolveStats); none ⇒ nothing */}
+      {stats && (
+        <section
+          className="px-7 py-8 text-center"
+          style={{
+            display: "grid",
+            gridTemplateColumns: `repeat(${Math.min(stats.length, 4)}, 1fr)`,
+            gap: 6,
+          }}
+        >
+          {stats.map((s, i) => (
+            <div key={`stat-${i}-${s.label.slice(0, 8)}`}>
+              <div
+                className="serif italic"
+                style={{
+                  fontSize: 30,
+                  color: GREEN,
+                  lineHeight: 1,
+                }}
+              >
+                {s.value}
+              </div>
+              <div
+                className="mt-1.5 uppercase"
+                style={{
+                  fontSize: 10,
+                  letterSpacing: "1.5px",
+                  color: MUTE,
+                  fontWeight: 600,
+                }}
+              >
+                {s.label}
+              </div>
             </div>
-            <div
-              className="mt-1.5 uppercase"
-              style={{
-                fontSize: 10,
-                letterSpacing: "1.5px",
-                color: MUTE,
-                fontWeight: 600,
-              }}
-            >
-              {s.label}
-            </div>
-          </div>
-        ))}
-      </section>
+          ))}
+        </section>
+      )}
 
       {/* CONTACT */}
       <SectionHead
@@ -1042,7 +989,7 @@ export const fitnessStoneEntry: Omit<TemplateRegistryEntry, "Component"> = {
   supports: {
     services: true,
     faqs: false,
-    testimonials: false,
+    testimonials: true,
     gallery: false,
     video: false,
     brochure: false,

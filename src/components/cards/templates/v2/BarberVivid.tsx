@@ -31,6 +31,7 @@ import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { resolveLabels } from "./shared/resolveLabels";
+import { resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#dc2626";
@@ -68,9 +69,6 @@ function digitsOnly(value: string): string {
 
 interface Copy {
   tagPill: string;
-  yearsLabel: string;
-  clientsLabel: string;
-  followersLabel: string;
   servicesH: string;
   ctaH: string;
   ctaSub: string;
@@ -84,9 +82,6 @@ interface Copy {
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     tagPill: "Premium Barber",
-    yearsLabel: "Jahre",
-    clientsLabel: "Kunden",
-    followersLabel: "Follower",
     servicesH: "Leistungen",
     ctaH: "Schnelle Buchung",
     ctaSub: "WhatsApp-Termin in Sekunden",
@@ -98,9 +93,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   en: {
     tagPill: "Premium Barber",
-    yearsLabel: "Years",
-    clientsLabel: "Clients",
-    followersLabel: "Followers",
     servicesH: "Services",
     ctaH: "Instant Booking",
     ctaSub: "Reserve via WhatsApp in seconds",
@@ -112,9 +104,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   tr: {
     tagPill: "Premium Berber",
-    yearsLabel: "Yıl",
-    clientsLabel: "Müşteri",
-    followersLabel: "Takipçi",
     servicesH: "Hizmetler",
     ctaH: "Anında Randevu",
     ctaSub: "WhatsApp ile saniyeler içinde rezervasyon",
@@ -127,9 +116,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   es: {
 
     tagPill: "Barbería premium",
-    yearsLabel: "Años",
-    clientsLabel: "Clientes",
-    followersLabel: "Seguidores",
     servicesH: "Servicios",
     ctaH: "Reserva instantánea",
     ctaSub: "Reserva por WhatsApp en segundos",
@@ -143,9 +129,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   it: {
 
     tagPill: "Barbiere premium",
-    yearsLabel: "Anni",
-    clientsLabel: "Clienti",
-    followersLabel: "Follower",
     servicesH: "Servizi",
     ctaH: "Prenotazione immediata",
     ctaSub: "Prenota via WhatsApp in pochi secondi",
@@ -159,9 +142,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   fr: {
 
     tagPill: "Barbier premium",
-    yearsLabel: "Années",
-    clientsLabel: "Clients",
-    followersLabel: "Abonnés",
     servicesH: "Services",
     ctaH: "Réservation instantanée",
     ctaSub: "Réservez par WhatsApp en quelques secondes",
@@ -175,9 +155,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   ar: {
 
     tagPill: "حلاق فاخر",
-    yearsLabel: "سنوات",
-    clientsLabel: "العملاء",
-    followersLabel: "متابعون",
     servicesH: "الخدمات",
     ctaH: "حجز فوري",
     ctaSub: "احجز عبر واتساب في ثوانٍ",
@@ -212,6 +189,7 @@ export function BarberVivid({
     : "";
 
   const services = (cardData.services ?? []).slice(0, 5);
+  const stats = resolveStats(cardData.stats);
   const cityFromAddress = cardData.address?.split(",").slice(-1)[0]?.trim();
   const nameFirst = cardData.name.trim().split(/\s+/)[0] ?? cardData.name;
   const heroGrad = `linear-gradient(135deg, ${DARK_1} 0%, ${DARK_2} 50%, ${DARK_3} 100%)`;
@@ -346,53 +324,61 @@ export function BarberVivid({
           >
             {cardData.title || cardData.position}
           </div>
-          <div className="flex flex-wrap gap-1.5">
-            <Pill text="15 Years" color={RED} bg={`${RED}1a`} />
-            <Pill text="Premium" color={ORANGE} bg={`${ORANGE}1f`} />
-            <Pill text="Studio" color={DARK_3} bg={`${DARK_3}1a`} />
-          </div>
+          {stats && (
+            <div className="flex flex-wrap gap-1.5">
+              {stats.map((s, i) => (
+                <Pill
+                  key={`stat-${i}-${s.label.slice(0, 8)}`}
+                  text={`${s.value} ${s.label}`}
+                  color={i % 2 === 0 ? RED : ORANGE}
+                  bg={i % 2 === 0 ? `${RED}1a` : `${ORANGE}1f`}
+                />
+              ))}
+            </div>
+          )}
         </div>
       </section>
 
-      {/* QUICK STATS */}
-      <section className="mt-5 grid grid-cols-3 gap-2.5 px-4">
-        {[
-          { num: "15", label: t.yearsLabel },
-          { num: "5K+", label: t.clientsLabel },
-          { num: "32K", label: t.followersLabel },
-        ].map((s, i) => (
-          <div
-            key={i}
-            className="rounded-2xl px-3 py-4 text-center"
-            style={{
-              background: SURFACE,
-              boxShadow: `0 4px 16px -4px ${DARK_1}14`,
-            }}
-          >
+      {/* QUICK STATS — owner-entered proof numbers (resolveStats); none ⇒ nothing */}
+      {stats && (
+        <section
+          className="mt-5 px-4"
+          style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(stats.length, 3)}, 1fr)`, gap: 10 }}
+        >
+          {stats.map((s, i) => (
             <div
-              className="display"
+              key={`stat-${i}-${s.label.slice(0, 8)}`}
+              className="rounded-2xl px-3 py-4 text-center"
               style={{
-                fontSize: 26,
-                fontWeight: 800,
-                background: accentGrad,
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-                color: "transparent",
-                lineHeight: 1,
-                marginBottom: 6,
+                background: SURFACE,
+                boxShadow: `0 4px 16px -4px ${DARK_1}14`,
               }}
             >
-              {s.num}
+              <div
+                className="display"
+                style={{
+                  fontSize: 26,
+                  fontWeight: 800,
+                  background: accentGrad,
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  color: "transparent",
+                  lineHeight: 1,
+                  marginBottom: 6,
+                }}
+              >
+                {s.value}
+              </div>
+              <div
+                className="uppercase"
+                style={{ fontSize: 10.5, fontWeight: 600, color: MUTED, letterSpacing: "0.5px" }}
+              >
+                {s.label}
+              </div>
             </div>
-            <div
-              className="uppercase"
-              style={{ fontSize: 10.5, fontWeight: 600, color: MUTED, letterSpacing: "0.5px" }}
-            >
-              {s.label}
-            </div>
-          </div>
-        ))}
-      </section>
+          ))}
+        </section>
+      )}
 
       {/* SERVICES */}
       {services.length > 0 && (

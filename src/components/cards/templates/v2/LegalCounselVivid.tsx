@@ -37,6 +37,7 @@ import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
 import { resolveLabels } from "./shared/resolveLabels";
+import { resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#1a2b9e";
@@ -86,9 +87,6 @@ interface Copy {
   contactSub: string;
   ctaLabel: string;
   pillActive: string;
-  yearsLabel: string;
-  casesLabel: string;
-  winRateLabel: string;
   saveContact: string;
   walletLabel: string;
   poweredBy: string;
@@ -102,9 +100,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contactSub: "Mit einem Klick Verbindung aufnehmen",
     ctaLabel: "Kostenloses Erstgespräch",
     pillActive: "Aktiv · Berlin",
-    yearsLabel: "Jahre",
-    casesLabel: "Mandate",
-    winRateLabel: "Erfolg",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
@@ -116,9 +111,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contactSub: "One-tap contact",
     ctaLabel: "Free initial consultation",
     pillActive: "Active · Berlin",
-    yearsLabel: "Years",
-    casesLabel: "Mandates",
-    winRateLabel: "Win rate",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
@@ -130,9 +122,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contactSub: "Tek dokunuşla iletişim",
     ctaLabel: "Ücretsiz Ön Görüşme",
     pillActive: "Aktif · Berlin",
-    yearsLabel: "Yıl",
-    casesLabel: "Dava",
-    winRateLabel: "Başarı",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
@@ -145,13 +134,10 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contactSub: "Contacto con un toque",
     ctaLabel: "Consulta inicial gratuita",
     pillActive: "Active · Berlin",
-    yearsLabel: "Años",
-    casesLabel: "Mandatos",
-    winRateLabel: "Tasa de éxito",
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
-  
+
   },
   it: {
 
@@ -161,13 +147,10 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contactSub: "Contatto con un tap",
     ctaLabel: "Prima consulenza gratuita",
     pillActive: "Active · Berlin",
-    yearsLabel: "Anni",
-    casesLabel: "Mandati",
-    winRateLabel: "Tasso di successo",
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
-  
+
   },
   fr: {
 
@@ -177,13 +160,10 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contactSub: "Contact en un clic",
     ctaLabel: "Première consultation gratuite",
     pillActive: "Active · Berlin",
-    yearsLabel: "Années",
-    casesLabel: "Mandats",
-    winRateLabel: "Taux de réussite",
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
-  
+
   },
   ar: {
 
@@ -193,13 +173,10 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contactSub: "اتصال بنقرة",
     ctaLabel: "استشارة أولية مجانية",
     pillActive: "Active · Berlin",
-    yearsLabel: "سنوات",
-    casesLabel: "تكليفات",
-    winRateLabel: "معدل النجاح",
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
-  
+
   },
 };
 
@@ -227,6 +204,7 @@ export function LegalCounselVivid({
 
   const services = (cardData.services ?? []).slice(0, 5);
   const testimonial = cardData.testimonials?.[0];
+  const stats = resolveStats(cardData.stats);
 
   return (
     <article
@@ -349,25 +327,33 @@ export function LegalCounselVivid({
         </div>
       </div>
 
-      {/* QSTATS — navy gradient */}
-      <div
-        className="relative mx-6 mt-7 grid grid-cols-3 overflow-hidden rounded-[18px] px-2 py-4.5"
-        style={{
-          background: `linear-gradient(135deg, ${NAVY_2} 0%, ${NAVY} 100%)`,
-        }}
-      >
-        <span
-          aria-hidden
-          className="pointer-events-none absolute right-0 top-0 h-20 w-20 rounded-full"
+      {/* QSTATS — owner-entered proof numbers (resolveStats); none ⇒ nothing */}
+      {stats && (
+        <div
+          className="relative mx-6 mt-7 grid overflow-hidden rounded-[18px] px-2 py-4.5"
           style={{
-            background: "rgba(245,158,11,0.18)",
-            transform: "translate(30px, -30px)",
+            background: `linear-gradient(135deg, ${NAVY_2} 0%, ${NAVY} 100%)`,
+            gridTemplateColumns: `repeat(${stats.length}, 1fr)`,
           }}
-        />
-        <VividQStat num="20+" label={t.yearsLabel} />
-        <VividQStat num="800+" label={t.casesLabel} divider />
-        <VividQStat num="94%" label={t.winRateLabel} divider />
-      </div>
+        >
+          <span
+            aria-hidden
+            className="pointer-events-none absolute right-0 top-0 h-20 w-20 rounded-full"
+            style={{
+              background: "rgba(245,158,11,0.18)",
+              transform: "translate(30px, -30px)",
+            }}
+          />
+          {stats.map((s, i) => (
+            <VividQStat
+              key={`stat-${i}-${s.label.slice(0, 8)}`}
+              num={s.value}
+              label={s.label}
+              divider={i > 0}
+            />
+          ))}
+        </div>
+      )}
 
       {/* SERVICES GRID */}
       {services.length > 0 && (

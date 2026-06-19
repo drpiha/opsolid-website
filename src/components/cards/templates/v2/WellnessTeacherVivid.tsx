@@ -42,6 +42,7 @@ import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
 import { resolveLabels } from "./shared/resolveLabels";
+import { resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#f97316"; // sunset orange
@@ -83,16 +84,11 @@ function digitsOnly(value: string): string {
 
 interface Copy {
   tag: string;
-  role: string;
-  mantra: string;
   callBtn: string;
   whatsappBtn: string;
   emailBtn: string;
   classCats: string;
   services: string;
-  yearsLabel: string;
-  studentsLabel: string;
-  communityLabel: string;
   trialBadge: string;
   trialTitle: string;
   trialDesc: string;
@@ -106,17 +102,11 @@ interface Copy {
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     tag: "Yoga & Wellness",
-    role: "Zertifizierte RYT-500 Yoga-Lehrerin",
-    mantra:
-      "Komm zurück in deinen Körper. Atme. Sei hier. Yoga beginnt genau in diesem Moment.",
     callBtn: "Anrufen",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-Mail",
     classCats: "Stundenkategorien",
     services: "Pakete",
-    yearsLabel: "Jahre",
-    studentsLabel: "Schüler:innen",
-    communityLabel: "Community",
     trialBadge: "Für Anfänger:innen",
     trialTitle: "Erste Stunde kostenlos",
     trialDesc:
@@ -129,17 +119,11 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   en: {
     tag: "Yoga & Wellness",
-    role: "RYT-500 Certified Yoga Teacher",
-    mantra:
-      "Come back to your body. Breathe. Be here. Yoga starts in exactly this moment.",
     callBtn: "Call",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
     classCats: "Class categories",
     services: "Packages",
-    yearsLabel: "Years",
-    studentsLabel: "Students",
-    communityLabel: "Community",
     trialBadge: "Beginners welcome",
     trialTitle: "First class free",
     trialDesc:
@@ -152,17 +136,11 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   tr: {
     tag: "Yoga & Wellness",
-    role: "RYT-500 Sertifikalı Yoga Eğitmeni",
-    mantra:
-      "Bedenine geri dön. Nefesini dinle. Tam burada ol. Yoga yolculuğu burada başlıyor.",
     callBtn: "Ara",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-posta",
     classCats: "Ders Kategorileri",
     services: "Paketler",
-    yearsLabel: "Yıl",
-    studentsLabel: "Öğrenci",
-    communityLabel: "Topluluk",
     trialBadge: "Yeni Başlayanlara",
     trialTitle: "İlk Ders Ücretsiz",
     trialDesc:
@@ -176,17 +154,11 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   es: {
 
     tag: "Yoga y bienestar",
-    role: "Profesor de yoga certificado RYT-500",
-    mantra:
-      "Come back to your body. Breathe. Be here. Yoga starts in exactly this moment.",
     callBtn: "Llamar",
     whatsappBtn: "WhatsApp",
     emailBtn: "Correo",
     classCats: "Categorías de clase",
     services: "Paquetes",
-    yearsLabel: "Años",
-    studentsLabel: "Estudiantes",
-    communityLabel: "Comunidad",
     trialBadge: "Principiantes bienvenidos",
     trialTitle: "Primera clase gratis",
     trialDesc:
@@ -196,22 +168,16 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
     contact: "Contacto",
-  
+
   },
   it: {
 
     tag: "Yoga e benessere",
-    role: "Insegnante di yoga certificato RYT-500",
-    mantra:
-      "Come back to your body. Breathe. Be here. Yoga starts in exactly this moment.",
     callBtn: "Chiama",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
     classCats: "Categorie di classi",
     services: "Pacchetti",
-    yearsLabel: "Anni",
-    studentsLabel: "Studenti",
-    communityLabel: "Comunità",
     trialBadge: "Principianti benvenuti",
     trialTitle: "Prima lezione gratuita",
     trialDesc:
@@ -221,22 +187,16 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
     contact: "Contatto",
-  
+
   },
   fr: {
 
     tag: "Yoga et bien-être",
-    role: "Professeur de yoga certifié RYT-500",
-    mantra:
-      "Come back to your body. Breathe. Be here. Yoga starts in exactly this moment.",
     callBtn: "Appeler",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-mail",
     classCats: "Catégories de cours",
     services: "Forfaits",
-    yearsLabel: "Années",
-    studentsLabel: "Étudiants",
-    communityLabel: "Communauté",
     trialBadge: "Débutants bienvenus",
     trialTitle: "Premier cours offert",
     trialDesc:
@@ -246,22 +206,16 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
     contact: "Contact",
-  
+
   },
   ar: {
 
     tag: "اليوغا والعافية",
-    role: "معلم يوغا معتمد RYT-500",
-    mantra:
-      "Come back to your body. Breathe. Be here. Yoga starts in exactly this moment.",
     callBtn: "اتصال",
     whatsappBtn: "واتساب",
     emailBtn: "البريد الإلكتروني",
     classCats: "فئات الحصص",
     services: "الباقات",
-    yearsLabel: "سنوات",
-    studentsLabel: "الطلاب",
-    communityLabel: "المجتمع",
     trialBadge: "نرحب بالمبتدئين",
     trialTitle: "الحصة الأولى مجانية",
     trialDesc:
@@ -271,7 +225,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
     contact: "اتصال",
-  
+
   },
 };
 
@@ -305,6 +259,7 @@ export function WellnessTeacherVivid({
     ? digitsOnly(cardData.whatsapp).replace(/^\+/, "")
     : "";
   const services = cardData.services ?? [];
+  const stats = resolveStats(cardData.stats);
   const year = new Date().getFullYear();
 
   return (
@@ -366,18 +321,22 @@ export function WellnessTeacherVivid({
           >
             {cardData.name}
           </h1>
-          <div
-            className="mt-1.5 text-[14px] font-medium"
-            style={{ color: "rgba(255,255,255,0.88)" }}
-          >
-            {cardData.title || t.role}
-          </div>
-          <p
-            className="mt-7 text-[14px] italic leading-[1.7]"
-            style={{ color: "rgba(255,255,255,0.92)" }}
-          >
-            “{cardData.bio || t.mantra}”
-          </p>
+          {cardData.title && (
+            <div
+              className="mt-1.5 text-[14px] font-medium"
+              style={{ color: "rgba(255,255,255,0.88)" }}
+            >
+              {cardData.title}
+            </div>
+          )}
+          {cardData.bio && (
+            <p
+              className="mt-7 text-[14px] italic leading-[1.7]"
+              style={{ color: "rgba(255,255,255,0.92)" }}
+            >
+              “{cardData.bio}”
+            </p>
+          )}
         </div>
       </header>
 
@@ -514,20 +473,22 @@ export function WellnessTeacherVivid({
         </section>
       )}
 
-      {/* STATS */}
-      <section
-        className="mt-7 px-7 py-8"
-        style={{
-          background: `linear-gradient(135deg, ${primaryDeep} 0%, ${primary} 100%)`,
-          color: "#fff",
-        }}
-      >
-        <div className="flex justify-around text-center">
-          <Stat num="6" label={t.yearsLabel} accent={accent} />
-          <Stat num="350+" label={t.studentsLabel} accent={accent} />
-          <Stat num="18K" label={t.communityLabel} accent={accent} />
-        </div>
-      </section>
+      {/* STATS — owner-entered proof numbers (resolveStats); none ⇒ nothing */}
+      {stats && (
+        <section
+          className="mt-7 px-7 py-8"
+          style={{
+            background: `linear-gradient(135deg, ${primaryDeep} 0%, ${primary} 100%)`,
+            color: "#fff",
+          }}
+        >
+          <div className="flex justify-around text-center">
+            {stats.map((s, i) => (
+              <Stat key={`stat-${i}-${s.label.slice(0, 8)}`} num={s.value} label={s.label} accent={accent} />
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* FREE TRIAL */}
       <section className="px-7 pt-7">

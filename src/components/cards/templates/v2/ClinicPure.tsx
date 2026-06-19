@@ -30,6 +30,7 @@ import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { resolveLabels } from "./shared/resolveLabels";
+import { resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#f8fffe";
@@ -63,9 +64,6 @@ function digitsOnly(value: string): string {
 }
 
 interface Copy {
-  yearsLabel: string;
-  patientsLabel: string;
-  satisfactionLabel: string;
   educationH: string;
   specialtiesH: string;
   contactH: string;
@@ -84,9 +82,6 @@ interface Copy {
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    yearsLabel: "Jahre",
-    patientsLabel: "Patienten",
-    satisfactionLabel: "Zufriedenheit",
     educationH: "Ausbildung",
     specialtiesH: "Schwerpunkte",
     contactH: "Kontakt",
@@ -103,9 +98,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     poweredBy: "Powered by",
   },
   en: {
-    yearsLabel: "Years",
-    patientsLabel: "Patients",
-    satisfactionLabel: "Satisfaction",
     educationH: "Education",
     specialtiesH: "Specialties",
     contactH: "Contact",
@@ -122,9 +114,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     poweredBy: "Powered by",
   },
   tr: {
-    yearsLabel: "Yıl",
-    patientsLabel: "Hasta",
-    satisfactionLabel: "Memnuniyet",
     educationH: "Eğitim",
     specialtiesH: "Uzmanlık",
     contactH: "İletişim",
@@ -142,9 +131,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   es: {
 
-    yearsLabel: "Años",
-    patientsLabel: "Pacientes",
-    satisfactionLabel: "Satisfacción",
     educationH: "Formación",
     specialtiesH: "Especialidades",
     contactH: "Contacto",
@@ -163,9 +149,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   it: {
 
-    yearsLabel: "Anni",
-    patientsLabel: "Pazienti",
-    satisfactionLabel: "Soddisfazione",
     educationH: "Formazione",
     specialtiesH: "Specialità",
     contactH: "Contatto",
@@ -184,9 +167,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   fr: {
 
-    yearsLabel: "Années",
-    patientsLabel: "Patients",
-    satisfactionLabel: "Satisfaction",
     educationH: "Formation",
     specialtiesH: "Spécialités",
     contactH: "Contact",
@@ -205,9 +185,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   ar: {
 
-    yearsLabel: "سنوات",
-    patientsLabel: "المرضى",
-    satisfactionLabel: "الرضا",
     educationH: "التعليم",
     specialtiesH: "التخصصات",
     contactH: "اتصال",
@@ -248,6 +225,7 @@ export function ClinicPure({
     : "";
 
   const services = (cardData.services ?? []).slice(0, 5);
+  const stats = resolveStats(cardData.stats);
   const cityFromAddress = cardData.address?.split(",").slice(-1)[0]?.trim();
 
   // Split name to allow first-word italic em
@@ -391,18 +369,29 @@ export function ClinicPure({
           </p>
         )}
 
-        {/* STATS */}
-        <div
-          className="mb-8 grid grid-cols-3 gap-3 py-5"
-          style={{
-            borderTop: `1px solid ${HAIRLINE}`,
-            borderBottom: `1px solid ${HAIRLINE}`,
-          }}
-        >
-          <PureStat num="12" sup=" yıl" label={t.yearsLabel} accent={accent} locale={locale} />
-          <PureStat num="3.2K" sup="+" label={t.patientsLabel} accent={accent} locale={locale} />
-          <PureStat num="98" sup="%" label={t.satisfactionLabel} accent={accent} locale={locale} />
-        </div>
+        {/* STATS — owner-entered proof numbers (resolveStats); none ⇒ nothing */}
+        {stats && (
+          <div
+            className="mb-8 py-5"
+            style={{
+              display: "grid",
+              gridTemplateColumns: `repeat(${Math.min(stats.length, 4)}, 1fr)`,
+              gap: 12,
+              borderTop: `1px solid ${HAIRLINE}`,
+              borderBottom: `1px solid ${HAIRLINE}`,
+            }}
+          >
+            {stats.map((s, i) => (
+              <PureStat
+                key={`stat-${i}-${s.label.slice(0, 8)}`}
+                num={s.value}
+                label={s.label}
+                accent={accent}
+                locale={locale}
+              />
+            ))}
+          </div>
+        )}
 
         {/* SERVICES */}
         {services.length > 0 && (
@@ -585,13 +574,11 @@ export function ClinicPure({
 
 function PureStat({
   num,
-  sup,
   label,
   accent,
   locale,
 }: {
   num: string;
-  sup?: string;
   label: string;
   accent: string;
   locale: "de" | "en" | "tr" | "es" | "it" | "fr" | "ar";
@@ -605,11 +592,6 @@ function PureStat({
         style={{ fontWeight: 300, color: INK, letterSpacing: "-1px" }}
       >
         {num}
-        {sup && (
-          <span style={{ fontSize: 14, color: INK_SOFT, fontWeight: 400 }}>
-            {sup}
-          </span>
-        )}
       </div>
       <div
         className="text-[10px] font-medium uppercase"

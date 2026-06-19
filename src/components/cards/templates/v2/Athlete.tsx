@@ -429,7 +429,7 @@ export function Athlete({
         accent={accent}
         sectorBadge={sector?.name}
         sourceLabel={sourceLabel}
-        coachLabel={cardData.position || cardData.title || (locale === "en" ? "Coach" : locale === "tr" ? "Antrenör" : "Coach")}
+        coachLabel={cardData.position || cardData.title || ""}
       />
 
       {stats.length > 0 && <StatsStrip stats={stats} accent={accent} />}
@@ -645,17 +645,19 @@ function Hero({
 
       {/* Hero text */}
       <div className="absolute inset-x-0 bottom-0 z-10 px-6 pb-8 pt-10">
-        <span
-          className="ath-mono mb-3 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[9.5px] font-bold"
-          style={{
-            background: `${accent}14`,
-            color: accent,
-            boxShadow: `inset 0 0 0 1px ${accent}40`,
-          }}
-        >
-          <Zap size={10} strokeWidth={2.6} />
-          {coachLabel}
-        </span>
+        {coachLabel && (
+          <span
+            className="ath-mono mb-3 inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[9.5px] font-bold"
+            style={{
+              background: `${accent}14`,
+              color: accent,
+              boxShadow: `inset 0 0 0 1px ${accent}40`,
+            }}
+          >
+            <Zap size={10} strokeWidth={2.6} />
+            {coachLabel}
+          </span>
+        )}
 
         <h1 className="ath-display text-white">
           <span

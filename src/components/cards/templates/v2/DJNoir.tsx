@@ -31,6 +31,7 @@ import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { resolveLabels } from "./shared/resolveLabels";
+import { resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#000000";
@@ -67,9 +68,6 @@ function digitsOnly(value: string): string {
 
 interface Copy {
   recLabel: string;
-  yearsLabel: string;
-  eventsLabel: string;
-  listenersLabel: string;
   genresH: string;
   upcomingH: string;
   bookingH: string;
@@ -83,9 +81,6 @@ interface Copy {
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     recLabel: "REC // Live Set",
-    yearsLabel: "Active",
-    eventsLabel: "Events",
-    listenersLabel: "Listeners",
     genresH: "Genres",
     upcomingH: "Upcoming",
     bookingH: "Booking",
@@ -97,9 +92,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   en: {
     recLabel: "REC // Live Set",
-    yearsLabel: "Active",
-    eventsLabel: "Events",
-    listenersLabel: "Listeners",
     genresH: "Genres",
     upcomingH: "Upcoming",
     bookingH: "Booking",
@@ -111,9 +103,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   tr: {
     recLabel: "REC // Live Set",
-    yearsLabel: "Aktif",
-    eventsLabel: "Etkinlik",
-    listenersLabel: "Dinleyici",
     genresH: "Türler",
     upcomingH: "Yaklaşan",
     bookingH: "Booking",
@@ -126,9 +115,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   es: {
 
     recLabel: "REC // Live Set",
-    yearsLabel: "Activo",
-    eventsLabel: "Eventos",
-    listenersLabel: "Oyentes",
     genresH: "Géneros",
     upcomingH: "Próximamente",
     bookingH: "Reserva",
@@ -142,9 +128,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   it: {
 
     recLabel: "REC // Live Set",
-    yearsLabel: "Attivo",
-    eventsLabel: "Eventi",
-    listenersLabel: "Ascoltatori",
     genresH: "Generi",
     upcomingH: "Prossimi",
     bookingH: "Prenotazione",
@@ -158,9 +141,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   fr: {
 
     recLabel: "REC // Live Set",
-    yearsLabel: "Actif",
-    eventsLabel: "Événements",
-    listenersLabel: "Auditeurs",
     genresH: "Genres",
     upcomingH: "À venir",
     bookingH: "Réservation",
@@ -174,9 +154,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   ar: {
 
     recLabel: "تسجيل // عرض حي",
-    yearsLabel: "نشط",
-    eventsLabel: "الفعاليات",
-    listenersLabel: "المستمعون",
     genresH: "الأنواع",
     upcomingH: "قادم",
     bookingH: "الحجز",
@@ -212,6 +189,7 @@ export function DJNoir({
     : "";
 
   const services = (cardData.services ?? []).slice(0, 5);
+  const stats = resolveStats(cardData.stats);
   const cityFromAddress = cardData.address?.split(",").slice(-1)[0]?.trim();
 
   // Split name in two words for gradient effect
@@ -396,44 +374,46 @@ export function DJNoir({
         </div>
       </section>
 
-      {/* STATS */}
-      <div
-        className="relz grid grid-cols-3"
-        style={{ borderBottom: `1px solid ${LINE}` }}
-      >
-        {[
-          { num: "10Y", label: t.yearsLabel },
-          { num: "450+", label: t.eventsLabel },
-          { num: "85K", label: t.listenersLabel },
-        ].map((s, i) => (
-          <div
-            key={i}
-            className="px-2 py-6 text-center"
-            style={{
-              borderRight: i < 2 ? `1px solid ${LINE}` : "none",
-            }}
-          >
+      {/* STATS — owner-entered proof numbers (resolveStats); none ⇒ nothing */}
+      {stats && (
+        <div
+          className="relz"
+          style={{
+            display: "grid",
+            gridTemplateColumns: `repeat(${Math.min(stats.length, 3)}, 1fr)`,
+            borderBottom: `1px solid ${LINE}`,
+          }}
+        >
+          {stats.map((s, i) => (
             <div
-              className="display text-[24px]"
+              key={`stat-${i}-${s.label.slice(0, 8)}`}
+              className="px-2 py-6 text-center"
               style={{
-                fontWeight: 800,
-                background: `linear-gradient(135deg, ${accent}, ${ACCENT_2})`,
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-                color: "transparent",
+                borderRight: i < stats.length - 1 ? `1px solid ${LINE}` : "none",
               }}
             >
-              {s.num}
+              <div
+                className="display text-[24px]"
+                style={{
+                  fontWeight: 800,
+                  background: `linear-gradient(135deg, ${accent}, ${ACCENT_2})`,
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  color: "transparent",
+                }}
+              >
+                {s.value}
+              </div>
+              <div
+                className="mt-1 text-[9px] uppercase"
+                style={{ color: TEXT_SOFT, letterSpacing: "1.5px" }}
+              >
+                {s.label}
+              </div>
             </div>
-            <div
-              className="mt-1 text-[9px] uppercase"
-              style={{ color: TEXT_SOFT, letterSpacing: "1.5px" }}
-            >
-              {s.label}
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* GENRES */}
       {cardData.bio && (

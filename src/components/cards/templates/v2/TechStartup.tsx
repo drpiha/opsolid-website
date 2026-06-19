@@ -115,7 +115,6 @@ interface TsCopy {
   poweredBy: string;
   shipped: string;
   open: string;
-  liveBadge: string;
   shareLabel: string;
 }
 
@@ -143,7 +142,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", TsCopy
     poweredBy: "Powered by",
     shipped: "Live",
     open: "Öffnen",
-    liveBadge: "Live · seit 2026",
     shareLabel: "Share",
   },
   en: {
@@ -169,7 +167,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", TsCopy
     poweredBy: "Powered by",
     shipped: "Live",
     open: "Open",
-    liveBadge: "Live · since 2026",
     shareLabel: "Share",
   },
   tr: {
@@ -195,11 +192,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", TsCopy
     poweredBy: "Powered by",
     shipped: "Canlı",
     open: "Aç",
-    liveBadge: "Canlı · 2026'dan beri",
     shareLabel: "Share",
   },
   es: {
-
     saveContact: "Guardar contacto",
     callNow: "Llamar",
     whatsapp: "WhatsApp",
@@ -222,12 +217,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", TsCopy
     poweredBy: "Desarrollado por",
     shipped: "En vivo",
     open: "Abierto",
-    liveBadge: "En vivo · desde 2026",
     shareLabel: "Share",
-
   },
   it: {
-
     saveContact: "Salva contatto",
     callNow: "Chiama",
     whatsapp: "WhatsApp",
@@ -250,12 +242,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", TsCopy
     poweredBy: "Realizzato con",
     shipped: "Live",
     open: "Aperto",
-    liveBadge: "Live · dal 2026",
     shareLabel: "Share",
-
   },
   fr: {
-
     saveContact: "Enregistrer le contact",
     callNow: "Appeler",
     whatsapp: "WhatsApp",
@@ -278,12 +267,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", TsCopy
     poweredBy: "Propulsé par",
     shipped: "Live",
     open: "Ouvert",
-    liveBadge: "Live · depuis 2026",
     shareLabel: "Share",
-
   },
   ar: {
-
     saveContact: "حفظ جهة الاتصال",
     callNow: "اتصال",
     whatsapp: "واتساب",
@@ -306,9 +292,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", TsCopy
     poweredBy: "مشغل بواسطة",
     shipped: "مباشر",
     open: "مفتوح",
-    liveBadge: "مباشر · منذ 2026",
     shareLabel: "Share",
-
   },
 };
 
@@ -600,7 +584,7 @@ function Hero({
               className="ts-pulse-dot block h-1.5 w-1.5 rounded-full"
               style={{ background: onPrimary }}
             />
-            {translations.liveBadge}
+            {translations.shipped}
           </span>
           {sectorBadge && (
             <span

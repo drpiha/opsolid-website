@@ -74,6 +74,7 @@ interface Copy {
   featuredEyebrow: string;
   featuredH: string;
   featuredTag: string;
+  locationLabel: string;
   bookBtn: string;
   saveContact: string;
   walletLabel: string;
@@ -91,6 +92,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     featuredEyebrow: "— Featured",
     featuredH: "Aktuelles Projekt",
     featuredTag: "Featured",
+    locationLabel: "Standort",
     bookBtn: "Termin reservieren",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
@@ -106,6 +108,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     featuredEyebrow: "— Featured",
     featuredH: "Featured Project",
     featuredTag: "Featured",
+    locationLabel: "Location",
     bookBtn: "Book appointment",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
@@ -121,13 +124,13 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     featuredEyebrow: "— Featured",
     featuredH: "Öne Çıkan Proje",
     featuredTag: "Featured",
+    locationLabel: "Konum",
     bookBtn: "Randevu Al",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
   },
   es: {
-
     servicesEyebrow: "— Servicios",
     servicesH: "Especialidades",
     ctaTitle: "Diseñemos tu próximo proyecto.",
@@ -137,14 +140,13 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     featuredEyebrow: "— Destacado",
     featuredH: "Proyecto destacado",
     featuredTag: "Destacado",
+    locationLabel: "Ubicación",
     bookBtn: "Reservar cita",
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
-  
   },
   it: {
-
     servicesEyebrow: "— Servizi",
     servicesH: "Specialità",
     ctaTitle: "Progettiamo il tuo prossimo progetto.",
@@ -154,14 +156,13 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     featuredEyebrow: "— In evidenza",
     featuredH: "Progetto in evidenza",
     featuredTag: "In evidenza",
+    locationLabel: "Posizione",
     bookBtn: "Prenota un appuntamento",
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
-  
   },
   fr: {
-
     servicesEyebrow: "— Services",
     servicesH: "Spécialités",
     ctaTitle: "Concevons votre prochain projet.",
@@ -171,14 +172,13 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     featuredEyebrow: "— À la une",
     featuredH: "Projet en vedette",
     featuredTag: "À la une",
+    locationLabel: "Emplacement",
     bookBtn: "Prendre rendez-vous",
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
-  
   },
   ar: {
-
     servicesEyebrow: "— الخدمات",
     servicesH: "التخصصات",
     ctaTitle: "لنصمم مشروعك القادم.",
@@ -188,11 +188,11 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     featuredEyebrow: "— مميز",
     featuredH: "مشروع مميز",
     featuredTag: "مميز",
+    locationLabel: "الموقع",
     bookBtn: "حجز موعد",
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
-  
   },
 };
 
@@ -694,7 +694,7 @@ export function ArchitectVivid({
                       fontWeight: 600,
                     }}
                   >
-                    {locale === "de" ? "Standort" : locale === "tr" ? "Konum" : "Location"}
+                    {t.locationLabel}
                   </div>
                   <div
                     style={{

@@ -48,6 +48,7 @@ import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
 import { resolveLabels } from "./shared/resolveLabels";
+import { resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#3d4451";
@@ -86,14 +87,9 @@ function digitsOnly(value: string): string {
 }
 
 interface Copy {
-  eyebrow: string;
   storyH: string;
-  storySignature: string;
   servicesH: string;
   contactH: string;
-  yearsLabel: string;
-  casesLabel: string;
-  winRateLabel: string;
   callBtn: string;
   whatsappBtn: string;
   emailBtn: string;
@@ -105,14 +101,9 @@ interface Copy {
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    eyebrow: "Bauer & Partner — Sorgfalt seit 2005",
     storyH: "Meine Geschichte",
-    storySignature: "— Dr. Klaus Bauer",
     servicesH: "Was ich tue",
     contactH: "Sprechen wir",
-    yearsLabel: "Jahre",
-    casesLabel: "Mandate",
-    winRateLabel: "Erfolg",
     callBtn: "Telefon",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-Mail",
@@ -122,14 +113,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     poweredBy: "Powered by",
   },
   en: {
-    eyebrow: "Bauer & Partner — Diligence since 2005",
     storyH: "My story",
-    storySignature: "— Dr. Klaus Bauer",
     servicesH: "What I do",
     contactH: "Let's talk",
-    yearsLabel: "Years",
-    casesLabel: "Mandates",
-    winRateLabel: "Win rate",
     callBtn: "Phone",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
@@ -139,14 +125,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     poweredBy: "Powered by",
   },
   tr: {
-    eyebrow: "Bauer & Partner — 2005'ten beri özen",
     storyH: "Hukuk Hikayem",
-    storySignature: "— Dr. Klaus Bauer",
     servicesH: "Yapabildiklerim",
     contactH: "Konuşalım",
-    yearsLabel: "Yıl",
-    casesLabel: "Dava",
-    winRateLabel: "Başarı",
     callBtn: "Telefon",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-posta",
@@ -156,15 +137,9 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     poweredBy: "Powered by",
   },
   es: {
-
-    eyebrow: "Bauer & Partner — Diligence since 2005",
     storyH: "Mi historia",
-    storySignature: "— Dr. Klaus Bauer",
     servicesH: "Lo que hago",
     contactH: "Hablemos",
-    yearsLabel: "Años",
-    casesLabel: "Mandatos",
-    winRateLabel: "Tasa de éxito",
     callBtn: "Teléfono",
     whatsappBtn: "WhatsApp",
     emailBtn: "Correo",
@@ -172,18 +147,11 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
-  
   },
   it: {
-
-    eyebrow: "Bauer & Partner — Diligence since 2005",
     storyH: "La mia storia",
-    storySignature: "— Dr. Klaus Bauer",
     servicesH: "Cosa faccio",
     contactH: "Parliamo",
-    yearsLabel: "Anni",
-    casesLabel: "Mandati",
-    winRateLabel: "Tasso di successo",
     callBtn: "Telefono",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
@@ -191,18 +159,11 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
-  
   },
   fr: {
-
-    eyebrow: "Bauer & Partner — Diligence since 2005",
     storyH: "Mon histoire",
-    storySignature: "— Dr. Klaus Bauer",
     servicesH: "Ce que je fais",
     contactH: "Discutons",
-    yearsLabel: "Années",
-    casesLabel: "Mandats",
-    winRateLabel: "Taux de réussite",
     callBtn: "Téléphone",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-mail",
@@ -210,18 +171,11 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
-  
   },
   ar: {
-
-    eyebrow: "Bauer & Partner — Diligence since 2005",
     storyH: "قصتي",
-    storySignature: "— Dr. Klaus Bauer",
     servicesH: "ما أفعله",
     contactH: "لنتحدث",
-    yearsLabel: "سنوات",
-    casesLabel: "تكليفات",
-    winRateLabel: "معدل النجاح",
     callBtn: "هاتف",
     whatsappBtn: "واتساب",
     emailBtn: "البريد الإلكتروني",
@@ -229,7 +183,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
-  
   },
 };
 
@@ -259,6 +212,7 @@ export function LegalCounselStone({
 
   const services = (cardData.services ?? []).slice(0, 5);
   const testimonial = cardData.testimonials?.[0];
+  const stats = resolveStats(cardData.stats);
 
   const nameParts = cardData.name.trim().split(/\s+/);
   const nameLead = nameParts.slice(0, -1).join(" ") || cardData.name;
@@ -291,12 +245,14 @@ export function LegalCounselStone({
           borderBottom: `1px solid ${BORDER}`,
         }}
       >
-        <div
-          className="serif relative mb-4.5 text-[13px] italic font-normal"
-          style={{ color: ACCENT, letterSpacing: "0.5px" }}
-        >
-          {t.eyebrow}
-        </div>
+        {cardData.company && (
+          <div
+            className="serif relative mb-4.5 text-[13px] italic font-normal"
+            style={{ color: ACCENT, letterSpacing: "0.5px" }}
+          >
+            {cardData.company}
+          </div>
+        )}
 
         <div
           className="relative mx-auto mb-5"
@@ -383,12 +339,14 @@ export function LegalCounselStone({
         </svg>
       </div>
 
-      {/* STATS */}
-      <div className="flex gap-3 px-7 pb-8">
-        <StoneStat num="20+" label={t.yearsLabel} />
-        <StoneStat num="800+" label={t.casesLabel} />
-        <StoneStat num="94%" label={t.winRateLabel} />
-      </div>
+      {/* STATS — owner-entered proof numbers (resolveStats); none ⇒ nothing */}
+      {stats && (
+        <div className="flex gap-3 px-7 pb-8">
+          {stats.map((s, i) => (
+            <StoneStat key={`stat-${i}-${s.label.slice(0, 8)}`} num={s.value} label={s.label} />
+          ))}
+        </div>
+      )}
 
       {/* STORY */}
       {cardData.bio && (
@@ -418,43 +376,41 @@ export function LegalCounselStone({
                 marginTop: 18,
               }}
             >
-              {t.storySignature}
+              — {cardData.name}
             </span>
           </p>
         </section>
       )}
 
-      {/* SLOGAN */}
-      <div
-        className="relative mx-7 rounded-[14px] px-6 py-6.5 text-center"
-        style={{
-          background: PAPER_WARM,
-          border: `1px solid ${BORDER_SOFT}`,
-        }}
-      >
-        <span
-          aria-hidden
-          className="pointer-events-none absolute top-1/2 -left-2 block h-px w-6.5"
-          style={{ background: ACCENT_3 }}
-        />
-        <span
-          aria-hidden
-          className="pointer-events-none absolute top-1/2 -right-2 block h-px w-6.5"
-          style={{ background: ACCENT_3 }}
-        />
-        <p
-          className="serif text-[17px] italic leading-[1.5]"
-          style={{ color: ACCENT, fontWeight: 500 }}
+      {/* SLOGAN — owner's tagline; absent ⇒ nothing (no invented copy) */}
+      {cardData.tagline && (
+        <div
+          className="relative mx-7 rounded-[14px] px-6 py-6.5 text-center"
+          style={{
+            background: PAPER_WARM,
+            border: `1px solid ${BORDER_SOFT}`,
+          }}
         >
-          {"“"}
-          {locale === "tr"
-            ? "Hukuki Güvenceniz, Başarınızın Temeli."
-            : locale === "de"
-              ? "Hukuki Güvenceniz — die ruhige Hand am Verhandlungstisch."
-              : "Your legal certainty — quiet hand, decisive moves."}
-          {"”"}
-        </p>
-      </div>
+          <span
+            aria-hidden
+            className="pointer-events-none absolute top-1/2 -left-2 block h-px w-6.5"
+            style={{ background: ACCENT_3 }}
+          />
+          <span
+            aria-hidden
+            className="pointer-events-none absolute top-1/2 -right-2 block h-px w-6.5"
+            style={{ background: ACCENT_3 }}
+          />
+          <p
+            className="serif text-[17px] italic leading-[1.5]"
+            style={{ color: ACCENT, fontWeight: 500 }}
+          >
+            {"“"}
+            {cardData.tagline}
+            {"”"}
+          </p>
+        </div>
+      )}
 
       {/* SERVICES */}
       {services.length > 0 && (

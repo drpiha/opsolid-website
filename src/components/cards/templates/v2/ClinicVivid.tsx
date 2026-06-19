@@ -30,6 +30,7 @@ import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { resolveLabels } from "./shared/resolveLabels";
+import { resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#0891b2";
@@ -64,9 +65,6 @@ function digitsOnly(value: string): string {
 
 interface Copy {
   heroTag: string;
-  yearsLabel: string;
-  patientsLabel: string;
-  satisfactionLabel: string;
   servicesH: string;
   testimonialsH: string;
   contactH: string;
@@ -84,9 +82,6 @@ interface Copy {
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     heroTag: "Allgemeinmedizin · Berlin",
-    yearsLabel: "Jahre",
-    patientsLabel: "Patienten",
-    satisfactionLabel: "Zufrieden",
     servicesH: "Leistungen",
     testimonialsH: "Stimmen",
     contactH: "Kontakt",
@@ -102,9 +97,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   en: {
     heroTag: "Family medicine · Berlin",
-    yearsLabel: "Years",
-    patientsLabel: "Patients",
-    satisfactionLabel: "Satisfied",
     servicesH: "Services",
     testimonialsH: "Testimonials",
     contactH: "Contact",
@@ -120,9 +112,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   tr: {
     heroTag: "Aile Hekimliği · Berlin",
-    yearsLabel: "Yıl",
-    patientsLabel: "Hasta",
-    satisfactionLabel: "Memnun",
     servicesH: "Hizmetler",
     testimonialsH: "Hasta Sesi",
     contactH: "İletişim",
@@ -139,9 +128,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   es: {
 
     heroTag: "Family medicine · Berlin",
-    yearsLabel: "Años",
-    patientsLabel: "Pacientes",
-    satisfactionLabel: "Satisfechos",
     servicesH: "Servicios",
     testimonialsH: "Testimonios",
     contactH: "Contacto",
@@ -159,9 +145,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   it: {
 
     heroTag: "Family medicine · Berlin",
-    yearsLabel: "Anni",
-    patientsLabel: "Pazienti",
-    satisfactionLabel: "Soddisfatti",
     servicesH: "Servizi",
     testimonialsH: "Testimonianze",
     contactH: "Contatto",
@@ -179,9 +162,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   fr: {
 
     heroTag: "Family medicine · Berlin",
-    yearsLabel: "Années",
-    patientsLabel: "Patients",
-    satisfactionLabel: "Satisfaits",
     servicesH: "Services",
     testimonialsH: "Témoignages",
     contactH: "Contact",
@@ -199,9 +179,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   ar: {
 
     heroTag: "Family medicine · Berlin",
-    yearsLabel: "سنوات",
-    patientsLabel: "المرضى",
-    satisfactionLabel: "راضون",
     servicesH: "الخدمات",
     testimonialsH: "شهادات",
     contactH: "اتصال",
@@ -248,6 +225,7 @@ export function ClinicVivid({
     : "";
 
   const services = (cardData.services ?? []).slice(0, 6);
+  const stats = resolveStats(cardData.stats);
   const testimonial = cardData.testimonials?.[0];
   const cityFromAddress = cardData.address?.split(",").slice(-1)[0]?.trim();
   const HERO_GRAD = `linear-gradient(135deg, ${BLUE} 0%, ${primary} 50%, ${GREEN} 100%)`;
@@ -392,41 +370,42 @@ export function ClinicVivid({
         </div>
       </div>
 
-      {/* QUICK STATS */}
-      <div className="mx-4 mt-5 grid grid-cols-3 gap-2.5">
-        {[
-          { num: "12", label: t.yearsLabel },
-          { num: "3.2K+", label: t.patientsLabel },
-          { num: "98%", label: t.satisfactionLabel },
-        ].map((s, i) => (
-          <div
-            key={i}
-            className="rounded-2xl px-3 py-[18px] text-center"
-            style={{
-              background: SURFACE,
-              boxShadow: "0 4px 16px -4px rgba(15,76,117,0.08)",
-            }}
-          >
+      {/* QUICK STATS — owner-entered proof numbers (resolveStats); none ⇒ nothing */}
+      {stats && (
+        <div
+          className="mx-4 mt-5"
+          style={{ display: "grid", gridTemplateColumns: `repeat(${Math.min(stats.length, 3)}, 1fr)`, gap: 10 }}
+        >
+          {stats.map((s, i) => (
             <div
-              className="display mb-1.5 text-[24px] font-extrabold leading-none"
+              key={`stat-${i}-${s.label.slice(0, 8)}`}
+              className="rounded-2xl px-3 py-[18px] text-center"
               style={{
-                background: HERO_GRAD,
-                WebkitBackgroundClip: "text",
-                backgroundClip: "text",
-                color: "transparent",
+                background: SURFACE,
+                boxShadow: "0 4px 16px -4px rgba(15,76,117,0.08)",
               }}
             >
-              {s.num}
+              <div
+                className="display mb-1.5 text-[24px] font-extrabold leading-none"
+                style={{
+                  background: HERO_GRAD,
+                  WebkitBackgroundClip: "text",
+                  backgroundClip: "text",
+                  color: "transparent",
+                }}
+              >
+                {s.value}
+              </div>
+              <div
+                className="text-[10px] font-semibold uppercase"
+                style={{ color: INK_SOFT, letterSpacing: "0.5px" }}
+              >
+                {s.label}
+              </div>
             </div>
-            <div
-              className="text-[10px] font-semibold uppercase"
-              style={{ color: INK_SOFT, letterSpacing: "0.5px" }}
-            >
-              {s.label}
-            </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
       {/* SERVICES GRID */}
       {services.length > 0 && (

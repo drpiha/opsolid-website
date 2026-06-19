@@ -80,7 +80,6 @@ function getInitials(name: string): string {
 
 interface AcnCopy {
   estLine: string;
-  steuerberatung: string;
   consultTagline: string;
   call: string;
   whatsapp: string;
@@ -88,7 +87,6 @@ interface AcnCopy {
   about: string;
   services: string;
   philosophy: string;
-  philosophyQuote: string;
   contact: string;
   social: string;
   bookConsult: string;
@@ -106,7 +104,6 @@ interface AcnCopy {
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCopy> = {
   de: {
     estLine: "Steuerberater · Berlin",
-    steuerberatung: "Steuerberatung",
     consultTagline: "Diskret · Präzise · Verlässlich",
     call: "Anrufen",
     whatsapp: "WhatsApp",
@@ -114,8 +111,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCop
     about: "Über",
     services: "Leistungen",
     philosophy: "Kanzleiphilosophie",
-    philosophyQuote:
-      "Steuern verstehen, GmbH gründen, digital arbeiten. Ihr verlässlicher Partner.",
     contact: "Kontakt",
     social: "Folgen",
     bookConsult: "Termin vereinbaren",
@@ -131,7 +126,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCop
   },
   en: {
     estLine: "Tax advisor · Berlin",
-    steuerberatung: "Tax Practice",
     consultTagline: "Discreet · Precise · Reliable",
     call: "Call",
     whatsapp: "WhatsApp",
@@ -139,8 +133,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCop
     about: "About",
     services: "Services",
     philosophy: "Practice Philosophy",
-    philosophyQuote:
-      "Understand taxes, found GmbH, work digitally. Your reliable partner.",
     contact: "Contact",
     social: "Follow",
     bookConsult: "Book a meeting",
@@ -156,7 +148,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCop
   },
   tr: {
     estLine: "Mali Müşavir · Berlin",
-    steuerberatung: "Mali Müşavirlik",
     consultTagline: "Diskret · Hassas · Güvenilir",
     call: "Ara",
     whatsapp: "WhatsApp",
@@ -164,8 +155,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCop
     about: "Hakkımda",
     services: "Hizmetler",
     philosophy: "Ofis Felsefesi",
-    philosophyQuote:
-      "Vergi anlamak, GmbH kurmak, dijital çalışmak. Güvenilir partneriniz.",
     contact: "İletişim",
     social: "Sosyal",
     bookConsult: "Randevu Al",
@@ -182,7 +171,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCop
   es: {
 
     estLine: "Asesor fiscal · Berlín",
-    steuerberatung: "Despacho fiscal",
     consultTagline: "Discreto · Preciso · Confiable",
     call: "Llamar",
     whatsapp: "WhatsApp",
@@ -190,8 +178,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCop
     about: "Acerca de",
     services: "Servicios",
     philosophy: "Filosofía del despacho",
-    philosophyQuote:
-      "Understand taxes, found GmbH, work digitally. Your reliable partner.",
     contact: "Contacto",
     social: "Seguir",
     bookConsult: "Reservar una reunión",
@@ -209,7 +195,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCop
   it: {
 
     estLine: "Consulente fiscale · Berlino",
-    steuerberatung: "Studio fiscale",
     consultTagline: "Discreto · Preciso · Affidabile",
     call: "Chiama",
     whatsapp: "WhatsApp",
@@ -217,8 +202,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCop
     about: "Chi siamo",
     services: "Servizi",
     philosophy: "Filosofia dello studio",
-    philosophyQuote:
-      "Understand taxes, found GmbH, work digitally. Your reliable partner.",
     contact: "Contatto",
     social: "Segui",
     bookConsult: "Prenota un incontro",
@@ -236,7 +219,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCop
   fr: {
 
     estLine: "Conseiller fiscal · Berlin",
-    steuerberatung: "Cabinet fiscal",
     consultTagline: "Discret · Précis · Fiable",
     call: "Appeler",
     whatsapp: "WhatsApp",
@@ -244,8 +226,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCop
     about: "À propos",
     services: "Services",
     philosophy: "Philosophie du cabinet",
-    philosophyQuote:
-      "Understand taxes, found GmbH, work digitally. Your reliable partner.",
     contact: "Contact",
     social: "Suivre",
     bookConsult: "Prendre rendez-vous",
@@ -263,7 +243,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCop
   ar: {
 
     estLine: "مستشار ضريبي · برلين",
-    steuerberatung: "ممارسة ضريبية",
     consultTagline: "خاص · دقيق · موثوق",
     call: "اتصال",
     whatsapp: "واتساب",
@@ -271,8 +250,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCop
     about: "حول",
     services: "الخدمات",
     philosophy: "فلسفة المكتب",
-    philosophyQuote:
-      "Understand taxes, found GmbH, work digitally. Your reliable partner.",
     contact: "اتصال",
     social: "متابعة",
     bookConsult: "احجز موعداً",
@@ -355,12 +332,14 @@ export function AccountingNoir({
           <span>{t.estLine}</span>
           <span aria-hidden className="block h-px w-6" style={{ background: `${gold}80` }} />
         </div>
-        <h1
-          className="serif text-[26px] font-semibold leading-[1.15]"
-          style={{ color: "#fff", letterSpacing: "0.3px" }}
-        >
-          {cardData.company || t.steuerberatung}
-        </h1>
+        {cardData.company && (
+          <h1
+            className="serif text-[26px] font-semibold leading-[1.15]"
+            style={{ color: "#fff", letterSpacing: "0.3px" }}
+          >
+            {cardData.company}
+          </h1>
+        )}
         <p
           className="mt-2 text-[12px] uppercase"
           style={{ color: "rgba(255,255,255,0.6)", letterSpacing: "1.5px" }}
@@ -498,7 +477,8 @@ export function AccountingNoir({
         )}
       </section>
 
-      {/* PHILOSOPHY (replaces bio with editorial framing) */}
+      {/* PHILOSOPHY (owner bio with editorial framing; absent ⇒ nothing) */}
+      {cardData.bio && (
       <section
         className="px-7 py-8"
         style={{ borderBottom: `1px solid ${HAIRLINE}` }}
@@ -508,9 +488,10 @@ export function AccountingNoir({
           className="serif mt-4 text-[16px] italic leading-[1.7]"
           style={{ color: INK }}
         >
-          &ldquo;{cardData.bio || t.philosophyQuote}&rdquo;
+          &ldquo;{cardData.bio}&rdquo;
         </p>
       </section>
+      )}
 
       {/* SERVICES */}
       {services.length > 0 && (

@@ -29,6 +29,7 @@ import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { resolveLabels } from "./shared/resolveLabels";
+import { resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#ea580c";
@@ -69,19 +70,12 @@ function digitsOnly(value: string): string {
 
 interface Copy {
   pulseLabel: string;
-  yearsLabel: string;
-  clientsLabel: string;
-  igLabel: string;
-  ytLabel: string;
   programsEyebrow: string;
   programsH: string;
   ctaTitle: string;
   ctaSub: string;
   ctaCall: string;
   ctaWa: string;
-  testiText: string;
-  testiName: string;
-  testiResult: string;
   contactEyebrow: string;
   contactH: string;
   bookBtn: string;
@@ -93,20 +87,12 @@ interface Copy {
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     pulseLabel: "Neue Gruppe startet",
-    yearsLabel: "Jahre",
-    clientsLabel: "Kunden",
-    igLabel: "Instagram",
-    ytLabel: "YouTube",
     programsEyebrow: "— Programme",
     programsH: "Leistungen & Preise",
     ctaTitle: "Programm starten",
     ctaSub: "Erste Beratung kostenlos. Heute den ersten Schritt machen.",
     ctaCall: "Anrufen",
     ctaWa: "WhatsApp",
-    testiText:
-      "Cans Programm hat mein Leben verändert. Körperlich und mental fühle ich mich stärker — eine nachhaltige Routine statt eines Crash-Plans.",
-    testiName: "Selin K.",
-    testiResult: "12 Wochen · -14 kg",
     contactEyebrow: "— Kontakt",
     contactH: "Verbinde dich",
     bookBtn: "Programm starten",
@@ -116,20 +102,12 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   en: {
     pulseLabel: "New cohort starting",
-    yearsLabel: "Years",
-    clientsLabel: "Clients",
-    igLabel: "Instagram",
-    ytLabel: "YouTube",
     programsEyebrow: "— Programs",
     programsH: "Services & Pricing",
     ctaTitle: "Start the program",
     ctaSub: "First consult is free. Take the first step today.",
     ctaCall: "Call now",
     ctaWa: "WhatsApp",
-    testiText:
-      "Can's program changed my life. Stronger in body and mind — a sustainable habit, not a crash plan.",
-    testiName: "Selin K.",
-    testiResult: "12 weeks · -14 kg",
     contactEyebrow: "— Contact",
     contactH: "Connect",
     bookBtn: "Start now",
@@ -139,20 +117,12 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   tr: {
     pulseLabel: "Yeni grup başlıyor",
-    yearsLabel: "Yıl",
-    clientsLabel: "Müşteri",
-    igLabel: "Instagram",
-    ytLabel: "YouTube",
     programsEyebrow: "— Programlar",
     programsH: "Hizmetler & Fiyatlar",
     ctaTitle: "Programı Başlat",
     ctaSub: "İlk konsültasyon ücretsiz. Bugün adım at.",
     ctaCall: "Hemen Ara",
     ctaWa: "WhatsApp",
-    testiText:
-      "Can'ın programıyla hayatım değişti. Hem fiziksel hem zihinsel olarak çok daha güçlü hissediyorum.",
-    testiName: "Selin K.",
-    testiResult: "12 haftada -14 kg",
     contactEyebrow: "— İletişim",
     contactH: "Bağlantı Kur",
     bookBtn: "Programa Başla",
@@ -162,20 +132,12 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   es: {
     pulseLabel: "Nueva cohorte comenzando",
-    yearsLabel: "Años",
-    clientsLabel: "Clientes",
-    igLabel: "Instagram",
-    ytLabel: "YouTube",
     programsEyebrow: "— Programs",
     programsH: "Servicios y tarifas",
     ctaTitle: "Iniciar el programa",
     ctaSub: "La primera consulta es gratis. Da el primer paso hoy.",
     ctaCall: "Llamar ahora",
     ctaWa: "WhatsApp",
-    testiText:
-      "Can's program changed my life. Stronger in body and mind — a sustainable habit, not a crash plan.",
-    testiName: "Selin K.",
-    testiResult: "12 weeks · -14 kg",
     contactEyebrow: "— Contact",
     contactH: "Conectar",
     bookBtn: "Empezar ahora",
@@ -186,20 +148,12 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   it: {
     pulseLabel: "Nuovo gruppo in partenza",
-    yearsLabel: "Anni",
-    clientsLabel: "Clienti",
-    igLabel: "Instagram",
-    ytLabel: "YouTube",
     programsEyebrow: "— Programs",
     programsH: "Servizi e prezzi",
     ctaTitle: "Avvia il programma",
     ctaSub: "La prima consulenza è gratuita. Fai il primo passo oggi.",
     ctaCall: "Chiama ora",
     ctaWa: "WhatsApp",
-    testiText:
-      "Can's program changed my life. Stronger in body and mind — a sustainable habit, not a crash plan.",
-    testiName: "Selin K.",
-    testiResult: "12 weeks · -14 kg",
     contactEyebrow: "— Contact",
     contactH: "Connetti",
     bookBtn: "Inizia ora",
@@ -210,20 +164,12 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   fr: {
     pulseLabel: "Nouveau groupe en démarrage",
-    yearsLabel: "Années",
-    clientsLabel: "Clients",
-    igLabel: "Instagram",
-    ytLabel: "YouTube",
     programsEyebrow: "— Programs",
     programsH: "Services et tarifs",
     ctaTitle: "Démarrer le programme",
     ctaSub: "La première consultation est gratuite. Faites le premier pas aujourd'hui.",
     ctaCall: "Appeler maintenant",
     ctaWa: "WhatsApp",
-    testiText:
-      "Can's program changed my life. Stronger in body and mind — a sustainable habit, not a crash plan.",
-    testiName: "Selin K.",
-    testiResult: "12 weeks · -14 kg",
     contactEyebrow: "— Contact",
     contactH: "Connecter",
     bookBtn: "Démarrer maintenant",
@@ -234,20 +180,12 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   ar: {
     pulseLabel: "مجموعة جديدة تبدأ",
-    yearsLabel: "سنوات",
-    clientsLabel: "العملاء",
-    igLabel: "إنستغرام",
-    ytLabel: "يوتيوب",
     programsEyebrow: "— Programs",
     programsH: "الخدمات والأسعار",
     ctaTitle: "ابدأ البرنامج",
     ctaSub: "الاستشارة الأولى مجانية. اتخذ الخطوة الأولى اليوم.",
     ctaCall: "اتصل الآن",
     ctaWa: "واتساب",
-    testiText:
-      "Can's program changed my life. Stronger in body and mind — a sustainable habit, not a crash plan.",
-    testiName: "Selin K.",
-    testiResult: "12 weeks · -14 kg",
     contactEyebrow: "— Contact",
     contactH: "تواصل",
     bookBtn: "ابدأ الآن",
@@ -288,6 +226,7 @@ export function FitnessVivid({
     : undefined;
 
   const services = (cardData.services ?? []).slice(0, 4);
+  const stats = resolveStats(cardData.stats);
   const nameParts = cardData.name.trim().split(/\s+/);
   const nameFirst = nameParts[0] ?? cardData.name;
   const nameLast = nameParts.slice(1).join(" ");
@@ -479,74 +418,76 @@ export function FitnessVivid({
             >
               {cardData.name}
             </div>
-            <div
-              className="truncate"
-              style={{ fontSize: 12, color: MUTE, marginTop: 2 }}
-            >
-              8 {t.yearsLabel} · 600+ {t.clientsLabel.toLowerCase()}
-            </div>
+            {cardData.tagline && (
+              <div
+                className="truncate"
+                style={{ fontSize: 12, color: MUTE, marginTop: 2 }}
+              >
+                {cardData.tagline}
+              </div>
+            )}
           </div>
         </div>
       </section>
 
-      {/* STATS GRID 2x2 */}
-      <section className="mx-6 mt-6 grid grid-cols-2 gap-2.5">
-        {[
-          { num: `8 ${t.yearsLabel}`, lbl: locale === "de" ? "Erfahrung" : locale === "tr" ? "Tecrübe" : "Experience", color: RED, glyph: "M22 12h-4l-3 9L9 3l-3 9H2" },
-          { num: "600+", lbl: t.clientsLabel, color: ORANGE, glyph: "M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2 M9 7m-4 0a4 4 0 1 1 8 0 a4 4 0 1 1 -8 0" },
-          { num: "45K", lbl: t.igLabel, color: "#d97706", glyph: "M3 3h18v18H3z M12 16a4 4 0 1 1 0 -8 a4 4 0 0 1 0 8 z" },
-          { num: "28K", lbl: t.ytLabel, color: RED, glyph: "M22.54 6.42a2.78 2.78 0 00-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 00-1.94 2A29 29 0 001 11.75a29 29 0 00.46 5.33A2.78 2.78 0 003.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 001.94-2 29 29 0 00.46-5.25 29 29 0 00-.46-5.33z M9.75 15.02 15.5 11.75 9.75 8.48 z" },
-        ].map((s, i) => (
-          <div
-            key={i}
-            className="flex items-center gap-3.5"
-            style={{
-              background: CARD,
-              borderRadius: 18,
-              padding: 18,
-              border: `1px solid ${LINE}`,
-              boxShadow: "0 2px 8px rgba(28,25,23,0.04)",
-            }}
-          >
-            <span
-              aria-hidden
-              className="flex shrink-0 items-center justify-center"
-              style={{
-                width: 42,
-                height: 42,
-                borderRadius: 14,
-                background: `${s.color}22`,
-                color: s.color,
-              }}
-            >
-              <StatGlyph idx={i} />
-            </span>
-            <div>
+      {/* STATS GRID 2x2 — owner-entered proof numbers (resolveStats); none ⇒ nothing */}
+      {stats && (
+        <section className="mx-6 mt-6 grid grid-cols-2 gap-2.5">
+          {stats.map((s, i) => {
+            const color = [RED, ORANGE, "#d97706", RED][i % 4];
+            return (
               <div
+                key={`stat-${i}-${s.label.slice(0, 8)}`}
+                className="flex items-center gap-3.5"
                 style={{
-                  fontSize: 22,
-                  fontWeight: 800,
-                  color: INK,
-                  lineHeight: 1,
+                  background: CARD,
+                  borderRadius: 18,
+                  padding: 18,
+                  border: `1px solid ${LINE}`,
+                  boxShadow: "0 2px 8px rgba(28,25,23,0.04)",
                 }}
               >
-                {s.num}
+                <span
+                  aria-hidden
+                  className="flex shrink-0 items-center justify-center"
+                  style={{
+                    width: 42,
+                    height: 42,
+                    borderRadius: 14,
+                    background: `${color}22`,
+                    color,
+                  }}
+                >
+                  <StatGlyph idx={i} />
+                </span>
+                <div>
+                  <div
+                    style={{
+                      fontSize: 22,
+                      fontWeight: 800,
+                      color: INK,
+                      lineHeight: 1,
+                    }}
+                  >
+                    {s.value}
+                  </div>
+                  <div
+                    className="mt-1 uppercase"
+                    style={{
+                      fontSize: 10,
+                      letterSpacing: "1.2px",
+                      color: MUTE,
+                      fontWeight: 600,
+                    }}
+                  >
+                    {s.label}
+                  </div>
+                </div>
               </div>
-              <div
-                className="mt-1 uppercase"
-                style={{
-                  fontSize: 10,
-                  letterSpacing: "1.2px",
-                  color: MUTE,
-                  fontWeight: 600,
-                }}
-              >
-                {s.lbl}
-              </div>
-            </div>
-          </div>
-        ))}
-      </section>
+            );
+          })}
+        </section>
+      )}
 
       {/* SERVICES */}
       {services.length > 0 && (
@@ -720,7 +661,8 @@ export function FitnessVivid({
         </section>
       )}
 
-      {/* TESTIMONIAL */}
+      {/* TESTIMONIAL — owner-entered (cardData.testimonials); absent ⇒ nothing */}
+      {cardData.testimonials?.[0] && (
       <section
         className="relative mx-6 mt-7 px-5 py-7"
         style={{
@@ -752,7 +694,7 @@ export function FitnessVivid({
             fontWeight: 500,
           }}
         >
-          {t.testiText}
+          {cardData.testimonials[0].quote}
         </p>
         <div
           className="mt-3.5 flex items-center gap-3 pt-3"
@@ -769,23 +711,26 @@ export function FitnessVivid({
               fontWeight: 700,
             }}
           >
-            {t.testiName[0]}
+            {cardData.testimonials[0].author[0]}
           </div>
           <div>
             <div
               style={{ fontSize: 12, fontWeight: 700, color: INK }}
             >
-              {t.testiName}
+              {cardData.testimonials[0].author}
             </div>
-            <div
-              className="mt-0.5"
-              style={{ fontSize: 11, color: ORANGE, fontWeight: 700 }}
-            >
-              {t.testiResult}
-            </div>
+            {cardData.testimonials[0].role && (
+              <div
+                className="mt-0.5"
+                style={{ fontSize: 11, color: ORANGE, fontWeight: 700 }}
+              >
+                {cardData.testimonials[0].role}
+              </div>
+            )}
           </div>
         </div>
       </section>
+      )}
 
       {/* CONTACT */}
       <SectionHead eb={t.contactEyebrow} h={t.contactH} ebColor={RED} />
@@ -1002,7 +947,7 @@ export const fitnessVividEntry: Omit<TemplateRegistryEntry, "Component"> = {
   supports: {
     services: true,
     faqs: false,
-    testimonials: false,
+    testimonials: true,
     gallery: false,
     video: false,
     brochure: false,

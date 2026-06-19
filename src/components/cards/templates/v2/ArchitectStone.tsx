@@ -72,7 +72,6 @@ interface Copy {
   servicesH: string;
   featuredH: string;
   featuredLabel: string;
-  testiCite: string;
   contactH: string;
   ctaPrimary: string;
   ctaSecondary: string;
@@ -88,7 +87,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     servicesH: "Hizmet Alanlarım",
     featuredH: "Öne Çıkan Çalışma",
     featuredLabel: "Featured",
-    testiCite: "Bauherrin",
     contactH: "İletişim",
     ctaPrimary: "Anrufen",
     ctaSecondary: "WhatsApp",
@@ -102,7 +100,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     servicesH: "Service Suite",
     featuredH: "Featured Work",
     featuredLabel: "Featured",
-    testiCite: "Project owner",
     contactH: "Contact",
     ctaPrimary: "Call",
     ctaSecondary: "WhatsApp",
@@ -116,7 +113,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     servicesH: "Hizmet Alanlarım",
     featuredH: "Öne Çıkan Çalışma",
     featuredLabel: "Featured",
-    testiCite: "Proje sahibi",
     contactH: "İletişim Kuralım",
     ctaPrimary: "Ara",
     ctaSecondary: "WhatsApp",
@@ -131,7 +127,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     servicesH: "Suite de servicios",
     featuredH: "Trabajo destacado",
     featuredLabel: "Featured",
-    testiCite: "Propietario del proyecto",
     contactH: "Contacto",
     ctaPrimary: "Llamar",
     ctaSecondary: "WhatsApp",
@@ -147,7 +142,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     servicesH: "Suite dei servizi",
     featuredH: "Lavori in evidenza",
     featuredLabel: "Featured",
-    testiCite: "Titolare del progetto",
     contactH: "Contatto",
     ctaPrimary: "Chiama",
     ctaSecondary: "WhatsApp",
@@ -163,7 +157,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     servicesH: "Suite de services",
     featuredH: "Travaux en vedette",
     featuredLabel: "Featured",
-    testiCite: "Propriétaire du projet",
     contactH: "Contact",
     ctaPrimary: "Appeler",
     ctaSecondary: "WhatsApp",
@@ -179,7 +172,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     servicesH: "حزمة الخدمات",
     featuredH: "أعمال مميزة",
     featuredLabel: "Featured",
-    testiCite: "صاحب المشروع",
     contactH: "اتصال",
     ctaPrimary: "اتصال",
     ctaSecondary: "واتساب",

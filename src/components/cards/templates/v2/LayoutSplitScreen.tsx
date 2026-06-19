@@ -62,7 +62,6 @@ function getInitials(name: string): string {
 }
 
 interface Copy {
-  heroEyebrow: string;
   servicesTitle: string;
   bioTitle: string;
   ctaCall: string;
@@ -76,7 +75,6 @@ interface Copy {
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    heroEyebrow: "Strategie · Innovation · Wachstum",
     servicesTitle: "Leistungen",
     bioTitle: "Meine Vision",
     ctaCall: "Anrufen",
@@ -88,7 +86,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     poweredBy: "Powered by",
   },
   en: {
-    heroEyebrow: "Strategy · Innovation · Growth",
     servicesTitle: "Services",
     bioTitle: "My Vision",
     ctaCall: "Call",
@@ -100,7 +97,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     poweredBy: "Powered by",
   },
   tr: {
-    heroEyebrow: "Strateji · İnovasyon · Büyüme",
     servicesTitle: "Hizmetler",
     bioTitle: "Vizyonum",
     ctaCall: "Ara",
@@ -113,7 +109,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   es: {
 
-    heroEyebrow: "Strategy · Innovation · Growth",
     servicesTitle: "Servicios",
     bioTitle: "Mi visión",
     ctaCall: "Llamar",
@@ -127,7 +122,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   it: {
 
-    heroEyebrow: "Strategy · Innovation · Growth",
     servicesTitle: "Servizi",
     bioTitle: "La mia visione",
     ctaCall: "Chiama",
@@ -141,7 +135,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   fr: {
 
-    heroEyebrow: "Strategy · Innovation · Growth",
     servicesTitle: "Services",
     bioTitle: "Ma vision",
     ctaCall: "Appeler",
@@ -155,7 +148,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   ar: {
 
-    heroEyebrow: "Strategy · Innovation · Growth",
     servicesTitle: "الخدمات",
     bioTitle: "رؤيتي",
     ctaCall: "اتصال",
@@ -223,18 +215,20 @@ export function LayoutSplitScreen({
           paddingBottom: 100,
         }}
       >
-        <div
-          className="display uppercase"
-          style={{
-            fontSize: 10,
-            letterSpacing: "4px",
-            color: accent,
-            fontWeight: 600,
-            marginBottom: 24,
-          }}
-        >
-          {cardData.position || t.heroEyebrow}
-        </div>
+        {cardData.position && (
+          <div
+            className="display uppercase"
+            style={{
+              fontSize: 10,
+              letterSpacing: "4px",
+              color: accent,
+              fontWeight: 600,
+              marginBottom: 24,
+            }}
+          >
+            {cardData.position}
+          </div>
+        )}
         {photoUrl ? (
           <div
             className="relative mx-auto mb-5 overflow-hidden"

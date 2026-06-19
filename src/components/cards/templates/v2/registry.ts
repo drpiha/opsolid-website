@@ -328,6 +328,8 @@ export const TESTIMONIALS_NATIVE_KEYS = new Set<string>([
   "photographer", "psychologist", "psychologist-pure", "psychologist-vivid",
   "real-estate", "real-estate-noir", "real-estate-pure", "real-estate-stone",
   "real-estate-vivid", "restaurant", "studio", "wedding-planner", "yoga-studio",
+  // Hardcoded persona testimonials rewired to cardData.testimonials (2026-06 fix).
+  "fitness-stone", "fitness-vivid",
 ]);
 
 /** Templates that render `brochureUrl` natively. */
@@ -351,9 +353,13 @@ export const STATS_NATIVE_KEYS = new Set<string>([
   "content-creator-noir", "content-creator-pure", "ecommerce-pure",
   "ecommerce-vivid", "event-planner", "event-planner-pure", "fitness-noir",
   "fitness-pure", "interior-design-vivid", "layout-vivid-bold",
-  "legal-counsel-noir", "legal-counsel-pure", "photographer-noir",
-  "photographer-stone", "psychologist", "psychologist-pure",
-  "psychologist-vivid", "wellness-teacher",
+  "legal-counsel-noir", "legal-counsel-pure", "legal-counsel-stone",
+  "photographer-noir", "photographer-stone", "psychologist",
+  "psychologist-pure", "psychologist-vivid", "wellness-teacher",
+  // Stat tiles rewired from hardcoded literals to cardData.stats (2026-06 fix).
+  "barber-vivid", "clinic-pure", "clinic-vivid", "dj-noir", "fitness-stone",
+  "fitness-vivid", "legal-counsel-vivid", "photographer-vivid",
+  "wellness-teacher-vivid",
 ]);
 
 /** Templates that render `cardData.bio` natively. */

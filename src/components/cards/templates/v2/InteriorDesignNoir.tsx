@@ -70,8 +70,6 @@ function digitsOnly(value: string): string {
 
 interface Copy {
   eyebrow: string;
-  tagline: string;
-  role: string;
   callBtn: string;
   whatsappBtn: string;
   emailBtn: string;
@@ -88,9 +86,6 @@ interface Copy {
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     eyebrow: "INTERIOR ATELIER · BERLIN",
-    tagline:
-      "Räume, die langsam reifen. Materialien, die altern dürfen. Ein Atelier für ruhige, dauerhafte Wohnarchitektur.",
-    role: "Interior Designerin",
     callBtn: "Anrufen",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-Mail",
@@ -105,9 +100,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   en: {
     eyebrow: "INTERIOR ATELIER · BERLIN",
-    tagline:
-      "Rooms that age slowly. Materials allowed to grow older. A studio for quiet, durable residential architecture.",
-    role: "Interior Designer",
     callBtn: "Call",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
@@ -122,9 +114,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   tr: {
     eyebrow: "INTERIOR ATELIER · BERLIN",
-    tagline:
-      "Yavaş olgunlaşan mekânlar. Yaşlanmasına izin verilen malzemeler. Sessiz ve kalıcı bir konut mimarisi atölyesi.",
-    role: "İç Mimar",
     callBtn: "Ara",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-posta",
@@ -140,9 +129,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   es: {
 
     eyebrow: "INTERIOR ATELIER · BERLIN",
-    tagline:
-      "Rooms that age slowly. Materials allowed to grow older. A studio for quiet, durable residential architecture.",
-    role: "Diseñador de interiores",
     callBtn: "Llamar",
     whatsappBtn: "WhatsApp",
     emailBtn: "Correo",
@@ -159,9 +145,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   it: {
 
     eyebrow: "INTERIOR ATELIER · BERLIN",
-    tagline:
-      "Rooms that age slowly. Materials allowed to grow older. A studio for quiet, durable residential architecture.",
-    role: "Interior Designer",
     callBtn: "Chiama",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
@@ -178,9 +161,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   fr: {
 
     eyebrow: "INTERIOR ATELIER · BERLIN",
-    tagline:
-      "Rooms that age slowly. Materials allowed to grow older. A studio for quiet, durable residential architecture.",
-    role: "Designer d'intérieur",
     callBtn: "Appeler",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-mail",
@@ -197,9 +177,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   ar: {
 
     eyebrow: "INTERIOR ATELIER · BERLIN",
-    tagline:
-      "Rooms that age slowly. Materials allowed to grow older. A studio for quiet, durable residential architecture.",
-    role: "مصمم داخلي",
     callBtn: "اتصال",
     whatsappBtn: "واتساب",
     emailBtn: "البريد الإلكتروني",
@@ -308,12 +285,14 @@ export function InteriorDesignNoir({
             className="mx-auto my-5 h-8 w-px"
             style={{ background: accent }}
           />
+          {(cardData.bio || cardData.tagline) && (
           <p
             className="serif mx-auto max-w-[320px] text-[16px] leading-[1.5]"
             style={{ color: TEXT_SOFT }}
           >
-            {cardData.bio || t.tagline}
+            {cardData.bio || cardData.tagline}
           </p>
+          )}
         </header>
 
         {/* PROFILE */}
@@ -350,12 +329,14 @@ export function InteriorDesignNoir({
             <div className="serif text-[22px]" style={{ color: TEXT }}>
               {cardData.name}
             </div>
+            {cardData.position && (
             <div
               className="mt-1 text-[11px] uppercase"
               style={{ color: accent, letterSpacing: "2.5px" }}
             >
-              {cardData.position || t.role}
+              {cardData.position}
             </div>
+            )}
           </div>
         </section>
 

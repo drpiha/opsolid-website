@@ -30,7 +30,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
-import { resolveLocation } from "./shared/profileExtras";
+import { resolveLocation, resolveStats } from "./shared/profileExtras";
 import { resolveLabels } from "./shared/resolveLabels";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
@@ -86,9 +86,6 @@ interface Copy {
   directionsLabel: string;
   shareTitle: string;
   shareSub: string;
-  yearsLabel: string;
-  shootsLabel: string;
-  countriesLabel: string;
   reviewLabel: string;
   saveContact: string;
   walletLabel: string;
@@ -107,9 +104,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     directionsLabel: "Konum",
     shareTitle: "Folge mir",
     shareSub: "Neue Shootings zuerst auf Instagram.",
-    yearsLabel: "Jahre",
-    shootsLabel: "Shootings",
-    countriesLabel: "Länder",
     reviewLabel: "Kunden-Review",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
@@ -126,9 +120,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     directionsLabel: "Directions",
     shareTitle: "Follow me",
     shareSub: "New shoots first on Instagram.",
-    yearsLabel: "Years",
-    shootsLabel: "Shoots",
-    countriesLabel: "Countries",
     reviewLabel: "Client review",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
@@ -145,9 +136,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     directionsLabel: "Konum",
     shareTitle: "Beni takip et",
     shareSub: "Yeni çekimleri önce Instagram'da.",
-    yearsLabel: "Yıl",
-    shootsLabel: "Çekim",
-    countriesLabel: "Ülke",
     reviewLabel: "Müşteri Yorumu",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
@@ -165,14 +153,11 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     directionsLabel: "Cómo llegar",
     shareTitle: "Sígueme",
     shareSub: "Nuevas sesiones primero en Instagram.",
-    yearsLabel: "Años",
-    shootsLabel: "Sesiones",
-    countriesLabel: "Países",
     reviewLabel: "Reseña de cliente",
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
-  
+
   },
   it: {
 
@@ -186,14 +171,11 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     directionsLabel: "Indicazioni",
     shareTitle: "Seguimi",
     shareSub: "Nuovi servizi prima su Instagram.",
-    yearsLabel: "Anni",
-    shootsLabel: "Servizi fotografici",
-    countriesLabel: "Paesi",
     reviewLabel: "Recensione cliente",
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
-  
+
   },
   fr: {
 
@@ -207,14 +189,11 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     directionsLabel: "Itinéraire",
     shareTitle: "Me suivre",
     shareSub: "Nouvelles séances d'abord sur Instagram.",
-    yearsLabel: "Années",
-    shootsLabel: "Séances photo",
-    countriesLabel: "Pays",
     reviewLabel: "Avis client",
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
-  
+
   },
   ar: {
 
@@ -228,14 +207,11 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     directionsLabel: "الاتجاهات",
     shareTitle: "تابعني",
     shareSub: "جلسات جديدة أولاً على إنستغرام.",
-    yearsLabel: "سنوات",
-    shootsLabel: "تصوير",
-    countriesLabel: "الدول",
     reviewLabel: "تقييم العميل",
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
-  
+
   },
 };
 
@@ -269,6 +245,7 @@ export function PhotographerVivid({
     : "";
 
   const services = (cardData.services ?? []).slice(0, 4);
+  const stats = resolveStats(cardData.stats);
   const tagline = cardData.title || cardData.position || "";
   const city = resolveLocation(cardData);
 
@@ -413,12 +390,14 @@ export function PhotographerVivid({
         </div>
       </div>
 
-      {/* STATS */}
-      <div className="mx-5 mt-6 grid grid-cols-3 gap-2">
-        <StatTile num="7" label={t.yearsLabel} accent={primary} />
-        <StatTile num="280+" label={t.shootsLabel} accent={primary} />
-        <StatTile num="15" label={t.countriesLabel} accent={primary} />
-      </div>
+      {/* STATS — owner-entered proof numbers (resolveStats); none ⇒ nothing */}
+      {stats && (
+        <div className="mx-5 mt-6 grid gap-2" style={{ gridTemplateColumns: `repeat(${stats.length}, 1fr)` }}>
+          {stats.map((s, i) => (
+            <StatTile key={`stat-${i}-${s.label.slice(0, 8)}`} num={s.value} label={s.label} accent={primary} />
+          ))}
+        </div>
+      )}
 
       {/* SERVICES TITLE + CARDS */}
       <section className="px-6 pb-2 pt-7">

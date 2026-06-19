@@ -87,7 +87,6 @@ interface Copy {
   saveContact: string;
   walletLabel: string;
   poweredBy: string;
-  motto: string;
   copyright: string;
 }
 
@@ -111,7 +110,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
-    motto: "Train. Push. Repeat.",
     copyright: "All Rights Reserved ©",
   },
   en: {
@@ -133,7 +131,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
-    motto: "Train. Push. Repeat.",
     copyright: "All Rights Reserved ©",
   },
   tr: {
@@ -155,7 +152,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
-    motto: "Train. Push. Repeat.",
     copyright: "All Rights Reserved ©",
   },
   es: {
@@ -178,7 +174,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
-    motto: "Train. Push. Repeat.",
     copyright: "All Rights Reserved ©",
 
   },
@@ -202,7 +197,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
-    motto: "Train. Push. Repeat.",
     copyright: "All Rights Reserved ©",
 
   },
@@ -226,7 +220,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
-    motto: "Train. Push. Repeat.",
     copyright: "All Rights Reserved ©",
 
   },
@@ -250,7 +243,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
-    motto: "Train. Push. Repeat.",
     copyright: "All Rights Reserved ©",
 
   },
@@ -495,6 +487,7 @@ export function FitnessNoir({
                 "linear-gradient(180deg, transparent 60%, rgba(5,5,5,0.95) 100%)",
             }}
           />
+          {cardData.tagline && (
           <div
             className="display absolute z-[2] uppercase"
             style={{
@@ -516,8 +509,9 @@ export function FitnessNoir({
                 marginRight: 12,
               }}
             />
-            {t.motto}
+            {cardData.tagline}
           </div>
+          )}
         </div>
       )}
 

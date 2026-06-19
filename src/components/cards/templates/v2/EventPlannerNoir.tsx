@@ -67,9 +67,6 @@ function digitsOnly(value: string): string {
 }
 
 interface Copy {
-  eyebrow: string;
-  tagline: string;
-  role: string;
   callBtn: string;
   whatsappBtn: string;
   emailBtn: string;
@@ -85,10 +82,6 @@ interface Copy {
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    eyebrow: "BLACK TIE GALA · BERLIN",
-    tagline:
-      "Diskret, durchdacht, unvergesslich. Hochzeiten und private Galas mit der Sorgfalt eines kuratierten Salons.",
-    role: "Event Designer · Wedding Planner",
     callBtn: "Anrufen",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-Mail",
@@ -102,10 +95,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contact: "Kontakt",
   },
   en: {
-    eyebrow: "BLACK TIE GALA · BERLIN",
-    tagline:
-      "Discreet, deliberate, unforgettable. Weddings and private galas with the care of a curated salon.",
-    role: "Event Designer · Wedding Planner",
     callBtn: "Call",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
@@ -119,10 +108,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contact: "Contact",
   },
   tr: {
-    eyebrow: "BLACK TIE GALA · BERLIN",
-    tagline:
-      "Sessiz, özenli, unutulmaz. Düğünler ve özel galalar — kürate edilmiş bir salonun titizliğiyle.",
-    role: "Etkinlik Tasarımcısı · Wedding Planner",
     callBtn: "Ara",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-posta",
@@ -136,11 +121,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contact: "İletişim",
   },
   es: {
-
-    eyebrow: "BLACK TIE GALA · BERLIN",
-    tagline:
-      "Discreet, deliberate, unforgettable. Weddings and private galas with the care of a curated salon.",
-    role: "Event Designer · Wedding Planner",
     callBtn: "Llamar",
     whatsappBtn: "WhatsApp",
     emailBtn: "Correo",
@@ -152,14 +132,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
     contact: "Contacto",
-  
   },
   it: {
-
-    eyebrow: "BLACK TIE GALA · BERLIN",
-    tagline:
-      "Discreet, deliberate, unforgettable. Weddings and private galas with the care of a curated salon.",
-    role: "Event Designer · Wedding Planner",
     callBtn: "Chiama",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
@@ -171,14 +145,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
     contact: "Contatto",
-  
   },
   fr: {
-
-    eyebrow: "BLACK TIE GALA · BERLIN",
-    tagline:
-      "Discreet, deliberate, unforgettable. Weddings and private galas with the care of a curated salon.",
-    role: "Event Designer · Wedding Planner",
     callBtn: "Appeler",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-mail",
@@ -190,14 +158,8 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
     contact: "Contact",
-  
   },
   ar: {
-
-    eyebrow: "BLACK TIE GALA · BERLIN",
-    tagline:
-      "Discreet, deliberate, unforgettable. Weddings and private galas with the care of a curated salon.",
-    role: "Event Designer · Wedding Planner",
     callBtn: "اتصال",
     whatsappBtn: "واتساب",
     emailBtn: "البريد الإلكتروني",
@@ -209,7 +171,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
     contact: "اتصال",
-  
   },
 };
 
@@ -286,12 +247,14 @@ export function EventPlannerNoir({
               background: `linear-gradient(90deg, transparent, ${accent}, transparent)`,
             }}
           />
-          <div
-            className="text-[10px] font-medium uppercase"
-            style={{ color: accent, letterSpacing: "5px" }}
-          >
-            {t.eyebrow}
-          </div>
+          {cardData.company && (
+            <div
+              className="text-[10px] font-medium uppercase"
+              style={{ color: accent, letterSpacing: "5px" }}
+            >
+              {cardData.company}
+            </div>
+          )}
           <h1
             className="serif mx-auto mt-6 text-[44px] leading-[1.05] tracking-[-1px]"
             style={{
@@ -308,12 +271,14 @@ export function EventPlannerNoir({
             className="mx-auto my-5 h-8 w-px"
             style={{ background: accent }}
           />
-          <p
-            className="serif mx-auto max-w-[320px] text-[16px] leading-[1.5]"
-            style={{ color: TEXT_SOFT }}
-          >
-            {cardData.bio || t.tagline}
-          </p>
+          {(cardData.bio || cardData.tagline) && (
+            <p
+              className="serif mx-auto max-w-[320px] text-[16px] leading-[1.5]"
+              style={{ color: TEXT_SOFT }}
+            >
+              {cardData.bio || cardData.tagline}
+            </p>
+          )}
         </header>
 
         {/* PROFILE */}
@@ -350,12 +315,14 @@ export function EventPlannerNoir({
             <div className="serif text-[22px]" style={{ color: TEXT }}>
               {cardData.name}
             </div>
-            <div
-              className="mt-1 text-[11px] uppercase"
-              style={{ color: accent, letterSpacing: "2.5px" }}
-            >
-              {cardData.position || t.role}
-            </div>
+            {cardData.position && (
+              <div
+                className="mt-1 text-[11px] uppercase"
+                style={{ color: accent, letterSpacing: "2.5px" }}
+              >
+                {cardData.position}
+              </div>
+            )}
           </div>
         </section>
 

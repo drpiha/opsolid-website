@@ -561,14 +561,22 @@ for (const f of fs.readdirSync(V2_DIR).sort()) {
           `("${node.right.text}") — render real data or nothing`,
       );
     }
-    // Rule A2 — `cardData.x || t.somethingFallback`: a persona claim parked in
-    // the copy table so it dodges the string-literal rule. Same sin.
+    // Rule A2 — `cardData.x || t.anything` / `?? t.anything`: a persona claim
+    // parked in the COPY table so it dodges the string-literal rule. Same sin.
+    // Broadened 2026-06 (was: only copy keys ending in "Fallback") to catch ANY
+    // copy-table fallback for a cardData field — e.g. `cardData.title || t.role`,
+    // `cardData.bio || t.mantra`, `cardData.company || t.steuerberatung`.
+    // Scoped to the conventional copy-table identifier `t` (the resolveLabels
+    // result) so legitimate `cardData.x || cardData.y` real-data chains AND the
+    // documented `cardData.services || sector?.services` preset fallback stay
+    // allowed.
     if (
       ts.isBinaryExpression(node) &&
       (node.operatorToken.kind === ts.SyntaxKind.BarBarToken ||
         node.operatorToken.kind === ts.SyntaxKind.QuestionQuestionToken) &&
       ts.isPropertyAccessExpression(node.right) &&
-      /[Ff]allback$/.test(node.right.name.text) &&
+      ts.isIdentifier(node.right.expression) &&
+      node.right.expression.text === "t" &&
       containsCardDataAccess(node.left)
     ) {
       errors.push(
