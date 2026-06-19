@@ -62,6 +62,7 @@ run_sql "patch_016_saved_cards.sql"           "$REPO_ROOT/prisma/patch_016_saved
 run_sql "patch_017_card_feedback.sql"         "$REPO_ROOT/prisma/patch_017_card_feedback.sql"
 run_sql "patch_018_card_actions.sql"          "$REPO_ROOT/prisma/patch_018_card_actions.sql"
 run_sql "patch_019_inbox_v2.sql"              "$REPO_ROOT/prisma/patch_019_inbox_v2.sql"
+run_sql "patch_020_founder_spotlight.sql"     "$REPO_ROOT/prisma/patch_020_founder_spotlight.sql"
 run_sql "seed.sql"                    "$REPO_ROOT/prisma/seed.sql"
 
 echo "== bootstrap ok =="
