@@ -30,6 +30,12 @@ const FOUNDER_CARD = {
     website: "https://opsolid.de",
     bio: "Praktische Automatisierung & KI-Systeme für den Mittelstand. Ich plane, baue und betreibe maßgeschneiderte Workflows, die Ihre operativen Prozesse beschleunigen.",
     bookingUrl: "https://cal.com/solidra/discovery-call",
+    spotlight: {
+      enabled: true,
+      body: "Aktuell nehme ich neue Automatisierungs- und KI-Projekte für Q3 an. Lass uns kurz sprechen — ein 20-minütiger Discovery-Call genügt.",
+      linkUrl: "https://cal.com/solidra/discovery-call",
+      linkLabel: "Gespräch buchen",
+    },
     impressumUrl: "https://opsolid.de/de/impressum",
     privacyUrl: "https://opsolid.de/de/privacy",
     socials: {

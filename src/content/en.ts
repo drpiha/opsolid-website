@@ -1780,6 +1780,15 @@ export const content = {
           cardLanguageLabel: "Card language",
           cardLanguageHint:
             "The language your card's visitors will see. You can change it later in the editor.",
+          spotlightSection: "Now · Spotlight",
+          spotlightHint:
+            "A bold, momentary update shown right below your photo — a short note and/or one link. Leave empty to hide it.",
+          spotlightEnabled: "Show on my card",
+          spotlightBody: "What's happening right now?",
+          spotlightBodyPlaceholder: "e.g. Booking new projects for July — say hi 👋",
+          spotlightLinkUrl: "Link (optional)",
+          spotlightLinkLabel: "Button text (optional)",
+          spotlightLinkLabelPlaceholder: "Read more",
           statsSection: "Stats",
           statsHint:
             "Real numbers shown as a stat strip on many designs (e.g. 12 — Years).",

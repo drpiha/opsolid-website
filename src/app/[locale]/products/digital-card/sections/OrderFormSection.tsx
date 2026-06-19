@@ -53,6 +53,7 @@ import {
   type CardLocale,
 } from "@/components/cards/order-form/CardLanguageSelector";
 import { ProfileExtrasFields } from "@/components/cards/order-form/ProfileExtrasFields";
+import { SpotlightEditor } from "@/components/cards/order-form/SpotlightEditor";
 import { StatsEditor } from "@/components/cards/order-form/StatsEditor";
 import {
   CARD_THEME_LIST,
@@ -1893,6 +1894,20 @@ function StepCardContent({
       {/* Tagline + location chip — owner-controlled profile extras (2026-06
           purge of hardcoded template personas). */}
       <ProfileExtrasFields cardData={cardData} setField={setCard} L={L} />
+
+      {/* Şu an / Now — a bold momentary update (note + link) shown right below
+          the photo. Same shared editor as the edit flow; SpotlightBlock renders
+          it live in the preview beside this form. */}
+      <div className="space-y-2">
+        <p className="text-heading-sm text-ink">
+          {L("spotlightSection", "Şu an · Now")}
+        </p>
+        <SpotlightEditor
+          spotlight={cardData.spotlight}
+          onChange={(next) => setCard("spotlight", next)}
+          L={L}
+        />
+      </div>
 
       {/* Stats — the proof-point numbers templates render as stat strips.
           Empty = no stat block on the card. */}
