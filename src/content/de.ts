@@ -1782,6 +1782,15 @@ export const content: Content = {
           cardLanguageLabel: "Kartensprache",
           cardLanguageHint:
             "Die Sprache, die Besucher Ihrer Karte sehen. Später im Editor änderbar.",
+          spotlightSection: "Aktuell · Spotlight",
+          spotlightHint:
+            "Eine auffällige, aktuelle Notiz direkt unter deinem Foto — ein kurzer Text und/oder ein Link. Leer lassen zum Ausblenden.",
+          spotlightEnabled: "Auf meiner Karte anzeigen",
+          spotlightBody: "Was gibt es gerade Neues?",
+          spotlightBodyPlaceholder: "z. B. Nehme im Juli neue Projekte an — meld dich 👋",
+          spotlightLinkUrl: "Link (optional)",
+          spotlightLinkLabel: "Button-Text (optional)",
+          spotlightLinkLabelPlaceholder: "Mehr erfahren",
           statsSection: "Kennzahlen",
           statsHint:
             "Echte Zahlen, die viele Designs als Kennzahlen-Leiste zeigen (z. B. 12 — Jahre).",

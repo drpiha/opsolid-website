@@ -14,6 +14,7 @@
 export type BlockLocale = "en" | "de" | "tr";
 
 export interface UniversalHeadings {
+  spotlight: string;
   gallery: string;
   embeds: string;
   faq: string;
@@ -24,12 +25,12 @@ export interface UniversalHeadings {
 }
 
 export const UNIVERSAL_HEADINGS: Record<BlockLocale, UniversalHeadings> = {
-  de: { gallery: "Galerie", embeds: "Eingebettet", faq: "Häufige Fragen", contact: "Kontakt", testimonials: "Stimmen", brochure: "Broschüre", about: "Profil" },
-  tr: { gallery: "Galeri", embeds: "Öne çıkan", faq: "Sık Sorulan Sorular", contact: "İletişim", testimonials: "Yorumlar", brochure: "Broşür", about: "Profil" },
-  en: { gallery: "Gallery", embeds: "Featured", faq: "FAQ", contact: "Get in touch", testimonials: "Testimonials", brochure: "Brochure", about: "About" },
+  de: { spotlight: "Aktuell", gallery: "Galerie", embeds: "Eingebettet", faq: "Häufige Fragen", contact: "Kontakt", testimonials: "Stimmen", brochure: "Broschüre", about: "Profil" },
+  tr: { spotlight: "Şu an", gallery: "Galeri", embeds: "Öne çıkan", faq: "Sık Sorulan Sorular", contact: "İletişim", testimonials: "Yorumlar", brochure: "Broşür", about: "Profil" },
+  en: { spotlight: "Now", gallery: "Gallery", embeds: "Featured", faq: "FAQ", contact: "Get in touch", testimonials: "Testimonials", brochure: "Brochure", about: "About" },
 };
 
 /** Ordered list of the universal heading keys (for the label editor). */
 export const UNIVERSAL_LABEL_KEYS: Array<keyof UniversalHeadings> = [
-  "about", "gallery", "testimonials", "faq", "brochure", "contact", "embeds",
+  "spotlight", "about", "gallery", "testimonials", "faq", "brochure", "contact", "embeds",
 ];

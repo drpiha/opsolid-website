@@ -42,7 +42,7 @@ const VISUAL_FIELDS = [
   "impressumUrl", "privacyUrl", "videoUrl", "videoPath", "socials", "services",
   "gallery", "faqs", "testimonials", "customButtons", "customSections",
   "statusMessage", "statusBanner", "tags", "embeds", "contactForm", "tipJar",
-  "stats",
+  "stats", "spotlight",
 ] as const;
 type VisualField = (typeof VISUAL_FIELDS)[number];
 
@@ -56,6 +56,7 @@ const WRAPPER_COVERED = new Set<string>([
   "brochureUrl",  // BrochureBlock (gated by BROCHURE_NATIVE_KEYS)
   "bio",          // AboutBlock (gated by BIO_NATIVE_KEYS)
   "stats",        // StatsBlock (gated by STATS_NATIVE_KEYS)
+  "spotlight",    // SpotlightBlock — general, rendered for every template
   // statusBanner/statusMessage render at page level outside the template.
   "statusBanner", "statusMessage",
 ]);

@@ -619,8 +619,29 @@ export const CardDataSchema = z.object({
     })
     .strict()
     .optional(),
+  /** Faz 9 — "Şu an / Now" spotlight. A GENERAL, owner-curated area that sits
+   *  high on every public card (right below the identity / profile block) for a
+   *  momentary update: a short paragraph and/or one link. Unlike the deliberately
+   *  muted `customSections`, this block is styled to stand out so a visitor's eye
+   *  lands on it and asks "what's here right now?". Editable in BOTH the create
+   *  and edit forms; rendered by the UniversalBlocks stack so it shows on the
+   *  public card AND in both live previews. Renders only when `enabled !== false`
+   *  AND there is a `body` or a `linkUrl`; otherwise the block returns null and
+   *  legacy cards are unaffected. `updatedAt` (ISO string, owner form stamps it
+   *  on save) drives an optional "updated X ago" freshness chip. */
+  spotlight: z
+    .object({
+      enabled: z.boolean().default(true),
+      body: z.string().trim().max(280).optional(),
+      linkUrl: url.optional(),
+      linkLabel: z.string().trim().max(48).optional(),
+      updatedAt: z.string().trim().max(40).optional(),
+    })
+    .strict()
+    .optional(),
 });
 export type CardData = z.infer<typeof CardDataSchema>;
+export type CardSpotlight = NonNullable<CardData["spotlight"]>;
 
 // -----------------------------------------------------------------------------
 // OrderPayload — what the client POSTs to /api/orders

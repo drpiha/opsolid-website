@@ -41,6 +41,7 @@ import {
 } from "@/components/cards/templates/v2/shared/universalHeadings";
 import { StatsBlock } from "@/components/cards/templates/v2/shared/StatsBlock";
 import { LogoBlock } from "@/components/cards/templates/v2/shared/LogoBlock";
+import { SpotlightBlock } from "@/components/cards/templates/v2/shared/SpotlightBlock";
 import { CustomSectionsBlock } from "@/components/cards/templates/v2/shared/CustomSectionsBlock";
 import { VideoBlock } from "@/components/cards/templates/v2/shared/VideoBlock";
 import { GalleryBlock } from "@/components/cards/templates/v2/shared/GalleryBlock";
@@ -123,6 +124,18 @@ export function UniversalBlocks({
       />
       {placement === "top" && videoBlock}
       {children}
+      {/* Universal "Şu an / Now" spotlight — a general, prominent area for a
+          momentary update (paragraph + link). Rendered first in the after-stack
+          so it sits high, right below the template's identity / profile block,
+          on every template. Self-hides unless enabled with a body or a link. */}
+      <SpotlightBlock
+        spotlight={data.spotlight}
+        heading={h.spotlight}
+        accentHex={accentHex}
+        primaryHex={primaryHex}
+        tone={tone}
+        locale={locale}
+      />
       {/* Universal bio — 22 templates don't render cardData.bio natively. */}
       {!suppressed(BIO_NATIVE_KEYS) && (
         <AboutBlock bio={data.bio} accentHex={accentHex} heading={h.about} />

@@ -1782,6 +1782,15 @@ export const content: Content = {
           cardLanguageLabel: "Kart dili",
           cardLanguageHint:
             "Kartınızı ziyaret edenlerin göreceği dil. Daha sonra editörden değiştirebilirsiniz.",
+          spotlightSection: "Şu an · Öne çıkan",
+          spotlightHint:
+            "Fotoğrafının hemen altında görünen dikkat çekici, anlık bir not — kısa bir yazı ve/veya tek bir bağlantı. Gizlemek için boş bırak.",
+          spotlightEnabled: "Kartımda göster",
+          spotlightBody: "Şu an neler oluyor?",
+          spotlightBodyPlaceholder: "ör. Temmuz için yeni projeler alıyorum — merhaba de 👋",
+          spotlightLinkUrl: "Bağlantı (isteğe bağlı)",
+          spotlightLinkLabel: "Buton metni (isteğe bağlı)",
+          spotlightLinkLabelPlaceholder: "Daha fazla",
           statsSection: "İstatistikler",
           statsHint:
             "Birçok tasarımda istatistik şeridi olarak görünen gerçek rakamlar (ör. 12 — Yıl).",

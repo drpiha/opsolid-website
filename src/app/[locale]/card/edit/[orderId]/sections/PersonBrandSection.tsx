@@ -12,6 +12,7 @@ import { useState } from "react";
 import { ChevronDown, Loader2, Pencil, Upload } from "lucide-react";
 import { Input, Textarea } from "@/components/ui/Input";
 import { ProfileExtrasFields } from "@/components/cards/order-form/ProfileExtrasFields";
+import { SpotlightEditor } from "@/components/cards/order-form/SpotlightEditor";
 import { useLocale } from "@/context/LocaleContext";
 import type { CardData } from "@/lib/validation";
 import type {
@@ -180,6 +181,19 @@ export default function PersonBrandSection({
               />
             </div>
           )}
+        </fieldset>
+
+        {/* Şu an / Now — prominent momentary update (note + link) shown right
+            below the photo on the public card and in the live preview. */}
+        <fieldset className="space-y-2">
+          <legend className="text-heading-sm text-ink">
+            {(form as Record<string, string>).spotlightSection ?? "Şu an · Now"}
+          </legend>
+          <SpotlightEditor
+            spotlight={cardData.spotlight}
+            onChange={(next) => setCard("spotlight", next)}
+            L={(k, fb) => (form as Record<string, string>)[k] ?? fb}
+          />
         </fieldset>
 
         {/* Socials */}
