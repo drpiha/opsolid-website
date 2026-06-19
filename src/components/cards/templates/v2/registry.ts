@@ -379,6 +379,14 @@ export const BIO_NATIVE_KEYS = new Set<string>([
   "wellness-teacher-vivid", "yoga-studio",
 ]);
 
+/** Templates that render `cardData.spotlight` natively in their own "below the
+ *  photo" slot (right under the hero). When the owner picks placement
+ *  "belowPhoto" UniversalBlocks suppresses its universal copy for these so it
+ *  isn't double-rendered; "top" / "bottom" still route through the wrapper. */
+export const SPOTLIGHT_NATIVE_KEYS = new Set<string>([
+  "real-estate",
+]);
+
 // =============================================================================
 // Planned line-up — what the Phase 7 carousel renders, regardless of which
 // per-template components have shipped yet. Lets the gallery show all 12

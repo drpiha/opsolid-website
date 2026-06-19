@@ -1789,6 +1789,10 @@ export const content = {
           spotlightLinkUrl: "Link (optional)",
           spotlightLinkLabel: "Button text (optional)",
           spotlightLinkLabelPlaceholder: "Read more",
+          spotlightPlacement: "Position on the card",
+          spotlightPlaceBelowPhoto: "Below the photo (recommended)",
+          spotlightPlaceTop: "Top of the card",
+          spotlightPlaceBottom: "Bottom of the card",
           statsSection: "Stats",
           statsHint:
             "Real numbers shown as a stat strip on many designs (e.g. 12 — Years).",

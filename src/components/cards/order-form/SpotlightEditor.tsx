@@ -11,7 +11,7 @@
 // editors; English fallbacks keep it working before locale keys land.
 // =============================================================================
 
-import { Input, Textarea } from "@/components/ui/Input";
+import { Input, Select, Textarea } from "@/components/ui/Input";
 import type { CardSpotlight } from "@/lib/validation";
 
 const MAX_BODY = 280;
@@ -58,6 +58,25 @@ export function SpotlightEditor({ spotlight, onChange, L }: Props) {
           {L("spotlightEnabled", "Show on my card")}
         </span>
       </label>
+
+      <Select
+        label={L("spotlightPlacement", "Position on the card")}
+        value={spotlight?.placement ?? "belowPhoto"}
+        onChange={(e) =>
+          commit(
+            { placement: e.target.value as CardSpotlight["placement"] },
+            false,
+          )
+        }
+      >
+        <option value="belowPhoto">
+          {L("spotlightPlaceBelowPhoto", "Below the photo (recommended)")}
+        </option>
+        <option value="top">{L("spotlightPlaceTop", "Top of the card")}</option>
+        <option value="bottom">
+          {L("spotlightPlaceBottom", "Bottom of the card")}
+        </option>
+      </Select>
 
       <div>
         <Textarea

@@ -82,6 +82,7 @@ const FIELD_TO_SET: Record<string, string> = {
   brochureUrl: "BROCHURE_NATIVE_KEYS",
   bio: "BIO_NATIVE_KEYS",
   stats: "STATS_NATIVE_KEYS",
+  spotlight: "SPOTLIGHT_NATIVE_KEYS",
 };
 
 // supports flag → field(s) that count as "renders it natively".
