@@ -30,6 +30,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveLocation } from "./shared/profileExtras";
 import { resolveLabels } from "./shared/resolveLabels";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
@@ -66,7 +67,6 @@ function digitsOnly(value: string): string {
 }
 
 interface Copy {
-  metaLabel: string;
   practiceEyebrow: string;
   practiceH: string;
   clinicEyebrow: string;
@@ -89,7 +89,6 @@ interface Copy {
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    metaLabel: "M.D. — Privatpraxis · Berlin",
     practiceEyebrow: "Praxisgebiete",
     practiceH: "Schwerpunkte",
     clinicEyebrow: "Praxis",
@@ -110,7 +109,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     webKey: "Web",
   },
   en: {
-    metaLabel: "M.D. — Private Practice · Berlin",
     practiceEyebrow: "Practice",
     practiceH: "Specialties",
     clinicEyebrow: "Clinic",
@@ -131,7 +129,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     webKey: "Web",
   },
   tr: {
-    metaLabel: "M.D. — Özel Muayenehane · Berlin",
     practiceEyebrow: "Uzmanlık",
     practiceH: "Çalışma Alanları",
     clinicEyebrow: "Klinik",
@@ -153,7 +150,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   es: {
 
-    metaLabel: "M.D. — Private Practice · Berlin",
+
     practiceEyebrow: "Despacho",
     practiceH: "Especialidades",
     clinicEyebrow: "Clínica",
@@ -176,7 +173,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   it: {
 
-    metaLabel: "M.D. — Private Practice · Berlin",
+
     practiceEyebrow: "Studio",
     practiceH: "Specialità",
     clinicEyebrow: "Clinica",
@@ -199,7 +196,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   fr: {
 
-    metaLabel: "M.D. — Private Practice · Berlin",
+
     practiceEyebrow: "Cabinet",
     practiceH: "Spécialités",
     clinicEyebrow: "Clinique",
@@ -222,7 +219,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   ar: {
 
-    metaLabel: "M.D. — Private Practice · Berlin",
+
     practiceEyebrow: "ممارسة",
     practiceH: "التخصصات",
     clinicEyebrow: "عيادة",
@@ -255,6 +252,7 @@ export function ClinicNoir({
   walletSlot,
 }: TemplateProps) {
   const t = resolveLabels(COPY[locale] ?? COPY.de, cardData.labels);
+  const loc = resolveLocation(cardData);
   const primary = brandPrimaryHex || LOCKED_PRIMARY;
   const accent = brandAccentHex || LOCKED_ACCENT;
   void primary;
@@ -316,12 +314,14 @@ export function ClinicNoir({
             background: `linear-gradient(180deg, ${accent} 0%, ${GOLD} 100%)`,
           }}
         />
+        {loc && (
         <div
           className="mb-3 text-[10.5px] font-medium uppercase"
           style={{ color: GOLD, letterSpacing: "3px" }}
         >
-          {t.metaLabel}
+          {loc}
         </div>
+        )}
         {cardData.company && (
           <div
             className="serif text-[14px] font-light uppercase"

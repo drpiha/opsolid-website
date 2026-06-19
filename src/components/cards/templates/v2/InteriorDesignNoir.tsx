@@ -33,6 +33,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveLocation } from "./shared/profileExtras";
 import { resolveLabels } from "./shared/resolveLabels";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
@@ -69,12 +70,10 @@ function digitsOnly(value: string): string {
 }
 
 interface Copy {
-  eyebrow: string;
   callBtn: string;
   whatsappBtn: string;
   emailBtn: string;
   featuredH: string;
-  featuredCaption: string;
   servicesH: string;
   contactH: string;
   cta: string;
@@ -85,12 +84,10 @@ interface Copy {
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    eyebrow: "INTERIOR ATELIER · BERLIN",
     callBtn: "Anrufen",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-Mail",
     featuredH: "Ausgewählt",
-    featuredCaption: "Mitte Penthouse · 2026",
     servicesH: "Atelier",
     contactH: "Kontakt",
     cta: "Erstgespräch anfragen",
@@ -99,12 +96,10 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     poweredBy: "Powered by",
   },
   en: {
-    eyebrow: "INTERIOR ATELIER · BERLIN",
     callBtn: "Call",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
     featuredH: "Selected",
-    featuredCaption: "Mitte Penthouse · 2026",
     servicesH: "Atelier",
     contactH: "Contact",
     cta: "Request a consultation",
@@ -113,12 +108,10 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     poweredBy: "Powered by",
   },
   tr: {
-    eyebrow: "INTERIOR ATELIER · BERLIN",
     callBtn: "Ara",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-posta",
     featuredH: "Seçilmiş",
-    featuredCaption: "Mitte Penthouse · 2026",
     servicesH: "Atölye",
     contactH: "İletişim",
     cta: "Görüşme Talep Et",
@@ -128,12 +121,10 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   es: {
 
-    eyebrow: "INTERIOR ATELIER · BERLIN",
     callBtn: "Llamar",
     whatsappBtn: "WhatsApp",
     emailBtn: "Correo",
     featuredH: "Selección",
-    featuredCaption: "Mitte Penthouse · 2026",
     servicesH: "Atelier",
     contactH: "Contacto",
     cta: "Solicitar una consulta",
@@ -144,12 +135,10 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   it: {
 
-    eyebrow: "INTERIOR ATELIER · BERLIN",
     callBtn: "Chiama",
     whatsappBtn: "WhatsApp",
     emailBtn: "Email",
     featuredH: "Selezionati",
-    featuredCaption: "Mitte Penthouse · 2026",
     servicesH: "Atelier",
     contactH: "Contatto",
     cta: "Richiedi una consulenza",
@@ -160,12 +149,10 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   fr: {
 
-    eyebrow: "INTERIOR ATELIER · BERLIN",
     callBtn: "Appeler",
     whatsappBtn: "WhatsApp",
     emailBtn: "E-mail",
     featuredH: "Sélection",
-    featuredCaption: "Mitte Penthouse · 2026",
     servicesH: "Atelier",
     contactH: "Contact",
     cta: "Demander une consultation",
@@ -176,12 +163,10 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   ar: {
 
-    eyebrow: "INTERIOR ATELIER · BERLIN",
     callBtn: "اتصال",
     whatsappBtn: "واتساب",
     emailBtn: "البريد الإلكتروني",
     featuredH: "مختار",
-    featuredCaption: "Mitte Penthouse · 2026",
     servicesH: "أتيليه",
     contactH: "اتصال",
     cta: "اطلب استشارة",
@@ -202,6 +187,7 @@ export function InteriorDesignNoir({
   walletSlot,
 }: TemplateProps) {
   const t = resolveLabels(COPY[locale] ?? COPY.de, cardData.labels);
+  const loc = resolveLocation(cardData);
   const accent = brandAccentHex || LOCKED_ACCENT;
   void (brandPrimaryHex || LOCKED_PRIMARY);
   void readableTextOn;
@@ -263,12 +249,14 @@ export function InteriorDesignNoir({
             style={{ background: `linear-gradient(90deg, transparent, ${accent}, transparent)` }}
           />
 
+          {(cardData.company || loc) && (
           <div
             className="text-[10px] font-medium uppercase"
             style={{ color: accent, letterSpacing: "5px" }}
           >
-            {t.eyebrow}
+            {[cardData.company, loc].filter(Boolean).join(" · ")}
           </div>
+          )}
           <h1
             className="serif mx-auto mt-6 text-[44px] leading-[1.05] tracking-[-1px]"
             style={{
@@ -386,12 +374,6 @@ export function InteriorDesignNoir({
                 style={{ color: TEXT }}
               >
                 {featured.title}
-              </div>
-              <div
-                className="mt-2 text-[11px] uppercase"
-                style={{ color: TEXT_MUTED, letterSpacing: "2.5px" }}
-              >
-                {t.featuredCaption}
               </div>
               {featured.description && (
                 <p

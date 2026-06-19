@@ -30,7 +30,7 @@ import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { resolveLabels } from "./shared/resolveLabels";
-import { resolveStats } from "./shared/profileExtras";
+import { resolveLocation, resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#0891b2";
@@ -64,7 +64,6 @@ function digitsOnly(value: string): string {
 }
 
 interface Copy {
-  heroTag: string;
   servicesH: string;
   testimonialsH: string;
   contactH: string;
@@ -81,7 +80,6 @@ interface Copy {
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    heroTag: "Allgemeinmedizin · Berlin",
     servicesH: "Leistungen",
     testimonialsH: "Stimmen",
     contactH: "Kontakt",
@@ -96,7 +94,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     credentialExp: "12y+",
   },
   en: {
-    heroTag: "Family medicine · Berlin",
     servicesH: "Services",
     testimonialsH: "Testimonials",
     contactH: "Contact",
@@ -111,7 +108,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     credentialExp: "12y+",
   },
   tr: {
-    heroTag: "Aile Hekimliği · Berlin",
     servicesH: "Hizmetler",
     testimonialsH: "Hasta Sesi",
     contactH: "İletişim",
@@ -127,7 +123,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   es: {
 
-    heroTag: "Family medicine · Berlin",
+
     servicesH: "Servicios",
     testimonialsH: "Testimonios",
     contactH: "Contacto",
@@ -144,7 +140,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   it: {
 
-    heroTag: "Family medicine · Berlin",
+
     servicesH: "Servizi",
     testimonialsH: "Testimonianze",
     contactH: "Contatto",
@@ -161,7 +157,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   fr: {
 
-    heroTag: "Family medicine · Berlin",
+
     servicesH: "Services",
     testimonialsH: "Témoignages",
     contactH: "Contact",
@@ -178,7 +174,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   ar: {
 
-    heroTag: "Family medicine · Berlin",
+
     servicesH: "الخدمات",
     testimonialsH: "شهادات",
     contactH: "اتصال",
@@ -214,6 +210,7 @@ export function ClinicVivid({
   walletSlot,
 }: TemplateProps) {
   const t = resolveLabels(COPY[locale] ?? COPY.de, cardData.labels);
+  const loc = resolveLocation(cardData);
   const primary = brandPrimaryHex || LOCKED_PRIMARY;
   const accent = brandAccentHex || LOCKED_ACCENT;
   void readableTextOn;
@@ -278,6 +275,7 @@ export function ClinicVivid({
           }}
         />
         <div className="absolute left-6 top-6 text-white">
+          {loc && (
           <div
             className="display mb-2 inline-block px-2.5 py-1 text-[10px] font-semibold uppercase"
             style={{
@@ -286,8 +284,9 @@ export function ClinicVivid({
               letterSpacing: "1.5px",
             }}
           >
-            {t.heroTag}
+            {loc}
           </div>
+          )}
           <div
             className="display text-[14px] font-medium opacity-95"
             style={{ color: "#ffffff" }}

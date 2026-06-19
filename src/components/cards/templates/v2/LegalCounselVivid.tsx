@@ -37,7 +37,7 @@ import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
 import { resolveLabels } from "./shared/resolveLabels";
-import { resolveStats } from "./shared/profileExtras";
+import { resolveLocation, resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#1a2b9e";
@@ -86,7 +86,6 @@ interface Copy {
   contactH: string;
   contactSub: string;
   ctaLabel: string;
-  pillActive: string;
   saveContact: string;
   walletLabel: string;
   poweredBy: string;
@@ -99,7 +98,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contactH: "Kontakt",
     contactSub: "Mit einem Klick Verbindung aufnehmen",
     ctaLabel: "Kostenloses Erstgespräch",
-    pillActive: "Aktiv · Berlin",
     saveContact: "Kontakt speichern",
     walletLabel: "Auf Smartphone speichern",
     poweredBy: "Powered by",
@@ -110,7 +108,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contactH: "Reach out",
     contactSub: "One-tap contact",
     ctaLabel: "Free initial consultation",
-    pillActive: "Active · Berlin",
     saveContact: "Save contact",
     walletLabel: "Add to wallet",
     poweredBy: "Powered by",
@@ -121,7 +118,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contactH: "Bize Ulaşın",
     contactSub: "Tek dokunuşla iletişim",
     ctaLabel: "Ücretsiz Ön Görüşme",
-    pillActive: "Aktif · Berlin",
     saveContact: "Kişiyi Kaydet",
     walletLabel: "Cüzdana ekle",
     poweredBy: "Powered by",
@@ -133,7 +129,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contactH: "Contacta",
     contactSub: "Contacto con un toque",
     ctaLabel: "Consulta inicial gratuita",
-    pillActive: "Active · Berlin",
+
     saveContact: "Guardar contacto",
     walletLabel: "Añadir a la cartera",
     poweredBy: "Desarrollado por",
@@ -146,7 +142,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contactH: "Contattaci",
     contactSub: "Contatto con un tap",
     ctaLabel: "Prima consulenza gratuita",
-    pillActive: "Active · Berlin",
+
     saveContact: "Salva contatto",
     walletLabel: "Aggiungi al wallet",
     poweredBy: "Realizzato con",
@@ -159,7 +155,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contactH: "Nous contacter",
     contactSub: "Contact en un clic",
     ctaLabel: "Première consultation gratuite",
-    pillActive: "Active · Berlin",
+
     saveContact: "Enregistrer le contact",
     walletLabel: "Ajouter au portefeuille",
     poweredBy: "Propulsé par",
@@ -172,7 +168,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     contactH: "تواصل",
     contactSub: "اتصال بنقرة",
     ctaLabel: "استشارة أولية مجانية",
-    pillActive: "Active · Berlin",
+
     saveContact: "حفظ جهة الاتصال",
     walletLabel: "إضافة إلى المحفظة",
     poweredBy: "مشغل بواسطة",
@@ -190,6 +186,7 @@ export function LegalCounselVivid({
   walletSlot,
 }: TemplateProps) {
   const t = resolveLabels(COPY[locale] ?? COPY.de, cardData.labels);
+  const loc = resolveLocation(cardData);
   const primary = brandPrimaryHex || LOCKED_PRIMARY;
   const accent = brandAccentHex || LOCKED_ACCENT;
   const onPrimary = readableTextOn(primary);
@@ -309,6 +306,7 @@ export function LegalCounselVivid({
               {[cardData.position, cardData.title].filter(Boolean).join(" · ")}
             </div>
           )}
+          {loc && (
           <span
             className="display inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[10.5px] font-bold"
             style={{
@@ -322,8 +320,9 @@ export function LegalCounselVivid({
               className="block h-1.5 w-1.5 rounded-full"
               style={{ background: ACCENT }}
             />
-            {t.pillActive}
+            {loc}
           </span>
+          )}
         </div>
       </div>
 

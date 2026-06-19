@@ -29,6 +29,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
+import { resolveLocation } from "./shared/profileExtras";
 import { resolveLabels } from "./shared/resolveLabels";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
@@ -64,7 +65,6 @@ function digitsOnly(value: string): string {
 
 interface Copy {
   metaAvailable: string;
-  metaCity: string;
   philosophy: string;
   portfolio: string;
   portfolioMore: string;
@@ -84,7 +84,6 @@ interface Copy {
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
     metaAvailable: "Verfügbar 2026",
-    metaCity: "Berlin · DE",
     philosophy: "Manifest",
     portfolio: "Portfolio",
     portfolioMore: "Mehr ansehen",
@@ -102,7 +101,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   en: {
     metaAvailable: "Available 2026",
-    metaCity: "Berlin · DE",
     philosophy: "Manifesto",
     portfolio: "Portfolio",
     portfolioMore: "View more",
@@ -120,7 +118,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   },
   tr: {
     metaAvailable: "2026 Müsait",
-    metaCity: "Berlin · DE",
     philosophy: "Manifesto",
     portfolio: "Portföy",
     portfolioMore: "Daha fazla",
@@ -139,7 +136,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   es: {
 
     metaAvailable: "Disponible 2026",
-    metaCity: "Berlin · DE",
     philosophy: "Manifiesto",
     portfolio: "Portafolio",
     portfolioMore: "Ver más",
@@ -159,7 +155,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   it: {
 
     metaAvailable: "Disponibile 2026",
-    metaCity: "Berlin · DE",
     philosophy: "Manifesto",
     portfolio: "Portfolio",
     portfolioMore: "Vedi altro",
@@ -179,7 +174,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   fr: {
 
     metaAvailable: "Disponible 2026",
-    metaCity: "Berlin · DE",
     philosophy: "Manifeste",
     portfolio: "Portfolio",
     portfolioMore: "Voir plus",
@@ -199,7 +193,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   ar: {
 
     metaAvailable: "متاح 2026",
-    metaCity: "Berlin · DE",
     philosophy: "البيان",
     portfolio: "المعرض",
     portfolioMore: "عرض المزيد",
@@ -228,6 +221,7 @@ export function PhotographerPure({
   walletSlot,
 }: TemplateProps) {
   const t = resolveLabels(COPY[locale] ?? COPY.de, cardData.labels);
+  const loc = resolveLocation(cardData);
   const primary = brandPrimaryHex || LOCKED_PRIMARY;
   const accent = brandAccentHex || LOCKED_ACCENT;
   void primary;
@@ -279,7 +273,7 @@ export function PhotographerPure({
             />
             {t.metaAvailable}
           </span>
-          <span>{t.metaCity}</span>
+          {loc && <span>{loc}</span>}
         </div>
         <h1
           className="text-[58px] leading-[0.92]"

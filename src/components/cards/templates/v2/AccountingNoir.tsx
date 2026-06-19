@@ -37,6 +37,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
+import { resolveLocation } from "./shared/profileExtras";
 import { resolveLabels } from "./shared/resolveLabels";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
@@ -79,7 +80,6 @@ function getInitials(name: string): string {
 }
 
 interface AcnCopy {
-  estLine: string;
   consultTagline: string;
   call: string;
   whatsapp: string;
@@ -103,7 +103,6 @@ interface AcnCopy {
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCopy> = {
   de: {
-    estLine: "Steuerberater · Berlin",
     consultTagline: "Diskret · Präzise · Verlässlich",
     call: "Anrufen",
     whatsapp: "WhatsApp",
@@ -125,7 +124,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCop
     reviewsLabel: "Bewertungen",
   },
   en: {
-    estLine: "Tax advisor · Berlin",
     consultTagline: "Discreet · Precise · Reliable",
     call: "Call",
     whatsapp: "WhatsApp",
@@ -147,7 +145,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCop
     reviewsLabel: "Reviews",
   },
   tr: {
-    estLine: "Mali Müşavir · Berlin",
     consultTagline: "Diskret · Hassas · Güvenilir",
     call: "Ara",
     whatsapp: "WhatsApp",
@@ -170,7 +167,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCop
   },
   es: {
 
-    estLine: "Asesor fiscal · Berlín",
     consultTagline: "Discreto · Preciso · Confiable",
     call: "Llamar",
     whatsapp: "WhatsApp",
@@ -194,7 +190,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCop
   },
   it: {
 
-    estLine: "Consulente fiscale · Berlino",
     consultTagline: "Discreto · Preciso · Affidabile",
     call: "Chiama",
     whatsapp: "WhatsApp",
@@ -218,7 +213,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCop
   },
   fr: {
 
-    estLine: "Conseiller fiscal · Berlin",
     consultTagline: "Discret · Précis · Fiable",
     call: "Appeler",
     whatsapp: "WhatsApp",
@@ -242,7 +236,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", AcnCop
   },
   ar: {
 
-    estLine: "مستشار ضريبي · برلين",
     consultTagline: "خاص · دقيق · موثوق",
     call: "اتصال",
     whatsapp: "واتساب",
@@ -277,6 +270,7 @@ export function AccountingNoir({
   walletSlot,
 }: TemplateProps) {
   const t = resolveLabels(COPY[locale] ?? COPY.de, cardData.labels);
+  const loc = resolveLocation(cardData);
   void brandPrimaryHex;
   const accent = brandAccentHex || LOCKED_ACCENT;
   // Use accent for the gold throughout (palette intent of NOIR)
@@ -324,14 +318,16 @@ export function AccountingNoir({
         }}
       >
         {/* Marker line */}
+        {loc && (
         <div
           className="serif mb-3 flex items-center gap-2.5 text-[10px] font-semibold uppercase"
           style={{ color: gold, letterSpacing: "5px" }}
         >
           <span aria-hidden className="block h-px w-6" style={{ background: `${gold}80` }} />
-          <span>{t.estLine}</span>
+          <span>{loc}</span>
           <span aria-hidden className="block h-px w-6" style={{ background: `${gold}80` }} />
         </div>
+        )}
         {cardData.company && (
           <h1
             className="serif text-[26px] font-semibold leading-[1.15]"

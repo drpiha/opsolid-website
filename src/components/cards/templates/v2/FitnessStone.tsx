@@ -29,7 +29,7 @@ import { ServiceLink } from "./shared/ServiceLink";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { resolveLabels } from "./shared/resolveLabels";
-import { resolveStats } from "./shared/profileExtras";
+import { resolveLocation, resolveStats } from "./shared/profileExtras";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
 const LOCKED_PRIMARY = "#5c5040";
@@ -70,7 +70,6 @@ function digitsOnly(value: string): string {
 }
 
 interface Copy {
-  atelierLabel: string;
   philLabel: string;
   servicesH: string;
   servicesSub: string;
@@ -88,7 +87,6 @@ interface Copy {
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> = {
   de: {
-    atelierLabel: "Holistic · Berlin",
     philLabel: "Mein Ansatz",
     servicesH: "Service-Spektrum",
     servicesSub: "Einzel- und Gruppen-Coaching",
@@ -109,7 +107,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     },
   },
   en: {
-    atelierLabel: "Holistic · Berlin",
     philLabel: "My approach",
     servicesH: "Service Range",
     servicesSub: "1-1 and small-group coaching",
@@ -130,7 +127,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     },
   },
   tr: {
-    atelierLabel: "Holistic · İstanbul",
     philLabel: "Yaklaşımım",
     servicesH: "Hizmet Yelpazesi",
     servicesSub: "Bireysel ve grup koçluk programları",
@@ -151,7 +147,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
     },
   },
   es: {
-    atelierLabel: "Holistic · Berlin",
+
     philLabel: "Mi enfoque",
     servicesH: "Gama de servicios",
     servicesSub: "Coaching individual y en grupo reducido",
@@ -173,7 +169,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   
   },
   it: {
-    atelierLabel: "Holistic · Berlin",
+
     philLabel: "Il mio approccio",
     servicesH: "Gamma di servizi",
     servicesSub: "Coaching individuale e di piccolo gruppo",
@@ -195,7 +191,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   
   },
   fr: {
-    atelierLabel: "Holistic · Berlin",
+
     philLabel: "Mon approche",
     servicesH: "Gamme de services",
     servicesSub: "Coaching individuel et en petit groupe",
@@ -217,7 +213,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", Copy> 
   
   },
   ar: {
-    atelierLabel: "Holistic · Berlin",
+
     philLabel: "نهجي",
     servicesH: "نطاق الخدمات",
     servicesSub: "تدريب فردي ومجموعات صغيرة",
@@ -250,6 +246,7 @@ export function FitnessStone({
   walletSlot,
 }: TemplateProps) {
   const t = resolveLabels(COPY[locale] ?? COPY.de, cardData.labels);
+  const loc = resolveLocation(cardData);
   const primary = brandPrimaryHex || LOCKED_PRIMARY;
   const accent = brandAccentHex || LOCKED_ACCENT;
   void primary;
@@ -321,6 +318,7 @@ export function FitnessStone({
           >
             {cardData.company || cardData.name}
           </div>
+          {loc && (
           <div
             className="serif uppercase"
             style={{
@@ -329,8 +327,9 @@ export function FitnessStone({
               color: GREEN_SOFT,
             }}
           >
-            {t.atelierLabel}
+            {loc}
           </div>
+          )}
           <div
             aria-hidden
             className="relative mx-auto mt-3.5"
@@ -886,7 +885,7 @@ export function FitnessStone({
             letterSpacing: "0.5px",
           }}
         >
-          &copy; {new Date().getFullYear()} — {t.atelierLabel}
+          &copy; {new Date().getFullYear()}{loc && ` — ${loc}`}
         </div>
         <div
           className="mt-1"

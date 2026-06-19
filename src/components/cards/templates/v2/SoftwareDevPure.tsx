@@ -28,7 +28,7 @@ import { SendMyInfoSlot } from "./shared/SendMyInfoSlot";
 import { SocialRow } from "./shared/SocialRow";
 import { WalletDock } from "./shared/WalletDock";
 import { ServiceLink } from "./shared/ServiceLink";
-import { resolveStats } from "./shared/profileExtras";
+import { resolveLocation, resolveStats } from "./shared/profileExtras";
 import { resolveLabels } from "./shared/resolveLabels";
 import type { SampleData, TemplateProps, TemplateRegistryEntry } from "./types";
 
@@ -78,7 +78,6 @@ interface SdpCopy {
   projectsLabel: string;
   responseLabel: string;
   developer: string;
-  remote: string;
 }
 
 export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdpCopy> = {
@@ -98,7 +97,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdpCop
     projectsLabel: "Projekte",
     responseLabel: "Antwort",
     developer: "Developer",
-    remote: "Remote · Berlin",
   },
   en: {
     available: "Available",
@@ -116,7 +114,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdpCop
     projectsLabel: "Projects",
     responseLabel: "Response",
     developer: "Developer",
-    remote: "Remote · Berlin",
   },
   tr: {
     available: "Müsait",
@@ -134,7 +131,6 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdpCop
     projectsLabel: "Proje",
     responseLabel: "Yanıt",
     developer: "Geliştirici",
-    remote: "Remote · Berlin",
   },
   es: {
 
@@ -153,8 +149,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdpCop
     projectsLabel: "Proyectos",
     responseLabel: "Respuesta",
     developer: "Desarrollador",
-    remote: "Remote · Berlin",
-  
+
   },
   it: {
 
@@ -173,8 +168,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdpCop
     projectsLabel: "Progetti",
     responseLabel: "Risposta",
     developer: "Sviluppatore",
-    remote: "Remote · Berlin",
-  
+
   },
   fr: {
 
@@ -193,8 +187,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdpCop
     projectsLabel: "Projets",
     responseLabel: "Réponse",
     developer: "Développeur",
-    remote: "Remote · Berlin",
-  
+
   },
   ar: {
 
@@ -213,8 +206,7 @@ export const COPY: Record<"de" | "en" | "tr" | "es" | "it" | "fr" | "ar", SdpCop
     projectsLabel: "المشاريع",
     responseLabel: "الاستجابة",
     developer: "مطور",
-    remote: "Remote · Berlin",
-  
+
   },
 };
 
@@ -229,6 +221,7 @@ export function SoftwareDevPure({
   walletSlot,
 }: TemplateProps) {
   const t = resolveLabels(COPY[locale] ?? COPY.de, cardData.labels);
+  const loc = resolveLocation(cardData);
   const accent = brandPrimaryHex || LOCKED_PRIMARY;
 
   const photoUrl = resolveAssetUrl(photoPath);
@@ -337,12 +330,14 @@ export function SoftwareDevPure({
           )}
         </div>
         <div className="flex-1">
+          {loc && (
           <div
             className="mono text-[10px] uppercase"
             style={{ color: INK_DIM, letterSpacing: "1.2px" }}
           >
-            {t.remote}
+            {loc}
           </div>
+          )}
           <div className="mt-0.5 text-[14px] font-medium" style={{ color: INK }}>
             {cardData.company || cardData.position}
           </div>
