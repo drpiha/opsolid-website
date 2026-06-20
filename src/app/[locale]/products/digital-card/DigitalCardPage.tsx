@@ -12,6 +12,7 @@ import { FaqAccordion } from "@/components/sections/FaqAccordion";
 import { OrderFormSection } from "./sections/OrderFormSection";
 import { TemplateGallery } from "./sections/TemplateGallery";
 import { CustomRequestSection } from "@/components/products/digital-card/CustomRequestSection";
+import { SovereigntyTable } from "@/components/products/digital-card/SovereigntyTable";
 import type { CardPricingMode } from "@/lib/billing/plan";
 
 /**
@@ -193,10 +194,6 @@ export function DigitalCardPage({
 
       <section className="os-section" id="order" data-screen-label="Order">
         <div className="wrap">
-          <p className="mb-6 inline-flex items-center gap-2 rounded-full border border-line bg-bg-2 px-4 py-2 text-sm text-ink-200">
-            <span aria-hidden>📱</span>
-            {t.card.mobileAppSoon}
-          </p>
           <OrderFormSection
             selectedTemplateId={selectedTemplateId}
             onTemplateChange={setSelectedTemplateId}
@@ -207,6 +204,8 @@ export function DigitalCardPage({
       </section>
 
       <CustomRequestSection />
+
+      <SovereigntyTable />
 
       <FaqAccordion
         eyebrow={t.products.digitalCard.faq.label}

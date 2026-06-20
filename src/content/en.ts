@@ -1506,7 +1506,7 @@ export const content = {
             highlight: "",
           },
           {
-            provider: "OpSolid Digital Card",
+            provider: "OpSo Smart",
             host: "DE (Frankfurt)",
             sub: "No US subprocessors",
             dpa: "Native",

@@ -1508,7 +1508,7 @@ export const content: Content = {
             highlight: "",
           },
           {
-            provider: "OpSolid Dijital Kartvizit",
+            provider: "OpSo Smart",
             host: "DE (Frankfurt)",
             sub: "ABD alt işleyen yok",
             dpa: "Yerli",

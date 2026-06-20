@@ -1508,7 +1508,7 @@ export const content: Content = {
             highlight: "",
           },
           {
-            provider: "OpSolid Digitale Visitenkarte",
+            provider: "OpSo Smart",
             host: "DE (Frankfurt)",
             sub: "Keine US-Subunternehmer",
             dpa: "Nativ",
