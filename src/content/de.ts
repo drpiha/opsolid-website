@@ -4819,6 +4819,12 @@ export const content: Content = {
           interior: "Innenarchitektur",
         },
       },
+      pricing: {
+        eyebrow: "[ PREISE ]",
+        headline: "Kostenlos starten. Zahlen, wenn Sie mehr brauchen.",
+        lead:
+          "Kostenlos erstellen und veröffentlichen. Upgraden Sie für eigene Domain und Analytics — oder lassen Sie alles von uns gestalten.",
+      },
     },
 
     contact: {

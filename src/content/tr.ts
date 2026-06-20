@@ -4821,6 +4821,12 @@ export const content: Content = {
           interior: "İç Mimarlık",
         },
       },
+      pricing: {
+        eyebrow: "[ FİYATLANDIRMA ]",
+        headline: "Ücretsiz başla. Sadece ihtiyaç oldukça öde.",
+        lead:
+          "Ücretsiz oluştur ve yayınla. Kendi alan adın ve analitik için yükselt — ya da her şeyi biz tasarlayalım.",
+      },
     },
 
     contact: {

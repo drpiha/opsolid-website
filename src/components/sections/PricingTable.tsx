@@ -9,6 +9,25 @@ type Props = {
   showHeading?: boolean;
   showProductHeading?: boolean;
   showProductLink?: boolean;
+  /**
+   * Overrides the primary (non-contact) tier CTA target. Defaults to the
+   * product's own href. Pass e.g. "/card/new" to send plan CTAs straight into
+   * a flow instead of back to the product page.
+   */
+  ctaHref?: string;
+  /**
+   * CTA target for "contact-style" tiers — the Enterprise tier plus any tier
+   * named in `contactTiers`. Defaults to /contact. Use to route quote-based or
+   * not-yet-purchasable tiers to a contact/request surface (e.g. an on-page
+   * "#custom" section) instead of a checkout that can't take payment.
+   */
+  contactHref?: string;
+  /**
+   * Tier names (besides Enterprise) that should render as a "Talk to us"
+   * contact CTA → `contactHref` instead of the primary CTA. Lets a page mark
+   * paid tiers as request-only while payments aren't live.
+   */
+  contactTiers?: string[];
 };
 
 export function PricingTable({
@@ -16,6 +35,9 @@ export function PricingTable({
   showHeading = false,
   showProductHeading = true,
   showProductLink = true,
+  ctaHref,
+  contactHref,
+  contactTiers,
 }: Props) {
   const { t } = useLocale();
   const p = t.v2.pricing;
@@ -123,16 +145,17 @@ export function PricingTable({
                   </div>
 
                   <div className="os-pricing-tier-cta">
-                    {tier.name === p.tierNames.enterprise ? (
+                    {tier.name === p.tierNames.enterprise ||
+                    contactTiers?.includes(tier.name) ? (
                       <Link
-                        href="/contact"
+                        href={contactHref ?? "/contact"}
                         className="btn btn-ghost btn-sm os-pricing-tier-button"
                       >
                         {p.labels.enterpriseCta}
                       </Link>
                     ) : (
                       <Link
-                        href={product.href}
+                        href={ctaHref ?? product.href}
                         className={
                           "btn btn-sm os-pricing-tier-button " +
                           (tier.isHighlighted ? "btn-primary" : "btn-ghost")

@@ -4836,6 +4836,12 @@ export const content = {
           interior: "Interior Design",
         },
       },
+      pricing: {
+        eyebrow: "[ PRICING ]",
+        headline: "Free to start. Pay only when you need more.",
+        lead:
+          "Build and publish for free. Upgrade for your own domain and analytics, or let us design the whole thing for you.",
+      },
     },
 
     contact: {

@@ -8,6 +8,7 @@ import { useLocale } from "@/context/LocaleContext";
 import { FoilCard } from "@/components/products/digital-card/FoilCard";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PricingTable } from "@/components/sections/PricingTable";
+import { FaqAccordion } from "@/components/sections/FaqAccordion";
 import { OrderFormSection } from "./sections/OrderFormSection";
 import { TemplateGallery } from "./sections/TemplateGallery";
 import { CustomRequestSection } from "@/components/products/digital-card/CustomRequestSection";
@@ -83,6 +84,14 @@ export function DigitalCardPage({
     };
   }, [eventSlug]);
 
+  // Pricing CTA routing keys off literal `tier.name` strings from
+  // t.v2.pricing.products (verso). Those names are intentionally NOT localized,
+  // so the match holds across locales; rename/translate a tier and routing
+  // silently reverts to the primary CTA (no type check catches it). While
+  // payments aren't live, both paid tiers are request-only (→ #custom).
+  const requestOnlyTiers =
+    pricingMode === "all_free" ? ["Premium", "White-glove"] : ["White-glove"];
+
   return (
     <>
       <section className="dc-hero" data-screen-label="Digital Card Hero">
@@ -125,14 +134,35 @@ export function DigitalCardPage({
         </div>
       </section>
 
-      {/* all_free mode: there is nothing to price — hide the plan table. */}
-      {pricingMode !== "all_free" && (
-        <PricingTable
-          productIds={["verso"]}
-          showProductHeading={false}
-          showProductLink={false}
-        />
-      )}
+      {/* Plan comparison — the value ladder (Free / Premium / White-glove),
+          shown regardless of pricingMode. Free is the live, no-charge path
+          (CTA → builder). While payments aren't live (all_free) the paid tiers
+          can't take a checkout, so they route to the on-page custom-request
+          section ("Talk to us") rather than dropping the visitor into the free
+          builder with a price tag they can't pay. White-glove is always
+          request-based; Premium becomes self-serve once payments go live. */}
+      <section
+        className="os-section"
+        id="pricing"
+        data-screen-label="Pricing"
+        style={{ paddingBottom: 0 }}
+      >
+        <div className="wrap">
+          <div className="os-section-head" style={{ marginBottom: 0 }}>
+            <span className="meta meta-hot">{d.pricing.eyebrow}</span>
+            <h2>{d.pricing.headline}</h2>
+            <p className="lead">{d.pricing.lead}</p>
+          </div>
+        </div>
+      </section>
+      <PricingTable
+        productIds={["verso"]}
+        showProductHeading={false}
+        showProductLink={false}
+        ctaHref="/card/new"
+        contactHref="/products/digital-card#custom"
+        contactTiers={requestOnlyTiers}
+      />
 
       <TemplateGallery
         selectedId={selectedTemplateId}
@@ -177,6 +207,16 @@ export function DigitalCardPage({
       </section>
 
       <CustomRequestSection />
+
+      <FaqAccordion
+        eyebrow={t.products.digitalCard.faq.label}
+        headline={t.products.digitalCard.faq.heading}
+        items={t.products.digitalCard.faq.items.map((it) => ({
+          q: it.question,
+          a: it.answer,
+        }))}
+        id="card-faq"
+      />
 
       <FinalCTA />
     </>
