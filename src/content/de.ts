@@ -4729,6 +4729,55 @@ export const content: Content = {
           },
         ],
       },
+      customRequest: {
+        eyebrow: "[ WHITE-GLOVE · FÜR SIE GESTALTET ]",
+        headline: "Lieber von uns gestalten lassen?",
+        lead:
+          "Zwei Done-for-you-Wege: White-Glove gestaltet Ihre Karte in 48 Stunden von Hand, oder wir erstellen ein Angebot für Teams und Sonderwünsche. Sagen Sie uns unten, was Sie brauchen — oder schreiben Sie uns einfach.",
+        options: [
+          {
+            tag: "WHITE-GLOVE",
+            price: "ab 299 €",
+            title: "Wir gestalten sie für Sie",
+            body:
+              "In 48 Stunden von Hand gestaltet, unbegrenzte Korrekturen, mehrsprachig (DE / EN / TR), bevorzugter Support.",
+          },
+          {
+            tag: "INDIVIDUELL · TEAM",
+            price: "Auf Anfrage",
+            title: "Maßgeschneidert oder Team-Rollout",
+            body:
+              "Besondere Layouts, viele Karten, eigene Domain — wir kalkulieren und senden Ihnen ein Angebot.",
+          },
+        ],
+        channels: {
+          heading: "Direkt erreichen",
+          note: "Am schnellsten per WhatsApp — meist antworten wir innerhalb eines Werktags.",
+          prefill: "Hallo OpSolid — ich hätte gern eine individuelle OpSo Smart Karte.",
+          labels: {
+            whatsappTr: "WhatsApp · TR",
+            whatsappDe: "WhatsApp · DE",
+            phone: "Anrufen",
+            email: "E-Mail",
+          },
+        },
+        form: {
+          heading: "Erzählen Sie uns von Ihrer Karte",
+          name: "Vollständiger Name",
+          email: "Geschäftliche E-Mail",
+          company: "Unternehmen (optional)",
+          industry: "Branche",
+          teamSize: "Wie viele Karten?",
+          teamSizeOptions: ["1", "2 – 5", "6 – 20", "20+"],
+          message: "Was brauchen Sie? Stil, Links, Sonderwünsche…",
+          consent:
+            "Ich willige ein, dass OpSolid diese Anfrage zur Beantwortung verarbeitet. Siehe Datenschutz.",
+          submit: "Anfrage senden",
+          submitting: "Senden…",
+          success: "Danke — wir antworten innerhalb eines Werktags.",
+          error: "Etwas ist schiefgelaufen. Bitte direkt an info@opsolid.de schreiben.",
+        },
+      },
     },
 
     contact: {

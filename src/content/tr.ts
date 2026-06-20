@@ -4730,6 +4730,55 @@ export const content: Content = {
           },
         ],
       },
+      customRequest: {
+        eyebrow: "[ WHITE-GLOVE · SİZİN İÇİN TASARLANIR ]",
+        headline: "Sizin için biz tasarlayalım mı?",
+        lead:
+          "İki 'sizin yerinize yapalım' yolu: White-glove kartınızı 48 saatte elde tasarlar, ya da ekipler ve özel istekler için teklif çıkarırız. Aşağıdan ne istediğini yaz — ya da direkt bize mesaj at.",
+        options: [
+          {
+            tag: "WHITE-GLOVE",
+            price: "299 €'dan başlar",
+            title: "Sizin için tasarlarız",
+            body:
+              "48 saatte elde tasarım, sınırsız revizyon, çok dilli (DE / EN / TR), öncelikli destek.",
+          },
+          {
+            tag: "ÖZEL · EKİP",
+            price: "Talep üzerine",
+            title: "Özel tasarım veya ekip kurulumu",
+            body:
+              "Özel düzenler, çok sayıda kart, kendi alan adınız — kapsamı çıkarıp size teklif göndeririz.",
+          },
+        ],
+        channels: {
+          heading: "Direkt bize ulaşın",
+          note: "En hızlısı WhatsApp — genelde bir iş günü içinde yanıtlıyoruz.",
+          prefill: "Merhaba OpSolid — özel bir OpSo Smart kart istiyorum.",
+          labels: {
+            whatsappTr: "WhatsApp · TR",
+            whatsappDe: "WhatsApp · DE",
+            phone: "Ara",
+            email: "E-posta",
+          },
+        },
+        form: {
+          heading: "Kartından bahset",
+          name: "Ad soyad",
+          email: "İş e-postası",
+          company: "Firma (opsiyonel)",
+          industry: "Sektör",
+          teamSize: "Kaç kart?",
+          teamSizeOptions: ["1", "2 – 5", "6 – 20", "20+"],
+          message: "Ne lazım? Stil, bağlantılar, özel istekler…",
+          consent:
+            "OpSolid'in bu talebi yanıtlamak için işlemesine onay veriyorum. Gizlilik Politikası'na bakın.",
+          submit: "Talebi gönder",
+          submitting: "Gönderiliyor…",
+          success: "Teşekkürler — bir iş günü içinde yanıtlayacağız.",
+          error: "Bir şeyler ters gitti. Lütfen doğrudan info@opsolid.de adresine yazın.",
+        },
+      },
     },
 
     contact: {

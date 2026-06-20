@@ -10,6 +10,7 @@ import { FinalCTA } from "@/components/sections/FinalCTA";
 import { PricingTable } from "@/components/sections/PricingTable";
 import { OrderFormSection } from "./sections/OrderFormSection";
 import { TemplateGallery } from "./sections/TemplateGallery";
+import { CustomRequestSection } from "@/components/products/digital-card/CustomRequestSection";
 import type { CardPricingMode } from "@/lib/billing/plan";
 
 /**
@@ -103,7 +104,10 @@ export function DigitalCardPage({
               <Link href="/card/new" className="btn btn-primary btn-lg">
                 {d.hero.ctaPrimary} <Icon name="arrow" size={18} />
               </Link>
-              <Link href="#templates" className="btn btn-ghost btn-lg">
+              <Link
+                href="/products/digital-card/gallery"
+                className="btn btn-ghost btn-lg"
+              >
                 {d.hero.ctaSecondary}
               </Link>
             </div>
@@ -171,6 +175,8 @@ export function DigitalCardPage({
           />
         </div>
       </section>
+
+      <CustomRequestSection />
 
       <FinalCTA />
     </>

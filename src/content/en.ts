@@ -4745,6 +4745,55 @@ export const content = {
           },
         ],
       },
+      customRequest: {
+        eyebrow: "[ WHITE-GLOVE · DESIGNED FOR YOU ]",
+        headline: "Prefer we design it for you?",
+        lead:
+          "Two done-for-you paths: white-glove hand-designs your card in 48 hours, or we quote a bespoke build for teams and special requests. Tell us what you need below — or just message us.",
+        options: [
+          {
+            tag: "WHITE-GLOVE",
+            price: "from €299",
+            title: "We design it for you",
+            body:
+              "Hand-designed in 48 hours, unlimited revisions, multi-language (DE / EN / TR), priority support.",
+          },
+          {
+            tag: "CUSTOM · TEAM",
+            price: "On request",
+            title: "Bespoke or team rollout",
+            body:
+              "Special layouts, many cards, your own domain — we scope it and send you a quote.",
+          },
+        ],
+        channels: {
+          heading: "Reach us directly",
+          note: "Fastest by WhatsApp — we usually reply within one business day.",
+          prefill: "Hi OpSolid — I'd like a custom OpSo Smart card.",
+          labels: {
+            whatsappTr: "WhatsApp · TR",
+            whatsappDe: "WhatsApp · DE",
+            phone: "Call",
+            email: "Email",
+          },
+        },
+        form: {
+          heading: "Tell us about your card",
+          name: "Full name",
+          email: "Work email",
+          company: "Company (optional)",
+          industry: "Industry / sector",
+          teamSize: "How many cards?",
+          teamSizeOptions: ["1", "2 – 5", "6 – 20", "20+"],
+          message: "What do you need? Style, links, special requests…",
+          consent:
+            "I consent to OpSolid processing this request to reply. See the Privacy Policy.",
+          submit: "Send request",
+          submitting: "Sending…",
+          success: "Thanks — we'll reply within one business day.",
+          error: "Something went wrong. Please email info@opsolid.de directly.",
+        },
+      },
     },
 
     contact: {

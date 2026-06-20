@@ -11,6 +11,16 @@ export const SITE_CONFIG = {
   url: "https://opsolid.de",
   email: "info@opsolid.de",
   phone: "+49 176 31020654",
+  /**
+   * WhatsApp Business reach for product inquiries (esp. OpSo Smart custom-card
+   * requests). Two numbers so customers reach us on their local channel:
+   * a Turkish line and the German mobile. Stored in E.164; render via
+   * `waLink()` in src/lib/contact-channels.ts.
+   */
+  whatsapp: {
+    tr: "+90 533 571 78 85",
+    de: "+49 176 31020654",
+  },
   address: {
     street: "Stolte Ley 12",
     postalCode: "59759",
