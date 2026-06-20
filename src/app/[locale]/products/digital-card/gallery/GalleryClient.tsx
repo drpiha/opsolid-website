@@ -2,13 +2,18 @@
 
 // =============================================================================
 // GalleryClient — browsable public gallery of all OpSo Smart digital-card
-// designs. Reads cardTemplates (98 entries) as the data source; thumbnails
+// designs. Reads cardTemplates (active entries) as the data source; thumbnails
 // live at /images/templates/card-<id>.png with a graceful fallback tile when
 // an image fails to load. Sector filter chips derive from the catalog's
 // distinct sectorHint values; "All" resets to the full lineup.
 //
-// i18n: labels are inline here (EN/DE/TR) keyed to the active locale from
-// useLocale(). The lead wires these into locale content files in a later pass.
+// i18n: all labels (incl. sector names) come from t.v2.digitalCard.gallery so
+// the strings stay translatable and pass the structural-parity build guard.
+//
+// Colour note: muted text/surfaces use the explicit ink-300/400 + bg/line
+// token steps, NOT slash-opacity. The bg/ink/line tokens are bare CSS vars
+// (no <alpha-value>), so `text-ink/40` would silently paint at full opacity.
+// copper/NN is fine — copper is hex-backed.
 // =============================================================================
 
 import * as React from "react";
@@ -16,179 +21,6 @@ import { useLocale } from "@/context/LocaleContext";
 import { LocaleLink } from "@/components/shared/LocaleLink";
 import { cardTemplates } from "@/config/card-templates";
 import type { CardTemplateDef } from "@/config/card-templates";
-
-// -----------------------------------------------------------------------------
-// Inline label map — DE / EN / TR. Kept minimal; content team moves these to
-// locale files in a later pass.
-// -----------------------------------------------------------------------------
-
-type LabelKey =
-  | "heading"
-  | "subheading"
-  | "countLabel"
-  | "allChip"
-  | "useDesign"
-  | "backLink"
-  | "imgFallbackLabel"
-  // sector names
-  | "general"
-  | "realEstate"
-  | "salon"
-  | "restaurant"
-  | "creator"
-  | "freelancer"
-  | "lawyer"
-  | "clinic"
-  | "fitness"
-  | "music"
-  | "architecture"
-  | "retail"
-  | "hospitality"
-  | "events"
-  | "construction"
-  | "tourism"
-  | "corporate"
-  | "tech"
-  | "consultant"
-  | "dentist"
-  | "psychologist"
-  | "beauty"
-  | "accounting"
-  | "software"
-  | "content-creator"
-  | "wellness"
-  | "eventPlanner"
-  | "auto"
-  | "interior";
-
-const LABELS: Record<"en" | "de" | "tr", Record<LabelKey, string>> = {
-  en: {
-    heading: "All designs",
-    subheading: "Browse the full lineup and pick the design that fits your work.",
-    countLabel: "designs",
-    allChip: "All",
-    useDesign: "Use this design",
-    backLink: "Back to Digital Card",
-    imgFallbackLabel: "Template preview",
-    // sectors
-    general: "General",
-    realEstate: "Real Estate",
-    salon: "Salon & Barber",
-    restaurant: "Restaurant",
-    creator: "Creator & Photo",
-    freelancer: "Freelancer",
-    lawyer: "Legal",
-    clinic: "Clinic",
-    fitness: "Fitness",
-    music: "Music & DJ",
-    architecture: "Architecture",
-    retail: "Retail",
-    hospitality: "Hospitality",
-    events: "Events",
-    construction: "Construction",
-    tourism: "Tourism",
-    corporate: "Corporate",
-    tech: "Tech",
-    consultant: "Consultant",
-    dentist: "Dentist",
-    psychologist: "Psychology",
-    beauty: "Beauty",
-    accounting: "Accounting",
-    software: "Software",
-    "content-creator": "Content Creator",
-    wellness: "Wellness",
-    eventPlanner: "Event Planner",
-    auto: "Auto Dealer",
-    interior: "Interior Design",
-  },
-  de: {
-    heading: "Alle Designs",
-    subheading: "Die komplette Auswahl — passend fur Ihre Branche.",
-    countLabel: "Designs",
-    allChip: "Alle",
-    useDesign: "Dieses Design wahlen",
-    backLink: "Zuruck zur digitalen Karte",
-    imgFallbackLabel: "Vorschau",
-    // sectors
-    general: "Allgemein",
-    realEstate: "Immobilien",
-    salon: "Salon & Barber",
-    restaurant: "Restaurant",
-    creator: "Kreativ & Foto",
-    freelancer: "Freelancer",
-    lawyer: "Recht & Kanzlei",
-    clinic: "Klinik",
-    fitness: "Fitness",
-    music: "Musik & DJ",
-    architecture: "Architektur",
-    retail: "Handel",
-    hospitality: "Hotellerie",
-    events: "Events",
-    construction: "Bau",
-    tourism: "Tourismus",
-    corporate: "Unternehmen",
-    tech: "Tech",
-    consultant: "Beratung",
-    dentist: "Zahnarzt",
-    psychologist: "Psychologie",
-    beauty: "Beauty",
-    accounting: "Buchhaltung",
-    software: "Software",
-    "content-creator": "Content Creator",
-    wellness: "Wellness",
-    eventPlanner: "Eventplanung",
-    auto: "Autohandel",
-    interior: "Innenarchitektur",
-  },
-  tr: {
-    heading: "Tum Tasarimlar",
-    subheading: "Tum koleksiyonu kesfet ve sektörune en uygun tasarimi sec.",
-    countLabel: "tasarim",
-    allChip: "Tümü",
-    useDesign: "Bu tasarimi kullan",
-    backLink: "Dijital Kartlara Don",
-    imgFallbackLabel: "On izleme",
-    // sectors
-    general: "Genel",
-    realEstate: "Emlak",
-    salon: "Salon & Berber",
-    restaurant: "Restoran",
-    creator: "Kreatif & Foto",
-    freelancer: "Freelancer",
-    lawyer: "Hukuk",
-    clinic: "Klinik",
-    fitness: "Fitness",
-    music: "Muzik & DJ",
-    architecture: "Mimari",
-    retail: "Perakende",
-    hospitality: "Otelcilik",
-    events: "Etkinlik",
-    construction: "Insaat",
-    tourism: "Turizm",
-    corporate: "Kurumsal",
-    tech: "Teknoloji",
-    consultant: "Danismanlik",
-    dentist: "Dis Hekimi",
-    psychologist: "Psikoloji",
-    beauty: "Guzellik",
-    accounting: "Muhasebe",
-    software: "Yazilim",
-    "content-creator": "Icerik Uretici",
-    wellness: "Saglik & Wellness",
-    eventPlanner: "Etkinlik Planlama",
-    auto: "Otomotiv",
-    interior: "Ic Mimarlik",
-  },
-};
-
-function useLabels() {
-  const { locale } = useLocale();
-  const lang = (["de", "tr"].includes(locale) ? locale : "en") as
-    | "en"
-    | "de"
-    | "tr";
-  return LABELS[lang];
-}
 
 // -----------------------------------------------------------------------------
 // Sector type — derived from the catalog union
@@ -210,16 +42,16 @@ function ThumbnailFallback({
   return (
     <div
       aria-hidden="false"
-      className="flex h-full w-full flex-col items-center justify-center gap-3 px-5 text-center"
+      className="flex h-full w-full flex-col items-center justify-center gap-3 bg-bg-2 px-5 text-center"
       style={{
-        background:
-          "radial-gradient(110% 75% at 20% 10%, rgba(232,162,82,0.15), transparent 55%), linear-gradient(165deg, #FAF6EF 0%, #ECE6D8 100%)",
+        backgroundImage:
+          "radial-gradient(110% 75% at 20% 10%, rgba(194,121,64,0.14), transparent 55%)",
       }}
     >
-      <span className="inline-flex items-center gap-1.5 rounded-full border border-copper/45 bg-copper/15 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-ink/70">
+      <span className="inline-flex items-center gap-1.5 rounded-full border border-copper/45 bg-copper/15 px-3 py-1 font-mono text-[10px] uppercase tracking-[0.22em] text-ink-200">
         {sectorLabel}
       </span>
-      <p className="max-w-[18ch] font-serif text-[17px] leading-snug text-ink/80">
+      <p className="max-w-[18ch] font-serif text-[17px] leading-snug text-ink-100">
         {name}
       </p>
       <span
@@ -227,7 +59,7 @@ function ThumbnailFallback({
         className="block h-px w-10"
         style={{
           background:
-            "linear-gradient(90deg, transparent, rgba(232,162,82,0.6), transparent)",
+            "linear-gradient(90deg, transparent, rgba(194,121,64,0.6), transparent)",
         }}
       />
     </div>
@@ -291,7 +123,7 @@ function TemplateCard({
         {/* ID badge */}
         <span
           aria-hidden
-          className="absolute right-2.5 top-2.5 rounded-full border border-ink/10 bg-bg-0/80 px-2 py-0.5 font-mono text-[9.5px] uppercase tracking-[0.18em] text-ink/45 backdrop-blur-sm"
+          className="absolute right-2.5 top-2.5 rounded-full border border-line bg-bg-0 px-2 py-0.5 font-mono text-[9.5px] uppercase tracking-[0.18em] text-ink-400 backdrop-blur-sm"
         >
           #{String(template.id).padStart(2, "0")}
         </span>
@@ -301,7 +133,7 @@ function TemplateCard({
       <div className="flex flex-col gap-3 p-4">
         {/* Sector chip + template name */}
         <div className="flex flex-col gap-1">
-          <span className="font-mono text-[9.5px] uppercase tracking-[0.2em] text-ink/45">
+          <span className="font-mono text-[9.5px] uppercase tracking-[0.2em] text-ink-400">
             {sectorLabel}
           </span>
           <h3 className="truncate font-serif text-[15px] leading-snug text-ink">
@@ -312,7 +144,7 @@ function TemplateCard({
         {/* CTA */}
         <LocaleLink
           href={`/card/new?template=${template.id}`}
-          className="btn btn-ghost inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-ink/15 bg-bg-0 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-ink/70 transition-colors hover:border-copper/50 hover:text-ink"
+          className="btn btn-ghost inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-line bg-bg-0 px-4 py-2 font-mono text-[10px] uppercase tracking-[0.18em] text-ink-200 transition-colors hover:border-copper/50 hover:text-ink"
           aria-label={`${useDesignLabel} — ${template.name}`}
         >
           {useDesignLabel}
@@ -330,31 +162,36 @@ function SectorPills({
   sectors,
   active,
   allLabel,
+  filterAriaLabel,
   labelFor,
   onChange,
 }: {
   sectors: SectorHint[];
   active: SectorHint | "all";
   allLabel: string;
+  filterAriaLabel: string;
   labelFor: (s: SectorHint) => string;
   onChange: (s: SectorHint | "all") => void;
 }) {
+  const pillBase =
+    "shrink-0 snap-start rounded-full px-4 py-1.5 font-mono text-[10.5px] uppercase tracking-[0.18em] transition-all duration-200";
+  const pillActive =
+    "border border-copper/55 bg-copper/15 text-ink shadow-[0_1px_0_rgba(194,121,64,0.3)_inset]";
+  const pillIdle =
+    "border border-line bg-bg-1 text-ink-300 hover:border-line-firm hover:text-ink-100";
+
   return (
     <div
       className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:flex-wrap md:overflow-visible md:px-0"
       role="group"
-      aria-label="Filter by sector"
+      aria-label={filterAriaLabel}
     >
       {/* All chip */}
       <button
         type="button"
         onClick={() => onChange("all")}
         aria-pressed={active === "all"}
-        className={`shrink-0 snap-start rounded-full px-4 py-1.5 font-mono text-[10.5px] uppercase tracking-[0.18em] transition-all duration-200 ${
-          active === "all"
-            ? "border border-copper/55 bg-copper/15 text-ink shadow-[0_1px_0_rgba(194,121,64,0.3)_inset]"
-            : "border border-ink/12 bg-bg-1/60 text-ink/55 hover:border-ink/25 hover:text-ink/90"
-        }`}
+        className={`${pillBase} ${active === "all" ? pillActive : pillIdle}`}
       >
         {allLabel}
       </button>
@@ -365,11 +202,7 @@ function SectorPills({
           type="button"
           onClick={() => onChange(sec)}
           aria-pressed={active === sec}
-          className={`shrink-0 snap-start rounded-full px-4 py-1.5 font-mono text-[10.5px] uppercase tracking-[0.18em] transition-all duration-200 ${
-            active === sec
-              ? "border border-copper/55 bg-copper/15 text-ink shadow-[0_1px_0_rgba(194,121,64,0.3)_inset]"
-              : "border border-ink/12 bg-bg-1/60 text-ink/55 hover:border-ink/25 hover:text-ink/90"
-          }`}
+          className={`${pillBase} ${active === sec ? pillActive : pillIdle}`}
         >
           {labelFor(sec)}
         </button>
@@ -402,7 +235,8 @@ const ALL_SECTORS: SectorHint[] = (() => {
 })();
 
 export function GalleryClient() {
-  const L = useLabels();
+  const { t } = useLocale();
+  const g = t.v2.digitalCard.gallery;
   const [activeFilter, setActiveFilter] = React.useState<SectorHint | "all">(
     "all"
   );
@@ -413,8 +247,9 @@ export function GalleryClient() {
   }, [activeFilter]);
 
   const labelFor = React.useCallback(
-    (s: SectorHint) => L[s] ?? s,
-    [L]
+    (s: SectorHint) =>
+      (g.sectors as Record<string, string>)[s] ?? s,
+    [g]
   );
 
   return (
@@ -422,8 +257,8 @@ export function GalleryClient() {
       {/* Back link */}
       <LocaleLink
         href="/products/digital-card"
-        className="mb-10 inline-flex items-center gap-1.5 font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink/50 transition-colors hover:text-copper"
-        aria-label={L.backLink}
+        className="mb-10 inline-flex items-center gap-1.5 font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink-400 transition-colors hover:text-copper"
+        aria-label={g.backLink}
       >
         {/* Inline chevron-left to avoid lucide import */}
         <svg
@@ -440,18 +275,18 @@ export function GalleryClient() {
           <path d="M19 12H5" />
           <path d="m12 5-7 7 7 7" />
         </svg>
-        {L.backLink}
+        {g.backLink}
       </LocaleLink>
 
       {/* Page heading */}
       <div className="mb-10 flex flex-col gap-2 md:mb-14">
-        <span className="mono-label text-[11px] text-ink/40">
-          {String(ALL_TEMPLATES.length).padStart(2, "0")} {L.countLabel}
+        <span className="mono-label text-[11px] text-ink-400">
+          {String(ALL_TEMPLATES.length).padStart(2, "0")} {g.countLabel}
         </span>
-        <h1 className="font-serif text-display-sm text-ink md:text-display-md">
-          {L.heading}
+        <h1 className="font-serif text-h1 text-ink md:text-display">
+          {g.heading}
         </h1>
-        <p className="mt-1 max-w-xl text-body text-ink/60">{L.subheading}</p>
+        <p className="mt-1 max-w-xl text-body text-ink-300">{g.subheading}</p>
       </div>
 
       {/* Sector filter */}
@@ -459,7 +294,8 @@ export function GalleryClient() {
         <SectorPills
           sectors={ALL_SECTORS}
           active={activeFilter}
-          allLabel={L.allChip}
+          allLabel={g.allChip}
+          filterAriaLabel={g.heading}
           labelFor={labelFor}
           onChange={setActiveFilter}
         />
@@ -467,8 +303,8 @@ export function GalleryClient() {
 
       {/* Live count when filtered */}
       {activeFilter !== "all" && (
-        <p className="mb-6 font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink/45">
-          {filtered.length} {L.countLabel}
+        <p className="mb-6 font-mono text-[10.5px] uppercase tracking-[0.18em] text-ink-400">
+          {filtered.length} {g.countLabel}
         </p>
       )}
 
@@ -479,7 +315,7 @@ export function GalleryClient() {
             key={tpl.id}
             template={tpl}
             sectorLabel={labelFor(tpl.sectorHint)}
-            useDesignLabel={L.useDesign}
+            useDesignLabel={g.useDesign}
           />
         ))}
       </div>
@@ -487,7 +323,7 @@ export function GalleryClient() {
       {/* Empty state — only if filter returns 0 (shouldn't happen with current catalog) */}
       {filtered.length === 0 && (
         <div className="panel mt-12 py-16 text-center">
-          <p className="text-body text-ink/50">{L.countLabel} — 0</p>
+          <p className="text-body text-ink-400">{g.countLabel} — 0</p>
         </div>
       )}
     </main>

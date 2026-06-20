@@ -187,7 +187,7 @@ export function CustomRequestSection() {
                   <span>
                     {f.consent}{" "}
                     <LocaleLink href="/privacy" className="underline">
-                      ↗
+                      {f.privacyLink}
                     </LocaleLink>
                   </span>
                 </label>

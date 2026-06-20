@@ -4,18 +4,18 @@ import { GalleryClient } from "./GalleryClient";
 export const metadata: Metadata = {
   title: "All Digital Card Designs | OpSo Smart",
   description:
-    "Browse all 98 digital business card templates — sorted by sector. Real Estate, Law, Restaurant, Fitness, Tech, and more. Pick a design and go live in minutes.",
+    "Browse every OpSo Smart digital business card template — sorted by sector. Real Estate, Law, Restaurant, Fitness, Tech, and more. Pick a design and go live in minutes.",
   openGraph: {
     title: "All Digital Card Designs | OpSo Smart",
     description:
-      "Browse all 98 digital business card templates — sorted by sector. Pick a design and go live in minutes.",
+      "Browse every OpSo Smart digital business card template — sorted by sector. Pick a design and go live in minutes.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "All Digital Card Designs | OpSo Smart",
     description:
-      "Browse all 98 digital business card templates — sorted by sector. Pick a design and go live in minutes.",
+      "Browse every OpSo Smart digital business card template — sorted by sector. Pick a design and go live in minutes.",
   },
 };
 
