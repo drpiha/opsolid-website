@@ -195,12 +195,12 @@ html[data-preview="v2"] .os-nav-dropdown {
 html[data-preview="v2"] .os-nav-dropdown-item-title { color: var(--v2-ink-1); }
 html[data-preview="v2"] .os-nav-dropdown-item-sub   { color: var(--v2-ink-3); }
 html[data-preview="v2"] .os-mobile-menu {
-  background: var(--v2-bg-base);
-  color: var(--v2-ink-1);
-}
-html[data-preview="v2"] .os-mobile-menu-bar,
-html[data-preview="v2"] .os-mobile-nav-link {
-  color: var(--v2-ink-1);
+  /* Always-dark surface (matches opsolid-site.css intent) so the menu's
+     hardcoded cream text stays legible in BOTH themes. Binding to
+     --v2-bg-base flipped the panel light in light mode, making the cream
+     .os-mobile-link / title / arrow text invisible. */
+  background: linear-gradient(180deg, rgba(11, 14, 19, 0.985) 0%, rgba(7, 9, 12, 1) 100%);
+  color: rgba(245, 240, 232, 0.94);
 }
 
 html[data-preview="v2"] .os-footer {
