@@ -47,7 +47,7 @@ export function StickySaveBar({ isDirty, formState, onRevert }: StickySaveBarPro
     >
       <div className="mx-auto flex max-w-2xl items-center justify-between gap-3 px-4 py-3 sm:px-6">
         {/* Left: status label */}
-        <div className="flex items-center gap-2 text-sm text-ink-200">
+        <div className="flex min-w-0 flex-1 items-center gap-2 text-sm text-ink-200">
           {isSaved ? (
             <CheckCircle2 size={15} className="text-signal-ok shrink-0" />
           ) : isDirty ? (
@@ -58,11 +58,12 @@ export function StickySaveBar({ isDirty, formState, onRevert }: StickySaveBarPro
           ) : null}
           <span
             className={
-              isSaved
+              "truncate " +
+              (isSaved
                 ? "text-signal-ok"
                 : isDirty
                 ? "text-ink font-medium"
-                : "text-ink-200"
+                : "text-ink-200")
             }
           >
             {isSaved ? edit.savedSuccess : isDirty ? edit.unsavedChanges : edit.allSaved}

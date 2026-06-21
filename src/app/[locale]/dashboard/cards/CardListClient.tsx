@@ -131,12 +131,12 @@ function ClaimBanner({
           return (
             <li
               key={card.id}
-              className="flex items-center justify-between rounded-xl border border-copper-500/20 bg-white/70 px-4 py-3"
+              className="flex items-center justify-between gap-3 rounded-xl border border-copper-500/20 bg-white/70 px-4 py-3"
             >
-              <div>
-                <p className="text-sm font-medium text-ink">{card.name}</p>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium text-ink">{card.name}</p>
                 {card.slug && (
-                  <p className="font-mono text-[11px] text-ink-400">/c/{card.slug}</p>
+                  <p className="truncate font-mono text-[11px] text-ink-400">/c/{card.slug}</p>
                 )}
               </div>
               <button
@@ -144,7 +144,7 @@ function ClaimBanner({
                 disabled={state === "loading" || state === "done"}
                 onClick={() => handleClaim(card.id)}
                 className={[
-                  "min-w-[110px] rounded-full px-4 py-1.5 text-xs font-medium transition-colors",
+                  "shrink-0 min-w-[110px] rounded-full px-4 py-1.5 text-xs font-medium transition-colors",
                   state === "done"
                     ? "bg-signal-ok/20 text-signal-ok cursor-default"
                     : state === "error"

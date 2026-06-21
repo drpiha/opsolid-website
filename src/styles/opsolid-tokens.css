@@ -523,6 +523,13 @@ p { margin: 0; color: var(--ink-200); }
 }
 .field::placeholder { color: var(--ink-500); }
 
+/* Mobile: form inputs must render at >=16px or iOS Safari auto-zooms the page
+   on focus (the body size is 15px). Bumping only on small viewports keeps the
+   desktop typography unchanged. */
+@media (max-width: 640px) {
+  .field { font-size: 16px; }
+}
+
 /* ==============================================================
    FOCUS — keyboard
    ============================================================== */

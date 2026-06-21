@@ -68,6 +68,16 @@ export function DashboardChrome({ userEmail, locale }: Props) {
             {SITE_CONFIG.name}
           </a>
           <a
+            href={`/${locale}/dashboard/cards`}
+            className="hidden sm:inline-flex items-center text-xs font-semibold text-ink transition-colors hover:text-copper-500"
+          >
+            {locale === "de"
+              ? "Meine Karten"
+              : locale === "tr"
+                ? "Kartlarım"
+                : "My Cards"}
+          </a>
+          <a
             href={`/${locale}/discover`}
             className="hidden sm:inline-flex items-center text-xs font-medium text-ink-400 transition-colors hover:text-ink"
           >
@@ -182,6 +192,17 @@ export function DashboardChrome({ userEmail, locale }: Props) {
                   </div>
                 </div>
 
+                <a
+                  href={`/${locale}/dashboard/cards`}
+                  onClick={() => setMenuOpen(false)}
+                  className="flex w-full items-center gap-2 px-4 py-2.5 text-sm font-medium text-ink transition-colors hover:bg-bg-2"
+                >
+                  {locale === "de"
+                    ? "Meine Karten"
+                    : locale === "tr"
+                      ? "Kartlarım"
+                      : "My Cards"}
+                </a>
                 <a
                   href={`/${locale}/dashboard/contacts`}
                   onClick={() => setMenuOpen(false)}

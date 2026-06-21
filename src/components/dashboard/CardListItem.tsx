@@ -62,7 +62,10 @@ export function CardListItem({ card, locale }: Props) {
   const deleteModalRef = useRef<HTMLDivElement>(null);
 
   const displayName = resolveCardName(card);
-  const publicUrl = card.slug ? `${window?.location?.origin ?? ""}/c/${card.slug}` : null;
+  // Relative path only — the absolute origin is resolved inside handleShare
+  // (client-only) so this client component renders identically on the server
+  // and on hydration. Referencing `window` at render is unsafe under SSR.
+  const publicPath = card.slug ? `/c/${card.slug}` : null;
   // The edit page is gated by the per-order edit token (?t=). Owned cards carry
   // their token from the dashboard query, so pass it through — otherwise the
   // editor rejects the visit with "Link incomplete". If a token is somehow
@@ -125,9 +128,9 @@ export function CardListItem({ card, locale }: Props) {
 
   const handleShare = async () => {
     setMenuOpen(false);
-    if (!publicUrl) return;
+    if (!publicPath) return;
     try {
-      await navigator.clipboard.writeText(publicUrl);
+      await navigator.clipboard.writeText(`${window.location.origin}${publicPath}`);
       // Simple inline toast — project has no global toast provider yet
       const toast = document.createElement("div");
       toast.textContent = "URL copied";
@@ -242,7 +245,7 @@ export function CardListItem({ card, locale }: Props) {
                   className="absolute right-0 top-8 z-10 w-44 rounded-xl border border-line bg-bg-1 py-1 shadow-lifted"
                 >
                   {/* Share */}
-                  {publicUrl && (
+                  {publicPath && (
                     <button
                       type="button"
                       role="menuitem"
@@ -303,7 +306,7 @@ export function CardListItem({ card, locale }: Props) {
           role="dialog"
           aria-modal="true"
           aria-labelledby="delete-modal-title"
-          className="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 px-4 backdrop-blur-sm"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4 backdrop-blur-sm"
           onClick={(e) => {
             if (e.target === e.currentTarget) setDeleteConfirmOpen(false);
           }}

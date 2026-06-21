@@ -116,7 +116,7 @@ export default function ContactSection({
                   <span className="block text-xs font-semibold text-ink">
                     {formMap[labelKey] ?? preset.label}
                   </span>
-                  <span className="block text-[10.5px] leading-snug text-ink-300">
+                  <span className="block text-[11.5px] leading-snug text-ink-300 sm:text-[10.5px]">
                     {formMap[descKey] ?? preset.description}
                   </span>
                   {active && (

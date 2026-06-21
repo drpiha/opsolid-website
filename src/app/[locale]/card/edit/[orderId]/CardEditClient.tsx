@@ -763,8 +763,11 @@ export function CardEditClient(props: Props) {
             )}
           </div>
 
-          {/* ================ RIGHT: preview (sticky, single page scroll) ====== */}
-          <div className="lg:sticky lg:top-20 lg:self-start lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto lg:pb-6">
+          {/* ================ RIGHT: preview (sticky, single page scroll) ======
+              Hidden below lg: on a phone the form is already long, and a full
+              card render stacked beneath every section just adds ~thousands of
+              px of scroll. Mobile owners preview via the "View Live" link. */}
+          <div className="hidden lg:block lg:sticky lg:top-20 lg:self-start lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto lg:pb-6">
             <p className="text-eyebrow mb-2 uppercase text-ink-200">
               {form.previewLabel}
             </p>
@@ -1003,7 +1006,7 @@ function CancelModal({
     <div
       role="dialog"
       aria-modal="true"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-ink/50 px-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4"
       onClick={onClose}
     >
       <div
@@ -1701,7 +1704,8 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                         tags: (l.tags ?? []).filter((t) => t !== tag),
                                       })
                                     }
-                                    className="text-copper-700 hover:text-copper leading-none"
+                                    className="-mr-1 inline-flex h-5 w-5 items-center justify-center rounded-full text-base leading-none text-copper-700 hover:bg-copper/10 hover:text-copper"
+                                    aria-label={`Remove tag ${tag}`}
                                   >
                                     ×
                                   </button>
@@ -1934,7 +1938,8 @@ function LeadsPanel({ orderId, editToken }: { orderId: string; editToken: string
                                         tags: (c.tags ?? []).filter((t) => t !== tag),
                                       })
                                     }
-                                    className="text-copper-700 hover:text-copper leading-none"
+                                    className="-mr-1 inline-flex h-5 w-5 items-center justify-center rounded-full text-base leading-none text-copper-700 hover:bg-copper/10 hover:text-copper"
+                                    aria-label={`Remove tag ${tag}`}
                                   >
                                     ×
                                   </button>

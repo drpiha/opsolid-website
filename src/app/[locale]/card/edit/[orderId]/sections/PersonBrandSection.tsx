@@ -273,7 +273,7 @@ export default function PersonBrandSection({
                         transform: `scale(${cardData.photoPosition?.scale ?? 1})`,
                       }}
                     />
-                    <div className="absolute inset-0 flex items-center justify-center bg-ink/0 opacity-0 transition-all group-hover:bg-ink/40 group-hover:opacity-100">
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-all group-hover:bg-black/40 group-hover:opacity-100">
                       <Pencil size={14} className="text-white" />
                     </div>
                   </button>
@@ -322,7 +322,7 @@ export default function PersonBrandSection({
                         transform: `scale(${cardData.logoPosition?.scale ?? 1})`,
                       }}
                     />
-                    <div className="absolute inset-0 flex items-center justify-center bg-ink/0 opacity-0 transition-all group-hover:bg-ink/40 group-hover:opacity-100">
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/0 opacity-0 transition-all group-hover:bg-black/40 group-hover:opacity-100">
                       <Pencil size={14} className="text-white" />
                     </div>
                   </button>
