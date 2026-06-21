@@ -6,8 +6,8 @@
 // Shows: thumbnail, name, status badge, view count, action menu
 // (Edit / Share / Delete).
 //
-// Delete: POST /api/cards/[id]/delete
-//   TODO (B0.6): endpoint does not exist yet — call is gated with a TODO note.
+// Delete: POST /api/account/cards/[id]/delete (exists; requireUser +
+// ownership check, soft-deletes to CANCELLED).
 // =============================================================================
 
 import { useState, useRef, useEffect } from "react";
@@ -158,7 +158,7 @@ export function CardListItem({ card, locale }: Props) {
       setDeleteConfirmOpen(false);
       router.refresh();
     } catch {
-      alert("Delete failed — endpoint not yet available.");
+      alert("Delete failed — please try again.");
     } finally {
       setDeleting(false);
     }

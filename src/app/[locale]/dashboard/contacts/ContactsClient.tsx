@@ -77,6 +77,7 @@ const COPY: Record<Locale, {
   statusOptions: Record<ContactStatus, string>;
   saving: string;
   saved: string;
+  saveError: string;
   loadError: string;
 }> = {
   de: {
@@ -98,6 +99,7 @@ const COPY: Record<Locale, {
     deleteConfirm: "Diesen Kontakt aus Ihrer Liste entfernen?",
     saving: "Speichern…",
     saved: "Gespeichert",
+    saveError: "Speichern fehlgeschlagen",
     loadError: "Kontakte konnten nicht geladen werden.",
     statusOptions: {
       new: "Neu",
@@ -126,6 +128,7 @@ const COPY: Record<Locale, {
     deleteConfirm: "Remove this contact from your list?",
     saving: "Saving…",
     saved: "Saved",
+    saveError: "Save failed",
     loadError: "Could not load contacts.",
     statusOptions: {
       new: "New",
@@ -154,6 +157,7 @@ const COPY: Record<Locale, {
     deleteConfirm: "Bu kişiyi listenizden kaldırmak istiyor musunuz?",
     saving: "Kaydediliyor…",
     saved: "Kaydedildi",
+    saveError: "Kaydedilemedi",
     loadError: "Kişiler yüklenemedi.",
     statusOptions: {
       new: "Yeni",
@@ -264,7 +268,9 @@ function ContactRow({
   );
   const [status, setStatus] = useState<ContactStatus>(contact.status);
   const [starred, setStarred] = useState(contact.starred);
-  const [saveState, setSaveState] = useState<"idle" | "saving" | "saved">("idle");
+  const [saveState, setSaveState] = useState<
+    "idle" | "saving" | "saved" | "error"
+  >("idle");
 
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -292,9 +298,15 @@ function ContactRow({
           onUpdate(contact.id, updated);
           setSaveState("saved");
           setTimeout(() => setSaveState("idle"), 2000);
+        } else {
+          // Surface the failure instead of leaving the indicator stuck on
+          // "Saving…" (this is what hid the follow-up-date 400 for so long).
+          setSaveState("error");
+          setTimeout(() => setSaveState("idle"), 4000);
         }
       } catch {
-        setSaveState("idle");
+        setSaveState("error");
+        setTimeout(() => setSaveState("idle"), 4000);
       }
     },
     [contact.id, onUpdate],
@@ -432,8 +444,17 @@ function ContactRow({
 
             {/* Save indicator */}
             {saveState !== "idle" && (
-              <span className="text-[11px] text-ink-400">
-                {saveState === "saving" ? copy.saving : copy.saved}
+              <span
+                className={
+                  "text-[11px] " +
+                  (saveState === "error" ? "text-signal-err" : "text-ink-400")
+                }
+              >
+                {saveState === "saving"
+                  ? copy.saving
+                  : saveState === "error"
+                    ? copy.saveError
+                    : copy.saved}
               </span>
             )}
 

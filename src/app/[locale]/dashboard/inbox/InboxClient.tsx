@@ -836,15 +836,22 @@ function ThreadDetailPane({
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ body: replyText.trim() }),
       });
+      const json = (await res.json().catch(() => ({}))) as {
+        description?: string;
+        status?: string;
+      };
       if (!res.ok) {
-        const json = (await res.json().catch(() => ({}))) as {
-          description?: string;
-        };
         setSendError(json.description ?? copy.detail.sendFailed);
         return;
       }
+      // The route returns 200 even when channel dispatch failed (the message
+      // is persisted with status "failed"). Honor that status instead of
+      // reporting a silent success.
       setReplyText("");
       setDraft(null);
+      if (json.status === "failed") {
+        setSendError(copy.detail.sendFailed);
+      }
       await onRefresh();
     } finally {
       setSending(false);
@@ -853,13 +860,22 @@ function ThreadDetailPane({
 
   async function handleDraft() {
     setDrafting(true);
+    setSendError(null);
     try {
       const res = await fetch(`/api/inbox/threads/${thread.id}/ai/suggest`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({}),
       });
-      if (!res.ok) return;
+      if (!res.ok) {
+        // AI key missing / no suggestion -> 4xx/5xx. Surface it instead of a
+        // silent no-op that just stops the spinner.
+        const json = (await res.json().catch(() => ({}))) as {
+          description?: string;
+        };
+        setSendError(json.description ?? copy.detail.sendFailed);
+        return;
+      }
       const json = (await res.json()) as { suggestion: ThreadSuggestion };
       setDraft(json.suggestion);
     } finally {

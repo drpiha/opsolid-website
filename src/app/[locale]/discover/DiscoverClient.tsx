@@ -74,13 +74,14 @@ const INDUSTRY_OPTIONS = Object.entries(SECTOR_PRESETS).map(([key, preset]) => (
 // ---------------------------------------------------------------------------
 
 function Avatar({ name, photoPath }: { name: string; photoPath: string | null }) {
+  const [failed, setFailed] = useState(false);
   const initials = name
     .split(" ")
     .slice(0, 2)
     .map((s) => s.charAt(0).toUpperCase())
     .join("");
 
-  if (photoPath) {
+  if (photoPath && !failed) {
     return (
       /* eslint-disable-next-line @next/next/no-img-element */
       <img
@@ -89,6 +90,7 @@ function Avatar({ name, photoPath }: { name: string; photoPath: string | null })
         width={56}
         height={56}
         className="h-14 w-14 shrink-0 rounded-full object-cover ring-1 ring-line"
+        onError={() => setFailed(true)}
       />
     );
   }

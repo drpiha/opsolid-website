@@ -19,7 +19,15 @@ const PatchSchema = z.object({
   notes: z.string().max(2000).optional(),
   tags: z.array(z.string().max(50)).max(10).optional(),
   metWhere: z.string().max(200).optional().nullable(),
-  followUpAt: z.string().datetime().optional().nullable(),
+  // Accept a date-only value ("YYYY-MM-DD" from <input type="date">) OR a full
+  // ISO datetime — the handler normalizes via `new Date()`. Requiring
+  // .datetime() silently 400'd every date-picker save (the follow-up date
+  // never persisted).
+  followUpAt: z
+    .string()
+    .refine((s) => !Number.isNaN(Date.parse(s)), { message: "invalid date" })
+    .optional()
+    .nullable(),
   status: z
     .enum(["new", "contacted", "customer", "partner", "archived"])
     .optional(),
