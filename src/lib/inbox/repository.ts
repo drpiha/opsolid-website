@@ -30,6 +30,18 @@ import type {
 // Channels
 // ---------------------------------------------------------------------------
 
+/**
+ * Thrown when a channel's (type, externalId) already belongs to a DIFFERENT
+ * user. The setup routes turn this into a 409 so a connect attempt can never
+ * silently overwrite another tenant's channel config.
+ */
+export class ChannelOwnershipError extends Error {
+  constructor() {
+    super("channel_taken");
+    this.name = "ChannelOwnershipError";
+  }
+}
+
 export async function upsertChannel(params: {
   userId: string;
   type: ChannelType;
@@ -40,6 +52,21 @@ export async function upsertChannel(params: {
   const config = (params.config ?? undefined) as
     | Prisma.InputJsonValue
     | undefined;
+  // Ownership guard. (type, externalId) is globally unique — one email address
+  // / phone number / bot is one channel system-wide. Without this check a second
+  // user submitting an externalId that already belongs to another account would
+  // fall into the upsert's `update` branch and overwrite that account's
+  // config/secret (cross-tenant hijack) while getting no channel of their own.
+  // Refuse instead.
+  const existing = await prisma.inboxChannel.findUnique({
+    where: {
+      type_externalId: { type: params.type, externalId: params.externalId },
+    },
+    select: { userId: true },
+  });
+  if (existing && existing.userId !== params.userId) {
+    throw new ChannelOwnershipError();
+  }
   return prisma.inboxChannel.upsert({
     where: {
       type_externalId: { type: params.type, externalId: params.externalId },

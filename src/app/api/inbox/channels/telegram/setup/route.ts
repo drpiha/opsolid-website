@@ -23,7 +23,11 @@
 import { NextResponse } from "next/server";
 import { randomBytes } from "node:crypto";
 import { requireUser, AuthError } from "@/lib/auth/require-user";
-import { upsertChannel, markChannelError } from "@/lib/inbox/repository";
+import {
+  upsertChannel,
+  markChannelError,
+  ChannelOwnershipError,
+} from "@/lib/inbox/repository";
 import {
   getMe,
   setWebhook,
@@ -69,18 +73,32 @@ export async function POST(req: Request) {
 
   const secretToken = randomBytes(24).toString("hex");
 
-  const channel = await upsertChannel({
-    userId: user.id,
-    type: "telegram",
-    externalId: String(bot.id),
-    label: body.label ?? `@${bot.username}`,
-    config: {
-      botToken,
-      secretToken,
-      botUsername: bot.username,
-      botId: bot.id,
-    },
-  });
+  let channel;
+  try {
+    channel = await upsertChannel({
+      userId: user.id,
+      type: "telegram",
+      externalId: String(bot.id),
+      label: body.label ?? `@${bot.username}`,
+      config: {
+        botToken,
+        secretToken,
+        botUsername: bot.username,
+        botId: bot.id,
+      },
+    });
+  } catch (err) {
+    if (err instanceof ChannelOwnershipError) {
+      return NextResponse.json(
+        {
+          error: "channel_taken",
+          description: "This bot is already connected to another account.",
+        },
+        { status: 409 },
+      );
+    }
+    throw err;
+  }
 
   const baseUrl =
     body.baseUrl?.replace(/\/$/, "") ??

@@ -20,7 +20,7 @@ import { NextResponse } from "next/server";
 import { randomBytes } from "node:crypto";
 import { z } from "zod";
 import { AuthError, requireUser } from "@/lib/auth/require-user";
-import { upsertChannel } from "@/lib/inbox/repository";
+import { upsertChannel, ChannelOwnershipError } from "@/lib/inbox/repository";
 
 export const runtime = "nodejs";
 
@@ -60,18 +60,33 @@ export async function POST(req: Request) {
 
   const webhookSecret = randomBytes(24).toString("hex");
 
-  const channel = await upsertChannel({
-    userId: user.id,
-    type: "whatsapp",
-    externalId: parsed.data.phoneNumberId,
-    label: parsed.data.label ?? `WhatsApp +${parsed.data.phoneNumberId}`,
-    config: {
-      apiKey: parsed.data.apiKey,
-      phoneNumberId: parsed.data.phoneNumberId,
-      baseUrl: parsed.data.baseUrl ?? null,
-      webhookSecret,
-    },
-  });
+  let channel;
+  try {
+    channel = await upsertChannel({
+      userId: user.id,
+      type: "whatsapp",
+      externalId: parsed.data.phoneNumberId,
+      label: parsed.data.label ?? `WhatsApp +${parsed.data.phoneNumberId}`,
+      config: {
+        apiKey: parsed.data.apiKey,
+        phoneNumberId: parsed.data.phoneNumberId,
+        baseUrl: parsed.data.baseUrl ?? null,
+        webhookSecret,
+      },
+    });
+  } catch (err) {
+    if (err instanceof ChannelOwnershipError) {
+      return NextResponse.json(
+        {
+          error: "channel_taken",
+          description:
+            "This WhatsApp number is already connected to another account.",
+        },
+        { status: 409 },
+      );
+    }
+    throw err;
+  }
 
   const base =
     process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://opsolid.de";

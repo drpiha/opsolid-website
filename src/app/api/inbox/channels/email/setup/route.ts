@@ -16,7 +16,7 @@
 import { NextResponse } from "next/server";
 import { randomBytes } from "node:crypto";
 import { requireUser, AuthError } from "@/lib/auth/require-user";
-import { upsertChannel } from "@/lib/inbox/repository";
+import { upsertChannel, ChannelOwnershipError } from "@/lib/inbox/repository";
 
 export const runtime = "nodejs";
 
@@ -45,18 +45,32 @@ export async function POST(req: Request) {
 
   const webhookSecret = randomBytes(20).toString("hex");
 
-  const channel = await upsertChannel({
-    userId: user.id,
-    type: "email",
-    externalId: inboxEmail,
-    label: body.label ?? inboxEmail,
-    config: {
-      inboxEmail,
-      webhookSecret,
-      // Future: per-channel SMTP override; until then we use env creds.
-      smtp: null,
-    },
-  });
+  let channel;
+  try {
+    channel = await upsertChannel({
+      userId: user.id,
+      type: "email",
+      externalId: inboxEmail,
+      label: body.label ?? inboxEmail,
+      config: {
+        inboxEmail,
+        webhookSecret,
+        // Future: per-channel SMTP override; until then we use env creds.
+        smtp: null,
+      },
+    });
+  } catch (err) {
+    if (err instanceof ChannelOwnershipError) {
+      return NextResponse.json(
+        {
+          error: "channel_taken",
+          description: "This email is already connected to another account.",
+        },
+        { status: 409 },
+      );
+    }
+    throw err;
+  }
 
   const baseUrl =
     process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
