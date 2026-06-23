@@ -1100,6 +1100,15 @@ export const content: Content = {
     },
     posts: [
       {
+        slug: "eu-ai-act-digital-omnibus-2026",
+        title: "AB Yapay Zeka Yasası Değişti: Yüksek Riskli Süreler Uzatıldı, Nudifier Uygulamalar Yasaklandı",
+        excerpt:
+          "Avrupa Parlamentosu, 423 oyla Yapay Zeka Yasası'nı değiştirdi: yüksek riskli süre 17 ay uzatıldı, nudifier yasağı Aralık 2026'dan geçerli.",
+        category: "ai",
+        date: "2026-06-23",
+        readTime: "6",
+      },
+      {
         slug: "workflow-automation-fundamentals",
         title: "İş Akışı Otomasyonu: Uygulamada Gerçekten Ne Önemli",
         excerpt:

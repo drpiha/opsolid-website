@@ -1100,6 +1100,15 @@ export const content: Content = {
     },
     posts: [
       {
+        slug: "eu-ai-act-digital-omnibus-2026",
+        title: "EU-KI-Gesetz geändert: Parlament verlängert Hochrisiko-Fristen und verbietet KI-Nudifier",
+        excerpt:
+          "Das Europaparlament verabschiedet den Digital Omnibus on AI: Hochrisiko-KI-Fristen um 17 Monate verlängert, KI-Nudifier ab Dezember 2026 verboten.",
+        category: "ai",
+        date: "2026-06-23",
+        readTime: "6",
+      },
+      {
         slug: "workflow-automation-fundamentals",
         title: "Workflow-Automatisierung: Was in der Praxis wirklich zählt",
         excerpt:
