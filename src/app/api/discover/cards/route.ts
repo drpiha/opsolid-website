@@ -51,9 +51,6 @@ type DiscoverRow = {
   slug: string | null;
   contactName: string;
   photoPath: string | null;
-  industry: string | null;
-  city: string | null;
-  country: string | null;
   languages: string[];
   openToNetworking: boolean;
   acceptingClients: boolean;
@@ -77,9 +74,6 @@ type DiscoverRow = {
 //                      Mixes freely with `tag`. Capped at 8 distinct tags
 //                      per request. A card matches if it carries ANY one
 //                      of the requested tags.
-//   industry         — exact match on industry field
-//   city             — case-insensitive contains match on city field (max 100 chars)
-//   country          — exact match on ISO 3166-1 alpha-2 country code (e.g. "DE")
 //   language         — card must include this language code in its languages[] array
 //   openToNetworking — "true" to filter to networking-open profiles only
 //   acceptingClients — "true" to filter to profiles actively accepting clients
@@ -139,9 +133,10 @@ export async function GET(req: NextRequest) {
         .filter((t): t is string => t !== null),
     ),
   ).slice(0, MAX_TAGS_PER_QUERY);
-  const industry = searchParams.get("industry")?.trim().slice(0, 100) || undefined;
-  const city = searchParams.get("city")?.trim().slice(0, 100) || undefined;
-  const country = searchParams.get("country")?.trim().slice(0, 10) || undefined;
+  // NOTE: industry/city/country were removed as filters — those CardOrder
+  // columns are never populated by any write path, so filtering on them always
+  // returned zero results. The discover UI now derives the sector from the
+  // card's template (templateId) instead. `language` is still honored.
   const language = searchParams.get("language")?.trim().slice(0, 10) || undefined;
   const openToNetworking =
     searchParams.get("openToNetworking") === "true" ? true : undefined;
@@ -200,9 +195,6 @@ export async function GET(req: NextRequest) {
         co.slug,
         co.contact_name      AS "contactName",
         co.photo_path        AS "photoPath",
-        co.industry,
-        co.city,
-        co.country,
         co.languages,
         co.open_to_networking AS "openToNetworking",
         co.accepting_clients  AS "acceptingClients",
@@ -213,12 +205,9 @@ export async function GET(req: NextRequest) {
       WHERE co.status = ${OrderStatus.PUBLISHED}
         AND co.visibility = 'public'
         AND ${cursorPublishedAt ? Prisma.sql`(co.published_at < ${cursorPublishedAt} OR (co.published_at = ${cursorPublishedAt} AND co.id < ${cursor}))` : Prisma.sql`TRUE`}
-        AND ${industry ? Prisma.sql`co.industry = ${industry}` : Prisma.sql`TRUE`}
-        AND ${country ? Prisma.sql`co.country = ${country}` : Prisma.sql`TRUE`}
         AND ${language ? Prisma.sql`${language} = ANY(co.languages)` : Prisma.sql`TRUE`}
         AND ${openToNetworking !== undefined ? Prisma.sql`co.open_to_networking = ${openToNetworking}` : Prisma.sql`TRUE`}
         AND ${acceptingClients !== undefined ? Prisma.sql`co.accepting_clients = ${acceptingClients}` : Prisma.sql`TRUE`}
-        AND ${city ? Prisma.sql`co.city ILIKE ${`%${escapeLike(city)}%`}` : Prisma.sql`TRUE`}
         AND ${
           tagArrayLiteral
             ? Prisma.sql`co.card_data -> 'tags' ?| ${tagArrayLiteral}::text[]`
@@ -244,12 +233,9 @@ export async function GET(req: NextRequest) {
       status: OrderStatus.PUBLISHED,
       visibility: "public",
     };
-    if (industry) where.industry = industry;
-    if (country) where.country = country;
     if (language) where.languages = { has: language };
     if (openToNetworking !== undefined) where.openToNetworking = openToNetworking;
     if (acceptingClients !== undefined) where.acceptingClients = acceptingClients;
-    if (city) where.city = { contains: city, mode: "insensitive" };
     if (filterTags.length === 1) {
       where.cardData = {
         path: ["tags"],
@@ -277,9 +263,6 @@ export async function GET(req: NextRequest) {
         slug: true,
         contactName: true,
         photoPath: true,
-        industry: true,
-        city: true,
-        country: true,
         languages: true,
         openToNetworking: true,
         acceptingClients: true,
@@ -312,9 +295,10 @@ export async function GET(req: NextRequest) {
       title: typeof data.title === "string" ? data.title : null,
       company: typeof data.company === "string" ? data.company : null,
       photoPath: c.photoPath,
-      industry: c.industry,
-      city: c.city,
-      country: c.country,
+      // The card's template is the only reliable sector signal — the structured
+      // industry/city/country columns are never populated by any write path, so
+      // the client derives a sector label from templateId instead.
+      templateId: c.templateId,
       languages: c.languages,
       openToNetworking: c.openToNetworking,
       acceptingClients: c.acceptingClients,

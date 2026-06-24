@@ -5,13 +5,19 @@
 //
 // Public page — no auth required to browse.
 // Fetches from GET /api/discover/cards with cursor-based pagination.
-// Filters: free-text search, industry, city, country, openToNetworking,
-// acceptingClients.
+// Filters: free-text search, openToNetworking, acceptingClients.
+//
+// Sector label: the CardOrder.industry/city/country columns are never written
+// by any code path, so they always render blank and filtering on them returns
+// nothing. The only reliable sector signal is the card's TEMPLATE — each
+// template in card-templates.ts carries a `sectorHint`, which we map to a human
+// label via SECTOR_PRESETS.
 // =============================================================================
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocale } from "@/context/LocaleContext";
-import { SECTOR_PRESETS } from "@/config/card-sectors";
+import { SECTOR_PRESETS, type SectorKey } from "@/config/card-sectors";
+import { getTemplateById, type CardTemplateDef } from "@/config/card-templates";
 
 // ---------------------------------------------------------------------------
 // Types
@@ -24,13 +30,44 @@ export interface DiscoverCard {
   title: string | null;
   company: string | null;
   photoPath: string | null;
-  industry: string | null;
-  city: string | null;
-  country: string | null;
+  templateId: number;
   languages: string[];
   openToNetworking: boolean;
   acceptingClients: boolean;
   publishedAt: string | null;
+}
+
+// ---------------------------------------------------------------------------
+// Sector label derivation
+//
+// A template's `sectorHint` is a fine-grained union (realEstate, fitness,
+// dentist, …) that does NOT line up 1:1 with the coarser SECTOR_PRESETS keys
+// (real-estate, consultant, …). This map bridges the hints we can confidently
+// name to a preset key; anything not listed falls back to no label.
+// ---------------------------------------------------------------------------
+
+const SECTOR_HINT_TO_PRESET: Partial<Record<CardTemplateDef["sectorHint"], SectorKey>> = {
+  realEstate: "real-estate",
+  salon: "salon",
+  restaurant: "restaurant",
+  creator: "creator",
+  "content-creator": "creator",
+  lawyer: "lawyer",
+  clinic: "clinic",
+  dentist: "clinic",
+  consultant: "consultant",
+  freelancer: "consultant",
+  corporate: "corporate",
+  events: "event",
+  eventPlanner: "event",
+};
+
+function sectorLabelForTemplate(templateId: number): string | null {
+  const tmpl = getTemplateById(templateId);
+  if (!tmpl) return null;
+  const presetKey = SECTOR_HINT_TO_PRESET[tmpl.sectorHint];
+  if (!presetKey) return null;
+  return SECTOR_PRESETS[presetKey]?.name ?? null;
 }
 
 // ---------------------------------------------------------------------------
@@ -59,15 +96,6 @@ function t(locale: string, de: string, en: string, tr: string): string {
   if (locale === "tr") return tr;
   return de;
 }
-
-// ---------------------------------------------------------------------------
-// Industry options derived from sector presets
-// ---------------------------------------------------------------------------
-
-const INDUSTRY_OPTIONS = Object.entries(SECTOR_PRESETS).map(([key, preset]) => ({
-  value: key,
-  label: preset.name,
-}));
 
 // ---------------------------------------------------------------------------
 // Avatar — shows photo or copper-tinted initials fallback
@@ -110,12 +138,7 @@ function Avatar({ name, photoPath }: { name: string; photoPath: string | null })
 // ---------------------------------------------------------------------------
 
 function DiscoverCardItem({ card, locale }: { card: DiscoverCard; locale: string }) {
-  const sectorLabel =
-    card.industry && SECTOR_PRESETS[card.industry as keyof typeof SECTOR_PRESETS]
-      ? SECTOR_PRESETS[card.industry as keyof typeof SECTOR_PRESETS].name
-      : card.industry;
-
-  const location = [card.city, card.country].filter(Boolean).join(", ");
+  const sectorLabel = sectorLabelForTemplate(card.templateId);
 
   return (
     <a
@@ -132,9 +155,6 @@ function DiscoverCardItem({ card, locale }: { card: DiscoverCard; locale: string
             <p className="mt-0.5 truncate text-sm text-ink-300">
               {[card.title, card.company].filter(Boolean).join(" · ")}
             </p>
-          )}
-          {location && (
-            <p className="mt-0.5 truncate text-xs text-ink-400">{location}</p>
           )}
         </div>
       </div>
@@ -173,7 +193,6 @@ function CardSkeleton() {
         <div className="flex-1 space-y-2 pt-1">
           <div className="h-3.5 w-2/3 animate-pulse rounded bg-bg-2" />
           <div className="h-3 w-1/2 animate-pulse rounded bg-bg-2" />
-          <div className="h-2.5 w-1/3 animate-pulse rounded bg-bg-2" />
         </div>
       </div>
       <div className="flex gap-1.5">
@@ -225,9 +244,6 @@ export function DiscoverClient() {
 
   // Filter state
   const [query, setQuery] = useState("");
-  const [industry, setIndustry] = useState("");
-  const [city, setCity] = useState("");
-  const [country, setCountry] = useState("");
   const [openToNetworking, setOpenToNetworking] = useState(false);
   const [acceptingClients, setAcceptingClients] = useState(false);
 
@@ -254,13 +270,10 @@ export function DiscoverClient() {
   const buildParams = useCallback((): Record<string, string> => {
     const p: Record<string, string> = {};
     if (debouncedQuery.trim()) p.q = debouncedQuery.trim();
-    if (industry) p.industry = industry;
-    if (city.trim()) p.city = city.trim();
-    if (country.trim()) p.country = country.trim();
     if (openToNetworking) p.openToNetworking = "true";
     if (acceptingClients) p.acceptingClients = "true";
     return p;
-  }, [debouncedQuery, industry, city, country, openToNetworking, acceptingClients]);
+  }, [debouncedQuery, openToNetworking, acceptingClients]);
 
   // Initial load + filter change: reset items and cursor
   useEffect(() => {
@@ -353,40 +366,6 @@ export function DiscoverClient() {
 
           {/* Filter chips row */}
           <div className="flex flex-wrap items-center gap-2">
-            {/* Industry dropdown */}
-            <select
-              value={industry}
-              onChange={(e) => setIndustry(e.target.value)}
-              className="rounded-lg border border-line bg-bg-1 px-3 py-1.5 text-sm text-ink-300 transition-colors focus:border-copper-500 focus:outline-none"
-            >
-              <option value="">
-                {t(safeLocale, "Alle Branchen", "All industries", "Tüm sektörler")}
-              </option>
-              {INDUSTRY_OPTIONS.map((opt) => (
-                <option key={opt.value} value={opt.value}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
-
-            {/* City input */}
-            <input
-              type="text"
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              placeholder={t(safeLocale, "Stadt", "City", "Şehir")}
-              className="w-32 rounded-lg border border-line bg-bg-1 px-3 py-1.5 text-sm text-ink placeholder-ink-400 transition-colors focus:border-copper-500 focus:outline-none"
-            />
-
-            {/* Country input */}
-            <input
-              type="text"
-              value={country}
-              onChange={(e) => setCountry(e.target.value)}
-              placeholder={t(safeLocale, "Land", "Country", "Ülke")}
-              className="w-28 rounded-lg border border-line bg-bg-1 px-3 py-1.5 text-sm text-ink placeholder-ink-400 transition-colors focus:border-copper-500 focus:outline-none"
-            />
-
             {/* Networking toggle chip */}
             <button
               type="button"
@@ -418,14 +397,11 @@ export function DiscoverClient() {
             </button>
 
             {/* Clear all filters — only show when any filter is active */}
-            {(query || industry || city || country || openToNetworking || acceptingClients) && (
+            {(query || openToNetworking || acceptingClients) && (
               <button
                 type="button"
                 onClick={() => {
                   setQuery("");
-                  setIndustry("");
-                  setCity("");
-                  setCountry("");
                   setOpenToNetworking(false);
                   setAcceptingClients(false);
                 }}
