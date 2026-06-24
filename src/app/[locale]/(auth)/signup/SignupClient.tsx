@@ -5,6 +5,11 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useLocale } from "@/context/LocaleContext";
 import { isLocale } from "@/lib/i18n";
+// GDPR / §7 UWG — the EXACT marketing opt-in checkbox wording. Imported from
+// the client-safe copy module (no prisma / no node:crypto), which is the SAME
+// source of truth the signup/magic-link routes persist as `consentText`, so the
+// stored consent always equals what the user saw.
+import { marketingCheckboxText } from "@/lib/marketing/copy";
 
 // M3 — when the visitor lands here from a public-card "Create yours" CTA,
 // the URL carries `?ref=<slug-or-code>`. Persist it in a cookie so the
@@ -33,6 +38,9 @@ export function SignupClient({ locale }: Props) {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  // GDPR / §7 UWG — separate marketing opt-in. UNTICKED by default (Planet49);
+  // never pre-checked.
+  const [marketingOptIn, setMarketingOptIn] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
   const [passwordError, setPasswordError] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
@@ -87,7 +95,12 @@ export function SignupClient({ locale }: Props) {
       const res = await fetch("/api/auth/magic-link", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, name: name || undefined, locale: safeLocale }),
+        body: JSON.stringify({
+          email,
+          name: name || undefined,
+          locale: safeLocale,
+          marketingOptIn,
+        }),
       });
       if (res.status === 429) {
         setSubmitError(errs.rate_limited);
@@ -118,6 +131,7 @@ export function SignupClient({ locale }: Props) {
           password,
           name: name || undefined,
           locale: safeLocale,
+          marketingOptIn,
         }),
       });
       if (res.status === 409) {
@@ -239,6 +253,24 @@ export function SignupClient({ locale }: Props) {
             )}
           </div>
         )}
+
+        {/* GDPR / §7 UWG — separate, UNTICKED-by-default marketing opt-in.
+            Distinct from any terms/privacy consent; never pre-checked. */}
+        <div className="flex items-start gap-2.5 pt-1">
+          <input
+            id="marketingOptIn"
+            type="checkbox"
+            checked={marketingOptIn}
+            onChange={(e) => setMarketingOptIn(e.target.checked)}
+            className="mt-0.5 h-4 w-4 shrink-0 cursor-pointer accent-copper-500"
+          />
+          <label
+            htmlFor="marketingOptIn"
+            className="text-xs leading-relaxed text-ink-400 cursor-pointer"
+          >
+            {marketingCheckboxText(safeLocale)}
+          </label>
+        </div>
 
         <button
           type="submit"

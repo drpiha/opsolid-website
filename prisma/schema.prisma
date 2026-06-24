@@ -1625,3 +1625,45 @@ model InboxPlaybook {
   @@index([userId, triggerType])
   @@map("inbox_playbooks")
 }
+
+// =============================================================================
+// MARKETING CONSENT — GDPR / §7 UWG double-opt-in (DOI) for marketing email.
+//
+// Germany requires prior express opt-in (Einwilligung, §7 UWG) before any
+// marketing email may be sent. The data given to create an account / card is
+// NOT consent to be marketed to (purpose limitation), so consent is collected
+// SEPARATELY via an unticked checkbox at signup, then a confirmation email
+// (DOI) is sent. Only rows with status="confirmed" are usable for marketing.
+//
+//   status flow:
+//     pending  → (user clicks confirm link) → confirmed
+//     pending/confirmed → (user clicks unsubscribe link) → unsubscribed
+//     unsubscribed → (re-opts in at signup) → pending → confirmed
+//
+// `email` is the natural key (lowercased in app code; @unique). `token` is a
+// 256-bit hex value (node:crypto randomBytes(32)); all confirm/unsubscribe
+// actions are by-token only so the route never reveals whether an email
+// exists. `consentText` stores the EXACT checkbox wording the user agreed to
+// (versioned via MARKETING_CONSENT_TEXT_VERSION) for the consent log /
+// Nachweisbarkeit. `ipHash` is sha256(ip+salt) — never the raw IP.
+// =============================================================================
+model MarketingConsent {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  // pending | confirmed | unsubscribed
+  status          String    @default("pending")
+  token           String    @unique
+  consentText     String    @map("consent_text")
+  // Version stamp of the wording the user agreed to (MARKETING_CONSENT_TEXT_VERSION).
+  consentVersion  String    @map("consent_version")
+  source          String    @default("signup")
+  locale          String    @default("de")
+  ipHash          String?   @map("ip_hash")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  confirmedAt     DateTime? @map("confirmed_at")
+  unsubscribedAt  DateTime? @map("unsubscribed_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+
+  @@index([status])
+  @@map("marketing_consents")
+}

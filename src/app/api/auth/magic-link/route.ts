@@ -25,6 +25,7 @@ import {
   magicLinkSubject,
 } from "@/lib/email/templates/magic-link";
 import { captureAuthEvent, errorResponse, readJson } from "../_helpers";
+import { fireMarketingOptIn } from "@/lib/marketing/consent";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -38,6 +39,10 @@ const RequestSchema = z.object({
   // es/it/fr/ar). The order-flow emails still only ship in en/de/tr — this
   // route only feeds magic-link, so the wider list is safe.
   locale: z.enum(["de", "en", "tr", "es", "it", "fr", "ar"]).optional(),
+  // GDPR / §7 UWG — the signup UI's magic-link path posts this flag. Separate,
+  // unticked-by-default marketing opt-in; only true triggers the DOI. The DOI
+  // confirm/optin templates only ship de/en/tr, so the helper normalises.
+  marketingOptIn: z.boolean().optional(),
 });
 
 export async function POST(req: Request) {
@@ -62,7 +67,7 @@ export async function POST(req: Request) {
       { status: 202 },
     );
   }
-  const { email, locale } = parsed.data;
+  const { email, locale, marketingOptIn } = parsed.data;
 
   try {
     const issued = await issueMagicLink(email, { locale });
@@ -88,6 +93,24 @@ export async function POST(req: Request) {
         err: String(err),
       });
     });
+    // GDPR / §7 UWG — separate marketing DOI. Fire-and-forget; never blocks or
+    // fails the magic-link response. Only when the user explicitly ticked it.
+    // The shared helper is internally safe (own try/catch); we still pass an
+    // onError that logs ip_hash ONLY (never the raw email).
+    if (marketingOptIn === true) {
+      void fireMarketingOptIn({
+        email,
+        locale: localeForCopy,
+        ipHash: hashIp(ip),
+        source: "signup",
+        onError: (err) => {
+          void captureAuthEvent("marketing_optin_failed", {
+            ip_hash: hashIp(ip),
+            err: String(err),
+          });
+        },
+      });
+    }
   } catch (err) {
     void captureAuthEvent("magic_link_issue_failed", {
       ip_hash: hashIp(ip),

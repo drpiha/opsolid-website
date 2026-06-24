@@ -1053,6 +1053,11 @@ export const content: Content = {
               "Aktif OpSo Smart kartları: abonelik aktif olduğu sürece saklanır. İptal / inaktif: abonelik bitiminden 90 gün sonra silinir (60. günde hatırlatma e-postası). Lead form gönderimleri (satın alma yok): 24 ay. Faturalar: § 257 HGB / Vergi Usul Kanunu uyarınca 10 yıl saklanır (yasal yükümlülük).",
           },
           {
+            title: "Pazarlama e-postaları (rıza / çift onay)",
+            content:
+              "Pazarlama e-postalarını (OpSo Smart hakkında ürün haberleri ve teklifler) yalnızca önceden alınmış açık rızanızla göndeririz (§ 7 UWG, GDPR m.6(1)(a)). Rıza, hesap oluşturmadan ayrı olarak önceden işaretlenmemiş bir kutucukla verilir ve bir onay e-postası aracılığıyla çift onay (double opt-in) ile doğrulanır; pazarlama e-postası yalnızca siz onayladıktan sonra gönderilir. İspat için tam rıza metnini, zaman damgasını ve hashlenmiş (asla açık metin olarak saklanmayan) bir IP adresini loglanır. Rızanızı her e-postadaki abonelikten çıkma bağlantısıyla veya info@opsolid.de adresine yazarak istediğiniz zaman ileriye dönük olarak geri çekebilirsiniz. Geri çekme, o ana kadar yapılan işlemenin hukuka uygunluğunu etkilemez.",
+          },
+          {
             title: "Silme hakkı",
             content:
               "OpSo Smart kartınızı ve ilgili tüm kişisel verileri hesabınız içinden tek tıklamayla veya info@opsolid.de adresine e-posta göndererek silebilirsiniz. Silme işlemi 30 gün içinde tamamlanır. Yıkıcı işlemler öncesi kimlik doğrulama (e-posta onayı + aktif ise 2FA) gereklidir.",

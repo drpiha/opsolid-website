@@ -37,6 +37,7 @@ import {
 } from "@/lib/email/templates/magic-link";
 import { captureAuthEvent, errorResponse, readJson } from "../_helpers";
 import { redeemReferral } from "@/lib/referrals";
+import { fireMarketingOptIn } from "@/lib/marketing/consent";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -59,7 +60,34 @@ const SignupSchema = z.object({
     .optional()
     .or(z.literal("").transform(() => undefined)),
   locale: z.enum(["de", "en", "tr"]).optional(),
+  // GDPR / §7 UWG — separate, unticked-by-default marketing opt-in. The
+  // account/card data is NOT consent to be marketed to (purpose limitation),
+  // so this is its own boolean, defaulted off. Only true here triggers the DOI.
+  marketingOptIn: z.boolean().optional(),
 });
+
+// ---------------------------------------------------------------------------
+// Marketing double-opt-in (DOI) — fire-and-forget.
+//
+// Called AFTER the account is created / link issued. Delegates to the shared
+// `fireMarketingOptIn` (src/lib/marketing/consent.ts), which is internally
+// safe (own try/catch, never throws) so it can never delay or fail the signup
+// response. Failures are captured with ip_hash ONLY — never the raw email.
+// ---------------------------------------------------------------------------
+function fireOptIn(email: string, locale: string, ip: string): void {
+  void fireMarketingOptIn({
+    email,
+    locale,
+    ipHash: hashIp(ip),
+    source: "signup",
+    onError: (err) => {
+      void captureAuthEvent("marketing_optin_failed", {
+        ip_hash: hashIp(ip),
+        err: String(err),
+      });
+    },
+  });
+}
 
 export async function POST(req: Request) {
   const ip = clientIp(req);
@@ -78,7 +106,8 @@ export async function POST(req: Request) {
   if (!parsed.success) {
     return errorResponse("invalid_input", "Invalid signup payload.", 400);
   }
-  const { email, password, name, locale } = parsed.data;
+  const { email, password, name, locale, marketingOptIn } = parsed.data;
+  const consentLocale = locale ?? "de";
 
   // ---------------- Magic-link path (no password supplied) ----------------
   if (!password) {
@@ -96,6 +125,11 @@ export async function POST(req: Request) {
           err: String(err),
         });
       });
+      // GDPR / §7 UWG — separate marketing DOI. Fire-and-forget; never blocks
+      // or fails the signup response. Only when the user explicitly ticked it.
+      if (marketingOptIn === true) {
+        fireOptIn(email, consentLocale, ip);
+      }
     } catch (err) {
       void captureAuthEvent("magic_link_issue_failed", {
         ip_hash: hashIp(ip),
@@ -188,6 +222,12 @@ export async function POST(req: Request) {
     } catch {
       /* malformed cookie — ignore */
     }
+  }
+
+  // GDPR / §7 UWG — separate marketing DOI. Fire-and-forget; never blocks or
+  // fails the signup response. Only when the user explicitly ticked it.
+  if (marketingOptIn === true) {
+    fireOptIn(email, consentLocale, ip);
   }
 
   const res = NextResponse.json(

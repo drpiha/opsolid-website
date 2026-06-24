@@ -1053,6 +1053,11 @@ export const content: Content = {
               "Aktive OpSo Smart-Karten: Aufbewahrung während laufendem Abo. Gekündigt / inaktiv: Löschung 90 Tage nach Abo-Ende (Erinnerungsmail an Tag 60). Lead-Formular-Übermittlungen (ohne Kauf): 24 Monate. Rechnungen: 10 Jahre Aufbewahrung gemäß § 257 HGB / Vergi Usul Kanunu (gesetzliche Pflicht).",
           },
           {
+            title: "Marketing-E-Mails (Einwilligung / Double-Opt-in)",
+            content:
+              "Werbliche E-Mails (Produktneuigkeiten und Angebote zu OpSo Smart) senden wir Ihnen nur mit Ihrer vorherigen ausdrücklichen Einwilligung (§ 7 UWG, Art. 6 Abs. 1 lit. a DSGVO). Die Einwilligung wird getrennt von der Kontoerstellung über ein nicht vorausgewähltes Kontrollkästchen erteilt und im Double-Opt-in-Verfahren per Bestätigungs-E-Mail verifiziert; erst nach Ihrer Bestätigung versenden wir Marketing-E-Mails. Zum Nachweis protokollieren wir den genauen Einwilligungstext, Zeitstempel sowie eine gehashte (nicht im Klartext gespeicherte) IP-Adresse. Sie können die Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen — über den Abmeldelink in jeder E-Mail oder per E-Mail an info@opsolid.de. Der Widerruf lässt die Rechtmäßigkeit der bis dahin erfolgten Verarbeitung unberührt.",
+          },
+          {
             title: "Recht auf Löschung",
             content:
               "Sie können Ihre OpSo Smart-Karte und alle zugehörigen personenbezogenen Daten mit einem Klick aus Ihrem Konto oder per E-Mail an info@opsolid.de löschen. Die Löschung wird innerhalb von 30 Tagen wirksam. Vor destruktiven Aktionen ist eine Identitätsprüfung (E-Mail-Bestätigung + 2FA, sofern aktiviert) erforderlich.",

@@ -1051,6 +1051,11 @@ export const content = {
               "Active OpSo Smart cards: retained while the subscription is active. Cancelled / inactive: deleted 90 days after subscription end (a reminder email is sent at day 60). Lead form submissions (no purchase): 24 months. Invoices: retained 10 years per § 257 HGB / Vergi Usul Kanunu (legal obligation).",
           },
           {
+            title: "Marketing emails (consent / double opt-in)",
+            content:
+              "We send marketing email (product news and offers about OpSo Smart) only with your prior express consent (§ 7 UWG, Art. 6(1)(a) GDPR). Consent is given separately from account creation via an unticked checkbox and verified by double opt-in through a confirmation email; we only send marketing email after you confirm. For proof, we log the exact consent wording, a timestamp, and a hashed (never plaintext) IP address. You can withdraw consent at any time with effect for the future — via the unsubscribe link in every email or by emailing info@opsolid.de. Withdrawal does not affect the lawfulness of processing carried out before it.",
+          },
+          {
             title: "Right to deletion",
             content:
               "You may delete your OpSo Smart card and all associated personal data with one click from your account, or by emailing info@opsolid.de. Deletion is effective within 30 days. Identity verification (email confirmation + 2FA where enabled) is required before destructive actions.",
