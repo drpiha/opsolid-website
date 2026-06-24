@@ -6,6 +6,8 @@ import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { usePathname } from "next/navigation";
 import { useLocale } from "@/context/LocaleContext";
 import { ThemeToggle } from "@/components/layout/ThemeToggle";
+import { useAuthState } from "@/components/layout/useAuthState";
+import { AccountMenu } from "@/components/layout/AccountMenu";
 import { cn } from "@/lib/utils";
 import type { Locale } from "@/content";
 
@@ -74,6 +76,24 @@ export function Header() {
   const { locale, setLocale, t } = useLocale();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const navLabels = t.v2.nav;
+
+  // Account corner — auth-aware. One fetch shared by the desktop AccountMenu
+  // and the mobile menu items below.
+  const auth = useAuthState();
+  const [loggingOut, setLoggingOut] = useState(false);
+  const logout = async () => {
+    setLoggingOut(true);
+    try {
+      await fetch("/api/auth/logout", {
+        method: "POST",
+        credentials: "same-origin",
+      });
+    } finally {
+      window.location.href = `/${locale}`;
+    }
+  };
+  const L = (de: string, en: string, tr: string) =>
+    locale === "en" ? en : locale === "tr" ? tr : de;
 
   useEffect(() => {
     setIsMobileOpen(false);
@@ -169,12 +189,14 @@ export function Header() {
           <div className="hidden md:inline-flex">
             <ThemeToggle />
           </div>
-          <Link
-            href="/dashboard/cards"
-            className="os-nav-link hidden md:inline-flex"
-          >
-            {navLabels.account}
-          </Link>
+          <div className="hidden md:block">
+            <AccountMenu
+              status={auth.status}
+              user={auth.user}
+              onLogout={logout}
+              loggingOut={loggingOut}
+            />
+          </div>
           <Link
             href="/contact"
             className="btn btn-primary btn-sm hidden md:inline-flex"
@@ -241,16 +263,54 @@ export function Header() {
                         </li>
                       );
                     })}
-                    <li className="os-mobile-item">
-                      <Dialog.Close asChild>
-                        <Link href="/dashboard/cards" className="os-mobile-link">
-                          <span className="os-mobile-link-label">
-                            {navLabels.account}
-                          </span>
-                          <span aria-hidden="true" className="os-mobile-arrow">→</span>
-                        </Link>
-                      </Dialog.Close>
-                    </li>
+                    {auth.status === "anon" && (
+                      <li className="os-mobile-item">
+                        <Dialog.Close asChild>
+                          <Link href="/login" className="os-mobile-link">
+                            <span className="os-mobile-link-label">
+                              {L("Anmelden", "Sign in", "Giriş")}
+                            </span>
+                            <span aria-hidden="true" className="os-mobile-arrow">→</span>
+                          </Link>
+                        </Dialog.Close>
+                      </li>
+                    )}
+                    {auth.status === "authed" && (
+                      <>
+                        <li className="os-mobile-item">
+                          <Dialog.Close asChild>
+                            <Link href="/dashboard/cards" className="os-mobile-link">
+                              <span className="os-mobile-link-label">
+                                {L("Meine Karten", "My cards", "Kartlarım")}
+                              </span>
+                              <span aria-hidden="true" className="os-mobile-arrow">→</span>
+                            </Link>
+                          </Dialog.Close>
+                        </li>
+                        {auth.user?.role === "ADMIN" && (
+                          <li className="os-mobile-item">
+                            <Dialog.Close asChild>
+                              <Link href="/dashboard/admin" className="os-mobile-link">
+                                <span className="os-mobile-link-label">Admin</span>
+                                <span aria-hidden="true" className="os-mobile-arrow">→</span>
+                              </Link>
+                            </Dialog.Close>
+                          </li>
+                        )}
+                        <li className="os-mobile-item">
+                          <button
+                            type="button"
+                            onClick={logout}
+                            disabled={loggingOut}
+                            className="os-mobile-link w-full text-left disabled:opacity-50"
+                          >
+                            <span className="os-mobile-link-label">
+                              {loggingOut ? "…" : L("Abmelden", "Sign out", "Çıkış")}
+                            </span>
+                          </button>
+                        </li>
+                      </>
+                    )}
                   </ul>
 
                   <div className="os-mobile-cta-wrap">

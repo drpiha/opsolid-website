@@ -24,6 +24,7 @@ export async function GET(req: Request) {
           email: user.email,
           name: user.name,
           locale: user.locale,
+          role: user.role,
           emailVerifiedAt: user.emailVerifiedAt?.toISOString() ?? null,
         },
       },
