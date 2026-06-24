@@ -1103,6 +1103,15 @@ export const content = {
     },
     posts: [
       {
+        slug: "eu-ai-act-digital-omnibus-2026",
+        title: "EU AI Act Amended: Parliament Extends High-Risk Deadlines and Bans AI Nudifiers",
+        excerpt:
+          "The EU Parliament voted 423 to 57 on 16 June to amend the AI Act - extending high-risk AI deadlines by 17 months and banning AI nudifier tools from December 2026.",
+        category: "ai",
+        date: "2026-06-23",
+        readTime: "6",
+      },
+      {
         slug: "workflow-automation-fundamentals",
         title: "Workflow Automation Fundamentals: What Actually Matters",
         excerpt:

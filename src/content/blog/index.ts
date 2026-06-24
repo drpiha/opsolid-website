@@ -345,6 +345,150 @@ const shortArticles: Record<string, Record<string, string>> = {
 <h2>GDPR Uyumluluğu</h2>
 <p>Sohbet verilerini saklamak için uygun onay aldığınızdan ve BSP'nizin verileri AB düzenlemelerine uygun şekilde işlediğinden emin olun.</p>`,
   },
+
+  "eu-ai-act-digital-omnibus-2026": {
+    en: `<figure><img src="/blog/eu-ai-act-digital-omnibus-2026.jpg" alt="European Parliament plenary session in Strasbourg" style="width:100%;height:auto;border-radius:8px" /><figcaption style="font-size:0.8rem;opacity:0.7">Photo: European Parliament (CC BY 4.0) via Openverse</figcaption></figure>
+
+<p>On 16 June 2026, the European Parliament approved a significant package of amendments to the EU Artificial Intelligence Act - known as the Digital Omnibus on AI - with 423 votes in favour, 57 against, and 174 abstentions. It is the first substantive revision to the law since its adoption in June 2024. The Council of the EU is expected to formally adopt the amended text on 29 June 2026, after which it will be published in the Official Journal.</p>
+
+<p><strong>In brief:</strong> High-risk AI compliance deadlines are extended by up to 17 months, transparency watermarking obligations apply from August 2026 for newly deployed systems, and a new prohibition on AI systems that generate non-consensual intimate imagery takes effect in December 2026.</p>
+
+<h2>Why the Amendment Happened</h2>
+<p>The original AI Act's August 2026 deadline for high-risk AI compliance was approaching faster than many organisations - particularly mid-sized businesses - could realistically prepare for. Supporting standards, conformity assessment infrastructure, and guidance from regulators were not yet fully in place. A broad coalition of industry associations argued that the timelines were technically unworkable.</p>
+<p>Co-rapporteur Arba Kokalari framed the package as a pragmatic recalibration: "We are pressing the pause button on the AI Act and we are reducing red tape." The Omnibus does not alter the regulation's underlying goals - it adjusts the timeline to give industry a viable path to compliance.</p>
+
+<h2>Deadlines, Redrawn</h2>
+<p>The most significant change for businesses using AI in higher-risk categories: the compliance deadline for standalone high-risk AI systems listed in Annex III shifts from 2 August 2026 to 2 December 2027 - a 17-month extension. Annex III covers AI used in recruitment, credit scoring, biometric identification, access to education, and access to essential public services.</p>
+<p>AI systems embedded as safety components in regulated products - such as industrial machinery - face a parallel delay from August 2027 to August 2028.</p>
+<p>Transparency obligations under Article 50 remain in force from 2 August 2026 for newly deployed systems. Systems already operating before that date receive a brief grace period until 2 December 2026. These include requirements to mark synthetic content and apply machine-readable labels to AI-generated material.</p>
+
+<h2>A New Prohibition: The Nudifier Ban</h2>
+<p>The Omnibus adds one significant new prohibition: a ban on AI systems designed to generate or manipulate non-consensual intimate imagery - commonly referred to as "nudifier" applications. The prohibition also covers AI systems producing child sexual abuse material. It applies to providers, deployers, and distributors, and takes effect on 2 December 2026.</p>
+<p>Co-rapporteur Michael McNamara noted that the ban addresses technology that "overwhelmingly" affects women and will enter into force before the end of 2026.</p>
+
+<h2>What Remains in Force</h2>
+<p>The Omnibus is not a broad deregulation. The following obligations remain unchanged:</p>
+<ul>
+<li>Prohibitions on social scoring, real-time biometric surveillance in public spaces, and subliminal manipulation - in force since February 2025</li>
+<li>Rules for general-purpose AI models - enforceable since August 2025</li>
+<li>Transparency labelling requirements for newly deployed systems - from August 2026</li>
+<li>Supply chain accountability: information-sharing failures between AI providers and downstream modifiers now carry fines of up to 3% of worldwide annual revenue</li>
+</ul>
+
+<h2>What This Means for DACH Businesses</h2>
+<p>For mid-sized companies in Germany, Austria, and Switzerland, the extended timeline creates a more manageable compliance window - but it does not eliminate the need for preparation. Organisations running AI in recruitment, credit decisions, customer risk assessment, or employee monitoring should use the additional time to complete AI system inventories, establish governance documentation, and map supply chain dependencies.</p>
+<p>Businesses in manufacturing should note that the Machinery Regulation overlap has been simplified: dual compliance is no longer required, but sector-specific AI safety standards will still apply from 2028.</p>
+<p>For businesses whose AI use covers general workflow automation, document processing, or customer service AI - the most common patterns in Mittelstand operations - the risk classification typically falls below the Annex III threshold. The most relevant near-term obligation is transparency: if your products or services use AI-generated content, labelling requirements apply from August 2026, on the original schedule.</p>
+
+<h2>What Comes Next</h2>
+<p>The Council of the EU is expected to formally vote on 29 June 2026. Once published in the Official Journal, the new deadlines and the nudifier prohibition become binding. The EU AI Office in Brussels is the centralised supervisory authority for general-purpose AI and large platforms, and enforcement activity is expected to increase through 2027.</p>
+<p>For businesses that had relied on the August 2026 deadline to create internal urgency, the extension removes some of that pressure - but the underlying compliance requirements remain unchanged. Organisations that use the extra time to build proper governance infrastructure will be better positioned when enforcement intensifies.</p>
+
+<h2>OpSolid Note</h2>
+<p>If you are running or building AI-assisted automation systems that touch personal data, employee decisions, or financial assessments, now is a good time to document how those systems work and how they are classified under the AI Act. The extra 17 months is useful - but only if it is spent on preparation rather than deferral.</p>
+
+<h2>Sources</h2>
+<ul>
+<li><a href="https://www.dastra.eu/en/blog/digital-omnibus-on-ai-parliament-votes-deadlines-redrawn/60108" target="_blank">Dastra: Digital Omnibus on AI - Parliament Votes, Deadlines Redrawn</a></li>
+<li><a href="https://sofiaglobe.com/2026/06/16/european-parliament-approves-ai-act-amendments-nudifier-ban/" target="_blank">Sofia Globe: European Parliament approves AI Act amendments, nudifier ban (16 June 2026)</a></li>
+<li><a href="https://www.consilium.europa.eu/en/press/press-releases/2026/05/07/artificial-intelligence-council-and-parliament-agree-to-simplify-and-streamline-rules/" target="_blank">Council of the EU: Council and Parliament agree to simplify and streamline AI rules (7 May 2026)</a></li>
+<li><a href="https://www.globalpolicywatch.com/2026/06/eu-ai-act-update-timeline-relief-targeted-simplification-and-new-prohibitions-2/" target="_blank">Global Policy Watch: EU AI Act Update - Timeline Relief, Simplification, and New Prohibitions</a></li>
+</ul>`,
+    de: `<figure><img src="/blog/eu-ai-act-digital-omnibus-2026.jpg" alt="Plenarsaal des Europäischen Parlaments in Straßburg" style="width:100%;height:auto;border-radius:8px" /><figcaption style="font-size:0.8rem;opacity:0.7">Foto: European Parliament (CC BY 4.0) via Openverse</figcaption></figure>
+
+<p>Am 16. Juni 2026 hat das Europäische Parlament ein umfassendes Änderungspaket zum EU-KI-Gesetz verabschiedet - den sogenannten Digital Omnibus on AI - mit 423 Ja-Stimmen, 57 Nein-Stimmen und 174 Enthaltungen. Es ist die erste inhaltliche Überarbeitung des Gesetzes seit seiner Verabschiedung im Juni 2024. Der Rat der EU soll das geänderte Gesetz voraussichtlich am 29. Juni 2026 formal annehmen, danach folgt die Veröffentlichung im Amtsblatt.</p>
+
+<p><strong>Kurzüberblick:</strong> Fristen für Hochrisiko-KI werden um bis zu 17 Monate verlängert, Transparenzpflichten zur Kennzeichnung von KI-Inhalten gelten ab August 2026 für neu in Betrieb genommene Systeme, und ein neues Verbot für KI-Systeme, die nicht-einvernehmliches Intimmaterial erzeugen, tritt im Dezember 2026 in Kraft.</p>
+
+<h2>Warum die Änderung kam</h2>
+<p>Die ursprüngliche Frist des KI-Gesetzes für die Einhaltung der Hochrisiko-KI-Anforderungen im August 2026 näherte sich schneller, als viele Organisationen - besonders mittelständische Betriebe - sich realistisch vorbereiten konnten. Unterstützende Normen, Konformitätsbewertungsinfrastruktur und Leitlinien der Behörden waren noch nicht vollständig vorhanden. Eine breite Koalition aus Industrie- und Technologieverbänden argumentierte, die Fristen seien technisch nicht umsetzbar.</p>
+<p>Co-Berichterstatterin Arba Kokalari beschrieb das Paket als pragmatische Neukalibrierung: "Wir drücken die Pausetaste beim KI-Gesetz und reduzieren Bürokratie." Der Omnibus ändert die grundlegenden Ziele der Verordnung nicht - er passt den Zeitplan an, um der Industrie einen umsetzbaren Compliance-Pfad zu eröffnen.</p>
+
+<h2>Fristen im Überblick</h2>
+<p>Die bedeutendste Änderung für Unternehmen, die KI in risikoreichen Bereichen einsetzen: Die Compliance-Frist für eigenständige Hochrisiko-KI-Systeme nach Anhang III verschiebt sich vom 2. August 2026 auf den 2. Dezember 2027 - eine Verlängerung um 17 Monate. Anhang III umfasst KI-Einsatz in Bereichen wie Personalauswahl, Kreditwürdigkeit, biometrische Identifikation, Bildungszugang und Zugang zu wesentlichen öffentlichen Diensten.</p>
+<p>KI-Systeme, die als Sicherheitskomponenten in regulierten Produkten eingebettet sind - etwa in Industriemaschinen - erhalten eine parallele Verschiebung von August 2027 auf August 2028.</p>
+<p>Transparenzpflichten nach Artikel 50 des KI-Gesetzes bleiben ab dem 2. August 2026 für neu in Betrieb genommene Systeme in Kraft. Systeme, die bereits vor diesem Datum in Betrieb sind, erhalten eine kurze Übergangsfrist bis zum 2. Dezember 2026. Diese Pflichten umfassen die Kennzeichnung synthetischer Inhalte und maschinenlesbare Markierungen bei KI-generiertem Material.</p>
+
+<h2>Ein neues Verbot: KI-Nudifier</h2>
+<p>Der Omnibus fügt dem KI-Gesetz ein bedeutendes neues Verbot hinzu: KI-Systeme, die darauf ausgelegt sind, nicht-einvernehmliches Intimmaterial zu erzeugen oder zu manipulieren - umgangssprachlich als "Nudifier"-Apps bezeichnet - werden verboten. Das Verbot gilt auch für KI-Systeme, die Kindesmissbrauchsmaterial erzeugen. Es gilt für Anbieter, Betreiber und Händler und tritt am 2. Dezember 2026 in Kraft.</p>
+<p>Co-Berichterstatter Michael McNamara erklärte, das Verbot betreffe Technologie, die "überwiegend" Frauen schade, und trete noch vor Ende 2026 in Kraft.</p>
+
+<h2>Was unverändert gilt</h2>
+<p>Der Omnibus ist keine umfassende Deregulierung. Folgende Anforderungen bleiben unverändert bestehen:</p>
+<ul>
+<li>Verbote für Social Scoring, biometrische Echtzeit-Überwachung im öffentlichen Raum und unterschwellige Manipulation - seit Februar 2025 in Kraft</li>
+<li>Regeln für KI-Allzweckmodelle - seit August 2025 durchsetzbar</li>
+<li>Transparenzkennzeichnungspflichten für neu in Betrieb genommene Systeme - ab August 2026</li>
+<li>Lieferkettenverantwortung: Verstöße gegen Informationsaustauschpflichten zwischen KI-Anbietern und nachgelagerten Modifizierern können mit Bußen bis zu 3% des weltweiten Jahresumsatzes geahndet werden</li>
+</ul>
+
+<h2>Was das für DACH-Unternehmen bedeutet</h2>
+<p>Für mittelständische Unternehmen in Deutschland, Österreich und der Schweiz schafft der verlängerte Zeitplan ein handhabbares Compliance-Fenster - aber er beseitigt nicht die Notwendigkeit zur Vorbereitung. Organisationen, die KI in Personalentscheidungen, Kreditvergabe, Kundenrisikobeurteilung oder Mitarbeiterüberwachung einsetzen, sollten die zusätzliche Zeit nutzen, um KI-System-Inventare zu erstellen, Governance-Dokumentation aufzubauen und Lieferkettenabhängigkeiten bei KI-Komponenten zu kartieren.</p>
+<p>Unternehmen im Bereich Maschinenbau und Industrie sollten beachten, dass die Überschneidung mit der Maschinenverordnung vereinfacht wurde: Doppelkonformität ist nicht mehr erforderlich, aber sektorspezifische KI-Sicherheitsstandards gelten ab 2028.</p>
+<p>Für Unternehmen, deren KI-Einsatz sich auf allgemeine Workflow-Automatisierung, Dokumentenverarbeitung oder KI-gestützte Kundenkommunikation beschränkt - die häufigsten Einsatzmuster im Mittelstand - fällt die Risikoklassifizierung typischerweise unterhalb der Schwelle von Anhang III. Die relevanteste kurzfristige Pflicht bleibt die Transparenz: Wer in Produkten oder Dienstleistungen KI-generierte Inhalte einsetzt, muss ab August 2026 die Kennzeichnungspflichten erfüllen.</p>
+
+<h2>Wie es weitergeht</h2>
+<p>Der Rat der EU soll voraussichtlich am 29. Juni 2026 formal abstimmen. Nach Veröffentlichung im Amtsblatt werden die neuen Fristen und das Nudifier-Verbot verbindlich. Das EU AI Office in Brüssel ist die zentrale Aufsichtsbehörde für KI-Allzweckmodelle und große Plattformanbieter; die Durchsetzungsaktivität soll durch 2027 zunehmen.</p>
+<p>Unternehmen, die auf die August-2026-Frist als internen Treiber für Compliance-Projekte gesetzt hatten, verlieren durch die Verlängerung etwas von diesem Druck - aber die grundlegenden Anforderungen haben sich nicht verändert. Wer das erweiterte Fenster für den Aufbau einer soliden Governance-Infrastruktur nutzt, wird bei steigender Durchsetzungsintensität besser aufgestellt sein.</p>
+
+<h2>OpSolid-Einordnung</h2>
+<p>Wer KI-gestützte Automatisierungssysteme betreibt oder aufbaut, die personenbezogene Daten, Personalentscheidungen oder Finanzbeurteilungen berühren, sollte jetzt damit beginnen zu dokumentieren, wie diese Systeme funktionieren und wie sie nach dem KI-Gesetz einzustufen sind. Die zusätzlichen 17 Monate sind nützlich - aber nur, wenn sie für Vorbereitung genutzt werden, nicht für Aufschub.</p>
+
+<h2>Quellen</h2>
+<ul>
+<li><a href="https://www.dastra.eu/en/blog/digital-omnibus-on-ai-parliament-votes-deadlines-redrawn/60108" target="_blank">Dastra: Digital Omnibus on AI - Parliament Votes, Deadlines Redrawn</a></li>
+<li><a href="https://sofiaglobe.com/2026/06/16/european-parliament-approves-ai-act-amendments-nudifier-ban/" target="_blank">Sofia Globe: Europaparlament billigt KI-Gesetz-Änderungen (16. Juni 2026)</a></li>
+<li><a href="https://www.consilium.europa.eu/en/press/press-releases/2026/05/07/artificial-intelligence-council-and-parliament-agree-to-simplify-and-streamline-rules/" target="_blank">Rat der EU: Einigung zur Vereinfachung der KI-Regeln (7. Mai 2026)</a></li>
+<li><a href="https://www.globalpolicywatch.com/2026/06/eu-ai-act-update-timeline-relief-targeted-simplification-and-new-prohibitions-2/" target="_blank">Global Policy Watch: EU AI Act Update - Fristverlagerungen und neue Verbote</a></li>
+</ul>`,
+    tr: `<figure><img src="/blog/eu-ai-act-digital-omnibus-2026.jpg" alt="Strasbourg'daki Avrupa Parlamentosu genel kurul salonu" style="width:100%;height:auto;border-radius:8px" /><figcaption style="font-size:0.8rem;opacity:0.7">Fotoğraf: European Parliament (CC BY 4.0) Openverse üzerinden</figcaption></figure>
+
+<p>16 Haziran 2026'da Avrupa Parlamentosu, AB Yapay Zeka Yasası'nda önemli bir değişiklik paketini onayladı - "Digital Omnibus on AI" olarak bilinen bu paket, 423 olumlu, 57 olumsuz oy ve 174 çekimsere ile kabul edildi. Bu, Haziran 2024'teki kabulünden bu yana yasada yapılan ilk özsel revizyon. AB Konseyi'nin değiştirilmiş metni resmi olarak 29 Haziran 2026'da benimsemesi bekleniyor; ardından Resmi Gazete'de yayımlanacak.</p>
+
+<p><strong>Özet:</strong> Yüksek riskli yapay zeka sistemleri için uyumluluk süresi 17 aya kadar uzatıldı, yeni konuşlanan sistemler için şeffaflık ve filigran zorunlulukları Ağustos 2026'dan itibaren geçerli olacak, rızasız gizli görüntü üreten yapay zeka sistemlerine yönelik yeni bir yasak ise Aralık 2026'dan itibaren uygulanacak.</p>
+
+<h2>Değişikliğin Nedeni</h2>
+<p>Orijinal Yapay Zeka Yasası'nda yüksek riskli yapay zeka uyumu için belirlenen Ağustos 2026 tarihi, birçok kuruluşun - özellikle orta ölçekli işletmelerin - gerçekçi şekilde hazırlanabileceğinden çok daha hızlı yaklaşıyordu. Destekleyici standartlar, uyumluluk değerlendirme altyapısı ve düzenleyici kurumlardan gelen rehber belgeler henüz tam anlamıyla hazır değildi. Geniş bir sanayi ve teknoloji dernekleri koalisyonu, sürelerin teknik açıdan uygulanabilir olmadığını savundu.</p>
+<p>Eş-raportor Arba Kokalari bu paketi pragmatik bir yeniden kalibrasyon olarak nitelendirdi: "Yapay Zeka Yasası'nda duraklatma tuşuna basıyoruz ve bürokratiyi azaltıyoruz." Omnibus, yönetmeliğin temel hedeflerini değiştirmiyor - sanayiye uygulanabilir bir uyumluluk yolu sunmak için takvimi ayarlıyor.</p>
+
+<h2>Yeniden Belirlenen Süreler</h2>
+<p>Yüksek riskli kullanım alanlarında yapay zeka çalıştıran işletmeler için en önemli değişiklik: Ek III'te listelenen bağımsız yüksek riskli yapay zeka sistemleri için uyumluluk tarihi 2 Ağustos 2026'dan 2 Aralık 2027'ye taşınıyor - 17 aylık bir uzatma. Ek III, işe alım, kredi puanlama, biyometrik kimlik doğrulama, eğitime erişim ve temel kamu hizmetlerine erişim gibi alanlardaki yapay zeka kullanımını kapsıyor.</p>
+<p>Düzenlenmiş ürünlere - örneğin endüstri makinelerine - güvenlik bileşeni olarak gömülmüş yapay zeka sistemleri için Ağustos 2027'den Ağustos 2028'e paralel bir erteleme yapılıyor.</p>
+<p>Yapay Zeka Yasası'nın 50. Maddesi kapsamındaki şeffaflık yükümlülükleri - sentetik içeriklerin işaretlenmesi ve yapay zeka üretimi materyal için makine tarafından okunabilir etiket gereklilikleri dahil - yeni konuşlanan sistemler için 2 Ağustos 2026 tarihinden itibaren yürürlükte kalmaktadır. Bu tarihten önce halihazırda işletilen sistemler 2 Aralık 2026'ya kadar kısa bir geçiş süresinden yararlanacak.</p>
+
+<h2>Yeni Bir Yasak: Yapay Zeka Nudifier Yasağı</h2>
+<p>Omnibus, Yapay Zeka Yasası'na önemli yeni bir yasak ekliyor: rızasız gizli görüntü oluşturmak veya manipüle etmek üzere tasarlanmış yapay zeka sistemleri - "nudifier" uygulamaları olarak bilinen araçlar - yasaklanıyor. Yasak, çocuk cinsel istismar materyali üreten yapay zeka sistemlerini de kapsıyor. Sağlayıcılar, konuşlandıranlar ve dağıtıcılar için geçerli olan yasak, 2 Aralık 2026'da yürürlüğe giriyor.</p>
+<p>Eş-raportor Michael McNamara, yasağın "ağırlıklı olarak" kadınları etkileyen bir teknolojiyi hedef aldığını ve 2026 yıl sonundan önce yürürlüğe gireceğini belirtti.</p>
+
+<h2>Yürürlükte Kalmaya Devam Edenler</h2>
+<p>Omnibus kapsamlı bir deregülasyon değil. Aşağıdaki yükümlülükler değişmeden yürürlükte kalmaya devam ediyor:</p>
+<ul>
+<li>Sosyal puanlama, kamusal alanlarda gerçek zamanlı biyometrik gözetim ve gizli manipülasyon yasakları - Şubat 2025'ten beri yürürlükte</li>
+<li>Genel amaçlı yapay zeka modeli kuralları - Ağustos 2025'ten beri uygulanabilir</li>
+<li>Yeni konuşlanan sistemler için şeffaflık etiketleme zorunlulukları - Ağustos 2026'dan itibaren</li>
+<li>Tedarik zinciri sorumluluğu: yapay zeka sağlayıcıları ile aşağı akış değiştiriciler arasındaki bilgi paylaşımı ihlalleri artık dünya genelinde yıllık gelirin %3'üne kadar para cezasına tabi</li>
+</ul>
+
+<h2>DACH Bölgesindeki İşletmeler için Anlamı</h2>
+<p>Almanya, Avusturya ve İsviçre'deki orta ölçekli işletmeler için uzatılmış süre, daha yönetilebilir bir yakın vadeli uyumluluk penceresi oluşturuyor - ancak hazırlık ihtiyacını ortadan kaldırmıyor. İşe alım, kredi kararları, müşteri risk değerlendirmesi veya çalışan izleme alanlarında yapay zeka çalıştıran kuruluşlar, ek süreden yapay zeka sistemi envanterlerini tamamlamak, kurumsal yönetim belgesi oluşturmak ve yapay zeka bileşenleri üzerindeki tedarik zinciri bağımlılıklarını haritalamak için yararlanmalı.</p>
+<p>Makine ve sanayi sektöründeki işletmeler, Makine Yönetmeliği ile çakışmanın basitleştirildiğini bilmeli: çift uyumluluk artık gerekli değil, ancak sektöre özgü yapay zeka güvenlik standartları 2028'den itibaren uygulanacak.</p>
+<p>Yapay zeka kullanımları genel iş akışı otomasyonu, belge işleme veya müşteri hizmetleri yapay zekasıyla sınırlı olan işletmeler için - Mittelstand operasyonlarındaki en yaygın kullanım şekilleri - risk sınıflandırması genellikle Ek III eşiğinin altında kalıyor. En alakalı yakın vadeli yükümlülük şeffaflık olmaya devam ediyor: ürün veya hizmetlerinizde yapay zeka üretimi içerik kullanıyorsanız, etiketleme gereklilikleri Ağustos 2026'dan itibaren orijinal takvime göre uygulanacak.</p>
+
+<h2>Bundan Sonra Ne Olacak</h2>
+<p>AB Konseyi'nin 29 Haziran 2026'da resmi oylaması bekleniyor. Resmi Gazete'de yayımlanmasıyla birlikte yeni süreler ve nudifier yasağı bağlayıcı hale geliyor. Brüksel'deki AB Yapay Zeka Ofisi, genel amaçlı yapay zeka ve büyük platform sağlayıcıları için merkezi denetim otoritesi; uygulama faaliyetlerinin 2027 boyunca artması bekleniyor.</p>
+<p>Ağustos 2026 tarihini iç uyumluluk projeleri için itici güç olarak kullanan işletmeler, bu uzatmayla söz konusu baskının bir kısmını kaybediyor - ancak temel uyumluluk gereklilikleri değişmemiş durumda. Uzatmadan sağlam bir yönetim altyapısı kurmak için yararlanan kuruluşlar, uygulama faaliyetleri yoğunlaştığında daha iyi konumda olacak.</p>
+
+<h2>OpSolid Notu</h2>
+<p>Kişisel veriler, çalışan kararları veya finansal değerlendirmeler için yapay zeka destekli otomasyon sistemleri çalıştırıyor veya geliştiriyorsanız, bu sistemlerin nasıl çalıştığını ve Yapay Zeka Yasası kapsamında nasıl sınıflandırıldığını belgelemek için şimdi iyi bir an. Ek 17 ay faydalı - ama yalnızca erteleme değil, hazırlık için kullanıldığında.</p>
+
+<h2>Kaynaklar</h2>
+<ul>
+<li><a href="https://www.dastra.eu/en/blog/digital-omnibus-on-ai-parliament-votes-deadlines-redrawn/60108" target="_blank">Dastra: Digital Omnibus on AI - Parlamento Oylaması, Yeniden Belirlenen Süreler</a></li>
+<li><a href="https://sofiaglobe.com/2026/06/16/european-parliament-approves-ai-act-amendments-nudifier-ban/" target="_blank">Sofia Globe: Avrupa Parlamentosu Yapay Zeka Yasası değişikliklerini onayladı (16 Haziran 2026)</a></li>
+<li><a href="https://www.consilium.europa.eu/en/press/press-releases/2026/05/07/artificial-intelligence-council-and-parliament-agree-to-simplify-and-streamline-rules/" target="_blank">AB Konseyi: Konsey ve Parlamento, KI kurallarını basitleştirme konusunda uzlaştı (7 Mayıs 2026)</a></li>
+<li><a href="https://www.globalpolicywatch.com/2026/06/eu-ai-act-update-timeline-relief-targeted-simplification-and-new-prohibitions-2/" target="_blank">Global Policy Watch: AB Yapay Zeka Yasası Güncellemesi - Süre Rahatlaması ve Yeni Yasaklar</a></li>
+</ul>`,
+  },
 };
 
 // Merge all articles
