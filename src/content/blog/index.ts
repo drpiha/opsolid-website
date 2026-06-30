@@ -11,6 +11,155 @@ export function getAllSlugs(): string[] {
 // Full article content stored as HTML strings per locale
 // To add a new article: add the slug key with HTML content for each language
 const articles: Record<string, Record<string, string>> = {
+  "eu-ai-act-august-2026-deadline": {
+    en: `<figure><img src="/blog/eu-ai-act-august-2026-deadline.jpg" alt="European Parliament plenary session on digital legislation" style="width:100%;height:auto;border-radius:8px" /><figcaption style="font-size:0.8rem;opacity:0.7">Photo: European Parliament (CC BY 2.0) via Openverse</figcaption></figure>
+
+<p>On 2 August 2026 - five weeks from now - the European Union's Artificial Intelligence Act enters its next major enforcement phase. For any business that deploys chatbots, generates synthetic media, or uses AI in customer-facing processes, this date carries concrete legal weight. A political deal struck in May 2026 shifted the deadline for one category of high-risk systems, but left the August cutoff firmly in place for transparency obligations and general-purpose AI model rules.</p>
+
+<p><strong>Key facts at a glance:</strong> The EU AI Act's Article 50 transparency requirements and general-purpose AI (GPAI) model penalty enforcement activate on 2 August 2026, with fines up to €15 million or 3% of global annual turnover. The compliance deadline for most high-risk AI systems listed in Annex III was deferred from August 2026 to 2 December 2027 by the AI Omnibus agreement of May 2026. Prohibited practices have been fully enforceable since February 2025 with fines up to €35 million or 7% of global turnover.</p>
+
+<h2>What the AI Omnibus Agreement Changed</h2>
+<p>On 7 May 2026, the Council of the EU and the European Parliament reached a provisional political agreement known as the AI Omnibus - a package intended to simplify and streamline the original AI Act's implementation timeline. The most significant change for most mid-market businesses: the compliance deadline for Annex III high-risk AI systems shifted from August 2026 to 2 December 2027, a deferral of roughly 16 months.</p>
+<p>Annex III covers AI used in employment decisions (including CV screening and performance evaluation), credit risk assessment, biometric categorisation, law enforcement, education, and judicial processes. If your business uses AI in any of these domains, the substantive compliance requirements remain unchanged - technical documentation, risk management systems, human oversight mechanisms, and data governance standards are all still required. Only the enforcement deadline moved.</p>
+<p>The agreement also deferred AI embedded in regulated products - medical devices, vehicles, and industrial machinery under Annex I - pushing that deadline to 2 August 2028. The Omnibus additionally refined the definition of "safety component" for industrial AI and reassigned certain machinery categories to a different regulatory tier.</p>
+
+<h2>What Is NOT Deferred: The August 2026 Obligations</h2>
+<p>Despite the high-risk deferral, the August 2026 deadline is active and affects a wide range of everyday business tools. Two areas take full legal effect on 2 August 2026:</p>
+<ul>
+<li><strong>Article 50 transparency obligations:</strong> Any AI system that interacts directly with people must disclose this at first contact. Synthetic audio, images, video, and text must carry machine-readable labels. Systems that use emotion recognition or biometric categorisation must notify users. Violations carry fines of up to €15 million or 3% of global annual turnover.</li>
+<li><strong>GPAI penalty enforcement:</strong> General-purpose AI model providers face active enforcement from August 2026. The Code of Practice - finalised in June 2026 - has been signed by Amazon, Anthropic, Google, Microsoft, and Mistral AI. Meta did not sign in full; xAI signed only the safety chapter. If your automation stack depends on third-party AI models, confirming those providers' compliance status is now a supply chain responsibility.</li>
+</ul>
+
+<h2>What Has Been Enforceable Since February 2025</h2>
+<p>Some provisions have carried legal force for over a year. Article 5 prohibited practices have been enforceable since February 2025, with fines up to €35 million or 7% of global turnover. These cover: social scoring by public or private entities, AI designed to manipulate users through subliminal techniques, systems that exploit vulnerable groups, and real-time remote biometric identification in public spaces except in narrow legally defined circumstances.</p>
+<p>Any business that deployed AI tools in these categories without legal review in early 2025 has been operating in regulated territory for 16 months.</p>
+
+<h2>Practical Steps for Mid-Market Businesses</h2>
+<p>For most Mittelstand companies, the immediate priority is compliance with the August 2026 transparency requirements. A practical checklist before 2 August 2026:</p>
+<ul>
+<li><strong>Audit customer-facing AI:</strong> Identify every chatbot, voice assistant, recommendation engine, or automated communication system that interacts directly with customers or employees. Each needs a disclosure mechanism from August onward.</li>
+<li><strong>Check synthetic content pipelines:</strong> If your team generates AI images, videos, or audio - or if your platforms do so automatically - machine-readable watermarking or labelling is required for new systems.</li>
+<li><strong>Map GPAI dependencies:</strong> If your automation stack relies on foundation models such as GPT, Claude, Gemini, or Mistral, confirm those providers are compliant with the Code of Practice. Supply chain due diligence now includes AI model providers.</li>
+<li><strong>Begin Annex III classification:</strong> Even with the 2027 deadline, identifying now whether any internal AI tools qualify as high-risk (HR decisions, credit assessments, biometric systems) avoids a last-minute compliance scramble in 18 months.</li>
+<li><strong>Consider ISO/IEC 42001:</strong> The AI Management System standard maps directly to AI Act requirements and generates audit evidence useful for both internal governance and customer conversations.</li>
+</ul>
+
+<h2>The Penalty Structure</h2>
+<p>The fine structure applies progressively. For most violations from August 2026, the ceiling is €15 million or 3% of global annual turnover - whichever is lower applies for SMEs, an explicit relief provision in the Act. Prohibited practices carry up to €35 million or 7% of turnover. Providing misleading information to authorities carries up to €7.5 million or 1.5% of turnover.</p>
+<p>Member states must also establish at least one national AI regulatory sandbox by 2 August 2026 - a formal path for businesses to test AI systems under regulatory supervision before full deployment.</p>
+
+<h2>What This Means in Practice</h2>
+<p>The EU AI Act is not primarily a legal project - it is an operational one. Transparency disclosures must be built into product and process flows. Documentation must be maintained and updated. Human oversight must be designed into workflows handling high-risk decisions. The Act demands evidence, not intent.</p>
+<p>For businesses already running AI-assisted processes in customer service, document handling, lead qualification, or operational analytics, the August deadline is a practical forcing function: formalise disclosure language, review logging and audit trail infrastructure, and establish oversight checkpoints now. That same infrastructure serves the high-risk compliance work due in December 2027.</p>
+<p>At OpSolid, we build AI-assisted automation with compliance architecture from the start - not as a retrofit. If you are deploying AI systems and the documentation and disclosure layer is not yet in place, the next five weeks are the right time to address it.</p>
+
+<h2>Sources</h2>
+<ul>
+<li><a href="https://www.consilium.europa.eu/en/press/press-releases/2026/05/07/artificial-intelligence-council-and-parliament-agree-to-simplify-and-streamline-rules/">Council of the EU: AI Omnibus provisional agreement, 7 May 2026</a></li>
+<li><a href="https://axis-intelligence.com/eu-ai-act-news-2026/">Axis Intelligence: EU AI Act 2026 - Compliance Requirements &amp; Deadlines</a></li>
+<li><a href="https://www.surecloud.com/resource-hub/eu-ai-act-complete-compliance-guide">SureCloud: EU AI Act Complete Compliance Guide, June 2026</a></li>
+<li><a href="https://artificialintelligenceact.eu/">EU AI Act official tracker</a></li>
+</ul>`,
+
+    de: `<figure><img src="/blog/eu-ai-act-august-2026-deadline.jpg" alt="Plenarsaal des Europaeischen Parlaments bei der Abstimmung ueber digitale Gesetzgebung" style="width:100%;height:auto;border-radius:8px" /><figcaption style="font-size:0.8rem;opacity:0.7">Foto: European Parliament (CC BY 2.0) via Openverse</figcaption></figure>
+
+<p>Am 2. August 2026 - in fuenf Wochen - tritt die naechste grosse Durchsetzungsphase des EU-Gesetzes ueber Kuenstliche Intelligenz in Kraft. Fuer jedes Unternehmen, das Chatbots einsetzt, synthetische Medien erzeugt oder KI in kundenseitigen Prozessen nutzt, hat dieses Datum konkrete rechtliche Bedeutung. Ein politischer Kompromiss vom Mai 2026 hat die Frist fuer eine Kategorie von Hochrisikosystemen verschoben - die August-Grenze fuer Transparenzpflichten und die Regeln fuer KI-Allzweckmodelle bleibt jedoch unveraendert bestehen.</p>
+
+<p><strong>Die wichtigsten Fakten im Ueberblick:</strong> Die Transparenzpflichten nach Artikel 50 des EU-KI-Gesetzes und die Durchsetzung von Bussgeldandrohungen fuer GPAI-Anbieter greifen ab dem 2. August 2026 - mit Geldbussen von bis zu 15 Millionen Euro oder 3 Prozent des weltweiten Jahresumsatzes. Die Compliance-Frist fuer die meisten Hochrisiko-KI-Systeme nach Anhang III wurde durch den KI-Omnibus-Kompromiss vom Mai 2026 auf den 2. Dezember 2027 verschoben. Verbotene Praktiken sind seit Februar 2025 vollstaendig durchsetzbar - mit Bussgeldandrohungen von bis zu 35 Millionen Euro oder 7 Prozent des Jahresumsatzes.</p>
+
+<h2>Was der KI-Omnibus-Kompromiss geaendert hat</h2>
+<p>Am 7. Mai 2026 einigten sich der Rat der EU und das Europaeische Parlament auf eine vorlaeufige politische Einigung - den sogenannten KI-Omnibus. Das Paket zielt darauf ab, den urspruenglichen Umsetzungszeitplan des KI-Gesetzes zu vereinfachen. Die bedeutendste Aenderung fuer die meisten mittelstaendischen Unternehmen: Die Compliance-Frist fuer Hochrisiko-KI nach Anhang III verschiebt sich von August 2026 auf den 2. Dezember 2027 - eine Verlaengerung von rund 16 Monaten.</p>
+<p>Anhang III umfasst KI-Systeme, die in Beschaeftigungsentscheidungen eingesetzt werden (einschliesslich CV-Screening und Leistungsbewertung), in der Kreditrisikobeurteilung, bei biometrischer Kategorisierung, in der Strafverfolgung, im Bildungswesen und in der Justiz. Wenn Ihr Unternehmen KI in einem dieser Bereiche einsetzt, bleiben die inhaltlichen Anforderungen unveraendert - technische Dokumentation, Risikomanagementsysteme, menschliche Aufsichtsmechanismen und Data-Governance-Standards sind weiterhin erforderlich. Lediglich die Durchsetzungsfrist wurde verlaengert.</p>
+<p>Der Kompromiss verschiebt ausserdem die Frist fuer KI in regulierten Produkten - Medizinprodukte, Fahrzeuge, Industriemaschinen nach Anhang I - auf den 2. August 2028. Zudem wurde die Definition von "Sicherheitskomponente" fuer industrielle KI praezisiert und bestimmte Maschinenkategorien wurden einer anderen Regulierungsebene zugeordnet.</p>
+
+<h2>Was nicht verschoben wurde: Die Pflichten ab 2. August 2026</h2>
+<p>Trotz der Verschiebung bei den Hochrisikosystemen gilt die August-Frist unveraendert und betrifft eine Vielzahl alltaeglicher Geschaeftstools. Zwei Bereiche treten am 2. August 2026 vollstaendig in Kraft:</p>
+<ul>
+<li><strong>Transparenzpflichten nach Artikel 50:</strong> Jedes KI-System, das direkt mit Menschen interagiert, muss dies beim ersten Kontakt offenlegen. Synthetische Audio-, Bild-, Video- und Textinhalte muessen maschinenlesbare Labels tragen. Systeme, die Emotionserkennung oder biometrische Kategorisierung einsetzen, muessen Nutzer informieren. Verstoesse werden mit bis zu 15 Millionen Euro oder 3 Prozent des weltweiten Jahresumsatzes geahndet.</li>
+<li><strong>Bussgelddurchsetzung fuer GPAI-Modelle:</strong> Anbieter von KI-Allzweckmodellen unterliegen ab August 2026 aktiver Durchsetzung. Der Code of Practice - im Juni 2026 abgeschlossen - wurde von Amazon, Anthropic, Google, Microsoft und Mistral AI unterzeichnet. Meta hat nicht vollstaendig unterzeichnet; xAI hat nur das Sicherheitskapitel unterzeichnet. Wenn Ihr Automatisierungs-Stack auf KI-Modellen Dritter basiert, ist die Pruefung des Compliance-Status dieser Anbieter jetzt Teil der Lieferketten-Sorgfaltspflicht.</li>
+</ul>
+
+<h2>Was seit Februar 2025 bereits durchgesetzt wird</h2>
+<p>Einige Bestimmungen haben bereits seit ueber einem Jahr Rechtswirkung. Die verbotenen Praktiken nach Artikel 5 sind seit Februar 2025 vollstaendig durchsetzbar. Diese umfassen: Social Scoring durch oeffentliche oder private Stellen, KI zur manipulativen Beeinflussung von Nutzern durch unterschwellige Techniken, Systeme, die vulnerable Gruppen ausnutzen, und Echtzeit-Fernbiometrie-Identifizierung im oeffentlichen Raum mit engen gesetzlichen Ausnahmen.</p>
+<p>Jedes Unternehmen, das KI-Tools in diesen Kategorien ohne rechtliche Pruefung seit Fruehjahr 2025 eingesetzt hat, befindet sich seit 16 Monaten in reguliertem Terrain.</p>
+
+<h2>Praktische Schritte fuer den Mittelstand</h2>
+<p>Fuer die meisten mittelstaendischen Unternehmen hat die Einhaltung der August-Transparenzpflichten oberste Prioritaet. Eine praktische Checkliste vor dem 2. August 2026:</p>
+<ul>
+<li><strong>Kundenseitige KI pruefen:</strong> Identifizieren Sie jeden Chatbot, Sprachassistenten, jede Empfehlungsmaschine oder automatisierte Kommunikation, die direkt mit Kunden oder Mitarbeitern interagiert. Jedes System benoetigt ab August einen Offenlegungsmechanismus.</li>
+<li><strong>Synthetische Inhaltspipelines ueberpruefen:</strong> Wenn Ihr Team KI-Bilder, -Videos oder -Audio erzeugt - oder Ihre Plattformen dies automatisch tun - ist maschinenlesbares Wasserzeichen oder Labeling fuer neue Systeme erforderlich.</li>
+<li><strong>GPAI-Abhaengigkeiten kartieren:</strong> Wenn Ihr Automatisierungs-Stack auf Grundlagenmodellen wie GPT, Claude, Gemini oder Mistral basiert, pruefen Sie den Compliance-Status dieser Anbieter gemaess dem Code of Practice.</li>
+<li><strong>Anhang-III-Klassifizierung beginnen:</strong> Auch mit der Frist 2027 sollten Sie jetzt pruefen, ob interne KI-Tools als hochriskant einzustufen sind - Personalentscheidungen, Kreditbewertung, biometrische Systeme - das vermeidet einen Last-Minute-Compliance-Sprint in 18 Monaten.</li>
+<li><strong>ISO/IEC 42001 in Betracht ziehen:</strong> Der Standard fuer KI-Managementsysteme bildet die Anforderungen des KI-Gesetzes direkt ab und schafft Pruefungsnachweise fuer interne Governance und Kundengespräche.</li>
+</ul>
+
+<h2>Die Bussgeldfestsetzung</h2>
+<p>Die Bussgeldstruktur gilt progressiv. Fuer die meisten Verstoesse ab August 2026 liegt die Obergrenze bei 15 Millionen Euro oder 3 Prozent des weltweiten Jahresumsatzes - fuer KMU gilt explizit der niedrigere Betrag, eine ausdrueckliche Entlastungsregelung im Gesetz. Verbotene Praktiken werden mit bis zu 35 Millionen Euro oder 7 Prozent des Umsatzes geahndet. Die Uebermittlung irrefuehrender Informationen an Behoerden wird mit bis zu 7,5 Millionen Euro oder 1,5 Prozent des Umsatzes bestraft.</p>
+<p>Mitgliedstaaten muessen zudem bis zum 2. August 2026 mindestens eine nationale KI-Regulierungssandbox einrichten - einen formalen Weg fuer Unternehmen, KI-Systeme unter behoerdlicher Aufsicht zu testen, bevor sie vollstaendig eingefuehrt werden.</p>
+
+<h2>Was das fuer die Praxis bedeutet</h2>
+<p>Das EU-KI-Gesetz ist in erster Linie kein juristisches Projekt - es ist ein operatives. Transparenzhinweise muessen in Produkt- und Prozessablaeufe eingebaut werden. Dokumentation muss gepflegt und aktualisiert werden. Menschliche Aufsicht muss in Workflows fuer risikobehaftete Entscheidungen verankert sein. Das Gesetz verlangt Nachweise, nicht nur Absichten.</p>
+<p>Fuer Unternehmen, die bereits KI-gestuetzte Prozesse in Kundenservice, Dokumentenverarbeitung, Lead-Qualifizierung oder operativer Analyse betreiben, ist die August-Frist ein praktischer Anlass: Offenlegungsformulierungen formalisieren, Protokollierungs- und Audit-Trail-Infrastruktur pruefen, Aufsichts-Checkpoints etablieren. Dieselbe Infrastruktur dient der Hochrisiko-Compliance-Arbeit, die im Dezember 2027 faellig wird.</p>
+<p>Bei OpSolid bauen wir KI-gestuetzte Automatisierung von Anfang an mit Compliance-Architektur - nicht als Nachrueckstung. Wenn Sie KI-Systeme einsetzen und die Dokumentations- und Offenlegungsschicht noch nicht vorhanden ist, sind die naechsten fuenf Wochen der richtige Zeitpunkt, das zu adressieren.</p>
+
+<h2>Quellen</h2>
+<ul>
+<li><a href="https://www.consilium.europa.eu/en/press/press-releases/2026/05/07/artificial-intelligence-council-and-parliament-agree-to-simplify-and-streamline-rules/">Rat der EU: Vorlaeufige Einigung zum KI-Omnibus, 7. Mai 2026</a></li>
+<li><a href="https://axis-intelligence.com/eu-ai-act-news-2026/">Axis Intelligence: EU AI Act 2026 - Compliance-Anforderungen und Fristen</a></li>
+<li><a href="https://www.surecloud.com/resource-hub/eu-ai-act-complete-compliance-guide">SureCloud: Vollstaendiger EU-KI-Gesetz-Compliance-Leitfaden, Juni 2026</a></li>
+<li><a href="https://artificialintelligenceact.eu/">Offizieller EU-KI-Gesetz-Tracker</a></li>
+</ul>`,
+
+    tr: `<figure><img src="/blog/eu-ai-act-august-2026-deadline.jpg" alt="Dijital mevzuat oylamasinda Avrupa Parlamentosu genel kurulu" style="width:100%;height:auto;border-radius:8px" /><figcaption style="font-size:0.8rem;opacity:0.7">Fotograf: European Parliament (CC BY 2.0) via Openverse</figcaption></figure>
+
+<p>2 Agustos 2026'da - bes hafta sonra - Avrupa Birligi Yapay Zeka Yasasi'nin bir sonraki buyuk uygulama asamasi yururluge giriyor. Chatbot kullanan, yapay zeka ile sentetik icerik ureten veya yapay zekay musteri sureclerinde kullanan her isletme icin bu tarih somut hukuki anlam tasiyor. Mayis 2026'da varilan siyasi uzlasi, bir yuksek riskli sistem kategorisi icin son tarihi erteledi; ancak seffaflik yukumlulukeri ve genel amacli yapay zeka model kurallari icin Agustos 2026 son tarihi degismeden korunuyor.</p>
+
+<p><strong>Temel gercekler:</strong> AB Yapay Zeka Yasasi'nin 50. Maddesi kapsamindaki seffaflik gereksinimleri ve GPAI ceza uygulamasi 2 Agustos 2026'da devreye giriyor; kuresel yillik cirolarin yuzde ucu veya 15 milyon Euro'ya kadar para cezasi ongoruluyor. Ek III'teki yuksek riskli yapay zeka sistemlerinin buyuk cogunlugu icin uyum son tarihi, Mayis 2026 Yapay Zeka Omnibus anlasmasiyla 2 Aralik 2027'ye ertelendi. Yasaklanan uygulamalar Subat 2025'ten bu yana kuresel cironun yuzde yedisi veya 35 milyon Euro'ya kadar ceza kesilerek tam olarak uygulanmaktadir.</p>
+
+<h2>Yapay Zeka Omnibus Anlasma Neyi Degistirdi</h2>
+<p>7 Mayis 2026'da AB Konseyi ve Avrupa Parlamentosu, Yapay Zeka Omnibus olarak bilinen gecici siyasi mutabakati imzaladi. Bu paket, YZ Yasasi'nin uygulama takvimini basitlestirmeyi amacliyor. Orta olcekli isletmelerin buyuk cogunlugu icin en onemli degisiklik: Ek III yuksek riskli YZ sistemlerine yonelik uyum son tarihi Agustos 2026'dan 2 Aralik 2027'ye, yaklasik 16 ay, ertelendi.</p>
+<p>Ek III; istihdam kararlarinda kullanilan yapay zekayi - CV tarama ve performans degerlendirme dahil -, kredi riski degerlendirmesini, biyometrik siniflandirmayi, kolluk kuvvetleri uygulamalarini, egitimi ve yargi sureclerini kapsiyor. Isletmeniz bu alanlarda yapay zeka kullaniyorsa, teknik belgeler, risk yonetimi sistemleri, insan denetim mekanizmalari ve veri yonetisim standartlari dahil icerik gereksinimleri degismedi; yalnizca uygulama son tarihi uzatildi.</p>
+<p>Anlasma, Ek I kapsamindaki duzenlemeli urunlere - tibbi cihazlar, araclar, endustrijel makineler - yerlestrilmis yapay zekanin son tarihini 2 Agustos 2028'e erteledi. Endustrijel yapay zeka icin "guvenlik bileseni" tanimi netlestrildi ve belirli makine kategorileri farkli bir duzenleyici katmana tasindi.</p>
+
+<h2>Ertelenmeyen Yukumlulukler: 2 Agustos 2026</h2>
+<p>Yuksek riskli sistemlerdeki ertelemeye ragmen Agustos 2026 son tarihi gecerlidir ve pek cok yaygin is aracini kapsar. Iki alan 2 Agustos 2026'da tam olarak yururluge giriyor:</p>
+<ul>
+<li><strong>50. Madde seffaflik yukumlulukeri:</strong> Insanlarla dogrudan etkilesime giren her yapay zeka sistemi bunu ilk temastan itibaren aciklamak zorundadir. Yapay zeka uretimi ses, goruntu, video ve metin icerikleri makine tarafindan okunabilir etiketler tasimalidir. Duygu tanima veya biyometrik siniflandirma kullanan sistemler kullanicilari bilgilendirmelidir. Ihlaller kuresel yillik cironun yuzde ucu veya 15 milyon Euro'ya kadar ceza doguran sonuclara yol acar.</li>
+<li><strong>GPAI ceza uygulamasi:</strong> Genel amacli yapay zeka model saglayicilari Agustos 2026'dan itibaren aktif yaptirima tabidir. Haziran 2026'da tamamlanan Uygulama Kurallari Amazon, Anthropic, Google, Microsoft ve Mistral AI tarafindan imzalandi. Meta belgeyi tam olarak imzalamadi; xAI yalnizca guvenlik bolumunu imzaladi. Otomasyon altyapiniz ucuncu taraf temel modellere dayaniyorsa, bu saglayicilarin uyum durumunun dogrulanmasi artik tedarik zinciri sorumlulugunun bir parcasidir.</li>
+</ul>
+
+<h2>Subat 2025'ten Bu Yana Yururlukte Olanlar</h2>
+<p>Bazi hukumler bir yili askin suredir hukuki guce sahip. 5. Madde kapsamindaki yasakli uygulamalar Subat 2025'ten bu yana kuresel cironun yuzde yedisi veya 35 milyon Euro'ya kadar ceza kesilerek uygulanmaktadir. Bu yasaklar sunlari kapsiyor: kamu ya da ozel kuruluslarin sosyal puanlama sistemleri, kullanicilari bilincalti tekniklerle manipule etmek icin tasarlanmis yapay zeka, savunmasiz gruplari istismar eden sistemler ve dar tanimlanan yasal istisnalar disinda kamuya acik alanlarda gercek zamanli uzaktan biyometrik tanimlama.</p>
+<p>Bu kategorilerde Subat 2025'ten once hukuki inceleme yapmadan yapay zeka araclari konuslandi her isletme, 16 aydir duzenlenmi alanda faaliyet gostermektedir.</p>
+
+<h2>Orta Olcekli Sirketler Icin Pratik Adimlar</h2>
+<p>Cogu Mittelstand isletmesi icin birincil oncelik Agustos 2026 seffaflik gereksinimlerine uyumdur. 2 Agustos 2026 oncesi pratik bir kontrol listesi:</p>
+<ul>
+<li><strong>Musteriye yonelik yapay zekalari denetleyin:</strong> Musteriler veya calisanlarla dogrudan etkilesime giren her chatbot, sesli asistan, oneri motoru veya otomatik iletisim sistemini belirleyin. Her birinin Agustos'tan itibaren bir aciklama mekanizmasina ihtiyaci var.</li>
+<li><strong>Sentetik icerik sureclerini kontrol edin:</strong> Ekibiniz yapay zeka uretimi goruntu, video veya ses uretiyorsa - ya da platformlariniz bunu otomatik yapiyorsa - yeni sistemler icin makine tarafindan okunabilir filigran veya etiketleme zorunludur.</li>
+<li><strong>GPAI bagimliliklerini haritalayiniz:</strong> Otomasyon altyapiniz GPT, Claude, Gemini veya Mistral gibi temel modellere dayaniyorsa, bu saglayicilarin Uygulama Kurallari'na uyum durumunu dogrulayin.</li>
+<li><strong>Ek III siniflandirmasina baslayin:</strong> 2027 son tarihi de olsa, dahili yapay zeka araclarinin yuksek riskli kategoriye girip girmedigini - IK kararlari, kredi degerlendirmesi, biyometrik sistemler - simdi belirlemek, 18 ay sonraki son dakika uyum kosustu rmasini onler.</li>
+<li><strong>ISO/IEC 42001'i degerlendirin:</strong> Yapay Zeka Yonetim Sistemi standardi YZ Yasasi gereksinimlerini dogrudan karsilar ve hem dahili yonetisim hem de musteri gorusmeleri icin denetim kaniti uretir.</li>
+</ul>
+
+<h2>Ceza Yapisi</h2>
+<p>Para cezasi yapisi kademeli olarak uygulanir. Agustos 2026'dan itibaren cogu ihlal icin tavan 15 milyon Euro veya kuresel yillik cironun yuzde ucudur; KOBi'ler icin daha dusuk olan tutar uygulanir - bu Yasa'nin acik bir KOBi destek hukmudu. Yasaklanan uygulamalar 35 milyon Euro veya cironun yuzde yedisine kadar yaptirima tabidir. Yetkililere yaniltici bilgi vermek 7,5 milyon Euro veya cironun yuzde bir bucluguna kadar ceza dogurur.</p>
+<p>Uye devletler ayrica 2 Agustos 2026'ya kadar en az bir ulusal yapay zeka duzenleme test alani (sandbox) kurmak zorundadir - isletmelere yapay zeka sistemlerini tam dagitimdan once duzenleyici denetim altinda test etme imkani sunan resmi bir yol.</p>
+
+<h2>Operasyon Ekipleri Icin Anlami</h2>
+<p>AB Yapay Zeka Yasasi oncelikle bir hukuki proje degil; operasyonel bir projedir. Seffaflik bildirimleri urun ve surec akislarina entegre edilmelidir. Belgeler guncellenmeye devam edilmelidir. Yuksek riskli kararlari isleyen is akislarina insan denetimi mekanizmalari yerlestirilmelidir. Yasa, niyet degil kanit talep eder.</p>
+<p>Musteri hizmetleri, belge isleme, lead kalifikasyonu veya operasyonel analizde yapay zeka destekli surecler yurutulan isletmeler icin Agustos son tarihi pratik bir zorlay ici: aciklama metinlerini formalize edin, gunlukleme ve denetim izi altyapisini gozden gecirin, denetim kontrol noktalari olusturun. Ayni altyapi Aralik 2027'de yapilacak yuksek riskli uyum calismasina da hizmet eder.</p>
+<p>OpSolid olarak yapay zeka destekli otomasyonu basindan itibaren uyum mimarisiyle insaa ediyoruz - sonradan eklenen bir katman olarak degil. Yapay zeka sistemleri kullaniyor ve belgeleme ile aciklama katmani henuz yerinde degilse, onunuzdeki bes hafta bunu ele almanin dogru zamanidir.</p>
+
+<h2>Kaynaklar</h2>
+<ul>
+<li><a href="https://www.consilium.europa.eu/en/press/press-releases/2026/05/07/artificial-intelligence-council-and-parliament-agree-to-simplify-and-streamline-rules/">AB Konseyi: YZ Omnibus gecici anlasmasi, 7 Mayis 2026</a></li>
+<li><a href="https://axis-intelligence.com/eu-ai-act-news-2026/">Axis Intelligence: AB YZ Yasasi 2026 - Uyum Gereksinimleri ve Son Tarihler</a></li>
+<li><a href="https://www.surecloud.com/resource-hub/eu-ai-act-complete-compliance-guide">SureCloud: AB YZ Yasasi Tam Uyum Rehberi, Haziran 2026</a></li>
+<li><a href="https://artificialintelligenceact.eu/">AB Yapay Zeka Yasasi resmi takip sitesi</a></li>
+</ul>`,
+  },
+
   "workflow-automation-fundamentals": {
     en: `<p>Workflow automation has moved from a luxury to a necessity for growing businesses. But the discussion is too often framed around which platform or tool to pick — when the real question is which engineering fundamentals make a workflow survive in production.</p>
 
