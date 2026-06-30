@@ -1105,6 +1105,15 @@ export const content: Content = {
     },
     posts: [
       {
+        slug: "eu-ai-act-august-2026-deadline",
+        title: "AB Yapay Zeka Yasasi: Agustos 2026 Son Tarihi Bes Hafta Uzakta",
+        excerpt:
+          "AB Yapay Zeka Yasasi'nin Agustos 2026 son tarihi yaklasiyor. Yapay Zeka Omnibus ile neler degisti, neler ertelendi ve yapay zeka kullanan sirketlerin simdi ne yapmasi gerekiyor.",
+        category: "ai",
+        date: "2026-06-30",
+        readTime: "7",
+      },
+      {
         slug: "workflow-automation-fundamentals",
         title: "İş Akışı Otomasyonu: Uygulamada Gerçekten Ne Önemli",
         excerpt:

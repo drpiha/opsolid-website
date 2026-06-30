@@ -1105,6 +1105,15 @@ export const content: Content = {
     },
     posts: [
       {
+        slug: "eu-ai-act-august-2026-deadline",
+        title: "EU-KI-Gesetz: Fuenf Wochen bis zur August-Frist - Was Unternehmen jetzt tun muessen",
+        excerpt:
+          "Die August-Frist des EU-KI-Gesetzes rueckt naeher. Was sich aendert, was der KI-Omnibus verschoben hat und was Unternehmen, die KI einsetzen, jetzt tun muessen.",
+        category: "ai",
+        date: "2026-06-30",
+        readTime: "7",
+      },
+      {
         slug: "workflow-automation-fundamentals",
         title: "Workflow-Automatisierung: Was in der Praxis wirklich zählt",
         excerpt:

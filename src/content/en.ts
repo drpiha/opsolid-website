@@ -1103,6 +1103,15 @@ export const content = {
     },
     posts: [
       {
+        slug: "eu-ai-act-august-2026-deadline",
+        title: "EU AI Act: The August 2026 Deadline Is 5 Weeks Away",
+        excerpt:
+          "The EU AI Act's August 2026 deadline is weeks away. Here's exactly what changes, what's been deferred by the AI Omnibus, and what businesses using AI must do before the cutoff.",
+        category: "ai",
+        date: "2026-06-30",
+        readTime: "7",
+      },
+      {
         slug: "workflow-automation-fundamentals",
         title: "Workflow Automation Fundamentals: What Actually Matters",
         excerpt:
