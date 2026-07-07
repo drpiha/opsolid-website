@@ -1103,6 +1103,15 @@ export const content = {
     },
     posts: [
       {
+        slug: "eu-ai-act-august-2026-omnibus-compliance",
+        title: "EU AI Act Goes Live: What the Omnibus Amendments Mean for Your Business",
+        excerpt:
+          "The EU AI Act enters full force on 2 August 2026. Here is what the Omnibus VII amendments changed - and which transparency rules every business must comply with now.",
+        category: "ai",
+        date: "2026-07-07",
+        readTime: "7",
+      },
+      {
         slug: "workflow-automation-fundamentals",
         title: "Workflow Automation Fundamentals: What Actually Matters",
         excerpt:
