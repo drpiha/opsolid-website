@@ -1105,6 +1105,15 @@ export const content: Content = {
     },
     posts: [
       {
+        slug: "eu-ai-act-august-2026-omnibus-compliance",
+        title: "AB Yapay Zeka Yasası Yürürlükte: Omnibus Değişiklikleri İşletmeniz İçin Ne Anlama Geliyor",
+        excerpt:
+          "AB Yapay Zeka Yasası 2 Ağustos 2026'da tam olarak yürürlüğe giriyor. Omnibus VII neler değiştirdi - ve hangi şeffaflık yükümlülükleri şimdi geçerli.",
+        category: "ai",
+        date: "2026-07-07",
+        readTime: "7",
+      },
+      {
         slug: "workflow-automation-fundamentals",
         title: "İş Akışı Otomasyonu: Uygulamada Gerçekten Ne Önemli",
         excerpt:

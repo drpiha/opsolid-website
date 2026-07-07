@@ -1105,6 +1105,15 @@ export const content: Content = {
     },
     posts: [
       {
+        slug: "eu-ai-act-august-2026-omnibus-compliance",
+        title: "EU-KI-Gesetz tritt in Kraft: Was die Omnibus-Änderungen für Ihr Unternehmen bedeuten",
+        excerpt:
+          "Am 2. August 2026 wird die KI-Verordnung vollständig anwendbar. Was Omnibus VII geändert hat - und welche Transparenzpflichten jetzt sofort gelten.",
+        category: "ai",
+        date: "2026-07-07",
+        readTime: "7",
+      },
+      {
         slug: "workflow-automation-fundamentals",
         title: "Workflow-Automatisierung: Was in der Praxis wirklich zählt",
         excerpt:
