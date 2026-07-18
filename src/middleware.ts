@@ -55,7 +55,7 @@ function readCountry(req: NextRequest): string | null {
 }
 
 /**
- * Locale resolution policy (2026-07 — geo is now resolved in-app):
+ * Locale resolution policy (2026-07 — geo is resolved in-app):
  *   1. Explicit user choice (our versioned cookie) always wins.
  *   2. An upstream geo header, if any proxy/CDN provides one (Cloudflare,
  *      Vercel, or a Traefik GeoIP plugin), is authoritative.
@@ -67,20 +67,67 @@ function readCountry(req: NextRequest): string | null {
  *      never forces /tr outside Turkey (the whole point of this change).
  *
  * TR → tr, DACH → de, every other country → en (see localeForCountry).
+ * Returns the resolved locale plus how it was reached, so a redirect can attach
+ * an opt-in x-opsolid-geo debug header (see maybeAttachGeoDebug).
  */
-async function detectLocale(req: NextRequest): Promise<Locale> {
+type LocaleSource = "cookie" | "geo-header" | "geo-ip" | "default";
+
+interface LocaleResolution {
+  locale: Locale;
+  country: string | null;
+  ip: string | null;
+  source: LocaleSource;
+}
+
+async function resolveLocale(req: NextRequest): Promise<LocaleResolution> {
   // 1. Explicit user choice.
   const cookieValue = req.cookies.get(COOKIE_NAME)?.value;
-  if (isLocale(cookieValue)) return cookieValue;
+  if (isLocale(cookieValue)) {
+    return { locale: cookieValue, country: null, ip: null, source: "cookie" };
+  }
 
   // 2. Upstream geo header (authoritative when a proxy/CDN provides it).
-  let country = readCountry(req);
+  const headerCountry = readCountry(req);
+  if (headerCountry) {
+    return {
+      locale: localeForCountry(headerCountry) ?? DEFAULT_LOCALE,
+      country: headerCountry,
+      ip: null,
+      source: "geo-header",
+    };
+  }
 
-  // 3. Bare Traefik sets no geo header → resolve the country in-app.
-  if (!country) country = await lookupCountryFromIp(req);
+  // 3. Bare Traefik sets no geo header → resolve the country in-app from IP.
+  const ip = clientIpFromRequest(req);
+  const country = ip ? await lookupCountryFromIp(ip, req) : null;
+  if (country) {
+    return {
+      locale: localeForCountry(country) ?? DEFAULT_LOCALE,
+      country,
+      ip,
+      source: "geo-ip",
+    };
+  }
 
-  // 4. Country decides the language; unknown country → English default.
-  return localeForCountry(country) ?? DEFAULT_LOCALE;
+  // 4. Country genuinely unknown → English default.
+  return { locale: DEFAULT_LOCALE, country: null, ip, source: "default" };
+}
+
+/**
+ * Opt-in diagnostics: on `?geodebug=1` reflect how the locale was resolved back
+ * in a response header. Country/own-IP are not sensitive and this is gated, so
+ * it stays invisible to normal traffic while making prod detection debuggable.
+ */
+function maybeAttachGeoDebug(
+  req: NextRequest,
+  res: NextResponse,
+  r: LocaleResolution,
+) {
+  if (req.nextUrl.searchParams.get("geodebug") !== "1") return;
+  res.headers.set(
+    "x-opsolid-geo",
+    `source=${r.source};country=${r.country ?? "-"};ip=${r.ip ?? "-"};locale=${r.locale}`,
+  );
 }
 
 /** Client IP from proxy headers (Traefik populates both on the VPS). */
@@ -95,20 +142,28 @@ function clientIpFromRequest(req: NextRequest): string | null {
 }
 
 /**
- * Resolve the visitor's country from their IP via our own /api/geo route (the
- * edge middleware can't read the on-disk GeoIP DB directly). Mirrors the
- * internal-fetch pattern already used for /api/domain-resolve. Fail-open: any
- * error/timeout resolves to null so navigation is never blocked on a geo miss.
+ * Resolve an IP → country via our own /api/geo route (the edge middleware can't
+ * read the on-disk GeoIP DB directly).
+ *
+ * We call the route over LOOPBACK, not the public origin. On the single-VPS
+ * Docker setup a container fetching its own public hostname
+ * (`https://opsolid.de/...`) can't hairpin back through Traefik, so that fetch
+ * silently failed and EVERY visitor fell through to English — the bug this
+ * fixes. The app process always answers on 127.0.0.1:<PORT> (PORT=3000 in the
+ * container). Fail-open: any error/timeout resolves to null so navigation is
+ * never blocked on a geo miss.
  */
-async function lookupCountryFromIp(req: NextRequest): Promise<string | null> {
-  const ip = clientIpFromRequest(req);
-  if (!ip) return null;
+async function lookupCountryFromIp(
+  ip: string,
+  req: NextRequest,
+): Promise<string | null> {
   try {
-    const url = `${req.nextUrl.origin}/api/geo?ip=${encodeURIComponent(ip)}`;
+    const port = req.nextUrl.port || process.env.PORT || "3000";
+    const url = `http://127.0.0.1:${port}/api/geo?ip=${encodeURIComponent(ip)}`;
     // Hard cap the lookup so a slow/hung geo call can never stall the first
     // page load — on timeout the fetch throws, we swallow it, and detection
     // falls through to the English default.
-    const res = await fetch(url, { signal: AbortSignal.timeout(1500) });
+    const res = await fetch(url, { signal: AbortSignal.timeout(2500) });
     if (!res.ok) return null;
     const body = (await res.json().catch(() => null)) as
       | { country?: string | null }
@@ -303,9 +358,14 @@ export async function middleware(req: NextRequest) {
   // request) so its geo lookup only runs on the locale-less paths that need it.
   const retiredTarget = getRetiredRedirectTarget(pathWithoutLocale);
   if (retiredTarget !== null) {
-    const localeForRedirect = hasLocale
-      ? (firstSegment as Locale)
-      : await detectLocale(req);
+    let localeForRedirect: Locale;
+    let resolution: LocaleResolution | null = null;
+    if (hasLocale) {
+      localeForRedirect = firstSegment as Locale;
+    } else {
+      resolution = await resolveLocale(req);
+      localeForRedirect = resolution.locale;
+    }
     const url = req.nextUrl.clone();
     url.pathname =
       retiredTarget === "/" ? `/${localeForRedirect}` : `/${localeForRedirect}${retiredTarget}`;
@@ -316,11 +376,13 @@ export async function middleware(req: NextRequest) {
       sameSite: "lax",
     });
     clearLegacyLocaleCookies(response);
+    if (resolution) maybeAttachGeoDebug(req, response, resolution);
     return response;
   }
 
   if (!hasLocale) {
-    const locale = await detectLocale(req);
+    const resolution = await resolveLocale(req);
+    const locale = resolution.locale;
     const url = req.nextUrl.clone();
     url.pathname = pathname === "/" ? `/${locale}` : `/${locale}${pathname}`;
 
@@ -331,6 +393,7 @@ export async function middleware(req: NextRequest) {
       sameSite: "lax",
     });
     clearLegacyLocaleCookies(response);
+    maybeAttachGeoDebug(req, response, resolution);
     return response;
   }
 
