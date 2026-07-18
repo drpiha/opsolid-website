@@ -45,6 +45,31 @@ export function isLocale(value: string | undefined | null): value is Locale {
   return !!value && (LOCALES as readonly string[]).includes(value);
 }
 
+/**
+ * DACH country codes (Germany, Austria, Switzerland, Liechtenstein) — all
+ * served the German marketing site. LI is included because it shares the
+ * language and B2B fabric with the rest of DACH.
+ */
+export const DE_COUNTRIES: ReadonlySet<string> = new Set(["DE", "AT", "CH", "LI"]);
+
+/**
+ * Single source of truth for the country → locale policy:
+ *   • TR                        → tr
+ *   • DACH (DE / AT / CH / LI)  → de
+ *   • any other known country   → en
+ *
+ * Returns `null` when the country is unknown (missing / unresolved) so the
+ * caller can apply its own default. Language is COUNTRY-driven on purpose:
+ * a Turkish browser locale must never select `tr` outside Turkey.
+ */
+export function localeForCountry(country: string | null | undefined): Locale | null {
+  if (!country) return null;
+  const code = country.toUpperCase();
+  if (code === "TR") return "tr";
+  if (DE_COUNTRIES.has(code)) return "de";
+  return "en";
+}
+
 export function extractLocaleFromPath(pathname: string): Locale | null {
   const segment = pathname.split("/")[1];
   return isLocale(segment) ? segment : null;

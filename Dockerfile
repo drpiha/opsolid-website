@@ -43,6 +43,15 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/public ./public
 
+# GeoIP country database (CC0, @ip-location-db). The /api/geo route reads this
+# .mmdb at runtime to resolve visitor IP → country for locale routing. Next's
+# standalone tracer only follows `require`d JS, not data files opened by path,
+# so — like the Prisma client below — we copy it explicitly to the exact path
+# src/lib/geo/country-db.ts resolves (process.cwd()/node_modules/...).
+COPY --from=builder --chown=nextjs:nodejs \
+    /app/node_modules/@ip-location-db/geo-whois-asn-country-mmdb/geo-whois-asn-country.mmdb \
+    ./node_modules/@ip-location-db/geo-whois-asn-country-mmdb/geo-whois-asn-country.mmdb
+
 # The generated Prisma client is required at runtime (imported from
 # @/generated/prisma). Standalone output *usually* picks it up via the trace,
 # but we copy it explicitly to be safe.
