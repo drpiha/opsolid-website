@@ -27,11 +27,13 @@ const LocaleContext = createContext<LocaleContextValue>({
   t: contents[DEFAULT_LOCALE],
 });
 
-// Keep in sync with src/middleware.ts. We versioned the cookie name when
-// the locale-detection policy changed (2026-05) so stale `NEXT_LOCALE=tr`
-// cookies from the previous logic stop overriding the new geo-based default.
-const COOKIE_NAME = "OPSOLID_LOCALE";
-const LEGACY_COOKIE_NAME = "NEXT_LOCALE";
+// Keep in sync with src/middleware.ts. The cookie name is versioned whenever
+// the locale-detection policy changes so stale AUTO-detected values from the
+// old logic stop overriding the new default. Bumped to _V2 in 2026-07 when
+// country detection moved in-app (previous `OPSOLID_LOCALE=tr` pins, set from
+// Accept-Language on the bare-Traefik prod, would otherwise stick).
+const COOKIE_NAME = "OPSOLID_LOCALE_V2";
+const LEGACY_COOKIE_NAMES = ["NEXT_LOCALE", "OPSOLID_LOCALE"];
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
 export function LocaleProvider({
@@ -64,9 +66,11 @@ export function LocaleProvider({
       if (!(LOCALES as readonly string[]).includes(next)) return;
       if (typeof document !== "undefined") {
         document.cookie = `${COOKIE_NAME}=${next}; path=/; max-age=${COOKIE_MAX_AGE}; samesite=lax`;
-        // Sweep the legacy cookie at the same time so it can't outvote the
+        // Sweep every legacy cookie at the same time so none can outvote the
         // new one if the user immediately opens a fresh tab.
-        document.cookie = `${LEGACY_COOKIE_NAME}=; path=/; max-age=0; samesite=lax`;
+        for (const legacy of LEGACY_COOKIE_NAMES) {
+          document.cookie = `${legacy}=; path=/; max-age=0; samesite=lax`;
+        }
       }
       const rest = stripLocaleFromPath(pathname || "/");
       router.push(withLocale(rest, next));

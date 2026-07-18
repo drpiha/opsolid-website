@@ -16,12 +16,19 @@ function voiceIsEnabled(): boolean {
   return t === "1" || t === "true" || t === "yes" || t === "on";
 }
 
-// Versioned cookie name. The old "NEXT_LOCALE" cookie set by the previous
-// detection logic (which routed everyone with a Turkish browser tag to TR
-// regardless of country) is intentionally ignored — bumping the cookie name
-// is the cleanest way to invalidate every stale preference at once.
-const COOKIE_NAME = "OPSOLID_LOCALE";
-const LEGACY_COOKIE_NAME = "NEXT_LOCALE";
+// Versioned cookie name. Each time the detection POLICY changes we bump this so
+// a stale AUTO-detected value can't pin returning visitors to the old result.
+// History:
+//   • NEXT_LOCALE       — original logic (Turkish browser tag → TR everywhere).
+//   • OPSOLID_LOCALE     — 2026-05 geo policy, but no geo header was ever set in
+//                          prod, so it kept auto-saving the Accept-Language guess
+//                          (e.g. OPSOLID_LOCALE=tr for a Turkish browser in
+//                          Berlin) and pinning that visitor to TR.
+//   • OPSOLID_LOCALE_V2  — 2026-07: country is now resolved in-app, so we bump
+//                          again to clear those stale tr/de pins and re-detect.
+// Every older name is swept on each response (clearLegacyLocaleCookies).
+const COOKIE_NAME = "OPSOLID_LOCALE_V2";
+const LEGACY_COOKIE_NAMES = ["NEXT_LOCALE", "OPSOLID_LOCALE"];
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
 
 /**
@@ -115,14 +122,13 @@ async function lookupCountryFromIp(req: NextRequest): Promise<string | null> {
   }
 }
 
-/** Delete the legacy NEXT_LOCALE cookie so it can never override the new one. */
-function clearLegacyLocaleCookie(res: NextResponse) {
-  if (res.cookies.get(LEGACY_COOKIE_NAME)) return;
-  res.cookies.set(LEGACY_COOKIE_NAME, "", {
-    path: "/",
-    maxAge: 0,
-    sameSite: "lax",
-  });
+/** Delete every legacy locale cookie so none can override the current one. */
+function clearLegacyLocaleCookies(res: NextResponse) {
+  for (const name of LEGACY_COOKIE_NAMES) {
+    // Don't clobber a value this same response is deliberately setting.
+    if (res.cookies.get(name)) continue;
+    res.cookies.set(name, "", { path: "/", maxAge: 0, sameSite: "lax" });
+  }
 }
 
 // Subdomain routing for the Smart Card product:
@@ -309,7 +315,7 @@ export async function middleware(req: NextRequest) {
       maxAge: COOKIE_MAX_AGE,
       sameSite: "lax",
     });
-    clearLegacyLocaleCookie(response);
+    clearLegacyLocaleCookies(response);
     return response;
   }
 
@@ -324,7 +330,7 @@ export async function middleware(req: NextRequest) {
       maxAge: COOKIE_MAX_AGE,
       sameSite: "lax",
     });
-    clearLegacyLocaleCookie(response);
+    clearLegacyLocaleCookies(response);
     return response;
   }
 
@@ -343,10 +349,10 @@ export async function middleware(req: NextRequest) {
       sameSite: "lax",
     });
   }
-  // Always sweep the legacy cookie on every response — the user could have
-  // a stale NEXT_LOCALE=tr that was set under the old detection logic, and
-  // we want it gone on the very next page load.
-  clearLegacyLocaleCookie(response);
+  // Always sweep the legacy cookies on every response — the user could have a
+  // stale NEXT_LOCALE=tr or OPSOLID_LOCALE=tr set under the old detection logic,
+  // and we want it gone on the very next page load.
+  clearLegacyLocaleCookies(response);
 
   return response;
 }
