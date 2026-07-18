@@ -29,11 +29,12 @@ const LocaleContext = createContext<LocaleContextValue>({
 
 // Keep in sync with src/middleware.ts. The cookie name is versioned whenever
 // the locale-detection policy changes so stale AUTO-detected values from the
-// old logic stop overriding the new default. Bumped to _V2 in 2026-07 when
-// country detection moved in-app (previous `OPSOLID_LOCALE=tr` pins, set from
-// Accept-Language on the bare-Traefik prod, would otherwise stick).
-const COOKIE_NAME = "OPSOLID_LOCALE_V2";
-const LEGACY_COOKIE_NAMES = ["NEXT_LOCALE", "OPSOLID_LOCALE"];
+// old logic stop overriding the new default. At _V3 (2026-07): the switcher is
+// now the ONLY writer of this cookie — middleware persists it just on a
+// confident geo redirect — so earlier auto-saved pins (=tr from Accept-Language,
+// then =en from the failed lookup) are swept and re-detected once.
+const COOKIE_NAME = "OPSOLID_LOCALE_V3";
+const LEGACY_COOKIE_NAMES = ["NEXT_LOCALE", "OPSOLID_LOCALE", "OPSOLID_LOCALE_V2"];
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365;
 
 export function LocaleProvider({
