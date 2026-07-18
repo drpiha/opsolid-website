@@ -1,6 +1,12 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { LOCALES, DEFAULT_LOCALE, isLocale, type Locale } from "@/lib/i18n";
+import {
+  LOCALES,
+  DEFAULT_LOCALE,
+  isLocale,
+  localeForCountry,
+  type Locale,
+} from "@/lib/i18n";
 import { getRetiredRedirectTarget } from "@/lib/redirects";
 
 function voiceIsEnabled(): boolean {
@@ -10,28 +16,38 @@ function voiceIsEnabled(): boolean {
   return t === "1" || t === "true" || t === "yes" || t === "on";
 }
 
-// Versioned cookie name. The old "NEXT_LOCALE" cookie set by the previous
-// detection logic (which routed everyone with a Turkish browser tag to TR
-// regardless of country) is intentionally ignored — bumping the cookie name
-// is the cleanest way to invalidate every stale preference at once.
-const COOKIE_NAME = "OPSOLID_LOCALE";
-const LEGACY_COOKIE_NAME = "NEXT_LOCALE";
+// Versioned cookie name. Each time the detection POLICY changes we bump this so
+// a stale AUTO-detected value can't pin returning visitors to the old result.
+// History:
+//   • NEXT_LOCALE       — original logic (Turkish browser tag → TR everywhere).
+//   • OPSOLID_LOCALE     — 2026-05 geo policy, but no geo header was ever set in
+//                          prod, so it kept auto-saving the Accept-Language guess
+//                          (e.g. OPSOLID_LOCALE=tr for a Turkish browser in
+//                          Berlin) and pinning that visitor to TR.
+//   • OPSOLID_LOCALE_V2  — 2026-07: country is now resolved in-app, so we bump
+//                          again to clear those stale tr/de pins and re-detect.
+// Every older name is swept on each response (clearLegacyLocaleCookies).
+const COOKIE_NAME = "OPSOLID_LOCALE_V2";
+const LEGACY_COOKIE_NAMES = ["NEXT_LOCALE", "OPSOLID_LOCALE"];
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
 
-// DACH country codes (Germany, Austria, Switzerland, Liechtenstein) — all
-// served the German marketing site. LI is included because it shares the
-// language and B2B fabric with the rest of DACH.
-const DE_COUNTRIES = new Set(["DE", "AT", "CH", "LI"]);
-
-/** Read the visitor's country code from whichever edge populated the request. */
+/**
+ * Read the visitor's country from an upstream geo header, if any proxy/CDN in
+ * front sets one. NOTE: the production VPS currently runs bare Traefik with no
+ * GeoIP plugin, so none of these are usually present and detection falls back
+ * to the in-app /api/geo lookup (lookupCountryFromIp). If Cloudflare
+ * (cf-ipcountry) or a Traefik GeoIP middleware is added later it is picked up
+ * here automatically and takes precedence over the in-app lookup — no other
+ * change required.
+ */
 function readCountry(req: NextRequest): string | null {
   // Vercel edge (when deployed on Vercel)
   const vercel = req.headers.get("x-vercel-ip-country");
   if (vercel) return vercel.toUpperCase();
-  // Cloudflare proxy (most common on opsolid.de VPS path)
+  // Cloudflare proxy (if the domain is ever orange-clouded)
   const cf = req.headers.get("cf-ipcountry");
   if (cf && cf !== "XX") return cf.toUpperCase();
-  // Generic / custom proxy headers (Traefik, nginx)
+  // Generic / custom proxy headers (Traefik GeoIP plugin, nginx)
   const generic =
     req.headers.get("x-country-code") || req.headers.get("x-geo-country");
   if (generic) return generic.toUpperCase();
@@ -39,51 +55,80 @@ function readCountry(req: NextRequest): string | null {
 }
 
 /**
- * Locale resolution policy (2026-05):
- *   • Explicit user choice (cookie) always wins.
- *   • If we know the country: TR → tr, DACH → de, everything else → en.
- *     Notably, a US visitor with a Turkish browser locale still lands on EN —
- *     country is authoritative once we have it.
- *   • Without a country (local dev, some proxies), fall back to
- *     Accept-Language but ONLY route mother-tongue DE/TR visitors. Every
- *     other language tag resolves to EN.
+ * Locale resolution policy (2026-07 — geo is now resolved in-app):
+ *   1. Explicit user choice (our versioned cookie) always wins.
+ *   2. An upstream geo header, if any proxy/CDN provides one (Cloudflare,
+ *      Vercel, or a Traefik GeoIP plugin), is authoritative.
+ *   3. Otherwise resolve the country ourselves from the client IP via the
+ *      Node-runtime /api/geo route — this is what makes detection work on the
+ *      bare-Traefik VPS, where NO edge sets a country header.
+ *   4. Country genuinely unknown → English. We deliberately do NOT consult
+ *      Accept-Language: language follows COUNTRY, so a Turkish browser locale
+ *      never forces /tr outside Turkey (the whole point of this change).
+ *
+ * TR → tr, DACH → de, every other country → en (see localeForCountry).
  */
-function detectLocale(req: NextRequest): Locale {
-  // 1. Explicit user choice (our own versioned cookie)
+async function detectLocale(req: NextRequest): Promise<Locale> {
+  // 1. Explicit user choice.
   const cookieValue = req.cookies.get(COOKIE_NAME)?.value;
   if (isLocale(cookieValue)) return cookieValue;
 
-  // 2. Geo header (authoritative — does NOT fall through to Accept-Language)
-  const country = readCountry(req);
-  if (country) {
-    if (country === "TR") return "tr";
-    if (DE_COUNTRIES.has(country)) return "de";
-    return "en";
-  }
+  // 2. Upstream geo header (authoritative when a proxy/CDN provides it).
+  let country = readCountry(req);
 
-  // 3. No country — Accept-Language, but only for DE/TR. Everything else EN.
-  const accept = req.headers.get("accept-language") || "";
-  const primary = accept
-    .split(",")[0]
-    ?.trim()
-    .split(";")[0]
-    ?.toLowerCase()
-    .split("-")[0];
+  // 3. Bare Traefik sets no geo header → resolve the country in-app.
+  if (!country) country = await lookupCountryFromIp(req);
 
-  if (primary === "tr") return "tr";
-  if (primary === "de") return "de";
-
-  return DEFAULT_LOCALE;
+  // 4. Country decides the language; unknown country → English default.
+  return localeForCountry(country) ?? DEFAULT_LOCALE;
 }
 
-/** Delete the legacy NEXT_LOCALE cookie so it can never override the new one. */
-function clearLegacyLocaleCookie(res: NextResponse) {
-  if (res.cookies.get(LEGACY_COOKIE_NAME)) return;
-  res.cookies.set(LEGACY_COOKIE_NAME, "", {
-    path: "/",
-    maxAge: 0,
-    sameSite: "lax",
-  });
+/** Client IP from proxy headers (Traefik populates both on the VPS). */
+function clientIpFromRequest(req: NextRequest): string | null {
+  const xff = req.headers.get("x-forwarded-for");
+  if (xff) {
+    const first = xff.split(",")[0]?.trim();
+    if (first) return first;
+  }
+  const xri = req.headers.get("x-real-ip");
+  return xri ? xri.trim() : null;
+}
+
+/**
+ * Resolve the visitor's country from their IP via our own /api/geo route (the
+ * edge middleware can't read the on-disk GeoIP DB directly). Mirrors the
+ * internal-fetch pattern already used for /api/domain-resolve. Fail-open: any
+ * error/timeout resolves to null so navigation is never blocked on a geo miss.
+ */
+async function lookupCountryFromIp(req: NextRequest): Promise<string | null> {
+  const ip = clientIpFromRequest(req);
+  if (!ip) return null;
+  try {
+    const url = `${req.nextUrl.origin}/api/geo?ip=${encodeURIComponent(ip)}`;
+    // Hard cap the lookup so a slow/hung geo call can never stall the first
+    // page load — on timeout the fetch throws, we swallow it, and detection
+    // falls through to the English default.
+    const res = await fetch(url, { signal: AbortSignal.timeout(1500) });
+    if (!res.ok) return null;
+    const body = (await res.json().catch(() => null)) as
+      | { country?: string | null }
+      | null;
+    const country = body?.country;
+    return typeof country === "string" && country.length === 2
+      ? country.toUpperCase()
+      : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Delete every legacy locale cookie so none can override the current one. */
+function clearLegacyLocaleCookies(res: NextResponse) {
+  for (const name of LEGACY_COOKIE_NAMES) {
+    // Don't clobber a value this same response is deliberately setting.
+    if (res.cookies.get(name)) continue;
+    res.cookies.set(name, "", { path: "/", maxAge: 0, sameSite: "lax" });
+  }
 }
 
 // Subdomain routing for the Smart Card product:
@@ -248,15 +293,19 @@ export async function middleware(req: NextRequest) {
   const firstSegment = pathname.split("/")[1];
   const hasLocale = isLocale(firstSegment);
 
-  // Retired-route 301 redirects. Checked before / after locale split so
-  // both /solutions and /en/solutions resolve to the right target with
-  // the locale prefix preserved.
-  const localeForRedirect = hasLocale ? (firstSegment as Locale) : detectLocale(req);
   const pathWithoutLocale = hasLocale
     ? pathname.slice(firstSegment.length + 1) || "/"
     : pathname;
+
+  // Retired-route 301 redirects. Checked after the locale split so both
+  // /solutions and /en/solutions resolve to the right target with the locale
+  // prefix preserved. detectLocale() is awaited lazily (and at most once per
+  // request) so its geo lookup only runs on the locale-less paths that need it.
   const retiredTarget = getRetiredRedirectTarget(pathWithoutLocale);
   if (retiredTarget !== null) {
+    const localeForRedirect = hasLocale
+      ? (firstSegment as Locale)
+      : await detectLocale(req);
     const url = req.nextUrl.clone();
     url.pathname =
       retiredTarget === "/" ? `/${localeForRedirect}` : `/${localeForRedirect}${retiredTarget}`;
@@ -266,12 +315,12 @@ export async function middleware(req: NextRequest) {
       maxAge: COOKIE_MAX_AGE,
       sameSite: "lax",
     });
-    clearLegacyLocaleCookie(response);
+    clearLegacyLocaleCookies(response);
     return response;
   }
 
   if (!hasLocale) {
-    const locale = detectLocale(req);
+    const locale = await detectLocale(req);
     const url = req.nextUrl.clone();
     url.pathname = pathname === "/" ? `/${locale}` : `/${locale}${pathname}`;
 
@@ -281,7 +330,7 @@ export async function middleware(req: NextRequest) {
       maxAge: COOKIE_MAX_AGE,
       sameSite: "lax",
     });
-    clearLegacyLocaleCookie(response);
+    clearLegacyLocaleCookies(response);
     return response;
   }
 
@@ -300,10 +349,10 @@ export async function middleware(req: NextRequest) {
       sameSite: "lax",
     });
   }
-  // Always sweep the legacy cookie on every response — the user could have
-  // a stale NEXT_LOCALE=tr that was set under the old detection logic, and
-  // we want it gone on the very next page load.
-  clearLegacyLocaleCookie(response);
+  // Always sweep the legacy cookies on every response — the user could have a
+  // stale NEXT_LOCALE=tr or OPSOLID_LOCALE=tr set under the old detection logic,
+  // and we want it gone on the very next page load.
+  clearLegacyLocaleCookies(response);
 
   return response;
 }

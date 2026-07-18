@@ -21,6 +21,7 @@
   "dependencies": {
     "@calcom/embed-react": "^1.5.3",
     "@hookform/resolvers": "^5.2.2",
+    "@ip-location-db/geo-whois-asn-country-mmdb": "^2.3.2026061719",
     "@napi-rs/canvas": "^0.1.99",
     "@prisma/client": "^6.19.3",
     "@radix-ui/react-dialog": "^1.1.15",
@@ -46,6 +47,7 @@
     "jsqr": "^1.4.0",
     "lenis": "^1.3.23",
     "lucide-react": "^1.7.0",
+    "maxmind": "^5.0.6",
     "nanoid": "^5.1.9",
     "next": "14.2.35",
     "nodemailer": "^7.0.0",
