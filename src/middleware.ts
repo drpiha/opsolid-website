@@ -24,11 +24,16 @@ function voiceIsEnabled(): boolean {
 //                          prod, so it kept auto-saving the Accept-Language guess
 //                          (e.g. OPSOLID_LOCALE=tr for a Turkish browser in
 //                          Berlin) and pinning that visitor to TR.
-//   • OPSOLID_LOCALE_V2  — 2026-07: country is now resolved in-app, so we bump
-//                          again to clear those stale tr/de pins and re-detect.
+//   • OPSOLID_LOCALE_V2  — 2026-07: country resolved in-app, but the internal
+//                          lookup hit its own public origin and silently failed
+//                          on the VPS, so it auto-saved the English fallback
+//                          (OPSOLID_LOCALE_V2=en) and pinned everyone to EN.
+//   • OPSOLID_LOCALE_V3  — 2026-07: lookup fixed (loopback). Bump once more to
+//                          clear those stale =en pins; and we no longer persist
+//                          the cookie when detection was unconfident (see below).
 // Every older name is swept on each response (clearLegacyLocaleCookies).
-const COOKIE_NAME = "OPSOLID_LOCALE_V2";
-const LEGACY_COOKIE_NAMES = ["NEXT_LOCALE", "OPSOLID_LOCALE"];
+const COOKIE_NAME = "OPSOLID_LOCALE_V3";
+const LEGACY_COOKIE_NAMES = ["NEXT_LOCALE", "OPSOLID_LOCALE", "OPSOLID_LOCALE_V2"];
 const COOKIE_MAX_AGE = 60 * 60 * 24 * 365; // 1 year
 
 /**
@@ -387,11 +392,18 @@ export async function middleware(req: NextRequest) {
     url.pathname = pathname === "/" ? `/${locale}` : `/${locale}${pathname}`;
 
     const response = NextResponse.redirect(url, 307);
-    response.cookies.set(COOKIE_NAME, locale, {
-      path: "/",
-      maxAge: COOKIE_MAX_AGE,
-      sameSite: "lax",
-    });
+    // Only PERSIST the locale when we actually resolved it (cookie / geo header
+    // / geo-ip). If detection was unconfident (source "default", e.g. the geo
+    // lookup missed), redirect to English but DON'T pin it — otherwise a single
+    // failed lookup would stick the visitor on /en for a year. The next visit
+    // re-detects. Explicit switcher choices persist via LocaleContext.
+    if (resolution.source !== "default") {
+      response.cookies.set(COOKIE_NAME, locale, {
+        path: "/",
+        maxAge: COOKIE_MAX_AGE,
+        sameSite: "lax",
+      });
+    }
     clearLegacyLocaleCookies(response);
     maybeAttachGeoDebug(req, response, resolution);
     return response;
@@ -404,17 +416,13 @@ export async function middleware(req: NextRequest) {
 
   const response = NextResponse.next({ request: { headers: requestHeaders } });
 
-  // Keep cookie in sync so the user's last viewed locale becomes default
-  if (req.cookies.get(COOKIE_NAME)?.value !== firstSegment) {
-    response.cookies.set(COOKIE_NAME, firstSegment, {
-      path: "/",
-      maxAge: COOKIE_MAX_AGE,
-      sameSite: "lax",
-    });
-  }
-  // Always sweep the legacy cookies on every response — the user could have a
-  // stale NEXT_LOCALE=tr or OPSOLID_LOCALE=tr set under the old detection logic,
-  // and we want it gone on the very next page load.
+  // NOTE: we deliberately do NOT persist the locale here. The cookie is written
+  // only on a confident geo redirect (above) or an explicit switcher choice
+  // (LocaleContext.setLocale). Auto-saving whatever /:locale the visitor happens
+  // to be viewing is exactly what let a broken-geo /en visit pin everyone to
+  // English — so being on a prefixed URL no longer writes the cookie, and a
+  // bare "/" visit always re-detects. Legacy cookies are still swept so stale
+  // pins from older logic disappear on the very next page load.
   clearLegacyLocaleCookies(response);
 
   return response;
