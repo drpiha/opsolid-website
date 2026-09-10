@@ -1,8 +1,32 @@
 # OpSolid Website — Live Status
 
-**Son güncelleme:** 2026-06-12 (kart ürünleştirme oturumu — pricing mode + owner self-serve)
-**Aktif dal:** `claude/digital-business-card-app-334cev`
+**Son güncelleme:** 2026-09-10 (OpSo ürün sayfası; yayın engelli)
+**Aktif dal:** `cod/opso-product-launch` (güncel `origin/main` 9385964 üzerinden)
 **Kanonik canlı panel.** Her oturum başında okunur, sonunda güncellenir.
+
+---
+
+## 2026-09-10 — OpSo ürün tanıtımı
+
+- `/de/opso`, `/en/opso`, `/tr/opso`: profesyonel dijital kartvizit, gerçek alt sayfalı küçük site, üç site ailesi, altı sayfaya kadar yapı, kaydetmeden mobil/masaüstü önizleme, QR/NFC ile uygulamasız alıcı deneyimi.
+- Free: hesapta bir kart veya site. Pro 10 / Studio 50: geliştirmede; satın alma, fiyat veya çıkış tarihi vaadi yok. App QA aşamasında, Play yayını ve doğrulanmış herkese açık APK bağlantısı henüz yok. Özel alan adı bağlantısı kullanıma açık değil.
+- Mevcut OpSolid site kabuğu, tema değişkenleri ve dil seçimi kullanıldı. Şematik ürün çizimi açıkça etiketli; müşteri görseli, fixture, sahte referans ve indirme bağlantısı eklenmedi.
+- Menü/footer `/opso` adresini gösteriyor. Mevcut web kartı `/products/digital-card` ve hesap/sipariş uçları korundu. OpSo'nun ayrı hesap sistemiyle karışmaması için yalnızca yeni ürün sayfasında eski web hesabı bağlantıları gizlendi.
+- `images.unoptimized: true`: [GHSA-2xp9-vwfh-vxw4](https://github.com/advisories/GHSA-2xp9-vwfh-vxw4) için sınırlı önlem. Görseller orijinal boyutta sunulur; bant genişliği artabilir. Next.js 14.2.35 yükseltilmedi. Windows'a özgü [GHSA-p293-qw3h-jr36](https://github.com/advisories/GHSA-p293-qw3h-jr36) ayrıca takip edilmeli; mevcut üretim Docker imajı Linux tabanlıdır.
+
+**VERIFIED (yerel):** `npm ci --no-audit --no-fund`, `npx prisma generate`, üretim derlemesi (390 sayfa ve TypeScript), ilgili dosyalarda ESLint ve `npm run audit:cards` geçti. Audit'in altı eski `blank-canvas` destek uyarısı sürüyor. Chrome'da 375/1440 px × DE/EN/TR olmak üzere altı kombinasyon geçti: yatay taşma yok, yerelleştirilmiş canonical ve lang, çalışan bölüm bağlantıları, klavyeyle FAQ açma, mobil menü açma/Escape ile kapatma, dil değiştirme ve doğru iletişim hedefi. Sayfa JavaScript hatası yok. Zararsız yerel görselle `/_next/image` 404; orijinal görsel ve eski ürün sayfası 200. Yeni route'lar sitemap'te. Tarayıcı kanıtı yerel geçici `opso-landing-review-20260910/results.json` dosyasındadır; fixture/çıktı repoya eklenmedi.
+
+**NOT VERIFIED:** Yeni içeriğin canlı sunumu, hosted CI ve üretimde optimizer 404 henüz doğrulanmadı. Mevcut Sentry ayarı derlemede 134 public source-map dosyası üretiyor; bu çalışma source-map politikasını değiştirmedi. Next.js yükseltmesi ve genel altyapı güvenliği bu dar ürün sayfası çalışmasından ayrıdır.
+
+**Yayın: BLOCKED / NO-GO.** Bağımsız inceleme gerçek üretim bağlantısındaki DB rolünün SUPERUSER, CREATEROLE, CREATEDB ve BYPASSRLS yetkilerine sahip olduğunu; 46 public tablonun sahibi olduğunu, tamamında TRUNCATE yetkisi bulunduğunu ve RLS'nin hiçbirinde etkin olmadığını doğruladı. Belgelenen yedek dizini bulunamadı ve güncel restore kanıtı yok. Rol/izin düzenlemesi ve doğrulanmış yedek/geri yükleme ayrı açık onay ve çalışma gerektirir. Bu oturum DB, kimlik bilgisi veya izin değiştirmedi; üretim yayını yapılmadı.
+
+**Yayın yolu (yalnızca engeller kaldırılıp tekrar onaylandıktan sonra):** Mevcut `Deploy to VPS` workflow'u `chown -R`, `rsync --delete` ve DB bootstrap çalıştırdığı için bu içerik yayınına uygun değil. `main`'e merge/push veya workflow dispatch yapmayın. Aşağıdaki yol bir uygulama imajını değiştirir; canlı çalıştırılmadı.
+
+1. İncelenen commit'i yalnızca takip edilen dosyalardan `git archive --format=tar --output=<archive> <SHA>` ile paketleyin. Çalışma klasörünü veya yerel `.env`/operatör dosyalarını paketlemeyin.
+2. VPS'te yeni `/tmp/opsolid-release-<SHA>` dizinine açın; `docker build --label org.opencontainers.image.revision=<SHA> -t opsolid-reviewed:<SHA> /tmp/opsolid-release-<SHA>` ile imaj oluşturun. Mevcut kaynak dizinine dosya kopyalamayın.
+3. Yeniden doğrulanacak mevcut Compose kimliği: proje `opsolid-website`, konfigürasyon `/opt/opsolid-website/docker-compose.yml`, env `/opt/opsolid-website/.env`. Yeni imaj dışında mevcut env, volume, ağ ve etiket ayarlarını koruyun; karşılaştırmada secret değerlerini çıktılamayın. Önceki imaj kimliğini ve `GIT_COMMIT` değerini geri dönüş için saklayın. 2026-09-10 incelemesindeki eski imaj: `sha256:107624f39a593005f1666db10a4d85a5034baf37e9ecd6186415d70b829df246` (kullanımdan önce tekrar doğrulanmalı).
+4. Yalnızca `services.opsolid.image: opsolid-reviewed:<SHA>` ve `services.opsolid.environment.GIT_COMMIT: <SHA>` içeren ayrı override dosyası hazırlayın. `docker compose -p opsolid-website --project-directory /opt/opsolid-website --env-file /opt/opsolid-website/.env -f /opt/opsolid-website/docker-compose.yml -f <override> up -d --no-deps --no-build --pull never opsolid` ile sadece uygulama servisini değiştirin. DB bootstrap, yeniden seed, izin değişikliği, kaynak aynalama veya temizleme çalıştırmayın.
+5. Container imajı/revision ve health JSON'da `dbOk: true` doğrulayın; HTTP 200 tek başına yeterli değildir. Üç `/opso` dili, mevcut ürün adresi, statik görseller ve `/_next/image` için 404 kontrol edin. Hata halinde aynı Compose komutunu, saklanan eski imaj ve önceki `GIT_COMMIT` değerini kullanan rollback override ile çalıştırın.
 
 ---
 

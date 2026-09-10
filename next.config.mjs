@@ -73,6 +73,11 @@ const nextConfig = {
     ];
   },
   images: {
+    // GHSA-2xp9-vwfh-vxw4: bypass server image optimization until the
+    // framework upgrade is validated. Disabling AVIF output alone does not
+    // stop AVIF input decoding. Images are served at their original size;
+    // /_next/image must remain unavailable while this mitigation is active.
+    unoptimized: true,
     formats: ["image/avif", "image/webp"],
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
