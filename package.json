@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "next build && npm run check:public-sourcemaps",
+    "check:public-sourcemaps": "node scripts/check-public-sourcemaps.mjs",
     "start": "next start",
     "lint": "next lint",
     "gen:template-previews": "tsx scripts/generate-template-previews.ts",

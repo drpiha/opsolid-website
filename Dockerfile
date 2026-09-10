@@ -24,6 +24,8 @@ ENV NEXT_TELEMETRY_DISABLED=1
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npx prisma generate
+# The build includes a fail-closed check for source maps in the public roots
+# copied into the runner below. Sentry uploads, when configured, finish first.
 RUN npm run build
 
 # --- Stage 3: runner (minimal) -----------------------------------------------

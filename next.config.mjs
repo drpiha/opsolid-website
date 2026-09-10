@@ -47,6 +47,7 @@ const nextConfig = {
   reactStrictMode: true,
   // Lean Docker image: only copies the runtime bundle, no node_modules.
   output: "standalone",
+  productionBrowserSourceMaps: false,
   async headers() {
     return [
       {
@@ -109,19 +110,30 @@ const nextConfig = {
 
 // -----------------------------------------------------------------------------
 // Sentry — only enable source-map upload when auth + org + project are present.
-// Missing envs must not crash the build; Sentry no-ops gracefully.
+// Unconfigured builds do not generate maps or call the Sentry build service.
 // -----------------------------------------------------------------------------
+const sentryUploadConfigured = Boolean(
+  process.env.SENTRY_AUTH_TOKEN?.trim() &&
+  process.env.SENTRY_ORG?.trim() &&
+  process.env.SENTRY_PROJECT?.trim(),
+);
+
 const sentryBuildOptions = {
   silent: true,
+  telemetry: false,
   org: process.env.SENTRY_ORG,
   project: process.env.SENTRY_PROJECT,
   authToken: process.env.SENTRY_AUTH_TOKEN,
-  // Disable source-map upload entirely when auth token is missing (dev /
-  // operators who don't run Sentry).
   disableLogger: true,
-  dryRun: !process.env.SENTRY_AUTH_TOKEN,
-  // Hide unhandled-route source maps from public chunks.
-  hideSourceMaps: true,
+  sourcemaps: {
+    disable: !sentryUploadConfigured,
+    // Keep maps useful to Sentry, but never copy them to the public image.
+    deleteSourcemapsAfterUpload: true,
+  },
+  release: {
+    create: sentryUploadConfigured,
+    finalize: sentryUploadConfigured,
+  },
   widenClientFileUpload: true,
   tunnelRoute: undefined,
 };

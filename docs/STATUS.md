@@ -1,8 +1,18 @@
 # OpSolid Website — Live Status
 
-**Son güncelleme:** 2026-09-10 (OpSo ürün sayfası; yayın engelli)
+**Son güncelleme:** 2026-09-11 (public source-map paketlemesi kapatıldı; yayın engelli)
 **Aktif dal:** `cod/opso-product-launch` (güncel `origin/main` 9385964 üzerinden)
 **Kanonik canlı panel.** Her oturum başında okunur, sonunda güncellenir.
+
+---
+
+## 2026-09-11 — Public source-map dosyaları
+
+- Kurulu Sentry 8.47 seçenekleri kontrol edildi. `hideSourceMaps`/`dryRun` yerine desteklenen `sourcemaps.disable` ve `deleteSourcemapsAfterUpload` kullanılıyor. Auth token, org ve project birlikte yoksa map üretimi/yüklemesi ile release oluşturma kapalı; build telemetry de kapalı. Tam yapılandırılmış Sentry yüklemesinde map'ler gönderildikten sonra public çıktıdan silinir. Paket sürümü değişmedi.
+- `npm run build` artık `check:public-sourcemaps` ile biter. `.next/static` veya `public` içinde map dosyası ya da doğrulanamayan symlink varsa build başarısız olur. Docker'ın mevcut build adımı bu kontrolü public dizinleri imaja kopyalamadan önce çalıştırır.
+- **VERIFIED:** Kontrol önce eski gerçek build'deki 134 map dosyasını reddetti. Temiz test dizinleri geçti; `public` altına eklenen sentetik map reddedildi. Yeni üretim build'i (390 sayfa, TypeScript) ve lint geçti; `.next/static` ve `public` map sayısı **0**. Loopback'te eski bilinen map adresi ve güncel JS chunk'ının `.map` adresi **404**, sayfa ve JS chunk **200**; görsel optimizer **404**. Sunucu test sonunda kapatıldı.
+- **NOT VERIFIED:** Gerçek Sentry yüklemesi çağrılmadı; test ortamında upload yapılandırması ve DSN yoktu. Docker imajı ve canlı yayın bu adımda çalıştırılmadı. Yerel kanıt: geçici `opsolid-sourcemap-guard-20260911/http-results.json`.
+- **Yayın hâlâ NO-GO:** 2026-09-10 denetimindeki aşırı yetkili DB rolü, bulunamayan belgelenmiş yedek dizini ve eksik güncel restore kanıtı aşağıdaki yayın kapısında duruyor. Üretimden önce ayrı onaylı en az yetkili uygulama rolü çalışması ve doğrulanmış yedek/geri yükleme kanıtı gerekir. DB, rol, kimlik bilgisi veya üretim değişikliği yapılmadı.
 
 ---
 
@@ -16,7 +26,7 @@
 
 **VERIFIED (yerel):** `npm ci --no-audit --no-fund`, `npx prisma generate`, üretim derlemesi (390 sayfa ve TypeScript), ilgili dosyalarda ESLint ve `npm run audit:cards` geçti. Audit'in altı eski `blank-canvas` destek uyarısı sürüyor. Chrome'da 375/1440 px × DE/EN/TR olmak üzere altı kombinasyon geçti: yatay taşma yok, yerelleştirilmiş canonical ve lang, çalışan bölüm bağlantıları, klavyeyle FAQ açma, mobil menü açma/Escape ile kapatma, dil değiştirme ve doğru iletişim hedefi. Sayfa JavaScript hatası yok. Zararsız yerel görselle `/_next/image` 404; orijinal görsel ve eski ürün sayfası 200. Yeni route'lar sitemap'te. Tarayıcı kanıtı yerel geçici `opso-landing-review-20260910/results.json` dosyasındadır; fixture/çıktı repoya eklenmedi.
 
-**NOT VERIFIED:** Yeni içeriğin canlı sunumu, hosted CI ve üretimde optimizer 404 henüz doğrulanmadı. Mevcut Sentry ayarı derlemede 134 public source-map dosyası üretiyor; bu çalışma source-map politikasını değiştirmedi. Next.js yükseltmesi ve genel altyapı güvenliği bu dar ürün sayfası çalışmasından ayrıdır.
+**NOT VERIFIED:** Yeni içeriğin canlı sunumu, hosted CI ve üretimde optimizer 404 henüz doğrulanmadı. Bu tarihte bulunan 134 public source-map dosyası için 2026-09-11 düzeltmesi yukarıdadır. Next.js yükseltmesi ve genel altyapı güvenliği bu dar ürün sayfası çalışmasından ayrıdır.
 
 **Yayın: BLOCKED / NO-GO.** Bağımsız inceleme gerçek üretim bağlantısındaki DB rolünün SUPERUSER, CREATEROLE, CREATEDB ve BYPASSRLS yetkilerine sahip olduğunu; 46 public tablonun sahibi olduğunu, tamamında TRUNCATE yetkisi bulunduğunu ve RLS'nin hiçbirinde etkin olmadığını doğruladı. Belgelenen yedek dizini bulunamadı ve güncel restore kanıtı yok. Rol/izin düzenlemesi ve doğrulanmış yedek/geri yükleme ayrı açık onay ve çalışma gerektirir. Bu oturum DB, kimlik bilgisi veya izin değiştirmedi; üretim yayını yapılmadı.
 
