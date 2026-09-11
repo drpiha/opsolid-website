@@ -1,108 +1,65 @@
 import { NextRequest, NextResponse } from "next/server";
-import { sendEmail } from "@/lib/email/client";
+import { hasEmailProvider, sendEmail } from "@/lib/email/client";
 import { escapeHtml } from "@/lib/email/shell";
+import { ContactRequestError, contactLimiter, contactSchema, readContactBody } from "@/lib/contact-guard";
 
 export const runtime = "nodejs";
 
-/**
- * Contact form POST endpoint.
- *
- * Required fields: name, email, message.
- * Optional fields: company, source, teamSize.
- *   - `source`   — marketing / referral label (e.g. "digital-card", "dbc-free").
- *   - `teamSize` — rough bucket (e.g. "1", "2 – 10", "50+").
- *
- * Both optional fields are sanitized (short strings only, <64 chars).
- * Backwards compatible: legacy callers that only send name/email/company/message
- * still work exactly as before.
- */
+const unavailable = () => NextResponse.json(
+  { error: "Message delivery is temporarily unavailable. Please try again later." },
+  { status: 503 },
+);
 
-const MAX_OPTIONAL_LEN = 64;
-
-function sanitizeShortString(value: unknown): string | undefined {
-  if (typeof value !== "string") return undefined;
-  const trimmed = value.trim();
-  if (!trimmed) return undefined;
-  if (trimmed.length > MAX_OPTIONAL_LEN) return undefined;
-  return trimmed;
-}
-
+/** Required: name/email/message. Existing optional company/source/teamSize,
+ * phone/topics remain accepted; unknown legacy properties are ignored. */
 export async function POST(req: NextRequest) {
-  try {
-    const body = await req.json();
-    const { name, email, company, message } = body;
-    const source = sanitizeShortString(body?.source);
-    const teamSize = sanitizeShortString(body?.teamSize);
-
-    // Validate required fields
-    if (!name || !email || !message) {
-      return NextResponse.json(
-        { error: "Name, email, and message are required." },
-        { status: 400 }
-      );
-    }
-
-    // Basic email format validation
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return NextResponse.json(
-        { error: "Please provide a valid email address." },
-        { status: 400 }
-      );
-    }
-
-    // Deliver via the shared provider chain (Brevo > Resend > SMTP > console)
-    // with the visitor's address as Reply-To. No personal-email fallback — if
-    // CONTACT_TO_EMAIL is unset we log a warning and let the UX continue.
-    const contactTo = process.env.CONTACT_TO_EMAIL;
-
-    if (contactTo) {
-      const subject = `New inquiry from ${name}${
-        company ? ` (${company})` : ""
-      }${source ? ` · source=${source}` : ""}`;
-
-      const bodyLines = [
-        `Name: ${name}`,
-        `Email: ${email}`,
-        `Company: ${company || "Not provided"}`,
-      ];
-      if (source) bodyLines.push(`Source: ${source}`);
-      if (teamSize) bodyLines.push(`Team size: ${teamSize}`);
-      bodyLines.push(``, `Message:`, message, ``, `---`, `Sent from opsolid.de contact form`, `Time: ${new Date().toISOString()}`);
-
-      const html = bodyLines
-        .map((line) =>
-          line === ""
-            ? "<br/>"
-            : `<p style="margin:0 0 4px 0;">${escapeHtml(line)}</p>`,
-        )
-        .join("");
-
-      const result = await sendEmail({
-        to: contactTo,
-        from: process.env.CONTACT_FROM_EMAIL || undefined,
-        replyTo: email,
-        subject,
-        html,
-        text: bodyLines.join("\n"),
-      });
-      if (!result.ok) {
-        console.error("[contact] delivery failed:", result.error);
-      }
-    } else {
-      // Dev-only fallback so the form still "works" without a destination.
-      if (process.env.NODE_ENV !== "production") {
-        console.warn(
-          "[contact] CONTACT_TO_EMAIL missing — submission accepted but not delivered",
-        );
-      }
-    }
-
-    return NextResponse.json({ success: true });
-  } catch (error) {
-    console.error("Contact form error:", error);
+  const permit = contactLimiter.acquire();
+  if (!permit.allowed) {
     return NextResponse.json(
-      { error: "An error occurred. Please try again." },
-      { status: 500 }
+      { error: "Too many requests. Please try again later." },
+      { status: 429, headers: { "Retry-After": String(permit.retryAfter) } },
     );
+  }
+  try {
+    const body = await readContactBody(req);
+    // The honeypot never triggers mail, even if the remaining bot payload is
+    // invalid. It uses the same generic accepted response as a delivered form.
+    if (body && typeof body === "object" && !Array.isArray(body) &&
+        "website" in body && typeof body.website === "string" && body.website.trim()) {
+      return NextResponse.json({ success: true });
+    }
+    const parsed = contactSchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json({ error: "Please provide valid contact details and a message." }, { status: 400 });
+    }
+    const { name, email, company, message, source, teamSize, phone, topics } = parsed.data;
+    const contactTo = process.env.CONTACT_TO_EMAIL?.trim();
+    if (!contactTo || !hasEmailProvider()) return unavailable();
+
+    const subject = `New inquiry from ${name}${company ? ` (${company})` : ""}${source ? ` · source=${source}` : ""}`;
+    const bodyLines = [`Name: ${name}`, `Email: ${email}`, `Company: ${company || "Not provided"}`];
+    if (phone) bodyLines.push(`Phone: ${phone}`);
+    if (topics?.length) bodyLines.push(`Topics: ${topics.join(", ")}`);
+    if (source) bodyLines.push(`Source: ${source}`);
+    if (teamSize) bodyLines.push(`Team size: ${teamSize}`);
+    bodyLines.push("", "Message:", message, "", "---", "Sent from opsolid.de contact form", `Time: ${new Date().toISOString()}`);
+
+    const result = await sendEmail({
+      to: contactTo,
+      from: process.env.CONTACT_FROM_EMAIL || undefined,
+      replyTo: email,
+      subject,
+      html: bodyLines.map((line) => line === "" ? "<br/>" : `<p style="margin:0 0 4px 0;">${escapeHtml(line)}</p>`).join(""),
+      text: bodyLines.join("\n"),
+    });
+    return result.ok ? NextResponse.json({ success: true }) : unavailable();
+  } catch (error) {
+    if (error instanceof ContactRequestError) {
+      return NextResponse.json({ error: "Invalid contact request." }, { status: error.status });
+    }
+    // Never return/log a thrown provider error or submitted content.
+    return unavailable();
+  } finally {
+    permit.release();
   }
 }

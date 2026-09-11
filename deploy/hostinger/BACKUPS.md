@@ -32,14 +32,22 @@ ls -lh /var/backups/opsolid
 
 ## Restore
 
-```bash
-# Pick a dump and restore into a fresh DB (smoke test target):
-gunzip -c /var/backups/opsolid/opsolid-20260423-0300.sql.gz \
-  | docker exec -i opsolid-db psql -U opsolid -d opsolid
-```
+Never restore a smoke-test dump into `opsolid-db` or its `opsolid` database.
+The former example incorrectly targeted production despite calling the target
+fresh. It has been removed.
 
-For a full DR test, spin up a throwaway Postgres container, stream the dump
-into it, and point a local dev app at it before touching production.
+Restore verification requires explicit authorization to create a restricted
+backup and an isolated temporary copy of production data. Keep all bytes on
+the VPS; never print/download the dump or restore errors containing rows.
+Use a separately named container with the exact reviewed PostgreSQL image,
+no network, no published ports, no production mounts, and temporary storage.
+Run `pg_restore --exit-on-error --single-transaction --no-owner --no-privileges`
+against that isolated target only. Validate the restored schema internally;
+export only pass/fail and aggregate counts. Cleanup may target only the
+freshly created, labelled verification container, never a production service.
+
+The concrete staged recovery and access-control plan is recorded in
+[`docs/ops/20260911-release-security-transition.md`](../../docs/ops/20260911-release-security-transition.md).
 
 ## Off-site copy (TODO)
 

@@ -1,8 +1,77 @@
 # OpSolid Website — Live Status
 
-**Son güncelleme:** 2026-06-12 (kart ürünleştirme oturumu — pricing mode + owner self-serve)
-**Aktif dal:** `claude/digital-business-card-app-334cev`
+**Son güncelleme:** 2026-09-11 (yayın güvenlik düzeltmeleri doğrulandı; canlı DB geçişi engelli)
+**Aktif dal:** `cod/opso-product-launch` (güncel `origin/main` 9385964 üzerinden)
 **Kanonik canlı panel.** Her oturum başında okunur, sonunda güncellenir.
+
+---
+
+## 2026-09-11 — Yayın öncesi güvenlik düzeltmeleri ve canlı ön kontrol
+
+- Kullanıcının OpSolid yayını onayıyla VPS yalnızca okundu. Uygulama sağlıklı, `nextjs` kullanıcısıyla ve ayrıcalıksız çalışıyor; mevcut image `sha256:107624f39a593005f1666db10a4d85a5034baf37e9ecd6186415d70b829df246`, canlı revision bilinmiyor. Gerçek uygulama DB bağlantısı hâlâ superuser/owner/CREATEDB/CREATEROLE/BYPASSRLS; 46 public tablonun tamamına TRUNCATE yetkisi var, RLS etkin tablo yok. Belirlenen `/var/backups/opsolid` konumu yok; başka bir konumda yedek olmadığı iddia edilmiyor. Sonuçlar yalnızca sonlu metadata olarak yerel `output/release-20260911/preflight.json` dosyasında.
+- Contact: 64 KiB / 10 saniye gövde sınırı, tip doğrulama, üç formda honeypot ve alan sınırları; başarısız/yapılandırılmamış e-posta için dürüst 503. Süreç başına ortak 30 istek/10 dakika ve dört eşzamanlı istek sınırı var. Doğrulanmamış proxy/IP başlıklarına güvenilmez; bu kullanıcı/IP başına kota değildir ve restart ile sıfırlanır. SMTP yolu korundu; HTTP sağlayıcı süresi başlık + JSON boyunca 10 saniye, SMTP aşama/boşta kalma süreleri sınırlı. Gönderi içeriği, kişi bilgisi ve ham sağlayıcı hataları tanılama çıktısına yazılmaz.
+- Cal: eksik imza anahtarı artık 503 ile kapalı. Canlı anahtarın yalnızca **yokluğu** doğrulandı; anahtar eklenmedi. Ham gövdede timing-safe HMAC, tip/boyut/zaman doğrulaması, 10 saniye gövde süresi ve dört eşzamanlı istek sınırı var. İşlem içi tekrar kaydı gönderimden önce ayrılır; kabul edilmiş tekrar 200, belirsiz/başarısız tekrar 503 verir ve otomatik yeniden göndermez. Bu kalıcı teslim kuyruğu değildir. En az bir yapılandırılmış kanal kabul etmedikçe gerçek notifier başarı bildirmez; SMTP HTML alanları kaçırılır ve eksik hedef başka posta kutusuna yönlendirilmez.
+- Docker context: env ve adlandırılmış operatör secret dosyaları, çıktılar, dahili belgeler ve anahtar dosyaları hariç tutuldu. Runner içinden yönetim script/ham migration SQL kopyaları çıkarıldı; gerekli Prisma client ve GeoIP dosyası korundu. Tehlikeli, üretim DB'sini restore hedefi yapan eski doküman komutu kaldırıldı.
+- **VERIFIED:** Sağlayıcıları stub'layan gerçek route/notifier/email client ve form-handler testleri **42/42 PASS** (`node --test scripts/contact-route-guard.test.cjs scripts/tests/cal-webhook.test.mjs scripts/tests/booking-notifications.test.mjs`). Node22 üretim build'i **390 sayfa**, tam TypeScript, ilgili ESLint, public source-map kontrolü ve `audit:cards` geçti; altı eski `blank-canvas` uyarısı aynı. Bağımsız güvenlik kaynak incelemesi **PASS**. Hiçbir gerçek test e-postası veya sağlayıcı çağrısı yapılmadı.
+- **BLOCKED / NOT VERIFIED:** Yeni kaynak canlı değil; Docker runtime ve gerçek sağlayıcı teslimi doğrulanmadı. Tam image deploy güvenlik kararı **NO-GO**: DB rolü/RLS ve yedek-restore kanıtı gerekiyor. Eski chown/rsync-delete/bootstrap workflow'u, main merge, DB/izin/credential değişikliği veya canlı restart çalıştırılmadı. [Somut kurtarma ve erişim geçişi planı](ops/20260911-release-security-transition.md) hazır; üretim verisinin izole restore için kopyalanması ve yetki değişiklikleri ayrıca açık onay gerektirir. Bu plan tamamlanmış migration/restore kanıtı değildir.
+
+---
+
+## 2026-09-11 — Dört fotoğraflı profesyonel örnek profil
+
+- Kullanıcının istediği farklı görsel tarzlar, gerçek yayımlanmış demo kart görüntüleriyle tanıtılıyor: Clara Weber (mimarlık, açık taş), James Bennett (danışmanlık, lacivert), Maya Collins (marka tasarımı, mercan/mor), Felix Berger (ürün tasarımı, açık mint). İsimler ve profiller kurgusal, portreler yapay zekâ ile üretilmiş; üç dilde kısa açıklama mevcut. Hasan'ın veya bir müşterinin kartı pazarlama örneği olarak eklenmedi.
+- Sekiz masaüstü/telefon PNG dosyası güncel doğrulanmış manifest ile SHA-256/boyut karşılaştırmasından sonra değiştirilmeden kopyalandı. Clara'nın reddedilen yüz kadrajı kullanılmadı; düzeltilmiş ikinci yayın sürümü kullanıldı. Eski altı geometrik örnek görsel public paketinden kaldırıldı. [Kaynak kaydı](20260911-opso-layout-previews.md), sekiz dosyanın **4923103 bayt** toplamını, ölçülerini ve hash'lerini içerir.
+- Dört profil seçimi, iki farklı kartı gösteren giriş görseli, orijinal boyut bağlantıları ve canlı örnek bağlantıları var. Almanca sayfa `?lang=de`, İngilizce/Türkçe sayfalar `?lang=en` açar. Static import'lar ölçüleri ve hash'li dosya adreslerini sabitler; görseller `/_next/image` kullanmaz. Yeni bağımlılık yok. Free/gelecek planlar, taslak/yayın ayrımı, Play ve APK açıklamaları dürüst biçimde korundu.
+- **VERIFIED:** Üretim build'i **390 sayfa**, TypeScript, public source-map kontrolü, ilgili kaynaklarda ESLint ve bağımsız kaynak incelemesi geçti. `audit:cards` geçti; altı eski `blank-canvas` uyarısı aynı.
+- **VERIFIED (yerel Chrome):** DE/EN/TR × **320/390/1440 px**, toplam dokuz kombinasyonda dört profil, iki giriş görseli, sekiz doğal görüntü ölçüsü, orijinal görsel bağlantıları **200**, kontrollü canlı örnek hedefi/dili, görünür klavye odağı, Tab/Enter/Space seçimi, FAQ, canonical/lang ve açıklamalar geçti. Yatay taşma ve JavaScript sayfa hatası **0**. Eski ürün adresi **200**; kaldırılmış örnek görsel ve optimizer **404**; sitemap geçti. İlk test otomasyonu sabit üst menüye yanlış tıklamıştı; görünür merkez/tıklama hedefi beklenerek düzeltildi. Uygulama kodunda bu nedenle değişiklik yapılmadı. Yerel çalışma alanı kanıtı: `output/playwright/opso-profile-showcase-20260911/` altında `results.json`, `de-1440-hero.png`, `maya-collins-390.png`; tam yerel set `%TEMP%/opso-profile-showcase-20260911/` altında korunur. Harici tarayıcı istekleri engellendi, yerel sunucu test sonunda kapatıldı.
+- **NOT VERIFIED / BLOCKED:** Bu OpSolid sayfası henüz canlı yayımlanmadı; yerel sonuçlar hosted uygulama CI, Docker deploy veya native cihaz kanıtı değildir. Demo kart görüntüleri yayımlanmış renderer'ın durumunu gösterir; Maya'nın eski mobil menüsü için VERSO tarafında yapılan ayrı kaynak düzeltmesinin yayımlandığı iddia edilmez. Aşağıdaki OpSolid DB rolü ve yedek/restore engelleri devam ediyor; bu iş DB, izin, kimlik bilgisi veya üretim servisi değiştirmedi. PR37 taslak, yayın **NO-GO**.
+
+---
+
+## 2026-09-11 — OpSo düzenlerini gerçek ekran görüntüleriyle tanıtma
+
+Bu önceki geometrik örnek sürümünün yerini yukarıdaki fotoğraflı dört profil aldı; aşağıdaki kayıt önceki yerel doğrulamayı belgeler.
+
+- `/de/opso`, `/en/opso`, `/tr/opso`: şematik çizim yerine daha önce incelenen OpSo test sürümünün altı gerçek ana sayfa görüntüsü. Danışmanlık, portfolyo ve hizmet işletmesi için masaüstü/telefon karşılaştırması, klavyeyle çalışan seçim düğmeleri ve orijinal boyutta görsel bağlantıları eklendi. İngilizce örnek içerikler ve test/yayına hazırlık durumu her dilde açıkça etiketli; müşteri referansı veya kurucunun kişisel kartı eklenmedi.
+- Kaydetme ile yayımlama ayrımı üç dilde netleştirildi. Website özelliklerinin yayına hazırlandığı, Google Play'de henüz kamuya açık yayın olmadığı, doğrulanmış genel APK bağlantısının bulunmadığı ve ücretli planların satın alınamadığı açık. Yeni Play rozeti veya indirme vaadi yok.
+- Altı PNG toplam **943002 bayt**; kaynak, boyut ve SHA-256 kayıtları [görsel kaynak kaydında](20260911-opso-layout-previews.md). Görseller değiştirilmeden kopyalandı, fixture HTML/JSON dosyaları yayımlanmadı. Yeni bağımlılık yok.
+- **VERIFIED:** Üretim build'i **390 sayfa**, TypeScript ve public source-map kontrolü geçti. İlgili dosyalarda ESLint temiz; `audit:cards` geçti, altı eski `blank-canvas` uyarısı aynı. PNG başlıklarından altı doğal genişlik/yükseklik, bileşen ölçüleriyle eşleştirildi. Bağımsız kaynak incelemesi geçti.
+- **VERIFIED (yerel Chrome):** DE/EN/TR × **375/1440 px**, üç düzenin tamamında seçim ve iki görüntünün yüklenmesi, orijinal görsel bağlantıları **200**, yatay taşma olmaması, Tab/Enter/Space seçimi, klavyeyle FAQ, canonical/lang, bölüm ve iletişim bağlantıları, örnek/test açıklaması ve Play bağlantısının bulunmaması doğrulandı. JavaScript sayfa hatası **0**. Eski ürün adresi **200**, optimizer **404**, üç route sitemap'te. Tarayıcıda üçüncü taraf istekleri engellendi. Yerel kanıt: `%TEMP%/opso-website-showcase-20260911/results.json` ve görsel kayıtlar.
+- **NOT VERIFIED / BLOCKED:** Bu değişiklikler henüz canlı yayımlanmadı; cihaz, hosted CI ve Docker deploy kanıtı değildir. Aşağıdaki gerçek üretim DB rolü ve yedek/restore engelleri giderilmedi ve bu adımda tekrar canlı sorgulanmadı. Varsayılan deploy workflow'u çalıştırılmadı; DB/rol/izin veya ortak VPS servislerinde değişiklik yok. PR37 taslak olarak güncellenir; **NO-GO** devam eder.
+
+---
+
+## 2026-09-11 — Public source-map dosyaları
+
+- Kurulu Sentry 8.47 seçenekleri kontrol edildi. `hideSourceMaps`/`dryRun` yerine desteklenen `sourcemaps.disable` ve `deleteSourcemapsAfterUpload` kullanılıyor. Auth token, org ve project birlikte yoksa map üretimi/yüklemesi ile release oluşturma kapalı; build telemetry de kapalı. Tam yapılandırılmış Sentry yüklemesinde map'ler gönderildikten sonra public çıktıdan silinir. Paket sürümü değişmedi.
+- `npm run build` artık `check:public-sourcemaps` ile biter. `.next/static` veya `public` içinde map dosyası ya da doğrulanamayan symlink varsa build başarısız olur. Docker'ın mevcut build adımı bu kontrolü public dizinleri imaja kopyalamadan önce çalıştırır.
+- **VERIFIED:** Kontrol önce eski gerçek build'deki 134 map dosyasını reddetti. Temiz test dizinleri geçti; `public` altına eklenen sentetik map reddedildi. Yeni üretim build'i (390 sayfa, TypeScript) ve lint geçti; `.next/static` ve `public` map sayısı **0**. Loopback'te eski bilinen map adresi ve güncel JS chunk'ının `.map` adresi **404**, sayfa ve JS chunk **200**; görsel optimizer **404**. Sunucu test sonunda kapatıldı.
+- **NOT VERIFIED:** Gerçek Sentry yüklemesi çağrılmadı; test ortamında upload yapılandırması ve DSN yoktu. Docker imajı ve canlı yayın bu adımda çalıştırılmadı. Yerel kanıt: geçici `opsolid-sourcemap-guard-20260911/http-results.json`.
+- **Yayın hâlâ NO-GO:** 2026-09-10 denetimindeki aşırı yetkili DB rolü, bulunamayan belgelenmiş yedek dizini ve eksik güncel restore kanıtı aşağıdaki yayın kapısında duruyor. Üretimden önce ayrı onaylı en az yetkili uygulama rolü çalışması ve doğrulanmış yedek/geri yükleme kanıtı gerekir. DB, rol, kimlik bilgisi veya üretim değişikliği yapılmadı.
+
+---
+
+## 2026-09-10 — OpSo ürün tanıtımı
+
+- `/de/opso`, `/en/opso`, `/tr/opso`: profesyonel dijital kartvizit, gerçek alt sayfalı küçük site, üç site ailesi, altı sayfaya kadar yapı, kaydetmeden mobil/masaüstü önizleme, QR/NFC ile uygulamasız alıcı deneyimi.
+- Free: hesapta bir kart veya site. Pro 10 / Studio 50: geliştirmede; satın alma, fiyat veya çıkış tarihi vaadi yok. App QA aşamasında, Play yayını ve doğrulanmış herkese açık APK bağlantısı henüz yok. Özel alan adı bağlantısı kullanıma açık değil.
+- Mevcut OpSolid site kabuğu, tema değişkenleri ve dil seçimi kullanıldı. Şematik ürün çizimi açıkça etiketli; müşteri görseli, fixture, sahte referans ve indirme bağlantısı eklenmedi.
+- Menü/footer `/opso` adresini gösteriyor. Mevcut web kartı `/products/digital-card` ve hesap/sipariş uçları korundu. OpSo'nun ayrı hesap sistemiyle karışmaması için yalnızca yeni ürün sayfasında eski web hesabı bağlantıları gizlendi.
+- `images.unoptimized: true`: [GHSA-2xp9-vwfh-vxw4](https://github.com/advisories/GHSA-2xp9-vwfh-vxw4) için sınırlı önlem. Görseller orijinal boyutta sunulur; bant genişliği artabilir. Next.js 14.2.35 yükseltilmedi. Windows'a özgü [GHSA-p293-qw3h-jr36](https://github.com/advisories/GHSA-p293-qw3h-jr36) ayrıca takip edilmeli; mevcut üretim Docker imajı Linux tabanlıdır.
+
+**VERIFIED (yerel):** `npm ci --no-audit --no-fund`, `npx prisma generate`, üretim derlemesi (390 sayfa ve TypeScript), ilgili dosyalarda ESLint ve `npm run audit:cards` geçti. Audit'in altı eski `blank-canvas` destek uyarısı sürüyor. Chrome'da 375/1440 px × DE/EN/TR olmak üzere altı kombinasyon geçti: yatay taşma yok, yerelleştirilmiş canonical ve lang, çalışan bölüm bağlantıları, klavyeyle FAQ açma, mobil menü açma/Escape ile kapatma, dil değiştirme ve doğru iletişim hedefi. Sayfa JavaScript hatası yok. Zararsız yerel görselle `/_next/image` 404; orijinal görsel ve eski ürün sayfası 200. Yeni route'lar sitemap'te. Tarayıcı kanıtı yerel geçici `opso-landing-review-20260910/results.json` dosyasındadır; fixture/çıktı repoya eklenmedi.
+
+**NOT VERIFIED:** Yeni içeriğin canlı sunumu, hosted CI ve üretimde optimizer 404 henüz doğrulanmadı. Bu tarihte bulunan 134 public source-map dosyası için 2026-09-11 düzeltmesi yukarıdadır. Next.js yükseltmesi ve genel altyapı güvenliği bu dar ürün sayfası çalışmasından ayrıdır.
+
+**Yayın: BLOCKED / NO-GO.** Bağımsız inceleme gerçek üretim bağlantısındaki DB rolünün SUPERUSER, CREATEROLE, CREATEDB ve BYPASSRLS yetkilerine sahip olduğunu; 46 public tablonun sahibi olduğunu, tamamında TRUNCATE yetkisi bulunduğunu ve RLS'nin hiçbirinde etkin olmadığını doğruladı. Belgelenen yedek dizini bulunamadı ve güncel restore kanıtı yok. Rol/izin düzenlemesi ve doğrulanmış yedek/geri yükleme ayrı açık onay ve çalışma gerektirir. Bu oturum DB, kimlik bilgisi veya izin değiştirmedi; üretim yayını yapılmadı.
+
+**Yayın yolu (yalnızca engeller kaldırılıp tekrar onaylandıktan sonra):** Mevcut `Deploy to VPS` workflow'u `chown -R`, `rsync --delete` ve DB bootstrap çalıştırdığı için bu içerik yayınına uygun değil. `main`'e merge/push veya workflow dispatch yapmayın. Aşağıdaki yol bir uygulama imajını değiştirir; canlı çalıştırılmadı.
+
+1. İncelenen commit'i yalnızca takip edilen dosyalardan `git archive --format=tar --output=<archive> <SHA>` ile paketleyin. Çalışma klasörünü veya yerel `.env`/operatör dosyalarını paketlemeyin.
+2. VPS'te yeni `/tmp/opsolid-release-<SHA>` dizinine açın; `docker build --label org.opencontainers.image.revision=<SHA> -t opsolid-reviewed:<SHA> /tmp/opsolid-release-<SHA>` ile imaj oluşturun. Mevcut kaynak dizinine dosya kopyalamayın.
+3. Yeniden doğrulanacak mevcut Compose kimliği: proje `opsolid-website`, konfigürasyon `/opt/opsolid-website/docker-compose.yml`, env `/opt/opsolid-website/.env`. Yeni imaj dışında mevcut env, volume, ağ ve etiket ayarlarını koruyun; karşılaştırmada secret değerlerini çıktılamayın. Önceki imaj kimliğini ve `GIT_COMMIT` değerini geri dönüş için saklayın. 2026-09-10 incelemesindeki eski imaj: `sha256:107624f39a593005f1666db10a4d85a5034baf37e9ecd6186415d70b829df246` (kullanımdan önce tekrar doğrulanmalı).
+4. Yalnızca `services.opsolid.image: opsolid-reviewed:<SHA>` ve `services.opsolid.environment.GIT_COMMIT: <SHA>` içeren ayrı override dosyası hazırlayın. `docker compose -p opsolid-website --project-directory /opt/opsolid-website --env-file /opt/opsolid-website/.env -f /opt/opsolid-website/docker-compose.yml -f <override> up -d --no-deps --no-build --pull never opsolid` ile sadece uygulama servisini değiştirin. DB bootstrap, yeniden seed, izin değişikliği, kaynak aynalama veya temizleme çalıştırmayın.
+5. Container imajı/revision ve health JSON'da `dbOk: true` doğrulayın; HTTP 200 tek başına yeterli değildir. Üç `/opso` dili, mevcut ürün adresi, statik görseller ve `/_next/image` için 404 kontrol edin. Hata halinde aynı Compose komutunu, saklanan eski imaj ve önceki `GIT_COMMIT` değerini kullanan rollback override ile çalıştırın.
 
 ---
 

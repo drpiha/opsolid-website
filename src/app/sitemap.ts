@@ -27,6 +27,7 @@ const STATIC_PAGES: PageDef[] = [
   // existing indexed URLs abruptly; will be folded into case studies later.
   { path: "/products/voice-agent", changeFrequency: "monthly", priority: 0.55 },
   { path: "/products/digital-card", changeFrequency: "monthly", priority: 0.55 },
+  { path: "/opso", changeFrequency: "monthly", priority: 0.8 },
   { path: "/products/kutasia", changeFrequency: "monthly", priority: 0.5 },
 
   // Legal

@@ -31,6 +31,7 @@ export function BlogPage() {
   const onSubscribe = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (submitting || !email.trim()) return;
+    const fd = new FormData(e.currentTarget);
     setSubmitting(true);
     setResult("idle");
     try {
@@ -40,6 +41,7 @@ export function BlogPage() {
         body: JSON.stringify({
           name: "Journal subscriber",
           email,
+          website: String(fd.get("website") || ""),
           topics: ["journal-subscribe"],
           message:
             "Subscribe to the OpSolid journal — notify on new long-form piece.",
@@ -191,8 +193,12 @@ export function BlogPage() {
                 marginTop: 20,
               }}
             >
+              <div hidden aria-hidden="true">
+                <input type="text" name="website" tabIndex={-1} autoComplete="off" maxLength={2048} />
+              </div>
               <input
                 type="email"
+                maxLength={254}
                 required
                 className="field"
                 style={{ maxWidth: 320, flex: "1 1 220px" }}

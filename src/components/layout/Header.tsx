@@ -52,9 +52,9 @@ const NAV_ITEMS: NavItem[] = [
   { key: "automationCheck", href: "/ai-automation-check", match: /\/ai-automation-check/ },
   {
     key: "opsoSmart",
-    href: "/products/digital-card",
-    match: /\/products\/digital-card/,
-    label: "OpSo Smart",
+    href: "/opso",
+    match: /\/(opso|products\/digital-card)(\/|$)/,
+    label: "OpSo",
   },
   { key: "journal", href: "/blog", match: /\/blog/ },
   { key: "contact", href: "/contact", match: /\/contact/ },
@@ -73,6 +73,9 @@ const VISIBLE_LOCALES: Locale[] = ["de", "en", "tr"];
 
 export function Header() {
   const pathname = usePathname();
+  // The prelaunch OpSo app has a separate account system from the legacy
+  // website card service. Do not imply that its account links open the app.
+  const isOpsoPage = /\/opso\/?$/.test(pathname || "");
   const { locale, setLocale, t } = useLocale();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const navLabels = t.v2.nav;
@@ -189,14 +192,14 @@ export function Header() {
           <div className="hidden md:inline-flex">
             <ThemeToggle />
           </div>
-          <div className="hidden md:block">
+          {!isOpsoPage && <div className="hidden md:block">
             <AccountMenu
               status={auth.status}
               user={auth.user}
               onLogout={logout}
               loggingOut={loggingOut}
             />
-          </div>
+          </div>}
           <Link
             href="/contact"
             className="btn btn-primary btn-sm hidden md:inline-flex"
@@ -263,7 +266,7 @@ export function Header() {
                         </li>
                       );
                     })}
-                    {auth.status === "anon" && (
+                    {!isOpsoPage && auth.status === "anon" && (
                       <li className="os-mobile-item">
                         <Dialog.Close asChild>
                           <Link href="/login" className="os-mobile-link">
@@ -275,7 +278,7 @@ export function Header() {
                         </Dialog.Close>
                       </li>
                     )}
-                    {auth.status === "authed" && (
+                    {!isOpsoPage && auth.status === "authed" && (
                       <>
                         <li className="os-mobile-item">
                           <Dialog.Close asChild>
