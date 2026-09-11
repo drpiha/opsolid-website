@@ -31,7 +31,8 @@ export function ContactPage() {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (submitting) return;
-    const fd = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const fd = new FormData(form);
     const payload = {
       name: String(fd.get("name") || ""),
       company: String(fd.get("company") || ""),
@@ -39,6 +40,7 @@ export function ContactPage() {
       phone: String(fd.get("phone") || ""),
       message: String(fd.get("message") || ""),
       topics: Array.from(topics),
+      website: String(fd.get("website") || ""),
     };
     setSubmitting(true);
     setResult("idle");
@@ -49,7 +51,7 @@ export function ContactPage() {
         body: JSON.stringify(payload),
       });
       setResult(res.ok ? "ok" : "error");
-      if (res.ok) e.currentTarget.reset();
+      if (res.ok) form.reset();
     } catch {
       setResult("error");
     } finally {
@@ -109,6 +111,9 @@ export function ContactPage() {
         </div>
 
         <form className="ct-form-panel" onSubmit={onSubmit}>
+          <div hidden aria-hidden="true">
+            <input type="text" name="website" tabIndex={-1} autoComplete="off" maxLength={2048} />
+          </div>
           <div className="ct-form-header">
             <span className="ct-form-title">{c.form.title}</span>
             <span className="meta">{c.form.meta}</span>
@@ -118,6 +123,7 @@ export function ContactPage() {
               <span>{c.form.fields.name.label}</span>
               <input
                 name="name"
+                maxLength={120}
                 required
                 autoComplete="name"
                 className="field"
@@ -128,6 +134,7 @@ export function ContactPage() {
               <span>{c.form.fields.company.label}</span>
               <input
                 name="company"
+                maxLength={160}
                 autoComplete="organization"
                 className="field"
                 placeholder={c.form.fields.company.placeholder}
@@ -139,6 +146,7 @@ export function ContactPage() {
               <span>{c.form.fields.email.label}</span>
               <input
                 name="email"
+                maxLength={254}
                 type="email"
                 required
                 autoComplete="email"
@@ -151,6 +159,7 @@ export function ContactPage() {
               <span>{c.form.fields.phone.label}</span>
               <input
                 name="phone"
+                maxLength={64}
                 type="tel"
                 autoComplete="tel"
                 inputMode="tel"
@@ -178,6 +187,8 @@ export function ContactPage() {
             <span>{c.form.fields.message.label}</span>
             <textarea
               name="message"
+              maxLength={8000}
+              required
               className="field"
               placeholder={c.form.fields.message.placeholder}
             />

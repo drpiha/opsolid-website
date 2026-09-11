@@ -1,8 +1,19 @@
 # OpSolid Website — Live Status
 
-**Son güncelleme:** 2026-09-11 (dört fotoğraflı OpSo örnek profili tamamlandı; yayın engelli)
+**Son güncelleme:** 2026-09-11 (yayın güvenlik düzeltmeleri doğrulandı; canlı DB geçişi engelli)
 **Aktif dal:** `cod/opso-product-launch` (güncel `origin/main` 9385964 üzerinden)
 **Kanonik canlı panel.** Her oturum başında okunur, sonunda güncellenir.
+
+---
+
+## 2026-09-11 — Yayın öncesi güvenlik düzeltmeleri ve canlı ön kontrol
+
+- Kullanıcının OpSolid yayını onayıyla VPS yalnızca okundu. Uygulama sağlıklı, `nextjs` kullanıcısıyla ve ayrıcalıksız çalışıyor; mevcut image `sha256:107624f39a593005f1666db10a4d85a5034baf37e9ecd6186415d70b829df246`, canlı revision bilinmiyor. Gerçek uygulama DB bağlantısı hâlâ superuser/owner/CREATEDB/CREATEROLE/BYPASSRLS; 46 public tablonun tamamına TRUNCATE yetkisi var, RLS etkin tablo yok. Belirlenen `/var/backups/opsolid` konumu yok; başka bir konumda yedek olmadığı iddia edilmiyor. Sonuçlar yalnızca sonlu metadata olarak yerel `output/release-20260911/preflight.json` dosyasında.
+- Contact: 64 KiB / 10 saniye gövde sınırı, tip doğrulama, üç formda honeypot ve alan sınırları; başarısız/yapılandırılmamış e-posta için dürüst 503. Süreç başına ortak 30 istek/10 dakika ve dört eşzamanlı istek sınırı var. Doğrulanmamış proxy/IP başlıklarına güvenilmez; bu kullanıcı/IP başına kota değildir ve restart ile sıfırlanır. SMTP yolu korundu; HTTP sağlayıcı süresi başlık + JSON boyunca 10 saniye, SMTP aşama/boşta kalma süreleri sınırlı. Gönderi içeriği, kişi bilgisi ve ham sağlayıcı hataları tanılama çıktısına yazılmaz.
+- Cal: eksik imza anahtarı artık 503 ile kapalı. Canlı anahtarın yalnızca **yokluğu** doğrulandı; anahtar eklenmedi. Ham gövdede timing-safe HMAC, tip/boyut/zaman doğrulaması, 10 saniye gövde süresi ve dört eşzamanlı istek sınırı var. İşlem içi tekrar kaydı gönderimden önce ayrılır; kabul edilmiş tekrar 200, belirsiz/başarısız tekrar 503 verir ve otomatik yeniden göndermez. Bu kalıcı teslim kuyruğu değildir. En az bir yapılandırılmış kanal kabul etmedikçe gerçek notifier başarı bildirmez; SMTP HTML alanları kaçırılır ve eksik hedef başka posta kutusuna yönlendirilmez.
+- Docker context: env ve adlandırılmış operatör secret dosyaları, çıktılar, dahili belgeler ve anahtar dosyaları hariç tutuldu. Runner içinden yönetim script/ham migration SQL kopyaları çıkarıldı; gerekli Prisma client ve GeoIP dosyası korundu. Tehlikeli, üretim DB'sini restore hedefi yapan eski doküman komutu kaldırıldı.
+- **VERIFIED:** Sağlayıcıları stub'layan gerçek route/notifier/email client ve form-handler testleri **42/42 PASS** (`node --test scripts/contact-route-guard.test.cjs scripts/tests/cal-webhook.test.mjs scripts/tests/booking-notifications.test.mjs`). Node22 üretim build'i **390 sayfa**, tam TypeScript, ilgili ESLint, public source-map kontrolü ve `audit:cards` geçti; altı eski `blank-canvas` uyarısı aynı. Bağımsız güvenlik kaynak incelemesi **PASS**. Hiçbir gerçek test e-postası veya sağlayıcı çağrısı yapılmadı.
+- **BLOCKED / NOT VERIFIED:** Yeni kaynak canlı değil; Docker runtime ve gerçek sağlayıcı teslimi doğrulanmadı. Tam image deploy güvenlik kararı **NO-GO**: DB rolü/RLS ve yedek-restore kanıtı gerekiyor. Eski chown/rsync-delete/bootstrap workflow'u, main merge, DB/izin/credential değişikliği veya canlı restart çalıştırılmadı. [Somut kurtarma ve erişim geçişi planı](ops/20260911-release-security-transition.md) hazır; üretim verisinin izole restore için kopyalanması ve yetki değişiklikleri ayrıca açık onay gerektirir. Bu plan tamamlanmış migration/restore kanıtı değildir.
 
 ---
 

@@ -32,9 +32,10 @@ export function CustomRequestSection() {
   const canSubmit =
     name.trim() && email.trim() && message.trim() && consent && status !== "submitting";
 
-  async function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!canSubmit) return;
+    const fd = new FormData(e.currentTarget);
     setStatus("submitting");
 
     // Fold the card-specific fields into the message body — /api/contact only
@@ -60,6 +61,7 @@ export function CustomRequestSection() {
           message: composed,
           source: "digital-card-custom",
           teamSize: teamSize || undefined,
+          website: String(fd.get("website") || ""),
         }),
       });
       setStatus(res.ok ? "success" : "error");
@@ -101,6 +103,9 @@ export function CustomRequestSection() {
           />
 
           <form className="panel" style={{ padding: 22 }} onSubmit={handleSubmit}>
+            <div hidden aria-hidden="true">
+              <input type="text" name="website" tabIndex={-1} autoComplete="off" maxLength={2048} />
+            </div>
             <div className="meta meta-hot mb-3">{f.heading}</div>
 
             {status === "success" ? (
@@ -115,6 +120,7 @@ export function CustomRequestSection() {
                     <input
                       className="field w-full"
                       value={name}
+                      maxLength={120}
                       onChange={(e) => setName(e.target.value)}
                       autoComplete="name"
                       required
@@ -126,6 +132,7 @@ export function CustomRequestSection() {
                       type="email"
                       className="field w-full"
                       value={email}
+                      maxLength={254}
                       onChange={(e) => setEmail(e.target.value)}
                       autoComplete="email"
                       required
@@ -138,6 +145,7 @@ export function CustomRequestSection() {
                     <input
                       className="field w-full"
                       value={company}
+                      maxLength={160}
                       onChange={(e) => setCompany(e.target.value)}
                       autoComplete="organization"
                     />
@@ -147,6 +155,7 @@ export function CustomRequestSection() {
                     <input
                       className="field w-full"
                       value={industry}
+                      maxLength={160}
                       onChange={(e) => setIndustry(e.target.value)}
                     />
                   </label>
@@ -172,6 +181,7 @@ export function CustomRequestSection() {
                     className="field w-full"
                     rows={4}
                     value={message}
+                    maxLength={8000}
                     onChange={(e) => setMessage(e.target.value)}
                     required
                   />

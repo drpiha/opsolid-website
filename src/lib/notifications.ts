@@ -1,13 +1,14 @@
 // =============================================================================
 // NOTIFICATION MODULE — Telegram, WhatsApp (CallMeBot), Email
 // Sends booking notifications to all configured channels in parallel.
-// Each channel fails silently (logs error) so one failure doesn't block others.
-// Silent failures ARE reported to Sentry (tag: area=admin-notification,
+// Booking channels run independently; at least one must accept delivery.
+// Failures are reported with finite Sentry diagnostics (tag: area=admin-notification,
 // channel={telegram|whatsapp|email}) so operators see them without blocking
 // the critical path. Sentry no-ops gracefully when DSN is missing.
 // =============================================================================
 
 import * as Sentry from "@sentry/nextjs";
+import { escapeHtml } from "./email/shell";
 
 export interface BookingInfo {
   title: string;
@@ -24,10 +25,10 @@ export interface BookingInfo {
 // Telegram
 // ---------------------------------------------------------------------------
 
-async function sendTelegram(booking: BookingInfo): Promise<void> {
+async function sendTelegram(booking: BookingInfo): Promise<boolean> {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
-  if (!token || !chatId) return;
+  if (!token || !chatId) return false;
 
   const emoji =
     booking.status === "created"
@@ -58,6 +59,7 @@ async function sendTelegram(booking: BookingInfo): Promise<void> {
 
   const url = `https://api.telegram.org/bot${token}/sendMessage`;
   const res = await fetch(url, {
+    signal: AbortSignal.timeout(10_000),
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -67,20 +69,19 @@ async function sendTelegram(booking: BookingInfo): Promise<void> {
     }),
   });
 
-  if (!res.ok) {
-    const body = await res.text();
-    throw new Error(`Telegram API error ${res.status}: ${body}`);
-  }
+  void res.body?.cancel().catch(() => undefined);
+  if (!res.ok) throw new Error("Booking provider rejected delivery");
+  return true;
 }
 
 // ---------------------------------------------------------------------------
 // WhatsApp (CallMeBot)
 // ---------------------------------------------------------------------------
 
-async function sendWhatsApp(booking: BookingInfo): Promise<void> {
+async function sendWhatsApp(booking: BookingInfo): Promise<boolean> {
   const phone = process.env.WHATSAPP_PHONE;
   const apiKey = process.env.WHATSAPP_CALLMEBOT_APIKEY;
-  if (!phone || !apiKey) return;
+  if (!phone || !apiKey) return false;
 
   const statusText =
     booking.status === "created"
@@ -104,24 +105,23 @@ async function sendWhatsApp(booking: BookingInfo): Promise<void> {
   const encodedMessage = encodeURIComponent(message);
   const url = `https://api.callmebot.com/whatsapp.php?phone=${phone}&text=${encodedMessage}&apikey=${apiKey}`;
 
-  const res = await fetch(url);
-  if (!res.ok) {
-    const body = await res.text();
-    throw new Error(`CallMeBot API error ${res.status}: ${body}`);
-  }
+  const res = await fetch(url, { signal: AbortSignal.timeout(10_000) });
+  void res.body?.cancel().catch(() => undefined);
+  if (!res.ok) throw new Error("Booking provider rejected delivery");
+  return true;
 }
 
 // ---------------------------------------------------------------------------
 // Email (via existing SMTP / nodemailer)
 // ---------------------------------------------------------------------------
 
-async function sendEmail(booking: BookingInfo): Promise<void> {
+async function sendEmail(booking: BookingInfo): Promise<boolean> {
   const smtpHost = process.env.SMTP_HOST;
   const smtpUser = process.env.SMTP_USER;
   const smtpPass = process.env.SMTP_PASS;
-  const contactTo = process.env.CONTACT_TO_EMAIL || "info@kutasia.com";
+  const contactTo = process.env.CONTACT_TO_EMAIL;
 
-  if (!smtpHost || !smtpUser || !smtpPass) return;
+  if (!smtpHost || !smtpUser || !smtpPass || !contactTo) return false;
 
   const nodemailer = await import("nodemailer");
 
@@ -130,6 +130,9 @@ async function sendEmail(booking: BookingInfo): Promise<void> {
     port: Number(process.env.SMTP_PORT) || 587,
     secure: (process.env.SMTP_PORT || "587") === "465",
     auth: { user: smtpUser, pass: smtpPass },
+    connectionTimeout: 10_000,
+    greetingTimeout: 10_000,
+    socketTimeout: 10_000,
   });
 
   const statusText =
@@ -141,6 +144,7 @@ async function sendEmail(booking: BookingInfo): Promise<void> {
 
   const subject = `${statusText}: ${booking.name} — ${booking.title}`;
 
+  const safe = Object.fromEntries(Object.entries(booking).map(([key, value]) => [key, escapeHtml(value ?? "")]));
   const html = `
     <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 520px; margin: 0 auto; padding: 24px;">
       <div style="background: linear-gradient(135deg, #1a5faa, #2563eb); border-radius: 12px; padding: 20px 24px; margin-bottom: 20px;">
@@ -149,34 +153,35 @@ async function sendEmail(booking: BookingInfo): Promise<void> {
       <table style="width: 100%; border-collapse: collapse; font-size: 14px; color: #334155;">
         <tr>
           <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-weight: 600; width: 100px;">Name</td>
-          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">${booking.name}</td>
+          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">${safe.name}</td>
         </tr>
         <tr>
           <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-weight: 600;">E-Mail</td>
-          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;"><a href="mailto:${booking.email}" style="color: #2563eb;">${booking.email}</a></td>
+          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;"><a href="mailto:${safe.email}" style="color: #2563eb;">${safe.email}</a></td>
         </tr>
         <tr>
           <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-weight: 600;">Termin</td>
-          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">${booking.title}</td>
+          <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">${safe.title}</td>
         </tr>
         <tr>
           <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-weight: 600;">Zeit</td>
           <td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">${formatDateTime(booking.startTime)} – ${formatTime(booking.endTime)}</td>
         </tr>
-        ${booking.location ? `<tr><td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-weight: 600;">Ort</td><td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">${booking.location}</td></tr>` : ""}
-        ${booking.notes ? `<tr><td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-weight: 600;">Notiz</td><td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">${booking.notes}</td></tr>` : ""}
+        ${booking.location ? `<tr><td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-weight: 600;">Ort</td><td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">${safe.location}</td></tr>` : ""}
+        ${booking.notes ? `<tr><td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0; font-weight: 600;">Notiz</td><td style="padding: 10px 0; border-bottom: 1px solid #e2e8f0;">${safe.notes}</td></tr>` : ""}
       </table>
       <p style="margin-top: 20px; font-size: 12px; color: #94a3b8;">Gesendet von OpSolid Booking Agent</p>
     </div>
   `;
 
-  await transporter.sendMail({
+  const result = await transporter.sendMail({
     from: `"OpSolid Booking Agent" <${smtpUser}>`,
     to: contactTo,
     replyTo: booking.email,
     subject,
     html,
   });
+  return Array.isArray(result.accepted) && result.accepted.length > 0;
 }
 
 // ---------------------------------------------------------------------------
@@ -193,12 +198,16 @@ export async function notifyBooking(booking: BookingInfo): Promise<void> {
 
   results.forEach((result, i) => {
     if (result.status === "rejected") {
-      console.error("[Notification Error]", result.reason);
-      Sentry.captureException(result.reason, {
+      console.error("[Notification Error] booking channel failed", channels[i]);
+      Sentry.captureMessage("Booking notification channel failed", {
         tags: { area: "admin-notification", channel: channels[i], kind: "booking" },
       });
     }
   });
+  // An accepted channel is sufficient; failed channels must not trigger duplicate sends.
+  if (!results.some(result => result.status === "fulfilled" && result.value)) {
+    throw new Error("Booking notification delivery unavailable");
+  }
 }
 
 // ---------------------------------------------------------------------------
