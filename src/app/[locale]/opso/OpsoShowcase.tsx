@@ -1,19 +1,21 @@
 "use client";
 
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import { useState } from "react";
 import type { OpsoShowcaseContent } from "@/content/opso";
 import styles from "./page.module.css";
 
-const layouts = [
-  { key: "consultant-site", desktopHeight: 956, mobileHeight: 1004 },
-  { key: "portfolio", desktopHeight: 956, mobileHeight: 1004 },
-  { key: "service-landing", desktopHeight: 1025, mobileHeight: 1139 },
-] as const;
+export type OpsoProfileAssets = {
+  key: "clara" | "james" | "maya" | "felix";
+  url: string;
+  desktop: StaticImageData;
+  mobile: StaticImageData;
+};
+export type OpsoDemoAssets = readonly [OpsoProfileAssets, OpsoProfileAssets, OpsoProfileAssets, OpsoProfileAssets];
 
-export default function OpsoShowcase({ content }: { content: OpsoShowcaseContent }) {
+export default function OpsoShowcase({ content, profiles, locale }: { content: OpsoShowcaseContent; profiles: OpsoDemoAssets; locale: "de" | "en" }) {
   const [selected, setSelected] = useState(0);
-  const layout = layouts[selected];
+  const profile = profiles[selected];
   const item = content.items[selected];
 
   return (
@@ -21,33 +23,38 @@ export default function OpsoShowcase({ content }: { content: OpsoShowcaseContent
       <div className={styles.layoutChoices} role="group" aria-label={content.label}>
         {content.items.map((choice, index) => (
           <button
-            className={styles.layoutChoice}
-            key={layouts[index].key}
+            className={`${styles.layoutChoice} ${styles[profiles[index].key]}`}
+            key={profiles[index].key}
             type="button"
             aria-pressed={selected === index}
             aria-controls="layout-preview"
             onClick={() => setSelected(index)}
           >
-            <span className={styles.number}>0{index + 1}</span>
-            <span className={styles.choiceTitle}>{choice.title}</span>
-            <span className={styles.choiceDescription}>{choice.text}</span>
+            <span className={styles.choiceIdentity}>
+              <span className={styles.choiceTitle}>{choice.title}</span>
+              <span className={styles.choiceProfession}>{choice.profession}</span>
+              <span className={styles.choiceStyle}>{choice.style}</span>
+            </span>
           </button>
         ))}
       </div>
       <p className={styles.previewCaption} id="layout-disclosure">{content.caption}</p>
-      <div id="layout-preview" className={styles.preview} role="region" aria-label={item.title} aria-describedby="layout-disclosure">
-        <p className={styles.previewSelection} aria-live="polite" aria-atomic="true">{item.title}</p>
+      <div id="layout-preview" className={`${styles.preview} ${styles[profile.key]}`} role="region" aria-label={item.title} aria-describedby="layout-disclosure">
+        <div className={styles.previewHeading}>
+          <p className={styles.previewSelection} aria-live="polite" aria-atomic="true">{item.title}<span>{item.profession}</span></p>
+          <p className={styles.previewDescription}>{item.text}</p>
+        </div>
+        <a className={styles.liveExample} href={`${profile.url}?lang=${locale}`} target="_blank" rel="noopener noreferrer">{content.openExample}<span aria-hidden="true">↗</span></a>
         <div className={styles.previewScreens}>
           {(["desktop", "mobile"] as const).map((format) => {
-            const width = format === "desktop" ? 1440 : 375;
-            const src = `/images/opso/layouts/${layout.key}-home-${width}.png`;
+            const asset = profile[format];
             return (
               <figure className={format === "desktop" ? styles.desktopPreview : styles.mobilePreview} key={format}>
-                <figcaption className={styles.screenLabel}>{content[format]}<span aria-hidden="true">{width} px</span></figcaption>
-                <a href={src} className={styles.imageLink} aria-label={`${content.fullSize}: ${item.title}, ${content[format]}`}>
-                  <Image src={src} alt={`${item.title}: ${content.imageAlt} (${content[format]})`} width={width} height={format === "desktop" ? layout.desktopHeight : layout.mobileHeight} sizes={format === "desktop" ? "(max-width: 700px) 100vw, 75vw" : "280px"} />
+                <figcaption className={styles.screenLabel}>{content[format]}</figcaption>
+                <a href={asset.src} className={styles.imageLink} aria-label={`${content.fullSize}: ${item.title}, ${content[format]}`}>
+                  <Image src={asset} alt={`${item.title}: ${content.imageAlt} (${content[format]})`} sizes={format === "desktop" ? "(max-width: 700px) 100vw, 75vw" : "280px"} />
                 </a>
-                <a className={styles.fullSizeLink} href={src}>{content.fullSize}<span aria-hidden="true">↗</span></a>
+                <a className={styles.fullSizeLink} href={asset.src} aria-label={`${content.fullSize}: ${item.title}, ${content[format]}`}>{content.fullSize}<span aria-hidden="true">↗</span></a>
               </figure>
             );
           })}

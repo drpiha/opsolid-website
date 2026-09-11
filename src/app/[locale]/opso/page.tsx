@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getOpsoContent } from "@/content/opso";
+import { OPSO_DEMO_PROFILES } from "@/content/opso-demo-assets";
 import { SITE_CONFIG } from "@/lib/constants";
 import { isLocale, PUBLIC_LOCALES } from "@/lib/i18n";
 import styles from "./page.module.css";
@@ -45,14 +46,16 @@ export default function OpsoPage({ params }: Props) {
             <h1>{c.title}</h1>
             <p className={styles.intro}>{c.intro}</p>
             <div className={styles.actions}>
-              <a className="btn btn-primary" href="#overview">{c.explore}<span aria-hidden="true">↓</span></a>
+              <a className="btn btn-primary" href="#layouts">{c.explore}<span aria-hidden="true">↓</span></a>
               <a className="btn btn-secondary" href="#availability">{c.availabilityLink}</a>
             </div>
           </div>
           <figure className={styles.figure}>
-            <a className={styles.heroPreview} href="#layouts">
-              <Image src="/images/opso/layouts/portfolio-home-1440.png" alt={c.illustration.alt} width={1440} height={956} priority sizes="(max-width: 1000px) 100vw, 50vw" />
-            </a>
+            <div className={styles.heroCards}>
+              {[0, 2].map((index) => <a className={styles.heroPreview} href="#layouts" key={OPSO_DEMO_PROFILES[index].key}>
+                <Image src={OPSO_DEMO_PROFILES[index].mobile} alt={`${c.illustration.alt}: ${c.families.items[index].title}`} priority sizes="(max-width: 1000px) 45vw, 25vw" />
+              </a>)}
+            </div>
             <figcaption>{c.illustration.caption}</figcaption>
           </figure>
         </header>
@@ -65,14 +68,14 @@ export default function OpsoPage({ params }: Props) {
           <h2 id="overview-heading">{c.overview.title}</h2>
           <p className={styles.sectionIntro}>{c.overview.intro}</p>
           <div className={styles.grid}>
-            {c.overview.items.map((item, i) => <div className={styles.feature} key={item.title}><span className={styles.number}>0{i + 1}</span><h3>{item.title}</h3><p>{item.text}</p></div>)}
+            {c.overview.items.map((item) => <div className={styles.feature} key={item.title}><h3>{item.title}</h3><p>{item.text}</p></div>)}
           </div>
         </section>
 
         <section className={styles.section} id="layouts" aria-labelledby="layouts-heading">
           <h2 id="layouts-heading">{c.families.title}</h2>
           <p className={styles.sectionIntro}>{c.families.intro}</p>
-          <OpsoShowcase content={c.families} />
+          <OpsoShowcase content={c.families} profiles={OPSO_DEMO_PROFILES} locale={params.locale === "de" ? "de" : "en"} />
           <div className={styles.sharing}><h3>{c.sharing.title}</h3><p>{c.sharing.text}</p></div>
         </section>
 

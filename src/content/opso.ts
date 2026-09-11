@@ -1,14 +1,16 @@
 import type { Locale } from "@/lib/i18n";
 
 type SectionItem = { title: string; text: string };
+type DemoProfile = SectionItem & { profession: string; style: string };
 export type OpsoShowcaseContent = {
   label: string;
   caption: string;
   desktop: string;
   mobile: string;
   fullSize: string;
+  openExample: string;
   imageAlt: string;
-  items: [SectionItem, SectionItem, SectionItem];
+  items: [DemoProfile, DemoProfile, DemoProfile, DemoProfile];
 };
 type OpsoContent = {
   meta: { title: string; description: string };
@@ -29,37 +31,39 @@ type OpsoContent = {
 };
 
 const en: OpsoContent = {
-  meta: { title: "OpSo | Digital business card & small website", description: "Meet OpSo: digital business cards and small websites with real subpages. Preview three layouts on desktop and mobile, and check the app’s launch status." },
+  meta: { title: "OpSo | Digital business cards with your own style", description: "Explore four professional OpSo example cards with portraits and distinct styles, from light and minimal to bold and colourful. Check features and app availability." },
   status: "In testing · Launch in preparation",
-  title: "A clear introduction to you and your work",
-  intro: "OpSo brings your contact details, work and services together. Build a professional digital business card or a small website, then share one link.",
-  explore: "Explore OpSo",
+  title: "Your work, in your own style",
+  intro: "Give people more than a name and a number. Bring your portrait, expertise, services and contact details together in a digital card that feels like you.",
+  explore: "Explore the examples",
   availabilityLink: "App availability",
   navLabel: "On this page",
-  nav: ["What it does", "Website layouts", "Plans", "Availability"],
-  illustration: { caption: "Portfolio layout from the test version · example content", alt: "OpSo portfolio website preview with navigation, an introduction and selected work" },
+  nav: ["What it does", "Example cards", "Plans", "Availability"],
+  illustration: { caption: "Example profiles with AI-generated portraits", alt: "OpSo example card" },
   overview: {
     title: "From a first hello to a fuller picture",
-    intro: "Use a compact card for a quick introduction. Give your work more room with a website that visitors can browse page by page.",
+    intro: "A portrait, a clear introduction and useful details help someone understand what you do and how to reach you.",
     items: [
-      { title: "A professional digital card", text: "Bring your profile, contact details and chosen links into one clear place. Decide what people see when you share." },
+      { title: "More of what makes you, you", text: "Start with your portrait and introduction. Add services, selected work and the contact options that fit your business. Choose what visitors see." },
       { title: "Room for more than a card", text: "Website layouts with a top menu and up to six addressable pages are being prepared for release. Give services, selected work and contact information their own space." },
       { title: "Preview, save, then publish", text: "Review changes in mobile and desktop preview. Save your draft, then publish when it is ready. Later edits stay in your draft until you publish again." },
     ],
   },
   families: {
-    title: "Three ways to give your work a home",
-    intro: "Compare the same example on a large screen and a phone. Each layout gives your content a different emphasis.",
-    label: "Choose a website layout",
-    caption: "Screenshots from the OpSo test version with English example content. Website features are being prepared for release. These are demonstration layouts, not customer websites.",
+    title: "Different people, different first impressions",
+    intro: "Architecture, consulting, brand design and digital products. Explore four complete examples, each with its own colour, character and content.",
+    label: "Choose an example profile",
+    caption: "Fictional demonstration profiles with AI-generated portraits. Captured from OpSo; these are not customer endorsements.",
     desktop: "Desktop",
     mobile: "Phone",
     fullSize: "View full-size image",
-    imageAlt: "Example homepage",
+    openExample: "Open the live example",
+    imageAlt: "Digital business card with an AI-generated portrait and example content",
     items: [
-      { title: "Consultant", text: "Introduce your expertise and give visitors a clear route to your services and contact page." },
-      { title: "Portfolio", text: "Put selected work at the centre, with dedicated pages for projects and your introduction." },
-      { title: "Service business", text: "Explain your offer, answer practical questions and help visitors find the right way to contact you." },
+      { title: "Clara Weber", profession: "Architect", style: "Light stone", text: "A calm, considered introduction. Light surfaces give her approach and architectural services room to breathe." },
+      { title: "James Bennett", profession: "Business consultant", style: "Corporate navy", text: "A focused professional profile. Deep navy brings structure to his expertise, services and contact options." },
+      { title: "Maya Collins", profession: "Brand designer", style: "Coral & violet", text: "A colourful introduction to a creative practice. An expressive palette makes room for personality and design work." },
+      { title: "Felix Berger", profession: "Product designer", style: "Fresh mint", text: "A clear, approachable profile. Light mint complements an introduction to digital product design and collaboration." },
     ],
   },
   sharing: { title: "Scan, tap or open the link", text: "A published OpSo card or website opens in the recipient’s browser, with no OpSo app required. Share its link, show its QR code or use a compatible NFC tag that points to the same address. NFC requires a compatible phone and tag." },
@@ -74,37 +78,39 @@ const en: OpsoContent = {
 };
 
 const de: OpsoContent = {
-  meta: { title: "OpSo | Digitale Visitenkarte & kleine Website", description: "OpSo verbindet digitale Visitenkarten mit kleinen Websites mit echten Unterseiten. Drei Layouts auf Desktop und Smartphone ansehen und den Stand der App erfahren." },
+  meta: { title: "OpSo | Digitale Visitenkarten mit eigenem Stil", description: "Vier professionelle OpSo-Beispielkarten mit Porträts und unterschiedlichen Stilen: hell, zurückhaltend oder farbenfroh. Funktionen und App-Verfügbarkeit im Überblick." },
   status: "In der Testphase · Veröffentlichung in Vorbereitung",
-  title: "Ein klarer erster Eindruck von Ihnen und Ihrer Arbeit",
-  intro: "OpSo bündelt Ihre Kontaktdaten, Arbeiten und Leistungen. Gestalten Sie eine professionelle digitale Visitenkarte oder eine kleine Website und teilen Sie einen Link.",
-  explore: "OpSo entdecken",
+  title: "Ihre Arbeit, in Ihrem eigenen Stil",
+  intro: "Zeigen Sie mehr als einen Namen und eine Nummer. Verbinden Sie Porträt, Expertise, Leistungen und Kontaktdaten in einer digitalen Visitenkarte, die zu Ihnen passt.",
+  explore: "Beispiele entdecken",
   availabilityLink: "Verfügbarkeit der App",
   navLabel: "Auf dieser Seite",
-  nav: ["Funktionen", "Website-Layouts", "Pläne", "Verfügbarkeit"],
-  illustration: { caption: "Portfolio-Layout aus der Testversion · Beispielinhalte", alt: "Vorschau einer OpSo-Portfolio-Website mit Navigation, Vorstellung und ausgewählten Arbeiten" },
+  nav: ["Funktionen", "Beispielkarten", "Pläne", "Verfügbarkeit"],
+  illustration: { caption: "Beispielprofile mit KI-generierten Porträts", alt: "OpSo-Beispielkarte" },
   overview: {
     title: "Vom ersten Kontakt zum vollständigen Bild",
-    intro: "Eine kompakte Karte für die kurze Vorstellung. Eine Website mit mehreren Seiten, wenn Ihre Arbeit mehr Raum braucht.",
+    intro: "Ein Porträt, eine klare Vorstellung und die passenden Informationen zeigen, was Sie tun und wie man Sie erreicht.",
     items: [
-      { title: "Eine professionelle digitale Visitenkarte", text: "Profil, Kontaktdaten und ausgewählte Links an einem übersichtlichen Ort. Sie entscheiden, was beim Teilen sichtbar ist." },
+      { title: "Mehr von dem, was Sie ausmacht", text: "Beginnen Sie mit Porträt und Vorstellung. Ergänzen Sie Leistungen, ausgewählte Arbeiten und passende Kontaktwege. Sie entscheiden, was Besucher sehen." },
       { title: "Mehr Raum als eine Visitenkarte", text: "Website-Layouts mit einem oberen Menü und bis zu sechs direkt aufrufbaren Seiten werden für den Start vorbereitet. Für Leistungen, ausgewählte Arbeiten und Kontaktdaten." },
       { title: "Prüfen, speichern, veröffentlichen", text: "Sehen Sie Änderungen in der Mobil- und Desktop-Vorschau an. Speichern Sie Ihren Entwurf und veröffentlichen Sie ihn, sobald er fertig ist. Spätere Änderungen bleiben bis zur erneuten Veröffentlichung im Entwurf." },
     ],
   },
   families: {
-    title: "Drei Website-Typen für Ihre Arbeit",
-    intro: "Vergleichen Sie dasselbe Beispiel auf einem großen Bildschirm und einem Smartphone. Jedes Layout setzt einen anderen Schwerpunkt.",
-    label: "Website-Layout auswählen",
-    caption: "Aufnahmen aus der OpSo-Testversion mit englischen Beispielinhalten. Die Website-Funktionen werden für die Veröffentlichung vorbereitet. Gezeigt werden Musterlayouts, keine Kundenwebsites.",
+    title: "Verschiedene Menschen, verschiedene erste Eindrücke",
+    intro: "Architektur, Beratung, Markengestaltung und digitale Produkte. Entdecken Sie vier ausgearbeitete Beispiele mit eigener Farbwelt, Persönlichkeit und passenden Inhalten.",
+    label: "Beispielprofil auswählen",
+    caption: "Fiktive Beispielprofile mit KI-generierten Porträts. Aufnahmen aus OpSo, keine Kundenreferenzen.",
     desktop: "Desktop",
     mobile: "Smartphone",
     fullSize: "Bild in voller Größe ansehen",
-    imageAlt: "Beispiel einer Startseite",
+    openExample: "Beispiel live öffnen",
+    imageAlt: "Digitale Visitenkarte mit KI-generiertem Porträt und Beispielinhalten",
     items: [
-      { title: "Beratung", text: "Stellen Sie Ihre Expertise vor und führen Sie Besucher zu Ihren Leistungen und zur Kontaktseite." },
-      { title: "Portfolio", text: "Geben Sie ausgewählten Arbeiten den Mittelpunkt, mit eigenen Seiten für Projekte und Ihre Vorstellung." },
-      { title: "Dienstleistungen", text: "Erklären Sie Ihr Angebot, beantworten Sie praktische Fragen und zeigen Sie den passenden Kontaktweg." },
+      { title: "Clara Weber", profession: "Architektin", style: "Helle Steintöne", text: "Ein ruhiger, durchdachter Auftritt. Helle Flächen geben ihrer Arbeitsweise und ihren Architekturleistungen Raum." },
+      { title: "James Bennett", profession: "Unternehmensberater", style: "Klassisches Navy", text: "Ein professionelles Profil mit klarem Fokus. Tiefes Marineblau gliedert Expertise, Leistungen und Kontaktmöglichkeiten." },
+      { title: "Maya Collins", profession: "Markendesignerin", style: "Koralle & Violett", text: "Ein farbenfroher Einblick in kreative Arbeit. Eine ausdrucksstarke Farbwelt verbindet Persönlichkeit und Gestaltung." },
+      { title: "Felix Berger", profession: "Produktdesigner", style: "Frisches Mint", text: "Ein klarer, zugänglicher Auftritt. Helles Mint begleitet seine Vorstellung, digitales Produktdesign und Möglichkeiten zur Zusammenarbeit." },
     ],
   },
   sharing: { title: "Scannen, antippen oder den Link öffnen", text: "Eine veröffentlichte OpSo-Karte oder Website öffnet sich im Browser des Empfängers, ohne OpSo-App. Teilen Sie den Link, zeigen Sie den QR-Code oder nutzen Sie einen kompatiblen NFC-Tag mit derselben Adresse. NFC setzt ein kompatibles Smartphone und einen passenden Tag voraus." },
@@ -119,37 +125,39 @@ const de: OpsoContent = {
 };
 
 const tr: OpsoContent = {
-  meta: { title: "OpSo | Dijital kartvizit ve küçük web sitesi", description: "OpSo dijital kartvizitleri gerçek alt sayfalı küçük sitelerle birleştirir. Üç düzeni masaüstü ve telefonda inceleyin, uygulamanın yayın durumunu öğrenin." },
+  meta: { title: "OpSo | Kendi tarzınızı yansıtan dijital kartvizitler", description: "Fotoğraflı dört profesyonel OpSo örnek kartını keşfedin: açık, sade veya renkli tasarımlar. Özellikleri ve uygulamanın yayın durumunu inceleyin." },
   status: "Test aşamasında · Yayına hazırlanıyor",
-  title: "Sizi ve işinizi anlatan ilk izlenim",
-  intro: "OpSo iletişim bilgilerinizi, çalışmalarınızı ve hizmetlerinizi bir araya getirir. Profesyonel bir dijital kartvizit veya küçük bir web sitesi hazırlayın, tek bağlantıyla paylaşın.",
-  explore: "OpSo’yu keşfedin",
+  title: "İşiniz, kendi tarzınızla",
+  intro: "Bir isim ve numaradan fazlasını paylaşın. Fotoğrafınızı, uzmanlığınızı, hizmetlerinizi ve iletişim bilgilerinizi sizi yansıtan bir dijital kartvizitte birleştirin.",
+  explore: "Örnekleri keşfedin",
   availabilityLink: "Uygulamanın durumu",
   navLabel: "Bu sayfada",
-  nav: ["Özellikler", "Site düzenleri", "Planlar", "Uygulama durumu"],
-  illustration: { caption: "Test sürümünden portfolyo düzeni · örnek içerik", alt: "Gezinme menüsü, tanıtım ve seçili çalışmalar içeren OpSo portfolyo sitesi önizlemesi" },
+  nav: ["Özellikler", "Örnek kartlar", "Planlar", "Uygulama durumu"],
+  illustration: { caption: "Yapay zekâ ile üretilmiş portrelerle örnek profiller", alt: "OpSo örnek kartı" },
   overview: {
     title: "İlk merhabadan daha kapsamlı bir tanıtıma",
-    intro: "Kısa bir tanışma için sade bir kart kullanın. İşinizi daha ayrıntılı anlatmak için ziyaretçilerin sayfa sayfa gezebildiği bir site hazırlayın.",
+    intro: "Bir fotoğraf, net bir tanıtım ve faydalı bilgiler; ne yaptığınızı ve size nasıl ulaşılacağını anlatır.",
     items: [
-      { title: "Profesyonel dijital kartvizit", text: "Profiliniz, iletişim bilgileriniz ve seçtiğiniz bağlantılar tek yerde. Paylaşırken nelerin görüneceğine siz karar verin." },
+      { title: "Sizi anlatan daha fazla ayrıntı", text: "Fotoğrafınız ve tanıtımınızla başlayın. Hizmetlerinizi, seçili çalışmalarınızı ve işinize uygun iletişim yollarını ekleyin. Ziyaretçilerin neler göreceğine siz karar verin." },
       { title: "Kartvizitin ötesinde bir alan", text: "Üst menüsü ve kendi adresinden açılan en fazla altı sayfası olan site düzenleri yayına hazırlanıyor. Hizmetlerinize, seçili çalışmalarınıza ve iletişim bilgilerinize yer açın." },
       { title: "İnceleyin, kaydedin, yayımlayın", text: "Değişiklikleri mobil ve masaüstü önizlemede inceleyin. Taslağınızı kaydedin, hazır olduğunda yayımlayın. Sonraki değişiklikler yeniden yayımlayana kadar taslakta kalır." },
     ],
   },
   families: {
-    title: "İşiniz için üç site türü",
-    intro: "Aynı örneği geniş ekranda ve telefonda karşılaştırın. Her düzen, içeriğinizin farklı bir yönünü öne çıkarır.",
-    label: "Site düzeni seçin",
-    caption: "OpSo test sürümünden, İngilizce örnek içerikli ekran görüntüleri. Site özellikleri yayına hazırlanıyor. Bunlar örnek düzenlerdir; müşteri siteleri değildir.",
+    title: "Farklı insanlar, farklı ilk izlenimler",
+    intro: "Mimarlık, danışmanlık, marka tasarımı ve dijital ürünler. Kendine özgü rengi, karakteri ve içeriği olan dört kapsamlı örneği inceleyin.",
+    label: "Örnek profil seçin",
+    caption: "Yapay zekâ ile üretilmiş portreler içeren kurgusal örnek profiller. OpSo’dan alınan görüntülerdir; müşteri referansı değildir.",
     desktop: "Masaüstü",
     mobile: "Telefon",
     fullSize: "Görseli tam boyutta aç",
-    imageAlt: "Örnek ana sayfa",
+    openExample: "Canlı örneği aç",
+    imageAlt: "Yapay zekâ ile üretilmiş portre ve örnek içerikli dijital kartvizit",
     items: [
-      { title: "Danışmanlık", text: "Uzmanlığınızı tanıtın; ziyaretçileri hizmetlerinize ve iletişim sayfanıza yönlendirin." },
-      { title: "Portfolyo", text: "Seçili çalışmalarınızı öne çıkarın. Projelerinize ve kendinizi tanıtmaya ayrı sayfalar ayırın." },
-      { title: "Hizmet işletmesi", text: "Teklifinizi anlatın, pratik soruları yanıtlayın ve ziyaretçilerin size doğru kanaldan ulaşmasını kolaylaştırın." },
+      { title: "Clara Weber", profession: "Mimar", style: "Açık taş tonları", text: "Sakin, özenli bir tanıtım. Açık yüzeyler, çalışma yaklaşımına ve mimarlık hizmetlerine alan açar." },
+      { title: "James Bennett", profession: "İş danışmanı", style: "Kurumsal lacivert", text: "Odağı net bir profesyonel profil. Koyu lacivert; uzmanlık, hizmetler ve iletişim seçeneklerini düzenler." },
+      { title: "Maya Collins", profession: "Marka tasarımcısı", style: "Mercan ve mor", text: "Yaratıcı çalışmalara renkli bir giriş. Güçlü renkler, kişiliğe ve tasarım çalışmalarına yer verir." },
+      { title: "Felix Berger", profession: "Ürün tasarımcısı", style: "Ferah mint", text: "Sade, ulaşılabilir bir profil. Açık mint; tanıtımına, dijital ürün tasarımına ve iş birliği seçeneklerine eşlik eder." },
     ],
   },
   sharing: { title: "Okutun, dokundurun veya bağlantıyı açın", text: "Yayımlanmış OpSo kartı veya sitesi, alıcının tarayıcısında açılır; OpSo uygulaması gerekmez. Bağlantıyı paylaşın, karekodu gösterin veya aynı adrese yönlenen uyumlu bir NFC etiketi kullanın. NFC için uyumlu telefon ve etiket gerekir." },

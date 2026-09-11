@@ -1,12 +1,25 @@
 # OpSolid Website — Live Status
 
-**Son güncelleme:** 2026-09-11 (OpSo gerçek düzen önizlemeleri tamamlandı; yayın engelli)
+**Son güncelleme:** 2026-09-11 (dört fotoğraflı OpSo örnek profili tamamlandı; yayın engelli)
 **Aktif dal:** `cod/opso-product-launch` (güncel `origin/main` 9385964 üzerinden)
 **Kanonik canlı panel.** Her oturum başında okunur, sonunda güncellenir.
 
 ---
 
+## 2026-09-11 — Dört fotoğraflı profesyonel örnek profil
+
+- Kullanıcının istediği farklı görsel tarzlar, gerçek yayımlanmış demo kart görüntüleriyle tanıtılıyor: Clara Weber (mimarlık, açık taş), James Bennett (danışmanlık, lacivert), Maya Collins (marka tasarımı, mercan/mor), Felix Berger (ürün tasarımı, açık mint). İsimler ve profiller kurgusal, portreler yapay zekâ ile üretilmiş; üç dilde kısa açıklama mevcut. Hasan'ın veya bir müşterinin kartı pazarlama örneği olarak eklenmedi.
+- Sekiz masaüstü/telefon PNG dosyası güncel doğrulanmış manifest ile SHA-256/boyut karşılaştırmasından sonra değiştirilmeden kopyalandı. Clara'nın reddedilen yüz kadrajı kullanılmadı; düzeltilmiş ikinci yayın sürümü kullanıldı. Eski altı geometrik örnek görsel public paketinden kaldırıldı. [Kaynak kaydı](20260911-opso-layout-previews.md), sekiz dosyanın **4923103 bayt** toplamını, ölçülerini ve hash'lerini içerir.
+- Dört profil seçimi, iki farklı kartı gösteren giriş görseli, orijinal boyut bağlantıları ve canlı örnek bağlantıları var. Almanca sayfa `?lang=de`, İngilizce/Türkçe sayfalar `?lang=en` açar. Static import'lar ölçüleri ve hash'li dosya adreslerini sabitler; görseller `/_next/image` kullanmaz. Yeni bağımlılık yok. Free/gelecek planlar, taslak/yayın ayrımı, Play ve APK açıklamaları dürüst biçimde korundu.
+- **VERIFIED:** Üretim build'i **390 sayfa**, TypeScript, public source-map kontrolü, ilgili kaynaklarda ESLint ve bağımsız kaynak incelemesi geçti. `audit:cards` geçti; altı eski `blank-canvas` uyarısı aynı.
+- **VERIFIED (yerel Chrome):** DE/EN/TR × **320/390/1440 px**, toplam dokuz kombinasyonda dört profil, iki giriş görseli, sekiz doğal görüntü ölçüsü, orijinal görsel bağlantıları **200**, kontrollü canlı örnek hedefi/dili, görünür klavye odağı, Tab/Enter/Space seçimi, FAQ, canonical/lang ve açıklamalar geçti. Yatay taşma ve JavaScript sayfa hatası **0**. Eski ürün adresi **200**; kaldırılmış örnek görsel ve optimizer **404**; sitemap geçti. İlk test otomasyonu sabit üst menüye yanlış tıklamıştı; görünür merkez/tıklama hedefi beklenerek düzeltildi. Uygulama kodunda bu nedenle değişiklik yapılmadı. Yerel çalışma alanı kanıtı: `output/playwright/opso-profile-showcase-20260911/` altında `results.json`, `de-1440-hero.png`, `maya-collins-390.png`; tam yerel set `%TEMP%/opso-profile-showcase-20260911/` altında korunur. Harici tarayıcı istekleri engellendi, yerel sunucu test sonunda kapatıldı.
+- **NOT VERIFIED / BLOCKED:** Bu OpSolid sayfası henüz canlı yayımlanmadı; yerel sonuçlar hosted uygulama CI, Docker deploy veya native cihaz kanıtı değildir. Demo kart görüntüleri yayımlanmış renderer'ın durumunu gösterir; Maya'nın eski mobil menüsü için VERSO tarafında yapılan ayrı kaynak düzeltmesinin yayımlandığı iddia edilmez. Aşağıdaki OpSolid DB rolü ve yedek/restore engelleri devam ediyor; bu iş DB, izin, kimlik bilgisi veya üretim servisi değiştirmedi. PR37 taslak, yayın **NO-GO**.
+
+---
+
 ## 2026-09-11 — OpSo düzenlerini gerçek ekran görüntüleriyle tanıtma
+
+Bu önceki geometrik örnek sürümünün yerini yukarıdaki fotoğraflı dört profil aldı; aşağıdaki kayıt önceki yerel doğrulamayı belgeler.
 
 - `/de/opso`, `/en/opso`, `/tr/opso`: şematik çizim yerine daha önce incelenen OpSo test sürümünün altı gerçek ana sayfa görüntüsü. Danışmanlık, portfolyo ve hizmet işletmesi için masaüstü/telefon karşılaştırması, klavyeyle çalışan seçim düğmeleri ve orijinal boyutta görsel bağlantıları eklendi. İngilizce örnek içerikler ve test/yayına hazırlık durumu her dilde açıkça etiketli; müşteri referansı veya kurucunun kişisel kartı eklenmedi.
 - Kaydetme ile yayımlama ayrımı üç dilde netleştirildi. Website özelliklerinin yayına hazırlandığı, Google Play'de henüz kamuya açık yayın olmadığı, doğrulanmış genel APK bağlantısının bulunmadığı ve ücretli planların satın alınamadığı açık. Yeni Play rozeti veya indirme vaadi yok.

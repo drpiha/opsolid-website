@@ -1,18 +1,26 @@
-# OpSo layout preview provenance
+# OpSo profile preview provenance
 
-The six PNG files in `public/images/opso/layouts/` are unchanged copies of the home-page captures in the VERSO repository's `output/playwright/website-pages-fonts-20260907/` evidence bundle. The source bundle identifies real React client components rendered in Chromium with intercepted synthetic documents. It is evidence of rendered layouts, not production availability or a live customer website.
+The user requested professional examples with human portraits, fictional German and English names, fuller content and visibly different styles. The current asset handoff is VERSO's `output/showcase-20260911-v2/verified-assets.json`, with captures in `output/playwright/showcase-20260911-v2/`. It identifies actual live public-card browser captures of fictional profiles with AI-generated portraits. These are not customer endorsements or native app/device screenshots.
 
-The user requested the previously reviewed website designs for the OpSolid product page. Only the consultant, portfolio and service-business home pages are used. All six images were visually inspected. Their English demonstration identity and illustrative work are labelled as examples in every page locale. No contact-page captures, customer data, account screenshots, testimonials, tokens or private URLs are included. The original fixture HTML/JSON is not published.
+The selected examples are Clara Weber (architecture, light stone), James Bennett (consulting, navy), Maya Collins (brand design, coral/violet), and Felix Berger (product design, light mint). Every landing-page locale carries a concise fictional-profile/AI-portrait disclosure. Live links use only the four verified public demo URLs; no founder card, customer account data or private URL is included.
 
-The product page labels website features as being prepared for release. It separates saving a draft from publishing, and does not claim a public Google Play release or provide an unverified APK download link.
+Each desktop/phone screenshot is copied without visual changes after matching the source manifest's SHA-256 and size. Static imports bind intrinsic dimensions and content-hashed image URLs to the reviewed files. The page does not depend on `/_next/image`; the existing optimizer mitigation remains enabled. Large original portrait files are not loaded just for small selector thumbnails.
 
-| File | Dimensions | Bytes | SHA-256 |
+Website features remain labelled as being prepared for release. Saving a draft and publishing are separate. No public Google Play release, paid checkout or unverified APK download is advertised.
+
+All eight viewport captures were visually inspected and matched against the final verified source manifest. Clara uses the corrected published revision with the landscape portrait; the rejected face crop was never copied. The previous six geometric screenshot files are removed from the public bundle. The new files total **4923103 bytes**, loaded as the selected pair; hero images reuse the Clara and Maya mobile assets.
+
+| File in `src/assets/opso/` | Dimensions | Bytes | SHA-256 |
 | --- | --- | ---: | --- |
-| consultant-site-home-1440.png | 1440 × 956 | 323276 | `44ce56cffb2205b26d3802f82ddf207f36090fc79f277bb0ad341ed88dd0e6b6` |
-| consultant-site-home-375.png | 375 × 1004 | 160412 | `6eadc76f7a6e58f358ca85ceb8a30b470d81c56dc3cb2ec9e6e6d58417b51c98` |
-| portfolio-home-1440.png | 1440 × 956 | 154625 | `44839adc659bf9eaf2549d70b37295f548ab48ceb0a7a89a7d888110e402daa8` |
-| portfolio-home-375.png | 375 × 1004 | 60723 | `8fc3fc8a200052741a6af6ecc4cd4e5544744a890bf72561f00e756b12c80e4f` |
-| service-landing-home-1440.png | 1440 × 1025 | 171416 | `7e8ab019badbec482c78a239964c3eea2ee721ddf57ffc0a1673090aa7b4fb4a` |
-| service-landing-home-375.png | 375 × 1139 | 72550 | `3bd9d066748f4080e9313a359bfad9b864cb5fd1a0ce1edd5035e36467012c36` |
+| clara-weber-desktop.png | 1440 × 1100 | 665264 | `46d4a5402cece0009124d5daf6fef123d8b09e773126a5305d561fbd4f8a5eeb` |
+| clara-weber-mobile.png | 390 × 844 | 240955 | `e7fff41ccb33efb7489fda05ac7d123a990d2617844f5f5d5ca9d1c66fcaea47` |
+| james-bennett-desktop.png | 1440 × 1100 | 744503 | `58b1417426a3ce5108e386985d210e2a6a298f07d53f0a06727e5a172ecb573d` |
+| james-bennett-mobile.png | 390 × 844 | 259160 | `4e8baafc048b6c3fd15fe39ff157dd002e0aa1cd7c60119701dbd30ea233935d` |
+| maya-collins-desktop.png | 1440 × 1100 | 1311973 | `b8f7880fbe293b6a11a05187cbc5336027870a47e6986a8da7b95d0341d1b4ef` |
+| maya-collins-mobile.png | 390 × 844 | 423140 | `9144f7adba5bd7eed0cc2bd8ba4b02aa6ac9612180ba6f0004186b722a46c00b` |
+| felix-berger-desktop.png | 1440 × 1100 | 1030552 | `a4b9b3f065005835783b17275e45c7eb2c977b6b7ab25b716184b279ba56305c` |
+| felix-berger-mobile.png | 390 × 844 | 247556 | `4df066ce8e42eddb1384ce7e56fef591999f443fdf4d1381532d7c8c7bc5be81` |
 
-The screenshots total 943002 bytes. The hero reuses the portfolio desktop image; the selector loads the chosen pair. Next.js image optimization remains disabled by the existing security mitigation. Build and runtime validation are recorded in `docs/STATUS.md`; this provenance record is not deployment proof.
+The four live-demo links use `https://opso.cc/opso-demo-<profile-id>` with `?lang=de` for the German landing page and `?lang=en` for English/Turkish. Screenshots retain their captured language: Clara/Felix German, James/Maya English. The published renderer's current appearance is preserved, including Maya's legacy mobile navigation; the separate navigation correction reported by the VERSO coordinator is not represented as deployed here.
+
+Build/browser evidence and the unchanged DB/backup deployment gates are recorded in `docs/STATUS.md`. This provenance record does not establish native app/device acceptance or deployment of the updated OpSolid landing page.
