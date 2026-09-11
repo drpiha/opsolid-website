@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getOpsoContent } from "@/content/opso";
 import { SITE_CONFIG } from "@/lib/constants";
 import { isLocale, PUBLIC_LOCALES } from "@/lib/i18n";
 import styles from "./page.module.css";
+import OpsoShowcase from "./OpsoShowcase";
 
 type Props = { params: { locale: string } };
 const sectionIds = ["overview", "layouts", "plans", "availability"];
@@ -48,17 +50,9 @@ export default function OpsoPage({ params }: Props) {
             </div>
           </div>
           <figure className={styles.figure}>
-            <div className={styles.browser} aria-hidden="true">
-              <div className={styles.browserBar}><span /><span /><span /></div>
-              <div className={styles.exampleMenu}><b>OpSo</b><div>{c.illustration.pages.map((page) => <span key={page}>{page}</span>)}</div></div>
-              <div className={styles.exampleBody}>
-                <div className={styles.exampleAvatar}>O</div>
-                <strong>{c.illustration.name}</strong>
-                <p>{c.illustration.role}</p>
-                <div className={styles.exampleContact}>{c.illustration.contact}</div>
-              </div>
-              <div className={styles.pageCards}>{c.illustration.pages.map((page, i) => <div key={page}><span>0{i + 1}</span><b>{page}</b><i /><i /></div>)}</div>
-            </div>
+            <a className={styles.heroPreview} href="#layouts">
+              <Image src="/images/opso/layouts/portfolio-home-1440.png" alt={c.illustration.alt} width={1440} height={956} priority sizes="(max-width: 1000px) 100vw, 50vw" />
+            </a>
             <figcaption>{c.illustration.caption}</figcaption>
           </figure>
         </header>
@@ -78,9 +72,7 @@ export default function OpsoPage({ params }: Props) {
         <section className={styles.section} id="layouts" aria-labelledby="layouts-heading">
           <h2 id="layouts-heading">{c.families.title}</h2>
           <p className={styles.sectionIntro}>{c.families.intro}</p>
-          <div className={styles.grid}>
-            {c.families.items.map((item, i) => <div className={styles.family} key={item.title}><div className={`${styles.layoutSketch} ${styles[`sketch${i}`]}`} aria-hidden="true"><span /><span /><span /></div><h3>{item.title}</h3><p>{item.text}</p></div>)}
-          </div>
+          <OpsoShowcase content={c.families} />
           <div className={styles.sharing}><h3>{c.sharing.title}</h3><p>{c.sharing.text}</p></div>
         </section>
 

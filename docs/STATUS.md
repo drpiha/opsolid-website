@@ -1,8 +1,19 @@
 # OpSolid Website — Live Status
 
-**Son güncelleme:** 2026-09-11 (public source-map paketlemesi kapatıldı; yayın engelli)
+**Son güncelleme:** 2026-09-11 (OpSo gerçek düzen önizlemeleri tamamlandı; yayın engelli)
 **Aktif dal:** `cod/opso-product-launch` (güncel `origin/main` 9385964 üzerinden)
 **Kanonik canlı panel.** Her oturum başında okunur, sonunda güncellenir.
+
+---
+
+## 2026-09-11 — OpSo düzenlerini gerçek ekran görüntüleriyle tanıtma
+
+- `/de/opso`, `/en/opso`, `/tr/opso`: şematik çizim yerine daha önce incelenen OpSo test sürümünün altı gerçek ana sayfa görüntüsü. Danışmanlık, portfolyo ve hizmet işletmesi için masaüstü/telefon karşılaştırması, klavyeyle çalışan seçim düğmeleri ve orijinal boyutta görsel bağlantıları eklendi. İngilizce örnek içerikler ve test/yayına hazırlık durumu her dilde açıkça etiketli; müşteri referansı veya kurucunun kişisel kartı eklenmedi.
+- Kaydetme ile yayımlama ayrımı üç dilde netleştirildi. Website özelliklerinin yayına hazırlandığı, Google Play'de henüz kamuya açık yayın olmadığı, doğrulanmış genel APK bağlantısının bulunmadığı ve ücretli planların satın alınamadığı açık. Yeni Play rozeti veya indirme vaadi yok.
+- Altı PNG toplam **943002 bayt**; kaynak, boyut ve SHA-256 kayıtları [görsel kaynak kaydında](20260911-opso-layout-previews.md). Görseller değiştirilmeden kopyalandı, fixture HTML/JSON dosyaları yayımlanmadı. Yeni bağımlılık yok.
+- **VERIFIED:** Üretim build'i **390 sayfa**, TypeScript ve public source-map kontrolü geçti. İlgili dosyalarda ESLint temiz; `audit:cards` geçti, altı eski `blank-canvas` uyarısı aynı. PNG başlıklarından altı doğal genişlik/yükseklik, bileşen ölçüleriyle eşleştirildi. Bağımsız kaynak incelemesi geçti.
+- **VERIFIED (yerel Chrome):** DE/EN/TR × **375/1440 px**, üç düzenin tamamında seçim ve iki görüntünün yüklenmesi, orijinal görsel bağlantıları **200**, yatay taşma olmaması, Tab/Enter/Space seçimi, klavyeyle FAQ, canonical/lang, bölüm ve iletişim bağlantıları, örnek/test açıklaması ve Play bağlantısının bulunmaması doğrulandı. JavaScript sayfa hatası **0**. Eski ürün adresi **200**, optimizer **404**, üç route sitemap'te. Tarayıcıda üçüncü taraf istekleri engellendi. Yerel kanıt: `%TEMP%/opso-website-showcase-20260911/results.json` ve görsel kayıtlar.
+- **NOT VERIFIED / BLOCKED:** Bu değişiklikler henüz canlı yayımlanmadı; cihaz, hosted CI ve Docker deploy kanıtı değildir. Aşağıdaki gerçek üretim DB rolü ve yedek/restore engelleri giderilmedi ve bu adımda tekrar canlı sorgulanmadı. Varsayılan deploy workflow'u çalıştırılmadı; DB/rol/izin veya ortak VPS servislerinde değişiklik yok. PR37 taslak olarak güncellenir; **NO-GO** devam eder.
 
 ---
 
