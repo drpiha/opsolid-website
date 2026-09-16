@@ -35,6 +35,10 @@ NO_UPDATE = READ_ONLY | {"domain_requests", "event_attendees", "inbox_suggestion
 DELETE = set("""card_album_photos card_webhooks event_attendees inbox_channels inbox_messages inbox_playbooks magic_link_tokens push_devices saved_cards voice_agents voice_appointment_rules voice_business_hours voice_handoff_rules voice_integrations voice_knowledge_base_items voice_notification_configs voice_tenants""".split())
 MATRIX = {table: ["SELECT"] + ([] if table in READ_ONLY else ["INSERT"]) + ([] if table in NO_UPDATE else ["UPDATE"]) + (["DELETE"] if table in DELETE else []) for table in TABLES}
 SEQUENCE = "public.card_orders_order_number_seq"
+CANDIDATE_FAILURE_CODES = {"isolated_hba_path_unreviewed", "isolated_hba_reload_failed", "isolated_hba_invalid",
+                           "candidate_exec_failed", "candidate_password_auth_failed", "candidate_prisma_crud_failed",
+                           "candidate_prisma_discovery_failed", "candidate_http_readiness_failed", "candidate_http_pages_failed",
+                           "candidate_http_guards_failed", "candidate_http_optimizer_failed"}
 
 
 def role_name(value):
@@ -237,6 +241,8 @@ def validate_isolated(expected, baseline, backup_report, role, candidate_check=N
             backup.validate_owned(backup.inspect(candidate_id), candidate_id, name, token, {expected[k]["id"] for k in expected})
             try:
                 proof = candidate_check(candidate_id, dict(credential))
+            except backup.ProofError as error:
+                raise backup.ProofError(str(error) if str(error) in CANDIDATE_FAILURE_CODES else "candidate_application_failed") from None
             except BaseException:
                 raise backup.ProofError("candidate_application_failed") from None
             result.update(candidate_proof(proof, candidate_image))

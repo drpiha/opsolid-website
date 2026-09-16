@@ -30,6 +30,8 @@ require = backup.require
 LABEL = "de.opsolid.candidate-proof"
 IMAGE_ENV = {"PATH", "NODE_VERSION", "YARN_VERSION", "NODE_ENV", "NEXT_TELEMETRY_DISABLED", "PORT", "HOSTNAME", "GIT_COMMIT"}
 MEMORY = 768 * backup.MIB
+NODE_STAGES = {"password_auth", "prisma_crud", "prisma_discovery", "http_readiness", "http_pages", "http_guards", "http_optimizer"}
+HBA_PATH = "/var/lib/postgresql/data/pgdata/pg_hba.conf"
 
 
 def environment_map(values):
@@ -83,32 +85,45 @@ def parse_node_proof(output):
         value = json.loads(output)
     except (ValueError, UnicodeError):
         raise backup.ProofError("candidate_proof_output_invalid") from None
-    keys = {"ok", "password_authentication_verified", "application_smoke_verified", "prisma_rollback_verified", "http_checks"}
+    keys = {"ok", "password_authentication_verified", "application_smoke_verified", "prisma_rollback_verified", "prisma_discovery_filter_verified", "http_checks"}
     require(isinstance(value, dict) and set(value) == keys, "candidate_proof_output_invalid")
     require(all(value[key] is True for key in keys - {"http_checks"}) and type(value["http_checks"]) is int and value["http_checks"] == 13, "candidate_checks_incomplete")
     return value
 
 
-def private_exec(container, program, *args, payload, timeout=60):
+def private_exec(container, program, *args, payload, timeout=60, node_diagnostics=False):
     try:
         result = subprocess.run(backup.DOCKER + ["exec", "-i", container, program, *args], input=payload,
                                 stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, timeout=timeout)
     except (OSError, subprocess.TimeoutExpired):
         raise backup.ProofError("candidate_exec_failed") from None
+    if result.returncode != 0 and node_diagnostics:
+        try:
+            diagnostic = json.loads(result.stdout) if len(result.stdout) <= 128 else None
+        except (ValueError, UnicodeError):
+            diagnostic = None
+        if isinstance(diagnostic, dict) and set(diagnostic) == {"ok", "stage"} and diagnostic["ok"] is False and isinstance(diagnostic["stage"], str) and diagnostic["stage"] in NODE_STAGES:
+            raise backup.ProofError("candidate_"+diagnostic["stage"]+"_failed")
     require(result.returncode == 0, "candidate_exec_failed")
     return result.stdout
 
 
 def configure_scram(database_id, runtime_role):
     role.role_name(runtime_role)
-    # This exact private file lives only in the owned clone's /tmp tmpfs. The
+    # hba_file is a postmaster-only setting. Change the contents of the exact
+    # existing HBA file in the owned clone's PGDATA tmpfs, then reload. The
     # callback is invoked only after role.validate_isolated validated its ID.
     hba = ("local all proof_owner trust\nlocal all all reject\n"
            f"host proof_restore {runtime_role} 127.0.0.1/32 scram-sha-256\n"
            "host all all 0.0.0.0/0 reject\nhost all all ::0/0 reject\n")
-    private_exec(database_id, "sh", "-c", "umask 077; set -C; cat > /tmp/hba-proof.conf", payload=hba.encode())
-    require(role.sql(database_id, "proof_restore", "proof_owner", "ALTER SYSTEM SET hba_file='/tmp/hba-proof.conf'; SELECT pg_reload_conf();") == "t", "isolated_hba_reload_failed")
-    ready_sql = "SELECT current_setting('listen_addresses')='127.0.0.1' AND current_setting('hba_file')='/tmp/hba-proof.conf' AND NOT EXISTS(SELECT 1 FROM pg_hba_file_rules WHERE error IS NOT NULL)"
+    require(backup.query(database_id, "proof_restore", "proof_owner", "SELECT current_setting('hba_file')="+role.literal(HBA_PATH)) == "t", "isolated_hba_path_unreviewed")
+    # docker exec inherits the clone's explicit postgres UID/GID. New file is
+    # private and on the same tmpfs; rename replaces the contents atomically.
+    replacement = HBA_PATH+".runtime-proof"
+    command = "set -eu; test -f "+HBA_PATH+"; test ! -L "+HBA_PATH+"; umask 077; set -C; cat > "+replacement+"; mv -f "+replacement+" "+HBA_PATH
+    private_exec(database_id, "sh", "-c", command, payload=hba.encode())
+    require(role.sql(database_id, "proof_restore", "proof_owner", "SELECT pg_reload_conf();") == "t", "isolated_hba_reload_failed")
+    ready_sql = "SELECT current_setting('listen_addresses')='127.0.0.1' AND current_setting('hba_file')="+role.literal(HBA_PATH)+" AND NOT EXISTS(SELECT 1 FROM pg_hba_file_rules WHERE error IS NOT NULL)"
     for _ in range(20):
         if backup.query(database_id, "proof_restore", "proof_owner", ready_sql) == "t":
             break
@@ -120,17 +135,30 @@ def configure_scram(database_id, runtime_role):
 
 
 NODE_PROOF = r"""
-const { PrismaClient } = require('./src/generated/prisma');
+const { PrismaClient, Prisma } = require('./src/generated/prisma');
 const { randomUUID } = require('node:crypto');
 const pause = ms => new Promise(resolve => setTimeout(resolve, ms));
 const assert = value => { if (!value) throw new Error('candidate_assertion'); };
 const client = new PrismaClient({ log: [] });
 let bad;
-async function request(path, expected, html = false) {
+let stage = 'password_auth';
+async function request(path, expected, html = false, noGoogleAnchor = false) {
   const res = await fetch('http://127.0.0.1:3000' + path, { redirect: 'manual', signal: AbortSignal.timeout(5000) });
   assert(res.status === expected);
   if (html) assert((res.headers.get('content-type') || '').includes('text/html'));
-  await res.body?.cancel();
+  if (noGoogleAnchor) {
+    const reader = res.body.getReader();
+    const chunks = []; let size = 0;
+    try {
+      for (;;) {
+        const {done, value} = await reader.read();
+        if (done) break;
+        size += value.byteLength; assert(size <= 2*1024*1024); chunks.push(value);
+      }
+    } finally { await reader.cancel(); }
+    const markup = Buffer.concat(chunks).toString('utf8');
+    assert(!/<a\b[^>]*\bhref\s*=\s*["']\/api\/auth\/google\?/i.test(markup));
+  } else { await res.body?.cancel(); }
 }
 async function run() {
   const wrong = new URL(process.env.DATABASE_URL);
@@ -144,6 +172,7 @@ async function run() {
   const identity = await client.$queryRawUnsafe('SELECT current_user::text AS current_user, session_user::text AS session_user');
   const expectedRole = decodeURIComponent(new URL(process.env.DATABASE_URL).username);
   assert(identity.length === 1 && identity[0].current_user === expectedRole && identity[0].session_user === expectedRole);
+  stage = 'prisma_crud';
   const id = 'runtime_prisma_' + randomUUID().replaceAll('-', '');
   const rollback = new Error('expected_synthetic_rollback');
   let rolledBack = false;
@@ -164,11 +193,27 @@ async function run() {
       await tx.session.update({ where: { id: session.id }, data: { revokedAt: new Date() } });
       await tx.session.create({ data: { userId: user.id, tokenHash: id+'_rotated', expiresAt: new Date(Date.now()+60000) } });
       await tx.savedCard.delete({ where: { id: saved.id } });
+      stage = 'prisma_discovery';
+      const discoveryCases = [
+        ['missing', {}, 'public'], ['null', {password:null}, 'public'], ['empty', {password:''}, 'public'],
+        ['locked', {password:'synthetic-only'}, 'public'], ['private', {}, 'private']
+      ];
+      for (const [suffix, cardData, visibility] of discoveryCases) await tx.cardOrder.create({ data: {
+        id:id+'_'+suffix, userId:user.id, templateId:template.id, contactName:'Synthetic', contactEmail:id+'@example.invalid',
+        contactPhone:'', cardData, visibility, billingMode:'one_time', amountCents:0, status:'PUBLISHED'
+      } });
+      // Exact no-search handler predicate; only synthetic IDs are eligible.
+      const visible = await tx.cardOrder.findMany({ where: {
+        id:{in:discoveryCases.map(([suffix])=>id+'_'+suffix)}, status:'PUBLISHED', visibility:'public',
+        AND:[{OR:[{cardData:{path:['password'],equals:Prisma.AnyNull}},{cardData:{path:['password'],equals:''}}]}]
+      }, select:{id:true}, take:10, orderBy:{publishedAt:'desc'} });
+      assert(JSON.stringify(visible.map(row=>row.id).sort())===JSON.stringify(['missing','null','empty'].map(suffix=>id+'_'+suffix).sort()));
       throw rollback;
     }, { maxWait: 5000, timeout: 20000 });
   } catch (error) { if (error !== rollback) throw error; rolledBack = true; }
   assert(rolledBack && await client.user.count({ where: { id } }) === 0);
   assert(await client.session.count({ where: { tokenHash: { in: [id+'_session', id+'_rotated'] } } }) === 0);
+  stage = 'http_readiness';
   let healthy = false;
   for (let attempt=0; attempt<30; attempt++) {
     try {
@@ -182,14 +227,17 @@ async function run() {
     await pause(500);
   }
   assert(healthy);
-  for (const locale of ['de','en','tr']) for (const page of ['opso','login','signup']) await request('/'+locale+'/'+page, 200, true);
+  stage = 'http_pages';
+  for (const locale of ['de','en','tr']) for (const page of ['opso','login','signup']) await request('/'+locale+'/'+page, 200, true, page!=='opso');
+  stage = 'http_guards';
   await request('/api/v1/cards', 401);
   await request('/api/account/saved-cards', 401);
+  stage = 'http_optimizer';
   await request('/_next/image?url=%2Ffavicon.ico&w=64&q=75', 404);
-  return { ok: true, password_authentication_verified: true, application_smoke_verified: true, prisma_rollback_verified: true, http_checks: 13 };
+  return { ok: true, password_authentication_verified: true, application_smoke_verified: true, prisma_rollback_verified: true, prisma_discovery_filter_verified: true, http_checks: 13 };
 }
 run().then(async proof => { await client.$disconnect(); process.stdout.write(JSON.stringify(proof)); })
- .catch(async () => { try { await client.$disconnect(); await bad?.$disconnect(); } catch {} process.stdout.write('{"ok":false}'); process.exitCode=1; });
+ .catch(async () => { try { await client.$disconnect(); await bad?.$disconnect(); } catch {} process.stdout.write(JSON.stringify({ok:false,stage})); process.exitCode=1; });
 """
 
 
@@ -223,7 +271,7 @@ def check_candidate(image, commit, expected, database_id, credential):
         inherited = environment_map(actual_image["Config"].get("Env"))
         require(environment_map(actual["Config"].get("Env")) == {**inherited, **env}, "candidate_effective_environment_mismatch")
         backup.run(["start", container_id])
-        proof = parse_node_proof(private_exec(container_id, "node", payload=NODE_PROOF.encode(), timeout=180))
+        proof = parse_node_proof(private_exec(container_id, "node", payload=NODE_PROOF.encode(), timeout=180, node_diagnostics=True))
     finally:
         if container_id:
             validate_candidate(backup.inspect(container_id), container_id, name, app_token, image, database_id)

@@ -77,7 +77,7 @@ class CandidateGuards(unittest.TestCase):
 
     def test_node_output_accepts_only_complete_finite_checks(self):
         proof = {"ok": True, "password_authentication_verified": True, "application_smoke_verified": True,
-                 "prisma_rollback_verified": True, "http_checks": 13}
+                 "prisma_rollback_verified": True, "prisma_discovery_filter_verified": True, "http_checks": 13}
         self.assertEqual(candidate.parse_node_proof(json.dumps(proof).encode()), proof)
         invalid = [b"PRIVATE unexpected output", json.dumps({**proof, "private": "data"}).encode(),
                    json.dumps({**proof, "password_authentication_verified": 1}).encode(),
@@ -86,24 +86,49 @@ class CandidateGuards(unittest.TestCase):
             with self.subTest(output=output), self.assertRaises(Exception):
                 candidate.parse_node_proof(output)
 
-    def test_scram_file_is_private_no_clobber_and_rejects_other_local_or_host_roles(self):
+    def test_scram_reloads_existing_exact_file_instead_of_postmaster_only_hba_setting(self):
         with patch.object(candidate, "private_exec", return_value=b"") as execute, \
              patch.object(candidate.role, "sql", return_value="t") as sql, \
-             patch.object(candidate.backup, "query", side_effect=["f", "t"]), patch.object(candidate.time, "sleep"):
+             patch.object(candidate.backup, "query", side_effect=["t", "f", "t"]), patch.object(candidate.time, "sleep"):
             candidate.configure_scram(DB, "opsolid_runtime_test")
         args, kwargs = execute.call_args
         self.assertEqual(args[0], DB)
-        self.assertIn("umask 077; set -C", args[-1])
+        self.assertIn("test -f "+candidate.HBA_PATH, args[-1])
+        self.assertIn("test ! -L "+candidate.HBA_PATH, args[-1])
+        self.assertIn("umask 077; set -C; cat > "+candidate.HBA_PATH+".runtime-proof", args[-1])
+        self.assertIn("mv -f "+candidate.HBA_PATH+".runtime-proof "+candidate.HBA_PATH, args[-1])
+        self.assertNotIn("ALTER SYSTEM", str(sql.call_args_list))
+        self.assertIn("SELECT pg_reload_conf()", str(sql.call_args_list))
         self.assertIn(b"local all all reject", kwargs["payload"])
         self.assertIn(b"127.0.0.1/32 scram-sha-256", kwargs["payload"])
         self.assertNotIn(b"host all all all trust", kwargs["payload"])
         self.assertEqual(sql.call_count, 2)
 
+    def test_production_identity_cannot_reach_hba_configuration(self):
+        with patch.object(candidate.backup, "inspect", return_value=database_fixture()), patch.object(candidate, "configure_scram") as configure:
+            with self.assertRaisesRegex(candidate.backup.ProofError, "^cleanup_id_invalid$"):
+                candidate.check_candidate(IMAGE, COMMIT, expected(), expected()["database"]["id"], {"role":"opsolid_runtime_test", "password":"x"*48})
+            configure.assert_not_called()
+
+    def test_hba_path_drift_cannot_write_any_file(self):
+        with patch.object(candidate.backup, "query", return_value="f"), patch.object(candidate, "private_exec") as execute:
+            with self.assertRaisesRegex(candidate.backup.ProofError, "^isolated_hba_path_unreviewed$"):
+                candidate.configure_scram(DB, "opsolid_runtime_test")
+            execute.assert_not_called()
+
+    def test_nonzero_node_exit_reports_only_allowlisted_finite_stage(self):
+        for output, code in ((b'{"ok":false,"stage":"prisma_crud"}', "candidate_prisma_crud_failed"),
+                             (b'{"ok":false,"stage":"PRIVATE"}', "candidate_exec_failed"),
+                             (b'{"ok":false,"stage":"prisma_crud","error":"PRIVATE"}', "candidate_exec_failed")):
+            with patch.object(candidate.subprocess, "run", return_value=types.SimpleNamespace(returncode=1, stdout=output)):
+                with self.assertRaisesRegex(candidate.backup.ProofError, "^"+code+"$"):
+                    candidate.private_exec(CONTAINER, "node", payload=b"synthetic", node_diagnostics=True)
+
     def run_callback(self, failure=False, boundary_drift=False):
         calls = []
         runtime_env = {}
         proof = {"ok": True, "password_authentication_verified": True, "application_smoke_verified": True,
-                 "prisma_rollback_verified": True, "http_checks": 13}
+                 "prisma_rollback_verified": True, "prisma_discovery_filter_verified": True, "http_checks": 13}
         def run(args, **_):
             calls.append(args)
             if args[:2] == ["image", "inspect"]:
@@ -173,6 +198,7 @@ for (const model of ['user','session','cardOrder','orderStatusHistory','cardLink
 }
 tx.cardTemplate = {findFirst: async () => ({id: 1})};
 tx.cardOrder.findUnique = async () => ({user: {id}, links: [{}], statusHistory: [{}], savedByUsers: [{}]});
+tx.cardOrder.findMany = async () => (mode==='discovery_leak' ? ['missing','null','empty','locked'] : ['missing','null','empty']).map(suffix=>({id:id+'_'+suffix}));
 class MockPrisma {
   constructor(options) {this.bad = !!options.datasources; this.user = {count: async()=>mode==='persisted' ? 1 : 0}; this.session = {count: async()=>0};}
   async $connect() {if(this.bad && mode!=='password_bypass') throw {errorCode:'P1000'};}
@@ -181,7 +207,7 @@ class MockPrisma {
   async $transaction(callback) {return callback(tx);}
 }
 Module._load = function(name, ...args) {
-  if (name==='./src/generated/prisma') return {PrismaClient:MockPrisma};
+  if (name==='./src/generated/prisma') return {PrismaClient:MockPrisma,Prisma:{AnyNull:{}}};
   if (name==='node:crypto') return {randomUUID:()=> 'fixed'};
   return originalLoad.call(this,name,...args);
 };
@@ -189,7 +215,9 @@ global.fetch = async (url, options) => {
   if(!url.startsWith('http://127.0.0.1:3000/') || options.redirect!=='manual') throw new Error('unsafe_request');
   const path = new URL(url).pathname;
   const status = path==='/_next/image' ? 404 : path.startsWith('/api/') && path!=='/api/health' ? (mode==='auth_open' ? 200 : 401) : 200;
-  return {status,headers:{get:()=> 'text/html'},body:{cancel:async()=>{}},json:async()=>({ok:true,dbOk:true,commit:process.env.GIT_COMMIT})};
+  return {status,headers:{get:()=> 'text/html'},body:{cancel:async()=>{},getReader:()=>{let done=false;return {
+    read:async()=>{if(done)return {done:true};done=true;return {done:false,value:Buffer.from(mode==='google_without_config' ? '<a href="/api/auth/google?locale=de">Google</a>' : '<main>Account - Google is mentioned without a link</main>')};},cancel:async()=>{}
+  };}},json:async()=>({ok:true,dbOk:true,commit:process.env.GIT_COMMIT})};
 };
 """
 
@@ -204,11 +232,11 @@ global.fetch = async (url, options) => {
         self.assertEqual(result.stderr, b"")
 
     def test_password_bypass_persisted_rows_and_open_auth_each_fail(self):
-        for mode in ("password_bypass", "persisted", "auth_open"):
+        for mode, stage in (("password_bypass", "password_auth"), ("persisted", "prisma_discovery"), ("auth_open", "http_guards"), ("discovery_leak", "prisma_discovery"), ("google_without_config", "http_pages")):
             with self.subTest(mode=mode):
                 result = self.run_node(mode)
                 self.assertEqual(result.returncode, 1)
-                self.assertEqual(result.stdout, b'{"ok":false}')
+                self.assertEqual(json.loads(result.stdout), {"ok":False,"stage":stage})
                 self.assertEqual(result.stderr, b"")
 
 
