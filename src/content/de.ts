@@ -5898,7 +5898,7 @@ export const content: Content = {
   auth: {
     signup: {
       title: "Konto erstellen",
-      subtitle: "Kostenlose digitale Visitenkarte — keine Kreditkarte erforderlich.",
+      subtitle: "Erstellen Sie Ihr kostenloses Konto per E-Mail-Anmeldelink oder Google. Ein Passwort ist nicht nötig.",
       emailLabel: "E-Mail-Adresse",
       nameLabel: "Name (optional)",
       passwordLabel: "Passwort",
@@ -5914,7 +5914,8 @@ export const content: Content = {
       emailLabel: "E-Mail-Adresse",
       passwordLabel: "Passwort",
       magicLinkCta: "Magic Link senden",
-      passwordCta: "oder Passwort verwenden",
+      passwordCta: "Passwort eines bereits bestätigten Kontos verwenden",
+      legacyPasswordHelp: "Passwörter bleiben für Konten mit bereits bestätigter E-Mail-Adresse verfügbar. Haben Sie Ihr Passwort vor der E-Mail-Bestätigung erstellt, nutzen Sie den Anmeldelink per E-Mail oder Google. Das frühere Passwort wird bei der ersten E-Mail-Bestätigung entfernt.",
       dontHaveAccount: "Noch kein Konto?",
       signUpLink: "Jetzt registrieren",
       expandPassword: "+ Passwort verwenden",

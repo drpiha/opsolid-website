@@ -106,7 +106,10 @@ export async function POST(req: Request) {
     );
   }
 
+  const credentialReadAt = new Date();
   const user = await prisma.user.findUnique({ where: { email } });
+  // Unverified credentials stay pre-verification regardless of commit timing.
+  const authenticatedAt = user?.emailVerifiedAt ? credentialReadAt : new Date(0);
 
   const hashToVerify = user?.passwordHash ?? (await getDummyHash());
   const ok = await verifyPassword(password, hashToVerify);
@@ -125,8 +128,9 @@ export async function POST(req: Request) {
     user.id,
     req.headers.get("user-agent"),
     hashIp(ip),
+    authenticatedAt,
   );
-  const accessToken = await signAccessToken(user.id);
+  const accessToken = await signAccessToken(user.id, authenticatedAt);
 
   return applyCors(
     NextResponse.json(

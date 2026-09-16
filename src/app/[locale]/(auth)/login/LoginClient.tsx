@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { useLocale } from "@/context/LocaleContext";
 import { isLocale } from "@/lib/i18n";
+import { safeAuthNextPath } from "@/lib/auth/safe-next-path";
 
 interface Props {
   locale: string;
@@ -18,8 +19,8 @@ export function LoginClient({ locale, googleEnabled = false }: Props) {
   const { t } = useLocale();
   const router = useRouter();
   const searchParams = useSearchParams();
-  const next = searchParams.get("next") ?? `/${locale}/dashboard/cards`;
   const safeLocale = isLocale(locale) ? locale : "en";
+  const next = safeAuthNextPath(searchParams.get("next"), `/${safeLocale}/dashboard/cards`);
 
   const s = t.auth.login;
   const errs = t.auth.errors;
@@ -151,6 +152,7 @@ export function LoginClient({ locale, googleEnabled = false }: Props) {
 
         {showPassword && (
           <div>
+            <p className="mb-3 text-xs leading-relaxed text-ink-400">{s.legacyPasswordHelp}</p>
             <label
               htmlFor="password"
               className="block text-xs font-medium text-ink-300 mb-1.5"

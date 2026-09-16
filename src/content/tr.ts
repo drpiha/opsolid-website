@@ -5897,7 +5897,7 @@ export const content: Content = {
   auth: {
     signup: {
       title: "Hesap oluştur",
-      subtitle: "Ücretsiz dijital kartvizit — kredi kartı gerekmez.",
+      subtitle: "Ücretsiz hesabınızı e-posta giriş bağlantısı veya Google ile oluşturun. Şifre gerekmez.",
       emailLabel: "E-posta adresi",
       nameLabel: "Ad (isteğe bağlı)",
       passwordLabel: "Şifre",
@@ -5913,7 +5913,8 @@ export const content: Content = {
       emailLabel: "E-posta adresi",
       passwordLabel: "Şifre",
       magicLinkCta: "Sihirli bağlantı gönder",
-      passwordCta: "veya şifre kullan",
+      passwordCta: "Önceden doğrulanmış hesabın şifresini kullan",
+      legacyPasswordHelp: "E-postası önceden doğrulanmış hesaplar şifreyle giriş yapmaya devam edebilir. Şifrenizi e-postanızı doğrulamadan önce oluşturduysanız e-posta giriş bağlantısını veya Google'ı kullanın. Önceki şifreniz ilk e-posta doğrulamasında kaldırılır.",
       dontHaveAccount: "Hesabınız yok mu?",
       signUpLink: "Hesap oluştur",
       expandPassword: "+ şifre kullan",

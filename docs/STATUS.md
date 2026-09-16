@@ -1,8 +1,19 @@
 # OpSolid Website — Live Status
 
-**Son güncelleme:** 2026-09-11 (yayın güvenlik düzeltmeleri doğrulandı; canlı DB geçişi engelli)
+**Son güncelleme:** 2026-09-17 (yeni yayın paketi ve izole geri yükleme doğrulandı; canlı geçiş aşağıda ayrı kaydedilir)
 **Aktif dal:** `cod/opso-product-launch` (güncel `origin/main` 9385964 üzerinden)
 **Kanonik canlı panel.** Her oturum başında okunur, sonunda güncellenir.
+
+---
+
+## 2026-09-17 — OpSo fiziksel kart, hesap ve paylaşım güvenliği
+
+- DE/EN/TR ürün sayfasında siyah OpSolid NFC konsepti, açık “yakında” etiketi ve planlanan KDV dahil24,90EUR/ayrı kargo bilgisi var. Sipariş/checkout açılmadı. Hesap ve yeni kart sonrası eklenen OpSo yönlendirmesi, mevcut web kartlarının henüz eşitlenmediğini açıklar. Canlı Android indirme merkezi404 olduğu için bozuk indirme linki yerine ürün sayfasındaki erişim bölümüne gider. [Tek hesap geçişi ve fiziksel üretim sözleşmesi](ops/20260917-opso-account-and-physical-card.md).
+- Eski web hesaplarında doğrulanmamış e-postayla kart keşfetme/sahiplenme kapatıldı. İlk Google/e-posta kanıtı öncesindeki parola ve oturumlar geçersizleşir; zaman damgasının transaction commit sırasına bağlı yarışını da kalıcı doğrulama-öncesi işaret kapatır. Yeni kayıt Google/e-posta bağlantısıyla olur; önceden doğrulanmış hesapların parolası korunur. Sahiplenme kontrolü doğrulanan e-postaya/boş sahibine atomik olarak bağlıdır; eski boşluklu e-postalar DB tarafında normalize edilir. Giriş sonrası yönlendirme yalnızca güvenli yerel yollara izin verir.22deterministik test ve bağımsız inceleme geçti; gerçek sağlayıcı teslimi testi yapılmadı.
+- Parolalı kartın tahmin edilebilir cookie ile açılma açığı giderildi:24saatlik HMAC kanıtı slug/parola sürümüne bağlı. Sayfa, publicJSON ve iki vCard yolu aynı kontrolü kullanır. Önizleme, albüm, cüzdan, QR, keşif, öneri ve katılımcı listeleri özel/parolalı içeriği dışarı çıkarmaz; yardımcı indirme özellikleri parolalı kartlar için kapalıdır. Eski imzasız açma cookie'si kabul edilmez, ziyaretçi bir kez parolayı tekrar girer. Önceden indirilmiş dosyalar veya üçüncü taraf önizleme önbellekleri geri alınamaz.
+- **VERIFIED VPS geri yükleme:** korumalı güncel yedek ayrı network-none/tmpfs PostgreSQL16 hedefinde geri yüklendi:46tablo,566kolon,108constraint,168index,1sequence,0geçersizconstraint,1527satır. Kaynak uygulama/DB kimlikleri, mount ve yapılandırma değişmedi; yalnızca prova container'ı kaldırıldı. Yedek248191bayt, SHA2568a2ddf489b69f6ce6850f730bdfae7ba1cc4863dd35e7b469bce3e050fe02013; sunucuda `/var/backups/opsolid/20260916T222303Z-90c657953fc94b888b6326a8/` içinde600/700izinleriyle korunur. İlk sayım çıktısı parse hatası gerçek psql sabit sorguyla teşhis edilip düzeltildi; başarısız ilk yedek de korunur.
+- RLS yeniden yazımı bu pazarlama yayınının önkoşulu değildir. Ayrı en az yetkili çalışma rolü ve gerçek aday Prisma/HTTP testi hazırlanıyor. GlobalPUBLICizinler, sahiplik ve uygulama verileri değiştirilmez; uygulama geçişi ancak exactimage/geri dönüş paketiyle yapılır. Aşağıdaki eski “yeniden onay gerekiyor” ifadeleri tarihsel; kullanıcı mevcut sınırlı yayın ve güvenli geçişi zaten yetkilendirdi.
+- **Henüz tamamlanmayan:** VERSO ile gerçek ortak hesap/kart yazma entegrasyonu, mevcut kartların onaylı taşınması, Google Play üretim yayını ve gerçek mağaza ödeme ürünleri. Ürün sayfası bu işlerin tamamlandığını iddia etmez.
 
 ---
 

@@ -14,7 +14,7 @@
 
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { OrderStatus } from "@/lib/validation";
+import { publicCardContentAccess, publicCardContentCacheControl } from "@/lib/cards/content-access";
 import { errorJson } from "@/lib/api/v1/errors";
 import { applyCors, corsPreflight } from "@/lib/api/v1/cors";
 import { rateLimit } from "@/lib/api/v1/rate-limit";
@@ -53,16 +53,12 @@ export async function GET(
     where: { slug: params.slug },
     select: CARD_API_SELECT,
   });
-  if (!card || card.status !== OrderStatus.PUBLISHED) {
-    return applyCors(errorJson("not_found", "Card not found.", 404), req);
+  const access = publicCardContentAccess(card, { cookieHeader: req.headers.get("cookie") });
+  if (access === "not_found" || !card) {
+    return applyCors(errorJson("not_found", "Card not found.", 404, { "Cache-Control": "no-store" }), req);
   }
-
-  // Phase 8.1 — visibility enforcement.
-  // "private" cards are owner-only; all other callers receive a 404 so the
-  // existence of the slug is not leaked. "unlisted" cards are accessible by
-  // direct link (this endpoint) but excluded from discovery — no change here.
-  if (card.visibility === 'private') {
-    return applyCors(errorJson("not_found", "Card not found.", 404), req);
+  if (access === "password_required") {
+    return applyCors(errorJson("password_required", "Card is password protected.", 401, { "Cache-Control": "private, no-store" }), req);
   }
 
   return applyCors(
@@ -71,7 +67,7 @@ export async function GET(
       {
         status: 200,
         headers: {
-          "Cache-Control": "public, max-age=60, s-maxage=60, stale-while-revalidate=300",
+          "Cache-Control": publicCardContentCacheControl(card.cardData, "public, max-age=60, s-maxage=60, stale-while-revalidate=300"),
         },
       },
     ),

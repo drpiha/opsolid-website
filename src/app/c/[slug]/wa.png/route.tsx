@@ -25,6 +25,7 @@ import { CardDataSchema } from "@/lib/validation";
 import { absoluteAssetUrl } from "@/lib/storage";
 import { getSiteUrl } from "@/lib/stripe";
 import { publicCardUrlFor } from "@/lib/card-host";
+import { canPublishCardPreview } from "@/lib/card-share-visibility";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -47,8 +48,8 @@ export async function GET(
   const order = await prisma.cardOrder.findUnique({
     where: { slug: params.slug },
   });
-  if (!order || order.status !== "PUBLISHED") {
-    return new Response("Not found", { status: 404 });
+  if (!order || !canPublishCardPreview(order)) {
+    return new Response("Not found", { status: 404, headers: { "Cache-Control": "no-store" } });
   }
 
   const parsed = CardDataSchema.safeParse(order.cardData);
@@ -229,7 +230,7 @@ export async function GET(
       width: WIDTH,
       height: HEIGHT,
       headers: {
-        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=600",
+        "Cache-Control": "no-store, max-age=0",
       },
     }
   );

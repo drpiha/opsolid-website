@@ -3,7 +3,8 @@
 // user's account (B0.6 claim-card flow).
 //
 // Pre-conditions:
-//   - card.userId IS NULL (unclaimed)
+//   - account email has been verified by the server
+//   - card.userId IS NULL (unclaimed), or already belongs to this user
 //   - LOWER(TRIM(card.contactEmail)) === LOWER(user.email)
 //
 // On success: sets card.userId = user.id.
@@ -11,15 +12,19 @@
 //
 // Returns:
 //   200  { ok: true, card: { id, slug, name, status } }
-//   400  card already claimed
 //   401  not authenticated
-//   403  email mismatch
+//   403  claim unavailable (unverified, mismatched, or owned by another user)
 //   404  card not found
 // =============================================================================
 
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireUser, AuthError } from "@/lib/auth/require-user";
+import {
+  CARD_CLAIM_FORBIDDEN,
+  claimUnownedLegacyCard,
+  legacyCardClaimDecision,
+} from "@/lib/auth/card-claim";
 
 export const runtime = "nodejs";
 
@@ -37,6 +42,10 @@ export async function POST(
 
   const { id } = await params;
 
+  if (!user.emailVerifiedAt) {
+    return NextResponse.json(CARD_CLAIM_FORBIDDEN, { status: 403 });
+  }
+
   const card = await prisma.cardOrder.findUnique({
     where: { id },
     select: {
@@ -53,39 +62,25 @@ export async function POST(
     return NextResponse.json({ error: "not_found" }, { status: 404 });
   }
 
-  // Already claimed.
-  if (card.userId !== null) {
-    if (card.userId === user.id) {
-      // Idempotent — already owned by this user.
-      return NextResponse.json({
-        ok: true,
-        card: { id: card.id, slug: card.slug, name: card.contactName, status: card.status },
-      });
+  const decision = legacyCardClaimDecision(user, card);
+  if (decision !== "claimable" && decision !== "owned") {
+    return NextResponse.json(CARD_CLAIM_FORBIDDEN, { status: 403 });
+  }
+
+  if (decision === "claimable") {
+    const outcome = await claimUnownedLegacyCard(prisma, card.id, user.id, card.contactEmail);
+    if (outcome === "unavailable") {
+      return NextResponse.json(CARD_CLAIM_FORBIDDEN, { status: 403 });
     }
-    return NextResponse.json({ error: "already_claimed" }, { status: 400 });
   }
-
-  // Email match verification (case-insensitive, trim-safe).
-  const storedEmail = card.contactEmail.trim().toLowerCase();
-  const userEmail = user.email.toLowerCase();
-  if (storedEmail !== userEmail) {
-    return NextResponse.json({ error: "email_mismatch" }, { status: 403 });
-  }
-
-  // Claim: set userId.
-  const updated = await prisma.cardOrder.update({
-    where: { id },
-    data: { userId: user.id },
-    select: { id: true, slug: true, contactName: true, status: true },
-  });
 
   return NextResponse.json({
     ok: true,
     card: {
-      id: updated.id,
-      slug: updated.slug,
-      name: updated.contactName,
-      status: updated.status,
+      id: card.id,
+      slug: card.slug,
+      name: card.contactName,
+      status: card.status,
     },
   });
 }

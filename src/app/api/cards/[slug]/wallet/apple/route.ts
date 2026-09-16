@@ -14,7 +14,8 @@
 
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { CardDataSchema, OrderStatus } from "@/lib/validation";
+import { canPublishCardPreview } from "@/lib/card-share-visibility";
+import { CardDataSchema } from "@/lib/validation";
 import { buildApplePass } from "@/lib/wallet/apple";
 import { WalletNotConfiguredError } from "@/lib/wallet/config";
 import { getSiteUrl } from "@/lib/stripe";
@@ -51,8 +52,8 @@ export async function GET(
     where: { slug: params.slug },
   });
 
-  if (!order || order.status !== OrderStatus.PUBLISHED) {
-    return NextResponse.json({ error: "not_found" }, { status: 404 });
+  if (!order || !canPublishCardPreview(order)) {
+    return NextResponse.json({ error: "not_found" }, { status: 404, headers: { "Cache-Control": "no-store" } });
   }
 
   const parsed = CardDataSchema.safeParse(order.cardData);

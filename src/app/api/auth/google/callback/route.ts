@@ -19,6 +19,7 @@ import { signAccessToken } from "@/lib/auth/jwt";
 import { setRefreshCookie, serializeCookie } from "@/lib/auth/cookies";
 import { hashIp } from "@/lib/auth/ip-hash";
 import { clientIp } from "@/lib/auth/rate-limit";
+import { verifyEmailOwnership, verifiedAuthenticationTime } from "@/lib/auth/email-verification";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -162,21 +163,21 @@ export async function GET(req: NextRequest) {
       },
     });
   } else if (!user.emailVerifiedAt) {
-    // Mark verified if not already (Google has verified the email)
-    await prisma.user.update({
-      where: { id: user.id },
-      data: { emailVerifiedAt: new Date() },
-    });
+    const userId = user.id;
+    user = await prisma.$transaction((tx) => verifyEmailOwnership(tx, userId));
   }
+  if (!user) return errorRedirect(stateLocale, "oauth_invalid");
 
   // Issue session
+  const authenticatedAt = verifiedAuthenticationTime(user.emailVerifiedAt);
   const ip = clientIp(req);
   const session = await issueSession(
     user.id,
     req.headers.get("user-agent"),
     hashIp(ip),
+    authenticatedAt,
   );
-  const accessToken = await signAccessToken(user.id);
+  const accessToken = await signAccessToken(user.id, authenticatedAt);
 
   // Clear the state cookie in every response
   const cookieClear = clearStateCookie();

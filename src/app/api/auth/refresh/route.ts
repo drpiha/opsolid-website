@@ -106,7 +106,7 @@ export async function POST(req: Request) {
     return res;
   }
 
-  const accessToken = await signAccessToken(session.user.id);
+  const accessToken = await signAccessToken(session.user.id, rotated.authenticatedAt);
 
   const res = NextResponse.json(
     {

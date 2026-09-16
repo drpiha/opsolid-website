@@ -62,6 +62,7 @@ function getSecret(): Uint8Array {
 
 export interface AccessTokenClaims {
   userId: string;
+  authenticatedAt: number;
 }
 
 /**
@@ -70,12 +71,12 @@ export interface AccessTokenClaims {
  * stale role/permission data. (Stateless tokens that contain roles are a
  * common bug vector in long-lived JWTs.)
  */
-export async function signAccessToken(userId: string): Promise<string> {
+export async function signAccessToken(userId: string, authenticatedAt = new Date()): Promise<string> {
   if (!userId || typeof userId !== "string") {
     throw new Error("signAccessToken: userId required");
   }
   const now = Math.floor(Date.now() / 1000);
-  return new SignJWT({ typ: "access" })
+  return new SignJWT({ typ: "access", auth_time_ms: authenticatedAt.getTime() })
     .setProtectedHeader({ alg: ALG, typ: "JWT" })
     .setSubject(userId)
     .setIssuer(ISSUER)
@@ -102,7 +103,9 @@ export async function verifyAccessToken(
     });
     if (payload.typ !== "access") return null;
     if (typeof payload.sub !== "string" || payload.sub.length === 0) return null;
-    return { userId: payload.sub };
+    const authenticatedAt = payload.auth_time_ms ?? (typeof payload.iat === "number" ? payload.iat * 1000 : null);
+    if (typeof authenticatedAt !== "number" || !Number.isFinite(authenticatedAt)) return null;
+    return { userId: payload.sub, authenticatedAt };
   } catch (err) {
     // Differentiate only for logging hygiene; caller always sees null.
     if (

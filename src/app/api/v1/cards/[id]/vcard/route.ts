@@ -22,15 +22,13 @@
 // =============================================================================
 
 import { NextResponse } from "next/server";
-import { headers } from "next/headers";
 import { prisma } from "@/lib/prisma";
-import { CardDataSchema, OrderStatus } from "@/lib/validation";
+import { CardDataSchema } from "@/lib/validation";
 import { applyCors, corsPreflight } from "@/lib/api/v1/cors";
 import { errorJson } from "@/lib/api/v1/errors";
 import { absoluteAssetUrl } from "@/lib/storage";
 import { getSiteUrl } from "@/lib/stripe";
-import { constantTimeEquals } from "@/lib/constantTime";
-import { unlockCookieName } from "@/lib/cards/unlock-cookie";
+import { publicCardContentAccess, publicCardContentCacheControl } from "@/lib/cards/content-access";
 import { formatVCard, vcardDownloadFilename } from "@/lib/vcard-public";
 
 export const runtime = "nodejs";
@@ -59,12 +57,12 @@ export async function GET(
     where: { id: params.id },
   });
 
-  if (!order || order.status !== OrderStatus.PUBLISHED) {
-    return applyCors(errorJson("not_found", "Card not found.", 404), req);
+  const access = publicCardContentAccess(order, { cookieHeader: req.headers.get("cookie"), ownerToken: new URL(req.url).searchParams.get("token") });
+  if (access === "not_found" || !order) {
+    return applyCors(errorJson("not_found", "Card not found.", 404, { "Cache-Control": "no-store" }), req);
   }
-  // Phase 8.1 — private cards must not leak vCard data either.
-  if (order.visibility === "private") {
-    return applyCors(errorJson("not_found", "Card not found.", 404), req);
+  if (access === "password_required") {
+    return applyCors(errorJson("password_required", "Card is password protected.", 401, { "Cache-Control": "private, no-store" }), req);
   }
 
   const parsed = CardDataSchema.safeParse(order.cardData);
@@ -75,35 +73,6 @@ export async function GET(
     );
   }
   const cardData = parsed.data;
-
-  // Password gate — same logic as `/c/[slug]/page.tsx`. We accept either a
-  // ?token=<editToken> owner bypass or the `verso_unlock_<slug>` cookie set
-  // when the visitor entered the password.
-  const cardDataRaw = cardData as Record<string, unknown>;
-  const passwordHash =
-    typeof cardDataRaw.password === "string" && cardDataRaw.password.length > 0
-      ? (cardDataRaw.password as string)
-      : null;
-  if (passwordHash) {
-    const url = new URL(req.url);
-    const token = url.searchParams.get("token") ?? "";
-    const isOwner =
-      Boolean(token) &&
-      Boolean(order.editToken) &&
-      constantTimeEquals(token, order.editToken!);
-    const cookieHeader = (await headers()).get("cookie") ?? "";
-    const cookieName = unlockCookieName(order.slug ?? "");
-    const hasUnlockCookie = cookieHeader
-      .split(";")
-      .map((c) => c.trim())
-      .some((c) => c.startsWith(`${cookieName}=`));
-    if (!isOwner && !hasUnlockCookie) {
-      return applyCors(
-        errorJson("password_required", "Card is password protected.", 401),
-        req,
-      );
-    }
-  }
 
   // Photo: inline-embed when small (< 200 KB), otherwise skip — better to
   // ship a slim .vcf than blow up the import dialog with a multi-MB blob.
@@ -161,7 +130,7 @@ export async function GET(
       "Content-Disposition": `attachment; filename="${vcardDownloadFilename(order.slug ?? "card")}"`,
       // 5-minute cache — cards may update, but a freshly-edited card whose
       // owner re-shares the link benefits from a quick refresh on their end.
-      "Cache-Control": "public, max-age=300",
+      "Cache-Control": publicCardContentCacheControl(order.cardData, "public, max-age=300"),
     },
   });
 }

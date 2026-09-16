@@ -12,5 +12,6 @@ export default function SignupPage({
 }: {
   params: { locale: string };
 }) {
-  return <SignupClient locale={params.locale} />;
+  const googleEnabled = !!process.env.GOOGLE_CLIENT_ID && !!process.env.GOOGLE_CLIENT_SECRET;
+  return <SignupClient locale={params.locale} googleEnabled={googleEnabled} />;
 }

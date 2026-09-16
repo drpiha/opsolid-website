@@ -17,7 +17,7 @@
 
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { OrderStatus } from "@/lib/validation";
+import { canPublishCardPreview } from "@/lib/card-share-visibility";
 import { renderQr } from "@/lib/qr/styled-server";
 import { absoluteAssetUrl } from "@/lib/storage";
 import { getSiteUrl } from "@/lib/stripe";
@@ -53,8 +53,8 @@ export async function GET(
   const order = await prisma.cardOrder.findUnique({
     where: { slug: params.slug },
   });
-  if (!order || order.status !== OrderStatus.PUBLISHED) {
-    return new NextResponse("Not found", { status: 404 });
+  if (!order || !canPublishCardPreview(order)) {
+    return new NextResponse("Not found", { status: 404, headers: { "Cache-Control": "no-store" } });
   }
 
   const saved = (order.qrStyle ?? null) as SavedQrStyle | null;
@@ -142,7 +142,7 @@ export async function GET(
         "Content-Type": contentType,
         // 5 min CDN, 1h SWR — a typical user shares the card a few times in
         // quick succession; we want the second share to hit cache.
-        "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600",
+        "Cache-Control": "no-store, max-age=0",
       },
     });
   } catch (err) {

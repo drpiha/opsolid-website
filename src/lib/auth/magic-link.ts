@@ -22,6 +22,7 @@
 
 import { randomBytes, createHash } from "node:crypto";
 import { prisma } from "@/lib/prisma";
+import { verifyEmailOwnership } from "./email-verification";
 
 const MAGIC_TOKEN_BYTES = 32;
 const DEFAULT_TTL_MINUTES = Number(process.env.MAGIC_LINK_TTL_MINUTES ?? "15");
@@ -168,14 +169,7 @@ export async function consumeMagicLink(
       if (consume.count === 0) {
         throw new Error("CONSUME_RACE");
       }
-      // Stamp emailVerifiedAt (idempotent — only set if null).
-      if (!tokenRow.user.emailVerifiedAt) {
-        await tx.user.update({
-          where: { id: tokenRow.user.id },
-          data: { emailVerifiedAt: new Date() },
-        });
-      }
-      return tx.user.findUnique({ where: { id: tokenRow.user.id } });
+      return verifyEmailOwnership(tx, tokenRow.user.id);
     });
     return result;
   } catch {

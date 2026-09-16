@@ -20,6 +20,7 @@ import { prisma } from "@/lib/prisma";
 import type { User } from "@/generated/prisma";
 import { verifyAccessToken } from "./jwt";
 import { getSessionUser, REFRESH_COOKIE_NAME } from "./session";
+import { authenticationIsCurrent } from "./email-verification";
 
 export class AuthError extends Error {
   readonly status: number;
@@ -55,6 +56,7 @@ export async function requireUser(req: Request): Promise<User> {
     if (!claims) throw new AuthError("invalid_token");
     const user = await prisma.user.findUnique({ where: { id: claims.userId } });
     if (!user) throw new AuthError("user_not_found");
+    if (!authenticationIsCurrent(claims.authenticatedAt, user.emailVerifiedAt)) throw new AuthError("session_invalid");
     return user;
   }
 

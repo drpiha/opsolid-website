@@ -11,6 +11,7 @@
 
 import * as React from "react";
 import { BarChart3, LogIn, Mail, Share2, X } from "lucide-react";
+import { OpSoCompanion } from "./OpSoCompanion";
 
 interface Labels {
   title: string;
@@ -29,6 +30,7 @@ interface Labels {
 interface Props {
   /** Per-card storage key suffix so a second card shows the tour again. */
   cardKey: string;
+  locale: "de" | "en" | "tr";
   manageHref: string;
   /** When set (unclaimed card), invites the owner to log in and own the card
    *  on their account so it's manageable from any device without the token. */
@@ -36,7 +38,7 @@ interface Props {
   labels: Labels;
 }
 
-export function OwnerWelcome({ cardKey, manageHref, loginHref, labels }: Props) {
+export function OwnerWelcome({ cardKey, locale, manageHref, loginHref, labels }: Props) {
   const storageKey = `opsolid-owner-welcome-${cardKey}`;
   const [open, setOpen] = React.useState(false);
 
@@ -79,7 +81,7 @@ export function OwnerWelcome({ cardKey, manageHref, loginHref, labels }: Props) 
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-50 px-3 pb-[max(12px,env(safe-area-inset-bottom))] sm:inset-x-auto sm:bottom-6 sm:right-6 sm:max-w-sm">
-      <div className="rounded-3xl border border-neutral-200 bg-white p-5 shadow-[0_24px_64px_-16px_rgba(20,18,15,0.35)]">
+      <div className="max-h-[85dvh] overflow-y-auto rounded-3xl border border-neutral-200 bg-white p-5 shadow-[0_24px_64px_-16px_rgba(20,18,15,0.35)]">
         <div className="flex items-start justify-between gap-3">
           <p className="font-semibold text-neutral-900">🎉 {labels.title}</p>
           <button
@@ -142,6 +144,7 @@ export function OwnerWelcome({ cardKey, manageHref, loginHref, labels }: Props) 
             </span>
           </a>
         )}
+        <OpSoCompanion locale={locale} compact />
       </div>
     </div>
   );

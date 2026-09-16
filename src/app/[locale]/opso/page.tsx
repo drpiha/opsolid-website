@@ -3,7 +3,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getOpsoContent } from "@/content/opso";
+import { getOpsoPhysicalCardContent } from "@/content/opso-physical-card";
 import { OPSO_DEMO_PROFILES } from "@/content/opso-demo-assets";
+import physicalNfcCard from "@/assets/opso/physical-nfc-black-concept.png";
 import { SITE_CONFIG } from "@/lib/constants";
 import { isLocale, PUBLIC_LOCALES } from "@/lib/i18n";
 import styles from "./page.module.css";
@@ -36,6 +38,7 @@ export function generateMetadata({ params }: Props): Metadata {
 export default function OpsoPage({ params }: Props) {
   if (!isLocale(params.locale)) notFound();
   const c = getOpsoContent(params.locale);
+  const physicalCard = getOpsoPhysicalCardContent(params.locale);
   return (
     <article className={styles.page}>
       <div className="wrap">
@@ -86,6 +89,34 @@ export default function OpsoPage({ params }: Props) {
             {[["Free", "1"], ["Pro", "10"], ["Studio", "50"]].map(([name, count], i) => <div className={styles.plan} key={name}><div className={styles.planHeader}><h3>{name}</h3><span>{i === 0 ? c.plans.free : c.plans.soon}</span></div><strong className={styles.count}>{count}</strong><p>{c.plans.unit}</p><p className={styles.planStatus}>{i === 0 ? c.plans.included : c.plans.coming}</p></div>)}
           </div>
           <p className={styles.note}>{c.plans.note}</p>
+        </section>
+
+        <section className={styles.physicalCard} aria-labelledby="physical-card-heading">
+          <figure className={styles.physicalCardVisual}>
+            <Image
+              src={physicalNfcCard}
+              alt={physicalCard.imageAlt}
+              sizes="(max-width: 800px) 100vw, 56vw"
+            />
+            <figcaption>{physicalCard.conceptNote}</figcaption>
+          </figure>
+          <div className={styles.physicalCardCopy}>
+            <p className={styles.physicalCardStatus}>{physicalCard.status}</p>
+            <h2 id="physical-card-heading">{physicalCard.title}</h2>
+            <p className={styles.physicalCardIntro}>{physicalCard.intro}</p>
+            <ul className={styles.physicalCardPoints}>
+              {physicalCard.points.map((point) => <li key={point}>{point}</li>)}
+            </ul>
+            <div className={styles.physicalCardPrice}>
+              <span>{physicalCard.priceLabel}</span>
+              <strong>{physicalCard.price}</strong>
+              <small>{physicalCard.priceDetail}</small>
+            </div>
+            <p className={styles.physicalCardNote}>{physicalCard.priceNote}</p>
+            <Link className="btn btn-primary" href={`/${params.locale}/contact`}>
+              {physicalCard.cta}<span aria-hidden="true">↗</span>
+            </Link>
+          </div>
         </section>
 
         <section className={styles.availability} id="availability" aria-labelledby="availability-heading">

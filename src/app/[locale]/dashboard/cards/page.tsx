@@ -10,6 +10,7 @@ import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { getSessionUser, REFRESH_COOKIE_NAME } from "@/lib/auth/session";
 import { prisma } from "@/lib/prisma";
+import { findClaimableLegacyCards } from "@/lib/auth/card-claim";
 import { CardListClient } from "./CardListClient";
 
 export const runtime = "nodejs";
@@ -36,7 +37,7 @@ export default async function DashboardCardsPage({ params }: Props) {
   }
 
   // Owned cards + claimable cards fetched in parallel.
-  const [cards, claimableCandidates] = await Promise.all([
+  const [cards, claimable] = await Promise.all([
     prisma.cardOrder.findMany({
       where: { userId: user.id },
       orderBy: { createdAt: "desc" },
@@ -52,32 +53,8 @@ export default async function DashboardCardsPage({ params }: Props) {
         _count: { select: { views: true } },
       },
     }),
-    // B0.6: unclaimed cards whose contactEmail matches the user (case-insensitive).
-    prisma.cardOrder.findMany({
-      where: {
-        userId: null,
-        contactEmail: {
-          equals: user.email,
-          mode: "insensitive",
-        },
-      },
-      select: {
-        id: true,
-        slug: true,
-        contactName: true,
-        status: true,
-        createdAt: true,
-        contactEmail: true,
-      },
-      orderBy: { createdAt: "desc" },
-    }),
+    findClaimableLegacyCards(prisma, user),
   ]);
-
-  // Secondary trim guard for claimable (old data may have whitespace).
-  const normalizedUserEmail = user.email.toLowerCase();
-  const claimable = claimableCandidates.filter(
-    (c) => c.contactEmail.trim().toLowerCase() === normalizedUserEmail,
-  );
 
   // Serialize dates — cannot pass Date objects across server→client boundary.
   const serializedCards = cards.map((c) => ({
