@@ -201,6 +201,13 @@ class IsolatedFlow(unittest.TestCase):
         self.assertFalse(result["ok"])
         self.assertEqual(result["code"], "candidate_application_failed")
 
+    def test_finite_allowlisted_candidate_stage_is_retained_without_raw_errors(self):
+        def callback(*_):
+            raise role.backup.ProofError("candidate_prisma_discovery_failed")
+        result, _ = self.run_flow(callback, IMAGE)
+        self.assertFalse(result["ok"])
+        self.assertEqual(result["code"], "candidate_prisma_discovery_failed")
+
 
 if __name__ == "__main__":
     unittest.main()
