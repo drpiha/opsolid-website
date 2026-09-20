@@ -1,0 +1,97 @@
+name: Build runtime image (artifact only)
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/build-runtime-image.yml
+      - scripts/ops/runtime-image-eligibility.cjs
+      - scripts/ops/build-runtime-image.cjs
+      - scripts/tests/runtime-image.test.cjs
+  push:
+    branches: [main]
+    paths:
+      - .github/workflows/build-runtime-image.yml
+      - scripts/ops/runtime-image-eligibility.cjs
+      - scripts/ops/build-runtime-image.cjs
+      - scripts/tests/runtime-image.test.cjs
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: Exact current main commit (40 lowercase hex characters)
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: runtime-image-${{ github.event_name }}-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  contracts:
+    if: ${{ github.event_name != 'workflow_dispatch' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22.23.2'
+      - name: Verify source-only runtime artifact contracts
+        run: node --test scripts/tests/runtime-image.test.cjs
+  image:
+    if: ${{ github.event_name == 'workflow_dispatch' && github.repository == 'drpiha/opsolid-website' && github.ref == 'refs/heads/main' && github.actor == github.repository_owner && github.triggering_actor == github.repository_owner }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22.23.2'
+      - name: Check artifact workflow contracts
+        run: node --test scripts/tests/runtime-image.test.cjs
+      - name: Require exact current main and latest successful source verification
+        id: gate
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
+        env:
+          TARGET_COMMIT: ${{ inputs.commit }}
+        with:
+          script: |
+            const { validateDispatch, validateEvidence } = require('./scripts/ops/runtime-image-eligibility.cjs');
+            const request = { eventName: context.eventName, ref: context.ref, sha: context.sha,
+              repository: process.env.GITHUB_REPOSITORY, repositoryId: process.env.GITHUB_REPOSITORY_ID,
+              actor: context.actor, triggeringActor: process.env.GITHUB_TRIGGERING_ACTOR, commit: process.env.TARGET_COMMIT };
+            validateDispatch(request);
+            const main = await github.rest.git.getRef({ ...context.repo, ref: 'heads/main' });
+            const runs = await github.rest.actions.listWorkflowRuns({ ...context.repo, workflow_id: 'deploy.yml',
+              branch: 'main', event: 'push', head_sha: request.commit, per_page: 20 });
+            const verified = validateEvidence(request, main.data, runs.data);
+            core.setOutput('verification-run-id', verified.runId);
+            core.setOutput('verification-run-attempt', String(verified.runAttempt));
+      - name: Build committed Dockerfile and export bounded image archive
+        env:
+          TARGET_COMMIT: ${{ inputs.commit }}
+          VERIFIED_RUN_ID: ${{ steps.gate.outputs.verification-run-id }}
+          VERIFIED_RUN_ATTEMPT: ${{ steps.gate.outputs.verification-run-attempt }}
+        run: node scripts/ops/build-runtime-image.cjs
+      - name: Retain image and finite provenance for reviewed private receive
+        if: ${{ success() }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: opsolid-image-${{ inputs.commit }}-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            runtime-artifact/image.tar.gz
+            runtime-artifact/metadata.json
+            runtime-artifact/SHA256SUMS
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 3
