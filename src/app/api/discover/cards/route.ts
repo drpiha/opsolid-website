@@ -21,6 +21,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Prisma } from "@/generated/prisma";
 import { prisma } from "@/lib/prisma";
+import { canPublishCardPreview } from "@/lib/card-share-visibility";
 import { OrderStatus } from "@/lib/validation";
 import { normalizeTagSlug } from "@/lib/discover/tags";
 import { hitWindow, clientIp } from "@/lib/auth/rate-limit";
@@ -47,6 +48,8 @@ const MAX_TAGS_PER_QUERY = 8;
 // Row shape returned by both the raw-SQL search path and the Prisma
 // findMany path. Kept to a single shape so the mapper can stay simple.
 type DiscoverRow = {
+  status: string;
+  visibility: string;
   id: string;
   slug: string | null;
   contactName: string;
@@ -191,6 +194,8 @@ export async function GET(req: NextRequest) {
 
     cards = await prisma.$queryRaw<DiscoverRow[]>`
       SELECT
+        co.status,
+        co.visibility,
         co.id,
         co.slug,
         co.contact_name      AS "contactName",
@@ -204,6 +209,7 @@ export async function GET(req: NextRequest) {
       FROM card_orders co
       WHERE co.status = ${OrderStatus.PUBLISHED}
         AND co.visibility = 'public'
+        AND COALESCE(co.card_data->>'password', '') = ''
         AND ${cursorPublishedAt ? Prisma.sql`(co.published_at < ${cursorPublishedAt} OR (co.published_at = ${cursorPublishedAt} AND co.id < ${cursor}))` : Prisma.sql`TRUE`}
         AND ${language ? Prisma.sql`${language} = ANY(co.languages)` : Prisma.sql`TRUE`}
         AND ${openToNetworking !== undefined ? Prisma.sql`co.open_to_networking = ${openToNetworking}` : Prisma.sql`TRUE`}
@@ -232,6 +238,13 @@ export async function GET(req: NextRequest) {
     const where: Prisma.CardOrderWhereInput = {
       status: OrderStatus.PUBLISHED,
       visibility: "public",
+      // Filter before TAKE so protected rows cannot underfill the page or
+      // become a public cursor. AnyNull covers JSON null and a missing path.
+      // Keep this AND separate from the tag any-of OR assembled below.
+      AND: [{ OR: [
+        { cardData: { path: ["password"], equals: Prisma.AnyNull } },
+        { cardData: { path: ["password"], equals: "" } },
+      ] }],
     };
     if (language) where.languages = { has: language };
     if (openToNetworking !== undefined) where.openToNetworking = openToNetworking;
@@ -259,6 +272,8 @@ export async function GET(req: NextRequest) {
       ...(cursor ? { skip: 1, cursor: { id: cursor } } : {}),
       orderBy: { publishedAt: "desc" },
       select: {
+        status: true,
+        visibility: true,
         id: true,
         slug: true,
         contactName: true,
@@ -281,7 +296,7 @@ export async function GET(req: NextRequest) {
   // --- Map to stable public shape ---
   // Callers must NOT depend on the shape of cardData — extract only what is
   // needed here so the serialization contract is explicit and versioned.
-  const result = items.map((c) => {
+  const result = items.filter(canPublishCardPreview).map((c) => {
     const data = (c.cardData ?? {}) as Record<string, unknown>;
     const tags = Array.isArray(data.tags)
       ? (data.tags as unknown[]).filter(

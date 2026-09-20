@@ -25,6 +25,7 @@ import { prisma } from "@/lib/prisma";
 import type { User } from "@/generated/prisma";
 import { verifyAccessToken } from "@/lib/auth/jwt";
 import { AuthError } from "@/lib/auth/require-user";
+import { authenticationIsCurrent } from "@/lib/auth/email-verification";
 
 const BEARER_PREFIX = /^Bearer\s+/i;
 
@@ -46,6 +47,7 @@ export async function requireBearerUser(req: Request): Promise<User> {
 
   const user = await prisma.user.findUnique({ where: { id: claims.userId } });
   if (!user) throw new AuthError("user_not_found");
+  if (!authenticationIsCurrent(claims.authenticatedAt, user.emailVerifiedAt)) throw new AuthError("session_invalid");
   return user;
 }
 

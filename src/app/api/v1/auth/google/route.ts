@@ -13,6 +13,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { issueSession } from "@/lib/auth/session";
+import { verifyEmailOwnership, verifiedAuthenticationTime } from "@/lib/auth/email-verification";
 import { signAccessToken } from "@/lib/auth/jwt";
 import { hashIp } from "@/lib/auth/ip-hash";
 import { hitWindow, clientIp } from "@/lib/auth/rate-limit";
@@ -131,8 +132,12 @@ export async function POST(req: NextRequest) {
     // one yet. We deliberately DON'T overwrite an existing custom avatar —
     // the user may have uploaded their own; respecting their choice beats
     // forcing the latest Google headshot on every login.
-    const patch: { emailVerifiedAt?: Date; image?: string } = {};
-    if (!user.emailVerifiedAt) patch.emailVerifiedAt = new Date();
+    if (!user.emailVerifiedAt) {
+      const userId = user.id;
+      user = await prisma.$transaction((tx) => verifyEmailOwnership(tx, userId));
+    }
+    if (!user) return applyCors(errorJson("invalid_token", "Google sign-in could not be completed.", 401), req);
+    const patch: { image?: string } = {};
     if (!user.image && picture) patch.image = picture;
     if (Object.keys(patch).length > 0) {
       user = await prisma.user.update({
@@ -142,12 +147,14 @@ export async function POST(req: NextRequest) {
     }
   }
 
+  const authenticatedAt = verifiedAuthenticationTime(user.emailVerifiedAt);
   const session = await issueSession(
     user.id,
     req.headers.get("user-agent"),
     hashIp(ip),
+    authenticatedAt,
   );
-  const accessToken = await signAccessToken(user.id);
+  const accessToken = await signAccessToken(user.id, authenticatedAt);
 
   return applyCors(
     NextResponse.json(

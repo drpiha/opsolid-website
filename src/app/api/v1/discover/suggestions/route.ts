@@ -20,6 +20,7 @@
 
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { canPublishCardPreview } from "@/lib/card-share-visibility";
 import { AuthError } from "@/lib/auth/require-user";
 import { OrderStatus } from "@/lib/validation";
 import { requireBearerUser } from "@/lib/api/v1/bearer-only";
@@ -32,7 +33,6 @@ export const dynamic = "force-dynamic";
 
 const RATE_MAX = 60;
 const RATE_WINDOW_MS = 60 * 60 * 1000;
-const CACHE_TTL_MS = 60 * 1000;
 const RESULT_LIMIT = 12;
 const RECENCY_WINDOW_MS = 60 * 24 * 60 * 60 * 1000; // 60 days
 
@@ -49,10 +49,6 @@ const W_GEO = 0.1;
 const MUTUAL_CAP = 5;
 const SECTOR_CAP = 5;
 
-// In-memory cache. Keyed by `${userId}` -> { ts, body }.
-// Simple Map; never grows past O(active users) and gets cleaned by TTL on read.
-type CacheEntry = { ts: number; body: SuggestionsBody };
-const cache = new Map<string, CacheEntry>();
 
 interface SuggestionItem {
   id: string;
@@ -97,17 +93,7 @@ export async function GET(req: Request) {
       );
     }
 
-    // --- Cache hit fast path. ---
-    const cached = cache.get(user.id);
-    if (cached && Date.now() - cached.ts < CACHE_TTL_MS) {
-      return applyCors(
-        NextResponse.json(cached.body, {
-          status: 200,
-          headers: { "Cache-Control": "private, max-age=60" },
-        }),
-        req,
-      );
-    }
+    // Recheck current visibility on every request; cached people may turn private.
 
     // --- Resolve the requester's "self profile" used for scoring. ---
     // We need: the requester's own card ids (to exclude self), the set of
@@ -149,11 +135,10 @@ export async function GET(req: Request) {
     const hasAnySignal = mySaved.length > 0 || myCity.length > 0 || myTags.length > 0;
     if (!hasAnySignal) {
       const empty: SuggestionsBody = { items: [] };
-      cache.set(user.id, { ts: Date.now(), body: empty });
       return applyCors(
         NextResponse.json(empty, {
           status: 200,
-          headers: { "Cache-Control": "private, max-age=60" },
+          headers: { "Cache-Control": "private, no-store" },
         }),
         req,
       );
@@ -173,6 +158,8 @@ export async function GET(req: Request) {
       orderBy: { publishedAt: "desc" },
       take: 200,
       select: {
+        status: true,
+        visibility: true,
         id: true,
         slug: true,
         contactName: true,
@@ -184,13 +171,13 @@ export async function GET(req: Request) {
       },
     });
 
-    if (candidates.length === 0) {
+    const visibleCandidates = candidates.filter(canPublishCardPreview);
+    if (visibleCandidates.length === 0) {
       const body: SuggestionsBody = { items: [] };
-      cache.set(user.id, { ts: Date.now(), body });
       return applyCors(
         NextResponse.json(body, {
           status: 200,
-          headers: { "Cache-Control": "private, max-age=60" },
+          headers: { "Cache-Control": "private, no-store" },
         }),
         req,
       );
@@ -207,7 +194,7 @@ export async function GET(req: Request) {
     // savers are users we ourselves have a saved-card relationship with.
     //
     // Step 1: every (savingUserId, savedCardOrderId) pair touching the pool.
-    const candidateIds = candidates.map((c) => c.id);
+    const candidateIds = visibleCandidates.map((c) => c.id);
     const candidateSaves = await prisma.savedCard.findMany({
       where: { cardOrderId: { in: candidateIds } },
       select: { userId: true, cardOrderId: true },
@@ -240,7 +227,7 @@ export async function GET(req: Request) {
 
     // --- Score each candidate. ---
     const now = Date.now();
-    const scored: SuggestionItem[] = candidates.map((c) => {
+    const scored: SuggestionItem[] = visibleCandidates.map((c) => {
       const data = (c.cardData ?? {}) as Record<string, unknown>;
       const tags = readTags(c.cardData);
 
@@ -293,12 +280,11 @@ export async function GET(req: Request) {
       .slice(0, RESULT_LIMIT);
 
     const body: SuggestionsBody = { items: ranked };
-    cache.set(user.id, { ts: Date.now(), body });
 
     return applyCors(
       NextResponse.json(body, {
         status: 200,
-        headers: { "Cache-Control": "private, max-age=60" },
+        headers: { "Cache-Control": "private, no-store" },
       }),
       req,
     );

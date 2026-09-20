@@ -17,11 +17,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createHash } from "node:crypto";
 import { prisma } from "@/lib/prisma";
+import { canPublishCardPreview } from "@/lib/card-share-visibility";
 import { putAsset, STORAGE_LIMITS } from "@/lib/storage";
 import { resolveAssetUrl } from "@/lib/cardAssetUrl";
 import {
   AlbumUploadSchema,
-  OrderStatus,
 } from "@/lib/validation";
 import { requireEditToken, EditTokenError } from "@/lib/auth/edit-token";
 import { renderAlbumPhotoPending } from "@/lib/email/templates/album-photo-pending";
@@ -106,10 +106,10 @@ export async function GET(
 
   const order = await prisma.cardOrder.findUnique({
     where: { slug },
-    select: { id: true, status: true },
+    select: { id: true, status: true, visibility: true, cardData: true },
   });
-  if (!order || order.status !== OrderStatus.PUBLISHED) {
-    return NextResponse.json({ error: "Karte nicht gefunden." }, { status: 404 });
+  if (!order || !canPublishCardPreview(order)) {
+    return NextResponse.json({ error: "Karte nicht gefunden." }, { status: 404, headers: { "Cache-Control": "no-store" } });
   }
 
   const where = { cardOrderId: order.id, status: "APPROVED" } as const;
@@ -179,14 +179,16 @@ export async function POST(
     select: {
       id: true,
       status: true,
+      visibility: true,
+      cardData: true,
       editToken: true,
       contactEmail: true,
       contactName: true,
       locale: true,
     },
   });
-  if (!order || order.status !== OrderStatus.PUBLISHED) {
-    return NextResponse.json({ error: "Karte nicht gefunden." }, { status: 404 });
+  if (!order || !canPublishCardPreview(order)) {
+    return NextResponse.json({ error: "Karte nicht gefunden." }, { status: 404, headers: { "Cache-Control": "no-store" } });
   }
 
   // Owner branch — validate edit token before doing any work.

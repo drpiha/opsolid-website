@@ -24,6 +24,8 @@ ENV NEXT_TELEMETRY_DISABLED=1
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npx prisma generate
+# The build includes a fail-closed check for source maps in the public roots
+# copied into the runner below. Sentry uploads, when configured, finish first.
 RUN npm run build
 
 # --- Stage 3: runner (minimal) -----------------------------------------------
@@ -57,18 +59,8 @@ COPY --from=builder --chown=nextjs:nodejs \
 # but we copy it explicitly to be safe.
 COPY --from=builder --chown=nextjs:nodejs /app/src/generated ./src/generated
 
-# Ship the raw SQL files alongside the app so the host-side db-bootstrap.sh
-# can `docker cp` them into the db container at deploy time (no Prisma CLI
-# in the runtime image → no `effect` module crash on boot).
-COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
-
-# Ship operational scripts (seed-admin, seed-templates, etc.) so operators
-# can run them via `docker exec opsolid-app npx tsx scripts/<name>.ts`.
-# These are not on the request path; they're tools for granting admin,
-# seeding fixtures, anonymising PII, etc.
-COPY --from=builder --chown=nextjs:nodejs /app/scripts ./scripts
-COPY --from=builder --chown=nextjs:nodejs /app/tsconfig.json ./tsconfig.json
-COPY --from=builder --chown=nextjs:nodejs /app/src/lib ./src/lib
+# Runtime ships only traced application dependencies and generated Prisma.
+# Migration/seed/admin tools remain operator-side, outside the serving image.
 
 USER nextjs
 EXPOSE 3000

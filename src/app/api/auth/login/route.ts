@@ -99,7 +99,11 @@ export async function POST(req: Request) {
     );
   }
 
+  const credentialReadAt = new Date();
   const user = await prisma.user.findUnique({ where: { email } });
+  // An unverified snapshot must never gain authority after a concurrent email
+  // proof commits, even if its verification timestamp was allocated earlier.
+  const authenticatedAt = user?.emailVerifiedAt ? credentialReadAt : new Date(0);
 
   // Always verify against SOMETHING — when no user, verify against the
   // dummy hash so timing / CPU matches the real path.
@@ -126,8 +130,9 @@ export async function POST(req: Request) {
     user.id,
     req.headers.get("user-agent"),
     hashIp(ip),
+    authenticatedAt,
   );
-  const accessToken = await signAccessToken(user.id);
+  const accessToken = await signAccessToken(user.id, authenticatedAt);
 
   const res = NextResponse.json(
     {

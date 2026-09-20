@@ -16,6 +16,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CardListItem } from "@/components/dashboard/CardListItem";
+import { OpSoCompanion } from "@/components/cards/OpSoCompanion";
 
 // ---------------------------------------------------------------------------
 // Exported types
@@ -236,6 +237,7 @@ export function CardListClient({ cards, claimable, locale, userEmail: _ }: Props
           ))}
         </div>
       )}
+      <OpSoCompanion locale={locale} />
     </div>
   );
 }

@@ -19,6 +19,7 @@ import { verifyPassword } from "@/lib/auth/password";
 import { hitWindow, clientIp } from "@/lib/auth/rate-limit";
 import {
   unlockCookieName,
+  signUnlockCookie,
   UNLOCK_COOKIE_MAX_AGE_S,
 } from "@/lib/cards/unlock-cookie";
 
@@ -63,9 +64,9 @@ export async function POST(
 
     const order = await prisma.cardOrder.findUnique({
       where: { slug },
-      select: { cardData: true, status: true },
+      select: { cardData: true, status: true, visibility: true },
     });
-    if (!order || order.status !== "PUBLISHED") {
+    if (!order || order.status !== "PUBLISHED" || order.visibility === "private") {
       return NextResponse.json(
         { error: { code: "not_found", message: "Card not found." } },
         { status: 404 },
@@ -93,10 +94,10 @@ export async function POST(
       );
     }
 
-    const res = NextResponse.json({ ok: true }, { status: 200 });
+    const res = NextResponse.json({ ok: true }, { status: 200, headers: { "Cache-Control": "private, no-store" } });
     res.cookies.set({
       name: unlockCookieName(slug),
-      value: "1",
+      value: signUnlockCookie(slug, stored),
       httpOnly: true,
       sameSite: "lax",
       path: "/",

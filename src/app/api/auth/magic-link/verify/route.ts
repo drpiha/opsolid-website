@@ -18,6 +18,7 @@
 import { NextResponse } from "next/server";
 import { consumeMagicLink } from "@/lib/auth/magic-link";
 import { issueSession } from "@/lib/auth/session";
+import { verifiedAuthenticationTime } from "@/lib/auth/email-verification";
 import { signAccessToken } from "@/lib/auth/jwt";
 import { setRefreshCookie, clearRefreshCookie } from "@/lib/auth/cookies";
 import { hitWindow, clientIp } from "@/lib/auth/rate-limit";
@@ -72,15 +73,17 @@ export async function GET(req: Request) {
   }
 
   // Issue session + access token.
+  const authenticatedAt = verifiedAuthenticationTime(user.emailVerifiedAt);
   const session = await issueSession(
     user.id,
     req.headers.get("user-agent"),
     hashIp(ip),
+    authenticatedAt,
   );
   // We don't return the access token via redirect URL (would leak it to
   // browser history / referrer). The client SPA picks it up by calling
   // /api/auth/refresh after navigation, which uses the freshly-set cookie.
-  await signAccessToken(user.id); // pre-warm jose key cache; JWT itself unused here.
+  await signAccessToken(user.id, authenticatedAt); // pre-warm jose key cache; JWT itself unused here.
 
   // M3 — attribute referral if the cookie is set. Failures here must NEVER
   // block the auth redirect; we fire-and-forget. The cookie is cleared on

@@ -13,10 +13,11 @@
 
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { CardDataSchema, OrderStatus } from "@/lib/validation";
+import { CardDataSchema } from "@/lib/validation";
 import { buildVCard, buildVCard3, vcardFilename } from "@/lib/vcard";
 import { absoluteAssetUrl } from "@/lib/storage";
 import { getSiteUrl } from "@/lib/stripe";
+import { publicCardContentAccess, publicCardContentCacheControl } from "@/lib/cards/content-access";
 import {
   readSourceFromSearchParams,
   describeSource,
@@ -35,8 +36,12 @@ export async function GET(
     where: { slug: params.slug },
   });
 
-  if (!order || order.status !== OrderStatus.PUBLISHED) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  const access = publicCardContentAccess(order, { cookieHeader: req.headers.get("cookie"), ownerToken: new URL(req.url).searchParams.get("token") });
+  if (access === "not_found" || !order) {
+    return NextResponse.json({ error: "Not found" }, { status: 404, headers: { "Cache-Control": "no-store" } });
+  }
+  if (access === "password_required") {
+    return NextResponse.json({ error: "Card is password protected" }, { status: 401, headers: { "Cache-Control": "private, no-store" } });
   }
 
   const parsed = CardDataSchema.safeParse(order.cardData);
@@ -124,7 +129,7 @@ export async function GET(
       // Short browser cache so a "Save Contact" tap doesn't re-render the file
       // each time, but new edits propagate fast (we re-read the order on
       // every request anyway — this is just network-level caching).
-      "Cache-Control": "public, max-age=60, must-revalidate",
+      "Cache-Control": publicCardContentCacheControl(order.cardData, "public, max-age=60, must-revalidate"),
     },
   });
 }

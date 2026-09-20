@@ -19,6 +19,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { consumeMagicLink } from "@/lib/auth/magic-link";
 import { issueSession } from "@/lib/auth/session";
+import { verifiedAuthenticationTime } from "@/lib/auth/email-verification";
 import { signAccessToken } from "@/lib/auth/jwt";
 import { hitWindow, clientIp } from "@/lib/auth/rate-limit";
 import { hashIp } from "@/lib/auth/ip-hash";
@@ -76,12 +77,14 @@ export async function POST(req: Request) {
     );
   }
 
+  const authenticatedAt = verifiedAuthenticationTime(user.emailVerifiedAt);
   const session = await issueSession(
     user.id,
     req.headers.get("user-agent"),
     hashIp(ip),
+    authenticatedAt,
   );
-  const accessToken = await signAccessToken(user.id);
+  const accessToken = await signAccessToken(user.id, authenticatedAt);
 
   return applyCors(
     NextResponse.json(

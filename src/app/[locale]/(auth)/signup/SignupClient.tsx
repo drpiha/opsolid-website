@@ -20,12 +20,12 @@ const REF_COOKIE_TTL_S = 60 * 60 * 24 * 7; // 7 days
 
 interface Props {
   locale: string;
+  googleEnabled?: boolean;
 }
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const PASSWORD_MIN = 12;
 
-export function SignupClient({ locale }: Props) {
+export function SignupClient({ locale, googleEnabled = false }: Props) {
   const { t } = useLocale();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -36,15 +36,12 @@ export function SignupClient({ locale }: Props) {
 
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
   // GDPR / §7 UWG — separate marketing opt-in. UNTICKED by default (Planet49);
   // never pre-checked.
   const [marketingOptIn, setMarketingOptIn] = useState(false);
   const [emailError, setEmailError] = useState<string | null>(null);
-  const [passwordError, setPasswordError] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [submitting, setSubmitting] = useState<"magic" | "password" | null>(null);
+  const [submitting, setSubmitting] = useState<"magic" | null>(null);
 
   // M3 — stash any inbound `?ref=` so the post-auth callback can attribute.
   useEffect(() => {
@@ -75,15 +72,6 @@ export function SignupClient({ locale }: Props) {
     return true;
   }
 
-  function validatePassword(value: string): boolean {
-    if (value.length < PASSWORD_MIN || !/[a-zA-Z]/.test(value) || !/\d/.test(value)) {
-      setPasswordError(errs.weak_password);
-      return false;
-    }
-    setPasswordError(null);
-    return true;
-  }
-
   async function handleMagicSignup(e: React.FormEvent) {
     e.preventDefault();
     if (submitting) return;
@@ -92,52 +80,16 @@ export function SignupClient({ locale }: Props) {
     setSubmitError(null);
     setSubmitting("magic");
     try {
-      const res = await fetch("/api/auth/magic-link", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email,
-          name: name || undefined,
-          locale: safeLocale,
-          marketingOptIn,
-        }),
-      });
-      if (res.status === 429) {
-        setSubmitError(errs.rate_limited);
-        return;
-      }
-      router.push(`/${safeLocale}/magic-link?email=${encodeURIComponent(email)}`);
-    } catch {
-      setSubmitError(errs.generic);
-    } finally {
-      setSubmitting(null);
-    }
-  }
-
-  async function handlePasswordSignup(e: React.FormEvent) {
-    e.preventDefault();
-    if (submitting) return;
-    if (!validateEmail(email)) return;
-    if (!validatePassword(password)) return;
-
-    setSubmitError(null);
-    setSubmitting("password");
-    try {
       const res = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email,
-          password,
           name: name || undefined,
           locale: safeLocale,
           marketingOptIn,
         }),
       });
-      if (res.status === 409) {
-        setSubmitError(errs.email_in_use);
-        return;
-      }
       if (res.status === 429) {
         setSubmitError(errs.rate_limited);
         return;
@@ -146,7 +98,7 @@ export function SignupClient({ locale }: Props) {
         setSubmitError(errs.generic);
         return;
       }
-      router.push(`/${safeLocale}/dashboard/cards`);
+      router.push(`/${safeLocale}/magic-link?email=${encodeURIComponent(email)}`);
     } catch {
       setSubmitError(errs.generic);
     } finally {
@@ -171,7 +123,7 @@ export function SignupClient({ locale }: Props) {
       )}
 
       <form
-        onSubmit={showPassword ? handlePasswordSignup : handleMagicSignup}
+        onSubmit={handleMagicSignup}
         className="space-y-4"
         noValidate
       >
@@ -223,37 +175,6 @@ export function SignupClient({ locale }: Props) {
           />
         </div>
 
-        {showPassword && (
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-xs font-medium text-ink-300 mb-1.5"
-            >
-              {s.passwordLabel}
-            </label>
-            <input
-              id="password"
-              type="password"
-              autoComplete="new-password"
-              minLength={PASSWORD_MIN}
-              value={password}
-              onChange={(e) => {
-                setPassword(e.target.value);
-                if (passwordError) setPasswordError(null);
-              }}
-              onBlur={() => password && validatePassword(password)}
-              aria-invalid={!!passwordError}
-              aria-describedby={passwordError ? "password-err" : undefined}
-              className="field w-full"
-            />
-            {passwordError && (
-              <p id="password-err" className="mt-1 text-xs text-signal-err">
-                {passwordError}
-              </p>
-            )}
-          </div>
-        )}
-
         {/* GDPR / §7 UWG — separate, UNTICKED-by-default marketing opt-in.
             Distinct from any terms/privacy consent; never pre-checked. */}
         <div className="flex items-start gap-2.5 pt-1">
@@ -277,36 +198,19 @@ export function SignupClient({ locale }: Props) {
           disabled={submitting !== null}
           className="btn btn-primary w-full"
         >
-          {submitting === "magic" || submitting === "password"
-            ? "…"
-            : showPassword
-              ? s.passwordLabel
-              : s.magicLinkCta}
+          {submitting === "magic" ? "…" : s.magicLinkCta}
         </button>
 
-        {!showPassword ? (
-          <button
-            type="button"
-            onClick={() => setShowPassword(true)}
-            className="block w-full text-center text-xs text-ink-500 hover:text-copper-500 transition-colors"
-          >
-            {s.expandPassword}
-          </button>
-        ) : (
-          <button
-            type="button"
-            onClick={() => {
-              setShowPassword(false);
-              setPassword("");
-              setPasswordError(null);
-              setSubmitError(null);
-            }}
-            className="block w-full text-center text-xs text-ink-500 hover:text-copper-500 transition-colors"
-          >
-            {s.magicLinkCta}
-          </button>
-        )}
       </form>
+
+      {googleEnabled && (
+        <a
+          href={`/api/auth/google?next=/dashboard/cards&mobile=0&locale=${safeLocale}`}
+          className="btn btn-ghost mt-4 w-full border border-line"
+        >
+          {t.auth.login.googleCta}
+        </a>
+      )}
 
       <p className="mt-8 text-center text-xs text-ink-500">
         {s.alreadyHaveAccount}{" "}

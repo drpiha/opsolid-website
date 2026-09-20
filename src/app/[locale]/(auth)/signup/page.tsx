@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { SignupClient } from "./SignupClient";
 
+// OAuth is configured when the immutable image starts, not during its build.
+export const dynamic = "force-dynamic";
+
 export const metadata: Metadata = {
   title: "Create Account | OpSolid",
   description: "Create your free OpSolid account and get a digital business card.",
@@ -12,5 +15,6 @@ export default function SignupPage({
 }: {
   params: { locale: string };
 }) {
-  return <SignupClient locale={params.locale} />;
+  const googleEnabled = !!process.env.GOOGLE_CLIENT_ID && !!process.env.GOOGLE_CLIENT_SECRET;
+  return <SignupClient locale={params.locale} googleEnabled={googleEnabled} />;
 }

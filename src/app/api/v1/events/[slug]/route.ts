@@ -13,7 +13,7 @@
 
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { OrderStatus } from "@/lib/validation";
+import { canPublishCardPreview } from "@/lib/card-share-visibility";
 import { errorJson } from "@/lib/api/v1/errors";
 import { applyCors, corsPreflight } from "@/lib/api/v1/cors";
 import { rateLimit } from "@/lib/api/v1/rate-limit";
@@ -86,8 +86,7 @@ export async function GET(
     .map((a) => a.card)
     .filter(
       (c) =>
-        c.status === OrderStatus.PUBLISHED &&
-        c.visibility !== "private" &&
+        canPublishCardPreview(c) &&
         c.slug,
     )
     .map(toPublicApiCard);
@@ -112,7 +111,7 @@ export async function GET(
     NextResponse.json(body, {
       status: 200,
       headers: {
-        "Cache-Control": "public, max-age=120, s-maxage=120, stale-while-revalidate=600",
+        "Cache-Control": "no-store, max-age=0",
       },
     }),
     req,

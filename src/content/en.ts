@@ -5924,7 +5924,7 @@ export const content = {
   auth: {
     signup: {
       title: "Create your account",
-      subtitle: "Get a free digital business card. No credit card required.",
+      subtitle: "Create your free account with an email sign-in link or Google. No password needed.",
       emailLabel: "Email address",
       nameLabel: "Name (optional)",
       passwordLabel: "Password",
@@ -5940,7 +5940,8 @@ export const content = {
       emailLabel: "Email address",
       passwordLabel: "Password",
       magicLinkCta: "Send magic link",
-      passwordCta: "or use password",
+      passwordCta: "Use an existing verified account password",
+      legacyPasswordHelp: "Passwords remain available for accounts whose email was already verified. If you created a password before verifying your email, use the email sign-in link or Google. Your earlier password is removed when your email is first verified.",
       dontHaveAccount: "Don't have an account?",
       signUpLink: "Create one",
       expandPassword: "+ use password",

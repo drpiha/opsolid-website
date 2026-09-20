@@ -13,6 +13,11 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireUser, AuthError } from "@/lib/auth/require-user";
+import {
+  CARD_CLAIM_FORBIDDEN,
+  getVerifiedClaimEmail,
+  findClaimableLegacyCards,
+} from "@/lib/auth/card-claim";
 
 export const runtime = "nodejs";
 
@@ -25,40 +30,12 @@ export async function GET(req: Request) {
     throw err;
   }
 
-  // Postgres LOWER() via raw filter — Prisma string mode is case-sensitive by
-  // default on Postgres. We use findMany with a raw `where` expression via the
-  // `equals` + `mode: 'insensitive'` Prisma feature for case-insensitive match.
-  // We also trim the stored email in app code after fetching (DB may have
-  // whitespace from old imports).
-  const normalizedUserEmail = user.email.toLowerCase();
+  const verifiedEmail = getVerifiedClaimEmail(user);
+  if (!verifiedEmail) {
+    return NextResponse.json(CARD_CLAIM_FORBIDDEN, { status: 403 });
+  }
 
-  // Fetch candidates with userId = null (unclaimed) using case-insensitive mode.
-  const candidates = await prisma.cardOrder.findMany({
-    where: {
-      userId: null,
-      contactEmail: {
-        equals: normalizedUserEmail,
-        mode: "insensitive",
-      },
-    },
-    select: {
-      id: true,
-      slug: true,
-      contactName: true,
-      contactEmail: true,
-      status: true,
-      createdAt: true,
-    },
-    orderBy: { createdAt: "desc" },
-  });
-
-  // Secondary trim guard: Prisma insensitive mode doesn't trim whitespace.
-  // Old imports may have stored "user@example.com " (trailing space). We apply
-  // a local trim-and-compare so those rows are also excluded when they don't
-  // match after trimming.
-  const claimable = candidates.filter(
-    (c) => c.contactEmail.trim().toLowerCase() === normalizedUserEmail,
-  );
+  const claimable = await findClaimableLegacyCards(prisma, user);
 
   return NextResponse.json(
     claimable.map((c) => ({

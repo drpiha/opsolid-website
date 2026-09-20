@@ -21,6 +21,7 @@ import { notFound, permanentRedirect } from "next/navigation";
 import { cookies, headers } from "next/headers";
 import type { Metadata } from "next";
 import { prisma } from "@/lib/prisma";
+import { canPublishCardPreview } from "@/lib/card-share-visibility";
 import { CardDataSchema } from "@/lib/validation";
 import { SmartCard } from "@/components/cards/smart/SmartCard";
 import { WalletButtons } from "@/components/cards/smart/WalletButtons";
@@ -43,7 +44,7 @@ import { LockScreen } from "@/components/cards/LockScreen";
 import { isPro } from "@/lib/auth/pro";
 import { constantTimeEquals } from "@/lib/constantTime";
 import { contents } from "@/content";
-import { unlockCookieName } from "@/lib/cards/unlock-cookie";
+import { publicCardContentAccess, cardPasswordHash } from "@/lib/cards/content-access";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -102,7 +103,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const { slug } = await params;
   const order = await loadOrder(slug);
   // Phase 8.1 — private cards must not leak metadata to crawlers/scrapers.
-  if (!order || order.visibility === 'private') return { title: "OpSolid Smart Card", robots: { index: false } };
+  if (!order || !canPublishCardPreview(order)) return { title: "OpSolid Smart Card", robots: { index: false } };
 
   const card = CardDataSchema.safeParse(order.cardData);
   const name = card.success ? card.data.name : order.contactName;
@@ -246,27 +247,15 @@ export default async function CardPage({ params, searchParams }: PageProps) {
   // hash existence on a wrong owner token.
   // -------------------------------------------------------------------------
   const cardDataRaw = parsed.data as Record<string, unknown>;
-  const passwordHash =
-    typeof cardDataRaw.password === "string" && cardDataRaw.password.length > 0
-      ? (cardDataRaw.password as string)
-      : null;
+  const passwordHash = cardPasswordHash(parsed.data);
 
   if (passwordHash) {
     const ownerTokenRaw0 = sp.owner;
     const ownerToken0 =
-      typeof ownerTokenRaw0 === "string" ? ownerTokenRaw0 : ownerTokenRaw0?.[0];
-    const isOwner0 = Boolean(
-      ownerToken0 &&
-        order.editToken &&
-        constantTimeEquals(ownerToken0, order.editToken),
-    );
+      (typeof ownerTokenRaw0 === "string" ? ownerTokenRaw0 : ownerTokenRaw0?.[0]) ||
+      (await cookies()).get(`card_owner_${order.id}`)?.value;
     const cookieHeader0 = (await headers()).get("cookie") ?? "";
-    const cookieName0 = unlockCookieName(slug);
-    const hasUnlockCookie = cookieHeader0
-      .split(";")
-      .map((c) => c.trim())
-      .some((c) => c.startsWith(`${cookieName0}=`));
-    if (!isOwner0 && !hasUnlockCookie) {
+    if (publicCardContentAccess(order, { cookieHeader: cookieHeader0, ownerToken: ownerToken0 }) !== "allowed") {
       const lockLocaleKey =
         order.locale === "en" || order.locale === "tr" ? order.locale : "de";
       const labels =
@@ -482,6 +471,7 @@ export default async function CardPage({ params, searchParams }: PageProps) {
         {isOwner && (
           <OwnerWelcome
             cardKey={order.id}
+            locale={localeKey}
             manageHref={manageHref}
             loginHref={ownerLoginHref}
             labels={contents[localeKey].card.ownerWelcome}

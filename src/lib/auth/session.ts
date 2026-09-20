@@ -18,6 +18,7 @@
 import { randomBytes, createHash, timingSafeEqual } from "node:crypto";
 import { prisma } from "@/lib/prisma";
 import type { User } from "@/generated/prisma";
+import { authenticationIsCurrent } from "./email-verification";
 
 const REFRESH_TOKEN_BYTES = 32;
 const DEFAULT_TTL_DAYS = Number(process.env.REFRESH_TOKEN_TTL_DAYS ?? "30");
@@ -30,6 +31,7 @@ export interface IssuedSession {
   refreshToken: string;
   expiresAt: Date;
   sessionId: string;
+  authenticatedAt: Date;
 }
 
 /**
@@ -57,6 +59,7 @@ export async function issueSession(
   userId: string,
   userAgent: string | null = null,
   ipHash: string | null = null,
+  authenticatedAt = new Date(),
 ): Promise<IssuedSession> {
   const refreshToken = generateRefreshToken();
   const tokenHash = hashRefreshToken(refreshToken);
@@ -69,11 +72,13 @@ export async function issueSession(
       userAgent: userAgent ? userAgent.slice(0, 255) : null,
       ipHash,
       expiresAt,
+      // Preserve the credential-proof time, not a later asynchronous DB write.
+      createdAt: authenticatedAt,
     },
     select: { id: true },
   });
 
-  return { refreshToken, expiresAt, sessionId: session.id };
+  return { refreshToken, expiresAt, sessionId: session.id, authenticatedAt };
 }
 
 /**
@@ -87,9 +92,10 @@ export async function issueSession(
 async function findActiveSessionByToken(refreshToken: string) {
   if (!refreshToken || typeof refreshToken !== "string") return null;
   const tokenHash = hashRefreshToken(refreshToken);
-  const session = await prisma.session.findUnique({ where: { tokenHash } });
+  const session = await prisma.session.findUnique({ where: { tokenHash }, include: { user: true } });
   if (!session) return null;
   if (session.revokedAt) return null;
+  if (!authenticationIsCurrent(session.createdAt, session.user.emailVerifiedAt)) return null;
   if (session.expiresAt.getTime() < Date.now()) return null;
   // Defensive constant-time compare against re-derived hash.
   const storedHashBuf = Buffer.from(session.tokenHash, "hex");
@@ -118,6 +124,7 @@ export async function getSessionUser(
   });
   if (!session) return null;
   if (session.revokedAt) return null;
+  if (!authenticationIsCurrent(session.createdAt, session.user.emailVerifiedAt)) return null;
   if (session.expiresAt.getTime() < Date.now()) return null;
   return session.user;
 }
@@ -161,12 +168,14 @@ export async function rotateSession(
           userAgent: userAgent ? userAgent.slice(0, 255) : null,
           ipHash,
           expiresAt,
+          // A refresh racing first email verification must not elevate old proof.
+          createdAt: old.createdAt,
         },
         select: { id: true },
       });
       return next;
     });
-    return { refreshToken: newToken, expiresAt, sessionId: created.id };
+    return { refreshToken: newToken, expiresAt, sessionId: created.id, authenticatedAt: old.createdAt };
   } catch {
     // Race or DB error — caller treats as auth failure.
     return null;

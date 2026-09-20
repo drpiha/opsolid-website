@@ -5,7 +5,7 @@
 //   1. Brevo     — BREVO_API_KEY is set (EU/GDPR sending, matches positioning)
 //   2. Resend    — RESEND_API_KEY is set
 //   3. SMTP      — SMTP_HOST + SMTP_USER + SMTP_PASS are set
-//   4. Console   — dev fallback; logs full payload, returns ok: true
+//   4. Unavailable - no send and no submission logging; returns ok: false
 //
 // Usage:
 //   import { sendEmail } from "@/lib/email/client";
@@ -82,20 +82,30 @@ function parseFromAddress(from: string): { email: string; name?: string } {
 // Sentry capture helper (optional — silently skipped when Sentry not present)
 // ---------------------------------------------------------------------------
 
-async function captureToSentry(err: unknown, context: Record<string, unknown>): Promise<void> {
+type EmailProvider = "brevo" | "resend" | "smtp";
+type EmailFailure = "http_rejected" | "transport_failed";
+
+// The original error, response body, mail headers and recipient are never
+// retained in diagnostics or exposed through a SendEmailResult.
+async function deliveryFailure(
+  provider: EmailProvider,
+  category: EmailFailure,
+  status?: number,
+): Promise<SendEmailResult> {
+  const code = `${provider}_${category}`;
+  const context = { provider, category, ...(status === undefined ? {} : { status }) };
+  console.error("[email] delivery failed", context);
   try {
     const Sentry = await import("@sentry/nextjs");
-    // captureException accepts a CaptureContext with an `extra` field —
-    // simpler and avoids Sentry's strict setExtra type that broke the
-    // build under newer @sentry/nextjs versions.
-    Sentry.captureException(err, { extra: context });
+    Sentry.captureException(new Error(code), { extra: context });
   } catch {
-    // Sentry not available — ignore
+    // Optional diagnostics must not affect delivery handling.
   }
+  return { ok: false, error: code };
 }
 
 // ---------------------------------------------------------------------------
-// fetch with a hard timeout — a hung provider must not wedge the request
+// One hard deadline covers both response headers and JSON consumption.
 // (the orders route fires card-live mail fire-and-forget, but the contact +
 // resend-link routes await the send).
 // ---------------------------------------------------------------------------
@@ -105,13 +115,34 @@ const EMAIL_HTTP_TIMEOUT_MS = 10_000;
 async function fetchWithTimeout(
   url: string,
   init: RequestInit
-): Promise<Response> {
+): Promise<{ response: Response; data: unknown }> {
   const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), EMAIL_HTTP_TIMEOUT_MS);
+  let response: Response | undefined;
+  let timer: ReturnType<typeof setTimeout>;
+  const deadline = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => {
+      reject(new Error("email_http_timeout"));
+      controller.abort();
+      // Abort also interrupts a locked response reader in the real fetch
+      // implementation. Cancel an unlocked body without reading its contents.
+      void response?.body?.cancel().catch(() => undefined);
+    }, EMAIL_HTTP_TIMEOUT_MS);
+  });
   try {
-    return await fetch(url, { ...init, signal: controller.signal });
+    const consume = async () => {
+      response = await fetch(url, { ...init, signal: controller.signal });
+      if (controller.signal.aborted) {
+        void response.body?.cancel().catch(() => undefined);
+        throw new Error("email_http_timeout");
+      }
+      const data: unknown = response.ok ? await response.json().catch(() => ({})) : undefined;
+      return { response, data };
+    };
+    // The explicit race also releases the caller if a transport fails to
+    // settle its promise when aborted. No automatic retry can duplicate mail.
+    return await Promise.race([consume(), deadline]);
   } finally {
-    clearTimeout(timer);
+    clearTimeout(timer!);
   }
 }
 
@@ -142,7 +173,7 @@ async function sendViaBrevo(
   }
 
   try {
-    const res = await fetchWithTimeout("https://api.brevo.com/v3/smtp/email", {
+    const { response: res, data } = await fetchWithTimeout("https://api.brevo.com/v3/smtp/email", {
       method: "POST",
       headers: {
         "api-key": apiKey,
@@ -153,35 +184,14 @@ async function sendViaBrevo(
     });
 
     if (!res.ok) {
-      const raw = await res.text().catch(() => "(no body)");
-      // 400/401 almost always means a bad key or an unverified sender —
-      // the #1 Brevo setup gotcha, so spell it out in the log.
-      const hint =
-        res.status === 400 || res.status === 401
-          ? " — verify BREVO_API_KEY and that the sender (BREVO_FROM_EMAIL) is a verified Brevo sender/domain"
-          : "";
-      const errMsg = `Brevo HTTP ${res.status}: ${raw}${hint}`;
-      await captureToSentry(new Error(errMsg), {
-        provider: "brevo",
-        to: input.to,
-        subject: input.subject,
-      });
-      console.error("[email:brevo] send failed", errMsg);
-      return { ok: false, error: errMsg };
+      void res.body?.cancel().catch(() => undefined);
+      return deliveryFailure("brevo", "http_rejected", res.status);
     }
 
-    const data = (await res.json().catch(() => ({}))) as { messageId?: string };
-    return { ok: true, messageId: data.messageId };
-  } catch (err) {
+    return { ok: true, messageId: (data as { messageId?: string }).messageId };
+  } catch {
     // Timeout (abort) or network error — never throw out of the provider.
-    const errMsg = err instanceof Error ? err.message : String(err);
-    await captureToSentry(err, {
-      provider: "brevo",
-      to: input.to,
-      subject: input.subject,
-    });
-    console.error("[email:brevo] send error", errMsg);
-    return { ok: false, error: errMsg };
+    return deliveryFailure("brevo", "transport_failed");
   }
 }
 
@@ -208,7 +218,7 @@ async function sendViaResend(
   }
 
   try {
-    const res = await fetchWithTimeout("https://api.resend.com/emails", {
+    const { response: res, data } = await fetchWithTimeout("https://api.resend.com/emails", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${apiKey}`,
@@ -218,28 +228,13 @@ async function sendViaResend(
     });
 
     if (!res.ok) {
-      const raw = await res.text().catch(() => "(no body)");
-      const errMsg = `Resend HTTP ${res.status}: ${raw}`;
-      await captureToSentry(new Error(errMsg), {
-        provider: "resend",
-        to: input.to,
-        subject: input.subject,
-      });
-      console.error("[email:resend] send failed", errMsg);
-      return { ok: false, error: errMsg };
+      void res.body?.cancel().catch(() => undefined);
+      return deliveryFailure("resend", "http_rejected", res.status);
     }
 
-    const data = (await res.json().catch(() => ({}))) as { id?: string };
-    return { ok: true, messageId: data.id };
-  } catch (err) {
-    const errMsg = err instanceof Error ? err.message : String(err);
-    await captureToSentry(err, {
-      provider: "resend",
-      to: input.to,
-      subject: input.subject,
-    });
-    console.error("[email:resend] send error", errMsg);
-    return { ok: false, error: errMsg };
+    return { ok: true, messageId: (data as { id?: string }).id };
+  } catch {
+    return deliveryFailure("resend", "transport_failed");
   }
 }
 
@@ -255,19 +250,21 @@ async function sendViaSmtp(
   const smtpUser = process.env.SMTP_USER!;
   const smtpPass = process.env.SMTP_PASS!;
 
-  const nodemailer = await import("nodemailer");
-  const transporter = nodemailer.default.createTransport({
-    host: smtpHost,
-    port: Number(process.env.SMTP_PORT ?? 587),
-    secure: (process.env.SMTP_PORT ?? "587") === "465",
-    auth: { user: smtpUser, pass: smtpPass },
-  });
-
-  // Already a display form ("Name <email>")? Use as-is; otherwise wrap the
-  // bare address so the inbox shows a friendly sender.
-  const fromHeader = from.includes("<") ? from : `"OpSolid" <${from}>`;
-
   try {
+    const nodemailer = await import("nodemailer");
+    const transporter = nodemailer.default.createTransport({
+      host: smtpHost,
+      port: Number(process.env.SMTP_PORT ?? 587),
+      secure: (process.env.SMTP_PORT ?? "587") === "465",
+      auth: { user: smtpUser, pass: smtpPass },
+      dnsTimeout: 10_000,
+      connectionTimeout: 10_000,
+      greetingTimeout: 10_000,
+      socketTimeout: 30_000,
+    });
+
+    // Preserve existing display-form sender handling.
+    const fromHeader = from.includes("<") ? from : `"OpSolid" <${from}>`;
     const info = await transporter.sendMail({
       from: fromHeader,
       to: input.to,
@@ -278,39 +275,20 @@ async function sendViaSmtp(
       headers: input.headers,
     });
     return { ok: true, messageId: info.messageId ?? undefined };
-  } catch (err) {
-    const errMsg = err instanceof Error ? err.message : String(err);
-    await captureToSentry(err, {
-      provider: "smtp",
-      to: input.to,
-      subject: input.subject,
-    });
-    console.error("[email:smtp] send failed", errMsg);
-    return { ok: false, error: errMsg };
+  } catch {
+    return deliveryFailure("smtp", "transport_failed");
   }
 }
 
 // ---------------------------------------------------------------------------
-// Provider: console (dev fallback)
+// Configuration presence only. This does not claim the provider is reachable.
 // ---------------------------------------------------------------------------
 
-function sendViaConsole(input: SendEmailInput, from: string): SendEmailResult {
-  console.log(
-    [
-      "",
-      "╔══════════════════════════════════════════╗",
-      "║  [email:console] DEV — no provider set   ║",
-      "╚══════════════════════════════════════════╝",
-      `  From   : ${from}`,
-      `  To     : ${input.to}`,
-      `  Subject: ${input.subject}`,
-      "",
-      input.text,
-      "──────────────────────────────────────────",
-      "",
-    ].join("\n")
+export function hasEmailProvider(): boolean {
+  return Boolean(
+    process.env.BREVO_API_KEY || process.env.RESEND_API_KEY ||
+    (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS),
   );
-  return { ok: true, messageId: "console-dev" };
 }
 
 // ---------------------------------------------------------------------------
@@ -341,6 +319,6 @@ export async function sendEmail(
     return sendViaSmtp(input, from);
   }
 
-  // 4. Console fallback
-  return sendViaConsole(input, from);
+  // Never print submission contents or report a send when nothing was sent.
+  return { ok: false, error: "provider_unavailable" };
 }
