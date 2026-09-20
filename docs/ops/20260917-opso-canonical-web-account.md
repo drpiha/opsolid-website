@@ -2,6 +2,10 @@
 
 ## Scope and state
 
+September20 release checkpoint: PR38 now targets `main` directly. Source `a75aea14afdd1ffbcc1b05344948b2e8fff1f703` passed fresh hosted validation in run35513654483: locked install, Prisma generation, audit, lint, typecheck, BFF/operations tests and production build. The former automatic VPS/database-bootstrap workflow is replaced by hosted validation only; a merge cannot deploy.
+
+The next-release app-only helper now has a reviewed `prepare-existing` mode with25 passing cutover tests. It preserves the entire live environment and existing database connection except `GIT_COMMIT`, verifies the current restricted role in a bounded read-only transaction, and accepts only hash-bound forward or rollback provenance from the current private packet. It does not provision roles or change database permissions. Production BFF activation remains off. The existing live packet's manifest hash was freshly verified as `98fc21caaddbe10548c0621699d3adf189b7fdb21e8f7a05049de34fe1491284`; actual candidate preparation, server read-only role proof and cutover are still pending.
+
 Implemented in isolated branch `cod/opso-canonical-web-account` from `e3936bb875c482620d9d5238b462bc3e8dcf5865`, with the later live OAuth fix `32075c8` and deployment/rollback proof `2e6a4ec` integrated as `a51c6c4` and `f3d6c59`. This implements steps 1–3 of the account contract for new canonical cards. It is not a migration of legacy website accounts/cards and is not evidence of production or two-client acceptance.
 
 The DE/EN/TR page at `/<locale>/opso/account` signs in using the actual VERSO email-code endpoints. It lists that VERSO workspace's cards, creates the first profile card through canonical onboarding, edits profile/privacy fields without replacing existing pages/media, checks the public profile through the preview endpoint, accepts versioned terms explicitly, and publishes a saved revision. The existing mobile client reads the same `GET /cards` collection. No mobile copy job is introduced.

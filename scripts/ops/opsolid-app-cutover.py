@@ -3,7 +3,8 @@
 
 No build, pull, database writes, role changes, permission changes or source sync.
 The existing Compose/.env stay untouched. Snapshots contain secrets and remain
-root-only on the VPS. Only image, GIT_COMMIT and DATABASE_URL change at runtime.
+root-only on the VPS. The original prepare mode changes the runtime DB login;
+prepare-existing preserves the complete live environment except GIT_COMMIT.
 An independent release GO is required before the operator uses --execute.
 """
 import argparse
@@ -18,7 +19,7 @@ import signal
 import stat
 import subprocess
 import sys
-from urllib.parse import parse_qs, quote, urlsplit, urlunsplit
+from urllib.parse import parse_qs, quote, unquote, urlsplit, urlunsplit
 import uuid
 
 spec = importlib.util.spec_from_file_location("candidate_runtime", Path(__file__).with_name("opsolid-candidate-runtime.py"))
@@ -31,6 +32,10 @@ PROJECT = Path("/opt/opsolid-website")
 COMPOSE = PROJECT / "docker-compose.yml"
 ENV = PROJECT / ".env"
 FILES = ("base.json", "forward.json", "rollback.json", "snapshot.json", "empty.env")
+# Read-only predecessor compatibility for the one reviewed September17 cutover.
+# This does not authorize applying an old packet with the updated executable.
+LEGACY_STATE = backup.BASE / "app-cutover-1a6a38b57fda46b6b8c39eac"
+LEGACY_SCRIPT_SHA256 = "ba7ca4ffffe1c9edb97f2b56c14a0ba6bb51982e1c5c17fd9d7fde92d7932e67"
 
 
 def run(args, timeout=60):
@@ -88,8 +93,12 @@ def verify_healthcheck(service, app):
 
 
 def make_packet(config, app, credential, image, commit):
-    require(bool(re.fullmatch(r"sha256:[a-f0-9]{64}", image)) and bool(re.fullmatch(r"[a-f0-9]{40}", commit)), "candidate_revision_invalid")
     env = next_environment(app, credential, commit)
+    return packet_with_environment(config, app, env, image, commit)
+
+
+def packet_with_environment(config, app, env, image, commit):
+    require(bool(re.fullmatch(r"sha256:[a-f0-9]{64}", image)) and bool(re.fullmatch(r"[a-f0-9]{40}", commit)), "candidate_revision_invalid")
     old_env = candidate.environment_map(app["Config"]["Env"])
     require(app["Config"]["Cmd"] == ["node", "server.js"] and app["Config"]["Entrypoint"] == ["docker-entrypoint.sh"], "live_startup_unreviewed")
     require(app["Config"]["User"] == "nextjs" and app["Config"]["WorkingDir"] == "/app", "live_execution_identity_unreviewed")
@@ -228,8 +237,13 @@ def prepare(args):
     config = json.loads(run(["compose", "--project-name", "opsolid-website", "--project-directory", str(PROJECT), "--env-file", str(ENV), "-f", str(COMPOSE), "config", "--format", "json"]))
     validate_source(config, baseline["app"])
     env = next_environment(baseline["app"], credential, args.commit)
+    metadata = {"role_state": str(args.role_state), "role_state_hashes": {key: role.digest_file(args.role_state/key) for key in ("validation.json", "credential.json", "provisioned.json")}}
+    return save_packet(args, expected, baseline, originals, image, config, env, metadata)
+
+
+def save_packet(args, expected, baseline, originals, image, config, env, metadata):
     require(set(candidate.environment_map(image["Config"].get("Env"))) <= set(env), "candidate_additional_environment_unreviewed")
-    base, forward, rollback = make_packet(config, baseline["app"], credential, args.candidate_image, args.commit)
+    base, forward, rollback = packet_with_environment(config, baseline["app"], env, args.candidate_image, args.commit)
     backup.secure_path(backup.BASE, private=True)
     state = backup.BASE / ("app-cutover-"+uuid.uuid4().hex[:24])
     state.mkdir(mode=0o700)
@@ -249,8 +263,7 @@ def prepare(args):
     snapshot = {"baseline": baseline, "expected": expected, "others": other_containers(expected["app"]["id"]),
                 "originals": originals, "forward_env": env, "rollback_env": candidate.environment_map(baseline["app"]["Config"]["Env"]),
                 "candidate_image": args.candidate_image, "commit": args.commit, "candidate_image_labels": image["Config"].get("Labels") or {},
-                "explicit_labels": {key: baseline["app"]["Config"]["Labels"][key] for key in config["services"]["opsolid"].get("labels", {})},
-                "role_state": str(args.role_state), "role_state_hashes": {key: role.digest_file(args.role_state/key) for key in ("validation.json", "credential.json", "provisioned.json")}}
+                "explicit_labels": {key: baseline["app"]["Config"]["Labels"][key] for key in config["services"]["opsolid"].get("labels", {})}, **metadata}
     require(original_hashes() == originals, "compose_source_changed_during_prepare")
     backup.unchanged(expected, baseline)
     role.write_private(state/"snapshot.json", snapshot)
@@ -258,15 +271,93 @@ def prepare(args):
     return state
 
 
-def load_packet(state):
+def load_packet(state, *, predecessor=False):
     require(state.is_absolute() and state.resolve() == state and state.parent == backup.BASE and bool(re.fullmatch(r"app-cutover-[a-f0-9]{24}", state.name)), "cutover_state_invalid")
     backup.secure_path(state, private=True)
     for filename in (*FILES, "manifest.json"):
         backup.secure_path(state/filename, private=True, file=True)
     manifest = json.loads((state/"manifest.json").read_text())
-    require(manifest["script_sha256"] == role.digest_file(Path(__file__)) and set(manifest["files"]) == set(FILES), "cutover_manifest_invalid")
+    accepted_script = manifest["script_sha256"] == role.digest_file(Path(__file__))
+    accepted_script |= predecessor and state == LEGACY_STATE and manifest["script_sha256"] == LEGACY_SCRIPT_SHA256
+    require(accepted_script and set(manifest["files"]) == set(FILES), "cutover_manifest_invalid")
     require(all(role.digest_file(state/key) == value for key, value in manifest["files"].items()), "cutover_packet_changed")
     return json.loads((state/"snapshot.json").read_text())
+
+
+def existing_environment(app, commit):
+    env = candidate.environment_map(app["Config"]["Env"])
+    current = urlsplit(env.get("DATABASE_URL", ""))
+    require(current.scheme in ("postgres", "postgresql") and current.hostname == "opsolid-db" and current.port in (None, 5432) and current.path == "/opsolid" and current.username and current.password and not current.fragment, "runtime_database_destination_unreviewed")
+    runtime_role = role.role_name(unquote(current.username))
+    require(len(env.get("JWT_SECRET", "")) >= 32, "runtime_jwt_missing_or_short")
+    require(env.get("OPSO_WEB_ENABLED", "") in ("", "false"), "existing_bff_activation_unreviewed")
+    require(bool(re.fullmatch(r"[a-f0-9]{40}", commit)), "candidate_revision_invalid")
+    # Never decode/reconstruct the URL or rotate a credential in this mode.
+    return {**env, "GIT_COMMIT": commit}, runtime_role
+
+
+def verify_existing_role(app, runtime_role):
+    role.role_name(runtime_role)
+    statements = ["SET TRANSACTION READ ONLY", "SET LOCAL statement_timeout='5s'", "SET LOCAL lock_timeout='2s'",
+                  role.assertion(f"session_user={role.literal(runtime_role)} AND current_user={role.literal(runtime_role)} AND EXISTS(SELECT 1 FROM pg_roles WHERE rolname=current_user AND rolcanlogin AND (rolvaliduntil IS NULL OR rolvaliduntil>now()))", "existing_runtime_identity_invalid"),
+                  *role.catalog_guard_sql().splitlines(), *role.privilege_guard_sql(runtime_role).splitlines()]
+    # Use the app's current connection, never a new credential or superuser.
+    # The transaction contains fixed catalog/privilege assertions only.
+    payload = """const {PrismaClient}=require('./src/generated/prisma');
+const client=new PrismaClient({log:[]});
+async function main(){
+ await client.$transaction(async(tx)=>{for(const sql of STATEMENTS) await tx.$executeRawUnsafe(sql);},{timeout:30000});
+ await client.$disconnect();process.stdout.write('existing_runtime_read_only_ok');
+}
+main().catch(async()=>{try{await client.$disconnect();}catch{}process.exitCode=1;});
+""".replace("STATEMENTS", json.dumps(statements))
+    require(candidate.private_exec(app["Id"], "node", payload=payload.encode(), timeout=40) == b"existing_runtime_read_only_ok", "existing_runtime_read_only_proof_failed")
+
+
+def predecessor_config(reference, app, database):
+    require(set(reference) == {"state", "manifest_sha256"} and bool(re.fullmatch(r"[a-f0-9]{64}", reference["manifest_sha256"])), "predecessor_reference_invalid")
+    state = Path(reference["state"])
+    previous = load_packet(state, predecessor=True)
+    require(role.digest_file(state/"manifest.json") == reference["manifest_sha256"], "predecessor_manifest_changed")
+    require(original_hashes() == previous["originals"], "original_compose_or_env_changed")
+    require(backup.fingerprint(database) == backup.fingerprint(previous["baseline"]["database"]), "predecessor_database_drift")
+    labels = app["Config"].get("Labels") or {}
+    directions = {f"{state}/base.json,{state}/{direction}.json": direction for direction in ("forward", "rollback")}
+    direction = directions.get(labels.get("com.docker.compose.project.config_files"))
+    require(direction is not None and labels.get("com.docker.compose.project.working_dir") == str(PROJECT), "private_compose_source_mismatch")
+    before = previous["baseline"]["app"]
+    target = json.loads((state/"base.json").read_text())
+    if direction == "forward":
+        image, env, image_labels = previous["candidate_image"], previous["forward_env"], previous["candidate_image_labels"]
+        target["services"]["opsolid"].update(image=image, environment=literal_compose(env))
+    else:
+        image, env = previous["expected"]["app"]["image"], previous["rollback_env"]
+        require(image == before["Image"] and env == candidate.environment_map(before["Config"]["Env"]), "predecessor_rollback_identity_mismatch")
+        image_labels = {key: value for key, value in before["Config"]["Labels"].items() if not key.startswith("com.docker.compose.")}
+    verify_app(before, app, image, env, image_labels, previous["explicit_labels"])
+    config = json.loads(run(compose_command(state, direction, "config")))
+    require(config == target, "predecessor_compose_replay_changed")
+    load_packet(state, predecessor=True)
+    require(role.digest_file(state/"manifest.json") == reference["manifest_sha256"], "predecessor_manifest_changed")
+    return config
+
+
+def prepare_existing(args):
+    backup.secure_path(args.expected, private=True, file=True)
+    expected = json.loads(args.expected.read_text())
+    backup.validate_expected(expected)
+    baseline = backup.production_snapshot(expected)
+    originals = original_hashes()
+    reference = {"state": str(args.current_state), "manifest_sha256": args.current_manifest_sha256}
+    config = predecessor_config(reference, baseline["app"], baseline["database"])
+    env, runtime_role = existing_environment(baseline["app"], args.commit)
+    image = json.loads(run(["image", "inspect", args.candidate_image]))[0]
+    candidate.validate_image(image, args.candidate_image, args.commit)
+    require(not image["Config"].get("Healthcheck"), "candidate_image_healthcheck_unreviewed")
+    verify_existing_role(baseline["app"], runtime_role)
+    # No access to the predecessor's candidate-bound role-state artifacts.
+    metadata = {"preparation": "existing-runtime-v1", "predecessor": reference, "runtime_role": runtime_role}
+    return save_packet(args, expected, baseline, originals, image, config, env, metadata)
 
 
 READ_PROOF = r"""
@@ -331,10 +422,17 @@ def apply_packet(state, direction, execute):
         current = current_app()
         verify_surroundings(snapshot, current)
         backup.unchanged(snapshot["expected"], snapshot["baseline"])
-        role_state = Path(snapshot["role_state"])
-        for key, digest in snapshot["role_state_hashes"].items():
-            backup.secure_path(role_state/key, private=True, file=True)
-            require(role.digest_file(role_state/key) == digest, "provisioned_role_state_changed")
+        if snapshot.get("preparation") == "existing-runtime-v1":
+            predecessor_config(snapshot["predecessor"], current, snapshot["baseline"]["database"])
+            environment, runtime_role = existing_environment(current, snapshot["commit"])
+            require(environment == snapshot["forward_env"] and runtime_role == snapshot["runtime_role"], "existing_runtime_environment_drift")
+            verify_existing_role(current, runtime_role)
+        else:
+            require("preparation" not in snapshot, "cutover_preparation_unreviewed")
+            role_state = Path(snapshot["role_state"])
+            for key, digest in snapshot["role_state_hashes"].items():
+                backup.secure_path(role_state/key, private=True, file=True)
+                require(role.digest_file(role_state/key) == digest, "provisioned_role_state_changed")
         image = snapshot["candidate_image"]
         candidate.validate_image(json.loads(run(["image", "inspect", image]))[0], image, snapshot["commit"])
         old_image = snapshot["expected"]["app"]["image"]
@@ -362,12 +460,14 @@ def apply_packet(state, direction, execute):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--mode", choices=("prepare", "apply", "rollback"), default="prepare")
+    parser.add_argument("--mode", choices=("prepare", "prepare-existing", "apply", "rollback"), default="prepare")
     parser.add_argument("--expected", type=Path)
     parser.add_argument("--role-state", type=Path)
     parser.add_argument("--candidate-image")
     parser.add_argument("--commit")
     parser.add_argument("--state", type=Path)
+    parser.add_argument("--current-state", type=Path)
+    parser.add_argument("--current-manifest-sha256")
     parser.add_argument("--execute", action="store_true")
     args = parser.parse_args()
     require(sys.platform == "linux" and os.geteuid() == 0, "vps_root_required")
@@ -375,9 +475,12 @@ def main():
     def interrupted(_number, _frame):
         raise backup.ProofError("interrupted")
     signal.signal(signal.SIGTERM, interrupted)
-    if args.mode == "prepare":
-        require(all(value is not None for value in (args.expected, args.role_state, args.candidate_image, args.commit)) and not args.execute, "prepare_arguments_invalid")
-        state = prepare(args)
+    if args.mode in ("prepare", "prepare-existing"):
+        required = (args.expected, args.candidate_image, args.commit)
+        required += (args.current_state, args.current_manifest_sha256) if args.mode == "prepare-existing" else (args.role_state,)
+        require(all(value is not None for value in required) and not args.execute and args.state is None, "prepare_arguments_invalid")
+        require(args.role_state is None if args.mode == "prepare-existing" else args.current_state is None and args.current_manifest_sha256 is None, "prepare_modes_mixed")
+        state = prepare_existing(args) if args.mode == "prepare-existing" else prepare(args)
         print(json.dumps({"ok": True, "stage": "private_packet_prepared", "state": str(state), "production_changed": False}))
         return
     require(args.state is not None, "cutover_state_required")

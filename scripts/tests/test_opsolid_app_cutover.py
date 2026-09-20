@@ -3,8 +3,10 @@ import copy
 import importlib.util
 import json
 from pathlib import Path
+import re
 import subprocess
 import tempfile
+from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
@@ -135,9 +137,11 @@ class PacketContracts(unittest.TestCase):
 
 
 class ApplicationOrchestration(unittest.TestCase):
-    def run_apply(self, execute=False, failure=None, initial="old", direction="forward", rollback_failure=None, guard_drift=None):
+    def run_apply(self, execute=False, failure=None, initial="old", direction="forward", rollback_failure=None, guard_drift=None, existing=False):
         before = app()
-        env = cutover.next_environment(before, {"role": ROLE, "password": "y"*48}, COMMIT)
+        if existing:
+            before["Config"]["Env"][0] = f"DATABASE_URL=postgresql://{ROLE}:synthetic%24value@opsolid-db:5432/opsolid?schema=public"
+        env = cutover.existing_environment(before, COMMIT)[0] if existing else cutover.next_environment(before, {"role": ROLE, "password": "y"*48}, COMMIT)
         def recreated(image, identity, environment):
             value = copy.deepcopy(before)
             value.update(Id=identity*64, Image=image)
@@ -156,6 +160,11 @@ class ApplicationOrchestration(unittest.TestCase):
                     "candidate_image": NEW, "commit": COMMIT, "candidate_image_labels": {"org.opencontainers.image.revision": COMMIT},
                     "explicit_labels": {"traefik.enable": "true"},
                     "role_state": "/var/backups/opsolid/runtime-role-synthetic", "role_state_hashes": {"validation.json": "hash", "credential.json": "hash", "provisioned.json": "hash"}}
+        if existing:
+            del snapshot["role_state"]
+            del snapshot["role_state_hashes"]
+            snapshot.update(preparation="existing-runtime-v1", runtime_role=ROLE,
+                            predecessor={"state": str(STATE), "manifest_sha256": "d"*64})
         calls = []
         current = None if initial == "absent" else copy.deepcopy(after if initial != "old" else before)
         if initial == "old-drift":
@@ -302,6 +311,183 @@ class ApplicationOrchestration(unittest.TestCase):
                 self.assertFalse(result["rollback_ok"])
                 self.assertEqual(result["rollback_stage"], "preflight")
                 self.assertEqual(sum("up" in call for call in calls), 1)
+
+    def test_existing_runtime_is_revalidated_before_apply_and_forward_failures_rollback(self):
+        for failure in (None, "compose", "health", "read"):
+            with self.subTest(failure=failure), patch.object(cutover, "predecessor_config") as predecessor, patch.object(cutover, "verify_existing_role") as role_probe:
+                result, error, calls, _, _ = self.run_apply(execute=True, existing=True, failure=failure)
+                self.assertIsNone(error)
+                predecessor.assert_called_once()
+                role_probe.assert_called_once()
+                self.assertEqual(result["ok"], failure is None)
+                self.assertEqual(sum("up" in call for call in calls), 1 if failure is None else 2)
+                if failure:
+                    self.assertTrue(result["rollback_ok"])
+
+    def test_failed_existing_role_or_predecessor_check_never_recreates_app(self):
+        for guard in ("predecessor_config", "verify_existing_role"):
+            with self.subTest(guard=guard), patch.object(cutover, "predecessor_config"), patch.object(cutover, "verify_existing_role"), patch.object(cutover, guard, side_effect=cutover.backup.ProofError("guard_failed")):
+                result, error, calls, _, persist = self.run_apply(execute=True, existing=True)
+                self.assertIsNone(result)
+                self.assertEqual(error, "guard_failed")
+                self.assertFalse(any("up" in call for call in calls))
+                persist.assert_not_called()
+
+    def test_existing_rollback_does_not_depend_on_predecessor_or_role_provisioning_files(self):
+        with patch.object(cutover, "predecessor_config", side_effect=AssertionError("not needed for recovery")), patch.object(cutover, "verify_existing_role", side_effect=AssertionError("no forward probe in rollback")):
+            result, error, calls, _, _ = self.run_apply(execute=True, direction="rollback", initial="candidate-drift", existing=True)
+            self.assertIsNone(error)
+            self.assertTrue(result["ok"])
+            self.assertEqual(sum("up" in call for call in calls), 1)
+
+
+class ExistingRuntimeContracts(unittest.TestCase):
+    def fixture(self, folder):
+        state = folder / ("app-cutover-"+"1"*24)
+        state.mkdir()
+        current = app()
+        current["Config"]["Env"][0] = f"DATABASE_URL=postgresql://{ROLE}:synthetic%24value@opsolid-db:5432/opsolid?schema=public&connection_limit=5"
+        current["Config"]["Labels"].update({"com.docker.compose.project.config_files": f"{state}/base.json,{state}/forward.json", "com.docker.compose.project.working_dir": str(cutover.PROJECT)})
+        database = copy.deepcopy(current)
+        database.update(Id="7"*64, Name="/opsolid-db", Image=cutover.backup.PG_IMAGE)
+        env = cutover.candidate.environment_map(current["Config"]["Env"])
+        base = config()
+        base["services"]["opsolid"].update(image=OLD, environment=cutover.literal_compose(env))
+        previous = {"baseline": {"app": current, "database": database}, "originals": {"source": "unchanged"},
+                    "expected": {"app": {"image": OLD}}, "rollback_env": env,
+                    "candidate_image": OLD, "forward_env": env, "candidate_image_labels": {}, "explicit_labels": {"traefik.enable": "true"}}
+        values = {"base.json": base, "forward.json": {"services": {"opsolid": {"image": OLD, "environment": {}}}}, "rollback.json": {}, "snapshot.json": previous}
+        for name, value in values.items():
+            (state/name).write_text(json.dumps(value), encoding="utf-8")
+        (state/"empty.env").write_text("")
+        self.manifest(state)
+        reference = {"state": str(state), "manifest_sha256": cutover.role.digest_file(state/"manifest.json")}
+        return state, reference, current, database, base
+
+    def manifest(self, state, script=None):
+        (state/"manifest.json").write_text(json.dumps({"script_sha256": script or cutover.role.digest_file(Path(cutover.__file__)), "files": {key: cutover.role.digest_file(state/key) for key in cutover.FILES}}), encoding="utf-8")
+
+    def test_environment_and_packet_preserve_database_url_bytes_and_default_off(self):
+        current = app()
+        url = f"postgresql://{ROLE}:synthetic%24value@opsolid-db:5432/opsolid?connection_limit=5&schema=public"
+        current["Config"]["Env"][0] = "DATABASE_URL="+url
+        before = cutover.candidate.environment_map(current["Config"]["Env"])
+        env, name = cutover.existing_environment(current, COMMIT)
+        self.assertEqual(name, ROLE)
+        self.assertEqual(env, {**before, "GIT_COMMIT": COMMIT})
+        base, forward, rollback = cutover.packet_with_environment(config(), current, env, NEW, COMMIT)
+        self.assertEqual(env["DATABASE_URL"], url)
+        self.assertEqual(forward["services"]["opsolid"]["environment"]["DATABASE_URL"], cutover.literal_compose(url))
+        self.assertEqual(rollback["services"]["opsolid"]["environment"], cutover.literal_compose(before))
+        for value in ("true", "TRUE", "1"):
+            changed = copy.deepcopy(current); changed["Config"]["Env"].append("OPSO_WEB_ENABLED="+value)
+            with self.subTest(value=value), self.assertRaisesRegex(cutover.backup.ProofError, "activation_unreviewed"):
+                cutover.existing_environment(changed, COMMIT)
+        current["Config"]["Env"][0] = "DATABASE_URL=postgresql://owner:synthetic@opsolid-db/opsolid"
+        with self.assertRaisesRegex(cutover.backup.ProofError, "role_name_invalid"):
+            cutover.existing_environment(current, COMMIT)
+
+    def test_role_proof_uses_only_existing_connection_and_read_only_catalog_assertions(self):
+        with patch.object(cutover.candidate, "private_exec", return_value=b"existing_runtime_read_only_ok") as execute, patch.object(cutover.role, "sql", side_effect=AssertionError("no admin SQL")):
+            cutover.verify_existing_role(app(), ROLE)
+        self.assertEqual(execute.call_args.args, (app()["Id"], "node"))
+        payload = execute.call_args.kwargs["payload"].decode()
+        self.assertIn('SET TRANSACTION READ ONLY', payload)
+        self.assertIn('session_user=', payload)
+        self.assertIn('role_flags_invalid', payload)
+        self.assertIn('effective_table_privilege_mismatch', payload)
+        self.assertNotIn('DATABASE_URL', payload)
+        statements, _ = json.JSONDecoder().raw_decode(payload.split('for(const sql of ', 1)[1])
+        self.assertEqual(statements[0], 'SET TRANSACTION READ ONLY')
+        self.assertEqual(statements[1:3], ["SET LOCAL statement_timeout='5s'", "SET LOCAL lock_timeout='2s'"])
+        self.assertTrue(all(sql.startswith('DO $proof$ ') and sql.count('DO $proof$') == 1 for sql in statements[3:]))
+        executable = re.sub(r"'(?:''|[^'])*'", "''", '\n'.join(statements))
+        for mutation in ('CREATE ROLE', 'GRANT ', 'REVOKE ', 'ALTER ', 'INSERT ', 'UPDATE ', 'DELETE ', 'TRUNCATE ', 'provision_sql'):
+            self.assertTrue(mutation not in executable, f'unexpected SQL mutation: {mutation}')
+        with patch.object(cutover.candidate, "private_exec", return_value=b"untrusted output"), self.assertRaisesRegex(cutover.backup.ProofError, "read_only_proof_failed"):
+            cutover.verify_existing_role(app(), ROLE)
+
+    def test_predecessor_binds_manifest_private_compose_live_runtime_and_database(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder).resolve()
+            state, reference, current, database, config_value = self.fixture(root)
+            with patch.object(cutover.backup, "BASE", root), patch.object(cutover.backup, "secure_path"), patch.object(cutover, "original_hashes", return_value={"source": "unchanged"}), patch.object(cutover, "run", return_value=json.dumps(config_value).encode()) as run:
+                self.assertEqual(cutover.predecessor_config(reference, current, database), config_value)
+                self.assertTrue(all('up' not in item.args[0] for item in run.call_args_list))
+                for drift in ("manifest", "source-label", "environment", "image", "database"):
+                    changed_ref, changed_app, changed_db = copy.deepcopy(reference), copy.deepcopy(current), copy.deepcopy(database)
+                    if drift == "manifest": changed_ref["manifest_sha256"] = "0"*64
+                    elif drift == "source-label": changed_app["Config"]["Labels"]["com.docker.compose.project.config_files"] = str(cutover.COMPOSE)
+                    elif drift == "environment": changed_app["Config"]["Env"].append("UNREVIEWED=yes")
+                    elif drift == "image": changed_app["Image"] = NEW
+                    else: changed_db["Id"] = "9"*64
+                    with self.subTest(drift=drift), self.assertRaises(cutover.backup.ProofError):
+                        cutover.predecessor_config(changed_ref, changed_app, changed_db)
+                (state/"forward.json").write_text("{}")
+                with self.assertRaisesRegex(cutover.backup.ProofError, "packet_changed"):
+                    cutover.predecessor_config(reference, current, database)
+
+    def test_legacy_script_hash_is_accepted_only_for_exact_predecessor_not_apply(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder).resolve()
+            state, _, _, _, _ = self.fixture(root)
+            self.manifest(state, cutover.LEGACY_SCRIPT_SHA256)
+            with patch.object(cutover.backup, "BASE", root), patch.object(cutover.backup, "secure_path"):
+                with self.assertRaisesRegex(cutover.backup.ProofError, "manifest_invalid"):
+                    cutover.load_packet(state, predecessor=True)
+                with patch.object(cutover, "LEGACY_STATE", state):
+                    self.assertIsInstance(cutover.load_packet(state, predecessor=True), dict)
+                    with self.assertRaisesRegex(cutover.backup.ProofError, "manifest_invalid"):
+                        cutover.load_packet(state)
+
+    def test_prepare_existing_and_post_rollback_next_release_preserve_existing_role_and_packets(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder).resolve()
+            state, reference, current, database, _ = self.fixture(root)
+            old_hashes = {name: cutover.role.digest_file(state/name) for name in (*cutover.FILES, "manifest.json")}
+            expected = {"app": {"id": current["Id"], "image": OLD}, "database": {"id": database["Id"]}}
+            path = root/"expected.json"; path.write_text(json.dumps(expected))
+            args = SimpleNamespace(expected=path, current_state=state, current_manifest_sha256=reference["manifest_sha256"], candidate_image=NEW, commit=COMMIT)
+            def run(command, **_):
+                if command[:2] == ["image", "inspect"]:
+                    return json.dumps([{"Id": NEW, "Config": {"Labels": {"org.opencontainers.image.revision": COMMIT}, "Env": []}}]).encode()
+                self.assertIn("config", command); self.assertNotIn("up", command)
+                paths = [Path(command[index+1]) for index, value in enumerate(command) if value == "-f"]
+                value = json.loads(paths[0].read_text()); overlay = json.loads(paths[1].read_text())
+                for key, item in overlay.get("services", {}).get("opsolid", {}).items():
+                    if key == "environment": value["services"]["opsolid"][key].update(item)
+                    else: value["services"]["opsolid"][key] = item
+                return json.dumps(value).encode()
+            with patch.object(cutover.backup, "BASE", root), patch.object(cutover.backup, "secure_path"), patch.object(cutover.backup, "validate_expected"), patch.object(cutover.backup, "production_snapshot", return_value={"app": current, "database": database}), patch.object(cutover.backup, "unchanged"), patch.object(cutover, "original_hashes", return_value={"source": "unchanged"}), patch.object(cutover, "other_containers", return_value=[]), patch.object(cutover, "run", side_effect=run), patch.object(cutover, "verify_existing_role") as probe, patch.object(cutover, "load_role_state", side_effect=AssertionError("no old role proof")), patch.object(cutover.role, "sql", side_effect=AssertionError("no provisioning")):
+                fresh = cutover.prepare_existing(args)
+                snapshot = cutover.load_packet(fresh)
+                probe.assert_called_once_with(current, ROLE)
+                # A failed forward followed by successful rollback uses the NEW
+                # packet's rollback overlay, while restoring the old image/env.
+                restored = copy.deepcopy(current)
+                restored["Config"]["Labels"]["com.docker.compose.project.config_files"] = f"{fresh}/base.json,{fresh}/rollback.json"
+                restored_ref = {"state": str(fresh), "manifest_sha256": cutover.role.digest_file(fresh/"manifest.json")}
+                restored_config = cutover.predecessor_config(restored_ref, restored, database)
+                self.assertEqual(restored_config["services"]["opsolid"]["image"], OLD)
+                for drift in ("forward-label", "candidate-image", "candidate-environment"):
+                    invalid = copy.deepcopy(restored)
+                    if drift == "forward-label": invalid["Config"]["Labels"]["com.docker.compose.project.config_files"] = f"{fresh}/base.json,{fresh}/forward.json"
+                    elif drift == "candidate-image": invalid["Image"] = NEW
+                    else: invalid["Config"]["Env"] = [key+"="+value for key, value in snapshot["forward_env"].items()]
+                    with self.subTest(drift=drift), self.assertRaises(cutover.backup.ProofError):
+                        cutover.predecessor_config(restored_ref, invalid, database)
+                next_args = SimpleNamespace(**{**vars(args), "current_state": fresh, "current_manifest_sha256": restored_ref["manifest_sha256"]})
+                with patch.object(cutover.backup, "production_snapshot", return_value={"app": restored, "database": database}):
+                    next_state = cutover.prepare_existing(next_args)
+                self.assertNotEqual(next_state, fresh)
+                self.assertEqual(cutover.load_packet(next_state)["rollback_env"]["DATABASE_URL"], snapshot["rollback_env"]["DATABASE_URL"])
+            self.assertNotEqual(fresh, state)
+            self.assertEqual(snapshot["preparation"], "existing-runtime-v1")
+            self.assertEqual(snapshot["predecessor"], reference)
+            self.assertNotIn("role_state", snapshot)
+            self.assertEqual(snapshot["forward_env"]["DATABASE_URL"], snapshot["rollback_env"]["DATABASE_URL"])
+            self.assertEqual(snapshot["forward_env"], {**snapshot["rollback_env"], "GIT_COMMIT": COMMIT})
+            self.assertEqual(old_hashes, {name: cutover.role.digest_file(state/name) for name in old_hashes})
 
 
 if __name__ == "__main__":
