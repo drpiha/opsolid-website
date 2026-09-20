@@ -1,123 +1,55 @@
-name: Deploy to VPS
+name: Verify web source (production disabled)
 
 on:
   push:
     branches: [main]
-    paths-ignore:
-      - "**/*.md"
-      - ".github/workflows/daily-blog-update.yml"
-      - "scripts/**"
-      - "deploy/hostinger/**"
-      - "mobile/**"
+  pull_request:
   workflow_dispatch:
 
-concurrency:
-  group: deploy-vps
-  cancel-in-progress: false
+permissions:
+  contents: read
 
+concurrency:
+  group: verify-web-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Production execution stays disabled until a separately reviewed app-only
+# release path can preserve the current runtime role and private Compose state.
+# The old source-sync/bootstrap/build deployment must not run on a merge.
+# Manual dispatch below performs validation only; it cannot apply a packet.
 jobs:
-  # Quality gate — runs on a GitHub-hosted runner BEFORE the VPS is touched.
-  # audit:cards is the fabricated-data guard (static AST analysis, no env/DB):
-  # a commit that reintroduces hardcoded persona stats, || "Berlin"-style
-  # fallbacks, fabricated years or mojibake fails here and the deploy job
-  # below never runs — the live container is never swapped.
   verify:
     name: Verify (audit:cards gate)
+    if: ${{ github.event_name != 'workflow_dispatch' || (github.ref == 'refs/heads/main' && github.actor == github.repository_owner && github.triggering_actor == github.repository_owner) }}
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 25
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
-      - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
-          node-version: 20
+          persist-credentials: false
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22.23.2'
           cache: npm
-      - name: Install dependencies
-        run: npm ci
+      - name: Install locked dependencies (including required native modules)
+        run: npm ci --no-audit --no-fund
+      - name: Enforce validation-only workflow
+        run: node --test scripts/tests/deploy-workflow.test.cjs
+      - name: Generate Prisma client locally (no database connection)
+        run: node node_modules/prisma/build/index.js generate
       - name: Card template fabricated-data audit
         run: npm run audit:cards
-
-  deploy:
-    name: Build and ship to /opt/opsolid-website
-    needs: verify
-    runs-on: [self-hosted, linux, vps]
-    timeout-minutes: 20
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Ensure deploy directory is writable
-        run: |
-          # Reclaim ownership without needing passwordless sudo for chown.
-          # The docker daemon runs as root, so we spin up a throwaway alpine
-          # container to chown /opt/opsolid-website back to the runner user.
-          # No-op when ownership is already correct (alpine chown is idempotent).
-          RUNNER_UID=$(id -u)
-          RUNNER_GID=$(id -g)
-          docker run --rm \
-            -v /opt/opsolid-website:/target \
-            alpine \
-            chown -R "${RUNNER_UID}:${RUNNER_GID}" /target
-
-      - name: Extract files to deploy directory
-        run: |
-          DEPLOY_DIR=/opt/opsolid-website
-
-          echo "==> Syncing source files to $DEPLOY_DIR (mirror, with delete)"
-          # --delete drops files on the VPS that no longer exist in the repo
-          # (e.g. after a `git revert`). Without it, orphaned source files
-          # break the next build because tsc/next picks them up. The exclude
-          # list below is the protection layer for runtime data (uploads,
-          # .env, prisma .next cache).
-          rsync -a --delete \
-            --exclude='.env' \
-            --exclude='.env.local' \
-            --exclude='node_modules' \
-            --exclude='.git' \
-            --exclude='.github' \
-            --exclude='.next' \
-            --exclude='.design-bundle' \
-            --exclude='_kutasia_tmp' \
-            --exclude='tsconfig.tsbuildinfo' \
-            --exclude='public/uploads' \
-            --exclude='mobile' \
-            ./ "$DEPLOY_DIR/"
-
-      - name: Apply pending DB migrations (idempotent)
-        run: |
-          cd /opt/opsolid-website
-          # db-bootstrap.sh applies all patch_*.sql files via psql against the
-          # opsolid-db container. Each patch uses IF NOT EXISTS guards so
-          # re-runs are safe. Runs BEFORE the app container rebuild so the new
-          # code never starts against an out-of-sync schema.
-          if [ -x deploy/hostinger/db-bootstrap.sh ]; then
-            REPO_ROOT=/opt/opsolid-website ./deploy/hostinger/db-bootstrap.sh
-          else
-            echo "WARN: db-bootstrap.sh not executable; chmod +x and try again"
-            chmod +x deploy/hostinger/db-bootstrap.sh
-            REPO_ROOT=/opt/opsolid-website ./deploy/hostinger/db-bootstrap.sh
-          fi
-
-      - name: Rebuild opsolid container
-        run: |
-          cd /opt/opsolid-website
-          docker compose up -d --build opsolid
-
-      - name: Health check
-        run: |
-          echo "Waiting 60s for build + startup..."
-          sleep 60
-          for attempt in $(seq 1 8); do
-            echo "==> Health check attempt $attempt/8..."
-            if curl -fsS --max-time 15 https://opsolid.de/api/health | tee /tmp/health.json; then
-              echo ""
-              echo "Health check passed on attempt $attempt."
-              exit 0
-            fi
-            echo "Not ready yet, waiting 15s..."
-            sleep 15
-          done
-          echo "Health check failed — container logs:"
-          docker logs --tail 80 opsolid-app
-          exit 1
+      - name: Lint application source
+        run: npm run lint
+      - name: Typecheck application source
+        run: node node_modules/typescript/bin/tsc --noEmit --incremental false
+      - name: Canonical account contracts (simulated upstream)
+        run: node --import tsx --test scripts/tests/opso-web-account.test.mts
+      - name: App-only cutover contracts (synthetic, no Docker or provider)
+        run: python3 -B scripts/tests/test_opsolid_app_cutover.py
+      - name: Production build and public source-map gate
+        run: npm run build
