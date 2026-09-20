@@ -3,6 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getOpsoContent } from "@/content/opso";
+import { getOpsoAccountCopy } from "@/content/opso-account";
+import { sessionKey } from "@/lib/opso-web/session";
 import { getOpsoPhysicalCardContent } from "@/content/opso-physical-card";
 import { OPSO_DEMO_PROFILES } from "@/content/opso-demo-assets";
 import physicalNfcCard from "@/assets/opso/physical-nfc-black-concept.png";
@@ -13,6 +15,7 @@ import OpsoShowcase from "./OpsoShowcase";
 
 type Props = { params: { locale: string } };
 const sectionIds = ["overview", "layouts", "plans", "availability"];
+export const dynamic = "force-dynamic";
 
 export function generateMetadata({ params }: Props): Metadata {
   if (!isLocale(params.locale)) notFound();
@@ -39,6 +42,9 @@ export default function OpsoPage({ params }: Props) {
   if (!isLocale(params.locale)) notFound();
   const c = getOpsoContent(params.locale);
   const physicalCard = getOpsoPhysicalCardContent(params.locale);
+  const accountKey = sessionKey(process.env.OPSO_WEB_SESSION_KEY);
+  const clientIpKey = sessionKey(process.env.OPSO_WEB_CLIENT_IP_SECRET);
+  const accountEnabled = process.env.OPSO_WEB_ENABLED === "true" && process.env.OPSO_WEB_TRUSTED_PROXY === "traefik-one-hop" && accountKey && clientIpKey && !accountKey.equals(clientIpKey);
   return (
     <article className={styles.page}>
       <div className="wrap">
@@ -51,6 +57,7 @@ export default function OpsoPage({ params }: Props) {
             <div className={styles.actions}>
               <a className="btn btn-primary" href="#layouts">{c.explore}<span aria-hidden="true">↓</span></a>
               <a className="btn btn-secondary" href="#availability">{c.availabilityLink}</a>
+              {accountEnabled && <Link className="btn btn-secondary" href={`/${params.locale === "de" || params.locale === "tr" ? params.locale : "en"}/opso/account`}>{getOpsoAccountCopy(params.locale === "de" || params.locale === "tr" ? params.locale : "en").signIn}</Link>}
             </div>
           </div>
           <figure className={styles.figure}>
