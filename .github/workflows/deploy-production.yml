@@ -1,0 +1,175 @@
+name: Deploy production (VPS)
+
+# Manual, phone-friendly production deploy. Setup: docs/ops/github-deploy.md
+# Flow: validate -> build runtime image on a hosted runner -> ship image and
+# reviewed ops scripts over SSH -> prepare-existing packet -> dry run ->
+# opsolid-app-cutover.py --execute (health check + automatic app-only rollback).
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: Type DEPLOY to deploy the current main HEAD to production
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Validate and build image
+    if: ${{ github.repository == 'drpiha/opsolid-website' && github.ref == 'refs/heads/main' && github.actor == github.repository_owner && github.triggering_actor == github.repository_owner }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: read
+      actions: read
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+    steps:
+      - name: Require typed confirmation
+        env:
+          CONFIRM: ${{ inputs.confirm }}
+        run: |
+          if [ "$CONFIRM" != "DEPLOY" ]; then
+            echo "::error::Confirmation must be exactly DEPLOY. Nothing was deployed."
+            exit 1
+          fi
+      - name: Checkout main at the dispatched commit
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Set up Node
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: '22.23.2'
+          cache: npm
+      - name: Install locked dependencies
+        run: npm ci --no-audit --no-fund
+      - name: Generate Prisma client locally (no database connection)
+        run: node node_modules/prisma/build/index.js generate
+      - name: Card template fabricated-data audit
+        run: npm run audit:cards
+      - name: Lint application source
+        run: npm run lint
+      - name: Typecheck application source
+        run: node node_modules/typescript/bin/tsc --noEmit --incremental false
+      - name: App-only cutover contracts (synthetic, no Docker or provider)
+        run: python3 -B scripts/tests/test_opsolid_app_cutover.py
+      - name: Production build and public source-map gate
+        run: npm run build
+      - name: Require exact current main and green source verification for this commit
+        id: gate
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7.1.0
+        env:
+          TARGET_COMMIT: ${{ github.sha }}
+        with:
+          script: |
+            const { validateDispatch, validateEvidence } = require('./scripts/ops/runtime-image-eligibility.cjs');
+            const request = { eventName: context.eventName, ref: context.ref, sha: context.sha,
+              repository: process.env.GITHUB_REPOSITORY, repositoryId: process.env.GITHUB_REPOSITORY_ID,
+              actor: context.actor, triggeringActor: process.env.GITHUB_TRIGGERING_ACTOR, commit: process.env.TARGET_COMMIT };
+            validateDispatch(request);
+            const main = await github.rest.git.getRef({ ...context.repo, ref: 'heads/main' });
+            const runs = await github.rest.actions.listWorkflowRuns({ ...context.repo, workflow_id: 'deploy.yml',
+              branch: 'main', event: 'push', head_sha: request.commit, per_page: 20 });
+            const verified = validateEvidence(request, main.data, runs.data);
+            core.setOutput('verification-run-id', verified.runId);
+            core.setOutput('verification-run-attempt', String(verified.runAttempt));
+      - name: Build committed Dockerfile and export bounded image archive
+        env:
+          TARGET_COMMIT: ${{ github.sha }}
+          VERIFIED_RUN_ID: ${{ steps.gate.outputs.verification-run-id }}
+          VERIFIED_RUN_ATTEMPT: ${{ steps.gate.outputs.verification-run-attempt }}
+        run: node scripts/ops/build-runtime-image.cjs
+      - name: Stage image and exact ops scripts for the deploy job
+        run: |
+          mkdir -p release/ops
+          cp runtime-artifact/image.tar.gz runtime-artifact/metadata.json runtime-artifact/SHA256SUMS release/
+          cp scripts/ops/opsolid-app-cutover.py scripts/ops/opsolid-candidate-runtime.py \
+             scripts/ops/opsolid-runtime-role.py scripts/ops/opsolid-backup-restore-proof.py \
+             scripts/ops/remote-deploy.sh release/ops/
+      - name: Upload release bundle (1 day)
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: opsolid-release-${{ github.sha }}
+          path: release/
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 1
+
+  deploy:
+    name: Deploy over SSH (health-gated, auto-rollback)
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: production
+    permissions:
+      contents: read
+    env:
+      COMMIT: ${{ github.sha }}
+      SSH_HOST: ${{ secrets.DEPLOY_SSH_HOST }}
+      SSH_USER: ${{ secrets.DEPLOY_SSH_USER }}
+      SSH_PORT: ${{ secrets.DEPLOY_SSH_PORT }}
+    steps:
+      - name: Download release bundle
+        uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: opsolid-release-${{ github.sha }}
+          path: release
+      - name: Verify bundle checksums
+        working-directory: release
+        run: sha256sum --check --strict SHA256SUMS
+      - name: Configure SSH (pinned host key, no secrets printed)
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_PRIVATE_KEY }}
+          SSH_KNOWN_HOSTS: ${{ secrets.DEPLOY_SSH_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          umask 077
+          for v in SSH_HOST SSH_USER SSH_PRIVATE_KEY SSH_KNOWN_HOSTS; do
+            if [ -z "${!v}" ]; then echo "::error::Missing repository secret for $v (see docs/ops/github-deploy.md)"; exit 1; fi
+          done
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/deploy_key
+          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          cat > ~/.ssh/config <<CONF
+          Host opsolid-vps
+            HostName ${SSH_HOST}
+            User ${SSH_USER}
+            Port ${SSH_PORT:-22}
+            IdentityFile ~/.ssh/deploy_key
+            IdentitiesOnly yes
+            StrictHostKeyChecking yes
+            UserKnownHostsFile ~/.ssh/known_hosts
+            BatchMode yes
+            ServerAliveInterval 30
+            ServerAliveCountMax 10
+          CONF
+          ssh-keygen -y -f ~/.ssh/deploy_key > /dev/null
+      - name: Upload image and ops scripts to the VPS
+        run: |
+          set -euo pipefail
+          ssh opsolid-vps "rm -rf opsolid-deploy-incoming/$COMMIT && mkdir -p -m 700 opsolid-deploy-incoming/$COMMIT"
+          scp -q -r release/. "opsolid-vps:opsolid-deploy-incoming/$COMMIT/"
+      - name: Cutover (prepare, dry run, execute with health check and rollback)
+        run: |
+          set -euo pipefail
+          if [ "$SSH_USER" = root ]; then runner="bash"; else runner="sudo -n bash"; fi
+          ssh opsolid-vps "$runner -s -- $COMMIT" < release/ops/remote-deploy.sh
+      - name: Summary
+        if: ${{ success() }}
+        run: echo "Deployed $COMMIT; health check passed." >> "$GITHUB_STEP_SUMMARY"
+      - name: Summary (failure)
+        if: ${{ failure() }}
+        run: |
+          echo "### Deploy FAILED for $COMMIT" >> "$GITHUB_STEP_SUMMARY"
+          echo "Check the Cutover step log: rollback_ok=true means the previous version is serving again; manual_review_required=true means log in to the VPS." >> "$GITHUB_STEP_SUMMARY"
+      - name: Remove SSH material
+        if: ${{ always() }}
+        run: rm -rf ~/.ssh/deploy_key ~/.ssh/config ~/.ssh/known_hosts
