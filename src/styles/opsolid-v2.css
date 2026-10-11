@@ -944,34 +944,6 @@ html[data-preview="v2"][data-theme="light"] .v2-node-graph {
   gap: var(--v2-space-3);
 }
 
-/* Counter card */
-.v2-kib-counter {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: var(--v2-space-4) var(--v2-space-5);
-  background: var(--v2-bg-raised);
-  border: 1px solid var(--v2-line-soft);
-  border-radius: var(--v2-radius-md);
-  align-self: flex-start;
-  max-width: 320px;
-  margin-top: var(--v2-space-3);
-}
-.v2-kib-counter__value {
-  font-family: var(--font-v2-mono), ui-monospace, monospace;
-  font-size: 2.25rem;
-  font-weight: 500;
-  font-variant-numeric: tabular-nums;
-  color: var(--v2-accent-primary);
-  line-height: 1;
-}
-.v2-kib-counter__label {
-  font-family: var(--font-v2-mono), ui-monospace, monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.06em;
-  color: var(--v2-ink-3);
-}
-
 /* Background log stream */
 .v2-kib-logstream {
   position: absolute;
@@ -1041,18 +1013,9 @@ html[data-preview="v2"][data-theme="light"] .v2-node-graph {
 .v2-terminal__live {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
   font-size: 0.7rem;
   letter-spacing: 0.1em;
-  color: var(--v2-motion-trace);
-}
-.v2-terminal__live-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--v2-motion-trace);
-  box-shadow: 0 0 8px var(--v2-motion-glow);
-  animation: v2-pulse 1.4s ease-in-out infinite;
+  color: #9CA3AF;
 }
 @keyframes v2-pulse {
   0%, 100% { opacity: 1; transform: scale(1); }
@@ -1113,7 +1076,6 @@ html[data-preview="v2"][data-theme="light"] .v2-node-graph {
 
 @media (prefers-reduced-motion: reduce) {
   .v2-kib-logstream__col { animation: none; }
-  .v2-terminal__live-dot { animation: none; }
   .v2-terminal__cursor--blink { animation: none; opacity: 1; }
 }
 
@@ -2402,6 +2364,11 @@ html[data-preview="v2"] .wrap {
   line-height: 1;
   letter-spacing: -0.02em;
   color: var(--v2-accent-primary);
+}
+.v2-home-outcomes__note {
+  margin: var(--v2-space-5) 0 0;
+  font-size: 0.875rem;
+  color: var(--v2-ink-3);
 }
 .v2-home-outcomes__card-body {
   font-size: 0.9375rem;

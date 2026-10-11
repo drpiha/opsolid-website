@@ -483,29 +483,7 @@ export const content = {
     testimonials: {
       label: "Field notes",
       headline: "What teams notice after working with OpSolid.",
-      items: [
-        {
-          quote:
-            "We stopped copying order data between four systems. The process now completes automatically before anyone starts the workday.",
-          name: "Lena Richter",
-          role: "Head of Operations",
-          company: "Mid-size retail group",
-        },
-        {
-          quote:
-            "OpSolid didn't try to sell us a platform. They mapped our actual process, automated the repetitive parts, and handed us full documentation.",
-          name: "Marco Weber",
-          role: "COO",
-          company: "Industrial group, Germany",
-        },
-        {
-          quote:
-            "The whole integration layer is self-hosted. No US subprocessors. Legal signed off in one meeting.",
-          name: "Sarah Klein",
-          role: "Head of IT",
-          company: "Service firm",
-        },
-      ],
+      items: [],
     },
 
     finalCta: {
@@ -1307,7 +1285,7 @@ export const content = {
         href: "/products/digital-card",
         externalUrl: "",
         icon: "idCard",
-        startingPrice: "Free",
+        startingPrice: "Price on request",
         category: "Customer-facing",
         stack: "Next.js · Hetzner · vCard · HubSpot",
       },
@@ -1315,12 +1293,12 @@ export const content = {
         name: "Voice AI Agent",
         tagline: "24/7 phone receptionist · Retell · Vapi",
         description:
-          "An AI voice agent that answers your phone line 24/7, books appointments, and routes calls. Multi-language (DE/EN/TR). Built on Retell AI or Vapi with calendar sync. Replaces €3k/month receptionist work.",
+          "An AI voice agent that answers your phone line 24/7, books appointments, and routes calls. Multi-language (DE/EN/TR). Built on Retell AI or Vapi with calendar sync.",
         status: "Live",
         href: "/products/voice-agent",
         externalUrl: "",
         icon: "phone",
-        startingPrice: "Starting at €1,200 setup + €0.12/min",
+        startingPrice: "Price on request",
         category: "Communication",
         stack: "Retell AI · Vapi · Cal.com · Supabase",
       },
@@ -1333,7 +1311,7 @@ export const content = {
         href: "/products/chatbot",
         externalUrl: "",
         icon: "messageCircle",
-        startingPrice: "Starting at €1,800 setup + €99/mo",
+        startingPrice: "Price on request",
         category: "Customer-facing",
         stack: "OpenAI · Custom Workflows · Supabase · HubSpot",
       },
@@ -1346,7 +1324,7 @@ export const content = {
         href: "/products/whatsapp-agent",
         externalUrl: "",
         icon: "messagesSquare",
-        startingPrice: "Starting at €1,500 setup + Meta fees",
+        startingPrice: "Price on request",
         category: "Communication",
         stack: "Meta Business Cloud · 360dialog · Twilio · Stripe",
       },
@@ -1359,7 +1337,7 @@ export const content = {
         href: "/products/booking-agent",
         externalUrl: "",
         icon: "calendarClock",
-        startingPrice: "Starting at €800 setup + €49/mo",
+        startingPrice: "Price on request",
         category: "Internal Ops",
         stack: "Cal.com · Retell · Custom Workflows · Google Calendar",
       },
@@ -1372,7 +1350,7 @@ export const content = {
         href: "/products/email-agent",
         externalUrl: "",
         icon: "mail",
-        startingPrice: "Starting at €99 – €499/month",
+        startingPrice: "Price on request",
         category: "Communication",
         stack: "Instantly · AgentMail · Custom Workflows · OpenAI",
       },
@@ -1380,12 +1358,12 @@ export const content = {
         name: "Lead Qualification Agent",
         tagline: "Voice + chat · CRM scoring · HubSpot sync",
         description:
-          "A conversational agent that qualifies inbound leads via voice or chat, scores them, and routes qualified leads into HubSpot/Pipedrive/Salesforce. 40% MQL→SQL conversion uplift realistic.",
+          "A conversational agent that qualifies inbound leads via voice or chat, scores them, and routes qualified leads into HubSpot/Pipedrive/Salesforce. Results depend on your baseline; we don't promise figures.",
         status: "Live",
         href: "/products/lead-qualifier",
         externalUrl: "",
         icon: "userCheck",
-        startingPrice: "Starting at €2,200 setup + €199/mo",
+        startingPrice: "Price on request",
         category: "Customer-facing",
         stack: "Retell · HubSpot · Custom Workflows · Supabase",
       },
@@ -1611,29 +1589,7 @@ export const content = {
       testimonials: {
         label: "SOCIAL PROOF",
         heading: "What customers say after their first card.",
-        items: [
-          {
-            quote:
-              "I built my card in ten minutes. Picked a template, typed in my details, hit publish, and the link was live. No back-and-forth, no waiting.",
-            name: "Lena Richter",
-            role: "Independent broker",
-            company: "Berlin, DE",
-          },
-          {
-            quote:
-              "The fact that the data stays in the EU closed the deal with our legal team. That alone sold it for us.",
-            name: "Marco Weber",
-            role: "COO",
-            company: "Munich industrial group",
-          },
-          {
-            quote:
-              "No monthly subscription. No 'enterprise tier' upsell. I started free, paid once for the custom domain, moved on. Exactly what I wanted.",
-            name: "Sarah Klein",
-            role: "Independent consultant",
-            company: "Berlin, DE",
-          },
-        ],
+        items: [],
       },
       howItWorks: {
         label: "HOW IT WORKS",
@@ -2142,7 +2098,7 @@ export const content = {
         primaryCta: "Book a demo",
         secondaryCta: "See how it works",
         tags: "RETELL · VAPI · DE/EN/TR · 24/7",
-        startingPrice: "Starting at €1,200 setup + €0.12/min",
+        startingPrice: "Price on request",
       },
       features: {
         label: "WHAT YOU GET",
@@ -2217,8 +2173,8 @@ export const content = {
         tiers: [
           {
             name: "Starter",
-            price: "€1,200",
-            billing: "one-time setup + €0.12/min",
+            price: "Price on request",
+            billing: "",
             features: [
               "One phone line",
               "DE or EN (one language)",
@@ -2230,8 +2186,8 @@ export const content = {
           },
           {
             name: "Business",
-            price: "€2,400",
-            billing: "setup + €0.12/min + €99/mo",
+            price: "Price on request",
+            billing: "",
             features: [
               "Up to 3 phone lines",
               "DE · EN · TR multilingual",
@@ -2245,14 +2201,14 @@ export const content = {
           },
           {
             name: "Enterprise",
-            price: "Custom",
-            billing: "volume pricing + SLA",
+            price: "Price on request",
+            billing: "",
             features: [
               "Unlimited lines",
               "Custom voice cloning",
               "Self-hosted option (Vapi)",
               "Dedicated slack channel",
-              "99.9% SLA",
+              "SLA by agreement",
             ],
             cta: "Talk to us",
           },
@@ -2306,7 +2262,7 @@ export const content = {
         primaryCta: "Book a demo",
         secondaryCta: "See how it works",
         tags: "OPENAI · CUSTOM · SUPABASE · MULTI-CHANNEL",
-        startingPrice: "Starting at €1,800 setup + €99/mo",
+        startingPrice: "Price on request",
       },
       features: {
         label: "WHAT YOU GET",
@@ -2381,8 +2337,8 @@ export const content = {
         tiers: [
           {
             name: "Web only",
-            price: "€1,800",
-            billing: "setup + €99/mo",
+            price: "Price on request",
+            billing: "",
             features: [
               "Website widget",
               "RAG on up to 200 pages/docs",
@@ -2394,8 +2350,8 @@ export const content = {
           },
           {
             name: "Multi-channel",
-            price: "€2,800",
-            billing: "setup + €199/mo",
+            price: "Price on request",
+            billing: "",
             features: [
               "Web + WhatsApp + Telegram",
               "Unified agent inbox",
@@ -2409,8 +2365,8 @@ export const content = {
           },
           {
             name: "Scale",
-            price: "From €5,000",
-            billing: "setup + usage-based",
+            price: "Price on request",
+            billing: "",
             features: [
               "Unlimited channels",
               "Custom LLM (self-hosted option)",
@@ -2466,7 +2422,7 @@ export const content = {
         primaryCta: "Book a demo",
         secondaryCta: "See how it works",
         tags: "META BUSINESS CLOUD · 360DIALOG · TWILIO · VERIFIED",
-        startingPrice: "Starting at €1,500 setup + Meta fees",
+        startingPrice: "Price on request",
       },
       features: {
         label: "WHAT YOU GET",
@@ -2541,8 +2497,8 @@ export const content = {
         tiers: [
           {
             name: "Launch",
-            price: "€1,500",
-            billing: "setup + Meta fees passthrough",
+            price: "Price on request",
+            billing: "",
             features: [
               "Business verification",
               "3 Meta templates approved",
@@ -2554,8 +2510,8 @@ export const content = {
           },
           {
             name: "Commerce",
-            price: "€3,200",
-            billing: "setup + €149/mo + Meta fees",
+            price: "Price on request",
+            billing: "",
             features: [
               "Everything in Launch",
               "Shopify/WooCommerce integration",
@@ -2569,8 +2525,8 @@ export const content = {
           },
           {
             name: "Enterprise",
-            price: "Custom",
-            billing: "setup + volume pricing",
+            price: "Price on request",
+            billing: "",
             features: [
               "Multi-country numbers",
               "CRM bi-directional sync",
@@ -2592,7 +2548,7 @@ export const content = {
           },
           {
             q: "How much are Meta's fees?",
-            a: "Conversation-based. Utility conversations (order updates) are roughly €0.02–0.05 each; marketing conversations €0.05–0.12. We pass these through at cost — no markup.",
+            a: "Conversation-based. Meta charges per conversation; we pass these fees through at cost, no markup. Details on request.",
           },
           {
             q: "How long does verification take?",
@@ -2626,7 +2582,7 @@ export const content = {
         primaryCta: "Book a demo",
         secondaryCta: "See how it works",
         tags: "CAL.COM · RETELL · CUSTOM · GOOGLE CALENDAR",
-        startingPrice: "Starting at €800 setup + €49/mo",
+        startingPrice: "Price on request",
       },
       features: {
         label: "WHAT YOU GET",
@@ -2701,8 +2657,8 @@ export const content = {
         tiers: [
           {
             name: "Solo",
-            price: "€800",
-            billing: "setup + €49/mo",
+            price: "Price on request",
+            billing: "",
             features: [
               "Up to 3 services",
               "Web form + chat intake",
@@ -2714,8 +2670,8 @@ export const content = {
           },
           {
             name: "Team",
-            price: "€1,600",
-            billing: "setup + €129/mo",
+            price: "Price on request",
+            billing: "",
             features: [
               "Unlimited services",
               "Phone + chat + form",
@@ -2729,8 +2685,8 @@ export const content = {
           },
           {
             name: "Multi-location",
-            price: "Custom",
-            billing: "per location",
+            price: "Price on request",
+            billing: "",
             features: [
               "Multi-site routing",
               "Resource constraints",
@@ -2756,7 +2712,7 @@ export const content = {
           },
           {
             q: "Does it really reduce no-shows?",
-            a: "In our deployments, 30–50% reduction is typical — driven by 24h + 2h reminders and a one-click reschedule link. Numbers depend on your service type.",
+            a: "Reminders (24h + 2h) and a one-click reschedule link can help reduce no-shows. We don't promise figures; results depend on your service type.",
           },
           {
             q: "Can customers just call us to book?",
@@ -2786,7 +2742,7 @@ export const content = {
         primaryCta: "Book a demo",
         secondaryCta: "See how it works",
         tags: "INSTANTLY · AGENTMAIL · CUSTOM · OPENAI",
-        startingPrice: "Starting at €99 – €499/month",
+        startingPrice: "Price on request",
       },
       features: {
         label: "WHAT YOU GET",
@@ -2861,8 +2817,8 @@ export const content = {
         tiers: [
           {
             name: "Triage",
-            price: "€99",
-            billing: "per month",
+            price: "Price on request",
+            billing: "",
             features: [
               "1 inbox classified + triaged",
               "Reply drafts (up to 200/mo)",
@@ -2873,8 +2829,8 @@ export const content = {
           },
           {
             name: "Outreach + Triage",
-            price: "€299",
-            billing: "per month",
+            price: "Price on request",
+            billing: "",
             features: [
               "Everything in Triage",
               "Cold outreach (5 inboxes)",
@@ -2888,8 +2844,8 @@ export const content = {
           },
           {
             name: "Scale",
-            price: "€499+",
-            billing: "per month, volume-based",
+            price: "Price on request",
+            billing: "",
             features: [
               "Unlimited inboxes",
               "Custom LLM routing",
@@ -2941,11 +2897,11 @@ export const content = {
           "handed to sales.",
         ],
         paragraph:
-          "A conversational agent that qualifies inbound leads via voice or chat, scores them against your ICP, and routes MQLs straight to sales in HubSpot or Pipedrive. Typical uplift: 40% MQL-to-SQL conversion.",
+          "A conversational agent that qualifies inbound leads via voice or chat, scores them against your ICP, and routes MQLs straight to sales in HubSpot or Pipedrive. We don't promise conversion figures; results depend on your baseline.",
         primaryCta: "Book a demo",
         secondaryCta: "See how it works",
         tags: "RETELL · HUBSPOT · CUSTOM · SCORING",
-        startingPrice: "Starting at €2,200 setup + €199/mo",
+        startingPrice: "Price on request",
       },
       features: {
         label: "WHAT YOU GET",
@@ -3020,8 +2976,8 @@ export const content = {
         tiers: [
           {
             name: "Chat-only",
-            price: "€2,200",
-            billing: "setup + €199/mo",
+            price: "Price on request",
+            billing: "",
             features: [
               "Website chat widget",
               "ICP scoring model",
@@ -3033,8 +2989,8 @@ export const content = {
           },
           {
             name: "Voice + Chat",
-            price: "€3,800",
-            billing: "setup + €349/mo",
+            price: "Price on request",
+            billing: "",
             features: [
               "Chat + inbound phone",
               "Retell voice qualification",
@@ -3048,8 +3004,8 @@ export const content = {
           },
           {
             name: "Enterprise",
-            price: "Custom",
-            billing: "per-team pricing",
+            price: "Price on request",
+            billing: "",
             features: [
               "Multi-team routing",
               "Custom CRM integrations",
@@ -3067,11 +3023,11 @@ export const content = {
         items: [
           {
             q: "Do leads actually stay engaged with an AI?",
-            a: "Short answer: yes, if the conversation feels useful. We disclose the AI up front, keep questions to 4–6 max, and offer a human handoff at any point. Completion rates run 60–80% vs. 15–25% on static forms.",
+            a: "Short answer: yes, if the conversation feels useful. We disclose the AI up front, keep questions to 4–6 max, and offer a human handoff at any point. We don't promise completion rates; they depend on your audience and use case.",
           },
           {
             q: "What's a realistic MQL→SQL uplift?",
-            a: "30–50% in most deployments, driven by better scoring accuracy + faster routing (SQLs hit sales in minutes vs. hours). Specific numbers depend on your current baseline.",
+            a: "Better scoring and faster routing can help, but we don't promise figures. Results depend on your current baseline.",
           },
           {
             q: "Can it disqualify leads?",
@@ -3619,7 +3575,7 @@ export const content = {
         eyebrow: "[ TYPICAL USE CASES ]",
         headline: "What we automate, in practice",
         lead:
-          "A short selection of the workflows we have built or scoped for SMEs. Less copy-paste, fewer mistakes, faster turnaround.",
+          "A short selection of the workflows we can build for SMEs. Less copy-paste, fewer mistakes, faster turnaround.",
         cards: [
           {
             title: "Email classification & routing",
@@ -4222,7 +4178,7 @@ export const content = {
         faq: {
           headline: "AI consulting — common questions",
           items: [
-            { q: "Do we have to be 'AI-ready'?", a: "No. Most clients are not — that's exactly why they need this work done before spending money on tools." },
+            { q: "Do we have to be 'AI-ready'?", a: "No. Many businesses are not — that's exactly why they need this work done before spending money on tools." },
             { q: "Do you sell AI tools?", a: "No. We are independent — we recommend what fits, including 'use what you already have' or 'don't do this yet'." },
             { q: "Can we use AI in a GDPR-compliant way?", a: "Yes, with the right model choice, EU hosting and a written guideline. We help you set this up." },
             { q: "How long does a consulting engagement take?", a: "Typically two to four weeks for the analysis and roadmap. Implementation timelines are separate and scope-dependent." },
@@ -4265,7 +4221,7 @@ export const content = {
           ],
         },
         useCases: {
-          headline: "Workflows we have automated",
+          headline: "Workflows we can automate",
           items: [
             {
               title: "Quote and document generation",
@@ -4351,7 +4307,7 @@ export const content = {
           ],
         },
         useCases: {
-          headline: "Microsoft 365 workflows we have built",
+          headline: "Microsoft 365 workflows we can build",
           items: [
             {
               title: "Approval workflows in Teams",
@@ -4438,7 +4394,7 @@ export const content = {
           ],
         },
         useCases: {
-          headline: "Internal tools we have built",
+          headline: "Internal tools we can build",
           items: [
             {
               title: "Operations admin console",
@@ -4524,7 +4480,7 @@ export const content = {
           ],
         },
         useCases: {
-          headline: "Training formats we have run",
+          headline: "Training formats we can run",
           items: [
             {
               title: "Company-wide AI primer",
@@ -4610,9 +4566,9 @@ export const content = {
           },
           {
             label: "UPTIME",
-            value: "99.9",
-            unit: "% target",
-            sub: "Retell SLA · vendor-measured",
+            value: "SLA",
+            unit: "",
+            sub: "by agreement",
           },
         ],
       },
@@ -5041,15 +4997,15 @@ export const content = {
       },
       featured: {
         eyebrow: "[ FLAGSHIPS ]",
-        heading: "The two products people remember us for",
+        heading: "Two featured products",
         items: [
           {
             id: "voice-agent",
             name: "Voice AI Agent",
             tagline: "24/7 phone receptionist on Retell or Vapi.",
-            body: "Multilingual phone answering, calendar sync, hand-off to humans when the script runs out. Live in Hamburg taxi dispatches, Bavarian hotels, and B2B service desks across DE.",
+            body: "Multilingual phone answering, calendar sync, hand-off to humans when the script runs out. Built for dispatch desks, hotels and B2B service desks.",
             href: "/products/voice-agent",
-            startingAt: "from €299/mo + €1,500 setup",
+            startingAt: "Price on request",
             badge: "Live",
           },
           {
@@ -5067,12 +5023,12 @@ export const content = {
         eyebrow: "[ AGENTS & SERVICES ]",
         heading: "Seven more, each clear about what it does",
         items: [
-          { id: "chatbot-agent", name: "Chatbot Agent", tagline: "Web chat trained on your knowledge base.", startingAt: "from €149/mo", href: "/products/chatbot-agent", category: "AGENT" },
-          { id: "whatsapp-agent", name: "WhatsApp Agent", tagline: "WhatsApp Business automated replies + broadcast.", startingAt: "from €199/mo", href: "/products/whatsapp-agent", category: "AGENT" },
-          { id: "booking-agent", name: "Booking Agent", tagline: "Multi-channel bookings → Cal.com → reminders.", startingAt: "from €99/mo", href: "/products/booking-agent", category: "AGENT" },
-          { id: "email-agent", name: "Email Agent", tagline: "Inbox triage, AI-drafted replies, escalation.", startingAt: "from €39/seat/mo", href: "/products/email-agent", category: "AGENT" },
-          { id: "lead-qualifier-agent", name: "Lead Qualifier Agent", tagline: "BANT scoring on form, chat, and voice intake.", startingAt: "from €249/mo", href: "/products/lead-qualifier-agent", category: "AGENT" },
-          { id: "custom-automation", name: "Custom Automation", tagline: "Sprint, project, or retainer engineering.", startingAt: "from €4,500 sprint", href: "/products/custom-automation", category: "SERVICE" },
+          { id: "chatbot-agent", name: "Chatbot Agent", tagline: "Web chat trained on your knowledge base.", startingAt: "Price on request", href: "/products/chatbot-agent", category: "AGENT" },
+          { id: "whatsapp-agent", name: "WhatsApp Agent", tagline: "WhatsApp Business automated replies + broadcast.", startingAt: "Price on request", href: "/products/whatsapp-agent", category: "AGENT" },
+          { id: "booking-agent", name: "Booking Agent", tagline: "Multi-channel bookings → Cal.com → reminders.", startingAt: "Price on request", href: "/products/booking-agent", category: "AGENT" },
+          { id: "email-agent", name: "Email Agent", tagline: "Inbox triage, AI-drafted replies, escalation.", startingAt: "Price on request", href: "/products/email-agent", category: "AGENT" },
+          { id: "lead-qualifier-agent", name: "Lead Qualifier Agent", tagline: "BANT scoring on form, chat, and voice intake.", startingAt: "Price on request", href: "/products/lead-qualifier-agent", category: "AGENT" },
+          { id: "custom-automation", name: "Custom Automation", tagline: "Sprint, project, or retainer engineering.", startingAt: "Price on request", href: "/products/custom-automation", category: "SERVICE" },
           { id: "kutasia", name: "Kutasia", tagline: "Unified WhatsApp, Telegram, Email and Voice AI workspace for SMBs.", startingAt: "from €79/mo", href: "/products/kutasia", category: "WORKSPACE" },
         ],
       },
@@ -5174,7 +5130,7 @@ export const content = {
             ],
           },
           useCases: [
-            { industry: "B2B SaaS", problem: "Engineers waste hours answering the same product questions in a chat widget.", outcome: "Chatbot answers 70% of product questions from the docs; leaves 30% for the team." },
+            { industry: "B2B SaaS", problem: "Engineers waste hours answering the same product questions in a chat widget.", outcome: "Chatbot can answer routine product questions from the docs and hand the rest to the team." },
             { industry: "E-commerce", problem: "Cart abandonment because shipping and returns questions go unanswered after 18:00.", outcome: "24/7 answers cut abandonment; complex orders escalate to email overnight." },
             { industry: "Professional services", problem: "Inbound leads land in a contact form and bounce when nobody replies fast.", outcome: "Chatbot qualifies, books a discovery call on Cal.com, drops the lead in HubSpot." },
           ],
@@ -5209,7 +5165,7 @@ export const content = {
           integrations: ["Meta WABA", "HubSpot", "Pipedrive", "Cal.com", "Stripe", "Twilio fallback", "Custom webhooks"],
           faq: [
             { q: "Do I need a Meta WABA number?", a: "Yes — you provide a number that we register with Meta on your behalf. If you already have a WABA number, we migrate it. The number stays yours; you can take it elsewhere if you ever leave." },
-            { q: "How do conversation costs work?", a: "Meta charges per 24-hour conversation window (~€0.05–0.15 in EU depending on category). On Standard and Professional we add a small per-message markup; on Enterprise we pass through Meta's price with no markup." },
+            { q: "How do conversation costs work?", a: "Meta charges per 24-hour conversation window, depending on category. Pricing on request." },
             { q: "Can my team take over the chat manually?", a: "Yes — every conversation has a 'human takeover' button in our dashboard, or you route to a Slack channel with full context. Once a human takes over, the agent stays silent until you mark the chat resolved." },
             { q: "Is broadcast spam-safe?", a: "We use Meta's pre-approved template messages only and respect opt-out requests automatically. Misuse will get your number banned by Meta — we configure conservative defaults that keep your number compliant." },
           ],
@@ -5230,7 +5186,7 @@ export const content = {
             ],
           },
           useCases: [
-            { industry: "Salons / barbers", problem: "Phone bookings interrupt service; clients double-book or no-show without notice.", outcome: "Voice and web take 80% of bookings; SMS reminders cut no-show rate by half." },
+            { industry: "Salons / barbers", problem: "Phone bookings interrupt service; clients double-book or no-show without notice.", outcome: "Voice and web can take bookings; SMS reminders can help reduce no-shows." },
             { industry: "Clinics", problem: "Reception spends hours on confirmation calls and rebookings.", outcome: "Reminders + auto-rebook flow handle most of it; reception only deals with exceptions." },
             { industry: "Multi-staff agencies", problem: "Round-robin booking across team members fails when calendars get out of sync.", outcome: "Real-time Cal.com integration keeps everyone in one source of truth; bookings route by skill or workload." },
           ],
@@ -5321,8 +5277,8 @@ export const content = {
           integrations: ["Postgres", "Node.js / TypeScript", "Python", "n8n", "Zapier (when it makes sense)", "Hetzner", "Custom APIs"],
           faq: [
             { q: "Why not just use Zapier or Make?", a: "We do — when they fit. Zapier and Make are great for simple connectors. They start to hurt at scale (cost, debugging, reliability) and they can't handle business-specific logic. We help you decide where each tool earns its keep, then build the rest." },
-            { q: "How does scoping work?", a: "Free 30-minute discovery call. If we both want to proceed, we run a paid scoping workshop (~€1,500, deducted from project fee if you sign) that produces a written spec and a fixed price. You walk away with the spec either way." },
-            { q: "What's the day rate?", a: "€1,200/day for senior automation engineering, billed in half-day increments. Below this, the work is junior labor or you're getting overcharged on tooling. Project pricing usually beats day rates for well-scoped work — that's the Standard sprint at €4,500." },
+            { q: "How does scoping work?", a: "Free 30-minute discovery call. If we both want to proceed, we run a paid scoping workshop (price on request) that produces a written spec and a fixed price. You walk away with the spec either way." },
+            { q: "What's the day rate?", a: "Price on request. We quote per scope — either a fixed project price or a rate agreed in advance." },
             { q: "Do you sign DPAs?", a: "Yes — standard German B2B AVV (Auftragsverarbeitungsvertrag) on every engagement that touches customer data. NDA before scoping if you need to share confidential context." },
           ],
         },
@@ -5332,12 +5288,12 @@ export const content = {
     pricing: {
       meta: {
         title: "Pricing — Standard, Professional, Enterprise | OpSolid",
-        description: "Transparent EUR pricing for OpSolid's nine products: Voice Agent, OpSo Smart, Chatbot, WhatsApp, Booking, Email, Lead Qualifier, Custom Automation, and Kutasia.",
+        description: "Pricing overview for OpSolid's products (prices for most products on request): Voice Agent, OpSo Smart, Chatbot, WhatsApp, Booking, Email, Lead Qualifier, Custom Automation, and Kutasia.",
       },
       hero: {
         eyebrow: "[ PRICING · TRANSPARENT ]",
         title: {
-          pre: "Tier pricing across ",
+          pre: "Pricing across ",
           italic: "all nine products",
           post: ".",
         },
@@ -5371,28 +5327,28 @@ export const content = {
           tiers: [
             {
               name: "Standard",
-              setup: "€1,500",
-              monthly: "€299/mo",
+              setup: "Price on request",
+              monthly: "Price on request",
               included: ["500 minutes / month", "1 phone number", "1 language", "Business-hours coverage", "Cal.com integration"],
-              overage: "€0.18/min",
+              overage: "",
               forWhom: "Single-location SMB, after-hours overflow",
               isHighlighted: false,
             },
             {
               name: "Professional",
-              setup: "€2,500",
-              monthly: "€699/mo",
+              setup: "Price on request",
+              monthly: "Price on request",
               included: ["2,000 minutes / month", "3 phone numbers", "Multilingual (DE / EN / TR)", "24/7 coverage", "CRM sync (HubSpot, Pipedrive)"],
-              overage: "€0.14/min",
+              overage: "",
               forWhom: "Mid-market with steady inbound (clinics, agencies)",
               isHighlighted: true,
             },
             {
               name: "Enterprise",
-              setup: "€4,500",
-              monthly: "€1,499/mo",
-              included: ["8,000 minutes / month", "Unlimited numbers", "Custom voice + branding", "SLA 99.9%", "EU data residency contract"],
-              overage: "€0.10/min",
+              setup: "Price on request",
+              monthly: "Price on request",
+              included: ["8,000 minutes / month", "Unlimited numbers", "Custom voice + branding", "SLA by agreement", "EU data residency contract"],
+              overage: "",
               forWhom: "High-volume, regulated industries",
               isHighlighted: false,
             },
@@ -5441,28 +5397,28 @@ export const content = {
           tiers: [
             {
               name: "Standard",
-              setup: "€750",
-              monthly: "€149/mo",
+              setup: "Price on request",
+              monthly: "Price on request",
               included: ["1 site", "500 conversations / month", "Knowledge base up to 50 docs", "Business-hours hand-off", "Email + ticket capture"],
-              overage: "€0.40 / conversation",
+              overage: "",
               forWhom: "Small site, lead-capture focus",
               isHighlighted: false,
             },
             {
               name: "Professional",
-              setup: "€1,500",
-              monthly: "€399/mo",
+              setup: "Price on request",
+              monthly: "Price on request",
               included: ["3 sites", "2,500 conversations / month", "Unlimited KB documents", "24/7 hand-off", "CRM sync"],
-              overage: "€0.30 / conversation",
+              overage: "",
               forWhom: "Mid-market with active funnel",
               isHighlighted: true,
             },
             {
               name: "Enterprise",
-              setup: "€3,000",
-              monthly: "€999/mo",
+              setup: "Price on request",
+              monthly: "Price on request",
               included: ["Unlimited sites", "10,000 conversations / month", "Multi-language", "SLA + audit log", "Custom voice + tone training"],
-              overage: "€0.20 / conversation",
+              overage: "",
               forWhom: "High-traffic e-commerce / B2B SaaS",
               isHighlighted: false,
             },
@@ -5476,28 +5432,28 @@ export const content = {
           tiers: [
             {
               name: "Standard",
-              setup: "€900",
-              monthly: "€199/mo",
+              setup: "Price on request",
+              monthly: "Price on request",
               included: ["1 WABA number", "3 users", "1,000 conversations / month", "Templates + broadcast", "Lead capture flow"],
-              overage: "Meta passthrough + €0.02 / msg",
+              overage: "",
               forWhom: "Local businesses, single-channel",
               isHighlighted: false,
             },
             {
               name: "Professional",
-              setup: "€1,800",
-              monthly: "€499/mo",
+              setup: "Price on request",
+              monthly: "Price on request",
               included: ["1 WABA number", "10 users", "5,000 conversations / month", "Automation flows", "CRM sync"],
-              overage: "Meta passthrough + €0.015 / msg",
+              overage: "",
               forWhom: "Mid-market service operations",
               isHighlighted: true,
             },
             {
               name: "Enterprise",
-              setup: "€3,500",
-              monthly: "€1,299/mo",
+              setup: "Price on request",
+              monthly: "Price on request",
               included: ["3+ WABA numbers", "Unlimited users", "20,000 conversations / month", "Multi-team routing", "SLA"],
-              overage: "Meta passthrough only (no markup)",
+              overage: "",
               forWhom: "High-volume retail / multi-brand",
               isHighlighted: false,
             },
@@ -5511,8 +5467,8 @@ export const content = {
           tiers: [
             {
               name: "Standard",
-              setup: "€500",
-              monthly: "€99/mo",
+              setup: "Price on request",
+              monthly: "Price on request",
               included: ["Web booking widget", "Cal.com sync", "Email + SMS reminders", "1 calendar", "Up to 100 bookings / month"],
               overage: "",
               forWhom: "Solo practitioner / small team",
@@ -5520,8 +5476,8 @@ export const content = {
             },
             {
               name: "Professional",
-              setup: "€1,200",
-              monthly: "€299/mo",
+              setup: "Price on request",
+              monthly: "Price on request",
               included: ["Up to 10 calendars", "Voice + WhatsApp + web intake", "No-show recovery flow", "Intake forms", "Custom reminders"],
               overage: "",
               forWhom: "Multi-staff service business",
@@ -5529,8 +5485,8 @@ export const content = {
             },
             {
               name: "Enterprise",
-              setup: "€2,500",
-              monthly: "€699/mo",
+              setup: "Price on request",
+              monthly: "Price on request",
               included: ["Unlimited calendars", "Custom workflows", "Deposit collection (Stripe)", "Multi-location", "SLA"],
               overage: "",
               forWhom: "Clinics, multi-branch operations",
@@ -5546,28 +5502,28 @@ export const content = {
           tiers: [
             {
               name: "Standard",
-              setup: "€600",
-              monthly: "€39/seat/mo",
+              setup: "Price on request",
+              monthly: "Price on request",
               included: ["1 shared inbox", "AI triage + auto-reply", "500 emails / seat / month", "Basic CRM log", "Slack notifications"],
-              overage: "€0.05 / email",
+              overage: "",
               forWhom: "Small ops team",
               isHighlighted: false,
             },
             {
               name: "Professional",
-              setup: "€1,200",
-              monthly: "€69/seat/mo",
+              setup: "Price on request",
+              monthly: "Price on request",
               included: ["3 inboxes", "Escalation rules", "2,000 emails / seat / month", "HubSpot / Pipedrive sync", "Custom reply templates"],
-              overage: "€0.04 / email",
+              overage: "",
               forWhom: "Mid-market service desk",
               isHighlighted: true,
             },
             {
               name: "Enterprise",
-              setup: "€2,500",
-              monthly: "€99/seat/mo",
+              setup: "Price on request",
+              monthly: "Price on request",
               included: ["Unlimited inboxes", "Custom routing rules", "Audit log + SLA", "EU DPA included", "Dedicated success manager"],
-              overage: "€0.03 / email",
+              overage: "",
               forWhom: "Regulated / high-volume",
               isHighlighted: false,
             },
@@ -5581,28 +5537,28 @@ export const content = {
           tiers: [
             {
               name: "Standard",
-              setup: "€1,000",
-              monthly: "€249/mo",
+              setup: "Price on request",
+              monthly: "Price on request",
               included: ["250 qualified leads / month", "Form + chat intake", "BANT scoring", "CRM push (HubSpot, Pipedrive)", "Slack alerts"],
-              overage: "€1.50 / lead",
+              overage: "",
               forWhom: "Outbound-light B2B",
               isHighlighted: false,
             },
             {
               name: "Professional",
-              setup: "€2,000",
-              monthly: "€599/mo",
+              setup: "Price on request",
+              monthly: "Price on request",
               included: ["1,000 qualified leads / month", "Voice + chat + form intake", "Custom scoring model", "Routing rules", "Weekly digest"],
-              overage: "€1.00 / lead",
+              overage: "",
               forWhom: "Active SDR-supported team",
               isHighlighted: true,
             },
             {
               name: "Enterprise",
-              setup: "€4,000",
-              monthly: "€1,499/mo",
+              setup: "Price on request",
+              monthly: "Price on request",
               included: ["4,000 qualified leads / month", "Multi-channel intake", "Account-based scoring", "SLA", "Custom integrations"],
-              overage: "€0.60 / lead",
+              overage: "",
               forWhom: "Sales-led mid-market",
               isHighlighted: false,
             },
@@ -5616,8 +5572,8 @@ export const content = {
           tiers: [
             {
               name: "Standard",
-              setup: "€4,500 fixed (sprint)",
-              monthly: "—",
+              setup: "Price on request",
+              monthly: "Price on request",
               included: ["1 workflow built end-to-end", "Scoping + build + 30-day support", "Up to 3 integrations", "Documentation + handover", "Source code yours"],
               overage: "",
               forWhom: "Single pain point, well-defined",
@@ -5625,8 +5581,8 @@ export const content = {
             },
             {
               name: "Professional",
-              setup: "€12,000 fixed (project) — or €1,200/day",
-              monthly: "—",
+              setup: "Price on request",
+              monthly: "Price on request",
               included: ["3–5 workflows", "Discovery workshop", "Build + 90-day support", "Integration + custom code", "Ops dashboard"],
               overage: "",
               forWhom: "Mid-market digital ops project",
@@ -5634,8 +5590,8 @@ export const content = {
             },
             {
               name: "Enterprise",
-              setup: "—",
-              monthly: "€4,500/mo (12-month minimum)",
+              setup: "Price on request",
+              monthly: "Price on request",
               included: ["Dedicated automation engineer 4 days / month", "Unlimited workflows in scope", "Quarterly review", "Priority on incidents", "Roadmap collaboration"],
               overage: "",
               forWhom: "Ongoing transformation partner",
@@ -5682,15 +5638,15 @@ export const content = {
       bundles: {
         eyebrow: "[ BUNDLES & ANNUAL ]",
         heading: "Stack the savings",
-        lead: "Buy more than one product, or commit annually, and the bill drops automatically. Discounts stack with each other.",
+        lead: "Buying more than one product or committing annually? We quote it together.",
         items: [
-          { rule: "2 products", benefit: "−10% on combined recurring fees" },
-          { rule: "3+ products", benefit: "−15% on combined recurring + 1 free tier upgrade for 3 months" },
-          { rule: "Annual prepay", benefit: "−15% (any product, any tier)" },
-          { rule: "OpSo Smart teams (50+ seats) bundled with any agent", benefit: "OpSo Smart seat price drops to €4/user/mo" },
-          { rule: "Custom Automation retainer customers", benefit: "All SaaS products at −20%" },
+          { rule: "2 products", benefit: "Price on request" },
+          { rule: "3+ products", benefit: "Price on request" },
+          { rule: "Annual prepay", benefit: "Price on request" },
+          { rule: "OpSo Smart teams (50+ seats) bundled with any agent", benefit: "Price on request" },
+          { rule: "Custom Automation retainer customers", benefit: "Price on request" },
         ],
-        note: "Discounts apply to recurring fees only. Setup fees stay fixed. Annual prepay non-refundable; monthly tiers cancel with 30-day notice.",
+        note: "Terms and conditions are agreed individually.",
       },
       footnote: "All prices in EUR, ex-VAT. Non-EU customers are charged ex-VAT with reverse charge applicable. EU-hosted infrastructure (Hetzner / IONOS Frankfurt) included on every tier.",
     },
