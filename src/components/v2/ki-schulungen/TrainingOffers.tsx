@@ -127,7 +127,8 @@ export function TrainingOffers() {
         <div className="wrap">
           <div className="os-section-head">
             <span className="meta meta-hot">{c.eyebrow}</span>
-            <h1>{c.headline}</h1>
+            {/* Tailwind preflight resets bare headings to body size; reuse the page-hero style. */}
+            <h1 className="v2-svc-hero__headline" style={{ margin: "12px 0 20px" }}>{c.headline}</h1>
             <p className="lead">{c.lead}</p>
           </div>
           <div className="v2-built__grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}>

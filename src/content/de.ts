@@ -8,7 +8,7 @@ import type { Content } from "./en";
 export const content: Content = {
   consent: {
     title: "Cookies & Analyse",
-    body: "Wir setzen ein minimales Analyse-Tool ein, um die Nutzung von OpSolid zu verstehen. Keine Marketing-Cookies, keine Profilbildung. Du kannst deine Wahl jederzeit ändern.",
+    body: "Wir setzen ein minimales Analyse-Tool ein, um die Nutzung von OpSolid zu verstehen. Keine Marketing-Cookies, keine Profilbildung. Sie können Ihre Wahl jederzeit ändern.",
     privacyLink: "Datenschutzerklärung lesen",
     accept: "Akzeptieren",
     reject: "Ablehnen",
