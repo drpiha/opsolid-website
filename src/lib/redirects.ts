@@ -20,9 +20,25 @@ export const RETIRED_REDIRECTS: Record<string, string> = {
 
   // Legacy aliases (without "-agent" suffix) → current dedicated pages.
   // The "-agent" suffixed paths are real routes now and must NOT be retired.
-  "/products/chatbot": "/products/chatbot-agent",
-  "/products/lead-qualifier": "/products/lead-qualifier-agent",
-  "/products/digital-reception": "/products/voice-agent",
+  "/products/chatbot": "/ki-beratung",
+  "/products/lead-qualifier": "/ki-beratung",
+  "/products/digital-reception": "/ki-beratung",
+
+  // v3: unsold product pages fold into the consulting offer. EXACT match
+  // only (see EXACT_ONLY) so no sibling route is ever caught by a prefix.
+  "/products/voice-agent": "/ki-beratung",
+  "/products/whatsapp-agent": "/ki-beratung",
+  "/products/chatbot-agent": "/ki-beratung",
+  "/products/email-agent": "/ki-beratung",
+  "/products/booking-agent": "/ki-beratung",
+  "/products/lead-qualifier-agent": "/ki-beratung",
+  "/products/custom-automation": "/ki-beratung",
+
+  // v3: legacy web-card entry points → OpSo. Exact only: /card/edit/*,
+  // /card/manage/*, /products/digital-card/thanks etc. must keep working.
+  "/card/new": "/opso",
+  "/signup": "/opso",
+  "/products/digital-card": "/opso",
 
   // Pricing removed from IA (2026-05-18 redesign Round 0 — we don't
   // advertise prices on the marketing site). Inbound links 308 to contact.
@@ -35,7 +51,19 @@ export const RETIRED_REDIRECTS: Record<string, string> = {
  * but `/products/voice-agent` (etc.) must fall through so those routes
  * still resolve — they're listed separately with their own targets.
  */
-const EXACT_ONLY = new Set<string>(["/products"]);
+export const EXACT_ONLY = new Set<string>([
+  "/products",
+  "/products/voice-agent",
+  "/products/whatsapp-agent",
+  "/products/chatbot-agent",
+  "/products/email-agent",
+  "/products/booking-agent",
+  "/products/lead-qualifier-agent",
+  "/products/custom-automation",
+  "/card/new",
+  "/signup",
+  "/products/digital-card",
+]);
 
 /**
  * If the given locale-stripped pathname is a retired route, returns the

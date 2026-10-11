@@ -3,6 +3,7 @@
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { Icon } from "@/components/shared/Icon";
 import { useLocale } from "@/context/LocaleContext";
+import { QuickCheckBooking } from "@/components/shared/QuickCheckBooking";
 import { FaqAccordion } from "@/components/sections/FaqAccordion";
 
 /**
@@ -126,6 +127,8 @@ export function AIAutomationCheck() {
           </div>
         </div>
       </section>
+
+      <QuickCheckBooking />
 
       {/* ----- FAQ ----- */}
       <FaqAccordion

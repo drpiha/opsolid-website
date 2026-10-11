@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
-import { ServicePage } from "@/components/sections/ServicePage";
 import { ServiceJsonLd } from "@/components/seo/ServiceJsonLd";
-import { KiSchulungenV2 } from "@/components/v2/ki-schulungen/KiSchulungenV2";
+import { TrainingOffers } from "@/components/v2/ki-schulungen/TrainingOffers";
 import { V2Shell } from "@/components/v2/V2Shell";
 import { isPreviewV2 } from "@/lib/preview";
 import { content as en } from "@/content/en";
@@ -58,14 +57,14 @@ export default function Page({
     return (
       <V2Shell>
         <ServiceJsonLd serviceKey="kiSchulungen" />
-        <KiSchulungenV2 />
+        <TrainingOffers />
       </V2Shell>
     );
   }
   return (
     <>
       <ServiceJsonLd serviceKey="kiSchulungen" />
-      <ServicePage serviceKey="kiSchulungen" />
+      <TrainingOffers />
     </>
   );
 }

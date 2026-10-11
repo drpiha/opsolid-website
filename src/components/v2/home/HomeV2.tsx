@@ -1,46 +1,50 @@
 "use client";
 
 /**
- * HomeV2 — M1 Foundation composition (replaces the rejected galaxy-backdrop
- * variant). Source: docs/redesign-prompt.md §2 Home + docs/research/decisions.md.
- *
- * Composition:
- *   - Full-width split. Left column: 3-line plain-language headline stack +
- *     lead + two CTAs + service chips.
- *   - Right column: a workflow card mock (rounded panel, three numbered
- *     flow rows) standing in for a real Power Automate / Make screenshot.
- *     M2 swaps the mock for the real screenshot once curated.
- *   - Behind everything: quiet 12-node graph canvas with packets traveling
- *     along edges in the v2 motion-trace teal. 0.55 opacity ambient.
- *   - Below the hero: 4-pillar grid linking into the existing service pages.
- *
- * Mobile (<960px): split collapses to single column; the workflow card slides
- *   below the headline.
- * Reduced-motion: NodeGraphBackdrop returns null; CSS animations disabled.
+ * HomeV2 (v3) — honest hero with the OpSo product video as proof that
+ * OpSolid ships real products, then the practices grid, a "Built by
+ * OpSolid" section and the use-case section.
  */
 
 import { useLocale } from "@/context/LocaleContext";
-import { getV2Content } from "@/content/v2";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
-import { NodeGraphBackdrop } from "./NodeGraphBackdrop";
-import { GalaxyBackdrop } from "./GalaxyBackdrop";
 import { PillarGrid } from "./PillarGrid";
 import { HomeOutcomes } from "./HomeOutcomes";
-import { SplineHero } from "./SplineHero";
+import { HeroVideo } from "./HeroVideo";
+import { BuiltByOpSolid } from "./BuiltByOpSolid";
+
+const COPY = {
+  de: {
+    eyebrow: "Software und KI im Alltag",
+    headline: ["Software und KI,", "die im Alltag", "laufen"],
+    lead: "OpSolid baut Automatisierung, interne Tools und KI-Lösungen für den Mittelstand und liefert mit OpSo ein eigenes Produkt, das heute schon im Einsatz ist.",
+    ctaPrimary: "KI-Check buchen",
+    ctaSecondary: "OpSo ansehen",
+  },
+  en: {
+    eyebrow: "Software and AI in daily work",
+    headline: ["Software and AI", "that run in", "daily work"],
+    lead: "OpSolid builds automation, internal tools and AI solutions for small and mid-sized businesses, and ships OpSo as a real product of its own.",
+    ctaPrimary: "Book an AI check",
+    ctaSecondary: "See OpSo",
+  },
+  tr: {
+    eyebrow: "Günlük işte yazılım ve YZ",
+    headline: ["Günlük işte", "gerçekten çalışan", "yazılım ve YZ"],
+    lead: "OpSolid, küçük ve orta ölçekli işletmeler için otomasyon, dahili araçlar ve YZ çözümleri kurar; OpSo ile gerçek bir ürün de sunar.",
+    ctaPrimary: "YZ kontrolü ayarla",
+    ctaSecondary: "OpSo'yu gör",
+  },
+} as const;
 
 export function HomeV2() {
   const { locale } = useLocale();
-  const c = getV2Content(locale);
-  const hero = c.home.hero;
-  const headline = hero.headline as readonly string[];
-  const chips = hero.chips as readonly string[];
+  const hero = COPY[locale === "de" || locale === "tr" ? locale : "en"];
+  const headline = hero.headline;
 
   return (
     <>
       <section className="v2-home-hero">
-        <GalaxyBackdrop />
-        <NodeGraphBackdrop />
-
         <div className="wrap v2-home-hero__inner">
           <div className="v2-home-hero__copy">
             <span className="v2-home-hero__eyebrow">{hero.eyebrow}</span>
@@ -56,64 +60,22 @@ export function HomeV2() {
             <p className="v2-home-hero__lead">{hero.lead}</p>
 
             <div className="v2-home-hero__ctas">
-              <Link href="/contact" className="v2-btn-primary" data-cursor="link">
+              <Link href="/ai-automation-check" className="v2-btn-primary" data-cursor="link">
                 {hero.ctaPrimary}
               </Link>
-              <Link href="/leistungen" className="v2-btn-ghost" data-cursor="link">
+              <Link href="/opso" className="v2-btn-ghost" data-cursor="link">
                 {hero.ctaSecondary}
               </Link>
             </div>
-
-            <ul className="v2-home-hero__chips" aria-label={hero.eyebrow}>
-              {chips.map((chip) => (
-                <li key={chip} className="v2-home-hero__chip">{chip}</li>
-              ))}
-            </ul>
           </div>
 
-          <SplineHero />
+          <HeroVideo />
         </div>
       </section>
 
+      <BuiltByOpSolid />
       <PillarGrid />
       <HomeOutcomes />
     </>
-  );
-}
-
-/**
- * WorkflowMock — legacy inline UI mock. Kept for one milestone as
- * emergency fallback in case the Spline scene fails to load; not
- * rendered on the live page (SplineHero owns the right column now).
- */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function WorkflowMock() {
-  const rows: Array<{ index: string; label: string; detail: string; meta: string }> = [
-    { index: "01", label: "Trigger", detail: "New invoice email arrives", meta: "outlook" },
-    { index: "02", label: "Decision", detail: "Vendor in approved list?", meta: "branch" },
-    { index: "03", label: "Action", detail: "Post to accounting + notify", meta: "queue" },
-  ];
-
-  return (
-    <div className="v2-home-hero__panel" aria-hidden="true">
-      <div className="v2-home-hero__panel-bar">
-        <span />
-        <span />
-        <span />
-        <span className="v2-home-hero__panel-title">flow · invoice-intake</span>
-      </div>
-
-      <div className="v2-home-hero__flow">
-        {rows.map((row) => (
-          <div key={row.index} className="v2-home-hero__flow-row">
-            <span className="v2-home-hero__flow-index">{row.index}</span>
-            <span>
-              <strong>{row.label}</strong> — {row.detail}
-            </span>
-            <span className="v2-home-hero__flow-meta">{row.meta}</span>
-          </div>
-        ))}
-      </div>
-    </div>
   );
 }
