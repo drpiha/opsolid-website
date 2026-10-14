@@ -485,29 +485,7 @@ export const content: Content = {
     testimonials: {
       label: "Saha notları",
       headline: "Ekipler OpSolid ile çalıştıktan sonra neyi fark ediyor.",
-      items: [
-        {
-          quote:
-            "Sipariş verilerini artık dört sistem arasında kopyalamıyoruz. Süreç artık herkes işe başlamadan önce otomatik tamamlanıyor.",
-          name: "Lena Richter",
-          role: "Operasyon Direktörü",
-          company: "Orta ölçekli perakende grubu",
-        },
-        {
-          quote:
-            "OpSolid bize bir platform satmaya çalışmadı. Gerçek sürecimizi haritalandırdılar, tekrarlayan kısımları otomatikleştirdiler ve tam dokümantasyonu teslim ettiler.",
-          name: "Marco Weber",
-          role: "COO",
-          company: "Sanayi grubu, Almanya",
-        },
-        {
-          quote:
-            "Bütün entegrasyon katmanı self-hosted. ABD alt işleyen yok. Legal tek toplantıda onay verdi.",
-          name: "Sarah Klein",
-          role: "BT Direktörü",
-          company: "Hizmet firması",
-        },
-      ],
+      items: [],
     },
 
     finalCta: {
@@ -1309,7 +1287,7 @@ export const content: Content = {
         href: "/products/digital-card",
         externalUrl: "",
         icon: "idCard",
-        startingPrice: "Ücretsiz",
+        startingPrice: "Fiyat talep üzerine",
         category: "Müşteriye yönelik",
         stack: "Next.js · Hetzner · vCard · HubSpot",
       },
@@ -1317,12 +1295,12 @@ export const content: Content = {
         name: "Ses AI Ajanı",
         tagline: "7/24 telefon resepsiyonu · Retell · Vapi",
         description:
-          "Telefon hattınıza 7/24 yanıt veren, randevu oluşturan ve çağrıları yönlendiren bir AI ses ajanı. Çok dilli (DE/EN/TR). Retell AI veya Vapi üzerine kurulu, takvim senkronu ile. Aylık 3.000 €'luk resepsiyonist işinin yerini alır.",
+          "Telefon hattınıza 7/24 yanıt veren, randevu oluşturan ve çağrıları yönlendiren bir AI ses ajanı. Çok dilli (DE/EN/TR). Retell AI veya Vapi üzerine kurulu, takvim senkronu ile.",
         status: "Canlı",
         href: "/products/voice-agent",
         externalUrl: "",
         icon: "phone",
-        startingPrice: "€1.200 kurulum + €0,12/dk'dan başlar",
+        startingPrice: "Fiyat talep üzerine",
         category: "İletişim",
         stack: "Retell AI · Vapi · Cal.com · Supabase",
       },
@@ -1335,7 +1313,7 @@ export const content: Content = {
         href: "/products/chatbot",
         externalUrl: "",
         icon: "messageCircle",
-        startingPrice: "€1.800 kurulum + €99/ay'dan başlar",
+        startingPrice: "Fiyat talep üzerine",
         category: "Müşteriye yönelik",
         stack: "OpenAI · Custom Workflows · Supabase · HubSpot",
       },
@@ -1348,7 +1326,7 @@ export const content: Content = {
         href: "/products/whatsapp-agent",
         externalUrl: "",
         icon: "messagesSquare",
-        startingPrice: "€1.500 kurulum + Meta ücretleri'nden başlar",
+        startingPrice: "Fiyat talep üzerine",
         category: "İletişim",
         stack: "Meta Business Cloud · 360dialog · Twilio · Stripe",
       },
@@ -1361,7 +1339,7 @@ export const content: Content = {
         href: "/products/booking-agent",
         externalUrl: "",
         icon: "calendarClock",
-        startingPrice: "€800 kurulum + €49/ay'dan başlar",
+        startingPrice: "Fiyat talep üzerine",
         category: "Dahili operasyon",
         stack: "Cal.com · Retell · Custom Workflows · Google Calendar",
       },
@@ -1374,7 +1352,7 @@ export const content: Content = {
         href: "/products/email-agent",
         externalUrl: "",
         icon: "mail",
-        startingPrice: "€99 – €499/ay'dan başlar",
+        startingPrice: "Fiyat talep üzerine",
         category: "İletişim",
         stack: "Instantly · AgentMail · Custom Workflows · OpenAI",
       },
@@ -1382,12 +1360,12 @@ export const content: Content = {
         name: "Lead Nitelendirme Ajanı",
         tagline: "Ses + sohbet · CRM skorlama · HubSpot senkron",
         description:
-          "Gelen leadleri ses veya sohbet üzerinden niteleyen, skorlayan ve nitelikli leadleri HubSpot/Pipedrive/Salesforce'a yönlendiren bir konuşma ajanı. %40 MQL→SQL dönüşüm artışı gerçekçi.",
+          "Gelen leadleri ses veya sohbet üzerinden niteleyen, skorlayan ve nitelikli leadleri HubSpot/Pipedrive/Salesforce'a yönlendiren bir konuşma ajanı. Sonuçlar mevcut tabanınıza bağlıdır; rakam vaat etmiyoruz.",
         status: "Canlı",
         href: "/products/lead-qualifier",
         externalUrl: "",
         icon: "userCheck",
-        startingPrice: "€2.200 kurulum + €199/ay'dan başlar",
+        startingPrice: "Fiyat talep üzerine",
         category: "Müşteriye yönelik",
         stack: "Retell · HubSpot · Custom Workflows · Supabase",
       },
@@ -1613,29 +1591,7 @@ export const content: Content = {
       testimonials: {
         label: "SOSYAL KANIT",
         heading: "İlk kartından sonra müşteriler ne söylüyor.",
-        items: [
-          {
-            quote:
-              "Kartımı on dakikada oluşturdum. Şablon seçtim, bilgilerimi yazdım, yayınladım - ve link canlıya çıktı. Ne yazışma ne de bekleme.",
-            name: "Lena Richter",
-            role: "Bağımsız emlakçı",
-            company: "Berlin, DE",
-          },
-          {
-            quote:
-              "Verilerin AB'de kalması, hukuk ekibimizi ikna etti. Sırf bu bile bizim için belirleyici oldu.",
-            name: "Marco Weber",
-            role: "COO",
-            company: "Münih sanayi grubu",
-          },
-          {
-            quote:
-              "Aylık abonelik yok. „Enterprise paketi“ satışı yok. Ücretsiz başladım, özel alan adı için bir kez ödedim, yoluma devam ettim. Tam da istediğim şey.",
-            name: "Sarah Klein",
-            role: "Bağımsız danışman",
-            company: "Berlin, DE",
-          },
-        ],
+        items: [],
       },
       howItWorks: {
         label: "NASIL ÇALIŞIR",
@@ -2140,7 +2096,7 @@ export const content: Content = {
         primaryCta: "Demo planla",
         secondaryCta: "Nasıl çalışır",
         tags: "RETELL · VAPI · DE/EN/TR · 7/24",
-        startingPrice: "€1.200 kurulum + €0,12/dk'dan başlar",
+        startingPrice: "Fiyat talep üzerine",
       },
       features: {
         label: "NELER VAR",
@@ -2215,8 +2171,8 @@ export const content: Content = {
         tiers: [
           {
             name: "Starter",
-            price: "€1.200",
-            billing: "tek seferlik kurulum + €0,12/dk",
+            price: "Fiyat talep üzerine",
+            billing: "",
             features: [
               "Tek telefon hattı",
               "DE veya EN (tek dil)",
@@ -2228,8 +2184,8 @@ export const content: Content = {
           },
           {
             name: "Business",
-            price: "€2.400",
-            billing: "kurulum + €0,12/dk + €99/ay",
+            price: "Fiyat talep üzerine",
+            billing: "",
             features: [
               "3 telefon hattına kadar",
               "DE · EN · TR çok dilli",
@@ -2243,14 +2199,14 @@ export const content: Content = {
           },
           {
             name: "Enterprise",
-            price: "Özel",
-            billing: "hacim fiyatlandırması + SLA",
+            price: "Fiyat talep üzerine",
+            billing: "",
             features: [
               "Sınırsız hat",
               "Özel ses klonlama",
               "Self-hosted opsiyonu (Vapi)",
               "Özel Slack kanalı",
-              "%99,9 SLA",
+              "SLA anlaşmaya göre",
             ],
             cta: "Bizimle konuşun",
           },
@@ -2304,7 +2260,7 @@ export const content: Content = {
         primaryCta: "Demo planla",
         secondaryCta: "Nasıl çalışır",
         tags: "OPENAI · CUSTOM · SUPABASE · ÇOK KANALLI",
-        startingPrice: "€1.800 kurulum + €99/ay'dan başlar",
+        startingPrice: "Fiyat talep üzerine",
       },
       features: {
         label: "NELER VAR",
@@ -2379,8 +2335,8 @@ export const content: Content = {
         tiers: [
           {
             name: "Sadece Web",
-            price: "€1.800",
-            billing: "kurulum + €99/ay",
+            price: "Fiyat talep üzerine",
+            billing: "",
             features: [
               "Web sitesi widget'ı",
               "200 sayfa/dokümana kadar RAG",
@@ -2392,8 +2348,8 @@ export const content: Content = {
           },
           {
             name: "Çok kanallı",
-            price: "€2.800",
-            billing: "kurulum + €199/ay",
+            price: "Fiyat talep üzerine",
+            billing: "",
             features: [
               "Web + WhatsApp + Telegram",
               "Birleşik ajan gelen kutusu",
@@ -2407,8 +2363,8 @@ export const content: Content = {
           },
           {
             name: "Scale",
-            price: "€5.000'den",
-            billing: "kurulum + kullanım bazlı",
+            price: "Fiyat talep üzerine",
+            billing: "",
             features: [
               "Sınırsız kanal",
               "Özel LLM (self-hosted opsiyonu)",
@@ -2464,7 +2420,7 @@ export const content: Content = {
         primaryCta: "Demo planla",
         secondaryCta: "Nasıl çalışır",
         tags: "META BUSINESS CLOUD · 360DIALOG · TWILIO · DOĞRULANMIŞ",
-        startingPrice: "€1.500 kurulum + Meta ücretleri'nden başlar",
+        startingPrice: "Fiyat talep üzerine",
       },
       features: {
         label: "NELER VAR",
@@ -2539,8 +2495,8 @@ export const content: Content = {
         tiers: [
           {
             name: "Launch",
-            price: "€1.500",
-            billing: "kurulum + Meta ücretleri geçişli",
+            price: "Fiyat talep üzerine",
+            billing: "",
             features: [
               "İşletme doğrulaması",
               "3 Meta şablonu onaylı",
@@ -2552,8 +2508,8 @@ export const content: Content = {
           },
           {
             name: "Commerce",
-            price: "€3.200",
-            billing: "kurulum + €149/ay + Meta ücretleri",
+            price: "Fiyat talep üzerine",
+            billing: "",
             features: [
               "Launch'taki her şey",
               "Shopify/WooCommerce entegrasyonu",
@@ -2567,8 +2523,8 @@ export const content: Content = {
           },
           {
             name: "Enterprise",
-            price: "Özel",
-            billing: "kurulum + hacim fiyatlandırması",
+            price: "Fiyat talep üzerine",
+            billing: "",
             features: [
               "Çok ülkeli numaralar",
               "Çift yönlü CRM senkronu",
@@ -2590,7 +2546,7 @@ export const content: Content = {
           },
           {
             q: "Meta'nın ücretleri ne kadar?",
-            a: "Konuşma bazlı. Utility konuşmaları (sipariş güncellemeleri) yaklaşık €0,02–0,05; pazarlama konuşmaları €0,05–0,12. Bunları maliyetine geçiriyoruz — marj yok.",
+            a: "Konuşma bazlı. Meta konuşma başına ücret alır; bunları maliyetine geçiriyoruz, marj yok. Ayrıntılar talep üzerine.",
           },
           {
             q: "Doğrulama ne kadar sürüyor?",
@@ -2624,7 +2580,7 @@ export const content: Content = {
         primaryCta: "Demo planla",
         secondaryCta: "Nasıl çalışır",
         tags: "CAL.COM · RETELL · CUSTOM · GOOGLE CALENDAR",
-        startingPrice: "€800 kurulum + €49/ay'dan başlar",
+        startingPrice: "Fiyat talep üzerine",
       },
       features: {
         label: "NELER VAR",
@@ -2699,8 +2655,8 @@ export const content: Content = {
         tiers: [
           {
             name: "Solo",
-            price: "€800",
-            billing: "kurulum + €49/ay",
+            price: "Fiyat talep üzerine",
+            billing: "",
             features: [
               "3 hizmete kadar",
               "Web form + sohbet alımı",
@@ -2712,8 +2668,8 @@ export const content: Content = {
           },
           {
             name: "Team",
-            price: "€1.600",
-            billing: "kurulum + €129/ay",
+            price: "Fiyat talep üzerine",
+            billing: "",
             features: [
               "Sınırsız hizmet",
               "Telefon + sohbet + form",
@@ -2727,8 +2683,8 @@ export const content: Content = {
           },
           {
             name: "Çok lokasyonlu",
-            price: "Özel",
-            billing: "lokasyon başına",
+            price: "Fiyat talep üzerine",
+            billing: "",
             features: [
               "Çok şubeli yönlendirme",
               "Kaynak kısıtları",
@@ -2754,7 +2710,7 @@ export const content: Content = {
           },
           {
             q: "Gerçekten gelmemeleri azaltıyor mu?",
-            a: "Uygulamalarımızda %30–50 azalma tipik — 24 saat + 2 saat hatırlatmalar ve tek tıkla yeniden planlama linkiyle. Sayılar hizmet türünüze bağlı.",
+            a: "24 saat + 2 saat hatırlatmalar ve tek tıkla yeniden planlama linki randevuya gelmemeleri azaltmaya yardımcı olabilir. Rakam vaat etmiyoruz; sonuç hizmet türünüze bağlıdır.",
           },
           {
             q: "Müşteriler rezervasyon için bizi arayabilir mi?",
@@ -2784,7 +2740,7 @@ export const content: Content = {
         primaryCta: "Demo planla",
         secondaryCta: "Nasıl çalışır",
         tags: "INSTANTLY · AGENTMAIL · CUSTOM · OPENAI",
-        startingPrice: "€99 – €499/ay'dan başlar",
+        startingPrice: "Fiyat talep üzerine",
       },
       features: {
         label: "NELER VAR",
@@ -2859,8 +2815,8 @@ export const content: Content = {
         tiers: [
           {
             name: "Triage",
-            price: "€99",
-            billing: "aylık",
+            price: "Fiyat talep üzerine",
+            billing: "",
             features: [
               "1 gelen kutusu sınıflandırma + triyaj",
               "Yanıt taslakları (aylık 200'e kadar)",
@@ -2871,8 +2827,8 @@ export const content: Content = {
           },
           {
             name: "Outreach + Triage",
-            price: "€299",
-            billing: "aylık",
+            price: "Fiyat talep üzerine",
+            billing: "",
             features: [
               "Triage'daki her şey",
               "Soğuk dış iletişim (5 gelen kutusu)",
@@ -2886,8 +2842,8 @@ export const content: Content = {
           },
           {
             name: "Scale",
-            price: "€499+",
-            billing: "aylık, hacim bazlı",
+            price: "Fiyat talep üzerine",
+            billing: "",
             features: [
               "Sınırsız gelen kutusu",
               "Özel LLM yönlendirme",
@@ -2939,11 +2895,11 @@ export const content: Content = {
           "satışa teslim edilmiş.",
         ],
         paragraph:
-          "Gelen leadleri ses veya sohbet üzerinden niteleyen, ICP'nize göre skorlayan ve MQL'leri doğrudan HubSpot veya Pipedrive'da satışa yönlendiren bir konuşma ajanı. Tipik artış: %40 MQL-SQL dönüşümü.",
+          "Gelen leadleri ses veya sohbet üzerinden niteleyen, ICP'nize göre skorlayan ve MQL'leri doğrudan HubSpot veya Pipedrive'da satışa yönlendiren bir konuşma ajanı. Dönüşüm rakamı vaat etmiyoruz; sonuçlar mevcut tabanınıza bağlıdır.",
         primaryCta: "Demo planla",
         secondaryCta: "Nasıl çalışır",
         tags: "RETELL · HUBSPOT · CUSTOM · SKORLAMA",
-        startingPrice: "€2.200 kurulum + €199/ay'dan başlar",
+        startingPrice: "Fiyat talep üzerine",
       },
       features: {
         label: "NELER VAR",
@@ -3018,8 +2974,8 @@ export const content: Content = {
         tiers: [
           {
             name: "Sadece sohbet",
-            price: "€2.200",
-            billing: "kurulum + €199/ay",
+            price: "Fiyat talep üzerine",
+            billing: "",
             features: [
               "Web sitesi sohbet widget'ı",
               "ICP skorlama modeli",
@@ -3031,8 +2987,8 @@ export const content: Content = {
           },
           {
             name: "Ses + Sohbet",
-            price: "€3.800",
-            billing: "kurulum + €349/ay",
+            price: "Fiyat talep üzerine",
+            billing: "",
             features: [
               "Sohbet + gelen telefon",
               "Retell ses nitelendirme",
@@ -3046,8 +3002,8 @@ export const content: Content = {
           },
           {
             name: "Enterprise",
-            price: "Özel",
-            billing: "ekip başına fiyatlandırma",
+            price: "Fiyat talep üzerine",
+            billing: "",
             features: [
               "Çok ekipli yönlendirme",
               "Özel CRM entegrasyonları",
@@ -3065,11 +3021,11 @@ export const content: Content = {
         items: [
           {
             q: "Leadler gerçekten AI ile etkileşimde kalıyor mu?",
-            a: "Kısa cevap: konuşma yararlı hissettirirse evet. AI'yı önceden açıklıyoruz, soruları en fazla 4–6 ile sınırlıyoruz ve her noktada insana devretme sunuyoruz. Tamamlama oranları statik formlardaki %15–25'e karşı %60–80 seviyelerinde.",
+            a: "Kısa cevap: konuşma yararlı hissettirirse evet. AI'yı önceden açıklıyoruz, soruları en fazla 4–6 ile sınırlıyoruz ve her noktada insana devretme sunuyoruz. Tamamlama oranı vaat etmiyoruz; hedef kitleye ve kullanım senaryosuna bağlıdır.",
           },
           {
             q: "Gerçekçi bir MQL→SQL artışı nedir?",
-            a: "Çoğu uygulamada %30–50, daha iyi skorlama doğruluğu + daha hızlı yönlendirme (SQL'ler satışa saatler yerine dakikalar içinde düşer) ile. Spesifik rakamlar mevcut tabanınıza bağlıdır.",
+            a: "Daha iyi skorlama ve daha hızlı yönlendirme yardımcı olabilir, ancak rakam vaat etmiyoruz. Sonuç mevcut tabanınıza bağlıdır.",
           },
           {
             q: "Leadleri diskalifiye edebilir mi?",
@@ -3604,7 +3560,7 @@ export const content: Content = {
         eyebrow: "[ TİPİK KULLANIM SENARYOLARI ]",
         headline: "Pratikte neleri otomatikleştiriyoruz",
         lead:
-          "KOBİ'ler için kurguladığımız veya hayata geçirdiğimiz iş akışlarından kısa bir seçki. Daha az kopyala-yapıştır, daha az hata, daha hızlı çıktı.",
+          "KOBİ'ler için kurgulayabileceğimiz veya hayata geçirebileceğimiz iş akışlarından kısa bir seçki. Daha az kopyala-yapıştır, daha az hata, daha hızlı çıktı.",
         cards: [
           {
             title: "E-posta sınıflandırma & yönlendirme",
@@ -4207,7 +4163,7 @@ export const content: Content = {
         faq: {
           headline: "AI danışmanlığı — sık sorulanlar",
           items: [
-            { q: "„AI-ready“ olmamız gerekir mi?", a: "Hayır. Çoğu müşteri değil — zaten bu yüzden tool'lara para harcamadan önce bu işin yapılması gerekiyor." },
+            { q: "„AI-ready“ olmamız gerekir mi?", a: "Hayır. Birçok işletme değil — zaten bu yüzden tool'lara para harcamadan önce bu işin yapılması gerekiyor." },
             { q: "AI tool'u satıyor musunuz?", a: "Hayır. Bağımsızız — neyin uygun olduğunu, „elinizdekini kullanın“ veya „bunu henüz yapmayın“ dahil, öneririz." },
             { q: "AI'ı DSGVO uyumlu kullanmak mümkün mü?", a: "Evet, doğru model seçimi, AB hosting ve yazılı politika ile. Başından itibaren bunu kurmanıza yardım ederiz." },
             { q: "Bir danışmanlık projesi ne kadar sürer?", a: "Analiz ve yol haritası için tipik olarak iki-dört hafta. Uygulama süreleri ayrı ve kapsama bağlı." },
@@ -4250,7 +4206,7 @@ export const content: Content = {
           ],
         },
         useCases: {
-          headline: "Otomatikleştirdiğimiz workflow'lar",
+          headline: "Otomatikleştirebileceğimiz workflow'lar",
           items: [
             {
               title: "Teklif ve doküman üretimi",
@@ -4336,7 +4292,7 @@ export const content: Content = {
           ],
         },
         useCases: {
-          headline: "İnşa ettiğimiz Microsoft 365 workflow'ları",
+          headline: "İnşa edebileceğimiz Microsoft 365 workflow'ları",
           items: [
             {
               title: "Teams'te onay workflow'ları",
@@ -4423,7 +4379,7 @@ export const content: Content = {
           ],
         },
         useCases: {
-          headline: "İnşa ettiğimiz iç araçlar",
+          headline: "İnşa edebileceğimiz iç araçlar",
           items: [
             {
               title: "Operations admin konsolu",
@@ -4509,7 +4465,7 @@ export const content: Content = {
           ],
         },
         useCases: {
-          headline: "Daha önce yürüttüğümüz eğitim formatları",
+          headline: "Yürütebileceğimiz eğitim formatları",
           items: [
             {
               title: "Şirket çapında AI temeli",
@@ -4595,9 +4551,9 @@ export const content: Content = {
           },
           {
             label: "UPTIME",
-            value: "%99,9",
-            unit: " hedef",
-            sub: "Retell SLA · sağlayıcı ölçümü",
+            value: "SLA",
+            unit: "",
+            sub: "anlaşmaya göre",
           },
         ],
       },
@@ -5026,9 +4982,9 @@ export const content: Content = {
       },
       featured: {
         eyebrow: "[ AMİRAL GEMİLERİ ]",
-        heading: "Bizi hatırlatan iki ürün",
+        heading: "Öne çıkan iki ürün",
         items: [
-          { id: "voice-agent", name: "Voice AI Agent", tagline: "Retell veya Vapi üzerinde 24/7 telefon resepsiyonu.", body: "Çok dilli telefon yanıtı, takvim senkronizasyonu, script bittiğinde insana devir. Hamburg taksi dispeçlerinde, Bavyera otellerinde ve Almanya çapında B2B service desk'lerinde canlı.", href: "/products/voice-agent", startingAt: "€1.500 setup + €299/ay'dan", badge: "Canlı" },
+          { id: "voice-agent", name: "Voice AI Agent", tagline: "Retell veya Vapi üzerinde 24/7 telefon resepsiyonu.", body: "Çok dilli telefon yanıtı, takvim senkronizasyonu, script bittiğinde insana devir. Dispeçlik, otel ve B2B service desk senaryoları için tasarlandı.", href: "/products/voice-agent", startingAt: "Fiyat talep üzerine", badge: "Canlı" },
           { id: "verso", name: "OpSo Smart", tagline: "Dijital kartvizit · ücretsiz, saniyeler içinde canlı.", body: "Kartınızı ücretsiz oluşturun ve saniyeler içinde yayınlayın. 20+ sektör şablonu, link, QR, WhatsApp veya e-posta ile paylaşın - alıcıya uygulama gerekmez, istediğiniz zaman düzenlenir. Frankfurt'ta EU barındırma. Linktree olmadan kağıt kartviziti değiştirir.", href: "/products/digital-card", startingAt: "Ücretsiz", badge: "Canlı" },
         ],
       },
@@ -5036,12 +4992,12 @@ export const content: Content = {
         eyebrow: "[ AJANLAR & HİZMETLER ]",
         heading: "Yedi tane daha, her biri ne yaptığında net",
         items: [
-          { id: "chatbot-agent", name: "Chatbot Agent", tagline: "Knowledge base'inizle eğitilmiş web chat.", startingAt: "€149/ay'dan", href: "/products/chatbot-agent", category: "AJAN" },
-          { id: "whatsapp-agent", name: "WhatsApp Agent", tagline: "WhatsApp Business otomatik yanıt + broadcast.", startingAt: "€199/ay'dan", href: "/products/whatsapp-agent", category: "AJAN" },
-          { id: "booking-agent", name: "Booking Agent", tagline: "Multi-kanal randevu → Cal.com → hatırlatma.", startingAt: "€99/ay'dan", href: "/products/booking-agent", category: "AJAN" },
-          { id: "email-agent", name: "Email Agent", tagline: "Inbox triage, AI taslak yanıt, eskalasyon.", startingAt: "€39/koltuk/ay'dan", href: "/products/email-agent", category: "AJAN" },
-          { id: "lead-qualifier-agent", name: "Lead Qualifier Agent", tagline: "Form, chat ve voice intake'te BANT scoring.", startingAt: "€249/ay'dan", href: "/products/lead-qualifier-agent", category: "AJAN" },
-          { id: "custom-automation", name: "Custom Automation", tagline: "Sprint, proje veya retainer engineering.", startingAt: "€4.500 sprint'ten", href: "/products/custom-automation", category: "HİZMET" },
+          { id: "chatbot-agent", name: "Chatbot Agent", tagline: "Knowledge base'inizle eğitilmiş web chat.", startingAt: "Fiyat talep üzerine", href: "/products/chatbot-agent", category: "AJAN" },
+          { id: "whatsapp-agent", name: "WhatsApp Agent", tagline: "WhatsApp Business otomatik yanıt + broadcast.", startingAt: "Fiyat talep üzerine", href: "/products/whatsapp-agent", category: "AJAN" },
+          { id: "booking-agent", name: "Booking Agent", tagline: "Multi-kanal randevu → Cal.com → hatırlatma.", startingAt: "Fiyat talep üzerine", href: "/products/booking-agent", category: "AJAN" },
+          { id: "email-agent", name: "Email Agent", tagline: "Inbox triage, AI taslak yanıt, eskalasyon.", startingAt: "Fiyat talep üzerine", href: "/products/email-agent", category: "AJAN" },
+          { id: "lead-qualifier-agent", name: "Lead Qualifier Agent", tagline: "Form, chat ve voice intake'te BANT scoring.", startingAt: "Fiyat talep üzerine", href: "/products/lead-qualifier-agent", category: "AJAN" },
+          { id: "custom-automation", name: "Custom Automation", tagline: "Sprint, proje veya retainer engineering.", startingAt: "Fiyat talep üzerine", href: "/products/custom-automation", category: "HİZMET" },
           { id: "kutasia", name: "Kutasia", tagline: "KOBİ'ler için unified WhatsApp, Telegram, e-posta ve Voice AI çalışma alanı.", startingAt: "€79/ay'dan", href: "/products/kutasia", category: "WORKSPACE" },
         ],
       },
@@ -5143,7 +5099,7 @@ export const content: Content = {
             ],
           },
           useCases: [
-            { industry: "B2B SaaS", problem: "Mühendisler chat widget'ında aynı ürün sorularını cevaplamakla saatler harcıyor.", outcome: "Chatbot dokümanlardan %70 ürün sorusunu yanıtlar; %30'u ekibe kalır." },
+            { industry: "B2B SaaS", problem: "Mühendisler chat widget'ında aynı ürün sorularını cevaplamakla saatler harcıyor.", outcome: "Chatbot sık sorulan ürün sorularını dokümanlardan yanıtlayabilir, kalanını ekibe devredebilir." },
             { industry: "E-ticaret", problem: "Saat 18 sonrası kargo ve iade soruları yanıtsız kaldığı için sepet terk ediliyor.", outcome: "7/24 yanıtlar terk oranını düşürür; karmaşık siparişler gece e-posta ile eskale edilir." },
             { industry: "Profesyonel hizmetler", problem: "Inbound lead'ler iletişim formuna düşüyor ve kimse hızlı cevap vermeyince zıplıyor.", outcome: "Chatbot niteler, Cal.com'da discovery call planlar, lead'i HubSpot'a düşürür." },
           ],
@@ -5178,7 +5134,7 @@ export const content: Content = {
           integrations: ["Meta WABA", "HubSpot", "Pipedrive", "Cal.com", "Stripe", "Twilio fallback", "Custom webhook"],
           faq: [
             { q: "Meta WABA numarasına ihtiyacım var mı?", a: "Evet — sizin adınıza Meta'da kaydedeceğimiz bir numara verirsiniz. Hâlihazırda WABA numaranız varsa migrate ederiz. Numara sizin kalır; ayrılırsanız her zaman taşıyabilirsiniz." },
-            { q: "Konuşma maliyetleri nasıl çalışıyor?", a: "Meta 24-saatlik konuşma penceresi başına ücret alır (kategoriye göre EU'da ~€0,05–0,15). Standard ve Professional'da küçük bir mesaj başına markup ekleriz; Enterprise'da Meta fiyatını markup'sız geçiririz." },
+            { q: "Konuşma maliyetleri nasıl çalışıyor?", a: "Meta, kategoriye göre 24 saatlik konuşma penceresi başına ücret alır. Fiyat talep üzerine." },
             { q: "Takımım sohbeti manuel olarak devralabilir mi?", a: "Evet — her konuşmada dashboard'umuzda 'insan devralır' düğmesi var, ya da tam bağlamla bir Slack kanalına route edersiniz. İnsan devraldıktan sonra ajan, sohbeti çözüldü işaretleyene kadar sessiz kalır." },
             { q: "Broadcast spam-güvenli mi?", a: "Sadece Meta'nın önceden onaylı template mesajlarını kullanır ve opt-out taleplerine otomatik uyar. Kötüye kullanım Meta'nın numaranızı banlamasına yol açar — biz numaranızı uyumlu tutan muhafazakar varsayılanlar yapılandırırız." },
           ],
@@ -5199,7 +5155,7 @@ export const content: Content = {
             ],
           },
           useCases: [
-            { industry: "Salon / berber", problem: "Telefon booking'i servisi keser; müşteriler haber vermeden çift-bookluyor veya gelmiyor.", outcome: "Voice ve web booking'lerin %80'ini alır; SMS hatırlatma no-show oranını yarıya indirir." },
+            { industry: "Salon / berber", problem: "Telefon booking'i servisi keser; müşteriler haber vermeden çift-bookluyor veya gelmiyor.", outcome: "Voice ve web booking alabilir; SMS hatırlatma no-show'ları azaltmaya yardımcı olabilir." },
             { industry: "Klinikler", problem: "Resepsiyon teyit araması ve yeniden booking'le saatler harcıyor.", outcome: "Hatırlatma + auto-rebook flow'u çoğunu halleder; resepsiyon sadece istisnalarla ilgilenir." },
             { industry: "Multi-staff ajanslar", problem: "Takım üyeleri arasında round-robin booking, takvimler senk dışına çıktığında başarısız olur.", outcome: "Real-time Cal.com entegrasyonu herkesi tek doğruluk kaynağında tutar; booking'ler skill veya iş yüküne göre route olur." },
           ],
@@ -5290,8 +5246,8 @@ export const content: Content = {
           integrations: ["Postgres", "Node.js / TypeScript", "Python", "n8n", "Zapier (mantıklıysa)", "Hetzner", "Custom API"],
           faq: [
             { q: "Neden sadece Zapier veya Make kullanmıyorsunuz?", a: "Kullanıyoruz — uyduğunda. Zapier ve Make basit connector'lar için yeterli; ölçekte zorlanmaya başlarlar (maliyet, debugging, güvenilirlik) ve işletmeye özel mantığı taşıyamazlar. Hangi aracın yerini hak ettiğine birlikte karar veriyoruz, gerisini biz kuruyoruz." },
-            { q: "Scoping nasıl çalışır?", a: "Ücretsiz 30-dakikalık discovery görüşmesi. İki taraf da devam etmek isterse, ücretli bir scoping workshop'u (~€1.500, sözleşme imzalanırsa proje ücretinden düşülür) çalıştırırız; yazılı spec ve sabit fiyat çıkar. Her durumda spec sizinle gider." },
-            { q: "Günlük tarife nedir?", a: "Senior automation engineering için günlük €1.200, yarım gün artışlarıyla faturalandırılır. Bunun altı junior iş veya tooling'de fazla ödüyorsunuz demek. İyi scope'lanmış işte proje fiyatı genelde günlük tarifeyi yener — bu €4.500'lik Standard sprint'tir." },
+            { q: "Scoping nasıl çalışır?", a: "Ücretsiz 30-dakikalık discovery görüşmesi. İki taraf da devam etmek isterse, ücretli bir scoping workshop'u (fiyat talep üzerine) çalıştırırız; yazılı spec ve sabit fiyat çıkar. Her durumda spec sizinle gider." },
+            { q: "Günlük tarife nedir?", a: "Fiyat talep üzerine. Kapsama göre teklif veririz — sabit proje fiyatı veya önceden kararlaştırılan bir tarife." },
             { q: "AVV imzalıyor musunuz?", a: "Evet — müşteri verisine dokunan her engagement'ta standart Alman B2B AVV (Auftragsverarbeitungsvertrag). Gizli bağlam paylaşmanız gerekiyorsa scoping öncesi NDA." },
           ],
         },
@@ -5301,7 +5257,7 @@ export const content: Content = {
     pricing: {
       meta: {
         title: "Fiyatlandırma — Standard, Professional, Enterprise | OpSolid",
-        description: "OpSolid'in dokuz ürünü için şeffaf EUR fiyatlandırma: Voice Agent, OpSo Smart, Chatbot, WhatsApp, Booking, Email, Lead Qualifier, Custom Automation ve Kutasia.",
+        description: "OpSolid ürünleri için fiyat özeti (çoğu ürünün fiyatı talep üzerine): Voice Agent, OpSo Smart, Chatbot, WhatsApp, Booking, Email, Lead Qualifier, Custom Automation ve Kutasia.",
       },
       hero: {
         eyebrow: "[ FİYATLANDIRMA · ŞEFFAF ]",
@@ -5340,28 +5296,28 @@ export const content: Content = {
           tiers: [
             {
               name: "Standard",
-              setup: "€1.500",
-              monthly: "€299/ay",
+              setup: "Fiyat talep üzerine",
+              monthly: "Fiyat talep üzerine",
               included: ["500 dakika / ay", "1 telefon numarası", "1 dil", "Mesai saatleri kapsamı", "Cal.com entegrasyonu"],
-              overage: "€0,18/dk",
+              overage: "",
               forWhom: "Tek lokasyon SMB, mesai dışı taşma",
               isHighlighted: false,
             },
             {
               name: "Professional",
-              setup: "€2.500",
-              monthly: "€699/ay",
+              setup: "Fiyat talep üzerine",
+              monthly: "Fiyat talep üzerine",
               included: ["2.000 dakika / ay", "3 telefon numarası", "Çok dilli (DE / EN / TR)", "7/24 kapsam", "CRM senk. (HubSpot, Pipedrive)"],
-              overage: "€0,14/dk",
+              overage: "",
               forWhom: "Sürekli inbound olan mid-market (klinik, ajans)",
               isHighlighted: true,
             },
             {
               name: "Enterprise",
-              setup: "€4.500",
-              monthly: "€1.499/ay",
-              included: ["8.000 dakika / ay", "Sınırsız numara", "Custom voice + branding", "SLA %99,9", "EU veri ikametgah sözleşmesi"],
-              overage: "€0,10/dk",
+              setup: "Fiyat talep üzerine",
+              monthly: "Fiyat talep üzerine",
+              included: ["8.000 dakika / ay", "Sınırsız numara", "Custom voice + branding", "SLA anlaşmaya göre", "EU veri ikametgah sözleşmesi"],
+              overage: "",
               forWhom: "Yüksek hacim, regüle sektörler",
               isHighlighted: false,
             },
@@ -5410,28 +5366,28 @@ export const content: Content = {
           tiers: [
             {
               name: "Standard",
-              setup: "€750",
-              monthly: "€149/ay",
+              setup: "Fiyat talep üzerine",
+              monthly: "Fiyat talep üzerine",
               included: ["1 site", "500 konuşma / ay", "Knowledge base 50 dokümana kadar", "Mesai saatlerinde devir", "E-mail + ticket capture"],
-              overage: "€0,40 / konuşma",
+              overage: "",
               forWhom: "Küçük site, lead capture odaklı",
               isHighlighted: false,
             },
             {
               name: "Professional",
-              setup: "€1.500",
-              monthly: "€399/ay",
+              setup: "Fiyat talep üzerine",
+              monthly: "Fiyat talep üzerine",
               included: ["3 site", "2.500 konuşma / ay", "Sınırsız KB dokümanı", "7/24 devir", "CRM senk."],
-              overage: "€0,30 / konuşma",
+              overage: "",
               forWhom: "Aktif funnel'i olan mid-market",
               isHighlighted: true,
             },
             {
               name: "Enterprise",
-              setup: "€3.000",
-              monthly: "€999/ay",
+              setup: "Fiyat talep üzerine",
+              monthly: "Fiyat talep üzerine",
               included: ["Sınırsız site", "10.000 konuşma / ay", "Çok dilli", "SLA + audit log", "Custom voice + tone training"],
-              overage: "€0,20 / konuşma",
+              overage: "",
               forWhom: "Yüksek trafikli e-ticaret / B2B SaaS",
               isHighlighted: false,
             },
@@ -5445,28 +5401,28 @@ export const content: Content = {
           tiers: [
             {
               name: "Standard",
-              setup: "€900",
-              monthly: "€199/ay",
+              setup: "Fiyat talep üzerine",
+              monthly: "Fiyat talep üzerine",
               included: ["1 WABA numarası", "3 kullanıcı", "1.000 konuşma / ay", "Şablon + broadcast", "Lead capture flow"],
-              overage: "Meta passthrough + €0,02 / mesaj",
+              overage: "",
               forWhom: "Lokal işletmeler, tek kanal",
               isHighlighted: false,
             },
             {
               name: "Professional",
-              setup: "€1.800",
-              monthly: "€499/ay",
+              setup: "Fiyat talep üzerine",
+              monthly: "Fiyat talep üzerine",
               included: ["1 WABA numarası", "10 kullanıcı", "5.000 konuşma / ay", "Otomasyon flow'ları", "CRM senk."],
-              overage: "Meta passthrough + €0,015 / mesaj",
+              overage: "",
               forWhom: "Mid-market servis operasyonu",
               isHighlighted: true,
             },
             {
               name: "Enterprise",
-              setup: "€3.500",
-              monthly: "€1.299/ay",
+              setup: "Fiyat talep üzerine",
+              monthly: "Fiyat talep üzerine",
               included: ["3+ WABA numarası", "Sınırsız kullanıcı", "20.000 konuşma / ay", "Çok takımlı routing", "SLA"],
-              overage: "Sadece Meta passthrough (markup yok)",
+              overage: "",
               forWhom: "Yüksek hacim retail / multi-brand",
               isHighlighted: false,
             },
@@ -5480,8 +5436,8 @@ export const content: Content = {
           tiers: [
             {
               name: "Standard",
-              setup: "€500",
-              monthly: "€99/ay",
+              setup: "Fiyat talep üzerine",
+              monthly: "Fiyat talep üzerine",
               included: ["Web booking widget", "Cal.com senk.", "E-mail + SMS hatırlatma", "1 takvim", "Aylık 100 booking'e kadar"],
               overage: "",
               forWhom: "Solo pratisyen / küçük takım",
@@ -5489,8 +5445,8 @@ export const content: Content = {
             },
             {
               name: "Professional",
-              setup: "€1.200",
-              monthly: "€299/ay",
+              setup: "Fiyat talep üzerine",
+              monthly: "Fiyat talep üzerine",
               included: ["10 takvime kadar", "Voice + WhatsApp + web intake", "No-show recovery flow", "Intake formları", "Custom hatırlatma"],
               overage: "",
               forWhom: "Çok personelli servis işletmesi",
@@ -5498,8 +5454,8 @@ export const content: Content = {
             },
             {
               name: "Enterprise",
-              setup: "€2.500",
-              monthly: "€699/ay",
+              setup: "Fiyat talep üzerine",
+              monthly: "Fiyat talep üzerine",
               included: ["Sınırsız takvim", "Custom workflow", "Depozito (Stripe)", "Multi-lokasyon", "SLA"],
               overage: "",
               forWhom: "Klinikler, multi-şube operasyonları",
@@ -5515,28 +5471,28 @@ export const content: Content = {
           tiers: [
             {
               name: "Standard",
-              setup: "€600",
-              monthly: "€39/koltuk/ay",
+              setup: "Fiyat talep üzerine",
+              monthly: "Fiyat talep üzerine",
               included: ["1 paylaşılan inbox", "AI triage + otomatik yanıt", "500 e-mail / koltuk / ay", "Temel CRM log", "Slack bildirim"],
-              overage: "€0,05 / e-mail",
+              overage: "",
               forWhom: "Küçük operasyon takımı",
               isHighlighted: false,
             },
             {
               name: "Professional",
-              setup: "€1.200",
-              monthly: "€69/koltuk/ay",
+              setup: "Fiyat talep üzerine",
+              monthly: "Fiyat talep üzerine",
               included: ["3 inbox", "Eskalasyon kuralları", "2.000 e-mail / koltuk / ay", "HubSpot / Pipedrive senk.", "Custom yanıt şablonu"],
-              overage: "€0,04 / e-mail",
+              overage: "",
               forWhom: "Mid-market servis masası",
               isHighlighted: true,
             },
             {
               name: "Enterprise",
-              setup: "€2.500",
-              monthly: "€99/koltuk/ay",
+              setup: "Fiyat talep üzerine",
+              monthly: "Fiyat talep üzerine",
               included: ["Sınırsız inbox", "Custom routing kuralları", "Audit log + SLA", "EU DPA dahil", "Adanmış success manager"],
-              overage: "€0,03 / e-mail",
+              overage: "",
               forWhom: "Regüle / yüksek hacim",
               isHighlighted: false,
             },
@@ -5550,28 +5506,28 @@ export const content: Content = {
           tiers: [
             {
               name: "Standard",
-              setup: "€1.000",
-              monthly: "€249/ay",
+              setup: "Fiyat talep üzerine",
+              monthly: "Fiyat talep üzerine",
               included: ["250 nitelikli lead / ay", "Form + chat intake", "BANT scoring", "CRM push (HubSpot, Pipedrive)", "Slack alert"],
-              overage: "€1,50 / lead",
+              overage: "",
               forWhom: "Outbound-hafif B2B",
               isHighlighted: false,
             },
             {
               name: "Professional",
-              setup: "€2.000",
-              monthly: "€599/ay",
+              setup: "Fiyat talep üzerine",
+              monthly: "Fiyat talep üzerine",
               included: ["1.000 nitelikli lead / ay", "Voice + chat + form intake", "Custom scoring modeli", "Routing kuralları", "Haftalık özet"],
-              overage: "€1,00 / lead",
+              overage: "",
               forWhom: "Aktif SDR-destekli takım",
               isHighlighted: true,
             },
             {
               name: "Enterprise",
-              setup: "€4.000",
-              monthly: "€1.499/ay",
+              setup: "Fiyat talep üzerine",
+              monthly: "Fiyat talep üzerine",
               included: ["4.000 nitelikli lead / ay", "Multi-kanal intake", "Account-tabanlı scoring", "SLA", "Custom entegrasyon"],
-              overage: "€0,60 / lead",
+              overage: "",
               forWhom: "Sales-led mid-market",
               isHighlighted: false,
             },
@@ -5585,8 +5541,8 @@ export const content: Content = {
           tiers: [
             {
               name: "Standard",
-              setup: "€4.500 sabit (sprint)",
-              monthly: "—",
+              setup: "Fiyat talep üzerine",
+              monthly: "Fiyat talep üzerine",
               included: ["1 workflow uçtan uca inşa", "Scoping + build + 30 gün destek", "3 entegrasyona kadar", "Dokümantasyon + devir", "Kaynak kodu sizde"],
               overage: "",
               forWhom: "Tek, iyi tanımlı acı noktası",
@@ -5594,8 +5550,8 @@ export const content: Content = {
             },
             {
               name: "Professional",
-              setup: "€12.000 sabit (proje) — veya €1.200/gün",
-              monthly: "—",
+              setup: "Fiyat talep üzerine",
+              monthly: "Fiyat talep üzerine",
               included: ["3–5 workflow", "Discovery workshop", "Build + 90 gün destek", "Entegrasyon + custom kod", "Ops dashboard"],
               overage: "",
               forWhom: "Mid-market dijital ops projesi",
@@ -5603,8 +5559,8 @@ export const content: Content = {
             },
             {
               name: "Enterprise",
-              setup: "—",
-              monthly: "€4.500/ay (12 ay min süre)",
+              setup: "Fiyat talep üzerine",
+              monthly: "Fiyat talep üzerine",
               included: ["Adanmış automation engineer 4 gün / ay", "Scope dahili sınırsız workflow", "Çeyreklik review", "Olaylarda öncelik", "Roadmap işbirliği"],
               overage: "",
               forWhom: "Sürekli dönüşüm partneri",
@@ -5651,15 +5607,15 @@ export const content: Content = {
       bundles: {
         eyebrow: "[ BUNDLE & YILLIK ]",
         heading: "Tasarrufu üst üste koyun",
-        lead: "Birden fazla ürün satın alın veya yıllık ödeyin, fatura otomatik düşer. İndirimler birbiriyle kombinlenebilir.",
+        lead: "Birden fazla ürün veya yıllık taahhüt mü? Birlikte teklif veririz.",
         items: [
-          { rule: "2 ürün", benefit: "Birleşik aylık ücretten −%10" },
-          { rule: "3+ ürün", benefit: "Aylık ücretten −%15 + 3 ay ücretsiz tier yükseltmesi" },
-          { rule: "Yıllık peşin ödeme", benefit: "−%15 (her ürün, her tier)" },
-          { rule: "OpSo Smart takımı (50+ koltuk) bir agent ile bundle", benefit: "OpSo Smart koltuk fiyatı €4/kullanıcı/ay'a düşer" },
-          { rule: "Custom Automation retainer müşterileri", benefit: "Tüm SaaS ürünlerinde −%20" },
+          { rule: "2 ürün", benefit: "Fiyat talep üzerine" },
+          { rule: "3+ ürün", benefit: "Fiyat talep üzerine" },
+          { rule: "Yıllık peşin ödeme", benefit: "Fiyat talep üzerine" },
+          { rule: "OpSo Smart takımı (50+ koltuk) bir agent ile bundle", benefit: "Fiyat talep üzerine" },
+          { rule: "Custom Automation retainer müşterileri", benefit: "Fiyat talep üzerine" },
         ],
-        note: "İndirimler sadece aylık ücretlere uygulanır. Setup ücreti sabit kalır. Yıllık peşin ödeme iade edilemez; aylık tierlar 30 gün önceden iptal edilebilir.",
+        note: "Koşullar bireysel olarak kararlaştırılır.",
       },
       footnote: "Tüm fiyatlar EUR, KDV hariç. EU dışı müşteriler reverse charge ile KDV'siz faturalandırılır. EU-hostlu altyapı (Hetzner / IONOS Frankfurt) her tier'da dahildir.",
     },

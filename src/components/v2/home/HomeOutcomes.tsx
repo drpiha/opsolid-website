@@ -1,9 +1,8 @@
 "use client";
 
 /**
- * HomeOutcomes — post-pillar enrichment section. Three anonymized
- * outcome vignettes that ground the abstract pillar promises in
- * concrete hours-saved numbers, followed by a trust strip and a
+ * HomeOutcomes — post-pillar enrichment section. Three illustrative
+ * use-case examples (no client results, no figures), followed by a trust strip and a
  * large editorial CTA.
  *
  * All copy is inline per-locale because each vignette is a hand-
@@ -17,23 +16,25 @@ import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 
 const COPY = {
   de: {
-    eyebrow: "Ergebnisse",
-    headline: "Was bei anderen passiert ist",
+    eyebrow: "Einsatzfelder",
+    headline: "Typische Einsatzfelder",
+    exampleLabel: "Beispiel",
+    note: "Hinweis: Es gibt noch keine Kundenreferenzen und wir versprechen keine konkreten Ergebnisse.",
     cases: [
       {
         sector: "Anlagenbau",
-        outcome: "11 h / Woche",
-        body: "Angebotsfreigaben automatisiert; CRM und ERP sprechen jetzt miteinander statt über Excel.",
+        outcome: "Angebotsfreigaben",
+        body: "Angebotsfreigaben lassen sich automatisieren; CRM und ERP können direkt statt über Excel Daten austauschen.",
       },
       {
         sector: "E-Commerce",
-        outcome: "Inbox Zero",
-        body: "Kundenanfragen werden klassifiziert, beantwortet oder eskaliert — bevor ein Mensch sie sieht.",
+        outcome: "Kundenanfragen",
+        body: "Anfragen können klassifiziert, beantwortet oder eskaliert werden, bevor ein Mensch sie bearbeitet.",
       },
       {
         sector: "Produktion",
-        outcome: "0 Doppelerfassung",
-        body: "Wartungsbelege fließen einmal aus dem Shopfloor durchs System — Excel-Pflege fällt weg.",
+        outcome: "Wartungsbelege",
+        body: "Belege können einmal aus dem Shopfloor durchs System fließen, statt mehrfach erfasst zu werden.",
       },
     ],
     trustEyebrow: "Vertrauensbasis",
@@ -45,23 +46,25 @@ const COPY = {
     finalCtaSecondary: "AI & Automation Check anfragen",
   },
   en: {
-    eyebrow: "Outcomes",
-    headline: "What happened for others",
+    eyebrow: "Use cases",
+    headline: "Typical use cases",
+    exampleLabel: "Example",
+    note: "Note: there are no client references yet, and we don't promise specific results.",
     cases: [
       {
         sector: "Industrial mfg",
-        outcome: "11 h / week",
-        body: "Quote approvals automated; CRM and ERP now talk to each other instead of going through Excel.",
+        outcome: "Quote approvals",
+        body: "Quote approvals can be automated; CRM and ERP can exchange data directly instead of going through Excel.",
       },
       {
         sector: "E-commerce",
-        outcome: "Inbox Zero",
-        body: "Customer messages classified, answered or escalated — before a human ever reads them.",
+        outcome: "Customer messages",
+        body: "Messages can be classified, answered or escalated before a human has to handle them.",
       },
       {
         sector: "Manufacturing",
-        outcome: "0 double-entry",
-        body: "Maintenance tickets flow once from the shopfloor through the stack — no more Excel babysitting.",
+        outcome: "Maintenance tickets",
+        body: "Tickets can flow once from the shopfloor through the stack instead of being entered several times.",
       },
     ],
     trustEyebrow: "Trust basis",
@@ -73,23 +76,25 @@ const COPY = {
     finalCtaSecondary: "Request the AI & Automation Check",
   },
   tr: {
-    eyebrow: "Sonuçlar",
-    headline: "Başkalarında ne oldu",
+    eyebrow: "Kullanım alanları",
+    headline: "Tipik kullanım alanları",
+    exampleLabel: "Örnek",
+    note: "Not: Henüz müşteri referansı yoktur ve belirli sonuçlar vaat etmiyoruz.",
     cases: [
       {
         sector: "Endüstriyel üretim",
-        outcome: "11 sa / hafta",
-        body: "Teklif onayları otomatik; CRM ile ERP Excel üzerinden değil, doğrudan birbiriyle konuşuyor.",
+        outcome: "Teklif onayları",
+        body: "Teklif onayları otomatikleştirilebilir; CRM ile ERP Excel yerine doğrudan veri alışverişi yapabilir.",
       },
       {
         sector: "E-ticaret",
-        outcome: "Inbox Zero",
-        body: "Müşteri mesajları sınıflandırılıyor, yanıtlanıyor veya yükseltiliyor — bir insan görmeden önce.",
+        outcome: "Müşteri mesajları",
+        body: "Mesajlar, bir insan ilgilenmeden önce sınıflandırılabilir, yanıtlanabilir veya yükseltilebilir.",
       },
       {
         sector: "Üretim",
-        outcome: "0 çift kayıt",
-        body: "Bakım talepleri tek seferde sahadan sisteme akıyor — Excel beslemesi tarihe karışıyor.",
+        outcome: "Bakım talepleri",
+        body: "Talepler birden fazla kez girilmek yerine tek seferde sahadan sisteme akabilir.",
       },
     ],
     trustEyebrow: "Güven zemini",
@@ -120,12 +125,13 @@ export function HomeOutcomes() {
           <ul className="v2-home-outcomes__grid">
             {c.cases.map((vignette, i) => (
               <li key={i} className="v2-home-outcomes__card">
-                <span className="v2-home-outcomes__card-sector">{vignette.sector}</span>
+                <span className="v2-home-outcomes__card-sector">{vignette.sector} · {c.exampleLabel}</span>
                 <span className="v2-home-outcomes__card-outcome">{vignette.outcome}</span>
                 <p className="v2-home-outcomes__card-body">{vignette.body}</p>
               </li>
             ))}
           </ul>
+          <p className="v2-home-outcomes__note">{c.note}</p>
         </div>
       </section>
 
@@ -137,7 +143,6 @@ export function HomeOutcomes() {
             <li>DSGVO</li>
             <li>AVV</li>
             <li>DE-Hosting</li>
-            <li>SOC 2 Sub-Processors</li>
             <li>Open-Source First</li>
           </ul>
         </div>

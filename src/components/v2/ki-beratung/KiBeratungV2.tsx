@@ -6,12 +6,11 @@
  * Three motion layers:
  *   1. Background log stream — fake ops log lines crawling upward, ~6% opacity.
  *      Pure CSS, no JS cost. Looks like an OS process tail.
- *   2. Left column: eyebrow + question + lead + CTAs + animated counter card
- *      ("11,3 Std / Woche" counts up from 0 when scrolled into view).
- *   3. Right column: terminal with header LIVE pill, typewriter output, and
- *      a progress bar that fills as the scan completes.
+ *   2. Left column: eyebrow + question + lead + CTAs.
+ *   3. Right column: illustrative terminal (labelled as an example, not a
+ *      real scan) with typewriter output and a progress bar.
  *
- * Reduced-motion: log stream paused, counter snaps to final, typewriter
+ * Reduced-motion: log stream paused, typewriter
  * renders all lines instantly, progress bar fills statically.
  */
 
@@ -88,11 +87,8 @@ export function KiBeratungV2() {
   const [typed, setTyped] = useState("");
   const [done, setDone] = useState(false);
   const [progressPct, setProgressPct] = useState(0);
-  const [counterValue, setCounterValue] = useState(0);
 
   const rafRef = useRef<number | null>(null);
-  const counterRafRef = useRef<number | null>(null);
-  const sectionRef = useRef<HTMLElement | null>(null);
 
   // Typewriter — same RAF-driven engine, now also drives the progress bar
   // by char-count over total length.
@@ -141,56 +137,12 @@ export function KiBeratungV2() {
     };
   }, [fullText]);
 
-  // Counter — animates from 0 → 11.3 when the section enters viewport. Uses
-  // IntersectionObserver so it fires once, not on every scroll.
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) {
-      setCounterValue(11.3);
-      return;
-    }
-    const node = sectionRef.current;
-    if (!node) return;
-
-    let started = false;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting && !started) {
-            started = true;
-            const start = performance.now();
-            const duration = 1600;
-            const easeOut = (t: number) => 1 - Math.pow(1 - t, 3);
-
-            const animate = (now: number) => {
-              const t = Math.min(1, (now - start) / duration);
-              setCounterValue(easeOut(t) * 11.3);
-              if (t < 1) counterRafRef.current = requestAnimationFrame(animate);
-            };
-            counterRafRef.current = requestAnimationFrame(animate);
-            observer.disconnect();
-          }
-        }
-      },
-      { threshold: 0.3 },
-    );
-    observer.observe(node);
-
-    return () => {
-      observer.disconnect();
-      if (counterRafRef.current !== null) cancelAnimationFrame(counterRafRef.current);
-    };
-  }, []);
-
-  const counterLabel =
+  const exampleLabel =
     locale === "de"
-      ? "Std / Woche identifiziert"
+      ? "Beispiel — kein echter Scan"
       : locale === "tr"
-        ? "saat / hafta tasarruf potansiyeli"
-        : "hrs / week identified";
-  const liveLabel =
-    locale === "de" ? "LIVE-SCAN" : locale === "tr" ? "CANLI TARAMA" : "LIVE SCAN";
+        ? "Örnek — gerçek tarama değil"
+        : "Example — not a real scan";
   const progressLabel =
     locale === "de"
       ? "Analyse läuft"
@@ -198,11 +150,11 @@ export function KiBeratungV2() {
         ? "Analiz devam ediyor"
         : "Analysis running";
   const completeLabel =
-    locale === "de" ? "Scan abgeschlossen" : locale === "tr" ? "Tarama tamamlandı" : "Scan complete";
+    locale === "de" ? "Beispiel abgeschlossen" : locale === "tr" ? "Örnek tamamlandı" : "Example complete";
 
   return (
     <main>
-    <section className="v2-kib-hero" ref={sectionRef}>
+    <section className="v2-kib-hero">
       {/* Background log stream — pure decoration. Two stacked copies so the
           CSS translate loop is seamless. */}
       <div className="v2-kib-logstream" aria-hidden="true">
@@ -228,19 +180,6 @@ export function KiBeratungV2() {
               {data.ctaSecondary}
             </Link>
           </div>
-
-          {/* Counter card — appears below CTAs, animates in when the section
-              enters viewport. Numeric display uses tabular-nums for stable
-              digit width while counting. */}
-          <div className="v2-kib-counter" aria-live="polite">
-            <div className="v2-kib-counter__value">
-              {counterValue.toLocaleString(
-                locale === "de" || locale === "tr" ? "de-DE" : "en-US",
-                { minimumFractionDigits: 1, maximumFractionDigits: 1 },
-              )}
-            </div>
-            <div className="v2-kib-counter__label">{counterLabel}</div>
-          </div>
         </div>
 
         <div className="v2-kib-hero__right">
@@ -250,10 +189,7 @@ export function KiBeratungV2() {
                 <i /><i /><i />
               </span>
               <span className="v2-terminal__title">{terminal.title}</span>
-              <span className="v2-terminal__live" aria-hidden="true">
-                <span className="v2-terminal__live-dot" />
-                {liveLabel}
-              </span>
+              <span className="v2-terminal__live">{exampleLabel}</span>
             </header>
             <div className="v2-terminal__body">
               <div className="v2-terminal__prompt">{terminal.prompt}</div>

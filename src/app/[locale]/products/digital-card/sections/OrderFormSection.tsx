@@ -225,9 +225,7 @@ function getSampleCard(locale: string): CardData {
         { q: "How fast can we start?", a: "Usually within a week. Book a short call and we map the first sprint together." },
         { q: "Do you work remotely?", a: "Yes — remote-first across the EU, on-site in Hamburg on request." },
       ],
-      testimonials: [
-        { author: "Lena Richter", role: "Founder, Hello Mauve", quote: "Alex turned a vague idea into a product our users immediately understood. Fast, sharp, no fluff." },
-      ],
+      testimonials: [],
       designNotes: "",
     };
   }
@@ -262,9 +260,7 @@ function getSampleCard(locale: string): CardData {
       { q: "Wie schnell können wir starten?", a: "Meist innerhalb einer Woche. Buchen Sie ein kurzes Gespräch — wir planen den ersten Sprint gemeinsam." },
       { q: "Arbeiten Sie remote?", a: "Ja — remote-first in der ganzen EU, vor Ort in Hamburg auf Anfrage." },
     ],
-    testimonials: [
-      { author: "Lena Richter", role: "Gründerin, Hello Mauve", quote: "Alex hat aus einer vagen Idee ein Produkt gemacht, das unsere Nutzer sofort verstanden haben. Schnell, präzise, ohne Schnörkel." },
-    ],
+    testimonials: [],
     designNotes: "",
   };
 }
