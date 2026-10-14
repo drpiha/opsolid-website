@@ -30,7 +30,15 @@ export function HeroVideo() {
   const [playing, setPlaying] = useState(false);
 
   useEffect(() => {
-    setReduced(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setReduced(reduce);
+    // No autoPlay attribute in the markup: playback only starts here, after the
+    // preference is known, so reduced-motion visitors never see it begin.
+    const v = ref.current;
+    if (v && !reduce) {
+      v.muted = true;
+      void v.play().catch(() => {});
+    }
   }, []);
 
   if (failed) {
@@ -50,7 +58,6 @@ export function HeroVideo() {
         ref={ref}
         src={OPSO_HERO_VIDEO_URL}
         poster={OPSO_HERO_POSTER_URL}
-        autoPlay={!reduced}
         muted
         loop
         playsInline
