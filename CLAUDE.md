@@ -21,11 +21,11 @@ re-running it.
 
 No separate backend process — Next.js API routes (`src/app/api/`) run within the same server.
 
-`?debug` on a marketing URL exposes `window.__v4stage.bounds()` (projected screen box of the 3D object) for layout audits. It is inert without the query string.
+`?debug` on a marketing URL exposes `window.__v4stage.bounds()` (projected screen box of the 3D object) for layout audits. It is inert without the query string. `npm run audit:stage` (needs a running server, `BASE=http://localhost:3000`) asserts per scene that the object never intersects text, buttons, tables or form controls at 1280/1440/1920/390 px; `npm run audit:headings` checks that no h1/h2 needs a mid-word break in de/en/tr. Run both after changing scenes, poses, column widths or heading copy.
 
 ## Architecture
 
-**OpSolid** is a B2B website built with Next.js 14 App Router, TypeScript, and Tailwind CSS. Brand: "OpSolid" (sprechende KI-Agents, Websites und Automatisierung für kleine und mittlere Betriebe, Arnsberg, Germany). Positioning: independent one-person practice — no fake metrics, no invented clients or testimonials, no "we" team language (first person singular), no employer references, no inflated claims. Only real products (OpSo, Kutasia) count as proof.
+**OpSolid** is a B2B website built with Next.js 14 App Router, TypeScript, and Tailwind CSS. Brand: "OpSolid" (sprechende KI-Agents, Websites und Automatisierung für kleine und mittlere Betriebe, Arnsberg, Germany). Positioning: an independent AI and automation practice for small and mid-sized businesses. **Voice (owner decision 2026-10-16): professional company voice** — OpSolid / "wir" / "we" / "biz", focused on what the work changes for the client's business. Team size is not a topic: never say or imply a one-person business ("allein", "Ein-Personen", "tek başıma", "solo") and never imply a large team. No fake metrics, no invented clients, testimonials, years of experience, certifications or partner badges, no employer references, no inflated claims. Proof is real work only: opsolid.de, OpSo (product in test phase) and Kutasia (a project in development, not a product yet).
 
 The site has two kinds of surfaces:
 
@@ -34,9 +34,9 @@ The site has two kinds of surfaces:
 
 ### Localization System
 
-Public locales are `de`, `en`, `tr`. `/` redirects by cookie → `Accept-Language` → `ROUTING_DEFAULT_LOCALE` (`de`); `/de`, `/en`, `/tr` never redirect. `DEFAULT_LOCALE` (`en`) is for app surfaces only. See `src/middleware.ts` and `scripts/tests/redirects.test.mts`.
+Public locales are `de`, `en`, `tr`. **Language follows the visitor's COUNTRY, never the browser language** (owner decision, #34/#35): locale-less URLs (`/`, `/ki-beratung`, …) get a 307 by cookie (explicit choice) → upstream geo header (`x-vercel-ip-country`, `cf-ipcountry`, `x-country-code`, `x-geo-country`) → in-app `/api/geo` lookup over loopback (fail-open) → `ROUTING_DEFAULT_LOCALE` (`de`). TR → `tr`, DACH → `de`, everything else → `en` (`localeForCountry`). `Accept-Language` is not consulted, so a Turkish browser in Germany lands on `/de`. `/de`, `/en`, `/tr` never redirect; retired locale-less URLs 301 to `/de`; detection never writes a cookie (only an explicit language switch does). Logic in `src/lib/locale-routing.ts` (pure, unit-tested in `scripts/tests/redirects.test.mts`), wiring in `src/middleware.ts`; `?geodebug=1` reflects the decision in an `x-opsolid-geo` header. `DEFAULT_LOCALE` (`en`) is for app surfaces only.
 
-**Marketing page text** lives in `src/content/v4/pages-{de,en,tr}.ts`, typed by `src/content/v4/types.ts` (`PageDef`: hero, blocks, faq, cta). All three files must define the same pages. A page route is `v4Meta` (metadata) + `v4Page` (render) from `src/components/v4/make-page.tsx`; do not hand-write layout per page. Voice: first person singular, plain wording, answer-first ledes under every H2. Never invent prices, clients, numbers or testimonials; open points go in the PR body under "Needs owner confirmation".
+**Marketing page text** lives in `src/content/v4/pages-{de,en,tr}.ts`, typed by `src/content/v4/types.ts` (`PageDef`: hero, blocks, faq, cta). All three files must define the same pages. A page route is `v4Meta` (metadata) + `v4Page` (render) from `src/components/v4/make-page.tsx`; do not hand-write layout per page. Voice: company voice (see Positioning), plain and concrete, answer-first ledes under every H2. Never invent prices, clients, numbers or testimonials; open points go in the PR body under "Needs owner confirmation".
 
 **App-surface text** (and impressum / privacy) lives in `src/content/en.ts` (type-defining source of truth), `de.ts`, `tr.ts`, combined in `src/content/index.ts`. The `Content` type is derived from `en.ts` using a `DeepString<T>` recursive type; DE and TR import it: `export const content: Content = { ... } as const`. When adding text there: add the key to `en.ts` first, then the same key to `de.ts` and `tr.ts`. All three must have identical structure or the build fails.
 

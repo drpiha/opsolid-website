@@ -13,7 +13,7 @@ import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 const COPY = {
   de: { headline: "KI-Quick-Check buchen", lead: "90 Minuten remote, mit schriftlichem Bericht. Ab 490 €, die ersten 3 Piloten kostenlos gegen ehrliches Feedback.", fallback: "Termin per Kontaktformular anfragen" },
   en: { headline: "Book the AI Quick Check", lead: "90 minutes remote with a written report. From €490, the first 3 pilots are free in exchange for honest feedback.", fallback: "Request a slot via the contact form" },
-  tr: { headline: "YZ Hızlı Kontrolü ayarla", lead: "90 dakika uzaktan, yazılı raporla. 490 €'dan; ilk 3 pilot dürüst geri bildirim karşılığında ücretsiz.", fallback: "İletişim formuyla randevu iste" },
+  tr: { headline: "YZ Hızlı Kontrol planlayın", lead: "90 dakika uzaktan, yazılı raporla. 490 €'dan; ilk 3 pilot dürüst geri bildirim karşılığında ücretsiz.", fallback: "İletişim formuyla randevu isteyin" },
 } as const;
 
 export function QuickCheckBooking() {

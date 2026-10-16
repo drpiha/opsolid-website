@@ -19,7 +19,7 @@ const STATIC_PAGES: string[] = [
   "/contact",
   "/blog",
   "/opso",
-  "/products/kutasia",
+  // Kutasia is a project in development, not a product yet: /products/kutasia stays reachable but is noindex and not listed here.
 ];
 
 function buildLanguageMap(path: string): Record<string, string> {

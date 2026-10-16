@@ -10,6 +10,7 @@ import { AccountMenu } from "@/components/layout/AccountMenu";
 import { cn } from "@/lib/utils";
 import { isV4Path } from "@/lib/v4";
 import type { Locale } from "@/content";
+import { Logo } from "@/components/v4/Logo";
 
 type L3 = { de: string; en: string; tr: string };
 type NavItem = { key: string; href: string; match: RegExp; label: L3 };
@@ -28,26 +29,16 @@ const NAV_ITEMS: NavItem[] = [
   { key: "check", href: "/ai-automation-check", match: /\/ai-automation-check/, label: { de: "KI-Check", en: "AI check", tr: "YZ kontrolü" } },
   { key: "training", href: "/ki-schulungen", match: /\/ki-schulungen/, label: { de: "KI-Schulungen", en: "AI training", tr: "YZ eğitimleri" } },
   { key: "opso", href: "/opso", match: /\/opso(\/|$)/, label: { de: "OpSo", en: "OpSo", tr: "OpSo" } },
-  { key: "about", href: "/ueber-mich", match: /\/ueber-mich/, label: { de: "Über mich", en: "About", tr: "Hakkımda" } },
+  { key: "about", href: "/ueber-mich", match: /\/ueber-mich/, label: { de: "Über OpSolid", en: "About", tr: "Hakkımızda" } },
 ];
 
-const CTA: L3 = { de: "KI-Check buchen", en: "Book an AI check", tr: "YZ kontrolü ayarla" };
+const CTA: L3 = { de: "KI-Check starten", en: "Start the AI Check", tr: "YZ kontrolüyle başlayın" };
 const CONTACT: L3 = { de: "Kontakt", en: "Contact", tr: "İletişim" };
 const MENU: L3 = { de: "Menü", en: "Menu", tr: "Menü" };
 const CLOSE: L3 = { de: "Menü schließen", en: "Close menu", tr: "Menüyü kapat" };
 
 const LOCALE_LABELS: Record<Locale, string> = { en: "EN", de: "DE", tr: "TR", es: "ES", it: "IT", fr: "FR", ar: "AR" };
 const VISIBLE_LOCALES: Locale[] = ["de", "en", "tr"];
-
-function Mark() {
-  return (
-    <svg className="v4-mark" width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
-      <rect x="2" y="4" width="22" height="4" fill="#C27940" />
-      <rect x="2" y="11" width="22" height="4" fill="currentColor" opacity=".85" />
-      <rect x="2" y="18" width="22" height="4" fill="currentColor" opacity=".55" />
-    </svg>
-  );
-}
 
 export function Header() {
   const pathname = usePathname();
@@ -94,10 +85,7 @@ export function Header() {
     <header className={cn("v4-header", scrolled && "is-scrolled", !v4 && "is-app")} role="banner">
       <div className="v4-header-in">
         <Link href="/" className="v4-brand" aria-label="OpSolid">
-          <Mark />
-          <span>
-            Op<b>Solid</b>
-          </span>
+          <Logo />
         </Link>
 
         <nav className="v4-nav" aria-label="Primary">
@@ -134,6 +122,9 @@ export function Header() {
           )}
           <Link href="/contact" className="v4-btn v4-btn-primary v4-header-cta">
             {CTA[loc]}
+            <span className="v4-btn-arr" aria-hidden="true">
+              →
+            </span>
           </Link>
 
           <Dialog.Root open={open} onOpenChange={setOpen}>
@@ -150,8 +141,7 @@ export function Header() {
               <Dialog.Content className="v4-sheet" aria-describedby={undefined}>
                 <div className="v4-sheet-bar">
                   <Dialog.Title className="v4-sheet-title">
-                    <Mark />
-                    OpSolid
+                    <Logo label="OpSolid" />
                   </Dialog.Title>
                   <Dialog.Close asChild>
                     <button type="button" className="v4-menu-btn" aria-label={CLOSE[loc]}>
@@ -196,6 +186,9 @@ export function Header() {
                     <Dialog.Close asChild>
                       <Link href="/ai-automation-check" className="v4-btn v4-btn-primary v4-btn-lg">
                         {CTA[loc]}
+                        <span className="v4-btn-arr" aria-hidden="true">
+                          →
+                        </span>
                       </Link>
                     </Dialog.Close>
                     <div className="v4-lang v4-lang-sheet" role="radiogroup" aria-label="Language">

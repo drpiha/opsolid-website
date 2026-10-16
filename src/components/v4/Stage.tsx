@@ -36,7 +36,7 @@ type Pose = [number, number, number, number, number, number, number, number, num
 const LABELS: Record<"de" | "en" | "tr", { n: string; t: string }[]> = {
   de: [
     { n: "Agents", t: "Stimme · Video" },
-    { n: "Websites", t: "Bau · Miete" },
+    { n: "Websites", t: "Kauf · Miete" },
     { n: "Prozessautomatisierung", t: "Abläufe" },
     { n: "Microsoft 365", t: "Outlook · Teams" },
     { n: "Interne Tools", t: "statt Tabelle" },
@@ -45,7 +45,7 @@ const LABELS: Record<"de" | "en" | "tr", { n: string; t: string }[]> = {
   ],
   en: [
     { n: "Agents", t: "Voice · Video" },
-    { n: "Websites", t: "Build · Rent" },
+    { n: "Websites", t: "Buy · Rent" },
     { n: "Process automation", t: "Workflows" },
     { n: "Microsoft 365", t: "Outlook · Teams" },
     { n: "Internal tools", t: "not a sheet" },
@@ -54,7 +54,7 @@ const LABELS: Record<"de" | "en" | "tr", { n: string; t: string }[]> = {
   ],
   tr: [
     { n: "Agent'lar", t: "Ses · Video" },
-    { n: "Web siteleri", t: "Kur · Kirala" },
+    { n: "Web siteleri", t: "Satın al · Kirala" },
     { n: "Süreç otomasyonu", t: "Akışlar" },
     { n: "Microsoft 365", t: "Outlook · Teams" },
     { n: "Dahili araçlar", t: "tablo yerine" },
@@ -543,12 +543,23 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
   let heatNow: number[] = [];
 
   const measure = (el: HTMLElement): Info => {
-    const col = el.querySelector<HTMLElement>(".v4-col") ?? el.querySelector<HTMLElement>(".v4-band-in > div") ?? el;
-    const r = col.getBoundingClientRect();
+    // Right edge of all content shown while this scene is active: the section itself and the plain
+    // flow sections that follow it up to the next scene (text columns, tables, the CTA band's buttons).
+    const parts: Element[] = [el];
+    for (let n = el.nextElementSibling; n && !(n as HTMLElement).dataset?.scene; n = n.nextElementSibling) parts.push(n);
+    let right = 0;
+    let found = false;
+    parts.forEach((part) =>
+      part.querySelectorAll<HTMLElement>(".v4-col, .v4-band-in > *").forEach((c) => {
+        found = true;
+        right = Math.max(right, c.getBoundingClientRect().right);
+      }),
+    );
+    if (!found) right = el.getBoundingClientRect().right;
     return {
       scene: (el.dataset.scene as SceneId) ?? "stack",
       heat: (el.dataset.heat ?? "").split(",").map((s) => parseInt(s, 10)).filter((n) => !Number.isNaN(n)),
-      textRight: r.right,
+      textRight: right,
       dim: !!el.dataset.dim,
     };
   };
@@ -723,12 +734,13 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
       const trA = iA?.textRight ?? vw * 0.45;
       const trB = iB?.textRight ?? trA;
       const textRight = lerp(trA, trB, u);
-      const L = Math.min(vw * 0.62, textRight + 44);
+      const L = textRight + 44;
       const R = vw - 24;
       const wpp = visW / vw;
       tx = ((L + R) / 2 - vw / 2) * wpp;
       ty = 0;
-      ts = Math.min(1.15, (visH * 0.9) / (2 * hh), ((R - L) * wpp) / (2 * hw * 1.05));
+      // No free column (content spans the width, e.g. the CTA band): the object steps out of the way.
+      ts = R - L < 240 ? 0.0001 : Math.min(1.15, (visH * 0.9) / (2 * hh), ((R - L) * wpp) / (2 * hw * 1.05));
     }
     // First frame: start at the target, not at the viewport centre, so the object never glides across the text.
     const kl = firstFrame ? 1 : Math.min(1, dt * 4);
@@ -740,7 +752,8 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
     group.rotation.y = cur.gy + Math.sin(Tm * 0.35) * 0.07 + (coarse ? 0 : pointer.x * 0.2);
     group.rotation.x = cur.gx - (coarse ? 0 : pointer.y * 0.09);
     group.position.set(cur.x, cur.y + Math.sin(Tm * 0.6) * 0.05, 0);
-    group.scale.setScalar(Math.max(0.05, cur.s));
+    group.scale.setScalar(Math.max(0.0001, cur.s));
+    group.visible = cur.s > 0.01;
   };
 
   // Layout-audit hook (`?debug` only): projected screen box of everything visible in the group.

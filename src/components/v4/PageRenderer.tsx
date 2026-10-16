@@ -1,29 +1,98 @@
 import Link from "next/link";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { withLocale, type Locale } from "@/lib/i18n";
 import { SITE_CONFIG, formatStand } from "@/lib/constants";
 import type { Block, L3, PageDef } from "@/content/v4/types";
 import { Reveal } from "@/components/v4/Reveal";
 import { AgentDemo } from "@/components/v4/AgentDemo";
 import { JsonLdGraph } from "@/components/v4/JsonLd";
-
-/**
- * Long German compounds ("Automatisierungspotenzial") do not fit a 36 rem column at heading size,
- * and browsers do not hyphenate them reliably. Insert a soft hyphen before a known stem when the word
- * is long, so the break lands on a morpheme boundary instead of mid-syllable. Invisible otherwise.
- */
-const STEMS = /(automatisierung|potenzial|vereinbarung|verordnung|kompetenz|kommunikation|integration|unternehmen|dokumentation|schulung|beratung|steuerung|werkzeug|anbindung|plattform|einführung|sicherheit)/gi;
-export function soft(text: string): string {
-  return text.replace(/[A-Za-zÄÖÜäöüßÇçĞğİıŞş]{14,}/g, (word) =>
-    word.replace(STEMS, (m, _g, offset: number) => {
-      const piece = m.replace(/^(automati)(sierung)$/i, "$1\u00AD$2");
-      return offset >= 4 ? "\u00AD" + piece : piece;
-    }),
-  );
-}
+import { soft } from "@/lib/soft-hyphen";
 
 const HOME: Record<L3, string> = { de: "Start", en: "Home", tr: "Ana sayfa" };
 const STAND: Record<L3, string> = { de: "Stand", en: "Updated", tr: "Güncelleme" };
+
+const pad2 = (n: number) => String(n).padStart(2, "0");
+
+/**
+ * Eyebrows are set in uppercase. Under lang="tr" the case mapping turns "i" into "İ" ("OPSOLİD"), so the brand
+ * name is marked as German (its origin) and keeps its letterforms in every locale.
+ */
+function brandSafe(text: string): ReactNode {
+  const parts = text.split(/(OpSolid)/);
+  if (parts.length === 1) return text;
+  return parts.map((part, i) =>
+    part === "OpSolid" ? (
+      <span key={i} lang="de">
+        {part}
+      </span>
+    ) : (
+      part
+    ),
+  );
+}
+
+/** Chapter counter ("02/07") in front of the eyebrow. Decorative: the heading outline already carries the order. */
+function Eyebrow({ text, n, total }: { text?: string; n?: number; total?: number }) {
+  const chap = n !== undefined && total !== undefined && total > 1;
+  if (!text && !chap) return null;
+  return (
+    <span className={`v4-eyebrow${text ? "" : " is-bare"}`}>
+      {chap && (
+        <span className="v4-chap" aria-hidden="true">
+          <b>{pad2(n)}</b>/{pad2(total)}
+        </span>
+      )}
+      {text && <span>{brandSafe(text)}</span>}
+    </span>
+  );
+}
+
+/** Arrow glyph on primary buttons (aria-hidden, the label stays the accessible name). */
+const Arr = () => (
+  <span className="v4-btn-arr" aria-hidden="true">
+    →
+  </span>
+);
+
+/**
+ * Price cell of a rate card: the amount set large, the qualifier ("ab", "from", TR suffix "'dan") small beside it.
+ * Strings without an amount ("Auf Anfrage") render unchanged. Reads the same text as before; JSON-LD is unaffected.
+ */
+const AMOUNT = /(\d[\d.,]*\s?€|€\s?\d[\d.,]*)/;
+function Price({ text }: { text: string }) {
+  const m = AMOUNT.exec(text);
+  if (!m) return <span className="pr-t">{text}</span>;
+  const pre = text.slice(0, m.index).trim();
+  const post = text.slice(m.index + m[0].length).trim();
+  return (
+    <>
+      {pre && (
+        <>
+          <span className="pr-q">{pre}</span>{" "}
+        </>
+      )}
+      <span className="pr-n">{m[0]}</span>
+      {post && <span className="pr-s">{post}</span>}
+    </>
+  );
+}
+
+/** Column variant per block type: index (linked rows), ledger (plain rows), narrow (process), wide (tables, demo), essay (text). */
+function variant(b: Block): string {
+  switch (b.t) {
+    case "rows":
+      return b.items.some((it) => it.href) ? "is-index" : "is-ledger";
+    case "steps":
+      return "is-narrow";
+    case "table":
+    case "demo":
+      return "is-wide";
+    case "text":
+      return "is-essay";
+    default:
+      return "";
+  }
+}
 
 export function href(locale: L3, path: string): string {
   if (/^(https?:|mailto:|tel:|#)/.test(path)) return path;
@@ -76,14 +145,17 @@ function BlockBody({ b, locale }: { b: Block; locale: L3 }) {
   switch (b.t) {
     case "rows":
       return (
-        <ul className="v4-rows">
-          {b.items.map((it) => (
-            <li key={it.h} className="v4-row">
+        <ul className="v4-rows v4-rows-n">
+          {b.items.map((it, idx) => (
+            <li key={it.h} className="v4-row" style={{ "--i": idx } as CSSProperties}>
               {it.href ? (
                 <V4Link locale={locale} to={it.href} className="v4-row-in">
                   <h3 className="v4-row-h">
                     {it.h}
                     {it.tag && <span>{it.tag}</span>}
+                    <span className="v4-row-go" aria-hidden="true">
+                      →
+                    </span>
                   </h3>
                   <p className="v4-row-p">{it.p}</p>
                 </V4Link>
@@ -103,8 +175,8 @@ function BlockBody({ b, locale }: { b: Block; locale: L3 }) {
     case "steps":
       return (
         <ol className="v4-steps">
-          {b.items.map((s) => (
-            <li key={s.h} className="v4-step">
+          {b.items.map((s, idx) => (
+            <li key={s.h} className="v4-step" style={{ "--i": idx } as CSSProperties}>
               <h3>{s.h}</h3>
               <p>{s.p}</p>
             </li>
@@ -140,7 +212,7 @@ function BlockBody({ b, locale }: { b: Block; locale: L3 }) {
                     const [main, sub] = cell.split("||");
                     return (
                       <td key={i} className={i === r.length - 1 ? "pr" : undefined}>
-                        {main}
+                        {i === r.length - 1 ? <Price text={main} /> : main}
                         {sub && <small>{sub}</small>}
                       </td>
                     );
@@ -156,7 +228,7 @@ function BlockBody({ b, locale }: { b: Block; locale: L3 }) {
       return (
         <>
           {b.paras.map((p, i) => (
-            <p key={i} className="v4-p">
+            <p key={i} className={i === 0 && !b.lede ? "v4-p is-lead" : "v4-p"}>
               {p}
             </p>
           ))}
@@ -178,8 +250,8 @@ function BlockBody({ b, locale }: { b: Block; locale: L3 }) {
   }
 }
 
-export function BlockSection({ b, locale, flow }: { b: Block; locale: L3; flow?: boolean }) {
-  const wide = b.t === "table" || b.t === "demo";
+export function BlockSection({ b, locale, flow, n, total }: { b: Block; locale: L3; flow?: boolean; n?: number; total?: number }) {
+  const v = variant(b);
   const cls = ["v4-sec", b.scene ? "has-scene" : "", flow ?? !b.scene ? "is-flow" : ""].filter(Boolean).join(" ");
   return (
     <section
@@ -191,55 +263,48 @@ export function BlockSection({ b, locale, flow }: { b: Block; locale: L3; flow?:
       aria-labelledby={b.id ? `${b.id}-h` : undefined}
     >
       <div className="v4-in">
-        <div className={`v4-col${wide ? " is-wide" : ""}`}>
-          {b.eyebrow && <span className="v4-eyebrow">{b.eyebrow}</span>}
-          <Reveal>
-            <h2 className="v4-h2" id={b.id ? `${b.id}-h` : undefined}>
-              {soft(b.h)}
-            </h2>
-          </Reveal>
-          {b.lede && (
-            <Reveal>
-              <p className="v4-lede">{b.lede}</p>
-            </Reveal>
+        {/* The column itself reveals (one observer); its children stagger in CSS, so an opaque panel never shows empty. */}
+        <Reveal className={`v4-col${v ? ` ${v}` : ""}`}>
+          <Eyebrow text={b.eyebrow} n={n} total={total} />
+          <h2 className="v4-h2" id={b.id ? `${b.id}-h` : undefined}>
+            {soft(b.h)}
+          </h2>
+          {b.lede && <p className="v4-lede">{b.lede}</p>}
+          <BlockBody b={b} locale={locale} />
+          {b.cta && (
+            <div className="v4-cta">
+              <V4Link locale={locale} to={b.cta.href} className="v4-btn v4-btn-primary">
+                {b.cta.label}
+                <Arr />
+              </V4Link>
+            </div>
           )}
-          <Reveal>
-            <BlockBody b={b} locale={locale} />
-            {b.cta && (
-              <div className="v4-cta">
-                <V4Link locale={locale} to={b.cta.href} className="v4-btn v4-btn-primary">
-                  {b.cta.label}
-                </V4Link>
-              </div>
-            )}
-          </Reveal>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
 }
 
-export function FaqSection({ faq, scene = "offset" }: { faq: NonNullable<PageDef["faq"]>; scene?: string }) {
+export function FaqSection({ faq, scene = "offset", n, total }: { faq: NonNullable<PageDef["faq"]>; scene?: string; n?: number; total?: number }) {
+  // Stays a 46rem panel: Stage fits the object beside the next scene's column (this one) during every flow
+  // block that precedes it, so a full-width FAQ would push the object off the page for the whole inner page.
   return (
-    <section className="v4-sec" data-scene={scene} aria-labelledby="faq-h">
+    <section className="v4-sec is-faq" data-scene={scene} aria-labelledby="faq-h">
       <div className="v4-in">
-        <div className="v4-col is-wide">
-          <Reveal>
-            <h2 className="v4-h2" id="faq-h">
-              {soft(faq.h)}
-            </h2>
-          </Reveal>
-          <Reveal>
-            <div className="v4-faq">
-              {faq.items.map((i) => (
-                <details key={i.q}>
-                  <summary>{i.q}</summary>
-                  <p>{i.a}</p>
-                </details>
-              ))}
-            </div>
-          </Reveal>
-        </div>
+        <Reveal className="v4-col is-wide">
+          <Eyebrow n={n} total={total} />
+          <h2 className="v4-h2" id="faq-h">
+            {soft(faq.h)}
+          </h2>
+          <div className="v4-faq">
+            {faq.items.map((i) => (
+              <details key={i.q}>
+                <summary>{i.q}</summary>
+                <p>{i.a}</p>
+              </details>
+            ))}
+          </div>
+        </Reveal>
       </div>
     </section>
   );
@@ -255,9 +320,10 @@ export function CtaBand({ cta, locale }: { cta: PageDef["cta"]; locale: L3 }) {
           </h2>
           <p>{cta.p}</p>
         </div>
-        <div className="v4-cta" style={{ marginTop: 0 }}>
+        <div className="v4-cta">
           <V4Link locale={locale} to={cta.primary.href} className="v4-btn v4-btn-primary v4-btn-lg">
             {cta.primary.label}
+            <Arr />
           </V4Link>
           {cta.secondary && (
             <V4Link locale={locale} to={cta.secondary.href} className="v4-btn v4-btn-ghost v4-btn-lg">
@@ -270,14 +336,14 @@ export function CtaBand({ cta, locale }: { cta: PageDef["cta"]; locale: L3 }) {
   );
 }
 
-export function Hero({ page, locale, trail, showStand = true }: { page: PageDef; locale: L3; trail?: { label: string; to?: string }[]; showStand?: boolean }) {
+export function Hero({ page, locale, trail, showStand = true, total }: { page: PageDef; locale: L3; trail?: { label: string; to?: string }[]; showStand?: boolean; total?: number }) {
   const h = page.hero;
   return (
     <section className="v4-sec is-hero" id="top" data-scene={h.scene} data-heat={h.heat?.join(",")}>
       <div className="v4-in">
         <div className="v4-col">
           {trail && trail.length > 0 && <Crumbs locale={locale} trail={trail} />}
-          <span className="v4-eyebrow">{h.eyebrow}</span>
+          <Eyebrow text={h.eyebrow} n={1} total={total} />
           <h1 className="v4-h1">
             {soft(h.h1[0])}
             <em>{soft(h.h1[1])}</em>
@@ -297,6 +363,7 @@ export function Hero({ page, locale, trail, showStand = true }: { page: PageDef;
           <div className="v4-cta">
             <V4Link locale={locale} to={h.primary.href} className="v4-btn v4-btn-primary v4-btn-lg">
               {h.primary.label}
+              <Arr />
             </V4Link>
             {h.secondary && (
               <V4Link locale={locale} to={h.secondary.href} className="v4-btn v4-btn-ghost v4-btn-lg">
@@ -316,20 +383,22 @@ export function Hero({ page, locale, trail, showStand = true }: { page: PageDef;
 }
 
 /** Generic page: hero + blocks + FAQ + CTA band + one JSON-LD graph. */
-export function PageRenderer({ page, locale, trail, kind, children }: { page: PageDef; locale: L3; trail: { label: string; to?: string }[]; kind?: "WebPage" | "ProfilePage" | "CollectionPage" | "ContactPage"; children?: ReactNode }) {
+export function PageRenderer({ page, locale, trail, kind, children }: { page: PageDef; locale: L3; trail: { label: string; to?: string }[]; kind?: "WebPage" | "AboutPage" | "ProfilePage" | "CollectionPage" | "ContactPage"; children?: ReactNode }) {
   const crumbs = [
     { name: HOME[locale], path: `/${locale}` },
     ...trail.map((c, i) => ({ name: c.label, path: `/${locale}${i === trail.length - 1 ? (page.slug ? `/${page.slug}` : "") : c.to ?? ""}` })),
   ];
+  // Chapters: hero = 01, then every block, then the FAQ. The CTA band is the finale and carries no number.
+  const total = 1 + page.blocks.length + (page.faq ? 1 : 0);
   return (
     <div className="v4-page">
       <JsonLdGraph locale={locale} slug={page.slug} name={page.meta.title} description={page.meta.description} crumbs={crumbs} page={page} kind={kind} />
-      <Hero page={page} locale={locale} trail={trail} />
+      <Hero page={page} locale={locale} trail={trail} total={total} />
       {page.blocks.map((b, i) => (
-        <BlockSection key={b.id ?? `${b.t}-${i}`} b={b} locale={locale} />
+        <BlockSection key={b.id ?? `${b.t}-${i}`} b={b} locale={locale} n={i + 2} total={total} />
       ))}
       {children}
-      {page.faq && <FaqSection faq={page.faq} />}
+      {page.faq && <FaqSection faq={page.faq} n={page.blocks.length + 2} total={total} />}
       <CtaBand cta={page.cta} locale={locale} />
     </div>
   );

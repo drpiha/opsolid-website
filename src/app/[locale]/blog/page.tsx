@@ -7,6 +7,7 @@ import { withLocale, type Locale } from "@/lib/i18n";
 import { pageMetadata, pickLocale } from "@/lib/seo-v4";
 import { Crumbs, CtaBand } from "@/components/v4/PageRenderer";
 import { JsonLdGraph } from "@/components/v4/JsonLd";
+import { soft } from "@/lib/soft-hyphen";
 import { Reveal } from "@/components/v4/Reveal";
 import { getPage } from "@/content/v4";
 import type { L3 } from "@/content/v4/types";
@@ -18,33 +19,33 @@ const T: Record<L3, { crumb: string; eyebrow: string; h1: [string, string, strin
     crumb: "Notizen",
     eyebrow: "Notizen aus der Praxis",
     h1: ["Kurz, technisch, ", "ohne Buzzwords", "."],
-    lede: "Was ich aus Automatisierungs- und KI-Projekten mitnehme, in kurzen Texten.",
+    lede: "Kurze Texte darüber, was in Automatisierungs- und KI-Projekten funktioniert und worauf es im laufenden Betrieb ankommt.",
     read: "Lesen",
     min: "Min.",
     title: "Notizen aus der Praxis: Automatisierung und KI",
-    desc: "Kurze, praxisnahe Texte zu Automatisierung, Integration, KI und Betrieb von Hasan Dönmez.",
+    desc: "Kurze, praxisnahe Texte von OpSolid zu Automatisierung, Integration, KI und Betrieb: was in Projekten funktioniert und worauf Unternehmen achten sollten.",
     cat: { automation: "Automatisierung", integration: "Integration", ai: "KI", operations: "Betrieb" },
   },
   en: {
     crumb: "Notes",
-    eyebrow: "Notes from practice",
+    eyebrow: "Notes from the field",
     h1: ["Short, technical, ", "no buzzwords", "."],
-    lede: "What I take away from automation and AI projects, in short texts.",
+    lede: "Short texts on what works in automation and AI projects and what matters once a system is in daily use.",
     read: "Read",
     min: "min",
-    title: "Notes from practice: automation and AI",
-    desc: "Short, practical texts on automation, integration, AI and operations by Hasan Dönmez.",
+    title: "Notes from the field: automation and AI",
+    desc: "Short, practical notes from OpSolid on automation, integration, AI and operations: what works in real projects and what businesses should look out for.",
     cat: { automation: "Automation", integration: "Integration", ai: "AI", operations: "Operations" },
   },
   tr: {
     crumb: "Notlar",
-    eyebrow: "Pratikten notlar",
-    h1: ["Kısa, teknik, ", "gevezelik yok", "."],
-    lede: "Otomasyon ve YZ projelerinden öğrendiklerim, kısa metinlerle.",
+    eyebrow: "Sahadan notlar",
+    h1: ["Kısa, teknik, ", "abartısız", "."],
+    lede: "Otomasyon ve YZ projelerinde neyin işe yaradığını ve sistemler günlük kullanıma girdiğinde nelerin önemli olduğunu anlatan kısa yazılar.",
     read: "Oku",
     min: "dk",
-    title: "Pratikten notlar: otomasyon ve YZ",
-    desc: "Hasan Dönmez'den otomasyon, entegrasyon, YZ ve operasyon üzerine kısa, pratik metinler.",
+    title: "Sahadan notlar: otomasyon ve YZ",
+    desc: "OpSolid'den otomasyon, entegrasyon, YZ ve operasyon üzerine kısa, pratik yazılar: projelerde neyin işe yaradığı ve nelere dikkat edilmesi gerektiği.",
     cat: { automation: "Otomasyon", integration: "Entegrasyon", ai: "YZ", operations: "Operasyon" },
   },
 };
@@ -81,9 +82,9 @@ export default function Page({ params }: Params) {
             <Crumbs locale={loc} trail={[{ label: t.crumb }]} />
             <span className="v4-eyebrow">{t.eyebrow}</span>
             <h1 className="v4-h1">
-              {t.h1[0]}
-              <em>{t.h1[1]}</em>
-              {t.h1[2]}
+              {soft(t.h1[0])}
+              <em>{soft(t.h1[1])}</em>
+              {soft(t.h1[2])}
             </h1>
             <p className="v4-lede">{t.lede}</p>
           </div>
@@ -101,7 +102,7 @@ export default function Page({ params }: Params) {
                         <time dateTime={p.date}>{date(p.date)}</time> · {t.cat[p.category] ?? p.category} · {p.readTime} {t.min}
                       </p>
                       <h2 className="v4-row-h" style={{ fontSize: "1.35rem" }}>
-                        {p.title}
+                        {soft(p.title)}
                         <span>{t.read} →</span>
                       </h2>
                       <p className="v4-row-p">{p.excerpt}</p>

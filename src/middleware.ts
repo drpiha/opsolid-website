@@ -6,6 +6,7 @@ import {
   isLocale,
   type Locale,
 } from "@/lib/i18n";
+import { resolveLocale, type LocaleResolution } from "@/lib/locale-routing";
 import { getRetiredRedirectTarget } from "@/lib/redirects";
 
 function voiceIsEnabled(): boolean {
@@ -35,47 +36,53 @@ const COOKIE_NAME = "OPSOLID_LOCALE_V3";
 const LEGACY_COOKIE_NAMES = ["NEXT_LOCALE", "OPSOLID_LOCALE", "OPSOLID_LOCALE_V2"];
 
 /**
- * Locale resolution for locale-less URLs (`/`, `/ki-beratung`, …).
- * Order: explicit choice (cookie) → Accept-Language → German.
- * Same logic for every client (no geo-IP): crawlers and users see the same
- * redirect, always a 307 (never cached as permanent), and `/de`, `/en`, `/tr`
- * never redirect at all. Only an explicit language switch persists a cookie.
+ * Locale resolution for locale-less URLs (`/`, `/ki-beratung`, …), see
+ * `src/lib/locale-routing.ts`: cookie → upstream geo header → in-app /api/geo
+ * lookup → German. Language follows COUNTRY (TR → tr, DACH → de, else → en);
+ * Accept-Language is never consulted. The redirect is always a 307 (never
+ * cached as permanent), `/de`, `/en`, `/tr` never redirect, detection never
+ * writes a cookie (only an explicit language switch does), and a locale-less
+ * retired URL gets a stable 301 to /de that does not depend on the request.
  */
-type LocaleSource = "cookie" | "accept-language" | "default";
 
-interface LocaleResolution {
-  locale: Locale;
-  source: LocaleSource;
-}
-
-const PUBLIC_RESOLVED: ReadonlyArray<Locale> = ["de", "en", "tr"];
-
-/** Best public locale from an Accept-Language header, honouring q-values. */
-function localeFromAcceptLanguage(header: string | null): Locale | null {
-  if (!header) return null;
-  const ranked = header
-    .split(",")
-    .map((part, index) => {
-      const [tag, ...params] = part.trim().split(";");
-      const q = params.map((p) => p.trim()).find((p) => p.startsWith("q="));
-      const weight = q ? Number.parseFloat(q.slice(2)) : 1;
-      return { tag: tag.trim().toLowerCase(), weight: Number.isFinite(weight) ? weight : 0, index };
-    })
-    .filter((x) => x.tag && x.weight > 0)
-    .sort((a, b) => b.weight - a.weight || a.index - b.index);
-  for (const { tag } of ranked) {
-    const base = tag.split("-")[0];
-    if ((PUBLIC_RESOLVED as readonly string[]).includes(base)) return base as Locale;
+/**
+ * Resolve an IP → country via our own /api/geo route (the edge middleware can't
+ * read the on-disk GeoIP DB directly).
+ *
+ * We call the route over LOOPBACK, not the public origin. On the single-VPS
+ * Docker setup a container fetching its own public hostname
+ * (`https://opsolid.de/...`) can't hairpin back through Traefik, so that fetch
+ * silently failed and EVERY visitor fell through to the default (#35). The app
+ * process always answers on 127.0.0.1:<PORT> (PORT=3000 in the container).
+ * Fail-open: any error/timeout resolves to null so navigation is never blocked
+ * on a geo miss.
+ */
+async function lookupCountryFromIp(ip: string, req: NextRequest): Promise<string | null> {
+  try {
+    const port = req.nextUrl.port || process.env.PORT || "3000";
+    const url = `http://127.0.0.1:${port}/api/geo?ip=${encodeURIComponent(ip)}`;
+    // Hard cap so a slow or hung lookup can never stall the first page load.
+    const res = await fetch(url, { signal: AbortSignal.timeout(2500) });
+    if (!res.ok) return null;
+    const body = (await res.json().catch(() => null)) as { country?: string | null } | null;
+    const country = body?.country;
+    return typeof country === "string" && country.length === 2 ? country.toUpperCase() : null;
+  } catch {
+    return null;
   }
-  return null;
 }
 
-async function resolveLocale(req: NextRequest): Promise<LocaleResolution> {
-  const cookieValue = req.cookies.get(COOKIE_NAME)?.value;
-  if (isLocale(cookieValue)) return { locale: cookieValue, source: "cookie" };
-  const fromHeader = localeFromAcceptLanguage(req.headers.get("accept-language"));
-  if (fromHeader) return { locale: fromHeader, source: "accept-language" };
-  return { locale: ROUTING_DEFAULT_LOCALE, source: "default" };
+/**
+ * Opt-in diagnostics: on `?geodebug=1` reflect how the locale was resolved back
+ * in a response header. Country and own IP are not sensitive and this is gated,
+ * so it stays invisible to normal traffic.
+ */
+function maybeAttachGeoDebug(req: NextRequest, res: NextResponse, r: LocaleResolution) {
+  if (req.nextUrl.searchParams.get("geodebug") !== "1") return;
+  res.headers.set(
+    "x-opsolid-geo",
+    `source=${r.source};country=${r.country ?? "-"};ip=${r.ip ?? "-"};locale=${r.locale}`,
+  );
 }
 
 /** Delete every legacy locale cookie so none can override the current one. */
@@ -272,11 +279,19 @@ export async function middleware(req: NextRequest) {
     // Root and other locale-less URLs: 307 (never cached as permanent) to the
     // resolved locale. Nothing is persisted here; only an explicit language
     // switch sets the cookie (LocaleContext.setLocale).
-    const { locale } = await resolveLocale(req);
+    const resolution = await resolveLocale({
+      cookie: req.cookies.get(COOKIE_NAME)?.value,
+      header: (name) => req.headers.get(name),
+      lookupCountry: (ip) => lookupCountryFromIp(ip, req),
+    });
+    const { locale } = resolution;
     const url = req.nextUrl.clone();
     url.pathname = pathname === "/" ? `/${locale}` : `/${locale}${pathname}`;
     const response = NextResponse.redirect(url, 307);
-    response.headers.set("Vary", "Accept-Language, Cookie");
+    // The answer depends on the cookie and on the client's country (IP or geo header), so no shared cache.
+    response.headers.set("Vary", "Cookie");
+    response.headers.set("Cache-Control", "private, no-store");
+    maybeAttachGeoDebug(req, response, resolution);
     clearLegacyLocaleCookies(response);
     return response;
   }

@@ -13,14 +13,16 @@ Branch `claude/opsolid-v4`, draft PR #43. Not deployed.
   - No WebGL, `prefers-reduced-motion`, or the footer switch "3D-Effekte: Aus" keep the poster and load no 3D code. The footer switch is the only quality control in production (the Voll/Leicht/Poster bar existed only in the static prototype).
   - Phones and touch devices run a lighter mode (DPR up to 1.5, no reflections, no bloom, no edge lines, 30 fps). Desktop has a frame-time guard that drops bloom for good if frames stay slow.
 - **Pages (DE, EN, TR, content in `src/content/v4/pages-*.ts`):** Start, Agents (new), Websites (new), Leistungen, KI-Beratung, Prozessautomatisierung, Microsoft 365, Interne Tools, KI-Schulungen, KI-Check, Über mich, Kontakt (form), Notizen (blog list and posts). OpSo, Impressum and Datenschutz keep their existing content under the new theme.
+- **Header and mark:** the header is opaque at every scroll position (no content showing through behind the nav). The logo mark is now a single plate of the 3D stack (copper top, ink front and side) instead of three bars, so it can no longer be mistaken for the menu button.
+- **Layout guards in the repo:** `npm run audit:stage` (Playwright, needs a running server, `BASE=...`) asserts per scene that the 3D object does not intersect any heading, paragraph, list item, table, link, button or form control at 1280, 1440, 1920 and 390 px (desktop: no exemption, phones: opaque panels exempt), plus horizontal scroll and console errors. `npm run audit:headings` checks that no h1/h2 needs a mid-word break in de/en/tr at 360–1920 px. Long German compounds get soft hyphens at known stems (`src/lib/soft-hyphen.ts`).
 - **Scripted agent demo:** typed sample dialogue plus a wave, and an abstract voice-reactive form in 3D (particle sphere that swells with the same amplitude, glowing core, three rings; no face, eyes or mouth). Labelled "Demo · Szenario, ohne Ton", with the data-protection note. No audio, no microphone, no provider. A live voice demo needs a provider and a data-protection review first.
-- **Voice:** all v4 copy is first person singular. Collective "we/wir/biz" phrasing was removed in DE, EN and TR ("Im KI-Check gehe ich … mit Ihnen durch").
+- **Voice (owner decision, 2026-10-16):** professional company voice (OpSolid / wir / we / biz), focused on what the work changes for the client's business. Team size is not a topic: all "allein", "Einzelpraxis", "one-person", "tek başıma" phrasing was removed, and no team size is implied. Experience is shown through real background (IT project management, digitalisation, process optimisation), the method and real work (opsolid.de, OpSo as a product in its test phase, Kutasia as a project in development, not a product). No invented numbers, clients, testimonials or certifications. The about page is now "Über OpSolid" (route `/ueber-mich` unchanged).
 
 ## SEO and GEO
 
 - One `" | OpSolid"` suffix (root title template); manual suffixes removed.
 - Self-canonical per locale, reciprocal hreflang (`de`, `en`, `tr`) and `x-default` = `/de` via `src/lib/seo-v4.ts`.
-- `/` answers with a 307 by cookie, then `Accept-Language`, then `de`. `/de`, `/en`, `/tr` never redirect. Locale-less retired URLs go to `/de/...` with a 301 that does not depend on request headers. The old geo-IP logic is gone. `DEFAULT_LOCALE` stays `en` (used by app surfaces); `ROUTING_DEFAULT_LOCALE` is `de`.
+- Locale routing keeps the owner's July rule (#34/#35): **language follows COUNTRY, not the browser**. `/` and other locale-less URLs get a 307 by cookie (explicit choice), then an upstream geo header, then the in-app `/api/geo` lookup over loopback (fail-open, 2.5 s timeout), then `de` when the country is unknown (the July version answered `en` there). Unlike the July version, detection no longer persists the cookie on a confident geo redirect, so a bare `/` visit always re-detects. TR → `tr`, DACH → `de`, everything else → `en`. `Accept-Language` is never consulted: a Turkish browser in Germany lands on `/de`. The 307 carries `Vary: Cookie` and `Cache-Control: private, no-store`; detection writes no cookie (only an explicit language switch persists); `/de`, `/en`, `/tr` never redirect; locale-less retired URLs go to `/de/...` with a stable 301. `?geodebug=1` reflects the decision in `x-opsolid-geo`. The logic is in `src/lib/locale-routing.ts` and unit-tested (country TR/DE/AT/CH/US, unknown country, cookie beats country, Accept-Language ignored). `DEFAULT_LOCALE` stays `en` (app surfaces); `ROUTING_DEFAULT_LOCALE` is `de`.
 - One JSON-LD `@graph` per page (`src/components/v4/JsonLd.tsx`): ProfessionalService, Person, WebSite, WebPage / ProfilePage / CollectionPage / ContactPage, BreadcrumbList (matches the visible breadcrumb), Service (offers only for the three published training prices), FAQPage (only where the FAQ is visible), BlogPosting.
 - `robots.txt`: public site open to search and AI bots (list in `src/app/robots.ts`), private paths disallowed. `llms.txt` rewritten, no "we", linked from the footer. Sitemap has alternates and real `lastModified`.
 - Visible "Stand: Oktober 2026" (from `SITE_UPDATED_ISO`), answer-first lede under every H2, one line "OpSolid ist nicht TopSolid" on Über mich and in the footer.
@@ -35,13 +37,15 @@ Branch `claude/opsolid-v4`, draft PR #43. Not deployed.
 
 ## Needs owner confirmation
 
-1. Websites: sale/rental terms and prices are not in the repo. The text says "Konditionen im Gespräch" and describes Kauf (you get the site) and Miete (I run it).
-2. The sample dialogue in the agent demo is invented and labelled "gespielter Ablauf".
-3. The repo lists two entry offers: KI-Check (price on request, 30-day plan) and KI-Quick-Check (from 490 €, short report). The KI-Check page links them; they may need merging.
-4. "Den KI-Quick-Check führe ich selbst durch" and "kein Zertifikatskurs" are inferred, not taken from existing copy.
-5. Kutasia is described with the llms.txt wording (WhatsApp, Telegram, email in one inbox, AI pre-sorting).
-6. Hero and "Über mich" sentences are new first-person drafts. No photo of Hasan yet.
-7. Screenshots on the 3D window planes: opsolid.de (this site), OpSo (card.opsolid.de landing, fictional demo profiles), Kutasia (kutasia.com root, Turkish UI, demo dashboard). Please confirm you are happy to show these publicly; replace the three files in `public/img/v4/` to change them.
+1. Websites: sale/rental terms and prices are not in the repo. The text says the terms are agreed in a conversation.
+2. The sample dialogue in the agent demo is invented and labelled as a scripted run.
+3. KI-Check (price on request, 30-day plan) and KI-Quick-Check (from 490 €, short report) overlap; may need merging.
+4. Trainings: the KI-Quick-Check is run by OpSolid; KI-Kompetenz Basis by a freelance specialist trainer selected by OpSolid and named in advance. Please confirm. The Copilot day is now spelled "Copilot-Praxistag" (was "Copilot Praxis-Tag"), also in structured data.
+5. Experience is stated only through facts from the earlier About page (practical background in IT project management, digitalisation and process optimisation). Real numbers (years, sectors, projects) can be added if the owner provides them. No photo yet.
+6. Screenshots on the 3D planes: opsolid.de, OpSo (card.opsolid.de landing, fictional demo profiles), Kutasia (kutasia.com, Turkish UI, demo dashboard). OK to show publicly?
+7. Legacy pages still reachable outside the v4 navigation: `/products` ("Neun Produkte", Kutasia with a price) and `/products/kutasia` describe Kutasia as a product. They are now `noindex` and out of the sitemap; recommended next step is a 301 to `/leistungen` (needs a change to `scripts/tests/redirects.test.mts`, which pins `/products/kutasia` as a working route). `/products/digital-card/gallery` says "go live in minutes" for OpSo.
+8. The about route is still `/ueber-mich` ("about me") for link stability; a move to `/ueber-uns` with a 301 is a small follow-up if wanted.
+9. Kept from earlier copy: the "500 Euro im Monat" platform comparison on Interne Tools; KVKK named for projects connected to Türkiye; TR buttons now in siz-form ("YZ kontrolü planlayın").
 
 ## Verification (sandbox, 2026-10-16)
 

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useLocaleBase as useLocale } from "@/context/LocaleContext";
 import { FxToggle } from "@/components/v4/FxToggle";
 import { SITE_CONFIG, formatStand } from "@/lib/constants";
+import { Logo } from "@/components/v4/Logo";
 
 type L3 = { de: string; en: string; tr: string };
 const L = (de: string, en: string, tr: string): L3 => ({ de, en, tr });
@@ -31,9 +32,9 @@ const COLS: { h: L3; items: { href: string; label: L3 }[] }[] = [
     ],
   },
   {
-    h: L("Praxis", "Practice", "Pratik"),
+    h: L("Unternehmen", "Company", "Kurumsal"),
     items: [
-      { href: "/ueber-mich", label: L("Über mich", "About", "Hakkımda") },
+      { href: "/ueber-mich", label: L("Über OpSolid", "About", "Hakkımızda") },
       { href: "/blog", label: L("Notizen", "Notes", "Notlar") },
       { href: "/contact", label: L("Kontakt", "Contact", "İletişim") },
     ],
@@ -48,14 +49,14 @@ const COLS: { h: L3; items: { href: string; label: L3 }[] }[] = [
 ];
 
 const TAGLINE = L(
-  "Unabhängige Praxis für KI-Agents, Websites und Automatisierung in Arnsberg.",
-  "Independent practice for AI agents, websites and automation, based in Arnsberg.",
-  "Arnsberg'de bağımsız bir pratik: YZ agent'ları, web siteleri ve otomasyon.",
+  "KI-Agents, Websites und Prozessautomatisierung für Unternehmen. Sitz in Arnsberg; wir arbeiten auf Deutsch, Englisch und Türkisch.",
+  "AI agents, websites and process automation for businesses. Based in Arnsberg, Germany; we work in German, English and Turkish.",
+  "İşletmeler için YZ agent'ları, web siteleri ve süreç otomasyonu. Merkezimiz Arnsberg'de; Almanca, İngilizce ve Türkçe çalışıyoruz.",
 );
 const NOT_TOPSOLID = L(
   "OpSolid ist nicht TopSolid (CAD/CAM) und steht in keiner Verbindung dazu.",
   "OpSolid is not TopSolid (CAD/CAM) and has no connection to it.",
-  "OpSolid, TopSolid (CAD/CAM) ile ilgili değildir.",
+  "OpSolid, TopSolid (CAD/CAM) ile ilgili değildir ve onunla bağlantısı yoktur.",
 );
 const STAND = L("Stand", "Updated", "Güncelleme");
 
@@ -71,14 +72,17 @@ export function Footer() {
     <footer className="v4-footer">
       <div className="v4-footer-in">
         <div className="v4-footer-top">
+          {/* The official lockup drawn as a hairline outline: the footer is the sheet's signature, not a second logotype. */}
+          <Logo className="v4-footer-logo" />
           <div className="v4-footer-brand">
-            <p className="v4-footer-word" aria-hidden="true">
-              OpSolid
-            </p>
             <p className="v4-footer-tag">{TAGLINE[loc]}</p>
             <p className="v4-footer-contact">
-              <a href={`mailto:${SITE_CONFIG.email}`}>{SITE_CONFIG.email}</a>
-              <span>{SITE_CONFIG.phone}</span>
+              <a className="v4-footer-mail" href={`mailto:${SITE_CONFIG.email}`}>
+                {SITE_CONFIG.email}
+              </a>
+              <a className="v4-footer-tel" href={`tel:${SITE_CONFIG.phone.replace(/\s/g, "")}`}>
+                {SITE_CONFIG.phone}
+              </a>
             </p>
           </div>
           <div className="v4-footer-cols">
@@ -101,13 +105,18 @@ export function Footer() {
             ))}
           </div>
         </div>
+        {/* Drafting title block (Schriftfeld): the same facts as before, one cell each. */}
         <div className="v4-footer-base">
-          <span>
-            © {year} OpSolid · Arnsberg · {STAND[loc]}: {formatStand(locale)}
+          <span className="v4-tb">© {year} OpSolid</span>
+          <span className="v4-tb">Arnsberg</span>
+          <span className="v4-tb">
+            {STAND[loc]}: {formatStand(locale)}
           </span>
-          <span>{NOT_TOPSOLID[loc]}</span>
-          <FxToggle />
+          <span className="v4-tb is-fx">
+            <FxToggle />
+          </span>
         </div>
+        <p className="v4-footer-note">{NOT_TOPSOLID[loc]}</p>
       </div>
     </footer>
   );

@@ -6,16 +6,22 @@ const PERSON = `${SITE_CONFIG.url}/#person`;
 const SITE = `${SITE_CONFIG.url}/#website`;
 
 const ORG_DESC: Record<L3, string> = {
-  de: "OpSolid ist eine unabhängige Praxis für KI-Agents, Websites, Prozessautomatisierung und KI-Schulungen in Arnsberg.",
-  en: "OpSolid is an independent practice for AI agents, websites, process automation and AI training, based in Arnsberg, Germany.",
-  tr: "OpSolid, Arnsberg'de bağımsız bir pratiktir: YZ agent'ları, web siteleri, süreç otomasyonu ve YZ eğitimleri.",
+  de: "OpSolid entwickelt für Unternehmen KI-Agents, Websites, Prozessautomatisierung, Microsoft-365-Automatisierung und interne Tools. Dazu kommen KI-Beratung und KI-Schulungen. Sitz in Arnsberg, Deutschland.",
+  en: "OpSolid builds AI agents, websites, process automation, Microsoft 365 automation and internal tools for businesses, and offers AI consulting and AI training. Based in Arnsberg, Germany.",
+  tr: "OpSolid, işletmeler için YZ agent'ları, web siteleri, süreç otomasyonu, Microsoft 365 otomasyonu ve dahili araçlar geliştirir; ayrıca YZ danışmanlığı ve YZ eğitimleri sunar. Merkezi Almanya'nın Arnsberg şehrindedir.",
 };
-const DISAMBIG = "OpSolid is an independent AI and automation practice. It is not TopSolid (CAD/CAM software).";
+const DISAMBIG = "OpSolid is an AI and automation service provider based in Arnsberg, Germany. It is not TopSolid (CAD/CAM software) and has no connection to it.";
 const JOB: Record<L3, string> = {
-  de: "Automatisierungsspezialist und KI-Berater",
-  en: "Automation specialist and AI consultant",
-  tr: "Otomasyon uzmanı ve YZ danışmanı",
+  de: "Gründer von OpSolid, Automatisierungsspezialist und KI-Berater",
+  en: "Founder of OpSolid, automation specialist and AI consultant",
+  tr: "OpSolid kurucusu, otomasyon uzmanı ve YZ danışmanı",
 };
+const AREA_SERVED = [
+  { "@type": "Country", name: "Germany" },
+  { "@type": "Country", name: "Austria" },
+  { "@type": "Country", name: "Switzerland" },
+  { "@type": "Country", name: "Türkiye" },
+];
 
 type Crumb = { name: string; path: string };
 
@@ -35,7 +41,7 @@ export function JsonLdGraph({
   description: string;
   crumbs: Crumb[];
   page?: PageDef;
-  kind?: "WebPage" | "ProfilePage" | "CollectionPage" | "ContactPage";
+  kind?: "WebPage" | "AboutPage" | "ProfilePage" | "CollectionPage" | "ContactPage";
   extra?: Record<string, unknown>[];
 }) {
   const url = `${SITE_CONFIG.url}/${locale}${slug ? `/${slug}` : ""}`;
@@ -44,7 +50,6 @@ export function JsonLdGraph({
       "@type": "ProfessionalService",
       "@id": ORG,
       name: SITE_CONFIG.name,
-      legalName: "OpSolid (Einzelunternehmen Hasan Dönmez)",
       url: SITE_CONFIG.url,
       logo: { "@type": "ImageObject", url: `${SITE_CONFIG.url}/icons/icon-512.png`, width: 512, height: 512 },
       image: `${SITE_CONFIG.url}/icons/icon-512.png`,
@@ -57,11 +62,7 @@ export function JsonLdGraph({
         addressLocality: SITE_CONFIG.address.city,
         addressCountry: "DE",
       },
-      areaServed: [
-        { "@type": "Country", name: "Germany" },
-        { "@type": "Country", name: "Austria" },
-        { "@type": "Country", name: "Switzerland" },
-      ],
+      areaServed: AREA_SERVED,
       knowsLanguage: ["de", "en", "tr"],
       founder: { "@id": PERSON },
       sameAs: ["https://www.linkedin.com/company/opsolid/"],
@@ -119,11 +120,7 @@ export function JsonLdGraph({
       description,
       serviceType: page.service.type,
       provider: { "@id": ORG },
-      areaServed: [
-        { "@type": "Country", name: "Germany" },
-        { "@type": "Country", name: "Austria" },
-        { "@type": "Country", name: "Switzerland" },
-      ],
+      areaServed: AREA_SERVED,
       url,
       ...(page.service.offers?.length
         ? {

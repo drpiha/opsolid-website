@@ -2,7 +2,7 @@
 
 /**
  * Scripted voice-agent scenario. Not a live call: it types a sample dialogue,
- * drives a wave and the 3D head's mouth via the shared voice state.
+ * drives a wave and the abstract 3D agent form via the shared voice state.
  */
 import { useEffect, useRef, useState } from "react";
 import { voice } from "@/lib/voice-sim";

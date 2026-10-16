@@ -26,7 +26,7 @@ export function v4Page(key: PageKey) {
         : SERVICE_KEYS.includes(key) && key !== "agents" && key !== "websites"
           ? [{ label: SERVICES_LABEL[loc], to: "/leistungen" }, { label: page.crumb }]
           : [{ label: page.crumb }];
-    const kind = key === "about" ? "ProfilePage" : key === "leistungen" ? "CollectionPage" : undefined;
+    const kind = key === "about" ? "AboutPage" : key === "leistungen" ? "CollectionPage" : undefined;
     return <PageRenderer page={page} locale={loc} trail={trail} kind={kind} />;
   };
 }

@@ -10,6 +10,7 @@ import { withLocale, type Locale } from "@/lib/i18n";
 import { pickLocale } from "@/lib/seo-v4";
 import { Crumbs, CtaBand } from "@/components/v4/PageRenderer";
 import { JsonLdGraph } from "@/components/v4/JsonLd";
+import { soft } from "@/lib/soft-hyphen";
 import { getPage } from "@/content/v4";
 import type { L3 } from "@/content/v4/types";
 
@@ -21,7 +22,7 @@ const BLOG = { de: de.blog, en: en.blog, tr: tr.blog };
 const L: Record<L3, { notes: string; home: string; by: string; read: string; min: string; prev: string; next: string; cat: Record<string, string> }> = {
   de: { notes: "Notizen", home: "Start", by: "Von Hasan Dönmez", read: "Lesezeit", min: "Min.", prev: "Vorheriger Text", next: "Nächster Text", cat: { automation: "Automatisierung", integration: "Integration", ai: "KI", operations: "Betrieb" } },
   en: { notes: "Notes", home: "Home", by: "By Hasan Dönmez", read: "Reading time", min: "min", prev: "Previous", next: "Next", cat: { automation: "Automation", integration: "Integration", ai: "AI", operations: "Operations" } },
-  tr: { notes: "Notlar", home: "Ana sayfa", by: "Hasan Dönmez", read: "Okuma süresi", min: "dk", prev: "Önceki", next: "Sonraki", cat: { automation: "Otomasyon", integration: "Entegrasyon", ai: "YZ", operations: "Operasyon" } },
+  tr: { notes: "Notlar", home: "Ana sayfa", by: "Yazar: Hasan Dönmez", read: "Okuma süresi", min: "dk", prev: "Önceki", next: "Sonraki", cat: { automation: "Otomasyon", integration: "Entegrasyon", ai: "YZ", operations: "Operasyon" } },
 };
 
 export async function generateStaticParams() {
@@ -93,7 +94,7 @@ export default function Page({ params }: Props) {
               <time dateTime={post.date}>{date}</time> · {t.cat[post.category] ?? post.category} · {t.read} {post.readTime} {t.min}
             </p>
             <h1 className="v4-h1" style={{ fontSize: "clamp(2rem, 4.6vw, 3.8rem)" }}>
-              {post.title}
+              {soft(post.title)}
             </h1>
             <p className="v4-lede">{post.excerpt}</p>
             <p className="v4-stand">{t.by}</p>

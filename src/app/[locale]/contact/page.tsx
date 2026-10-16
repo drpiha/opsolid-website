@@ -15,9 +15,9 @@ export function generateMetadata({ params }: Params): Metadata {
 }
 
 const LABEL = {
-  de: { form: "Nachricht schreiben", direct: "Direkt erreichen", mail: "E-Mail", phone: "Telefon", where: "Ort", note: "Arnsberg, Deutschland" },
-  en: { form: "Write a message", direct: "Reach me directly", mail: "Email", phone: "Phone", where: "Place", note: "Arnsberg, Germany" },
-  tr: { form: "Mesaj yazın", direct: "Doğrudan ulaşın", mail: "E-posta", phone: "Telefon", where: "Yer", note: "Arnsberg, Almanya" },
+  de: { form: "Nachricht schreiben", direct: "Direkter Kontakt", mail: "E-Mail", phone: "Telefon", where: "Standort", note: "Arnsberg, Deutschland" },
+  en: { form: "Write a message", direct: "Reach us directly", mail: "Email", phone: "Phone", where: "Location", note: "Arnsberg, Germany" },
+  tr: { form: "Mesaj yazın", direct: "Doğrudan ulaşın", mail: "E-posta", phone: "Telefon", where: "Konum", note: "Arnsberg, Almanya" },
 } as const;
 
 export default function Page({ params }: Params) {
