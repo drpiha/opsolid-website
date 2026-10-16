@@ -7,6 +7,18 @@ import { Reveal } from "@/components/v4/Reveal";
 import { AgentDemo } from "@/components/v4/AgentDemo";
 import { JsonLdGraph } from "@/components/v4/JsonLd";
 
+/**
+ * Long German compounds ("Automatisierungspotenzial") do not fit a 36 rem column at heading size,
+ * and browsers do not hyphenate them reliably. Insert a soft hyphen before a known stem when the word
+ * is long, so the break lands on a morpheme boundary instead of mid-syllable. Invisible otherwise.
+ */
+const STEMS = /(automatisierung|potenzial|vereinbarung|verordnung|kompetenz|kommunikation|integration|unternehmen|dokumentation|schulung|beratung|steuerung|werkzeug|anbindung|plattform|einführung|sicherheit)/gi;
+export function soft(text: string): string {
+  return text.replace(/[A-Za-zÄÖÜäöüßÇçĞğİıŞş]{14,}/g, (word) =>
+    word.replace(STEMS, (m, _g, offset: number) => (offset >= 4 ? "\u00AD" + m : m)),
+  );
+}
+
 const HOME: Record<L3, string> = { de: "Start", en: "Home", tr: "Ana sayfa" };
 const STAND: Record<L3, string> = { de: "Stand", en: "Updated", tr: "Güncelleme" };
 
@@ -180,7 +192,7 @@ export function BlockSection({ b, locale, flow }: { b: Block; locale: L3; flow?:
           {b.eyebrow && <span className="v4-eyebrow">{b.eyebrow}</span>}
           <Reveal>
             <h2 className="v4-h2" id={b.id ? `${b.id}-h` : undefined}>
-              {b.h}
+              {soft(b.h)}
             </h2>
           </Reveal>
           {b.lede && (
@@ -206,12 +218,12 @@ export function BlockSection({ b, locale, flow }: { b: Block; locale: L3; flow?:
 
 export function FaqSection({ faq, scene = "offset" }: { faq: NonNullable<PageDef["faq"]>; scene?: string }) {
   return (
-    <section className="v4-sec" data-scene={scene} data-dim="1" aria-labelledby="faq-h">
+    <section className="v4-sec" data-scene={scene} aria-labelledby="faq-h">
       <div className="v4-in">
         <div className="v4-col is-wide">
           <Reveal>
             <h2 className="v4-h2" id="faq-h">
-              {faq.h}
+              {soft(faq.h)}
             </h2>
           </Reveal>
           <Reveal>
@@ -236,7 +248,7 @@ export function CtaBand({ cta, locale }: { cta: PageDef["cta"]; locale: L3 }) {
       <div className="v4-band-in">
         <div>
           <h2 className="v4-h2" id="cta-h">
-            {cta.h}
+            {soft(cta.h)}
           </h2>
           <p>{cta.p}</p>
         </div>
@@ -264,9 +276,9 @@ export function Hero({ page, locale, trail, showStand = true }: { page: PageDef;
           {trail && trail.length > 0 && <Crumbs locale={locale} trail={trail} />}
           <span className="v4-eyebrow">{h.eyebrow}</span>
           <h1 className="v4-h1">
-            {h.h1[0]}
-            <em>{h.h1[1]}</em>
-            {h.h1[2]}
+            {soft(h.h1[0])}
+            <em>{soft(h.h1[1])}</em>
+            {soft(h.h1[2])}
           </h1>
           <p className="v4-lede">{h.lede}</p>
           {h.spec && (

@@ -54,7 +54,7 @@ export const tr: Record<PageKey, PageDef> = {
         heat: [1],
         eyebrow: "Satın alınan veya kiralanan web siteleri",
         h: "Tasarladığım, kurduğum ve kiraladığım web siteleri.",
-        lede: "Kendine has bir yüzü olan web sitesi, satın alma veya kiralama ile. Koşulları görüşmede netleştiririz.",
+        lede: "Kendine has bir yüzü olan web sitesi, satın alma veya kiralama ile. Koşulları sizinle görüşmede netleştiririm.",
         items: [
           { h: "opsolid.de", tag: "Bu site", p: "Benim tasarladığım, kurduğum ve işlettiğim site: üç dil, önce metin, 3D yalnızca ek olarak.", href: "https://opsolid.de" },
           { h: "OpSo", tag: "Ürün", p: "NFC ve QR ile dijital kartvizit, kendi web uygulaması olarak kuruldu.", href: "https://card.opsolid.de" },
@@ -84,7 +84,7 @@ export const tr: Record<PageKey, PageDef> = {
         heat: [5, 6],
         eyebrow: "YZ kontrolü ve YZ eğitimleri",
         h: "Önce netleştir, sonra kur.",
-        lede: "YZ kontrolünde 60–90 dakika iş akışlarınızı birlikte inceleriz. Ardından beş değerlendirilmiş adaylı, yazılı bir 30 günlük plan alırsınız.",
+        lede: "YZ kontrolünde 60–90 dakika iş akışlarınızı sizinle birlikte incelerim. Ardından beş değerlendirilmiş adaylı, yazılı bir 30 günlük plan alırsınız.",
         rows: [
           ["Kapsam", "60–90 dakika, yerinde veya uzaktan"],
           ["Sonuç", "Süreç haritası, 5 değerlendirilmiş fırsat, 30 günlük plan"],
@@ -199,12 +199,12 @@ export const tr: Record<PageKey, PageDef> = {
       h: "Agent'lar hakkında sorular",
       items: [
         { q: "Agent bugün canlı konuşuyor mu?", a: "Bugün oynatılan bir senaryo gösteriyorum. Canlı ses demosu, ses sağlayıcısı ve veri koruma incelemesi netleşince gelecek." },
-        { q: "Görüşmeleri kim dinler?", a: "Bunu önceden belirleriz: sağlayıcı, saklama yeri, saklama süresi ve erişim. Arayanlara başta bir YZ sisteminin konuştuğu söylenir." },
+        { q: "Görüşmeleri kim dinler?", a: "Bunu sizinle önceden belirlerim: sağlayıcı, saklama yeri, saklama süresi ve erişim. Arayanlara başta bir YZ sisteminin konuştuğu söylenir." },
         { q: "Agent ekibimin yerini alır mı?", a: "Hayır. Rutini üstlenir ve bir kişi gerekir gerekmez devreder." },
-        { q: "Nasıl başlarım?", a: "YZ kontrolüyle. Orada bir agent'ın işletmeniz için anlamlı olup olmadığını ve hangi görevleri üstlenmesi gerektiğini netleştiririz." },
+        { q: "Nasıl başlarım?", a: "YZ kontrolüyle. Orada bir agent'ın işletmeniz için anlamlı olup olmadığını ve hangi görevleri üstlenmesi gerektiğini netleştiririm." },
       ],
     },
-    cta: { h: "Bir agent'ın size uyup uymadığını kontrol edin.", p: "YZ kontrolünde, bir şey kurulmadan önce görevleri, sınırları ve veri korumayı netleştiririz.", primary: CHECK, secondary: CONTACT },
+    cta: { h: "Bir agent'ın size uyup uymadığını kontrol edin.", p: "YZ kontrolünde, bir şey kurulmadan önce görevleri, sınırları ve veri korumayı netleştiririm.", primary: CHECK, secondary: CONTACT },
     service: { type: "AI voice and video agents" },
   },
 
@@ -219,7 +219,7 @@ export const tr: Record<PageKey, PageDef> = {
     hero: {
       eyebrow: "Web siteleri · satın alma veya kiralama",
       h1: ["Tasarladığım, kurduğum", " ve kiraladığım", " web siteleri."],
-      lede: "Kendine has bir yüzü olan web sitesi: hızlı, kolay okunur ve birden çok dilde. Satın alırsınız ya da kiralarsınız. Koşulları görüşmede netleştiririz.",
+      lede: "Kendine has bir yüzü olan web sitesi: hızlı, kolay okunur ve birden çok dilde. Satın alırsınız ya da kiralarsınız. Koşulları sizinle görüşmede netleştiririm.",
       primary: CONTACT,
       secondary: { label: "Referanslara bak", href: "#referenzen" },
       scene: "websites",
@@ -239,7 +239,7 @@ export const tr: Record<PageKey, PageDef> = {
           { h: "Tasarım", p: "Şablon yerine kendi el yazısı: tipografi, renk ve hareket işletmenize uyar." },
           { h: "Kurulum", p: "Önce metin, hızlı yükleme, erişilebilir; arama motorları ve YZ aramasına uygun temiz yapı." },
           { h: "Çok dillilik", p: "Kendi adresleri olan birden çok dil ve arama için temiz işaretleme." },
-          { h: "Satın alma veya kiralama", p: "Satın alma: bitmiş siteyi alırsınız. Kiralama: sürekli kullanırsınız, işletimle ben ilgilenirim. Koşulları birlikte belirleriz." },
+          { h: "Satın alma veya kiralama", p: "Satın alma: bitmiş siteyi alırsınız. Kiralama: sürekli kullanırsınız, işletimle ben ilgilenirim. Koşulları sizinle birlikte belirlerim." },
         ],
       },
       {
@@ -271,13 +271,13 @@ export const tr: Record<PageKey, PageDef> = {
     faq: {
       h: "Web siteleri hakkında sorular",
       items: [
-        { q: "Satın alma mı, kiralama mı daha iyi?", a: "Siteyi kendiniz sürdürmek isteyip istemediğinize bağlı. Satın alırsanız sizindir, kiralarsanız işletimle ben ilgilenirim. Bunu görüşmede netleştiririz." },
+        { q: "Satın alma mı, kiralama mı daha iyi?", a: "Siteyi kendiniz sürdürmek isteyip istemediğinize bağlı. Satın alırsanız sizindir, kiralarsanız işletimle ben ilgilenirim. Bunu sizinle görüşmede netleştiririm." },
         { q: "Bir web sitesi ne kadar sürer?", a: "Kapsama bağlı. Görüşmeden sonra somut bir takvim söylerim." },
-        { q: "Metin ve görseller kimin?", a: "Sizin verdiğiniz içerik sizin kalır. Tasarım ve kod kullanım haklarını önceden yazılı olarak belirleriz." },
+        { q: "Metin ve görseller kimin?", a: "Sizin verdiğiniz içerik sizin kalır. Tasarım ve kod kullanım haklarını önceden yazılı olarak belirlerim." },
         { q: "Site 3D ve hareket içerebilir mi?", a: "Evet, ek olarak. Metin her zaman önce gelir, efektler kapatılabilir ve az hareket ayarına uyar." },
       ],
     },
-    cta: { h: "Web sitenizi konuşalım.", p: "Sitenin ne yapması gerektiğini kısaca yazın. Genellikle birkaç iş günü içinde yanıtlarım.", primary: CONTACT },
+    cta: { h: "Web sitenizi anlatın.", p: "Sitenin ne yapması gerektiğini kısaca yazın. Genellikle birkaç iş günü içinde yanıtlarım.", primary: CONTACT },
     service: { type: "Website design, development and rental" },
   },
 
@@ -302,7 +302,6 @@ export const tr: Record<PageKey, PageDef> = {
         t: "rows",
         eyebrow: "Tüm hizmetler",
         h: "Yığındaki her plaka bir tekliftir.",
-        dim: true,
         items: [
           { h: "Agent'lar", tag: "Ses · video", p: "Talepler, randevular ve bilgi için konuşan YZ agent'ları.", href: "/agents" },
           { h: "Web siteleri", tag: "Kurulum · kiralama", p: "Tasarlanır, kurulur ve isteğe bağlı kiralanır.", href: "/websites" },
@@ -314,7 +313,7 @@ export const tr: Record<PageKey, PageDef> = {
         ],
       },
     ],
-    cta: { h: "Nereden başlayacağınızdan emin değil misiniz?", p: "YZ kontrolünde iş akışlarınızı sıralar, önce karşılığını verecek parçayı seçeriz.", primary: CHECK, secondary: CONTACT },
+    cta: { h: "Nereden başlayacağınızdan emin değil misiniz?", p: "YZ kontrolünde iş akışlarınızı sıralar, önce karşılığını verecek parçayı seçerim.", primary: CHECK, secondary: CONTACT },
   },
 
   kiBeratung: {
@@ -536,7 +535,7 @@ export const tr: Record<PageKey, PageDef> = {
       h: "Microsoft 365 hakkında sorular",
       items: [
         { q: "Power Automate Premium lisansına ihtiyacım var mı?", a: "Bazen. Çoğu işe yarar akış standart planlarla çalışır. Premium'un ne zaman gerektiğini söylerim." },
-        { q: "Microsoft 365 Copilot'a değer mi?", a: "Bazı ekipler için evet, bazıları için hayır. Lisans almadan önce bunu netleştiririz." },
+        { q: "Microsoft 365 Copilot'a değer mi?", a: "Bazı ekipler için evet, bazıları için hayır. Lisans almadan önce bunu netleştiririm." },
         { q: "BT'mizle birlikte çalışabilir misiniz?", a: "Evet. Çoğu proje BT'nizle veya Microsoft ortağınızla birlikte yürür. Tamamlarım, yerine geçmem." },
         { q: "Bu KVKK/GDPR uyumlu mu?", a: "AB tenant'ındaki Microsoft 365 KVKK/GDPR uyumlu işletilebilir. Temiz yapılandırır ve veri akışlarını dokümante ederim." },
       ],
@@ -612,7 +611,7 @@ export const tr: Record<PageKey, PageDef> = {
       h: "Dahili araçlar hakkında sorular",
       items: [
         { q: "Neden hazır yazılım değil?", a: "Hazır yazılım çoğu zaman doğru seçimdir. Yalnızca uymadığında veya amaç için fazla pahalı olacağında kurarım. Bunu size dürüstçe söylerim." },
-        { q: "Kod kimin?", a: "Başlamadan önce yazılı olarak belirleriz. Kaynak kod ve dokümantasyonun devri olağandır." },
+        { q: "Kod kimin?", a: "Başlamadan önce yazılı olarak belirlerim. Kaynak kod ve dokümantasyonun devri olağandır." },
         { q: "Araç nerede çalışır?", a: "AB'de, seçeceğiniz bir sağlayıcıda veya kendi altyapınızda." },
       ],
     },
@@ -646,7 +645,7 @@ export const tr: Record<PageKey, PageDef> = {
         caption: "Parça listesi: YZ eğitimleri",
         cols: ["Teklif", "Format", "Fiyat"],
         rows: [
-          ["YZ Hızlı Kontrol||Günlük işinizde YZ'nin nerede anlamlı, nerede anlamsız olduğuna birlikte bakarız. Sonuç kısa yazılı bir rapor. İlk 3 pilot, dürüst geri bildirim karşılığında ücretsiz.", "90 dakika uzaktan, raporlu", "490 €'dan"],
+          ["YZ Hızlı Kontrol||Günlük işinizde YZ'nin nerede anlamlı, nerede anlamsız olduğuna sizinle birlikte bakarım. Sonuç kısa yazılı bir rapor. İlk 3 pilot, dürüst geri bildirim karşılığında ücretsiz.", "90 dakika uzaktan, raporlu", "490 €'dan"],
           ["YZ Yetkinliği Temel||İş gününde YZ'yi güvenle kullanmanın temelleri. Önceden bizzat seçtiğim serbest çalışan bir eğitmen tarafından yürütülür. AB YZ Tüzüğü'nün 4. maddesi kapsamındaki YZ yetkinliği önlemlerinizi destekler.", "Yarım gün, 15 kişiye kadar", "1.490 €"],
           ["Copilot Uygulama Günü||Microsoft 365 Copilot ile kendi işlerinizde uygulamalı çalışma. Zaten Copilot lisansı olan işletmeler için.", "1 gün, 12 kişiye kadar", "2.400 €'dan"],
         ],
@@ -668,7 +667,7 @@ export const tr: Record<PageKey, PageDef> = {
       items: [
         { q: "Sertifika alıyor muyuz?", a: "Eğitim bir sertifika kursu değildir. AB YZ Tüzüğü'nün 4. maddesi kapsamındaki YZ yetkinliği önlemlerinizi destekler." },
         { q: "Eğitimi kim yürütür?", a: "YZ Hızlı Kontrol'ü kendim yürütürüm. YZ Yetkinliği Temel'i, önceden bizzat seçtiğim serbest çalışan bir uzman üstlenir." },
-        { q: "Çevrimiçi tarihler mümkün mü?", a: "Hızlı Kontrol uzaktan yapılır. Diğer formatları sizinle netleştiririz." },
+        { q: "Çevrimiçi tarihler mümkün mü?", a: "Hızlı Kontrol uzaktan yapılır. Diğer formatları sizinle netleştiririm." },
       ],
     },
     cta: { h: "Doğru formatı bulun.", p: "Ekip ve hedef hakkında kısaca yazın. Bir format önerir ve fiyatı söylerim.", primary: { label: "Talep gönder", href: "/contact" }, secondary: CHECK },
@@ -758,7 +757,7 @@ export const tr: Record<PageKey, PageDef> = {
         eyebrow: "Sonuç",
         h: "Sonunda gelen kutunuzda ne olur.",
         items: [
-          { h: "Süreç haritası", p: "Konuştuğumuz iş akışları, yazılı olarak." },
+          { h: "Süreç haritası", p: "Ele alınan iş akışları, yazılı olarak." },
           { h: "5 değerlendirilmiş fırsat", p: "Araç önerisi ve kaba emek tahminiyle." },
           { h: "30 günlük plan", p: "Sorumlularla." },
           { h: "Manuel kalanlar üzerine not", p: "Neyin bilerek manuel kalması gerektiği ve neden." },
@@ -772,7 +771,7 @@ export const tr: Record<PageKey, PageDef> = {
         { q: "Gizlilik sözleşmesi yapılır mı?", a: "Evet, analiz görüşmesinden önce standart bir NDA imzalanır." },
         { q: "Bu yalnızca zaten YZ kullanan işletmeler için mi?", a: "Hayır. Birçok proje hiç YZ olmadan başlar." },
         { q: "Araçlarımızı kullanmaya devam edebilir miyiz?", a: "Evet. Microsoft 365, Google Workspace, CRM veya ERP'niz iş akışını taşıyorsa önce onları kullanırım." },
-        { q: "Kontrolden sonra ne olur?", a: "Ya planı kendiniz uygularsınız, ya birlikte bir pilot kurarız, ya da orada biter. Bağımlılık yok." },
+        { q: "Kontrolden sonra ne olur?", a: "Ya planı kendiniz uygularsınız, ya benimle birlikte bir pilot kurarsınız, ya da orada biter. Bağımlılık yok." },
       ],
     },
     cta: { h: "Gerçekten neye değdiğini öğrenin.", p: "Bir görüşme, yazılı bir plan, yükümlülük yok. Karşılığını vermeyecek bir projeye başlamaktansa henüz doğru zaman olmadığını söylemeyi tercih ederim.", primary: { label: "YZ kontrolü talep et", href: "/contact" }, secondary: { label: "Tüm hizmetler", href: "/leistungen" } },
@@ -829,7 +828,7 @@ export const tr: Record<PageKey, PageDef> = {
         paras: ["OpSolid, TopSolid (CAD/CAM) ile ilgili değildir ve onunla bağlantısı yoktur. Hasan Dönmez ve OpSolid'i arıyorsanız doğru yerdesiniz."],
       },
     ],
-    cta: { h: "Birlikte işe yarar bir şey kuralım.", p: "İş akışlarınızda çok fazla elle iş varsa yardımcı olabilirim.", primary: CHECK, secondary: CONTACT },
+    cta: { h: "İşe yarar bir şey kurmanın zamanı.", p: "İş akışlarınızda çok fazla elle iş varsa yardımcı olabilirim.", primary: CHECK, secondary: CONTACT },
   },
 
   contact: {

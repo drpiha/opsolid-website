@@ -50,7 +50,7 @@ export const de: Record<PageKey, PageDef> = {
         heat: [1],
         eyebrow: "Websites zum Kauf oder zur Miete",
         h: "Websites, die ich gestalte, baue und vermiete.",
-        lede: "Eine Website mit eigenem Gesicht, zum Kauf oder zur Miete. Die Konditionen klären wir im Gespräch.",
+        lede: "Eine Website mit eigenem Gesicht, zum Kauf oder zur Miete. Die Konditionen kläre ich mit Ihnen im Gespräch.",
         items: [
           { h: "opsolid.de", tag: "Diese Seite", p: "Gestaltet, gebaut und betrieben von mir: drei Sprachen, Text zuerst, 3D nur als Zugabe.", href: "https://opsolid.de" },
           { h: "OpSo", tag: "Produkt", p: "Digitale Visitenkarte mit NFC und QR, als eigene Web-App gebaut.", href: "https://card.opsolid.de" },
@@ -80,7 +80,7 @@ export const de: Record<PageKey, PageDef> = {
         heat: [5, 6],
         eyebrow: "KI-Check und KI-Schulungen",
         h: "Erst klären, dann bauen.",
-        lede: "Im KI-Check gehen wir 60–90 Minuten Ihre Abläufe durch. Danach erhalten Sie einen schriftlichen 30-Tage-Plan mit fünf bewerteten Kandidaten.",
+        lede: "Im KI-Check gehe ich 60–90 Minuten Ihre Abläufe mit Ihnen durch. Danach erhalten Sie einen schriftlichen 30-Tage-Plan mit fünf bewerteten Kandidaten.",
         rows: [
           ["Umfang", "60–90 Minuten, vor Ort oder remote"],
           ["Ergebnis", "Prozesskarte, 5 bewertete Potenziale, 30-Tage-Plan"],
@@ -211,12 +211,12 @@ export const de: Record<PageKey, PageDef> = {
       h: "Fragen zu Agents",
       items: [
         { q: "Spricht der Agent heute schon live?", a: "Heute zeige ich ein gespieltes Szenario. Die Live-Sprachdemo folgt, sobald Sprachanbieter und Datenschutzprüfung geklärt sind." },
-        { q: "Wer hört die Gespräche mit?", a: "Das legen wir vorab fest: Anbieter, Speicherort, Aufbewahrung und Zugriff. Anrufer erfahren zu Beginn, dass ein KI-System spricht." },
+        { q: "Wer hört die Gespräche mit?", a: "Das lege ich vorab mit Ihnen fest: Anbieter, Speicherort, Aufbewahrung und Zugriff. Anrufer erfahren zu Beginn, dass ein KI-System spricht." },
         { q: "Ersetzt ein Agent mein Team?", a: "Nein. Er nimmt Routine ab und übergibt, sobald eine Person gefragt ist." },
-        { q: "Wie starte ich?", a: "Mit dem KI-Check. Dort klären wir, ob ein Agent für Ihren Betrieb sinnvoll ist und welche Aufgaben er übernehmen sollte." },
+        { q: "Wie starte ich?", a: "Mit dem KI-Check. Dort kläre ich mit Ihnen, ob ein Agent für Ihren Betrieb sinnvoll ist und welche Aufgaben er übernehmen sollte." },
       ],
     },
-    cta: { h: "Prüfen, ob ein Agent für Sie passt.", p: "Im KI-Check klären wir Aufgaben, Grenzen und Datenschutz, bevor etwas gebaut wird.", primary: CHECK, secondary: CONTACT },
+    cta: { h: "Prüfen, ob ein Agent für Sie passt.", p: "Im KI-Check kläre ich Aufgaben, Grenzen und Datenschutz, bevor etwas gebaut wird.", primary: CHECK, secondary: CONTACT },
     service: { type: "AI voice and video agents" },
   },
 
@@ -231,7 +231,7 @@ export const de: Record<PageKey, PageDef> = {
     hero: {
       eyebrow: "Websites · Kauf oder Miete",
       h1: ["Websites, die ich ", "gestalte, baue", " und vermiete."],
-      lede: "Eine Website mit eigenem Gesicht, schnell, gut lesbar und in mehreren Sprachen. Sie kaufen sie oder mieten sie. Die Konditionen klären wir im Gespräch.",
+      lede: "Eine Website mit eigenem Gesicht, schnell, gut lesbar und in mehreren Sprachen. Sie kaufen sie oder mieten sie. Die Konditionen kläre ich mit Ihnen im Gespräch.",
       primary: CONTACT,
       secondary: { label: "Referenzen ansehen", href: "#referenzen" },
       scene: "websites",
@@ -251,7 +251,7 @@ export const de: Record<PageKey, PageDef> = {
           { h: "Gestaltung", p: "Eine eigene Handschrift statt Vorlage: Typografie, Farbe und Bewegung passen zu Ihrem Betrieb." },
           { h: "Bau", p: "Text zuerst, schnelle Ladezeit, barrierearm, sauber für Suchmaschinen und KI-Suche aufgebaut." },
           { h: "Mehrsprachigkeit", p: "Mehrere Sprachen mit eigenen Adressen und sauberer Auszeichnung für die Suche." },
-          { h: "Kauf oder Miete", p: "Kauf: Sie erhalten die fertige Website. Miete: Sie nutzen sie laufend, ich kümmere mich um den Betrieb. Die Konditionen legen wir gemeinsam fest." },
+          { h: "Kauf oder Miete", p: "Kauf: Sie erhalten die fertige Website. Miete: Sie nutzen sie laufend, ich kümmere mich um den Betrieb. Die Konditionen legen Sie und ich gemeinsam fest." },
         ],
       },
       {
@@ -283,9 +283,9 @@ export const de: Record<PageKey, PageDef> = {
     faq: {
       h: "Fragen zu Websites",
       items: [
-        { q: "Kauf oder Miete, was ist besser?", a: "Das hängt davon ab, ob Sie die Seite selbst weiterführen wollen. Beim Kauf gehört sie Ihnen, bei der Miete kümmere ich mich um den Betrieb. Wir klären das im Gespräch." },
+        { q: "Kauf oder Miete, was ist besser?", a: "Das hängt davon ab, ob Sie die Seite selbst weiterführen wollen. Beim Kauf gehört sie Ihnen, bei der Miete kümmere ich mich um den Betrieb. Das kläre ich mit Ihnen im Gespräch." },
         { q: "Wie lange dauert eine Website?", a: "Das hängt vom Umfang ab. Nach dem Gespräch nenne ich einen konkreten Zeitplan." },
-        { q: "Wem gehören Texte und Bilder?", a: "Inhalte, die Sie liefern, bleiben Ihre. Die Nutzungsrechte an Gestaltung und Code regeln wir vorab schriftlich." },
+        { q: "Wem gehören Texte und Bilder?", a: "Inhalte, die Sie liefern, bleiben Ihre. Die Nutzungsrechte an Gestaltung und Code halte ich vorab schriftlich fest." },
         { q: "Kann die Seite 3D und Bewegung enthalten?", a: "Ja, als Zugabe. Der Text steht immer zuerst, und die Effekte lassen sich abschalten und respektieren die Einstellung für weniger Bewegung." },
       ],
     },
@@ -314,7 +314,6 @@ export const de: Record<PageKey, PageDef> = {
         t: "rows",
         eyebrow: "Alle Leistungen",
         h: "Jede Platte im Stapel ist ein Angebot.",
-        dim: true,
         items: [
           { h: "Agents", tag: "Stimme · Video", p: "Sprechende KI-Agents für Anfragen, Termine und Auskünfte.", href: "/agents" },
           { h: "Websites", tag: "Bau · Miete", p: "Gestaltet, gebaut und auf Wunsch vermietet.", href: "/websites" },
@@ -326,7 +325,7 @@ export const de: Record<PageKey, PageDef> = {
         ],
       },
     ],
-    cta: { h: "Nicht sicher, wo anfangen?", p: "Im KI-Check ordnen wir Ihre Abläufe und wählen den Baustein, der sich zuerst lohnt.", primary: CHECK, secondary: CONTACT },
+    cta: { h: "Nicht sicher, wo anfangen?", p: "Im KI-Check ordne ich Ihre Abläufe und wähle den Baustein, der sich zuerst lohnt.", primary: CHECK, secondary: CONTACT },
   },
 
   kiBeratung: {
@@ -548,7 +547,7 @@ export const de: Record<PageKey, PageDef> = {
       h: "Fragen zu Microsoft 365",
       items: [
         { q: "Brauche ich Power-Automate-Premium-Lizenzen?", a: "Manchmal. Die meisten sinnvollen Flows laufen mit den Standardplänen. Ich sage Ihnen, wann Premium nötig ist." },
-        { q: "Lohnt sich Microsoft 365 Copilot?", a: "Für manche Teams ja, für andere nicht. Wir klären das, bevor Sie Lizenzen kaufen." },
+        { q: "Lohnt sich Microsoft 365 Copilot?", a: "Für manche Teams ja, für andere nicht. Das kläre ich, bevor Sie Lizenzen kaufen." },
         { q: "Können Sie mit unserer IT zusammenarbeiten?", a: "Ja. Die meisten Projekte laufen gemeinsam mit Ihrer IT oder Ihrem Microsoft-Partner. Ich ergänze, ich ersetze nicht." },
         { q: "Ist das DSGVO-konform?", a: "Microsoft 365 im EU-Tenant lässt sich DSGVO-konform betreiben. Ich konfiguriere es sauber und dokumentiere die Datenflüsse." },
       ],
@@ -624,7 +623,7 @@ export const de: Record<PageKey, PageDef> = {
       h: "Fragen zu internen Tools",
       items: [
         { q: "Warum nicht fertige Software?", a: "Fertige Software ist oft die richtige Wahl. Ich baue nur, wenn sie nicht passt oder zu teuer für den Zweck wäre. Das sage ich Ihnen ehrlich." },
-        { q: "Wem gehört der Code?", a: "Das regeln wir vor dem Start schriftlich. Üblich ist die Übergabe von Quellcode und Dokumentation." },
+        { q: "Wem gehört der Code?", a: "Das halte ich vor dem Start schriftlich fest. Üblich ist die Übergabe von Quellcode und Dokumentation." },
         { q: "Wo läuft das Werkzeug?", a: "In der EU, bei einem Anbieter Ihrer Wahl oder auf Ihrer eigenen Infrastruktur." },
       ],
     },
@@ -680,7 +679,7 @@ export const de: Record<PageKey, PageDef> = {
       items: [
         { q: "Bekommen wir ein Zertifikat?", a: "Die Schulung ist kein Zertifikatskurs. Sie unterstützt Ihre Maßnahmen zur KI-Kompetenz nach Art. 4 der EU-KI-Verordnung." },
         { q: "Wer führt die Schulung durch?", a: "Den KI-Quick-Check führe ich selbst durch. Bei KI-Kompetenz Basis übernimmt eine freiberufliche Fachperson, die ich vorab persönlich auswähle." },
-        { q: "Gibt es Online-Termine?", a: "Der Quick-Check läuft remote. Die anderen Formate stimmen wir mit Ihnen ab." },
+        { q: "Gibt es Online-Termine?", a: "Der Quick-Check läuft remote. Die anderen Formate stimme ich mit Ihnen ab." },
       ],
     },
     cta: { h: "Das passende Format finden.", p: "Schreiben Sie mir kurz zu Team und Ziel. Ich empfehle ein Format und nenne den Preis.", primary: { label: "Anfrage senden", href: "/contact" }, secondary: CHECK },
@@ -784,7 +783,7 @@ export const de: Record<PageKey, PageDef> = {
         { q: "Wird eine Vertraulichkeitsvereinbarung geschlossen?", a: "Ja, eine Standard-NDA wird vor dem Analysegespräch unterzeichnet." },
         { q: "Ist das nur für Betriebe, die schon KI nutzen?", a: "Nein. Viele Projekte starten ganz ohne KI." },
         { q: "Können wir unsere Werkzeuge weiter nutzen?", a: "Ja. Wo Microsoft 365, Google Workspace, Ihr CRM oder ERP den Ablauf tragen, nutze ich das zuerst." },
-        { q: "Was passiert nach dem Check?", a: "Entweder Sie setzen den Plan selbst um, wir setzen gemeinsam einen Pilot um, oder es endet dort. Kein Lock-in." },
+        { q: "Was passiert nach dem Check?", a: "Sie setzen den Plan selbst um, Sie und ich setzen gemeinsam einen Pilot um, oder es endet dort. Kein Lock-in." },
       ],
     },
     cta: { h: "Herausfinden, was sich wirklich lohnt.", p: "Ein Gespräch, ein schriftlicher Plan, keine Verpflichtung. Ich sage Ihnen lieber, dass es noch nicht der richtige Zeitpunkt ist, als ein Projekt zu starten, das sich nicht trägt.", primary: { label: "KI-Check anfragen", href: "/contact" }, secondary: { label: "Alle Leistungen", href: "/leistungen" } },
@@ -841,7 +840,7 @@ export const de: Record<PageKey, PageDef> = {
         paras: ["OpSolid ist nicht TopSolid (CAD/CAM) und steht in keiner Verbindung dazu. Wer Hasan Dönmez und OpSolid sucht, ist hier richtig."],
       },
     ],
-    cta: { h: "Lassen Sie uns etwas Nützliches bauen.", p: "Wenn Ihre Abläufe zu viel Handarbeit enthalten, kann ich helfen.", primary: CHECK, secondary: CONTACT },
+    cta: { h: "Etwas Nützliches für Ihre Abläufe bauen.", p: "Wenn Ihre Abläufe zu viel Handarbeit enthalten, kann ich helfen.", primary: CHECK, secondary: CONTACT },
   },
 
   contact: {

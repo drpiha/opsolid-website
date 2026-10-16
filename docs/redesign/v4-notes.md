@@ -5,12 +5,16 @@ Branch `claude/opsolid-v4`, draft PR #43. Not deployed.
 ## What changed
 
 - **Art direction (marketing routes only):** graphite + copper, Archivo (display and body, width axis) + IBM Plex Mono (labels). Scoped to `html[data-v4]`. Dark only. App surfaces (dashboard, onboarding, card-preview, auth, public cards `/c/*`, admin, voice) keep the existing theme system and its stylesheet bundle.
-- **3D stage:** one persistent object behind every marketing page, a stack of seven plates (one per offering). Sections mark scenes with `data-scene` and `data-heat`; the stage re-forms per section with GSAP ScrollTrigger. `src/components/v4/Stage.tsx`.
+- **3D stage:** one persistent object behind every marketing page, a stack of seven plates (one per offering) that re-forms per section with GSAP ScrollTrigger. Sections mark scenes with `data-scene` and `data-heat`. `src/components/v4/Stage.tsx`.
+  - **Own column, never over text.** On desktop the object is fitted into the free column beside the measured text column of the scene in view (scale and position are derived from the column's right edge each frame). Wide blocks (tables, the agent demo, FAQ) sit on an opaque panel. On phones the object is above the text and every text column is an opaque panel. `?debug` exposes `window.__v4stage.bounds()` for automated overlap checks.
+  - **Impact:** HDR copper edges with bloom (desktop), per-scene camera moves (dolly, crane, field of view), cubic easing between scenes, first frame placed directly at its target (no glide across text).
+  - **Real proof on the window planes:** the Websites and Produkte scenes show real screenshots of opsolid.de, OpSo (card.opsolid.de, a demo profile) and Kutasia (kutasia.com, Turkish UI) as `public/img/v4/shot-*.webp` (24–30 kB each, fetched only on pages that have such a scene).
   - three.js and GSAP are dynamic imports, started on the first user intent (pointer, scroll, touch, key) or after 8 s. Until then the static poster (inline SVG) is the first frame.
-  - No WebGL, `prefers-reduced-motion`, or the footer switch "3D-Effekte: Aus" keep the poster and load no 3D code.
-  - Phones and touch devices run a lighter mode (DPR 1, no reflections, no edge lines, 30 fps).
+  - No WebGL, `prefers-reduced-motion`, or the footer switch "3D-Effekte: Aus" keep the poster and load no 3D code. The footer switch is the only quality control in production (the Voll/Leicht/Poster bar existed only in the static prototype).
+  - Phones and touch devices run a lighter mode (DPR up to 1.5, no reflections, no bloom, no edge lines, 30 fps). Desktop has a frame-time guard that drops bloom for good if frames stay slow.
 - **Pages (DE, EN, TR, content in `src/content/v4/pages-*.ts`):** Start, Agents (new), Websites (new), Leistungen, KI-Beratung, Prozessautomatisierung, Microsoft 365, Interne Tools, KI-Schulungen, KI-Check, Über mich, Kontakt (form), Notizen (blog list and posts). OpSo, Impressum and Datenschutz keep their existing content under the new theme.
-- **Scripted agent demo:** typed sample dialogue plus wave and a 3D head whose mouth follows the same amplitude. Labelled "Demo · Szenario, ohne Ton". No audio, no microphone, no provider. A live voice demo needs a provider and a data-protection review first.
+- **Scripted agent demo:** typed sample dialogue plus a wave, and an abstract voice-reactive form in 3D (particle sphere that swells with the same amplitude, glowing core, three rings; no face, eyes or mouth). Labelled "Demo · Szenario, ohne Ton", with the data-protection note. No audio, no microphone, no provider. A live voice demo needs a provider and a data-protection review first.
+- **Voice:** all v4 copy is first person singular. Collective "we/wir/biz" phrasing was removed in DE, EN and TR ("Im KI-Check gehe ich … mit Ihnen durch").
 
 ## SEO and GEO
 

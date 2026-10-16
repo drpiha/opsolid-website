@@ -54,7 +54,7 @@ export const en: Record<PageKey, PageDef> = {
         heat: [1],
         eyebrow: "Websites to buy or rent",
         h: "Websites I design, build and rent out.",
-        lede: "A website with its own character, to buy or to rent. We settle the terms in a conversation.",
+        lede: "A website with its own character, to buy or to rent. I settle the terms with you in a conversation.",
         items: [
           { h: "opsolid.de", tag: "This site", p: "Designed, built and run by me: three languages, text first, 3D only as an extra.", href: "https://opsolid.de" },
           { h: "OpSo", tag: "Product", p: "A digital business card with NFC and QR, built as its own web app.", href: "https://card.opsolid.de" },
@@ -84,7 +84,7 @@ export const en: Record<PageKey, PageDef> = {
         heat: [5, 6],
         eyebrow: "AI check and AI training",
         h: "Clarify first, then build.",
-        lede: "In the AI check we go through your workflows for 60–90 minutes. You then receive a written 30-day plan with five rated candidates.",
+        lede: "In the AI check I go through your workflows with you for 60–90 minutes. You then receive a written 30-day plan with five rated candidates.",
         rows: [
           ["Scope", "60–90 minutes, on site or remote"],
           ["Result", "Process map, 5 rated opportunities, 30-day plan"],
@@ -199,12 +199,12 @@ export const en: Record<PageKey, PageDef> = {
       h: "Questions about agents",
       items: [
         { q: "Does the agent speak live today?", a: "Today I show a scripted scenario. The live voice demo follows once the voice provider and the data-protection review are settled." },
-        { q: "Who listens to the conversations?", a: "We settle that beforehand: provider, storage location, retention and access. Callers are told at the start that an AI system is speaking." },
+        { q: "Who listens to the conversations?", a: "I settle that with you beforehand: provider, storage location, retention and access. Callers are told at the start that an AI system is speaking." },
         { q: "Does an agent replace my team?", a: "No. It takes over routine and hands over as soon as a person is needed." },
-        { q: "How do I start?", a: "With the AI check. There we clarify whether an agent makes sense for your business and which tasks it should take." },
+        { q: "How do I start?", a: "With the AI check. There I clarify whether an agent makes sense for your business and which tasks it should take." },
       ],
     },
-    cta: { h: "Check whether an agent fits you.", p: "In the AI check we clarify tasks, limits and data protection before anything is built.", primary: CHECK, secondary: CONTACT },
+    cta: { h: "Check whether an agent fits you.", p: "In the AI check I clarify tasks, limits and data protection before anything is built.", primary: CHECK, secondary: CONTACT },
     service: { type: "AI voice and video agents" },
   },
 
@@ -219,7 +219,7 @@ export const en: Record<PageKey, PageDef> = {
     hero: {
       eyebrow: "Websites · buy or rent",
       h1: ["Websites I ", "design, build", " and rent out."],
-      lede: "A website with its own character: fast, easy to read and in several languages. You buy it or rent it. We settle the terms in a conversation.",
+      lede: "A website with its own character: fast, easy to read and in several languages. You buy it or rent it. I settle the terms with you in a conversation.",
       primary: CONTACT,
       secondary: { label: "See references", href: "#referenzen" },
       scene: "websites",
@@ -239,7 +239,7 @@ export const en: Record<PageKey, PageDef> = {
           { h: "Design", p: "Its own hand instead of a template: typography, colour and motion fit your business." },
           { h: "Build", p: "Text first, fast loading, accessible, and built cleanly for search engines and AI search." },
           { h: "Multilingual", p: "Several languages with their own addresses and clean markup for search." },
-          { h: "Buy or rent", p: "Buy: you receive the finished site. Rent: you use it continuously and I take care of operation. We set the terms together." },
+          { h: "Buy or rent", p: "Buy: you receive the finished site. Rent: you use it continuously and I take care of operation. You and I set the terms together." },
         ],
       },
       {
@@ -271,9 +271,9 @@ export const en: Record<PageKey, PageDef> = {
     faq: {
       h: "Questions about websites",
       items: [
-        { q: "Buy or rent, which is better?", a: "It depends on whether you want to carry the site on yourself. If you buy, it is yours; if you rent, I take care of operation. We settle that in a conversation." },
+        { q: "Buy or rent, which is better?", a: "It depends on whether you want to carry the site on yourself. If you buy, it is yours; if you rent, I take care of operation. I settle that with you in a conversation." },
         { q: "How long does a website take?", a: "That depends on scope. After the conversation I name a concrete schedule." },
-        { q: "Who owns the texts and images?", a: "Content you supply stays yours. We agree the usage rights for design and code in writing beforehand." },
+        { q: "Who owns the texts and images?", a: "Content you supply stays yours. I agree the usage rights for design and code with you in writing beforehand." },
         { q: "Can the site include 3D and motion?", a: "Yes, as an extra. The text always comes first, effects can be switched off, and they respect the reduced-motion setting." },
       ],
     },
@@ -302,7 +302,6 @@ export const en: Record<PageKey, PageDef> = {
         t: "rows",
         eyebrow: "All services",
         h: "Every plate in the stack is an offer.",
-        dim: true,
         items: [
           { h: "Agents", tag: "Voice · video", p: "Talking AI agents for inquiries, appointments and answers.", href: "/agents" },
           { h: "Websites", tag: "Build · rent", p: "Designed, built and, on request, rented out.", href: "/websites" },
@@ -314,7 +313,7 @@ export const en: Record<PageKey, PageDef> = {
         ],
       },
     ],
-    cta: { h: "Not sure where to start?", p: "In the AI check we sort your workflows and pick the building block that pays off first.", primary: CHECK, secondary: CONTACT },
+    cta: { h: "Not sure where to start?", p: "In the AI check I sort your workflows and pick the building block that pays off first.", primary: CHECK, secondary: CONTACT },
   },
 
   kiBeratung: {
@@ -536,7 +535,7 @@ export const en: Record<PageKey, PageDef> = {
       h: "Questions about Microsoft 365",
       items: [
         { q: "Do I need Power Automate Premium licences?", a: "Sometimes. Most useful flows run on the standard plans. I will tell you when Premium is needed." },
-        { q: "Is Microsoft 365 Copilot worth it?", a: "For some teams yes, for others no. We clarify that before you buy licences." },
+        { q: "Is Microsoft 365 Copilot worth it?", a: "For some teams yes, for others no. I clarify that before you buy licences." },
         { q: "Can you work with our IT?", a: "Yes. Most projects run together with your IT or your Microsoft partner. I add to it, I do not replace it." },
         { q: "Is this GDPR-compliant?", a: "Microsoft 365 in an EU tenant can be run in a GDPR-compliant way. I configure it cleanly and document the data flows." },
       ],
@@ -612,7 +611,7 @@ export const en: Record<PageKey, PageDef> = {
       h: "Questions about internal tools",
       items: [
         { q: "Why not ready-made software?", a: "Ready-made software is often the right choice. I only build when it does not fit or would be too expensive for the purpose. I will tell you honestly." },
-        { q: "Who owns the code?", a: "We settle that in writing before the start. Handing over source code and documentation is usual." },
+        { q: "Who owns the code?", a: "I put that in writing before the start. Handing over source code and documentation is usual." },
         { q: "Where does the tool run?", a: "In the EU, with a provider of your choice or on your own infrastructure." },
       ],
     },
@@ -646,7 +645,7 @@ export const en: Record<PageKey, PageDef> = {
         caption: "Parts list: AI training",
         cols: ["Offer", "Format", "Price"],
         rows: [
-          ["AI Quick Check||Together we look at where AI makes sense in your daily work and where it does not. Result as a short written report. The first 3 pilots are free, in exchange for honest feedback.", "90 minutes remote, with report", "from €490"],
+          ["AI Quick Check||Together, you and I look at where AI makes sense in your daily work and where it does not. Result as a short written report. The first 3 pilots are free, in exchange for honest feedback.", "90 minutes remote, with report", "from €490"],
           ["AI Literacy Basics||Fundamentals for using AI safely at work. Delivered by a freelance trainer I select personally in advance. Supports your measures for AI literacy under Art. 4 of the EU AI Act.", "Half day, up to 15 people", "€1,490"],
           ["Copilot Practice Day||Hands-on work with Microsoft 365 Copilot on your own tasks. For businesses that already hold Copilot licences.", "1 day, up to 12 people", "from €2,400"],
         ],
@@ -668,7 +667,7 @@ export const en: Record<PageKey, PageDef> = {
       items: [
         { q: "Do we get a certificate?", a: "The training is not a certificate course. It supports your measures for AI literacy under Art. 4 of the EU AI Act." },
         { q: "Who delivers the training?", a: "I deliver the AI Quick Check myself. For AI Literacy Basics a freelance specialist takes over, whom I select personally in advance." },
-        { q: "Are online dates possible?", a: "The Quick Check runs remote. We agree the other formats with you." },
+        { q: "Are online dates possible?", a: "The Quick Check runs remote. I agree the other formats with you." },
       ],
     },
     cta: { h: "Find the right format.", p: "Write me briefly about team and goal. I recommend a format and name the price.", primary: { label: "Send an inquiry", href: "/contact" }, secondary: CHECK },
@@ -758,7 +757,7 @@ export const en: Record<PageKey, PageDef> = {
         eyebrow: "Result",
         h: "What ends up in your inbox.",
         items: [
-          { h: "Process map", p: "The workflows we discussed, in writing." },
+          { h: "Process map", p: "The workflows discussed, in writing." },
           { h: "5 rated opportunities", p: "With tool recommendation and a rough effort estimate." },
           { h: "30-day plan", p: "With owners." },
           { h: "Note on what stays manual", p: "What should deliberately stay manual, and why." },
@@ -772,7 +771,7 @@ export const en: Record<PageKey, PageDef> = {
         { q: "Is a confidentiality agreement signed?", a: "Yes, a standard NDA is signed before the analysis call." },
         { q: "Is this only for businesses that already use AI?", a: "No. Many projects start with no AI at all." },
         { q: "Can we keep using our tools?", a: "Yes. Where Microsoft 365, Google Workspace, your CRM or ERP carry the workflow, I use those first." },
-        { q: "What happens after the check?", a: "Either you carry out the plan yourself, we run a pilot together, or it ends there. No lock-in." },
+        { q: "What happens after the check?", a: "Either you carry out the plan yourself, you and I run a pilot together, or it ends there. No lock-in." },
       ],
     },
     cta: { h: "Find out what is really worth it.", p: "One conversation, a written plan, no obligation. I would rather tell you it is not the right time yet than start a project that does not pay off.", primary: { label: "Request an AI check", href: "/contact" }, secondary: { label: "All services", href: "/leistungen" } },
@@ -829,7 +828,7 @@ export const en: Record<PageKey, PageDef> = {
         paras: ["OpSolid is not TopSolid (CAD/CAM) and has no connection to it. If you are looking for Hasan Dönmez and OpSolid, you are in the right place."],
       },
     ],
-    cta: { h: "Let us build something useful.", p: "If your workflows contain too much manual work, I can help.", primary: CHECK, secondary: CONTACT },
+    cta: { h: "Build something useful for your workflows.", p: "If your workflows contain too much manual work, I can help.", primary: CHECK, secondary: CONTACT },
   },
 
   contact: {

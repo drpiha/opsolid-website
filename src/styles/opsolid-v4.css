@@ -85,7 +85,7 @@ html[data-v4] body::before {
   content: "";
   position: fixed;
   inset: 0;
-  z-index: 0;
+  z-index: 1;
   pointer-events: none;
   background-image: linear-gradient(var(--v4-line) 1px, transparent 1px), linear-gradient(90deg, var(--v4-line) 1px, transparent 1px);
   background-size: 72px 72px;
@@ -109,7 +109,7 @@ html[data-v4] body::before {
 .v4-stage {
   position: fixed;
   inset: 0;
-  z-index: 1;
+  z-index: 0;
   pointer-events: none;
 }
 .v4-stage canvas {
@@ -124,7 +124,7 @@ html[data-dim="1"] .v4-stage.is-on canvas { opacity: 0.28; }
 html[data-dim="2"] .v4-stage.is-on canvas { opacity: 0.1; }
 .v4-poster {
   position: fixed;
-  z-index: 1;
+  z-index: 0;
   pointer-events: none;
   right: 8vw;
   top: 50%;
@@ -374,6 +374,8 @@ html:not([data-v4]) .v4-poster, html:not([data-v4]) .v4-stage { display: none; }
 .v4-sec.is-flow { min-height: 0; align-items: flex-start; }
 .v4-col { width: 100%; max-width: 36rem; }
 .v4-col.is-wide { max-width: 46rem; }
+/* Wide blocks (tables, the agent demo) sit on an opaque panel: the 3D object never shows through text. */
+.v4-col.is-wide { background: rgba(18, 17, 15, 0.93); border: 1px solid var(--v4-line2); padding: 28px clamp(20px, 3vw, 36px); }
 .v4-eyebrow {
   display: block;
   margin-bottom: 20px;
@@ -396,7 +398,7 @@ html:not([data-v4]) .v4-poster, html:not([data-v4]) .v4-stage { display: none; }
   hyphens: auto;
 }
 .v4-h1 { font-size: clamp(2.5rem, 5.2vw, 5rem); }
-.v4-sec.is-hero .v4-col { max-width: 44rem; }
+.v4-sec.is-hero .v4-col { max-width: min(42rem, 54vw); }
 .v4-sec.is-hero .v4-lede, .v4-sec.is-hero .v4-spec { max-width: 36rem; }
 .v4-h1 em { font-style: normal; color: var(--v4-cu); }
 .v4-h2 { font-size: clamp(1.7rem, 4.4vw, 3.5rem); }
@@ -582,7 +584,7 @@ html[data-v4] [aria-labelledby="consent-title"] button { border-radius: 2px !imp
   .v4-sec.is-hero { padding-top: calc(44vh); min-height: 0; }
   .v4-sec.has-scene { padding-top: 40vh; }
   .v4-sec.is-flow { padding-top: 28px; }
-  .v4-col { background: rgba(18, 17, 15, 0.94); padding: 22px 18px; margin: 0 -4px; max-width: none; }
+  .v4-col, .v4-col.is-wide, .v4-sec.is-hero .v4-col { background: #12110f; padding: 22px 18px; margin: 0 -4px; max-width: none; }
   .v4-h1 { font-size: clamp(2.3rem, 11.5vw, 3.3rem); }
   .v4-spec { grid-template-columns: 6rem 1fr; }
   .v4-block div { grid-template-columns: 6.5rem 1fr; }
@@ -639,3 +641,10 @@ html[data-v4] [aria-labelledby="consent-title"] button:hover { box-shadow: inset
   .v4-table td.pr, .v4-table .pr { text-align: left; padding: 4px 0 0; font-size: 1.05rem; }
   .v4-table caption { display: block; }
 }
+
+/* Older product pages (OpSo) keep their markup under the v4 theme: flat copper, square corners, no gradients. */
+html[data-v4] .btn { border-radius: 2px; font-weight: 700; min-height: 44px; }
+html[data-v4] .btn-primary { background: var(--v4-cu); background-image: none; color: var(--v4-on-cu); border-color: var(--v4-cu); box-shadow: none; }
+html[data-v4] .btn-primary:hover { background: var(--v4-cu-hi); filter: none; box-shadow: none; transform: none; }
+html[data-v4] .btn-ghost, html[data-v4] .btn-secondary { background: transparent; border-color: var(--v4-line2); color: var(--v4-ink); box-shadow: none; }
+html[data-v4] .btn-ghost:hover, html[data-v4] .btn-secondary:hover { border-color: var(--v4-cu); color: var(--v4-ink); background: transparent; }

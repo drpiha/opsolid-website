@@ -1,27 +1,36 @@
 "use client";
 
 /**
- * Stage — the persistent 3D object behind every v4 marketing page.
+ * Stage: the persistent 3D object behind every v4 marketing page.
  *
  * One object (a stack of seven plates, one per offering) re-forms as the
  * visitor scrolls. Pages mark sections with `data-scene="…"` and optional
  * `data-heat="0,1"` (plate indices to light up). All text is plain HTML; the
  * stage is decoration that loads after first paint:
- *  - three.js and GSAP ScrollTrigger are dynamic imports, started when idle
+ *  - three.js and GSAP ScrollTrigger are dynamic imports, started on first user
+ *    intent (or after 8 s), never during first paint or hydration
  *  - no WebGL, `prefers-reduced-motion` or the footer switch → static poster
- *  - small screens / touch → light mode (DPR 1, no reflections, 30 fps)
+ *  - phones / touch → light mode (DPR ≤ 1.5, no reflections, no bloom, no edge lines, 30 fps)
+ *  - on desktop the object lives in the free column beside the text: its scale
+ *    and position are fitted to the measured text column of the scene in view,
+ *    so it does not sit on readable copy; on phones the text is on opaque
+ *    panels below the object.
  */
 
 import { useEffect, useRef, useState } from "react";
+import type * as THREE from "three";
 import { usePathname } from "next/navigation";
 import { useLocaleBase as useLocale } from "@/context/LocaleContext";
-import { isV4Path } from "@/lib/v4";
+import { isV4Path, stripLocalePrefix } from "@/lib/v4";
 import { stepVoice, voice } from "@/lib/voice-sim";
+import type { SceneId } from "@/components/v4/scenes";
+
+/** v4-themed routes with their own layout and no scenes: no 3D object (and no 3D code) there. */
+const NO_STAGE = new Set(["opso", "impressum", "privacy"]);
 
 export const FX_STORAGE_KEY = "opsolid-fx";
 export const FX_EVENT = "opsolid-fx-change";
 
-import type { SceneId } from "@/components/v4/scenes";
 type Pose = [number, number, number, number, number, number, number, number, number];
 
 const LABELS: Record<"de" | "en" | "tr", { n: string; t: string }[]> = {
@@ -54,12 +63,47 @@ const LABELS: Record<"de" | "en" | "tr", { n: string; t: string }[]> = {
   ],
 };
 
+/** Real screenshots on the window planes (Websites / Produkte scenes). Plate index → file. */
+const SHOTS: Record<number, string> = {
+  3: "/img/v4/shot-opsolid.webp",
+  2: "/img/v4/shot-card.webp",
+  4: "/img/v4/shot-kutasia.webp",
+};
+
+const clamp01 = (x: number) => Math.max(0, Math.min(1, x));
 const sm = (x: number) => {
-  const c = Math.max(0, Math.min(1, x));
+  const c = clamp01(x);
   return c * c * (3 - 2 * c);
+};
+/** Cubic in/out: slow start, decisive middle, slow settle. */
+const easeInOut = (x: number) => {
+  const c = clamp01(x);
+  return c < 0.5 ? 4 * c * c * c : 1 - Math.pow(-2 * c + 2, 3) / 2;
 };
 const lerp = (a: number, b: number, u: number) => a + (b - a) * u;
 const wrap = (a: number) => ((((a + Math.PI) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI)) - Math.PI;
+
+const HP = Math.PI / 2;
+// Websites: a cascade of three real-screenshot panels (plates 3, 2, 4); the other four as thin blueprint sheets behind.
+const WEB: Pose[] = [
+  [-1.65, 1.15, -1.7, HP, 0, 0.2, 0.42, 0.3, 0.42],
+  [-1.15, 1.6, -2.1, HP, 0, 0.14, 0.42, 0.3, 0.42],
+  [0.25, 0.1, 0.15, HP, 0, 0.12, 0.88, 0.3, 0.88],
+  [-0.65, 1.3, -0.55, HP, 0, 0.12, 0.88, 0.3, 0.88],
+  [0.95, -1.15, 0.85, HP, 0, 0.12, 0.88, 0.3, 0.88],
+  [1.65, 1.15, -1.7, HP, 0, -0.2, 0.42, 0.3, 0.42],
+  [1.15, 1.6, -2.1, HP, 0, -0.14, 0.42, 0.3, 0.42],
+];
+// Produkte: OpSo and Kutasia as two large cards on a diagonal, opsolid.de behind, the rest as thin sheets.
+const CARD: Pose[] = [
+  [-1.9, -0.9, -1.6, HP, 0, 0.22, 0.4, 0.2, 0.4],
+  [-1.55, 1.25, -1.9, HP, 0, 0.18, 0.4, 0.2, 0.4],
+  [-0.75, 0.75, 0.2, HP, 0, 0.16, 0.95, 0.3, 0.95],
+  [0.05, 0.1, -1.4, HP, 0, 0, 0.62, 0.25, 0.62],
+  [0.75, -0.75, 0.7, HP, 0, 0.16, 0.95, 0.3, 0.95],
+  [1.55, 1.25, -1.9, HP, 0, -0.18, 0.4, 0.2, 0.4],
+  [1.9, -0.9, -1.6, HP, 0, -0.22, 0.4, 0.2, 0.4],
+];
 
 function pose(scene: SceneId, i: number, t: number): Pose {
   const c = i - 3;
@@ -67,17 +111,17 @@ function pose(scene: SceneId, i: number, t: number): Pose {
     case "stack":
       return [0, -c * 0.4, 0, 0, c * 0.09, 0, 1, 1, 1];
     case "agents": {
-      const a = (i / 7) * Math.PI * 2 + t * 0.25;
-      return [Math.cos(a) * 2.1, Math.sin(a * 2 + i) * 0.1, Math.sin(a) * 2.1, 0, wrap(-(a + Math.PI / 2)), 0, 0.62, 0.8, 0.5];
+      const a = (i / 7) * Math.PI * 2 + t * 0.2;
+      return [Math.cos(a) * 2.35, Math.sin(a * 2 + i) * 0.12, Math.sin(a) * 2.35, 0, wrap(-(a + HP)), 0, 0.56, 0.7, 0.44];
     }
     case "websites":
-      return [c * 0.64, 0.05 * (3 - Math.abs(c)), -Math.abs(c) * 0.3, Math.PI / 2, 0, c * -0.18, 0.55, 0.45, 0.72];
+      return WEB[i];
     case "flow":
       return [c * 0.8, 0, 0, 0, 0, 0, 0.34, 0.7, 0.5];
     case "steps":
       return [c * 0.56, c * 0.3, 0, 0, -0.35, 0, 0.45, 1, 0.65];
     case "cards":
-      return [c * 0.34, 0, c * 0.16, Math.PI / 2, 0, c * 0.3, 0.6, 0.22, 0.62];
+      return CARD[i];
     case "offset":
       return [i % 2 ? 0.14 : -0.14, -c * 0.4, 0, 0, c * 0.05, 0, 1, 1, 1];
     default:
@@ -85,10 +129,23 @@ function pose(scene: SceneId, i: number, t: number): Pose {
   }
 }
 
-const GY: Record<SceneId, number> = { stack: -0.55, agents: 0, websites: 0, flow: 0, steps: -0.35, cards: -0.3, offset: -0.6, tight: 0.35 };
-const GX: Record<SceneId, number> = { stack: 0.12, agents: 0.4, websites: 0.05, flow: 0.1, steps: 0.1, cards: 0.05, offset: 0.1, tight: 0.1 };
-const GS: Record<SceneId, number> = { stack: 1, agents: 0.88, websites: 0.95, flow: 0.72, steps: 0.72, cards: 1, offset: 1, tight: 1 };
-const GXO: Record<SceneId, number> = { stack: 0, agents: 0.05, websites: 0, flow: -0.01, steps: 0.07, cards: 0, offset: 0, tight: 0 };
+/** Half width of each scene at scale 1 (world units), used to fit it into the free column. */
+const HALF_W: Record<SceneId, number> = { stack: 1.7, agents: 3.1, websites: 2.35, flow: 3.35, steps: 2.45, cards: 2.4, offset: 1.75, tight: 1.7 };
+/** Half height at scale 1, to keep tall scenes inside the viewport. */
+const HALF_H: Record<SceneId, number> = { stack: 2.1, agents: 2.2, websites: 2.35, flow: 1.4, steps: 2.0, cards: 2.0, offset: 2.0, tight: 2.0 };
+/** Camera per scene: distance, height, field of view. Scene changes are deliberate dolly / crane moves. */
+const CAM: Record<SceneId, { z: number; y: number; fov: number }> = {
+  stack: { z: 9.5, y: 0.1, fov: 35 },
+  agents: { z: 10.4, y: 1.0, fov: 34 },
+  websites: { z: 8.6, y: 0, fov: 36 },
+  flow: { z: 10.2, y: 0.5, fov: 34 },
+  steps: { z: 9.4, y: 0.9, fov: 35 },
+  cards: { z: 8.8, y: 0, fov: 37 },
+  offset: { z: 9.8, y: -0.2, fov: 35 },
+  tight: { z: 11.2, y: 0.4, fov: 33 },
+};
+const GY: Record<SceneId, number> = { stack: -0.55, agents: 0, websites: 0, flow: 0, steps: -0.35, cards: 0, offset: -0.6, tight: 0.35 };
+const GX: Record<SceneId, number> = { stack: 0.12, agents: 0.35, websites: 0.02, flow: 0.12, steps: 0.12, cards: 0.02, offset: 0.1, tight: 0.1 };
 
 const POSTER_SLABS = [
   ["#c27940", "#e0a070", "#8f4f1e"],
@@ -131,46 +188,85 @@ type Core = {
   setScenes: (els: HTMLElement[]) => void;
 };
 
+// Agent particles: a Fibonacci sphere whose radius swells with the (simulated) voice amplitude.
+const PARTICLE_VERT = /* glsl */ `
+uniform float uTime;
+uniform float uAmp;
+uniform float uPx;
+attribute float aSeed;
+varying float vA;
+void main() {
+  vec3 p = position;
+  float n = sin(dot(p, vec3(3.1, 2.3, 1.7)) + uTime * 1.4 + aSeed * 6.2831);
+  float d = uAmp * 0.5 * (0.55 + 0.45 * n);
+  vec3 pos = p * (1.0 + d);
+  vec4 mv = modelViewMatrix * vec4(pos, 1.0);
+  gl_Position = projectionMatrix * mv;
+  gl_PointSize = (0.02 + 0.024 * aSeed + uAmp * 0.035) * uPx / -mv.z;
+  vA = 0.5 + 0.5 * n * uAmp + 0.35 * uAmp;
+}`;
+const PARTICLE_FRAG = /* glsl */ `
+uniform vec3 uColor;
+varying float vA;
+void main() {
+  vec2 c = gl_PointCoord - 0.5;
+  float r = length(c);
+  if (r > 0.5) discard;
+  float a = smoothstep(0.5, 0.0, r);
+  gl_FragColor = vec4(uColor * (0.42 + vA * 1.0), a * 0.9);
+  #include <tonemapping_fragment>
+  #include <colorspace_fragment>
+}`;
+
+type Composer = { render: (dt: number) => void; setSize: (w: number, h: number) => void; setPixelRatio: (r: number) => void; dispose: () => void };
+
 async function createCore(host: HTMLElement, quality: "full" | "light", onFirstFrame: () => void): Promise<Core | null> {
-  const THREE = await import("three");
+  const T = await import("three");
   const gsapMod = await import("gsap");
   const stMod = await import("gsap/ScrollTrigger");
   const gsap = gsapMod.gsap ?? gsapMod.default;
   const ScrollTrigger = stMod.ScrollTrigger ?? stMod.default;
   gsap.registerPlugin(ScrollTrigger);
+  const full = quality === "full";
+  const qs = new URLSearchParams(window.location.search);
+  const debug = qs.has("debug");
 
-  let renderer: InstanceType<typeof THREE.WebGLRenderer>;
+  let renderer: THREE.WebGLRenderer;
   try {
-    renderer = new THREE.WebGLRenderer({ antialias: quality === "full", alpha: true, powerPreference: "high-performance" });
+    renderer = new T.WebGLRenderer({ antialias: true, alpha: !full, powerPreference: "high-performance" });
   } catch {
     return null;
   }
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.outputColorSpace = T.SRGBColorSpace;
+  renderer.toneMapping = T.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
-  renderer.setClearColor(0x000000, 0);
-  renderer.setPixelRatio(quality === "full" ? Math.min(window.devicePixelRatio || 1, 2) : 1);
+  // Full quality renders an opaque canvas (bloom needs it); the page grid is drawn above it.
+  renderer.setClearColor(0x12110f, full ? 1 : 0);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5));
   host.appendChild(renderer.domElement);
 
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(35, 1, 0.1, 60);
+  const scene = new T.Scene();
+  // The backdrop is a scene colour rather than the clear colour: EffectComposer's RenderPass clears
+  // before it binds its target, with a clear colour still in output space, which lifts the page
+  // graphite to a grey. #23221f lands on the page graphite (#12110f) after ACES + sRGB output.
+  if (full) scene.background = new T.Color(0x23221f);
+  const camera = new T.PerspectiveCamera(35, 1, 0.1, 60);
   camera.position.set(0, 0, 9.5);
-  scene.add(new THREE.AmbientLight(0xffffff, 1.3));
-  const key = new THREE.DirectionalLight(0xffd8b0, 4.2);
+  scene.add(new T.AmbientLight(0xffffff, 1.3));
+  const key = new T.DirectionalLight(0xffd8b0, 4.2);
   key.position.set(4, 6, 6);
   scene.add(key);
-  const rim = new THREE.PointLight(0xc27940, 90, 30, 2);
+  const rim = new T.PointLight(0xc27940, 90, 30, 2);
   rim.position.set(-5, -2, -4);
   scene.add(rim);
 
   const disposables: { dispose: () => void }[] = [];
-  const track = <T extends { dispose: () => void }>(o: T): T => {
+  const track = <D extends { dispose: () => void }>(o: D): D => {
     disposables.push(o);
     return o;
   };
 
-  // Environment reflections (full quality only)
-  if (quality === "full") {
+  if (full) {
     const c = document.createElement("canvas");
     c.width = 512;
     c.height = 256;
@@ -184,10 +280,10 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
     g.fillRect(230, 150, 50, 70);
     g.fillStyle = "#3a362f";
     g.fillRect(0, 200, 512, 56);
-    const et = new THREE.CanvasTexture(c);
-    et.mapping = THREE.EquirectangularReflectionMapping;
-    et.colorSpace = THREE.SRGBColorSpace;
-    const pm = new THREE.PMREMGenerator(renderer);
+    const et = new T.CanvasTexture(c);
+    et.mapping = T.EquirectangularReflectionMapping;
+    et.colorSpace = T.SRGBColorSpace;
+    const pm = new T.PMREMGenerator(renderer);
     const rt = pm.fromEquirectangular(et);
     scene.environment = rt.texture;
     track(rt);
@@ -195,10 +291,10 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
     pm.dispose();
   }
 
-  const group = new THREE.Group();
+  const group = new T.Group();
   scene.add(group);
-  const box = track(new THREE.BoxGeometry(2.4, 0.34, 1.6));
-  const egeo = track(new THREE.EdgesGeometry(box));
+  const box = track(new T.BoxGeometry(2.4, 0.34, 1.6));
+  const egeo = track(new T.EdgesGeometry(box));
 
   const cs = getComputedStyle(document.body);
   const stack = (a: string, b: string, fb: string) => [cs.getPropertyValue(a).trim(), cs.getPropertyValue(b).trim(), fb].filter(Boolean).join(", ");
@@ -213,6 +309,7 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
     /* fall back to whatever is available */
   }
 
+  // Blueprint top face (default). Window planes swap in real screenshots.
   const topCanvas = document.createElement("canvas");
   topCanvas.width = 512;
   topCanvas.height = 340;
@@ -245,33 +342,63 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
     g.stroke();
     g.strokeRect(176, 110, 160, 120);
   }
-  const topTex = track(new THREE.CanvasTexture(topCanvas));
-  topTex.colorSpace = THREE.SRGBColorSpace;
+  const topTex = track(new T.CanvasTexture(topCanvas));
+  topTex.colorSpace = T.SRGBColorSpace;
   topTex.anisotropy = 4;
 
-  const envI = quality === "full" ? 0.5 : 0;
+  const envI = full ? 0.5 : 0;
   type Slab = {
-    m: InstanceType<typeof THREE.Mesh>;
-    mats: InstanceType<typeof THREE.MeshStandardMaterial>[];
-    lab: InstanceType<typeof THREE.MeshStandardMaterial>;
-    edge: InstanceType<typeof THREE.LineBasicMaterial>;
+    m: THREE.Mesh;
+    mats: THREE.MeshStandardMaterial[];
+    lab: THREE.MeshStandardMaterial;
+    top: THREE.MeshStandardMaterial;
+    shot: THREE.MeshBasicMaterial | null;
+    edge: THREE.LineBasicMaterial;
     heat: number;
   };
   const slabs: Slab[] = [];
   for (let i = 0; i < 7; i++) {
-    const body = track(new THREE.MeshStandardMaterial({ color: 0x1f1d1a, metalness: 0.55, roughness: 0.45, envMapIntensity: envI }));
-    const lab = track(new THREE.MeshStandardMaterial({ metalness: 0.35, roughness: 0.5, envMapIntensity: envI }));
-    const tp = track(new THREE.MeshStandardMaterial({ map: topTex, metalness: 0.35, roughness: 0.5, envMapIntensity: envI }));
-    const m = new THREE.Mesh(box, [body, body, tp, body, lab, lab]);
-    const edge = track(new THREE.LineBasicMaterial({ color: 0xe0a070, transparent: true, opacity: 0.45 }));
-    const lines = new THREE.LineSegments(egeo, edge);
-    lines.visible = quality === "full";
+    const body = track(new T.MeshStandardMaterial({ color: 0x1f1d1a, metalness: 0.55, roughness: 0.45, envMapIntensity: envI }));
+    const lab = track(new T.MeshStandardMaterial({ metalness: 0.35, roughness: 0.5, envMapIntensity: envI }));
+    const tp = track(new T.MeshStandardMaterial({ map: topTex, metalness: 0.2, roughness: 0.55, envMapIntensity: envI }));
+    const m = new T.Mesh(box, [body, body, tp, body, lab, lab]);
+    const edge = track(new T.LineBasicMaterial({ transparent: true, opacity: 0.8 }));
+    edge.color.setRGB(0.9, 0.5, 0.2);
+    const lines = new T.LineSegments(egeo, edge);
+    lines.visible = full;
     m.add(lines);
     group.add(m);
-    slabs.push({ m, mats: [body, lab, tp], lab, edge, heat: 0 });
+    slabs.push({ m, mats: [body, lab, tp], lab, top: tp, shot: null, edge, heat: 0 });
   }
 
-  const labelTextures: InstanceType<typeof THREE.CanvasTexture>[] = [];
+  // Screenshots (~80 kB webp in total) are fetched only on pages that have a Websites / Produkte
+  // scene, and after the core is running; the blueprint face shows until they arrive. They are unlit
+  // (basic material) so that the real page colours read as screens, slightly under the bloom threshold.
+  const loader = new T.TextureLoader();
+  let shotsRequested = false;
+  const loadShots = () => {
+    if (shotsRequested) return;
+    shotsRequested = true;
+    Object.entries(SHOTS).forEach(([idx, src]) => {
+      loader.load(
+        src,
+        (t) => {
+          t.colorSpace = T.SRGBColorSpace;
+          t.anisotropy = 4;
+          const mat = track(new T.MeshBasicMaterial({ map: t }));
+          mat.color.setRGB(0.9, 0.9, 0.9);
+          slabs[+idx].shot = mat;
+          track(t);
+        },
+        undefined,
+        () => {
+          /* keep the blueprint face */
+        },
+      );
+    });
+  };
+
+  const labelTextures: THREE.CanvasTexture[] = [];
   const setLabels = (locale: "de" | "en" | "tr") => {
     labelTextures.splice(0).forEach((t) => t.dispose());
     LABELS[locale].forEach((d, i) => {
@@ -291,8 +418,8 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
       g.fillText(d.t.toUpperCase(), 990, 76);
       g.fillStyle = "#c27940";
       g.fillRect(0, 0, 1024, 3);
-      const t = new THREE.CanvasTexture(c);
-      t.colorSpace = THREE.SRGBColorSpace;
+      const t = new T.CanvasTexture(c);
+      t.colorSpace = T.SRGBColorSpace;
       t.anisotropy = 4;
       slabs[i].lab.map = t;
       slabs[i].lab.needsUpdate = true;
@@ -300,102 +427,164 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
     });
   };
 
-  const rail = new THREE.Mesh(track(new THREE.BoxGeometry(6.4, 0.05, 0.9)), track(new THREE.MeshStandardMaterial({ color: 0x1d1b18, metalness: 0.5, roughness: 0.5 })));
+  const rail = new T.Mesh(track(new T.BoxGeometry(6.4, 0.05, 0.9)), track(new T.MeshStandardMaterial({ color: 0x1d1b18, metalness: 0.5, roughness: 0.5 })));
   rail.position.y = -0.36;
   rail.scale.x = 0.001;
   group.add(rail);
-  const railEdge = track(new THREE.LineBasicMaterial({ color: 0xc27940 }));
-  rail.add(new THREE.LineSegments(track(new THREE.EdgesGeometry(rail.geometry)), railEdge));
+  const railEdge = track(new T.LineBasicMaterial({ color: 0xc27940 }));
+  railEdge.color.setRGB(2.4, 1.2, 0.5);
+  const railLines = new T.LineSegments(track(new T.EdgesGeometry(rail.geometry)), railEdge);
+  railLines.visible = full;
+  rail.add(railLines);
 
-  // Agent head
-  const head = new THREE.Group();
+  // ---- Agent: an abstract, voice-reactive form. A particle sphere that swells with the voice, a
+  // glowing core, three rings and (full quality) a faint wireframe shell. No face, no eyes, no mouth.
+  const head = new T.Group();
   group.add(head);
-  head.add(new THREE.Mesh(track(new THREE.SphereGeometry(0.95, 48, 32)), track(new THREE.MeshStandardMaterial({ color: 0x2b2925, metalness: 0.5, roughness: 0.32, envMapIntensity: envI }))));
-  head.add(
-    new THREE.Mesh(
-      track(new THREE.SphereGeometry(0.965, 40, 12, Math.PI / 2 - 0.95, 1.9, 1.05, 0.45)),
-      track(new THREE.MeshStandardMaterial({ color: 0xc27940, metalness: 0.7, roughness: 0.3, side: THREE.DoubleSide, envMapIntensity: envI })),
-    ),
-  );
-  const eyeM = track(new THREE.MeshBasicMaterial({ color: 0xffe3c4 }));
-  const eyeG = track(new THREE.CircleGeometry(0.065, 20));
-  [-1, 1].forEach((s) => {
-    const e = new THREE.Mesh(eyeG, eyeM);
-    e.position.set(s * 0.3, 0.2, Math.sqrt(0.965 * 0.965 - 0.09 - 0.04) + 0.01);
-    head.add(e);
-  });
-  const mouthM = track(new THREE.MeshBasicMaterial({ color: 0xe0a070 }));
-  const mouthG = track(new THREE.BoxGeometry(0.05, 0.1, 0.04));
-  const mouth: InstanceType<typeof THREE.Mesh>[] = [];
-  for (let k = 0; k < 9; k++) {
-    const x = (k - 4) * 0.11;
-    const mb = new THREE.Mesh(mouthG, mouthM);
-    mb.position.set(x, -0.33, Math.sqrt(0.965 * 0.965 - x * x - 0.33 * 0.33) + 0.01);
-    head.add(mb);
-    mouth.push(mb);
+  const N = full ? 1100 : 500;
+  const pos = new Float32Array(N * 3);
+  const seed = new Float32Array(N);
+  const gold = Math.PI * (3 - Math.sqrt(5));
+  for (let k = 0; k < N; k++) {
+    const y = 1 - (k / (N - 1)) * 2;
+    const r = Math.sqrt(1 - y * y);
+    const th = gold * k;
+    pos[k * 3] = Math.cos(th) * r;
+    pos[k * 3 + 1] = y;
+    pos[k * 3 + 2] = Math.sin(th) * r;
+    seed[k] = ((k * 9301 + 49297) % 233280) / 233280;
   }
-  const halo = new THREE.Mesh(track(new THREE.TorusGeometry(1.4, 0.014, 8, 100)), track(new THREE.MeshBasicMaterial({ color: 0xc27940, transparent: true, opacity: 0.8 })));
-  halo.rotation.x = Math.PI / 2.15;
-  head.add(halo);
+  const pgeo = track(new T.BufferGeometry());
+  pgeo.setAttribute("position", new T.BufferAttribute(pos, 3));
+  pgeo.setAttribute("aSeed", new T.BufferAttribute(seed, 1));
+  const pmat = track(
+    new T.ShaderMaterial({
+      uniforms: { uTime: { value: 0 }, uAmp: { value: 0.05 }, uPx: { value: 600 }, uColor: { value: new T.Color(1.6, 0.9, 0.4) } },
+      vertexShader: PARTICLE_VERT,
+      fragmentShader: PARTICLE_FRAG,
+      transparent: true,
+      depthWrite: false,
+      blending: T.AdditiveBlending,
+    }),
+  );
+  const cloud = new T.Points(pgeo, pmat);
+  cloud.scale.setScalar(1.05);
+  cloud.frustumCulled = false;
+  head.add(cloud);
+  const coreMat = track(new T.MeshBasicMaterial({ color: 0xffffff }));
+  coreMat.color.setRGB(2.6, 1.45, 0.65);
+  const core = new T.Mesh(track(new T.SphereGeometry(0.17, 24, 16)), coreMat);
+  head.add(core);
+  const rings: THREE.Mesh[] = [];
+  [1.25, 1.52, 1.78].forEach((rad, k) => {
+    const mat = track(new T.MeshBasicMaterial({ transparent: true, opacity: 0.85 - k * 0.2 }));
+    mat.color.setRGB(2.0 - k * 0.3, 1.0 - k * 0.1, 0.4);
+    const ring = new T.Mesh(track(new T.TorusGeometry(rad, 0.012, 8, 120)), mat);
+    ring.rotation.set(Math.PI / 2.2 + k * 0.5, k * 0.7, k * 1.1);
+    head.add(ring);
+    rings.push(ring);
+  });
+  if (full) {
+    const wireMat = track(new T.LineBasicMaterial({ transparent: true, opacity: 0.16 }));
+    wireMat.color.setRGB(1.2, 0.7, 0.35);
+    head.add(new T.LineSegments(track(new T.WireframeGeometry(new T.IcosahedronGeometry(0.98, 2))), wireMat));
+  }
   head.scale.setScalar(0.0001);
   head.visible = false;
 
+  // ---- bloom (full quality only): copper edges, the voice core and the particles glow
+  let composer: Composer | null = null;
+  if (full && !qs.has("nobloom")) {
+    try {
+      const [{ EffectComposer }, { RenderPass }, { UnrealBloomPass }, { OutputPass }] = await Promise.all([
+        import("three/examples/jsm/postprocessing/EffectComposer.js"),
+        import("three/examples/jsm/postprocessing/RenderPass.js"),
+        import("three/examples/jsm/postprocessing/UnrealBloomPass.js"),
+        import("three/examples/jsm/postprocessing/OutputPass.js"),
+      ]);
+      const pr = renderer.getPixelRatio();
+      const target = new T.WebGLRenderTarget(window.innerWidth * pr, window.innerHeight * pr, { type: T.HalfFloatType, samples: 4 });
+      const c = new EffectComposer(renderer, target);
+      c.setPixelRatio(pr);
+      c.addPass(new RenderPass(scene, camera));
+      c.addPass(new UnrealBloomPass(new T.Vector2(window.innerWidth / 2, window.innerHeight / 2), 0.5, 0.5, 0.9));
+      c.addPass(new OutputPass());
+      composer = c;
+    } catch {
+      composer = null;
+    }
+  }
+
   // ---- layout + sizing
-  const layout = { x: 0, y: 0, s: 1, w: 0 };
-  const small = () => window.innerWidth < 760;
+  const mobile = () => window.innerWidth < 760;
   const resize = () => {
     const w = window.innerWidth;
     const h = window.innerHeight;
     renderer.setSize(w, h, false);
+    composer?.setSize(w, h);
     camera.aspect = w / h;
     camera.updateProjectionMatrix();
-    const visH = 2 * 9.5 * Math.tan((17.5 * Math.PI) / 180);
-    const visW = visH * (w / h);
-    if (small()) {
-      layout.x = 0;
-      layout.y = visH * 0.2;
-      layout.s = Math.min(1, visW / 5.4);
-      layout.w = 0;
-    } else {
-      layout.x = visW * 0.2;
-      layout.y = 0;
-      layout.s = Math.min(1.15, visH / 5.6);
-      layout.w = visW;
-    }
   };
   resize();
   window.addEventListener("resize", resize);
 
   // ---- scenes (DOM-driven)
+  type Info = { scene: SceneId; heat: number[]; textRight: number; dim: boolean };
   let sceneEls: HTMLElement[] = [];
+  let infos: Info[] = [];
   let triggers: InstanceType<typeof ScrollTrigger>[] = [];
   let activeIdx = 0;
   const progress: number[] = [];
   let fA: SceneId = "stack";
   let fB: SceneId = "stack";
   let fU = 0;
+  let iA: Info | null = null;
+  let iB: Info | null = null;
   let heatNow: number[] = [];
-  const parseHeat = (el: HTMLElement | undefined): number[] =>
-    (el?.dataset.heat ?? "").split(",").map((s) => parseInt(s, 10)).filter((n) => !Number.isNaN(n));
-  const sceneOf = (el: HTMLElement | undefined): SceneId => ((el?.dataset.scene as SceneId) ?? "stack");
+
+  const measure = (el: HTMLElement): Info => {
+    const col = el.querySelector<HTMLElement>(".v4-col") ?? el.querySelector<HTMLElement>(".v4-band-in > div") ?? el;
+    const r = col.getBoundingClientRect();
+    return {
+      scene: (el.dataset.scene as SceneId) ?? "stack",
+      heat: (el.dataset.heat ?? "").split(",").map((s) => parseInt(s, 10)).filter((n) => !Number.isNaN(n)),
+      textRight: r.right,
+      dim: !!el.dataset.dim,
+    };
+  };
   const recompute = () => {
-    const i = Math.min(activeIdx, Math.max(0, sceneEls.length - 1));
+    if (!infos.length) {
+      fA = fB = "stack";
+      fU = 0;
+      iA = iB = null;
+      heatNow = [];
+      return;
+    }
+    const i = Math.min(activeIdx, infos.length - 1);
     const p = progress[i] ?? 0;
-    const cur = sceneEls[i];
-    const nxt = sceneEls[i + 1];
-    fA = sceneOf(cur);
-    fB = nxt ? sceneOf(nxt) : fA;
-    fU = nxt ? sm((p - 0.5) / 0.5) : 0;
-    heatNow = parseHeat(fU > 0.5 && nxt ? nxt : cur);
-    const dimEl = fU > 0.5 && nxt ? nxt : cur;
-    if (dimEl?.dataset.dim) document.documentElement.setAttribute("data-dim", "1");
+    const nxt = infos[i + 1];
+    iA = infos[i];
+    iB = nxt ?? infos[i];
+    fA = iA.scene;
+    fB = iB.scene;
+    // The morph runs over the last 60 % of a section with a cubic ease, so the move reads as deliberate.
+    fU = nxt ? easeInOut((p - 0.4) / 0.6) : 0;
+    const pick = fU > 0.5 ? iB : iA;
+    heatNow = pick.heat;
+    if (pick.dim) document.documentElement.setAttribute("data-dim", "1");
     else document.documentElement.removeAttribute("data-dim");
+  };
+  const remeasure = () => {
+    infos = sceneEls.map(measure);
+    recompute();
   };
   const setScenes = (els: HTMLElement[]) => {
     triggers.forEach((t) => t.kill());
     triggers = [];
     sceneEls = els;
     activeIdx = 0;
+    snapped = false; // a new page is a cut: place the object at its new column at once
+    if (els.some((e) => e.dataset.scene === "websites" || e.dataset.scene === "cards")) loadShots();
     if (els.length === 0) document.documentElement.setAttribute("data-dim", "2");
     else document.documentElement.removeAttribute("data-dim");
     els.forEach((el, i) => {
@@ -418,20 +607,23 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
               recompute();
             }
           },
+          onRefresh: i === 0 ? () => remeasure() : undefined,
         }),
       );
     });
-    recompute();
+    remeasure();
     ScrollTrigger.refresh();
   };
+  window.addEventListener("resize", remeasure);
 
   // ---- render loop
   let running = true;
   let raf = 0;
-  let T = 0;
+  let Tm = 0;
   let last = performance.now();
   let frame = 0;
   let first = false;
+  let slow = 0;
   const pointer = { x: 0, y: 0 };
   const coarse = window.matchMedia("(pointer: coarse)").matches;
   const onPointer = (e: PointerEvent) => {
@@ -444,73 +636,168 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
   };
   document.addEventListener("visibilitychange", onVis);
 
-  // current blended parameters, eased
-  const cur = { gy: 0, gx: 0, gs: 1, gxo: 0 };
+  const cur = { gy: 0, gx: 0, s: 1, x: 0, y: 0, cz: 9.5, cy: 0.1, fov: 35 };
   let curHeadW = 0;
   let curRailW = 0;
+  let snapped = false;
 
   const update = (dt: number) => {
+    const firstFrame = !snapped;
+    snapped = true;
     const u = fU;
     const w = (id: SceneId) => (fA === fB ? (fA === id ? 1 : 0) : (fA === id ? 1 - u : 0) + (fB === id ? u : 0));
+    const small = mobile();
+    const useShots = w("websites") + w("cards") > 0.5;
+
     slabs.forEach((s, i) => {
-      const a = pose(fA, i, T);
-      const b = pose(fB, i, T);
+      const a = pose(fA, i, Tm);
+      const b = pose(fB, i, Tm);
       s.m.position.set(lerp(a[0], b[0], u), lerp(a[1], b[1], u), lerp(a[2], b[2], u));
       s.m.rotation.set(lerp(a[3], b[3], u), lerp(a[4], b[4], u), lerp(a[5], b[5], u));
       s.m.scale.set(lerp(a[6], b[6], u), lerp(a[7], b[7], u), lerp(a[8], b[8], u));
-      s.m.position.y += Math.sin(T * 2.2 - i * 0.9) * 0.1 * w("flow");
+      s.m.position.y += Math.sin(Tm * 2.2 - i * 0.9) * 0.1 * w("flow");
       const tg = heatNow.includes(i) ? 1 : 0;
       s.heat += (tg - s.heat) * Math.min(1, dt * 5);
-      const e = s.heat * 0.32;
+      // Lighting all plates at once would flatten the stack to beige; keep it to a glow.
+      const hv = s.heat * (heatNow.length > 3 ? 0.4 : 1);
+      const e = hv * 0.32;
       s.mats.forEach((mt) => mt.emissive.setRGB(0.76 * e, 0.47 * e, 0.25 * e));
-      s.edge.opacity = 0.45 + 0.5 * s.heat;
+      // Edges glow harder on lit plates (HDR colour; blooms on desktop).
+      s.edge.color.setRGB(0.9 + hv * 2.4, 0.5 + hv * 1.2, 0.2 + hv * 0.5);
+      s.edge.opacity = 0.7 + 0.3 * hv;
+      // Real screenshots on the window planes while the Websites / Produkte scenes are in view.
+      const want = useShots && s.shot ? s.shot : s.top;
+      const mats = s.m.material as THREE.Material[];
+      if (mats[2] !== want) mats[2] = want;
     });
-    const headW = w("agents");
+
     const railW = w("flow");
-    curHeadW += (headW - curHeadW) * Math.min(1, dt * 6);
     curRailW += (railW - curRailW) * Math.min(1, dt * 6);
     rail.scale.x = Math.max(0.001, sm(curRailW));
+    const headW = w("agents");
+    curHeadW += (headW - curHeadW) * Math.min(1, dt * 6);
     head.visible = curHeadW > 0.02;
     head.scale.setScalar(Math.max(0.0001, sm(curHeadW)));
     if (head.visible) {
-      const amp = stepVoice(T);
-      mouth.forEach((mb, i) => {
-        mb.scale.y = 0.12 + amp * (0.5 + 0.5 * Math.sin(T * 11 + i * 1.3)) * 1.9;
+      const amp = stepVoice(Tm);
+      pmat.uniforms.uTime.value = Tm;
+      pmat.uniforms.uAmp.value = amp;
+      pmat.uniforms.uPx.value = renderer.domElement.height / (2 * Math.tan((camera.fov * Math.PI) / 360));
+      core.scale.setScalar(1 + amp * 1.4 + (voice.mode === "listen" ? 0.12 * Math.sin(Tm * 4) : 0));
+      head.rotation.y = Tm * 0.25 + pointer.x * 0.3;
+      head.rotation.x = Math.sin(Tm * 0.7) * 0.08 - pointer.y * 0.12;
+      rings.forEach((r, k) => {
+        r.scale.setScalar(1 + amp * (0.05 + k * 0.035) * (0.7 + 0.3 * Math.sin(Tm * (3 + k) - k)));
+        r.rotation.z += dt * (0.25 + k * 0.18) * (k % 2 ? -1 : 1);
       });
-      head.rotation.y = Math.sin(T * 0.8) * 0.18 + pointer.x * 0.3;
-      head.rotation.x = Math.sin(T * 1.3) * 0.04 + (amp > 0.3 ? 0.04 : 0) - pointer.y * 0.15;
-      const ps = 1 + amp * 0.08 + (voice.mode === "listen" ? 0.03 * Math.sin(T * 4) : 0);
-      halo.scale.set(ps, ps, ps);
-      halo.rotation.z = T * 0.4;
     }
-    const tgt = {
-      gy: lerp(GY[fA], GY[fB], u),
-      gx: lerp(GX[fA], GX[fB], u),
-      gs: lerp(GS[fA], GS[fB], u),
-      gxo: lerp(GXO[fA], GXO[fB], u),
-    };
-    const k = Math.min(1, dt * 5);
-    cur.gy += (tgt.gy - cur.gy) * k;
-    cur.gx += (tgt.gx - cur.gx) * k;
-    cur.gs += (tgt.gs - cur.gs) * k;
-    cur.gxo += (tgt.gxo - cur.gxo) * k;
-    group.rotation.y = cur.gy + Math.sin(T * 0.35) * 0.07 + (coarse ? 0 : pointer.x * 0.22);
-    group.rotation.x = cur.gx - (coarse ? 0 : pointer.y * 0.1);
-    group.position.set(layout.x + cur.gxo * layout.w, layout.y + Math.sin(T * 0.6) * 0.05, 0);
-    group.scale.setScalar(layout.s * cur.gs);
+
+    // camera: eased between the per-scene dolly / crane positions
+    const cA = CAM[fA];
+    const cB = CAM[fB];
+    const kc = firstFrame ? 1 : Math.min(1, dt * 3.5);
+    cur.cz += (lerp(cA.z, cB.z, u) - cur.cz) * kc;
+    cur.cy += (lerp(cA.y, cB.y, u) - cur.cy) * kc;
+    cur.fov += (lerp(cA.fov, cB.fov, u) - cur.fov) * kc;
+    if (Math.abs(camera.fov - cur.fov) > 0.01) {
+      camera.fov = cur.fov;
+      camera.updateProjectionMatrix();
+    }
+    camera.position.set(0, cur.cy + Math.cos(Tm * 0.14) * 0.12, cur.cz + Math.sin(Tm * 0.18) * 0.2);
+    camera.lookAt(0, cur.cy * 0.25, 0);
+
+    // fit the object into the free column beside the text (desktop) or above it (phones)
+    const vw = window.innerWidth;
+    const visH = 2 * cur.cz * Math.tan((cur.fov * Math.PI) / 360);
+    const visW = visH * (vw / window.innerHeight);
+    const hw = lerp(HALF_W[fA], HALF_W[fB], u);
+    const hh = lerp(HALF_H[fA], HALF_H[fB], u);
+    let tx: number;
+    let ty: number;
+    let ts: number;
+    if (small) {
+      tx = 0;
+      ty = visH * 0.2;
+      ts = Math.min(1, visW / (2 * hw + 0.45));
+    } else {
+      const trA = iA?.textRight ?? vw * 0.45;
+      const trB = iB?.textRight ?? trA;
+      const textRight = lerp(trA, trB, u);
+      const L = Math.min(vw * 0.62, textRight + 44);
+      const R = vw - 24;
+      const wpp = visW / vw;
+      tx = ((L + R) / 2 - vw / 2) * wpp;
+      ty = 0;
+      ts = Math.min(1.15, (visH * 0.9) / (2 * hh), ((R - L) * wpp) / (2 * hw * 1.05));
+    }
+    // First frame: start at the target, not at the viewport centre, so the object never glides across the text.
+    const kl = firstFrame ? 1 : Math.min(1, dt * 4);
+    cur.x += (tx - cur.x) * kl;
+    cur.y += (ty - cur.y) * kl;
+    cur.s += (ts - cur.s) * kl;
+    cur.gy += (lerp(GY[fA], GY[fB], u) - cur.gy) * kl;
+    cur.gx += (lerp(GX[fA], GX[fB], u) - cur.gx) * kl;
+    group.rotation.y = cur.gy + Math.sin(Tm * 0.35) * 0.07 + (coarse ? 0 : pointer.x * 0.2);
+    group.rotation.x = cur.gx - (coarse ? 0 : pointer.y * 0.09);
+    group.position.set(cur.x, cur.y + Math.sin(Tm * 0.6) * 0.05, 0);
+    group.scale.setScalar(Math.max(0.05, cur.s));
   };
+
+  // Layout-audit hook (`?debug` only): projected screen box of everything visible in the group.
+  if (debug) {
+    const tb = new T.Box3();
+    const tv = new T.Vector3();
+    (window as unknown as Record<string, unknown>).__v4stage = {
+      bounds: () => {
+        group.updateMatrixWorld(true);
+        camera.updateMatrixWorld(true);
+        let l = Infinity;
+        let t = Infinity;
+        let r = -Infinity;
+        let b = -Infinity;
+        const add = (o: THREE.Object3D) => {
+          tb.setFromObject(o);
+          if (tb.isEmpty()) return;
+          for (const x of [tb.min.x, tb.max.x])
+            for (const y of [tb.min.y, tb.max.y])
+              for (const z of [tb.min.z, tb.max.z]) {
+                tv.set(x, y, z).project(camera);
+                const px = (tv.x * 0.5 + 0.5) * window.innerWidth;
+                const py = (-tv.y * 0.5 + 0.5) * window.innerHeight;
+                l = Math.min(l, px);
+                r = Math.max(r, px);
+                t = Math.min(t, py);
+                b = Math.max(b, py);
+              }
+        };
+        slabs.forEach((s) => add(s.m));
+        if (head.visible) add(cloud);
+        if (rail.scale.x > 0.05) add(rail);
+        return { l, t, r, b, from: fA, to: fB, u: fU, scale: cur.s, frames: frame };
+      },
+    };
+  }
 
   const loop = (now: number) => {
     if (!running) return;
     raf = requestAnimationFrame(loop);
     if (document.hidden) return;
     frame++;
-    if (quality === "light" && frame % 2) return;
+    if (!full && frame % 2) return;
     const dt = Math.min(0.05, (now - last) / 1000 || 0.016);
+    // Frame-time guard: if bloom cannot hold ~20 fps, fall back to the plain renderer for good.
+    if (composer && !debug && (now - last) / 1000 > 0.05) {
+      slow++;
+      if (slow > 40) {
+        composer.dispose();
+        composer = null;
+      }
+    } else if (slow > 0) slow--;
     last = now;
-    T += dt;
+    Tm += dt;
     update(dt);
-    renderer.render(scene, camera);
+    if (composer) composer.render(dt);
+    else renderer.render(scene, camera);
     if (!first) {
       first = true;
       onFirstFrame();
@@ -525,13 +812,16 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
       running = false;
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
+      window.removeEventListener("resize", remeasure);
       window.removeEventListener("pointermove", onPointer);
       document.removeEventListener("visibilitychange", onVis);
       triggers.forEach((t) => t.kill());
       labelTextures.forEach((t) => t.dispose());
       disposables.forEach((d) => d.dispose());
+      composer?.dispose();
       renderer.dispose();
       renderer.domElement.remove();
+      delete (window as unknown as Record<string, unknown>).__v4stage;
     },
   };
 }
@@ -542,10 +832,11 @@ export function Stage() {
   const hostRef = useRef<HTMLDivElement>(null);
   const coreRef = useRef<Core | null>(null);
   const [ready, setReady] = useState(false);
-  const v4 = isV4Path(pathname);
+  const first = stripLocalePrefix(pathname ?? "").split("/").filter(Boolean)[0] ?? "";
+  const v4 = isV4Path(pathname) && !NO_STAGE.has(first);
   const loc: "de" | "en" | "tr" = locale === "de" || locale === "tr" ? locale : "en";
 
-  // Start the 3D core once, after first paint and when the browser is idle.
+  // Start the 3D core once, after first paint and on first user intent.
   useEffect(() => {
     if (!v4) return;
     let cancelled = false;
@@ -595,9 +886,9 @@ export function Stage() {
         });
     };
 
-    // The static poster is the first frame. The 3D core (three.js + GSAP, ~210 kB gz) starts on the
-    // first sign of a person (pointer, scroll, touch, key), or after 8 s for someone just watching,
-    // so it never competes with first paint, hydration or an automated audit's quiet window.
+    // The static poster is the first frame. The 3D core (three.js + GSAP) starts on the first sign of
+    // a person (pointer, scroll, touch, key), or after 8 s for someone just watching, so it never
+    // competes with first paint, hydration or an automated audit's quiet window.
     const INTENT = ["pointerdown", "pointermove", "wheel", "touchstart", "keydown", "scroll"] as const;
     const onIntent = () => {
       INTENT.forEach((e) => window.removeEventListener(e, onIntent));
