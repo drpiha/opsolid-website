@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import {
   LOCALES,
-  DEFAULT_LOCALE,
+  ROUTING_DEFAULT_LOCALE,
   isLocale,
   type Locale,
 } from "@/lib/i18n";
@@ -75,7 +75,7 @@ async function resolveLocale(req: NextRequest): Promise<LocaleResolution> {
   if (isLocale(cookieValue)) return { locale: cookieValue, source: "cookie" };
   const fromHeader = localeFromAcceptLanguage(req.headers.get("accept-language"));
   if (fromHeader) return { locale: fromHeader, source: "accept-language" };
-  return { locale: DEFAULT_LOCALE, source: "default" };
+  return { locale: ROUTING_DEFAULT_LOCALE, source: "default" };
 }
 
 /** Delete every legacy locale cookie so none can override the current one. */
@@ -259,7 +259,7 @@ export async function middleware(req: NextRequest) {
   // locale: a permanent redirect must not depend on request headers.
   const retiredTarget = getRetiredRedirectTarget(pathWithoutLocale);
   if (retiredTarget !== null) {
-    const localeForRedirect: Locale = hasLocale ? (firstSegment as Locale) : DEFAULT_LOCALE;
+    const localeForRedirect: Locale = hasLocale ? (firstSegment as Locale) : ROUTING_DEFAULT_LOCALE;
     const url = req.nextUrl.clone();
     url.pathname =
       retiredTarget === "/" ? `/${localeForRedirect}` : `/${localeForRedirect}${retiredTarget}`;

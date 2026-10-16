@@ -3,8 +3,8 @@
 // =============================================================================
 // useAuthState — lightweight "am I logged in?" hook for marketing-site chrome.
 //
-// Calls GET /api/auth/me once on mount. That endpoint resolves the session from
-// the refresh cookie (or Bearer) and returns the user (incl. role) or 401. The
+// Calls GET /api/auth/status once on mount. That endpoint resolves the session from
+// the refresh cookie (or Bearer) and returns the user (incl. role), or `{ user: null }` (200). The
 // header uses this to render an auth-aware account corner: a "Sign in" link when
 // anonymous, an account menu (My cards / Admin / Sign out) when logged in.
 //
@@ -30,7 +30,7 @@ export function useAuthState(): { status: AuthStatus; user: AuthUser | null } {
 
   useEffect(() => {
     let cancelled = false;
-    fetch("/api/auth/me", { credentials: "same-origin" })
+    fetch("/api/auth/status", { credentials: "same-origin" })
       .then(async (res) => {
         if (cancelled) return;
         if (res.ok) {

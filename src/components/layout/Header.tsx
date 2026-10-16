@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { usePathname } from "next/navigation";
-import { useLocale } from "@/context/LocaleContext";
+import { useLocaleBase as useLocale } from "@/context/LocaleContext";
 import { useAuthState } from "@/components/layout/useAuthState";
 import { AccountMenu } from "@/components/layout/AccountMenu";
 import { cn } from "@/lib/utils";

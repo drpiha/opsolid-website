@@ -2,8 +2,8 @@
 
 import { createContext, useContext, useCallback, useMemo, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { contents } from "@/content";
 import type { Content } from "@/content/en";
+import { ContentContext } from "@/context/ContentContext";
 import {
   LOCALES,
   DEFAULT_LOCALE,
@@ -15,16 +15,14 @@ import {
   directionForLocale,
 } from "@/lib/i18n";
 
-interface LocaleContextValue {
+interface LocaleBaseValue {
   locale: Locale;
   setLocale: (locale: Locale) => void;
-  t: Content;
 }
 
-const LocaleContext = createContext<LocaleContextValue>({
+const LocaleContext = createContext<LocaleBaseValue>({
   locale: DEFAULT_LOCALE,
   setLocale: () => {},
-  t: contents[DEFAULT_LOCALE],
 });
 
 // Keep in sync with src/middleware.ts. The cookie name is versioned whenever
@@ -79,14 +77,28 @@ export function LocaleProvider({
     [pathname, router]
   );
 
-  const value = useMemo(
-    () => ({ locale, setLocale, t: contents[locale] }),
-    [locale, setLocale]
-  );
+  const value = useMemo(() => ({ locale, setLocale }), [locale, setLocale]);
 
   return <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>;
 }
 
-export function useLocale() {
+/** Locale + setter only. Safe everywhere; does not require (or pull in) the content bundle. */
+export function useLocaleBase(): LocaleBaseValue {
   return useContext(LocaleContext);
+}
+
+const MISSING_CONTENT = new Proxy({} as Content, {
+  get(_target, prop) {
+    if (prop === "then" || typeof prop === "symbol") return undefined;
+    throw new Error(
+      `useLocale().t.${String(prop)} was read outside a <ContentProvider>. v4 marketing routes carry their own copy; app surfaces get content through ContentGate.`,
+    );
+  },
+});
+
+/** Locale + setter + the full localized content bundle (`t`). `t` needs <ContentProvider> above it. */
+export function useLocale(): LocaleBaseValue & { t: Content } {
+  const base = useContext(LocaleContext);
+  const t = useContext(ContentContext);
+  return { ...base, t: t ?? MISSING_CONTENT };
 }

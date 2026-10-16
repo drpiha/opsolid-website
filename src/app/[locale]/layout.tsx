@@ -6,6 +6,7 @@ import { Footer } from "@/components/layout/Footer";
 import { PageTransition } from "@/components/motion/PageTransition";
 import { Stage } from "@/components/v4/Stage";
 import { V4Sync } from "@/components/v4/V4Sync";
+import { ContentGate } from "@/components/v4/ContentGate";
 import { LOCALES, type Locale, isLocale } from "@/lib/i18n";
 
 export function generateStaticParams() {
@@ -58,7 +59,9 @@ export default function LocaleLayout({
       </a>
       <Header />
       <main id="main" className="flex-1 relative z-[2]">
-        <PageTransition>{children}</PageTransition>
+        <ContentGate>
+          <PageTransition>{children}</PageTransition>
+        </ContentGate>
       </main>
       <Footer />
     </ClientProviders>

@@ -8,18 +8,7 @@
    Shared site layout (.os-header, .os-hero, .km-* kinetic mechanism,
    sections) lives in opsolid-site.css. */
 @import "../styles/opsolid-tokens.css";
-@import "../styles/opsolid-site.css";
-@import "../styles/opsolid-backdrop.css";
-@import "../styles/opsolid-voice-agent.css";
-@import "../styles/opsolid-digital-card.css";
-@import "../styles/opsolid-kutasia.css";
-@import "../styles/opsolid-contact.css";
-@import "../styles/opsolid-blog.css";
-@import "../styles/opsolid-pricing.css";
-@import "../styles/opsolid-consulting.css";
-@import "../styles/opsolid-v2.css";
 @import "../styles/opsolid-v4.css";
-@import "../components/cards/smart/themes.css";
 
 @layer base {
   /* Legacy light-mode variables kept for any stragglers still reading them.

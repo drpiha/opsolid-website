@@ -14,7 +14,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
-import { useLocale } from "@/context/LocaleContext";
+import { useLocaleBase as useLocale } from "@/context/LocaleContext";
 import type { AuthStatus, AuthUser } from "./useAuthState";
 
 interface Props {

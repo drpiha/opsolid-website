@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useLocale } from "@/context/LocaleContext";
+import { useLocaleBase as useLocale } from "@/context/LocaleContext";
 
 const T = {
   de: {

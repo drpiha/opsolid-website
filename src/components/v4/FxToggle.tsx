@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useLocale } from "@/context/LocaleContext";
+import { useLocaleBase as useLocale } from "@/context/LocaleContext";
 import { FX_EVENT, FX_STORAGE_KEY } from "@/components/v4/Stage";
 
 const T = {

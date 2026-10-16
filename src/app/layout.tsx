@@ -9,6 +9,7 @@ import {
   Archivo,
   IBM_Plex_Mono,
 } from "next/font/google";
+import localFont from "next/font/local";
 import { isV4Path } from "@/lib/v4";
 import { ConditionalAnalytics } from "@/components/shared/ConditionalAnalytics";
 import { SITE_CONFIG } from "@/lib/constants";
@@ -19,17 +20,34 @@ import "./globals.css";
 // v4: Archivo (display + body, variable width axis) and IBM Plex Mono (labels)
 // are the only preloaded families for the marketing site. The legacy families
 // below still serve app surfaces (cards, dashboard) but are not preloaded.
+// Latin is preloaded; latin-ext (ğ ş İ ı …) loads on demand, so first paint
+// carries one display file instead of two. Both families are stacked in CSS.
 const archivo = Archivo({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   display: "swap",
   variable: "--font-archivo",
   axes: ["wdth"],
 });
+const archivoExt = Archivo({
+  subsets: ["latin-ext"],
+  display: "swap",
+  preload: false,
+  variable: "--font-archivo-ext",
+  axes: ["wdth"],
+});
 
 const ibmPlexMono = IBM_Plex_Mono({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   display: "swap",
+  preload: false,
   variable: "--font-plex-mono",
+  weight: ["400", "500"],
+});
+const ibmPlexMonoExt = IBM_Plex_Mono({
+  subsets: ["latin-ext"],
+  display: "swap",
+  preload: false,
+  variable: "--font-plex-mono-ext",
   weight: ["400", "500"],
 });
 
@@ -61,18 +79,15 @@ const firaCode = Fira_Code({
   weight: ["400", "500"],
 });
 
-// Geist isn't a Google Font at this time; Vercel ships it as a static file
-// in the `geist` npm package. We keep it optional — if the package is
-// missing, the CSS stack falls back to Inter for display.
-let geistVariable = "";
-try {
-  // Dynamic require so missing dep in CI doesn't break the build.
-  // eslint-disable-next-line @typescript-eslint/no-var-requires, @typescript-eslint/no-require-imports
-  const { GeistSans } = require("geist/font/sans");
-  geistVariable = GeistSans.variable;
-} catch {
-  geistVariable = "";
-}
+// Geist ships as a file in the `geist` npm package. It only serves legacy card
+// templates and app surfaces, so it is declared without preload.
+const geist = localFont({
+  src: "../../node_modules/geist/dist/fonts/geist-sans/Geist-Variable.woff2",
+  variable: "--font-geist",
+  display: "swap",
+  preload: false,
+  weight: "100 900",
+});
 
 const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
@@ -183,11 +198,13 @@ export default function RootLayout({
 
   const fontClasses = [
     archivo.variable,
+    archivoExt.variable,
     ibmPlexMono.variable,
+    ibmPlexMonoExt.variable,
     inter.variable,
     instrumentSerif.variable,
     jetBrainsMono.variable,
-    geistVariable,
+    geist.variable,
     plusJakartaSans.variable,
     firaCode.variable,
   ]

@@ -38,3 +38,12 @@ export function isV4Path(pathname: string | null | undefined): boolean {
   const first = rest.split("/").filter(Boolean)[0] ?? "";
   return V4_FIRST_SEGMENTS.has(first);
 }
+
+/** v4 routes whose (legacy) components still read the full content bundle via useLocale().t. */
+const NEEDS_CONTENT = new Set(["impressum", "privacy"]);
+
+export function needsContentBundle(pathname: string | null | undefined): boolean {
+  if (!isV4Path(pathname)) return true;
+  const first = stripLocalePrefix(pathname ?? "").split("/").filter(Boolean)[0] ?? "";
+  return NEEDS_CONTENT.has(first);
+}

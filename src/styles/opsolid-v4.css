@@ -5,6 +5,27 @@
    Families: Archivo (display + body, width axis) · IBM Plex Mono (labels).
    ========================================================================== */
 
+:root {
+  /* App surfaces (light/dark by the legacy theme) share the v4 header and footer:
+     map the v4 variables onto the legacy token ladder there. */
+  --v4-bg: var(--bg-1);
+  --v4-bg2: var(--bg-2);
+  --v4-bg3: var(--bg-3);
+  --v4-ink: var(--ink-100);
+  --v4-ink2: var(--ink-300);
+  --v4-ink3: var(--ink-400);
+  --v4-line: var(--line);
+  --v4-line2: var(--line-firm);
+  --v4-cu: #c27940;
+  --v4-cu-hi: #8f4f1e;
+  --v4-on-cu: #12110f;
+  --v4-display: var(--font-archivo), var(--font-archivo-ext), "Arial Narrow", system-ui, sans-serif;
+  --v4-mono: var(--font-plex-mono), var(--font-plex-mono-ext), ui-monospace, Menlo, monospace;
+  --v4-gutter: max(18px, env(safe-area-inset-left, 0px));
+  --v4-gutter-r: max(18px, env(safe-area-inset-right, 0px));
+}
+:root[data-theme="dark"] { --v4-cu-hi: #e0a070; }
+
 html[data-v4],
 html[data-v4][data-theme] {
   --v4-bg: #12110f;
@@ -18,8 +39,8 @@ html[data-v4][data-theme] {
   --v4-cu: #c27940;
   --v4-cu-hi: #e0a070;
   --v4-on-cu: #12110f;
-  --v4-display: var(--font-archivo), "Arial Narrow", system-ui, sans-serif;
-  --v4-mono: var(--font-plex-mono), ui-monospace, Menlo, monospace;
+  --v4-display: var(--font-archivo), var(--font-archivo-ext), "Arial Narrow", system-ui, sans-serif;
+  --v4-mono: var(--font-plex-mono), var(--font-plex-mono-ext), ui-monospace, Menlo, monospace;
   --v4-gutter: max(18px, env(safe-area-inset-left, 0px));
   --v4-gutter-r: max(18px, env(safe-area-inset-right, 0px));
 
@@ -605,3 +626,16 @@ html[data-v4] [aria-labelledby="consent-title"] button:hover { box-shadow: inset
 .v4-prose th, .v4-prose td { text-align: left; padding: 10px 10px 10px 0; border-bottom: 1px solid var(--v4-line); }
 .v4-pn { display: grid; gap: 24px; }
 @media (min-width: 760px) { .v4-pn { grid-template-columns: 1fr 1fr; } }
+
+/* tables stack on phones so the price never hides behind a horizontal scroll */
+@media (max-width: 759px) {
+  .v4-table { min-width: 0; }
+  .v4-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .v4-table, .v4-table tbody, .v4-table tr, .v4-table td { display: block; width: 100%; }
+  .v4-table tr { padding: 16px 0; border-bottom: 1px solid var(--v4-line); }
+  .v4-table td { padding: 0 0 6px; border: 0; }
+  .v4-table td:first-child { font-weight: 700; font-size: 1.1rem; }
+  .v4-table td:first-child small { font-weight: 400; font-size: 0.9rem; }
+  .v4-table td.pr, .v4-table .pr { text-align: left; padding: 4px 0 0; font-size: 1.05rem; }
+  .v4-table caption { display: block; }
+}

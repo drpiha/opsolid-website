@@ -3,13 +3,11 @@
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { getConsent, setConsent } from "@/lib/consent";
-import { useLocale } from "@/context/LocaleContext";
-import { contents } from "@/content";
-
-type SiteLocale = keyof typeof contents;
+import { useLocaleBase } from "@/context/LocaleContext";
+import { CONSENT_COPY } from "@/content/consent-copy";
 
 export function ConsentBanner() {
-  const { t, locale } = useLocale();
+  const { locale } = useLocaleBase();
   const pathname = usePathname();
   const [show, setShow] = useState(false);
 
@@ -17,10 +15,8 @@ export function ConsentBanner() {
   // so the context falls back to English. The URL's first segment is the
   // visitor's language: use it, otherwise /de pages show an English banner.
   const segment = pathname?.split("/")[1] ?? "";
-  const pathLocale = Object.prototype.hasOwnProperty.call(contents, segment)
-    ? (segment as SiteLocale)
-    : null;
-  const copy = pathLocale ? contents[pathLocale].consent : t.consent;
+  const pathLocale = Object.prototype.hasOwnProperty.call(CONSENT_COPY, segment) ? segment : null;
+  const copy = CONSENT_COPY[pathLocale ?? locale] ?? CONSENT_COPY.en;
   const privacyLocale = pathLocale ?? locale;
 
   // Suppress on chrome-less render targets that are screenshot or

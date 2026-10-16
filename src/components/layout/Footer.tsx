@@ -2,7 +2,7 @@
 
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { usePathname } from "next/navigation";
-import { useLocale } from "@/context/LocaleContext";
+import { useLocaleBase as useLocale } from "@/context/LocaleContext";
 import { FxToggle } from "@/components/v4/FxToggle";
 import { SITE_CONFIG, formatStand } from "@/lib/constants";
 

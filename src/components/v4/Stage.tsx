@@ -14,7 +14,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
-import { useLocale } from "@/context/LocaleContext";
+import { useLocaleBase as useLocale } from "@/context/LocaleContext";
 import { isV4Path } from "@/lib/v4";
 import { stepVoice, voice } from "@/lib/voice-sim";
 
@@ -200,8 +200,10 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
   const box = track(new THREE.BoxGeometry(2.4, 0.34, 1.6));
   const egeo = track(new THREE.EdgesGeometry(box));
 
-  const fontFamily = (getComputedStyle(document.body).getPropertyValue("--font-archivo") || "Archivo").trim() || "Archivo";
-  const monoFamily = (getComputedStyle(document.body).getPropertyValue("--font-plex-mono") || "monospace").trim() || "monospace";
+  const cs = getComputedStyle(document.body);
+  const stack = (a: string, b: string, fb: string) => [cs.getPropertyValue(a).trim(), cs.getPropertyValue(b).trim(), fb].filter(Boolean).join(", ");
+  const fontFamily = stack("--font-archivo", "--font-archivo-ext", "Archivo, sans-serif");
+  const monoFamily = stack("--font-plex-mono", "--font-plex-mono-ext", "monospace");
   try {
     await Promise.race([
       Promise.all([document.fonts.load(`800 62px ${fontFamily}`), document.fonts.load(`500 24px ${monoFamily}`)]),
@@ -593,9 +595,20 @@ export function Stage() {
         });
     };
 
-    if (!prefersReduced && !off && gl) {
+    // The static poster is the first frame. The 3D core (three.js + GSAP, ~210 kB gz) starts on the
+    // first sign of a person (pointer, scroll, touch, key), or after 8 s for someone just watching,
+    // so it never competes with first paint, hydration or an automated audit's quiet window.
+    const INTENT = ["pointerdown", "pointermove", "wheel", "touchstart", "keydown", "scroll"] as const;
+    const onIntent = () => {
+      INTENT.forEach((e) => window.removeEventListener(e, onIntent));
+      window.clearTimeout(idleId);
       const ric = (window as unknown as { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number }).requestIdleCallback;
-      idleId = ric ? ric(start, { timeout: 1800 }) : window.setTimeout(start, 400);
+      if (ric) ric(start, { timeout: 600 });
+      else window.setTimeout(start, 50);
+    };
+    if (!prefersReduced && !off && gl) {
+      INTENT.forEach((e) => window.addEventListener(e, onIntent, { passive: true, once: true }));
+      idleId = window.setTimeout(onIntent, 8000);
     }
     const onFx = () => {
       let nowOff = false;
@@ -611,6 +624,7 @@ export function Stage() {
     return () => {
       cancelled = true;
       if (idleId) window.clearTimeout(idleId);
+      INTENT.forEach((e) => window.removeEventListener(e, onIntent));
       window.removeEventListener(FX_EVENT, onFx);
       stop();
     };
