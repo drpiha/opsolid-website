@@ -1,31 +1,119 @@
 import type { Metadata } from "next";
-import { BlogPage } from "./BlogPage";
-import { BlogV2 } from "@/components/v2/blog/BlogV2";
-import { V2Shell } from "@/components/v2/V2Shell";
-import { isPreviewV2 } from "@/lib/preview";
+import Link from "next/link";
+import { content as de } from "@/content/de";
+import { content as en } from "@/content/en";
+import { content as tr } from "@/content/tr";
+import { withLocale, type Locale } from "@/lib/i18n";
+import { pageMetadata, pickLocale } from "@/lib/seo-v4";
+import { Crumbs, CtaBand } from "@/components/v4/PageRenderer";
+import { JsonLdGraph } from "@/components/v4/JsonLd";
+import { Reveal } from "@/components/v4/Reveal";
+import { getPage } from "@/content/v4";
+import type { L3 } from "@/content/v4/types";
 
-export const metadata: Metadata = {
-  title: "Blog",
-  description:
-    "Insights on workflow automation, systems integration, AI, and operational efficiency from OpSolid.",
-  openGraph: {
-    title: "Blog | OpSolid",
-    description:
-      "Practical articles about workflow automation, integration strategies, and operational efficiency.",
+type Params = { params: { locale?: string } };
+
+const T: Record<L3, { crumb: string; eyebrow: string; h1: [string, string, string]; lede: string; read: string; min: string; title: string; desc: string; cat: Record<string, string> }> = {
+  de: {
+    crumb: "Notizen",
+    eyebrow: "Notizen aus der Praxis",
+    h1: ["Kurz, technisch, ", "ohne Buzzwords", "."],
+    lede: "Was ich aus Automatisierungs- und KI-Projekten mitnehme, in kurzen Texten.",
+    read: "Lesen",
+    min: "Min.",
+    title: "Notizen aus der Praxis: Automatisierung und KI",
+    desc: "Kurze, praxisnahe Texte zu Automatisierung, Integration, KI und Betrieb von Hasan Dönmez.",
+    cat: { automation: "Automatisierung", integration: "Integration", ai: "KI", operations: "Betrieb" },
+  },
+  en: {
+    crumb: "Notes",
+    eyebrow: "Notes from practice",
+    h1: ["Short, technical, ", "no buzzwords", "."],
+    lede: "What I take away from automation and AI projects, in short texts.",
+    read: "Read",
+    min: "min",
+    title: "Notes from practice: automation and AI",
+    desc: "Short, practical texts on automation, integration, AI and operations by Hasan Dönmez.",
+    cat: { automation: "Automation", integration: "Integration", ai: "AI", operations: "Operations" },
+  },
+  tr: {
+    crumb: "Notlar",
+    eyebrow: "Pratikten notlar",
+    h1: ["Kısa, teknik, ", "gevezelik yok", "."],
+    lede: "Otomasyon ve YZ projelerinden öğrendiklerim, kısa metinlerle.",
+    read: "Oku",
+    min: "dk",
+    title: "Pratikten notlar: otomasyon ve YZ",
+    desc: "Hasan Dönmez'den otomasyon, entegrasyon, YZ ve operasyon üzerine kısa, pratik metinler.",
+    cat: { automation: "Otomasyon", integration: "Entegrasyon", ai: "YZ", operations: "Operasyon" },
   },
 };
 
-export default function Page({
-  searchParams,
-}: {
-  searchParams?: Record<string, string | string[] | undefined>;
-}) {
-  if (isPreviewV2(searchParams)) {
-    return (
-      <V2Shell>
-        <BlogV2 />
-      </V2Shell>
-    );
-  }
-  return <BlogPage />;
+const BLOG = { de: de.blog, en: en.blog, tr: tr.blog };
+
+export function generateMetadata({ params }: Params): Metadata {
+  const loc = pickLocale(params?.locale);
+  return pageMetadata(loc, "blog", { title: T[loc].title, description: T[loc].desc });
+}
+
+export default function Page({ params }: Params) {
+  const loc = pickLocale(params?.locale);
+  const t = T[loc];
+  const posts = [...BLOG[loc].posts].sort((a, b) => (a.date < b.date ? 1 : -1));
+  const date = (d: string) => new Intl.DateTimeFormat(loc === "de" ? "de-DE" : loc === "tr" ? "tr-TR" : "en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }).format(new Date(d + "T00:00:00Z"));
+  const cta = getPage(loc, "home").cta;
+  return (
+    <div className="v4-page">
+      <JsonLdGraph
+        locale={loc}
+        slug="blog"
+        name={t.title}
+        description={t.desc}
+        kind="CollectionPage"
+        crumbs={[
+          { name: loc === "de" ? "Start" : loc === "tr" ? "Ana sayfa" : "Home", path: `/${loc}` },
+          { name: t.crumb, path: `/${loc}/blog` },
+        ]}
+      />
+      <section className="v4-sec is-hero" data-scene="stack" data-dim="1">
+        <div className="v4-in">
+          <div className="v4-col">
+            <Crumbs locale={loc} trail={[{ label: t.crumb }]} />
+            <span className="v4-eyebrow">{t.eyebrow}</span>
+            <h1 className="v4-h1">
+              {t.h1[0]}
+              <em>{t.h1[1]}</em>
+              {t.h1[2]}
+            </h1>
+            <p className="v4-lede">{t.lede}</p>
+          </div>
+        </div>
+      </section>
+      <section className="v4-sec is-flow" aria-label={t.eyebrow}>
+        <div className="v4-in">
+          <div className="v4-col is-wide">
+            <ul className="v4-rows" style={{ marginTop: 0 }}>
+              {posts.map((p) => (
+                <li key={p.slug} className="v4-row">
+                  <Reveal>
+                    <Link href={withLocale(`/blog/${p.slug}`, loc as Locale)} className="v4-row-in">
+                      <p className="v4-eyebrow" style={{ margin: "0 0 8px" }}>
+                        <time dateTime={p.date}>{date(p.date)}</time> · {t.cat[p.category] ?? p.category} · {p.readTime} {t.min}
+                      </p>
+                      <h2 className="v4-row-h" style={{ fontSize: "1.35rem" }}>
+                        {p.title}
+                        <span>{t.read} →</span>
+                      </h2>
+                      <p className="v4-row-p">{p.excerpt}</p>
+                    </Link>
+                  </Reveal>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+      <CtaBand cta={cta} locale={loc} />
+    </div>
+  );
 }

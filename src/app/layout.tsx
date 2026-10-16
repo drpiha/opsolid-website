@@ -6,16 +6,37 @@ import {
   JetBrains_Mono,
   Plus_Jakarta_Sans,
   Fira_Code,
+  Archivo,
+  IBM_Plex_Mono,
 } from "next/font/google";
+import { isV4Path } from "@/lib/v4";
 import { ConditionalAnalytics } from "@/components/shared/ConditionalAnalytics";
 import { SITE_CONFIG } from "@/lib/constants";
 import { isLocale, DEFAULT_LOCALE, directionForLocale } from "@/lib/i18n";
 import { ConsentBanner } from "@/components/shared/ConsentBanner";
 import "./globals.css";
 
+// v4: Archivo (display + body, variable width axis) and IBM Plex Mono (labels)
+// are the only preloaded families for the marketing site. The legacy families
+// below still serve app surfaces (cards, dashboard) but are not preloaded.
+const archivo = Archivo({
+  subsets: ["latin", "latin-ext"],
+  display: "swap",
+  variable: "--font-archivo",
+  axes: ["wdth"],
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  subsets: ["latin", "latin-ext"],
+  display: "swap",
+  variable: "--font-plex-mono",
+  weight: ["400", "500"],
+});
+
 const inter = Inter({
   subsets: ["latin", "latin-ext"],
   display: "swap",
+  preload: false,
   variable: "--font-inter",
   weight: ["400", "500", "600", "700"],
 });
@@ -27,6 +48,7 @@ const inter = Inter({
 const plusJakartaSans = Plus_Jakarta_Sans({
   subsets: ["latin", "latin-ext"],
   display: "swap",
+  preload: false,
   variable: "--font-v2-body",
   weight: ["400", "500", "600", "700", "800"],
 });
@@ -34,6 +56,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 const firaCode = Fira_Code({
   subsets: ["latin"],
   display: "swap",
+  preload: false,
   variable: "--font-v2-mono",
   weight: ["400", "500"],
 });
@@ -54,6 +77,7 @@ try {
 const instrumentSerif = Instrument_Serif({
   subsets: ["latin"],
   display: "swap",
+  preload: false,
   variable: "--font-instrument-serif",
   weight: ["400"],
   style: ["normal", "italic"],
@@ -62,6 +86,7 @@ const instrumentSerif = Instrument_Serif({
 const jetBrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   display: "swap",
+  preload: false,
   variable: "--font-jetbrains-mono",
   weight: ["400", "500", "600"],
 });
@@ -133,15 +158,15 @@ export const viewport: Viewport = {
   themeColor: [
     // M9 v2 promotion: Concrete Studio teal replaces legacy copper as the
     // primary accent across both light and dark UA chrome.
-    { media: "(prefers-color-scheme: light)", color: "#0F766E" },
-    { media: "(prefers-color-scheme: dark)", color: "#14B8A6" },
+    { media: "(prefers-color-scheme: light)", color: "#12110F" },
+    { media: "(prefers-color-scheme: dark)", color: "#12110F" },
   ],
 };
 
 // Applied inline in <head> before hydration so the first paint already has
 // the correct palette — avoids flash-of-wrong-theme. Mirrors
 // src/context/ThemeContext.tsx (DEFAULT_THEME = "light", key = "opsolid-theme").
-const NO_FLASH_THEME_SCRIPT = `(function(){try{var t=localStorage.getItem('opsolid-theme');if(t==='hybrid'){t='light';localStorage.setItem('opsolid-theme','light');}if(t!=='light'&&t!=='dark'){t='light';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();`;
+const NO_FLASH_THEME_SCRIPT = `(function(){try{if(document.documentElement.hasAttribute('data-v4')){document.documentElement.setAttribute('data-theme','dark');return;}var t=localStorage.getItem('opsolid-theme');if(t==='hybrid'){t='light';localStorage.setItem('opsolid-theme','light');}if(t!=='light'&&t!=='dark'){t='light';}document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();`;
 
 export default function RootLayout({
   children,
@@ -153,7 +178,12 @@ export default function RootLayout({
   const lang = isLocale(localeHeader) ? localeHeader : DEFAULT_LOCALE;
   const dir = directionForLocale(lang);
 
+  const requestPath = headerStore.get("x-pathname");
+  const v4 = isV4Path(requestPath);
+
   const fontClasses = [
+    archivo.variable,
+    ibmPlexMono.variable,
     inter.variable,
     instrumentSerif.variable,
     jetBrainsMono.variable,
@@ -178,7 +208,9 @@ export default function RootLayout({
       lang={lang}
       dir={dir}
       className={fontClasses}
-      data-preview={previewV2 ? "v2" : undefined}
+      data-preview={previewV2 && !v4 ? "v2" : undefined}
+      data-v4={v4 ? "1" : undefined}
+      data-theme={v4 ? "dark" : undefined}
       suppressHydrationWarning
     >
       <head>

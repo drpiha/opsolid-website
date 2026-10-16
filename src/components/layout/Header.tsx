@@ -5,291 +5,213 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { LocaleLink as Link } from "@/components/shared/LocaleLink";
 import { usePathname } from "next/navigation";
 import { useLocale } from "@/context/LocaleContext";
-import { ThemeToggle } from "@/components/layout/ThemeToggle";
 import { useAuthState } from "@/components/layout/useAuthState";
 import { AccountMenu } from "@/components/layout/AccountMenu";
 import { cn } from "@/lib/utils";
+import { isV4Path } from "@/lib/v4";
 import type { Locale } from "@/content";
 
-type NavItem = {
-  key: string;
-  href: string;
-  match: RegExp;
-  labels: { de: string; en: string; tr: string };
-};
+type L3 = { de: string; en: string; tr: string };
+type NavItem = { key: string; href: string; match: RegExp; label: L3 };
 
-// Focused primary nav (v3). Leistungen, Prozessautomatisierung, Interne Tools,
-// Microsoft 365 and the blog live in the footer.
+// v4 primary navigation. The service pages (Prozessautomatisierung,
+// Microsoft 365, Interne Tools, KI-Beratung) sit under "Leistungen".
 const NAV_ITEMS: NavItem[] = [
-  { key: "home", href: "/", match: /^\/(en|de|tr|es|it|fr|ar)?\/?$/, labels: { de: "Home", en: "Home", tr: "Ana sayfa" } },
-  { key: "opso", href: "/opso", match: /\/(opso|products\/digital-card)(\/|$)/, labels: { de: "OpSo", en: "OpSo", tr: "OpSo" } },
-  { key: "automationCheck", href: "/ai-automation-check", match: /\/ai-automation-check/, labels: { de: "KI-Check", en: "AI check", tr: "YZ kontrolü" } },
-  { key: "training", href: "/ki-schulungen", match: /\/ki-schulungen/, labels: { de: "KI-Schulungen", en: "AI training", tr: "YZ eğitimleri" } },
-  { key: "about", href: "/ueber-mich", match: /\/ueber-mich/, labels: { de: "Über mich", en: "About", tr: "Hakkımda" } },
-  { key: "contact", href: "/contact", match: /\/contact/, labels: { de: "Kontakt", en: "Contact", tr: "İletişim" } },
+  { key: "agents", href: "/agents", match: /\/agents(\/|$)/, label: { de: "Agents", en: "Agents", tr: "Agent'lar" } },
+  { key: "websites", href: "/websites", match: /\/websites(\/|$)/, label: { de: "Websites", en: "Websites", tr: "Web siteleri" } },
+  {
+    key: "services",
+    href: "/leistungen",
+    match: /\/(leistungen|ki-beratung|prozessautomatisierung|microsoft-365-automatisierung|interne-tools)(\/|$)/,
+    label: { de: "Leistungen", en: "Services", tr: "Hizmetler" },
+  },
+  { key: "check", href: "/ai-automation-check", match: /\/ai-automation-check/, label: { de: "KI-Check", en: "AI check", tr: "YZ kontrolü" } },
+  { key: "training", href: "/ki-schulungen", match: /\/ki-schulungen/, label: { de: "KI-Schulungen", en: "AI training", tr: "YZ eğitimleri" } },
+  { key: "opso", href: "/opso", match: /\/opso(\/|$)/, label: { de: "OpSo", en: "OpSo", tr: "OpSo" } },
+  { key: "about", href: "/ueber-mich", match: /\/ueber-mich/, label: { de: "Über mich", en: "About", tr: "Hakkımda" } },
 ];
 
-const LOCALE_LABELS: Record<Locale, string> = {
-  en: "EN",
-  de: "DE",
-  tr: "TR",
-  es: "ES",
-  it: "IT",
-  fr: "FR",
-  ar: "AR",
-};
+const CTA: L3 = { de: "KI-Check buchen", en: "Book an AI check", tr: "YZ kontrolü ayarla" };
+const CONTACT: L3 = { de: "Kontakt", en: "Contact", tr: "İletişim" };
+const MENU: L3 = { de: "Menü", en: "Menu", tr: "Menü" };
+const CLOSE: L3 = { de: "Menü schließen", en: "Close menu", tr: "Menüyü kapat" };
+
+const LOCALE_LABELS: Record<Locale, string> = { en: "EN", de: "DE", tr: "TR", es: "ES", it: "IT", fr: "FR", ar: "AR" };
 const VISIBLE_LOCALES: Locale[] = ["de", "en", "tr"];
+
+function Mark() {
+  return (
+    <svg className="v4-mark" width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+      <rect x="2" y="4" width="22" height="4" fill="#C27940" />
+      <rect x="2" y="11" width="22" height="4" fill="currentColor" opacity=".85" />
+      <rect x="2" y="18" width="22" height="4" fill="currentColor" opacity=".55" />
+    </svg>
+  );
+}
 
 export function Header() {
   const pathname = usePathname();
-  // The prelaunch OpSo app has a separate account system from the legacy
-  // website card service. Do not imply that its account links open the app.
-  const isOpsoPage = /\/opso\/?$/.test(pathname || "");
-  const { locale, setLocale, t } = useLocale();
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
-  const navLabels = t.v2.nav;
+  const { locale, setLocale } = useLocale();
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const loc: keyof L3 = locale === "de" || locale === "tr" ? locale : "en";
+  const v4 = isV4Path(pathname);
 
-  // Account corner — auth-aware. One fetch shared by the desktop AccountMenu
-  // and the mobile menu items below.
   const auth = useAuthState();
   const [loggingOut, setLoggingOut] = useState(false);
   const logout = async () => {
     setLoggingOut(true);
     try {
-      await fetch("/api/auth/logout", {
-        method: "POST",
-        credentials: "same-origin",
-      });
+      await fetch("/api/auth/logout", { method: "POST", credentials: "same-origin" });
     } finally {
       window.location.href = `/${locale}`;
     }
   };
-  const L = (de: string, en: string, tr: string) =>
-    locale === "en" ? en : locale === "tr" ? tr : de;
-
-  const navLabel = (n: NavItem) =>
-    locale === "tr" ? n.labels.tr : locale === "de" ? n.labels.de : n.labels.en;
 
   useEffect(() => {
-    setIsMobileOpen(false);
+    setOpen(false);
   }, [pathname]);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (!isMobileOpen) return;
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    if (!open) return;
     window.history.pushState({ opsolidMenu: true }, "");
-    const onPop = () => setIsMobileOpen(false);
+    const onPop = () => setOpen(false);
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
-  }, [isMobileOpen]);
+  }, [open]);
 
-  // Hide marketing chrome on customer self-service surfaces.
   if (pathname && /\/card\/edit\//.test(pathname)) return null;
+  const isOpsoPage = /\/opso\/?$/.test(pathname || "");
 
   return (
-    <header className="os-header" role="banner">
-      <div className="os-header-inner">
-        <Link href="/" className="os-brand" aria-label="OpSolid — home">
-          <span className="os-brand-mark" aria-hidden="true" />
-          <span className="os-brand-text">OpSolid</span>
+    <header className={cn("v4-header", scrolled && "is-scrolled", !v4 && "is-app")} role="banner">
+      <div className="v4-header-in">
+        <Link href="/" className="v4-brand" aria-label="OpSolid">
+          <Mark />
+          <span>
+            Op<b>Solid</b>
+          </span>
         </Link>
 
-        <nav className="os-nav" aria-label="Primary">
+        <nav className="v4-nav" aria-label="Primary">
           {NAV_ITEMS.map((n) => {
             const active = n.match.test(pathname || "");
             return (
-              <Link
-                key={n.key}
-                href={n.href}
-                className={cn("os-nav-link", active && "is-active")}
-              >
-                {navLabel(n)}
+              <Link key={n.key} href={n.href} className={cn("v4-nav-link", active && "is-active")} aria-current={active ? "page" : undefined}>
+                {n.label[loc]}
               </Link>
             );
           })}
         </nav>
 
-        <div className="os-header-right">
-          <div
-            className="os-desktop-locale hidden md:inline-flex"
-            role="radiogroup"
-            aria-label="Language"
-          >
+        <div className="v4-header-right">
+          <div className="v4-lang" role="radiogroup" aria-label="Language">
             {VISIBLE_LOCALES.map((l) => (
               <button
                 key={l}
                 type="button"
                 role="radio"
                 aria-checked={l === locale}
+                lang={l}
                 onClick={() => setLocale(l)}
-                className={cn(
-                  "os-desktop-locale-chip",
-                  l === locale && "is-active",
-                )}
+                className={cn("v4-lang-chip", l === locale && "is-active")}
               >
                 {LOCALE_LABELS[l]}
               </button>
             ))}
           </div>
-          <div className="hidden md:inline-flex">
-            <ThemeToggle />
-          </div>
-          {!isOpsoPage && <div className="hidden md:block">
-            <AccountMenu
-              status={auth.status}
-              user={auth.user}
-              onLogout={logout}
-              loggingOut={loggingOut}
-            />
-          </div>}
-          <Link
-            href="/contact"
-            className="btn btn-primary btn-sm hidden md:inline-flex"
-            style={{ padding: "7px 14px" }}
-          >
-            {navLabels.cta}
+          {!isOpsoPage && auth.status === "authed" && (
+            <div className="v4-account">
+              <AccountMenu status={auth.status} user={auth.user} onLogout={logout} loggingOut={loggingOut} />
+            </div>
+          )}
+          <Link href="/contact" className="v4-btn v4-btn-primary v4-header-cta">
+            {CTA[loc]}
           </Link>
 
-          <Dialog.Root open={isMobileOpen} onOpenChange={setIsMobileOpen}>
+          <Dialog.Root open={open} onOpenChange={setOpen}>
             <Dialog.Trigger asChild>
-              <button
-                type="button"
-                className="os-mobile-toggle md:hidden"
-                aria-label="Open menu"
-              >
+              <button type="button" className="v4-menu-btn" aria-label={MENU[loc]}>
+                <span className="v4-menu-label">{MENU[loc]}</span>
                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M4 7H20M4 12H20M4 17H20" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  <path d="M3 8H21M3 16H21" stroke="currentColor" strokeWidth="2" strokeLinecap="square" />
                 </svg>
               </button>
             </Dialog.Trigger>
-
             <Dialog.Portal>
-              <Dialog.Overlay className="os-mobile-overlay" />
-              <Dialog.Content
-                className="os-mobile-menu"
-                aria-describedby={undefined}
-              >
-                <div className="os-mobile-menu-bar">
-                  <Dialog.Title className="os-mobile-menu-title">
-                    <span className="os-brand-mark" aria-hidden="true" />
+              <Dialog.Overlay className="v4-sheet-overlay" />
+              <Dialog.Content className="v4-sheet" aria-describedby={undefined}>
+                <div className="v4-sheet-bar">
+                  <Dialog.Title className="v4-sheet-title">
+                    <Mark />
                     OpSolid
                   </Dialog.Title>
                   <Dialog.Close asChild>
-                    <button
-                      type="button"
-                      className="os-mobile-close"
-                      aria-label="Close menu"
-                    >
+                    <button type="button" className="v4-menu-btn" aria-label={CLOSE[loc]}>
                       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                        <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                        <path d="M5 5L19 19M19 5L5 19" stroke="currentColor" strokeWidth="2" strokeLinecap="square" />
                       </svg>
                     </button>
                   </Dialog.Close>
                 </div>
-
-                <nav className="os-mobile-menu-inner" aria-label="Site">
-                  <ul className="os-mobile-list">
+                <nav className="v4-sheet-nav" aria-label="Site">
+                  <ul>
                     {NAV_ITEMS.map((n) => {
                       const active = n.match.test(pathname || "");
                       return (
-                        <li key={n.key} className={cn("os-mobile-item", active && "is-active")}>
+                        <li key={n.key}>
                           <Dialog.Close asChild>
-                            <Link
-                              href={n.href}
-                              className={cn("os-mobile-link", active && "is-active")}
-                            >
-                              <span className="os-mobile-link-label">
-                                {active && <span className="os-mobile-active-dot" aria-hidden="true" />}
-                                {navLabel(n)}
-                              </span>
-                              <span aria-hidden="true" className="os-mobile-arrow">→</span>
+                            <Link href={n.href} className={cn("v4-sheet-link", active && "is-active")} aria-current={active ? "page" : undefined}>
+                              <span>{n.label[loc]}</span>
+                              <span aria-hidden="true">→</span>
                             </Link>
                           </Dialog.Close>
                         </li>
                       );
                     })}
-                    {!isOpsoPage && auth.status === "anon" && (
-                      <li className="os-mobile-item">
-                        <Dialog.Close asChild>
-                          <Link href="/login" className="os-mobile-link">
-                            <span className="os-mobile-link-label">
-                              {L("Anmelden", "Sign in", "Giriş")}
-                            </span>
-                            <span aria-hidden="true" className="os-mobile-arrow">→</span>
-                          </Link>
-                        </Dialog.Close>
+                    <li>
+                      <Dialog.Close asChild>
+                        <Link href="/contact" className="v4-sheet-link">
+                          <span>{CONTACT[loc]}</span>
+                          <span aria-hidden="true">→</span>
+                        </Link>
+                      </Dialog.Close>
+                    </li>
+                    {!isOpsoPage && auth.status === "authed" && (
+                      <li>
+                        <button type="button" onClick={logout} disabled={loggingOut} className="v4-sheet-link v4-sheet-plain">
+                          <span>{loggingOut ? "…" : loc === "de" ? "Abmelden" : loc === "tr" ? "Çıkış" : "Sign out"}</span>
+                        </button>
                       </li>
                     )}
-                    {!isOpsoPage && auth.status === "authed" && (
-                      <>
-                        <li className="os-mobile-item">
-                          <Dialog.Close asChild>
-                            <Link href="/dashboard/cards" className="os-mobile-link">
-                              <span className="os-mobile-link-label">
-                                {L("Meine Karten", "My cards", "Kartlarım")}
-                              </span>
-                              <span aria-hidden="true" className="os-mobile-arrow">→</span>
-                            </Link>
-                          </Dialog.Close>
-                        </li>
-                        {auth.user?.role === "ADMIN" && (
-                          <li className="os-mobile-item">
-                            <Dialog.Close asChild>
-                              <Link href="/dashboard/admin" className="os-mobile-link">
-                                <span className="os-mobile-link-label">Admin</span>
-                                <span aria-hidden="true" className="os-mobile-arrow">→</span>
-                              </Link>
-                            </Dialog.Close>
-                          </li>
-                        )}
-                        <li className="os-mobile-item">
-                          <button
-                            type="button"
-                            onClick={logout}
-                            disabled={loggingOut}
-                            className="os-mobile-link w-full text-left disabled:opacity-50"
-                          >
-                            <span className="os-mobile-link-label">
-                              {loggingOut ? "…" : L("Abmelden", "Sign out", "Çıkış")}
-                            </span>
-                          </button>
-                        </li>
-                      </>
-                    )}
                   </ul>
-
-                  <div className="os-mobile-cta-wrap">
+                  <div className="v4-sheet-foot">
                     <Dialog.Close asChild>
-                      <Link
-                        href="/contact"
-                        className="btn btn-primary btn-lg os-mobile-cta"
-                      >
-                        {navLabels.cta}
+                      <Link href="/ai-automation-check" className="v4-btn v4-btn-primary v4-btn-lg">
+                        {CTA[loc]}
                       </Link>
                     </Dialog.Close>
-                  </div>
-
-                  <div className="os-mobile-footer">
-                    <div
-                      className="os-mobile-locale-row"
-                      role="radiogroup"
-                      aria-label="Language"
-                    >
+                    <div className="v4-lang v4-lang-sheet" role="radiogroup" aria-label="Language">
                       {VISIBLE_LOCALES.map((l) => (
                         <button
                           key={l}
                           type="button"
                           role="radio"
                           aria-checked={l === locale}
+                          lang={l}
                           onClick={() => setLocale(l)}
-                          className={cn("os-mobile-locale-chip", l === locale && "is-active")}
+                          className={cn("v4-lang-chip", l === locale && "is-active")}
                         >
                           {LOCALE_LABELS[l]}
                         </button>
                       ))}
-                    </div>
-                    <div className="os-mobile-theme-row">
-                      <ThemeToggle />
                     </div>
                   </div>
                 </nav>

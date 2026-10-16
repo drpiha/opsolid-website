@@ -3,6 +3,16 @@
 // Update these values to customize the brand identity
 // =============================================================================
 
+/** Date of the last substantive content update; drives the visible "Stand:" line. */
+export const SITE_UPDATED_ISO = "2026-10-16";
+
+/** "Oktober 2026" / "October 2026" / "Ekim 2026". */
+export function formatStand(locale: string): string {
+  const d = new Date(SITE_UPDATED_ISO + "T00:00:00Z");
+  const tag = locale === "de" ? "de-DE" : locale === "tr" ? "tr-TR" : "en-GB";
+  return new Intl.DateTimeFormat(tag, { month: "long", year: "numeric", timeZone: "UTC" }).format(d);
+}
+
 export const SITE_CONFIG = {
   name: "OpSolid",
   tagline: "KI- & Automatisierungsberatung für mittelständische Unternehmen",

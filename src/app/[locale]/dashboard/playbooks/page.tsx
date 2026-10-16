@@ -9,7 +9,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Playbooks | OpSolid",
+  title: "Playbooks",
   robots: { index: false, follow: false },
 };
 

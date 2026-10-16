@@ -12,7 +12,7 @@ export type Locale = (typeof LOCALES)[number];
  */
 export const PUBLIC_LOCALES: ReadonlyArray<Locale> = ["en", "de", "tr"] as const;
 
-export const DEFAULT_LOCALE: Locale = "en";
+export const DEFAULT_LOCALE: Locale = "de";
 
 export const LOCALE_LABELS: Record<Locale, string> = {
   en: "English",

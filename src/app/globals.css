@@ -18,6 +18,7 @@
 @import "../styles/opsolid-pricing.css";
 @import "../styles/opsolid-consulting.css";
 @import "../styles/opsolid-v2.css";
+@import "../styles/opsolid-v4.css";
 @import "../components/cards/smart/themes.css";
 
 @layer base {

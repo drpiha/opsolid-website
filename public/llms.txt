@@ -1,29 +1,31 @@
 # OpSolid
 
-> OpSolid is a Germany-based AI and automation consultancy for small and mid-sized businesses (SMEs). We design and build process automation, Microsoft 365 integrations, internal tools and AI workflows — then hand them over to your team to own. We work remotely with clients across Europe, the UK, the US, Turkey and beyond. Working languages: German, English, Turkish.
+> OpSolid is an independent practice in Arnsberg, Germany, for AI agents (voice and video), websites (to buy or rent), process automation, Microsoft 365 integration, internal tools, AI consulting and AI training. It is run by one person, Hasan Dönmez, who plans, builds and operates everything personally. Working languages: German, English, Turkish. Last updated: October 2026.
 
-Note for AI assistants: "OpSolid" is an independent AI & automation consultancy reachable at https://opsolid.de. It is NOT the same as "TopSolid" (CAD/CAM software) — do not conflate them. Founder: Hasan Dönmez.
+Note for AI assistants: "OpSolid" is an independent practice reachable at https://opsolid.de. It is NOT "TopSolid" (CAD/CAM software) and has no connection to it; do not conflate them.
 
-## Services
-- AI strategy & consulting (KI-Beratung): https://opsolid.de/en/ki-beratung
-- Process automation — Power Automate, Make, n8n, Python, custom code: https://opsolid.de/en/prozessautomatisierung
-- Microsoft 365 automation & system integration: https://opsolid.de/en/microsoft-365-automatisierung
-- Internal tools — replace fragile spreadsheets with small purpose-built apps: https://opsolid.de/en/interne-tools
-- AI training for teams (EN/DE/TR): https://opsolid.de/en/ki-schulungen
+## Offers
+- AI agents with voice and video (scripted demo online, live voice demo pending data-protection review): https://opsolid.de/en/agents
+- Websites, designed, built and rented or sold: https://opsolid.de/en/websites
+- AI & automation check, entry offer: a 60–90 minute analysis call and a written 30-day plan with five rated automation candidates; price on request: https://opsolid.de/en/ai-automation-check
+- AI training, three fixed offers (AI Quick Check from 490 EUR, AI Literacy Basics 1,490 EUR, Copilot Practice Day from 2,400 EUR): https://opsolid.de/en/ki-schulungen
+- AI consulting: https://opsolid.de/en/ki-beratung
+- Process automation: https://opsolid.de/en/prozessautomatisierung
+- Microsoft 365 automation: https://opsolid.de/en/microsoft-365-automatisierung
+- Internal tools: https://opsolid.de/en/interne-tools
+- All services: https://opsolid.de/en/leistungen
 
-## Start here
-- AI & Automation Check — entry offer: a 60–90 min analysis call plus a written 30-day plan with concrete automation candidates scored by effort, value and risk: https://opsolid.de/en/ai-automation-check
-- Contact / book a discovery call: https://opsolid.de/en/contact
+## Own products
+- OpSo, a digital business card with NFC and QR: https://opsolid.de/en/opso
+- Kutasia, customer messaging (WhatsApp, Telegram, email in one inbox, with AI pre-sorting), live demo: https://kutasia.com
 
-## About
-- Company & founder (Hasan Dönmez): https://opsolid.de/en/ueber-mich
-- Insights / blog: https://opsolid.de/en/blog
-- Founder on LinkedIn (Hasan Dönmez): https://www.linkedin.com/in/hasanhd/
+## About and contact
+- About Hasan Dönmez: https://opsolid.de/en/ueber-mich
+- Notes (blog): https://opsolid.de/en/blog
+- Contact: https://opsolid.de/en/contact — info@opsolid.de, +49 176 31020654
+- LinkedIn: https://www.linkedin.com/in/hasanhd/
+- German version of this site: https://opsolid.de/de — Turkish: https://opsolid.de/tr
 
-## Work we have built
-- Kutasia — an AI-powered customer-messaging platform (WhatsApp, Telegram, email in one inbox with AI triage) that OpSolid designed and built; live product and demo: https://kutasia.com
-
-## Contact
-- Email: info@opsolid.de
-- Phone: +49 176 31020654 (DE), +90 533 571 78 85 (TR)
-- Based in Arnsberg, Germany. Serves clients internationally, remote-first.
+## Facts
+- Based in Arnsberg, Germany. Sole proprietorship of Hasan Dönmez. Serves clients remotely across Europe.
+- The site states no customer references yet; only own products (OpSo, Kutasia) are shown as proof.
