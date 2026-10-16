@@ -397,8 +397,8 @@ html:not([data-v4]) .v4-poster, html:not([data-v4]) .v4-stage { display: none; }
   overflow-wrap: break-word;
   hyphens: auto;
 }
-.v4-h1 { font-size: clamp(2.5rem, 5.2vw, 5rem); }
-.v4-sec.is-hero .v4-col { max-width: min(42rem, 54vw); }
+.v4-h1 { font-size: clamp(2.25rem, 4.2vw, 4.25rem); }
+.v4-sec.is-hero .v4-col { max-width: min(44rem, 54vw); }
 .v4-sec.is-hero .v4-lede, .v4-sec.is-hero .v4-spec { max-width: 36rem; }
 .v4-h1 em { font-style: normal; color: var(--v4-cu); }
 .v4-h2 { font-size: clamp(1.7rem, 4.4vw, 3.5rem); }

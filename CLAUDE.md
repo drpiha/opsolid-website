@@ -71,7 +71,7 @@ App routes: `page.tsx` (server, metadata) + `PageName.tsx` (client, `"use client
 - `components/ui/` — Design system primitives (Button, Card, Badge, Input) using CVA (app surfaces)
 - `components/shared/` — Reusable pieces (AnimatedSection — IntersectionObserver + CSS transitions, `ConsentBanner`, `LocaleLink`)
 - `components/layout/` — Header (language switcher, nav) and Footer (includes the "3D-Effekte" switch)
-- `components/sections/`, `components/v2/` — older marketing sections, no longer used by the marketing routes; app surfaces such as the product pages still import a few of them. Do not extend them for marketing pages.
+- `components/sections/`, `components/v2/` — older marketing sections. The marketing routes no longer render them; `/about` and the `products/*` pages still do. Do not extend them for marketing pages.
 - `components/ClientProviders.tsx` — Wraps children with LocaleProvider (keeps layout.tsx as server component)
 
 ### Art direction (marketing routes, v4)

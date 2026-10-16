@@ -15,7 +15,10 @@ import { JsonLdGraph } from "@/components/v4/JsonLd";
 const STEMS = /(automatisierung|potenzial|vereinbarung|verordnung|kompetenz|kommunikation|integration|unternehmen|dokumentation|schulung|beratung|steuerung|werkzeug|anbindung|plattform|einführung|sicherheit)/gi;
 export function soft(text: string): string {
   return text.replace(/[A-Za-zÄÖÜäöüßÇçĞğİıŞş]{14,}/g, (word) =>
-    word.replace(STEMS, (m, _g, offset: number) => (offset >= 4 ? "\u00AD" + m : m)),
+    word.replace(STEMS, (m, _g, offset: number) => {
+      const piece = m.replace(/^(automati)(sierung)$/i, "$1\u00AD$2");
+      return offset >= 4 ? "\u00AD" + piece : piece;
+    }),
   );
 }
 

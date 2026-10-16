@@ -33,25 +33,29 @@ Branch `claude/opsolid-v4`, draft PR #43. Not deployed.
 - Consent copy extracted into `src/content/consent-copy.ts`; accept and reject carry the same visual weight.
 - `/api/auth/status` answers 200 for anonymous visitors, so there is no 401 console error on every page. `/api/auth/me` keeps its 401 contract.
 
-## Content assumptions that need the owner's approval
+## Needs owner confirmation
 
 1. Websites: sale/rental terms and prices are not in the repo. The text says "Konditionen im Gespräch" and describes Kauf (you get the site) and Miete (I run it).
-2. The sample dialogue in the agent demo is invented and labelled as a scripted run.
+2. The sample dialogue in the agent demo is invented and labelled "gespielter Ablauf".
 3. The repo lists two entry offers: KI-Check (price on request, 30-day plan) and KI-Quick-Check (from 490 €, short report). The KI-Check page links them; they may need merging.
 4. "Den KI-Quick-Check führe ich selbst durch" and "kein Zertifikatskurs" are inferred, not taken from existing copy.
 5. Kutasia is described with the llms.txt wording (WhatsApp, Telegram, email in one inbox, AI pre-sorting).
-6. Hero and "Über mich" sentences are new first-person drafts. No photo yet.
+6. Hero and "Über mich" sentences are new first-person drafts. No photo of Hasan yet.
+7. Screenshots on the 3D window planes: opsolid.de (this site), OpSo (card.opsolid.de landing, fictional demo profiles), Kutasia (kutasia.com root, Turkish UI, demo dashboard). Please confirm you are happy to show these publicly; replace the three files in `public/img/v4/` to change them.
 
 ## Verification (sandbox, 2026-10-16)
 
-- `npm run lint`, `npx tsc --noEmit`, `npm run audit:cards`, `npx tsx --test scripts/tests/redirects.test.mts` (3 of 3), `npm run build`: all pass.
-- axe-core (WCAG 2.0/2.1/2.2 A and AA plus best practice) on 15 pages at 1440 and 390 px: no violations.
-- Lighthouse 12 mobile, devtools throttling (4x CPU, slow 4G), production build, software WebGL, pages `/de`, `/de/agents`, `/de/ki-schulungen`: performance 89–92, accessibility 100, best practices 100, SEO 100; LCP 2.2–2.3 s (text), TBT 150–260 ms, CLS 0.02–0.03. Unthrottled in the same sandbox the LCP is 0.15–0.6 s. The target "LCP under 2.0 s lab" is not reached under that throttling. Remaining weight: render-blocking CSS (tailwind about 23 kB gz, tokens, v4) and the preloaded display font (about 89 kB). Ideas not done: purge unused tailwind utilities for marketing routes, subset the display font to the used width and weight range, inline critical CSS.
-- JS at load (gzip): about 194 kB, down from about 407 kB. The 3D chunk (three + GSAP) adds about 210 kB after first intent.
-- Not measured: real devices, real GPUs, field data.
+- Clean install and gate: `npm ci`, `npm run lint`, `npx tsc --noEmit`, `npm run predeploy` (audit:cards + build), `npx tsx --test scripts/tests/redirects.test.mts` (3 of 3): all pass.
+- Overlap audit (Playwright + `?debug` hook; for every scene section of every marketing page the projected object box is compared with the rectangle of every visible text element not on an opaque panel). Final build: the 13 pages that have a 3D stage at 1440 and 390 px, 6 pages at 1280 and at 1920 px, plus a mid-morph pass at 78 % section progress (1440 and 390, 8 pages) on the previous build. Earlier builds covered 13 pages at each of 1280, 1440 and 1920. No overlaps, no console errors, no horizontal scroll at 1440 or 390 on any page including OpSo, Impressum and Datenschutz (which have no 3D stage). The audit boxes are conservative axis-aligned boxes, so a few pixels of apparent edge contact at the right viewport edge are not real overlap.
+- axe-core (WCAG 2.0/2.1/2.2 A and AA plus best practice), with the 3D stage running (full on desktop, light on mobile), 18 pages (`/de` pages, `/en`, `/tr`) at 1440 and 390 px: 0 violations.
+- Lighthouse 12 mobile, devtools throttling (4x CPU, slow 4G), production build, software WebGL, final build. `/de`: performance 89 (85–89 over five runs), LCP 2.3 s (2.2–2.4 s, text, `p.v4-lede`), TBT 170 ms (170–260 ms), CLS 0.024. `/de/ki-schulungen`: 92, LCP 2.4 s, TBT 100 ms, CLS 0.027. `/de/agents`: 92, LCP 2.2 s, TBT 180 ms, CLS 0.022. Accessibility 100, best practices 100, SEO 100 on all. LCP is within 2.5 s and CLS within 0.1, but with little headroom on `/de` and `/de/ki-schulungen`; the earlier internal target "LCP under 2.0 s lab" is not reached under that throttling. Remaining weight: render-blocking CSS (tailwind about 23 kB gz, tokens, v4) and the preloaded display font (about 89 kB). Not done: purge unused tailwind utilities for marketing routes, subset the display font, inline critical CSS.
+- JS at load (gzip): about 194 kB (Next reports 159 kB first-load for marketing routes), down from about 407 kB. The 3D chunks (three, bloom passes, GSAP ScrollTrigger) add about 210 kB gz after first intent; screenshots add about 79 kB, only on pages that have a Websites / Produkte scene.
+- Limits: all WebGL runs here use software rendering (SwiftShader, a few frames per second), so frame rate, bloom cost and the frame-time guard are not measured, and no real GPU, phone or field data was available. Lighthouse in this sandbox does not interact with the page, so the 3D core (which starts on first intent or after 8 s) is largely outside the measured window; interactive cost of the 3D is therefore not in these numbers.
 
-## CLAUDE.md follow-ups (not edited here)
+## CLAUDE.md
 
-- Fonts: Archivo + IBM Plex Mono replace Geist/Inter/Instrument Serif/JetBrains Mono on marketing routes.
-- "No framer-motion full-page choreography, no gradient mesh, no glassmorphism" still holds. A scroll-driven 3D stage (three.js + GSAP) is now part of the design.
-- Brand tokens: copper `#C27940`, copper-ink `#8F4F1E` for text on light, graphite `#12110F`; marketing routes are dark only.
+Updated in this PR: v4 art direction and tokens, Archivo + IBM Plex Mono, the content split (`useLocaleBase` vs `useLocale`), the 3D guardrails (SSR text as LCP, idle/intent load, light mode on phones, poster for reduced motion / no WebGL, footer switch, never over text, abstract agent, real proof only), no gradient mesh, no glassmorphism. Stale rules (Geist/Inter/Instrument Serif as the marketing fonts, the homepage sections list, the "deep blue / violet" tailwind note, the single `useLocale()` pattern) were replaced; "no gradient mesh, no glassmorphism, no framer-motion page choreography" is kept.
+
+## Dead code candidates (not removed)
+
+`src/app/[locale]/leistungen/LeistungenPage.tsx` and `src/app/[locale]/ai-automation-check/AIAutomationCheck.tsx` are not imported by anything any more (the routes render the v4 page definitions). `src/components/v2/*` and `src/components/sections/*` are still imported by `/about`, the `products/*` pages and `ProductStubPage`, so they stay. Left in place to keep this PR reviewable.

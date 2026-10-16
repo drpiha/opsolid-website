@@ -659,7 +659,7 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
       const tg = heatNow.includes(i) ? 1 : 0;
       s.heat += (tg - s.heat) * Math.min(1, dt * 5);
       // Lighting all plates at once would flatten the stack to beige; keep it to a glow.
-      const hv = s.heat * (heatNow.length > 3 ? 0.4 : 1);
+      const hv = s.heat * (heatNow.length > 3 ? 0.2 : 1);
       const e = hv * 0.32;
       s.mats.forEach((mt) => mt.emissive.setRGB(0.76 * e, 0.47 * e, 0.25 * e));
       // Edges glow harder on lit plates (HDR colour; blooms on desktop).
