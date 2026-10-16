@@ -1,0 +1,53 @@
+# opsolid.de v4: implementation notes (2026-10-16)
+
+Branch `claude/opsolid-v4`, draft PR #43. Not deployed.
+
+## What changed
+
+- **Art direction (marketing routes only):** graphite + copper, Archivo (display and body, width axis) + IBM Plex Mono (labels). Scoped to `html[data-v4]`. Dark only. App surfaces (dashboard, onboarding, card-preview, auth, public cards `/c/*`, admin, voice) keep the existing theme system and its stylesheet bundle.
+- **3D stage:** one persistent object behind every marketing page, a stack of seven plates (one per offering). Sections mark scenes with `data-scene` and `data-heat`; the stage re-forms per section with GSAP ScrollTrigger. `src/components/v4/Stage.tsx`.
+  - three.js and GSAP are dynamic imports, started on the first user intent (pointer, scroll, touch, key) or after 8 s. Until then the static poster (inline SVG) is the first frame.
+  - No WebGL, `prefers-reduced-motion`, or the footer switch "3D-Effekte: Aus" keep the poster and load no 3D code.
+  - Phones and touch devices run a lighter mode (DPR 1, no reflections, no edge lines, 30 fps).
+- **Pages (DE, EN, TR, content in `src/content/v4/pages-*.ts`):** Start, Agents (new), Websites (new), Leistungen, KI-Beratung, Prozessautomatisierung, Microsoft 365, Interne Tools, KI-Schulungen, KI-Check, Über mich, Kontakt (form), Notizen (blog list and posts). OpSo, Impressum and Datenschutz keep their existing content under the new theme.
+- **Scripted agent demo:** typed sample dialogue plus wave and a 3D head whose mouth follows the same amplitude. Labelled "Demo · Szenario, ohne Ton". No audio, no microphone, no provider. A live voice demo needs a provider and a data-protection review first.
+
+## SEO and GEO
+
+- One `" | OpSolid"` suffix (root title template); manual suffixes removed.
+- Self-canonical per locale, reciprocal hreflang (`de`, `en`, `tr`) and `x-default` = `/de` via `src/lib/seo-v4.ts`.
+- `/` answers with a 307 by cookie, then `Accept-Language`, then `de`. `/de`, `/en`, `/tr` never redirect. Locale-less retired URLs go to `/de/...` with a 301 that does not depend on request headers. The old geo-IP logic is gone. `DEFAULT_LOCALE` stays `en` (used by app surfaces); `ROUTING_DEFAULT_LOCALE` is `de`.
+- One JSON-LD `@graph` per page (`src/components/v4/JsonLd.tsx`): ProfessionalService, Person, WebSite, WebPage / ProfilePage / CollectionPage / ContactPage, BreadcrumbList (matches the visible breadcrumb), Service (offers only for the three published training prices), FAQPage (only where the FAQ is visible), BlogPosting.
+- `robots.txt`: public site open to search and AI bots (list in `src/app/robots.ts`), private paths disallowed. `llms.txt` rewritten, no "we", linked from the footer. Sitemap has alternates and real `lastModified`.
+- Visible "Stand: Oktober 2026" (from `SITE_UPDATED_ISO`), answer-first lede under every H2, one line "OpSolid ist nicht TopSolid" on Über mich and in the footer.
+
+## Performance work
+
+- The full content bundle (about 220 kB gz) no longer ships to marketing routes: `useLocale()` is split into locale-only (`useLocaleBase`) and content (`t`, via `ContentGate`).
+- Legacy stylesheets (about 26 kB gz) load only for app, legal and card surfaces.
+- Archivo latin is the only preloaded display font; latin-ext (ğ ş İ ı) loads on demand. Geist is no longer preloaded.
+- Consent copy extracted into `src/content/consent-copy.ts`; accept and reject carry the same visual weight.
+- `/api/auth/status` answers 200 for anonymous visitors, so there is no 401 console error on every page. `/api/auth/me` keeps its 401 contract.
+
+## Content assumptions that need the owner's approval
+
+1. Websites: sale/rental terms and prices are not in the repo. The text says "Konditionen im Gespräch" and describes Kauf (you get the site) and Miete (I run it).
+2. The sample dialogue in the agent demo is invented and labelled as a scripted run.
+3. The repo lists two entry offers: KI-Check (price on request, 30-day plan) and KI-Quick-Check (from 490 €, short report). The KI-Check page links them; they may need merging.
+4. "Den KI-Quick-Check führe ich selbst durch" and "kein Zertifikatskurs" are inferred, not taken from existing copy.
+5. Kutasia is described with the llms.txt wording (WhatsApp, Telegram, email in one inbox, AI pre-sorting).
+6. Hero and "Über mich" sentences are new first-person drafts. No photo yet.
+
+## Verification (sandbox, 2026-10-16)
+
+- `npm run lint`, `npx tsc --noEmit`, `npm run audit:cards`, `npx tsx --test scripts/tests/redirects.test.mts` (3 of 3), `npm run build`: all pass.
+- axe-core (WCAG 2.0/2.1/2.2 A and AA plus best practice) on 15 pages at 1440 and 390 px: no violations.
+- Lighthouse 12 mobile, devtools throttling (4x CPU, slow 4G), production build, software WebGL, pages `/de`, `/de/agents`, `/de/ki-schulungen`: performance 89–92, accessibility 100, best practices 100, SEO 100; LCP 2.2–2.3 s (text), TBT 150–260 ms, CLS 0.02–0.03. Unthrottled in the same sandbox the LCP is 0.15–0.6 s. The target "LCP under 2.0 s lab" is not reached under that throttling. Remaining weight: render-blocking CSS (tailwind about 23 kB gz, tokens, v4) and the preloaded display font (about 89 kB). Ideas not done: purge unused tailwind utilities for marketing routes, subset the display font to the used width and weight range, inline critical CSS.
+- JS at load (gzip): about 194 kB, down from about 407 kB. The 3D chunk (three + GSAP) adds about 210 kB after first intent.
+- Not measured: real devices, real GPUs, field data.
+
+## CLAUDE.md follow-ups (not edited here)
+
+- Fonts: Archivo + IBM Plex Mono replace Geist/Inter/Instrument Serif/JetBrains Mono on marketing routes.
+- "No framer-motion full-page choreography, no gradient mesh, no glassmorphism" still holds. A scroll-driven 3D stage (three.js + GSAP) is now part of the design.
+- Brand tokens: copper `#C27940`, copper-ink `#8F4F1E` for text on light, graphite `#12110F`; marketing routes are dark only.

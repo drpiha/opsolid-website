@@ -87,8 +87,8 @@ function pose(scene: SceneId, i: number, t: number): Pose {
 
 const GY: Record<SceneId, number> = { stack: -0.55, agents: 0, websites: 0, flow: 0, steps: -0.35, cards: -0.3, offset: -0.6, tight: 0.35 };
 const GX: Record<SceneId, number> = { stack: 0.12, agents: 0.4, websites: 0.05, flow: 0.1, steps: 0.1, cards: 0.05, offset: 0.1, tight: 0.1 };
-const GS: Record<SceneId, number> = { stack: 1, agents: 0.88, websites: 0.95, flow: 0.85, steps: 0.72, cards: 1, offset: 1, tight: 1 };
-const GXO: Record<SceneId, number> = { stack: 0, agents: 0.05, websites: 0, flow: 0.02, steps: 0.07, cards: 0, offset: 0, tight: 0 };
+const GS: Record<SceneId, number> = { stack: 1, agents: 0.88, websites: 0.95, flow: 0.72, steps: 0.72, cards: 1, offset: 1, tight: 1 };
+const GXO: Record<SceneId, number> = { stack: 0, agents: 0.05, websites: 0, flow: -0.01, steps: 0.07, cards: 0, offset: 0, tight: 0 };
 
 const POSTER_SLABS = [
   ["#c27940", "#e0a070", "#8f4f1e"],

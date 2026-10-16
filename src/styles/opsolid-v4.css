@@ -491,7 +491,7 @@ a.v4-row-in:hover { padding-left: 10px; }
 /* cta band */
 .v4-band { position: relative; z-index: 2; border-top: 1px solid var(--v4-line2); background: var(--v4-bg2); }
 .v4-band-in { max-width: 1360px; margin: 0 auto; padding: clamp(56px, 9vh, 96px) var(--v4-gutter-r, 18px) clamp(56px, 9vh, 96px) var(--v4-gutter, 18px); display: grid; gap: 28px; }
-.v4-band h2 { margin: 0; }
+.v4-band h2 { margin: 0 0 16px; }
 .v4-band p { margin: 0; color: var(--v4-ink2); max-width: 34rem; }
 
 /* contact + forms */
@@ -536,10 +536,10 @@ a.v4-row-in:hover { padding-left: 10px; }
 .v4-fx { min-height: 36px; padding: 0 12px; background: none; border: 1px solid var(--v4-line2); color: var(--v4-ink2); font-family: var(--v4-mono); font-size: 0.72rem; letter-spacing: 0.05em; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
 span.v4-fx { border-color: transparent; padding: 0; }
 .v4-fx b { color: var(--v4-cu-hi); font-weight: 500; }
-@media (min-width: 900px) {
-  .v4-footer-top { grid-template-columns: 1.1fr 1.5fr; gap: 64px; }
-  .v4-footer-cols { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (min-width: 760px) {
+  .v4-footer-cols { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px 28px; }
 }
+.v4-footer-col a { overflow-wrap: anywhere; }
 
 /* --------------------------------------------------------------- reveal */
 .v4-rv { opacity: 1; transform: none; }
