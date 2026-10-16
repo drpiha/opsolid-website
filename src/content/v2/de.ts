@@ -31,7 +31,7 @@ export const v2: V2Mirror = {
       lead: "Wir bauen die Werkzeuge, die Abläufe und die KI-Schicht, die Ihren Betrieb im Hintergrund tragen. Damit niemand mehr fragen muss, ob es gelaufen ist.",
       ctaPrimary: "Sprechen wir",
       ctaSecondary: "Was wir bauen",
-      chips: ["Prozessautomatisierung", "Interne Tools", "KI-Beratung", "Schulungen DE · EN · TR"],
+      chips: ["Prozessautomatisierung", "Interne Tools", "KI-Beratung", "Schulungen DE\u00a0·\u00a0EN\u00a0·\u00a0TR"],
     },
     pillars: {
       eyebrow: "Was wir bauen",
@@ -54,7 +54,7 @@ export const v2: V2Mirror = {
         },
         {
           slug: "ki-schulungen",
-          label: "Schulungen DE · EN · TR",
+          label: "Schulungen DE\u00a0·\u00a0EN\u00a0·\u00a0TR",
           sub: "Praxis-Workshops auf Deutsch, Englisch und Türkisch — für die Menschen, die das System bedienen werden",
         },
       ],

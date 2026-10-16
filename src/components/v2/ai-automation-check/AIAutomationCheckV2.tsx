@@ -19,6 +19,7 @@ import {
   V2Process,
   V2FinalCta,
 } from "@/components/v2/services/ServiceSections";
+import { QuickCheckBooking } from "@/components/shared/QuickCheckBooking";
 import { FaqAccordion } from "@/components/sections/FaqAccordion";
 
 export function AIAutomationCheckV2() {
@@ -104,6 +105,8 @@ export function AIAutomationCheckV2() {
           body: s.body,
         }))}
       />
+
+      <QuickCheckBooking />
 
       {/* FAQ — reuse existing accordion (its CSS already lives in opsolid-site.css) */}
       <section className="v2-svc-section">

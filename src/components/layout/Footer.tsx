@@ -58,6 +58,12 @@ export function Footer() {
                 <li>
                   <Link href="/opso">OpSo</Link>
                 </li>
+                <li>
+                  <Link href="/leistungen">{f.cols.servicesHeading}</Link>
+                </li>
+                <li>
+                  <Link href="/microsoft-365-automatisierung">Microsoft 365</Link>
+                </li>
               </ul>
             </div>
             <div className="os-footer-col">

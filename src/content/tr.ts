@@ -8,7 +8,7 @@ import type { Content } from "./en";
 export const content: Content = {
   consent: {
     title: "Çerezler ve analitik",
-    body: "OpSolid'in nasıl kullanıldığını anlamak için minimal analitik kullanıyoruz. Pazarlama çerezi, profilleme yok. Tercihini istediğin zaman değiştirebilirsin.",
+    body: "OpSolid'in nasıl kullanıldığını anlamak için minimal analitik kullanıyoruz. Pazarlama çerezi, profilleme yok. Tercihinizi istediğiniz zaman değiştirebilirsiniz.",
     privacyLink: "Gizlilik politikamızı okuyun",
     accept: "Kabul et",
     reject: "Reddet",

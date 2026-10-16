@@ -4,11 +4,24 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { getConsent, setConsent } from "@/lib/consent";
 import { useLocale } from "@/context/LocaleContext";
+import { contents } from "@/content";
+
+type SiteLocale = keyof typeof contents;
 
 export function ConsentBanner() {
   const { t, locale } = useLocale();
   const pathname = usePathname();
   const [show, setShow] = useState(false);
+
+  // The banner is mounted in the root layout, outside the [locale] provider,
+  // so the context falls back to English. The URL's first segment is the
+  // visitor's language: use it, otherwise /de pages show an English banner.
+  const segment = pathname?.split("/")[1] ?? "";
+  const pathLocale = Object.prototype.hasOwnProperty.call(contents, segment)
+    ? (segment as SiteLocale)
+    : null;
+  const copy = pathLocale ? contents[pathLocale].consent : t.consent;
+  const privacyLocale = pathLocale ?? locale;
 
   // Suppress on chrome-less render targets that are screenshot or
   // embedded in mobile WebView previews. The banner has no UX value
@@ -41,18 +54,18 @@ export function ConsentBanner() {
       style={{ paddingBottom: "max(1.25rem, env(safe-area-inset-bottom))" }}
     >
       <h2 id="consent-title" className="font-serif text-base text-ink">
-        {t.consent.title}
+        {copy.title}
       </h2>
-      <p className="mt-2 text-sm text-ink/70">{t.consent.body}</p>
+      <p className="mt-2 text-sm text-ink/70">{copy.body}</p>
       <p className="mt-2 text-xs text-ink/50">
-        <a href={`/${locale}/privacy`} className="underline hover:text-ink">
-          {t.consent.privacyLink}
+        <a href={`/${privacyLocale}/privacy`} className="underline hover:text-ink">
+          {copy.privacyLink}
         </a>
       </p>
       {/*
         TDDDG § 25 + DSGVO equal-prominence requirement: reject and accept
-        must have visually equivalent weight. Both buttons are solid-filled
-        with the same height and padding; only the colour tone differs
+        must have visually equivalent weight. Both buttons share the same
+        shape, height, padding and type size; only the colour tone differs
         (neutral vs primary). Do not regress to `btn-ghost` for reject —
         German DPAs treat low-contrast reject buttons as a dark pattern.
       */}
@@ -62,14 +75,14 @@ export function ConsentBanner() {
           type="button"
           className="inline-flex min-h-[44px] items-center justify-center rounded-full bg-neutral-900 px-5 text-sm font-medium text-neutral-50 transition hover:bg-neutral-800 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
         >
-          {t.consent.reject}
+          {copy.reject}
         </button>
         <button
           onClick={accept}
           type="button"
-          className="btn-primary min-h-[44px]"
+          className="btn-primary inline-flex min-h-[44px] items-center justify-center rounded-full px-5 text-sm font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-neutral-400"
         >
-          {t.consent.accept}
+          {copy.accept}
         </button>
       </div>
     </div>

@@ -11,53 +11,22 @@ import { AccountMenu } from "@/components/layout/AccountMenu";
 import { cn } from "@/lib/utils";
 import type { Locale } from "@/content";
 
-type NavKey = "home" | "services" | "automationCheck" | "journal" | "contact";
-
-type ServiceSlug =
-  | "ki-beratung"
-  | "prozessautomatisierung"
-  | "microsoft-365-automatisierung"
-  | "interne-tools"
-  | "ki-schulungen";
-
 type NavItem = {
   key: string;
   href: string;
   match: RegExp;
-  /** Explicit label for brand/product items that are not keys in t.v2.nav. */
-  label?: string;
-  /** When set, the desktop nav renders a hover dropdown of these sub-services. */
-  servicesDropdown?: ServiceSlug[];
+  labels: { de: string; en: string; tr: string };
 };
 
-const SERVICE_SLUGS: ServiceSlug[] = [
-  "ki-beratung",
-  "prozessautomatisierung",
-  "microsoft-365-automatisierung",
-  "interne-tools",
-  "ki-schulungen",
-];
-
+// Focused primary nav (v3). Leistungen, Prozessautomatisierung, Interne Tools,
+// Microsoft 365 and the blog live in the footer.
 const NAV_ITEMS: NavItem[] = [
-  { key: "home", href: "/", match: /^\/(en|de|tr|es|it|fr|ar)?\/?$/ },
-  // Hybrid: click goes to /leistungen overview; desktop hover opens a
-  // dropdown listing the 5 sub-services. Active-match also covers the
-  // sub-service routes so the link stays highlighted.
-  {
-    key: "services",
-    href: "/leistungen",
-    match: /\/(leistungen|ki-beratung|prozessautomatisierung|microsoft-365-automatisierung|interne-tools|ki-schulungen)/,
-    servicesDropdown: SERVICE_SLUGS,
-  },
-  { key: "automationCheck", href: "/ai-automation-check", match: /\/ai-automation-check/ },
-  {
-    key: "opsoSmart",
-    href: "/opso",
-    match: /\/(opso|products\/digital-card)(\/|$)/,
-    label: "OpSo",
-  },
-  { key: "journal", href: "/blog", match: /\/blog/ },
-  { key: "contact", href: "/contact", match: /\/contact/ },
+  { key: "home", href: "/", match: /^\/(en|de|tr|es|it|fr|ar)?\/?$/, labels: { de: "Home", en: "Home", tr: "Ana sayfa" } },
+  { key: "opso", href: "/opso", match: /\/(opso|products\/digital-card)(\/|$)/, labels: { de: "OpSo", en: "OpSo", tr: "OpSo" } },
+  { key: "automationCheck", href: "/ai-automation-check", match: /\/ai-automation-check/, labels: { de: "KI-Check", en: "AI check", tr: "YZ kontrolü" } },
+  { key: "training", href: "/ki-schulungen", match: /\/ki-schulungen/, labels: { de: "KI-Schulungen", en: "AI training", tr: "YZ eğitimleri" } },
+  { key: "about", href: "/ueber-mich", match: /\/ueber-mich/, labels: { de: "Über mich", en: "About", tr: "Hakkımda" } },
+  { key: "contact", href: "/contact", match: /\/contact/, labels: { de: "Kontakt", en: "Contact", tr: "İletişim" } },
 ];
 
 const LOCALE_LABELS: Record<Locale, string> = {
@@ -98,6 +67,9 @@ export function Header() {
   const L = (de: string, en: string, tr: string) =>
     locale === "en" ? en : locale === "tr" ? tr : de;
 
+  const navLabel = (n: NavItem) =>
+    locale === "tr" ? n.labels.tr : locale === "de" ? n.labels.de : n.labels.en;
+
   useEffect(() => {
     setIsMobileOpen(false);
   }, [pathname]);
@@ -125,44 +97,14 @@ export function Header() {
         <nav className="os-nav" aria-label="Primary">
           {NAV_ITEMS.map((n) => {
             const active = n.match.test(pathname || "");
-            const dropdown = n.servicesDropdown;
-            if (!dropdown) {
-              return (
-                <Link
-                  key={n.key}
-                  href={n.href}
-                  className={cn("os-nav-link", active && "is-active")}
-                >
-                  {(n.label ?? navLabels[n.key as NavKey])}
-                </Link>
-              );
-            }
             return (
-              <span key={n.key} className="os-nav-has-dropdown">
-                <Link
-                  href={n.href}
-                  className={cn("os-nav-link", active && "is-active")}
-                  aria-haspopup="true"
-                >
-                  {(n.label ?? navLabels[n.key as NavKey])}
-                </Link>
-                <div className="os-nav-dropdown" role="menu" aria-label={(n.label ?? navLabels[n.key as NavKey])}>
-                  {dropdown.map((slug) => {
-                    const entry = navLabels.servicesDropdown[slug];
-                    return (
-                      <Link
-                        key={slug}
-                        href={`/${slug}`}
-                        role="menuitem"
-                        className="os-nav-dropdown-item"
-                      >
-                        <span className="os-nav-dropdown-item-title">{entry.title}</span>
-                        <span className="os-nav-dropdown-item-sub">{entry.sub}</span>
-                      </Link>
-                    );
-                  })}
-                </div>
-              </span>
+              <Link
+                key={n.key}
+                href={n.href}
+                className={cn("os-nav-link", active && "is-active")}
+              >
+                {navLabel(n)}
+              </Link>
             );
           })}
         </nav>
@@ -258,7 +200,7 @@ export function Header() {
                             >
                               <span className="os-mobile-link-label">
                                 {active && <span className="os-mobile-active-dot" aria-hidden="true" />}
-                                {(n.label ?? navLabels[n.key as NavKey])}
+                                {navLabel(n)}
                               </span>
                               <span aria-hidden="true" className="os-mobile-arrow">→</span>
                             </Link>

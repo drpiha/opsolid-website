@@ -286,8 +286,17 @@ html[data-preview="v2"] [class*="ambient-"] {
   color: var(--v2-ink-1);
   margin: 0;
 }
+/* Two columns leave the headline ~55% of the width: at the full display size
+   the first line ("Software und KI,") broke before its last word. Declared
+   after the base rule so it wins. */
+@media (min-width: 960px) {
+  .v2-home-hero__headline {
+    font-size: clamp(2.75rem, 4.6vw, 4.5rem);
+  }
+}
 .v2-home-hero__headline > span {
   display: block;
+  text-wrap: balance;
 }
 .v2-home-hero__headline > span + span {
   margin-top: 2px;
@@ -2359,11 +2368,15 @@ html[data-preview="v2"] .wrap {
 }
 .v2-home-outcomes__card-outcome {
   font-family: var(--font-v2-display), system-ui, sans-serif;
-  font-size: clamp(2rem, 4vw, 2.75rem);
+  /* Words now (e.g. "Angebotsfreigaben"), not short figures: smaller and
+     allowed to wrap/hyphenate so long German compounds stay in the card. */
+  font-size: clamp(1.5rem, 2.4vw, 2rem);
   font-weight: 700;
-  line-height: 1;
+  line-height: 1.1;
   letter-spacing: -0.02em;
   color: var(--v2-accent-primary);
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }
 .v2-home-outcomes__note {
   margin: var(--v2-space-5) 0 0;
@@ -2891,3 +2904,16 @@ html[data-preview="v2"][data-theme="dark"] .v2-svc-finalcta .btn.btn-primary {
 @media (prefers-reduced-motion: reduce) {
   .v2-aac-hero__chip-dot { animation: none; }
 }
+
+/* v3 hero video + "Built by OpSolid" */
+.v2-hero-video { position: relative; width: 100%; max-height: 560px; border-radius: 16px; overflow: hidden; border: 1px solid var(--line, rgba(128,128,128,.25)); display: flex; justify-content: center; background: rgba(128,128,128,.08); }
+.v2-hero-video video, .v2-hero-video img { display: block; width: 100%; max-height: 560px; object-fit: contain; height: auto; }
+.v2-hero-video__play { position: absolute; inset: 0; margin: auto; width: 64px; height: 64px; border-radius: 50%; border: 0; background: #C27940; color: #fff; font-size: 22px; cursor: pointer; }
+.v2-built { padding-block: 64px; }
+.v2-built__headline { font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 12px 0 28px; }
+.v2-built__grid { display: grid; gap: 20px; grid-template-columns: 1fr; }
+@media (min-width: 800px) { .v2-built__grid { grid-template-columns: 1fr 1fr; } }
+.v2-built__card { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; padding: 28px; border: 1px solid var(--line, rgba(128,128,128,.25)); border-radius: 16px; }
+.v2-built__card h3 { font-size: 1.5rem; margin: 0; }
+.v2-built__card p { margin: 0; opacity: .85; }
+.v2-built__links { display: flex; gap: 12px; flex-wrap: wrap; margin-top: auto; }
