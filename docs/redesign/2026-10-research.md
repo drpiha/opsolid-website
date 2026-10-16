@@ -85,3 +85,18 @@ Observed on live opsolid.de today (curl): `<title>` ends "| OpSolid | OpSolid" (
 
 ## 6. Sources (abridged)
 Awwwards SOTD archive pages; developers.google.com (localized-versions, managing-multi-regional-sites, faqpage, organization, site-names, ai-features, google-common-crawlers); web.dev/articles/vitals; nextjs.org (generate-metadata, sitemap); developers.openai.com/api/docs/bots; support.claude.com (crawler); docs.perplexity.ai/guides/bots; support.apple.com/en-us/119829; llmstxt.org; ahrefs.com/blog/llmstxt-study; developers.cloudflare.com changelog 2026-02-12; arxiv.org/abs/2311.09735.
+
+## 7. Addendum (2026-10-16): scroll-driven 3D / WebGL references
+
+Direction change from the owner: scroll-driven 3D that is effective and not generic, since OpSolid will sell and rent websites and ship voice/video 3D AI agents. Method: three standard web searches only. The results were thin: they confirmed Active Theory (v4, Awwwards Site of the Month, Jan 2018) and Lusion (first studio site, Site of the Month, May), and otherwise returned Awwwards inspiration pages and opinion pieces. The remaining entries come from the earlier research pass (SOTD/SOTY lists read on 2026-10-16) and general knowledge; their traits are **not re-verified in this pass**. Open each site once on a real device before copying any technique.
+
+1. **Lando Norris** (Awwwards Site of the Year 2025, per the earlier pass). Borrow: a single strong brand object and bold type carrying a long scroll story. Do not copy: its weight; it is a showpiece.
+2. **Messenger** (Site of the Year 2025, per the earlier pass). Borrow: scene changes that follow the narrative beats instead of decorating them. Check its mobile behaviour first.
+3. **Igloo Inc.** Borrow: one hero object that holds the brand and a dark, calm palette. Not verified in this pass.
+4. **Lusion** (verified: Site of the Month, May). A small studio focused on real-time animation. Borrow: real-time 3D as the brand signature; keep the interaction restrained enough to read the text.
+5. **Active Theory** (verified: v4 Site of the Month, Jan 2018). Borrow: one continuous world instead of separate page blocks. Their sites are heavy; we ship one object, not a world.
+6. **Bruno Simon portfolio.** Borrow: personality from one original 3D idea. Not verified in this pass.
+
+Practical guidance from the search results (vendor and community sources, not official docs): animate only transform and opacity, keep real text in HTML, load 3D lazily near or after first paint, pause the render loop when hidden, choose quality by device tier, and ship a static fallback. The prototype implements all of these.
+
+What we take: one original object (a stack of seven plates, one per offering) that re-forms per section; HTML text first; 3D after load; poster fallback for no WebGL and `prefers-reduced-motion`; a lighter scene on phones.
