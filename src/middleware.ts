@@ -6,7 +6,7 @@ import {
   isLocale,
   type Locale,
 } from "@/lib/i18n";
-import { resolveLocale, type LocaleResolution } from "@/lib/locale-routing";
+import { lookupCountryViaApi, resolveLocale, type LocaleResolution } from "@/lib/locale-routing";
 import { getRetiredRedirectTarget } from "@/lib/redirects";
 
 function voiceIsEnabled(): boolean {
@@ -58,18 +58,9 @@ const LEGACY_COOKIE_NAMES = ["NEXT_LOCALE", "OPSOLID_LOCALE", "OPSOLID_LOCALE_V2
  * on a geo miss.
  */
 async function lookupCountryFromIp(ip: string, req: NextRequest): Promise<string | null> {
-  try {
-    const port = req.nextUrl.port || process.env.PORT || "3000";
-    const url = `http://127.0.0.1:${port}/api/geo?ip=${encodeURIComponent(ip)}`;
-    // Hard cap so a slow or hung lookup can never stall the first page load.
-    const res = await fetch(url, { signal: AbortSignal.timeout(2500) });
-    if (!res.ok) return null;
-    const body = (await res.json().catch(() => null)) as { country?: string | null } | null;
-    const country = body?.country;
-    return typeof country === "string" && country.length === 2 ? country.toUpperCase() : null;
-  } catch {
-    return null;
-  }
+  const port = req.nextUrl.port || process.env.PORT || "3000";
+  // Hard cap so a slow or hung lookup can never stall the first page load.
+  return lookupCountryViaApi(`http://127.0.0.1:${port}/api/geo?ip=${encodeURIComponent(ip)}`, 2500);
 }
 
 /**

@@ -94,3 +94,31 @@ test("Accept-Language is never consulted: Turkish browser in Germany → de, Tur
   assert.equal((await resolveLocale(inputs({ headers: { "accept-language": "tr-TR,tr;q=0.9" } }))).locale, "de");
   assert.equal((await resolveLocale(inputs({ headers: { "accept-language": "en-US", "x-vercel-ip-country": "TR" } }))).locale, "tr");
 });
+
+test("geo lookup timeout, network error, non-200 or bad payload → country unknown → de", async () => {
+  const lookupCountryViaApi: typeof import("../../src/lib/locale-routing.ts").lookupCountryViaApi =
+    (routing as any).lookupCountryViaApi ?? (routing as any).default.lookupCountryViaApi;
+  // A lookup that never answers on its own: only the abort signal ends it.
+  const hanging = (_url: string, init: { signal: AbortSignal }) =>
+    new Promise<Response>((_resolve, reject) => init.signal.addEventListener("abort", () => reject(new Error("aborted"))));
+  // AbortSignal.timeout uses an unref'd timer; keep the loop alive the way a running server does.
+  const keepAlive = setTimeout(() => {}, 5000);
+  const started = Date.now();
+  const r = await resolveLocale({
+    cookie: undefined,
+    header: (n: string) => (n === "x-forwarded-for" ? "5.6.7.8" : null),
+    lookupCountry: (ip: string) => lookupCountryViaApi(`http://127.0.0.1:3000/api/geo?ip=${ip}`, 50, hanging),
+  });
+  assert.equal(r.locale, "de");
+  assert.equal(r.source, "default");
+  assert.ok(Date.now() - started < 1000, "timeout must cut the lookup short");
+  // other failure modes
+  const json = (status: number, body: unknown) => async () => new Response(JSON.stringify(body), { status, headers: { "content-type": "application/json" } });
+  assert.equal(await lookupCountryViaApi("u", 50, json(500, { country: "TR" })), null);
+  assert.equal(await lookupCountryViaApi("u", 50, json(200, { country: "Turkey" })), null);
+  assert.equal(await lookupCountryViaApi("u", 50, async () => { throw new Error("ECONNREFUSED"); }), null);
+  assert.equal(await lookupCountryViaApi("u", 50, async () => new Response("not json", { status: 200 })), null);
+  // and the happy path normalises the code
+  assert.equal(await lookupCountryViaApi("u", 50, json(200, { country: "tr" })), "TR");
+  clearTimeout(keepAlive);
+});

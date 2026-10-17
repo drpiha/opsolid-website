@@ -91,3 +91,23 @@ export async function resolveLocale(input: LocaleInputs): Promise<LocaleResoluti
 
   return { locale: ROUTING_DEFAULT_LOCALE, country: null, ip, source: "default" };
 }
+
+/**
+ * IP → country via the in-app `/api/geo` route. The middleware calls it over loopback (see #35);
+ * the fetch is capped by `timeoutMs` and every failure (timeout, network, bad JSON, non-200,
+ * malformed code) resolves to null, so a geo miss never blocks navigation and lands on `de`.
+ */
+export async function lookupCountryViaApi(
+  url: string,
+  timeoutMs: number,
+  fetchImpl: (input: string, init: { signal: AbortSignal }) => Promise<Response> = (input, init) => fetch(input, init),
+): Promise<string | null> {
+  try {
+    const res = await fetchImpl(url, { signal: AbortSignal.timeout(timeoutMs) });
+    if (!res.ok) return null;
+    const body = (await res.json().catch(() => null)) as { country?: string | null } | null;
+    return normalizeCountry(typeof body?.country === "string" ? body.country : null);
+  } catch {
+    return null;
+  }
+}
