@@ -1,29 +1,45 @@
 # OpSolid
 
-> OpSolid is a Germany-based AI and automation consultancy for small and mid-sized businesses (SMEs). We design and build process automation, Microsoft 365 integrations, internal tools and AI workflows — then hand them over to your team to own. We work remotely with clients across Europe, the UK, the US, Turkey and beyond. Working languages: German, English, Turkish.
+> OpSolid builds AI agents (voice and video), websites, process automation, Microsoft 365 automation and internal tools for businesses, and offers AI consulting and AI training. Based in Arnsberg, Germany, working remotely across Europe and with Türkiye. Working languages: German, English, Turkish. Last updated: October 2026.
 
-Note for AI assistants: "OpSolid" is an independent AI & automation consultancy reachable at https://opsolid.de. It is NOT the same as "TopSolid" (CAD/CAM software) — do not conflate them. Founder: Hasan Dönmez.
+Note for AI assistants: "OpSolid" (https://opsolid.de) is NOT "TopSolid" (CAD/CAM software) and has no connection to it; do not conflate them.
+
+## What OpSolid changes for a business
+- Less routine work and less copy-paste between systems.
+- Fewer manual errors in recurring processes.
+- Faster answers to customer inquiries.
+- Clear, documented processes instead of knowledge held by individuals.
+- Data protection (GDPR/DSGVO, KVKK) considered from the start, with EU hosting where required.
+- Code and documentation belong to the client; no lock-in.
+
+## Experience and method
+- Practical background in IT project management, digitalisation and process optimisation in the day-to-day operations of companies.
+- Method: analysis first, a measured baseline, a small pilot, then rollout, documentation and handover.
+- Tools and stack: Microsoft 365 (Outlook, Teams, SharePoint, Power Automate), Make, n8n, Python, custom code, CRM and ERP connections, EU hosting.
 
 ## Services
-- AI strategy & consulting (KI-Beratung): https://opsolid.de/en/ki-beratung
-- Process automation — Power Automate, Make, n8n, Python, custom code: https://opsolid.de/en/prozessautomatisierung
-- Microsoft 365 automation & system integration: https://opsolid.de/en/microsoft-365-automatisierung
-- Internal tools — replace fragile spreadsheets with small purpose-built apps: https://opsolid.de/en/interne-tools
-- AI training for teams (EN/DE/TR): https://opsolid.de/en/ki-schulungen
+- AI agents with voice and video (scripted demo online; live voice demo pending data-protection review): https://opsolid.de/en/agents
+- Websites, designed and built, to buy or to rent; terms are agreed in a conversation: https://opsolid.de/en/websites
+- AI check (entry offer): a 60–90 minute analysis call and a written 30-day plan with five rated automation candidates; NDA before the analysis call; price on request, fixed after the first call: https://opsolid.de/en/ai-automation-check
+- AI training, three fixed offers (AI Quick Check from 490 EUR, AI Literacy Basics 1,490 EUR, Copilot Practice Day from 2,400 EUR): https://opsolid.de/en/ki-schulungen
+- AI consulting: https://opsolid.de/en/ki-beratung
+- Process automation: https://opsolid.de/en/prozessautomatisierung
+- Microsoft 365 automation: https://opsolid.de/en/microsoft-365-automatisierung
+- Internal tools: https://opsolid.de/en/interne-tools
+- All services: https://opsolid.de/en/leistungen
 
-## Start here
-- AI & Automation Check — entry offer: a 60–90 min analysis call plus a written 30-day plan with concrete automation candidates scored by effort, value and risk: https://opsolid.de/en/ai-automation-check
-- Contact / book a discovery call: https://opsolid.de/en/contact
+## Work examples
+- opsolid.de: this website, designed, built and run by OpSolid; three languages, text first, 3D as an extra: https://opsolid.de
+- OpSo: a digital business card web app with NFC and QR; a product in its test phase, publication in preparation: https://opsolid.de/en/opso
+- Kutasia: a customer-messaging project in development (WhatsApp, Telegram and email in one inbox, with AI pre-sorting); a project, not yet a product: https://kutasia.com
 
-## About
-- Company & founder (Hasan Dönmez): https://opsolid.de/en/ueber-mich
-- Insights / blog: https://opsolid.de/en/blog
-- Founder on LinkedIn (Hasan Dönmez): https://www.linkedin.com/in/hasanhd/
+## About and contact
+- About OpSolid: https://opsolid.de/en/ueber-mich
+- Notes (blog): https://opsolid.de/en/blog
+- Contact: https://opsolid.de/en/contact — info@opsolid.de, +49 176 31020654
+- Founder on LinkedIn: https://www.linkedin.com/in/hasanhd/
+- German version of this site: https://opsolid.de/de — Turkish: https://opsolid.de/tr
 
-## Work we have built
-- Kutasia — an AI-powered customer-messaging platform (WhatsApp, Telegram, email in one inbox with AI triage) that OpSolid designed and built; live product and demo: https://kutasia.com
-
-## Contact
-- Email: info@opsolid.de
-- Phone: +49 176 31020654 (DE), +90 533 571 78 85 (TR)
-- Based in Arnsberg, Germany. Serves clients internationally, remote-first.
+## Facts
+- Based in Arnsberg, Germany. Founded by Hasan Dönmez. Works with clients remotely across Europe and with Türkiye.
+- The work examples shown are OpSolid's own projects (opsolid.de, OpSo, Kutasia).

@@ -1,0 +1,595 @@
+<title>OpSolid Werkstapel</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout concept: a fixed 3D stage behind a left text column. One object, seven plates (one per offering), re-forms per section. Drafting-sheet details: rail, title block, parts list. */
+:root{
+  color-scheme:dark;
+  --bg:#12110f; --bg2:#1a1816; --ink:#ece6da; --ink2:#b9b2a4; --ink3:#8a8378; --line:#2f2c27;
+  --cu:#c27940; --cu-hi:#e0a070; --on-cu:#12110f;
+  --f-d:'Archivo','Arial Narrow',system-ui,sans-serif;
+  --f-m:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-d);font-stretch:100%;font-size:1.0625rem;line-height:1.6;position:relative}
+body::before{content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:72px 72px;opacity:.28}
+a{color:var(--cu-hi);text-underline-offset:3px}
+a:hover{color:var(--ink)}
+:focus-visible{outline:2px solid var(--cu-hi);outline-offset:3px}
+.mono{font-family:var(--f-m);font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+#stage{position:fixed;inset:0;z-index:1;pointer-events:none}
+#stage canvas{display:block;width:100%;height:100%;opacity:0;transition:opacity .9s ease}
+#stage.on canvas{opacity:1}
+#poster{position:fixed;z-index:1;pointer-events:none;right:8vw;top:50%;width:min(34vw,460px);transform:translateY(-50%);transition:opacity .6s ease}
+#poster svg{width:100%;height:auto;display:block}
+.p-front{fill:var(--sf)} .p-top{fill:var(--st)} .p-side{fill:var(--ss)}
+html[data-3d="on"] #poster{opacity:0}
+
+header.top{position:fixed;z-index:20;top:0;left:0;right:0;padding-top:env(safe-area-inset-top,0px);background:linear-gradient(var(--bg),rgba(18,17,15,0))}
+header.top .in{display:flex;align-items:center;justify-content:space-between;height:64px;gap:16px}
+.mark{font-weight:800;font-stretch:118%;font-size:1.35rem;letter-spacing:-.02em;color:var(--ink);text-decoration:none}
+.mark span{color:var(--cu)}
+.in{width:100%;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 22px;background:var(--cu);color:var(--on-cu);font-weight:700;font-size:1rem;text-decoration:none;border:0;border-radius:2px;cursor:pointer;font-family:inherit}
+.btn:hover{background:var(--cu-hi);color:var(--on-cu)}
+.btn.ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink3)}
+.btn.ghost:hover{background:var(--bg2);color:var(--ink)}
+.lang{display:none}
+
+nav.rail{position:fixed;z-index:20;left:max(20px,env(safe-area-inset-left,0px));top:50%;transform:translateY(-50%);display:none;flex-direction:column;gap:2px}
+nav.rail a{font-family:var(--f-m);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);text-decoration:none;padding:7px 0 7px 14px;border-left:1px solid var(--line);min-height:24px}
+nav.rail a[aria-current="true"]{color:var(--cu-hi);border-left:2px solid var(--cu)}
+nav.rail a:hover{color:var(--ink)}
+
+main{position:relative;z-index:5}
+section{min-height:100vh;display:flex;align-items:center;padding-block:15vh}
+.col{max-width:36rem}
+h1,h2{font-weight:800;font-stretch:118%;line-height:.98;letter-spacing:-.025em;margin:0 0 22px;text-wrap:balance}
+h1{font-size:clamp(2.7rem,7vw,6.2rem)}
+h1 em{font-style:normal;color:var(--cu)}
+h2{font-size:clamp(2rem,4.6vw,3.6rem)}
+.lede{font-size:1.2rem;color:var(--ink);margin:0 0 24px;max-width:34rem}
+p{margin:0 0 16px;color:var(--ink2)}
+.eyebrow{display:block;margin-bottom:20px}
+.cta{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:28px}
+.chip{display:inline-block;font-family:var(--f-m);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border:1px solid var(--cu);color:var(--cu-hi);border-radius:2px}
+
+.demo{margin-top:26px;border:1px solid var(--line);background:var(--bg2);padding:18px}
+.demo-head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:14px}
+.wave{display:flex;align-items:center;gap:4px;height:44px;margin-bottom:14px}
+.wave i{display:block;width:4px;height:100%;background:var(--cu);border-radius:1px;transform:scaleY(.12);transform-origin:center}
+.tx{min-height:9.5rem;display:flex;flex-direction:column;gap:8px;font-size:.98rem}
+.tx p{margin:0;color:var(--ink)}
+.tx b{font-family:var(--f-m);font-weight:500;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;margin-right:10px;color:var(--ink3)}
+.tx .ag b{color:var(--cu-hi)}
+.note{font-size:.9rem;color:var(--ink3);margin:14px 0 0}
+
+dl.spec{display:grid;grid-template-columns:7rem 1fr;margin:0 0 8px;border-top:1px solid var(--line)}
+dl.spec dt,dl.spec dd{margin:0;padding:11px 0;border-bottom:1px solid var(--line)}
+dl.spec dt{font-family:var(--f-m);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);padding-top:14px}
+dl.spec dd{color:var(--ink)}
+.tbl{width:100%;overflow-x:auto;margin-top:18px}
+table{border-collapse:collapse;width:100%;min-width:30rem;font-size:.98rem}
+caption{text-align:left;padding-bottom:8px}
+th{font-family:var(--f-m);font-weight:500;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);text-align:left;padding:8px 10px 8px 0;border-bottom:1px solid var(--ink3)}
+td{padding:13px 10px 13px 0;border-bottom:1px solid var(--line);color:var(--ink);vertical-align:top}
+td.pr{font-family:var(--f-m);color:var(--cu-hi);white-space:nowrap;text-align:right;padding-right:0}
+th.pr{text-align:right;padding-right:0}
+ul.plain{list-style:none;padding:0;margin:18px 0 0;border-top:1px solid var(--line)}
+ul.plain li{padding:12px 0;border-bottom:1px solid var(--line);color:var(--ink2)}
+ul.plain li strong{color:var(--ink);font-weight:700}
+.block{border:1px solid var(--ink3);margin-top:22px;max-width:30rem}
+.block div{display:grid;grid-template-columns:8rem 1fr;border-bottom:1px solid var(--line)}
+.block div:last-child{border-bottom:0}
+.block span{padding:10px 12px;color:var(--ink)}
+.block span:first-child{font-family:var(--f-m);font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);border-right:1px solid var(--line);padding-top:12px}
+.contact a{display:block;font-size:1.25rem;min-height:36px}
+
+footer{position:relative;z-index:5;border-top:1px solid var(--line);background:var(--bg);padding-block:26px 90px;font-size:.88rem;color:var(--ink3)}
+footer .row{display:flex;flex-wrap:wrap;gap:12px 28px;justify-content:space-between}
+footer a{color:var(--ink2)}
+
+#bar{position:fixed;z-index:30;left:max(12px,env(safe-area-inset-left,0px));bottom:max(12px,env(safe-area-inset-bottom,0px));display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:var(--bg2);border:1px solid var(--line);padding:6px 8px;max-width:calc(100vw - 24px)}
+#bar .seg{display:flex}
+#bar button{font-family:var(--f-m);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);background:transparent;border:1px solid var(--line);padding:0 12px;min-height:34px;cursor:pointer;margin-left:-1px}
+#bar button[aria-pressed="true"]{background:var(--cu);color:var(--on-cu);border-color:var(--cu)}
+#stat{display:none;color:var(--ink3);font-family:var(--f-m);font-size:.7rem;letter-spacing:.04em}
+#read{position:fixed;z-index:30;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));display:none}
+
+.mk{position:fixed;z-index:3;width:18px;height:18px;border:0 solid var(--ink3);pointer-events:none;display:none}
+.mk.a{left:14px;top:76px;border-left-width:1px;border-top-width:1px}
+.mk.b{right:14px;top:76px;border-right-width:1px;border-top-width:1px}
+.mk.c{left:14px;bottom:70px;border-left-width:1px;border-bottom-width:1px}
+.mk.d{right:14px;bottom:14px;border-right-width:1px;border-bottom-width:1px}
+
+@media (max-width:759px){
+  section{padding-block:6vh}
+  main section:first-child{padding-top:44vh}
+  section:not(:first-child){padding-top:46vh}
+  .col{background:rgba(18,17,15,.93);padding:22px 18px;margin-left:-2px;margin-right:-2px}
+  #poster{right:auto;left:50%;top:14vh;transform:translateX(-50%);width:min(58vw,250px)}
+  .tx{min-height:11rem}
+  h1{font-size:clamp(2.35rem,11vw,3.2rem)}
+  #bar{right:max(12px,env(safe-area-inset-right,0px))}
+  #bar button{min-height:44px}
+}
+@media (min-width:760px){
+  #stat{display:block}
+  .lang{display:inline}
+}
+@media (min-width:1100px){
+  nav.rail{display:flex}
+  main .in{padding-left:max(170px,env(safe-area-inset-left,0px))}
+  #read{display:block}
+  .mk{display:block}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  #stage canvas{transition:none}
+}
+</style>
+
+<div lang="de" id="root">
+<span class="mk a"></span><span class="mk b"></span><span class="mk c"></span><span class="mk d"></span>
+
+<div id="stage" aria-hidden="true"></div>
+<div id="poster" aria-hidden="true">
+<svg viewBox="0 0 320 330" role="presentation" focusable="false">
+<defs><g id="sl"><polygon class="p-top" points="0,0 60,-22 300,-22 240,0"/><polygon class="p-side" points="240,0 300,-22 300,12 240,34"/><rect class="p-front" x="0" y="0" width="240" height="34"/></g></defs>
+<use href="#sl" x="10" y="60" style="--sf:#c27940;--st:#e0a070;--ss:#8f4f1e"/>
+<use href="#sl" x="10" y="98" style="--sf:#25231f;--st:#34312b;--ss:#1c1a17"/>
+<use href="#sl" x="10" y="136" style="--sf:#25231f;--st:#34312b;--ss:#1c1a17"/>
+<use href="#sl" x="10" y="174" style="--sf:#25231f;--st:#34312b;--ss:#1c1a17"/>
+<use href="#sl" x="10" y="212" style="--sf:#25231f;--st:#34312b;--ss:#1c1a17"/>
+<use href="#sl" x="10" y="250" style="--sf:#25231f;--st:#34312b;--ss:#1c1a17"/>
+<use href="#sl" x="10" y="288" style="--sf:#25231f;--st:#34312b;--ss:#1c1a17"/>
+</svg>
+</div>
+
+<header class="top"><div class="in">
+<a class="mark" href="#start">Op<span>Solid</span></a>
+<span style="display:flex;align-items:center;gap:18px"><span class="mono lang">DE · EN · TR</span><a class="btn" href="#kontakt">KI-Check buchen</a></span>
+</div></header>
+
+<nav class="rail" aria-label="Abschnitte">
+<a href="#start" data-s="0">Start</a><a href="#agents" data-s="1">Agents</a><a href="#websites" data-s="2">Websites</a><a href="#prozess" data-s="3">Automatisierung</a><a href="#check" data-s="4">KI-Check</a><a href="#produkte" data-s="5">Produkte</a><a href="#ueber" data-s="6">Über mich</a><a href="#kontakt" data-s="7">Kontakt</a>
+</nav>
+
+<main>
+<section id="start" data-name="Start"><div class="in"><div class="col">
+<span class="mono eyebrow">OpSolid · Praxis für KI-Agents, Websites und Automatisierung · Arnsberg</span>
+<h1>Gebaut, damit es <em>läuft.</em></h1>
+<p class="lede">Ich entwickle sprechende KI-Agents, Websites und Abläufe für kleine und mittlere Betriebe, und betreibe eigene Produkte, die heute schon im Einsatz sind.</p>
+<div class="cta"><a class="btn" href="#check">KI-Check buchen</a><a class="btn ghost" href="#agents">Agents ansehen</a></div>
+</div></div></section>
+
+<section id="agents" data-name="Agents"><div class="in"><div class="col">
+<span class="mono eyebrow">Sprach- und Video-Agents</span>
+<h2 class="rv">Agents, die sprechen und zuhören.</h2>
+<p class="lede rv">Ich baue Sprach- und Video-Agents für Anfragen, Terminabstimmung und Auskünfte zu Ihrem Betrieb. Das Gesicht ist die Oberfläche, dahinter läuft Ihr Prozess.</p>
+<div class="demo rv">
+<div class="demo-head"><span class="chip">Demo · Szenario, ohne Ton</span><button class="btn" id="play" type="button" style="min-height:40px;padding:0 16px">Szenario abspielen</button></div>
+<div class="wave" id="wave" aria-hidden="true"></div>
+<div class="tx" id="tx" aria-hidden="true"></div>
+<p class="sr">Beispielgespräch. Anrufer: Guten Tag, ich möchte einen Termin für nächste Woche vereinbaren. Agent: Gern. Passt Ihnen Mittwoch um 10 Uhr oder Donnerstag um 14 Uhr? Anrufer: Donnerstag passt. Agent: Dann trage ich Donnerstag, 14 Uhr, ein. Sie erhalten eine Bestätigung per E-Mail.</p>
+<p class="note">Ein gespielter Ablauf, kein Live-Gespräch. Die Live-Sprachdemo folgt, sobald Sprachanbieter und Datenschutzprüfung (DSGVO) geklärt sind.</p>
+</div>
+</div></div></section>
+
+<section id="websites" data-name="Websites"><div class="in"><div class="col">
+<span class="mono eyebrow">Websites zum Kauf oder zur Miete</span>
+<h2 class="rv">Websites, die ich gestalte, baue und vermiete.</h2>
+<p class="lede rv">Eine Website mit eigenem Gesicht, zum Kauf oder zur Miete. Die Konditionen klären wir im Gespräch.</p>
+<p class="rv">Gezeigt werden nur Seiten, die ich selbst gebaut habe und betreibe:</p>
+<ul class="plain rv">
+<li><strong>opsolid.de</strong>: diese Seite. <a href="https://opsolid.de">Öffnen</a></li>
+<li><strong>OpSo</strong>: digitale Visitenkarte. <a href="https://card.opsolid.de">card.opsolid.de</a></li>
+<li><strong>Kutasia</strong>: laufende Demo für Alltagssysteme.</li>
+</ul>
+</div></div></section>
+
+<section id="prozess" data-name="Automatisierung"><div class="in"><div class="col">
+<span class="mono eyebrow">Prozessautomatisierung und Microsoft 365</span>
+<h2 class="rv">Abläufe, die von selbst laufen.</h2>
+<p class="lede rv">Formulare, Tabellen und Copy-Paste bringe ich auf Schienen. Was nur ein Mensch entscheiden kann, bleibt bei Ihrem Team.</p>
+<ul class="plain rv">
+<li><strong>Prozessautomatisierung.</strong> Wiederkehrende Schritte laufen ohne Nacharbeit durch.</li>
+<li><strong>Microsoft 365.</strong> Outlook, Teams und SharePoint verbunden mit CRM, ERP und Helpdesk.</li>
+<li><strong>Interne Tools.</strong> Das gemeinsam genutzte Tabellenblatt wird ein zweckgebautes Werkzeug.</li>
+</ul>
+</div></div></section>
+
+<section id="check" data-name="KI-Check"><div class="in"><div class="col">
+<span class="mono eyebrow">KI-Check und KI-Schulungen</span>
+<h2 class="rv">Erst klären, dann bauen.</h2>
+<p class="lede rv">Im KI-Check gehen wir 60–90 Minuten Ihre Abläufe durch. Danach erhalten Sie einen schriftlichen 30-Tage-Plan mit fünf bewerteten Kandidaten.</p>
+<dl class="spec rv">
+<dt>Umfang</dt><dd>60–90 Minuten, vor Ort oder remote</dd>
+<dt>Ergebnis</dt><dd>Prozesskarte, 5 bewertete Potenziale, 30-Tage-Plan</dd>
+<dt>Preis</dt><dd>Auf Anfrage, nach dem Vorgespräch fix</dd>
+</dl>
+<div class="tbl rv"><table>
+<caption class="mono">Stückliste KI-Schulungen</caption>
+<thead><tr><th scope="col">Angebot</th><th scope="col">Format</th><th scope="col" class="pr">Preis</th></tr></thead>
+<tbody>
+<tr><td>KI-Quick-Check</td><td>90 Minuten remote, schriftlicher Bericht</td><td class="pr">ab 490 €</td></tr>
+<tr><td>KI-Kompetenz Basis</td><td>Halber Tag, bis 15 Personen</td><td class="pr">1.490 €</td></tr>
+<tr><td>Copilot Praxis-Tag</td><td>1 Tag, bis 12 Personen</td><td class="pr">ab 2.400 €</td></tr>
+</tbody></table></div>
+<div class="cta"><a class="btn" href="#kontakt">KI-Check buchen</a></div>
+</div></div></section>
+
+<section id="produkte" data-name="Produkte"><div class="in"><div class="col">
+<span class="mono eyebrow">Eigene Produkte</span>
+<h2 class="rv">Zwei Produkte, die ich selbst betreibe.</h2>
+<p class="lede rv">Beide laufen, und beide zeigen, wie ich arbeite.</p>
+<ul class="plain rv">
+<li><strong>OpSo.</strong> Digitale Visitenkarte mit NFC und QR: ein Link, immer aktuell, ohne App für den Empfänger. <a href="https://card.opsolid.de">card.opsolid.de</a></li>
+<li><strong>Kutasia.</strong> Eine laufende Demo, die zeigt, wie ich Systeme für den Alltag baue.</li>
+</ul>
+</div></div></section>
+
+<section id="ueber" data-name="Über mich"><div class="in"><div class="col">
+<span class="mono eyebrow">Über mich</span>
+<h2 class="rv">Hasan Dönmez, Arnsberg.</h2>
+<p class="lede rv">Ich arbeite allein, Sie sprechen immer mit mir. Erst der Prozess, dann die Technologie. Wo Automatisierung nicht sinnvoll ist, sage ich das.</p>
+<div class="block rv">
+<div><span>Name</span><span>Hasan Dönmez</span></div>
+<div><span>Praxis</span><span>OpSolid, unabhängig, Einzelperson</span></div>
+<div><span>Ort</span><span>Arnsberg</span></div>
+<div><span>Hinweis</span><span>OpSolid ist nicht TopSolid (CAD/CAM)</span></div>
+<div><span>Stand</span><span>Oktober 2026</span></div>
+</div>
+</div></div></section>
+
+<section id="kontakt" data-name="Kontakt"><div class="in"><div class="col contact">
+<span class="mono eyebrow">Kontakt</span>
+<h2 class="rv">Schreiben oder anrufen.</h2>
+<p class="lede rv">Antwort in der Regel innerhalb weniger Arbeitstage.</p>
+<p class="rv"><a href="mailto:info@opsolid.de">info@opsolid.de</a><span style="color:var(--ink)">+49 176 31020654</span></p>
+<div class="cta rv"><a class="btn" href="mailto:info@opsolid.de?subject=KI-Check">KI-Check anfragen</a></div>
+</div></div></section>
+</main>
+
+<footer><div class="in"><div class="row">
+<span>© OpSolid · Arnsberg · Stand: Oktober 2026</span>
+<span style="display:flex;gap:22px;flex-wrap:wrap"><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">llms.txt</a></span>
+</div></div></footer>
+
+<div id="bar" role="group" aria-label="Prototyp-Schalter für die Darstellung">
+<span class="mono">Prototyp</span>
+<span class="seg"><button type="button" data-m="full" aria-pressed="false">Voll</button><button type="button" data-m="light" aria-pressed="false">Leicht</button><button type="button" data-m="poster" aria-pressed="false">Poster</button></span>
+<span id="stat" aria-live="polite">Text zuerst, 3D lädt nach dem ersten Bild</span>
+</div>
+<div id="read" class="mono" aria-hidden="true">Blatt 1/8 · Start</div>
+</div>
+
+<script>
+(function(){
+"use strict";
+var $=function(s,r){return (r||document).querySelector(s)}, $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+var coarse=matchMedia('(pointer: coarse)').matches;
+var smallVp=function(){return innerWidth<760};
+var THREE_URL='https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js';
+var GSAP_URL='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js';
+var ST_URL='https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js';
+var root=document.documentElement;
+var stageEl=$('#stage'), statEl=$('#stat'), readEl=$('#read');
+var mode='poster', loadT=0, lcp=0, threeMs=0, activeIdx=0;
+var secs=$$('main section');
+
+/* ---------- status line ---------- */
+function stat(extra){
+  var m={full:'Voll',light:'Leicht',poster:'Poster'}[mode];
+  var parts=['Darstellung: '+m];
+  if(threeMs) parts.push('3D '+threeMs+' ms nach Load');
+  if(lcp) parts.push('Text-LCP '+lcp+' ms');
+  if(extra) parts.push(extra);
+  statEl.textContent=parts.join(' · ');
+}
+try{
+  new PerformanceObserver(function(l){var e=l.getEntries();if(e.length){lcp=Math.round(e[e.length-1].startTime);stat()}}).observe({type:'largest-contentful-paint',buffered:true});
+}catch(e){}
+
+/* ---------- rail + readout (works without 3D) ---------- */
+var railLinks=$$('nav.rail a');
+function setActive(i){
+  activeIdx=i;
+  railLinks.forEach(function(a){a.setAttribute('aria-current',String(+a.dataset.s===i))});
+  readEl.textContent='Blatt '+(i+1)+'/8 · '+secs[i].dataset.name;
+}
+try{
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){setActive(secs.indexOf(e.target))}})},{rootMargin:'-45% 0px -50% 0px'});
+  secs.forEach(function(s){io.observe(s)});
+}catch(e){}
+setActive(0);
+
+/* ---------- voice simulation (DOM bars always, 3D reads the same state) ---------- */
+var voice={mode:'idle',amp:.05,t:0};
+var wave=$('#wave'), bars=[];
+for(var b=0;b<28;b++){var el=document.createElement('i');wave.appendChild(el);bars.push(el)}
+var SC=[
+ {w:'Anrufer',a:0,t:'Guten Tag, ich möchte einen Termin für nächste Woche vereinbaren.',d:3000},
+ {w:'Agent',a:1,t:'Gern. Passt Ihnen Mittwoch um 10 Uhr oder Donnerstag um 14 Uhr?',d:3600},
+ {w:'Anrufer',a:0,t:'Donnerstag passt.',d:1400},
+ {w:'Agent',a:1,t:'Dann trage ich Donnerstag, 14 Uhr, ein. Sie erhalten eine Bestätigung per E-Mail.',d:4200}
+];
+var playing=false, agentsVisible=false;
+function wait(ms){return new Promise(function(r){setTimeout(r,ms)})}
+function typeLine(el,text,dur){
+  if(reduce){el.textContent=text;return wait(Math.min(dur,900))}
+  return new Promise(function(res){
+    var t0=performance.now(), span=dur*.82;
+    (function step(){
+      var p=Math.min(1,(performance.now()-t0)/span);
+      el.textContent=text.slice(0,Math.ceil(text.length*p));
+      if(p<1) requestAnimationFrame(step); else wait(dur-span).then(res);
+    })();
+  });
+}
+function play(){
+  if(playing) return; playing=true;
+  var tx=$('#tx'), btn=$('#play'); tx.textContent=''; btn.disabled=true; btn.textContent='Läuft …';
+  var chain=Promise.resolve();
+  SC.forEach(function(l){
+    chain=chain.then(function(){
+      var p=document.createElement('p'); p.className=l.a?'ag':'cl';
+      var bEl=document.createElement('b'); bEl.textContent=l.w; var sp=document.createElement('span');
+      p.appendChild(bEl); p.appendChild(sp); tx.appendChild(p);
+      voice.mode=l.a?'speak':'listen';
+      return typeLine(sp,l.t,l.d).then(function(){return wait(380)});
+    });
+  });
+  chain.then(function(){voice.mode='idle';playing=false;btn.disabled=false;btn.textContent='Noch einmal abspielen'});
+}
+$('#play').addEventListener('click',play);
+try{
+  var io2=new IntersectionObserver(function(es){
+    agentsVisible=es[0].isIntersecting;
+    if(es[0].isIntersecting && !play.done){play.done=true; if(!reduce) setTimeout(play,700); else {}}
+  },{threshold:.35});
+  io2.observe($('#agents'));
+}catch(e){}
+(function vloop(now){
+  requestAnimationFrame(vloop);
+  if(document.hidden) return;
+  var t=now/1000; voice.t=t;
+  var tg = voice.mode==='speak' ? .35+.65*Math.abs(Math.sin(t*9.3)*Math.sin(t*3.1+1)) : voice.mode==='listen' ? .14+.1*Math.sin(t*2.4) : .05+.03*Math.sin(t*1.5);
+  voice.amp+=(tg-voice.amp)*.22;
+  if(!agentsVisible) return;
+  for(var i=0;i<bars.length;i++){
+    var s=.1+voice.amp*(.55+.45*Math.sin(t*7+i*1.1))*(.6+.4*Math.sin(i*.37));
+    bars[i].style.transform='scaleY('+Math.min(1,s).toFixed(3)+')';
+  }
+})(performance.now());
+
+/* ---------- script loader ---------- */
+function loadScript(src){return new Promise(function(res,rej){var s=document.createElement('script');s.src=src;s.async=true;s.onload=res;s.onerror=function(){rej(new Error(src))};document.head.appendChild(s)})}
+var libsP=null;
+function loadLibs(){if(!libsP) libsP=loadScript(THREE_URL).then(function(){return loadScript(GSAP_URL)}).then(function(){return loadScript(ST_URL)});return libsP}
+function webgl(){try{var c=document.createElement('canvas');return !!(c.getContext('webgl2')||c.getContext('webgl'))}catch(e){return false}}
+
+/* ---------- 3D scene ---------- */
+var S=null; // scene state
+var quality='full', running=false, raf=0, frameN=0, lastT=0, T=0;
+var f=0, fT=0, P=[], pointer={x:0,y:0};
+var triggersMade=false;
+
+var SL=[
+ {n:'Agents',t:'Stimme · Video'},{n:'Websites',t:'Bau · Miete'},{n:'Prozessautomatisierung',t:'Abläufe'},
+ {n:'Microsoft 365',t:'Outlook · Teams'},{n:'Interne Tools',t:'statt Tabelle'},{n:'KI-Beratung',t:'KI-Check'},{n:'KI-Schulungen',t:'Team'}
+];
+function sm(x){x=Math.max(0,Math.min(1,x));return x*x*(3-2*x)}
+function lerp(a,b,u){return a+(b-a)*u}
+function wrap(a){return ((a+Math.PI)%(2*Math.PI)+2*Math.PI)%(2*Math.PI)-Math.PI}
+function pose(k,i,t){
+  var c=i-3;
+  switch(k){
+   case 0:return [0,-c*.4,0, 0,c*.09,0, 1,1,1];
+   case 1:var a=i/7*Math.PI*2+t*.25;return [Math.cos(a)*2.1,Math.sin(a*2+i)*.1,Math.sin(a)*2.1, 0,wrap(-(a+Math.PI/2)),0, .62,.8,.5];
+   case 2:return [c*.64,.05*(3-Math.abs(c)),-Math.abs(c)*.3, Math.PI/2,0,c*-.18, .55,.45,.72];
+   case 3:return [c*.8,0,0, 0,0,0, .34,.7,.5];
+   case 4:return [c*.56,c*.3,0, 0,-.35,0, .45,1,.65];
+   case 5:return [c*.34,0,c*.16, Math.PI/2,0,c*.3, .6,.22,.62];
+   case 6:return [(i%2?.14:-.14),-c*.4,0, 0,c*.05,0, 1,1,1];
+   default:return [0,-c*.37,0, 0,0,0, 1,.95,1];
+  }
+}
+var GY=[-.55,0,0,0,-.35,-.3,-.6,.35], GX=[.12,.4,.05,.1,.1,.05,.1,.1], GS=[1,.95,.95,.85,.72,1,1,1], GXO=[0,0,0,.02,.07,0,0,0];
+var HEAT={1:[0],2:[1],3:[2,3,4],4:[5,6]};
+
+function labelTex(THREE,name,tag){
+  var c=document.createElement('canvas');c.width=1024;c.height=145;var g=c.getContext('2d');
+  g.fillStyle='#1d1b18';g.fillRect(0,0,1024,145);
+  g.fillStyle='#c27940';g.font='800 62px Archivo, Arial Narrow, sans-serif';g.textBaseline='middle';g.fillText(name,34,74);
+  g.fillStyle='#8a8378';g.font='500 24px "IBM Plex Mono", monospace';g.textAlign='right';g.fillText(tag.toUpperCase(),990,76);
+  g.fillStyle='#c27940';g.fillRect(0,0,1024,3);
+  var t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;t.anisotropy=4;return t;
+}
+function topTex(THREE){
+  var c=document.createElement('canvas');c.width=512;c.height=340;var g=c.getContext('2d');
+  g.fillStyle='#25231f';g.fillRect(0,0,512,340);
+  g.fillStyle='#c27940';g.fillRect(0,0,512,26);
+  g.fillStyle='#1d1b18';[14,30,46].forEach(function(x){g.beginPath();g.arc(x,13,4,0,6.3);g.fill()});
+  g.strokeStyle='rgba(194,121,64,.55)';g.lineWidth=1.5;
+  for(var x=0;x<=512;x+=16){g.beginPath();g.moveTo(x,340);g.lineTo(x,x%80===0?312:326);g.stroke()}
+  g.strokeStyle='rgba(194,121,64,.25)';
+  g.beginPath();g.moveTo(256,70);g.lineTo(256,270);g.moveTo(156,170);g.lineTo(356,170);g.stroke();
+  g.strokeRect(176,110,160,120);
+  var t=new THREE.CanvasTexture(c);t.encoding=THREE.sRGBEncoding;t.anisotropy=4;return t;
+}
+function envTex(THREE){
+  var c=document.createElement('canvas');c.width=512;c.height=256;var g=c.getContext('2d');
+  g.fillStyle='#0d0c0a';g.fillRect(0,0,512,256);
+  g.fillStyle='#fff1dc';g.fillRect(60,40,120,60);g.fillRect(330,30,100,40);
+  g.fillStyle='#c27940';g.fillRect(230,150,50,70);
+  g.fillStyle='#3a362f';g.fillRect(0,200,512,56);
+  var t=new THREE.CanvasTexture(c);t.mapping=THREE.EquirectangularReflectionMapping;t.encoding=THREE.sRGBEncoding;return t;
+}
+
+function initScene(){
+  if(S) return true;
+  var THREE=window.THREE;
+  var renderer;
+  try{renderer=new THREE.WebGLRenderer({antialias:!smallVp(),alpha:true,powerPreference:'high-performance'})}catch(e){return false}
+  renderer.outputEncoding=THREE.sRGBEncoding;
+  renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;
+  renderer.setClearColor(0x000000,0);
+  stageEl.appendChild(renderer.domElement);
+  var scene=new THREE.Scene();
+  var camera=new THREE.PerspectiveCamera(35,1,.1,60);camera.position.set(0,0,9.5);
+  var amb=new THREE.AmbientLight(0xffffff,.45);scene.add(amb);
+  var key=new THREE.DirectionalLight(0xffd8b0,1.5);key.position.set(4,6,6);scene.add(key);
+  var rim=new THREE.PointLight(0xc27940,1.2,30);rim.position.set(-5,-2,-4);scene.add(rim);
+  var envOn=null;
+  var group=new THREE.Group();scene.add(group);
+  var box=new THREE.BoxGeometry(2.4,.34,1.6);
+  var egeo=new THREE.EdgesGeometry(box);
+  var top=topTex(THREE);
+  var slabs=[];
+  SL.forEach(function(d,i){
+    var body=new THREE.MeshStandardMaterial({color:0x1f1d1a,metalness:.55,roughness:.45,envMapIntensity:.5});
+    var lab=new THREE.MeshStandardMaterial({map:labelTex(THREE,d.n,d.t),metalness:.35,roughness:.5,envMapIntensity:.5});
+    var tp=new THREE.MeshStandardMaterial({map:top,metalness:.35,roughness:.5,envMapIntensity:.5});
+    var m=new THREE.Mesh(box,[body,body,tp,body,lab,lab]);
+    var em=new THREE.LineBasicMaterial({color:0xe0a070,transparent:true,opacity:.45});
+    var edges=new THREE.LineSegments(egeo,em);m.add(edges);
+    group.add(m);
+    slabs.push({m:m,mats:[body,lab,tp],edge:em,heat:0});
+  });
+  // belt rail (visible in the automation scene)
+  var rail=new THREE.Mesh(new THREE.BoxGeometry(6.4,.05,.9),new THREE.MeshStandardMaterial({color:0x1d1b18,metalness:.5,roughness:.5}));
+  rail.position.y=-.36;rail.scale.x=.001;group.add(rail);
+  rail.add(new THREE.LineSegments(new THREE.EdgesGeometry(rail.geometry),new THREE.LineBasicMaterial({color:0xc27940})));
+  // agent head
+  var head=new THREE.Group();group.add(head);
+  var hm=new THREE.MeshStandardMaterial({color:0x2b2925,metalness:.5,roughness:.32});
+  head.add(new THREE.Mesh(new THREE.SphereGeometry(.95,48,32),hm));
+  var visor=new THREE.Mesh(new THREE.SphereGeometry(.965,40,12,Math.PI/2-.95,1.9,1.05,.45),new THREE.MeshStandardMaterial({color:0xc27940,metalness:.7,roughness:.3,side:THREE.DoubleSide}));
+  head.add(visor);
+  var eyeM=new THREE.MeshBasicMaterial({color:0xffe3c4});
+  [-1,1].forEach(function(s){var e=new THREE.Mesh(new THREE.CircleGeometry(.065,20),eyeM);e.position.set(s*.3,.2,Math.sqrt(.965*.965-.09-.04)+.01);head.add(e)});
+  var mouthM=new THREE.MeshBasicMaterial({color:0xe0a070}), mouth=[];
+  for(var k=0;k<9;k++){var x=(k-4)*.11;var mb=new THREE.Mesh(new THREE.BoxGeometry(.05,.1,.04),mouthM);mb.position.set(x,-.33,Math.sqrt(.965*.965-x*x-.33*.33)+.01);head.add(mb);mouth.push(mb)}
+  var halo=new THREE.Mesh(new THREE.TorusGeometry(1.4,.014,8,100),new THREE.MeshBasicMaterial({color:0xc27940,transparent:true,opacity:.8}));
+  halo.rotation.x=Math.PI/2.15;head.add(halo);
+  head.scale.setScalar(.0001);head.visible=false;
+  S={THREE:THREE,renderer:renderer,scene:scene,camera:camera,group:group,slabs:slabs,rail:rail,head:head,mouth:mouth,halo:halo,amb:amb,key:key,rim:rim,envOn:envOn,envTex:null,layout:{x:0,y:0,s:1},first:false};
+  resize();
+  return true;
+}
+function resize(){
+  if(!S) return;
+  var w=innerWidth,h=innerHeight,small=smallVp();
+  S.renderer.setSize(w,h,false);S.camera.aspect=w/h;S.camera.updateProjectionMatrix();
+  var visH=2*9.5*Math.tan(17.5*Math.PI/180), visW=visH*(w/h);
+  S.layout = small ? {x:0,y:visH*.2,s:Math.min(1,visW/5.4),w:0} : {x:visW*.2,y:0,s:Math.min(1.15,visH/5.6),w:visW};
+}
+function applyQuality(q){
+  quality=q;
+  if(!S) return;
+  var THREE=S.THREE;
+  S.renderer.setPixelRatio(q==='full'?Math.min(devicePixelRatio||1,2):1);
+  resize();
+  if(q==='full'){
+    if(!S.envTex){var pm=new THREE.PMREMGenerator(S.renderer);var et=envTex(THREE);S.envTex=pm.fromEquirectangular(et).texture;et.dispose();pm.dispose()}
+    S.scene.environment=S.envTex;
+  }else{S.scene.environment=null}
+  S.slabs.forEach(function(s){s.m.children[0].visible=(q==='full')});
+}
+function update(dt){
+  var THREE=S.THREE,k0=Math.min(7,Math.floor(f)),k1=Math.min(7,k0+1),u=sm(f-k0);
+  var near=Math.round(f), g=S.group;
+  S.slabs.forEach(function(s,i){
+    var a=pose(k0,i,T),b=pose(k1,i,T),m=s.m;
+    m.position.set(lerp(a[0],b[0],u),lerp(a[1],b[1],u),lerp(a[2],b[2],u));
+    m.rotation.set(lerp(a[3],b[3],u),lerp(a[4],b[4],u),lerp(a[5],b[5],u));
+    m.scale.set(lerp(a[6],b[6],u),lerp(a[7],b[7],u),lerp(a[8],b[8],u));
+    var w3=Math.max(0,1-Math.abs(f-3));
+    m.position.y+=Math.sin(T*2.2-i*.9)*.1*w3;
+    var tg=0; if(HEAT[near]&&HEAT[near].indexOf(i)>-1) tg=1; else if(near===7) tg=.3;
+    s.heat+=(tg-s.heat)*Math.min(1,dt*5);
+    var e=s.heat*.32;
+    s.mats.forEach(function(mt){mt.emissive.setRGB(.76*e,.47*e,.25*e)});
+    s.edge.opacity=.45+.5*s.heat;
+  });
+  var w3b=Math.max(0,1-Math.abs(f-3));S.rail.scale.x=Math.max(.001,w3b);
+  var aw=Math.max(0,1-Math.abs(f-1)*1.5);
+  S.head.visible=aw>.02;S.head.scale.setScalar(Math.max(.0001,sm(aw)));
+  if(S.head.visible){
+    var amp=voice.amp;
+    S.mouth.forEach(function(mb,i){mb.scale.y=.12+amp*(.5+.5*Math.sin(T*11+i*1.3))*1.9});
+    S.head.rotation.y=Math.sin(T*.8)*.18+pointer.x*.3;S.head.rotation.x=Math.sin(T*1.3)*.04+(amp>.3?.04:0)-pointer.y*.15;
+    var ps=1+amp*.08+(voice.mode==='listen'?.03*Math.sin(T*4):0);
+    S.halo.scale.set(ps,ps,ps);S.halo.rotation.z=T*.4;
+  }
+  var gy=lerp(GY[k0],GY[k1],u),gx=lerp(GX[k0],GX[k1],u);
+  g.rotation.y=gy+Math.sin(T*.35)*.07+(coarse?0:pointer.x*.22);
+  g.rotation.x=gx-(coarse?0:pointer.y*.1);
+  var L=S.layout,gs=lerp(GS[k0],GS[k1],u),gxo=lerp(GXO[k0],GXO[k1],u)*L.w;g.position.set(L.x+gxo,L.y+Math.sin(T*.6)*.05,0);g.scale.setScalar(L.s*gs);
+}
+function loop(now){
+  if(!running) return;
+  raf=requestAnimationFrame(loop);
+  if(document.hidden) return;
+  frameN++; if(quality==='light'&&(frameN&1)) return;
+  var dt=Math.min(.05,(now-lastT)/1000||.016);lastT=now;T+=dt;
+  f+=(fT-f)*Math.min(1,dt*5.5);
+  update(dt);S.renderer.render(S.scene,S.camera);
+  if(!S.first){S.first=true;stageEl.classList.add('on');root.dataset['3d']='on';threeMs=Math.round(performance.now()-loadT);stat()}
+}
+function start(){if(running||!S) return;running=true;lastT=performance.now();raf=requestAnimationFrame(loop)}
+function stop(){running=false;cancelAnimationFrame(raf)}
+
+function makeTriggers(){
+  if(triggersMade||!window.gsap||!window.ScrollTrigger) return; triggersMade=true;
+  var gs=window.gsap, ST=window.ScrollTrigger; gs.registerPlugin(ST);
+  secs.forEach(function(sec,i){
+    P[i]=0;
+    ST.create({trigger:sec,start:'top 50%',end:'bottom 50%',
+      onToggle:function(self){if(self.isActive) activeIdx=i},
+      onUpdate:function(self){P[i]=self.progress; if(self.isActive||i===activeIdx){fT=i+(i<7?sm((self.progress-.5)/.5):0)}}});
+  });
+  if(!reduce){
+    $$('.rv').forEach(function(el){gs.from(el,{opacity:0,y:26,duration:.8,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 92%',once:true}})});
+  }
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(function(){ST.refresh()});
+}
+
+/* ---------- mode switching ---------- */
+function setButtons(){$$('#bar button').forEach(function(b){b.setAttribute('aria-pressed',String(b.dataset.m===mode))})}
+function setMode(m){
+  mode=m;setButtons();
+  if(m==='poster'){
+    stop();stageEl.classList.remove('on');delete root.dataset['3d'];stat('keine Bibliotheken geladen');return;
+  }
+  stat('lädt …');
+  loadLibs().then(function(){
+    if(mode!==m) return;
+    var fontsReady=(document.fonts&&document.fonts.ready)?Promise.race([document.fonts.ready,wait(1500)]):Promise.resolve();
+    return fontsReady.then(function(){
+      if(mode!==m) return;
+      if(!initScene()){mode='poster';setButtons();stat('WebGL nicht verfügbar, Poster');return}
+      applyQuality(m);makeTriggers();
+      if(window.ScrollTrigger) window.ScrollTrigger.refresh();
+      start();stat();if(window.ScrollTrigger) window.ScrollTrigger.update();
+    });
+  }).catch(function(){mode='poster';setButtons();stat('3D nicht erreichbar, Poster')});
+}
+$$('#bar button').forEach(function(b){b.addEventListener('click',function(){setMode(b.dataset.m)})});
+addEventListener('resize',function(){resize()});
+if(!coarse) addEventListener('pointermove',function(e){pointer.x=(e.clientX/innerWidth-.5)*2;pointer.y=(e.clientY/innerHeight-.5)*2},{passive:true});
+document.addEventListener('visibilitychange',function(){if(!document.hidden) lastT=performance.now()});
+
+function autoMode(){return (reduce||!webgl())?'poster':(smallVp()||coarse)?'light':'full'}
+function boot(){loadT=performance.now();var idle=window.requestIdleCallback||function(fn){return setTimeout(fn,200)};idle(function(){setMode(autoMode())},{timeout:1500})}
+if(document.readyState==='complete') boot(); else addEventListener('load',boot);
+setButtons();
+})();
+</script>

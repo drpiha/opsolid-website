@@ -21,7 +21,7 @@ import {
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Unsubscribe | OpSolid",
+  title: "Unsubscribe",
   robots: { index: false },
 };
 

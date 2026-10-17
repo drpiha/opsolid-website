@@ -3,9 +3,10 @@ import { notFound } from "next/navigation";
 import { ClientProviders } from "@/components/ClientProviders";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
-import { AmbientBackdrop } from "@/components/visual/AmbientBackdrop";
-import { LenisProvider } from "@/components/motion/LenisProvider";
 import { PageTransition } from "@/components/motion/PageTransition";
+import { Stage } from "@/components/v4/Stage";
+import { V4Sync } from "@/components/v4/V4Sync";
+import { ContentGate } from "@/components/v4/ContentGate";
 import { LOCALES, type Locale, isLocale } from "@/lib/i18n";
 
 export function generateStaticParams() {
@@ -51,14 +52,18 @@ export default function LocaleLayout({
 
   return (
     <ClientProviders initialLocale={params.locale}>
-      <LenisProvider>
-        <AmbientBackdrop />
-        <Header />
-        <main className="flex-1 relative z-[1]">
+      <V4Sync />
+      <Stage />
+      <a href="#main" className="v4-skip">
+        {params.locale === "de" ? "Zum Inhalt springen" : params.locale === "tr" ? "İçeriğe geç" : "Skip to content"}
+      </a>
+      <Header />
+      <main id="main" className="flex-1 relative z-[2]">
+        <ContentGate>
           <PageTransition>{children}</PageTransition>
-        </main>
-        <Footer />
-      </LenisProvider>
+        </ContentGate>
+      </main>
+      <Footer />
     </ClientProviders>
   );
 }

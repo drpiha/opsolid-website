@@ -22,7 +22,7 @@ import {
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Confirm subscription | OpSolid",
+  title: "Confirm subscription",
   robots: { index: false },
 };
 
