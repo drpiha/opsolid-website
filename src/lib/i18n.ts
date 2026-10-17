@@ -14,6 +14,9 @@ export const PUBLIC_LOCALES: ReadonlyArray<Locale> = ["en", "de", "tr"] as const
 
 export const DEFAULT_LOCALE: Locale = "en";
 
+/** Where locale-less URLs (`/`) land when neither the cookie nor the visitor's country decide. Matches hreflang x-default. */
+export const ROUTING_DEFAULT_LOCALE: Locale = "de";
+
 export const LOCALE_LABELS: Record<Locale, string> = {
   en: "English",
   de: "Deutsch",

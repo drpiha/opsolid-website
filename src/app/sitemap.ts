@@ -1,39 +1,26 @@
 import { MetadataRoute } from "next";
-import { SITE_CONFIG } from "@/lib/constants";
+import { SITE_CONFIG, SITE_UPDATED_ISO } from "@/lib/constants";
 import { PUBLIC_LOCALES } from "@/lib/i18n";
 import { content as en } from "@/content/en";
 
-type PageDef = { path: string; changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"]; priority: number };
-
-const STATIC_PAGES: PageDef[] = [
-  // Consulting positioning — primary funnel
-  { path: "", changeFrequency: "weekly", priority: 1 },
-  { path: "/leistungen", changeFrequency: "weekly", priority: 0.9 },
-  { path: "/ai-automation-check", changeFrequency: "weekly", priority: 0.95 },
-
-  // Sub-services (under /leistungen, but flat URLs)
-  { path: "/ki-beratung", changeFrequency: "monthly", priority: 0.8 },
-  { path: "/prozessautomatisierung", changeFrequency: "monthly", priority: 0.8 },
-  { path: "/microsoft-365-automatisierung", changeFrequency: "monthly", priority: 0.8 },
-  { path: "/interne-tools", changeFrequency: "monthly", priority: 0.8 },
-  { path: "/ki-schulungen", changeFrequency: "monthly", priority: 0.8 },
-
-  { path: "/ueber-mich", changeFrequency: "monthly", priority: 0.7 },
-  { path: "/contact", changeFrequency: "monthly", priority: 0.8 },
-  { path: "/blog", changeFrequency: "weekly", priority: 0.7 },
-
-  // Legacy product pages — still reachable but de-prioritised in the
-  // consulting positioning. Kept in the sitemap so Google does not drop
-  // existing indexed URLs abruptly; will be folded into case studies later.
-  { path: "/opso", changeFrequency: "monthly", priority: 0.8 },
-  { path: "/products/kutasia", changeFrequency: "monthly", priority: 0.5 },
-
-  // Legal
-  { path: "/impressum", changeFrequency: "yearly", priority: 0.3 },
-  { path: "/privacy", changeFrequency: "yearly", priority: 0.3 },
+/** Public marketing paths. Google ignores priority/changefreq, so only real lastModified is emitted. */
+const STATIC_PAGES: string[] = [
+  "",
+  "/agents",
+  "/websites",
+  "/leistungen",
+  "/ai-automation-check",
+  "/ki-beratung",
+  "/prozessautomatisierung",
+  "/microsoft-365-automatisierung",
+  "/interne-tools",
+  "/ki-schulungen",
+  "/ueber-uns",
+  "/contact",
+  "/blog",
+  "/opso",
+  // Kutasia is a project in development, not a product yet: /products/kutasia 301s to /websites (work samples).
 ];
-
-const BLOG_SLUGS = en.blog.posts.map((p) => p.slug);
 
 function buildLanguageMap(path: string): Record<string, string> {
   const map: Record<string, string> = {};
@@ -44,33 +31,21 @@ function buildLanguageMap(path: string): Record<string, string> {
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const now = new Date();
+  const stamp = new Date(SITE_UPDATED_ISO + "T00:00:00Z");
   const entries: MetadataRoute.Sitemap = [];
 
-  for (const page of STATIC_PAGES) {
-    const languages = buildLanguageMap(page.path);
+  for (const path of STATIC_PAGES) {
+    const languages = buildLanguageMap(path);
     for (const loc of PUBLIC_LOCALES) {
-      entries.push({
-        url: `${SITE_CONFIG.url}/${loc}${page.path}`,
-        lastModified: now,
-        changeFrequency: page.changeFrequency,
-        priority: page.priority,
-        alternates: { languages },
-      });
+      entries.push({ url: `${SITE_CONFIG.url}/${loc}${path}`, lastModified: stamp, alternates: { languages } });
     }
   }
 
-  for (const slug of BLOG_SLUGS) {
-    const path = `/blog/${slug}`;
+  for (const post of en.blog.posts) {
+    const path = `/blog/${post.slug}`;
     const languages = buildLanguageMap(path);
     for (const loc of PUBLIC_LOCALES) {
-      entries.push({
-        url: `${SITE_CONFIG.url}/${loc}${path}`,
-        lastModified: now,
-        changeFrequency: "monthly",
-        priority: 0.6,
-        alternates: { languages },
-      });
+      entries.push({ url: `${SITE_CONFIG.url}/${loc}${path}`, lastModified: new Date(post.date + "T00:00:00Z"), alternates: { languages } });
     }
   }
 

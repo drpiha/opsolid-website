@@ -3,11 +3,21 @@
 // Update these values to customize the brand identity
 // =============================================================================
 
+/** Date of the last substantive content update; drives the visible "Stand:" line. */
+export const SITE_UPDATED_ISO = "2026-10-16";
+
+/** "Oktober 2026" / "October 2026" / "Ekim 2026". */
+export function formatStand(locale: string): string {
+  const d = new Date(SITE_UPDATED_ISO + "T00:00:00Z");
+  const tag = locale === "de" ? "de-DE" : locale === "tr" ? "tr-TR" : "en-GB";
+  return new Intl.DateTimeFormat(tag, { month: "long", year: "numeric", timeZone: "UTC" }).format(d);
+}
+
 export const SITE_CONFIG = {
   name: "OpSolid",
-  tagline: "KI- & Automatisierungsberatung für mittelständische Unternehmen",
+  tagline: "KI-Agents, Websites und Automatisierung",
   description:
-    "OpSolid unterstützt mittelständische Unternehmen in Deutschland und Europa bei KI-Beratung, Prozessautomatisierung und digitalen Workflows — praxisnah, messbar, datenschutzbewusst.",
+    "OpSolid entwickelt KI-Agents, Websites und Prozessautomatisierung für kleine und mittlere Unternehmen: praxisnah, dokumentiert, datenschutzbewusst.",
   url: "https://opsolid.de",
   email: "info@opsolid.de",
   phone: "+49 176 31020654",
@@ -50,7 +60,7 @@ export const FOOTER_LINKS = {
     { label: "Leistungen", href: "/leistungen" },
   ],
   studio: [
-    { label: "Über mich", href: "/ueber-mich" },
+    { label: "Über OpSolid", href: "/ueber-uns" },
     { label: "Wissen", href: "/blog" },
     { label: "Kontakt", href: "/contact" },
   ],

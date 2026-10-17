@@ -2,7 +2,7 @@
 
 import Link, { type LinkProps } from "next/link";
 import { forwardRef } from "react";
-import { useLocale } from "@/context/LocaleContext";
+import { useLocaleBase as useLocale } from "@/context/LocaleContext";
 import { withLocale } from "@/lib/i18n";
 
 type LocaleLinkProps = Omit<LinkProps, "href"> & {
