@@ -49,7 +49,7 @@ const PATHS = {
   interne: "/interne-tools",
   schulungen: "/ki-schulungen",
   check: "/ai-automation-check",
-  about: "/ueber-mich",
+  about: "/ueber-uns",
   contact: "/contact",
   blog: "/blog",
 };

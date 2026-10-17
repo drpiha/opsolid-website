@@ -29,7 +29,7 @@ const NAV_ITEMS: NavItem[] = [
   { key: "check", href: "/ai-automation-check", match: /\/ai-automation-check/, label: { de: "KI-Check", en: "AI check", tr: "YZ kontrolü" } },
   { key: "training", href: "/ki-schulungen", match: /\/ki-schulungen/, label: { de: "KI-Schulungen", en: "AI training", tr: "YZ eğitimleri" } },
   { key: "opso", href: "/opso", match: /\/opso(\/|$)/, label: { de: "OpSo", en: "OpSo", tr: "OpSo" } },
-  { key: "about", href: "/ueber-mich", match: /\/ueber-mich/, label: { de: "Über OpSolid", en: "About", tr: "Hakkımızda" } },
+  { key: "about", href: "/ueber-uns", match: /\/ueber-uns/, label: { de: "Über OpSolid", en: "About", tr: "Hakkımızda" } },
 ];
 
 const CTA: L3 = { de: "KI-Check starten", en: "Start the AI Check", tr: "YZ kontrolüyle başlayın" };

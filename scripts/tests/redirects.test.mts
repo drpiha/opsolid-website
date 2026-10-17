@@ -19,10 +19,22 @@ test("legacy card entry points go to /opso, exact only", () => {
   }
 });
 
+test("about page and legacy product hub land on the current pages", () => {
+  assert.equal(getRetiredRedirectTarget("/ueber-mich"), "/ueber-uns");
+  assert.equal(getRetiredRedirectTarget("/about"), "/ueber-uns");
+  assert.equal(getRetiredRedirectTarget("/products"), "/leistungen");
+  assert.equal(getRetiredRedirectTarget("/products/"), "/leistungen");
+  assert.equal(getRetiredRedirectTarget("/products/kutasia"), "/websites");
+  assert.equal(getRetiredRedirectTarget("/solutions"), "/leistungen");
+  // the OpSo flow under /products/digital-card/* keeps working
+  assert.equal(getRetiredRedirectTarget("/products/digital-card/thanks"), null);
+  assert.equal(getRetiredRedirectTarget("/products/digital-card/gallery"), null);
+});
+
 test("working routes are never redirected", () => {
   for (const p of [
     "/card/edit/abc", "/card/manage/abc", "/card/new/step", "/products/digital-card/thanks",
-    "/products/kutasia", "/c/slug", "/login", "/dashboard/cards", "/opso", "/ki-schulungen",
+    "/c/slug", "/login", "/dashboard/cards", "/opso", "/ki-schulungen", "/ueber-uns", "/websites",
   ]) {
     assert.equal(getRetiredRedirectTarget(p), null, p);
   }

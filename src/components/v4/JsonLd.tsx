@@ -72,7 +72,7 @@ export function JsonLdGraph({
       "@id": PERSON,
       name: "Hasan Dönmez",
       jobTitle: JOB[locale],
-      url: `${SITE_CONFIG.url}/${locale}/ueber-mich`,
+      url: `${SITE_CONFIG.url}/${locale}/ueber-uns`,
       worksFor: { "@id": ORG },
       knowsLanguage: ["de", "en", "tr"],
       knowsAbout: ["AI agents", "Process automation", "Microsoft 365", "Internal tools", "AI training"],

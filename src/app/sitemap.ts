@@ -15,11 +15,11 @@ const STATIC_PAGES: string[] = [
   "/microsoft-365-automatisierung",
   "/interne-tools",
   "/ki-schulungen",
-  "/ueber-mich",
+  "/ueber-uns",
   "/contact",
   "/blog",
   "/opso",
-  // Kutasia is a project in development, not a product yet: /products/kutasia stays reachable but is noindex and not listed here.
+  // Kutasia is a project in development, not a product yet: /products/kutasia 301s to /websites (work samples).
 ];
 
 function buildLanguageMap(path: string): Record<string, string> {

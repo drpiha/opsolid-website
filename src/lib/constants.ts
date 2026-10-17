@@ -60,7 +60,7 @@ export const FOOTER_LINKS = {
     { label: "Leistungen", href: "/leistungen" },
   ],
   studio: [
-    { label: "Über OpSolid", href: "/ueber-mich" },
+    { label: "Über OpSolid", href: "/ueber-uns" },
     { label: "Wissen", href: "/blog" },
     { label: "Kontakt", href: "/contact" },
   ],

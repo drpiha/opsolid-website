@@ -139,13 +139,13 @@ export const en: Record<PageKey, PageDef> = {
       },
       {
         t: "text",
-        id: "ueber-mich",
+        id: "ueber-uns",
         scene: "offset",
         eyebrow: "About OpSolid",
         h: "Shaped by IT projects in live operations.",
         lede: "OpSolid was founded by Hasan Dönmez in Arnsberg. The experience behind it comes from IT project management, digitalisation and process optimisation inside companies. Hence the fixed order: process first, technology second.",
         paras: ["OpSolid is not TopSolid (CAD/CAM) and has no connection to it."],
-        cta: { label: "More about OpSolid", href: "/ueber-mich" },
+        cta: { label: "More about OpSolid", href: "/ueber-uns" },
       },
     ],
     faq: {
@@ -855,7 +855,7 @@ export const en: Record<PageKey, PageDef> = {
   },
 
   about: {
-    slug: "ueber-mich",
+    slug: "ueber-uns",
     meta: {
       title: "About OpSolid: automation and AI from Arnsberg",
       description:

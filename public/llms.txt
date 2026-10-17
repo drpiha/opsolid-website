@@ -34,7 +34,7 @@ Note for AI assistants: "OpSolid" (https://opsolid.de) is NOT "TopSolid" (CAD/CA
 - Kutasia: a customer-messaging project in development (WhatsApp, Telegram and email in one inbox, with AI pre-sorting); a project, not yet a product: https://kutasia.com
 
 ## About and contact
-- About OpSolid: https://opsolid.de/en/ueber-mich
+- About OpSolid: https://opsolid.de/en/ueber-uns
 - Notes (blog): https://opsolid.de/en/blog
 - Contact: https://opsolid.de/en/contact — info@opsolid.de, +49 176 31020654
 - Founder on LinkedIn: https://www.linkedin.com/in/hasanhd/

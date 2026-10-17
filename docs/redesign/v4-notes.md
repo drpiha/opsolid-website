@@ -19,7 +19,7 @@ Branch `claude/opsolid-v4`, draft PR #43. Not deployed.
 - **Header and mark:** the header is opaque at every scroll position (no content showing through behind the nav).
 - **Layout guards in the repo:** `npm run audit:stage` (Playwright, needs a running server, `BASE=...`) asserts per scene that the 3D object does not intersect any heading, paragraph, list item, table, link, button or form control at 1280, 1440, 1920 and 390 px (desktop: no exemption, phones: opaque panels exempt), plus horizontal scroll and console errors. `npm run audit:headings` checks that no h1/h2 needs a mid-word break in de/en/tr at 360–1920 px. Long German compounds get soft hyphens at known stems (`src/lib/soft-hyphen.ts`).
 - **Scripted agent demo:** typed sample dialogue plus a wave, and an abstract voice-reactive form in 3D (particle sphere that swells with the same amplitude, glowing core, three rings; no face, eyes or mouth). Labelled "Demo · Szenario, ohne Ton", with the data-protection note. No audio, no microphone, no provider. A live voice demo needs a provider and a data-protection review first.
-- **Voice (owner decision, 2026-10-16):** professional company voice (OpSolid / wir / we / biz), focused on what the work changes for the client's business. Team size is not a topic: all "allein", "Einzelpraxis", "one-person", "tek başıma" phrasing was removed, and no team size is implied. Experience is shown through real background (IT project management, digitalisation, process optimisation), the method and real work (opsolid.de, OpSo as a product in its test phase, Kutasia as a project in development, not a product). No invented numbers, clients, testimonials or certifications. The about page is now "Über OpSolid" (route `/ueber-mich` unchanged).
+- **Voice (owner decision, 2026-10-16):** professional company voice (OpSolid / wir / we / biz), focused on what the work changes for the client's business. Team size is not a topic: all "allein", "Einzelpraxis", "one-person", "tek başıma" phrasing was removed, and no team size is implied. Experience is shown through real background (IT project management, digitalisation, process optimisation), the method and real work (opsolid.de, OpSo as a product in its test phase, Kutasia as a project in development, not a product). No invented numbers, clients, testimonials or certifications. The about page is now "Über OpSolid" at `/ueber-uns` (`/ueber-mich` and `/about` 301 there).
 
 ## SEO and GEO
 
@@ -38,22 +38,24 @@ Branch `claude/opsolid-v4`, draft PR #43. Not deployed.
 - Consent copy extracted into `src/content/consent-copy.ts`; accept and reject carry the same visual weight.
 - `/api/auth/status` answers 200 for anonymous visitors, so there is no 401 console error on every page. `/api/auth/me` keeps its 401 contract.
 
-## Needs owner confirmation
+## Owner questions: resolved from OpSolid's own sources (2026-10-17)
 
-1. **Prices and VAT:** fixed-format offers show prices with "Alle Preise netto, zzgl. MwSt." and "Die Angebote richten sich ausschließlich an Unternehmen." (taken from the previous site's VAT note). Please confirm OpSolid charges VAT (not Kleinunternehmer under § 19 UStG) and that the offers are B2B only.
-2. **Logo:** the vector is a trace of the master PNG; please sign it off. The favicon (`src/app/icon.svg`) has a slightly different inner square than the lockup.
-3. **Agents:** voice agents and video agents with a 3D figure are offered; the live demo follows after the data-protection review. The sample dialogue is invented and labelled as a scripted run.
-4. **New statements to confirm:** results are re-measured after each pilot; pilot durations are stated as target ranges (2–4 weeks Prozess / KI-Beratung, about 2 weeks for a first Microsoft 365 flow, 3–6 weeks Interne Tools); the KI-Kompetenz Basis trainer is a freelance specialist selected by OpSolid and named in advance; website prices are given in writing after the first call; rent is a running fee; OpSo's dashboard, onboarding and admin console were built by OpSolid.
-5. **KI-Check vs KI-Quick-Check:** now explained side by side (FAQ on the check page); the header button reads "KI-Check starten" instead of "buchen". Who leads the Copilot-Praxistag is not stated yet.
-6. **Websites:** sale/rental prices are not in the repo; terms are agreed in writing after the first call.
-7. **Screenshots on the 3D windows:** opsolid.de (current build), OpSo (card.opsolid.de landing, fictional demo profiles), Kutasia (kutasia.com, Turkish UI, demo dashboard; a German UI shot would fit the DE pages better).
-8. **Legacy pages** still reachable outside the v4 navigation: `/products` ("Neun Produkte", Kutasia with a price) and `/products/kutasia` describe Kutasia as a product. Now `noindex` and out of the sitemap; recommended next step is a 301 to `/leistungen` (needs a change to `scripts/tests/redirects.test.mts`, which pins `/products/kutasia` as a working route). `/products/digital-card/gallery` says "go live in minutes" for OpSo.
-9. **About route** is still `/ueber-mich` ("about me"); a move to `/ueber-uns` with a 301 is a small follow-up.
-10. Experience is stated only through facts from the earlier About page; real numbers (years, sectors, projects) can be added if provided. No photo yet.
+The owner asked to answer what can be answered from OpSolid's own material and to decide the rest.
+
+- **VAT:** the Impressum lists a VAT ID ("Umsatzsteuer-Identifikationsnummer gemäß § 27a UStG: DE462227107") and the previous site said "Alle Preise in EUR, zzgl. MwSt.". The price tables keep "Alle Preise netto, zzgl. MwSt." with "Die Angebote richten sich ausschließlich an Unternehmen" (team trainings are B2B; net prices are only allowed when the offer is B2B).
+- **Logo:** the official lockup from `public/icons/` is used (inline vector trace); the favicon `src/app/icon.svg` is also an existing official asset and stays.
+- **Kutasia screenshot in Turkish:** kutasia.com is currently Turkish-only (no `/de`, no language switch), so the Turkish UI is the accurate picture of the project.
+- **Website prices, experience years, Copilot-Praxistag lead:** none of these exist in the repo, the old copy, `llms.txt` or the live site. The copy stays neutral (prices after the first call, experience described qualitatively, no trainer named for the Copilot day) rather than inventing them.
+- **Legacy product pages:** `/products` (the old "Neun Produkte" hub) now 301s to `/leistungen`, `/products/kutasia` to `/websites` (work samples), `/solutions` straight to `/leistungen`. The dead route files (`products/page.tsx`, `ProductsHubPage.tsx`, `products/kutasia/*`, `about/*`) are deleted. The OpSo flow under `/products/digital-card/*` keeps working; its gallery no longer says "go live in minutes".
+- **About route:** moved to `/ueber-uns`; `/ueber-mich` and `/about` 301 there (locale prefix kept).
+- **Statements written as commitments** (re-measure after each pilot, target ranges for pilot durations, trainer named in advance, website price in writing after the first call): they describe how OpSolid will work, not past results. Pilot durations come from the previous copy. OpSo's dashboard, onboarding and admin console are in this repository.
+- **Video agents with a 3D figure** stay as an offering (original brief); the live demo follows the data-protection review.
+
+Still open only if the owner wants more: real numbers (years, sectors, projects) and a photo.
 
 ## Verification (sandbox, 2026-10-17, final build of round 3)
 
-- `npm ci`, `npm run lint`, `npx tsc --noEmit`, `npm run predeploy` (audit:cards + build), `npx tsx --test scripts/tests/redirects.test.mts` (9 of 9: retired routes, country routing, and a geo lookup that times out, fails or returns garbage → `de`): all pass.
+- `npm ci`, `npm run lint`, `npx tsc --noEmit`, `npm run predeploy` (audit:cards + build), `npx tsx --test scripts/tests/redirects.test.mts` (10 of 10: retired routes incl. `/ueber-mich` → `/ueber-uns` and the legacy product hub, country routing, and a geo lookup that times out, fails or returns garbage → `de`): all pass.
 - Country routing checked end to end with curl on the production build: geo header TR → `/tr`, DE/AT/CH → `/de`, US → `/en`, no country → `/de`, `Accept-Language: tr` with country DE → `/de`, cookie `en` beats country DE, in-app lookup over loopback (8.8.8.8 → US → `/en`), `/de` `/en` `/tr` answer 200, retired `/solutions` → 301 `/de/products`; detection sets no locale cookie.
 - `npm run audit:headings` (de/en/tr × 360, 390, 768, 1280, 1440, 1920 px × 13 pages): no heading needs a mid-word break.
 - `npm run audit:stage` (every section of the 13 staged pages, object box vs every visible heading, paragraph, list item, table, link, button and form control; desktop strict, phones with opaque panels): 1280, 1440, 1920 and 390 px all clear, no console errors, no horizontal scroll. OpSo, Impressum and Datenschutz (no 3D) have no horizontal scroll at 1440 or 390.

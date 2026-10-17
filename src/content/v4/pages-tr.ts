@@ -139,13 +139,13 @@ export const tr: Record<PageKey, PageDef> = {
       },
       {
         t: "text",
-        id: "ueber-mich",
+        id: "ueber-uns",
         scene: "offset",
         eyebrow: "OpSolid hakkında",
         h: "Şirket içi BT projelerinin deneyimiyle.",
         lede: "OpSolid, Arnsberg'de Hasan Dönmez tarafından kuruldu. Arkasındaki deneyim, şirketlerdeki BT proje yönetimi, dijitalleşme ve süreç iyileştirme çalışmalarından gelir. Sıramız bu yüzden sabittir: önce süreç, sonra teknoloji.",
         paras: ["OpSolid, TopSolid (CAD/CAM) ile ilgili değildir ve onunla bağlantısı yoktur."],
-        cta: { label: "OpSolid'i tanıyın", href: "/ueber-mich" },
+        cta: { label: "OpSolid'i tanıyın", href: "/ueber-uns" },
       },
     ],
     faq: {
@@ -855,7 +855,7 @@ export const tr: Record<PageKey, PageDef> = {
   },
 
   about: {
-    slug: "ueber-mich",
+    slug: "ueber-uns",
     meta: {
       title: "OpSolid hakkında: Arnsberg'den otomasyon ve YZ",
       description:

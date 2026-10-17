@@ -29,7 +29,7 @@ No separate backend process — Next.js API routes (`src/app/api/`) run within t
 
 The site has two kinds of surfaces:
 
-- **Marketing routes** (`isV4Path` in `src/lib/v4.ts`): home, agents, websites, leistungen, ki-beratung, prozessautomatisierung, microsoft-365-automatisierung, interne-tools, ki-schulungen, ai-automation-check, ueber-mich, contact, blog, plus opso, impressum and privacy, which keep their own components under the v4 theme (impressum and privacy still read the content bundle, see `needsContentBundle`). Dark graphite + copper art direction (v4), scroll-driven 3D stage, SSR text. Scoped to `html[data-v4]`, set server-side in the root layout from the `x-pathname` header.
+- **Marketing routes** (`isV4Path` in `src/lib/v4.ts`): home, agents, websites, leistungen, ki-beratung, prozessautomatisierung, microsoft-365-automatisierung, interne-tools, ki-schulungen, ai-automation-check, ueber-uns, contact, blog, plus opso, impressum and privacy, which keep their own components under the v4 theme (impressum and privacy still read the content bundle, see `needsContentBundle`). Dark graphite + copper art direction (v4), scroll-driven 3D stage, SSR text. Scoped to `html[data-v4]`, set server-side in the root layout from the `x-pathname` header.
 - **App surfaces** (dashboard, onboarding, auth, discover, public cards `/c/*`, admin, voice, `products/*`): the older tri-theme system (light · hybrid · dark), the `src/content/{en,de,tr}.ts` bundle and `src/styles/legacy.css`.
 
 ### Localization System

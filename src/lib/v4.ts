@@ -18,7 +18,7 @@ const V4_FIRST_SEGMENTS = new Set([
   "ki-schulungen",
   "ai-automation-check",
   "opso",
-  "ueber-mich",
+  "ueber-uns",
   "contact",
   "blog",
   "impressum",

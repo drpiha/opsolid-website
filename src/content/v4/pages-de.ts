@@ -135,13 +135,13 @@ export const de: Record<PageKey, PageDef> = {
       },
       {
         t: "text",
-        id: "ueber-mich",
+        id: "ueber-uns",
         scene: "offset",
         eyebrow: "Über OpSolid",
         h: "Aus IT-Projekten im laufenden Betrieb.",
         lede: "Gegründet wurde OpSolid von Hasan Dönmez in Arnsberg. Die Erfahrung dahinter stammt aus IT-Projektmanagement, Digitalisierung und Prozessoptimierung in Unternehmen. Daher die feste Reihenfolge: erst der Ablauf, dann die Technik.",
         paras: ["OpSolid ist nicht TopSolid (CAD/CAM) und steht in keiner Verbindung dazu."],
-        cta: { label: "Mehr über OpSolid", href: "/ueber-mich" },
+        cta: { label: "Mehr über OpSolid", href: "/ueber-uns" },
       },
     ],
     faq: {
@@ -861,7 +861,7 @@ export const de: Record<PageKey, PageDef> = {
   },
 
   about: {
-    slug: "ueber-mich",
+    slug: "ueber-uns",
     meta: {
       title: "Über OpSolid: Automatisierung und KI aus Arnsberg",
       description:

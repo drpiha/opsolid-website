@@ -11,12 +11,19 @@
  */
 export const RETIRED_REDIRECTS: Record<string, string> = {
   // Top-level info pages → home
-  "/solutions": "/products",
+  "/solutions": "/leistungen",
   "/faq": "/contact",
   "/use-cases": "/blog",
 
-  // Renamed bio page: /about → /ueber-mich (German-first positioning, 2026-05).
-  "/about": "/ueber-mich",
+  // About page: /about → /ueber-mich (2026-05) → /ueber-uns (2026-10, company voice).
+  "/about": "/ueber-uns",
+  "/ueber-mich": "/ueber-uns",
+
+  // Legacy product hub ("Neun Produkte") and the Kutasia product page: Kutasia is a project in
+  // development, not a product (owner, 2026-10). The hub goes to the services overview, Kutasia
+  // to the work samples on the Websites page.
+  "/products": "/leistungen",
+  "/products/kutasia": "/websites",
 
   // Legacy aliases (without "-agent" suffix) → current dedicated pages.
   // The "-agent" suffixed paths are real routes now and must NOT be retired.
@@ -47,12 +54,13 @@ export const RETIRED_REDIRECTS: Record<string, string> = {
 
 /**
  * Keys in RETIRED_REDIRECTS that should only match exactly, not as a
- * path prefix. `/products` redirects to `/` for the bare products index,
+ * path prefix. `/products` redirects to `/leistungen` for the bare products index,
  * but `/products/voice-agent` (etc.) must fall through so those routes
  * still resolve — they're listed separately with their own targets.
  */
 export const EXACT_ONLY = new Set<string>([
   "/products",
+  "/products/kutasia",
   "/products/voice-agent",
   "/products/whatsapp-agent",
   "/products/chatbot-agent",

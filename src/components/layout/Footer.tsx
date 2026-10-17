@@ -34,7 +34,7 @@ const COLS: { h: L3; items: { href: string; label: L3 }[] }[] = [
   {
     h: L("Unternehmen", "Company", "Kurumsal"),
     items: [
-      { href: "/ueber-mich", label: L("Über OpSolid", "About", "Hakkımızda") },
+      { href: "/ueber-uns", label: L("Über OpSolid", "About", "Hakkımızda") },
       { href: "/blog", label: L("Notizen", "Notes", "Notlar") },
       { href: "/contact", label: L("Kontakt", "Contact", "İletişim") },
     ],
