@@ -585,11 +585,28 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
     if (pick.dim) document.documentElement.setAttribute("data-dim", "1");
     else document.documentElement.removeAttribute("data-dim");
   };
+  // Right edge of the text that is on screen right now (any section, scene or not), so a wider
+  // neighbouring section that is still visible never ends up under the object.
+  let contentEls: HTMLElement[] = [];
+  let visRight = 0;
+  const measureVisible = () => {
+    const vh = window.innerHeight;
+    let r = 0;
+    for (const c of contentEls) {
+      const b = c.getBoundingClientRect();
+      if (b.bottom > 0 && b.top < vh && b.width > 0) r = Math.max(r, b.right);
+    }
+    visRight = r;
+  };
+  const onScrollMeasure = () => measureVisible();
+  window.addEventListener("scroll", onScrollMeasure, { passive: true });
   const remeasure = () => {
     infos = sceneEls.map(measure);
     recompute();
   };
   const setScenes = (els: HTMLElement[]) => {
+    contentEls = Array.from(document.querySelectorAll<HTMLElement>("main .v4-col, main .v4-band-in > *"));
+    measureVisible();
     triggers.forEach((t) => t.kill());
     triggers = [];
     sceneEls = els;
@@ -626,6 +643,7 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
     ScrollTrigger.refresh();
   };
   window.addEventListener("resize", remeasure);
+  window.addEventListener("resize", onScrollMeasure);
 
   // ---- render loop
   let running = true;
@@ -733,7 +751,7 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
     } else {
       const trA = iA?.textRight ?? vw * 0.45;
       const trB = iB?.textRight ?? trA;
-      const textRight = lerp(trA, trB, u);
+      const textRight = Math.max(lerp(trA, trB, u), visRight);
       const L = textRight + 44;
       const R = vw - 24;
       const wpp = visW / vw;
@@ -826,6 +844,8 @@ async function createCore(host: HTMLElement, quality: "full" | "light", onFirstF
       cancelAnimationFrame(raf);
       window.removeEventListener("resize", resize);
       window.removeEventListener("resize", remeasure);
+      window.removeEventListener("resize", onScrollMeasure);
+      window.removeEventListener("scroll", onScrollMeasure);
       window.removeEventListener("pointermove", onPointer);
       document.removeEventListener("visibilitychange", onVis);
       triggers.forEach((t) => t.kill());
