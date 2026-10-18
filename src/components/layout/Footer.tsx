@@ -14,9 +14,9 @@ const COLS: { h: L3; items: { href: string; label: L3 }[] }[] = [
   {
     h: L("Angebote", "Offers", "Teklifler"),
     items: [
-      { href: "/agents", label: L("Agents", "Agents", "Agent'lar") },
+      { href: "/agents", label: L("KI-Agenten", "AI agents", "YZ asistanları") },
       { href: "/websites", label: L("Websites", "Websites", "Web siteleri") },
-      { href: "/ai-automation-check", label: L("KI-Check", "AI check", "YZ kontrolü") },
+      { href: "/ai-automation-check", label: L("KI-Check", "AI Check", "YZ Kontrolü") },
       { href: "/ki-schulungen", label: L("KI-Schulungen", "AI training", "YZ eğitimleri") },
       { href: "/opso", label: L("OpSo", "OpSo", "OpSo") },
     ],
@@ -27,7 +27,7 @@ const COLS: { h: L3; items: { href: string; label: L3 }[] }[] = [
       { href: "/ki-beratung", label: L("KI-Beratung", "AI consulting", "YZ danışmanlığı") },
       { href: "/prozessautomatisierung", label: L("Prozessautomatisierung", "Process automation", "Süreç otomasyonu") },
       { href: "/microsoft-365-automatisierung", label: L("Microsoft 365", "Microsoft 365", "Microsoft 365") },
-      { href: "/interne-tools", label: L("Interne Tools", "Internal tools", "Dahili araçlar") },
+      { href: "/interne-tools", label: L("Interne Tools", "Internal tools", "Şirket içi araçlar") },
       { href: "/leistungen", label: L("Alle Leistungen", "All services", "Tüm hizmetler") },
     ],
   },
@@ -42,16 +42,16 @@ const COLS: { h: L3; items: { href: string; label: L3 }[] }[] = [
   {
     h: L("Rechtliches", "Legal", "Yasal"),
     items: [
-      { href: "/impressum", label: L("Impressum", "Imprint", "Künye") },
+      { href: "/impressum", label: L("Impressum", "Legal notice", "Yasal bildirim") },
       { href: "/privacy", label: L("Datenschutz", "Privacy", "Gizlilik") },
     ],
   },
 ];
 
 const TAGLINE = L(
-  "KI-Agents, Websites und Prozessautomatisierung für Unternehmen. Sitz in Arnsberg; wir arbeiten auf Deutsch, Englisch und Türkisch.",
+  "KI-Agenten, Websites und Prozessautomatisierung für Unternehmen. Sitz in Arnsberg; wir arbeiten auf Deutsch, Englisch und Türkisch.",
   "AI agents, websites and process automation for businesses. Based in Arnsberg, Germany; we work in German, English and Turkish.",
-  "İşletmeler için YZ agent'ları, web siteleri ve süreç otomasyonu. Merkezimiz Arnsberg'de; Almanca, İngilizce ve Türkçe çalışıyoruz.",
+  "İşletmeler için YZ asistanları, web siteleri ve süreç otomasyonu. Merkezimiz Arnsberg'de; Almanca, İngilizce ve Türkçe çalışıyoruz.",
 );
 const NOT_TOPSOLID = L(
   "OpSolid ist nicht TopSolid (CAD/CAM) und steht in keiner Verbindung dazu.",

@@ -6,9 +6,9 @@ const PERSON = `${SITE_CONFIG.url}/#person`;
 const SITE = `${SITE_CONFIG.url}/#website`;
 
 const ORG_DESC: Record<L3, string> = {
-  de: "OpSolid entwickelt für Unternehmen KI-Agents, Websites, Prozessautomatisierung, Microsoft-365-Automatisierung und interne Tools. Dazu kommen KI-Beratung und KI-Schulungen. Sitz in Arnsberg, Deutschland.",
+  de: "OpSolid entwickelt für Unternehmen KI-Agenten, Websites, Prozessautomatisierung, Microsoft-365-Automatisierung und interne Tools. Dazu kommen KI-Beratung und KI-Schulungen. Sitz in Arnsberg, Deutschland.",
   en: "OpSolid builds AI agents, websites, process automation, Microsoft 365 automation and internal tools for businesses, and offers AI consulting and AI training. Based in Arnsberg, Germany.",
-  tr: "OpSolid, işletmeler için YZ agent'ları, web siteleri, süreç otomasyonu, Microsoft 365 otomasyonu ve dahili araçlar geliştirir; ayrıca YZ danışmanlığı ve YZ eğitimleri sunar. Merkezi Almanya'nın Arnsberg şehrindedir.",
+  tr: "OpSolid, işletmeler için YZ asistanları, web siteleri, süreç otomasyonu, Microsoft 365 otomasyonu ve şirket içi araçlar geliştirir; ayrıca YZ danışmanlığı ve YZ eğitimleri sunar. Merkezi Almanya'nın Arnsberg şehrindedir.",
 };
 const DISAMBIG = "OpSolid is an AI and automation service provider based in Arnsberg, Germany. It is not TopSolid (CAD/CAM software) and has no connection to it.";
 const JOB: Record<L3, string> = {

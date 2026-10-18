@@ -8,7 +8,7 @@
 //
 // Runs on the Node runtime because the lookup touches the filesystem + the
 // `maxmind` reader. Fail-safe: any error resolves to { country: null } so a
-// geo miss never blocks navigation — the middleware just falls back to English.
+// geo miss never blocks navigation — the middleware falls back to German (ROUTING_DEFAULT_LOCALE).
 // =============================================================================
 
 import { NextResponse } from "next/server";

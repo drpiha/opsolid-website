@@ -1777,10 +1777,10 @@ export const content: Content = {
     },
     eventDirectory: {
       eyebrow: "Teilnehmerverzeichnis",
-      ctaTitle: "Auch dabei? Erstellen Sie Ihre Karte.",
+      ctaTitle: "Ihre eigene digitale Visitenkarte",
       ctaBody:
-        "Kostenlos, ohne Konto — Ihre Karte ist in Minuten live und Sie erscheinen in dieser Liste.",
-      ctaButton: "Karte erstellen",
+        "Digitale Visitenkarten mit OpSo: Beispiele, Funktionen und Verfügbarkeit im Überblick.",
+      ctaButton: "OpSo ansehen",
       participantsHeading: "Teilnehmer",
       participantsHint:
         "Karten, deren Inhaber sich öffentlich listen lassen. Antippen, um den Kontakt anzusehen und zu speichern.",

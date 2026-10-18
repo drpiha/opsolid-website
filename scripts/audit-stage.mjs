@@ -87,13 +87,6 @@ for (const loc of LOCALES) {
   for (const [w, h] of SIZES) {
     const mobile = w < 760;
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, hasTouch: mobile, isMobile: mobile, deviceScaleFactor: 1 });
-    await ctx.addInitScript(() => {
-      try {
-        localStorage.setItem("opsolid.consent", JSON.stringify({ version: 1, analytics: false, timestamp: 1 }));
-      } catch {
-        /* storage unavailable */
-      }
-    });
     for (const pg of PAGES) {
       const label = `${loc}/${pg} @${w}x${h}`;
       const p = await ctx.newPage();

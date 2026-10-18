@@ -53,7 +53,7 @@
 .screenLabel { display: flex; justify-content: space-between; gap: .75rem; margin-bottom: .75rem; font-size: .8rem; }
 .imageLink { display: block; border: 1px solid var(--line-firm); border-radius: 2px; overflow: hidden; background: #fff; }
 .imageLink img { width: 100%; height: auto; display: block; }
-.fullSizeLink { display: flex; align-items: center; gap: .75rem; width: fit-content; font-size: .78rem; color: var(--ink-200); margin-top: .8rem; text-decoration: underline; text-underline-offset: .25rem; }
+.fullSizeLink { display: flex; align-items: center; min-height: 44px; gap: .75rem; width: fit-content; font-size: .78rem; color: var(--ink-200); margin-top: .8rem; text-decoration: underline; text-underline-offset: .25rem; }
 .sharing { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; padding-top: 2rem; }
 .sharing p { color: var(--ink-200); font-size: .95rem; }
 .planHeader { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: .5rem; }
@@ -86,7 +86,7 @@
 .availability a { white-space: normal; }
 .faq { margin-top: 2rem; max-width: 880px; }
 .faq details { padding: 1.2rem 0; border-top: 1px solid var(--line-firm); }
-.faq summary { cursor: pointer; font-size: 1.05rem; font-weight: 500; padding: .25rem 0; }
+.faq summary { cursor: pointer; font-size: 1.05rem; font-weight: 500; padding: .6rem 0; min-height: 44px; }
 .faq details p { color: var(--ink-200); max-width: 75ch; margin: 1rem 0 .25rem; }
 @media (max-width: 1100px) { .layoutChoices { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 1000px) { .hero { grid-template-columns: 1fr; } .page h1 { max-width: 20ch; } .figure { width: 100%; max-width: 640px; } .physicalCard { grid-template-columns: 1fr; } .physicalCardVisual { max-width: 760px; } .physicalCardCopy { max-width: 640px; } }

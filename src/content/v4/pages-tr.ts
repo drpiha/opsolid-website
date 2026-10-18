@@ -66,7 +66,7 @@ export const tr: Record<PageKey, PageDef> = {
         heat: [1],
         eyebrow: "Web siteleri · satın alma veya abonelik",
         h: "Şablondan değil, size göre tasarlanır.",
-        lede: "Hızlı açılan, kolay okunan ve birden çok dilde çalışan web siteleri tasarlar, kurar ve işletiriz. Web sitesi aboneliğinin fiyatı sabittir; satın alma fiyatını ilk görüşmeden sonra yazılı olarak bildiririz.",
+        lede: "Hızlı açılan, kolay okunan ve birden çok dilde çalışan web siteleri tasarlar, kurar ve işletiriz. Web sitesi aboneliği aylık 99 €'dan başlar; satın alma fiyatını ilk görüşmeden sonra yazılı olarak bildiririz.",
         items: [
           { h: "opsolid.de", tag: "Bu site", p: "OpSolid tarafından tasarlandı, kuruldu ve işletiliyor: üç dil, önce metin; 3D sahne metinden sonra yüklenir ve kapatılabilir." },
           { h: "Satın alma", p: "Tek seferlik proje bedeli. Tamamlanan site sizin olur ve onu kendiniz yönetirsiniz." },
@@ -261,7 +261,7 @@ export const tr: Record<PageKey, PageDef> = {
     hero: {
       eyebrow: "Web siteleri · satın alma veya abonelik",
       h1: ["", "Size benzeyen", " web siteleri."],
-      lede: "OpSolid; hızlı açılan, kolay okunan ve birden çok dilde çalışan web siteleri tasarlar ve kurar. Satın alma: tek seferlik proje bedeli, site sizin olur. Web sitesi aboneliği: aylık 99 €'dan başlayan sabit bir ücret; barındırma, bakım ve güncellemeleri biz üstleniriz.",
+      lede: "OpSolid; hızlı açılan, kolay okunan ve birden çok dilde çalışan web siteleri tasarlar ve kurar. Satın alma: tek seferlik proje bedeli, site sizin olur. Web sitesi aboneliği: aylık 99 €'dan başlayan ücret; barındırma, bakım ve güncellemeleri biz üstleniriz.",
       primary: CONTACT,
       secondary: { label: "Örnek çalışmaları inceleyin", href: "#referenzen" },
       scene: "websites",
@@ -292,7 +292,7 @@ export const tr: Record<PageKey, PageDef> = {
         id: "preise",
         eyebrow: "Fiyatlar",
         h: "Bir web sitesinin maliyeti.",
-        lede: "Web sitesi aboneliğinin fiyatı sabittir. Satın almada proje bedelini ilk görüşmeden sonra yazılı olarak bildiririz.",
+        lede: "Web sitesi aboneliğinin fiyatları tabloda yer alır. Satın almada proje bedelini ilk görüşmeden sonra yazılı olarak bildiririz.",
         caption: "Web sitesi aboneliği ve satın almaya genel bakış",
         cols: ["Model", "Kapsam", "Fiyat"],
         rows: [

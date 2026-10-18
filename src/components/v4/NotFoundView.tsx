@@ -15,7 +15,7 @@ const COPY: Record<L3, { eyebrow: string; h1: [string, string, string]; lede: st
     home: "Zur Startseite",
     contact: "Kontakt",
     more: "Weitere Seiten",
-    links: [["/agents", "Agents"], ["/websites", "Websites"], ["/leistungen", "Leistungen"], ["/ai-automation-check", "KI-Check"]],
+    links: [["/agents", "KI-Agenten"], ["/websites", "Websites"], ["/leistungen", "Leistungen"], ["/ai-automation-check", "KI-Check"]],
   },
   en: {
     eyebrow: "Error 404",
@@ -24,7 +24,7 @@ const COPY: Record<L3, { eyebrow: string; h1: [string, string, string]; lede: st
     home: "Back to home",
     contact: "Contact",
     more: "More pages",
-    links: [["/agents", "Agents"], ["/websites", "Websites"], ["/leistungen", "Services"], ["/ai-automation-check", "AI check"]],
+    links: [["/agents", "AI agents"], ["/websites", "Websites"], ["/leistungen", "Services"], ["/ai-automation-check", "AI Check"]],
   },
   tr: {
     eyebrow: "Hata 404",
@@ -33,7 +33,7 @@ const COPY: Record<L3, { eyebrow: string; h1: [string, string, string]; lede: st
     home: "Ana sayfaya dön",
     contact: "İletişim",
     more: "Diğer sayfalar",
-    links: [["/agents", "Agent'lar"], ["/websites", "Web siteleri"], ["/leistungen", "Hizmetler"], ["/ai-automation-check", "YZ kontrolü"]],
+    links: [["/agents", "YZ asistanları"], ["/websites", "Web siteleri"], ["/leistungen", "Hizmetler"], ["/ai-automation-check", "YZ Kontrolü"]],
   },
 };
 

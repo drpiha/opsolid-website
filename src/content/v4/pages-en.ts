@@ -66,7 +66,7 @@ export const en: Record<PageKey, PageDef> = {
         heat: [1],
         eyebrow: "Websites to buy or by subscription",
         h: "Designed for you, not from a template.",
-        lede: "We design, build and run websites that load fast, read well and work in several languages. The website subscription has a fixed price; for a purchase, you get the price in writing after our first call.",
+        lede: "We design, build and run websites that load fast, read well and work in several languages. The website subscription starts at €99 a month; for a purchase, you get the price in writing after our first call.",
         items: [
           { h: "opsolid.de", tag: "This site", p: "Designed, built and run by OpSolid: three languages, text first; the 3D stage loads after the text and can be switched off." },
           { h: "Buy", p: "A one-off project price. The finished website is yours, and you take it forward yourself." },
@@ -261,7 +261,7 @@ export const en: Record<PageKey, PageDef> = {
     hero: {
       eyebrow: "Websites · buy or subscribe",
       h1: ["Websites that look like ", "you", "."],
-      lede: "OpSolid designs and builds websites that load fast, read well and work in several languages. Buy: a one-off project price, and the site is yours. Website subscription: a fixed price from €99 a month, and we take care of hosting, maintenance and updates.",
+      lede: "OpSolid designs and builds websites that load fast, read well and work in several languages. Buy: a one-off project price, and the site is yours. Website subscription: from €99 a month, and we take care of hosting, maintenance and updates.",
       primary: CONTACT,
       secondary: { label: "See work samples", href: "#referenzen" },
       scene: "websites",
@@ -292,7 +292,7 @@ export const en: Record<PageKey, PageDef> = {
         id: "preise",
         eyebrow: "Prices",
         h: "What a website costs.",
-        lede: "The website subscription has a fixed price. For a purchase, we give you the project price in writing after our first call.",
+        lede: "The website subscription prices are in the table. For a purchase, we give you the project price in writing after our first call.",
         caption: "Website subscription and purchase at a glance",
         cols: ["Model", "Scope", "Price"],
         rows: [

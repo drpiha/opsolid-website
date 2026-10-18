@@ -21,7 +21,7 @@ const T = {
     errMessage: "Bitte schreiben Sie kurz, worum es geht.",
     consent: "Ihre Angaben verwenden wir nur, um Ihre Anfrage zu beantworten. Mehr dazu in der",
     privacy: "Datenschutzerklärung",
-    topicList: ["KI-Agents", "Websites", "Automatisierung", "KI-Check", "KI-Schulungen", "Sonstiges"],
+    topicList: ["KI-Agenten", "Websites", "Automatisierung", "KI-Check", "KI-Schulungen", "Sonstiges"],
   },
   en: {
     name: "Name",
@@ -38,7 +38,7 @@ const T = {
     errMessage: "Please tell us briefly what it is about.",
     consent: "We use your details only to answer your inquiry. More in the",
     privacy: "privacy policy",
-    topicList: ["AI agents", "Websites", "Automation", "AI check", "AI training", "Other"],
+    topicList: ["AI agents", "Websites", "Automation", "AI Check", "AI training", "Other"],
   },
   tr: {
     name: "Ad",
@@ -55,7 +55,7 @@ const T = {
     errMessage: "Lütfen konunuzu kısaca yazın.",
     consent: "Bilgilerinizi yalnızca talebinizi yanıtlamak için kullanırız. Ayrıntılar",
     privacy: "gizlilik politikasında",
-    topicList: ["YZ agent'ları", "Web siteleri", "Otomasyon", "YZ kontrolü", "YZ eğitimleri", "Diğer"],
+    topicList: ["YZ asistanları", "Web siteleri", "Otomasyon", "YZ Kontrolü", "YZ eğitimleri", "Diğer"],
   },
 } as const;
 

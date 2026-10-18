@@ -31,7 +31,7 @@ type OpsoContent = {
 };
 
 const en: OpsoContent = {
-  meta: { title: "OpSo | Digital business cards with your own style", description: "Explore four professional OpSo example cards with portraits and distinct styles, from light and minimal to bold and colourful. Check features and app availability." },
+  meta: { title: "OpSo | Digital business cards with your own style", description: "Four OpSo example cards with portraits and distinct styles, from light and minimal to bold and colourful. Features and app availability at a glance." },
   status: "In testing · Launch in preparation",
   title: "Your work, in your own style",
   intro: "Give people more than a name and a number. Bring your portrait, expertise, services and contact details together in a digital card that feels like you.",
@@ -78,7 +78,7 @@ const en: OpsoContent = {
 };
 
 const de: OpsoContent = {
-  meta: { title: "OpSo | Digitale Visitenkarten mit eigenem Stil", description: "Vier professionelle OpSo-Beispielkarten mit Porträts und unterschiedlichen Stilen: hell, zurückhaltend oder farbenfroh. Funktionen und App-Verfügbarkeit im Überblick." },
+  meta: { title: "OpSo | Digitale Visitenkarten mit eigenem Stil", description: "Vier OpSo-Beispielkarten mit Porträts und eigenem Stil, von hell und zurückhaltend bis farbenfroh. Funktionen und App-Verfügbarkeit im Überblick." },
   status: "In der Testphase · Veröffentlichung in Vorbereitung",
   title: "Ihre Arbeit, in Ihrem eigenen Stil",
   intro: "Zeigen Sie mehr als einen Namen und eine Nummer. Verbinden Sie Porträt, Expertise, Leistungen und Kontaktdaten in einer digitalen Visitenkarte, die zu Ihnen passt.",
@@ -125,7 +125,7 @@ const de: OpsoContent = {
 };
 
 const tr: OpsoContent = {
-  meta: { title: "OpSo | Kendi tarzınızı yansıtan dijital kartvizitler", description: "Fotoğraflı dört profesyonel OpSo örnek kartını keşfedin: açık, sade veya renkli tasarımlar. Özellikleri ve uygulamanın yayın durumunu inceleyin." },
+  meta: { title: "OpSo | Kendi tarzınızı yansıtan dijital kartvizitler", description: "Fotoğraflı dört OpSo örnek kartı: açık ve sade tasarımlardan renkli olanlara. Özellikler ve uygulamanın yayın durumu bir bakışta." },
   status: "Test aşamasında · Yayına hazırlanıyor",
   title: "İşiniz, kendi tarzınızla",
   intro: "Bir isim ve numaradan fazlasını paylaşın. Fotoğrafınızı, uzmanlığınızı, hizmetlerinizi ve iletişim bilgilerinizi sizi yansıtan bir dijital kartvizitte birleştirin.",

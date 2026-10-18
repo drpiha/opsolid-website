@@ -15,9 +15,9 @@ export function formatStand(locale: string): string {
 
 export const SITE_CONFIG = {
   name: "OpSolid",
-  tagline: "KI-Agents, Websites und Automatisierung",
+  tagline: "KI-Agenten, Websites und Automatisierung",
   description:
-    "OpSolid entwickelt KI-Agents, Websites und Prozessautomatisierung für kleine und mittlere Unternehmen: praxisnah, dokumentiert, datenschutzbewusst.",
+    "OpSolid entwickelt KI-Agenten, Websites und Prozessautomatisierung für kleine und mittlere Unternehmen: praxisnah, dokumentiert, datenschutzbewusst.",
   url: "https://opsolid.de",
   email: "info@opsolid.de",
   phone: "+49 176 31020654",

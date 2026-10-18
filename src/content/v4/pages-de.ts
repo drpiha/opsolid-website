@@ -66,7 +66,7 @@ export const de: Record<PageKey, PageDef> = {
         heat: [1],
         eyebrow: "Websites zum Kauf oder im Abo",
         h: "Gestaltet für Sie, nicht aus der Vorlage.",
-        lede: "Wir gestalten, bauen und betreiben Websites, die schnell laden, gut lesbar sind und in mehreren Sprachen funktionieren. Das Website-Abo hat einen festen Preis; den Kaufpreis nennen wir nach dem ersten Gespräch schriftlich.",
+        lede: "Wir gestalten, bauen und betreiben Websites, die schnell laden, gut lesbar sind und in mehreren Sprachen funktionieren. Das Website-Abo gibt es ab 99 € im Monat; den Kaufpreis nennen wir nach dem ersten Gespräch schriftlich.",
         items: [
           { h: "opsolid.de", tag: "Diese Website", p: "Von OpSolid gestaltet, gebaut und betrieben: drei Sprachen, Text zuerst; die 3D-Bühne lädt nach dem Text und lässt sich abschalten." },
           { h: "Kauf", p: "Einmaliger Projektpreis. Die fertige Website gehört Ihnen, und Sie führen sie selbst weiter." },
@@ -261,7 +261,7 @@ export const de: Record<PageKey, PageDef> = {
     hero: {
       eyebrow: "Websites · Kauf oder Abo",
       h1: ["Websites, die nach ", "Ihnen", " aussehen."],
-      lede: "OpSolid gestaltet und baut Websites, die schnell laden, gut lesbar sind und in mehreren Sprachen funktionieren. Kauf: einmaliger Projektpreis, die Seite gehört Ihnen. Website-Abo: fester Preis ab 99 € im Monat; Hosting, Pflege und Updates übernehmen wir.",
+      lede: "OpSolid gestaltet und baut Websites, die schnell laden, gut lesbar sind und in mehreren Sprachen funktionieren. Kauf: einmaliger Projektpreis, die Seite gehört Ihnen. Website-Abo: ab 99 € im Monat; Hosting, Pflege und Updates übernehmen wir.",
       primary: CONTACT,
       secondary: { label: "Arbeitsproben ansehen", href: "#referenzen" },
       scene: "websites",
@@ -292,7 +292,7 @@ export const de: Record<PageKey, PageDef> = {
         id: "preise",
         eyebrow: "Preise",
         h: "Was eine Website kostet.",
-        lede: "Das Website-Abo hat einen festen Preis. Für den Kauf nennen wir den Projektpreis nach dem ersten Gespräch schriftlich.",
+        lede: "Die Preise für das Website-Abo stehen in der Tabelle. Für den Kauf nennen wir den Projektpreis nach dem ersten Gespräch schriftlich.",
         caption: "Website-Abo und Kauf im Überblick",
         cols: ["Modell", "Umfang", "Preis"],
         rows: [

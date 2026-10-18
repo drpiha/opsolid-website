@@ -20,7 +20,7 @@ const cx = (...c: (string | false | undefined)[]) => c.filter(Boolean).join(" ")
 // v4 primary navigation. The service pages (Prozessautomatisierung,
 // Microsoft 365, Interne Tools, KI-Beratung) sit under "Leistungen".
 const NAV_ITEMS: NavItem[] = [
-  { key: "agents", href: "/agents", match: /\/agents(\/|$)/, label: { de: "Agents", en: "Agents", tr: "Agent'lar" } },
+  { key: "agents", href: "/agents", match: /\/agents(\/|$)/, label: { de: "KI-Agenten", en: "AI agents", tr: "YZ asistanları" } },
   { key: "websites", href: "/websites", match: /\/websites(\/|$)/, label: { de: "Websites", en: "Websites", tr: "Web siteleri" } },
   {
     key: "services",
@@ -28,7 +28,7 @@ const NAV_ITEMS: NavItem[] = [
     match: /\/(leistungen|ki-beratung|prozessautomatisierung|microsoft-365-automatisierung|interne-tools)(\/|$)/,
     label: { de: "Leistungen", en: "Services", tr: "Hizmetler" },
   },
-  { key: "check", href: "/ai-automation-check", match: /\/ai-automation-check/, label: { de: "KI-Check", en: "AI check", tr: "YZ kontrolü" } },
+  { key: "check", href: "/ai-automation-check", match: /\/ai-automation-check/, label: { de: "KI-Check", en: "AI Check", tr: "YZ Kontrolü" } },
   { key: "training", href: "/ki-schulungen", match: /\/ki-schulungen/, label: { de: "KI-Schulungen", en: "AI training", tr: "YZ eğitimleri" } },
   { key: "opso", href: "/opso", match: /\/opso(\/|$)/, label: { de: "OpSo", en: "OpSo", tr: "OpSo" } },
   { key: "about", href: "/ueber-uns", match: /\/ueber-uns/, label: { de: "Über OpSolid", en: "About", tr: "Hakkımızda" } },
@@ -36,7 +36,7 @@ const NAV_ITEMS: NavItem[] = [
 
 // One CTA, one target on desktop and in the mobile sheet: the KI-Check is the entry offer, like every
 // in-page "Mit dem KI-Check starten" button.
-const CTA: L3 = { de: "KI-Check starten", en: "Start the AI Check", tr: "YZ kontrolüyle başlayın" };
+const CTA: L3 = { de: "KI-Check starten", en: "Start the AI Check", tr: "YZ Kontrolüyle başlayın" };
 const CTA_HREF = "/ai-automation-check";
 const CONTACT: L3 = { de: "Kontakt", en: "Contact", tr: "İletişim" };
 const MENU: L3 = { de: "Menü", en: "Menu", tr: "Menü" };

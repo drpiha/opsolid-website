@@ -104,7 +104,7 @@ export default function Page({ params }: Params) {
                       </p>
                       <h2 className="v4-row-h" style={{ fontSize: "1.35rem" }}>
                         {soft(p.title)}
-                        <span>{t.read} →</span>
+                        <span aria-hidden="true">{t.read} →</span>
                       </h2>
                       <p className="v4-row-p">{p.excerpt}</p>
                     </Link>

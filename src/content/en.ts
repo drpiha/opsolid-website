@@ -1789,10 +1789,10 @@ export const content = {
     },
     eventDirectory: {
       eyebrow: "Event directory",
-      ctaTitle: "Going too? Create your card.",
+      ctaTitle: "Your own digital business card",
       ctaBody:
-        "Free, no account needed — your card is live in minutes and you appear in this list.",
-      ctaButton: "Create my card",
+        "Digital business cards with OpSo: examples, features and availability at a glance.",
+      ctaButton: "See OpSo",
       participantsHeading: "Participants",
       participantsHint:
         "Cards whose owners chose to be listed publicly. Tap one to view and save the contact.",

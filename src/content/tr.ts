@@ -1776,10 +1776,10 @@ export const content: Content = {
     },
     eventDirectory: {
       eyebrow: "Katılımcı rehberi",
-      ctaTitle: "Sen de mi katılıyorsun? Kartını oluştur.",
+      ctaTitle: "Kendi dijital kartvizitiniz",
       ctaBody:
-        "Ücretsiz, hesap gerekmez — kartın dakikalar içinde yayında olur ve bu listede görünürsün.",
-      ctaButton: "Kartımı oluştur",
+        "OpSo ile dijital kartvizitler: örnekler, özellikler ve kullanılabilirlik bir bakışta.",
+      ctaButton: "OpSo'yu inceleyin",
       participantsHeading: "Katılımcılar",
       participantsHint:
         "Sahipleri herkese açık listelenmeyi seçen kartlar. Birine dokunarak kişiyi görüntüle ve rehberine kaydet.",

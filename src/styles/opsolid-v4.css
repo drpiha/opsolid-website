@@ -888,25 +888,6 @@ html[data-v4] .wrap { max-width: 1360px; }
 html[data-v4] .os-footer, html[data-v4] .os-header { display: none; }
 html[data-v4] main { position: relative; z-index: 2; }
 
-/* consent banner → compact bar */
-html[data-v4] [aria-labelledby="consent-title"] {
-  left: auto !important;
-  right: 12px !important;
-  bottom: calc(12px + env(safe-area-inset-bottom, 0px)) !important;
-  width: min(24rem, calc(100vw - 24px));
-  max-width: none;
-  margin-left: 0 !important;
-  font-size: 0.85rem;
-  border-radius: 2px !important;
-  background: var(--v4-bg2) !important;
-  border: 1px solid var(--v4-line2) !important;
-  padding: 16px !important;
-  backdrop-filter: none !important;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5) !important;
-}
-html[data-v4] [aria-labelledby="consent-title"] h2 { font-family: var(--v4-display) !important; font-weight: 700; color: var(--v4-ink); }
-html[data-v4] [aria-labelledby="consent-title"] button { border-radius: 2px !important; }
-
 /* ---------------------------------------------------------- responsive */
 @media (max-width: 759px) {
   /* Poster in the hero's figure window, like the live object: below the header (+8) and above the
@@ -968,15 +949,6 @@ html[data-v4] [aria-labelledby="consent-title"] button { border-radius: 2px !imp
 .v4-topic { min-height: 44px; padding: 0 14px; background: transparent; border: 1px solid var(--v4-line2); color: var(--v4-ink); font-family: var(--v4-mono); font-size: 0.78rem; letter-spacing: 0.02em; cursor: pointer; border-radius: 2px; }
 .v4-topic:hover { border-color: var(--v4-cu); }
 .v4-topic[aria-pressed="true"] { background: var(--v4-cu); border-color: var(--v4-cu); color: var(--v4-on-cu); }
-
-@media (max-width: 759px) {
-  html[data-v4] [aria-labelledby="consent-title"] { left: 12px !important; width: auto; padding: 14px !important; }
-  html[data-v4] [aria-labelledby="consent-title"] p { margin-top: 6px !important; }
-}
-html[data-v4] [aria-labelledby="consent-title"] > div:last-child { flex-direction: row !important; justify-content: flex-end; margin-top: 12px !important; }
-/* Accept and reject carry identical visual weight (German DPAs treat a faded reject as a dark pattern). */
-html[data-v4] [aria-labelledby="consent-title"] button { min-height: 44px; padding: 0 18px !important; background: transparent !important; background-image: none !important; color: var(--v4-ink) !important; font-weight: 700; box-shadow: inset 0 0 0 1px var(--v4-ink); }
-html[data-v4] [aria-labelledby="consent-title"] button:hover { box-shadow: inset 0 0 0 1px var(--v4-cu-hi); color: var(--v4-cu-hi) !important; }
 
 /* article prose */
 .v4-prose { max-width: 44rem; font-size: 1.08rem; line-height: 1.75; color: var(--v4-ink2); }

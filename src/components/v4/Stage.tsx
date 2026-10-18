@@ -35,8 +35,8 @@ type Pose = [number, number, number, number, number, number, number, number, num
 
 const LABELS: Record<"de" | "en" | "tr", { n: string; t: string }[]> = {
   de: [
-    { n: "Agents", t: "Telefon · Chat" },
-    { n: "Websites", t: "Kauf · Miete" },
+    { n: "KI-Agenten", t: "Telefon · Chat" },
+    { n: "Websites", t: "Kauf · Abo" },
     { n: "Prozessautomatisierung", t: "Abläufe" },
     { n: "Microsoft 365", t: "Outlook · Teams" },
     { n: "Interne Tools", t: "statt Tabelle" },
@@ -44,21 +44,21 @@ const LABELS: Record<"de" | "en" | "tr", { n: string; t: string }[]> = {
     { n: "KI-Schulungen", t: "Team" },
   ],
   en: [
-    { n: "Agents", t: "Phone · Chat" },
-    { n: "Websites", t: "Buy · Rent" },
+    { n: "AI agents", t: "Phone · Chat" },
+    { n: "Websites", t: "Buy · Subscribe" },
     { n: "Process automation", t: "Workflows" },
     { n: "Microsoft 365", t: "Outlook · Teams" },
     { n: "Internal tools", t: "not a sheet" },
-    { n: "AI consulting", t: "AI check" },
+    { n: "AI consulting", t: "AI Check" },
     { n: "AI training", t: "Team" },
   ],
   tr: [
-    { n: "Agent'lar", t: "Telefon · Sohbet" },
-    { n: "Web siteleri", t: "Satın al · Kirala" },
+    { n: "YZ asistanları", t: "Telefon · Sohbet" },
+    { n: "Web siteleri", t: "Satın al · Abone ol" },
     { n: "Süreç otomasyonu", t: "Akışlar" },
     { n: "Microsoft 365", t: "Outlook · Teams" },
-    { n: "Dahili araçlar", t: "tablo yerine" },
-    { n: "YZ danışmanlığı", t: "YZ kontrolü" },
+    { n: "Şirket içi araçlar", t: "tablo yerine" },
+    { n: "YZ danışmanlığı", t: "YZ Kontrolü" },
     { n: "YZ eğitimleri", t: "Ekip" },
   ],
 };
