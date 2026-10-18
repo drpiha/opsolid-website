@@ -25,8 +25,7 @@ export const RETIRED_REDIRECTS: Record<string, string> = {
   "/products": "/leistungen",
   "/products/kutasia": "/websites",
 
-  // Legacy aliases (without "-agent" suffix) → current dedicated pages.
-  // The "-agent" suffixed paths are real routes now and must NOT be retired.
+  // Legacy aliases (without "-agent" suffix) → the consulting offer.
   "/products/chatbot": "/ki-beratung",
   "/products/lead-qualifier": "/ki-beratung",
   "/products/digital-reception": "/ki-beratung",
