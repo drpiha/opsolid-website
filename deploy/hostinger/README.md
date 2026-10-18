@@ -12,6 +12,11 @@ Kutasia. The pattern mirrors `/opt/kutasia/`:
 
 ## First-time setup on the VPS
 
+Historical: this is how the server was first set up. Do not re-run any of it
+on the live VPS. Releases follow "Release and follow-ups" below; rebuilding
+in `/opt/opsolid-website` or editing its `docker-compose.yml` or `.env` breaks
+the reviewed release and rollback chain.
+
 ```bash
 # 1) Give the VPS read access to the GitHub repo
 #    The pubkey lives at /root/.ssh/opsolid_deploy.pub — add it as a
@@ -75,19 +80,83 @@ WHATSAPP_PHONE=4917631020654
 WHATSAPP_CALLMEBOT_APIKEY=...
 ```
 
-## Update deploy
+## Release and follow-ups
 
-After code changes are pushed to GitHub:
+There is no automatic deploy and no rebuild on the VPS. Merging to `main` runs
+only "Verify web source (production disabled)" (`.github/workflows/deploy.yml`).
+`git pull`, `docker compose up -d --build`, `scripts/deploy.sh` (retired, exits
+with an error) and the old rsync/bootstrap workflow are not release paths.
+
+1. **Image:** after the exact `main` push passes verification, the repository
+   owner dispatches `build-runtime-image.yml` on `main` with the full `main`
+   SHA as `commit`. The image exists only as a three-day workflow artifact.
+   See [`docs/ops/hosted-runtime-image.md`](../../docs/ops/hosted-runtime-image.md).
+2. **Private receive** (separately reviewed): authenticate the exact owner run
+   and artifact, verify the hashes, `docker load`, re-check image ID, platform
+   and OCI revision.
+3. **App-only cutover** (separately reviewed), as root, with
+   `scripts/ops/opsolid-app-cutover.py`:
+
+   ```bash
+   # Writes a new private forward/rollback packet; changes nothing live.
+   python3 scripts/ops/opsolid-app-cutover.py --mode prepare-existing \
+     --expected <private expected-identity file> \
+     --candidate-image <loaded image> --commit <full sha> \
+     --current-state <current packet dir> \
+     --current-manifest-sha256 <its manifest hash>
+
+   # Dry run, then the real switch after an independent release GO.
+   python3 scripts/ops/opsolid-app-cutover.py --mode apply --state <new packet>
+   python3 scripts/ops/opsolid-app-cutover.py --mode apply --state <new packet> --execute
+
+   # Return to the previous image (dry run without --execute).
+   python3 scripts/ops/opsolid-app-cutover.py --mode rollback --state <new packet> --execute
+   ```
+
+   `prepare-existing` keeps the complete live environment and database
+   connection and changes only the image and `GIT_COMMIT`. The cutover
+   recreates only the `opsolid` app container; a failed forward step rolls
+   back automatically. It never builds, pulls, syncs source, runs migrations
+   or `db-bootstrap.sh`, or changes roles and permissions. A schema change
+   needs its own reviewed database step before the cutover.
+
+**Keep `/opt/opsolid-website/docker-compose.yml` and `.env` byte-identical.**
+The cutover script hashes both and refuses to continue when they differ from
+the originals recorded in the current packet. A runtime env change is its own
+reviewed ops change, not a hand edit.
+
+### This release: `prepare-existing` only
+
+Use only `--mode prepare-existing`. The original `--mode prepare` (new runtime
+role) depends on `scripts/ops/opsolid-candidate-runtime.py --execute`, whose
+smoke test still requires `/{de,en,tr}/signup` to answer 200. Since `/signup`
+became a 301 to `/opso` (#42), that mode fails at stage `http_pages`.
+
+The post-cutover proof (`READ_PROOF` in the cutover script) checks only
+`/api/health` (exact commit, `dbOk: true`) and the database identity. After
+`apply --execute`, check the public site by hand:
 
 ```bash
-cd /opt/opsolid-website
-GIT_SSH_COMMAND='ssh -i /root/.ssh/opsolid_deploy' git pull
-docker compose up -d --build
-
-# If this pull contains schema SQL changes (new file under prisma/patch_*.sql
-# or an edited init.sql), re-run the bootstrap — it's idempotent:
-bash deploy/hostinger/db-bootstrap.sh
+for p in /de /en /tr /de/agents /de/websites /de/blog /de/contact /de/opso /de/impressum /de/privacy; do
+  printf '%s ' "$p"; curl -s -o /dev/null -w '%{http_code}\n' "https://opsolid.de$p"   # expect 200
+done
+curl -s -o /dev/null -w '%{http_code} %{redirect_url}\n' https://opsolid.de/de/signup  # expect 301 -> /de/opso
+curl -sI 'https://opsolid.de/?geodebug=1' | grep -i -e '^location' -e '^x-opsolid-geo'  # 307 + country decision
+curl -s https://opsolid.de/api/health                                                   # exact commit, dbOk true
 ```
+
+### Follow-up (deferred, separately reviewed ops change)
+
+`scripts/ops/*` carry reviewed digests, so they are not changed in this
+release. After go-live, in one reviewed change:
+
+- `opsolid-candidate-runtime.py` `NODE_PROOF`: request `opso` and `login` per
+  locale (200), `/de/signup` as 301, and at least one v4 page per locale;
+  update `http_checks` and `scripts/tests/test_opsolid_candidate_runtime.py`
+  (it pins the current check count).
+- Optionally add a `GET /de` expecting 200 `text/html` to `READ_PROOF` in
+  `opsolid-app-cutover.py` (and its tests), so a broken marketing page cannot
+  pass as verified.
 
 ## DNS checklist
 
@@ -109,8 +178,12 @@ Then in the Stripe dashboard, "Send test webhook" against the endpoint.
 
 ## Operational docs
 
+- [`docs/ops/hosted-runtime-image.md`](../../docs/ops/hosted-runtime-image.md) — hosted image artifact and private receive.
+- [`scripts/ops/opsolid-app-cutover.py`](../../scripts/ops/opsolid-app-cutover.py) — reviewed app-only cutover and rollback.
 - [`BACKUPS.md`](./BACKUPS.md) — daily Postgres dump + 14d retention cron.
-- [`CUTOVER.md`](./CUTOVER.md) — Stripe TEST → LIVE runbook.
+- [`CUTOVER.md`](./CUTOVER.md) — Stripe TEST → LIVE runbook. It predates the
+  reviewed release path: do not run its `.env` edit and rebuild steps as
+  written; the env swap needs a reviewed ops change.
 - [`crontab.example`](./crontab.example) — the cron entry for backups.
 - [`db-bootstrap.sh`](./db-bootstrap.sh) — idempotent schema + seed runner.
 - [`backup.sh`](./backup.sh) — the actual backup script (run by cron).

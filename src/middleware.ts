@@ -2,12 +2,52 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import {
   LOCALES,
+  PUBLIC_LOCALES,
   ROUTING_DEFAULT_LOCALE,
   isLocale,
   type Locale,
 } from "@/lib/i18n";
 import { lookupCountryViaApi, resolveLocale, type LocaleResolution } from "@/lib/locale-routing";
 import { getRetiredRedirectTarget } from "@/lib/redirects";
+import { isV4Path } from "@/lib/v4";
+
+/** Origin of a Sentry DSN baked in at build time ("" when unset or malformed). */
+function sentryOrigin(dsn: string | undefined): string {
+  if (!dsn) return "";
+  try {
+    return new URL(dsn).origin;
+  } catch {
+    return "";
+  }
+}
+
+/**
+ * Enforced CSP for the v4 marketing documents. The production string (no DSN)
+ * is the policy that was tested in a browser on every marketing template with
+ * 0 violations, the 3D stage included (same-origin chunks and textures only).
+ * App surfaces keep the report-only policy from next.config.mjs. `next dev`
+ * also needs 'unsafe-eval' (webpack eval source maps); a Sentry DSN adds its
+ * ingest origin. No nonces: inline scripts stay allowed until the Next upgrade.
+ */
+const SENTRY_ORIGIN = sentryOrigin(process.env.NEXT_PUBLIC_SENTRY_DSN);
+const V4_CSP = [
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline'${process.env.NODE_ENV === "development" ? " 'unsafe-eval'" : ""}`,
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob:",
+  "font-src 'self'",
+  `connect-src 'self'${SENTRY_ORIGIN ? ` ${SENTRY_ORIGIN}` : ""}`,
+  "media-src 'self'",
+  "worker-src 'self' blob:",
+  "frame-src 'none'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'self'",
+].join("; ");
+
+/** Cheap IPv4/IPv6 shape check (edge-safe, no node:net). */
+const IP_SHAPE = /^[0-9A-Fa-f:.]{2,45}$/;
 
 function voiceIsEnabled(): boolean {
   const v = process.env.VOICE_AGENT_ENABLED;
@@ -66,13 +106,16 @@ async function lookupCountryFromIp(ip: string, req: NextRequest): Promise<string
 /**
  * Opt-in diagnostics: on `?geodebug=1` reflect how the locale was resolved back
  * in a response header. Country and own IP are not sensitive and this is gated,
- * so it stays invisible to normal traffic.
+ * so it stays invisible to normal traffic. The IP comes from X-Forwarded-For,
+ * so anything that is not shaped like an address is reported as "invalid"
+ * instead of echoing client text.
  */
 function maybeAttachGeoDebug(req: NextRequest, res: NextResponse, r: LocaleResolution) {
   if (req.nextUrl.searchParams.get("geodebug") !== "1") return;
+  const ip = r.ip ? (IP_SHAPE.test(r.ip) ? r.ip : "invalid") : "-";
   res.headers.set(
     "x-opsolid-geo",
-    `source=${r.source};country=${r.country ?? "-"};ip=${r.ip ?? "-"};locale=${r.locale}`,
+    `source=${r.source};country=${r.country ?? "-"};ip=${ip};locale=${r.locale}`,
   );
 }
 
@@ -128,6 +171,14 @@ function isLocalDev(host: string): boolean {
 export async function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
   const host = (req.headers.get("host") || "").toLowerCase();
+
+  // Pages only answer GET/HEAD. The app has no Server Actions and no page-level
+  // POST handler, so refusing other methods here keeps request bodies away
+  // from the Next 14 action/RSC decoders (unbounded multipart parse, RSC DoS
+  // advisories). /api/* (incl. /api/voice/*) keeps its own method handling.
+  if (req.method !== "GET" && req.method !== "HEAD" && !pathname.startsWith("/api/")) {
+    return new NextResponse(null, { status: 405, headers: { Allow: "GET, HEAD" } });
+  }
 
   // -- Voice Agent master kill switch ---------------------------------------
   // Gate /api/voice/* and /voice/* when VOICE_AGENT_ENABLED is falsy.
@@ -250,14 +301,22 @@ export async function middleware(req: NextRequest) {
   const pathWithoutLocale = hasLocale
     ? pathname.slice(firstSegment.length + 1) || "/"
     : pathname;
+  // es/it/fr/ar still exist for app and card surfaces, but the marketing pages
+  // are only written in de/en/tr.
+  const isPartialLocale = hasLocale && !PUBLIC_LOCALES.includes(firstSegment as Locale);
 
   // Retired-route 301 redirects. Checked after the locale split so both
   // /solutions and /en/solutions resolve to the right target with the locale
-  // prefix preserved. A locale-less retired URL always lands on the default
+  // prefix preserved (a partial locale goes straight to /en, every target is a
+  // marketing page). A locale-less retired URL always lands on the default
   // locale: a permanent redirect must not depend on request headers.
   const retiredTarget = getRetiredRedirectTarget(pathWithoutLocale);
   if (retiredTarget !== null) {
-    const localeForRedirect: Locale = hasLocale ? (firstSegment as Locale) : ROUTING_DEFAULT_LOCALE;
+    const localeForRedirect: Locale = !hasLocale
+      ? ROUTING_DEFAULT_LOCALE
+      : isPartialLocale && isV4Path(retiredTarget)
+        ? "en"
+        : (firstSegment as Locale);
     const url = req.nextUrl.clone();
     url.pathname =
       retiredTarget === "/" ? `/${localeForRedirect}` : `/${localeForRedirect}${retiredTarget}`;
@@ -287,12 +346,28 @@ export async function middleware(req: NextRequest) {
     return response;
   }
 
+  // Marketing pages under a partial locale (/es, /ar/agents, …) would render
+  // the English copy with lang="es" / dir="rtl": send them to the /en page.
+  // Card surfaces (/c/*) never reach this (excluded by the matcher).
+  if (isPartialLocale && isV4Path(pathname)) {
+    const url = req.nextUrl.clone();
+    url.pathname = pathWithoutLocale === "/" ? "/en" : `/en${pathWithoutLocale}`;
+    const response = NextResponse.redirect(url, 301);
+    clearLegacyLocaleCookies(response);
+    return response;
+  }
+
   // Forward pathname as header so server components can read it
   const requestHeaders = new Headers(req.headers);
   requestHeaders.set("x-pathname", pathname + search);
   requestHeaders.set("x-locale", firstSegment);
+  // Next 14 reads a nonce from an inbound CSP header; a client must never be
+  // able to supply one.
+  requestHeaders.delete("content-security-policy");
+  requestHeaders.delete("content-security-policy-report-only");
 
   const response = NextResponse.next({ request: { headers: requestHeaders } });
+  if (isV4Path(pathname)) response.headers.set("Content-Security-Policy", V4_CSP);
 
   // NOTE: we deliberately do NOT persist the locale here. The cookie is written
   // only on a confident geo redirect (above) or an explicit switcher choice

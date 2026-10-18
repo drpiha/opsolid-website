@@ -18,13 +18,9 @@ Dashboard → Webhooks → Add webhook:
 
 - URL: `https://opsolid.de/api/voice/webhooks/retell`
 - Events: check all — `call_started`, `call_ended`, `transcript_updated`, `recording_ready`, `error`
-- Signing secret: copy it (Retell calls this the "webhook signing secret")
+- No separate signing secret is needed: the app does not read one.
 
-```env
-RETELL_WEBHOOK_SECRET=whsec_xxxxxxxx  # Optional — we verify via RETELL_API_KEY HMAC
-```
-
-Signature verification uses `HMAC-SHA256(RETELL_API_KEY, rawBody)` → base64 → compare with `x-retell-signature` header. This is the standard Retell signature scheme.
+Signature verification (`src/lib/voice/provider/retell.ts`) reads `x-retell-signature: v=<unix_ms>,d=<hex>` and compares `d` with hex `HMAC-SHA256(RETELL_API_KEY, rawBody + unix_ms)`, with a 5-minute replay window. This mirrors the retell-sdk `verify()` helper.
 
 ## 4. Import or buy a phone number
 

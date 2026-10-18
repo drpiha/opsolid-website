@@ -18,9 +18,12 @@ test("removed single-agent product pages 301 to /agents, automation to /prozessa
 });
 
 test("legacy card entry points go to /opso, exact only", () => {
-  for (const p of ["/card/new", "/signup", "/products/digital-card"]) {
+  for (const p of ["/card/new", "/signup", "/products/digital-card", "/products/digital-card/gallery", "/card-preview"]) {
     assert.equal(getRetiredRedirectTarget(p), "/opso");
+    assert.equal(getRetiredRedirectTarget(`${p}/`), "/opso");
   }
+  assert.equal(getRetiredRedirectTarget("/products/digital-card/gallery/x"), null);
+  assert.equal(getRetiredRedirectTarget("/card-preview/x"), null);
 });
 
 test("about page and legacy product hub land on the current pages", () => {
@@ -30,9 +33,9 @@ test("about page and legacy product hub land on the current pages", () => {
   assert.equal(getRetiredRedirectTarget("/products/"), "/leistungen");
   assert.equal(getRetiredRedirectTarget("/products/kutasia"), "/websites");
   assert.equal(getRetiredRedirectTarget("/solutions"), "/leistungen");
-  // the OpSo flow under /products/digital-card/* keeps working
+  // the OpSo flow under /products/digital-card/* keeps working (the gallery is retired, see above)
   assert.equal(getRetiredRedirectTarget("/products/digital-card/thanks"), null);
-  assert.equal(getRetiredRedirectTarget("/products/digital-card/gallery"), null);
+  assert.equal(getRetiredRedirectTarget("/products/digital-card/thanks/abc"), null);
 });
 
 test("working routes are never redirected", () => {

@@ -1,0 +1,13 @@
+Fonts used only by the Open Graph image routes (src/lib/og-card.tsx).
+Static latin + latin-ext subsets served by Google Fonts.
+
+archivo-800-semiexpanded.ttf
+  Archivo, ExtraBold, SemiExpanded
+  Copyright 2020 The Archivo Project Authors (https://github.com/Omnibus-Type/Archivo)
+
+ibm-plex-mono-500.ttf
+  IBM Plex Mono, Medium
+  Copyright 2017 IBM Corp. with Reserved Font Name "Plex"
+
+Both are licensed under the SIL Open Font License, Version 1.1:
+https://openfontlicense.org/open-font-license-official-text/

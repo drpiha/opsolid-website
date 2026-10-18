@@ -11,10 +11,8 @@ import {
 } from "next/font/google";
 import localFont from "next/font/local";
 import { isV4Path } from "@/lib/v4";
-import { ConditionalAnalytics } from "@/components/shared/ConditionalAnalytics";
 import { SITE_CONFIG } from "@/lib/constants";
 import { isLocale, DEFAULT_LOCALE, directionForLocale } from "@/lib/i18n";
-import { ConsentBanner } from "@/components/shared/ConsentBanner";
 import "./globals.css";
 
 // v4: Archivo (display + body, variable width axis) and IBM Plex Mono (labels)
@@ -237,13 +235,10 @@ export default function RootLayout({
         />
       </head>
       <body className="grain font-sans antialiased bg-bg-1 text-ink-200 min-h-[100svh] flex flex-col">
+        {/* No analytics and no consent banner: the site stores only technically
+            necessary or user-chosen settings (language cookie on an explicit
+            switch, the footer's 3D-effects switch), which need no consent. */}
         {children}
-        {/* C5 — ConsentBanner sets the localStorage flag; ConditionalAnalytics
-            (a client component) watches it and only mounts <Analytics /> after
-            the user accepts. We can't pass `beforeSend` from this server layout
-            because RSC cannot serialize functions across the boundary. */}
-        <ConsentBanner />
-        <ConditionalAnalytics />
       </body>
     </html>
   );

@@ -142,22 +142,15 @@ ADMIN_TOKEN=... (~/.opsolid-deploy-secrets içinde)
 
 ## 8. Deploy — yapılan değişiklik VPS'e nasıl gider
 
-`feat/complete-dbc` dalında değişiklik yaptıysanız:
+VPS'te `git pull` + `docker compose up -d --build` yolu **emekliye ayrıldı**; `main`'e
+merge yalnızca doğrulama çalıştırır, otomatik deploy yoktur. Yayın: owner'ın
+`build-runtime-image.yml` ile tam `main` SHA'sından ürettiği imaj artefaktı, ayrı
+incelenen özel alım ve `scripts/ops/opsolid-app-cutover.py --mode prepare-existing`
+ardından `--mode apply` ile yalnızca uygulama container'ının değiştirilmesi.
+Ayrıntılar: `README.md` ("Deployment") ve `deploy/hostinger/README.md`.
+`/opt/opsolid-website/docker-compose.yml` ve `.env` elle değiştirilmez.
 
-```bash
-git push origin feat/complete-dbc
-# VPS'e:
-ssh -i ~/.ssh/id_ed25519_opsolid root@srv1150632.hstgr.cloud <<'EOF'
-cd /opt/opsolid-website
-GIT_SSH_COMMAND='ssh -i /root/.ssh/opsolid_deploy' git fetch
-GIT_SSH_COMMAND='ssh -i /root/.ssh/opsolid_deploy' git checkout feat/complete-dbc
-GIT_SSH_COMMAND='ssh -i /root/.ssh/opsolid_deploy' git pull
-docker compose up -d --build opsolid
-docker logs opsolid-app --tail 20
-EOF
-```
-
-Şema değişikliği varsa `docker exec -i opsolid-db psql -U opsolid -d opsolid < prisma/patch_*.sql` (idempotent patch dosyaları var).
+Şema değişikliği cutover'ın parçası değildir; ayrı incelenen bir veritabanı adımı gerektirir.
 
 ---
 

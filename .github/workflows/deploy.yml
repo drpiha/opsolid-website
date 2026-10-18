@@ -49,6 +49,12 @@ jobs:
         run: node node_modules/typescript/bin/tsc --noEmit --incremental false
       - name: Canonical account contracts (simulated upstream)
         run: node --import tsx --test scripts/tests/opso-web-account.test.mts
+      - name: Routing and retired-redirect contract
+        run: node --import tsx --test scripts/tests/redirects.test.mts
+      - name: Contact route guard (synthetic, no provider)
+        run: node --test scripts/contact-route-guard.test.cjs
+      - name: No Server Actions on Next 14 (they would expose the RSC DoS advisories)
+        run: '! grep -rl "use server" src'
       - name: App-only cutover contracts (synthetic, no Docker or provider)
         run: python3 -B scripts/tests/test_opsolid_app_cutover.py
       - name: Production build and public source-map gate

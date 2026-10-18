@@ -24,7 +24,7 @@ Do not modify prompts to hide AI identity. This also aligns with the EU AI Act (
 
 ## Call recordings
 
-**Default: disabled** (`VOICE_CALL_RECORDING_ENABLED=false`)
+**Default: disabled** (`VOICE_RECORDINGS_ENABLED=false`, overridable per tenant)
 
 If you enable recordings:
 - Callers must be informed before recording starts: "Dieses Gespräch wird zur Qualitätssicherung aufgezeichnet."

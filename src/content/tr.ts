@@ -14,14 +14,6 @@ export const content: Content = {
 
 
 
-  notFound: {
-    title: "Sayfa bulunamadı",
-    description:
-      "Aradığınız sayfa mevcut değil veya taşınmış olabilir.",
-    backHome: "Ana Sayfaya Dön",
-    contactUs: "Bize Ulaşın",
-  },
-
   impressum: {
     title: "Yasal Bildirim",
     notice:
@@ -57,7 +49,7 @@ export const content: Content = {
     subtitle: "Datenschutzerklärung · Privacy Policy",
     notice:
       "Bu, OpSolid pazarlama sitesi ve OpSo Smart (Dijital Kartvizit) ürünü için GDPR (AB) ve KVKK (Türkiye) çerçevesinde hazırlanmış bir aydınlatma metnidir. Gewerbeanmeldung sonrası avukat onaylı nihai metin bu bildirimin yerini alacaktır. Son inceleme: Hasan Dönmez.",
-    lastUpdated: "Son güncelleme: Mayıs 2026",
+    lastUpdated: "Son güncelleme: Ekim 2026",
     sections: [
       {
         title: "1. Veri Koruma Özeti",
@@ -74,17 +66,12 @@ export const content: Content = {
           {
             title: "İletişim Formu",
             content:
-              "İletişim formu aracılığıyla gönderilen veriler (ad, iş e-postası, şirket, mesaj, opsiyonel telefon) talebin işlenmesi ve takibi amacıyla saklanır. Hukuki dayanak: Sözleşmeye ilişkin talepler için GDPR Madde 6(1)(b), meşru menfaat için GDPR Madde 6(1)(f) veya açık rıza için GDPR Madde 6(1)(a). KVKK dayanağı: m.5(2)(c) (sözleşmenin ifası) veya m.5(1) açık rıza.",
+              "İletişim formu aracılığıyla gönderilen veriler (ad, e-posta adresi, isteğe bağlı şirket adı, seçilen konular ve mesaj) talebin işlenmesi ve takibi amacıyla saklanır. Hukuki dayanak: Sözleşmeye ilişkin talepler için GDPR Madde 6(1)(b), meşru menfaat için GDPR Madde 6(1)(f) veya açık rıza için GDPR Madde 6(1)(a). KVKK dayanağı: m.5(2)(c) (sözleşmenin ifası) veya m.5(1) açık rıza.",
           },
           {
             title: "Sunucu Günlük Dosyaları",
             content:
               "Barındırma sağlayıcısı, tarayıcı türü, işletim sistemi, yönlendiren URL, ana bilgisayar adı, IP adresi (mümkün olduğunda kısaltılmış) ve istek zamanını otomatik olarak toplar. Saklama: 14 gün güvenlik ve kötüye kullanım analizi için, ardından silinir. Hukuki dayanak: GDPR m.6(1)(f) (operasyonel güvenlikte meşru menfaat).",
-          },
-          {
-            title: "Çerez Onay Kaydı",
-            content:
-              "Çerez bandında bir tercih yaptığınızda (kabul / ret), seçiminizi zaman damgasıyla birlikte tarayıcınızın localStorage alanında saklarız. Bu onay kaydı için IP adresinizi iletmiyoruz. Tercihinizi alt menüdeki bağlantıyla istediğiniz zaman değiştirebilir veya geri alabilirsiniz. Hukuki dayanak: GDPR m.6(1)(c) (TDDDG § 25 uyarınca onayı belgeleme yasal yükümlülüğü).",
           },
         ],
       },
@@ -97,14 +84,14 @@ export const content: Content = {
         title: "5. Çerezler ve Analitik",
         subsections: [
           {
-            title: "Kesinlikle gerekli olanlar",
+            title: "Gerekli ve kendi seçtiğiniz ayarlar",
             content:
-              "Dil tercihi ve çerez onay durumu tarayıcınızın localStorage alanında saklanır. Bunlar sitenin çalışması için zorunludur ve TDDDG § 25(2) uyarınca onaya tabi değildir.",
+              "Yalnızca teknik olarak gerekli olanları veya kendi seçtiklerinizi saklarız. Bunlar şunlardır: yalnızca dili kendiniz değiştirdiğinizde ayarlanan bir dil çerezi; alt bilgideki \"3D efektler\" anahtarının ayarı, yalnızca kullandığınızda tarayıcınızın localStorage alanına kaydedilir; hesap ve kart alanlarında ise giriş yaptıktan sonra bir oturum çerezi ile localStorage alanında tek tek görünüm ayarları ve form taslakları. Bu bilgiler yalnızca seçiminizi uygulamak veya hizmeti sunmak için kullanılır ve üçüncü taraflarla paylaşılmaz. TDDDG § 25(2) uyarınca onaya tabi değildir; bu nedenle bu web sitesi çerez bandı göstermez.",
           },
           {
-            title: "Opsiyonel analitik",
+            title: "Analitik yok",
             content:
-              "Çerez bandında analitik onayı verirseniz, toplulaştırılmış, anonim sayfa görüntüleme sayıları toplanabilir. Bu toplama çerezsiz ve kişisel tanımlayıcı olmadan yapılır; bireysel ziyaretçi tanımlayamaz. Reddetmeniz halinde hiçbir analitik çağrısı yapılmaz ve hiçbir veri Vilnius'taki Hostinger sunucusunu terk etmez.",
+              "Bu web sitesi herhangi bir analiz veya izleme aracı kullanmaz: sayfa görüntüleme sayımı, ziyaretçi profili veya izleme çerezi yoktur.",
           },
           {
             title: "Üçüncü taraf izleme, reklam veya sosyal eklenti yok",
@@ -143,7 +130,7 @@ export const content: Content = {
       {
         title: "7. Uluslararası Veri Aktarımı",
         content:
-          "Kişisel veriler Avrupa Ekonomik Alanı dışına aktarıldığında (örn. ABD'de Vercel, Stripe, OpenAI, Anthropic), aktarım (a) alıcı DPF sertifikalı ise AB-ABD Veri Gizliliği Çerçevesi yeterlilik kararına, ya da (b) Standart Sözleşme Hükümleri (SCC, AB 2021/914) ile dökümante edilmiş Transfer Etki Değerlendirmesine dayanır. Türkiye'de yerleşik veri sahipleri için ek olarak KVKK m.9 yurtdışı aktarım kuralları uygulanır: aktarımlar KVKK standart sözleşmesi (10.07.2024 Yönetmeliği) kapsamında yapılır ve gerektiğinde 5 iş günü içinde Kurum'a bildirilir.",
+          "Kişisel veriler Avrupa Ekonomik Alanı dışına aktarıldığında (örn. ABD'deki Stripe, OpenAI veya Anthropic), aktarım (a) alıcı DPF sertifikalı ise AB-ABD Veri Gizliliği Çerçevesi yeterlilik kararına, ya da (b) Standart Sözleşme Hükümleri (SCC, AB 2021/914) ile dökümante edilmiş Transfer Etki Değerlendirmesine dayanır. Türkiye'de yerleşik veri sahipleri için ek olarak KVKK m.9 yurtdışı aktarım kuralları uygulanır: aktarımlar KVKK standart sözleşmesi (10.07.2024 Yönetmeliği) kapsamında yapılır ve gerektiğinde 5 iş günü içinde Kurum'a bildirilir.",
       },
       {
         title: "8. OpSo Smart Dijital Kartvizit Ürünü",
@@ -218,66 +205,62 @@ export const content: Content = {
       {
         slug: "eu-ai-act-august-2026-omnibus-compliance",
         title: "AB Yapay Zeka Yasası Yürürlükte: Omnibus Değişiklikleri İşletmeniz İçin Ne Anlama Geliyor",
+        seoTitle: "AB Yapay Zeka Yasası: Omnibus Neleri Değiştirdi",
         excerpt:
-          "AB Yapay Zeka Yasası 2 Ağustos 2026'da tam olarak yürürlüğe giriyor. Omnibus VII neler değiştirdi - ve hangi şeffaflık yükümlülükleri şimdi geçerli.",
+          "AB Yapay Zeka Yasası 2 Ağustos 2026'dan itibaren büyük ölçüde uygulanıyor. Omnibus VII neler değiştirdi – ve hangi şeffaflık yükümlülükleri geçerli.",
         category: "ai",
         date: "2026-07-07",
-        readTime: "7",
       },
       {
         slug: "workflow-automation-fundamentals",
         title: "İş Akışı Otomasyonu: Uygulamada Gerçekten Ne Önemli",
         excerpt:
-          "Bir iş akışı otomasyonunu üretimde ayakta tutan şey neyse onlara odaklanan bir inceleme — hata yönetimi, veri egemenliği, izlenebilirlik ve çıkış maliyeti, seçilen motordan bağımsız olarak.",
+          "Bir iş akışı otomasyonunu üretimde ayakta tutan şeyler: hata yönetimi, veri egemenliği, izlenebilirlik ve çıkış maliyeti – seçilen araçtan bağımsız olarak.",
         category: "automation",
         date: "2026-03-15",
-        readTime: "6",
       },
       {
         slug: "5-signs-your-business-needs-process-automation",
         title: "İşletmenizin Süreç Otomasyonuna İhtiyacı Olduğunun 5 İşareti",
+        seoTitle: "Süreç Otomasyonuna İhtiyaç Duyduğunuzun 5 İşareti",
         excerpt:
           "Ekibiniz manuel işlere çok fazla zaman mı harcıyor? İşte otomasyona yatırım yapmanın zamanının geldiğini gösteren temel göstergeler.",
         category: "operations",
         date: "2026-03-08",
-        readTime: "5",
       },
       {
         slug: "connecting-crm-erp-the-integration-playbook",
-        title: "CRM ve ERP Bağlantısı: Entegrasyon Rehberi",
+        title: "CRM ve ERP Bağlantısı: Genel Bakış",
         excerpt:
-          "CRM ve ERP sistemlerinizi senkronize etmek için pratik bir rehber — veri silolarını azaltarak tek bir doğru kaynak oluşturmak.",
+          "CRM ve ERP sistemlerinizi senkronize etmeye pratik bir bakış — veri silolarını azaltarak tek bir doğru kaynak oluşturmak.",
         category: "integration",
         date: "2026-02-28",
-        readTime: "8",
       },
       {
         slug: "ai-chatbots-vs-rule-based-bots",
         title: "Yapay Zeka Chatbot'ları ve Kural Tabanlı Botlar: Hangisine İhtiyacınız Var?",
+        seoTitle: "Yapay Zeka Chatbot'u mu, Kural Tabanlı Bot mu?",
         excerpt:
           "Yapay zeka destekli ve kural tabanlı chatbot'lar arasındaki farkı ve her yaklaşımın işletmeniz için ne zaman mantıklı olduğunu anlayın.",
         category: "ai",
         date: "2026-02-20",
-        readTime: "7",
       },
       {
         slug: "choosing-the-right-automation-architecture",
         title:
           "İşletmeniz İçin Doğru Otomasyon Mimarisini Seçmek",
         excerpt:
-          "Noktadan noktaya entegrasyonlar, özel orkestrasyon katmanları ve hibrit modeller arasında nasıl seçim yapılır — hacme, uyumluluğa ve ekip büyüklüğüne göre; tedarikçi sunumuna göre değil.",
+          "Noktadan noktaya entegrasyon, merkezi orkestrasyon veya hibrit model: hacme, uyumluluğa ve ekip büyüklüğüne göre seçim, tedarikçi sunumuna göre değil.",
         category: "automation",
         date: "2026-02-12",
-        readTime: "10",
       },
       {
         slug: "whatsapp-business-automation-guide",
-        title: "WhatsApp Business Otomasyon Rehberi",
+        title: "WhatsApp Business Otomasyonu: Genel Bakış",
         excerpt:
           "WhatsApp üzerinde müşteri iletişimini nasıl otomatize edeceğiniz — sipariş onaylarından destek botlarına — kişisel dokunuşu kaybetmeden.",
         category: "automation",
         date: "2026-02-05",
-        readTime: "9",
       },
     ],
   },

@@ -14,14 +14,6 @@ export const content: Content = {
 
 
 
-  notFound: {
-    title: "Seite nicht gefunden",
-    description:
-      "Die gesuchte Seite existiert nicht oder wurde verschoben.",
-    backHome: "Zurück zur Startseite",
-    contactUs: "Kontakt",
-  },
-
   impressum: {
     title: "Impressum",
     notice:
@@ -56,8 +48,8 @@ export const content: Content = {
     title: "Datenschutzerklärung",
     subtitle: "Privacy Policy · Aydınlatma Metni",
     notice:
-      "Diese selbst erstellte Datenschutzerklärung umfasst die DSGVO (EU) und KVKK (Türkei) für die OpSolid-Marketing-Site sowie das OpSo Smart-Produkt (Digital Business Card). Eine anwaltlich geprüfte Endfassung ersetzt diesen Hinweis nach der Gewerbeanmeldung. Letzter Stand: Hasan Dönmez.",
-    lastUpdated: "Letzte Aktualisierung: Mai 2026",
+      "Diese selbst erstellte Datenschutzerklärung umfasst die DSGVO (EU) und KVKK (Türkei) für die OpSolid-Marketing-Site sowie das OpSo Smart-Produkt (Digital Business Card). Eine anwaltlich geprüfte Endfassung ersetzt diesen Hinweis nach der Gewerbeanmeldung. Letzte Durchsicht: Hasan Dönmez.",
+    lastUpdated: "Letzte Aktualisierung: Oktober 2026",
     sections: [
       {
         title: "1. Datenschutz auf einen Blick",
@@ -74,17 +66,12 @@ export const content: Content = {
           {
             title: "Kontaktformular",
             content:
-              "Über das Kontaktformular übermittelte Daten (Name, geschäftliche E-Mail, Unternehmen, Nachricht, optional Telefon) werden zur Bearbeitung der Anfrage und für Rückfragen gespeichert. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO bei vertragsbezogenen Anfragen, Art. 6 Abs. 1 lit. f DSGVO bei berechtigtem Interesse oder Art. 6 Abs. 1 lit. a DSGVO bei erteilter Einwilligung. KVKK-Grundlage: Art. 5(2)(c) (Vertragserfüllung) bzw. Art. 5(1) açık rıza.",
+              "Über das Kontaktformular übermittelte Daten (Name, E-Mail-Adresse, optional Unternehmen, gewählte Themen und Nachricht) werden zur Bearbeitung der Anfrage und für Rückfragen gespeichert. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO bei vertragsbezogenen Anfragen, Art. 6 Abs. 1 lit. f DSGVO bei berechtigtem Interesse oder Art. 6 Abs. 1 lit. a DSGVO bei erteilter Einwilligung. KVKK-Grundlage: Art. 5(2)(c) (Vertragserfüllung) bzw. Art. 5(1) açık rıza.",
           },
           {
             title: "Server-Log-Dateien",
             content:
               "Der Hosting-Anbieter erfasst automatisch Browsertyp, Betriebssystem, Referrer-URL, Hostname, IP-Adresse (wo möglich gekürzt) und Zeitpunkt der Anfrage. Aufbewahrung: 14 Tage zur Sicherheits- und Missbrauchsanalyse, danach Löschung. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse am Betrieb).",
-          },
-          {
-            title: "Cookie-Einwilligungsprotokoll",
-            content:
-              "Wenn Sie im Cookie-Banner eine Auswahl treffen (Akzeptieren / Ablehnen), speichern wir die Auswahl mit Zeitstempel im localStorage Ihres Browsers. Wir übertragen für diesen Einwilligungsnachweis nicht Ihre IP. Sie können die Auswahl jederzeit über den Footer-Link ändern oder widerrufen. Rechtsgrundlage: Art. 6 Abs. 1 lit. c DSGVO (rechtliche Verpflichtung gemäß § 25 TDDDG, Einwilligung zu dokumentieren).",
           },
         ],
       },
@@ -97,14 +84,14 @@ export const content: Content = {
         title: "5. Cookies & Analyse",
         subsections: [
           {
-            title: "Unbedingt erforderlich",
+            title: "Erforderliche und selbst gewählte Einstellungen",
             content:
-              "Sprachpräferenz und Cookie-Einwilligungsstatus werden im localStorage des Browsers gespeichert. Diese sind für den Betrieb erforderlich und einwilligungsfrei nach § 25 Abs. 2 TDDDG.",
+              "Wir speichern nur, was technisch erforderlich ist oder was Sie selbst wählen. Dazu gehören ein Sprach-Cookie, das nur gesetzt wird, wenn Sie die Sprache selbst umstellen; die Einstellung des Schalters „3D-Effekte“ im Seitenfuß, die nur bei Benutzung im localStorage Ihres Browsers gespeichert wird; und in Konto- und Kartenbereichen ein Sitzungs-Cookie nach der Anmeldung sowie einzelne Anzeige-Einstellungen und Formularentwürfe im localStorage. Diese Angaben dienen nur dazu, Ihre Auswahl umzusetzen oder den Dienst bereitzustellen, und werden nicht an Dritte weitergegeben. Sie sind nach § 25 Abs. 2 TDDDG einwilligungsfrei; deshalb zeigt diese Website kein Cookie-Banner.",
           },
           {
-            title: "Optionale Analyse",
+            title: "Keine Analyse",
             content:
-              "Falls Sie im Cookie-Banner Analyse zustimmen, werden aggregierte, anonyme Seitenaufrufzahlen erfasst. Die Erfassung erfolgt cookieless, ohne personenbezogene Kennungen, und kann einzelne Besucherinnen und Besucher nicht identifizieren. Bei Ablehnung wird kein Analyse-Aufruf ausgelöst und es verlassen keine Daten den Hostinger-Server in Vilnius.",
+              "Diese Website setzt kein Analyse- oder Tracking-Tool ein: keine Zählung von Seitenaufrufen, keine Besucherprofile, keine Tracking-Cookies.",
           },
           {
             title: "Kein Drittanbieter-Tracking, keine Werbung, keine Social-Plugins",
@@ -143,7 +130,7 @@ export const content: Content = {
       {
         title: "7. Internationale Datenübermittlung",
         content:
-          "Soweit personenbezogene Daten in Länder außerhalb des Europäischen Wirtschaftsraums übermittelt werden (z. B. an Vercel, Stripe, OpenAI, Anthropic in den USA), erfolgt dies (a) auf Grundlage des Angemessenheitsbeschlusses zum EU-US Data Privacy Framework, sofern der Empfänger DPF-zertifiziert ist, oder (b) auf Grundlage der Standardvertragsklauseln (SCC, EU 2021/914) mit dokumentiertem Transfer Impact Assessment. Für betroffene Personen mit Wohnsitz in der Türkei gelten zusätzlich KVKK Art. 9 zur Yurtdışı Aktarım: Übermittlungen erfolgen unter KVKK-Standardvertragsklauseln (Yönetmelik 10.07.2024) und werden, sofern vorgesehen, dem Kurum innerhalb von 5 Werktagen gemeldet.",
+          "Soweit personenbezogene Daten in Länder außerhalb des Europäischen Wirtschaftsraums übermittelt werden (z. B. an Stripe, OpenAI oder Anthropic in den USA), erfolgt dies (a) auf Grundlage des Angemessenheitsbeschlusses zum EU-US Data Privacy Framework, sofern der Empfänger DPF-zertifiziert ist, oder (b) auf Grundlage der Standardvertragsklauseln (SCC, EU 2021/914) mit dokumentiertem Transfer Impact Assessment. Für betroffene Personen mit Wohnsitz in der Türkei gelten zusätzlich KVKK Art. 9 zur Yurtdışı Aktarım: Übermittlungen erfolgen unter KVKK-Standardvertragsklauseln (Yönetmelik 10.07.2024) und werden, sofern vorgesehen, dem Kurum innerhalb von 5 Werktagen gemeldet.",
       },
       {
         title: "8. OpSo Smart Digital Business Card Produkt",
@@ -217,67 +204,64 @@ export const content: Content = {
     posts: [
       {
         slug: "eu-ai-act-august-2026-omnibus-compliance",
-        title: "EU-KI-Gesetz tritt in Kraft: Was die Omnibus-Änderungen für Ihr Unternehmen bedeuten",
+        title: "EU-KI-Verordnung ab 2. August 2026 anwendbar: Was die Omnibus-Änderungen für Ihr Unternehmen bedeuten",
+        seoTitle: "EU-KI-Verordnung ab 2. August 2026 anwendbar",
         excerpt:
-          "Am 2. August 2026 wird die KI-Verordnung vollständig anwendbar. Was Omnibus VII geändert hat - und welche Transparenzpflichten jetzt sofort gelten.",
+          "Ab dem 2. August 2026 ist die KI-Verordnung weitgehend anwendbar. Was Omnibus VII geändert hat – und welche Transparenzpflichten ab diesem Tag gelten.",
         category: "ai",
         date: "2026-07-07",
-        readTime: "7",
       },
       {
         slug: "workflow-automation-fundamentals",
         title: "Workflow-Automatisierung: Was in der Praxis wirklich zählt",
+        seoTitle: "Workflow-Automatisierung: Was im Betrieb zählt",
         excerpt:
-          "Ein nüchterner Blick darauf, was eine Workflow-Automatisierung im Produktivbetrieb trägt — Fehlerbehandlung, Datenhoheit, Observability und Ausstiegskosten, unabhängig von der gewählten Engine.",
+          "Was eine Automatisierung im laufenden Betrieb trägt: Fehlerbehandlung, Datenhoheit, Nachvollziehbarkeit und Ausstiegskosten – unabhängig vom Werkzeug.",
         category: "automation",
         date: "2026-03-15",
-        readTime: "6",
       },
       {
         slug: "5-signs-your-business-needs-process-automation",
         title: "5 Anzeichen, dass Ihr Unternehmen Prozessautomatisierung braucht",
+        seoTitle: "5 Anzeichen, dass Sie Prozessautomatisierung brauchen",
         excerpt:
           "Verbringt Ihr Team zu viel Zeit mit manueller Arbeit? Hier sind die wichtigsten Indikatoren, dass es Zeit ist, in Automatisierung zu investieren.",
         category: "operations",
         date: "2026-03-08",
-        readTime: "5",
       },
       {
         slug: "connecting-crm-erp-the-integration-playbook",
-        title: "CRM & ERP verbinden: Der Integrations-Leitfaden",
+        title: "CRM und ERP verbinden: ein Überblick",
         excerpt:
-          "Ein praktischer Leitfaden zur Synchronisierung Ihrer CRM- und ERP-Systeme — Datensilos abbauen und eine zentrale Datenquelle schaffen.",
+          "Ein praktischer Überblick zur Synchronisierung Ihrer CRM- und ERP-Systeme – Datensilos abbauen und eine zentrale Datenquelle schaffen.",
         category: "integration",
         date: "2026-02-28",
-        readTime: "8",
       },
       {
         slug: "ai-chatbots-vs-rule-based-bots",
         title: "KI-Chatbots vs. regelbasierte Bots: Was brauchen Sie?",
         excerpt:
-          "Den Unterschied zwischen KI-gestützten und regelbasierten Chatbots verstehen — und wann welcher Ansatz für Ihr Unternehmen sinnvoll ist.",
+          "Den Unterschied zwischen KI-gestützten und regelbasierten Chatbots verstehen – und wann welcher Ansatz für Ihr Unternehmen sinnvoll ist.",
         category: "ai",
         date: "2026-02-20",
-        readTime: "7",
       },
       {
         slug: "choosing-the-right-automation-architecture",
         title:
           "Die richtige Automatisierungsarchitektur für Ihr Unternehmen wählen",
+        seoTitle: "Die richtige Automatisierungsarchitektur wählen",
         excerpt:
-          "Wie man zwischen Point-to-Point-Integrationen, individuellen Orchestrierungsschichten und hybriden Modellen entscheidet — anhand von Volumen, Compliance und Teamgröße, nicht Vendor-Pitch.",
+          "Direkte Schnittstellen, zentrale Orchestrierung oder hybrid? Entscheiden Sie nach Volumen, Compliance und Teamgröße, nicht nach Verkaufsargumenten.",
         category: "automation",
         date: "2026-02-12",
-        readTime: "10",
       },
       {
         slug: "whatsapp-business-automation-guide",
-        title: "Der vollständige Leitfaden zur WhatsApp Business Automatisierung",
+        title: "WhatsApp-Business-Automatisierung: ein Überblick",
         excerpt:
-          "So automatisieren Sie Kundenkommunikation über WhatsApp — von Bestellbestätigungen bis zu Support-Bots — ohne die persönliche Note zu verlieren.",
+          "So automatisieren Sie Kundenkommunikation über WhatsApp – von Bestellbestätigungen bis zu Support-Bots – ohne die persönliche Note zu verlieren.",
         category: "automation",
         date: "2026-02-05",
-        readTime: "9",
       },
     ],
   },

@@ -17,15 +17,18 @@ import { countryForIp } from "@/lib/geo/country-db";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
-// Cache per-IP result at the edge/CDN for a day; the country of an IP is
-// extremely stable, and the middleware already short-circuits repeat visits
-// via the OPSOLID_LOCALE cookie, so this is mostly belt-and-suspenders.
+// Only the middleware's loopback call needs this answer: never let a shared
+// cache or CDN keep it (and turn the route into a public GeoIP service).
 const CACHE_HEADERS = {
-  "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=3600",
+  "Cache-Control": "private, no-store",
 };
+
+// Cheap shape check (IPv4 / IPv6 characters only); anything else is not looked up.
+const IP_SHAPE = /^[0-9A-Fa-f:.]{2,45}$/;
 
 export async function GET(req: Request) {
   const ip = (new URL(req.url).searchParams.get("ip") || "").trim();
+  if (!IP_SHAPE.test(ip)) return NextResponse.json({ country: null }, { headers: CACHE_HEADERS });
   try {
     const country = await countryForIp(ip);
     return NextResponse.json({ country }, { headers: CACHE_HEADERS });

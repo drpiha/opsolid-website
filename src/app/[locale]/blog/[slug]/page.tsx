@@ -1,13 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPostBySlug, getAllSlugs, getPostContent } from "@/content/blog";
+import { getPostBySlug, getAllSlugs, getPostContent, getReadMinutes } from "@/content/blog";
 import { content as de } from "@/content/de";
 import { content as en } from "@/content/en";
 import { content as tr } from "@/content/tr";
 import { SITE_CONFIG } from "@/lib/constants";
 import { withLocale, type Locale } from "@/lib/i18n";
-import { pickLocale } from "@/lib/seo-v4";
+import { pickLocale, OG_LOCALE, ogImage } from "@/lib/seo-v4";
 import { Crumbs, CtaBand } from "@/components/v4/PageRenderer";
 import { JsonLdGraph } from "@/components/v4/JsonLd";
 import { soft } from "@/lib/soft-hyphen";
@@ -35,12 +35,24 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!post) return {};
   const path = `/blog/${params.slug}`;
   const abs = (l: string) => `${SITE_CONFIG.url}/${l}${path}`;
+  // Long headings get a short seoTitle for the <title>; the visible H1 keeps the full title.
+  const title = post.seoTitle ?? post.title;
   return {
-    title: post.title,
+    title,
     description: post.excerpt,
     alternates: { canonical: abs(loc), languages: { de: abs("de"), en: abs("en"), tr: abs("tr"), "x-default": abs("de") } },
-    openGraph: { title: post.title, description: post.excerpt, type: "article", url: abs(loc), publishedTime: post.date, siteName: SITE_CONFIG.name },
-    twitter: { card: "summary_large_image", title: post.title, description: post.excerpt },
+    openGraph: {
+      title,
+      description: post.excerpt,
+      type: "article",
+      url: abs(loc),
+      publishedTime: post.date,
+      siteName: SITE_CONFIG.name,
+      locale: OG_LOCALE[loc],
+      alternateLocale: (Object.keys(OG_LOCALE) as L3[]).filter((l) => l !== loc).map((l) => OG_LOCALE[l]),
+      images: [ogImage(loc)],
+    },
+    twitter: { card: "summary_large_image", title, description: post.excerpt, images: [ogImage(loc).url] },
   };
 }
 
@@ -80,6 +92,7 @@ export default function Page({ params }: Props) {
             datePublished: post.date,
             dateModified: post.date,
             inLanguage: loc,
+            image: `${SITE_CONFIG.url}${ogImage(loc).url}`,
             articleSection: post.category,
             author: { "@id": `${SITE_CONFIG.url}/#person` },
             publisher: { "@id": `${SITE_CONFIG.url}/#organization` },
@@ -91,7 +104,7 @@ export default function Page({ params }: Props) {
           <div className="v4-col is-wide">
             <Crumbs locale={loc} trail={[{ label: t.notes, to: "/blog" }, { label: post.title }]} />
             <p className="v4-eyebrow">
-              <time dateTime={post.date}>{date}</time> · {t.cat[post.category] ?? post.category} · {t.read} {post.readTime} {t.min}
+              <time dateTime={post.date}>{date}</time> · {t.cat[post.category] ?? post.category} · {t.read} {getReadMinutes(params.slug, loc)} {t.min}
             </p>
             <h1 className="v4-h1" style={{ fontSize: "clamp(2rem, 4.6vw, 3.8rem)" }}>
               {soft(post.title)}

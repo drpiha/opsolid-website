@@ -3,8 +3,9 @@
 // =============================================================================
 // EventDirectoryPage — client half of /events/[slug].
 //
-// Event header → "create your card" CTA (deep-links the order page with
-// ?event=<slug>) → alphabetical attendee grid linking to each public card.
+// Event header → "create your card" CTA (links to /opso; the web order flow
+// at /card/new is retired) → alphabetical attendee grid linking to each
+// public card.
 // Copy lives in t.card.eventDirectory (DE/EN/TR).
 // =============================================================================
 
@@ -110,7 +111,7 @@ export function EventDirectoryPage({ event, attendees }: Props) {
             <p className="mt-1 text-sm text-ink-200">{d.ctaBody}</p>
           </div>
           <Link
-            href={`/card/new?event=${encodeURIComponent(event.slug)}`}
+            href="/opso"
             className="inline-flex shrink-0 items-center gap-2 rounded-full bg-copper px-6 py-3 text-sm font-semibold text-ink transition-transform hover:scale-[1.02] active:scale-[0.98]"
           >
             <UserPlus size={15} />

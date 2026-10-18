@@ -10,6 +10,7 @@ import { JsonLdGraph } from "@/components/v4/JsonLd";
 import { soft } from "@/lib/soft-hyphen";
 import { Reveal } from "@/components/v4/Reveal";
 import { getPage } from "@/content/v4";
+import { getReadMinutes } from "@/content/blog";
 import type { L3 } from "@/content/v4/types";
 
 type Params = { params: { locale?: string } };
@@ -99,7 +100,7 @@ export default function Page({ params }: Params) {
                   <Reveal>
                     <Link href={withLocale(`/blog/${p.slug}`, loc as Locale)} className="v4-row-in">
                       <p className="v4-eyebrow" style={{ margin: "0 0 8px" }}>
-                        <time dateTime={p.date}>{date(p.date)}</time> · {t.cat[p.category] ?? p.category} · {p.readTime} {t.min}
+                        <time dateTime={p.date}>{date(p.date)}</time> · {t.cat[p.category] ?? p.category} · {getReadMinutes(p.slug, loc)} {t.min}
                       </p>
                       <h2 className="v4-row-h" style={{ fontSize: "1.35rem" }}>
                         {soft(p.title)}

@@ -16,6 +16,9 @@ const JOB: Record<L3, string> = {
   en: "Founder of OpSolid, automation specialist and AI consultant",
   tr: "OpSolid kurucusu, otomasyon uzmanı ve YZ danışmanı",
 };
+// Same value as the Impressum (content impressum.sections.vatIdText); keep the two in step.
+const VAT_ID = "DE462227107";
+const UNIT_CODE = { month: "MON", year: "ANN" } as const;
 const AREA_SERVED = [
   { "@type": "Country", name: "Germany" },
   { "@type": "Country", name: "Austria" },
@@ -59,13 +62,15 @@ export function JsonLdGraph({
       telephone: SITE_CONFIG.phone,
       address: {
         "@type": "PostalAddress",
+        streetAddress: SITE_CONFIG.address.street,
+        postalCode: SITE_CONFIG.address.postalCode,
         addressLocality: SITE_CONFIG.address.city,
         addressCountry: "DE",
       },
+      vatID: VAT_ID,
       areaServed: AREA_SERVED,
       knowsLanguage: ["de", "en", "tr"],
       founder: { "@id": PERSON },
-      sameAs: ["https://www.linkedin.com/company/opsolid/"],
     },
     {
       "@type": "Person",
@@ -124,13 +129,19 @@ export function JsonLdGraph({
       url,
       ...(page.service.offers?.length
         ? {
+            // Published prices are net (plus VAT); recurring ones are per month or year.
             offers: page.service.offers.map((o) => ({
               "@type": "Offer",
               name: o.name,
               priceCurrency: "EUR",
-              ...(o.from
-                ? { priceSpecification: { "@type": "PriceSpecification", priceCurrency: "EUR", minPrice: o.price } }
-                : { price: o.price }),
+              ...(o.from ? {} : { price: o.price }),
+              priceSpecification: {
+                "@type": "UnitPriceSpecification",
+                priceCurrency: "EUR",
+                ...(o.from ? { minPrice: o.price } : { price: o.price }),
+                valueAddedTaxIncluded: false,
+                ...(o.unit ? { referenceQuantity: { "@type": "QuantitativeValue", value: 1, unitCode: UNIT_CODE[o.unit] } } : {}),
+              },
             })),
           }
         : {}),

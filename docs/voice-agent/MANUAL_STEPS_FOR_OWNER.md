@@ -30,19 +30,15 @@ Steps that cannot be automated. Do these in order before accepting the first pay
 ## Phase 2: First deployment (once)
 
 - [ ] **5. Deploy to VPS**  
-  Use the standard deploy workflow. See `deployment-checklist.md`.
+  Use the reviewed release path (`README.md`, "Deployment"). See `deployment-checklist.md`.
 
-- [ ] **6. Run prisma db push**  
-  ```bash
-  ssh vps "cd /opt/opsolid-website && docker-compose exec app npx prisma db push"
-  ```
-  Creates 14 new tables. Verify no errors.
+- [ ] **6. Create the Voice tables**  
+  Creates 14 new tables. This is a production database change: do it as its
+  own reviewed database step with a fresh backup, not with an ad-hoc
+  `prisma db push` on the VPS.
 
-- [ ] **7. Run seed**  
-  ```bash
-  ssh vps "cd /opt/opsolid-website && docker-compose exec app npx prisma db seed"
-  ```
-  Creates the 4 billing plans.
+- [ ] **7. Seed the billing plans**  
+  Creates the 4 billing plans. Also a reviewed database step.
 
 - [ ] **8. Smoke test admin**  
   Open: `https://opsolid.de/admin/voice?token=<VOICE_ADMIN_TOKEN>`  

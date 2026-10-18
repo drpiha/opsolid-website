@@ -40,6 +40,10 @@ export const RETIRED_REDIRECTS: Record<string, string> = {
   "/card/new": "/opso",
   "/signup": "/opso",
   "/products/digital-card": "/opso",
+  // Orphaned demo surfaces of the retired web-card flow (2026-10): the template
+  // gallery (its CTAs pointed at /card/new) and the live-preview demo.
+  "/products/digital-card/gallery": "/opso",
+  "/card-preview": "/opso",
 
   // Pricing removed from IA (2026-05-18 redesign Round 0 — we don't
   // advertise prices on the marketing site). Inbound links 308 to contact.
@@ -57,6 +61,8 @@ export const EXACT_ONLY = new Set<string>([
   "/card/new",
   "/signup",
   "/products/digital-card",
+  "/products/digital-card/gallery",
+  "/card-preview",
 ]);
 
 /**

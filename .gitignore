@@ -75,3 +75,7 @@ tsc-out.txt
 
 # Design canvas handoff bundle (external HTML mocks, not source of truth)
 handoff/
+
+# Python bytecode (CI runs python3 -B; local runs must not add caches)
+__pycache__/
+*.py[co]

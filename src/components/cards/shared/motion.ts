@@ -15,9 +15,9 @@
 
 import type { Variants } from "framer-motion";
 
-// cubic-bezier(0.22, 1, 0.36, 1) — also used in the HTML demos under
-// /public/demos/business-card. Keeping the same easing makes the React ports
-// match the originals one-to-one. Tuple typed loose so Framer Motion 11+
+// cubic-bezier(0.22, 1, 0.36, 1) — the easing of the original HTML card demos
+// (removed from public/ in 2026-10), kept so the React ports still match
+// them one-to-one. Tuple typed loose so Framer Motion 11+
 // accepts it as a cubic-bezier 4-tuple without relying on the `Easing` export
 // (which moved between major versions).
 export const easeOutQuint = [0.22, 1, 0.36, 1] as const;

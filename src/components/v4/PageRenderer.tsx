@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 import { withLocale, type Locale } from "@/lib/i18n";
 import { SITE_CONFIG, formatStand } from "@/lib/constants";
-import type { Block, L3, PageDef } from "@/content/v4/types";
+import type { Block, L3, PageDef, Shot } from "@/content/v4/types";
 import { Reveal } from "@/components/v4/Reveal";
 import { AgentDemo } from "@/components/v4/AgentDemo";
 import { JsonLdGraph } from "@/components/v4/JsonLd";
@@ -10,6 +10,7 @@ import { soft } from "@/lib/soft-hyphen";
 
 const HOME: Record<L3, string> = { de: "Start", en: "Home", tr: "Ana sayfa" };
 const STAND: Record<L3, string> = { de: "Stand", en: "Updated", tr: "Güncelleme" };
+const CRUMBS: Record<L3, string> = { de: "Brotkrümelnavigation", en: "Breadcrumb", tr: "Sayfa yolu" };
 
 const pad2 = (n: number) => String(n).padStart(2, "0");
 
@@ -118,7 +119,7 @@ export function V4Link({ locale, to, className, children }: { locale: L3; to: st
 
 export function Crumbs({ locale, trail }: { locale: L3; trail: { label: string; to?: string }[] }) {
   return (
-    <nav aria-label="Breadcrumb">
+    <nav aria-label={CRUMBS[locale]}>
       <ol className="v4-crumbs">
         <li>
           <V4Link locale={locale} to="/">
@@ -141,6 +142,16 @@ export function Crumbs({ locale, trail }: { locale: L3; trail: { label: string; 
   );
 }
 
+/** A real screenshot of our own work under the row text: plain HTML proof, also for poster and 3D-off visitors. */
+function ShotFigure({ shot }: { shot: Shot }) {
+  return (
+    <figure className="v4-shot">
+      {/* eslint-disable-next-line @next/next/no-img-element -- static webp at its intrinsic size, lazy below the fold */}
+      <img src={shot.src} width={shot.w} height={shot.h} alt={shot.alt} loading="lazy" decoding="async" />
+    </figure>
+  );
+}
+
 function BlockBody({ b, locale }: { b: Block; locale: L3 }) {
   switch (b.t) {
     case "rows":
@@ -158,6 +169,7 @@ function BlockBody({ b, locale }: { b: Block; locale: L3 }) {
                     </span>
                   </h3>
                   <p className="v4-row-p">{it.p}</p>
+                  {it.shot && <ShotFigure shot={it.shot} />}
                 </V4Link>
               ) : (
                 <div className="v4-row-in">
@@ -166,6 +178,7 @@ function BlockBody({ b, locale }: { b: Block; locale: L3 }) {
                     {it.tag && <span>{it.tag}</span>}
                   </h3>
                   <p className="v4-row-p">{it.p}</p>
+                  {it.shot && <ShotFigure shot={it.shot} />}
                 </div>
               )}
             </li>

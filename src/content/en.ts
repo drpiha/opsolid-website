@@ -13,14 +13,6 @@ export const content = {
 
 
 
-  notFound: {
-    title: "Page not found",
-    description:
-      "The page you are looking for does not exist or has been moved.",
-    backHome: "Back to Home",
-    contactUs: "Contact Us",
-  },
-
   impressum: {
     title: "Legal Notice",
     notice:
@@ -56,7 +48,7 @@ export const content = {
     subtitle: "Datenschutzerklärung · Aydınlatma Metni",
     notice:
       "This is a self-prepared privacy notice covering GDPR (EU) and KVKK (Türkiye) for the OpSolid marketing site and the OpSo Smart Digital Business Card product. A lawyer-reviewed final version will replace this notice after Gewerbeanmeldung. Last review by Hasan Dönmez.",
-    lastUpdated: "Last updated: May 2026",
+    lastUpdated: "Last updated: October 2026",
     sections: [
       {
         title: "1. Data Protection at a Glance",
@@ -73,17 +65,12 @@ export const content = {
           {
             title: "Contact Form",
             content:
-              "Data submitted via the contact form (name, work email, company, message, optional phone) is stored for processing the inquiry and follow-up. Legal basis: Art. 6(1)(b) GDPR for contract-related inquiries, Art. 6(1)(f) GDPR for legitimate interest, or Art. 6(1)(a) GDPR if consent was given. KVKK basis: Art. 5(2)(c) (sözleşme ifası) or Art. 5(1) açık rıza.",
+              "Data submitted via the contact form (name, email address, company if given, selected topics and message) is stored for processing the inquiry and follow-up. Legal basis: Art. 6(1)(b) GDPR for contract-related inquiries, Art. 6(1)(f) GDPR for legitimate interest, or Art. 6(1)(a) GDPR if consent was given. KVKK basis: Art. 5(2)(c) (sözleşme ifası) or Art. 5(1) açık rıza.",
           },
           {
             title: "Server Log Files",
             content:
               "The hosting provider automatically collects browser type, OS, referrer URL, hostname, IP address (truncated where possible), and request time. Retention: 14 days for security/abuse analysis, then deleted. Legal basis: Art. 6(1)(f) GDPR (legitimate interest in operational security).",
-          },
-          {
-            title: "Cookie Consent Log",
-            content:
-              "When you make a cookie banner choice (accept / reject), we store the choice plus a timestamp in your browser's localStorage. We do not transmit your IP for this consent record. You can revoke or change the choice at any time via the page footer link. Legal basis: Art. 6(1)(c) GDPR (legal obligation under § 25 TDDDG to document consent).",
           },
         ],
       },
@@ -96,14 +83,14 @@ export const content = {
         title: "5. Cookies & Analytics",
         subsections: [
           {
-            title: "Strictly necessary",
+            title: "Necessary and self-chosen settings",
             content:
-              "Language preference and cookie consent state are stored in your browser's localStorage. These are strictly necessary for the site to function and do not require consent under § 25(2) TDDDG.",
+              "We only store what is technically necessary or what you choose yourself. This includes a language cookie, set only when you switch the language yourself; the setting of the \"3D effects\" switch in the footer, saved in your browser's localStorage only when you use it; and, in the account and card areas, a session cookie after you sign in as well as individual display settings and form drafts in localStorage. This information is only used to apply your choice or to provide the service and is not passed on to third parties. It does not require consent under § 25(2) TDDDG, which is why this website shows no cookie banner.",
           },
           {
-            title: "Optional analytics",
+            title: "No analytics",
             content:
-              "If you accept analytics in the cookie banner, aggregated, anonymous page-view counts may be collected. The collection is cookieless, contains no personal identifiers, and cannot identify individual visitors. If you reject, no analytics call is made and no data leaves the Hostinger Vilnius server.",
+              "This website uses no analytics or tracking tool: no page-view counting, no visitor profiles, no tracking cookies.",
           },
           {
             title: "No third-party tracking, ads, or social plugins",
@@ -142,7 +129,7 @@ export const content = {
       {
         title: "7. International Data Transfers",
         content:
-          "Where personal data is transferred outside the European Economic Area (e.g. to Vercel, Stripe, OpenAI, Anthropic in the United States), the transfer is based on (a) the EU-US Data Privacy Framework adequacy decision where the recipient is DPF-certified, or (b) Standard Contractual Clauses (SCC, EU 2021/914) with a documented Transfer Impact Assessment. For Türkiye-resident data subjects, KVKK Art. 9 yurtdışı aktarım rules apply: transfers are made under KVKK standard contractual clauses (Yönetmelik 10.07.2024) and notified to the Kurum within 5 business days where required.",
+          "Where personal data is transferred outside the European Economic Area (e.g. to Stripe, OpenAI or Anthropic in the United States), the transfer is based on (a) the EU-US Data Privacy Framework adequacy decision where the recipient is DPF-certified, or (b) Standard Contractual Clauses (SCC, EU 2021/914) with a documented Transfer Impact Assessment. For Türkiye-resident data subjects, KVKK Art. 9 yurtdışı aktarım rules apply: transfers are made under KVKK standard contractual clauses (Yönetmelik 10.07.2024) and notified to the Kurum within 5 business days where required.",
       },
       {
         title: "8. OpSo Smart Digital Business Card Product",
@@ -216,21 +203,21 @@ export const content = {
     posts: [
       {
         slug: "eu-ai-act-august-2026-omnibus-compliance",
-        title: "EU AI Act Goes Live: What the Omnibus Amendments Mean for Your Business",
+        title: "EU AI Act Applies from 2 August 2026: What the Omnibus Amendments Mean for Your Business",
+        // <title> when the heading is too long for search results (≤ 55 chars; the layout adds " | OpSolid").
+        seoTitle: "EU AI Act from 2 August 2026: the Omnibus Changes",
         excerpt:
-          "The EU AI Act enters full force on 2 August 2026. Here is what the Omnibus VII amendments changed - and which transparency rules every business must comply with now.",
+          "The EU AI Act largely applies from 2 August 2026. Here is what the Omnibus VII amendments changed – and which transparency rules apply from that day.",
         category: "ai",
         date: "2026-07-07",
-        readTime: "7",
       },
       {
         slug: "workflow-automation-fundamentals",
         title: "Workflow Automation Fundamentals: What Actually Matters",
         excerpt:
-          "A practical look at what makes a workflow automation last in production — error handling, data sovereignty, observability, and exit cost — independent of which engine you pick.",
+          "What keeps a workflow automation running in production — error handling, data sovereignty, observability and exit cost — whichever engine you pick.",
         category: "automation",
         date: "2026-03-15",
-        readTime: "6",
       },
       {
         slug: "5-signs-your-business-needs-process-automation",
@@ -239,16 +226,14 @@ export const content = {
           "Is your team spending too much time on manual work? Here are the key indicators that it's time to invest in automation.",
         category: "operations",
         date: "2026-03-08",
-        readTime: "5",
       },
       {
         slug: "connecting-crm-erp-the-integration-playbook",
-        title: "Connecting CRM & ERP: The Integration Playbook",
+        title: "Connecting CRM and ERP: An Overview",
         excerpt:
-          "A practical guide to synchronizing your CRM and ERP systems — reducing data silos and creating a single source of truth.",
+          "A practical overview of synchronising your CRM and ERP systems — reducing data silos and creating a single source of truth.",
         category: "integration",
         date: "2026-02-28",
-        readTime: "8",
       },
       {
         slug: "ai-chatbots-vs-rule-based-bots",
@@ -257,26 +242,24 @@ export const content = {
           "Understanding the difference between AI-powered and rule-based chatbots, and when each approach makes sense for your business.",
         category: "ai",
         date: "2026-02-20",
-        readTime: "7",
       },
       {
         slug: "choosing-the-right-automation-architecture",
         title:
           "Choosing the Right Automation Architecture for Your Business",
+        seoTitle: "Choosing the Right Automation Architecture",
         excerpt:
-          "How to choose between point-to-point integrations, custom orchestration layers, and hybrid models — based on volume, compliance, and team size, not vendor pitch.",
+          "Choosing between point-to-point integrations, a central orchestration layer and hybrid models — by volume, compliance and team size, not vendor pitch.",
         category: "automation",
         date: "2026-02-12",
-        readTime: "10",
       },
       {
         slug: "whatsapp-business-automation-guide",
-        title: "The Complete Guide to WhatsApp Business Automation",
+        title: "WhatsApp Business Automation: An Overview",
         excerpt:
           "How to automate customer communication on WhatsApp — from order confirmations to support bots — without losing the personal touch.",
         category: "automation",
         date: "2026-02-05",
-        readTime: "9",
       },
     ],
   },

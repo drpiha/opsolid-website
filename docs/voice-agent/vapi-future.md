@@ -18,7 +18,6 @@ Vapi (vapi.ai) is a second voice AI provider. The integration skeleton is built 
    ```env
    VAPI_API_KEY=your-vapi-key
    VAPI_WEBHOOK_SECRET=your-vapi-webhook-secret
-   VOICE_PROVIDER_VAPI_ENABLED=true
    ```
 5. **Remove `RETELL_API_KEY`** from the environment (factory picks first available key)
 
@@ -34,11 +33,7 @@ Vapi (vapi.ai) is a second voice AI provider. The integration skeleton is built 
 
 ## Enabling per tenant
 
-Set `VOICE_PROVIDER_VAPI_ENABLED=true` and `VOICE_DEFAULT_PROVIDER=vapi`. Individual tenants can also override via `VoiceTenant.featureFlags`:
-
-```json
-{ "VOICE_PROVIDER_VAPI_ENABLED": true }
-```
+Not implemented yet. `getVoiceProvider()` in `src/lib/voice/provider/index.ts` picks Retell when `RETELL_API_KEY` is set, otherwise Vapi when `VAPI_API_KEY` is set; no env flag or `VoiceTenant.featureFlags` entry selects the provider per tenant. A per-tenant switch needs code there first.
 
 ## Why we built the skeleton
 

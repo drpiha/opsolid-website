@@ -23,6 +23,13 @@ export function AgentDemo({ chip, play, again, note, sr, script }: { chip: strin
 
   useEffect(() => {
     alive.current = true;
+    // Reduced motion: the wave stays a static baseline (CSS scaleY(0.12)); no rAF loop at all.
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return () => {
+        alive.current = false;
+        voice.mode = "idle";
+      };
+    }
     let raf = 0;
     const bars = waveRef.current ? Array.from(waveRef.current.children) as HTMLElement[] : [];
     const tick = (now: number) => {

@@ -1,25 +1,33 @@
 import type { PageDef } from "./types";
 import type { PageKey } from "./keys";
 
-const CHECK = { label: "YZ kontrolüyle başlayın", href: "/ai-automation-check" };
+const CHECK = { label: "YZ Kontrolüyle başlayın", href: "/ai-automation-check" };
 const CONTACT = { label: "İletişime geçin", href: "/contact" };
 /** Required under every price table: net prices are only safe when the offer is visibly limited to businesses. */
 const PRICE_NOTE = "Tüm fiyatlar net, KDV hariçtir. Hizmetlerimiz yalnızca işletmelere yöneliktir.";
-/** Limited pilot phase: remove once the three free Quick-Checks are used. */
-const PILOT_NOTE = "Pilot dönemi: İlk üç YZ Hızlı Kontrol'ü, dürüst geri bildirim karşılığında ücretsiz yapıyoruz.";
+/** Limited pilot phase: remove once the three free YZ Kontrolü sessions are used. */
+const PILOT_NOTE = "Pilot dönemi: İlk üç YZ Kontrolünü başlangıç kapsamında, dürüst geri bildirim karşılığında ücretsiz yapıyoruz.";
 
 const DEMO = {
   chip: "Demo · senaryo, sessiz",
   play: "Senaryoyu oynatın",
   again: "Tekrar oynatın",
   note: "Kurgulanmış bir akıştır, canlı görüşme değildir. Canlı ses demosu, ses sağlayıcısı ve veri koruma incelemesi (KVKK/GDPR) netleştiğinde yayına alınacak.",
-  sr: "Örnek görüşme. Arayan: İyi günler, gelecek hafta için randevu almak istiyorum. Asistan: Memnuniyetle. Çarşamba 10:00 mu, perşembe 14:00 mü uygun? Arayan: Perşembe uygun. Asistan: O zaman perşembe 14:00'e kaydediyorum. Onayı e-postayla alacaksınız.",
+  sr: "Örnek görüşme. Asistan: İyi günler, bir yapay zekâ asistanıyla görüşüyorsunuz. Size nasıl yardımcı olabilirim? Arayan: Gelecek hafta için randevu almak istiyorum. Asistan: Memnuniyetle. Çarşamba 10:00 mu, perşembe 14:00 mü uygun? Arayan: Perşembe uygun. Asistan: O zaman perşembe 14:00'e kaydediyorum. Onayı e-postayla alacaksınız.",
   script: [
-    { who: "Arayan", agent: false, text: "İyi günler, gelecek hafta için randevu almak istiyorum.", ms: 3000 },
+    { who: "Asistan", agent: true, text: "İyi günler, bir yapay zekâ asistanıyla görüşüyorsunuz. Size nasıl yardımcı olabilirim?", ms: 3400 },
+    { who: "Arayan", agent: false, text: "Gelecek hafta için randevu almak istiyorum.", ms: 3000 },
     { who: "Asistan", agent: true, text: "Memnuniyetle. Çarşamba 10:00 mu, perşembe 14:00 mü uygun?", ms: 3600 },
     { who: "Arayan", agent: false, text: "Perşembe uygun.", ms: 1400 },
     { who: "Asistan", agent: true, text: "O zaman perşembe 14:00'e kaydediyorum. Onayı e-postayla alacaksınız.", ms: 4200 },
   ],
+};
+
+/** Real screenshots of our own work (public/img/v4), shown next to the project rows. */
+const SHOT = {
+  opsolid: { src: "/img/v4/shot-opsolid.webp", w: 960, h: 640, alt: "opsolid.de ana sayfası (Almanca): “Erst messen, dann bauen.” (Önce ölçeriz, sonra kurarız.) başlığı ve yanında her biri bir hizmeti gösteren yedi plakalık bir yığın" },
+  opso: { src: "/img/v4/shot-card.webp", w: 960, h: 640, alt: "OpSo ana sayfası (Almanca): “Deine Visitenkarte als Mini-Website.” (Mini web sitesi olarak kartvizitiniz.) başlığı ve yanında kurgusal bir demo profili, QR kod, NFC ve bağlantı etiketleri gösteren bir telefon" },
+  kutasia: { src: "/img/v4/shot-kutasia.webp", w: 960, h: 640, alt: "Kutasia ana sayfası: “Müşteri iletişimi, randevu ve işleriniz tek ekranda” başlığı ve yanında mesajları ve haftalık istatistikleri gösteren bir kontrol paneli görünümü" },
 };
 
 export const tr: Record<PageKey, PageDef> = {
@@ -34,7 +42,7 @@ export const tr: Record<PageKey, PageDef> = {
     hero: {
       eyebrow: "KOBİ'ler için otomasyon ve yapay zekâ · Arnsberg · TR/DE/EN",
       h1: ["Önce ölçeriz, ", "sonra kurarız", "."],
-      lede: "Ekibinizin rutin işlerini üstleniriz: telefonu karşılayan YZ asistanları, kopyala-yapıştır gerektirmeyen iş akışları ve size benzeyen web siteleriyle. Kurmadan önce bir iş akışının bugün neye mal olduğunu ölçer, sonunda her şeyi belgeleyerek ekibinize teslim ederiz.",
+      lede: "Ekibinizin rutin işlerini üstleniriz: aramaları karşılayan YZ asistanları, kopyala-yapıştır gerektirmeyen iş akışları ve size benzeyen web siteleriyle. Kurmadan önce bir iş akışının bugün neye mal olduğunu ölçer, sonunda her şeyi belgeleyerek ekibinize teslim ederiz.",
       primary: CHECK,
       secondary: { label: "YZ asistanlarını görün", href: "/agents" },
       scene: "stack",
@@ -56,13 +64,13 @@ export const tr: Record<PageKey, PageDef> = {
         id: "websites",
         scene: "websites",
         heat: [1],
-        eyebrow: "Web siteleri · satın alma veya kiralama",
+        eyebrow: "Web siteleri · satın alma veya abonelik",
         h: "Şablondan değil, size göre tasarlanır.",
-        lede: "Hızlı açılan, kolay okunan ve birden çok dilde çalışan web siteleri tasarlar, kurar ve işletiriz. Fiyatı ilk görüşmeden sonra yazılı olarak bildiririz.",
+        lede: "Hızlı açılan, kolay okunan ve birden çok dilde çalışan web siteleri tasarlar, kurar ve işletiriz. Web sitesi aboneliğinin fiyatı sabittir; satın alma fiyatını ilk görüşmeden sonra yazılı olarak bildiririz.",
         items: [
-          { h: "opsolid.de", tag: "Bu site", p: "OpSolid tarafından tasarlandı, kuruldu ve işletiliyor: üç dil, önce metin; 3D sahne metinden sonra yüklenir ve kapatılabilir.", href: "https://opsolid.de" },
+          { h: "opsolid.de", tag: "Bu site", p: "OpSolid tarafından tasarlandı, kuruldu ve işletiliyor: üç dil, önce metin; 3D sahne metinden sonra yüklenir ve kapatılabilir." },
           { h: "Satın alma", p: "Tek seferlik proje bedeli. Tamamlanan site sizin olur ve onu kendiniz yönetirsiniz." },
-          { h: "Kiralama", p: "Tek seferlik yatırım yerine düzenli bir ücret. İşletim ve bakımı biz üstleniriz." },
+          { h: "Web sitesi aboneliği", p: "Tek seferlik yatırım yerine sabit bir aylık veya yıllık ücret. Barındırma, bakım ve güncellemeleri biz üstleniriz." },
         ],
         cta: { label: "Web sitelerini inceleyin", href: "/websites" },
       },
@@ -100,25 +108,25 @@ export const tr: Record<PageKey, PageDef> = {
         id: "ki-check",
         scene: "steps",
         heat: [5, 6],
-        eyebrow: "İlk adım: YZ kontrolü",
+        eyebrow: "İlk adım: YZ Kontrolü",
         h: "Bütçeden önce bir plan.",
-        lede: "YZ kontrolü, hangi iş akışlarınızın otomasyona uygun olduğunu, hangilerinin olmadığını gösterir. 60–90 dakikada bu akışları işi yapan kişilerle birlikte gözden geçiririz. Ardından beş değerlendirilmiş aday içeren 30 günlük yazılı bir plan alırsınız.",
+        lede: "YZ Kontrolü, hangi iş akışlarınızın otomasyona uygun olduğunu, hangilerinin olmadığını gösterir. Başlangıç kapsamı: işi yapan kişilerle 90 dakikalık uzaktan bir görüşme, ardından kısa bir yazılı rapor. Süreç haritası ve 30 günlük plan içeren geniş kapsam için sabit fiyatı önceden yazılı olarak bildiririz.",
         rows: [
-          ["Kapsam", "60–90 dakika, yerinde veya uzaktan"],
-          ["Sonuç", "Süreç haritası, beş değerlendirilmiş aday, 30 günlük plan"],
+          ["Başlangıç", "90 dakika uzaktan, kısa yazılı rapor"],
+          ["Geniş kapsam", "Atölye, süreç haritası, beş değerlendirilmiş aday, 30 günlük plan"],
           ["NDA", "Analiz görüşmesinden önce"],
-          ["Fiyat", "Sabit fiyat; ön görüşmeden sonra netleşir"],
+          ["Fiyat", "490 €'dan itibaren, net; geniş kapsam için sabit fiyat, önceden yazılı"],
         ],
-        cta: { label: "YZ kontrolünü ayrıntılı görün", href: "/ai-automation-check" },
+        cta: { label: "YZ Kontrolünü ayrıntılı görün", href: "/ai-automation-check" },
       },
       {
         t: "table",
         eyebrow: "Başlangıç ve eğitimler",
         h: "Sabit formatlar, net fiyatlar.",
-        caption: "YZ Hızlı Kontrol ve YZ eğitimlerine genel bakış",
+        caption: "YZ Kontrolü ve YZ eğitimlerine genel bakış",
         cols: ["Hizmet", "Format", "Fiyat"],
         rows: [
-          ["YZ Hızlı Kontrol", "90 dakika uzaktan, kısa yazılı rapor", "490 €'dan itibaren"],
+          ["YZ Kontrolü", "90 dakika uzaktan, kısa yazılı rapor", "490 €'dan itibaren"],
           ["YZ Yetkinliği Temel", "Yarım gün, en fazla 15 kişi", "1.490 €"],
           ["Copilot Uygulama Günü", "1 gün, en fazla 12 kişi", "2.400 €'dan itibaren"],
         ],
@@ -152,7 +160,7 @@ export const tr: Record<PageKey, PageDef> = {
       h: "Sık sorulan sorular",
       items: [
         { q: "Muhatabımız kim olacak?", a: "Analizden işletime kadar OpSolid'de sabit bir muhatabınız olur. YZ Yetkinliği Temel eğitimini ise bizim seçtiğimiz ve adını size önceden bildirdiğimiz serbest çalışan bir uzman yürütür." },
-        { q: "Ekibimizin ne kadar zaman ayırması gerekir?", a: "YZ kontrolü için: kısa bir ön görüşme, işi yapan kişilerle 60–90 dakikalık analiz ve planı konuşmak için 30 dakika." },
+        { q: "Ekibimizin ne kadar zaman ayırması gerekir?", a: "YZ Kontrolü için: kısa bir ön görüşme ve işi yapan kişilerle 90 dakikalık analiz. Geniş kapsamda buna bir atölye ve planı konuşmak için 30 dakika eklenir; gereken süreyi teklifte önceden belirtiriz." },
         { q: "Önceden gizlilik sözleşmesi imzalanıyor mu?", a: "Evet. Analiz görüşmesinden önce standart bir NDA imzalanır." },
         { q: "Mevcut sistemlerimizi koruyabilir miyiz?", a: "Evet. Microsoft 365, Google Workspace, CRM'iniz veya ERP'niz iş akışını taşıyorsa onların üzerine kurarız." },
         { q: "Hangi dillerde çalışıyorsunuz?", a: "Türkçe, Almanca ve İngilizce. Arnsberg'den ve uzaktan; Avrupa genelindeki ve Türkiye'deki işletmelerle çalışıyoruz." },
@@ -172,7 +180,7 @@ export const tr: Record<PageKey, PageDef> = {
     meta: {
       title: "Telefon ve web sitesi için YZ asistanları",
       description:
-        "OpSolid'in yapay zekâ asistanları (AI agent) talepleri alır, randevuları ayarlar ve ekibinize devreder. Canlıya geçmeden önce veri koruma incelenir.",
+        "OpSolid'in yapay zekâ asistanları telefon ve sohbet asistanı olarak çalışır: talepleri alır, randevuları ayarlar ve ekibinize devreder. Veri koruma incelemesiyle.",
     },
     crumb: "YZ asistanları",
     hero: {
@@ -184,7 +192,7 @@ export const tr: Record<PageKey, PageDef> = {
       scene: "agents",
       heat: [0],
       spec: [
-        ["Formatlar", "Sesli: telefonda ve web sitesinde; 3D figürlü video"],
+        ["Formatlar", "Telefon ve sohbet asistanı"],
         ["Görevler", "Talepler, randevular, bilgi, devretme"],
         ["Durum", "Senaryo demosu; canlı demo hazırlanıyor"],
       ],
@@ -196,7 +204,7 @@ export const tr: Record<PageKey, PageDef> = {
         scene: "agents",
         heat: [0],
         h: "Bir arama böyle ilerler.",
-        lede: "İlk cümleden onaya kadar bir randevu talebi: Asistan uygun saatleri önerir, randevuyu kaydeder ve e-postayla onay gönderir. Bir insan gerektiği anda görüşmeyi ekibinize devreder.",
+        lede: "İlk cümleden onaya kadar bir randevu talebi: Asistan en başta bir yapay zekâ sisteminin konuştuğunu söyler, uygun saatleri önerir, randevuyu kaydeder ve e-postayla onay gönderir. Bir insan gerektiği anda görüşmeyi ekibinize devreder.",
         ...DEMO,
       },
       {
@@ -230,37 +238,39 @@ export const tr: Record<PageKey, PageDef> = {
     faq: {
       h: "YZ asistanları hakkında sorular",
       items: [
+        { q: "Bir YZ asistanının maliyeti nedir?", a: "Görevlere, bağlantılara ve arama hacmine bağlıdır. Fiyatı, hiçbir şey kurulmadan önce yazılı olarak bildiririz. Fiyatlar net olup KDV hariçtir." },
         { q: "Asistan bugün canlı konuşabiliyor mu?", a: "Şu anda canlandırılmış bir senaryo gösteriyoruz. Canlı ses demosu, ses sağlayıcısı ve veri koruma incelemesi netleştiğinde gelecek." },
         { q: "Görüşmeleri kim dinleyebilir?", a: "Bunu önceden sizinle birlikte belirleriz: sağlayıcı, saklama yeri, saklama süresi ve erişim. Arayanlara en başta bir YZ sistemiyle konuştukları bildirilir." },
         { q: "Asistan ekibimizin yerini alır mı?", a: "Hayır. Rutin işleri üstlenir ve bir kişi gerektiği anda görüşmeyi devreder." },
-        { q: "Video formatında asistan da var mı?", a: "Evet. Telefonda ve web sitesinde sesli çalışan asistanların yanı sıra, örneğin web siteniz veya resepsiyonunuz için 3D figürlü video asistanlar da kuruyoruz. Canlı demo, veri koruma incelemesinden sonra gelecek." },
-        { q: "Nasıl başlarız?", a: "YZ kontrolüyle. Bir asistanın işletmeniz için anlamlı olup olmadığını ve hangi görevleri üstlenmesi gerektiğini orada birlikte netleştiririz." },
+        { q: "Bu sitedeki 3D form bir asistan mı?", a: "Hayır. Soyut 3D form bir tasarım öğesidir; sayfanın altındaki “3D efektler” ayarından kapatabilirsiniz. YZ asistanlarımız figürsüz ve yüzsüz, telefon ve sohbet asistanı olarak çalışır." },
+        { q: "Nasıl başlarız?", a: "YZ Kontrolüyle. Bir asistanın işletmeniz için anlamlı olup olmadığını ve hangi görevleri üstlenmesi gerektiğini orada birlikte netleştiririz." },
       ],
     },
-    cta: { h: "Asistan size uygun mu, birlikte bakalım.", p: "YZ kontrolünde, hiçbir şey kurulmadan önce görevleri, sınırları ve veri korumayı netleştiririz.", primary: CHECK, secondary: CONTACT },
-    service: { type: "AI voice agents" },
+    cta: { h: "Asistan size uygun mu, birlikte bakalım.", p: "YZ Kontrolünde, hiçbir şey kurulmadan önce görevleri, sınırları ve veri korumayı netleştiririz.", primary: CHECK, secondary: CONTACT },
+    service: { type: "AI phone and chat assistants" },
   },
 
   websites: {
     slug: "websites",
     meta: {
-      title: "Web sitesi tasarımı: satın alma veya kiralama",
+      title: "Web sitesi tasarımı: satın alma veya abonelik",
       description:
-        "OpSolid, işletmenize benzeyen web siteleri tasarlar, kurar ve işletir: hızlı, çok dilli ve kolay bulunur. Satın alma veya kiralama seçeneğiyle.",
+        "OpSolid, işletmenize benzeyen hızlı ve çok dilli web siteleri tasarlar, kurar ve işletir. Satın alma veya aylık 99 €'dan itibaren (net) web sitesi aboneliği.",
     },
     crumb: "Web siteleri",
     hero: {
-      eyebrow: "Web siteleri · satın alma veya kiralama",
+      eyebrow: "Web siteleri · satın alma veya abonelik",
       h1: ["", "Size benzeyen", " web siteleri."],
-      lede: "OpSolid; hızlı açılan, kolay okunan ve birden çok dilde çalışan web siteleri tasarlar ve kurar. Satın alma: tek seferlik proje bedeli, site sizin olur. Kiralama: düzenli bir ücret; işletim ve bakımı biz üstleniriz. Fiyatı ilk görüşmeden sonra yazılı olarak bildiririz.",
+      lede: "OpSolid; hızlı açılan, kolay okunan ve birden çok dilde çalışan web siteleri tasarlar ve kurar. Satın alma: tek seferlik proje bedeli, site sizin olur. Web sitesi aboneliği: aylık 99 €'dan başlayan sabit bir ücret; barındırma, bakım ve güncellemeleri biz üstleniriz.",
       primary: CONTACT,
       secondary: { label: "Örnek çalışmaları inceleyin", href: "#referenzen" },
       scene: "websites",
       heat: [1],
       spec: [
-        ["Modeller", "Satın alma veya kiralama"],
-        ["Diller", "Türkçe, Almanca, İngilizce mümkün"],
-        ["Fiyat", "İlk görüşmeden sonra yazılı olarak"],
+        ["Modeller", "Satın alma veya web sitesi aboneliği"],
+        ["Abonelik", "Aylık 99 €'dan itibaren veya yıllık 990 €; kurulum 490 €'dan itibaren"],
+        ["Satın alma", "Fiyat, ilk görüşmeden sonra yazılı olarak"],
+        ["Fiyatlar", "Net, KDV hariç; yalnızca işletmeler için"],
       ],
     },
     blocks: [
@@ -274,8 +284,22 @@ export const tr: Record<PageKey, PageDef> = {
           { h: "Tasarım", p: "Yeni logo takılmış bir şablon yerine işletmenize uyan tipografi, renk ve hareket." },
           { h: "Kurulum", p: "Önce metin, hızlı yükleme, erişilebilirlik; arama motorları ve YZ aramaları için temiz bir yapı." },
           { h: "Çok dillilik", p: "Her dil için ayrı adres ve arama motorları için doğru işaretleme; isterseniz Türkçe, Almanca ve İngilizce." },
-          { h: "Satın alma veya kiralama", p: "Siteyi kendiniz sürdürmek istiyorsanız satın alma, teknik hiçbir şeyle uğraşmak istemiyorsanız kiralama mantıklıdır." },
+          { h: "Satın alma veya abonelik", p: "Siteyi kendiniz sürdürmek istiyorsanız satın alma, teknik hiçbir şeyle uğraşmak istemiyorsanız web sitesi aboneliği mantıklıdır." },
         ],
+      },
+      {
+        t: "table",
+        id: "preise",
+        eyebrow: "Fiyatlar",
+        h: "Bir web sitesinin maliyeti.",
+        lede: "Web sitesi aboneliğinin fiyatı sabittir. Satın almada proje bedelini ilk görüşmeden sonra yazılı olarak bildiririz.",
+        caption: "Web sitesi aboneliği ve satın almaya genel bakış",
+        cols: ["Model", "Kapsam", "Fiyat"],
+        rows: [
+          ["Web sitesi aboneliği||Barındırma, bakım, güncellemeler ve ayda 1 küçük değişiklik dahildir (5 iş günü içinde uygulanır, acil servis yoktur).", "Kurulum 490 €'dan itibaren, ardından aylık veya yıllık", "Aylık 99 €'dan itibaren veya yıllık 990 €"],
+          ["Satın alma||Tek seferlik proje bedeli. Tamamlanan site sizin olur; onu kendiniz veya BT ekibinizle sürdürürsünüz.", "Kapsama göre proje bedeli, ilk görüşmeden sonra yazılı olarak", "Talep üzerine"],
+        ],
+        note: PRICE_NOTE,
       },
       {
         t: "rows",
@@ -284,11 +308,11 @@ export const tr: Record<PageKey, PageDef> = {
         heat: [1],
         eyebrow: "Örnek çalışmalar",
         h: "Kendimiz tasarladık, kendimiz kurduk.",
-        lede: "Bu projeleri OpSolid, tasarımdan teknolojiye kadar kendisi kurguladı ve geliştirdi. Bağlantılar sizi doğrudan projelere götürür; kendiniz inceleyebilirsiniz.",
+        lede: "Bu projeleri OpSolid, tasarımdan teknolojiye kadar kendisi kurguladı ve geliştirdi. Bağlantılar sizi projelere götürür; kendiniz inceleyebilirsiniz.",
         items: [
-          { h: "opsolid.de", tag: "Bu site", p: "Üç dil, önce metin; 3D sahne metinden sonra yüklenir ve kapatılabilir.", href: "https://opsolid.de" },
-          { h: "OpSo", tag: "Test aşamasında ürün", p: "Web uygulaması olarak dijital kartvizit: profil, QR kod ve NFC bağlantısı. Yayına hazırlık sürüyor.", href: "https://card.opsolid.de" },
-          { h: "Kutasia", tag: "Geliştirme aşamasında proje", p: "WhatsApp, Telegram ve e-posta için tek gelen kutusu; mesajları yapay zekâ önceden sıralar.", href: "https://kutasia.com" },
+          { h: "opsolid.de", tag: "Bu site", p: "Üç dil, önce metin; 3D sahne metinden sonra yüklenir ve kapatılabilir.", shot: SHOT.opsolid },
+          { h: "OpSo", tag: "Test aşamasında ürün", p: "Web uygulaması olarak dijital kartvizit: profil, QR kod ve NFC bağlantısı. Yayına hazırlık sürüyor.", href: "/opso", shot: SHOT.opso },
+          { h: "Kutasia", tag: "Geliştirme aşamasında proje", p: "WhatsApp, Telegram ve e-posta için tek gelen kutusu; mesajları yapay zekâ önceden sıralar.", href: "https://kutasia.com", shot: SHOT.kutasia },
         ],
       },
       {
@@ -301,21 +325,28 @@ export const tr: Record<PageKey, PageDef> = {
           { h: "Görüşme", p: "Hedefi, hedef kitleyi, içerikleri ve dilleri netleştiririz. Ardından kapsamı ve fiyatı yazılı olarak bildiririz." },
           { h: "Taslak", p: "En önemli sayfaların yapısı ve tasarımı, geri bildiriminize göre şekillenir." },
           { h: "Kurulum", p: "Metin, görsel ve formlarla uygulama; telefonda ve masaüstünde test edilir." },
-          { h: "Yayın ve işletim", p: "Yayına alma, alan adı, veri koruma bileşenleri ve isterseniz düzenli bakım." },
+          { h: "Yayın ve işletim", p: "Yayına alma, alan adı ve veri koruma bileşenleri; web sitesi aboneliğinde ardından barındırma, bakım ve güncellemeleri biz üstleniriz." },
         ],
       },
     ],
     faq: {
       h: "Web siteleri hakkında sorular",
       items: [
-        { q: "Satın almak mı, kiralamak mı daha iyi?", a: "Siteyi kendiniz veya BT ekibinizle sürdürmek istiyorsanız satın alın: Bir kez ödersiniz, site sizindir. Teknikle uğraşmak istemiyorsanız kiralayın: Düzenli ödersiniz, işletim ve bakımı biz üstleniriz." },
+        { q: "Satın alma mı, abonelik mi daha uygun?", a: "Siteyi kendiniz veya BT ekibinizle sürdürmek istiyorsanız satın alın: Bir kez ödersiniz, site sizindir; fiyatı ilk görüşmeden sonra yazılı olarak bildiririz. Teknik işlerle uğraşmak istemiyorsanız web sitesi aboneliğini seçin: aylık 99 €'dan itibaren veya yıllık 990 €, kurulum 490 €'dan itibaren; tüm fiyatlar net, KDV hariçtir. Barındırma, bakım, güncellemeler ve ayda bir küçük değişiklik dahildir; değişiklik 5 iş günü içinde uygulanır, acil servis yoktur." },
         { q: "Bir web sitesi projesi ne kadar sürer?", a: "Kapsama bağlıdır. İlk görüşmeden sonra somut bir zaman planı alırsınız." },
         { q: "Metinler ve görseller kime ait?", a: "Sizin sağladığınız içerikler sizin kalır. Tasarım ve kodun kullanım haklarını önceden yazılı olarak belirleriz." },
         { q: "Sitede 3D ve hareket olabilir mi?", a: "Evet, ek olarak. Metin her zaman önce gelir; efektler kapatılabilir ve azaltılmış hareket ayarına uyar." },
       ],
     },
     cta: { h: "Web siteniz ne başarmalı?", p: "Sitenin kimin için olduğunu ve neyi başarması gerektiğini iki üç cümleyle yazın. Genellikle birkaç iş günü içinde yanıt veririz.", primary: { label: "Web sitesi talep edin", href: "/contact" } },
-    service: { type: "Website design, development and rental" },
+    service: {
+      type: "Website design, development and subscription",
+      offers: [
+        { name: "Web sitesi aboneliği, aylık", price: 99, from: true, unit: "month" },
+        { name: "Web sitesi aboneliği, yıllık", price: 990, unit: "year" },
+        { name: "Web sitesi aboneliği, kurulum", price: 490, from: true },
+      ],
+    },
   },
 
   leistungen: {
@@ -329,7 +360,7 @@ export const tr: Record<PageKey, PageDef> = {
     hero: {
       eyebrow: "Hizmetler",
       h1: ["Manuel işi azaltmanın ", "yedi yolu", "."],
-      lede: "Her hizmet belirli bir sorunu çözer: cevapsız kalan aramalar, artık işletmenize uymayan bir web sitesi, sistemler arasında elle taşınan veriler. YZ kontrolü, nereden başlamanın en çok karşılık vereceğini gösterir.",
+      lede: "Her hizmet belirli bir sorunu çözer: cevapsız kalan aramalar, artık işletmenize uymayan bir web sitesi, sistemler arasında elle taşınan veriler. YZ Kontrolü, nereden başlamanın en çok karşılık vereceğini gösterir.",
       primary: CHECK,
       scene: "stack",
       heat: [0, 1, 2, 3, 4, 5, 6],
@@ -342,7 +373,7 @@ export const tr: Record<PageKey, PageDef> = {
         h: "Hangi hizmet hangi sorunu çözer?",
         items: [
           { h: "YZ asistanları", tag: "Telefon · web sitesi", p: "Aramalar ve talepler yanıtsız kalıyorsa: Asistan onları karşılar, randevuları ayarlar ve ekibinize devreder.", href: "/agents" },
-          { h: "Web siteleri", tag: "Satın alma · kiralama", p: "Web siteniz artık işletmenize uymuyorsa: tasarlarız, kurarız ve isterseniz işletiriz.", href: "/websites" },
+          { h: "Web siteleri", tag: "Satın alma · abonelik", p: "Web siteniz artık işletmenize uymuyorsa: tasarlarız, kurarız ve isterseniz işletiriz.", href: "/websites" },
           { h: "Süreç otomasyonu", p: "Aynı veriler iki kez giriliyorsa: teklifler, raporlar ve veri eşitleme otomatik işler.", href: "/prozessautomatisierung" },
           { h: "Microsoft 365", p: "Lisanslar ödeniyor ama pek kullanılmıyorsa: onayları, belgeleri ve e-posta kurallarını otomatikleştiririz.", href: "/microsoft-365-automatisierung" },
           { h: "Şirket içi araçlar", p: "Bir tablo darboğaza dönüştüyse: yetkileri, geçmişi ve tam ihtiyacınız olan alanları olan bir araç.", href: "/interne-tools" },
@@ -356,14 +387,14 @@ export const tr: Record<PageKey, PageDef> = {
         eyebrow: "Yöntem",
         h: "Nereden başlarsanız başlayın, yol aynı.",
         items: [
-          { h: "Analiz", p: "YZ kontrolünde iş akışlarınızı kayda alır ve bugünkü maliyetlerini ölçeriz." },
+          { h: "Analiz", p: "YZ Kontrolünde iş akışlarınızı inceler ve otomasyonun nerede karşılığını vereceğini netleştiririz." },
           { h: "Pilot", p: "Etkisi büyük tek bir iş akışı; sabit kapsam ve sabit zaman çerçevesiyle." },
           { h: "Devreye alma", p: "Pilotta işe yarayan çözüm yaygınlaştırılır ve belgelenir." },
           { h: "Teslim", p: "Çözümü ekibiniz kendisi işletir; isterseniz değişiklikler için küçük bir destek çerçevesiyle yanınızda oluruz." },
         ],
       },
     ],
-    cta: { h: "Nereden başlamalı?", p: "YZ kontrolünde iş akışlarınızı birlikte sıralar, ilk önce karşılığını verecek yapı taşını seçeriz.", primary: CHECK, secondary: CONTACT },
+    cta: { h: "Nereden başlamalı?", p: "YZ Kontrolünde iş akışlarınızı birlikte sıralar, ilk önce karşılığını verecek yapı taşını seçeriz.", primary: CHECK, secondary: CONTACT },
   },
 
   kiBeratung: {
@@ -437,7 +468,8 @@ export const tr: Record<PageKey, PageDef> = {
     faq: {
       h: "YZ danışmanlığı hakkında sorular",
       items: [
-        { q: "YZ danışmanlığı ile YZ kontrolü arasındaki fark nedir?", a: "YZ kontrolü, iş akışlarınızda YZ'li veya YZ'siz otomasyon adaylarını arar. YZ danışmanlığı daha ileri gider: somut YZ uygulamalarını değerlendirir, 6 ila 12 aylık bir yol haritası belirler ve işletmeniz için bir YZ politikası hazırlar." },
+        { q: "Ücreti ne kadar?", a: "Kapsama bağlıdır. Kapsamı ve fiyatı, iş başlamadan önce teklifte yazılı olarak belirleriz. Fiyatlar net olup KDV hariçtir." },
+        { q: "YZ danışmanlığı ile YZ Kontrolü arasındaki fark nedir?", a: "YZ Kontrolü, iş akışlarınızda YZ'li veya YZ'siz otomasyon adaylarını arar. YZ danışmanlığı daha ileri gider: somut YZ uygulamalarını değerlendirir, 6 ila 12 aylık bir yol haritası belirler ve işletmeniz için bir YZ politikası hazırlar." },
         { q: "YZ araçları satıyor musunuz?", a: "Hayır. OpSolid bağımsızdır ve işinize uyanı önerir. Bu bazen “elinizdekini kullanın” ya da “şimdilik bekleyin” anlamına da gelir." },
         { q: "YZ, KVKK ve GDPR kurallarına uygun kullanılabilir mi?", a: "Kullanım, veri korumaya uygun biçimde kurgulanabilir: doğru model seçimi, AB'de barındırma, veri işleme sözleşmesi ve yazılı bir politika. Bunları birlikte hazırlarız; nihai değerlendirme veri koruma sorumlunuza veya hukuk danışmanınıza aittir." },
         { q: "Danışmanlık ne kadar sürer?", a: "Analiz ve yol haritası için iki ila dört hafta öngörürüz; kesin çerçeveyi teklifte belirleriz. Uygulama ayrı bir projedir." },
@@ -518,6 +550,7 @@ export const tr: Record<PageKey, PageDef> = {
     faq: {
       h: "Süreç otomasyonu hakkında sorular",
       items: [
+        { q: "Ücreti ne kadar?", a: "Kapsama bağlıdır. Kapsamı ve fiyatı, iş başlamadan önce teklifte yazılı olarak belirleriz. Fiyatlar net olup KDV hariçtir." },
         { q: "Tipik bir ilk proje nedir?", a: "Etkisi büyük tek bir iş akışı; örneğin teklif hazırlama, e-posta sıralama veya haftalık rapor. Sabit kapsam, hedef çerçeve iki ila dört hafta." },
         { q: "Bunun için YZ gerekir mi?", a: "Hayır. Çoğu zaman ilk mantıklı adım, hiç YZ kullanmayan düzgün bir otomasyondur." },
         { q: "İş akışı sonradan değişirse ne olur?", a: "Dokümantasyonu, BT ekibiniz değişiklikleri kendisi yapabilecek şekilde hazırlarız. Daha büyük değişiklikler için isteğe bağlı küçük bir aylık çerçeve sunarız." },
@@ -580,7 +613,7 @@ export const tr: Record<PageKey, PageDef> = {
         t: "tags",
         eyebrow: "Araçlar",
         h: "Microsoft'un yapı taşlarıyla.",
-        items: ["Power Automate", "Power Apps", "SharePoint Online", "Teams, bot'lar, onaylar", "Outlook, Exchange", "Microsoft Graph API", "Microsoft 365 Copilot", "Entra ID"],
+        items: ["Power Automate", "Power Apps", "SharePoint Online", "Teams, botlar, onaylar", "Outlook, Exchange", "Microsoft Graph API", "Microsoft 365 Copilot", "Entra ID"],
       },
       {
         scene: "steps",
@@ -598,8 +631,9 @@ export const tr: Record<PageKey, PageDef> = {
     faq: {
       h: "Microsoft 365 hakkında sorular",
       items: [
+        { q: "Ücreti ne kadar?", a: "Kapsama bağlıdır. Kapsamı ve fiyatı, iş başlamadan önce teklifte yazılı olarak belirleriz. Fiyatlar net olup KDV hariçtir." },
         { q: "Power Automate Premium lisansına ihtiyacımız var mı?", a: "Bazen. İşe yarayan birçok akış standart planlarla çalışır. Premium'un ne zaman gerektiğini size önceden söyleriz." },
-        { q: "Microsoft 365 Copilot'a değer mi?", a: "Bazı ekipler için evet, bazıları için hayır. Bunu siz lisans satın almadan önce netleştiririz." },
+        { q: "Microsoft 365 Copilot almaya değer mi?", a: "Bazı ekipler için evet, bazıları için hayır. Bunu siz lisans satın almadan önce netleştiririz." },
         { q: "BT ekibimizle birlikte çalışabilir misiniz?", a: "Evet. BT ekibiniz veya Microsoft iş ortağınızla birlikte çalışırız; OpSolid tamamlar, yerine geçmez." },
         { q: "Bu, KVKK ve GDPR açısından uygun mu?", a: "Kullanım, veri korumaya uygun biçimde kurgulanabilir: AB Veri Sınırı (EU Data Boundary), veri işleme sözleşmesi, roller ve yetkiler, belgelenmiş veri akışları. Nihai değerlendirme veri koruma sorumlunuza veya hukuk danışmanınıza aittir; bunun için gereken dokümantasyonu biz sağlarız." },
       ],
@@ -678,6 +712,7 @@ export const tr: Record<PageKey, PageDef> = {
     faq: {
       h: "Şirket içi araçlar hakkında sorular",
       items: [
+        { q: "Ücreti ne kadar?", a: "Kapsama bağlıdır. Kapsamı ve fiyatı, iş başlamadan önce teklifte yazılı olarak belirleriz. Fiyatlar net olup KDV hariçtir." },
         { q: "Neden hazır yazılım değil?", a: "Hazır yazılım çoğu zaman doğru seçimdir. Yalnızca uymadığında veya amaca göre fazla pahalı olduğunda geliştiririz ve bunu size önceden söyleriz." },
         { q: "Kod kime ait?", a: "Bunu başlamadan önce yazılı olarak belirleriz. Öngörülen, kaynak kodun ve dokümantasyonun size teslim edilmesidir." },
         { q: "Araç nerede çalışır?", a: "AB'de, seçtiğiniz bir sağlayıcıda veya kendi altyapınızda." },
@@ -692,7 +727,7 @@ export const tr: Record<PageKey, PageDef> = {
     meta: {
       title: "YZ eğitimleri: net fiyatlı üç format",
       description:
-        "YZ Hızlı Kontrol 490 €'dan itibaren, YZ Yetkinliği Temel 1.490 €, Copilot Uygulama Günü 2.400 €'dan itibaren (KDV hariç). Türkçe, Almanca veya İngilizce.",
+        "YZ Kontrolü 490 €'dan itibaren, YZ Yetkinliği Temel 1.490 €, Copilot Uygulama Günü 2.400 €'dan itibaren (KDV hariç). Türkçe, Almanca veya İngilizce.",
     },
     crumb: "YZ eğitimleri",
     hero: {
@@ -710,10 +745,10 @@ export const tr: Record<PageKey, PageDef> = {
         id: "angebote",
         eyebrow: "Formatlar ve fiyatlar",
         h: "Ekibinize hangi format uyar?",
-        caption: "YZ Hızlı Kontrol ve YZ eğitimlerine genel bakış",
+        caption: "YZ Kontrolü ve YZ eğitimlerine genel bakış",
         cols: ["Hizmet", "Format", "Fiyat"],
         rows: [
-          ["YZ Hızlı Kontrol||Kompakt başlangıç: Günlük işinizde YZ'nin nerede anlamlı olduğunu, nerede olmadığını birlikte inceleriz. OpSolid tarafından yürütülür; sonuç kısa bir yazılı rapordur.", "90 dakika uzaktan, raporlu", "490 €'dan itibaren"],
+          ["YZ Kontrolü||Kompakt başlangıç: Günlük işinizde YZ'nin nerede anlamlı olduğunu, nerede olmadığını birlikte inceleriz. OpSolid tarafından yürütülür; sonuç kısa bir yazılı rapordur. Süreç haritası ve 30 günlük plan içeren geniş kapsamı, önceden yazılı olarak bildirdiğimiz sabit bir fiyatla sunarız.", "90 dakika uzaktan, raporlu", "490 €'dan itibaren"],
           ["YZ Yetkinliği Temel||İş hayatında YZ'yi güvenle kullanmanın temelleri. OpSolid'in seçtiği ve adını size önceden bildirdiği serbest çalışan bir uzman yürütür. AB YZ Tüzüğü'nün 4. maddesi kapsamındaki YZ yetkinliği önlemlerinizi destekler.", "Yarım gün, en fazla 15 kişi", "1.490 €"],
           ["Copilot Uygulama Günü||Kendi işleriniz üzerinde Microsoft 365 Copilot ile uygulamalı çalışma. Copilot lisansı zaten bulunan işletmeler için.", "1 gün, en fazla 12 kişi", "2.400 €'dan itibaren"],
         ],
@@ -736,16 +771,16 @@ export const tr: Record<PageKey, PageDef> = {
       h: "Eğitimler hakkında sorular",
       items: [
         { q: "Sertifika alıyor muyuz?", a: "Eğitim bir sertifika kursu değildir. AB YZ Tüzüğü'nün 4. maddesi kapsamındaki YZ yetkinliği önlemlerinizi destekler." },
-        { q: "Eğitimi kim yürütür?", a: "YZ Hızlı Kontrol'ü OpSolid kendisi yürütür. YZ Yetkinliği Temel'i ise OpSolid'in seçtiği ve adını size önceden bildirdiği serbest çalışan bir uzman yürütür." },
-        { q: "YZ Hızlı Kontrol neden eğitimler arasında?", a: "Çünkü bir eğitimden önce iyi bir başlangıçtır: 90 dakikada YZ'nin günlük işinizde nerede anlamlı olduğunu netleştiririz. İş akışlarınızın süreç haritası ve 30 günlük planla eksiksiz kaydını ise YZ kontrolü sunar." },
-        { q: "Çevrimiçi eğitim mümkün mü?", a: "YZ Hızlı Kontrol uzaktan yapılır. Diğer formatlarda yerinde mi uzaktan mı yapılacağını sizinle birlikte belirleriz." },
+        { q: "Eğitimi kim yürütür?", a: "YZ Kontrolünü OpSolid kendisi yürütür. YZ Yetkinliği Temel'i ise OpSolid'in seçtiği ve adını size önceden bildirdiği serbest çalışan bir uzman yürütür." },
+        { q: "YZ Kontrolü neden eğitimler arasında?", a: "Çünkü bir eğitimden önce iyi bir başlangıçtır: 90 dakikada YZ'nin günlük işinizde nerede anlamlı olduğunu netleştiririz. İsterseniz kontrolü, iş akışlarınızın süreç haritası ve 30 günlük planla kaydına genişletiriz; bunun sabit fiyatını önceden yazılı olarak bildiririz." },
+        { q: "Çevrimiçi eğitim mümkün mü?", a: "YZ Kontrolünün başlangıç kapsamı uzaktan yapılır. Diğer formatlarda yerinde mi uzaktan mı yapılacağını sizinle birlikte belirleriz." },
       ],
     },
     cta: { h: "Doğru formatı bulun.", p: "Ekibiniz ve hedefiniz hakkında kısaca yazın. Size bir format önerir ve fiyatı bildiririz.", primary: { label: "Eğitim talep edin", href: "/contact" }, secondary: CHECK },
     service: {
       type: "AI training",
       offers: [
-        { name: "YZ Hızlı Kontrol", price: 490, from: true },
+        { name: "YZ Kontrolü", price: 490, from: true },
         { name: "YZ Yetkinliği Temel", price: 1490 },
         { name: "Copilot Uygulama Günü", price: 2400, from: true },
       ],
@@ -755,24 +790,24 @@ export const tr: Record<PageKey, PageDef> = {
   check: {
     slug: "ai-automation-check",
     meta: {
-      title: "YZ kontrolü: 30 günlük planla otomasyon potansiyeli",
+      title: "YZ Kontrolü: otomasyon nerede karşılığını verir?",
       description:
-        "OpSolid'in YZ kontrolü: iş akışlarınızın 60–90 dakikalık analizi, ardından beş değerlendirilmiş aday içeren 30 günlük yazılı plan. Sabit fiyat, önceden NDA.",
+        "OpSolid'in YZ Kontrolü 490 €'dan itibaren, net: 90 dakika uzaktan, ardından kısa bir yazılı rapor. Geniş kapsamda süreç haritası ve 30 günlük plan. Önceden NDA.",
     },
-    crumb: "YZ kontrolü",
+    crumb: "YZ Kontrolü",
     hero: {
-      eyebrow: "YZ kontrolü · ilk adım",
-      h1: ["Otomasyon ", "nerede", " gerçekten değer?"],
-      lede: "YZ kontrolü, hangi iş akışlarınızın otomatikleştirilebileceğini, hangilerinin manuel kalmasının daha iyi olduğunu gösterir: 60–90 dakikalık bir analiz görüşmesi ve efor, fayda ve riske göre değerlendirilmiş beş aday içeren 30 günlük yazılı bir plan.",
-      primary: { label: "YZ kontrolü talep edin", href: "/contact" },
+      eyebrow: "YZ Kontrolü · ilk adım",
+      h1: ["Otomasyon ", "nerede", " gerçekten karşılığını verir?"],
+      lede: "YZ Kontrolü, hangi iş akışlarınızın otomatikleştirilebileceğini, hangilerinin manuel kalmasının daha iyi olduğunu gösterir. Başlangıç kapsamı 490 €'dan itibaren, net: 90 dakika uzaktan ve kısa bir yazılı rapor. Atölye, süreç haritası ve 30 günlük plan içeren geniş kapsam için sabit fiyatı önceden yazılı olarak bildiririz.",
+      primary: { label: "YZ Kontrolü talep edin", href: "/contact" },
       secondary: { label: "Adımları görün", href: "#ablauf" },
       scene: "steps",
       heat: [5],
       spec: [
-        ["Kapsam", "60–90 dakika, yerinde veya uzaktan"],
-        ["Sonuç", "Süreç haritası, beş değerlendirilmiş aday, 30 günlük plan"],
+        ["Başlangıç", "90 dakika uzaktan, kısa yazılı rapor"],
+        ["Geniş kapsam", "Atölye, süreç haritası, beş değerlendirilmiş aday, 30 günlük plan"],
         ["NDA", "Analiz görüşmesinden önce"],
-        ["Fiyat", "Sabit fiyat; ön görüşmeden sonra netleşir"],
+        ["Fiyat", "490 €'dan itibaren, net; geniş kapsam için sabit fiyat, önceden yazılı"],
       ],
     },
     blocks: [
@@ -791,17 +826,18 @@ export const tr: Record<PageKey, PageDef> = {
         ],
       },
       {
-        t: "rows",
-        eyebrow: "Neler dahil",
-        h: "Kontrolde neler var?",
-        items: [
-          { h: "Analiz görüşmesi, 60–90 dakika", p: "Yerinde veya uzaktan, işi yapan kişilerle. İşin ekibinizde nasıl aktığını dinleriz." },
-          { h: "Önemli iş akışlarının kaydı", p: "İş akışları, ekibinizin birlikte kontrol edebileceği şekilde yazıya dökülür." },
-          { h: "Beş somut aday", p: "Gerçek iş akışlarınızdan çıkar; genel bir YZ dilek listesi değildir." },
-          { h: "Efor, fayda ve riske göre değerlendirme", p: "Yönetim teknik bilgi gerektirmeden önceliklendirebilsin diye." },
-          { h: "30 günlük plan", p: "Sonraki adımlar, araçlar, sorumlular ve beklenen sonuç." },
-          { h: "İsteğe bağlı: ilk pilot", p: "Anlamlı olduğunda ilk otomasyonu sabit kapsam ve süreyle hayata geçiririz." },
+        t: "table",
+        id: "umfang",
+        eyebrow: "Kapsam ve fiyat",
+        h: "Küçük başlayın, gerekirse genişletin.",
+        lede: "Başlangıç kapsamının fiyatı 490 €'dan başlar. Daha fazlasına ihtiyacınız varsa kapsamı genişletir, bunun sabit fiyatını önceden yazılı olarak bildiririz.",
+        caption: "YZ Kontrolü: başlangıç ve geniş kapsam",
+        cols: ["Kapsam", "Format", "Fiyat"],
+        rows: [
+          ["Başlangıç||OpSolid tarafından, işi yapan kişilerle birlikte yürütülür. Sonuç kısa bir yazılı rapordur: Günlük işinizde YZ ve otomasyonun nerede anlamlı olduğu, nerede olmadığı.", "90 dakika uzaktan, raporlu", "490 €'dan itibaren"],
+          ["Geniş kapsam||Önemli iş akışlarının kaydı, süreç haritası, efor, fayda ve riske göre değerlendirilmiş beş aday, 30 günlük plan ve 30 dakikalık değerlendirme toplantısı.", "Yerinde veya uzaktan atölye", "Sabit fiyat, önceden yazılı"],
         ],
+        note: `${PRICE_NOTE} ${PILOT_NOTE}`,
       },
       {
         t: "rows",
@@ -812,6 +848,7 @@ export const tr: Record<PageKey, PageDef> = {
           { h: "YZ var, ortak kurallar yok", p: "Ekibiniz YZ'yi zaten kullanıyor, ama ortak kurallar ve yapı olmadan." },
           { h: "Operasyon sorumluları", p: "Çok sayıda manuel devir zaman kaybettiriyor ve hataya yol açıyor." },
           { h: "Satın alma kararı öncesi", p: "Microsoft 365, Power Automate veya Make gibi araçları değerlendiriyor ve önce ne için kullanacağınızı bilmek istiyorsunuz." },
+          { h: "Sektör odağı", p: "Hizmet, yeme-içme, perakende ve muayenehaneler (sağlık verisi olmadan). Tesisat ve ısıtma, bina teknik tesisatı, elektrik, inşaat ve toptan ticaret işletmeleri için değil." },
         ],
       },
       {
@@ -822,10 +859,10 @@ export const tr: Record<PageKey, PageDef> = {
         eyebrow: "Süreç",
         h: "Dört adım, tek bir sabit fiyat.",
         items: [
-          { h: "Ön görüşme", p: "Hedefleri ve ilgili iş akışlarını kısaca netleştiririz. Ardından sabit fiyat belli olur." },
-          { h: "Analiz görüşmesi", p: "İşi gerçekten yapan kişilerle 60–90 dakika." },
-          { h: "Yazılı plan", p: "Birkaç iş günü içinde süreç haritasını ve 30 günlük planı alırsınız." },
-          { h: "Değerlendirme toplantısı", p: "Kapsam, efor ve sonraki adımlar üzerine 30 dakika." },
+          { h: "Ön görüşme", p: "Hedefleri, ilgili iş akışlarını ve kapsamı kısaca netleştiririz. Ardından sabit fiyat belli olur; 490 €'dan itibaren, net." },
+          { h: "Analiz görüşmesi", p: "İşi gerçekten yapan kişilerle 90 dakika uzaktan; geniş kapsamda atölye olarak, isterseniz yerinde." },
+          { h: "Yazılı sonuç", p: "Kısa bir rapor; geniş kapsamda süreç haritasını ve 30 günlük planı birkaç iş günü içinde alırsınız." },
+          { h: "Değerlendirme toplantısı", p: "Geniş kapsamda: plan, efor ve sonraki adımlar üzerine 30 dakika." },
         ],
       },
       {
@@ -833,25 +870,25 @@ export const tr: Record<PageKey, PageDef> = {
         eyebrow: "Sonuç",
         h: "Sonunda gelen kutunuzda olanlar.",
         items: [
-          { h: "Süreç haritası", p: "Görüşülen iş akışları, yazılı olarak." },
-          { h: "Beş değerlendirilmiş aday", p: "Araç önerisi ve kaba efor tahminiyle." },
-          { h: "30 günlük plan", p: "Sorumlular ve sonraki adımlarla." },
-          { h: "Manuel kalacaklar notu", p: "Neyin bilerek manuel kalması gerektiği ve nedeni." },
+          { h: "Kısa yazılı rapor", tag: "Başlangıç", p: "Günlük işinizde YZ ve otomasyonun nerede anlamlı olduğu, nerede olmadığı." },
+          { h: "Süreç haritası", tag: "Geniş kapsam", p: "Görüşülen iş akışları, yazılı olarak." },
+          { h: "Beş değerlendirilmiş aday", tag: "Geniş kapsam", p: "Gerçek iş akışlarınızdan; araç önerisi ve kaba efor tahminiyle." },
+          { h: "30 günlük plan", tag: "Geniş kapsam", p: "Sorumlular ve sonraki adımlarla." },
+          { h: "Manuel kalacaklar", tag: "Geniş kapsam", p: "Hangi adımların bilerek manuel kalması gerektiği ve nedeni." },
         ],
       },
     ],
     faq: {
-      h: "YZ kontrolü hakkında sorular",
+      h: "YZ Kontrolü hakkında sorular",
       items: [
-        { q: "YZ kontrolünün ücreti nedir?", a: "Sabit fiyatı ön görüşmeden sonra bildiririz; kapsama ve ekip büyüklüğüne bağlıdır. Tüm fiyatlar net, KDV hariçtir." },
-        { q: "YZ kontrolü ile YZ Hızlı Kontrol arasındaki fark nedir?", a: "YZ kontrolü, yerinde veya uzaktan iş akışlarınızı kayda alır; süreç haritası, beş değerlendirilmiş aday ve 30 günlük plan sunar. YZ Hızlı Kontrol ise kısa bir yazılı raporla biten, 90 dakikalık uzaktan bir görüşmedir; 490 €'dan itibaren, KDV hariç." },
+        { q: "YZ Kontrolünün ücreti nedir?", a: "Başlangıç kapsamı 490 €'dan itibaren: 90 dakika uzaktan ve kısa bir yazılı rapor. Atölye, süreç haritası ve 30 günlük plan içeren geniş kapsam için sabit fiyatı ön görüşmeden sonra, iş başlamadan önce yazılı olarak bildiririz. Tüm fiyatlar net, KDV hariçtir." },
         { q: "Gizlilik sözleşmesi imzalanıyor mu?", a: "Evet, analiz görüşmesinden önce standart bir NDA imzalanır." },
-        { q: "Otomatikleştirmeye değer bir şey çıkmazsa ne olur?", a: "O zaman planda tam olarak bu, gerekçesiyle birlikte yazar. Bu da bir sonuçtur: Karşılığını vermeyecek bir projeye kaynak ayırmazsınız." },
-        { q: "Kontrolden sonra ne olur?", a: "Üç yol vardır: Planı kendiniz uygularsınız, birlikte bir pilot hayata geçiririz ya da iş birliği orada sona erer. Herhangi bir taahhüt altına girmezsiniz." },
+        { q: "Otomatikleştirmeye değer bir şey çıkmazsa ne olur?", a: "O zaman yazılı sonuçta tam olarak bu, gerekçesiyle birlikte yer alır. Bu da bir sonuçtur: Karşılığını vermeyecek bir projeye kaynak ayırmazsınız." },
+        { q: "Kontrolden sonra ne olur?", a: "Üç yol vardır: Önerileri kendiniz uygularsınız, birlikte bir pilot hayata geçiririz ya da iş birliği orada sona erer. Herhangi bir taahhüt altına girmezsiniz." },
       ],
     },
-    cta: { h: "Neyin gerçekten değdiğini öğrenin.", p: "Bir görüşme, yazılı bir plan, taahhüt yok. Zamanlama henüz doğru değilse bunu size söyleriz.", primary: { label: "YZ kontrolü talep edin", href: "/contact" }, secondary: { label: "Tüm hizmetler", href: "/leistungen" } },
-    service: { type: "AI and automation assessment" },
+    cta: { h: "Neyin gerçekten değdiğini öğrenin.", p: "Bir görüşme, yazılı bir sonuç, taahhüt yok. Zamanlama henüz doğru değilse bunu size söyleriz.", primary: { label: "YZ Kontrolü talep edin", href: "/contact" }, secondary: { label: "Tüm hizmetler", href: "/leistungen" } },
+    service: { type: "AI and automation assessment", offers: [{ name: "YZ Kontrolü", price: 490, from: true }] },
   },
 
   about: {
@@ -891,6 +928,12 @@ export const tr: Record<PageKey, PageDef> = {
       },
       {
         t: "text",
+        eyebrow: "Sektörler",
+        h: "Hangi işletmelerle çalışıyoruz?",
+        paras: ["Sektör odağı: hizmet, yeme-içme, perakende ve muayenehaneler (sağlık verisi olmadan). Tesisat, ısıtma ve sıhhi tesisat (SHK), bina teknik tesisatı (TGA), elektrik, inşaat ve toptan ticaret işletmeleri için çalışmıyoruz."],
+      },
+      {
+        t: "text",
         eyebrow: "Kurucu ve deneyim",
         h: "Yöntemimiz nereden geliyor?",
         lede: "OpSolid'i Hasan Dönmez kurdu. Deneyimi, şirketlerin günlük işleyişi içinde yürüttüğü BT proje yönetimi, dijitalleşme ve süreç iyileştirme çalışmalarından gelir. Yöntemimizin her adımı oradan doğdu: iş akışını kayda almak, başlangıç durumunu ölçmek, küçük bir pilotla denemek, eksiksiz teslim etmek.",
@@ -907,8 +950,9 @@ export const tr: Record<PageKey, PageDef> = {
         eyebrow: "Kendi projelerimiz",
         h: "İşimizi gösteren projeler.",
         items: [
-          { h: "OpSo", tag: "Test aşamasında ürün", p: "NFC ve QR destekli dijital kartvizit; kendi kontrol paneli, ilk kurulum akışı ve yönetim konsoluyla web uygulaması olarak geliştirildi. Yayına hazırlık sürüyor.", href: "/opso" },
-          { h: "Kutasia", tag: "Geliştirme aşamasında proje", p: "WhatsApp, Telegram ve e-postadan gelen müşteri mesajları tek gelen kutusunda, YZ destekli ön sıralamayla.", href: "https://kutasia.com" },
+          { h: "opsolid.de", tag: "Bu site", p: "OpSolid tarafından tasarlandı, kuruldu ve işletiliyor: üç dil, önce metin; 3D sahne metinden sonra yüklenir ve kapatılabilir.", shot: SHOT.opsolid },
+          { h: "OpSo", tag: "Test aşamasında ürün", p: "NFC ve QR destekli dijital kartvizit; kendi kontrol paneli, ilk kurulum akışı ve yönetim konsoluyla web uygulaması olarak geliştirildi. Yayına hazırlık sürüyor.", href: "/opso", shot: SHOT.opso },
+          { h: "Kutasia", tag: "Geliştirme aşamasında proje", p: "WhatsApp, Telegram ve e-postadan gelen müşteri mesajları tek gelen kutusunda, YZ destekli ön sıralamayla.", href: "https://kutasia.com", shot: SHOT.kutasia },
         ],
       },
       {
@@ -924,7 +968,7 @@ export const tr: Record<PageKey, PageDef> = {
   contact: {
     slug: "contact",
     meta: {
-      title: "İletişim: iş akışınızı anlatın, YZ kontrolü talep edin",
+      title: "İletişim: iş akışınızı anlatın, YZ Kontrolü talep edin",
       description:
         "OpSolid'e form, e-posta veya telefonla ulaşın: hangi iş akışı, hangi sistemler, bugün ne aksıyor. Genellikle birkaç iş günü içinde yanıt veririz.",
     },
@@ -933,10 +977,11 @@ export const tr: Record<PageKey, PageDef> = {
       eyebrow: "İletişim",
       h1: ["Üç cümle ", "yeterli", "."],
       lede: "Hangi iş akışının söz konusu olduğunu, hangi sistemlerin işin içinde olduğunu ve bugün neyin aksadığını yazın. Form, e-posta veya telefonla; genellikle birkaç iş günü içinde yanıt veririz.",
-      primary: { label: "Önce YZ kontrolünü inceleyin", href: "/ai-automation-check" },
+      primary: { label: "Mesaj yazın", href: "#form-h" },
+      secondary: CHECK,
       scene: "tight",
     },
     blocks: [],
-    cta: { h: "Önce iş akışlarınıza mı bakalım?", p: "YZ kontrolü iş akışlarınızı kayda alır ve beş değerlendirilmiş aday içeren 30 günlük yazılı bir plan sunar.", primary: CHECK },
+    cta: { h: "Önce iş akışlarınıza mı bakalım?", p: "YZ Kontrolü, otomasyonun sizde nerede karşılığını vereceğini gösterir: 90 dakika uzaktan, ardından kısa bir yazılı rapor.", primary: CHECK },
   },
 };

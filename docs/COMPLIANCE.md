@@ -22,6 +22,7 @@
 
 ### Mevcut Olan ama Doğrulanması Gereken
 - `src/lib/consent.ts` — sadece localStorage'a kayıt yapıyor; sunucu tarafı log yok. Bu yasal asgaride yeterli ama güçlü değil. Sonraki adım: `/api/consent-log` endpoint'i + DB tablosu (öncelik düşük).
+- **Güncelleme 2026-10:** `ConsentBanner`, `ConditionalAnalytics` ve Vercel Analytics kaldırıldı; gerekçe `src/app/layout.tsx` içindeki açıklamada. Yukarıdaki `ConsentBanner.tsx` satırı ve aşağıdaki 9. madde bu yüzden tarihseldir.
 - Ürün sayfasındaki form (`src/app/[locale]/products/digital-card/sections/OrderFormSection.tsx`) hâlâ derleme hatası veriyor (eksik radix-ui/embla/framer-motion bağımlılıkları). Bu commit kapsamı dışında — Verso self-serve order akışı tamamlandığında ele alınacak.
 
 ---
@@ -119,7 +120,7 @@
 - **Maliyet:** 0 €.
 - **Çıktı:** `docs/legal/RoPA-2026.xlsx` veya Notion sayfası.
 
-#### 9. Cookie consent server-side log
+#### 9. Cookie consent server-side log (2026-10: geçersiz, consent banner kaldırıldı)
 - **Niye:** localStorage tek başına ispat değeri zayıf. TDDDG § 25 dökümante edilebilir consent ister.
 - **Nasıl:** `/api/consent-log` endpoint'i ekleyin; ConsentBanner içinden POST atın. DB tablosu: `id, sessionId (anonim), choice (accept/reject), version, ts, ipHash`. (Bu opsiyonel — kod tarafı işi, isterseniz Claude'a yaptırabilirsiniz.)
 - **Süre:** 2-3 saat developer.
