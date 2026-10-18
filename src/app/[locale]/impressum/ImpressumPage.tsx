@@ -80,10 +80,10 @@ export function ImpressumPage({ locale }: { locale: L3 }) {
             <h1 id="impressum-title" className="v4-h1" style={{ fontSize: "clamp(2rem, 4.6vw, 3.8rem)" }}>
               {s.title}
             </h1>
-            <aside className={styles.notice} aria-label={L.notice}>
+            <div className={styles.notice} role="note" aria-label={L.notice}>
               <p className="v4-eyebrow">{L.notice}</p>
               <p>{s.notice}</p>
-            </aside>
+            </div>
 
             <ol className={`v4-rows v4-rows-n ${styles.list}`}>
               {items.map((item) => (

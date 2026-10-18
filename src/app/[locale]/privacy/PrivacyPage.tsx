@@ -28,10 +28,10 @@ export function PrivacyPage({ locale }: { locale: L3 }) {
               {title}
             </h1>
             <p className={styles.sub}>{s.subtitle}</p>
-            <aside className={styles.notice} aria-label={L.notice}>
+            <div className={styles.notice} role="note" aria-label={L.notice}>
               <p className="v4-eyebrow">{L.notice}</p>
               <p>{s.notice}</p>
-            </aside>
+            </div>
 
             <div className={`v4-prose ${styles.doc}`}>
               {(s.sections as ReadonlyArray<Section>).map((section) => (
