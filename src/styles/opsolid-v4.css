@@ -19,8 +19,8 @@
   --v4-cu: #c27940;
   --v4-cu-hi: #8f4f1e;
   --v4-on-cu: #12110f;
-  --v4-display: var(--font-archivo), var(--font-archivo-ext), "Arial Narrow", system-ui, sans-serif;
-  --v4-mono: var(--font-plex-mono), var(--font-plex-mono-ext), ui-monospace, Menlo, monospace;
+  --v4-display: var(--font-archivo), "Arial Narrow", system-ui, sans-serif;
+  --v4-mono: var(--font-plex-mono), ui-monospace, Menlo, monospace;
   --v4-gutter: max(18px, env(safe-area-inset-left, 0px));
   --v4-gutter-r: max(18px, env(safe-area-inset-right, 0px));
   --v4-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -40,8 +40,8 @@ html[data-v4][data-theme] {
   --v4-cu: #c27940;
   --v4-cu-hi: #e0a070;
   --v4-on-cu: #12110f;
-  --v4-display: var(--font-archivo), var(--font-archivo-ext), "Arial Narrow", system-ui, sans-serif;
-  --v4-mono: var(--font-plex-mono), var(--font-plex-mono-ext), ui-monospace, Menlo, monospace;
+  --v4-display: var(--font-archivo), "Arial Narrow", system-ui, sans-serif;
+  --v4-mono: var(--font-plex-mono), ui-monospace, Menlo, monospace;
   --v4-gutter: max(18px, env(safe-area-inset-left, 0px));
   --v4-gutter-r: max(18px, env(safe-area-inset-right, 0px));
 
@@ -142,9 +142,13 @@ html[data-dim="2"] .v4-stage.is-on canvas { opacity: 0.1; }
   transition: opacity 0.6s ease;
 }
 .v4-poster svg { width: 100%; height: auto; display: block; }
-.v4-poster .p-front { fill: var(--sf); }
-.v4-poster .p-top { fill: var(--st); }
-.v4-poster .p-side { fill: var(--ss); }
+/* Poster plates in the stage's material: dark faces, copper hairline edges, the stage's labels. */
+.v4-poster .p-front { fill: #1d1b18; }
+.v4-poster .p-top { fill: #25231f; }
+.v4-poster .p-side { fill: #171513; }
+.v4-poster .p-front, .v4-poster .p-top, .v4-poster .p-side { stroke: #c27940; stroke-opacity: 0.8; stroke-width: 1px; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.v4-poster .p-n { font-family: var(--v4-display); font-weight: 800; font-size: 13px; fill: #c27940; }
+.v4-poster .p-t { font-family: var(--v4-mono); font-weight: 500; font-size: 6.5px; letter-spacing: 0.06em; fill: #8a8378; }
 html[data-stage] .v4-poster { opacity: 0; }
 html:not([data-v4]) .v4-poster, html:not([data-v4]) .v4-stage { display: none; }
 
@@ -859,7 +863,9 @@ html[data-v4] [aria-labelledby="consent-title"] button { border-radius: 2px !imp
 
 /* ---------------------------------------------------------- responsive */
 @media (max-width: 759px) {
-  .v4-poster { right: auto; left: 50%; top: 15vh; transform: translateX(-50%); width: min(58vw, 250px); }
+  /* Poster in the hero's figure window, like the live object: below the header (+8) and above the
+     FIG label (44vh − 30 px, −8); the drawing is about as tall as it is wide. */
+  .v4-poster { right: auto; left: 50%; top: 76px; transform: translateX(-50%); width: min(58vw, 250px, calc((44vh - 114px) * 0.95)); }
   html[data-v4] body::after { opacity: 0.3; -webkit-mask-image: linear-gradient(180deg, #000 0, #000 30vh, transparent 45vh); mask-image: linear-gradient(180deg, #000 0, #000 30vh, transparent 45vh); }
   .v4-sec { display: block; min-height: 0; padding-block: 28px; }
   .v4-sec.is-hero { padding-top: 44vh; padding-bottom: 28px; min-height: 0; }
@@ -881,9 +887,10 @@ html[data-v4] [aria-labelledby="consent-title"] button { border-radius: 2px !imp
   .v4-sec.is-flow .v4-col, .v4-sec.is-faq .v4-col, .v4-col + .v4-col { border-top: 1px solid var(--v4-line); }
   /* contact page: its two stacked columns carry an inline 48px gap; join them like the other sheets */
   .v4-sec > .v4-in[style] { gap: 0 !important; }
-  /* Scene windows are numbered like figures on a drawing sheet (decorative, empty alt text). */
+  /* Scene windows are numbered like figures on a drawing sheet (decorative, empty alt text). Every
+     chapter counts, so FIG. n sits above chapter n; flow chapters without a window skip a number. */
   .v4-page { counter-reset: fig; }
-  .v4-sec.is-hero, .v4-sec.has-scene { counter-increment: fig; }
+  .v4-page .v4-sec { counter-increment: fig; }
   .v4-sec.is-hero::before, .v4-sec.has-scene::before {
     content: "FIG. " counter(fig, decimal-leading-zero) / "";
     position: absolute;
