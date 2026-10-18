@@ -296,7 +296,7 @@ export const de: Record<PageKey, PageDef> = {
         caption: "Website-Abo und Kauf im Überblick",
         cols: ["Modell", "Umfang", "Preis"],
         rows: [
-          ["Website-Abo||Inklusive Hosting, Pflege, Updates und 1 kleine Änderung pro Monat (Umsetzung innerhalb von 5 Werktagen, kein Notdienst).", "Einrichtung ab 490 €, danach monatlich oder jährlich", "ab 99 €/Monat oder 990 €/Jahr"],
+          ["Website-Abo||Inklusive Hosting, Pflege, Updates und 1 kleine Änderung pro Monat (Umsetzung innerhalb von 5 Werktagen, kein Notdienst).", "Einrichtung ab 490 €; danach monatlich oder 990 € im Jahr", "ab 99 €/Monat"],
           ["Kauf||Einmaliger Projektpreis. Die fertige Website gehört Ihnen, und Sie führen sie selbst oder mit Ihrer IT weiter.", "Projektpreis nach Umfang, schriftlich nach dem ersten Gespräch", "Auf Anfrage"],
         ],
         note: PRICE_NOTE,

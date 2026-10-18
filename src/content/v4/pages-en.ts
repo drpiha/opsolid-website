@@ -296,7 +296,7 @@ export const en: Record<PageKey, PageDef> = {
         caption: "Website subscription and purchase at a glance",
         cols: ["Model", "Scope", "Price"],
         rows: [
-          ["Website subscription||Includes hosting, maintenance, updates and 1 small change per month (done within 5 working days, no emergency service).", "Setup from €490, then monthly or yearly", "from €99/month or €990/year"],
+          ["Website subscription||Includes hosting, maintenance, updates and 1 small change per month (done within 5 working days, no emergency service).", "Setup from €490; then monthly or €990 a year", "from €99/month"],
           ["Buy||A one-off project price. The finished website is yours, and you take it forward yourself or with your IT.", "Project price by scope, in writing after the first call", "On request"],
         ],
         note: PRICE_NOTE,

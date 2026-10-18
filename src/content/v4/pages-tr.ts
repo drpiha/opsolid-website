@@ -296,7 +296,7 @@ export const tr: Record<PageKey, PageDef> = {
         caption: "Web sitesi aboneliği ve satın almaya genel bakış",
         cols: ["Model", "Kapsam", "Fiyat"],
         rows: [
-          ["Web sitesi aboneliği||Barındırma, bakım, güncellemeler ve ayda 1 küçük değişiklik dahildir (5 iş günü içinde uygulanır, acil servis yoktur).", "Kurulum 490 €'dan itibaren, ardından aylık veya yıllık", "Aylık 99 €'dan itibaren veya yıllık 990 €"],
+          ["Web sitesi aboneliği||Barındırma, bakım, güncellemeler ve ayda 1 küçük değişiklik dahildir (5 iş günü içinde uygulanır, acil servis yoktur).", "Kurulum 490 €'dan itibaren; ardından aylık veya yıllık 990 €", "aylık 99 €'dan itibaren"],
           ["Satın alma||Tek seferlik proje bedeli. Tamamlanan site sizin olur; onu kendiniz veya BT ekibinizle sürdürürsünüz.", "Kapsama göre proje bedeli, ilk görüşmeden sonra yazılı olarak", "Talep üzerine"],
         ],
         note: PRICE_NOTE,
