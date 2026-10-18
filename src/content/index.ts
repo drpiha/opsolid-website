@@ -2,13 +2,12 @@
 // LOCALE BARREL — M6 expanded to 7 locales
 // =============================================================================
 // Fully-translated locales: en, de, tr.
-// Partially-translated locales: es, it, fr, ar — these import the English
-// content tree and override only the highest-traffic keys (nav, home.hero,
-// v2.nav). Everything else (blog, products marketing copy, the 3500-line
-// legal pages …) falls back to English at runtime via the deep-merge in
-// each locale's content file. See `src/content/es.ts` for the merge code.
+// Partially-translated locales: es, it, fr, ar — used by the public card
+// surfaces (/c/*). They import the English content tree and deep-merge an
+// `overrides` object on top (currently empty), so every key falls back to
+// English. See `src/content/es.ts` for the merge code.
 //
-// To add a new translated key for one of the partial locales: edit the
+// To add a translated key for one of the partial locales: edit the
 // `overrides` object in that locale's file. The TypeScript type stays
 // satisfied because the merge result is asserted as `Content`.
 // =============================================================================

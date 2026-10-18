@@ -1,13 +1,9 @@
 /**
  * Map of retired route paths → target path they should 301 to.
  * Keys are locale-stripped paths (e.g. "/solutions", "/products/chatbot").
- * Used by middleware.ts to redirect old URLs so existing inbound links
- * and SEO don't 404 after the Claude Design v2 scope reduction.
- *
- * Rules: we keep only the six marketing surfaces in the design bundle
- * (Home, Voice Agent, Digital Card, Kutasia, Journal, Contact) plus
- * legal pages. Everything else either retires to home or to the
- * closest flagship product.
+ * middleware.ts redirects these before rendering, so inbound links and
+ * search results from earlier site versions land on the current v4 page
+ * that answers the same question instead of a 404.
  */
 export const RETIRED_REDIRECTS: Record<string, string> = {
   // Top-level info pages → home
@@ -25,21 +21,19 @@ export const RETIRED_REDIRECTS: Record<string, string> = {
   "/products": "/leistungen",
   "/products/kutasia": "/websites",
 
-  // Legacy aliases (without "-agent" suffix) → current dedicated pages.
-  // The "-agent" suffixed paths are real routes now and must NOT be retired.
-  "/products/chatbot": "/ki-beratung",
-  "/products/lead-qualifier": "/ki-beratung",
-  "/products/digital-reception": "/ki-beratung",
-
-  // v3: unsold product pages fold into the consulting offer. EXACT match
-  // only (see EXACT_ONLY) so no sibling route is ever caught by a prefix.
-  "/products/voice-agent": "/ki-beratung",
-  "/products/whatsapp-agent": "/ki-beratung",
-  "/products/chatbot-agent": "/ki-beratung",
-  "/products/email-agent": "/ki-beratung",
-  "/products/booking-agent": "/ki-beratung",
-  "/products/lead-qualifier-agent": "/ki-beratung",
-  "/products/custom-automation": "/ki-beratung",
+  // Former single-agent product pages (removed 2026-10, v4 cleanup) and their older aliases → the
+  // agents page; the automation page → process automation. The route folders no longer exist, so
+  // sub-paths redirect too.
+  "/products/chatbot": "/agents",
+  "/products/lead-qualifier": "/agents",
+  "/products/digital-reception": "/agents",
+  "/products/voice-agent": "/agents",
+  "/products/whatsapp-agent": "/agents",
+  "/products/chatbot-agent": "/agents",
+  "/products/email-agent": "/agents",
+  "/products/booking-agent": "/agents",
+  "/products/lead-qualifier-agent": "/agents",
+  "/products/custom-automation": "/prozessautomatisierung",
 
   // v3: legacy web-card entry points → OpSo. Exact only: /card/edit/*,
   // /card/manage/*, /products/digital-card/thanks etc. must keep working.
@@ -54,20 +48,12 @@ export const RETIRED_REDIRECTS: Record<string, string> = {
 
 /**
  * Keys in RETIRED_REDIRECTS that should only match exactly, not as a
- * path prefix. `/products` redirects to `/leistungen` for the bare products index,
- * but `/products/voice-agent` (etc.) must fall through so those routes
- * still resolve — they're listed separately with their own targets.
+ * path prefix: their sub-routes are live (`/products/digital-card/thanks`,
+ * `/card/new/...`) or have their own targets (`/products/kutasia`).
  */
 export const EXACT_ONLY = new Set<string>([
   "/products",
   "/products/kutasia",
-  "/products/voice-agent",
-  "/products/whatsapp-agent",
-  "/products/chatbot-agent",
-  "/products/email-agent",
-  "/products/booking-agent",
-  "/products/lead-qualifier-agent",
-  "/products/custom-automation",
   "/card/new",
   "/signup",
   "/products/digital-card",

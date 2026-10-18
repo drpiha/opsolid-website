@@ -64,7 +64,9 @@ export function ContactForm4() {
 
   const submit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const f = new FormData(e.currentTarget);
+    // React clears currentTarget after the synchronous part of the handler; keep the form itself.
+    const form = e.currentTarget;
+    const f = new FormData(form);
     setState("sending");
     try {
       const res = await fetch("/api/contact", {
@@ -82,7 +84,7 @@ export function ContactForm4() {
       });
       setState(res.ok ? "ok" : "err");
       if (res.ok) {
-        (e.target as HTMLFormElement).reset();
+        form.reset();
         setTopics(new Set());
       }
     } catch {

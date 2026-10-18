@@ -3,14 +3,18 @@ import test from "node:test";
 import * as mod from "../../src/lib/redirects.ts";
 const getRetiredRedirectTarget: (p: string) => string | null = (mod as any).getRetiredRedirectTarget ?? (mod as any).default.getRetiredRedirectTarget;
 
-const SOLD_OUT = ["voice-agent", "whatsapp-agent", "chatbot-agent", "email-agent", "booking-agent", "lead-qualifier-agent", "custom-automation"];
+const AGENT_PAGES = ["voice-agent", "whatsapp-agent", "chatbot-agent", "email-agent", "booking-agent", "lead-qualifier-agent", "chatbot", "lead-qualifier", "digital-reception"];
 
-test("retired product pages 301 to /ki-beratung (exact)", () => {
-  for (const s of SOLD_OUT) {
-    assert.equal(getRetiredRedirectTarget(`/products/${s}`), "/ki-beratung");
-    assert.equal(getRetiredRedirectTarget(`/products/${s}/`), "/ki-beratung");
-    assert.equal(getRetiredRedirectTarget(`/products/${s}/anything`), null);
+test("removed single-agent product pages 301 to /agents, automation to /prozessautomatisierung", () => {
+  for (const s of AGENT_PAGES) {
+    assert.equal(getRetiredRedirectTarget(`/products/${s}`), "/agents");
+    assert.equal(getRetiredRedirectTarget(`/products/${s}/`), "/agents");
+    // the route folders are gone, so deeper links land there too
+    assert.equal(getRetiredRedirectTarget(`/products/${s}/demo`), "/agents");
   }
+  assert.equal(getRetiredRedirectTarget("/products/custom-automation"), "/prozessautomatisierung");
+  // prefix matching must not catch a sibling slug
+  assert.equal(getRetiredRedirectTarget("/products/voice-agents"), null);
 });
 
 test("legacy card entry points go to /opso, exact only", () => {
@@ -34,7 +38,7 @@ test("about page and legacy product hub land on the current pages", () => {
 test("working routes are never redirected", () => {
   for (const p of [
     "/card/edit/abc", "/card/manage/abc", "/card/new/step", "/products/digital-card/thanks",
-    "/c/slug", "/login", "/dashboard/cards", "/opso", "/ki-schulungen", "/ueber-uns", "/websites",
+    "/c/slug", "/login", "/dashboard/cards", "/opso", "/ki-schulungen", "/ueber-uns", "/websites", "/agents",
   ]) {
     assert.equal(getRetiredRedirectTarget(p), null, p);
   }

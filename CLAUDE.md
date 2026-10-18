@@ -69,9 +69,9 @@ App routes: `page.tsx` (server, metadata) + `PageName.tsx` (client, `"use client
 
 - `components/v4/` — marketing system: `PageRenderer` (blocks), `Stage` (3D), `AgentDemo`, `Reveal`, `ContactForm4`, `JsonLd`, `make-page`, `FxToggle`, `V4Sync`, `ContentGate`.
 - `components/ui/` — Design system primitives (Button, Card, Badge, Input) using CVA (app surfaces)
-- `components/shared/` — Reusable pieces (AnimatedSection — IntersectionObserver + CSS transitions, `ConsentBanner`, `LocaleLink`)
+- `components/shared/` — Reusable pieces (`ConsentBanner`, `ConditionalAnalytics`, `LocaleLink`, `Icon`)
 - `components/layout/` — Header (language switcher, nav) and Footer (includes the "3D-Effekte" switch)
-- `components/sections/`, `components/v2/` — older marketing sections. The marketing routes no longer render them; `/about` and the `products/*` pages still do. Do not extend them for marketing pages.
+- `components/sections/` — `FaqAccordion`, `FinalCTA`, `PricingTable`, used only by the OpSo order flow under `products/digital-card`. The pre-v4 marketing components (`components/v2`, the old section library, the single-agent product pages) were removed in 2026-10; their URLs 301 via `src/lib/redirects.ts`. Do not reintroduce them for marketing pages.
 - `components/ClientProviders.tsx` — Wraps children with LocaleProvider (keeps layout.tsx as server component)
 
 ### Art direction (marketing routes, v4)
@@ -83,7 +83,7 @@ Industrial-luxury, dark only: graphite surfaces, warm oxidized copper as the sin
 
 Typography: **Archivo** (display and body; the width axis is used for headings: `font-stretch: 118%`, weight 800) and **IBM Plex Mono** (eyebrows, labels, meta). Only the latin subset of Archivo is preloaded; latin-ext (ğ ş İ ı) loads on demand. Components: `.v4-sec`, `.v4-col`, `.v4-btn(-primary|-ghost|-lg)`, `.v4-rows`, `.v4-steps`, `.v4-table`, `.v4-faq`, `.v4-band`.
 
-Rules: no gradient mesh, no glassmorphism (consent banner and header included), no `framer-motion` for page choreography (only the small `Reveal` / `AnimatedSection` observers), accept and reject buttons carry identical visual weight, minimum 44 px touch targets.
+Rules: no gradient mesh, no glassmorphism (consent banner and header included), no `framer-motion` for page choreography (only the small `Reveal` observer), accept and reject buttons carry identical visual weight, minimum 44 px touch targets.
 
 App-surface tokens (unchanged): `bg-bg-{0..5}`, `text-ink-*`, `border-line-*`, `copper-{50..900}` (DEFAULT `#C27940`), `neutral-{50..950}`, `signal-ok|warn|err`; Geist / Inter / JetBrains Mono / Instrument Serif. `amber`, `paper*`, `olive`, `steel` are removed; Tailwind silently drops classes that reference them.
 

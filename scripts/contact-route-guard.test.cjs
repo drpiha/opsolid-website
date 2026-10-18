@@ -45,7 +45,7 @@ function harness({ env = smtpEnv, delivery = async () => ({ ok: true }), realEma
         return [states[index], (value) => { states[index] = value; }];
       } };
       if (id === 'react/jsx-runtime') return { jsx: (type, props) => ({ type, props }), jsxs: (type, props) => ({ type, props }) };
-      if (id === '@/context/LocaleContext') return { useLocale: () => ({ t: locale }) };
+      if (id === '@/context/LocaleContext') return { useLocale: () => ({ t: locale }), useLocaleBase: () => ({ locale: 'de', setLocale() {} }) };
       if (id === '@/components/shared/Icon') return { Icon: 'icon' };
       if (id === '@/components/shared/LocaleLink') return { LocaleLink: 'a' };
       if (id === './ContactChannels') return { ContactChannels: 'contact-channels' };
@@ -311,13 +311,10 @@ function descendants(node) {
   return [node, ...descendants(node.props?.children)];
 }
 
-test('actual three form components submit their honeypot, with no UI-copy replacement', async () => {
-  const contactCopy = { hero: { title: {}, contacts: [], trust: [] }, form: { fields: { name: {}, company: {}, email: {}, phone: {}, interest: {}, message: {} }, topics: [] } };
-  const blogCopy = { head: { title: {} }, emptyFeature: {}, series: {} };
+test('actual form components (v4 contact form, OpSo custom request) submit their honeypot, with no UI-copy replacement', async () => {
   const customCopy = { options: [], channels: { labels: {} }, form: { teamSizeOptions: [] } };
   const cases = [
-    ['src/app/[locale]/contact/ContactPage.tsx', 'ContactPage', [], { v2: { contact: contactCopy } }],
-    ['src/app/[locale]/blog/BlogPage.tsx', 'BlogPage', ['visitor@example.test'], { v2: { blog: blogCopy }, blog: { posts: [] } }],
+    ['src/components/v4/ContactForm4.tsx', 'ContactForm4', [], undefined],
     ['src/components/products/digital-card/CustomRequestSection.tsx', 'CustomRequestSection', ['Demo Visitor', 'visitor@example.test', '', '', '', 'Synthetic inquiry', true], { v2: { digitalCard: { customRequest: customCopy } } }],
   ];
   for (const [file, component, componentState, locale] of cases) {
@@ -328,8 +325,9 @@ test('actual three form components submit their honeypot, with no UI-copy replac
     assert.ok(form && trap);
     assert.equal(trap.props.tabIndex, -1);
     assert.equal(trap.props.autoComplete, 'off');
-    const wrapper = nodes.find((node) => node.props?.children === trap);
-    assert.equal(wrapper.props.hidden, true);
+    // The trap's wrapper is removed from view and from assistive technology: `hidden`, or aria-hidden off-screen.
+    const wrapper = nodes.find((node) => node.props?.children === trap || (Array.isArray(node.props?.children) && node.props.children.includes(trap)));
+    assert.ok(wrapper.props.hidden === true || (wrapper.props['aria-hidden'] === 'true' && wrapper.props.style?.position === 'absolute'));
     let resets = 0;
     const event = { preventDefault() {}, currentTarget: { fields: { ...valid, website: 'https://bot.example.test' }, reset() { resets++; } } };
     const pending = form.props.onSubmit(event);
@@ -338,21 +336,22 @@ test('actual three form components submit their honeypot, with no UI-copy replac
     await pending;
     assert.equal(h.requests.length, 1);
     assert.equal(JSON.parse(h.requests[0].options.body).website, 'https://bot.example.test');
-    if (component === 'ContactPage') {
+    if (component === 'ContactForm4') {
       assert.equal(resets, 1);
-      assert.equal(h.states[2], 'ok');
+      assert.equal(h.states[1], 'ok');
     }
   }
 });
 
-test('actual main contact form retains entered fields and shows existing error state on503', async () => {
-  const h = harness({ locale: { v2: { contact: { hero: { title: {}, contacts: [], trust: [] }, form: { fields: { name: {}, company: {}, email: {}, phone: {}, interest: {}, message: {} }, topics: [] } } } }, httpResponse: () => ({ ok: false, status: 503 }) });
-  const form = descendants(h.load('src/app/[locale]/contact/ContactPage.tsx').ContactPage()).find((node) => node.type === 'form');
+test('actual main contact form (v4) retains entered fields and shows its error state on503', async () => {
+  const h = harness({ httpResponse: () => ({ ok: false, status: 503 }) });
+  const form = descendants(h.load('src/components/v4/ContactForm4.tsx').ContactForm4()).find((node) => node.type === 'form');
   let resets = 0;
   await form.props.onSubmit({ preventDefault() {}, currentTarget: { fields: valid, reset() { resets++; } } });
   assert.equal(resets, 0);
-  assert.equal(h.states[1], false);
-  assert.equal(h.states[2], 'error');
+  assert.equal(h.states[1], 'err');
+  assert.equal(h.requests.length, 1);
+  assert.equal(JSON.parse(h.requests[0].options.body).email, valid.email);
 });
 
 test('successful HTTP headers cannot escape the total deadline while their JSON body stalls', async () => {
