@@ -67,12 +67,6 @@ const nextConfig = {
       { source: "/gizlilik", destination: "/tr/privacy", permanent: true },
     ];
   },
-  async rewrites() {
-    return [
-      { source: "/sunum", destination: "/decks/musteri-sunumu/index.html" },
-      { source: "/sunum/", destination: "/decks/musteri-sunumu/index.html" },
-    ];
-  },
   images: {
     // GHSA-2xp9-vwfh-vxw4: bypass server image optimization until the
     // framework upgrade is validated. Disabling AVIF output alone does not
