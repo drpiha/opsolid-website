@@ -1,14 +1,11 @@
 "use client";
 
-import { useLocale } from "@/context/LocaleContext";
-
 type FaqItem = { q: string; a: string };
 
 /**
  * FAQ accordion driven by native <details>/<summary> for zero JS overhead
- * and keyboard accessibility out of the box. Used on both the homepage and
- * the /ai-automation-check page — pass the `items` prop directly so the
- * page-specific FAQ can be rendered with its own headline.
+ * and keyboard accessibility out of the box. Used by the OpSo order page —
+ * pass the `items` prop directly so each page renders its own headline.
  */
 export function FaqAccordion({
   eyebrow,
@@ -44,19 +41,5 @@ export function FaqAccordion({
         </div>
       </div>
     </section>
-  );
-}
-
-/** Homepage-scoped helper that pulls copy from `t.v2.home.faq`. */
-export function HomepageFaq() {
-  const { t } = useLocale();
-  const f = t.v2.home.faq;
-  return (
-    <FaqAccordion
-      eyebrow={f.eyebrow}
-      headline={f.headline}
-      items={f.items}
-      id="faq"
-    />
   );
 }

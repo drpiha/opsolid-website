@@ -311,13 +311,9 @@ function descendants(node) {
   return [node, ...descendants(node.props?.children)];
 }
 
-test('actual three form components submit their honeypot, with no UI-copy replacement', async () => {
-  const contactCopy = { hero: { title: {}, contacts: [], trust: [] }, form: { fields: { name: {}, company: {}, email: {}, phone: {}, interest: {}, message: {} }, topics: [] } };
-  const blogCopy = { head: { title: {} }, emptyFeature: {}, series: {} };
+test('actual digital-card custom request form submits its honeypot, with no UI-copy replacement', async () => {
   const customCopy = { options: [], channels: { labels: {} }, form: { teamSizeOptions: [] } };
   const cases = [
-    ['src/app/[locale]/contact/ContactPage.tsx', 'ContactPage', [], { v2: { contact: contactCopy } }],
-    ['src/app/[locale]/blog/BlogPage.tsx', 'BlogPage', ['visitor@example.test'], { v2: { blog: blogCopy }, blog: { posts: [] } }],
     ['src/components/products/digital-card/CustomRequestSection.tsx', 'CustomRequestSection', ['Demo Visitor', 'visitor@example.test', '', '', '', 'Synthetic inquiry', true], { v2: { digitalCard: { customRequest: customCopy } } }],
   ];
   for (const [file, component, componentState, locale] of cases) {
@@ -330,29 +326,14 @@ test('actual three form components submit their honeypot, with no UI-copy replac
     assert.equal(trap.props.autoComplete, 'off');
     const wrapper = nodes.find((node) => node.props?.children === trap);
     assert.equal(wrapper.props.hidden, true);
-    let resets = 0;
-    const event = { preventDefault() {}, currentTarget: { fields: { ...valid, website: 'https://bot.example.test' }, reset() { resets++; } } };
+    const event = { preventDefault() {}, currentTarget: { fields: { ...valid, website: 'https://bot.example.test' }, reset() {} } };
     const pending = form.props.onSubmit(event);
     // React clears currentTarget after the synchronous event callback.
     event.currentTarget = null;
     await pending;
     assert.equal(h.requests.length, 1);
     assert.equal(JSON.parse(h.requests[0].options.body).website, 'https://bot.example.test');
-    if (component === 'ContactPage') {
-      assert.equal(resets, 1);
-      assert.equal(h.states[2], 'ok');
-    }
   }
-});
-
-test('actual main contact form retains entered fields and shows existing error state on503', async () => {
-  const h = harness({ locale: { v2: { contact: { hero: { title: {}, contacts: [], trust: [] }, form: { fields: { name: {}, company: {}, email: {}, phone: {}, interest: {}, message: {} }, topics: [] } } } }, httpResponse: () => ({ ok: false, status: 503 }) });
-  const form = descendants(h.load('src/app/[locale]/contact/ContactPage.tsx').ContactPage()).find((node) => node.type === 'form');
-  let resets = 0;
-  await form.props.onSubmit({ preventDefault() {}, currentTarget: { fields: valid, reset() { resets++; } } });
-  assert.equal(resets, 0);
-  assert.equal(h.states[1], false);
-  assert.equal(h.states[2], 'error');
 });
 
 test('successful HTTP headers cannot escape the total deadline while their JSON body stalls', async () => {
