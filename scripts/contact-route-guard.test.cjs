@@ -45,7 +45,7 @@ function harness({ env = smtpEnv, delivery = async () => ({ ok: true }), realEma
         return [states[index], (value) => { states[index] = value; }];
       } };
       if (id === 'react/jsx-runtime') return { jsx: (type, props) => ({ type, props }), jsxs: (type, props) => ({ type, props }) };
-      if (id === '@/context/LocaleContext') return { useLocale: () => ({ t: locale }) };
+      if (id === '@/context/LocaleContext') return { useLocale: () => ({ t: locale }), useLocaleBase: () => ({ locale: 'de' }) };
       if (id === '@/components/shared/Icon') return { Icon: 'icon' };
       if (id === '@/components/shared/LocaleLink') return { LocaleLink: 'a' };
       if (id === './ContactChannels') return { ContactChannels: 'contact-channels' };
@@ -412,4 +412,66 @@ test('a transport returning headers after timeout cannot begin a late body read'
   assert.equal(bodyReads, 0);
   assert.equal(cancelled, 1);
   assert.equal(h.timers.size, 0);
+});
+
+// The live /[locale]/contact form. useState order: [topics, state].
+function renderContactForm4(options) {
+  const h = harness(options);
+  const nodes = descendants(h.load('src/components/v4/ContactForm4.tsx').ContactForm4());
+  const form = nodes.find((node) => node.type === 'form');
+  const trap = nodes.find((node) => node.type === 'input' && node.props.name === 'website');
+  return { h, nodes, form, trap };
+}
+
+async function submitContactForm4(form, fields) {
+  let resets = 0;
+  const element = { fields, reset() { resets++; } };
+  const event = { preventDefault() {}, currentTarget: element, target: element };
+  const pending = form.props.onSubmit(event);
+  // React clears currentTarget after the synchronous event callback; target stays set.
+  event.currentTarget = null;
+  await pending;
+  return resets;
+}
+
+test('actual v4 contact form renders its honeypot unfocusable in an aria-hidden off-screen wrapper', () => {
+  const { nodes, form, trap } = renderContactForm4();
+  assert.ok(form && trap);
+  assert.equal(trap.props.tabIndex, -1);
+  assert.equal(trap.props.autoComplete, 'off');
+  const wrapper = nodes.find((node) => Array.isArray(node.props?.children) && node.props.children.includes(trap));
+  assert.equal(wrapper.type, 'div');
+  assert.equal(wrapper.props['aria-hidden'], 'true');
+  assert.equal(wrapper.props.style.position, 'absolute');
+  assert.equal(wrapper.props.style.left, '-9999px');
+  assert.equal(wrapper.props.style.overflow, 'hidden');
+  const label = wrapper.props.children.find((node) => node.type === 'label');
+  assert.equal(label.props.htmlFor, trap.props.id);
+});
+
+test('actual v4 contact form posts its honeypot to /api/contact and resets on success', async () => {
+  const { h, form } = renderContactForm4({ componentState: [new Set(['KI-Agents'])], httpResponse: () => ({ ok: true }) });
+  const resets = await submitContactForm4(form, { ...valid, website: 'https://bot.example.test' });
+  assert.equal(h.requests.length, 1);
+  assert.equal(h.requests[0].url, '/api/contact');
+  assert.equal(h.requests[0].options.method, 'POST');
+  const body = JSON.parse(h.requests[0].options.body);
+  assert.equal(body.website, 'https://bot.example.test');
+  assert.equal(body.email, valid.email);
+  assert.deepEqual(body.topics, ['KI-Agents']);
+  assert.equal(body.source, 'v4-contact-de');
+  assert.equal(resets, 1);
+  assert.equal(h.states[0].size, 0);
+  assert.equal(h.states[1], 'ok');
+});
+
+test('actual v4 contact form keeps entered fields and shows its error state on 503', async () => {
+  const topics = new Set(['KI-Agents']);
+  const { h, form } = renderContactForm4({ componentState: [topics], httpResponse: () => ({ ok: false, status: 503 }) });
+  const resets = await submitContactForm4(form, valid);
+  assert.equal(h.requests.length, 1);
+  assert.equal(JSON.parse(h.requests[0].options.body).email, valid.email);
+  assert.equal(resets, 0);
+  assert.equal(h.states[0], topics);
+  assert.equal(h.states[1], 'err');
 });
